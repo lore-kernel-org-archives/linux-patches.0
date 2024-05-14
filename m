@@ -1,136 +1,287 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CC9180A6A;
-	Tue, 14 May 2024 21:29:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5D2181BA3
+	for <patches@lists.linux.dev>; Tue, 14 May 2024 21:53:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715722183; cv=none; b=EAZb45ibjzurI2tf70q7Ybmr7rjtwxZMjMmItfBcdervkkBaU7BRPnhp7ZAZMN/XlHCYOXpcS9hpTl6axMuRFz6OYfFydHfoeccT2nkkLeyMJhBuUMcUdfeGgrjSa04XD+k+Ay4V5DbRKF8WAyQ0AsaA5hxUIit7/yBAyguJuv0=
+	t=1715723586; cv=none; b=SQrS2CgP4VfDVzYACJjo/W25H07O0IOkxX4rU5Rbxi0G+wnk6ZHHtFd+DqB0YenE+q8b9nJ70yU6vzJkZaStNDlSOQ14LdMRxUAB2ibIKlopSKtkkYe+Sqo90wMNIEdvA2Thle6jXSOsL3yuMbKhHCfkeQk2CKWBZorsWr/Wd+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715722183; c=relaxed/simple;
-	bh=Y+m1nbd28r9a7918tO34Pw+7ZflDLT2x0sc9gLxM79Q=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=U8ovaJsXiIrFjqHxdEHP3xb/J6e+CRy+1FloTgVoZxdfzJZbmBiUuaS0BD80TgvM0Ru7VGTrsRDDvqr3oxnkSW0QQwd+ynJL+9Z36LWmc3ishgCbdh1fy2X9qzE67lmeilJd7SxNGPNHTkvlEYbdeouPg5wDIOcKZihquDCIDTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tj7qo6Oq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715723586; c=relaxed/simple;
+	bh=2M+FInE/lrnYInW0wW9bQowLmoHwZVKEyZK4ZsQUCSE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TiGwVXB42kj2Pd+99sqHKIFq/jouSsVu7tuCDLSRJtoqk8ckN0b2LjV1fipG/wOWqWdzqCajCtI6jbbTlOeALMN5HqE5UOwMDT4UULsBBkXjsPjCb1ScrnDYVS1+5WTRev5+N4nweGhf/HqciKZ3L5gYgGu6fJ/axDWHLOz1dCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hXnIOwRu; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tj7qo6Oq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47491C2BD10;
-	Tue, 14 May 2024 21:29:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715722182;
-	bh=Y+m1nbd28r9a7918tO34Pw+7ZflDLT2x0sc9gLxM79Q=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=tj7qo6OqQuXFdOdFZ1bi12ZdMFQ36pNjyngiRyzkjtqgMTgrAPBfYYo9cn1g0GmCq
-	 Ojop1qK+lr5KWo1zePIYi343Vr7czqA8sBS/DTXRsy2ZQxTKk8+UlQ+4ggwg2w6lQq
-	 tOHzWCvnQewAUise+RwW/gpoqKA/KHNDKqVD3f7UI7IWF9vnrlak3WhHoyGIZhpxOV
-	 l4j0P79xvLU5JLeKZ8HU+Bu7YuVqVT6dUV/C/AGi5Qe0I48zQzt7VQogogY96yp8Pq
-	 Kt4NqAFWtSGsT1r0u24xApI8REWXUrbC5s8FgZXOtHb3PgZzzWpeYqOKKkjgS75l8s
-	 F9lSpEr0HqWTA==
-Message-ID: <5c919f0d3d72fe1592a11c45545e8a60.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hXnIOwRu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1715723583; x=1747259583;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=2M+FInE/lrnYInW0wW9bQowLmoHwZVKEyZK4ZsQUCSE=;
+  b=hXnIOwRuA02nljjByBwJPi/TkiMnCdaiRTeA5+ZP6zIkWtB8bjlV3qbQ
+   WPJ2MrMcqjkg/AdUhBBJmvU3LRxlfOQYVyTRfkDjH0PYP3wn6sX4SVTre
+   gZsEba5GAQ1lb1Yq8NcXa4ekLhow/ZHob0OsIyaDTt90EfrWOFXTiRN+z
+   CHK48smb9x5X80DBJ6xYX2MGOcXtQs6pgZjVwWRviPMkKvCTzv4Hk6iBq
+   4Tb/WEZYgSEzCJLPo+gGXDTPwKGG7IrD8sN1YIglJrT6QTs5+YT+h1ZN9
+   o6WTav9EvCTxp3lIulArW0A/570cHmRIzFX3UoNAgmk/3u80iIiLi9OYd
+   A==;
+X-CSE-ConnectionGUID: LVvxafjVR2uFH8dHwB8VAA==
+X-CSE-MsgGUID: Ri/txIg0TdiEWklllInyLg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11073"; a="11599992"
+X-IronPort-AV: E=Sophos;i="6.08,159,1712646000"; 
+   d="scan'208";a="11599992"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2024 14:53:02 -0700
+X-CSE-ConnectionGUID: 7w534L2IQomymjeaKL+3gg==
+X-CSE-MsgGUID: +VSdj60ATnmZvcKi13jeBg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,159,1712646000"; 
+   d="scan'208";a="54042189"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.105])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2024 14:53:03 -0700
+Date: Tue, 14 May 2024 14:53:01 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: "Yu, Fenghua" <fenghua.yu@intel.com>,
+	"Wieczor-Retman, Maciej" <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	"x86@kernel.org" <x86@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v17 7/9] x86/resctrl: Add new monitor files for Sub-NUMA
+ cluster (SNC) monitoring
+Message-ID: <ZkPdPTbgH-0EpBc4@agluck-desk3>
+References: <20240503203325.21512-1-tony.luck@intel.com>
+ <20240503203325.21512-8-tony.luck@intel.com>
+ <0178e84e-d55f-47bf-b8b0-58e05fcaa108@intel.com>
+ <ZkJIZdU2knEUJN7Q@agluck-desk3>
+ <f49931b0-d9bf-45f0-ab35-93b1a78f6b97@intel.com>
+ <ZkKupOKRu5S7Rkgx@agluck-desk3>
+ <2efcae46-736a-4809-8530-7dde3977f3ce@intel.com>
+ <SJ1PR11MB60838E2DB2984EF95D34C692FCE32@SJ1PR11MB6083.namprd11.prod.outlook.com>
+ <b718c70b-21ea-4c4d-9ecf-387b8276a721@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <b822c6a5488c4098059b6d3c35eecbbd.sboyd@kernel.org>
-References: <20240422232404.213174-1-sboyd@kernel.org> <CABVgOSmgUJp3FijpYGCphi1OzRUNvmYQmPDdL6mN59YnbkR2iQ@mail.gmail.com> <b822c6a5488c4098059b6d3c35eecbbd.sboyd@kernel.org>
-Subject: Re: [PATCH v4 00/10] clk: Add kunit tests for fixed rate and parent data
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
-To: David Gow <davidgow@google.com>, Rob Herring <robh@kernel.org>
-Date: Tue, 14 May 2024 14:29:40 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b718c70b-21ea-4c4d-9ecf-387b8276a721@intel.com>
 
-Quoting Stephen Boyd (2024-05-02 18:27:42)
-> Quoting David Gow (2024-05-01 01:08:11)
-> >=20
-> > The other thing I've noted so far is that the
-> > of_apply_kunit_platform_device and of_overlay_apply_kunit_cleanup
-> > tests fail (and BUG() with a NULL pointer) on powerpc:
-> > > [15:18:51]     # of_overlay_apply_kunit_platform_device: EXPECTATION =
-FAILED at drivers/of/overlay_test.c:47
-> > > [15:18:51]     Expected pdev is not null, but is
-> > > [15:18:51] BUG: Kernel NULL pointer dereference at 0x0000004c
->=20
-> This seems to be because pdev is NULL and we call put_device(&pdev->dev)
-> on it. We could be nicer and have an 'if (pdev)' check there. I wonder
-> if that fixes the other two below?
->=20
-> ---8<---
-> diff --git a/drivers/of/overlay_test.c b/drivers/of/overlay_test.c
-> index 223e5a5c23c5..85cfbe6bb132 100644
-> --- a/drivers/of/overlay_test.c
-> +++ b/drivers/of/overlay_test.c
-> @@ -91,7 +92,8 @@ static void of_overlay_apply_kunit_cleanup(struct kunit=
- *test)
->         dev =3D bus_find_device(&platform_bus_type, NULL, kunit_compatibl=
-e,
->                               of_overlay_bus_match_compatible);
->         KUNIT_EXPECT_PTR_EQ(test, NULL, dev);
-> -       put_device(dev);
-> +       if (dev)
-> +               put_device(dev);
->  }
+On Tue, May 14, 2024 at 01:30:05PM -0700, Reinette Chatre wrote:
+> Hi Tony,
+> 
+> On 5/14/2024 11:26 AM, Luck, Tony wrote:
+> >> On 5/13/2024 5:21 PM, Tony Luck wrote:
+> >>> On Mon, May 13, 2024 at 11:53:17AM -0700, Reinette Chatre wrote:
+> >>>> On 5/13/2024 10:05 AM, Tony Luck wrote:
+> >>>>> On Fri, May 10, 2024 at 02:24:13PM -0700, Reinette Chatre wrote:
+> >>>>> Thanks for the review. Detailed comments below. But overall I'm
+> >>>>> going to split patch 7 into a bunch of smaller changes, each with
+> >>>>> a better commit message.
+> >>>>>
+> >>>>>> On 5/3/2024 1:33 PM, Tony Luck wrote:
+> >>>>>>
+> >>>>>> (Could you please start the changelog with some context?)
+> >>>>>>
+> >>>>>>> Add a field to the rdt_resource structure to track whether monitoring
+> >>>>>>> resources are tracked by hardware at a different scope (NODE) from
+> >>>>>>> the legacy L3 scope.
+> >>>>>>
+> >>>>>> This seems to describe @mon_scope that was introduced in patch #3?
+> >>>>>
+> >>>>> Not really. Patch #3 made the change so that control an monitor
+> >>>>> functions can have different scope. That's still needed as with SNC
+> >>>>> enabled the underlying data collection is at the node level for
+> >>>>> monitoring, while control stays at the L3 cache scope.
+> >>>>>
+> >>>>> This new field describes the legacy scope of monitoring, so that
+> >>>>> resctrl can provide correctly scoped monitor files for legacy
+> >>>>> applications that aren't aware of SNC. So I'm using this both
+> >>>>> to indicate when SNC is enabled (with mon_scope != mon_display_scope)
+> >>>>> or disabled (when they are the same).
+> >>>>
+> >>>> This seems to enforce the idea that these new additions aim to be
+> >>>> generic on the surface but the only goal is to support SNC.
+> >>>
+> >>> If you have some more ideas on how to make this more generic and
+> >>> less SNC specific I'm all ears.
+> >>
+> >> It may not end up being totally generic. It should not pretend to be
+> >> when it is not. It makes the flows difficult to follow when there are
+> >> these unexpected checks/quirks in what claims to be core code.
+> > 
+> > Do you want some sort of warning comments in pieces of code
+> > that are SNC specific?
+> 
+> I cannot think now where warnings will be appropriate but if you
+> find instances then please do. To start the quirks can at least be
+> documented. For example, "Only user of <feature> is SNC, which does
+> not require <custom> so simplify by <describe shortcut> ..."
 
-This last hunk isn't needed.
+The main spot that triggered this line of discussion was changing the
+sanity check that operations to read monitors is being done from a
+CPU within the right domain. I've added a short comment on the new
+check:
 
-> =20
->  static struct kunit_case of_overlay_apply_kunit_test_cases[] =3D {
->=20
-> > > [15:18:51]     # of_overlay_apply_kunit_platform_device: try faulted:=
- last line seen lib/kunit/resource.c:99
-> > > [15:18:51]     # of_overlay_apply_kunit_platform_device: internal err=
-or occurred preventing test case from running: -4
-> > > [15:18:51] [FAILED] of_overlay_apply_kunit_platform_device
-> >=20
-> > > [15:18:51] BUG: Kernel NULL pointer dereference at 0x0000004c
-> > > [15:18:51] note: kunit_try_catch[698] exited with irqs disabled
-> > > [15:18:51]     # of_overlay_apply_kunit_cleanup: try faulted: last li=
-ne seen drivers/of/overlay_test.c:77
-> > > [15:18:51]     # of_overlay_apply_kunit_cleanup: internal error occur=
-red preventing test case from running: -4
-> > > [15:18:51] [FAILED] of_overlay_apply_kunit_cleanup
-> >=20
-> > I've not had a chance to dig into it any further, yet, but it appears
-> > to work on all of the other architectures I tried.
->=20
-> Cool. I don't know why powerpc doesn't make devices. Maybe it has a
-> similar design to sparc to create resources. I'll check it out.
->=20
+-       if (!cpumask_test_cpu(smp_processor_id(), &d->hdr.cpu_mask))
++       /* Event counts can only be read from a CPU on the same L3 cache */
++       if (d->display_id != get_cpu_cacheinfo_id(smp_processor_id(), r->mon_display_scope))
+                return -EINVAL;
 
-powerpc doesn't mark the root node with OF_POPULATED_BUS. If I set that
-in of_platform_default_populate_init() then the overlays can be applied.
+But my change embeds the assumption that monitor events are L3 scoped.
 
----8<----
-diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-index 389d4ea6bfc1..fa7b439e9402 100644
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -565,6 +565,10 @@ static int __init of_platform_default_populate_init(vo=
-id)
- 				of_platform_device_create(node, buf, NULL);
- 		}
-=20
-+		node =3D of_find_node_by_path("/");
-+		if (node)
-+			of_node_set_flag(node, OF_POPULATED_BUS);
-+		of_node_put(node);
- 	} else {
- 		/*
- 		 * Handle certain compatibles explicitly, since we don't want to create
+Should it be something like this (to keep the non-SNC case generic):
 
-I'm guessing this is wrong though, because I see bunch of powerpc specific =
-code
-calling of_platform_bus_probe() which will set the flag on the actual platf=
-orm
-bus nodes. Maybe we should just allow overlays to create devices at the root
-node regardless? Of course, the flag doc says "platform bus created for
-children" and if we never populated the root then that isn't entirely accur=
-ate.
+	if (r->mon_scope == r->mon_display_scope) {
+		if (!cpumask_test_cpu(smp_processor_id(), &d->hdr.cpu_mask))
+			return -EINVAL;
+	} else {
+		/*
+		 * SNC: OK to read events on any CPU sharing same L3
+		 * cache instance.
+		 */
+		 if (d->display_id != get_cpu_cacheinfo_id(smp_processor_id(), r->mon_display_scope))
+		 	return -EINVAL;
+	}
 
-Rob, can you point me in the right direction? Do we need to use simple-bus =
-in
-the test overlays and teach overlay code to populate that bus?
+> 
+> > 
+> >>
+> >>>>>>>         }
+> >>>>>>> +
+> >>>>>>> +       return 0;
+> >>>>>>> +}
+> >>>>>>> +
+> >>>>>>> +static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
+> >>>>>>> +                               struct rdt_mon_domain *d,
+> >>>>>>> +                               struct rdt_resource *r, struct rdtgroup *prgrp)
+> >>>>>>> +{
+> >>>>>>> +       struct kernfs_node *kn, *ckn;
+> >>>>>>> +       char name[32];
+> >>>>>>> +       bool do_sum;
+> >>>>>>> +       int ret;
+> >>>>>>> +
+> >>>>>>> +       do_sum = r->mon_scope != r->mon_display_scope;
+> >>>>>>> +       sprintf(name, "mon_%s_%02d", r->name, d->display_id);
+> >>>>>>> +       kn = kernfs_find_and_get_ns(parent_kn, name, NULL);
+> >>>>>>> +       if (!kn) {
+> >>>>>>> +               /* create the directory */
+> >>>>>>> +               kn = kernfs_create_dir(parent_kn, name, parent_kn->mode, prgrp);
+> >>>>>>> +               if (IS_ERR(kn))
+> >>>>>>> +                       return PTR_ERR(kn);
+> >>>>>>> +
+> >>>>>>> +               ret = rdtgroup_kn_set_ugid(kn);
+> >>>>>>> +               if (ret)
+> >>>>>>> +                       goto out_destroy;
+> >>>>>>> +               ret = mon_add_all_files(kn, d, r, prgrp, do_sum);
+> >>>>>>
+> >>>>>> This does not look right. If I understand correctly the private data
+> >>>>>> of these event files will have whichever mon domain came up first as
+> >>>>>> its domain id. That seems completely arbitrary and does not reflect
+> >>>>>> accurate state for this file. Since "do_sum" is essentially a "flag"
+> >>>>>> on how this file can be treated, can its "dom_id" not rather be
+> >>>>>> the "monitor scope domain id"? Could that not help to eliminate
+> >>>>>
+> >>>>> You are correct that this should be the "monitor scope domain id" rather
+> >>>>> than the first SNC domain that appears. I'll change to use that. I don't
+> >>>>> think it helps in removing the per-domain display_id.
+> >>>>
+> >>>> Wouldn't the file metadata then be the "display_id"?
+> >>>
+> >>> Yes. The metadata is the display_id for files that need to sum across
+> >>> SNC nodes, but the domain id for ones where no summation is needed.
+> >>
+> >> Right ... and there is a "sum" flag to tell which is which?
+> > 
+> > Yes. sum==0 means the domid field is the one and only domain to
+> > report for this resctrl monitor file. sum==1 means the domid field is
+> > the display_id - all domains with this display_id must be summed to
+> > provide the result to present to the user.
+> > 
+> > I've tried to capture that in the kerneldoc comment for struct mon_event.
+> > Here's what I'm planning to include in v18 (Outlook will probably mangle
+> > the formatting ... just imagine that the text lines up neatly):
+> > 
+> > diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+> > index 49440f194253..3411557d761a 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/internal.h
+> > +++ b/arch/x86/kernel/cpu/resctrl/internal.h
+> > @@ -132,14 +132,19 @@ struct mon_evt {
+> >   *                     as kernfs private data
+> >   * @rid:               Resource id associated with the event file
+> >   * @evtid:             Event id associated with the event file
+> > - * @domid:             The domain to which the event file belongs
+> > + * @sum:               Set when event must be summed across multiple
+> > + *                     domains.
+> > + * @domid:             When @sum is zero this is the domain to which
+> > + *                     the event file belongs. When sum is one this
+> > + *                     is the display_id of all domains to be summed
+> 
+> Here is where I would like to understand why it cannot just be
+> "When sum is one this is the domain id of the scope at which (for which?)
+> the events must be summed." Although, you already mentioned this will be
+> clear in next posting.
+> 
+> >   * @u:                 Name of the bit fields struct
+> >   */
+> >  union mon_data_bits {
+> >         void *priv;
+> >         struct {
+> >                 unsigned int rid                : 10;
+> > -               enum resctrl_event_id evtid     : 8;
+> > +               enum resctrl_event_id evtid     : 7;
+> > +               unsigned int sum                : 1;
+> >                 unsigned int domid              : 14;
+> >         } u;
+> >  };
+> > 
+> > -Tony
+
+Maybe an example might help. Assume an SNC system with two sockets,
+three SNC nodes per socket, only supporting monitoring. The only domain
+list created by resctrl is the mon_domains list on the RDT_RESOURCE_L3
+resource. And it looks like this (with "disply_list" abbreviated to
+"dspl" to keep the picture small):
+
+
+       <------ SNC NODES ON SOCKET 0 ----->   <------ SNC NODES ON SOCKET 1 ------>
+----> +----------+ +----------+ +----------+ +----------+ +----------+ +----------+
+      | id = 0   | | id = 1   | | id = 2   | | id = 3   | | id = 4   | | id = 5   |
+      |          | |          | |          | |          | |          | |          |
+      | dspl = 0 | | dspl = 0 | | dspl = 0 | | dspl = 1 | | dspl = 1 | | dspl = 1 |
+      |          | |          | |          | |          | |          | |          |
+      +----------+ +----------+ +----------+ +----------+ +----------+ +----------+
+
+Reading the per-SNC node monitor values looks just the same as the
+non-SNC case. The struct rmid_read passed across the smp_call*() has
+the resource, domain, event, and reading the counters is essentially
+unchanged.
+
+Reading a file to sum event counts for SNC nodes on socket 1 needs to
+find each of the "struct rdt_mon_domain" that are part of socket 1.
+I'm doing that with meta data in the file that says sum=1 (need to add
+up something) and domid=1 (the things to be added are those with
+display_id = 1). So the code reads:
+
+	list_for_each_entry(d, &rr->r->mon_domains, hdr.list) {
+		if (d->display_id == rr->d->display_id) {
+			... call stuff to read and sum for domain "d"
+		}
+	}
+
+The display_id is "the domain id of the scope at which (for which?)
+the events must be summed." in your text above.
+
+> Reinette
+
+-Tony
