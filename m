@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C629213540D;
-	Tue, 14 May 2024 10:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F692B9AD;
+	Tue, 14 May 2024 10:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715682644; cv=none; b=uXVVBPJR0CKO/Wm4ANEygyrC3nILMu+MwoBVElKyBlFrJW29d7qlGtJJrqULzg10asELujDx6jt/HKsNkHAJxkWnNx252eqWrVhdP3Stb8qyYQ6qR484f1rr7EZlJB0JuWTHWxU87U5Uv7+XUpXUlW1tFepbeARceteLwyVuWJw=
+	t=1715682653; cv=none; b=hXgIBjLIP6KnjsXkYJBFTPpRZ0a1QQEwuvCLpZdvTSsUwK80xKaRcZ/ILH1zwv0QfM25GrMbr8HUSV3UkAU0qc8xmw4Oq8IaR49+YjmuI4PjH1WRBNpCFX6/SYqo5FtKYQ06mi6gED/E5Q0I3a9C+FLqvgi5i+Wkh2/GbzolVvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715682644; c=relaxed/simple;
-	bh=eTffmI0HWeHA5Iigx5Nv77D0R1rj8AkRf57oPQ3bIFY=;
+	s=arc-20240116; t=1715682653; c=relaxed/simple;
+	bh=rSJvJ4KgnKlab+WjxYuPpO3eo3pnqxFYMO2hQtRAh6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atWHs8k76ZBQOwwhwvMhbX/FEdgXz8yid+Desh5W1vx09FYGjSOU8xABwMWn8Cb/4hGduP/Zhk0lu/zWfe3gA186G+stG8J+L2e2Zh2ShcrixnnCMYiD+qwnzr+6bvCeOVyrK2lg/tpW5qb9M/rBfi7m5WwK9LNNOQ7iaqgrncA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWeMDdT5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hfh4E4ESofvkzSxzOMHFHLDUmtkoh1YuYtIItcidDrIIhqnsmQ19g0/ObGbUfu0Uno682hBaxWlnjglY2FxwG4fZy5oVV4eglyDwl0QDlZc8ZWQ42J7p1bEAjZP5F0PwGDNoXZL3GQ6FLEUuyLPFSOYZJ8D6WIZLmRQocJ+0BEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4dZsC6b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWeMDdT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87EAC2BD10;
-	Tue, 14 May 2024 10:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4dZsC6b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E92EC2BD10;
+	Tue, 14 May 2024 10:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715682644;
-	bh=eTffmI0HWeHA5Iigx5Nv77D0R1rj8AkRf57oPQ3bIFY=;
+	s=korg; t=1715682653;
+	bh=rSJvJ4KgnKlab+WjxYuPpO3eo3pnqxFYMO2hQtRAh6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWeMDdT5xRfL71Ty97YyXXGkJ5ygUUCazhl6i+gkqQgcxiBafGscsf9b3oOOnyYWA
-	 VX67AwY9O4oGMh8zho5ryRBKydriI2oPP3mQsMwyDcA0qdhF6cPGZYh6ft2DLkFvNY
-	 ZvfvgMdpv8luBauWw7tG39mLPvgB6zFz0Wre2wVY=
+	b=d4dZsC6baPaSzpz/g1QkLAmiWq9xfGEHHslfUfwfn8da0W0Y1ZRzbTEX3b2a8UVuh
+	 cxma39d2qrnA22itM+QP5VS+XmHwSETpQ453GuXKDzaI30tD+K5q9o1TgmuffbMFNB
+	 8VpX0ZWUwU5/gacaWNDF3t8voCCsRXZD9EC00rhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	"David S. Miller" <davem@davemloft.net>,
+	Alexander Potapenko <glider@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 075/336] net: core: reject skb_copy(_expand) for fraglist GSO skbs
-Date: Tue, 14 May 2024 12:14:39 +0200
-Message-ID: <20240514101041.437620565@linuxfoundation.org>
+Subject: [PATCH 6.8 093/336] KVM: arm64: vgic-v2: Check for non-NULL vCPU in vgic_v2_parse_attr()
+Date: Tue, 14 May 2024 12:14:57 +0200
+Message-ID: <20240514101042.117117631@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101038.595152603@linuxfoundation.org>
 References: <20240514101038.595152603@linuxfoundation.org>
@@ -51,71 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-[ Upstream commit d091e579b864fa790dd6a0cd537a22c383126681 ]
+[ Upstream commit 6ddb4f372fc63210034b903d96ebbeb3c7195adb ]
 
-SKB_GSO_FRAGLIST skbs must not be linearized, otherwise they become
-invalid. Return NULL if such an skb is passed to skb_copy or
-skb_copy_expand, in order to prevent a crash on a potential later
-call to skb_gso_segment.
+vgic_v2_parse_attr() is responsible for finding the vCPU that matches
+the user-provided CPUID, which (of course) may not be valid. If the ID
+is invalid, kvm_get_vcpu_by_id() returns NULL, which isn't handled
+gracefully.
 
-Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Similar to the GICv3 uaccess flow, check that kvm_get_vcpu_by_id()
+actually returns something and fail the ioctl if not.
+
+Cc: stable@vger.kernel.org
+Fixes: 7d450e282171 ("KVM: arm/arm64: vgic-new: Add userland access to VGIC dist registers")
+Reported-by: Alexander Potapenko <glider@google.com>
+Tested-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240424173959.3776798-2-oliver.upton@linux.dev
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ arch/arm64/kvm/vgic/vgic-kvm-device.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 71dee435d549d..570269c477549 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -2014,11 +2014,17 @@ static inline int skb_alloc_rx_flag(const struct sk_buff *skb)
- 
- struct sk_buff *skb_copy(const struct sk_buff *skb, gfp_t gfp_mask)
+diff --git a/arch/arm64/kvm/vgic/vgic-kvm-device.c b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+index f48b8dab8b3d2..1d26bb5b02f4b 100644
+--- a/arch/arm64/kvm/vgic/vgic-kvm-device.c
++++ b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+@@ -338,12 +338,12 @@ int kvm_register_vgic_device(unsigned long type)
+ int vgic_v2_parse_attr(struct kvm_device *dev, struct kvm_device_attr *attr,
+ 		       struct vgic_reg_attr *reg_attr)
  {
--	int headerlen = skb_headroom(skb);
--	unsigned int size = skb_end_offset(skb) + skb->data_len;
--	struct sk_buff *n = __alloc_skb(size, gfp_mask,
--					skb_alloc_rx_flag(skb), NUMA_NO_NODE);
-+	struct sk_buff *n;
-+	unsigned int size;
-+	int headerlen;
-+
-+	if (WARN_ON_ONCE(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST))
-+		return NULL;
+-	int cpuid;
++	int cpuid = FIELD_GET(KVM_DEV_ARM_VGIC_CPUID_MASK, attr->attr);
  
-+	headerlen = skb_headroom(skb);
-+	size = skb_end_offset(skb) + skb->data_len;
-+	n = __alloc_skb(size, gfp_mask,
-+			skb_alloc_rx_flag(skb), NUMA_NO_NODE);
- 	if (!n)
- 		return NULL;
+-	cpuid = FIELD_GET(KVM_DEV_ARM_VGIC_CPUID_MASK, attr->attr);
+-
+-	reg_attr->vcpu = kvm_get_vcpu_by_id(dev->kvm, cpuid);
+ 	reg_attr->addr = attr->attr & KVM_DEV_ARM_VGIC_OFFSET_MASK;
++	reg_attr->vcpu = kvm_get_vcpu_by_id(dev->kvm, cpuid);
++	if (!reg_attr->vcpu)
++		return -EINVAL;
  
-@@ -2346,12 +2352,17 @@ struct sk_buff *skb_copy_expand(const struct sk_buff *skb,
- 	/*
- 	 *	Allocate the copy buffer
- 	 */
--	struct sk_buff *n = __alloc_skb(newheadroom + skb->len + newtailroom,
--					gfp_mask, skb_alloc_rx_flag(skb),
--					NUMA_NO_NODE);
--	int oldheadroom = skb_headroom(skb);
- 	int head_copy_len, head_copy_off;
-+	struct sk_buff *n;
-+	int oldheadroom;
-+
-+	if (WARN_ON_ONCE(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST))
-+		return NULL;
- 
-+	oldheadroom = skb_headroom(skb);
-+	n = __alloc_skb(newheadroom + skb->len + newtailroom,
-+			gfp_mask, skb_alloc_rx_flag(skb),
-+			NUMA_NO_NODE);
- 	if (!n)
- 		return NULL;
- 
+ 	return 0;
+ }
 -- 
 2.43.0
 
