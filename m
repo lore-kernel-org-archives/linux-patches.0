@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B844CF9D4;
-	Tue, 14 May 2024 11:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FFCF9D4;
+	Tue, 14 May 2024 11:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715687850; cv=none; b=cwRZJf/+n8BHuMPV6EHUgMYZVbGKg78UwM8lkcpstvFfu6mscMqCF+hXopIIu6h3sxTRVQVBYN6UQBa92fQ/iP9r5aRohGR7sXoE76e40HIrdsuQo5pduS+2SgeDaPZ08BtT89TG45kvKh4Uz2c2APdlJBM9J+TAaW0u746Y6ns=
+	t=1715687853; cv=none; b=a2Qd+rWzdGjJm/VZsp+bFD8U0+bMwx9pVUVhBT9So027PkbFws8aH7kcRYmZzUtWXjFDn97tWoFsXjW5js73VkX4UoyE0oeh16uGEB/mOxX7bYWqwVc6E7jcSmxc9ogoh7MeFkOYnzPAH9gWLcQ40INj9H39xVvBF1crQEq1CQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715687850; c=relaxed/simple;
-	bh=4SkQ4t8udrfvLsHeogR/+dY2Tw6a0tTeHyFkLbPkSBY=;
+	s=arc-20240116; t=1715687853; c=relaxed/simple;
+	bh=qF3YodMJHNtoNXyVilu2cl6L6LitKz9ZoY9hbQV5NqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XX0t2ktR2jdxZ2pzW9+19He6C0E9o4t4a5FxP7QE9fRiGnWjaNELP+uBC1CrwJiTr1B2oRqUHMjIpr3QEcCROLCD9azG5wC+i/Jnh7xDhJnuRU0XRV3BmXIPJY+iKDjAHvXww13XHl+9GrdnijAMtrnqonc2wSyWfYK+WlEXVxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZqYAYSR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j4rTaiV7DNQVOek2spw7y3Mw9iqYP/I2pKpHqQryPpFPLeEej0L0TpmGkCfYBcSyQZVyiyHZLesfXKWRqJc6kHhh0BubHvUkj4itX8izY3NBhh2b6sqE5sJ9kxKCvLSATY7j4ksoPOUfOIHJblpdIx2G6D+zeV2gEHZ5Q/s0J4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hA5WGt8r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZqYAYSR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029F5C2BD10;
-	Tue, 14 May 2024 11:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hA5WGt8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE25C32781;
+	Tue, 14 May 2024 11:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715687850;
-	bh=4SkQ4t8udrfvLsHeogR/+dY2Tw6a0tTeHyFkLbPkSBY=;
+	s=korg; t=1715687853;
+	bh=qF3YodMJHNtoNXyVilu2cl6L6LitKz9ZoY9hbQV5NqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZqYAYSRGxoa01oxfjQV8DDrH485TX2ogamTYPodqpHFZapHS7FB3LC+7nOnCykOO
-	 kr9yX0O5ivkA3tBgFX4OoDf5P43fnsgxup6X7lgqLYPRRNORsGlpV3YckGorYWl9si
-	 tBHTb6ADFGFLzYZToKdEsMsGM5ldhLMlDUNQdGBA=
+	b=hA5WGt8rNqu5HZ6sGXdAMqXvIaGlWWj+ZaE/Pl/swu/wPI1qFd8i4GorSsM/+AxYG
+	 PQmJrQCzvfFLZLbuO+wbD8IwPzV5Tj4yFEa6Dn2F5bAB8gA6QsKWVG66EBHi1u3MiO
+	 mt2T6M92Rb1VHKFNcsKwS8r+vURzHXODU7CK/S8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang Wang <wangpeiyang1@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Aleksa Savic <savicaleksa83@gmail.com>,
+	Marius Zachmann <mail@mariuszachmann.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 127/168] net: hns3: use appropriate barrier function after setting a bit value
-Date: Tue, 14 May 2024 12:20:25 +0200
-Message-ID: <20240514101011.477741304@linuxfoundation.org>
+Subject: [PATCH 5.15 110/168] hwmon: (corsair-cpro) Use a separate buffer for sending commands
+Date: Tue, 14 May 2024 12:20:08 +0200
+Message-ID: <20240514101010.836896327@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101006.678521560@linuxfoundation.org>
 References: <20240514101006.678521560@linuxfoundation.org>
@@ -53,62 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peiyang Wang <wangpeiyang1@huawei.com>
+From: Aleksa Savic <savicaleksa83@gmail.com>
 
-[ Upstream commit 094c281228529d333458208fd02fcac3b139d93b ]
+[ Upstream commit e0cd85dc666cb08e1bd313d560cb4eff4d04219e ]
 
-There is a memory barrier in followed case. When set the port down,
-hclgevf_set_timmer will set DOWN in state. Meanwhile, the service task has
-different behaviour based on whether the state is DOWN. Thus, to make sure
-service task see DOWN, use smp_mb__after_atomic after calling set_bit().
+Introduce cmd_buffer, a separate buffer for storing only
+the command that is sent to the device. Before this separation,
+the existing buffer was shared for both the command and the
+report received in ccp_raw_event(), which was copied into it.
 
-          CPU0                        CPU1
-========================== ===================================
-hclgevf_set_timer_task()    hclgevf_periodic_service_task()
-  set_bit(DOWN,state)         test_bit(DOWN,state)
+However, because of hidraw, the raw event parsing may be triggered
+in the middle of sending a command, resulting in outputting gibberish
+to the device. Using a separate buffer resolves this.
 
-pf also has this issue.
-
-Fixes: ff200099d271 ("net: hns3: remove unnecessary work in hclgevf_main")
-Fixes: 1c6dfe6fc6f7 ("net: hns3: remove mailbox and reset work in hclge_main")
-Signed-off-by: Peiyang Wang <wangpeiyang1@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
+Signed-off-by: Aleksa Savic <savicaleksa83@gmail.com>
+Acked-by: Marius Zachmann <mail@mariuszachmann.de>
+Link: https://lore.kernel.org/r/20240504092504.24158-2-savicaleksa83@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c   | 3 +--
- drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/hwmon/corsair-cpro.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index a0a64441199c5..4b0027a41f3cd 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -8156,8 +8156,7 @@ static void hclge_set_timer_task(struct hnae3_handle *handle, bool enable)
- 		/* Set the DOWN flag here to disable link updating */
- 		set_bit(HCLGE_STATE_DOWN, &hdev->state);
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index fa6aa4fc8b521..0a9cbb556188f 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -79,6 +79,7 @@ struct ccp_device {
+ 	struct device *hwmon_dev;
+ 	struct completion wait_input_report;
+ 	struct mutex mutex; /* whenever buffer is used, lock before send_usb_cmd */
++	u8 *cmd_buffer;
+ 	u8 *buffer;
+ 	int target[6];
+ 	DECLARE_BITMAP(temp_cnct, NUM_TEMP_SENSORS);
+@@ -111,15 +112,15 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
+ 	unsigned long t;
+ 	int ret;
  
--		/* flush memory to make sure DOWN is seen by service task */
--		smp_mb__before_atomic();
-+		smp_mb__after_atomic(); /* flush memory to make sure DOWN is seen by service task */
- 		hclge_flush_link_update(hdev);
- 	}
- }
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 9afb44d738c4e..a41e04796b0b6 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -2722,8 +2722,7 @@ static void hclgevf_set_timer_task(struct hnae3_handle *handle, bool enable)
- 	} else {
- 		set_bit(HCLGEVF_STATE_DOWN, &hdev->state);
+-	memset(ccp->buffer, 0x00, OUT_BUFFER_SIZE);
+-	ccp->buffer[0] = command;
+-	ccp->buffer[1] = byte1;
+-	ccp->buffer[2] = byte2;
+-	ccp->buffer[3] = byte3;
++	memset(ccp->cmd_buffer, 0x00, OUT_BUFFER_SIZE);
++	ccp->cmd_buffer[0] = command;
++	ccp->cmd_buffer[1] = byte1;
++	ccp->cmd_buffer[2] = byte2;
++	ccp->cmd_buffer[3] = byte3;
  
--		/* flush memory to make sure DOWN is seen by service task */
--		smp_mb__before_atomic();
-+		smp_mb__after_atomic(); /* flush memory to make sure DOWN is seen by service task */
- 		hclgevf_flush_link_update(hdev);
- 	}
- }
+ 	reinit_completion(&ccp->wait_input_report);
+ 
+-	ret = hid_hw_output_report(ccp->hdev, ccp->buffer, OUT_BUFFER_SIZE);
++	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -492,7 +493,11 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	if (!ccp)
+ 		return -ENOMEM;
+ 
+-	ccp->buffer = devm_kmalloc(&hdev->dev, OUT_BUFFER_SIZE, GFP_KERNEL);
++	ccp->cmd_buffer = devm_kmalloc(&hdev->dev, OUT_BUFFER_SIZE, GFP_KERNEL);
++	if (!ccp->cmd_buffer)
++		return -ENOMEM;
++
++	ccp->buffer = devm_kmalloc(&hdev->dev, IN_BUFFER_SIZE, GFP_KERNEL);
+ 	if (!ccp->buffer)
+ 		return -ENOMEM;
+ 
 -- 
 2.43.0
 
