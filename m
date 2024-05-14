@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4259518026;
-	Tue, 14 May 2024 11:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF18718026;
+	Tue, 14 May 2024 11:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715685315; cv=none; b=qE/E51OZ/BOk1b4gNLXaqpSHpz95JBN9eTEM9hup3oTFdnYozZz2onYD1hEjE/xcydNvu+IgogEPsuC/aOAwL53w4SlsWe43Xj/J2fPwDbiWV11xp/0hHohXPYe2X6PGN+wfLJa3q1/ce+8bJGEhaynzepO8YTs4JFBOJSqBcK8=
+	t=1715685321; cv=none; b=H1BOzkwZSbrwU4uYRzedZLEGxbA/JituOOfVFS1sif9YuxM1+PByJb76l74J/0u1ejqU8FPAAl89ugaIy0sBY6RNewS5nRWbOAIJd4jM/1iv4ygwm8fsWNkw1f33+yiKO+w6+XkDa9T6RdcUb/qrwek0f7iynLzKtL/WOO3dWPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715685315; c=relaxed/simple;
-	bh=98EhZK/YkPw8fyonihg13fIt12BVzEDsQOsTBgwmKSI=;
+	s=arc-20240116; t=1715685321; c=relaxed/simple;
+	bh=cHXfspJOU2bd4g2pg1wKrNvVahctK1sXMGE/4ngtVYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAyCyojYIzYY1p8hlKK2WLfkKKbkIgpcasaDPMtYx+JmM8W9BbtDqUcja1UWjCiVyT3ztu0wY5NtggSOPJLsFqx15B8RplI0Gy0jt/ud/AcvakVIhN8LlqfmmrShno6n++I22hy0px9Gji4iE+TX2TIV7jAcJObMq4HNDWp1FgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgijDRYm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gp1rgct0Fw6IufYfsTb+15egQGneY8Q25vBsjiwvd8aGvH3s7brQG+BMKu70FbEqkd4a8UgXGXyfrNdonEBPxhRuM6L1XFwoekSDtUJvxFkC2QpuCp5QzwfVKyZv2bhLqQ9c+O88k5l4cCaoWCplUpx5uoJ+TxJewCE2yfFAU70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQMUkJwX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgijDRYm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62626C2BD10;
-	Tue, 14 May 2024 11:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQMUkJwX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30EEC2BD10;
+	Tue, 14 May 2024 11:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715685315;
-	bh=98EhZK/YkPw8fyonihg13fIt12BVzEDsQOsTBgwmKSI=;
+	s=korg; t=1715685321;
+	bh=cHXfspJOU2bd4g2pg1wKrNvVahctK1sXMGE/4ngtVYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BgijDRYmz44+lFYWU/aPdvRA2lXDxX8TqMk/lKznWYyFPN6Mdo4rdWPsspBcMpIHp
-	 NtOR06vBpEDSQR3u20iMJrXG1lKGKYlzJy7jwGEKQRsadTE6rp4CsXX/zfrMAIezPT
-	 olmiZn7EaPC9UHV1JB3WUtBIAOe2r5kMZGO17K9c=
+	b=hQMUkJwXhUnUyCUiHsz5w/igLyzzmI7habAepyy+dk8+LZpD/m8wy5AqMmonM6iSJ
+	 xa2wOTl/ZxK0WL9pfnIXgZ8T4uT0NlTpqP+FzCZXMV5xasvIBxpx56u42DtTthMo19
+	 YKh0O8+sFKpUvCSOqEUjm+qAGcDgfoDkssMIPRcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/301] vboxsf: explicitly deny setlease attempts
-Date: Tue, 14 May 2024 12:16:37 +0200
-Message-ID: <20240514101037.006851566@linuxfoundation.org>
+Subject: [PATCH 6.6 161/301] 9p: explicitly deny setlease attempts
+Date: Tue, 14 May 2024 12:17:12 +0200
+Message-ID: <20240514101038.336553958@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240514101032.219857983@linuxfoundation.org>
 References: <20240514101032.219857983@linuxfoundation.org>
@@ -53,33 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 1ece2c43b88660ddbdf8ecb772e9c41ed9cda3dd ]
+[ Upstream commit 7a84602297d36617dbdadeba55a2567031e5165b ]
 
-vboxsf does not break leases on its own, so it can't properly handle the
-case where the hypervisor changes the data. Don't allow file leases on
-vboxsf.
+9p is a remote network protocol, and it doesn't support asynchronous
+notifications from the server. Ensure that we don't hand out any leases
+since we can't guarantee they'll be broken when a file's contents
+change.
 
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/r/20240319-setlease-v1-1-5997d67e04b3@kernel.org
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Eric Van Hensbergen <ericvh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/vboxsf/file.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/9p/vfs_file.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/vboxsf/file.c b/fs/vboxsf/file.c
-index 2307f8037efc3..118dedef8ebe8 100644
---- a/fs/vboxsf/file.c
-+++ b/fs/vboxsf/file.c
-@@ -218,6 +218,7 @@ const struct file_operations vboxsf_reg_fops = {
- 	.release = vboxsf_file_release,
- 	.fsync = noop_fsync,
- 	.splice_read = filemap_splice_read,
+diff --git a/fs/9p/vfs_file.c b/fs/9p/vfs_file.c
+index 11cd8d23f6f23..8566ddad49ad5 100644
+--- a/fs/9p/vfs_file.c
++++ b/fs/9p/vfs_file.c
+@@ -591,6 +591,7 @@ const struct file_operations v9fs_file_operations = {
+ 	.splice_read = v9fs_file_splice_read,
+ 	.splice_write = iter_file_splice_write,
+ 	.fsync = v9fs_file_fsync,
 +	.setlease = simple_nosetlease,
  };
  
- const struct inode_operations vboxsf_reg_iops = {
+ const struct file_operations v9fs_file_operations_dotl = {
+@@ -605,4 +606,5 @@ const struct file_operations v9fs_file_operations_dotl = {
+ 	.splice_read = v9fs_file_splice_read,
+ 	.splice_write = iter_file_splice_write,
+ 	.fsync = v9fs_file_fsync_dotl,
++	.setlease = simple_nosetlease,
+ };
 -- 
 2.43.0
 
