@@ -1,120 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AEE155A52;
-	Wed, 15 May 2024 16:17:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E9E156253
+	for <patches@lists.linux.dev>; Wed, 15 May 2024 16:21:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715789867; cv=none; b=SinGpaYah7pc/W4h0I1BzGb98Nk2FRB9xQff7zZfJUY0eeRhUxVLYM9b1LzdsxF60Gvflppcjd+OqUaq5KuRJyj9TllPhnWpeeDmcLOPx/UzhqhMFdbJkB3NCzbyfzETWneGna9/fEeUQSNrZ1HVBpYbpNODmrKW+dey03L+0wk=
+	t=1715790070; cv=none; b=rGiHxPqUk/vRd739HI/Wcmdn0NfhY+dQqWY192etUkY6fW2V3c89m8CKx3ScUlf27Rbv/H+tIeWE98NviHyUskSyPvRw3p/1Wuf713Iq0entbmVSR0RsOci374iccsAupZrRX+AmhIxWUcSELDiJQI1aPzUW6rlcI3gyWy+bDwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715789867; c=relaxed/simple;
-	bh=uLTSFmR26jysz/t1r0pgjgFB0W2gGfXMncXxbWXDUbA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=paPx+MSBpKp7fu8nvkMkP7IfAQIq0GP9JXdsxrIsoyRyIikY5hGssvBRvr4KxQ1mST9QkhBmhsb+QCSQX6oxBbgWYU0DcVc0IfDmC+b9IAY/1vF/dpsbiz9w/OhFSpycyRkGpGjRDugYG+tPkeH06H/n/2vSOAi52DFI2iS5nW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bB1XiwhU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715790070; c=relaxed/simple;
+	bh=VTAKupd41+vwdD2+AAdWUtgNtPv+N5S8/ZucUcvM7XI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EWvj3qCO1rn5C8lzNzqhuwwoKOKxBWIL8YSerLh8rg4TPyVbOQh23c3Lr25Q+VXcxlky8aNlxxDzYkSg62eIqQv9y69JOHOK5zsRUl/ng+4zHfSuQpRxKCIEP3kN8xGhXAQZkn6dsv+OmylWcve0OpdQlR/YW+UQZJr2j0tPgmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=IcMhzKzL; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bB1XiwhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99916C116B1;
-	Wed, 15 May 2024 16:17:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715789866;
-	bh=uLTSFmR26jysz/t1r0pgjgFB0W2gGfXMncXxbWXDUbA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bB1XiwhUpKp1t8bJCEHlCNxXE7ah418QzlRO5wyZ0lNBhEYwNFfJk5Qh8WYqv+BRF
-	 /j3bJoLC8/rVZ+zk/inwN/d2cDjW1n/J0ZLEH/83rvDwoxI1GkvoGYvf/FhYOJAUvk
-	 id/t+ZTSQrhfvRCaRRhV5vZaV3oa8dq2yhr8PPXMnqmaugbhnYKr4Tq+T35XfLKocI
-	 WTutv/nu6A/+hGB3VMQYnkq1X4mRVvX/F9pQapCsOtTNj+Wkwk7blfaURXd3TqZOqU
-	 DhI6542mPzalK46wAIC+Z2xHXL/qBrbbiTb7Oknh7GN1ELgr/+ZxX8i0KDVQID/L4e
-	 rcS1VnKLnZz7A==
-Date: Wed, 15 May 2024 17:17:39 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Doug Berger <opendmb@gmail.com>
-Subject: Re: [PATCH 6.1 000/243] 6.1.91-rc2 review
-Message-ID: <39483cfc-4345-4fbd-87c2-9d618c6fdbc6@sirena.org.uk>
-References: <20240515082456.986812732@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="IcMhzKzL"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2e576057c2bso73528941fa.1
+        for <patches@lists.linux.dev>; Wed, 15 May 2024 09:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1715790067; x=1716394867; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VZ4/RopXS5f2WiCBIMNF7eOCyIDKJ+KDv3FhPq2DLoA=;
+        b=IcMhzKzL1NAUFKECb9jIS7hrT4V6ClgygAVRFjjWFB8dRS/IJXIdLJCeJvCjf2x6P7
+         6ZRK1yXxqxWHfeZrMXHQD2LX1c83D9a5h4GQfnaVvKosNVTKfiMeUsRGgR7ELOqDk/sH
+         MXVp999C7w9RxqlZExzzBLioeITwb6EayW2SA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715790067; x=1716394867;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VZ4/RopXS5f2WiCBIMNF7eOCyIDKJ+KDv3FhPq2DLoA=;
+        b=VyfiUUfprHO3QYQGeqTZn2DKdbZ6JxluVp2mFmOpFZRChv3RGbpBR+s5QIMvu7t4Rp
+         Z3qjFJhxo4J2xriD2wdfXfWBtFmbrIhq2+ZIJQkmEbe12CU8CurdgMbOPHAk/Zz9Lpaj
+         Z9oC2gqK9w4zNznGdqSDHPy070wX226gY5NZJnU9qpgNWSmBQ/BY9shfpx+F8VgmBfxb
+         yG/WjYsam8pZdSFJkJCG5ITjUA2bW/FAAEG7kVJuvXtz7icNhxx3vBs1HJ66Ioi05Igy
+         4x2JzTkwgqU0A+SOPn0iH5e1A7bwPhEHuCicEM0BgajiTjI6NQpOzb3GbRcA6utxBn93
+         mDog==
+X-Forwarded-Encrypted: i=1; AJvYcCX6NHzfgKo9ZpMws5yoqkN/PONVnm7bMu4aHBOr0ySsO9qWQuRYPqbXQbAcyMzWZ2N6ZAdOtWz434O/6ZX4gFsDIBqLj27Hww==
+X-Gm-Message-State: AOJu0YxNI4cbgtKf8+5N1Qs3lmKN819ScONiO88WUbnMRNY1I3GatrNi
+	NoVv7uhKoNuT3+KqudnCzzRTp0+f/WonqR+9WAhGItweRGvDQnYcuAJo4cYQ289I7SbjnZHdXqi
+	ywUflbQ==
+X-Google-Smtp-Source: AGHT+IHA4zBSyQKKipXhI+Dwur7+zKGvaB+CIQ44iut6S9Rxu4zj3xdzntvS+ilsNx1/54T0gbENHw==
+X-Received: by 2002:a2e:b002:0:b0:2db:a9c9:4c5e with SMTP id 38308e7fff4ca-2e51fd47edfmr162731581fa.21.1715790066823;
+        Wed, 15 May 2024 09:21:06 -0700 (PDT)
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com. [209.85.167.41])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2e4d0ce3241sm20642011fa.39.2024.05.15.09.21.05
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 May 2024 09:21:05 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-523b017a5c6so214986e87.1
+        for <patches@lists.linux.dev>; Wed, 15 May 2024 09:21:05 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWvODAaEID+RN25XwD/B5OHZoCcS62Cp5TH+iZvpWnToSOzGlfbd1iEwObYIBv42QEE6WqQuAC2qcKKQzYSb0DBfyqO6jqU3g==
+X-Received: by 2002:ac2:5f59:0:b0:521:92f6:3d34 with SMTP id
+ 2adb3069b0e04-5220fd7c838mr12720657e87.22.1715790065107; Wed, 15 May 2024
+ 09:21:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cprXTNmPew9yvJ45"
-Content-Disposition: inline
-In-Reply-To: <20240515082456.986812732@linuxfoundation.org>
-X-Cookie: When in doubt, lead trump.
+References: <20240515082456.986812732@linuxfoundation.org> <39483cfc-4345-4fbd-87c2-9d618c6fdbc6@sirena.org.uk>
+In-Reply-To: <39483cfc-4345-4fbd-87c2-9d618c6fdbc6@sirena.org.uk>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 15 May 2024 09:20:48 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wjntFiQ=mM-zDHTMnrqki3MN3+6aSXhjnJozBaKqLLUDQ@mail.gmail.com>
+Message-ID: <CAHk-=wjntFiQ=mM-zDHTMnrqki3MN3+6aSXhjnJozBaKqLLUDQ@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/243] 6.1.91-rc2 review
+To: Mark Brown <broonie@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, Doug Berger <opendmb@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
+On Wed, 15 May 2024 at 09:17, Mark Brown <broonie@kernel.org> wrote:
+>
+>     A bisect claims that "net: bcmgenet:
+> synchronize EXT_RGMII_OOB_CTRL access" is the first commit that breaks,
+> I'm not seeing issues with other stables.
 
---cprXTNmPew9yvJ45
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+That's d85cf67a3396 ("net: bcmgenet: synchronize EXT_RGMII_OOB_CTRL
+access") upstream. Is upstream ok?
 
-On Wed, May 15, 2024 at 10:27:34AM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.91 release.
-> There are 243 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-This seems to break NFS boot for me on Raspberry Pi 4.  The first sign
-of trouble is a WARN:
-
-[   31.969792] ------------[ cut here ]------------
-Setting prompt string to ['-+\\[ end trace \\w* \\]-+[^\\n]*\\r', '/ #', 'Login timed out', 'Login incorrect']
-[   31.974485] NETDEV WATCHDOG: end0 (bcmgenet): transmit queue 4 timed out
-[   31.981327] WARNING: CPU: 1 PID: 0 at net/sched/sch_generic.c:525 dev_watchdog+0x20c/0x214
-
-Full log at:
-
-   https://lava.sirena.org.uk/scheduler/job/265447#L1021
-
-ramdisk boots seem happy.  A bisect claims that "net: bcmgenet:
-synchronize EXT_RGMII_OOB_CTRL access" is the first commit that breaks,
-I'm not seeing issues with other stables.
-
-# bad: [ca2e773ed20f212ed18c759aef3993ae7bfea631] Linux 6.1.91-rc2
-# good: [909ba1f1b4146de529469910c1bd0b1248964536] Linux 6.1.90
-# good: [a48685468888cca7b6e9df4b944a11be93de7837] MIPS: scall: Save thread_info.syscall unconditionally on entry
-git bisect start 'ca2e773ed20f212ed18c759aef3993ae7bfea631' '909ba1f1b4146de529469910c1bd0b1248964536' 'a48685468888cca7b6e9df4b944a11be93de7837'
-# bad: [ca2e773ed20f212ed18c759aef3993ae7bfea631] Linux 6.1.91-rc2
-git bisect bad ca2e773ed20f212ed18c759aef3993ae7bfea631
-# good: [b86d51ccf09b413520133f135d69e2ed90aae95d] btrfs: fix kvcalloc() arguments order in btrfs_ioctl_send()
-git bisect good b86d51ccf09b413520133f135d69e2ed90aae95d
-# bad: [e84fd70ea88224569d12d7fb011a29796f1d7eb9] net: bcmgenet: synchronize UMAC_CMD access
-git bisect bad e84fd70ea88224569d12d7fb011a29796f1d7eb9
-# good: [b8c64a29b20e55e5d910d59ae3cc8b188c3d8048] usb: xhci-plat: Don't include xhci.h
-git bisect good b8c64a29b20e55e5d910d59ae3cc8b188c3d8048
-# good: [f87acc39c53bf614274607090a25f51f567f16c2] mptcp: ensure snd_nxt is properly initialized on connect
-git bisect good f87acc39c53bf614274607090a25f51f567f16c2
-# good: [cd586168e27d7403c49cfe8c5e3f40f44e63f2f4] kmsan: compiler_types: declare __no_sanitize_or_inline
-git bisect good cd586168e27d7403c49cfe8c5e3f40f44e63f2f4
-# bad: [3443d6c3616b41676a7f02b0fbb55da47067dbc4] net: bcmgenet: synchronize EXT_RGMII_OOB_CTRL access
-git bisect bad 3443d6c3616b41676a7f02b0fbb55da47067dbc4
-# good: [7d43b80d8a20d95c876cd6a4f2cc94f9da4637f7] tipc: fix UAF in error path
-git bisect good 7d43b80d8a20d95c876cd6a4f2cc94f9da4637f7
-# first bad commit: [3443d6c3616b41676a7f02b0fbb55da47067dbc4] net: bcmgenet: synchronize EXT_RGMII_OOB_CTRL access
-
---cprXTNmPew9yvJ45
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZE4CMACgkQJNaLcl1U
-h9CTQQf9HoF7NMyOCqfkWU+/x144f7ZUa2bjkO46zn8GEX6agCSlR41uN7X4V4+Y
-ZmzXblkCcUPtBUXs+ih9J13aqn1jilD2i/v+LsGeOdcdK8GO13JrFLCzj0FXUzvP
-S7ytNGdr7B5x68IrfEjaSA9Ck5nOfkbhzpkj713hpOM9NPWgiUuaqaFT90TalO8Y
-YLafWkUNECuUZJAt32JsbbPI5l+CTjCxrtZQfsnIQa0Wwtiub37A4TSqwpbheUlr
-0nJDwlMgTITtPg0j+PCAlikMsPOA6OGUTporTdqERT7rUsOLLXvznTdudZZ1dKFA
-tiJs3SQbjLO4rzMAN1orIGPA0wKFvw==
-=+prd
------END PGP SIGNATURE-----
-
---cprXTNmPew9yvJ45--
+                 Linus
