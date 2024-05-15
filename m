@@ -1,116 +1,178 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ADC6F073
-	for <patches@lists.linux.dev>; Wed, 15 May 2024 12:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83FE43144
+	for <patches@lists.linux.dev>; Wed, 15 May 2024 13:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715775268; cv=none; b=t2awf2AmVzTjRC8uxtd17BXm1rFCyGGBAExpfKLkaTKxBIWLD+GiwDimVh9KcvjXkVkv+Qhnp+tVo0KyMkiCkWi/hXDTG3zMbR38doC9mnIulmY55c6R9qeG651oH2HrX4Zg4m3eO7dWPMTuGO2CLTq+1vXyK6UXzkk14tG67rA=
+	t=1715778384; cv=none; b=qrqgKUqXZWe11TY/0pSrYvwWsrlr7haB7rOW9WVb9vORm/+tO5svQAPIS92Z72uqfSllCzdKFpdLEFG+e7UB6nqqLndNv5ja2WKX0gm0A2FLRq01VeLQtc07xyvO5+HuNSo4cLeiylpEss5gUri5gRMa74tjXSQ8pccNxYvX3KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715775268; c=relaxed/simple;
-	bh=5vvTdF84HZ5Xj8N79djUvlGKFH96u+9TgIV5IIPavf8=;
-	h=From:To:Cc:Date:Message-Id:Subject; b=QvYnWmzEyrn33FA2gnbgi7ofhXH3yL2ND+9gzmJWhPVdlo7fECVLTS7Sj4MtXe1I6jB4Ccovx4FdjCFTKtZFYjmFOU4/peMvewUIGBwSFcGzUTt17ObojV88aVIDOMIHBcY6Snx0s4Comsr1QPItHPorU/VO8ElVYTbO+w4VANI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662D4C116B1
-	for <patches@lists.linux.dev>; Wed, 15 May 2024 12:14:27 +0000 (UTC)
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Wed, 15 May 2024 13:14:24 +0100
-Resent-Message-ID: <ZkSnIOEBcPkT5f5m@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Wed, 15 May 2024 07:26:09 +0100
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=oSZY=MS=everest-semi.com=zhangyi@kernel.org>)
-	id 1s785W-002hQg-VZ
-	for broonie@sirena.co.uk; Wed, 15 May 2024 07:26:09 +0100
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id CFF9F6134E
-	for <broonie@sirena.co.uk>; Wed, 15 May 2024 06:26:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 9496CC116B1; Wed, 15 May 2024 06:26:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6CC4FC2BD11
-	for <broonie@kernel.org>; Wed, 15 May 2024 06:25:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 6CC4FC2BD11
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=everest-semi.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=everest-semi.com
-Received: from unknown (HELO zy-virtual-machine.localdomain)([116.233.72.63])
-	by sina.net (10.75.30.239) with ESMTP
-	id 6644554E00027164; Wed, 15 May 2024 14:25:19 +0800 (CST)
-X-Sender: zhangyi@everest-semi.com
-X-Auth-ID: zhangyi@everest-semi.com
-Authentication-Results: sina.net;
-	 spf=none smtp.mailfrom=zhangyi@everest-semi.com;
-	 dkim=none header.i=none;
-	 dmarc=none action=none header.from=zhangyi@everest-semi.com
-X-SMAIL-MID: AB69DCD971BE4D3EB51851EB3211F295
-X-SMAIL-UIID: AB69DCD971BE4D3EB51851EB3211F295-20240515-142519
-From: Zhang Yi <zhangyi@everest-semi.com>
-To: alsa-devel@alsa-project.org,
-	broonie@kernel.org
-Cc: tiwai@suse.com,
-	amadeuszx.slawinski@linux.intel.com,
-	yangxiaohua@everest-semi.com,
-	zhuning@everest-semi.com,
-	zhangyi@everest-semi.com
-Date: Wed, 15 May 2024 14:25:17 +0800
-Message-Id: <20240515062517.23661-1-zhangyi@everest-semi.com>
-X-Mailer: git-send-email 2.17.1
-X-SA-Exim-Connect-IP: 2604:1380:4641:c500::1
-X-SA-Exim-Mail-From: SRS0=oSZY=MS=everest-semi.com=zhangyi@kernel.org
-Subject: [PATCH] ASoC: codecs: ES8326: solve hp and button detect issue
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: eqcYAfXzGMbz
+	s=arc-20240116; t=1715778384; c=relaxed/simple;
+	bh=A0YxFuuJShHBQ3xCPsMtAedx1f9EA+YbMAddHPRKwiU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DJI28n8oetkNZIbK1w6QW0OcRLgyLp6m8QySNjzudO3DLr14APAfLFCrS5fVSFJ5wnbFDbm5qg+Ayngy7Xm33ts2jWGzzZRzx5iOkuOqkO+021v4rD/b/jedd0LtNF8sX7EZq1lNuLXwDdlJzv33p/M7tucBfEJfKVhnFz42sTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rvdY/AXK; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rvdY/AXK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D87C116B1
+	for <patches@lists.linux.dev>; Wed, 15 May 2024 13:06:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715778384;
+	bh=A0YxFuuJShHBQ3xCPsMtAedx1f9EA+YbMAddHPRKwiU=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=rvdY/AXKAcsO8WrapFPJs3ADz99OtdbHGqSxheuLegvO/mgbeU30ahKSaF0QhsY5y
+	 jVWBU2e1R8nM9RKtuKLZcyqRzLPvxodOMT9Kmx/4PVwKtjQfAg8Ia4yOAPG6t03QY1
+	 mVii6+i5lWDUW1jIt0dUYlNy9XJEErw5WRExs39M8NU2NhhJnZUw2VYMgelfBTGTkV
+	 ySX7RroJD4hhnzC/U9+2V4v92uR81h/Lp/b3KAXUqW/Vw2Z2SmwUUL1ILSBplQOqrZ
+	 19upOy+ZKuH9uiMVeafnaM9h5/9salMdrPI7ugdL7UYnZiZIrZeTt99w8AHySqIpzv
+	 uR7gXmEpq/TMQ==
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-51f99f9e0faso7824142e87.2
+        for <patches@lists.linux.dev>; Wed, 15 May 2024 06:06:24 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVfjbWUMDeO8bSDKxEIU2VAvg0HQV0+tPfl9Y+/ww3rAs365pzY7Pr7KuhF1WBsU3eTCW2556CDQuifsZoeHPq2tT6xXBa1NA==
+X-Gm-Message-State: AOJu0YyfRboBV7nTp8yHP6XbX/Qzp+owTZDMpYKGQLuYUP0tPC1oMydI
+	xhJsz8kzQ+3xopHXpO8JS1OCwaAM66wDW8BG2h2unie3Ak8jeIZHFwaTBuQJUryWzJOTxsSgteM
+	7JNn0IBCCzfHTJ7XXo7mjBYY+9A==
+X-Google-Smtp-Source: AGHT+IFx85HwyGkq7nhuxIMzVBaBcFT+g2jH7StU0bEW7eR8FFo2zOGOMnX4dCVgnkGHDb6Fk2RaGnQFsJxSXXkyhAc=
+X-Received: by 2002:a05:6512:3043:b0:522:36f7:3660 with SMTP id
+ 2adb3069b0e04-52236f739f8mr11158575e87.36.1715778382780; Wed, 15 May 2024
+ 06:06:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+References: <20240422232404.213174-1-sboyd@kernel.org> <CABVgOSmgUJp3FijpYGCphi1OzRUNvmYQmPDdL6mN59YnbkR2iQ@mail.gmail.com>
+ <b822c6a5488c4098059b6d3c35eecbbd.sboyd@kernel.org> <5c919f0d3d72fe1592a11c45545e8a60.sboyd@kernel.org>
+In-Reply-To: <5c919f0d3d72fe1592a11c45545e8a60.sboyd@kernel.org>
+From: Rob Herring <robh@kernel.org>
+Date: Wed, 15 May 2024 08:06:09 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqK4EZ0RhYCw6ZaeYSJu5Ps1J+J25vjwQy2XvNa5F5d7Pw@mail.gmail.com>
+Message-ID: <CAL_JsqK4EZ0RhYCw6ZaeYSJu5Ps1J+J25vjwQy2XvNa5F5d7Pw@mail.gmail.com>
+Subject: Re: [PATCH v4 00/10] clk: Add kunit tests for fixed rate and parent data
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: David Gow <davidgow@google.com>, Michael Turquette <mturquette@baylibre.com>, 
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+	patches@lists.linux.dev, kunit-dev@googlegroups.com, 
+	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, 
+	Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J . Wysocki" <rafael@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, 
+	Christian Marangi <ansuelsmth@gmail.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Maxime Ripard <maxime@cerno.tech>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-We got an error report about headphone type detection and button detection.
-We fixed the headphone type detection error by adjusting the condition
-of setting es8326->hp to 0.And we fixed the button detection error by
-adjusting micbias and vref.
+On Tue, May 14, 2024 at 4:29=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wro=
+te:
+>
+> Quoting Stephen Boyd (2024-05-02 18:27:42)
+> > Quoting David Gow (2024-05-01 01:08:11)
+> > >
+> > > The other thing I've noted so far is that the
+> > > of_apply_kunit_platform_device and of_overlay_apply_kunit_cleanup
+> > > tests fail (and BUG() with a NULL pointer) on powerpc:
+> > > > [15:18:51]     # of_overlay_apply_kunit_platform_device: EXPECTATIO=
+N FAILED at drivers/of/overlay_test.c:47
+> > > > [15:18:51]     Expected pdev is not null, but is
+> > > > [15:18:51] BUG: Kernel NULL pointer dereference at 0x0000004c
+> >
+> > This seems to be because pdev is NULL and we call put_device(&pdev->dev=
+)
+> > on it. We could be nicer and have an 'if (pdev)' check there. I wonder
+> > if that fixes the other two below?
+> >
+> > ---8<---
+> > diff --git a/drivers/of/overlay_test.c b/drivers/of/overlay_test.c
+> > index 223e5a5c23c5..85cfbe6bb132 100644
+> > --- a/drivers/of/overlay_test.c
+> > +++ b/drivers/of/overlay_test.c
+> > @@ -91,7 +92,8 @@ static void of_overlay_apply_kunit_cleanup(struct kun=
+it *test)
+> >         dev =3D bus_find_device(&platform_bus_type, NULL, kunit_compati=
+ble,
+> >                               of_overlay_bus_match_compatible);
+> >         KUNIT_EXPECT_PTR_EQ(test, NULL, dev);
+> > -       put_device(dev);
+> > +       if (dev)
+> > +               put_device(dev);
+> >  }
+>
+> This last hunk isn't needed.
+>
+> >
+> >  static struct kunit_case of_overlay_apply_kunit_test_cases[] =3D {
+> >
+> > > > [15:18:51]     # of_overlay_apply_kunit_platform_device: try faulte=
+d: last line seen lib/kunit/resource.c:99
+> > > > [15:18:51]     # of_overlay_apply_kunit_platform_device: internal e=
+rror occurred preventing test case from running: -4
+> > > > [15:18:51] [FAILED] of_overlay_apply_kunit_platform_device
+> > >
+> > > > [15:18:51] BUG: Kernel NULL pointer dereference at 0x0000004c
+> > > > [15:18:51] note: kunit_try_catch[698] exited with irqs disabled
+> > > > [15:18:51]     # of_overlay_apply_kunit_cleanup: try faulted: last =
+line seen drivers/of/overlay_test.c:77
+> > > > [15:18:51]     # of_overlay_apply_kunit_cleanup: internal error occ=
+urred preventing test case from running: -4
+> > > > [15:18:51] [FAILED] of_overlay_apply_kunit_cleanup
+> > >
+> > > I've not had a chance to dig into it any further, yet, but it appears
+> > > to work on all of the other architectures I tried.
+> >
+> > Cool. I don't know why powerpc doesn't make devices. Maybe it has a
+> > similar design to sparc to create resources. I'll check it out.
+> >
+>
+> powerpc doesn't mark the root node with OF_POPULATED_BUS. If I set that
+> in of_platform_default_populate_init() then the overlays can be applied.
+>
+> ---8<----
+> diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+> index 389d4ea6bfc1..fa7b439e9402 100644
+> --- a/drivers/of/platform.c
+> +++ b/drivers/of/platform.c
+> @@ -565,6 +565,10 @@ static int __init of_platform_default_populate_init(=
+void)
+>                                 of_platform_device_create(node, buf, NULL=
+);
+>                 }
+>
+> +               node =3D of_find_node_by_path("/");
+> +               if (node)
+> +                       of_node_set_flag(node, OF_POPULATED_BUS);
 
-Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
----
- sound/soc/codecs/es8326.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+I think you want to do this in of_platform_bus_probe() instead to
+mirror of_platform_populate(). These are supposed to be the same
+except that 'populate' only creates devices for nodes with compatible
+while 'probe' will create devices for all child nodes. Looks like we
+are missing some devlink stuff too. There may have been some issue for
+PPC with it.
 
-diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
-index 93385f181d2c..3031699a14c4 100755
---- a/sound/soc/codecs/es8326.c
-+++ b/sound/soc/codecs/es8326.c
-@@ -829,8 +829,8 @@ static void es8326_jack_detect_handler(struct work_struct *work)
- 			/* mute adc when mic path switch */
- 			regmap_write(es8326->regmap, ES8326_ADC1_SRC, 0x44);
- 			regmap_write(es8326->regmap, ES8326_ADC2_SRC, 0x66);
--			es8326->hp = 0;
- 		}
-+		es8326->hp = 0;
- 		regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x01);
- 		regmap_write(es8326->regmap, ES8326_SYS_BIAS, 0x0a);
- 		regmap_update_bits(es8326->regmap, ES8326_HP_DRIVER_REF, 0x0f, 0x03);
-@@ -981,7 +981,7 @@ static int es8326_resume(struct snd_soc_component *component)
- 	regmap_write(es8326->regmap, ES8326_ANA_LP, 0xf0);
- 	usleep_range(10000, 15000);
- 	regmap_write(es8326->regmap, ES8326_HPJACK_TIMER, 0xd9);
--	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0xcb);
-+	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0xd8);
- 	/* set headphone default type and detect pin */
- 	regmap_write(es8326->regmap, ES8326_HPDET_TYPE, 0x83);
- 	regmap_write(es8326->regmap, ES8326_CLK_RESAMPLE, 0x05);
-@@ -1018,7 +1018,7 @@ static int es8326_resume(struct snd_soc_component *component)
- 
- 	regmap_write(es8326->regmap, ES8326_ANA_VSEL, 0x7F);
- 	/* select vdda as micbias source */
--	regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x23);
-+	regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x03);
- 	/* set dac dsmclip = 1 */
- 	regmap_write(es8326->regmap, ES8326_DAC_DSM, 0x08);
- 	regmap_write(es8326->regmap, ES8326_DAC_VPPSCALE, 0x15);
--- 
-2.17.1
+> +               of_node_put(node);
+>         } else {
+>                 /*
+>                  * Handle certain compatibles explicitly, since we don't =
+want to create
+>
+> I'm guessing this is wrong though, because I see bunch of powerpc specifi=
+c code
+> calling of_platform_bus_probe() which will set the flag on the actual pla=
+tform
+> bus nodes. Maybe we should just allow overlays to create devices at the r=
+oot
+> node regardless? Of course, the flag doc says "platform bus created for
+> children" and if we never populated the root then that isn't entirely acc=
+urate.
+>
+> Rob, can you point me in the right direction? Do we need to use simple-bu=
+s in
+> the test overlays and teach overlay code to populate that bus?
 
+Overlays adding things to the root node might be suspect, but probably
+there are some valid reasons to do so. If simple-bus makes sense here,
+then yes, you should use it. But if what's on it is not MMIO devices,
+don't. That's a warning in the schema now.
+
+Rob
