@@ -1,162 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCEC2F877;
-	Wed, 15 May 2024 21:15:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EC5155A57
+	for <patches@lists.linux.dev>; Wed, 15 May 2024 21:44:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715807738; cv=none; b=GgNaSJYkGzjSu2HFG1loMxO0Qyobt1+SrysBrBaZay69ifGLH6gKB44e5OFwYwvZjgj+m+j3Br0PDuI4v3WuGx5/A5bObLb9mU+G1kKISQailg4jqZ+VHnF9Osz4CSQmH+uFkm9RpEFzlaUAZ5m+PjtMJwxvruVS2FeYyPqrkuA=
+	t=1715809447; cv=none; b=PjS5bmByIP+CS9Uhxia622BVaVUkmsBVc39RCi/C0e2tGM6VrBvUzNX1SP9kObzrOEznz20P0mJs0rldyOpBLZlsWo+QbVO8zq7RiK6/FBuGiZcvPuwVZL8KtljGoSksAR92qdbcDs5q36FCdkwjM+FZ1zmOV9PrJ69+kWefqu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715807738; c=relaxed/simple;
-	bh=8zRgYixeWbU5a3kUd0M4xV5TV+AjxJpEmwU45ge4kaY=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=BmsCn2nCgRDW0wQkhSgrZ3VM4nF0BbusABfrVK25kzZEPP9th1rJ3mdbkBqWUhlPh5lMZm40tiwfSqLufAOcW2V5BkLp8VE+00gR7HoCdWvSnEmLWMlvQPkmhFuf/FHhOyapJbP8tZDLGMnDCU8qibbLgJcIR+BcxTAuIuRsbAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PiDOQQmN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715809447; c=relaxed/simple;
+	bh=5qEbwkLcOrEvBA+Jfj2Sig7VdcHS47eVtQcB3Ya+vhA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=quxy7cgwdBPM0H32e3g0l2TFNKfrYIy4R6JG/rv1OONadvRhCPifrR0wY4wQbkCWBgdGBL6FSv2+1md/K/DzXBeSQb+NQ73tQNw6uFuw3UDU3zZWwn+rtjxMVv0d6kvn2R22OApqxWoAiuBseEILLP5WMYXAiAlgXXMm+A3znn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VXz+v8EP; arc=none smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PiDOQQmN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B304C116B1;
-	Wed, 15 May 2024 21:15:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715807738;
-	bh=8zRgYixeWbU5a3kUd0M4xV5TV+AjxJpEmwU45ge4kaY=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=PiDOQQmN+bIHiSfpue2YctCCuTwEZkmpnSQGS3TqeNw0bE58cNELXRSd85nazMCPD
-	 yuyXdclaoXVl/gIeV3NxguyB4jU8hRBbwCLWM8Ce6hG3Aftjx0m6mkx3JnkRu8L61F
-	 qCJ/012Qc4p9xwHF+8KEZzJM+driOYnuam1IQoI9owU8e5ESdC4IjvM5Mu2OlTHOjB
-	 g9qjwOJYBTWtHgJDeBBv2x/DFhL6M6/FB+rJSajg2VRDV/830G/RhBhCT1FjyRohhx
-	 FXGpleblOhL/tGUOmGx1hG+eiRwQldeZlT5/MfIcU1Ig4+uSXrn/MJ28b8ibODTfCo
-	 7kY1NLoRgCVzw==
-Message-ID: <f6d7574582592f3bfa50fc45fefc53be.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VXz+v8EP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1715809446; x=1747345446;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=5qEbwkLcOrEvBA+Jfj2Sig7VdcHS47eVtQcB3Ya+vhA=;
+  b=VXz+v8EPpngZBgJNZZVggACf/ll3vzq/T6NpVa9gY2LNYoZkF3Qmi8z0
+   zKevjhmw6Sam+IMed9JXH8a3wdRLWTnqu46Vng/zirmQxoYO8ChNOSvyu
+   eVH+2yUloXodxmCo7yUHucUHQjPRSPT0P6UO09hLO50uaBARoI/LMpCyr
+   Cr4ZnaNl/JcgPihgLwhxVG0jV49twEThmoCehwGOeDnojhgqKwOlPuZiR
+   rkY7lxdbgv88Bw9WovyXkROKeXBIt6i+kLh+zuf8fVyE2zuhEKPyA1uLq
+   1+8abVYtg9/C5LCY7EYjeG62DCqsvxMexGMjXsR72KVKgeLYmuLc3n3UJ
+   Q==;
+X-CSE-ConnectionGUID: JYYt1MrHSym9tnP9p2jcfg==
+X-CSE-MsgGUID: jOPEjmmQQvGwkQew2Ho0yg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11074"; a="12062141"
+X-IronPort-AV: E=Sophos;i="6.08,162,1712646000"; 
+   d="scan'208";a="12062141"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2024 14:44:06 -0700
+X-CSE-ConnectionGUID: y+PWi6rLQryn5aDZO4Uggw==
+X-CSE-MsgGUID: t4cKo+MIRHKBGvkLVjhNHg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,162,1712646000"; 
+   d="scan'208";a="31253888"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2024 14:44:05 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: x86@kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] x86/cpu: Fix x86_match_cpu() to match just X86_VENDOR_INTEL
+Date: Wed, 15 May 2024 14:43:57 -0700
+Message-ID: <20240515214357.73798-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAL_JsqK4EZ0RhYCw6ZaeYSJu5Ps1J+J25vjwQy2XvNa5F5d7Pw@mail.gmail.com>
-References: <20240422232404.213174-1-sboyd@kernel.org> <CABVgOSmgUJp3FijpYGCphi1OzRUNvmYQmPDdL6mN59YnbkR2iQ@mail.gmail.com> <b822c6a5488c4098059b6d3c35eecbbd.sboyd@kernel.org> <5c919f0d3d72fe1592a11c45545e8a60.sboyd@kernel.org> <CAL_JsqK4EZ0RhYCw6ZaeYSJu5Ps1J+J25vjwQy2XvNa5F5d7Pw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/10] clk: Add kunit tests for fixed rate and parent data
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: David Gow <davidgow@google.com>, Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
-To: Rob Herring <robh@kernel.org>
-Date: Wed, 15 May 2024 14:15:36 -0700
-User-Agent: alot/0.10
+Content-Transfer-Encoding: 8bit
 
-Quoting Rob Herring (2024-05-15 06:06:09)
-> On Tue, May 14, 2024 at 4:29=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> w=
-rote:
-> >
-> > powerpc doesn't mark the root node with OF_POPULATED_BUS. If I set that
-> > in of_platform_default_populate_init() then the overlays can be applied.
-> >
-> > ---8<----
-> > diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-> > index 389d4ea6bfc1..fa7b439e9402 100644
-> > --- a/drivers/of/platform.c
-> > +++ b/drivers/of/platform.c
-> > @@ -565,6 +565,10 @@ static int __init of_platform_default_populate_ini=
-t(void)
-> >                                 of_platform_device_create(node, buf, NU=
-LL);
-> >                 }
-> >
-> > +               node =3D of_find_node_by_path("/");
-> > +               if (node)
-> > +                       of_node_set_flag(node, OF_POPULATED_BUS);
->=20
-> I think you want to do this in of_platform_bus_probe() instead to
-> mirror of_platform_populate(). These are supposed to be the same
-> except that 'populate' only creates devices for nodes with compatible
-> while 'probe' will create devices for all child nodes. Looks like we
-> are missing some devlink stuff too. There may have been some issue for
-> PPC with it.
+There's a wildcard match in arch/x86/kernel/smpboot.c that wants
+to hit on any CPU made by Intel. The match used to work because
+the check was actually looking for any Intel CPU in family 6.
 
-Got it. So this patch?
+With the change to ease support for families other than 6,
+this wildcard match failed because every entry in the struct x86_cpu_id
+was zero. This is used as the end-marker in arrays of x86_cpu_id
+structures, so can never match.
 
----8<---
-diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-index 389d4ea6bfc1..acecefcfdba7 100644
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -421,6 +421,7 @@ int of_platform_bus_probe(struct device_node *root,
- 	if (of_match_node(matches, root)) {
- 		rc =3D of_platform_bus_create(root, matches, NULL, parent, false);
- 	} else for_each_child_of_node(root, child) {
-+		of_node_set_flag(root, OF_POPULATED_BUS);
- 		if (!of_match_node(matches, child))
- 			continue;
- 		rc =3D of_platform_bus_create(child, matches, NULL, parent, false);
+Failure to match meant the logic to detect Intel Sub-NUMA cluster
+mode didn't operate and there were boot messages about insane
+cache configuration.
 
+Fix by changing X86_VENDOR_INTEL to a non-zero value (4 was lowest
+unused value, so I picked that).
 
-This doesn't work though. I see that prom_init() is called, which
-constructs a DTB and flattens it to be unflattened by
-unflatten_device_tree(). The powerpc machine type used by qemu is
-PLATFORM_PSERIES_LPAR. It looks like it never calls
-of_platform_bus_probe() from the pseries platform code.
+Fixes: 4db64279bc2b ("x86/cpu: Switch to new Intel CPU model defines")
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ arch/x86/include/asm/processor.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-What about skipping the OF_POPULATED_BUS check, or skipping the check
-when the parent is the root node? This is the if condition that's
-giving the headache.
+diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
+index cb4f6c513c48..271c4c95bc37 100644
+--- a/arch/x86/include/asm/processor.h
++++ b/arch/x86/include/asm/processor.h
+@@ -175,10 +175,10 @@ struct cpuinfo_x86 {
+ 	unsigned		initialized : 1;
+ } __randomize_layout;
+ 
+-#define X86_VENDOR_INTEL	0
+ #define X86_VENDOR_CYRIX	1
+ #define X86_VENDOR_AMD		2
+ #define X86_VENDOR_UMC		3
++#define X86_VENDOR_INTEL	4
+ #define X86_VENDOR_CENTAUR	5
+ #define X86_VENDOR_TRANSMETA	7
+ #define X86_VENDOR_NSC		8
+-- 
+2.44.0
 
----8<---
-diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-index 389d4ea6bfc1..38dfafc25d86 100644
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -735,10 +735,6 @@ static int of_platform_notify(struct notifier_block *n=
-b,
-=20
- 	switch (of_reconfig_get_state_change(action, rd)) {
- 	case OF_RECONFIG_CHANGE_ADD:
--		/* verify that the parent is a bus */
--		if (!of_node_check_flag(rd->dn->parent, OF_POPULATED_BUS))
--			return NOTIFY_OK;	/* not for us */
--
- 		/* already populated? (driver using of_populate manually) */
- 		if (of_node_check_flag(rd->dn, OF_POPULATED))
- 			return NOTIFY_OK;
-
-
->=20
-> > +               of_node_put(node);
-> >         } else {
-> >                 /*
-> >                  * Handle certain compatibles explicitly, since we don'=
-t want to create
-> >
-> > I'm guessing this is wrong though, because I see bunch of powerpc speci=
-fic code
-> > calling of_platform_bus_probe() which will set the flag on the actual p=
-latform
-> > bus nodes. Maybe we should just allow overlays to create devices at the=
- root
-> > node regardless? Of course, the flag doc says "platform bus created for
-> > children" and if we never populated the root then that isn't entirely a=
-ccurate.
-> >
-> > Rob, can you point me in the right direction? Do we need to use simple-=
-bus in
-> > the test overlays and teach overlay code to populate that bus?
->=20
-> Overlays adding things to the root node might be suspect, but probably
-> there are some valid reasons to do so.
-
-In this case we're using it to add nodes without a reg property to the
-root node.
-
-> If simple-bus makes sense here,
-> then yes, you should use it. But if what's on it is not MMIO devices,
-> don't. That's a warning in the schema now.
->=20
-
-Ok. Sounds like adding these nodes to the root node is the right way
-then.
-
-I wonder if we can make MMIO devices appear on the kunit bus by adding
-DT support to the bus and then letting those nodes have reg properties
-that we "sinkhole" by making those iomem resources point to something
-else in the ioremap code. Then we can work in MMIO kunit emulation that
-way to let tests check code that works with readl/writel, e.g. the clk
-gate tests.
