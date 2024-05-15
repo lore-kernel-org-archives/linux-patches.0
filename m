@@ -1,171 +1,157 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2084.outbound.protection.outlook.com [40.107.102.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA561C17
-	for <patches@lists.linux.dev>; Wed, 15 May 2024 00:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715733423; cv=none; b=WkbjHy0asB0VTm1ZKYU1tKBdNDLKrfbP65M7SLnN83DcLuq4sMqn21YW8S2y7tWBk7w04Y07Kuq/+Qv87hIx96pWer9nto7iiEdF6mEGH7bqH0+K8ZvULUkGkk9vQEVDgS/4R+vNBER0NFjOx7E1uniZg4DdJYWobO6itKcboFo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715733423; c=relaxed/simple;
-	bh=oBWUlEWluAHTiq7x5PmtdIOTVCfEATl1uVh/AdUEqHk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VMvdrgcZ69QEXCdVZ8yaO8uM72GeZGXAL1tn0nvJSebG1D4haACrK0XC2El4broAx/WSVa25GBYTKpN463AvR05HbaJtDUEUpr7UJ0m5WbfLEHDHQRUwTyx3pOrZE8IOaDkSWCpPSMmlb4zz+RJ1S9+u7JR8Y/T/P3CEYRN2Juk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=1SBHa9JO; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D6D6116;
+	Wed, 15 May 2024 00:37:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.102.84
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1715733433; cv=fail; b=M051GsAvpNWpGmiJzvKnKcY7uNI67AYXY1c7kOXzGDXwJkANJfTX86ZRiemuooqvClMBydKpm+fkqBXCnF/9CJAqT3h2gWsUoHWm9oVfjlREoK3wsYI9lbv8+Q+mhQ9dH/fKub0yRJkhkY1vlhibwBDk8QeRPpS8USHcHQmAMjQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1715733433; c=relaxed/simple;
+	bh=nJkVGh2eDqxlAiKr0xIx1uO88odeHk3TI4MbNBCDFJY=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qwFAzmgoMoVTAwxrJly2M5vPo8UyoGdCZSOKlKRz12tRxTug+7n8SmpM8S7E+FGOTUsojywG4hJti1ovGlcd3LSOzEnP7TCDzh9Yr8YqvDaCp65p0zvcRzZUhX1oyf4ceS/WCuIfNnV2ibwJLWcHXUF1v59R4q4WWtI2bFjy3PE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=e7kxzY2Y; arc=fail smtp.client-ip=40.107.102.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="1SBHa9JO"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2b9cdbd6da9so175083a91.1
-        for <patches@lists.linux.dev>; Tue, 14 May 2024 17:37:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1715733422; x=1716338222; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vk8qZUNPyTPW/A1KHzQN8z/XqvExIz1hHrnYNu4UtMQ=;
-        b=1SBHa9JOWoOWFw4xnzkv/iB+KKEYXKZ7jwmznYLySA4obaIY3v/FlWvRGYZQeJGfPX
-         cjTd39GXBz0jygdItxA+PLB9DrCRWIy87i2ySPa+y65MV6xvueBTx4UcFIVIdd9lSNU1
-         vHKy0qhg/0qURTD79YqZJymo4RQj3GtYBlM6z/5hc2VCFnyPYJeag3ag4nNE+f66RwzX
-         XbIseMv7C88pdPX7CdPlCNvUixbjfbpmjM5kSA41Qx767/be+VCkjBJblLZnYpmVuvlY
-         miZA0M0jOPTNvJzGaYdRmd7PfPzuj0dSK6hXCUj3UxN1SUEA/oZ395zhap+UQgDx/3qi
-         VmRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715733422; x=1716338222;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vk8qZUNPyTPW/A1KHzQN8z/XqvExIz1hHrnYNu4UtMQ=;
-        b=pIHSll80Je0RdD1CkGJwVLfasiL2J/Z3dTUlsymCDfh6t72QkKY1XqKgoJDzmyxDLk
-         IymhPgz3q94e1ZlJX8MmlF0+q9g1biZ6Zq5ShIO4RopWqLhjxNhj0jxJLUU9ijmdt+Kb
-         8ghmfDS0AXgHe1JvLdHfZVwA69x9+zI9DpbLZ2WkIQM66nZ/s9eIOBJIXygwDWJQ1jll
-         07H0uhP7wfaclj/BDbPUfclCQG4dmTWLrkZQVDFQDN1uq3WHyh2yzAo0aXXIglCJoKFL
-         Dtl9QMlE29GSk9j1Xrj7dHdxUu/dcbZnwfQtxlpngrdlbn13Y1kbSx1Yscl5vhlaaDgu
-         qfsw==
-X-Forwarded-Encrypted: i=1; AJvYcCVJlTuRoqcFygEoMPfHY2RwrvS/SVaIwIJWSFpkHXP1bDcwDzn1O7+F2Kuk27ND8yLZi7+P8JxmDuA873ZX2XpI/XvZTBZMbw==
-X-Gm-Message-State: AOJu0YxaAc7pxRwEgDUXlg3UgVxXMGIgMP+hONdthQnYbC7veZSH/l3c
-	la57PWsEQpaic2Di9c94BfwzIsdiSO2sdEHAXm4OfrSli9upfAtNDoZxzxB2z3UZhfHWIELWXVa
-	EKy3nWvBKTxKwtshQ8W2Rz5KCoF9cdeaqExhl
-X-Google-Smtp-Source: AGHT+IHeqrDxqHwSqE8LkP9zNnO4aoIPfWbbw91OWLX6RaFgTT+3fK4f+394LqJxYkdL3RuANgpc2LoWG62WKveVJjY=
-X-Received: by 2002:a17:90b:438d:b0:2a2:f4f4:2c4a with SMTP id
- 98e67ed59e1d1-2b66001a442mr24360414a91.21.1715733421460; Tue, 14 May 2024
- 17:37:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="e7kxzY2Y"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=N1Rbl/1TTSkvoWI7LX4JbXNZQAvw7r4Cd8BegydvKSPybMMcTKYg8hOv4Op+6ZWXQFSiYEP3Ld2xxLyW3rpAqcn0UXXDHpVg5tH/k8EL4N1h0iUdcMQ5W+zTNzLd03b3saOBQrA2z9kBaF0iz2EQ/j4BKe2jH1OXAnobYJVL8hnWe+kM2uFoKwuJyBccCLpB8DacrRV9HszDL8Ubxc6kdsyScQHiuQvjMY3EvVqlLUNrAJ9TCjLoyVz9dlJDfuNcqw0d2mK89gFGx2vvym/EwgeI7Wgrr6FAyQbGaPB2t1hKAK/fLwkb7nqTT6YwWKuJ0LzPtnPfCQ+sc5d+U//ikw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FvR4MLhjxGQhSWAXbNtKqoqSYHoQ+4OR8aJxNh8jawE=;
+ b=LzTEHr+4MfrnJj4oK6QVp+LzPHkSq2LD+/B2B0qPErUcipMjuNO7Y2RHSrcgfw/80LyGL7/fryXGRfYVMTeEwN0sksQlwXNv4XA8c0qf84aKvNrcSmKyCfHOSkf9KMYAAEkDGjIVFo/2m2CG6eqqgVJXhXf5LKbyMgAbyz7TvwCQhdjOXQTmEi47ZL1IJpLkxowMvv6fOfBaySVqm6ikAanUBVYepueNwEEbQTBfY5JrVHYNuWiaZtdmrtcamj2QCUwgwb36twkc+6CpsKh+rAgDQg7RrN7FQgdZvpAQh2tBOpKuE+dWuRHrEqhS+GxtyFES+YDSTkhZ1jPKWvCg2g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FvR4MLhjxGQhSWAXbNtKqoqSYHoQ+4OR8aJxNh8jawE=;
+ b=e7kxzY2YNz+T4cDg/hH8Q1JqHUhzB3XUtJs/uyyzMr/iNtP4QIRI0HK0fA3bh+OZcjYEk2gp+qfYrRshPuY80Lg4asHgJO7UZCo7DXYUnFLJfzlYOewiv1/dcKp1VbrsoLrK5AaQ4BsMOSde0B/v1XkuvxG7ElWsClPshNQx2bGbT6IojnrAgp002OFBwNWv5g/9h7D7a7TNJ6r++3CqpABkXa+PvyDEzFeLCI2SlTyDnpst4ALIKx3H3MtRuAFM44jk3wi0MRtK+VvPZtODZEEqOH13sG17+LrqCbdUL+vg6Sm7Lh2vqR4so2wBIA8vdzRzYJpaYXAzsrdAmoopVw==
+Received: from SN7PR04CA0183.namprd04.prod.outlook.com (2603:10b6:806:126::8)
+ by SN7PR12MB6931.namprd12.prod.outlook.com (2603:10b6:806:261::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Wed, 15 May
+ 2024 00:37:08 +0000
+Received: from SN1PEPF0002529D.namprd05.prod.outlook.com
+ (2603:10b6:806:126:cafe::db) by SN7PR04CA0183.outlook.office365.com
+ (2603:10b6:806:126::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55 via Frontend
+ Transport; Wed, 15 May 2024 00:37:08 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ SN1PEPF0002529D.mail.protection.outlook.com (10.167.242.4) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7587.21 via Frontend Transport; Wed, 15 May 2024 00:37:08 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 14 May
+ 2024 17:37:00 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Tue, 14 May 2024 17:36:59 -0700
+Received: from nvidia.com (10.127.8.11) by mail.nvidia.com (10.126.190.182)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Tue, 14 May 2024 17:36:56 -0700
+Date: Tue, 14 May 2024 17:36:54 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>,
+	<linux-arm-kernel@lists.infradead.org>, Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
+	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
+	<patches@lists.linux.dev>, Shameerali Kolothum Thodi
+	<shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v7 06/14] iommu/arm-smmu-v3: Do not use
+ master->sva_enable to restrict attaches
+Message-ID: <ZkQDpidgI8l1Vhc7@nvidia.com>
+References: <0-v7-9597c885796c+d2-smmuv3_newapi_p2b_jgg@nvidia.com>
+ <6-v7-9597c885796c+d2-smmuv3_newapi_p2b_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240514101006.678521560@linuxfoundation.org> <5beea8ed-b92b-4bee-b77b-4a3d57a5c001@oracle.com>
-In-Reply-To: <5beea8ed-b92b-4bee-b77b-4a3d57a5c001@oracle.com>
-From: Martin Faltesek <mfaltesek@google.com>
-Date: Tue, 14 May 2024 19:36:24 -0500
-Message-ID: <CAOiWkA8SNRbCPZ_gHQRczZovokZbFSJXQc1vUmtD0quZV9tp0Q@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/168] 5.15.159-rc1 review
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org, 
-	Vegard Nossum <vegard.nossum@oracle.com>, Darren Kenny <darren.kenny@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <6-v7-9597c885796c+d2-smmuv3_newapi_p2b_jgg@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002529D:EE_|SN7PR12MB6931:EE_
+X-MS-Office365-Filtering-Correlation-Id: 92a03fb9-84f3-4f99-a6cb-08dc7477270f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230031|82310400017|376005|36860700004|1800799015|7416005;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?wKuO93UU41QZlm89DpZZZ1DeSSIjKTdsONHc28qCtdoDgBFu0F1nwrj+7D+d?=
+ =?us-ascii?Q?crIfFmZ4+vsxVhY6JxT2b1BEbDM5kN7RjR74QVUtqVINQ3q1d39wcFO6S8U8?=
+ =?us-ascii?Q?SDOMRcpCMcNBuIt+SLGfnbMJso9r5USYpzULxRc7hzsbDHc6S5YpMNPCwDhW?=
+ =?us-ascii?Q?yJ1ZqmIcio6tRy3gRw3JfMCzU/ljTBv7nlwWt92ySyEl+TRDRyOQ/bsTVbKX?=
+ =?us-ascii?Q?DzLbZ/Es+kXevEwNp9AT3myb35F9bjBY/GDUGz0lOyfXsUVkvqjo4N0DPl+L?=
+ =?us-ascii?Q?Yc0S2VUJMFJqczuO7hOgys8dMYQ8Gim67Az1Hhjuf5FmYDf2+zMfRQ5zhpCB?=
+ =?us-ascii?Q?MBk3wVHyw4jTzcq75mLaTrOOI5yymQBqLwQ4beJIJvbtoASaaRxMb9Clchrt?=
+ =?us-ascii?Q?FJoJsVIqElN7FaiGu92+6DCKObDlQFJJ3vByPwEM0rJ9c4kLq9WcAX67XnVY?=
+ =?us-ascii?Q?Abk2SE0goenHIT8v+RAu0aqDBJUCYif9pr6VMw2/hdgt6kkMPdhUI3TtXB5X?=
+ =?us-ascii?Q?XLrfcSMQssbC8JQi97TaWMxzthVy+5704lGwWaBlVJFyqn4EUXBEvG+RRebf?=
+ =?us-ascii?Q?RKd39cei1RxyrCmua22zUw4piYHKX+owZeT/Ns5VIGtfvWUAe0F+qSb17XeJ?=
+ =?us-ascii?Q?0QvIZp8gj6Lb0UKNWzD7sC1gR+91QiVz+ohOooXwUJWEW6SDAJnp6FlMZ7bL?=
+ =?us-ascii?Q?RT1sa9tQSo43v0xz0basrJjyCvsisOCt3Oae5VTYSzt9YqL5kqDTM4ORM3XF?=
+ =?us-ascii?Q?oow1w2jufKSqE9NvjuFtWbO4RBddOrvqZN3AcmDHBUkhm88agWxW6t+SOOVE?=
+ =?us-ascii?Q?ySTWBlEWoi/eoLAfPcetkyWAC2cW4VKDRxUbHbUlwmh8sZSDU5jKRh1GAZWL?=
+ =?us-ascii?Q?8ab6F3U9GzpXCQUtUtSQKBoWvloxKumDZVctO1HMJOvAOYwhga3vpEze4+vD?=
+ =?us-ascii?Q?tN36nxUEj8P+SI6xorj1D8R19h6wfDD1qAxSfoviyZ5cR3BCcAhiN3xvs6RF?=
+ =?us-ascii?Q?13I1CXFtDNpfFOYl3oGtqQR7MA+/W6YkEw9Eh5wnok2DbnmXAvt9iPvDRAf3?=
+ =?us-ascii?Q?NhNRkXEQNaadF40zV8D/q90/9mhJFynDtzyJR4JRu3hZjrVKZqrYo50c0AlM?=
+ =?us-ascii?Q?1sr6XS0chRiCSTI2nIqXkZhoddT82/owZko4LyRxmneCKtR9eVXqEGEPd3fJ?=
+ =?us-ascii?Q?eVsP6lsPIgnOrAaWRAcBbucOdtAc5X/N+bvE3Qu6l4HCwcVJTXp6OvregJsF?=
+ =?us-ascii?Q?eglU44jGq2R4ABD4IIPsEdr4MzfLnPVgRivrE/xSrj6jLrPEHX3GDPKKWHbF?=
+ =?us-ascii?Q?gSEYhKyszbrWht1+A4AueGhfF3USAtIYVNFrMFwLkgU+eVelbg/HtZHPUNPq?=
+ =?us-ascii?Q?bj2CUGtdTgkPRE+tZL8ocJu1naKH?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230031)(82310400017)(376005)(36860700004)(1800799015)(7416005);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2024 00:37:08.3941
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 92a03fb9-84f3-4f99-a6cb-08dc7477270f
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SN1PEPF0002529D.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6931
 
-Build failure on arm:
+On Wed, May 08, 2024 at 03:57:14PM -0300, Jason Gunthorpe wrote:
+> We no longer need a master->sva_enable to control what attaches are
+> allowed. Instead we can tell if the attach is legal based on the current
+> configuration of the master.
+> 
+> Keep track of the number of valid CD entries for SSID's in the cd_table
+> and if the cd_table has been installed in the STE directly so we know what
+> the configuration is.
+> 
+> The attach logic is then made into:
+>  - SVA bind, check if the CD is installed
+>  - RID attach of S2, block if SSIDs are used
+>  - RID attach of IDENTITY/BLOCKING, block if SSIDs are used
+> 
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-In file included from drivers/iommu/mtk_iommu_v1.c:22:
-drivers/iommu/mtk_iommu_v1.c:579:25: error: 'mtk_iommu_v1_of_ids'
-undeclared here (not in a function); did you mean 'mtk_iommu_of_ids'?
-  579 | MODULE_DEVICE_TABLE(of, mtk_iommu_v1_of_ids);
-      |                         ^~~~~~~~~~~~~~~~~~~
-./include/linux/module.h:244:15: note: in definition of macro
-'MODULE_DEVICE_TABLE'
-  244 | extern typeof(name) __mod_##type##__##name##_device_table
-         \
-      |               ^~~~
-./include/linux/module.h:244:21: error:
-'__mod_of__mtk_iommu_v1_of_ids_device_table' aliased to undefined
-symbol 'mtk_iommu_v1_of_ids'
-  244 | extern typeof(name) __mod_##type##__##name##_device_table
-         \
-      |                     ^~~~~~
-drivers/iommu/mtk_iommu_v1.c:579:1: note: in expansion of macro
-'MODULE_DEVICE_TABLE'
-  579 | MODULE_DEVICE_TABLE(of, mtk_iommu_v1_of_ids);
-      | ^~~~~~~~~~~~~~~~~~~
-make[2]: *** [scripts/Makefile.build:289: drivers/iommu/mtk_iommu_v1.o] Err=
-or 1
-make[1]: *** [scripts/Makefile.build:552: drivers/iommu] Error 2
+With that in_ste check removed,
 
-This is from patch:
-
-bce893a92324  krzk@kernel.org           2024-05-14  iommu: mtk: fix
-module autoloading
-
-+MODULE_DEVICE_TABLE(of, mtk_iommu_v1_of_ids);
-
-should be, I think:
-
-+MODULE_DEVICE_TABLE(of, mtk_iommu_of_ids);
-
-
-On Tue, May 14, 2024 at 11:29=E2=80=AFAM Harshit Mogalapalli
-<harshit.m.mogalapalli@oracle.com> wrote:
->
-> Hi Greg,
->
-> On 14/05/24 15:48, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.159 release.
-> > There are 168 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Thu, 16 May 2024 10:09:32 +0000.
-> > Anything received after that time might be too late.
-> >
->
-> No problems seen on x86_64 and aarch64 with our testing.
->
-> Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
->
-> Note: selftests have a build problem in 5.15.y, 5.10.y, 5.4.y, 4.19.y
->
-> 5.15.y revert:
-> https://lore.kernel.org/all/20240506084635.2942238-1-harshit.m.mogalapall=
-i@oracle.com/
->
-> This is not a regression in this tag but from somewhere around 5.15.152 t=
-ag.
->
-> Reverts for other stable releases:
-> 5.10.y:
-> https://lore.kernel.org/all/20240506084926.2943076-1-harshit.m.mogalapall=
-i@oracle.com/
-> 5.4.y:
-> https://lore.kernel.org/all/20240506085044.2943648-1-harshit.m.mogalapall=
-i@oracle.com/
-> 4.19.y:
-> https://lore.kernel.org/all/20240506105724.3068232-1-harshit.m.mogalapall=
-i@oracle.com/
->
-> Could you please queue these up for future releases.
->
->
-> Thanks,
-> Harshit
-> > The whole patch series can be found in one patch at:
-> >       https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.15.159-rc1.gz
-> > or in the git tree and branch at:
-> >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.15.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-> >
->
+Reviewed-y: Nicolin Chen <nicolinc@nvidia.com>
