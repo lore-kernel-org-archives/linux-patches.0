@@ -1,100 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D666A3A29F;
-	Wed, 15 May 2024 06:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C42B41C73;
+	Wed, 15 May 2024 07:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715753736; cv=none; b=bibSqVgqoAXg7g11scenR7vEj2rFGs3RticXVaaXdwAlFEiUGOE7sYsy2xhqStsqmL00VhD1bz3iYyxhBHu0ckb0m/M+6efRTzssivxfdPMzgPzkyJFhMJCZ2iZkFMqFtYcHmC8q1Q0XDgc2+ylc2ZT/9SPxZLQ1dJIcTkY4Jlg=
+	t=1715759502; cv=none; b=h0O9P339b5Elj1Tq3CDjVvAt9u1QaL1s51HM3o4F2NyFi5D3UeU75N6ET0DkmUlBzIv6+iYgbUPZJZfezgjVhPfhYYgfRXfAntf6sVb/ly+GvwYUV7JVxIsDR7rJnN/On4gRjKaKxDmaWmqtH1JXLavxcyPQ7Xzp8vY9PvXbAHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715753736; c=relaxed/simple;
-	bh=QW0ePSHkW552niEBjTaVu6MQs1tT30hlRqsaoskf3Vs=;
+	s=arc-20240116; t=1715759502; c=relaxed/simple;
+	bh=1vDdTLpjyTmHDqyYX9ahZF7XLwKvShRk1KIxzZTG66A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fdNzNmIINBwnZ/7xTx51v+fTM6PU/eKmbi6bcNhiXfNAgFBcxwH7+D32vXlPOSnOo1BSq+K+rPjcO+CmAeQONoM61o3WVqks8mFMzC6lNjDXkzPOshvhuewTT+bLlVtH9foZLyVLdA0ujM0luOCVoHTj+hL5DEiaqwptp5C6bWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BWte8rQ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=m1vrryq8iD+Mk8/TYhrEdPhUGhw2jph4oZw8Jc3S9HfhF5KgNT6VhPALEWfjQG/vn193Zhxh05wQ7uWfJXEIDsdYq3cB+gfkoQ4t1IikW1HQQGFFwKZ1QlHc0109pzOh5thMpOPlBgvKZ5uJe2VPoHRw+NWS35xWFUs7guXOgMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5HSjC5Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BWte8rQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDAB6C2BD11;
-	Wed, 15 May 2024 06:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5HSjC5Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46283C32782;
+	Wed, 15 May 2024 07:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1715753735;
-	bh=QW0ePSHkW552niEBjTaVu6MQs1tT30hlRqsaoskf3Vs=;
+	s=korg; t=1715759501;
+	bh=1vDdTLpjyTmHDqyYX9ahZF7XLwKvShRk1KIxzZTG66A=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=0BWte8rQZ/gV8H3Pk2iX4yEv1WsPvTennu4dSZquli4mIjgs0Uqi3q0ry2063Zkpz
-	 /YUzWPtzPbqJiwxUKgN2m0O1NeKM60tLfp7jJkh8xKOrkTDBpn92Mi+uGjjn9i/NNu
-	 KcvFt3pVBAmRI7Gbh09hKqEqeSquBMOVleHz2TFE=
-Date: Wed, 15 May 2024 08:15:32 +0200
+	b=V5HSjC5YL/+WApLuY3zyAfPRso+ZAgu3NdqgB1ocHbjG5WdkDUArRRQjcIKioZRuR
+	 HiMAP6StzvfQU9VpDbNpCCwtkT4tFglwmsOqGGcAWR0kZyNYbEuvKsG3rPWOzdkL4T
+	 +JwUOi8r8Zu1u/To7G13iHMnQnWpTU5FqfmYkk2A=
+Date: Wed, 15 May 2024 09:51:38 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Andrew Donnellan <ajd@linux.ibm.com>
+To: Jerome Brunet <jbrunet@baylibre.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Nayna Jain <nayna@linux.ibm.com>,
-	Russell Currey <ruscur@russell.cc>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 088/236] powerpc/pseries: Implement signed update for
- PLPKS objects
-Message-ID: <2024051524-polyester-preoccupy-2236@gregkh>
-References: <20240514101020.320785513@linuxfoundation.org>
- <20240514101023.710898376@linuxfoundation.org>
- <9d093600382fb412381827365a5a342d632d1269.camel@linux.ibm.com>
+	Dmitry Shmidt <dimitrysh@google.com>,
+	Neil Armstrong <narmstrong@baylibre.com>,
+	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 100/168] ASoC: meson: axg-card: Fix nonatomic links
+Message-ID: <2024051548-worsening-thrift-c427@gregkh>
+References: <20240514101006.678521560@linuxfoundation.org>
+ <20240514101010.464612719@linuxfoundation.org>
+ <1j34qkzh7w.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9d093600382fb412381827365a5a342d632d1269.camel@linux.ibm.com>
+In-Reply-To: <1j34qkzh7w.fsf@starbuckisacylon.baylibre.com>
 
-On Wed, May 15, 2024 at 10:01:06AM +1000, Andrew Donnellan wrote:
-> On Tue, 2024-05-14 at 12:17 +0200, Greg Kroah-Hartman wrote:
-> > 6.1-stable review patch.  If anyone has any objections, please let me
-> > know.
-> > 
-> > ------------------
-> > 
-> > From: Nayna Jain <nayna@linux.ibm.com>
-> > 
-> > [ Upstream commit 899d9b8fee66da820eadc60b2a70090eb83db761 ]
-> > 
-> > The Platform Keystore provides a signed update interface which can be
-> > used
-> > to create, replace or append to certain variables in the PKS in a
-> > secure
-> > fashion, with the hypervisor requiring that the update be signed
-> > using the
-> > Platform Key.
-> > 
-> > Implement an interface to the H_PKS_SIGNED_UPDATE hcall in the plpks
-> > driver to allow signed updates to PKS objects.
-> > 
-> > (The plpks driver doesn't need to do any cryptography or otherwise
-> > handle
-> > the actual signed variable contents - that will be handled by
-> > userspace
-> > tooling.)
-> > 
-> > Signed-off-by: Nayna Jain <nayna@linux.ibm.com>
-> > [ajd: split patch, add timeout handling and misc cleanups]
-> > Co-developed-by: Andrew Donnellan <ajd@linux.ibm.com>
-> > Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
-> > Signed-off-by: Russell Currey <ruscur@russell.cc>
-> > Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-> > Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-> > Link:
-> > https://lore.kernel.org/r/20230210080401.345462-18-ajd@linux.ibm.com
-> > Stable-dep-of: 784354349d2c ("powerpc/pseries: make max polling
-> > consistent for longer H_CALLs")
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+On Tue, May 14, 2024 at 02:26:02PM +0200, Jerome Brunet wrote:
 > 
-> This is a new feature and I don't think it should be backported.
-> 784354349d2c can be backported by dropping the
-> plpks_signed_update_var() hunk.
+> On Tue 14 May 2024 at 12:19, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 > 
+> > 5.15-stable review patch.  If anyone has any objections, please let me know.
+> >
+> 
+> Patch #100 and #101 should not be applied on v5.15.
+> 
+> A bit of history:
+> * 3y ago patches #44 and #45 have been applied to fix a problem in AML
+>   audio, but it caused a regression.
+> * No solution was found at the time, so the patches were reverted by
+>   change #100 and #101
+> * Recently I came up with change #43 which fixes the regression from 3y
+>   ago, so the fixes for original problem could be applied again (with a
+>   different sha1 of course)
+> 
+> The situation was detailed in the cover letter of the related series:
+> https://lore.kernel.org/linux-amlogic/20240426152946.3078805-1-jbrunet@baylibre.com
+> 
+> >From what I can see the backport is fine on 6.8, 6.6 and 6.1.
+> Things starts to be problematic on 5.15.
+> 
+> In general, if upstream commit b11d26660dff is backported, it is fine to
+> apply upstream commits:
+>  * dcba52ace7d4 ("ASoC: meson: axg-card: make links nonatomic")
+>  * f949ed458ad1 ("ASoC: meson: axg-tdm-interface: manage formatters in trigger")
+> And the following commits (which are reverts for the 2 above) should not be applied:
+>  * 0c9b152c72e5 ("ASoC: meson: axg-card: Fix nonatomic links")
+>  * c26830b6c5c5 ("ASoC: meson: axg-tdm-interface: Fix formatters in trigger"")
+> 
+> If b11d26660dff is not backported, the 2 first change should be
+> backported, or reverted if they have already been.
+> 
+> * v5.15: just dropping change #100 and #101 should be fine
 
-Now dropped and fixed up, thanks.
+I have now dropped these.
+
+> * v5.10: I suppose this is where the backport starts to be problematic
+>          Best would be to drop #31, #32, #73 and #74 for now
+
+All now dropped.
+
+> * v5.4: Same drop #26, #27, #60 and #61
+
+All now dropped.
+
+> * v4.19: drop #17 and #44
+
+Dropped!
+
+thanks for letting me know.
 
 greg k-h
