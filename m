@@ -1,144 +1,174 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2089.outbound.protection.outlook.com [40.107.223.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82E518E
-	for <patches@lists.linux.dev>; Wed, 15 May 2024 00:06:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715731579; cv=none; b=GbvIx7fxKR5CGLxX1msrtCnTovzWBsXdk2ErpUNIkWihc/7MTwMY6+86sTKJrHOBVFnYBg1+n+38QejxQ6jEwSJ2v95g0M/bNcjYFM1+W/ncmk9zrihArsJ+tm0dHuMSEdj/n4Fe8a0A6fhKaH1zIh+SHYt5SMZMGYujJB3BoYE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715731579; c=relaxed/simple;
-	bh=V6CTpVgYXrlq/4ejWbGGBKIUn4vs+g7U6kisWyra9sc=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=MnhxbTrEVCkDdp0V2MLTl8kSjd0Sn2ZRxF1cUBZpvgQH4vkQVNwG2iUyhea5W/KhuRijfu+3mhC3hIxkG4ziK6TnsG6bOMg3nG9ojpftpqr4f/AeDnQWFgsx71ukEEVE55nEk78LooWeUcPCoNtqJsCnyFOgRpYoW8ejsf9V4Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=lrEgG9ir; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12C37FB;
+	Wed, 15 May 2024 00:32:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.89
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1715733172; cv=fail; b=TgOCiFa+CgmKO2OaDlCoq4QBjjV0aU5pdNwR5u6JGwFKw5aEJVLn1dZ/IO7NxNZbIzjj0YgL8PDfyzlRcXvXH4nebdJoxStLOYcCGaLhNh32GkhGZ5GHsHbAp5duanaPVzTI08BMpQzeGyWjfcQ0QihuA9G02b7+R3mZT6aRMlI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1715733172; c=relaxed/simple;
+	bh=G6BfMP7gdswVte7JigmyDaDge1uvgQcEV5nqVsQQw5U=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aUuVn0Kium4kNKg3VzpRfjcDyMv0yxlmC4m30EE30SGzIyPjXRTNv8s0jq3gV6gc55se0bZ9jEZW0GQBIqPlW7NKDwqM5Prsc9eS0dMRfpiahrjoaSngG3jtbKQU0ip0HY3D7R3blkaQE3mUOeSP/vGEzfx7BFH2FknZao8pXuY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=I6OJ6h7k; arc=fail smtp.client-ip=40.107.223.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="lrEgG9ir"
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 44F066HF031304;
-	Wed, 15 May 2024 00:06:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=aVx3hmhcBtdUIGMwUj1UALl4sV/Fm3fZMc01j6MWcEo=;
- b=lrEgG9irqWNdcuzIZzFtMAqktdenBHvG6eOioK1Ls3BBAhsj23wSWd0mLseGxDMw0HFi
- MdQhDiGVE5hPW7pjSApFRlUKLn8TjX5gE6qvCTqo2R6EwW+cgv6+OmaPo6eDR5vJd3lI
- OD3eJ3g6KUOHLkV0dSZvFYQiRTsJguHlgQBjC3yM8ele2rqtJ5fXAutG9KcvsEWRHgNc
- o8k2SI5zv+26QaEm+Ym15LNymUgK4qFkXCYozs8yW78tuBgC902wyPJH9u9TH9xcj67B
- 42eFxfHD5S85WZCNPGPg1fnU0ujHaPgL83Q0jfLKRYCE0X60oCUABlb5mfOw7EMyaLuz 0Q== 
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3y4h7c83xj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 May 2024 00:06:05 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 44EMHSrQ006200;
-	Wed, 15 May 2024 00:01:40 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3y2mgmg9sm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 May 2024 00:01:39 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 44F01ag755837144
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 15 May 2024 00:01:38 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0EE7F2005A;
-	Wed, 15 May 2024 00:01:36 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9703E20043;
-	Wed, 15 May 2024 00:01:35 +0000 (GMT)
-Received: from ozlabs.au.ibm.com (unknown [9.192.253.14])
-	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 15 May 2024 00:01:35 +0000 (GMT)
-Received: from jarvis.ozlabs.ibm.com (unknown [9.150.21.91])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 57DAA60426;
-	Wed, 15 May 2024 10:01:26 +1000 (AEST)
-Message-ID: <9d093600382fb412381827365a5a342d632d1269.camel@linux.ibm.com>
-Subject: Re: [PATCH 6.1 088/236] powerpc/pseries: Implement signed update
- for PLPKS objects
-From: Andrew Donnellan <ajd@linux.ibm.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Nayna Jain <nayna@linux.ibm.com>,
-        Russell
- Currey <ruscur@russell.cc>,
-        Stefan Berger <stefanb@linux.ibm.com>,
-        Michael
- Ellerman <mpe@ellerman.id.au>,
-        Sasha Levin <sashal@kernel.org>
-Date: Wed, 15 May 2024 10:01:06 +1000
-In-Reply-To: <20240514101023.710898376@linuxfoundation.org>
-References: <20240514101020.320785513@linuxfoundation.org>
-	 <20240514101023.710898376@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.52.1 (3.52.1-1.fc40) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Df7gaqDmJjGybBExg4QYx_ACJzAG4_pm
-X-Proofpoint-ORIG-GUID: Df7gaqDmJjGybBExg4QYx_ACJzAG4_pm
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="I6OJ6h7k"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dBbzOOB4S8LkWA2raXygdeRQ0bT0uSU55dcFF/33jXe3/jFVsj1RwBzlNlnKHvOvkEHJFb52J4seVYhyT200V4LCy9qFxBgsKnfS+6O5JCDRz9HQYdxuilI0rru+mLYFhZbz5hEAOL1IfS/RCONmWBn0xVdXYYLMTjPxqd274pcteaxSSVawAVeYA2xI9qMa0MmbzlajxvQCXzvTZMNSN8GOp/Co+C4jmNciFM1tyYjSJZ7l+zfeUqN3/konczAfJ/mLYs7CncqBbj27nm8rI/EFc9qgwXpQfCgPrp6ft1C2vSsxs6iqDQFeLDTw7YDwVH57Ais3a7anV6woiCSVDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tsZsZIYYWxnJImdzzI/IPFu4xtv4MN3rGUMNHmhaqDw=;
+ b=ILAqur7q1JwDOvQ3AAlTQEgCz4b5+pRQSdaOoemLB9PDOniWq1RvdNyrIDni7K6R8txEAccFt33CxH+YlcXcQtz9XgBoO7bup9BAL9ir1o4TMl0ltP8QoAO5SyWjOne3dElmShNoUeUhWVr4GWJhBazQL4vaMq5bab4SF63pKock7MpPuouE82MGBrBXO2QyvdaW/Lgr5X9ggbPc264aT2IblH5NaCtQMLoMvvLasIIVHaJmtGh5BvI5NGeVeoNVNQvD44aMa8fRzGizn7wzxAIH+JBobRexksgZVt3yAsztkDUIIXilW4i8aFUEcL/F0cLGkZr5SdZ3oGl+Nz7ohA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tsZsZIYYWxnJImdzzI/IPFu4xtv4MN3rGUMNHmhaqDw=;
+ b=I6OJ6h7koyEEuPHdR7YX+3Lb1W/2NXhM6tTwjPbQF8O8iG5mLzV3uqOOeX9oLYbxneGOzVCtsrVsbnOisZKliid9htvXrsCwBaO7jr24Bqtmco5y1eLy1Kq7q49OCtSvSQLoUFYM9efsA7k38cJ+Hl6APjAi08x71bdmdUxh5KdKxEP6Dss2KPtbscttxLwBiGCtoBf5c9TWl88dV2XSv/SqoNTa5aFGD81nwQb0MWD448JdOlHEB7KiTreYucN6Hvq/NOVLn9eQLCF41peyDO9HAr4+uwW3i5cpxv19c1Pw9/rpkMXkzXfJ74gwqMyyY2ReQJAe7JqZag6SozMu+Q==
+Received: from CH2PR20CA0003.namprd20.prod.outlook.com (2603:10b6:610:58::13)
+ by CY8PR12MB7265.namprd12.prod.outlook.com (2603:10b6:930:57::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Wed, 15 May
+ 2024 00:32:43 +0000
+Received: from CH2PEPF00000146.namprd02.prod.outlook.com
+ (2603:10b6:610:58:cafe::47) by CH2PR20CA0003.outlook.office365.com
+ (2603:10b6:610:58::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.27 via Frontend
+ Transport; Wed, 15 May 2024 00:32:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CH2PEPF00000146.mail.protection.outlook.com (10.167.244.103) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7587.21 via Frontend Transport; Wed, 15 May 2024 00:32:43 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 14 May
+ 2024 17:32:31 -0700
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 14 May
+ 2024 17:32:30 -0700
+Received: from nvidia.com (10.127.8.11) by mail.nvidia.com (10.129.68.8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Tue, 14 May 2024 17:32:26 -0700
+Date: Tue, 14 May 2024 17:32:25 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>,
+	<linux-arm-kernel@lists.infradead.org>, Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
+	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
+	<patches@lists.linux.dev>, Shameerali Kolothum Thodi
+	<shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v7 11/14] iommu/arm-smmu-v3: Allow IDENTITY/BLOCKED to be
+ set while PASID is used
+Message-ID: <ZkQCmSc+/8haHj2P@nvidia.com>
+References: <0-v7-9597c885796c+d2-smmuv3_newapi_p2b_jgg@nvidia.com>
+ <11-v7-9597c885796c+d2-smmuv3_newapi_p2b_jgg@nvidia.com>
+ <ZkG9INGfwNcnubyI@nvidia.com>
+ <ZkPtnTfup2snod+/@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-14_14,2024-05-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=581
- impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1011 mlxscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2405140174
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZkPtnTfup2snod+/@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF00000146:EE_|CY8PR12MB7265:EE_
+X-MS-Office365-Filtering-Correlation-Id: bebb8ece-9ade-4e5e-3ff4-08dc7476894a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230031|7416005|1800799015|376005|36860700004|82310400017;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?bMJUg8FVNwH1zOEqUwgzWw/ghnliaqHNOvwHuSE4u2T0b7AgBSurbc5aZtG+?=
+ =?us-ascii?Q?NUxWnuSQO2tpx/a82aiQ/Jpf6wAILol22DmivafKAQ9MBey1exSlcIJ1qM31?=
+ =?us-ascii?Q?6KJhVVIoPoSu9neEScJl46y2x6QLK3qzCAxcZiehmb7G9IUs72MHIdyDiFsg?=
+ =?us-ascii?Q?POVUoZriiYyBujN35b+X3anzJpA/xxCKssuLwGlaTvqGYhvr3zz+etZZX95m?=
+ =?us-ascii?Q?AT3dBWkTqAdnlGB8aa/xgQot2+EtZ404+/W4yGUoyuRsbH+qsDi37AfN+yoY?=
+ =?us-ascii?Q?vAvNkJykwidFmqw4pEK65OjNuG44dbDoWcNbcfkv+lDqwb1Ws6gQOziuIyrS?=
+ =?us-ascii?Q?mB3+f8n744LZU6Zmz41IJ/Crr6xHI30myw58qBuH1LcX23tU70HYq71w4lMr?=
+ =?us-ascii?Q?P9eyJKMoIwnnHHD+Nk8qDlGltequ9leXj/ObjYhhhgSjEmwbamYGFvBRhvD4?=
+ =?us-ascii?Q?PgOXPMkUN9oEA/92gpquv/WGRXmoYDMZBjaBCURkXgN1j+cBjEiRfcUUddoF?=
+ =?us-ascii?Q?JlTFlB0XPWVWEEzgrZFAxf/msTIyMqt6JZf07k47oCGw1bJTU34RRw6Dkpob?=
+ =?us-ascii?Q?P4ducWPLNSx3WQ12awNbzZfFCb2ORRFNWnHZs4z787fPmjIYS+fZTLiUSo6+?=
+ =?us-ascii?Q?gGtTTMLo9dHr3aR60Z70zKa4VmDFJQIokwbc335Dkii8tYkZY2U6hpAXX8Wq?=
+ =?us-ascii?Q?Vy0u5BODqUGHbljmbQG2gTI8l5ZpZI0iVbaPCRPBQBk8rXLTMjtdFVUGHaVn?=
+ =?us-ascii?Q?wjXqKbELZDFXfPgOZ8H4MJQqeQcxcNDnk9x/UrCPvPWdsH+SN8Ens/aG3AN4?=
+ =?us-ascii?Q?1hSDjSzWsO9tGhmvfV5HkqgMBvy/ZkOFY/KzjPnNoEsGSRRJ1xZDJ/6R+ERF?=
+ =?us-ascii?Q?LbDLTLg0j9lrlIcKAzATxohXVu9s+3kkf9t4ARQ0Hifn4INp4GzeunWdzKEN?=
+ =?us-ascii?Q?QGuSVcsh4RiOckCWfiEefvwZOorayWMPrsc1D8AwuPkaKCeWNa5awrY/XqCo?=
+ =?us-ascii?Q?vb36UyGHGN1CmMmAhZW3UAMkn7wi85XQ4udRSY7kLr4PcugPQ6Mg58QGQFqU?=
+ =?us-ascii?Q?z115q59qpZ2Oa8PdtVZ+p3h62uYaAGQPgjHo6vfA4nhzlgE1hk68OG50VzAY?=
+ =?us-ascii?Q?fIxaRrTzjNzYSpqP1e+J/m0B16mJbKosvHyRDsyWMd0nhHEx+lMqXU73giP4?=
+ =?us-ascii?Q?ztYXadYmLvsj56mwzZFrdYS9c92zBTyGLMDTTvTcAtu091C1Ob4GRnbFvV1X?=
+ =?us-ascii?Q?RaTx4kdmJwOB9r5aaDmAQ+BEafj1GGLY6YUOGL3Zycouz4Ha3nwEClypRQjE?=
+ =?us-ascii?Q?M/tDm7mMkMo0AbrSqZZtI1vM3yIFCEhyRiIDEQj5YmizC9eb9v+Gz7Wp2aBV?=
+ =?us-ascii?Q?n2UimLvnZva+17MmNJv/NKe57JTA?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(7416005)(1800799015)(376005)(36860700004)(82310400017);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2024 00:32:43.6356
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bebb8ece-9ade-4e5e-3ff4-08dc7476894a
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH2PEPF00000146.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7265
 
-On Tue, 2024-05-14 at 12:17 +0200, Greg Kroah-Hartman wrote:
-> 6.1-stable review patch.=C2=A0 If anyone has any objections, please let me
-> know.
->=20
-> ------------------
->=20
-> From: Nayna Jain <nayna@linux.ibm.com>
->=20
-> [ Upstream commit 899d9b8fee66da820eadc60b2a70090eb83db761 ]
->=20
-> The Platform Keystore provides a signed update interface which can be
-> used
-> to create, replace or append to certain variables in the PKS in a
-> secure
-> fashion, with the hypervisor requiring that the update be signed
-> using the
-> Platform Key.
->=20
-> Implement an interface to the H_PKS_SIGNED_UPDATE hcall in the plpks
-> driver to allow signed updates to PKS objects.
->=20
-> (The plpks driver doesn't need to do any cryptography or otherwise
-> handle
-> the actual signed variable contents - that will be handled by
-> userspace
-> tooling.)
->=20
-> Signed-off-by: Nayna Jain <nayna@linux.ibm.com>
-> [ajd: split patch, add timeout handling and misc cleanups]
-> Co-developed-by: Andrew Donnellan <ajd@linux.ibm.com>
-> Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
-> Signed-off-by: Russell Currey <ruscur@russell.cc>
-> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-> Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-> Link:
-> https://lore.kernel.org/r/20230210080401.345462-18-ajd@linux.ibm.com
-> Stable-dep-of: 784354349d2c ("powerpc/pseries: make max polling
-> consistent for longer H_CALLs")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+On Tue, May 14, 2024 at 08:02:53PM -0300, Jason Gunthorpe wrote:
+> On Mon, May 13, 2024 at 12:11:28AM -0700, Nicolin Chen wrote:
+> > On Wed, May 08, 2024 at 03:57:19PM -0300, Jason Gunthorpe wrote:
+> > > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> > > index 15378c131a5bc7..41d7a0664a445d 100644
+> > > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> > > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> > > @@ -991,6 +991,14 @@ void arm_smmu_get_ste_used(const __le64 *ent, __le64 *used_bits)
+> > >  				    STRTAB_STE_1_S1STALLD | STRTAB_STE_1_STRW |
+> > >  				    STRTAB_STE_1_EATS);
+> > >  		used_bits[2] |= cpu_to_le64(STRTAB_STE_2_S2VMID);
+> > > +
+> > > +		/*
+> > > +		 * See 13.5 Summary of attribute/permission configuration fields
+> > > +		 * for the SHCFG behavior.
+> > > +		 */
+> > > +		if (FIELD_GET(STRTAB_STE_1_S1DSS, le64_to_cpu(ent[1])) ==
+> > > +		    STRTAB_STE_1_S1DSS_BYPASS)
+> > > +			used_bits[1] |= cpu_to_le64(STRTAB_STE_1_SHCFG);
+> > 
+> > Should we check ARM_SMMU_FEAT_ATTR_TYPES_OVR here as well? 
+> 
+> It isn't needed, this is just checking relationships, it is up to the
+> make functions to set the correct bits based on things like FEAT data.
+> 
+> > The SHCFG is RES0 when !ARM_SMMU_FEAT_ATTR_TYPES_OVR. So, the
+> > used_bits[1] doesn't need to include it in this case?
+> 
+> In the not-supported case then the bit will always be zero from all
+> make functions and so this will all do nothing.
 
-This is a new feature and I don't think it should be backported.
-784354349d2c can be backported by dropping the
-plpks_signed_update_var() hunk.
+I see. Thanks for the clarification.
 
---=20
-Andrew Donnellan    OzLabs, ADL Canberra
-ajd@linux.ibm.com   IBM Australia Limited
+Nicolin
