@@ -1,101 +1,162 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7319315ADA4
-	for <patches@lists.linux.dev>; Wed, 15 May 2024 19:54:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCEC2F877;
+	Wed, 15 May 2024 21:15:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715802891; cv=none; b=qFF69YckKVo/3fXW5aaN6ZACzQ6BzHgSZ1Wm78aH6amQ8vcDfHkvG8BMcfDMsrIAA48HeWD0Jd9c4qfmzRDMnoxk+z88jbXa9gPv3mAUoCLteeAVCHN/HQhzsD5ADZxd4c+UaIcsbxHI/XT8jsvPGeeixw6MtWp2u5Uk8pnN9Qw=
+	t=1715807738; cv=none; b=GgNaSJYkGzjSu2HFG1loMxO0Qyobt1+SrysBrBaZay69ifGLH6gKB44e5OFwYwvZjgj+m+j3Br0PDuI4v3WuGx5/A5bObLb9mU+G1kKISQailg4jqZ+VHnF9Osz4CSQmH+uFkm9RpEFzlaUAZ5m+PjtMJwxvruVS2FeYyPqrkuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715802891; c=relaxed/simple;
-	bh=RpY1ZLIWGoaTSG2trt5v7gG4sxt/2eeLMWhzG0YEN0w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pDW/ko9K4gMGLISbJLIbSve65dJjlVk6PpHNxtG79TGRqVs5Ww43/BLILaSs1GlA+p1u8OCaHWg4kqcpytzdc8iuwV7IR7vSd6co4v/UPBlrXOTsSbqG/vH38rclGH+JE7VIZMHUQRf0YJVny8XgohC0GcYjFqsRLnph5JzUVJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4u9DShd; arc=none smtp.client-ip=209.85.166.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1715807738; c=relaxed/simple;
+	bh=8zRgYixeWbU5a3kUd0M4xV5TV+AjxJpEmwU45ge4kaY=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=BmsCn2nCgRDW0wQkhSgrZ3VM4nF0BbusABfrVK25kzZEPP9th1rJ3mdbkBqWUhlPh5lMZm40tiwfSqLufAOcW2V5BkLp8VE+00gR7HoCdWvSnEmLWMlvQPkmhFuf/FHhOyapJbP8tZDLGMnDCU8qibbLgJcIR+BcxTAuIuRsbAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PiDOQQmN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4u9DShd"
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-7e1df3a3f38so31567139f.0
-        for <patches@lists.linux.dev>; Wed, 15 May 2024 12:54:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1715802888; x=1716407688; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bl2K9Oe3kWb4B4ZrUWnPsSq8OrI5PV1sUFttZ0QWN3U=;
-        b=g4u9DShdZz1H4Bfx3+XS60cBBB2aO3X8zpXQ0TkOHluO/ZTCmduxi3FpJBKl/VoRoU
-         W7Fyc5TqtrhTOR+ghmxZiU4rGL5zUh/mDsBGTFqcq5WQpbQAI3gs7SExzxs+2R9SKtZh
-         f5ujhuROz4tQcvU7iO9ItQaNJSpCL4q+KwD9c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715802888; x=1716407688;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bl2K9Oe3kWb4B4ZrUWnPsSq8OrI5PV1sUFttZ0QWN3U=;
-        b=dyrHda0az3/RhjvarokDb8pCE4X/4U4tmJYa3rlO1esv0D/Dh7zgJABNG+loLI8z5P
-         ztIg/rKCCJo0lRxuPW7VtQ5h2U9EdWUjt0brDBzwzBmb7Xn7yWstxkN/NcsEL8U5g3Wd
-         /qjfwfIzWdnXcqcgG+SNXtCeCsJg6uOsD7kCpv5VAxMeh3yyLQlt0oXNVoffP1QmnHOU
-         KWCwDKO0MIR1NBclf2SI+UumgpBJnOTyAnFGq2hdTkfin1VMb1zA89Q9E9ywRCYCj1cx
-         zT98SWoO+HnZ++mXvk84LWqkWJbzXkGm6Vwx50ExBfnXHHoOj5oW7+Excuixb0kqbW6O
-         /K/A==
-X-Gm-Message-State: AOJu0YwgtICCcuoqZNZnu/to+jm1AIBtfcClIv6TiNoLhGfSF9h/7Jm4
-	jEJF9/RfzQnlAAogVc8mQpsk6QliiLhksDv5+Pp9btqnffh7JuxNttBnp4zShuw=
-X-Google-Smtp-Source: AGHT+IEt+AFs1YP+RmbhIVtPtEK1Ie3e0g8AnrQnfralB4FlTv2dlK5IMdCEU/UsVRuCWZYJWFA6Ng==
-X-Received: by 2002:a6b:d203:0:b0:7de:e04b:42c3 with SMTP id ca18e2360f4ac-7e1b5022577mr1766220139f.0.1715802888578;
-        Wed, 15 May 2024 12:54:48 -0700 (PDT)
-Received: from [192.168.1.128] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4895841e9c9sm3311353173.4.2024.05.15.12.54.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 May 2024 12:54:48 -0700 (PDT)
-Message-ID: <ee899ee0-f3e9-4f61-b48f-ccd6efa28127@linuxfoundation.org>
-Date: Wed, 15 May 2024 13:54:47 -0600
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PiDOQQmN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B304C116B1;
+	Wed, 15 May 2024 21:15:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715807738;
+	bh=8zRgYixeWbU5a3kUd0M4xV5TV+AjxJpEmwU45ge4kaY=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=PiDOQQmN+bIHiSfpue2YctCCuTwEZkmpnSQGS3TqeNw0bE58cNELXRSd85nazMCPD
+	 yuyXdclaoXVl/gIeV3NxguyB4jU8hRBbwCLWM8Ce6hG3Aftjx0m6mkx3JnkRu8L61F
+	 qCJ/012Qc4p9xwHF+8KEZzJM+driOYnuam1IQoI9owU8e5ESdC4IjvM5Mu2OlTHOjB
+	 g9qjwOJYBTWtHgJDeBBv2x/DFhL6M6/FB+rJSajg2VRDV/830G/RhBhCT1FjyRohhx
+	 FXGpleblOhL/tGUOmGx1hG+eiRwQldeZlT5/MfIcU1Ig4+uSXrn/MJ28b8ibODTfCo
+	 7kY1NLoRgCVzw==
+Message-ID: <f6d7574582592f3bfa50fc45fefc53be.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.9 0/5] 6.9.1-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20240515082345.213796290@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20240515082345.213796290@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAL_JsqK4EZ0RhYCw6ZaeYSJu5Ps1J+J25vjwQy2XvNa5F5d7Pw@mail.gmail.com>
+References: <20240422232404.213174-1-sboyd@kernel.org> <CABVgOSmgUJp3FijpYGCphi1OzRUNvmYQmPDdL6mN59YnbkR2iQ@mail.gmail.com> <b822c6a5488c4098059b6d3c35eecbbd.sboyd@kernel.org> <5c919f0d3d72fe1592a11c45545e8a60.sboyd@kernel.org> <CAL_JsqK4EZ0RhYCw6ZaeYSJu5Ps1J+J25vjwQy2XvNa5F5d7Pw@mail.gmail.com>
+Subject: Re: [PATCH v4 00/10] clk: Add kunit tests for fixed rate and parent data
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: David Gow <davidgow@google.com>, Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
+To: Rob Herring <robh@kernel.org>
+Date: Wed, 15 May 2024 14:15:36 -0700
+User-Agent: alot/0.10
 
-On 5/15/24 02:26, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.9.1 release.
-> There are 5 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 17 May 2024 08:23:27 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.1-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+Quoting Rob Herring (2024-05-15 06:06:09)
+> On Tue, May 14, 2024 at 4:29=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> w=
+rote:
+> >
+> > powerpc doesn't mark the root node with OF_POPULATED_BUS. If I set that
+> > in of_platform_default_populate_init() then the overlays can be applied.
+> >
+> > ---8<----
+> > diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+> > index 389d4ea6bfc1..fa7b439e9402 100644
+> > --- a/drivers/of/platform.c
+> > +++ b/drivers/of/platform.c
+> > @@ -565,6 +565,10 @@ static int __init of_platform_default_populate_ini=
+t(void)
+> >                                 of_platform_device_create(node, buf, NU=
+LL);
+> >                 }
+> >
+> > +               node =3D of_find_node_by_path("/");
+> > +               if (node)
+> > +                       of_node_set_flag(node, OF_POPULATED_BUS);
+>=20
+> I think you want to do this in of_platform_bus_probe() instead to
+> mirror of_platform_populate(). These are supposed to be the same
+> except that 'populate' only creates devices for nodes with compatible
+> while 'probe' will create devices for all child nodes. Looks like we
+> are missing some devlink stuff too. There may have been some issue for
+> PPC with it.
 
-Compiled and booted on my test system. No dmesg regressions.
+Got it. So this patch?
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+---8<---
+diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+index 389d4ea6bfc1..acecefcfdba7 100644
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -421,6 +421,7 @@ int of_platform_bus_probe(struct device_node *root,
+ 	if (of_match_node(matches, root)) {
+ 		rc =3D of_platform_bus_create(root, matches, NULL, parent, false);
+ 	} else for_each_child_of_node(root, child) {
++		of_node_set_flag(root, OF_POPULATED_BUS);
+ 		if (!of_match_node(matches, child))
+ 			continue;
+ 		rc =3D of_platform_bus_create(child, matches, NULL, parent, false);
 
-thanks,
--- Shuah
+
+This doesn't work though. I see that prom_init() is called, which
+constructs a DTB and flattens it to be unflattened by
+unflatten_device_tree(). The powerpc machine type used by qemu is
+PLATFORM_PSERIES_LPAR. It looks like it never calls
+of_platform_bus_probe() from the pseries platform code.
+
+What about skipping the OF_POPULATED_BUS check, or skipping the check
+when the parent is the root node? This is the if condition that's
+giving the headache.
+
+---8<---
+diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+index 389d4ea6bfc1..38dfafc25d86 100644
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -735,10 +735,6 @@ static int of_platform_notify(struct notifier_block *n=
+b,
+=20
+ 	switch (of_reconfig_get_state_change(action, rd)) {
+ 	case OF_RECONFIG_CHANGE_ADD:
+-		/* verify that the parent is a bus */
+-		if (!of_node_check_flag(rd->dn->parent, OF_POPULATED_BUS))
+-			return NOTIFY_OK;	/* not for us */
+-
+ 		/* already populated? (driver using of_populate manually) */
+ 		if (of_node_check_flag(rd->dn, OF_POPULATED))
+ 			return NOTIFY_OK;
+
+
+>=20
+> > +               of_node_put(node);
+> >         } else {
+> >                 /*
+> >                  * Handle certain compatibles explicitly, since we don'=
+t want to create
+> >
+> > I'm guessing this is wrong though, because I see bunch of powerpc speci=
+fic code
+> > calling of_platform_bus_probe() which will set the flag on the actual p=
+latform
+> > bus nodes. Maybe we should just allow overlays to create devices at the=
+ root
+> > node regardless? Of course, the flag doc says "platform bus created for
+> > children" and if we never populated the root then that isn't entirely a=
+ccurate.
+> >
+> > Rob, can you point me in the right direction? Do we need to use simple-=
+bus in
+> > the test overlays and teach overlay code to populate that bus?
+>=20
+> Overlays adding things to the root node might be suspect, but probably
+> there are some valid reasons to do so.
+
+In this case we're using it to add nodes without a reg property to the
+root node.
+
+> If simple-bus makes sense here,
+> then yes, you should use it. But if what's on it is not MMIO devices,
+> don't. That's a warning in the schema now.
+>=20
+
+Ok. Sounds like adding these nodes to the root node is the right way
+then.
+
+I wonder if we can make MMIO devices appear on the kunit bus by adding
+DT support to the bus and then letting those nodes have reg properties
+that we "sinkhole" by making those iomem resources point to something
+else in the ioremap code. Then we can work in MMIO kunit emulation that
+way to let tests check code that works with readl/writel, e.g. the clk
+gate tests.
