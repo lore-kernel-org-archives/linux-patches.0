@@ -1,178 +1,192 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83FE43144
-	for <patches@lists.linux.dev>; Wed, 15 May 2024 13:06:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715778384; cv=none; b=qrqgKUqXZWe11TY/0pSrYvwWsrlr7haB7rOW9WVb9vORm/+tO5svQAPIS92Z72uqfSllCzdKFpdLEFG+e7UB6nqqLndNv5ja2WKX0gm0A2FLRq01VeLQtc07xyvO5+HuNSo4cLeiylpEss5gUri5gRMa74tjXSQ8pccNxYvX3KY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715778384; c=relaxed/simple;
-	bh=A0YxFuuJShHBQ3xCPsMtAedx1f9EA+YbMAddHPRKwiU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DJI28n8oetkNZIbK1w6QW0OcRLgyLp6m8QySNjzudO3DLr14APAfLFCrS5fVSFJ5wnbFDbm5qg+Ayngy7Xm33ts2jWGzzZRzx5iOkuOqkO+021v4rD/b/jedd0LtNF8sX7EZq1lNuLXwDdlJzv33p/M7tucBfEJfKVhnFz42sTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rvdY/AXK; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9F312C7FB
+	for <patches@lists.linux.dev>; Wed, 15 May 2024 13:42:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1715780553; cv=fail; b=pWqk6CZ9gPi8wabDipQCDmOzH30idE/jmqEDKweFniOUiFzHfRHJ5zqJxQX58V17yZhDJ946Fu98+q65XBW6cdXFMgNESralVDXZaDo8yOD7jen1xye+dAFx97g7jkdVyaaTlp0Ea9vgVU3XpriASmjcSmZa7Rzs3Qi4LoJi/AA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1715780553; c=relaxed/simple;
+	bh=7jHYQGHYKXK/Zrq9yqk5QBctbXJ1Kd8N7WX/h7u90iQ=;
+	h=To:Cc:Subject:From:In-Reply-To:Message-ID:References:Date:
+	 Content-Type:MIME-Version; b=oLhePX/kKxURcAjksoBMoyl4ZM9j6Hmpu6qLDq44ZK1HAjpu48zDLuYGkOu99+PSmryTiitpYFKZp/QLaRjWwhMfegaCjQZ27J06ThU0L/N3PCV5vdteLoOo6jO1kDKqbsK2OVsgDk3RbbGDmIUZgPHDq1mR5q5KNKS1adDkgsI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=fVeCtgPH; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=kOhMVGf1; arc=fail smtp.client-ip=205.220.177.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rvdY/AXK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D87C116B1
-	for <patches@lists.linux.dev>; Wed, 15 May 2024 13:06:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715778384;
-	bh=A0YxFuuJShHBQ3xCPsMtAedx1f9EA+YbMAddHPRKwiU=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=rvdY/AXKAcsO8WrapFPJs3ADz99OtdbHGqSxheuLegvO/mgbeU30ahKSaF0QhsY5y
-	 jVWBU2e1R8nM9RKtuKLZcyqRzLPvxodOMT9Kmx/4PVwKtjQfAg8Ia4yOAPG6t03QY1
-	 mVii6+i5lWDUW1jIt0dUYlNy9XJEErw5WRExs39M8NU2NhhJnZUw2VYMgelfBTGTkV
-	 ySX7RroJD4hhnzC/U9+2V4v92uR81h/Lp/b3KAXUqW/Vw2Z2SmwUUL1ILSBplQOqrZ
-	 19upOy+ZKuH9uiMVeafnaM9h5/9salMdrPI7ugdL7UYnZiZIrZeTt99w8AHySqIpzv
-	 uR7gXmEpq/TMQ==
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-51f99f9e0faso7824142e87.2
-        for <patches@lists.linux.dev>; Wed, 15 May 2024 06:06:24 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVfjbWUMDeO8bSDKxEIU2VAvg0HQV0+tPfl9Y+/ww3rAs365pzY7Pr7KuhF1WBsU3eTCW2556CDQuifsZoeHPq2tT6xXBa1NA==
-X-Gm-Message-State: AOJu0YyfRboBV7nTp8yHP6XbX/Qzp+owTZDMpYKGQLuYUP0tPC1oMydI
-	xhJsz8kzQ+3xopHXpO8JS1OCwaAM66wDW8BG2h2unie3Ak8jeIZHFwaTBuQJUryWzJOTxsSgteM
-	7JNn0IBCCzfHTJ7XXo7mjBYY+9A==
-X-Google-Smtp-Source: AGHT+IFx85HwyGkq7nhuxIMzVBaBcFT+g2jH7StU0bEW7eR8FFo2zOGOMnX4dCVgnkGHDb6Fk2RaGnQFsJxSXXkyhAc=
-X-Received: by 2002:a05:6512:3043:b0:522:36f7:3660 with SMTP id
- 2adb3069b0e04-52236f739f8mr11158575e87.36.1715778382780; Wed, 15 May 2024
- 06:06:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="fVeCtgPH";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="kOhMVGf1"
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 44F7n0VG008470;
+	Wed, 15 May 2024 13:42:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : in-reply-to : message-id : references : date : content-type :
+ mime-version; s=corp-2023-11-20;
+ bh=BKvgrQRxaFbuG6JqAs08g369J58ZNGTLWGpjM9Wvjvg=;
+ b=fVeCtgPHyLHKk5d/gLfFxQjQWjPxQQkXgZjHmRDdxIu8lG+skVi8mhr32WAwdBnUVhWS
+ jUijRbQ8RC0cDBzioDhkfMbOpP/K12ipQtGlH+3Xm8/S/8CSRgKKD888pTT5PcHACVle
+ mMB4rF8U+XZxO6aQreqykjAR8cjLkUq9DRph7AV0nzx8VAd7i5uVkqhR7kQdAXk1TZ4z
+ Sy4eZl9iTNLcG7VKrypotwedRVsPZqW563lwx6jkUbASn34zqT1bf7TZK8BcewOSPlTI
+ Zbb8h2xDR9sLJrORACcoEOkJ3irR+/WzSUk8xJRcqjhlqammT2p6OioAWAVaoGHXvCIS EQ== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3y3t4fd27k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 15 May 2024 13:42:26 +0000
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 44FD64om018212;
+	Wed, 15 May 2024 13:42:25 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com (mail-dm6nam10lp2100.outbound.protection.outlook.com [104.47.58.100])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3y1y4f1694-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 15 May 2024 13:42:25 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jiOwHd7uMmEWUkKhyjfIyurEdqArirL92ifCTM71zP42UMj3KRnBP8WpvLVioDr3INYPfs+8sUOJ63f7wpnp4cnFsEVEGmlH5d/VvSlV2NPI13Nf4oQlp+Kd3GvL/KW20sqhoZXmUF6NsRSsIBDvSddrqHFaDDI8FgBgraH7nsT5jDarNyTH/mh6eg2aqG2Jm26qDQIJ7gtTmjqizrWm7SZCGtJggdfvw7eEzCW+zStBiU1H4odan4dFcOwoB5BoBr247SMQIENy7UWiGyfut8UK+Y7eLoCmta8MT9Mhq7v5pFBDw/nh2rCkN28itIH9mxt1S/5wtHoPIPwihNRU0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BKvgrQRxaFbuG6JqAs08g369J58ZNGTLWGpjM9Wvjvg=;
+ b=mSevRIa3vhDEHlbiYsCUTrJn57qGWCc5fL8GmQSQSwagoBsTl66w+jGYu71WcQSdfP1DdVkXQC7tfznmaJTPZJzSNOgKR0LATRtaJqaIQy8kmhmqN9X/qfahqKXt49FyHOFLasTE4vAyITX9hI15hk/4QT3f7jtCyb1q5VJd5x8L+9g7K8q+qluG/PTHj07dlJ1ovZm6MN91hbvo4tYpuaLxREVlzrEd3O9iTdutDaGO8/QbUwvHzYiqWb2S02u4t1OqewYMYIJuorduSwao36kenls3AHGLHp5S7tXuYi/de6+X6iFHSyljbo0LoB6pNU/BXIIIv1y20gd+Z9mmug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BKvgrQRxaFbuG6JqAs08g369J58ZNGTLWGpjM9Wvjvg=;
+ b=kOhMVGf1bB6DybsvpY1K8VwakRUOW+Lqmfi9MgDqPjeEjHKmoqXSTj07XICtSR0VEXCQ3Oakzs3wWq1WKRjis5FsQF0ZAjPnGYT8kRbtH9aHY2xCgDwQMOb0UfCOjE6x/BB3jpRzEg7J4G9jTrFCRRqACcqC8loffhCyGjvvz5E=
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com (2603:10b6:510:3d::12)
+ by CH3PR10MB6716.namprd10.prod.outlook.com (2603:10b6:610:146::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Wed, 15 May
+ 2024 13:42:15 +0000
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::5c74:6a24:843e:e8f7]) by PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::5c74:6a24:843e:e8f7%4]) with mapi id 15.20.7587.026; Wed, 15 May 2024
+ 13:42:14 +0000
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+        Kashyap Desai
+ <kashyap.desai@broadcom.com>,
+        Sumit Saxena <sumit.saxena@broadcom.com>,
+        Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+        "James E.J. Bottomley"
+ <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Tomas Henzl <thenzl@redhat.com>, mpi3mr-linuxdrv.pdl@broadcom.com,
+        linux-scsi@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] scsi: mpi3mr: Use proper format specifier in
+ mpi3mr_sas_port_add()
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+In-Reply-To: <20240514-mpi3mr-fix-wformat-v1-1-f1ad49217e5e@kernel.org>
+	(Nathan Chancellor's message of "Tue, 14 May 2024 13:47:23 -0700")
+Organization: Oracle Corporation
+Message-ID: <yq1y18bry3h.fsf@ca-mkp.ca.oracle.com>
+References: <20240514-mpi3mr-fix-wformat-v1-1-f1ad49217e5e@kernel.org>
+Date: Wed, 15 May 2024 09:42:12 -0400
+Content-Type: text/plain
+X-ClientProxiedBy: SJ0PR03CA0127.namprd03.prod.outlook.com
+ (2603:10b6:a03:33c::12) To PH0PR10MB4759.namprd10.prod.outlook.com
+ (2603:10b6:510:3d::12)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240422232404.213174-1-sboyd@kernel.org> <CABVgOSmgUJp3FijpYGCphi1OzRUNvmYQmPDdL6mN59YnbkR2iQ@mail.gmail.com>
- <b822c6a5488c4098059b6d3c35eecbbd.sboyd@kernel.org> <5c919f0d3d72fe1592a11c45545e8a60.sboyd@kernel.org>
-In-Reply-To: <5c919f0d3d72fe1592a11c45545e8a60.sboyd@kernel.org>
-From: Rob Herring <robh@kernel.org>
-Date: Wed, 15 May 2024 08:06:09 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqK4EZ0RhYCw6ZaeYSJu5Ps1J+J25vjwQy2XvNa5F5d7Pw@mail.gmail.com>
-Message-ID: <CAL_JsqK4EZ0RhYCw6ZaeYSJu5Ps1J+J25vjwQy2XvNa5F5d7Pw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/10] clk: Add kunit tests for fixed rate and parent data
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: David Gow <davidgow@google.com>, Michael Turquette <mturquette@baylibre.com>, 
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
-	patches@lists.linux.dev, kunit-dev@googlegroups.com, 
-	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, 
-	Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J . Wysocki" <rafael@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, 
-	Christian Marangi <ansuelsmth@gmail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Maxime Ripard <maxime@cerno.tech>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4759:EE_|CH3PR10MB6716:EE_
+X-MS-Office365-Filtering-Correlation-Id: d176672d-377b-4034-ac27-08dc74e4d432
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|366007|7416005|1800799015;
+X-Microsoft-Antispam-Message-Info: 
+	=?us-ascii?Q?PG2dvcgPvc4oUcw8kwcInTWdP5r0z5wHfEjgu7umrJVbbmC39qtmahvCQIOm?=
+ =?us-ascii?Q?AN5AWl6otjyNCALihWAmWFRvtdnD2f6MStp0bVJpEKJvyOpW9nP0MwyF7mmx?=
+ =?us-ascii?Q?4mnOuPbGxZEgO5E6YQLcPQUyLJqs+NCZNc6ef/iupxzQATp9BuxFd5suG6dI?=
+ =?us-ascii?Q?IQBAR5IoqV7eqmTXksOHPZjaFxNtYvfYiSseAcL/Jz8sTi1ZUlLj4DfC68Lx?=
+ =?us-ascii?Q?kI7YDhd0fqEEXFhAauWoQKGaKHJzyetSHw9Iek5GKNe+QPY8jpFoE9PphA7Y?=
+ =?us-ascii?Q?kYEqUd8GCbcdwT+lZuBPXXQu2fHPiZSPlj5qP4qOO2C9hktsMjG5f1c5Rh3C?=
+ =?us-ascii?Q?QKTqj8X8pqwPryR579pI14gtlBlHw/5rgVToDP8GMBTWPbspvmEf1mARrvk3?=
+ =?us-ascii?Q?GyfO2YCQDxfg2NjvHWZQHQn9PITZBzlNwZGU/o15RN/ATkf0mWYDntpvH4Ir?=
+ =?us-ascii?Q?E3P/3TEzDvO13qa6XB2w7UcebEGfSqxMrRg6UKor+Wf/kq4D9Tw2T3atCGV4?=
+ =?us-ascii?Q?PbyyZie2LdJxlCTO01FdO/EWdCDebnoqwen9r7blQtAkXMIj7LEBbgg9p7y+?=
+ =?us-ascii?Q?Z62MBB5NkNW82oJ/4inYMhgdCTGY3poordwObBor8lyla5kOUsK/IE64L6vo?=
+ =?us-ascii?Q?TrtPQZ8O/NrwJFsl2ITouMnaBArdFADIE32tAmjNueBhjAHrDwI2Z8bNBULr?=
+ =?us-ascii?Q?dh0+FvD+EcZUxSLxKyatdRWAyvrqX8xtJ4J9XetQWTYSPOE4pgm1HVpr/gu6?=
+ =?us-ascii?Q?o3d0CF+JGTLGYXECTEgaZWYTc/Lk/jfV2uRyb9AaNKL7Ec5MYJchy/JPzk/W?=
+ =?us-ascii?Q?fAy6KWEdJlZr4AzzEZ9098tprMTsohFcaLngD3NwzCXbaTrfD/qQOa3EmIhB?=
+ =?us-ascii?Q?Mbm2oaBbkBljI5PWNvcLGjxnXLaNUHER9zQ7W87T1DSwCH+ol4CPVkoxhjLQ?=
+ =?us-ascii?Q?iS0+JfLPItiaK7pK2R0WV24dlPGCF8/YH8Q9za4meQ5rTgU2LmW+3FoWlO09?=
+ =?us-ascii?Q?muF3TLMjUx/AlyMKy3SaH80QyipsG6r/i7hKRzOWcRVkWQ1uVIqRMMalUfMW?=
+ =?us-ascii?Q?Tijzp7Q+CDrvBy0vg6b9JskN54fFnCv4+ykpo2HyFVXHugC9Yt+9t6g0R2Im?=
+ =?us-ascii?Q?fZiqvs4QmbUBTpJ69sYpVC0KsQpcuPBpPpYrg1x4IOgTT5MlwyRuN+T09YC5?=
+ =?us-ascii?Q?acNNpMYYcArfYgogqKWOZM//V2Z9EQWP6c4OmWmgpfxrOuHJFRtTeFIkKZPf?=
+ =?us-ascii?Q?HKoQP8JjAFB7D2+idV2KQSdws02h1v+S6mwMON2SJg=3D=3D?=
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR10MB4759.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(366007)(7416005)(1800799015);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?us-ascii?Q?YY1jY1KBgxn8s36VFnpTJPXaeK/T9mn6TuGCYz4Xlmo386VVENlKVpu+nPJk?=
+ =?us-ascii?Q?1S/1COS/gFgmo4okk4VL/GMUY+6Vhby0MTDNw/X7aRsq7SIz5URpgUZnHhS0?=
+ =?us-ascii?Q?cwmerDM7iqjmBgQnU8xyVCEsHaRfyw7XxS3XY0WqnKMDXIECw/0Htmr3Z/63?=
+ =?us-ascii?Q?wgP93TTRzmxwq6K2cbXO6yM0vx793ThkhVz2vV35dl/KI6eqnJyFLE1JXL9i?=
+ =?us-ascii?Q?Qxs4PXKNrNBx75WwavRJqOkpQme278oix/Ohx/QrDo6B5tDUo3Q22cEDw6pK?=
+ =?us-ascii?Q?CckuN+JvRI2/wZ9Z/0yGW8y0hkvsUQITB5yINJqdUK9M3Qmw0RPBTelbL5MN?=
+ =?us-ascii?Q?ztrBXKITizQRbum2qN960eeMjWo7At8m9doMM90xMwN5xLYXYJvzRCKGIdqP?=
+ =?us-ascii?Q?P14OokKwjvArygte5l6RmxDlHgTcjFfW2hQQRQvFA8fPJGa6dbhd5ulOyv8o?=
+ =?us-ascii?Q?jRl+kcltKm9cFU/IP88W0SwmRuverQiu2WoQ9mlTQYFNHxst4mX+Che4eXIF?=
+ =?us-ascii?Q?ZlYtJV3qscNSvCFXuNhDynpr5Up8bR9CckmdhOnPciqQ7jxrnYLNpQ55RlXv?=
+ =?us-ascii?Q?HWvs7pYhWyObTEPXtWRzGdHXSPxTE778pKWig5p1UYCYY8sx2tWG4k+K5Zjl?=
+ =?us-ascii?Q?noxcQyjUroS5n0qFfPeWkbBQOsi2hKYON27O4cuWVc7vPeF6Gw6epB8UYDiT?=
+ =?us-ascii?Q?yVPKCT39b/CNXCIJ/71o0N5V/YHzCLwJNlK8+864/SMbzlRzBv+aQUsj7qf9?=
+ =?us-ascii?Q?8g/SoUQGombwpPm2oEQ23b/XC4vj6mP/7WiHDLahIb7C5V1KPz7cQTlOrN6J?=
+ =?us-ascii?Q?hritgPZKzFby7uKHU3AGBUEw5KBfXWFhxafdgMfh8D6/DV0nqZlRYu9hcubD?=
+ =?us-ascii?Q?Lqmz6nJFexJYDf5Q+J4P4dj8r6nO/ISiX3EzCbU86ypCMoPG6+8D6q7s3eZs?=
+ =?us-ascii?Q?NGEfeP84GLMESlD2K2wH/xGTsPsvdd1gPWx8XMyxIUysiB63TWxGVp4FecUK?=
+ =?us-ascii?Q?IkomCIzRXj7+kyC/opEL6kpHzAo8NH8jBnaNoGsibWuNlJe+3pXloiQq2e0B?=
+ =?us-ascii?Q?9EcYeZGPjq6/9sr7fJePOboEYweUgPTKaQChpRtt9xssDC/8qMF5BGgS/PvA?=
+ =?us-ascii?Q?LBdbydFwtDeefyS472V25feAydrqHXge9qYMZfivsUjPypnC58HESjUn7Ie9?=
+ =?us-ascii?Q?uedmY/xJHgW0o832KuC4jtS69xas/AaGqjSmP+4qj1eLh7LmWOzJM5QzYJJI?=
+ =?us-ascii?Q?KdNKtYg8eeW/yN7wB92u1Tc3wz/h3IJU8c9g57SIlul20lkwgrJ23aH+nkkf?=
+ =?us-ascii?Q?f75cTCsB6S0mqqTfXGQjyTCtRNwaGGwsumYiggRiuP01nEr35YwXp/1iiWMd?=
+ =?us-ascii?Q?o7uozo4eYZ4rSbQg6JNCG1ZWAfuF3Vbvo5hWqKM7jSVHcGjwRt5LrBkb+Dn8?=
+ =?us-ascii?Q?dDpvCk/Yuy0Ht7SqtrlfITdfM3K032Eb30tCKDzDJ2udwjjkw+Q/2dYSVzPR?=
+ =?us-ascii?Q?dNLAzHymZyMDWzTaqNdbrenj5ctTenmE7a0HtLHUuMOyAd//x5vEjEi0+vIO?=
+ =?us-ascii?Q?cKk4Nj7owBFVGd/Y8w3w8rIMthCT/6inPuFPg/YI2bu3MJBVZ2iKinOFhHW+?=
+ =?us-ascii?Q?eA=3D=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	pbwONkha2eUy4i5YmfWT5BQKgm8OBKkST4Ia9VUuO27ho8iF1bV2gc8+z2/zTlaTdgNut6er6ZBg6nD5nfjx67Zwb+pyXgt4x0MDXvg7jbV4x6B4mjZMiDf/8GyMSJQUM1JdwsGgEBvhfHZ/TqNq1JzIQudArWdCjgdvFF1nUbove96rD2SBD+0AQ1CFTVs7FXrIEtV/JqQc9x9u3dqar27agICVPO6pRcumwL/3opSc4KSWSdC4H0yHJjBwyaTVQA+NX8I1K+mFPPCA4SEtlmzxtAeQnK9aWh61CZRSwP8jULE7BJfCm5rm8HyRzOQs9tMJUOBiQsyHFucMiZoyM3N/xPJ1SIzVDPWBWpDMEB44aMPexHrKfugo2skVgfiKfcLD+gUavPgohKd2rNNIJszEFdOJAPD8ru2aQjS75NLAVm+kZZ4P2BT+X99wiu+C4htmETpemHXbDvjecEAuuUwdXixEqvFBFJ2ExqhKaq9XM7UksXfdsilvBvYPuB2KYOcAE+uoe00EOsetrmDTeQzxcN/Kb1i0/v/9ck3ZE7WpgqZs46CiRB9on1DBjsyk1pI56nw/tpXRHdKKqUDxhwVtKHGe6ntp+jz64odsdGo=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d176672d-377b-4034-ac27-08dc74e4d432
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4759.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2024 13:42:14.2226
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UWr7oFR4F9v6J85C8buuROERMTbqArC/hMszrdowqew+Yz0T8EeRuA76au2K1Pb9mIZYqTeZd5KpYQoYXiPowAO2ye7q+HVCf34yk2Fnt00=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB6716
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-15_07,2024-05-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 mlxlogscore=856
+ adultscore=0 mlxscore=0 spamscore=0 suspectscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405150096
+X-Proofpoint-ORIG-GUID: dE1evrrNcsL1rhirPaKoqR6nLvzlfRls
+X-Proofpoint-GUID: dE1evrrNcsL1rhirPaKoqR6nLvzlfRls
 
-On Tue, May 14, 2024 at 4:29=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wro=
-te:
->
-> Quoting Stephen Boyd (2024-05-02 18:27:42)
-> > Quoting David Gow (2024-05-01 01:08:11)
-> > >
-> > > The other thing I've noted so far is that the
-> > > of_apply_kunit_platform_device and of_overlay_apply_kunit_cleanup
-> > > tests fail (and BUG() with a NULL pointer) on powerpc:
-> > > > [15:18:51]     # of_overlay_apply_kunit_platform_device: EXPECTATIO=
-N FAILED at drivers/of/overlay_test.c:47
-> > > > [15:18:51]     Expected pdev is not null, but is
-> > > > [15:18:51] BUG: Kernel NULL pointer dereference at 0x0000004c
-> >
-> > This seems to be because pdev is NULL and we call put_device(&pdev->dev=
-)
-> > on it. We could be nicer and have an 'if (pdev)' check there. I wonder
-> > if that fixes the other two below?
-> >
-> > ---8<---
-> > diff --git a/drivers/of/overlay_test.c b/drivers/of/overlay_test.c
-> > index 223e5a5c23c5..85cfbe6bb132 100644
-> > --- a/drivers/of/overlay_test.c
-> > +++ b/drivers/of/overlay_test.c
-> > @@ -91,7 +92,8 @@ static void of_overlay_apply_kunit_cleanup(struct kun=
-it *test)
-> >         dev =3D bus_find_device(&platform_bus_type, NULL, kunit_compati=
-ble,
-> >                               of_overlay_bus_match_compatible);
-> >         KUNIT_EXPECT_PTR_EQ(test, NULL, dev);
-> > -       put_device(dev);
-> > +       if (dev)
-> > +               put_device(dev);
-> >  }
->
-> This last hunk isn't needed.
->
-> >
-> >  static struct kunit_case of_overlay_apply_kunit_test_cases[] =3D {
-> >
-> > > > [15:18:51]     # of_overlay_apply_kunit_platform_device: try faulte=
-d: last line seen lib/kunit/resource.c:99
-> > > > [15:18:51]     # of_overlay_apply_kunit_platform_device: internal e=
-rror occurred preventing test case from running: -4
-> > > > [15:18:51] [FAILED] of_overlay_apply_kunit_platform_device
-> > >
-> > > > [15:18:51] BUG: Kernel NULL pointer dereference at 0x0000004c
-> > > > [15:18:51] note: kunit_try_catch[698] exited with irqs disabled
-> > > > [15:18:51]     # of_overlay_apply_kunit_cleanup: try faulted: last =
-line seen drivers/of/overlay_test.c:77
-> > > > [15:18:51]     # of_overlay_apply_kunit_cleanup: internal error occ=
-urred preventing test case from running: -4
-> > > > [15:18:51] [FAILED] of_overlay_apply_kunit_cleanup
-> > >
-> > > I've not had a chance to dig into it any further, yet, but it appears
-> > > to work on all of the other architectures I tried.
-> >
-> > Cool. I don't know why powerpc doesn't make devices. Maybe it has a
-> > similar design to sparc to create resources. I'll check it out.
-> >
->
-> powerpc doesn't mark the root node with OF_POPULATED_BUS. If I set that
-> in of_platform_default_populate_init() then the overlays can be applied.
->
-> ---8<----
-> diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-> index 389d4ea6bfc1..fa7b439e9402 100644
-> --- a/drivers/of/platform.c
-> +++ b/drivers/of/platform.c
-> @@ -565,6 +565,10 @@ static int __init of_platform_default_populate_init(=
-void)
->                                 of_platform_device_create(node, buf, NULL=
-);
->                 }
->
-> +               node =3D of_find_node_by_path("/");
-> +               if (node)
-> +                       of_node_set_flag(node, OF_POPULATED_BUS);
 
-I think you want to do this in of_platform_bus_probe() instead to
-mirror of_platform_populate(). These are supposed to be the same
-except that 'populate' only creates devices for nodes with compatible
-while 'probe' will create devices for all child nodes. Looks like we
-are missing some devlink stuff too. There may have been some issue for
-PPC with it.
+Nathan,
 
-> +               of_node_put(node);
->         } else {
->                 /*
->                  * Handle certain compatibles explicitly, since we don't =
-want to create
->
-> I'm guessing this is wrong though, because I see bunch of powerpc specifi=
-c code
-> calling of_platform_bus_probe() which will set the flag on the actual pla=
-tform
-> bus nodes. Maybe we should just allow overlays to create devices at the r=
-oot
-> node regardless? Of course, the flag doc says "platform bus created for
-> children" and if we never populated the root then that isn't entirely acc=
-urate.
->
-> Rob, can you point me in the right direction? Do we need to use simple-bu=
-s in
-> the test overlays and teach overlay code to populate that bus?
+> When building for a 32-bit platform such as ARM or i386, for which
+> size_t is unsigned int, there is a warning due to using an unsigned
+> long format specifier:
 
-Overlays adding things to the root node might be suspect, but probably
-there are some valid reasons to do so. If simple-bus makes sense here,
-then yes, you should use it. But if what's on it is not MMIO devices,
-don't. That's a warning in the schema now.
+Applied to 6.10/scsi-staging, thanks!
 
-Rob
+-- 
+Martin K. Petersen	Oracle Linux Engineering
