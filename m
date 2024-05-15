@@ -1,118 +1,116 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05D72CCD0
-	for <patches@lists.linux.dev>; Wed, 15 May 2024 12:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ADC6F073
+	for <patches@lists.linux.dev>; Wed, 15 May 2024 12:14:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715774596; cv=none; b=hlESm0Rw0xpaHAAtM20EAXto37JpuiNIyPjp4bKBPWnZ7IvkBlCJCofKiaysxnyA92v6kYRFoGNVIXgdxthOa3NWcGZf7ipcucU8Tc+vkLSE72MJZXcwIRIP7FDWku3QgF0Fp/1/XmjYZdO74WFVbCP8yXpx2NLYGZRgKXaYd2A=
+	t=1715775268; cv=none; b=t2awf2AmVzTjRC8uxtd17BXm1rFCyGGBAExpfKLkaTKxBIWLD+GiwDimVh9KcvjXkVkv+Qhnp+tVo0KyMkiCkWi/hXDTG3zMbR38doC9mnIulmY55c6R9qeG651oH2HrX4Zg4m3eO7dWPMTuGO2CLTq+1vXyK6UXzkk14tG67rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715774596; c=relaxed/simple;
-	bh=cZULlQnzOZ2Pej2Sv06sBDw4hjTWF4t0tcOP2mtKUnY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JuuSItBBqE7tuItNzYTkydNH5w+YxTGhdrXW8ayXsbbjmL14i+/oXHikNtedIaIhBnAR7Ok6zJyExDvNXNWTkclfv70bB1UnGoJcgKWVQd8/oBBSXrZVjDUkHzoZqBgh22XRWjlCMIOV5gqAzbIFXB1x97rsyZd20ThD6fdHYO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=Masb01gc; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="Masb01gc"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1eeabda8590so48991475ad.0
-        for <patches@lists.linux.dev>; Wed, 15 May 2024 05:03:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1715774593; x=1716379393; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4DcB2okqnAgkynFg9jcCuDayVN3zRAZHBcQStj5iFBs=;
-        b=Masb01gcdDIO/C9EbxBGRH5ZMvqJm336//2F6WM0QgBW69GllcXPkwSmeBYE9uhHzK
-         3s/y7zIxsnMSLG0AVtJ9l+NOCm4puPUfPGbXgHfSlzKN+oprteStTGkiOef9kQLwOXDb
-         pyn7oRs7D8ZoTKylyYLniM2wHCmdI97TpP55RImttl/dGWb/rqBKnsJTY0CmoIByUQqA
-         19oaqSEhj0DEVVoMWH0m3ffKlCOoGY/J/00byTNRYQaUVtNAZv9zLcA17LWhXSzcnAdl
-         DrmuDBlvWlZNsoQ2cfKnhKuogYf9i93KmZPKDg5/ESDKms9iPddQ3r4U/FieP05OMTRb
-         LSUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715774593; x=1716379393;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4DcB2okqnAgkynFg9jcCuDayVN3zRAZHBcQStj5iFBs=;
-        b=t0bJcBmDkYYsP2VG60zEMGuRhEo5xC+63Ghp4xJXZmyEQ7UB7/8sbnKa4/s/HH3ueW
-         zpowephjui8cEEoU2sxa7iqqLupQLMBzslMO1t2oGMw7aYcZdCD1wurDfjAduXhXOiNK
-         5v+1QiEethMquEwKOR3NsA2mWVWsQ1hfKYvCc47wzxkiPmhPbz4NlsiB5xV2f6+j67gv
-         ShPqZLgBtlVup5M47k/pBWo0R3wFQSh4o/LNGF1dR0WC3pHhcrHoYtkjYAciBBpAxnfZ
-         gAH1xcUgj+S2OEDR9TVNZdbejJKxSNgWuXUgjMOXHENv1ZbCRu5xKprcB1lG1bKwHAIu
-         FsFw==
-X-Forwarded-Encrypted: i=1; AJvYcCUzf1xWquzyv2SS9RhvuNTYDrk2gLnXU8MepOzNXQ4DbaP87A4iTUFdZ+QQ34E3vK7wqv0mdMpEQClw1YIEEA0SDkDpwtQ7VA==
-X-Gm-Message-State: AOJu0Yx7vTxR6m6jvoQIE9J3PyInegzeU6G0eb4D5ab/5+OvIg1zHnut
-	ZcFwfhBiiFNljgWrrZPFTlC2iXC1ybTmG+dgRuphbM32bvOuC7WmgqGxFFYZOjogOVfgAo76t32
-	r9j/qoxb209NKRu1FHQtPiyAw0ZogDockKyl9Jw==
-X-Google-Smtp-Source: AGHT+IFy3gmVgZkNpyZFzjDzx0VAz+u8/kXHpLODxZzc9kj++XjUCO678HSP+AFx1+KEX/6z3WmoITL5ipamNpy1768=
-X-Received: by 2002:a17:902:7d95:b0:1ee:b2ff:c93a with SMTP id
- d9443c01a7336-1ef43f3e4admr144321025ad.40.1715774593154; Wed, 15 May 2024
- 05:03:13 -0700 (PDT)
+	s=arc-20240116; t=1715775268; c=relaxed/simple;
+	bh=5vvTdF84HZ5Xj8N79djUvlGKFH96u+9TgIV5IIPavf8=;
+	h=From:To:Cc:Date:Message-Id:Subject; b=QvYnWmzEyrn33FA2gnbgi7ofhXH3yL2ND+9gzmJWhPVdlo7fECVLTS7Sj4MtXe1I6jB4Ccovx4FdjCFTKtZFYjmFOU4/peMvewUIGBwSFcGzUTt17ObojV88aVIDOMIHBcY6Snx0s4Comsr1QPItHPorU/VO8ElVYTbO+w4VANI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662D4C116B1
+	for <patches@lists.linux.dev>; Wed, 15 May 2024 12:14:27 +0000 (UTC)
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Wed, 15 May 2024 13:14:24 +0100
+Resent-Message-ID: <ZkSnIOEBcPkT5f5m@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Wed, 15 May 2024 07:26:09 +0100
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=oSZY=MS=everest-semi.com=zhangyi@kernel.org>)
+	id 1s785W-002hQg-VZ
+	for broonie@sirena.co.uk; Wed, 15 May 2024 07:26:09 +0100
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id CFF9F6134E
+	for <broonie@sirena.co.uk>; Wed, 15 May 2024 06:26:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id 9496CC116B1; Wed, 15 May 2024 06:26:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6CC4FC2BD11
+	for <broonie@kernel.org>; Wed, 15 May 2024 06:25:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 6CC4FC2BD11
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=everest-semi.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=everest-semi.com
+Received: from unknown (HELO zy-virtual-machine.localdomain)([116.233.72.63])
+	by sina.net (10.75.30.239) with ESMTP
+	id 6644554E00027164; Wed, 15 May 2024 14:25:19 +0800 (CST)
+X-Sender: zhangyi@everest-semi.com
+X-Auth-ID: zhangyi@everest-semi.com
+Authentication-Results: sina.net;
+	 spf=none smtp.mailfrom=zhangyi@everest-semi.com;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=zhangyi@everest-semi.com
+X-SMAIL-MID: AB69DCD971BE4D3EB51851EB3211F295
+X-SMAIL-UIID: AB69DCD971BE4D3EB51851EB3211F295-20240515-142519
+From: Zhang Yi <zhangyi@everest-semi.com>
+To: alsa-devel@alsa-project.org,
+	broonie@kernel.org
+Cc: tiwai@suse.com,
+	amadeuszx.slawinski@linux.intel.com,
+	yangxiaohua@everest-semi.com,
+	zhuning@everest-semi.com,
+	zhangyi@everest-semi.com
+Date: Wed, 15 May 2024 14:25:17 +0800
+Message-Id: <20240515062517.23661-1-zhangyi@everest-semi.com>
+X-Mailer: git-send-email 2.17.1
+X-SA-Exim-Connect-IP: 2604:1380:4641:c500::1
+X-SA-Exim-Mail-From: SRS0=oSZY=MS=everest-semi.com=zhangyi@kernel.org
+Subject: [PATCH] ASoC: codecs: ES8326: solve hp and button detect issue
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: eqcYAfXzGMbz
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20240515082510.431870507@linuxfoundation.org>
-In-Reply-To: <20240515082510.431870507@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Wed, 15 May 2024 21:03:01 +0900
-Message-ID: <CAKL4bV5YkLqnZJsLB6t-n0ZeSSZAHYsaE0c6=-=ohK8PBG8AvQ@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/309] 6.6.31-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Greg
+We got an error report about headphone type detection and button detection.
+We fixed the headphone type detection error by adjusting the condition
+of setting es8326->hp to 0.And we fixed the button detection error by
+adjusting micbias and vref.
 
-On Wed, May 15, 2024 at 5:27=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.31 release.
-> There are 309 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 17 May 2024 08:23:27 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.31-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
+---
+ sound/soc/codecs/es8326.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-6.6.31-rc2 tested.
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index 93385f181d2c..3031699a14c4 100755
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -829,8 +829,8 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 			/* mute adc when mic path switch */
+ 			regmap_write(es8326->regmap, ES8326_ADC1_SRC, 0x44);
+ 			regmap_write(es8326->regmap, ES8326_ADC2_SRC, 0x66);
+-			es8326->hp = 0;
+ 		}
++		es8326->hp = 0;
+ 		regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x01);
+ 		regmap_write(es8326->regmap, ES8326_SYS_BIAS, 0x0a);
+ 		regmap_update_bits(es8326->regmap, ES8326_HP_DRIVER_REF, 0x0f, 0x03);
+@@ -981,7 +981,7 @@ static int es8326_resume(struct snd_soc_component *component)
+ 	regmap_write(es8326->regmap, ES8326_ANA_LP, 0xf0);
+ 	usleep_range(10000, 15000);
+ 	regmap_write(es8326->regmap, ES8326_HPJACK_TIMER, 0xd9);
+-	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0xcb);
++	regmap_write(es8326->regmap, ES8326_ANA_MICBIAS, 0xd8);
+ 	/* set headphone default type and detect pin */
+ 	regmap_write(es8326->regmap, ES8326_HPDET_TYPE, 0x83);
+ 	regmap_write(es8326->regmap, ES8326_CLK_RESAMPLE, 0x05);
+@@ -1018,7 +1018,7 @@ static int es8326_resume(struct snd_soc_component *component)
+ 
+ 	regmap_write(es8326->regmap, ES8326_ANA_VSEL, 0x7F);
+ 	/* select vdda as micbias source */
+-	regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x23);
++	regmap_write(es8326->regmap, ES8326_VMIDLOW, 0x03);
+ 	/* set dac dsmclip = 1 */
+ 	regmap_write(es8326->regmap, ES8326_DAC_DSM, 0x08);
+ 	regmap_write(es8326->regmap, ES8326_DAC_VPPSCALE, 0x15);
+-- 
+2.17.1
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
-
-[    0.000000] Linux version 6.6.31-rc2rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.1.1 20240507, GNU ld (GNU
-Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Wed May 15 20:35:08 JST 2024
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
