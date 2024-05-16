@@ -1,92 +1,82 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A658614B06E
-	for <patches@lists.linux.dev>; Thu, 16 May 2024 15:04:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6961DFD6;
+	Thu, 16 May 2024 15:41:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715871892; cv=none; b=Lp0Nn+s/7q9eLbEfLrAJoJozOX7FRpDBMIM3igxzdB1BV5qFmreoNaXH5FHgAM2OHWqubePfd5alS/y3BJYPDW813o5rmrsmbKJoxfLUntFSgi9Jh6ekln0xwIzbELiPBFvGvBcaztjrPwN3+iD1nj8bMq0+LWCyqxScygoovH8=
+	t=1715874116; cv=none; b=j4zPYO0tdpf2vDUqH7Joxked2SEQmkixO9Ir8OvO4ny3qUXSCnfjN90u4aJIF5gGIt4FbE4C2TQoLgPTV54Mqrqo0JGVA4IAD62xpjDZtagg6ZOt6EB234S3fTP6J1YH9UpIhSurglRRc+p9ujmIIEXED9LXpX25oFnPr17L3qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715871892; c=relaxed/simple;
-	bh=1yLuwr5Ny+Gy2jE6b4j91jagshOW1WAMTqW/K2hryZM=;
-	h=Date:Subject:In-Reply-To:CC:From:To:Message-ID:Mime-Version:
-	 Content-Type; b=Ql/tEqFZFlejy3bjuRC+8d52uLtFofGwsjx7vXX0EJ4+NvVF5VqUkmUxnGZKKybgQ2krgRT3e3O6T//qVs5fCIZUMZXWZHabNJbmJameylBm1ykjM4bWGRaWk8cofKwrY4PIo8S9B6Md/Mbsq9MPsAdNZ58fV2tURxAqzpZoWzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dabbelt.com; spf=pass smtp.mailfrom=dabbelt.com; dkim=pass (2048-bit key) header.d=dabbelt-com.20230601.gappssmtp.com header.i=@dabbelt-com.20230601.gappssmtp.com header.b=yTdlCNFM; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dabbelt.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dabbelt.com
+	s=arc-20240116; t=1715874116; c=relaxed/simple;
+	bh=XfWlKT52rk3dHWds0VUbx+0BhvlPaBvp8U6eFA2uQV8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eX1RrfgFkJZIXFwP96txOFdcPc2XUoSQB7/LP90cTyyD4XgwQNT8WNlg4ChHltPJk1sZl0ex6gEv8bWB95ZYZXdt+dUlrRzCykOaDYpGNIieZJERH0S05jP4K+vJKJqPQlT7kAKy4RU/C1Rc3Qck8rLrP8/kSbYf1Oo0TTyiniE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ughN7Gfr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dabbelt-com.20230601.gappssmtp.com header.i=@dabbelt-com.20230601.gappssmtp.com header.b="yTdlCNFM"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1ed96772f92so65180475ad.0
-        for <patches@lists.linux.dev>; Thu, 16 May 2024 08:04:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dabbelt-com.20230601.gappssmtp.com; s=20230601; t=1715871890; x=1716476690; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:to:from:cc
-         :in-reply-to:subject:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5tFCjyRy326EuMyapGXcH9cbJEkf5Ts4nwZLLLeQ4rw=;
-        b=yTdlCNFMLGNVBj4SIQUvIhttutCM55fXrZ0YquYwVm/WG8FmT2cIdSAze6OF0+VDTq
-         345gOBEMAp6IxRJTuxOLmVyz2ej6IdqZSirZD4CRe+vFyJ3ZJo9IjWQq0LYGXB7yYoPu
-         9baha4IFNAHum5tP8T/UX02Ms/GUHYQzQtNPCiP+NCqEoxu1l/3RTC1Nhw+zKZjuJocH
-         kH59BlG+ohwLECZXgCUDirGGkboL5T9K3eiNIH0oWd2rBk9VDCSFh2XMCU6hGpVuX6de
-         SLbizWqRyPTOj0Xv0WU/Qwiwk+WZyN8H7DC8nXQWE2kK1Rsa6cGJhseivU/T1xgEVj+V
-         ay8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715871890; x=1716476690;
-        h=content-transfer-encoding:mime-version:message-id:to:from:cc
-         :in-reply-to:subject:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5tFCjyRy326EuMyapGXcH9cbJEkf5Ts4nwZLLLeQ4rw=;
-        b=EYKefXkzM21z/5kJ/k3N2XaSNrYjZg6oRR6yMwcuYdfLo+ZHeGGI0DB8HtxoZ6Tghc
-         A3iAV7XSNG6bAdFJBpR8v3b1O8AzltYk+o6qxd8rz2h/rvCYRMVlnv3Gidi5FX1dffxA
-         sPuMjg03hwnebftE99200/y/BUObNMfhZoLZJsnnkT4E2r2/DY1C8hpi1784keKAvHCp
-         UCcpmARe4X+nIAyRPz9MFD1eC6FIl2gGzDmq/K9aYWcR5w/kLhavz7/L60spgS3EGUHb
-         J1pFOm8Knj2+14GqPK2AHt1z7JJKYO9/FjQmHFaSAoUw7ypALd+Z7nZ3qGthVM/5e7GD
-         ekfw==
-X-Forwarded-Encrypted: i=1; AJvYcCVIy9L2NWyIXdCuggn/sSQT9jPPeQ9PJ590KTT8dJ+6Dtr8HvqB0jPvDg0Xehdpqs5LTYQlvFRy1nwTwECTlSL7YEdtiHQ1Kg==
-X-Gm-Message-State: AOJu0YzAYGIM81mG+0GGADXrqJGrCvxa4Prp4cuaDeNRaE2lAK9fVjdX
-	8Vj7fCFZBap2dJn9ZnsPiOSf+enkRrW0YQfQtkpv+OL4au6yWBcf0uA4ce1sat4=
-X-Google-Smtp-Source: AGHT+IHyr+L3kQts1mekEifNWiW4+PjiSNLgehkncSk5asn5KHFcaUVhYB0qIAyAQvaljXMM2Ch1ig==
-X-Received: by 2002:a17:902:6546:b0:1ea:cb6f:ee5b with SMTP id d9443c01a7336-1ef43e2796fmr195159345ad.38.1715871889708;
-        Thu, 16 May 2024 08:04:49 -0700 (PDT)
-Received: from localhost ([50.145.13.30])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ef0c2567ccsm139617235ad.301.2024.05.16.08.04.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 May 2024 08:04:49 -0700 (PDT)
-Date: Thu, 16 May 2024 08:04:49 -0700 (PDT)
-X-Google-Original-Date: Thu, 16 May 2024 08:04:47 PDT (-0700)
-Subject:     Re: [PATCH] scsi: mpi3mr: Use proper format specifier in mpi3mr_sas_port_add()
-In-Reply-To: <yq1y18bry3h.fsf@ca-mkp.ca.oracle.com>
-CC: nathan@kernel.org, sathya.prakash@broadcom.com, kashyap.desai@broadcom.com,
-  sumit.saxena@broadcom.com, sreekanth.reddy@broadcom.com, jejb@linux.ibm.com, martin.petersen@oracle.com,
-  thenzl@redhat.com, mpi3mr-linuxdrv.pdl@broadcom.com, linux-scsi@vger.kernel.org,
-  patches@lists.linux.dev
-From: Palmer Dabbelt <palmer@dabbelt.com>
-To: martin.petersen@oracle.com
-Message-ID: <mhng-c0ff89cb-4699-4ff6-b0c1-a71fadd710f7@palmer-ri-x1c9a>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ughN7Gfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1536C113CC;
+	Thu, 16 May 2024 15:41:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715874115;
+	bh=XfWlKT52rk3dHWds0VUbx+0BhvlPaBvp8U6eFA2uQV8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ughN7Gfr3Rzd8oKxHLsehBVmwzh3m9JnfY7Hti36z804gvp/e37d7QK86KxT2Rdlj
+	 nLUmplxi2ZaKYGBdt4LiLWxMJGK9UgwxfpcqTS/1WgIFlAjoh1J7UPtPNLX2I/hzKW
+	 fPGKE9uYOHMkcawRcLHbnqvVrYHBs/Mruvf4NCUFH1qtbgmLU6YwDWnBZU0zbrJm5r
+	 ktPAxsXHA4cQsVWHRvSaZuUrtHSgkDxq9Yv9dtaFr6l1P4aTE574Eq6+jh+YJP5cOn
+	 TUogwDSoBMNLd020sP789U8WI2PgseM331QBS9tzXIQRGCONxyJ/5g/lQprUhkUXhP
+	 UKC86w+ImBaoQ==
+Date: Thu, 16 May 2024 16:41:49 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.6 000/308] 6.6.31-rc3 review
+Message-ID: <533a6e6f-83fd-4f06-a7bb-78144839d34a@sirena.org.uk>
+References: <20240516121335.906510573@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (MHng)
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="8UvaK5fao2dQW2NB"
+Content-Disposition: inline
+In-Reply-To: <20240516121335.906510573@linuxfoundation.org>
+X-Cookie: I'm having a MID-WEEK CRISIS!
 
-On Wed, 15 May 2024 06:42:12 PDT (-0700), martin.petersen@oracle.com wrote:
->
-> Nathan,
->
->> When building for a 32-bit platform such as ARM or i386, for which
->> size_t is unsigned int, there is a warning due to using an unsigned
->> long format specifier:
->
-> Applied to 6.10/scsi-staging, thanks!
 
-This fixes rv32 as well, so
+--8UvaK5fao2dQW2NB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+On Thu, May 16, 2024 at 02:15:01PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.31 release.
+> There are 308 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-(don't worry about up the review, it's mostly here so I can find it 
-again if I forget)
+Tested-by: Mark Brown <broonie@kernel.org>
 
-Thanks!
+--8UvaK5fao2dQW2NB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZGKTwACgkQJNaLcl1U
+h9BS+wf+OEIch6iDjwEGoV/pGI3t9p1souA7yiUVT2tEsgQEt9xmIfk74fS8ML4w
+nKwSKeWgTjSziGJ/LzKZ2gl6GPZv3FPy4EE9alUoQfj3rbqxRCi3+UWDykmqRKsU
+70LwuLnktI4ISFHqoD5ChAYzrxnfmZ3PwAA21g4sV+nTLCT94JZ32AInDkM0EXzx
+MH25OXiKNVJ3f8/Qsw3RA74WB2lKR+EuLmNwBtC51ZeXwZG/g23hXjD/XM6Nefqy
+VCSXRCly7Mf+pRxlzVlJ14Wrxm6ZjASvTPsGmbhnIL+RYvBmmHtj6+HewKVBGA1P
+E/u6NDMtFPAU2pJv7ihdVTV7Xg17jw==
+=x7N8
+-----END PGP SIGNATURE-----
+
+--8UvaK5fao2dQW2NB--
