@@ -1,86 +1,103 @@
-Received: from smtpout36.security-mail.net (smtpout36.security-mail.net [85.31.212.36])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE6914373A
-	for <patches@lists.linux.dev>; Thu, 16 May 2024 09:15:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=85.31.212.36
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EA1142E74
+	for <patches@lists.linux.dev>; Thu, 16 May 2024 09:28:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.9
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715850907; cv=fail; b=jlA9X3fTYCSSjb9IdOx5HkGSuT592JvyPHVQh19qTckJE+huIZSkjQDEBBt1RZtjhKzDMFjBk9FWe1rO/XBQ4oOLbScrvnf6rAf4DOX7M6wVCEIxTb+DxEACJR7284XX1hG/3ALZ1zYfiLHHf7WxBIBGrKi1uTNc29lrJLoqmdM=
+	t=1715851732; cv=fail; b=ueH1pWSM7uy60Fofg6jcPQRFXqBPrBEOMCff6hd0tJZT/lrGSBTGDn3oICpmpgOOg33YrGJYMtbjbMpYAkIcIvaYlt5PLo+QaHhDHQ/sJ5+rxOfzDTAIqBJqBGvi3clMKenI9tGbfQbN4fVsX9x8QnRIeCB6kITAdwEPyfmiEms=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715850907; c=relaxed/simple;
-	bh=Gk97dZ93D1jbPehlZpifsIayO1o78Zn1QAGKkvOAPIU=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=OGkqDU2/x97lcs87wAI+O192A47rVuAphUJbPWULeE7Bcrgr4HY8rP18l5VNdXlJVB9F/juqahYz+uZhNGJu+JFMMg/uHYwIdbLUzJc03h2u77qV27orMOCjr5fZbsPf26qKCYtju88RRoZyvyiE97wg7yRQ8XSwR4X2tVBHENg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com; spf=pass smtp.mailfrom=kalrayinc.com; dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=cmmZPd2+; dkim=fail (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=cpG6DbTl reason="signature verification failed"; arc=fail smtp.client-ip=85.31.212.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kalrayinc.com
+	s=arc-20240116; t=1715851732; c=relaxed/simple;
+	bh=nLGAEu4wDkHTuRmmK+xaOXpZviypk/OfQ4tlYIyeQnE=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=M+tRgw/jUj348CTqwwPVAsxptPVbgRwHKM6QOBJ5eIeJTF8zuFx/zxwL83wBcy6c/EahZJ9jlliT5BBrWwYYKXh/lpytIG98+rcNXaqAwd17KnQiB/bTKrpK4GTQvq8iX16gSQQv5Z3aosavVhjA/tuazn/OWP5kdGjVogovYrs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fHgpW2hI; arc=fail smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="cmmZPd2+";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="cpG6DbTl"
-Received: from localhost (localhost [127.0.0.1])
-	by fx301.security-mail.net (Postfix) with ESMTP id B486F3D0ED0
-	for <patches@lists.linux.dev>; Thu, 16 May 2024 11:10:53 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kalrayinc.com;
-	s=sec-sig-email; t=1715850653;
-	bh=Gk97dZ93D1jbPehlZpifsIayO1o78Zn1QAGKkvOAPIU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=cmmZPd2+98eHOCfqRu62eD0E7SduEfGb78p+KUu9ya5NdAM3uKGQOmUw546Rv54sT
-	 TyZHrFs3RQQOaUox3fafqaPNuNcVtZL82NvP+83UWwca5gWEjKLvjmOyJqS5ZxSidP
-	 56XBNhBpU4gB01XvQHr8fwv1T1Oc8n32PBVJoJw0=
-Received: from fx301 (localhost [127.0.0.1]) by fx301.security-mail.net
- (Postfix) with ESMTP id 6E8833D1433; Thu, 16 May 2024 11:10:53 +0200 (CEST)
-Received: from PR0P264CU014.outbound.protection.outlook.com
- (mail-francecentralazlp17012010.outbound.protection.outlook.com
- [40.93.76.10]) by fx301.security-mail.net (Postfix) with ESMTPS id
- D3B673D10F4; Thu, 16 May 2024 11:10:52 +0200 (CEST)
-Received: from PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:14b::6)
- by PR1P264MB3511.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:143::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.28; Thu, 16 May
- 2024 09:10:51 +0000
-Received: from PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
- ([fe80::7a6f:1976:3bf3:aa39]) by PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
- ([fe80::7a6f:1976:3bf3:aa39%4]) with mapi id 15.20.7587.026; Thu, 16 May
- 2024 09:10:51 +0000
-X-Virus-Scanned: E-securemail
-Secumail-id: <575b.6645cd9c.d2d8f.0>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fHgpW2hI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1715851730; x=1747387730;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=nLGAEu4wDkHTuRmmK+xaOXpZviypk/OfQ4tlYIyeQnE=;
+  b=fHgpW2hIPWBSvss0ESu/F0JTCmmtkeQJ47pk/dcJNALSw30lhIeG5ioi
+   Ee/OAwvyIKMqXETreSC0jGuz5JtFJVLYzv3NyFP6HTOvKOWwZL9JFyQE/
+   v9VMDvvCri4uWfc1Rm7Pc34+l/8W46w8j+j7v5ESDsoGt9vlTClDBK7vR
+   ovhW46vIdzUPbZsQQJnOkGdc+ZTF+C3PJHtpIY2PfJZZXjQIYNnfSmNgn
+   o6EIMzFRUz3Xt2H+zGoFbJj1oBIgOv7ydiqdzW5LwihGRRRYKIUeG+Kyj
+   Fu7XckJF4Yo0K26XrGdiZ6YABB5ocWXwhqRJ9tVb2ktQ7GDrUleEwc4QC
+   w==;
+X-CSE-ConnectionGUID: FE2yKulvRhiAthXgOrUuvg==
+X-CSE-MsgGUID: M6WViuZ/S4SfrffJ5GGHrQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11074"; a="22622607"
+X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; 
+   d="scan'208";a="22622607"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 May 2024 02:28:49 -0700
+X-CSE-ConnectionGUID: +8ZRXVBzTsmwnUVEs+ZPVA==
+X-CSE-MsgGUID: fc5GZpf4SmWVv7NzdWx6MA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; 
+   d="scan'208";a="35923490"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by fmviesa004.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 16 May 2024 02:28:49 -0700
+Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 16 May 2024 02:28:49 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 16 May 2024 02:28:48 -0700
+Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Thu, 16 May 2024 02:28:48 -0700
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (104.47.51.40) by
+ edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Thu, 16 May 2024 02:28:48 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bMMBLEwBE/ObnHKQ4khNT0mpp4RqPE3IrUG9HSK2mJwo+3+qFDJHyC87qO/OZxG1Vrb2p3yLGN+EaAxm4shNCy61GREWDVuv0fb3bIVEMyy9qLCPGiULpfokIpxngUYPXLMXAyReio9uO3rqn0KHRW40H0DP+NhE7SqfFcQt4B9cqeY2uXflsVfV2BMV76GGcPLhoPvao3Y3jkMswkFk7OFP5KM5kBfa4DOLgDXvX/sW0AxgWqVntAtnkXXqNbjWoyUmUt2FlqG+CLxRNker/cF3CSnoy5KOf24mjpa8k13tJRAt6p/6cvctVpNaimJvd14DJnrvvfP2lo6xwZRNHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=microsoft.com; s=arcselector9901;
+ b=d6zOcP0uEmBky1DW8MK1wKr/3lv2jxg3Rm3jVEp+r2v0sdRfc8kUETuDaBZHqbTi5CyIOaQJuVJe1fDd3PlRre8z/ScqawN4/Oohjpfk1Jugh6tBgnQtUyhSUf3NHtyFnoBlqK+8LpEi2LSEEEi1wLt8BwIUiYzHaWFp+l3BW1+2KIoxAhaxn0fd5YYejBDFhD04UWylCuMGvvUedJhTl+SkHir3uOwzFAQVTJONWqt8petRI0klbyKMiMSU0aZ1V+m4OkV77FWs7lj6J1jpgXwO5XY5gTQk9uEll/GWHXg832ezMT8c5lUhvD3bZctGXQqiNL9XGFq6LBHLge+JYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tSwz5Dq6FqvDtkKK7Kx8CrgM6PvxxFnc83+LktgGgug=;
- b=bmNrdpu01GleGm83Ya/+uqwR6Th2q5+mk08HNhJYu9ZQSO7Zuk9Avot4L5vvhyi94yTXO6b08odmBkopIPRPWAIp6DYvQ5wMHhBSVufNQ60n3esRUT+TAa7l3wS0CJJ+vzKwr9NBMzKOa+r3gYkbOZKSPLXFxuKH2gF85ftYBSEGp0djXTi2dDW9wLlt6mi8PIW1VTz+tKRNPOCbVyhGCm+plq2HVPwKxCnRqBlsPoiXZ6QhXFxZQiuaztco0ubjH0xez3W5Hy0TWagiL9+yzih4G/YKiw52hn9IogSePPcsfVHp0vTXfNUPBFPjLddm2QSd5wxrlVrx7rANXjoa2w==
+ bh=S9nw/YMAaajzY5xpQ3nkEQfJsNeyPOFLtTGIG2D/0NM=;
+ b=biL4GEwBqMfZ+18qofYs9VV6e4P7p5cnnx5Unv4cJMnXfCeUnm7fCe42mvtC+lnHslgBqkOO/FyJdG6VuEA0YZuerL+Kcv+VQLpTJBstfQBcWPm6oFwlVFzYfVDnPWRZJFop4TOCRFsQ7ihWZPrEtPZuMhE+49135NmtnY89eC5leUwc9/5dMCE30tn4gUifTimgmyZHFWYZb6qX5Ggk/PhMt1ohDKb6nkloiHSTqZX51/q5FZiH7vhcFWYIBf2BVaw8oe7W2oXqfBOhJdW9veRzs40h9eZi6Tvnb/JBajjBCAoYWQNaG4dqvkD4wYXlJ9ovURpp3ZmlvBxxZH+70g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=kalrayinc.com; dmarc=pass action=none
- header.from=kalrayinc.com; dkim=pass header.d=kalrayinc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kalrayinc.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tSwz5Dq6FqvDtkKK7Kx8CrgM6PvxxFnc83+LktgGgug=;
- b=cpG6DbTlQ2P/iKLPbscBYpFtc4yumxYPigVsaJ1oltIFtfPpnCR4QCLnT8wOfV8dNoFo9Eo12rKQW3ZIub8CaVys01l/Ea/tTfoQeRNdTJ6oN4SORZsSOr9gXU+agQAJylZShPwFDQ1aTnQhBat9Pr9MECdae5/jnt0Kv/giyV1601T8bQX3P5ECW0IAyloz74iSL1RFJ1kkJkC/LX9KkXCJRieq+up13XUi9sbWtSz1UCLyCrIgiFSSlB+S8lz9zGwR5KtplSrpg4X+ToaIN4Amqf8/Scxarbw726Bin/rxKUzdKA1Ix0zFFvc2WLEuTw7yb1GqMs/83H5578Iuzg==
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=kalrayinc.com;
-Message-ID: <7a8a015d-24d9-4bd3-a252-988f5273978f@kalrayinc.com>
-Date: Thu, 16 May 2024 11:10:48 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/243] 6.1.91-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240515082456.986812732@linuxfoundation.org>
-Content-Language: fr
-From: Yann Sionneau <ysionneau@kalrayinc.com>
-In-Reply-To: <20240515082456.986812732@linuxfoundation.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from MN0PR11MB6231.namprd11.prod.outlook.com (2603:10b6:208:3c4::15)
+ by MN6PR11MB8195.namprd11.prod.outlook.com (2603:10b6:208:47f::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Thu, 16 May
+ 2024 09:28:40 +0000
+Received: from MN0PR11MB6231.namprd11.prod.outlook.com
+ ([fe80::a137:ffd0:97a3:1db4]) by MN0PR11MB6231.namprd11.prod.outlook.com
+ ([fe80::a137:ffd0:97a3:1db4%3]) with mapi id 15.20.7544.052; Thu, 16 May 2024
+ 09:28:40 +0000
+Date: Thu, 16 May 2024 11:28:27 +0200
+From: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+To: Tony Luck <tony.luck@intel.com>
+CC: Fenghua Yu <fenghua.yu@intel.com>, Reinette Chatre
+	<reinette.chatre@intel.com>, Peter Newman <peternewman@google.com>, "James
+ Morse" <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, Drew Fustini
+	<dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, <x86@kernel.org>,
+	<linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+Subject: Re: [PATCH v18 00/17] Add support for Sub-NUMA cluster (SNC) systems
+Message-ID: <6obc3orsktj4dcrl4nw3qo7o2dth3s5np6cyq6fllweq34iqlc@ku5cf7kigh4a>
+References: <20240515222326.74166-1-tony.luck@intel.com>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AS4PR09CA0022.eurprd09.prod.outlook.com
- (2603:10a6:20b:5d4::14) To PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:14b::6)
+In-Reply-To: <20240515222326.74166-1-tony.luck@intel.com>
+X-ClientProxiedBy: DU2PR04CA0332.eurprd04.prod.outlook.com
+ (2603:10a6:10:2b4::20) To MN0PR11MB6231.namprd11.prod.outlook.com
+ (2603:10b6:208:3c4::15)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -88,62 +105,189 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PR0P264MB3481:EE_|PR1P264MB3511:EE_
-X-MS-Office365-Filtering-Correlation-Id: 45aa62be-499b-4cfd-9b37-08dc758814cd
+X-MS-TrafficTypeDiagnostic: MN0PR11MB6231:EE_|MN6PR11MB8195:EE_
+X-MS-Office365-Filtering-Correlation-Id: ce0ef186-afaf-445e-dca6-08dc758a9299
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|376005|7416005|1800799015;
-X-Microsoft-Antispam-Message-Info: CKgO31rDIVR80w7uwKkQ5GdGz9OUZvnRGxlqq08ElYbP0oLS8ZsodafFv09la2Weealuz7oJuEffxbwOKcurseqizL7+EI52y/aJ7auOcJgyUah95bFm4e1eLUKeslgB2zX4qnMGCu1eyOKz/s8tSXLBnsWeQTv6HepXBzzE5yRyRAop9yDvZ6UFweMgODkADIHayM0HOKCpAUxvXTmoM6s7xCa3/74HUSYtqjVHCFkwD9z1k6KRrnRbItqklkbdTnBZ5Oix0QiU6QcuPpIGPXBZNz7xpj8Nb/sjcgrJccDXjVZ+dwWW/yGd5F6bo7U3GLQGBPaPSLV8U9xhlUz+q75bf6kx8kipkKnWow/Ir/Jepu/8xBEuHBylgyvs9bsSM+Y66ytn5kr6fVsY1rhtJUGM0lcApnCYuNfVqZ+lZmLOy5EB/GyRKSZv719JyzavTqRwbmAWVrN6GSup0q3pesEqeqLmx3vRhrSQ7qb9uwYPdCV4hAccFVJ1DS+zLrpkz8JXsTNFrF7l2QPgqBO8zQq6PpRGyEG4ebOaCWFSzBNwpcFUl8VZ9PpA/ojTjL4SQ9gMBCN5+UN8kAQiaTTzPWXz/IHZ+0vOooxourYmirZUqJx57mW5KJTnIk8MJFCxpbfPFCsFFrDsXAV/cRGi9W4uurkwOnREzGRJK6S0G0G4XyaM8dtUsyt2P5M3PiGostTN9I0uJf3PUAJRB5Rs4loC6wgdFzN6gjhBaiGtUE3uMgFwdBN7jX33Sf4DoJX3o1kpBKDhb/YJW1Oss/tx9zstKlqUZpcGHQdx5sw5sdgEyQJLArZzIaV1inK8k0izLHgv2M5xcW0p+4H/Xx7KnarWTteYFY+G1NGwQ6fwHhYnJjw0x4/1pEb659FQQvgnmx6NEcLu2onNXdd/GhnzEaJmv/gTn+sfJ7L/XFstTiQdcK8otZWk2q8+u3pvEGYoQL/
- PitfbMgR/02roedsmjNZtHwdRN65emeb3oc4aglfhytD7mXNW0qw6mCdFJGy6VVjNTbNeIYwh9Uc5l/R2IHNS0HJxRrYD83SlfhuNycBJ06Mox7u7KwNM4SWDEPCFcAQt21Us/WHafmMikKOBR7YHZ/IkExRwzpBhRPWbcpS8/+yJM/kWvLanWR2Nz/WVqz9mkrMw/+uOiRDHxFL7TbUaLv8yO8GR1XKF3SuG2rXy/+6K+ZcpOwFAa2u3PQXPr4bCxCcK9A7pp3TNBb+MtP618CbG29F7WzP9z4eTy+c=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(366007)(376005)(7416005)(1800799015);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|1800799015|366007;
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?02kFAX+4uY2DNiBlMqG5ZB55jfvDTkOahViZ5yCSTa9Uip9/Ni7RTQW7kE?=
+ =?iso-8859-1?Q?L5esPnLlVaasUG9wLGW51vUURtB3Yzo23bty8BGehwY/BVnQrqC5tHz9/l?=
+ =?iso-8859-1?Q?5Spw6ghad9ux9kA+vzzMqPXSMxKp29cucDBbzkw6M2IUM5Wt05t4MjVbt1?=
+ =?iso-8859-1?Q?u7D8VBhZbAIQDUiK8wTkxm+FCc8ITBggm5TOdeqKRyfop+15siHm//ncqS?=
+ =?iso-8859-1?Q?I7SV8dh4IZfnYoul4fAexLxY8neU742vcVNFQoxVyqiat6aPDCnPKZi/6U?=
+ =?iso-8859-1?Q?TXVgCCTxeZfTFpvVYBLe/uJdGpfkYdaryWy52m8MYi6jHDyCiFAi5jREXS?=
+ =?iso-8859-1?Q?9IKFpbtjy8gHLQd5fWfF3M0eeg51VIbl60Ed+FGQT2mRSha+IW5RYSveeq?=
+ =?iso-8859-1?Q?+QYgP3Jh2ZP4LXY+2H3YYqmKRn8edC0bsOyGYTImWr1jKqDgMc/T7eDZ6j?=
+ =?iso-8859-1?Q?7w1u5yrpwoF9ItyKUbZRGO79agC9WVuXbhVytKqeUxWM7GW4FcmEF5N0CP?=
+ =?iso-8859-1?Q?1PnFbxjYpQSESmLmMxzVGwMjbtMoGEtb9mX9lL9nbI4OTc4wvUEJptoCgf?=
+ =?iso-8859-1?Q?+hN0TA7x5i6FUz/mbKqDUGSvX4fk7qvwydAn8QiZ/rW/DnL4YEg3x/edz2?=
+ =?iso-8859-1?Q?qHz+Lga2Ybpg9hNWv4BquQ8KoOZXsN0iP48WXCZ3rGT6huly2ZB+UVDzTf?=
+ =?iso-8859-1?Q?VV921vaKCEdZX/+mxnCQmg7vFEk+e98xbtliF7bRg5ES5YIKobJe0PTbZr?=
+ =?iso-8859-1?Q?53Ls/kg7L89TSdzniWDz78hF/cjgslGo8M8/sXbdt9E+pJHjvfEeaaQF1u?=
+ =?iso-8859-1?Q?qRpZ2DlhcCYUjXHbVuFW4i2Uwij9ECGzNaYap5OvBS0HtZ8Uv481MjBm8/?=
+ =?iso-8859-1?Q?VITmgm7vmaHis/PWXlkBiP0e2b3Wba8uyEn448d1ixm7lkULx9Mok7MQbE?=
+ =?iso-8859-1?Q?g6HbHq4AXh4f1aLJAZnm/h36HI73OgYEIBiNRNAWqqKuba5l8TOi70gAYH?=
+ =?iso-8859-1?Q?vU39KW1ttcHfpPHzSJAPAF0IHXpyk73JFP+qlm9058aI5OWQppDk8P67Pu?=
+ =?iso-8859-1?Q?V8sLiuwQpXBYW9BaDhbfCDaL4doKKHxOHFU1ppa7QmcVgplbYxGwz1Pzyb?=
+ =?iso-8859-1?Q?EO/tDyV/qg2s/UhP0NOytlA7xyd/1o8D/TMwzGksJEihGcUp1ydQy5kEm/?=
+ =?iso-8859-1?Q?G2xGop+l+pKVnyEq3nEgyR6zYr/SWRfwaxEUJtdVAB5srT6rfinxwlcmj9?=
+ =?iso-8859-1?Q?argQ9PsfPJocaCBGutYJwFo+hLn8m3TpwCr5JhCtA=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN0PR11MB6231.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(366007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: ao8OStSqmEU2P3Z/OZHzowA/hZjArs+240tkugjwrZQRi5As5OvCRxQJPUT67qacHp+lLCFqJ0UB8aLEH3MI+J7PfoCP/GV81bHjWBTBiLxCZBhYuRCVe8eXBOFY5LlK520THh4Im7IfxcDw3nCSsuAKXmuoxjJaN4zxCoXqlDo/UJgMjvbhRrl2ExSptE5xrz76ZzbM4uTBHJHAKLk223TbcsMgQrJHPAYjbX6QCP1BpffWxfVNdnVpSn2QWMreZ3lSTVhv2wK4QVvmEiKWIS27mohE4cv5iPHYl9kK28EbjqaYS88wUo4Id8Rf+CP4dWu7f0wgcM7XeDuuR/ViekwSn3U6a3cUiieN6AJ9mr4J9y6jC707uCj73Ltf4ZGKo9NKsthEd8SmBgZZ7YjVj75bfXslrQs1IGIsrOm2mz0i31OCiuN7Wk52x8VFQGFwGtrXHYpw8Sn7RbmmAnVtpGZLZUFe6AsgPVsXwBg0D/CzlCQAkYkOiTs5uNxykiG3uPHpyOY29mOFsI95Nsal6IRcsHUiReTXqYUIsqupA+uJJtO4w7QJ560DeUXbuTnxgm8F0YvJ4HCEu5ylBLuyDYEtNEL09+7KpiwkNK6pkgPp6BpDmd4OEyKX3l9YpVUAyqc/e/7n4os0K++ifdF1jYkVVdCSzn+ILUZHwm2dRyStPGFo5h88YVuAnmCs3qjsqcoS4vMcIho4qQ0g1c1VTcMPCn4DAsjW+I0r+/HNWecOxNsFCYJXyxAv0br4MM957zWcIsjLq70gjhKc6qX7z3fUm7jUDEFWYSwM4T0oCRdYNs7Z0Hf65uyvYM1ZIHTWffFhD30q/TwvlIqhtH8qYbG8PZoGxralChQTHaD+CA/E3SjSfTuAJCFWEplYOrKAXlN1ChqFI+oxeDS/Z/sGzGc5bYJvWW+PQ4WitzOLDEIgJZh1bjdsT595K1kLy/qf
- 5T66ivC0jwP6aZqJsEIL0oYv3DWTKAdTAeeatHSfsGRUIYC+PyqBIegP2060iJHHCuSoog4m3roFJZM0KrL07RH1WEvVPbbyk0TBF5Z8Js+PchgbvMYIdrVvNMqWyYQesXqcS76hp6myM3L482KnY7INcAo3m1YJQtisdX8HJTmiT+5oANzcCQKQcsuVDEKxeoBK6IqxBFi0Eg56MCOAHj7PGxHtxWPao8Ctje5VmpnMeC8PeXoH6mG9dd07FRdMndMQ++/Gq8dh7HPIvBXmTCNTdEEMa/TXScwERONK5t4LXcdVy8VJYvl2PWWx91TCYlkHKRK3f6C7Sgiwmy1UFXUmPHPxo44gKIsP7LLwEI6j9ODmwKLwrL6Co57wkbkkVKzQc17ZdQa4ECOKtq6XPYac2hA7XwtZoTjrzJZxHyEPLgfbZ36tYpyoajMFeRd0q8Yos23YCzNvIwDQxRGItyrQaie+0nEbmEFRnFj+qd2Z97iwAQO3c3Yt7aLjcL/ONqy1zfS1le32jw+YwtlsZNLbmYcQ1JUvSc0lvCMMl17fQV6448iWROOnT56GaGAuYvlZnguU9IRo4DjNbdTjC0Thm+zVOmeTCDwJLJYwER8UTR5tAwv+QQFzDkda0IoNsFIbe7b3SB7wZ6qQxqbuOQ==
-X-OriginatorOrg: kalrayinc.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45aa62be-499b-4cfd-9b37-08dc758814cd
-X-MS-Exchange-CrossTenant-AuthSource: PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?lg/VRaGfA+M8s1LuugdW9ZruEGMIiz8FBXG7XWaK7EtHfTIkqGuRjyy659?=
+ =?iso-8859-1?Q?j+FPEV1oMwt5SUarVePbVpayn93++ge8sKYEHKO96xgXnGeV3QHdnxJu8Q?=
+ =?iso-8859-1?Q?hSpFECYn0CVz/cR7kdKKCIKOa0kBXtcQpRtmA2ks8SrCoQNe2/jTZCHUCD?=
+ =?iso-8859-1?Q?Za5csE2tmFcTq2EI32HqLcD7l5w56yN7AceNAfG7c+3Dug0lnnwi3QKlbX?=
+ =?iso-8859-1?Q?Ae2/KimCeqYZBi4ufvV6nVhD7VokqrCLTDB19aQtlTeq6R1oXI3JIHjJ4X?=
+ =?iso-8859-1?Q?kV8nQp4LDY0yvs76z9W1ZhNxmtucsZ5dlOU+/hj9mpVmWZGfkFJODjBizA?=
+ =?iso-8859-1?Q?ZfESTz2UG9tG3/GdrPCpfAuXCnMF7ozguaylGfISUpa3GjNSD+u4PABwMM?=
+ =?iso-8859-1?Q?BckSFposNGmzfnLN4eaBvAOiwzPjuKCmHDYR5gkyeA/q0EcmADDjRfcGeR?=
+ =?iso-8859-1?Q?0vjwnQCCKYxI14S9yPWkE+CTspgxt0eRRx8Sp37C7h6i2VJkynEyYhuwwf?=
+ =?iso-8859-1?Q?2fEm3KTb1r73N94bYczHmZgHhDrqO1zBBpTwKxUvRBEUgM2pQIOUv2wTzO?=
+ =?iso-8859-1?Q?Q+4GWhOLp26XOcwIeOxvSHkUxbFaWzlOkMg4BScPE35gA7X6/F7p+lU0F7?=
+ =?iso-8859-1?Q?HK6rMPPK666pt7sZxixErM0D7kN4/c4kr4h6b49o/BVqkU2YeKQ75uqXHt?=
+ =?iso-8859-1?Q?XHjO1go35BXNZtuKBzPNTg2MhidwhTEIMpNjeHGAUqVmBtSc1Kx3LFr4sf?=
+ =?iso-8859-1?Q?M326/2sW/Qjp7N71xgdQS8e1bIOY0SrL0h4MX8+M6mEjifnQo7hkdZDBY1?=
+ =?iso-8859-1?Q?Av3PSfS3N8jS3yBAnN3NIGVYq6bksfCqXmBPHSypEhIxna5BSbfEEKJKMv?=
+ =?iso-8859-1?Q?6tLOXjfBrvjcxTYx/Pzks/+hKvH6hPD+E8kyeIm4IQEY7JtQV7G9leO270?=
+ =?iso-8859-1?Q?+4EDZbMdLOi9y/LpDX4MPp5PFcuOsPqr3yzN3M0tCc7x4DSLd/iPNbGtHr?=
+ =?iso-8859-1?Q?Yxsk91ZCfDvMlpAZb4aV5x8DOBgkq/ijV5wbdYJC4l0gCKh0OKRaTki0uj?=
+ =?iso-8859-1?Q?zn9F3nfoUCGjQ/H212+D1ZFTC/uJOfNUZBiSFNnxCJbEVFavvBIpMjsVuK?=
+ =?iso-8859-1?Q?mcrz2ZjcH9vevZ3jgNOZuZ1QYxRO0hJFIzfPMp1+S5RSTm+bgGXW35nO+j?=
+ =?iso-8859-1?Q?9LD0tViEmg3xbZTTqN/RYbMkjsDxaCTFxJD1z1HfowV/pntrUMh45bky8M?=
+ =?iso-8859-1?Q?NN3xGEXw+/iSSwp5KBoWoxfnFRPUS84W1QAx3pSh6d/0vJV9zryCKJjO60?=
+ =?iso-8859-1?Q?FBnnotn0T48GhpbET7A8vtsfHAmf+98TVmL6yKVlYv5NgGayjxcjtolmBT?=
+ =?iso-8859-1?Q?YNCC8wqP2p2zHqC7HcRNAGZsxPb0MWIqynVeIeVWL7nA9YboubPAuxHbzV?=
+ =?iso-8859-1?Q?vRqq+62RhKcuTaqj4ce9uEP3YRgiHa/Xu7Z3pYQ0oSNxy4H742lTGZzPlq?=
+ =?iso-8859-1?Q?fQmNdrmYownzmgzGTq/f/AWPSJ7pbKWqkLAq9vOfigNbuae2f8Xu5qqMYH?=
+ =?iso-8859-1?Q?iu4Ud5Ti/PjTbX0K1nKLhz/HgmWcuhQKueTMvKdsUT+EinXplc//KYMfQp?=
+ =?iso-8859-1?Q?K6OikfvYHCj8GtfdVQSpud9QcaoMz4D61qfN7892fA6oioHo8WUOfJf4DA?=
+ =?iso-8859-1?Q?AtcHRgIy538wm5Orbik=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: ce0ef186-afaf-445e-dca6-08dc758a9299
+X-MS-Exchange-CrossTenant-AuthSource: MN0PR11MB6231.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2024 09:10:51.3906
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2024 09:28:40.7286
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 8931925d-7620-4a64-b7fe-20afd86363d3
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6QJtzNeFVmIp8RHXD69CMA7qcpeftJ4TbBxdNCnywckcsKpkGSDtnpDSZ1JFhC0+J4Rs4TV3YJQ9ayeYb5Uh3Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR1P264MB3511
-X-ALTERMIMEV2_out: done
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6h3W1TeUqMBkRCzdqt9FQXmqhyuZrk42gahhzZ5H95Ui/uEc0q0YMVOL45Mcu39j/xVE8C4HA4izEW6ITKvFBVAW2ORSniHlJWqfasvvI2U=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR11MB8195
+X-OriginatorOrg: intel.com
 
-Hi Greg,
-
-Le 5/15/24 à 10:27, Greg Kroah-Hartman a écrit :
-> This is the start of the stable review cycle for the 6.1.91 release.
-> There are 243 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 2024-05-15 at 15:23:08 -0700, Tony Luck wrote:
+>This series based on top of Linus upstream commit 33e02dc69afb ("Merge
+>tag 'sound-6.10-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound")
 >
-> Responses should be made by Fri, 17 May 2024 08:23:27 +0000.
-> Anything received after that time might be too late.
+>The Sub-NUMA cluster feature on some Intel processors partitions the CPUs
+>that share an L3 cache into two or more sets. This plays havoc with the
+>Resource Director Technology (RDT) monitoring features.  Prior to this
+>patch Intel has advised that SNC and RDT are incompatible.
 >
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.91-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
+>Some of these CPUs support an MSR that can partition the RMID counters
+>in the same way. This allows monitoring features to be used. Legacy
+>monitoring files provide the sum of counters from each SNC node for
+>backwards compatibility. Additional  files per SNC node provide details
+>per node.
 >
-> thanks,
+>Cache and memory bandwidth allocation features continue to operate at
+>the scope of the L3 cache.
+>
+>Signed-off-by: Tony Luck <tony.luck@intel.com>
+>
+>---
+>Changes since v17: https://lore.kernel.org/all/20240503203325.21512-1-tony.luck@intel.com/
+>
+>Reinette: This is still using the per-domain display_id field as
+>discussed. Would a better name make the intent clearer?
+>
+>Patch 7 in previous version included virtually all of the new changes.
+>But that meant it was doing a lot of thinngs in a single patch
+>(including reverting a dozen lines from patch 6!)
+>
+>So this series breaks patch 7 into nine pieces (0007..0015) for
+>better documentation in commit comments of the changes, and hopefully
+>easier review.
+>
+>Patches 0001 ... 0005:  Unchanged
+>Patch 0006:             Dropped change that was reverted in v17.0007
+>
+>Next nine are the split of the original patch v17.0007
+>Patch 0007:             Added bigger commit comment describing where
+>                        this part of the series is heading and why.
+>Patch 0008:             Added justification for new display_id field in struct rdt_mon_domain
+>Patch 0009:             Split out a helper from mkdir_mondata_subdir()
+>                        so real changes in patch 0011 are easier to see.
+>Patch 0010:             Comment stealing a bit from union mon_data_bits.evtid
+>Patch 0011:             Save display_id instead of a random d->id in
+>                        meta data for monitor files that must sum SNC nodes
+>                        Don't call mon_event_read() to initialize "sum" files
+>Patch 0012:             Set domid for "sum" files to the display id, not
+>			to whatever SNC domain ID is in use here. Don't
+>			call mon_event_read() for "sum" files.
+>Patch 0013:             No change (apart from being split out from old patch 7)
+>Patch 0014:             Because of change in patch 0011 to save the
+>                        display_id can no longer look up a domain using
+>                        rdt_find_domain(). Instead search r->mon_domains
+>                        for a match with d->display_id or d->hdr.id
+>                        Drop extra arg to ___mon_event_count() also
+>                        the "tmp" variable in __mon_event_count()
+>Patch 0015:             Put #include <linux/cacheinfo.h> in alphabetical order
+>			When SNC is disabled, keep the old check that
+>			the current CPU is in the domain being read.
+>			For the SNC case add comment about reading
+>			monitor values from any CPU in the same L3 domain.
+>
+>Patch 0016:             Took alternate SNC detection algorithm from:
+>                        https://lore.kernel.org/all/20240327200352.236835-11-tony.luck@intel.com/
+>                        as it is simpler. But merged in the sanity
+>                        checks that make sense.
+>			Converted the X86_MATCH*() usage to new model
+>			that supports Intel families other than "6".
+>Patch 0017:             No change
+>
+>
+>Tony Luck (17):
+>  x86/resctrl: Prepare for new domain scope
+>  x86/resctrl: Prepare to split rdt_domain structure
+>  x86/resctrl: Prepare for different scope for control/monitor
+>    operations
+>  x86/resctrl: Split the rdt_domain and rdt_hw_domain structures
+>  x86/resctrl: Add node-scope to the options for feature scope
+>  x86/resctrl: Introduce snc_nodes_per_l3_cache
+>  x86/resctrl: Prepare for new Sub-NUMA (SNC) cluster monitor files
+>  x86/resctrl: Add and initialize display_id field to struct
+>    rdt_mon_domain
+>  x86/resctrl: Add new fields to struct rmid_read for summation of
+>    domains
+>  x86/resctrl: Refactor mkdir_mondata_subdir() with a helper function
+>  x86/resctrl: Allocate a new bit in union mon_data_bits
+>  x86/resctrl: Create Sub-NUMA (SNC) monitor files
+>  x86/resctrl: Handle removing directories in Sub-NUMA (SNC) mode
+>  x86/resctrl: Sum monitor data acrss Sub-NUMA (SNC) nodes when needed
+>  x86/resctrl: Fix RMID reading sanity check for Sub-NUMA (SNC) mode
+>  x86/resctrl: Sub NUMA Cluster detection and enable
+>  x86/resctrl: Update documentation with Sub-NUMA cluster changes
+>
+> Documentation/arch/x86/resctrl.rst        |  17 +
+> include/linux/resctrl.h                   |  89 +++--
+> arch/x86/include/asm/msr-index.h          |   1 +
+> arch/x86/kernel/cpu/resctrl/internal.h    |  78 ++--
+> arch/x86/kernel/cpu/resctrl/core.c        | 422 ++++++++++++++++++----
+> arch/x86/kernel/cpu/resctrl/ctrlmondata.c |  70 ++--
+> arch/x86/kernel/cpu/resctrl/monitor.c     | 106 ++++--
+> arch/x86/kernel/cpu/resctrl/pseudo_lock.c |  26 +-
+> arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 267 +++++++++-----
+> 9 files changed, 779 insertions(+), 297 deletions(-)
+>
+>
+>base-commit: 33e02dc69afbd8f1b85a51d74d72f139ba4ca623
+>-- 
+>2.44.0
+>
 
-I tested 6.1.91-rc2 (ca2e773ed20f) on Kalray kvx arch (not upstream yet) and everything looks good!
+Tested-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
 
-It ran on real hw (k200, k200lp and k300 boards), on qemu as well as on our internal instruction set simulator (ISS).
-
-Tests were run on several interfaces/drivers (usb, qsfp ethernet, eMMC, PCIe endpoint+RC, SPI, remoteproc, uart, iommu). LTP and uClibc-ng testsuites are also run without any regression.
-
-Everything looks fine to us.
-
-Tested-by: Yann Sionneau<ysionneau@kalrayinc.com>
-
--- Yann
-
-
-
-
-
+-- 
+Kind regards
+Maciej Wiecz�r-Retman
