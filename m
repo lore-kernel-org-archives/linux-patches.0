@@ -1,118 +1,232 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C5C2C1B8
-	for <patches@lists.linux.dev>; Thu, 16 May 2024 07:18:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9611928DD1
+	for <patches@lists.linux.dev>; Thu, 16 May 2024 07:33:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715843898; cv=none; b=kv4bd0mmnpJMJvFiey0cWuHHKoz6VLZyqON2VN02QjmJSAL0sdF3QPePPuABnm/WZpV1pp48JJUtd3rWWcpceF7366vof1PqRq0H1lMRVjlfFTK9Up2/YC+WJIJ/mCGZdOEvY3ycAxBVTxticgweh2Ti+3Vx3mZXttU15THHpzo=
+	t=1715844821; cv=none; b=Yy43+CbQSWFcl9ZF2x/boDlCHxwQtFy+C38rwxrQSW5wxFNLQB3z0tg6Jsm34T4ZNQ+ng/YJUx+KVfn80NzSN23I9c88BH8GsN96WvaR41nKoPwYGDARgFtSQOJt9aKmcBAkjSAPyfjY1Br4/f/DGePSVPepDmeMmUA7UwByHtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715843898; c=relaxed/simple;
-	bh=rgXkxk9Orw9SGwaHV/qdWKAMzOz0en6hFneE/RcKR3s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hXled6M59Ek9R9ruCZmD4C11I9SKsSJR8b/n8HkbnGPX8COitmVW7J9PTzRwNDQ1VH3p0I1787skkVapa1cj/tR0ULutV5VkzmPc3NHsIqSU9I8tRFVzT0uQpCa4Ynvdf+HweaOhfT6fZ1wRsF6BH1ldB7vEBILcc3lYvZFRU9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=VTrERbxU; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1715844821; c=relaxed/simple;
+	bh=mV3bzfV2I1TjTPcS2ZrQrzUq8aipyYkqsnM4fcoounU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nYyZTXKo3h1MQ1SAfedsHx3+yND/vbaMxjnNeGRyjVtc8G97eWvg2AQcwf/5N6cfB2UG+IkO0pX3ch2sx/ZBmHPhEvmAJgI2e9YfRRfsKU97W6PaNaQNRBO8mTYBEkwQeKvwctBqHJuX85u86NJTQZxHffu8+eErmBuK3pX+uXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hiMShvgZ; arc=none smtp.client-ip=209.85.222.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="VTrERbxU"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 31D5140E01A3;
-	Thu, 16 May 2024 07:18:12 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id Xj4QD_2gjpOz; Thu, 16 May 2024 07:18:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1715843888; bh=vEDqqJEpXplCnXAGo2TY8kMB/3YopuPJQZuB64A6wAA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VTrERbxUKOlGNBmwhar7AYP4n7jrzbsPFIdBnq5duTW4yw+NIa6cFn4Qsuc/8UNyZ
-	 aQKSwMurKh6KiQx1BzCTHWzXm0ejQGRy6DjDAAvCgPZGAw1PT+XYSIkx+QauOU4tf2
-	 YcMlP2Je92cSHuUMxyau9hVBsmDKN2abXUNXFKd3j2fsfJTpHSCaRSsWt04WjXWmEF
-	 6w5BeXwEZeNcOmq97WonIxCBgDB8RtZ6D9j+VuHkiB+AyQQqdW1JZtFSLYo8P0UMy2
-	 SfZPqRRWgxJ5BZagkG0dfs6bKnEMl9cSoJehurryeLLP3/8rq8ZVeI1OhR7LaFGRPi
-	 v0X/iWjt4tTStpclO8371LQSWkKLlSJJRKmLWvR7iFCzLoClLy0gfV0kbJP5CO7iQ0
-	 OdIXt8+9DmI2fBcmg5bVFLMKDI/QpoCN+Fr9qhTPbkJRnzYTrcnWxH00iGAkZ1Xmdw
-	 nHyJLOhaldATmaRmwvqyp1zyrIP7efD9qqNT3DpWSqQWAx8YmqHNHKRQPQ8hbg9bQB
-	 eF4olmhGN8wEk7i060jtCgqQ0UCcFO6K1POlF5n7sfXLua3pdCULPLVIBHWyQ8BGl/
-	 Tr2TBKvZ94VNPl95cyJ5tMr8w+IgIj4B9Gctyz0+M653e1X2png1fJfbkJ1PbzeU0f
-	 aWLrSFAOfqe93ZZM80wzcW/k=
-Received: from zn.tnic (p5de8ee85.dip0.t-ipconnect.de [93.232.238.133])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 9639940E01E8;
-	Thu, 16 May 2024 07:18:04 +0000 (UTC)
-Date: Thu, 16 May 2024 09:17:59 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: "Luck, Tony" <tony.luck@intel.com>
-Cc: "x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH] x86/cpu: Fix x86_match_cpu() to match just
- X86_VENDOR_INTEL
-Message-ID: <20240516071759.GAZkWzJ7t83HW6BECA@fat_crate.local>
-References: <20240515214357.73798-1-tony.luck@intel.com>
- <20240515220058.GEZkUwmtNazjQaLdDn@fat_crate.local>
- <SJ1PR11MB6083D455CE90AFC3251703B8FCEC2@SJ1PR11MB6083.namprd11.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hiMShvgZ"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-7fe97255d23so527887241.1
+        for <patches@lists.linux.dev>; Thu, 16 May 2024 00:33:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715844818; x=1716449618; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pIWq/FZE2YXC731qnWaoLEetM8Q50pTmv2YuXDZyF8g=;
+        b=hiMShvgZk56m0XlitO0AYfImOxWphZxONP/+8xVutsfSQUU0GvOu54xGuMokyG2hlp
+         mGuCis6V95ofVwi7ET0AT47jTvQLddKo1kc9VNx22Eb4mITDU3nTlIxDowrrmNc2zsRc
+         n9RWA8/T9PHpi/FhjLtb215t8IaM/5I7/N0QgdE113FDjRidRQ6c8tuTdKAKfb6XZbnE
+         9B+1qw7Q21g2xutreUwehNI87WQ4ZWr1JeLzGc0rt0FQLKO+UaiKO/9V/bLLUnbSOMSb
+         a97BvdO6+UzU1ywd9KdR68ap/kfu/Gzsz241JX/WnPdCixgn88Z1V1Z8Ht0lI4v2ijMk
+         px0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715844818; x=1716449618;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pIWq/FZE2YXC731qnWaoLEetM8Q50pTmv2YuXDZyF8g=;
+        b=v6GMb/nLv9j0U3sv8Vl/Zz8DQLTLBQs+ApSv19DG6s5ygGonXLmVwlRhmDY4nCvd25
+         lMUnuk2FMsPqLIUkLflg/BtWdikwKl5X4PToAWOq0y3u0wdVvvIUzyGtJ146FwZJAmKr
+         mjsrQ5UWnoO19vrzslsYw5PV9G3YIeK9H62phKqUD3pXIFB8bk57kOB7fe5dwiBPCYuh
+         Tpk2lH7chLD4AYeBleZGVsErK/92WT67ZK6R8KekofkMwfTlBG9Qx04xVERPgs5z7/SH
+         L5GzjyJGLB9qTdm0j4Hsuxgu96gYltHvabDfmMjvWVXScDhzoLz/Pz1JkaArGz1xHTZ8
+         RVDg==
+X-Forwarded-Encrypted: i=1; AJvYcCXC1Iv1sPcu7EGINnElF4rsdffSb5iDAcZOYNjq5nHJxMPpCrBvgJJjARSZXVL8PDNuXh2w5N6rU1NJ/7rlCLptCf6FRr+QAQ==
+X-Gm-Message-State: AOJu0YyVYIIZDtZf+5Tkl3qvt3rvgNnar/8d1NOY9fuuFMofI/EokzfU
+	IXIfkHiFuUxXuOxqv06Sez4t6WWRdFB0LELss/Q55feRkM0uL8XFAewKWuS2al+hzG6am8+pU3I
+	HzTn6x4EqV+KiGG80j8yNhGU81qi0JKj2BklVUQ==
+X-Google-Smtp-Source: AGHT+IGpRPi8is2Z+QCntAHBaeChPe/gMG90B246WuBKo8Y5w6+Oj96SVZGUzvo02KPLmnyH2zx4kpOyclGT5J1KB+U=
+X-Received: by 2002:a05:6102:c86:b0:47e:f116:4535 with SMTP id
+ ada2fe7eead31-48077dca716mr18583373137.8.1715844817070; Thu, 16 May 2024
+ 00:33:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <SJ1PR11MB6083D455CE90AFC3251703B8FCEC2@SJ1PR11MB6083.namprd11.prod.outlook.com>
+References: <20240514100948.010148088@linuxfoundation.org>
+In-Reply-To: <20240514100948.010148088@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 16 May 2024 09:33:25 +0200
+Message-ID: <CA+G9fYtvj5OEOeAG31vON6vE_NHE8a-3Sqg=ptb4hmf0icLmtg@mail.gmail.com>
+Subject: Re: [PATCH 4.19 00/63] 4.19.314-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 15, 2024 at 10:07:56PM +0000, Luck, Tony wrote:
-> >> There's a wildcard match in arch/x86/kernel/smpboot.c that wants
-> >> to hit on any CPU made by Intel. The match used to work because
-> >
-> > intel_cod_cpu[] or which one?
-> >
-> > Please be more specific.
-> 
-> intel_cod_cpu[] is the only one in arch/x86/kernel/smpboot.c
+On Tue, 14 May 2024 at 13:39, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.19.314 release.
+> There are 63 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 16 May 2024 10:09:32 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
+4.19.314-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Sorry Tony, commit messages are not a guessing game but a precise
-explanation as to what the problem is. Please try again.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Also, this change looks like "oh, lemme change the Intel vendor number
-so that my conditional works".
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-But the Intel vendor has been 0 for what, 30 years?
+## Build
+* kernel: 4.19.314-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-4.19.y
+* git commit: 61b47a187ce8efaf5f5b7cd7e2ab6ca1b7da2557
+* git describe: v4.19.313-62-g61b47a187ce8
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19=
+.313-62-g61b47a187ce8/
 
-Are you sure no other code in the tree relies on that? Audited?
+## Test Regressions (compared to v4.19.313)
 
-Also, those x86_match_cpu functions with for-loop termination
-conditionals checking whether stuff is not 0 - i.e., that:
+## Metric Regressions (compared to v4.19.313)
 
-        for (m = match;
-             m->vendor | m->family | m->model | m->steppings | m->feature;
-	     ^^^^^^^^^^^
-             m++) {
+## Test Fixes (compared to v4.19.313)
 
-are technically wrong when a vendor 0 is valid.
+## Metric Fixes (compared to v4.19.313)
 
-So this has all worked by chance and you've hit the one case where it
-didn't.
+## Test result summary
+total: 42289, pass: 38159, fail: 195, skip: 3906, xfail: 29
 
-Because it's not like we don't have a "invalid vendor" define:
+## Build Summary
+* arc: 10 total, 10 passed, 0 failed
+* arm: 102 total, 96 passed, 6 failed
+* arm64: 28 total, 23 passed, 5 failed
+* i386: 15 total, 12 passed, 3 failed
+* mips: 19 total, 19 passed, 0 failed
+* parisc: 3 total, 0 passed, 3 failed
+* powerpc: 24 total, 24 passed, 0 failed
+* s390: 6 total, 6 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 24 total, 19 passed, 5 failed
 
-#define X86_VENDOR_UNKNOWN      0xff
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mm
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-zram
+* kunit
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-smoketest
+* ltp-syscalls
+* ltp-tracing
+* rcutorture
 
-So, *actually*, all those terminators at the end of those arrays should
-have those invalid values.
-
-And there are a gazillion of those in the tree... :-\
-
-Lovely.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+--
+Linaro LKFT
+https://lkft.linaro.org
