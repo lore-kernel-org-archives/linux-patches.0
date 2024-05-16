@@ -1,63 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DD54A3F;
-	Thu, 16 May 2024 00:56:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C5C2C1B8
+	for <patches@lists.linux.dev>; Thu, 16 May 2024 07:18:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715821001; cv=none; b=MvYihZ26MdYOS6lSokX/tdOczV5LYhlPKq7KZ5Nr38MF609XbME6e7rLvuCPyxehw6fsO4AOT4CJxlptcELoEvs6U26jht1EJqCrCq3NKN9HPTBgY0Lqe5lHKw5jMv1+XKFHw8fqrJ9y18XKCyxmkQ510m8Jv5UBz6N1UVOAdAA=
+	t=1715843898; cv=none; b=kv4bd0mmnpJMJvFiey0cWuHHKoz6VLZyqON2VN02QjmJSAL0sdF3QPePPuABnm/WZpV1pp48JJUtd3rWWcpceF7366vof1PqRq0H1lMRVjlfFTK9Up2/YC+WJIJ/mCGZdOEvY3ycAxBVTxticgweh2Ti+3Vx3mZXttU15THHpzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715821001; c=relaxed/simple;
-	bh=RZqXihDKwwl6roptdsNe65gDMPagfXaqrff9GjtkDN0=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=fOHQsowQy78XEgjenPcJBnJgZEjNtisqpKo9wMNUTz6caXcru6x2Ov0g+hN1GjxoUmOP7xpE00BNGKz9S2yNE6An2GcmnbziKqO90H+1yO6cqL93ss/pTT8qY0QBWxJPU0lYv3+BW7FVaeXwVJ3UGdIhn55likbkH5SLAFKKzao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OaNX86Q9; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715843898; c=relaxed/simple;
+	bh=rgXkxk9Orw9SGwaHV/qdWKAMzOz0en6hFneE/RcKR3s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hXled6M59Ek9R9ruCZmD4C11I9SKsSJR8b/n8HkbnGPX8COitmVW7J9PTzRwNDQ1VH3p0I1787skkVapa1cj/tR0ULutV5VkzmPc3NHsIqSU9I8tRFVzT0uQpCa4Ynvdf+HweaOhfT6fZ1wRsF6BH1ldB7vEBILcc3lYvZFRU9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=VTrERbxU; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OaNX86Q9"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id F1F38C32782;
-	Thu, 16 May 2024 00:56:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715821001;
-	bh=RZqXihDKwwl6roptdsNe65gDMPagfXaqrff9GjtkDN0=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=OaNX86Q90Xh1cwLFVq3NbGVTvoWYQF4CcpdTyUGihBtH9+MObm1iNSDmaDmiahyWt
-	 8ijVsLiyCxk7xD15g8Ym6rRefh+mP+2wnYKRs0Glu2vABop894KhBwePA98ymqkjPa
-	 o1o21CGZQhSOfdp4v+6F82xeFxFr3NF7ICk6ME2UaF9XSamXBlz6S65HaKHp3Z+wKH
-	 LwUuUAJ1y2shHAwGhMfll7PknpvVnrOThV6VSVMqNlxWm1z9EDo0bI+lxhGkP3lOMy
-	 kLSLN87EBeTl7xiGlMm6PASu1WYf9Uys1Gh4ygFMqmP3/2TjUUfuM8/o077tswMeBX
-	 +ofYlTS6aeYaw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E76C4C43332;
-	Thu, 16 May 2024 00:56:40 +0000 (UTC)
-Subject: Re: [GIT PULL] Modules changes for v6.10-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <ZkMfS727s_1MQWzQ@bombadil.infradead.org>
-References: <ZkMfS727s_1MQWzQ@bombadil.infradead.org>
-X-PR-Tracked-List-Id: <linux-arch.vger.kernel.org>
-X-PR-Tracked-Message-Id: <ZkMfS727s_1MQWzQ@bombadil.infradead.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.10-rc1
-X-PR-Tracked-Commit-Id: 2c9e5d4a008293407836d29d35dfd4353615bd2f
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: a49468240e89628236b738b5ab9416eae8f90c15
-Message-Id: <171582100094.27993.18157939993173010013.pr-tracker-bot@kernel.org>
-Date: Thu, 16 May 2024 00:56:40 +0000
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, linux-modules@vger.kernel.org, mcgrof@kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org, rppt@kernel.org, song@kernel.org, tglx@linutronix.de, bjorn@kernel.org, mhiramat@kernel.org, rostedt@goodmis.org, philmd@linaro.org, will@kernel.org, sam@ravnborg.org, alexghiti@rivosinc.com, liviu@dudau.co.uk, justinstitt@google.com, elsk@google.com
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="VTrERbxU"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 31D5140E01A3;
+	Thu, 16 May 2024 07:18:12 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Xj4QD_2gjpOz; Thu, 16 May 2024 07:18:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1715843888; bh=vEDqqJEpXplCnXAGo2TY8kMB/3YopuPJQZuB64A6wAA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VTrERbxUKOlGNBmwhar7AYP4n7jrzbsPFIdBnq5duTW4yw+NIa6cFn4Qsuc/8UNyZ
+	 aQKSwMurKh6KiQx1BzCTHWzXm0ejQGRy6DjDAAvCgPZGAw1PT+XYSIkx+QauOU4tf2
+	 YcMlP2Je92cSHuUMxyau9hVBsmDKN2abXUNXFKd3j2fsfJTpHSCaRSsWt04WjXWmEF
+	 6w5BeXwEZeNcOmq97WonIxCBgDB8RtZ6D9j+VuHkiB+AyQQqdW1JZtFSLYo8P0UMy2
+	 SfZPqRRWgxJ5BZagkG0dfs6bKnEMl9cSoJehurryeLLP3/8rq8ZVeI1OhR7LaFGRPi
+	 v0X/iWjt4tTStpclO8371LQSWkKLlSJJRKmLWvR7iFCzLoClLy0gfV0kbJP5CO7iQ0
+	 OdIXt8+9DmI2fBcmg5bVFLMKDI/QpoCN+Fr9qhTPbkJRnzYTrcnWxH00iGAkZ1Xmdw
+	 nHyJLOhaldATmaRmwvqyp1zyrIP7efD9qqNT3DpWSqQWAx8YmqHNHKRQPQ8hbg9bQB
+	 eF4olmhGN8wEk7i060jtCgqQ0UCcFO6K1POlF5n7sfXLua3pdCULPLVIBHWyQ8BGl/
+	 Tr2TBKvZ94VNPl95cyJ5tMr8w+IgIj4B9Gctyz0+M653e1X2png1fJfbkJ1PbzeU0f
+	 aWLrSFAOfqe93ZZM80wzcW/k=
+Received: from zn.tnic (p5de8ee85.dip0.t-ipconnect.de [93.232.238.133])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 9639940E01E8;
+	Thu, 16 May 2024 07:18:04 +0000 (UTC)
+Date: Thu, 16 May 2024 09:17:59 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: "Luck, Tony" <tony.luck@intel.com>
+Cc: "x86@kernel.org" <x86@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH] x86/cpu: Fix x86_match_cpu() to match just
+ X86_VENDOR_INTEL
+Message-ID: <20240516071759.GAZkWzJ7t83HW6BECA@fat_crate.local>
+References: <20240515214357.73798-1-tony.luck@intel.com>
+ <20240515220058.GEZkUwmtNazjQaLdDn@fat_crate.local>
+ <SJ1PR11MB6083D455CE90AFC3251703B8FCEC2@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <SJ1PR11MB6083D455CE90AFC3251703B8FCEC2@SJ1PR11MB6083.namprd11.prod.outlook.com>
 
-The pull request you sent on Tue, 14 May 2024 01:22:35 -0700:
+On Wed, May 15, 2024 at 10:07:56PM +0000, Luck, Tony wrote:
+> >> There's a wildcard match in arch/x86/kernel/smpboot.c that wants
+> >> to hit on any CPU made by Intel. The match used to work because
+> >
+> > intel_cod_cpu[] or which one?
+> >
+> > Please be more specific.
+> 
+> intel_cod_cpu[] is the only one in arch/x86/kernel/smpboot.c
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.10-rc1
+Sorry Tony, commit messages are not a guessing game but a precise
+explanation as to what the problem is. Please try again.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/a49468240e89628236b738b5ab9416eae8f90c15
+Also, this change looks like "oh, lemme change the Intel vendor number
+so that my conditional works".
 
-Thank you!
+But the Intel vendor has been 0 for what, 30 years?
+
+Are you sure no other code in the tree relies on that? Audited?
+
+Also, those x86_match_cpu functions with for-loop termination
+conditionals checking whether stuff is not 0 - i.e., that:
+
+        for (m = match;
+             m->vendor | m->family | m->model | m->steppings | m->feature;
+	     ^^^^^^^^^^^
+             m++) {
+
+are technically wrong when a vendor 0 is valid.
+
+So this has all worked by chance and you've hit the one case where it
+didn't.
+
+Because it's not like we don't have a "invalid vendor" define:
+
+#define X86_VENDOR_UNKNOWN      0xff
+
+So, *actually*, all those terminators at the end of those arrays should
+have those invalid values.
+
+And there are a gazillion of those in the tree... :-\
+
+Lovely.
 
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
