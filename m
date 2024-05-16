@@ -1,103 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63085147C75;
-	Thu, 16 May 2024 14:03:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A658614B06E
+	for <patches@lists.linux.dev>; Thu, 16 May 2024 15:04:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715868227; cv=none; b=KyTz2V+ZvKkVjwT/0N/v90iLw+yXs77HG08R4UvXGTg+o8qtDKHosgmUO5srbm38Ng/T/JVrmWuhyGliegC6oAn07zi7rXA5hB41pOCwvqAG6Nqc4WhpjGPFzXzCIEJFhptzBGXnITU8wK+6g65HczgtKSOc70hYeyU1bV6ZHyU=
+	t=1715871892; cv=none; b=Lp0Nn+s/7q9eLbEfLrAJoJozOX7FRpDBMIM3igxzdB1BV5qFmreoNaXH5FHgAM2OHWqubePfd5alS/y3BJYPDW813o5rmrsmbKJoxfLUntFSgi9Jh6ekln0xwIzbELiPBFvGvBcaztjrPwN3+iD1nj8bMq0+LWCyqxScygoovH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715868227; c=relaxed/simple;
-	bh=btau07SULIoJqAYVzbVYOn4odv7J5jQdnBX5OjVK4G4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=U1GIqgwE4Y02uBfsjeDm0ekVvfUnZtMGzRpJVLNl8By7ASkK96khoOMh3MELsdw2AazFkrVn2NY6Po9OuaqPVksoRQUyAVeu0hE1ck6VpJc3BpSQDkWc9QtRId127WJmX1f0ialfvuqIcSWZe1APaKX+rq1KOPabIA6QZXo2qDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Drw8Zuny; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715871892; c=relaxed/simple;
+	bh=1yLuwr5Ny+Gy2jE6b4j91jagshOW1WAMTqW/K2hryZM=;
+	h=Date:Subject:In-Reply-To:CC:From:To:Message-ID:Mime-Version:
+	 Content-Type; b=Ql/tEqFZFlejy3bjuRC+8d52uLtFofGwsjx7vXX0EJ4+NvVF5VqUkmUxnGZKKybgQ2krgRT3e3O6T//qVs5fCIZUMZXWZHabNJbmJameylBm1ykjM4bWGRaWk8cofKwrY4PIo8S9B6Md/Mbsq9MPsAdNZ58fV2tURxAqzpZoWzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dabbelt.com; spf=pass smtp.mailfrom=dabbelt.com; dkim=pass (2048-bit key) header.d=dabbelt-com.20230601.gappssmtp.com header.i=@dabbelt-com.20230601.gappssmtp.com header.b=yTdlCNFM; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dabbelt.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dabbelt.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Drw8Zuny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98387C113CC;
-	Thu, 16 May 2024 14:03:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715868227;
-	bh=btau07SULIoJqAYVzbVYOn4odv7J5jQdnBX5OjVK4G4=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Drw8ZunyLWTr0nM0rJ68C/Qs17bPqqTgPav4i1mGgj2/L27YwXmx4oZjSv7CNjyCi
-	 3ObhB/MpoSlxm0DigGTMGuE+plKFoNl91gH2B+GxdKDTGW8BwepQOCwBioUVFmvR6r
-	 VERV9RbO0dTwfKKr3htsi1Iblz3WALW6tUsRpmnyIjK03hmJbAPqSNYYVuN8RjdR5P
-	 dliR0k/KQ20XL1ccOSlhdwSWyUFhSE4umJB819p4TTpRcn7qavEJz0eCTRIOvREhwc
-	 NjGkrSaGwzOB0c8LknuaND4gAkoNrCqqthBLNN/vIivn3O7ADidW4SzXkDlJZivOm4
-	 7qhhsK0PS/1GA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 16 May 2024 07:03:41 -0700
-Subject: [PATCH] x86/boot: Address clang -Wimplicit-fallthrough in
- vsprintf()
+	dkim=pass (2048-bit key) header.d=dabbelt-com.20230601.gappssmtp.com header.i=@dabbelt-com.20230601.gappssmtp.com header.b="yTdlCNFM"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1ed96772f92so65180475ad.0
+        for <patches@lists.linux.dev>; Thu, 16 May 2024 08:04:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dabbelt-com.20230601.gappssmtp.com; s=20230601; t=1715871890; x=1716476690; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:to:from:cc
+         :in-reply-to:subject:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5tFCjyRy326EuMyapGXcH9cbJEkf5Ts4nwZLLLeQ4rw=;
+        b=yTdlCNFMLGNVBj4SIQUvIhttutCM55fXrZ0YquYwVm/WG8FmT2cIdSAze6OF0+VDTq
+         345gOBEMAp6IxRJTuxOLmVyz2ej6IdqZSirZD4CRe+vFyJ3ZJo9IjWQq0LYGXB7yYoPu
+         9baha4IFNAHum5tP8T/UX02Ms/GUHYQzQtNPCiP+NCqEoxu1l/3RTC1Nhw+zKZjuJocH
+         kH59BlG+ohwLECZXgCUDirGGkboL5T9K3eiNIH0oWd2rBk9VDCSFh2XMCU6hGpVuX6de
+         SLbizWqRyPTOj0Xv0WU/Qwiwk+WZyN8H7DC8nXQWE2kK1Rsa6cGJhseivU/T1xgEVj+V
+         ay8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715871890; x=1716476690;
+        h=content-transfer-encoding:mime-version:message-id:to:from:cc
+         :in-reply-to:subject:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5tFCjyRy326EuMyapGXcH9cbJEkf5Ts4nwZLLLeQ4rw=;
+        b=EYKefXkzM21z/5kJ/k3N2XaSNrYjZg6oRR6yMwcuYdfLo+ZHeGGI0DB8HtxoZ6Tghc
+         A3iAV7XSNG6bAdFJBpR8v3b1O8AzltYk+o6qxd8rz2h/rvCYRMVlnv3Gidi5FX1dffxA
+         sPuMjg03hwnebftE99200/y/BUObNMfhZoLZJsnnkT4E2r2/DY1C8hpi1784keKAvHCp
+         UCcpmARe4X+nIAyRPz9MFD1eC6FIl2gGzDmq/K9aYWcR5w/kLhavz7/L60spgS3EGUHb
+         J1pFOm8Knj2+14GqPK2AHt1z7JJKYO9/FjQmHFaSAoUw7ypALd+Z7nZ3qGthVM/5e7GD
+         ekfw==
+X-Forwarded-Encrypted: i=1; AJvYcCVIy9L2NWyIXdCuggn/sSQT9jPPeQ9PJ590KTT8dJ+6Dtr8HvqB0jPvDg0Xehdpqs5LTYQlvFRy1nwTwECTlSL7YEdtiHQ1Kg==
+X-Gm-Message-State: AOJu0YzAYGIM81mG+0GGADXrqJGrCvxa4Prp4cuaDeNRaE2lAK9fVjdX
+	8Vj7fCFZBap2dJn9ZnsPiOSf+enkRrW0YQfQtkpv+OL4au6yWBcf0uA4ce1sat4=
+X-Google-Smtp-Source: AGHT+IHyr+L3kQts1mekEifNWiW4+PjiSNLgehkncSk5asn5KHFcaUVhYB0qIAyAQvaljXMM2Ch1ig==
+X-Received: by 2002:a17:902:6546:b0:1ea:cb6f:ee5b with SMTP id d9443c01a7336-1ef43e2796fmr195159345ad.38.1715871889708;
+        Thu, 16 May 2024 08:04:49 -0700 (PDT)
+Received: from localhost ([50.145.13.30])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ef0c2567ccsm139617235ad.301.2024.05.16.08.04.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 May 2024 08:04:49 -0700 (PDT)
+Date: Thu, 16 May 2024 08:04:49 -0700 (PDT)
+X-Google-Original-Date: Thu, 16 May 2024 08:04:47 PDT (-0700)
+Subject:     Re: [PATCH] scsi: mpi3mr: Use proper format specifier in mpi3mr_sas_port_add()
+In-Reply-To: <yq1y18bry3h.fsf@ca-mkp.ca.oracle.com>
+CC: nathan@kernel.org, sathya.prakash@broadcom.com, kashyap.desai@broadcom.com,
+  sumit.saxena@broadcom.com, sreekanth.reddy@broadcom.com, jejb@linux.ibm.com, martin.petersen@oracle.com,
+  thenzl@redhat.com, mpi3mr-linuxdrv.pdl@broadcom.com, linux-scsi@vger.kernel.org,
+  patches@lists.linux.dev
+From: Palmer Dabbelt <palmer@dabbelt.com>
+To: martin.petersen@oracle.com
+Message-ID: <mhng-c0ff89cb-4699-4ff6-b0c1-a71fadd710f7@palmer-ri-x1c9a>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240516-x86-boot-fix-clang-implicit-fallthrough-v1-1-04dc320ca07c@kernel.org>
-X-B4-Tracking: v=1; b=H4sIADwSRmYC/x2NwQqDMBBEf0X27IKRJmp/RTyY7WoWUiOJLYL47
- 116fMO8mQsKZ+ECz+qCzF8pkjYFU1dAYd5WRnkpQ9u0j8Yah2fv0Kd04CInUtQKynuPQqLRHOM
- RcvqsAReyNHhvhs5Z0LU9sxr/p3G67x8/+nHAeQAAAA==
-To: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
- Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, 
- x86@kernel.org
-Cc: Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- kernel test robot <lkp@intel.com>, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1475; i=nathan@kernel.org;
- h=from:subject:message-id; bh=btau07SULIoJqAYVzbVYOn4odv7J5jQdnBX5OjVK4G4=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGluQk73OprDal7ErGtaPL/fzVM1ew6D8kGH9DdR834W/
- HZbf2NqRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZiIHBfDP71rcTKm7x0Y2SX0
- I0s4zSc45au+t1qy/qCzwtG3pQteODIy/NsZvI1Z6vjeiqfiWrXB2x2l+cR1DM7/SDilMyVTit+
- WBQA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Mime-Version: 1.0 (MHng)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-After enabling -Wimplicit-fallthrough for the x86 boot code, clang
-warns:
+On Wed, 15 May 2024 06:42:12 PDT (-0700), martin.petersen@oracle.com wrote:
+>
+> Nathan,
+>
+>> When building for a 32-bit platform such as ARM or i386, for which
+>> size_t is unsigned int, there is a warning due to using an unsigned
+>> long format specifier:
+>
+> Applied to 6.10/scsi-staging, thanks!
 
-  arch/x86/boot/printf.c:257:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
-    257 |                 case 'u':
-        |                 ^
+This fixes rv32 as well, so
 
-Clang is a little more pedantic than GCC, which does not warn when
-falling through to a case that is just break or return. Clang's version
-is more in line with the kernel's own stance in deprecated.rst, which
-states that all switch/case blocks must end in either break,
-fallthrough, continue, goto, or return. Add the missing break to silence
-the warning.
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
 
-Fixes: dd0716c2b877 ("x86/boot: Add a fallthrough annotation")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202405162054.ryP73vy1-lkp@intel.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/x86/boot/printf.c | 2 ++
- 1 file changed, 2 insertions(+)
+(don't worry about up the review, it's mostly here so I can find it 
+again if I forget)
 
-diff --git a/arch/x86/boot/printf.c b/arch/x86/boot/printf.c
-index c0ec1dc355ab..51dc14b714f6 100644
---- a/arch/x86/boot/printf.c
-+++ b/arch/x86/boot/printf.c
-@@ -254,6 +254,8 @@ int vsprintf(char *buf, const char *fmt, va_list args)
- 		case 'd':
- 		case 'i':
- 			flags |= SIGN;
-+			break;
-+
- 		case 'u':
- 			break;
- 
-
----
-base-commit: dd0716c2b87792ebea30864e7ad1df461d4c1525
-change-id: 20240516-x86-boot-fix-clang-implicit-fallthrough-fc5c9bb19765
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Thanks!
