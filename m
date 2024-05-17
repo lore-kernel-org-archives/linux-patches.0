@@ -1,165 +1,113 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2055.outbound.protection.outlook.com [40.107.243.55])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B9AF4EE;
-	Fri, 17 May 2024 20:35:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.55
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715978122; cv=fail; b=sV8olUUrz/kjslirwTTVSgrX+ztH8icqffNQNMneBF5/FnNT8iZynUZ+Qssulywlh3v/NBwzdZQl+ZT/Fc48VTTtbMaAqNJvGeYYtWxjXgW82yocdOtOQCyB7qGN8LwxPxY8uwQD3YWrmJHDMZHNRsXCEAg+gRQU+9fH4J1odqY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715978122; c=relaxed/simple;
-	bh=Vkt9m8BvhECOYPHPReLJwvdFU6aRVGCNDa1ZUirOw5I=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZGg0sYbdJhdAr3FNoQ7SdTxAPFK34bhUKWweYohzZlEDsJC8phDxWj37jRzrxKPfCNaJqGcETc6uHYjM65HJLsvw2i90hWx+MpRSEzuK4/1tBO5eO3wJPsYNnwIm6cDEfgZGm6O8/IeoP7q5LwU6ZFwYiW8oDONPHdorhbBOQi0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MNmwLD2v; arc=fail smtp.client-ip=40.107.243.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C42F1DFF2
+	for <patches@lists.linux.dev>; Fri, 17 May 2024 20:41:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1715978485; cv=none; b=hNAnoaN2zY2RGUnhu6Pw3GWG7KeSpIxcsn2XpQ1N+fMx1yZY9W6ss+xB8CTlqr22lB4++Mo8K6m2OhCxwrcsfTZ+y+usrZr3tFIxHRXGQhVVN1kSqsKwDKHC4kVftGdpYYdKkJyg5ELAs+z2RSd7K/ZVdP/dxLS1fXhs0RHO0Dw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1715978485; c=relaxed/simple;
+	bh=zyOuYSC78p7yIHSIK3YPMOawrAe8CDN7YBWgxS3A4DQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nqhASKkJkzxqMicawa0CmLJJAbfK6PDhwoekNth3mG0CzaKrAEWH1R0wJ53/NbN7bSR1It/OFBS4qAG58Gf63EeDZU3eGxetSpRfBo9T4puFNcvvtfimKHLzgcc1TuTu7BWtYCh2gGyoArUqWynL+cFydzkmJ2jKHhVXwCwWDT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=n0E5/zDO; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=55g4QL0b; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MNmwLD2v"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=k0Rvf4Cq1KJsxzrtzgb2xO68e836U1dGWZ+9oE8vL/s/t+pkov66Dy9tR7U8uzCmeKuZXmdXsSbm3EaYzIvRs0gDZs6E0kHrPCMBGlEBeN3IWO0IBtq9o7vm8NfiYDz+ktpLjFcYY4o5n19JqflLnVF2vWHSVrSdJ4elvAbEZbFyucyyuVU4Z1bgXBCaYpn4Fb7Ju1cjCuG8Lw4hICNa2YwVLJYZ4HzS1qGXoQjiRZyP+JTQGY1zQzmDgd4m/N0L5P+xjNZo3Zq1VsrHGBDpZCAprbcDTI1fikO/eCYfTu+HTt0eRhkGBoUivQMOdyxx1Hddvk3Y5CsKOuXmcClPLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VkrVYxTH5TlKxuf8HoCv127lopErl/K6bquocEBh23c=;
- b=TOwkN3SAkGhETVhWEd7uSMfVWhwSlYiU8rzkvZ+Q82M/tDZJEzbzBD8i5YttXQ7FHGonysTvuyW+QpUVyBPZt0LGY9CVWe1HQE0HGJjU6gKPdo2cZE9C38XloS2JHrjW9kpNVOa2+zbvoGY6C7Dt7WCjDLRZitRUpsFqpAwTK3D50s09sLZRlYW0+Dw/wzso92rJUQcEwpL1JmCcBwnBHcgGBU3zu00Dl1QIMroFnAwtk8f5DpnWcp+CZlFN+NrXOvoV8EIKyNcgrXbvnVHMxlQcavdza7CwX3/fArX+2y8QoT627gh6hVJQullALwh73vwS3nh0D945SxeQpnBfsg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VkrVYxTH5TlKxuf8HoCv127lopErl/K6bquocEBh23c=;
- b=MNmwLD2vDnv8YNWdrvb6E/NpGTpZ2LnNw1kqtcLcuU+r5xuAiLZTKkdzkIQvfzaDca4EspfmH/ZSmWSCchEYuYi9UCuwWasnLSgYKJh4TWJKEUXN1oierp3583glMDWrmlnVeMTF6TBtSIQSjXockvmsQdHRMfsYqx7oAFBillc8yljR4WmLOl6/8lNU+7yFXQ4z+eOzVlTiYh/s0WNIVNW6L60a8//r56Uuh26o7q1HJqgkpgcmwybbCfAnDFCf+tAD67QwxR67c8ACPSyON3KqvFpubi0m+QbGRFG/rWwyNQXz6WHbkHYr3HZJl9YxySjfUeEtGAoyheWdUdMUxA==
-Received: from BL1PR13CA0063.namprd13.prod.outlook.com (2603:10b6:208:2b8::8)
- by SJ0PR12MB7475.namprd12.prod.outlook.com (2603:10b6:a03:48d::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.27; Fri, 17 May
- 2024 20:35:15 +0000
-Received: from MN1PEPF0000ECD4.namprd02.prod.outlook.com
- (2603:10b6:208:2b8:cafe::d8) by BL1PR13CA0063.outlook.office365.com
- (2603:10b6:208:2b8::8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7611.12 via Frontend
- Transport; Fri, 17 May 2024 20:35:14 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- MN1PEPF0000ECD4.mail.protection.outlook.com (10.167.242.132) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7587.21 via Frontend Transport; Fri, 17 May 2024 20:35:14 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 17 May
- 2024 13:35:03 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Fri, 17 May 2024 13:35:02 -0700
-Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.126.190.181)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Fri, 17 May 2024 13:34:58 -0700
-Date: Fri, 17 May 2024 13:34:56 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>,
-	<linux-arm-kernel@lists.infradead.org>, Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer
-	<mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
-	<patches@lists.linux.dev>, Shameerali Kolothum Thodi
-	<shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v7 10/14] iommu/arm-smmu-v3: Put the SVA mmu notifier in
- the smmu_domain
-Message-ID: <Zke/cO6xBejkSOf8@nvidia.com>
-References: <0-v7-9597c885796c+d2-smmuv3_newapi_p2b_jgg@nvidia.com>
- <10-v7-9597c885796c+d2-smmuv3_newapi_p2b_jgg@nvidia.com>
- <ZkKExvnPkHWjedAX@nvidia.com>
- <20240517194814.GA133219@nvidia.com>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="n0E5/zDO";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="55g4QL0b"
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1715978482;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QZ4h1wQmVnSiPurtyO10mrFNnm7uledEHoSaoAVavPw=;
+	b=n0E5/zDOzUr/2cjZmyqgrTpcWoh1DlfH4ji1W+cmuZgXmfqW95WmnY+F6sEDjnrkfFbyte
+	c+ZxJJ7/u7RPWRShl81Wy8uLGeB+FswNIj5w/OYC3rW4p0FuFQ8aj4Gq9yUBgw0qGDmOCw
+	5aPzMSXxziu9kRh2W1LI/AIBkn/cmvUtLmM4RYFPnd05GeZFd1ou6uVf0SkKReFoL0YzVZ
+	9W+LlP3OWNQK/XfLt6IFvpwFd37rGSAIvTDUhUEWaCnpWqJR8nShglK/nFphstG+U2YCPv
+	JN0XxScEjqEv9YPT7oyoI2EbwGJMCbfoKGfzHXw5tOKZWAkw5lOJIA9twvIr2g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1715978482;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QZ4h1wQmVnSiPurtyO10mrFNnm7uledEHoSaoAVavPw=;
+	b=55g4QL0bLJxk3dZjc4ExSoZPUHzrPkGPNSdsBkZjhanf8L8la2xMotYhnf58itwaB0iUEf
+	hwXf/NpJjRgo2/BA==
+To: "H. Peter Anvin" <hpa@zytor.com>, Borislav Petkov <bp@alien8.de>, Tony
+ Luck <tony.luck@intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>, Dave Hansen
+ <dave.hansen@linux.intel.com>, x86@kernel.org, "Peter Zijlstra (Intel)"
+ <peterz@infradead.org>, Uros Bizjak <ubizjak@gmail.com>, Rick Edgecombe
+ <rick.p.edgecombe@intel.com>, Arnd Bergmann <arnd@arndb.de>, Mateusz Guzik
+ <mjguzik@gmail.com>, Thomas Renninger <trenn@suse.de>, Greg Kroah-Hartman
+ <gregkh@suse.de>, Andi Kleen <ak@linux.intel.com>,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v2] x86/cpu: Fix x86_match_cpu() to match just
+ X86_VENDOR_INTEL
+In-Reply-To: <863D0F06-1217-4C94-B2CA-816FC4ABB103@zytor.com>
+References: <20240516162925.79245-1-tony.luck@intel.com>
+ <20240517144312.GBZkdtAOuJZCvxhFbJ@fat_crate.local>
+ <863D0F06-1217-4C94-B2CA-816FC4ABB103@zytor.com>
+Date: Fri, 17 May 2024 22:41:21 +0200
+Message-ID: <87h6ewjhn2.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240517194814.GA133219@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD4:EE_|SJ0PR12MB7475:EE_
-X-MS-Office365-Filtering-Correlation-Id: 865172bf-23f9-4c54-9ad5-08dc76b0db54
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230031|376005|1800799015|36860700004|82310400017|7416005;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?vd7NyqczUidrqwSJNNx+SP+LN3E6kSHTfY8WuLQ5osGAGMYIyVxkV7kpz150?=
- =?us-ascii?Q?Xd0gsUdd8Xo5SI5xoX9eKs2lAXvHBdIXZcjS+gliZsWn5+xtyql6NsSXiF+r?=
- =?us-ascii?Q?vSumNWlMnwfirR6eMOLSRIrP+uNcUFTFwKWjOf+cdMzqFEox5K5Qgsx4i90u?=
- =?us-ascii?Q?OR9QiJHOC79CuqlMIJ/EjCzoVrXugd3ScTonK9W6rhBfJOf6//VpBgGnsdKG?=
- =?us-ascii?Q?RV8gH5qJ8DddPDCbyzVhots63n9rnt/N3e0TxxEwLlCu2L81DGvz/b0I/C0d?=
- =?us-ascii?Q?lJmv2nU0iwYzzoEurXIynagigsQuRDUwCrT/YUPMEpZ6kKO2b6qqqa9HnmlY?=
- =?us-ascii?Q?lXW2192dABbXktVcV31Igblg0VzrdroV6WWqjrvxDzvT+Y4nHvpteCXGLHe/?=
- =?us-ascii?Q?JnMo0SxDBR67xeie2VaU5HXwnKdhH60b4C+/5L81QM4tu7yU8GHYVwS8mUVI?=
- =?us-ascii?Q?D7fYekgu3OlTXV93o5blp5+wTuWrsqmkCzTHw+UJvVFKXryfQ8EYhPieTtgs?=
- =?us-ascii?Q?Mcei3sZticINYGtLJMVFvERQ6UepJiVyTOpJdcXGbGRlKJL1vEOBSjNoqO5a?=
- =?us-ascii?Q?Wu+QaY2CMjIUIH0wIAR9UGBpSG1x9ZlxV3N1AX6NYil5eGiAv4EL02yk0vbK?=
- =?us-ascii?Q?CNEzrTH3oWr9DSSCvFAc2MAWxhXHhSzbNM+0mu/tovfl3Tiv72UhsH4o6a7x?=
- =?us-ascii?Q?q0GFRCRPdmFKmKpfztc3F1ZnsosvisSzEQGb4IB/TJ1meMVjn33WPy6J2RkQ?=
- =?us-ascii?Q?7y2Ett9MuGhHzQ3mG166w0Kptf9YfMJUj1gbaH0E8TFAqCpes9EoxWsgJtya?=
- =?us-ascii?Q?ZnA7cR/otXEQyBAuyQ+U/3DSCmqidnoUlrUl93TZdgR5OLI0QBVHVznoTNKQ?=
- =?us-ascii?Q?/hP/s4VjYdaxEQi7r8jKt06Zf7xe8uNbC1NMAKzlANLbwGMKf6e4VV2uijyO?=
- =?us-ascii?Q?olXlw6BxUdaKt3n7i2ckLvorSSOevXLTtHhCTaVlnJDNV7BwmPWbi6HMcsqi?=
- =?us-ascii?Q?hXIsFLfdEaTvth+PjzlEtu2O5L7Nnplh/bunlH1npY/IAbsawqNtEBAokBgU?=
- =?us-ascii?Q?p4Ur7qfPHEsArqpo7JtW7YRPoIoOooWBQ+iz4+WdsKt8Vk3PLFyUZjdlUllL?=
- =?us-ascii?Q?yHXJEOfnJfFEv4JA9X7Aklp40JnWb53b3mrJnb63Cba4NzRiSTisAFWtZ0qc?=
- =?us-ascii?Q?2c8U4QYhTgwjrNN+xgV8Vd7XIaMIFCgOQvAHSJf4r7pHoKFyqLUGPnd8LBs/?=
- =?us-ascii?Q?EHUwJ0MdVsJFS9crx9Nx/ZuevwGgRFc03xo4c47AWJ8KXdOv8aadYcfGdmjn?=
- =?us-ascii?Q?RcHPO1AJlGbgDm2Htpk0hccRotGqLxb/PcfjNgNnekBGsakwxghOnD7L3G08?=
- =?us-ascii?Q?1qhRNfHBjQcBa8e48M8A51kdB8Zr?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230031)(376005)(1800799015)(36860700004)(82310400017)(7416005);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 May 2024 20:35:14.3500
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 865172bf-23f9-4c54-9ad5-08dc76b0db54
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MN1PEPF0000ECD4.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB7475
+Content-Type: text/plain
 
-On Fri, May 17, 2024 at 04:48:14PM -0300, Jason Gunthorpe wrote:
-> On Mon, May 13, 2024 at 02:23:18PM -0700, Nicolin Chen wrote:
-> > >  static void arm_smmu_mmu_notifier_free(struct mmu_notifier *mn)
-> > >  {
-> > > -	kfree(mn_to_smmu(mn));
-> > > +	struct arm_smmu_domain *smmu_domain =
-> > > +		container_of(mn, struct arm_smmu_domain, mmu_notifier);
-> > > +
-> > > +	kfree(smmu_domain);
-> > 
-> > Would it be cleaner to refactor mn_to_smmu to mn_to_smmu_domain?
-> 
-> I usually like a few more usages before making macros..
+On Fri, May 17 2024 at 10:35, H. Peter Anvin wrote:
+> On May 17, 2024 7:43:12 AM PDT, Borislav Petkov <bp@alien8.de> wrote:
+>>And then do:
+>>
+>>struct x86_cpu_id {
+>>        __u16 vendor;
+>>        __u16 family;
+>>        __u16 model;
+>>        __u16 steppings;
+>>        __u16 feature;  /* bit index */
+>>	__u16 flags;
+>>        kernel_ulong_t driver_data;
+>>};
+>>
+>>#define X86_CPU_ID_FLAG_VENDOR_VALID		BIT(0)
+>>
+>>and then have the macros in arch/x86/include/asm/cpu_device_id.h set
+>>that valid flag and then have x86_match_cpu() check it.
+>>
+>>Then you don't risk a userspace breakage and that x86_match_cpu() crap
+>>thing is fixed.
+>
+> I'm confused. Why not simply use say -1 for wildcard vendor match, -2
+> for no vendor ID (no CPUID or other known probing mechanism) and -3
+> for unrecognized vendor (vendor detectable but not known.)
 
-Hmm, asking because I saw three of them in the end:
-drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c:145:            container_of(mn, struct arm_smmu_domain, mmu_notifier);
-drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c:166:            container_of(mn, struct arm_smmu_domain, mmu_notifier);
-drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c:201:            container_of(mn, struct arm_smmu_domain, mmu_notifier);
+This has nothing to do with wildcards.
 
-How many more usages typically could be a good threshold?
+The problem at hand is about loop termination. Making that explicit by
+having a valid bit in the existing struct hole is trivial, straight
+forward and just works obviously correct.
 
-It's a nit though. So, in either way it's fine.
+> I *hate* these strings with the passion of a thousand suns: they are a
+> classic case of how just blindly converting binary information to hex
+> adds absolutely no value, and often makes the result worse than what
+> one started with. And yes, I complained about that when they first
+> went in as a classic case of exposing what was always simply intended
+> as a kernel internal interface to user space.
 
-Thanks
-Nicolin
+You obviously did not complain loud enough :)
+
+> This is particularly pathetic as there already is a canonical string
+> representation of the vendor ID!
+
+I agree, but that train has left the station long ago,
+
+Thanks,
+
+        tglx
