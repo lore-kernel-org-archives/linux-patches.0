@@ -1,127 +1,98 @@
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E632B273FC
-	for <patches@lists.linux.dev>; Thu, 16 May 2024 23:08:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB8A384
+	for <patches@lists.linux.dev>; Fri, 17 May 2024 00:28:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715900901; cv=none; b=ZVFIRgLga5GuKqwyREZ14KRfm3aterATYucTBL1NkKbZBplMyvFmRJRa2rBEOjZ/1kKSQcAUGWECfrF/KhrwM6lwkrmzxNcv1QvVzWwQ5ZvKHIee8/OQDQwF2FQ35tUFSnM80/fl3Hs5Ty7VPUe1Rg/3B76km6IS8fEXlZ9waBc=
+	t=1715905716; cv=none; b=oPiadz7sFpwfWwxA+Yd9hVleDXokc3aKf8jB7dEveXXJ8OkghMrrmNlsMjYBxFCbSCESERcJSiEy62IxBTa9IMzCNgmk45umb5NzoS4o5XM0ehlTnSJdIAAADDF8TeQT0BmsN9gvxCGUehrR7EpQ8z/zm2YvuAPwZ70f/rwIqHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715900901; c=relaxed/simple;
-	bh=EP942SqgqU+2g95deuGJUqyAMQDCgoYsK8UTO8Gxpcc=;
+	s=arc-20240116; t=1715905716; c=relaxed/simple;
+	bh=CkO8SGr3uIUI/OgequQPuoLhpOqUITNQj9EK8i1IjnA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ov6QYzjdk43i+H3v7s0wCneus9CafyY3P9bG330HHCXFkwvIWTzF0LyFOZMIFkUFHxDipGevgjURyx2P1PXC7oiYz+qC4hKIGxk4QR8HB7sx+znfmTD4ONoBwzE0C+J+HlTUV8G5mcbEzXkqiTQNQB/f5Ao+uPQATPj4208vkMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AUlDf7Lq; arc=none smtp.client-ip=209.85.221.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=HLYuBtr04QZFlw8PsY9p55ApHa4v517u6p6xaUvDXedXhhIPe0ovEP/kb1gGsgIGXCHhqlMeTWwAEmjety0Ehs2u6vS2xwkqiVrRzw4BYJeDWfPro9oDvK+LahmyPfIW5o5lJcojZzgPrUIVTPqRWiu+W0AnRtxPLlXDd/0SIPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T6IVny6B; arc=none smtp.client-ip=209.85.221.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AUlDf7Lq"
-Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-4df5676b06fso31587e0c.1
-        for <patches@lists.linux.dev>; Thu, 16 May 2024 16:08:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T6IVny6B"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-4e1459a13fdso64158e0c.3
+        for <patches@lists.linux.dev>; Thu, 16 May 2024 17:28:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1715900899; x=1716505699; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gak+/oovP81PfogPpqJsHd/1CwWJ9r/ylbJlVjZgFRo=;
-        b=AUlDf7LqVpVphba2YCU8W8N3XI12RuMFR1sZEnmUwY8qqXSXm0ElSRbzrBZdf2WfaI
-         vNv+gw7gYpFVQhwKX890D3wgU3WVmdLCoOoyoXQ1bVnKoSaS51O5oXyE/6wjo/MGkIK5
-         GQNg5j61wks7eKngVMG1FVU1LSFuHfw4ctz9UhJoClJy44lAmb8ZAJc9/xfCQveFVG4J
-         MtvaT+pyMud4CGegxBJhDdvvX8YAUUPdmDLq0G9mlpzEMpCx9d/dtPWTyWoEUyAyGJiN
-         Gh1HL3VZGH39qiN8UL/zBJDUTHHg/3sm67W5Ut74UEG2G2uGJUUp1kezG8exA5yffxJ8
-         u79A==
+        d=gmail.com; s=20230601; t=1715905714; x=1716510514; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=n/jyAWPQcY8kSQKEOoekqeq1mLd+RuTg+/71Ne2/pnQ=;
+        b=T6IVny6Bq++kWUE0hNwk66idVlr2kts2A2ZIv+n2D34q07KY5TdMydze6VgbxHcFF6
+         Vn1OX3Hn3WQsszeC5f2+75hxCxvUSdOS9lRFdmfRueFL0tDTcWX9rgkG+Bg48WeQ1oF7
+         5N3/XGwtOlfIg09ignmjoBwvpCNT6SKUHWKYoW102yifjfMFbSa5gb4ZxNY06b8aqr7M
+         0GPg1PSiz8DAjyRxcv8TYFhRpxgOvqj+o/OaUZcF5n1QNa3C56/zTIgEaJ/mwwGG+ECO
+         rNCfbhS5tbtF+3CuHIGR17OWVkrgZjzOtEpmO93t329pN9bCsDCBStYdlrb55OMK0Axp
+         76gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715900899; x=1716505699;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gak+/oovP81PfogPpqJsHd/1CwWJ9r/ylbJlVjZgFRo=;
-        b=RljUTKnH1b8RrexDrTbrKaNdfMV+kPsP+2xy6r3g+ynas628uNx0WDW1Lkze76QOAB
-         zwJVvt7+eIVBI0KfCWGxjyIgVLs1jBWVKanSZxrFI6uG83Qkgoh48oX9Ti/lqQx79Ku6
-         budiOn6kA15XglOyugVbH3Vwb24Ftrb8hOso9wdmiRpDFETwqqZJL8zkk7asaik2JBXf
-         rtzG///xtmZsSpyaKDm4SkjN6CPW3LdFlHRFE+3Dvc/oPavxGGUQXas65Aqmfp3LtdBE
-         H327IeB+mu7F+U59iKBKG4t0uchE2hLcqKwGjvZtZbR5yRBMs0ul6RSlxDXjPbCNRKo0
-         LZTg==
-X-Forwarded-Encrypted: i=1; AJvYcCX9A6Ji2GR4FW359scD9UGiIXnEfqkqgfgxJA6T/JBMxcpXgpkcFOqh5ylu+ONHNOM3CpJCpHyIrMF6qjTYEagj/dbbM9T/4g==
-X-Gm-Message-State: AOJu0YwAwS/61zimO7eaQxlQuLYUOhetQ8IwEjkP750SSED/BzdRi4oq
-	wW6NuN7jkIsHFKCzVRBIbrVJn4xs1xiRtvEzy50BPSRFmvcUXxsRkhadsOxBh6VL+LzKXVDJuhx
-	xWZsCq+pFtCpjogVUJyGF7CZfc1HSah3zsV5a
-X-Google-Smtp-Source: AGHT+IFMgTb54aBiq7xBfnDGVVGoTPJD2NkwNvHCirLNFVItNElpLuHUDLgn7UWhCRx47d2b9REE8C02r6/bHnLb5WM=
-X-Received: by 2002:a05:6102:3e26:b0:47b:b8a7:7ddc with SMTP id
- ada2fe7eead31-48077eb4acdmr25780377137.30.1715900898508; Thu, 16 May 2024
- 16:08:18 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1715905714; x=1716510514;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=n/jyAWPQcY8kSQKEOoekqeq1mLd+RuTg+/71Ne2/pnQ=;
+        b=XaqSsHPZitlljJ33177Re7ltnkb0cPMeMVTbgBw2uGZYxHWEwffRA8JDSJFXWolQAc
+         iThYSnG58HSOWOIO4K4azXLmBuxkkYGCK3EWSGDdbm5tA9+D/2tlVLHbVi/2BeRsZqXU
+         F6isaytwmfJ0v0Y7OZD6lDJutXlYjPtQRAksFJNKLLTrtnZarzKXpI0DjbQQ+Llt/fyx
+         dt5LV7fdtFaQjYlklDbIghR+zzlqmqf38dXX6p+m4ESxbhCElYyigxVT5LuCX7RTSdSA
+         GgiWONAH8yj8leoI1Q/EDXmhjkiAhLyFdhG3GfUKJj9xp7N5Wr1pjbdzFcdN4k9FomMO
+         hb6w==
+X-Forwarded-Encrypted: i=1; AJvYcCWittxEXQw5T2sKWkIk8GFJVkCpXSQg9aj9A7kBQFQ7akWIowxSYQ+7cRlNtbdIRQ2zHRYdZsJxS4wYhnW6WnqlByUNMentLw==
+X-Gm-Message-State: AOJu0YwmsA18+cPoVchByvkE0j/Oe4pOIvXIzYYFMyYNyIlHSDFMFoyo
+	bRQKAE2OoLRT+kYOtqHTrJbIiVcvN0Qr5iZCQ4sDLfrrF4HVEhp50cdzzVebu3W1ehpF6ZR5jfa
+	5iBRyxyqGuAVJrCmzjhtjnkBdJMA=
+X-Google-Smtp-Source: AGHT+IGZIPNNhi/2On1W9ZhO80r2OJahAqKc9Ee7yecm4HVWGUZQe22zbWas3dFzHStJmIZDph3hjW9cby3ssEJmJ+c=
+X-Received: by 2002:a05:6122:318d:b0:4d8:7359:4c25 with SMTP id
+ 71dfb90a1353d-4df8834b266mr17676695e0c.12.1715905712899; Thu, 16 May 2024
+ 17:28:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240516-x86-boot-fix-clang-implicit-fallthrough-v1-1-04dc320ca07c@kernel.org>
-In-Reply-To: <20240516-x86-boot-fix-clang-implicit-fallthrough-v1-1-04dc320ca07c@kernel.org>
-From: Justin Stitt <justinstitt@google.com>
-Date: Thu, 16 May 2024 16:08:06 -0700
-Message-ID: <CAFhGd8oAunv=+xT84hC2hCp3F-=Oy_gvK08eRmD6nk9xwCvWzQ@mail.gmail.com>
-Subject: Re: [PATCH] x86/boot: Address clang -Wimplicit-fallthrough in vsprintf()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
-	Bill Wendling <morbo@google.com>, linux-kernel@vger.kernel.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev, kernel test robot <lkp@intel.com>
+References: <20240516121349.430565475@linuxfoundation.org>
+In-Reply-To: <20240516121349.430565475@linuxfoundation.org>
+From: Allen <allen.lkml@gmail.com>
+Date: Thu, 16 May 2024 17:28:21 -0700
+Message-ID: <CAOMdWSJr4eN-V-hD6UqdQ9aurk3RUj_A+3fMk+SMREhasGk1kg@mail.gmail.com>
+Subject: Re: [PATCH 6.8 000/339] 6.8.10-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, broonie@kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 16, 2024 at 7:03=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
 >
-> After enabling -Wimplicit-fallthrough for the x86 boot code, clang
-> warns:
+> This is the start of the stable review cycle for the 6.8.10 release.
+> There are 339 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
->   arch/x86/boot/printf.c:257:3: warning: unannotated fall-through between=
- switch labels [-Wimplicit-fallthrough]
->     257 |                 case 'u':
->         |                 ^
+> Responses should be made by Sat, 18 May 2024 12:12:41 +0000.
+> Anything received after that time might be too late.
 >
-> Clang is a little more pedantic than GCC, which does not warn when
-> falling through to a case that is just break or return. Clang's version
-> is more in line with the kernel's own stance in deprecated.rst, which
-> states that all switch/case blocks must end in either break,
-> fallthrough, continue, goto, or return. Add the missing break to silence
-> the warning.
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.10-rc3.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
 >
-> Fixes: dd0716c2b877 ("x86/boot: Add a fallthrough annotation")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202405162054.ryP73vy1-lkp@i=
-ntel.com/
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> thanks,
+>
+> greg k-h
+>
 
-Seems simple enough.
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-Acked-by: Justin Stitt <justinstitt@google.com>
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-> ---
->  arch/x86/boot/printf.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/arch/x86/boot/printf.c b/arch/x86/boot/printf.c
-> index c0ec1dc355ab..51dc14b714f6 100644
-> --- a/arch/x86/boot/printf.c
-> +++ b/arch/x86/boot/printf.c
-> @@ -254,6 +254,8 @@ int vsprintf(char *buf, const char *fmt, va_list args=
-)
->                 case 'd':
->                 case 'i':
->                         flags |=3D SIGN;
-> +                       break;
-> +
->                 case 'u':
->                         break;
->
->
-> ---
-> base-commit: dd0716c2b87792ebea30864e7ad1df461d4c1525
-> change-id: 20240516-x86-boot-fix-clang-implicit-fallthrough-fc5c9bb19765
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
+Thanks.
