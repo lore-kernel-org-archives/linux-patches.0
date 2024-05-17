@@ -1,98 +1,97 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE805384
-	for <patches@lists.linux.dev>; Fri, 17 May 2024 00:29:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12283389;
+	Fri, 17 May 2024 00:33:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715905792; cv=none; b=RJen5YBxiV7Pgr6BThIdTo+p/g6gg/LFDMW3dEZzb1pn4KgwZa0v6Fd41rDX6NgFYu1g5a2wsj2rdgAtmscTVmRMoouas+FFaWmqy2RwycIlrOKHNBcDJD4vYLTt0LJYNPZphboU+Jn8bhgdWpY83xW5hWC31GxkWYwP1ZzQLRg=
+	t=1715906014; cv=none; b=oWdY8+o8vM+DIBMjeNWAzFz7YZIFcemQJVKQTzZPYp6EG7XFAz7NzFDOd/yQVj7pRCe8sYTjpB9TlESckmzG/2dmuI9V8QduACyY3zrkCW6IhJE+CmERJvwpvRYsrLErOztjY/kM1tzxaJfwv9RgcMcMJmfX7h59Q4TS7M6RaAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715905792; c=relaxed/simple;
-	bh=KH0mu/PBKvyDTtRbZDfMad/j9+AAEqnKA8oRnYYewaU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ccBr/j1WuhtPvU5tSV3cPK37atlN3/zgBiLO2AlIHCYu4sUa2Kv7PoSG7bT9sohordQFD+tQfHXJSMZsJsN1ybO+HoDo8sQwj+ir9HH4CsriqAepA7u2pPgfXWiE0wlw0tCM4F5mxCTWnmAz4sW/DepW/QM7mfM0FvQvy0eQyLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gRI0wzLi; arc=none smtp.client-ip=209.85.217.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1715906014; c=relaxed/simple;
+	bh=NtdMFwjCCg6DRe8jJko5fsFCy+aStnuV7IT8PB1A13Y=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=QH93JmupedKdsukGr94Z+8CWlw//qBNegTkGO0UCvdSU8NZC2M5nnlnM4e1Yka5bfrFs1wUDeQEeEuqYAEFRSrtygLELhq1GuONS9YKjFAxucLHTCf/IHxQcPLJ+tuNw2ZSbaJyThPRZs2I6fOhJ9HLNFnqSY4VEA7yaEoFFx9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HD7Szvyn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gRI0wzLi"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-47f01a027easo2437280137.0
-        for <patches@lists.linux.dev>; Thu, 16 May 2024 17:29:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715905790; x=1716510590; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=N+KmOyC/iV8n/07rVcqpUpUm3beAF6+iOzU5m/G/q6o=;
-        b=gRI0wzLiMi+E3gntx1JUOZPLD5XBoWxNyBMhuhuwgWEe9zdKgmcpwyksRWLtB8mUSz
-         U10ufiIg8bTJHFftEgv1EslefM8RDbQGgTmcNYHxzeknAFAwDEDsHFDjPiYnryWX3ueE
-         zs4tk+KAmBBNh6q9SuOVXB7/6xQ32w3zREciE+sbvoJO5R87Fb0D3gP6QjXISrb6RqMF
-         9KXcqK6hW9/ffcmoGOwcRDNfBMM8gpzXWoFgGFHXVMZhx3x2KjW/urq7Ant9EHmIGQQ9
-         fDLdFfAHbk9+4WyaHjMsdVOJHEeuTy2ObemhJZDUc0hyrKeyZRmNYGLTan5xbFsnVlEP
-         3aLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715905790; x=1716510590;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N+KmOyC/iV8n/07rVcqpUpUm3beAF6+iOzU5m/G/q6o=;
-        b=i9eGCNZkw83nZQGoeGZW5kKUFvhG+KhnoZ4BBC5GXRe8OplJM7PqDnksxcLjIcc3S4
-         hC78gJZ4+ez5VMujQZTF8uz3hb6FD4do7MTX45/LjyGnjGbv5rCrp6+WKI3kRX1FsYmT
-         ztQyi0l2hja6L+g1e6ORiPIIxXSH6KkbN6JtqikE9pRysvNB08COUUi1kgLBrIF3ml2Q
-         PbYU1I8S8eAvAJUppojhzBaMS17xxE83OogXSN+SpZx/ejK2ZuLM0JyVHjy2Z3RemHcR
-         rx2HeSz21gHrexcN6nrhgBmtqnD8d2y39YV2DDvVRB+QYTcRHTiNXYep1EGF4eNc336G
-         4w8g==
-X-Forwarded-Encrypted: i=1; AJvYcCW3zF6sIdESOSfPzAzHkHncjwcHh8ziqfHsZwpI2HP8xsPPxcWBb884UQoS74BcXic793hYX35wT2EpcqbuNVlZRV3qax/r6A==
-X-Gm-Message-State: AOJu0YyCHn1IjGbGW7Kr5adxcnaD8uj0HSntgjXHCgEPEwCMTetrKTp2
-	1VNSn/lDdYz+O5MTTMq/Ouo6WfyV3NESt2gMkpVP8/NZl5UUMV0NfSnqf4H07qbbBtLxXJay7Gz
-	hctyt2RvrhK3nlNuCFBvVQQ/nosk=
-X-Google-Smtp-Source: AGHT+IHvllubFZaKY6KPvv1qxfS9Saxnyz/cYL94fUH5oUTlB1YWBRPY36H/Sx5fd2+exy7HAXc8Wf55NEjs5679QeY=
-X-Received: by 2002:a05:6102:14a7:b0:47c:28c1:5379 with SMTP id
- ada2fe7eead31-48077eb3c8fmr20452446137.33.1715905789817; Thu, 16 May 2024
- 17:29:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HD7Szvyn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7095DC113CC;
+	Fri, 17 May 2024 00:33:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715906013;
+	bh=NtdMFwjCCg6DRe8jJko5fsFCy+aStnuV7IT8PB1A13Y=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=HD7SzvynKcjYOsvcvN/G2QU4qpCjqTri3qEAUXZJKLDZd8DaMG3OHyjJWQvd/PNSN
+	 Hp3G5XPAdtvJsu/IhGFHIdDEP2qwIMy4G3HWe3wmKLvS+77nMDzpRF/H7juYwzhCcq
+	 LGYLU2dy6v05RtemPVjwjMaeiojcS/Ic8eojFv8JE+gKUbdF69Pbpkr13ptXIlpgBb
+	 1vc6a+nFcvDpsnmOhOSw7xMZ/50XnFVYsNWeU9GCgkfaUDR53tPeRIlPGD9gpFI+ZI
+	 6R4pkCX9kR4SJYk04QKvI8BF6y67hgnec7XugZyYDBNO47GSXeReF5OSF4XIhCiqNk
+	 fHuH7AyWjgkQQ==
+Message-ID: <a5a821acebb8f447e3f17a0b5ba7f4e2.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240516091232.619851361@linuxfoundation.org>
-In-Reply-To: <20240516091232.619851361@linuxfoundation.org>
-From: Allen <allen.lkml@gmail.com>
-Date: Thu, 16 May 2024 17:29:38 -0700
-Message-ID: <CAOMdWSK7KC18aVMn9mo22s3g8BFj2oGVRdosNkF4fY3k7xPp2w@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/244] 6.1.91-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAL_Jsq+M953w4FdOHmDWByqUbJmB+g_G=KxAuZ04zFqV6zBmzg@mail.gmail.com>
+References: <20240422232404.213174-1-sboyd@kernel.org> <CABVgOSmgUJp3FijpYGCphi1OzRUNvmYQmPDdL6mN59YnbkR2iQ@mail.gmail.com> <b822c6a5488c4098059b6d3c35eecbbd.sboyd@kernel.org> <5c919f0d3d72fe1592a11c45545e8a60.sboyd@kernel.org> <CAL_JsqK4EZ0RhYCw6ZaeYSJu5Ps1J+J25vjwQy2XvNa5F5d7Pw@mail.gmail.com> <f6d7574582592f3bfa50fc45fefc53be.sboyd@kernel.org> <CAL_Jsq+M953w4FdOHmDWByqUbJmB+g_G=KxAuZ04zFqV6zBmzg@mail.gmail.com>
+Subject: Re: [PATCH v4 00/10] clk: Add kunit tests for fixed rate and parent data
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: David Gow <davidgow@google.com>, Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
+To: Rob Herring <robh@kernel.org>
+Date: Thu, 16 May 2024 17:33:31 -0700
+User-Agent: alot/0.10
 
->
-> This is the start of the stable review cycle for the 6.1.91 release.
-> There are 244 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 18 May 2024 09:11:43 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.91-rc3.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+Quoting Rob Herring (2024-05-15 15:08:47)
+> On Wed, May 15, 2024 at 4:15=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> w=
+rote:
+> > diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+> > index 389d4ea6bfc1..acecefcfdba7 100644
+> > --- a/drivers/of/platform.c
+> > +++ b/drivers/of/platform.c
+> > @@ -421,6 +421,7 @@ int of_platform_bus_probe(struct device_node *root,
+> >         if (of_match_node(matches, root)) {
+> >                 rc =3D of_platform_bus_create(root, matches, NULL, pare=
+nt, false);
+> >         } else for_each_child_of_node(root, child) {
+> > +               of_node_set_flag(root, OF_POPULATED_BUS);
+>=20
+> No, the same spot as of_platform_populate has it. I guess this would
+> be the same, but no reason to do this in the for_each_child_of_node
+> loop...
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+Ok. I'm not intending to send this patch.
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+>=20
+> >                 if (!of_match_node(matches, child))
+> >                         continue;
+> >                 rc =3D of_platform_bus_create(child, matches, NULL, par=
+ent, false);
+> >
+> >
+> > This doesn't work though. I see that prom_init() is called, which
+> > constructs a DTB and flattens it to be unflattened by
+> > unflatten_device_tree(). The powerpc machine type used by qemu is
+> > PLATFORM_PSERIES_LPAR. It looks like it never calls
+> > of_platform_bus_probe() from the pseries platform code.
+>=20
+> Huh. Maybe pseries doesn't have any platform devices?
 
-Thanks.
+Looks like it.
+
+>=20
+> Ideally, we'd still do it in of_platform_default_populate_init(), but
+> if you look at the history, you'll see that broke some PPC boards
+> (damn initcall ordering).
+>=20
+> > What about skipping the OF_POPULATED_BUS check, or skipping the check
+> > when the parent is the root node? This is the if condition that's
+> > giving the headache.
+>=20
+> I don't think we should just remove it, but a root node check seems fine.
+>=20
+
+Alright. I've added a check to see if the root node is the parent to
+allow it. That works well enough, so I'll send that in v5.
