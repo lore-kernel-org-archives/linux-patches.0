@@ -1,82 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6736812DD9F;
-	Fri, 17 May 2024 15:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F32213D8A8;
+	Fri, 17 May 2024 17:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715959116; cv=none; b=IiMsWGixv55Y1/yKRyXACI9EmxPNVNmMhT/a6OaTFRK961EmBRHDeGzlHbYHtgjNqgHgfmVb727jYLoiF9Ex+8G1nkEDjaQnzfYVjkNjCskvXBhAhVlZhYeOCIGdvuo1PNUiAsZ48kZeGIX1ZYW4IcVzS2cKPhDAfcK5WJXsI1Q=
+	t=1715965587; cv=none; b=M44MfnwCNkF+l8H9jIK8TzggDRYx0XJM0TnVvTUrbDqiLl1bssmCURKYATUlrJOTTkAMQaT4l2nqgnJK/mEsVMASaTs8A37XRq+1imEpQ/ptR6XfzAV6iqdMQSQyUCjeAqvGcd63VbYp5+BN6JR8RAciCYObPhqdISSgLuNWsBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715959116; c=relaxed/simple;
-	bh=UoxzRiDZ+O5N/jgmjQRwGygnUVsa2VMjATeBWNTgTzk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tKq9lowx+g9uLAA3VLjb/SeNNw5Q01lB6iiDOS3SbZnHhqSlHpGQ9Uc2YW5cFWaGWMvSRjdZGurxJorw91KDnWZePoaR9GE8luCYzHIZch0QjBGqZkvaFwD/lYp4TotRw2iAhosTJOgsszflh9hX2sPiCqwvN/FCO4s5rlDsztg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mUp1JG1x; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1715965587; c=relaxed/simple;
+	bh=d/iGbHWjoWyhaPNdJOqLEjIUxOpDm9so2jUuJZJzu2Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TlYcqPjwHwUY3BPDDvBlABxLP2vIsAX5c70Mj/ia+FPcUyE2OX7zStVQ94sds0S7QOhUEoSDKcnkh8/IUagWuINAKw4T1h3ZugxuW9eznHYWwl8ECU3RLZASjepHDMxmoIAAS50/rnzN+5yjZOJKNl0tke18zx/Ue286EZ/Fxfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kN1Y0UuH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mUp1JG1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3890AC2BD10;
-	Fri, 17 May 2024 15:18:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kN1Y0UuH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F007C2BD10;
+	Fri, 17 May 2024 17:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715959115;
-	bh=UoxzRiDZ+O5N/jgmjQRwGygnUVsa2VMjATeBWNTgTzk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mUp1JG1xjhlBGV5rWRPDwtlRWArHUCcp6+UL669IQBFyXAohqu2zRvQ7S3yM4pi6O
-	 BXr5RCG18AGMN28M9xDJTgQ+SBrbNUbhEZJXEuZiAK/9H6rPRC4xDLv7OWPpyD0ESC
-	 B9Vq08mIQU/S0YbYmkE+dplgrTD9pt9UaeykKLamyhSrp+RZ/hhEZEYYLYTJ2eSyew
-	 U8wgOq0VEe87HFPDW7m/BJ29Rtd35K5HdNmodHDcDvWLJ/P+51Iw8BrZbsB24UKEUy
-	 EVQCyx/NtHR08QOeeRh8qiGYa2oXNLH0Dt8Q2pVujHYSHr64o3i8dh0IyS1OVUDzPq
-	 clJtycJRMGyHw==
-Date: Fri, 17 May 2024 08:18:33 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	s=k20201202; t=1715965586;
+	bh=d/iGbHWjoWyhaPNdJOqLEjIUxOpDm9so2jUuJZJzu2Q=;
+	h=From:To:Cc:Subject:Date:From;
+	b=kN1Y0UuH04ZwTXw78nZc2j7OWDOkVAh1V8+M07v5xX8rXGFAwXboWN+LOFXsVBZE2
+	 OX4gggZQoG6yMWMH7iswxvn0RX1bbAxDy+j3L6xspb70ItJRTFQChJW79H36LlqUnC
+	 j+70ITQqVIM4xqVzpEqenPq54HTeaIkMWGNTlkhfx9T8Rv3w7l+eFdinjBGMShf+Q/
+	 cNYw3cysnFvYOF/ihYqZkNukuSvCHUxyX8QZ7SpuF3oDC1KJOEyHHY9PVGfGgTMXqy
+	 P263L7jLJzUxF9iVssXkCQp97/oN0A7jIAqfbkc995EWqjmp7YlnRzhQPmVnj9s3rq
+	 FsWdNP7s6dqXQ==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>,
 	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Kees Cook <keescook@chromium.org>
-Subject: Re: [PATCH] x86/boot: Address clang -Wimplicit-fallthrough in
- vsprintf()
-Message-ID: <20240517151833.GB3660288@thelio-3990X>
-References: <20240516-x86-boot-fix-clang-implicit-fallthrough-v1-1-04dc320ca07c@kernel.org>
- <20240517095110.GAZkcojmJQoY_zU-OT@fat_crate.local>
+	Justin Stitt <justinstitt@google.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	llvm@lists.linux.dev,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Jonathan Corbet <corbet@lwn.net>,
+	linux-doc@vger.kernel.org
+Subject: [PATCH] docs: rust: introduce the new kernel.org LLVM+Rust toolchains
+Date: Fri, 17 May 2024 19:06:15 +0200
+Message-ID: <20240517170615.377786-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240517095110.GAZkcojmJQoY_zU-OT@fat_crate.local>
+Content-Transfer-Encoding: 8bit
 
-On Fri, May 17, 2024 at 11:51:10AM +0200, Borislav Petkov wrote:
-> On Thu, May 16, 2024 at 07:03:41AM -0700, Nathan Chancellor wrote:
-> > After enabling -Wimplicit-fallthrough for the x86 boot code, clang
-> > warns:
-> > 
-> >   arch/x86/boot/printf.c:257:3: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
-> >     257 |                 case 'u':
-> >         |                 ^
-> > 
-> > Clang is a little more pedantic than GCC, which does not warn when
-> > falling through to a case that is just break or return.
-> 
-> Is anyone fixing Clang?
-> 
-> :-P
+From: Nathan Chancellor <nathan@kernel.org>
 
-There was a patch to make Clang match GCC's behavior a few years ago but
-I think Kees made a good argument that GCC's behavior leaves potential
-bugs on the table, so that was not pursued further.
+These combined LLVM+Rust toolchains are now available, thanks to Nathan
+Chancellor (ClangBuiltLinux).
 
-https://reviews.llvm.org/D91895#2417170
+Thus introduce them in the Rust Quick Start guide.
 
-It was brought up to GCC as well but they did not want to change their
-behavior:
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Co-developed-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ Documentation/rust/quick-start.rst | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=91432
+diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
+index cc3f11e0d441..6fe69a601134 100644
+--- a/Documentation/rust/quick-start.rst
++++ b/Documentation/rust/quick-start.rst
+@@ -16,6 +16,13 @@ under names like ``rustc``, ``rust-src``, ``rust-bindgen``, etc. However,
+ at the time of writing, they are likely not to be recent enough unless
+ the distribution tracks the latest releases.
+ 
++Prebuilt stable versions of LLVM+Rust are provided on `kernel.org
++<https://kernel.org/pub/tools/llvm/rust/>`_. These are the same slim and fast
++LLVM toolchains from :ref:`Getting LLVM <getting_llvm>` with versions of Rust
++added to them that Rust for Linux supports, depending on the Linux version. Two
++sets are provided: the "latest LLVM" and "matching LLVM" (please see the link
++for more information).
++
+ To easily check whether the requirements are met, the following target
+ can be used::
+ 
 
-Cheers,
-Nathan
+base-commit: 97ab3e8eec0ce79d9e265e6c9e4c480492180409
+-- 
+2.45.1
+
