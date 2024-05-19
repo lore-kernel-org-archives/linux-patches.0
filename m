@@ -1,47 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0164D26AEC;
-	Sun, 19 May 2024 21:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412FC26AEC;
+	Sun, 19 May 2024 21:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716152870; cv=none; b=OA91khVxx2iPgud07Yr7lEzh50zKWrGYbx08qWHihroYBHw3Nnsrw3o3aCzjfj60a/5yq+6reqBQ7bk/P3LIdkBUhcZa/ybBvbHc8sANsQsUdbtjooonShl/R2DXvoKNFzo/bA4OWiCeNEkMnSbcOGRq148lZwGM4ETCkdDh4MI=
+	t=1716153168; cv=none; b=hU1MWqiGgK6EN2hyhG6k0nTihu3jlmNv+r4icmw0nd+0B+Upqu1668tmwoPCRyEyPjp6T2HspnQa9HyLoUbjZCu5LCrlwLiC/p/SJ0JppB6YE1yceeRjNzG9a6hZeJoo5YqxhIXxrWnubGeuOArYFUqTpADMUXlkEI/6epn+zkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716152870; c=relaxed/simple;
-	bh=H6awbG9maNnvIwZjWXp+MfoENhflzFD1z6syx90vt8w=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=q7l2UdMu39nWvu9yikfDPoPHQn6VVZGeKxFET11MJLwbO7xb7a0OAwnYaTEPk4rcFotLAaiU4qk7C1FDWQXUOwdByhN8Jui+2AWbWe0nK4r7M2HyOBzcHQUUL57y4nBckyBV693WLmpEhbQu6zl/GLuqkDceTG6OdAUJrS/evCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qaOy4dM7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716153168; c=relaxed/simple;
+	bh=e2u0UG0wuyw4TbBEmJFcpe0xCx60m/GShz0PKNVG8As=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EWmmWp34yJWpAkxNrSEYFJql6DX9ZLCoXZaM3AGl5B4hhADUE1h4W5RK+YBRU1Np0aj3kVD1J7aRjQZLwPbEbk9/PuC2hW0LoAzeSiOMPgF5UWMM2F2RgSt0JrJ5bBc5Z3cPiDku8zTL2pWNJDzRrNebTdLSy/mIhpP7Q21gJEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Js1yFGSO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qaOy4dM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6337EC32781;
-	Sun, 19 May 2024 21:07:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Js1yFGSO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408B0C32781;
+	Sun, 19 May 2024 21:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716152869;
-	bh=H6awbG9maNnvIwZjWXp+MfoENhflzFD1z6syx90vt8w=;
+	s=k20201202; t=1716153167;
+	bh=e2u0UG0wuyw4TbBEmJFcpe0xCx60m/GShz0PKNVG8As=;
 	h=From:To:Cc:Subject:Date:From;
-	b=qaOy4dM7+RG6NzPTly9gDrivijI3h0waUvmosPNvNuSdulFOz1xGW0pqAraNLq4Hh
-	 my7NuhTeOUrobIr8/Qq2elov23GnsoRTnSE9gDsR0FJ7KdwDD1Nm5m9A2SOLJ0WPEi
-	 6W/0clmDW3ClOolRUmQ8kypF7MUWH2vjUj0Ch/xHz1CpUMaYvAEz2BF1Isw1otp2CF
-	 HjF0dpgYySEzVVHaurEOOs88nYPkh3NeGE0zFuOMyd3neD5NyQjz39o7CCn9MtOGiW
-	 AYTCznAIxHHyJsitG7gv0BoOJpPlE4lgr4QJiXvCnv3wGckErPfuM0iXADtyC1mB0o
-	 RIYq4zzdeBd/A==
+	b=Js1yFGSOqbapVHh1Hmmi9E6X5MWNAr7fD6efIWps0bj+fs2rQMPjHOOrc6AOQkiDm
+	 x7kh2+QW70OTH4gySqsQi51cKf6yXscbi+oefcNO36VDGEMDzxZhNUV7hUHDAmGmaf
+	 d6w1f3qkbIC1pk3Zzztw14BG95JhBhmAafxXEroBS6hUuL5P/oix6q1QCHZpfMyyka
+	 kqj1YPJbyVW1PB7fcvgm/TrIIViBWZ0h0txMTmaZXmteHDIpvZNUtkXdzEEKauqYA7
+	 qn+k9vNMhX8xVvqoN2yd+uhnuLnWjOwCmLgZWUevazxkv92U+MADIbKy4KVzdG+cx7
+	 jfoPN2GLNQHmQ==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
+To: Masahiro Yamada <masahiroy@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Wedson Almeida Filho <wedsonaf@gmail.com>,
 	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
+Cc: Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Gary Guo <gary@garyguo.net>,
 	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
 	Benno Lossin <benno.lossin@proton.me>,
 	Andreas Hindborg <a.hindborg@samsung.com>,
 	Alice Ryhl <aliceryhl@google.com>,
+	linux-kbuild@vger.kernel.org,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@redhat.com>
-Subject: [PATCH] rust: avoid unused import warning in `rusttest`
-Date: Sun, 19 May 2024 23:07:35 +0200
-Message-ID: <20240519210735.587323-1-ojeda@kernel.org>
+	patches@lists.linux.dev
+Subject: [PATCH 1/3] kbuild: rust: move `-Dwarnings` handling to `Makefile.extrawarn`
+Date: Sun, 19 May 2024 23:12:33 +0200
+Message-ID: <20240519211235.589325-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,53 +53,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When compiling for the `rusttest` target, the `core::ptr` import is
-unused since its only use happens in the `reserve()` method which is
-not compiled in that target:
+Following commit e88ca24319e4 ("kbuild: consolidate warning flags
+in scripts/Makefile.extrawarn"), move `-Dwarnings` handling into
+`Makefile.extrawarn` like C's `-Werror`.
 
-    warning: unused import: `core::ptr`
-    --> rust/kernel/alloc/vec_ext.rs:7:5
-      |
-    7 | use core::ptr;
-      |     ^^^^^^^^^
-      |
-      = note: `#[warn(unused_imports)]` on by default
+No functional change intended.
 
-Thus clean it.
-
-Fixes: 97ab3e8eec0c ("rust: alloc: fix dangling pointer in VecExt<T>::reserve()")
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/alloc/vec_ext.rs | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ Makefile                   | 3 ---
+ scripts/Makefile.extrawarn | 3 +++
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/rust/kernel/alloc/vec_ext.rs b/rust/kernel/alloc/vec_ext.rs
-index e9a81052728a..1297a4be32e8 100644
---- a/rust/kernel/alloc/vec_ext.rs
-+++ b/rust/kernel/alloc/vec_ext.rs
-@@ -4,7 +4,6 @@
+diff --git a/Makefile b/Makefile
+index 763b6792d3d5..fba567a55607 100644
+--- a/Makefile
++++ b/Makefile
+@@ -842,9 +842,6 @@ stackp-flags-$(CONFIG_STACKPROTECTOR_STRONG)      := -fstack-protector-strong
  
- use super::{AllocError, Flags};
- use alloc::vec::Vec;
--use core::ptr;
+ KBUILD_CFLAGS += $(stackp-flags-y)
  
- /// Extensions to [`Vec`].
- pub trait VecExt<T>: Sized {
-@@ -141,7 +140,11 @@ fn reserve(&mut self, additional: usize, flags: Flags) -> Result<(), AllocError>
-         // `krealloc_aligned`. A `Vec<T>`'s `ptr` value is not guaranteed to be NULL and might be
-         // dangling after being created with `Vec::new`. Instead, we can rely on `Vec<T>`'s capacity
-         // to be zero if no memory has been allocated yet.
--        let ptr = if cap == 0 { ptr::null_mut() } else { old_ptr };
-+        let ptr = if cap == 0 {
-+            core::ptr::null_mut()
-+        } else {
-+            old_ptr
-+        };
+-KBUILD_RUSTFLAGS-$(CONFIG_WERROR) += -Dwarnings
+-KBUILD_RUSTFLAGS += $(KBUILD_RUSTFLAGS-y)
+-
+ ifdef CONFIG_FRAME_POINTER
+ KBUILD_CFLAGS	+= -fno-omit-frame-pointer -fno-optimize-sibling-calls
+ KBUILD_RUSTFLAGS += -Cforce-frame-pointers=y
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index 3ce5d503a6da..48114e91c386 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -26,6 +26,9 @@ endif
  
-         // SAFETY: `ptr` is valid because it's either NULL or comes from a previous call to
-         // `krealloc_aligned`. We also verified that the type is not a ZST.
-
-base-commit: 97ab3e8eec0ce79d9e265e6c9e4c480492180409
+ KBUILD_CPPFLAGS-$(CONFIG_WERROR) += -Werror
+ KBUILD_CPPFLAGS += $(KBUILD_CPPFLAGS-y)
++KBUILD_RUSTFLAGS-$(CONFIG_WERROR) += -Dwarnings
++KBUILD_RUSTFLAGS += $(KBUILD_RUSTFLAGS-y)
++
+ KBUILD_CFLAGS-$(CONFIG_CC_NO_ARRAY_BOUNDS) += -Wno-array-bounds
+ 
+ ifdef CONFIG_CC_IS_CLANG
 -- 
 2.45.1
 
