@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E279F13C3D2
-	for <patches@lists.linux.dev>; Mon, 20 May 2024 22:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B7913C3F9
+	for <patches@lists.linux.dev>; Mon, 20 May 2024 22:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716245212; cv=none; b=Hh9zlTdGo5k1qdSWvUTk9YtQV361pPTnLLW3J+xTh8ToGY9eUJNJznXBFrwMBKK4StcEbQsZTmbiMatHX01zhMKDKC2+7+Yb2c+XoiXTD/DaLiDYAHE7zcdzrEFouH/u8MTPLzaiwONBDWXygWt9SM32zQn4C/EAX7MZIUXQJmM=
+	t=1716245212; cv=none; b=Kue8Cw0cmYRJx2x9dfID1vZvf5dtgp0Zd/X/enNmh07w7fksGldq+3ni60SHhkNBctELbFJV+qQmHlLKb1iFuyrv/PCuVewDgbElJKvjhq7tsCMeNHDNpx58+Nup0wjOGk262kzKnLNx5U/v9rzRxIdd1o3eVMgN0YHNLyP1WuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1716245212; c=relaxed/simple;
-	bh=dSW16Z5owqXk0diJ8oqVw/YYkOHbNprsGlWIpUTivak=;
+	bh=sASbPr2zR3JdDKlYAQlWUeMercohyneum+eNLKpGg/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTWM0Vt2R7SiTt3EVk0a/mhIU/qUdCbm3nkL6VaCEIC5qQJ4UJdXfH8RX4fN7s7yc/FsncFY29SOh2K/AVsJniVt3WkPtEyG8aj2lWW4q8naYZLKCxOnun4rUd4fp7vytP1DAXeOrE8MLyBXnowgFmgNHLxhB85ud8KeaviBZoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kiJUcg+9; arc=none smtp.client-ip=192.198.163.18
+	 MIME-Version; b=HKawh3Fu+1sRjkwUatldNVoxaGO4iVG73UrwHJYgsPstij4jjzxX8ZYwOjQ0SKlXX53KsxpCcO81uotvx5k1fMRG4/QX8EtKrPuR4BeFYJDUH9LWfGABEEcELU4wP+PbisjUHwey+tJocSJHSg72v9o2qAhgNhXtMZJz3hIty60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EIzwhYTx; arc=none smtp.client-ip=192.198.163.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kiJUcg+9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EIzwhYTx"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1716245210; x=1747781210;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=dSW16Z5owqXk0diJ8oqVw/YYkOHbNprsGlWIpUTivak=;
-  b=kiJUcg+9yL2rddVFNareTbodN99gxdfTE0uo11phtksxYLPYfGkm1cUV
-   ILdlvmcvb3wItd2l6zDyVhd9MLbGHduJldDeRLXuvS7zMoZj1eEbpHH9+
-   PAtJ2/cpXLFwo4keyuV6LVle3yvzZnfcyoKDqpeEcjRjMti4+ldP+2xB/
-   oRj8ZPDPMQrrKVSdjuaeiZgMxh5JipmXRqiVu2LtXoOymkqKzWvOWfxQm
-   7Lm84k0Oifw+eymDDzZdxdLSRWxSOYgjY44fiSr/Q44PW5nzekoD9Ulyy
-   sf3ux4qtbZcxWF36uzzHuPJbajGmDkgJJ//l3MyLKQtO6IxqNsr04sn1V
-   w==;
-X-CSE-ConnectionGUID: UBo5pqsCSmCwV71YW9+y7Q==
-X-CSE-MsgGUID: wRi5Ak/PRFOX3U6bzqseBA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="12199838"
+  bh=sASbPr2zR3JdDKlYAQlWUeMercohyneum+eNLKpGg/c=;
+  b=EIzwhYTx3Lt3V+qqgSAbn94w/U7teoFEO2n5rZ8gWa+clB+fN9crskkC
+   X46IPrPDXjX5ZLkxx/gv0ZQfOPuXw25SAZ3x3mrGiFs3sSuoQFibNEzVk
+   rj7t/+HbnOv47S3jCy7IdZQt6OmO0+2FiEafGgIKWGUVUxSm27MDkWmsa
+   YhZKpDoeI8FJKWB8GXRIT4jcV1xYEOYEkpU66vofD29vK5QsurrlqiZ0c
+   ExSvwSYdYft0R/DTQEGwbRd30T0pHkPEzuT/5L1O9rwIzPcYp0q3fVovw
+   N1TiyuXz5b3wy01BvxeHgW8+8j6zubUGEzqD1BZEaY4nL+sdpijqglE+K
+   A==;
+X-CSE-ConnectionGUID: tYkcwMoHRue//5/JZsVmZA==
+X-CSE-MsgGUID: ZSH4vcBoQoWGuZMCrC01rQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="12199880"
 X-IronPort-AV: E=Sophos;i="6.08,176,1712646000"; 
-   d="scan'208";a="12199838"
+   d="scan'208";a="12199880"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
   by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2024 15:46:39 -0700
-X-CSE-ConnectionGUID: 10UPfhpOSu27kDmEtACdaw==
-X-CSE-MsgGUID: 15/3bRvIQzO/o2blYupKog==
+X-CSE-ConnectionGUID: nlACXApCRPuDY0QXHvTOlQ==
+X-CSE-MsgGUID: rNZxRk8JRsmWn+lR2jNOeA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,176,1712646000"; 
-   d="scan'208";a="32593473"
+   d="scan'208";a="32593486"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2024 15:46:38 -0700
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2024 15:46:39 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Thomas Gleixner <tglx@linutronix.de>,
 	Ingo Molnar <mingo@redhat.com>,
@@ -60,9 +60,9 @@ Cc: "H. Peter Anvin" <hpa@zytor.com>,
 	Andi Kleen <ak@linux.intel.com>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v6 30/49] x86/virt/tdx: Switch to new Intel CPU model defines
-Date: Mon, 20 May 2024 15:46:01 -0700
-Message-ID: <20240520224620.9480-31-tony.luck@intel.com>
+Subject: [PATCH v6 34/49] x86/boot: Switch to new Intel CPU model defines
+Date: Mon, 20 May 2024 15:46:05 -0700
+Message-ID: <20240520224620.9480-35-tony.luck@intel.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240520224620.9480-1-tony.luck@intel.com>
 References: <20240520224620.9480-1-tony.luck@intel.com>
@@ -74,39 +74,28 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-New CPU #defines encode vendor and family as well as model.
+New CPU #defines encode vendor and family as well as model but
+boot code doesn't have all the infrastructure to use them. Hard
+code the one CPU model number used here.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/virt/vmx/tdx/tdx.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/boot/cpucheck.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/virt/vmx/tdx/tdx.c b/arch/x86/virt/vmx/tdx/tdx.c
-index 49a1c6890b55..4e2b2e2ac9f9 100644
---- a/arch/x86/virt/vmx/tdx/tdx.c
-+++ b/arch/x86/virt/vmx/tdx/tdx.c
-@@ -33,7 +33,7 @@
- #include <asm/msr.h>
- #include <asm/cpufeature.h>
- #include <asm/tdx.h>
--#include <asm/intel-family.h>
-+#include <asm/cpu_device_id.h>
- #include <asm/processor.h>
- #include <asm/mce.h>
- #include "tdx.h"
-@@ -1426,9 +1426,9 @@ static void __init check_tdx_erratum(void)
- 	 * private memory poisons that memory, and a subsequent read of
- 	 * that memory triggers #MC.
+diff --git a/arch/x86/boot/cpucheck.c b/arch/x86/boot/cpucheck.c
+index fed8d13ce252..0aae4d4ed615 100644
+--- a/arch/x86/boot/cpucheck.c
++++ b/arch/x86/boot/cpucheck.c
+@@ -203,7 +203,7 @@ int check_knl_erratum(void)
  	 */
--	switch (boot_cpu_data.x86_model) {
--	case INTEL_FAM6_SAPPHIRERAPIDS_X:
--	case INTEL_FAM6_EMERALDRAPIDS_X:
-+	switch (boot_cpu_data.x86_vfm) {
-+	case INTEL_SAPPHIRERAPIDS_X:
-+	case INTEL_EMERALDRAPIDS_X:
- 		setup_force_cpu_bug(X86_BUG_TDX_PW_MCE);
- 	}
- }
+ 	if (!is_intel() ||
+ 	    cpu.family != 6 ||
+-	    cpu.model != INTEL_FAM6_XEON_PHI_KNL)
++	    cpu.model != 0x57 /*INTEL_XEON_PHI_KNL*/)
+ 		return 0;
+ 
+ 	/*
 -- 
 2.45.0
 
