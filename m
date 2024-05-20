@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A006A3D3BC
-	for <patches@lists.linux.dev>; Mon, 20 May 2024 22:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1E213A265
+	for <patches@lists.linux.dev>; Mon, 20 May 2024 22:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716245202; cv=none; b=SYBZQEG8X4KtxOR/IJLhwVd5Dz8p41JgNKXlCZi4ANB6I3bDx3wmmecGs3D/NDcM7yYm7qNq8/vjFELF4HXPIgbxclNyvKhxgOOrwOYpTuCFVAz72nV1WR8pgQ3E7hwgVqwo0E4Y9bpg93BlbmEYuHpcrpghzB6J2+dRAs2ptt8=
+	t=1716245203; cv=none; b=kr7KlAWjQmDLfELc9RC97t1Hvs/sdGZHpaaRkgMt6VmVVFSY3Y8kZ+IqY7qDenNC3slBUQoX9ZCXjT+x8g47PnR84aQDXOUYVxv4QIoEyvcKY26Zl3Fa5ROcGrPnNBEVm26BRlUV9nnleE7ars8f2awLf8KgoNlRpT6IEiNsgsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716245202; c=relaxed/simple;
-	bh=v93/ual/g32vB/MEMraEt8b9ts3LdceCjM3EwpB5y20=;
+	s=arc-20240116; t=1716245203; c=relaxed/simple;
+	bh=SrCUXI/oM/RyfJid2zkIs4n9nvj5uW7YKEMoo1adejA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ohSdY1Oh5B8Q1A9U58Pd7dJJ0HKZyYXS/ebhhpsN18IM9K2zpatbDp+ze1zuheGXEpnY/dwaLro7V2DlH44xUMtKLiEFU5dV9FflMXfz9o+expaXe18uxzYCG9FDp9YFRvgnx+IIDBX3b+N5D4ljIAlBaXtmmaqhkxhE2qHwn3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iJOcjdCn; arc=none smtp.client-ip=192.198.163.18
+	 MIME-Version; b=NzVKhbX9Jr/LQaEtBd46RAlIw3EanbyFYhY4K/R53JWa946qnhrrUR0neo5hokLf/RUjmXUn+gkoVB4IpzOntg4C8qPdte9UlcIh8JmAz592E83DyvdHmyEjqz1JCmpQ/aTIrwOD+kBw5BWCUmdZJ+Noj0b6oApwdGfNDORWEyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=B5qjDzrA; arc=none smtp.client-ip=192.198.163.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iJOcjdCn"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="B5qjDzrA"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1716245199; x=1747781199;
+  t=1716245201; x=1747781201;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=v93/ual/g32vB/MEMraEt8b9ts3LdceCjM3EwpB5y20=;
-  b=iJOcjdCnTMBKE8VEgWhJ7T6QHAt3xNiEXn3Yua+7Imn6IJ9EdvMnzGrL
-   5eAIO8Q/1ncagH6WSMLkP7ayptyV/MOAXJmSJ1DFVl98vKbmHXxnQW56W
-   ba0JHGZbdBHeeVWWE2qyyrmqIYDhkLytHKJ8TbKjouMvB6DcCAF0/QG/6
-   M1WnVhwRjmvC3gL5Xr4xqo1nH9N4a4xASRndd8QJ44/OR4Pd51rHxNBnU
-   Ops3Betrj2FbAZZ06cNMI/hNqKrKQxuZ5ATpsHqFeT9gfuzJvVUxhyI7Q
-   6pxuLyvyIodcxnRMSqcIgfQkCNHyh0EaGJAW2Aq62Hx+7BNP86tuBg1G9
-   Q==;
-X-CSE-ConnectionGUID: XQWxv+vuSwmLLmQPdq6fQg==
-X-CSE-MsgGUID: og0VDC1UR/Cr17Dsc6cHeA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="12199531"
+  bh=SrCUXI/oM/RyfJid2zkIs4n9nvj5uW7YKEMoo1adejA=;
+  b=B5qjDzrAHfcgnWGUKHf3mFXs82WZ8/U3NhADcmEmWx46FBdncdvzmt2o
+   y0KRknvMjNbYNlxCHLsCRbzBd1twLnJF7K/ISAIb5tjJ6RRX7OaPdp/mM
+   UWjL5QQoQUo9JRxQ2KvFXrAzP3b8f1eRokJtJNNLTwqQGPcLL9ncpAJRr
+   irpzil3d+uaCVm1Il3C3U9tuEjDklIBWdoAANytmhFnyEFOH6VUJrKVa3
+   0XCYs1cebFAgyyE/4SVTjvMb1MJ6o+YB76Ld5e/XlKwjeu5NU0Hyfqx8z
+   xA4Go46oqV5A0eLLIrw91dVIf3YzrCgLiFk07v6nPgJh9S95nM63W4uCG
+   w==;
+X-CSE-ConnectionGUID: FTlzJFbbT6C8ymoXay1Eyg==
+X-CSE-MsgGUID: qDxYvyNUQj+Rxt1/GIbTEQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="12199601"
 X-IronPort-AV: E=Sophos;i="6.08,176,1712646000"; 
-   d="scan'208";a="12199531"
+   d="scan'208";a="12199601"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2024 15:46:35 -0700
-X-CSE-ConnectionGUID: 8wuCngyrRqutNflgnQSAEA==
-X-CSE-MsgGUID: /viPDrVoQp+zeZMF0zFKDQ==
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2024 15:46:36 -0700
+X-CSE-ConnectionGUID: hUI/PFvgSy+kdlt5jv+Wtw==
+X-CSE-MsgGUID: rEtX2mjpRy677qKZA6Yolg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,176,1712646000"; 
-   d="scan'208";a="32593389"
+   d="scan'208";a="32593409"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2024 15:46:35 -0700
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2024 15:46:36 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Thomas Gleixner <tglx@linutronix.de>,
 	Ingo Molnar <mingo@redhat.com>,
@@ -60,10 +60,10 @@ Cc: "H. Peter Anvin" <hpa@zytor.com>,
 	Andi Kleen <ak@linux.intel.com>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH v6 03/49] tpm: Switch to new Intel CPU model defines
-Date: Mon, 20 May 2024 15:45:34 -0700
-Message-ID: <20240520224620.9480-4-tony.luck@intel.com>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH v6 09/49] KVM: VMX: Switch to new Intel CPU model defines
+Date: Mon, 20 May 2024 15:45:40 -0700
+Message-ID: <20240520224620.9480-10-tony.luck@intel.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240520224620.9480-1-tony.luck@intel.com>
 References: <20240520224620.9480-1-tony.luck@intel.com>
@@ -78,38 +78,42 @@ Content-Transfer-Encoding: 8bit
 New CPU #defines encode vendor and family as well as model.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Acked-by: Sean Christopherson <seanjc@google.com>
 ---
- drivers/char/tpm/tpm.h          | 2 +-
- drivers/char/tpm/tpm_tis_core.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kvm/vmx/vmx.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm.h b/drivers/char/tpm/tpm.h
-index 6b8b9956ba69..7bb87fa5f7a1 100644
---- a/drivers/char/tpm/tpm.h
-+++ b/drivers/char/tpm/tpm.h
-@@ -28,7 +28,7 @@
- #include <linux/tpm_eventlog.h>
- 
- #ifdef CONFIG_X86
--#include <asm/intel-family.h>
-+#include <asm/cpu_device_id.h>
- #endif
- 
- #define TPM_MINOR		224	/* officially assigned */
-diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
-index 13e99cf65efe..690ad8e9b731 100644
---- a/drivers/char/tpm/tpm_tis_core.h
-+++ b/drivers/char/tpm/tpm_tis_core.h
-@@ -210,7 +210,7 @@ static inline int tpm_tis_verify_crc(struct tpm_tis_data *data, size_t len,
- static inline bool is_bsw(void)
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 6051fad5945f..ceb0c1e6275a 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -2525,17 +2525,15 @@ static bool cpu_has_sgx(void)
+  */
+ static bool cpu_has_perf_global_ctrl_bug(void)
  {
- #ifdef CONFIG_X86
--	return ((boot_cpu_data.x86_model == INTEL_FAM6_ATOM_AIRMONT) ? 1 : 0);
-+	return (boot_cpu_data.x86_vfm == INTEL_ATOM_AIRMONT) ? 1 : 0;
- #else
+-	if (boot_cpu_data.x86 == 0x6) {
+-		switch (boot_cpu_data.x86_model) {
+-		case INTEL_FAM6_NEHALEM_EP:	/* AAK155 */
+-		case INTEL_FAM6_NEHALEM:	/* AAP115 */
+-		case INTEL_FAM6_WESTMERE:	/* AAT100 */
+-		case INTEL_FAM6_WESTMERE_EP:	/* BC86,AAY89,BD102 */
+-		case INTEL_FAM6_NEHALEM_EX:	/* BA97 */
+-			return true;
+-		default:
+-			break;
+-		}
++	switch (boot_cpu_data.x86_vfm) {
++	case INTEL_NEHALEM_EP:	/* AAK155 */
++	case INTEL_NEHALEM:	/* AAP115 */
++	case INTEL_WESTMERE:	/* AAT100 */
++	case INTEL_WESTMERE_EP:	/* BC86,AAY89,BD102 */
++	case INTEL_NEHALEM_EX:	/* BA97 */
++		return true;
++	default:
++		break;
+ 	}
+ 
  	return false;
- #endif
 -- 
 2.45.0
 
