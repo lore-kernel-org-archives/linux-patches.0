@@ -1,96 +1,87 @@
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9B4200CB
-	for <patches@lists.linux.dev>; Mon, 20 May 2024 09:40:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23339224F2
+	for <patches@lists.linux.dev>; Mon, 20 May 2024 09:41:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716198029; cv=none; b=K+mAhwT2s2klhz6yV/1douzMlq0kQyn9n5h1UKZ33Kl6vby5AHql7JLPaPo4DrG/g6Y1IsHCTnLU79smRWLca00StdlmIfrmZ0ERmemlwJH9Guvx4AMSFBxjLwfXW9yveKwBG40JJNVvoX/fhNr1WzVCwtSdzXk5ODA/EAbbyEU=
+	t=1716198082; cv=none; b=W+iKRE0UzDMOBDEsLUrLeAbpJD/SU6Ob008je7k0qqNmFhvy8zxQLC7NJUTAXVuJIh0yBdmKcXbXSdHCxssxVnOJl1JaezQBcaf+BQGn2cdC/n70qYp867763FPX16VdVQcjczrMKhdF0LLZpsAZa5RDWuRqLRh2cuj5TYwj0zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716198029; c=relaxed/simple;
-	bh=hlbB+kN75U9YScWnGXlfgm/HK3XeDX7QVEgtfCxUOBE=;
+	s=arc-20240116; t=1716198082; c=relaxed/simple;
+	bh=7uuugY85m3skoiVn07kJvXcB4zJBbm3CV5cNkHDjjBE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ThU33VYMM/lX4BlNi0dtTFrUElYHGuziAgTcGpsOIS2Jlz60XBm2gJyN3mV6+xxZBhhdH1mt+ZJjSTH/Tq3ykLqtR18wJB+gR/WJ7sZGCt2mFD7upqt5KgVdIqluo3ud/PBhGuJM3Yfd5Zkyksyon8CyZJodRUrQH1vWz2W7d/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mgh+RV0H; arc=none smtp.client-ip=209.85.217.46
+	 To:Cc:Content-Type; b=f+mb3DZ+t26UMfB0eJ/ckh38jwnoZB4FmrBvdgo1wvu8jmi42KE+aCI3M3zW5E/CGKn+gQqPZkZEv6r7YirwjyMYAcJDW6tjhIS6uDS1W72zTlyshOTqJ2ejzw3UwTcYM2QcbCdwybxFzfyJj6AcrX1RM9X93ItEFhsxRrshDC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HTAALj9+; arc=none smtp.client-ip=209.85.222.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mgh+RV0H"
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-47ef5a51829so471940137.2
-        for <patches@lists.linux.dev>; Mon, 20 May 2024 02:40:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HTAALj9+"
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-7f82c932858so1283131241.0
+        for <patches@lists.linux.dev>; Mon, 20 May 2024 02:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1716198027; x=1716802827; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1716198080; x=1716802880; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QWeEZYLQFowsoh5tWMf37zmjnQP8pREzFJH0TgxKuRc=;
-        b=mgh+RV0HKEX8fQBLq5D1AlZCdrvXclhFdw7Nqizo4tv6juC99W8k5jXyvgTvIbO49J
-         bjO5/fjn5/nTgNSCuryL79JGc4/q/tkp+WMZeC4fF5IvWAR77A2lU3TsaYSyK9x+x+YX
-         ilMPEN2qa7IOiYbvOONRtKE6UUPJyxiR0v/7njW2pqWWZFubffm8WKLdMb2cwfBLrqd9
-         Jr2IH49XFGPatzjH/gWgRJHhDNvto6E5aExVQL9TwnP5ppgtP2c+Csuw6rHr0BeAZDWl
-         Yom6JTEctP1RulXMiBUr2lQcEmy8jbyiLf/IO5oeFrVuKoYK1QIQjcNKyvG7yTcVxRQc
-         vNsg==
+        bh=7uuugY85m3skoiVn07kJvXcB4zJBbm3CV5cNkHDjjBE=;
+        b=HTAALj9+efTfiVzmYbMkRlMLyLzvEF1Ckarf6j7eeXg0tgSbybQP+IU4po5oWs5DKD
+         rtxqZ337/Rhrpn8PJ84v/9AyW+rT9m49cjiHLVa7YAxG4OzsgsSlh/dm501BUpYoUD6G
+         l29wnwAJLsyaRdFFNK2aUuA8m0+kmM7Y3oqoxeqkX1UInBkr6HTmdnInmPhQuoqoQ+9v
+         qW5thgM8mYBhSgj81NCutFUU7WtZkM1jtWVvJHOJduwCSMsNpmS4O0tnuxBVr9l4QoNX
+         gwvl1wMLKt7j74D5l9FntGiLyr11XGqfSq/q6T8mbavFqNgjyos6Rj/6L2N3+NDYBxyo
+         Jozw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716198027; x=1716802827;
+        d=1e100.net; s=20230601; t=1716198080; x=1716802880;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QWeEZYLQFowsoh5tWMf37zmjnQP8pREzFJH0TgxKuRc=;
-        b=Qq5X7iyybt/Fz972aMLHgQtBvRd6RM6fBwG7+o4f/8/P+NAitr1AyLMklpHwwkvUla
-         TsDUaw1wvvLgldXeV4xswstzVgGkCqbcJDkKCzczsIIHbM4X3WtWKhMX1gxfwMIzKr/0
-         oOpAnxNp2idx4aHCvfBZZpBgjD4cmfLUQO4uS9vl89sqFks8a8nsfVJ3xh+7/TvBHCNQ
-         wq6z324oG/aB2wXrqE6LOini/o02STgTnJeM6GxKrafebZdV/y6hCLEvNCktI72jtw8F
-         czuZ/n93Qa5uVGH2X011WYp1q5S6GYL4vRM4i979TPS8mE8YmQ82WIJOmI9JWtSvdBDY
-         +KaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUCxpxrVNKUxj4kDEuAxD2JmWD2vEKL0L50RqMWNHQjrIdin2gZahKEYsHMqlYvV7JqDNqjXarWwRnw7oVojkvhZhKRRC097g==
-X-Gm-Message-State: AOJu0YwJWAeOv5V4RlflJMEdgRyOAP3zu+i6YBv6ZfYz7PW1JhGC3mxA
-	AI01fvG2zecLFNIk8AKLoA+63ck9l9jIZuDodluoz5U5QVKaPtI2YlDPhtMjpuvD2Hsr85LQ/c1
-	Sf+u6z9TuJ5rMVDSSUtZaOC+YSgW2JcFtUQc3
-X-Google-Smtp-Source: AGHT+IGRslYvtPZVflT9H/QVdXO5/e6Xw9lf8JCxCi36VGobIaGTO31kcm2q5Iy/MccVAuZ4g5GXjchLPJr6wZYIugk=
-X-Received: by 2002:a05:6102:32cb:b0:47e:f5a5:7f79 with SMTP id
- ada2fe7eead31-48077dce359mr29874881137.2.1716198025227; Mon, 20 May 2024
- 02:40:25 -0700 (PDT)
+        bh=7uuugY85m3skoiVn07kJvXcB4zJBbm3CV5cNkHDjjBE=;
+        b=PZBpZeLJ157wpSSEQoIvyfhEthDRC9QOVXmW5HJLDAsLVOAgTVn5iLZjEYMKEuwr6c
+         JLhwcF4A3MB4HXHSpYRnLs9hHJPfCW+/Be2UejhAu9MGn+TtLdO4M1s3I9xS6w6HhMMi
+         O3z3RGvmGhP5G04RM9sU24EV0YTWLie0nhX/9ABLNUjvtUQBY2Miv1yqs/bJJ16h2rhE
+         OhXADfi86fN+W9BOelnN9ZbHhUCWKrtG1pwKZPTOly3vN9QLbEyfjQ7PymPu+5A8Dfzg
+         lGiQsGi0asLME/2f2FkDmA11Z7/6dbnv17o2IO4eJSQhG1rOT6ZQw/L5d78brFgChxqV
+         j+gg==
+X-Forwarded-Encrypted: i=1; AJvYcCXQsBPmWJ0Mb5ZQcLZLnwGlCjvBTXkC/H6P/ZGLQ8th0wsvtWUJQNjEz3GhQ1zTr6nU1RuqreO6agUeqV4jHKdx3lXQ13hrFQ==
+X-Gm-Message-State: AOJu0YzQiQM79y06dd7xbh96X3LoHokWwSh4y6czEOo8d8z5aJSb8zhD
+	u4VpCQzPabjsDjzEyrI1/6Zh+tWSeAbgxmdrHMQbAiOl43Qvtpyei3c1q1SZRY2YlUaOfM/CNZ7
+	YISTtSAkWn6/YeUzP7PqXucfIobj0KsvidzJ/
+X-Google-Smtp-Source: AGHT+IHIRXk83gqTUdQImOJqZPIX0uv6AUm05mTPSzxJ+VjagPZfmFf9nOGa5CXpYjIsVt4/l7jOnVOm53CKwZsfOTU=
+X-Received: by 2002:a05:6122:200d:b0:4d4:e92:1a71 with SMTP id
+ 71dfb90a1353d-4df8835c8d1mr26014914e0c.11.1716198079941; Mon, 20 May 2024
+ 02:41:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240519210735.587323-1-ojeda@kernel.org>
-In-Reply-To: <20240519210735.587323-1-ojeda@kernel.org>
+References: <20240519211235.589325-1-ojeda@kernel.org>
+In-Reply-To: <20240519211235.589325-1-ojeda@kernel.org>
 From: Alice Ryhl <aliceryhl@google.com>
-Date: Mon, 20 May 2024 11:40:12 +0200
-Message-ID: <CAH5fLghTdgWyEQFLL8VVSFBNq1hgXPF0gqoM2KETD=Ubj8xV9Q@mail.gmail.com>
-Subject: Re: [PATCH] rust: avoid unused import warning in `rusttest`
+Date: Mon, 20 May 2024 11:41:07 +0200
+Message-ID: <CAH5fLgjiKzmmwTrfiAx05tzFYVHDQUsiFmroMcWd3t=P+f6spQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] kbuild: rust: move `-Dwarnings` handling to `Makefile.extrawarn`
 To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+Cc: Masahiro Yamada <masahiroy@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Danilo Krummrich <dakr@redhat.com>
+	linux-kbuild@vger.kernel.org, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 19, 2024 at 11:07=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
+On Sun, May 19, 2024 at 11:12=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
 ote:
 >
-> When compiling for the `rusttest` target, the `core::ptr` import is
-> unused since its only use happens in the `reserve()` method which is
-> not compiled in that target:
+> Following commit e88ca24319e4 ("kbuild: consolidate warning flags
+> in scripts/Makefile.extrawarn"), move `-Dwarnings` handling into
+> `Makefile.extrawarn` like C's `-Werror`.
 >
->     warning: unused import: `core::ptr`
->     --> rust/kernel/alloc/vec_ext.rs:7:5
->       |
->     7 | use core::ptr;
->       |     ^^^^^^^^^
->       |
->       =3D note: `#[warn(unused_imports)]` on by default
+> No functional change intended.
 >
-> Thus clean it.
->
-> Fixes: 97ab3e8eec0c ("rust: alloc: fix dangling pointer in VecExt<T>::res=
-erve()")
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
