@@ -1,115 +1,73 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD66C1CD1B
-	for <patches@lists.linux.dev>; Tue, 21 May 2024 16:10:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F7917997
+	for <patches@lists.linux.dev>; Tue, 21 May 2024 16:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716307812; cv=none; b=jcCmNIrulTZyXwG573+7IRmcZwOZIa6zezhnAARLAj3R/eFtWST+9HAJGzxqzNY6OdqHPteNZsuxebYPD/FKLv4Z1t4g3xt2gjEYSs/pBxrhEYTSATVwg6L0AWxz6lmQ6BNDzCB/cCus7HTPKP/+dSeQQfHvLeuqgKBHCN0H6Aw=
+	t=1716308258; cv=none; b=KH8xpANxWRCOaqfNGrXgvXtbdL75mTWhMeeDc3DtmZWOelFWVIvydi25LYG2zruwWIoGQtzb/rFFanOAVR0RaDUWdGn72AYNgw2ObpIf3OHbxxVe7PgaJwCVI9z77MiIH5GFiBGoCdAQDu9L8OTDkw7nKHYZcFzoOFE4ASJCcvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716307812; c=relaxed/simple;
-	bh=68M2NDRggCs0VFE9AYWoncMfFrGsX4y4CaXof55Z9lY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BENtRuRiKFWqbKQQBxDAE6KHrUVQTxFF7rEP3sBbKXAnFMSP9A5GFD1VOb6BqkPY69325Qz4Uc2cgeyxAw3I4apbPQmAsbIBduEKsnXR1Y7OCvVR1GP850VYHrgp1/NfD4WIjNgjsAu9QdVYXB9oDK9dJn1nbkiO84hr1n82WPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iH22YBEn; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iH22YBEn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1716307811; x=1747843811;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=68M2NDRggCs0VFE9AYWoncMfFrGsX4y4CaXof55Z9lY=;
-  b=iH22YBEnb+PRB7VhHisRWVd/ppgozKGHIjA9Lc98Ar94uHikSVJHP+aw
-   1YXakqH7sL9mJlPbzeRzUgyAH1YofgQkrpRpnk0vroCNSqqtrUOiGBhB7
-   LkQN+YNIGFYw2IJ2nE49L0S2aDATFgGfOo4ukNMrI9TAki7jy5m3T+uAK
-   UDxnXbjyRuSbPSLhxQSjPgtCDxkUheGlTOaBVNsnHhhrQR7Z0ryKC3ew6
-   JByO+Pme9gJ+3vMRO7Pcg8pcB0PuNBz586vZ3wVzyOX5tAdunSH6lG8CP
-   2b/ro0jPeZadRjY8LiiFjOKkHTO2JrF5EhD/jxvER5P4rS4LJH+8fKmu/
-   Q==;
-X-CSE-ConnectionGUID: QTmcoVpfRAi5Y5O5GfXmhQ==
-X-CSE-MsgGUID: dVZESAwhQAObk/kzgnsCYg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="12357961"
+	s=arc-20240116; t=1716308258; c=relaxed/simple;
+	bh=Mp+X4n+G4e+9QIapZ3qaEU0CrBdfMJsKLNODW33+ROE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f+DDG2FEuQQKvW7tLvwImLj/h+cROEfY0RDWgEAZgEC835AYXprY5Cozm3sGf579LO5JZwMdmEqJGxrSHyWt7M1MiFTVpq2nhIDitF1hwhFLCFs1Fe+Ih8KQsv9iiS5kr3swOwOox2ARZFYeJ2SwnvurPaDyOGUXNdgIfkoqO94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=fail smtp.mailfrom=kernel.org; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=kernel.org
+X-CSE-ConnectionGUID: llM+uVlbT0aILzMifyaH6g==
+X-CSE-MsgGUID: dL5EGQuYQdOHG4Q2JOfFkg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11078"; a="23652303"
 X-IronPort-AV: E=Sophos;i="6.08,178,1712646000"; 
-   d="scan'208";a="12357961"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2024 09:10:11 -0700
-X-CSE-ConnectionGUID: a8tXbICTTXeHaECMbbl+Zg==
-X-CSE-MsgGUID: m5Lpxi2PS32s4xtVNbvnjA==
+   d="scan'208";a="23652303"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2024 09:17:21 -0700
+X-CSE-ConnectionGUID: FInIGSHkSASZXYn4LNWvgw==
+X-CSE-MsgGUID: P/ernt7WR92JzSqFzPwp9g==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,178,1712646000"; 
-   d="scan'208";a="33129766"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2024 09:10:10 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: andy@kernel.org
-Cc: ak@linux.intel.com,
-	arnd@arndb.de,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	hpa@zytor.com,
-	linux-kernel@vger.kernel.org,
-	mingo@redhat.com,
-	mjguzik@gmail.com,
-	patches@lists.linux.dev,
-	peterz@infradead.org,
-	rick.p.edgecombe@intel.com,
-	tglx@linutronix.de,
-	tony.luck@intel.com,
-	trenn@suse.de,
-	ubizjak@gmail.com,
-	x86@kernel.org
-Subject: [PATCH v6.1 16/49] x86/platform/intel-mid: Switch to new Intel CPU model defines
-Date: Tue, 21 May 2024 09:10:01 -0700
-Message-ID: <20240521161002.12866-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <Zkyrtgj7yQR8H-Bz@smile.fi.intel.com>
+   d="scan'208";a="70387499"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2024 09:17:17 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andy@kernel.org>)
+	id 1s9SAr-00000009i16-3hrV;
+	Tue, 21 May 2024 19:17:13 +0300
+Date: Tue, 21 May 2024 19:17:13 +0300
+From: Andy Shevchenko <andy@kernel.org>
+To: Tony Luck <tony.luck@intel.com>
+Cc: ak@linux.intel.com, arnd@arndb.de, bp@alien8.de,
+	dave.hansen@linux.intel.com, hpa@zytor.com,
+	linux-kernel@vger.kernel.org, mingo@redhat.com, mjguzik@gmail.com,
+	patches@lists.linux.dev, peterz@infradead.org,
+	rick.p.edgecombe@intel.com, tglx@linutronix.de, trenn@suse.de,
+	ubizjak@gmail.com, x86@kernel.org
+Subject: Re: [PATCH v6.1 16/49] x86/platform/intel-mid: Switch to new Intel
+ CPU model defines
+Message-ID: <ZkzJCWIahaYPYwDz@smile.fi.intel.com>
 References: <Zkyrtgj7yQR8H-Bz@smile.fi.intel.com>
+ <20240521161002.12866-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240521161002.12866-1-tony.luck@intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-New CPU #defines encode vendor and family as well as model.
+On Tue, May 21, 2024 at 09:10:01AM -0700, Tony Luck wrote:
+> New CPU #defines encode vendor and family as well as model.
+> 
+> N.B. Drop Haswell. CPU model 0x3C was included by mistake
+> in upstream code.
 
-N.B. Drop Haswell. CPU model 0x3C was included by mistake
-in upstream code.
+Yep, the result looks good. Dunno if it's better to have a separate patch with
+proper Fixes tag. Up to you, folks.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Acked-by: Andy Shevchenko <andy@kernel.org>
----
- arch/x86/platform/intel-mid/intel-mid.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/arch/x86/platform/intel-mid/intel-mid.c b/arch/x86/platform/intel-mid/intel-mid.c
-index 7be71c2cdc83..f83bbe0acd4a 100644
---- a/arch/x86/platform/intel-mid/intel-mid.c
-+++ b/arch/x86/platform/intel-mid/intel-mid.c
-@@ -22,6 +22,7 @@
- #include <asm/mpspec_def.h>
- #include <asm/hw_irq.h>
- #include <asm/apic.h>
-+#include <asm/cpu_device_id.h>
- #include <asm/io_apic.h>
- #include <asm/intel-mid.h>
- #include <asm/io.h>
-@@ -55,9 +56,8 @@ static void __init intel_mid_time_init(void)
- 
- static void intel_mid_arch_setup(void)
- {
--	switch (boot_cpu_data.x86_model) {
--	case 0x3C:
--	case 0x4A:
-+	switch (boot_cpu_data.x86_vfm) {
-+	case INTEL_ATOM_SILVERMONT_MID:
- 		x86_platform.legacy.rtc = 1;
- 		break;
- 	default:
 -- 
-2.45.0
+With Best Regards,
+Andy Shevchenko
+
 
