@@ -1,79 +1,103 @@
-Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31673611A
-	for <patches@lists.linux.dev>; Mon, 20 May 2024 23:34:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1225134B1
+	for <patches@lists.linux.dev>; Tue, 21 May 2024 02:41:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.165.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716248066; cv=none; b=CS9xemblSAQdgF1RK5jxLyqPXgOClsr84dM9uRzb/FzJ9K1KXK2CbE7Nmf37Gdhg2FS4/O3jzhzYaaski/zbZu2ShcOPPY+Q2Srn3zjCFaWtz3j8JRVDm7yTU7lhl1Ewqg56v/QU35yOK/NaA0wAj1/U4plzXQKcislnDRSWidM=
+	t=1716259268; cv=none; b=bl0DqL6Xtg9O+ax2xDqwRKREUNQXGBpNFF2aYyg/6cs37b6r2BcQfcUg39TVytOmSJ8ot0SyVDrnreREZaEIjy6ku/QZGUWs+XC+8h9ksL5f6rBfXl30eQacCbrMQehH2yOpINnib4KaR0wbbznGrIY5HUnQtY4B2e5alE+8DhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716248066; c=relaxed/simple;
-	bh=saWUEh2uRj5tPYq6Oqo/SXMWeqs6jwgcuDZjJrDuUJ8=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=rAn+kM++lbLbophTPYt92c8TNPJnOykDJHn3PWbby8SXbkxBJuQ2kRM/Fbp3/CTLhH66H/BOfycYpPaJjEn8Dv3cY2JeshpR2Vuzsk9YCAXoZJaTfdXdlibpLIAo+WthnRzdk1gy5DHNntnRVzqVlBf7LThlzC8iyZridwdKiSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=cOeoWDyq; arc=none smtp.client-ip=198.137.202.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
+	s=arc-20240116; t=1716259268; c=relaxed/simple;
+	bh=P9f17l4ELNU0fSi3k8dZVgWkU+45uxlI+TNflbqcu20=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QVHzMroR2zXG3491EQyrDKuT5Hq1yPKZ5GXydsC+CFb2mw0rUAv/7Yh30V+UUNJq9yjQXaqnH8LRPKATFStGBU/+XxoMEJsTWlfdbr+34MwvP8HyvbSxvjDKfIYlmdZcKNef20A5yJGZpWrZBN9td6+n8R/zJqklXqd7Mubnc64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=h28RPd2q; arc=none smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="cOeoWDyq"
-Received: from [127.0.0.1] ([76.133.66.138])
-	(authenticated bits=0)
-	by mail.zytor.com (8.17.2/8.17.1) with ESMTPSA id 44KNXTlW3973431
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-	Mon, 20 May 2024 16:33:30 -0700
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 44KNXTlW3973431
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2024051501; t=1716248010;
-	bh=saWUEh2uRj5tPYq6Oqo/SXMWeqs6jwgcuDZjJrDuUJ8=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=cOeoWDyqzDF2ij0gEQOs16dIrHWwtLGdNtHW+VvsASLftUAzRWEVdwCHnv/3CBBaP
-	 VEOfsT1yrf8q4qu9ZySN+Y0ZqomHz8cDeG5XgDEQJ1MIHWiDxELj4+c9FkOug3eCR8
-	 9SaeJ7AOGcgBik44AGZ8V/YmWAaOBxAQOD3tKcJKF70Colk/QHSpZjpabSVxSYSh4i
-	 5aAPNtF55x7ztmORDrRx9tgSXEFBsIkIh8aQDE7ISdQUz4OcfIaMCf31Bzafjpyrjp
-	 SEXrFc84jBdt3ErOB3K7wvUFvPWKdOVm7mbA7pEYnxKfbFMOEY4EFrIsG8reHszOMB
-	 IbmNmswMzB8JQ==
-Date: Mon, 20 May 2024 16:33:27 -0700
-From: "H. Peter Anvin" <hpa@zytor.com>
-To: "Luck, Tony" <tony.luck@intel.com>, Thomas Gleixner <tglx@linutronix.de>,
-        Borislav Petkov <bp@alien8.de>
-CC: Ingo Molnar <mingo@redhat.com>, Dave Hansen <dave.hansen@linux.intel.com>,
-        "x86@kernel.org" <x86@kernel.org>,
-        "Peter Zijlstra (Intel)" <peterz@infradead.org>,
-        Uros Bizjak <ubizjak@gmail.com>,
-        "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
-        Arnd Bergmann <arnd@arndb.de>, Mateusz Guzik <mjguzik@gmail.com>,
-        Thomas Renninger <trenn@suse.de>, Greg Kroah-Hartman <gregkh@suse.de>,
-        Andi Kleen <ak@linux.intel.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: =?US-ASCII?Q?RE=3A_=5BPATCH_v2=5D_x86/cpu=3A_Fix_x86=5Fmatch?=
- =?US-ASCII?Q?=5Fcpu=28=29_to_match_just_X86=5FVENDOR=5FINTEL?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <SJ1PR11MB60835EAF2929D72D9C245ACEFCEE2@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20240516162925.79245-1-tony.luck@intel.com> <20240517144312.GBZkdtAOuJZCvxhFbJ@fat_crate.local> <863D0F06-1217-4C94-B2CA-816FC4ABB103@zytor.com> <87h6ewjhn2.ffs@tglx> <SJ1PR11MB60835EAF2929D72D9C245ACEFCEE2@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Message-ID: <509BDCB2-5203-460B-8317-043A07CB38B0@zytor.com>
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="h28RPd2q"
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 44KNNnmO007591;
+	Tue, 21 May 2024 02:41:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2023-11-20;
+ bh=OsHL4EQr3Pz38QrW02bQKSNNRd5XY5Dexk7+9+bVyXE=;
+ b=h28RPd2qzvlmTPJ0oaB740ElXckDH7AngYmKtgC+IfiXEr0Dv1b1iOLb/bfayE42vY++
+ g4I+KlQxNy7cj3l3pOY7jd8GGucJLdgCuiNlgD1TdgXKqps0vkjlMa0eFYvl8bl4G9VN
+ MobN4rlMNuoFScjFcNN1wRFxAs5Jx8D943QIbzc18txgJe0LPvSUFDvY/Sc66fM9lk+1
+ +uV1NUP29tnT/1Syxtl39qEM0pfRMKByIRUjUqLRk8/qx7Zhjl20ACuJMsrafNMocAny
+ vP6WWF+RKr7hK4J9NBmclD9zS1Wfk2B4l5zNfjmcvIpXtYf/LvNomNBQbxVyEFkiy2Ca 1Q== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3y6jx2by7d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 21 May 2024 02:41:02 +0000
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 44L2Fs5v002742;
+	Tue, 21 May 2024 02:41:00 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3y6js72bgk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 21 May 2024 02:41:00 +0000
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44L2exco013516;
+	Tue, 21 May 2024 02:41:00 GMT
+Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3y6js72bfn-3;
+	Tue, 21 May 2024 02:41:00 +0000
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+To: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+        Kashyap Desai <kashyap.desai@broadcom.com>,
+        Sumit Saxena <sumit.saxena@broadcom.com>,
+        Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Tomas Henzl <thenzl@redhat.com>, Nathan Chancellor <nathan@kernel.org>
+Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
+        mpi3mr-linuxdrv.pdl@broadcom.com, linux-scsi@vger.kernel.org,
+        patches@lists.linux.dev
+Subject: Re: [PATCH] scsi: mpi3mr: Use proper format specifier in mpi3mr_sas_port_add()
+Date: Mon, 20 May 2024 22:40:16 -0400
+Message-ID: <171625915905.2717551.4005718868423470103.b4-ty@oracle.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240514-mpi3mr-fix-wformat-v1-1-f1ad49217e5e@kernel.org>
+References: <20240514-mpi3mr-fix-wformat-v1-1-f1ad49217e5e@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-21_01,2024-05-17_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 bulkscore=0
+ suspectscore=0 spamscore=0 mlxscore=0 adultscore=0 mlxlogscore=807
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2405210020
+X-Proofpoint-GUID: YPqcq0ZY9Blm8Ibdg0tDwVrSViMdKeig
+X-Proofpoint-ORIG-GUID: YPqcq0ZY9Blm8Ibdg0tDwVrSViMdKeig
 
-On May 17, 2024 1:54:33 PM PDT, "Luck, Tony" <tony=2Eluck@intel=2Ecom> wrot=
-e:
->>> This is particularly pathetic as there already is a canonical string
->>> representation of the vendor ID!
->>
->> I agree, but that train has left the station long ago,
->
->Is that "GenuineIntel" and "AuthenticAMD"? While canonical, 96-bit values=
- seem less
->easy to use than simple small integers=2E
->
->-Tony
->
+On Tue, 14 May 2024 13:47:23 -0700, Nathan Chancellor wrote:
 
-Not for internal use, but for exporting in strings=2E
+> When building for a 32-bit platform such as ARM or i386, for which
+> size_t is unsigned int, there is a warning due to using an unsigned long
+> format specifier:
+> 
+>   drivers/scsi/mpi3mr/mpi3mr_transport.c:1370:11: error: format specifies type 'unsigned long' but the argument has type 'unsigned int' [-Werror,-Wformat]
+>    1369 |                         ioc_warn(mrioc, "skipping port %u, max allowed value is %lu\n",
+>         |                                                                                 ~~~
+>         |                                                                                 %u
+>    1370 |                             i, sizeof(mr_sas_port->phy_mask) * 8);
+>         |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> [...]
+
+Applied to 6.10/scsi-queue, thanks!
+
+[1/1] scsi: mpi3mr: Use proper format specifier in mpi3mr_sas_port_add()
+      https://git.kernel.org/mkp/scsi/c/9f365cb8bbd0
+
+-- 
+Martin K. Petersen	Oracle Linux Engineering
