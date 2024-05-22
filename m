@@ -1,100 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EE6757FD
-	for <patches@lists.linux.dev>; Wed, 22 May 2024 11:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697BE1171C
+	for <patches@lists.linux.dev>; Wed, 22 May 2024 15:36:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716379184; cv=none; b=f/52TquhnAuNeFI9XGI9/PRih+qtoiPcjikzmwK0Ry5vsfDMCYsCMbxshQ0E/X1v9s+Agzi8uZCP7MwwyTcri+TVPfxfm7NUSNOGXM0Ye0pS0uKyeZsK/ZHJXporLMIUgYZPIgX1+GBnt1AXXb5HPAjPfMQ5N9ejvbAA421azEo=
+	t=1716392191; cv=none; b=pVRO1D25y/n7dJUbCYJxzRyXrVle9+W7BiM2X1ccV8w1a33Z0Lhf03tVkrgA4x9uDtnTtSDVJ+MAv+itm0TtCz14yiZipFzED4+9w2vJeW2nCV5xbMVjNLzH68mIXhYYHZLQ32QKFwZJ9yPmbDEDJueC5f6tD9bSxvplBtycJKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716379184; c=relaxed/simple;
-	bh=cuGc8Pu9YBooy2bz94a0RDTpxwgjGmzp7A3RCV71uBY=;
+	s=arc-20240116; t=1716392191; c=relaxed/simple;
+	bh=ULFbJbVKQMWnZ1ms7vRd/YXmVFPFapk+Fu4aJyVk1Os=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l8WiGbyaSQBixlFRWV/WMnWU/81VurSjDfzE40kSygx/S0OfSUD9jI0B9iPcO5oHpdFszktQKZM1WIuzWZ+n1lC8506D0gfXXF7TLmyw5l7SqHxRoZGeYW16ZVuvgcCW8vRJzDy1BgaNI8FOKd6zSycQNIa5aF8JwQPxzoq6sUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hcnbO8mX; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hcnbO8mX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 143BCC4AF07
-	for <patches@lists.linux.dev>; Wed, 22 May 2024 11:59:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716379184;
-	bh=cuGc8Pu9YBooy2bz94a0RDTpxwgjGmzp7A3RCV71uBY=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=hcnbO8mXFpIc91wErXvGslZ3sgAyS68n+Y5nJuYxtxXdpA92NNES6C4Rd2jaQr4Ye
-	 XerDk0Wk7MSFONF2RF7Pq/6qN5F4Gk6qI72QMSHhTOOiqyLurtWb6KtAEQpCo5FvW3
-	 SQmEGrFlAHZ5ZvVCrjv8l2LEssQWura3MVi+J2W/yc60fhDk12N4LC/M6MSmx73uyl
-	 XXbX1O6HEZ32+bBS+kL2DewIh+hJdSORh5Yw2DdMYi3wBu44suBRmMLpU5oxWH63Qx
-	 RRC9WChlu4vOeiYIjRAfssZC1fzcVO7Xfn3fXNdnlXpBnS4O8pNuDo0rzLz+/40/oW
-	 mn3THbRU1bZ+Q==
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2e1fa824504so60456851fa.0
-        for <patches@lists.linux.dev>; Wed, 22 May 2024 04:59:43 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVrxw6ihV5ExeOhzL1ODsHLi0sukGIK9E4xKSh58Tn6RJSnLEoeogoNzIaCr9G68F1siM1TPg8rO9LxZpl4A5FUdUCu8Ptm5g==
-X-Gm-Message-State: AOJu0Yy329gdY5MORwooxmPlH501ecnE5ilr0704wXSLbGWsAJSqURw7
-	p64iRzc/jTVKva4rnhfyKZy4fSEBRusa7SxlVfvzFLOMccawJoHdz1Ag7ecCKD7WYBMlhsVVNwF
-	nv9JisnoOMMOv8UVRLS91g6jiol0=
-X-Google-Smtp-Source: AGHT+IFPDTl0Xas48io8ucKnx9sinCtylTniInZ1t2wKyn685dcWLc2Vn6GNhQryETbGWnVDTr0biA4YngfFKpJz2nY=
-X-Received: by 2002:a2e:8904:0:b0:2e7:1bb6:2e8b with SMTP id
- 38308e7fff4ca-2e949540f5dmr11986731fa.35.1716379182789; Wed, 22 May 2024
- 04:59:42 -0700 (PDT)
+	 To:Cc:Content-Type; b=MFodIP/gTtT5iaEXmhyILNzJQxnOCPce6kClvC9/aqWsbbA7Mx0cZIAr+CbN2XW74zB8dSTWKY5eX+yv9rpHzJEY4nLYjjqsOxY2HJf7zuxCm1LYOrnDnGd1fYo2tPpku5RRsqfHqZvkIQJmV9XDKNEKVZRluW8gDbKt2y+RUE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-627efad69b4so4488487b3.3
+        for <patches@lists.linux.dev>; Wed, 22 May 2024 08:36:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716392188; x=1716996988;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5rBlAy4O9Lv/8JE6GkQCoKCu1hP1DJWjgLhKz1QEi/g=;
+        b=t6TqZfjBiRMqeuEm78qK43eg7vulrvAUyOovMfASqhUIX4iNm5jUw6zdb82Q1KaIR+
+         vVyOQxVjXe0isHOhineaQdxQ7LkUQ0YWdTFIEg89FnEjHqtcmzCtO8Gd5QmQzhglIn91
+         52uKS+fuwpQXveKKOBunDj9yrlK6FYnQGbCS41IbHO5zD1MDl/WlzTSKnYV2/j87P3Ak
+         jGk/Z+AGA50E4VlxiR13SNlwyYKOekDlgDHVeviZ1Z/CFRIByhuzapSIwAf8l7prFBTm
+         lVt/DjBO6ANBO/kRKoMCH6BRSK448d7RS+rGwwM3UDdFZsn+K6AreiwVbrxHqbBgWCOV
+         yD1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWeSgAhC3qafozvLSIV7fiFQ+XQkPNhv5zJaJThRujVxC/0/pKlQCUv1axN/QyNV9zf3jpr6nAH5Qp7qkRV9lHqcWaAQKYOXw==
+X-Gm-Message-State: AOJu0YzwgKr21KYRfmZfWKX4l0eh7gWPGxGsLWQR5T3jEr+6p+q6m1V9
+	HdNPi06X5S5LXny4DpHhXEg+BxSd3jswxZ0DQ8SYDA31YCyy+VUBQ1jyIiQy
+X-Google-Smtp-Source: AGHT+IG9CEpfEfL+WWLVe5F+6kdlx5IrtAsgnxG9XQHnc3Zs5/b2SeU14A95yfaHj/j2spiL+LIhVA==
+X-Received: by 2002:a81:83c5:0:b0:618:25fc:e2a9 with SMTP id 00721157ae682-627e471524fmr25016567b3.38.1716392188120;
+        Wed, 22 May 2024 08:36:28 -0700 (PDT)
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com. [209.85.128.179])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6277943ca66sm26920027b3.66.2024.05.22.08.36.27
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 May 2024 08:36:27 -0700 (PDT)
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-627e3368394so13150917b3.2
+        for <patches@lists.linux.dev>; Wed, 22 May 2024 08:36:27 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXhu5DmMLHC5GzUlWgwQ+gcK6LvHQdCB1Qw3+C0raScsBy3IUC82yh+u6sV+w2KXlrN1Uu1vb9qV+galGn0WHWHwXlSqw6VBg==
+X-Received: by 2002:a05:690c:6513:b0:61a:da7e:1f66 with SMTP id
+ 00721157ae682-627e462389bmr27860127b3.2.1716392187488; Wed, 22 May 2024
+ 08:36:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240519211235.589325-1-ojeda@kernel.org> <20240519211235.589325-2-ojeda@kernel.org>
- <CAK7LNATPx2wTEM=KDmGtcH8vVTB4suOhh-CUQKP54F8wtPWDiw@mail.gmail.com>
- <CANiq72mcdtNie=t=HHhZnjQa7gQiDZin+TYP_7Rgi4kL83H2BA@mail.gmail.com>
- <CAK7LNASYYYsiZUaA1StD9kWO0WBC0PBPtfY7u32g94WtOPFZgw@mail.gmail.com> <CANiq72mzTaKYJqNcv1qT3nXEbh_t7CwaAqxCuYNcx9eHOZf7wQ@mail.gmail.com>
-In-Reply-To: <CANiq72mzTaKYJqNcv1qT3nXEbh_t7CwaAqxCuYNcx9eHOZf7wQ@mail.gmail.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Wed, 22 May 2024 20:58:46 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAQkUik_VW7j-d56Pr4NnExxDnjMfWSwtxvijH4q4Onctg@mail.gmail.com>
-Message-ID: <CAK7LNAQkUik_VW7j-d56Pr4NnExxDnjMfWSwtxvijH4q4Onctg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] kbuild: rust: apply `CONFIG_WERROR` to all Rust targets
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, linux-kbuild@vger.kernel.org, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
+References: <20240521111958.2384173-1-Jason@zx2c4.com> <20240521111958.2384173-4-Jason@zx2c4.com>
+In-Reply-To: <20240521111958.2384173-4-Jason@zx2c4.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 22 May 2024 17:36:15 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdUwVuVfAwDJkMNZFj+_+dKHFf1MX1=wrchUhHfKoP0Z6w@mail.gmail.com>
+Message-ID: <CAMuHMdUwVuVfAwDJkMNZFj+_+dKHFf1MX1=wrchUhHfKoP0Z6w@mail.gmail.com>
+Subject: Re: [PATCH v15 3/5] arch: allocate vgetrandom_alloc() syscall number
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, tglx@linutronix.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 22, 2024 at 7:52=E2=80=AFPM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
+On Tue, May 21, 2024 at 1:21=E2=80=AFPM Jason A. Donenfeld <Jason@zx2c4.com=
+> wrote:
+> Add vgetrandom_alloc() as syscall 462 (or 572 on alpha) by adding it to
+> all of the various syscall.tbl and unistd.h files.
 >
-> On Wed, May 22, 2024 at 12:14=E2=80=AFPM Masahiro Yamada <masahiroy@kerne=
-l.org> wrote:
-> >
-> > What does "everything else" mean exactly?
->
-> Everything but the host programs. Or as many targets as possible, if
-> you think there are other cases that we should avoid.
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 
+>  arch/m68k/kernel/syscalls/syscall.tbl               | 1 +
 
-You can do this if rebuilding makes sense
-when any CONFIG option is changed.
+Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
 
+Gr{oetje,eeting}s,
 
-
-> > Why is the .config required for generating documentation?
->
-> `rustdoc` sees the code in a similar way as the compiler (it uses
-> parts of the compiler); in particular, it processes conditional
-> compilation like the compiler. So we need a given configuration to
-> generate it.
-
-Surprising.
-
-It potentially generates different documentations
-depending on the .config file.
-
-
+                        Geert
 
 --=20
-Best Regards
-Masahiro Yamada
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
