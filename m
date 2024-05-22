@@ -1,90 +1,90 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEC3F4E7
-	for <patches@lists.linux.dev>; Wed, 22 May 2024 21:20:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258237BAF7
+	for <patches@lists.linux.dev>; Wed, 22 May 2024 21:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.9
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716412850; cv=fail; b=RGtWheQ68qclmoWlBS8tBmkqsNs2e6z3uaiZNIDBv3JlsLTjE75V259+FwJfhi2YWpYt25BO33DERldZKof3PaSh47okEeUaSfp2Ksgu2bkKZ8v3dQQIEYFnjE+uQfdOXQ5YPJlRPvv7W5dNO5dV5iHmbjV2IJhQu5HCMt2DWtU=
+	t=1716413061; cv=fail; b=L50z5Y1WVFPiNjQY/IhVrM59OHONawVwOtNQQ+1YjhRW5c+X0wxtycjAd30rrz36NSt0WEJgmByMdrZSlnlfSyXYXKh45lRUiajSuLYBpAh0r9NLz5txmmVPpH5ZtSAvTRKyuI38Fp3cHJb86irY1mm7b1Xr7NUDjMJi9b+xXAM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716412850; c=relaxed/simple;
-	bh=7t5HwqO2IhPFQu3NpRknFspRIw4i2KhD6OY+QtzzREY=;
+	s=arc-20240116; t=1716413061; c=relaxed/simple;
+	bh=5a6J5br8fwfhqsBS6qBCJ5Bp+xhcKSvt445jUuiMdm4=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=ijAJ0HRDMKdoQdXD+0JJRTOUKyXLnqsKi5MNlTUM/MQ46BoiZs+2nVtOVJu6z4AWCP4AU5aT2WTkfs6Ob5IAD0vXJFPr9m/xZVZAGjenTqDKGpuS/BCqcS1xmBdtHWMfeqzxEeXsNPjxqL2ByuBJwQ2xmM3w5G9I1JKGrSedKFk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MSFXptxK; arc=fail smtp.client-ip=198.175.65.19
+	 Content-Type:MIME-Version; b=fHKk6yNP++DGPZAk50jCytTmOkdCzfEvahiCrxlKt2xIcQyCC9y50SUzw7U5sQQPqFIUH6TsvK3bu7i87TYOwC/e8VT4y9mbgy9rbRztinv1indE2IJ88ghtB3VYZ88bZQXUrCzEwO7F20dy/6nbiEjM6mSd+RowQajkwgWUPEs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NcCWSvsx; arc=fail smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MSFXptxK"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NcCWSvsx"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1716412849; x=1747948849;
+  t=1716413060; x=1747949060;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=7t5HwqO2IhPFQu3NpRknFspRIw4i2KhD6OY+QtzzREY=;
-  b=MSFXptxKbQ0cA4BgXtrO6Ld36XlEcvJZY9IKXQnU+QvtJemUi9G8ZlF0
-   ZwWIjOAqnAoFGT/gyuJFKnDB7hms3Fqqn5dWuJrhFWZuFxF2OHNqfUZ9O
-   oTOk4/oYo417f3qx3lwC/5fBLAqOwYPryEObJfmc9Gs4jU4XyRRQXGuIo
-   Q9ewTKeSE/bpmVcY/qmTJcBuMf0mgDpMeiH5f9zfDvPy0XTa8J1YXGi4R
-   hwVUwrydlwNCwb+2NlDErTfD+xa03LCukLtyw/cCGkCVzPZtAm/taBBVB
-   FjBf3eQKOdin262NBwxXeLO/qjDvUIiilZSplu785y/7RnxNK6iPqMbbK
+  bh=5a6J5br8fwfhqsBS6qBCJ5Bp+xhcKSvt445jUuiMdm4=;
+  b=NcCWSvsx/PpV/WqPk1zg/7uOd07l1aDoTKYhiJhrF+LvRRCDSfE7bwct
+   sjXJSMAwxBy9fu2TU+mpVv9LB71qY4R1mBdwuuPOWFq1WO1NXtoozya/6
+   YZLFJDjn71ktVgVbV/D+eJ4QFAUB7a7TZ0XEcdFNJIjeyvVAWmzPOM+W/
+   CGK/5ttKiY68jFeyKd90pTPhSyg3UBmQPqQl846+U+dWPdtgFDbJZp6oE
+   BjjVbDaAq5dm7jaTEe1WBLOC4Y8Dj58jCSHckZcx2ZJhQnPqASy+fYV4F
+   mwT3xV9nWLpUTg8M7Y0Cv5wiY6Hqv/R0BosDFW8QITgd5Ap1LYeMqbhNF
    w==;
-X-CSE-ConnectionGUID: kdSu+pDCSmS9tPU9L1IRHg==
-X-CSE-MsgGUID: v0rjnWkxSl2bDcxoZBuEHg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11080"; a="12546332"
+X-CSE-ConnectionGUID: h3ZKeBZISDm9qdu5zXMIjg==
+X-CSE-MsgGUID: LnO9MQB+R5OpGrsVhKWIMA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11080"; a="35206638"
 X-IronPort-AV: E=Sophos;i="6.08,181,1712646000"; 
-   d="scan'208";a="12546332"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2024 14:20:49 -0700
-X-CSE-ConnectionGUID: TGMyFR8TT0GSDXZzhW499Q==
-X-CSE-MsgGUID: RpA2hmSwTPiXiBeShASn7A==
+   d="scan'208";a="35206638"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2024 14:24:19 -0700
+X-CSE-ConnectionGUID: gIyuGEAoT5+FHUnmVSAM2Q==
+X-CSE-MsgGUID: 6qdpTMYFQrKFkdfgTpnGyg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,181,1712646000"; 
-   d="scan'208";a="37904166"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by fmviesa003.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 22 May 2024 14:20:48 -0700
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+   d="scan'208";a="70824553"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by orviesa001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 22 May 2024 14:24:18 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 22 May 2024 14:20:48 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ 15.1.2507.39; Wed, 22 May 2024 14:24:17 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 22 May 2024 14:20:47 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ 15.1.2507.39; Wed, 22 May 2024 14:24:17 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Wed, 22 May 2024 14:20:47 -0700
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (104.47.73.169)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ 15.1.2507.39 via Frontend Transport; Wed, 22 May 2024 14:24:17 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.101)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 22 May 2024 14:20:47 -0700
+ 15.1.2507.39; Wed, 22 May 2024 14:24:17 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QNVEapGDTh09uHK6ItyWshg2LGfc1uCdn/8izk4XGif/FR3n0IK6WgdiGZQ3aCBHii7Am4TBtFi5kPFryJW7LLsKTt9K+DHsL4xBdPvgpS3POFumSh/Vwwg1g8Rc4/NvzC4+Cw2YDT/iYxGXt0CFJaGAYnYExCzyob2XsjzTyPCFsPWbBfSE5u8nOiDyFcJ8/AMluceA6QYQxYH7G0JEiCLSfcX1KcXKXLCrZXWeF6+knR7zdfW8f0AuK28iMpGqby44SZa90x2mANlyMgz1gIzlKEYhgjMh6UROIWZ2ABNOPd6gmamuzyILcZY4PMOEmoUYD8qK9zcML/tqeyEUkw==
+ b=amNhv58gK0Q42Ph5HpXedPcRiXTMn+s7XkNTGE28RQfswXKNJY0j1LgM2zFE4ITcjDZHa0YYkAWNW9tIRZKQmWiRIURg64u0Vt42PUUoy8qYvwikncJ/onL6LgBnhF1Xd7BLiF1VK96HHgQOzmCSIZB0+VzJMLIc8hBxBKOGsoSXc/CEvGBAG7ZMQaEnQQN1qCUIiCXuiMyJRdXZz3mDFkhBU89ozqTdc0/ihJaKsIo1BkdIP+ajeRa/OPAYi8aOZYyz1VNWUmmMp0xcAKIwUAnxvNz2X7C/SvIFIZxtgfyhwFOGj3bpETfxftfWeevRMDvrxjNshDwJwkPceUhzKA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=S/fYgsefMscpu1hfNAIQ9teNXUgNCbcUzdlvKw+PYRw=;
- b=oNOqBrSb7gAOMTLCttLN/MX9Djd+lDcyqqQro4sRAKe2prKKX1zYfnifL2C1/26CDLCe67JYgjqWw3gwKuCGsdnBMDIPFlG51AmR+j00aGm5Ym3ufqht+5zbXVwLxoobuCd+rDYlvt5CdRzuct+gCCJxYuU9TP0VP321/ZIB2yF34D0M3QfCK8r5BqnwbMI2CL459aohzYGmJpLag/20PUkbPWzOWsT80rj6rPaNVHfqGLww0qT3I3XSGj3F60ZSqeAFN725DCDloEtkTyLtomFmPYGa3KfBUdU6ObNEJp6q+iDLfjnv/g/iuBSFx7Ez1uXxR4iBUz9TEkJLNXhT+g==
+ bh=e978tpVbAivZ3kL7DC3gCVUkkUr3smEKGqJ1POO0AMw=;
+ b=B/ZZ9VsEGQEW8rAoTGqWylGpM0rp4aKEZ3+OsiLK9bY63eImnw61aEsPW2FC77eExfrSCC1Jjp70nejmV68IYsXoXRmD1F/XNBh24/VrHrkxgrKZQZdCd5iuM3UCzHfHwjS4cZMEBMZhNwUAVxn49qaF6Qm8rxOVT1Om1J8s1lnlcIoTWX5MB+TeZ/SfMlFwlcfHlOqh+X678XSS1oUHFKZDawoh2aFjs/86dwkn74YhNEhr8ZgSzQ+0G2FFmsBKvvVMSvp7DUiRUtwHvm/mHyXi3X44sANTv7+3sDH26XftuDqlQ+lCTbwIgBgPUbH2HC7WxC6V7Xhp40STdHgZyg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by PH0PR11MB7422.namprd11.prod.outlook.com (2603:10b6:510:285::13) with
+ by MW4PR11MB7056.namprd11.prod.outlook.com (2603:10b6:303:21a::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.36; Wed, 22 May
- 2024 21:20:42 +0000
+ 2024 21:24:14 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf%3]) with mapi id 15.20.7611.016; Wed, 22 May 2024
- 21:20:42 +0000
-Message-ID: <7f72f98e-65ee-466d-a931-35bd744296f2@intel.com>
-Date: Wed, 22 May 2024 14:20:40 -0700
+ 21:24:14 +0000
+Message-ID: <ccd5df99-4d7e-4224-a07e-3897e370b53e@intel.com>
+Date: Wed, 22 May 2024 14:24:12 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 13/17] x86/resctrl: Handle removing directories in
- Sub-NUMA (SNC) mode
+Subject: Re: [PATCH v18 14/17] x86/resctrl: Sum monitor data acrss Sub-NUMA
+ (SNC) nodes when needed
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>, Maciej
  Wieczor-Retman <maciej.wieczor-retman@intel.com>, Peter Newman
 	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
@@ -93,14 +93,14 @@ To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>, Maciej
 CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
 	<patches@lists.linux.dev>
 References: <20240515222326.74166-1-tony.luck@intel.com>
- <20240515222326.74166-14-tony.luck@intel.com>
+ <20240515222326.74166-15-tony.luck@intel.com>
 Content-Language: en-US
 From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <20240515222326.74166-14-tony.luck@intel.com>
+In-Reply-To: <20240515222326.74166-15-tony.luck@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0233.namprd03.prod.outlook.com
- (2603:10b6:303:b9::28) To SJ2PR11MB7573.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4P221CA0029.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:303:8b::34) To SJ2PR11MB7573.namprd11.prod.outlook.com
  (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -109,205 +109,248 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|PH0PR11MB7422:EE_
-X-MS-Office365-Filtering-Correlation-Id: cc8cdd93-b9dc-4e18-860b-08dc7aa50927
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|MW4PR11MB7056:EE_
+X-MS-Office365-Filtering-Correlation-Id: 62c8e8fb-7492-4510-3365-08dc7aa587b8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|1800799015|376005;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SWNWZDdJUzRkZGJGSVhiQW5IOFQ3VEhOQkJMYjViMzdpNGZPN3VTc0ZObGNu?=
- =?utf-8?B?dDN1eXRvTEU5Z3ZkZktUTHV3ZDMvYzRkOXR3a1djSFVSbFdxbUl2MTVDT09u?=
- =?utf-8?B?MHp3eVQ5WGRUYmhCOGN0QUd4NzNMWXJidHJubnhaZTR2bEUwbUJwbUp3L3dk?=
- =?utf-8?B?RzR0ZlltWE9pS3NOWXBVVHFHSkFQdnVLWWRvT2FrR1A4OWpadkc0R1UwM1ZF?=
- =?utf-8?B?bTJ1RmRBOEpFQkZkVm9KaEtIZzlpNEdSR3BUTnRiMk1qZ3Bwa0JEM2NTOGc1?=
- =?utf-8?B?VnRyR0NjS3c2Qkt0ZENiaUdYUmRNcVVVeWx3L2Q5UG5xUjBETXU3LzZYYjBL?=
- =?utf-8?B?dHVPTks0QWZra1l4UlR1Nzg1amQ4QXo3VThldE8vaHJYZnpqTnBIbDNiaUk2?=
- =?utf-8?B?aWRLMVBFVU5ydUJadGZDbitTdnNHckVyRGNEQUIzZmJpSHBtb3lqMFJUNGFy?=
- =?utf-8?B?c0M4RlVzNU1WSUxMbGIrd0F4NG1UWHpzSXp5S0JhZGhvRnJBUkRZNUN1NGVQ?=
- =?utf-8?B?dmN1RWRqRXBhZE9sUzg3NFBpa1FuUTRVVm4xaEs1Q0ZZbHBXd2o0UmVXbUox?=
- =?utf-8?B?ZkJJUXJjb01ReFk0MEM5YVZOT1ZWTzBJUk1nWHpkOHNKN2I4dlN6QzEyamYy?=
- =?utf-8?B?elRSV3Jwb3lFNlBoWmN6aFo4ejhzUjBkTDR1YkZCY2NmUzVzSXdaV0JZSlFp?=
- =?utf-8?B?MHVLUGgvQmJkcWFEUDE0dkJnOU0zTFBNSWIzWTRlWGVaRTZyTHpzSzhXYWlU?=
- =?utf-8?B?YnZkS2xKaWlPR2o2SW51MHlSdGRwNFJkMUdSRGt4MUR4NTV4dVR6VUpNYlZh?=
- =?utf-8?B?TDgxVEptbnI5ZUhIUlRaekJsV0I5NWgxdkVnQmxnS1Bkanc3SkR0RHJhM3pn?=
- =?utf-8?B?SGszeFdKeGYzYXFhemh3QkZBYzc4MVB5NEFkWXIrSE5zZzAxK1RnSFlQeElY?=
- =?utf-8?B?SEpZZjBGQkpsWlAvclBzRXhhelVFZjJQSXFkNnpRTWN0c1NiUFBwUXJIbGg4?=
- =?utf-8?B?SXgwMjEzUGVNWWp0cTlNZzlLeW8zZlF2c2JWcjhtOXM5VFFWVkh3Z0lKNUMy?=
- =?utf-8?B?aVBQbzI4eE9OYnVwMXdCeGk1QmdjY1Fybnc5Y3Q1S0RyZUdZNGc2Y1A3U1FW?=
- =?utf-8?B?bUpHNFRqVU9tckdsQTdKeWVkOHg0SHRVRVNWYXFMb0tQMXlEZXZ4SUFyYlRt?=
- =?utf-8?B?NiszM0dyM3g1Z1Q2U2NIZTJSK3d6VFlKSUw5UjZsbGZ3ejhSUVUvUXJ3R25I?=
- =?utf-8?B?L29jOUFZZU1nYnFEM2FBdCtiOEV0cGlKOEJEczluSDQ1MGx6ZHRlUUZndGww?=
- =?utf-8?B?WndVMWhsbkxudG5kRE5WclpVSUNCNU1GVnpEN2xhdGlrUXNHSlpsUVh4V1Z2?=
- =?utf-8?B?NUVacitYaktnSGg3Szh2MGo1TEFJNStoNXFVMHdxdWxnblZybjZkSmVpcGpo?=
- =?utf-8?B?RlZSZm15RWl5WWNpUmQzUldDckNmM3JrOUxFS0lsNWhFaXJ6U0ZId2FMbjZF?=
- =?utf-8?B?UENhN2Z2OTVEUGpXVkZid255Z3ZrWVhraWRMOHJWaHJLMUgvTUZZRVVNYUlD?=
- =?utf-8?B?VEoxQ25YT3kwQ2hXby8vT2FQS0Vka3RxT0toREZYTzYvYmppSzEwZlFOMEhF?=
- =?utf-8?B?T3d6OTB4d0VzQmNaOG1xRXVaOFl5Z2VwMitudVlwdGsxSElUdnA3WmNUTEFr?=
- =?utf-8?B?SWQwek1BN2dqNHZYRDQ4aDdtZWhiNzBSOVdjZlVQclpMUkxjT2RrYnR3PT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(1800799015)(376005);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|376005|1800799015;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YXFocksvQ283U1E3WU5kUVg2K21EWjJEcys1VU5PS3pMb3FZSng4amdoaHJT?=
+ =?utf-8?B?YkZudFFqWHU3UnlOV1FORW8yZURDeGtEM3dIMEFDYjkrMk1OS01mVzVpTHFh?=
+ =?utf-8?B?VGdsKzZYWXhjMTVTOXNESWlkaG9ybXl3cWx1UmdBSFIwYzYvVGR6UU4wUmRx?=
+ =?utf-8?B?RUlvemV1aTU4c1N4VEN3eTZ5QjFkZHFhQ1R4cS9CazJvbm1STm1uS0ljakI4?=
+ =?utf-8?B?RWc4bjFhemw5QWV3dFhaOVo3RUErbVBwWGxJZzYzbnFSeFFvemRHWmd5Y3pC?=
+ =?utf-8?B?dWhqUE5Vc2t0aVczbkRKUkh1NEhMbzkxL3EveHhwOWpWY01LQVpsaituWnN3?=
+ =?utf-8?B?bHBqeXo4eXNMOG5ZZXQycDVUSmtyVHIzM1FDa3lBakRpaWd3cmcrcFNiZS9q?=
+ =?utf-8?B?TkNKUlJkemcwbFptbjFLcG5xQkN3ZHJ2R05VblpzMmF0eGJZMTExZ2t5cVp2?=
+ =?utf-8?B?ZG45a3JKOXFtMUhJaTViN2dZM3pjT1NxaXQ0VWNjSnZFSmJ5T0MvNWJCZktz?=
+ =?utf-8?B?U1pyRU1FMGcrdXdRSUF4ejYrYndYZWNwa3diOVFrb3EwU2FYQmVEdjhXZWdL?=
+ =?utf-8?B?OElnS1hLZDNVQUJkWHBibmtJeklHUC93YXI1bWR3Z2FLU2pRSy80MnRWVzN3?=
+ =?utf-8?B?RUJjNVJCb2xYZUMrbTAzZlJwNVZXT0tRZzFtUlV2RmVHVXlMWU9sSEtKTlBI?=
+ =?utf-8?B?T2kyb0lMellUV0d0ZklCQXowUXBTL05adlBEdW9SQVRVZ1ZJUVJnTkNOQjhC?=
+ =?utf-8?B?b0p1RzZZWVJoc1VxeWdMVUJ5bSs4REROdFBmK1RNSjZiaUhscW9WZ1FwWngw?=
+ =?utf-8?B?QVBpMEdMMXl2YXROTXVhRVlyakR2enlyTGVPaVYyRnlwOEZ3TTRGUmxLWlpl?=
+ =?utf-8?B?ODF4eFZod2xzYXB3ZjVvcnM3UFE3Y1d1bHhMOHZWVlRYUVRONTI1YmNuR3g0?=
+ =?utf-8?B?cm9qTU50NGUxT2ZqMTNzbzl5YUx0ZlAzVEVabnYyMzNteVZYK3VGdlNnNHU2?=
+ =?utf-8?B?a1NKOWF6UXFYeVl6aklWbkpVSjI2cVlWTEViVnhWd3FzR2U2cm95aHpXKzZ5?=
+ =?utf-8?B?TmswamRJakt5TXhUUzFCSzdXd1dEOUpVT3FKY2pUazJqUzdabEFsZ1E3eFk4?=
+ =?utf-8?B?OXVDQ29ObHFvL05QeG5QNStDcENEcm5MOWxpTmtlK0NWd083cVM5WVVFVC85?=
+ =?utf-8?B?V1Voc0l0a0k2U0tmYWxaNGM1TENvZ3I0bDJKa3hJV0dtc2tIeUo3QkthK2la?=
+ =?utf-8?B?aTZJOU9ZYXFKUE9sMlhOUi9mUWlRU3VEaUpyRkQrVWVFVExhUGpZaDUvdVFh?=
+ =?utf-8?B?a3hQU1A3SWJsTm9RWldFK0Q5V1AzaldXT1NDVHFIMFNzMTJQUmxCZWVud0hQ?=
+ =?utf-8?B?Rmc2eVR2YlpaWTVXWUppVWVVT3F5a3o5WUQ1V0c3bExiNSszOGNuNksrRm5O?=
+ =?utf-8?B?WmtOeExYNFJrajQweWU0REp5NzlyWCsrMHpxUk1aTXowMzl3ODNTVnB1bHp4?=
+ =?utf-8?B?V096Tkl1WDduOTJESXZRb1lGZis4ZlFRRGVWU3o1RHRvQ21Da09aSHEyT0U2?=
+ =?utf-8?B?NXVDVGV3WXlhbm1FQlZZa3FMUFk4MFFEV0NJbVJvK2gwSGtScjh2Z1kwWVVR?=
+ =?utf-8?B?TlZGMFNKa3JuaENuQzNyN3ptNWFORWVMenVsdFBkcFNDem9XT0dXK3k0Z1Jh?=
+ =?utf-8?B?b3JkWVBDMWhVY2kwc3NKNEc1eUN0UU5KOGEzazg5cnFqZGpCb1VFV1hRPT0=?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(376005)(1800799015);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TWlQSDZHMUNaOEpFUGVnQlRwRkp6cEJudTk0VG9mWngxTm9IWHVXaVppOEpn?=
- =?utf-8?B?djdrYjhoandHVVdITSsyQStiQ2s4eXZ6UElmZnZVQWNEcW1GeVc3MVlyWnBp?=
- =?utf-8?B?T3ZBYkJlR1JMVm1IM1ljd2lQWmh4SVFWdFJNOHhjQTB5bzM5ZTk0UjFCdXdx?=
- =?utf-8?B?SGZEbHhzY1FkTXJIaU01dWVnZ2M3Uk13T0hWcm9IdUZhVXk4SGRmQkUyM1NM?=
- =?utf-8?B?RWlLMFdoUGxVcXpQOUVnNHRHUm9Xd0F6Z1FsOTJQNjJxa3dxa3BSS01wRnlV?=
- =?utf-8?B?QXhtdDZkOGdCYkt4ZmJCcWJ3OWlMN2NmNGhKSUZoeVI1TC96VmtXbnVEaDRj?=
- =?utf-8?B?YjU4TGJCSkxmVmsyTHpaYVRhN1RqdVhkc2tYWmlDUFBFVGdyQStHNWRES2VF?=
- =?utf-8?B?RWkzTnpGdm0wL3RlZ2ZlbHRacmNLUWt3UWxNSTl1QWMrbGZoVHlEWjJCbUxt?=
- =?utf-8?B?eTBBYmNQODlYZFpNQnJsK3ZaUnh3YzVVRWp2ZFNPS0xSWHM2OGl5dWhZRUFJ?=
- =?utf-8?B?bUVlenZVa3VCZ29aMGF6RmtXNGNjQ1NCVFRrU2VVcUp5cUJ3Nkt3OEl3OExo?=
- =?utf-8?B?bzFXMDZyNmpOM0pSWU9ieVRZa1hyeGxvdzBGa3BFb3RWNStIeDFZWWZDLy8x?=
- =?utf-8?B?OEIrY1hvUEZYUXdTU2NES0hoRWs1enhNbFk1NzVoaUhLczZKOFRiQ09ET0xU?=
- =?utf-8?B?SXg5dnBBQ083dGVjTDU5Z0xaR3FrVmtjQ2x6ZnRJL3kvVXhvdXpCcTNWWnJi?=
- =?utf-8?B?Nm82cjFHTUJmZzdWOXFaVVVrcklPZ044RXBzbmFHM3ZWckg2V25RUThLSEZ5?=
- =?utf-8?B?UmlnNjQranQybE5FNTEwcXptalJvR05rcm1sN3pleHluYi9WejZMYW9YNHdo?=
- =?utf-8?B?WW8wcGs4THdEbjFyOXJ4WVBuZUJaSktWZHlqV1A3T3ZPSXM3amxHN3htYlE4?=
- =?utf-8?B?WHFFL0g2SzFDcitiVWRCVStBVVRuNjV4YjYzODB2Z09rMU1ncXkrQkUzaEhO?=
- =?utf-8?B?eGlxQWl1NTRLckFxRHJqeUtVZ2Rla3pDQzFRZFhRZHJMUHZ5TzBjOFBVcEc5?=
- =?utf-8?B?TkxqcGZsVHByQWhESW5BbzBlS1hFK0hNenU0eUk4Z28yOTU3YnlHUEtTQXph?=
- =?utf-8?B?QXRZVDZtbkNRZVlHWE1Hc21PVld1emt1K25SdzZZTzhTUDVxMm5PbytFZG9F?=
- =?utf-8?B?cStHS3NHRmRZQVlkblF2d1cwZmJSNEYrUWhCTGxubHYzc0FubW85ZXJJd2xh?=
- =?utf-8?B?aVo0WGNYZnRsL004UVZUNGtydGxjZkdtZFpzTVpnTS9nb3NiL3N3Ni9Rb2Fy?=
- =?utf-8?B?aHpMbHNDaFgra0hqd2tja2FZRXFSaTJjYTdPd1hXNStkYlZFVVJ1ZEs3SHRC?=
- =?utf-8?B?N2RNRUFSSTMxVi9pZ0JpWU03eTJVVi8zNFM5VEtSZnFBZTNzS0VFaHp1bSt2?=
- =?utf-8?B?bTlKUVhUSy9QZlRJa2dKQnc4M203bTVXaEhBdmdOV1pKblFWNEcxRGNXRzBH?=
- =?utf-8?B?VnhaaENNaWQyMnppeC8wMzdnRm44U2NlZ2swclByQlZQYmgrNVZVVXBXNU1U?=
- =?utf-8?B?UFhOTnFnS0hBM0MwbTFWSzlyMUNNQ2gwVzdLOWV1T3BBT21OTnNqOU5IWmRZ?=
- =?utf-8?B?VVFieUxRc0hNNEFESC9SQnppejEzSlZsVXVFRklFN1dLU3lBeEZaK3BEZU9y?=
- =?utf-8?B?clBOdml4QlRQZjhrY0hCYUM5QVJmd3l3Wm9hYkxOSXl3S2RkdmtISWNqK0cw?=
- =?utf-8?B?bnQySjlxTkpNT1BIUWhKMjZMOUdrSklGbE42c1l6N29pdlpzVVpvczJXOURt?=
- =?utf-8?B?RDZSMnUwejNPdjJYMS9ycGZodVBBd2l4RWhMVEU3N1p0Nm1lWHpicjZJdnlB?=
- =?utf-8?B?aEs1UC9tK1QrRG8vTy9LNk9vNDJGVjNheDBuaWxsY2RGU1NSQndpbVB5ZzFU?=
- =?utf-8?B?SWpVVEkrdzNRM25rUzFFazBJL1BEQkk2RkR3T2Z3bFpPVy9iV3RDb2pCaFBV?=
- =?utf-8?B?T0k2SkhLdmZJZGZkdDRnTGkxRVZsRjdpV01GUjVSTXNsM0Z6NmJ1eXNMcFND?=
- =?utf-8?B?d29LNFZRUXpDSVZsTFh4OUYzQnZEK1N5Rk9Wby9MbEtTSUNVVXRTWVpodzd0?=
- =?utf-8?B?Q0NUNjJhVUdlbEdleWJEYUN3TTlNeG5ZSWIrTHhUNTRMMUVPWE5NbzhDWnlw?=
- =?utf-8?B?VVE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: cc8cdd93-b9dc-4e18-860b-08dc7aa50927
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?blZVbjdIMEVqcnNCUWNpUmthcTFRQ3gvNHo4OXNZMTNIamQvekVlT2RvdHBD?=
+ =?utf-8?B?MkIxVEVFT1FJTVZhMjdnWURiRUVpQnlQc1BKRERUQi9ubWlZbVRXYzVOYlhQ?=
+ =?utf-8?B?elFzYVZPMjlwbVdzdDBBMGxtdFlXeWMvbG9HQi93dk41b09wLzlpMVZKcjBO?=
+ =?utf-8?B?MW1kNGVVWEZLZlBkeklHaTdUT25rSCthM0NiNCtVck9CVXd3WGgxazZEWnRZ?=
+ =?utf-8?B?YnZPTDJRMkl6eGVYeEVJMU56ckN4Z2ZFSlhIb1FWR3c1c25XYmtVVzJhS0hZ?=
+ =?utf-8?B?aU42TXhkK3Rpa2pXQTBJelRwRUkzMHQ0L3NCZnFpTVlDZ2VNSFlkQ3UrSmtC?=
+ =?utf-8?B?RU1xZzVlb2ZURklHMVBvRjZMOHdnd3JyVkJWOVN4MDZ1aEpiSTNLQURDM1BB?=
+ =?utf-8?B?NHZoRUUwbGxuVEFncXI2bkszUVI2dFkrVUpuNHlWcThEWVVHMUNrMkpJUDNx?=
+ =?utf-8?B?bG54OWFGQWs0SXZQZmd5ZVVaNUJmVFk2RHpEdERVK1NMRDdWTXlWdGU0ODZS?=
+ =?utf-8?B?emRjUmZsVkVTLzhadGhuM1IzUUc4Z2ExRjJQOHg1bXViSjY2bGtYdXQvcmE1?=
+ =?utf-8?B?eGpvU21VVTJ0QjRaVklzUmMyOGRlTHc5OExGYkk0VnJud0F2RG5xZFFDQjBN?=
+ =?utf-8?B?Q3pOeVJEa3RGRXo3YXdTRWdHNE1waEROZUdpZUV5RElTaG5BbUNjQms5ZmFO?=
+ =?utf-8?B?Ty9laUR3SlJ6QThFZCtoTXlFS2Z0aWxlUk96N2o5RGp1b0NIek1VRS83Ulhu?=
+ =?utf-8?B?clB5bW4vNlhldXp1TG1zanlJVlJ1b2pjWkRoMFVXaTBKbE5VY0JtTWNzUytX?=
+ =?utf-8?B?bHRmZGdEbFlLOEZycGJnWTEzeWtCOGN2V0V1ZWtpV2FXVXRqRWVWVHNBWWF6?=
+ =?utf-8?B?c3RsWkw0clVGL3A3OXpvSWt4M1JXbHRUaGlPQnpmRGgzcHRFL3JRS2JVQWhN?=
+ =?utf-8?B?RXlVU1B6NjQva2ZPbnpYejJ6RHVUd0R5RWdjT1NLWmpCVXYvd2xEbDIwV1E0?=
+ =?utf-8?B?WXJsZFhWR3d0NlBHTzFXcG5CTHRyUDFPNGFVbnI0QWhaUTh1U0YzT0pxcitT?=
+ =?utf-8?B?WkJFTDlleHNocjlGVHBjbU5JNUEvdU14WGozWEhIY1RXZUlqNnRQWWZNSW1n?=
+ =?utf-8?B?bWtRMXpzZllsa1JBUVlvdi8yTkd0alJxU0RML0xYZTRKMWFVbnA5VkFVbEpR?=
+ =?utf-8?B?Mk1FaFdxTGhEdGJQckpTU2Q3NWF0TmROMUIzcXFWSmJwc3R2QjV5OEF2VlBJ?=
+ =?utf-8?B?ajhLTmVtb3NWZDdNVWtabnRWQjRiZ2R3dVNxMjl5L3JDdmtENG4yaU1YMzV5?=
+ =?utf-8?B?dU1SVzA1SGpPRmJtcStrMjN1Y3ltWTlSQ2xDcFJjV2ZYZmRRZ0YvQ2RTOEkz?=
+ =?utf-8?B?U0VJZmgvZmRPc2JIbzVDbUQ4OTJBQW05bWlILzVJSVpNajJ3aksySVhOcmZU?=
+ =?utf-8?B?SVNwVWtuK20wVDErUXRBRDlRR1hWN0xrd3lacjg4Z2lzdTRUbFlva3ZFckQz?=
+ =?utf-8?B?MlQ1STNsMmlWZUVvZEpvaE9yalNlWXI5cThWa1loRTY2VjZDQUVBUFN2cEJn?=
+ =?utf-8?B?cTVrQzJhL2FaaFMrb0pJbUtPMmcwUnYxbHZCbE1tdEU1SkM0ZTZFQXNBS1FK?=
+ =?utf-8?B?WWZKUjRSb012MitiOG9WY0FZNG8xcmh5YkFia3IyOWlKNFVxYzZLYktxT0dK?=
+ =?utf-8?B?cU9mak9oc3doVzFSMTFSeFJ0Lyt2RTJoMlZzVGtsckJFYjZ3QkRTMFVhc0Nu?=
+ =?utf-8?B?K0FUcldPVjhCdDgzOFBEUXpGVm44T1B6V3VaK243a1Y2VE1KL2VVejg1YXVV?=
+ =?utf-8?B?c1p4ZHErQnpXQ1lxQVFmaERIU0pqcVZ2ZTV6WkJpYVl3TEVjbFV1OUdBUUU1?=
+ =?utf-8?B?WnNxY1haODZvMUNhN2doZjRKZDM1bXVTaGo4TU0xUEMzVGJBQ0d1K3l6UHRk?=
+ =?utf-8?B?Q0ZFQnZOOGgraDZzS3lPRy9QOUdlQlVDbnF0bVRNTE91ejFORjdCWU94U3Ew?=
+ =?utf-8?B?RWVhYnc4K21yV2tVZDdQclpIQmpwYWFhd05BUFR3MDlUOXhCTlZxZ0FEcEg0?=
+ =?utf-8?B?dTdndHBhSk90cHBFQ3hVR2NIM0lubE1QajNBeUtrL1ZCOWtXOXBHN0U5MTNm?=
+ =?utf-8?B?Q080UDFRdWZRVzFEWTZGMCttZ3kzb0hWdWxnTG5vQUxvRE1yNlA3Z1VmRCtH?=
+ =?utf-8?B?Vmc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 62c8e8fb-7492-4510-3365-08dc7aa587b8
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2024 21:20:42.2858
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2024 21:24:14.7366
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4K/XCarTjaU7i8tvJ49trH6LfoZEQBRPhzLa6ux5CS20nlzwv4BXTFvMoRSjCyLjXsl+c5eAQtTApRDuYblziXOdmGMw28c7b12ouKH55XA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB7422
+X-MS-Exchange-CrossTenant-UserPrincipalName: CTrlnYBinaEn7vFOEuM6DsbApkreE7wWMNx0vBiYBSt9OE08oS5NdnMZuHCiq7DWyBfA169uF/4UPC0Djz3AMqiY6JAfEAIyocvfK1EVZyQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB7056
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
+shortlog: acrss -> across?
+
 On 5/15/2024 3:23 PM, Tony Luck wrote:
-> In SNC mode there are multiple subdirectories in each L3 level monitor
-> directory (one for each SNC node). If all the CPUs in an SNC node are
-> taken offline, then just that SNC node directory must be removed. In
+> When the sumdomains fields is set in the rmid_read structure, walk
+> the list of domains in this resource to find all that share an L3
+> cache id (rr->display_id).
 
-imperative tone needed
+"L3 cache id" vs "monitor display scope"?
 
-> non-SNC mode, or when the last SNC node directory is removed, also
-> remove the L3 monitor directory.
+> 
+> Adjust the RMID value based on which SNC domain is being accessed.
 
-There is a disconnect between changelog and code. The code tries to be
-generic while the changelog is as specific to SNC as possible. This makes
-it hard to go from changelog (ignoring that changelog does not follow x86
-customs to begin with) to patch.
+Thinking generously this changelog contains two brief descriptions of code
+snippets. There is no context or explanation of what the goal of this change
+is and why it chooses to implement things the way it does ... implementations
+that definitely needs some explanation.
 
 > 
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->  arch/x86/kernel/cpu/resctrl/rdtgroup.c | 43 +++++++++++++++++++++-----
->  1 file changed, 36 insertions(+), 7 deletions(-)
+>  arch/x86/kernel/cpu/resctrl/ctrlmondata.c | 20 +++++++++++---
+>  arch/x86/kernel/cpu/resctrl/monitor.c     | 33 ++++++++++++++++++++++-
+>  2 files changed, 48 insertions(+), 5 deletions(-)
 > 
-> diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> index f0f468babdea..cac32ddd3afd 100644
-> --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> @@ -3011,17 +3011,46 @@ static int mon_addfile(struct kernfs_node *parent_kn, const char *name,
->   * and monitor groups with given domain id.
->   */
->  static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
-> -					   unsigned int dom_id)
-> +					   struct rdt_mon_domain *d)
->  {
->  	struct rdtgroup *prgrp, *crgrp;
-> +	struct rdt_mon_domain *dom;
-> +	bool remove_all = true;
-> +	struct kernfs_node *kn;
-> +	char subname[32];
->  	char name[32];
->  
-> +	sprintf(name, "mon_%s_%02d", r->name, d->display_id);
-> +	if (r->mon_scope != r->mon_display_scope) {
-> +		int count = 0;
+> diff --git a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+> index 3b9383612c35..7ab788d47ad3 100644
+> --- a/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+> +++ b/arch/x86/kernel/cpu/resctrl/ctrlmondata.c
+> @@ -575,15 +575,27 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
+>  	resid = md.u.rid;
+>  	domid = md.u.domid;
+>  	evtid = md.u.evtid;
+> -
+> +	rr.sumdomains = md.u.sum;
+>  	r = &rdt_resources_all[resid].r_resctrl;
+> -	hdr = rdt_find_domain(&r->mon_domains, domid, NULL);
+> -	if (!hdr || WARN_ON_ONCE(hdr->type != RESCTRL_MON_DOMAIN)) {
 > +
-> +		list_for_each_entry(dom, &r->mon_domains, hdr.list)
-> +			if (d->display_id == dom->display_id)
-> +				count++;
-> +		if (count > 1) {
-> +			remove_all = false;
-> +			sprintf(subname, "mon_sub_%s_%02d", r->name, d->hdr.id);
+> +	if (rr.sumdomains) {
+> +		rr.display_id = domid;
+> +		list_for_each_entry(d, &r->mon_domains, hdr.list) {
+> +			if (d->display_id == domid)
+> +				goto got_domain;
 > +		}
-> +	}
-
-This continues to look suspect to me. When I took a closer look during previous
-version I thought this information can only be accessed via inode. Seeing this
-code again made me look more closely and it seems there is no problem to just
-query how many subdirectories a directory has. See for example, kobject_has_children().
-Doing something like that seems more intuitive than this quirky way to set and
-use a flag.
-
-> +
->  	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
-> -		sprintf(name, "mon_%s_%02d", r->name, dom_id);
-> -		kernfs_remove_by_name(prgrp->mon.mon_data_kn, name);
-> +		if (remove_all) {
-> +			kernfs_remove_by_name(prgrp->mon.mon_data_kn, name);
-> +		} else {
-> +			kn = kernfs_find_and_get_ns(prgrp->mon.mon_data_kn, name, NULL);
-
-kernfs_find_and_get()?
-
-> +			if (kn)
-> +				kernfs_remove_by_name(kn, subname);
+>  		ret = -ENOENT;
+>  		goto out;
+> +	} else {
+> +		hdr = rdt_find_domain(&r->mon_domains, domid, NULL);
+> +		if (!hdr || WARN_ON_ONCE(hdr->type != RESCTRL_MON_DOMAIN)) {
+> +			ret = -ENOENT;
+> +			goto out;
 > +		}
+> +		d = container_of(hdr, struct rdt_mon_domain, hdr);
+>  	}
+> -	d = container_of(hdr, struct rdt_mon_domain, hdr);
 >  
-> -		list_for_each_entry(crgrp, &prgrp->mon.crdtgrp_list, mon.crdtgrp_list)
-> -			kernfs_remove_by_name(crgrp->mon.mon_data_kn, name);
-> +		list_for_each_entry(crgrp, &prgrp->mon.crdtgrp_list, mon.crdtgrp_list) {
-> +			if (remove_all) {
-> +				kernfs_remove_by_name(crgrp->mon.mon_data_kn, name);
-> +			} else {
-> +				kn = kernfs_find_and_get_ns(prgrp->mon.mon_data_kn, name, NULL);
+> +got_domain:
+>  	mon_event_read(&rr, r, d, rdtgrp, evtid, false);
 
-copy&paste ?
+This looks more like "wedging things until it works". In the "sumdomains" case
+it just picks the first matching domain without any explanation why it would
+be ok. The only reason why mon_event_read() needs the domain is so that
+it can use it to determine which CPUs it should read the counters from and it looks
+like this code is written to take advantage of just that. It is a hack based on
+knowledge of internals of mon_event_read() to just get the reader to run on a
+CPU that works for SNC where another quirk awaits to override the domain
+when the counter is _actually_ read so that it can get the correct architectural
+state.
 
-> +				if (kn)
-> +					kernfs_remove_by_name(kn, subname);
-> +			}
-> +		}
+I was expecting here to at least see some documentation/comments
+to explain why the code behaves the way it is. Optimistically it can
+be documented as an "optimization" for the sumdomains case that is only
+used by SNC where it is ok to read counters from any domain in the
+"monitor display scope".
+
+Apart from the documentation I do not think this code should wedge itself
+in like this. 
+
+To make it obvious what this code does I think the non-SNC case should
+set rr.d and mon_event_read() should take a CPU mask as parameter
+instead of a struct rdt_domain. This means that in SNC case rr.d will be
+NULL and make the code flow more obvious.
+
+>  
+>  	if (rr.err == -EIO)
+> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+> index 0f66825a1ac9..668d2fdf58cd 100644
+> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
+> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+> @@ -546,7 +546,7 @@ static struct mbm_state *get_mbm_state(struct rdt_mon_domain *d, u32 closid,
 >  	}
 >  }
 >  
-> @@ -3111,8 +3140,8 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
->  static void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
->  					   struct rdt_mon_domain *d)
+> -static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+> +static int ___mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
 >  {
-> -	struct kernfs_node *parent_kn;
->  	struct rdtgroup *prgrp, *crgrp;
-> +	struct kernfs_node *parent_kn;
->  	struct list_head *head;
+>  	struct mbm_state *m;
+>  	u64 tval = 0;
+> @@ -569,6 +569,37 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+>  	return 0;
+>  }
 >  
+> +static u32 get_node_rmid(struct rdt_resource *r, struct rdt_mon_domain *d, u32 rmid)
+> +{
+> +	int cpu = cpumask_any(&d->hdr.cpu_mask);
+> +
+> +	return rmid + (cpu_to_node(cpu) % snc_nodes_per_l3_cache) * r->num_rmid;
 
-Stray snippet?
+Is this missing a "if (snc_nodes_per_l3_cache > 1)" ?
 
->  	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
-> @@ -3984,7 +4013,7 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d
->  	 * per domain monitor data directories.
->  	 */
->  	if (resctrl_mounted && resctrl_arch_mon_capable())
-> -		rmdir_mondata_subdir_allrdtgrp(r, d->hdr.id);
-> +		rmdir_mondata_subdir_allrdtgrp(r, d);
->  
->  	if (is_mbm_enabled())
->  		cancel_delayed_work(&d->mbm_over);
+I do not think this belongs in resctrl fs code though. Should this algorithm be forced
+on all architectures? It seems more appropriate for the arch specific code.
+
+> +}
+> +
+> +static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+> +{
+> +	struct rdt_mon_domain *d;
+> +	u32 node_rmid;
+> +	int ret = 0;
+> +
+> +	if (!rr->sumdomains) {
+> +		node_rmid = get_node_rmid(rr->r, rr->d, rmid);
+> +		return ___mon_event_count(closid, node_rmid, rr);
+> +	}
+> +
+
+/*
+ * rr->sumdomains is only set by SNC mode where the event
+ * counters of a monitoring domain can be read from a CPU belonging
+ * to a different monitoring domain that shares the same monitoring
+ * display domain. Optimize counter reads when needing to sum the
+ * values by reading the counter for several domains from
+ * the same CPU instead of sending IPI to one CPU of each monitoring
+ * domain.
+ */
+
+Please feel free to improve, please do help folks trying to understand
+what this code does.
+
+> +	list_for_each_entry(d, &rr->r->mon_domains, hdr.list) {
+> +		if (d->display_id != rr->display_id)
+> +			continue;
+> +		rr->d = d;
+> +		node_rmid = get_node_rmid(rr->r, d, rmid);
+> +		ret = ___mon_event_count(closid, node_rmid, rr);
+> +		if (ret)
+> +			break;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+>  /*
+>   * mbm_bw_count() - Update bw count from values previously read by
+>   *		    __mon_event_count().
 
 Reinette
