@@ -1,89 +1,105 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697BE1171C
-	for <patches@lists.linux.dev>; Wed, 22 May 2024 15:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B715A76048;
+	Wed, 22 May 2024 17:32:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716392191; cv=none; b=pVRO1D25y/n7dJUbCYJxzRyXrVle9+W7BiM2X1ccV8w1a33Z0Lhf03tVkrgA4x9uDtnTtSDVJ+MAv+itm0TtCz14yiZipFzED4+9w2vJeW2nCV5xbMVjNLzH68mIXhYYHZLQ32QKFwZJ9yPmbDEDJueC5f6tD9bSxvplBtycJKA=
+	t=1716399170; cv=none; b=q7ozyMAJqO5X3IzwcvN3gD4HChQQagR9/FfOzIsGYE9J9aDiu5cHbENwJYPU8tMoSyMMbEBhWEuEL9GdXux1llUWawv8BZfIWYGDkOXHDaZi2Jd+0XuTDz3lxWAlJur3jdSzeBA1HYTTkSkG9351svK+M2Pp01PU+yGCnLk1Kgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716392191; c=relaxed/simple;
-	bh=ULFbJbVKQMWnZ1ms7vRd/YXmVFPFapk+Fu4aJyVk1Os=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MFodIP/gTtT5iaEXmhyILNzJQxnOCPce6kClvC9/aqWsbbA7Mx0cZIAr+CbN2XW74zB8dSTWKY5eX+yv9rpHzJEY4nLYjjqsOxY2HJf7zuxCm1LYOrnDnGd1fYo2tPpku5RRsqfHqZvkIQJmV9XDKNEKVZRluW8gDbKt2y+RUE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-627efad69b4so4488487b3.3
-        for <patches@lists.linux.dev>; Wed, 22 May 2024 08:36:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716392188; x=1716996988;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5rBlAy4O9Lv/8JE6GkQCoKCu1hP1DJWjgLhKz1QEi/g=;
-        b=t6TqZfjBiRMqeuEm78qK43eg7vulrvAUyOovMfASqhUIX4iNm5jUw6zdb82Q1KaIR+
-         vVyOQxVjXe0isHOhineaQdxQ7LkUQ0YWdTFIEg89FnEjHqtcmzCtO8Gd5QmQzhglIn91
-         52uKS+fuwpQXveKKOBunDj9yrlK6FYnQGbCS41IbHO5zD1MDl/WlzTSKnYV2/j87P3Ak
-         jGk/Z+AGA50E4VlxiR13SNlwyYKOekDlgDHVeviZ1Z/CFRIByhuzapSIwAf8l7prFBTm
-         lVt/DjBO6ANBO/kRKoMCH6BRSK448d7RS+rGwwM3UDdFZsn+K6AreiwVbrxHqbBgWCOV
-         yD1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWeSgAhC3qafozvLSIV7fiFQ+XQkPNhv5zJaJThRujVxC/0/pKlQCUv1axN/QyNV9zf3jpr6nAH5Qp7qkRV9lHqcWaAQKYOXw==
-X-Gm-Message-State: AOJu0YzwgKr21KYRfmZfWKX4l0eh7gWPGxGsLWQR5T3jEr+6p+q6m1V9
-	HdNPi06X5S5LXny4DpHhXEg+BxSd3jswxZ0DQ8SYDA31YCyy+VUBQ1jyIiQy
-X-Google-Smtp-Source: AGHT+IG9CEpfEfL+WWLVe5F+6kdlx5IrtAsgnxG9XQHnc3Zs5/b2SeU14A95yfaHj/j2spiL+LIhVA==
-X-Received: by 2002:a81:83c5:0:b0:618:25fc:e2a9 with SMTP id 00721157ae682-627e471524fmr25016567b3.38.1716392188120;
-        Wed, 22 May 2024 08:36:28 -0700 (PDT)
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com. [209.85.128.179])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6277943ca66sm26920027b3.66.2024.05.22.08.36.27
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 May 2024 08:36:27 -0700 (PDT)
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-627e3368394so13150917b3.2
-        for <patches@lists.linux.dev>; Wed, 22 May 2024 08:36:27 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXhu5DmMLHC5GzUlWgwQ+gcK6LvHQdCB1Qw3+C0raScsBy3IUC82yh+u6sV+w2KXlrN1Uu1vb9qV+galGn0WHWHwXlSqw6VBg==
-X-Received: by 2002:a05:690c:6513:b0:61a:da7e:1f66 with SMTP id
- 00721157ae682-627e462389bmr27860127b3.2.1716392187488; Wed, 22 May 2024
- 08:36:27 -0700 (PDT)
+	s=arc-20240116; t=1716399170; c=relaxed/simple;
+	bh=/PN55//MytV2k126282ue9+p5v4Xkeov6iPQTSuOE0I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DJfhIvb6JcJ59leuTgR6ebcrW0fWdKtNvd5+pixDQkJvsAmfClh0BMftQDsOqj5aNCO+lQkipq5RCDFJVnJZKvMw15JUu1cmmqBKDfAtQWr93GOSChaYXaz3F2nY6W8PPomX0bNE3vjFZcLsbyK6sfYfOkebhmLg+WbsaDxvDBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y47fhWjY; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y47fhWjY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7FBC2BBFC;
+	Wed, 22 May 2024 17:32:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716399170;
+	bh=/PN55//MytV2k126282ue9+p5v4Xkeov6iPQTSuOE0I=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Y47fhWjYcGcX+hOXTvI/thAGXgpXSJkTNj/raoRIYCzHfYHB0cm8nftecIKyahIjl
+	 Q4aZMLVXBy+W/wAXMACXGJcNlJE9tnqGrnX9CEn3+FsT3RfYR7lHA7DeSRc+QCFKY6
+	 qPEeOvszF4EwoIto7zwVqmRwaKRVcIGVW+Bk8BgD36RD892XLlH/uHaSp6g/5GCJUI
+	 2hBukG52w9lh3MSvOIBjqjCBN9KU1qz9i5se9iqFs8SPvPKDxvQlg6675DysWrBDYV
+	 WvBUkze66kt6+i0jHAo78VPkSOyPGn/i7t0TESMlrvksdlaZRAvkefo1+PkBxvFHej
+	 hFvTTnR93Ap3A==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 22 May 2024 10:32:43 -0700
+Subject: [PATCH] efi/libstub: zboot.lds: Discard .discard sections
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240521111958.2384173-1-Jason@zx2c4.com> <20240521111958.2384173-4-Jason@zx2c4.com>
-In-Reply-To: <20240521111958.2384173-4-Jason@zx2c4.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Wed, 22 May 2024 17:36:15 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdUwVuVfAwDJkMNZFj+_+dKHFf1MX1=wrchUhHfKoP0Z6w@mail.gmail.com>
-Message-ID: <CAMuHMdUwVuVfAwDJkMNZFj+_+dKHFf1MX1=wrchUhHfKoP0Z6w@mail.gmail.com>
-Subject: Re: [PATCH v15 3/5] arch: allocate vgetrandom_alloc() syscall number
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, tglx@linutronix.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240522-efi-zboot-lds-add-discard-sections-to-discard-v1-1-6b415efa0f85@kernel.org>
+X-B4-Tracking: v=1; b=H4sIADosTmYC/z2NQQqDQAxFryJZN2CDFuxVShfjJFMDxSmToYji3
+ Q0uXL4P7/0NTIqKwbPZoMhfTfPscL81EKcwfwSVnYFa6tqeCCUprmPOFb9sGJiR1WIojCaxum1
+ Y87X1SWgYU0f8CODNX3F/Of9e730/AL0j0wl/AAAA
+To: Ard Biesheuvel <ardb@kernel.org>
+Cc: Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+ Huacai Chen <chenhuacai@kernel.org>, WANG Xuerui <kernel@xen0n.name>, 
+ linux-efi@vger.kernel.org, loongarch@lists.linux.dev, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1966; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=/PN55//MytV2k126282ue9+p5v4Xkeov6iPQTSuOE0I=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGl+Oo4Oxd7SElMMTAu1Lm6fLL6M/+cp31+Llh65fP3Gy
+ 4u7j+0W6ShlYRDjYpAVU2Spfqx63NBwzlnGG6cmwcxhZQIZwsDFKQATeXKT4Q9H3JdL7xP8nLr+
+ bQ+r07/4Idp7zpSFZ3rXaNZs35OXKnCf4X/2GW+e06zO+rcVgn482DjpxNxVRy0/aKXkvJPQWyq
+ sKMEOAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Tue, May 21, 2024 at 1:21=E2=80=AFPM Jason A. Donenfeld <Jason@zx2c4.com=
-> wrote:
-> Add vgetrandom_alloc() as syscall 462 (or 572 on alpha) by adding it to
-> all of the various syscall.tbl and unistd.h files.
->
-> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+When building ARCH=loongarch defconfig + CONFIG_UNWINDER_ORC=y using
+LLVM, there is a warning from ld.lld when linking the EFI zboot image
+due to the use of unreachable() in number() in vsprintf.c:
 
->  arch/m68k/kernel/syscalls/syscall.tbl               | 1 +
+  ld.lld: warning: drivers/firmware/efi/libstub/lib.a(vsprintf.stub.o):(.discard.unreachable+0x0): has non-ABS relocation R_LARCH_32_PCREL against symbol ''
 
-Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
+If the compiler cannot eliminate the default case for any reason, the
+.discard.unreachable section will remain in the final binary but the
+entire point of any section prefixed with .discard is that it is only
+used at compile time, so it can be discarded via /DISCARD/ in a linker
+script. The asm-generic vmlinux.lds.h includes .discard and .discard.*
+in the COMMON_DISCARDS macro but that is not used for zboot.lds, as it
+is not a kernel image linker script.
 
-Gr{oetje,eeting}s,
+Add .discard and .discard.* to /DISCARD/ in zboot.lds, so that any
+sections meant to be discarded at link time are not included in the
+final zboot image. This issue is not specific to LoongArch, it is just
+the first architecture to select CONFIG_OBJTOOL, which defines
+annotate_unreachable() as an asm statement to add the
+.discard.unreachable section, and use the EFI stub.
 
-                        Geert
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2023
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/firmware/efi/libstub/zboot.lds | 1 +
+ 1 file changed, 1 insertion(+)
 
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
+diff --git a/drivers/firmware/efi/libstub/zboot.lds b/drivers/firmware/efi/libstub/zboot.lds
+index ac8c0ef85158..af2c82f7bd90 100644
+--- a/drivers/firmware/efi/libstub/zboot.lds
++++ b/drivers/firmware/efi/libstub/zboot.lds
+@@ -41,6 +41,7 @@ SECTIONS
+ 	}
+ 
+ 	/DISCARD/ : {
++		*(.discard .discard.*)
+ 		*(.modinfo .init.modinfo)
+ 	}
+ }
 
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+---
+base-commit: 15aa8fb852f995dd234a57f12dfb989044968bb6
+change-id: 20240522-efi-zboot-lds-add-discard-sections-to-discard-5fe29bf42d6a
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
