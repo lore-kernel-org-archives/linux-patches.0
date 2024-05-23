@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C591D545;
-	Thu, 23 May 2024 13:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D3F1D545;
+	Thu, 23 May 2024 13:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470841; cv=none; b=kZnZdYJIYkgDjYnX0NrYv6U1SkKPX4Dt5u3/iHExniC8uO04x6Iu4YOUsoAcbGlCYfScAnZokKfUiLxfsvV9kref6DqWFotQg5AhvrLQZn2ZP9SXK8QLe0cxFqEAJWgHLbJKJMo2VAmUc1e+d5ZboI7v8g4SKtj6Zq3DeN412/Q=
+	t=1716470844; cv=none; b=MsokEQRq/eAUM9/UCIYogzyoxm2TV1RpjzZ2vuSq/1/+E9vWniCPyp26ESl7Pp1VkAGHkt9ZEI7v81t0awmEKXtXp51D0qx01a8nN/1s8MKKBeqRilVruklsNiqdsfg0WI5AIefkg5bSXkE0Nun+UNLwrVH5JCz3Z2JJ5qMWyAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470841; c=relaxed/simple;
-	bh=k+ziPZXthm2VZUPSWuPI2OiGTNsoecG365M5gsgLGao=;
+	s=arc-20240116; t=1716470844; c=relaxed/simple;
+	bh=EpKvlF2t/AmjL50Ob+xS9/WCSeqm26KCKqJZiebMbgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HEP5sUdrok5dcOOUwy+9MQltnVVxU6o+o7WlFwJctrrpCjg4p+a1OzWRloJH97K2Zq2hnwCELCkkGN9N/doQEgBQjH7CF+/rh78Rkuo0kB3cDARy6gcgb9KlgFzy7IOmUZSGPWQ0U+N1LiCzu3cHy1cxIFH+g03Wj4FEXZVqyG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeI+2kRx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b9mxyUQYoikusPrVLZl91CBxxbPA/jSUi922sFVE7IZGUaly/TBnSY6vLqCjE5fQrrGO2jFIOhNIN+Itde2PRsQnUSiKQLkaUqJgz86w5gI2awgL8Qn3V6HdVMqcUe0Un8c2ZeuInzdsGB6g/H0IqZzL3g6EINeYF/Y9O6miewA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6/SG+7U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeI+2kRx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D496C3277B;
-	Thu, 23 May 2024 13:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6/SG+7U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB87C2BD10;
+	Thu, 23 May 2024 13:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470841;
-	bh=k+ziPZXthm2VZUPSWuPI2OiGTNsoecG365M5gsgLGao=;
+	s=korg; t=1716470843;
+	bh=EpKvlF2t/AmjL50Ob+xS9/WCSeqm26KCKqJZiebMbgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QeI+2kRxcsQcYq/bn8VbXRW44MlPBD1tLVphScOUMZJqoBbylRXoA8csvW9zegu5e
-	 3FHmaG+xYLvw68MU9EjVzFF0mdoka2GX3Xx/9pPs0RoBR1vRPpmhq41NJSCqVr00wl
-	 lsgWm74OmE3XYR6N/3gOxC/5XXLJxukzmhwq3DVg=
+	b=Z6/SG+7U0TEhsLjj2EonI1x/dC/ETI89LhIGps/GgtRloATMw18p8o7WRZVVxUGjt
+	 +hDZDRvUmOamLihulDy3p53N9O2iPKFBOdLOucGQZH/NKy4JqmPb3nD2gwLen02fxy
+	 sFTGxZCR6ukZU8vwaTnYie/2Ta6JzdZKoRHHioZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>
-Subject: [PATCH 6.6 088/102] erofs: reliably distinguish block based and fscache mode
-Date: Thu, 23 May 2024 15:13:53 +0200
-Message-ID: <20240523130345.787954431@linuxfoundation.org>
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Ajay Kaher <ajay.kaher@broadcom.com>
+Subject: [PATCH 6.6 089/102] drm/amdgpu: Fix possible NULL dereference in amdgpu_ras_query_error_status_helper()
+Date: Thu, 23 May 2024 15:13:54 +0200
+Message-ID: <20240523130345.825503429@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -47,73 +48,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit 7af2ae1b1531feab5d38ec9c8f472dc6cceb4606 upstream.
+commit b8d55a90fd55b767c25687747e2b24abd1ef8680 upstream.
 
-When erofs_kill_sb() is called in block dev based mode, s_bdev may not
-have been initialised yet, and if CONFIG_EROFS_FS_ONDEMAND is enabled,
-it will be mistaken for fscache mode, and then attempt to free an anon_dev
-that has never been allocated, triggering the following warning:
+Return invalid error code -EINVAL for invalid block id.
 
-============================================
-ida_free called for id=0 which is not allocated.
-WARNING: CPU: 14 PID: 926 at lib/idr.c:525 ida_free+0x134/0x140
-Modules linked in:
-CPU: 14 PID: 926 Comm: mount Not tainted 6.9.0-rc3-dirty #630
-RIP: 0010:ida_free+0x134/0x140
-Call Trace:
- <TASK>
- erofs_kill_sb+0x81/0x90
- deactivate_locked_super+0x35/0x80
- get_tree_bdev+0x136/0x1e0
- vfs_get_tree+0x2c/0xf0
- do_new_mount+0x190/0x2f0
- [...]
-============================================
+Fixes the below:
 
-Now when erofs_kill_sb() is called, erofs_sb_info must have been
-initialised, so use sbi->fsid to distinguish between the two modes.
+drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:1183 amdgpu_ras_query_error_status_helper() error: we previously assumed 'info' could be null (see line 1176)
 
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20240419123611.947084-3-libaokun1@huawei.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Suggested-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Cc: Tao Zhou <tao.zhou1@amd.com>
+Cc: Hawking Zhang <Hawking.Zhang@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[Ajay: applied AMDGPU_RAS_BLOCK_COUNT condition to amdgpu_ras_query_error_status()
+       as amdgpu_ras_query_error_status_helper() not present in v6.6, v6.1
+       amdgpu_ras_query_error_status_helper() was introduced in 8cc0f5669eb6]
+Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/super.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -786,17 +786,13 @@ static int erofs_init_fs_context(struct
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+@@ -1025,6 +1025,9 @@ int amdgpu_ras_query_error_status(struct
+ 	if (!obj)
+ 		return -EINVAL;
  
- static void erofs_kill_sb(struct super_block *sb)
- {
--	struct erofs_sb_info *sbi;
-+	struct erofs_sb_info *sbi = EROFS_SB(sb);
- 
--	if (erofs_is_fscache_mode(sb))
-+	if (IS_ENABLED(CONFIG_EROFS_FS_ONDEMAND) && sbi->fsid)
- 		kill_anon_super(sb);
- 	else
- 		kill_block_super(sb);
- 
--	sbi = EROFS_SB(sb);
--	if (!sbi)
--		return;
--
- 	erofs_free_dev_context(sbi->devs);
- 	fs_put_dax(sbi->dax_dev, NULL);
- 	erofs_fscache_unregister_fs(sb);
++	if (!info || info->head.block == AMDGPU_RAS_BLOCK_COUNT)
++		return -EINVAL;
++
+ 	if (info->head.block == AMDGPU_RAS_BLOCK__UMC) {
+ 		amdgpu_ras_get_ecc_info(adev, &err_data);
+ 	} else {
 
 
