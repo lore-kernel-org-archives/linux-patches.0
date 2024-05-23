@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C9614B095;
-	Thu, 23 May 2024 13:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE1414AD36;
+	Thu, 23 May 2024 13:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470738; cv=none; b=e2Ztv95UHRcDFbJNU3jEe+V0gHbrkqPa09zoJHaCLywAfET4DtJMvgj9Cw2paWxvjsKYSBg117QnR6X+U4eHoBlmNOk4Uoqz3+msobqQUR5SJihuWzUQhtPOfytYiCt8c/mcYNe3EqPJ2YcMf9+z5FskkGFpfgtcFucfNNiUAYA=
+	t=1716470740; cv=none; b=p0VNlKuae/lRK8bPmTWQZAjAs9O/HODwcm+XRjzu3eW2lUWwWwpAwtJeiROtQVRI/qkVLYbWCpDf/zfLghNYzxFf8D0CnoKMFr7ldXdctpZQg21jQZMMt4Q9hlZOvMhYde1VGJMVyNhynSken2IXgHPZimU0+D2P50PmAnU8sTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470738; c=relaxed/simple;
-	bh=kE47LfOuDBm/lGLnB0crJ03Y+DjPt/NfQL/NnFKVwCI=;
+	s=arc-20240116; t=1716470740; c=relaxed/simple;
+	bh=ARW6wELzP0214cYmOPUbV/TDv/VEcXbVYGPGeLiTV4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YxsfPapmwSt6l4e6B2k4x6ZdyKhdARwNmgpyD0vpN9DRiud1x0vdN3sT6+BZKTnS0Ri2YRTOu/i0kYvGWA9M+EFjFwSnKQP6po/Uo1N7VnQXzlgQXHe2sv3vWGJNCbBreejD/p24E/6R75gCStbU2n4bfwLJ9CScQYyl3cQ74RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXT5Z3M6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ymjr0B0xBgLu9OUbzXkc1ZVz27EOFgY5zx0hutttrUMq/xgKSaO/d1NrzaHUGtmWOgCplv/BvE3KXnlMyfvqCLsOukb89aGo0THJ16NGBz/aSpCVn78n29hCT541HCuvhtyZS928bzOfvH3s5OBJ9ztALItHO3BLht/NmiSvtAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGqHrUy6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXT5Z3M6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73443C32781;
-	Thu, 23 May 2024 13:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGqHrUy6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E188C3277B;
+	Thu, 23 May 2024 13:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470737;
-	bh=kE47LfOuDBm/lGLnB0crJ03Y+DjPt/NfQL/NnFKVwCI=;
+	s=korg; t=1716470740;
+	bh=ARW6wELzP0214cYmOPUbV/TDv/VEcXbVYGPGeLiTV4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GXT5Z3M6t/5i5rFfXb2qZBEdeVHHMW1ZQjYEoVs0SuclhCFFdYwVxW0QcEtE8150v
-	 MZLnLOoobiRv63bw0k0peH1H6tT+1f+kNauLmnaY8bTh4WQ8aQBGgGfb+26aTdt3jG
-	 DH4zDZ2rXCeQeusSvCGNlrRZ/JOKE5gTP5sXsmEg=
+	b=MGqHrUy6e/kfRhQaR87HED8oF/zj5hAXeRy8EpLGUWrANGQxnMNLuZIHdTZivntza
+	 gckYyi3F4kkZK8u88oBsfh4Tl4z8D7bMshPnbV6HYYEx/55KT83hLznZURcXWwtmAv
+	 vUx054ynUXlGB6/euKvmvus6GCKv97zOUKgEiPY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bharath SM <bharathsm@microsoft.com>,
+	Meetakshi Setiya <msetiya@microsoft.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/102] smb311: additional compression flag defined in updated protocol spec
-Date: Thu, 23 May 2024 15:13:35 +0200
-Message-ID: <20240523130345.109203021@linuxfoundation.org>
+Subject: [PATCH 6.6 071/102] smb3: add trace event for mknod
+Date: Thu, 23 May 2024 15:13:36 +0200
+Message-ID: <20240523130345.146284211@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -53,52 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit e56bc745fa1de77abc2ad8debc4b1b83e0426c49 ]
+[ Upstream commit e9e9fbeb83f65d3d487e0a0838c0867292c99fb2 ]
 
-Added new compression flag that was recently documented, in
-addition fix some typos and clarify the sid_attr_data struct
-definition.
+Add trace points to help debug mknod and mkfifo:
+
+   smb3_mknod_done
+   smb3_mknod_enter
+   smb3_mknod_err
+
+Example output:
+
+      TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+         | |         |   |||||     |         |
+    mkfifo-6163    [003] .....   960.425558: smb3_mknod_enter: xid=12 sid=0xb55130f6 tid=0x46e6241c path=\fifo1
+    mkfifo-6163    [003] .....   960.432719: smb3_mknod_done: xid=12 sid=0xb55130f6 tid=0x46e6241c
 
 Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Reviewed-by: Meetakshi Setiya <msetiya@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/common/smb2pdu.h | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/smb/client/dir.c   | 7 +++++++
+ fs/smb/client/trace.h | 4 +++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
-index 735614d233a06..202ff91281560 100644
---- a/fs/smb/common/smb2pdu.h
-+++ b/fs/smb/common/smb2pdu.h
-@@ -280,15 +280,16 @@ struct smb3_blob_data {
- #define SE_GROUP_RESOURCE		0x20000000
- #define SE_GROUP_LOGON_ID		0xC0000000
+diff --git a/fs/smb/client/dir.c b/fs/smb/client/dir.c
+index 37897b919dd5a..864b194dbaa0a 100644
+--- a/fs/smb/client/dir.c
++++ b/fs/smb/client/dir.c
+@@ -627,11 +627,18 @@ int cifs_mknod(struct mnt_idmap *idmap, struct inode *inode,
+ 		goto mknod_out;
+ 	}
  
--/* struct sid_attr_data is SidData array in BlobData format then le32 Attr */
--
- struct sid_array_data {
- 	__le16 SidAttrCount;
- 	/* SidAttrList - array of sid_attr_data structs */
- } __packed;
++	trace_smb3_mknod_enter(xid, tcon->ses->Suid, tcon->tid, full_path);
++
+ 	rc = tcon->ses->server->ops->make_node(xid, inode, direntry, tcon,
+ 					       full_path, mode,
+ 					       device_number);
  
--struct luid_attr_data {
+ mknod_out:
++	if (rc)
++		trace_smb3_mknod_err(xid,  tcon->ses->Suid, tcon->tid, rc);
++	else
++		trace_smb3_mknod_done(xid, tcon->ses->Suid, tcon->tid);
++
+ 	free_dentry_path(page);
+ 	free_xid(xid);
+ 	cifs_put_tlink(tlink);
+diff --git a/fs/smb/client/trace.h b/fs/smb/client/trace.h
+index f9c1fd32d0b8c..5e83cb9da9028 100644
+--- a/fs/smb/client/trace.h
++++ b/fs/smb/client/trace.h
+@@ -375,6 +375,7 @@ DEFINE_SMB3_INF_COMPOUND_ENTER_EVENT(get_reparse_compound_enter);
+ DEFINE_SMB3_INF_COMPOUND_ENTER_EVENT(delete_enter);
+ DEFINE_SMB3_INF_COMPOUND_ENTER_EVENT(mkdir_enter);
+ DEFINE_SMB3_INF_COMPOUND_ENTER_EVENT(tdis_enter);
++DEFINE_SMB3_INF_COMPOUND_ENTER_EVENT(mknod_enter);
+ 
+ DECLARE_EVENT_CLASS(smb3_inf_compound_done_class,
+ 	TP_PROTO(unsigned int xid,
+@@ -415,7 +416,7 @@ DEFINE_SMB3_INF_COMPOUND_DONE_EVENT(query_wsl_ea_compound_done);
+ DEFINE_SMB3_INF_COMPOUND_DONE_EVENT(delete_done);
+ DEFINE_SMB3_INF_COMPOUND_DONE_EVENT(mkdir_done);
+ DEFINE_SMB3_INF_COMPOUND_DONE_EVENT(tdis_done);
 -
-+/* struct sid_attr_data is SidData array in BlobData format then le32 Attr */
-+struct sid_attr_data {
-+	__le16 BlobSize;
-+	__u8 BlobData[];
-+	/* __le32 Attr */
- } __packed;
++DEFINE_SMB3_INF_COMPOUND_DONE_EVENT(mknod_done);
+ 
+ DECLARE_EVENT_CLASS(smb3_inf_compound_err_class,
+ 	TP_PROTO(unsigned int xid,
+@@ -461,6 +462,7 @@ DEFINE_SMB3_INF_COMPOUND_ERR_EVENT(query_wsl_ea_compound_err);
+ DEFINE_SMB3_INF_COMPOUND_ERR_EVENT(mkdir_err);
+ DEFINE_SMB3_INF_COMPOUND_ERR_EVENT(delete_err);
+ DEFINE_SMB3_INF_COMPOUND_ERR_EVENT(tdis_err);
++DEFINE_SMB3_INF_COMPOUND_ERR_EVENT(mknod_err);
  
  /*
-@@ -502,6 +503,7 @@ struct smb2_encryption_neg_context {
- #define SMB3_COMPRESS_LZ77_HUFF	cpu_to_le16(0x0003)
- /* Pattern scanning algorithm See MS-SMB2 3.1.4.4.1 */
- #define SMB3_COMPRESS_PATTERN	cpu_to_le16(0x0004) /* Pattern_V1 */
-+#define SMB3_COMPRESS_LZ4	cpu_to_le16(0x0005)
- 
- /* Compression Flags */
- #define SMB2_COMPRESSION_CAPABILITIES_FLAG_NONE		cpu_to_le32(0x00000000)
+  * For logging SMB3 Status code and Command for responses which return errors
 -- 
 2.43.0
 
