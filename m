@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BE82AE94;
-	Thu, 23 May 2024 13:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544852AE94;
+	Thu, 23 May 2024 13:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470297; cv=none; b=Lx4Cs6VJWRn7FuEd6dA6DNFVkoLESYfY3Oi1k19rMemBGWv/qgrDWsWq/wIFulbh0HYy+M2W3fNxKfc6dPakawRLwPxJUCxwid3DNnW7lLzcafVsedJFV0yDcji6jFgBLvO2KMO4NTBSQhUMvjw9AizsUKAPKsONb2l26VjHAfE=
+	t=1716470300; cv=none; b=DHQRwW4LKuaF+2H0fMF3c58yQiOhUZfkfIi5BUQFlTbXC5xQ8aZlPb1KDALC/VCHwGLxAFGoPmtKk1I8J6dmvw2044H/dQUh0zmb4LtC/llesKhXRq1Gbr4yw21AcyrDoXQrnq/AcaOW0rtIt71eXcFEX6tCFvDS5KeD6EoSbws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470297; c=relaxed/simple;
-	bh=9Wewl6hkz2i23EI/shFjVXCt+PeBPa/8rOD7usPn1yU=;
+	s=arc-20240116; t=1716470300; c=relaxed/simple;
+	bh=zOybmDRXxOu3bI3kEa8ND5baG5q8/6D+PQ/RwfMc/hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxwrF2IQGBFXNSJdPdkMKuxdeGQ6dQFQyl/b1wOBO1Kp1pMGcN72IJ3BFdABuhy6SU8q6tODCGIIBxPNsbExk8WnoonMrnnDc1Vqg+dUoqkhEJcBsACTSHbcg99dOFf0iSXLGSwa8sN1Igm4ksu2Nk/aMoEQ4W4tI7Shab8I85o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZatVEcGu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CdmdUtGMRxymXDnuuuq8kR7al4hFSY29yvJIyo1yEBCOCmlNG9vtuBceH+iqfz6j4H10ZGELfD0vHdZJEw5idjlaSBLxljay6/P52SZt3WQsuiPkHp0eDBeLx94d/o/FKyHRuLsLv/KX/eb6p5Xev8tmdBc7+xz8oFU341gw/YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aimOR9WI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZatVEcGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0CCC32781;
-	Thu, 23 May 2024 13:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aimOR9WI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D239CC2BD10;
+	Thu, 23 May 2024 13:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470297;
-	bh=9Wewl6hkz2i23EI/shFjVXCt+PeBPa/8rOD7usPn1yU=;
+	s=korg; t=1716470300;
+	bh=zOybmDRXxOu3bI3kEa8ND5baG5q8/6D+PQ/RwfMc/hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZatVEcGu7zxxN5lQTht8hDUXv3nyNCLlt+rU8d0VO0ujJVYZvmbW2t4LFZxByDNp7
-	 BUqzZS+3mr2ovQgDm0Br+GGl8bY7MmshDwqjz1wRfnCnE4MXAJEa8ptGd0WZOPZq6W
-	 G/dHXHdeG0pcs+7xQi64iG8ZvICacUPvu3zV+vAc=
+	b=aimOR9WIzTUqRjfmj4yVA+nmIsDM2HYvNgYHZeXn3SZU/1b86AjNStOC6r+oiiQSh
+	 ERXXlHkYTR5Ms+/HDdsSvU46sfFUNjGRcOHJvr93Tls210J8ZUriM5Hk/IU+toWaA7
+	 n+5+H7FVYVgbzq6P/9nP+OuWQXNB7SBRibcKduKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Shaoying Xu <shaoyi@amazon.com>
-Subject: [PATCH 5.15 12/23] net: tls: handle backlogging of crypto requests
-Date: Thu, 23 May 2024 15:13:08 +0200
-Message-ID: <20240523130328.418565055@linuxfoundation.org>
+	"yenchia.chen" <yenchia.chen@mediatek.com>
+Subject: [PATCH 5.15 13/23] netlink: annotate lockless accesses to nlk->max_recvmsg_len
+Date: Thu, 23 May 2024 15:13:09 +0200
+Message-ID: <20240523130328.455931434@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130327.956341021@linuxfoundation.org>
 References: <20240523130327.956341021@linuxfoundation.org>
@@ -53,91 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 8590541473188741055d27b955db0777569438e3 upstream.
+commit a1865f2e7d10dde00d35a2122b38d2e469ae67ed upstream.
 
-Since we're setting the CRYPTO_TFM_REQ_MAY_BACKLOG flag on our
-requests to the crypto API, crypto_aead_{encrypt,decrypt} can return
- -EBUSY instead of -EINPROGRESS in valid situations. For example, when
-the cryptd queue for AESNI is full (easy to trigger with an
-artificially low cryptd.cryptd_max_cpu_qlen), requests will be enqueued
-to the backlog but still processed. In that case, the async callback
-will also be called twice: first with err == -EINPROGRESS, which it
-seems we can just ignore, then with err == 0.
+syzbot reported a data-race in data-race in netlink_recvmsg() [1]
 
-Compared to Sabrina's original patch this version uses the new
-tls_*crypt_async_wait() helpers and converts the EBUSY to
-EINPROGRESS to avoid having to modify all the error handling
-paths. The handling is identical.
+Indeed, netlink_recvmsg() can be run concurrently,
+and netlink_dump() also needs protection.
 
-Fixes: a54667f6728c ("tls: Add support for encryption using async offload accelerator")
-Fixes: 94524d8fc965 ("net/tls: Add support for async decryption of tls records")
-Co-developed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/netdev/9681d1febfec295449a62300938ed2ae66983f28.1694018970.git.sd@queasysnail.net/
+[1]
+BUG: KCSAN: data-race in netlink_recvmsg / netlink_recvmsg
+
+read to 0xffff888141840b38 of 8 bytes by task 23057 on cpu 0:
+netlink_recvmsg+0xea/0x730 net/netlink/af_netlink.c:1988
+sock_recvmsg_nosec net/socket.c:1017 [inline]
+sock_recvmsg net/socket.c:1038 [inline]
+__sys_recvfrom+0x1ee/0x2e0 net/socket.c:2194
+__do_sys_recvfrom net/socket.c:2212 [inline]
+__se_sys_recvfrom net/socket.c:2208 [inline]
+__x64_sys_recvfrom+0x78/0x90 net/socket.c:2208
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+write to 0xffff888141840b38 of 8 bytes by task 23037 on cpu 1:
+netlink_recvmsg+0x114/0x730 net/netlink/af_netlink.c:1989
+sock_recvmsg_nosec net/socket.c:1017 [inline]
+sock_recvmsg net/socket.c:1038 [inline]
+____sys_recvmsg+0x156/0x310 net/socket.c:2720
+___sys_recvmsg net/socket.c:2762 [inline]
+do_recvmmsg+0x2e5/0x710 net/socket.c:2856
+__sys_recvmmsg net/socket.c:2935 [inline]
+__do_sys_recvmmsg net/socket.c:2958 [inline]
+__se_sys_recvmmsg net/socket.c:2951 [inline]
+__x64_sys_recvmmsg+0xe2/0x160 net/socket.c:2951
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x0000000000000000 -> 0x0000000000001000
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 23037 Comm: syz-executor.2 Not tainted 6.3.0-rc4-syzkaller-00195-g5a57b48fdfcb #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/02/2023
+
+Fixes: 9063e21fb026 ("netlink: autosize skb lengthes")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230403214643.768555-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[v5.15: fixed contextual merge-conflicts in tls_decrypt_done and tls_encrypt_done]
-Cc: <stable@vger.kernel.org> # 5.15
-Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
+Signed-off-by: yenchia.chen <yenchia.chen@mediatek.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ net/netlink/af_netlink.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -175,6 +175,17 @@ static void tls_decrypt_done(struct cryp
- 	struct sk_buff *skb;
- 	unsigned int pages;
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1935,7 +1935,7 @@ static int netlink_recvmsg(struct socket
+ 	struct sock *sk = sock->sk;
+ 	struct netlink_sock *nlk = nlk_sk(sk);
+ 	int noblock = flags & MSG_DONTWAIT;
+-	size_t copied;
++	size_t copied, max_recvmsg_len;
+ 	struct sk_buff *skb, *data_skb;
+ 	int err, ret;
  
-+	/* If requests get too backlogged crypto API returns -EBUSY and calls
-+	 * ->complete(-EINPROGRESS) immediately followed by ->complete(0)
-+	 * to make waiting for backlog to flush with crypto_wait_req() easier.
-+	 * First wait converts -EBUSY -> -EINPROGRESS, and the second one
-+	 * -EINPROGRESS -> 0.
-+	 * We have a single struct crypto_async_request per direction, this
-+	 * scheme doesn't help us, so just ignore the first ->complete().
-+	 */
-+	if (err == -EINPROGRESS)
-+		return;
-+
- 	skb = (struct sk_buff *)req->data;
- 	tls_ctx = tls_get_ctx(skb->sk);
- 	ctx = tls_sw_ctx_rx(tls_ctx);
-@@ -273,6 +284,10 @@ static int tls_do_decryption(struct sock
- 	}
+@@ -1968,9 +1968,10 @@ static int netlink_recvmsg(struct socket
+ #endif
  
- 	ret = crypto_aead_decrypt(aead_req);
-+	if (ret == -EBUSY) {
-+		ret = tls_decrypt_async_wait(ctx);
-+		ret = ret ?: -EINPROGRESS;
-+	}
- 	if (ret == -EINPROGRESS) {
- 		if (darg->async)
- 			return 0;
-@@ -455,6 +470,9 @@ static void tls_encrypt_done(struct cryp
- 	struct tls_rec *rec;
- 	bool ready = false;
+ 	/* Record the max length of recvmsg() calls for future allocations */
+-	nlk->max_recvmsg_len = max(nlk->max_recvmsg_len, len);
+-	nlk->max_recvmsg_len = min_t(size_t, nlk->max_recvmsg_len,
+-				     SKB_WITH_OVERHEAD(32768));
++	max_recvmsg_len = max(READ_ONCE(nlk->max_recvmsg_len), len);
++	max_recvmsg_len = min_t(size_t, max_recvmsg_len,
++				SKB_WITH_OVERHEAD(32768));
++	WRITE_ONCE(nlk->max_recvmsg_len, max_recvmsg_len);
  
-+	if (err == -EINPROGRESS) /* see the comment in tls_decrypt_done() */
-+		return;
-+
- 	rec = container_of(aead_req, struct tls_rec, aead_req);
- 	msg_en = &rec->msg_encrypted;
+ 	copied = data_skb->len;
+ 	if (len < copied) {
+@@ -2219,6 +2220,7 @@ static int netlink_dump(struct sock *sk)
+ 	struct netlink_ext_ack extack = {};
+ 	struct netlink_callback *cb;
+ 	struct sk_buff *skb = NULL;
++	size_t max_recvmsg_len;
+ 	struct module *module;
+ 	int err = -ENOBUFS;
+ 	int alloc_min_size;
+@@ -2241,8 +2243,9 @@ static int netlink_dump(struct sock *sk)
+ 	cb = &nlk->cb;
+ 	alloc_min_size = max_t(int, cb->min_dump_alloc, NLMSG_GOODSIZE);
  
-@@ -551,6 +569,10 @@ static int tls_do_encryption(struct sock
- 	atomic_inc(&ctx->encrypt_pending);
- 
- 	rc = crypto_aead_encrypt(aead_req);
-+	if (rc == -EBUSY) {
-+		rc = tls_encrypt_async_wait(ctx);
-+		rc = rc ?: -EINPROGRESS;
-+	}
- 	if (!rc || rc != -EINPROGRESS) {
- 		atomic_dec(&ctx->encrypt_pending);
- 		sge->offset -= prot->prepend_size;
+-	if (alloc_min_size < nlk->max_recvmsg_len) {
+-		alloc_size = nlk->max_recvmsg_len;
++	max_recvmsg_len = READ_ONCE(nlk->max_recvmsg_len);
++	if (alloc_min_size < max_recvmsg_len) {
++		alloc_size = max_recvmsg_len;
+ 		skb = alloc_skb(alloc_size,
+ 				(GFP_KERNEL & ~__GFP_DIRECT_RECLAIM) |
+ 				__GFP_NOWARN | __GFP_NORETRY);
 
 
