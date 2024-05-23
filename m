@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288C714BFB0;
-	Thu, 23 May 2024 13:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A213E14AD25;
+	Thu, 23 May 2024 13:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470689; cv=none; b=j2U2JVU+0aGrB9jtfKHp/1n0EiQIIrDj4Z9Bn0ocxmPvlltzHjeBenwvBME/4rSaLODXlDrzJat8us59P/BgulHv0HwcNGyOKV9ybrC4CGiWA2JxCtzbX9S5RO/ppmOHgY5Tlk7lQ1vXM9/a+jcMl6e2f6+jHB1Zk3Psu/1CY2E=
+	t=1716470691; cv=none; b=Fz4dqCFn0rJIra3PXzUE07EblABbCdXXSJR7mjO9b4gZg4KVpUdyedGz66qTiXJ5o/dxQLyrSsA5hTgggw9lOn3D1HDMN2ysV/C4LmwwZWPUiBN9cYvuls8CFdyB6vy3we6kFAIkdBTrbcT/b+11bwoYclYVSFIUhD00t9IreGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470689; c=relaxed/simple;
-	bh=Md5B/qbY7tNuY9/sgioKDQrDUwodlDNHyX+ewLQRseA=;
+	s=arc-20240116; t=1716470691; c=relaxed/simple;
+	bh=NGJukVT2PoHjVSNRACiE0x3mj/yAk/sauawRDqmhJeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuX+SoI/zJZxsBKxei6ImPKrKAzGS4fW3JlBWIhTT8zN4Q3Wj4uGlC41inbIVk1wi4bZvZZ1ZR8GWM4Kbmjm1fNCk78tMPLnbGouNYdWvKv068JRZVI2dGrJsHd+SR5FnM4Nybq/45Fn6x4NAOEqHTvp9XzXdHH771TgigKh4FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svyRpCA/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dVef6RPTcXJ+2eGI3jeYpaG9ZQE59Deh1t5u5LBWPg/0I8BmFRbX55Vt21VmsiSNTMEXC9u7aIGhesF7ps2zk3BIQqX3n0VurbjY/ZnE+eDB/Z3nkmIhiIoStZxpdLHRr/H1B3195pzvQp0KdVLYVJHIcgEFFYxDWuUbkcm6pog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/1a2qQW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svyRpCA/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3A0C3277B;
-	Thu, 23 May 2024 13:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/1a2qQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2733EC3277B;
+	Thu, 23 May 2024 13:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470688;
-	bh=Md5B/qbY7tNuY9/sgioKDQrDUwodlDNHyX+ewLQRseA=;
+	s=korg; t=1716470691;
+	bh=NGJukVT2PoHjVSNRACiE0x3mj/yAk/sauawRDqmhJeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=svyRpCA/pP2xY2lfnxnUmz+G8WkfU7jVmvsyFHFe3Q3q1jNk3He4cartmuvvnMuim
-	 KsNUzYgAKpzUI8zjxIQWs+LxjtzHmuvTdt+BkNEYoui2atVUilZULVazl1Vqo4Yz+Z
-	 V6NkQTra9lu6S2UJ5dsgaBnI0ATwP3MlB0on8BI8=
+	b=c/1a2qQWumyhQqsAS+sSd281fs+w6Xys6s8w0Y8ZXPgS3paNEaHV6QrgqJ0mLB3vJ
+	 2Csq25laqQiOKumJhuGJ7LgWeggud6MKzUixeKcX4hSJYZny+TPY0E1z4/0Vc21dd5
+	 HQCrmvunYhnqsjqCDpmGE4F31Ynq87ePdHA6GcOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/102] cifs: get rid of dup length check in parse_reparse_point()
-Date: Thu, 23 May 2024 15:12:47 +0200
-Message-ID: <20240523130343.301369464@linuxfoundation.org>
+Subject: [PATCH 6.6 023/102] cifs: remove unneeded return statement
+Date: Thu, 23 May 2024 15:12:48 +0200
+Message-ID: <20240523130343.338090328@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -51,84 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 8a3c4e44c243308c2364a00f9944c3d6fbdeb125 ]
+[ Upstream commit a3f763fdcb2f784c355aed66ddac6748ff8dbfa6 ]
 
-smb2_compound_op(SMB2_OP_GET_REPARSE) already checks if ioctl response
-has a valid reparse data buffer's length, so there's no need to check
-it again in parse_reparse_point().
+Return statement was not needed at end of cifs_chan_update_iface
 
-In order to get rid of duplicate check, validate reparse data buffer's
-length also in cifs_query_reparse_point().
-
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Suggested-by: Christophe Jaillet <christophe.jaillet@wanadoo.fr>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 14 ++++++++++++--
- fs/smb/client/smb2ops.c | 12 ------------
- 2 files changed, 12 insertions(+), 14 deletions(-)
+ fs/smb/client/sess.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index e9e33b0b3ac47..01e89070df5ab 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -2700,11 +2700,12 @@ int cifs_query_reparse_point(const unsigned int xid,
- 			     u32 *tag, struct kvec *rsp,
- 			     int *rsp_buftype)
- {
-+	struct reparse_data_buffer *buf;
- 	struct cifs_open_parms oparms;
- 	TRANSACT_IOCTL_REQ *io_req = NULL;
- 	TRANSACT_IOCTL_RSP *io_rsp = NULL;
- 	struct cifs_fid fid;
--	__u32 data_offset, data_count;
-+	__u32 data_offset, data_count, len;
- 	__u8 *start, *end;
- 	int io_rsp_len;
- 	int oplock = 0;
-@@ -2774,7 +2775,16 @@ int cifs_query_reparse_point(const unsigned int xid,
- 		goto error;
- 	}
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index 5de32640f0265..3216f786908fb 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -485,8 +485,6 @@ cifs_chan_update_iface(struct cifs_ses *ses, struct TCP_Server_Info *server)
  
--	*tag = le32_to_cpu(((struct reparse_data_buffer *)start)->ReparseTag);
-+	data_count = le16_to_cpu(io_rsp->ByteCount);
-+	buf = (struct reparse_data_buffer *)start;
-+	len = sizeof(*buf);
-+	if (data_count < len ||
-+	    data_count < le16_to_cpu(buf->ReparseDataLength) + len) {
-+		rc = -EIO;
-+		goto error;
-+	}
-+
-+	*tag = le32_to_cpu(buf->ReparseTag);
- 	rsp->iov_base = io_rsp;
- 	rsp->iov_len = io_rsp_len;
- 	*rsp_buftype = CIFS_LARGE_BUFFER;
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 9b7cdb7d7ece8..3e07ab1564ea7 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -2946,18 +2946,6 @@ int parse_reparse_point(struct reparse_data_buffer *buf,
- 			u32 plen, struct cifs_sb_info *cifs_sb,
- 			bool unicode, struct cifs_open_info_data *data)
- {
--	if (plen < sizeof(*buf)) {
--		cifs_dbg(VFS, "%s: reparse buffer is too small. Must be at least 8 bytes but was %d\n",
--			 __func__, plen);
--		return -EIO;
--	}
+ 	ses->chans[chan_index].iface = iface;
+ 	spin_unlock(&ses->chan_lock);
 -
--	if (plen < le16_to_cpu(buf->ReparseDataLength) + sizeof(*buf)) {
--		cifs_dbg(VFS, "%s: invalid reparse buf length: %d\n",
--			 __func__, plen);
--		return -EIO;
--	}
--
- 	data->reparse.buf = buf;
+-	return;
+ }
  
- 	/* See MS-FSCC 2.1.2 */
+ /*
 -- 
 2.43.0
 
