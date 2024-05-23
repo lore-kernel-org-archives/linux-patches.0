@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34061D555;
-	Thu, 23 May 2024 13:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B281D52D;
+	Thu, 23 May 2024 13:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470123; cv=none; b=AFUtfm1Ue/k7s53b071sF7dLBki0g9jGL6drfF+SobN+LJR0exU9juStw5wn5EYob7gAbmLCPXk3safjrrJQUTHfumSgBj7CNQnNq+Tr05PeUU1Tte8e0dXRDYpB0gjO16dpofyGN6UE6/XpLRIaQp48QxVfgycfXvatGSWVKrs=
+	t=1716470125; cv=none; b=m/HJqbEMFKn3jT/k0SytKqTioR1+iJ+E29WrwWq1c7f95jFk5wll6pwT0FuNtEa4BBq90IizMTBeiobi3VhWulzNf1MXHl7bkMaHQqsI6ZjWVDnbOlwWT5cpcTCU0Un8pLbo7fwt8E+wXddNPzrsWMmNGRAxta+egmyERvq0bJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470123; c=relaxed/simple;
-	bh=Rk7pnm6VY1UMWYJRyfvM/+wWQrhcXbvS4opzk2UqXoA=;
+	s=arc-20240116; t=1716470125; c=relaxed/simple;
+	bh=jowO80mJUiu32oLMQWrZ456/ZNEBno7fgecgZXoVaJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IK8UXSrryIfx6rteCW06XltbzkUKI+UX3SZF+YCBb9647dlyYtlAOs50T3sy0Ov5neAPo+v0QB/AVGwLgM36ICGjhodeOMPF6eYx241wSc6T3cdd4ZQ5B9xWTEvdTngueypfhX+LJPPWWT50PWIa3wxI37Llnp9lb0REDkzFHhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OELRbfX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g23KOgzDYylQCjfJLJs60hnd4riatGDfabE01396OwolIaRxyFb+5754gLyufivoW4H1O4+alr+bBRm+0oM0SAWp9jg6i4aSu2htrlhsy9S1P7q+FMR8ggHQLUb99KKx+MjpvbLcTRC7Dd+EtPkQ8wWvzXNngPlw63MJMbiA3gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFFsoC1r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OELRbfX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64522C2BD10;
-	Thu, 23 May 2024 13:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFFsoC1r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F4CC3277B;
+	Thu, 23 May 2024 13:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470122;
-	bh=Rk7pnm6VY1UMWYJRyfvM/+wWQrhcXbvS4opzk2UqXoA=;
+	s=korg; t=1716470125;
+	bh=jowO80mJUiu32oLMQWrZ456/ZNEBno7fgecgZXoVaJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1OELRbfX36APNjRu5FmthZCZBuXPk2oEyacri5+dC5WHh98BG8LWH/MKeP/SW9OGG
-	 SNAe4eqlYzGzVasdRRnNOupZHALO3j/NvFmKrdf9CNkiRD9GFpRGPCk5kYjtUVmHh9
-	 TkCDOTA4/RTE3ZTpeKC0/LL2DGSnRFPGSuhPgdYY=
+	b=kFFsoC1r/Wc/wdKoh8KbKYkvQ1uGGUUbdbaRx+B0jkZ3CuQ33G8gczaRPg7fuOVrN
+	 nmR3R2t3Jsw0ga9yd2bHmvyTuDW2y6/JGrxWDaJo7M50FZ+Xj/F1yZ8GXwfcqCWD0z
+	 BASVXWNsNimIby+ns6luOwJCNWOrKSxfPGxCdDLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>
-Subject: [PATCH 5.4 10/16] firmware: arm_scmi: Harden accesses to the reset domains
-Date: Thu, 23 May 2024 15:12:43 +0200
-Message-ID: <20240523130326.138140225@linuxfoundation.org>
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Alex Elder <elder@linaro.org>
+Subject: [PATCH 5.4 11/16] arm64: dts: qcom: Fix interrupt-map parent address cells
+Date: Thu, 23 May 2024 15:12:44 +0200
+Message-ID: <20240523130326.174127361@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130325.743454852@linuxfoundation.org>
 References: <20240523130325.743454852@linuxfoundation.org>
@@ -51,41 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Rob Herring <robh@kernel.org>
 
-commit e9076ffbcaed5da6c182b144ef9f6e24554af268 upstream.
+commit 0ac10b291bee84b00bf9fb2afda444e77e7f88f4 upstream.
 
-Accessing reset domains descriptors by the index upon the SCMI drivers
-requests through the SCMI reset operations interface can potentially
-lead to out-of-bound violations if the SCMI driver misbehave.
+The 'interrupt-map' in several QCom SoCs is malformed. The '#address-cells'
+size of the parent interrupt controller (the GIC) is not accounted for.
 
-Add an internal consistency check before any such domains descriptors
-accesses.
-
-Link: https://lore.kernel.org/r/20220817172731.1185305-5-cristian.marussi@arm.com
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20210928192210.1842377-1-robh@kernel.org
+Signed-off-by: Alex Elder <elder@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/reset.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/firmware/arm_scmi/reset.c
-+++ b/drivers/firmware/arm_scmi/reset.c
-@@ -135,8 +135,12 @@ static int scmi_domain_reset(const struc
- 	struct scmi_xfer *t;
- 	struct scmi_msg_reset_domain_reset *dom;
- 	struct scmi_reset_info *pi = handle->reset_priv;
--	struct reset_dom_info *rdom = pi->dom_info + domain;
-+	struct reset_dom_info *rdom;
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -872,10 +872,10 @@
+ 			interrupts = <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi";
+ 			interrupt-map-mask = <0 0 0 0x7>;
+-			interrupt-map =	<0 0 0 1 &intc 0 135 IRQ_TYPE_LEVEL_HIGH>,
+-					<0 0 0 2 &intc 0 136 IRQ_TYPE_LEVEL_HIGH>,
+-					<0 0 0 3 &intc 0 138 IRQ_TYPE_LEVEL_HIGH>,
+-					<0 0 0 4 &intc 0 139 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-map =	<0 0 0 1 &intc 0 0 135 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 2 &intc 0 0 136 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 3 &intc 0 0 138 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 4 &intc 0 0 139 IRQ_TYPE_LEVEL_HIGH>;
  
-+	if (domain >= pi->num_domains)
-+		return -EINVAL;
-+
-+	rdom = pi->dom_info + domain;
- 	if (rdom->async_reset)
- 		flags |= ASYNCHRONOUS_RESET;
- 
+ 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
+ 				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
 
 
