@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526B813A897;
-	Thu, 23 May 2024 13:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2803B13C3D8;
+	Thu, 23 May 2024 13:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470778; cv=none; b=pXCd68BImxjGdWWEEQ7uf87+qmpy5eoXH+qQ0KzIR3Jwc7BmdLkPgeKBoJp1XxoXa32fEHTNCnSwN1pCqR0vMQ8bDEntkzfL82QrhOMoZ3zpEvBVPSt09GmW1Ox3QQ+TDVul1QsfIQG0qS5ikf4/ViD77F40kq5WR0q3OdBNRtU=
+	t=1716470781; cv=none; b=p6fcNixeDRgCJzriR+VDs/3INstHeHSdpEtomABOp8XAzc+SiwvmB00HTWRTkP5Qvzzbi3MuUcCJpTOZRKVXViyExH8O0L5GdlJ0KfxG0kLP/F9weJopy0WE2wT3ih/pMvlsd6ho5YSuifiwkLlPNGoErGPDzR+h1k2KV51W9mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470778; c=relaxed/simple;
-	bh=N2X4gLyO5oopsbNW0rsekWgW05fJBPqVM1oyuq0GpTk=;
+	s=arc-20240116; t=1716470781; c=relaxed/simple;
+	bh=nU4w30vDKyKP9JGURPcF04Hz0RprMAxhYOL3K1tO350=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S6l9phmQ4f19i8diV5BAGCeEhQMqVduyImCkyc8x/BA0GdommEVqcd+aO8UfsFKijpSDFkSU+Im5JhpDNOUJYIxQhcrXzorS3p/RVhKpkxRHlrvFE8gOS811JVn7KSe+BfeuuwB5IDY88kd+pe+XW8p0QR2h/cUWHeZ6OIgCUR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMlUiLWt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YTtksZsFYGzwURuHvZR5VUFFAUql6qEJNr3aImeYn5lFBnZD3Qc/9J2O1bSEqtYm2McQIn2pc4OArm5rwa1JoqT1rNCQnVameKGyIQJwlZYOjkLAqJKttpWYePHm8jIz9WkHLHonlC/1jrdPJITNch+ZbOyFV2F8p7XRz7xDml4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTVEt5/L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMlUiLWt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEFFC3277B;
-	Thu, 23 May 2024 13:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTVEt5/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C36C2BD10;
+	Thu, 23 May 2024 13:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470778;
-	bh=N2X4gLyO5oopsbNW0rsekWgW05fJBPqVM1oyuq0GpTk=;
+	s=korg; t=1716470781;
+	bh=nU4w30vDKyKP9JGURPcF04Hz0RprMAxhYOL3K1tO350=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XMlUiLWtPc7bOF2oozd+xcjHSkoNi0rGDqkfLvLGxJMxnCRrL047PlADgcO0btf0A
-	 4FDqfy3E6TpOXDBwSWAk694JKCflFIm29nc+j8q5XtOHSYpCL5umnyj9oYpudoVeX7
-	 gp7r6OhSiaGP0uNWtmtFOPkvoayRqYhYqZvEdlco=
+	b=KTVEt5/LRce5KIC97j/JzQkWCK5sImsMwH7+DdgYqGeW4Uo3/J0xV2oAUdpfadlRp
+	 Ug7Wt7zr6u/P0fEPHnQlIiJ9WwvVaI7goknx+CL0+EDkbJ2say8+GxO5cTut40EQgx
+	 5CxUD/OtvOK2/oSx9uzUyDy9yZbVNhbupMfOo4Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Paulo Alcantara <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/102] smb: client: return reparse type in /proc/mounts
-Date: Thu, 23 May 2024 15:13:19 +0200
-Message-ID: <20240523130344.502869322@linuxfoundation.org>
+Subject: [PATCH 6.6 055/102] smb3: add dynamic trace point for ioctls
+Date: Thu, 23 May 2024 15:13:20 +0200
+Message-ID: <20240523130344.540375760@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -52,58 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 1e5f4240714bb238d2d17c7e14e5fb45c9140665 ]
+[ Upstream commit 073dd87c8e1ee55ca163956f0c71249dc28aac51 ]
 
-Add support for returning reparse mount option in /proc/mounts.
+It can be helpful in debugging to know which ioctls are called to better
+correlate them with smb3 fsctls (and opens).  Add a dynamic trace point
+to trace ioctls into cifs.ko
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202402262152.YZOwDlCM-lkp@intel.com/
-Signed-off-by: Paulo Alcantara <pc@manguebit.com>
+Here is sample output:
+
+            TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+               | |         |   |||||     |         |
+ new-inotify-ioc-90418   [001] ..... 142157.397024: smb3_ioctl: xid=18 fid=0x0 ioctl cmd=0xc009cf0b
+ new-inotify-ioc-90457   [007] ..... 142217.943569: smb3_ioctl: xid=22 fid=0x389bf5b6 ioctl cmd=0xc009cf0b
+
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c   |  2 ++
- fs/smb/client/cifsglob.h | 12 ++++++++++++
- 2 files changed, 14 insertions(+)
+ fs/smb/client/ioctl.c |  5 +++++
+ fs/smb/client/trace.h | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+)
 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index 6d9d2174ee691..30bf754c9fc93 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -674,6 +674,8 @@ cifs_show_options(struct seq_file *s, struct dentry *root)
- 		seq_printf(s, ",backupgid=%u",
- 			   from_kgid_munged(&init_user_ns,
- 					    cifs_sb->ctx->backupgid));
-+	seq_show_option(s, "reparse",
-+			cifs_reparse_type_str(cifs_sb->ctx->reparse_type));
+diff --git a/fs/smb/client/ioctl.c b/fs/smb/client/ioctl.c
+index 682eabdd1d6cc..855ac5a62edfa 100644
+--- a/fs/smb/client/ioctl.c
++++ b/fs/smb/client/ioctl.c
+@@ -349,6 +349,11 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
+ 	xid = get_xid();
  
- 	seq_printf(s, ",rsize=%u", cifs_sb->ctx->rsize);
- 	seq_printf(s, ",wsize=%u", cifs_sb->ctx->wsize);
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index ddb64af50a45d..053556ca6f011 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -159,6 +159,18 @@ enum cifs_reparse_type {
- 	CIFS_REPARSE_TYPE_DEFAULT = CIFS_REPARSE_TYPE_NFS,
- };
- 
-+static inline const char *cifs_reparse_type_str(enum cifs_reparse_type type)
-+{
-+	switch (type) {
-+	case CIFS_REPARSE_TYPE_NFS:
-+		return "nfs";
-+	case CIFS_REPARSE_TYPE_WSL:
-+		return "wsl";
-+	default:
-+		return "unknown";
-+	}
-+}
+ 	cifs_dbg(FYI, "cifs ioctl 0x%x\n", command);
++	if (pSMBFile == NULL)
++		trace_smb3_ioctl(xid, 0, command);
++	else
++		trace_smb3_ioctl(xid, pSMBFile->fid.persistent_fid, command);
 +
- struct session_key {
- 	unsigned int len;
- 	char *response;
+ 	switch (command) {
+ 		case FS_IOC_GETFLAGS:
+ 			if (pSMBFile == NULL)
+diff --git a/fs/smb/client/trace.h b/fs/smb/client/trace.h
+index ce90ae0d77f84..f9c1fd32d0b8c 100644
+--- a/fs/smb/client/trace.h
++++ b/fs/smb/client/trace.h
+@@ -1032,6 +1032,38 @@ DEFINE_EVENT(smb3_ses_class, smb3_##name,  \
+ 
+ DEFINE_SMB3_SES_EVENT(ses_not_found);
+ 
++DECLARE_EVENT_CLASS(smb3_ioctl_class,
++	TP_PROTO(unsigned int xid,
++		__u64	fid,
++		unsigned int command),
++	TP_ARGS(xid, fid, command),
++	TP_STRUCT__entry(
++		__field(unsigned int, xid)
++		__field(__u64, fid)
++		__field(unsigned int, command)
++	),
++	TP_fast_assign(
++		__entry->xid = xid;
++		__entry->fid = fid;
++		__entry->command = command;
++	),
++	TP_printk("xid=%u fid=0x%llx ioctl cmd=0x%x",
++		__entry->xid, __entry->fid, __entry->command)
++)
++
++#define DEFINE_SMB3_IOCTL_EVENT(name)        \
++DEFINE_EVENT(smb3_ioctl_class, smb3_##name,  \
++	TP_PROTO(unsigned int xid,	     \
++		__u64 fid,		     \
++		unsigned int command),	     \
++	TP_ARGS(xid, fid, command))
++
++DEFINE_SMB3_IOCTL_EVENT(ioctl);
++
++
++
++
++
+ DECLARE_EVENT_CLASS(smb3_credit_class,
+ 	TP_PROTO(__u64	currmid,
+ 		__u64 conn_id,
 -- 
 2.43.0
 
