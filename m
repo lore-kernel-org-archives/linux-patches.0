@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FF413B7AE;
-	Thu, 23 May 2024 13:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7456213B7AE;
+	Thu, 23 May 2024 13:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470671; cv=none; b=i/EAqR8Hc399Xxb+hLGg6N0g4jQ1jr4G0wQLTc/kG8Ol7WG2vq0aN6rMHLXqteyCxBqXj7TV/hLSOLQ9Cki9qRUM6AmKrAEGKCoEmnUCdbrY2havInA+1Sew/nRtpuJg/lB9MQhS3E4o/yBmddC6f41AhBzbfa6SEZe1Y6g+agY=
+	t=1716470674; cv=none; b=nhWnRSJNiz5r04L10WGQeUqs7JMOlLgA13F/Csb/sGxsBUALHpEHar+snywSdlAk5WnO8EzzOXcLYPwN+/NdNEVZfRdkEcBrI2M9uCut5chpJuYSy/bhmii6hM0wY+mMQUGtwRy4ZwbswDZpB8KP2lpxE/BUkJMEmM5/uFviE9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470671; c=relaxed/simple;
-	bh=5/8Be5imG+aSrlLdfLCd3QFtOOndRiifjbCJdIRrArE=;
+	s=arc-20240116; t=1716470674; c=relaxed/simple;
+	bh=8ndBFyslHJPmwDf9+0sEsvN7ac99B8+st2VbjnKLm4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r7oa+UTYy2MRVq0yRlbolVxusbFjjYMv7kUEohpDk41ejQNsYD0uGk5Atd0AxDufin1iJBC3epkFonugf9xORctp0sbgkRpivBFLV4XVH+uM8kLQ1f+Ykvh5ZSClXvZbb6aEmPZjdPGuXUtt2xWH3gXFksR4+lN57pr4nawPtAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6squx6w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aH69kq5LYOVHAxZ1xXfOefsEBTR8cVvG1XiEe2GAAwzuGZ3wwIRta9n1J06ba9CsxmMk8SNv8DnB1Ur7jsBMlyeYF1PCm3jbeRVpEhbaTXAS+m+0vuw3JluRAKgsUCZL/KHf/s3sPsFKA3jJSj0NRP7JuR1ZmXrwaF8aqphKTxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDoZgVUb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6squx6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F06C3277B;
-	Thu, 23 May 2024 13:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDoZgVUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F07C2C32782;
+	Thu, 23 May 2024 13:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470671;
-	bh=5/8Be5imG+aSrlLdfLCd3QFtOOndRiifjbCJdIRrArE=;
+	s=korg; t=1716470674;
+	bh=8ndBFyslHJPmwDf9+0sEsvN7ac99B8+st2VbjnKLm4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6squx6wfOHSPjxjRRwK9ga8zmSrjN1asKrM16Z+QV0o5dlsK1nC09hCplcFZ9MYY
-	 cqIdq2ilGL75CtCjzss7zDopx+rdZBistyOCxx73onePoBfNYM5Jl66M0eL6NOCVRI
-	 hX6NPlvysngtESWETbwfp325JFNhVXAGMGhg9uXw=
+	b=EDoZgVUb/7vKMLkXGcvhqor2qsDRMCxHSCZcwFj8sfGPC5omJptBVGUpQllr/CdIo
+	 zBgWnzgJxoJ+qgz+vJNzapiE34l2q13A9ljscsx+nkcESlKRM3F0lrhmyS2yLghP8M
+	 szZZd56hwghg/Xt9ARirB0aWVFY60+uZHx/VEcco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paulo Alcantara <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/102] smb: client: move most of reparse point handling code to common file
-Date: Thu, 23 May 2024 15:13:11 +0200
-Message-ID: <20240523130344.201878023@linuxfoundation.org>
+Subject: [PATCH 6.6 047/102] smb: client: fix potential broken compound request
+Date: Thu, 23 May 2024 15:13:12 +0200
+Message-ID: <20240523130344.239290572@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -53,920 +53,196 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit c520ba7573a84bd37f8803a3beeb8f6f995bf9e1 ]
+[ Upstream commit 6914d288c63682e20e0f6e1e0b8e8f5847012d67 ]
 
-In preparation to add support for creating special files also via WSL
-reparse points in next commits.
+Now that smb2_compound_op() can accept up to 5 commands in a single
+compound request, set the appropriate NextCommand and related flags to
+all subsequent commands as well as handling the case where a valid
+@cfile is passed and therefore skipping create and close requests in
+the compound chain.
+
+This fix a potential broken compound request that could be sent from
+smb2_get_reparse_inode() if the client found a valid open
+file (@cfile) prior to calling smb2_compound_op().
 
 Signed-off-by: Paulo Alcantara <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/Makefile    |   2 +-
- fs/smb/client/cifsglob.h  |  13 --
- fs/smb/client/cifsproto.h |   4 -
- fs/smb/client/inode.c     |  79 +---------
- fs/smb/client/readdir.c   |  18 +--
- fs/smb/client/reparse.c   | 320 ++++++++++++++++++++++++++++++++++++++
- fs/smb/client/reparse.h   |  73 +++++++++
- fs/smb/client/smb2ops.c   | 254 +-----------------------------
- fs/smb/client/smb2proto.h |   6 +
- 9 files changed, 405 insertions(+), 364 deletions(-)
- create mode 100644 fs/smb/client/reparse.c
- create mode 100644 fs/smb/client/reparse.h
+ fs/smb/client/smb2inode.c | 106 ++++++++++++++++++++++----------------
+ 1 file changed, 63 insertions(+), 43 deletions(-)
 
-diff --git a/fs/smb/client/Makefile b/fs/smb/client/Makefile
-index 0b07eb94c93b3..e11985f2460b2 100644
---- a/fs/smb/client/Makefile
-+++ b/fs/smb/client/Makefile
-@@ -12,7 +12,7 @@ cifs-y := trace.o cifsfs.o cifs_debug.o connect.o dir.o file.o \
- 	  smb2ops.o smb2maperror.o smb2transport.o \
- 	  smb2misc.o smb2pdu.o smb2inode.o smb2file.o cifsacl.o fs_context.o \
- 	  dns_resolve.o cifs_spnego_negtokeninit.asn1.o asn1.o \
--	  namespace.o
-+	  namespace.o reparse.o
+diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
+index add90eb8fc165..33f3fffcb8277 100644
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -223,14 +223,13 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 							  SMB2_O_INFO_FILE, 0,
+ 							  sizeof(struct smb2_file_all_info) +
+ 							  PATH_MAX * 2, 0, NULL);
+-				if (!rc) {
+-					smb2_set_next_command(tcon, &rqst[num_rqst]);
+-					smb2_set_related(&rqst[num_rqst]);
+-				}
+ 			}
+-
+-			if (rc)
++			if (!rc && (!cfile || num_rqst > 1)) {
++				smb2_set_next_command(tcon, &rqst[num_rqst]);
++				smb2_set_related(&rqst[num_rqst]);
++			} else if (rc) {
+ 				goto finished;
++			}
+ 			num_rqst++;
+ 			trace_smb3_query_info_compound_enter(xid, ses->Suid,
+ 							     tcon->tid, full_path);
+@@ -260,14 +259,13 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 							  sizeof(struct smb311_posix_qinfo *) +
+ 							  (PATH_MAX * 2) +
+ 							  (sizeof(struct cifs_sid) * 2), 0, NULL);
+-				if (!rc) {
+-					smb2_set_next_command(tcon, &rqst[num_rqst]);
+-					smb2_set_related(&rqst[num_rqst]);
+-				}
+ 			}
+-
+-			if (rc)
++			if (!rc && (!cfile || num_rqst > 1)) {
++				smb2_set_next_command(tcon, &rqst[num_rqst]);
++				smb2_set_related(&rqst[num_rqst]);
++			} else if (rc) {
+ 				goto finished;
++			}
+ 			num_rqst++;
+ 			trace_smb3_posix_query_info_compound_enter(xid, ses->Suid,
+ 								   tcon->tid, full_path);
+@@ -325,13 +323,13 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 							FILE_END_OF_FILE_INFORMATION,
+ 							SMB2_O_INFO_FILE, 0,
+ 							data, size);
+-				if (!rc) {
+-					smb2_set_next_command(tcon, &rqst[num_rqst]);
+-					smb2_set_related(&rqst[num_rqst]);
+-				}
+ 			}
+-			if (rc)
++			if (!rc && (!cfile || num_rqst > 1)) {
++				smb2_set_next_command(tcon, &rqst[num_rqst]);
++				smb2_set_related(&rqst[num_rqst]);
++			} else if (rc) {
+ 				goto finished;
++			}
+ 			num_rqst++;
+ 			trace_smb3_set_eof_enter(xid, ses->Suid, tcon->tid, full_path);
+ 			break;
+@@ -356,14 +354,13 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 							COMPOUND_FID, current->tgid,
+ 							FILE_BASIC_INFORMATION,
+ 							SMB2_O_INFO_FILE, 0, data, size);
+-				if (!rc) {
+-					smb2_set_next_command(tcon, &rqst[num_rqst]);
+-					smb2_set_related(&rqst[num_rqst]);
+-				}
+ 			}
+-
+-			if (rc)
++			if (!rc && (!cfile || num_rqst > 1)) {
++				smb2_set_next_command(tcon, &rqst[num_rqst]);
++				smb2_set_related(&rqst[num_rqst]);
++			} else if (rc) {
+ 				goto finished;
++			}
+ 			num_rqst++;
+ 			trace_smb3_set_info_compound_enter(xid, ses->Suid,
+ 							   tcon->tid, full_path);
+@@ -397,13 +394,13 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 							COMPOUND_FID, COMPOUND_FID,
+ 							current->tgid, FILE_RENAME_INFORMATION,
+ 							SMB2_O_INFO_FILE, 0, data, size);
+-				if (!rc) {
+-					smb2_set_next_command(tcon, &rqst[num_rqst]);
+-					smb2_set_related(&rqst[num_rqst]);
+-				}
+ 			}
+-			if (rc)
++			if (!rc && (!cfile || num_rqst > 1)) {
++				smb2_set_next_command(tcon, &rqst[num_rqst]);
++				smb2_set_related(&rqst[num_rqst]);
++			} else if (rc) {
+ 				goto finished;
++			}
+ 			num_rqst++;
+ 			trace_smb3_rename_enter(xid, ses->Suid, tcon->tid, full_path);
+ 			break;
+@@ -438,15 +435,27 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 			rqst[num_rqst].rq_iov = vars->io_iov;
+ 			rqst[num_rqst].rq_nvec = ARRAY_SIZE(vars->io_iov);
  
- $(obj)/asn1.o: $(obj)/cifs_spnego_negtokeninit.asn1.h
+-			rc = SMB2_ioctl_init(tcon, server, &rqst[num_rqst],
+-					     COMPOUND_FID, COMPOUND_FID,
+-					     FSCTL_SET_REPARSE_POINT,
+-					     in_iov[i].iov_base,
+-					     in_iov[i].iov_len, 0);
+-			if (rc)
++			if (cfile) {
++				rc = SMB2_ioctl_init(tcon, server, &rqst[num_rqst],
++						     cfile->fid.persistent_fid,
++						     cfile->fid.volatile_fid,
++						     FSCTL_SET_REPARSE_POINT,
++						     in_iov[i].iov_base,
++						     in_iov[i].iov_len, 0);
++			} else {
++				rc = SMB2_ioctl_init(tcon, server, &rqst[num_rqst],
++						     COMPOUND_FID, COMPOUND_FID,
++						     FSCTL_SET_REPARSE_POINT,
++						     in_iov[i].iov_base,
++						     in_iov[i].iov_len, 0);
++			}
++			if (!rc && (!cfile || num_rqst > 1)) {
++				smb2_set_next_command(tcon, &rqst[num_rqst]);
++				smb2_set_related(&rqst[num_rqst]);
++			} else if (rc) {
+ 				goto finished;
+-			smb2_set_next_command(tcon, &rqst[num_rqst]);
+-			smb2_set_related(&rqst[num_rqst++]);
++			}
++			num_rqst++;
+ 			trace_smb3_set_reparse_compound_enter(xid, ses->Suid,
+ 							      tcon->tid, full_path);
+ 			break;
+@@ -454,14 +463,25 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 			rqst[num_rqst].rq_iov = vars->io_iov;
+ 			rqst[num_rqst].rq_nvec = ARRAY_SIZE(vars->io_iov);
  
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 08540541046c1..296ed556be0e2 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -223,19 +223,6 @@ struct cifs_open_info_data {
- 	};
- };
- 
--static inline bool cifs_open_data_reparse(struct cifs_open_info_data *data)
--{
--	struct smb2_file_all_info *fi = &data->fi;
--	u32 attrs = le32_to_cpu(fi->Attributes);
--	bool ret;
--
--	ret = data->reparse_point || (attrs & ATTR_REPARSE);
--	if (ret)
--		attrs |= ATTR_REPARSE;
--	fi->Attributes = cpu_to_le32(attrs);
--	return ret;
--}
--
- /*
-  *****************************************************************
-  * Except the CIFS PDUs themselves all the
-diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
-index 50040990e70b9..8e0a348f1f660 100644
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -210,10 +210,6 @@ extern struct inode *cifs_iget(struct super_block *sb,
- int cifs_get_inode_info(struct inode **inode, const char *full_path,
- 			struct cifs_open_info_data *data, struct super_block *sb, int xid,
- 			const struct cifs_fid *fid);
--bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
--				 struct cifs_fattr *fattr,
--				 struct cifs_open_info_data *data);
--
- extern int smb311_posix_get_inode_info(struct inode **inode,
- 				       const char *full_path,
- 				       struct cifs_open_info_data *data,
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index 2739cb8390804..8aff8382cfb54 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -26,6 +26,7 @@
- #include "fs_context.h"
- #include "cifs_ioctl.h"
- #include "cached_dir.h"
-+#include "reparse.h"
- 
- static void cifs_set_ops(struct inode *inode)
- {
-@@ -728,84 +729,6 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
- 		fattr->cf_mode, fattr->cf_uniqueid, fattr->cf_nlink);
- }
- 
--static inline dev_t nfs_mkdev(struct reparse_posix_data *buf)
--{
--	u64 v = le64_to_cpu(*(__le64 *)buf->DataBuffer);
--
--	return MKDEV(v >> 32, v & 0xffffffff);
--}
--
--bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
--				 struct cifs_fattr *fattr,
--				 struct cifs_open_info_data *data)
--{
--	struct reparse_posix_data *buf = data->reparse.posix;
--	u32 tag = data->reparse.tag;
--
--	if (tag == IO_REPARSE_TAG_NFS && buf) {
--		switch (le64_to_cpu(buf->InodeType)) {
--		case NFS_SPECFILE_CHR:
--			fattr->cf_mode |= S_IFCHR;
--			fattr->cf_dtype = DT_CHR;
--			fattr->cf_rdev = nfs_mkdev(buf);
--			break;
--		case NFS_SPECFILE_BLK:
--			fattr->cf_mode |= S_IFBLK;
--			fattr->cf_dtype = DT_BLK;
--			fattr->cf_rdev = nfs_mkdev(buf);
--			break;
--		case NFS_SPECFILE_FIFO:
--			fattr->cf_mode |= S_IFIFO;
--			fattr->cf_dtype = DT_FIFO;
--			break;
--		case NFS_SPECFILE_SOCK:
--			fattr->cf_mode |= S_IFSOCK;
--			fattr->cf_dtype = DT_SOCK;
--			break;
--		case NFS_SPECFILE_LNK:
--			fattr->cf_mode |= S_IFLNK;
--			fattr->cf_dtype = DT_LNK;
--			break;
--		default:
--			WARN_ON_ONCE(1);
--			return false;
--		}
--		return true;
--	}
--
--	switch (tag) {
--	case IO_REPARSE_TAG_LX_SYMLINK:
--		fattr->cf_mode |= S_IFLNK;
--		fattr->cf_dtype = DT_LNK;
--		break;
--	case IO_REPARSE_TAG_LX_FIFO:
--		fattr->cf_mode |= S_IFIFO;
--		fattr->cf_dtype = DT_FIFO;
--		break;
--	case IO_REPARSE_TAG_AF_UNIX:
--		fattr->cf_mode |= S_IFSOCK;
--		fattr->cf_dtype = DT_SOCK;
--		break;
--	case IO_REPARSE_TAG_LX_CHR:
--		fattr->cf_mode |= S_IFCHR;
--		fattr->cf_dtype = DT_CHR;
--		break;
--	case IO_REPARSE_TAG_LX_BLK:
--		fattr->cf_mode |= S_IFBLK;
--		fattr->cf_dtype = DT_BLK;
--		break;
--	case 0: /* SMB1 symlink */
--	case IO_REPARSE_TAG_SYMLINK:
--	case IO_REPARSE_TAG_NFS:
--		fattr->cf_mode |= S_IFLNK;
--		fattr->cf_dtype = DT_LNK;
--		break;
--	default:
--		return false;
--	}
--	return true;
--}
--
- static void cifs_open_info_to_fattr(struct cifs_fattr *fattr,
- 				    struct cifs_open_info_data *data,
- 				    struct super_block *sb)
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index 73ff9bd059682..3e5d22b356e92 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -22,6 +22,7 @@
- #include "smb2proto.h"
- #include "fs_context.h"
- #include "cached_dir.h"
-+#include "reparse.h"
- 
- /*
-  * To be safe - for UCS to UTF-8 with strings loaded with the rare long
-@@ -55,23 +56,6 @@ static inline void dump_cifs_file_struct(struct file *file, char *label)
- }
- #endif /* DEBUG2 */
- 
--/*
-- * Match a reparse point inode if reparse tag and ctime haven't changed.
-- *
-- * Windows Server updates ctime of reparse points when their data have changed.
-- * The server doesn't allow changing reparse tags from existing reparse points,
-- * though it's worth checking.
-- */
--static inline bool reparse_inode_match(struct inode *inode,
--				       struct cifs_fattr *fattr)
--{
--	struct timespec64 ctime = inode_get_ctime(inode);
--
--	return (CIFS_I(inode)->cifsAttrs & ATTR_REPARSE) &&
--		CIFS_I(inode)->reparse_tag == fattr->cf_cifstag &&
--		timespec64_equal(&ctime, &fattr->cf_ctime);
--}
--
- /*
-  * Attempt to preload the dcache with the results from the FIND_FIRST/NEXT
-  *
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-new file mode 100644
-index 0000000000000..c405be47c84d9
---- /dev/null
-+++ b/fs/smb/client/reparse.c
-@@ -0,0 +1,320 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2024 Paulo Alcantara <pc@manguebit.com>
-+ */
-+
-+#include <linux/fs.h>
-+#include <linux/stat.h>
-+#include <linux/slab.h>
-+#include "cifsglob.h"
-+#include "smb2proto.h"
-+#include "cifsproto.h"
-+#include "cifs_unicode.h"
-+#include "cifs_debug.h"
-+#include "reparse.h"
-+
-+int smb2_create_reparse_symlink(const unsigned int xid, struct inode *inode,
-+				struct dentry *dentry, struct cifs_tcon *tcon,
-+				const char *full_path, const char *symname)
-+{
-+	struct reparse_symlink_data_buffer *buf = NULL;
-+	struct cifs_open_info_data data;
-+	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
-+	struct inode *new;
-+	struct kvec iov;
-+	__le16 *path;
-+	char *sym, sep = CIFS_DIR_SEP(cifs_sb);
-+	u16 len, plen;
-+	int rc = 0;
-+
-+	sym = kstrdup(symname, GFP_KERNEL);
-+	if (!sym)
-+		return -ENOMEM;
-+
-+	data = (struct cifs_open_info_data) {
-+		.reparse_point = true,
-+		.reparse = { .tag = IO_REPARSE_TAG_SYMLINK, },
-+		.symlink_target = sym,
-+	};
-+
-+	convert_delimiter(sym, sep);
-+	path = cifs_convert_path_to_utf16(sym, cifs_sb);
-+	if (!path) {
-+		rc = -ENOMEM;
-+		goto out;
-+	}
-+
-+	plen = 2 * UniStrnlen((wchar_t *)path, PATH_MAX);
-+	len = sizeof(*buf) + plen * 2;
-+	buf = kzalloc(len, GFP_KERNEL);
-+	if (!buf) {
-+		rc = -ENOMEM;
-+		goto out;
-+	}
-+
-+	buf->ReparseTag = cpu_to_le32(IO_REPARSE_TAG_SYMLINK);
-+	buf->ReparseDataLength = cpu_to_le16(len - sizeof(struct reparse_data_buffer));
-+	buf->SubstituteNameOffset = cpu_to_le16(plen);
-+	buf->SubstituteNameLength = cpu_to_le16(plen);
-+	memcpy(&buf->PathBuffer[plen], path, plen);
-+	buf->PrintNameOffset = 0;
-+	buf->PrintNameLength = cpu_to_le16(plen);
-+	memcpy(buf->PathBuffer, path, plen);
-+	buf->Flags = cpu_to_le32(*symname != '/' ? SYMLINK_FLAG_RELATIVE : 0);
-+	if (*sym != sep)
-+		buf->Flags = cpu_to_le32(SYMLINK_FLAG_RELATIVE);
-+
-+	convert_delimiter(sym, '/');
-+	iov.iov_base = buf;
-+	iov.iov_len = len;
-+	new = smb2_get_reparse_inode(&data, inode->i_sb, xid,
-+				     tcon, full_path, &iov);
-+	if (!IS_ERR(new))
-+		d_instantiate(dentry, new);
-+	else
-+		rc = PTR_ERR(new);
-+out:
-+	kfree(path);
-+	cifs_free_open_info(&data);
-+	kfree(buf);
-+	return rc;
-+}
-+
-+static int nfs_set_reparse_buf(struct reparse_posix_data *buf,
-+			       mode_t mode, dev_t dev,
-+			       struct kvec *iov)
-+{
-+	u64 type;
-+	u16 len, dlen;
-+
-+	len = sizeof(*buf);
-+
-+	switch ((type = reparse_mode_nfs_type(mode))) {
-+	case NFS_SPECFILE_BLK:
-+	case NFS_SPECFILE_CHR:
-+		dlen = sizeof(__le64);
-+		break;
-+	case NFS_SPECFILE_FIFO:
-+	case NFS_SPECFILE_SOCK:
-+		dlen = 0;
-+		break;
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+
-+	buf->ReparseTag = cpu_to_le32(IO_REPARSE_TAG_NFS);
-+	buf->Reserved = 0;
-+	buf->InodeType = cpu_to_le64(type);
-+	buf->ReparseDataLength = cpu_to_le16(len + dlen -
-+					     sizeof(struct reparse_data_buffer));
-+	*(__le64 *)buf->DataBuffer = cpu_to_le64(((u64)MAJOR(dev) << 32) |
-+						 MINOR(dev));
-+	iov->iov_base = buf;
-+	iov->iov_len = len + dlen;
-+	return 0;
-+}
-+
-+int smb2_make_nfs_node(unsigned int xid, struct inode *inode,
-+		       struct dentry *dentry, struct cifs_tcon *tcon,
-+		       const char *full_path, umode_t mode, dev_t dev)
-+{
-+	struct cifs_open_info_data data;
-+	struct reparse_posix_data *p;
-+	struct inode *new;
-+	struct kvec iov;
-+	__u8 buf[sizeof(*p) + sizeof(__le64)];
-+	int rc;
-+
-+	p = (struct reparse_posix_data *)buf;
-+	rc = nfs_set_reparse_buf(p, mode, dev, &iov);
-+	if (rc)
-+		return rc;
-+
-+	data = (struct cifs_open_info_data) {
-+		.reparse_point = true,
-+		.reparse = { .tag = IO_REPARSE_TAG_NFS, .posix = p, },
-+	};
-+
-+	new = smb2_get_reparse_inode(&data, inode->i_sb, xid,
-+				     tcon, full_path, &iov);
-+	if (!IS_ERR(new))
-+		d_instantiate(dentry, new);
-+	else
-+		rc = PTR_ERR(new);
-+	cifs_free_open_info(&data);
-+	return rc;
-+}
-+
-+/* See MS-FSCC 2.1.2.6 for the 'NFS' style reparse tags */
-+static int parse_reparse_posix(struct reparse_posix_data *buf,
-+			       struct cifs_sb_info *cifs_sb,
-+			       struct cifs_open_info_data *data)
-+{
-+	unsigned int len;
-+	u64 type;
-+
-+	switch ((type = le64_to_cpu(buf->InodeType))) {
-+	case NFS_SPECFILE_LNK:
-+		len = le16_to_cpu(buf->ReparseDataLength);
-+		data->symlink_target = cifs_strndup_from_utf16(buf->DataBuffer,
-+							       len, true,
-+							       cifs_sb->local_nls);
-+		if (!data->symlink_target)
-+			return -ENOMEM;
-+		convert_delimiter(data->symlink_target, '/');
-+		cifs_dbg(FYI, "%s: target path: %s\n",
-+			 __func__, data->symlink_target);
-+		break;
-+	case NFS_SPECFILE_CHR:
-+	case NFS_SPECFILE_BLK:
-+	case NFS_SPECFILE_FIFO:
-+	case NFS_SPECFILE_SOCK:
-+		break;
-+	default:
-+		cifs_dbg(VFS, "%s: unhandled inode type: 0x%llx\n",
-+			 __func__, type);
-+		return -EOPNOTSUPP;
-+	}
-+	return 0;
-+}
-+
-+static int parse_reparse_symlink(struct reparse_symlink_data_buffer *sym,
-+				 u32 plen, bool unicode,
-+				 struct cifs_sb_info *cifs_sb,
-+				 struct cifs_open_info_data *data)
-+{
-+	unsigned int len;
-+	unsigned int offs;
-+
-+	/* We handle Symbolic Link reparse tag here. See: MS-FSCC 2.1.2.4 */
-+
-+	offs = le16_to_cpu(sym->SubstituteNameOffset);
-+	len = le16_to_cpu(sym->SubstituteNameLength);
-+	if (offs + 20 > plen || offs + len + 20 > plen) {
-+		cifs_dbg(VFS, "srv returned malformed symlink buffer\n");
-+		return -EIO;
-+	}
-+
-+	data->symlink_target = cifs_strndup_from_utf16(sym->PathBuffer + offs,
-+						       len, unicode,
-+						       cifs_sb->local_nls);
-+	if (!data->symlink_target)
-+		return -ENOMEM;
-+
-+	convert_delimiter(data->symlink_target, '/');
-+	cifs_dbg(FYI, "%s: target path: %s\n", __func__, data->symlink_target);
-+
-+	return 0;
-+}
-+
-+int parse_reparse_point(struct reparse_data_buffer *buf,
-+			u32 plen, struct cifs_sb_info *cifs_sb,
-+			bool unicode, struct cifs_open_info_data *data)
-+{
-+	data->reparse.buf = buf;
-+
-+	/* See MS-FSCC 2.1.2 */
-+	switch (le32_to_cpu(buf->ReparseTag)) {
-+	case IO_REPARSE_TAG_NFS:
-+		return parse_reparse_posix((struct reparse_posix_data *)buf,
-+					   cifs_sb, data);
-+	case IO_REPARSE_TAG_SYMLINK:
-+		return parse_reparse_symlink(
-+			(struct reparse_symlink_data_buffer *)buf,
-+			plen, unicode, cifs_sb, data);
-+	case IO_REPARSE_TAG_LX_SYMLINK:
-+	case IO_REPARSE_TAG_AF_UNIX:
-+	case IO_REPARSE_TAG_LX_FIFO:
-+	case IO_REPARSE_TAG_LX_CHR:
-+	case IO_REPARSE_TAG_LX_BLK:
-+		return 0;
-+	default:
-+		cifs_dbg(VFS, "%s: unhandled reparse tag: 0x%08x\n",
-+			 __func__, le32_to_cpu(buf->ReparseTag));
-+		return -EOPNOTSUPP;
-+	}
-+}
-+
-+int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb,
-+			     struct kvec *rsp_iov,
-+			     struct cifs_open_info_data *data)
-+{
-+	struct reparse_data_buffer *buf;
-+	struct smb2_ioctl_rsp *io = rsp_iov->iov_base;
-+	u32 plen = le32_to_cpu(io->OutputCount);
-+
-+	buf = (struct reparse_data_buffer *)((u8 *)io +
-+					     le32_to_cpu(io->OutputOffset));
-+	return parse_reparse_point(buf, plen, cifs_sb, true, data);
-+}
-+
-+bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
-+				 struct cifs_fattr *fattr,
-+				 struct cifs_open_info_data *data)
-+{
-+	struct reparse_posix_data *buf = data->reparse.posix;
-+	u32 tag = data->reparse.tag;
-+
-+	if (tag == IO_REPARSE_TAG_NFS && buf) {
-+		switch (le64_to_cpu(buf->InodeType)) {
-+		case NFS_SPECFILE_CHR:
-+			fattr->cf_mode |= S_IFCHR;
-+			fattr->cf_dtype = DT_CHR;
-+			fattr->cf_rdev = reparse_nfs_mkdev(buf);
-+			break;
-+		case NFS_SPECFILE_BLK:
-+			fattr->cf_mode |= S_IFBLK;
-+			fattr->cf_dtype = DT_BLK;
-+			fattr->cf_rdev = reparse_nfs_mkdev(buf);
-+			break;
-+		case NFS_SPECFILE_FIFO:
-+			fattr->cf_mode |= S_IFIFO;
-+			fattr->cf_dtype = DT_FIFO;
-+			break;
-+		case NFS_SPECFILE_SOCK:
-+			fattr->cf_mode |= S_IFSOCK;
-+			fattr->cf_dtype = DT_SOCK;
-+			break;
-+		case NFS_SPECFILE_LNK:
-+			fattr->cf_mode |= S_IFLNK;
-+			fattr->cf_dtype = DT_LNK;
-+			break;
-+		default:
-+			WARN_ON_ONCE(1);
-+			return false;
-+		}
-+		return true;
-+	}
-+
-+	switch (tag) {
-+	case IO_REPARSE_TAG_LX_SYMLINK:
-+		fattr->cf_mode |= S_IFLNK;
-+		fattr->cf_dtype = DT_LNK;
-+		break;
-+	case IO_REPARSE_TAG_LX_FIFO:
-+		fattr->cf_mode |= S_IFIFO;
-+		fattr->cf_dtype = DT_FIFO;
-+		break;
-+	case IO_REPARSE_TAG_AF_UNIX:
-+		fattr->cf_mode |= S_IFSOCK;
-+		fattr->cf_dtype = DT_SOCK;
-+		break;
-+	case IO_REPARSE_TAG_LX_CHR:
-+		fattr->cf_mode |= S_IFCHR;
-+		fattr->cf_dtype = DT_CHR;
-+		break;
-+	case IO_REPARSE_TAG_LX_BLK:
-+		fattr->cf_mode |= S_IFBLK;
-+		fattr->cf_dtype = DT_BLK;
-+		break;
-+	case 0: /* SMB1 symlink */
-+	case IO_REPARSE_TAG_SYMLINK:
-+	case IO_REPARSE_TAG_NFS:
-+		fattr->cf_mode |= S_IFLNK;
-+		fattr->cf_dtype = DT_LNK;
-+		break;
-+	default:
-+		return false;
-+	}
-+	return true;
-+}
-diff --git a/fs/smb/client/reparse.h b/fs/smb/client/reparse.h
-new file mode 100644
-index 0000000000000..3ceb90da0df90
---- /dev/null
-+++ b/fs/smb/client/reparse.h
-@@ -0,0 +1,73 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2024 Paulo Alcantara <pc@manguebit.com>
-+ */
-+
-+#ifndef _CIFS_REPARSE_H
-+#define _CIFS_REPARSE_H
-+
-+#include <linux/fs.h>
-+#include <linux/stat.h>
-+#include "cifsglob.h"
-+
-+static inline dev_t reparse_nfs_mkdev(struct reparse_posix_data *buf)
-+{
-+	u64 v = le64_to_cpu(*(__le64 *)buf->DataBuffer);
-+
-+	return MKDEV(v >> 32, v & 0xffffffff);
-+}
-+
-+static inline u64 reparse_mode_nfs_type(mode_t mode)
-+{
-+	switch (mode & S_IFMT) {
-+	case S_IFBLK: return NFS_SPECFILE_BLK;
-+	case S_IFCHR: return NFS_SPECFILE_CHR;
-+	case S_IFIFO: return NFS_SPECFILE_FIFO;
-+	case S_IFSOCK: return NFS_SPECFILE_SOCK;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Match a reparse point inode if reparse tag and ctime haven't changed.
-+ *
-+ * Windows Server updates ctime of reparse points when their data have changed.
-+ * The server doesn't allow changing reparse tags from existing reparse points,
-+ * though it's worth checking.
-+ */
-+static inline bool reparse_inode_match(struct inode *inode,
-+				       struct cifs_fattr *fattr)
-+{
-+	struct timespec64 ctime = inode_get_ctime(inode);
-+
-+	return (CIFS_I(inode)->cifsAttrs & ATTR_REPARSE) &&
-+		CIFS_I(inode)->reparse_tag == fattr->cf_cifstag &&
-+		timespec64_equal(&ctime, &fattr->cf_ctime);
-+}
-+
-+static inline bool cifs_open_data_reparse(struct cifs_open_info_data *data)
-+{
-+	struct smb2_file_all_info *fi = &data->fi;
-+	u32 attrs = le32_to_cpu(fi->Attributes);
-+	bool ret;
-+
-+	ret = data->reparse_point || (attrs & ATTR_REPARSE);
-+	if (ret)
-+		attrs |= ATTR_REPARSE;
-+	fi->Attributes = cpu_to_le32(attrs);
-+	return ret;
-+}
-+
-+bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
-+				 struct cifs_fattr *fattr,
-+				 struct cifs_open_info_data *data);
-+int smb2_create_reparse_symlink(const unsigned int xid, struct inode *inode,
-+				struct dentry *dentry, struct cifs_tcon *tcon,
-+				const char *full_path, const char *symname);
-+int smb2_make_nfs_node(unsigned int xid, struct inode *inode,
-+		       struct dentry *dentry, struct cifs_tcon *tcon,
-+		       const char *full_path, umode_t mode, dev_t dev);
-+int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb, struct kvec *rsp_iov,
-+			     struct cifs_open_info_data *data);
-+
-+#endif /* _CIFS_REPARSE_H */
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 9ade347978709..2c59a6fc2d7c7 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -28,6 +28,7 @@
- #include "fscache.h"
- #include "fs_context.h"
- #include "cached_dir.h"
-+#include "reparse.h"
- 
- /* Change credits for different ops and return the total number of credits */
- static int
-@@ -2989,109 +2990,6 @@ smb2_get_dfs_refer(const unsigned int xid, struct cifs_ses *ses,
- 	return rc;
- }
- 
--/* See MS-FSCC 2.1.2.6 for the 'NFS' style reparse tags */
--static int parse_reparse_posix(struct reparse_posix_data *buf,
--			       struct cifs_sb_info *cifs_sb,
--			       struct cifs_open_info_data *data)
--{
--	unsigned int len;
--	u64 type;
--
--	switch ((type = le64_to_cpu(buf->InodeType))) {
--	case NFS_SPECFILE_LNK:
--		len = le16_to_cpu(buf->ReparseDataLength);
--		data->symlink_target = cifs_strndup_from_utf16(buf->DataBuffer,
--							       len, true,
--							       cifs_sb->local_nls);
--		if (!data->symlink_target)
--			return -ENOMEM;
--		convert_delimiter(data->symlink_target, '/');
--		cifs_dbg(FYI, "%s: target path: %s\n",
--			 __func__, data->symlink_target);
--		break;
--	case NFS_SPECFILE_CHR:
--	case NFS_SPECFILE_BLK:
--	case NFS_SPECFILE_FIFO:
--	case NFS_SPECFILE_SOCK:
--		break;
--	default:
--		cifs_dbg(VFS, "%s: unhandled inode type: 0x%llx\n",
--			 __func__, type);
--		return -EOPNOTSUPP;
--	}
--	return 0;
--}
--
--static int parse_reparse_symlink(struct reparse_symlink_data_buffer *sym,
--				 u32 plen, bool unicode,
--				 struct cifs_sb_info *cifs_sb,
--				 struct cifs_open_info_data *data)
--{
--	unsigned int len;
--	unsigned int offs;
--
--	/* We handle Symbolic Link reparse tag here. See: MS-FSCC 2.1.2.4 */
--
--	offs = le16_to_cpu(sym->SubstituteNameOffset);
--	len = le16_to_cpu(sym->SubstituteNameLength);
--	if (offs + 20 > plen || offs + len + 20 > plen) {
--		cifs_dbg(VFS, "srv returned malformed symlink buffer\n");
--		return -EIO;
--	}
--
--	data->symlink_target = cifs_strndup_from_utf16(sym->PathBuffer + offs,
--						       len, unicode,
--						       cifs_sb->local_nls);
--	if (!data->symlink_target)
--		return -ENOMEM;
--
--	convert_delimiter(data->symlink_target, '/');
--	cifs_dbg(FYI, "%s: target path: %s\n", __func__, data->symlink_target);
--
--	return 0;
--}
--
--int parse_reparse_point(struct reparse_data_buffer *buf,
--			u32 plen, struct cifs_sb_info *cifs_sb,
--			bool unicode, struct cifs_open_info_data *data)
--{
--	data->reparse.buf = buf;
--
--	/* See MS-FSCC 2.1.2 */
--	switch (le32_to_cpu(buf->ReparseTag)) {
--	case IO_REPARSE_TAG_NFS:
--		return parse_reparse_posix((struct reparse_posix_data *)buf,
--					   cifs_sb, data);
--	case IO_REPARSE_TAG_SYMLINK:
--		return parse_reparse_symlink(
--			(struct reparse_symlink_data_buffer *)buf,
--			plen, unicode, cifs_sb, data);
--	case IO_REPARSE_TAG_LX_SYMLINK:
--	case IO_REPARSE_TAG_AF_UNIX:
--	case IO_REPARSE_TAG_LX_FIFO:
--	case IO_REPARSE_TAG_LX_CHR:
--	case IO_REPARSE_TAG_LX_BLK:
--		return 0;
--	default:
--		cifs_dbg(VFS, "%s: unhandled reparse tag: 0x%08x\n",
--			 __func__, le32_to_cpu(buf->ReparseTag));
--		return -EOPNOTSUPP;
--	}
--}
--
--static int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb,
--				    struct kvec *rsp_iov,
--				    struct cifs_open_info_data *data)
--{
--	struct reparse_data_buffer *buf;
--	struct smb2_ioctl_rsp *io = rsp_iov->iov_base;
--	u32 plen = le32_to_cpu(io->OutputCount);
--
--	buf = (struct reparse_data_buffer *)((u8 *)io +
--					     le32_to_cpu(io->OutputOffset));
--	return parse_reparse_point(buf, plen, cifs_sb, true, data);
--}
--
- static struct cifs_ntsd *
- get_smb2_acl_by_fid(struct cifs_sb_info *cifs_sb,
- 		    const struct cifs_fid *cifsfid, u32 *pacllen, u32 info)
-@@ -5123,152 +5021,6 @@ int cifs_sfu_make_node(unsigned int xid, struct inode *inode,
- 	return rc;
- }
- 
--static inline u64 mode_nfs_type(mode_t mode)
--{
--	switch (mode & S_IFMT) {
--	case S_IFBLK: return NFS_SPECFILE_BLK;
--	case S_IFCHR: return NFS_SPECFILE_CHR;
--	case S_IFIFO: return NFS_SPECFILE_FIFO;
--	case S_IFSOCK: return NFS_SPECFILE_SOCK;
--	}
--	return 0;
--}
--
--static int nfs_set_reparse_buf(struct reparse_posix_data *buf,
--			       mode_t mode, dev_t dev,
--			       struct kvec *iov)
--{
--	u64 type;
--	u16 len, dlen;
--
--	len = sizeof(*buf);
--
--	switch ((type = mode_nfs_type(mode))) {
--	case NFS_SPECFILE_BLK:
--	case NFS_SPECFILE_CHR:
--		dlen = sizeof(__le64);
--		break;
--	case NFS_SPECFILE_FIFO:
--	case NFS_SPECFILE_SOCK:
--		dlen = 0;
--		break;
--	default:
--		return -EOPNOTSUPP;
--	}
--
--	buf->ReparseTag = cpu_to_le32(IO_REPARSE_TAG_NFS);
--	buf->Reserved = 0;
--	buf->InodeType = cpu_to_le64(type);
--	buf->ReparseDataLength = cpu_to_le16(len + dlen -
--					     sizeof(struct reparse_data_buffer));
--	*(__le64 *)buf->DataBuffer = cpu_to_le64(((u64)MAJOR(dev) << 32) |
--						 MINOR(dev));
--	iov->iov_base = buf;
--	iov->iov_len = len + dlen;
--	return 0;
--}
--
--static int nfs_make_node(unsigned int xid, struct inode *inode,
--			 struct dentry *dentry, struct cifs_tcon *tcon,
--			 const char *full_path, umode_t mode, dev_t dev)
--{
--	struct cifs_open_info_data data;
--	struct reparse_posix_data *p;
--	struct inode *new;
--	struct kvec iov;
--	__u8 buf[sizeof(*p) + sizeof(__le64)];
--	int rc;
--
--	p = (struct reparse_posix_data *)buf;
--	rc = nfs_set_reparse_buf(p, mode, dev, &iov);
--	if (rc)
--		return rc;
--
--	data = (struct cifs_open_info_data) {
--		.reparse_point = true,
--		.reparse = { .tag = IO_REPARSE_TAG_NFS, .posix = p, },
--	};
--
--	new = smb2_get_reparse_inode(&data, inode->i_sb, xid,
--				     tcon, full_path, &iov);
--	if (!IS_ERR(new))
--		d_instantiate(dentry, new);
--	else
--		rc = PTR_ERR(new);
--	cifs_free_open_info(&data);
--	return rc;
--}
--
--static int smb2_create_reparse_symlink(const unsigned int xid,
--				       struct inode *inode,
--				       struct dentry *dentry,
--				       struct cifs_tcon *tcon,
--				       const char *full_path,
--				       const char *symname)
--{
--	struct reparse_symlink_data_buffer *buf = NULL;
--	struct cifs_open_info_data data;
--	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
--	struct inode *new;
--	struct kvec iov;
--	__le16 *path;
--	char *sym, sep = CIFS_DIR_SEP(cifs_sb);
--	u16 len, plen;
--	int rc = 0;
--
--	sym = kstrdup(symname, GFP_KERNEL);
--	if (!sym)
--		return -ENOMEM;
--
--	data = (struct cifs_open_info_data) {
--		.reparse_point = true,
--		.reparse = { .tag = IO_REPARSE_TAG_SYMLINK, },
--		.symlink_target = sym,
--	};
--
--	convert_delimiter(sym, sep);
--	path = cifs_convert_path_to_utf16(sym, cifs_sb);
--	if (!path) {
--		rc = -ENOMEM;
--		goto out;
--	}
--
--	plen = 2 * UniStrnlen((wchar_t *)path, PATH_MAX);
--	len = sizeof(*buf) + plen * 2;
--	buf = kzalloc(len, GFP_KERNEL);
--	if (!buf) {
--		rc = -ENOMEM;
--		goto out;
--	}
--
--	buf->ReparseTag = cpu_to_le32(IO_REPARSE_TAG_SYMLINK);
--	buf->ReparseDataLength = cpu_to_le16(len - sizeof(struct reparse_data_buffer));
--	buf->SubstituteNameOffset = cpu_to_le16(plen);
--	buf->SubstituteNameLength = cpu_to_le16(plen);
--	memcpy(&buf->PathBuffer[plen], path, plen);
--	buf->PrintNameOffset = 0;
--	buf->PrintNameLength = cpu_to_le16(plen);
--	memcpy(buf->PathBuffer, path, plen);
--	buf->Flags = cpu_to_le32(*symname != '/' ? SYMLINK_FLAG_RELATIVE : 0);
--	if (*sym != sep)
--		buf->Flags = cpu_to_le32(SYMLINK_FLAG_RELATIVE);
--
--	convert_delimiter(sym, '/');
--	iov.iov_base = buf;
--	iov.iov_len = len;
--	new = smb2_get_reparse_inode(&data, inode->i_sb, xid,
--				     tcon, full_path, &iov);
--	if (!IS_ERR(new))
--		d_instantiate(dentry, new);
--	else
--		rc = PTR_ERR(new);
--out:
--	kfree(path);
--	cifs_free_open_info(&data);
--	kfree(buf);
--	return rc;
--}
--
- static int smb2_make_node(unsigned int xid, struct inode *inode,
- 			  struct dentry *dentry, struct cifs_tcon *tcon,
- 			  const char *full_path, umode_t mode, dev_t dev)
-@@ -5286,8 +5038,8 @@ static int smb2_make_node(unsigned int xid, struct inode *inode,
- 		rc = cifs_sfu_make_node(xid, inode, dentry, tcon,
- 					full_path, mode, dev);
- 	} else {
--		rc = nfs_make_node(xid, inode, dentry, tcon,
--				   full_path, mode, dev);
-+		rc = smb2_make_nfs_node(xid, inode, dentry, tcon,
-+					full_path, mode, dev);
- 	}
- 	return rc;
- }
-diff --git a/fs/smb/client/smb2proto.h b/fs/smb/client/smb2proto.h
-index 221143788a1c0..64a0ef0409a6e 100644
---- a/fs/smb/client/smb2proto.h
-+++ b/fs/smb/client/smb2proto.h
-@@ -310,5 +310,11 @@ int smb311_posix_query_path_info(const unsigned int xid,
- int posix_info_parse(const void *beg, const void *end,
- 		     struct smb2_posix_info_parsed *out);
- int posix_info_sid_size(const void *beg, const void *end);
-+int smb2_create_reparse_symlink(const unsigned int xid, struct inode *inode,
-+				struct dentry *dentry, struct cifs_tcon *tcon,
-+				const char *full_path, const char *symname);
-+int smb2_make_nfs_node(unsigned int xid, struct inode *inode,
-+		       struct dentry *dentry, struct cifs_tcon *tcon,
-+		       const char *full_path, umode_t mode, dev_t dev);
- 
- #endif			/* _SMB2PROTO_H */
+-			rc = SMB2_ioctl_init(tcon, server, &rqst[num_rqst],
+-					     COMPOUND_FID, COMPOUND_FID,
+-					     FSCTL_GET_REPARSE_POINT,
+-					     NULL, 0, CIFSMaxBufSize);
+-			if (rc)
++			if (cfile) {
++				rc = SMB2_ioctl_init(tcon, server, &rqst[num_rqst],
++						     cfile->fid.persistent_fid,
++						     cfile->fid.volatile_fid,
++						     FSCTL_GET_REPARSE_POINT,
++						     NULL, 0, CIFSMaxBufSize);
++			} else {
++				rc = SMB2_ioctl_init(tcon, server, &rqst[num_rqst],
++						     COMPOUND_FID, COMPOUND_FID,
++						     FSCTL_GET_REPARSE_POINT,
++						     NULL, 0, CIFSMaxBufSize);
++			}
++			if (!rc && (!cfile || num_rqst > 1)) {
++				smb2_set_next_command(tcon, &rqst[num_rqst]);
++				smb2_set_related(&rqst[num_rqst]);
++			} else if (rc) {
+ 				goto finished;
+-			smb2_set_next_command(tcon, &rqst[num_rqst]);
+-			smb2_set_related(&rqst[num_rqst++]);
++			}
++			num_rqst++;
+ 			trace_smb3_get_reparse_compound_enter(xid, ses->Suid,
+ 							      tcon->tid, full_path);
+ 			break;
 -- 
 2.43.0
 
