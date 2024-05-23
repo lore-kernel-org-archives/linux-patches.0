@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C5D14AD2B;
-	Thu, 23 May 2024 13:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E164814A604;
+	Thu, 23 May 2024 13:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470111; cv=none; b=lLhl9UQis2hqOtZcrR9z4oH7iIDJEuI8pkwMTyC57OfH/3GEgD+LkiabLVLYYoL1VnSzILg7A9aw3GjO5lYxgqeNGhiVk0rSirK3uEkGPu2MwSYrV/eiPq2fEOiRjzCE5P6sZ9DWkSOPWFtoTHoVLjWyA0Jb0Kabql9RyTxl/Zg=
+	t=1716470114; cv=none; b=IaTFMt1zEHz/dE0SkyBcdjne1aQ23MIQTnyZPLoFTJREFp9DpsZrIN6vY1SyrsyNCxofVZpbgP9IWRWs7n9WXfmEN0lkY/anQvExdncdb61ujig1C9iOXmZSrtN0OjObzIfnw6HlbL6USWUbWBj0yU7PoiHS+VTvl0cMVouGEEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470111; c=relaxed/simple;
-	bh=aNu9ICKEqsolNjac6jaz/z2uLONnZ3p0iABNwboRge8=;
+	s=arc-20240116; t=1716470114; c=relaxed/simple;
+	bh=6NEldmJ5J0jO6MKxjU6pT882xrRKpgXkw0bavVc2ZUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B8ewC6Amn8vEuYLXI2wG/NYeerXC2OgAo2KX8teoZs1FNaO37THZQv/bUpE22O0LJcIOjoD8Tml0DtdHGyZMs1tLDDali7jclvkt+fJl7ViErdRmbbKTL6oTa32vIzuy4iVSNcV6PgT6snZby8sC1AwmtllExzed0q1yLMQnC98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvAFqDKB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZlvWpECYCDngr1WMXKYzSrIr1JJaZJ3FAZktFjbXVbLGBqJ8MnFpwqmUMVb0LrMLsGBvsQ1v9OBR/TTVaEHLRFi2zJTH1MgsSABIUDJHW4U4kdZ5g+HpxtqaYlJyZevuIpBzpmZzZLKA6Zxare6RJiOyasiWuTMDo+bXH8q1PCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFCcBh4M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvAFqDKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE2EC32782;
-	Thu, 23 May 2024 13:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFCcBh4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C066C3277B;
+	Thu, 23 May 2024 13:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470110;
-	bh=aNu9ICKEqsolNjac6jaz/z2uLONnZ3p0iABNwboRge8=;
+	s=korg; t=1716470113;
+	bh=6NEldmJ5J0jO6MKxjU6pT882xrRKpgXkw0bavVc2ZUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VvAFqDKBK3LkVVQ7K3xzo2uSjnsg67UONGSaZ9pSiEjQmk+QSFRiQkzhtWXodpQJ6
-	 CcwyMxLxdQcv9c6AJwboxO5bjewop+w9AvV15z+SKF4HKsml7iN6oGIptxDPB9SI+C
-	 yq0ym4gAy3pqPX/WykXvWS1CH+L6q+WYQST9TAb4=
+	b=zFCcBh4MyKwDx+SWx/H2f7ScWvR+GtsKXrGcjJmqn/zpyS7asdYsBjpNVx/I3J9Hk
+	 huU6dD4YNOfxjWvjucVD8hzWeUyGtXGHX5ZbdUWQXR++7N+75JS4Vpio04XMHqkodk
+	 eDHbNUpDjVTDD/38xzenaF+awNJ+QbdA4sycFtOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liuye <liu.yeC@h3c.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>
-Subject: [PATCH 4.19 17/18] serial: kgdboc: Fix NMI-safety problems from keyboard reset code
-Date: Thu, 23 May 2024 15:12:40 +0200
-Message-ID: <20240523130326.392944420@linuxfoundation.org>
+	Akira Yokosawa <akiyks@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 4.19 18/18] docs: kernel_include.py: Cope with docutils 0.21
+Date: Thu, 23 May 2024 15:12:41 +0200
+Message-ID: <20240523130326.429632764@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130325.727602650@linuxfoundation.org>
 References: <20240523130325.727602650@linuxfoundation.org>
@@ -51,95 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Thompson <daniel.thompson@linaro.org>
+From: Akira Yokosawa <akiyks@gmail.com>
 
-commit b2aba15ad6f908d1a620fd97f6af5620c3639742 upstream.
+commit d43ddd5c91802a46354fa4c4381416ef760676e2 upstream.
 
-Currently, when kdb is compiled with keyboard support, then we will use
-schedule_work() to provoke reset of the keyboard status.  Unfortunately
-schedule_work() gets called from the kgdboc post-debug-exception
-handler.  That risks deadlock since schedule_work() is not NMI-safe and,
-even on platforms where the NMI is not directly used for debugging, the
-debug trap can have NMI-like behaviour depending on where breakpoints
-are placed.
+Running "make htmldocs" on a newly installed Sphinx 7.3.7 ends up in
+a build error:
 
-Fix this by using the irq work system, which is NMI-safe, to defer the
-call to schedule_work() to a point when it is safe to call.
+    Sphinx parallel build error:
+    AttributeError: module 'docutils.nodes' has no attribute 'reprunicode'
 
-Reported-by: Liuye <liu.yeC@h3c.com>
-Closes: https://lore.kernel.org/all/20240228025602.3087748-1-liu.yeC@h3c.com/
+docutils 0.21 has removed nodes.reprunicode, quote from release note [1]:
+
+  * Removed objects:
+
+    docutils.nodes.reprunicode, docutils.nodes.ensure_str()
+        Python 2 compatibility hacks
+
+Sphinx 7.3.0 supports docutils 0.21 [2]:
+
+kernel_include.py, whose origin is misc.py of docutils, uses reprunicode.
+
+Upstream docutils removed the offending line from the corresponding file
+(docutils/docutils/parsers/rst/directives/misc.py) in January 2022.
+Quoting the changelog [3]:
+
+    Deprecate `nodes.reprunicode` and `nodes.ensure_str()`.
+
+    Drop uses of the deprecated constructs (not required with Python 3).
+
+Do the same for kernel_include.py.
+
+Tested against:
+  - Sphinx 2.4.5 (docutils 0.17.1)
+  - Sphinx 3.4.3 (docutils 0.17.1)
+  - Sphinx 5.3.0 (docutils 0.18.1)
+  - Sphinx 6.2.1 (docutils 0.19)
+  - Sphinx 7.2.6 (docutils 0.20.1)
+  - Sphinx 7.3.7 (docutils 0.21.2)
+
+Link: http://www.docutils.org/RELEASE-NOTES.html#release-0-21-2024-04-09 [1]
+Link: https://www.sphinx-doc.org/en/master/changes.html#release-7-3-0-released-apr-16-2024 [2]
+Link: https://github.com/docutils/docutils/commit/c8471ce47a24 [3]
+Signed-off-by: Akira Yokosawa <akiyks@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20240424-kgdboc_fix_schedule_work-v2-1-50f5a490aec5@linaro.org
-Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/faf5fa45-2a9d-4573-9d2e-3930bdc1ed65@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/kgdboc.c |   30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ Documentation/sphinx/kernel_include.py |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/tty/serial/kgdboc.c
-+++ b/drivers/tty/serial/kgdboc.c
-@@ -16,6 +16,7 @@
- #include <linux/console.h>
- #include <linux/vt_kern.h>
- #include <linux/input.h>
-+#include <linux/irq_work.h>
- #include <linux/module.h>
+--- a/Documentation/sphinx/kernel_include.py
++++ b/Documentation/sphinx/kernel_include.py
+@@ -94,7 +94,6 @@ class KernelInclude(Include):
+         # HINT: this is the only line I had to change / commented out:
+         #path = utils.relative_path(None, path)
  
- #define MAX_CONFIG_LEN		40
-@@ -35,6 +36,25 @@ static int kgdboc_use_kms;  /* 1 if we u
- static struct tty_driver	*kgdb_tty_driver;
- static int			kgdb_tty_line;
- 
-+/*
-+ * When we leave the debug trap handler we need to reset the keyboard status
-+ * (since the original keyboard state gets partially clobbered by kdb use of
-+ * the keyboard).
-+ *
-+ * The path to deliver the reset is somewhat circuitous.
-+ *
-+ * To deliver the reset we register an input handler, reset the keyboard and
-+ * then deregister the input handler. However, to get this done right, we do
-+ * have to carefully manage the calling context because we can only register
-+ * input handlers from task context.
-+ *
-+ * In particular we need to trigger the action from the debug trap handler with
-+ * all its NMI and/or NMI-like oddities. To solve this the kgdboc trap exit code
-+ * (the "post_exception" callback) uses irq_work_queue(), which is NMI-safe, to
-+ * schedule a callback from a hardirq context. From there we have to defer the
-+ * work again, this time using schedule_work(), to get a callback using the
-+ * system workqueue, which runs in task context.
-+ */
- #ifdef CONFIG_KDB_KEYBOARD
- static int kgdboc_reset_connect(struct input_handler *handler,
- 				struct input_dev *dev,
-@@ -86,10 +106,17 @@ static void kgdboc_restore_input_helper(
- 
- static DECLARE_WORK(kgdboc_restore_input_work, kgdboc_restore_input_helper);
- 
-+static void kgdboc_queue_restore_input_helper(struct irq_work *unused)
-+{
-+	schedule_work(&kgdboc_restore_input_work);
-+}
-+
-+static DEFINE_IRQ_WORK(kgdboc_restore_input_irq_work, kgdboc_queue_restore_input_helper);
-+
- static void kgdboc_restore_input(void)
- {
- 	if (likely(system_state == SYSTEM_RUNNING))
--		schedule_work(&kgdboc_restore_input_work);
-+		irq_work_queue(&kgdboc_restore_input_irq_work);
- }
- 
- static int kgdboc_register_kbd(char **cptr)
-@@ -120,6 +147,7 @@ static void kgdboc_unregister_kbd(void)
- 			i--;
- 		}
- 	}
-+	irq_work_sync(&kgdboc_restore_input_irq_work);
- 	flush_work(&kgdboc_restore_input_work);
- }
- #else /* ! CONFIG_KDB_KEYBOARD */
+-        path = nodes.reprunicode(path)
+         encoding = self.options.get(
+             'encoding', self.state.document.settings.input_encoding)
+         e_handler=self.state.document.settings.input_encoding_error_handler
 
 
