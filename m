@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9712E14A4E9;
-	Thu, 23 May 2024 13:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F74714B077;
+	Thu, 23 May 2024 13:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470260; cv=none; b=tR4AhNRSMdP12zELe7r0HXbtFbX+E9g4gb0pZ1K3GeAqilSV09VvYmTtX8dCC6Ws4YOko9cmh30E0A51D3I/7Iw1hpSEGBkjmkFsKnBRp367ewfCbayZP4At3MDlfq4yp+i6oUCDFBwO0YltSzItq4UYvVxWdN99l8sAu/M76Lk=
+	t=1716470263; cv=none; b=inQBlVaxVwnxZgSy0tsTtXCBHj9W7T3efYeXfVca3OhFkJn2QnfxVSqPoZvCxq23sfG8tGGtkinPGcmOZ4ZI71tNl7xyxrhDH4Xn/eE4o2E8KEViiIbEQ3fjPEotnd+veZDqNbae2wCQcPQzq7w2PGdaRePl3jwRUxjF9KX9GoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470260; c=relaxed/simple;
-	bh=+PwjzSd57IBdNTAg7L33HdWh3nNq85PVsRJEihMsXn4=;
+	s=arc-20240116; t=1716470263; c=relaxed/simple;
+	bh=VEhrFf6XuK8g0RJFkHnWvFUeo+LFFvJJ9PrqkT6JsUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rb2Jf2Dw1MZX60iIi5d7tWzhuIMrX9mgYzUfjMHN9h02ZQnxlCy4tQn8CCI9kYQlFhOkIkd7tC2Zls0JPDzhsOoZD6+sEcL0VUX7Weqg0LkxE2WtOab1djp2YeFnEEhr/507hj1i0g3XaJam/EUYov8GxZwIhKq3AKu9yEy/FsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7fQOsHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pUPWNKmBmzUHJWFYWjCCELgJwUeTpBYP4FnU2sY2BKVG4nyJ2U3Fs8WMm57262p9eSo9vaMOA0KceFwJ8+kgaDEtNgx8lvEul6wsEAYFgoxJOJB+oFrb7oTdxNUysgcL6SVpiVSx47UP4DGLVV4Dq/WcdtoGEM+qrml23URkHvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaSZcmBx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7fQOsHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF03BC2BD10;
-	Thu, 23 May 2024 13:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaSZcmBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8EEC3277B;
+	Thu, 23 May 2024 13:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470260;
-	bh=+PwjzSd57IBdNTAg7L33HdWh3nNq85PVsRJEihMsXn4=;
+	s=korg; t=1716470262;
+	bh=VEhrFf6XuK8g0RJFkHnWvFUeo+LFFvJJ9PrqkT6JsUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7fQOsHPP4XRBF2tTMj8Db/JKYsXoCM5rhKbcgT7ayvwZ6reCGDzt9DXpDhpwFBzR
-	 fnvrWDW2bEOtQyGtuRacS4gCrXerXde8V+tXr4mqX+OSIxTHx1oHRDDQC5lelP0Ynr
-	 +8PG/fiYQA0Ws9+xcgIL0yhr3It54tRtigVSMNvU=
+	b=TaSZcmBxhWIrzQ+kVjFtMTndCTnZUvRtEuPNzxOFPtF0CQGGvdAK6QjCjK2bhd1f6
+	 ktiLuQ4M478Gh25q47c7et3PbEh3KJSXy7GKoaDT0ePiSNjuqpHZvzYYKyhcd3mULh
+	 9Szhfd18vuEHEQIwA645kcmeC0rpiculi00yfIyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.9 25/25] block: add a partscan sysfs attribute for disks
-Date: Thu, 23 May 2024 15:13:10 +0200
-Message-ID: <20240523130331.328995890@linuxfoundation.org>
+	Liuye <liu.yeC@h3c.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>
+Subject: [PATCH 6.9 16/25] serial: kgdboc: Fix NMI-safety problems from keyboard reset code
+Date: Thu, 23 May 2024 15:13:01 +0200
+Message-ID: <20240523130330.998880571@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130330.386580714@linuxfoundation.org>
 References: <20240523130330.386580714@linuxfoundation.org>
@@ -50,76 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Daniel Thompson <daniel.thompson@linaro.org>
 
-commit a4217c6740dc64a3eb6815868a9260825e8c68c6 upstream.
+commit b2aba15ad6f908d1a620fd97f6af5620c3639742 upstream.
 
-Userspace had been unknowingly relying on a non-stable interface of
-kernel internals to determine if partition scanning is enabled for a
-given disk. Provide a stable interface for this purpose instead.
+Currently, when kdb is compiled with keyboard support, then we will use
+schedule_work() to provoke reset of the keyboard status.  Unfortunately
+schedule_work() gets called from the kgdboc post-debug-exception
+handler.  That risks deadlock since schedule_work() is not NMI-safe and,
+even on platforms where the NMI is not directly used for debugging, the
+debug trap can have NMI-like behaviour depending on where breakpoints
+are placed.
 
-Cc: stable@vger.kernel.org # 6.3+
-Depends-on: 140ce28dd3be ("block: add a disk_has_partscan helper")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/linux-block/ZhQJf8mzq_wipkBH@gardel-login/
-Link: https://lore.kernel.org/r/20240502130033.1958492-3-hch@lst.de
-[axboe: add links and commit message from Keith]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fix this by using the irq work system, which is NMI-safe, to defer the
+call to schedule_work() to a point when it is safe to call.
+
+Reported-by: Liuye <liu.yeC@h3c.com>
+Closes: https://lore.kernel.org/all/20240228025602.3087748-1-liu.yeC@h3c.com/
+Cc: stable@vger.kernel.org
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20240424-kgdboc_fix_schedule_work-v2-1-50f5a490aec5@linaro.org
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/ABI/stable/sysfs-block |   10 ++++++++++
- block/genhd.c                        |    8 ++++++++
- 2 files changed, 18 insertions(+)
+ drivers/tty/serial/kgdboc.c |   30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
---- a/Documentation/ABI/stable/sysfs-block
-+++ b/Documentation/ABI/stable/sysfs-block
-@@ -101,6 +101,16 @@ Description:
- 		devices that support receiving integrity metadata.
+--- a/drivers/tty/serial/kgdboc.c
++++ b/drivers/tty/serial/kgdboc.c
+@@ -19,6 +19,7 @@
+ #include <linux/console.h>
+ #include <linux/vt_kern.h>
+ #include <linux/input.h>
++#include <linux/irq_work.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/serial_core.h>
+@@ -48,6 +49,25 @@ static struct kgdb_io		kgdboc_earlycon_i
+ static int                      (*earlycon_orig_exit)(struct console *con);
+ #endif /* IS_BUILTIN(CONFIG_KGDB_SERIAL_CONSOLE) */
  
++/*
++ * When we leave the debug trap handler we need to reset the keyboard status
++ * (since the original keyboard state gets partially clobbered by kdb use of
++ * the keyboard).
++ *
++ * The path to deliver the reset is somewhat circuitous.
++ *
++ * To deliver the reset we register an input handler, reset the keyboard and
++ * then deregister the input handler. However, to get this done right, we do
++ * have to carefully manage the calling context because we can only register
++ * input handlers from task context.
++ *
++ * In particular we need to trigger the action from the debug trap handler with
++ * all its NMI and/or NMI-like oddities. To solve this the kgdboc trap exit code
++ * (the "post_exception" callback) uses irq_work_queue(), which is NMI-safe, to
++ * schedule a callback from a hardirq context. From there we have to defer the
++ * work again, this time using schedule_work(), to get a callback using the
++ * system workqueue, which runs in task context.
++ */
+ #ifdef CONFIG_KDB_KEYBOARD
+ static int kgdboc_reset_connect(struct input_handler *handler,
+ 				struct input_dev *dev,
+@@ -99,10 +119,17 @@ static void kgdboc_restore_input_helper(
  
-+What:		/sys/block/<disk>/partscan
-+Date:		May 2024
-+Contact:	Christoph Hellwig <hch@lst.de>
-+Description:
-+		The /sys/block/<disk>/partscan files reports if partition
-+		scanning is enabled for the disk.  It returns "1" if partition
-+		scanning is enabled, or "0" if not.  The value type is a 32-bit
-+		unsigned integer, but only "0" and "1" are valid values.
-+
-+
- What:		/sys/block/<disk>/<partition>/alignment_offset
- Date:		April 2009
- Contact:	Martin K. Petersen <martin.petersen@oracle.com>
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -1044,6 +1044,12 @@ static ssize_t diskseq_show(struct devic
- 	return sprintf(buf, "%llu\n", disk->diskseq);
- }
+ static DECLARE_WORK(kgdboc_restore_input_work, kgdboc_restore_input_helper);
  
-+static ssize_t partscan_show(struct device *dev,
-+		struct device_attribute *attr, char *buf)
++static void kgdboc_queue_restore_input_helper(struct irq_work *unused)
 +{
-+	return sprintf(buf, "%u\n", disk_has_partscan(dev_to_disk(dev)));
++	schedule_work(&kgdboc_restore_input_work);
 +}
 +
- static DEVICE_ATTR(range, 0444, disk_range_show, NULL);
- static DEVICE_ATTR(ext_range, 0444, disk_ext_range_show, NULL);
- static DEVICE_ATTR(removable, 0444, disk_removable_show, NULL);
-@@ -1057,6 +1063,7 @@ static DEVICE_ATTR(stat, 0444, part_stat
- static DEVICE_ATTR(inflight, 0444, part_inflight_show, NULL);
- static DEVICE_ATTR(badblocks, 0644, disk_badblocks_show, disk_badblocks_store);
- static DEVICE_ATTR(diskseq, 0444, diskseq_show, NULL);
-+static DEVICE_ATTR(partscan, 0444, partscan_show, NULL);
++static DEFINE_IRQ_WORK(kgdboc_restore_input_irq_work, kgdboc_queue_restore_input_helper);
++
+ static void kgdboc_restore_input(void)
+ {
+ 	if (likely(system_state == SYSTEM_RUNNING))
+-		schedule_work(&kgdboc_restore_input_work);
++		irq_work_queue(&kgdboc_restore_input_irq_work);
+ }
  
- #ifdef CONFIG_FAIL_MAKE_REQUEST
- ssize_t part_fail_show(struct device *dev,
-@@ -1103,6 +1110,7 @@ static struct attribute *disk_attrs[] =
- 	&dev_attr_events_async.attr,
- 	&dev_attr_events_poll_msecs.attr,
- 	&dev_attr_diskseq.attr,
-+	&dev_attr_partscan.attr,
- #ifdef CONFIG_FAIL_MAKE_REQUEST
- 	&dev_attr_fail.attr,
- #endif
+ static int kgdboc_register_kbd(char **cptr)
+@@ -133,6 +160,7 @@ static void kgdboc_unregister_kbd(void)
+ 			i--;
+ 		}
+ 	}
++	irq_work_sync(&kgdboc_restore_input_irq_work);
+ 	flush_work(&kgdboc_restore_input_work);
+ }
+ #else /* ! CONFIG_KDB_KEYBOARD */
 
 
