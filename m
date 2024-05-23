@@ -1,198 +1,132 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835D41E497;
-	Thu, 23 May 2024 13:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC4514B950;
+	Thu, 23 May 2024 13:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470547; cv=none; b=aaVL6FpKs0MnzG9JESbJaWmzPnON4BAE9cH+tMDk2uu+Ipmi9enT1mVTKk0IJFgDatWzRi+z4T6OPPRXoJX/Dlro13u31DRfgUtVQuL90X/RXIfhkF9dgTbJIfK5tbm1JoKzOkIQesNnKysHHqiJIpyEV6c6I+0mNWDQzHxkahs=
+	t=1716470550; cv=none; b=qizfZvemPTk5m+2FAOqpwjwXdpDrApFg/kGz4ugBqnCmSW/UHHn3gnnyESA/YbkZPWPdXS7BHWZbOhwRDfr8/MdJOPZLCmoTORpnYCdotfz9lySaVQkNd5WJVPZy+fuRxhBLg8GF8VKvuJaP/lOmESpuuvG5iuKTeQ26CpttUME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470547; c=relaxed/simple;
-	bh=cAMqcshjNY7oZ9DZf6rf0+n+26VChVTtA6o+CUumKfU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GH79jmQIgjdvCSWRdFOkoeJ43aw5Rq8mThmjiI+GJCPSGtAXCujlx/SLsWUmuyzTxvk16W3WCxhtSFoabBs7rc5jrR+jm4ftZgOaOZzdNNRTLFm0mcIQvZ+aGA6WF/5+6kLCcholRmv1iSblBkUn48GJmqeKz3OEOKlP0s6SlJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WG2+xg8z; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716470550; c=relaxed/simple;
+	bh=/eX/OjUCZzFP9fLRXekoLokrxJyQUrAbYz9L08Oas9o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=albfz5+I7ISvKH7FE9A2kPu1uEIANuco4CD+e8XSq9VM7J6bGcRIpfaZO25NSxIc+0mSVx6XtOiWjrYkdI+/OOswvF0i8tEoXL9yvuLRSkLQRJkTNaxYWEUTJ22QFxoycB38P7XhvLYPUgle7dR005xOY5GZhvEVjdL3aRkJFbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mR40ZFQb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WG2+xg8z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD395C3277B;
-	Thu, 23 May 2024 13:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mR40ZFQb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE20CC3277B;
+	Thu, 23 May 2024 13:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470547;
-	bh=cAMqcshjNY7oZ9DZf6rf0+n+26VChVTtA6o+CUumKfU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=WG2+xg8z0tKbQBMIbvIaZrKyc0jfVSfwwUGLyu+MJnR6PJJpcn02jZbAvukxh33gi
-	 DNGRVPr1C03ajhy3YlUeh4esjC0XYK+0SeQE9wTmynOlj2vQc5UJuNPiE26H2vaeIJ
-	 SeUIVEyfd08MqzSFI4UTBlMI/XRnFHVgqLeI3IYE=
+	s=korg; t=1716470550;
+	bh=/eX/OjUCZzFP9fLRXekoLokrxJyQUrAbYz9L08Oas9o=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=mR40ZFQbBjH1zY5yOJROACJR3KoZ2zGsUZHqYTGDKR+ErZnXL2XctkJZLQfdgnkDX
+	 BNjlIcyS4xFIIOr65rD1PPpsugS55oSpX9xITvIH8L0TOJfL36/Ir6+9tveYrGbbmS
+	 t4IPoGa2QbvmQCAGVsovcHmVQVTMSz1SIxKOuzAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org
-Subject: [PATCH 6.8 00/23] 6.8.11-rc1 review
-Date: Thu, 23 May 2024 15:13:27 +0200
-Message-ID: <20240523130329.745905823@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.8 22/23] block: add a disk_has_partscan helper
+Date: Thu, 23 May 2024 15:13:49 +0200
+Message-ID: <20240523130330.588688366@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240523130329.745905823@linuxfoundation.org>
+References: <20240523130329.745905823@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.11-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.8.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.8.11-rc1
-X-KernelTest-Deadline: 2024-05-25T13:03+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.8.11 release.
-There are 23 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.8-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Sat, 25 May 2024 13:03:15 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.11-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
-and the diffstat can be found below.
+From: Christoph Hellwig <hch@lst.de>
 
-thanks,
+commit 140ce28dd3bee8e53acc27f123ae474d69ef66f0 upstream.
 
-greg k-h
+Add a helper to check if partition scanning is enabled instead of
+open coding the check in a few places.  This now always checks for
+the hidden flag even if all but one of the callers are never reachable
+for hidden gendisks.
 
--------------
-Pseudo-Shortlog of commits:
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20240502130033.1958492-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ block/genhd.c           |    7 ++-----
+ block/partitions/core.c |    5 +----
+ include/linux/blkdev.h  |   13 +++++++++++++
+ 3 files changed, 16 insertions(+), 9 deletions(-)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.8.11-rc1
-
-Christoph Hellwig <hch@lst.de>
-    block: add a partscan sysfs attribute for disks
-
-Christoph Hellwig <hch@lst.de>
-    block: add a disk_has_partscan helper
-
-SeongJae Park <sj@kernel.org>
-    Docs/admin-guide/mm/damon/usage: fix wrong example of DAMOS filter matching sysfs file
-
-Akira Yokosawa <akiyks@gmail.com>
-    docs: kernel_include.py: Cope with docutils 0.21
-
-Thomas Weißschuh <linux@weissschuh.net>
-    admin-guide/hw-vuln/core-scheduling: fix return type of PR_SCHED_CORE_GET
-
-Jarkko Sakkinen <jarkko@kernel.org>
-    KEYS: trusted: Do not use WARN when encode fails
-
-AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-    remoteproc: mediatek: Make sure IPI buffer fits in L2TCM
-
-Daniel Thompson <daniel.thompson@linaro.org>
-    serial: kgdboc: Fix NMI-safety problems from keyboard reset code
-
-Javier Carrasco <javier.carrasco@wolfvision.net>
-    usb: typec: tipd: fix event checking for tps6598x
-
-Javier Carrasco <javier.carrasco@wolfvision.net>
-    usb: typec: tipd: fix event checking for tps25750
-
-Heikki Krogerus <heikki.krogerus@linux.intel.com>
-    usb: typec: ucsi: displayport: Fix potential deadlock
-
-Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-    net: usb: ax88179_178a: fix link status when link is set to down/up
-
-Prashanth K <quic_prashk@quicinc.com>
-    usb: dwc3: Wait unconditionally after issuing EndXfer command
-
-Carlos Llamas <cmllamas@google.com>
-    binder: fix max_thread type inconsistency
-
-Christian Brauner <brauner@kernel.org>
-    erofs: reliably distinguish block based and fscache mode
-
-Baokun Li <libaokun1@huawei.com>
-    erofs: get rid of erofs_fs_context
-
-Jarkko Sakkinen <jarkko@kernel.org>
-    KEYS: trusted: Fix memory leak in tpm2_key_encode()
-
-Sungwoo Kim <iam@sung-woo.kim>
-    Bluetooth: L2CAP: Fix div-by-zero in l2cap_le_flowctl_init()
-
-Sungwoo Kim <iam@sung-woo.kim>
-    Bluetooth: L2CAP: Fix slab-use-after-free in l2cap_connect()
-
-Jacob Keller <jacob.e.keller@intel.com>
-    ice: remove unnecessary duplicate checks for VF VSI ID
-
-Jacob Keller <jacob.e.keller@intel.com>
-    ice: pass VSI pointer into ice_vc_isvalid_q_id
-
-Ronald Wahl <ronald.wahl@raritan.com>
-    net: ks8851: Fix another TX stall caused by wrong ISR flag handling
-
-Jose Fernandez <josef@netflix.com>
-    drm/amd/display: Fix division by zero in setup_dsc_config
-
-
--------------
-
-Diffstat:
-
- Documentation/ABI/stable/sysfs-block               |  10 ++
- .../admin-guide/hw-vuln/core-scheduling.rst        |   4 +-
- Documentation/admin-guide/mm/damon/usage.rst       |   2 +-
- Documentation/sphinx/kernel_include.py             |   1 -
- Makefile                                           |   4 +-
- block/genhd.c                                      |  15 ++-
- block/partitions/core.c                            |   5 +-
- drivers/android/binder.c                           |   2 +-
- drivers/android/binder_internal.h                  |   2 +-
- drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c        |   7 +-
- drivers/net/ethernet/intel/ice/ice_virtchnl.c      |  22 ++--
- drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c |   3 -
- drivers/net/ethernet/micrel/ks8851_common.c        |  18 +--
- drivers/net/usb/ax88179_178a.c                     |  37 ++++--
- drivers/remoteproc/mtk_scp.c                       |  10 +-
- drivers/tty/serial/kgdboc.c                        |  30 ++++-
- drivers/usb/dwc3/gadget.c                          |   4 +-
- drivers/usb/typec/tipd/core.c                      |  51 ++++++---
- drivers/usb/typec/tipd/tps6598x.h                  |  11 ++
- drivers/usb/typec/ucsi/displayport.c               |   4 -
- fs/erofs/internal.h                                |   7 --
- fs/erofs/super.c                                   | 124 +++++++++------------
- include/linux/blkdev.h                             |  13 +++
- include/net/bluetooth/hci.h                        |   9 ++
- include/net/bluetooth/hci_core.h                   |   1 +
- net/bluetooth/hci_conn.c                           |  71 ++++++++----
- net/bluetooth/hci_event.c                          |  31 ++++--
- net/bluetooth/iso.c                                |   2 +-
- net/bluetooth/l2cap_core.c                         |  38 +++----
- net/bluetooth/sco.c                                |   6 +-
- security/keys/trusted-keys/trusted_tpm2.c          |  25 ++++-
- 31 files changed, 339 insertions(+), 230 deletions(-)
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -345,9 +345,7 @@ int disk_scan_partitions(struct gendisk
+ 	struct bdev_handle *handle;
+ 	int ret = 0;
+ 
+-	if (disk->flags & (GENHD_FL_NO_PART | GENHD_FL_HIDDEN))
+-		return -EINVAL;
+-	if (test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
++	if (!disk_has_partscan(disk))
+ 		return -EINVAL;
+ 	if (disk->open_partitions)
+ 		return -EBUSY;
+@@ -503,8 +501,7 @@ int __must_check device_add_disk(struct
+ 			goto out_unregister_bdi;
+ 
+ 		/* Make sure the first partition scan will be proceed */
+-		if (get_capacity(disk) && !(disk->flags & GENHD_FL_NO_PART) &&
+-		    !test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
++		if (get_capacity(disk) && disk_has_partscan(disk))
+ 			set_bit(GD_NEED_PART_SCAN, &disk->state);
+ 
+ 		bdev_add(disk->part0, ddev->devt);
+--- a/block/partitions/core.c
++++ b/block/partitions/core.c
+@@ -584,10 +584,7 @@ static int blk_add_partitions(struct gen
+ 	struct parsed_partitions *state;
+ 	int ret = -EAGAIN, p;
+ 
+-	if (disk->flags & GENHD_FL_NO_PART)
+-		return 0;
+-
+-	if (test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
++	if (!disk_has_partscan(disk))
+ 		return 0;
+ 
+ 	state = check_partition(disk);
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -233,6 +233,19 @@ static inline unsigned int disk_openers(
+ 	return atomic_read(&disk->part0->bd_openers);
+ }
+ 
++/**
++ * disk_has_partscan - return %true if partition scanning is enabled on a disk
++ * @disk: disk to check
++ *
++ * Returns %true if partitions scanning is enabled for @disk, or %false if
++ * partition scanning is disabled either permanently or temporarily.
++ */
++static inline bool disk_has_partscan(struct gendisk *disk)
++{
++	return !(disk->flags & (GENHD_FL_NO_PART | GENHD_FL_HIDDEN)) &&
++		!test_bit(GD_SUPPRESS_PART_SCAN, &disk->state);
++}
++
+ /*
+  * The gendisk is refcounted by the part0 block_device, and the bd_device
+  * therein is also used for device model presentation in sysfs.
 
 
