@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1ED41E497;
-	Thu, 23 May 2024 13:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D1714A634;
+	Thu, 23 May 2024 13:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470564; cv=none; b=JUybSxc7gG/bAFgNaHJhtjzFTzBFl76HgQyqGD7yk0r5xp4hoEMdZDVDE8g604dP9w3cTTMpqrUKDj1v3FdbpGFN0vvvD2bQlAsM64neG78ieotL09Uq1mjHBfEzyGceMXBdhuziT7owU8y0FamSoHa/Oki8uNpfehFq4SoDNCE=
+	t=1716470567; cv=none; b=Vqrs7remERvu1iXT6IzXaDPXSMrn/EEzWWWY4i9Ij03Cl1uD6tlCHagK7ATC1UG7alDJf8zPmbSiLP6R0jBZEA2C/GEt1IS6ggC78M0BnmcifPWbTBJ9VrQvyTQDUy9F+Tdl1PxGHX6YYs0cU8WT50+kCugKBGZOJCv6nrH4t6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470564; c=relaxed/simple;
-	bh=CiL0T8Kj8jfy8azRcYJw2HLntzoXoHhZmMoLPdz+BgU=;
+	s=arc-20240116; t=1716470567; c=relaxed/simple;
+	bh=ztGmeoKAEGdDm5Ff2G4XSKEy4g/pDR7d2keGr9iRtfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2sc/EOs8CHkdeJ7roLlkqtu2E4kh1+AoM0mrI4IYulNu++/XP0eOy3zZi1P6YknFuP+taObOyhU/1bJoaHEhW86Hofcej/ads+Gm+bp0KbbwhLwVcBEMK4kLl6Lrq/PTMVsRR6zuYzxy8d90dpE36VJE3twRkW3OAjtU5HnlQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKlmmZpP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jk7YBbeiRqMtHk023POIGDVejuZML3LL6po8Y37j3qb85xIGEZLneFJApUMK8Kws6Q0Wh4klhYEB1KLTIgzlX4jYiVqCi0r8V8T4is665ZIXkvzTMv+DVe2+8Y7V10HiFReVn6ZOl8/WsN8Nr6BSMUmOvjr1uBWY5mi7DRXP0Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvOiQO+i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKlmmZpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CF5C2BD10;
-	Thu, 23 May 2024 13:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvOiQO+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1184BC3277B;
+	Thu, 23 May 2024 13:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470564;
-	bh=CiL0T8Kj8jfy8azRcYJw2HLntzoXoHhZmMoLPdz+BgU=;
+	s=korg; t=1716470567;
+	bh=ztGmeoKAEGdDm5Ff2G4XSKEy4g/pDR7d2keGr9iRtfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EKlmmZpP4/nfOrJGN2AmxqzAM2k6IrO3akyl5Op23+Pq1/j5CH7KTm9491N0fZ9mU
-	 PxM1OIOnkY29EK/ueaqoKOvnk27r0l+EOMEP+3Rux+8VURZeafGz8+NkLl0UrJE/Vj
-	 Tg5FyIO/+wqFXbRBVg4akykM3LKQ0FEizoIDTcwo=
+	b=bvOiQO+iZPSnvOus9bdmW2qSQFcJuMb1kONHFCCYcb35TzN9sxzaa85SXn9H0W8k7
+	 V9auyo2mUkwoMCNhx+kHck//eIwcU44Gmra/2XNGli3VMJ0ttbwPr6835IkL0uE8ZZ
+	 zUhhcAdpoulPe/cKQ90g3ycRtw3HhasO/D6EOaKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Pierre Mariani <pierre.mariani@gmail.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/102] smb: client: introduce cifs_sfu_make_node()
-Date: Thu, 23 May 2024 15:12:36 +0200
-Message-ID: <20240523130342.890217658@linuxfoundation.org>
+Subject: [PATCH 6.6 012/102] smb: client: Fix minor whitespace errors and warnings
+Date: Thu, 23 May 2024 15:12:37 +0200
+Message-ID: <20240523130342.927260629@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -51,281 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Pierre Mariani <pierre.mariani@gmail.com>
 
-[ Upstream commit b0348e459c836abdb0f4b967e006d15c77cf1c87 ]
+[ Upstream commit 0108ce08aed195d200ffbad74c1948bbaefe6625 ]
 
-Remove duplicate code and add new helper for creating special files in
-SFU (Services for UNIX) format that can be shared by SMB1+ code.
+Fixes no-op checkpatch errors and warnings.
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Pierre Mariani <pierre.mariani@gmail.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsproto.h |  3 ++
- fs/smb/client/smb1ops.c   | 80 ++++-------------------------------
- fs/smb/client/smb2ops.c   | 89 ++++++++++++++++++---------------------
- 3 files changed, 52 insertions(+), 120 deletions(-)
+ fs/smb/client/connect.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
-index 1bdad33580b57..9480cdb9588d5 100644
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -673,6 +673,9 @@ char *extract_sharename(const char *unc);
- int parse_reparse_point(struct reparse_data_buffer *buf,
- 			u32 plen, struct cifs_sb_info *cifs_sb,
- 			bool unicode, struct cifs_open_info_data *data);
-+int cifs_sfu_make_node(unsigned int xid, struct inode *inode,
-+		       struct dentry *dentry, struct cifs_tcon *tcon,
-+		       const char *full_path, umode_t mode, dev_t dev);
- 
- #ifdef CONFIG_CIFS_DFS_UPCALL
- static inline int get_dfs_path(const unsigned int xid, struct cifs_ses *ses,
-diff --git a/fs/smb/client/smb1ops.c b/fs/smb/client/smb1ops.c
-index 1aebcf95c1951..212ec6f66ec65 100644
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -1041,15 +1041,7 @@ cifs_make_node(unsigned int xid, struct inode *inode,
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index cb3bed8364e07..2466b28379ff8 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -501,6 +501,7 @@ static int reconnect_target_unlocked(struct TCP_Server_Info *server, struct dfs_
+ static int reconnect_dfs_server(struct TCP_Server_Info *server)
  {
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
- 	struct inode *newinode = NULL;
--	int rc = -EPERM;
--	struct cifs_open_info_data buf = {};
--	struct cifs_io_parms io_parms;
--	__u32 oplock = 0;
--	struct cifs_fid fid;
--	struct cifs_open_parms oparms;
--	unsigned int bytes_written;
--	struct win_dev *pdev;
--	struct kvec iov[2];
-+	int rc;
+ 	struct dfs_cache_tgt_iterator *target_hint = NULL;
++
+ 	DFS_CACHE_TGT_LIST(tl);
+ 	int num_targets = 0;
+ 	int rc = 0;
+@@ -763,6 +764,7 @@ cifs_read_from_socket(struct TCP_Server_Info *server, char *buf,
+ {
+ 	struct msghdr smb_msg = {};
+ 	struct kvec iov = {.iov_base = buf, .iov_len = to_read};
++
+ 	iov_iter_kvec(&smb_msg.msg_iter, ITER_DEST, &iov, 1, to_read);
  
- 	if (tcon->unix_ext) {
+ 	return cifs_readv_from_socket(server, &smb_msg);
+@@ -1418,11 +1420,13 @@ cifs_match_ipaddr(struct sockaddr *srcaddr, struct sockaddr *rhs)
+ 	case AF_INET: {
+ 		struct sockaddr_in *saddr4 = (struct sockaddr_in *)srcaddr;
+ 		struct sockaddr_in *vaddr4 = (struct sockaddr_in *)rhs;
++
+ 		return (saddr4->sin_addr.s_addr == vaddr4->sin_addr.s_addr);
+ 	}
+ 	case AF_INET6: {
+ 		struct sockaddr_in6 *saddr6 = (struct sockaddr_in6 *)srcaddr;
+ 		struct sockaddr_in6 *vaddr6 = (struct sockaddr_in6 *)rhs;
++
+ 		return (ipv6_addr_equal(&saddr6->sin6_addr, &vaddr6->sin6_addr)
+ 			&& saddr6->sin6_scope_id == vaddr6->sin6_scope_id);
+ 	}
+@@ -2607,8 +2611,8 @@ cifs_get_tcon(struct cifs_ses *ses, struct smb3_fs_context *ctx)
+ 			rc = -EOPNOTSUPP;
+ 			goto out_fail;
+ 		} else {
+-			cifs_dbg(VFS, "Check vers= mount option. SMB3.11 "
+-				"disabled but required for POSIX extensions\n");
++			cifs_dbg(VFS,
++				"Check vers= mount option. SMB3.11 disabled but required for POSIX extensions\n");
+ 			rc = -EOPNOTSUPP;
+ 			goto out_fail;
+ 		}
+@@ -2751,7 +2755,6 @@ cifs_put_tlink(struct tcon_link *tlink)
+ 	if (!IS_ERR(tlink_tcon(tlink)))
+ 		cifs_put_tcon(tlink_tcon(tlink));
+ 	kfree(tlink);
+-	return;
+ }
+ 
+ static int
+@@ -2892,6 +2895,7 @@ static inline void
+ cifs_reclassify_socket4(struct socket *sock)
+ {
+ 	struct sock *sk = sock->sk;
++
+ 	BUG_ON(!sock_allow_reclassification(sk));
+ 	sock_lock_init_class_and_name(sk, "slock-AF_INET-CIFS",
+ 		&cifs_slock_key[0], "sk_lock-AF_INET-CIFS", &cifs_key[0]);
+@@ -2901,6 +2905,7 @@ static inline void
+ cifs_reclassify_socket6(struct socket *sock)
+ {
+ 	struct sock *sk = sock->sk;
++
+ 	BUG_ON(!sock_allow_reclassification(sk));
+ 	sock_lock_init_class_and_name(sk, "slock-AF_INET6-CIFS",
+ 		&cifs_slock_key[1], "sk_lock-AF_INET6-CIFS", &cifs_key[1]);
+@@ -2935,15 +2940,18 @@ static int
+ bind_socket(struct TCP_Server_Info *server)
+ {
+ 	int rc = 0;
++
+ 	if (server->srcaddr.ss_family != AF_UNSPEC) {
+ 		/* Bind to the specified local IP address */
+ 		struct socket *socket = server->ssocket;
++
+ 		rc = kernel_bind(socket,
+ 				 (struct sockaddr *) &server->srcaddr,
+ 				 sizeof(server->srcaddr));
+ 		if (rc < 0) {
+ 			struct sockaddr_in *saddr4;
+ 			struct sockaddr_in6 *saddr6;
++
+ 			saddr4 = (struct sockaddr_in *)&server->srcaddr;
+ 			saddr6 = (struct sockaddr_in6 *)&server->srcaddr;
+ 			if (saddr6->sin6_family == AF_INET6)
+@@ -3173,6 +3181,7 @@ void reset_cifs_unix_caps(unsigned int xid, struct cifs_tcon *tcon,
+ 
+ 	if (!CIFSSMBQFSUnixInfo(xid, tcon)) {
+ 		__u64 cap = le64_to_cpu(tcon->fsUnixInfo.Capability);
++
+ 		cifs_dbg(FYI, "unix caps which server supports %lld\n", cap);
  		/*
-@@ -1083,74 +1075,18 @@ cifs_make_node(unsigned int xid, struct inode *inode,
- 			d_instantiate(dentry, newinode);
- 		return rc;
- 	}
--
- 	/*
--	 * SMB1 SFU emulation: should work with all servers, but only
--	 * support block and char device (no socket & fifo)
-+	 * Check if mounted with mount parm 'sfu' mount parm.
-+	 * SFU emulation should work with all servers, but only
-+	 * supports block and char device (no socket & fifo),
-+	 * and was used by default in earlier versions of Windows
- 	 */
- 	if (!(cifs_sb->mnt_cifs_flags & CIFS_MOUNT_UNX_EMUL))
--		return rc;
--
--	if (!S_ISCHR(mode) && !S_ISBLK(mode))
--		return rc;
--
--	cifs_dbg(FYI, "sfu compat create special file\n");
--
--	oparms = (struct cifs_open_parms) {
--		.tcon = tcon,
--		.cifs_sb = cifs_sb,
--		.desired_access = GENERIC_WRITE,
--		.create_options = cifs_create_options(cifs_sb, CREATE_NOT_DIR |
--						      CREATE_OPTION_SPECIAL),
--		.disposition = FILE_CREATE,
--		.path = full_path,
--		.fid = &fid,
--	};
--
--	if (tcon->ses->server->oplocks)
--		oplock = REQ_OPLOCK;
--	else
--		oplock = 0;
--	rc = tcon->ses->server->ops->open(xid, &oparms, &oplock, &buf);
--	if (rc)
--		return rc;
--
--	/*
--	 * BB Do not bother to decode buf since no local inode yet to put
--	 * timestamps in, but we can reuse it safely.
--	 */
--
--	pdev = (struct win_dev *)&buf.fi;
--	io_parms.pid = current->tgid;
--	io_parms.tcon = tcon;
--	io_parms.offset = 0;
--	io_parms.length = sizeof(struct win_dev);
--	iov[1].iov_base = &buf.fi;
--	iov[1].iov_len = sizeof(struct win_dev);
--	if (S_ISCHR(mode)) {
--		memcpy(pdev->type, "IntxCHR", 8);
--		pdev->major = cpu_to_le64(MAJOR(dev));
--		pdev->minor = cpu_to_le64(MINOR(dev));
--		rc = tcon->ses->server->ops->sync_write(xid, &fid, &io_parms,
--							&bytes_written, iov, 1);
--	} else if (S_ISBLK(mode)) {
--		memcpy(pdev->type, "IntxBLK", 8);
--		pdev->major = cpu_to_le64(MAJOR(dev));
--		pdev->minor = cpu_to_le64(MINOR(dev));
--		rc = tcon->ses->server->ops->sync_write(xid, &fid, &io_parms,
--							&bytes_written, iov, 1);
+ 		 * check for reconnect case in which we do not
+@@ -3698,7 +3707,7 @@ CIFSTCon(const unsigned int xid, struct cifs_ses *ses,
+ 	smb_buffer_response = smb_buffer;
+ 
+ 	header_assemble(smb_buffer, SMB_COM_TREE_CONNECT_ANDX,
+-			NULL /*no tid */ , 4 /*wct */ );
++			NULL /*no tid */, 4 /*wct */);
+ 
+ 	smb_buffer->Mid = get_next_mid(ses->server);
+ 	smb_buffer->Uid = ses->Suid;
+@@ -3717,12 +3726,12 @@ CIFSTCon(const unsigned int xid, struct cifs_ses *ses,
+ 	if (ses->server->sign)
+ 		smb_buffer->Flags2 |= SMBFLG2_SECURITY_SIGNATURE;
+ 
+-	if (ses->capabilities & CAP_STATUS32) {
++	if (ses->capabilities & CAP_STATUS32)
+ 		smb_buffer->Flags2 |= SMBFLG2_ERR_STATUS;
 -	}
--	tcon->ses->server->ops->close(xid, tcon, &fid);
--	d_drop(dentry);
--
--	/* FIXME: add code here to set EAs */
--
--	cifs_free_open_info(&buf);
--	return rc;
-+		return -EPERM;
-+	return cifs_sfu_make_node(xid, inode, dentry, tcon,
-+				  full_path, mode, dev);
- }
- 
--
--
- struct smb_version_operations smb1_operations = {
- 	.send_cancel = send_nt_cancel,
- 	.compare_fids = cifs_compare_fids,
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 04fea874d0a33..2b892a736e5f9 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5105,41 +5105,24 @@ static int smb2_next_header(struct TCP_Server_Info *server, char *buf,
- 	return 0;
- }
- 
--static int
--smb2_make_node(unsigned int xid, struct inode *inode,
--	       struct dentry *dentry, struct cifs_tcon *tcon,
--	       const char *full_path, umode_t mode, dev_t dev)
-+int cifs_sfu_make_node(unsigned int xid, struct inode *inode,
-+		       struct dentry *dentry, struct cifs_tcon *tcon,
-+		       const char *full_path, umode_t mode, dev_t dev)
- {
--	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
--	int rc = -EPERM;
- 	struct cifs_open_info_data buf = {};
--	struct cifs_io_parms io_parms = {0};
--	__u32 oplock = 0;
--	struct cifs_fid fid;
-+	struct TCP_Server_Info *server = tcon->ses->server;
- 	struct cifs_open_parms oparms;
-+	struct cifs_io_parms io_parms = {};
-+	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
-+	struct cifs_fid fid;
- 	unsigned int bytes_written;
- 	struct win_dev *pdev;
- 	struct kvec iov[2];
--
--	/*
--	 * Check if mounted with mount parm 'sfu' mount parm.
--	 * SFU emulation should work with all servers, but only
--	 * supports block and char device (no socket & fifo),
--	 * and was used by default in earlier versions of Windows
--	 */
--	if (!(cifs_sb->mnt_cifs_flags & CIFS_MOUNT_UNX_EMUL))
--		return rc;
--
--	/*
--	 * TODO: Add ability to create instead via reparse point. Windows (e.g.
--	 * their current NFS server) uses this approach to expose special files
--	 * over SMB2/SMB3 and Samba will do this with SMB3.1.1 POSIX Extensions
--	 */
-+	__u32 oplock = server->oplocks ? REQ_OPLOCK : 0;
-+	int rc;
- 
- 	if (!S_ISCHR(mode) && !S_ISBLK(mode) && !S_ISFIFO(mode))
--		return rc;
--
--	cifs_dbg(FYI, "sfu compat create special file\n");
-+		return -EPERM;
- 
- 	oparms = (struct cifs_open_parms) {
- 		.tcon = tcon,
-@@ -5152,11 +5135,7 @@ smb2_make_node(unsigned int xid, struct inode *inode,
- 		.fid = &fid,
- 	};
- 
--	if (tcon->ses->server->oplocks)
--		oplock = REQ_OPLOCK;
--	else
--		oplock = 0;
--	rc = tcon->ses->server->ops->open(xid, &oparms, &oplock, &buf);
-+	rc = server->ops->open(xid, &oparms, &oplock, &buf);
- 	if (rc)
- 		return rc;
- 
-@@ -5164,42 +5143,56 @@ smb2_make_node(unsigned int xid, struct inode *inode,
- 	 * BB Do not bother to decode buf since no local inode yet to put
- 	 * timestamps in, but we can reuse it safely.
- 	 */
--
- 	pdev = (struct win_dev *)&buf.fi;
- 	io_parms.pid = current->tgid;
- 	io_parms.tcon = tcon;
--	io_parms.offset = 0;
--	io_parms.length = sizeof(struct win_dev);
--	iov[1].iov_base = &buf.fi;
--	iov[1].iov_len = sizeof(struct win_dev);
-+	io_parms.length = sizeof(*pdev);
-+	iov[1].iov_base = pdev;
-+	iov[1].iov_len = sizeof(*pdev);
- 	if (S_ISCHR(mode)) {
- 		memcpy(pdev->type, "IntxCHR", 8);
- 		pdev->major = cpu_to_le64(MAJOR(dev));
- 		pdev->minor = cpu_to_le64(MINOR(dev));
--		rc = tcon->ses->server->ops->sync_write(xid, &fid, &io_parms,
--							&bytes_written, iov, 1);
- 	} else if (S_ISBLK(mode)) {
- 		memcpy(pdev->type, "IntxBLK", 8);
- 		pdev->major = cpu_to_le64(MAJOR(dev));
- 		pdev->minor = cpu_to_le64(MINOR(dev));
--		rc = tcon->ses->server->ops->sync_write(xid, &fid, &io_parms,
--							&bytes_written, iov, 1);
- 	} else if (S_ISFIFO(mode)) {
- 		memcpy(pdev->type, "LnxFIFO", 8);
--		pdev->major = 0;
--		pdev->minor = 0;
--		rc = tcon->ses->server->ops->sync_write(xid, &fid, &io_parms,
--							&bytes_written, iov, 1);
- 	}
--	tcon->ses->server->ops->close(xid, tcon, &fid);
--	d_drop(dentry);
- 
-+	rc = server->ops->sync_write(xid, &fid, &io_parms,
-+				     &bytes_written, iov, 1);
-+	server->ops->close(xid, tcon, &fid);
-+	d_drop(dentry);
- 	/* FIXME: add code here to set EAs */
--
- 	cifs_free_open_info(&buf);
- 	return rc;
- }
- 
-+static int smb2_make_node(unsigned int xid, struct inode *inode,
-+			  struct dentry *dentry, struct cifs_tcon *tcon,
-+			  const char *full_path, umode_t mode, dev_t dev)
-+{
-+	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
+-	if (ses->capabilities & CAP_DFS) {
 +
-+	/*
-+	 * Check if mounted with mount parm 'sfu' mount parm.
-+	 * SFU emulation should work with all servers, but only
-+	 * supports block and char device (no socket & fifo),
-+	 * and was used by default in earlier versions of Windows
-+	 */
-+	if (!(cifs_sb->mnt_cifs_flags & CIFS_MOUNT_UNX_EMUL))
-+		return -EPERM;
-+	/*
-+	 * TODO: Add ability to create instead via reparse point. Windows (e.g.
-+	 * their current NFS server) uses this approach to expose special files
-+	 * over SMB2/SMB3 and Samba will do this with SMB3.1.1 POSIX Extensions
-+	 */
-+	return cifs_sfu_make_node(xid, inode, dentry, tcon,
-+				  full_path, mode, dev);
-+}
++	if (ses->capabilities & CAP_DFS)
+ 		smb_buffer->Flags2 |= SMBFLG2_DFS;
+-	}
 +
- #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
- struct smb_version_operations smb20_operations = {
- 	.compare_fids = smb2_compare_fids,
+ 	if (ses->capabilities & CAP_UNICODE) {
+ 		smb_buffer->Flags2 |= SMBFLG2_UNICODE;
+ 		length =
 -- 
 2.43.0
 
