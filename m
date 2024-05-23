@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B19E1D545;
-	Thu, 23 May 2024 13:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623441D545;
+	Thu, 23 May 2024 13:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470812; cv=none; b=EboS+1vZvPCPRuw3OBs4pDnDWborkrZGQieHrYStxAK2blOZNyiaz5lKx3b4iGQnBoqThT/lFViTyqst1lt9wp9ewdEGDSGzDMUKF3GvnBuBxgKOulbT7xgPvbvhrbi2HKH1eR0qAUSqx6n4YJOMw1qjHCGyx5vKpPo60YRGe14=
+	t=1716470815; cv=none; b=EI4PNXQ5xWyERIMYGb2YCWN6lcbsEzrnaWw9FEvBijQ/MQyGiCAvOWTQJ7/66WQZDIuOuX4z9qwBSkTlgSVhPBOzkv16e0jZN++wdJrOA3eywY2Uoq0el+aBOqo5wKCuATEAQk52tBDXyYi8TqjWAvGmO+GhkmEoS1ItyP82YOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470812; c=relaxed/simple;
-	bh=Sj8loP/priNKYd0+bx8fDkm33Vee50eq0u5wfYKS5mo=;
+	s=arc-20240116; t=1716470815; c=relaxed/simple;
+	bh=v3/1w+Ix7o4P1xji5rjpWpUu2GREbVJx3AxXGKpH0cA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3WvQOAksa0tjLT4ifXNXxGBeIWfx8NJY2XxcTHkFUXDAsmb6l/sQmKJIJ/MjRljFAskJ4ux3SaPevbxC+ryVgvtN1G6rNHSGGDz/jd4irH6d1YK3NYI+OHVfXKSMZBIOClsyAMT2jdKFCt5QzU77h51AiPeVSFFPv5KsOavJGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YI76MLGf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rVarpUkge5wuyOCiLY2Vqaw+bm50b5O/ONbOP96DQZJom6SeKkzAOk0vxdTMUll4t+tqAOBc4IkLQmWrt03xkYxww3+NX7GcwUv9j1wGNoJVFgFjNW3Dac6S75tLg8n+AOD8OfLU5lftPv7R2fo2XoI9pyBAgG7zCmB4AnLA5yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpPU7Pd4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YI76MLGf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06219C32781;
-	Thu, 23 May 2024 13:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpPU7Pd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C44C2BD10;
+	Thu, 23 May 2024 13:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470812;
-	bh=Sj8loP/priNKYd0+bx8fDkm33Vee50eq0u5wfYKS5mo=;
+	s=korg; t=1716470815;
+	bh=v3/1w+Ix7o4P1xji5rjpWpUu2GREbVJx3AxXGKpH0cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YI76MLGfPIwNXrIs6wp+mWwUPXMD3ao7SMDfhOf1LJYYR5wGAQ5uO6DDNmoBV/q++
-	 ahtGsk5j6/hpwvqEACuIDC7seSQUEwhTFpaszKIRlSI9orR18AjHoQxTjblw0lcoyi
-	 Hf89hOQ31Q/9DtB2ZUl9CIooB+CMWWZzbPOMrp04=
+	b=bpPU7Pd4+nh230tKrtjaiEnuAd4YrrfC8YS7hXTJm+yIvmLqj/mJYWae8+7YPR4C6
+	 AXVxAETKgBuAyz8jUnu8/G285KCpQZL+TqyWoX9wChNwcZ8lHzN0M7TQ5H3PmcpEnA
+	 yDFAeYpw8lbOVure50llQYvYEy4ZxR2hqshuUNOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.6 097/102] KEYS: trusted: Do not use WARN when encode fails
-Date: Thu, 23 May 2024 15:14:02 +0200
-Message-ID: <20240523130346.132074653@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Chris Hyser <chris.hyser@oracle.com>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 6.6 098/102] admin-guide/hw-vuln/core-scheduling: fix return type of PR_SCHED_CORE_GET
+Date: Thu, 23 May 2024 15:14:03 +0200
+Message-ID: <20240523130346.170373785@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -43,50 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit 050bf3c793a07f96bd1e2fd62e1447f731ed733b upstream.
+commit 8af2d1ab78f2342f8c4c3740ca02d86f0ebfac5a upstream.
 
-When asn1_encode_sequence() fails, WARN is not the correct solution.
+sched_core_share_pid() copies the cookie to userspace with
+put_user(id, (u64 __user *)uaddr), expecting 64 bits of space.
+The "unsigned long" datatype that is documented in core-scheduling.rst
+however is only 32 bits large on 32 bit architectures.
 
-1. asn1_encode_sequence() is not an internal function (located
-   in lib/asn1_encode.c).
-2. Location is known, which makes the stack trace useless.
-3. Results a crash if panic_on_warn is set.
+Document "unsigned long long" as the correct data type that is always
+64bits large.
 
-It is also noteworthy that the use of WARN is undocumented, and it
-should be avoided unless there is a carefully considered rationale to
-use it.
+This matches what the selftest cs_prctl_test.c has been doing all along.
 
-Replace WARN with pr_err, and print the return value instead, which is
-only useful piece of information.
-
-Cc: stable@vger.kernel.org # v5.13+
-Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 0159bb020ca9 ("Documentation: Add usecases, design and interface for core scheduling")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/util-linux/df7a25a0-7923-4f8b-a527-5e6f0064074d@t-8ch.de/
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Chris Hyser <chris.hyser@oracle.com>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/20240423-core-scheduling-cookie-v1-1-5753a35f8dfc@weissschuh.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_tpm2.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/admin-guide/hw-vuln/core-scheduling.rst |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/security/keys/trusted-keys/trusted_tpm2.c
-+++ b/security/keys/trusted-keys/trusted_tpm2.c
-@@ -84,8 +84,9 @@ static int tpm2_key_encode(struct truste
- 	work1 = payload->blob;
- 	work1 = asn1_encode_sequence(work1, work1 + sizeof(payload->blob),
- 				     scratch, work - scratch);
--	if (WARN(IS_ERR(work1), "BUG: ASN.1 encoder failed")) {
-+	if (IS_ERR(work1)) {
- 		ret = PTR_ERR(work1);
-+		pr_err("BUG: ASN.1 encoder failed with %d\n", ret);
- 		goto err;
- 	}
+--- a/Documentation/admin-guide/hw-vuln/core-scheduling.rst
++++ b/Documentation/admin-guide/hw-vuln/core-scheduling.rst
+@@ -67,8 +67,8 @@ arg4:
+     will be performed for all tasks in the task group of ``pid``.
  
+ arg5:
+-    userspace pointer to an unsigned long for storing the cookie returned by
+-    ``PR_SCHED_CORE_GET`` command. Should be 0 for all other commands.
++    userspace pointer to an unsigned long long for storing the cookie returned
++    by ``PR_SCHED_CORE_GET`` command. Should be 0 for all other commands.
+ 
+ In order for a process to push a cookie to, or pull a cookie from a process, it
+ is required to have the ptrace access mode: `PTRACE_MODE_READ_REALCREDS` to the
 
 
