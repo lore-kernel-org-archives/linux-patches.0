@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29071E497;
-	Thu, 23 May 2024 13:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083A81E497;
+	Thu, 23 May 2024 13:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470289; cv=none; b=avrNbr1zRvCLvRHkviM9JvpaFKNyUllCzaNmYx3+nOf1xfZ4OwmQagz6+eLZkJkDuTntRPV81/DVtYgHqtWsiYm84d/O1tiJ0VFQWPBZLr4hfSaA5CZxvSFU5rllKow1l35drtKqX1tl9noN/F7lzVycsxiWrO2kaJRm5Js6NQ4=
+	t=1716470292; cv=none; b=VNQDMp79V8nkW4ys1A+QkEJZce4W7KD06yynge6cSjFWAj2E+0DTZcTQgp6t2tzKIPROnKZhqyCx0dehqugvy4CdZILrvU5goDhostAlv5Yq8FZTAwumZPLHaNK4ar7bi0j9mPsANWh4txt1EzWQ/zD/fQ7AvU3DXrIOnTC5wn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470289; c=relaxed/simple;
-	bh=ofavnzkS8ATe8Yct3OyZNv++Q9edNFjSoHKheyXLWno=;
+	s=arc-20240116; t=1716470292; c=relaxed/simple;
+	bh=qyc0NXrU59JpXoUwAJxg2Tu6GugVSO4+qbdbpJQskWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPM7UrO/2vTg5oyVL5RMdANiTU03TiEEhoK21GMVbuiBEL+rPvd1OV0QKkK7MCtS5KN83Y3gSUTiJ2bVWX1UPC/kCUSfqEhb1eXgmIwyE5h303wUrbB40L6qepxP3XNikCxYF9vOXOMmxXS9Haw2wDj4wcTdz3SzMyQm64NfSwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvAYYwkp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pHdaZZyPp+vy9zzzc41yJFKRtmsNYh6invoi8Ex2WHRd4Rzg/gw3rjbMLawulndEm71k3+CNF+y14TlywV7zT5N9WYDwrnWLP4hH5JN/YK80fWLj/SwJvyNy0KjdIpEVmflJvuIpwoW7Bwkx2TytsZdTtw9cS02kpUkYFwpcAWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPJN5VJm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvAYYwkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B355C2BD10;
-	Thu, 23 May 2024 13:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPJN5VJm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBCDC2BD10;
+	Thu, 23 May 2024 13:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470288;
-	bh=ofavnzkS8ATe8Yct3OyZNv++Q9edNFjSoHKheyXLWno=;
+	s=korg; t=1716470291;
+	bh=qyc0NXrU59JpXoUwAJxg2Tu6GugVSO4+qbdbpJQskWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CvAYYwkpsbLppI4UcU4thCoVScblxj10RRVdxqnuTCATr+9bmODukKNFxlGqYbXtl
-	 B9L+j7NPw6UjmA24CWHEypezvzncQNle2NahGTwSKruZBgrHgQFuh5wnSzs8kLiq7N
-	 6sWrv+cetLo5Iajoe7yh6T/5MnB2CQ5PRRAkLMcs=
+	b=hPJN5VJmOk0z35OBxbESRzZ9+vt03aTj49X6Ohbw/0tNxzQy15UHiS9uyb07R3up0
+	 EkyL1B5TuaUU/IPDAbTJTR0sXoNFdWMH76zm6T3McE7QEd3da2xn18yky2Zqj3vjsu
+	 YwhxAhHmZLCrlZCCmhAdxTumS0jojUKDLhPnjHZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Jose Fernandez <josef@netflix.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Limonciello, Mario" <mario.limonciello@amd.com>
-Subject: [PATCH 5.15 01/23] drm/amd/display: Fix division by zero in setup_dsc_config
-Date: Thu, 23 May 2024 15:12:57 +0200
-Message-ID: <20240523130328.014252014@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	"David S. Miller" <davem@davemloft.net>,
+	Shaoying Xu <shaoyi@amazon.com>
+Subject: [PATCH 5.15 10/23] net: tls: factor out tls_*crypt_async_wait()
+Date: Thu, 23 May 2024 15:13:06 +0200
+Message-ID: <20240523130328.342478955@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130327.956341021@linuxfoundation.org>
 References: <20240523130327.956341021@linuxfoundation.org>
@@ -52,61 +53,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Fernandez <josef@netflix.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 130afc8a886183a94cf6eab7d24f300014ff87ba upstream.
+commit c57ca512f3b68ddcd62bda9cc24a8f5584ab01b1 upstream.
 
-When slice_height is 0, the division by slice_height in the calculation
-of the number of slices will cause a division by zero driver crash. This
-leaves the kernel in a state that requires a reboot. This patch adds a
-check to avoid the division by zero.
+Factor out waiting for async encrypt and decrypt to finish.
+There are already multiple copies and a subsequent fix will
+need more. No functional changes.
 
-The stack trace below is for the 6.8.4 Kernel. I reproduced the issue on
-a Z16 Gen 2 Lenovo Thinkpad with a Apple Studio Display monitor
-connected via Thunderbolt. The amdgpu driver crashed with this exception
-when I rebooted the system with the monitor connected.
+Note that crypto_wait_req() returns wait->err
 
-kernel: ? die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434 arch/x86/kernel/dumpstack.c:447)
-kernel: ? do_trap (arch/x86/kernel/traps.c:113 arch/x86/kernel/traps.c:154)
-kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
-kernel: ? do_error_trap (./arch/x86/include/asm/traps.h:58 arch/x86/kernel/traps.c:175)
-kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
-kernel: ? exc_divide_error (arch/x86/kernel/traps.c:194 (discriminator 2))
-kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
-kernel: ? asm_exc_divide_error (./arch/x86/include/asm/idtentry.h:548)
-kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
-kernel: dc_dsc_compute_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1109) amdgpu
-
-After applying this patch, the driver no longer crashes when the monitor
-is connected and the system is rebooted. I believe this is the same
-issue reported for 3113.
-
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Jose Fernandez <josef@netflix.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3113
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Limonciello, Mario" <mario.limonciello@amd.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: aec7961916f3 ("tls: fix race between async notify and socket close")
+[v5.15: removed changes in tls_sw_splice_eof and adjusted waiting factor out for
+async descrypt in tls_sw_recvmsg]
+Cc: <stable@vger.kernel.org> # 5.15
+Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/tls/tls_sw.c |   90 +++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 49 insertions(+), 41 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
-@@ -939,7 +939,12 @@ static bool setup_dsc_config(
- 	if (!is_dsc_possible)
- 		goto done;
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -226,6 +226,20 @@ static void tls_decrypt_done(struct cryp
+ 	spin_unlock_bh(&ctx->decrypt_compl_lock);
+ }
  
--	dsc_cfg->num_slices_v = pic_height/slice_height;
-+	if (slice_height > 0) {
-+		dsc_cfg->num_slices_v = pic_height / slice_height;
-+	} else {
-+		is_dsc_possible = false;
-+		goto done;
-+	}
++static int tls_decrypt_async_wait(struct tls_sw_context_rx *ctx)
++{
++	int pending;
++
++	spin_lock_bh(&ctx->decrypt_compl_lock);
++	reinit_completion(&ctx->async_wait.completion);
++	pending = atomic_read(&ctx->decrypt_pending);
++	spin_unlock_bh(&ctx->decrypt_compl_lock);
++	if (pending)
++		crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
++
++	return ctx->async_wait.err;
++}
++
+ static int tls_do_decryption(struct sock *sk,
+ 			     struct sk_buff *skb,
+ 			     struct scatterlist *sgin,
+@@ -496,6 +510,28 @@ static void tls_encrypt_done(struct cryp
+ 		schedule_delayed_work(&ctx->tx_work.work, 1);
+ }
  
- 	if (target_bandwidth_kbps > 0) {
- 		is_dsc_possible = decide_dsc_target_bpp_x16(
++static int tls_encrypt_async_wait(struct tls_sw_context_tx *ctx)
++{
++	int pending;
++
++	spin_lock_bh(&ctx->encrypt_compl_lock);
++	ctx->async_notify = true;
++
++	pending = atomic_read(&ctx->encrypt_pending);
++	spin_unlock_bh(&ctx->encrypt_compl_lock);
++	if (pending)
++		crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
++	else
++		reinit_completion(&ctx->async_wait.completion);
++
++	/* There can be no concurrent accesses, since we have no
++	 * pending encrypt operations
++	 */
++	WRITE_ONCE(ctx->async_notify, false);
++
++	return ctx->async_wait.err;
++}
++
+ static int tls_do_encryption(struct sock *sk,
+ 			     struct tls_context *tls_ctx,
+ 			     struct tls_sw_context_tx *ctx,
+@@ -946,7 +982,6 @@ int tls_sw_sendmsg(struct sock *sk, stru
+ 	int num_zc = 0;
+ 	int orig_size;
+ 	int ret = 0;
+-	int pending;
+ 
+ 	if (msg->msg_flags & ~(MSG_MORE | MSG_DONTWAIT | MSG_NOSIGNAL |
+ 			       MSG_CMSG_COMPAT))
+@@ -1115,24 +1150,12 @@ trim_sgl:
+ 	if (!num_async) {
+ 		goto send_end;
+ 	} else if (num_zc) {
+-		/* Wait for pending encryptions to get completed */
+-		spin_lock_bh(&ctx->encrypt_compl_lock);
+-		ctx->async_notify = true;
+-
+-		pending = atomic_read(&ctx->encrypt_pending);
+-		spin_unlock_bh(&ctx->encrypt_compl_lock);
+-		if (pending)
+-			crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
+-		else
+-			reinit_completion(&ctx->async_wait.completion);
++		int err;
+ 
+-		/* There can be no concurrent accesses, since we have no
+-		 * pending encrypt operations
+-		 */
+-		WRITE_ONCE(ctx->async_notify, false);
+-
+-		if (ctx->async_wait.err) {
+-			ret = ctx->async_wait.err;
++		/* Wait for pending encryptions to get completed */
++		err = tls_encrypt_async_wait(ctx);
++		if (err) {
++			ret = err;
+ 			copied = 0;
+ 		}
+ 	}
+@@ -1910,22 +1933,14 @@ pick_next_record:
+ 
+ recv_end:
+ 	if (async) {
+-		int pending;
+-
+ 		/* Wait for all previously submitted records to be decrypted */
+-		spin_lock_bh(&ctx->decrypt_compl_lock);
+-		reinit_completion(&ctx->async_wait.completion);
+-		pending = atomic_read(&ctx->decrypt_pending);
+-		spin_unlock_bh(&ctx->decrypt_compl_lock);
+-		if (pending) {
+-			err = crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
+-			if (err) {
+-				/* one of async decrypt failed */
+-				tls_err_abort(sk, err);
+-				copied = 0;
+-				decrypted = 0;
+-				goto end;
+-			}
++		err = tls_decrypt_async_wait(ctx);
++		if (err) {
++			/* one of async decrypt failed */
++			tls_err_abort(sk, err);
++			copied = 0;
++			decrypted = 0;
++			goto end;
+ 		}
+ 
+ 		/* Drain records from the rx_list & copy if required */
+@@ -2144,16 +2159,9 @@ void tls_sw_release_resources_tx(struct
+ 	struct tls_context *tls_ctx = tls_get_ctx(sk);
+ 	struct tls_sw_context_tx *ctx = tls_sw_ctx_tx(tls_ctx);
+ 	struct tls_rec *rec, *tmp;
+-	int pending;
+ 
+ 	/* Wait for any pending async encryptions to complete */
+-	spin_lock_bh(&ctx->encrypt_compl_lock);
+-	ctx->async_notify = true;
+-	pending = atomic_read(&ctx->encrypt_pending);
+-	spin_unlock_bh(&ctx->encrypt_compl_lock);
+-
+-	if (pending)
+-		crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
++	tls_encrypt_async_wait(ctx);
+ 
+ 	tls_tx_records(sk, -1);
+ 
 
 
