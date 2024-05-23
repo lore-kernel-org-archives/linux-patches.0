@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F3A13B7AE;
-	Thu, 23 May 2024 13:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003DA13B7AE;
+	Thu, 23 May 2024 13:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470662; cv=none; b=aCsNTHkgLdKpaRLzvt8oq31UxzdhK26BxINTqdov4i5ZKFqrs3XznFUd0ieEmOxq3VS+BirNFzREKz7LqM0BRDmSlKI8SdI8jK66tNtcREQMpqTKV9rIhPAbhFrtYlx6Mp5CxuS5cTKxICRKR0sHVRxATkK4sTmiKj76uPu2/PA=
+	t=1716470666; cv=none; b=t1p5W96K4slUm/w0CaMRKa8u9YgvhmqLDpT0ZGJHBsSSj/xxkNq/l7EhdBB3B0l+l8uY9OWkiOkVn1TIStloK81t/xas8N0uJ5BzSTsHFNxkZi7KOJLwGsxqrJARE52O50QJcUeeVkChcC269nWq4vFRfU6tCRU99VJj8H4f830=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470662; c=relaxed/simple;
-	bh=fBQTXv/2V5fuBrKrYoE2bD3dnNnlzFgOMYzoDWzuuzU=;
+	s=arc-20240116; t=1716470666; c=relaxed/simple;
+	bh=uiPwcAQOxbfHo3gn7jfFVEJZDQBKpSaffxprEomLZ1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rwBiw/dJSjJXEc4l54QhNGTnelgcZbwXyk9VYu3w4/mzSukvyzvP93DjLkCGG2K3kqmyCg2V5b/NtmvYB9WnUIY9ApIsYTwZ4RcGDKRIGtnG3quRw1PruLemqvtekUm79nELVN5M8++0ecZLlBorskp3TALp2yJzPxGkg+VOt+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcRNbzQQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AlzYBnKS3D4KxCbNdun1Jt54XOVRvu2Vp/Zr4fgQkwY1iwJ/Ztwb6+VWqALB3jrbbe2BNSJSvQ4DAIXmY5vi28GwoaPnQMKgmHWrtpTzRalZqcbnuQ49j0cXq0RSgs1d6SWU9EbTBoYnqpr7cVcY29GkLs79t9bUXFkth1LBewo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IszQq43; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcRNbzQQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE3BC32781;
-	Thu, 23 May 2024 13:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IszQq43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31448C32781;
+	Thu, 23 May 2024 13:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470662;
-	bh=fBQTXv/2V5fuBrKrYoE2bD3dnNnlzFgOMYzoDWzuuzU=;
+	s=korg; t=1716470665;
+	bh=uiPwcAQOxbfHo3gn7jfFVEJZDQBKpSaffxprEomLZ1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WcRNbzQQRRUV5YnOAPPQNFZdck1kT07pDiSCdrHFK5jS0uS/xqKzuIF32wOEhrRqT
-	 C0j7n9d7a4ddvCfwQo4bJDEk0WVLNvKqsFc9+KsRZWftHIhu5Ht+NEwwjxBgvpD11K
-	 bPkXzAv3PSt7EPGpeaWH3OZmxN0RL+rs+Sm3jS1I=
+	b=0IszQq43GznkKmvQYmKO1d0pNybubZXA8/RvKBagLFjMk60LHXC8rW/29vgwnsoAa
+	 iyCII3ZswGCbqjqinZ9ic80a8vZIZqXi18aZm7Rh0ySPhxk5ZdSfttDgvVb0gz9hEw
+	 z/6x8FXMYhQ2cMcdun1AdVMB0mVYblJe6fhoB/J8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meetakshi Setiya <msetiya@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/102] smb: client: retry compound request without reusing lease
-Date: Thu, 23 May 2024 15:13:09 +0200
-Message-ID: <20240523130344.127635533@linuxfoundation.org>
+Subject: [PATCH 6.6 018/102] smb: client: handle special files and symlinks in SMB3 POSIX
+Date: Thu, 23 May 2024 15:12:43 +0200
+Message-ID: <20240523130343.150748137@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -51,115 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meetakshi Setiya <msetiya@microsoft.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 71f15c90e785d1de4bcd65a279e7256684c25c0d ]
+[ Upstream commit 9c38568a75c160786d5f5d5b96aeefed0c1b76bd ]
 
-There is a shortcoming in the current implementation of the file
-lease mechanism exposed when the lease keys were attempted to be
-reused for unlink, rename and set_path_size operations for a client. As
-per MS-SMB2, lease keys are associated with the file name. Linux smb
-client maintains lease keys with the inode. If the file has any hardlinks,
-it is possible that the lease for a file be wrongly reused for an
-operation on the hardlink or vice versa. In these cases, the mentioned
-compound operations fail with STATUS_INVALID_PARAMETER.
-This patch adds a fallback to the old mechanism of not sending any
-lease with these compound operations if the request with lease key fails
-with STATUS_INVALID_PARAMETER.
-Resending the same request without lease key should not hurt any
-functionality, but might impact performance especially in cases where
-the error is not because of the usage of wrong lease key and we might
-end up doing an extra roundtrip.
+Parse reparse points in SMB3 posix query info as they will be
+supported and required by the new specification.
 
-Signed-off-by: Meetakshi Setiya <msetiya@microsoft.com>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2inode.c | 41 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+ fs/smb/client/inode.c | 50 +++++++++++++++++++++++++------------------
+ 1 file changed, 29 insertions(+), 21 deletions(-)
 
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index 0b7b083352919..add90eb8fc165 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -154,6 +154,17 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index 89dfb405f9c1e..b8260ace2bee9 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -693,29 +693,36 @@ static void smb311_posix_info_to_fattr(struct cifs_fattr *fattr,
+ 		fattr->cf_mtime.tv_sec += tcon->ses->server->timeAdj;
  	}
  
- 	/* if there is an existing lease, reuse it */
-+
 +	/*
-+	 * note: files with hardlinks cause unexpected behaviour. As per MS-SMB2,
-+	 * lease keys are associated with the filepath. We are maintaining lease keys
-+	 * with the inode on the client. If the file has hardlinks, it is possible
-+	 * that the lease for a file be reused for an operation on its hardlink or
-+	 * vice versa.
-+	 * As a workaround, send request using an existing lease key and if the server
-+	 * returns STATUS_INVALID_PARAMETER, which maps to EINVAL, send the request
-+	 * again without the lease.
++	 * The srv fs device id is overridden on network mount so setting
++	 * @fattr->cf_rdev isn't needed here.
 +	 */
- 	if (dentry) {
- 		inode = d_inode(dentry);
- 		if (CIFS_I(inode)->lease_granted && server->ops->get_lease_key) {
-@@ -874,11 +885,20 @@ int
- smb2_unlink(const unsigned int xid, struct cifs_tcon *tcon, const char *name,
- 	    struct cifs_sb_info *cifs_sb, struct dentry *dentry)
- {
--	return smb2_compound_op(xid, tcon, cifs_sb, name, DELETE, FILE_OPEN,
-+	int rc = smb2_compound_op(xid, tcon, cifs_sb, name, DELETE, FILE_OPEN,
- 				CREATE_DELETE_ON_CLOSE | OPEN_REPARSE_POINT,
- 				ACL_NO_MODE, NULL,
- 				&(int){SMB2_OP_DELETE}, 1,
- 				NULL, NULL, NULL, dentry);
-+	if (rc == -EINVAL) {
-+		cifs_dbg(FYI, "invalid lease key, resending request without lease");
-+		rc = smb2_compound_op(xid, tcon, cifs_sb, name, DELETE, FILE_OPEN,
-+				CREATE_DELETE_ON_CLOSE | OPEN_REPARSE_POINT,
-+				ACL_NO_MODE, NULL,
-+				&(int){SMB2_OP_DELETE}, 1,
-+				NULL, NULL, NULL, NULL);
+ 	fattr->cf_eof = le64_to_cpu(info->EndOfFile);
+ 	fattr->cf_bytes = le64_to_cpu(info->AllocationSize);
+ 	fattr->cf_createtime = le64_to_cpu(info->CreationTime);
+-
+ 	fattr->cf_nlink = le32_to_cpu(info->HardLinks);
+ 	fattr->cf_mode = (umode_t) le32_to_cpu(info->Mode);
+-	/* The srv fs device id is overridden on network mount so setting rdev isn't needed here */
+-	/* fattr->cf_rdev = le32_to_cpu(info->DeviceId); */
+ 
+-	if (data->symlink) {
+-		fattr->cf_mode |= S_IFLNK;
+-		fattr->cf_dtype = DT_LNK;
+-		fattr->cf_symlink_target = data->symlink_target;
+-		data->symlink_target = NULL;
+-	} else if (fattr->cf_cifsattrs & ATTR_DIRECTORY) {
++	if (cifs_open_data_reparse(data) &&
++	    cifs_reparse_point_to_fattr(cifs_sb, fattr, data))
++		goto out_reparse;
++
++	fattr->cf_mode &= ~S_IFMT;
++	if (fattr->cf_cifsattrs & ATTR_DIRECTORY) {
+ 		fattr->cf_mode |= S_IFDIR;
+ 		fattr->cf_dtype = DT_DIR;
+ 	} else { /* file */
+ 		fattr->cf_mode |= S_IFREG;
+ 		fattr->cf_dtype = DT_REG;
+ 	}
+-	/* else if reparse point ... TODO: add support for FIFO and blk dev; special file types */
+ 
++out_reparse:
++	if (S_ISLNK(fattr->cf_mode)) {
++		if (likely(data->symlink_target))
++			fattr->cf_eof = strnlen(data->symlink_target, PATH_MAX);
++		fattr->cf_symlink_target = data->symlink_target;
++		data->symlink_target = NULL;
 +	}
-+	return rc;
- }
+ 	sid_to_id(cifs_sb, owner, fattr, SIDOWNER);
+ 	sid_to_id(cifs_sb, group, fattr, SIDGROUP);
  
- static int smb2_set_path_attr(const unsigned int xid, struct cifs_tcon *tcon,
-@@ -919,8 +939,14 @@ int smb2_rename_path(const unsigned int xid,
- 	drop_cached_dir_by_name(xid, tcon, from_name, cifs_sb);
- 	cifs_get_writable_path(tcon, from_name, FIND_WR_WITH_DELETE, &cfile);
+@@ -740,25 +747,25 @@ bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
+ 	if (tag == IO_REPARSE_TAG_NFS && buf) {
+ 		switch (le64_to_cpu(buf->InodeType)) {
+ 		case NFS_SPECFILE_CHR:
+-			fattr->cf_mode |= S_IFCHR | cifs_sb->ctx->file_mode;
++			fattr->cf_mode |= S_IFCHR;
+ 			fattr->cf_dtype = DT_CHR;
+ 			fattr->cf_rdev = nfs_mkdev(buf);
+ 			break;
+ 		case NFS_SPECFILE_BLK:
+-			fattr->cf_mode |= S_IFBLK | cifs_sb->ctx->file_mode;
++			fattr->cf_mode |= S_IFBLK;
+ 			fattr->cf_dtype = DT_BLK;
+ 			fattr->cf_rdev = nfs_mkdev(buf);
+ 			break;
+ 		case NFS_SPECFILE_FIFO:
+-			fattr->cf_mode |= S_IFIFO | cifs_sb->ctx->file_mode;
++			fattr->cf_mode |= S_IFIFO;
+ 			fattr->cf_dtype = DT_FIFO;
+ 			break;
+ 		case NFS_SPECFILE_SOCK:
+-			fattr->cf_mode |= S_IFSOCK | cifs_sb->ctx->file_mode;
++			fattr->cf_mode |= S_IFSOCK;
+ 			fattr->cf_dtype = DT_SOCK;
+ 			break;
+ 		case NFS_SPECFILE_LNK:
+-			fattr->cf_mode = S_IFLNK | cifs_sb->ctx->file_mode;
++			fattr->cf_mode |= S_IFLNK;
+ 			fattr->cf_dtype = DT_LNK;
+ 			break;
+ 		default:
+@@ -770,29 +777,29 @@ bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
  
--	return smb2_set_path_attr(xid, tcon, from_name, to_name, cifs_sb,
-+	int rc = smb2_set_path_attr(xid, tcon, from_name, to_name, cifs_sb,
- 				  co, DELETE, SMB2_OP_RENAME, cfile, source_dentry);
-+	if (rc == -EINVAL) {
-+		cifs_dbg(FYI, "invalid lease key, resending request without lease");
-+		rc = smb2_set_path_attr(xid, tcon, from_name, to_name, cifs_sb,
-+				  co, DELETE, SMB2_OP_RENAME, cfile, NULL);
-+	}
-+	return rc;
- }
+ 	switch (tag) {
+ 	case IO_REPARSE_TAG_LX_SYMLINK:
+-		fattr->cf_mode |= S_IFLNK | cifs_sb->ctx->file_mode;
++		fattr->cf_mode |= S_IFLNK;
+ 		fattr->cf_dtype = DT_LNK;
+ 		break;
+ 	case IO_REPARSE_TAG_LX_FIFO:
+-		fattr->cf_mode |= S_IFIFO | cifs_sb->ctx->file_mode;
++		fattr->cf_mode |= S_IFIFO;
+ 		fattr->cf_dtype = DT_FIFO;
+ 		break;
+ 	case IO_REPARSE_TAG_AF_UNIX:
+-		fattr->cf_mode |= S_IFSOCK | cifs_sb->ctx->file_mode;
++		fattr->cf_mode |= S_IFSOCK;
+ 		fattr->cf_dtype = DT_SOCK;
+ 		break;
+ 	case IO_REPARSE_TAG_LX_CHR:
+-		fattr->cf_mode |= S_IFCHR | cifs_sb->ctx->file_mode;
++		fattr->cf_mode |= S_IFCHR;
+ 		fattr->cf_dtype = DT_CHR;
+ 		break;
+ 	case IO_REPARSE_TAG_LX_BLK:
+-		fattr->cf_mode |= S_IFBLK | cifs_sb->ctx->file_mode;
++		fattr->cf_mode |= S_IFBLK;
+ 		fattr->cf_dtype = DT_BLK;
+ 		break;
+ 	case 0: /* SMB1 symlink */
+ 	case IO_REPARSE_TAG_SYMLINK:
+ 	case IO_REPARSE_TAG_NFS:
+-		fattr->cf_mode = S_IFLNK | cifs_sb->ctx->file_mode;
++		fattr->cf_mode |= S_IFLNK;
+ 		fattr->cf_dtype = DT_LNK;
+ 		break;
+ 	default:
+@@ -832,6 +839,7 @@ static void cifs_open_info_to_fattr(struct cifs_fattr *fattr,
+ 	fattr->cf_createtime = le64_to_cpu(info->CreationTime);
+ 	fattr->cf_nlink = le32_to_cpu(info->NumberOfLinks);
  
- int smb2_create_hardlink(const unsigned int xid,
-@@ -949,11 +975,20 @@ smb2_set_path_size(const unsigned int xid, struct cifs_tcon *tcon,
- 	in_iov.iov_base = &eof;
- 	in_iov.iov_len = sizeof(eof);
- 	cifs_get_writable_path(tcon, full_path, FIND_WR_ANY, &cfile);
--	return smb2_compound_op(xid, tcon, cifs_sb, full_path,
-+	int rc = smb2_compound_op(xid, tcon, cifs_sb, full_path,
- 				FILE_WRITE_DATA, FILE_OPEN,
- 				0, ACL_NO_MODE, &in_iov,
- 				&(int){SMB2_OP_SET_EOF}, 1,
- 				cfile, NULL, NULL, dentry);
-+	if (rc == -EINVAL) {
-+		cifs_dbg(FYI, "invalid lease key, resending request without lease");
-+		rc = smb2_compound_op(xid, tcon, cifs_sb, full_path,
-+				FILE_WRITE_DATA, FILE_OPEN,
-+				0, ACL_NO_MODE, &in_iov,
-+				&(int){SMB2_OP_SET_EOF}, 1,
-+				cfile, NULL, NULL, NULL);
-+	}
-+	return rc;
- }
- 
- int
++	fattr->cf_mode = cifs_sb->ctx->file_mode;
+ 	if (cifs_open_data_reparse(data) &&
+ 	    cifs_reparse_point_to_fattr(cifs_sb, fattr, data))
+ 		goto out_reparse;
 -- 
 2.43.0
 
