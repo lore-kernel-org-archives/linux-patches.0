@@ -1,209 +1,196 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62CC14A62D;
-	Thu, 23 May 2024 13:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7832D14B954;
+	Thu, 23 May 2024 13:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470252; cv=none; b=GDKb1H0j3T7l86619y9FvulhtgGa7xMCAEwa8IgNFr0JVYh7PmXy13yH0TUnkJi/bIAazRHw92Uo48cLSCfw3hT/88hTI7VlfCLJfBeHeAZF3IfODK2P1Yek+ggxVPl1N8wUXaxPxEEqsHtcPeDyfp26Q0r9FcRFwFU1UELtGiQ=
+	t=1716470254; cv=none; b=dNq9bC2nzeEyXNGux8PAIE+R26/Qo/D8CkB1hn62fRYxncSJgJH3oAdQOGOuKXyWjmrxGMP72j5X0ANN8pakv5b0v3z+X+GwOW/DIV9lRyFRMGOLQGtBg7fWBOfDPKuDVWYNAjLkEgEkWYHS0A+NTbhFjqfyu2Y3IjkaCD5XmZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470252; c=relaxed/simple;
-	bh=/4a/xj7cfRIZDCnPtNaV7cN+oIvMYqd0ViXOU/2Moz4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IVXN+XCEX5oIcfkX6Fe5Yy+P5ksYJ7H6O3KcL+p3VEOLByQvYc9Zrc3LPpbFskeqt9wqXabs+vwNOdGZ6UVwyl9jUO39/VOltl5blpkST88/wsQOz9XTvN287ao1MbId4Z+mFv+6RsNXu0J/8Ao6qpRXao0zLGuRYY+0R2R4zpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVJU7Nmr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716470254; c=relaxed/simple;
+	bh=jo8W4rMzAlQ3BFN9Q7b2Q21pnLtD9DfGj/jF2tugkVo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=lWteFG5OkHnqWglkoFEfpC0nM6f7gxkP/Q3gnXoddzqW5BNIH3iVJrsBwUat0A/CMeDv9No+MDyeV6sW4llCSZaCQ0nqsstxrylshSIjLgZBSO6PFwS1zNRXMnLBKVnTc1BuLxMXBBktKvlCGKOxFvcXmWlICI4dBIryJeV0U8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5rwJQyy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVJU7Nmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F06C2BD10;
-	Thu, 23 May 2024 13:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5rwJQyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F11C3277B;
+	Thu, 23 May 2024 13:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470251;
-	bh=/4a/xj7cfRIZDCnPtNaV7cN+oIvMYqd0ViXOU/2Moz4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=QVJU7NmrrdI6MAaUJzDIiO8XRmKm+T4mMIvoj6UTrJHXfh6dfpQIjcvRlZQy5xZCT
-	 Y7FNDfTtOum7zzevN7ATi4TQnYH9Xx3TNOl9OuKXpggLXiXN5B9+SUNbB/lnNcn4ht
-	 N4LWp5mAioQ9ejDUKoWxPtH0UxSMzZ8QAPZMkIEI=
+	s=korg; t=1716470254;
+	bh=jo8W4rMzAlQ3BFN9Q7b2Q21pnLtD9DfGj/jF2tugkVo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=S5rwJQyyXI499L1WpXbDV0+vQR3Tlp1PnFS4GaxdDdOqkJQWYBZDTEh1ia0+0QXze
+	 tk3HE3sIGG3yerQa7W5rI9YMYzvvDCbJ+eQ+dS/kua15RuZ4ubdwIY78Qv38WhhACe
+	 2hNC4qXHYUBe7NP36tWg9rvZvM7ykENpUyHUcHec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org
-Subject: [PATCH 6.9 00/25] 6.9.2-rc1 review
-Date: Thu, 23 May 2024 15:12:45 +0200
-Message-ID: <20240523130330.386580714@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco@wolfvision.net>
+Subject: [PATCH 6.9 15/25] usb: typec: tipd: fix event checking for tps6598x
+Date: Thu, 23 May 2024 15:13:00 +0200
+Message-ID: <20240523130330.962668355@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240523130330.386580714@linuxfoundation.org>
+References: <20240523130330.386580714@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.2-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.9.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.9.2-rc1
-X-KernelTest-Deadline: 2024-05-25T13:03+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.9.2 release.
-There are 25 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.9-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Sat, 25 May 2024 13:03:15 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.2-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
-and the diffstat can be found below.
+From: Javier Carrasco <javier.carrasco@wolfvision.net>
 
-thanks,
+commit 409c1cfb5a803f3cf2d17aeaf75c25c4be951b07 upstream.
 
-greg k-h
+The current interrupt service routine of the tps6598x only reads the
+first 64 bits of the INT_EVENT1 and INT_EVENT2 registers, which means
+that any event above that range will be ignored, leaving interrupts
+unattended. Moreover, those events will not be cleared, and the device
+will keep the interrupt enabled.
 
--------------
-Pseudo-Shortlog of commits:
+This issue has been observed while attempting to load patches, and the
+'ReadyForPatch' field (bit 81) of INT_EVENT1 was set.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.9.2-rc1
+Given that older versions of the tps6598x (1, 2 and 6) provide 8-byte
+registers, a mechanism based on the upper byte of the version register
+(0x0F) has been included. The manufacturer has confirmed [1] that this
+byte is always 0 for older versions, and either 0xF7 (DH parts) or 0xF9
+(DK parts) is returned in newer versions (7 and 8).
 
-Christoph Hellwig <hch@lst.de>
-    block: add a partscan sysfs attribute for disks
+Read the complete INT_EVENT registers to handle all interrupts generated
+by the device and account for the hardware version to select the
+register size.
 
-Christoph Hellwig <hch@lst.de>
-    block: add a disk_has_partscan helper
+Link: https://e2e.ti.com/support/power-management-group/power-management/f/power-management-forum/1346521/tps65987d-register-command-to-distinguish-between-tps6591-2-6-and-tps65987-8 [1]
+Fixes: 0a4c005bd171 ("usb: typec: driver for TI TPS6598x USB Power Delivery controllers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Javier Carrasco <javier.carrasco@wolfvision.net>
+Link: https://lore.kernel.org/r/20240429-tps6598x_fix_event_handling-v3-2-4e8e58dce489@wolfvision.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/usb/typec/tipd/core.c     |   45 +++++++++++++++++++++++++++-----------
+ drivers/usb/typec/tipd/tps6598x.h |   11 +++++++++
+ 2 files changed, 43 insertions(+), 13 deletions(-)
 
-SeongJae Park <sj@kernel.org>
-    Docs/admin-guide/mm/damon/usage: fix wrong schemes effective quota update command
-
-SeongJae Park <sj@kernel.org>
-    Docs/admin-guide/mm/damon/usage: fix wrong example of DAMOS filter matching sysfs file
-
-Akira Yokosawa <akiyks@gmail.com>
-    docs: kernel_include.py: Cope with docutils 0.21
-
-Thomas Weißschuh <linux@weissschuh.net>
-    admin-guide/hw-vuln/core-scheduling: fix return type of PR_SCHED_CORE_GET
-
-Jarkko Sakkinen <jarkko@kernel.org>
-    KEYS: trusted: Do not use WARN when encode fails
-
-Hans Verkuil <hverkuil-cisco@xs4all.nl>
-    Revert "media: v4l2-ctrls: show all owned controls in log_status"
-
-AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-    remoteproc: mediatek: Make sure IPI buffer fits in L2TCM
-
-Daniel Thompson <daniel.thompson@linaro.org>
-    serial: kgdboc: Fix NMI-safety problems from keyboard reset code
-
-Javier Carrasco <javier.carrasco@wolfvision.net>
-    usb: typec: tipd: fix event checking for tps6598x
-
-Javier Carrasco <javier.carrasco@wolfvision.net>
-    usb: typec: tipd: fix event checking for tps25750
-
-Heikki Krogerus <heikki.krogerus@linux.intel.com>
-    usb: typec: ucsi: displayport: Fix potential deadlock
-
-Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-    net: usb: ax88179_178a: fix link status when link is set to down/up
-
-Prashanth K <quic_prashk@quicinc.com>
-    usb: dwc3: Wait unconditionally after issuing EndXfer command
-
-Carlos Llamas <cmllamas@google.com>
-    binder: fix max_thread type inconsistency
-
-Bard Liao <yung-chuan.liao@linux.intel.com>
-    ASoC: Intel: sof_sdw: use generic rtd_init function for Realtek SDW DMICs
-
-Jarkko Sakkinen <jarkko@kernel.org>
-    KEYS: trusted: Fix memory leak in tpm2_key_encode()
-
-Sungwoo Kim <iam@sung-woo.kim>
-    Bluetooth: L2CAP: Fix div-by-zero in l2cap_le_flowctl_init()
-
-Uros Bizjak <ubizjak@gmail.com>
-    x86/percpu: Use __force to cast from __percpu address space
-
-Ronald Wahl <ronald.wahl@raritan.com>
-    net: ks8851: Fix another TX stall caused by wrong ISR flag handling
-
-Jose Fernandez <josef@netflix.com>
-    drm/amd/display: Fix division by zero in setup_dsc_config
-
-Perry Yuan <perry.yuan@amd.com>
-    cpufreq: amd-pstate: fix the highest frequency issue which limits performance
-
-Ben Greear <greearb@candelatech.com>
-    wifi: iwlwifi: Use request_module_nowait
-
-Peter Tsao <peter.tsao@mediatek.com>
-    Bluetooth: btusb: Fix the patch for MT7920 the affected to MT7921
-
-
--------------
-
-Diffstat:
-
- Documentation/ABI/stable/sysfs-block               | 10 +++
- .../admin-guide/hw-vuln/core-scheduling.rst        |  4 +-
- Documentation/admin-guide/mm/damon/usage.rst       |  6 +-
- Documentation/sphinx/kernel_include.py             |  1 -
- Makefile                                           |  4 +-
- arch/x86/include/asm/percpu.h                      |  6 +-
- block/genhd.c                                      | 15 +++--
- block/partitions/core.c                            |  5 +-
- drivers/android/binder.c                           |  2 +-
- drivers/android/binder_internal.h                  |  2 +-
- drivers/bluetooth/btusb.c                          |  1 +
- drivers/cpufreq/amd-pstate.c                       | 22 ++++++-
- drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c        |  7 +-
- drivers/media/v4l2-core/v4l2-ctrls-core.c          | 18 ++----
- drivers/net/ethernet/micrel/ks8851_common.c        | 18 +-----
- drivers/net/usb/ax88179_178a.c                     | 37 +++++++----
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c       | 10 +--
- drivers/remoteproc/mtk_scp.c                       | 10 ++-
- drivers/tty/serial/kgdboc.c                        | 30 ++++++++-
- drivers/usb/dwc3/gadget.c                          |  4 +-
- drivers/usb/typec/tipd/core.c                      | 51 ++++++++++-----
- drivers/usb/typec/tipd/tps6598x.h                  | 11 ++++
- drivers/usb/typec/ucsi/displayport.c               |  4 --
- include/linux/blkdev.h                             | 13 ++++
- include/net/bluetooth/hci.h                        |  9 +++
- include/net/bluetooth/hci_core.h                   |  1 +
- net/bluetooth/hci_conn.c                           | 75 +++++++++++++++-------
- net/bluetooth/hci_event.c                          | 31 +++++----
- net/bluetooth/iso.c                                |  2 +-
- net/bluetooth/l2cap_core.c                         | 17 +----
- net/bluetooth/sco.c                                |  6 +-
- security/keys/trusted-keys/trusted_tpm2.c          | 25 ++++++--
- sound/soc/intel/boards/Makefile                    |  1 +
- sound/soc/intel/boards/sof_sdw.c                   | 12 ++--
- sound/soc/intel/boards/sof_sdw_common.h            |  1 +
- sound/soc/intel/boards/sof_sdw_rt_dmic.c           | 52 +++++++++++++++
- 36 files changed, 357 insertions(+), 166 deletions(-)
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -28,6 +28,7 @@
+ #define TPS_REG_MODE			0x03
+ #define TPS_REG_CMD1			0x08
+ #define TPS_REG_DATA1			0x09
++#define TPS_REG_VERSION			0x0F
+ #define TPS_REG_INT_EVENT1		0x14
+ #define TPS_REG_INT_EVENT2		0x15
+ #define TPS_REG_INT_MASK1		0x16
+@@ -636,49 +637,67 @@ err_unlock:
+ 
+ static irqreturn_t tps6598x_interrupt(int irq, void *data)
+ {
++	int intev_len = TPS_65981_2_6_INTEVENT_LEN;
+ 	struct tps6598x *tps = data;
+-	u64 event1 = 0;
+-	u64 event2 = 0;
++	u64 event1[2] = { };
++	u64 event2[2] = { };
++	u32 version;
+ 	u32 status;
+ 	int ret;
+ 
+ 	mutex_lock(&tps->lock);
+ 
+-	ret = tps6598x_read64(tps, TPS_REG_INT_EVENT1, &event1);
+-	ret |= tps6598x_read64(tps, TPS_REG_INT_EVENT2, &event2);
++	ret = tps6598x_read32(tps, TPS_REG_VERSION, &version);
++	if (ret)
++		dev_warn(tps->dev, "%s: failed to read version (%d)\n",
++			 __func__, ret);
++
++	if (TPS_VERSION_HW_VERSION(version) == TPS_VERSION_HW_65987_8_DH ||
++	    TPS_VERSION_HW_VERSION(version) == TPS_VERSION_HW_65987_8_DK)
++		intev_len = TPS_65987_8_INTEVENT_LEN;
++
++	ret = tps6598x_block_read(tps, TPS_REG_INT_EVENT1, event1, intev_len);
++
++	ret = tps6598x_block_read(tps, TPS_REG_INT_EVENT1, event1, intev_len);
+ 	if (ret) {
+-		dev_err(tps->dev, "%s: failed to read events\n", __func__);
++		dev_err(tps->dev, "%s: failed to read event1\n", __func__);
+ 		goto err_unlock;
+ 	}
+-	trace_tps6598x_irq(event1, event2);
++	ret = tps6598x_block_read(tps, TPS_REG_INT_EVENT2, event2, intev_len);
++	if (ret) {
++		dev_err(tps->dev, "%s: failed to read event2\n", __func__);
++		goto err_unlock;
++	}
++	trace_tps6598x_irq(event1[0], event2[0]);
+ 
+-	if (!(event1 | event2))
++	if (!(event1[0] | event1[1] | event2[0] | event2[1]))
+ 		goto err_unlock;
+ 
+ 	if (!tps6598x_read_status(tps, &status))
+ 		goto err_clear_ints;
+ 
+-	if ((event1 | event2) & TPS_REG_INT_POWER_STATUS_UPDATE)
++	if ((event1[0] | event2[0]) & TPS_REG_INT_POWER_STATUS_UPDATE)
+ 		if (!tps6598x_read_power_status(tps))
+ 			goto err_clear_ints;
+ 
+-	if ((event1 | event2) & TPS_REG_INT_DATA_STATUS_UPDATE)
++	if ((event1[0] | event2[0]) & TPS_REG_INT_DATA_STATUS_UPDATE)
+ 		if (!tps6598x_read_data_status(tps))
+ 			goto err_clear_ints;
+ 
+ 	/* Handle plug insert or removal */
+-	if ((event1 | event2) & TPS_REG_INT_PLUG_EVENT)
++	if ((event1[0] | event2[0]) & TPS_REG_INT_PLUG_EVENT)
+ 		tps6598x_handle_plug_event(tps, status);
+ 
+ err_clear_ints:
+-	tps6598x_write64(tps, TPS_REG_INT_CLEAR1, event1);
+-	tps6598x_write64(tps, TPS_REG_INT_CLEAR2, event2);
++	tps6598x_block_write(tps, TPS_REG_INT_CLEAR1, event1, intev_len);
++	tps6598x_block_write(tps, TPS_REG_INT_CLEAR2, event2, intev_len);
+ 
+ err_unlock:
+ 	mutex_unlock(&tps->lock);
+ 
+-	if (event1 | event2)
++	if (event1[0] | event1[1] | event2[0] | event2[1])
+ 		return IRQ_HANDLED;
++
+ 	return IRQ_NONE;
+ }
+ 
+--- a/drivers/usb/typec/tipd/tps6598x.h
++++ b/drivers/usb/typec/tipd/tps6598x.h
+@@ -253,4 +253,15 @@
+ #define TPS_PTCC_DEV				2
+ #define TPS_PTCC_APP				3
+ 
++/* Version Register */
++#define TPS_VERSION_HW_VERSION_MASK            GENMASK(31, 24)
++#define TPS_VERSION_HW_VERSION(x)              TPS_FIELD_GET(TPS_VERSION_HW_VERSION_MASK, (x))
++#define TPS_VERSION_HW_65981_2_6               0x00
++#define TPS_VERSION_HW_65987_8_DH              0xF7
++#define TPS_VERSION_HW_65987_8_DK              0xF9
++
++/* Int Event Register length */
++#define TPS_65981_2_6_INTEVENT_LEN             8
++#define TPS_65987_8_INTEVENT_LEN               11
++
+ #endif /* __TPS6598X_H__ */
 
 
