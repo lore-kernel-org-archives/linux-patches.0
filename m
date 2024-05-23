@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9961714B941;
-	Thu, 23 May 2024 13:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F31414A4F0;
+	Thu, 23 May 2024 13:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470334; cv=none; b=nux1nrTrf4etJtDlrUQCjQd5Zlk6boRNu2nfiH3VYt4M+S/640NiWnPm42FuZIwT6fyhBPh2rZchK0v5clzWMb53UJLnnXtwkvde2vzL/Cwl9opLQOZRt7IyoYkveddRiV7aQdZHY1tlxqgEKFIlVakj50Xce+J6mPFtr4X7uH0=
+	t=1716470337; cv=none; b=M6eLGb/vk4mMzsM7/PiL3RtXohrFXPmYH8iePU115tsYeX8GyjOCQqZeYERDdpF/7THQ8qUAm1dI6QmUQonlGRdYjPcsU5dmczX/qL3fMYMHaOnhHiYPLnsSW0x6tZDY6EUVZO8IZhSB8KF6qmtJFRoGHRiwxE3UkYOcHKotoUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470334; c=relaxed/simple;
-	bh=RLvW8RwL+BCmIph3FBbHaNhCgzvqb+9LZ8KJWqCljgY=;
+	s=arc-20240116; t=1716470337; c=relaxed/simple;
+	bh=jR7gL44gryZ4ztnQtJM/AiKj/37Iilp+HmXcRVjPswM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aC/Bz0eHhoAFRfdXkgy6l9ifoZ410FRKavJt7kZFWtVSUO1fTrm7/Gf3pNnEHHfcUjfSaUL8MngjT1mE/IQHjwTwVD27/lHDWCczUQkhXInAhHMoQreIp6WCcC+Yi0+qXghRpwi8NJ738PsjCrw6ig2HWGW6+pFEGjzfJjmAWqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7Td1n+K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5MlHKkZkY1+xrrIhKU0o1fXBSx0Augcuxj+c4wxmULwEWrrH9YD4K+YF5zhufXXvnx9t1fGRrd2R6IQpB7RtZ7su0dOuaZ/fJzcBqtGBKgxwMCUGdWyHgmLcE6l34j/dyPKwERECB1EtJH2mYvreRzZ0xP6rKZd1Qbbt8i0jrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjHRnTcf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7Td1n+K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D04C3277B;
-	Thu, 23 May 2024 13:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjHRnTcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED455C2BD10;
+	Thu, 23 May 2024 13:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470334;
-	bh=RLvW8RwL+BCmIph3FBbHaNhCgzvqb+9LZ8KJWqCljgY=;
+	s=korg; t=1716470337;
+	bh=jR7gL44gryZ4ztnQtJM/AiKj/37Iilp+HmXcRVjPswM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7Td1n+KBDV1i0kf90qGW1WOrmYJKi5gALIkF9lXzPpTn48HJMBycc4K5IxQvVSSl
-	 XFW3pNYbmau4AeXYb9fJlBjTGWgV3YB2IpVpwr7aRvdS8a368w2fTNRSTkyrk+EFDW
-	 trKjTGGlOBLjCyI3Juwgvud9qtXQrLgDyNQfHHHo=
+	b=gjHRnTcfN4Qpu4igtHzqJI1qHM91NAYQA8xMsAd1D9e/swL/E/lpGBuh1fAqhjJif
+	 aXVHFA7Ary2+3PFohMPiivzdMK2iGg+zIUz+Dec2iAIU+CCJhgF8gY/IHc5JPEvN6U
+	 GeHz5PAIDU9DjKThRzh7YzuzxM/ndrB1E3ui2eCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 5.15 17/23] binder: fix max_thread type inconsistency
-Date: Thu, 23 May 2024 15:13:13 +0200
-Message-ID: <20240523130328.603045855@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.15 18/23] usb: typec: ucsi: displayport: Fix potential deadlock
+Date: Thu, 23 May 2024 15:13:14 +0200
+Message-ID: <20240523130328.639277092@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130327.956341021@linuxfoundation.org>
 References: <20240523130327.956341021@linuxfoundation.org>
@@ -45,55 +44,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 42316941335644a98335f209daafa4c122f28983 upstream.
+commit b791a67f68121d69108640d4a3e591d210ffe850 upstream.
 
-The type defined for the BINDER_SET_MAX_THREADS ioctl was changed from
-size_t to __u32 in order to avoid incompatibility issues between 32 and
-64-bit kernels. However, the internal types used to copy from user and
-store the value were never updated. Use u32 to fix the inconsistency.
+The function ucsi_displayport_work() does not access the
+connector, so it also must not acquire the connector lock.
 
-Fixes: a9350fc859ae ("staging: android: binder: fix BINDER_SET_MAX_THREADS declaration")
-Reported-by: Arve Hjønnevåg <arve@android.com>
+This fixes a potential deadlock scenario:
+
+ucsi_displayport_work() -> lock(&con->lock)
+typec_altmode_vdm()
+dp_altmode_vdm()
+dp_altmode_work()
+typec_altmode_enter()
+ucsi_displayport_enter() -> lock(&con->lock)
+
+Reported-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20240421173750.3117808-1-cmllamas@google.com
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240507134316.161999-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c          |    2 +-
- drivers/android/binder_internal.h |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/displayport.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -5165,7 +5165,7 @@ static long binder_ioctl(struct file *fi
- 			goto err;
- 		break;
- 	case BINDER_SET_MAX_THREADS: {
--		int max_threads;
-+		u32 max_threads;
+--- a/drivers/usb/typec/ucsi/displayport.c
++++ b/drivers/usb/typec/ucsi/displayport.c
+@@ -275,8 +275,6 @@ static void ucsi_displayport_work(struct
+ 	struct ucsi_dp *dp = container_of(work, struct ucsi_dp, work);
+ 	int ret;
  
- 		if (copy_from_user(&max_threads, ubuf,
- 				   sizeof(max_threads))) {
---- a/drivers/android/binder_internal.h
-+++ b/drivers/android/binder_internal.h
-@@ -420,7 +420,7 @@ struct binder_proc {
- 	struct list_head todo;
- 	struct binder_stats stats;
- 	struct list_head delivered_death;
--	int max_threads;
-+	u32 max_threads;
- 	int requested_threads;
- 	int requested_threads_started;
- 	int tmp_ref;
+-	mutex_lock(&dp->con->lock);
+-
+ 	ret = typec_altmode_vdm(dp->alt, dp->header,
+ 				dp->vdo_data, dp->vdo_size);
+ 	if (ret)
+@@ -285,8 +283,6 @@ static void ucsi_displayport_work(struct
+ 	dp->vdo_data = NULL;
+ 	dp->vdo_size = 0;
+ 	dp->header = 0;
+-
+-	mutex_unlock(&dp->con->lock);
+ }
+ 
+ void ucsi_displayport_remove_partner(struct typec_altmode *alt)
 
 
