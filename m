@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7081D545;
-	Thu, 23 May 2024 13:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118761E497;
+	Thu, 23 May 2024 13:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470163; cv=none; b=oHfFLRvy1myd4+DvtYdDIwMDAX7yaXJ7B6matWyEqhVv43n9jkDdXlv5q6SLUbtwi5EFk3yg9f8Vl9g88CkzFn50/MgG+kn/VqXqduyKnddhFFDmLNgCEbH6qh0tZBtfPCmJfudBqNVGmJV2nNWBxIOd0u/rrFURchzKrk7o2wk=
+	t=1716470166; cv=none; b=n+AovbL78U3DPILckUPPegKBN8eRtb2TG/qsrbjMi58LRPxfGfFK0O6Y3ErVEL07Erw1muH1cTPvVewNLKKJChwzgeyu3uTVxye6gf+RTsAXylOrbA290Hx++xTsX2541IDCbqOVmSObHVbgH7/tbuiyZDt8aZ9tSTu1a84BnBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470163; c=relaxed/simple;
-	bh=6JBMl1KPnq8QzCv1D0XpMlRFT6fuiafwx3yYil/JB+w=;
+	s=arc-20240116; t=1716470166; c=relaxed/simple;
+	bh=1pHtBVXv7BLKyMSdc/KM94DsTKG/7tLuWFPAsFd8rU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iotIKjwmt15PMS0+IFuFzKCs+3o9z/Dv3qe+LkAzdhuQ0PvWiDX8ZV0kTo/shO1uIYkZqx6U/7CBGIrzNY6RLUik7ojc9Ie7m7DBSVkYGx27r2M8L3EYXKFpAOJVt029nC1btIOU/G5FEUgt1dB74DRYzc/uGCzDTqIxN89BPqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fbkJb3a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bh9m4KQdbKNQEkmsu1OcX6fjqbmoVxIqE1Xs3wi3taQ7YlnPAVDEmhDFf8iPMBi6PqT6+OoeFw8208f9lUNdU7lV3OL7e+b5YtNnvgctSPNRAZhIocaTsYWdUuWtyvVspgANqoyCtHHqJ0X4hEX+TJVDpW/lIbHl3ym31FqWnLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sX6VuqwC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fbkJb3a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FD4C2BD10;
-	Thu, 23 May 2024 13:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sX6VuqwC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44060C3277B;
+	Thu, 23 May 2024 13:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470162;
-	bh=6JBMl1KPnq8QzCv1D0XpMlRFT6fuiafwx3yYil/JB+w=;
+	s=korg; t=1716470165;
+	bh=1pHtBVXv7BLKyMSdc/KM94DsTKG/7tLuWFPAsFd8rU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0fbkJb3a/qCgGKct/Dg44A+UFQCCUyPxrIsg2/EC81H5o0ANojRgt3SArM8xZds5o
-	 twg5ENywfG2BVAeyYEnBSAb2GlB1u6q4vYooFO6Vv5Vek1y6TXND+35UFJgGNQ6UuM
-	 Gon3JN/MG8M3FiyXbIKoqvhe/3OiME7rt0/g4H+s=
+	b=sX6VuqwCi+hisMO+ljYIn/88KB5zyzuqJ4EOS0YtVqqyHnIEXe1XxJGKgrmqa3B+i
+	 WTHkOvS31+3a5lKljheyzi1RLIlXfqCe3Ng0unT2mgD15UV03lsE0vliAOzwPajLnZ
+	 PEqgyphMPtW9o5UhEbQEopxofd7zskSPB3e+4w/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH 5.4 16/16] docs: kernel_include.py: Cope with docutils 0.21
-Date: Thu, 23 May 2024 15:12:49 +0200
-Message-ID: <20240523130326.358787831@linuxfoundation.org>
+	Pavel Machek <pavel@denx.de>,
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.4 12/16] btrfs: add missing mutex_unlock in btrfs_relocate_sys_chunks()
+Date: Thu, 23 May 2024 15:12:45 +0200
+Message-ID: <20240523130326.211485861@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130325.743454852@linuxfoundation.org>
 References: <20240523130325.743454852@linuxfoundation.org>
@@ -50,66 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akira Yokosawa <akiyks@gmail.com>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-commit d43ddd5c91802a46354fa4c4381416ef760676e2 upstream.
+commit 9af503d91298c3f2945e73703f0e00995be08c30 upstream.
 
-Running "make htmldocs" on a newly installed Sphinx 7.3.7 ends up in
-a build error:
+The previous patch that replaced BUG_ON by error handling forgot to
+unlock the mutex in the error path.
 
-    Sphinx parallel build error:
-    AttributeError: module 'docutils.nodes' has no attribute 'reprunicode'
-
-docutils 0.21 has removed nodes.reprunicode, quote from release note [1]:
-
-  * Removed objects:
-
-    docutils.nodes.reprunicode, docutils.nodes.ensure_str()
-        Python 2 compatibility hacks
-
-Sphinx 7.3.0 supports docutils 0.21 [2]:
-
-kernel_include.py, whose origin is misc.py of docutils, uses reprunicode.
-
-Upstream docutils removed the offending line from the corresponding file
-(docutils/docutils/parsers/rst/directives/misc.py) in January 2022.
-Quoting the changelog [3]:
-
-    Deprecate `nodes.reprunicode` and `nodes.ensure_str()`.
-
-    Drop uses of the deprecated constructs (not required with Python 3).
-
-Do the same for kernel_include.py.
-
-Tested against:
-  - Sphinx 2.4.5 (docutils 0.17.1)
-  - Sphinx 3.4.3 (docutils 0.17.1)
-  - Sphinx 5.3.0 (docutils 0.18.1)
-  - Sphinx 6.2.1 (docutils 0.19)
-  - Sphinx 7.2.6 (docutils 0.20.1)
-  - Sphinx 7.3.7 (docutils 0.21.2)
-
-Link: http://www.docutils.org/RELEASE-NOTES.html#release-0-21-2024-04-09 [1]
-Link: https://www.sphinx-doc.org/en/master/changes.html#release-7-3-0-released-apr-16-2024 [2]
-Link: https://github.com/docutils/docutils/commit/c8471ce47a24 [3]
-Signed-off-by: Akira Yokosawa <akiyks@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/r/faf5fa45-2a9d-4573-9d2e-3930bdc1ed65@gmail.com
+Link: https://lore.kernel.org/all/Zh%2fHpAGFqa7YAFuM@duo.ucw.cz
+Reported-by: Pavel Machek <pavel@denx.de>
+Fixes: 7411055db5ce ("btrfs: handle chunk tree lookup error in btrfs_relocate_sys_chunks()")
+CC: stable@vger.kernel.org
+Reviewed-by: Pavel Machek <pavel@denx.de>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/sphinx/kernel_include.py |    1 -
- 1 file changed, 1 deletion(-)
+ fs/btrfs/volumes.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/sphinx/kernel_include.py
-+++ b/Documentation/sphinx/kernel_include.py
-@@ -94,7 +94,6 @@ class KernelInclude(Include):
-         # HINT: this is the only line I had to change / commented out:
-         #path = utils.relative_path(None, path)
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -3277,6 +3277,7 @@ again:
+ 			 * alignment and size).
+ 			 */
+ 			ret = -EUCLEAN;
++			mutex_unlock(&fs_info->delete_unused_bgs_mutex);
+ 			goto error;
+ 		}
  
--        path = nodes.reprunicode(path)
-         encoding = self.options.get(
-             'encoding', self.state.document.settings.input_encoding)
-         e_handler=self.state.document.settings.input_encoding_error_handler
 
 
