@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29BB14B955;
-	Thu, 23 May 2024 13:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF52C14A634;
+	Thu, 23 May 2024 13:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470200; cv=none; b=mxCB9/mqm4Y1gTu42CzRV0SYVCLN3Z2nZsLXXO3p4EUkw/bD0t85PEBj5YNm6kaaizaxlVePZNPBUTpjKy2zDSNuUZHg6VQNcublqzyEO71Vb/vk4Ab6Ttd5wOhJGMuZhIoHGYPBla20gg0DKhvq9+RTvpzqqSSmjJ9D8XxueZY=
+	t=1716470202; cv=none; b=Y+JSRovNk2unueEK8Y5nPr4Mym7/dfE9LeRCamNYLipSL6I0IDbOAhpGrCOlYWJaZ/tAieGSxSstc1TtCTjrVK6/tWJtjK+tHf1BVVYZas8ZOFa7cylqnVGmSfPpM0dXSux8YyNnjmDoUQxEzKSkhKNtVSwE966zDTTqaRvduwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470200; c=relaxed/simple;
-	bh=coHV7cK9U7GffXQ0kq2o2gTUQBGK8YuQV6blCCWmoUk=;
+	s=arc-20240116; t=1716470202; c=relaxed/simple;
+	bh=VylK7EqrcXpIvDC74OQMzKS/2IsPFBOjqKML2obJmZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ten48e/ehCQxD1YKdwX2kDvuAwKWflE3G+OO8KgpQFg4+dUYeF1pqCOH/7jrrOgCdo33tnHaQgldYQT0i84zoflg1xOOGt6dG7lhK2N+7FVmITHmz5XAFiuRzmmvePjj3OGalXuKUAFnoMLKGJaVPPkk1yN4vRuELbW/u0R9NxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCsEOz+q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s4iaDBkVinUbXaCtjmaJrjvgsNepnKgO7kFuO6MEN+2y3/q7sEnygJphAnAPIUq2GEv9lF4RzRf29Z/Paj0nfyORsmiNMzR3gOrHa+shhT+kLSEJxFsegGyqZOOgGR7BdfPuzW7NzMDJGdSFdyA/WJNJQ96CsEtgWNXhTPBdPTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tg4h5o1r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCsEOz+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D61C32782;
-	Thu, 23 May 2024 13:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tg4h5o1r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581AAC2BD10;
+	Thu, 23 May 2024 13:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470199;
-	bh=coHV7cK9U7GffXQ0kq2o2gTUQBGK8YuQV6blCCWmoUk=;
+	s=korg; t=1716470202;
+	bh=VylK7EqrcXpIvDC74OQMzKS/2IsPFBOjqKML2obJmZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aCsEOz+qPCws3BaMLHNAwKl1Tt1i02OlfpQUM/8Ym68YCpzw2dsiQ3NP59iONsiJu
-	 6Asf5Fu7Ce4hSvsBjA8h7BAuzXQCkWXYgRlKGUgGLpldRLhWX6gYIFy8QqQSd+E+yS
-	 uyWGnBFhjEH2VZpz25i4jN33dkV3bJ+zcS6V8Bkc=
+	b=tg4h5o1rzarAVaC7Z/qb2jWKd+IuOKIQ6j+bcgJf0S4g3BGM6wyeu71bcK+LmGxB4
+	 sba5yr/bjl5/WhPq9KXqtKUEaTjUf72RsJfD9gikgmqpxu5/At2P2gIycZfa4h/JHu
+	 9jbVqqmQUyh1k0IvaKm9lw2jHYgcnwhhLULzW6YY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liqiong <liqiong@nfschina.com>,
-	THOBY Simon <Simon.THOBY@viveris.fr>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	GUO Zihua <guozihua@huawei.com>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH 5.10 06/15] ima: fix deadlock when traversing "ima_default_rules".
-Date: Thu, 23 May 2024 15:12:48 +0200
-Message-ID: <20240523130326.696422945@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"yenchia.chen" <yenchia.chen@mediatek.com>
+Subject: [PATCH 5.10 07/15] netlink: annotate lockless accesses to nlk->max_recvmsg_len
+Date: Thu, 23 May 2024 15:12:49 +0200
+Message-ID: <20240523130326.734443380@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130326.451548488@linuxfoundation.org>
 References: <20240523130326.451548488@linuxfoundation.org>
@@ -53,143 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: liqiong <liqiong@nfschina.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit eb0782bbdfd0d7c4786216659277c3fd585afc0e upstream.
+commit a1865f2e7d10dde00d35a2122b38d2e469ae67ed upstream.
 
-The current IMA ruleset is identified by the variable "ima_rules"
-that default to "&ima_default_rules". When loading a custom policy
-for the first time, the variable is updated to "&ima_policy_rules"
-instead. That update isn't RCU-safe, and deadlocks are possible.
-Indeed, some functions like ima_match_policy() may loop indefinitely
-when traversing "ima_default_rules" with list_for_each_entry_rcu().
+syzbot reported a data-race in data-race in netlink_recvmsg() [1]
 
-When iterating over the default ruleset back to head, if the list
-head is "ima_default_rules", and "ima_rules" have been updated to
-"&ima_policy_rules", the loop condition (&entry->list != ima_rules)
-stays always true, traversing won't terminate, causing a soft lockup
-and RCU stalls.
+Indeed, netlink_recvmsg() can be run concurrently,
+and netlink_dump() also needs protection.
 
-Introduce a temporary value for "ima_rules" when iterating over
-the ruleset to avoid the deadlocks.
+[1]
+BUG: KCSAN: data-race in netlink_recvmsg / netlink_recvmsg
 
-Signed-off-by: liqiong <liqiong@nfschina.com>
-Reviewed-by: THOBY Simon <Simon.THOBY@viveris.fr>
-Fixes: 38d859f991f3 ("IMA: policy can now be updated multiple times")
-Reported-by: kernel test robot <lkp@intel.com> (Fix sparse: incompatible types in comparison expression.)
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: GUO Zihua <guozihua@huawei.com>
+read to 0xffff888141840b38 of 8 bytes by task 23057 on cpu 0:
+netlink_recvmsg+0xea/0x730 net/netlink/af_netlink.c:1988
+sock_recvmsg_nosec net/socket.c:1017 [inline]
+sock_recvmsg net/socket.c:1038 [inline]
+__sys_recvfrom+0x1ee/0x2e0 net/socket.c:2194
+__do_sys_recvfrom net/socket.c:2212 [inline]
+__se_sys_recvfrom net/socket.c:2208 [inline]
+__x64_sys_recvfrom+0x78/0x90 net/socket.c:2208
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+write to 0xffff888141840b38 of 8 bytes by task 23037 on cpu 1:
+netlink_recvmsg+0x114/0x730 net/netlink/af_netlink.c:1989
+sock_recvmsg_nosec net/socket.c:1017 [inline]
+sock_recvmsg net/socket.c:1038 [inline]
+____sys_recvmsg+0x156/0x310 net/socket.c:2720
+___sys_recvmsg net/socket.c:2762 [inline]
+do_recvmmsg+0x2e5/0x710 net/socket.c:2856
+__sys_recvmmsg net/socket.c:2935 [inline]
+__do_sys_recvmmsg net/socket.c:2958 [inline]
+__se_sys_recvmmsg net/socket.c:2951 [inline]
+__x64_sys_recvmmsg+0xe2/0x160 net/socket.c:2951
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x0000000000000000 -> 0x0000000000001000
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 23037 Comm: syz-executor.2 Not tainted 6.3.0-rc4-syzkaller-00195-g5a57b48fdfcb #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/02/2023
+
+Fixes: 9063e21fb026 ("netlink: autosize skb lengthes")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230403214643.768555-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: yenchia.chen <yenchia.chen@mediatek.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/ima_policy.c |   29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ net/netlink/af_netlink.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/security/integrity/ima/ima_policy.c
-+++ b/security/integrity/ima/ima_policy.c
-@@ -210,7 +210,7 @@ static struct ima_rule_entry *arch_polic
- static LIST_HEAD(ima_default_rules);
- static LIST_HEAD(ima_policy_rules);
- static LIST_HEAD(ima_temp_rules);
--static struct list_head *ima_rules = &ima_default_rules;
-+static struct list_head __rcu *ima_rules = (struct list_head __rcu *)(&ima_default_rules);
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1927,7 +1927,7 @@ static int netlink_recvmsg(struct socket
+ 	struct sock *sk = sock->sk;
+ 	struct netlink_sock *nlk = nlk_sk(sk);
+ 	int noblock = flags & MSG_DONTWAIT;
+-	size_t copied;
++	size_t copied, max_recvmsg_len;
+ 	struct sk_buff *skb, *data_skb;
+ 	int err, ret;
  
- static int ima_policy __initdata;
+@@ -1960,9 +1960,10 @@ static int netlink_recvmsg(struct socket
+ #endif
  
-@@ -648,12 +648,14 @@ int ima_match_policy(struct inode *inode
- {
- 	struct ima_rule_entry *entry;
- 	int action = 0, actmask = flags | (flags << 1);
-+	struct list_head *ima_rules_tmp;
+ 	/* Record the max length of recvmsg() calls for future allocations */
+-	nlk->max_recvmsg_len = max(nlk->max_recvmsg_len, len);
+-	nlk->max_recvmsg_len = min_t(size_t, nlk->max_recvmsg_len,
+-				     SKB_WITH_OVERHEAD(32768));
++	max_recvmsg_len = max(READ_ONCE(nlk->max_recvmsg_len), len);
++	max_recvmsg_len = min_t(size_t, max_recvmsg_len,
++				SKB_WITH_OVERHEAD(32768));
++	WRITE_ONCE(nlk->max_recvmsg_len, max_recvmsg_len);
  
- 	if (template_desc)
- 		*template_desc = ima_template_desc_current();
+ 	copied = data_skb->len;
+ 	if (len < copied) {
+@@ -2211,6 +2212,7 @@ static int netlink_dump(struct sock *sk)
+ 	struct netlink_ext_ack extack = {};
+ 	struct netlink_callback *cb;
+ 	struct sk_buff *skb = NULL;
++	size_t max_recvmsg_len;
+ 	struct module *module;
+ 	int err = -ENOBUFS;
+ 	int alloc_min_size;
+@@ -2233,8 +2235,9 @@ static int netlink_dump(struct sock *sk)
+ 	cb = &nlk->cb;
+ 	alloc_min_size = max_t(int, cb->min_dump_alloc, NLMSG_GOODSIZE);
  
- 	rcu_read_lock();
--	list_for_each_entry_rcu(entry, ima_rules, list) {
-+	ima_rules_tmp = rcu_dereference(ima_rules);
-+	list_for_each_entry_rcu(entry, ima_rules_tmp, list) {
- 
- 		if (!(entry->action & actmask))
- 			continue;
-@@ -701,11 +703,15 @@ int ima_match_policy(struct inode *inode
- void ima_update_policy_flag(void)
- {
- 	struct ima_rule_entry *entry;
-+	struct list_head *ima_rules_tmp;
- 
--	list_for_each_entry(entry, ima_rules, list) {
-+	rcu_read_lock();
-+	ima_rules_tmp = rcu_dereference(ima_rules);
-+	list_for_each_entry_rcu(entry, ima_rules_tmp, list) {
- 		if (entry->action & IMA_DO_MASK)
- 			ima_policy_flag |= entry->action;
- 	}
-+	rcu_read_unlock();
- 
- 	ima_appraise |= (build_ima_appraise | temp_ima_appraise);
- 	if (!ima_appraise)
-@@ -898,10 +904,10 @@ void ima_update_policy(void)
- 
- 	list_splice_tail_init_rcu(&ima_temp_rules, policy, synchronize_rcu);
- 
--	if (ima_rules != policy) {
-+	if (ima_rules != (struct list_head __rcu *)policy) {
- 		ima_policy_flag = 0;
--		ima_rules = policy;
- 
-+		rcu_assign_pointer(ima_rules, policy);
- 		/*
- 		 * IMA architecture specific policy rules are specified
- 		 * as strings and converted to an array of ima_entry_rules
-@@ -989,7 +995,7 @@ static int ima_lsm_rule_init(struct ima_
- 		pr_warn("rule for LSM \'%s\' is undefined\n",
- 			entry->lsm[lsm_rule].args_p);
- 
--		if (ima_rules == &ima_default_rules) {
-+		if (ima_rules == (struct list_head __rcu *)(&ima_default_rules)) {
- 			kfree(entry->lsm[lsm_rule].args_p);
- 			entry->lsm[lsm_rule].args_p = NULL;
- 			result = -EINVAL;
-@@ -1598,9 +1604,11 @@ void *ima_policy_start(struct seq_file *
- {
- 	loff_t l = *pos;
- 	struct ima_rule_entry *entry;
-+	struct list_head *ima_rules_tmp;
- 
- 	rcu_read_lock();
--	list_for_each_entry_rcu(entry, ima_rules, list) {
-+	ima_rules_tmp = rcu_dereference(ima_rules);
-+	list_for_each_entry_rcu(entry, ima_rules_tmp, list) {
- 		if (!l--) {
- 			rcu_read_unlock();
- 			return entry;
-@@ -1619,7 +1627,8 @@ void *ima_policy_next(struct seq_file *m
- 	rcu_read_unlock();
- 	(*pos)++;
- 
--	return (&entry->list == ima_rules) ? NULL : entry;
-+	return (&entry->list == &ima_default_rules ||
-+		&entry->list == &ima_policy_rules) ? NULL : entry;
- }
- 
- void ima_policy_stop(struct seq_file *m, void *v)
-@@ -1823,6 +1832,7 @@ bool ima_appraise_signature(enum kernel_
- 	struct ima_rule_entry *entry;
- 	bool found = false;
- 	enum ima_hooks func;
-+	struct list_head *ima_rules_tmp;
- 
- 	if (id >= READING_MAX_ID)
- 		return false;
-@@ -1834,7 +1844,8 @@ bool ima_appraise_signature(enum kernel_
- 	func = read_idmap[id] ?: FILE_CHECK;
- 
- 	rcu_read_lock();
--	list_for_each_entry_rcu(entry, ima_rules, list) {
-+	ima_rules_tmp = rcu_dereference(ima_rules);
-+	list_for_each_entry_rcu(entry, ima_rules_tmp, list) {
- 		if (entry->action != APPRAISE)
- 			continue;
- 
+-	if (alloc_min_size < nlk->max_recvmsg_len) {
+-		alloc_size = nlk->max_recvmsg_len;
++	max_recvmsg_len = READ_ONCE(nlk->max_recvmsg_len);
++	if (alloc_min_size < max_recvmsg_len) {
++		alloc_size = max_recvmsg_len;
+ 		skb = alloc_skb(alloc_size,
+ 				(GFP_KERNEL & ~__GFP_DIRECT_RECLAIM) |
+ 				__GFP_NOWARN | __GFP_NORETRY);
 
 
