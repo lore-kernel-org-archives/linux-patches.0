@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEA41E4B0;
-	Thu, 23 May 2024 13:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C2C14C599;
+	Thu, 23 May 2024 13:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470377; cv=none; b=lPox/Emj+AWDR7q3rfoq2uouJuV9o6jgK3drXM2nPruJj4AxvqW3V7Z9HBFdY4bCfkrJRIZ8x6iLm+XwmcDA78XB/thU/d/WOa46L5xjDEeXAhQNQR0zJK6nTc1V9L1jm3CZX20LOngt1u/zlbqpRvwVvURddvGHDLXIC4UWQ5s=
+	t=1716470380; cv=none; b=VSWK8tbzwzOSOYjt9n6qg6IXr40TL1iqiEOyngWQlDhnWiItf+cye4FQAVIzucKhvj3xa1jjiX2mzz/RyY86gJVpOc3TudO/mh5yKljVyg3AAqB+K60TXcVITIvUt3MVRisyLQblba3aq1giHiPO4ZBMuzDDJaQK8HnrI0z5vSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470377; c=relaxed/simple;
-	bh=MPBTeuSfY8aTQOiRlD0FULTi2xUvqX0ba8rYBd38ztI=;
+	s=arc-20240116; t=1716470380; c=relaxed/simple;
+	bh=shng2I1rVJ0Et0yDN9XgTbfBz6hoBnJ8fljPAcDgW+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qzcJuFZeml7d3Tl6TVPhoE+rKE2//4on8Smn9VMjF/uamuu5P1l5xCVZ4U7a4uhhCFLK7S5gq4J00jmXwHX9nhOko3Eca5Kg4co++a5aTizUi1i7chSXI4ORpj51RZnISeP7wJQYGfyzv6fOjnwwd2WfbdWzsCgi0J8TTMg8GsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CqtILJSe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z7EdPGpCKVv4wgHKaaXEm09kKuF4GR5235H+Klxp1/0lJZNI2sHIVjEv3CCEPJZ32Cw7o8aTXCz4IKV+3zJlaiyZoQ33gb6cm4uQesifFNThCL92iRbxHB/pNbOT3EZrk7v7Vfe2L08obDBF+rNsbL2n590kMuTT7jQQzMO6Vlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mc4mX6xJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CqtILJSe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC3A5C2BD10;
-	Thu, 23 May 2024 13:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mc4mX6xJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1DFC4AF09;
+	Thu, 23 May 2024 13:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470377;
-	bh=MPBTeuSfY8aTQOiRlD0FULTi2xUvqX0ba8rYBd38ztI=;
+	s=korg; t=1716470380;
+	bh=shng2I1rVJ0Et0yDN9XgTbfBz6hoBnJ8fljPAcDgW+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CqtILJSeZageyRFAeUZ+4Ee9hJLUoHTOL1VYv3xhHEOepgFVmHNwUYFrf3tPad3xF
-	 FvwIM36NYO4Kv+F0VjsOJk9j/XnU9mzToU1OcuAPslY66rRAz75K3Bx5mgeHFv0wh0
-	 OluxsrjPKha5sGQVqEyTV9GxBjc5SgXgYkIcmBts=
+	b=Mc4mX6xJHK7IMuPTcnM6l2pSRFeieZf9CHZePSSPm+Ek99ihnO7Xwk0ohSFuFCDFV
+	 yY1TyNCKYxpD7lM0X+aJUJWZibomwM8JXGfN0Ly9Rp38/x8pHZV+dHXhKOLenlER9/
+	 UE/oQBJpysYWbMyTTLJuyY/wf6yFLhfbITeAdPXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dave Chinner <dchinner@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 16/45] iomap: write iomap validity checks
-Date: Thu, 23 May 2024 15:13:07 +0200
-Message-ID: <20240523130333.104778685@linuxfoundation.org>
+Subject: [PATCH 6.1 17/45] xfs: use iomap_valid method to detect stale cached iomaps
+Date: Thu, 23 May 2024 15:13:08 +0200
+Message-ID: <20240523130333.142766911@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130332.496202557@linuxfoundation.org>
 References: <20240523130332.496202557@linuxfoundation.org>
@@ -54,258 +53,382 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit d7b64041164ca177170191d2ad775da074ab2926 ]
+[ Upstream commit 304a68b9c63bbfc1f6e159d68e8892fc54a06067 ]
 
-A recent multithreaded write data corruption has been uncovered in
-the iomap write code. The core of the problem is partial folio
-writes can be flushed to disk while a new racing write can map it
-and fill the rest of the page:
-
-writeback			new write
-
-allocate blocks
-  blocks are unwritten
-submit IO
-.....
-				map blocks
-				iomap indicates UNWRITTEN range
-				loop {
-				  lock folio
-				  copyin data
-.....
-IO completes
-  runs unwritten extent conv
-    blocks are marked written
-				  <iomap now stale>
-				  get next folio
-				}
-
-Now add memory pressure such that memory reclaim evicts the
-partially written folio that has already been written to disk.
-
-When the new write finally gets to the last partial page of the new
-write, it does not find it in cache, so it instantiates a new page,
-sees the iomap is unwritten, and zeros the part of the page that
-it does not have data from. This overwrites the data on disk that
-was originally written.
-
-The full description of the corruption mechanism can be found here:
+Now that iomap supports a mechanism to validate cached iomaps for
+buffered write operations, hook it up to the XFS buffered write ops
+so that we can avoid data corruptions that result from stale cached
+iomaps. See:
 
 https://lore.kernel.org/linux-xfs/20220817093627.GZ3600936@dread.disaster.area/
 
-To solve this problem, we need to check whether the iomap is still
-valid after we lock each folio during the write. We have to do it
-after we lock the page so that we don't end up with state changes
-occurring while we wait for the folio to be locked.
+or the ->iomap_valid() introduction commit for exact details of the
+corruption vector.
 
-Hence we need a mechanism to be able to check that the cached iomap
-is still valid (similar to what we already do in buffered
-writeback), and we need a way for ->begin_write to back out and
-tell the high level iomap iterator that we need to remap the
-remaining write range.
-
-The iomap needs to grow some storage for the validity cookie that
-the filesystem provides to travel with the iomap. XFS, in
-particular, also needs to know some more information about what the
-iomap maps (attribute extents rather than file data extents) to for
-the validity cookie to cover all the types of iomaps we might need
-to validate.
+The validity cookie we store in the iomap is based on the type of
+iomap we return. It is expected that the iomap->flags we set in
+xfs_bmbt_to_iomap() is not perturbed by the iomap core and are
+returned to us in the iomap passed via the .iomap_valid() callback.
+This ensures that the validity cookie is always checking the correct
+inode fork sequence numbers to detect potential changes that affect
+the extent cached by the iomap.
 
 Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/iomap/buffered-io.c |   29 ++++++++++++++++++++++++++++-
- fs/iomap/iter.c        |   19 ++++++++++++++++++-
- include/linux/iomap.h  |   43 +++++++++++++++++++++++++++++++++++--------
- 3 files changed, 81 insertions(+), 10 deletions(-)
+ fs/xfs/libxfs/xfs_bmap.c |    6 +-
+ fs/xfs/xfs_aops.c        |    2 
+ fs/xfs/xfs_iomap.c       |   95 +++++++++++++++++++++++++++++++++++++----------
+ fs/xfs/xfs_iomap.h       |    5 +-
+ fs/xfs/xfs_pnfs.c        |    6 +-
+ 5 files changed, 87 insertions(+), 27 deletions(-)
 
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -579,7 +579,7 @@ static int iomap_write_begin_inline(cons
- 	return iomap_read_inline_data(iter, folio);
+--- a/fs/xfs/libxfs/xfs_bmap.c
++++ b/fs/xfs/libxfs/xfs_bmap.c
+@@ -4551,7 +4551,8 @@ xfs_bmapi_convert_delalloc(
+ 	 * the extent.  Just return the real extent at this offset.
+ 	 */
+ 	if (!isnullstartblock(bma.got.br_startblock)) {
+-		xfs_bmbt_to_iomap(ip, iomap, &bma.got, 0, flags);
++		xfs_bmbt_to_iomap(ip, iomap, &bma.got, 0, flags,
++				xfs_iomap_inode_sequence(ip, flags));
+ 		*seq = READ_ONCE(ifp->if_seq);
+ 		goto out_trans_cancel;
+ 	}
+@@ -4599,7 +4600,8 @@ xfs_bmapi_convert_delalloc(
+ 	XFS_STATS_INC(mp, xs_xstrat_quick);
+ 
+ 	ASSERT(!isnullstartblock(bma.got.br_startblock));
+-	xfs_bmbt_to_iomap(ip, iomap, &bma.got, 0, flags);
++	xfs_bmbt_to_iomap(ip, iomap, &bma.got, 0, flags,
++				xfs_iomap_inode_sequence(ip, flags));
+ 	*seq = READ_ONCE(ifp->if_seq);
+ 
+ 	if (whichfork == XFS_COW_FORK)
+--- a/fs/xfs/xfs_aops.c
++++ b/fs/xfs/xfs_aops.c
+@@ -372,7 +372,7 @@ retry:
+ 	    isnullstartblock(imap.br_startblock))
+ 		goto allocate_blocks;
+ 
+-	xfs_bmbt_to_iomap(ip, &wpc->iomap, &imap, 0, 0);
++	xfs_bmbt_to_iomap(ip, &wpc->iomap, &imap, 0, 0, XFS_WPC(wpc)->data_seq);
+ 	trace_xfs_map_blocks_found(ip, offset, count, whichfork, &imap);
+ 	return 0;
+ allocate_blocks:
+--- a/fs/xfs/xfs_iomap.c
++++ b/fs/xfs/xfs_iomap.c
+@@ -48,13 +48,45 @@ xfs_alert_fsblock_zero(
+ 	return -EFSCORRUPTED;
  }
  
--static int iomap_write_begin(const struct iomap_iter *iter, loff_t pos,
-+static int iomap_write_begin(struct iomap_iter *iter, loff_t pos,
- 		size_t len, struct folio **foliop)
- {
- 	const struct iomap_page_ops *page_ops = iter->iomap.page_ops;
-@@ -613,6 +613,27 @@ static int iomap_write_begin(const struc
- 		status = (iter->flags & IOMAP_NOWAIT) ? -EAGAIN : -ENOMEM;
- 		goto out_no_page;
- 	}
++u64
++xfs_iomap_inode_sequence(
++	struct xfs_inode	*ip,
++	u16			iomap_flags)
++{
++	u64			cookie = 0;
 +
-+	/*
-+	 * Now we have a locked folio, before we do anything with it we need to
-+	 * check that the iomap we have cached is not stale. The inode extent
-+	 * mapping can change due to concurrent IO in flight (e.g.
-+	 * IOMAP_UNWRITTEN state can change and memory reclaim could have
-+	 * reclaimed a previously partially written page at this index after IO
-+	 * completion before this write reaches this file offset) and hence we
-+	 * could do the wrong thing here (zero a page range incorrectly or fail
-+	 * to zero) and corrupt data.
-+	 */
-+	if (page_ops && page_ops->iomap_valid) {
-+		bool iomap_valid = page_ops->iomap_valid(iter->inode,
-+							&iter->iomap);
-+		if (!iomap_valid) {
-+			iter->iomap.flags |= IOMAP_F_STALE;
-+			status = 0;
-+			goto out_unlock;
-+		}
-+	}
++	if (iomap_flags & IOMAP_F_XATTR)
++		return READ_ONCE(ip->i_af.if_seq);
++	if ((iomap_flags & IOMAP_F_SHARED) && ip->i_cowfp)
++		cookie = (u64)READ_ONCE(ip->i_cowfp->if_seq) << 32;
++	return cookie | READ_ONCE(ip->i_df.if_seq);
++}
 +
- 	if (pos + len > folio_pos(folio) + folio_size(folio))
- 		len = folio_pos(folio) + folio_size(folio) - pos;
- 
-@@ -768,6 +789,8 @@ again:
- 		status = iomap_write_begin(iter, pos, bytes, &folio);
- 		if (unlikely(status))
- 			break;
-+		if (iter->iomap.flags & IOMAP_F_STALE)
-+			break;
- 
- 		page = folio_file_page(folio, pos >> PAGE_SHIFT);
- 		if (mapping_writably_mapped(mapping))
-@@ -1076,6 +1099,8 @@ static loff_t iomap_unshare_iter(struct
- 		status = iomap_write_begin(iter, pos, bytes, &folio);
- 		if (unlikely(status))
- 			return status;
-+		if (iter->iomap.flags & IOMAP_F_STALE)
-+			break;
- 
- 		status = iomap_write_end(iter, pos, bytes, bytes, folio);
- 		if (WARN_ON_ONCE(status == 0))
-@@ -1131,6 +1156,8 @@ static loff_t iomap_zero_iter(struct iom
- 		status = iomap_write_begin(iter, pos, bytes, &folio);
- 		if (status)
- 			return status;
-+		if (iter->iomap.flags & IOMAP_F_STALE)
-+			break;
- 
- 		offset = offset_in_folio(folio, pos);
- 		if (bytes > folio_size(folio) - offset)
---- a/fs/iomap/iter.c
-+++ b/fs/iomap/iter.c
-@@ -7,12 +7,28 @@
- #include <linux/iomap.h>
- #include "trace.h"
- 
 +/*
-+ * Advance to the next range we need to map.
-+ *
-+ * If the iomap is marked IOMAP_F_STALE, it means the existing map was not fully
-+ * processed - it was aborted because the extent the iomap spanned may have been
-+ * changed during the operation. In this case, the iteration behaviour is to
-+ * remap the unprocessed range of the iter, and that means we may need to remap
-+ * even when we've made no progress (i.e. iter->processed = 0). Hence the
-+ * "finished iterating" case needs to distinguish between
-+ * (processed = 0) meaning we are done and (processed = 0 && stale) meaning we
-+ * need to remap the entire remaining range.
++ * Check that the iomap passed to us is still valid for the given offset and
++ * length.
 + */
- static inline int iomap_iter_advance(struct iomap_iter *iter)
++static bool
++xfs_iomap_valid(
++	struct inode		*inode,
++	const struct iomap	*iomap)
++{
++	return iomap->validity_cookie ==
++			xfs_iomap_inode_sequence(XFS_I(inode), iomap->flags);
++}
++
++const struct iomap_page_ops xfs_iomap_page_ops = {
++	.iomap_valid		= xfs_iomap_valid,
++};
++
+ int
+ xfs_bmbt_to_iomap(
+ 	struct xfs_inode	*ip,
+ 	struct iomap		*iomap,
+ 	struct xfs_bmbt_irec	*imap,
+ 	unsigned int		mapping_flags,
+-	u16			iomap_flags)
++	u16			iomap_flags,
++	u64			sequence_cookie)
  {
-+	bool stale = iter->iomap.flags & IOMAP_F_STALE;
+ 	struct xfs_mount	*mp = ip->i_mount;
+ 	struct xfs_buftarg	*target = xfs_inode_buftarg(ip);
+@@ -91,6 +123,9 @@ xfs_bmbt_to_iomap(
+ 	if (xfs_ipincount(ip) &&
+ 	    (ip->i_itemp->ili_fsync_fields & ~XFS_ILOG_TIMESTAMP))
+ 		iomap->flags |= IOMAP_F_DIRTY;
 +
- 	/* handle the previous iteration (if any) */
- 	if (iter->iomap.length) {
--		if (iter->processed <= 0)
-+		if (iter->processed < 0)
- 			return iter->processed;
-+		if (!iter->processed && !stale)
-+			return 0;
- 		if (WARN_ON_ONCE(iter->processed > iomap_length(iter)))
- 			return -EIO;
- 		iter->pos += iter->processed;
-@@ -33,6 +49,7 @@ static inline void iomap_iter_done(struc
- 	WARN_ON_ONCE(iter->iomap.offset > iter->pos);
- 	WARN_ON_ONCE(iter->iomap.length == 0);
- 	WARN_ON_ONCE(iter->iomap.offset + iter->iomap.length <= iter->pos);
-+	WARN_ON_ONCE(iter->iomap.flags & IOMAP_F_STALE);
++	iomap->validity_cookie = sequence_cookie;
++	iomap->page_ops = &xfs_iomap_page_ops;
+ 	return 0;
+ }
  
- 	trace_iomap_iter_dstmap(iter->inode, &iter->iomap);
- 	if (iter->srcmap.type != IOMAP_HOLE)
---- a/include/linux/iomap.h
-+++ b/include/linux/iomap.h
-@@ -49,26 +49,35 @@ struct vm_fault;
-  *
-  * IOMAP_F_BUFFER_HEAD indicates that the file system requires the use of
-  * buffer heads for this mapping.
-+ *
-+ * IOMAP_F_XATTR indicates that the iomap is for an extended attribute extent
-+ * rather than a file data extent.
-  */
--#define IOMAP_F_NEW		0x01
--#define IOMAP_F_DIRTY		0x02
--#define IOMAP_F_SHARED		0x04
--#define IOMAP_F_MERGED		0x08
--#define IOMAP_F_BUFFER_HEAD	0x10
--#define IOMAP_F_ZONE_APPEND	0x20
-+#define IOMAP_F_NEW		(1U << 0)
-+#define IOMAP_F_DIRTY		(1U << 1)
-+#define IOMAP_F_SHARED		(1U << 2)
-+#define IOMAP_F_MERGED		(1U << 3)
-+#define IOMAP_F_BUFFER_HEAD	(1U << 4)
-+#define IOMAP_F_ZONE_APPEND	(1U << 5)
-+#define IOMAP_F_XATTR		(1U << 6)
+@@ -195,7 +230,8 @@ xfs_iomap_write_direct(
+ 	xfs_fileoff_t		offset_fsb,
+ 	xfs_fileoff_t		count_fsb,
+ 	unsigned int		flags,
+-	struct xfs_bmbt_irec	*imap)
++	struct xfs_bmbt_irec	*imap,
++	u64			*seq)
+ {
+ 	struct xfs_mount	*mp = ip->i_mount;
+ 	struct xfs_trans	*tp;
+@@ -285,6 +321,7 @@ xfs_iomap_write_direct(
+ 		error = xfs_alert_fsblock_zero(ip, imap);
  
- /*
-  * Flags set by the core iomap code during operations:
-  *
-  * IOMAP_F_SIZE_CHANGED indicates to the iomap_end method that the file size
-  * has changed as the result of this write operation.
-+ *
-+ * IOMAP_F_STALE indicates that the iomap is not valid any longer and the file
-+ * range it covers needs to be remapped by the high level before the operation
-+ * can proceed.
-  */
--#define IOMAP_F_SIZE_CHANGED	0x100
-+#define IOMAP_F_SIZE_CHANGED	(1U << 8)
-+#define IOMAP_F_STALE		(1U << 9)
+ out_unlock:
++	*seq = xfs_iomap_inode_sequence(ip, 0);
+ 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 	return error;
  
- /*
-  * Flags from 0x1000 up are for file system specific usage:
-  */
--#define IOMAP_F_PRIVATE		0x1000
-+#define IOMAP_F_PRIVATE		(1U << 12)
+@@ -743,6 +780,7 @@ xfs_direct_write_iomap_begin(
+ 	bool			shared = false;
+ 	u16			iomap_flags = 0;
+ 	unsigned int		lockmode = XFS_ILOCK_SHARED;
++	u64			seq;
  
+ 	ASSERT(flags & (IOMAP_WRITE | IOMAP_ZERO));
  
- /*
-@@ -89,6 +98,7 @@ struct iomap {
- 	void			*inline_data;
- 	void			*private; /* filesystem private */
- 	const struct iomap_page_ops *page_ops;
-+	u64			validity_cookie; /* used with .iomap_valid() */
- };
+@@ -811,9 +849,10 @@ xfs_direct_write_iomap_begin(
+ 			goto out_unlock;
+ 	}
  
- static inline sector_t iomap_sector(const struct iomap *iomap, loff_t pos)
-@@ -128,6 +138,23 @@ struct iomap_page_ops {
- 	int (*page_prepare)(struct inode *inode, loff_t pos, unsigned len);
- 	void (*page_done)(struct inode *inode, loff_t pos, unsigned copied,
- 			struct page *page);
++	seq = xfs_iomap_inode_sequence(ip, iomap_flags);
+ 	xfs_iunlock(ip, lockmode);
+ 	trace_xfs_iomap_found(ip, offset, length, XFS_DATA_FORK, &imap);
+-	return xfs_bmbt_to_iomap(ip, iomap, &imap, flags, iomap_flags);
++	return xfs_bmbt_to_iomap(ip, iomap, &imap, flags, iomap_flags, seq);
+ 
+ allocate_blocks:
+ 	error = -EAGAIN;
+@@ -839,24 +878,26 @@ allocate_blocks:
+ 	xfs_iunlock(ip, lockmode);
+ 
+ 	error = xfs_iomap_write_direct(ip, offset_fsb, end_fsb - offset_fsb,
+-			flags, &imap);
++			flags, &imap, &seq);
+ 	if (error)
+ 		return error;
+ 
+ 	trace_xfs_iomap_alloc(ip, offset, length, XFS_DATA_FORK, &imap);
+ 	return xfs_bmbt_to_iomap(ip, iomap, &imap, flags,
+-				 iomap_flags | IOMAP_F_NEW);
++				 iomap_flags | IOMAP_F_NEW, seq);
+ 
+ out_found_cow:
+-	xfs_iunlock(ip, lockmode);
+ 	length = XFS_FSB_TO_B(mp, cmap.br_startoff + cmap.br_blockcount);
+ 	trace_xfs_iomap_found(ip, offset, length - offset, XFS_COW_FORK, &cmap);
+ 	if (imap.br_startblock != HOLESTARTBLOCK) {
+-		error = xfs_bmbt_to_iomap(ip, srcmap, &imap, flags, 0);
++		seq = xfs_iomap_inode_sequence(ip, 0);
++		error = xfs_bmbt_to_iomap(ip, srcmap, &imap, flags, 0, seq);
+ 		if (error)
+-			return error;
++			goto out_unlock;
+ 	}
+-	return xfs_bmbt_to_iomap(ip, iomap, &cmap, flags, IOMAP_F_SHARED);
++	seq = xfs_iomap_inode_sequence(ip, IOMAP_F_SHARED);
++	xfs_iunlock(ip, lockmode);
++	return xfs_bmbt_to_iomap(ip, iomap, &cmap, flags, IOMAP_F_SHARED, seq);
+ 
+ out_unlock:
+ 	if (lockmode)
+@@ -915,6 +956,7 @@ xfs_buffered_write_iomap_begin(
+ 	int			allocfork = XFS_DATA_FORK;
+ 	int			error = 0;
+ 	unsigned int		lockmode = XFS_ILOCK_EXCL;
++	u64			seq;
+ 
+ 	if (xfs_is_shutdown(mp))
+ 		return -EIO;
+@@ -1094,26 +1136,31 @@ retry:
+ 	 * Flag newly allocated delalloc blocks with IOMAP_F_NEW so we punch
+ 	 * them out if the write happens to fail.
+ 	 */
++	seq = xfs_iomap_inode_sequence(ip, IOMAP_F_NEW);
+ 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 	trace_xfs_iomap_alloc(ip, offset, count, allocfork, &imap);
+-	return xfs_bmbt_to_iomap(ip, iomap, &imap, flags, IOMAP_F_NEW);
++	return xfs_bmbt_to_iomap(ip, iomap, &imap, flags, IOMAP_F_NEW, seq);
+ 
+ found_imap:
++	seq = xfs_iomap_inode_sequence(ip, 0);
+ 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+-	return xfs_bmbt_to_iomap(ip, iomap, &imap, flags, 0);
++	return xfs_bmbt_to_iomap(ip, iomap, &imap, flags, 0, seq);
+ 
+ found_cow:
+-	xfs_iunlock(ip, XFS_ILOCK_EXCL);
++	seq = xfs_iomap_inode_sequence(ip, 0);
+ 	if (imap.br_startoff <= offset_fsb) {
+-		error = xfs_bmbt_to_iomap(ip, srcmap, &imap, flags, 0);
++		error = xfs_bmbt_to_iomap(ip, srcmap, &imap, flags, 0, seq);
+ 		if (error)
+-			return error;
++			goto out_unlock;
++		seq = xfs_iomap_inode_sequence(ip, IOMAP_F_SHARED);
++		xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 		return xfs_bmbt_to_iomap(ip, iomap, &cmap, flags,
+-					 IOMAP_F_SHARED);
++					 IOMAP_F_SHARED, seq);
+ 	}
+ 
+ 	xfs_trim_extent(&cmap, offset_fsb, imap.br_startoff - offset_fsb);
+-	return xfs_bmbt_to_iomap(ip, iomap, &cmap, flags, 0);
++	xfs_iunlock(ip, XFS_ILOCK_EXCL);
++	return xfs_bmbt_to_iomap(ip, iomap, &cmap, flags, 0, seq);
+ 
+ out_unlock:
+ 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+@@ -1193,6 +1240,7 @@ xfs_read_iomap_begin(
+ 	int			nimaps = 1, error = 0;
+ 	bool			shared = false;
+ 	unsigned int		lockmode = XFS_ILOCK_SHARED;
++	u64			seq;
+ 
+ 	ASSERT(!(flags & (IOMAP_WRITE | IOMAP_ZERO)));
+ 
+@@ -1206,13 +1254,14 @@ xfs_read_iomap_begin(
+ 			       &nimaps, 0);
+ 	if (!error && (flags & IOMAP_REPORT))
+ 		error = xfs_reflink_trim_around_shared(ip, &imap, &shared);
++	seq = xfs_iomap_inode_sequence(ip, shared ? IOMAP_F_SHARED : 0);
+ 	xfs_iunlock(ip, lockmode);
+ 
+ 	if (error)
+ 		return error;
+ 	trace_xfs_iomap_found(ip, offset, length, XFS_DATA_FORK, &imap);
+ 	return xfs_bmbt_to_iomap(ip, iomap, &imap, flags,
+-				 shared ? IOMAP_F_SHARED : 0);
++				 shared ? IOMAP_F_SHARED : 0, seq);
+ }
+ 
+ const struct iomap_ops xfs_read_iomap_ops = {
+@@ -1237,6 +1286,7 @@ xfs_seek_iomap_begin(
+ 	struct xfs_bmbt_irec	imap, cmap;
+ 	int			error = 0;
+ 	unsigned		lockmode;
++	u64			seq;
+ 
+ 	if (xfs_is_shutdown(mp))
+ 		return -EIO;
+@@ -1271,8 +1321,9 @@ xfs_seek_iomap_begin(
+ 		if (data_fsb < cow_fsb + cmap.br_blockcount)
+ 			end_fsb = min(end_fsb, data_fsb);
+ 		xfs_trim_extent(&cmap, offset_fsb, end_fsb);
++		seq = xfs_iomap_inode_sequence(ip, IOMAP_F_SHARED);
+ 		error = xfs_bmbt_to_iomap(ip, iomap, &cmap, flags,
+-					  IOMAP_F_SHARED);
++				IOMAP_F_SHARED, seq);
+ 		/*
+ 		 * This is a COW extent, so we must probe the page cache
+ 		 * because there could be dirty page cache being backed
+@@ -1293,8 +1344,9 @@ xfs_seek_iomap_begin(
+ 	imap.br_startblock = HOLESTARTBLOCK;
+ 	imap.br_state = XFS_EXT_NORM;
+ done:
++	seq = xfs_iomap_inode_sequence(ip, 0);
+ 	xfs_trim_extent(&imap, offset_fsb, end_fsb);
+-	error = xfs_bmbt_to_iomap(ip, iomap, &imap, flags, 0);
++	error = xfs_bmbt_to_iomap(ip, iomap, &imap, flags, 0, seq);
+ out_unlock:
+ 	xfs_iunlock(ip, lockmode);
+ 	return error;
+@@ -1320,6 +1372,7 @@ xfs_xattr_iomap_begin(
+ 	struct xfs_bmbt_irec	imap;
+ 	int			nimaps = 1, error = 0;
+ 	unsigned		lockmode;
++	int			seq;
+ 
+ 	if (xfs_is_shutdown(mp))
+ 		return -EIO;
+@@ -1336,12 +1389,14 @@ xfs_xattr_iomap_begin(
+ 	error = xfs_bmapi_read(ip, offset_fsb, end_fsb - offset_fsb, &imap,
+ 			       &nimaps, XFS_BMAPI_ATTRFORK);
+ out_unlock:
 +
-+	/*
-+	 * Check that the cached iomap still maps correctly to the filesystem's
-+	 * internal extent map. FS internal extent maps can change while iomap
-+	 * is iterating a cached iomap, so this hook allows iomap to detect that
-+	 * the iomap needs to be refreshed during a long running write
-+	 * operation.
-+	 *
-+	 * The filesystem can store internal state (e.g. a sequence number) in
-+	 * iomap->validity_cookie when the iomap is first mapped to be able to
-+	 * detect changes between mapping time and whenever .iomap_valid() is
-+	 * called.
-+	 *
-+	 * This is called with the folio over the specified file position held
-+	 * locked by the iomap code.
-+	 */
-+	bool (*iomap_valid)(struct inode *inode, const struct iomap *iomap);
- };
++	seq = xfs_iomap_inode_sequence(ip, IOMAP_F_XATTR);
+ 	xfs_iunlock(ip, lockmode);
  
- /*
+ 	if (error)
+ 		return error;
+ 	ASSERT(nimaps);
+-	return xfs_bmbt_to_iomap(ip, iomap, &imap, flags, 0);
++	return xfs_bmbt_to_iomap(ip, iomap, &imap, flags, IOMAP_F_XATTR, seq);
+ }
+ 
+ const struct iomap_ops xfs_xattr_iomap_ops = {
+--- a/fs/xfs/xfs_iomap.h
++++ b/fs/xfs/xfs_iomap.h
+@@ -13,14 +13,15 @@ struct xfs_bmbt_irec;
+ 
+ int xfs_iomap_write_direct(struct xfs_inode *ip, xfs_fileoff_t offset_fsb,
+ 		xfs_fileoff_t count_fsb, unsigned int flags,
+-		struct xfs_bmbt_irec *imap);
++		struct xfs_bmbt_irec *imap, u64 *sequence);
+ int xfs_iomap_write_unwritten(struct xfs_inode *, xfs_off_t, xfs_off_t, bool);
+ xfs_fileoff_t xfs_iomap_eof_align_last_fsb(struct xfs_inode *ip,
+ 		xfs_fileoff_t end_fsb);
+ 
++u64 xfs_iomap_inode_sequence(struct xfs_inode *ip, u16 iomap_flags);
+ int xfs_bmbt_to_iomap(struct xfs_inode *ip, struct iomap *iomap,
+ 		struct xfs_bmbt_irec *imap, unsigned int mapping_flags,
+-		u16 iomap_flags);
++		u16 iomap_flags, u64 sequence_cookie);
+ 
+ int xfs_zero_range(struct xfs_inode *ip, loff_t pos, loff_t len,
+ 		bool *did_zero);
+--- a/fs/xfs/xfs_pnfs.c
++++ b/fs/xfs/xfs_pnfs.c
+@@ -125,6 +125,7 @@ xfs_fs_map_blocks(
+ 	int			nimaps = 1;
+ 	uint			lock_flags;
+ 	int			error = 0;
++	u64			seq;
+ 
+ 	if (xfs_is_shutdown(mp))
+ 		return -EIO;
+@@ -176,6 +177,7 @@ xfs_fs_map_blocks(
+ 	lock_flags = xfs_ilock_data_map_shared(ip);
+ 	error = xfs_bmapi_read(ip, offset_fsb, end_fsb - offset_fsb,
+ 				&imap, &nimaps, bmapi_flags);
++	seq = xfs_iomap_inode_sequence(ip, 0);
+ 
+ 	ASSERT(!nimaps || imap.br_startblock != DELAYSTARTBLOCK);
+ 
+@@ -189,7 +191,7 @@ xfs_fs_map_blocks(
+ 		xfs_iunlock(ip, lock_flags);
+ 
+ 		error = xfs_iomap_write_direct(ip, offset_fsb,
+-				end_fsb - offset_fsb, 0, &imap);
++				end_fsb - offset_fsb, 0, &imap, &seq);
+ 		if (error)
+ 			goto out_unlock;
+ 
+@@ -209,7 +211,7 @@ xfs_fs_map_blocks(
+ 	}
+ 	xfs_iunlock(ip, XFS_IOLOCK_EXCL);
+ 
+-	error = xfs_bmbt_to_iomap(ip, iomap, &imap, 0, 0);
++	error = xfs_bmbt_to_iomap(ip, iomap, &imap, 0, 0, seq);
+ 	*device_generation = mp->m_generation;
+ 	return error;
+ out_unlock:
 
 
