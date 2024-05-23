@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65AE2AE94;
-	Thu, 23 May 2024 13:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917501D545;
+	Thu, 23 May 2024 13:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470489; cv=none; b=SG1Wqam8154dJeUZbp0/jfIO27mKMP59r0tNi3zzeyRrwv4dl7AEe80HjP6eXFlcUwHr8720XFlox4ESHON7cpFTW9r94AzdBLVxvfsm7ATvI6e9MZkIMN1U27lWtGqT7O6b/tn/ud7Nw1g/KMsGu9Y/jjpEzVXYYKH+BsBEw/E=
+	t=1716470492; cv=none; b=o3SyW4xia2SNaQMdVOrVPjZmAVnhLB4Lr0xW7rfYZatS2YiZrPZq6TOCwjdsZV3LSBvWcTUTCaz3bRsD5iFCjgY61HfOfs27f7X/9f/iC7a0GkHnRpoOlb9IvnxdqBKAq3Y8tkaVv8YkaRVBKMATGbPUw6Zo8i+E38hu+06s3GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470489; c=relaxed/simple;
-	bh=/nNjaI5VRdcZpcJGML/zCMRBvWq8zXCDlrNNPaPDHjk=;
+	s=arc-20240116; t=1716470492; c=relaxed/simple;
+	bh=bMaYevDg4KhNqxeeY3hVZT0+YJAureBfs5Y8eILKsKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6vZF0RKFIs2j6r5JQoLfWx0ynnOwqVNNC/DoBu4ytDkFXrW0FC9aTKnGpaNV4B9dPYNwz2XcpX7VFtoJAVTYesmpC4xCRswo+3hi0m2d+RKydI+n0Cl2zV6Yt6bBjGihlKRyCSUz+QpI2OAaZWe5aVSnWL49lFB+Mm3S849YOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZeyw8PD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qg0SCkc1wtcK8YDhUxmtalygbpvoPCh/GA6wi8pTuusn9OHQnu2kcVqDjpX7ugsdy0wolavzYhnCwGAJ77SSRww3UmSpAZ3eWcXXAkUTmNG7oVmEpxxcaxKEve0sqrv6HNbMQKdR4pTBIqNx8h1Qp0y4dMjcGh/D9J3THYd6O00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THtZtPlN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZeyw8PD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF1CC3277B;
-	Thu, 23 May 2024 13:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THtZtPlN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18615C2BD10;
+	Thu, 23 May 2024 13:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470489;
-	bh=/nNjaI5VRdcZpcJGML/zCMRBvWq8zXCDlrNNPaPDHjk=;
+	s=korg; t=1716470492;
+	bh=bMaYevDg4KhNqxeeY3hVZT0+YJAureBfs5Y8eILKsKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZeyw8PDSQQ/FavfSckFfb8QBARZ+/wy73uM+WGzbkvyMgvsydi1kfraE+/IsKsgN
-	 SyI3PDjGaBIaFd9sa26hMVE1ULwku8Mhx06RiIu42RyzLnHhipsQbzK1reWZBt4Tnv
-	 xW/Zhb3MQzUeCkmYUQj+GcYKtmOeRb0yMzOds3YI=
+	b=THtZtPlNdiTjO3qVhXRctrKzU/qFxzWE88MaBP9l0tY32rF2U8lJAmXM/Ai/vhdvo
+	 9JGAfcToWaARqM3h6WOofdp3TE/lDnGtlj/ssMghtPXdlLgrceTF3wuvh8V8JGd1/L
+	 +3MuWKT8VmmmrPtMaMJK4XAE8KnYXfiNRxAae+EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Jose Fernandez <josef@netflix.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Limonciello, Mario" <mario.limonciello@amd.com>
-Subject: [PATCH 6.8 01/23] drm/amd/display: Fix division by zero in setup_dsc_config
-Date: Thu, 23 May 2024 15:13:28 +0200
-Message-ID: <20240523130329.803582727@linuxfoundation.org>
+	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.8 10/23] binder: fix max_thread type inconsistency
+Date: Thu, 23 May 2024 15:13:37 +0200
+Message-ID: <20240523130330.136870998@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130329.745905823@linuxfoundation.org>
 References: <20240523130329.745905823@linuxfoundation.org>
@@ -46,67 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Fernandez <josef@netflix.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 130afc8a886183a94cf6eab7d24f300014ff87ba upstream.
+commit 42316941335644a98335f209daafa4c122f28983 upstream.
 
-When slice_height is 0, the division by slice_height in the calculation
-of the number of slices will cause a division by zero driver crash. This
-leaves the kernel in a state that requires a reboot. This patch adds a
-check to avoid the division by zero.
+The type defined for the BINDER_SET_MAX_THREADS ioctl was changed from
+size_t to __u32 in order to avoid incompatibility issues between 32 and
+64-bit kernels. However, the internal types used to copy from user and
+store the value were never updated. Use u32 to fix the inconsistency.
 
-The stack trace below is for the 6.8.4 Kernel. I reproduced the issue on
-a Z16 Gen 2 Lenovo Thinkpad with a Apple Studio Display monitor
-connected via Thunderbolt. The amdgpu driver crashed with this exception
-when I rebooted the system with the monitor connected.
-
-kernel: ? die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434 arch/x86/kernel/dumpstack.c:447)
-kernel: ? do_trap (arch/x86/kernel/traps.c:113 arch/x86/kernel/traps.c:154)
-kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
-kernel: ? do_error_trap (./arch/x86/include/asm/traps.h:58 arch/x86/kernel/traps.c:175)
-kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
-kernel: ? exc_divide_error (arch/x86/kernel/traps.c:194 (discriminator 2))
-kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
-kernel: ? asm_exc_divide_error (./arch/x86/include/asm/idtentry.h:548)
-kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
-kernel: dc_dsc_compute_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1109) amdgpu
-
-After applying this patch, the driver no longer crashes when the monitor
-is connected and the system is rebooted. I believe this is the same
-issue reported for 3113.
-
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Jose Fernandez <josef@netflix.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3113
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Limonciello, Mario" <mario.limonciello@amd.com>
+Fixes: a9350fc859ae ("staging: android: binder: fix BINDER_SET_MAX_THREADS declaration")
+Reported-by: Arve Hjønnevåg <arve@android.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20240421173750.3117808-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/android/binder.c          |    2 +-
+ drivers/android/binder_internal.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
-@@ -1050,7 +1050,12 @@ static bool setup_dsc_config(
- 	if (!is_dsc_possible)
- 		goto done;
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -5367,7 +5367,7 @@ static long binder_ioctl(struct file *fi
+ 			goto err;
+ 		break;
+ 	case BINDER_SET_MAX_THREADS: {
+-		int max_threads;
++		u32 max_threads;
  
--	dsc_cfg->num_slices_v = pic_height/slice_height;
-+	if (slice_height > 0) {
-+		dsc_cfg->num_slices_v = pic_height / slice_height;
-+	} else {
-+		is_dsc_possible = false;
-+		goto done;
-+	}
- 
- 	if (target_bandwidth_kbps > 0) {
- 		is_dsc_possible = decide_dsc_target_bpp_x16(
+ 		if (copy_from_user(&max_threads, ubuf,
+ 				   sizeof(max_threads))) {
+--- a/drivers/android/binder_internal.h
++++ b/drivers/android/binder_internal.h
+@@ -421,7 +421,7 @@ struct binder_proc {
+ 	struct list_head todo;
+ 	struct binder_stats stats;
+ 	struct list_head delivered_death;
+-	int max_threads;
++	u32 max_threads;
+ 	int requested_threads;
+ 	int requested_threads_started;
+ 	int tmp_ref;
 
 
