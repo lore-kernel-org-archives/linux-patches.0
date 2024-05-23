@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057A613BAC3;
-	Thu, 23 May 2024 13:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A1C2AE94;
+	Thu, 23 May 2024 13:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470484; cv=none; b=Zz8rvXcoykXqyEwbFjRoP6olrHdulTnehmYcvegxzX1lmpgADsKY0FW2sdVcVk+uQRD3a08CC0LUFvkf8RIHLIbdXMxs6XmwbqPGK6hYxNrK0Aj/MIndBSeuNElLC/y0zOne7kFcpmFcsmVHgupZ5VPLigp6nfUR7k/TAB509gs=
+	t=1716470486; cv=none; b=dSfuG83k+jbGjG2+OfIag40CkQsOnZbdN9NT3QQPpYYrvTRIITo9mYhI6ITa6ypUy9jOoCFdy9YczwerbkpPt58JdXTQaFnA/YUL4VwBCnC97x+JJga2iI2tqIVAhfiZgDT04Mu3J0ZVeYwuqsyZ6kbqBdRF16hcklu+MrDcWCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470484; c=relaxed/simple;
-	bh=wNFDdiWuvPW+DQoq784SCevZCg+2zfwLu/fDU994n5w=;
+	s=arc-20240116; t=1716470486; c=relaxed/simple;
+	bh=ABKL4sBtffIwA1Cqvu411S5I+TGxRauEVL8WvcZEeNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/xzHCIfPpuFyGrh3uLuKfFZe/aZqbjpjEtBwwUPaYMR8uWZOqcn07zEFXZXHzBxJEpDYcverwzgKOuDLY6CaT13RV+DBVlfQ7tmCqD9zSwqLHj5/2yxN9MI4adoEr/dzqBwq3DMot+AaHMDX1Okvf/hEJSOj8j0D1dz48aCO9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EufFEFtx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r4jSdA1nASH/az1QK/Qxl71LDCs15C8Nds6K1wVX2iA7Ed586bOnPeBjJ3v7kHGG3Vvucug01rYp2v5V+Ufhotr+2R5OIALCBwgLAL20DK1yoMpQdy2zUq9Z2pOOKeLzoJho4BotG5rllh97H69D5OGZ3b+NzZkjqaJhDh5Zv/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oqy63DPR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EufFEFtx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81EF7C3277B;
-	Thu, 23 May 2024 13:21:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oqy63DPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6B3C32782;
+	Thu, 23 May 2024 13:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470483;
-	bh=wNFDdiWuvPW+DQoq784SCevZCg+2zfwLu/fDU994n5w=;
+	s=korg; t=1716470486;
+	bh=ABKL4sBtffIwA1Cqvu411S5I+TGxRauEVL8WvcZEeNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EufFEFtxRIOeHqLaBC74TJ2bKEbkXDIzKQ0Wfa3zjS8Jz16am6EwIVcUx/2IYd1xL
-	 JR1ZO/ENdDFvVMb0PX2NvtCqWBBsJtJslbX2NE8BomnUBVSiO0cfrpBytQMzHV6eYV
-	 rgnbbnNVOurivF+jBjaaqgkF01OX0Qcy0r6tY+Lk=
+	b=Oqy63DPRYAiyKXcL7vJM8ofRZ9TGMp2Fidf75aZoRt3y/0JlDdznT/6Mm5/qlZ8bR
+	 orRP33SBN5QdWvUU3MLEveYoBpeAK5WiCCh0CJZmxOkdlyKWlSjC1Nmyef4jdRSq21
+	 +pqJlKy/v8jGYumWufDH/Bk/LC5zneWgy2Ekeq7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.1 43/45] KEYS: trusted: Do not use WARN when encode fails
-Date: Thu, 23 May 2024 15:13:34 +0200
-Message-ID: <20240523130334.109073267@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Oleksandr Tymoshenko <ovt@google.com>
+Subject: [PATCH 6.1 34/45] arm64: atomics: lse: remove stale dependency on JUMP_LABEL
+Date: Thu, 23 May 2024 15:13:25 +0200
+Message-ID: <20240523130333.786843989@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130332.496202557@linuxfoundation.org>
 References: <20240523130332.496202557@linuxfoundation.org>
@@ -49,44 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 050bf3c793a07f96bd1e2fd62e1447f731ed733b upstream.
+commit 657eef0a5420a02c02945ed8c87f2ddcbd255772 upstream.
 
-When asn1_encode_sequence() fails, WARN is not the correct solution.
+Currently CONFIG_ARM64_USE_LSE_ATOMICS depends upon CONFIG_JUMP_LABEL,
+as the inline atomics were indirected with a static branch.
 
-1. asn1_encode_sequence() is not an internal function (located
-   in lib/asn1_encode.c).
-2. Location is known, which makes the stack trace useless.
-3. Results a crash if panic_on_warn is set.
+However, since commit:
 
-It is also noteworthy that the use of WARN is undocumented, and it
-should be avoided unless there is a carefully considered rationale to
-use it.
+  21fb26bfb01ffe0d ("arm64: alternatives: add alternative_has_feature_*()")
 
-Replace WARN with pr_err, and print the return value instead, which is
-only useful piece of information.
+... we use an alternative_branch (which is always available) rather than
+a static branch, and hence the dependency is unnecessary.
 
-Cc: stable@vger.kernel.org # v5.13+
-Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Remove the stale dependency, along with the stale include. This will
+allow the use of LSE atomics in kernels built with CONFIG_JUMP_LABEL=n,
+and reduces the risk of circular header dependencies via <asm/lse.h>.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20221114125424.2998268-1-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_tpm2.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/Kconfig           |    1 -
+ arch/arm64/include/asm/lse.h |    1 -
+ 2 files changed, 2 deletions(-)
 
---- a/security/keys/trusted-keys/trusted_tpm2.c
-+++ b/security/keys/trusted-keys/trusted_tpm2.c
-@@ -84,8 +84,9 @@ static int tpm2_key_encode(struct truste
- 	work1 = payload->blob;
- 	work1 = asn1_encode_sequence(work1, work1 + sizeof(payload->blob),
- 				     scratch, work - scratch);
--	if (WARN(IS_ERR(work1), "BUG: ASN.1 encoder failed")) {
-+	if (IS_ERR(work1)) {
- 		ret = PTR_ERR(work1);
-+		pr_err("BUG: ASN.1 encoder failed with %d\n", ret);
- 		goto err;
- 	}
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -1752,7 +1752,6 @@ config ARM64_LSE_ATOMICS
  
+ config ARM64_USE_LSE_ATOMICS
+ 	bool "Atomic instructions"
+-	depends on JUMP_LABEL
+ 	default y
+ 	help
+ 	  As part of the Large System Extensions, ARMv8.1 introduces new
+--- a/arch/arm64/include/asm/lse.h
++++ b/arch/arm64/include/asm/lse.h
+@@ -10,7 +10,6 @@
+ 
+ #include <linux/compiler_types.h>
+ #include <linux/export.h>
+-#include <linux/jump_label.h>
+ #include <linux/stringify.h>
+ #include <asm/alternative.h>
+ #include <asm/alternative-macros.h>
 
 
