@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6369D13BC38;
-	Thu, 23 May 2024 13:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7341D545;
+	Thu, 23 May 2024 13:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470174; cv=none; b=bH5EiTljQ8c0mF6jTFtbkN0xh56EMPlrMl6NilIQV4pIOM1ZvmRDpEqfGKzLFwAa6ml8ETaAVG9IugDibAPAJRH0Vc7QvCXgNFGHtTeLf5dktNvEhIoWOiK3dGYJ/J8dy0TiImex1TVAWh0df0AYBM5gVH/G0wjGho2Z16kz+lA=
+	t=1716470177; cv=none; b=SGgwV+s/yTMX8X/9nQvAlcyRD4afnP6vVz+MQJs5ztmGBsgJqGNJoZiDX9js6fiL2z0jTTj5LoGwKq98MhdheO3MabyyXJ8fauK5tnGwnisElqO0i19AanVI9R4jXmhr+Mfas52l26JIdcv/f6ZLrwuTlgN7shgJYS8xprvPbl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470174; c=relaxed/simple;
-	bh=R1NvdflBn+znU0HAU3EcWFUPbkXI69rhxt+bnF7Lf0s=;
+	s=arc-20240116; t=1716470177; c=relaxed/simple;
+	bh=Iy9aaJxGASA/V/entutPoRrDyHk78sgPfHhI6HqR4KI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tl3YZJnFSMoeFz/mloD91bbfg/3ZKlAUmNltblwwMuNl/03qfh44/mqMruT7TvdL0wEOWpcBSOUg72IkFtVnYVzAJbJH5je72x8wHyVM2q9NOWLv9exfkUJFy3z704QR0Ekm8f3p6U8AIp2VtspnaALyq7eXg6lDZAGA4JXo3QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rij0uOE/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nsOuwebN3hbpnYjhsKNz2lxy2dkPuAkVeDqjwRjAXFHE/jC3rVYfxnem/smhSDmx2zIlYbiP5m+1u+VUbn2vMijriUPynImC4z75K/jqqBb0f8n7c6CnIKCT4iC8jgngvhN63JRGY3Oi0XzdL41YYBPblfQe6X+DWeHmdh7rVQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w++PidWm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rij0uOE/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D515FC2BD10;
-	Thu, 23 May 2024 13:16:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w++PidWm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99E5C3277B;
+	Thu, 23 May 2024 13:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470174;
-	bh=R1NvdflBn+znU0HAU3EcWFUPbkXI69rhxt+bnF7Lf0s=;
+	s=korg; t=1716470177;
+	bh=Iy9aaJxGASA/V/entutPoRrDyHk78sgPfHhI6HqR4KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rij0uOE/kpe231I0u9KzUjyHBiWvtUtxXih1xSLVgNLYHUR1c7+viwIlpM8+KwJ/k
-	 pxOzcMztFBTdJ4S/xUL2VRbHsAZS1V9vZeV1ri5FZ1y4a6uUGT/6K9HdUOGKNGZ/sh
-	 81cPag4JXUYwDLa7PK2HTUwRQFj37GK6ZByLRe+k=
+	b=w++PidWmCI3xaqZFHXktkk+ppmIYlc36DDvI2+es8LI9oZFtZqSsjAACyXKfShgTF
+	 ePBzdFP+SbyNOqtuuT3kB/9Kchb5zbCCGsq7PeFuhQB6EAA7ApoomCeFXqwT7Wn5qW
+	 mF1fJlFMeW4oSBmAfVZwpMv65+ERvoYAoA9JIVK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Machek <pavel@denx.de>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 11/15] btrfs: add missing mutex_unlock in btrfs_relocate_sys_chunks()
-Date: Thu, 23 May 2024 15:12:53 +0200
-Message-ID: <20240523130326.882403497@linuxfoundation.org>
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Ajay Kaher <ajay.kaher@broadcom.com>
+Subject: [PATCH 5.10 12/15] drm/amdgpu: Fix possible NULL dereference in amdgpu_ras_query_error_status_helper()
+Date: Thu, 23 May 2024 15:12:54 +0200
+Message-ID: <20240523130326.920997628@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130326.451548488@linuxfoundation.org>
 References: <20240523130326.451548488@linuxfoundation.org>
@@ -45,42 +48,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit 9af503d91298c3f2945e73703f0e00995be08c30 upstream.
+commit b8d55a90fd55b767c25687747e2b24abd1ef8680 upstream.
 
-The previous patch that replaced BUG_ON by error handling forgot to
-unlock the mutex in the error path.
+Return invalid error code -EINVAL for invalid block id.
 
-Link: https://lore.kernel.org/all/Zh%2fHpAGFqa7YAFuM@duo.ucw.cz
-Reported-by: Pavel Machek <pavel@denx.de>
-Fixes: 7411055db5ce ("btrfs: handle chunk tree lookup error in btrfs_relocate_sys_chunks()")
-CC: stable@vger.kernel.org
-Reviewed-by: Pavel Machek <pavel@denx.de>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Fixes the below:
+
+drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:1183 amdgpu_ras_query_error_status_helper() error: we previously assumed 'info' could be null (see line 1176)
+
+Suggested-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Cc: Tao Zhou <tao.zhou1@amd.com>
+Cc: Hawking Zhang <Hawking.Zhang@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[Ajay: applied AMDGPU_RAS_BLOCK_COUNT condition to amdgpu_ras_error_query()
+       as amdgpu_ras_query_error_status_helper() not present in v5.10, v5.4
+       amdgpu_ras_query_error_status_helper() was introduced in 8cc0f5669eb6]
+Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -3194,6 +3194,7 @@ again:
- 			 * alignment and size).
- 			 */
- 			ret = -EUCLEAN;
-+			mutex_unlock(&fs_info->delete_unused_bgs_mutex);
- 			goto error;
- 		}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+@@ -765,6 +765,9 @@ int amdgpu_ras_error_query(struct amdgpu
+ 	if (!obj)
+ 		return -EINVAL;
  
++	if (!info || info->head.block == AMDGPU_RAS_BLOCK_COUNT)
++		return -EINVAL;
++
+ 	switch (info->head.block) {
+ 	case AMDGPU_RAS_BLOCK__UMC:
+ 		if (adev->umc.funcs->query_ras_error_count)
 
 
