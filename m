@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7832D14B954;
-	Thu, 23 May 2024 13:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5551F14AD36;
+	Thu, 23 May 2024 13:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470254; cv=none; b=dNq9bC2nzeEyXNGux8PAIE+R26/Qo/D8CkB1hn62fRYxncSJgJH3oAdQOGOuKXyWjmrxGMP72j5X0ANN8pakv5b0v3z+X+GwOW/DIV9lRyFRMGOLQGtBg7fWBOfDPKuDVWYNAjLkEgEkWYHS0A+NTbhFjqfyu2Y3IjkaCD5XmZs=
+	t=1716470257; cv=none; b=YmvTVoSN8OLT62SEYnPHWhO5Z7+l8/5M4j9GV1xh0MPMO0rjlPCYLGCTOZpfkqFM+hlGgeb+fm8oK0yvM2FIfupGki3dJhDC6gJtltp6oGzHEj2FjUrenze3caq22aZNEn/Oj4RNKES3Pregz5Lyz+Mhus0u1ksvqX5LcMMHUI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470254; c=relaxed/simple;
-	bh=jo8W4rMzAlQ3BFN9Q7b2Q21pnLtD9DfGj/jF2tugkVo=;
+	s=arc-20240116; t=1716470257; c=relaxed/simple;
+	bh=xE2WAf7ghI2rSeEjHiR+uhnZFCk7gb6IiENd0xZDotw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lWteFG5OkHnqWglkoFEfpC0nM6f7gxkP/Q3gnXoddzqW5BNIH3iVJrsBwUat0A/CMeDv9No+MDyeV6sW4llCSZaCQ0nqsstxrylshSIjLgZBSO6PFwS1zNRXMnLBKVnTc1BuLxMXBBktKvlCGKOxFvcXmWlICI4dBIryJeV0U8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5rwJQyy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PSnDFZTdKlQp67qvvj6kolHQVuQNmW5H5zrpQBY855/U1DzpXeyD/QP0kfuS7RXZL+17JAuVsXXCOjWeJmYOFHWuCs7ZPX/ra9+s5jcuGWMXX8u93hYVv4XMrKaiU/3eLaPIxzkypinuhoaATl6uNunbwkljm3iQ/vMNbrl0TG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ex9AwQZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5rwJQyy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F11C3277B;
-	Thu, 23 May 2024 13:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ex9AwQZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01B3C2BD10;
+	Thu, 23 May 2024 13:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470254;
-	bh=jo8W4rMzAlQ3BFN9Q7b2Q21pnLtD9DfGj/jF2tugkVo=;
+	s=korg; t=1716470257;
+	bh=xE2WAf7ghI2rSeEjHiR+uhnZFCk7gb6IiENd0xZDotw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S5rwJQyyXI499L1WpXbDV0+vQR3Tlp1PnFS4GaxdDdOqkJQWYBZDTEh1ia0+0QXze
-	 tk3HE3sIGG3yerQa7W5rI9YMYzvvDCbJ+eQ+dS/kua15RuZ4ubdwIY78Qv38WhhACe
-	 2hNC4qXHYUBe7NP36tWg9rvZvM7ykENpUyHUcHec=
+	b=Ex9AwQZxwVqxzUYIC77Ae/ldOs2VMvH1xDnHFJIeMso2dBd9OiuTVelrYcqX8o/qE
+	 ymdISogd6Ij2GokNZgn+Mh7UB/BsiGC+dEKrmFKjZwMxMPMeCmY90vmHazoOJTmrZV
+	 QYwqhbewlcMnrX7IQOHOk6xWuj2sRPj48SZf0MgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco@wolfvision.net>
-Subject: [PATCH 6.9 15/25] usb: typec: tipd: fix event checking for tps6598x
-Date: Thu, 23 May 2024 15:13:00 +0200
-Message-ID: <20240523130330.962668355@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.9 24/25] block: add a disk_has_partscan helper
+Date: Thu, 23 May 2024 15:13:09 +0200
+Message-ID: <20240523130331.292645865@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130330.386580714@linuxfoundation.org>
 References: <20240523130330.386580714@linuxfoundation.org>
@@ -49,148 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco@wolfvision.net>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 409c1cfb5a803f3cf2d17aeaf75c25c4be951b07 upstream.
+commit 140ce28dd3bee8e53acc27f123ae474d69ef66f0 upstream.
 
-The current interrupt service routine of the tps6598x only reads the
-first 64 bits of the INT_EVENT1 and INT_EVENT2 registers, which means
-that any event above that range will be ignored, leaving interrupts
-unattended. Moreover, those events will not be cleared, and the device
-will keep the interrupt enabled.
+Add a helper to check if partition scanning is enabled instead of
+open coding the check in a few places.  This now always checks for
+the hidden flag even if all but one of the callers are never reachable
+for hidden gendisks.
 
-This issue has been observed while attempting to load patches, and the
-'ReadyForPatch' field (bit 81) of INT_EVENT1 was set.
-
-Given that older versions of the tps6598x (1, 2 and 6) provide 8-byte
-registers, a mechanism based on the upper byte of the version register
-(0x0F) has been included. The manufacturer has confirmed [1] that this
-byte is always 0 for older versions, and either 0xF7 (DH parts) or 0xF9
-(DK parts) is returned in newer versions (7 and 8).
-
-Read the complete INT_EVENT registers to handle all interrupts generated
-by the device and account for the hardware version to select the
-register size.
-
-Link: https://e2e.ti.com/support/power-management-group/power-management/f/power-management-forum/1346521/tps65987d-register-command-to-distinguish-between-tps6591-2-6-and-tps65987-8 [1]
-Fixes: 0a4c005bd171 ("usb: typec: driver for TI TPS6598x USB Power Delivery controllers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Javier Carrasco <javier.carrasco@wolfvision.net>
-Link: https://lore.kernel.org/r/20240429-tps6598x_fix_event_handling-v3-2-4e8e58dce489@wolfvision.net
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20240502130033.1958492-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tipd/core.c     |   45 +++++++++++++++++++++++++++-----------
- drivers/usb/typec/tipd/tps6598x.h |   11 +++++++++
- 2 files changed, 43 insertions(+), 13 deletions(-)
+ block/genhd.c           |    7 ++-----
+ block/partitions/core.c |    5 +----
+ include/linux/blkdev.h  |   13 +++++++++++++
+ 3 files changed, 16 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -28,6 +28,7 @@
- #define TPS_REG_MODE			0x03
- #define TPS_REG_CMD1			0x08
- #define TPS_REG_DATA1			0x09
-+#define TPS_REG_VERSION			0x0F
- #define TPS_REG_INT_EVENT1		0x14
- #define TPS_REG_INT_EVENT2		0x15
- #define TPS_REG_INT_MASK1		0x16
-@@ -636,49 +637,67 @@ err_unlock:
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -345,9 +345,7 @@ int disk_scan_partitions(struct gendisk
+ 	struct file *file;
+ 	int ret = 0;
  
- static irqreturn_t tps6598x_interrupt(int irq, void *data)
- {
-+	int intev_len = TPS_65981_2_6_INTEVENT_LEN;
- 	struct tps6598x *tps = data;
--	u64 event1 = 0;
--	u64 event2 = 0;
-+	u64 event1[2] = { };
-+	u64 event2[2] = { };
-+	u32 version;
- 	u32 status;
- 	int ret;
+-	if (disk->flags & (GENHD_FL_NO_PART | GENHD_FL_HIDDEN))
+-		return -EINVAL;
+-	if (test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
++	if (!disk_has_partscan(disk))
+ 		return -EINVAL;
+ 	if (disk->open_partitions)
+ 		return -EBUSY;
+@@ -503,8 +501,7 @@ int __must_check device_add_disk(struct
+ 			goto out_unregister_bdi;
  
- 	mutex_lock(&tps->lock);
+ 		/* Make sure the first partition scan will be proceed */
+-		if (get_capacity(disk) && !(disk->flags & GENHD_FL_NO_PART) &&
+-		    !test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
++		if (get_capacity(disk) && disk_has_partscan(disk))
+ 			set_bit(GD_NEED_PART_SCAN, &disk->state);
  
--	ret = tps6598x_read64(tps, TPS_REG_INT_EVENT1, &event1);
--	ret |= tps6598x_read64(tps, TPS_REG_INT_EVENT2, &event2);
-+	ret = tps6598x_read32(tps, TPS_REG_VERSION, &version);
-+	if (ret)
-+		dev_warn(tps->dev, "%s: failed to read version (%d)\n",
-+			 __func__, ret);
-+
-+	if (TPS_VERSION_HW_VERSION(version) == TPS_VERSION_HW_65987_8_DH ||
-+	    TPS_VERSION_HW_VERSION(version) == TPS_VERSION_HW_65987_8_DK)
-+		intev_len = TPS_65987_8_INTEVENT_LEN;
-+
-+	ret = tps6598x_block_read(tps, TPS_REG_INT_EVENT1, event1, intev_len);
-+
-+	ret = tps6598x_block_read(tps, TPS_REG_INT_EVENT1, event1, intev_len);
- 	if (ret) {
--		dev_err(tps->dev, "%s: failed to read events\n", __func__);
-+		dev_err(tps->dev, "%s: failed to read event1\n", __func__);
- 		goto err_unlock;
- 	}
--	trace_tps6598x_irq(event1, event2);
-+	ret = tps6598x_block_read(tps, TPS_REG_INT_EVENT2, event2, intev_len);
-+	if (ret) {
-+		dev_err(tps->dev, "%s: failed to read event2\n", __func__);
-+		goto err_unlock;
-+	}
-+	trace_tps6598x_irq(event1[0], event2[0]);
+ 		bdev_add(disk->part0, ddev->devt);
+--- a/block/partitions/core.c
++++ b/block/partitions/core.c
+@@ -573,10 +573,7 @@ static int blk_add_partitions(struct gen
+ 	struct parsed_partitions *state;
+ 	int ret = -EAGAIN, p;
  
--	if (!(event1 | event2))
-+	if (!(event1[0] | event1[1] | event2[0] | event2[1]))
- 		goto err_unlock;
+-	if (disk->flags & GENHD_FL_NO_PART)
+-		return 0;
+-
+-	if (test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
++	if (!disk_has_partscan(disk))
+ 		return 0;
  
- 	if (!tps6598x_read_status(tps, &status))
- 		goto err_clear_ints;
- 
--	if ((event1 | event2) & TPS_REG_INT_POWER_STATUS_UPDATE)
-+	if ((event1[0] | event2[0]) & TPS_REG_INT_POWER_STATUS_UPDATE)
- 		if (!tps6598x_read_power_status(tps))
- 			goto err_clear_ints;
- 
--	if ((event1 | event2) & TPS_REG_INT_DATA_STATUS_UPDATE)
-+	if ((event1[0] | event2[0]) & TPS_REG_INT_DATA_STATUS_UPDATE)
- 		if (!tps6598x_read_data_status(tps))
- 			goto err_clear_ints;
- 
- 	/* Handle plug insert or removal */
--	if ((event1 | event2) & TPS_REG_INT_PLUG_EVENT)
-+	if ((event1[0] | event2[0]) & TPS_REG_INT_PLUG_EVENT)
- 		tps6598x_handle_plug_event(tps, status);
- 
- err_clear_ints:
--	tps6598x_write64(tps, TPS_REG_INT_CLEAR1, event1);
--	tps6598x_write64(tps, TPS_REG_INT_CLEAR2, event2);
-+	tps6598x_block_write(tps, TPS_REG_INT_CLEAR1, event1, intev_len);
-+	tps6598x_block_write(tps, TPS_REG_INT_CLEAR2, event2, intev_len);
- 
- err_unlock:
- 	mutex_unlock(&tps->lock);
- 
--	if (event1 | event2)
-+	if (event1[0] | event1[1] | event2[0] | event2[1])
- 		return IRQ_HANDLED;
-+
- 	return IRQ_NONE;
+ 	state = check_partition(disk);
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -233,6 +233,19 @@ static inline unsigned int disk_openers(
+ 	return atomic_read(&disk->part0->bd_openers);
  }
  
---- a/drivers/usb/typec/tipd/tps6598x.h
-+++ b/drivers/usb/typec/tipd/tps6598x.h
-@@ -253,4 +253,15 @@
- #define TPS_PTCC_DEV				2
- #define TPS_PTCC_APP				3
- 
-+/* Version Register */
-+#define TPS_VERSION_HW_VERSION_MASK            GENMASK(31, 24)
-+#define TPS_VERSION_HW_VERSION(x)              TPS_FIELD_GET(TPS_VERSION_HW_VERSION_MASK, (x))
-+#define TPS_VERSION_HW_65981_2_6               0x00
-+#define TPS_VERSION_HW_65987_8_DH              0xF7
-+#define TPS_VERSION_HW_65987_8_DK              0xF9
++/**
++ * disk_has_partscan - return %true if partition scanning is enabled on a disk
++ * @disk: disk to check
++ *
++ * Returns %true if partitions scanning is enabled for @disk, or %false if
++ * partition scanning is disabled either permanently or temporarily.
++ */
++static inline bool disk_has_partscan(struct gendisk *disk)
++{
++	return !(disk->flags & (GENHD_FL_NO_PART | GENHD_FL_HIDDEN)) &&
++		!test_bit(GD_SUPPRESS_PART_SCAN, &disk->state);
++}
 +
-+/* Int Event Register length */
-+#define TPS_65981_2_6_INTEVENT_LEN             8
-+#define TPS_65987_8_INTEVENT_LEN               11
-+
- #endif /* __TPS6598X_H__ */
+ /*
+  * The gendisk is refcounted by the part0 block_device, and the bd_device
+  * therein is also used for device model presentation in sysfs.
 
 
