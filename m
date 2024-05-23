@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBC814A633;
-	Thu, 23 May 2024 13:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501381E504;
+	Thu, 23 May 2024 13:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470397; cv=none; b=YyQcA/onpnvNABwm4MDYvlbWSGujU5ndICoQ5vvcT6pP9maEmBJ3V/j1JpKEYm1PG4TT2j12Gm1tiWqH/xWkYDaeZwBS0dYYdvFRFnllUiT0TwBIW4bw0RSsYphnWu8GV7Lpx1GA5NFFyxCH/8d6dXoK/pcZQ190cBEw+FJJVP8=
+	t=1716470400; cv=none; b=ELuQwSkH8lV2addtdW5w1j8G9VYcXcpxNjyWKQKSzFlmtLP7SGtiLCQr0yA8ato7+dun3wKjSj3w6mqr/SyWtfmK/yZlGs3sQPD0HcJkUwwFAYrvUKCGP+ZhwNY40vDxI3uKz50aKDybJXy/OSflBG+MNJR7gcYnXqHyZ+xWXQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470397; c=relaxed/simple;
-	bh=4+/GpNoM+ATqIdmj45tF2O3A2LfNs1ZUxy/c6LNJCG4=;
+	s=arc-20240116; t=1716470400; c=relaxed/simple;
+	bh=LmUw0KQKcknYVdYJgOYbstn+3rTGBRb1eRTBRE0bpxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJxMnjvBc4uZGZpql+/hWAW1YIvQ6J/wTP5RB1Y6dmGXD3RH7plFe/sShocIXbZuqB6IKwDsY7qAXdA3KSXIilUUqz09JiG2l6MGIT2TXy3p0JW8jngy0vA3CW3gLRpnt9G66WvuId6pc054GtZ2XcQxzSUciBzp5KiPztYbUoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJkejf0N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gyIR4TQ5n+QrBT8Z/O/COtZKk9S1CrzYdwX+BsgaY+nWS4uEN+BZMvih8gmpFzT3R35hWaQV4j+lLFw6tG9C2rhcC9+6ud0XGPIkvZcASe5FpyYNfR2VV2mnZFai6nyceOaCgRfuNGvSDqJBSgjKdVXv+DM3IowAPzRBThNxN90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnO1vB4i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJkejf0N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3DDC32782;
-	Thu, 23 May 2024 13:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnO1vB4i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96FFC3277B;
+	Thu, 23 May 2024 13:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470397;
-	bh=4+/GpNoM+ATqIdmj45tF2O3A2LfNs1ZUxy/c6LNJCG4=;
+	s=korg; t=1716470400;
+	bh=LmUw0KQKcknYVdYJgOYbstn+3rTGBRb1eRTBRE0bpxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJkejf0Ng3t/xqKk2bN+QLiAZj0wHynRmAzoXD2bFqzIQ8R8O2z2JyfucPWHgs+u6
-	 6Xv70idvbTwHOXaHJqFoIZwESiG1dW7O0tbi1oBpR7m133W6jUSrmVHZEV9gd76kDR
-	 5y8cPm9VN4FjV324LNHG3o+atCnteBvWnwGvTnEU=
+	b=UnO1vB4ilwkSvT832VdkmKNREwGQmR+YJ37QAHNttI7B7GSlmUxLM+ubM9GnkDQkE
+	 1zK6N3txnXKR5vGQuxOs9+vyOqiZB8T27xo9BUI2vnT7/C3X2434NCtUKbr2b1otb2
+	 O7j0yVj4v7sEPNIMyrI43i730uPpTwfosLGmRCyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Dave Chinner <dchinner@redhat.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 22/45] xfs: fix incorrect i_nlink caused by inode racing
-Date: Thu, 23 May 2024 15:13:13 +0200
-Message-ID: <20240523130333.331467544@linuxfoundation.org>
+Subject: [PATCH 6.1 23/45] xfs: invalidate block device page cache during unmount
+Date: Thu, 23 May 2024 15:13:14 +0200
+Message-ID: <20240523130333.371532357@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130332.496202557@linuxfoundation.org>
 References: <20240523130332.496202557@linuxfoundation.org>
@@ -51,78 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit 28b4b0596343d19d140da059eee0e5c2b5328731 ]
+[ Upstream commit 032e160305f6872e590c77f11896fb28365c6d6c ]
 
-The following error occurred during the fsstress test:
+Every now and then I see fstests failures on aarch64 (64k pages) that
+trigger on the following sequence:
 
-XFS: Assertion failed: VFS_I(ip)->i_nlink >= 2, file: fs/xfs/xfs_inode.c, line: 2452
+mkfs.xfs $dev
+mount $dev $mnt
+touch $mnt/a
+umount $mnt
+xfs_db -c 'path /a' -c 'print' $dev
 
-The problem was that inode race condition causes incorrect i_nlink to be
-written to disk, and then it is read into memory. Consider the following
-call graph, inodes that are marked as both XFS_IFLUSHING and
-XFS_IRECLAIMABLE, i_nlink will be reset to 1 and then restored to original
-value in xfs_reinit_inode(). Therefore, the i_nlink of directory on disk
-may be set to 1.
+99% of the time this succeeds, but every now and then xfs_db cannot find
+/a and fails.  This turns out to be a race involving udev/blkid, the
+page cache for the block device, and the xfs_db process.
 
-  xfsaild
-      xfs_inode_item_push
-          xfs_iflush_cluster
-              xfs_iflush
-                  xfs_inode_to_disk
+udev is triggered whenever anyone closes a block device or unmounts it.
+The default udev rules invoke blkid to read the fs super and create
+symlinks to the bdev under /dev/disk.  For this, it uses buffered reads
+through the page cache.
 
-  xfs_iget
-      xfs_iget_cache_hit
-          xfs_iget_recycle
-              xfs_reinit_inode
-                  inode_init_always
+xfs_db also uses buffered reads to examine metadata.  There is no
+coordination between xfs_db and udev, which means that they can run
+concurrently.  Note there is no coordination between the kernel and
+blkid either.
 
-xfs_reinit_inode() needs to hold the ILOCK_EXCL as it is changing internal
-inode state and can race with other RCU protected inode lookups. On the
-read side, xfs_iflush_cluster() grabs the ILOCK_SHARED while under rcu +
-ip->i_flags_lock, and so xfs_iflush/xfs_inode_to_disk() are protected from
-racing inode updates (during transactions) by that lock.
+On a system with 64k pages, the page cache can cache the superblock and
+the root inode (and hence the root dir) with the same 64k page.  If
+udev spawns blkid after the mkfs and the system is busy enough that it
+is still running when xfs_db starts up, they'll both read from the same
+page in the pagecache.
 
-Fixes: ff7bebeb91f8 ("xfs: refactor the inode recycling code") # goes further back than this
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+The unmount writes updated inode metadata to disk directly.  The XFS
+buffer cache does not use the bdev pagecache, nor does it invalidate the
+pagecache on umount.  If the above scenario occurs, the pagecache no
+longer reflects what's on disk, xfs_db reads the stale metadata, and
+fails to find /a.  Most of the time this succeeds because closing a bdev
+invalidates the page cache, but when processes race, everyone loses.
+
+Fix the problem by invalidating the bdev pagecache after flushing the
+bdev, so that xfs_db will see up to date metadata.
+
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_icache.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/xfs/xfs_buf.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -342,6 +342,9 @@ xfs_iget_recycle(
+--- a/fs/xfs/xfs_buf.c
++++ b/fs/xfs/xfs_buf.c
+@@ -1945,6 +1945,7 @@ xfs_free_buftarg(
+ 	list_lru_destroy(&btp->bt_lru);
  
- 	trace_xfs_iget_recycle(ip);
+ 	blkdev_issue_flush(btp->bt_bdev);
++	invalidate_bdev(btp->bt_bdev);
+ 	fs_put_dax(btp->bt_daxdev, btp->bt_mount);
  
-+	if (!xfs_ilock_nowait(ip, XFS_ILOCK_EXCL))
-+		return -EAGAIN;
-+
- 	/*
- 	 * We need to make it look like the inode is being reclaimed to prevent
- 	 * the actual reclaim workers from stomping over us while we recycle
-@@ -355,6 +358,7 @@ xfs_iget_recycle(
- 
- 	ASSERT(!rwsem_is_locked(&inode->i_rwsem));
- 	error = xfs_reinit_inode(mp, inode);
-+	xfs_iunlock(ip, XFS_ILOCK_EXCL);
- 	if (error) {
- 		/*
- 		 * Re-initializing the inode failed, and we are in deep
-@@ -523,6 +527,8 @@ xfs_iget_cache_hit(
- 	if (ip->i_flags & XFS_IRECLAIMABLE) {
- 		/* Drops i_flags_lock and RCU read lock. */
- 		error = xfs_iget_recycle(pag, ip);
-+		if (error == -EAGAIN)
-+			goto out_skip;
- 		if (error)
- 			return error;
- 	} else {
+ 	kmem_free(btp);
 
 
