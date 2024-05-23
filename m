@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A21414BF85;
-	Thu, 23 May 2024 13:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CD91E504;
+	Thu, 23 May 2024 13:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470269; cv=none; b=UsXPN0t4WPrqZ/sL01KtocrAB9OgOK7TvDC6fDLpSyS3zDN5UOkoa5/bfBn1BtpO4XOZvR1xhyO9ZB9CDCq7Hk+QV650W9yc0pdYfBcLybCnC76AHUzPRVisgAfQwD7jZViDFA1owh/ZBbYfvDmfynXJFrhx9XHGWK8tO8C4XO0=
+	t=1716470271; cv=none; b=jSk6KbHXovGRNvrCA77IdUcesAA7n36EPGrq0nlLKJh7/wV8YKxtEbTIFIfuBXx8fccz3A1LMT0vtHUSO9981kMkR/rZE2sbY6A6RCneqpQWpUGCxc+nzRTHfH66rrozpri+4tpmCQe86ypf/x3vvvr/6bnV+d/3r/eQ40zyPAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470269; c=relaxed/simple;
-	bh=kvqRI6G69uxY9OVl7JI6M9jrb4NvUA2DUXcVZXGJzaQ=;
+	s=arc-20240116; t=1716470271; c=relaxed/simple;
+	bh=NzXdNlWRESErEhnq6IazWZwIMWEMpykvdphgCdSk4Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ahtpIEhk76Cd1Tw4+Gpj1dEqS/wFciVGFQ/sjBEv8/rDdgmZ8KyaHiUQfO94tyLxOvW1+mYHt5oq292QzukMZuyjXtuPdFvYwQwn51Jy5LAjPa7li84l1OiLuEf4ZX5aRy6fmNRyCq6sDO+sp+Fcb2QDQZDtA5V5Y/anfjNIMh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsTfiJqj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V/BQAK1n4JbrBR4toMtZ5kNVzGrnFPs1JEO3ZDq7Tc9DX/IylFOAA5hqtI48AsXhZcSqBZBkbo9rdyH0uPkXeama8yeidjTPw1I1qurB/pFss8XuzZ7pmeUDaWXDO7txYV705h0dKUt7Iye+sSMlh9Ce087rdVWZKqbjHqH3svA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkW/TND6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsTfiJqj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57419C4AF09;
-	Thu, 23 May 2024 13:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkW/TND6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E930C2BD10;
+	Thu, 23 May 2024 13:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470268;
-	bh=kvqRI6G69uxY9OVl7JI6M9jrb4NvUA2DUXcVZXGJzaQ=;
+	s=korg; t=1716470271;
+	bh=NzXdNlWRESErEhnq6IazWZwIMWEMpykvdphgCdSk4Js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dsTfiJqjXeL3muOS5wMlRr7cbcaoO4Wl4XmB7w90Udli75Rjblo1X7+ApVCAr0KvR
-	 sJDPaQiua9O7fWC1FuQiYelHvjLoF6+4dMlFQnKYBLphQqfNDFfuFQG8/QY8/eaw9Q
-	 KZ2zbR7he1T4l4WhZ7FmzD9YxhiGWNt/GKz9Y5qc=
+	b=GkW/TND6+34YQkECMzi5qKMaM8C9q4kxE6wPfqsJsXQFlU0Ob1yolYbAaER2e2Jwn
+	 KzbQRVEra25SCr7pzKu+ybu8qc1O/uVZcAs/+trqC/7L0c9noD4J35ljVOe51HttUd
+	 TJrswPMSFobd7+PTJAKpOV8IVe4Hg8o4si5kP7kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: [PATCH 6.9 18/25] Revert "media: v4l2-ctrls: show all owned controls in log_status"
-Date: Thu, 23 May 2024 15:13:03 +0200
-Message-ID: <20240523130331.071611751@linuxfoundation.org>
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.9 19/25] KEYS: trusted: Do not use WARN when encode fails
+Date: Thu, 23 May 2024 15:13:04 +0200
+Message-ID: <20240523130331.107439190@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130330.386580714@linuxfoundation.org>
 References: <20240523130330.386580714@linuxfoundation.org>
@@ -50,82 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-commit eba63df7eb1f95df6bfb67722a35372b6994928d upstream.
+commit 050bf3c793a07f96bd1e2fd62e1447f731ed733b upstream.
 
-This reverts commit 9801b5b28c6929139d6fceeee8d739cc67bb2739.
+When asn1_encode_sequence() fails, WARN is not the correct solution.
 
-This patch introduced a potential deadlock scenario:
+1. asn1_encode_sequence() is not an internal function (located
+   in lib/asn1_encode.c).
+2. Location is known, which makes the stack trace useless.
+3. Results a crash if panic_on_warn is set.
 
-[Wed May  8 10:02:06 2024]  Possible unsafe locking scenario:
+It is also noteworthy that the use of WARN is undocumented, and it
+should be avoided unless there is a carefully considered rationale to
+use it.
 
-[Wed May  8 10:02:06 2024]        CPU0                    CPU1
-[Wed May  8 10:02:06 2024]        ----                    ----
-[Wed May  8 10:02:06 2024]   lock(vivid_ctrls:1620:(hdl_vid_cap)->_lock);
-[Wed May  8 10:02:06 2024]                                lock(vivid_ctrls:1608:(hdl_user_vid)->_lock);
-[Wed May  8 10:02:06 2024]                                lock(vivid_ctrls:1620:(hdl_vid_cap)->_lock);
-[Wed May  8 10:02:06 2024]   lock(vivid_ctrls:1608:(hdl_user_vid)->_lock);
+Replace WARN with pr_err, and print the return value instead, which is
+only useful piece of information.
 
-For now just revert.
-
-Fixes: 9801b5b28c69 ("media: v4l2-ctrls: show all owned controls in log_status")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c |   18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ security/keys/trusted-keys/trusted_tpm2.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -2504,8 +2504,7 @@ int v4l2_ctrl_handler_setup(struct v4l2_
- EXPORT_SYMBOL(v4l2_ctrl_handler_setup);
+--- a/security/keys/trusted-keys/trusted_tpm2.c
++++ b/security/keys/trusted-keys/trusted_tpm2.c
+@@ -84,8 +84,9 @@ static int tpm2_key_encode(struct truste
+ 	work1 = payload->blob;
+ 	work1 = asn1_encode_sequence(work1, work1 + sizeof(payload->blob),
+ 				     scratch, work - scratch);
+-	if (WARN(IS_ERR(work1), "BUG: ASN.1 encoder failed")) {
++	if (IS_ERR(work1)) {
+ 		ret = PTR_ERR(work1);
++		pr_err("BUG: ASN.1 encoder failed with %d\n", ret);
+ 		goto err;
+ 	}
  
- /* Log the control name and value */
--static void log_ctrl(const struct v4l2_ctrl_handler *hdl,
--		     struct v4l2_ctrl *ctrl,
-+static void log_ctrl(const struct v4l2_ctrl *ctrl,
- 		     const char *prefix, const char *colon)
- {
- 	if (ctrl->flags & (V4L2_CTRL_FLAG_DISABLED | V4L2_CTRL_FLAG_WRITE_ONLY))
-@@ -2515,11 +2514,7 @@ static void log_ctrl(const struct v4l2_c
- 
- 	pr_info("%s%s%s: ", prefix, colon, ctrl->name);
- 
--	if (ctrl->handler != hdl)
--		v4l2_ctrl_lock(ctrl);
- 	ctrl->type_ops->log(ctrl);
--	if (ctrl->handler != hdl)
--		v4l2_ctrl_unlock(ctrl);
- 
- 	if (ctrl->flags & (V4L2_CTRL_FLAG_INACTIVE |
- 			   V4L2_CTRL_FLAG_GRABBED |
-@@ -2538,7 +2533,7 @@ static void log_ctrl(const struct v4l2_c
- void v4l2_ctrl_handler_log_status(struct v4l2_ctrl_handler *hdl,
- 				  const char *prefix)
- {
--	struct v4l2_ctrl_ref *ref;
-+	struct v4l2_ctrl *ctrl;
- 	const char *colon = "";
- 	int len;
- 
-@@ -2550,12 +2545,9 @@ void v4l2_ctrl_handler_log_status(struct
- 	if (len && prefix[len - 1] != ' ')
- 		colon = ": ";
- 	mutex_lock(hdl->lock);
--	list_for_each_entry(ref, &hdl->ctrl_refs, node) {
--		if (ref->from_other_dev ||
--		    (ref->ctrl->flags & V4L2_CTRL_FLAG_DISABLED))
--			continue;
--		log_ctrl(hdl, ref->ctrl, prefix, colon);
--	}
-+	list_for_each_entry(ctrl, &hdl->ctrls, node)
-+		if (!(ctrl->flags & V4L2_CTRL_FLAG_DISABLED))
-+			log_ctrl(ctrl, prefix, colon);
- 	mutex_unlock(hdl->lock);
- }
- EXPORT_SYMBOL(v4l2_ctrl_handler_log_status);
 
 
