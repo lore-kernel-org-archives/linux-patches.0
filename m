@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BE314A61E;
-	Thu, 23 May 2024 13:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE7A1E497;
+	Thu, 23 May 2024 13:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470102; cv=none; b=d2im8R2U0Y/sM0Pgcxa9qRZ/403L1g1lPJlMohUQEpDk9TweIUa9MWKf6kmUSvTGJ1tZNPK3fymk6roHcyhzDtTVR9Nh2A5i7/wBUHWlLDlxL9+u2EFDbWxcAIYqOl4JUECz4nGQEBOSsdUY3q8SMUiVgnVUTDTaGADmEAmeguk=
+	t=1716470105; cv=none; b=VyxBrTjWgJZvrnlukYQ2kdyiP4P9q8sh9eyW8U3o+pAIKXIZLr9YRrWieKBCaYPNQCaHU0jN+cai7/anK4x8K3y5Ve/L7AiCs6b/NgFT/8gtoVPf8mGm0SspPU+wRRyXpZGSzoaoGn+E3R6qwrJ7NbaWNZPyRat7cjZL+d6FKVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470102; c=relaxed/simple;
-	bh=3AsO0W86twZBnCxJDvq+2bnnSJwpOe6D6G9K4dyL+MI=;
+	s=arc-20240116; t=1716470105; c=relaxed/simple;
+	bh=sn3yw1QWvcTAilyXa7sywtAaOauc6GRRDvLXsQVlbTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYkaMUMdSmk9X+co1uM6qkYTieoFiMbzrX8ysCVHwmOmBiy2Ch6zZm/N/HeucoiSYV2EPZ2FtkSyALGWhs5FV5ZOOPzO0uycQ1krTvZVkvEnYiscZ5MW4YnWOGeG0R7yMwFUGru7cuulnf7cc0T5vE4qGkheivl1VfBRZs7OizM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSTGCjCo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LxEVY1auJf6MbbiJivcrbRlPS7B9/++JpGOpNGFL0/NfEuYVNNVVlfjiKPMT1Cs6hGqSDPE+R1GwARzp2svu45hJIFx4Cg9RomqI3nDTSBs3REDUDm4Bjb91yd0bAHagHQXBqKqBGKQlkpQfg95tvBHWfwMheVfvnJptlOJ9Cpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hV9Loekg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSTGCjCo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FBFC32781;
-	Thu, 23 May 2024 13:15:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hV9Loekg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C97C2BD10;
+	Thu, 23 May 2024 13:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470102;
-	bh=3AsO0W86twZBnCxJDvq+2bnnSJwpOe6D6G9K4dyL+MI=;
+	s=korg; t=1716470105;
+	bh=sn3yw1QWvcTAilyXa7sywtAaOauc6GRRDvLXsQVlbTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tSTGCjCocTp590Egr3mxeVj0H3N4d+RXfAGJHsk6x+P/Vih+57ymk/dG8wJvHzXUR
-	 ohFwVFXX96bxvkoDF0h6z2aESYpw/IHdTbq/ep8xJ4x9dvT86+m56chCU5P4aQkrEG
-	 yAyS3doaJT0VuiWKB+41jWXYJQ0zJqxGu2lYZU/k=
+	b=hV9LoekgV5Rc7L8ZJkV+N86v6/c/CKUSe+SGGzUnbFV8Mkl7Mq5yd8SHsmBTmnFIl
+	 PU4gR3NZnlzku4gnuQlpeZWkpBOR8QfSr8BdzrEvpdGu3fDSEZ6MWvD/4KSAo2HW7n
+	 YoB9xvKB8yNq6VjzmVq0CVEn2I4iEAfwJRFz+cvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, George Guo" <guodongtai@kylinos.cn>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
+	Tom Zanussi <zanussi@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	George Guo <guodongtai@kylinos.cn>
-Subject: [PATCH 4.19 08/18] tracing: Consolidate trace_add/remove_event_call back to the nolock functions
-Date: Thu, 23 May 2024 15:12:31 +0200
-Message-ID: <20240523130326.048256449@linuxfoundation.org>
+	George Guo <guodongtai@kylinos.cn>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Joe Perches <joe@perches.com>,
+	Andreas Schwab <schwab@linux-m68k.org>
+Subject: [PATCH 4.19 09/18] string.h: Add str_has_prefix() helper function
+Date: Thu, 23 May 2024 15:12:32 +0200
+Message-ID: <20240523130326.087206848@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130325.727602650@linuxfoundation.org>
 References: <20240523130325.727602650@linuxfoundation.org>
@@ -54,127 +57,78 @@ Content-Transfer-Encoding: 8bit
 
 From: "Steven Rostedt (VMware)" <rostedt@goodmis.org>
 
-commit 7e1413edd6194a9807aa5f3ac0378b9b4b9da879 upstream.
+commit 72921427d46bf9731a1ab7864adc64c43dfae29f upstream.
 
-The trace_add/remove_event_call_nolock() functions were added to allow
-the tace_add/remove_event_call() code be called when the event_mutex
-lock was already taken. Now that all callers are done within the
-event_mutex, there's no reason to have two different interfaces.
+A discussion came up in the trace triggers thread about converting a
+bunch of:
 
-Remove the current wrapper trace_add/remove_event_call()s and rename the
-_nolock versions back to the original names.
+ strncmp(str, "const", sizeof("const") - 1)
 
-Link: http://lkml.kernel.org/r/154140866955.17322.2081425494660638846.stgit@devbox
+use cases into a helper macro. It started with:
 
-Acked-by: Masami Hiramatsu <mhiramat@kernel.org>
+	strncmp(str, const, sizeof(const) - 1)
+
+But then Joe Perches mentioned that if a const is not used, the
+sizeof() will be the size of a pointer, which can be bad. And that
+gcc will optimize strlen("const") into "sizeof("const") - 1".
+
+Thinking about this more, a quick grep in the kernel tree found several
+(thousands!) of cases that use this construct. A quick grep also
+revealed that there's probably several bugs in that use case. Some are
+that people forgot the "- 1" (which I found) and others could be that
+the constant for the sizeof is different than the constant (although, I
+haven't found any of those, but I also didn't look hard).
+
+I figured the best thing to do is to create a helper macro and place it
+into include/linux/string.h. And go around and fix all the open coded
+versions of it later.
+
+Note, gcc appears to optimize this when we make it into an always_inline
+static function, which removes a lot of issues that a macro produces.
+
+Link: http://lkml.kernel.org/r/e3e754f2bd18e56eaa8baf79bee619316ebf4cfc.1545161087.git.tom.zanussi@linux.intel.com
+Link: http://lkml.kernel.org/r/20181219211615.2298e781@gandalf.local.home
+Link: http://lkml.kernel.org/r/CAHk-=wg_sR-UEC1ggmkZpypOUYanL5CMX4R7ceuaV4QMf5jBtg@mail.gmail.com
+
+Cc: Tom Zanussi <zanussi@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Suggestions-by: Linus Torvalds <torvalds@linux-foundation.org>
+Suggestions-by: Joe Perches <joe@perches.com>
+Suggestions-by: Andreas Schwab <schwab@linux-m68k.org>
 Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
 Signed-off-by: George Guo <guodongtai@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/trace_events.h     |    2 --
- kernel/trace/trace_events.c      |   30 ++++--------------------------
- kernel/trace/trace_events_hist.c |    6 +++---
- 3 files changed, 7 insertions(+), 31 deletions(-)
+ include/linux/string.h |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -529,8 +529,6 @@ extern int trace_event_raw_init(struct t
- extern int trace_define_field(struct trace_event_call *call, const char *type,
- 			      const char *name, int offset, int size,
- 			      int is_signed, int filter_type);
--extern int trace_add_event_call_nolock(struct trace_event_call *call);
--extern int trace_remove_event_call_nolock(struct trace_event_call *call);
- extern int trace_add_event_call(struct trace_event_call *call);
- extern int trace_remove_event_call(struct trace_event_call *call);
- extern int trace_event_get_offsets(struct trace_event_call *call);
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -2312,7 +2312,8 @@ __trace_early_add_new_event(struct trace
- struct ftrace_module_file_ops;
- static void __add_event_to_tracers(struct trace_event_call *call);
- 
--int trace_add_event_call_nolock(struct trace_event_call *call)
-+/* Add an additional event_call dynamically */
-+int trace_add_event_call(struct trace_event_call *call)
- {
- 	int ret;
- 	lockdep_assert_held(&event_mutex);
-@@ -2327,17 +2328,6 @@ int trace_add_event_call_nolock(struct t
- 	return ret;
+--- a/include/linux/string.h
++++ b/include/linux/string.h
+@@ -492,4 +492,24 @@ static inline void memcpy_and_pad(void *
+ 		memcpy(dest, src, dest_len);
  }
  
--/* Add an additional event_call dynamically */
--int trace_add_event_call(struct trace_event_call *call)
--{
--	int ret;
--
--	mutex_lock(&event_mutex);
--	ret = trace_add_event_call_nolock(call);
--	mutex_unlock(&event_mutex);
--	return ret;
--}
--
- /*
-  * Must be called under locking of trace_types_lock, event_mutex and
-  * trace_event_sem.
-@@ -2383,8 +2373,8 @@ static int probe_remove_event_call(struc
- 	return 0;
- }
- 
--/* no event_mutex version */
--int trace_remove_event_call_nolock(struct trace_event_call *call)
-+/* Remove an event_call */
-+int trace_remove_event_call(struct trace_event_call *call)
- {
- 	int ret;
- 
-@@ -2398,18 +2388,6 @@ int trace_remove_event_call_nolock(struc
- 
- 	return ret;
- }
--
--/* Remove an event_call */
--int trace_remove_event_call(struct trace_event_call *call)
--{
--	int ret;
--
--	mutex_lock(&event_mutex);
--	ret = trace_remove_event_call_nolock(call);
--	mutex_unlock(&event_mutex);
--
--	return ret;
--}
- 
- #define for_each_event(event, start, end)			\
- 	for (event = start;					\
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -980,7 +980,7 @@ static int register_synth_event(struct s
- 	call->data = event;
- 	call->tp = event->tp;
- 
--	ret = trace_add_event_call_nolock(call);
-+	ret = trace_add_event_call(call);
- 	if (ret) {
- 		pr_warn("Failed to register synthetic event: %s\n",
- 			trace_event_name(call));
-@@ -989,7 +989,7 @@ static int register_synth_event(struct s
- 
- 	ret = set_synth_event_print_fmt(call);
- 	if (ret < 0) {
--		trace_remove_event_call_nolock(call);
-+		trace_remove_event_call(call);
- 		goto err;
- 	}
-  out:
-@@ -1004,7 +1004,7 @@ static int unregister_synth_event(struct
- 	struct trace_event_call *call = &event->call;
- 	int ret;
- 
--	ret = trace_remove_event_call_nolock(call);
-+	ret = trace_remove_event_call(call);
- 
- 	return ret;
- }
++/**
++ * str_has_prefix - Test if a string has a given prefix
++ * @str: The string to test
++ * @prefix: The string to see if @str starts with
++ *
++ * A common way to test a prefix of a string is to do:
++ *  strncmp(str, prefix, sizeof(prefix) - 1)
++ *
++ * But this can lead to bugs due to typos, or if prefix is a pointer
++ * and not a constant. Instead use str_has_prefix().
++ *
++ * Returns: 0 if @str does not start with @prefix
++         strlen(@prefix) if @str does start with @prefix
++ */
++static __always_inline size_t str_has_prefix(const char *str, const char *prefix)
++{
++	size_t len = strlen(prefix);
++	return strncmp(str, prefix, len) == 0 ? len : 0;
++}
++
+ #endif /* _LINUX_STRING_H_ */
 
 
