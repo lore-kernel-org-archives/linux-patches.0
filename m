@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAD614B083;
-	Thu, 23 May 2024 13:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0551E504;
+	Thu, 23 May 2024 13:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470326; cv=none; b=s839EvFTM1RxwLy6exL1jfySaWW2GGW5EhazrbjVmU0iWpVyyVS9+RAB2sxj+pH+NkW+0RV2phL5mNcIjU4uPIFciEaSxd2gE+nSRF5blnDUT0tYO5E4yuZnDbdFZIVgQVeIPzbZmeJVNZdCz/JlKPdQZ5y/GERWNEL4Rp2hb98=
+	t=1716470328; cv=none; b=pUoi+jSlW7CO21oAE9Mre0lGRpkFwAzgzX1JokiXlJQCxvZUVyjGB6YS2jvCNU1Boya5IrKg/iIRzaThItljr0bX3atTwDkh+FgdrRL7xS98t9MTQVZrjoC4gPVaPW/H5Z3g4VI/cNAha69baRydEIAEXolGBGCvwJW0S39efiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470326; c=relaxed/simple;
-	bh=gH//Nd+UlS+e4EDPhwTPdsUIF5hBHBLdZp2JgyKolaY=;
+	s=arc-20240116; t=1716470328; c=relaxed/simple;
+	bh=LUtOI/8+H583S4AdL7+YtFDPL2d/+rJveiUGlbe9jGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SE11uRukHQauBLeSr9OjvFpj+eZtl+JBiCq1vAjLyG4KPjRi17KlkA1nz/qdFjLDwxAv354e8KOmoZ2aqV9LcxZQS4RfLAsWpsHiQtO8QJyINpYFl/zRsEKQgUfKp2V1Gw+eopn7b940yDaxC0mVHybJoqWJXx6lzg5jIr5RbYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWE8l/rA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RF87a7Ixh+ZkOxG4CNClKw2MQJb/pPsOh7w88SPu/ADmhxjoxMyXAN4hyj1EI193BBTCdcsNYYCMd76ogM2LoL3qXtSqufqeRc6HXMu8b8p4hhOhfgdjG93admSsPMqpz/W2PGKG71xyp7cWn1W1R2xQIC36vXWwHyGOAKLDQ+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1N+Aj2m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWE8l/rA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A12C3277B;
-	Thu, 23 May 2024 13:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1N+Aj2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64009C2BD10;
+	Thu, 23 May 2024 13:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470325;
-	bh=gH//Nd+UlS+e4EDPhwTPdsUIF5hBHBLdZp2JgyKolaY=;
+	s=korg; t=1716470328;
+	bh=LUtOI/8+H583S4AdL7+YtFDPL2d/+rJveiUGlbe9jGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWE8l/rAffe50mPTwR7LFeOPb8kEwSwAA5zNHnYL166Yr2ezd3D50uGUgKMW5Q2Qi
-	 K8w71nPGUu2YTqQKqx45cxdlHKsHaqudwJ+FUBfZCCdL1V0EQe1VaoP5X2G84nMTWj
-	 tWrv9XSaalNdUVQGGsLQJNLQzFr2ZmI+jhVuUTXc=
+	b=v1N+Aj2mtNE06W0YN/sY3VwF+wwa187adTmv/CuZGmot9viJuFX+3G+5YTZBjHAaM
+	 59TCIFTGYpFSlxg879jzoc04Fy85oK0xChcqa+E74wlYW1zexXc6cRHboChapmbWKW
+	 0snYO2ovq4syDHRugjr/gcIIIoOZR/UZ9vYZwpKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	"David S. Miller" <davem@davemloft.net>,
 	Shaoying Xu <shaoyi@amazon.com>
-Subject: [PATCH 5.15 08/23] tls: rx: simplify async wait
-Date: Thu, 23 May 2024 15:13:04 +0200
-Message-ID: <20240523130328.268096025@linuxfoundation.org>
+Subject: [PATCH 5.15 09/23] tls: extract context alloc/initialization out of tls_set_sw_offload
+Date: Thu, 23 May 2024 15:13:05 +0200
+Message-ID: <20240523130328.305064226@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130327.956341021@linuxfoundation.org>
 References: <20240523130327.956341021@linuxfoundation.org>
@@ -51,79 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit 37943f047bfb88ba4dfc7a522563f57c86d088a0 upstream.
+commit 615580cbc99af0da2d1c7226fab43a3d5003eb97 upstream.
 
-Since we are protected from async completions by decrypt_compl_lock
-we can drop the async_notify and reinit the completion before we
-start waiting.
+Simplify tls_set_sw_offload a bit.
 
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: aec7961916f3 ("tls: fix race between async notify and socket close")
+[v5.15: fixed contextual conflicts from unavailable init_waitqueue_head and
+skb_queue_head_init calls in tls_set_sw_offload and init_ctx_rx]
+Cc: <stable@vger.kernel.org> # 5.15
 Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tls.h |    1 -
- net/tls/tls_sw.c  |   14 ++------------
- 2 files changed, 2 insertions(+), 13 deletions(-)
+ net/tls/tls_sw.c |   82 ++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 49 insertions(+), 33 deletions(-)
 
---- a/include/net/tls.h
-+++ b/include/net/tls.h
-@@ -150,7 +150,6 @@ struct tls_sw_context_rx {
- 	atomic_t decrypt_pending;
- 	/* protect crypto_wait with decrypt_pending*/
- 	spinlock_t decrypt_compl_lock;
--	bool async_notify;
- };
- 
- struct tls_record_info {
 --- a/net/tls/tls_sw.c
 +++ b/net/tls/tls_sw.c
-@@ -174,7 +174,6 @@ static void tls_decrypt_done(struct cryp
- 	struct scatterlist *sg;
- 	struct sk_buff *skb;
- 	unsigned int pages;
--	int pending;
- 
- 	skb = (struct sk_buff *)req->data;
- 	tls_ctx = tls_get_ctx(skb->sk);
-@@ -222,9 +221,7 @@ static void tls_decrypt_done(struct cryp
- 	kfree(aead_req);
- 
- 	spin_lock_bh(&ctx->decrypt_compl_lock);
--	pending = atomic_dec_return(&ctx->decrypt_pending);
--
--	if (!pending && ctx->async_notify)
-+	if (!atomic_dec_return(&ctx->decrypt_pending))
- 		complete(&ctx->async_wait.completion);
- 	spin_unlock_bh(&ctx->decrypt_compl_lock);
+@@ -2291,6 +2291,46 @@ void tls_sw_strparser_arm(struct sock *s
+ 	strp_check_rcv(&rx_ctx->strp);
  }
-@@ -1917,7 +1914,7 @@ recv_end:
  
- 		/* Wait for all previously submitted records to be decrypted */
- 		spin_lock_bh(&ctx->decrypt_compl_lock);
--		ctx->async_notify = true;
-+		reinit_completion(&ctx->async_wait.completion);
- 		pending = atomic_read(&ctx->decrypt_pending);
- 		spin_unlock_bh(&ctx->decrypt_compl_lock);
- 		if (pending) {
-@@ -1929,15 +1926,8 @@ recv_end:
- 				decrypted = 0;
- 				goto end;
- 			}
++static struct tls_sw_context_tx *init_ctx_tx(struct tls_context *ctx, struct sock *sk)
++{
++	struct tls_sw_context_tx *sw_ctx_tx;
++
++	if (!ctx->priv_ctx_tx) {
++		sw_ctx_tx = kzalloc(sizeof(*sw_ctx_tx), GFP_KERNEL);
++		if (!sw_ctx_tx)
++			return NULL;
++	} else {
++		sw_ctx_tx = ctx->priv_ctx_tx;
++	}
++
++	crypto_init_wait(&sw_ctx_tx->async_wait);
++	spin_lock_init(&sw_ctx_tx->encrypt_compl_lock);
++	INIT_LIST_HEAD(&sw_ctx_tx->tx_list);
++	INIT_DELAYED_WORK(&sw_ctx_tx->tx_work.work, tx_work_handler);
++	sw_ctx_tx->tx_work.sk = sk;
++
++	return sw_ctx_tx;
++}
++
++static struct tls_sw_context_rx *init_ctx_rx(struct tls_context *ctx)
++{
++	struct tls_sw_context_rx *sw_ctx_rx;
++
++	if (!ctx->priv_ctx_rx) {
++		sw_ctx_rx = kzalloc(sizeof(*sw_ctx_rx), GFP_KERNEL);
++		if (!sw_ctx_rx)
++			return NULL;
++	} else {
++		sw_ctx_rx = ctx->priv_ctx_rx;
++	}
++
++	crypto_init_wait(&sw_ctx_rx->async_wait);
++	spin_lock_init(&sw_ctx_rx->decrypt_compl_lock);
++	skb_queue_head_init(&sw_ctx_rx->rx_list);
++
++	return sw_ctx_rx;
++}
++
+ int tls_set_sw_offload(struct sock *sk, struct tls_context *ctx, int tx)
+ {
+ 	struct tls_context *tls_ctx = tls_get_ctx(sk);
+@@ -2317,46 +2357,22 @@ int tls_set_sw_offload(struct sock *sk,
+ 	}
+ 
+ 	if (tx) {
+-		if (!ctx->priv_ctx_tx) {
+-			sw_ctx_tx = kzalloc(sizeof(*sw_ctx_tx), GFP_KERNEL);
+-			if (!sw_ctx_tx) {
+-				rc = -ENOMEM;
+-				goto out;
+-			}
+-			ctx->priv_ctx_tx = sw_ctx_tx;
 -		} else {
--			reinit_completion(&ctx->async_wait.completion);
- 		}
+-			sw_ctx_tx =
+-				(struct tls_sw_context_tx *)ctx->priv_ctx_tx;
+-		}
+-	} else {
+-		if (!ctx->priv_ctx_rx) {
+-			sw_ctx_rx = kzalloc(sizeof(*sw_ctx_rx), GFP_KERNEL);
+-			if (!sw_ctx_rx) {
+-				rc = -ENOMEM;
+-				goto out;
+-			}
+-			ctx->priv_ctx_rx = sw_ctx_rx;
+-		} else {
+-			sw_ctx_rx =
+-				(struct tls_sw_context_rx *)ctx->priv_ctx_rx;
+-		}
+-	}
++		ctx->priv_ctx_tx = init_ctx_tx(ctx, sk);
++		if (!ctx->priv_ctx_tx)
++			return -ENOMEM;
  
--		/* There can be no concurrent accesses, since we have no
--		 * pending decrypt operations
--		 */
--		WRITE_ONCE(ctx->async_notify, false);
--
- 		/* Drain records from the rx_list & copy if required */
- 		if (is_peek || is_kvec)
- 			err = process_rx_list(ctx, msg, &control, copied,
+-	if (tx) {
+-		crypto_init_wait(&sw_ctx_tx->async_wait);
+-		spin_lock_init(&sw_ctx_tx->encrypt_compl_lock);
++		sw_ctx_tx = ctx->priv_ctx_tx;
+ 		crypto_info = &ctx->crypto_send.info;
+ 		cctx = &ctx->tx;
+ 		aead = &sw_ctx_tx->aead_send;
+-		INIT_LIST_HEAD(&sw_ctx_tx->tx_list);
+-		INIT_DELAYED_WORK(&sw_ctx_tx->tx_work.work, tx_work_handler);
+-		sw_ctx_tx->tx_work.sk = sk;
+ 	} else {
+-		crypto_init_wait(&sw_ctx_rx->async_wait);
+-		spin_lock_init(&sw_ctx_rx->decrypt_compl_lock);
++		ctx->priv_ctx_rx = init_ctx_rx(ctx);
++		if (!ctx->priv_ctx_rx)
++			return -ENOMEM;
++
++		sw_ctx_rx = ctx->priv_ctx_rx;
+ 		crypto_info = &ctx->crypto_recv.info;
+ 		cctx = &ctx->rx;
+-		skb_queue_head_init(&sw_ctx_rx->rx_list);
+ 		aead = &sw_ctx_rx->aead_recv;
+ 	}
+ 
 
 
