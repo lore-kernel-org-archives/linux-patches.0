@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C087E1E497;
-	Thu, 23 May 2024 13:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2D214A633;
+	Thu, 23 May 2024 13:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470541; cv=none; b=No9O850mYr+LqAEuwdywpcsjh9W3xHHr6b/a2UZvVpG66LovDj1Ye9OFjubz38OJxd1YNzCJSQMN7FPuUwxIduaEw9Dlgo6fj6XoQR0+U2rZiDNSlf9Nwh3iLgm9RQW0zsL7/rc+MshGvyddCwyXSErTvUvFgAUh1hbcLEsnaoE=
+	t=1716470544; cv=none; b=kGtVwkcKrPhBOvJFhijF0xFNCZoy/DZ1pZjWF8DG+iFAAWJh+E+8lUayWGroKIUwfdzkxhgIxNg485hF6waCLmasfXZ7gtFd5ch7z85MLlaRIJHgqIvONHWV769jrLc8pEa3CmtPrLV8Z9CABKKhS2L5uV8qgJU65qJwIJ4C9vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470541; c=relaxed/simple;
-	bh=zQlGdpib4aSCGluKgPOMpFqgaqQdqSjzPt712pnaqYk=;
+	s=arc-20240116; t=1716470544; c=relaxed/simple;
+	bh=HUaurkJiVusfUHbo+rjAA8T1xryVytzZ5sUAwbGsif4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+qZqYn9qx1FeBzuIshQ1t8mFnxCfYWo/pmyUBD7bU+s1OdfzsNPp8D3H8EfCUMao4bc8pFPKta7MMJSN53hCWkbOW3sP3/Hux74Y+M4oXTY9hRz6+mraqyG912G/Pv7wUf7lCzWJbJzThiIDSVXRYyKumBjsSuXOyEoocSrRd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XCEUaoH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uNkUyFbQUzuaE2+jNL+pzj1AeBovM+hyagl0erTTIgGA0+gU4Z5uETNxFqlY1X2w7AfGCBI3lpjEuvQ3XdDLhYg74fsFCfcpyVYs7I/0+P8I3bhBreBHwBlLRBzsQiWAITXtRmAHIq3yO9Z3dSKb+BgXz6yc54qyzYFivvbF6Jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xucmw8nB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XCEUaoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479FBC2BD10;
-	Thu, 23 May 2024 13:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xucmw8nB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274B6C3277B;
+	Thu, 23 May 2024 13:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470541;
-	bh=zQlGdpib4aSCGluKgPOMpFqgaqQdqSjzPt712pnaqYk=;
+	s=korg; t=1716470544;
+	bh=HUaurkJiVusfUHbo+rjAA8T1xryVytzZ5sUAwbGsif4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XCEUaoH+0vVtaWloohhd6wAn/OyrJaSyEakIVLREaCsfNzn2i/OSkiTSn8khGkOg
-	 YN0Z7gSG0z7mNbryLFZYWtT58PGQVEq+FOrb7qLAsj8KCM3VLAbUaXO4RK54tQzgHV
-	 wEhQa8K1MyUjvExygB0U9BWZzYJXKiS+HgeyMmlg=
+	b=xucmw8nB8KegvW0kjGT7CMJZaYqv0482PGb1bbZZqbVSV1EnE3s0CSg8j3Y5cUKbe
+	 VsVoV3+Vzci0snC6eVGF1or9Q+8522ihi6RqDgrkhedQBnJLj7T5/WVOGGJ14kl+5Q
+	 J5yjid7ANbNv+TsUDoXh5UhXE0L5IGp+nEfDoRAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Baokun Li <libaokun1@huawei.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Chao Yu <chao@kernel.org>
-Subject: [PATCH 6.8 08/23] erofs: get rid of erofs_fs_context
-Date: Thu, 23 May 2024 15:13:35 +0200
-Message-ID: <20240523130330.063326122@linuxfoundation.org>
+Subject: [PATCH 6.8 09/23] erofs: reliably distinguish block based and fscache mode
+Date: Thu, 23 May 2024 15:13:36 +0200
+Message-ID: <20240523130330.099973146@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130329.745905823@linuxfoundation.org>
 References: <20240523130329.745905823@linuxfoundation.org>
@@ -52,293 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 07abe43a28b2c660f726d66f5470f7f114f9643a upstream.
+commit 7af2ae1b1531feab5d38ec9c8f472dc6cceb4606 upstream.
 
-Instead of allocating the erofs_sb_info in fill_super() allocate it during
-erofs_init_fs_context() and ensure that erofs can always have the info
-available during erofs_kill_sb(). After this erofs_fs_context is no longer
-needed, replace ctx with sbi, no functional changes.
+When erofs_kill_sb() is called in block dev based mode, s_bdev may not
+have been initialised yet, and if CONFIG_EROFS_FS_ONDEMAND is enabled,
+it will be mistaken for fscache mode, and then attempt to free an anon_dev
+that has never been allocated, triggering the following warning:
 
-Suggested-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+============================================
+ida_free called for id=0 which is not allocated.
+WARNING: CPU: 14 PID: 926 at lib/idr.c:525 ida_free+0x134/0x140
+Modules linked in:
+CPU: 14 PID: 926 Comm: mount Not tainted 6.9.0-rc3-dirty #630
+RIP: 0010:ida_free+0x134/0x140
+Call Trace:
+ <TASK>
+ erofs_kill_sb+0x81/0x90
+ deactivate_locked_super+0x35/0x80
+ get_tree_bdev+0x136/0x1e0
+ vfs_get_tree+0x2c/0xf0
+ do_new_mount+0x190/0x2f0
+ [...]
+============================================
+
+Now when erofs_kill_sb() is called, erofs_sb_info must have been
+initialised, so use sbi->fsid to distinguish between the two modes.
+
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
 Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20240419123611.947084-2-libaokun1@huawei.com
-[ Gao Xiang: trivial conflict due to a warning message. ]
+Link: https://lore.kernel.org/r/20240419123611.947084-3-libaokun1@huawei.com
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/internal.h |    7 ---
- fs/erofs/super.c    |  116 +++++++++++++++++++++++-----------------------------
- 2 files changed, 53 insertions(+), 70 deletions(-)
+ fs/erofs/super.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/fs/erofs/internal.h
-+++ b/fs/erofs/internal.h
-@@ -84,13 +84,6 @@ struct erofs_dev_context {
- 	bool flatdev;
- };
- 
--struct erofs_fs_context {
--	struct erofs_mount_opts opt;
--	struct erofs_dev_context *devs;
--	char *fsid;
--	char *domain_id;
--};
--
- /* all filesystem-wide lz4 configurations */
- struct erofs_sb_lz4_info {
- 	/* # of pages needed for EROFS lz4 rolling decompression */
 --- a/fs/erofs/super.c
 +++ b/fs/erofs/super.c
-@@ -370,18 +370,18 @@ out:
- 	return ret;
- }
+@@ -790,17 +790,13 @@ static int erofs_init_fs_context(struct
  
--static void erofs_default_options(struct erofs_fs_context *ctx)
-+static void erofs_default_options(struct erofs_sb_info *sbi)
+ static void erofs_kill_sb(struct super_block *sb)
  {
- #ifdef CONFIG_EROFS_FS_ZIP
--	ctx->opt.cache_strategy = EROFS_ZIP_CACHE_READAROUND;
--	ctx->opt.max_sync_decompress_pages = 3;
--	ctx->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_AUTO;
-+	sbi->opt.cache_strategy = EROFS_ZIP_CACHE_READAROUND;
-+	sbi->opt.max_sync_decompress_pages = 3;
-+	sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_AUTO;
- #endif
- #ifdef CONFIG_EROFS_FS_XATTR
--	set_opt(&ctx->opt, XATTR_USER);
-+	set_opt(&sbi->opt, XATTR_USER);
- #endif
- #ifdef CONFIG_EROFS_FS_POSIX_ACL
--	set_opt(&ctx->opt, POSIX_ACL);
-+	set_opt(&sbi->opt, POSIX_ACL);
- #endif
- }
- 
-@@ -426,17 +426,17 @@ static const struct fs_parameter_spec er
- static bool erofs_fc_set_dax_mode(struct fs_context *fc, unsigned int mode)
- {
- #ifdef CONFIG_FS_DAX
--	struct erofs_fs_context *ctx = fc->fs_private;
-+	struct erofs_sb_info *sbi = fc->s_fs_info;
- 
- 	switch (mode) {
- 	case EROFS_MOUNT_DAX_ALWAYS:
- 		warnfc(fc, "DAX enabled. Warning: EXPERIMENTAL, use at your own risk");
--		set_opt(&ctx->opt, DAX_ALWAYS);
--		clear_opt(&ctx->opt, DAX_NEVER);
-+		set_opt(&sbi->opt, DAX_ALWAYS);
-+		clear_opt(&sbi->opt, DAX_NEVER);
- 		return true;
- 	case EROFS_MOUNT_DAX_NEVER:
--		set_opt(&ctx->opt, DAX_NEVER);
--		clear_opt(&ctx->opt, DAX_ALWAYS);
-+		set_opt(&sbi->opt, DAX_NEVER);
-+		clear_opt(&sbi->opt, DAX_ALWAYS);
- 		return true;
- 	default:
- 		DBG_BUGON(1);
-@@ -451,7 +451,7 @@ static bool erofs_fc_set_dax_mode(struct
- static int erofs_fc_parse_param(struct fs_context *fc,
- 				struct fs_parameter *param)
- {
--	struct erofs_fs_context *ctx = fc->fs_private;
-+	struct erofs_sb_info *sbi = fc->s_fs_info;
- 	struct fs_parse_result result;
- 	struct erofs_device_info *dif;
- 	int opt, ret;
-@@ -464,9 +464,9 @@ static int erofs_fc_parse_param(struct f
- 	case Opt_user_xattr:
- #ifdef CONFIG_EROFS_FS_XATTR
- 		if (result.boolean)
--			set_opt(&ctx->opt, XATTR_USER);
-+			set_opt(&sbi->opt, XATTR_USER);
- 		else
--			clear_opt(&ctx->opt, XATTR_USER);
-+			clear_opt(&sbi->opt, XATTR_USER);
- #else
- 		errorfc(fc, "{,no}user_xattr options not supported");
- #endif
-@@ -474,16 +474,16 @@ static int erofs_fc_parse_param(struct f
- 	case Opt_acl:
- #ifdef CONFIG_EROFS_FS_POSIX_ACL
- 		if (result.boolean)
--			set_opt(&ctx->opt, POSIX_ACL);
-+			set_opt(&sbi->opt, POSIX_ACL);
- 		else
--			clear_opt(&ctx->opt, POSIX_ACL);
-+			clear_opt(&sbi->opt, POSIX_ACL);
- #else
- 		errorfc(fc, "{,no}acl options not supported");
- #endif
- 		break;
- 	case Opt_cache_strategy:
- #ifdef CONFIG_EROFS_FS_ZIP
--		ctx->opt.cache_strategy = result.uint_32;
-+		sbi->opt.cache_strategy = result.uint_32;
- #else
- 		errorfc(fc, "compression not supported, cache_strategy ignored");
- #endif
-@@ -505,27 +505,27 @@ static int erofs_fc_parse_param(struct f
- 			kfree(dif);
- 			return -ENOMEM;
- 		}
--		down_write(&ctx->devs->rwsem);
--		ret = idr_alloc(&ctx->devs->tree, dif, 0, 0, GFP_KERNEL);
--		up_write(&ctx->devs->rwsem);
-+		down_write(&sbi->devs->rwsem);
-+		ret = idr_alloc(&sbi->devs->tree, dif, 0, 0, GFP_KERNEL);
-+		up_write(&sbi->devs->rwsem);
- 		if (ret < 0) {
- 			kfree(dif->path);
- 			kfree(dif);
- 			return ret;
- 		}
--		++ctx->devs->extra_devices;
-+		++sbi->devs->extra_devices;
- 		break;
- #ifdef CONFIG_EROFS_FS_ONDEMAND
- 	case Opt_fsid:
--		kfree(ctx->fsid);
--		ctx->fsid = kstrdup(param->string, GFP_KERNEL);
--		if (!ctx->fsid)
-+		kfree(sbi->fsid);
-+		sbi->fsid = kstrdup(param->string, GFP_KERNEL);
-+		if (!sbi->fsid)
- 			return -ENOMEM;
- 		break;
- 	case Opt_domain_id:
--		kfree(ctx->domain_id);
--		ctx->domain_id = kstrdup(param->string, GFP_KERNEL);
--		if (!ctx->domain_id)
-+		kfree(sbi->domain_id);
-+		sbi->domain_id = kstrdup(param->string, GFP_KERNEL);
-+		if (!sbi->domain_id)
- 			return -ENOMEM;
- 		break;
- #else
-@@ -582,8 +582,7 @@ static const struct export_operations er
- static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
- {
- 	struct inode *inode;
 -	struct erofs_sb_info *sbi;
--	struct erofs_fs_context *ctx = fc->fs_private;
 +	struct erofs_sb_info *sbi = EROFS_SB(sb);
- 	int err;
  
- 	sb->s_magic = EROFS_SUPER_MAGIC;
-@@ -591,19 +590,6 @@ static int erofs_fc_fill_super(struct su
- 	sb->s_maxbytes = MAX_LFS_FILESIZE;
- 	sb->s_op = &erofs_sops;
- 
--	sbi = kzalloc(sizeof(*sbi), GFP_KERNEL);
--	if (!sbi)
--		return -ENOMEM;
--
--	sb->s_fs_info = sbi;
--	sbi->opt = ctx->opt;
--	sbi->devs = ctx->devs;
--	ctx->devs = NULL;
--	sbi->fsid = ctx->fsid;
--	ctx->fsid = NULL;
--	sbi->domain_id = ctx->domain_id;
--	ctx->domain_id = NULL;
--
- 	sbi->blkszbits = PAGE_SHIFT;
- 	if (erofs_is_fscache_mode(sb)) {
- 		sb->s_blocksize = PAGE_SIZE;
-@@ -707,9 +693,9 @@ static int erofs_fc_fill_super(struct su
- 
- static int erofs_fc_get_tree(struct fs_context *fc)
- {
--	struct erofs_fs_context *ctx = fc->fs_private;
-+	struct erofs_sb_info *sbi = fc->s_fs_info;
- 
--	if (IS_ENABLED(CONFIG_EROFS_FS_ONDEMAND) && ctx->fsid)
+-	if (erofs_is_fscache_mode(sb))
 +	if (IS_ENABLED(CONFIG_EROFS_FS_ONDEMAND) && sbi->fsid)
- 		return get_tree_nodev(fc, erofs_fc_fill_super);
- 
- 	return get_tree_bdev(fc, erofs_fc_fill_super);
-@@ -719,19 +705,19 @@ static int erofs_fc_reconfigure(struct f
- {
- 	struct super_block *sb = fc->root->d_sb;
- 	struct erofs_sb_info *sbi = EROFS_SB(sb);
--	struct erofs_fs_context *ctx = fc->fs_private;
-+	struct erofs_sb_info *new_sbi = fc->s_fs_info;
- 
- 	DBG_BUGON(!sb_rdonly(sb));
- 
--	if (ctx->fsid || ctx->domain_id)
-+	if (new_sbi->fsid || new_sbi->domain_id)
- 		erofs_info(sb, "ignoring reconfiguration for fsid|domain_id.");
- 
--	if (test_opt(&ctx->opt, POSIX_ACL))
-+	if (test_opt(&new_sbi->opt, POSIX_ACL))
- 		fc->sb_flags |= SB_POSIXACL;
+ 		kill_anon_super(sb);
  	else
- 		fc->sb_flags &= ~SB_POSIXACL;
+ 		kill_block_super(sb);
  
--	sbi->opt = ctx->opt;
-+	sbi->opt = new_sbi->opt;
- 
- 	fc->sb_flags |= SB_RDONLY;
- 	return 0;
-@@ -762,12 +748,15 @@ static void erofs_free_dev_context(struc
- 
- static void erofs_fc_free(struct fs_context *fc)
- {
--	struct erofs_fs_context *ctx = fc->fs_private;
-+	struct erofs_sb_info *sbi = fc->s_fs_info;
- 
--	erofs_free_dev_context(ctx->devs);
--	kfree(ctx->fsid);
--	kfree(ctx->domain_id);
--	kfree(ctx);
-+	if (!sbi)
-+		return;
-+
-+	erofs_free_dev_context(sbi->devs);
-+	kfree(sbi->fsid);
-+	kfree(sbi->domain_id);
-+	kfree(sbi);
- }
- 
- static const struct fs_context_operations erofs_context_ops = {
-@@ -779,21 +768,22 @@ static const struct fs_context_operation
- 
- static int erofs_init_fs_context(struct fs_context *fc)
- {
--	struct erofs_fs_context *ctx;
-+	struct erofs_sb_info *sbi;
- 
--	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
--	if (!ctx)
-+	sbi = kzalloc(sizeof(*sbi), GFP_KERNEL);
-+	if (!sbi)
- 		return -ENOMEM;
--	ctx->devs = kzalloc(sizeof(struct erofs_dev_context), GFP_KERNEL);
--	if (!ctx->devs) {
--		kfree(ctx);
-+
-+	sbi->devs = kzalloc(sizeof(struct erofs_dev_context), GFP_KERNEL);
-+	if (!sbi->devs) {
-+		kfree(sbi);
- 		return -ENOMEM;
- 	}
--	fc->fs_private = ctx;
-+	fc->s_fs_info = sbi;
- 
--	idr_init(&ctx->devs->tree);
--	init_rwsem(&ctx->devs->rwsem);
--	erofs_default_options(ctx);
-+	idr_init(&sbi->devs->tree);
-+	init_rwsem(&sbi->devs->rwsem);
-+	erofs_default_options(sbi);
- 	fc->ops = &erofs_context_ops;
- 	return 0;
- }
+-	sbi = EROFS_SB(sb);
+-	if (!sbi)
+-		return;
+-
+ 	erofs_free_dev_context(sbi->devs);
+ 	fs_put_dax(sbi->dax_dev, NULL);
+ 	erofs_fscache_unregister_fs(sb);
 
 
