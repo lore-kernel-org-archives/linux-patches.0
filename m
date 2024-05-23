@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DC91D545;
-	Thu, 23 May 2024 13:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A651D545;
+	Thu, 23 May 2024 13:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470826; cv=none; b=mvqkoK2Q1IosFBcnYAXfXja2/yy0Xu7R3YDzv+JRiX4UVTK+rBT7mVev9nTA118boE3BjYkP6O91L5cQU4XWg8nFin2ts8Vm17Gx3kVvjhooCimQR8OBa2wm9ofi2PFAbnln4QPWavqKk8MUpG3vkWFRbjCkgypiR6IZ46C22/E=
+	t=1716470829; cv=none; b=PgD+iabtMm8e5JBqIAj5WYuJU2Vm0BYFVHn+EW9rhj0Hppx9hj4rAz1E5ELjTshtNtrhrQrjgisTKjDkdiTw5LOQc1mp+MEVaK4qHevLYx7mKJcHmElVcTIN0HOxsyVAp/oj8LC/YTAfQjRIcmZSkVLdUkHPoS84C1AHOyrZs8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470826; c=relaxed/simple;
-	bh=kPpELrsGhxluGZL4uadPiTpkPqMcmsM8Hm3FHQ7wfhI=;
+	s=arc-20240116; t=1716470829; c=relaxed/simple;
+	bh=Y2YX3KMOFZI6T1S1XiElFW/TZtlie3KWaUDBDuyULJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=letkpbzhmWE0iiwwscaPoTx9+MmWMrGCgvbyl8vG1WUlQ7jQgkuU5NO0hr/alS1IqN1H6M+mZVlhRLJOdWAGvJ5wtQEDTXqicbsF40lNHCj/zCw706TzRDTu+tS0GuG1Kge1y7QsKJZz/wLlrppJjGbgk493+dhLLqmpbisQQ+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFTlpxPN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XWj/lmZaVXPGlScqv5ysEBdva+KJnDjDTvQvaDRRO7lpQ8FkdYIQDEMyP/onRU1mEE9PQo/NhOqKk/2VR46zoAjHAhyR1uq24pqGRyx/MfM//nwNwdbsiWmclIA6OCbc1Qz7gY1I917jKSOaYX2UGq8q3lakkV0M0xFHJv8mhoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHkTu/5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFTlpxPN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45494C3277B;
-	Thu, 23 May 2024 13:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHkTu/5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB78C2BD10;
+	Thu, 23 May 2024 13:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470826;
-	bh=kPpELrsGhxluGZL4uadPiTpkPqMcmsM8Hm3FHQ7wfhI=;
+	s=korg; t=1716470829;
+	bh=Y2YX3KMOFZI6T1S1XiElFW/TZtlie3KWaUDBDuyULJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFTlpxPNEQpJ7pEA+JLnCqlHg++ikwzGhARVTFGeQkJk7wjzwCxQKUllyQxTnIlEo
-	 WRKxuXp90Vwns4SslTPT7vPx/QsBNJ75fHHMm9Ic+pnitORPmADh929pBpmMFIqUcm
-	 edPXvwa0x+P8k7uP4yP0YtEPkXIHsiWDbeeGq96g=
+	b=YHkTu/5lk/OHzPcTOfGqSkWZ8yLArbReBSRkTLuUaxSS4jgZKLqgajk0Ei+iItvqq
+	 GuCoc6jiwBA4DmfTjWuGT44VlL/s7NGT8/EOj/A5PJbfbcMmJE1zljyY3gHNCs9ktr
+	 +eBdCVIhAB0OqvYdAXwC1MbqBSoXFSVzopbA775A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mengqi Zhang <mengqi.zhang@mediatek.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	=?UTF-8?q?Lin=20Gui=20 ?= <Lin.Gui@mediatek.com>
-Subject: [PATCH 6.6 084/102] mmc: core: Add HS400 tuning in HS400es initialization
-Date: Thu, 23 May 2024 15:13:49 +0200
-Message-ID: <20240523130345.638587856@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 102/102] block: add a partscan sysfs attribute for disks
+Date: Thu, 23 May 2024 15:14:07 +0200
+Message-ID: <20240523130346.321704879@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -45,47 +44,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mengqi Zhang <mengqi.zhang@mediatek.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 77e01b49e35f24ebd1659096d5fc5c3b75975545 upstream.
+commit a4217c6740dc64a3eb6815868a9260825e8c68c6 upstream.
 
-During the initialization to HS400es stage, add a HS400 tuning flow as an
-optional process. For Mediatek IP, the HS400es mode requires a specific
-tuning to ensure the correct HS400 timing setting.
+Userspace had been unknowingly relying on a non-stable interface of
+kernel internals to determine if partition scanning is enabled for a
+given disk. Provide a stable interface for this purpose instead.
 
-Signed-off-by: Mengqi Zhang <mengqi.zhang@mediatek.com>
-Link: https://lore.kernel.org/r/20231225093839.22931-2-mengqi.zhang@mediatek.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: "Lin Gui (桂林)" <Lin.Gui@mediatek.com>
+Cc: stable@vger.kernel.org # 6.3+
+Depends-on: 140ce28dd3be ("block: add a disk_has_partscan helper")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/linux-block/ZhQJf8mzq_wipkBH@gardel-login/
+Link: https://lore.kernel.org/r/20240502130033.1958492-3-hch@lst.de
+[axboe: add links and commit message from Keith]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/mmc.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ Documentation/ABI/stable/sysfs-block |   10 ++++++++++
+ block/genhd.c                        |    8 ++++++++
+ 2 files changed, 18 insertions(+)
 
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -1819,8 +1819,13 @@ static int mmc_init_card(struct mmc_host
+--- a/Documentation/ABI/stable/sysfs-block
++++ b/Documentation/ABI/stable/sysfs-block
+@@ -101,6 +101,16 @@ Description:
+ 		devices that support receiving integrity metadata.
  
- 		if (err)
- 			goto free_card;
--
--	} else if (!mmc_card_hs400es(card)) {
-+	} else if (mmc_card_hs400es(card)) {
-+		if (host->ops->execute_hs400_tuning) {
-+			err = host->ops->execute_hs400_tuning(host, card);
-+			if (err)
-+				goto free_card;
-+		}
-+	} else {
- 		/* Select the desired bus width optionally */
- 		err = mmc_select_bus_width(card);
- 		if (err > 0 && mmc_card_hs(card)) {
+ 
++What:		/sys/block/<disk>/partscan
++Date:		May 2024
++Contact:	Christoph Hellwig <hch@lst.de>
++Description:
++		The /sys/block/<disk>/partscan files reports if partition
++		scanning is enabled for the disk.  It returns "1" if partition
++		scanning is enabled, or "0" if not.  The value type is a 32-bit
++		unsigned integer, but only "0" and "1" are valid values.
++
++
+ What:		/sys/block/<disk>/<partition>/alignment_offset
+ Date:		April 2009
+ Contact:	Martin K. Petersen <martin.petersen@oracle.com>
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -1037,6 +1037,12 @@ static ssize_t diskseq_show(struct devic
+ 	return sprintf(buf, "%llu\n", disk->diskseq);
+ }
+ 
++static ssize_t partscan_show(struct device *dev,
++		struct device_attribute *attr, char *buf)
++{
++	return sprintf(buf, "%u\n", disk_has_partscan(dev_to_disk(dev)));
++}
++
+ static DEVICE_ATTR(range, 0444, disk_range_show, NULL);
+ static DEVICE_ATTR(ext_range, 0444, disk_ext_range_show, NULL);
+ static DEVICE_ATTR(removable, 0444, disk_removable_show, NULL);
+@@ -1050,6 +1056,7 @@ static DEVICE_ATTR(stat, 0444, part_stat
+ static DEVICE_ATTR(inflight, 0444, part_inflight_show, NULL);
+ static DEVICE_ATTR(badblocks, 0644, disk_badblocks_show, disk_badblocks_store);
+ static DEVICE_ATTR(diskseq, 0444, diskseq_show, NULL);
++static DEVICE_ATTR(partscan, 0444, partscan_show, NULL);
+ 
+ #ifdef CONFIG_FAIL_MAKE_REQUEST
+ ssize_t part_fail_show(struct device *dev,
+@@ -1096,6 +1103,7 @@ static struct attribute *disk_attrs[] =
+ 	&dev_attr_events_async.attr,
+ 	&dev_attr_events_poll_msecs.attr,
+ 	&dev_attr_diskseq.attr,
++	&dev_attr_partscan.attr,
+ #ifdef CONFIG_FAIL_MAKE_REQUEST
+ 	&dev_attr_fail.attr,
+ #endif
 
 
