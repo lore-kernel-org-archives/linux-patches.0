@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF47613A897;
-	Thu, 23 May 2024 13:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6014913A897;
+	Thu, 23 May 2024 13:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470423; cv=none; b=HdZ/wB7Vte0yblJy4cnxY9kmm20ha24/TKVQVMjo7Y1thVMxDXueI83AW4hKPgF8y2UkRqx8uI09nX6gmzgroBAXkqrUM6ebGIK0MUHHe7T1EOs9rfv7/iaOaXBZcgjFZgZNJ5UWzWkZGlCt/xcLlMjzTCBU1OEBwTVWBc7Nr/k=
+	t=1716470426; cv=none; b=E1eKncYkedOrr/U/uDzMT+NscjV0zueWse3FwykGQR7mAuh52bkMafMLcyFRoe7FjQqlnwj2lla4gO8y4CHy2dCSTI2QMMVG3j+HzJrASZ2EAPQ8a8QVzej1GNi+WsEEBP+cQuFaJL9ER316oCqFUJkZHTLF3Rvc1xJSSRk2qMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470423; c=relaxed/simple;
-	bh=zEeCXbC7KL2UEZgyrAVsPPHW75J9t92xo9FQCyYcQfU=;
+	s=arc-20240116; t=1716470426; c=relaxed/simple;
+	bh=rII5Q+GpBteE68ax2eu2D395ibtDys12Sb46FxaYyXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+ZHDyznv/sC1p7fbdxRhbW/i2xndCmA13DSDx6YQvhtiXLXhL9oWsUz45g04/XFWd25LvoWe1PovozQH7S27q35j0R34w8PtEfUdygs/UxnAFi40jB2GIVWs1Z+HMUtai/D5cxWwvwWLPCkMj3M+gUGAjMqk+2i7hUSIx+YjM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHB02+LR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oMUb/qANeZV096h+LFYH1wIhrdnvQZZIOyEfqNX/R9j7Eu11QcDMat9D2cKn12+aCCzphhqNkNuSDO8AYvRVrnjt7F3WOIVE1HmLUDts8ubSAvc9SQCTSE/kVSnibyvP+6MrcPs9wxpsINBJPHJH17GX2HHW25+Pc1juDaia1LE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoG+cz3D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHB02+LR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C29C4AF08;
-	Thu, 23 May 2024 13:20:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoG+cz3D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC863C32786;
+	Thu, 23 May 2024 13:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470423;
-	bh=zEeCXbC7KL2UEZgyrAVsPPHW75J9t92xo9FQCyYcQfU=;
+	s=korg; t=1716470426;
+	bh=rII5Q+GpBteE68ax2eu2D395ibtDys12Sb46FxaYyXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WHB02+LRIToOT+37bstVkaA0zBBAKVKDLtxjRlDJ7p/CfCSA5RnUnPKVVK7EiTYc4
-	 8Xw5ajI0doPAt5wCt/n49k7XAg5ubaAP7orhENuvqzrSiXgWX5I7ABA7SkPu3hoSWv
-	 Rt6TTfuhHPcZoB0dCrlYHu0b8yk60WQu9Ekc9cmM=
+	b=AoG+cz3DvsU+511XrgKkL5RxLTONwH/ThQRwu7HoT/XOYfivyycZ50KIx/3fS9nV3
+	 D09WA66E+O+SPqk8DqfgyPFEY1kLVkpjWoRtChQnoNkVYpZexkmXVf6U5d7Zw13w9f
+	 vHfn2LBmIvcu4uUzNoCL8d0VGMQt6NWz4cw/xOVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Dave Chinner <dchinner@redhat.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 30/45] xfs: allow inode inactivation during a ro mount log recovery
-Date: Thu, 23 May 2024 15:13:21 +0200
-Message-ID: <20240523130333.632228345@linuxfoundation.org>
+Subject: [PATCH 6.1 31/45] xfs: fix log recovery when unknown rocompat bits are set
+Date: Thu, 23 May 2024 15:13:22 +0200
+Message-ID: <20240523130333.669646604@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130332.496202557@linuxfoundation.org>
 References: <20240523130332.496202557@linuxfoundation.org>
@@ -53,59 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit 76e589013fec672c3587d6314f2d1f0aeddc26d9 ]
+[ Upstream commit 74ad4693b6473950e971b3dc525b5ee7570e05d0 ]
 
-In the next patch, we're going to prohibit log recovery if the primary
-superblock contains an unrecognized rocompat feature bit even on
-readonly mounts.  This requires removing all the code in the log
-mounting process that temporarily disables the readonly state.
+Log recovery has always run on read only mounts, even where the primary
+superblock advertises unknown rocompat bits.  Due to a misunderstanding
+between Eric and Darrick back in 2018, we accidentally changed the
+superblock write verifier to shutdown the fs over that exact scenario.
+As a result, the log cleaning that occurs at the end of the mounting
+process fails if there are unknown rocompat bits set.
 
-Unfortunately, inode inactivation disables itself on readonly mounts.
-Clearing the iunlinked lists after log recovery needs inactivation to
-run to free the unreferenced inodes, which (AFAICT) is the only reason
-why log mounting plays games with the readonly state in the first place.
+As we now allow writing of the superblock if there are unknown rocompat
+bits set on a RO mount, we no longer want to turn off RO state to allow
+log recovery to succeed on a RO mount.  Hence we also remove all the
+(now unnecessary) RO state toggling from the log recovery path.
 
-Therefore, change the inactivation predicates to allow inactivation
-during log recovery of a readonly mount.
-
+Fixes: 9e037cb7972f ("xfs: check for unknown v5 feature bits in superblock write verifier"
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ fs/xfs/libxfs/xfs_sb.c |    3 ++-
+ fs/xfs/xfs_log.c       |   17 -----------------
+ 2 files changed, 2 insertions(+), 18 deletions(-)
 
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -1652,8 +1652,11 @@ xfs_inode_needs_inactive(
- 	if (VFS_I(ip)->i_mode == 0)
- 		return false;
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -266,7 +266,8 @@ xfs_validate_sb_write(
+ 		return -EFSCORRUPTED;
+ 	}
  
--	/* If this is a read-only mount, don't do this (would generate I/O) */
--	if (xfs_is_readonly(mp))
-+	/*
-+	 * If this is a read-only mount, don't do this (would generate I/O)
-+	 * unless we're in log recovery and cleaning the iunlinked list.
-+	 */
-+	if (xfs_is_readonly(mp) && !xlog_recovery_needed(mp->m_log))
- 		return false;
+-	if (xfs_sb_has_ro_compat_feature(sbp, XFS_SB_FEAT_RO_COMPAT_UNKNOWN)) {
++	if (!xfs_is_readonly(mp) &&
++	    xfs_sb_has_ro_compat_feature(sbp, XFS_SB_FEAT_RO_COMPAT_UNKNOWN)) {
+ 		xfs_alert(mp,
+ "Corruption detected in superblock read-only compatible features (0x%x)!",
+ 			(sbp->sb_features_ro_compat &
+--- a/fs/xfs/xfs_log.c
++++ b/fs/xfs/xfs_log.c
+@@ -730,15 +730,7 @@ xfs_log_mount(
+ 	 * just worked.
+ 	 */
+ 	if (!xfs_has_norecovery(mp)) {
+-		/*
+-		 * log recovery ignores readonly state and so we need to clear
+-		 * mount-based read only state so it can write to disk.
+-		 */
+-		bool	readonly = test_and_clear_bit(XFS_OPSTATE_READONLY,
+-						&mp->m_opstate);
+ 		error = xlog_recover(log);
+-		if (readonly)
+-			set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
+ 		if (error) {
+ 			xfs_warn(mp, "log mount/recovery failed: error %d",
+ 				error);
+@@ -787,7 +779,6 @@ xfs_log_mount_finish(
+ 	struct xfs_mount	*mp)
+ {
+ 	struct xlog		*log = mp->m_log;
+-	bool			readonly;
+ 	int			error = 0;
  
- 	/* If the log isn't running, push inodes straight to reclaim. */
-@@ -1713,8 +1716,11 @@ xfs_inactive(
- 	mp = ip->i_mount;
- 	ASSERT(!xfs_iflags_test(ip, XFS_IRECOVERY));
+ 	if (xfs_has_norecovery(mp)) {
+@@ -796,12 +787,6 @@ xfs_log_mount_finish(
+ 	}
  
--	/* If this is a read-only mount, don't do this (would generate I/O) */
--	if (xfs_is_readonly(mp))
-+	/*
-+	 * If this is a read-only mount, don't do this (would generate I/O)
-+	 * unless we're in log recovery and cleaning the iunlinked list.
-+	 */
-+	if (xfs_is_readonly(mp) && !xlog_recovery_needed(mp->m_log))
- 		goto out;
+ 	/*
+-	 * log recovery ignores readonly state and so we need to clear
+-	 * mount-based read only state so it can write to disk.
+-	 */
+-	readonly = test_and_clear_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
+-
+-	/*
+ 	 * During the second phase of log recovery, we need iget and
+ 	 * iput to behave like they do for an active filesystem.
+ 	 * xfs_fs_drop_inode needs to be able to prevent the deletion
+@@ -850,8 +835,6 @@ xfs_log_mount_finish(
+ 	xfs_buftarg_drain(mp->m_ddev_targp);
  
- 	/* Metadata inodes require explicit resource cleanup. */
+ 	clear_bit(XLOG_RECOVERY_NEEDED, &log->l_opstate);
+-	if (readonly)
+-		set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
+ 
+ 	/* Make sure the log is dead if we're returning failure. */
+ 	ASSERT(!error || xlog_is_shutdown(log));
 
 
