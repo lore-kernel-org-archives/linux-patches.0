@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A092C14AD36;
-	Thu, 23 May 2024 13:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8359D1E497;
+	Thu, 23 May 2024 13:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470743; cv=none; b=qiqAjxL6JngB9sqglt7NIgDwvsYpACA2sVYRNP53Jvs8C8WecXNA8ygfvbnSEf3nA1n0fOaFeR6DClWIrvfgK1iWhMny3ocVx2C0Lw6hswSJitgPv1c4cQlsNNNVT8wtDkUOcBjm2F8gHmn9U1vHRywkm0Ka8WrmTPHEaCVBbpE=
+	t=1716470746; cv=none; b=baTn3wulmiNfKMB+DR+fXnIX6q9lFiZz5I1/DYcU1f0pqTAR/LbxF92ZrcrWkTv6/d5FM3Vsg506hScJBLGWvPMdHXEa8CHA50+lG7Uc0rVLaSqYw8Eh4y27w1iHJhylu8hWupPn4hAWmPioSnTuGJLIg5OqPFS2/WsgCDWC6Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470743; c=relaxed/simple;
-	bh=ygF415+6ID86gs9jh9dlFvLfjPPptfnCdPBH+HJXK/s=;
+	s=arc-20240116; t=1716470746; c=relaxed/simple;
+	bh=PQT+AkbWYAe5vGMUMUKenkfv3vs+MAwr58Yw8auunbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ly8h93sKV2H7IfqyGyAA+PkuOzLdNdDCqrCYYOQLvlqgR59/U8iChoIWxAIhXBRS+RAH+CYX6l3CNTPrn+jH71c54KcrqqaBbq1uMVqdlFuR5vwqrZ1s9eENzbovKIuu0sHwtaaeGINg4lmuvKPIy16T4dOSoCeQQ/qV29N6b2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGIwu/MV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iNSwvQI3xrN5uj4kWNK3ZElIkWEsSi1Wdg1eK9t1HOhNMC7JE6dZ94I3TzcuZW9Bo+NokpWJ3tgqXVtDGOAoWRmIO161otfDra4sni8keObntdEWqLc0kTUuDVvU+iznhR+VptMXhAKqI91euXEREH8NUzai30ZnOPszvgN/Fpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gLBWgTw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGIwu/MV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277B3C4AF0A;
-	Thu, 23 May 2024 13:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gLBWgTw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02007C2BD10;
+	Thu, 23 May 2024 13:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470743;
-	bh=ygF415+6ID86gs9jh9dlFvLfjPPptfnCdPBH+HJXK/s=;
+	s=korg; t=1716470746;
+	bh=PQT+AkbWYAe5vGMUMUKenkfv3vs+MAwr58Yw8auunbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGIwu/MV+xlvrm1Y1ttM9iki7e+0Yb7SAv+fqZBw6ZBep4LfjxcXfYIh9Z/23u664
-	 gmuOm746C1380oXkWZ8i/jz/NijxCpHhGlZNnc0hWc5M1cqjw1O7lYhevEsRQVtalt
-	 g2fstalX2BwMEUt/6K1X1XUVleT3Bydo3xGMgGus=
+	b=0gLBWgTw8EwX9VCR4oc7y9zudhhr/jikx+QWEQyFQ2/DodvQAIcSurRcjJD5g8UDX
+	 qbRKuxNG6yOyWELxduW7VpWNNfEKbachPQLFNtIfrUsQlStyfdSO0xUOtCJxVyHh3v
+	 Ws59onUXi2eW1l/11/GToLu4ey4WRBELu8gRiFyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meetakshi Setiya <msetiya@microsoft.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/102] smb: client: fix NULL ptr deref in cifs_mark_open_handles_for_deleted_file()
-Date: Thu, 23 May 2024 15:13:37 +0200
-Message-ID: <20240523130345.183232062@linuxfoundation.org>
+Subject: [PATCH 6.6 073/102] smb: client: instantiate when creating SFU files
+Date: Thu, 23 May 2024 15:13:38 +0200
+Message-ID: <20240523130345.220416383@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -55,102 +54,206 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit ec4535b2a1d709d3a1fbec26739c672f13c98a7b ]
+[ Upstream commit c6ff459037b2e35450af2351037eac4c8aca1d6b ]
 
-cifs_get_fattr() may be called with a NULL inode, so check for a
-non-NULL inode before calling
-cifs_mark_open_handles_for_deleted_file().
+In cifs_sfu_make_node(), on success, instantiate rather than leave it
+with dentry unhashed negative to support callers that expect mknod(2)
+to always instantiate.
 
-This fixes the following oops:
+This fixes the following test case:
 
-  mount.cifs //srv/share /mnt -o ...,vers=3.1.1
-  cd /mnt
-  touch foo; tail -f foo &
-  rm foo
-  cat foo
-
-  BUG: kernel NULL pointer dereference, address: 00000000000005c0
+  mount.cifs //srv/share /mnt -o ...,sfu
+  mkfifo /mnt/fifo
+  ./xfstests/ltp/growfiles -b -W test -e 1 -u -i 0 -L 30 /mnt/fifo
+  ...
+  BUG: unable to handle page fault for address: 000000034cec4e58
   #PF: supervisor read access in kernel mode
   #PF: error_code(0x0000) - not-present page
   PGD 0 P4D 0
-  Oops: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 2 PID: 696 Comm: cat Not tainted 6.9.0-rc2 #1
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-  1.16.3-1.fc39 04/01/2014
-  RIP: 0010:__lock_acquire+0x5d/0x1c70
-  Code: 00 00 44 8b a4 24 a0 00 00 00 45 85 f6 0f 84 bb 06 00 00 8b 2d
-  48 e2 95 01 45 89 c3 41 89 d2 45 89 c8 85 ed 0 0 <48> 81 3f 40 7a 76
-  83 44 0f 44 d8 83 fe 01 0f 86 1b 03 00 00 31 d2
-  RSP: 0018:ffffc90000b37490 EFLAGS: 00010002
-  RAX: 0000000000000000 RBX: ffff888110021ec0 RCX: 0000000000000000
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00000000000005c0
-  RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000000
-  R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000200
-  FS: 00007f2a1fa08740(0000) GS:ffff888157a00000(0000)
-  knlGS:0000000000000000 CS: 0010 DS: 0000 ES: 0000 CR0:
-  0000000080050033
-  CR2: 00000000000005c0 CR3: 000000011ac7c000 CR4: 0000000000750ef0
+  Oops: 0000 1 PREEMPT SMP PTI
+  CPU: 0 PID: 138098 Comm: growfiles Kdump: loaded Not tainted
+  5.14.0-436.3987_1240945149.el9.x86_64 #1
+  Hardware name: Red Hat KVM, BIOS 0.5.1 01/01/2011
+  RIP: 0010:_raw_callee_save__kvm_vcpu_is_preempted+0x0/0x20
+  Code: e8 15 d9 61 00 e9 63 ff ff ff 41 bd ea ff ff ff e9 58 ff ff ff e8
+  d0 71 c0 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 <48> 8b 04
+  fd 60 2b c1 99 80 b8 90 50 03 00 00 0f 95 c0 c3 cc cc cc
+  RSP: 0018:ffffb6a143cf7cf8 EFLAGS: 00010206
+  RAX: ffff8a9bc30fb038 RBX: ffff8a9bc666a200 RCX: ffff8a9cc0260000
+  RDX: 00000000736f622e RSI: ffff8a9bc30fb038 RDI: 000000007665645f
+  RBP: ffffb6a143cf7d70 R08: 0000000000001000 R09: 0000000000000001
+  R10: 0000000000000001 R11: 0000000000000000 R12: ffff8a9bc666a200
+  R13: 0000559a302a12b0 R14: 0000000000001000 R15: 0000000000000000
+  FS: 00007fbed1dbb740(0000) GS:ffff8a9cf0000000(0000)
+  knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 000000034cec4e58 CR3: 0000000128ec6006 CR4: 0000000000770ef0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
   PKRU: 55555554
   Call Trace:
    <TASK>
-   ? __die+0x23/0x70
-   ? page_fault_oops+0x180/0x490
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? exc_page_fault+0x70/0x230
-   ? asm_exc_page_fault+0x26/0x30
-   ? __lock_acquire+0x5d/0x1c70
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   lock_acquire+0xc0/0x2d0
-   ? cifs_mark_open_handles_for_deleted_file+0x3a/0x100 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? kmem_cache_alloc+0x2d9/0x370
-   _raw_spin_lock+0x34/0x80
-   ? cifs_mark_open_handles_for_deleted_file+0x3a/0x100 [cifs]
-   cifs_mark_open_handles_for_deleted_file+0x3a/0x100 [cifs]
-   cifs_get_fattr+0x24c/0x940 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   cifs_get_inode_info+0x96/0x120 [cifs]
-   cifs_lookup+0x16e/0x800 [cifs]
-   cifs_atomic_open+0xc7/0x5d0 [cifs]
-   ? lookup_open.isra.0+0x3ce/0x5f0
-   ? __pfx_cifs_atomic_open+0x10/0x10 [cifs]
-   lookup_open.isra.0+0x3ce/0x5f0
-   path_openat+0x42b/0xc30
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   do_filp_open+0xc4/0x170
-   do_sys_openat2+0xab/0xe0
-   __x64_sys_openat+0x57/0xa0
-   do_syscall_64+0xc1/0x1e0
-   entry_SYSCALL_64_after_hwframe+0x72/0x7a
+   ? show_trace_log_lvl+0x1c4/0x2df
+   ? show_trace_log_lvl+0x1c4/0x2df
+   ? __mutex_lock.constprop.0+0x5f7/0x6a0
+   ? __die_body.cold+0x8/0xd
+   ? page_fault_oops+0x134/0x170
+   ? exc_page_fault+0x62/0x150
+   ? asm_exc_page_fault+0x22/0x30
+   ? _pfx_raw_callee_save__kvm_vcpu_is_preempted+0x10/0x10
+   __mutex_lock.constprop.0+0x5f7/0x6a0
+   ? __mod_memcg_lruvec_state+0x84/0xd0
+   pipe_write+0x47/0x650
+   ? do_anonymous_page+0x258/0x410
+   ? inode_security+0x22/0x60
+   ? selinux_file_permission+0x108/0x150
+   vfs_write+0x2cb/0x410
+   ksys_write+0x5f/0xe0
+   do_syscall_64+0x5c/0xf0
+   ? syscall_exit_to_user_mode+0x22/0x40
+   ? do_syscall_64+0x6b/0xf0
+   ? sched_clock_cpu+0x9/0xc0
+   ? exc_page_fault+0x62/0x150
+   entry_SYSCALL_64_after_hwframe+0x6e/0x76
 
-Fixes: ffceb7640cbf ("smb: client: do not defer close open handles to deleted files")
-Reviewed-by: Meetakshi Setiya <msetiya@microsoft.com>
-Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
+Fixes: 72bc63f5e23a ("smb3: fix creating FIFOs when mounting with "sfu" mount option")
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c | 94 ++++++++++++++++++++++++-----------------
+ 1 file changed, 55 insertions(+), 39 deletions(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index b304215a4d668..9cdbc3ccc1d14 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -1105,7 +1105,8 @@ static int cifs_get_fattr(struct cifs_open_info_data *data,
- 		} else {
- 			cifs_open_info_to_fattr(fattr, data, sb);
- 		}
--		if (!rc && fattr->cf_flags & CIFS_FATTR_DELETE_PENDING)
-+		if (!rc && *inode &&
-+		    (fattr->cf_flags & CIFS_FATTR_DELETE_PENDING))
- 			cifs_mark_open_handles_for_deleted_file(*inode, full_path);
- 		break;
- 	case -EREMOTE:
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 981a922cf38f0..df6c6d31236ad 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4956,68 +4956,84 @@ static int smb2_next_header(struct TCP_Server_Info *server, char *buf,
+ 	return 0;
+ }
+ 
+-int cifs_sfu_make_node(unsigned int xid, struct inode *inode,
+-		       struct dentry *dentry, struct cifs_tcon *tcon,
+-		       const char *full_path, umode_t mode, dev_t dev)
++static int __cifs_sfu_make_node(unsigned int xid, struct inode *inode,
++				struct dentry *dentry, struct cifs_tcon *tcon,
++				const char *full_path, umode_t mode, dev_t dev)
+ {
+-	struct cifs_open_info_data buf = {};
+ 	struct TCP_Server_Info *server = tcon->ses->server;
+ 	struct cifs_open_parms oparms;
+ 	struct cifs_io_parms io_parms = {};
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
+ 	struct cifs_fid fid;
+ 	unsigned int bytes_written;
+-	struct win_dev *pdev;
++	struct win_dev pdev = {};
+ 	struct kvec iov[2];
+ 	__u32 oplock = server->oplocks ? REQ_OPLOCK : 0;
+ 	int rc;
+ 
+-	if (!S_ISCHR(mode) && !S_ISBLK(mode) && !S_ISFIFO(mode))
++	switch (mode & S_IFMT) {
++	case S_IFCHR:
++		strscpy(pdev.type, "IntxCHR", strlen("IntxChr"));
++		pdev.major = cpu_to_le64(MAJOR(dev));
++		pdev.minor = cpu_to_le64(MINOR(dev));
++		break;
++	case S_IFBLK:
++		strscpy(pdev.type, "IntxBLK", strlen("IntxBLK"));
++		pdev.major = cpu_to_le64(MAJOR(dev));
++		pdev.minor = cpu_to_le64(MINOR(dev));
++		break;
++	case S_IFIFO:
++		strscpy(pdev.type, "LnxFIFO", strlen("LnxFIFO"));
++		break;
++	default:
+ 		return -EPERM;
++	}
+ 
+-	oparms = (struct cifs_open_parms) {
+-		.tcon = tcon,
+-		.cifs_sb = cifs_sb,
+-		.desired_access = GENERIC_WRITE,
+-		.create_options = cifs_create_options(cifs_sb, CREATE_NOT_DIR |
+-						      CREATE_OPTION_SPECIAL),
+-		.disposition = FILE_CREATE,
+-		.path = full_path,
+-		.fid = &fid,
+-	};
++	oparms = CIFS_OPARMS(cifs_sb, tcon, full_path, GENERIC_WRITE,
++			     FILE_CREATE, CREATE_NOT_DIR |
++			     CREATE_OPTION_SPECIAL, ACL_NO_MODE);
++	oparms.fid = &fid;
+ 
+-	rc = server->ops->open(xid, &oparms, &oplock, &buf);
++	rc = server->ops->open(xid, &oparms, &oplock, NULL);
+ 	if (rc)
+ 		return rc;
+ 
+-	/*
+-	 * BB Do not bother to decode buf since no local inode yet to put
+-	 * timestamps in, but we can reuse it safely.
+-	 */
+-	pdev = (struct win_dev *)&buf.fi;
+ 	io_parms.pid = current->tgid;
+ 	io_parms.tcon = tcon;
+-	io_parms.length = sizeof(*pdev);
+-	iov[1].iov_base = pdev;
+-	iov[1].iov_len = sizeof(*pdev);
+-	if (S_ISCHR(mode)) {
+-		memcpy(pdev->type, "IntxCHR", 8);
+-		pdev->major = cpu_to_le64(MAJOR(dev));
+-		pdev->minor = cpu_to_le64(MINOR(dev));
+-	} else if (S_ISBLK(mode)) {
+-		memcpy(pdev->type, "IntxBLK", 8);
+-		pdev->major = cpu_to_le64(MAJOR(dev));
+-		pdev->minor = cpu_to_le64(MINOR(dev));
+-	} else if (S_ISFIFO(mode)) {
+-		memcpy(pdev->type, "LnxFIFO", 8);
+-	}
++	io_parms.length = sizeof(pdev);
++	iov[1].iov_base = &pdev;
++	iov[1].iov_len = sizeof(pdev);
+ 
+ 	rc = server->ops->sync_write(xid, &fid, &io_parms,
+ 				     &bytes_written, iov, 1);
+ 	server->ops->close(xid, tcon, &fid);
+-	d_drop(dentry);
+-	/* FIXME: add code here to set EAs */
+-	cifs_free_open_info(&buf);
++	return rc;
++}
++
++int cifs_sfu_make_node(unsigned int xid, struct inode *inode,
++		       struct dentry *dentry, struct cifs_tcon *tcon,
++		       const char *full_path, umode_t mode, dev_t dev)
++{
++	struct inode *new = NULL;
++	int rc;
++
++	rc = __cifs_sfu_make_node(xid, inode, dentry, tcon,
++				  full_path, mode, dev);
++	if (rc)
++		return rc;
++
++	if (tcon->posix_extensions) {
++		rc = smb311_posix_get_inode_info(&new, full_path, NULL,
++						 inode->i_sb, xid);
++	} else if (tcon->unix_ext) {
++		rc = cifs_get_inode_info_unix(&new, full_path,
++					      inode->i_sb, xid);
++	} else {
++		rc = cifs_get_inode_info(&new, full_path, NULL,
++					 inode->i_sb, xid, NULL);
++	}
++	if (!rc)
++		d_instantiate(dentry, new);
+ 	return rc;
+ }
+ 
 -- 
 2.43.0
 
