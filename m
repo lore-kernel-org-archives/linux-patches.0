@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CAE14A605;
-	Thu, 23 May 2024 13:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D487E1E504;
+	Thu, 23 May 2024 13:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470386; cv=none; b=sTBGLdn9Nc6Hn0rdqjrfjx3xf5ehOe2nQPaJrSXBTyxCeUIyOl0q+Yqw/7zFev6+A5rplZCQK2mhv4mVUzPw+cujiqh4i6J3uPKxHpRw/nPqbfPF3MT+rPleryHAirkOF3lnjv278aWU16xgq1oqH6NTVUnQyOzBGgkRYcZzGME=
+	t=1716470388; cv=none; b=awbzClKDTU1asi/S2gP56Ec+d+TcnraPOCcaVdBJm62F0BHJKQl/6DZsS+SaL8Gl0Rl5TPAlAf+6NgUHUdRECdmHDynP9CU0aWlXoVYrZc8YMPLujCwenlNTtPO6HgEr0O9YZlNu19J58QjJUVR3ssYMLkgIa8HFhbfQj7Qz6hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470386; c=relaxed/simple;
-	bh=pHvGTNU4EH9gMrUROsTYfztxnLvggJpWH1pguCmMBLo=;
+	s=arc-20240116; t=1716470388; c=relaxed/simple;
+	bh=R4/lwUxBiUSlMXZuASscL6sbMfKQ47bnjEZHfHREgEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MnvyeBPJ3JkeCb6tMxscy9NBoYf8GGWGRmm8Vml6jiBQ7W1ELG15Xcw/iuY5ymgW+Xj67lAGdxRfXReLIa9yuAVtaZ5hwISA9/WtxJcgveNKX3mGj9uCJJQjTBUDzbB9ndvvuAgTntVBS6kZLesI6d8HLX/TT525ek3i6ZK4/wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b12/LBbn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lSbqYQM3oS8T2ocGClgIEGv1hfFgKUtqkls/0JCTDmbXX6QCOeiSJWA+wLM+B2V0HCGFD8clPz1xJv2VTVbQfGXibq+swCVf6HtzAAsDBzqlghgJCwYe5aaftJomk426Fsevb7FJuCIQfvXuht6ZbY4Z9/dA6C/ITniE8ggic+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxH8wXBq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b12/LBbn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E35C2BD10;
-	Thu, 23 May 2024 13:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxH8wXBq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6F8C2BD10;
+	Thu, 23 May 2024 13:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470385;
-	bh=pHvGTNU4EH9gMrUROsTYfztxnLvggJpWH1pguCmMBLo=;
+	s=korg; t=1716470388;
+	bh=R4/lwUxBiUSlMXZuASscL6sbMfKQ47bnjEZHfHREgEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b12/LBbn5YZuuOJBshtze2irRqPma2Fu/RV/B34dZ1450bpK1LSRY+NIOOJYlJPKf
-	 sXe0OHWgIozVYfAvHv0ReMzPdWu+m3VHSIyqW1GAl3CuZsDO+1SxmkCv0VTwEs77mR
-	 V6I6Na/iTeYlRAormJ2ovtievK8b2SJ/RtN4qv8Q=
+	b=WxH8wXBqcYpjgMtcGVvHCy/I95h28CdefBkXih4dxuZ1E7bY9guBhhdC2Y3HrPs+Y
+	 AvOntxUlThcSfeCyz3k3mNgM+mj8j4HNGAaoRKMKLSUdGarBDPvJ0G+NydG0oXsSlB
+	 o4g+iD5rDFqGIoEhw/jfagcbaDCMCSaIdMWQzINw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	Brian Foster <bfoster@redhat.com>
-Subject: [PATCH 6.1 19/45] xfs: fix off-by-one-block in xfs_discard_folio()
-Date: Thu, 23 May 2024 15:13:10 +0200
-Message-ID: <20240523130333.217647647@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	netdev@vger.kernel.org,
+	Ronald Wahl <ronald.wahl@raritan.com>
+Subject: [PATCH 6.1 02/45] net: ks8851: Fix another TX stall caused by wrong ISR flag handling
+Date: Thu, 23 May 2024 15:12:53 +0200
+Message-ID: <20240523130332.588507835@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130332.496202557@linuxfoundation.org>
 References: <20240523130332.496202557@linuxfoundation.org>
@@ -53,80 +55,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Ronald Wahl <ronald.wahl@raritan.com>
 
-[ Upstream commit 8ac5b996bf5199f15b7687ceae989f8b2a410dda ]
+commit 317a215d493230da361028ea8a4675de334bfa1a upstream.
 
-The recent writeback corruption fixes changed the code in
-xfs_discard_folio() to calculate a byte range to for punching
-delalloc extents. A mistake was made in using round_up(pos) for the
-end offset, because when pos points at the first byte of a block, it
-does not get rounded up to point to the end byte of the block. hence
-the punch range is short, and this leads to unexpected behaviour in
-certain cases in xfs_bmap_punch_delalloc_range.
+Under some circumstances it may happen that the ks8851 Ethernet driver
+stops sending data.
 
-e.g. pos = 0 means we call xfs_bmap_punch_delalloc_range(0,0), so
-there is no previous extent and it rounds up the punch to the end of
-the delalloc extent it found at offset 0, not the end of the range
-given to xfs_bmap_punch_delalloc_range().
+Currently the interrupt handler resets the interrupt status flags in the
+hardware after handling TX. With this approach we may lose interrupts in
+the time window between handling the TX interrupt and resetting the TX
+interrupt status bit.
 
-Fix this by handling the zero block offset case correctly.
+When all of the three following conditions are true then transmitting
+data stops:
 
-Bugzilla: https://bugzilla.kernel.org/show_bug.cgi?id=217030
-Link: https://lore.kernel.org/linux-xfs/Y+vOfaxIWX1c%2Fyy9@bfoster/
-Fixes: 7348b322332d ("xfs: xfs_bmap_punch_delalloc_range() should take a byte range")
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Found-by: Brian Foster <bfoster@redhat.com>
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
+  - TX queue is stopped to wait for room in the hardware TX buffer
+  - no queued SKBs in the driver (txq) that wait for being written to hw
+  - hardware TX buffer is empty and the last TX interrupt was lost
+
+This is because reenabling the TX queue happens when handling the TX
+interrupt status but if the TX status bit has already been cleared then
+this interrupt will never come.
+
+With this commit the interrupt status flags will be cleared before they
+are handled. That way we stop losing interrupts.
+
+The wrong handling of the ISR flags was there from the beginning but
+with commit 3dc5d4454545 ("net: ks8851: Fix TX stall caused by TX
+buffer overrun") the issue becomes apparent.
+
+Fixes: 3dc5d4454545 ("net: ks8851: Fix TX stall caused by TX buffer overrun")
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: netdev@vger.kernel.org
+Cc: stable@vger.kernel.org # 5.10+
+Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_aops.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/micrel/ks8851_common.c |   18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
 
---- a/fs/xfs/xfs_aops.c
-+++ b/fs/xfs/xfs_aops.c
-@@ -439,15 +439,17 @@ xfs_prepare_ioend(
- }
+--- a/drivers/net/ethernet/micrel/ks8851_common.c
++++ b/drivers/net/ethernet/micrel/ks8851_common.c
+@@ -328,7 +328,6 @@ static irqreturn_t ks8851_irq(int irq, v
+ {
+ 	struct ks8851_net *ks = _ks;
+ 	struct sk_buff_head rxq;
+-	unsigned handled = 0;
+ 	unsigned long flags;
+ 	unsigned int status;
+ 	struct sk_buff *skb;
+@@ -336,24 +335,17 @@ static irqreturn_t ks8851_irq(int irq, v
+ 	ks8851_lock(ks, &flags);
  
- /*
-- * If the page has delalloc blocks on it, we need to punch them out before we
-- * invalidate the page.  If we don't, we leave a stale delalloc mapping on the
-- * inode that can trip up a later direct I/O read operation on the same region.
-+ * If the folio has delalloc blocks on it, the caller is asking us to punch them
-+ * out. If we don't, we can leave a stale delalloc mapping covered by a clean
-+ * page that needs to be dirtied again before the delalloc mapping can be
-+ * converted. This stale delalloc mapping can trip up a later direct I/O read
-+ * operation on the same region.
-  *
-- * We prevent this by truncating away the delalloc regions on the page.  Because
-+ * We prevent this by truncating away the delalloc regions on the folio. Because
-  * they are delalloc, we can do this without needing a transaction. Indeed - if
-  * we get ENOSPC errors, we have to be able to do this truncation without a
-- * transaction as there is no space left for block reservation (typically why we
-- * see a ENOSPC in writeback).
-+ * transaction as there is no space left for block reservation (typically why
-+ * we see a ENOSPC in writeback).
-  */
- static void
- xfs_discard_folio(
-@@ -465,8 +467,13 @@ xfs_discard_folio(
- 		"page discard on page "PTR_FMT", inode 0x%llx, pos %llu.",
- 			folio, ip->i_ino, pos);
+ 	status = ks8851_rdreg16(ks, KS_ISR);
++	ks8851_wrreg16(ks, KS_ISR, status);
  
-+	/*
-+	 * The end of the punch range is always the offset of the the first
-+	 * byte of the next folio. Hence the end offset is only dependent on the
-+	 * folio itself and not the start offset that is passed in.
-+	 */
- 	error = xfs_bmap_punch_delalloc_range(ip, pos,
--			round_up(pos, folio_size(folio)));
-+				folio_pos(folio) + folio_size(folio));
+ 	netif_dbg(ks, intr, ks->netdev,
+ 		  "%s: status 0x%04x\n", __func__, status);
  
- 	if (error && !xfs_is_shutdown(mp))
- 		xfs_alert(mp, "page discard unable to remove delalloc mapping.");
+-	if (status & IRQ_LCI)
+-		handled |= IRQ_LCI;
+-
+ 	if (status & IRQ_LDI) {
+ 		u16 pmecr = ks8851_rdreg16(ks, KS_PMECR);
+ 		pmecr &= ~PMECR_WKEVT_MASK;
+ 		ks8851_wrreg16(ks, KS_PMECR, pmecr | PMECR_WKEVT_LINK);
+-
+-		handled |= IRQ_LDI;
+ 	}
+ 
+-	if (status & IRQ_RXPSI)
+-		handled |= IRQ_RXPSI;
+-
+ 	if (status & IRQ_TXI) {
+ 		unsigned short tx_space = ks8851_rdreg16(ks, KS_TXMIR);
+ 
+@@ -365,20 +357,12 @@ static irqreturn_t ks8851_irq(int irq, v
+ 		if (netif_queue_stopped(ks->netdev))
+ 			netif_wake_queue(ks->netdev);
+ 		spin_unlock(&ks->statelock);
+-
+-		handled |= IRQ_TXI;
+ 	}
+ 
+-	if (status & IRQ_RXI)
+-		handled |= IRQ_RXI;
+-
+ 	if (status & IRQ_SPIBEI) {
+ 		netdev_err(ks->netdev, "%s: spi bus error\n", __func__);
+-		handled |= IRQ_SPIBEI;
+ 	}
+ 
+-	ks8851_wrreg16(ks, KS_ISR, handled);
+-
+ 	if (status & IRQ_RXI) {
+ 		/* the datasheet says to disable the rx interrupt during
+ 		 * packet read-out, however we're masking the interrupt
 
 
