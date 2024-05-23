@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41AE314A62D;
-	Thu, 23 May 2024 13:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266BB14AD38;
+	Thu, 23 May 2024 13:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470154; cv=none; b=nbCYAElEIOiXqOmgpe/1bQcqXKILTS2My/QLPjAJugB2IHCjLD0kivo735E2UPZjzmtvUkABE8rGcgjMADtbjPR6wBi+LWyKxcZMfvySVDQqAsgHT7bNCvSK6ljlfj1Z9axzPeflJ7o4PbubHE3xKqWdHGw3trioqUGTKalLPew=
+	t=1716470157; cv=none; b=QF/8PRsL6fcXGA/3zPr7kw5I7tpDcPHjHWRO59Lgnk2fBeyx2WauJlodgadl/fx51AZsOAyDbrBFT03LgjM2Zxgg6MmEMQgPhtZrkgHrRnkgQbbM9Xn5TPHVaBbsqfV786hEvMmmGVNKnxFkyjnW5IAz2NhouM97I3zYzTDVrGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470154; c=relaxed/simple;
-	bh=nC9MKH36BwmDcvKmySAppRVVvi5opCHrYE92n7Y9Hg8=;
+	s=arc-20240116; t=1716470157; c=relaxed/simple;
+	bh=u2jcGAOTl0OL3M3WQeG4rpKmdEpmhmzcsLTqZvFjDPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=giA3Wk3mhBbVhhQlwm10jci7IdEsqqf3+BV6MKmeL+KqOl9Dnap5BzKmjFZe++oEnNP5Zn9/1koI+eDXjEmqI5vLYSk/AxrbanGBNx+boxKEkvyRkGpw86SJ3Mf8lvdki0PDDT1P1dBf1Qw8TfJiu4qiLGCiLYhA2frc3OkaP5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjnh2gfM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uwxd4+tBUd9d31bbpO9B8eE06ljpEa522+UvUizMpT7pgvoW2eHoTdjNR1Ekw8a6RtRaqEAkZ8MimZ8IDc9xxT3hRxQ1BAj1GOY2zOUtv5ZTU3tZJSHdPzmGLNXPnEoF9vPvpld4dnYhL+uFoJOPpcXX71DTHOYIcHa4VIXoL0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meErOzym; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjnh2gfM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21C3C32781;
-	Thu, 23 May 2024 13:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meErOzym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A473EC4AF0A;
+	Thu, 23 May 2024 13:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470154;
-	bh=nC9MKH36BwmDcvKmySAppRVVvi5opCHrYE92n7Y9Hg8=;
+	s=korg; t=1716470157;
+	bh=u2jcGAOTl0OL3M3WQeG4rpKmdEpmhmzcsLTqZvFjDPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hjnh2gfMwFZUEIQSSCojL5/9aGLV1l3ZJrxp5vf10hkF73/mQqphtT5CsQ5oDM3Uv
-	 U4BsKfafwBceW/w2jaG1UJEk6dRHOz+AAD/cG30aV5n9rbto4x1tCGjsq52jEbCt7q
-	 SqA9L0w8sQ2gxZlghxUWls9JYvU2ITnWE5ud6GDY=
+	b=meErOzymTwosds66Hf2cOyVTiCr5jJNq5ArMFt2U2bv2UInwnMKG9GVsAkGrdRLq+
+	 WmtMpgJvQDRLDLPHOCujrSIr4ncwTQi46P5J/qMXqEP80cpe0k+o2HqkhJzDNB4NUN
+	 u5+RcItnk/b5CJo5yk3pG11uoo1y65g2T6pMvqd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Ajay Kaher <ajay.kaher@broadcom.com>
-Subject: [PATCH 5.4 13/16] drm/amdgpu: Fix possible NULL dereference in amdgpu_ras_query_error_status_helper()
-Date: Thu, 23 May 2024 15:12:46 +0200
-Message-ID: <20240523130326.247877616@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.4 14/16] usb: typec: ucsi: displayport: Fix potential deadlock
+Date: Thu, 23 May 2024 15:12:47 +0200
+Message-ID: <20240523130326.284613729@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130325.743454852@linuxfoundation.org>
 References: <20240523130325.743454852@linuxfoundation.org>
@@ -48,51 +44,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit b8d55a90fd55b767c25687747e2b24abd1ef8680 upstream.
+commit b791a67f68121d69108640d4a3e591d210ffe850 upstream.
 
-Return invalid error code -EINVAL for invalid block id.
+The function ucsi_displayport_work() does not access the
+connector, so it also must not acquire the connector lock.
 
-Fixes the below:
+This fixes a potential deadlock scenario:
 
-drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:1183 amdgpu_ras_query_error_status_helper() error: we previously assumed 'info' could be null (see line 1176)
+ucsi_displayport_work() -> lock(&con->lock)
+typec_altmode_vdm()
+dp_altmode_vdm()
+dp_altmode_work()
+typec_altmode_enter()
+ucsi_displayport_enter() -> lock(&con->lock)
 
-Suggested-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Cc: Tao Zhou <tao.zhou1@amd.com>
-Cc: Hawking Zhang <Hawking.Zhang@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[Ajay: applied AMDGPU_RAS_BLOCK_COUNT condition to amdgpu_ras_error_query()
-       as amdgpu_ras_query_error_status_helper() not present in v5.10, v5.4
-       amdgpu_ras_query_error_status_helper() was introduced in 8cc0f5669eb6]
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
+Reported-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240507134316.161999-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/typec/ucsi/displayport.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-@@ -594,6 +594,9 @@ int amdgpu_ras_error_query(struct amdgpu
- 	if (!obj)
- 		return -EINVAL;
+--- a/drivers/usb/typec/ucsi/displayport.c
++++ b/drivers/usb/typec/ucsi/displayport.c
+@@ -251,8 +251,6 @@ static void ucsi_displayport_work(struct
+ 	struct ucsi_dp *dp = container_of(work, struct ucsi_dp, work);
+ 	int ret;
  
-+	if (!info || info->head.block == AMDGPU_RAS_BLOCK_COUNT)
-+		return -EINVAL;
-+
- 	switch (info->head.block) {
- 	case AMDGPU_RAS_BLOCK__UMC:
- 		if (adev->umc.funcs->query_ras_error_count)
+-	mutex_lock(&dp->con->lock);
+-
+ 	ret = typec_altmode_vdm(dp->alt, dp->header,
+ 				dp->vdo_data, dp->vdo_size);
+ 	if (ret)
+@@ -261,8 +259,6 @@ static void ucsi_displayport_work(struct
+ 	dp->vdo_data = NULL;
+ 	dp->vdo_size = 0;
+ 	dp->header = 0;
+-
+-	mutex_unlock(&dp->con->lock);
+ }
+ 
+ void ucsi_displayport_remove_partner(struct typec_altmode *alt)
 
 
