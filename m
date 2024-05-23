@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382EB2AE94;
-	Thu, 23 May 2024 13:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29071E497;
+	Thu, 23 May 2024 13:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470286; cv=none; b=jTco4V30pC5DY3kcGFth1erb70yZEvMQu1Bk2XoboGkBzED81MkWVg/vy0NeNzWcRbjX8OtKtF3kcul0EzshFVlNZu2wIyu0I6fZyOrv1Pn74XDUBQ2IBluY0bwCdpNNLuFpWEvs3SEEMoS1cYcW1LpAz8bPsUGzSby7fhpaPP8=
+	t=1716470289; cv=none; b=avrNbr1zRvCLvRHkviM9JvpaFKNyUllCzaNmYx3+nOf1xfZ4OwmQagz6+eLZkJkDuTntRPV81/DVtYgHqtWsiYm84d/O1tiJ0VFQWPBZLr4hfSaA5CZxvSFU5rllKow1l35drtKqX1tl9noN/F7lzVycsxiWrO2kaJRm5Js6NQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470286; c=relaxed/simple;
-	bh=j502eUQRyRQ0rmk0zHZYhHd61TEqrO+miE+N3yBgp/8=;
+	s=arc-20240116; t=1716470289; c=relaxed/simple;
+	bh=ofavnzkS8ATe8Yct3OyZNv++Q9edNFjSoHKheyXLWno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQuGzmuPkJy47TLlONKlahHpfEqc8Co3tHqam1BWD5yqFsPaAV12TjjmT5yXZn/hKF+uNWFv7Pe5eNFcRlBS7B3r5lJIzvWrpBQ7aIZBDacI6OqMBDX8kBqh4dlwlFd5U2nCMLlPXoQ47FKjzpyz3zetraSpi0Nk/TzTbzaA9XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYpS3zon; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPM7UrO/2vTg5oyVL5RMdANiTU03TiEEhoK21GMVbuiBEL+rPvd1OV0QKkK7MCtS5KN83Y3gSUTiJ2bVWX1UPC/kCUSfqEhb1eXgmIwyE5h303wUrbB40L6qepxP3XNikCxYF9vOXOMmxXS9Haw2wDj4wcTdz3SzMyQm64NfSwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvAYYwkp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYpS3zon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DACC2BD10;
-	Thu, 23 May 2024 13:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvAYYwkp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B355C2BD10;
+	Thu, 23 May 2024 13:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470285;
-	bh=j502eUQRyRQ0rmk0zHZYhHd61TEqrO+miE+N3yBgp/8=;
+	s=korg; t=1716470288;
+	bh=ofavnzkS8ATe8Yct3OyZNv++Q9edNFjSoHKheyXLWno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WYpS3zonHE88My8V+t33OY2BMWxQ2tj0OxZsmobpg4MC6kFCbP5/8F+Pg/qZWXJPR
-	 9hhnCV+Tg5OF1HF0LROto/l/d72BxoQPt8qU+vn1MTfXZIihM/rnkqDLMd8ztVl9Fj
-	 gMFyXv3D+lB4GWAuM/fsHwgfLnjLubQv1VjVUFg4=
+	b=CvAYYwkpsbLppI4UcU4thCoVScblxj10RRVdxqnuTCATr+9bmODukKNFxlGqYbXtl
+	 B9L+j7NPw6UjmA24CWHEypezvzncQNle2NahGTwSKruZBgrHgQFuh5wnSzs8kLiq7N
+	 6sWrv+cetLo5Iajoe7yh6T/5MnB2CQ5PRRAkLMcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Javier Carrasco <javier.carrasco@wolfvision.net>
-Subject: [PATCH 6.9 14/25] usb: typec: tipd: fix event checking for tps25750
-Date: Thu, 23 May 2024 15:12:59 +0200
-Message-ID: <20240523130330.927059534@linuxfoundation.org>
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Jose Fernandez <josef@netflix.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Limonciello, Mario" <mario.limonciello@amd.com>
+Subject: [PATCH 5.15 01/23] drm/amd/display: Fix division by zero in setup_dsc_config
+Date: Thu, 23 May 2024 15:12:57 +0200
+Message-ID: <20240523130328.014252014@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240523130330.386580714@linuxfoundation.org>
-References: <20240523130330.386580714@linuxfoundation.org>
+In-Reply-To: <20240523130327.956341021@linuxfoundation.org>
+References: <20240523130327.956341021@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +48,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.9-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco@wolfvision.net>
+From: Jose Fernandez <josef@netflix.com>
 
-commit d64adb0f41e62f91fcfdf0e0d9d5bfa714db0d23 upstream.
+commit 130afc8a886183a94cf6eab7d24f300014ff87ba upstream.
 
-In its current form, the interrupt service routine of the tps25750
-checks the event flags in the lowest 64 bits of the interrupt event
-register (event[0]), but also in the upper part (event[1]).
+When slice_height is 0, the division by slice_height in the calculation
+of the number of slices will cause a division by zero driver crash. This
+leaves the kernel in a state that requires a reboot. This patch adds a
+check to avoid the division by zero.
 
-Given that all flags are defined as BIT() or BIT_ULL(), they are
-restricted to the first 64 bits of the INT_EVENT1 register. Including
-the upper part of the register can lead to false positives e.g. if the
-event 64 bits above the one being checked is set, but the one being
-checked is not.
+The stack trace below is for the 6.8.4 Kernel. I reproduced the issue on
+a Z16 Gen 2 Lenovo Thinkpad with a Apple Studio Display monitor
+connected via Thunderbolt. The amdgpu driver crashed with this exception
+when I rebooted the system with the monitor connected.
 
-Restrict the flag checking to the first 64 bits of the INT_EVENT1
-register.
+kernel: ? die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434 arch/x86/kernel/dumpstack.c:447)
+kernel: ? do_trap (arch/x86/kernel/traps.c:113 arch/x86/kernel/traps.c:154)
+kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
+kernel: ? do_error_trap (./arch/x86/include/asm/traps.h:58 arch/x86/kernel/traps.c:175)
+kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
+kernel: ? exc_divide_error (arch/x86/kernel/traps.c:194 (discriminator 2))
+kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
+kernel: ? asm_exc_divide_error (./arch/x86/include/asm/idtentry.h:548)
+kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
+kernel: dc_dsc_compute_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1109) amdgpu
 
-Fixes: 7e7a3c815d22 ("USB: typec: tps6598x: Add TPS25750 support")
-Cc: stable@vger.kernel.org
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Javier Carrasco <javier.carrasco@wolfvision.net>
-Link: https://lore.kernel.org/r/20240429-tps6598x_fix_event_handling-v3-1-4e8e58dce489@wolfvision.net
+After applying this patch, the driver no longer crashes when the monitor
+is connected and the system is rebooted. I believe this is the same
+issue reported for 3113.
+
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Jose Fernandez <josef@netflix.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3113
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Limonciello, Mario" <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tipd/core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -604,11 +604,11 @@ static irqreturn_t tps25750_interrupt(in
- 	if (!tps6598x_read_status(tps, &status))
- 		goto err_clear_ints;
+--- a/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
++++ b/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
+@@ -939,7 +939,12 @@ static bool setup_dsc_config(
+ 	if (!is_dsc_possible)
+ 		goto done;
  
--	if ((event[0] | event[1]) & TPS_REG_INT_POWER_STATUS_UPDATE)
-+	if (event[0] & TPS_REG_INT_POWER_STATUS_UPDATE)
- 		if (!tps6598x_read_power_status(tps))
- 			goto err_clear_ints;
+-	dsc_cfg->num_slices_v = pic_height/slice_height;
++	if (slice_height > 0) {
++		dsc_cfg->num_slices_v = pic_height / slice_height;
++	} else {
++		is_dsc_possible = false;
++		goto done;
++	}
  
--	if ((event[0] | event[1]) & TPS_REG_INT_DATA_STATUS_UPDATE)
-+	if (event[0] & TPS_REG_INT_DATA_STATUS_UPDATE)
- 		if (!tps6598x_read_data_status(tps))
- 			goto err_clear_ints;
- 
-@@ -617,7 +617,7 @@ static irqreturn_t tps25750_interrupt(in
- 	 * a plug event. Therefore, we need to check
- 	 * for pr/dr status change to set TypeC dr/pr accordingly.
- 	 */
--	if ((event[0] | event[1]) & TPS_REG_INT_PLUG_EVENT ||
-+	if (event[0] & TPS_REG_INT_PLUG_EVENT ||
- 	    tps6598x_has_role_changed(tps, status))
- 		tps6598x_handle_plug_event(tps, status);
- 
+ 	if (target_bandwidth_kbps > 0) {
+ 		is_dsc_possible = decide_dsc_target_bpp_x16(
 
 
