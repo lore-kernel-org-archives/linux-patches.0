@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9767E13B7AE;
-	Thu, 23 May 2024 13:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DF113A897;
+	Thu, 23 May 2024 13:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470414; cv=none; b=aYE8ultvnyt6e+shx/3jQGkzZ0XWvWJ6tO0qbWeiQGUkyhe5y/1j8cuXtOnAGoMDybAT0cG3xktfdj4Aj42aG0wxDVZOO8BFpGORhlpaWQVxRCNe//4bGemW6x3jLaBNgVBV6yLo6gDix6mKB1gsZpU8gw0z9aa4XRHFEOaCMQg=
+	t=1716470417; cv=none; b=BU5F+J6FI1FWeRwZOta8Xj1CPeitlmE+2dJgCTqeiM7TfQ4Lkfcn+fvXytIoTmfqugBzF4ePTVcNyJ25ajVkHY/6v4px89R59/h+XBC8u/+1V8HtB/maQRuc2LpcOSl9Bt4WWUU7KqzwNxCAyqj+GIkg7pJDyXfrtGX2Js07ttc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470414; c=relaxed/simple;
-	bh=vozqe5HJFExakPx4VYJs81NZXQ1p1+EkNDrstmecujg=;
+	s=arc-20240116; t=1716470417; c=relaxed/simple;
+	bh=9lcSinglYTzq53su3TxoQOlN+SZoOeREb+OsguBMm24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYlv7O4XY9nkj5yMfch59Avf+Jo0+fs2A4lEN+4TdRE+4wtquOlhBjeyBLqoAoqnmHn9BbJ0XhjzsBNcxjVR3x7ptKogdqCgJ15xxTDrVBaPvS8tmmMUKQlN8fLQhFGVOfa1N6AASDPyY7JeaJhjYV6LiI4zJ7XKxhE9c83q3H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyZIToNG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrOFa3nu/h/3BoGOglK7n80nHqHFR9DWHbamgo0gTUyKjeycvIopACUNZGbwrbloUlA9HbFoZr70irYI6muBekAvbilL1LQDJpQW/i9PuH2yVi6TAa4poLQZa6Uv7SBdQW5dYQ2g/KbIO8EQO6JowWr/4a0jj5gu8M8l5JmRn+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfIUwuC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyZIToNG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221CAC2BD10;
-	Thu, 23 May 2024 13:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfIUwuC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FFEC32781;
+	Thu, 23 May 2024 13:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470414;
-	bh=vozqe5HJFExakPx4VYJs81NZXQ1p1+EkNDrstmecujg=;
+	s=korg; t=1716470417;
+	bh=9lcSinglYTzq53su3TxoQOlN+SZoOeREb+OsguBMm24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lyZIToNGIGdn7ZB06EorcHB5rC6XB6YU0qvqDELbw243vp1rrOrhhm3CXZ9Qbt483
-	 2myShi/hfvDDoGsj/a7iTFbiQxoCTe/2hTMpkLYL1+uTnRmq1Gh2QUiEbcVN34KNHx
-	 MmOAogc0L34E8HPO5BxFT29X4VL2Kx1qBwATXa+k=
+	b=gfIUwuC0bDYg7a34QyESMiCue3Jk1uq79saCFyMDHHICyZ8caZff1N5fopmcAlWnz
+	 nuDUeWW1KJCiCQrLB3IcVzdaXvI4F2yPvO/44Ai2WipudrabIl76uCvkk2SZMOWx19
+	 6XJkmfvmiS+5M9spp09+OP/4f/jXfsaWrHt7oir8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Dave Chinner <dchinner@redhat.com>,
-	Xiao Yang <yangx.jy@fujitsu.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 28/45] xfs: estimate post-merge refcounts correctly
-Date: Thu, 23 May 2024 15:13:19 +0200
-Message-ID: <20240523130333.558568101@linuxfoundation.org>
+Subject: [PATCH 6.1 29/45] xfs: invalidate xfs_bufs when allocating cow extents
+Date: Thu, 23 May 2024 15:13:20 +0200
+Message-ID: <20240523130333.595567861@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130332.496202557@linuxfoundation.org>
 References: <20240523130332.496202557@linuxfoundation.org>
@@ -54,109 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit b25d1984aa884fc91a73a5a407b9ac976d441e9b ]
+[ Upstream commit ddfdd530e43fcb3f7a0a69966e5f6c33497b4ae3 ]
 
-Upon enabling fsdax + reflink for XFS, xfs/179 began to report refcount
-metadata corruptions after being run.  Specifically, xfs_repair noticed
-single-block refcount records that could be combined but had not been.
+While investigating test failures in xfs/17[1-3] in alwayscow mode, I
+noticed through code inspection that xfs_bmap_alloc_userdata isn't
+setting XFS_ALLOC_USERDATA when allocating extents for a file's CoW
+fork.  COW staging extents should be flagged as USERDATA, since user
+data are persisted to these blocks before being remapped into a file.
 
-The root cause of this is improper MAXREFCOUNT edge case handling in
-xfs_refcount_merge_extents.  When we're trying to find candidates for a
-refcount btree record merge, we compute the refcount attribute of the
-merged record, but we fail to account for the fact that once a record
-hits rc_refcount == MAXREFCOUNT, it is pinned that way forever.  Hence
-the computed refcount is wrong, and we fail to merge the extents.
+This mis-classification has a few impacts on the behavior of the system.
+First, the filestreams allocator is supposed to keep allocating from a
+chosen AG until it runs out of space in that AG.  However, it only does
+that for USERDATA allocations, which means that COW allocations aren't
+tied to the filestreams AG.  Fortunately, few people use filestreams, so
+nobody's noticed.
 
-Fix this by adjusting the merge predicates to compute the adjusted
-refcount correctly.
+A more serious problem is that xfs_alloc_ag_vextent_small looks for a
+buffer to invalidate *if* the USERDATA flag is set and the AG is so full
+that the allocation had to come from the AGFL because the cntbt is
+empty.  The consequences of not invalidating the buffer are severe --
+if the AIL incorrectly checkpoints a buffer that is now being used to
+store user data, that action will clobber the user's written data.
 
-Fixes: 3172725814f9 ("xfs: adjust refcount of an extent of blocks in refcount btree")
+Fix filestreams and yet another data corruption vector by flagging COW
+allocations as USERDATA.
+
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Xiao Yang <yangx.jy@fujitsu.com>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_refcount.c |   25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ fs/xfs/libxfs/xfs_bmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_refcount.c
-+++ b/fs/xfs/libxfs/xfs_refcount.c
-@@ -820,6 +820,17 @@ xfs_refc_valid(
- 	return rc->rc_startblock != NULLAGBLOCK;
- }
- 
-+static inline xfs_nlink_t
-+xfs_refc_merge_refcount(
-+	const struct xfs_refcount_irec	*irec,
-+	enum xfs_refc_adjust_op		adjust)
-+{
-+	/* Once a record hits MAXREFCOUNT, it is pinned there forever */
-+	if (irec->rc_refcount == MAXREFCOUNT)
-+		return MAXREFCOUNT;
-+	return irec->rc_refcount + adjust;
-+}
-+
- static inline bool
- xfs_refc_want_merge_center(
- 	const struct xfs_refcount_irec	*left,
-@@ -831,6 +842,7 @@ xfs_refc_want_merge_center(
- 	unsigned long long		*ulenp)
- {
- 	unsigned long long		ulen = left->rc_blockcount;
-+	xfs_nlink_t			new_refcount;
- 
- 	/*
- 	 * To merge with a center record, both shoulder records must be
-@@ -846,9 +858,10 @@ xfs_refc_want_merge_center(
- 		return false;
- 
- 	/* The shoulder record refcounts must match the new refcount. */
--	if (left->rc_refcount != cleft->rc_refcount + adjust)
-+	new_refcount = xfs_refc_merge_refcount(cleft, adjust);
-+	if (left->rc_refcount != new_refcount)
- 		return false;
--	if (right->rc_refcount != cleft->rc_refcount + adjust)
-+	if (right->rc_refcount != new_refcount)
- 		return false;
- 
- 	/*
-@@ -871,6 +884,7 @@ xfs_refc_want_merge_left(
- 	enum xfs_refc_adjust_op		adjust)
- {
- 	unsigned long long		ulen = left->rc_blockcount;
-+	xfs_nlink_t			new_refcount;
- 
- 	/*
- 	 * For a left merge, the left shoulder record must be adjacent to the
-@@ -881,7 +895,8 @@ xfs_refc_want_merge_left(
- 		return false;
- 
- 	/* Left shoulder record refcount must match the new refcount. */
--	if (left->rc_refcount != cleft->rc_refcount + adjust)
-+	new_refcount = xfs_refc_merge_refcount(cleft, adjust);
-+	if (left->rc_refcount != new_refcount)
- 		return false;
- 
- 	/*
-@@ -903,6 +918,7 @@ xfs_refc_want_merge_right(
- 	enum xfs_refc_adjust_op		adjust)
- {
- 	unsigned long long		ulen = right->rc_blockcount;
-+	xfs_nlink_t			new_refcount;
- 
- 	/*
- 	 * For a right merge, the right shoulder record must be adjacent to the
-@@ -913,7 +929,8 @@ xfs_refc_want_merge_right(
- 		return false;
- 
- 	/* Right shoulder record refcount must match the new refcount. */
--	if (right->rc_refcount != cright->rc_refcount + adjust)
-+	new_refcount = xfs_refc_merge_refcount(cright, adjust);
-+	if (right->rc_refcount != new_refcount)
- 		return false;
- 
- 	/*
+--- a/fs/xfs/libxfs/xfs_bmap.c
++++ b/fs/xfs/libxfs/xfs_bmap.c
+@@ -4058,7 +4058,7 @@ xfs_bmap_alloc_userdata(
+ 	 * the busy list.
+ 	 */
+ 	bma->datatype = XFS_ALLOC_NOBUSY;
+-	if (whichfork == XFS_DATA_FORK) {
++	if (whichfork == XFS_DATA_FORK || whichfork == XFS_COW_FORK) {
+ 		bma->datatype |= XFS_ALLOC_USERDATA;
+ 		if (bma->offset == 0)
+ 			bma->datatype |= XFS_ALLOC_INITIAL_USER_DATA;
 
 
