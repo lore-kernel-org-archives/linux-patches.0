@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8C313BC38;
-	Thu, 23 May 2024 13:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D71613C66A;
+	Thu, 23 May 2024 13:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470231; cv=none; b=bZO2kKXHA7p75KX6cmBSgpwAJJpf0AE9wo4wTR5AwRldyoVgktzLZMrXyPbmHy48MLf+CYKzuZcNXbwGfug2Q4Vmm1r0/57D8PykmI9+ZFMdw517IICIetrQ/cmggG6Mz23YU8qEA/oB6mKOYDTItSZlvpmcHzGVNT8vcDNt3/Q=
+	t=1716470234; cv=none; b=slcYJI1wGLQEp2DjfY9qY1EvOksb9BxatihAMfUJp6Tk2zhrmgYQTz97Ft9ByIbAtahfG1wmuzWrX2znGs8+STMFB98zN/7EIiAddNd8tQowJIqLFVBju7jdERMXoIu5ZnDi05IJtOUYt45CaIVGicjfEWUGNQfSOMN90BZ+res=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470231; c=relaxed/simple;
-	bh=N68t6Q28fL4ZLR7uloRmSlS+7gxIIFUSn3yflux95mc=;
+	s=arc-20240116; t=1716470234; c=relaxed/simple;
+	bh=Xr5W1Y1vcss3vrjxFVUhmrsrP7AGCd8irn6EFmxERiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MYqu226CwaqLkXNGfabsomCKH0x7rcNkxg445W+0PT6MCSv0OgaE9qyxSeYp3Z4trntr3uFA6thVGYKy3EXW4YvTJHIlEzPePM9R4bPwqRv1dHDo7yPSxQFufvAR23yzfyM4aMCJraoFmEswfES+qnNFxuBvdVEEnJb7jx3s9UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5T89LsY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OC3vmjd+Rtb4cuUXc5POdi0U305hSku8eGeuxWfShigFsL1JvfCIV14nxgRcHl2qSDyqWqxvrhlAGxlsQqI1emn18vv2IgwoWYCoTX7p+a3CVoKqbLWKnCu5+vOzw6/qX6u/bU6bV2t3X3xkaTwnlG/3R3u9sxvqfPU7eN28m2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1MSD8Gf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5T89LsY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC59C2BD10;
-	Thu, 23 May 2024 13:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1MSD8Gf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB4CC3277B;
+	Thu, 23 May 2024 13:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470231;
-	bh=N68t6Q28fL4ZLR7uloRmSlS+7gxIIFUSn3yflux95mc=;
+	s=korg; t=1716470234;
+	bh=Xr5W1Y1vcss3vrjxFVUhmrsrP7AGCd8irn6EFmxERiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X5T89LsY4LtmigW8Xf/tNErCmgVrVZRIrhu8yxLUAU4uuPt+EM44CbsWWfPBIbfvS
-	 OYPw0vRk1F12Ok58HCPJurizR/EdqI1hnldK/GT96NhPkcbVnnmbHDmB0/BqifOxC+
-	 HOGTnDJu4HHN8IBsgLGe0Zrzru1ynvijs7h/+hU8=
+	b=w1MSD8GfEDAAc37LCOwKJ9QtetUz8CBqCyq7gWHLxxZ+pSyg4hzD0uf2NGIQEObT0
+	 EVZMmxPBGvDioGfTKElditvfL8D7fIAxIf64TmN6gDJyPN3ClAV5W/3/5WYlL9vOtT
+	 KOj+zxYCE0tjCBnlxkQyFnFmEOwKZ8d/0RrIy1wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Perry Yuan <perry.yuan@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Gaha Bana <gahabana@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.9 03/25] cpufreq: amd-pstate: fix the highest frequency issue which limits performance
-Date: Thu, 23 May 2024 15:12:48 +0200
-Message-ID: <20240523130330.517274967@linuxfoundation.org>
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Jose Fernandez <josef@netflix.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Limonciello, Mario" <mario.limonciello@amd.com>
+Subject: [PATCH 6.9 04/25] drm/amd/display: Fix division by zero in setup_dsc_config
+Date: Thu, 23 May 2024 15:12:49 +0200
+Message-ID: <20240523130330.552973276@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130330.386580714@linuxfoundation.org>
 References: <20240523130330.386580714@linuxfoundation.org>
@@ -52,92 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Perry Yuan <perry.yuan@amd.com>
+From: Jose Fernandez <josef@netflix.com>
 
-commit bf202e654bfa57fb8cf9d93d4c6855890b70b9c4 upstream.
+commit 130afc8a886183a94cf6eab7d24f300014ff87ba upstream.
 
-To address the performance drop issue, an optimization has been
-implemented. The incorrect highest performance value previously set by the
-low-level power firmware for AMD CPUs with Family ID 0x19 and Model ID
-ranging from 0x70 to 0x7F series has been identified as the cause.
+When slice_height is 0, the division by slice_height in the calculation
+of the number of slices will cause a division by zero driver crash. This
+leaves the kernel in a state that requires a reboot. This patch adds a
+check to avoid the division by zero.
 
-To resolve this, a check has been implemented to accurately determine the
-CPU family and model ID. The correct highest performance value is now set
-and the performance drop caused by the incorrect highest performance value
-are eliminated.
+The stack trace below is for the 6.8.4 Kernel. I reproduced the issue on
+a Z16 Gen 2 Lenovo Thinkpad with a Apple Studio Display monitor
+connected via Thunderbolt. The amdgpu driver crashed with this exception
+when I rebooted the system with the monitor connected.
 
-Before the fix, the highest frequency was set to 4200MHz, now it is set
-to 4971MHz which is correct.
+kernel: ? die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434 arch/x86/kernel/dumpstack.c:447)
+kernel: ? do_trap (arch/x86/kernel/traps.c:113 arch/x86/kernel/traps.c:154)
+kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
+kernel: ? do_error_trap (./arch/x86/include/asm/traps.h:58 arch/x86/kernel/traps.c:175)
+kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
+kernel: ? exc_divide_error (arch/x86/kernel/traps.c:194 (discriminator 2))
+kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
+kernel: ? asm_exc_divide_error (./arch/x86/include/asm/idtentry.h:548)
+kernel: ? setup_dsc_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1053) amdgpu
+kernel: dc_dsc_compute_config (drivers/gpu/drm/amd/amdgpu/../display/dc/dsc/dc_dsc.c:1109) amdgpu
 
-CPU NODE SOCKET CORE L1d:L1i:L2:L3 ONLINE    MAXMHZ   MINMHZ       MHZ
-  0    0      0    0 0:0:0:0          yes 4971.0000 400.0000  400.0000
-  1    0      0    0 0:0:0:0          yes 4971.0000 400.0000  400.0000
-  2    0      0    1 1:1:1:0          yes 4971.0000 400.0000 4865.8140
-  3    0      0    1 1:1:1:0          yes 4971.0000 400.0000  400.0000
+After applying this patch, the driver no longer crashes when the monitor
+is connected and the system is rebooted. I believe this is the same
+issue reported for 3113.
 
-Fixes: f3a052391822 ("cpufreq: amd-pstate: Enable amd-pstate preferred core support")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218759
-Signed-off-by: Perry Yuan <perry.yuan@amd.com>
-Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Tested-by: Gaha Bana <gahabana@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Jose Fernandez <josef@netflix.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3113
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Limonciello, Mario" <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/amd-pstate.c |   22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -50,7 +50,8 @@
+--- a/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
++++ b/drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c
+@@ -1055,7 +1055,12 @@ static bool setup_dsc_config(
+ 	if (!is_dsc_possible)
+ 		goto done;
  
- #define AMD_PSTATE_TRANSITION_LATENCY	20000
- #define AMD_PSTATE_TRANSITION_DELAY	1000
--#define AMD_PSTATE_PREFCORE_THRESHOLD	166
-+#define CPPC_HIGHEST_PERF_PERFORMANCE	196
-+#define CPPC_HIGHEST_PERF_DEFAULT	166
+-	dsc_cfg->num_slices_v = pic_height/slice_height;
++	if (slice_height > 0) {
++		dsc_cfg->num_slices_v = pic_height / slice_height;
++	} else {
++		is_dsc_possible = false;
++		goto done;
++	}
  
- /*
-  * TODO: We need more time to fine tune processors with shared memory solution
-@@ -290,6 +291,21 @@ static inline int amd_pstate_enable(bool
- 	return static_call(amd_pstate_enable)(enable);
- }
- 
-+static u32 amd_pstate_highest_perf_set(struct amd_cpudata *cpudata)
-+{
-+	struct cpuinfo_x86 *c = &cpu_data(0);
-+
-+	/*
-+	 * For AMD CPUs with Family ID 19H and Model ID range 0x70 to 0x7f,
-+	 * the highest performance level is set to 196.
-+	 * https://bugzilla.kernel.org/show_bug.cgi?id=218759
-+	 */
-+	if (c->x86 == 0x19 && (c->x86_model >= 0x70 && c->x86_model <= 0x7f))
-+		return CPPC_HIGHEST_PERF_PERFORMANCE;
-+
-+	return CPPC_HIGHEST_PERF_DEFAULT;
-+}
-+
- static int pstate_init_perf(struct amd_cpudata *cpudata)
- {
- 	u64 cap1;
-@@ -306,7 +322,7 @@ static int pstate_init_perf(struct amd_c
- 	 * the default max perf.
- 	 */
- 	if (cpudata->hw_prefcore)
--		highest_perf = AMD_PSTATE_PREFCORE_THRESHOLD;
-+		highest_perf = amd_pstate_highest_perf_set(cpudata);
- 	else
- 		highest_perf = AMD_CPPC_HIGHEST_PERF(cap1);
- 
-@@ -330,7 +346,7 @@ static int cppc_init_perf(struct amd_cpu
- 		return ret;
- 
- 	if (cpudata->hw_prefcore)
--		highest_perf = AMD_PSTATE_PREFCORE_THRESHOLD;
-+		highest_perf = amd_pstate_highest_perf_set(cpudata);
- 	else
- 		highest_perf = cppc_perf.highest_perf;
- 
+ 	if (target_bandwidth_kbps > 0) {
+ 		is_dsc_possible = decide_dsc_target_bpp_x16(
 
 
