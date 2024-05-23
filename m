@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547F214BF89;
-	Thu, 23 May 2024 13:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C0114AD3A;
+	Thu, 23 May 2024 13:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470602; cv=none; b=WtdvjpyHoD2b9HLwwdbZ6POWJU30oStrJ8kPjfHxtHWoGKbtzaAM8jS238Nd0IB2NVWvOOdOmsRSAlPkpnRurUoPyUPz3yy5GGpnwxTBMqLcocYhESeL+NZsvPZF/Kq77vTfWV7ASFLVsdIkkjRVkt3KCgWZ5578w3sqeR/gPF0=
+	t=1716470605; cv=none; b=u6frf2w0+hdtnrny/OaCadtyj7XTactNgxPW5bVxgYaatHUYco2gIuhb9asc/5VaO1T6x+Oe5xu9AifC5mf1E4XFl647NVkknm0bCw0kdjk5tHHkuE60oHU0h/C0b/7fYqXu37rhiZjWZrVl0CmNPbrhxxKeTBVfjDJ5hIORAJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470602; c=relaxed/simple;
-	bh=lCHh3CowkY31HaJn6l9iRUCkQs5r3WRKdfcReKf+p7Y=;
+	s=arc-20240116; t=1716470605; c=relaxed/simple;
+	bh=ADaCEAKHRdQ5zahjQduwuXUvIU4tJBquPeor8htHjYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vl5J+Bv+3NJV72iwnMpZ6jlcuEwUWOlJMOqG65GzEENnd0kF9cDLjLBjCxgh25gPoR+NLIIsWPJAPjVpvgrY9rCALkPaCH+0UGUx/5lH05C2A3w4c2A43ttIaTMle8Hh0FkPFg4GF3wpIcd8x/9vEpCQEtxo9PrCSY5+CeoZuZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B93TDpvl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=phTfFvblzK4U4axJ1ihcK9+KkytaRRDgfMc/PAfRDBdf9Bq1I9b2yPQzPYIXtZZ5Rfz1Tw76hkyvfJg0AxUIND5VHhOS/09ZV64d8+yCphMdLxi04BSC/6zOFjxaraBOGrq8Jm+NU27zuojpeyRwaUh+i/GjJwpmkHIkgVQUSOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laG+V2bY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B93TDpvl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FBB7C32781;
-	Thu, 23 May 2024 13:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laG+V2bY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D2FC32781;
+	Thu, 23 May 2024 13:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470601;
-	bh=lCHh3CowkY31HaJn6l9iRUCkQs5r3WRKdfcReKf+p7Y=;
+	s=korg; t=1716470604;
+	bh=ADaCEAKHRdQ5zahjQduwuXUvIU4tJBquPeor8htHjYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B93TDpvlHbWGufmbITLs81GTb5nKyMmavEkqUS1x3EULlqkqwNbZb+X//7kWDsUlG
-	 4jA4O3/gvbTZKbC+g3XGtPlaHduAcruDQQEhCIXXlercN9t7mQhTaceky+5G12kqg4
-	 oe5ljxo0PXmieV4TZG9IpuuVPPFHrC345hZfaIqg=
+	b=laG+V2bYjpbXtNRGLDguTdGR5w7704/c4FDB0awaSGYkbYTUSbCI3/CXaG9VLKl/C
+	 HVXFZPKwxPSGNjtQh8g9fQflGb9qG6XJvVk30DHjHL48A9dTmx8vs4pGcmbxUkYLz7
+	 L4TdbjcbEhesefOq5+E3DYkXfDG9RhWr9Liz/5/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <sfrench@samba.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/102] smb: client: allow creating symlinks via reparse points
-Date: Thu, 23 May 2024 15:12:41 +0200
-Message-ID: <20240523130343.077083052@linuxfoundation.org>
+Subject: [PATCH 6.6 025/102] ksmbd: vfs: fix all kernel-doc warnings
+Date: Thu, 23 May 2024 15:12:50 +0200
+Message-ID: <20240523130343.412475327@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -52,201 +56,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 514d793e27a310eb26b112c1f8f1a160472907e5 ]
+[ Upstream commit 8d99c1131d9d03053b7b1e1245b8f6e6846d9c69 ]
 
-Add support for creating symlinks via IO_REPARSE_TAG_SYMLINK reparse
-points in SMB2+.
+Fix all kernel-doc warnings in vfs.c:
 
-These are fully supported by most SMB servers and documented in
-MS-FSCC.  Also have the advantage of requiring fewer roundtrips as
-their symlink targets can be parsed directly from CREATE responses on
-STATUS_STOPPED_ON_SYMLINK errors.
+vfs.c:54: warning: Function parameter or member 'parent' not described in 'ksmbd_vfs_lock_parent'
+vfs.c:54: warning: Function parameter or member 'child' not described in 'ksmbd_vfs_lock_parent'
+vfs.c:54: warning: No description found for return value of 'ksmbd_vfs_lock_parent'
+vfs.c:372: warning: Function parameter or member 'fp' not described in 'ksmbd_vfs_read'
+vfs.c:372: warning: Excess function parameter 'fid' description in 'ksmbd_vfs_read'
+vfs.c:489: warning: Function parameter or member 'fp' not described in 'ksmbd_vfs_write'
+vfs.c:489: warning: Excess function parameter 'fid' description in 'ksmbd_vfs_write'
+vfs.c:555: warning: Function parameter or member 'path' not described in 'ksmbd_vfs_getattr'
+vfs.c:555: warning: Function parameter or member 'stat' not described in 'ksmbd_vfs_getattr'
+vfs.c:555: warning: Excess function parameter 'work' description in 'ksmbd_vfs_getattr'
+vfs.c:555: warning: Excess function parameter 'fid' description in 'ksmbd_vfs_getattr'
+vfs.c:555: warning: Excess function parameter 'attrs' description in 'ksmbd_vfs_getattr'
+vfs.c:572: warning: Function parameter or member 'p_id' not described in 'ksmbd_vfs_fsync'
+vfs.c:595: warning: Function parameter or member 'work' not described in 'ksmbd_vfs_remove_file'
+vfs.c:595: warning: Function parameter or member 'path' not described in 'ksmbd_vfs_remove_file'
+vfs.c:595: warning: Excess function parameter 'name' description in 'ksmbd_vfs_remove_file'
+vfs.c:633: warning: Function parameter or member 'work' not described in 'ksmbd_vfs_link'
+vfs.c:805: warning: Function parameter or member 'fp' not described in 'ksmbd_vfs_truncate'
+vfs.c:805: warning: Excess function parameter 'fid' description in 'ksmbd_vfs_truncate'
+vfs.c:846: warning: Excess function parameter 'size' description in 'ksmbd_vfs_listxattr'
+vfs.c:953: warning: Function parameter or member 'option' not described in 'ksmbd_vfs_set_fadvise'
+vfs.c:953: warning: Excess function parameter 'options' description in 'ksmbd_vfs_set_fadvise'
+vfs.c:1167: warning: Function parameter or member 'um' not described in 'ksmbd_vfs_lookup_in_dir'
+vfs.c:1203: warning: Function parameter or member 'work' not described in 'ksmbd_vfs_kern_path_locked'
+vfs.c:1641: warning: No description found for return value of 'ksmbd_vfs_init_kstat'
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311260838.nx5mkj1j-lkp@intel.com/
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <sfrench@samba.org>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h |  6 ++++
- fs/smb/client/link.c     | 15 ++++++---
- fs/smb/client/smb2ops.c  | 70 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 86 insertions(+), 5 deletions(-)
+ fs/smb/server/vfs.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 3e7c3c3d73a73..414648bf816b2 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -577,6 +577,12 @@ struct smb_version_operations {
- 	int (*parse_reparse_point)(struct cifs_sb_info *cifs_sb,
- 				   struct kvec *rsp_iov,
- 				   struct cifs_open_info_data *data);
-+	int (*create_reparse_symlink)(const unsigned int xid,
-+				      struct inode *inode,
-+				      struct dentry *dentry,
-+				      struct cifs_tcon *tcon,
-+				      const char *full_path,
-+				      const char *symname);
- };
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 626406b0cf4ac..2558119969359 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -49,6 +49,10 @@ static void ksmbd_vfs_inherit_owner(struct ksmbd_work *work,
  
- struct smb_version_values {
-diff --git a/fs/smb/client/link.c b/fs/smb/client/link.c
-index 691f43a1ec2bc..d86da949a9190 100644
---- a/fs/smb/client/link.c
-+++ b/fs/smb/client/link.c
-@@ -569,6 +569,7 @@ cifs_symlink(struct mnt_idmap *idmap, struct inode *inode,
- 	int rc = -EOPNOTSUPP;
- 	unsigned int xid;
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
-+	struct TCP_Server_Info *server;
- 	struct tcon_link *tlink;
- 	struct cifs_tcon *pTcon;
- 	const char *full_path;
-@@ -590,6 +591,7 @@ cifs_symlink(struct mnt_idmap *idmap, struct inode *inode,
- 		goto symlink_exit;
- 	}
- 	pTcon = tlink_tcon(tlink);
-+	server = cifs_pick_channel(pTcon->ses);
+ /**
+  * ksmbd_vfs_lock_parent() - lock parent dentry if it is stable
++ * @parent: parent dentry
++ * @child: child dentry
++ *
++ * Returns: %0 on success, %-ENOENT if the parent dentry is not stable
+  */
+ int ksmbd_vfs_lock_parent(struct dentry *parent, struct dentry *child)
+ {
+@@ -360,7 +364,7 @@ static int check_lock_range(struct file *filp, loff_t start, loff_t end,
+ /**
+  * ksmbd_vfs_read() - vfs helper for smb file read
+  * @work:	smb work
+- * @fid:	file id of open file
++ * @fp:		ksmbd file pointer
+  * @count:	read byte count
+  * @pos:	file pos
+  * @rbuf:	read data buffer
+@@ -474,7 +478,7 @@ static int ksmbd_vfs_stream_write(struct ksmbd_file *fp, char *buf, loff_t *pos,
+ /**
+  * ksmbd_vfs_write() - vfs helper for smb file write
+  * @work:	work
+- * @fid:	file id of open file
++ * @fp:		ksmbd file pointer
+  * @buf:	buf containing data for writing
+  * @count:	read byte count
+  * @pos:	file pos
+@@ -545,10 +549,8 @@ int ksmbd_vfs_write(struct ksmbd_work *work, struct ksmbd_file *fp,
  
- 	full_path = build_path_from_dentry(direntry, page);
- 	if (IS_ERR(full_path)) {
-@@ -601,17 +603,20 @@ cifs_symlink(struct mnt_idmap *idmap, struct inode *inode,
- 	cifs_dbg(FYI, "symname is %s\n", symname);
+ /**
+  * ksmbd_vfs_getattr() - vfs helper for smb getattr
+- * @work:	work
+- * @fid:	file id of open file
+- * @attrs:	inode attributes
+- *
++ * @path:	path of dentry
++ * @stat:	pointer to returned kernel stat structure
+  * Return:	0 on success, otherwise error
+  */
+ int ksmbd_vfs_getattr(const struct path *path, struct kstat *stat)
+@@ -565,6 +567,7 @@ int ksmbd_vfs_getattr(const struct path *path, struct kstat *stat)
+  * ksmbd_vfs_fsync() - vfs helper for smb fsync
+  * @work:	work
+  * @fid:	file id of open file
++ * @p_id:	persistent file id
+  *
+  * Return:	0 on success, otherwise error
+  */
+@@ -587,7 +590,8 @@ int ksmbd_vfs_fsync(struct ksmbd_work *work, u64 fid, u64 p_id)
  
- 	/* BB what if DFS and this volume is on different share? BB */
--	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MF_SYMLINKS)
-+	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_MF_SYMLINKS) {
- 		rc = create_mf_symlink(xid, pTcon, cifs_sb, full_path, symname);
- #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
--	else if (pTcon->unix_ext)
-+	} else if (pTcon->unix_ext) {
- 		rc = CIFSUnixCreateSymLink(xid, pTcon, full_path, symname,
- 					   cifs_sb->local_nls,
- 					   cifs_remap(cifs_sb));
- #endif /* CONFIG_CIFS_ALLOW_INSECURE_LEGACY */
--	/* else
--	   rc = CIFSCreateReparseSymLink(xid, pTcon, fromName, toName,
--					cifs_sb_target->local_nls); */
-+	} else if (server->ops->create_reparse_symlink) {
-+		rc =  server->ops->create_reparse_symlink(xid, inode, direntry,
-+							  pTcon, full_path,
-+							  symname);
-+		goto symlink_exit;
-+	}
+ /**
+  * ksmbd_vfs_remove_file() - vfs helper for smb rmdir or unlink
+- * @name:	directory or file name that is relative to share
++ * @work:	work
++ * @path:	path of dentry
+  *
+  * Return:	0 on success, otherwise error
+  */
+@@ -623,6 +627,7 @@ int ksmbd_vfs_remove_file(struct ksmbd_work *work, const struct path *path)
  
- 	if (rc == 0) {
- 		if (pTcon->posix_extensions) {
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 4fed19d5a81d4..c5957deb1a859 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5246,6 +5246,72 @@ static int nfs_make_node(unsigned int xid, struct inode *inode,
- 	return rc;
- }
+ /**
+  * ksmbd_vfs_link() - vfs helper for creating smb hardlink
++ * @work:	work
+  * @oldname:	source file name
+  * @newname:	hardlink name that is relative to share
+  *
+@@ -800,7 +805,7 @@ int ksmbd_vfs_rename(struct ksmbd_work *work, const struct path *old_path,
+ /**
+  * ksmbd_vfs_truncate() - vfs helper for smb file truncate
+  * @work:	work
+- * @fid:	file id of old file
++ * @fp:		ksmbd file pointer
+  * @size:	truncate to given size
+  *
+  * Return:	0 on success, otherwise error
+@@ -843,7 +848,6 @@ int ksmbd_vfs_truncate(struct ksmbd_work *work,
+  * ksmbd_vfs_listxattr() - vfs helper for smb list extended attributes
+  * @dentry:	dentry of file for listing xattrs
+  * @list:	destination buffer
+- * @size:	destination buffer length
+  *
+  * Return:	xattr list length on success, otherwise error
+  */
+@@ -952,7 +956,7 @@ int ksmbd_vfs_setxattr(struct mnt_idmap *idmap,
+ /**
+  * ksmbd_vfs_set_fadvise() - convert smb IO caching options to linux options
+  * @filp:	file pointer for IO
+- * @options:	smb IO options
++ * @option:	smb IO options
+  */
+ void ksmbd_vfs_set_fadvise(struct file *filp, __le32 option)
+ {
+@@ -1164,6 +1168,7 @@ static bool __caseless_lookup(struct dir_context *ctx, const char *name,
+  * @dir:	path info
+  * @name:	filename to lookup
+  * @namelen:	filename length
++ * @um:		&struct unicode_map to use
+  *
+  * Return:	0 on success, otherwise error
+  */
+@@ -1194,6 +1199,7 @@ static int ksmbd_vfs_lookup_in_dir(const struct path *dir, char *name,
  
-+static int smb2_create_reparse_symlink(const unsigned int xid,
-+				       struct inode *inode,
-+				       struct dentry *dentry,
-+				       struct cifs_tcon *tcon,
-+				       const char *full_path,
-+				       const char *symname)
-+{
-+	struct reparse_symlink_data_buffer *buf = NULL;
-+	struct cifs_open_info_data data;
-+	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
-+	struct inode *new;
-+	struct kvec iov;
-+	__le16 *path;
-+	char *sym;
-+	u16 len, plen;
-+	int rc = 0;
-+
-+	sym = kstrdup(symname, GFP_KERNEL);
-+	if (!sym)
-+		return -ENOMEM;
-+
-+	data = (struct cifs_open_info_data) {
-+		.reparse_point = true,
-+		.reparse = { .tag = IO_REPARSE_TAG_SYMLINK, },
-+		.symlink_target = sym,
-+	};
-+
-+	path = cifs_convert_path_to_utf16(symname, cifs_sb);
-+	if (!path) {
-+		rc = -ENOMEM;
-+		goto out;
-+	}
-+
-+	plen = 2 * UniStrnlen((wchar_t *)path, PATH_MAX);
-+	len = sizeof(*buf) + plen * 2;
-+	buf = kzalloc(len, GFP_KERNEL);
-+	if (!buf) {
-+		rc = -ENOMEM;
-+		goto out;
-+	}
-+
-+	buf->ReparseTag = cpu_to_le32(IO_REPARSE_TAG_SYMLINK);
-+	buf->ReparseDataLength = cpu_to_le16(len - sizeof(struct reparse_data_buffer));
-+	buf->SubstituteNameOffset = cpu_to_le16(plen);
-+	buf->SubstituteNameLength = cpu_to_le16(plen);
-+	memcpy(&buf->PathBuffer[plen], path, plen);
-+	buf->PrintNameOffset = 0;
-+	buf->PrintNameLength = cpu_to_le16(plen);
-+	memcpy(buf->PathBuffer, path, plen);
-+	buf->Flags = cpu_to_le32(*symname != '/' ? SYMLINK_FLAG_RELATIVE : 0);
-+
-+	iov.iov_base = buf;
-+	iov.iov_len = len;
-+	new = smb2_get_reparse_inode(&data, inode->i_sb, xid,
-+				     tcon, full_path, &iov);
-+	if (!IS_ERR(new))
-+		d_instantiate(dentry, new);
-+	else
-+		rc = PTR_ERR(new);
-+out:
-+	kfree(path);
-+	cifs_free_open_info(&data);
-+	kfree(buf);
-+	return rc;
-+}
-+
- static int smb2_make_node(unsigned int xid, struct inode *inode,
- 			  struct dentry *dentry, struct cifs_tcon *tcon,
- 			  const char *full_path, umode_t mode, dev_t dev)
-@@ -5322,6 +5388,7 @@ struct smb_version_operations smb20_operations = {
- 	.parse_reparse_point = smb2_parse_reparse_point,
- 	.query_mf_symlink = smb3_query_mf_symlink,
- 	.create_mf_symlink = smb3_create_mf_symlink,
-+	.create_reparse_symlink = smb2_create_reparse_symlink,
- 	.open = smb2_open_file,
- 	.set_fid = smb2_set_fid,
- 	.close = smb2_close_file,
-@@ -5424,6 +5491,7 @@ struct smb_version_operations smb21_operations = {
- 	.parse_reparse_point = smb2_parse_reparse_point,
- 	.query_mf_symlink = smb3_query_mf_symlink,
- 	.create_mf_symlink = smb3_create_mf_symlink,
-+	.create_reparse_symlink = smb2_create_reparse_symlink,
- 	.open = smb2_open_file,
- 	.set_fid = smb2_set_fid,
- 	.close = smb2_close_file,
-@@ -5530,6 +5598,7 @@ struct smb_version_operations smb30_operations = {
- 	.parse_reparse_point = smb2_parse_reparse_point,
- 	.query_mf_symlink = smb3_query_mf_symlink,
- 	.create_mf_symlink = smb3_create_mf_symlink,
-+	.create_reparse_symlink = smb2_create_reparse_symlink,
- 	.open = smb2_open_file,
- 	.set_fid = smb2_set_fid,
- 	.close = smb2_close_file,
-@@ -5645,6 +5714,7 @@ struct smb_version_operations smb311_operations = {
- 	.parse_reparse_point = smb2_parse_reparse_point,
- 	.query_mf_symlink = smb3_query_mf_symlink,
- 	.create_mf_symlink = smb3_create_mf_symlink,
-+	.create_reparse_symlink = smb2_create_reparse_symlink,
- 	.open = smb2_open_file,
- 	.set_fid = smb2_set_fid,
- 	.close = smb2_close_file,
+ /**
+  * ksmbd_vfs_kern_path_locked() - lookup a file and get path info
++ * @work:	work
+  * @name:		file path that is relative to share
+  * @flags:		lookup flags
+  * @parent_path:	if lookup succeed, return parent_path info
+@@ -1641,6 +1647,8 @@ int ksmbd_vfs_get_dos_attrib_xattr(struct mnt_idmap *idmap,
+  * ksmbd_vfs_init_kstat() - convert unix stat information to smb stat format
+  * @p:          destination buffer
+  * @ksmbd_kstat:      ksmbd kstat wrapper
++ *
++ * Returns: pointer to the converted &struct file_directory_info
+  */
+ void *ksmbd_vfs_init_kstat(char **p, struct ksmbd_kstat *ksmbd_kstat)
+ {
 -- 
 2.43.0
 
