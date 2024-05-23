@@ -1,124 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916962599;
-	Thu, 23 May 2024 02:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4381813BC0D;
+	Thu, 23 May 2024 11:57:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716430810; cv=none; b=arNRC4jGs0repzopMRkeIUfcItFNKQ6HnqOcqf9BlG27K1vokop/bCgz4JZwfTn/2eudwg6eFBF8FVTR9aknO121tpXHgdsU4mBKqGJGBk454g0O/9x+ekeldxvzYhnkDEwi7kBUIyyxbOBWg2jJfpPhFaIAZhVOYxrxqr8Y75k=
+	t=1716465482; cv=none; b=pfqN7UPZzaHIg4J/fHEgODZ1UilwLr+vokM8fSXiwpR3bdfZfiOTuCA3nUaIg4NWtUOOn6mPSMyrzdE/gQ/iLG5OpPu+dp+HLL/TPc3yVoTkztcwUPhPCRNKWJMqJCAgRMdoTJQaZwohZJIvjXf3L3XgcA+0WRcM2LFLsInEsMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716430810; c=relaxed/simple;
-	bh=8YLExkAWvQwUkYKlsfDf7mOtmV2KT3rc2IEA2TsqMH4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fRrmwNs68H3/k6REyvZ/LTPhP1P0aj6AC0X+5CSeLU5i5y1fE3mFr9Yjada/pasvZv2bbZ4jIzNNgBallwTnnbqyg3Avrvc0rk8SayTNKyzcGnLvdkUFXuS1MuEDLIqVcOTGG02IVsXQngzg7mk1eOW7tTZtzjxk8TwT1HSdSBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqBFRquf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716465482; c=relaxed/simple;
+	bh=HAA1JcByLN2wxVzM8aQ+x0+swB/h7EfCk3kNXfRjJPU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dpl6CsgCKBn19/wRHOKq293pet/XoolKiBQTIqVdbvnUBZlmrtoI0gwJiqY/KGZVtEJusIwVyWShqKlwI+qjOqRRlyhTgDD0XIikV4UubvsbXpq2Lg3sKF+HwSdzxj0Ld31xQJ7yWj948Sc1/VsVqwoZ3MCFHff/HxT559fEjYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=AHEaR+8V; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqBFRquf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA3DC4AF07;
-	Thu, 23 May 2024 02:20:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716430810;
-	bh=8YLExkAWvQwUkYKlsfDf7mOtmV2KT3rc2IEA2TsqMH4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=gqBFRqufnpH8uQ3ANXM7tJnCEYf7MZhnBPqa0I9s+8duks+Pgg8Lq45rpWJvHofqT
-	 6cXwsEu9xcykJq3I/gzNjiy4Q5/x+vCC2CeBzWsx9hJzWXwogmtCRzizI2gkFV7aa5
-	 4PdWYlEz6vllaCO1SuaSZOuU2Oih781BaPZzQCp16dUOO8r+Zk8hH/UnZm6qIuubYG
-	 T7EIyR4CLy72Vk4AU/dOH0tmvsiKE+R+vp/oLfS3cllSIfvUx1Ttndd14G9QJc4Gda
-	 Bzs+FihojeP4LIFB2dEBEWglO0f5RxajQ/+fmTdHSbRtp9De1AC33qIO53Hk3tV0FA
-	 DvNVwhK3UnrIw==
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a5a2d0d8644so955863766b.1;
-        Wed, 22 May 2024 19:20:10 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXRi6Dziicx+vKxaWjXiQR24EmtGoQ9Za+bss3hAQ+TcL6/7IAANawEeFgFhS8nu00vcZPDzToWtrBUbF/bMNLVkcdgH779XCAVeOMYN16HroKrNLOzfasqqTAlkzUQe5PYClkEI1uEkVr2GhCcluguCIFR2rtZjJ0=
-X-Gm-Message-State: AOJu0YwajrH3jkVchLbheWvHZAAFFv+9SQwhYAFFjXhZrquW4azmCmBr
-	6yhWrj31bheMTa108qoQpwJnAJPUV/RWAgB2XS+tnseXsmhwXPJd/rH98+rV3DWD+0I3CEbA12R
-	SWMgZ3tU1nnx1m2ZANJ6ftm4XPnI=
-X-Google-Smtp-Source: AGHT+IHFFAFNdm2thGmpgTjZWOG+fuvJCmT7/ZlPl55Y9DTWh7mQqEWjHeMPJmZvWGHQXLSxyYiaQAE8rvH+ytx+Hb8=
-X-Received: by 2002:a17:906:4152:b0:a59:d44c:9bc with SMTP id
- a640c23a62f3a-a622814def4mr264319766b.66.1716430808794; Wed, 22 May 2024
- 19:20:08 -0700 (PDT)
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="AHEaR+8V"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 8E80840E016A;
+	Thu, 23 May 2024 11:57:56 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 3CkgdAvAWOub; Thu, 23 May 2024 11:57:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1716465472; bh=CZsS3pH+jsfAXazQiScb1RJnmsQRxtO2MeMGpP7QhSw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AHEaR+8VLh2AUD/73UMfLvOhkoWFwPnKKZAn7ED/OxX4oRee6Ajq7T6ITbQ2xxAZf
+	 aBwbPRX0q1x3f6XAWb0VG9E+SXWL2pCDszYRyXTzhJWX0BxSSqIxqGcnqb3aoRrlUO
+	 XSh5ntCCWer9JLBLpSTvvHn90cGKyrzSVx8pMtu3o/k4z0od20pciBHhftKLhAUtFb
+	 DmZfa4ymad4XO4QgJwOxtPR1A/ZHoZOiEVdhrF83TKZblxG4AwXcLGRCztYAsdh1Bd
+	 JjAf8YoRHy8HlGo9F6dJeLTJH2suS77Ge9TdLecdxwPtGJu/Y5CRn/r/tMmiCGK5o7
+	 z6J0ZzxHbV2XBRY1hw7jfDkrjPIEyOa3PJ6BFBDgqc3hprhSw/k6zymY1AondSJch0
+	 vI23KQpDgveZaefQsIotj8N6tza8ztrToAuMtk2WM5RWOmNARmb11O03sxos0wmcC0
+	 s9ux/7PUexi1FnqRzn/Ybvb3SXrPhElFIKCTRG6ytaz8NkqrAQYp/McUwRVc2Q+UJQ
+	 FdjeOuK8MsbruS9OZgnIcCl2VFd6KdNK1zeEutVyZ/t92MI+CD8boAlT4Gr+UQhg57
+	 6Hxw11OBcREkKt93s+eMGNjkQxbtk0KKZWuZIA+5USbTGpTM/TZze4HnvG/nwgo2Pe
+	 1KdbGlRc43GtDeFabG9VlnMY=
+Received: from zn.tnic (p5de8ee85.dip0.t-ipconnect.de [93.232.238.133])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 7B6A340E0177;
+	Thu, 23 May 2024 11:57:40 +0000 (UTC)
+Date: Thu, 23 May 2024 13:57:34 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: Re: [PATCH] x86/boot: Address clang -Wimplicit-fallthrough in
+ vsprintf()
+Message-ID: <20240523115734.GAZk8vLgzOzD8Tv9pq@fat_crate.local>
+References: <20240516-x86-boot-fix-clang-implicit-fallthrough-v1-1-04dc320ca07c@kernel.org>
+ <20240517095110.GAZkcojmJQoY_zU-OT@fat_crate.local>
+ <20240517151833.GB3660288@thelio-3990X>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240522-efi-zboot-lds-add-discard-sections-to-discard-v1-1-6b415efa0f85@kernel.org>
- <CAMj1kXG-Ck3y1STD9GeS6gyqUgOL6ch3jjCtdZjN_w+LScOzpw@mail.gmail.com>
-In-Reply-To: <CAMj1kXG-Ck3y1STD9GeS6gyqUgOL6ch3jjCtdZjN_w+LScOzpw@mail.gmail.com>
-From: Huacai Chen <chenhuacai@kernel.org>
-Date: Thu, 23 May 2024 10:19:47 +0800
-X-Gmail-Original-Message-ID: <CAAhV-H4EOV8cMPpO_=O4rnCNKcMwVa_NeeoA9w8unC5nJU5LzQ@mail.gmail.com>
-Message-ID: <CAAhV-H4EOV8cMPpO_=O4rnCNKcMwVa_NeeoA9w8unC5nJU5LzQ@mail.gmail.com>
-Subject: Re: [PATCH] efi/libstub: zboot.lds: Discard .discard sections
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, WANG Xuerui <kernel@xen0n.name>, linux-efi@vger.kernel.org, 
-	loongarch@lists.linux.dev, llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240517151833.GB3660288@thelio-3990X>
 
-Acked-by: Huacai Chen <chenhuacai@loongson.cn>
+On Fri, May 17, 2024 at 08:18:33AM -0700, Nathan Chancellor wrote:
+> There was a patch to make Clang match GCC's behavior a few years ago but
+> I think Kees made a good argument that GCC's behavior leaves potential
+> bugs on the table, so that was not pursued further.
+> 
+> https://reviews.llvm.org/D91895#2417170
 
-On Thu, May 23, 2024 at 1:37=E2=80=AFAM Ard Biesheuvel <ardb@kernel.org> wr=
-ote:
->
-> On Wed, 22 May 2024 at 19:32, Nathan Chancellor <nathan@kernel.org> wrote=
-:
-> >
-> > When building ARCH=3Dloongarch defconfig + CONFIG_UNWINDER_ORC=3Dy usin=
-g
-> > LLVM, there is a warning from ld.lld when linking the EFI zboot image
-> > due to the use of unreachable() in number() in vsprintf.c:
-> >
-> >   ld.lld: warning: drivers/firmware/efi/libstub/lib.a(vsprintf.stub.o):=
-(.discard.unreachable+0x0): has non-ABS relocation R_LARCH_32_PCREL against=
- symbol ''
-> >
-> > If the compiler cannot eliminate the default case for any reason, the
-> > .discard.unreachable section will remain in the final binary but the
-> > entire point of any section prefixed with .discard is that it is only
-> > used at compile time, so it can be discarded via /DISCARD/ in a linker
-> > script. The asm-generic vmlinux.lds.h includes .discard and .discard.*
-> > in the COMMON_DISCARDS macro but that is not used for zboot.lds, as it
-> > is not a kernel image linker script.
-> >
-> > Add .discard and .discard.* to /DISCARD/ in zboot.lds, so that any
-> > sections meant to be discarded at link time are not included in the
-> > final zboot image. This issue is not specific to LoongArch, it is just
-> > the first architecture to select CONFIG_OBJTOOL, which defines
-> > annotate_unreachable() as an asm statement to add the
-> > .discard.unreachable section, and use the EFI stub.
-> >
-> > Closes: https://github.com/ClangBuiltLinux/linux/issues/2023
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
->
-> Thanks, I'll take this as a fix.
->
->
-> > ---
-> >  drivers/firmware/efi/libstub/zboot.lds | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/firmware/efi/libstub/zboot.lds b/drivers/firmware/=
-efi/libstub/zboot.lds
-> > index ac8c0ef85158..af2c82f7bd90 100644
-> > --- a/drivers/firmware/efi/libstub/zboot.lds
-> > +++ b/drivers/firmware/efi/libstub/zboot.lds
-> > @@ -41,6 +41,7 @@ SECTIONS
-> >         }
-> >
-> >         /DISCARD/ : {
-> > +               *(.discard .discard.*)
-> >                 *(.modinfo .init.modinfo)
-> >         }
-> >  }
-> >
-> > ---
-> > base-commit: 15aa8fb852f995dd234a57f12dfb989044968bb6
-> > change-id: 20240522-efi-zboot-lds-add-discard-sections-to-discard-5fe29=
-bf42d6a
-> >
-> > Best regards,
-> > --
-> > Nathan Chancellor <nathan@kernel.org>
-> >
+Really? Maybe I'm being dense but I don't see real bugs there... I see
+readability issues. :-)
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
