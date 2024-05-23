@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECB814AD36;
-	Thu, 23 May 2024 13:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483EC14BF89;
+	Thu, 23 May 2024 13:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470645; cv=none; b=F48mIKxlOhJAiXKPeZr0u19ljZpV88+GnfZaXwMWQP++kBHQ+zSZ7lYrEt2uUAge7IjhQt5kzEOTXPZaB1QyM44OFIljWv+r9XSDJOYPAhJgM3EpQJ0Z/Eg9cm9lj787onbWQ6dR2+Z2820X0KvdMxspncbLnwHm9V26YVAV8I4=
+	t=1716470648; cv=none; b=oSGPMMNJaV0LWorPnHQYvhBLjIVQWpuIr0yjL2djR0FBdrhce/EvZxXpNAZ4T6uau2AtDrWx3hNhLnQz0PhSR0/ZqLxAvrv1W5UZvtfq5HXZMVpozOtal03Ev7wwE9xgfO8eyMdKjQLI8cFLeqaMZPtkdkHjZSLRP3AilcmckDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470645; c=relaxed/simple;
-	bh=dvddSzMPNP+7LD38niesJ14ww41MOC8RTMEoDV2wvdk=;
+	s=arc-20240116; t=1716470648; c=relaxed/simple;
+	bh=5Rjlqt9ne6Qs+glYGpPaiKYjoIKQHXhUNC/GAhng07k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blgfnolYJoN3pONghVaCBW6v/+3VhG15v/6XMFwpRFTMpfHmZ/KY8hFgox4Uae0ippsYQNs6qbUJw0MeViAfZ1zhMcC4kJ3yB2WQcrNvD94Pw5dS/QU3+tjUVuvI5UBhyKn5BxM9n9p/mmSopZT8jKuE12e1ibSbbiTAr+GmeXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVEp0OfO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mb3iaQMeb81SCq5Nev5ZwSiyNY8Y6Qc6WgIF4FbzL8/R9DUH/CECTwYYaENTWJDZmYgnPxybO1kn4024BDeBNgKn4RJf/9eXunDn2/GwlxXizhTLkKRRMTFxZxWp6K5ePBI0KJqO+p89oGk95Lv4h5O3W/QFJ4+DWMyLhj6lQaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EveyBl29; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVEp0OfO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B93C4AF0A;
-	Thu, 23 May 2024 13:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EveyBl29"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64E9C32781;
+	Thu, 23 May 2024 13:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470645;
-	bh=dvddSzMPNP+7LD38niesJ14ww41MOC8RTMEoDV2wvdk=;
+	s=korg; t=1716470648;
+	bh=5Rjlqt9ne6Qs+glYGpPaiKYjoIKQHXhUNC/GAhng07k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kVEp0OfOq9EHRKhYclsTMKK4era0NvjhZ8XcjXzFxaG7+YT06Irt6N8Url7Pa3KeH
-	 AYc8+fA3LzboIKzzoiSYbNKRVCs92ka4Q9OWVXgwHH/xAf8pDog0DdAiwEs4NvE0v0
-	 PiskvfPwV7n8gF0EVBCrA/BJA8twwtt9cZ7/Wd8o=
+	b=EveyBl29VTNk5UoZ7Xox1h4UY6Zscc/qSpS0pFAVWtD4W5xAMu9PMeG1DIxUlhGlJ
+	 c9O3FSq9nyRFA1N0ad3+rzu0LveSLq78HV5LWwq/POsJU9iGrDyLwo9Ew8YCs+Ifyb
+	 Nf07/dMTnOdHQ1FmX+s+GqRhbr1Lvqh9sGBURFDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/102] smb: client: handle path separator of created SMB symlinks
-Date: Thu, 23 May 2024 15:13:03 +0200
-Message-ID: <20240523130343.901249804@linuxfoundation.org>
+Subject: [PATCH 6.6 039/102] smb3: update allocation size more accurately on write completion
+Date: Thu, 23 May 2024 15:13:04 +0200
+Message-ID: <20240523130343.937943967@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -51,56 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 8bde59b20de06339d598e8b05e5195f7c631c38b ]
+[ Upstream commit dbfdff402d89854126658376cbcb08363194d3cd ]
 
-Convert path separator to CIFS_DIR_SEP(cifs_sb) from symlink target
-before sending it over the wire otherwise the created SMB symlink may
-become innaccesible from server side.
+Changes to allocation size are approximated for extending writes of cached
+files until the server returns the actual value (on SMB3 close or query info
+for example), but it was setting the estimated value for number of blocks
+to larger than the file size even if the file is likely sparse which
+breaks various xfstests (e.g. generic/129, 130, 221, 228).
 
-Fixes: 514d793e27a3 ("smb: client: allow creating symlinks via reparse points")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+When i_size and i_blocks are updated in write completion do not increase
+allocation size more than what was written (rounded up to 512 bytes).
+
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/smb/client/file.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 23cf6e92fd54c..9ade347978709 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5212,7 +5212,7 @@ static int smb2_create_reparse_symlink(const unsigned int xid,
- 	struct inode *new;
- 	struct kvec iov;
- 	__le16 *path;
--	char *sym;
-+	char *sym, sep = CIFS_DIR_SEP(cifs_sb);
- 	u16 len, plen;
- 	int rc = 0;
- 
-@@ -5226,7 +5226,8 @@ static int smb2_create_reparse_symlink(const unsigned int xid,
- 		.symlink_target = sym,
- 	};
- 
--	path = cifs_convert_path_to_utf16(symname, cifs_sb);
-+	convert_delimiter(sym, sep);
-+	path = cifs_convert_path_to_utf16(sym, cifs_sb);
- 	if (!path) {
- 		rc = -ENOMEM;
- 		goto out;
-@@ -5249,7 +5250,10 @@ static int smb2_create_reparse_symlink(const unsigned int xid,
- 	buf->PrintNameLength = cpu_to_le16(plen);
- 	memcpy(buf->PathBuffer, path, plen);
- 	buf->Flags = cpu_to_le32(*symname != '/' ? SYMLINK_FLAG_RELATIVE : 0);
-+	if (*sym != sep)
-+		buf->Flags = cpu_to_le32(SYMLINK_FLAG_RELATIVE);
- 
-+	convert_delimiter(sym, '/');
- 	iov.iov_base = buf;
- 	iov.iov_len = len;
- 	new = smb2_get_reparse_inode(&data, inode->i_sb, xid,
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index 6d44991e1ccdc..751ae89cefe36 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -3204,8 +3204,15 @@ static int cifs_write_end(struct file *file, struct address_space *mapping,
+ 	if (rc > 0) {
+ 		spin_lock(&inode->i_lock);
+ 		if (pos > inode->i_size) {
++			loff_t additional_blocks = (512 - 1 + copied) >> 9;
++
+ 			i_size_write(inode, pos);
+-			inode->i_blocks = (512 - 1 + pos) >> 9;
++			/*
++			 * Estimate new allocation size based on the amount written.
++			 * This will be updated from server on close (and on queryinfo)
++			 */
++			inode->i_blocks = min_t(blkcnt_t, (512 - 1 + pos) >> 9,
++						inode->i_blocks + additional_blocks);
+ 		}
+ 		spin_unlock(&inode->i_lock);
+ 	}
 -- 
 2.43.0
 
