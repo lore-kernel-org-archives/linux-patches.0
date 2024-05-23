@@ -1,178 +1,192 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0551E504;
-	Thu, 23 May 2024 13:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA9913C66A;
+	Thu, 23 May 2024 13:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470328; cv=none; b=pUoi+jSlW7CO21oAE9Mre0lGRpkFwAzgzX1JokiXlJQCxvZUVyjGB6YS2jvCNU1Boya5IrKg/iIRzaThItljr0bX3atTwDkh+FgdrRL7xS98t9MTQVZrjoC4gPVaPW/H5Z3g4VI/cNAha69baRydEIAEXolGBGCvwJW0S39efiE=
+	t=1716470331; cv=none; b=sh2fYVPYbdCXzl4Qtk5qpw5gXzQd3M1WPhowEYvxO8++Dtt1Yxb2Kc25DS0zyULcmOrbmCm2cs/eOkZy5qRVqS92DPa0EjOZKCred9VJmS8RjAko0XvmuJHa2EBdCk4365CxCdZ5aI5MArZyHh3daVggPb8b/m66zhw+UYqqs/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470328; c=relaxed/simple;
-	bh=LUtOI/8+H583S4AdL7+YtFDPL2d/+rJveiUGlbe9jGg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RF87a7Ixh+ZkOxG4CNClKw2MQJb/pPsOh7w88SPu/ADmhxjoxMyXAN4hyj1EI193BBTCdcsNYYCMd76ogM2LoL3qXtSqufqeRc6HXMu8b8p4hhOhfgdjG93admSsPMqpz/W2PGKG71xyp7cWn1W1R2xQIC36vXWwHyGOAKLDQ+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1N+Aj2m; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716470331; c=relaxed/simple;
+	bh=rf0H/0zXq6MWa/jgcYccnJNhQhS7/5+iqtLrcPg9K8o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IckVHZCY5sHN+tRWR/NPHYPDYFWfMN5IDEgpLzAkJiR7jGoMDWBzNlXfm3kyyeRIpo8yTDLV8gmW7d0lBw2y3tAoLFP5Bpd3AsNTO0rYy9kS5iDhWrmiFFtEx5i3vTrkgkWkiDY9xSggMoXQYBbpjoJ+KtWKBO588DQzc97AChU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwzfM1vP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1N+Aj2m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64009C2BD10;
-	Thu, 23 May 2024 13:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwzfM1vP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E10CC32781;
+	Thu, 23 May 2024 13:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470328;
-	bh=LUtOI/8+H583S4AdL7+YtFDPL2d/+rJveiUGlbe9jGg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v1N+Aj2mtNE06W0YN/sY3VwF+wwa187adTmv/CuZGmot9viJuFX+3G+5YTZBjHAaM
-	 59TCIFTGYpFSlxg879jzoc04Fy85oK0xChcqa+E74wlYW1zexXc6cRHboChapmbWKW
-	 0snYO2ovq4syDHRugjr/gcIIIoOZR/UZ9vYZwpKw=
+	s=korg; t=1716470331;
+	bh=rf0H/0zXq6MWa/jgcYccnJNhQhS7/5+iqtLrcPg9K8o=;
+	h=From:To:Cc:Subject:Date:From;
+	b=FwzfM1vPePs3kcDanivbTCC+jQ91ERA+HhmErhRZ8HTF819qlBabg7Th2RNAPUoE1
+	 P+Govhe/c303VXcaEkDma0yk908l+3nf0AWUuCrEwqykEdx6mDw0b0RTZ510njfKmD
+	 YPzioB+spGi4l2rMvOntLBB3JThZXPK6pKlhoOzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	Shaoying Xu <shaoyi@amazon.com>
-Subject: [PATCH 5.15 09/23] tls: extract context alloc/initialization out of tls_set_sw_offload
-Date: Thu, 23 May 2024 15:13:05 +0200
-Message-ID: <20240523130328.305064226@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org
+Subject: [PATCH 5.15 00/23] 5.15.160-rc1 review
+Date: Thu, 23 May 2024 15:12:56 +0200
+Message-ID: <20240523130327.956341021@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240523130327.956341021@linuxfoundation.org>
-References: <20240523130327.956341021@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.160-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.15.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.15.160-rc1
+X-KernelTest-Deadline: 2024-05-25T13:03+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 5.15.160 release.
+There are 23 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 25 May 2024 13:03:15 +0000.
+Anything received after that time might be too late.
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.160-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+and the diffstat can be found below.
 
-commit 615580cbc99af0da2d1c7226fab43a3d5003eb97 upstream.
+thanks,
 
-Simplify tls_set_sw_offload a bit.
+greg k-h
 
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: aec7961916f3 ("tls: fix race between async notify and socket close")
-[v5.15: fixed contextual conflicts from unavailable init_waitqueue_head and
-skb_queue_head_init calls in tls_set_sw_offload and init_ctx_rx]
-Cc: <stable@vger.kernel.org> # 5.15
-Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/tls/tls_sw.c |   82 ++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 49 insertions(+), 33 deletions(-)
+-------------
+Pseudo-Shortlog of commits:
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2291,6 +2291,46 @@ void tls_sw_strparser_arm(struct sock *s
- 	strp_check_rcv(&rx_ctx->strp);
- }
- 
-+static struct tls_sw_context_tx *init_ctx_tx(struct tls_context *ctx, struct sock *sk)
-+{
-+	struct tls_sw_context_tx *sw_ctx_tx;
-+
-+	if (!ctx->priv_ctx_tx) {
-+		sw_ctx_tx = kzalloc(sizeof(*sw_ctx_tx), GFP_KERNEL);
-+		if (!sw_ctx_tx)
-+			return NULL;
-+	} else {
-+		sw_ctx_tx = ctx->priv_ctx_tx;
-+	}
-+
-+	crypto_init_wait(&sw_ctx_tx->async_wait);
-+	spin_lock_init(&sw_ctx_tx->encrypt_compl_lock);
-+	INIT_LIST_HEAD(&sw_ctx_tx->tx_list);
-+	INIT_DELAYED_WORK(&sw_ctx_tx->tx_work.work, tx_work_handler);
-+	sw_ctx_tx->tx_work.sk = sk;
-+
-+	return sw_ctx_tx;
-+}
-+
-+static struct tls_sw_context_rx *init_ctx_rx(struct tls_context *ctx)
-+{
-+	struct tls_sw_context_rx *sw_ctx_rx;
-+
-+	if (!ctx->priv_ctx_rx) {
-+		sw_ctx_rx = kzalloc(sizeof(*sw_ctx_rx), GFP_KERNEL);
-+		if (!sw_ctx_rx)
-+			return NULL;
-+	} else {
-+		sw_ctx_rx = ctx->priv_ctx_rx;
-+	}
-+
-+	crypto_init_wait(&sw_ctx_rx->async_wait);
-+	spin_lock_init(&sw_ctx_rx->decrypt_compl_lock);
-+	skb_queue_head_init(&sw_ctx_rx->rx_list);
-+
-+	return sw_ctx_rx;
-+}
-+
- int tls_set_sw_offload(struct sock *sk, struct tls_context *ctx, int tx)
- {
- 	struct tls_context *tls_ctx = tls_get_ctx(sk);
-@@ -2317,46 +2357,22 @@ int tls_set_sw_offload(struct sock *sk,
- 	}
- 
- 	if (tx) {
--		if (!ctx->priv_ctx_tx) {
--			sw_ctx_tx = kzalloc(sizeof(*sw_ctx_tx), GFP_KERNEL);
--			if (!sw_ctx_tx) {
--				rc = -ENOMEM;
--				goto out;
--			}
--			ctx->priv_ctx_tx = sw_ctx_tx;
--		} else {
--			sw_ctx_tx =
--				(struct tls_sw_context_tx *)ctx->priv_ctx_tx;
--		}
--	} else {
--		if (!ctx->priv_ctx_rx) {
--			sw_ctx_rx = kzalloc(sizeof(*sw_ctx_rx), GFP_KERNEL);
--			if (!sw_ctx_rx) {
--				rc = -ENOMEM;
--				goto out;
--			}
--			ctx->priv_ctx_rx = sw_ctx_rx;
--		} else {
--			sw_ctx_rx =
--				(struct tls_sw_context_rx *)ctx->priv_ctx_rx;
--		}
--	}
-+		ctx->priv_ctx_tx = init_ctx_tx(ctx, sk);
-+		if (!ctx->priv_ctx_tx)
-+			return -ENOMEM;
- 
--	if (tx) {
--		crypto_init_wait(&sw_ctx_tx->async_wait);
--		spin_lock_init(&sw_ctx_tx->encrypt_compl_lock);
-+		sw_ctx_tx = ctx->priv_ctx_tx;
- 		crypto_info = &ctx->crypto_send.info;
- 		cctx = &ctx->tx;
- 		aead = &sw_ctx_tx->aead_send;
--		INIT_LIST_HEAD(&sw_ctx_tx->tx_list);
--		INIT_DELAYED_WORK(&sw_ctx_tx->tx_work.work, tx_work_handler);
--		sw_ctx_tx->tx_work.sk = sk;
- 	} else {
--		crypto_init_wait(&sw_ctx_rx->async_wait);
--		spin_lock_init(&sw_ctx_rx->decrypt_compl_lock);
-+		ctx->priv_ctx_rx = init_ctx_rx(ctx);
-+		if (!ctx->priv_ctx_rx)
-+			return -ENOMEM;
-+
-+		sw_ctx_rx = ctx->priv_ctx_rx;
- 		crypto_info = &ctx->crypto_recv.info;
- 		cctx = &ctx->rx;
--		skb_queue_head_init(&sw_ctx_rx->rx_list);
- 		aead = &sw_ctx_rx->aead_recv;
- 	}
- 
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.15.160-rc1
+
+Akira Yokosawa <akiyks@gmail.com>
+    docs: kernel_include.py: Cope with docutils 0.21
+
+Thomas Weißschuh <linux@weissschuh.net>
+    admin-guide/hw-vuln/core-scheduling: fix return type of PR_SCHED_CORE_GET
+
+Jarkko Sakkinen <jarkko@kernel.org>
+    KEYS: trusted: Do not use WARN when encode fails
+
+AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+    remoteproc: mediatek: Make sure IPI buffer fits in L2TCM
+
+Daniel Thompson <daniel.thompson@linaro.org>
+    serial: kgdboc: Fix NMI-safety problems from keyboard reset code
+
+Heikki Krogerus <heikki.krogerus@linux.intel.com>
+    usb: typec: ucsi: displayport: Fix potential deadlock
+
+Carlos Llamas <cmllamas@google.com>
+    binder: fix max_thread type inconsistency
+
+Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+    drm/amdgpu: Fix possible NULL dereference in amdgpu_ras_query_error_status_helper()
+
+Sean Christopherson <seanjc@google.com>
+    KVM: x86: Clear "has_error_code", not "error_code", for RM exception injection
+
+Eric Dumazet <edumazet@google.com>
+    netlink: annotate data-races around sk->sk_err
+
+Eric Dumazet <edumazet@google.com>
+    netlink: annotate lockless accesses to nlk->max_recvmsg_len
+
+Jakub Kicinski <kuba@kernel.org>
+    net: tls: handle backlogging of crypto requests
+
+Jakub Kicinski <kuba@kernel.org>
+    tls: fix race between async notify and socket close
+
+Jakub Kicinski <kuba@kernel.org>
+    net: tls: factor out tls_*crypt_async_wait()
+
+Sabrina Dubroca <sd@queasysnail.net>
+    tls: extract context alloc/initialization out of tls_set_sw_offload
+
+Jakub Kicinski <kuba@kernel.org>
+    tls: rx: simplify async wait
+
+Doug Berger <opendmb@gmail.com>
+    net: bcmgenet: synchronize UMAC_CMD access
+
+Doug Berger <opendmb@gmail.com>
+    net: bcmgenet: synchronize EXT_RGMII_OOB_CTRL access
+
+Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+    Revert "selftests: mm: fix map_hugetlb failure on 64K page size systems"
+
+Jarkko Sakkinen <jarkko@kernel.org>
+    KEYS: trusted: Fix memory leak in tpm2_key_encode()
+
+NeilBrown <neilb@suse.de>
+    nfsd: don't allow nfsd threads to be signalled.
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    pinctrl: core: handle radix_tree_insert() errors in pinctrl_register_one_pin()
+
+Jose Fernandez <josef@netflix.com>
+    drm/amd/display: Fix division by zero in setup_dsc_config
+
+
+-------------
+
+Diffstat:
+
+ .../admin-guide/hw-vuln/core-scheduling.rst        |   4 +-
+ Documentation/sphinx/kernel_include.py             |   1 -
+ Makefile                                           |   4 +-
+ arch/x86/kvm/x86.c                                 |  11 +-
+ drivers/android/binder.c                           |   2 +-
+ drivers/android/binder_internal.h                  |   2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c            |   3 +
+ drivers/gpu/drm/amd/display/dc/dsc/dc_dsc.c        |   7 +-
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c     |  12 +-
+ drivers/net/ethernet/broadcom/genet/bcmgenet.h     |   2 +
+ drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c |   6 +
+ drivers/net/ethernet/broadcom/genet/bcmmii.c       |   4 +
+ drivers/pinctrl/core.c                             |  14 +-
+ drivers/remoteproc/mtk_scp.c                       |  10 +-
+ drivers/tty/serial/kgdboc.c                        |  30 +++-
+ drivers/usb/typec/ucsi/displayport.c               |   4 -
+ fs/nfs/callback.c                                  |   9 +-
+ fs/nfsd/nfs4proc.c                                 |   5 +-
+ fs/nfsd/nfssvc.c                                   |  12 --
+ include/net/tls.h                                  |   6 -
+ net/netlink/af_netlink.c                           |  23 +--
+ net/sunrpc/svc_xprt.c                              |  16 +-
+ net/tls/tls_sw.c                                   | 199 +++++++++++----------
+ security/keys/trusted-keys/trusted_tpm2.c          |  25 ++-
+ tools/testing/selftests/vm/map_hugetlb.c           |   7 -
+ 25 files changed, 243 insertions(+), 175 deletions(-)
 
 
