@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B5614A60D;
-	Thu, 23 May 2024 13:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382EB2AE94;
+	Thu, 23 May 2024 13:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470283; cv=none; b=bDWbhQLapnhUtvLg4O7rp7JhhdwlKEvKVmP3vXja5mgJjVDgqvSJLzmvKXnJGdCChl/GdDduVijNjr2cFjil9/frjkC73VXa3Vkrn8y7EBCRuSDyQEmsV5iHgV1ilpw7y8KTvMg3DbpGU5e/I91Ye/JzvHbahDzqqXEDqbiJpwA=
+	t=1716470286; cv=none; b=jTco4V30pC5DY3kcGFth1erb70yZEvMQu1Bk2XoboGkBzED81MkWVg/vy0NeNzWcRbjX8OtKtF3kcul0EzshFVlNZu2wIyu0I6fZyOrv1Pn74XDUBQ2IBluY0bwCdpNNLuFpWEvs3SEEMoS1cYcW1LpAz8bPsUGzSby7fhpaPP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470283; c=relaxed/simple;
-	bh=SVfX7DG2cIf09x/+bi6h0LAuxaeB4G0kZAxUsJYExXo=;
+	s=arc-20240116; t=1716470286; c=relaxed/simple;
+	bh=j502eUQRyRQ0rmk0zHZYhHd61TEqrO+miE+N3yBgp/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fVYTPndiEsuQeAIo4Pf0X9eDWBGfUzZaF8ZWh9/63F2EouOhUezVFyh4u/Wlytt5IJIEZhTSf0ZmDFvXwYXpZjjF8G4hbAgnkj8C7inNQB59P/FrVxz9DwjMN9lQnVAF3xEnywtOHDxLS0PPZd7NzxKg/8ILKV75/31KpEX7OHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x385M5DN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YQuGzmuPkJy47TLlONKlahHpfEqc8Co3tHqam1BWD5yqFsPaAV12TjjmT5yXZn/hKF+uNWFv7Pe5eNFcRlBS7B3r5lJIzvWrpBQ7aIZBDacI6OqMBDX8kBqh4dlwlFd5U2nCMLlPXoQ47FKjzpyz3zetraSpi0Nk/TzTbzaA9XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYpS3zon; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x385M5DN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E563C2BD10;
-	Thu, 23 May 2024 13:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYpS3zon"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DACC2BD10;
+	Thu, 23 May 2024 13:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470283;
-	bh=SVfX7DG2cIf09x/+bi6h0LAuxaeB4G0kZAxUsJYExXo=;
+	s=korg; t=1716470285;
+	bh=j502eUQRyRQ0rmk0zHZYhHd61TEqrO+miE+N3yBgp/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x385M5DNbQAbGkvkV6O3dM4vhYbcPca72+x5hUR33nC+mFBJVDrNNafchsl+LFPlE
-	 ctwZUV9THG335xYjrmU9ZDV0BPtFTICgSmBU6hFQH8DRbewL2/lFW1ReNKWhB5Nxcq
-	 LThWkz0Y2vOdCfUZwehy2XZ+rJ+5GJbHDNgjmznU=
+	b=WYpS3zonHE88My8V+t33OY2BMWxQ2tj0OxZsmobpg4MC6kFCbP5/8F+Pg/qZWXJPR
+	 9hhnCV+Tg5OF1HF0LROto/l/d72BxoQPt8qU+vn1MTfXZIihM/rnkqDLMd8ztVl9Fj
+	 gMFyXv3D+lB4GWAuM/fsHwgfLnjLubQv1VjVUFg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.9 23/25] Docs/admin-guide/mm/damon/usage: fix wrong schemes effective quota update command
-Date: Thu, 23 May 2024 15:13:08 +0200
-Message-ID: <20240523130331.254667140@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Javier Carrasco <javier.carrasco@wolfvision.net>
+Subject: [PATCH 6.9 14/25] usb: typec: tipd: fix event checking for tps25750
+Date: Thu, 23 May 2024 15:12:59 +0200
+Message-ID: <20240523130330.927059534@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130330.386580714@linuxfoundation.org>
 References: <20240523130330.386580714@linuxfoundation.org>
@@ -52,46 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Javier Carrasco <javier.carrasco@wolfvision.net>
 
-commit 14e70e4660d6ecaf503c461f072949ef8758e4a1 upstream.
+commit d64adb0f41e62f91fcfdf0e0d9d5bfa714db0d23 upstream.
 
-To update effective size quota of DAMOS schemes on DAMON sysfs file
-interface, user should write 'update_schemes_effective_quotas' to the
-kdamond 'state' file.  But the document is mistakenly saying the input
-string as 'update_schemes_effective_bytes'.  Fix it (s/bytes/quotas/).
+In its current form, the interrupt service routine of the tps25750
+checks the event flags in the lowest 64 bits of the interrupt event
+register (event[0]), but also in the upper part (event[1]).
 
-Link: https://lkml.kernel.org/r/20240503180318.72798-8-sj@kernel.org
-Fixes: a6068d6dfa2f ("Docs/admin-guide/mm/damon/usage: document effective_bytes file")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.9.x]
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Shuah Khan <shuah@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Given that all flags are defined as BIT() or BIT_ULL(), they are
+restricted to the first 64 bits of the INT_EVENT1 register. Including
+the upper part of the register can lead to false positives e.g. if the
+event 64 bits above the one being checked is set, but the one being
+checked is not.
+
+Restrict the flag checking to the first 64 bits of the INT_EVENT1
+register.
+
+Fixes: 7e7a3c815d22 ("USB: typec: tps6598x: Add TPS25750 support")
+Cc: stable@vger.kernel.org
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Javier Carrasco <javier.carrasco@wolfvision.net>
+Link: https://lore.kernel.org/r/20240429-tps6598x_fix_event_handling-v3-1-4e8e58dce489@wolfvision.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/typec/tipd/core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -153,7 +153,7 @@ Users can write below commands for the k
- - ``clear_schemes_tried_regions``: Clear the DAMON-based operating scheme
-   action tried regions directory for each DAMON-based operation scheme of the
-   kdamond.
--- ``update_schemes_effective_bytes``: Update the contents of
-+- ``update_schemes_effective_quotas``: Update the contents of
-   ``effective_bytes`` files for each DAMON-based operation scheme of the
-   kdamond.  For more details, refer to :ref:`quotas directory <sysfs_quotas>`.
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -604,11 +604,11 @@ static irqreturn_t tps25750_interrupt(in
+ 	if (!tps6598x_read_status(tps, &status))
+ 		goto err_clear_ints;
  
-@@ -342,7 +342,7 @@ Based on the user-specified :ref:`goal <
- effective size quota is further adjusted.  Reading ``effective_bytes`` returns
- the current effective size quota.  The file is not updated in real time, so
- users should ask DAMON sysfs interface to update the content of the file for
--the stats by writing a special keyword, ``update_schemes_effective_bytes`` to
-+the stats by writing a special keyword, ``update_schemes_effective_quotas`` to
- the relevant ``kdamonds/<N>/state`` file.
+-	if ((event[0] | event[1]) & TPS_REG_INT_POWER_STATUS_UPDATE)
++	if (event[0] & TPS_REG_INT_POWER_STATUS_UPDATE)
+ 		if (!tps6598x_read_power_status(tps))
+ 			goto err_clear_ints;
  
- Under ``weights`` directory, three files (``sz_permil``,
+-	if ((event[0] | event[1]) & TPS_REG_INT_DATA_STATUS_UPDATE)
++	if (event[0] & TPS_REG_INT_DATA_STATUS_UPDATE)
+ 		if (!tps6598x_read_data_status(tps))
+ 			goto err_clear_ints;
+ 
+@@ -617,7 +617,7 @@ static irqreturn_t tps25750_interrupt(in
+ 	 * a plug event. Therefore, we need to check
+ 	 * for pr/dr status change to set TypeC dr/pr accordingly.
+ 	 */
+-	if ((event[0] | event[1]) & TPS_REG_INT_PLUG_EVENT ||
++	if (event[0] & TPS_REG_INT_PLUG_EVENT ||
+ 	    tps6598x_has_role_changed(tps, status))
+ 		tps6598x_handle_plug_event(tps, status);
+ 
 
 
