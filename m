@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E531E497;
-	Thu, 23 May 2024 13:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F187E2AE94;
+	Thu, 23 May 2024 13:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470306; cv=none; b=ZdafoHr8N7Knv/xwRxxmiiTALHXIg9+kDWnpW0yPXuTZIg+AKuNOrAnLs737Z9k7chPkYyt1FuddQj9fkUrPl29+7drYX1xlPI9+33IxqQf8FiSGiGcln9eqTisLtlTboTqYWQd646So1UbmeLHdyLiQI/08HDCSVikO3hM6GBE=
+	t=1716470309; cv=none; b=cGe9jRL8EgztRDkahR0r+6zkpwfZ2d5xR4y1LJ/44qeQV5qLGo7L8KwylYJZJ3ZZcyXCUM7rvc5Nhyc53U2/x56nImTAG6PFbFtzMsrDsjlJh+oqgzpRRRJufb1MMFRxobyUKjt3AGxj0Y7wOaTOuR5TlVs0jpkmd+bu8ungIaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470306; c=relaxed/simple;
-	bh=H/oTNvUOuTom9PqPFlMT+xn9MeTCP1pIQF7mJOX9WIY=;
+	s=arc-20240116; t=1716470309; c=relaxed/simple;
+	bh=Q33rdetUKd/x7JWaK4jo2LniXHiSQDLLglPJYaougKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Si7HdPf61PPZB1NoilWmfs3h9hRJ7XFsHPDpxggbBN85+kSAu5PtmRhVhk4+bzi4DW5QZ84iZg+/9WPTYnxjQApB4C9CCHOMav9Enoq6tYVwPjUFdF8mNKDlkilnwhl5sSE7CDbIVMppPlXRK+yl3maTHuKeJKRsHF9P8u3gcd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMhNmfj3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p6Bj23dmTVrzBEbpicLvzHUUr2MyNqVIgB4jrDvQg1FrHfeRfz7EDZt4gj08IkGZNcWiXy/PA7yUxvy5RIyo1WdINJPTZmGs56maqZZGlpEqUXByoBx3PG5RV0sMTwYFvIgCNYjCR9QyXIBEBYlt9HLGqHc1sHdLd/WGY8r8A2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kREsMDwQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMhNmfj3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB60C3277B;
-	Thu, 23 May 2024 13:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kREsMDwQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725BDC32781;
+	Thu, 23 May 2024 13:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470305;
-	bh=H/oTNvUOuTom9PqPFlMT+xn9MeTCP1pIQF7mJOX9WIY=;
+	s=korg; t=1716470308;
+	bh=Q33rdetUKd/x7JWaK4jo2LniXHiSQDLLglPJYaougKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QMhNmfj3ziXEcXHLJO1ewiMpTST3jCpxx0RG9lOCFbG+UiT7m5gNtqOqUmveZNZa8
-	 Dto+h28tRsFi+TOkfqbErpnwGGKTi7JyqoHKHWrVMCQhp0RmfCdqTV+hsusABojr8/
-	 L+Kk1+eFDPMfJtia9C6WMQ+kui63IQ47nWzL/Rec=
+	b=kREsMDwQA4QZQ0K9sDpz2D/TYEpUAJlxGfsK+T1gsfJkVAIwhLalnd+oaHMZ6mv7/
+	 8qLIvZrIAQ6opaZqddb2uQTzn+Jquv2IYU0M2jRQZNMqVtvYFPKko0pNho7DvAKFGQ
+	 X4cfAFDEJ0KaJbocdPkGv6eU0qUnf0IjUyXwHbUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Nicolas Saenz Julienne <nsaenz@amazon.com>
-Subject: [PATCH 5.15 15/23] KVM: x86: Clear "has_error_code", not "error_code", for RM exception injection
-Date: Thu, 23 May 2024 15:13:11 +0200
-Message-ID: <20240523130328.529955317@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Hemdan, Hagar Gamal Halim" <hagarhem@amazon.de>
+Subject: [PATCH 5.15 02/23] pinctrl: core: handle radix_tree_insert() errors in pinctrl_register_one_pin()
+Date: Thu, 23 May 2024 15:12:58 +0200
+Message-ID: <20240523130328.051503093@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130327.956341021@linuxfoundation.org>
 References: <20240523130327.956341021@linuxfoundation.org>
@@ -52,57 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit 6c41468c7c12d74843bb414fc00307ea8a6318c3 upstream.
+commit ecfe9a015d3e1e46504d5b3de7eef1f2d186194a upstream.
 
-When injecting an exception into a vCPU in Real Mode, suppress the error
-code by clearing the flag that tracks whether the error code is valid, not
-by clearing the error code itself.  The "typo" was introduced by recent
-fix for SVM's funky Paged Real Mode.
+pinctrl_register_one_pin() doesn't check the result of radix_tree_insert()
+despite they both may return a negative error code.  Linus Walleij said he
+has copied the radix tree code from kernel/irq/ where the functions calling
+radix_tree_insert() are *void* themselves; I think it makes more sense to
+propagate the errors from radix_tree_insert() upstream if we can do that...
 
-Opportunistically hoist the logic above the tracepoint so that the trace
-is coherent with respect to what is actually injected (this was also the
-behavior prior to the buggy commit).
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-Fixes: b97f07458373 ("KVM: x86: determine if an exception has an error code only when injecting it.")
-Cc: stable@vger.kernel.org
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230322143300.2209476-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[nsaenz: backport to 5.15.y]
-Signed-off-by: Nicolas Saenz Julienne <nsaenz@amazon.com>
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20230719202253.13469-3-s.shtylyov@omp.ru
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Cc: "Hemdan, Hagar Gamal Halim" <hagarhem@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Sean Christopherson <seanjc@google.com>
 ---
- arch/x86/kvm/x86.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/pinctrl/core.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -9134,13 +9134,20 @@ int kvm_check_nested_events(struct kvm_v
- 
- static void kvm_inject_exception(struct kvm_vcpu *vcpu)
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -205,6 +205,7 @@ static int pinctrl_register_one_pin(stru
+ 				    const struct pinctrl_pin_desc *pin)
  {
-+	/*
-+	 * Suppress the error code if the vCPU is in Real Mode, as Real Mode
-+	 * exceptions don't report error codes.  The presence of an error code
-+	 * is carried with the exception and only stripped when the exception
-+	 * is injected as intercepted #PF VM-Exits for AMD's Paged Real Mode do
-+	 * report an error code despite the CPU being in Real Mode.
-+	 */
-+	vcpu->arch.exception.has_error_code &= is_protmode(vcpu);
-+
- 	trace_kvm_inj_exception(vcpu->arch.exception.nr,
- 				vcpu->arch.exception.has_error_code,
- 				vcpu->arch.exception.error_code,
- 				vcpu->arch.exception.injected);
+ 	struct pin_desc *pindesc;
++	int error;
  
--	if (vcpu->arch.exception.error_code && !is_protmode(vcpu))
--		vcpu->arch.exception.error_code = false;
- 	static_call(kvm_x86_queue_exception)(vcpu);
+ 	pindesc = pin_desc_get(pctldev, pin->number);
+ 	if (pindesc) {
+@@ -226,18 +227,25 @@ static int pinctrl_register_one_pin(stru
+ 	} else {
+ 		pindesc->name = kasprintf(GFP_KERNEL, "PIN%u", pin->number);
+ 		if (!pindesc->name) {
+-			kfree(pindesc);
+-			return -ENOMEM;
++			error = -ENOMEM;
++			goto failed;
+ 		}
+ 		pindesc->dynamic_name = true;
+ 	}
+ 
+ 	pindesc->drv_data = pin->drv_data;
+ 
+-	radix_tree_insert(&pctldev->pin_desc_tree, pin->number, pindesc);
++	error = radix_tree_insert(&pctldev->pin_desc_tree, pin->number, pindesc);
++	if (error)
++		goto failed;
++
+ 	pr_debug("registered pin %d (%s) on %s\n",
+ 		 pin->number, pindesc->name, pctldev->desc->name);
+ 	return 0;
++
++failed:
++	kfree(pindesc);
++	return error;
  }
  
+ static int pinctrl_register_pins(struct pinctrl_dev *pctldev,
 
 
