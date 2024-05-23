@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466EA13D2BD;
-	Thu, 23 May 2024 13:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D94913D2BD;
+	Thu, 23 May 2024 13:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470064; cv=none; b=eswbnia8EOU0j9TW1Tapbf8STi7YsPVdeKjGzknyK6KvBeqa8Kc2+KvsHSF5uMXSMpbWTPZRMq0ID70qqFJ7wRnzL5Hd5yKzPLxhbjGxbRZRAfWgiCaIxGnborVjrPW0/Bfwte3ziM1HsqKJR6zXRKIEbTW+e/4rrCasnzeswio=
+	t=1716470067; cv=none; b=WXvC1vxd7sIhxXmQfRNCGn9JW3RpcvNTaCRuB/rRGnf59MYnWQfMIF+XsJcs0ZXcTN1ew4qWZTbtykbAYlVZjUnVGZDRR9rheYEWO9eExMH04zSAjGfcMH57WtwoDv/pIJKeWUTTE2YyYQ40cv2ICnWPH2+WK/7ScXc8l9F6+ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470064; c=relaxed/simple;
-	bh=pijBhMmQfByK8w1z3lTYVAEdh1azwlVD/12pwWefrgA=;
+	s=arc-20240116; t=1716470067; c=relaxed/simple;
+	bh=BJtu1QWnKxmIdNysMfOoxseP/D/N6IJxHo5IPQ1wbL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ecAfrLzaVjKEUto3+HpIgWrFt28+xjXEdyY1Mzk1ZNHQg3aK5rjmRPnYNp++nq689TrlTa1lwB/TZ9qTG+mtj+z19aHx4D52GYWvyNBy4GMgTKcJf8SqBHtcqmC3k6eUiR1UicVYBmJs0SENUco5aC9YS6sZ31aWdAe44pjHvuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=atTwlxG0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LkGBCVGi8QRJgzRdPBNp5jDmdHc/OR/IQRmmUKhWMdpxOJuRWWaUfb1QE+2zPD7bqpqtYAs0MGEIgKlRCmhsx0d5/fUstjSKoYl76pP62sDgqFqZaHQaRNDYW+cu4kjPKOtG7Ofkec/7nfULkVFfHzx7aWp0+pjzjiDN//VbZ40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJguPe94; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="atTwlxG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4E8C2BD10;
-	Thu, 23 May 2024 13:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJguPe94"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495A2C3277B;
+	Thu, 23 May 2024 13:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470063;
-	bh=pijBhMmQfByK8w1z3lTYVAEdh1azwlVD/12pwWefrgA=;
+	s=korg; t=1716470066;
+	bh=BJtu1QWnKxmIdNysMfOoxseP/D/N6IJxHo5IPQ1wbL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=atTwlxG07ShOfBEjfTl9QZUsQWiE628/IYnaw17bLNRmXEuVaXBVPBnJYJNsRjfIn
-	 +VIz0BjBuCxEgx6mPJ0rH5veUJGZ6nqJfR1047YODDOgH/pu2JMYaJa0CLplpW/edr
-	 hIvTyO6bWRr92LRjcd2bMQ+4aMoYUAnavXVmdnzg=
+	b=JJguPe94b/26CDJj6vaEGtqXbSCYGXIGmkMaRdxPBh8xi0m0Wi1DM76DbLvr4v9hB
+	 IyOfOOwSm830vuyviFLpTt6OBc2aYQTVUhNs1Njq2KWNXgu7abFOlqa9aWDNmzpzAp
+	 S7XHJwBuItbWA2mtXIk8Vv1v4nCqp54hLQRJYpHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"shuah@kernel.org, sashal@kernel.org, vegard.nossum@oracle.com, darren.kenny@oracle.com, Harshit Mogalapalli" <harshit.m.mogalapalli@oracle.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 4.19 01/18] Revert "selftests: mm: fix map_hugetlb failure on 64K page size systems"
-Date: Thu, 23 May 2024 15:12:24 +0200
-Message-ID: <20240523130325.786232978@linuxfoundation.org>
+	Tom Zanussi <tom.zanussi@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
+	George Guo <guodongtai@kylinos.cn>
+Subject: [PATCH 4.19 10/18] tracing: Use str_has_prefix() helper for histogram code
+Date: Thu, 23 May 2024 15:12:33 +0200
+Message-ID: <20240523130326.126788514@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130325.727602650@linuxfoundation.org>
 References: <20240523130325.727602650@linuxfoundation.org>
@@ -51,52 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
+From: "Steven Rostedt (VMware)" <rostedt@goodmis.org>
 
-This reverts commit abdbd5f3e8c504d864fdc032dd5a4eb481cb12bf which is commit
-91b80cc5b39f00399e8e2d17527cad2c7fa535e2 upstream.
+commit 754481e6954cbef53f8bc4412ad48dde611e21d3 upstream.
 
-map_hugetlb.c:18:10: fatal error: vm_util.h: No such file or directory
-   18 | #include "vm_util.h"
-      |          ^~~~~~~~~~~
-compilation terminated.
+The tracing histogram code contains a lot of instances of the construct:
 
-vm_util.h is not present in 4.19.y, as commit:642bc52aed9c ("selftests:
-vm: bring common functions to a new file") is not present in stable
-kernels <=6.1.y
+ strncmp(str, "const", sizeof("const") - 1)
 
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
+This can be prone to bugs due to typos or bad cut and paste. Use the
+str_has_prefix() helper macro instead that removes the need for having two
+copies of the constant string.
+
+Cc: Tom Zanussi <tom.zanussi@linux.intel.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Signed-off-by: George Guo <guodongtai@kylinos.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vm/map_hugetlb.c |    7 -------
- 1 file changed, 7 deletions(-)
+ kernel/trace/trace_events_hist.c |   32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
---- a/tools/testing/selftests/vm/map_hugetlb.c
-+++ b/tools/testing/selftests/vm/map_hugetlb.c
-@@ -15,7 +15,6 @@
- #include <unistd.h>
- #include <sys/mman.h>
- #include <fcntl.h>
--#include "vm_util.h"
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1878,8 +1878,8 @@ static int parse_action(char *str, struc
+ 	if (attrs->n_actions >= HIST_ACTIONS_MAX)
+ 		return ret;
  
- #define LENGTH (256UL*1024*1024)
- #define PROTECTION (PROT_READ | PROT_WRITE)
-@@ -71,16 +70,10 @@ int main(int argc, char **argv)
+-	if ((strncmp(str, "onmatch(", strlen("onmatch(")) == 0) ||
+-	    (strncmp(str, "onmax(", strlen("onmax(")) == 0)) {
++	if ((str_has_prefix(str, "onmatch(")) ||
++	    (str_has_prefix(str, "onmax("))) {
+ 		attrs->action_str[attrs->n_actions] = kstrdup(str, GFP_KERNEL);
+ 		if (!attrs->action_str[attrs->n_actions]) {
+ 			ret = -ENOMEM;
+@@ -1896,34 +1896,34 @@ static int parse_assignment(char *str, s
  {
- 	void *addr;
- 	int ret;
--	size_t hugepage_size;
- 	size_t length = LENGTH;
- 	int flags = FLAGS;
- 	int shift = 0;
+ 	int ret = 0;
  
--	hugepage_size = default_huge_page_size();
--	/* munmap with fail if the length is not page aligned */
--	if (hugepage_size > length)
--		length = hugepage_size;
--
- 	if (argc > 1)
- 		length = atol(argv[1]) << 20;
- 	if (argc > 2) {
+-	if ((strncmp(str, "key=", strlen("key=")) == 0) ||
+-	    (strncmp(str, "keys=", strlen("keys=")) == 0)) {
++	if ((str_has_prefix(str, "key=")) ||
++	    (str_has_prefix(str, "keys="))) {
+ 		attrs->keys_str = kstrdup(str, GFP_KERNEL);
+ 		if (!attrs->keys_str) {
+ 			ret = -ENOMEM;
+ 			goto out;
+ 		}
+-	} else if ((strncmp(str, "val=", strlen("val=")) == 0) ||
+-		 (strncmp(str, "vals=", strlen("vals=")) == 0) ||
+-		 (strncmp(str, "values=", strlen("values=")) == 0)) {
++	} else if ((str_has_prefix(str, "val=")) ||
++		   (str_has_prefix(str, "vals=")) ||
++		   (str_has_prefix(str, "values="))) {
+ 		attrs->vals_str = kstrdup(str, GFP_KERNEL);
+ 		if (!attrs->vals_str) {
+ 			ret = -ENOMEM;
+ 			goto out;
+ 		}
+-	} else if (strncmp(str, "sort=", strlen("sort=")) == 0) {
++	} else if (str_has_prefix(str, "sort=")) {
+ 		attrs->sort_key_str = kstrdup(str, GFP_KERNEL);
+ 		if (!attrs->sort_key_str) {
+ 			ret = -ENOMEM;
+ 			goto out;
+ 		}
+-	} else if (strncmp(str, "name=", strlen("name=")) == 0) {
++	} else if (str_has_prefix(str, "name=")) {
+ 		attrs->name = kstrdup(str, GFP_KERNEL);
+ 		if (!attrs->name) {
+ 			ret = -ENOMEM;
+ 			goto out;
+ 		}
+-	} else if (strncmp(str, "clock=", strlen("clock=")) == 0) {
++	} else if (str_has_prefix(str, "clock=")) {
+ 		strsep(&str, "=");
+ 		if (!str) {
+ 			ret = -EINVAL;
+@@ -1936,7 +1936,7 @@ static int parse_assignment(char *str, s
+ 			ret = -ENOMEM;
+ 			goto out;
+ 		}
+-	} else if (strncmp(str, "size=", strlen("size=")) == 0) {
++	} else if (str_has_prefix(str, "size=")) {
+ 		int map_bits = parse_map_size(str);
+ 
+ 		if (map_bits < 0) {
+@@ -3623,7 +3623,7 @@ static struct action_data *onmax_parse(c
+ 	if (!onmax_fn_name || !str)
+ 		goto free;
+ 
+-	if (strncmp(onmax_fn_name, "save", strlen("save")) == 0) {
++	if (str_has_prefix(onmax_fn_name, "save")) {
+ 		char *params = strsep(&str, ")");
+ 
+ 		if (!params) {
+@@ -4414,8 +4414,8 @@ static int parse_actions(struct hist_tri
+ 	for (i = 0; i < hist_data->attrs->n_actions; i++) {
+ 		str = hist_data->attrs->action_str[i];
+ 
+-		if (strncmp(str, "onmatch(", strlen("onmatch(")) == 0) {
+-			char *action_str = str + strlen("onmatch(");
++		if (str_has_prefix(str, "onmatch(")) {
++			char *action_str = str + sizeof("onmatch(") - 1;
+ 
+ 			data = onmatch_parse(tr, action_str);
+ 			if (IS_ERR(data)) {
+@@ -4423,8 +4423,8 @@ static int parse_actions(struct hist_tri
+ 				break;
+ 			}
+ 			data->fn = action_trace;
+-		} else if (strncmp(str, "onmax(", strlen("onmax(")) == 0) {
+-			char *action_str = str + strlen("onmax(");
++		} else if (str_has_prefix(str, "onmax(")) {
++			char *action_str = str + sizeof("onmax(") - 1;
+ 
+ 			data = onmax_parse(action_str);
+ 			if (IS_ERR(data)) {
 
 
