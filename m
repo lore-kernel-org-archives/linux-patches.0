@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4206814A60C;
-	Thu, 23 May 2024 13:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B24714A60C;
+	Thu, 23 May 2024 13:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470429; cv=none; b=sCLldyQbIm6eolOQ789e4yKdLacprkWvsSStUCFjcOsSLuCjPvb9AuPxxcsFXbLNl/YvxG19VwycjY+YEqd6neBa4BMPqurRxx9IPeo/To+6bx4TIsdenFowqiHzgS1aS68AOtS4XGXZFTGl01BPpYbeQry60LRYMhBQNdmnscU=
+	t=1716470432; cv=none; b=jyW2UKNzajXhBmyMgS3bHzYdCKB5efD2XV9axtzbI5TiGQJWvn48CpY754xBD7ThmXc8r+gOrAWJ4jRQ5sZgzRB/rTYDfWyU0jp8XVI5POpxP2tqlNfTgCYRTJdQettdRoZTC5GqVFUk4a+2zaCYXO4Cb01lhFj+8d4heTEAIe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470429; c=relaxed/simple;
-	bh=d+2Ncqa0GCsY94kPOLrqwI2LwNdiht8lslipLl8h7qE=;
+	s=arc-20240116; t=1716470432; c=relaxed/simple;
+	bh=n0aloHzOOR5gL3AKTiHG2W4ZUZvf9vs5OkUhYemGlN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQ5JO+6G6fhUrtlFsG5OVdb0M96hemBDo3ME5hnyRRC4aNBPlbuG2E4z2f27fXAjzJxZg+4OI+LXxRVFy9/+sp0odNPnF2YcLGaaYh07SWcncG4I4ANTakVVJiSVDT835e3EKEInTbFuh+ku2GdUuMMy6v3gD9SEGQNyIFIIKpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQhshYju; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JmkIgNnPGBwjqAjwD/srdy2TsDTddoahLNV7fNpzlscNAx5Xu5uvyWxDNHFUj1qBNeqtw2Q9rKiXUdpFn8FhwPZ05I7j1h1gA6SznCshrgJfar4DOHv5e4S/MZ2tVe75GW5SFy2iNAKGtaqJ934xCLUpVQ2xf07HPmatSjSRm4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dRMUevF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQhshYju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97F3C2BD10;
-	Thu, 23 May 2024 13:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dRMUevF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65BCC2BD10;
+	Thu, 23 May 2024 13:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470429;
-	bh=d+2Ncqa0GCsY94kPOLrqwI2LwNdiht8lslipLl8h7qE=;
+	s=korg; t=1716470432;
+	bh=n0aloHzOOR5gL3AKTiHG2W4ZUZvf9vs5OkUhYemGlN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQhshYjutei16lti3jMjLwmBrN3/gEzfk0u7XUnkn6foNC0Hyy8m3rg1A6P0Eante
-	 CwesmLkHyyyLk2yiA/Uy3/M+5wIT0gJFZnnr8f1Q9gjuMfb8NqcIpXaDroHqPTOVxI
-	 dX01HMs0cloptrW21aUqTDhVQOzwvcjrh2h4+3X0=
+	b=0dRMUevFngZlAmzXl7k3avpCQJBKi9yeVI+LeeIA0SfL8sb8KkMdASpFoMRJ3CC1F
+	 Jsw/nOcMhiQuSGL9y4WD0a6sI8US3CTVJK88cZzQ6PbHTzWwO5nmYcA9xU2wzTDPbT
+	 DE3ZiWVe3BUcy8YSWlUdPaeph9h2mjzXY6DBGC9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hironori Shiina <shiina.hironori@fujitsu.com>,
+	Eric Sandeen <sandeen@redhat.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandanbabu@kernel.org>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 32/45] xfs: get root inode correctly at bulkstat
-Date: Thu, 23 May 2024 15:13:23 +0200
-Message-ID: <20240523130333.708698382@linuxfoundation.org>
+Subject: [PATCH 6.1 33/45] xfs: short circuit xfs_growfs_data_private() if delta is zero
+Date: Thu, 23 May 2024 15:13:24 +0200
+Message-ID: <20240523130333.747276534@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130332.496202557@linuxfoundation.org>
 References: <20240523130332.496202557@linuxfoundation.org>
@@ -51,46 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hironori Shiina <shiina.hironori@gmail.com>
+From: Eric Sandeen <sandeen@redhat.com>
 
-[ Upstream commit 817644fa4525258992f17fecf4f1d6cdd2e1b731 ]
+[ Upstream commit 84712492e6dab803bf595fb8494d11098b74a652 ]
 
-The root inode number should be set to `breq->startino` for getting stat
-information of the root when XFS_BULK_IREQ_SPECIAL_ROOT is used.
-Otherwise, the inode search is started from 1
-(XFS_BULK_IREQ_SPECIAL_ROOT) and the inode with the lowest number in a
-filesystem is returned.
+Although xfs_growfs_data() doesn't call xfs_growfs_data_private()
+if in->newblocks == mp->m_sb.sb_dblocks, xfs_growfs_data_private()
+further massages the new block count so that we don't i.e. try
+to create a too-small new AG.
 
-Fixes: bf3cb3944792 ("xfs: allow single bulkstat of special inodes")
-Signed-off-by: Hironori Shiina <shiina.hironori@fujitsu.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+This may lead to a delta of "0" in xfs_growfs_data_private(), so
+we end up in the shrink case and emit the EXPERIMENTAL warning
+even if we're not changing anything at all.
+
+Fix this by returning straightaway if the block delta is zero.
+
+(nb: in older kernels, the result of entering the shrink case
+with delta == 0 may actually let an -ENOSPC escape to userspace,
+which is confusing for users.)
+
+Fixes: fb2fc1720185 ("xfs: support shrinking unused space in the last AG")
+Signed-off-by: Eric Sandeen <sandeen@redhat.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_ioctl.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_fsops.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/xfs/xfs_ioctl.c
-+++ b/fs/xfs/xfs_ioctl.c
-@@ -754,7 +754,7 @@ xfs_bulkstat_fmt(
- static int
- xfs_bulk_ireq_setup(
- 	struct xfs_mount	*mp,
--	struct xfs_bulk_ireq	*hdr,
-+	const struct xfs_bulk_ireq *hdr,
- 	struct xfs_ibulk	*breq,
- 	void __user		*ubuffer)
- {
-@@ -780,7 +780,7 @@ xfs_bulk_ireq_setup(
+--- a/fs/xfs/xfs_fsops.c
++++ b/fs/xfs/xfs_fsops.c
+@@ -129,6 +129,10 @@ xfs_growfs_data_private(
+ 	if (delta < 0 && nagcount < 2)
+ 		return -EINVAL;
  
- 		switch (hdr->ino) {
- 		case XFS_BULK_IREQ_SPECIAL_ROOT:
--			hdr->ino = mp->m_sb.sb_rootino;
-+			breq->startino = mp->m_sb.sb_rootino;
- 			break;
- 		default:
- 			return -EINVAL;
++	/* No work to do */
++	if (delta == 0)
++		return 0;
++
+ 	oagcount = mp->m_sb.sb_agcount;
+ 	/* allocate the new per-ag structures */
+ 	if (nagcount > oagcount) {
 
 
