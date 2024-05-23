@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCE014A4DC;
-	Thu, 23 May 2024 13:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBC814A633;
+	Thu, 23 May 2024 13:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470394; cv=none; b=tf44FAaJHQDyoUukt925a9ErcCPnxcsQ0dwBlaDhiYOH62G1eekZ6we7gs1LJLNtQXGN4b+eqHjs7+rTVagD8tedYViR2nXbTDIwQPRB4xskP0zLG196qxMA0mIVqxycdw4IfIH0/9JPk957Ff2UiCvXZNGKNrzQ+BpDW1KvBJQ=
+	t=1716470397; cv=none; b=YyQcA/onpnvNABwm4MDYvlbWSGujU5ndICoQ5vvcT6pP9maEmBJ3V/j1JpKEYm1PG4TT2j12Gm1tiWqH/xWkYDaeZwBS0dYYdvFRFnllUiT0TwBIW4bw0RSsYphnWu8GV7Lpx1GA5NFFyxCH/8d6dXoK/pcZQ190cBEw+FJJVP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470394; c=relaxed/simple;
-	bh=P21SDQuljE9hvki7NPIwqkltFBptvIz1www3J9UK7Bg=;
+	s=arc-20240116; t=1716470397; c=relaxed/simple;
+	bh=4+/GpNoM+ATqIdmj45tF2O3A2LfNs1ZUxy/c6LNJCG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZqjaC4bH6UovCBGoQDnlVkVUxlzG8H2KLNz6YH16KvOAub006NT/GTgGqKYaur0Varr96hN8F4ZYvsOWRGzdHgf178R9gs6cAWkA1SdQlw8kiV0OrKOIB6hiztdqiUfMUfaseZgioGH+fmv+yVUGDdMBn9OVYVqiugbw9wJ3M7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIPeXK6F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lJxMnjvBc4uZGZpql+/hWAW1YIvQ6J/wTP5RB1Y6dmGXD3RH7plFe/sShocIXbZuqB6IKwDsY7qAXdA3KSXIilUUqz09JiG2l6MGIT2TXy3p0JW8jngy0vA3CW3gLRpnt9G66WvuId6pc054GtZ2XcQxzSUciBzp5KiPztYbUoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJkejf0N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIPeXK6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA1CC2BD10;
-	Thu, 23 May 2024 13:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJkejf0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3DDC32782;
+	Thu, 23 May 2024 13:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470394;
-	bh=P21SDQuljE9hvki7NPIwqkltFBptvIz1www3J9UK7Bg=;
+	s=korg; t=1716470397;
+	bh=4+/GpNoM+ATqIdmj45tF2O3A2LfNs1ZUxy/c6LNJCG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pIPeXK6F6UL/DP5qu/c4zVG53xxHUaflsYXAQ1T68zhFYIY3nTOJyVhHllKa+fyA8
-	 ZQeOMvbjFqA3nfutXW5PastUnd+pfcqF8gx/lfAbiFf2+uNmTrjd7twqHnftHExUKf
-	 X2ac0QpknNs13bgxqG8YbrKCjK5TVbXffX36d/Nk=
+	b=NJkejf0Ng3t/xqKk2bN+QLiAZj0wHynRmAzoXD2bFqzIQ8R8O2z2JyfucPWHgs+u6
+	 6Xv70idvbTwHOXaHJqFoIZwESiG1dW7O0tbi1oBpR7m133W6jUSrmVHZEV9gd76kDR
+	 5y8cPm9VN4FjV324LNHG3o+atCnteBvWnwGvTnEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Long Li <leo.lilong@huawei.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 21/45] xfs: fix sb write verify for lazysbcount
-Date: Thu, 23 May 2024 15:13:12 +0200
-Message-ID: <20240523130333.292940842@linuxfoundation.org>
+Subject: [PATCH 6.1 22/45] xfs: fix incorrect i_nlink caused by inode racing
+Date: Thu, 23 May 2024 15:13:13 +0200
+Message-ID: <20240523130333.331467544@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130332.496202557@linuxfoundation.org>
 References: <20240523130332.496202557@linuxfoundation.org>
@@ -53,93 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit 59f6ab40fd8735c9a1a15401610a31cc06a0bbd6 ]
+[ Upstream commit 28b4b0596343d19d140da059eee0e5c2b5328731 ]
 
-When lazysbcount is enabled, fsstress and loop mount/unmount test report
-the following problems:
+The following error occurred during the fsstress test:
 
-XFS (loop0): SB summary counter sanity check failed
-XFS (loop0): Metadata corruption detected at xfs_sb_write_verify+0x13b/0x460,
-	xfs_sb block 0x0
-XFS (loop0): Unmount and run xfs_repair
-XFS (loop0): First 128 bytes of corrupted metadata buffer:
-00000000: 58 46 53 42 00 00 10 00 00 00 00 00 00 28 00 00  XFSB.........(..
-00000010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-00000020: 69 fb 7c cd 5f dc 44 af 85 74 e0 cc d4 e3 34 5a  i.|._.D..t....4Z
-00000030: 00 00 00 00 00 20 00 06 00 00 00 00 00 00 00 80  ..... ..........
-00000040: 00 00 00 00 00 00 00 81 00 00 00 00 00 00 00 82  ................
-00000050: 00 00 00 01 00 0a 00 00 00 00 00 04 00 00 00 00  ................
-00000060: 00 00 0a 00 b4 b5 02 00 02 00 00 08 00 00 00 00  ................
-00000070: 00 00 00 00 00 00 00 00 0c 09 09 03 14 00 00 19  ................
-XFS (loop0): Corruption of in-memory data (0x8) detected at _xfs_buf_ioapply
-	+0xe1e/0x10e0 (fs/xfs/xfs_buf.c:1580).  Shutting down filesystem.
-XFS (loop0): Please unmount the filesystem and rectify the problem(s)
-XFS (loop0): log mount/recovery failed: error -117
-XFS (loop0): log mount failed
+XFS: Assertion failed: VFS_I(ip)->i_nlink >= 2, file: fs/xfs/xfs_inode.c, line: 2452
 
-This corruption will shutdown the file system and the file system will
-no longer be mountable. The following script can reproduce the problem,
-but it may take a long time.
+The problem was that inode race condition causes incorrect i_nlink to be
+written to disk, and then it is read into memory. Consider the following
+call graph, inodes that are marked as both XFS_IFLUSHING and
+XFS_IRECLAIMABLE, i_nlink will be reset to 1 and then restored to original
+value in xfs_reinit_inode(). Therefore, the i_nlink of directory on disk
+may be set to 1.
 
- #!/bin/bash
+  xfsaild
+      xfs_inode_item_push
+          xfs_iflush_cluster
+              xfs_iflush
+                  xfs_inode_to_disk
 
- device=/dev/sda
- testdir=/mnt/test
- round=0
+  xfs_iget
+      xfs_iget_cache_hit
+          xfs_iget_recycle
+              xfs_reinit_inode
+                  inode_init_always
 
- function fail()
- {
-	 echo "$*"
-	 exit 1
- }
+xfs_reinit_inode() needs to hold the ILOCK_EXCL as it is changing internal
+inode state and can race with other RCU protected inode lookups. On the
+read side, xfs_iflush_cluster() grabs the ILOCK_SHARED while under rcu +
+ip->i_flags_lock, and so xfs_iflush/xfs_inode_to_disk() are protected from
+racing inode updates (during transactions) by that lock.
 
- mkdir -p $testdir
- while [ $round -lt 10000 ]
- do
-	 echo "******* round $round ********"
-	 mkfs.xfs -f $device
-	 mount $device $testdir || fail "mount failed!"
-	 fsstress -d $testdir -l 0 -n 10000 -p 4 >/dev/null &
-	 sleep 4
-	 killall -w fsstress
-	 umount $testdir
-	 xfs_repair -e $device > /dev/null
-	 if [ $? -eq 2 ];then
-		 echo "ERR CODE 2: Dirty log exception during repair."
-		 exit 1
-	 fi
-	 round=$(($round+1))
- done
-
-With lazysbcount is enabled, There is no additional lock protection for
-reading m_ifree and m_icount in xfs_log_sb(), if other cpu modifies the
-m_ifree, this will make the m_ifree greater than m_icount. For example,
-consider the following sequence and ifreedelta is postive:
-
- CPU0				 CPU1
- xfs_log_sb			 xfs_trans_unreserve_and_mod_sb
- ----------			 ------------------------------
- percpu_counter_sum(&mp->m_icount)
-				 percpu_counter_add_batch(&mp->m_icount,
-						idelta, XFS_ICOUNT_BATCH)
-				 percpu_counter_add(&mp->m_ifree, ifreedelta);
- percpu_counter_sum(&mp->m_ifree)
-
-After this, incorrect inode count (sb_ifree > sb_icount) will be writen to
-the log. In the subsequent writing of sb, incorrect inode count (sb_ifree >
-sb_icount) will fail to pass the boundary check in xfs_validate_sb_write()
-that cause the file system shutdown.
-
-When lazysbcount is enabled, we don't need to guarantee that Lazy sb
-counters are completely correct, but we do need to guarantee that sb_ifree
-<= sb_icount. On the other hand, the constraint that m_ifree <= m_icount
-must be satisfied any time that there /cannot/ be other threads allocating
-or freeing inode chunks. If the constraint is violated under these
-circumstances, sb_i{count,free} (the ondisk superblock inode counters)
-maybe incorrect and need to be marked sick at unmount, the count will
-be rebuilt on the next mount.
-
-Fixes: 8756a5af1819 ("libxfs: add more bounds checking to sb sanity checks")
+Fixes: ff7bebeb91f8 ("xfs: refactor the inode recycling code") # goes further back than this
 Signed-off-by: Long Li <leo.lilong@huawei.com>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
@@ -147,53 +92,37 @@ Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_sb.c |    4 +++-
- fs/xfs/xfs_mount.c     |   15 +++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_icache.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/xfs/libxfs/xfs_sb.c
-+++ b/fs/xfs/libxfs/xfs_sb.c
-@@ -973,7 +973,9 @@ xfs_log_sb(
- 	 */
- 	if (xfs_has_lazysbcount(mp)) {
- 		mp->m_sb.sb_icount = percpu_counter_sum(&mp->m_icount);
--		mp->m_sb.sb_ifree = percpu_counter_sum(&mp->m_ifree);
-+		mp->m_sb.sb_ifree = min_t(uint64_t,
-+				percpu_counter_sum(&mp->m_ifree),
-+				mp->m_sb.sb_icount);
- 		mp->m_sb.sb_fdblocks = percpu_counter_sum(&mp->m_fdblocks);
- 	}
+--- a/fs/xfs/xfs_icache.c
++++ b/fs/xfs/xfs_icache.c
+@@ -342,6 +342,9 @@ xfs_iget_recycle(
  
---- a/fs/xfs/xfs_mount.c
-+++ b/fs/xfs/xfs_mount.c
-@@ -538,6 +538,20 @@ xfs_check_summary_counts(
- 	return 0;
- }
+ 	trace_xfs_iget_recycle(ip);
  
-+static void
-+xfs_unmount_check(
-+	struct xfs_mount	*mp)
-+{
-+	if (xfs_is_shutdown(mp))
-+		return;
++	if (!xfs_ilock_nowait(ip, XFS_ILOCK_EXCL))
++		return -EAGAIN;
 +
-+	if (percpu_counter_sum(&mp->m_ifree) >
-+			percpu_counter_sum(&mp->m_icount)) {
-+		xfs_alert(mp, "ifree/icount mismatch at unmount");
-+		xfs_fs_mark_sick(mp, XFS_SICK_FS_COUNTERS);
-+	}
-+}
-+
- /*
-  * Flush and reclaim dirty inodes in preparation for unmount. Inodes and
-  * internal inode structures can be sitting in the CIL and AIL at this point,
-@@ -1077,6 +1091,7 @@ xfs_unmountfs(
- 	if (error)
- 		xfs_warn(mp, "Unable to free reserved block pool. "
- 				"Freespace may not be correct on next mount.");
-+	xfs_unmount_check(mp);
+ 	/*
+ 	 * We need to make it look like the inode is being reclaimed to prevent
+ 	 * the actual reclaim workers from stomping over us while we recycle
+@@ -355,6 +358,7 @@ xfs_iget_recycle(
  
- 	xfs_log_unmount(mp);
- 	xfs_da_unmount(mp);
+ 	ASSERT(!rwsem_is_locked(&inode->i_rwsem));
+ 	error = xfs_reinit_inode(mp, inode);
++	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 	if (error) {
+ 		/*
+ 		 * Re-initializing the inode failed, and we are in deep
+@@ -523,6 +527,8 @@ xfs_iget_cache_hit(
+ 	if (ip->i_flags & XFS_IRECLAIMABLE) {
+ 		/* Drops i_flags_lock and RCU read lock. */
+ 		error = xfs_iget_recycle(pag, ip);
++		if (error == -EAGAIN)
++			goto out_skip;
+ 		if (error)
+ 			return error;
+ 	} else {
 
 
