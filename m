@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1EE13BAE2;
-	Thu, 23 May 2024 13:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B921E497;
+	Thu, 23 May 2024 13:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470343; cv=none; b=Zn257AANdZMoZHFHsfXSi4mHWtjcA0QlKOdA5Cf6dZYdDIT95N9V/LDnFTd4akq8vw4wFpu9MmX1KxgxhBm/ZqB/R/4nOXAGoLqmQHZvO9al6Hb6C+OX+bunVHRbvyouEHXqhsl2So7Ro5DslwkSYABahQAK1i49DGfAPAw/UGk=
+	t=1716470346; cv=none; b=j0fn3tpHrcmvVB2gqdA7CnjTLIa9WOUU5Xl0V30EDYo/ocUQkWmUvl8+2mbkWHyVuaLqry8T2OzlwvwlmhwwvvBsXYM/4ML2bR5Bg4qG0832y+0lo03iTZvzbLkWNuz/6MIq3i8Mp7eHlaxBWTlmWmWm2sJOOPBYCyVytybkCzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470343; c=relaxed/simple;
-	bh=ilrApoZFho2H220uP2dGrrk5TSpwBEEdij/960F1Nkc=;
+	s=arc-20240116; t=1716470346; c=relaxed/simple;
+	bh=2BdwpiaPjOMPc2qA7EsE5fJHFe9Iq6vQ0Uhlggx8tNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atTwSReAL6rWLy8OJEtT6oHalXo5DPIMuChfzuot8qtBukGclM2VCyy5YpQPgBa7cFSn+XcBW2TggwjsiI7KC7PKZZkmHvxjHE4s+cKyY4xuqC8k5sPaAOurPkrj5C4clisNu+SkaMEJn60H1ZA+rWCgM1ytwLP5AMpzW/XS3VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyTUDjYx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tKhMTvWGW576Froa9vBDcftabQbfynf0uRuzB1c9/HNphS8wBlO1S/Q0XYgPG0prHV4OSsTLNuD6vxuDsqpFAJcuL6c4b6ViFTRPr3iGt4g4nYn6vpuC/llRH9wDSNxI79NuY7mYA7UWbQEMjPncr53VV/W42QFUM/FiB6/g+7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gw3h28Hr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyTUDjYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDF1C32781;
-	Thu, 23 May 2024 13:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gw3h28Hr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732D1C2BD10;
+	Thu, 23 May 2024 13:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470343;
-	bh=ilrApoZFho2H220uP2dGrrk5TSpwBEEdij/960F1Nkc=;
+	s=korg; t=1716470345;
+	bh=2BdwpiaPjOMPc2qA7EsE5fJHFe9Iq6vQ0Uhlggx8tNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WyTUDjYxHNznixyIpcdWaUvvNvgFJ/oKaW2y8GAfxERHvcY3X2HyVsj50ZyLchqh3
-	 nB792I4CQWk/ynFd3tldQz0khAQ5siPWikHA82MrqSP8K19NC16JjkX/8Ug3+zBvVP
-	 +nSw48gbUHh6xilUwW5DWDP3h/ICXFFJrax9YTn0=
+	b=Gw3h28HrANMAaigEVNuEn02mpu74tH+o6TGWqFODOpnymxSqi4y0AXqBqUxIPa07f
+	 IfL2dP5IQdDovcCHGXl8ZmZpddBGBsqic3DubJYJt85EBEk3G4u/lIB5FKrYhvjGgN
+	 O1K9tfpI8TsnKuvUOQnB2tK05oHcYTKvaRLik5z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 5.15 20/23] remoteproc: mediatek: Make sure IPI buffer fits in L2TCM
-Date: Thu, 23 May 2024 15:13:16 +0200
-Message-ID: <20240523130328.712314820@linuxfoundation.org>
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.15 21/23] KEYS: trusted: Do not use WARN when encode fails
+Date: Thu, 23 May 2024 15:13:17 +0200
+Message-ID: <20240523130328.750122646@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130327.956341021@linuxfoundation.org>
 References: <20240523130327.956341021@linuxfoundation.org>
@@ -50,59 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-commit 331f91d86f71d0bb89a44217cc0b2a22810bbd42 upstream.
+commit 050bf3c793a07f96bd1e2fd62e1447f731ed733b upstream.
 
-The IPI buffer location is read from the firmware that we load to the
-System Companion Processor, and it's not granted that both the SRAM
-(L2TCM) size that is defined in the devicetree node is large enough
-for that, and while this is especially true for multi-core SCP, it's
-still useful to check on single-core variants as well.
+When asn1_encode_sequence() fails, WARN is not the correct solution.
 
-Failing to perform this check may make this driver perform R/W
-operations out of the L2TCM boundary, resulting (at best) in a
-kernel panic.
+1. asn1_encode_sequence() is not an internal function (located
+   in lib/asn1_encode.c).
+2. Location is known, which makes the stack trace useless.
+3. Results a crash if panic_on_warn is set.
 
-To fix that, check that the IPI buffer fits, otherwise return a
-failure and refuse to boot the relevant SCP core (or the SCP at
-all, if this is single core).
+It is also noteworthy that the use of WARN is undocumented, and it
+should be avoided unless there is a carefully considered rationale to
+use it.
 
-Fixes: 3efa0ea743b7 ("remoteproc/mediatek: read IPI buffer offset from FW")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240321084614.45253-2-angelogioacchino.delregno@collabora.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Replace WARN with pr_err, and print the return value instead, which is
+only useful piece of information.
+
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/mtk_scp.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ security/keys/trusted-keys/trusted_tpm2.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/remoteproc/mtk_scp.c
-+++ b/drivers/remoteproc/mtk_scp.c
-@@ -126,7 +126,7 @@ static int scp_elf_read_ipi_buf_addr(str
- static int scp_ipi_init(struct mtk_scp *scp, const struct firmware *fw)
- {
- 	int ret;
--	size_t offset;
-+	size_t buf_sz, offset;
- 
- 	/* read the ipi buf addr from FW itself first */
- 	ret = scp_elf_read_ipi_buf_addr(scp, fw, &offset);
-@@ -138,6 +138,14 @@ static int scp_ipi_init(struct mtk_scp *
+--- a/security/keys/trusted-keys/trusted_tpm2.c
++++ b/security/keys/trusted-keys/trusted_tpm2.c
+@@ -84,8 +84,9 @@ static int tpm2_key_encode(struct truste
+ 	work1 = payload->blob;
+ 	work1 = asn1_encode_sequence(work1, work1 + sizeof(payload->blob),
+ 				     scratch, work - scratch);
+-	if (WARN(IS_ERR(work1), "BUG: ASN.1 encoder failed")) {
++	if (IS_ERR(work1)) {
+ 		ret = PTR_ERR(work1);
++		pr_err("BUG: ASN.1 encoder failed with %d\n", ret);
+ 		goto err;
  	}
- 	dev_info(scp->dev, "IPI buf addr %#010zx\n", offset);
  
-+	/* Make sure IPI buffer fits in the L2TCM range assigned to this core */
-+	buf_sz = sizeof(*scp->recv_buf) + sizeof(*scp->send_buf);
-+
-+	if (scp->sram_size < buf_sz + offset) {
-+		dev_err(scp->dev, "IPI buffer does not fit in SRAM.\n");
-+		return -EOVERFLOW;
-+	}
-+
- 	scp->recv_buf = (struct mtk_share_obj __iomem *)
- 			(scp->sram_base + offset);
- 	scp->send_buf = (struct mtk_share_obj __iomem *)
 
 
