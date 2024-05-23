@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E671E4B0;
-	Thu, 23 May 2024 13:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4026B13B7AE;
+	Thu, 23 May 2024 13:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470277; cv=none; b=FaHbeExCgB29MDEhSsKZQRWUR0JR3Tu+5n2ED26vyMghGB5+pdoFslze305pnSwn1RGMSbhRYSKiWG0Y7H8DR6Zlo8GJIL50OtamN/SJG3EdyMWRbVOy6Vz8n+rMOG1rjyF8wbScfKfBE/flRl8eW5pT11J9TQ2z5QwofSdKAms=
+	t=1716470280; cv=none; b=RnFKijapBPU6vesmUf8AQkzFONt2GzpTIhlme1gGkqMbkovAY6lymk3hEcfq2aX41JCiCinIK9MzP/EDS5hd6puzszg+yue5sj7WQ1mGLGiL3KE3M3P+G47S9rTAM68yMs9mmOA8+N7iZMpDbIESj7gR9O842gyU7h91CsVk+6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470277; c=relaxed/simple;
-	bh=4P5Hw5xB5drnBhUCt4X2i9Nh79QgX8ueynN2WuswB6k=;
+	s=arc-20240116; t=1716470280; c=relaxed/simple;
+	bh=1IDhpaEKD2zqJ4fJ2bWGcr9uglXWbY0V7pnmp4ueZg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pW3f3j3D+IgomrmcnoeIrNDEiKGTUq3CnplTEroUJ/NtKXjJx0bqto1TSKes9r/aRxA1pKi/f6HjxcDfqHtB5rUtiJwv41aJ0HIHn/lv+E3CKZ1inl0R2mF1MobvpPgXmjaytWjCtYYIrViARQw2RzIQaRYF0jlX/U63NMB/8Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJs7UXqF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cq0hY/hjnpSTqrI2RqovWFyE9ZUoqWgVbYnV3wez+aw6afdb9sTAHCFF5WVWEBNBcUUHbbWKps0OKsQdQWklcujUK/+wNPi08LXigMBUT3jpF1twUJAwulI6CzeL8zpfD7Vgm8hXSYE4SWAL8SZ5jDSi1hY3ma0P+t7zIeKIyKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1y0OT2T7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJs7UXqF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52BDC2BD10;
-	Thu, 23 May 2024 13:17:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1y0OT2T7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD700C2BD10;
+	Thu, 23 May 2024 13:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470277;
-	bh=4P5Hw5xB5drnBhUCt4X2i9Nh79QgX8ueynN2WuswB6k=;
+	s=korg; t=1716470280;
+	bh=1IDhpaEKD2zqJ4fJ2bWGcr9uglXWbY0V7pnmp4ueZg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJs7UXqFiXQFJoDHSIWlh5wrG5p285fzb2sFDjS+x4R0z+09FgOhmH6547xaql2A2
-	 akCCRAzu28Qf9jZyCQAkHttwToUNZDVWXnQ7GZ/itdbIgOeAXxiGTL/Uauyf83Lrwn
-	 EZDHyNnJfLMH5gKyb6rkk6nkWcCV9tmI+N5ekTGk=
+	b=1y0OT2T7sWsYJNPeBvVvycWoPNZTCF73kOQiuZbeCxL3akCVnHSMM70Zt92K9AzV+
+	 0RTEqpFwYQDfSsQ+moPHlZpzE3qHe9Dup9fwMwyEMKjZDAzseMBznLuMLiOPSGzp6B
+	 CnMGiDoAgiB8372Y0t3rhFKqorvG3EqgLz7CfdbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH 6.9 21/25] docs: kernel_include.py: Cope with docutils 0.21
-Date: Thu, 23 May 2024 15:13:06 +0200
-Message-ID: <20240523130331.181542601@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.9 22/25] Docs/admin-guide/mm/damon/usage: fix wrong example of DAMOS filter matching sysfs file
+Date: Thu, 23 May 2024 15:13:07 +0200
+Message-ID: <20240523130331.217812248@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130330.386580714@linuxfoundation.org>
 References: <20240523130330.386580714@linuxfoundation.org>
@@ -50,66 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akira Yokosawa <akiyks@gmail.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit d43ddd5c91802a46354fa4c4381416ef760676e2 upstream.
+commit da2a061888883e067e8e649d086df35c92c760a7 upstream.
 
-Running "make htmldocs" on a newly installed Sphinx 7.3.7 ends up in
-a build error:
+The example usage of DAMOS filter sysfs files, specifically the part of
+'matching' file writing for memcg type filter, is wrong.  The intention is
+to exclude pages of a memcg that already getting enough care from a given
+scheme, but the example is setting the filter to apply the scheme to only
+the pages of the memcg.  Fix it.
 
-    Sphinx parallel build error:
-    AttributeError: module 'docutils.nodes' has no attribute 'reprunicode'
-
-docutils 0.21 has removed nodes.reprunicode, quote from release note [1]:
-
-  * Removed objects:
-
-    docutils.nodes.reprunicode, docutils.nodes.ensure_str()
-        Python 2 compatibility hacks
-
-Sphinx 7.3.0 supports docutils 0.21 [2]:
-
-kernel_include.py, whose origin is misc.py of docutils, uses reprunicode.
-
-Upstream docutils removed the offending line from the corresponding file
-(docutils/docutils/parsers/rst/directives/misc.py) in January 2022.
-Quoting the changelog [3]:
-
-    Deprecate `nodes.reprunicode` and `nodes.ensure_str()`.
-
-    Drop uses of the deprecated constructs (not required with Python 3).
-
-Do the same for kernel_include.py.
-
-Tested against:
-  - Sphinx 2.4.5 (docutils 0.17.1)
-  - Sphinx 3.4.3 (docutils 0.17.1)
-  - Sphinx 5.3.0 (docutils 0.18.1)
-  - Sphinx 6.2.1 (docutils 0.19)
-  - Sphinx 7.2.6 (docutils 0.20.1)
-  - Sphinx 7.3.7 (docutils 0.21.2)
-
-Link: http://www.docutils.org/RELEASE-NOTES.html#release-0-21-2024-04-09 [1]
-Link: https://www.sphinx-doc.org/en/master/changes.html#release-7-3-0-released-apr-16-2024 [2]
-Link: https://github.com/docutils/docutils/commit/c8471ce47a24 [3]
-Signed-off-by: Akira Yokosawa <akiyks@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/r/faf5fa45-2a9d-4573-9d2e-3930bdc1ed65@gmail.com
+Link: https://lkml.kernel.org/r/20240503180318.72798-7-sj@kernel.org
+Fixes: 9b7f9322a530 ("Docs/admin-guide/mm/damon/usage: document DAMOS filters of sysfs")
+Closes: https://lore.kernel.org/r/20240317191358.97578-1-sj@kernel.org
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>	[6.3.x]
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/sphinx/kernel_include.py |    1 -
- 1 file changed, 1 deletion(-)
+ Documentation/admin-guide/mm/damon/usage.rst |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/sphinx/kernel_include.py
-+++ b/Documentation/sphinx/kernel_include.py
-@@ -97,7 +97,6 @@ class KernelInclude(Include):
-         # HINT: this is the only line I had to change / commented out:
-         #path = utils.relative_path(None, path)
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -434,7 +434,7 @@ pages of all memory cgroups except ``/ha
+     # # further filter out all cgroups except one at '/having_care_already'
+     echo memcg > 1/type
+     echo /having_care_already > 1/memcg_path
+-    echo N > 1/matching
++    echo Y > 1/matching
  
--        path = nodes.reprunicode(path)
-         encoding = self.options.get(
-             'encoding', self.state.document.settings.input_encoding)
-         e_handler=self.state.document.settings.input_encoding_error_handler
+ Note that ``anon`` and ``memcg`` filters are currently supported only when
+ ``paddr`` :ref:`implementation <sysfs_context>` is being used.
 
 
