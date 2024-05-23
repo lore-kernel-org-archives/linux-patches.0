@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC4514B950;
-	Thu, 23 May 2024 13:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4482614B09F;
+	Thu, 23 May 2024 13:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470550; cv=none; b=qizfZvemPTk5m+2FAOqpwjwXdpDrApFg/kGz4ugBqnCmSW/UHHn3gnnyESA/YbkZPWPdXS7BHWZbOhwRDfr8/MdJOPZLCmoTORpnYCdotfz9lySaVQkNd5WJVPZy+fuRxhBLg8GF8VKvuJaP/lOmESpuuvG5iuKTeQ26CpttUME=
+	t=1716470553; cv=none; b=V0BnBQT0pm18QfaFqyeLNtARqizSHU0Br82FpETL7/xvdBxuBBq7vAe13hex5x1A+HG2RQBvdAs/+5MiM0jdbjNcI4pMr0VwuGpF+UeqGOG+/fZqUBiQPS4Y6OlhPSOfvJRKnwlc02H4eImc3Zczr9KVJRdnxQnvhqMI/SYPy0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470550; c=relaxed/simple;
-	bh=/eX/OjUCZzFP9fLRXekoLokrxJyQUrAbYz9L08Oas9o=;
+	s=arc-20240116; t=1716470553; c=relaxed/simple;
+	bh=kTlUWzVY37SYag5o8RJwmh4RTeKBU6GHpcq7jLjg170=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=albfz5+I7ISvKH7FE9A2kPu1uEIANuco4CD+e8XSq9VM7J6bGcRIpfaZO25NSxIc+0mSVx6XtOiWjrYkdI+/OOswvF0i8tEoXL9yvuLRSkLQRJkTNaxYWEUTJ22QFxoycB38P7XhvLYPUgle7dR005xOY5GZhvEVjdL3aRkJFbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mR40ZFQb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h0zA5nQwzhI4E2O4xexVe2YZgPFA4GtD+bfRkaaiFXXTCWvWvPzN11Me4ePMKeWHztddixyple1+T4vGMibN7nXcylvd2HUifr4v9W/boQbN6osn2AvWwMtysxrBuuHgwufbl35pPLpXl3YtPHC+EEe6PvGB4QNVok5x8diLcD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHaMRvdY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mR40ZFQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE20CC3277B;
-	Thu, 23 May 2024 13:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHaMRvdY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFD3C3277B;
+	Thu, 23 May 2024 13:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470550;
-	bh=/eX/OjUCZzFP9fLRXekoLokrxJyQUrAbYz9L08Oas9o=;
+	s=korg; t=1716470553;
+	bh=kTlUWzVY37SYag5o8RJwmh4RTeKBU6GHpcq7jLjg170=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mR40ZFQbBjH1zY5yOJROACJR3KoZ2zGsUZHqYTGDKR+ErZnXL2XctkJZLQfdgnkDX
-	 BNjlIcyS4xFIIOr65rD1PPpsugS55oSpX9xITvIH8L0TOJfL36/Ir6+9tveYrGbbmS
-	 t4IPoGa2QbvmQCAGVsovcHmVQVTMSz1SIxKOuzAw=
+	b=wHaMRvdYyvY0Hmb1HpWiu4M6xgdDfQRK46Dy7XNAusrCR6tFePWGhjVtxg/arZnAM
+	 Ky2/n93JqZfu9ByAMKRcxaOLxmiEqekJYCeIdbXaEYsibgLw/jfPcPj28oYd9sJdYx
+	 mEtGESXsWPsDdxGfmrxWE9uoGzy9qKqbDEWFLYss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.8 22/23] block: add a disk_has_partscan helper
-Date: Thu, 23 May 2024 15:13:49 +0200
-Message-ID: <20240523130330.588688366@linuxfoundation.org>
+Subject: [PATCH 6.8 23/23] block: add a partscan sysfs attribute for disks
+Date: Thu, 23 May 2024 15:13:50 +0200
+Message-ID: <20240523130330.625704586@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130329.745905823@linuxfoundation.org>
 References: <20240523130329.745905823@linuxfoundation.org>
@@ -52,81 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-commit 140ce28dd3bee8e53acc27f123ae474d69ef66f0 upstream.
+commit a4217c6740dc64a3eb6815868a9260825e8c68c6 upstream.
 
-Add a helper to check if partition scanning is enabled instead of
-open coding the check in a few places.  This now always checks for
-the hidden flag even if all but one of the callers are never reachable
-for hidden gendisks.
+Userspace had been unknowingly relying on a non-stable interface of
+kernel internals to determine if partition scanning is enabled for a
+given disk. Provide a stable interface for this purpose instead.
 
+Cc: stable@vger.kernel.org # 6.3+
+Depends-on: 140ce28dd3be ("block: add a disk_has_partscan helper")
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240502130033.1958492-2-hch@lst.de
+Link: https://lore.kernel.org/linux-block/ZhQJf8mzq_wipkBH@gardel-login/
+Link: https://lore.kernel.org/r/20240502130033.1958492-3-hch@lst.de
+[axboe: add links and commit message from Keith]
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/genhd.c           |    7 ++-----
- block/partitions/core.c |    5 +----
- include/linux/blkdev.h  |   13 +++++++++++++
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ Documentation/ABI/stable/sysfs-block |   10 ++++++++++
+ block/genhd.c                        |    8 ++++++++
+ 2 files changed, 18 insertions(+)
 
+--- a/Documentation/ABI/stable/sysfs-block
++++ b/Documentation/ABI/stable/sysfs-block
+@@ -101,6 +101,16 @@ Description:
+ 		devices that support receiving integrity metadata.
+ 
+ 
++What:		/sys/block/<disk>/partscan
++Date:		May 2024
++Contact:	Christoph Hellwig <hch@lst.de>
++Description:
++		The /sys/block/<disk>/partscan files reports if partition
++		scanning is enabled for the disk.  It returns "1" if partition
++		scanning is enabled, or "0" if not.  The value type is a 32-bit
++		unsigned integer, but only "0" and "1" are valid values.
++
++
+ What:		/sys/block/<disk>/<partition>/alignment_offset
+ Date:		April 2009
+ Contact:	Martin K. Petersen <martin.petersen@oracle.com>
 --- a/block/genhd.c
 +++ b/block/genhd.c
-@@ -345,9 +345,7 @@ int disk_scan_partitions(struct gendisk
- 	struct bdev_handle *handle;
- 	int ret = 0;
- 
--	if (disk->flags & (GENHD_FL_NO_PART | GENHD_FL_HIDDEN))
--		return -EINVAL;
--	if (test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
-+	if (!disk_has_partscan(disk))
- 		return -EINVAL;
- 	if (disk->open_partitions)
- 		return -EBUSY;
-@@ -503,8 +501,7 @@ int __must_check device_add_disk(struct
- 			goto out_unregister_bdi;
- 
- 		/* Make sure the first partition scan will be proceed */
--		if (get_capacity(disk) && !(disk->flags & GENHD_FL_NO_PART) &&
--		    !test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
-+		if (get_capacity(disk) && disk_has_partscan(disk))
- 			set_bit(GD_NEED_PART_SCAN, &disk->state);
- 
- 		bdev_add(disk->part0, ddev->devt);
---- a/block/partitions/core.c
-+++ b/block/partitions/core.c
-@@ -584,10 +584,7 @@ static int blk_add_partitions(struct gen
- 	struct parsed_partitions *state;
- 	int ret = -EAGAIN, p;
- 
--	if (disk->flags & GENHD_FL_NO_PART)
--		return 0;
--
--	if (test_bit(GD_SUPPRESS_PART_SCAN, &disk->state))
-+	if (!disk_has_partscan(disk))
- 		return 0;
- 
- 	state = check_partition(disk);
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -233,6 +233,19 @@ static inline unsigned int disk_openers(
- 	return atomic_read(&disk->part0->bd_openers);
+@@ -1044,6 +1044,12 @@ static ssize_t diskseq_show(struct devic
+ 	return sprintf(buf, "%llu\n", disk->diskseq);
  }
  
-+/**
-+ * disk_has_partscan - return %true if partition scanning is enabled on a disk
-+ * @disk: disk to check
-+ *
-+ * Returns %true if partitions scanning is enabled for @disk, or %false if
-+ * partition scanning is disabled either permanently or temporarily.
-+ */
-+static inline bool disk_has_partscan(struct gendisk *disk)
++static ssize_t partscan_show(struct device *dev,
++		struct device_attribute *attr, char *buf)
 +{
-+	return !(disk->flags & (GENHD_FL_NO_PART | GENHD_FL_HIDDEN)) &&
-+		!test_bit(GD_SUPPRESS_PART_SCAN, &disk->state);
++	return sprintf(buf, "%u\n", disk_has_partscan(dev_to_disk(dev)));
 +}
 +
- /*
-  * The gendisk is refcounted by the part0 block_device, and the bd_device
-  * therein is also used for device model presentation in sysfs.
+ static DEVICE_ATTR(range, 0444, disk_range_show, NULL);
+ static DEVICE_ATTR(ext_range, 0444, disk_ext_range_show, NULL);
+ static DEVICE_ATTR(removable, 0444, disk_removable_show, NULL);
+@@ -1057,6 +1063,7 @@ static DEVICE_ATTR(stat, 0444, part_stat
+ static DEVICE_ATTR(inflight, 0444, part_inflight_show, NULL);
+ static DEVICE_ATTR(badblocks, 0644, disk_badblocks_show, disk_badblocks_store);
+ static DEVICE_ATTR(diskseq, 0444, diskseq_show, NULL);
++static DEVICE_ATTR(partscan, 0444, partscan_show, NULL);
+ 
+ #ifdef CONFIG_FAIL_MAKE_REQUEST
+ ssize_t part_fail_show(struct device *dev,
+@@ -1103,6 +1110,7 @@ static struct attribute *disk_attrs[] =
+ 	&dev_attr_events_async.attr,
+ 	&dev_attr_events_poll_msecs.attr,
+ 	&dev_attr_diskseq.attr,
++	&dev_attr_partscan.attr,
+ #ifdef CONFIG_FAIL_MAKE_REQUEST
+ 	&dev_attr_fail.attr,
+ #endif
 
 
