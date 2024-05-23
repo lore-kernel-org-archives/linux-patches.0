@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D3F1D545;
-	Thu, 23 May 2024 13:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E3F13A897;
+	Thu, 23 May 2024 13:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470844; cv=none; b=MsokEQRq/eAUM9/UCIYogzyoxm2TV1RpjzZ2vuSq/1/+E9vWniCPyp26ESl7Pp1VkAGHkt9ZEI7v81t0awmEKXtXp51D0qx01a8nN/1s8MKKBeqRilVruklsNiqdsfg0WI5AIefkg5bSXkE0Nun+UNLwrVH5JCz3Z2JJ5qMWyAg=
+	t=1716470847; cv=none; b=XiiBiPE7I4/2u0EG33BlBTvT3CijHTZC092yeZet380fziCumWAR38zfTKRakNZ/kHclYz6w3EPeYuQohTXDtFYuqlGPtesxsmeu8U2ydUT62KQ9v+OIFNfjbyzZVXMhg63E2bG5LmbbzEIjxo4Y8GjA/Oc/0QGBeB2gDJS/asg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470844; c=relaxed/simple;
-	bh=EpKvlF2t/AmjL50Ob+xS9/WCSeqm26KCKqJZiebMbgY=;
+	s=arc-20240116; t=1716470847; c=relaxed/simple;
+	bh=sR4sEu6TMDzr39HSicX0uJ3ZzvdE6K3ioKHCqfxymNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b9mxyUQYoikusPrVLZl91CBxxbPA/jSUi922sFVE7IZGUaly/TBnSY6vLqCjE5fQrrGO2jFIOhNIN+Itde2PRsQnUSiKQLkaUqJgz86w5gI2awgL8Qn3V6HdVMqcUe0Un8c2ZeuInzdsGB6g/H0IqZzL3g6EINeYF/Y9O6miewA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6/SG+7U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WZZA8Kf16sdlDZqDvWl3/yO+tkUfWuGCdtU66T9ebgFbFt5Rmcaaz4i5OGFI9Xsvzu4AfUWEgmWlS9P2+NdpLUZiMbw0TbPrLJe9GlK2Uqu0r/AmBsE/GBsU68AtpIo63k8DVf90MXUOCDZVBe/dFosn+1JRNSWIBUX432NAsg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDAFbCaC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6/SG+7U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB87C2BD10;
-	Thu, 23 May 2024 13:27:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDAFbCaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ACAEC3277B;
+	Thu, 23 May 2024 13:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470843;
-	bh=EpKvlF2t/AmjL50Ob+xS9/WCSeqm26KCKqJZiebMbgY=;
+	s=korg; t=1716470846;
+	bh=sR4sEu6TMDzr39HSicX0uJ3ZzvdE6K3ioKHCqfxymNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z6/SG+7U0TEhsLjj2EonI1x/dC/ETI89LhIGps/GgtRloATMw18p8o7WRZVVxUGjt
-	 +hDZDRvUmOamLihulDy3p53N9O2iPKFBOdLOucGQZH/NKy4JqmPb3nD2gwLen02fxy
-	 sFTGxZCR6ukZU8vwaTnYie/2Ta6JzdZKoRHHioZY=
+	b=gDAFbCaCSNdTD48s7hsiWHsua5efOLmby6OnlQ3IfJG57QKWHkglyR/rOHXXbn0n5
+	 fitdYv73wQWCHWgeDHcmTuqikngirF1TpRPdZBihVnQbyV2bvCx0evnsDAfnYd3W1/
+	 R6Mh2TE2sousqDq2hLWt/T17NnA+J1CnCzVz6woM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Ajay Kaher <ajay.kaher@broadcom.com>
-Subject: [PATCH 6.6 089/102] drm/amdgpu: Fix possible NULL dereference in amdgpu_ras_query_error_status_helper()
-Date: Thu, 23 May 2024 15:13:54 +0200
-Message-ID: <20240523130345.825503429@linuxfoundation.org>
+	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.6 090/102] binder: fix max_thread type inconsistency
+Date: Thu, 23 May 2024 15:13:55 +0200
+Message-ID: <20240523130345.864022881@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
 References: <20240523130342.462912131@linuxfoundation.org>
@@ -55,44 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit b8d55a90fd55b767c25687747e2b24abd1ef8680 upstream.
+commit 42316941335644a98335f209daafa4c122f28983 upstream.
 
-Return invalid error code -EINVAL for invalid block id.
+The type defined for the BINDER_SET_MAX_THREADS ioctl was changed from
+size_t to __u32 in order to avoid incompatibility issues between 32 and
+64-bit kernels. However, the internal types used to copy from user and
+store the value were never updated. Use u32 to fix the inconsistency.
 
-Fixes the below:
-
-drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c:1183 amdgpu_ras_query_error_status_helper() error: we previously assumed 'info' could be null (see line 1176)
-
-Suggested-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Cc: Tao Zhou <tao.zhou1@amd.com>
-Cc: Hawking Zhang <Hawking.Zhang@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[Ajay: applied AMDGPU_RAS_BLOCK_COUNT condition to amdgpu_ras_query_error_status()
-       as amdgpu_ras_query_error_status_helper() not present in v6.6, v6.1
-       amdgpu_ras_query_error_status_helper() was introduced in 8cc0f5669eb6]
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
+Fixes: a9350fc859ae ("staging: android: binder: fix BINDER_SET_MAX_THREADS declaration")
+Reported-by: Arve Hjønnevåg <arve@android.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20240421173750.3117808-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/android/binder.c          |    2 +-
+ drivers/android/binder_internal.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
-@@ -1025,6 +1025,9 @@ int amdgpu_ras_query_error_status(struct
- 	if (!obj)
- 		return -EINVAL;
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -5368,7 +5368,7 @@ static long binder_ioctl(struct file *fi
+ 			goto err;
+ 		break;
+ 	case BINDER_SET_MAX_THREADS: {
+-		int max_threads;
++		u32 max_threads;
  
-+	if (!info || info->head.block == AMDGPU_RAS_BLOCK_COUNT)
-+		return -EINVAL;
-+
- 	if (info->head.block == AMDGPU_RAS_BLOCK__UMC) {
- 		amdgpu_ras_get_ecc_info(adev, &err_data);
- 	} else {
+ 		if (copy_from_user(&max_threads, ubuf,
+ 				   sizeof(max_threads))) {
+--- a/drivers/android/binder_internal.h
++++ b/drivers/android/binder_internal.h
+@@ -421,7 +421,7 @@ struct binder_proc {
+ 	struct list_head todo;
+ 	struct binder_stats stats;
+ 	struct list_head delivered_death;
+-	int max_threads;
++	u32 max_threads;
+ 	int requested_threads;
+ 	int requested_threads_started;
+ 	int tmp_ref;
 
 
