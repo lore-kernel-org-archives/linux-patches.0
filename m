@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F31414A4F0;
-	Thu, 23 May 2024 13:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442DE13BAE2;
+	Thu, 23 May 2024 13:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470337; cv=none; b=M6eLGb/vk4mMzsM7/PiL3RtXohrFXPmYH8iePU115tsYeX8GyjOCQqZeYERDdpF/7THQ8qUAm1dI6QmUQonlGRdYjPcsU5dmczX/qL3fMYMHaOnhHiYPLnsSW0x6tZDY6EUVZO8IZhSB8KF6qmtJFRoGHRiwxE3UkYOcHKotoUw=
+	t=1716470340; cv=none; b=FY2AvIXmyjBOfr464+lCqQup0XA7mZWNAJ34M1EDV9sUmf1Cd5LRT4WNEIkN7ByZkwgyRQq2+8Q50TA5aSnZYcvzLRW7Z03imQq0JwaUzAUmFfWImt3swG21m0WN4ra9GLypHYABMgeT3PFZvrea2ZzmOmXZtN8vIZzuV++KqfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470337; c=relaxed/simple;
-	bh=jR7gL44gryZ4ztnQtJM/AiKj/37Iilp+HmXcRVjPswM=;
+	s=arc-20240116; t=1716470340; c=relaxed/simple;
+	bh=Iw8s0kcLO/gw8+1FNONeLZWhtRiFFwoO+LqkS3vsQNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o5MlHKkZkY1+xrrIhKU0o1fXBSx0Augcuxj+c4wxmULwEWrrH9YD4K+YF5zhufXXvnx9t1fGRrd2R6IQpB7RtZ7su0dOuaZ/fJzcBqtGBKgxwMCUGdWyHgmLcE6l34j/dyPKwERECB1EtJH2mYvreRzZ0xP6rKZd1Qbbt8i0jrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjHRnTcf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uh8ouugQ82FxGv7TMcsKGbeD40vjdmMQ1WaW5xiv0uDrR1IBdb/uTslODKXJbyTq7qH2zhu4FiBZFY0dQ44K/snix1K6dRkyByINaCU6VkXNXolbSE+yYGL3pkWPa6U2CU83iJhZTWMrzN9bP0H70rOKZzdXmE+54s+F5OUoARY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIkdRj1L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjHRnTcf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED455C2BD10;
-	Thu, 23 May 2024 13:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIkdRj1L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54F7C3277B;
+	Thu, 23 May 2024 13:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470337;
-	bh=jR7gL44gryZ4ztnQtJM/AiKj/37Iilp+HmXcRVjPswM=;
+	s=korg; t=1716470340;
+	bh=Iw8s0kcLO/gw8+1FNONeLZWhtRiFFwoO+LqkS3vsQNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gjHRnTcfN4Qpu4igtHzqJI1qHM91NAYQA8xMsAd1D9e/swL/E/lpGBuh1fAqhjJif
-	 aXVHFA7Ary2+3PFohMPiivzdMK2iGg+zIUz+Dec2iAIU+CCJhgF8gY/IHc5JPEvN6U
-	 GeHz5PAIDU9DjKThRzh7YzuzxM/ndrB1E3ui2eCY=
+	b=gIkdRj1L1Csi4QGj6DI9vFMOLBt4INK1h/nQTetbd5BI2LnP3VAJQ+kJyAoC8Iiea
+	 33KvDKyeBQIAeb63joMFcERixXKORd8RHpS+jyg4nGTiNzpOmPnU1z1NRYplt4RrLN
+	 uHRMB3a9KHsa1EqdWlHnv+iEZGlBSAQt37cSdUZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 18/23] usb: typec: ucsi: displayport: Fix potential deadlock
-Date: Thu, 23 May 2024 15:13:14 +0200
-Message-ID: <20240523130328.639277092@linuxfoundation.org>
+	Liuye <liu.yeC@h3c.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>
+Subject: [PATCH 5.15 19/23] serial: kgdboc: Fix NMI-safety problems from keyboard reset code
+Date: Thu, 23 May 2024 15:13:15 +0200
+Message-ID: <20240523130328.676074925@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130327.956341021@linuxfoundation.org>
 References: <20240523130327.956341021@linuxfoundation.org>
@@ -50,51 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Daniel Thompson <daniel.thompson@linaro.org>
 
-commit b791a67f68121d69108640d4a3e591d210ffe850 upstream.
+commit b2aba15ad6f908d1a620fd97f6af5620c3639742 upstream.
 
-The function ucsi_displayport_work() does not access the
-connector, so it also must not acquire the connector lock.
+Currently, when kdb is compiled with keyboard support, then we will use
+schedule_work() to provoke reset of the keyboard status.  Unfortunately
+schedule_work() gets called from the kgdboc post-debug-exception
+handler.  That risks deadlock since schedule_work() is not NMI-safe and,
+even on platforms where the NMI is not directly used for debugging, the
+debug trap can have NMI-like behaviour depending on where breakpoints
+are placed.
 
-This fixes a potential deadlock scenario:
+Fix this by using the irq work system, which is NMI-safe, to defer the
+call to schedule_work() to a point when it is safe to call.
 
-ucsi_displayport_work() -> lock(&con->lock)
-typec_altmode_vdm()
-dp_altmode_vdm()
-dp_altmode_work()
-typec_altmode_enter()
-ucsi_displayport_enter() -> lock(&con->lock)
-
-Reported-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Fixes: af8622f6a585 ("usb: typec: ucsi: Support for DisplayPort alt mode")
+Reported-by: Liuye <liu.yeC@h3c.com>
+Closes: https://lore.kernel.org/all/20240228025602.3087748-1-liu.yeC@h3c.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240507134316.161999-1-heikki.krogerus@linux.intel.com
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20240424-kgdboc_fix_schedule_work-v2-1-50f5a490aec5@linaro.org
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/displayport.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/tty/serial/kgdboc.c |   30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/displayport.c
-+++ b/drivers/usb/typec/ucsi/displayport.c
-@@ -275,8 +275,6 @@ static void ucsi_displayport_work(struct
- 	struct ucsi_dp *dp = container_of(work, struct ucsi_dp, work);
- 	int ret;
+--- a/drivers/tty/serial/kgdboc.c
++++ b/drivers/tty/serial/kgdboc.c
+@@ -19,6 +19,7 @@
+ #include <linux/console.h>
+ #include <linux/vt_kern.h>
+ #include <linux/input.h>
++#include <linux/irq_work.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/serial_core.h>
+@@ -48,6 +49,25 @@ static struct kgdb_io		kgdboc_earlycon_i
+ static int                      (*earlycon_orig_exit)(struct console *con);
+ #endif /* IS_BUILTIN(CONFIG_KGDB_SERIAL_CONSOLE) */
  
--	mutex_lock(&dp->con->lock);
--
- 	ret = typec_altmode_vdm(dp->alt, dp->header,
- 				dp->vdo_data, dp->vdo_size);
- 	if (ret)
-@@ -285,8 +283,6 @@ static void ucsi_displayport_work(struct
- 	dp->vdo_data = NULL;
- 	dp->vdo_size = 0;
- 	dp->header = 0;
--
--	mutex_unlock(&dp->con->lock);
++/*
++ * When we leave the debug trap handler we need to reset the keyboard status
++ * (since the original keyboard state gets partially clobbered by kdb use of
++ * the keyboard).
++ *
++ * The path to deliver the reset is somewhat circuitous.
++ *
++ * To deliver the reset we register an input handler, reset the keyboard and
++ * then deregister the input handler. However, to get this done right, we do
++ * have to carefully manage the calling context because we can only register
++ * input handlers from task context.
++ *
++ * In particular we need to trigger the action from the debug trap handler with
++ * all its NMI and/or NMI-like oddities. To solve this the kgdboc trap exit code
++ * (the "post_exception" callback) uses irq_work_queue(), which is NMI-safe, to
++ * schedule a callback from a hardirq context. From there we have to defer the
++ * work again, this time using schedule_work(), to get a callback using the
++ * system workqueue, which runs in task context.
++ */
+ #ifdef CONFIG_KDB_KEYBOARD
+ static int kgdboc_reset_connect(struct input_handler *handler,
+ 				struct input_dev *dev,
+@@ -99,10 +119,17 @@ static void kgdboc_restore_input_helper(
+ 
+ static DECLARE_WORK(kgdboc_restore_input_work, kgdboc_restore_input_helper);
+ 
++static void kgdboc_queue_restore_input_helper(struct irq_work *unused)
++{
++	schedule_work(&kgdboc_restore_input_work);
++}
++
++static DEFINE_IRQ_WORK(kgdboc_restore_input_irq_work, kgdboc_queue_restore_input_helper);
++
+ static void kgdboc_restore_input(void)
+ {
+ 	if (likely(system_state == SYSTEM_RUNNING))
+-		schedule_work(&kgdboc_restore_input_work);
++		irq_work_queue(&kgdboc_restore_input_irq_work);
  }
  
- void ucsi_displayport_remove_partner(struct typec_altmode *alt)
+ static int kgdboc_register_kbd(char **cptr)
+@@ -133,6 +160,7 @@ static void kgdboc_unregister_kbd(void)
+ 			i--;
+ 		}
+ 	}
++	irq_work_sync(&kgdboc_restore_input_irq_work);
+ 	flush_work(&kgdboc_restore_input_work);
+ }
+ #else /* ! CONFIG_KDB_KEYBOARD */
 
 
