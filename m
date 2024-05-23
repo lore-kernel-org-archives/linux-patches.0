@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D42914A604;
-	Thu, 23 May 2024 13:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB381E4B0;
+	Thu, 23 May 2024 13:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470220; cv=none; b=fPyNuewtVHENYItsg3DsWXT8FVkN2YMPHjLuzqLf/VfG9Ks1UEDg87DPdCfvH34Sr1bC81RJyOZo/QUE2ZLqhIs+DKQUy2YWWqjGvKSvMNYzwVztz2zl92xG08oLzfU9E3S8SZlZZB7imWLZ2IPnXjJGyOCYxrr4rft7aJ4sYp8=
+	t=1716470223; cv=none; b=p8WLp8ujc7DWPJtzWuswzmWGWgT6kkeEgBnKvn8QrDyWFDZllJgId720iiqro9L8EGp6tc4hLt7N+C1FcG+ZrB0QFfJfFm0vEIW3sYe7at/WIDTSrM4wsFcg5C8tsU7E6oDxHaD1+YRgYkZy4gtebCfQxOljLVwemSqlrODDeOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470220; c=relaxed/simple;
-	bh=VDeUaB7sONVvCv9mw69JjrJKS15c3FxR0n4qCnD0n04=;
+	s=arc-20240116; t=1716470223; c=relaxed/simple;
+	bh=BTwqio0Z+CBcrRDOMoYbtt7HfAnXQMGCI4AI3O7koOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qwJgZyt2dvPbhMTNV6YgzYK2Nn3cUiftdyYSHcRLlRx+EGDm/UDMdh+X6skcgAZ8AbKZLfIElaGGcVMh9VWMqhQcDOtpBjbR5jnsJAEQt9XIUHAx/y9UN43O4az+vd8RPar8VAbl7jTDhhD0zfztFShNxHuJc+Mz4ff1Gq3b1tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00jHBSar; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JEahu1V+YKMzKM945x/8yEaVhxovFlzhKUBcuYVGekQi3ZlPbFPdKoxiDpGIkb6qor+8DEt7T48SlBRL7sLX9xHpSLqxWZr3Bj6D+YzJrSMF2KtTKJ0ArXfv66V2r3F+QEMS3NNA8Vrxuwjzi9Tu8KjnHUVwx0X4TbTueaRWjUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVGb2OoX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00jHBSar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8020C2BD10;
-	Thu, 23 May 2024 13:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVGb2OoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B4AC2BD10;
+	Thu, 23 May 2024 13:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470220;
-	bh=VDeUaB7sONVvCv9mw69JjrJKS15c3FxR0n4qCnD0n04=;
+	s=korg; t=1716470222;
+	bh=BTwqio0Z+CBcrRDOMoYbtt7HfAnXQMGCI4AI3O7koOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=00jHBSarZRTEiGOvcyO5DjeASZlF2NRqoD33bf9eHqO94ZXZZl2/4RDVRWOg16NPm
-	 yp80CJW8yALT5lrBZ9WzXkb2pvNp9joycurQjRaaDNvNlu7RmSKfmtycKgak+d0MfI
-	 NUspWihJzDMdVLxrgKtuRAQBjQAWvKU8U1KwbheE=
+	b=DVGb2OoXOcqsnPW3CeDIZ5jnuh0CRAF4V8y5PhKuKzn/E+5m9sfGqNwpq9q8wvsUV
+	 e+ZPLJPDR6N9QJlPARxCN96puZxLzRbMPrd49aNymi6gKqLpQbWt1kyn74ivrl+EfF
+	 FYkR/LVtbeWeufZYh2Ibaq1tcEe6Oc7gaHTRZK1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashanth K <quic_prashk@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.9 11/25] usb: dwc3: Wait unconditionally after issuing EndXfer command
-Date: Thu, 23 May 2024 15:12:56 +0200
-Message-ID: <20240523130330.814020853@linuxfoundation.org>
+	Isaac Ganoung <inventor500@vivaldi.net>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.9 12/25] net: usb: ax88179_178a: fix link status when link is set to down/up
+Date: Thu, 23 May 2024 15:12:57 +0200
+Message-ID: <20240523130330.852282367@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130330.386580714@linuxfoundation.org>
 References: <20240523130330.386580714@linuxfoundation.org>
@@ -50,58 +53,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-commit 1d26ba0944d398f88aaf997bda3544646cf21945 upstream.
+commit ecf848eb934b03959918f5269f64c0e52bc23998 upstream.
 
-Currently all controller IP/revisions except DWC3_usb3 >= 310a
-wait 1ms unconditionally for ENDXFER completion when IOC is not
-set. This is because DWC_usb3 controller revisions >= 3.10a
-supports GUCTL2[14: Rst_actbitlater] bit which allows polling
-CMDACT bit to know whether ENDXFER command is completed.
+The idea was to keep only one reset at initialization stage in order to
+reduce the total delay, or the reset from usbnet_probe or the reset from
+usbnet_open.
 
-Consider a case where an IN request was queued, and parallelly
-soft_disconnect was called (due to ffs_epfile_release). This
-eventually calls stop_active_transfer with IOC cleared, hence
-send_gadget_ep_cmd() skips waiting for CMDACT cleared during
-EndXfer. For DWC3 controllers with revisions >= 310a, we don't
-forcefully wait for 1ms either, and we proceed by unmapping the
-requests. If ENDXFER didn't complete by this time, it leads to
-SMMU faults since the controller would still be accessing those
-requests.
+I have seen that restarting from usbnet_probe is necessary to avoid doing
+too complex things. But when the link is set to down/up (for example to
+configure a different mac address) the link is not correctly recovered
+unless a reset is commanded from usbnet_open.
 
-Fix this by ensuring ENDXFER completion by adding 1ms delay in
-__dwc3_stop_active_transfer() unconditionally.
+So, detect the initialization stage (first call) to not reset from
+usbnet_open after the reset from usbnet_probe and after this stage, always
+reset from usbnet_open too (when the link needs to be rechecked).
 
-Cc: stable@vger.kernel.org
-Fixes: b353eb6dc285 ("usb: dwc3: gadget: Skip waiting for CMDACT cleared during endxfer")
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240502044103.1066350-1-quic_prashk@quicinc.com
+Apply to all the possible devices, the behavior now is going to be the same.
+
+cc: stable@vger.kernel.org # 6.6+
+Fixes: 56f78615bcb1 ("net: usb: ax88179_178a: avoid writing the mac address before first reading")
+Reported-by: Isaac Ganoung <inventor500@vivaldi.net>
+Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240510090846.328201-1-jtornosm@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/usb/ax88179_178a.c |   37 ++++++++++++++++++++++++++-----------
+ 1 file changed, 26 insertions(+), 11 deletions(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -1699,7 +1699,6 @@ static int __dwc3_gadget_get_frame(struc
-  */
- static int __dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force, bool interrupt)
- {
--	struct dwc3 *dwc = dep->dwc;
- 	struct dwc3_gadget_ep_cmd_params params;
- 	u32 cmd;
- 	int ret;
-@@ -1724,8 +1723,7 @@ static int __dwc3_stop_active_transfer(s
- 	dep->resource_index = 0;
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -174,6 +174,7 @@ struct ax88179_data {
+ 	u32 wol_supported;
+ 	u32 wolopts;
+ 	u8 disconnecting;
++	u8 initialized;
+ };
  
- 	if (!interrupt) {
--		if (!DWC3_IP_IS(DWC3) || DWC3_VER_IS_PRIOR(DWC3, 310A))
--			mdelay(1);
-+		mdelay(1);
- 		dep->flags &= ~DWC3_EP_TRANSFER_STARTED;
- 	} else if (!ret) {
- 		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
+ struct ax88179_int_data {
+@@ -1673,6 +1674,18 @@ static int ax88179_reset(struct usbnet *
+ 	return 0;
+ }
+ 
++static int ax88179_net_reset(struct usbnet *dev)
++{
++	struct ax88179_data *ax179_data = dev->driver_priv;
++
++	if (ax179_data->initialized)
++		ax88179_reset(dev);
++	else
++		ax179_data->initialized = 1;
++
++	return 0;
++}
++
+ static int ax88179_stop(struct usbnet *dev)
+ {
+ 	u16 tmp16;
+@@ -1692,6 +1705,7 @@ static const struct driver_info ax88179_
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
++	.reset = ax88179_net_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1704,6 +1718,7 @@ static const struct driver_info ax88178a
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
++	.reset = ax88179_net_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1716,7 +1731,7 @@ static const struct driver_info cypress_
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset = ax88179_reset,
++	.reset = ax88179_net_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1729,7 +1744,7 @@ static const struct driver_info dlink_du
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset = ax88179_reset,
++	.reset = ax88179_net_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1742,7 +1757,7 @@ static const struct driver_info sitecom_
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset = ax88179_reset,
++	.reset = ax88179_net_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1755,7 +1770,7 @@ static const struct driver_info samsung_
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset = ax88179_reset,
++	.reset = ax88179_net_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1768,7 +1783,7 @@ static const struct driver_info lenovo_i
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset = ax88179_reset,
++	.reset = ax88179_net_reset,
+ 	.stop = ax88179_stop,
+ 	.flags = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1781,7 +1796,7 @@ static const struct driver_info belkin_i
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset	= ax88179_reset,
++	.reset	= ax88179_net_reset,
+ 	.stop	= ax88179_stop,
+ 	.flags	= FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1794,7 +1809,7 @@ static const struct driver_info toshiba_
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset	= ax88179_reset,
++	.reset	= ax88179_net_reset,
+ 	.stop = ax88179_stop,
+ 	.flags	= FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1807,7 +1822,7 @@ static const struct driver_info mct_info
+ 	.unbind	= ax88179_unbind,
+ 	.status	= ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset	= ax88179_reset,
++	.reset	= ax88179_net_reset,
+ 	.stop	= ax88179_stop,
+ 	.flags	= FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1820,7 +1835,7 @@ static const struct driver_info at_umc20
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset  = ax88179_reset,
++	.reset  = ax88179_net_reset,
+ 	.stop   = ax88179_stop,
+ 	.flags  = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1833,7 +1848,7 @@ static const struct driver_info at_umc20
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset  = ax88179_reset,
++	.reset  = ax88179_net_reset,
+ 	.stop   = ax88179_stop,
+ 	.flags  = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
+@@ -1846,7 +1861,7 @@ static const struct driver_info at_umc20
+ 	.unbind = ax88179_unbind,
+ 	.status = ax88179_status,
+ 	.link_reset = ax88179_link_reset,
+-	.reset  = ax88179_reset,
++	.reset  = ax88179_net_reset,
+ 	.stop   = ax88179_stop,
+ 	.flags  = FLAG_ETHER | FLAG_FRAMING_AX,
+ 	.rx_fixup = ax88179_rx_fixup,
 
 
