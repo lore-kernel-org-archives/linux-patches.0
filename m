@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354CA14AD0D;
-	Thu, 23 May 2024 13:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FC414AD0D;
+	Thu, 23 May 2024 13:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470435; cv=none; b=g4IZYEKHrsglEjoGXqgXuEE8+bjEOgzwUFsC1XmxfuIcDHY1oNic+F1HbPczngJcay4p3QQA9J8DFIABpRQAAYZYLP290zstKhAH0rfH5jO8NxIdWdNgNahps6MjnrDWQz6AeaSszO83ZE3zF+F+1fkkAPqOXB4jpIpG8L2Ydok=
+	t=1716470438; cv=none; b=pwZWNWwqHFQ9g2qffl3pbck1WBaCm4hicLAqn2mMtlSYOlRgn2r9+nAqHpS8lAK9k70YXgxDI09Gx848H9NQW0JZXNfGxHnffPbImQjf2oCRMiJJ690PMoUZdiWT0ysFANoCX7jsarXnc/AC03UypNXxrHSRYSKmHJvQK05q0Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470435; c=relaxed/simple;
-	bh=9sN5wR37VHpQXrXKDtZtL9dkb5ht3INBCzcyQNar43U=;
+	s=arc-20240116; t=1716470438; c=relaxed/simple;
+	bh=+IwP8zpJE8n0F0mqqYLMkZVRYo+VpbIDR8oIZwngY84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGvS7R+KzspYTzTwyar598P5mh9CeTR+pG7u+orhpIrKiC3aAnDcj9TjM6BwPCewf5b10gO+ctejhJpN6cr7Ih37AxeD0xR5JKfU/IWBnv4p2XW7+6FCAye1UKt6Jtha7SJwbejt8UZnaIDP/LyqPbOqgMvjEgHVLYeubeQAqpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msjRd6PM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PlMFEmMMVQJf0lPqzV4pKHckAIl7I+ZI1Lo7K8nTdOryJHaj7Jei0uI8NM5RTfdc5khmjON/z9vhY+ibA5nP6Ieb7IrjQVM2wMIj4pVaYPIfhvpXNT88vMzgHxTM4RdbrOsT5OlSEm5LBGYna0uB1Rm+5SLeKT4xBsTjeANBLBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPvnTo76; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msjRd6PM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCB2C32786;
-	Thu, 23 May 2024 13:20:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPvnTo76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8861BC2BD10;
+	Thu, 23 May 2024 13:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470435;
-	bh=9sN5wR37VHpQXrXKDtZtL9dkb5ht3INBCzcyQNar43U=;
+	s=korg; t=1716470437;
+	bh=+IwP8zpJE8n0F0mqqYLMkZVRYo+VpbIDR8oIZwngY84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msjRd6PMfiYiU0jF5wSi5E8LxAf328h6iAlRrRXTraxsIMOJ5aOjMI8+FCtKcSDMn
-	 EjxlRr8qcRR7XvcsVQHmlAynkKq8PedakQsV3d3rpZp54MDd05tHW6VdJNgIb5Nlju
-	 c0L3Sdd1eeAhsfzt2BHV+jlq9qYVJYQ5Ni2nP2jY=
+	b=QPvnTo766WBeAtPM8N/uipT556rDiDyDkWphs/0Dfph/WLqpeFSg/J4hVvn54VvZi
+	 xhi6ePC69f7xcIPqH9xfoQey+UEtk+fdeIuaOlhOIlG3clbikxxqQ3oqaLq4jlaGcQ
+	 ovYWOJTW5XVDbMUBMi9bQktWrL4BiYWcjq7FIyiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.1 04/45] ice: remove unnecessary duplicate checks for VF VSI ID
-Date: Thu, 23 May 2024 15:12:55 +0200
-Message-ID: <20240523130332.667690287@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Hemdan, Hagar Gamal Halim" <hagarhem@amazon.de>
+Subject: [PATCH 6.1 05/45] pinctrl: core: handle radix_tree_insert() errors in pinctrl_register_one_pin()
+Date: Thu, 23 May 2024 15:12:56 +0200
+Message-ID: <20240523130332.703764794@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240523130332.496202557@linuxfoundation.org>
 References: <20240523130332.496202557@linuxfoundation.org>
@@ -52,47 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit 363f689600dd010703ce6391bcfc729a97d21840 upstream.
+commit ecfe9a015d3e1e46504d5b3de7eef1f2d186194a upstream.
 
-The ice_vc_fdir_param_check() function validates that the VSI ID of the
-virtchnl flow director command matches the VSI number of the VF. This is
-already checked by the call to ice_vc_isvalid_vsi_id() immediately
-following this.
+pinctrl_register_one_pin() doesn't check the result of radix_tree_insert()
+despite they both may return a negative error code.  Linus Walleij said he
+has copied the radix tree code from kernel/irq/ where the functions calling
+radix_tree_insert() are *void* themselves; I think it makes more sense to
+propagate the errors from radix_tree_insert() upstream if we can do that...
 
-This check is unnecessary since ice_vc_isvalid_vsi_id() already confirms
-this by checking that the VSI ID can locate the VSI associated with the VF
-structure.
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-Furthermore, a following change is going to refactor the ice driver to
-report VSI IDs using a relative index for each VF instead of reporting the
-PF VSI number. This additional check would break that logic since it
-enforces that the VSI ID matches the VSI number.
-
-Since this check duplicates  the logic in ice_vc_isvalid_vsi_id() and gets
-in the way of refactoring that logic, remove it.
-
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20230719202253.13469-3-s.shtylyov@omp.ru
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Cc: "Hemdan, Hagar Gamal Halim" <hagarhem@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/pinctrl/core.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-@@ -107,9 +107,6 @@ ice_vc_fdir_param_check(struct ice_vf *v
- 	if (!(vf->driver_caps & VIRTCHNL_VF_OFFLOAD_FDIR_PF))
- 		return -EINVAL;
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -205,6 +205,7 @@ static int pinctrl_register_one_pin(stru
+ 				    const struct pinctrl_pin_desc *pin)
+ {
+ 	struct pin_desc *pindesc;
++	int error;
  
--	if (vsi_id != vf->lan_vsi_num)
--		return -EINVAL;
--
- 	if (!ice_vc_isvalid_vsi_id(vf, vsi_id))
- 		return -EINVAL;
+ 	pindesc = pin_desc_get(pctldev, pin->number);
+ 	if (pindesc) {
+@@ -226,18 +227,25 @@ static int pinctrl_register_one_pin(stru
+ 	} else {
+ 		pindesc->name = kasprintf(GFP_KERNEL, "PIN%u", pin->number);
+ 		if (!pindesc->name) {
+-			kfree(pindesc);
+-			return -ENOMEM;
++			error = -ENOMEM;
++			goto failed;
+ 		}
+ 		pindesc->dynamic_name = true;
+ 	}
  
+ 	pindesc->drv_data = pin->drv_data;
+ 
+-	radix_tree_insert(&pctldev->pin_desc_tree, pin->number, pindesc);
++	error = radix_tree_insert(&pctldev->pin_desc_tree, pin->number, pindesc);
++	if (error)
++		goto failed;
++
+ 	pr_debug("registered pin %d (%s) on %s\n",
+ 		 pin->number, pindesc->name, pctldev->desc->name);
+ 	return 0;
++
++failed:
++	kfree(pindesc);
++	return error;
+ }
+ 
+ static int pinctrl_register_pins(struct pinctrl_dev *pctldev,
 
 
