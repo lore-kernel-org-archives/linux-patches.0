@@ -1,90 +1,115 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191B643AA3
-	for <patches@lists.linux.dev>; Fri, 24 May 2024 18:47:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2616F06D
+	for <patches@lists.linux.dev>; Fri, 24 May 2024 20:38:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716576464; cv=none; b=nOn9bfVqE692A5PnXyoHMoMa4BQpRyuipPnIGOSCLgqI+Q9GmD+nPyubFQ3ZpHN35GHqOqc8G451Uy1QpODCXYzsY1r5I9neUTspk9TQtfjB0dzNKvtIhYGouWG5oMZhioNNKipFND0sR90tQjd3DKUoKYK0rwQMUFkgmF7XFYw=
+	t=1716583115; cv=none; b=XfP44dRDhJykqQ2AJ/iPutsKWU8lBvxNwlITy0P9cMNK7ZnP5+PcIIfTHqE8u20nJUvxUKVTnwwvqr0cOfq9P2HgK4AEZzsltkpbrqE8Ap1tj4583WTwGcLj8mWj7IbHIwQE7o649x+e2M03j9F+xgIii4rrHFe79h7oPrhpaBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716576464; c=relaxed/simple;
-	bh=H0d5UkGL0Q3b1gWFoaRHDwqYOH4N6JLBIDgAWXyVK8c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ekgyGaf2KWArpMuqBrD9XumANN4pYEgyE9VOGx/U6tHE1R/L6RLUDz0Ljn9XmmjyqDfszgt5Ew0MEJG8TAgrIEFiuskO7KpwASBC7dsMqYh3yBVfPmddns2dM1SrIEgzD7cHa4oYBf+Iucdq+WlIh/8PEIhewNrsdHBnukra8dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id D11031C0094; Fri, 24 May 2024 20:47:39 +0200 (CEST)
-Date: Fri, 24 May 2024 20:47:39 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.9 00/25] 6.9.2-rc1 review
-Message-ID: <ZlDgy2Xg40PmmVRg@duo.ucw.cz>
-References: <20240523130330.386580714@linuxfoundation.org>
+	s=arc-20240116; t=1716583115; c=relaxed/simple;
+	bh=S/CepABZtOlPX20ha1FrGJQLcyN9UQbC79cMMCFoGoU=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=OyrsWGk0Lxs+k5ECR0IeO278/ht/aYstE4vRsbYaCmhA1Y3xvsEG4i9NzOsRrphB517B+BKxjKaZOXHRdfmcqwKTy+0ZDCC39toz4u75E7qSgQPuSA6Pl3fJJti8UYCM1fh+9bRJC/gVp0Mp6zYxmbYzCphs62/zGF4Y4ZhTwOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=vCIuG6p5; arc=none smtp.client-ip=44.202.169.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="vCIuG6p5"
+Received: from eig-obgw-6007a.ext.cloudfilter.net ([10.0.30.247])
+	by cmsmtp with ESMTPS
+	id 9pBhswer2jfBAAbepspiWL; Fri, 24 May 2024 20:36:55 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id AbeosmWoqsrbKAbeos7ggE; Fri, 24 May 2024 20:36:54 +0000
+X-Authority-Analysis: v=2.4 cv=EpDUrzcA c=1 sm=1 tr=0 ts=6650fa66
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=TpHVaj0NuXgA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=BXyYjBD0cXuZo9oD7aYA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=gZ7TlAKxKHB4HHiLPpdNE3DMEhio6U5TCd2emnuDUVU=; b=vCIuG6p5ue1XfMNcZVHBnRzo+2
+	3R/5NjRYI9+C6IwgSZHXieXJJ7iued8gRuKRFMoXzTbmmsHTEiImLUXZoGR7jZdLmH4y+egytu1cV
+	CyXZ3BlJ1/tTdrWWNlRjTi5GtAoQOzatA9Xg+8CXzzkP2qw8ZSDYyeunkcUOr+bxERzjXPlGTmQot
+	t+xXUOzw/VdPWX8bUkgTyXMOAuKhgr1nZIhp3ClkkIihQhnDj74gYesmQreK273JHjlAwdGGZIjQU
+	iDNFpx8D/Erw2xRtl6UaoHShCPud/KrhZlEkgXRsLBYZ4VZ2IuKFmnGerSO6c9oCwq4r8SKnEItRG
+	a/uEEQYA==;
+Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:39790 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1sAbem-0033LW-0J;
+	Fri, 24 May 2024 14:36:52 -0600
+Subject: Re: [PATCH 6.6 000/102] 6.6.32-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240523130342.462912131@linuxfoundation.org>
+In-Reply-To: <20240523130342.462912131@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <9e5db24b-23f7-2f5b-f74d-6fef6b779cbc@w6rz.net>
+Date: Fri, 24 May 2024 13:36:49 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="we+3Jk5TNvblIb1W"
-Content-Disposition: inline
-In-Reply-To: <20240523130330.386580714@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 98.207.139.8
+X-Source-L: No
+X-Exim-ID: 1sAbem-0033LW-0J
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:39790
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfE3+IaWYFtqEQf3ZKBsvwr3WLdbWusvbrnprwszyu4V9dRSxfgNWPkD280wkLbQ13XVabgbrwdxKVcmg7znPMflgcMpWD8YKwIUeFimyVW6gAvTkzLm7
+ m8Qm5Wdi31N1GwrYzOD+AhFAbTbXsmQVyuefSr1EmMw5zJkYMHS11EAwArjQr8ooDM+/a7Rgy/AzUQ==
 
-
---we+3Jk5TNvblIb1W
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> This is the start of the stable review cycle for the 6.9.2 release.
-> There are 25 patches in this series, all will be posted as a response
+On 5/23/24 6:12 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.32 release.
+> There are 102 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Sat, 25 May 2024 13:03:15 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.32-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-We are now testing 6.9 too, and it seems okay
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.9.y
+Tested-by: Ron Economos <re@w6rz.net>
 
-We are seeing some problems with spectre-meltdown checker,
-
-https://lava.ciplatform.org/scheduler/job/1138103#L998
-
-while it passes on v6.8.11-rc1:
-
-https://lava.ciplatform.org/scheduler/job/1137807#L976
-
-I'm not sure if that signifies real problem.
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
-
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---we+3Jk5TNvblIb1W
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZlDgywAKCRAw5/Bqldv6
-8mF2AJ0WHccb/X35mddtQ4Y15r1pWfukxwCeMavXVE+aF9y3LeF/gdgRWPty0/Y=
-=v20g
------END PGP SIGNATURE-----
-
---we+3Jk5TNvblIb1W--
