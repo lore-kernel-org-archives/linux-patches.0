@@ -1,80 +1,111 @@
-Received: from submarine.notk.org (62-210-214-84.rev.poneytelecom.eu [62.210.214.84])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EFBD2C9A
-	for <patches@lists.linux.dev>; Fri, 24 May 2024 00:56:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152841DFC6
+	for <patches@lists.linux.dev>; Fri, 24 May 2024 04:23:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716512189; cv=none; b=eDg34FdlBcl4DnAn46b5TWeEBfpA5CEs8JlvLC3OsffTSh03t7kj0e4cKBWAudzBlfCvKaCxDGrhKil3LIg+35WS+9IycHLOeZ38QpTw4ur0VA2G0yGDzViRGSZuoZ6eWg+XCCEcU6iEKEtzIHDTFfFaZEjoKM8yIzWYRZV7U2M=
+	t=1716524610; cv=none; b=FnROqvEcrgu1HfRSl8MuehWlcNE3wzkBfZd5jxgmebdVsJe6bYiRz4xEXK/x/rY9xOYCQxaSnm89uqoGfxXkNW/qlgfR/pS/SwC3l0zPM4oZPPB62PcDv9ghAC+Ohf3iYjy9K+ZMrbofnL4RUWaIoypLItJTN7VF+b0gfid57Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716512189; c=relaxed/simple;
-	bh=5F1z1Woqll497cd46zyP+J5EAcA55tR8OXSbU/KNAac=;
+	s=arc-20240116; t=1716524610; c=relaxed/simple;
+	bh=2LfolRYLLxKA0vNdufyOzsa+bWHaW30aM8s0d31YeWQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yty1JAEthQPMp+Czy9B2aYpUyH41imBZlTbZWg3Rn1BYJ4Szu2GE/sZ14j/Gb5UNxrPni8E8dUN5vR22T/xFqd4P9YK+3n4hYPOnYsp3A6rlaaaDHuRpzVS955RUajwqFuikydD2egCJztdeXMswXMxWiZl98pfOKgUUdy4s21Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=b63FHAbG; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=en6v01cMosezS4JbCviuV54MQv6+/43H4D/1y63DIJqwE3uhmtTblDQhk3rPwCMM9M7FI+h/S///TCpDnPBQg9rdFWCK+1fQMebNfYnUTkQIjFZ+s9zOYtjRU924M4tcVkFininnySwpqU45ru9KWSRiYJgxws4u+bWTnQvEALo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g0tPzUkU; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="b63FHAbG"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id 4875B14C2DB;
-	Fri, 24 May 2024 02:56:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1716512183;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=10Rzt42s+HPACNX7hQ0Sh+1c1eQ91GOfo9jACwkRnOA=;
-	b=b63FHAbGiS5pCrH8hcTwp0IyhAL3RM6UxNRm5LyOPkpaZ7+6TBjip82FKAnZZPDCvyWvtW
-	ZSflcHDFZFPPv33AmFPdQe8rebTJnJNXUsOxCu0dpk+B7BBsIT6NUeGTcI48enDoOIrOoc
-	EH2NhZjP0jkpmP7HzXgawVumenld1Z4FKcjfyHBnnVzBOQj8OfL8kZ0cord+NauvP2Qd3p
-	iNJp6SqUoG58yTIDy9pOBfYL9d6aYRM8EonBqKY8yD56EyATI+1gaAcu/1/C5UxEwKAYkR
-	JnPcVdNjrqW3s6ysz6pUZvlDwJrYY7Hn2lCm5jxg36n9K/wNInDJx83EiT13WQ==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 2d469f13;
-	Fri, 24 May 2024 00:56:14 +0000 (UTC)
-Date: Fri, 24 May 2024 09:55:59 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 5.10 00/15] 5.10.218-rc1 review
-Message-ID: <Zk_lnyn3IAmRtP2X@codewreck.org>
-References: <20240523130326.451548488@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g0tPzUkU"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-681adefa33fso344862a12.3
+        for <patches@lists.linux.dev>; Thu, 23 May 2024 21:23:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716524608; x=1717129408; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OeePSp/RgwC8Je30bbAZD6yPtJsoOz+P6dvGPXjZ8/I=;
+        b=g0tPzUkULrB1ZrrLra03IuUkf4RoRmhaozTJQdXM69TNHaS7YQyMVbhiiN64k6ibDd
+         3j7OBoI5dcDctj67z97hRRh6o7+OpoznzZL+oromiQQXtDSMnMB3vF0pC00JUk2/dnKd
+         yrFNMgFcq0jFsbqxBnO/3aFLtocQQ78nZVbZc7tLzbcTdXmSzT1oqey03mQxUn9ReA+I
+         h/Djm/hgjwgvrWOPBvF9+dcDD3U94Gd80XNzfmv1f2EHZmZ7eIU8T7hYKLQPOmaI48ew
+         ldgqcsw04Ay3/lP1dMhsLXPOvNYS6RlDWyQZ8nZ0Js1qnDPII2H/vlSkyyUjo+5SbG/B
+         0/kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716524608; x=1717129408;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OeePSp/RgwC8Je30bbAZD6yPtJsoOz+P6dvGPXjZ8/I=;
+        b=GRQ96OsgBAcKRutH420BrVkFGPN29Y3TIQ1o2EVtcL1uHywoY+UgESuBPrAbdvxAqx
+         xJ7NjXI6z8BS4buZSpisZjiPAtB+02nzuj1jJGBMmnYZoJ4lYTYNh1O0fb8KwCScSwbu
+         CbUe8yCEqJ5FRIJGZTYcGP9bFAeDMvMhgtQvbAD3hdVLook0aIBI7JIekBf0OnE0LfQ/
+         /fqsI1DNJdBNg3xKlu9eUScnz/Ow2jwdur1dsji2qFNyFYPJe1vt0bB2GjAne9ivAlcv
+         JEJ+uhVpXjMpWAHxwzmi/B8B+foavhnaHz4wqO8vftG81DOuhcUlhLwIcrpYqAGqpuU5
+         50ZA==
+X-Gm-Message-State: AOJu0YwpYiJb2iYWNBV+a9RMZfPbOfF06SIAIiIxXknONhaMoo4S8AWE
+	yjV7wOoDFZvyfLnEn4UFt2UFmsspWsoVwUTiu4l5j4EcbWWCnK8+
+X-Google-Smtp-Source: AGHT+IGL6Qf/LrNMcPvOToaA6hvscgczsPZw6Uye4zSKUPm2OAeplwZ/7x7PKchhMiLbLC8a8/Tk5g==
+X-Received: by 2002:a17:90a:34c9:b0:2b9:a7bf:8701 with SMTP id 98e67ed59e1d1-2bf5ef1c9c7mr1383796a91.21.1716524608227;
+        Thu, 23 May 2024 21:23:28 -0700 (PDT)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2bf5f30aa1bsm460479a91.7.2024.05.23.21.23.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 May 2024 21:23:27 -0700 (PDT)
+Received: by archie.me (Postfix, from userid 1000)
+	id 8189B18305344; Fri, 24 May 2024 11:23:24 +0700 (WIB)
+Date: Fri, 24 May 2024 11:23:23 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.8 00/23] 6.8.11-rc1 review
+Message-ID: <ZlAWO3Z7YaD0_-aA@archie.me>
+References: <20240523130329.745905823@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="CTPA9SvdXJ6T5ZnG"
+Content-Disposition: inline
+In-Reply-To: <20240523130329.745905823@linuxfoundation.org>
+
+
+--CTPA9SvdXJ6T5ZnG
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240523130326.451548488@linuxfoundation.org>
+Content-Transfer-Encoding: quoted-printable
 
-Greg Kroah-Hartman wrote on Thu, May 23, 2024 at 03:12:42PM +0200:
-> This is the start of the stable review cycle for the 5.10.218 release.
-> There are 15 patches in this series, all will be posted as a response
+On Thu, May 23, 2024 at 03:13:27PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.8.11 release.
+> There are 23 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Sat, 25 May 2024 13:03:15 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.218-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
+>=20
 
-Tested bc8c5267b8b7 ("Linux 5.10.218-rc1") on:
-- arm i.MX6ULL (Armadillo 640)
-- arm64 i.MX8MP (Armadillo G4)
+Successfully compiled and installed the kernel on my computer (Acer
+Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
 
-No obvious regression in dmesg or basic tests:
-Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
---
-Dominique Martinet | Asmadeus
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--CTPA9SvdXJ6T5ZnG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZlAWMQAKCRD2uYlJVVFO
+o8VQAP0VBXeBkjyxR9vKizrdWjHQAeFmJX4ajFxSRfY4ScLLtgD8DMbEuCaDQFr8
+VS9UdjMf+VYVgK16xeM6Vz0cFFF62gs=
+=OANL
+-----END PGP SIGNATURE-----
+
+--CTPA9SvdXJ6T5ZnG--
