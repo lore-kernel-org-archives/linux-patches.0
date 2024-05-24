@@ -1,88 +1,213 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F23B53E31
-	for <patches@lists.linux.dev>; Fri, 24 May 2024 11:25:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D318624B
+	for <patches@lists.linux.dev>; Fri, 24 May 2024 11:42:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716549936; cv=none; b=FtAZrweCV+dhY27MDm+j57ay3FhkdzekN36X/JC0sDHFiiktWanRYhIFfTS7jTe46XoIixVco7MvO87Y85uCjn/tJhut3k+83zWhguDwG59HHY+yArK8YVdmG7v+n+7eHpeUIa+UEu5lpydORP9ySZ6j3x1d2cmr0KqNt3MEkYs=
+	t=1716550948; cv=none; b=sDbXEcTpTAALY3PJvmZfB5LS397Dq0CLqiVxJrrHqyse5ybGLWnnRBUt4x2fnC4XTW4wLNH5i7B+2bkZdwBogNuPhmaBn/DtRjwvd/NlreZ9e0IGBHj1MQPEVSc2BtyoRQl+joZAk7cnT5ppvo9zi2Of0/gjoa9X0axth2JB4uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716549936; c=relaxed/simple;
-	bh=PrpWk3jp2AvwvAowQPTKXjwg9ei48L4Q8K5vqVQrmnc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O9+iwMxQ5M90PCJMHlOM60beyXJsVsq+3ltZNiONbl8rP+ywuFVIsKalC7q6tn5s83PuPgMDJQG6hlrXJ3t8eWXHOqmFr8YVNie5qa7gNzSN6I1/cbdoTkKIUCGQAOAZ3Dg4UkHfErla+lgCtfofNicmYg8NTCyI6l2Z4wDyWFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 0507C1C0094; Fri, 24 May 2024 13:25:33 +0200 (CEST)
-Date: Fri, 24 May 2024 13:25:32 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.8 00/23] 6.8.11-rc1 review
-Message-ID: <ZlB5LO+JTbeaCatD@duo.ucw.cz>
-References: <20240523130329.745905823@linuxfoundation.org>
+	s=arc-20240116; t=1716550948; c=relaxed/simple;
+	bh=+mkcUxMgjHTJE7LSoGXd+4Je2IxfRW+Y9Nwx0ewwowA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WAAtpcXdPBXQjgmYRkYpoCuBKyYYtfkOTOi4bRHMr8oDVRKXt794gfmn5tb47ympfpUYVzckocPkmEF0hEM2I/d2JLGNyu64aRGm0kOo3aMOh4A5xpMVMrliYuoYM+rOzuJM0XgCKLBttBUBk7+dYyp5Kc6uk418t/ln4Xp/130=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OZ//+S8a; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OZ//+S8a"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6ab9d3d878bso4504266d6.2
+        for <patches@lists.linux.dev>; Fri, 24 May 2024 04:42:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716550945; x=1717155745; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yUBz/X7v2h9KLktMkCURYwLf7bZdYcqIIXCNuLisKAg=;
+        b=OZ//+S8aGH8fEFdmWtf3jLxtIPbvlV2hXP05vuFssrsP9CxQVyH+iNqZRPOkcZ3+Zv
+         mAhFyBv3t8XL5l1j76RVOwpIgGdsJJuxs9WhdE0DVchG/UqHkUE1s8zTQW83zTzeRwWQ
+         ylXD7UrzuYuANm4SWA77d4eOc8g166R3TsiMtkWsQElqjOCzaqQz1HgtGntH8X2MCBH7
+         nixIgSZiseVNPw8hT0jn6xwQPDnIs1yR5zcC2j9MPYD786kKd2ybj3j4KmZT9rR+oPBG
+         NSRGqb5AKkEUUdAmGzZGgpwW6hf2/DJFpx6bekgo3JK7FsWz28bUlM8UJ3k3NTIntnlG
+         RjrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716550945; x=1717155745;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yUBz/X7v2h9KLktMkCURYwLf7bZdYcqIIXCNuLisKAg=;
+        b=REzVwoUtPOflp3swdEBTEJ1qmz0aN6rwV7mncqhCVdDcm7jrNs5KKZ+5ev3hUE05TU
+         k7RbLzUycmmCijr8XDdWApNimpEEXOhHxwnUeu9YFPQ+nF/nym8hkaqWgNc3jNfslUfn
+         YqYdodv1eyH8NvNEjEaMYFso16t4U46fzTTgrJS3AfvWLFGh8Yn1Jfb5+7J94acP0TUb
+         EyaZgLfPvjIid4/+bTQRo48D33OlI77ue+kR3FjyGcYSHc2GOuKdOZsHxcb4x35Fnyk9
+         yDBEOnQuymL3Vl9GJwWQNhZBceTeXaXsF2zIk0RpE3A4nrqwLA0WcPuyV8kegQ/MLS49
+         mSQg==
+X-Forwarded-Encrypted: i=1; AJvYcCWBhZ06Y4xZMR+txxYm2vN4XzCpc1UDW9/xlrnIm/MbnydVDJLLdQXS7XO7M2rhbXICWNUgGIbiHbueZq/Ea6xKqH4jTTUnbA==
+X-Gm-Message-State: AOJu0Yzil62sgtkfjgAQkbTltUHyfy1Ke/GSxeqwks8p4F1dp7OrQ0ey
+	iNlAJXrrR5kAmVfrLw7DidkBauf4kkOQy2u/TpvYy0C1r+UXtvqAsiGuYwKf+X6nPfoSIUMpNEg
+	s0wm9Y0KxsBft66OJ4Ztf71YttEFeoiZ/PsCRLg==
+X-Google-Smtp-Source: AGHT+IHV7skJSpbmWm1CldNH/dEGLgQ0x0cx+ALY8NjMdQP0Uua1/gEx/s0+aDv4VPVhdjQGxLFULonAEOrcN6GN1uc=
+X-Received: by 2002:a05:6214:31a1:b0:6a0:a98a:4846 with SMTP id
+ 6a1803df08f44-6abbbc3de5dmr17095236d6.17.1716550945617; Fri, 24 May 2024
+ 04:42:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GXaZT0HN9OY27mfA"
-Content-Disposition: inline
-In-Reply-To: <20240523130329.745905823@linuxfoundation.org>
-
-
---GXaZT0HN9OY27mfA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20240523130326.451548488@linuxfoundation.org>
+In-Reply-To: <20240523130326.451548488@linuxfoundation.org>
+From: Anders Roxell <anders.roxell@linaro.org>
+Date: Fri, 24 May 2024 13:42:14 +0200
+Message-ID: <CADYN=9KS5gCW+C8V+bEtHDUUmuApv7Nq9xgHf-LTp887N-VLsg@mail.gmail.com>
+Subject: Re: [PATCH 5.10 00/15] 5.10.218-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi!
-
-> This is the start of the stable review cycle for the 6.8.11 release.
-> There are 23 patches in this series, all will be posted as a response
+On Thu, 23 May 2024 at 15:17, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.10.218 release.
+> There are 15 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Sat, 25 May 2024 13:03:15 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.10.218-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.10.y
+> and the diffstat can be found below.
 
-CIP testing did not find any problems here:
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.8.y
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-6.6, 5.15, 5.4 pass our testing, too:
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 104 total, 104 passed, 0 failed
+* arm64: 31 total, 31 passed, 0 failed
+* i386: 25 total, 25 passed, 0 failed
+* mips: 22 total, 22 passed, 0 failed
+* parisc: 3 total, 0 passed, 3 failed
+* powerpc: 23 total, 23 passed, 0 failed
+* riscv: 9 total, 9 passed, 0 failed
+* s390: 9 total, 9 passed, 0 failed
+* sh: 9 total, 9 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 27 total, 27 passed, 0 failed
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.6.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.15.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.4.y
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mm
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-crypto
+* ltp-cve
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-smoketest
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---GXaZT0HN9OY27mfA
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZlB5LAAKCRAw5/Bqldv6
-8qv3AKCGpz833WdM76DUbKGXBpIhOUalogCgwQ8Gs2ucWgDgrVy7wkVYKm4IaBY=
-=x/fR
------END PGP SIGNATURE-----
-
---GXaZT0HN9OY27mfA--
+--
+Linaro LKFT
+https://lkft.linaro.org
