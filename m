@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7E815FCFC;
-	Mon, 27 May 2024 19:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801B71607AA;
+	Mon, 27 May 2024 19:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837853; cv=none; b=WVKyyB4bp8YywS722JwiC/kmt7lX+LX8MnzOu8IKddPUuNWzFWQep0VqkLNn6dT37kPaj0jP9CkRthO1+WZ7qilrpLgtsp8ccUadn9zDclPuyrqQGaxDfyTDoah1DWiZyZhYReq2lH/KCfgPdAfbS5oRogJMlOLhXUmx/gwbifU=
+	t=1716837855; cv=none; b=EpRL7Ce+3o2awfvEg1LIMdEUjdnIgaB8rLhdiMndgQub/3VeDPJPPlU9qIuotAIAXChHrRVHNnGDKS46IjrJiJdFcZyvhRm5IJYN/PY+cbHyqCvAicV4WF54r9+kUGs4D9L4sxUX03Vq5LUbWmyIRgpVgCb/ps9UE2flsAKtmh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837853; c=relaxed/simple;
-	bh=9GMZeknBZnZRoQWriG0demUMh1PZNX4Ll4jc+Yq5ies=;
+	s=arc-20240116; t=1716837855; c=relaxed/simple;
+	bh=DqmXxHPg2vhXcZr4ol+YOuxnQmWxcuC3T58GsdwSkSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZDPA51lXJsuJlmulbBcJ2OmMZKzaR51QfzHCHWcqFVIINopt/y/wFEJQVpRAwcf7cgggMffQoW7kxSJnP2ftipx8/IUIWBda2/CLcqF1o2CdCm1wzxUpPDr3b9NKmPaC+TebrbGtICOpish6Q0tMwoNgKZmIIuCBHeq+Es6oso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApZ0lSpt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e4yqGjjbxThpDSHmMwmuDC/dqyGWz9/zxSkYsPfEM5BVF8QVO6+TUObk/yXkR9lxf3WJfJXQ1XFhUbsMVNX7xF7ZNjyapZLeSQy96ZC9aFG7bRX/mUNZCy8EwuKtqt3z1UK3fAN+uEQ0hlFj91+G/IPMzDGj2+9zRBUH1M99JC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10uae6hD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApZ0lSpt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3CCC32781;
-	Mon, 27 May 2024 19:24:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10uae6hD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16996C32781;
+	Mon, 27 May 2024 19:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837852;
-	bh=9GMZeknBZnZRoQWriG0demUMh1PZNX4Ll4jc+Yq5ies=;
+	s=korg; t=1716837855;
+	bh=DqmXxHPg2vhXcZr4ol+YOuxnQmWxcuC3T58GsdwSkSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ApZ0lSptaba7tyYF3EQbN349KTxzsLddaHl4SQ/12kb7Efhb8h1JEa/5MvGWiYru8
-	 y/DFm8qwCtfuk/3t7P1AOmJ7JoOrcKpU5q/alf8zYYw6brqZvW3pBefSK2jgUd9Eqs
-	 4sf+dyNBxsZef+/JfDpmB9LMSU70CMNep9KirJuM=
+	b=10uae6hDSWKtCR5+/zBg7dF19i4vmGAt7yCfYzs9w53Df1Fj7ZSpvsU+UMlZ/64po
+	 /DC8zJsate5uXQzdM9fKXPn/g9GBafYryDI9nNXKfJ5qsRFqNgIZBpT92NCy7Kr3Hh
+	 faXlW5jOZVFHVdAaBhO6iFtDsGdEWa9pes9wTkX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixiong Wei <weiguixiong@bytedance.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 168/493] x86/boot: Ignore relocations in .notes sections in walk_relocs() too
-Date: Mon, 27 May 2024 20:52:50 +0200
-Message-ID: <20240527185635.854889864@linuxfoundation.org>
+Subject: [PATCH 6.8 169/493] wifi: ieee80211: fix ieee80211_mle_basic_sta_prof_size_ok()
+Date: Mon, 27 May 2024 20:52:51 +0200
+Message-ID: <20240527185635.890739495@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,52 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixiong Wei <weiguixiong@bytedance.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 76e9762d66373354b45c33b60e9a53ef2a3c5ff2 ]
+[ Upstream commit c121514df0daa800cc500dc2738e0b8a1c54af98 ]
 
-Commit:
+If there was a possibility of an MLE basic STA profile without
+subelements, we might reject it because we account for the one
+octet for sta_info_len twice (it's part of itself, and in the
+fixed portion). Like in ieee80211_mle_reconf_sta_prof_size_ok,
+subtract 1 to adjust that.
 
-  aaa8736370db ("x86, relocs: Ignore relocations in .notes section")
+When reading the elements we did take this into account, and
+since there are always elements, this never really mattered.
 
-... only started ignoring the .notes sections in print_absolute_relocs(),
-but the same logic should also by applied in walk_relocs() to avoid
-such relocations.
-
-[ mingo: Fixed various typos in the changelog, removed extra curly braces from the code. ]
-
-Fixes: aaa8736370db ("x86, relocs: Ignore relocations in .notes section")
-Fixes: 5ead97c84fa7 ("xen: Core Xen implementation")
-Fixes: da1a679cde9b ("Add /sys/kernel/notes")
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20240317150547.24910-1-weiguixiong@bytedance.com
+Fixes: 7b6f08771bf6 ("wifi: ieee80211: Support validating ML station profile length")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240318184907.00bb0b20ed60.I8c41dd6fc14c4b187ab901dea15ade73c79fb98c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/tools/relocs.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/linux/ieee80211.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/tools/relocs.c b/arch/x86/tools/relocs.c
-index b029fb81ebeee..e7a44a7f617fb 100644
---- a/arch/x86/tools/relocs.c
-+++ b/arch/x86/tools/relocs.c
-@@ -746,6 +746,15 @@ static void walk_relocs(int (*process)(struct section *sec, Elf_Rel *rel,
- 		if (!(sec_applies->shdr.sh_flags & SHF_ALLOC)) {
- 			continue;
- 		}
-+
-+		/*
-+		 * Do not perform relocations in .notes sections; any
-+		 * values there are meant for pre-boot consumption (e.g.
-+		 * startup_xen).
-+		 */
-+		if (sec_applies->shdr.sh_type == SHT_NOTE)
-+			continue;
-+
- 		sh_symtab = sec_symtab->symtab;
- 		sym_strtab = sec_symtab->link->strtab;
- 		for (j = 0; j < sec->shdr.sh_size/sizeof(Elf_Rel); j++) {
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index 83c4d060a5596..b69771a2e4e74 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -5145,7 +5145,7 @@ static inline bool ieee80211_mle_basic_sta_prof_size_ok(const u8 *data,
+ 		info_len += 1;
+ 
+ 	return prof->sta_info_len >= info_len &&
+-	       fixed + prof->sta_info_len <= len;
++	       fixed + prof->sta_info_len - 1 <= len;
+ }
+ 
+ /**
 -- 
 2.43.0
 
