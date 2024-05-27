@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A2A15ECFF;
-	Mon, 27 May 2024 19:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139301754B;
+	Mon, 27 May 2024 19:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836745; cv=none; b=LHYEBmYgMWOlbgcfv8qfHV2hiZQS6sQ2Ht3j1p6Cww5sY5Sae0CXu/ThJcPh59YiLCCm+oMPKaF8KJyJOgD0pEfPvwAKQfc01lT2uqcjo2WqgBGJsk9VHH0S0kJVu3xPnoiQK9JdfBUTblLBH55dKkHf1VicZG9tLl3b59dM7cc=
+	t=1716836748; cv=none; b=W5/KzNvbCEEX9i4+wFf1X8jRtcBpgGg5JbDDWFp7NtPnhyQ+yFAjZRtPpfxcTlx7vrkLo34MZQZlpJrfLlJEGXL8ZQg9nPnBMH/jZLnbmr+aNPZhfMmwEsxGDqxg8GxyL9bFwoSUpgkpNjRwhkszcgeM7HOwLvPsnQ2QuvpSCKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836745; c=relaxed/simple;
-	bh=96BcwpnLesuWK64bciYxC9ZH80HWpeRSVvzlX//qNHE=;
+	s=arc-20240116; t=1716836748; c=relaxed/simple;
+	bh=32ClpFUauyhA2EtfpjyGZbvECIrenUiyINjgUBaKIzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MOO0/vEU/1utCdsYr27kaSSKRtuJ45/6ByEH68p08EImh6A/0ML4cE/RslhjuSWH6ZtypcfcM/1sZBjFJ1OsmWtWuE+oGgg2PMvZJwY8zYY9ihW/3XH+AJPh6VrGZU2f8IKvWhFjfuAGP1EZyjAXFgKUGLHsGgoU1d++htbA+Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZ3ZmKfC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GKec9f92LFT5eINouT/R5PuXFyfAgh7p20sM5hj3j7dBin6LnQ9riIhSBdrPuzYrE3WtdrgNUGGb/OlAb+jO1X+8aHK8HFy+M34T7vHgvYwa+moTp1fuFeFH1eTyfrw9uOximCDSfuIEw71bCnMYZv89bnMymkIFJOm/3yTXJ+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKDh5wd0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZ3ZmKfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0A3C2BBFC;
-	Mon, 27 May 2024 19:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKDh5wd0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BF8FC2BBFC;
+	Mon, 27 May 2024 19:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836745;
-	bh=96BcwpnLesuWK64bciYxC9ZH80HWpeRSVvzlX//qNHE=;
+	s=korg; t=1716836748;
+	bh=32ClpFUauyhA2EtfpjyGZbvECIrenUiyINjgUBaKIzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xZ3ZmKfCWOIwQ2MI/hhlgk06bqJ31HtVnrNxL+KjEIazCORuZ6GqkzgVpszcm3oM9
-	 lgANWsmi677VZ2qoAOzrq/K2+NQ0BWm6lykRvT+qbCglyBN0hV+/DnGTo1VY9gmXRk
-	 0iPPTm5/rRkIssERxp8kMiczIny5zfDQu3IEOzlU=
+	b=xKDh5wd08qICdNTkxRtX9WNWnkc8XSHRI5F+4z6INm0FVMPKhVa9alT537uY0L6eD
+	 J6jE8aTCWrL4QnBYleqxC40DMT6+b6G3Dj+QT4MPZ89OHdWRU3ZMF+9xAQjNV44j5T
+	 A/+EmwEQqF2JozfmKunR6oLJQ52dgZ401vLt5rbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 170/427] gfs2: finish_xmote cleanup
-Date: Mon, 27 May 2024 20:53:37 +0200
-Message-ID: <20240527185618.189861636@linuxfoundation.org>
+Subject: [PATCH 6.9 171/427] gfs2: do_xmote fixes
+Date: Mon, 27 May 2024 20:53:38 +0200
+Message-ID: <20240527185618.257164547@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,101 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 1cd28e15864054f3c48baee9eecda1c0441c48ac ]
+[ Upstream commit 9947a06d29c0a30da88cdc6376ca5fd87083e130 ]
 
-Currently, function finish_xmote() takes and releases the glock
-spinlock.  However, all of its callers immediately take that spinlock
-again, so it makes more sense to take the spin lock before calling
-finish_xmote() already.
+Function do_xmote() is called with the glock spinlock held.  Commit
+86934198eefa added a 'goto skip_inval' statement at the beginning of the
+function to further below where the glock spinlock is expected not to be
+held anymore.  Then it added code there that requires the glock spinlock
+to be held.  This doesn't make sense; fix this up by dropping and
+retaking the spinlock where needed.
 
-With that, thaw_glock() is the only place that sets the GLF_HAVE_REPLY
-flag outside of the glock spinlock, but it also takes that spinlock
-immediately thereafter.  Change that to set the bit when the spinlock is
-already held.  This allows to switch from test_and_clear_bit() to
-test_bit() and clear_bit() in glock_work_func().
+In addition, when ->lm_lock() returned an error, do_xmote() didn't fail
+the locking operation, and simply left the glock hanging; fix that as
+well.  (This is a much older error.)
 
+Fixes: 86934198eefa ("gfs2: Clear flags when withdraw prevents xmote")
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Stable-dep-of: 9947a06d29c0 ("gfs2: do_xmote fixes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ fs/gfs2/glock.c | 44 +++++++++++++++++++++++++-------------------
+ 1 file changed, 25 insertions(+), 19 deletions(-)
 
 diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 1bf0d751ece0a..0c719fcd4fbc5 100644
+index 0c719fcd4fbc5..2507fe34cbdf0 100644
 --- a/fs/gfs2/glock.c
 +++ b/fs/gfs2/glock.c
-@@ -617,7 +617,6 @@ static void finish_xmote(struct gfs2_glock *gl, unsigned int ret)
- 	struct gfs2_holder *gh;
- 	unsigned state = ret & LM_OUT_ST_MASK;
+@@ -713,6 +713,7 @@ __acquires(&gl->gl_lockref.lock)
+ {
+ 	const struct gfs2_glock_operations *glops = gl->gl_ops;
+ 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
++	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
+ 	unsigned int lck_flags = (unsigned int)(gh ? gh->gh_flags : 0);
+ 	int ret;
  
--	spin_lock(&gl->gl_lockref.lock);
- 	trace_gfs2_glock_state_change(gl, state);
- 	state_change(gl, state);
- 	gh = find_first_waiter(gl);
-@@ -665,7 +664,6 @@ static void finish_xmote(struct gfs2_glock *gl, unsigned int ret)
- 			       gl->gl_target, state);
- 			GLOCK_BUG_ON(gl, 1);
+@@ -741,6 +742,9 @@ __acquires(&gl->gl_lockref.lock)
+ 	    (gl->gl_state == LM_ST_EXCLUSIVE) ||
+ 	    (lck_flags & (LM_FLAG_TRY|LM_FLAG_TRY_1CB)))
+ 		clear_bit(GLF_BLOCKING, &gl->gl_flags);
++	if (!glops->go_inval && !glops->go_sync)
++		goto skip_inval;
++
+ 	spin_unlock(&gl->gl_lockref.lock);
+ 	if (glops->go_sync) {
+ 		ret = glops->go_sync(gl);
+@@ -753,6 +757,7 @@ __acquires(&gl->gl_lockref.lock)
+ 				fs_err(sdp, "Error %d syncing glock \n", ret);
+ 				gfs2_dump_glock(NULL, gl, true);
+ 			}
++			spin_lock(&gl->gl_lockref.lock);
+ 			goto skip_inval;
  		}
--		spin_unlock(&gl->gl_lockref.lock);
- 		return;
+ 	}
+@@ -773,9 +778,10 @@ __acquires(&gl->gl_lockref.lock)
+ 		glops->go_inval(gl, target == LM_ST_DEFERRED ? 0 : DIO_METADATA);
+ 		clear_bit(GLF_INVALIDATE_IN_PROGRESS, &gl->gl_flags);
+ 	}
++	spin_lock(&gl->gl_lockref.lock);
+ 
+ skip_inval:
+-	gfs2_glock_hold(gl);
++	gl->gl_lockref.count++;
+ 	/*
+ 	 * Check for an error encountered since we called go_sync and go_inval.
+ 	 * If so, we can't withdraw from the glock code because the withdraw
+@@ -817,37 +823,37 @@ __acquires(&gl->gl_lockref.lock)
+ 			 */
+ 			clear_bit(GLF_LOCK, &gl->gl_flags);
+ 			clear_bit(GLF_DEMOTE_IN_PROGRESS, &gl->gl_flags);
+-			gfs2_glock_queue_work(gl, GL_GLOCK_DFT_HOLD);
+-			goto out;
++			__gfs2_glock_queue_work(gl, GL_GLOCK_DFT_HOLD);
++			return;
+ 		} else {
+ 			clear_bit(GLF_INVALIDATE_IN_PROGRESS, &gl->gl_flags);
+ 		}
  	}
  
-@@ -688,7 +686,6 @@ static void finish_xmote(struct gfs2_glock *gl, unsigned int ret)
- 	}
- out:
- 	clear_bit(GLF_LOCK, &gl->gl_flags);
--	spin_unlock(&gl->gl_lockref.lock);
- }
+-	if (sdp->sd_lockstruct.ls_ops->lm_lock)	{
+-		struct lm_lockstruct *ls = &sdp->sd_lockstruct;
++	if (ls->ls_ops->lm_lock) {
++		spin_unlock(&gl->gl_lockref.lock);
++		ret = ls->ls_ops->lm_lock(gl, target, lck_flags);
++		spin_lock(&gl->gl_lockref.lock);
  
- static bool is_system_glock(struct gfs2_glock *gl)
-@@ -835,15 +832,19 @@ __acquires(&gl->gl_lockref.lock)
+-		/* lock_dlm */
+-		ret = sdp->sd_lockstruct.ls_ops->lm_lock(gl, target, lck_flags);
  		if (ret == -EINVAL && gl->gl_target == LM_ST_UNLOCKED &&
  		    target == LM_ST_UNLOCKED &&
  		    test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
-+			spin_lock(&gl->gl_lockref.lock);
- 			finish_xmote(gl, target);
--			gfs2_glock_queue_work(gl, 0);
-+			__gfs2_glock_queue_work(gl, 0);
-+			spin_unlock(&gl->gl_lockref.lock);
+-			spin_lock(&gl->gl_lockref.lock);
+-			finish_xmote(gl, target);
+-			__gfs2_glock_queue_work(gl, 0);
+-			spin_unlock(&gl->gl_lockref.lock);
++			/*
++			 * The lockspace has been released and the lock has
++			 * been unlocked implicitly.
++			 */
  		} else if (ret) {
  			fs_err(sdp, "lm_lock ret %d\n", ret);
- 			GLOCK_BUG_ON(gl, !gfs2_withdrawing_or_withdrawn(sdp));
+-			GLOCK_BUG_ON(gl, !gfs2_withdrawing_or_withdrawn(sdp));
++			target = gl->gl_state | LM_OUT_ERROR;
++		} else {
++			/* The operation will be completed asynchronously. */
++			return;
  		}
- 	} else { /* lock_nolock */
-+		spin_lock(&gl->gl_lockref.lock);
- 		finish_xmote(gl, target);
--		gfs2_glock_queue_work(gl, 0);
-+		__gfs2_glock_queue_work(gl, 0);
-+		spin_unlock(&gl->gl_lockref.lock);
+-	} else { /* lock_nolock */
+-		spin_lock(&gl->gl_lockref.lock);
+-		finish_xmote(gl, target);
+-		__gfs2_glock_queue_work(gl, 0);
+-		spin_unlock(&gl->gl_lockref.lock);
  	}
- out:
- 	spin_lock(&gl->gl_lockref.lock);
-@@ -1099,11 +1100,12 @@ static void glock_work_func(struct work_struct *work)
- 	struct gfs2_glock *gl = container_of(work, struct gfs2_glock, gl_work.work);
- 	unsigned int drop_refs = 1;
- 
--	if (test_and_clear_bit(GLF_REPLY_PENDING, &gl->gl_flags)) {
-+	spin_lock(&gl->gl_lockref.lock);
-+	if (test_bit(GLF_REPLY_PENDING, &gl->gl_flags)) {
-+		clear_bit(GLF_REPLY_PENDING, &gl->gl_flags);
- 		finish_xmote(gl, gl->gl_reply);
- 		drop_refs++;
- 	}
+-out:
 -	spin_lock(&gl->gl_lockref.lock);
- 	if (test_bit(GLF_PENDING_DEMOTE, &gl->gl_flags) &&
- 	    gl->gl_state != LM_ST_UNLOCKED &&
- 	    gl->gl_demote_state != LM_ST_EXCLUSIVE) {
-@@ -2176,8 +2178,11 @@ static void thaw_glock(struct gfs2_glock *gl)
- 		return;
- 	if (!lockref_get_not_dead(&gl->gl_lockref))
- 		return;
 +
-+	spin_lock(&gl->gl_lockref.lock);
- 	set_bit(GLF_REPLY_PENDING, &gl->gl_flags);
--	gfs2_glock_queue_work(gl, 0);
++	/* Complete the operation now. */
++	finish_xmote(gl, target);
 +	__gfs2_glock_queue_work(gl, 0);
-+	spin_unlock(&gl->gl_lockref.lock);
  }
  
  /**
