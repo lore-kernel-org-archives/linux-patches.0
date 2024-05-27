@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC0217E90E;
-	Mon, 27 May 2024 19:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6D217E90E;
+	Mon, 27 May 2024 19:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837162; cv=none; b=eSiHVxg9ZUXKFT2TQdcgMMN3oXTjvWu58MrRZw6rTe1bSnDztluv9iQ+o5AII3MrMOcGktEQNLu5w4yvKPgc7jOt5R5ZEKbFMf8PPFwApyknNG43HtzTockG/E+C7NqvxTGgjiY0ReGR0yyuKMgqhE9VX7aw433/jXrlIgbIPZU=
+	t=1716837165; cv=none; b=UGxMrnSX/dDsrHSt63nNl+vsy2HoabaWQMhNSJDdjxSclFokek52Y/3IW7j5fJIrBhwCOwO2h+djS4xz2XgwzH6xUU3RWvvawIIvopTqjykRKMtsZEUu2DjRNPccZ57Cbu9LhpIWI1ifHdIdUU3Y6sHkdT6ZepJ7fz4g4Y2UNXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837162; c=relaxed/simple;
-	bh=CXW7Y1MTZnk1eO/wtu6dIzQnSMhjIpapW29azKIDTGY=;
+	s=arc-20240116; t=1716837165; c=relaxed/simple;
+	bh=jcb1mabQ332I/TRlyIxIOV6ygtbBP8cwbMHjZ1O8NN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6Qy/ShEWtMuooFeAfQrNPbZw8ff5q3jNTtbE6zG8Zo60AJQxq3Afhc0WUZcSLt5938CAWZ/v3GnndFYo3y5jDJW85yl6J+l2oP8nMOOYUTxhKMycCxLZH0YAemU4htVVPAbdEYl+BsXmsBiIQzqshgm4V5bRcsJRm+29JY1JPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wabdxrr6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=isiLAJkL9S0iYFE+lK2IPGt9pXTzV6WdqhdLsqjgh9HhjzrijXfvYIQ/gBrccT2/5PqD+n0RIMboNQF5sc5nXzpRbq5W9YloY5k5rwlKhd4YSHv7j1g/yraqG8go8X/d+5B0LLMes9G/KZoQgjFrI7FTZFDhdhskfAibHoX9M3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBcf60Tg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wabdxrr6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE88C2BBFC;
-	Mon, 27 May 2024 19:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBcf60Tg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035C3C2BBFC;
+	Mon, 27 May 2024 19:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837162;
-	bh=CXW7Y1MTZnk1eO/wtu6dIzQnSMhjIpapW29azKIDTGY=;
+	s=korg; t=1716837165;
+	bh=jcb1mabQ332I/TRlyIxIOV6ygtbBP8cwbMHjZ1O8NN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wabdxrr6uZzhsteutcKgnawnW+HD5B0bvzMLsrlN9+SN6pcgE/68tjkJFdhk/lKri
-	 pOdzn+wcYyHYJVk7fo7Z/0zZsY9d9bGSy+R1Y63QScZztgRz+j6BqXBScUKsakAJIS
-	 cE+Rhp4etYEaxjQfPP21bsHOXpADUmVd+dr75pOk=
+	b=gBcf60TgXvkNQgBGoca4X45XNLvxLycE2PlMDaojGHu1+WFy8cOA3psGXf6k3t/4r
+	 XxTiCc5LH6wu+YnMMQx9IGzbmj78yPkzrFCZPqCbY/5mV7Zmr91Z0qssRa9EKC7I6T
+	 ea5sJGvsz6tO/6Lzq4dlbwLKagY0mHF6SwuChTr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 317/427] platform/x86: xiaomi-wmi: Fix race condition when reporting key events
-Date: Mon, 27 May 2024 20:56:04 +0200
-Message-ID: <20240527185631.355312808@linuxfoundation.org>
+Subject: [PATCH 6.9 335/427] drm/bridge: tc358775: Dont log an error when DSI host cant be found
+Date: Mon, 27 May 2024 20:56:22 +0200
+Message-ID: <20240527185632.521624023@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -46,98 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 290680c2da8061e410bcaec4b21584ed951479af ]
+[ Upstream commit 272377aa0e3dddeec3f568c8bb9d12c7a79d8ef5 ]
 
-Multiple WMI events can be received concurrently, so multiple instances
-of xiaomi_wmi_notify() can be active at the same time. Since the input
-device is shared between those handlers, the key input sequence can be
-disturbed.
+Given that failing to find a DSI host causes the driver to defer probe,
+make use of dev_err_probe() to log the reason. This makes the defer
+probe reason available and avoids alerting userspace about something
+that is not necessarily an error.
 
-Fix this by protecting the key input sequence with a mutex.
-
-Compile-tested only.
-
-Fixes: edb73f4f0247 ("platform/x86: wmi: add Xiaomi WMI key driver")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20240402143059.8456-2-W_Armin@gmx.de
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: b26975593b17 ("display/drm/bridge: TC358775 DSI/LVDS driver")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-6-619a28148e5c@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/xiaomi-wmi.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/gpu/drm/bridge/tc358775.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/xiaomi-wmi.c b/drivers/platform/x86/xiaomi-wmi.c
-index 54a2546bb93bf..be80f0bda9484 100644
---- a/drivers/platform/x86/xiaomi-wmi.c
-+++ b/drivers/platform/x86/xiaomi-wmi.c
-@@ -2,8 +2,10 @@
- /* WMI driver for Xiaomi Laptops */
+diff --git a/drivers/gpu/drm/bridge/tc358775.c b/drivers/gpu/drm/bridge/tc358775.c
+index 90a89d70d8328..fea4f00a20f83 100644
+--- a/drivers/gpu/drm/bridge/tc358775.c
++++ b/drivers/gpu/drm/bridge/tc358775.c
+@@ -610,10 +610,8 @@ static int tc_attach_host(struct tc_data *tc)
+ 						};
  
- #include <linux/acpi.h>
-+#include <linux/device.h>
- #include <linux/input.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/wmi.h>
+ 	host = of_find_mipi_dsi_host_by_node(tc->host_node);
+-	if (!host) {
+-		dev_err(dev, "failed to find dsi host\n");
+-		return -EPROBE_DEFER;
+-	}
++	if (!host)
++		return dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n");
  
- #include <uapi/linux/input-event-codes.h>
-@@ -20,12 +22,21 @@
- 
- struct xiaomi_wmi {
- 	struct input_dev *input_dev;
-+	struct mutex key_lock;	/* Protects the key event sequence */
- 	unsigned int key_code;
- };
- 
-+static void xiaomi_mutex_destroy(void *data)
-+{
-+	struct mutex *lock = data;
-+
-+	mutex_destroy(lock);
-+}
-+
- static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
- {
- 	struct xiaomi_wmi *data;
-+	int ret;
- 
- 	if (wdev == NULL || context == NULL)
- 		return -EINVAL;
-@@ -35,6 +46,11 @@ static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
- 		return -ENOMEM;
- 	dev_set_drvdata(&wdev->dev, data);
- 
-+	mutex_init(&data->key_lock);
-+	ret = devm_add_action_or_reset(&wdev->dev, xiaomi_mutex_destroy, &data->key_lock);
-+	if (ret < 0)
-+		return ret;
-+
- 	data->input_dev = devm_input_allocate_device(&wdev->dev);
- 	if (data->input_dev == NULL)
- 		return -ENOMEM;
-@@ -59,10 +75,12 @@ static void xiaomi_wmi_notify(struct wmi_device *wdev, union acpi_object *dummy)
- 	if (data == NULL)
- 		return;
- 
-+	mutex_lock(&data->key_lock);
- 	input_report_key(data->input_dev, data->key_code, 1);
- 	input_sync(data->input_dev);
- 	input_report_key(data->input_dev, data->key_code, 0);
- 	input_sync(data->input_dev);
-+	mutex_unlock(&data->key_lock);
- }
- 
- static const struct wmi_device_id xiaomi_wmi_id_table[] = {
+ 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
+ 	if (IS_ERR(dsi)) {
 -- 
 2.43.0
 
