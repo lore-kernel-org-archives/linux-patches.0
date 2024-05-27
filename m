@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63DE262BE;
-	Mon, 27 May 2024 19:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6311F262BE;
+	Mon, 27 May 2024 19:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838167; cv=none; b=DUiw7GJGSTGfAAQWY5K9ULtqK+H/e3BeC5xueOqfICh8ZAUeEXro+e3mnVbo9dv1WBPlHsyjyz+lsfxFC/nBJV8FW01qgDHWnIR387L0tPnfUXzsSpCJcLJctguGXpzD/kCvCqkBK7cpSlxws5NU37ihJgPVyfHu6fcY9emt9z8=
+	t=1716838170; cv=none; b=I/3N+ca/oal684HCsupHZZ/P69hGV86yRF6VZXsVfpXWnKI1mTk7h51ga+CFYvOPkTwVY6XU24DZlur4j7XRekrBpVPVV/jzbDZ6QPadaF+WrLPYkp4TsqZTwnAPnRRNb1YNSxgJJZQKPEszBgOlXdo9nFxcGgKs2ZXOeLvMBT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838167; c=relaxed/simple;
-	bh=dG4Of5iXkjIBhC/sipDeqIngb1kp0EoHNTcQbS/+1gM=;
+	s=arc-20240116; t=1716838170; c=relaxed/simple;
+	bh=4ze4FDo+4S8E4RrO2QizEHfsN7Xhtol9tGwQpzMQYtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uw2SIYLGHdmOUAnX3wJxfNpMXCor5AnPfJu5rYSFGwmanDMRSBas5JcyZElwo0U9IgsV7322xAyl1NJYdS3U6PRfn2XUR7/yJyL7qnG8pNy8y6VlOeikpImuKf7S/+4o198MJXCzNVDEHiHOlmO5Q08STZPCW6jUpzpFlumk/GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CL+ynlHG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gJfGcCCV4BsVe9nvgLzaSySH7a+Ctyf/q2THIq6MjLloqfDv3aMQUe6f/T/sGchbU0nX5Bt1le7stvW4ti09XbGqH3Es/VFuGHPuCmvEHcrPkgH8r86+DBwsQHEDESyYeRtFMa1GlsOJawWqNmwF2x8Hml/wnu4A8qfdMy0d9hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2Mxree9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CL+ynlHG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4EAC2BBFC;
-	Mon, 27 May 2024 19:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2Mxree9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB63C2BBFC;
+	Mon, 27 May 2024 19:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838167;
-	bh=dG4Of5iXkjIBhC/sipDeqIngb1kp0EoHNTcQbS/+1gM=;
+	s=korg; t=1716838170;
+	bh=4ze4FDo+4S8E4RrO2QizEHfsN7Xhtol9tGwQpzMQYtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CL+ynlHGMm0hcQzYJMKIc81jKzCv/6LSmItioa7Ltq6Eh/Rh2K+FHNKgNB7BA8dSF
-	 EMP6Xl0uF/CeZCKP9dP7Fa+mhBeGW4AoaDG49wZLfAZisQNGEunILdDZuzeTbRZgCo
-	 v+wCWHu8gddLtPS/gLf3J6T327+HCx06MFU6wuYY=
+	b=A2Mxree91OZ/XWr/8FHNZPIGsh1XhxbEvRryP1IPqblz7z87nDRV2VTl1L7P+OEJM
+	 isArPGKeWJNzCfK80kQ8+hpTbbfWToq782iWEak5dU4oR3NIXZSUGKLm7ObS26/a++
+	 yIJlK4pcu1WhEXCJhpYrdXHMI9hjfhd9fYdjDMio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 291/493] wifi: mwl8k: initialize cmd->addr[] properly
-Date: Mon, 27 May 2024 20:54:53 +0200
-Message-ID: <20240527185639.827080490@linuxfoundation.org>
+Subject: [PATCH 6.8 292/493] HID: amd_sfh: Handle "no sensors" in PM operations
+Date: Mon, 27 May 2024 20:54:54 +0200
+Message-ID: <20240527185639.854945457@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,36 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 1d60eabb82694e58543e2b6366dae3e7465892a5 ]
+[ Upstream commit 077e3e3bc84a51891e732507bbbd9acf6e0e4c8b ]
 
-This loop is supposed to copy the mac address to cmd->addr but the
-i++ increment is missing so it copies everything to cmd->addr[0] and
-only the last address is recorded.
+Resume or suspend each sensor device based on the num_hid_devices.
+Therefore, add a check to handle the special case where no sensors are
+present.
 
-Fixes: 22bedad3ce11 ("net: convert multicast list to list_head")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/b788be9a-15f5-4cca-a3fe-79df4c8ce7b2@moroto.mountain
+Fixes: 93ce5e0231d7 ("HID: amd_sfh: Implement SFH1.1 functionality")
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwl8k.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwl8k.c b/drivers/net/wireless/marvell/mwl8k.c
-index 13bcb123d1223..c0ecd769ada76 100644
---- a/drivers/net/wireless/marvell/mwl8k.c
-+++ b/drivers/net/wireless/marvell/mwl8k.c
-@@ -2718,7 +2718,7 @@ __mwl8k_cmd_mac_multicast_adr(struct ieee80211_hw *hw, int allmulti,
- 		cmd->action |= cpu_to_le16(MWL8K_ENABLE_RX_MULTICAST);
- 		cmd->numaddr = cpu_to_le16(mc_count);
- 		netdev_hw_addr_list_for_each(ha, mc_list) {
--			memcpy(cmd->addr[i], ha->addr, ETH_ALEN);
-+			memcpy(cmd->addr[i++], ha->addr, ETH_ALEN);
- 		}
- 	}
+diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
+index 9dbe6f4cb2942..c89e6a2a58736 100644
+--- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
++++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
+@@ -227,6 +227,11 @@ static void amd_sfh_resume(struct amd_mp2_dev *mp2)
+ 	struct amd_mp2_sensor_info info;
+ 	int i, status;
  
++	if (!cl_data->is_any_sensor_enabled) {
++		amd_sfh_clear_intr(mp2);
++		return;
++	}
++
+ 	for (i = 0; i < cl_data->num_hid_devices; i++) {
+ 		if (cl_data->sensor_sts[i] == SENSOR_DISABLED) {
+ 			info.sensor_idx = cl_data->sensor_idx[i];
+@@ -252,6 +257,11 @@ static void amd_sfh_suspend(struct amd_mp2_dev *mp2)
+ 	struct amdtp_cl_data *cl_data = mp2->cl_data;
+ 	int i, status;
+ 
++	if (!cl_data->is_any_sensor_enabled) {
++		amd_sfh_clear_intr(mp2);
++		return;
++	}
++
+ 	for (i = 0; i < cl_data->num_hid_devices; i++) {
+ 		if (cl_data->sensor_idx[i] != HPD_IDX &&
+ 		    cl_data->sensor_sts[i] == SENSOR_ENABLED) {
 -- 
 2.43.0
 
