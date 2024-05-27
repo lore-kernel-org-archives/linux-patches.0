@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2B617E90E;
-	Mon, 27 May 2024 19:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2530D17E90E;
+	Mon, 27 May 2024 19:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836957; cv=none; b=ZSAHSCyMdropOtV7vCr9oqtu/mzgbbUKZuBapc6uWyKFmypK6Y5FL95dkmfiFxtCPBLws5HISj1jEQvBdc08ym57TyxUu6bY0YEFYLonFgKYJ1c9POQuj4v7LEFy7HeFzXyxDRaf2njiJBzkhgLqAIJVtZMgcAuZpdCPhU96m2I=
+	t=1716836959; cv=none; b=fPv9N1LVIM+H7n2lT6YNWd+WbRfBk+dTRO8vkDWa3tl8Mt0XcxXbP+niPLEezpetxNzj29+n8NSSY1FLX90md0E1z5KVvz6XVrNk30cT8h+vvXCdp+G234CtDmtbJLiosW+QtIiadBZ4fnk9cy/+9X5LzKtZGE+5795x0W7TIl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836957; c=relaxed/simple;
-	bh=+86ns46RJaJIKzPs9m5hKMsHweXBFjfnH60ghlLozyw=;
+	s=arc-20240116; t=1716836959; c=relaxed/simple;
+	bh=HzPOZHy52jFV0+l1WICobp6NlkPgQFaAUKnZra7fBKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PatjTvs9Lg/ccasprF/8A3GJv8UCM1BBeFfbEoFkxW16m8nnvPJTsLNF88zCNiXT9co6Xs2A8/p2C7Qu5bQubj6r7bomLm/k9bdGoxyDWLx3BzyEpSM22hBUlsewrTi/BiFvpOJNMv4DGngTsLlw1wqkulNIqxZE10AITpNOTG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdtRMV50; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q86twFEVpZgSLEpR5GK8da1qt6yUyD4ODJTEq8oLipiaW5pkd1C5lDctc7XnfQm/dWxfDyD8uN2F/GRmWNldBrm9EXS3V0kXSLJjNEsaKWQF887YXpdPzaU6r/djD1g0xDzk+35bpsCfW0CRbsS/lYyPixfFuVNaE4T+WSwLEmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPlklsNj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdtRMV50"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22980C2BBFC;
-	Mon, 27 May 2024 19:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPlklsNj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2B5C2BBFC;
+	Mon, 27 May 2024 19:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836956;
-	bh=+86ns46RJaJIKzPs9m5hKMsHweXBFjfnH60ghlLozyw=;
+	s=korg; t=1716836959;
+	bh=HzPOZHy52jFV0+l1WICobp6NlkPgQFaAUKnZra7fBKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdtRMV505GvU2/r6F0iVwZW4CXSTSyyPjmGaHO5YOpgo1kZiCWdvIJx0WPm/4elc/
-	 Aw5rHLxUOyDTCm6fru/ZJRWTsGm2h6yqemNWCMYuFqWhjKULgv0AzB1/ukr0IiqeJ0
-	 PHjbx7qTJFHjQsaqt/nH3WF+WI5Czhwd7N54+WeA=
+	b=lPlklsNj9FisvPzGA5F/kMNcU6HwV2yx8JyRb//8UeHvq1mJ7j+Yjp1nUAeWMcHqQ
+	 FnxEZkIphKgXjRLM1RSkI/p8bifqXri3Fj3f2wLlg3fr7Nt/2GQVv/Vy+7XjTvOuYn
+	 O+57alhWvYh8r3SMzU0k/qj95vbd7z8j4HZqF+Pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akiva Goldberger <agoldberger@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 254/427] net/mlx5: Add a timeout to acquire the command queue semaphore
-Date: Mon, 27 May 2024 20:55:01 +0200
-Message-ID: <20240527185626.248561197@linuxfoundation.org>
+Subject: [PATCH 6.9 228/427] m68k: Fix spinlock race in kernel thread creation
+Date: Mon, 27 May 2024 20:54:35 +0200
+Message-ID: <20240527185623.776658845@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,154 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akiva Goldberger <agoldberger@nvidia.com>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-[ Upstream commit 485d65e1357123a697c591a5aeb773994b247ad7 ]
+[ Upstream commit da89ce46f02470ef08f0f580755d14d547da59ed ]
 
-Prevent forced completion handling on an entry that has not yet been
-assigned an index, causing an out of bounds access on idx = -22.
-Instead of waiting indefinitely for the sem, blocking flow now waits for
-index to be allocated or a sem acquisition timeout before beginning the
-timer for FW completion.
+Context switching does take care to retain the correct lock owner across
+the switch from 'prev' to 'next' tasks.  This does rely on interrupts
+remaining disabled for the entire duration of the switch.
 
-Kernel log example:
-mlx5_core 0000:06:00.0: wait_func_handle_exec_timeout:1128:(pid 185911): cmd[-22]: CREATE_UCTX(0xa04) No done completion
+This condition is guaranteed for normal process creation and context
+switching between already running processes, because both 'prev' and
+'next' already have interrupts disabled in their saved copies of the
+status register.
 
-Fixes: 8e715cd613a1 ("net/mlx5: Set command entry semaphore up once got index free")
-Signed-off-by: Akiva Goldberger <agoldberger@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240509112951.590184-5-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The situation is different for newly created kernel threads.  The status
+register is set to PS_S in copy_thread(), which does leave the IPL at 0.
+Upon restoring the 'next' thread's status register in switch_to() aka
+resume(), interrupts then become enabled prematurely.  resume() then
+returns via ret_from_kernel_thread() and schedule_tail() where run queue
+lock is released (see finish_task_switch() and finish_lock_switch()).
+
+A timer interrupt calling scheduler_tick() before the lock is released
+in finish_task_switch() will find the lock already taken, with the
+current task as lock owner.  This causes a spinlock recursion warning as
+reported by Guenter Roeck.
+
+As far as I can ascertain, this race has been opened in commit
+533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
+but I haven't done a detailed study of kernel history so it may well
+predate that commit.
+
+Interrupts cannot be disabled in the saved status register copy for
+kernel threads (init will complain about interrupts disabled when
+finally starting user space).  Disable interrupts temporarily when
+switching the tasks' register sets in resume().
+
+Note that a simple oriw 0x700,%sr after restoring sr is not enough here
+- this leaves enough of a race for the 'spinlock recursion' warning to
+still be observed.
+
+Tested on ARAnyM and qemu (Quadra 800 emulation).
+
+Fixes: 533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/07811b26-677c-4d05-aeb4-996cd880b789@roeck-us.net
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20240411033631.16335-1-schmitzmic@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 41 +++++++++++++++----
- include/linux/mlx5/driver.h                   |  1 +
- 2 files changed, 33 insertions(+), 9 deletions(-)
+ arch/m68k/kernel/entry.S | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index 4957412ff1f65..511e7fee39ac5 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -969,19 +969,32 @@ static void cmd_work_handler(struct work_struct *work)
- 	bool poll_cmd = ent->polling;
- 	struct mlx5_cmd_layout *lay;
- 	struct mlx5_core_dev *dev;
--	unsigned long cb_timeout;
--	struct semaphore *sem;
-+	unsigned long timeout;
- 	unsigned long flags;
- 	int alloc_ret;
- 	int cmd_mode;
+diff --git a/arch/m68k/kernel/entry.S b/arch/m68k/kernel/entry.S
+index 3bcdd32a6b366..338b474910f74 100644
+--- a/arch/m68k/kernel/entry.S
++++ b/arch/m68k/kernel/entry.S
+@@ -430,7 +430,9 @@ resume:
+ 	movec	%a0,%dfc
  
-+	complete(&ent->handling);
-+
- 	dev = container_of(cmd, struct mlx5_core_dev, cmd);
--	cb_timeout = msecs_to_jiffies(mlx5_tout_ms(dev, CMD));
-+	timeout = msecs_to_jiffies(mlx5_tout_ms(dev, CMD));
+ 	/* restore status register */
+-	movew	%a1@(TASK_THREAD+THREAD_SR),%sr
++	movew	%a1@(TASK_THREAD+THREAD_SR),%d0
++	oriw	#0x0700,%d0
++	movew	%d0,%sr
  
--	complete(&ent->handling);
--	sem = ent->page_queue ? &cmd->vars.pages_sem : &cmd->vars.sem;
--	down(sem);
- 	if (!ent->page_queue) {
-+		if (down_timeout(&cmd->vars.sem, timeout)) {
-+			mlx5_core_warn(dev, "%s(0x%x) timed out while waiting for a slot.\n",
-+				       mlx5_command_str(ent->op), ent->op);
-+			if (ent->callback) {
-+				ent->callback(-EBUSY, ent->context);
-+				mlx5_free_cmd_msg(dev, ent->out);
-+				free_msg(dev, ent->in);
-+				cmd_ent_put(ent);
-+			} else {
-+				ent->ret = -EBUSY;
-+				complete(&ent->done);
-+			}
-+			complete(&ent->slotted);
-+			return;
-+		}
- 		alloc_ret = cmd_alloc_index(cmd, ent);
- 		if (alloc_ret < 0) {
- 			mlx5_core_err_rl(dev, "failed to allocate command entry\n");
-@@ -994,10 +1007,11 @@ static void cmd_work_handler(struct work_struct *work)
- 				ent->ret = -EAGAIN;
- 				complete(&ent->done);
- 			}
--			up(sem);
-+			up(&cmd->vars.sem);
- 			return;
- 		}
- 	} else {
-+		down(&cmd->vars.pages_sem);
- 		ent->idx = cmd->vars.max_reg_cmds;
- 		spin_lock_irqsave(&cmd->alloc_lock, flags);
- 		clear_bit(ent->idx, &cmd->vars.bitmask);
-@@ -1005,6 +1019,8 @@ static void cmd_work_handler(struct work_struct *work)
- 		spin_unlock_irqrestore(&cmd->alloc_lock, flags);
- 	}
+ 	rts
  
-+	complete(&ent->slotted);
-+
- 	lay = get_inst(cmd, ent->idx);
- 	ent->lay = lay;
- 	memset(lay, 0, sizeof(*lay));
-@@ -1023,7 +1039,7 @@ static void cmd_work_handler(struct work_struct *work)
- 	ent->ts1 = ktime_get_ns();
- 	cmd_mode = cmd->mode;
- 
--	if (ent->callback && schedule_delayed_work(&ent->cb_timeout_work, cb_timeout))
-+	if (ent->callback && schedule_delayed_work(&ent->cb_timeout_work, timeout))
- 		cmd_ent_get(ent);
- 	set_bit(MLX5_CMD_ENT_STATE_PENDING_COMP, &ent->state);
- 
-@@ -1143,6 +1159,9 @@ static int wait_func(struct mlx5_core_dev *dev, struct mlx5_cmd_work_ent *ent)
- 		ent->ret = -ECANCELED;
- 		goto out_err;
- 	}
-+
-+	wait_for_completion(&ent->slotted);
-+
- 	if (cmd->mode == CMD_MODE_POLLING || ent->polling)
- 		wait_for_completion(&ent->done);
- 	else if (!wait_for_completion_timeout(&ent->done, timeout))
-@@ -1157,6 +1176,9 @@ static int wait_func(struct mlx5_core_dev *dev, struct mlx5_cmd_work_ent *ent)
- 	} else if (err == -ECANCELED) {
- 		mlx5_core_warn(dev, "%s(0x%x) canceled on out of queue timeout.\n",
- 			       mlx5_command_str(ent->op), ent->op);
-+	} else if (err == -EBUSY) {
-+		mlx5_core_warn(dev, "%s(0x%x) timeout while waiting for command semaphore.\n",
-+			       mlx5_command_str(ent->op), ent->op);
- 	}
- 	mlx5_core_dbg(dev, "err %d, delivery status %s(%d)\n",
- 		      err, deliv_status_to_str(ent->status), ent->status);
-@@ -1208,6 +1230,7 @@ static int mlx5_cmd_invoke(struct mlx5_core_dev *dev, struct mlx5_cmd_msg *in,
- 	ent->polling = force_polling;
- 
- 	init_completion(&ent->handling);
-+	init_completion(&ent->slotted);
- 	if (!callback)
- 		init_completion(&ent->done);
- 
-@@ -1225,7 +1248,7 @@ static int mlx5_cmd_invoke(struct mlx5_core_dev *dev, struct mlx5_cmd_msg *in,
- 		return 0; /* mlx5_cmd_comp_handler() will put(ent) */
- 
- 	err = wait_func(dev, ent);
--	if (err == -ETIMEDOUT || err == -ECANCELED)
-+	if (err == -ETIMEDOUT || err == -ECANCELED || err == -EBUSY)
- 		goto out_free;
- 
- 	ds = ent->ts2 - ent->ts1;
-diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
-index bf9324a31ae97..80452bd982531 100644
---- a/include/linux/mlx5/driver.h
-+++ b/include/linux/mlx5/driver.h
-@@ -862,6 +862,7 @@ struct mlx5_cmd_work_ent {
- 	void		       *context;
- 	int			idx;
- 	struct completion	handling;
-+	struct completion	slotted;
- 	struct completion	done;
- 	struct mlx5_cmd        *cmd;
- 	struct work_struct	work;
 -- 
 2.43.0
 
