@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7F8168C4;
-	Mon, 27 May 2024 19:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11ED1168C4;
+	Mon, 27 May 2024 19:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837443; cv=none; b=C4IOcb4APIYtDHIrm3xhxTWXE0jRqaW4XpeGgO86aHLqu6QdgIG0YWSE+81D4V5BMmVgTDE9WaCrbgnCRyCGB3NNLRrOPgQuCMYT0lP6H7q5xUyg7l09wTPwsAw3tSyI0uyik3Vyhs5R0OQ09erETVvN/YAcBstXp9giz1sH3d4=
+	t=1716837447; cv=none; b=aWs1JNk7cgSuDVma++8TjPjJKif2ZQoXPPAzRkqOJ48zBPQ5NX4CL6a0NbSidiszSaIZEUOeTtVHpAULKVjWFxFTWPpNfUw35RpAhlKsAy3OYoDzSvBw378CJQwHJlSFnl1SbHOkQpbvB6wjNl6HdUgoiMzS0Azt25ZuruwRii0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837443; c=relaxed/simple;
-	bh=sgQ8UsqysqQEo2J+r9IarMKKEM9oydtktE4yqO4B65k=;
+	s=arc-20240116; t=1716837447; c=relaxed/simple;
+	bh=eUjoJPjLxtkuz2rySdVCI6lgldYbdUsAIm0YGSgTEDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gcoEuQpJ49oNqfMNjbir4xRUduN6G9Jbk1542wXf80EtfOri05c6OdaUBPhdD6EA+5L6sGOzBb+H8gKcJjhu7zFFgouQDvW8nIkwYJbe1PIDIMegQ/zaU8tILSRU1LUXcCIkSEail6jPxj35rwEdBL5U4m9aAnOvcxv8Tso4O6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9T0HTY1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p7/n2zYDoX816x9ZdG7OEu/cE+H/fJo16mLlvSFPoBVRqYCrY3sW//c2r5zh4KSEGwIVlDnqWmq9TT055+8pDgvkp7lciWI9o5UcAxMN52GbBZ1J5gdlq/UVNXvRrVnLac48T5FrhmL2to8cPQU4XmUjtpsHtbdZjh3GgsEKuIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kgyoR5On; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9T0HTY1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DADC2BBFC;
-	Mon, 27 May 2024 19:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgyoR5On"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42001C2BBFC;
+	Mon, 27 May 2024 19:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837443;
-	bh=sgQ8UsqysqQEo2J+r9IarMKKEM9oydtktE4yqO4B65k=;
+	s=korg; t=1716837446;
+	bh=eUjoJPjLxtkuz2rySdVCI6lgldYbdUsAIm0YGSgTEDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9T0HTY1Uagl/lRQZqZLqri9DbyktOa1pOUawvnbblp/TMqT5+GoeIO5byYxdw78D
-	 wjw3NZu6QaKZ/SZItnti3fDk7dJvmkMWKJKub5KsfD7tQ0tolroWX2+AR8d1UvhJow
-	 vezyirjXDsGjYt+0HDFawoeEoy5tdWJseplP6+VY=
+	b=kgyoR5OnMQdx2a+JV7kGMDDvBxsQV2kzPu8jjK9SloGazqrVHG4G8eTSEWhxXGfcu
+	 MW7HU5/gSzuz+HAt2wIEM/LCYr771DE0/YTITq6Otr4CPLr/yon/MxmHRwt2o1f5B8
+	 CW4irogI3y4xT279WE4liOYhrRdsRbqRrjpi0bgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ken Milmore <ken.milmore@gmail.com>,
 	Heiner Kallweit <hkallweit1@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.8 016/493] Revert "r8169: dont try to disable interrupts if NAPI is, scheduled already"
-Date: Mon, 27 May 2024 20:50:18 +0200
-Message-ID: <20240527185628.105436261@linuxfoundation.org>
+Subject: [PATCH 6.8 017/493] r8169: Fix possible ring buffer corruption on fragmented Tx packets.
+Date: Mon, 27 May 2024 20:50:19 +0200
+Message-ID: <20240527185628.215502159@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,44 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Ken Milmore <ken.milmore@gmail.com>
 
-commit eabb8a9be1e4a12f3bf37ceb7411083e3775672d upstream.
+commit c71e3a5cffd5309d7f84444df03d5b72600cc417 upstream.
 
-This reverts commit 7274c4147afbf46f45b8501edbdad6da8cd013b9.
+An issue was found on the RTL8125b when transmitting small fragmented
+packets, whereby invalid entries were inserted into the transmit ring
+buffer, subsequently leading to calls to dma_unmap_single() with a null
+address.
 
-Ken reported that RTL8125b can lock up if gro_flush_timeout has the
-default value of 20000 and napi_defer_hard_irqs is set to 0.
-In this scenario device interrupts aren't disabled, what seems to
-trigger some silicon bug under heavy load. I was able to reproduce this
-behavior on RTL8168h. Fix this by reverting 7274c4147afb.
+This was caused by rtl8169_start_xmit() not noticing changes to nr_frags
+which may occur when small packets are padded (to work around hardware
+quirks) in rtl8169_tso_csum_v2().
 
-Fixes: 7274c4147afb ("r8169: don't try to disable interrupts if NAPI is scheduled already")
+To fix this, postpone inspecting nr_frags until after any padding has been
+applied.
+
+Fixes: 9020845fb5d6 ("r8169: improve rtl8169_start_xmit")
 Cc: stable@vger.kernel.org
-Reported-by: Ken Milmore <ken.milmore@gmail.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/9b5b6f4c-4f54-4b90-b0b3-8d8023c2e780@gmail.com
+Signed-off-by: Ken Milmore <ken.milmore@gmail.com>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/27ead18b-c23d-4f49-a020-1fc482c5ac95@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/net/ethernet/realtek/r8169_main.c
 +++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4541,10 +4541,8 @@ static irqreturn_t rtl8169_interrupt(int
- 		rtl_schedule_task(tp, RTL_FLAG_TASK_RESET_PENDING);
- 	}
+@@ -4221,11 +4221,11 @@ static void rtl8169_doorbell(struct rtl8
+ static netdev_tx_t rtl8169_start_xmit(struct sk_buff *skb,
+ 				      struct net_device *dev)
+ {
+-	unsigned int frags = skb_shinfo(skb)->nr_frags;
+ 	struct rtl8169_private *tp = netdev_priv(dev);
+ 	unsigned int entry = tp->cur_tx % NUM_TX_DESC;
+ 	struct TxDesc *txd_first, *txd_last;
+ 	bool stop_queue, door_bell;
++	unsigned int frags;
+ 	u32 opts[2];
  
--	if (napi_schedule_prep(&tp->napi)) {
--		rtl_irq_disable(tp);
--		__napi_schedule(&tp->napi);
--	}
-+	rtl_irq_disable(tp);
-+	napi_schedule(&tp->napi);
- out:
- 	rtl_ack_events(tp, status);
+ 	if (unlikely(!rtl_tx_slots_avail(tp))) {
+@@ -4248,6 +4248,7 @@ static netdev_tx_t rtl8169_start_xmit(st
  
+ 	txd_first = tp->TxDescArray + entry;
+ 
++	frags = skb_shinfo(skb)->nr_frags;
+ 	if (frags) {
+ 		if (rtl8169_xmit_frags(tp, skb, opts, entry))
+ 			goto err_dma_1;
 
 
