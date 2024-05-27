@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA701EEF7;
-	Mon, 27 May 2024 19:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF4F1EEF7;
+	Mon, 27 May 2024 19:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838341; cv=none; b=M3H5W3a92tPBM4kxb4gVf9l5uWom0pAfH6VoylaKrigjswnIzmxXQs1pefS8XgpUFB61kJL80W1ukoQOX9a5/UiPfvmX1WTepbqfPK2T+oypovVX0IvR05bXsE3hWUfg+arnbL4MRFpPGBdtjpKZB6ATNAZ+htAoFwe9XVt0U4Y=
+	t=1716838344; cv=none; b=s3c75/ycZFlVGrJS1YmfCBPXH5nZI0xWhAX7CD7tdIXNWBkJctuvnwgOoGEQFeXOo2PvdtsO/F6TAvPcIIHJq6NjpIJeFsV/ZnZIf7HWZ5lR12z9gT4h8RzgUmRJztwznb1SZff3JZxSXuKWREtgHM8TLDLAOzRy+jWBwNl9qcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838341; c=relaxed/simple;
-	bh=2SEaBis3vKg3RGcWms0oIu3wuamRKroqWIYO38ALa4k=;
+	s=arc-20240116; t=1716838344; c=relaxed/simple;
+	bh=P/9WdOKcURDnPlaP7/sB8ICoCXVuXZVKYSMPOsJQU6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tm294f0NZ8msW25xG6W9XN+GCPPC8ufKmBcKedEIntA0t29+bmoT2KNOFpFl7SmKvKKS2ALmyAITUjvimQat8f1+8D1aFesV7FaCl+Bydh2BME2XzyTP7cmXLc8c7SC1i3rTucdXn1+dNzpmAdW4lhh10+RM7WdzBso2s2nYN9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsYrRN2u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LGIM9eORK3tYLubuVHvGFcZPudxq8aju88nDOuWfBTPaXRPWuLLQM4VL4lTDK5qXwrchHExYeOBxal5TC+KvxnFvx3Q/ObwlIJ8ZzcLzbq7rZ3BH0m2Db76MleR1ghu0TWFhcPA0KoFmWCsln0uEfbP0T0dMx2G4RhEcj/9Q8ZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1Zz1OLU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsYrRN2u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE97BC2BBFC;
-	Mon, 27 May 2024 19:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1Zz1OLU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BDAC2BBFC;
+	Mon, 27 May 2024 19:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838341;
-	bh=2SEaBis3vKg3RGcWms0oIu3wuamRKroqWIYO38ALa4k=;
+	s=korg; t=1716838343;
+	bh=P/9WdOKcURDnPlaP7/sB8ICoCXVuXZVKYSMPOsJQU6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YsYrRN2u3TNE73JE0Z/1f+or58+p0mrdlZORmu75WtHbm6gAU8XS/Onf/ECZym21T
-	 GGOjDp7dLGOjddknCEEiPgfR4k24lELsm93fXX86QgAArHHbWA88m6Ip6Or3jylvQk
-	 r4aECXTwxihcivUuys68aqnw3dUVkpznc5ljCC3s=
+	b=u1Zz1OLUcYi2v7VkMs/vwl2R9FiSPZe7QPrM5v/4vc6jmF1LegwtOj25UiDPz248d
+	 2Ty0dJ/mlLfJD9YpCdB8N4jTojHYM+fMQ2vQ8BYVTlj6C9Dd96d8gxAnlITCbfYIzg
+	 25OLNgA4BZDFRPwQFe/q5WXrrRSWF9d9Pl/NW23g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 315/493] net/mlx5: Fix peer devlink set for SF representor devlink port
-Date: Mon, 27 May 2024 20:55:17 +0200
-Message-ID: <20240527185640.589968369@linuxfoundation.org>
+Subject: [PATCH 6.8 306/493] net: ethernet: mediatek: use ADMAv1 instead of ADMAv2.0 on MT7981 and MT7986
+Date: Mon, 27 May 2024 20:55:08 +0200
+Message-ID: <20240527185640.307450842@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -54,164 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 3c453e8cc672de1f9c662948dba43176bc68d7f0 ]
+[ Upstream commit 5e69ff84f3e6cc54502a902043847b37ed78afd4 ]
 
-The cited patch change register devlink flow, and neglect to reflect
-the changes for peer devlink set logic. Peer devlink set is
-triggering a call trace if done after devl_register.[1]
+ADMAv2.0 is plagued by RX hangs which can't easily detected and happen upon
+receival of a corrupted Ethernet frame.
 
-Hence, align peer devlink set logic with register devlink flow.
+Use ADMAv1 instead which is also still present and usable, and doesn't
+suffer from that problem.
 
-[1]
-WARNING: CPU: 4 PID: 3394 at net/devlink/core.c:155 devlink_rel_nested_in_add+0x177/0x180
-CPU: 4 PID: 3394 Comm: kworker/u40:1 Not tainted 6.9.0-rc4_for_linust_min_debug_2024_04_16_14_08 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-Workqueue: mlx5_vhca_event0 mlx5_vhca_state_work_handler [mlx5_core]
-RIP: 0010:devlink_rel_nested_in_add+0x177/0x180
-Call Trace:
- <TASK>
- ? __warn+0x78/0x120
- ? devlink_rel_nested_in_add+0x177/0x180
- ? report_bug+0x16d/0x180
- ? handle_bug+0x3c/0x60
- ? exc_invalid_op+0x14/0x70
- ? asm_exc_invalid_op+0x16/0x20
- ? devlink_port_init+0x30/0x30
- ? devlink_port_type_clear+0x50/0x50
- ? devlink_rel_nested_in_add+0x177/0x180
- ? devlink_rel_nested_in_add+0xdd/0x180
- mlx5_sf_mdev_event+0x74/0xb0 [mlx5_core]
- notifier_call_chain+0x35/0xb0
- blocking_notifier_call_chain+0x3d/0x60
- mlx5_blocking_notifier_call_chain+0x22/0x30 [mlx5_core]
- mlx5_sf_dev_probe+0x185/0x3e0 [mlx5_core]
- auxiliary_bus_probe+0x38/0x80
- ? driver_sysfs_add+0x51/0x80
- really_probe+0xc5/0x3a0
- ? driver_probe_device+0x90/0x90
- __driver_probe_device+0x80/0x160
- driver_probe_device+0x1e/0x90
- __device_attach_driver+0x7d/0x100
- bus_for_each_drv+0x80/0xd0
- __device_attach+0xbc/0x1f0
- bus_probe_device+0x86/0xa0
- device_add+0x64f/0x860
- __auxiliary_device_add+0x3b/0xa0
- mlx5_sf_dev_add+0x139/0x330 [mlx5_core]
- mlx5_sf_dev_state_change_handler+0x1e4/0x250 [mlx5_core]
- notifier_call_chain+0x35/0xb0
- blocking_notifier_call_chain+0x3d/0x60
- mlx5_vhca_state_work_handler+0x151/0x200 [mlx5_core]
- process_one_work+0x13f/0x2e0
- worker_thread+0x2bd/0x3c0
- ? rescuer_thread+0x410/0x410
- kthread+0xc4/0xf0
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork+0x2d/0x50
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork_asm+0x11/0x20
- </TASK>
-
-Fixes: bf729988303a ("net/mlx5: Restore mistakenly dropped parts in register devlink flow")
-Fixes: c6e77aa9dd82 ("net/mlx5: Register devlink first under devlink lock")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240509112951.590184-3-tariqt@nvidia.com
+Fixes: 197c9e9b17b1 ("net: ethernet: mtk_eth_soc: introduce support for mt7986 chipset")
+Co-developed-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/57cef74bbd0c243366ad1ff4221e3f72f437ec80.1715164770.git.daniel@makrotopia.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/main.c    | 14 +++++---------
- .../mellanox/mlx5/core/sf/dev/driver.c        | 19 ++++++++-----------
- 2 files changed, 13 insertions(+), 20 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 46 ++++++++++-----------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index e285823bd08f0..0288e19e3a68e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1680,6 +1680,8 @@ int mlx5_init_one_light(struct mlx5_core_dev *dev)
- 	struct devlink *devlink = priv_to_devlink(dev);
- 	int err;
- 
-+	devl_lock(devlink);
-+	devl_register(devlink);
- 	dev->state = MLX5_DEVICE_STATE_UP;
- 	err = mlx5_function_enable(dev, true, mlx5_tout_ms(dev, FW_PRE_INIT_TIMEOUT));
- 	if (err) {
-@@ -1693,27 +1695,21 @@ int mlx5_init_one_light(struct mlx5_core_dev *dev)
- 		goto query_hca_caps_err;
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 3eefb735ce197..d7d73295f0dc4 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -110,16 +110,16 @@ static const struct mtk_reg_map mt7986_reg_map = {
+ 	.tx_irq_mask		= 0x461c,
+ 	.tx_irq_status		= 0x4618,
+ 	.pdma = {
+-		.rx_ptr		= 0x6100,
+-		.rx_cnt_cfg	= 0x6104,
+-		.pcrx_ptr	= 0x6108,
+-		.glo_cfg	= 0x6204,
+-		.rst_idx	= 0x6208,
+-		.delay_irq	= 0x620c,
+-		.irq_status	= 0x6220,
+-		.irq_mask	= 0x6228,
+-		.adma_rx_dbg0	= 0x6238,
+-		.int_grp	= 0x6250,
++		.rx_ptr		= 0x4100,
++		.rx_cnt_cfg	= 0x4104,
++		.pcrx_ptr	= 0x4108,
++		.glo_cfg	= 0x4204,
++		.rst_idx	= 0x4208,
++		.delay_irq	= 0x420c,
++		.irq_status	= 0x4220,
++		.irq_mask	= 0x4228,
++		.adma_rx_dbg0	= 0x4238,
++		.int_grp	= 0x4250,
+ 	},
+ 	.qdma = {
+ 		.qtx_cfg	= 0x4400,
+@@ -1107,7 +1107,7 @@ static bool mtk_rx_get_desc(struct mtk_eth *eth, struct mtk_rx_dma_v2 *rxd,
+ 	rxd->rxd1 = READ_ONCE(dma_rxd->rxd1);
+ 	rxd->rxd3 = READ_ONCE(dma_rxd->rxd3);
+ 	rxd->rxd4 = READ_ONCE(dma_rxd->rxd4);
+-	if (mtk_is_netsys_v2_or_greater(eth)) {
++	if (mtk_is_netsys_v3_or_greater(eth)) {
+ 		rxd->rxd5 = READ_ONCE(dma_rxd->rxd5);
+ 		rxd->rxd6 = READ_ONCE(dma_rxd->rxd6);
  	}
+@@ -2028,7 +2028,7 @@ static int mtk_poll_rx(struct napi_struct *napi, int budget,
+ 			break;
  
--	devl_lock(devlink);
--	devl_register(devlink);
--
- 	err = mlx5_devlink_params_register(priv_to_devlink(dev));
- 	if (err) {
- 		mlx5_core_warn(dev, "mlx5_devlink_param_reg err = %d\n", err);
--		goto params_reg_err;
-+		goto query_hca_caps_err;
- 	}
+ 		/* find out which mac the packet come from. values start at 1 */
+-		if (mtk_is_netsys_v2_or_greater(eth)) {
++		if (mtk_is_netsys_v3_or_greater(eth)) {
+ 			u32 val = RX_DMA_GET_SPORT_V2(trxd.rxd5);
  
- 	devl_unlock(devlink);
- 	return 0;
+ 			switch (val) {
+@@ -2140,7 +2140,7 @@ static int mtk_poll_rx(struct napi_struct *napi, int budget,
+ 		skb->dev = netdev;
+ 		bytes += skb->len;
  
--params_reg_err:
--	devl_unregister(devlink);
--	devl_unlock(devlink);
- query_hca_caps_err:
--	devl_unregister(devlink);
--	devl_unlock(devlink);
- 	mlx5_function_disable(dev, true);
- out:
- 	dev->state = MLX5_DEVICE_STATE_INTERNAL_ERROR;
-+	devl_unregister(devlink);
-+	devl_unlock(devlink);
- 	return err;
- }
+-		if (mtk_is_netsys_v2_or_greater(eth)) {
++		if (mtk_is_netsys_v3_or_greater(eth)) {
+ 			reason = FIELD_GET(MTK_RXD5_PPE_CPU_REASON, trxd.rxd5);
+ 			hash = trxd.rxd5 & MTK_RXD5_FOE_ENTRY;
+ 			if (hash != MTK_RXD5_FOE_ENTRY)
+@@ -2690,7 +2690,7 @@ static int mtk_rx_alloc(struct mtk_eth *eth, int ring_no, int rx_flag)
  
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-index 7ebe712808275..b2986175d9afe 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-@@ -60,6 +60,13 @@ static int mlx5_sf_dev_probe(struct auxiliary_device *adev, const struct auxilia
- 		goto remap_err;
- 	}
- 
-+	/* Peer devlink logic expects to work on unregistered devlink instance. */
-+	err = mlx5_core_peer_devlink_set(sf_dev, devlink);
-+	if (err) {
-+		mlx5_core_warn(mdev, "mlx5_core_peer_devlink_set err=%d\n", err);
-+		goto peer_devlink_set_err;
-+	}
-+
- 	if (MLX5_ESWITCH_MANAGER(sf_dev->parent_mdev))
- 		err = mlx5_init_one_light(mdev);
+ 		rxd->rxd3 = 0;
+ 		rxd->rxd4 = 0;
+-		if (mtk_is_netsys_v2_or_greater(eth)) {
++		if (mtk_is_netsys_v3_or_greater(eth)) {
+ 			rxd->rxd5 = 0;
+ 			rxd->rxd6 = 0;
+ 			rxd->rxd7 = 0;
+@@ -3893,7 +3893,7 @@ static int mtk_hw_init(struct mtk_eth *eth, bool reset)
  	else
-@@ -69,20 +76,10 @@ static int mlx5_sf_dev_probe(struct auxiliary_device *adev, const struct auxilia
- 		goto init_one_err;
- 	}
+ 		mtk_hw_reset(eth);
  
--	err = mlx5_core_peer_devlink_set(sf_dev, devlink);
--	if (err) {
--		mlx5_core_warn(mdev, "mlx5_core_peer_devlink_set err=%d\n", err);
--		goto peer_devlink_set_err;
--	}
--
- 	return 0;
+-	if (mtk_is_netsys_v2_or_greater(eth)) {
++	if (mtk_is_netsys_v3_or_greater(eth)) {
+ 		/* Set FE to PDMAv2 if necessary */
+ 		val = mtk_r32(eth, MTK_FE_GLO_MISC);
+ 		mtk_w32(eth,  val | BIT(4), MTK_FE_GLO_MISC);
+@@ -5169,11 +5169,11 @@ static const struct mtk_soc_data mt7981_data = {
+ 		.dma_len_offset = 8,
+ 	},
+ 	.rx = {
+-		.desc_size = sizeof(struct mtk_rx_dma_v2),
+-		.irq_done_mask = MTK_RX_DONE_INT_V2,
++		.desc_size = sizeof(struct mtk_rx_dma),
++		.irq_done_mask = MTK_RX_DONE_INT,
+ 		.dma_l4_valid = RX_DMA_L4_VALID_V2,
+-		.dma_max_len = MTK_TX_DMA_BUF_LEN_V2,
+-		.dma_len_offset = 8,
++		.dma_max_len = MTK_TX_DMA_BUF_LEN,
++		.dma_len_offset = 16,
+ 	},
+ };
  
--peer_devlink_set_err:
--	if (mlx5_dev_is_lightweight(sf_dev->mdev))
--		mlx5_uninit_one_light(sf_dev->mdev);
--	else
--		mlx5_uninit_one(sf_dev->mdev);
- init_one_err:
-+peer_devlink_set_err:
- 	iounmap(mdev->iseg);
- remap_err:
- 	mlx5_mdev_uninit(mdev);
+@@ -5195,11 +5195,11 @@ static const struct mtk_soc_data mt7986_data = {
+ 		.dma_len_offset = 8,
+ 	},
+ 	.rx = {
+-		.desc_size = sizeof(struct mtk_rx_dma_v2),
+-		.irq_done_mask = MTK_RX_DONE_INT_V2,
++		.desc_size = sizeof(struct mtk_rx_dma),
++		.irq_done_mask = MTK_RX_DONE_INT,
+ 		.dma_l4_valid = RX_DMA_L4_VALID_V2,
+-		.dma_max_len = MTK_TX_DMA_BUF_LEN_V2,
+-		.dma_len_offset = 8,
++		.dma_max_len = MTK_TX_DMA_BUF_LEN,
++		.dma_len_offset = 16,
+ 	},
+ };
+ 
 -- 
 2.43.0
 
