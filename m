@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C7917727;
-	Mon, 27 May 2024 19:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D267317727;
+	Mon, 27 May 2024 19:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838506; cv=none; b=K9s0JFbRYBWzyyDAG+/nYGR4g7AQ51uQiZK8hiHIBFblr5OpDMmV1WccSBsusNAnxEOp8Li8xocL4KPN5+18QB7TixzBapWhQylsajwbSpFSjSWnJKNmXtdjwFLhz8L+EcLHFB3DbHvCq2Rde2z4YHS/ulCRsy0MAzGpoUNldj0=
+	t=1716838508; cv=none; b=XR+ptKC26/aecHArSCMEHpAPMjvXT0Ifz/Cak5ym9kbRiZX65zf8FS89sl1n4/G2rzWOPUhtLxgKc7d3QLqv4ncEH8mG2JeEbA40LAjmKWhzE/xpv5UarqQFMy73IN9sJs5pVDJSgB59GsN2uVEe4mivyRdjM4mj+hhEePCp3UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838506; c=relaxed/simple;
-	bh=nh+N0xaj9Jrokr70jYXLfpVJHMNIDeh2eWuS1baMuSU=;
+	s=arc-20240116; t=1716838508; c=relaxed/simple;
+	bh=anWsHkJR8TnB5L/AkZt0063d3TRcUjEuzdYPKq0DAoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZWM+QOe/9jI6f6bLrkrGT3FJIJU084KazEmSWfZGF660/+PSF6/e4inKdMOc52hLfWUT5RB+6T074GvCrn/Biw1ZkmJF3bXvEj73n5/PxhGW8COLsXntXTvvuqTpEL0JHpcCIV1XCKPTFxkgMkzy+hv25Ce+kDALZltiJ2SG9TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlZXml6X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lSrLYMrDrwwMUUasggwQe03KpnB0UONQD6EJ/Af/r1MC2zzb531xf7+daPJvRg1MnN7Ad19XqoW5W55QAKFc6cTeRzMbe0+J/oGbKNqRZyiwc3YkaPZJoy+b+AM7KWqURnsw6g3ODPvbJotGnheEBUAf0VTRwehgr8unX+0WO+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFQL4Rc8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlZXml6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF534C2BBFC;
-	Mon, 27 May 2024 19:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFQL4Rc8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADE8C2BBFC;
+	Mon, 27 May 2024 19:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838506;
-	bh=nh+N0xaj9Jrokr70jYXLfpVJHMNIDeh2eWuS1baMuSU=;
+	s=korg; t=1716838508;
+	bh=anWsHkJR8TnB5L/AkZt0063d3TRcUjEuzdYPKq0DAoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UlZXml6XpkUNo7/9+GtpN1CKr3HkDmmsqbmj0hPXnDfX9k9WTcn4E/qSX5DbO/FgP
-	 tr1bh0YWqCI0GH6MD/S563/JKUBOupgWAvVefBJ5c08LXp4XF0AX5VgDMHYr8lhXP2
-	 42537sZU9CFYhLomrIjbAkzzE2Qiutrs8y6EGt/M=
+	b=zFQL4Rc8mtLMx37R0LaLQBK6SkCa9Ozbz4lOb+WcSC71zhbpfJkvIZSo7Z80eXxnR
+	 KtAV4TyIYHG58maNJTn9c+Ue/LURU8J9XcR0GUFjBreLixtGGDOSsXL2wQtY9n3kAN
+	 u1LYdZHQQYayckJ9YJ8Bv5daxdt9YwYTYIqtIdrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <p.yadav@ti.com>,
-	Julien Massot <julien.massot@collabora.com>,
-	Changhuang Liang <Changhuang.liang@starfivetech.com>,
-	Jai Luthra <j-luthra@ti.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jaewon Kim <jaewon02.kim@samsung.com>,
+	Sam Protsenko <semen.protsenko@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 419/493] media: cadence: csi2rx: configure DPHY before starting source stream
-Date: Mon, 27 May 2024 20:57:01 +0200
-Message-ID: <20240527185643.995502720@linuxfoundation.org>
+Subject: [PATCH 6.8 420/493] clk: samsung: exynosautov9: fix wrong pll clock id value
+Date: Mon, 27 May 2024 20:57:02 +0200
+Message-ID: <20240527185644.036427631@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -55,88 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Yadav <p.yadav@ti.com>
+From: Jaewon Kim <jaewon02.kim@samsung.com>
 
-[ Upstream commit fd64dda48f7e3f67ada1e1fe47e784ab350da72e ]
+[ Upstream commit 04ee3a0b44e3d18cf6b0c712d14b98624877fd26 ]
 
-When the source device is operating above 1.5 Gbps per lane, it needs to
-send the Skew Calibration Sequence before sending any HS data. If the
-DPHY is initialized after the source stream is started, then it might
-miss the sequence and not be able to receive data properly. Move the
-start of source subdev to the end of the sequence to make sure
-everything is ready to receive data before the source starts streaming.
+All PLL id values of CMU_TOP were incorrectly set to FOUT_SHARED0_PLL.
+It modified to the correct PLL clock id value.
 
-Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
-Fixes: 3295cf1241d3 ("media: cadence: Add support for external dphy")
-Tested-by: Julien Massot <julien.massot@collabora.com>
-Tested-by: Changhuang Liang <Changhuang.liang@starfivetech.com>
-Reviewed-by: Julien Massot <julien.massot@collabora.com>
-Reviewed-by: Changhuang Liang <Changhuang.liang@starfivetech.com>
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 6587c62f69dc ("clk: samsung: add top clock support for Exynos Auto v9 SoC")
+Signed-off-by: Jaewon Kim <jaewon02.kim@samsung.com>
+Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+Link: https://lore.kernel.org/r/20240328091000.17660-1-jaewon02.kim@samsung.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/cadence/cdns-csi2rx.c | 26 +++++++++++---------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/clk/samsung/clk-exynosautov9.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/cadence/cdns-csi2rx.c b/drivers/media/platform/cadence/cdns-csi2rx.c
-index 0ea5fa956fe9a..5be75bd4add39 100644
---- a/drivers/media/platform/cadence/cdns-csi2rx.c
-+++ b/drivers/media/platform/cadence/cdns-csi2rx.c
-@@ -235,10 +235,6 @@ static int csi2rx_start(struct csi2rx_priv *csi2rx)
- 
- 	writel(reg, csi2rx->base + CSI2RX_STATIC_CFG_REG);
- 
--	ret = v4l2_subdev_call(csi2rx->source_subdev, video, s_stream, true);
--	if (ret)
--		goto err_disable_pclk;
--
- 	/* Enable DPHY clk and data lanes. */
- 	if (csi2rx->dphy) {
- 		reg = CSI2RX_DPHY_CL_EN | CSI2RX_DPHY_CL_RST;
-@@ -248,6 +244,13 @@ static int csi2rx_start(struct csi2rx_priv *csi2rx)
- 		}
- 
- 		writel(reg, csi2rx->base + CSI2RX_DPHY_LANE_CTRL_REG);
-+
-+		ret = csi2rx_configure_ext_dphy(csi2rx);
-+		if (ret) {
-+			dev_err(csi2rx->dev,
-+				"Failed to configure external DPHY: %d\n", ret);
-+			goto err_disable_pclk;
-+		}
- 	}
- 
- 	/*
-@@ -287,14 +290,9 @@ static int csi2rx_start(struct csi2rx_priv *csi2rx)
- 
- 	reset_control_deassert(csi2rx->sys_rst);
- 
--	if (csi2rx->dphy) {
--		ret = csi2rx_configure_ext_dphy(csi2rx);
--		if (ret) {
--			dev_err(csi2rx->dev,
--				"Failed to configure external DPHY: %d\n", ret);
--			goto err_disable_sysclk;
--		}
--	}
-+	ret = v4l2_subdev_call(csi2rx->source_subdev, video, s_stream, true);
-+	if (ret)
-+		goto err_disable_sysclk;
- 
- 	clk_disable_unprepare(csi2rx->p_clk);
- 
-@@ -308,6 +306,10 @@ static int csi2rx_start(struct csi2rx_priv *csi2rx)
- 		clk_disable_unprepare(csi2rx->pixel_clk[i - 1]);
- 	}
- 
-+	if (csi2rx->dphy) {
-+		writel(0, csi2rx->base + CSI2RX_DPHY_LANE_CTRL_REG);
-+		phy_power_off(csi2rx->dphy);
-+	}
- err_disable_pclk:
- 	clk_disable_unprepare(csi2rx->p_clk);
+diff --git a/drivers/clk/samsung/clk-exynosautov9.c b/drivers/clk/samsung/clk-exynosautov9.c
+index e9c06eb93e666..f04bacacab2cb 100644
+--- a/drivers/clk/samsung/clk-exynosautov9.c
++++ b/drivers/clk/samsung/clk-exynosautov9.c
+@@ -352,13 +352,13 @@ static const struct samsung_pll_clock top_pll_clks[] __initconst = {
+ 	/* CMU_TOP_PURECLKCOMP */
+ 	PLL(pll_0822x, FOUT_SHARED0_PLL, "fout_shared0_pll", "oscclk",
+ 	    PLL_LOCKTIME_PLL_SHARED0, PLL_CON3_PLL_SHARED0, NULL),
+-	PLL(pll_0822x, FOUT_SHARED0_PLL, "fout_shared1_pll", "oscclk",
++	PLL(pll_0822x, FOUT_SHARED1_PLL, "fout_shared1_pll", "oscclk",
+ 	    PLL_LOCKTIME_PLL_SHARED1, PLL_CON3_PLL_SHARED1, NULL),
+-	PLL(pll_0822x, FOUT_SHARED0_PLL, "fout_shared2_pll", "oscclk",
++	PLL(pll_0822x, FOUT_SHARED2_PLL, "fout_shared2_pll", "oscclk",
+ 	    PLL_LOCKTIME_PLL_SHARED2, PLL_CON3_PLL_SHARED2, NULL),
+-	PLL(pll_0822x, FOUT_SHARED0_PLL, "fout_shared3_pll", "oscclk",
++	PLL(pll_0822x, FOUT_SHARED3_PLL, "fout_shared3_pll", "oscclk",
+ 	    PLL_LOCKTIME_PLL_SHARED3, PLL_CON3_PLL_SHARED3, NULL),
+-	PLL(pll_0822x, FOUT_SHARED0_PLL, "fout_shared4_pll", "oscclk",
++	PLL(pll_0822x, FOUT_SHARED4_PLL, "fout_shared4_pll", "oscclk",
+ 	    PLL_LOCKTIME_PLL_SHARED4, PLL_CON3_PLL_SHARED4, NULL),
+ };
  
 -- 
 2.43.0
