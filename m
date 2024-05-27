@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7C3D518;
-	Mon, 27 May 2024 19:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9DCD518;
+	Mon, 27 May 2024 19:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836636; cv=none; b=D/fM1I5zCTOZD5+g1cB279TY+pZDiPEw1J6pj7E5J1AF0cW/dtQwVKFZ22GEzyzLgyr+NA6oM3PjN8NMldkAUy7RKeWU/5MwBpYl+sLUFnnw9Ljz5YUY6gc73XGx6FLUwd/fLPmgWU2rnz6dtVfbS1Q5m3lxHdi7stzleVzaFpo=
+	t=1716836638; cv=none; b=NL15e8kmVCzEb4c32p7fhjzdLg67vzmR1DiscOrn59UPVSD6xRCkL/mQmtdGag1xQnaxOJpuMRJ0RvtIxjOOO8TsOt2kjuUzQNwcAIbeI94bWdtMCsgnq8ImEuwmmduHNpvXsaQv8gfcsovbtWhRc5tqGCqUWfj+JgJ81zoGdbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836636; c=relaxed/simple;
-	bh=tqYsUHqsf15htg515qBOMyb96FhDsmOnnr7LsZSHOBU=;
+	s=arc-20240116; t=1716836638; c=relaxed/simple;
+	bh=Er7U3JXgebqaAU9bz7LRLWz+55LHDANYXTE8ErVZAgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vyt57Nkk/vJE1bNz6+hxio1zqywbjAkYF5/iLUcMaGKeiZ0xTMvhnBu4cBpDQMorTg7xogRC324Z+XKZ4ldTXIyTGmMLnSaQMFBq88tivWByWBza5AcG9KCxfrQtl7KUPHwas1su73T/F7bH19f6l1ZuKyzEtQ8byXpTAi8yq0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuQ6ww57; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fuuc/xsUC3F6Ko/6zLTosdHYrv2ZQGn5XEsMu4ptAKn/IJUgUVJku6b3lCkzpM4Z/lRr7rL6GkkXwtmt0AK7H4SZj0zhsNyDIAXy3PK1X/RdL4dAwzNzpkHboOBJPb5pqF3fAeWOK5ciqPenJB9otu/dZCD8vN0IPkhpvCWawWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8z4dErz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuQ6ww57"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C23C2BBFC;
-	Mon, 27 May 2024 19:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8z4dErz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15005C2BBFC;
+	Mon, 27 May 2024 19:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836635;
-	bh=tqYsUHqsf15htg515qBOMyb96FhDsmOnnr7LsZSHOBU=;
+	s=korg; t=1716836638;
+	bh=Er7U3JXgebqaAU9bz7LRLWz+55LHDANYXTE8ErVZAgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuQ6ww57AWv+Px5No7Gp7krHdQqqcBgAN+sdXNkE/jxnRS/Nm/cTboN/qXHIlZQZm
-	 IhyY8HbKxTjvDe3CRQfk/D+COd0lQRZSA2TBb7H93iLM/X4SuW+un8FE7DgjpGx4uL
-	 1AGufjWv8joab7EA0G4q6XqKcCXMtKPwjgo8DIM4=
+	b=k8z4dErz5ck6YUQNZVplt29+6DPNk3NrMHmCR3H1DBwkHMiamgyWdsgIc0XkmkyVw
+	 SWxtaUwM+MkatW1pvvz3wkXTMCzDqwYGLzc4UMfbggxGYj2gt4FH0xzzLXYjIhw/sG
+	 oPvHlvri7Lx/yR98NEr7WB+TMMVAhOMc4ARR0ifc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Can Guo <quic_cang@quicinc.com>,
 	Andrew Halaney <ahalaney@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 129/427] scsi: ufs: qcom: Perform read back after writing CGC enable
-Date: Mon, 27 May 2024 20:52:56 +0200
-Message-ID: <20240527185613.975873551@linuxfoundation.org>
+Subject: [PATCH 6.9 130/427] scsi: ufs: cdns-pltfrm: Perform read back after writing HCLKDIV
+Date: Mon, 27 May 2024 20:52:57 +0200
+Message-ID: <20240527185614.057611595@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -55,10 +55,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrew Halaney <ahalaney@redhat.com>
 
-[ Upstream commit d9488511b3ac7eb48a91bc5eded7027525525e03 ]
+[ Upstream commit b715c55daf598aac8fa339048e4ca8a0916b332e ]
 
-Currently, the CGC enable bit is written and then an mb() is used to ensure
-that completes before continuing.
+Currently, HCLKDIV is written to and then completed with an mb().
 
 mb() ensures that the write completes, but completion doesn't mean that it
 isn't stored in a buffer somewhere. The recommendation for ensuring this
@@ -72,30 +71,30 @@ Let's do that to ensure the bit hits the device. Because the mb()'s purpose
 wasn't to add extra ordering (on top of the ordering guaranteed by
 writel()/readl()), it can safely be removed.
 
+Fixes: d90996dae8e4 ("scsi: ufs: Add UFS platform driver for Cadence UFS")
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Can Guo <quic_cang@quicinc.com>
-Fixes: 81c0fc51b7a7 ("ufs-qcom: add support for Qualcomm Technologies Inc platforms")
 Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-5-181252004586@redhat.com
+Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-6-181252004586@redhat.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 2 +-
+ drivers/ufs/host/cdns-pltfrm.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 004a0f6b1fffa..62c343444d973 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -412,7 +412,7 @@ static void ufs_qcom_enable_hw_clk_gating(struct ufs_hba *hba)
- 		    REG_UFS_CFG2);
- 
- 	/* Ensure that HW clock gating is enabled before next operations */
+diff --git a/drivers/ufs/host/cdns-pltfrm.c b/drivers/ufs/host/cdns-pltfrm.c
+index bb30267da4711..66811d8d1929c 100644
+--- a/drivers/ufs/host/cdns-pltfrm.c
++++ b/drivers/ufs/host/cdns-pltfrm.c
+@@ -136,7 +136,7 @@ static int cdns_ufs_set_hclkdiv(struct ufs_hba *hba)
+ 	 * Make sure the register was updated,
+ 	 * UniPro layer will not work with an incorrect value.
+ 	 */
 -	mb();
-+	ufshcd_readl(hba, REG_UFS_CFG2);
- }
++	ufshcd_readl(hba, CDNS_UFS_REG_HCLKDIV);
  
- static int ufs_qcom_hce_enable_notify(struct ufs_hba *hba,
+ 	return 0;
+ }
 -- 
 2.43.0
 
