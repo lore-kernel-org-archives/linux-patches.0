@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE29626AF2;
-	Mon, 27 May 2024 19:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2F21667D2;
+	Mon, 27 May 2024 19:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836542; cv=none; b=GTO2moQmuWwsJJKjIyJV4SJ7J/dhVRn74e/jZSmIAouGfqgPzgqY3ySZExbXx0WnNcMQ79DAsYnCtLPsIDuLHbqkrMZSjCc/yOmihdD4VOeEvPPJCaQ5rduLhkspZi17AMVXztWkVBsTXFm2wMqNlJz3mtUyhb7LKHsLW03bWCA=
+	t=1716836544; cv=none; b=Hv7vFv/DQkMm8NcqpymtxSUMRCHNCI1ktH0QyUbkKaGB6ew8lJn1yonkukQj+xXvc8H1pfUf2nZ6a5baCDtD4J5AqlLv6RYZCz73E2+0OTIOlz9z1NNpDVvaL/4hvqTQnP/2YJWgin/S3xsgxpIwz6vuG/3K5A9lFcCj6Z8ib70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836542; c=relaxed/simple;
-	bh=XV3R9ytdJx19jR+Ppar+XzZyzPWixxLIbsniVQnD29E=;
+	s=arc-20240116; t=1716836544; c=relaxed/simple;
+	bh=0CFu4OaR/decLe8iUNh8DS4Gy6Sdo3gVMbx6eEJUiBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pPOIAmO93/cvHVXf+ERtaNmy5n5yiP+Rje3cB2ucZB1oCHbxAidNxbX4i/HA6Kt8Gl5P3X3p5AfGSib1pWBPyy0IbLjiZ+znSetz0WoggeIF/0b4ASH0LzUo+JjEux/h6s2qIO/HrX4TVZ7Gi3bK1eT49YHGKZ8O/xTNKWa2QsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0GX7u9K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iKXjLntkqOnCBovOLtUTX3VjlHjdvuA+neSMyfnxc66N9dVdt4wZ5Auwwc37w1x40aQ0Vs4Bra/R0RZenLNRJL7FIQIfizCyqK92O6mrrIfMGFx6z3cq3zjirPfyWBH9He4VTZjwK/YImbiAXTjDc1xwJv87ogtaaNJdDVqXy8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0STVc4SJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0GX7u9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24992C32781;
-	Mon, 27 May 2024 19:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0STVc4SJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF198C32782;
+	Mon, 27 May 2024 19:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836541;
-	bh=XV3R9ytdJx19jR+Ppar+XzZyzPWixxLIbsniVQnD29E=;
+	s=korg; t=1716836544;
+	bh=0CFu4OaR/decLe8iUNh8DS4Gy6Sdo3gVMbx6eEJUiBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l0GX7u9KAQLh85OcmNhqDbIa4Z5Ps/wcTB9aYegpWaz8GOhQoylPSK6jYObTLWvxX
-	 51kdJYjkYoxKhZNqvOvg4xUfD+THW5roLrkApiWZaiOUY9DNXg0nL8mLJ6QE5h38ci
-	 ub0tSOMRIovIeCk8Qr9mp8/PDVNk65oXGurwzN9c=
+	b=0STVc4SJSDhoNE9Ws5yAxD5vbDlqhWkJ7UYPH8bFG36Vwc1UEJ34tiMp8AvCC+Eys
+	 mdujcJ0yaROTAmmad2XoBQUKU/CcakvCKkgI0zm5kyBoNtQSukzSqZn0tD54d4is5n
+	 hFbheYZBgMKx/tDjBYI5+aPJITWUucmFn/HjC+M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tim Chen <tim.c.chen@linux.intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 052/427] crypto: x86/nh-avx2 - add missing vzeroupper
-Date: Mon, 27 May 2024 20:51:39 +0200
-Message-ID: <20240527185606.562470323@linuxfoundation.org>
+Subject: [PATCH 6.9 053/427] crypto: x86/sha256-avx2 - add missing vzeroupper
+Date: Mon, 27 May 2024 20:51:40 +0200
+Message-ID: <20240527185606.683637381@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,32 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 4ad096cca942959871d8ff73826d30f81f856f6e ]
+[ Upstream commit 57ce8a4e162599cf9adafef1f29763160a8e5564 ]
 
-Since nh_avx2() uses ymm registers, execute vzeroupper before returning
-from it.  This is necessary to avoid reducing the performance of SSE
-code.
+Since sha256_transform_rorx() uses ymm registers, execute vzeroupper
+before returning from it.  This is necessary to avoid reducing the
+performance of SSE code.
 
-Fixes: 0f961f9f670e ("crypto: x86/nhpoly1305 - add AVX2 accelerated NHPoly1305")
+Fixes: d34a460092d8 ("crypto: sha256 - Optimized sha256 x86_64 routine using AVX2's RORX instructions")
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Acked-by: Tim Chen <tim.c.chen@linux.intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/nh-avx2-x86_64.S | 1 +
+ arch/x86/crypto/sha256-avx2-asm.S | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/crypto/nh-avx2-x86_64.S b/arch/x86/crypto/nh-avx2-x86_64.S
-index ef73a3ab87263..791386d9a83aa 100644
---- a/arch/x86/crypto/nh-avx2-x86_64.S
-+++ b/arch/x86/crypto/nh-avx2-x86_64.S
-@@ -154,5 +154,6 @@ SYM_TYPED_FUNC_START(nh_avx2)
- 	vpaddq		T1, T0, T0
- 	vpaddq		T4, T0, T0
- 	vmovdqu		T0, (HASH)
+diff --git a/arch/x86/crypto/sha256-avx2-asm.S b/arch/x86/crypto/sha256-avx2-asm.S
+index 9918212faf914..0ffb072be9561 100644
+--- a/arch/x86/crypto/sha256-avx2-asm.S
++++ b/arch/x86/crypto/sha256-avx2-asm.S
+@@ -716,6 +716,7 @@ SYM_TYPED_FUNC_START(sha256_transform_rorx)
+ 	popq	%r13
+ 	popq	%r12
+ 	popq	%rbx
 +	vzeroupper
  	RET
- SYM_FUNC_END(nh_avx2)
+ SYM_FUNC_END(sha256_transform_rorx)
+ 
 -- 
 2.43.0
 
