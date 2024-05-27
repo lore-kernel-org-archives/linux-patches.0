@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4B91078F;
-	Mon, 27 May 2024 19:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD011754B;
+	Mon, 27 May 2024 19:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836763; cv=none; b=rlh62idIPglHuFqIlZTHv16e1/58gqRDrbWGS/vCvREVK+PmbxhiJ0tLde8kGcy3vaIIISlutvsuAxj7pvFyNDdRc2R4UhF58RP4dNbQiV92SazdI2IT+PP3P8rIu5yOn5Y4kFGL9VKsGdDJWDeLvjECNCotHNDtcxr3NnuqO0Q=
+	t=1716836766; cv=none; b=T2SNvfl8ikBdWyxN5bfZTgXtYTatf56BU4jNdPoQMeoDFNJnbYa8Z30HL0D0ld6RDuOKqr7m4ChxPcrYUmQOGkk+mKXN3mrfBjq2ahyP+5Mcmrblh5gJXoiUmZLFspwVpz0FcSMssFRzHyTbNDNMc1GGYZKdXEfWMW7L6a2On4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836763; c=relaxed/simple;
-	bh=MW1RHBaPr1p1fN8R/8eGpzxvmLgk4AxFh90wdGhuUS0=;
+	s=arc-20240116; t=1716836766; c=relaxed/simple;
+	bh=vPxJmKf+cGnsDUHXtCv9at7sB9medW4RPKJPxfyMHUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d14eu/PdMV7wwoQPYMWFRVJh9Nrd3CDvn2xbFeltn6UZr4a0bkISLEe5lu8rTCzbhh98rLVPKpeDyThuaKNXu+nB3E6BOvODQTqOB04HE2TVdco8Fu3hbL8sFq3aOvQNjcpHr/U+NRxwrchRT3vtSU0L7thRN5iWz6zxrtULzVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dwiYUuA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t7rIIhUSyejVIeP8sLpJ9sG4HGFBz/T2pVkEq1gjnxKWtNg1JRU58Ry1aXcPggeKFs7O08p+ZgV4UuuxsnSKSMh/0636+2XhkcEnvRE4c+0FKdoUr6C+xsimYB15PuXlAnjBMwxv7DoIB4o38AJgngOkkP3fDaH0OVo8iaQ4UVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1g+FYdi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dwiYUuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01FBDC2BBFC;
-	Mon, 27 May 2024 19:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1g+FYdi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71386C2BBFC;
+	Mon, 27 May 2024 19:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836763;
-	bh=MW1RHBaPr1p1fN8R/8eGpzxvmLgk4AxFh90wdGhuUS0=;
+	s=korg; t=1716836765;
+	bh=vPxJmKf+cGnsDUHXtCv9at7sB9medW4RPKJPxfyMHUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1dwiYUuA0EYx2Cr6L2wDFLnyQ1h7U2SB9phUJUEno/jLvREi1Q92keaoLVhDobslJ
-	 KuD8BKAvSg9ey9Rzz0kla8AkV9f2d8a/lMHkuAdZVnQmFckgtHRGmWRYld8C04442k
-	 RNLcHlHaf6G3eJp2QXHWPsTktbV6Bn81TnzjQXIU=
+	b=K1g+FYdit2bOmyKyL5+mePDeGzbXUL62npwx99mv6ynoIKHWZtVCyEY661lzWk8Iv
+	 TYaqjf+fIZexDCSuNUKjWqpl4QXZpRnRG8Y0jHAL9CMnJoI1+0iz7HhqgxDefJmuSQ
+	 ydMitz7ZZPWVMTyUKJO1JZzfo7JYVrD9k7URfZGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqin Liu <yongqin.liu@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 176/427] wifi: ath10k: populate board data for WCN3990
-Date: Mon, 27 May 2024 20:53:43 +0200
-Message-ID: <20240527185618.666092561@linuxfoundation.org>
+Subject: [PATCH 6.9 177/427] net: dsa: mv88e6xxx: Add support for model-specific pre- and post-reset handlers
+Date: Mon, 27 May 2024 20:53:44 +0200
+Message-ID: <20240527185618.748600130@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,63 +52,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-[ Upstream commit f1f1b5b055c9f27a2f90fd0f0521f5920e9b3c18 ]
+[ Upstream commit 0fdd27b9d6d7c60bd319d3497ad797934bab13cb ]
 
-Specify board data size (and board.bin filename) for the WCN3990
-platform.
+Instead of calling mv88e6xxx_g2_eeprom_wait() directly from
+mv88e6xxx_hardware_reset(), add configurable pre- and post-reset hard
+reset handlers. Initially, the handlers are set to
+mv88e6xxx_g2_eeprom_wait() for all families that have get/set_eeprom()
+to match the existing behavior. No functional change intended (except
+for additional error messages on failure).
 
-Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
-Fixes: 03a72288c546 ("ath10k: wmi: add hw params entry for wcn3990")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240130-wcn3990-board-fw-v1-1-738f7c19a8c8@linaro.org
+Fixes: 6ccf50d4d474 ("net: dsa: mv88e6xxx: Avoid EEPROM timeout when EEPROM is absent")
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c      | 3 +++
- drivers/net/wireless/ath/ath10k/hw.h        | 1 +
- drivers/net/wireless/ath/ath10k/targaddrs.h | 3 +++
- 3 files changed, 7 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c | 50 +++++++++++++++++++++++++++++---
+ drivers/net/dsa/mv88e6xxx/chip.h |  6 ++++
+ 2 files changed, 52 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index 9ce6f49ab2614..fa5e2e6518313 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -720,6 +720,9 @@ static const struct ath10k_hw_params ath10k_hw_params_list[] = {
- 		.max_spatial_stream = 4,
- 		.fw = {
- 			.dir = WCN3990_HW_1_0_FW_DIR,
-+			.board = WCN3990_HW_1_0_BOARD_DATA_FILE,
-+			.board_size = WCN3990_BOARD_DATA_SZ,
-+			.board_ext_size = WCN3990_BOARD_EXT_DATA_SZ,
- 		},
- 		.sw_decrypt_mcast_mgmt = true,
- 		.rx_desc_ops = &wcn3990_rx_desc_ops,
-diff --git a/drivers/net/wireless/ath/ath10k/hw.h b/drivers/net/wireless/ath/ath10k/hw.h
-index 93c0730919966..9aa2d821b5078 100644
---- a/drivers/net/wireless/ath/ath10k/hw.h
-+++ b/drivers/net/wireless/ath/ath10k/hw.h
-@@ -133,6 +133,7 @@ enum qca9377_chip_id_rev {
- /* WCN3990 1.0 definitions */
- #define WCN3990_HW_1_0_DEV_VERSION	ATH10K_HW_WCN3990
- #define WCN3990_HW_1_0_FW_DIR		ATH10K_FW_DIR "/WCN3990/hw1.0"
-+#define WCN3990_HW_1_0_BOARD_DATA_FILE "board.bin"
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 0918bd6fa81dd..ab13c8bc199c0 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -3146,6 +3146,7 @@ static int mv88e6xxx_software_reset(struct mv88e6xxx_chip *chip)
+ static void mv88e6xxx_hardware_reset(struct mv88e6xxx_chip *chip)
+ {
+ 	struct gpio_desc *gpiod = chip->reset;
++	int err;
  
- #define ATH10K_FW_FILE_BASE		"firmware"
- #define ATH10K_FW_API_MAX		6
-diff --git a/drivers/net/wireless/ath/ath10k/targaddrs.h b/drivers/net/wireless/ath/ath10k/targaddrs.h
-index ec556bb88d658..ba37e6c7ced08 100644
---- a/drivers/net/wireless/ath/ath10k/targaddrs.h
-+++ b/drivers/net/wireless/ath/ath10k/targaddrs.h
-@@ -491,4 +491,7 @@ struct host_interest {
- #define QCA4019_BOARD_DATA_SZ	  12064
- #define QCA4019_BOARD_EXT_DATA_SZ 0
+ 	/* If there is a GPIO connected to the reset pin, toggle it */
+ 	if (gpiod) {
+@@ -3154,17 +3155,26 @@ static void mv88e6xxx_hardware_reset(struct mv88e6xxx_chip *chip)
+ 		 * mid-byte, causing the first EEPROM read after the reset
+ 		 * from the wrong location resulting in the switch booting
+ 		 * to wrong mode and inoperable.
++		 * For this reason, switch families with EEPROM support
++		 * generally wait for EEPROM loads to complete as their pre-
++		 * and post-reset handlers.
+ 		 */
+-		if (chip->info->ops->get_eeprom)
+-			mv88e6xxx_g2_eeprom_wait(chip);
++		if (chip->info->ops->hardware_reset_pre) {
++			err = chip->info->ops->hardware_reset_pre(chip);
++			if (err)
++				dev_err(chip->dev, "pre-reset error: %d\n", err);
++		}
  
-+#define WCN3990_BOARD_DATA_SZ	  26328
-+#define WCN3990_BOARD_EXT_DATA_SZ 0
+ 		gpiod_set_value_cansleep(gpiod, 1);
+ 		usleep_range(10000, 20000);
+ 		gpiod_set_value_cansleep(gpiod, 0);
+ 		usleep_range(10000, 20000);
+ 
+-		if (chip->info->ops->get_eeprom)
+-			mv88e6xxx_g2_eeprom_wait(chip);
++		if (chip->info->ops->hardware_reset_post) {
++			err = chip->info->ops->hardware_reset_post(chip);
++			if (err)
++				dev_err(chip->dev, "post-reset error: %d\n", err);
++		}
+ 	}
+ }
+ 
+@@ -4394,6 +4404,8 @@ static const struct mv88e6xxx_ops mv88e6141_ops = {
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu =  mv88e6390_g1_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6390_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -4584,6 +4596,8 @@ static const struct mv88e6xxx_ops mv88e6172_ops = {
+ 	.watchdog_ops = &mv88e6097_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6352_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -4684,6 +4698,8 @@ static const struct mv88e6xxx_ops mv88e6176_ops = {
+ 	.watchdog_ops = &mv88e6097_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6352_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -4778,6 +4794,8 @@ static const struct mv88e6xxx_ops mv88e6190_ops = {
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6390_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -4836,6 +4854,8 @@ static const struct mv88e6xxx_ops mv88e6190x_ops = {
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6390_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -4892,6 +4912,8 @@ static const struct mv88e6xxx_ops mv88e6191_ops = {
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6390_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -4951,6 +4973,8 @@ static const struct mv88e6xxx_ops mv88e6240_ops = {
+ 	.watchdog_ops = &mv88e6097_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6352_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -5004,6 +5028,8 @@ static const struct mv88e6xxx_ops mv88e6250_ops = {
+ 	.watchdog_ops = &mv88e6250_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6250_g1_reset,
+ 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
+ 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
+@@ -5051,6 +5077,8 @@ static const struct mv88e6xxx_ops mv88e6290_ops = {
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6390_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -5110,6 +5138,8 @@ static const struct mv88e6xxx_ops mv88e6320_ops = {
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
+ 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
+@@ -5156,6 +5186,8 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
+ 	.set_egress_port = mv88e6095_g1_set_egress_port,
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
+ 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
+@@ -5206,6 +5238,8 @@ static const struct mv88e6xxx_ops mv88e6341_ops = {
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu =  mv88e6390_g1_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6390_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -5361,6 +5395,8 @@ static const struct mv88e6xxx_ops mv88e6352_ops = {
+ 	.watchdog_ops = &mv88e6097_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6352_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -5423,6 +5459,8 @@ static const struct mv88e6xxx_ops mv88e6390_ops = {
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6390_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -5485,6 +5523,8 @@ static const struct mv88e6xxx_ops mv88e6390x_ops = {
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6390_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+@@ -5550,6 +5590,8 @@ static const struct mv88e6xxx_ops mv88e6393x_ops = {
+ 	.watchdog_ops = &mv88e6393x_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6393x_port_mgmt_rsvd2cpu,
+ 	.pot_clear = mv88e6xxx_g2_pot_clear,
++	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
++	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
+ 	.reset = mv88e6352_g1_reset,
+ 	.rmu_disable = mv88e6390_g1_rmu_disable,
+ 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.h b/drivers/net/dsa/mv88e6xxx/chip.h
+index 85eb293381a7e..c34caf9815c5c 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.h
++++ b/drivers/net/dsa/mv88e6xxx/chip.h
+@@ -487,6 +487,12 @@ struct mv88e6xxx_ops {
+ 	int (*ppu_enable)(struct mv88e6xxx_chip *chip);
+ 	int (*ppu_disable)(struct mv88e6xxx_chip *chip);
+ 
++	/* Additional handlers to run before and after hard reset, to make sure
++	 * that the switch and EEPROM are in a good state.
++	 */
++	int (*hardware_reset_pre)(struct mv88e6xxx_chip *chip);
++	int (*hardware_reset_post)(struct mv88e6xxx_chip *chip);
 +
- #endif /* __TARGADDRS_H__ */
+ 	/* Switch Software Reset */
+ 	int (*reset)(struct mv88e6xxx_chip *chip);
+ 
 -- 
 2.43.0
 
