@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1E515FCE9;
-	Mon, 27 May 2024 19:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62366262BE;
+	Mon, 27 May 2024 19:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837869; cv=none; b=AxYphHxKqKwq72FTBBs5g6GMueFlRT9UV9EATWhCmvhbE2PITRixANXv5k+MJJX/0gMwUaEYfzI6FWQYT8lIvaFdqcvvIuc/8mGS44fs8zxeaJDWsU+ee/CSrPJLtpcl9LmWfp/NPzIGv2P6BflzliMhDFbLr5fvcocod6TQu3U=
+	t=1716837871; cv=none; b=Tst0WzfekUqHBUbcbGu2rPtCYd0dq+Mafroplg1i64DeoWhEvkggIILBRyTYcpZJvAoGRZu6nYkLJGbXYpf1xS/Cuzk2WMDIxVpqHwooy3ytZD5AKBQNGpkXcN5AitZ8+cY3fGmpFN/EYSY8koc7uwcDSdXxMIOe82Tl3y1OnoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837869; c=relaxed/simple;
-	bh=qWaHv3AOxFNfOXWTzclFObiHUKrDaV86+qTPG6Q5bww=;
+	s=arc-20240116; t=1716837871; c=relaxed/simple;
+	bh=Sb4hrVPVvzq1hoW4TbVfqh8cqn1XQy7O39pNFEmebK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OnLp8Aq8lpeLRHJ+8RINdyiZzNQnudGqChTb/xg8YgfqhomHG4ezcvdnKVyj6MuzTe8pHFPOSNFTOwT4xd/01ZadUeg1CPKWREmhzLEGfcUlYgO7LiKUefiyzft8DdSBq4rI0mdxlgiDk8mlQnGXgQTgB8g4ZekiMglU2YWTluE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ydmv7oQL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCG6wptt2qngTRqeRbICpLk3Y1oBn1EVLAbogAaGmUVpxVHLoxciLFKB8rkrtjIeUGf5VCRP0A4NNsFMQsLHv4cgMC22E2GcwyZu4n73mQCCdEb0ivsUTStkF+2RY0MckqJdUEhvXzETT6UXSU8Kp7XF1q8ZsqUvMwPOAWNdv0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAMFKrZ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ydmv7oQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A5AC2BBFC;
-	Mon, 27 May 2024 19:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAMFKrZ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED813C2BBFC;
+	Mon, 27 May 2024 19:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837868;
-	bh=qWaHv3AOxFNfOXWTzclFObiHUKrDaV86+qTPG6Q5bww=;
+	s=korg; t=1716837871;
+	bh=Sb4hrVPVvzq1hoW4TbVfqh8cqn1XQy7O39pNFEmebK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ydmv7oQLGKPIng/r6cvzd538TmhKfUs0RlPN+09RUqTHUKlYg1Q9hJ1T2evZGxguB
-	 XHHe0N+bS8bXH0IQzEKundymsJUnZZJwpqkqyqHAUMY5W9vfhhm4PM6Nw2SdHJWerw
-	 Bpb+n4vkGmWxb3y24YeqlZQkZyIv0XCMQRmX8bXE=
+	b=OAMFKrZ7F1aqHQOAjXtzGPtk9LQt6KFSn4pKptJQj8sI588SjlkHZqJtp/aEDzdms
+	 fn4XCQHX7xH/pJv/g7Tbn8bmszpWM34eRamjRv0LCbtE7ngBOAhO1xC05uSEvqmGhB
+	 Bu/CratXWEyiZ5A8FkpKF9XzAoC6BH/Q15hBcgAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 135/493] shmem: Fix shmem_rename2()
-Date: Mon, 27 May 2024 20:52:17 +0200
-Message-ID: <20240527185634.881995353@linuxfoundation.org>
+Subject: [PATCH 6.8 126/493] ARM: configs: sunxi: Enable DRM_DW_HDMI
+Date: Mon, 27 May 2024 20:52:08 +0200
+Message-ID: <20240527185634.617371443@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,53 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit ad191eb6d6942bb835a0b20b647f7c53c1d99ca4 ]
+[ Upstream commit deff401b14e2d832b25b55862ad6c73378fe034e ]
 
-When renaming onto an existing directory entry, user space expects
-the replacement entry to have the same directory offset as the
-original one.
+Commit 4fc8cb47fcfd ("drm/display: Move HDMI helpers into display-helper
+module") turned the DRM_DW_HDMI dependency of DRM_SUN8I_DW_HDMI into a
+depends on which ended up disabling the driver in the defconfig. Make
+sure it's still enabled.
 
-Link: https://gitlab.alpinelinux.org/alpine/aports/-/issues/15966
-Fixes: a2e459555c5f ("shmem: stable directory offsets")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://lore.kernel.org/r/20240415152057.4605-4-cel@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 4fc8cb47fcfd ("drm/display: Move HDMI helpers into display-helper module")
+Reported-by: Mark Brown <broonie@kernel.org>
+Reported-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20240403-fix-dw-hdmi-kconfig-v1-5-afbc4a835c38@kernel.org
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/libfs.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm/configs/sunxi_defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/libfs.c b/fs/libfs.c
-index bb6731fa63059..ef700d39f0f35 100644
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -365,6 +365,9 @@ int simple_offset_empty(struct dentry *dentry)
-  *
-  * Caller provides appropriate serialization.
-  *
-+ * User space expects the directory offset value of the replaced
-+ * (new) directory entry to be unchanged after a rename.
-+ *
-  * Returns zero on success, a negative errno value on failure.
-  */
- int simple_offset_rename(struct inode *old_dir, struct dentry *old_dentry,
-@@ -372,8 +375,14 @@ int simple_offset_rename(struct inode *old_dir, struct dentry *old_dentry,
- {
- 	struct offset_ctx *old_ctx = old_dir->i_op->get_offset_ctx(old_dir);
- 	struct offset_ctx *new_ctx = new_dir->i_op->get_offset_ctx(new_dir);
-+	long new_offset = dentry2offset(new_dentry);
- 
- 	simple_offset_remove(old_ctx, old_dentry);
-+
-+	if (new_offset) {
-+		offset_set(new_dentry, 0);
-+		return simple_offset_replace(new_ctx, old_dentry, new_offset);
-+	}
- 	return simple_offset_add(new_ctx, old_dentry);
- }
- 
+diff --git a/arch/arm/configs/sunxi_defconfig b/arch/arm/configs/sunxi_defconfig
+index bddc82f789421..a83d29fed1756 100644
+--- a/arch/arm/configs/sunxi_defconfig
++++ b/arch/arm/configs/sunxi_defconfig
+@@ -110,6 +110,7 @@ CONFIG_DRM_PANEL_LVDS=y
+ CONFIG_DRM_PANEL_SIMPLE=y
+ CONFIG_DRM_PANEL_EDP=y
+ CONFIG_DRM_SIMPLE_BRIDGE=y
++CONFIG_DRM_DW_HDMI=y
+ CONFIG_DRM_LIMA=y
+ CONFIG_FB_SIMPLE=y
+ CONFIG_BACKLIGHT_CLASS_DEVICE=y
 -- 
 2.43.0
 
