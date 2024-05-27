@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621F817E90E;
-	Mon, 27 May 2024 19:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA58E17E90E;
+	Mon, 27 May 2024 19:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837068; cv=none; b=l7CbzBTq27OmlTDItvMXD3hjdRdnnip1emcBc/iBL/fPmYfJ9FYbYt2EljWwV+fFpavgLR+bsLTrPs0EkrrWgaanFgN6GRLSsVKzNo8CoRbaWiBEEptgs4PQ01CjzPGUlg5p7LpmLLCxGKQQ7WILW7Cpp0yNHQWqeufUuG5DnwM=
+	t=1716837070; cv=none; b=SvEV5veOA4aQf5TOWfmGE/IZWMGIGC7dWIKIqEcGjK89fdy1t7vp/F+zKehZQ4F+0xFvVAC/MvHCHy/bAbQ6IwFSm3FBkAD6TnHofkRE8JJH5Bmvv4tqVU6ZzydhxTwJaJYhTap47PptqcfISj9yl5n5gbw4y0EU8hAd+NOdM+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837068; c=relaxed/simple;
-	bh=tw8KNhAPpoXf6wt7A3otFuLMDhHKiW/zJig1qN3LQOI=;
+	s=arc-20240116; t=1716837070; c=relaxed/simple;
+	bh=ZXbD3375AoYj6k3GZgA1MQj02/2gsAG5tbaU4EUBvfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZCAd851R8VDctKNn5BNbYrsWxzBapvYepjquwymr1t5d3+JgN+zTzSuo468YeOhOYXusWiWTZbOB4SMx2i04C3n1NI2p1GjMMi1xSzImnVQmrph2jpbYbO4iE5SSTV10TPyaaUaLlMYIyydc4sZ58ZHvDYoXVNw2xMTN2JDD7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eF35FRPk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jUdnRAk5k7CDvAgqrFROMie6XTuJaJrW5cDSfKWolaYJ/QSPPhEkJaukbX2T2C/ZVCTpLGTvxeQNMEmeANxqIhl4HV1YSMdOrYNyY5JeQQRtOuo4Pa/CSTeSh6uSClBArw7CBmLYXMFE2zG7Oyz83Y7Hta7hANNuDpWw3y5utaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OG8vZphj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eF35FRPk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF3AC2BBFC;
-	Mon, 27 May 2024 19:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OG8vZphj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7104EC2BBFC;
+	Mon, 27 May 2024 19:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837068;
-	bh=tw8KNhAPpoXf6wt7A3otFuLMDhHKiW/zJig1qN3LQOI=;
+	s=korg; t=1716837070;
+	bh=ZXbD3375AoYj6k3GZgA1MQj02/2gsAG5tbaU4EUBvfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eF35FRPks+PaQQRMO3XC6Zo2UJv4fbdN0pzKbvHF6RzFhwebXYLAIbTp9a6lM+My/
-	 53Z0UXvONMqu26QcPp7MNWQ5h9u21U0vt/Yhb4IBuucxEiVb0CtyVkAYnMRYoazThl
-	 yMpO49Tx31tdid+tvRCTTkSpd6Tjvoc5gGbrXL8A=
+	b=OG8vZphjiIiBGskav/SW1tSY9vVJIX65oGGYEjScLJ+C8mWRkIfXkyC3p+unTgBgd
+	 HUTiwhUOV+/jcyFz4c7eR4V1jH/8JJQU3BzyFvGXWnQsuRYJSiN0BkSBmzpxwKcGd6
+	 0jSe3BSTDxs4COl4VOLPGLw2YWgTqj9B4nVNfk6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Rander Wang <rander.wang@intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 298/427] drm/mediatek: Init `ddp_comp` with devm_kcalloc()
-Date: Mon, 27 May 2024 20:55:45 +0200
-Message-ID: <20240527185630.069770638@linuxfoundation.org>
+Subject: [PATCH 6.9 299/427] ASoC: SOF: Intel: hda-dai: fix channel map configuration for aggregated dailink
+Date: Mon, 27 May 2024 20:55:46 +0200
+Message-ID: <20240527185630.139401920@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,58 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 01a2c5123e27b3c4685bf2fc4c2e879f6e0c7b33 ]
+[ Upstream commit 831045513c8a2ef14c3cf39b33d1ccedf588c4a8 ]
 
-In the case where `conn_routes` is true we allocate an extra slot in
-the `ddp_comp` array but mtk_drm_crtc_create() never seemed to
-initialize it in the test case I ran. For me, this caused a later
-crash when we looped through the array in mtk_drm_crtc_mode_valid().
-This showed up for me when I booted with `slub_debug=FZPUA` which
-poisons the memory initially. Without `slub_debug` I couldn't
-reproduce, presumably because the later code handles the value being
-NULL and in most cases (not guaranteed in all cases) the memory the
-allocator returned started out as 0.
+The existing code derives the channel map used to program the HDaudio
+link DMA from the hw_params, but that is not quite right in the case
+of aggregation. The code in soc-pcm.c splits the hw_params depending
+on the codec_ch_map, and we need to reconstruct the channel-map to
+insert the data in the right places.
 
-It really doesn't hurt to initialize the array with devm_kcalloc()
-since the array is small and the overhead of initting a handful of
-elements to 0 is small. In general initting memory to zero is a safer
-practice and usually it's suggested to only use the non-initting alloc
-functions if you really need to.
+This issue is seen only on amplifier feedback capture where the data
+from the second amplifier was replaced by that of the first amplifier.
 
-Let's switch the function to use an allocation function that zeros the
-memory. For me, this avoids the crash.
+Note that the loop iterator of the macro for_each_rtd_cpu_dais() is
+reused in a following loop. This is different to all existing usages
+of that macro, hence the use of a boolean flag to avoid an access to
+an uninitialized variable.
 
-Fixes: 01389b324c97 ("drm/mediatek: Add connector dynamic selection capability")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240328092248.1.I2e73c38c0f264ee2fa4a09cdd83994e37ba9f541@changeid/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 2960ee5c4814 ("ASoC: SOF: Intel: hda-dai: add helpers for SoundWire callbacks")
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://msgid.link/r/20240402151828.175002-2-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/sof/intel/hda-dai.c | 31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-index a04499c4f9ca2..29207b2756c14 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-@@ -1009,10 +1009,10 @@ int mtk_drm_crtc_create(struct drm_device *drm_dev,
+diff --git a/sound/soc/sof/intel/hda-dai.c b/sound/soc/sof/intel/hda-dai.c
+index c1682bcdb5a66..6a39ca632f55e 100644
+--- a/sound/soc/sof/intel/hda-dai.c
++++ b/sound/soc/sof/intel/hda-dai.c
+@@ -439,10 +439,17 @@ int sdw_hda_dai_hw_params(struct snd_pcm_substream *substream,
+ 			  int link_id)
+ {
+ 	struct snd_soc_dapm_widget *w = snd_soc_dai_get_widget(cpu_dai, substream->stream);
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	const struct hda_dai_widget_dma_ops *ops;
++	struct snd_soc_dai_link_ch_map *ch_maps;
+ 	struct hdac_ext_stream *hext_stream;
++	struct snd_soc_dai *dai;
+ 	struct snd_sof_dev *sdev;
++	bool cpu_dai_found = false;
++	int cpu_dai_id;
++	int ch_mask;
+ 	int ret;
++	int j;
  
- 	mtk_crtc->mmsys_dev = priv->mmsys_dev;
- 	mtk_crtc->ddp_comp_nr = path_len;
--	mtk_crtc->ddp_comp = devm_kmalloc_array(dev,
--						mtk_crtc->ddp_comp_nr + (conn_routes ? 1 : 0),
--						sizeof(*mtk_crtc->ddp_comp),
--						GFP_KERNEL);
-+	mtk_crtc->ddp_comp = devm_kcalloc(dev,
-+					  mtk_crtc->ddp_comp_nr + (conn_routes ? 1 : 0),
-+					  sizeof(*mtk_crtc->ddp_comp),
-+					  GFP_KERNEL);
- 	if (!mtk_crtc->ddp_comp)
- 		return -ENOMEM;
+ 	ret = non_hda_dai_hw_params(substream, params, cpu_dai);
+ 	if (ret < 0) {
+@@ -457,9 +464,29 @@ int sdw_hda_dai_hw_params(struct snd_pcm_substream *substream,
+ 	if (!hext_stream)
+ 		return -ENODEV;
  
+-	/* in the case of SoundWire we need to program the PCMSyCM registers */
++	/*
++	 * in the case of SoundWire we need to program the PCMSyCM registers. In case
++	 * of aggregated devices, we need to define the channel mask for each sublink
++	 * by reconstructing the split done in soc-pcm.c
++	 */
++	for_each_rtd_cpu_dais(rtd, cpu_dai_id, dai) {
++		if (dai == cpu_dai) {
++			cpu_dai_found = true;
++			break;
++		}
++	}
++
++	if (!cpu_dai_found)
++		return -ENODEV;
++
++	ch_mask = 0;
++	for_each_link_ch_maps(rtd->dai_link, j, ch_maps) {
++		if (ch_maps->cpu == cpu_dai_id)
++			ch_mask |= ch_maps->ch_mask;
++	}
++
+ 	ret = hdac_bus_eml_sdw_map_stream_ch(sof_to_bus(sdev), link_id, cpu_dai->id,
+-					     GENMASK(params_channels(params) - 1, 0),
++					     ch_mask,
+ 					     hdac_stream(hext_stream)->stream_tag,
+ 					     substream->stream);
+ 	if (ret < 0) {
 -- 
 2.43.0
 
