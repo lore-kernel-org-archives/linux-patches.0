@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234B0168C4;
-	Mon, 27 May 2024 19:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4DF168C4;
+	Mon, 27 May 2024 19:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837909; cv=none; b=FJocMCnChGcj+05dSLIM3SVYyTfR+ICgww8x6onskU1NivhTvzEtbg/5E7uV8ChuSIwDQ+5ZWPqjkEVmbgZfFZ6H8fOfhBWjEkzl5u3gC3PFYqBy1onHE8wFtpG/niiFn8vm2RNBw5X49sUOy4uRY8H6PFbEdQjOWjv1Qf4Mtzs=
+	t=1716837911; cv=none; b=MACDLcMmis0gbHF+C8MJqp3wb66C0R63N2gcxfgvG+/vK/oRjrMVQu4pKTKb5+CUZQDzTibXmegQk/5Tiwv4y21kVJEG38PY05KRBWm1enrFcr5DLCKvWVLxbqlhpr/CYVuBhlIMlTfhKWc2ZpIokZnwKLmtHBZwzPp+hd95v1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837909; c=relaxed/simple;
-	bh=qOI7sc3+MoRv8CRgDDsk/sqHexesgQHN8P8QdeYxVPk=;
+	s=arc-20240116; t=1716837911; c=relaxed/simple;
+	bh=Yxl9Am7WxH0FlKKdpYSzMkyJvOJn0qg70U5iVSqdMpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOFWtyZaubRmj62a5mGWyRmI+HSK1de1bxVnKMRofs6Pbv5+MykRU09keOcxvbVDEpDGNBFUktos03TfDcs+8g4EhM93sox3FUIZc5gZkcNYXBUduE2ecLsrKEqkFOCH4tO7jcgc4HvPq9s24p+IdRyrr6aI8OWNBxYXySQD4v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSf+vrtx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sm4tgIo5oPRnrEDmVGdyOAcYEi0hkNsDbORtl91+lsgpASmq5l1AQfwJcdSgSnt/G2UvS7wbJJ4199nXILrnVq3WSkAAjYRk405NvvM+I+TWuF3jrLbEJzF04ZACaLpaa+68tos0EdJ108FN3l5p15ea+gVfu+mA9dNxxW0Pjic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIpcfk9l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSf+vrtx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8A5C2BBFC;
-	Mon, 27 May 2024 19:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIpcfk9l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E0FC2BBFC;
+	Mon, 27 May 2024 19:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837909;
-	bh=qOI7sc3+MoRv8CRgDDsk/sqHexesgQHN8P8QdeYxVPk=;
+	s=korg; t=1716837911;
+	bh=Yxl9Am7WxH0FlKKdpYSzMkyJvOJn0qg70U5iVSqdMpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zSf+vrtxRA1A9LAtg2tWg5y3DPDzVf8OSNAxM6v+mqrzZwjPpeELvb/Wr15WlFJRh
-	 yBCv4R+vvk/Og4VXOK6aKT02Owfaxejcvl91e+9Xnt8ta7JaIoVK6ffok2ppdzKI0T
-	 PK2zLjpDNfia16mZJ9VKYE+j5ZHcxjxZD1Wv0ZL0=
+	b=LIpcfk9lkwgrfWq0bW196ZxVEo7skSrQ/Dr6TuOn5lg0p3TSv7WdClWP0tmAZcHho
+	 lwRYD//dScVJp7jM7Fjl4zLBvBDPIHfoN5UwrcdmY0OzIfSxKP6M8todvdQ0UYB963
+	 qIg4w+34qkJmO9CN2x17u8tPZ9+KMGtwvGUw0tt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Anton Protopopov <aspsk@isovalent.com>,
+	syzbot+148110ee7cf72f39f33e@syzkaller.appspotmail.com,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 192/493] bpf: Pack struct bpf_fib_lookup
-Date: Mon, 27 May 2024 20:53:14 +0200
-Message-ID: <20240527185636.628054022@linuxfoundation.org>
+Subject: [PATCH 6.8 193/493] bpf: prevent r10 register from being marked as precise
+Date: Mon, 27 May 2024 20:53:15 +0200
+Message-ID: <20240527185636.655512365@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -54,72 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Protopopov <aspsk@isovalent.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit f91717007217d975aa975ddabd91ae1a107b9bff ]
+[ Upstream commit 1f2a74b41ea8b902687eb97c4e7e3f558801865b ]
 
-The struct bpf_fib_lookup is supposed to be of size 64. A recent commit
-59b418c7063d ("bpf: Add a check for struct bpf_fib_lookup size") added
-a static assertion to check this property so that future changes to the
-structure will not accidentally break this assumption.
+r10 is a special register that is not under BPF program's control and is
+always effectively precise. The rest of precision logic assumes that
+only r0-r9 SCALAR registers are marked as precise, so prevent r10 from
+being marked precise.
 
-As it immediately turned out, on some 32-bit arm systems, when AEABI=n,
-the total size of the structure was equal to 68, see [1]. This happened
-because the bpf_fib_lookup structure contains a union of two 16-bit
-fields:
+This can happen due to signed cast instruction allowing to do something
+like `r0 = (s8)r10;`, which later, if r0 needs to be precise, would lead
+to an attempt to mark r10 as precise.
 
-    union {
-            __u16 tot_len;
-            __u16 mtu_result;
-    };
+Prevent this with an extra check during instruction backtracking.
 
-which was supposed to compile to a 16-bit-aligned 16-bit field. On the
-aforementioned setups it was instead both aligned and padded to 32-bits.
-
-Declare this inner union as __attribute__((packed, aligned(2))) such
-that it always is of size 2 and is aligned to 16 bits.
-
-  [1] https://lore.kernel.org/all/CA+G9fYtsoP51f-oP_Sp5MOq-Ffv8La2RztNpwvE6+R1VtFiLrw@mail.gmail.com/#t
-
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Fixes: e1850ea9bd9e ("bpf: bpf_fib_lookup return MTU value as output when looked up")
-Signed-off-by: Anton Protopopov <aspsk@isovalent.com>
+Fixes: 8100928c8814 ("bpf: Support new sign-extension mov insns")
+Reported-by: syzbot+148110ee7cf72f39f33e@syzkaller.appspotmail.com
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240403123303.1452184-1-aspsk@isovalent.com
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20240404214536.3551295-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/bpf.h       | 2 +-
- tools/include/uapi/linux/bpf.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
-index 754e68ca8744c..83f31916e2635 100644
---- a/include/uapi/linux/bpf.h
-+++ b/include/uapi/linux/bpf.h
-@@ -7040,7 +7040,7 @@ struct bpf_fib_lookup {
- 
- 		/* output: MTU value */
- 		__u16	mtu_result;
--	};
-+	} __attribute__((packed, aligned(2)));
- 	/* input: L3 device index for lookup
- 	 * output: device index from FIB lookup
- 	 */
-diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
-index 7f24d898efbb4..a12f597a1c47f 100644
---- a/tools/include/uapi/linux/bpf.h
-+++ b/tools/include/uapi/linux/bpf.h
-@@ -7039,7 +7039,7 @@ struct bpf_fib_lookup {
- 
- 		/* output: MTU value */
- 		__u16	mtu_result;
--	};
-+	} __attribute__((packed, aligned(2)));
- 	/* input: L3 device index for lookup
- 	 * output: device index from FIB lookup
- 	 */
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 11bc3af33f34f..68ec508057466 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -3584,7 +3584,8 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+ 				 * sreg needs precision before this insn
+ 				 */
+ 				bt_clear_reg(bt, dreg);
+-				bt_set_reg(bt, sreg);
++				if (sreg != BPF_REG_FP)
++					bt_set_reg(bt, sreg);
+ 			} else {
+ 				/* dreg = K
+ 				 * dreg needs precision after this insn.
+@@ -3600,7 +3601,8 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+ 				 * both dreg and sreg need precision
+ 				 * before this insn
+ 				 */
+-				bt_set_reg(bt, sreg);
++				if (sreg != BPF_REG_FP)
++					bt_set_reg(bt, sreg);
+ 			} /* else dreg += K
+ 			   * dreg still needs precision before this insn
+ 			   */
 -- 
 2.43.0
 
