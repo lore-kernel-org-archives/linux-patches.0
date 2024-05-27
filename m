@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52DA1078F;
-	Mon, 27 May 2024 19:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4B91078F;
+	Mon, 27 May 2024 19:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836760; cv=none; b=tfOiqu6h8mkWouz6FaSBTY0bM4532H8EsM+VKVjEcUP1aa7HZKjA/QA9JPIS8YyC0NMzhw4n2z7DUDrDR4Dl/TKpmKZ7KrnPybnmfO7xtR00VFoiANqJeIfX9rFHwAgur6WwYvGEWZUMTxJnf5dueNH5uUi7lmV3oLbaOBeZULk=
+	t=1716836763; cv=none; b=rlh62idIPglHuFqIlZTHv16e1/58gqRDrbWGS/vCvREVK+PmbxhiJ0tLde8kGcy3vaIIISlutvsuAxj7pvFyNDdRc2R4UhF58RP4dNbQiV92SazdI2IT+PP3P8rIu5yOn5Y4kFGL9VKsGdDJWDeLvjECNCotHNDtcxr3NnuqO0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836760; c=relaxed/simple;
-	bh=qc3qGULy2ztBA0WIyjLlS5acpWG2wRwbHynpIdg5T/I=;
+	s=arc-20240116; t=1716836763; c=relaxed/simple;
+	bh=MW1RHBaPr1p1fN8R/8eGpzxvmLgk4AxFh90wdGhuUS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEQiWGzkHBkX0Fy4IaQfD3aCjJvkxxrPfO2uX6shs11GgfpzPC6Ii7qkal+I6M0svAJgbvtiEWshW6AYjjqACICZz7jGnkQcXYs8TxOWXfV0jJv7Fvbf6A1tNptnGj4VG1k4b32hfA+8LA/vA9TEo9T3QKesNeJZc9OMgbifDfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUEmcMth; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d14eu/PdMV7wwoQPYMWFRVJh9Nrd3CDvn2xbFeltn6UZr4a0bkISLEe5lu8rTCzbhh98rLVPKpeDyThuaKNXu+nB3E6BOvODQTqOB04HE2TVdco8Fu3hbL8sFq3aOvQNjcpHr/U+NRxwrchRT3vtSU0L7thRN5iWz6zxrtULzVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dwiYUuA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUEmcMth"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6707EC32782;
-	Mon, 27 May 2024 19:06:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dwiYUuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01FBDC2BBFC;
+	Mon, 27 May 2024 19:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836760;
-	bh=qc3qGULy2ztBA0WIyjLlS5acpWG2wRwbHynpIdg5T/I=;
+	s=korg; t=1716836763;
+	bh=MW1RHBaPr1p1fN8R/8eGpzxvmLgk4AxFh90wdGhuUS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kUEmcMthaqoSMigIhrjOLnEz/qIjWrkKEVOhnIvVKlbqyXdWyqtVZCCK1Zxuu3fe7
-	 6+u1SS/YRh2LAZNgT4ilRMCfsWn3F0Vls6rlRhEb85TnP799/QMdXzia4sU4g48SVR
-	 vMFbuhhmWn8bHFxSJeci6MN+lL7Lf+NsWeT5llkg=
+	b=1dwiYUuA0EYx2Cr6L2wDFLnyQ1h7U2SB9phUJUEno/jLvREi1Q92keaoLVhDobslJ
+	 KuD8BKAvSg9ey9Rzz0kla8AkV9f2d8a/lMHkuAdZVnQmFckgtHRGmWRYld8C04442k
+	 RNLcHlHaf6G3eJp2QXHWPsTktbV6Bn81TnzjQXIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Portia Stephens <portia.stephens@canonical.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 175/427] cpufreq: brcmstb-avs-cpufreq: ISO C90 forbids mixed declarations
-Date: Mon, 27 May 2024 20:53:42 +0200
-Message-ID: <20240527185618.577872057@linuxfoundation.org>
+Subject: [PATCH 6.9 176/427] wifi: ath10k: populate board data for WCN3990
+Date: Mon, 27 May 2024 20:53:43 +0200
+Message-ID: <20240527185618.666092561@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,42 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Portia Stephens <portia.stephens@canonical.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit fa7bd98f3c8b33fb68c6b2bc69cff32b63db69f8 ]
+[ Upstream commit f1f1b5b055c9f27a2f90fd0f0521f5920e9b3c18 ]
 
-There is a compile warning because a NULL pointer check was added before
-a struct was declared. This moves the NULL pointer check to after the
-struct is declared and moves the struct assignment to after the NULL
-pointer check.
+Specify board data size (and board.bin filename) for the WCN3990
+platform.
 
-Fixes: f661017e6d32 ("cpufreq: brcmstb-avs-cpufreq: add check for cpufreq_cpu_get's return value")
-Signed-off-by: Portia Stephens <portia.stephens@canonical.com>
-Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
+Fixes: 03a72288c546 ("ath10k: wmi: add hw params entry for wcn3990")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240130-wcn3990-board-fw-v1-1-738f7c19a8c8@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/brcmstb-avs-cpufreq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/core.c      | 3 +++
+ drivers/net/wireless/ath/ath10k/hw.h        | 1 +
+ drivers/net/wireless/ath/ath10k/targaddrs.h | 3 +++
+ 3 files changed, 7 insertions(+)
 
-diff --git a/drivers/cpufreq/brcmstb-avs-cpufreq.c b/drivers/cpufreq/brcmstb-avs-cpufreq.c
-index 1a1857b0a6f48..ea8438550b490 100644
---- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
-+++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
-@@ -481,9 +481,12 @@ static bool brcm_avs_is_firmware_loaded(struct private_data *priv)
- static unsigned int brcm_avs_cpufreq_get(unsigned int cpu)
- {
- 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
-+	struct private_data *priv;
-+
- 	if (!policy)
- 		return 0;
--	struct private_data *priv = policy->driver_data;
-+
-+	priv = policy->driver_data;
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index 9ce6f49ab2614..fa5e2e6518313 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -720,6 +720,9 @@ static const struct ath10k_hw_params ath10k_hw_params_list[] = {
+ 		.max_spatial_stream = 4,
+ 		.fw = {
+ 			.dir = WCN3990_HW_1_0_FW_DIR,
++			.board = WCN3990_HW_1_0_BOARD_DATA_FILE,
++			.board_size = WCN3990_BOARD_DATA_SZ,
++			.board_ext_size = WCN3990_BOARD_EXT_DATA_SZ,
+ 		},
+ 		.sw_decrypt_mcast_mgmt = true,
+ 		.rx_desc_ops = &wcn3990_rx_desc_ops,
+diff --git a/drivers/net/wireless/ath/ath10k/hw.h b/drivers/net/wireless/ath/ath10k/hw.h
+index 93c0730919966..9aa2d821b5078 100644
+--- a/drivers/net/wireless/ath/ath10k/hw.h
++++ b/drivers/net/wireless/ath/ath10k/hw.h
+@@ -133,6 +133,7 @@ enum qca9377_chip_id_rev {
+ /* WCN3990 1.0 definitions */
+ #define WCN3990_HW_1_0_DEV_VERSION	ATH10K_HW_WCN3990
+ #define WCN3990_HW_1_0_FW_DIR		ATH10K_FW_DIR "/WCN3990/hw1.0"
++#define WCN3990_HW_1_0_BOARD_DATA_FILE "board.bin"
  
- 	cpufreq_cpu_put(policy);
+ #define ATH10K_FW_FILE_BASE		"firmware"
+ #define ATH10K_FW_API_MAX		6
+diff --git a/drivers/net/wireless/ath/ath10k/targaddrs.h b/drivers/net/wireless/ath/ath10k/targaddrs.h
+index ec556bb88d658..ba37e6c7ced08 100644
+--- a/drivers/net/wireless/ath/ath10k/targaddrs.h
++++ b/drivers/net/wireless/ath/ath10k/targaddrs.h
+@@ -491,4 +491,7 @@ struct host_interest {
+ #define QCA4019_BOARD_DATA_SZ	  12064
+ #define QCA4019_BOARD_EXT_DATA_SZ 0
  
++#define WCN3990_BOARD_DATA_SZ	  26328
++#define WCN3990_BOARD_EXT_DATA_SZ 0
++
+ #endif /* __TARGADDRS_H__ */
 -- 
 2.43.0
 
