@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCB215FCFB;
-	Mon, 27 May 2024 19:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6347C160877;
+	Mon, 27 May 2024 19:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838593; cv=none; b=ImxeH9y/yQ2bg+3JRPvahBInnDNybgMW3jYvfQ1lZvN3l8iYNyEvqQQ4+xw/uwZ9+CJSyGR6+GJEqflj67VB6A94mt+GcUFUZRu0kn9qrL4FuewxNytgFCvvdTaT5iG0G9prt5KlARgAy8BhMnN9gmXPllzXQR4ZuWtD5CrO8fE=
+	t=1716838596; cv=none; b=GjNE2wglSKdDunaRCyvVIxWQ/73YMcSIznoEAyhtnXKsS2M7vh6VGEnE1YmJ3O21cXuS+TEFWX3LESUHHlIfihisXOv6gglPHYnqwx+vqapiNrNSuBzWeBoQ8mhm33d3Uc7URDqRMB4wewoaA23W/vkFCMkcUyCem9+NF0bqZ3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838593; c=relaxed/simple;
-	bh=Az1+j/pC+vu41qCT8WSZ+S2tq9GVqXPsujkHgIkq/08=;
+	s=arc-20240116; t=1716838596; c=relaxed/simple;
+	bh=j7byoY24LXlga5o+fFlJCjTzRMHbz9Ftz8ABoQJY+4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZXCDDH0DFEIv8eXVCmzHdePjRPuh/ykPwMDqCMCtSTd3IXfQEB30FJ4lJQE8K/fiGCKYBtpAl2fdkSr7HxKrG2/NsiMp++iVLqoDrgEHe6/uEvqDUEMGP2i0R3vai9snhIIGUli89cBa0kpMzI9f7m8e9EBsNLkWv/KHwXQ/ZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PwnGNL2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p4V7RrpL7Yx1MWB2g1+rSvC//iNN38nThjqkFaoRgWSKN5ftSiXhxMf2GrLn4HLW4JStiN9enD80rDJBgMJbRvtS1rTEsW4USqACpKkgim/e1mzCP3MBy6S7UxaiQNdIAg53u2zOLfIAfXuDmog6e+SUOPTkjqIzAXePU5hoT0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Do7Hwspe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PwnGNL2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E90C2BBFC;
-	Mon, 27 May 2024 19:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Do7Hwspe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB226C4AF0C;
+	Mon, 27 May 2024 19:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838593;
-	bh=Az1+j/pC+vu41qCT8WSZ+S2tq9GVqXPsujkHgIkq/08=;
+	s=korg; t=1716838596;
+	bh=j7byoY24LXlga5o+fFlJCjTzRMHbz9Ftz8ABoQJY+4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1PwnGNL2FcV6CGY++aN2Aoh/i3cVmIow4d8b1AQPBg9kh/ZCNyl7la1Ap2+aFumaJ
-	 RBaSro9f+5J8WlIg+yHJ9zbFUurGAvEMpXC5XzG+4Xl62XfukzfwwmhZ7Zh+YbObiI
-	 aLrIBGqr4Ja1r0YcIqN3/RLo8DZUfvgZGHwdm180=
+	b=Do7Hwspe+hgDWwjw7auCNwvEtz2fpWHNpRmEtqvCS55rLQuvN2yjtaafv7n7SIddX
+	 Wis5RlnlagcYcUBRmHUG6h8FEz1SGYh6KkPz188lmsAQYxHOiJQSuHp11djmgSKNQc
+	 gcOid1GbpZCSNedN1F0Xr2qtAxCcivcchlBbdB0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	David Hildenbrand <david@redhat.com>,
-	Andy Lutomirski <luto@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Fei Li <fei1.li@intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 454/493] virt: acrn: stop using follow_pfn
-Date: Mon, 27 May 2024 20:57:36 +0200
-Message-ID: <20240527185645.066574811@linuxfoundation.org>
+Subject: [PATCH 6.8 437/493] RDMA/rxe: Fix incorrect rxe_put in error path
+Date: Mon, 27 May 2024 20:57:19 +0200
+Message-ID: <20240527185644.565919760@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -57,69 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 1b265da7ea1e1ae997fa119c2846bb389eb39c6b ]
+[ Upstream commit 8776618dbbd1b6f210b31509507e1aad461d6435 ]
 
-Patch series "remove follow_pfn".
+In rxe_send() a ref is taken on the qp to keep it alive until the
+kfree_skb() has a chance to call the skb destructor rxe_skb_tx_dtor()
+which drops the reference. If the packet has an incorrect protocol the
+error path just calls kfree_skb() which will call the destructor which
+will drop the ref. Currently the driver also calls rxe_put() which is
+incorrect. Additionally since the packets sent to rxe_send() are under the
+control of the driver and it only ever produces IPV4 or IPV6 packets the
+simplest fix is to remove all the code in this block.
 
-This series open codes follow_pfn in the only remaining caller, although
-the code there remains questionable.  It then also moves follow_phys into
-the only user and simplifies it a bit.
-
-This patch (of 3):
-
-Switch from follow_pfn to follow_pte so that we can get rid of follow_pfn.
-Note that this doesn't fix any of the pre-existing raciness and lack of
-permission checking in the code.
-
-Link: https://lkml.kernel.org/r/20240324234542.2038726-1-hch@lst.de
-Link: https://lkml.kernel.org/r/20240324234542.2038726-2-hch@lst.de
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Fei Li <fei1.li@intel.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 3d6586008f7b ("drivers/virt/acrn: fix PFNMAP PTE checks in acrn_vm_ram_map()")
+Link: https://lore.kernel.org/r/20240329145513.35381-12-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Fixes: 9eb7f8e44d13 ("IB/rxe: Move refcounting earlier in rxe_send()")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/acrn/mm.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_net.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/virt/acrn/mm.c b/drivers/virt/acrn/mm.c
-index fa5d9ca6be570..69c3f619f8819 100644
---- a/drivers/virt/acrn/mm.c
-+++ b/drivers/virt/acrn/mm.c
-@@ -171,18 +171,24 @@ int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
- 	mmap_read_lock(current->mm);
- 	vma = vma_lookup(current->mm, memmap->vma_base);
- 	if (vma && ((vma->vm_flags & VM_PFNMAP) != 0)) {
-+		spinlock_t *ptl;
-+		pte_t *ptep;
-+
- 		if ((memmap->vma_base + memmap->len) > vma->vm_end) {
- 			mmap_read_unlock(current->mm);
- 			return -EINVAL;
- 		}
+diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
+index cd59666158b18..e5827064ab1e2 100644
+--- a/drivers/infiniband/sw/rxe/rxe_net.c
++++ b/drivers/infiniband/sw/rxe/rxe_net.c
+@@ -366,18 +366,10 @@ static int rxe_send(struct sk_buff *skb, struct rxe_pkt_info *pkt)
+ 	rxe_get(pkt->qp);
+ 	atomic_inc(&pkt->qp->skb_out);
  
--		ret = follow_pfn(vma, memmap->vma_base, &pfn);
--		mmap_read_unlock(current->mm);
-+		ret = follow_pte(vma->vm_mm, memmap->vma_base, &ptep, &ptl);
- 		if (ret < 0) {
-+			mmap_read_unlock(current->mm);
- 			dev_dbg(acrn_dev.this_device,
- 				"Failed to lookup PFN at VMA:%pK.\n", (void *)memmap->vma_base);
- 			return ret;
- 		}
-+		pfn = pte_pfn(ptep_get(ptep));
-+		pte_unmap_unlock(ptep, ptl);
-+		mmap_read_unlock(current->mm);
+-	if (skb->protocol == htons(ETH_P_IP)) {
++	if (skb->protocol == htons(ETH_P_IP))
+ 		err = ip_local_out(dev_net(skb_dst(skb)->dev), skb->sk, skb);
+-	} else if (skb->protocol == htons(ETH_P_IPV6)) {
++	else
+ 		err = ip6_local_out(dev_net(skb_dst(skb)->dev), skb->sk, skb);
+-	} else {
+-		rxe_dbg_qp(pkt->qp, "Unknown layer 3 protocol: %d\n",
+-				skb->protocol);
+-		atomic_dec(&pkt->qp->skb_out);
+-		rxe_put(pkt->qp);
+-		kfree_skb(skb);
+-		return -EINVAL;
+-	}
  
- 		return acrn_mm_region_add(vm, memmap->user_vm_pa,
- 			 PFN_PHYS(pfn), memmap->len,
+ 	if (unlikely(net_xmit_eval(err))) {
+ 		rxe_dbg_qp(pkt->qp, "error sending packet: %d\n", err);
 -- 
 2.43.0
 
