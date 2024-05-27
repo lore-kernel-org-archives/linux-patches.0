@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B108D16079B;
-	Mon, 27 May 2024 19:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE2415FA91;
+	Mon, 27 May 2024 19:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838129; cv=none; b=TTOq2I1IBK87ceudfHQ//ltBCgc2lxYYYQCuID0zb0ft5zNGab+MMMhUoQvE1aMkrpGE42s02HQN0TBGMmzBRSpO88tgw9EsWeRx0IHu5u+UF7KwMIDecnuZedFfAy4w7I0iuc+WuEcGOIDDKMNvAoJykQ13IgnLVEk/O4a+9v4=
+	t=1716838132; cv=none; b=QULxNVVLrLiZGYvJ1x/4IGUazZ5WfZko0uGRIPzFsjVgwgQOR6RS4z6Pwyn0LLKqVPwnRxzG2inWuSFMlGZr1igaWtqybb+ZF95AEHu32MpmhKAnBuWuLmlHeL0GTnX6sQSRWcvRw9IUhel4fHHO6hhjwZQKkbxAteDWqAo28vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838129; c=relaxed/simple;
-	bh=mJq6c5o2jGIY8sdcoj08kWTikYFucowkE5X1DsYyjr4=;
+	s=arc-20240116; t=1716838132; c=relaxed/simple;
+	bh=zdx5SlhMCGyySCMQKDI2PIrxzQul/RGo16WkVla2olY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/u7d65ADQxMB6XI4Ekej4ut9KwXRqozM0GAKYVpe1KmGOxgGfV9cxFZxB2QFU6orsIkGTTRNtoz4vNc/vJXTbMbwgLu9B2oqcfWKKuWazarQQ51692DcnxqvPPpnT9awqDsKDTUiTNNIzFJ3raoq6A5O+ccm/7ieSjjDuXhG9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjRtyWpf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fOYRWPXXovkyEUtvRxGafn+C7ANXRQ5oie4yqc6JnX2CGz29GWEAX0t+uQpW8r4zN0FzAhPO+2VEBMLNNjsH8ZVpaOZa8I75jQ8am2H4MHT5iB7deRpb0JMCIPnkLv0tQwNbzPYEdw9uWSm1BoxAKGUuYLRIpiVizM6kfVIIrI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHEIftT3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjRtyWpf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDB1C32786;
-	Mon, 27 May 2024 19:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHEIftT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC91C2BBFC;
+	Mon, 27 May 2024 19:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838129;
-	bh=mJq6c5o2jGIY8sdcoj08kWTikYFucowkE5X1DsYyjr4=;
+	s=korg; t=1716838132;
+	bh=zdx5SlhMCGyySCMQKDI2PIrxzQul/RGo16WkVla2olY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yjRtyWpfW7NbV3+/1V1ikmKdLbmlbu46dGVzv7zlv1q9p4PHIh1Df3y1bmepn/dqB
-	 aS5z5sypYINuFZELngYP2Gs8s3rmw3vkPq1OTbeIXD3gRru9ytxyEyR/ksWoqrK09r
-	 mp2o1iMAReeCy4uqww1cog/NUWiaAdwIvLOe52IM=
+	b=PHEIftT3pzLMq4WBW+3z29qu9pLm9K5YHvhe5U2b1xCBgml98tEo6317X/k5xZA/Z
+	 f9tS4fmpel3brXrmy5DnFmML6KHw9nG+01Bsru7hdULjWhXR3uK7K+/9iLB/GaUdNs
+	 /1S6OwSM/9IAHN63jnn1otIHY5K3sOntm9tjYjHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	John Hubbard <jhubbard@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 278/493] selftests/binderfs: use the Makefiles rules, not Makes implicit rules
-Date: Mon, 27 May 2024 20:54:40 +0200
-Message-ID: <20240527185639.394124942@linuxfoundation.org>
+Subject: [PATCH 6.8 279/493] selftests/resctrl: fix clang build failure: use LOCAL_HDRS
+Date: Mon, 27 May 2024 20:54:41 +0200
+Message-ID: <20240527185639.430953328@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -46,6 +47,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
@@ -54,7 +56,7 @@ Content-Transfer-Encoding: 8bit
 
 From: John Hubbard <jhubbard@nvidia.com>
 
-[ Upstream commit 019baf635eb6ffe8d6c1343f81788f02a7e0ed98 ]
+[ Upstream commit d8171aa4ca72f1a67bf3c14c59441d63c1d2585f ]
 
 First of all, in order to build with clang at all, one must first apply
 Valentin Obst's build fix for LLVM [1]. Once that is done, then when
@@ -71,49 +73,36 @@ form:
 
     clang file1.c header2.h
 
-While trying to fix this, I noticed that:
-
-a) selftests/lib.mk already avoids the problem, and
-
-b) The binderfs Makefile indavertently bypasses the selftests/lib.mk
-build system, and quitely uses Make's implicit build rules for .c files
-instead.
-
-The Makefile attempts to set up both a dependency and a source file,
-neither of which was needed, because lib.mk is able to automatically
-handle both. This line:
-
-    binderfs_test: binderfs_test.c
-
-...causes Make's implicit rules to run, which builds binderfs_test
-without ever looking at lib.mk.
-
-Fix this by simply deleting the "binderfs_test:" Makefile target and
-letting lib.mk handle it instead.
+Fix this by using selftests/lib.mk facilities for tracking local header
+file dependencies: add them to LOCAL_HDRS, leaving only the .c files to
+be passed to the compiler.
 
 [1] https://lore.kernel.org/all/20240329-selftests-libmk-llvm-rfc-v1-1-2f9ed7d1c49f@valentinobst.de/
 
-Fixes: 6e29225af902 ("binderfs: port tests to test harness infrastructure")
-Cc: Christian Brauner <brauner@kernel.org>
+Fixes: 8e289f454289 ("selftests/resctrl: Add resctrl.h into build deps")
+Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: John Hubbard <jhubbard@nvidia.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
+Acked-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/filesystems/binderfs/Makefile | 2 --
- 1 file changed, 2 deletions(-)
+ tools/testing/selftests/resctrl/Makefile | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/filesystems/binderfs/Makefile b/tools/testing/selftests/filesystems/binderfs/Makefile
-index c2f7cef919c04..eb4c3b4119348 100644
---- a/tools/testing/selftests/filesystems/binderfs/Makefile
-+++ b/tools/testing/selftests/filesystems/binderfs/Makefile
-@@ -3,6 +3,4 @@
- CFLAGS += $(KHDR_INCLUDES) -pthread
- TEST_GEN_PROGS := binderfs_test
+diff --git a/tools/testing/selftests/resctrl/Makefile b/tools/testing/selftests/resctrl/Makefile
+index 2deac2031de9e..021863f86053a 100644
+--- a/tools/testing/selftests/resctrl/Makefile
++++ b/tools/testing/selftests/resctrl/Makefile
+@@ -5,6 +5,8 @@ CFLAGS += $(KHDR_INCLUDES)
  
--binderfs_test: binderfs_test.c ../../kselftest.h ../../kselftest_harness.h
--
- include ../../lib.mk
+ TEST_GEN_PROGS := resctrl_tests
+ 
++LOCAL_HDRS += $(wildcard *.h)
++
+ include ../lib.mk
+ 
+-$(OUTPUT)/resctrl_tests: $(wildcard *.[ch])
++$(OUTPUT)/resctrl_tests: $(wildcard *.c)
 -- 
 2.43.0
 
