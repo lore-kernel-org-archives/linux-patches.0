@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23EF15FA91;
-	Mon, 27 May 2024 19:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489F615FA91;
+	Mon, 27 May 2024 19:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838026; cv=none; b=N4TGco1LJ7wkRZT0gpWF6P0DW1M443aXg00hYQ9OCEp5KZXdwvqeA8eFIExa6qiX/kVdsXMUl2nRQsy+kfiwU9u5Pv8yOeKb7y2hqQDKpI/b4jG3rDa32wFhrZTMpPpKnInN4zQ6faG/cpFsts4H+PMt/gyQxchl5O+UalnAOy0=
+	t=1716838029; cv=none; b=NbsS+USJ+h6mDruZWNyLNOer6vY0Z0S3L7ZKtvlrCIvYjkqCINA3PQm1RiT8JbNTxDXpfyPIGe4/Zz4sTYodyRFR/iagnc1lkN8zezUirExjDORDWrwwugX6wGkLoFo6Z2nEbAG1ethXCK5/wspeNB6/ReigD50633nFvkynY7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838026; c=relaxed/simple;
-	bh=JVvUprFIdbVZhlj+MC1ztlU6sFe13pAgmwKr5un6GbI=;
+	s=arc-20240116; t=1716838029; c=relaxed/simple;
+	bh=G4RED9dV+mnX3RdVV77OHm4Q2MD6ah2clW/G2G1gVIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jW7L27vEErwu0oo5LpLidmslCIUSdA7iwuXOcdaSu4rSF7CGTRNlXMxf/6OfgUNlDwbopfsSPPFhpe/cN+D0vJgGmJC6G4HpcSfCXbe9IZB1/ZoTUUPpwTzETfKuNIpQHx6fGsAIVoc+no9bUR+dFjje/ZPKCxV50P/RiZ7yvbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZQwnBlL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gO2dqrIVaq5t8UMFZdZFe9xwKLxUoIGeH44pOXD90pSLOnoNAiMSF0iTm0dqefgVtoj4+kftSVYRUFz8Y3Cav8pFK063Wu8SMXCk5KRt9JQZHHsel6Ok+QJloi9G3aq/SoDFh8Dlp//oEwJqh9Qc/c4EPT5V/Ek5c6kjK6R+2g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icrzuFOo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZQwnBlL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F68C2BBFC;
-	Mon, 27 May 2024 19:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icrzuFOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7259C2BBFC;
+	Mon, 27 May 2024 19:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838026;
-	bh=JVvUprFIdbVZhlj+MC1ztlU6sFe13pAgmwKr5un6GbI=;
+	s=korg; t=1716838029;
+	bh=G4RED9dV+mnX3RdVV77OHm4Q2MD6ah2clW/G2G1gVIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xZQwnBlLhgl1FP+8/82mSGzhQQa2/KEP90LpzxiErkAlIDyKMtB9JjVJu1Z2NT0v7
-	 TBt3q6/Z3n3KK2g7sSa0PR9YJ+Nivh7AWiULFFwT9UytZEbVQrFBzjETJdH45+GLxb
-	 4D0p1jwugaAHY6R2pss+IZCCRi8diMa/R0MzS2ts=
+	b=icrzuFOoceZv9z6r+pFfhcjBjCGhNhKKJ784Ujc2z5zWGWFw6xcZdd65Z+LSNm9E2
+	 o81hv6QpRzBJ/5Bx85/cZRqh5tsef+9jx7y4gqkqTNzt5NGVVAQOcNeaRnyvy8jDry
+	 gcqQqDFfAOm72xggSqLgdpXQfHsTAB67wqsXIw7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
-	Stanley Chu <stanley.chu@mediatek.com>,
-	Can Guo <quic_cang@quicinc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Portia Stephens <portia.stephens@canonical.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 238/493] scsi: ufs: core: mcq: Fix ufshcd_mcq_sqe_search()
-Date: Mon, 27 May 2024 20:54:00 +0200
-Message-ID: <20240527185638.085184893@linuxfoundation.org>
+Subject: [PATCH 6.8 239/493] cpufreq: brcmstb-avs-cpufreq: ISO C90 forbids mixed declarations
+Date: Mon, 27 May 2024 20:54:01 +0200
+Message-ID: <20240527185638.117759835@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -54,48 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Portia Stephens <portia.stephens@canonical.com>
 
-[ Upstream commit 3c5d0dce8ce0a2781ac306b9ad1492b005ecbab5 ]
+[ Upstream commit fa7bd98f3c8b33fb68c6b2bc69cff32b63db69f8 ]
 
-Fix the calculation of the utrd pointer. This patch addresses the following
-Coverity complaint:
+There is a compile warning because a NULL pointer check was added before
+a struct was declared. This moves the NULL pointer check to after the
+struct is declared and moves the struct assignment to after the NULL
+pointer check.
 
-CID 1538170: (#1 of 1): Extra sizeof expression (SIZEOF_MISMATCH)
-suspicious_pointer_arithmetic: Adding sq_head_slot * 32UL /* sizeof (struct
-utp_transfer_req_desc) */ to pointer hwq->sqe_base_addr of type struct
-utp_transfer_req_desc * is suspicious because adding an integral value to
-this pointer automatically scales that value by the size, 32 bytes, of the
-pointed-to type, struct utp_transfer_req_desc. Most likely, the
-multiplication by sizeof (struct utp_transfer_req_desc) in this expression
-is extraneous and should be eliminated.
-
-Cc: Bao D. Nguyen <quic_nguyenb@quicinc.com>
-Cc: Stanley Chu <stanley.chu@mediatek.com>
-Cc: Can Guo <quic_cang@quicinc.com>
-Fixes: 8d7290348992 ("scsi: ufs: mcq: Add supporting functions for MCQ abort")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240410000751.1047758-1-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f661017e6d32 ("cpufreq: brcmstb-avs-cpufreq: add check for cpufreq_cpu_get's return value")
+Signed-off-by: Portia Stephens <portia.stephens@canonical.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-mcq.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/cpufreq/brcmstb-avs-cpufreq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index c873fd8239427..7ae3096814282 100644
---- a/drivers/ufs/core/ufs-mcq.c
-+++ b/drivers/ufs/core/ufs-mcq.c
-@@ -597,8 +597,7 @@ static bool ufshcd_mcq_sqe_search(struct ufs_hba *hba,
- 	addr = le64_to_cpu(cmd_desc_base_addr) & CQE_UCD_BA;
+diff --git a/drivers/cpufreq/brcmstb-avs-cpufreq.c b/drivers/cpufreq/brcmstb-avs-cpufreq.c
+index 1a1857b0a6f48..ea8438550b490 100644
+--- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
++++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
+@@ -481,9 +481,12 @@ static bool brcm_avs_is_firmware_loaded(struct private_data *priv)
+ static unsigned int brcm_avs_cpufreq_get(unsigned int cpu)
+ {
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
++	struct private_data *priv;
++
+ 	if (!policy)
+ 		return 0;
+-	struct private_data *priv = policy->driver_data;
++
++	priv = policy->driver_data;
  
- 	while (sq_head_slot != hwq->sq_tail_slot) {
--		utrd = hwq->sqe_base_addr +
--				sq_head_slot * sizeof(struct utp_transfer_req_desc);
-+		utrd = hwq->sqe_base_addr + sq_head_slot;
- 		match = le64_to_cpu(utrd->command_desc_base_addr) & CQE_UCD_BA;
- 		if (addr == match) {
- 			ufshcd_mcq_nullify_sqe(utrd);
+ 	cpufreq_cpu_put(policy);
+ 
 -- 
 2.43.0
 
