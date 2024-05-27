@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA6E17727;
-	Mon, 27 May 2024 19:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6058513AD05;
+	Mon, 27 May 2024 19:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838209; cv=none; b=fK35uMxNQwEMKtyiLpAlUL8ltU6xVVRATUmsDqMTWYMyJFxMe24WhqJL9eZj6es+3frFRlIJFMFsxA/9+FFvvQsyyd36/N8SB/iQwlSbYyMLFOIJG43HP29g8O3eTHJUqZOcGo9esPQKWtCVJWTFVNugqqrXtb2yWmgSRhVVuoU=
+	t=1716838211; cv=none; b=gIdzXFiQaYP2Np06FXJdu3mvpLOzrWYYSc7CL2vYwwU3AR/hH7LcsWrk7/8t5X4LFiMpN4AiOMpbgiELB/b4q3VjTUqMvB5hggoZ2LVXgDFeG2I/pyBi3f/F3Wc6nJziGRTYg8J07inaBVqJwrOEn2lRbCUIRiK/hvm80bmn7Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838209; c=relaxed/simple;
-	bh=LFApEpaM5wrImS7VdPG7ICjiLGq+bpfRE9mSPq+KWhM=;
+	s=arc-20240116; t=1716838211; c=relaxed/simple;
+	bh=cFpo5I0dRt5uYfv7VB7VwPWRIJG6NF4/fFKK57mDfDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMKOzw6cAvkXyyc7l4pX/HGVH+4TbNqvCWiK112oniso4gh50VBDBFYwE/wtIsDD9VH9MPsHTC/QJostrBcM7Kx6LQr2JFuZimOvBTY/nULAxNrZ5BDhOUY7x2RY5+T0mbleWQobzKtU2FbsdoM3v52HoN4V0x5BjSrWlnhK/Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAcwvxGp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UgezqlEv+TGkYhKMcgglwvJBof9KLPULzH3t4d4Lym7vG4tZ7T+rAWsVMe/YjO2S4bPV2oqf12h+m3Dt++oAU9QH8z8/nuLVpzv6xyCpAhu/lQvwrR4zRDLHttd6CWhb4l++UM3JlMmLwPGqriyB1FnC7o9F/bXHxvdZJ6HD4DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5mX+Sp0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAcwvxGp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9BAC2BBFC;
-	Mon, 27 May 2024 19:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5mX+Sp0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE63C2BBFC;
+	Mon, 27 May 2024 19:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838208;
-	bh=LFApEpaM5wrImS7VdPG7ICjiLGq+bpfRE9mSPq+KWhM=;
+	s=korg; t=1716838211;
+	bh=cFpo5I0dRt5uYfv7VB7VwPWRIJG6NF4/fFKK57mDfDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wAcwvxGpI00XGjt6F6OyctSuYvSxqEn5DykGJIOrIDhm0nkbBxL9z4max/SoOHYon
-	 liKn5aFShGmh25ZotlcvTtp/ZZQrDOeOO+kRi8lbN0XXJrz60isX5TwlsSu6rpZ3rY
-	 Ko4wvQqnhmrAStRIQMU3+ahAF5jEqQoxd8KzoiD4=
+	b=f5mX+Sp0rPkQyvpQmVrLKPIT5mt6VKOdTcIuUjxzOrTCcddj8Wfs83s8QhblosA6W
+	 uVj7rMs4R9sQhNBDMpLYLuPyplrJ39zPv+bv1jlBrs24MxUqVl/wFGOv6dTYrBw3JD
+	 3dUoErMQ+DiMxhh+SZpCmYJ8w4AFW5pe2Sy/ct2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+838346b979830606c854@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 266/493] bpf: Add BPF_PROG_TYPE_CGROUP_SKB attach type enforcement in BPF_LINK_CREATE
-Date: Mon, 27 May 2024 20:54:28 +0200
-Message-ID: <20240527185638.990240481@linuxfoundation.org>
+Subject: [PATCH 6.8 267/493] sh: kprobes: Merge arch_copy_kprobe() into arch_prepare_kprobe()
+Date: Mon, 27 May 2024 20:54:29 +0200
+Message-ID: <20240527185639.024110951@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,47 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 543576ec15b17c0c93301ac8297333c7b6e84ac7 ]
+[ Upstream commit 1422ae080b66134fe192082d9b721ab7bd93fcc5 ]
 
-bpf_prog_attach uses attach_type_to_prog_type to enforce proper
-attach type for BPF_PROG_TYPE_CGROUP_SKB. link_create uses
-bpf_prog_get and relies on bpf_prog_attach_check_attach_type
-to properly verify prog_type <> attach_type association.
+arch/sh/kernel/kprobes.c:52:16: warning: no previous prototype for 'arch_copy_kprobe' [-Wmissing-prototypes]
 
-Add missing attach_type enforcement for the link_create case.
-Otherwise, it's currently possible to attach cgroup_skb prog
-types to other cgroup hooks.
+Although SH kprobes support was only merged in v2.6.28, it missed the
+earlier removal of the arch_copy_kprobe() callback in v2.6.15.
 
-Fixes: af6eea57437a ("bpf: Implement bpf_link-based cgroup BPF program attachment")
-Link: https://lore.kernel.org/bpf/0000000000004792a90615a1dde0@google.com/
-Reported-by: syzbot+838346b979830606c854@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20240426231621.2716876-2-sdf@google.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Based on the powerpc part of commit 49a2a1b83ba6fa40 ("[PATCH] kprobes:
+changed from using spinlock to mutex").
+
+Fixes: d39f5450146ff39f ("sh: Add kprobes support.")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/717d47a19689cc944fae6e981a1ad7cae1642c89.1709326528.git.geert+renesas@glider.be
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/sh/kernel/kprobes.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 0f90b6b27430d..1860ba343726d 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -3852,6 +3852,11 @@ static int bpf_prog_attach_check_attach_type(const struct bpf_prog *prog,
- 			 * check permissions at attach time.
- 			 */
- 			return -EPERM;
-+
-+		ptype = attach_type_to_prog_type(attach_type);
-+		if (prog->type != ptype)
-+			return -EINVAL;
-+
- 		return prog->enforce_expected_attach_type &&
- 			prog->expected_attach_type != attach_type ?
- 			-EINVAL : 0;
+diff --git a/arch/sh/kernel/kprobes.c b/arch/sh/kernel/kprobes.c
+index aed1ea8e2c2f0..74051b8ddf3e7 100644
+--- a/arch/sh/kernel/kprobes.c
++++ b/arch/sh/kernel/kprobes.c
+@@ -44,17 +44,12 @@ int __kprobes arch_prepare_kprobe(struct kprobe *p)
+ 	if (OPCODE_RTE(opcode))
+ 		return -EFAULT;	/* Bad breakpoint */
+ 
++	memcpy(p->ainsn.insn, p->addr, MAX_INSN_SIZE * sizeof(kprobe_opcode_t));
+ 	p->opcode = opcode;
+ 
+ 	return 0;
+ }
+ 
+-void __kprobes arch_copy_kprobe(struct kprobe *p)
+-{
+-	memcpy(p->ainsn.insn, p->addr, MAX_INSN_SIZE * sizeof(kprobe_opcode_t));
+-	p->opcode = *p->addr;
+-}
+-
+ void __kprobes arch_arm_kprobe(struct kprobe *p)
+ {
+ 	*p->addr = BREAKPOINT_INSTRUCTION;
 -- 
 2.43.0
 
