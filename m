@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9350C262BE;
-	Mon, 27 May 2024 19:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24092262BE;
+	Mon, 27 May 2024 19:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838193; cv=none; b=s6VJheTMyUOj1xlEsSnOce9r4To9YgdqRiba2YE6sKUWkCgR1E5Ut4W3yxnw+e4al5X9aZvYP1digeaRdiakxnu3OWIzCcH/FC63W9TT2AeX7xcGQZxAzrXEwI+7HzxgSi+4EURYp1MjJBMaly4lehvJNSPTopY8OvOy/PtQ8L4=
+	t=1716838196; cv=none; b=ReXfHojNVHY24pSNyJGTttlmLxpZiuY+1AzTFra9ubOUDLZU4P0t6Vxyf85FEBGd+a8vucow5Xe/EWqFBVuoSzJNg/aEDFzBI0mZphVwFxkXVCP4DCp+f1lwTenadW6UbTSER4DMxqk7kEPdhtHtUmLD/wo8xgjCv0Oy1fcFpq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838193; c=relaxed/simple;
-	bh=IzrnfSfW+dlg1rxVni7Q8jcafDzF/cOKf0xxEBNtLtY=;
+	s=arc-20240116; t=1716838196; c=relaxed/simple;
+	bh=NR3JQESadvJpyaI1XrqYgTz7jDUsa90S7dZCAn2j0QY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cQ1ryjiv0X4xsk2CBtQcHzrVCyWSWVnDD21lWSL6n+kFBGyca3mQr0Nq2+LRpMC2zJnkoUZ4kMpYrLkjW3mOlyDUmoVTJNb4JrT9XS5TZ0IarryMtnQ9t85Xau9dej7qJXiJlGZTxZTiBOV9hyANmY3rxxJYSmDlJPBFBbeDPvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzTrL5lQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AIjEMpUhTvgcWWs+pithFJ6bC0oCRP7kU4Han3Rf5LENqVef7DTkzRUKtAauBn5Lvf5C+3RU3obXj8V1iXtAuwV8/jAsgHLGpLj0Yl+O8Q4fJ8jTgfHXjRPOjg7lkYVPh3zt0GAveQzv0JqbYpduyURhvSmUaK+h60owyyZMHC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6FPoD+O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzTrL5lQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2237DC2BBFC;
-	Mon, 27 May 2024 19:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6FPoD+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2F0C2BBFC;
+	Mon, 27 May 2024 19:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838193;
-	bh=IzrnfSfW+dlg1rxVni7Q8jcafDzF/cOKf0xxEBNtLtY=;
+	s=korg; t=1716838196;
+	bh=NR3JQESadvJpyaI1XrqYgTz7jDUsa90S7dZCAn2j0QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nzTrL5lQeG3/I/OE1XKSBhrYhH58xEDJC1ueyP9x/Hf1q4os5sTCQOp8uTPl5RxGL
-	 7dwp1rtyEtlAV4eqokygTOfTvfQpc/HhMrJpIRrxCa61CdcE3uGqHdsq8f/ASBeXH5
-	 3pzsGUjXTFdGgu0Sq+1ZEEWcAFnrPGEy7E5ir7ok=
+	b=t6FPoD+OwRDe9DMlOoFxB/GqYzeBTmYT+gUSPjUHwOOxfUvjhFUC6u3hHf5MhVdek
+	 FRRDXgqDTAEwamBnDvnHQzPi1hQmDybwHgui5fAMyZKOnBccSp8EegLnvR2DDsDSis
+	 uC3etexVtEGCozJRPSfsaYc1H5Ut5Yaffl1vB2Eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	George Stark <gnstark@salutedevices.com>,
+	Gao Xingwang <gaoxingwang1@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 265/493] pwm: meson: Use mul_u64_u64_div_u64() for frequency calculating
-Date: Mon, 27 May 2024 20:54:27 +0200
-Message-ID: <20240527185638.958357182@linuxfoundation.org>
+Subject: [PATCH 6.8 301/493] net: ipv6: fix wrong start position when receive hop-by-hop fragment
+Date: Mon, 27 May 2024 20:55:03 +0200
+Message-ID: <20240527185640.151280199@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -45,53 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: George Stark <gnstark@salutedevices.com>
+From: gaoxingwang <gaoxingwang1@huawei.com>
 
-[ Upstream commit 32c44e1fa921aebf8a5ef9f778534a30aab39313 ]
+[ Upstream commit 1cd354fe1e4864eeaff62f66ee513080ec946f20 ]
 
-While calculating frequency for the given period u64 numbers are
-multiplied before division what can lead to overflow in theory so use
-secure mul_u64_u64_div_u64() which handles overflow correctly.
+In IPv6, ipv6_rcv_core will parse the hop-by-hop type extension header and increase skb->transport_header by one extension header length.
+But if there are more other extension headers like fragment header at this time, the skb->transport_header points to the second extension header,
+not the transport layer header or the first extension header.
 
-Fixes: 329db102a26d ("pwm: meson: make full use of common clock framework")
-Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: George Stark <gnstark@salutedevices.com>
-Link: https://lore.kernel.org/r/20240425171253.2752877-4-gnstark@salutedevices.com
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+This will result in the start and nexthdrp variable not pointing to the same position in ipv6frag_thdr_trunced,
+and ipv6_skip_exthdr returning incorrect offset and frag_off.Sometimes,the length of the last sharded packet is smaller than the calculated incorrect offset, resulting in packet loss.
+We can use network header to offset and calculate the correct position to solve this problem.
+
+Fixes: 9d9e937b1c8b (ipv6/netfilter: Discard first fragment not including all headers)
+Signed-off-by: Gao Xingwang <gaoxingwang1@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-meson.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/reassembly.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-meson.c b/drivers/pwm/pwm-meson.c
-index 6fefa80af0a4c..52ac3277f4204 100644
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -177,7 +177,7 @@ static int meson_pwm_calc(struct pwm_chip *chip, struct pwm_device *pwm,
- 
- 	dev_dbg(pwmchip_parent(chip), "fin_freq: %ld Hz\n", fin_freq);
- 
--	cnt = div_u64(fin_freq * period, NSEC_PER_SEC);
-+	cnt = mul_u64_u64_div_u64(fin_freq, period, NSEC_PER_SEC);
- 	if (cnt > 0xffff) {
- 		dev_err(pwmchip_parent(chip), "unable to get period cnt\n");
- 		return -EINVAL;
-@@ -192,7 +192,7 @@ static int meson_pwm_calc(struct pwm_chip *chip, struct pwm_device *pwm,
- 		channel->hi = 0;
- 		channel->lo = cnt;
- 	} else {
--		duty_cnt = div_u64(fin_freq * duty, NSEC_PER_SEC);
-+		duty_cnt = mul_u64_u64_div_u64(fin_freq, duty, NSEC_PER_SEC);
- 
- 		dev_dbg(pwmchip_parent(chip), "duty=%llu duty_cnt=%u\n", duty, duty_cnt);
- 
+diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
+index 5ebc47da1000c..2af98edef87ee 100644
+--- a/net/ipv6/reassembly.c
++++ b/net/ipv6/reassembly.c
+@@ -369,7 +369,7 @@ static int ipv6_frag_rcv(struct sk_buff *skb)
+ 	 * the source of the fragment, with the Pointer field set to zero.
+ 	 */
+ 	nexthdr = hdr->nexthdr;
+-	if (ipv6frag_thdr_truncated(skb, skb_transport_offset(skb), &nexthdr)) {
++	if (ipv6frag_thdr_truncated(skb, skb_network_offset(skb) + sizeof(struct ipv6hdr), &nexthdr)) {
+ 		__IP6_INC_STATS(net, __in6_dev_get_safely(skb->dev),
+ 				IPSTATS_MIB_INHDRERRORS);
+ 		icmpv6_param_prob(skb, ICMPV6_HDR_INCOMP, 0);
 -- 
 2.43.0
 
