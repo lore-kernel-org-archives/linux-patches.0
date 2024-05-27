@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7634217E90E;
-	Mon, 27 May 2024 19:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107AC17E90E;
+	Mon, 27 May 2024 19:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837099; cv=none; b=MKW/45Xt61FEo6PNZ3yezfcjFRrcaiRSHpBd0qjx7G+TlgplPtOYO88LfQTJWqTtwx/VCmM0LX2Xbx5UFZG3JONCZEF3du0BISCs4mvthnxQpNR9XUgVhpGuON02X9T3XfXiKilX+D3IR06K8zJ8EE70UJXov+7cR4Hf9cOg7Fs=
+	t=1716837102; cv=none; b=bHEau+q+i7lwIQBlxni/PE3w8gyIQgidm2NT3HMdFiyJJDhXHhI+KiBDA6zGX3e20xiNTmu10KFXcGuHy433ser9nQ310CGziIzJPQSHNaEFOS8sDVUDq66lBFZt3ejfQYgkMntcszcxWCMghwHhuy0yMK2nZEmuRF3LRPIs5M8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837099; c=relaxed/simple;
-	bh=QfdgAU7LV/FpT1ta6+eE+5azBS3KMe96rl+dCnq8S34=;
+	s=arc-20240116; t=1716837102; c=relaxed/simple;
+	bh=ENYqkh0v7EKIDMhJcn1+wXCTVc5cVWGfcV1RbVFVLyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETxWf0sBgK4jrnH4B/+34m5tgLmBP/C/GOEs2bGA29N0eG45jx8C0W5xYH+8QtIQyXt2BkzGsPa8+O25a4NZ4bQjhFm1F81E2x+eZp8oHx++7/OCbVXYGh/36L/qh0xp1bumT20jfvx83oIPEfj8Sx84y0sHgpC7PeB89BCVBW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKzjMFpr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ONh12VRjBLZtUcYrVpInXrt4oBWVgWETwXW2PnTS3YOeSBnGyw03/OPDaVLis7KU3MwGjXzQml9fe5VkpavOYk+VgQ0W5tbpJGA/Oa8a+9VWrr3sahnL47ArzunogLw7neGqJP8t41kUWLNPXm1KSvOGWOKVMGTi02EfRwEBv00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+gjkFSa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKzjMFpr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0B8C2BBFC;
-	Mon, 27 May 2024 19:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+gjkFSa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99909C2BBFC;
+	Mon, 27 May 2024 19:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837099;
-	bh=QfdgAU7LV/FpT1ta6+eE+5azBS3KMe96rl+dCnq8S34=;
+	s=korg; t=1716837101;
+	bh=ENYqkh0v7EKIDMhJcn1+wXCTVc5cVWGfcV1RbVFVLyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DKzjMFprAOPElhKIySZ6xc8mavgcsJx/kLQEjxnFtxDpVSUhbWZ+0z56OFGuj1VgZ
-	 qgV5GV2eYKPdYrRmRaDy69J1mAXpK0D/E/KoNXIHYyB6oaVDUNMXEAfNBhSo1Hq0nL
-	 +KcNXHw3NSXqFrSj5Rno/Q+vpjn6ALMoAtNSf38Q=
+	b=Y+gjkFSaUWVH3NOrZ41JpoQlqWuXPyb48zYCYeOp2PxSH2PYrRk2jaifUSFk9d62x
+	 SNZDHDiid4vrwnWVyfWQPA2Bwr2fb2Q0y+2DuLohe3Ti69/2kY8kdqxMI9sOAnXhhO
+	 SdFVArINON4dohxpgjO7KruW5dac7itqjSWYrMXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 309/427] ASoC: Intel: avs: Fix ASRC module initialization
-Date: Mon, 27 May 2024 20:55:56 +0200
-Message-ID: <20240527185630.810913786@linuxfoundation.org>
+Subject: [PATCH 6.9 274/427] drm/panel-edp: Add prepare_to_enable to 200ms for MNC207QS1-1
+Date: Mon, 27 May 2024 20:55:21 +0200
+Message-ID: <20240527185628.091386056@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,34 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>
 
-[ Upstream commit 9d2e26f31c7cc3fa495c423af9b4902ec0dc7be3 ]
+[ Upstream commit e635b7eb7062b464bbd9795308b1a80eac0b01f5 ]
 
-The ASRC module configuration consists of several reserved fields. Zero
-them out when initializing the module to avoid sending invalid data.
+For MNC207QS1-1 panel, Splash screen occur when switch from VT1 to VT2.
+The BL_EN signal does not conform to the VESA protocol.
+BL_EN signal needs to be pulled high after video signal.
+So add prepare_to_enable to 200ms.
 
-Fixes: 274d79e51875 ("ASoC: Intel: avs: Configure modules according to their type")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://msgid.link/r/20240405090929.1184068-6-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[ dianders: Adjusted subject prefix and added Fixes tag ]
+
+Fixes: 0547692ac146 ("drm/panel-edp: Add several generic edp panels")
+Signed-off-by: Zhengqiao Xia <xiazhengqiao@huaqin.corp-partner.google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240301084006.14422-1-xiazhengqiao@huaqin.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/path.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/panel/panel-edp.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/avs/path.c b/sound/soc/intel/avs/path.c
-index e785fc2a7008f..a44ed33b56080 100644
---- a/sound/soc/intel/avs/path.c
-+++ b/sound/soc/intel/avs/path.c
-@@ -367,6 +367,7 @@ static int avs_asrc_create(struct avs_dev *adev, struct avs_path_module *mod)
- 	struct avs_tplg_module *t = mod->template;
- 	struct avs_asrc_cfg cfg;
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index d58f90bc48fba..745f3e48f02ac 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1865,6 +1865,13 @@ static const struct panel_delay delay_200_500_e50 = {
+ 	.enable = 50,
+ };
  
-+	memset(&cfg, 0, sizeof(cfg));
- 	cfg.base.cpc = t->cfg_base->cpc;
- 	cfg.base.ibs = t->cfg_base->ibs;
- 	cfg.base.obs = t->cfg_base->obs;
++static const struct panel_delay delay_200_500_e50_p2e200 = {
++	.hpd_absent = 200,
++	.unprepare = 500,
++	.enable = 50,
++	.prepare_to_enable = 200,
++};
++
+ static const struct panel_delay delay_200_500_e80 = {
+ 	.hpd_absent = 200,
+ 	.unprepare = 500,
+@@ -2034,7 +2041,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('C', 'M', 'N', 0x14d6, &delay_200_500_e80_d50, "N140BGA-EA4"),
+ 	EDP_PANEL_ENTRY('C', 'M', 'N', 0x14e5, &delay_200_500_e80_d50, "N140HGA-EA1"),
+ 
+-	EDP_PANEL_ENTRY('C', 'S', 'O', 0x1200, &delay_200_500_e50, "MNC207QS1-1"),
++	EDP_PANEL_ENTRY('C', 'S', 'O', 0x1200, &delay_200_500_e50_p2e200, "MNC207QS1-1"),
+ 
+ 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d51, &delay_200_500_e200, "Unknown"),
+ 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d5b, &delay_200_500_e200, "Unknown"),
 -- 
 2.43.0
 
