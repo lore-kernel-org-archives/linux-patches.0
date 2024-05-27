@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C78D17E90E;
-	Mon, 27 May 2024 19:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AB917E90E;
+	Mon, 27 May 2024 19:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837051; cv=none; b=FkgRIUGk8FhJ0fJdJJrgHvjP4wNBnBdh/fe00t4D8etCM0lN4RyJKwxJVyGs1wx0Gg7LymNTjwgfAh6TQDLrc+PWnzmIOHd/Wod7g++Eefsitk+zS3bqFHMMW10wBai0CqLeLx2Gs0msSA7wJ4MWeDxoGtF2BVJDVnR5tMB5ilM=
+	t=1716837053; cv=none; b=HFyF9vHaUSNXwOZKg4TfU96km/Lkq2GDBHil/LCxhQGQaTwvLGep97eu2uhUaKJNh0ScBB688Ctc4TmatbmCFaZIENHr2NLDidVFOTtg0/bnYMy03fy6+pOPBHyz0m0CwcIojPjv80+NAjzdo+3OCTuxytDjWAwYQ2VgOMS2aZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837051; c=relaxed/simple;
-	bh=Fho2e9qA7nqM77EaKG5js2mdfd3jBAh9yt9zFeepYa4=;
+	s=arc-20240116; t=1716837053; c=relaxed/simple;
+	bh=v6xR/5dlfsakDK+omWOiRWflaBA9EES6tDS9wRXtVUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lupgd+YEOvCvfruPHAeO7MOnHby3TNn5T1+DkESP7UBlkFvD4vD3T7kSjH4+PDYjlQ2/Di7ANy271hIj8g4fGf9poKRPaLASeFu3OXWmth4ER+uPEt3jrM4UOsZ4oX44faf9N0D8KCXM9zh8Ii1rZdwg52ExfDt9oo7IBmY/NzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymjeCRDA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FSXDIj+F26SFaftkHgDcKM6LQwS3SqzZxdSSOH6WK93YGFQ+cXSK18NDCXCCQQd2Dy7t4VjxUE6qdb516+1lP/micpUGyC9zYvKAtO395ArxDI3NP8bFKsq0vDzsMDwdrbC0l5IjC8iRQW6xN1LeD73OKW6lD2CahIeg9vZ9NhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWHXACjU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymjeCRDA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B924C2BBFC;
-	Mon, 27 May 2024 19:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWHXACjU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FDCC32781;
+	Mon, 27 May 2024 19:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837050;
-	bh=Fho2e9qA7nqM77EaKG5js2mdfd3jBAh9yt9zFeepYa4=;
+	s=korg; t=1716837053;
+	bh=v6xR/5dlfsakDK+omWOiRWflaBA9EES6tDS9wRXtVUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ymjeCRDAOvlwyvfGa5OuWcOkmjE68+EOeZv5vNTiVTFHXhMNsKio96qiMiyR90UiG
-	 s1fahr8hdHMZHSVOgfuV00XR/uzdMIsLcEVKP3iOajn8/hvfPaCwK46kjCqDwS1WXl
-	 KK1Sc7XVYh2ewTPBGmjELXtveR5Sle5l1wHi7eLQ=
+	b=aWHXACjUZfzr5itqOzbq6La5H846a0xNlBosLSe+iz3mUGseJ3v8ZHXAws/C2i6Nk
+	 pTJfGddoqCQNRTJe1q64sD5I9NHy5wc4iBneeXUxbelv6gasX7CvRtLKuoYjPIAE2w
+	 iYE6XkiWuP6yyBU3zhXb/yK3quk3dx26OmAkKXDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Heiko Stuebner <heiko.stuebner@cherry.de>,
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 291/427] ASoC: mediatek: Assign dummy when codec not specified for a DAI link
-Date: Mon, 27 May 2024 20:55:38 +0200
-Message-ID: <20240527185629.555111583@linuxfoundation.org>
+Subject: [PATCH 6.9 292/427] drm/panel: ltk050h3146w: add MIPI_DSI_MODE_VIDEO to LTK050H3148W flags
+Date: Mon, 27 May 2024 20:55:39 +0200
+Message-ID: <20240527185629.623514077@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,43 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Heiko Stuebner <heiko.stuebner@cherry.de>
 
-[ Upstream commit 5f39231888c63f0a7708abc86b51b847476379d8 ]
+[ Upstream commit 80cc8c0d09e6bab3bd016ddaccd0570cadbe1891 ]
 
-MediaTek sound card drivers are checking whether a DAI link is present
-and used on a board to assign the correct parameters and this is done
-by checking the codec DAI names at probe time.
+Similar to other variants, the LTK050H3148W wants to run in video mode
+when displaying data. So far only the Synopsis DSI driver was using this
+panel and it is always switching to video mode, independent of this flag
+being set.
 
-If no real codec is present, assign the dummy codec to the DAI link
-to avoid NULL pointer during string comparison.
+Other DSI drivers might handle this differently, so add the flag.
 
-Fixes: 4302187d955f ("ASoC: mediatek: common: add soundcard driver common code")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://msgid.link/r/20240313110147.1267793-5-angelogioacchino.delregno@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e5f9d543419c ("drm/panel: ltk050h3146w: add support for Leadtek LTK050H3148W-CTA6 variant")
+Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
+Reviewed-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240320131232.327196-1-heiko@sntech.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/common/mtk-soundcard-driver.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/common/mtk-soundcard-driver.c b/sound/soc/mediatek/common/mtk-soundcard-driver.c
-index a58e1e3674dec..000a086a8cf44 100644
---- a/sound/soc/mediatek/common/mtk-soundcard-driver.c
-+++ b/sound/soc/mediatek/common/mtk-soundcard-driver.c
-@@ -22,7 +22,11 @@ static int set_card_codec_info(struct snd_soc_card *card,
+diff --git a/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c b/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c
+index 9d87cc1a357e3..57b56ade48add 100644
+--- a/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c
++++ b/drivers/gpu/drm/panel/panel-leadtek-ltk050h3146w.c
+@@ -326,7 +326,8 @@ static const struct drm_display_mode ltk050h3148w_mode = {
+ static const struct ltk050h3146w_desc ltk050h3148w_data = {
+ 	.mode = &ltk050h3148w_mode,
+ 	.init = ltk050h3148w_init_sequence,
+-	.mode_flags = MIPI_DSI_MODE_VIDEO_SYNC_PULSE | MIPI_DSI_MODE_VIDEO_BURST,
++	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
++		      MIPI_DSI_MODE_VIDEO_BURST,
+ };
  
- 	codec_node = of_get_child_by_name(sub_node, "codec");
- 	if (!codec_node) {
--		dev_dbg(dev, "%s no specified codec\n", dai_link->name);
-+		dev_dbg(dev, "%s no specified codec: setting dummy.\n", dai_link->name);
-+
-+		dai_link->codecs = &snd_soc_dummy_dlc;
-+		dai_link->num_codecs = 1;
-+		dai_link->dynamic = 1;
- 		return 0;
- 	}
- 
+ static int ltk050h3146w_init_sequence(struct ltk050h3146w *ctx)
 -- 
 2.43.0
 
