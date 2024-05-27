@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAE515FCE0;
-	Mon, 27 May 2024 19:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4361649C2;
+	Mon, 27 May 2024 19:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836526; cv=none; b=V614oGQt6QEV8YzM1eAvWgVHjs3BS6RMPXLkhFO2uOG7qsJs6/u4GgC6lh1MjCzQdLI+bfa451FGizGxA83dub3lkmyNv5qHJXJbzYPrcSDJ2S6FhD9WH0wFhZ8OsYJj7LAHLX+zAswXgtVcNIAYqrpJc3jXQik5FD4mqup/aPU=
+	t=1716836529; cv=none; b=edT9pttXD/bEIvu8mlc9nULi2pVN7QR+UfG/+GALLw7jmM3xqXuy3QlQhXvq+8LrELMJpKr6wGKHog9HhOmVrK0FOUjcVtB6lSQZTSqWbP0twAGodMh/j3ZbJOx6Gn8vCJEuaVhFlnlzTq2JFCTYPV6YTCes9H8gy9QvuS+BVy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836526; c=relaxed/simple;
-	bh=iwMue27QdhVv3EnLvsJ+Te/Ts0fnsRwRPFUsCWFOTp4=;
+	s=arc-20240116; t=1716836529; c=relaxed/simple;
+	bh=Yh74qXK4Lcf+4/A5QTNdD9mbrQA88WDlIG9nsC0fdoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=avshFvCN64FN4NQVw62ORmCCQsLmORNLTimTKn16ii8H1vwTXv5m7UH4gJ2syphVt5RztKRzYkzbjWyhjp2wUmxS2Sl8i7MwuclHz5m599T9uf4ee9zAsfhvNBbGHh5+64K4skupWQz7zNfqZ0R++OfPGu7i2R9+6Fqx5eEGQPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPQzCcrn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H4SS1iQjywEFxGUK7dBMlm5HeltVBacU8MFzJIVbHKGeIcKH5sNbMhns6wwiI5al0QzPNB4IYbioiZ6D3PpZqnu0+fRXT3TYQymtcfRIMFuz4RivNK3Ib+6x4fRva9oSB++noVhD6i4Pn3yrJN5eq+dRb7BSdZcfXFmn3XHP0Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtX1gllZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPQzCcrn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3634C2BBFC;
-	Mon, 27 May 2024 19:02:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtX1gllZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBB6C2BBFC;
+	Mon, 27 May 2024 19:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836526;
-	bh=iwMue27QdhVv3EnLvsJ+Te/Ts0fnsRwRPFUsCWFOTp4=;
+	s=korg; t=1716836528;
+	bh=Yh74qXK4Lcf+4/A5QTNdD9mbrQA88WDlIG9nsC0fdoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPQzCcrnw/mWiutnwe+kAmZqboIbJSJb4m3Vi3ZlROsS8rr/ySYS9J/gixvTs0VKI
-	 M9WGD/B04Vj+wXrp0G0VDMDbmcpwIlIfyLItlk8CF/p/nAbRvulu/cwkZEXOISRTw6
-	 lQ+H4WMQhJqrPzhmF+obCcvg115K/iQD0bOzs5MM=
+	b=CtX1gllZ7owu2WeaoDdpYbn4DakGcsNnwVacFnUkHt21cahCaHv80HCCFWk0eBO2v
+	 q84nMB4M8dV1/dyPq/1zKo72sbv5fykK1elgN/PCR+SZLHngufsCCAxkifFSnV5iUJ
+	 xytU0WBLSMk4nX9GB2Rin8IUulvosRlILpYppicA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Damian Muszynski <damian.muszynski@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot+0a3683a0a6fecf909244@syzkaller.appspotmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 086/427] crypto: qat - specify firmware files for 402xx
-Date: Mon, 27 May 2024 20:52:13 +0200
-Message-ID: <20240527185609.786773961@linuxfoundation.org>
+Subject: [PATCH 6.9 087/427] block: refine the EOF check in blkdev_iomap_begin
+Date: Mon, 27 May 2024 20:52:14 +0200
+Message-ID: <20240527185609.874384294@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,41 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit a3dc1f2b6b932a13f139d3be3c765155542c1070 ]
+[ Upstream commit 0c12028aec837f5a002009bbf68d179d506510e8 ]
 
-The 4xxx driver can probe 4xxx and 402xx devices. However, the driver
-only specifies the firmware images required for 4xxx.
-This might result in external tools missing these binaries, if required,
-in the initramfs.
+blkdev_iomap_begin rounds down the offset to the logical block size
+before stashing it in iomap->offset and checking that it still is
+inside the inode size.
 
-Specify the firmware image used by 402xx with the MODULE_FIRMWARE()
-macros in the 4xxx driver.
+Check the i_size check to the raw pos value so that we don't try a
+zero size write if iter->pos is unaligned.
 
-Fixes: a3e8c919b993 ("crypto: qat - add support for 402xx devices")
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 487c607df790 ("block: use iomap for writes to block devices")
+Reported-by: syzbot+0a3683a0a6fecf909244@syzkaller.appspotmail.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Tested-by: syzbot+0a3683a0a6fecf909244@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/20240503081042.2078062-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_4xxx/adf_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ block/fops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c b/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
-index 9762f2bf7727f..d26564cebdec4 100644
---- a/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
-@@ -197,7 +197,9 @@ module_pci_driver(adf_driver);
- MODULE_LICENSE("Dual BSD/GPL");
- MODULE_AUTHOR("Intel");
- MODULE_FIRMWARE(ADF_4XXX_FW);
-+MODULE_FIRMWARE(ADF_402XX_FW);
- MODULE_FIRMWARE(ADF_4XXX_MMP);
-+MODULE_FIRMWARE(ADF_402XX_MMP);
- MODULE_DESCRIPTION("Intel(R) QuickAssist Technology");
- MODULE_VERSION(ADF_DRV_VERSION);
- MODULE_SOFTDEP("pre: crypto-intel_qat");
+diff --git a/block/fops.c b/block/fops.c
+index 679d9b752fe82..df2c68d3f198e 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -390,7 +390,7 @@ static int blkdev_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+ 
+ 	iomap->bdev = bdev;
+ 	iomap->offset = ALIGN_DOWN(offset, bdev_logical_block_size(bdev));
+-	if (iomap->offset >= isize)
++	if (offset >= isize)
+ 		return -EIO;
+ 	iomap->type = IOMAP_MAPPED;
+ 	iomap->addr = iomap->offset;
 -- 
 2.43.0
 
