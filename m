@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC63F1DFED;
-	Mon, 27 May 2024 19:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC79F1078F;
+	Mon, 27 May 2024 19:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836487; cv=none; b=hJjcnIXEGE0M+/vQ21v8g7k1gF82eaEslvLiqxNmCOKImsEeScu9vXEio8zp2SGKRSbKrOEibg+p+yXJE2spr6NHvn36oMlZjv993ZqNCo2VayW6DCdIPl6ufUvyKVlrNV1ClfzaIvBbadbyW52IkwTHiY8k79XOaRpJanIRiQ4=
+	t=1716836490; cv=none; b=iwduFrYPb6E/w0Dc3BfyNACMf8sFo5PEiVw8EhvTc0hMdCT445g1adLg+1/FYomFqfRD334P/heyc/UdMXUl57nAjDOmzFgrFlfNR8kkgG2K787hRC2IvrdkrnGQsHyluG8BcqpL0b8hgtoDSEOOwSnymIGZE3eVPH6BgthGe5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836487; c=relaxed/simple;
-	bh=KwQNfu/2lU1CUrHe2CMJGsGHVv0QiUbQ+OhvpihZshI=;
+	s=arc-20240116; t=1716836490; c=relaxed/simple;
+	bh=4DltXQC+ZAfHzXvaMW9k7iBWyNARxvCFCkGdBI143qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lwv7cJGoKGeBCBE28yZthNas7QYDmSVylBFynwhYCWHsa0B09SjL9gla8ieOns7L9lFDZLYlSXMpEOrRlt1WJfMrlDxBn61k35pTMLw7jntfJLxH+/4bs4dqxq+X0JXz9EeZkHGJghYiE+yu41hHctyJRGV7CNX4nBDaUyWhc2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXDRctLA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vn9IySTRMwEZm++1syw706vAnzuZRukQZ/1CgGPC6CUlZYH7nQh2rB8h0Y3f0KnH9ZsznDdS5FqOPVye/ti3BIt6dC1GsxIOb2F0YPK5zdxZ0rAk4wbF78TLK8WtgzwiXvozi+NOjuf3cTKw9OUJZfv9MzN2k8XHhOtA5ijxVGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+KIV9FP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXDRctLA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552E1C2BBFC;
-	Mon, 27 May 2024 19:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+KIV9FP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D93CC2BBFC;
+	Mon, 27 May 2024 19:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836487;
-	bh=KwQNfu/2lU1CUrHe2CMJGsGHVv0QiUbQ+OhvpihZshI=;
+	s=korg; t=1716836490;
+	bh=4DltXQC+ZAfHzXvaMW9k7iBWyNARxvCFCkGdBI143qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXDRctLAwKx+la+r63B0o2jlo88EVUWSmk30ftOzfmIv3veULETRB460hN+vNCD3K
-	 MrRDoRjebf/VF3oNfLEeBL0Yb2A0wbMRrqPEhYb9pJzvgbFJWCMyjyIPwVxwyaHMCs
-	 2nLML4x9XkwRyn3Kkdgj/TIA6CUqXtFctHFqNwA8=
+	b=B+KIV9FPrnGKZUgoV4DFAd8qKGjWYgQOULpifI3SYmr2NEw3EBIpgcSsdwftFS/Jn
+	 FDSIc+FX3gS3tLDF3VQsa164R542/c19HDFG4UpZobp26gIExKIpygm24LprpzXo1t
+	 EEHqTrPDeW38MZ28dtNrL9Sjh0xBnibYbfSeR0x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	"Ivan T. Ivanov" <iivanov@suse.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 073/427] soc: mediatek: cmdq: Fix typo of CMDQ_JUMP_RELATIVE
-Date: Mon, 27 May 2024 20:52:00 +0200
-Message-ID: <20240527185608.672580224@linuxfoundation.org>
+Subject: [PATCH 6.9 047/427] firmware: raspberrypi: Use correct device for DMA mappings
+Date: Mon, 27 May 2024 20:51:34 +0200
+Message-ID: <20240527185606.138712011@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,47 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit ed4d5ab179b9f0a60da87c650a31f1816db9b4b4 ]
+[ Upstream commit df518a0ae1b982a4dcf2235464016c0c4576a34d ]
 
-For cmdq jump command, offset 0 means relative jump and offset 1
-means absolute jump. cmdq_pkt_jump() is absolute jump, so fix the
-typo of CMDQ_JUMP_RELATIVE in cmdq_pkt_jump().
+The buffer used to transfer data over the mailbox interface is mapped
+using the client's device. This is incorrect, as the device performing
+the DMA transfer is the mailbox itself. Fix it by using the mailbox
+controller device instead.
 
-Fixes: 946f1792d3d7 ("soc: mediatek: cmdq: add jump function")
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240222154120.16959-2-chunkuang.hu@kernel.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+This requires including the mailbox_controller.h header to dereference
+the mbox_chan and mbox_controller structures. The header is not meant to
+be included by clients. This could be fixed by extending the client API
+with a function to access the controller's device.
+
+Fixes: 4e3d60656a72 ("ARM: bcm2835: Add the Raspberry Pi firmware driver")
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Tested-by: Ivan T. Ivanov <iivanov@suse.de>
+Link: https://lore.kernel.org/r/20240326195807.15163-3-laurent.pinchart@ideasonboard.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-cmdq-helper.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/firmware/raspberrypi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soc/mediatek/mtk-cmdq-helper.c b/drivers/soc/mediatek/mtk-cmdq-helper.c
-index b0cd071c4719b..0b2e5690dacfa 100644
---- a/drivers/soc/mediatek/mtk-cmdq-helper.c
-+++ b/drivers/soc/mediatek/mtk-cmdq-helper.c
-@@ -14,7 +14,8 @@
- #define CMDQ_POLL_ENABLE_MASK	BIT(0)
- #define CMDQ_EOC_IRQ_EN		BIT(0)
- #define CMDQ_REG_TYPE		1
--#define CMDQ_JUMP_RELATIVE	1
-+#define CMDQ_JUMP_RELATIVE	0
-+#define CMDQ_JUMP_ABSOLUTE	1
+diff --git a/drivers/firmware/raspberrypi.c b/drivers/firmware/raspberrypi.c
+index 322aada20f742..ac34876a97f8b 100644
+--- a/drivers/firmware/raspberrypi.c
++++ b/drivers/firmware/raspberrypi.c
+@@ -9,6 +9,7 @@
+ #include <linux/dma-mapping.h>
+ #include <linux/kref.h>
+ #include <linux/mailbox_client.h>
++#include <linux/mailbox_controller.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_platform.h>
+@@ -97,8 +98,8 @@ int rpi_firmware_property_list(struct rpi_firmware *fw,
+ 	if (size & 3)
+ 		return -EINVAL;
  
- struct cmdq_instruction {
- 	union {
-@@ -397,7 +398,7 @@ int cmdq_pkt_jump(struct cmdq_pkt *pkt, dma_addr_t addr)
- 	struct cmdq_instruction inst = {};
+-	buf = dma_alloc_coherent(fw->cl.dev, PAGE_ALIGN(size), &bus_addr,
+-				 GFP_ATOMIC);
++	buf = dma_alloc_coherent(fw->chan->mbox->dev, PAGE_ALIGN(size),
++				 &bus_addr, GFP_ATOMIC);
+ 	if (!buf)
+ 		return -ENOMEM;
  
- 	inst.op = CMDQ_CODE_JUMP;
--	inst.offset = CMDQ_JUMP_RELATIVE;
-+	inst.offset = CMDQ_JUMP_ABSOLUTE;
- 	inst.value = addr >>
- 		cmdq_get_shift_pa(((struct cmdq_client *)pkt->cl)->chan);
- 	return cmdq_pkt_append_command(pkt, inst);
+@@ -126,7 +127,7 @@ int rpi_firmware_property_list(struct rpi_firmware *fw,
+ 		ret = -EINVAL;
+ 	}
+ 
+-	dma_free_coherent(fw->cl.dev, PAGE_ALIGN(size), buf, bus_addr);
++	dma_free_coherent(fw->chan->mbox->dev, PAGE_ALIGN(size), buf, bus_addr);
+ 
+ 	return ret;
+ }
 -- 
 2.43.0
 
