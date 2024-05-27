@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C64C26ACA;
-	Mon, 27 May 2024 19:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D9F1DFED;
+	Mon, 27 May 2024 19:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836406; cv=none; b=Ou2pNfV6zOoRAg52N6kzvfaFNmEtf3hZEI2a1lQ7AOMjnjQ62k7Ha/HXH4jb4MBK+iXPtROjfGfkCw5eX8WEq9KBR17lo0R5AHgnIvPDDBY8QVwqybItSFt9YvaD6Cyze91ECMJWJeo5YAQ+t8eqC7fODtlVd8Obh4dj3N0wx+4=
+	t=1716836409; cv=none; b=dA9w/2/LaUadnu0lQ3uO/HfSAOwvt4HiAMxHnWbrnl5qgo4lYRnBP0U6eLNBhoTg35UdIg8uJNpGMWv11sufIRH2k/qCFC32BI3RapzrM010Zl4Y3TzctmZRe1YD166QYNdMHLmMR+CNUJUA8XMOy0QQMDnGUkYGQJL4vchXmg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836406; c=relaxed/simple;
-	bh=5W/fCRXQe8HyRZ2C3UAoOACfbDeqAm3cPJueZYJD3wU=;
+	s=arc-20240116; t=1716836409; c=relaxed/simple;
+	bh=N3qkXrXahVFeZjpf2v1n1lNsgoCKoFQ8MSFhvEHuggA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAkeTXVKH5MrAo/JRuv2RKIDb4RrDyyLQFLZ59n2MoAp3D9+lrXG23WlmkS4K3MOUxWlRLbYqxicVuATGc8W6XFV8+degwDbLoPrfvfXvLrWUWWm6qmTZt385YsQuWUuvjSxwLBLSFIlYTEfhFDlA9Xfkok+kSRC3+l60S4GxOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fu62ES6A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CHN6ai3JU3i7/zlxAjXKv+kj5ELTaSkE42Hy4p5WSRhAcPN8veHdae0Q4Oag9w8Myyto1C4YJzWe91X/pEsRB1vqZw7Uoi5CjPv2xWVZSnc1DLa2lcYU4/mC19LjIqDI8VTAw99xiGh0xicsUloacXLh1kx+nCErPHHsGZ6e2uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glqEKiYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fu62ES6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0035BC2BBFC;
-	Mon, 27 May 2024 19:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glqEKiYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCAAC2BBFC;
+	Mon, 27 May 2024 19:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836406;
-	bh=5W/fCRXQe8HyRZ2C3UAoOACfbDeqAm3cPJueZYJD3wU=;
+	s=korg; t=1716836408;
+	bh=N3qkXrXahVFeZjpf2v1n1lNsgoCKoFQ8MSFhvEHuggA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fu62ES6ALczZu5VbFJlkQrD7Fj/CIrP5j8CiMFCr1jee9XVGL6MfJNakv7JCdVbp9
-	 VIaynqb00rIBi6SPK1WxCJif1lz0VW+taE6F113FGgAAXBGfPH1RTfdu8IdymtgBMS
-	 HCwkE9trCwJKH7d7YXoIFrlvZXjVaKO/J1TL88yI=
+	b=glqEKiYk0J5xflMAWCmSPk/tMBFVAX2mqKzC9RtIFXASoHE7lb6IbyBHgqi8MKXQI
+	 rapF83hnSPwAe8UtdNWkO+IWhz4LwuZNQeUlcuwDU1Nllcgqcor8UTsit3pbBmnGNG
+	 8kN99ywf30TwXsVlYXMCO3bxbLZL/Dc3rbBOpA7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	mark.rutland@arm.com,
-	mathieu.desnoyers@efficios.com,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>
-Subject: [PATCH 6.9 004/427] ftrace: Fix possible use-after-free issue in ftrace_location()
-Date: Mon, 27 May 2024 20:50:51 +0200
-Message-ID: <20240527185602.156674328@linuxfoundation.org>
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.9 040/427] ALSA: Fix deadlocks with kctl removals at disconnection
+Date: Mon, 27 May 2024 20:51:27 +0200
+Message-ID: <20240527185605.422855727@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,170 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit e60b613df8b6253def41215402f72986fee3fc8d upstream.
+commit 87988a534d8e12f2e6fc01fe63e6c1925dc5307c upstream.
 
-KASAN reports a bug:
+In snd_card_disconnect(), we set card->shutdown flag at the beginning,
+call callbacks and do sync for card->power_ref_sleep waiters at the
+end.  The callback may delete a kctl element, and this can lead to a
+deadlock when the device was in the suspended state.  Namely:
 
-  BUG: KASAN: use-after-free in ftrace_location+0x90/0x120
-  Read of size 8 at addr ffff888141d40010 by task insmod/424
-  CPU: 8 PID: 424 Comm: insmod Tainted: G        W          6.9.0-rc2+
-  [...]
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x68/0xa0
-   print_report+0xcf/0x610
-   kasan_report+0xb5/0xe0
-   ftrace_location+0x90/0x120
-   register_kprobe+0x14b/0xa40
-   kprobe_init+0x2d/0xff0 [kprobe_example]
-   do_one_initcall+0x8f/0x2d0
-   do_init_module+0x13a/0x3c0
-   load_module+0x3082/0x33d0
-   init_module_from_file+0xd2/0x130
-   __x64_sys_finit_module+0x306/0x440
-   do_syscall_64+0x68/0x140
-   entry_SYSCALL_64_after_hwframe+0x71/0x79
+* A process waits for the power up at snd_power_ref_and_wait() in
+  snd_ctl_info() or read/write() inside card->controls_rwsem.
 
-The root cause is that, in lookup_rec(), ftrace record of some address
-is being searched in ftrace pages of some module, but those ftrace pages
-at the same time is being freed in ftrace_release_mod() as the
-corresponding module is being deleted:
+* The system gets disconnected meanwhile, and the driver tries to
+  delete a kctl via snd_ctl_remove*(); it tries to take
+  card->controls_rwsem again, but this is already locked by the
+  above.  Since the sleeper isn't woken up, this deadlocks.
 
-           CPU1                       |      CPU2
-  register_kprobes() {                | delete_module() {
-    check_kprobe_address_safe() {     |
-      arch_check_ftrace_location() {  |
-        ftrace_location() {           |
-          lookup_rec() // USE!        |   ftrace_release_mod() // Free!
+An easy fix is to wake up sleepers before processing the driver
+disconnect callbacks but right after setting the card->shutdown flag.
+Then all sleepers will abort immediately, and the code flows again.
 
-To fix this issue:
-  1. Hold rcu lock as accessing ftrace pages in ftrace_location_range();
-  2. Use ftrace_location_range() instead of lookup_rec() in
-     ftrace_location();
-  3. Call synchronize_rcu() before freeing any ftrace pages both in
-     ftrace_process_locs()/ftrace_release_mod()/ftrace_free_mem().
+So, basically this patch moves the wait_event() call at the right
+timing.  While we're at it, just to be sure, call wait_event_all()
+instead of wait_event(), although we don't use exclusive events on
+this queue for now.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240509192859.1273558-1-zhengyejian1@huawei.com
-
-Cc: stable@vger.kernel.org
-Cc: <mhiramat@kernel.org>
-Cc: <mark.rutland@arm.com>
-Cc: <mathieu.desnoyers@efficios.com>
-Fixes: ae6aa16fdc16 ("kprobes: introduce ftrace based optimization")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218816
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://lore.kernel.org/r/20240510101424.6279-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   39 +++++++++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 16 deletions(-)
+ sound/core/init.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -1595,12 +1595,15 @@ static struct dyn_ftrace *lookup_rec(uns
- unsigned long ftrace_location_range(unsigned long start, unsigned long end)
- {
- 	struct dyn_ftrace *rec;
-+	unsigned long ip = 0;
- 
-+	rcu_read_lock();
- 	rec = lookup_rec(start, end);
- 	if (rec)
--		return rec->ip;
-+		ip = rec->ip;
-+	rcu_read_unlock();
- 
--	return 0;
-+	return ip;
- }
- 
- /**
-@@ -1614,25 +1617,22 @@ unsigned long ftrace_location_range(unsi
-  */
- unsigned long ftrace_location(unsigned long ip)
- {
--	struct dyn_ftrace *rec;
-+	unsigned long loc;
- 	unsigned long offset;
- 	unsigned long size;
- 
--	rec = lookup_rec(ip, ip);
--	if (!rec) {
-+	loc = ftrace_location_range(ip, ip);
-+	if (!loc) {
- 		if (!kallsyms_lookup_size_offset(ip, &size, &offset))
- 			goto out;
- 
- 		/* map sym+0 to __fentry__ */
- 		if (!offset)
--			rec = lookup_rec(ip, ip + size - 1);
-+			loc = ftrace_location_range(ip, ip + size - 1);
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -516,6 +516,14 @@ void snd_card_disconnect(struct snd_card
+ 		}
  	}
  
--	if (rec)
--		return rec->ip;
--
- out:
--	return 0;
-+	return loc;
- }
++#ifdef CONFIG_PM
++	/* wake up sleepers here before other callbacks for avoiding potential
++	 * deadlocks with other locks (e.g. in kctls);
++	 * then this notifies the shutdown and sleepers would abort immediately
++	 */
++	wake_up_all(&card->power_sleep);
++#endif
++
+ 	/* notify all connected devices about disconnection */
+ 	/* at this point, they cannot respond to any calls except release() */
  
- /**
-@@ -6596,6 +6596,8 @@ static int ftrace_process_locs(struct mo
- 	/* We should have used all pages unless we skipped some */
- 	if (pg_unuse) {
- 		WARN_ON(!skipped);
-+		/* Need to synchronize with ftrace_location_range() */
-+		synchronize_rcu();
- 		ftrace_free_pages(pg_unuse);
+@@ -543,7 +551,6 @@ void snd_card_disconnect(struct snd_card
  	}
- 	return ret;
-@@ -6809,6 +6811,9 @@ void ftrace_release_mod(struct module *m
-  out_unlock:
- 	mutex_unlock(&ftrace_lock);
  
-+	/* Need to synchronize with ftrace_location_range() */
-+	if (tmp_page)
-+		synchronize_rcu();
- 	for (pg = tmp_page; pg; pg = tmp_page) {
- 
- 		/* Needs to be called outside of ftrace_lock */
-@@ -7142,6 +7147,7 @@ void ftrace_free_mem(struct module *mod,
- 	unsigned long start = (unsigned long)(start_ptr);
- 	unsigned long end = (unsigned long)(end_ptr);
- 	struct ftrace_page **last_pg = &ftrace_pages_start;
-+	struct ftrace_page *tmp_page = NULL;
- 	struct ftrace_page *pg;
- 	struct dyn_ftrace *rec;
- 	struct dyn_ftrace key;
-@@ -7183,12 +7189,8 @@ void ftrace_free_mem(struct module *mod,
- 		ftrace_update_tot_cnt--;
- 		if (!pg->index) {
- 			*last_pg = pg->next;
--			if (pg->records) {
--				free_pages((unsigned long)pg->records, pg->order);
--				ftrace_number_of_pages -= 1 << pg->order;
--			}
--			ftrace_number_of_groups--;
--			kfree(pg);
-+			pg->next = tmp_page;
-+			tmp_page = pg;
- 			pg = container_of(last_pg, struct ftrace_page, next);
- 			if (!(*last_pg))
- 				ftrace_pages = pg;
-@@ -7205,6 +7207,11 @@ void ftrace_free_mem(struct module *mod,
- 		clear_func_from_hashes(func);
- 		kfree(func);
- 	}
-+	/* Need to synchronize with ftrace_location_range() */
-+	if (tmp_page) {
-+		synchronize_rcu();
-+		ftrace_free_pages(tmp_page);
-+	}
+ #ifdef CONFIG_PM
+-	wake_up(&card->power_sleep);
+ 	snd_power_sync_ref(card);
+ #endif
  }
- 
- void __init ftrace_free_init_mem(void)
 
 
