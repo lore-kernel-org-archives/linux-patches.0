@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1134A17727;
-	Mon, 27 May 2024 19:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB4A17727;
+	Mon, 27 May 2024 19:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838463; cv=none; b=pXyTN38SC93+/FftrW3avOICDFUXy0VL2YYHegLSDNcrCWMHOH9cPoQhFDlcdT9V8mub4kT1xlr/vmE5oZB0z8lH52QEEj2An7IvoBeZf6qRXY/XxPrYKDoPXYrEc/zh3ZRnH7INe0LZOBcgoz6l3nC+jKqeGgO1i1sw+uspiso=
+	t=1716838465; cv=none; b=NN3+vvfPq3phGNZcuzY8TjLm8Qjg6BktLi3uxg/bEPpSebCnehmGyGPahGZ9xNUaRCxsUYGjMMY+s9T9X7mHNGnvMjWskIRZu710r7gjVbB28Zkw5aDkU+/9mtVBrhR4qxyeiTpx0wqPdp92TrrbOXXMLqJ2y+bCYJoNxtcsK/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838463; c=relaxed/simple;
-	bh=Z12yb9tvhwB56VrFseycth6+p/n2fZ/b4ozcLXkc+CU=;
+	s=arc-20240116; t=1716838465; c=relaxed/simple;
+	bh=Fxc6NiPff9R+ubeYaiy0JYdxtKMikoX46fgL9ReRK7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGVxeW5CADd4Yc97hCoVIOomYS8K+YPvWUAHhn5WmVOm14raAOCS11xtKQfmadhw+yTJ06Vdg1JMvS0QuIRhT/33ETnhQHqPziUkERVID3wQzPYPucrdDFbkfzi78I7ZJPjhvlj2TAWFCh/0tEt/NNkvWwZGXEuFF4q3zgBDct8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8bhCd8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A2r3QL+SmY9vBMYGWPG8uBJd5LQ4sgreJ5bRlGiubGVhphLedha3rvXYPUNrOjRdbVe5d4mPxmInlDJRBToQsgfXSiMimEM+pimjukDg2rRQdhdMmt9RjTeXXqhVxmLW40nz/377wovdN5HQ4djwwK7xu10Z8M2dohME59pT2qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RYCVQO4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8bhCd8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C04C2BBFC;
-	Mon, 27 May 2024 19:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RYCVQO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65E8C2BBFC;
+	Mon, 27 May 2024 19:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838462;
-	bh=Z12yb9tvhwB56VrFseycth6+p/n2fZ/b4ozcLXkc+CU=;
+	s=korg; t=1716838465;
+	bh=Fxc6NiPff9R+ubeYaiy0JYdxtKMikoX46fgL9ReRK7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8bhCd8dIj6+w0i19y/0EnqIY53YbZ4k0O2nsxFfduUdfgYzpxfuutedXyfeVygO1
-	 x32IXfyN90EUxXuBEEq0jQi32iXWWR6H1GfoRp4AsZPd3+6vm03AX1zJ6KcjdDcSDp
-	 0m+62Ko7n/XNU3RV7BA9sGxzf0Uy2j+B6YPf59UQ=
+	b=2RYCVQO4gjW96Mec5CUFYQYHixdjOH8iM7GovBxrP4YRQz1Psh5P8hRKWHFIRuEVx
+	 JbnUdwl0aJC9Hd+WJe4fC3+RYFEVb7vc8U+A7GGXwYML+UN1eqUc6hix5KrWiGlmFs
+	 JfVsjVw/Fk1Yh5nX7kTP9bTx/8Qb1Yj3y4La+4l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Mark Brown <broonie@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 403/493] ASoC: tracing: Export SND_SOC_DAPM_DIR_OUT to its value
-Date: Mon, 27 May 2024 20:56:45 +0200
-Message-ID: <20240527185643.467967985@linuxfoundation.org>
+Subject: [PATCH 6.8 404/493] drm/bridge: anx7625: Dont log an error when DSI host cant be found
+Date: Mon, 27 May 2024 20:56:46 +0200
+Message-ID: <20240527185643.502349344@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -46,52 +48,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 58300f8d6a48e58d1843199be743f819e2791ea3 ]
+[ Upstream commit ef4a9204d594fe959cdbc7418273caf4001535c8 ]
 
-The string SND_SOC_DAPM_DIR_OUT is printed in the snd_soc_dapm_path trace
-event instead of its value:
+Given that failing to find a DSI host causes the driver to defer probe,
+make use of dev_err_probe() to log the reason. This makes the defer
+probe reason available and avoids alerting userspace about something
+that is not necessarily an error.
 
-   (((REC->path_dir) == SND_SOC_DAPM_DIR_OUT) ? "->" : "<-")
-
-User space cannot parse this, as it has no idea what SND_SOC_DAPM_DIR_OUT
-is. Use TRACE_DEFINE_ENUM() to convert it to its value:
-
-   (((REC->path_dir) == 1) ? "->" : "<-")
-
-So that user space tools, such as perf and trace-cmd, can parse it
-correctly.
-
-Reported-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Fixes: 6e588a0d839b5 ("ASoC: dapm: Consolidate path trace events")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/20240416000303.04670cdf@rorschach.local.home
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 269332997a16 ("drm/bridge: anx7625: Return -EPROBE_DEFER if the dsi host was not found")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-1-619a28148e5c@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/asoc.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/trace/events/asoc.h b/include/trace/events/asoc.h
-index 4d8ef71090af1..97a434d021356 100644
---- a/include/trace/events/asoc.h
-+++ b/include/trace/events/asoc.h
-@@ -12,6 +12,8 @@
- #define DAPM_DIRECT "(direct)"
- #define DAPM_ARROW(dir) (((dir) == SND_SOC_DAPM_DIR_OUT) ? "->" : "<-")
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index 29d91493b101a..4ee5614a26236 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -2076,10 +2076,8 @@ static int anx7625_setup_dsi_device(struct anx7625_data *ctx)
+ 	};
  
-+TRACE_DEFINE_ENUM(SND_SOC_DAPM_DIR_OUT);
-+
- struct snd_soc_jack;
- struct snd_soc_card;
- struct snd_soc_dapm_widget;
+ 	host = of_find_mipi_dsi_host_by_node(ctx->pdata.mipi_host_node);
+-	if (!host) {
+-		DRM_DEV_ERROR(dev, "fail to find dsi host.\n");
+-		return -EPROBE_DEFER;
+-	}
++	if (!host)
++		return dev_err_probe(dev, -EPROBE_DEFER, "fail to find dsi host.\n");
+ 
+ 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
+ 	if (IS_ERR(dsi)) {
 -- 
 2.43.0
 
