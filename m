@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D07262BE;
-	Mon, 27 May 2024 19:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6598215FCFB;
+	Mon, 27 May 2024 19:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838308; cv=none; b=tHaIKBGqbd4d7oobShomhh10mniZ3htnn9SRFk5noKMoA7YbP8FKiOtre/S4QwaL0OeATaTRJAgzu6bDyIQLWH64MBYsu/TvAeFaaD5HzURuZZfVGbcOrwbEn5WzcBwHfZRcnB6zsEuuMF86wUFblVDNDnx4bv7DaqUBIhhfXvI=
+	t=1716838310; cv=none; b=qMeuQiQpeaHq8C4pMoLTpDdfy5meM/Nidg0QEOn+WAQ537TXY906wt8E7FSg8MVuRt/vYDiL4Xv/M3ew0Bf13Es9FzGKUI+PbxlZIDjmbkVB765hQ0M4UhOI7AjraMaBqyCoLVJaMCyp0xYEHcvItwFXiJlUm/Fgc2ZR0McZ1o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838308; c=relaxed/simple;
-	bh=8jTGDWWWVkGYiWEU/9YY3TcLaHXtcdc9T2aPyGvQhR4=;
+	s=arc-20240116; t=1716838310; c=relaxed/simple;
+	bh=M4LYytuu6oBFWPtS2lovqQMy+dIozcbh8ScfcaCj5gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7J9K0p9GTLW7fgAqt+VGDtWGeCAE16RiUyMeRW0jk9BtFQz6x/3upuTSva1zykmHhadtABOt6EYruiGfjB0WdeCHt33IGZrzAsVKRuQQDXfl70LBKYwfTKhSN0fC/OyeGSzzhvAMbIEUvXTzneiyfmqVMtcACEt0xCQBthCFSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9EnJUXJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TjImqaCzgpAX2DYIWgW8xh7DnnLrXtakEVXwr2/04pTpSJScGvU8NWbG0GZoEZapSfbyjqFUWGRrL8WvZpjbHLk7VHJ+5/RjvdUIqjReBNvImHU4vbrI+mO4Q6b+6M6hpcC1/OVIW0Htuef9qAMsCr/z8KUC86lK5rXW26+UYK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAjWAiat; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9EnJUXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA22C2BBFC;
-	Mon, 27 May 2024 19:31:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAjWAiat"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E29C32781;
+	Mon, 27 May 2024 19:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838307;
-	bh=8jTGDWWWVkGYiWEU/9YY3TcLaHXtcdc9T2aPyGvQhR4=;
+	s=korg; t=1716838310;
+	bh=M4LYytuu6oBFWPtS2lovqQMy+dIozcbh8ScfcaCj5gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z9EnJUXJ5LI8LdGBayAGZOJVMEIN4kQ8uXTzpRROcW73wVqfTKfiyKcRVrtY4lOwe
-	 iR1/Sa4i+3aY574nVFiwIrXQcx1LJC3Q63s0jTuyrmfgR7hteGSRx6JUss66ECVa1I
-	 huXc2ksmI5uBY+vFZAxhzX5hsdVxWFvC7lXbYLrU=
+	b=VAjWAiatWa02seEVSODLRRoEVvIYmno4hx2KQnudrGriGOXmVzyazKS+ovWSEIFGd
+	 lIKZ3wiEzo3cnnXfA2NWFMuypXglDFSE1VUQHOP1AWTsWc6T2w6X4anTVV75q3UEI0
+	 KpxECe49/FJoTdzvULtikzo0WweHv0bjqt+XFjWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 342/493] Bluetooth: Remove usage of the deprecated ida_simple_xx() API
-Date: Mon, 27 May 2024 20:55:44 +0200
-Message-ID: <20240527185641.459277745@linuxfoundation.org>
+Subject: [PATCH 6.8 343/493] Bluetooth: hci_event: Remove code to removed CONFIG_BT_HS
+Date: Mon, 27 May 2024 20:55:45 +0200
+Message-ID: <20240527185641.493187420@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,83 +51,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
-[ Upstream commit 9c16d0c8d93e3d2a95c5ed927b061f244db75579 ]
+[ Upstream commit f4b0c2b4cd78b75acde56c2ee5aa732b6fb2a6a9 ]
 
-ida_alloc() and ida_free() should be preferred to the deprecated
-ida_simple_get() and ida_simple_remove().
+Commit cec9f3c5561d ("Bluetooth: Remove BT_HS") removes config BT_HS, but
+misses two "ifdef BT_HS" blocks in hci_event.c.
 
-Note that the upper limit of ida_simple_get() is exclusive, but the one of
-ida_alloc_max() is inclusive. So a -1 has been added when needed.
+Remove this dead code from this removed config option.
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: 84a4bb6548a2 ("Bluetooth: HCI: Remove HCI_AMP support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 9 +++++----
- net/bluetooth/hci_sock.c | 4 ++--
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ net/bluetooth/hci_event.c | 163 --------------------------------------
+ 1 file changed, 163 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index befe645d3f9bf..101ea9137dfef 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2609,10 +2609,11 @@ int hci_register_dev(struct hci_dev *hdev)
- 	 */
- 	switch (hdev->dev_type) {
- 	case HCI_PRIMARY:
--		id = ida_simple_get(&hci_index_ida, 0, HCI_MAX_ID, GFP_KERNEL);
-+		id = ida_alloc_max(&hci_index_ida, HCI_MAX_ID - 1, GFP_KERNEL);
- 		break;
- 	case HCI_AMP:
--		id = ida_simple_get(&hci_index_ida, 1, HCI_MAX_ID, GFP_KERNEL);
-+		id = ida_alloc_range(&hci_index_ida, 1, HCI_MAX_ID - 1,
-+				     GFP_KERNEL);
- 		break;
- 	default:
- 		return -EINVAL;
-@@ -2711,7 +2712,7 @@ int hci_register_dev(struct hci_dev *hdev)
- 	destroy_workqueue(hdev->workqueue);
- 	destroy_workqueue(hdev->req_workqueue);
- err:
--	ida_simple_remove(&hci_index_ida, hdev->id);
-+	ida_free(&hci_index_ida, hdev->id);
- 
- 	return error;
- }
-@@ -2793,7 +2794,7 @@ void hci_release_dev(struct hci_dev *hdev)
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index c19d78e5d2053..4de8f0dc1a523 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5697,150 +5697,6 @@ static void hci_remote_oob_data_request_evt(struct hci_dev *hdev, void *edata,
  	hci_dev_unlock(hdev);
- 
- 	ida_destroy(&hdev->unset_handle_ida);
--	ida_simple_remove(&hci_index_ida, hdev->id);
-+	ida_free(&hci_index_ida, hdev->id);
- 	kfree_skb(hdev->sent_cmd);
- 	kfree_skb(hdev->req_skb);
- 	kfree_skb(hdev->recv_event);
-diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
-index 3f5f0932330d2..703b84bd48d5b 100644
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -101,7 +101,7 @@ static bool hci_sock_gen_cookie(struct sock *sk)
- 	int id = hci_pi(sk)->cookie;
- 
- 	if (!id) {
--		id = ida_simple_get(&sock_cookie_ida, 1, 0, GFP_KERNEL);
-+		id = ida_alloc_min(&sock_cookie_ida, 1, GFP_KERNEL);
- 		if (id < 0)
- 			id = 0xffffffff;
- 
-@@ -119,7 +119,7 @@ static void hci_sock_free_cookie(struct sock *sk)
- 
- 	if (id) {
- 		hci_pi(sk)->cookie = 0xffffffff;
--		ida_simple_remove(&sock_cookie_ida, id);
-+		ida_free(&sock_cookie_ida, id);
- 	}
  }
  
+-#if IS_ENABLED(CONFIG_BT_HS)
+-static void hci_chan_selected_evt(struct hci_dev *hdev, void *data,
+-				  struct sk_buff *skb)
+-{
+-	struct hci_ev_channel_selected *ev = data;
+-	struct hci_conn *hcon;
+-
+-	bt_dev_dbg(hdev, "handle 0x%2.2x", ev->phy_handle);
+-
+-	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
+-	if (!hcon)
+-		return;
+-
+-	amp_read_loc_assoc_final_data(hdev, hcon);
+-}
+-
+-static void hci_phy_link_complete_evt(struct hci_dev *hdev, void *data,
+-				      struct sk_buff *skb)
+-{
+-	struct hci_ev_phy_link_complete *ev = data;
+-	struct hci_conn *hcon, *bredr_hcon;
+-
+-	bt_dev_dbg(hdev, "handle 0x%2.2x status 0x%2.2x", ev->phy_handle,
+-		   ev->status);
+-
+-	hci_dev_lock(hdev);
+-
+-	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
+-	if (!hcon)
+-		goto unlock;
+-
+-	if (!hcon->amp_mgr)
+-		goto unlock;
+-
+-	if (ev->status) {
+-		hci_conn_del(hcon);
+-		goto unlock;
+-	}
+-
+-	bredr_hcon = hcon->amp_mgr->l2cap_conn->hcon;
+-
+-	hcon->state = BT_CONNECTED;
+-	bacpy(&hcon->dst, &bredr_hcon->dst);
+-
+-	hci_conn_hold(hcon);
+-	hcon->disc_timeout = HCI_DISCONN_TIMEOUT;
+-	hci_conn_drop(hcon);
+-
+-	hci_debugfs_create_conn(hcon);
+-	hci_conn_add_sysfs(hcon);
+-
+-	amp_physical_cfm(bredr_hcon, hcon);
+-
+-unlock:
+-	hci_dev_unlock(hdev);
+-}
+-
+-static void hci_loglink_complete_evt(struct hci_dev *hdev, void *data,
+-				     struct sk_buff *skb)
+-{
+-	struct hci_ev_logical_link_complete *ev = data;
+-	struct hci_conn *hcon;
+-	struct hci_chan *hchan;
+-	struct amp_mgr *mgr;
+-
+-	bt_dev_dbg(hdev, "log_handle 0x%4.4x phy_handle 0x%2.2x status 0x%2.2x",
+-		   le16_to_cpu(ev->handle), ev->phy_handle, ev->status);
+-
+-	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
+-	if (!hcon)
+-		return;
+-
+-	/* Create AMP hchan */
+-	hchan = hci_chan_create(hcon);
+-	if (!hchan)
+-		return;
+-
+-	hchan->handle = le16_to_cpu(ev->handle);
+-	hchan->amp = true;
+-
+-	BT_DBG("hcon %p mgr %p hchan %p", hcon, hcon->amp_mgr, hchan);
+-
+-	mgr = hcon->amp_mgr;
+-	if (mgr && mgr->bredr_chan) {
+-		struct l2cap_chan *bredr_chan = mgr->bredr_chan;
+-
+-		l2cap_chan_lock(bredr_chan);
+-
+-		bredr_chan->conn->mtu = hdev->block_mtu;
+-		l2cap_logical_cfm(bredr_chan, hchan, 0);
+-		hci_conn_hold(hcon);
+-
+-		l2cap_chan_unlock(bredr_chan);
+-	}
+-}
+-
+-static void hci_disconn_loglink_complete_evt(struct hci_dev *hdev, void *data,
+-					     struct sk_buff *skb)
+-{
+-	struct hci_ev_disconn_logical_link_complete *ev = data;
+-	struct hci_chan *hchan;
+-
+-	bt_dev_dbg(hdev, "handle 0x%4.4x status 0x%2.2x",
+-		   le16_to_cpu(ev->handle), ev->status);
+-
+-	if (ev->status)
+-		return;
+-
+-	hci_dev_lock(hdev);
+-
+-	hchan = hci_chan_lookup_handle(hdev, le16_to_cpu(ev->handle));
+-	if (!hchan || !hchan->amp)
+-		goto unlock;
+-
+-	amp_destroy_logical_link(hchan, ev->reason);
+-
+-unlock:
+-	hci_dev_unlock(hdev);
+-}
+-
+-static void hci_disconn_phylink_complete_evt(struct hci_dev *hdev, void *data,
+-					     struct sk_buff *skb)
+-{
+-	struct hci_ev_disconn_phy_link_complete *ev = data;
+-	struct hci_conn *hcon;
+-
+-	bt_dev_dbg(hdev, "status 0x%2.2x", ev->status);
+-
+-	if (ev->status)
+-		return;
+-
+-	hci_dev_lock(hdev);
+-
+-	hcon = hci_conn_hash_lookup_handle(hdev, ev->phy_handle);
+-	if (hcon && hcon->type == AMP_LINK) {
+-		hcon->state = BT_CLOSED;
+-		hci_disconn_cfm(hcon, ev->reason);
+-		hci_conn_del(hcon);
+-	}
+-
+-	hci_dev_unlock(hdev);
+-}
+-#endif
+-
+ static void le_conn_update_addr(struct hci_conn *conn, bdaddr_t *bdaddr,
+ 				u8 bdaddr_type, bdaddr_t *local_rpa)
+ {
+@@ -7656,25 +7512,6 @@ static const struct hci_ev {
+ 	/* [0x3e = HCI_EV_LE_META] */
+ 	HCI_EV_REQ_VL(HCI_EV_LE_META, hci_le_meta_evt,
+ 		      sizeof(struct hci_ev_le_meta), HCI_MAX_EVENT_SIZE),
+-#if IS_ENABLED(CONFIG_BT_HS)
+-	/* [0x40 = HCI_EV_PHY_LINK_COMPLETE] */
+-	HCI_EV(HCI_EV_PHY_LINK_COMPLETE, hci_phy_link_complete_evt,
+-	       sizeof(struct hci_ev_phy_link_complete)),
+-	/* [0x41 = HCI_EV_CHANNEL_SELECTED] */
+-	HCI_EV(HCI_EV_CHANNEL_SELECTED, hci_chan_selected_evt,
+-	       sizeof(struct hci_ev_channel_selected)),
+-	/* [0x42 = HCI_EV_DISCONN_PHY_LINK_COMPLETE] */
+-	HCI_EV(HCI_EV_DISCONN_LOGICAL_LINK_COMPLETE,
+-	       hci_disconn_loglink_complete_evt,
+-	       sizeof(struct hci_ev_disconn_logical_link_complete)),
+-	/* [0x45 = HCI_EV_LOGICAL_LINK_COMPLETE] */
+-	HCI_EV(HCI_EV_LOGICAL_LINK_COMPLETE, hci_loglink_complete_evt,
+-	       sizeof(struct hci_ev_logical_link_complete)),
+-	/* [0x46 = HCI_EV_DISCONN_LOGICAL_LINK_COMPLETE] */
+-	HCI_EV(HCI_EV_DISCONN_PHY_LINK_COMPLETE,
+-	       hci_disconn_phylink_complete_evt,
+-	       sizeof(struct hci_ev_disconn_phy_link_complete)),
+-#endif
+ 	/* [0x48 = HCI_EV_NUM_COMP_BLOCKS] */
+ 	HCI_EV(HCI_EV_NUM_COMP_BLOCKS, hci_num_comp_blocks_evt,
+ 	       sizeof(struct hci_ev_num_comp_blocks)),
 -- 
 2.43.0
 
