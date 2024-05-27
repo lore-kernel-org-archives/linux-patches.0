@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29BF917E90E;
-	Mon, 27 May 2024 19:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD8A17E90E;
+	Mon, 27 May 2024 19:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836735; cv=none; b=LQJUm9CLbF8tN/5nKHo7LlXgpWK/+ZaVhfx9cOP7u4qGF2tRSnuMYH9bVSEAIoRYMg3M5sHcXIsgOgLC2RHmFwKycEX++y+bSTf+WUI/ud/mWaopDNKyKmFkhFelIgwBZZNJZvXpYlYqWKdr230EQMs46FB830gejSXq3rJ+2ps=
+	t=1716836738; cv=none; b=FgGyE8rk4XV5+j9WVyETnMdBViH3Wh95Omf/i+npYYvqCmTIjkoi+XiMjgwBsjz8jRnpCre5Fcnyy1Cq1C5m6QqyIkvWC8Cfj29D8BvTvY/oOJPwPaPCZZ7j506Zzyr42En4SsdmZtBpY2gZrJQLXxAOGmUDXv4g53PnokaAA3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836735; c=relaxed/simple;
-	bh=w43UkdPHjp3eicED17OWPF5Fj2B/hNDKKiqnPulFVOg=;
+	s=arc-20240116; t=1716836738; c=relaxed/simple;
+	bh=K8PpnrJq3J6Re+CcLYdZhmteBDgfiSj6XoGTZUWALyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jo8DRzY109tdTkpjVR8Rrj+SwvZGBwUedJbkFfk080hc3lIqxMJqB7S/fzZDxo1elJdHX3w82YPnwGOrS+pqRbE3QJnk09HzKD9BobFZim2YTiA/YP4oimTndFMDJ/qUuH0LZ/gdlt3JZC0ksqC/svEccYYx5cwQgId7HnldWhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0+bQy6i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p77pP2nbAD+TJog3+UB+PHwI1KtwVHcNPHXbZydFr4yA7250sy30qM+y1GXE1qiykIMyeblVO90sUFfgLPLu2ylfOg84wg/WJvr9tNkitsNJdKUc9fwtA70gB8v8xT4cNMSuIfrcEzDl8bODA7i+fNBfrDM8Ra6878v3xDd2F1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSlC8dQV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0+bQy6i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E5FC2BBFC;
-	Mon, 27 May 2024 19:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSlC8dQV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4242BC32782;
+	Mon, 27 May 2024 19:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836735;
-	bh=w43UkdPHjp3eicED17OWPF5Fj2B/hNDKKiqnPulFVOg=;
+	s=korg; t=1716836737;
+	bh=K8PpnrJq3J6Re+CcLYdZhmteBDgfiSj6XoGTZUWALyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0+bQy6iWlhRpOrLGamQGMXUHABb4d6f/VD96Rsj9oaT/vx+wx0YyeW5GbAmNPVN1
-	 kHjvkYxVrqZC3qNanAKwtplz4nTlyPCTswUINxv3e/y2DA0sLjfDdJZeyH8PSC4M7t
-	 uxv9QGdw8mT9EI8FR2Ilnq3kFCikpCG0Av7Ji1UY=
+	b=gSlC8dQVytLteEkQKS9jIiyTtWA1JGbMdAMNP5XoO6mpEEjFeN/yPSbg8ct7aGVA0
+	 uSEZPuKnizl9a2cmNTf7DK1bvPVp8Npejy7UvFK1YdgiD1wJOr7TTUkNoe/sR07KAz
+	 +TX29ECIwbrfAeOJT1vXkRDH8chi8Oa5w6u1NBp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinbo Zhu <zhuyinbo@loongson.cn>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Su Hui <suhui@nfschina.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 166/427] dt-bindings: thermal: loongson,ls2k-thermal: Fix incorrect compatible definition
-Date: Mon, 27 May 2024 20:53:33 +0200
-Message-ID: <20240527185617.878249611@linuxfoundation.org>
+Subject: [PATCH 6.9 167/427] wifi: ath10k: Fix an error code problem in ath10k_dbg_sta_write_peer_debug_trigger()
+Date: Mon, 27 May 2024 20:53:34 +0200
+Message-ID: <20240527185617.958801562@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,80 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Zhou <zhoubinbin@loongson.cn>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit c8c4353685778e75e186103411e9d01a4a3f2b90 ]
+[ Upstream commit c511a9c12674d246916bb16c479d496b76983193 ]
 
-The temperature output register of the Loongson-2K2000 is defined in the
-chip configuration domain, which is different from the Loongson-2K1000,
-so it can't be fallbacked.
+Clang Static Checker (scan-build) warns:
 
-We need to use two groups of registers to describe it: the first group
-is the high and low temperature threshold setting register; the second
-group is the temperature output register.
+drivers/net/wireless/ath/ath10k/debugfs_sta.c:line 429, column 3
+Value stored to 'ret' is never read.
 
-It is true that this fix will cause ABI corruption, but it is necessary
-otherwise the Loongson-2K2000 temperature sensor will not work properly.
+Return 'ret' rather than 'count' when 'ret' stores an error code.
 
-Fixes: 72684d99a854 ("thermal: dt-bindings: add loongson-2 thermal")
-Cc: Yinbo Zhu <zhuyinbo@loongson.cn>
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/5198999d679f1a1c3457385acb9fadfc85da1f1e.1713837379.git.zhoubinbin@loongson.cn
+Fixes: ee8b08a1be82 ("ath10k: add debugfs support to get per peer tids log via tracing")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240422034243.938962-1-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../thermal/loongson,ls2k-thermal.yaml        | 23 +++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/debugfs_sta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml b/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
-index 9748a479dcd4d..ca81c8afba79c 100644
---- a/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
-+++ b/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
-@@ -18,14 +18,15 @@ properties:
-     oneOf:
-       - enum:
-           - loongson,ls2k1000-thermal
-+          - loongson,ls2k2000-thermal
-       - items:
-           - enum:
-               - loongson,ls2k0500-thermal
--              - loongson,ls2k2000-thermal
-           - const: loongson,ls2k1000-thermal
+diff --git a/drivers/net/wireless/ath/ath10k/debugfs_sta.c b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
+index 394bf3c32abff..0f6de862c3a9b 100644
+--- a/drivers/net/wireless/ath/ath10k/debugfs_sta.c
++++ b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
+@@ -439,7 +439,7 @@ ath10k_dbg_sta_write_peer_debug_trigger(struct file *file,
+ 	}
+ out:
+ 	mutex_unlock(&ar->conf_mutex);
+-	return count;
++	return ret ?: count;
+ }
  
-   reg:
--    maxItems: 1
-+    minItems: 1
-+    maxItems: 2
- 
-   interrupts:
-     maxItems: 1
-@@ -39,6 +40,24 @@ required:
-   - interrupts
-   - '#thermal-sensor-cells'
- 
-+if:
-+  properties:
-+    compatible:
-+      contains:
-+        enum:
-+          - loongson,ls2k2000-thermal
-+
-+then:
-+  properties:
-+    reg:
-+      minItems: 2
-+      maxItems: 2
-+
-+else:
-+  properties:
-+    reg:
-+      maxItems: 1
-+
- unevaluatedProperties: false
- 
- examples:
+ static const struct file_operations fops_peer_debug_trigger = {
 -- 
 2.43.0
 
