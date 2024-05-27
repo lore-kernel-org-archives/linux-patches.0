@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24AB15FA91;
-	Mon, 27 May 2024 19:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BE0262BE;
+	Mon, 27 May 2024 19:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838021; cv=none; b=KGsulswnwFJiYHMRrczMwJfdZ5GQSvx0dsUMmF4WWACWNlRBIdSd6eCpurbrewLj4Ayulf833WfR2mJ3PTf9+z8l5TevhItkHWNAP4T2AZCTCtiL4yOxnvkSp5Vlv5E07FT4uKh3kVO9+w7ixqXgJ/cM6xG13Yhmcsh+ti2w9G4=
+	t=1716838024; cv=none; b=fs9EvmHCEJdUpbNyKXO7Rk4wA4e0BlVj609Y+kZ80FoQ/badDG1oA9cOCc8cagOY3J78MsdOw/lqphWm9cW6Xs1jEMOWmmSzCDqKmbrMuVzyBN4BjC5VHXI9+XF0JjXyXL1rY1Y0BdS96W3fi9vsjGF4CwnLYlscelG3evFdOcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838021; c=relaxed/simple;
-	bh=W4scv2E/7gs3KbSyL87GmkVN5wDBLdx4NSqJ+tByKgw=;
+	s=arc-20240116; t=1716838024; c=relaxed/simple;
+	bh=talgTT9SGEQnnI7QQGTI2W7f7xxz103kyEqVuAn+VTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cxfj31lVwdbWzAa1uFfYtOx7cFWVmQtfvXc95L1nkXaHs6BZ+yvZwvX9x0W2a44Dunmp6Tv1eiOEaT9AlniMv0Vr+rlit/5eZ7x2N+FaxQUQKltdg13rePqZNHYBwQwuht8Q2ubC3GtO6Hp79GFjIWwfiA8FPOoLPlh63i6jR80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hlfre8c6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q4pAgKecz/pVWOreWa749/Er0cnHhb35IgnygsJnJU0QL+nOUhl1B7NDmr/jWwu4gTeKTouymAl950USp1JArm/WnYAiWeBzbmWVNdYLfaXGl+MLGEEpI/4iFWO1AI7642nWGKrLiuddBi9qAKU/wC7TwGI2Td6Cx1RkmKTAKiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHzz21PJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlfre8c6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F37C32782;
-	Mon, 27 May 2024 19:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHzz21PJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23CCC2BBFC;
+	Mon, 27 May 2024 19:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838021;
-	bh=W4scv2E/7gs3KbSyL87GmkVN5wDBLdx4NSqJ+tByKgw=;
+	s=korg; t=1716838024;
+	bh=talgTT9SGEQnnI7QQGTI2W7f7xxz103kyEqVuAn+VTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hlfre8c6qaiNxyTlKDp2rwgX1+qyDje/OQd319NFn0VXxcNPyMyBZB3/UpsjvZ1Hy
-	 OzHSN1PO6vh8gnIa6ImlXEyy4bEf0QLNPWabgmBBPh78lAfsLeCQmx+5WGly3gLAnJ
-	 OwlzyD7blCnlaShA8fQOMQNcpMJCClcsWr5mBx+k=
+	b=dHzz21PJDS17Gc0W4FsbJQEnkqgrFGG58bq2Jo7hX7IUB1iZfq7OT8QyjEeOuPmJ1
+	 IZx+LmcWdcUomrN64fM7Dt7XZmWWP1SkOGFejKvzeHy9AuhMnG7SmUuZ3uFXKjitxL
+	 wijqEyUdgaUclzmb6s+ysnGbqk+9Gr+QdeZxwcM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 236/493] thermal/debugfs: Avoid excessive updates of trip point statistics
-Date: Mon, 27 May 2024 20:53:58 +0200
-Message-ID: <20240527185638.014537807@linuxfoundation.org>
+Subject: [PATCH 6.8 237/493] selftests/bpf: Fix a fd leak in error paths in open_netns
+Date: Mon, 27 May 2024 20:53:59 +0200
+Message-ID: <20240527185638.051978977@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,84 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 0a293c77580581c4b058eb40287acadac6ffd14a ]
+[ Upstream commit 151f7442436658ee84076681d8f52e987fe147ea ]
 
-Since thermal_debug_update_temp() is called before invoking
-thermal_debug_tz_trip_down() for the trips that were crossed by the
-zone temperature on the way up, it updates the statistics for them
-as though the current zone temperature was above the low temperature
-of each of them.  However, if a given trip has just been crossed on the
-way down, the zone temperature is in fact below its low temperature,
-but this is handled by thermal_debug_tz_trip_down() running after the
-update of the trip statistics.
+As Martin mentioned in review comment, there is an existing bug that
+orig_netns_fd will be leaked in the later "goto fail;" case after
+open("/proc/self/ns/net") in open_netns() in network_helpers.c. This
+patch adds "close(token->orig_netns_fd);" before "free(token);" to
+fix it.
 
-The remedy is to call thermal_debug_update_temp() after
-thermal_debug_tz_trip_down() has been invoked for all of the
-trips in question, but then thermal_debug_tz_trip_up() needs to
-be adjusted, so it does not update the statistics for the trips
-that has just been crossed on the way up, as that will be taken
-care of by thermal_debug_update_temp() down the road.
-
-Modify the code accordingly.
-
-Fixes: 7ef01f228c9f ("thermal/debugfs: Add thermal debugfs information for mitigation episodes")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Fixes: a30338840fa5 ("selftests/bpf: Move open_netns() and close_netns() into network_helpers.c")
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Link: https://lore.kernel.org/r/a104040b47c3c34c67f3f125cdfdde244a870d3c.1713868264.git.tanggeliang@kylinos.cn
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c    | 3 ++-
- drivers/thermal/thermal_debugfs.c | 7 -------
- 2 files changed, 2 insertions(+), 8 deletions(-)
+ tools/testing/selftests/bpf/network_helpers.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index dfaa6341694a0..1818901d37ca8 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -432,7 +432,6 @@ static void update_temperature(struct thermal_zone_device *tz)
- 	trace_thermal_temperature(tz);
+diff --git a/tools/testing/selftests/bpf/network_helpers.c b/tools/testing/selftests/bpf/network_helpers.c
+index 6db27a9088e97..be96bf022316f 100644
+--- a/tools/testing/selftests/bpf/network_helpers.c
++++ b/tools/testing/selftests/bpf/network_helpers.c
+@@ -461,6 +461,8 @@ struct nstoken *open_netns(const char *name)
  
- 	thermal_genl_sampling_temp(tz->id, temp);
--	thermal_debug_update_temp(tz);
+ 	return token;
+ fail:
++	if (token->orig_netns_fd != -1)
++		close(token->orig_netns_fd);
+ 	free(token);
+ 	return NULL;
  }
- 
- static void thermal_zone_device_check(struct work_struct *work)
-@@ -476,6 +475,8 @@ void __thermal_zone_device_update(struct thermal_zone_device *tz,
- 	for_each_trip(tz, trip)
- 		handle_thermal_trip(tz, trip);
- 
-+	thermal_debug_update_temp(tz);
-+
- 	monitor_thermal_zone(tz);
- }
- 
-diff --git a/drivers/thermal/thermal_debugfs.c b/drivers/thermal/thermal_debugfs.c
-index 5693cc8b231aa..47ab95b3699e9 100644
---- a/drivers/thermal/thermal_debugfs.c
-+++ b/drivers/thermal/thermal_debugfs.c
-@@ -555,7 +555,6 @@ void thermal_debug_tz_trip_up(struct thermal_zone_device *tz,
- 	struct tz_episode *tze;
- 	struct tz_debugfs *tz_dbg;
- 	struct thermal_debugfs *thermal_dbg = tz->debugfs;
--	int temperature = tz->temperature;
- 	int trip_id = thermal_zone_trip_id(tz, trip);
- 	ktime_t now = ktime_get();
- 
-@@ -624,12 +623,6 @@ void thermal_debug_tz_trip_up(struct thermal_zone_device *tz,
- 
- 	tze = list_first_entry(&tz_dbg->tz_episodes, struct tz_episode, node);
- 	tze->trip_stats[trip_id].timestamp = now;
--	tze->trip_stats[trip_id].max = max(tze->trip_stats[trip_id].max, temperature);
--	tze->trip_stats[trip_id].min = min(tze->trip_stats[trip_id].min, temperature);
--	tze->trip_stats[trip_id].count++;
--	tze->trip_stats[trip_id].avg = tze->trip_stats[trip_id].avg +
--		(temperature - tze->trip_stats[trip_id].avg) /
--		tze->trip_stats[trip_id].count;
- 
- unlock:
- 	mutex_unlock(&thermal_dbg->lock);
 -- 
 2.43.0
 
