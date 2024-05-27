@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3628168C4;
-	Mon, 27 May 2024 19:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5368E1863F;
+	Mon, 27 May 2024 19:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837349; cv=none; b=XX/hcNJyxWDI4AlxnQLedRt1scD7RBMAUzRfs0Hlby4ErzyIfLK6fHd+5wpfnuOnP49PzNy8PcXsz/DZIHNo8mNKLuTVYCLELRO/1Ea+bTq0QHmmiD/OK+HP8g9GKKgmAT2WL0rEV+emrCEbkTK9R2qMztTD4L3IosD4htsWYcA=
+	t=1716837352; cv=none; b=syxjLihzmkJUrf0NM7vkBc9iZFN8jiotUMtg1IZi8SpQ8hIcQRJjaxdT3dxoODE/31DreCdE9U8+M0lRPq4WCc+bgtHyQSAY8dEP4sbtduWiMQLolzXwt16O9GmSQUS/IdknBLUnG+BxLG4/B9k5hOjim2R3CfkCbf8YZCy5ww8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837349; c=relaxed/simple;
-	bh=oAXh2dm/QJ/R/ytoSXgfh7GAN95ap9v2DbL9PnnujDQ=;
+	s=arc-20240116; t=1716837352; c=relaxed/simple;
+	bh=yxWbgenmY2d94v43ffrSQ89ooME78WpjBhq+9/RV/FA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDWcTHA/mzmj0gcxIHtpMCSn7IXhAJUPVnB/MO+7MBZVbGcM11RDCpMiHZGoqEBMKe2BCje5EpTFret2IJOsSsssoX416OOFRZb3y37dmrnq7asx0cdKgT72WqL8FlhUDJWvyyRjIYcBiP3BQG1dt5EKqj8B3iTMYoaAKaz5W2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjKc20Gc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z33/8K0Rs4bzr4qiT9xXOoB9I3qTYng5f3uaMjJimL6s5OJlx7X5Zo3axZR2T04IGQ6BkIAlf7KmPhQvVlQmZefG4E6g5LyZ1cXIvzwlXG8/mK+LtA4aXjRanU2RmG7NAwQO88fm4ehbJi4TafFtH5BAIVfukDDu1XO5yzcCIJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sa7ZSyVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjKc20Gc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56042C2BBFC;
-	Mon, 27 May 2024 19:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sa7ZSyVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB02BC2BBFC;
+	Mon, 27 May 2024 19:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837349;
-	bh=oAXh2dm/QJ/R/ytoSXgfh7GAN95ap9v2DbL9PnnujDQ=;
+	s=korg; t=1716837352;
+	bh=yxWbgenmY2d94v43ffrSQ89ooME78WpjBhq+9/RV/FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PjKc20GcUAvp80+7QtSUnmf/N6Fh0Q3Ng/UPSrjmql+egyJEcNnY1x8ZBLJRL4KcB
-	 B0sOTKJrCm+bNqkl/8HY9IPwZ32AGyHubxvOg6zSzoU48lYD3h6HSurD03FP73ljtF
-	 ZWMc7AxPv7MAXCe5AAHQoFrRl1tC/Q2/8y/jKUZc=
+	b=sa7ZSyVsBhZ0mjudlM3XEqN8gLAYrjxrj8SHoPayu1vpxvk/M2tRhHKgrMv47QcQp
+	 iMoE+4cdkcqhc2nZtt2fC6mCjurBewOy9RVYgz53tAj3L/hkKxLBgJ3X0F3pMwJkux
+	 4ziD645PzA140FBQaC6oqbVbMGVY44ofIzBisXhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bob Pearson <rpearsonhpe@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 367/427] RDMA/rxe: Fix seg fault in rxe_comp_queue_pkt
-Date: Mon, 27 May 2024 20:56:54 +0200
-Message-ID: <20240527185634.083917706@linuxfoundation.org>
+Subject: [PATCH 6.9 368/427] RDMA/rxe: Allow good work requests to be executed
+Date: Mon, 27 May 2024 20:56:55 +0200
+Message-ID: <20240527185634.117489888@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,48 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 2b23b6097303ed0ba5f4bc036a1c07b6027af5c6 ]
+[ Upstream commit b703374837a8f8422fa3f1edcf65505421a65a6a ]
 
-In rxe_comp_queue_pkt() an incoming response packet skb is enqueued to the
-resp_pkts queue and then a decision is made whether to run the completer
-task inline or schedule it. Finally the skb is dereferenced to bump a 'hw'
-performance counter. This is wrong because if the completer task is
-already running in a separate thread it may have already processed the skb
-and freed it which can cause a seg fault.  This has been observed
-infrequently in testing at high scale.
+A previous commit incorrectly added an 'if(!err)' before scheduling the
+requester task in rxe_post_send_kernel(). But if there were send wrs
+successfully added to the send queue before a bad wr they might never get
+executed.
 
-This patch fixes this by changing the order of enqueuing the packet until
-after the counter is accessed.
+This commit fixes this by scheduling the requester task if any wqes were
+successfully posted in rxe_post_send_kernel() in rxe_verbs.c.
 
-Link: https://lore.kernel.org/r/20240329145513.35381-4-rpearsonhpe@gmail.com
+Link: https://lore.kernel.org/r/20240329145513.35381-5-rpearsonhpe@gmail.com
 Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
-Fixes: 0b1e5b99a48b ("IB/rxe: Add port protocol stats")
+Fixes: 5bf944f24129 ("RDMA/rxe: Add error messages")
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_comp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_verbs.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_comp.c b/drivers/infiniband/sw/rxe/rxe_comp.c
-index b78b8c0856abd..c997b7cbf2a9e 100644
---- a/drivers/infiniband/sw/rxe/rxe_comp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_comp.c
-@@ -131,12 +131,12 @@ void rxe_comp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb)
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+index 614581989b381..a49784e5156c5 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -888,6 +888,7 @@ static int rxe_post_send_kernel(struct rxe_qp *qp,
  {
- 	int must_sched;
+ 	int err = 0;
+ 	unsigned long flags;
++	int good = 0;
  
--	skb_queue_tail(&qp->resp_pkts, skb);
--
--	must_sched = skb_queue_len(&qp->resp_pkts) > 1;
-+	must_sched = skb_queue_len(&qp->resp_pkts) > 0;
- 	if (must_sched != 0)
- 		rxe_counter_inc(SKB_TO_PKT(skb)->rxe, RXE_CNT_COMPLETER_SCHED);
+ 	spin_lock_irqsave(&qp->sq.sq_lock, flags);
+ 	while (ibwr) {
+@@ -895,12 +896,15 @@ static int rxe_post_send_kernel(struct rxe_qp *qp,
+ 		if (err) {
+ 			*bad_wr = ibwr;
+ 			break;
++		} else {
++			good++;
+ 		}
+ 		ibwr = ibwr->next;
+ 	}
+ 	spin_unlock_irqrestore(&qp->sq.sq_lock, flags);
  
-+	skb_queue_tail(&qp->resp_pkts, skb);
-+
- 	if (must_sched)
- 		rxe_sched_task(&qp->comp.task);
- 	else
+-	if (!err)
++	/* kickoff processing of any posted wqes */
++	if (good)
+ 		rxe_sched_task(&qp->req.task);
+ 
+ 	spin_lock_irqsave(&qp->state_lock, flags);
 -- 
 2.43.0
 
