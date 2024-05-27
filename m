@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6311F262BE;
-	Mon, 27 May 2024 19:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E53262BE;
+	Mon, 27 May 2024 19:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838170; cv=none; b=I/3N+ca/oal684HCsupHZZ/P69hGV86yRF6VZXsVfpXWnKI1mTk7h51ga+CFYvOPkTwVY6XU24DZlur4j7XRekrBpVPVV/jzbDZ6QPadaF+WrLPYkp4TsqZTwnAPnRRNb1YNSxgJJZQKPEszBgOlXdo9nFxcGgKs2ZXOeLvMBT0=
+	t=1716838173; cv=none; b=J97BvHPuHumgx+kg2F0skp6YS3xMPQaSuSTruFgSwNInZnnki6U+lhzZvPqs/nqV7rGv31ckWQ/RCNYBj8aTlYOLIo7dXSRmd/lErBnucpfim3zWXzxaSXed7N59e6NBYD7OIkCARxeiEwGGLQVUzr4Cc4SMa7Kz3I6SmsOGZBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838170; c=relaxed/simple;
-	bh=4ze4FDo+4S8E4RrO2QizEHfsN7Xhtol9tGwQpzMQYtE=;
+	s=arc-20240116; t=1716838173; c=relaxed/simple;
+	bh=hmwDLfZ2Gltj2UAL+eIZuUGlExktg+TMS7PoV1EyfNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJfGcCCV4BsVe9nvgLzaSySH7a+Ctyf/q2THIq6MjLloqfDv3aMQUe6f/T/sGchbU0nX5Bt1le7stvW4ti09XbGqH3Es/VFuGHPuCmvEHcrPkgH8r86+DBwsQHEDESyYeRtFMa1GlsOJawWqNmwF2x8Hml/wnu4A8qfdMy0d9hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2Mxree9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f2r6hhcGoD6aLp+I2oIl3NPqHjQu7PfTlHjHcmGiGbdn0Seo7oqD7jUexXNvgnVOO/II53XIBFf8Ake2h6S+Z8gBhEpT2DVTMbKHAqr6p5lajMzTxn+5lNQsG4AArsxg+ep/apwX0IX6qAvSoQpO7u+bgynbIv/Oel5hYQDrKqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJbBkNt3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2Mxree9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB63C2BBFC;
-	Mon, 27 May 2024 19:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJbBkNt3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84FBDC2BBFC;
+	Mon, 27 May 2024 19:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838170;
-	bh=4ze4FDo+4S8E4RrO2QizEHfsN7Xhtol9tGwQpzMQYtE=;
+	s=korg; t=1716838172;
+	bh=hmwDLfZ2Gltj2UAL+eIZuUGlExktg+TMS7PoV1EyfNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A2Mxree91OZ/XWr/8FHNZPIGsh1XhxbEvRryP1IPqblz7z87nDRV2VTl1L7P+OEJM
-	 isArPGKeWJNzCfK80kQ8+hpTbbfWToq782iWEak5dU4oR3NIXZSUGKLm7ObS26/a++
-	 yIJlK4pcu1WhEXCJhpYrdXHMI9hjfhd9fYdjDMio=
+	b=kJbBkNt3jI0+oPP13b9ygmqR7aR68WyOQkwf66ESH9T3lMO8dmTkIN6uFWG0ez9de
+	 mTrAL81ToF5woT8o63lV0wqqrRHXuP5HkktHm13Q2m8WIw/HhP+M3CLP0JMjUGLCAv
+	 +wofebL5woBWv7jovfoA1zSAErvWKwFJXiYpBWVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 292/493] HID: amd_sfh: Handle "no sensors" in PM operations
-Date: Mon, 27 May 2024 20:54:54 +0200
-Message-ID: <20240527185639.854945457@linuxfoundation.org>
+Subject: [PATCH 6.8 293/493] usb: aqc111: stop lying about skb->truesize
+Date: Mon, 27 May 2024 20:54:55 +0200
+Message-ID: <20240527185639.886883198@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,50 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 077e3e3bc84a51891e732507bbbd9acf6e0e4c8b ]
+[ Upstream commit 9aad6e45c4e7d16b2bb7c3794154b828fb4384b4 ]
 
-Resume or suspend each sensor device based on the num_hid_devices.
-Therefore, add a check to handle the special case where no sensors are
-present.
+Some usb drivers try to set small skb->truesize and break
+core networking stacks.
 
-Fixes: 93ce5e0231d7 ("HID: amd_sfh: Implement SFH1.1 functionality")
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+I replace one skb_clone() by an allocation of a fresh
+and small skb, to get minimally sized skbs, like we did
+in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
+in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
+stop lying about skb->truesize")
+
+Fixes: 361459cd9642 ("net: usb: aqc111: Implement RX data path")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240506135546.3641185-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/usb/aqc111.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
-index 9dbe6f4cb2942..c89e6a2a58736 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
-@@ -227,6 +227,11 @@ static void amd_sfh_resume(struct amd_mp2_dev *mp2)
- 	struct amd_mp2_sensor_info info;
- 	int i, status;
+diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+index 7b8afa589a53c..284375f662f1e 100644
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -1141,17 +1141,15 @@ static int aqc111_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			continue;
+ 		}
  
-+	if (!cl_data->is_any_sensor_enabled) {
-+		amd_sfh_clear_intr(mp2);
-+		return;
-+	}
-+
- 	for (i = 0; i < cl_data->num_hid_devices; i++) {
- 		if (cl_data->sensor_sts[i] == SENSOR_DISABLED) {
- 			info.sensor_idx = cl_data->sensor_idx[i];
-@@ -252,6 +257,11 @@ static void amd_sfh_suspend(struct amd_mp2_dev *mp2)
- 	struct amdtp_cl_data *cl_data = mp2->cl_data;
- 	int i, status;
+-		/* Clone SKB */
+-		new_skb = skb_clone(skb, GFP_ATOMIC);
++		new_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
  
-+	if (!cl_data->is_any_sensor_enabled) {
-+		amd_sfh_clear_intr(mp2);
-+		return;
-+	}
-+
- 	for (i = 0; i < cl_data->num_hid_devices; i++) {
- 		if (cl_data->sensor_idx[i] != HPD_IDX &&
- 		    cl_data->sensor_sts[i] == SENSOR_ENABLED) {
+ 		if (!new_skb)
+ 			goto err;
+ 
+-		new_skb->len = pkt_len;
++		skb_put(new_skb, pkt_len);
++		memcpy(new_skb->data, skb->data, pkt_len);
+ 		skb_pull(new_skb, AQ_RX_HW_PAD);
+-		skb_set_tail_pointer(new_skb, new_skb->len);
+ 
+-		new_skb->truesize = SKB_TRUESIZE(new_skb->len);
+ 		if (aqc111_data->rx_checksum)
+ 			aqc111_rx_checksum(new_skb, pkt_desc);
+ 
 -- 
 2.43.0
 
