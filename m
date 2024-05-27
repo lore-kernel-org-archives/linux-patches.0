@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FA917E90E;
-	Mon, 27 May 2024 19:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D086A17E90E;
+	Mon, 27 May 2024 19:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837260; cv=none; b=G9RilGO++UO9Rdn0Crunwmz5L5nGS/Uequ/VUqzSctE1HqWYm1tVrZHSu2rxL3QlorFeVshkf5s45E6JFZG3FTnHzzkLQ0q+Er3gNGxTsMMjmKtqG3FODLUYdkBJ9W43ZzH6oFZ8cD7WNpNQFF5hfqt7+lYVNyDp/yj19UtWuBw=
+	t=1716837262; cv=none; b=TbUPnb3S3cGklK53sLCXGcE048QdTERds8SZ/bGtplVAjN6YYeIVZ7nWSVGCPu3rJwOplsEBaeH4zhNEKJXkArdnm1uZ7HhgJpxc6+ldyhuLZo25/YVBbSSB00BfaZ5jNecgfcCTr3a4XTGHY0CAS8weqX20DDCt9Nw+FYxmU5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837260; c=relaxed/simple;
-	bh=nkNZpNxtSWn/yDmUoltT1sxPxx7WIIpqbVjZq2Pi+lQ=;
+	s=arc-20240116; t=1716837262; c=relaxed/simple;
+	bh=/TMd9Tshwti61BWkQg4Hmul84FTInqAHTDJwfOGvrsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iq0OG+w5k0VINNzLmY62Jsv5CSgSTMzznrwTHWq3G+m+OAoxpLkh32NCMhUEP6+vK6YauMG6ZCUxzGpHNtRdi9xbv6h6qC+i9HxRXKY3EBDIkFi4GwD5t1tZuir4iziY4MoW7WkTgeqNcByQYUl+NQec9cuB2HWy+LGPveh+r2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtOwNoYn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r+esTdCvZkxw0f6CDVlV8a0VfYv9T1B19jVr0s0wgrORohkWbbMseBEAbZ9QMvyf7DcogfuyA2vI02rB6E5LmVUTe0dqf8SjPPSrOiYEneYNonO+/6w9JymFij7jnLNrYCqWRP+37mzB+/SbfcuBsoj3Cb5yIk4pDaBu6ZVknzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TREWwSh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtOwNoYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AEAC2BBFC;
-	Mon, 27 May 2024 19:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TREWwSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B4CC2BBFC;
+	Mon, 27 May 2024 19:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837260;
-	bh=nkNZpNxtSWn/yDmUoltT1sxPxx7WIIpqbVjZq2Pi+lQ=;
+	s=korg; t=1716837262;
+	bh=/TMd9Tshwti61BWkQg4Hmul84FTInqAHTDJwfOGvrsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GtOwNoYno+cxSwhwyuS1s4L1O3h0xgJjxs/jfevz53jXZSjHLgISxpAKvlnD4zrJO
-	 gunwfdUKgsgsAA72xyFVOEwp5ZnW1je+EbRqJMPAYHN+ceJf8snZRz2GjjXnfGF8/h
-	 ShLsab9spZEjpC0BkJw/APDP1+eLMouNy/a9GgOQ=
+	b=0TREWwSh+zipddUCer3rYHdV7ZfNC0aPrGnaua+APO1rHL7Pyxdy9lL67ofvzqNhU
+	 VxEVuJ2jvq41xkJZx9GoebgZFTBFjCSuQMfjb5wTn3pZbzHjxrIqNdt8Lv9p+Xbaak
+	 g10P/8WyHkbBZz5I92UYiiJ4c5OoGheH1heHFx14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Rik van Riel <riel@surriel.com>,
+	Stefan Roesch <shr@devkernel.io>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 373/427] lib/test_hmm.c: handle src_pfns and dst_pfns allocation failure
-Date: Mon, 27 May 2024 20:57:00 +0200
-Message-ID: <20240527185634.272059402@linuxfoundation.org>
+Subject: [PATCH 6.9 374/427] mm/ksm: fix ksm exec support for prctl
+Date: Mon, 27 May 2024 20:57:01 +0200
+Message-ID: <20240527185634.304744343@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -46,64 +51,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit c2af060d1c18beaec56351cf9c9bcbbc5af341a3 ]
+[ Upstream commit 3a9e567ca45fb5280065283d10d9a11f0db61d2b ]
 
-The kcalloc() in dmirror_device_evict_chunk() will return null if the
-physical memory has run out.  As a result, if src_pfns or dst_pfns is
-dereferenced, the null pointer dereference bug will happen.
+Patch series "mm/ksm: fix ksm exec support for prctl", v4.
 
-Moreover, the device is going away.  If the kcalloc() fails, the pages
-mapping a chunk could not be evicted.  So add a __GFP_NOFAIL flag in
-kcalloc().
+commit 3c6f33b7273a ("mm/ksm: support fork/exec for prctl") inherits
+MMF_VM_MERGE_ANY flag when a task calls execve().  However, it doesn't
+create the mm_slot, so ksmd will not try to scan this task.  The first
+patch fixes the issue.
 
-Finally, as there is no need to have physically contiguous memory, Switch
-kcalloc() to kvcalloc() in order to avoid failing allocations.
+The second patch refactors to prepare for the third patch.  The third
+patch extends the selftests of ksm to verfity the deduplication really
+happens after fork/exec inherits ths KSM setting.
 
-Link: https://lkml.kernel.org/r/20240312005905.9939-1-duoming@zju.edu.cn
-Fixes: b2ef9f5a5cb3 ("mm/hmm/test: add selftest driver for HMM")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Cc: Jérôme Glisse <jglisse@redhat.com>
+This patch (of 3):
+
+commit 3c6f33b7273a ("mm/ksm: support fork/exec for prctl") inherits
+MMF_VM_MERGE_ANY flag when a task calls execve().  Howerver, it doesn't
+create the mm_slot, so ksmd will not try to scan this task.
+
+To fix it, allocate and add the mm_slot to ksm_mm_head in __bprm_mm_init()
+when the mm has MMF_VM_MERGE_ANY flag.
+
+Link: https://lkml.kernel.org/r/20240328111010.1502191-1-tujinjiang@huawei.com
+Link: https://lkml.kernel.org/r/20240328111010.1502191-2-tujinjiang@huawei.com
+Fixes: 3c6f33b7273a ("mm/ksm: support fork/exec for prctl")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Stefan Roesch <shr@devkernel.io>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_hmm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/exec.c           | 11 +++++++++++
+ include/linux/ksm.h | 13 +++++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/lib/test_hmm.c b/lib/test_hmm.c
-index 717dcb8301273..b823ba7cb6a15 100644
---- a/lib/test_hmm.c
-+++ b/lib/test_hmm.c
-@@ -1226,8 +1226,8 @@ static void dmirror_device_evict_chunk(struct dmirror_chunk *chunk)
- 	unsigned long *src_pfns;
- 	unsigned long *dst_pfns;
+diff --git a/fs/exec.c b/fs/exec.c
+index cf1df7f16e55c..0c5f06d08c355 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -67,6 +67,7 @@
+ #include <linux/time_namespace.h>
+ #include <linux/user_events.h>
+ #include <linux/rseq.h>
++#include <linux/ksm.h>
  
--	src_pfns = kcalloc(npages, sizeof(*src_pfns), GFP_KERNEL);
--	dst_pfns = kcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL);
-+	src_pfns = kvcalloc(npages, sizeof(*src_pfns), GFP_KERNEL | __GFP_NOFAIL);
-+	dst_pfns = kvcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL | __GFP_NOFAIL);
- 
- 	migrate_device_range(src_pfns, start_pfn, npages);
- 	for (i = 0; i < npages; i++) {
-@@ -1250,8 +1250,8 @@ static void dmirror_device_evict_chunk(struct dmirror_chunk *chunk)
+ #include <linux/uaccess.h>
+ #include <asm/mmu_context.h>
+@@ -267,6 +268,14 @@ static int __bprm_mm_init(struct linux_binprm *bprm)
+ 		goto err_free;
  	}
- 	migrate_device_pages(src_pfns, dst_pfns, npages);
- 	migrate_device_finalize(src_pfns, dst_pfns, npages);
--	kfree(src_pfns);
--	kfree(dst_pfns);
-+	kvfree(src_pfns);
-+	kvfree(dst_pfns);
+ 
++	/*
++	 * Need to be called with mmap write lock
++	 * held, to avoid race with ksmd.
++	 */
++	err = ksm_execve(mm);
++	if (err)
++		goto err_ksm;
++
+ 	/*
+ 	 * Place the stack at the largest stack address the architecture
+ 	 * supports. Later, we'll move this to an appropriate place. We don't
+@@ -288,6 +297,8 @@ static int __bprm_mm_init(struct linux_binprm *bprm)
+ 	bprm->p = vma->vm_end - sizeof(void *);
+ 	return 0;
+ err:
++	ksm_exit(mm);
++err_ksm:
+ 	mmap_write_unlock(mm);
+ err_free:
+ 	bprm->vma = NULL;
+diff --git a/include/linux/ksm.h b/include/linux/ksm.h
+index 401348e9f92b4..7e2b1de3996ac 100644
+--- a/include/linux/ksm.h
++++ b/include/linux/ksm.h
+@@ -59,6 +59,14 @@ static inline int ksm_fork(struct mm_struct *mm, struct mm_struct *oldmm)
+ 	return 0;
  }
  
- /* Removes free pages from the free list so they can't be re-allocated */
++static inline int ksm_execve(struct mm_struct *mm)
++{
++	if (test_bit(MMF_VM_MERGE_ANY, &mm->flags))
++		return __ksm_enter(mm);
++
++	return 0;
++}
++
+ static inline void ksm_exit(struct mm_struct *mm)
+ {
+ 	if (test_bit(MMF_VM_MERGEABLE, &mm->flags))
+@@ -107,6 +115,11 @@ static inline int ksm_fork(struct mm_struct *mm, struct mm_struct *oldmm)
+ 	return 0;
+ }
+ 
++static inline int ksm_execve(struct mm_struct *mm)
++{
++	return 0;
++}
++
+ static inline void ksm_exit(struct mm_struct *mm)
+ {
+ }
 -- 
 2.43.0
 
