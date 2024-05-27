@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BC6168C4;
-	Mon, 27 May 2024 19:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF9915FD01;
+	Mon, 27 May 2024 19:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837955; cv=none; b=kjfwjzSMJ68CUnP9QkqagH8xfyu4ybtJHay/0ztOmhbjkLM4tJjtHCuCbgJAILhoi1qBziiMc6dz7Fqe8EuIGUpWeL4jLt5TPnB5Bzi2c0foWLKK78hWxNyKIRTV5dIh/nPO/j0dr5HtmP4v+0ZRX9C/VuEM/yZ6VSO/98WHuL4=
+	t=1716837957; cv=none; b=VpIKeyQ+ngsBTqwROvJPfWGOD7NeaX8sv2RSlSlT6eLjW1kz4sbqWvYFkhqFDCCmr9by9nIDuY7U5vqb7654L1i9iOSgxgf50br/Luh2AMifLoGH2DADElV/vS3KTo4KsjJItJZ8GKW29aJtPf9GDuTvwfgZB3ezTvpE9ivUl2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837955; c=relaxed/simple;
-	bh=HDTNVRzN0WNh7zXeX6oyjD9PFX9xbe+OH9femdQtOE0=;
+	s=arc-20240116; t=1716837957; c=relaxed/simple;
+	bh=QaJvz/ZvlAVEEqtZRb/9r4ymxSGaEHxAwnuxOVrjRjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uVh37xvgJD7GTtx+C09oa++rbeM4lg2jtvu0ptkjCStEleKYsUDgM+oqyP/EnR6SUYTPS7xN8CRJU+/y4eaO7QpyDvDEmk2ycIa9WVbWx4DozwL+bFed3YWnaheDWm5rbdErfXyP+j71wZP+CM88fMTGoTGee07rfFYp4tSV4y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R40OdWnF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X2F1xSyeC52M1QV6kZV9p/gI/JWptDk/Io31SabQvm4cls6JqiEfkO9B7nltTNwfP2huWhI4bwRrKiiJCKA0pDWZ9wzEIYYNcYZeS94TW7MUWajViIAXpy0xTIbkZUSBnivSrJR+R5sqXT7DRt7cTaZILMjQjfJzgrMHAVnCMf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lk1LmFz/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R40OdWnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAB3C2BBFC;
-	Mon, 27 May 2024 19:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lk1LmFz/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663BAC2BBFC;
+	Mon, 27 May 2024 19:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837955;
-	bh=HDTNVRzN0WNh7zXeX6oyjD9PFX9xbe+OH9femdQtOE0=;
+	s=korg; t=1716837957;
+	bh=QaJvz/ZvlAVEEqtZRb/9r4ymxSGaEHxAwnuxOVrjRjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R40OdWnF9Kw4PcHiMQoBlSOd+TkkV6j1Y6OmRmgVccAQAZn6Tq1Kx5S0aYL7XgStp
-	 GDs5va8ZgykBmgOz2q/MB0QkQTGm+MRxl6Q4GHw4TZYraUxlBqaWYUARyytxJvanEG
-	 lPSbzOxu7/XbRvwa5cQjnijmKHmZj7h2GllkXLP0=
+	b=lk1LmFz/w/079HG1/gzKOWxTg1jNCqtgGwUvhc9HcfnbBcYftjxafVkg6Jy90fTTQ
+	 o1UP7+DJYlB0xjnaZcyGCAIEbxngiDJ+PuKjifWRZTIfeQX5/dHrT3R9GAZzBkj+MU
+	 G7h91NsHSHL2/pg/k04iaKMCC9gZncoUuQjUEkJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 209/493] gfs2: Dont forget to complete delayed withdraw
-Date: Mon, 27 May 2024 20:53:31 +0200
-Message-ID: <20240527185637.157914029@linuxfoundation.org>
+Subject: [PATCH 6.8 174/493] wifi: iwlwifi: mvm: fix active link counting during recovery
+Date: Mon, 27 May 2024 20:52:56 +0200
+Message-ID: <20240527185636.042321958@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -50,37 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit b01189333ee91c1ae6cd96dfd1e3a3c2e69202f0 ]
+[ Upstream commit 9737da2f00d6409ae48a79d4dddd9362b230aa31 ]
 
-Commit fffe9bee14b0 ("gfs2: Delay withdraw from atomic context")
-switched from gfs2_withdraw() to gfs2_withdraw_delayed() in
-gfs2_ail_error(), but failed to then check if a delayed withdraw had
-occurred.  Fix that by adding the missing check in __gfs2_ail_flush(),
-where the spin locks are already dropped and a withdraw is possible.
+During recovery, the chanctx_conf in mac80211 is still non-NULL even
+though the channel context has not yet been assigned again. In that
+case, the real count is actually lower.
 
-Fixes: fffe9bee14b0 ("gfs2: Delay withdraw from atomic context")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Switch to instead count the phy_ctx assignment and ensure that the
+assignment is cleared at the start of recovery.
+
+Fixes: 12bacfc2c065 ("wifi: iwlwifi: handle eSR transitions")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240320232419.55f37339e7d1.I57006568a90ffb7a1232def1b2f3264dea711ba6@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glops.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../wireless/intel/iwlwifi/mvm/mld-mac80211.c | 20 ++++++++-----------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 45653cbc8a87d..e0e8dfeee777d 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -82,6 +82,9 @@ static void __gfs2_ail_flush(struct gfs2_glock *gl, bool fsync,
- 	GLOCK_BUG_ON(gl, !fsync && atomic_read(&gl->gl_ail_count));
- 	spin_unlock(&sdp->sd_ail_lock);
- 	gfs2_log_unlock(sdp);
-+
-+	if (gfs2_withdrawing(sdp))
-+		gfs2_withdraw(sdp);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index 1da4fd1c4560b..0aa54d33e3ba1 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -189,17 +189,13 @@ static void iwl_mvm_mld_mac_remove_interface(struct ieee80211_hw *hw,
+ 	mutex_unlock(&mvm->mutex);
  }
  
+-static unsigned int iwl_mvm_mld_count_active_links(struct ieee80211_vif *vif)
++static unsigned int iwl_mvm_mld_count_active_links(struct iwl_mvm_vif *mvmvif)
+ {
+ 	unsigned int n_active = 0;
+ 	int i;
  
+ 	for (i = 0; i < IEEE80211_MLD_MAX_NUM_LINKS; i++) {
+-		struct ieee80211_bss_conf *link_conf;
+-
+-		link_conf = link_conf_dereference_protected(vif, i);
+-		if (link_conf &&
+-		    rcu_access_pointer(link_conf->chanctx_conf))
++		if (mvmvif->link[i] && mvmvif->link[i]->phy_ctxt)
+ 			n_active++;
+ 	}
+ 
+@@ -245,18 +241,18 @@ __iwl_mvm_mld_assign_vif_chanctx(struct iwl_mvm *mvm,
+ {
+ 	u16 *phy_ctxt_id = (u16 *)ctx->drv_priv;
+ 	struct iwl_mvm_phy_ctxt *phy_ctxt = &mvm->phy_ctxts[*phy_ctxt_id];
+-	unsigned int n_active = iwl_mvm_mld_count_active_links(vif);
+ 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
++	unsigned int n_active = iwl_mvm_mld_count_active_links(mvmvif);
+ 	unsigned int link_id = link_conf->link_id;
+ 	int ret;
+ 
+-	/* if the assigned one was not counted yet, count it now */
+-	if (!rcu_access_pointer(link_conf->chanctx_conf))
+-		n_active++;
+-
+ 	if (WARN_ON_ONCE(!mvmvif->link[link_id]))
+ 		return -EINVAL;
+ 
++	/* if the assigned one was not counted yet, count it now */
++	if (!mvmvif->link[link_id]->phy_ctxt)
++		n_active++;
++
+ 	/* mac parameters such as HE support can change at this stage
+ 	 * For sta, need first to configure correct state from drv_sta_state
+ 	 * and only after that update mac config.
+@@ -416,7 +412,7 @@ __iwl_mvm_mld_unassign_vif_chanctx(struct iwl_mvm *mvm,
+ 
+ {
+ 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
+-	unsigned int n_active = iwl_mvm_mld_count_active_links(vif);
++	unsigned int n_active = iwl_mvm_mld_count_active_links(mvmvif);
+ 	unsigned int link_id = link_conf->link_id;
+ 
+ 	/* shouldn't happen, but verify link_id is valid before accessing */
 -- 
 2.43.0
 
