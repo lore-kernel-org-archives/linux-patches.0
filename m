@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8F317727;
-	Mon, 27 May 2024 19:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E7917727;
+	Mon, 27 May 2024 19:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838359; cv=none; b=aJpQJBHBpjKUx/NRYJ89GvKlUOFCDGKGlSCGbXwvbY7rKbKgtMGjrs8dtQj9xluBgi2OjBdsFjWNoWsj5TGhIq2QxWLmDR8jIj+gHGp2XzqP0kB6wTWnscDE5rMrCuzlKu4NLXLqoRxVhqAQKmQXHAc+WiCGEKF7qXShyijV+E8=
+	t=1716838361; cv=none; b=lzBVFMLBQWsQj4QI+65JUrdIo5ahetFOd7P4MPDIeMmoH2DtqeaF8w6NxAQdtShdaIPZCF9CKJC15G6vBiuiYxwd1NeIBqO8cpLZx5m9HPmfxzYcHEHbn4Id68CZwSIof5Z2YCkIOwbuDINBpzJn7QClgnjNRWHdmOsH+wZ//04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838359; c=relaxed/simple;
-	bh=jTryLUIa0tggS7cIpuigXo+Mai58s9seQYROhiJ9WqM=;
+	s=arc-20240116; t=1716838361; c=relaxed/simple;
+	bh=ll9VDenLDFZZPrqNuI/YrUCXgXHr/AfrC0wKtUeFvG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m8DuYnGYBAloBitYgCbz0Gcu4IKd6wfaKfJ+L3EjYVuOfWPMoVeCYJ+xhiECpdu8KsnS8/49FZ89TlSTAFduFV3lK+4VhefH1jPrSQmgykLNXyLUgIKdbHZGFMps5VGToJ9LOasRtc286O7wmdEgDoJ4uvSsc/Yj51jFePwvARk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKvFPcRm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QQWoM2ATkjh7p2s3h7z50pmnhCgi5pJ/1cQfeM8h6I5ONGFS6+syrdViiRomhdJ05DpqwubTkhN7kkY9bxiypP+l3ZjM43GhZ1x1Ayb2KWBfoUew2FBcASaorQXQaqBOIXPor22vqt0BVW37qzCQbRF0TEdMxewdmtOvZUcMTdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fesxo+gJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKvFPcRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D23C2BBFC;
-	Mon, 27 May 2024 19:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fesxo+gJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48878C2BBFC;
+	Mon, 27 May 2024 19:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838359;
-	bh=jTryLUIa0tggS7cIpuigXo+Mai58s9seQYROhiJ9WqM=;
+	s=korg; t=1716838361;
+	bh=ll9VDenLDFZZPrqNuI/YrUCXgXHr/AfrC0wKtUeFvG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yKvFPcRm96QpnNOKCDMGhUbzNFdiJ04a9uB6TXByk+SMv/CeZQkoYfYIRfkNrMyO1
-	 yZxq0fi5cSB8fsngc/QDQCrAFni7QV2bu3Hh13J+/u2sWmmyKnAYzwntqzt65npDqv
-	 4j+dEASqWDfqdhRgwcWYnvvI9RTaBCeNjJ5/IUJo=
+	b=fesxo+gJ4aT1/wenONCPQhKZbWTLDSECMaI3ruJfKGOwlOwth+3uYs5qTHyEO2n7T
+	 fRSn5Ijrpdcj2d/00ixV8FwvlBNla18S9jcPyT5w8PTdXZQ854W0w2fIxFkUN275qP
+	 8NeAItl/Ie1foyocVJY6TTJ6Zdc55FF6dNeIPs0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Aapo Vienamo <aapo.vienamo@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 363/493] ASoC: Intel: avs: ssm4567: Do not ignore route checks
-Date: Mon, 27 May 2024 20:56:05 +0200
-Message-ID: <20240527185642.153342293@linuxfoundation.org>
+Subject: [PATCH 6.8 364/493] mtd: core: Report error if first mtd_otp_size() call fails in mtd_otp_nvmem_add()
+Date: Mon, 27 May 2024 20:56:06 +0200
+Message-ID: <20240527185642.187998659@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,34 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Aapo Vienamo <aapo.vienamo@linux.intel.com>
 
-[ Upstream commit e6719d48ba6329536c459dcee5a571e535687094 ]
+[ Upstream commit d44f0bbbd8d182debcce88bda55b05269f3d33d6 ]
 
-A copy-paste from intel/boards/skl_nau88l25_ssm4567.c made the avs's
-equivalent disable route checks as well. Such behavior is not desired.
+Jump to the error reporting code in mtd_otp_nvmem_add() if the
+mtd_otp_size() call fails. Without this fix, the error is not logged.
 
-Fixes: 69ea14efe99b ("ASoC: Intel: avs: Add ssm4567 machine board")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://msgid.link/r/20240308090502.2136760-4-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Aapo Vienamo <aapo.vienamo@linux.intel.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Fixes: 4b361cfa8624 ("mtd: core: add OTP nvmem provider support")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240313173425.1325790-2-aapo.vienamo@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/boards/ssm4567.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/mtd/mtdcore.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/avs/boards/ssm4567.c b/sound/soc/intel/avs/boards/ssm4567.c
-index 4a0e136835ff5..b64be685dc23b 100644
---- a/sound/soc/intel/avs/boards/ssm4567.c
-+++ b/sound/soc/intel/avs/boards/ssm4567.c
-@@ -172,7 +172,6 @@ static int avs_ssm4567_probe(struct platform_device *pdev)
- 	card->dapm_routes = card_base_routes;
- 	card->num_dapm_routes = ARRAY_SIZE(card_base_routes);
- 	card->fully_routed = true;
--	card->disable_route_checks = true;
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index 0de87bc638405..6d5c755411de0 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -956,8 +956,10 @@ static int mtd_otp_nvmem_add(struct mtd_info *mtd)
  
- 	ret = snd_soc_fixup_dai_links_platform_name(card, pname);
- 	if (ret)
+ 	if (mtd->_get_user_prot_info && mtd->_read_user_prot_reg) {
+ 		size = mtd_otp_size(mtd, true);
+-		if (size < 0)
+-			return size;
++		if (size < 0) {
++			err = size;
++			goto err;
++		}
+ 
+ 		if (size > 0) {
+ 			nvmem = mtd_otp_nvmem_register(mtd, "user-otp", size,
 -- 
 2.43.0
 
