@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD3D15FD04;
-	Mon, 27 May 2024 19:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5216715FCF0;
+	Mon, 27 May 2024 19:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838604; cv=none; b=LJ/WZlYyaZXKeKiY9fd/eMad2MDzPDvjmPjUGKDAJt7Xsw9f59fTeddAbW4Lpv1J5r9qw1SoZ9A4W/E0a809yU6gzRNaYi+WYqkrziKoI2dIoS9UjthJl645ODnlLbXjv9xkaRGy/8YeGCTO1vjCSwBBB1du6tWF8PgWnSnRBD4=
+	t=1716838607; cv=none; b=mZ9DlEy2d1qMtPW88LaElD+otvsgEMx28U4RsWND0Fxk8BaQSirW2wr3gv93b7gCzihVO3JtkuVckxLAwQagnbs1ZT2Zm+Vbgem/gIgbOS4yN414sq7F8fs86mRhAE2nht9WJzXJ33rm0bjSxOY8Vs7NRHTMKgdCHTd7XoBqRwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838604; c=relaxed/simple;
-	bh=1l0+uAZ6wMKFv0l+0ItBvsrV0RbIVOKxywX6/YXGXqw=;
+	s=arc-20240116; t=1716838607; c=relaxed/simple;
+	bh=8QtG+DxdpXb+reg3ONlxGnmUGWFv6rzNVjCVL9S6S8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NlaLGrrDLzD+F1swE9V5QYB8cUPBv17DgxSxMHu0CGtQ0+hkuapaTVGVfmGHgwpzYFGCswBADdtmxw5fsG2Ifu+BbErora8HeK2pBygX6CqoLq/UBkTU+QvU11nKVkex2Wgo60elKqFMcw+3cMTqmxgaiKHTJnbNKMrMXWocvfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3HdWt06; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nbZ7zg8GqK5oKJVAvQ5Pn4NVVo4Mzj1iY2DDh4SOw+0KJR77taXCRHgMSg2LkZnS0BtwijWtoMFJtTTZ0xcbNUatUi2cHnpbyU6qvPuVApDhhwIQsIp9VDfX6C9vLLqoc26OZiLsQ6G1tcKDygupl9JuCjzKr4luYOQtotOz7vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gS0Kmt19; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3HdWt06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C05C2BBFC;
-	Mon, 27 May 2024 19:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gS0Kmt19"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1208C2BBFC;
+	Mon, 27 May 2024 19:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838604;
-	bh=1l0+uAZ6wMKFv0l+0ItBvsrV0RbIVOKxywX6/YXGXqw=;
+	s=korg; t=1716838607;
+	bh=8QtG+DxdpXb+reg3ONlxGnmUGWFv6rzNVjCVL9S6S8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s3HdWt06WaXAcZrsfisvaSBzQ62jqPVoomctvUhkBYxFgDM6pLWgcVzeLYFP2y6GF
-	 BaCAPkFyxQ0p+f6hiro0eavfvmV/GmTSudAy06E1XTk1hWLrwyH/Ojx742NXaWu0d3
-	 J0u664XPCGQWDyTUwbEgk1/lwULpZmi8Z4mICl5k=
+	b=gS0Kmt19yOEKISAuQlg9C2ZHv/mhADrqjy8m12I47BVmy+aYnCP3aii/gcpcux8g8
+	 9vJQW1cEQ98zuXaJv8s3EAhGMAXOVYRz0JKF/kNGYNXgsmMzOopDKIa6+KPZhzR4Uh
+	 8zKZZLzzy+9F3Goz8xu8ltPzhzd+3cqqJfcGeXBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Vorel <pvorel@suse.cz>,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 457/493] nfsd: dont create nfsv4recoverydir in nfsdfs when not used.
-Date: Mon, 27 May 2024 20:57:39 +0200
-Message-ID: <20240527185645.151574903@linuxfoundation.org>
+Subject: [PATCH 6.8 458/493] ext4: fix potential unnitialized variable
+Date: Mon, 27 May 2024 20:57:40 +0200
+Message-ID: <20240527185645.187340125@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,66 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0770249b90f9d9f69714b76adc36cf6c895bc1f9 ]
+[ Upstream commit 3f4830abd236d0428e50451e1ecb62e14c365e9b ]
 
-When CONFIG_NFSD_LEGACY_CLIENT_TRACKING is not set, the virtual file
-  /proc/fs/nfsd/nfsv4recoverydir
-is created but responds EINVAL to any access.
-This is not useful, is somewhat surprising, and it causes ltp to
-complain.
+Smatch complains "err" can be uninitialized in the caller.
 
-The only known user of this file is in nfs-utils, which handles
-non-existence and read-failure equally well.  So there is nothing to
-gain from leaving the file present but inaccessible.
+    fs/ext4/indirect.c:349 ext4_alloc_branch()
+    error: uninitialized symbol 'err'.
 
-So this patch removes the file when its content is not available - i.e.
-when that config option is not selected.
+Set the error to zero on the success path.
 
-Also remove the #ifdef which hides some of the enum values when
-CONFIG_NFSD_V$ not selection.  simple_fill_super() quietly ignores array
-entries that are not present, so having slots in the array that don't
-get used is perfectly acceptable.  So there is no value in this #ifdef.
-
-Reported-by: Petr Vorel <pvorel@suse.cz>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 74fd48739d04 ("nfsd: new Kconfig option for legacy client tracking")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/363a4673-0fb8-4adf-b4fb-90a499077276@moroto.mountain
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsctl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/mballoc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index ea3c8114245c2..d8f54eb7455e3 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -48,12 +48,10 @@ enum {
- 	NFSD_MaxBlkSize,
- 	NFSD_MaxConnections,
- 	NFSD_Filecache,
--#ifdef CONFIG_NFSD_V4
- 	NFSD_Leasetime,
- 	NFSD_Gracetime,
- 	NFSD_RecoveryDir,
- 	NFSD_V4EndGrace,
--#endif
- 	NFSD_MaxReserved
- };
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index cf407425d0f30..00b0839b534da 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -6119,6 +6119,7 @@ ext4_mb_new_blocks_simple(struct ext4_allocation_request *ar, int *errp)
+ 	ext4_mb_mark_bb(sb, block, 1, true);
+ 	ar->len = 1;
  
-@@ -1359,7 +1357,9 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
- #ifdef CONFIG_NFSD_V4
- 		[NFSD_Leasetime] = {"nfsv4leasetime", &transaction_ops, S_IWUSR|S_IRUSR},
- 		[NFSD_Gracetime] = {"nfsv4gracetime", &transaction_ops, S_IWUSR|S_IRUSR},
-+#ifdef CONFIG_NFSD_LEGACY_CLIENT_TRACKING
- 		[NFSD_RecoveryDir] = {"nfsv4recoverydir", &transaction_ops, S_IWUSR|S_IRUSR},
-+#endif
- 		[NFSD_V4EndGrace] = {"v4_end_grace", &transaction_ops, S_IWUSR|S_IRUGO},
- #endif
- 		/* last one */ {""}
++	*errp = 0;
+ 	return block;
+ }
+ 
 -- 
 2.43.0
 
