@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2776C168C4;
-	Mon, 27 May 2024 19:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA994262BE;
+	Mon, 27 May 2024 19:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837945; cv=none; b=QuoVaIkj0KWSoxcQ22xuASNmqHPG46qPYqqbK5vBMXmcNACTP6+O+qzuG+jZRjwz8sjlu36J/b0NB8e+BAmbi1ZSADJAIvF7Smvniu5kCCmxh2yN4ERcyTDuF5EUaqAhgOLTqVC9kHz+iS/niq5uqzfOQA3BYy96k1GB0mzsaME=
+	t=1716837947; cv=none; b=fIndQRqEYYOM/okDSH2Va1oBkCf/hQEw1ViVex/l+dJDXmSXIlSxEn4J50FFi/LOyjZGu9W8irGEwgUl/DOF+rV4o6/HtffcvuJjIfyd/3j3QL0h7AVGhikTNLOM2T7D9nzyob4ImUFaTCmCG8q0Wr+QAhOJM4ic8izwrXX+EV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837945; c=relaxed/simple;
-	bh=iq//nYSpQpiRqpfYotlDpzt5Jxsg908NcZ08vEw4Qkg=;
+	s=arc-20240116; t=1716837947; c=relaxed/simple;
+	bh=4zR8np2Q9Mhu5ft9sXIvTmbb1mS7v7aCxLySk9NZahk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYIXg8D/Y3iLfojXQdIuEfmLHN6wPZMUujB0jGn4VZSBeLaKMoSUZ9oTaDq04oOoo5Wvgnk9dFtNXtkiBBXmRH2F3GJUw50KMqxJ091xdzmtA9kEEsaicvjeAe12iWe0byYe0z2HkkY8T/jpiZ+j8ssSm3q+eTiZGJQGdorbKc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/RZUrL9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KHVSvnWOWzYpA2ew7dTtsyJcjqBsHKM0PQ6ONHIBykRrK972sFKJphYlgPfpxWtVNcOwhonx7OJI1i0r3plTkK80LRvCOfnzUwGiaiKbXPIrFMEcp1R/hz53uQJwXcbmshsE/6IBtyDD7+gHfdKy1SsxpUCcHkviOCakcYHJCL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHcSHG/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/RZUrL9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2D7C2BBFC;
-	Mon, 27 May 2024 19:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHcSHG/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D486C2BBFC;
+	Mon, 27 May 2024 19:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837945;
-	bh=iq//nYSpQpiRqpfYotlDpzt5Jxsg908NcZ08vEw4Qkg=;
+	s=korg; t=1716837947;
+	bh=4zR8np2Q9Mhu5ft9sXIvTmbb1mS7v7aCxLySk9NZahk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/RZUrL9TN2OBz95TEuMloWl4VhI4TOTOnlkP46H7Y8L3i6XFVbl1kCImpyti25Ou
-	 z5hSNQB5AHOby94Qvf9h9chcrba091G/GojkpYSeMOli4QIeCac0aqztTDYx3Ie9+Q
-	 0MxEZLyDcoeso3RpRSOwK4k+3NcrWIRComabUD0w=
+	b=rHcSHG/aj/zbzdLqK+ROj1DRSQBVqMv4nUOpcUQZ0b5Bp5Dri+QEIvJ9G5smibwHX
+	 kg321Ye4zNiVu9FUMErBi1XdwkLQxus6CAboyiZNhzsvjTBDm/33mWsr39fbuAgjEG
+	 gmTlrS8UJi3PWW37fg3tlg6GVXiNFPfzm6jHUTxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 205/493] locking/atomic/x86: Correct the definition of __arch_try_cmpxchg128()
-Date: Mon, 27 May 2024 20:53:27 +0200
-Message-ID: <20240527185637.029330719@linuxfoundation.org>
+Subject: [PATCH 6.8 206/493] irqchip/alpine-msi: Fix off-by-one in allocation error path
+Date: Mon, 27 May 2024 20:53:28 +0200
+Message-ID: <20240527185637.064571739@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,38 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Zenghui Yu <yuzenghui@huawei.com>
 
-[ Upstream commit 929ad065ba2967be238dfdc0895b79fda62c7f16 ]
+[ Upstream commit ff3669a71afa06208de58d6bea1cc49d5e3fcbd1 ]
 
-Correct the definition of __arch_try_cmpxchg128(), introduced by:
+When alpine_msix_gic_domain_alloc() fails, there is an off-by-one in the
+number of interrupts to be freed.
 
-  b23e139d0b66 ("arch: Introduce arch_{,try_}_cmpxchg128{,_local}()")
+Fix it by passing the number of successfully allocated interrupts, instead
+of the relative index of the last allocated one.
 
-Fixes: b23e139d0b66 ("arch: Introduce arch_{,try_}_cmpxchg128{,_local}()")
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Link: https://lore.kernel.org/r/20240408091547.90111-2-ubizjak@gmail.com
+Fixes: 3841245e8498 ("irqchip/alpine-msi: Fix freeing of interrupts on allocation error path")
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20240327142305.1048-1-yuzenghui@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cmpxchg_64.h | 2 +-
+ drivers/irqchip/irq-alpine-msi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/cmpxchg_64.h b/arch/x86/include/asm/cmpxchg_64.h
-index 44b08b53ab32f..c1d6cd58f8094 100644
---- a/arch/x86/include/asm/cmpxchg_64.h
-+++ b/arch/x86/include/asm/cmpxchg_64.h
-@@ -62,7 +62,7 @@ static __always_inline u128 arch_cmpxchg128_local(volatile u128 *ptr, u128 old,
- 	asm volatile(_lock "cmpxchg16b %[ptr]"				\
- 		     CC_SET(e)						\
- 		     : CC_OUT(e) (ret),					\
--		       [ptr] "+m" (*ptr),				\
-+		       [ptr] "+m" (*(_ptr)),				\
- 		       "+a" (o.low), "+d" (o.high)			\
- 		     : "b" (n.low), "c" (n.high)			\
- 		     : "memory");					\
+diff --git a/drivers/irqchip/irq-alpine-msi.c b/drivers/irqchip/irq-alpine-msi.c
+index 9c8b1349ee17b..a1430ab60a8a3 100644
+--- a/drivers/irqchip/irq-alpine-msi.c
++++ b/drivers/irqchip/irq-alpine-msi.c
+@@ -165,7 +165,7 @@ static int alpine_msix_middle_domain_alloc(struct irq_domain *domain,
+ 	return 0;
+ 
+ err_sgi:
+-	irq_domain_free_irqs_parent(domain, virq, i - 1);
++	irq_domain_free_irqs_parent(domain, virq, i);
+ 	alpine_msix_free_sgi(priv, sgi, nr_irqs);
+ 	return err;
+ }
 -- 
 2.43.0
 
