@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C2117E90E;
-	Mon, 27 May 2024 19:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A6017E90E;
+	Mon, 27 May 2024 19:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836786; cv=none; b=A7atwtfvUIJOV2AnD5wnpp1QS6yx1WHfX07/JTh7zbfqZWcphUuRP/RnzB/4/kE4MzR0yEkwnTdRxOHh9PJL+/f+s1ZKioe2iW2cYf0C1SndNhD0Nv2IzZtl2S8gwtgnSqkAuCdFakoEMV95zTDQ03+qDTMbRb0AB+1vYBhnBbY=
+	t=1716836788; cv=none; b=R/UystBTdPJP8t1Z+jo5n8boYzydxz5g+voN0ns2/pkvpYJPc9uQraUH1J3LUsJpzNTy1kEE8hNUBEs/+Pc/civdhP9Fg83pMxrauR5ZaTOfP1D8Ofc4k5Un+7AxBCtDrsaHRQjnRRNWWT7VhpgqteA3oo7XmpaS5f1riqyFak4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836786; c=relaxed/simple;
-	bh=9cxUG7XVLpEmlAVDdW5HICZ0du52RqqEWYAHWKw43ts=;
+	s=arc-20240116; t=1716836788; c=relaxed/simple;
+	bh=omJT04MiZWvgAmEshlQrvq32ORe6WKeLpHoz7HwXuOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2A775g1PBwXWsU8PxaoWLti7VNK5tca076nOj+YfuiwHuN8oPU+c3LT+WCnj3vfSya227z4PQ48vCP+TVlZj0ehi1tnEzv1AAi80e+v/pFjcwE0QTUhuv5RXzXRFIw4XmUQ6CnqfpVpjW3w37jLT4K3l6lR4C6g/T4rOBVD9Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAbYZPH6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jEV+4ZOaMt4xg9cmEO+EldPeLItli1ZJ8QWVorwNKkv0Ig95Dwh9Iif6Qp5mA3kFQyYFqg35FMpnXwRYPif3WIja9gzG3W7kZCb1a9LjzuFuNLXX3atY5UdjZIdCaGUZFK31uK7Kwxdyez2jxFLoefeoVL/BxAnZFbKz+URi854=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m24eh1xB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAbYZPH6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0175C32781;
-	Mon, 27 May 2024 19:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m24eh1xB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B5AC2BBFC;
+	Mon, 27 May 2024 19:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836786;
-	bh=9cxUG7XVLpEmlAVDdW5HICZ0du52RqqEWYAHWKw43ts=;
+	s=korg; t=1716836788;
+	bh=omJT04MiZWvgAmEshlQrvq32ORe6WKeLpHoz7HwXuOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WAbYZPH6/EoJMn4cdLLhPCCx13R+x2lKQzd36kT2WxMdv95MoCWScLykusetAr/Sj
-	 px/AhKecK2riz1hiD+r0S80KIkind6KFhfvjtbfci5eyqptz3KylCF9sySODMQXuaY
-	 yqdEm4xBn6TYy+NkTh0GEkS1slKnX4693AJ6S+lc=
+	b=m24eh1xB1YNVy4sYbXRQSsc5yptjzE2ifj7HBlf7wRYTPuOqZyWMUK3R61zv72EDL
+	 xUN/65qW2yn840QLFMOFYo6zAwsPr0O3lCineedeq2Fkx9mj5ebVsXSnshaJAwYSpw
+	 GenI+OgX9m3cHS1rPce1R0TT+vjR40BC2AxWRuWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 135/427] EDAC/skx_common: Allow decoding of SGX addresses
-Date: Mon, 27 May 2024 20:53:02 +0200
-Message-ID: <20240527185614.466318168@linuxfoundation.org>
+Subject: [PATCH 6.9 181/427] thermal/debugfs: Pass cooling device state to thermal_debug_cdev_add()
+Date: Mon, 27 May 2024 20:53:48 +0200
+Message-ID: <20240527185619.126950782@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,41 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit e0d335077831196bffe6a634ffe385fc684192ca ]
+[ Upstream commit 31a0fa0019b022024cc082ae292951a596b06f8c ]
 
-There are no "struct page" associations with SGX pages, causing the check
-pfn_to_online_page() to fail. This results in the inability to decode the
-SGX addresses and warning messages like:
+If cdev_dt_seq_show() runs before the first state transition of a cooling
+device, it will not print any state residency information for it, even
+though it might be reasonably expected to print residency information for
+the initial state of the cooling device.
 
-  Invalid address 0x34cc9a98840 in IA32_MC17_ADDR
+For this reason, rearrange the code to get the initial state of a cooling
+device at the registration time and pass it to thermal_debug_cdev_add(),
+so that the latter can create a duration record for that state which will
+allow cdev_dt_seq_show() to print its residency information.
 
-Add an additional check to allow the decoding of the error address and to
-skip the warning message, if the error address is an SGX address.
-
-Fixes: 1e92af09fab1 ("EDAC/skx_common: Filter out the invalid address")
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/r/20240408120419.50234-1-qiuxu.zhuo@intel.com
+Fixes: 755113d76786 ("thermal/debugfs: Add thermal cooling device debugfs information")
+Reported-by: Lukasz Luba <lukasz.luba@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Tested-by: Lukasz Luba <lukasz.luba@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/skx_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/thermal_core.c    |  9 +++++++--
+ drivers/thermal/thermal_debugfs.c | 12 ++++++++++--
+ drivers/thermal/thermal_debugfs.h |  4 ++--
+ 3 files changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
-index 9c5b6f8bd8bd5..27996b7924c82 100644
---- a/drivers/edac/skx_common.c
-+++ b/drivers/edac/skx_common.c
-@@ -648,7 +648,7 @@ int skx_mce_check_error(struct notifier_block *nb, unsigned long val,
- 	memset(&res, 0, sizeof(res));
- 	res.mce  = mce;
- 	res.addr = mce->addr & MCI_ADDR_PHYSADDR;
--	if (!pfn_to_online_page(res.addr >> PAGE_SHIFT)) {
-+	if (!pfn_to_online_page(res.addr >> PAGE_SHIFT) && !arch_is_platform_page(res.addr)) {
- 		pr_err("Invalid address 0x%llx in IA32_MC%d_ADDR\n", mce->addr, mce->bank);
- 		return NOTIFY_DONE;
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index 015d41a9a368b..38b7d02384d7c 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -898,6 +898,7 @@ __thermal_cooling_device_register(struct device_node *np,
+ {
+ 	struct thermal_cooling_device *cdev;
+ 	struct thermal_zone_device *pos = NULL;
++	unsigned long current_state;
+ 	int id, ret;
+ 
+ 	if (!ops || !ops->get_max_state || !ops->get_cur_state ||
+@@ -935,6 +936,10 @@ __thermal_cooling_device_register(struct device_node *np,
+ 	if (ret)
+ 		goto out_cdev_type;
+ 
++	ret = cdev->ops->get_cur_state(cdev, &current_state);
++	if (ret)
++		goto out_cdev_type;
++
+ 	thermal_cooling_device_setup_sysfs(cdev);
+ 
+ 	ret = dev_set_name(&cdev->device, "cooling_device%d", cdev->id);
+@@ -948,6 +953,8 @@ __thermal_cooling_device_register(struct device_node *np,
+ 		return ERR_PTR(ret);
  	}
+ 
++	thermal_debug_cdev_add(cdev, current_state);
++
+ 	/* Add 'this' new cdev to the global cdev list */
+ 	mutex_lock(&thermal_list_lock);
+ 
+@@ -963,8 +970,6 @@ __thermal_cooling_device_register(struct device_node *np,
+ 
+ 	mutex_unlock(&thermal_list_lock);
+ 
+-	thermal_debug_cdev_add(cdev);
+-
+ 	return cdev;
+ 
+ out_cooling_dev:
+diff --git a/drivers/thermal/thermal_debugfs.c b/drivers/thermal/thermal_debugfs.c
+index 2891d2ab4875c..403f74d663dce 100644
+--- a/drivers/thermal/thermal_debugfs.c
++++ b/drivers/thermal/thermal_debugfs.c
+@@ -468,8 +468,9 @@ void thermal_debug_cdev_state_update(const struct thermal_cooling_device *cdev,
+  * Allocates a cooling device object for debug, initializes the
+  * statistics and create the entries in sysfs.
+  * @cdev: a pointer to a cooling device
++ * @state: current state of the cooling device
+  */
+-void thermal_debug_cdev_add(struct thermal_cooling_device *cdev)
++void thermal_debug_cdev_add(struct thermal_cooling_device *cdev, int state)
+ {
+ 	struct thermal_debugfs *thermal_dbg;
+ 	struct cdev_debugfs *cdev_dbg;
+@@ -486,9 +487,16 @@ void thermal_debug_cdev_add(struct thermal_cooling_device *cdev)
+ 		INIT_LIST_HEAD(&cdev_dbg->durations[i]);
+ 	}
+ 
+-	cdev_dbg->current_state = 0;
++	cdev_dbg->current_state = state;
+ 	cdev_dbg->timestamp = ktime_get();
+ 
++	/*
++	 * Create a record for the initial cooling device state, so its
++	 * duration will be printed by cdev_dt_seq_show() as expected if it
++	 * runs before the first state transition.
++	 */
++	thermal_debugfs_cdev_record_get(thermal_dbg, cdev_dbg->durations, state);
++
+ 	debugfs_create_file("trans_table", 0400, thermal_dbg->d_top,
+ 			    thermal_dbg, &tt_fops);
+ 
+diff --git a/drivers/thermal/thermal_debugfs.h b/drivers/thermal/thermal_debugfs.h
+index 155b9af5fe870..c28bd4c114124 100644
+--- a/drivers/thermal/thermal_debugfs.h
++++ b/drivers/thermal/thermal_debugfs.h
+@@ -2,7 +2,7 @@
+ 
+ #ifdef CONFIG_THERMAL_DEBUGFS
+ void thermal_debug_init(void);
+-void thermal_debug_cdev_add(struct thermal_cooling_device *cdev);
++void thermal_debug_cdev_add(struct thermal_cooling_device *cdev, int state);
+ void thermal_debug_cdev_remove(struct thermal_cooling_device *cdev);
+ void thermal_debug_cdev_state_update(const struct thermal_cooling_device *cdev, int state);
+ void thermal_debug_tz_add(struct thermal_zone_device *tz);
+@@ -14,7 +14,7 @@ void thermal_debug_tz_trip_down(struct thermal_zone_device *tz,
+ void thermal_debug_update_temp(struct thermal_zone_device *tz);
+ #else
+ static inline void thermal_debug_init(void) {}
+-static inline void thermal_debug_cdev_add(struct thermal_cooling_device *cdev) {}
++static inline void thermal_debug_cdev_add(struct thermal_cooling_device *cdev, int state) {}
+ static inline void thermal_debug_cdev_remove(struct thermal_cooling_device *cdev) {}
+ static inline void thermal_debug_cdev_state_update(const struct thermal_cooling_device *cdev,
+ 						   int state) {}
 -- 
 2.43.0
 
