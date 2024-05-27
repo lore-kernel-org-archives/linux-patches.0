@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E84117727;
-	Mon, 27 May 2024 19:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D925417727;
+	Mon, 27 May 2024 19:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838470; cv=none; b=FwY3ssaVKrFTPlEY4oJGlV7Cd+8EWtYDAKwnprUtvySBQOoD/Q9erHGeP5vjRmBFTkEnyjNdAqKOVPxS6n20On4BCGQ3Vgc9CiJ5Q462eHTBgfYo5TXHeTWvuY8Wn0RvmZ3+JCUc2xRkk/ZrXuxshPI7WT361Rl1++RsTAz/BQw=
+	t=1716838472; cv=none; b=fBIxgPHqtK+jIlRb6GC94M4L3TW+978QUtM9M+VuOORAlmGGODZJBsB40XW1DPQDsf8rRxLEvL0gE+3ntuCTH7d2phCcrHttRVvXI2/0bsw6he2KO9e0pLTsc7uCT6KDp9cpZj9T6Z/yYXQP5mzvr6mDzsiit/BRyGSmFKgYO+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838470; c=relaxed/simple;
-	bh=+Cp0bPTWJAq6RBCeChwEfnM2oC42mIVMTm7Xv5UGxpw=;
+	s=arc-20240116; t=1716838472; c=relaxed/simple;
+	bh=cML+L69gv1q2moNdLyzvdYCRNOCQwUabE5yuE9G9qco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d6k4dP7/kUANZee+7KouTo3plaFxAL8AOY7xILbc9YWILPWCbrxKErOzHgl7jhptKMjkNkgwEotpLoQEFvmf3Kw6jrMOLdgTz0eg6RwiErj6I54WUQzdrQe2CU0SwUWNjwqx+qE/zwKo9Ts/gKYBLHh5uroN8NnG46pRBtfDJ1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qr2o2rZD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=J/aXuE8vjdHPXNaSxRsuxe0PDgZnejA6vEaapu9aQEHDhVOM7cwm4L7ffidgmmSIX0jZGCFq13TgpYrgqJE87UwVgFukjowQRyjHuROLAuqI6KkraEeZdS7hwPTUZRkd5veBAlNRnDd8swyg0Bzx2nDxSNNZjk3h+klVbccNT9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=funLibNU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qr2o2rZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7F1C2BBFC;
-	Mon, 27 May 2024 19:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="funLibNU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711AEC2BBFC;
+	Mon, 27 May 2024 19:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838470;
-	bh=+Cp0bPTWJAq6RBCeChwEfnM2oC42mIVMTm7Xv5UGxpw=;
+	s=korg; t=1716838472;
+	bh=cML+L69gv1q2moNdLyzvdYCRNOCQwUabE5yuE9G9qco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qr2o2rZDjF1/6Ud/mqVQQjwQwOVnnR8BE8vVi5db5i0ddMrGMlJCFXvfHcCqvKfXr
-	 1cld4EwyX3P3BH+O1jvQRG7eTgA+T0FftY51ZEEZy8EdTHQ5h943j9g22xSrR9NFPx
-	 5Tu54CnQiDBV0Yt6ErQHHqYnQuJXjkxuZQ/L9zDQ=
+	b=funLibNUPoBCPVchL6jmn0Bk9KYlPjQnX7meFsSCKQS4S31/coZsC7aw36DLvzt6+
+	 xbQnvmxzne8YPWlncQALV/GZ4ypIzxFzorFMlHpAtNpeNGMO03chJvy8w9gr4lmHze
+	 s4x3LUuZieaKAoOcatnk8gGc2FXRltHbWbqFE+UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 406/493] drm/bridge: lt8912b: Dont log an error when DSI host cant be found
-Date: Mon, 27 May 2024 20:56:48 +0200
-Message-ID: <20240527185643.565140580@linuxfoundation.org>
+Subject: [PATCH 6.8 407/493] drm/bridge: lt9611: Dont log an error when DSI host cant be found
+Date: Mon, 27 May 2024 20:56:49 +0200
+Message-ID: <20240527185643.599682305@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -56,39 +57,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit b3b4695ff47c4964d4ccb930890c9ffd8e455e20 ]
+[ Upstream commit cd0a2c6a081ff67007323725b9ff07d9934b1ed8 ]
 
 Given that failing to find a DSI host causes the driver to defer probe,
 make use of dev_err_probe() to log the reason. This makes the defer
 probe reason available and avoids alerting userspace about something
 that is not necessarily an error.
 
-Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
+Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
 Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-3-619a28148e5c@collabora.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-4-619a28148e5c@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c | 6 ++----
+ drivers/gpu/drm/bridge/lontium-lt9611.c | 6 ++----
  1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-index 97d4af3d13653..0b5b98d3e5f6f 100644
---- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -494,10 +494,8 @@ static int lt8912_attach_dsi(struct lt8912 *lt)
- 						 };
+diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
+index 9663601ce0981..89bdd938757e1 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt9611.c
++++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
+@@ -760,10 +760,8 @@ static struct mipi_dsi_device *lt9611_attach_dsi(struct lt9611 *lt9611,
+ 	int ret;
  
- 	host = of_find_mipi_dsi_host_by_node(lt->host_node);
+ 	host = of_find_mipi_dsi_host_by_node(dsi_node);
 -	if (!host) {
--		dev_err(dev, "failed to find dsi host\n");
--		return -EPROBE_DEFER;
+-		dev_err(lt9611->dev, "failed to find dsi host\n");
+-		return ERR_PTR(-EPROBE_DEFER);
 -	}
 +	if (!host)
-+		return dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n");
++		return ERR_PTR(dev_err_probe(lt9611->dev, -EPROBE_DEFER, "failed to find dsi host\n"));
  
  	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
  	if (IS_ERR(dsi)) {
