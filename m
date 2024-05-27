@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCE2763F8;
-	Mon, 27 May 2024 19:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D012B763F8;
+	Mon, 27 May 2024 19:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836651; cv=none; b=tEQRvidDpNGWlB5vuarOW5vwcNn1ZM5tBRKbV2j+1lL7cxSdFNLLxMhgVgro4tpFIaHYNowNBwhGdt3mEAts7oB15o5H1bjoB9aNtmJ3cnkXdvYVgwyygmwmeL86FpgNJbj3Oo76qUNNZ5ej/Mdc8qgbDg0LFY08svDo7cbE83c=
+	t=1716836653; cv=none; b=dSLT3gn4reuSUcfKBOUTYugOxxEWY3GCnwLflqB+9UIu0t0utYS1GLp9LXqttE51e3WJqBPV9TzHH0owaZesL4rRMUqsDAjgQZseqfqhNyZeVOYZsdhX4tD2fsoNVEU48apZd+wgcA4GuHI862Q8q87Q+1ApjXCWj8ma80GsoKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836651; c=relaxed/simple;
-	bh=sFxClzDhnZJVamf2jYOG1NzjR4rftAzlsBF0AZWaMyY=;
+	s=arc-20240116; t=1716836653; c=relaxed/simple;
+	bh=EDEadB0d2lM/uAe238oip5Qn43YvAQcbvLqqX2Q23sE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PdQt7uLj4iQMe2Jo0Hzjgum4E+X+/H/BzEdBiaoBVMDq+HBHjjhCno/zimbY7azLDZ079+Ig6hAAb3A2F5RFegEYNWHx57dc2NHzR2Ko1NbxzpvYsuNXUhoNmySfmaxZd6MXASfv8zo5qIcWhMRntj4YLMnsuk9a8iO5RsnrKtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHRx5Kyv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VnAo8K2Jjr5Bf6+Mlg9WEfvHTaRxHHcPVLUqi3YS17xT7Le5/WvwCYKaS4BGL8+p5bsh8KXqE7CcT1ao/aB2zKGseKzBX8QU9iJbGgMCH6C7Q0i0ANoBjculgkS6otGVTLy4g1YHIWGVfK/Wcd1YBUMr1qK1wllFTR1UdCVBnoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rs1i2ojI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHRx5Kyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812C8C2BBFC;
-	Mon, 27 May 2024 19:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rs1i2ojI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0596DC2BBFC;
+	Mon, 27 May 2024 19:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836650;
-	bh=sFxClzDhnZJVamf2jYOG1NzjR4rftAzlsBF0AZWaMyY=;
+	s=korg; t=1716836653;
+	bh=EDEadB0d2lM/uAe238oip5Qn43YvAQcbvLqqX2Q23sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YHRx5KyvckSngWQ74W3zz8/iOp6RAVDm0GeqG35xCOcYsd1X6xUYpS8fovA4CQJeK
-	 BABhbKyRotOrEnE3s5cbyO7Q1DOVWEQIECht9nrI3nBwj4F8TDEcEws8LpEWUasjaT
-	 HaZRKKvEwjrvUPT3gMwb3C+a5fPROu/3IcnVcTzs=
+	b=rs1i2ojIL1QgnNowcN5dJV3n02XLGITbFUjJhIdB/82N5jy+t9yPdWwQJbYRiBuz/
+	 gF4TW2wbcNX9xBrDCMLfe/IlC3azJw+56hX8bwTHE12U1iJarj5yOUaYEIvAkD9d+u
+	 hchdxWOD3fIhxmvJ6sTy6WkJB11tfED+VtYdA3r0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
+	Aloka Dixit <quic_alokad@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 094/427] libbpf: Prevent null-pointer dereference when prog to load has no BTF
-Date: Mon, 27 May 2024 20:52:21 +0200
-Message-ID: <20240527185610.575662813@linuxfoundation.org>
+Subject: [PATCH 6.9 095/427] wifi: ath12k: use correct flag field for 320 MHz channels
+Date: Mon, 27 May 2024 20:52:22 +0200
+Message-ID: <20240527185610.675612393@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,55 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quentin Monnet <qmo@kernel.org>
+From: Aloka Dixit <quic_alokad@quicinc.com>
 
-[ Upstream commit 9bf48fa19a4b1d186e08b20bf7e5de26a15644fb ]
+[ Upstream commit 020e08ae5e68cbc0791e8d842443a86eb6aa99f6 ]
 
-In bpf_objec_load_prog(), there's no guarantee that obj->btf is non-NULL
-when passing it to btf__fd(), and this function does not perform any
-check before dereferencing its argument (as bpf_object__btf_fd() used to
-do). As a consequence, we get segmentation fault errors in bpftool (for
-example) when trying to load programs that come without BTF information.
+Due to an error during rebasing the patchset 320 MHz channel support got
+broken. ath12k was setting the QoS bit instead of the correct flag.
+WMI_PEER_EXT_320MHZ (0x2) is defined as an extended flag, replace
+peer_flags by peer_flags_ext while sending peer data.
 
-v2: Keep btf__fd() in the fix instead of reverting to bpf_object__btf_fd().
+This affected both QCN9274 and WCN7850 which use the same flag.
 
-Fixes: df7c3f7d3a3d ("libbpf: make uniform use of btf__fd() accessor inside libbpf")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Quentin Monnet <qmo@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240314150438.232462-1-qmo@kernel.org
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
+
+Fixes: 6734cf9b4cc7 ("wifi: ath12k: peer assoc for 320 MHz")
+Signed-off-by: Aloka Dixit <quic_alokad@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240314204651.11075-1-quic_alokad@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index a2061fcd612d7..4980ed4f7559b 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -7321,9 +7321,9 @@ static int bpf_object_load_prog(struct bpf_object *obj, struct bpf_program *prog
- 	char *cp, errmsg[STRERR_BUFSIZE];
- 	size_t log_buf_size = 0;
- 	char *log_buf = NULL, *tmp;
--	int btf_fd, ret, err;
- 	bool own_log_buf = true;
- 	__u32 log_level = prog->log_level;
-+	int ret, err;
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index 9d69a17699264..34de3d16efc09 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -1900,7 +1900,7 @@ static void ath12k_wmi_copy_peer_flags(struct wmi_peer_assoc_complete_cmd *cmd,
+ 		if (arg->bw_160)
+ 			cmd->peer_flags |= cpu_to_le32(WMI_PEER_160MHZ);
+ 		if (arg->bw_320)
+-			cmd->peer_flags |= cpu_to_le32(WMI_PEER_EXT_320MHZ);
++			cmd->peer_flags_ext |= cpu_to_le32(WMI_PEER_EXT_320MHZ);
  
- 	if (prog->type == BPF_PROG_TYPE_UNSPEC) {
- 		/*
-@@ -7347,9 +7347,8 @@ static int bpf_object_load_prog(struct bpf_object *obj, struct bpf_program *prog
- 	load_attr.prog_ifindex = prog->prog_ifindex;
- 
- 	/* specify func_info/line_info only if kernel supports them */
--	btf_fd = btf__fd(obj->btf);
--	if (btf_fd >= 0 && kernel_supports(obj, FEAT_BTF_FUNC)) {
--		load_attr.prog_btf_fd = btf_fd;
-+	if (obj->btf && btf__fd(obj->btf) >= 0 && kernel_supports(obj, FEAT_BTF_FUNC)) {
-+		load_attr.prog_btf_fd = btf__fd(obj->btf);
- 		load_attr.func_info = prog->func_info;
- 		load_attr.func_info_rec_size = prog->func_info_rec_size;
- 		load_attr.func_info_cnt = prog->func_info_cnt;
+ 		/* Typically if STBC is enabled for VHT it should be enabled
+ 		 * for HT as well
 -- 
 2.43.0
 
