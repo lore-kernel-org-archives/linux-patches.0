@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B2915FA85;
-	Mon, 27 May 2024 19:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D7215FCE9;
+	Mon, 27 May 2024 19:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837311; cv=none; b=fdBXGFFTwFXZmPJ1AKwT1h7cjkIz1FPOxOn59v/C6AmZruxFnPO0/K0qvA6tjrtM+EcroRc4f7e/WcSZYuAGO3J/Bk0mgdzpFsDvOZvqMneCv2L1fXluTzXklXRplc1PeO92X+l/5Ivdgl5xkiay84c/olct2hnOASGIpbDFghw=
+	t=1716837314; cv=none; b=vFMbFD/3W/pPtF8Q9wVd8pWYxRbeb105PoG4eDXjSR85t5zpzezqzQk1AVu4Eb9J8XnCI63oLQjKhh6kofwH6NN1XNN+lpMv2a/VK71VC5+KR+UZSvwG+eEcAvLjCSeHqfbgHN8xltqlE2kxYXmKJwJOjwVE1AcZkOWMASC4GbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837311; c=relaxed/simple;
-	bh=Y9qtySFcvXSqSQIkoSF27O722MRDCupfLZGsLIvDvWc=;
+	s=arc-20240116; t=1716837314; c=relaxed/simple;
+	bh=n+brIzfddrknWzjyC7eGySkNbQVNCZKflav0MaWAdyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bgutkjl1TGPEKWjzCeW/jjB/H8MTwoLgz1ilve6A5s2zf1l9Djnjc5CaCGXYJootA/CKA+SCXnroLyU+gVPcYdET3Sv1/0F46OTKAcN7YAU4fTyetqP/cJiGolNjMk7Mu3C3n/1J/VwUgsZA5vmDw9Nk1rfscmRCKZ8S4WmhN88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycP7PumX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cnMG5BM/3Zo1YXsyu5xpUHtTRfqi/hQCrWTF6df25mjf6p5e+bfZOY4ECRopBOHeKMU1amFiKzeIxzLRKQIrLFQougFprm+dGLXcpKc4ah1f41nqzQp0ZA6tZJGtmq88DktbwMUux4Rv8hEVSaGpMCU/Br/wRm2+cfTon7YtCNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVln4Lu6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycP7PumX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF61C2BBFC;
-	Mon, 27 May 2024 19:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVln4Lu6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65E7C2BBFC;
+	Mon, 27 May 2024 19:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837311;
-	bh=Y9qtySFcvXSqSQIkoSF27O722MRDCupfLZGsLIvDvWc=;
+	s=korg; t=1716837314;
+	bh=n+brIzfddrknWzjyC7eGySkNbQVNCZKflav0MaWAdyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ycP7PumXOArxnkyDX/NOKMSkcyel8lZhH1D0sJvG40SsJfmzZioa+no5SV/ztr+ks
-	 VPlCZzB7IjEIko8nJPHGTufVm8VKCLG4ucK8f175SF8qLIjLWhq1EiaCFcMke9IlJj
-	 SqMlMkDAnR/y0UDVAjO8TxaWO7Y+VQjV7eO0e+zI=
+	b=gVln4Lu62Ns1bVOveagl9czED0dqHwwhe8G4x0jZjRe9rbrdoYwDhTUJSxbbFljNc
+	 Sw3pnxCF4HJRlYlgo8oGHrnCGd5nZw4AEYEjwGZxeCaJArIpZKA7wcz/j8F4NgCHha
+	 Wgh+RqMzXLp0ql2UxsyhL4cEvE9Ykjak3vsnUawI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Vorel <pvorel@suse.cz>,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 391/427] nfsd: dont create nfsv4recoverydir in nfsdfs when not used.
-Date: Mon, 27 May 2024 20:57:18 +0200
-Message-ID: <20240527185634.822742348@linuxfoundation.org>
+Subject: [PATCH 6.9 392/427] dax/bus.c: replace WARN_ON_ONCE() with lockdep asserts
+Date: Mon, 27 May 2024 20:57:19 +0200
+Message-ID: <20240527185634.851164119@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,66 +54,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Vishal Verma <vishal.l.verma@intel.com>
 
-[ Upstream commit 0770249b90f9d9f69714b76adc36cf6c895bc1f9 ]
+[ Upstream commit c14c647bbe23fd96f6bffcc122b9c6c8c46c7928 ]
 
-When CONFIG_NFSD_LEGACY_CLIENT_TRACKING is not set, the virtual file
-  /proc/fs/nfsd/nfsv4recoverydir
-is created but responds EINVAL to any access.
-This is not useful, is somewhat surprising, and it causes ltp to
-complain.
+Patch series "dax/bus.c: Fixups for dax-bus locking", v3.
 
-The only known user of this file is in nfs-utils, which handles
-non-existence and read-failure equally well.  So there is nothing to
-gain from leaving the file present but inaccessible.
+Commit Fixes: c05ae9d85b47 ("dax/bus.c: replace driver-core lock usage by
+a local rwsem") introduced a few problems that this series aims to fix.
+Add back device_lock() where it was correctly used (during device
+manipulation operations), remove conditional locking in
+unregister_dax_dev() and unregister_dax_mapping(), use non-interruptible
+versions of rwsem locks when not called from a user process, and fix up a
+write vs.  read usage of an rwsem.
 
-So this patch removes the file when its content is not available - i.e.
-when that config option is not selected.
+This patch (of 4):
 
-Also remove the #ifdef which hides some of the enum values when
-CONFIG_NFSD_V$ not selection.  simple_fill_super() quietly ignores array
-entries that are not present, so having slots in the array that don't
-get used is perfectly acceptable.  So there is no value in this #ifdef.
+In [1], Dan points out that all of the WARN_ON_ONCE() usage in the
+referenced patch should be replaced with lockdep_assert_held, or
+lockdep_held_assert_write().  Replace these as appropriate.
 
-Reported-by: Petr Vorel <pvorel@suse.cz>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 74fd48739d04 ("nfsd: new Kconfig option for legacy client tracking")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lkml.kernel.org/r/20240430-vv-dax_abi_fixes-v3-0-e3dcd755774c@intel.com
+Link: https://lore.kernel.org/r/65f0b5ef41817_aa222941a@dwillia2-mobl3.amr.corp.intel.com.notmuch [1]
+Link: https://lkml.kernel.org/r/20240430-vv-dax_abi_fixes-v3-1-e3dcd755774c@intel.com
+Fixes: c05ae9d85b47 ("dax/bus.c: replace driver-core lock usage by a local rwsem")
+Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
+Reported-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Cc: Alison Schofield <alison.schofield@intel.com>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsctl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dax/bus.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index ecd18bffeebc7..4d23bb1d08c0a 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -48,12 +48,10 @@ enum {
- 	NFSD_MaxBlkSize,
- 	NFSD_MaxConnections,
- 	NFSD_Filecache,
--#ifdef CONFIG_NFSD_V4
- 	NFSD_Leasetime,
- 	NFSD_Gracetime,
- 	NFSD_RecoveryDir,
- 	NFSD_V4EndGrace,
--#endif
- 	NFSD_MaxReserved
- };
+diff --git a/drivers/dax/bus.c b/drivers/dax/bus.c
+index 797e1ebff2997..7924dd542a139 100644
+--- a/drivers/dax/bus.c
++++ b/drivers/dax/bus.c
+@@ -192,7 +192,7 @@ static u64 dev_dax_size(struct dev_dax *dev_dax)
+ 	u64 size = 0;
+ 	int i;
  
-@@ -1360,7 +1358,9 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
- #ifdef CONFIG_NFSD_V4
- 		[NFSD_Leasetime] = {"nfsv4leasetime", &transaction_ops, S_IWUSR|S_IRUSR},
- 		[NFSD_Gracetime] = {"nfsv4gracetime", &transaction_ops, S_IWUSR|S_IRUSR},
-+#ifdef CONFIG_NFSD_LEGACY_CLIENT_TRACKING
- 		[NFSD_RecoveryDir] = {"nfsv4recoverydir", &transaction_ops, S_IWUSR|S_IRUSR},
-+#endif
- 		[NFSD_V4EndGrace] = {"v4_end_grace", &transaction_ops, S_IWUSR|S_IRUGO},
- #endif
- 		/* last one */ {""}
+-	WARN_ON_ONCE(!rwsem_is_locked(&dax_dev_rwsem));
++	lockdep_assert_held(&dax_dev_rwsem);
+ 
+ 	for (i = 0; i < dev_dax->nr_range; i++)
+ 		size += range_len(&dev_dax->ranges[i].range);
+@@ -302,7 +302,7 @@ static unsigned long long dax_region_avail_size(struct dax_region *dax_region)
+ 	resource_size_t size = resource_size(&dax_region->res);
+ 	struct resource *res;
+ 
+-	WARN_ON_ONCE(!rwsem_is_locked(&dax_region_rwsem));
++	lockdep_assert_held(&dax_region_rwsem);
+ 
+ 	for_each_dax_region_resource(dax_region, res)
+ 		size -= resource_size(res);
+@@ -447,7 +447,7 @@ static void trim_dev_dax_range(struct dev_dax *dev_dax)
+ 	struct range *range = &dev_dax->ranges[i].range;
+ 	struct dax_region *dax_region = dev_dax->region;
+ 
+-	WARN_ON_ONCE(!rwsem_is_locked(&dax_region_rwsem));
++	lockdep_assert_held_write(&dax_region_rwsem);
+ 	dev_dbg(&dev_dax->dev, "delete range[%d]: %#llx:%#llx\n", i,
+ 		(unsigned long long)range->start,
+ 		(unsigned long long)range->end);
+@@ -507,7 +507,7 @@ static int __free_dev_dax_id(struct dev_dax *dev_dax)
+ 	struct dax_region *dax_region;
+ 	int rc = dev_dax->id;
+ 
+-	WARN_ON_ONCE(!rwsem_is_locked(&dax_dev_rwsem));
++	lockdep_assert_held_write(&dax_dev_rwsem);
+ 
+ 	if (!dev_dax->dyn_id || dev_dax->id < 0)
+ 		return -1;
+@@ -713,7 +713,7 @@ static void __unregister_dax_mapping(void *data)
+ 
+ 	dev_dbg(dev, "%s\n", __func__);
+ 
+-	WARN_ON_ONCE(!rwsem_is_locked(&dax_region_rwsem));
++	lockdep_assert_held_write(&dax_region_rwsem);
+ 
+ 	dev_dax->ranges[mapping->range_id].mapping = NULL;
+ 	mapping->range_id = -1;
+@@ -830,7 +830,7 @@ static int devm_register_dax_mapping(struct dev_dax *dev_dax, int range_id)
+ 	struct device *dev;
+ 	int rc;
+ 
+-	WARN_ON_ONCE(!rwsem_is_locked(&dax_region_rwsem));
++	lockdep_assert_held_write(&dax_region_rwsem);
+ 
+ 	if (dev_WARN_ONCE(&dev_dax->dev, !dax_region->dev->driver,
+ 				"region disabled\n"))
+@@ -876,7 +876,7 @@ static int alloc_dev_dax_range(struct dev_dax *dev_dax, u64 start,
+ 	struct resource *alloc;
+ 	int i, rc;
+ 
+-	WARN_ON_ONCE(!rwsem_is_locked(&dax_region_rwsem));
++	lockdep_assert_held_write(&dax_region_rwsem);
+ 
+ 	/* handle the seed alloc special case */
+ 	if (!size) {
+@@ -935,7 +935,7 @@ static int adjust_dev_dax_range(struct dev_dax *dev_dax, struct resource *res, r
+ 	struct device *dev = &dev_dax->dev;
+ 	int rc;
+ 
+-	WARN_ON_ONCE(!rwsem_is_locked(&dax_region_rwsem));
++	lockdep_assert_held_write(&dax_region_rwsem);
+ 
+ 	if (dev_WARN_ONCE(dev, !size, "deletion is handled by dev_dax_shrink\n"))
+ 		return -EINVAL;
 -- 
 2.43.0
 
