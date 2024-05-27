@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49365168C4;
-	Mon, 27 May 2024 19:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD42315FCFC;
+	Mon, 27 May 2024 19:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837804; cv=none; b=qsqYhURLTNorV8Mim99Um1iVmg6CIbL9ZNuqrs+n+zeFQH7BBCy6/0VACYP2qpAhBJmSU0LXePypBEBIrlw63pnTyCmQ4Ft00VCdbrsZdDJinbgwnVHixMYOuxdXX/6NI4Yqk3n3Xyov9DzWDx5hsKyOQ3WxUxogYZgF5acpL64=
+	t=1716837807; cv=none; b=gzkWxiSm7qqpVrTm+XTjPD09rmmBjf9TTkiM1IbIdC4+pql8XMBumCRXnpTyQ7SkugFeXHJ8Ad9qezpLbnnwBU25JppHH/T+PJs8Jx4Jb6EHjCbGAy8tWoSDxEwicAk//MS0C3hGLBmbWnUTFXNVb/AukmomNU7j9rXdHaTStgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837804; c=relaxed/simple;
-	bh=TuWxy1FFIiiuUYzb41eQ7txirMqpyFQKs9ppDZiYcnw=;
+	s=arc-20240116; t=1716837807; c=relaxed/simple;
+	bh=sKHV4IklCwvMivi0fqvX9x/JX4UFro3TSPx3oNF1atY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QV/EN0WhmfnCQk6oUk4R3v8fgC92niG9LYy93ax30yIfF4glGz/0yZ4BkpQzjPMXM/WFnxjN6kXpGzW0YFpU4ALkUVsSrFYLaohkTiPiL9MiaMAG7tM4cwi3NikZuUQGJQbSFfIZZBOQ9uSR5uoMrLV1TXKsIJXj171bh+6xAnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2AS+OKc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBRHF6WJQ+kfp6PVqaLkLvRNJVIWI424h+T2zXulyripOLZd0VJ/609mPoi7df5sqF1k5oHjy0u8Mz3RNi4PRvl1e7GqSwtBbOqHZr1FHv/FagdWjTOfjmfqNyPSY4UwT5ddiOu9lRVYRiLXDBDffEq86kD8fefLvyAS6arWeNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yknoSjHM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2AS+OKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D735BC2BBFC;
-	Mon, 27 May 2024 19:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yknoSjHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E210C2BBFC;
+	Mon, 27 May 2024 19:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837804;
-	bh=TuWxy1FFIiiuUYzb41eQ7txirMqpyFQKs9ppDZiYcnw=;
+	s=korg; t=1716837806;
+	bh=sKHV4IklCwvMivi0fqvX9x/JX4UFro3TSPx3oNF1atY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2AS+OKcF/4+aqbXZNq/2GU37RFtcAP/0wIoTBBbldkhgp6VOlq/Ec/h76Xpc1l5r
-	 4wK0wzhGq3FADzaMT5whjlZEWR1JwogWEWamshclKmpd5G2Y2TkwYuNjWB4r2Mr2+S
-	 D4tu61mcGXscAfOX0chWAuKVDG9Yao8BjMX/Icjw=
+	b=yknoSjHMQg8KSIDFScNIFp8sXD50c7tqc+cFVxeJo98hfuaBhl6gGmrpC+M0ZXry0
+	 CFEd3bWO60wXz2rg7VzV65YrXB/yA+vlqPiXm1Re0KHXoUHF1XPisFC0R3ckPTjGph
+	 X07DyrKiMkQivkHikLwshfBHbKyyHwfxc6iKjl4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 151/493] kunit/fortify: Fix mismatched kvalloc()/vfree() usage
-Date: Mon, 27 May 2024 20:52:33 +0200
-Message-ID: <20240527185635.368514130@linuxfoundation.org>
+Subject: [PATCH 6.8 152/493] io_uring/net: remove dependency on REQ_F_PARTIAL_IO for sr->done_io
+Date: Mon, 27 May 2024 20:52:34 +0200
+Message-ID: <20240527185635.405192773@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -50,62 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 998b18072ceb0613629c256b409f4d299829c7ec ]
+[ Upstream commit 9817ad85899fb695f875610fb743cb18cf087582 ]
 
-The kv*() family of tests were accidentally freeing with vfree() instead
-of kvfree(). Use kvfree() instead.
+Ensure that prep handlers always initialize sr->done_io before any
+potential failure conditions, and with that, we now it's always been
+set even for the failure case.
 
-Fixes: 9124a2640148 ("kunit/fortify: Validate __alloc_size attribute results")
-Link: https://lore.kernel.org/r/20240425230619.work.299-kees@kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+With that, we don't need to use the REQ_F_PARTIAL_IO flag to gate on that.
+Additionally, we should not overwrite req->cqe.res unless sr->done_io is
+actually positive.
+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: ef42b85a5609 ("io_uring/net: fix sendzc lazy wake polling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/fortify_kunit.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ io_uring/net.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/lib/fortify_kunit.c b/lib/fortify_kunit.c
-index 2e4fedc816210..7830a9e64ead7 100644
---- a/lib/fortify_kunit.c
-+++ b/lib/fortify_kunit.c
-@@ -229,28 +229,28 @@ DEFINE_ALLOC_SIZE_TEST_PAIR(vmalloc)
- 									\
- 	checker((expected_pages) * PAGE_SIZE,				\
- 		kvmalloc((alloc_pages) * PAGE_SIZE, gfp),		\
--		vfree(p));						\
-+		kvfree(p));						\
- 	checker((expected_pages) * PAGE_SIZE,				\
- 		kvmalloc_node((alloc_pages) * PAGE_SIZE, gfp, NUMA_NO_NODE), \
--		vfree(p));						\
-+		kvfree(p));						\
- 	checker((expected_pages) * PAGE_SIZE,				\
- 		kvzalloc((alloc_pages) * PAGE_SIZE, gfp),		\
--		vfree(p));						\
-+		kvfree(p));						\
- 	checker((expected_pages) * PAGE_SIZE,				\
- 		kvzalloc_node((alloc_pages) * PAGE_SIZE, gfp, NUMA_NO_NODE), \
--		vfree(p));						\
-+		kvfree(p));						\
- 	checker((expected_pages) * PAGE_SIZE,				\
- 		kvcalloc(1, (alloc_pages) * PAGE_SIZE, gfp),		\
--		vfree(p));						\
-+		kvfree(p));						\
- 	checker((expected_pages) * PAGE_SIZE,				\
- 		kvcalloc((alloc_pages) * PAGE_SIZE, 1, gfp),		\
--		vfree(p));						\
-+		kvfree(p));						\
- 	checker((expected_pages) * PAGE_SIZE,				\
- 		kvmalloc_array(1, (alloc_pages) * PAGE_SIZE, gfp),	\
--		vfree(p));						\
-+		kvfree(p));						\
- 	checker((expected_pages) * PAGE_SIZE,				\
- 		kvmalloc_array((alloc_pages) * PAGE_SIZE, 1, gfp),	\
--		vfree(p));						\
-+		kvfree(p));						\
- 									\
- 	prev_size = (expected_pages) * PAGE_SIZE;			\
- 	orig = kvmalloc(prev_size, gfp);				\
+diff --git a/io_uring/net.c b/io_uring/net.c
+index 46ea09e1e3829..d193b87d0a03b 100644
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -359,6 +359,8 @@ int io_sendmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ {
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
+ 
++	sr->done_io = 0;
++
+ 	if (req->opcode == IORING_OP_SEND) {
+ 		if (READ_ONCE(sqe->__pad3[0]))
+ 			return -EINVAL;
+@@ -381,7 +383,6 @@ int io_sendmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	if (req->ctx->compat)
+ 		sr->msg_flags |= MSG_CMSG_COMPAT;
+ #endif
+-	sr->done_io = 0;
+ 	return 0;
+ }
+ 
+@@ -603,6 +604,8 @@ int io_recvmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ {
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
+ 
++	sr->done_io = 0;
++
+ 	if (unlikely(sqe->file_index || sqe->addr2))
+ 		return -EINVAL;
+ 
+@@ -639,7 +642,6 @@ int io_recvmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	if (req->ctx->compat)
+ 		sr->msg_flags |= MSG_CMSG_COMPAT;
+ #endif
+-	sr->done_io = 0;
+ 	sr->nr_multishot_loops = 0;
+ 	return 0;
+ }
+@@ -1019,6 +1021,8 @@ int io_send_zc_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	struct io_ring_ctx *ctx = req->ctx;
+ 	struct io_kiocb *notif;
+ 
++	zc->done_io = 0;
++
+ 	if (unlikely(READ_ONCE(sqe->__pad2[0]) || READ_ONCE(sqe->addr3)))
+ 		return -EINVAL;
+ 	/* we don't support IOSQE_CQE_SKIP_SUCCESS just yet */
+@@ -1071,8 +1075,6 @@ int io_send_zc_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	if (zc->msg_flags & MSG_DONTWAIT)
+ 		req->flags |= REQ_F_NOWAIT;
+ 
+-	zc->done_io = 0;
+-
+ #ifdef CONFIG_COMPAT
+ 	if (req->ctx->compat)
+ 		zc->msg_flags |= MSG_CMSG_COMPAT;
+@@ -1318,7 +1320,7 @@ void io_sendrecv_fail(struct io_kiocb *req)
+ {
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
+ 
+-	if (req->flags & REQ_F_PARTIAL_IO)
++	if (sr->done_io)
+ 		req->cqe.res = sr->done_io;
+ 
+ 	if ((req->flags & REQ_F_NEED_CLEANUP) &&
 -- 
 2.43.0
 
