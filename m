@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7AFDDA9;
-	Mon, 27 May 2024 19:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008D717E8F5;
+	Mon, 27 May 2024 19:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836411; cv=none; b=BAgNgi41ryP4/OsIFfq90QPCFo2QgYnw3fV9719Onlbw71b2BxOgsjJBpiCs5nlmfoLMF7ekx2M5Qvtof4oaB4iNf0c5Qx0ZySFRZSbYJH//+DJSuVo4+27N7fcejVgJyYKp4axEaDSgEQtMMR1koSMMrd+NNLefvzVorhe0ImY=
+	t=1716836414; cv=none; b=obbs17U7lidn5fXuomLWhiqrr1sdYgDQiuDnUiBxM2rxkpj42Ly/udRlZhJGG3ppebucxYyVk8A64Z9piEo6JrEf0NZRyWSLTS6bRxw2pLCO4laFeq7jhOPfSJqQyHoWrcc1eE8KBnWZKHVU/hy+ZMsmcMBdn4e+DneMCQ45oM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836411; c=relaxed/simple;
-	bh=AvW51SVkt4ya0Rd9YoSLXMyLuA22UcjxExHSes/aRn8=;
+	s=arc-20240116; t=1716836414; c=relaxed/simple;
+	bh=rMjOEU9/MHJ9+8+j6IM9PBveNtM58v1zFffNXP4EyoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNwevCX5tld9w4AEq/rUns9Tl3ZTns77uK5G0UPxpVsyCGCJWaDs9VOvO1ZLzuyx/Evvj9VsHcHyQnW3n3hvMbPeuwCalQ2t7Ba4tTQZkJyBeBBzmhKs7D8RnPASk6rHqphC/R8RKxqPVMjoMhLqHhsCG0x+6bk6yWTzQq3sjfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7THi77c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=chb5DuBoxFc6QUD6Lld5bCZxqPoLlTc+uhTYKifapZTui4BvGdY2oW7iixTrrYMAzhVKW3dgF+q6b5gK8o9s2i1oIa/fdNu3DXLCp0HIlAcbyDJo5s2o9J4g8t+NvZ7xoNu39YjpJGQOPXFGZIPQ4TnnyHAhsTWFFVRUPje6m+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bi950QqA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7THi77c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABBFC2BBFC;
-	Mon, 27 May 2024 19:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bi950QqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA21C2BBFC;
+	Mon, 27 May 2024 19:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836411;
-	bh=AvW51SVkt4ya0Rd9YoSLXMyLuA22UcjxExHSes/aRn8=;
+	s=korg; t=1716836413;
+	bh=rMjOEU9/MHJ9+8+j6IM9PBveNtM58v1zFffNXP4EyoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r7THi77cwb6Nae4gThuk9kZp628l1oVrT3rdIfTaX94Ul3AedFlAFmQI4zbQtW0x2
-	 XTW52s/71+PAuP17wYt5z8crQp8uya5vNFcs0L3JIiJmEgIYXHf1QRBWPy5cdYVC02
-	 qXgYAFfk2GxZ7fvQiGk2L2ua8ZLzMCLPHCkqLCWg=
+	b=bi950QqArg7HV4lBgYvfyAV5AwEpPyXQ7VLkU6jW33tXrQ11bHC6S/0FNlV9YDgOq
+	 oaupZmOivr2nvRkqwctvUGcURT6pgYZm8E51CzeJxJuR2tWy+YAK8X3mOCbwmFca5W
+	 PObRlmffomEnvztr4spLRw6r8crynr454fo7WnxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <oliver.sang@intel.com>,
+	Simo Sorce <simo@redhat.com>,
+	David Howells <dhowells@redhat.com>,
 	Eric Biggers <ebiggers@google.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.9 041/427] KEYS: asymmetric: Add missing dependency on CRYPTO_SIG
-Date: Mon, 27 May 2024 20:51:28 +0200
-Message-ID: <20240527185605.532204335@linuxfoundation.org>
+Subject: [PATCH 6.9 042/427] KEYS: asymmetric: Add missing dependencies of FIPS_SIGNATURE_SELFTEST
+Date: Mon, 27 May 2024 20:51:29 +0200
+Message-ID: <20240527185605.709286344@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,37 +55,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@google.com>
 
-commit dcaa86b904ea3761e62c849957dd0904e126bf4a upstream.
+commit 9d2fd8bdc12f403a5c35c971936a0e1d5cb5108e upstream.
 
-Make ASYMMETRIC_PUBLIC_KEY_SUBTYPE select CRYPTO_SIG to avoid build
-errors like the following, which were possible with
-CONFIG_ASYMMETRIC_PUBLIC_KEY_SUBTYPE=y && CONFIG_CRYPTO_SIG=n:
+Since the signature self-test uses RSA and SHA-256, it must only be
+enabled when those algorithms are enabled.  Otherwise it fails and
+panics the kernel on boot-up.
 
-    ld: vmlinux.o: in function `public_key_verify_signature':
-    (.text+0x306280): undefined reference to `crypto_alloc_sig'
-    ld: (.text+0x306300): undefined reference to `crypto_sig_set_pubkey'
-    ld: (.text+0x306324): undefined reference to `crypto_sig_verify'
-    ld: (.text+0x30636c): undefined reference to `crypto_sig_set_privkey'
-
-Fixes: 63ba4d67594a ("KEYS: asymmetric: Use new crypto interface without scatterlists")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202404221528.51d75177-lkp@intel.com
+Fixes: 3cde3174eb91 ("certs: Add FIPS selftests")
 Cc: stable@vger.kernel.org
+Cc: Simo Sorce <simo@redhat.com>
+Cc: David Howells <dhowells@redhat.com>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ crypto/asymmetric_keys/Kconfig |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/crypto/asymmetric_keys/Kconfig
 +++ b/crypto/asymmetric_keys/Kconfig
-@@ -15,6 +15,7 @@ config ASYMMETRIC_PUBLIC_KEY_SUBTYPE
- 	select MPILIB
- 	select CRYPTO_HASH_INFO
- 	select CRYPTO_AKCIPHER
-+	select CRYPTO_SIG
- 	select CRYPTO_HASH
- 	help
- 	  This option provides support for asymmetric public key type handling.
+@@ -86,5 +86,7 @@ config FIPS_SIGNATURE_SELFTEST
+ 	depends on ASYMMETRIC_KEY_TYPE
+ 	depends on PKCS7_MESSAGE_PARSER=X509_CERTIFICATE_PARSER
+ 	depends on X509_CERTIFICATE_PARSER
++	depends on CRYPTO_RSA
++	depends on CRYPTO_SHA256
+ 
+ endif # ASYMMETRIC_KEY_TYPE
 
 
