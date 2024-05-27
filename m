@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D23F15FA91;
-	Mon, 27 May 2024 19:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0D215FA91;
+	Mon, 27 May 2024 19:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837783; cv=none; b=slhNQQWj6+g0lbKOeAbpZlsDRih7ziHhbSx086d0UK8S8gWLJ5k3MukZ7pmKFvPchY8NGSPZ4v5SwqQ+blQXODq5h/cB8DAg3pRpSArH0HAlEVXdDa+CUD9BZxrd31djKuJdUprw8ce7dDfe9ZAcVMWGueyGxWb+cl2FIHcNPvg=
+	t=1716837786; cv=none; b=Ti0qDsZifPpqof18zkapOjSHRaVZT73BiZ4jELJ+LixeNI79tYL3iNbN39FlbonYPGykLxwjuYlOk1S/njMjk6VLY5iKmev5fw6ptmkjT6gbsWf0dkY/b9NLXsCZ/28UknaDEO6hPBrwShjOTGj9Okgfkt21hh6q8Dgi4VWQGy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837783; c=relaxed/simple;
-	bh=odwx+2jDo2l7+i1iqQniDzd/3FenZsvfuxPWVCuA0ew=;
+	s=arc-20240116; t=1716837786; c=relaxed/simple;
+	bh=7KHY4BTf1gJ3m1LAPSut2xbzSmdsL116GDKMw7ddda8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hiZAaIuy79RtOxZUOCzRGUt6ib2UFwohf+8bh2WHGUxjytlRAI8q3TgkBQBHFzFD9ymWRiiQvAMyYYCyTB5NkVnN9HI7Nnx7J0MkLyE7XgF5bpYaz0dnZ17ly7rJpWMtNRmcveaAdw6cyNnUjP0Pt9X9dT0nHVr2wbFo+YyALNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKsj5D4T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WW174jlZqI6lnIkdOLE2pMlez0OIFUCtzgYE4jibrrSYAZpGGAb7LDfU5srYuIzCAUJmXwDmIOUNScjAUDMuMuq+vOcYoo1TFV9nMHsc2ayavXgoE/0Zc5gi09747fsvRBXkc9x92OIpnnj6IM8fouDJyKWFz3tcxFFqnHyJGrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGNu3hlq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKsj5D4T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32031C2BBFC;
-	Mon, 27 May 2024 19:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGNu3hlq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92D0C2BBFC;
+	Mon, 27 May 2024 19:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837783;
-	bh=odwx+2jDo2l7+i1iqQniDzd/3FenZsvfuxPWVCuA0ew=;
+	s=korg; t=1716837786;
+	bh=7KHY4BTf1gJ3m1LAPSut2xbzSmdsL116GDKMw7ddda8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GKsj5D4TWRxjaQXh3q74xiCfnKbNrEi+xwLfz8gR+HJGjq5ujLkckkA1J6Dk1IC70
-	 Vov5liLYBs7ZJgoTUqt8xyVYVLx8fqlDrK5tonjKAlzbFUsLx5/vByIJIvVMC73Vw7
-	 ADCGOXdOmc3VgfnbKljEg+lwbzk75jecCtLDGyVc=
+	b=uGNu3hlqL3H5Rc9nWciIbEmcqhZxux/n7wKEig1JdhIrMX/QzGRLZHl+BVYqSw6i7
+	 pMdBrjeEiC4Iwgd6MuwOHeqUVddD7Ex1yo8z06jl2d4YkSFccsI6coT/+1uKGQc5B4
+	 jV1o4Vn6UgUfWqEposVbjoPoYy6jJJ3LmNTucvnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 144/493] firmware: qcom: scm: Fix __scm and waitq completion variable initialization
-Date: Mon, 27 May 2024 20:52:26 +0200
-Message-ID: <20240527185635.155339425@linuxfoundation.org>
+Subject: [PATCH 6.8 145/493] soc: mediatek: cmdq: Fix typo of CMDQ_JUMP_RELATIVE
+Date: Mon, 27 May 2024 20:52:27 +0200
+Message-ID: <20240527185635.186710140@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,67 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 
-[ Upstream commit 2e4955167ec5c04534cebea9e8273a907e7a75e1 ]
+[ Upstream commit ed4d5ab179b9f0a60da87c650a31f1816db9b4b4 ]
 
-It is possible qcom_scm_is_available() gives wrong indication that
-if __scm is initialized while __scm->dev is not and similar issue
-is also possible with __scm->waitq_comp.
+For cmdq jump command, offset 0 means relative jump and offset 1
+means absolute jump. cmdq_pkt_jump() is absolute jump, so fix the
+typo of CMDQ_JUMP_RELATIVE in cmdq_pkt_jump().
 
-Fix this appropriately by the use of release barrier and read barrier
-that will make sure if __scm is initialized so, is all of its field
-variable.
-
-Fixes: d0f6fa7ba2d6 ("firmware: qcom: scm: Convert SCM to platform driver")
-Fixes: 6bf325992236 ("firmware: qcom: scm: Add wait-queue handling logic")
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Link: https://lore.kernel.org/r/1711034642-22860-4-git-send-email-quic_mojha@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 946f1792d3d7 ("soc: mediatek: cmdq: add jump function")
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20240222154120.16959-2-chunkuang.hu@kernel.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/soc/mediatek/mtk-cmdq-helper.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index ca381cb2ee979..29c24578ad2bf 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1713,7 +1713,7 @@ static int qcom_scm_qseecom_init(struct qcom_scm *scm)
-  */
- bool qcom_scm_is_available(void)
- {
--	return !!__scm;
-+	return !!READ_ONCE(__scm);
- }
- EXPORT_SYMBOL_GPL(qcom_scm_is_available);
+diff --git a/drivers/soc/mediatek/mtk-cmdq-helper.c b/drivers/soc/mediatek/mtk-cmdq-helper.c
+index b0cd071c4719b..0b2e5690dacfa 100644
+--- a/drivers/soc/mediatek/mtk-cmdq-helper.c
++++ b/drivers/soc/mediatek/mtk-cmdq-helper.c
+@@ -14,7 +14,8 @@
+ #define CMDQ_POLL_ENABLE_MASK	BIT(0)
+ #define CMDQ_EOC_IRQ_EN		BIT(0)
+ #define CMDQ_REG_TYPE		1
+-#define CMDQ_JUMP_RELATIVE	1
++#define CMDQ_JUMP_RELATIVE	0
++#define CMDQ_JUMP_ABSOLUTE	1
  
-@@ -1794,10 +1794,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	if (!scm)
- 		return -ENOMEM;
+ struct cmdq_instruction {
+ 	union {
+@@ -397,7 +398,7 @@ int cmdq_pkt_jump(struct cmdq_pkt *pkt, dma_addr_t addr)
+ 	struct cmdq_instruction inst = {};
  
-+	scm->dev = &pdev->dev;
- 	ret = qcom_scm_find_dload_address(&pdev->dev, &scm->dload_mode_addr);
- 	if (ret < 0)
- 		return ret;
- 
-+	init_completion(&scm->waitq_comp);
- 	mutex_init(&scm->scm_bw_lock);
- 
- 	scm->path = devm_of_icc_get(&pdev->dev, NULL);
-@@ -1829,10 +1831,8 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	__scm = scm;
--	__scm->dev = &pdev->dev;
--
--	init_completion(&__scm->waitq_comp);
-+	/* Let all above stores be available after this */
-+	smp_store_release(&__scm, scm);
- 
- 	irq = platform_get_irq_optional(pdev, 0);
- 	if (irq < 0) {
+ 	inst.op = CMDQ_CODE_JUMP;
+-	inst.offset = CMDQ_JUMP_RELATIVE;
++	inst.offset = CMDQ_JUMP_ABSOLUTE;
+ 	inst.value = addr >>
+ 		cmdq_get_shift_pa(((struct cmdq_client *)pkt->cl)->chan);
+ 	return cmdq_pkt_append_command(pkt, inst);
 -- 
 2.43.0
 
