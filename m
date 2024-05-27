@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB151863F;
-	Mon, 27 May 2024 19:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD58715EFC3;
+	Mon, 27 May 2024 19:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837334; cv=none; b=sxpWjNMMN9AX/GO5w9COOUPgOPdUT/Ub+m4bV3fZbLppZaPe0S4D3IeGqRcURdGQ7qGgK/40s/1rPIeuJ15kRk7dxYjvjJ/n0zYSGxTCHH3azrrFmEBZBV5RP3BSrEr0FMxzhQ3ZkGc6Tc8W2JALiEK0Ghw7bsE1Iu/ej/yB1RQ=
+	t=1716837337; cv=none; b=j/y5G3UHQmX9hSAJHwt3Vq5Am4QhhubaOlNnPOO6qK5qGJnYc938mbhf9EhYvNXYbowjCcEPibhxq6z5Gl8MYcL/dOUyZ4TSrzRqagVn5KtLOi5MHzSuoF8uLRJZyCILGMnH+/MiiagSpOOZzjiOHojQ6oP0kT/7CcFyP5ef12U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837334; c=relaxed/simple;
-	bh=g2isR0jjffFD6EfSmd9dVW/ZpViYbza+TaqAG4HeEYU=;
+	s=arc-20240116; t=1716837337; c=relaxed/simple;
+	bh=V6qvy1E6got5D0HK+KEpoY0NcLYnGqEQwuAmf0OHug0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hb2XDuUgoc8ooAR/hqB5QDINzcNzbdkGiPDQ8inyNd3h8HYYBRWORY3UTbS702O1MWbL3f+Uc31XJAYk5bnjkLD1NEjRl1txcg1KYaczKyBAV5YvcK1Eff1e7AXkKCXi6wKH/7rSTrsHPi/jZK0KRxVJoITUXY39bRxFFh9Id6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIonqk2u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JoWZc+rBDhLwyCBK1WbthDVZi2KzmlOlICfvEtO+DL+0LdTuZJzbcYEPuks/Mx24pooAc41maGolWvILbComhllaOGpSv42sD1Nj99YSpRYUQSP1lpetVrLTacmVusZntVG8zqJmoN+dOatglsrTyUfGQX+GWGmQ2/O12ZXFMMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwpc9TvM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIonqk2u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB08C32781;
-	Mon, 27 May 2024 19:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwpc9TvM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA84C2BBFC;
+	Mon, 27 May 2024 19:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837333;
-	bh=g2isR0jjffFD6EfSmd9dVW/ZpViYbza+TaqAG4HeEYU=;
+	s=korg; t=1716837336;
+	bh=V6qvy1E6got5D0HK+KEpoY0NcLYnGqEQwuAmf0OHug0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tIonqk2uKFj8E+zR7csNsiUvcWicpbB9XftU6XyOZw1HpAUNEFg1NxdIWOG6ONtEY
-	 jk3cRB7Bn2hvFX3mWkZR329dVLjcBrClbbkV+zpfYNYwhLM4X7u3wBL9D8fas6n0EX
-	 ncVatEsojFSMSbYTB8f1HjDEeC23mZfULRjIIUJ4=
+	b=iwpc9TvMgdatuKLOr1X1eER6y2fnr/nHeP94KqFbV5xBT1lEzwx14K8/ROTOszSuM
+	 0D71U3vhM/Miua+l0MCu5octgw20n2b0YljEY5te9lhArRf9+I+xmjiDlPdMqXrP7R
+	 bENdtjN1BfLi1iUKjGv9LdcM2fI3Mep/Tb6vNrWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 399/427] clk: qcom: Fix SM_GPUCC_8650 dependencies
-Date: Mon, 27 May 2024 20:57:26 +0200
-Message-ID: <20240527185635.066925135@linuxfoundation.org>
+Subject: [PATCH 6.9 364/427] clk: qcom: clk-alpha-pll: remove invalid Stromer register offset
+Date: Mon, 27 May 2024 20:56:51 +0200
+Message-ID: <20240527185633.985391108@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,44 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 07fb0a76bb757990b99fc2ab78ad7d1709cc441d ]
+[ Upstream commit 4f2bc4acbb1916b8cd2ce4bb3ba7b1cd7cb705fa ]
 
-CONFIG_SM_GCC_8650 depends on ARM64 but it is selected by
-CONFIG_SM_GPUCC_8650, which can be selected on ARM, resulting in a
-Kconfig warning.
+The offset of the CONFIG_CTL_U register defined for the Stromer
+PLL is wrong. It is not aligned on a 4 bytes boundary which might
+causes errors in regmap operations.
 
-WARNING: unmet direct dependencies detected for SM_GCC_8650
-  Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=y] && (ARM64 || COMPILE_TEST [=n])
-  Selected by [y]:
-  - SM_GPUCC_8650 [=y] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=y]
+Maybe the intention behind of using the 0xff value was to indicate
+that the register is not implemented in the PLL, but this is not
+verified anywhere in the code. Moreover, this value is not used
+even in other register offset arrays despite that those PLLs also
+have unimplemented registers.
 
-Add the same dependencies to CONFIG_SM_GPUCC_8650 to resolve the
-warning.
+Additionally, on the Stromer PLLs the current code only touches
+the CONFIG_CTL_U register if the result of pll_has_64bit_config()
+is true which condition is not affected by the change.
 
-Fixes: 8676fd4f3874 ("clk: qcom: add the SM8650 GPU Clock Controller driver")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240318-fix-some-qcom-kconfig-deps-v1-2-ea0773e3df5a@kernel.org
+Due to the reasons above, simply remove the CONFIG_CTL_U entry
+from the Stromer specific array.
+
+Fixes: e47a4f55f240 ("clk: qcom: clk-alpha-pll: Add support for Stromer PLLs")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240311-alpha-pll-stromer-cleanup-v1-1-f7c0c5607cca@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/clk-alpha-pll.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index b9ff32cab329b..1bb51a0588726 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -1095,6 +1095,7 @@ config SM_GPUCC_8550
- 
- config SM_GPUCC_8650
- 	tristate "SM8650 Graphics Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
- 	select SM_GCC_8650
- 	help
- 	  Support for the graphics clock controller on SM8650 devices.
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 8a412ef47e163..734a73f322b3a 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -213,7 +213,6 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+ 		[PLL_OFF_USER_CTL] = 0x18,
+ 		[PLL_OFF_USER_CTL_U] = 0x1c,
+ 		[PLL_OFF_CONFIG_CTL] = 0x20,
+-		[PLL_OFF_CONFIG_CTL_U] = 0xff,
+ 		[PLL_OFF_TEST_CTL] = 0x30,
+ 		[PLL_OFF_TEST_CTL_U] = 0x34,
+ 		[PLL_OFF_STATUS] = 0x28,
 -- 
 2.43.0
 
