@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403901078F;
-	Mon, 27 May 2024 19:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048141078F;
+	Mon, 27 May 2024 19:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836931; cv=none; b=VMdybSUip+o+zB6v6bDl153CMpaGUqGlVV54DU5euK1rDHK0il7gQbU7sPJd1kRhk7ljD2kmF20GnxDrO3oefs8L/po1u2H90cO0EKpeGi0KuTXSp3Alzm87VXvu9W6mh9pOsZrwSS/tw9Ho5B89JdUhJ+qrFmnen1FwNRSKwhE=
+	t=1716836934; cv=none; b=Q5cevyHo+h0cfZsEilalzteEh5Xw1p6JI3fzKK12lf6h6F532KdIvwFeKDbCmDR77yFM/OTKTM8GzQgVZlWoPBg3TbMYq94kVxxmmlKXUEH9SVeA0ACkW5w/jbmKEjkATzBWlhF5QW3G+yY8sjm8Kv1VNUlYV5Fftcj1lCoPC5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836931; c=relaxed/simple;
-	bh=zuNLv8RoYkx8jy6Q/52wXjecCR1HnUiXSYmhyvOIP8c=;
+	s=arc-20240116; t=1716836934; c=relaxed/simple;
+	bh=OeuDtPSKZXrNTcp3gJguQMW43U07v0U0sy42BXcUI5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dowzYhUKVrkh4cLc3Zg5B+U4S0266huvMpk+9K/rWRc0qe9VafmzS4z870dNs3TlIGesqLeYs9qMI0NdDAV+eo8XNVjbrT4UbuMK4l4jNbzpdiAPi27PTEp/4fRm/9aXA54xPYGdtw5+cdyJd4lG2L1P1jlDxsPJ0vniLd9HnKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmE0wRqc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V3RQNwMiH7nQfdV9ge6h6w6Z3ZkbF7vHteVopOBv+cHGzDRC0PuUUvZulN816aj2JDM1Lode7ypueM2Q9d+JbU33an0saHS5j6+B32q5Y2eiqwrlj/d8UNfA7/F9VKN5CqDk6P/EUsRhQvmk/8yHpEGEA9DW+GwCtHcmVQ+9nQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwuJWX+n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmE0wRqc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9219C2BBFC;
-	Mon, 27 May 2024 19:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwuJWX+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F411C2BBFC;
+	Mon, 27 May 2024 19:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836931;
-	bh=zuNLv8RoYkx8jy6Q/52wXjecCR1HnUiXSYmhyvOIP8c=;
+	s=korg; t=1716836933;
+	bh=OeuDtPSKZXrNTcp3gJguQMW43U07v0U0sy42BXcUI5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmE0wRqcAs9gszKN7eNSXObWZaHT44N26cDOS64XrWefcr5r113h1xUoewc8Pf7L6
-	 k22fcLwolBzHDKx/2C7WZ3zIfYnrK59GdcEIhr0mWqeF1Du+X7fZnNHC3Pz8cLj5fN
-	 V6xJE9j+if/8gaobVoHXgVNib/6VwzeS/B1Kmeh0=
+	b=uwuJWX+nFXkBYEMyelRj4QF08srJvVgcy/gXLzH2asR+sYbW1nL6B2PWkHE/QoM5z
+	 FbrAiI60g/USb4xeMFUcthI2gTiZSN0BrYCx8v0VWxiM04WBrS+rAW+r3dyNxC9W9V
+	 7zOjdi7Y8aYNfdzXJhU42mg7k3pUp12jszwOFo5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 227/427] net: usb: sr9700: stop lying about skb->truesize
-Date: Mon, 27 May 2024 20:54:34 +0200
-Message-ID: <20240527185623.691533684@linuxfoundation.org>
+Subject: [PATCH 6.9 245/427] af_unix: Fix data races in unix_release_sock/unix_stream_sendmsg
+Date: Mon, 27 May 2024 20:54:52 +0200
+Message-ID: <20240527185625.459142804@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,57 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 05417aa9c0c038da2464a0c504b9d4f99814a23b ]
+[ Upstream commit 540bf24fba16b88c1b3b9353927204b4f1074e25 ]
 
-Some usb drivers set small skb->truesize and break
-core networking stacks.
+A data-race condition has been identified in af_unix. In one data path,
+the write function unix_release_sock() atomically writes to
+sk->sk_shutdown using WRITE_ONCE. However, on the reader side,
+unix_stream_sendmsg() does not read it atomically. Consequently, this
+issue is causing the following KCSAN splat to occur:
 
-In this patch, I removed one of the skb->truesize override.
+	BUG: KCSAN: data-race in unix_release_sock / unix_stream_sendmsg
 
-I also replaced one skb_clone() by an allocation of a fresh
-and small skb, to get minimally sized skbs, like we did
-in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
-in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
-stop lying about skb->truesize")
+	write (marked) to 0xffff88867256ddbb of 1 bytes by task 7270 on cpu 28:
+	unix_release_sock (net/unix/af_unix.c:640)
+	unix_release (net/unix/af_unix.c:1050)
+	sock_close (net/socket.c:659 net/socket.c:1421)
+	__fput (fs/file_table.c:422)
+	__fput_sync (fs/file_table.c:508)
+	__se_sys_close (fs/open.c:1559 fs/open.c:1541)
+	__x64_sys_close (fs/open.c:1541)
+	x64_sys_call (arch/x86/entry/syscall_64.c:33)
+	do_syscall_64 (arch/x86/entry/common.c:?)
+	entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
 
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240506143939.3673865-1-edumazet@google.com
+	read to 0xffff88867256ddbb of 1 bytes by task 989 on cpu 14:
+	unix_stream_sendmsg (net/unix/af_unix.c:2273)
+	__sock_sendmsg (net/socket.c:730 net/socket.c:745)
+	____sys_sendmsg (net/socket.c:2584)
+	__sys_sendmmsg (net/socket.c:2638 net/socket.c:2724)
+	__x64_sys_sendmmsg (net/socket.c:2753 net/socket.c:2750 net/socket.c:2750)
+	x64_sys_call (arch/x86/entry/syscall_64.c:33)
+	do_syscall_64 (arch/x86/entry/common.c:?)
+	entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+	value changed: 0x01 -> 0x03
+
+The line numbers are related to commit dd5a440a31fa ("Linux 6.9-rc7").
+
+Commit e1d09c2c2f57 ("af_unix: Fix data races around sk->sk_shutdown.")
+addressed a comparable issue in the past regarding sk->sk_shutdown.
+However, it overlooked resolving this particular data path.
+This patch only offending unix_stream_sendmsg() function, since the
+other reads seem to be protected by unix_state_lock() as discussed in
+Link: https://lore.kernel.org/all/20240508173324.53565-1-kuniyu@amazon.com/
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240509081459.2807828-1-leitao@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sr9700.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ net/unix/af_unix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
-index 3164451e1010c..0a662e42ed965 100644
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -421,19 +421,15 @@ static int sr9700_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 			skb_pull(skb, 3);
- 			skb->len = len;
- 			skb_set_tail_pointer(skb, len);
--			skb->truesize = len + sizeof(struct sk_buff);
- 			return 2;
- 		}
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 9a6ad5974dff5..e94839d89b09d 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2270,7 +2270,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
+ 			goto out_err;
+ 	}
  
--		/* skb_clone is used for address align */
--		sr_skb = skb_clone(skb, GFP_ATOMIC);
-+		sr_skb = netdev_alloc_skb_ip_align(dev->net, len);
- 		if (!sr_skb)
- 			return 0;
+-	if (sk->sk_shutdown & SEND_SHUTDOWN)
++	if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
+ 		goto pipe_err;
  
--		sr_skb->len = len;
--		sr_skb->data = skb->data + 3;
--		skb_set_tail_pointer(sr_skb, len);
--		sr_skb->truesize = len + sizeof(struct sk_buff);
-+		skb_put(sr_skb, len);
-+		memcpy(sr_skb->data, skb->data + 3, len);
- 		usbnet_skb_return(dev, sr_skb);
- 
- 		skb_pull(skb, len + SR_RX_OVERHEAD);
+ 	while (sent < len) {
 -- 
 2.43.0
 
