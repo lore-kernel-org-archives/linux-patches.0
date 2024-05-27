@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707A315EFC3;
-	Mon, 27 May 2024 19:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93E815FA91;
+	Mon, 27 May 2024 19:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837809; cv=none; b=r1oNFMvuPZYV6kaCVnrvrzznlpH9w55NAuz3QQPR26RT3uhORs944XaVTuDqD9yTh6jCb9UPCe6YrM7gyFVvoAR61pGlqtR2Hu0ob2Zpt7ftTJGyKbI1jYUGpV5yBCXQIoGA343H/V7UYVduyCqPU+ArBSsrpzU/9wdZpmaWwa4=
+	t=1716837812; cv=none; b=sewZNHK5HFE27Iy00O8/R2eQRB2MD+GVFALHszaeekFbk+6bjEaMxFKLjUiRDUqTsWj+2q8LLMfImHY1duUBjFh3/I0X4j4TCIJP8OhJ1J/Lc9ae60IuiDQpg6Joyf7RIUdCcQ724I4nC+x6Nm5qy4aYA3Ksp+C6mgjrv31IcWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837809; c=relaxed/simple;
-	bh=v23vynnKZ8Uv0mX1ZSul5wWgrFbWaP0dxmq6ULfL1aw=;
+	s=arc-20240116; t=1716837812; c=relaxed/simple;
+	bh=9TO1TP/pIw5CIZbudxQbBUK9l0jE9TWGV1cDrJ2szkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZir3uxKP1ko6cuMTSanqHBXJgCz18Fw6TkgwiTF62ndrJ/sSjRHUiqVq9kbhlj0Ie+SAsNzHq7Zc3YwtnwjR0qXUrEWEnxZL0wXmcZI4EkC/osxlyrUtdqwLF5LvLMq5Xd7PvrsKwW6FwLCMOkApY8dTseKWp/j0s8z/05H94E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyGXtpkO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XsD+3ZLQqCzhZop1x67PQ/abWcnIo22UtWg9k666j08LLJvOSrw0I2LJjugNigePFBmt3gz/IPxx0cHyZqNmSf83tjTD9hdN/vLbb0+w7S5eCebkOXuP0QPwJ9YM4fP9bPg7zRqXgCHIOTi0yWBua3L7nIkSnttiPOr8PDI1x4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0m1VmWSa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyGXtpkO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0605EC2BBFC;
-	Mon, 27 May 2024 19:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0m1VmWSa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDDBC2BBFC;
+	Mon, 27 May 2024 19:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837809;
-	bh=v23vynnKZ8Uv0mX1ZSul5wWgrFbWaP0dxmq6ULfL1aw=;
+	s=korg; t=1716837811;
+	bh=9TO1TP/pIw5CIZbudxQbBUK9l0jE9TWGV1cDrJ2szkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DyGXtpkO2Cm42dio9wZeGrg8ky/VIAEx/ewbmeSaOi5fJJDIEmo3G78TJYAOP3cvF
-	 BVynjWtvZL7luxYEHQ9hvFwlaMukXbtjOTBIHXXKZ/8E5w9NySNk+krZzaiv5RnHLy
-	 BiWQ0B4TRJQQ9lPiU+k8lUcxccqqAhQCo1qnv2QM=
+	b=0m1VmWSaepahpIJh8ZNdHYa5kMZdjZqmFiVaZmIUHX0w3a6FoJTvy8e+S/8thz4Cj
+	 ZWFo+KMd/pnH3yXT8Z2LrcphipYLs8Y9f97P+yTD38vSP0TfBRCPS8I2/IqjD1Ii4Q
+	 ppTVyMAOnA8VvDUZPG6uJj/OpD80xGOxtAa2G+m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 153/493] io_uring/net: fix sendzc lazy wake polling
-Date: Mon, 27 May 2024 20:52:35 +0200
-Message-ID: <20240527185635.430700521@linuxfoundation.org>
+Subject: [PATCH 6.8 154/493] soc: qcom: pmic_glink: Make client-lock non-sleeping
+Date: Mon, 27 May 2024 20:52:36 +0200
+Message-ID: <20240527185635.462239861@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,35 +52,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit ef42b85a5609cd822ca0a68dd2bef2b12b5d1ca3 ]
+[ Upstream commit 9329933699b32d467a99befa20415c4b2172389a ]
 
-SEND[MSG]_ZC produces multiple CQEs via notifications, LAZY_WAKE doesn't
-handle it and so disable LAZY_WAKE for sendzc polling. It should be
-fine, sends are not likely to be polled in the first place.
+The recently introduced commit '635ce0db8956 ("soc: qcom: pmic_glink:
+don't traverse clients list without a lock")' ensured that the clients
+list is not modified while traversed.
 
-Fixes: 6ce4a93dbb5b ("io_uring/poll: use IOU_F_TWQ_LAZY_WAKE for wakeups")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/5b360fb352d91e3aec751d75c87dfb4753a084ee.1714488419.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+But the callback is made from the GLINK IRQ handler and as such this
+mutual exclusion can not be provided by a (sleepable) mutex.
+
+Replace the mutex with a spinlock.
+
+Fixes: 635ce0db8956 ("soc: qcom: pmic_glink: don't traverse clients list without a lock")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240430-pmic-glink-sleep-while-atomic-v1-1-88fb493e8545@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/net.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/qcom/pmic_glink.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/io_uring/net.c b/io_uring/net.c
-index d193b87d0a03b..099ab92cca0b7 100644
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1022,6 +1022,7 @@ int io_send_zc_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 	struct io_kiocb *notif;
+diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
+index e85a12ec2aab1..823fd108fa039 100644
+--- a/drivers/soc/qcom/pmic_glink.c
++++ b/drivers/soc/qcom/pmic_glink.c
+@@ -11,6 +11,7 @@
+ #include <linux/slab.h>
+ #include <linux/soc/qcom/pdr.h>
+ #include <linux/soc/qcom/pmic_glink.h>
++#include <linux/spinlock.h>
  
- 	zc->done_io = 0;
-+	req->flags |= REQ_F_POLL_NO_LAZY;
+ enum {
+ 	PMIC_GLINK_CLIENT_BATT = 0,
+@@ -36,7 +37,7 @@ struct pmic_glink {
+ 	unsigned int pdr_state;
  
- 	if (unlikely(READ_ONCE(sqe->__pad2[0]) || READ_ONCE(sqe->addr3)))
- 		return -EINVAL;
+ 	/* serializing clients list updates */
+-	struct mutex client_lock;
++	spinlock_t client_lock;
+ 	struct list_head clients;
+ };
+ 
+@@ -58,10 +59,11 @@ static void _devm_pmic_glink_release_client(struct device *dev, void *res)
+ {
+ 	struct pmic_glink_client *client = (struct pmic_glink_client *)res;
+ 	struct pmic_glink *pg = client->pg;
++	unsigned long flags;
+ 
+-	mutex_lock(&pg->client_lock);
++	spin_lock_irqsave(&pg->client_lock, flags);
+ 	list_del(&client->node);
+-	mutex_unlock(&pg->client_lock);
++	spin_unlock_irqrestore(&pg->client_lock, flags);
+ }
+ 
+ struct pmic_glink_client *devm_pmic_glink_register_client(struct device *dev,
+@@ -72,6 +74,7 @@ struct pmic_glink_client *devm_pmic_glink_register_client(struct device *dev,
+ {
+ 	struct pmic_glink_client *client;
+ 	struct pmic_glink *pg = dev_get_drvdata(dev->parent);
++	unsigned long flags;
+ 
+ 	client = devres_alloc(_devm_pmic_glink_release_client, sizeof(*client), GFP_KERNEL);
+ 	if (!client)
+@@ -84,12 +87,12 @@ struct pmic_glink_client *devm_pmic_glink_register_client(struct device *dev,
+ 	client->priv = priv;
+ 
+ 	mutex_lock(&pg->state_lock);
+-	mutex_lock(&pg->client_lock);
++	spin_lock_irqsave(&pg->client_lock, flags);
+ 
+ 	list_add(&client->node, &pg->clients);
+ 	client->pdr_notify(client->priv, pg->client_state);
+ 
+-	mutex_unlock(&pg->client_lock);
++	spin_unlock_irqrestore(&pg->client_lock, flags);
+ 	mutex_unlock(&pg->state_lock);
+ 
+ 	devres_add(dev, client);
+@@ -112,6 +115,7 @@ static int pmic_glink_rpmsg_callback(struct rpmsg_device *rpdev, void *data,
+ 	struct pmic_glink_client *client;
+ 	struct pmic_glink_hdr *hdr;
+ 	struct pmic_glink *pg = dev_get_drvdata(&rpdev->dev);
++	unsigned long flags;
+ 
+ 	if (len < sizeof(*hdr)) {
+ 		dev_warn(pg->dev, "ignoring truncated message\n");
+@@ -120,12 +124,12 @@ static int pmic_glink_rpmsg_callback(struct rpmsg_device *rpdev, void *data,
+ 
+ 	hdr = data;
+ 
+-	mutex_lock(&pg->client_lock);
++	spin_lock_irqsave(&pg->client_lock, flags);
+ 	list_for_each_entry(client, &pg->clients, node) {
+ 		if (client->id == le32_to_cpu(hdr->owner))
+ 			client->cb(data, len, client->priv);
+ 	}
+-	mutex_unlock(&pg->client_lock);
++	spin_unlock_irqrestore(&pg->client_lock, flags);
+ 
+ 	return 0;
+ }
+@@ -165,6 +169,7 @@ static void pmic_glink_state_notify_clients(struct pmic_glink *pg)
+ {
+ 	struct pmic_glink_client *client;
+ 	unsigned int new_state = pg->client_state;
++	unsigned long flags;
+ 
+ 	if (pg->client_state != SERVREG_SERVICE_STATE_UP) {
+ 		if (pg->pdr_state == SERVREG_SERVICE_STATE_UP && pg->ept)
+@@ -175,10 +180,10 @@ static void pmic_glink_state_notify_clients(struct pmic_glink *pg)
+ 	}
+ 
+ 	if (new_state != pg->client_state) {
+-		mutex_lock(&pg->client_lock);
++		spin_lock_irqsave(&pg->client_lock, flags);
+ 		list_for_each_entry(client, &pg->clients, node)
+ 			client->pdr_notify(client->priv, new_state);
+-		mutex_unlock(&pg->client_lock);
++		spin_unlock_irqrestore(&pg->client_lock, flags);
+ 		pg->client_state = new_state;
+ 	}
+ }
+@@ -265,7 +270,7 @@ static int pmic_glink_probe(struct platform_device *pdev)
+ 	pg->dev = &pdev->dev;
+ 
+ 	INIT_LIST_HEAD(&pg->clients);
+-	mutex_init(&pg->client_lock);
++	spin_lock_init(&pg->client_lock);
+ 	mutex_init(&pg->state_lock);
+ 
+ 	match_data = (unsigned long *)of_device_get_match_data(&pdev->dev);
 -- 
 2.43.0
 
