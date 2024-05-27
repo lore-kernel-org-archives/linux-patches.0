@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452C6161911;
-	Mon, 27 May 2024 19:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7871161935;
+	Mon, 27 May 2024 19:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836557; cv=none; b=TviQsug1IofGkN91eQ3KF80cv3H6Hl0odU1Tg7LL3TJkitCoTLMbGjWzoZUrVmojKU7BlCtRAojg9zx0hrb+5QZBUshVQzc+pHCbnmug95+7DtvRdHxLZGeRBjLH1BSvFY6BKpHcN+harge/i1NgypQkahQAhReq1ABsLeDtld4=
+	t=1716836560; cv=none; b=c6T9+FqJL/kR/0YgtU3wFvWJA+UE4YEcWWUv0Od5ztLIt955zKs+b3tvryVv3Gwg3jrNgBMsQ1Vr3gNK5MT33qQhIRhRjDXkJjZfRiGEx8sdabRjbd3PgEsdTyaZjhDKigAlivll16LW76YlCOUUjD1vISms6qv5zRfCPajRg5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836557; c=relaxed/simple;
-	bh=gDDH2LtUiIoBbKP3sV5WKVtJF+7GeFqh2aY2gMV9Kv0=;
+	s=arc-20240116; t=1716836560; c=relaxed/simple;
+	bh=qLJDf3/3NhUVOF6e7RfLz76xy59FkXsRXVWz/DYvab0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxbclnD2N1sp16s/YOHnVuRcHYKEjjhrFtO914DhxnDTpxo4QhnVSJ9bGj+V/Tj4hbikVMNa7A93GOPO+JQxJwBumpWnJqDDNCsYGfVZOXgzkEVu2nJVjeiV3ExOj8T6V55i+pYjxXCpRinLJElx5SFYBF7KJXNaqVlnPlK+EqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVDpPBci; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n3eppgMiSuBwghOZkZPkj+X6cMlQdGgqbijAD3eO9CjknKLaRySpJiPm5KfTx8DZSWA+FWVqV8M+tYSIKtI7yMQw0Qt2ChIVABUvvNZ+M2L9TCTiLGBYiOj5+LiI7y4Q09LcUgYKGlB6JfZJUEAGBgcg/WOvIj7gjmJiNfQQeDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XLm+zh/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVDpPBci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C506C32786;
-	Mon, 27 May 2024 19:02:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XLm+zh/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA53CC32781;
+	Mon, 27 May 2024 19:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836556;
-	bh=gDDH2LtUiIoBbKP3sV5WKVtJF+7GeFqh2aY2gMV9Kv0=;
+	s=korg; t=1716836559;
+	bh=qLJDf3/3NhUVOF6e7RfLz76xy59FkXsRXVWz/DYvab0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVDpPBciJktRLjOQ03IpVJxeBwGttS7zBH7lB84T89BMxTsL2grO9C2e8/KxtBf/l
-	 3yBHDnRZuiUxVvekkSin2ry1XYgmZemDJpo2YOLrC25Fk9gjaTrcUR8ENjE2OL3N1s
-	 mfAYd2ZAMejvmApXyFpZmSX5OB0jBCeSY9wMV+KQ=
+	b=2XLm+zh/BdAdzCFZLzb9e1PzpKgHEj6fQ0PBotbe/tG8E7LL7FbbZhyh21oY4H4Zu
+	 A/hfFKSuXvT63M6UNsLb6EoyuLEJMHW6/qVNKULwmgOxGtLO3Hhs7xCLLL9L0mdb6+
+	 Qrbkmk2GmBF9JOGxMRafTih5213Bvb9I69qAPeco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 101/427] wifi: iwlwifi: mvm: Do not warn on invalid link on scan complete
-Date: Mon, 27 May 2024 20:52:28 +0200
-Message-ID: <20240527185611.204856637@linuxfoundation.org>
+Subject: [PATCH 6.9 102/427] wifi: iwlwifi: mvm: allocate STA links only for active links
+Date: Mon, 27 May 2024 20:52:29 +0200
+Message-ID: <20240527185611.279952849@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,42 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 1c78d39f4ede227e50e36165b3a76bc7c37ead02 ]
+[ Upstream commit 62bdd97598f8be82a24f556f78336b05d1c3e84b ]
 
-As it is possible that by the time the scan is completed the link was
-already removed.
+For the mvm driver, data structures match what's in the firmware,
+we allocate FW IDs for them already etc. During link switch we
+already allocate/free the STA links appropriately, but initially
+we'd allocate them always. Fix this to allocate memory, a STA ID,
+etc. only for active links.
 
-Fixes: 3a5a5cb06700 ("wifi: iwlwifi: mvm: Correctly report TSF data in scan complete")
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Fixes: 57974a55d995 ("wifi: iwlwifi: mvm: refactor iwl_mvm_mac_sta_state_common()")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.619d3574a757.I0523e92547f0288c8b0119b1fdc5e967a5a8956e@changeid
+Link: https://msgid.link/20240319100755.f2093ff73465.Ie891e1cc9c9df09ae22be6aad5c143e376f40f0e@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 11559563ae381..22bc032cffc8b 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -3171,8 +3171,13 @@ void iwl_mvm_rx_umac_scan_complete_notif(struct iwl_mvm *mvm,
- 		struct iwl_mvm_vif_link_info *link_info =
- 			scan_vif->link[mvm->scan_link_id];
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
+index 23e64a757cfe8..4ba1599ed71ca 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
+@@ -582,14 +582,14 @@ static int iwl_mvm_mld_alloc_sta_links(struct iwl_mvm *mvm,
+ 				       struct ieee80211_sta *sta)
+ {
+ 	struct iwl_mvm_sta *mvm_sta = iwl_mvm_sta_from_mac80211(sta);
++	struct ieee80211_link_sta *link_sta;
+ 	unsigned int link_id;
+ 	int ret;
  
--		if (!WARN_ON(!link_info))
-+		/* It is possible that by the time the scan is complete the link
-+		 * was already removed and is not valid.
-+		 */
-+		if (link_info)
- 			memcpy(info.tsf_bssid, link_info->bssid, ETH_ALEN);
-+		else
-+			IWL_DEBUG_SCAN(mvm, "Scan link is no longer valid\n");
+ 	lockdep_assert_held(&mvm->mutex);
  
- 		ieee80211_scan_completed(mvm->hw, &info);
- 		mvm->scan_vif = NULL;
+-	for (link_id = 0; link_id < ARRAY_SIZE(sta->link); link_id++) {
+-		if (!rcu_access_pointer(sta->link[link_id]) ||
+-		    mvm_sta->link[link_id])
++	for_each_sta_active_link(vif, sta, link_sta, link_id) {
++		if (WARN_ON(mvm_sta->link[link_id]))
+ 			continue;
+ 
+ 		ret = iwl_mvm_mld_alloc_sta_link(mvm, vif, sta, link_id);
 -- 
 2.43.0
 
