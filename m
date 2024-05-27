@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801B71607AA;
-	Mon, 27 May 2024 19:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4A515FD01;
+	Mon, 27 May 2024 19:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837855; cv=none; b=EpRL7Ce+3o2awfvEg1LIMdEUjdnIgaB8rLhdiMndgQub/3VeDPJPPlU9qIuotAIAXChHrRVHNnGDKS46IjrJiJdFcZyvhRm5IJYN/PY+cbHyqCvAicV4WF54r9+kUGs4D9L4sxUX03Vq5LUbWmyIRgpVgCb/ps9UE2flsAKtmh0=
+	t=1716837858; cv=none; b=b8Ugpfl1oKTBJR7/i2iMB3bznRTThdRD8WPXGvN9Yvux94A3eR/QRLoXL2cmUNTKk4vvxs2tNWtAjqclH/r0ZAQZ2RnAaLMIBfp0XwWrchY2UJkg/QRvbJQ0vObwKKcMZ6CrIoS2X9YxsJeSQFC/aCczeulKpsIHNVfL4C0QYGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837855; c=relaxed/simple;
-	bh=DqmXxHPg2vhXcZr4ol+YOuxnQmWxcuC3T58GsdwSkSk=;
+	s=arc-20240116; t=1716837858; c=relaxed/simple;
+	bh=OWWVqqayg06pfjRtpmXlIZBKp+2SyuUD/e5Hw7QSjgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4yqGjjbxThpDSHmMwmuDC/dqyGWz9/zxSkYsPfEM5BVF8QVO6+TUObk/yXkR9lxf3WJfJXQ1XFhUbsMVNX7xF7ZNjyapZLeSQy96ZC9aFG7bRX/mUNZCy8EwuKtqt3z1UK3fAN+uEQ0hlFj91+G/IPMzDGj2+9zRBUH1M99JC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10uae6hD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TpiFYSPxEIkx5vgrisHjWoGqkhc68iAwNXJWKUp0Z88qahAQE6oFPGW3PKJbpOMyasPi0+qRbD50norb7xJv32FEsLP8JsaMnNvnSA5UeJipKVWxS+MKUfzLBEc/yDfzhhqzZFRI8RWKwtcIgJRoSgRUCNiJbvS1hn24XSdEoWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bvf3KFNN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10uae6hD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16996C32781;
-	Mon, 27 May 2024 19:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bvf3KFNN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9969C2BBFC;
+	Mon, 27 May 2024 19:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837855;
-	bh=DqmXxHPg2vhXcZr4ol+YOuxnQmWxcuC3T58GsdwSkSk=;
+	s=korg; t=1716837858;
+	bh=OWWVqqayg06pfjRtpmXlIZBKp+2SyuUD/e5Hw7QSjgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10uae6hDSWKtCR5+/zBg7dF19i4vmGAt7yCfYzs9w53Df1Fj7ZSpvsU+UMlZ/64po
-	 /DC8zJsate5uXQzdM9fKXPn/g9GBafYryDI9nNXKfJ5qsRFqNgIZBpT92NCy7Kr3Hh
-	 faXlW5jOZVFHVdAaBhO6iFtDsGdEWa9pes9wTkX4=
+	b=Bvf3KFNNsN7lwlpghvMObAnio+xWTA2ijiMFEALnzvWhL7snH15/QPzwHaZWacc/H
+	 PgXs8byWS9GovyWQDJRhN7o6EgUIGq7jDR6enAkeqyDaae5WVTcXR0m+6eo7JizPux
+	 AaaWxR1IkRhc39R2WeozpK1eV1yK6pQdAkEy+dTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 169/493] wifi: ieee80211: fix ieee80211_mle_basic_sta_prof_size_ok()
-Date: Mon, 27 May 2024 20:52:51 +0200
-Message-ID: <20240527185635.890739495@linuxfoundation.org>
+Subject: [PATCH 6.8 131/493] maple_tree: Add mtree_alloc_cyclic()
+Date: Mon, 27 May 2024 20:52:13 +0200
+Message-ID: <20240527185634.766051614@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,43 +51,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c121514df0daa800cc500dc2738e0b8a1c54af98 ]
+[ Upstream commit 9b6713cc75229f25552c643083cbdbfb771e5bca ]
 
-If there was a possibility of an MLE basic STA profile without
-subelements, we might reject it because we account for the one
-octet for sta_info_len twice (it's part of itself, and in the
-fixed portion). Like in ieee80211_mle_reconf_sta_prof_size_ok,
-subtract 1 to adjust that.
+I need a cyclic allocator for the simple_offset implementation in
+fs/libfs.c.
 
-When reading the elements we did take this into account, and
-since there are always elements, this never really mattered.
-
-Fixes: 7b6f08771bf6 ("wifi: ieee80211: Support validating ML station profile length")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240318184907.00bb0b20ed60.I8c41dd6fc14c4b187ab901dea15ade73c79fb98c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/r/170820144179.6328.12838600511394432325.stgit@91.116.238.104.host.secureserver.net
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 23cdd0eed3f1 ("libfs: Fix simple_offset_rename_exchange()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ieee80211.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/maple_tree.h |  7 +++
+ lib/maple_tree.c           | 93 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 100 insertions(+)
 
-diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
-index 83c4d060a5596..b69771a2e4e74 100644
---- a/include/linux/ieee80211.h
-+++ b/include/linux/ieee80211.h
-@@ -5145,7 +5145,7 @@ static inline bool ieee80211_mle_basic_sta_prof_size_ok(const u8 *data,
- 		info_len += 1;
+diff --git a/include/linux/maple_tree.h b/include/linux/maple_tree.h
+index b3d63123b945b..a53ad4dabd7e8 100644
+--- a/include/linux/maple_tree.h
++++ b/include/linux/maple_tree.h
+@@ -171,6 +171,7 @@ enum maple_type {
+ #define MT_FLAGS_LOCK_IRQ	0x100
+ #define MT_FLAGS_LOCK_BH	0x200
+ #define MT_FLAGS_LOCK_EXTERN	0x300
++#define MT_FLAGS_ALLOC_WRAPPED	0x0800
  
- 	return prof->sta_info_len >= info_len &&
--	       fixed + prof->sta_info_len <= len;
-+	       fixed + prof->sta_info_len - 1 <= len;
+ #define MAPLE_HEIGHT_MAX	31
+ 
+@@ -319,6 +320,9 @@ int mtree_insert_range(struct maple_tree *mt, unsigned long first,
+ int mtree_alloc_range(struct maple_tree *mt, unsigned long *startp,
+ 		void *entry, unsigned long size, unsigned long min,
+ 		unsigned long max, gfp_t gfp);
++int mtree_alloc_cyclic(struct maple_tree *mt, unsigned long *startp,
++		void *entry, unsigned long range_lo, unsigned long range_hi,
++		unsigned long *next, gfp_t gfp);
+ int mtree_alloc_rrange(struct maple_tree *mt, unsigned long *startp,
+ 		void *entry, unsigned long size, unsigned long min,
+ 		unsigned long max, gfp_t gfp);
+@@ -499,6 +503,9 @@ void *mas_find_range(struct ma_state *mas, unsigned long max);
+ void *mas_find_rev(struct ma_state *mas, unsigned long min);
+ void *mas_find_range_rev(struct ma_state *mas, unsigned long max);
+ int mas_preallocate(struct ma_state *mas, void *entry, gfp_t gfp);
++int mas_alloc_cyclic(struct ma_state *mas, unsigned long *startp,
++		void *entry, unsigned long range_lo, unsigned long range_hi,
++		unsigned long *next, gfp_t gfp);
+ 
+ bool mas_nomem(struct ma_state *mas, gfp_t gfp);
+ void mas_pause(struct ma_state *mas);
+diff --git a/lib/maple_tree.c b/lib/maple_tree.c
+index d70db05757091..fe6092a1dc353 100644
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -4290,6 +4290,56 @@ static inline void *mas_insert(struct ma_state *mas, void *entry)
+ 
  }
  
- /**
++/**
++ * mas_alloc_cyclic() - Internal call to find somewhere to store an entry
++ * @mas: The maple state.
++ * @startp: Pointer to ID.
++ * @range_lo: Lower bound of range to search.
++ * @range_hi: Upper bound of range to search.
++ * @entry: The entry to store.
++ * @next: Pointer to next ID to allocate.
++ * @gfp: The GFP_FLAGS to use for allocations.
++ *
++ * Return: 0 if the allocation succeeded without wrapping, 1 if the
++ * allocation succeeded after wrapping, or -EBUSY if there are no
++ * free entries.
++ */
++int mas_alloc_cyclic(struct ma_state *mas, unsigned long *startp,
++		void *entry, unsigned long range_lo, unsigned long range_hi,
++		unsigned long *next, gfp_t gfp)
++{
++	unsigned long min = range_lo;
++	int ret = 0;
++
++	range_lo = max(min, *next);
++	ret = mas_empty_area(mas, range_lo, range_hi, 1);
++	if ((mas->tree->ma_flags & MT_FLAGS_ALLOC_WRAPPED) && ret == 0) {
++		mas->tree->ma_flags &= ~MT_FLAGS_ALLOC_WRAPPED;
++		ret = 1;
++	}
++	if (ret < 0 && range_lo > min) {
++		ret = mas_empty_area(mas, min, range_hi, 1);
++		if (ret == 0)
++			ret = 1;
++	}
++	if (ret < 0)
++		return ret;
++
++	do {
++		mas_insert(mas, entry);
++	} while (mas_nomem(mas, gfp));
++	if (mas_is_err(mas))
++		return xa_err(mas->node);
++
++	*startp = mas->index;
++	*next = *startp + 1;
++	if (*next == 0)
++		mas->tree->ma_flags |= MT_FLAGS_ALLOC_WRAPPED;
++
++	return ret;
++}
++EXPORT_SYMBOL(mas_alloc_cyclic);
++
+ static __always_inline void mas_rewalk(struct ma_state *mas, unsigned long index)
+ {
+ retry:
+@@ -6443,6 +6493,49 @@ int mtree_alloc_range(struct maple_tree *mt, unsigned long *startp,
+ }
+ EXPORT_SYMBOL(mtree_alloc_range);
+ 
++/**
++ * mtree_alloc_cyclic() - Find somewhere to store this entry in the tree.
++ * @mt: The maple tree.
++ * @startp: Pointer to ID.
++ * @range_lo: Lower bound of range to search.
++ * @range_hi: Upper bound of range to search.
++ * @entry: The entry to store.
++ * @next: Pointer to next ID to allocate.
++ * @gfp: The GFP_FLAGS to use for allocations.
++ *
++ * Finds an empty entry in @mt after @next, stores the new index into
++ * the @id pointer, stores the entry at that index, then updates @next.
++ *
++ * @mt must be initialized with the MT_FLAGS_ALLOC_RANGE flag.
++ *
++ * Context: Any context.  Takes and releases the mt.lock.  May sleep if
++ * the @gfp flags permit.
++ *
++ * Return: 0 if the allocation succeeded without wrapping, 1 if the
++ * allocation succeeded after wrapping, -ENOMEM if memory could not be
++ * allocated, -EINVAL if @mt cannot be used, or -EBUSY if there are no
++ * free entries.
++ */
++int mtree_alloc_cyclic(struct maple_tree *mt, unsigned long *startp,
++		void *entry, unsigned long range_lo, unsigned long range_hi,
++		unsigned long *next, gfp_t gfp)
++{
++	int ret;
++
++	MA_STATE(mas, mt, 0, 0);
++
++	if (!mt_is_alloc(mt))
++		return -EINVAL;
++	if (WARN_ON_ONCE(mt_is_reserved(entry)))
++		return -EINVAL;
++	mtree_lock(mt);
++	ret = mas_alloc_cyclic(&mas, startp, entry, range_lo, range_hi,
++			       next, gfp);
++	mtree_unlock(mt);
++	return ret;
++}
++EXPORT_SYMBOL(mtree_alloc_cyclic);
++
+ int mtree_alloc_rrange(struct maple_tree *mt, unsigned long *startp,
+ 		void *entry, unsigned long size, unsigned long min,
+ 		unsigned long max, gfp_t gfp)
 -- 
 2.43.0
 
