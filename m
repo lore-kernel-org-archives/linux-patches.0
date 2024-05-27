@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6EA168C4;
-	Mon, 27 May 2024 19:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F575168C4;
+	Mon, 27 May 2024 19:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837714; cv=none; b=YUNT9rTHAYa8UZefVxHbI3Je3dTa3AN08pd/7I+/fdK/KvopoNOcuk9fAp3UcPKZ5IFSlzYA4cNTYGyzfW2muuDlrxV3HzCaiDSnYNJEo74FP8UZP2D9L9zKeAFUgb6AkfeXWg3eS4lHzvh05Pgq0/7g7xlcOTXsRfWKQJsehnM=
+	t=1716837717; cv=none; b=MAzHYJNLy7zzGlA+p8mNtMi22X/050g1BeU0zrXsKCYTSWOOYcelDcsCOjZzOAWP48ryGjkuLcyK56sVuQFR7pzH/RybRjwp/rQiCHoKRjXoifV6UPc7CYH1/qCkkkOBumnKiSaq++LpjvDMfo2P3c0Nj2jaSAvh+iz9JDWMrMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837714; c=relaxed/simple;
-	bh=c9Mi6xoXrJ281+pEsd6w08rfw9d9od9d3pUyg13eRn4=;
+	s=arc-20240116; t=1716837717; c=relaxed/simple;
+	bh=YJb7IQG1VdANIOf+wh6QzQyRX9Gf6VtYjC5qBZEtLPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fY2acLWSje+HMQ12nEJ2k1sN/BiDWx8e0cZYDhwIfGPfuWN4bjnKzz4yBqtdNv+KKjRaUag9/6zZ22GsVXlJaejq4mJl/6VT6BwHQZ6c4YxMAFj0uFRvprz6toRDWZgt7hMRXv2SqFQ26+OVsYvdAXdr9SDNtyoXZDa5zXaGpH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZZWUA+i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GBZy9SMNkAvELe4jMowTUpmwJoxbZ+QfEI66NBTSCV0r3rDV96sGFwKvlSVF3rZD5WugmZF4Ke9l5btf7m31rMqjfttAZjFi7ywb9JVQJOTbHC+r4+TfXpyFf61OxUAzru+F5rQC3gdG54f5f4YEVFH1Gy4NOcenzg4lRJTGdAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUcxtx13; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZZWUA+i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400F4C2BBFC;
-	Mon, 27 May 2024 19:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUcxtx13"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77AAC2BBFC;
+	Mon, 27 May 2024 19:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837714;
-	bh=c9Mi6xoXrJ281+pEsd6w08rfw9d9od9d3pUyg13eRn4=;
+	s=korg; t=1716837717;
+	bh=YJb7IQG1VdANIOf+wh6QzQyRX9Gf6VtYjC5qBZEtLPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZZWUA+iWTJlRk+9DZEVW93qMNT8yd8sV1ldvxnAm9yG2adhhdcw2vDw49B0eE1Hv
-	 VH59NIlqc2sHqlNidZKt5hXCP+UTmWKo8J84cXTg5AuD0VRV/kxO1asGiBFZF1gS1c
-	 AxYKwI9bwsZJJsq61GRdHSBdTSYVWHEAbcr85mGc=
+	b=IUcxtx136awNyfd2wD63MlytPOXpDEpZA55lrIM5nUNh2Nvtseo5JrUHdBzPz3HtK
+	 NnI7v+oueywcyvyH42qtFeXg2EtiMN6eogYpdqwvyobr2cPxWtNNCLKbVPMP5vWe71
+	 Sn7XRDi7KgaxoSDq3/Rok1m9IEyBf/e20EWYUco0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Kubisiak <brian@kubisiak.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Justin Stitt <justinstitt@google.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 115/493] ecryptfs: Fix buffer size for tag 66 packet
-Date: Mon, 27 May 2024 20:51:57 +0200
-Message-ID: <20240527185634.278873794@linuxfoundation.org>
+Subject: [PATCH 6.8 116/493] nilfs2: fix out-of-range warning
+Date: Mon, 27 May 2024 20:51:58 +0200
+Message-ID: <20240527185634.304969116@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,114 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Kubisiak <brian@kubisiak.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 85a6a1aff08ec9f5b929d345d066e2830e8818e5 ]
+[ Upstream commit c473bcdd80d4ab2ae79a7a509a6712818366e32a ]
 
-The 'TAG 66 Packet Format' description is missing the cipher code and
-checksum fields that are packed into the message packet. As a result,
-the buffer allocated for the packet is 3 bytes too small and
-write_tag_66_packet() will write up to 3 bytes past the end of the
-buffer.
+clang-14 points out that v_size is always smaller than a 64KB
+page size if that is configured by the CPU architecture:
 
-Fix this by increasing the size of the allocation so the whole packet
-will always fit in the buffer.
+fs/nilfs2/ioctl.c:63:19: error: result of comparison of constant 65536 with expression of type '__u16' (aka 'unsigned short') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+        if (argv->v_size > PAGE_SIZE)
+            ~~~~~~~~~~~~ ^ ~~~~~~~~~
 
-This fixes the below kasan slab-out-of-bounds bug:
+This is ok, so just shut up that warning with a cast.
 
-  BUG: KASAN: slab-out-of-bounds in ecryptfs_generate_key_packet_set+0x7d6/0xde0
-  Write of size 1 at addr ffff88800afbb2a5 by task touch/181
-
-  CPU: 0 PID: 181 Comm: touch Not tainted 6.6.13-gnu #1 4c9534092be820851bb687b82d1f92a426598dc6
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2/GNU Guix 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4c/0x70
-   print_report+0xc5/0x610
-   ? ecryptfs_generate_key_packet_set+0x7d6/0xde0
-   ? kasan_complete_mode_report_info+0x44/0x210
-   ? ecryptfs_generate_key_packet_set+0x7d6/0xde0
-   kasan_report+0xc2/0x110
-   ? ecryptfs_generate_key_packet_set+0x7d6/0xde0
-   __asan_store1+0x62/0x80
-   ecryptfs_generate_key_packet_set+0x7d6/0xde0
-   ? __pfx_ecryptfs_generate_key_packet_set+0x10/0x10
-   ? __alloc_pages+0x2e2/0x540
-   ? __pfx_ovl_open+0x10/0x10 [overlay 30837f11141636a8e1793533a02e6e2e885dad1d]
-   ? dentry_open+0x8f/0xd0
-   ecryptfs_write_metadata+0x30a/0x550
-   ? __pfx_ecryptfs_write_metadata+0x10/0x10
-   ? ecryptfs_get_lower_file+0x6b/0x190
-   ecryptfs_initialize_file+0x77/0x150
-   ecryptfs_create+0x1c2/0x2f0
-   path_openat+0x17cf/0x1ba0
-   ? __pfx_path_openat+0x10/0x10
-   do_filp_open+0x15e/0x290
-   ? __pfx_do_filp_open+0x10/0x10
-   ? __kasan_check_write+0x18/0x30
-   ? _raw_spin_lock+0x86/0xf0
-   ? __pfx__raw_spin_lock+0x10/0x10
-   ? __kasan_check_write+0x18/0x30
-   ? alloc_fd+0xf4/0x330
-   do_sys_openat2+0x122/0x160
-   ? __pfx_do_sys_openat2+0x10/0x10
-   __x64_sys_openat+0xef/0x170
-   ? __pfx___x64_sys_openat+0x10/0x10
-   do_syscall_64+0x60/0xd0
-   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-  RIP: 0033:0x7f00a703fd67
-  Code: 25 00 00 41 00 3d 00 00 41 00 74 37 64 8b 04 25 18 00 00 00 85 c0 75 5b 44 89 e2 48 89 ee bf 9c ff ff ff b8 01 01 00 00 0f 05 <48> 3d 00 f0 ff ff 0f 87 85 00 00 00 48 83 c4 68 5d 41 5c c3 0f 1f
-  RSP: 002b:00007ffc088e30b0 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
-  RAX: ffffffffffffffda RBX: 00007ffc088e3368 RCX: 00007f00a703fd67
-  RDX: 0000000000000941 RSI: 00007ffc088e48d7 RDI: 00000000ffffff9c
-  RBP: 00007ffc088e48d7 R08: 0000000000000001 R09: 0000000000000000
-  R10: 00000000000001b6 R11: 0000000000000246 R12: 0000000000000941
-  R13: 0000000000000000 R14: 00007ffc088e48d7 R15: 00007f00a7180040
-   </TASK>
-
-  Allocated by task 181:
-   kasan_save_stack+0x2f/0x60
-   kasan_set_track+0x29/0x40
-   kasan_save_alloc_info+0x25/0x40
-   __kasan_kmalloc+0xc5/0xd0
-   __kmalloc+0x66/0x160
-   ecryptfs_generate_key_packet_set+0x6d2/0xde0
-   ecryptfs_write_metadata+0x30a/0x550
-   ecryptfs_initialize_file+0x77/0x150
-   ecryptfs_create+0x1c2/0x2f0
-   path_openat+0x17cf/0x1ba0
-   do_filp_open+0x15e/0x290
-   do_sys_openat2+0x122/0x160
-   __x64_sys_openat+0xef/0x170
-   do_syscall_64+0x60/0xd0
-   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Fixes: dddfa461fc89 ("[PATCH] eCryptfs: Public key; packet management")
-Signed-off-by: Brian Kubisiak <brian@kubisiak.com>
-Link: https://lore.kernel.org/r/5j2q56p6qkhezva6b2yuqfrsurmvrrqtxxzrnp3wqu7xrz22i7@hoecdztoplbl
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240328143051.1069575-7-arnd@kernel.org
+Fixes: 3358b4aaa84f ("nilfs2: fix problems of memory allocation in ioctl")
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reviewed-by: Justin Stitt <justinstitt@google.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ecryptfs/keystore.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nilfs2/ioctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ecryptfs/keystore.c b/fs/ecryptfs/keystore.c
-index 3fe41964c0d8d..7f9f68c00ef63 100644
---- a/fs/ecryptfs/keystore.c
-+++ b/fs/ecryptfs/keystore.c
-@@ -300,9 +300,11 @@ write_tag_66_packet(char *signature, u8 cipher_code,
- 	 *         | Key Identifier Size      | 1 or 2 bytes |
- 	 *         | Key Identifier           | arbitrary    |
- 	 *         | File Encryption Key Size | 1 or 2 bytes |
-+	 *         | Cipher Code              | 1 byte       |
- 	 *         | File Encryption Key      | arbitrary    |
-+	 *         | Checksum                 | 2 bytes      |
- 	 */
--	data_len = (5 + ECRYPTFS_SIG_SIZE_HEX + crypt_stat->key_size);
-+	data_len = (8 + ECRYPTFS_SIG_SIZE_HEX + crypt_stat->key_size);
- 	*packet = kmalloc(data_len, GFP_KERNEL);
- 	message = *packet;
- 	if (!message) {
+diff --git a/fs/nilfs2/ioctl.c b/fs/nilfs2/ioctl.c
+index cfb6aca5ec383..d6e3f20e8872e 100644
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -60,7 +60,7 @@ static int nilfs_ioctl_wrap_copy(struct the_nilfs *nilfs,
+ 	if (argv->v_nmembs == 0)
+ 		return 0;
+ 
+-	if (argv->v_size > PAGE_SIZE)
++	if ((size_t)argv->v_size > PAGE_SIZE)
+ 		return -EINVAL;
+ 
+ 	/*
 -- 
 2.43.0
 
