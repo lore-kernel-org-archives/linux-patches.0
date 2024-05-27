@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3E215FD04;
-	Mon, 27 May 2024 19:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8D46A039;
+	Mon, 27 May 2024 19:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836875; cv=none; b=j3RVHDzgnlvpIhFff+Sxlt9TElOWkyevbaX8gn76dHZO0btMQqENTrLXSPAUWXB+tIQ26+jSTULX7SJPqpZRjZ86wtylEEra4hOLZDX2tGilAN3TSdKx+0wIbJfQfBCFPE9wXcJKDE9mvY05RhC/LYP3VUSlUDt1gnuS37cFSZM=
+	t=1716836878; cv=none; b=cxe8zHMOBa5XcImZjpMMaILK/GehJiT8hjrF4S1lglgB2sU0ds5/MHPppasyEQs4a68SqS9FJihekSTTevyarelmzuc5/Pfdn+0AcYujcWLwfwn16oz59t3mD2wTMj7NVLMCw0oexK1/+QhwzhQ3Vk/yYMltSqoN9uvost57vPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836875; c=relaxed/simple;
-	bh=WDj2G4CvoyyJNd7QF78dcu5rt/tK2M1AGJhHMfonP5c=;
+	s=arc-20240116; t=1716836878; c=relaxed/simple;
+	bh=AwK3Gdda18GvybnK51hvxHUzLj37bvpbljUhJYO/FYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gwCjG6LOiwkIp4MIXDjWHAAI9Y0gG8GpTKvn4DtL2cCAfXjLgo3qSHIeSFujTME95z1a3BI+lPJnDnmwwvX22Wb9oe2rDccjIlmgKaLu5bzzcaC0WAUhUZT8Z9n+vm3HPbLj2tdT5jYSeDZezcxowjr9XxPjeHwSx9X98Ejnqzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUFlajIw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lIMb4+lyaIBo4DvCcGQgeZqLZmrti29jTTYDMcRPBQPAgmO4oAfvo/cf5kgqX64D3kOiCli+76V084KKABWIY4LyxDAizdCD84s+oMEOhu76G4rsmEvaO56LYPwVIzjJobfOWQhJImUCanYJFfPK09qUO1RN6gXmI6kP6yM2K+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moBG6nqg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUFlajIw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63ABC2BBFC;
-	Mon, 27 May 2024 19:07:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moBG6nqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8322FC32781;
+	Mon, 27 May 2024 19:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836875;
-	bh=WDj2G4CvoyyJNd7QF78dcu5rt/tK2M1AGJhHMfonP5c=;
+	s=korg; t=1716836877;
+	bh=AwK3Gdda18GvybnK51hvxHUzLj37bvpbljUhJYO/FYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUFlajIwcyHVGvzXGAbWclD1l7V2uP8HT4DoKD5DwHqkF7nOWQv4xDLveSOtxR1mp
-	 iqqnXfa1W1DJYOg/itvr1YsZRakxEiTfAnGFBklKfilI0J8hhsCcyQgaVj4IcgJ0TQ
-	 5doRyk85+VLMwO/Mp5DjG26QlKravLhmcEFXXMV4=
+	b=moBG6nqgysE0+9djIrP65qd/K+PnwA2P5xtdRY8rjcCzcsBViXooR0KqOkaN/jdHP
+	 OWn3DvG4HL5Ba5lzz8qo0nkX7i71cJ9PVK779MjPhX+SY3c26TG/0/SLpBHdHUMD5I
+	 7LXRL3U/XwTZN5GhX444/4yX9kinsZGbzyLokVZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jim Liu <JJLIU0@nuvoton.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 220/427] scsi: qla2xxx: Fix debugfs output for fw_resource_count
-Date: Mon, 27 May 2024 20:54:27 +0200
-Message-ID: <20240527185623.099579454@linuxfoundation.org>
+Subject: [PATCH 6.9 221/427] gpio: nuvoton: Fix sgpio irq handle error
+Date: Mon, 27 May 2024 20:54:28 +0200
+Message-ID: <20240527185623.189157608@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,41 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Himanshu Madhani <himanshu.madhani@oracle.com>
+From: Jim Liu <jim.t90615@gmail.com>
 
-[ Upstream commit 998d09c5ef6183bd8137d1a892ba255b15978bb4 ]
+[ Upstream commit 7f45fe2ea3b8c85787976293126a4a7133b107de ]
 
-DebugFS output for fw_resource_count shows:
+The generic_handle_domain_irq() function calls irq_resolve_mapping().
+Thus delete a duplicative irq_find_mapping() call
+so that a stack trace and an RCU stall will be avoided.
 
-estimate exchange used[0] high water limit [1945] n        estimate iocb2 used [0] high water limit [5141]
-        estimate exchange2 used[0] high water limit [1945]
-
-Which shows incorrect display due to missing newline in seq_print().
-
-[mkp: fix checkpatch warning about space before newline]
-
-Fixes: 5f63a163ed2f ("scsi: qla2xxx: Fix exchange oversubscription for management commands")
-Signed-off-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Link: https://lore.kernel.org/r/20240426020056.3639406-1-himanshu.madhani@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c4f8457d17ce ("gpio: nuvoton: Add Nuvoton NPCM sgpio driver")
+Signed-off-by: Jim Liu <JJLIU0@nuvoton.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240506064244.1645922-1-JJLIU0@nuvoton.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_dfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-npcm-sgpio.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_dfs.c b/drivers/scsi/qla2xxx/qla_dfs.c
-index 55ff3d7482b3e..a1545dad0c0ce 100644
---- a/drivers/scsi/qla2xxx/qla_dfs.c
-+++ b/drivers/scsi/qla2xxx/qla_dfs.c
-@@ -274,7 +274,7 @@ qla_dfs_fw_resource_cnt_show(struct seq_file *s, void *unused)
- 		seq_printf(s, "Driver: estimate iocb used [%d] high water limit [%d]\n",
- 			   iocbs_used, ha->base_qpair->fwres.iocbs_limit);
+diff --git a/drivers/gpio/gpio-npcm-sgpio.c b/drivers/gpio/gpio-npcm-sgpio.c
+index d31788b43abcc..2605706145434 100644
+--- a/drivers/gpio/gpio-npcm-sgpio.c
++++ b/drivers/gpio/gpio-npcm-sgpio.c
+@@ -434,7 +434,7 @@ static void npcm_sgpio_irq_handler(struct irq_desc *desc)
+ 	struct gpio_chip *gc = irq_desc_get_handler_data(desc);
+ 	struct irq_chip *ic = irq_desc_get_chip(desc);
+ 	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
+-	unsigned int i, j, girq;
++	unsigned int i, j;
+ 	unsigned long reg;
  
--		seq_printf(s, "estimate exchange used[%d] high water limit [%d] n",
-+		seq_printf(s, "estimate exchange used[%d] high water limit [%d]\n",
- 			   exch_used, ha->base_qpair->fwres.exch_limit);
+ 	chained_irq_enter(ic, desc);
+@@ -443,11 +443,9 @@ static void npcm_sgpio_irq_handler(struct irq_desc *desc)
+ 		const struct npcm_sgpio_bank *bank = &npcm_sgpio_banks[i];
  
- 		if (ql2xenforce_iocb_limit == 2) {
+ 		reg = ioread8(bank_reg(gpio, bank, EVENT_STS));
+-		for_each_set_bit(j, &reg, 8) {
+-			girq = irq_find_mapping(gc->irq.domain,
+-						i * 8 + gpio->nout_sgpio + j);
+-			generic_handle_domain_irq(gc->irq.domain, girq);
+-		}
++		for_each_set_bit(j, &reg, 8)
++			generic_handle_domain_irq(gc->irq.domain,
++						  i * 8 + gpio->nout_sgpio + j);
+ 	}
+ 
+ 	chained_irq_exit(ic, desc);
 -- 
 2.43.0
 
