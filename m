@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037C715FCE6;
-	Mon, 27 May 2024 18:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882A015FCE6;
+	Mon, 27 May 2024 18:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836378; cv=none; b=EZ2FbjjUITesm1MkmwEAel4PKNHmbt7D/bW8Vl3mUJNo2XDl3iM/k9JD8rTaTJZtGMT/nJs6jBMGUbirCA9ufHUA8hLxq0qtLN5nUlwkrqulvTU4/JWEl+tUQQfn6K8FHbl9P6E3cXt6Q0Hbr3a81qvmpn2xgaASmJjqmDDoCa4=
+	t=1716836380; cv=none; b=p3oHFmE+WhomUmQxswHnywqPpGAPvTZkmpy8eyQ4zaGuJHGHlaiW1mRKGThOlxNCr/ez4v1d+bl2dYDVWWLtR+s4zb8npH/f72UAISgFfS0Dke5lqyo0AEtXPMBCkT5nMAeOYZZl3O9H4n1VLH6GfVKVGY+FV29Ll5si+I6beg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836378; c=relaxed/simple;
-	bh=JfVBuYZpWp2qyg+gOz0lS4TqrE87g80SVeHfS0+lK20=;
+	s=arc-20240116; t=1716836380; c=relaxed/simple;
+	bh=Twp0g3AAgK61rjho50QxntfVPMU+a2L4YBZtkvo5zUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N2EbJX6QGiFWUHoVsNryGEYtPU/87Vtg/HxszBXh8fMeErfB8HQsS1woGOWrtHHbNNEH0aTBa9jstMroKk1RFvuamsWk70jChBUdFEMOWaBU2/lsBm03/kNDP1pAiWFhkGheAgiPFwaWv2FH8MFfyvTfbRN3QcLcXM/yTHGvCss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGKs9CyW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YHHNfe3ah+q9BYDvTydwpocQaMT4jePr8P0pI9+XMeMoKPzD2j9XZ1cHxCxR0GJUtNLtffaBJxqAGQEhOehpEzsY+F2Ol98CmwbBc8pkc8XbcsbKygOTCN45p5D/fEL+MwF5oO1eaLyItuBTYbbqmj0bcqx5LQagoKeWR+Dk9aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UC4ikuuE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGKs9CyW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB61C2BBFC;
-	Mon, 27 May 2024 18:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UC4ikuuE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC35C2BBFC;
+	Mon, 27 May 2024 18:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836377;
-	bh=JfVBuYZpWp2qyg+gOz0lS4TqrE87g80SVeHfS0+lK20=;
+	s=korg; t=1716836380;
+	bh=Twp0g3AAgK61rjho50QxntfVPMU+a2L4YBZtkvo5zUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGKs9CyW1arph9fcv7J9x805QKE8ftok9zgiSVu8vFadBsxO3nMMUz6x23Ni4us66
-	 7MZKzoHOKI6RV661BtIhEFC4HOCanqdlkkcx5mXFN6M2v1IHB+BNGwa9NhWIc3KLsB
-	 LQ5wFtanhIJnBlSPJGtJ3/IlrR8Z0x874MMN3T9E=
+	b=UC4ikuuEB6fjlVNCVLULECZIE6hyyBIp5AtPXoTPuHXVpwdRjJkXrvbNNAO84JYY6
+	 mTer3wdNvqfo0XR/ibSmQPUQ5B13RvBTkWpavUM7ZdXFBC90bcKuz/EA9WHtfeT7Tl
+	 a/1PgAev+iGrEwf6AlA+JDMGhWMP7BmIbATvO6BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.9 003/427] selftests/ftrace: Fix checkbashisms errors
-Date: Mon, 27 May 2024 20:50:50 +0200
-Message-ID: <20240527185602.050394262@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com,
+	"Bai, Shuangpeng" <sjb7183@psu.edu>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.9 030/427] nilfs2: fix potential hang in nilfs_detach_log_writer()
+Date: Mon, 27 May 2024 20:51:17 +0200
+Message-ID: <20240527185604.518194158@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -50,56 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit b07b7e2fd51840c7dfffa98c4344ab36195bb8dc upstream.
+commit eb85dace897c5986bc2f36b3c783c6abb8a4292e upstream.
 
-Fix the below checkbashisms errors. Because of these errors, these tests
-will fail on dash shell.
+Syzbot has reported a potential hang in nilfs_detach_log_writer() called
+during nilfs2 unmount.
 
-possible bashism in test.d/kprobe/kretprobe_entry_arg.tc line 14 ('function' is useless):
-function streq() {
-possible bashism in test.d/dynevent/fprobe_entry_arg.tc line 14 ('function' is useless):
-function streq() {
+Analysis revealed that this is because nilfs_segctor_sync(), which
+synchronizes with the log writer thread, can be called after
+nilfs_segctor_destroy() terminates that thread, as shown in the call trace
+below:
 
-Fixes: f6e2253a617c ("selftests/ftrace: Add test cases for entry args at function exit")
-Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+nilfs_detach_log_writer
+  nilfs_segctor_destroy
+    nilfs_segctor_kill_thread  --> Shut down log writer thread
+    flush_work
+      nilfs_iput_work_func
+        nilfs_dispose_list
+          iput
+            nilfs_evict_inode
+              nilfs_transaction_commit
+                nilfs_construct_segment (if inode needs sync)
+                  nilfs_segctor_sync  --> Attempt to synchronize with
+                                          log writer thread
+                           *** DEADLOCK ***
+
+Fix this issue by changing nilfs_segctor_sync() so that the log writer
+thread returns normally without synchronizing after it terminates, and by
+forcing tasks that are already waiting to complete once after the thread
+terminates.
+
+The skipped inode metadata flushout will then be processed together in the
+subsequent cleanup work in nilfs_segctor_destroy().
+
+Link: https://lkml.kernel.org/r/20240520132621.4054-4-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e3973c409251e136fdd0
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Cc: "Bai, Shuangpeng" <sjb7183@psu.edu>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../selftests/ftrace/test.d/dynevent/fprobe_entry_arg.tc        | 2 +-
- .../selftests/ftrace/test.d/kprobe/kretprobe_entry_arg.tc       | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/nilfs2/segment.c |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/dynevent/fprobe_entry_arg.tc b/tools/testing/selftests/ftrace/test.d/dynevent/fprobe_entry_arg.tc
-index d183b8a8ecf8..1e251ce2998e 100644
---- a/tools/testing/selftests/ftrace/test.d/dynevent/fprobe_entry_arg.tc
-+++ b/tools/testing/selftests/ftrace/test.d/dynevent/fprobe_entry_arg.tc
-@@ -11,7 +11,7 @@ echo 1 > events/tests/enable
- echo > trace
- cat trace > /dev/null
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2196,6 +2196,14 @@ static int nilfs_segctor_sync(struct nil
+ 	for (;;) {
+ 		set_current_state(TASK_INTERRUPTIBLE);
  
--function streq() {
-+streq() {
- 	test $1 = $2
++		/*
++		 * Synchronize only while the log writer thread is alive.
++		 * Leave flushing out after the log writer thread exits to
++		 * the cleanup work in nilfs_segctor_destroy().
++		 */
++		if (!sci->sc_task)
++			break;
++
+ 		if (atomic_read(&wait_req.done)) {
+ 			err = wait_req.err;
+ 			break;
+@@ -2211,7 +2219,7 @@ static int nilfs_segctor_sync(struct nil
+ 	return err;
  }
  
-diff --git a/tools/testing/selftests/ftrace/test.d/kprobe/kretprobe_entry_arg.tc b/tools/testing/selftests/ftrace/test.d/kprobe/kretprobe_entry_arg.tc
-index 53b82f36a1d0..e50470b53164 100644
---- a/tools/testing/selftests/ftrace/test.d/kprobe/kretprobe_entry_arg.tc
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kretprobe_entry_arg.tc
-@@ -11,7 +11,7 @@ echo 1 > events/kprobes/enable
- echo > trace
- cat trace > /dev/null
+-static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err)
++static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
+ {
+ 	struct nilfs_segctor_wait_request *wrq, *n;
+ 	unsigned long flags;
+@@ -2219,7 +2227,7 @@ static void nilfs_segctor_wakeup(struct
+ 	spin_lock_irqsave(&sci->sc_wait_request.lock, flags);
+ 	list_for_each_entry_safe(wrq, n, &sci->sc_wait_request.head, wq.entry) {
+ 		if (!atomic_read(&wrq->done) &&
+-		    nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq)) {
++		    (force || nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq))) {
+ 			wrq->err = err;
+ 			atomic_set(&wrq->done, 1);
+ 		}
+@@ -2368,7 +2376,7 @@ static void nilfs_segctor_notify(struct
+ 	if (mode == SC_LSEG_SR) {
+ 		sci->sc_state &= ~NILFS_SEGCTOR_COMMIT;
+ 		sci->sc_seq_done = sci->sc_seq_accepted;
+-		nilfs_segctor_wakeup(sci, err);
++		nilfs_segctor_wakeup(sci, err, false);
+ 		sci->sc_flush_request = 0;
+ 	} else {
+ 		if (mode == SC_FLUSH_FILE)
+@@ -2752,6 +2760,13 @@ static void nilfs_segctor_destroy(struct
+ 		|| sci->sc_seq_request != sci->sc_seq_done);
+ 	spin_unlock(&sci->sc_state_lock);
  
--function streq() {
-+streq() {
- 	test $1 = $2
- }
++	/*
++	 * Forcibly wake up tasks waiting in nilfs_segctor_sync(), which can
++	 * be called from delayed iput() via nilfs_evict_inode() and can race
++	 * with the above log writer thread termination.
++	 */
++	nilfs_segctor_wakeup(sci, 0, true);
++
+ 	if (flush_work(&sci->sc_iput_work))
+ 		flag = true;
  
--- 
-2.45.1
-
 
 
