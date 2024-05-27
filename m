@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBA415FD01;
-	Mon, 27 May 2024 19:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B871DFED;
+	Mon, 27 May 2024 19:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836574; cv=none; b=SYOFAVaUtA/F4yHqFtZW9VorANCG4TvX8yqmnENUN+yAIXfQWHv8BGckzmODGJK22OsFNdUCuiPRvohbS0iIyAdV5EMl1IXf0muIz/IKuG4NekGUcxLw6Q4za+s0EhoiWQiohmHCVpWRR142yQlxK7xUY0374ZtCEdp6NZtNzrA=
+	t=1716836577; cv=none; b=aCZLrjYOH6Coy1Y9Dqn5i0FB8uotuEAbxDXnw5gekUV75pgG542mUYfCAQYR5nroKlkNucNI1R3+4s5hN3d+bImKaaOhydzXne8w+W3pmzdF4obBJOkjxJT1LX/h+ebkboRXBMNpdXxNnILT+qPeGXenayiuI1NQIYit1IEw3b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836574; c=relaxed/simple;
-	bh=zhx5jqtIqM+cODDhkBexyHuGpLNJmMEPvQzSX12ubQY=;
+	s=arc-20240116; t=1716836577; c=relaxed/simple;
+	bh=Di3me2f4BGV2Rsm5wl7QNMR/MnQ2Ixtn33EdZe2rWic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NQK2eiJCHyDWpm8i214ikfXS9uekQvYiVBALQSrdTz1jIVocQm7KEHnIQBxQp3xGs0WmOG3e+31NNUSuET7N7DZhrc2P/eLWjGFo7b7qfacf13jzRBXSoEExO3rz6pZZQIgn8bTmTSktWM7C4JGKm54Ile9gwWalH6NJlOYtOiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwrHzQft; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P3g8wTTiAsw8baIzNThG56oh27EeOkLzsMP6FCo+3S+N40tR2bmtI7aLC1I0KNB87auavMAZ5xQKp1WQvw/l6YRLC/++DfCVvZqObAuCkBrHSTztmJPkUMmIOAHhdHgtPyRaiAdZ5ChG/LO1Eeh7OWsFombuHJ+obH4MfXlmR68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4MmAImD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwrHzQft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F609C2BBFC;
-	Mon, 27 May 2024 19:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4MmAImD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9487BC2BBFC;
+	Mon, 27 May 2024 19:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836574;
-	bh=zhx5jqtIqM+cODDhkBexyHuGpLNJmMEPvQzSX12ubQY=;
+	s=korg; t=1716836576;
+	bh=Di3me2f4BGV2Rsm5wl7QNMR/MnQ2Ixtn33EdZe2rWic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GwrHzQft/qVx6ffDq5J7zXSV5Q5JavjQBgVSUuvZsigCbmuXudNpK/soHQ12drqbF
-	 ll/h/bjQnPIZMf3Ip6FUVv2TKr5JLx+RCkhdMyyi6l/jPvvcPDoMtIxUPzHrX46zpL
-	 knd9p6X6pDy55Qxt4XJNd1bSRohOoki2qI8/yadg=
+	b=C4MmAImDa3hNfM/Hh+EvDhVhW505MHRIZz5bhRAXdoj7iw+E/QtkF2G5zhxvHMOGf
+	 4rogxMgaRMbS4HHOEEntUROlvBkji5m4fR2ayqmQA/cb0NPkndx2BpwV6rMiwCVCPl
+	 +nLjZnwZ8Ow5BGcv304tfLivr4kOKaq2agwwJdhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 108/427] wifi: iwlwifi: mvm: fix check in iwl_mvm_sta_fw_id_mask
-Date: Mon, 27 May 2024 20:52:35 +0200
-Message-ID: <20240527185611.880007144@linuxfoundation.org>
+Subject: [PATCH 6.9 091/427] wifi: brcmfmac: pcie: handle randbuf allocation failure
+Date: Mon, 27 May 2024 20:52:18 +0200
+Message-ID: <20240527185610.229689229@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,39 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit d69aef8084cc72df7b0f2583096d9b037c647ec8 ]
+[ Upstream commit 316f790ebcf94bdf59f794b7cdea4068dc676d4c ]
 
-In the previous commit, I renamed the variable to differentiate
-mac80211/mvm link STA, but forgot to adjust the check. The one
-from mac80211 is already non-NULL anyway, but the mvm one can
-be NULL when the mac80211 isn't during link switch conditions.
-Fix the check.
+The kzalloc() in brcmf_pcie_download_fw_nvram() will return null
+if the physical memory has run out. As a result, if we use
+get_random_bytes() to generate random bytes in the randbuf, the
+null pointer dereference bug will happen.
 
-Fixes: 2783ab506eaa ("wifi: iwlwifi: mvm: select STA mask only for active links")
-Reviewed-by: Daniel Gabay <daniel.gabay@intel.com>
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240325180850.e95b442bafe9.I8c0119fce7b00cb4f65782930d2c167ed5dd0a6e@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+In order to prevent allocation failure, this patch adds a separate
+function using buffer on kernel stack to generate random bytes in
+the randbuf, which could prevent the kernel stack from overflow.
+
+Fixes: 91918ce88d9f ("wifi: brcmfmac: pcie: Provide a buffer of random bytes to the device")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240306140437.18177-1-duoming@zju.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../wireless/broadcom/brcm80211/brcmfmac/pcie.c   | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-index dffdd00f8ab62..36dc291d98dd6 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-@@ -36,7 +36,7 @@ u32 iwl_mvm_sta_fw_id_mask(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
- 		mvm_link_sta =
- 			rcu_dereference_check(mvmsta->link[link_id],
- 					      lockdep_is_held(&mvm->mutex));
--		if (!link_sta)
-+		if (!mvm_link_sta)
- 			continue;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index d7fb88bb6ae1a..06698a714b523 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -1675,6 +1675,15 @@ struct brcmf_random_seed_footer {
+ #define BRCMF_RANDOM_SEED_MAGIC		0xfeedc0de
+ #define BRCMF_RANDOM_SEED_LENGTH	0x100
  
- 		result |= BIT(mvm_link_sta->sta_id);
++static noinline_for_stack void
++brcmf_pcie_provide_random_bytes(struct brcmf_pciedev_info *devinfo, u32 address)
++{
++	u8 randbuf[BRCMF_RANDOM_SEED_LENGTH];
++
++	get_random_bytes(randbuf, BRCMF_RANDOM_SEED_LENGTH);
++	memcpy_toio(devinfo->tcm + address, randbuf, BRCMF_RANDOM_SEED_LENGTH);
++}
++
+ static int brcmf_pcie_download_fw_nvram(struct brcmf_pciedev_info *devinfo,
+ 					const struct firmware *fw, void *nvram,
+ 					u32 nvram_len)
+@@ -1717,7 +1726,6 @@ static int brcmf_pcie_download_fw_nvram(struct brcmf_pciedev_info *devinfo,
+ 				.length = cpu_to_le32(rand_len),
+ 				.magic = cpu_to_le32(BRCMF_RANDOM_SEED_MAGIC),
+ 			};
+-			void *randbuf;
+ 
+ 			/* Some Apple chips/firmwares expect a buffer of random
+ 			 * data to be present before NVRAM
+@@ -1729,10 +1737,7 @@ static int brcmf_pcie_download_fw_nvram(struct brcmf_pciedev_info *devinfo,
+ 				    sizeof(footer));
+ 
+ 			address -= rand_len;
+-			randbuf = kzalloc(rand_len, GFP_KERNEL);
+-			get_random_bytes(randbuf, rand_len);
+-			memcpy_toio(devinfo->tcm + address, randbuf, rand_len);
+-			kfree(randbuf);
++			brcmf_pcie_provide_random_bytes(devinfo, address);
+ 		}
+ 	} else {
+ 		brcmf_dbg(PCIE, "No matching NVRAM file found %s\n",
 -- 
 2.43.0
 
