@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E64262BE;
-	Mon, 27 May 2024 19:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB90262BE;
+	Mon, 27 May 2024 19:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838039; cv=none; b=s/kQq3mxnvRPkHv0McsCVr0HeTY4wCLBOif28BnZHoZSJFzVKfBTWbkfY1cGATUGQtzZaVCGuAuOmI5urD+D0TyBJeqmi6/D6I1BMSVhY0lfYON21+i9b5ChBhmQNCjxlkty8MZpV7rjvshqmZvRo+gCEURHZ1+f5D/lPVWmTQo=
+	t=1716838042; cv=none; b=tqD46lxNlCTH+qtFRYyqz24PVyWtdCKSE8bEc3Yd9X01WZ33i0YWt0wwaDAliaKp75GwYp/7duJF/WOgLUeUqN3gnc4+lE1Isy8i2KiB3tCuSGjpEzXEVSsH30wuuJeVWx7pr632hes8VgGzSkl9GefQ3jQowKdTjhFt5t10qQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838039; c=relaxed/simple;
-	bh=sYA6PciNsu7J1IGdyHa7GwKmG9f4zvWWbp6asomQCe8=;
+	s=arc-20240116; t=1716838042; c=relaxed/simple;
+	bh=VNAArefKWp5eldadxbL7j7YrwpoChqGcLzSFUbAAJ+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1kqqTnfnvm6fQIoRGUrLfEDoaz6+C8xLVIUjlhjeIV5BXMRAOylpeFrIy5AJD7eHFETwgRaHGNgsRW7CdTrS5z38cMdAxyzaTBMXMhAdjx74x+Fd81SkqTflzqEJ/WrXVB+A0Vo/f+MsJRB2qlZUZeEvRJR9vt/aIH8khcN9xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9Va82Tk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ctvvg0lE8C+HbCXmETIP4OebUQx4K/H42vDPJP96czOzx1LAwtKVPIVfzy+PJkuqY88UMdD9NmSjCsITbYlb2TcxeceY6qxTOEBD4cIZrSLm2KRn5xRHjXjCTSEALSC7Wht24BqH0CWm1tl1aTsAu9p9/QaCFrkHeb9YW7x10as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIJ6Z7N5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9Va82Tk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E103C2BBFC;
-	Mon, 27 May 2024 19:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIJ6Z7N5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65DAC2BBFC;
+	Mon, 27 May 2024 19:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838039;
-	bh=sYA6PciNsu7J1IGdyHa7GwKmG9f4zvWWbp6asomQCe8=;
+	s=korg; t=1716838042;
+	bh=VNAArefKWp5eldadxbL7j7YrwpoChqGcLzSFUbAAJ+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9Va82Tk/zIAwO/oHdjzLX4ZFYCu4c+SkWf0qEGfnR0wUxVACfr53JTWPs7cSDuz+
-	 2peTANWRD8RA8NV8tK5balnrSA19ZWLrXNqbkqQgXTk5QEW4jHuVcyeGKJ5Bwh8Rn2
-	 61A//xjU1Sy4j4YmKeIRPHRgcIw/TBt79fHoW+bw=
+	b=fIJ6Z7N5rYXlCM6OqSc5mfPY9yKwP3h+h1bEsoBATpGXUltXbTgINPYeSV1vqgquo
+	 LutGOs5OM4mt1wjFRLIh/xGmoRKQRd5fRhsniPbgBtNdBNCzsMKP8F0s46e5Uvq90f
+	 joPx1v4pX2fO/QwWil2zQlYBrx5x2FFy0Mf/DdF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 243/493] tcp: avoid premature drops in tcp_add_backlog()
-Date: Mon, 27 May 2024 20:54:05 +0200
-Message-ID: <20240527185638.253523231@linuxfoundation.org>
+Subject: [PATCH 6.8 244/493] thermal/debugfs: Create records for cdev states as they get used
+Date: Mon, 27 May 2024 20:54:06 +0200
+Message-ID: <20240527185638.288213918@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,85 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit ec00ed472bdb7d0af840da68c8c11bff9f4d9caa ]
+[ Upstream commit f4ae18fcb652c6cccc834ded525ac37f91d5cdb1 ]
 
-While testing TCP performance with latest trees,
-I saw suspect SOCKET_BACKLOG drops.
+Because thermal_debug_cdev_state_update() only creates a duration record
+for the old state of a cooling device, if its new state is used for the
+first time, there will be no record for it and cdev_dt_seq_show() will
+not print the duration information for it even though it contains code
+to compute the duration value in that case.
 
-tcp_add_backlog() computes its limit with :
+Address this by making thermal_debug_cdev_state_update() create a
+duration record for the new state if there is none.
 
-    limit = (u32)READ_ONCE(sk->sk_rcvbuf) +
-            (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
-    limit += 64 * 1024;
-
-This does not take into account that sk->sk_backlog.len
-is reset only at the very end of __release_sock().
-
-Both sk->sk_backlog.len and sk->sk_rmem_alloc could reach
-sk_rcvbuf in normal conditions.
-
-We should double sk->sk_rcvbuf contribution in the formula
-to absorb bubbles in the backlog, which happen more often
-for very fast flows.
-
-This change maintains decent protection against abuses.
-
-Fixes: c377411f2494 ("net: sk_add_backlog() take rmem_alloc into account")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240423125620.3309458-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 755113d76786 ("thermal/debugfs: Add thermal cooling device debugfs information")
+Reported-by: Lukasz Luba <lukasz.luba@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Tested-by: Lukasz Luba <lukasz.luba@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/thermal/thermal_debugfs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 68a065c0e5081..abd47159d7e4d 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -2000,7 +2000,7 @@ int tcp_v4_early_demux(struct sk_buff *skb)
- bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb,
- 		     enum skb_drop_reason *reason)
- {
--	u32 limit, tail_gso_size, tail_gso_segs;
-+	u32 tail_gso_size, tail_gso_segs;
- 	struct skb_shared_info *shinfo;
- 	const struct tcphdr *th;
- 	struct tcphdr *thtail;
-@@ -2009,6 +2009,7 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb,
- 	bool fragstolen;
- 	u32 gso_segs;
- 	u32 gso_size;
-+	u64 limit;
- 	int delta;
+diff --git a/drivers/thermal/thermal_debugfs.c b/drivers/thermal/thermal_debugfs.c
+index 47ab95b3699e9..2891d2ab4875c 100644
+--- a/drivers/thermal/thermal_debugfs.c
++++ b/drivers/thermal/thermal_debugfs.c
+@@ -435,6 +435,14 @@ void thermal_debug_cdev_state_update(const struct thermal_cooling_device *cdev,
+ 	}
  
- 	/* In case all data was pulled from skb frags (in __pskb_pull_tail()),
-@@ -2106,7 +2107,13 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb,
- 	__skb_push(skb, hdrlen);
- 
- no_coalesce:
--	limit = (u32)READ_ONCE(sk->sk_rcvbuf) + (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
-+	/* sk->sk_backlog.len is reset only at the end of __release_sock().
-+	 * Both sk->sk_backlog.len and sk->sk_rmem_alloc could reach
-+	 * sk_rcvbuf in normal conditions.
+ 	cdev_dbg->current_state = new_state;
++
++	/*
++	 * Create a record for the new state if it is not there, so its
++	 * duration will be printed by cdev_dt_seq_show() as expected if it
++	 * runs before the next state transition.
 +	 */
-+	limit = ((u64)READ_ONCE(sk->sk_rcvbuf)) << 1;
++	thermal_debugfs_cdev_record_get(thermal_dbg, cdev_dbg->durations, new_state);
 +
-+	limit += ((u32)READ_ONCE(sk->sk_sndbuf)) >> 1;
+ 	transition = (old_state << 16) | new_state;
  
- 	/* Only socket owner can try to collapse/prune rx queues
- 	 * to reduce memory overhead, so add a little headroom here.
-@@ -2114,6 +2121,8 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb,
- 	 */
- 	limit += 64 * 1024;
- 
-+	limit = min_t(u64, limit, UINT_MAX);
-+
- 	if (unlikely(sk_add_backlog(sk, skb, limit))) {
- 		bh_unlock_sock(sk);
- 		*reason = SKB_DROP_REASON_SOCKET_BACKLOG;
+ 	/*
 -- 
 2.43.0
 
