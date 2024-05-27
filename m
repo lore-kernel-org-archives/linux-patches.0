@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F7115FCE9;
-	Mon, 27 May 2024 19:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5169015FCE9;
+	Mon, 27 May 2024 19:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837814; cv=none; b=ixXbh1CKQoFkp6OnbC28+OaQWOjlggG2H7pcqVfDmSklnMrvMV+h+MphZT1bnGfY5d4XKfbegPPTW2mCPohSSFg/PfH/T2UCBnV2o0yRDiYgWFdwbJTTIIHcxuUTG0cvPUvJt7y8gsQTl9Sn9ETq/iQO7OXDaRJ9rJEsr8Tceog=
+	t=1716837817; cv=none; b=mxHmMY3A73FRfmVdhUiI52vla7xjEmu5z8CKKJFWyrrocq2vXf0HnzWFELSTjdviIVO/ewAas7Kkv54nbtj7TTEfBo+i1pYe7cVUMAEcoQJVo8W9xH/rknz8Icqmtp4qHZCRSk/o9PIykT5uIf48vszlULh3vI9u1iCqX7B/1lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837814; c=relaxed/simple;
-	bh=q3KWIXWiLsIk24cCXSJmCtnOb3ZaV4hLU/iTkDl/EbA=;
+	s=arc-20240116; t=1716837817; c=relaxed/simple;
+	bh=4cmPmWwci5qvLOhcXNMT+JRccvLnsfS/BhSvz11tDSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ssbdwyymc/hTCum6otAqginK93TMUrBDZIO5lWIgPwXaa76cu76xlifSHId35IqNZFsbIghuZPV8S1Tew4Or842Ux5lQ7apV6PUDQzq99ew57xOPieofqRXxGNEoYzcF6c2hARUkoWixpDUe9byDxQhGA4r+2IDRy9diEhemUDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrjjarsU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M5F+fWWk0YVijPmxp4hZ/KSYsKyR2F7WQu2U4xIrsJhChckAZynrDj2ig05hTp/evg23IYwsye0M6ZxnB7hsPZ83iOldSFHKwgE3j/L+BnmyD+A44tmzZktxv1DEndFXSFng+uUCND8zfvm2qC6dI5QMAjEfI+FHhzy6Bq8PAYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s10KUvch; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrjjarsU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627B9C2BBFC;
-	Mon, 27 May 2024 19:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s10KUvch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8CCC2BBFC;
+	Mon, 27 May 2024 19:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837814;
-	bh=q3KWIXWiLsIk24cCXSJmCtnOb3ZaV4hLU/iTkDl/EbA=;
+	s=korg; t=1716837817;
+	bh=4cmPmWwci5qvLOhcXNMT+JRccvLnsfS/BhSvz11tDSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QrjjarsUo39bMvOKcCM9SF7LnB9MshCTRrrjazeJ3LbZ13B4EbpRt0wN0698wPkso
-	 4gLcs0mXmt1F9/O6PkehqzDO3K0z97pAnYbIYqLKyudAm5409KoFY5tfH3IlSEKtGE
-	 RzmjaQtoBMU2atccvuln0VVCOTNZjBUz5R8dg340=
+	b=s10KUvchK7xziW0bT3bU5YHr5zS+dzTLpdFm+CD22D7z882/8NavchQuG6ZgmOe4I
+	 SprYlIi05yegWNwfuREXqYEP4Z9cGki5CM4+P+of39u5tcx1rDTy4W6YU6owkTKzd/
+	 1lEkoCNb6NRLWgbOz14rZgmLQTsMTyUtJOZSoZPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Kees Cook <keescook@chromium.org>,
+	Jan Kara <jack@suse.cz>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 155/493] lkdtm: Disable CFI checking for perms functions
-Date: Mon, 27 May 2024 20:52:37 +0200
-Message-ID: <20240527185635.488691080@linuxfoundation.org>
+Subject: [PATCH 6.8 129/493] libfs: Define a minimum directory offset
+Date: Mon, 27 May 2024 20:52:11 +0200
+Message-ID: <20240527185634.710170103@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,57 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit fb28a8862dc4b5bf8e44578338f35d9c6c68339d ]
+[ Upstream commit 7beea725a8ca412c6190090ce7c3a13b169592a1 ]
 
-The EXEC_RODATA test plays a lot of tricks to live in the .rodata section,
-and once again ran into objtool's (completely reasonable) assumptions
-that executable code should live in an executable section. However, this
-manifested only under CONFIG_CFI_CLANG=y, as one of the .cfi_sites was
-pointing into the .rodata section.
+This value is used in several places, so make it a symbolic
+constant.
 
-Since we're testing non-CFI execution properties in perms.c (and
-rodata.c), we can disable CFI for the involved functions, and remove the
-CFI arguments from rodata.c entirely.
-
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202308301532.d7acf63e-oliver.sang@intel.com
-Fixes: 6342a20efbd8 ("objtool: Add elf_create_section_pair()")
-Link: https://lore.kernel.org/r/20240430234953.work.760-kees@kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/r/170820142741.6328.12428356024575347885.stgit@91.116.238.104.host.secureserver.net
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 23cdd0eed3f1 ("libfs: Fix simple_offset_rename_exchange()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/lkdtm/Makefile | 2 +-
- drivers/misc/lkdtm/perms.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/libfs.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/misc/lkdtm/Makefile b/drivers/misc/lkdtm/Makefile
-index 95ef971b5e1cb..b28701138b4bc 100644
---- a/drivers/misc/lkdtm/Makefile
-+++ b/drivers/misc/lkdtm/Makefile
-@@ -19,7 +19,7 @@ KASAN_SANITIZE_rodata.o			:= n
- KCSAN_SANITIZE_rodata.o			:= n
- KCOV_INSTRUMENT_rodata.o		:= n
- OBJECT_FILES_NON_STANDARD_rodata.o	:= y
--CFLAGS_REMOVE_rodata.o			+= $(CC_FLAGS_LTO) $(RETHUNK_CFLAGS)
-+CFLAGS_REMOVE_rodata.o			+= $(CC_FLAGS_LTO) $(RETHUNK_CFLAGS) $(CC_FLAGS_CFI)
+diff --git a/fs/libfs.c b/fs/libfs.c
+index 752e24c669d97..f0045db739df8 100644
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -240,6 +240,11 @@ const struct inode_operations simple_dir_inode_operations = {
+ };
+ EXPORT_SYMBOL(simple_dir_inode_operations);
  
- OBJCOPYFLAGS :=
- OBJCOPYFLAGS_rodata_objcopy.o	:= \
-diff --git a/drivers/misc/lkdtm/perms.c b/drivers/misc/lkdtm/perms.c
-index b93404d656509..5b861dbff27e9 100644
---- a/drivers/misc/lkdtm/perms.c
-+++ b/drivers/misc/lkdtm/perms.c
-@@ -61,7 +61,7 @@ static void *setup_function_descriptor(func_desc_t *fdesc, void *dst)
- 	return fdesc;
++/* 0 is '.', 1 is '..', so always start with offset 2 or more */
++enum {
++	DIR_OFFSET_MIN	= 2,
++};
++
+ static void offset_set(struct dentry *dentry, u32 offset)
+ {
+ 	dentry->d_fsdata = (void *)((uintptr_t)(offset));
+@@ -261,9 +266,7 @@ void simple_offset_init(struct offset_ctx *octx)
+ {
+ 	xa_init_flags(&octx->xa, XA_FLAGS_ALLOC1);
+ 	lockdep_set_class(&octx->xa.xa_lock, &simple_offset_xa_lock);
+-
+-	/* 0 is '.', 1 is '..', so always start with offset 2 */
+-	octx->next_offset = 2;
++	octx->next_offset = DIR_OFFSET_MIN;
  }
  
--static noinline void execute_location(void *dst, bool write)
-+static noinline __nocfi void execute_location(void *dst, bool write)
+ /**
+@@ -276,7 +279,7 @@ void simple_offset_init(struct offset_ctx *octx)
+  */
+ int simple_offset_add(struct offset_ctx *octx, struct dentry *dentry)
  {
- 	void (*func)(void);
- 	func_desc_t fdesc;
+-	static const struct xa_limit limit = XA_LIMIT(2, U32_MAX);
++	static const struct xa_limit limit = XA_LIMIT(DIR_OFFSET_MIN, U32_MAX);
+ 	u32 offset;
+ 	int ret;
+ 
+@@ -481,7 +484,7 @@ static int offset_readdir(struct file *file, struct dir_context *ctx)
+ 		return 0;
+ 
+ 	/* In this case, ->private_data is protected by f_pos_lock */
+-	if (ctx->pos == 2)
++	if (ctx->pos == DIR_OFFSET_MIN)
+ 		file->private_data = NULL;
+ 	else if (file->private_data == ERR_PTR(-ENOENT))
+ 		return 0;
 -- 
 2.43.0
 
