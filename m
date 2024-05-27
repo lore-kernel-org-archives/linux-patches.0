@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F289917E90E;
-	Mon, 27 May 2024 19:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9496117E90E;
+	Mon, 27 May 2024 19:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836982; cv=none; b=OQ/5NXOqCjuVx0txiU2kpQSz2+Kwy7dKDWDEZTBDNq5qfKweYSHlxXcRK14KboPLHIu/2N9KxhKMMQQHT/PIwqd0iiZYobppG7muSgyDOcllZJAPzKCRpLwuLO3WuGqrf8zdSXx78IxIy3lVR2gYjvwwmJ+qhCUjqBOZSbKF8Ts=
+	t=1716836984; cv=none; b=ETG6x85gGv2xqWqADFlVynY9FrZjCXRzJ3eG7wcmM4HEbvDnevMS79f4lKmWBkgFhe0OXfq4+SLMRLQMPcSqDgbZfUpNgmSDziQjqTYul6r2Y980PGWFdOPy8BEDWIKpU5aUJ34bxxIpwPvnUIkvNEZqLeTppvMQ7NKynlQgkhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836982; c=relaxed/simple;
-	bh=DwO0d8ByphG9DVeFLAOk8RycD62uwe8SC0sLCKyfQa4=;
+	s=arc-20240116; t=1716836984; c=relaxed/simple;
+	bh=uoxgB93CDJis5fWur4PITK2E+EXVPG/zHD6bb5IIk/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilKqYUjsxqaCOuuVJO+1fJqu2SJD11e1RxBA4O9EIfSTD4bgUL/z/kz/GIKT7qyklZ5LHr2EuBTxysUWWGN3m1hrKJ6NEQbB7er5TRwqwztJBs1xnhmwvbvPXTG8t19W9DpGzDAqUUrQ2FnmAF+dxf1jli5cLEj+ZSQNPHCYR04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqvqfcmH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=js3nR1X2uxNzLt+DWDwnTJYjmFS2E2daa5BAXTWaCVo55VjIixpKtSsRjlo4n/29hVA47hxn3uD6ypXXmhQb4sX0kxIhA/qS+PSEh0wAUT2yzrefU86Dfvl+k2g3N2O5W995smYyA3AwLTyq3SGIEDkxQTdAVEz9qEXGgXpPU64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQCusfUd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqvqfcmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878E5C2BBFC;
-	Mon, 27 May 2024 19:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQCusfUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2091DC2BBFC;
+	Mon, 27 May 2024 19:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836981;
-	bh=DwO0d8ByphG9DVeFLAOk8RycD62uwe8SC0sLCKyfQa4=;
+	s=korg; t=1716836984;
+	bh=uoxgB93CDJis5fWur4PITK2E+EXVPG/zHD6bb5IIk/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqvqfcmHBukLW0GGso3PkxcOOMe+IGUG82TKUeZ/xncGaI0BZkUc8o+dTjU6poAMg
-	 tAH5kw00gIr9NcwSHdTZ4iUJN6x8BfwRUiC5ZGyAxLFMyY/UHoWSYUPKtBHZ9dZGVF
-	 4jQ4ltOIi99U6ry5K3bluDyUMiAU4yu481tYpohs=
+	b=fQCusfUdFzO9aA8zlcefU4G2lxV81douNeTaIT7db1QfnRJ0eTfFlDv8CsVqk3nu7
+	 58xinC89kMRGpZrSWJdRkv0s/3gPO25p0Bg0W8jDRfiwhvL7pGjpSjKgvlJdpPAZ9G
+	 3k6SCcWsnZfU8VwfbXx9w6QVjCbSqyIYKh+eRuqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 263/427] net: fec: remove .ndo_poll_controller to avoid deadlocks
-Date: Mon, 27 May 2024 20:55:10 +0200
-Message-ID: <20240527185627.022765992@linuxfoundation.org>
+Subject: [PATCH 6.9 264/427] mptcp: SO_KEEPALIVE: fix getsockopt support
+Date: Mon, 27 May 2024 20:55:11 +0200
+Message-ID: <20240527185627.103549774@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,73 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit c2e0c58b25a0a0c37ec643255558c5af4450c9f5 ]
+[ Upstream commit a65198136eaa15b74ee0abf73f12ef83d469a334 ]
 
-There is a deadlock issue found in sungem driver, please refer to the
-commit ac0a230f719b ("eth: sungem: remove .ndo_poll_controller to avoid
-deadlocks"). The root cause of the issue is that netpoll is in atomic
-context and disable_irq() is called by .ndo_poll_controller interface
-of sungem driver, however, disable_irq() might sleep. After analyzing
-the implementation of fec_poll_controller(), the fec driver should have
-the same issue. Due to the fec driver uses NAPI for TX completions, the
-.ndo_poll_controller is unnecessary to be implemented in the fec driver,
-so fec_poll_controller() can be safely removed.
+SO_KEEPALIVE support has to be set on each subflow: on each TCP socket,
+where sk_prot->keepalive is defined. Technically, nothing has to be done
+on the MPTCP socket. That's why mptcp_sol_socket_sync_intval() was
+called instead of mptcp_sol_socket_intval().
 
-Fixes: 7f5c6addcdc0 ("net/fec: add poll controller function for fec nic")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://lore.kernel.org/r/20240511062009.652918-1-wei.fang@nxp.com
+Except that when nothing is done on the MPTCP socket, the
+getsockopt(SO_KEEPALIVE), handled in net/core/sock.c:sk_getsockopt(),
+will not know if SO_KEEPALIVE has been set on the different subflows or
+not.
+
+The fix is simple: simply call mptcp_sol_socket_intval() which will end
+up calling net/core/sock.c:sk_setsockopt() where the SOCK_KEEPOPEN flag
+will be set, the one used in sk_getsockopt().
+
+So now, getsockopt(SO_KEEPALIVE) on an MPTCP socket will return the same
+value as the one previously set with setsockopt(SO_KEEPALIVE).
+
+Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20240514011335.176158-2-martineau@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 26 -----------------------
- 1 file changed, 26 deletions(-)
+ net/mptcp/sockopt.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 8bd213da8fb6f..a72d8a2eb0b31 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3674,29 +3674,6 @@ fec_set_mac_address(struct net_device *ndev, void *p)
- 	return 0;
- }
+diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
+index 73fdf423de44e..08b7be2b1b69e 100644
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -181,8 +181,6 @@ static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
  
--#ifdef CONFIG_NET_POLL_CONTROLLER
--/**
-- * fec_poll_controller - FEC Poll controller function
-- * @dev: The FEC network adapter
-- *
-- * Polled functionality used by netconsole and others in non interrupt mode
-- *
-- */
--static void fec_poll_controller(struct net_device *dev)
--{
--	int i;
--	struct fec_enet_private *fep = netdev_priv(dev);
--
--	for (i = 0; i < FEC_IRQ_NUM; i++) {
--		if (fep->irq[i] > 0) {
--			disable_irq(fep->irq[i]);
--			fec_enet_interrupt(fep->irq[i], dev);
--			enable_irq(fep->irq[i]);
--		}
--	}
--}
--#endif
--
- static inline void fec_enet_set_netdev_features(struct net_device *netdev,
- 	netdev_features_t features)
- {
-@@ -4003,9 +3980,6 @@ static const struct net_device_ops fec_netdev_ops = {
- 	.ndo_tx_timeout		= fec_timeout,
- 	.ndo_set_mac_address	= fec_set_mac_address,
- 	.ndo_eth_ioctl		= phy_do_ioctl_running,
--#ifdef CONFIG_NET_POLL_CONTROLLER
--	.ndo_poll_controller	= fec_poll_controller,
--#endif
- 	.ndo_set_features	= fec_set_features,
- 	.ndo_bpf		= fec_enet_bpf,
- 	.ndo_xdp_xmit		= fec_enet_xdp_xmit,
+ 	switch (optname) {
+ 	case SO_KEEPALIVE:
+-		mptcp_sol_socket_sync_intval(msk, optname, val);
+-		return 0;
+ 	case SO_DEBUG:
+ 	case SO_MARK:
+ 	case SO_PRIORITY:
 -- 
 2.43.0
 
