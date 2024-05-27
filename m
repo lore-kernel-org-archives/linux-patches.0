@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A1F7347E;
-	Mon, 27 May 2024 19:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB794168C4;
+	Mon, 27 May 2024 19:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837569; cv=none; b=JZDMmb402ZYKmVW5/Id9U18Q9qME5RZTstzBB9M1B0Z8dbpRhgHwA9qVDJbBkSa+4iBkzhkSBiEGuY+UxuxvxvkCa+64pA9WBXZZOiy6Mk7ZUjbE7uwwbiUzXrlrd+1iRhqxVDH9H+V82ykPN3X916Ha7Z+FAMhCK+kJf2wmjT0=
+	t=1716837571; cv=none; b=DcNIBSx17S7OgqhGPH6gQwfGMBY0oKVSSiok2ujWclK2cB/cGczzyc25X75BJ9ondvx5zvXw4UkhCb9aObyOvlAlfOdCzBoD7f//OY5Wvg7emk2iyAdy3/KMh1OErWg8LTmI/bsW1HyQBJNUFeUzjtmlAvJOojNEa3ahBj+6/u4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837569; c=relaxed/simple;
-	bh=DQUvq59zIDm+rbyzmhKpPJRoY1zFMHEgnEq+pervDG8=;
+	s=arc-20240116; t=1716837571; c=relaxed/simple;
+	bh=ltqszpaEtrYTv8NfJvYsN3scVWE9/Bz6PsNDdL8o8c4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JO3PReUBMwBqh185c3QjI5Db4giF9e++CSNn0jn0K/lP1bldIUPrGkEcrzAZtjI2LRq7kqyAydvdWctRhUHNFGCZk2a05kGMA17iBHAS4qVAalZjDFd5tF3CoIPaW/R0SIUhJmcDVjDLpWHC2nhE3183+4pNfOBsa4WAkxrZkqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5hNXVbE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ErOEqX2xEsa5HQGs7OLviOM0igDLpSChiziDP+QUbw4nVBEuFTJgamW9DzkOWUtUufWuT2dHCejtDMM/Kfka9kzLeHyfgdSboNMOYoHPhwktCceSy3i9OxOSRbGiNWEj8xscMxKBtW6R9dJcV1vgXvPdizCcqVqIDqZJE6WaOxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5T2NIBe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5hNXVbE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779DEC2BBFC;
-	Mon, 27 May 2024 19:19:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5T2NIBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FF7C2BBFC;
+	Mon, 27 May 2024 19:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837569;
-	bh=DQUvq59zIDm+rbyzmhKpPJRoY1zFMHEgnEq+pervDG8=;
+	s=korg; t=1716837571;
+	bh=ltqszpaEtrYTv8NfJvYsN3scVWE9/Bz6PsNDdL8o8c4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5hNXVbEYeil/tC3OsH4QzhXns1wdum/vftIXr7bJfDMjVfHRCONv8QssVOV951Zr
-	 ygZAnsWtLH09GoJkcC1N8ZUm9TB0KQkn+TsfGLGLEtMaAeVMTVWo84ZV84axI0KiTq
-	 IWaEcb1ycdATzjdK9aEBgSVo53iepFcwg3n2Wm88=
+	b=V5T2NIBeDZ0jd4hPhHYNVsUuc3imuzsWifqIJJf2PSwPHskK+kTanZPXXu5ilWBKy
+	 IEV+SyCLJAhGaWIgkTf4MewLhi8mU10TMFFF9Jnv+KfjvP6iVdR5gppgNkdUaC+SVu
+	 KwrKZKrHRw2cYPZvMjaTy7JRA2We2Vcb0Djij2tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Phil Auld <pauld@redhat.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 061/493] sched/isolation: Fix boot crash when maxcpus < first housekeeping CPU
-Date: Mon, 27 May 2024 20:51:03 +0200
-Message-ID: <20240527185631.511119261@linuxfoundation.org>
+Subject: [PATCH 6.8 062/493] ASoC: Intel: bytcr_rt5640: Apply Asus T100TA quirk to Asus T100TAM too
+Date: Mon, 27 May 2024 20:51:04 +0200
+Message-ID: <20240527185631.582380140@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -54,76 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 257bf89d84121280904800acd25cc2c444c717ae ]
+[ Upstream commit e50729d742ec364895f1c389c32315984a987aa5 ]
 
-housekeeping_setup() checks cpumask_intersects(present, online) to ensure
-that the kernel will have at least one housekeeping CPU after smp_init(),
-but this doesn't work if the maxcpus= kernel parameter limits the number of
-processors available after bootup.
+The Asus T100TA quirk has been using an exact match on a product-name of
+"T100TA" but there are also T100TAM variants with a slightly higher
+clocked CPU and a metal backside which need the same quirk.
 
-For example, a kernel with "maxcpus=2 nohz_full=0-2" parameters crashes at
-boot time on a virtual machine with 4 CPUs.
+Sort the existing T100TA (stereo speakers) below the more specific
+T100TAF (mono speaker) quirk and switch from exact matching to
+substring matching so that the T100TA quirk will also match on
+the T100TAM models.
 
-Change housekeeping_setup() to use cpumask_first_and() and check that the
-returned CPU number is valid and less than setup_max_cpus.
-
-Another corner case is "nohz_full=0" on a machine with a single CPU or with
-the maxcpus=1 kernel argument. In this case non_housekeeping_mask is empty
-and tick_nohz_full_setup() makes no sense. And indeed, the kernel hits the
-WARN_ON(tick_nohz_full_running) in tick_sched_do_timer().
-
-And how should the kernel interpret the "nohz_full=" parameter? It should
-be silently ignored, but currently cpulist_parse() happily returns the
-empty cpumask and this leads to the same problem.
-
-Change housekeeping_setup() to check cpumask_empty(non_housekeeping_mask)
-and do nothing in this case.
-
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/20240413141746.GA10008@redhat.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://msgid.link/r/20240407191559.21596-1-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/isolation.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/soc/intel/boards/bytcr_rt5640.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/sched/isolation.c b/kernel/sched/isolation.c
-index 373d42c707bc5..82e2f7fc7c267 100644
---- a/kernel/sched/isolation.c
-+++ b/kernel/sched/isolation.c
-@@ -109,6 +109,7 @@ static void __init housekeeping_setup_type(enum hk_type type,
- static int __init housekeeping_setup(char *str, unsigned long flags)
- {
- 	cpumask_var_t non_housekeeping_mask, housekeeping_staging;
-+	unsigned int first_cpu;
- 	int err = 0;
- 
- 	if ((flags & HK_FLAG_TICK) && !(housekeeping.flags & HK_FLAG_TICK)) {
-@@ -129,7 +130,8 @@ static int __init housekeeping_setup(char *str, unsigned long flags)
- 	cpumask_andnot(housekeeping_staging,
- 		       cpu_possible_mask, non_housekeeping_mask);
- 
--	if (!cpumask_intersects(cpu_present_mask, housekeeping_staging)) {
-+	first_cpu = cpumask_first_and(cpu_present_mask, housekeeping_staging);
-+	if (first_cpu >= nr_cpu_ids || first_cpu >= setup_max_cpus) {
- 		__cpumask_set_cpu(smp_processor_id(), housekeeping_staging);
- 		__cpumask_clear_cpu(smp_processor_id(), non_housekeeping_mask);
- 		if (!housekeeping.flags) {
-@@ -138,6 +140,9 @@ static int __init housekeeping_setup(char *str, unsigned long flags)
- 		}
- 	}
- 
-+	if (cpumask_empty(non_housekeeping_mask))
-+		goto free_housekeeping_staging;
-+
- 	if (!housekeeping.flags) {
- 		/* First setup call ("nohz_full=" or "isolcpus=") */
- 		enum hk_type type;
+diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
+index 05f38d1f7d824..b41a1147f1c34 100644
+--- a/sound/soc/intel/boards/bytcr_rt5640.c
++++ b/sound/soc/intel/boards/bytcr_rt5640.c
+@@ -636,28 +636,30 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
+ 					BYT_RT5640_USE_AMCR0F28),
+ 	},
+ 	{
++		/* Asus T100TAF, unlike other T100TA* models this one has a mono speaker */
+ 		.matches = {
+ 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T100TA"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T100TAF"),
+ 		},
+ 		.driver_data = (void *)(BYT_RT5640_IN1_MAP |
+ 					BYT_RT5640_JD_SRC_JD2_IN4N |
+ 					BYT_RT5640_OVCD_TH_2000UA |
+ 					BYT_RT5640_OVCD_SF_0P75 |
++					BYT_RT5640_MONO_SPEAKER |
++					BYT_RT5640_DIFF_MIC |
++					BYT_RT5640_SSP0_AIF2 |
+ 					BYT_RT5640_MCLK_EN),
+ 	},
+ 	{
++		/* Asus T100TA and T100TAM, must come after T100TAF (mono spk) match */
+ 		.matches = {
+-			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T100TAF"),
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "T100TA"),
+ 		},
+ 		.driver_data = (void *)(BYT_RT5640_IN1_MAP |
+ 					BYT_RT5640_JD_SRC_JD2_IN4N |
+ 					BYT_RT5640_OVCD_TH_2000UA |
+ 					BYT_RT5640_OVCD_SF_0P75 |
+-					BYT_RT5640_MONO_SPEAKER |
+-					BYT_RT5640_DIFF_MIC |
+-					BYT_RT5640_SSP0_AIF2 |
+ 					BYT_RT5640_MCLK_EN),
+ 	},
+ 	{
 -- 
 2.43.0
 
