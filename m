@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB6B161302;
-	Mon, 27 May 2024 19:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18681863F;
+	Mon, 27 May 2024 19:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837326; cv=none; b=GqLEz0yVof5Atk2KJ8AM4wqIlbG4qlzBCLqOcTYGjzpRIgniXkNbVm5XLZd5PFa3V2MDBMLA9MBjD7MyjWhAQJYt6M+uJag1bAcoIVtPjD0PnBWFXuWkE/9wB1NUVDaixQx7/R8bdh0q7c76XjNByM2EfCw+nastpj4xPsIKc8E=
+	t=1716837328; cv=none; b=KZ1wPuZx8nyZtErbTxwzazshg+yFWm6EoNpsZz83/0H/neurS83gwOdXpzbDiaESpaGdAwNsdQHtUo5iUZh6LGMjWCjFWn59CEKGJ+CnhmDkbwBsCSWwl9SHl6mjl7iQ7rVyVa3HXg0KqAGw135l1PzpWZuSzEz8bJOwfFX0C5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837326; c=relaxed/simple;
-	bh=MOimMQdEwXibqU45fKzdEdiLPnL2mMaeXvIW5j+ping=;
+	s=arc-20240116; t=1716837328; c=relaxed/simple;
+	bh=yIOfJZSgpwGy828iKf5Hjlys1YuXKF46WCmB9X4PQAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t2sSgrTmPnYW9rO/3BFTjUmvyFE0Ntrie9lUmKHOWuXgJc8wDfOu/ak+Zd3RVTmjFfEK9kU38FkPlrgxb1UEYdjLRAU5tJyQh334dYEFYXCqHg1Y4iZPmpWmiydR4SEqnHTclcfh7UWpTze1olesRCLNmRF/hOwPz7hrU00xdEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNjSpW8a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Js6JoxNjkPESYYAcsQ5VNuwJOiUx/A+JfQq7ael4AJA5pZNUNCyYwfTG2sz4YjwMNqgnagMg2QXM3y4wOy6fgMM1h8fsp5UXQ8cijxCqu0AFbzhbBvQ9vASDOf7CUMwJDVGVd7t/LrupmoE92Fm4yyyPUWu8ZwpdetG6ir8BfU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hdr+I13P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNjSpW8a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59F0C2BBFC;
-	Mon, 27 May 2024 19:15:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hdr+I13P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A3FC2BBFC;
+	Mon, 27 May 2024 19:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837326;
-	bh=MOimMQdEwXibqU45fKzdEdiLPnL2mMaeXvIW5j+ping=;
+	s=korg; t=1716837328;
+	bh=yIOfJZSgpwGy828iKf5Hjlys1YuXKF46WCmB9X4PQAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNjSpW8alwbehYbeK6LLopyUAPsqQSKLwzRiANdxQRLFWMG49l8wtgdkVi5HwMe95
-	 ElTcbLF9RbFyxWMn9SdibQbvrPZD5V34h7RSLgp4GRhWm5WtBOvxdoDUauTI/TuMcA
-	 c8z8cOPvhg5ZcCUeCz/XlAgflCBSh8tBiFTlWa1E=
+	b=Hdr+I13Pauc/UqdAnrSWQ+vcdUOXkQeU2t4NeyKjGpL1cssR185XpPsYlh7XO3t4t
+	 k3Z+z597OF96jA+WrFxf+f7ux7oagVsG+OKvbxbfFj3h1uQi/JaFZHgfmOF36xGFrG
+	 Dxxt5QUVtOdFWc/9qx1anq1AJochHHxhdpIs0y2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 396/427] ext4: fix potential unnitialized variable
-Date: Mon, 27 May 2024 20:57:23 +0200
-Message-ID: <20240527185634.971886005@linuxfoundation.org>
+Subject: [PATCH 6.9 397/427] ext4: remove the redundant folio_wait_stable()
+Date: Mon, 27 May 2024 20:57:24 +0200
+Message-ID: <20240527185635.002478021@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,38 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 3f4830abd236d0428e50451e1ecb62e14c365e9b ]
+[ Upstream commit df0b5afc62f3368d657a8fe4a8d393ac481474c2 ]
 
-Smatch complains "err" can be uninitialized in the caller.
+__filemap_get_folio() with FGP_WRITEBEGIN parameter has already wait
+for stable folio, so remove the redundant folio_wait_stable() in
+ext4_da_write_begin(), it was left over from the commit cc883236b792
+("ext4: drop unnecessary journal handle in delalloc write") that
+removed the retry getting page logic.
 
-    fs/ext4/indirect.c:349 ext4_alloc_branch()
-    error: uninitialized symbol 'err'.
-
-Set the error to zero on the success path.
-
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/363a4673-0fb8-4adf-b4fb-90a499077276@moroto.mountain
+Fixes: cc883236b792 ("ext4: drop unnecessary journal handle in delalloc write")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240419023005.2719050-1-yi.zhang@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/inode.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 12b3f196010b8..714f83632e3f9 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -6113,6 +6113,7 @@ ext4_mb_new_blocks_simple(struct ext4_allocation_request *ar, int *errp)
- 	ext4_mb_mark_bb(sb, block, 1, true);
- 	ar->len = 1;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 537803250ca9a..6de6bf57699be 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -2887,9 +2887,6 @@ static int ext4_da_write_begin(struct file *file, struct address_space *mapping,
+ 	if (IS_ERR(folio))
+ 		return PTR_ERR(folio);
  
-+	*errp = 0;
- 	return block;
- }
- 
+-	/* In case writeback began while the folio was unlocked */
+-	folio_wait_stable(folio);
+-
+ #ifdef CONFIG_FS_ENCRYPTION
+ 	ret = ext4_block_write_begin(folio, pos, len, ext4_da_get_block_prep);
+ #else
 -- 
 2.43.0
 
