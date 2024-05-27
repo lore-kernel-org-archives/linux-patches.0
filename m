@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2F21667D2;
-	Mon, 27 May 2024 19:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C7F167DA7;
+	Mon, 27 May 2024 19:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836544; cv=none; b=Hv7vFv/DQkMm8NcqpymtxSUMRCHNCI1ktH0QyUbkKaGB6ew8lJn1yonkukQj+xXvc8H1pfUf2nZ6a5baCDtD4J5AqlLv6RYZCz73E2+0OTIOlz9z1NNpDVvaL/4hvqTQnP/2YJWgin/S3xsgxpIwz6vuG/3K5A9lFcCj6Z8ib70=
+	t=1716836548; cv=none; b=PbawYRzc4oDLxy2yjSdPzXi6JtGNddzu+fHKabmLMG8XUiZkh+XkaP6MB9uI1hrTpkownx3k5ME7E9ljBpKkYy6P2ELdkbO992owW5fa79c/Qy4+qCFSWhTBuoF9mYP+Qtp8x2Y5Z+fWvjiI/8EvkNdNw29FpCqW3cQl6AK10cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836544; c=relaxed/simple;
-	bh=0CFu4OaR/decLe8iUNh8DS4Gy6Sdo3gVMbx6eEJUiBY=;
+	s=arc-20240116; t=1716836548; c=relaxed/simple;
+	bh=Q8rGwDCbpnsZtwdZfNNUhihYERVC8E+ci1JntanBIPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iKXjLntkqOnCBovOLtUTX3VjlHjdvuA+neSMyfnxc66N9dVdt4wZ5Auwwc37w1x40aQ0Vs4Bra/R0RZenLNRJL7FIQIfizCyqK92O6mrrIfMGFx6z3cq3zjirPfyWBH9He4VTZjwK/YImbiAXTjDc1xwJv87ogtaaNJdDVqXy8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0STVc4SJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MSDwornYfAQQlqWokUPVyVn6g/QFBDnkcNJ3BqJOTn82JPQ2hbgHDq5FYnmt+ykYOk7X99cebi4gbtMpeA29QeOEk4OCQp8RDADWzd5zhZp6PROWl1cNhYmwOCY5dYVfiXXDsAO/LGm3ZGhqLF7tP1SAdC3mrZ7WdjYCt4AW99c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff6dEIhH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0STVc4SJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF198C32782;
-	Mon, 27 May 2024 19:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff6dEIhH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353F4C2BBFC;
+	Mon, 27 May 2024 19:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836544;
-	bh=0CFu4OaR/decLe8iUNh8DS4Gy6Sdo3gVMbx6eEJUiBY=;
+	s=korg; t=1716836546;
+	bh=Q8rGwDCbpnsZtwdZfNNUhihYERVC8E+ci1JntanBIPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0STVc4SJSDhoNE9Ws5yAxD5vbDlqhWkJ7UYPH8bFG36Vwc1UEJ34tiMp8AvCC+Eys
-	 mdujcJ0yaROTAmmad2XoBQUKU/CcakvCKkgI0zm5kyBoNtQSukzSqZn0tD54d4is5n
-	 hFbheYZBgMKx/tDjBYI5+aPJITWUucmFn/HjC+M8=
+	b=Ff6dEIhHP6naks+hvRORjUxDSqegq5RWAJp6X1VURntQNFrphheXI6rbyg6YzpFn1
+	 HJXnncjOB67A/+zmtGQuea4epFl0B587cuPcJcxMN+7lAYiewE8FE7XHTj1y+3j9vM
+	 zfLsN2SiPxPWJdOslUTPlGimi54Y6vt8OnzlbeLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 053/427] crypto: x86/sha256-avx2 - add missing vzeroupper
-Date: Mon, 27 May 2024 20:51:40 +0200
-Message-ID: <20240527185606.683637381@linuxfoundation.org>
+Subject: [PATCH 6.9 044/427] crypto: bcm - Fix pointer arithmetic
+Date: Mon, 27 May 2024 20:51:31 +0200
+Message-ID: <20240527185605.878908284@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,35 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 57ce8a4e162599cf9adafef1f29763160a8e5564 ]
+[ Upstream commit 2b3460cbf454c6b03d7429e9ffc4fe09322eb1a9 ]
 
-Since sha256_transform_rorx() uses ymm registers, execute vzeroupper
-before returning from it.  This is necessary to avoid reducing the
-performance of SSE code.
+In spu2_dump_omd() value of ptr is increased by ciph_key_len
+instead of hash_iv_len which could lead to going beyond the
+buffer boundaries.
+Fix this bug by changing ciph_key_len to hash_iv_len.
 
-Fixes: d34a460092d8 ("crypto: sha256 - Optimized sha256 x86_64 routine using AVX2's RORX instructions")
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Acked-by: Tim Chen <tim.c.chen@linux.intel.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 9d12ba86f818 ("crypto: brcm - Add Broadcom SPU driver")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/sha256-avx2-asm.S | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/bcm/spu2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/crypto/sha256-avx2-asm.S b/arch/x86/crypto/sha256-avx2-asm.S
-index 9918212faf914..0ffb072be9561 100644
---- a/arch/x86/crypto/sha256-avx2-asm.S
-+++ b/arch/x86/crypto/sha256-avx2-asm.S
-@@ -716,6 +716,7 @@ SYM_TYPED_FUNC_START(sha256_transform_rorx)
- 	popq	%r13
- 	popq	%r12
- 	popq	%rbx
-+	vzeroupper
- 	RET
- SYM_FUNC_END(sha256_transform_rorx)
+diff --git a/drivers/crypto/bcm/spu2.c b/drivers/crypto/bcm/spu2.c
+index 07989bb8c220a..3fdc64b5a65e7 100644
+--- a/drivers/crypto/bcm/spu2.c
++++ b/drivers/crypto/bcm/spu2.c
+@@ -495,7 +495,7 @@ static void spu2_dump_omd(u8 *omd, u16 hash_key_len, u16 ciph_key_len,
+ 	if (hash_iv_len) {
+ 		packet_log("  Hash IV Length %u bytes\n", hash_iv_len);
+ 		packet_dump("  hash IV: ", ptr, hash_iv_len);
+-		ptr += ciph_key_len;
++		ptr += hash_iv_len;
+ 	}
  
+ 	if (ciph_iv_len) {
 -- 
 2.43.0
 
