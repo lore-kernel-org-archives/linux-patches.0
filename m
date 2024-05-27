@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EF017E90E;
-	Mon, 27 May 2024 19:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC96117E90E;
+	Mon, 27 May 2024 19:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837088; cv=none; b=YILkblbOmH4dHdEs/309TN7q8U3T+h4H3k5LVfgpQi4NyF2v17B+nwMhspG1up/UifDy9yIsK4bhMk97YMnueS2Bz+EOVdNqaLY0u66SkDsTIqAqxs0h74gJAgl4MfLihzl08oP6cTc5cdnQLyyjYe2baK5U4bsn2UCSBhVklyg=
+	t=1716837091; cv=none; b=RKMCBpjt+Xbsgq4Q1yoN9Af/wtVd52eft0rlYROunJtURzDSJc++P/yzxKVjk6S/CW8qIt841EPuXq+/GuDO/HVoYfWv0uPtRoTz2xIJVRq09d+qUOVU0d8e40fQmlXKvNsnMQuOi2mqX9VudBpcJ4kHhKvNurInPvJ6zGoaJLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837088; c=relaxed/simple;
-	bh=Z41lnDo7t6wKuthNYBwcU1IgILOV0B9eHyTjcwoQ8KQ=;
+	s=arc-20240116; t=1716837091; c=relaxed/simple;
+	bh=zFT6lpRI0FFIwl4UfvmGcY0LWseXZ2lprbjtQJIqF44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QctGWIOpOOK+hmo+ZQKVESOuwjBBya9fhW/cOfyEYSIAyVmJbnugFu/H2ybmz+nBjqMBY96TIagbmRUSxqqdL3edXBxrb3eF7YYdlJ7UDdd5LZWfjTqMoTDQfJXmZsySU1eQZ22pFIBpAAgu+9xeCrxGfEsm816fBMD1ebDSxHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=da4/RoZv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XLn5xQFdJ2jEQKDvHvgx+9KmohYj5lGNpY8GZvWtfZAlBCzxjZJQXcfvhtKr+iM6Evq7uBKf9QWBLNGbz1y9HvzjguoZg28TcNPNJ3ypbvdYtMl5YKjjkxyixrshb3bhZBBGn0XgBoY8ZclkpO2gNAl+8f5owYRlVqQu08vW1FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2pSppcQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="da4/RoZv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D60C2BBFC;
-	Mon, 27 May 2024 19:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2pSppcQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA0FC2BBFC;
+	Mon, 27 May 2024 19:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837088;
-	bh=Z41lnDo7t6wKuthNYBwcU1IgILOV0B9eHyTjcwoQ8KQ=;
+	s=korg; t=1716837091;
+	bh=zFT6lpRI0FFIwl4UfvmGcY0LWseXZ2lprbjtQJIqF44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=da4/RoZvjK9PauYcB0wL4Cwu3ozjvuI1jux+g5E/cMh1FfCUk+OcBTjguBXUUhAyk
-	 kAghRCPRvi9g5CR9RlbnrMNQu9X/YaCHjLdC3DJyDa/cuwAbeWk8Y6CM6jg1L/Yaxg
-	 a94+UwgesyoAWIZHabsPmOBVv7mNL4hSynvn37g4=
+	b=J2pSppcQzZw4NpxBWQ13f80Ma+W4DcMu3HJ8diScp+qlJWuDAXH+fmNmrMcNI47VP
+	 IydOgAksvsDRRVol2bVCr5i4nzd5qzRwmIXaL6vbuyvZjU+AFtdzRD7kgvO95Jhezs
+	 cJj+NnpdiYTWWCB9nZ7YCCc11AkBEdSrWlsjB2m4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Helge Deller <deller@gmx.de>,
+	Tianchen Ding <dtcccc@linux.alibaba.com>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 305/427] fbdev: sisfb: hide unused variables
-Date: Mon, 27 May 2024 20:55:52 +0200
-Message-ID: <20240527185630.535127506@linuxfoundation.org>
+Subject: [PATCH 6.9 306/427] selftests: cgroup: skip test_cgcore_lesser_ns_open when cgroup2 mounted without nsdelegate
+Date: Mon, 27 May 2024 20:55:53 +0200
+Message-ID: <20240527185630.602169049@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,66 +52,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Tianchen Ding <dtcccc@linux.alibaba.com>
 
-[ Upstream commit 688cf598665851b9e8cb5083ff1d208ce43d10ff ]
+[ Upstream commit 4793cb599b1bdc3d356f0374c2c99ffe890ae876 ]
 
-Building with W=1 shows that a couple of variables in this driver are only
-used in certain configurations:
+The test case test_cgcore_lesser_ns_open only tasks effect when cgroup2
+is mounted with "nsdelegate" mount option. If it misses this option, or
+is remounted without "nsdelegate", the test case will fail. For example,
+running bpf/test_cgroup_storage first, and then run cgroup/test_core will
+fail on test_cgcore_lesser_ns_open. Skip it if "nsdelegate" is not
+detected in cgroup2 mount options.
 
-drivers/video/fbdev/sis/init301.c:239:28: error: 'SiS_Part2CLVX_6' defined but not used [-Werror=unused-const-variable=]
-  239 | static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:230:28: error: 'SiS_Part2CLVX_5' defined but not used [-Werror=unused-const-variable=]
-  230 | static const unsigned char SiS_Part2CLVX_5[] = {   /* 750p */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:211:28: error: 'SiS_Part2CLVX_4' defined but not used [-Werror=unused-const-variable=]
-  211 | static const unsigned char SiS_Part2CLVX_4[] = {   /* PAL */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:192:28: error: 'SiS_Part2CLVX_3' defined but not used [-Werror=unused-const-variable=]
-  192 | static const unsigned char SiS_Part2CLVX_3[] = {  /* NTSC, 525i, 525p */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:184:28: error: 'SiS_Part2CLVX_2' defined but not used [-Werror=unused-const-variable=]
-  184 | static const unsigned char SiS_Part2CLVX_2[] = {
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:176:28: error: 'SiS_Part2CLVX_1' defined but not used [-Werror=unused-const-variable=]
-  176 | static const unsigned char SiS_Part2CLVX_1[] = {
-      |                            ^~~~~~~~~~~~~~~
-
-This started showing up after the definitions were moved into the
-source file from the header, which was not flagged by the compiler.
-Move the definition into the appropriate #ifdef block that already
-exists next to them.
-
-Fixes: 5908986ef348 ("video: fbdev: sis: avoid mismatched prototypes")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: bf35a7879f1d ("selftests: cgroup: Test open-time cgroup namespace usage for migration checks")
+Signed-off-by: Tianchen Ding <dtcccc@linux.alibaba.com>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sis/init301.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/selftests/cgroup/cgroup_util.c        | 8 +++++---
+ tools/testing/selftests/cgroup/cgroup_util.h        | 2 +-
+ tools/testing/selftests/cgroup/test_core.c          | 7 ++++++-
+ tools/testing/selftests/cgroup/test_cpu.c           | 2 +-
+ tools/testing/selftests/cgroup/test_cpuset.c        | 2 +-
+ tools/testing/selftests/cgroup/test_freezer.c       | 2 +-
+ tools/testing/selftests/cgroup/test_hugetlb_memcg.c | 2 +-
+ tools/testing/selftests/cgroup/test_kill.c          | 2 +-
+ tools/testing/selftests/cgroup/test_kmem.c          | 2 +-
+ tools/testing/selftests/cgroup/test_memcontrol.c    | 2 +-
+ tools/testing/selftests/cgroup/test_zswap.c         | 2 +-
+ 11 files changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/video/fbdev/sis/init301.c b/drivers/video/fbdev/sis/init301.c
-index a8fb41f1a2580..09329072004f4 100644
---- a/drivers/video/fbdev/sis/init301.c
-+++ b/drivers/video/fbdev/sis/init301.c
-@@ -172,7 +172,7 @@ static const unsigned char SiS_HiTVGroup3_2[] = {
- };
+diff --git a/tools/testing/selftests/cgroup/cgroup_util.c b/tools/testing/selftests/cgroup/cgroup_util.c
+index 0340d4ca8f51c..432db923bced0 100644
+--- a/tools/testing/selftests/cgroup/cgroup_util.c
++++ b/tools/testing/selftests/cgroup/cgroup_util.c
+@@ -195,10 +195,10 @@ int cg_write_numeric(const char *cgroup, const char *control, long value)
+ 	return cg_write(cgroup, control, buf);
+ }
  
- /* 301C / 302ELV extended Part2 TV registers (4 tap scaler) */
--
-+#ifdef CONFIG_FB_SIS_315
- static const unsigned char SiS_Part2CLVX_1[] = {
-     0x00,0x00,
-     0x00,0x20,0x00,0x00,0x7F,0x20,0x02,0x7F,0x7D,0x20,0x04,0x7F,0x7D,0x1F,0x06,0x7E,
-@@ -245,7 +245,6 @@ static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
-     0xFF,0xFF,
- };
+-int cg_find_unified_root(char *root, size_t len)
++int cg_find_unified_root(char *root, size_t len, bool *nsdelegate)
+ {
+ 	char buf[10 * PAGE_SIZE];
+-	char *fs, *mount, *type;
++	char *fs, *mount, *type, *options;
+ 	const char delim[] = "\n\t ";
  
--#ifdef CONFIG_FB_SIS_315
- /* 661 et al LCD data structure (2.03.00) */
- static const unsigned char SiS_LCDStruct661[] = {
-     /* 1024x768 */
+ 	if (read_text("/proc/self/mounts", buf, sizeof(buf)) <= 0)
+@@ -211,12 +211,14 @@ int cg_find_unified_root(char *root, size_t len)
+ 	for (fs = strtok(buf, delim); fs; fs = strtok(NULL, delim)) {
+ 		mount = strtok(NULL, delim);
+ 		type = strtok(NULL, delim);
+-		strtok(NULL, delim);
++		options = strtok(NULL, delim);
+ 		strtok(NULL, delim);
+ 		strtok(NULL, delim);
+ 
+ 		if (strcmp(type, "cgroup2") == 0) {
+ 			strncpy(root, mount, len);
++			if (nsdelegate)
++				*nsdelegate = !!strstr(options, "nsdelegate");
+ 			return 0;
+ 		}
+ 	}
+diff --git a/tools/testing/selftests/cgroup/cgroup_util.h b/tools/testing/selftests/cgroup/cgroup_util.h
+index 1df7f202214af..89e8519fb2719 100644
+--- a/tools/testing/selftests/cgroup/cgroup_util.h
++++ b/tools/testing/selftests/cgroup/cgroup_util.h
+@@ -21,7 +21,7 @@ static inline int values_close(long a, long b, int err)
+ 	return abs(a - b) <= (a + b) / 100 * err;
+ }
+ 
+-extern int cg_find_unified_root(char *root, size_t len);
++extern int cg_find_unified_root(char *root, size_t len, bool *nsdelegate);
+ extern char *cg_name(const char *root, const char *name);
+ extern char *cg_name_indexed(const char *root, const char *name, int index);
+ extern char *cg_control(const char *cgroup, const char *control);
+diff --git a/tools/testing/selftests/cgroup/test_core.c b/tools/testing/selftests/cgroup/test_core.c
+index 80aa6b2373b96..a5672a91d273c 100644
+--- a/tools/testing/selftests/cgroup/test_core.c
++++ b/tools/testing/selftests/cgroup/test_core.c
+@@ -18,6 +18,8 @@
+ #include "../kselftest.h"
+ #include "cgroup_util.h"
+ 
++static bool nsdelegate;
++
+ static int touch_anon(char *buf, size_t size)
+ {
+ 	int fd;
+@@ -775,6 +777,9 @@ static int test_cgcore_lesser_ns_open(const char *root)
+ 	pid_t pid;
+ 	int status;
+ 
++	if (!nsdelegate)
++		return KSFT_SKIP;
++
+ 	cg_test_a = cg_name(root, "cg_test_a");
+ 	cg_test_b = cg_name(root, "cg_test_b");
+ 
+@@ -862,7 +867,7 @@ int main(int argc, char *argv[])
+ 	char root[PATH_MAX];
+ 	int i, ret = EXIT_SUCCESS;
+ 
+-	if (cg_find_unified_root(root, sizeof(root)))
++	if (cg_find_unified_root(root, sizeof(root), &nsdelegate))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+ 	if (cg_read_strstr(root, "cgroup.subtree_control", "memory"))
+diff --git a/tools/testing/selftests/cgroup/test_cpu.c b/tools/testing/selftests/cgroup/test_cpu.c
+index 24020a2c68dcd..186bf96f6a284 100644
+--- a/tools/testing/selftests/cgroup/test_cpu.c
++++ b/tools/testing/selftests/cgroup/test_cpu.c
+@@ -700,7 +700,7 @@ int main(int argc, char *argv[])
+ 	char root[PATH_MAX];
+ 	int i, ret = EXIT_SUCCESS;
+ 
+-	if (cg_find_unified_root(root, sizeof(root)))
++	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+ 	if (cg_read_strstr(root, "cgroup.subtree_control", "cpu"))
+diff --git a/tools/testing/selftests/cgroup/test_cpuset.c b/tools/testing/selftests/cgroup/test_cpuset.c
+index b061ed1e05b4d..4034d14ba69ac 100644
+--- a/tools/testing/selftests/cgroup/test_cpuset.c
++++ b/tools/testing/selftests/cgroup/test_cpuset.c
+@@ -249,7 +249,7 @@ int main(int argc, char *argv[])
+ 	char root[PATH_MAX];
+ 	int i, ret = EXIT_SUCCESS;
+ 
+-	if (cg_find_unified_root(root, sizeof(root)))
++	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+ 	if (cg_read_strstr(root, "cgroup.subtree_control", "cpuset"))
+diff --git a/tools/testing/selftests/cgroup/test_freezer.c b/tools/testing/selftests/cgroup/test_freezer.c
+index 8845353aca53b..8730645d363a7 100644
+--- a/tools/testing/selftests/cgroup/test_freezer.c
++++ b/tools/testing/selftests/cgroup/test_freezer.c
+@@ -827,7 +827,7 @@ int main(int argc, char *argv[])
+ 	char root[PATH_MAX];
+ 	int i, ret = EXIT_SUCCESS;
+ 
+-	if (cg_find_unified_root(root, sizeof(root)))
++	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+diff --git a/tools/testing/selftests/cgroup/test_hugetlb_memcg.c b/tools/testing/selftests/cgroup/test_hugetlb_memcg.c
+index f0fefeb4cc24c..856f9508ea562 100644
+--- a/tools/testing/selftests/cgroup/test_hugetlb_memcg.c
++++ b/tools/testing/selftests/cgroup/test_hugetlb_memcg.c
+@@ -214,7 +214,7 @@ int main(int argc, char **argv)
+ 		return ret;
+ 	}
+ 
+-	if (cg_find_unified_root(root, sizeof(root)))
++	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+ 	switch (test_hugetlb_memcg(root)) {
+diff --git a/tools/testing/selftests/cgroup/test_kill.c b/tools/testing/selftests/cgroup/test_kill.c
+index 6153690319c9c..0e5bb6c7307a5 100644
+--- a/tools/testing/selftests/cgroup/test_kill.c
++++ b/tools/testing/selftests/cgroup/test_kill.c
+@@ -276,7 +276,7 @@ int main(int argc, char *argv[])
+ 	char root[PATH_MAX];
+ 	int i, ret = EXIT_SUCCESS;
+ 
+-	if (cg_find_unified_root(root, sizeof(root)))
++	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
+ 		switch (tests[i].fn(root)) {
+diff --git a/tools/testing/selftests/cgroup/test_kmem.c b/tools/testing/selftests/cgroup/test_kmem.c
+index c82f974b85c94..137506db03127 100644
+--- a/tools/testing/selftests/cgroup/test_kmem.c
++++ b/tools/testing/selftests/cgroup/test_kmem.c
+@@ -420,7 +420,7 @@ int main(int argc, char **argv)
+ 	char root[PATH_MAX];
+ 	int i, ret = EXIT_SUCCESS;
+ 
+-	if (cg_find_unified_root(root, sizeof(root)))
++	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+ 	/*
+diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
+index c7c9572003a8c..b462416b38061 100644
+--- a/tools/testing/selftests/cgroup/test_memcontrol.c
++++ b/tools/testing/selftests/cgroup/test_memcontrol.c
+@@ -1314,7 +1314,7 @@ int main(int argc, char **argv)
+ 	char root[PATH_MAX];
+ 	int i, proc_status, ret = EXIT_SUCCESS;
+ 
+-	if (cg_find_unified_root(root, sizeof(root)))
++	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+ 	/*
+diff --git a/tools/testing/selftests/cgroup/test_zswap.c b/tools/testing/selftests/cgroup/test_zswap.c
+index f0e488ed90d89..ef7f395453173 100644
+--- a/tools/testing/selftests/cgroup/test_zswap.c
++++ b/tools/testing/selftests/cgroup/test_zswap.c
+@@ -440,7 +440,7 @@ int main(int argc, char **argv)
+ 	char root[PATH_MAX];
+ 	int i, ret = EXIT_SUCCESS;
+ 
+-	if (cg_find_unified_root(root, sizeof(root)))
++	if (cg_find_unified_root(root, sizeof(root), NULL))
+ 		ksft_exit_skip("cgroup v2 isn't mounted\n");
+ 
+ 	if (!zswap_configured())
 -- 
 2.43.0
 
