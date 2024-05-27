@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142D9168C4;
-	Mon, 27 May 2024 19:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56F8168C4;
+	Mon, 27 May 2024 19:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837730; cv=none; b=j5cuTJoiV4KtrIVpNgW27kOzAijvO1I63iRVrdriWh8oNTuVYfdxx6nrI71BQezl3agMh8Owdj6tXOevQcIby30cnWGXXS8kszoPsNvhOnrXkZWnqYcqxneqO4fcRGPrDYeL8LTX5Ta5Fx4hqLKbaURCRkBiAlRTo4JGP6er01U=
+	t=1716837732; cv=none; b=ugKJPpHf9HVRFkt0zcdmqGKi4ulmqTeSnDkSN8D1soVu4nL84h73TNghUafOGg1KGKIxJoytBCbap7ZTpRipvN8Edp4jkLZYTtIXUqSdmnLUJDLe6GuvNcTVLNCGA2p0RIY04aaf8kudfKBRbPTVgo46NLxQcjPkDrQo4wTTBDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837730; c=relaxed/simple;
-	bh=k5mW1Wel9G3kb/rp56RTOPe2tQIDndG0P2C1ENsi+3o=;
+	s=arc-20240116; t=1716837732; c=relaxed/simple;
+	bh=8Y9akUizmVnSFY2KlkgOrthiogYxP0mFuFnP0YWt8ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqDdXSixtgETFW24RY2hFm8/xaTSbST6+IhHFSAuKLZ6ylzLYQxzFfNKH0l8LEjiLjTqBuSCIaVLx+U9AUmWvTapum5VOAQ5xIuddUN1lSI3nD85isyz0IJSR8XCKetxgnBTW4KsGJXUN3MaPYyiv0Y72DO4JAzjtEVPCv18Z/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cyyymsij; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OC4h9Y+Lp5kmVUT0PbrjQ8cn+hBmUHSC7Tfjl6IymP51YP2gXPinltFpzSvgO1YL9c96eReVBg9Pi3Wh/U7wusKmcZduJyS6Ab1CCvA2E0syHqNph4JBRG7yiwKZoOxCoPvBHngi/isk+hZ2q45ynEfmV8JyZKWqxZtq7Fi60wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgIq+6an; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cyyymsij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914C8C2BBFC;
-	Mon, 27 May 2024 19:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgIq+6an"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F73C2BBFC;
+	Mon, 27 May 2024 19:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837730;
-	bh=k5mW1Wel9G3kb/rp56RTOPe2tQIDndG0P2C1ENsi+3o=;
+	s=korg; t=1716837732;
+	bh=8Y9akUizmVnSFY2KlkgOrthiogYxP0mFuFnP0YWt8ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CyyymsijAoqJJvPKPFfbECIE07GmmWh/GoOPd2/plWbymJVkPy3RfrNT7l3g9cCf7
-	 ZmwMDdiqYXig4xcT54JxDUzlyxAK1y19p8t40tOg6Cx/czOtIbOE+KJezpJDNjTRNI
-	 o36xbpHoJsCCXDjIeAwf5RrpJANcEjwKyKWOgv4Y=
+	b=SgIq+6an99AXbiaCWVibmxpoh6kbux8q9WXkU14ojPy2OwuXfbvQwQOzzd1uGRloe
+	 7VP3eY6cVDAV3UMhi7F2j3koFTubk6xgqux60kKz4IlSx0jz5SJX65GfchrFU+u9C2
+	 Odmav4erxhootfm5S8n6gytjCoHQRR3GfwoPYhAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 121/493] crypto: x86/sha512-avx2 - add missing vzeroupper
-Date: Mon, 27 May 2024 20:52:03 +0200
-Message-ID: <20240527185634.460206430@linuxfoundation.org>
+Subject: [PATCH 6.8 122/493] s390/cio: fix tracepoint subchannel type field
+Date: Mon, 27 May 2024 20:52:04 +0200
+Message-ID: <20240527185634.488050860@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,35 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-[ Upstream commit 6a24fdfe1edbafacdacd53516654d99068f20eec ]
+[ Upstream commit 8692a24d0fae19f674d51726d179ad04ba95d958 ]
 
-Since sha512_transform_rorx() uses ymm registers, execute vzeroupper
-before returning from it.  This is necessary to avoid reducing the
-performance of SSE code.
+The subchannel-type field "st" of s390_cio_stsch and s390_cio_msch
+tracepoints is incorrectly filled with the subchannel-enabled SCHIB
+value "ena". Fix this by assigning the correct value.
 
-Fixes: e01d69cb0195 ("crypto: sha512 - Optimized SHA512 x86_64 assembly routine using AVX instructions.")
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Acked-by: Tim Chen <tim.c.chen@linux.intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: d1de8633d96a ("s390 cio: Rewrite trace point class s390_class_schib")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/sha512-avx2-asm.S | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/s390/cio/trace.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/crypto/sha512-avx2-asm.S b/arch/x86/crypto/sha512-avx2-asm.S
-index f08496cd68708..24973f42c43ff 100644
---- a/arch/x86/crypto/sha512-avx2-asm.S
-+++ b/arch/x86/crypto/sha512-avx2-asm.S
-@@ -680,6 +680,7 @@ SYM_TYPED_FUNC_START(sha512_transform_rorx)
- 	pop	%r12
- 	pop	%rbx
- 
-+	vzeroupper
- 	RET
- SYM_FUNC_END(sha512_transform_rorx)
- 
+diff --git a/drivers/s390/cio/trace.h b/drivers/s390/cio/trace.h
+index 86993de253451..a4c5c6736b310 100644
+--- a/drivers/s390/cio/trace.h
++++ b/drivers/s390/cio/trace.h
+@@ -50,7 +50,7 @@ DECLARE_EVENT_CLASS(s390_class_schib,
+ 		__entry->devno = schib->pmcw.dev;
+ 		__entry->schib = *schib;
+ 		__entry->pmcw_ena = schib->pmcw.ena;
+-		__entry->pmcw_st = schib->pmcw.ena;
++		__entry->pmcw_st = schib->pmcw.st;
+ 		__entry->pmcw_dnv = schib->pmcw.dnv;
+ 		__entry->pmcw_dev = schib->pmcw.dev;
+ 		__entry->pmcw_lpm = schib->pmcw.lpm;
 -- 
 2.43.0
 
