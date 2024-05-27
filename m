@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D54117E90E;
-	Mon, 27 May 2024 19:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905C517E90E;
+	Mon, 27 May 2024 19:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837132; cv=none; b=EAul/PzepuwbnW11GEVpR2aD0UaJaj7GdwfKhfLuKofvY+9nVzXjU5BxUngmcJiCVA1ldlOEX2qsy8Ewv57vVq0C+y5cL/gfZOnTFRzU4hCR5Mfe2axOz/XOU1PKbOrjKfag5yqfK3vg6W/jzrSH5X4STozsjbbWH/7Oi5lfGd4=
+	t=1716837134; cv=none; b=mG/NIdqCqaDsoUWoDW66Plwkak95eEJ+1LrzoXdMPV33H6vwuwflWY3husq3RVS7CKngCCXp5A8OwSrxTHU+m5PqmdxzbfoI7S1zFWJ4fyYN0LppKxjBZYicp29pqQ7tNZEARFY5HXQwwCzAnj1y+RvqXggLFOaHLaKgwZEv4sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837132; c=relaxed/simple;
-	bh=cUXm6diHtXBbkFlrcAhcev6u4BC8zMBufJiSaaeZCto=;
+	s=arc-20240116; t=1716837134; c=relaxed/simple;
+	bh=toZnJGdjfZWtalC0DAmUwtOLdc0rNqI0dP0VZLIXNb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YmKsgLca9oOmlTSxLPW5DZEL/APx7jQt/Da0SnhfXWDLNAN6enizLZF612+1dwqYGj7Q87NZtdLiGaR/qZnRc5mlTJMMeKA63ey3ES9s1nS7d0L/me9y9M76y/j5+4OJnuGtdYVJC8UDiXRgRy/8LnJb2fdJ/21TT+nh3AvjRhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+nuHLcf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iji0Lexgk+Vu+qIhKQ7XFSL1UNkwRgTL6uQqO38KGtsDwuKMSCV93+ocoz5wYGSutn7uxokbiKOQi/YvRS7ferUxOnysziiuQy/XdISr4dxoLGCHTdct8cn4W75q6ut52qOIltiMtdWD2lPYmFdLTc1MrcYunZ+YBkKwZ7ZEnVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icuoAROI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+nuHLcf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AD0C2BBFC;
-	Mon, 27 May 2024 19:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icuoAROI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FB9C2BBFC;
+	Mon, 27 May 2024 19:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837131;
-	bh=cUXm6diHtXBbkFlrcAhcev6u4BC8zMBufJiSaaeZCto=;
+	s=korg; t=1716837134;
+	bh=toZnJGdjfZWtalC0DAmUwtOLdc0rNqI0dP0VZLIXNb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+nuHLcfdrUWItlkKN/ZYEr0qXmpXa9uURQCJlyFz7qtUV0GR3g8pFxgZ3Hyqgclb
-	 zWyeLlJlFb9EwKdDCmtF2h3LFhwOEtsmjeen10o8/ZwzYLrGD8J34SKtFcBZn9zNN5
-	 wiuelnsnqmHIJ2kXdPZ9cAyv/tta+gXIDrotnmIg=
+	b=icuoAROIjas2SVZNHzpfJF5JvqYpwNfNK4mn0nMJdL7d9uu9Xrq2cvypNxilayxjp
+	 TX7O+CdfuuP7feAWTi+JoxqoHRQEa0+3Wxug3NN9F/I4RI7rLAIq0xnGgmVr6RT3qx
+	 gCjTNuv/ADovVhOexdnK5FVjTJDKm9B3i5zye+TM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 270/427] Bluetooth: ISO: Make iso_get_sock_listen generic
-Date: Mon, 27 May 2024 20:55:17 +0200
-Message-ID: <20240527185627.631136990@linuxfoundation.org>
+Subject: [PATCH 6.9 316/427] drm: bridge: cdns-mhdp8546: Fix possible null pointer dereference
+Date: Mon, 27 May 2024 20:56:03 +0200
+Message-ID: <20240527185631.283064794@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,196 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 311527e9dafdcae0c5a20d62f4f84ad01b33b5f4 ]
+[ Upstream commit 935a92a1c400285545198ca2800a4c6c519c650a ]
 
-This makes iso_get_sock_listen more generic, to return matching socket
-in the state provided as argument.
+In cdns_mhdp_atomic_enable(), the return value of drm_mode_duplicate() is
+assigned to mhdp_state->current_mode, and there is a dereference of it in
+drm_mode_set_name(), which will lead to a NULL pointer dereference on
+failure of drm_mode_duplicate().
 
-Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: a5b862c6a221 ("Bluetooth: L2CAP: Fix div-by-zero in l2cap_le_flowctl_init()")
+Fix this bug add a check of mhdp_state->current_mode.
+
+Fixes: fb43aa0acdfd ("drm: bridge: Add support for Cadence MHDP8546 DPI/DP bridge")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240408125810.21899-1-amishin@t-argos.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/bluetooth.h |  2 +-
- net/bluetooth/iso.c               | 75 +++++++++++++++++--------------
- 2 files changed, 43 insertions(+), 34 deletions(-)
+ drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
-index eaec5d6caa29d..b3228bd6cd6be 100644
---- a/include/net/bluetooth/bluetooth.h
-+++ b/include/net/bluetooth/bluetooth.h
-@@ -285,7 +285,7 @@ void bt_err_ratelimited(const char *fmt, ...);
- 	bt_err_ratelimited("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
+diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+index e226acc5c15e1..8a91ef0ae0651 100644
+--- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+@@ -2059,6 +2059,9 @@ static void cdns_mhdp_atomic_enable(struct drm_bridge *bridge,
+ 	mhdp_state = to_cdns_mhdp_bridge_state(new_state);
  
- /* Connection and socket states */
--enum {
-+enum bt_sock_state {
- 	BT_CONNECTED = 1, /* Equal to TCP_ESTABLISHED to make net code happy */
- 	BT_OPEN,
- 	BT_BOUND,
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 6bed4aa8291de..6cb41f9d174e2 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -85,8 +85,9 @@ static void iso_sock_disconn(struct sock *sk);
+ 	mhdp_state->current_mode = drm_mode_duplicate(bridge->dev, mode);
++	if (!mhdp_state->current_mode)
++		return;
++
+ 	drm_mode_set_name(mhdp_state->current_mode);
  
- typedef bool (*iso_sock_match_t)(struct sock *sk, void *data);
- 
--static struct sock *iso_get_sock_listen(bdaddr_t *src, bdaddr_t *dst,
--					iso_sock_match_t match, void *data);
-+static struct sock *iso_get_sock(bdaddr_t *src, bdaddr_t *dst,
-+				 enum bt_sock_state state,
-+				 iso_sock_match_t match, void *data);
- 
- /* ---- ISO timers ---- */
- #define ISO_CONN_TIMEOUT	(HZ * 40)
-@@ -233,10 +234,11 @@ static void iso_conn_del(struct hci_conn *hcon, int err)
- 		 * terminated are not processed anymore.
- 		 */
- 		if (test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags)) {
--			parent = iso_get_sock_listen(&hcon->src,
--						     &hcon->dst,
--						     iso_match_conn_sync_handle,
--						     hcon);
-+			parent = iso_get_sock(&hcon->src,
-+					      &hcon->dst,
-+					      BT_LISTEN,
-+					      iso_match_conn_sync_handle,
-+					      hcon);
- 
- 			if (parent) {
- 				set_bit(BT_SK_PA_SYNC_TERM,
-@@ -581,22 +583,23 @@ static struct sock *__iso_get_sock_listen_by_sid(bdaddr_t *ba, bdaddr_t *bc,
- 	return NULL;
- }
- 
--/* Find socket listening:
-+/* Find socket in given state:
-  * source bdaddr (Unicast)
-  * destination bdaddr (Broadcast only)
-  * match func - pass NULL to ignore
-  * match func data - pass -1 to ignore
-  * Returns closest match.
-  */
--static struct sock *iso_get_sock_listen(bdaddr_t *src, bdaddr_t *dst,
--					iso_sock_match_t match, void *data)
-+static struct sock *iso_get_sock(bdaddr_t *src, bdaddr_t *dst,
-+				 enum bt_sock_state state,
-+				 iso_sock_match_t match, void *data)
- {
- 	struct sock *sk = NULL, *sk1 = NULL;
- 
- 	read_lock(&iso_sk_list.lock);
- 
- 	sk_for_each(sk, &iso_sk_list.head) {
--		if (sk->sk_state != BT_LISTEN)
-+		if (sk->sk_state != state)
- 			continue;
- 
- 		/* Match Broadcast destination */
-@@ -1777,32 +1780,37 @@ static void iso_conn_ready(struct iso_conn *conn)
- 						 HCI_EVT_LE_BIG_SYNC_ESTABILISHED);
- 
- 			/* Get reference to PA sync parent socket, if it exists */
--			parent = iso_get_sock_listen(&hcon->src,
--						     &hcon->dst,
--						     iso_match_pa_sync_flag, NULL);
-+			parent = iso_get_sock(&hcon->src, &hcon->dst,
-+					      BT_LISTEN,
-+					      iso_match_pa_sync_flag,
-+					      NULL);
- 			if (!parent && ev)
--				parent = iso_get_sock_listen(&hcon->src,
--							     &hcon->dst,
--							     iso_match_big, ev);
-+				parent = iso_get_sock(&hcon->src,
-+						      &hcon->dst,
-+						      BT_LISTEN,
-+						      iso_match_big, ev);
- 		} else if (test_bit(HCI_CONN_PA_SYNC_FAILED, &hcon->flags)) {
- 			ev2 = hci_recv_event_data(hcon->hdev,
- 						  HCI_EV_LE_PA_SYNC_ESTABLISHED);
- 			if (ev2)
--				parent = iso_get_sock_listen(&hcon->src,
--							     &hcon->dst,
--							     iso_match_sid, ev2);
-+				parent = iso_get_sock(&hcon->src,
-+						      &hcon->dst,
-+						      BT_LISTEN,
-+						      iso_match_sid, ev2);
- 		} else if (test_bit(HCI_CONN_PA_SYNC, &hcon->flags)) {
- 			ev3 = hci_recv_event_data(hcon->hdev,
- 						  HCI_EVT_LE_BIG_INFO_ADV_REPORT);
- 			if (ev3)
--				parent = iso_get_sock_listen(&hcon->src,
--							     &hcon->dst,
--							     iso_match_sync_handle, ev3);
-+				parent = iso_get_sock(&hcon->src,
-+						      &hcon->dst,
-+						      BT_LISTEN,
-+						      iso_match_sync_handle,
-+						      ev3);
- 		}
- 
- 		if (!parent)
--			parent = iso_get_sock_listen(&hcon->src,
--							BDADDR_ANY, NULL, NULL);
-+			parent = iso_get_sock(&hcon->src, BDADDR_ANY,
-+					      BT_LISTEN, NULL, NULL);
- 
- 		if (!parent)
- 			return;
-@@ -1923,8 +1931,8 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 	 */
- 	ev1 = hci_recv_event_data(hdev, HCI_EV_LE_PA_SYNC_ESTABLISHED);
- 	if (ev1) {
--		sk = iso_get_sock_listen(&hdev->bdaddr, bdaddr, iso_match_sid,
--					 ev1);
-+		sk = iso_get_sock(&hdev->bdaddr, bdaddr, BT_LISTEN,
-+				  iso_match_sid, ev1);
- 		if (sk && !ev1->status)
- 			iso_pi(sk)->sync_handle = le16_to_cpu(ev1->handle);
- 
-@@ -1934,12 +1942,12 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 	ev2 = hci_recv_event_data(hdev, HCI_EVT_LE_BIG_INFO_ADV_REPORT);
- 	if (ev2) {
- 		/* Try to get PA sync listening socket, if it exists */
--		sk = iso_get_sock_listen(&hdev->bdaddr, bdaddr,
--						iso_match_pa_sync_flag, NULL);
-+		sk = iso_get_sock(&hdev->bdaddr, bdaddr, BT_LISTEN,
-+				  iso_match_pa_sync_flag, NULL);
- 
- 		if (!sk) {
--			sk = iso_get_sock_listen(&hdev->bdaddr, bdaddr,
--						 iso_match_sync_handle, ev2);
-+			sk = iso_get_sock(&hdev->bdaddr, bdaddr, BT_LISTEN,
-+					  iso_match_sync_handle, ev2);
- 
- 			/* If PA Sync is in process of terminating,
- 			 * do not handle any more BIGInfo adv reports.
-@@ -1979,8 +1987,8 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 		u8 *base;
- 		struct hci_conn *hcon;
- 
--		sk = iso_get_sock_listen(&hdev->bdaddr, bdaddr,
--					 iso_match_sync_handle_pa_report, ev3);
-+		sk = iso_get_sock(&hdev->bdaddr, bdaddr, BT_LISTEN,
-+				  iso_match_sync_handle_pa_report, ev3);
- 		if (!sk)
- 			goto done;
- 
-@@ -2029,7 +2037,8 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 			hcon->le_per_adv_data_len = 0;
- 		}
- 	} else {
--		sk = iso_get_sock_listen(&hdev->bdaddr, BDADDR_ANY, NULL, NULL);
-+		sk = iso_get_sock(&hdev->bdaddr, BDADDR_ANY,
-+				  BT_LISTEN, NULL, NULL);
- 	}
- 
- done:
+ 	dev_dbg(mhdp->dev, "%s: Enabling mode %s\n", __func__, mode->name);
 -- 
 2.43.0
 
