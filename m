@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE321607A2;
-	Mon, 27 May 2024 19:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B108D16079B;
+	Mon, 27 May 2024 19:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838127; cv=none; b=GBRfYhNvRMTm2swCdp9EH++nGAgWRDvAewumeXsC5qVXL0QO7QcW4Blh93VwYWROTRxtWSYg6DvWRMTfCvggB2Ejebv3IHCWBLm9P5yGr4ajjOif5YVZbu2gwW2fhXZarKqN4rgjLfhZpo/r6EWgoZIltZ/i1TR+HjVeSoM8K+w=
+	t=1716838129; cv=none; b=TTOq2I1IBK87ceudfHQ//ltBCgc2lxYYYQCuID0zb0ft5zNGab+MMMhUoQvE1aMkrpGE42s02HQN0TBGMmzBRSpO88tgw9EsWeRx0IHu5u+UF7KwMIDecnuZedFfAy4w7I0iuc+WuEcGOIDDKMNvAoJykQ13IgnLVEk/O4a+9v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838127; c=relaxed/simple;
-	bh=TNyvqMRDHubCvk8T/pOQ0kHq5SYgnRN9BIfxM2OS0vA=;
+	s=arc-20240116; t=1716838129; c=relaxed/simple;
+	bh=mJq6c5o2jGIY8sdcoj08kWTikYFucowkE5X1DsYyjr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/C09i21O6qQLt9dHF0nRRwU7JGSq6sV/FW9mjcjcCig/Tof7nvhJKdPKyjHQoyK5Rkss+e07LZL7zCbPCc7qXz+5ZZGjK7PJ+rxnKR/K1HN92zJkKstvQrUhJlK5ZYEvtcoQ2eA4f/XZ2CwZOa3kCP0+vvODP2yuKlhrvQKwqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1z6DCIl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J/u7d65ADQxMB6XI4Ekej4ut9KwXRqozM0GAKYVpe1KmGOxgGfV9cxFZxB2QFU6orsIkGTTRNtoz4vNc/vJXTbMbwgLu9B2oqcfWKKuWazarQQ51692DcnxqvPPpnT9awqDsKDTUiTNNIzFJ3raoq6A5O+ccm/7ieSjjDuXhG9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjRtyWpf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1z6DCIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD202C2BBFC;
-	Mon, 27 May 2024 19:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjRtyWpf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDB1C32786;
+	Mon, 27 May 2024 19:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838127;
-	bh=TNyvqMRDHubCvk8T/pOQ0kHq5SYgnRN9BIfxM2OS0vA=;
+	s=korg; t=1716838129;
+	bh=mJq6c5o2jGIY8sdcoj08kWTikYFucowkE5X1DsYyjr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1z6DCIlQqItrNExM9laICY+8a57mjW5AqvRJ5ZW/nbMbsVBrWeLNZYm5m6LPS4TD
-	 IbXvyyubEF9JeoKsDktmi6ATX9+GwwOKqUTIiEK0nxWvFTH3uXVw7TGGJxJOuHFqXO
-	 fj5TAfixncc/MpbeQnYUrmvCNAuAQYYTlYB/Bmd0=
+	b=yjRtyWpfW7NbV3+/1V1ikmKdLbmlbu46dGVzv7zlv1q9p4PHIh1Df3y1bmepn/dqB
+	 aS5z5sypYINuFZELngYP2Gs8s3rmw3vkPq1OTbeIXD3gRru9ytxyEyR/ksWoqrK09r
+	 mp2o1iMAReeCy4uqww1cog/NUWiaAdwIvLOe52IM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Christian Brauner <brauner@kernel.org>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 277/493] wifi: rtw89: wow: refine WoWLAN flows of HCI interrupts and low power mode
-Date: Mon, 27 May 2024 20:54:39 +0200
-Message-ID: <20240527185639.362109375@linuxfoundation.org>
+Subject: [PATCH 6.8 278/493] selftests/binderfs: use the Makefiles rules, not Makes implicit rules
+Date: Mon, 27 May 2024 20:54:40 +0200
+Message-ID: <20240527185639.394124942@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,105 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: John Hubbard <jhubbard@nvidia.com>
 
-[ Upstream commit baaf806e4632a259cc959fd1c516c2d9ed48df6d ]
+[ Upstream commit 019baf635eb6ffe8d6c1343f81788f02a7e0ed98 ]
 
-After enabling packet offload, the TX will be stuck after resume from
-WoWLAN mode. And the 8852c gets error messages like
+First of all, in order to build with clang at all, one must first apply
+Valentin Obst's build fix for LLVM [1]. Once that is done, then when
+building with clang, via:
 
-rtw89_8852ce 0000:04:00.0: No busy txwd pages available
-rtw89_8852ce 0000:04:00.0: queue 0 txwd 100 is not idle
-rtw89_8852ce 0000:04:00.0: queue 0 txwd 101 is not idle
-rtw89_8852ce 0000:04:00.0: queue 0 txwd 102 is not idle
-rtw89_8852ce 0000:04:00.0: queue 0 txwd 103 is not idle
+    make LLVM=1 -C tools/testing/selftests
 
-If suspend/resume many times that firmware will download failed and
-disconnection.
+...the following error occurs:
 
-To fix these issues, We removed the rtw89_hci_disable_intr() and
-rtw89_hci_enable_intr() during rtw89_wow_swap_fw() to prevent add packet
-offload can't receive c2h back due to interrupt disable. Only 8852C and
-8922A needs to disable interrupt before downloading fw.
+   clang: error: cannot specify -o when generating multiple output files
 
-Furthermore, we avoid using low power HCI mode on WoWLAN mode, to prevent
-interrupt enabled, then get interrupt and calculate RXBD mismatched due to
-software RXBD index already reset but hardware RXBD index not yet.
+This is because clang, unlike gcc, won't accept invocations of this
+form:
 
-Fixes: 5c12bb66b79d ("wifi: rtw89: refine packet offload flow")
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://msgid.link/20240502022505.28966-3-pkshih@realtek.com
+    clang file1.c header2.h
+
+While trying to fix this, I noticed that:
+
+a) selftests/lib.mk already avoids the problem, and
+
+b) The binderfs Makefile indavertently bypasses the selftests/lib.mk
+build system, and quitely uses Make's implicit build rules for .c files
+instead.
+
+The Makefile attempts to set up both a dependency and a source file,
+neither of which was needed, because lib.mk is able to automatically
+handle both. This line:
+
+    binderfs_test: binderfs_test.c
+
+...causes Make's implicit rules to run, which builds binderfs_test
+without ever looking at lib.mk.
+
+Fix this by simply deleting the "binderfs_test:" Makefile target and
+letting lib.mk handle it instead.
+
+[1] https://lore.kernel.org/all/20240329-selftests-libmk-llvm-rfc-v1-1-2f9ed7d1c49f@valentinobst.de/
+
+Fixes: 6e29225af902 ("binderfs: port tests to test harness infrastructure")
+Cc: Christian Brauner <brauner@kernel.org>
+Signed-off-by: John Hubbard <jhubbard@nvidia.com>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/ps.c  |  3 ++-
- drivers/net/wireless/realtek/rtw89/wow.c | 12 ++++++++++--
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ tools/testing/selftests/filesystems/binderfs/Makefile | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/ps.c b/drivers/net/wireless/realtek/rtw89/ps.c
-index 917c01e5e9eda..e86d5588ec609 100644
---- a/drivers/net/wireless/realtek/rtw89/ps.c
-+++ b/drivers/net/wireless/realtek/rtw89/ps.c
-@@ -54,7 +54,8 @@ static void rtw89_ps_power_mode_change_with_hci(struct rtw89_dev *rtwdev,
+diff --git a/tools/testing/selftests/filesystems/binderfs/Makefile b/tools/testing/selftests/filesystems/binderfs/Makefile
+index c2f7cef919c04..eb4c3b4119348 100644
+--- a/tools/testing/selftests/filesystems/binderfs/Makefile
++++ b/tools/testing/selftests/filesystems/binderfs/Makefile
+@@ -3,6 +3,4 @@
+ CFLAGS += $(KHDR_INCLUDES) -pthread
+ TEST_GEN_PROGS := binderfs_test
  
- static void rtw89_ps_power_mode_change(struct rtw89_dev *rtwdev, bool enter)
- {
--	if (rtwdev->chip->low_power_hci_modes & BIT(rtwdev->ps_mode))
-+	if (rtwdev->chip->low_power_hci_modes & BIT(rtwdev->ps_mode) &&
-+	    !test_bit(RTW89_FLAG_WOWLAN, rtwdev->flags))
- 		rtw89_ps_power_mode_change_with_hci(rtwdev, enter);
- 	else
- 		rtw89_mac_power_mode_change(rtwdev, enter);
-diff --git a/drivers/net/wireless/realtek/rtw89/wow.c b/drivers/net/wireless/realtek/rtw89/wow.c
-index 5c7ca36c09b6b..abb4d1cc55d0e 100644
---- a/drivers/net/wireless/realtek/rtw89/wow.c
-+++ b/drivers/net/wireless/realtek/rtw89/wow.c
-@@ -489,14 +489,17 @@ static int rtw89_wow_swap_fw(struct rtw89_dev *rtwdev, bool wow)
- 	struct rtw89_wow_param *rtw_wow = &rtwdev->wow;
- 	struct ieee80211_vif *wow_vif = rtw_wow->wow_vif;
- 	struct rtw89_vif *rtwvif = (struct rtw89_vif *)wow_vif->drv_priv;
-+	enum rtw89_core_chip_id chip_id = rtwdev->chip->chip_id;
- 	const struct rtw89_chip_info *chip = rtwdev->chip;
- 	bool include_bb = !!chip->bbmcu_nr;
-+	bool disable_intr_for_dlfw = false;
- 	struct ieee80211_sta *wow_sta;
- 	struct rtw89_sta *rtwsta = NULL;
- 	bool is_conn = true;
- 	int ret;
- 
--	rtw89_hci_disable_intr(rtwdev);
-+	if (chip_id == RTL8852C || chip_id == RTL8922A)
-+		disable_intr_for_dlfw = true;
- 
- 	wow_sta = ieee80211_find_sta(wow_vif, rtwvif->bssid);
- 	if (wow_sta)
-@@ -504,12 +507,18 @@ static int rtw89_wow_swap_fw(struct rtw89_dev *rtwdev, bool wow)
- 	else
- 		is_conn = false;
- 
-+	if (disable_intr_for_dlfw)
-+		rtw89_hci_disable_intr(rtwdev);
-+
- 	ret = rtw89_fw_download(rtwdev, fw_type, include_bb);
- 	if (ret) {
- 		rtw89_warn(rtwdev, "download fw failed\n");
- 		return ret;
- 	}
- 
-+	if (disable_intr_for_dlfw)
-+		rtw89_hci_enable_intr(rtwdev);
-+
- 	rtw89_phy_init_rf_reg(rtwdev, true);
- 
- 	ret = rtw89_fw_h2c_role_maintain(rtwdev, rtwvif, rtwsta,
-@@ -552,7 +561,6 @@ static int rtw89_wow_swap_fw(struct rtw89_dev *rtwdev, bool wow)
- 	}
- 
- 	rtw89_mac_hw_mgnt_sec(rtwdev, wow);
--	rtw89_hci_enable_intr(rtwdev);
- 
- 	return 0;
- }
+-binderfs_test: binderfs_test.c ../../kselftest.h ../../kselftest_harness.h
+-
+ include ../../lib.mk
 -- 
 2.43.0
 
