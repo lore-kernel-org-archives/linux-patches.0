@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4C615FCFB;
-	Mon, 27 May 2024 19:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547FA15FCFB;
+	Mon, 27 May 2024 19:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838609; cv=none; b=Xtl0KkprSb//1efYOThJCbAB7H8HOfKptQPch5ve8dQzYZ4ffKILpVlvvEXALTN5Mvt68Uq2Z9xMUAC82RXq5Z1eow38ZXsip1Hb1y5wb1YLLi56mBISEFLmcC26r35OTYZe7yjt192wh/20IGoAwRPQIr+ME2IvsxyFCrYqjco=
+	t=1716838612; cv=none; b=Rlbj03V0RV2AQkDWAwgsdTgd3hADp4rIUl3EK3IsZcsrTkHII/7n5gThIy1gse3/Irf3DDEN1GW+4bYIf7UpQOXAQDL79kUh3cesMenSJGdm4wIyVZow/qS5lTAKRMH0ZOPAn6T3kjkPZb6+DWTXmWJUhpOY7UD3GIutqoe9kAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838609; c=relaxed/simple;
-	bh=E9VUsxix/oQURjXKWy03AnyOd3CqjIF3s/rPvP0gmEY=;
+	s=arc-20240116; t=1716838612; c=relaxed/simple;
+	bh=/4Vvo/aXdERodqZwGYrPCHesqpsErddK5X2A+8ptGbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEkG8iWZJA0hIUnqUH1Y/9P+1+AwajrCB8d6VwLOMvktnkD5WGt8msEmAjIq92Sz0Zsvs1UY9UGENfRUMYiZfMrrVu1aiTT9Erpr4W/UgvRlH8G3blP4p651tjkieE5itlbmYqvlyojUD8VpagGLXOf3qy1ld8j9KpeRp4mxHNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwoAyZMm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XDJpsTWrYzz0+XOYvFA+HirR9L/tiIgz6eILBNXrRHTk20Q77Ki6PtmNVd36yrSY0dVzUr9vnH1mcfg8H601MK33Rz2Nhl88cWiWLNnZniOlt8tflK5ieBiGMMIP2pxkdGfetxa2RgegaKypuZLSZnSna4tZ4FyAYOKfAMb9+Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ya2riV0B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwoAyZMm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C14C2BBFC;
-	Mon, 27 May 2024 19:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ya2riV0B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE13FC2BBFC;
+	Mon, 27 May 2024 19:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838609;
-	bh=E9VUsxix/oQURjXKWy03AnyOd3CqjIF3s/rPvP0gmEY=;
+	s=korg; t=1716838612;
+	bh=/4Vvo/aXdERodqZwGYrPCHesqpsErddK5X2A+8ptGbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EwoAyZMm+267Ilh67URNMZEFp3EmAu5Com1QTy+oi5ipMeQFj92nQN9xGORFCY02e
-	 RpLZckHer47Ze0jwdc0aqKLlDMJ3CM4WowMLgaE0LB3BDDIu1PF4sf1O1gfmBZe9Gt
-	 3MYdNDdz9IPUWF5vL9PiGt09UvzFKoU/q1p3XxeM=
+	b=Ya2riV0BFbb64TutzDA5DIKQCMsOb1EtIiqR80i4LWysFAFrMuOvhfmFkAGvnmqOj
+	 IKErTXG8FNoELnURdvtGZbar30Y9/xGcvNDy1LTAa9DlWjv35Z1uOheJAco96epVsG
+	 eZMwM3CfFt6CWo1L6gdWkp/pnFKV4q9JYnW1/rF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 459/493] ext4: remove the redundant folio_wait_stable()
-Date: Mon, 27 May 2024 20:57:41 +0200
-Message-ID: <20240527185645.218450726@linuxfoundation.org>
+Subject: [PATCH 6.8 460/493] clk: qcom: Fix SC_CAMCC_8280XP dependencies
+Date: Mon, 27 May 2024 20:57:42 +0200
+Message-ID: <20240527185645.245446255@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,40 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit df0b5afc62f3368d657a8fe4a8d393ac481474c2 ]
+[ Upstream commit e00f2540a581f8b8c165e5ae8afe52e4ad038550 ]
 
-__filemap_get_folio() with FGP_WRITEBEGIN parameter has already wait
-for stable folio, so remove the redundant folio_wait_stable() in
-ext4_da_write_begin(), it was left over from the commit cc883236b792
-("ext4: drop unnecessary journal handle in delalloc write") that
-removed the retry getting page logic.
+CONFIG_SC_GCC_8280XP depends on ARM64 but it is selected by
+CONFIG_SC_CAMCC_8280XP, which can be selected on ARM, resulting in a
+Kconfig warning.
 
-Fixes: cc883236b792 ("ext4: drop unnecessary journal handle in delalloc write")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240419023005.2719050-1-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+WARNING: unmet direct dependencies detected for SC_GCC_8280XP
+  Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=y] && (ARM64 || COMPILE_TEST [=n])
+  Selected by [y]:
+  - SC_CAMCC_8280XP [=y] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=y]
+
+Add the same dependencies to CONFIG_SC_CAMCC_8280XP to resolve the
+warning.
+
+Fixes: ff93872a9c61 ("clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240318-fix-some-qcom-kconfig-deps-v1-1-ea0773e3df5a@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/clk/qcom/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 2ccf3b5e3a7c4..31604907af50e 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -2887,9 +2887,6 @@ static int ext4_da_write_begin(struct file *file, struct address_space *mapping,
- 	if (IS_ERR(folio))
- 		return PTR_ERR(folio);
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 2a9da0939377a..67f1151a3d2b0 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -439,6 +439,7 @@ config SC_CAMCC_7280
  
--	/* In case writeback began while the folio was unlocked */
--	folio_wait_stable(folio);
--
- #ifdef CONFIG_FS_ENCRYPTION
- 	ret = ext4_block_write_begin(folio, pos, len, ext4_da_get_block_prep);
- #else
+ config SC_CAMCC_8280XP
+ 	tristate "SC8280XP Camera Clock Controller"
++	depends on ARM64 || COMPILE_TEST
+ 	select SC_GCC_8280XP
+ 	help
+ 	  Support for the camera clock controller on Qualcomm Technologies, Inc
 -- 
 2.43.0
 
