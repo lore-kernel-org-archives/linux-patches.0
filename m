@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686E417E90E;
-	Mon, 27 May 2024 19:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F077817E90E;
+	Mon, 27 May 2024 19:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837192; cv=none; b=AMPwxN3S2ot7D6pD8vfoMmURUvYglbbDlliwv0O2YK/yxhmwOaxoo/nhAXAL4/2V71/u7iZbZjZnchLqDCj1lKMuQ36bcgQ0uqhuRObFHazVycr/S9wdGcfndsCsFPpi6osOkodH+oSnjZLrLbymRfCOSHGrwWguWVmSuBU+DmE=
+	t=1716837195; cv=none; b=YNdZfxyxFAgFKYmV6TYU2tJWpuftJAYUZ/GVD8+Se990ci1Dd4rIAgNauUX6In7YTe6tDhf2o8HsPEDqiRpkZ6XeQSk/oGqzK07rbrETeMxP5/tp8GE1yLitRpV6lV2u/Y0rWdioWa8Y1ywPC/r1JlVMhcv8BAPSpfB/KNXRpZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837192; c=relaxed/simple;
-	bh=fRGzh667BiUYsByclKuLOZQCchpCqB0aFA1B4fxT0u8=;
+	s=arc-20240116; t=1716837195; c=relaxed/simple;
+	bh=eX7i1MUzJ0qV3sEbU0kOA6Ej8SgXD6nPB1lN9hBzxs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IhQjHEhtcF0bRDIaVNs2byRCv454YZDr6wA4ML7M19qmL61RXzFXz9MNlzC5yzqNfzstpp4FTNjD/rPZg5yo7nUrgJikMMo5k7oWJ7F06lb8QgCzIMpBV2D4rwejr1qBv/tJegXQVdB/HNa3xWVRktZmEbK0Xm0YeH+8zlejVMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1i7TdDB9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ayGPj1u34lAMnfxClX0FX38CHixpJFjUIfc3+t6zmy84fkbE+Svlf7EG0cAhvP58uRjj3gQpRDuwXaDt9LCZh6XocYZKwCSzC90rm9n3F1V33Qe7dGEwjBFXZVlntEJ3U2iUh4LMprMJ9oayMj0NFwRtGGABA/J4cUnCvSGLRrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuCj3ECY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1i7TdDB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3840C2BBFC;
-	Mon, 27 May 2024 19:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuCj3ECY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D35C2BBFC;
+	Mon, 27 May 2024 19:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837192;
-	bh=fRGzh667BiUYsByclKuLOZQCchpCqB0aFA1B4fxT0u8=;
+	s=korg; t=1716837194;
+	bh=eX7i1MUzJ0qV3sEbU0kOA6Ej8SgXD6nPB1lN9hBzxs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1i7TdDB9eZuhULAbgSthHezTi+Hs9F/TQ+CEcOGACBr5uBWJAufEsPLUW0Jvxfdp4
-	 Ln1+cYZ6vv08zi/NwyMsIVYLeyabrJ9a3O+ghM9NjACtVoEBNE0thMxEkegDrcqCh7
-	 XMRceK0Yh6SMwc+/5SjZKk4jO7p38j7LgORvf39E=
+	b=tuCj3ECYgtr1b6Wb5q5bq41Dtm4Ewi6XbJBrK1sHk8UQq3nDLTgR7EIAhPxzHk8x5
+	 AZxxXx4StLsjKTNsp15XTi0FGqIyG3jvszFhA/kjPNLdgElXGrqqNrB4YgOlypQLpc
+	 YWbXtGHChtOZ88f/dvlu8zLWA2UldJC1O2MCgJH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 318/427] drm/msm/dp: allow voltage swing / pre emphasis of 3
-Date: Mon, 27 May 2024 20:56:05 +0200
-Message-ID: <20240527185631.429292721@linuxfoundation.org>
+Subject: [PATCH 6.9 345/427] drm/edid: Parse topology block for all DispID structure v1.x
+Date: Mon, 27 May 2024 20:56:32 +0200
+Message-ID: <20240527185633.172355922@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -45,142 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 22578178e5dd6d3aa4490879df8b6c2977d980be ]
+[ Upstream commit e0a200ab4b72afd581bd6f82fc1ef510a4fb5478 ]
 
-Both dp_link_adjust_levels() and dp_ctrl_update_vx_px() limit swing and
-pre-emphasis to 2, while the real maximum value for the sum of the
-voltage swing and pre-emphasis is 3. Fix the DP code to remove this
-limitation.
+DisplayID spec v1.3 revision history notes do claim that
+the toplogy block was added in v1.3 so requiring structure
+v1.2 would seem correct, but there is at least one EDID in
+edid.tv with a topology block and structure v1.0. And
+there are also EDIDs with DisplayID structure v1.3 which
+seems to be totally incorrect as DisplayID spec v1.3 lists
+structure v1.2 as the only legal value.
 
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/577006/
-Link: https://lore.kernel.org/r/20240203-dp-swing-3-v1-1-6545e1706196@linaro.org
+Unfortunately I couldn't find copies of DisplayID spec
+v1.0-v1.2 anywhere (even on vesa.org), so I'll have to
+go on empirical evidence alone.
+
+We used to parse the topology block on all v1.x
+structures until the check for structure v2.0 was added.
+Let's go back to doing that as the evidence does suggest
+that there are DisplayIDs in the wild that would miss
+out on the topology stuff otherwise.
+
+Also toss out DISPLAY_ID_STRUCTURE_VER_12 entirely as
+it doesn't appear we can really use it for anything.
+
+I *think* we could technically skip all the structure
+version checks as the block tags shouldn't conflict
+between v2.0 and v1.x. But no harm in having a bit of
+extra sanity checks I guess.
+
+So far I'm not aware of any user reported regressions
+from overly strict check, but I do know that it broke
+igt/kms_tiled_display's fake DisplayID as that one
+gets generated with structure v1.0.
+
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Fixes: c5a486af9df7 ("drm/edid: parse Tiled Display Topology Data Block for DisplayID 2.0")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240410180139.21352-1-ville.syrjala@linux.intel.com
+Acked-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c |  6 +++---
- drivers/gpu/drm/msm/dp/dp_link.c | 22 +++++++++++-----------
- drivers/gpu/drm/msm/dp/dp_link.h | 14 +-------------
- 3 files changed, 15 insertions(+), 27 deletions(-)
+ drivers/gpu/drm/drm_edid.c  | 2 +-
+ include/drm/drm_displayid.h | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index c4dda1faef677..112c7e54fc7a6 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1052,14 +1052,14 @@ static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
- 	if (ret)
- 		return ret;
- 
--	if (voltage_swing_level >= DP_TRAIN_VOLTAGE_SWING_MAX) {
-+	if (voltage_swing_level >= DP_TRAIN_LEVEL_MAX) {
- 		drm_dbg_dp(ctrl->drm_dev,
- 				"max. voltage swing level reached %d\n",
- 				voltage_swing_level);
- 		max_level_reached |= DP_TRAIN_MAX_SWING_REACHED;
- 	}
- 
--	if (pre_emphasis_level >= DP_TRAIN_PRE_EMPHASIS_MAX) {
-+	if (pre_emphasis_level >= DP_TRAIN_LEVEL_MAX) {
- 		drm_dbg_dp(ctrl->drm_dev,
- 				"max. pre-emphasis level reached %d\n",
- 				pre_emphasis_level);
-@@ -1150,7 +1150,7 @@ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl,
- 		}
- 
- 		if (ctrl->link->phy_params.v_level >=
--			DP_TRAIN_VOLTAGE_SWING_MAX) {
-+			DP_TRAIN_LEVEL_MAX) {
- 			DRM_ERROR_RATELIMITED("max v_level reached\n");
- 			return -EAGAIN;
- 		}
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 49dfac1fd1ef2..ea911d9244be7 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -1109,6 +1109,7 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
- int dp_link_adjust_levels(struct dp_link *dp_link, u8 *link_status)
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index 923c4423151c1..9064cdeb1319b 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -7324,7 +7324,7 @@ static void drm_parse_tiled_block(struct drm_connector *connector,
+ static bool displayid_is_tiled_block(const struct displayid_iter *iter,
+ 				     const struct displayid_block *block)
  {
- 	int i;
-+	u8 max_p_level;
- 	int v_max = 0, p_max = 0;
- 	struct dp_link_private *link;
+-	return (displayid_version(iter) == DISPLAY_ID_STRUCTURE_VER_12 &&
++	return (displayid_version(iter) < DISPLAY_ID_STRUCTURE_VER_20 &&
+ 		block->tag == DATA_BLOCK_TILED_DISPLAY) ||
+ 		(displayid_version(iter) == DISPLAY_ID_STRUCTURE_VER_20 &&
+ 		 block->tag == DATA_BLOCK_2_TILED_DISPLAY_TOPOLOGY);
+diff --git a/include/drm/drm_displayid.h b/include/drm/drm_displayid.h
+index 566497eeb3b81..bc1f6b378195f 100644
+--- a/include/drm/drm_displayid.h
++++ b/include/drm/drm_displayid.h
+@@ -30,7 +30,6 @@ struct drm_edid;
+ #define VESA_IEEE_OUI				0x3a0292
  
-@@ -1140,30 +1141,29 @@ int dp_link_adjust_levels(struct dp_link *dp_link, u8 *link_status)
- 	 * Adjust the voltage swing and pre-emphasis level combination to within
- 	 * the allowable range.
- 	 */
--	if (dp_link->phy_params.v_level > DP_TRAIN_VOLTAGE_SWING_MAX) {
-+	if (dp_link->phy_params.v_level > DP_TRAIN_LEVEL_MAX) {
- 		drm_dbg_dp(link->drm_dev,
- 			"Requested vSwingLevel=%d, change to %d\n",
- 			dp_link->phy_params.v_level,
--			DP_TRAIN_VOLTAGE_SWING_MAX);
--		dp_link->phy_params.v_level = DP_TRAIN_VOLTAGE_SWING_MAX;
-+			DP_TRAIN_LEVEL_MAX);
-+		dp_link->phy_params.v_level = DP_TRAIN_LEVEL_MAX;
- 	}
+ /* DisplayID Structure versions */
+-#define DISPLAY_ID_STRUCTURE_VER_12		0x12
+ #define DISPLAY_ID_STRUCTURE_VER_20		0x20
  
--	if (dp_link->phy_params.p_level > DP_TRAIN_PRE_EMPHASIS_MAX) {
-+	if (dp_link->phy_params.p_level > DP_TRAIN_LEVEL_MAX) {
- 		drm_dbg_dp(link->drm_dev,
- 			"Requested preEmphasisLevel=%d, change to %d\n",
- 			dp_link->phy_params.p_level,
--			DP_TRAIN_PRE_EMPHASIS_MAX);
--		dp_link->phy_params.p_level = DP_TRAIN_PRE_EMPHASIS_MAX;
-+			DP_TRAIN_LEVEL_MAX);
-+		dp_link->phy_params.p_level = DP_TRAIN_LEVEL_MAX;
- 	}
- 
--	if ((dp_link->phy_params.p_level > DP_TRAIN_PRE_EMPHASIS_LVL_1)
--		&& (dp_link->phy_params.v_level ==
--			DP_TRAIN_VOLTAGE_SWING_LVL_2)) {
-+	max_p_level = DP_TRAIN_LEVEL_MAX - dp_link->phy_params.v_level;
-+	if (dp_link->phy_params.p_level > max_p_level) {
- 		drm_dbg_dp(link->drm_dev,
- 			"Requested preEmphasisLevel=%d, change to %d\n",
- 			dp_link->phy_params.p_level,
--			DP_TRAIN_PRE_EMPHASIS_LVL_1);
--		dp_link->phy_params.p_level = DP_TRAIN_PRE_EMPHASIS_LVL_1;
-+			max_p_level);
-+		dp_link->phy_params.p_level = max_p_level;
- 	}
- 
- 	drm_dbg_dp(link->drm_dev, "adjusted: v_level=%d, p_level=%d\n",
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
-index 83da170bc56bf..42aed9c90b732 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.h
-+++ b/drivers/gpu/drm/msm/dp/dp_link.h
-@@ -19,19 +19,7 @@ struct dp_link_info {
- 	unsigned long capabilities;
- };
- 
--enum dp_link_voltage_level {
--	DP_TRAIN_VOLTAGE_SWING_LVL_0	= 0,
--	DP_TRAIN_VOLTAGE_SWING_LVL_1	= 1,
--	DP_TRAIN_VOLTAGE_SWING_LVL_2	= 2,
--	DP_TRAIN_VOLTAGE_SWING_MAX	= DP_TRAIN_VOLTAGE_SWING_LVL_2,
--};
--
--enum dp_link_preemaphasis_level {
--	DP_TRAIN_PRE_EMPHASIS_LVL_0	= 0,
--	DP_TRAIN_PRE_EMPHASIS_LVL_1	= 1,
--	DP_TRAIN_PRE_EMPHASIS_LVL_2	= 2,
--	DP_TRAIN_PRE_EMPHASIS_MAX	= DP_TRAIN_PRE_EMPHASIS_LVL_2,
--};
-+#define DP_TRAIN_LEVEL_MAX	3
- 
- struct dp_link_test_video {
- 	u32 test_video_pattern;
+ /* DisplayID Structure v1r2 Data Blocks */
 -- 
 2.43.0
 
