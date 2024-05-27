@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B454917727;
-	Mon, 27 May 2024 19:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D12915FA60;
+	Mon, 27 May 2024 19:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838547; cv=none; b=BU05DrnwHlo+NQB38BB8slTIMf5Cc1SIF+i4Vnycbjeiz6UhgfPfgUtMBNSFsALiqbQJHx7cZunYywNBSkkpAUG2c2li5Uy+aMSDJAfN0vOSuh8tUK9hUmvw4YxY8VLzJzS+GM3qp2dWR04Mmff8m+3h01oDdO3mrU4lfGYMwgQ=
+	t=1716838550; cv=none; b=l9mKEodSpQI9TvTTjQjRK+JczYQHmG4bHtAvGXVuUgBmVVcQFv3ExWuBHKVAVviRK3y0aim3R1aDuia5jcxe1XHNv+Cxk9lVTtw5jnyr2currmL23UVKxf71tnIPE3mwaP4VuaLmHJ5IuXCcOzgRvnKHLfCL8u2/wAs8gdsLWbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838547; c=relaxed/simple;
-	bh=HQ3suMNMojjQ053CG8UwjBCG6vVfQbuS4sf2z8n+ZAw=;
+	s=arc-20240116; t=1716838550; c=relaxed/simple;
+	bh=eEIoeQBRTmccXOfwpcnesYET6gY+sIORQ28b7YQdlEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WgEQYiZll44r4ZP5Y5EWIb5Zyy8V2SrzEKQBnncykDvnHoRPdxFnhu5ciSUj4kzCXs+X4aiyH6R7/+tTizhunVKGGe8tY4Cx4xXvhEZlO4Fimrav9n4qOmd9/e25sfs+uRUZUtb3VBUSX6Vtn6TbmOhmwsoyLM+lGKmHvLlvuLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qh0JgPl4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bNuy+h8CG22ROrTs0nasG6lWHVDuZ/vaUWwaC42bkI9LQNRCbu1FRwNTP+XKzK/5IlZGlGvXbWfIf5m2C0K6VlocVC3vam/Q32AJHEn+gQMDLbIUKPgjt5723w62YYnnZuUgqJLtXFEgpElN4vhUICxQ6YHhxHMcoW+444kBg+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GFOguU1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qh0JgPl4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48457C2BBFC;
-	Mon, 27 May 2024 19:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GFOguU1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D650EC2BBFC;
+	Mon, 27 May 2024 19:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838547;
-	bh=HQ3suMNMojjQ053CG8UwjBCG6vVfQbuS4sf2z8n+ZAw=;
+	s=korg; t=1716838550;
+	bh=eEIoeQBRTmccXOfwpcnesYET6gY+sIORQ28b7YQdlEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qh0JgPl4VRuv7Qg/jOFKRePnLT/sFdSiqzK3Tlgij0Hof2WENObifHIP7C1+iU6WA
-	 vntE3nm0FhLmKJeBryIH99rR56AwQH86emZg+y1l4lcRC3d6J85CFpVKJwbZF72LD+
-	 jSSzTxRlWZr39j4dKpPBLyeZBg1Wl/I4CvyCYnFc=
+	b=1GFOguU1tVBO/zZ3vc+gkzZNBux57OVb+f7Av7fMySoa53mZD2/km+DyLf/JWZMpC
+	 MkU2Mbs/Hh2A28eBpD6m6oWZ4rms7Jomlwp1vOA1ZG58tlQITrZ2HiszBGLUHBZlNG
+	 Cyqa4K56Uf5qx9bPsXpCW/Zm0/gFqog0iaOJqN6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Popescu <catalin.popescu@leica-geosystems.com>,
-	Marek Vasut <marex@denx.de>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 433/493] clk: rs9: fix wrong default value for clock amplitude
-Date: Mon, 27 May 2024 20:57:15 +0200
-Message-ID: <20240527185644.438235508@linuxfoundation.org>
+Subject: [PATCH 6.8 434/493] clk: qcom: clk-alpha-pll: remove invalid Stromer register offset
+Date: Mon, 27 May 2024 20:57:16 +0200
+Message-ID: <20240527185644.468773883@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,70 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Popescu <catalin.popescu@leica-geosystems.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 1758c68c81b8b881818fcebaaeb91055362a82f8 ]
+[ Upstream commit 4f2bc4acbb1916b8cd2ce4bb3ba7b1cd7cb705fa ]
 
-According to 9FGV0241, 9FGV0441 & 9FGV0841 datasheets, the default
-value for the clock amplitude is 0.8V, while the driver assumes 0.7V.
+The offset of the CONFIG_CTL_U register defined for the Stromer
+PLL is wrong. It is not aligned on a 4 bytes boundary which might
+causes errors in regmap operations.
 
-Additionally, define constants for default values for both clock
-amplitude and spread spectrum and use them.
+Maybe the intention behind of using the 0xff value was to indicate
+that the register is not implemented in the PLL, but this is not
+verified anywhere in the code. Moreover, this value is not used
+even in other register offset arrays despite that those PLLs also
+have unimplemented registers.
 
-Fixes: 892e0ddea1aa ("clk: rs9: Add Renesas 9-series PCIe clock generator driver")
-Signed-off-by: Catalin Popescu <catalin.popescu@leica-geosystems.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Link: https://lore.kernel.org/r/20240415140348.2887619-1-catalin.popescu@leica-geosystems.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Additionally, on the Stromer PLLs the current code only touches
+the CONFIG_CTL_U register if the result of pll_has_64bit_config()
+is true which condition is not affected by the change.
+
+Due to the reasons above, simply remove the CONFIG_CTL_U entry
+from the Stromer specific array.
+
+Fixes: e47a4f55f240 ("clk: qcom: clk-alpha-pll: Add support for Stromer PLLs")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240311-alpha-pll-stromer-cleanup-v1-1-f7c0c5607cca@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-renesas-pcie.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/clk-renesas-pcie.c b/drivers/clk/clk-renesas-pcie.c
-index 53e21ac302e6d..4c3a5e4eb77ac 100644
---- a/drivers/clk/clk-renesas-pcie.c
-+++ b/drivers/clk/clk-renesas-pcie.c
-@@ -25,10 +25,12 @@
- #define RS9_REG_SS_AMP_0V7			0x1
- #define RS9_REG_SS_AMP_0V8			0x2
- #define RS9_REG_SS_AMP_0V9			0x3
-+#define RS9_REG_SS_AMP_DEFAULT			RS9_REG_SS_AMP_0V8
- #define RS9_REG_SS_AMP_MASK			0x3
- #define RS9_REG_SS_SSC_100			0
- #define RS9_REG_SS_SSC_M025			(1 << 3)
- #define RS9_REG_SS_SSC_M050			(3 << 3)
-+#define RS9_REG_SS_SSC_DEFAULT			RS9_REG_SS_SSC_100
- #define RS9_REG_SS_SSC_MASK			(3 << 3)
- #define RS9_REG_SS_SSC_LOCK			BIT(5)
- #define RS9_REG_SR				0x2
-@@ -205,8 +207,8 @@ static int rs9_get_common_config(struct rs9_driver_data *rs9)
- 	int ret;
- 
- 	/* Set defaults */
--	rs9->pll_amplitude = RS9_REG_SS_AMP_0V7;
--	rs9->pll_ssc = RS9_REG_SS_SSC_100;
-+	rs9->pll_amplitude = RS9_REG_SS_AMP_DEFAULT;
-+	rs9->pll_ssc = RS9_REG_SS_SSC_DEFAULT;
- 
- 	/* Output clock amplitude */
- 	ret = of_property_read_u32(np, "renesas,out-amplitude-microvolt",
-@@ -247,13 +249,13 @@ static void rs9_update_config(struct rs9_driver_data *rs9)
- 	int i;
- 
- 	/* If amplitude is non-default, update it. */
--	if (rs9->pll_amplitude != RS9_REG_SS_AMP_0V7) {
-+	if (rs9->pll_amplitude != RS9_REG_SS_AMP_DEFAULT) {
- 		regmap_update_bits(rs9->regmap, RS9_REG_SS, RS9_REG_SS_AMP_MASK,
- 				   rs9->pll_amplitude);
- 	}
- 
- 	/* If SSC is non-default, update it. */
--	if (rs9->pll_ssc != RS9_REG_SS_SSC_100) {
-+	if (rs9->pll_ssc != RS9_REG_SS_SSC_DEFAULT) {
- 		regmap_update_bits(rs9->regmap, RS9_REG_SS, RS9_REG_SS_SSC_MASK,
- 				   rs9->pll_ssc);
- 	}
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 05898d2a8b22c..58ae732959803 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -212,7 +212,6 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+ 		[PLL_OFF_USER_CTL] = 0x18,
+ 		[PLL_OFF_USER_CTL_U] = 0x1c,
+ 		[PLL_OFF_CONFIG_CTL] = 0x20,
+-		[PLL_OFF_CONFIG_CTL_U] = 0xff,
+ 		[PLL_OFF_TEST_CTL] = 0x30,
+ 		[PLL_OFF_TEST_CTL_U] = 0x34,
+ 		[PLL_OFF_STATUS] = 0x28,
 -- 
 2.43.0
 
