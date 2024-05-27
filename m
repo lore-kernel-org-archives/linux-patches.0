@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD02326ACA;
-	Mon, 27 May 2024 19:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6B426ACA;
+	Mon, 27 May 2024 19:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836900; cv=none; b=LMXUBPPrlVcvjPt14Il9scA/esmgNlcM81pAW5VaYnphmJcDDPvDeWu3TiyGw3mbGuhwMljckOOhp9FvJdGvJ8vvQtkN12XplwqWgPFJBS6fpSd/TEwCa4cCicGhpZupTyb4KPlXxb4HvnpBz37RMU+LyYV/urD6Y3KZ/mGQZCw=
+	t=1716836903; cv=none; b=Iyf8rAjGdbCEozZSe1tHoHarYLHnL3c0xpStET9eXf2ys1wOkREb+DJVbiv2X+f73IGjPzIrNskbgTSUlcrQBlbbk2hjlSgLWOsjIjzIHn3MNwtaEqy4mlJg1gN6+0qvwAaid3UsAELrh5s8M9gZImgnYK/fWy/wEEXFW4lNPQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836900; c=relaxed/simple;
-	bh=xOjXN57eMozpnnCdPfPamrzKnZIBXE0AFBnmhnLKLVI=;
+	s=arc-20240116; t=1716836903; c=relaxed/simple;
+	bh=R7LcVM76N3MqROgIBdRpSiEGqz8cI43SRx30wcqfyYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jEHSoxpMdTo+KJZ4ci4ahgYK5pLU5aCRPoNKQoMpmQLafueKMGPWXstFb1GHNCoLWo57fk0cBmH6joe1zpRB9ZpbqFgd1M3cVIPEyCLouf5/trdhWzKDLB9NRs75AvAlx/3SZ3ufN1jYpI4WnE9RzO7nIzcmHiqES/lewPMvw9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S17WjqM3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KJ91Utf5+3GpbixpAtS1Dlm4UqQq4rJwxu4RY/+waeVRLYg5xZn8rv6HwP72s9ciQTJU/G0OllBaQqhKY2hiFesbaM/5bZ4KtQyMSFtEOwf70+Q4hoARGGRxOdndpmBPyhOjUldgTUqN1Yo9fsUJPxaeoxMWtat8tIyf8UEy6Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYUlo6wM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S17WjqM3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603AAC2BBFC;
-	Mon, 27 May 2024 19:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYUlo6wM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EE1C2BBFC;
+	Mon, 27 May 2024 19:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836900;
-	bh=xOjXN57eMozpnnCdPfPamrzKnZIBXE0AFBnmhnLKLVI=;
+	s=korg; t=1716836903;
+	bh=R7LcVM76N3MqROgIBdRpSiEGqz8cI43SRx30wcqfyYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S17WjqM3PTup+BHUishSWAWnfZD8iznftr3X9O0ViwDlNf3DaFXPrdE5rmY6T6MsG
-	 nRJiJIX2bAFvXGrANxMEn6CdGflB54baXu5LAOB0ItBM79x3VPBUzC77BZwPuXIsPz
-	 qTfIBTjIniloVpDNLSEZjqqgS+l8tXt1h/H6NpF0=
+	b=KYUlo6wMbe1k0yB+zs7kch6n1AF1444Zi274UKlI2SDYC8eDArEzbgPC+GcjsvQcu
+	 tMUrrEyruROzmsDog1LBaDt03Cvs4WYPHp8+yd1iDi7iB+2y8prB+EtUgSVnglRKlA
+	 Dt5P+4v2arT3i82dHIbhNej+XdLoEh3e5wsvyzig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 180/427] thermal/debugfs: Create records for cdev states as they get used
-Date: Mon, 27 May 2024 20:53:47 +0200
-Message-ID: <20240527185619.015359850@linuxfoundation.org>
+Subject: [PATCH 6.9 226/427] usb: aqc111: stop lying about skb->truesize
+Date: Mon, 27 May 2024 20:54:33 +0200
+Message-ID: <20240527185623.603106365@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,48 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f4ae18fcb652c6cccc834ded525ac37f91d5cdb1 ]
+[ Upstream commit 9aad6e45c4e7d16b2bb7c3794154b828fb4384b4 ]
 
-Because thermal_debug_cdev_state_update() only creates a duration record
-for the old state of a cooling device, if its new state is used for the
-first time, there will be no record for it and cdev_dt_seq_show() will
-not print the duration information for it even though it contains code
-to compute the duration value in that case.
+Some usb drivers try to set small skb->truesize and break
+core networking stacks.
 
-Address this by making thermal_debug_cdev_state_update() create a
-duration record for the new state if there is none.
+I replace one skb_clone() by an allocation of a fresh
+and small skb, to get minimally sized skbs, like we did
+in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
+in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
+stop lying about skb->truesize")
 
-Fixes: 755113d76786 ("thermal/debugfs: Add thermal cooling device debugfs information")
-Reported-by: Lukasz Luba <lukasz.luba@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Tested-by: Lukasz Luba <lukasz.luba@arm.com>
+Fixes: 361459cd9642 ("net: usb: aqc111: Implement RX data path")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240506135546.3641185-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_debugfs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/usb/aqc111.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/thermal/thermal_debugfs.c b/drivers/thermal/thermal_debugfs.c
-index 47ab95b3699e9..2891d2ab4875c 100644
---- a/drivers/thermal/thermal_debugfs.c
-+++ b/drivers/thermal/thermal_debugfs.c
-@@ -435,6 +435,14 @@ void thermal_debug_cdev_state_update(const struct thermal_cooling_device *cdev,
- 	}
+diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+index 7b8afa589a53c..284375f662f1e 100644
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -1141,17 +1141,15 @@ static int aqc111_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			continue;
+ 		}
  
- 	cdev_dbg->current_state = new_state;
-+
-+	/*
-+	 * Create a record for the new state if it is not there, so its
-+	 * duration will be printed by cdev_dt_seq_show() as expected if it
-+	 * runs before the next state transition.
-+	 */
-+	thermal_debugfs_cdev_record_get(thermal_dbg, cdev_dbg->durations, new_state);
-+
- 	transition = (old_state << 16) | new_state;
+-		/* Clone SKB */
+-		new_skb = skb_clone(skb, GFP_ATOMIC);
++		new_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
  
- 	/*
+ 		if (!new_skb)
+ 			goto err;
+ 
+-		new_skb->len = pkt_len;
++		skb_put(new_skb, pkt_len);
++		memcpy(new_skb->data, skb->data, pkt_len);
+ 		skb_pull(new_skb, AQ_RX_HW_PAD);
+-		skb_set_tail_pointer(new_skb, new_skb->len);
+ 
+-		new_skb->truesize = SKB_TRUESIZE(new_skb->len);
+ 		if (aqc111_data->rx_checksum)
+ 			aqc111_rx_checksum(new_skb, pkt_desc);
+ 
 -- 
 2.43.0
 
