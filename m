@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D792117E90E;
-	Mon, 27 May 2024 19:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E74D17E90E;
+	Mon, 27 May 2024 19:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836976; cv=none; b=lSfLUJ9LxOwV5sJlDURmvJdAWipm0NIl3uixZzka/+hQm0YVUBbK+LT2TsBbkQviuRM5s47nmT1W4jE6bF6k6A/j1QfGuGID9eiXAlhXjF36i9AZ4uPtkGlBSTq78dVlkYXXmukgx/UC8Y4qHUqVHW7+zqXn1R6RlaNuWVYU6RE=
+	t=1716836979; cv=none; b=nXrFG5Z54keu84kWkGg96AAbMwAU9OstBuZ+KRjKROJZA/HPsUGk/1iYd6SR3BhAY0dWfuGor+gugZwa1ni7sHR9dshhz7eXn8cMDnv+jzHuZgCC4z6+bBdXM4mU8QqxW7dkr0KNxZv2cAXXqrWnEGIEaJPO0fvIXAnQIGeU65g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836976; c=relaxed/simple;
-	bh=5kNROnP1tn/wwrnhyaF4oNm9E0PQOidzaHmbhqhlXQk=;
+	s=arc-20240116; t=1716836979; c=relaxed/simple;
+	bh=Xu0yNeBQsNNsrNgmj+h5xZkSDjlXZGHrCOmF4eH2d4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsDi+YOxCJDmshdLsgfRC78NkLTXniwIIy0pfEhntzIql6eZZuTebC15eFvdT7nMpAE4NDoOFIFOtGvfmHCk1iGiQbL/cbKni0jj9TNSrEhFAvB9E/4LYInQPCz071EjhzwSPvwxhIXnItyOuK6MoirfMb736dsSpnbwmmWadhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvOaydk6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bZAhyPCFbtszLSoRypflJKo7RJbuKVeJWnt7KSQVRbgXsgt/A47tZihzsbp+1WeV8dZgQ5dJTrsjNc+EEwrHXGKPZEZm2YAWsW23P2ppHIVkErwp4dHO1cD5eHfQqAUvIErYnLe6BiGqBTdRQAAU4brbszeKr2NHRSw2K+0q3uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/Qxh/6a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvOaydk6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB43C2BBFC;
-	Mon, 27 May 2024 19:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/Qxh/6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F168AC2BBFC;
+	Mon, 27 May 2024 19:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836976;
-	bh=5kNROnP1tn/wwrnhyaF4oNm9E0PQOidzaHmbhqhlXQk=;
+	s=korg; t=1716836979;
+	bh=Xu0yNeBQsNNsrNgmj+h5xZkSDjlXZGHrCOmF4eH2d4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvOaydk6NX7bGAHeDf8W107LL872LO9uk7zYiCXNdfGZ9YrqVUEUnPVkMQAK3Nqn2
-	 5Luhtg8XvareYTWn3/pfG/j2ljaqKz8v/ZWAxp72rHYdh46fat7+1HjRgVBwhzAo0l
-	 olGwLHDSzRFmpcwIadmd16ltNrAs3PQqQEM6AGJA=
+	b=p/Qxh/6a3LEql585fmGfEQrQrNv6R7mVywWaqlHCkIU7xIU98gERVa4jU8Rmk80lo
+	 86/VNhGrfWysxZi1fUR9VxHqkGBwcd1t8yWxeWX7HMBaTb5TrBLK8bgP12ppiDMTdk
+	 zbeW+fPP2QxqjgbiPgnvYidqSpkN3mZt+JwFNdZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 261/427] ax25: Fix reference count leak issue of net_device
-Date: Mon, 27 May 2024 20:55:08 +0200
-Message-ID: <20240527185626.811713120@linuxfoundation.org>
+Subject: [PATCH 6.9 262/427] dpll: fix return value check for kmemdup
+Date: Mon, 27 May 2024 20:55:09 +0200
+Message-ID: <20240527185626.938939654@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,51 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 36e56b1b002bb26440403053f19f9e1a8bc075b2 ]
+[ Upstream commit ad506586cb69292b6ac59ab95468aadd54b19ab7 ]
 
-There is a reference count leak issue of the object "net_device" in
-ax25_dev_device_down(). When the ax25 device is shutting down, the
-ax25_dev_device_down() drops the reference count of net_device one
-or zero times depending on if we goto unlock_put or not, which will
-cause memory leak.
+The return value of kmemdup() is dst->freq_supported, not
+src->freq_supported. Update the check accordingly.
 
-In order to solve the above issue, decrease the reference count of
-net_device after dev->ax25_ptr is set to null.
-
-Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/7ce3b23a40d9084657ba1125432f0ecc380cbc80.1715247018.git.duoming@zju.edu.cn
+Fixes: 830ead5fb0c5 ("dpll: fix pin dump crash for rebound module")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20240513032824.2410459-1-nichen@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/ax25_dev.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/dpll/dpll_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
-index 52ccc37d5687a..c9d55b99a7a57 100644
---- a/net/ax25/ax25_dev.c
-+++ b/net/ax25/ax25_dev.c
-@@ -118,15 +118,10 @@ void ax25_dev_device_down(struct net_device *dev)
- 	list_for_each_entry(s, &ax25_dev_list, list) {
- 		if (s == ax25_dev) {
- 			list_del(&s->list);
--			goto unlock_put;
-+			break;
- 		}
+diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
+index d0f6693ca1426..32019dc33cca7 100644
+--- a/drivers/dpll/dpll_core.c
++++ b/drivers/dpll/dpll_core.c
+@@ -449,7 +449,7 @@ static int dpll_pin_prop_dup(const struct dpll_pin_properties *src,
+ 				   sizeof(*src->freq_supported);
+ 		dst->freq_supported = kmemdup(src->freq_supported,
+ 					      freq_size, GFP_KERNEL);
+-		if (!src->freq_supported)
++		if (!dst->freq_supported)
+ 			return -ENOMEM;
  	}
--	dev->ax25_ptr = NULL;
--	spin_unlock_bh(&ax25_dev_lock);
--	ax25_dev_put(ax25_dev);
--	return;
- 
--unlock_put:
- 	dev->ax25_ptr = NULL;
- 	spin_unlock_bh(&ax25_dev_lock);
- 	netdev_put(dev, &ax25_dev->dev_tracker);
+ 	if (src->board_label) {
 -- 
 2.43.0
 
