@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A45168C4;
-	Mon, 27 May 2024 19:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE2D168C4;
+	Mon, 27 May 2024 19:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837694; cv=none; b=FUye9xo7Jp6LnmFQ2+ZSh8sih3xh5DPswuDjcry/IJs1z+RRVnvF6g6MSV2FpE0rQcSXtJn9YbVqAYumefcAOvKWQUdv6LJVjX/seUXOfoh7v5CqCDpHnytRA6eUgsxtMvGqMPAB0i4W2Sk/e9OukgMrZPFR+wapsE8ud02uszg=
+	t=1716837696; cv=none; b=fizW7i0HmKZIXYu2xQAT2axdOolB1qbDZp43JWlvHUYO+wabJdRDHpJ8LRIdSE10wwbm5+gEB3lnL/9Hl6n7IeLGl5DZ288J4eIzgm4ehSKNseWH/prKgXwtXawZ6IcS99IlI2bOypYg6Go3fpNnd8VtUbYB5PJ3eaUfFd3rNi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837694; c=relaxed/simple;
-	bh=UHavKZO4PEqLn8Pjpn+6N3EMTfjwkc6LcNYuKlFHxCo=;
+	s=arc-20240116; t=1716837696; c=relaxed/simple;
+	bh=lM+9ttsnFiTz0Dp23Mwx3U0hprTe86Sgeh2Nmn/v7QU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cq9/COAVWWmvtGha2Zq0ksxEw2LFpc8nV3Ei0Xu/AAdVWsO8zRzOPOHO0gHWlB5AeFvZ6Zd6wQQaRjrwlQ5D31SpGgvu6jHOygXkmZ4b610dClr4DMEqZMEg+AlAK6uKndjImV2FCEc2XZxhLirmExM3LVZVyJxN02n94qCBMho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5p2CmIL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bIK9N7DXXPSSPJWlg0S7RGaG2YcpuFfhT9eJf3xF35raT+vf7FH/QLeq/GC2fWWhwKo/FW6ZBERDNVzyZRhAQsJIWht6lRnB+9UE25Csxa96/JVHoNuY6/qdvhfXMWXKEp2SJ6cvWuQ2XTN+oissiFbUFZ0cM9iaw1mOACKXDog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BQbDyh9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5p2CmIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF66C2BBFC;
-	Mon, 27 May 2024 19:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BQbDyh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A16C2BBFC;
+	Mon, 27 May 2024 19:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837694;
-	bh=UHavKZO4PEqLn8Pjpn+6N3EMTfjwkc6LcNYuKlFHxCo=;
+	s=korg; t=1716837696;
+	bh=lM+9ttsnFiTz0Dp23Mwx3U0hprTe86Sgeh2Nmn/v7QU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5p2CmILwj8s6fBRIehq9iLRy1WVPjCoS204kRHTc2VyASlG1Dt3ub21t/NfA12LH
-	 zlrnKMbAirHaSUVZySV0MD1Qbry/YY+hg0qozJp2gj6Dy6gAqdy6ltd0AMkcf5kLX5
-	 BM7u5lRDFIkpuEzK0Tw9yQ404qQTy0EeCCGI/cRo=
+	b=1BQbDyh9ugODDSDUvB8PDvMpiRFzrMcc4p62RQMX+V1kGyVR7YHF5T/xsAHZTDkcl
+	 fvtScXqA5QP5Sb4oHy64J3kLskQFxqXQniekiAmfgHN5xApYBEa69B6EIKasGcPSJy
+	 BycSlF7dn32N98pZVlKyDDuQmgsnek1Qjgjcmsy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+045b454ab35fd82a35fb@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 108/493] epoll: be better about file lifetimes
-Date: Mon, 27 May 2024 20:51:50 +0200
-Message-ID: <20240527185634.056918751@linuxfoundation.org>
+Subject: [PATCH 6.8 109/493] nvmet: prevent sprintf() overflow in nvmet_subsys_nsid_exists()
+Date: Mon, 27 May 2024 20:51:51 +0200
+Message-ID: <20240527185634.090352810@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,92 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 4efaa5acf0a1d2b5947f98abb3acf8bfd966422b ]
+[ Upstream commit d15dcd0f1a4753b57e66c64c8dc2a9779ff96aab ]
 
-epoll can call out to vfs_poll() with a file pointer that may race with
-the last 'fput()'. That would make f_count go down to zero, and while
-the ep->mtx locking means that the resulting file pointer tear-down will
-be blocked until the poll returns, it means that f_count is already
-dead, and any use of it won't actually get a reference to the file any
-more: it's dead regardless.
+The nsid value is a u32 that comes from nvmet_req_find_ns().  It's
+endian data and we're on an error path and both of those raise red
+flags.  So let's make this safer.
 
-Make sure we have a valid ref on the file pointer before we call down to
-vfs_poll() from the epoll routines.
+1) Make the buffer large enough for any u32.
+2) Remove the unnecessary initialization.
+3) Use snprintf() instead of sprintf() for even more safety.
+4) The sprintf() function returns the number of bytes printed, not
+   counting the NUL terminator. It is impossible for the return value to
+   be <= 0 so delete that.
 
-Link: https://lore.kernel.org/lkml/0000000000002d631f0615918f1e@google.com/
-Reported-by: syzbot+045b454ab35fd82a35fb@syzkaller.appspotmail.com
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 505363957fad ("nvmet: fix nvme status code when namespace is disabled")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 38 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
+ drivers/nvme/target/configfs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 3534d36a14740..c5a9a483fb538 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -875,6 +875,34 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
- 	return res;
- }
- 
-+/*
-+ * The ffd.file pointer may be in the process of being torn down due to
-+ * being closed, but we may not have finished eventpoll_release() yet.
-+ *
-+ * Normally, even with the atomic_long_inc_not_zero, the file may have
-+ * been free'd and then gotten re-allocated to something else (since
-+ * files are not RCU-delayed, they are SLAB_TYPESAFE_BY_RCU).
-+ *
-+ * But for epoll, users hold the ep->mtx mutex, and as such any file in
-+ * the process of being free'd will block in eventpoll_release_file()
-+ * and thus the underlying file allocation will not be free'd, and the
-+ * file re-use cannot happen.
-+ *
-+ * For the same reason we can avoid a rcu_read_lock() around the
-+ * operation - 'ffd.file' cannot go away even if the refcount has
-+ * reached zero (but we must still not call out to ->poll() functions
-+ * etc).
-+ */
-+static struct file *epi_fget(const struct epitem *epi)
-+{
-+	struct file *file;
-+
-+	file = epi->ffd.file;
-+	if (!atomic_long_inc_not_zero(&file->f_count))
-+		file = NULL;
-+	return file;
-+}
-+
- /*
-  * Differs from ep_eventpoll_poll() in that internal callers already have
-  * the ep->mtx so we need to start from depth=1, such that mutex_lock_nested()
-@@ -883,14 +911,22 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
- static __poll_t ep_item_poll(const struct epitem *epi, poll_table *pt,
- 				 int depth)
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index b7bfee4b77a84..3ef6bc655661d 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -731,10 +731,9 @@ static struct configfs_attribute *nvmet_ns_attrs[] = {
+ bool nvmet_subsys_nsid_exists(struct nvmet_subsys *subsys, u32 nsid)
  {
--	struct file *file = epi->ffd.file;
-+	struct file *file = epi_fget(epi);
- 	__poll_t res;
+ 	struct config_item *ns_item;
+-	char name[4] = {};
++	char name[12];
  
-+	/*
-+	 * We could return EPOLLERR | EPOLLHUP or something, but let's
-+	 * treat this more as "file doesn't exist, poll didn't happen".
-+	 */
-+	if (!file)
-+		return 0;
-+
- 	pt->_key = epi->event.events;
- 	if (!is_file_epoll(file))
- 		res = vfs_poll(file, pt);
- 	else
- 		res = __ep_eventpoll_poll(file, pt, depth);
-+	fput(file);
- 	return res & epi->event.events;
- }
- 
+-	if (sprintf(name, "%u", nsid) <= 0)
+-		return false;
++	snprintf(name, sizeof(name), "%u", nsid);
+ 	mutex_lock(&subsys->namespaces_group.cg_subsys->su_mutex);
+ 	ns_item = config_group_find_item(&subsys->namespaces_group, name);
+ 	mutex_unlock(&subsys->namespaces_group.cg_subsys->su_mutex);
 -- 
 2.43.0
 
