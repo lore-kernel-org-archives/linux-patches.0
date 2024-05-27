@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D63961FCD;
-	Mon, 27 May 2024 19:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52DA1078F;
+	Mon, 27 May 2024 19:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836758; cv=none; b=Ywc4nIMtLuuR4pJ6U4g2gdNOqOukby2kPdOYooKwf6Gxeqp5jdHtv9g/mahMIHYIOHowdFShu1AJjZXgVdJqK8EgqrL/Ckdtocr5rOvmG9E7Ufb030coIi7eqRrAW+jWrsW+vtGUXs675fLkVFbDtI27tceau7AE2gnXgG27SXY=
+	t=1716836760; cv=none; b=tfOiqu6h8mkWouz6FaSBTY0bM4532H8EsM+VKVjEcUP1aa7HZKjA/QA9JPIS8YyC0NMzhw4n2z7DUDrDR4Dl/TKpmKZ7KrnPybnmfO7xtR00VFoiANqJeIfX9rFHwAgur6WwYvGEWZUMTxJnf5dueNH5uUi7lmV3oLbaOBeZULk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836758; c=relaxed/simple;
-	bh=BXRfTG6c2cKQyLIazaAVWMLPe0UfjAB66Tj5hrmiYHk=;
+	s=arc-20240116; t=1716836760; c=relaxed/simple;
+	bh=qc3qGULy2ztBA0WIyjLlS5acpWG2wRwbHynpIdg5T/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UfCVPWke20SNoSrtbxG8K3c7K14n8oUvGs5U+K5DCjxx6sHiwUqcT80smOoK8Lt67sZpsFcEklospq9UeaMVgvGk/umIjvxvPAl+XSTTcrO0mcCC82HcniNkn39r5PfLP5tM2jEoGEO7lNJc1psS+pEAzukC96qs7s4jJJp/Wik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00UoyrUK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vEQiWGzkHBkX0Fy4IaQfD3aCjJvkxxrPfO2uX6shs11GgfpzPC6Ii7qkal+I6M0svAJgbvtiEWshW6AYjjqACICZz7jGnkQcXYs8TxOWXfV0jJv7Fvbf6A1tNptnGj4VG1k4b32hfA+8LA/vA9TEo9T3QKesNeJZc9OMgbifDfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUEmcMth; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00UoyrUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B4FC2BBFC;
-	Mon, 27 May 2024 19:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUEmcMth"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6707EC32782;
+	Mon, 27 May 2024 19:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836758;
-	bh=BXRfTG6c2cKQyLIazaAVWMLPe0UfjAB66Tj5hrmiYHk=;
+	s=korg; t=1716836760;
+	bh=qc3qGULy2ztBA0WIyjLlS5acpWG2wRwbHynpIdg5T/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=00UoyrUK7FRtXnH3TY7rZV8l8piS4v0a44uY1oMIDJQJ0NqpORRjWD1+TaVZAdv/R
-	 o4QE9PlWVDXFGdc6IT+qziSS9oBpa6MfEekC6/umPXO4lej8uhWpGtQiuyCIrLqR0e
-	 k8GqL73mFwWxWIQHcherddpxRYt23ftqwSiAGJ6Y=
+	b=kUEmcMthaqoSMigIhrjOLnEz/qIjWrkKEVOhnIvVKlbqyXdWyqtVZCCK1Zxuu3fe7
+	 6+u1SS/YRh2LAZNgT4ilRMCfsWn3F0Vls6rlRhEb85TnP799/QMdXzia4sU4g48SVR
+	 vMFbuhhmWn8bHFxSJeci6MN+lL7Lf+NsWeT5llkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Portia Stephens <portia.stephens@canonical.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 139/427] ACPI: disable -Wstringop-truncation
-Date: Mon, 27 May 2024 20:53:06 +0200
-Message-ID: <20240527185614.853893658@linuxfoundation.org>
+Subject: [PATCH 6.9 175/427] cpufreq: brcmstb-avs-cpufreq: ISO C90 forbids mixed declarations
+Date: Mon, 27 May 2024 20:53:42 +0200
+Message-ID: <20240527185618.577872057@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,46 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Portia Stephens <portia.stephens@canonical.com>
 
-[ Upstream commit a3403d304708f60565582d60af4316289d0316a0 ]
+[ Upstream commit fa7bd98f3c8b33fb68c6b2bc69cff32b63db69f8 ]
 
-gcc -Wstringop-truncation warns about copying a string that results in a
-missing nul termination:
+There is a compile warning because a NULL pointer check was added before
+a struct was declared. This moves the NULL pointer check to after the
+struct is declared and moves the struct assignment to after the NULL
+pointer check.
 
-drivers/acpi/acpica/tbfind.c: In function 'acpi_tb_find_table':
-drivers/acpi/acpica/tbfind.c:60:9: error: 'strncpy' specified bound 6 equals destination size [-Werror=stringop-truncation]
-   60 |         strncpy(header.oem_id, oem_id, ACPI_OEM_ID_SIZE);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/acpi/acpica/tbfind.c:61:9: error: 'strncpy' specified bound 8 equals destination size [-Werror=stringop-truncation]
-   61 |         strncpy(header.oem_table_id, oem_table_id, ACPI_OEM_TABLE_ID_SIZE);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The code works as intended, and the warning could be addressed by using
-a memcpy(), but turning the warning off for this file works equally well
-and may be easier to merge.
-
-Fixes: 47c08729bf1c ("ACPICA: Fix for LoadTable operator, input strings")
-Link: https://lore.kernel.org/lkml/CAJZ5v0hoUfv54KW7y4223Mn9E7D4xvR7whRFNLTBqCZMUxT50Q@mail.gmail.com/#t
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: f661017e6d32 ("cpufreq: brcmstb-avs-cpufreq: add check for cpufreq_cpu_get's return value")
+Signed-off-by: Portia Stephens <portia.stephens@canonical.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/brcmstb-avs-cpufreq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/Makefile b/drivers/acpi/acpica/Makefile
-index 30f3fc13c29d1..8d18af396de92 100644
---- a/drivers/acpi/acpica/Makefile
-+++ b/drivers/acpi/acpica/Makefile
-@@ -5,6 +5,7 @@
+diff --git a/drivers/cpufreq/brcmstb-avs-cpufreq.c b/drivers/cpufreq/brcmstb-avs-cpufreq.c
+index 1a1857b0a6f48..ea8438550b490 100644
+--- a/drivers/cpufreq/brcmstb-avs-cpufreq.c
++++ b/drivers/cpufreq/brcmstb-avs-cpufreq.c
+@@ -481,9 +481,12 @@ static bool brcm_avs_is_firmware_loaded(struct private_data *priv)
+ static unsigned int brcm_avs_cpufreq_get(unsigned int cpu)
+ {
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
++	struct private_data *priv;
++
+ 	if (!policy)
+ 		return 0;
+-	struct private_data *priv = policy->driver_data;
++
++	priv = policy->driver_data;
  
- ccflags-y			:= -D_LINUX -DBUILDING_ACPICA
- ccflags-$(CONFIG_ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
-+CFLAGS_tbfind.o 		+= $(call cc-disable-warning, stringop-truncation)
+ 	cpufreq_cpu_put(policy);
  
- # use acpi.o to put all files here into acpi.o modparam namespace
- obj-y	+= acpi.o
 -- 
 2.43.0
 
