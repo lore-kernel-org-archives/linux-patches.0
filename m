@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC5717E90E;
-	Mon, 27 May 2024 19:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33C717E90E;
+	Mon, 27 May 2024 19:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836817; cv=none; b=cByje6Il49OZCnKs3AjgOKKwAEWzkMVbfS5Wh4UAk3Ou7l3Tiwn3K5B5dWAK/xBbXBYnhOv/gkuSkCoBjVbJIgyMqq+xIemJD/m2R4N2Is8Ou20QQUKMapf5KBHBoLscY0r/zW7RLgai2YVTMWXOWMDzzBlhOkELeEi4PjVGN24=
+	t=1716836819; cv=none; b=rQzh/FXeNVTO4LVdguU3extHjgTXK5w88Zg/bkA8tACp54BFPhfFcDCgug42USZrGYXiwZC0eDkt4R/sV0J8IFx3OO76gIiL3m9Oo30pacLsEprqQPCtaDkEOCuks30ebsGMGX2Kw0G69a/f3VwdhdwowgmnDYAxpb8bNh3R3BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836817; c=relaxed/simple;
-	bh=eZ6KDLmuFLThP7Ne4opnjiUIERrLr95l/ZxFRAjZ9J4=;
+	s=arc-20240116; t=1716836819; c=relaxed/simple;
+	bh=CAxeFSQGO1ODz12bPZC9EsrwzYKho1KajxqirT4b4Qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MllUOq/hmhBhIpLdyk10nNbKTIYc5GL4vxmDfLp5+nuTugxEjzCJoMylVggL6kj2CXk2cREGsj6eqLJ24aUhfd+lJgE6GPYdnDF8uen+1f4nfwV+Sge6Xe6slIjfDlNuVMEhbAjjGq6kwuoXyhmMaNMrw9GcRuxRgMQYqEEt7TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EusTpPbJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dNY8b/Km/92sF5ZLlZBP7vO1ypAmrNOZpfsSdEXdI+x3kpF7znzc+5FKboSR074JYMdgBp3Y2Bp4axeyoF/ne0I3XnpLlPqqUE+Vy8tmtusa7JhuZo/fSFGr65B4q+CscfvlVItRjU4uoIoWeZj/cooSRl9DZtxdZDSmGlaXdzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcQ8CXCY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EusTpPbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8494C2BBFC;
-	Mon, 27 May 2024 19:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcQ8CXCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8A6C2BBFC;
+	Mon, 27 May 2024 19:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836817;
-	bh=eZ6KDLmuFLThP7Ne4opnjiUIERrLr95l/ZxFRAjZ9J4=;
+	s=korg; t=1716836819;
+	bh=CAxeFSQGO1ODz12bPZC9EsrwzYKho1KajxqirT4b4Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EusTpPbJe+Zf2zXY8hmf6zxeYXWLMX4Fy5CZc+Yq1MIBXGUHTbL5Go7neai7bRe6S
-	 sPbv3/K8FPA7qYUWyp0nFU3azPfkWBczrokYtZzsxVLAO6bKGsS4kzGXBlChvBmtHY
-	 s54mnINB8gEQG4jYH02ua1dYpKu2zSafvfJUGHio=
+	b=rcQ8CXCYQ3fj7UkPlL5C+btWI0nwx9eVQ6/XhLxQgLpS56NbEXGhLvB0NbzCFRqR3
+	 +pof7HaMqjWzgzU/feYVedkeo5bzAsG0RpmM3TzksK01HibIXYXAr8TzR08QJLCQ0y
+	 c+PlmEN3wge/BSI1ep99G09gQI+UA2Hk25ZUssOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Chad Monroe <chad@monroe.io>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 182/427] pwm: sti: Simplify probe function using devm functions
-Date: Mon, 27 May 2024 20:53:49 +0200
-Message-ID: <20240527185619.234167994@linuxfoundation.org>
+Subject: [PATCH 6.9 200/427] wifi: mt76: mt7996: fix size of txpower MCU command
+Date: Mon, 27 May 2024 20:54:07 +0200
+Message-ID: <20240527185620.940125932@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -44,117 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Chad Monroe <chad@monroe.io>
 
-[ Upstream commit 5bb0b194aeee5d5da6881232f4e9989b35957c25 ]
+[ Upstream commit 66ffcb9abae68625c704b247c7d15cbbc7837391 ]
 
-Instead of of_clk_get_by_name() use devm_clk_get_prepared() which has
-several advantages:
+Fixes issues with scanning and low power output at some rates.
 
- - Combines getting the clock and a call to clk_prepare(). The latter
-   can be dropped from sti_pwm_probe() accordingly.
- - Cares for calling clk_put() which is missing in both probe's error
-   path and the remove function.
- - Cares for calling clk_unprepare() which can be dropped from the error
-   paths and the remove function. (Note that not all error path got this
-   right.)
-
-With additionally using devm_pwmchip_add() instead of pwmchip_add() the
-remove callback can be dropped completely. With it the last user of
-platform_get_drvdata() goes away and so platform_set_drvdata() can be
-dropped from the probe function, too.
-
-Fixes: 378fe115d19d ("pwm: sti: Add new driver for ST's PWM IP")
-Link: https://lore.kernel.org/r/81f0e1d173652f435afda6719adaed1922fe059a.1710068192.git.u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: f75e4779d215 ("wifi: mt76: mt7996: add txpower setting support")
+Signed-off-by: Chad Monroe <chad@monroe.io>
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-sti.c | 39 +++------------------------------------
- 1 file changed, 3 insertions(+), 36 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c    | 7 +++++--
+ drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h | 1 +
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
-index 39d80da0e14af..f07b1126e7a81 100644
---- a/drivers/pwm/pwm-sti.c
-+++ b/drivers/pwm/pwm-sti.c
-@@ -624,32 +624,20 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index b44abe2acc81b..cfb5a7d348eb8 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -4464,7 +4464,7 @@ int mt7996_mcu_set_txpower_sku(struct mt7996_phy *phy)
+ 		u8 band_idx;
+ 	} __packed req = {
+ 		.tag = cpu_to_le16(UNI_TXPOWER_POWER_LIMIT_TABLE_CTRL),
+-		.len = cpu_to_le16(sizeof(req) + MT7996_SKU_RATE_NUM - 4),
++		.len = cpu_to_le16(sizeof(req) + MT7996_SKU_PATH_NUM - 4),
+ 		.power_ctrl_id = UNI_TXPOWER_POWER_LIMIT_TABLE_CTRL,
+ 		.power_limit_type = TX_POWER_LIMIT_TABLE_RATE,
+ 		.band_idx = phy->mt76->band_idx,
+@@ -4479,7 +4479,7 @@ int mt7996_mcu_set_txpower_sku(struct mt7996_phy *phy)
+ 	mphy->txpower_cur = tx_power;
  
- 	if (cdata->pwm_num_devs) {
--		pc->pwm_clk = of_clk_get_by_name(dev->of_node, "pwm");
-+		pc->pwm_clk = devm_clk_get_prepared(dev, "pwm");
- 		if (IS_ERR(pc->pwm_clk)) {
- 			dev_err(dev, "failed to get PWM clock\n");
- 			return PTR_ERR(pc->pwm_clk);
- 		}
--
--		ret = clk_prepare(pc->pwm_clk);
--		if (ret) {
--			dev_err(dev, "failed to prepare clock\n");
--			return ret;
--		}
- 	}
+ 	skb = mt76_mcu_msg_alloc(&dev->mt76, NULL,
+-				 sizeof(req) + MT7996_SKU_RATE_NUM);
++				 sizeof(req) + MT7996_SKU_PATH_NUM);
+ 	if (!skb)
+ 		return -ENOMEM;
  
- 	if (cdata->cpt_num_devs) {
--		pc->cpt_clk = of_clk_get_by_name(dev->of_node, "capture");
-+		pc->cpt_clk = devm_clk_get_prepared(dev, "capture");
- 		if (IS_ERR(pc->cpt_clk)) {
- 			dev_err(dev, "failed to get PWM capture clock\n");
- 			return PTR_ERR(pc->cpt_clk);
- 		}
+@@ -4503,6 +4503,9 @@ int mt7996_mcu_set_txpower_sku(struct mt7996_phy *phy)
+ 	/* eht */
+ 	skb_put_data(skb, &la.eht[0], sizeof(la.eht));
  
--		ret = clk_prepare(pc->cpt_clk);
--		if (ret) {
--			dev_err(dev, "failed to prepare clock\n");
--			return ret;
--		}
--
- 		cdata->ddata = devm_kzalloc(dev, cdata->cpt_num_devs * sizeof(*cdata->ddata), GFP_KERNEL);
- 		if (!cdata->ddata)
- 			return -ENOMEM;
-@@ -664,27 +652,7 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 		mutex_init(&ddata->lock);
- 	}
- 
--	ret = pwmchip_add(chip);
--	if (ret < 0) {
--		clk_unprepare(pc->pwm_clk);
--		clk_unprepare(pc->cpt_clk);
--		return ret;
--	}
--
--	platform_set_drvdata(pdev, chip);
--
--	return 0;
--}
--
--static void sti_pwm_remove(struct platform_device *pdev)
--{
--	struct pwm_chip *chip = platform_get_drvdata(pdev);
--	struct sti_pwm_chip *pc = to_sti_pwmchip(chip);
--
--	pwmchip_remove(chip);
--
--	clk_unprepare(pc->pwm_clk);
--	clk_unprepare(pc->cpt_clk);
-+	return devm_pwmchip_add(dev, chip);
++	/* padding */
++	skb_put_zero(skb, MT7996_SKU_PATH_NUM - MT7996_SKU_RATE_NUM);
++
+ 	return mt76_mcu_skb_send_msg(&dev->mt76, skb,
+ 				     MCU_WM_UNI_CMD(TXPOWER), true);
  }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+index 36d1f247d55aa..ddeb40d522c5a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+@@ -50,6 +50,7 @@
+ #define MT7996_CFEND_RATE_11B		0x03	/* 11B LP, 11M */
  
- static const struct of_device_id sti_pwm_of_match[] = {
-@@ -699,7 +667,6 @@ static struct platform_driver sti_pwm_driver = {
- 		.of_match_table = sti_pwm_of_match,
- 	},
- 	.probe = sti_pwm_probe,
--	.remove_new = sti_pwm_remove,
- };
- module_platform_driver(sti_pwm_driver);
+ #define MT7996_SKU_RATE_NUM		417
++#define MT7996_SKU_PATH_NUM		494
  
+ #define MT7996_MAX_TWT_AGRT		16
+ #define MT7996_MAX_STA_TWT_AGRT		8
 -- 
 2.43.0
 
