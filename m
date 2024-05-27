@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B549160887;
-	Mon, 27 May 2024 19:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C87160877;
+	Mon, 27 May 2024 19:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838583; cv=none; b=QoxtuHYkIu2tBMn8uTrVShEiOAF/xLSsRs662ppGi+xrmq5IdMS6137kXsXy8Gt6JPJ86Sb6EzCnvEuxo5V2OlkIQOqrg9bJJw2hJYcTOlQjFMwpZaa1FM7VoiXsi+ORrHcOi3BxaUu0/qYkdaXrBqXcWfM1Ngt2ZnC5IDk0tm0=
+	t=1716838586; cv=none; b=eJL/qM3jm0mUZ+3wAPfLQWtk787NM3eodsr62PttGEQGaVQFK2L5npec5VIGFefoJx3nsQEcfupb4nu+SStGuGBF7fo5WegVnM1FesIQ1M0pTQMw4eLL8iaODPo3eQEf22t1lVcaC4L7DCaWRLhMc9gCA25JEKPwP+eLFbeWbJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838583; c=relaxed/simple;
-	bh=XmgH8GCLo5+6Hvp3alsI5NDggmWE7vdx9pKBtkG2jaE=;
+	s=arc-20240116; t=1716838586; c=relaxed/simple;
+	bh=o9qlUjN44qZWu8ea2M1+4d4Am2CZZDuBdLakRj++ze0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SipJq91SDtTNxECcWgp1trY1ODkJDy6nT9lKTRijaSBGkXg8IpJFa/1M+CSDwnOJ3cLLqahJdAoSs9qQIAvg1+4BZ51IBIcMTsICzmFpQZEYKPr4frXKV6DZufJ4Tikdyl6m8S5NKWzWpeUdrzI8ogmmCBlSzwa7jKT4/fhTqQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8vDV7Rw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l9lfLXrJM+sVMCl09USY/zKNwR9Iy3o8v2YCV+Mnz7Ql/gTCXCW669EpIxXuw7jZ6m3NwNBv52Vge730Iqo74k0aJBH6YnWg4gNl6wX2nTBTlrucgQzvpEe9pzieY3AE+AkzFtbSu1d6nYl2Ty2fCMKD2efCbh4aKJrpDgKHzKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O4+ugjgw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8vDV7Rw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1469CC32782;
-	Mon, 27 May 2024 19:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O4+ugjgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F695C2BBFC;
+	Mon, 27 May 2024 19:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838583;
-	bh=XmgH8GCLo5+6Hvp3alsI5NDggmWE7vdx9pKBtkG2jaE=;
+	s=korg; t=1716838585;
+	bh=o9qlUjN44qZWu8ea2M1+4d4Am2CZZDuBdLakRj++ze0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8vDV7RwncQ78+8VUX7xx/XYuLW5hte0Rzlllw+V7GJTI35AETzUOK+cDRcyVBqGF
-	 uecgqJOBbCaaZl7Z/G7cvoYoLOiEinZ2xqs40Ejear5/Ar4bYlljE5WdfudGRJhj+N
-	 iCMp8qB1l8/bNoUX3jYAfo9CqFAQfPh1JJcvclWs=
+	b=O4+ugjgwa2ZVwRwqNfz+FZaPzoFmu/BF8aRXOmm7nI7Sn+DBlSKyjSktFH7Q4DkFs
+	 coAbAR0Zo853+WjR6KC0O4Bd3PuZ/EfGRFeGNxPUE5fk5u/Gd3Ttvu0WZpE9+Jgtfu
+	 lKV0BgE7xULexfPTJT25HjF0rMQu97//S2Up3Bsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Luis Henriques <lhenriques@suse.de>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Konstantin Taranov <kotaranov@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 450/493] ext4: avoid excessive credit estimate in ext4_tmpfile()
-Date: Mon, 27 May 2024 20:57:32 +0200
-Message-ID: <20240527185644.949451985@linuxfoundation.org>
+Subject: [PATCH 6.8 451/493] RDMA/mana_ib: Introduce helpers to create and destroy mana queues
+Date: Mon, 27 May 2024 20:57:33 +0200
+Message-ID: <20240527185644.978917764@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,50 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Konstantin Taranov <kotaranov@microsoft.com>
 
-[ Upstream commit 35a1f12f0ca857fee1d7a04ef52cbd5f1f84de13 ]
+[ Upstream commit 46f5be7cd4bceb3a503c544b3dab7b75fe4bb96b ]
 
-A user with minimum journal size (1024 blocks these days) complained
-about the following error triggered by generic/697 test in
-ext4_tmpfile():
+Intoduce helpers to work with mana ib queues (struct mana_ib_queue).
+A queue always consists of umem, gdma_region, and id.
+A queue can become a WQ or a CQ.
 
-run fstests generic/697 at 2024-02-28 05:34:46
-JBD2: vfstest wants too many credits credits:260 rsv_credits:0 max:256
-EXT4-fs error (device loop0) in __ext4_new_inode:1083: error 28
-
-Indeed the credit estimate in ext4_tmpfile() is huge.
-EXT4_MAXQUOTAS_INIT_BLOCKS() is 219, then 10 credits from ext4_tmpfile()
-itself and then ext4_xattr_credits_for_new_inode() adds more credits
-needed for security attributes and ACLs. Now the
-EXT4_MAXQUOTAS_INIT_BLOCKS() is in fact unnecessary because we've
-already initialized quotas with dquot_init() shortly before and so
-EXT4_MAXQUOTAS_TRANS_BLOCKS() is enough (which boils down to 3 credits).
-
-Fixes: af51a2ac36d1 ("ext4: ->tmpfile() support")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Tested-by: Luis Henriques <lhenriques@suse.de>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240307115320.28949-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Konstantin Taranov <kotaranov@microsoft.com>
+Link: https://lore.kernel.org/r/1711483688-24358-2-git-send-email-kotaranov@linux.microsoft.com
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: f79edef79b6a ("RDMA/mana_ib: boundary check before installing cq callbacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mana/main.c    | 43 ++++++++++++++++++++++++++++
+ drivers/infiniband/hw/mana/mana_ib.h | 10 +++++++
+ 2 files changed, 53 insertions(+)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index 05b647e6bc195..58fee3c6febcb 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -2898,7 +2898,7 @@ static int ext4_tmpfile(struct mnt_idmap *idmap, struct inode *dir,
- 	inode = ext4_new_inode_start_handle(idmap, dir, mode,
- 					    NULL, 0, NULL,
- 					    EXT4_HT_DIR,
--			EXT4_MAXQUOTAS_INIT_BLOCKS(dir->i_sb) +
-+			EXT4_MAXQUOTAS_TRANS_BLOCKS(dir->i_sb) +
- 			  4 + EXT4_XATTR_TRANS_BLOCKS);
- 	handle = ext4_journal_current_handle();
- 	err = PTR_ERR(inode);
+diff --git a/drivers/infiniband/hw/mana/main.c b/drivers/infiniband/hw/mana/main.c
+index 71e33feee61bb..4524c6b807487 100644
+--- a/drivers/infiniband/hw/mana/main.c
++++ b/drivers/infiniband/hw/mana/main.c
+@@ -237,6 +237,49 @@ void mana_ib_dealloc_ucontext(struct ib_ucontext *ibcontext)
+ 		ibdev_dbg(ibdev, "Failed to destroy doorbell page %d\n", ret);
+ }
+ 
++int mana_ib_create_queue(struct mana_ib_dev *mdev, u64 addr, u32 size,
++			 struct mana_ib_queue *queue)
++{
++	struct ib_umem *umem;
++	int err;
++
++	queue->umem = NULL;
++	queue->id = INVALID_QUEUE_ID;
++	queue->gdma_region = GDMA_INVALID_DMA_REGION;
++
++	umem = ib_umem_get(&mdev->ib_dev, addr, size, IB_ACCESS_LOCAL_WRITE);
++	if (IS_ERR(umem)) {
++		err = PTR_ERR(umem);
++		ibdev_dbg(&mdev->ib_dev, "Failed to get umem, %d\n", err);
++		return err;
++	}
++
++	err = mana_ib_create_zero_offset_dma_region(mdev, umem, &queue->gdma_region);
++	if (err) {
++		ibdev_dbg(&mdev->ib_dev, "Failed to create dma region, %d\n", err);
++		goto free_umem;
++	}
++	queue->umem = umem;
++
++	ibdev_dbg(&mdev->ib_dev,
++		  "create_dma_region ret %d gdma_region 0x%llx\n",
++		  err, queue->gdma_region);
++
++	return 0;
++free_umem:
++	ib_umem_release(umem);
++	return err;
++}
++
++void mana_ib_destroy_queue(struct mana_ib_dev *mdev, struct mana_ib_queue *queue)
++{
++	/* Ignore return code as there is not much we can do about it.
++	 * The error message is printed inside.
++	 */
++	mana_ib_gd_destroy_dma_region(mdev, queue->gdma_region);
++	ib_umem_release(queue->umem);
++}
++
+ static int
+ mana_ib_gd_first_dma_region(struct mana_ib_dev *dev,
+ 			    struct gdma_context *gc,
+diff --git a/drivers/infiniband/hw/mana/mana_ib.h b/drivers/infiniband/hw/mana/mana_ib.h
+index f83390eebb7d7..859fd3bfc764f 100644
+--- a/drivers/infiniband/hw/mana/mana_ib.h
++++ b/drivers/infiniband/hw/mana/mana_ib.h
+@@ -45,6 +45,12 @@ struct mana_ib_adapter_caps {
+ 	u32 max_inline_data_size;
+ };
+ 
++struct mana_ib_queue {
++	struct ib_umem *umem;
++	u64 gdma_region;
++	u64 id;
++};
++
+ struct mana_ib_dev {
+ 	struct ib_device ib_dev;
+ 	struct gdma_dev *gdma_dev;
+@@ -169,6 +175,10 @@ int mana_ib_create_dma_region(struct mana_ib_dev *dev, struct ib_umem *umem,
+ int mana_ib_gd_destroy_dma_region(struct mana_ib_dev *dev,
+ 				  mana_handle_t gdma_region);
+ 
++int mana_ib_create_queue(struct mana_ib_dev *mdev, u64 addr, u32 size,
++			 struct mana_ib_queue *queue);
++void mana_ib_destroy_queue(struct mana_ib_dev *mdev, struct mana_ib_queue *queue);
++
+ struct ib_wq *mana_ib_create_wq(struct ib_pd *pd,
+ 				struct ib_wq_init_attr *init_attr,
+ 				struct ib_udata *udata);
 -- 
 2.43.0
 
