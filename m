@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC126168C4;
-	Mon, 27 May 2024 19:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B06168C4;
+	Mon, 27 May 2024 19:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837452; cv=none; b=dA36fFACTftSevSS8Qczjf4N4CZnSffglUTNYlqVgiIA/RazJqcOB3GZcLtCHiJi0Z73qLKiFFNuXWrKn47mX/yF4CTXLCBT4OhcY6l96HrnwfNv8kaDctK1xKiDhYfkFS3xeVsAIMSgc35I81a7GeepSup8lmv7jyRwsYuQO7E=
+	t=1716837456; cv=none; b=cVYxjXY528DcrWUXQ4gW6XK0fz1OMPY7G97on7DiNobWI4rbI3PCup+gYcjhpDMONXI3vj+gLcmZHvs5IQU2xBkFDuyE+2uUFUA0pLc8HTzGTbWx+WIakfmNheXjPvsbS2dC7xlsUkh+iMgBixnzclc2SRxpsERi7CrRViuEkYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837452; c=relaxed/simple;
-	bh=ze7QeFIJ8L0syFUsOHDfS6VBkcyRdm1/2Bq3MKpLN+g=;
+	s=arc-20240116; t=1716837456; c=relaxed/simple;
+	bh=eG4y+dqm8iBqyhfGuR/xSRzzLShdRuub2V9Uc/lADHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pOsroXh3DAYGgS6xuN7tJtsKcmq4/C/UCV+594y9o847r2KlOZA57MCb2e8OY2drzxGZrCudQ375tdwurBN3FAp/hJvkSr9Lm0sFI5NPsrwwZ569BBk3LgvU0KInk7Y7Kt81TlY3av8+RKF9MmHNEGzYSWsqXhVuiMtblx6sowc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqmdmheT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cFUqbrOoEGCAzTU9JBGLNEc0FB7WmNRgWVk0IxgmKp2h9LLOcRKFPT7KZGjbrVHk9QeCpGiOcNsxDuDAV820hrXMTp5PGyFNxk5zGHAn5wVSWdBrRQUXZ8+CzuEkE0tikhMAdmCN1a/qRwL+h/Oa/yxDaS/o/DVUjn1fsRKWDb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uko7g2Mk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqmdmheT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4172EC2BBFC;
-	Mon, 27 May 2024 19:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uko7g2Mk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C45AC2BBFC;
+	Mon, 27 May 2024 19:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837452;
-	bh=ze7QeFIJ8L0syFUsOHDfS6VBkcyRdm1/2Bq3MKpLN+g=;
+	s=korg; t=1716837456;
+	bh=eG4y+dqm8iBqyhfGuR/xSRzzLShdRuub2V9Uc/lADHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqmdmheTCibUSYMW2TEBi6mtz+Nane+4t44+deuHxgaNtDITOVNyC6xqX5ASu8N0W
-	 kSQaGkEPmsd1/tdwACPgo96nHrOhUFLl7M1jXYsE2PBbBbbO5AMmfwffrrGlliJpEW
-	 pBheTYgjw6YHzduk904GPwHNtIbAiPo0/sMC9Tx4=
+	b=uko7g2Mk0C0DsEXqqGF77Hq6u4FXrke+mMAClEooUw5478iRQZgWe6N3jccSQHq9v
+	 2YJCOa+wnDPn3M/KXzwCYbEtY35fxTpxCnuBQ5b5Fey+CfEDJhjgCH4UG3RJu0UHrw
+	 VOft4T8D+FvgkPvOvuy843qYqYXpZ2rbxm1JzxII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.8 019/493] net: mana: Fix the extra HZ in mana_hwc_send_request
-Date: Mon, 27 May 2024 20:50:21 +0200
-Message-ID: <20240527185628.422170058@linuxfoundation.org>
+	Daniel J Blueman <daniel@quora.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Steffen Persvold <sp@numascale.com>,
+	James Cleverdon <james.cleverdon.external@eviden.com>,
+	Dimitri Sivanich <sivanich@hpe.com>,
+	Prarit Bhargava <prarit@redhat.com>
+Subject: [PATCH 6.8 002/493] x86/tsc: Trust initial offset in architectural TSC-adjust MSRs
+Date: Mon, 27 May 2024 20:50:04 +0200
+Message-ID: <20240527185626.760223171@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,35 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
+From: Daniel J Blueman <daniel@quora.org>
 
-commit 9c91c7fadb1771dcc2815c5271d14566366d05c5 upstream.
+commit 455f9075f14484f358b3c1d6845b4a438de198a7 upstream.
 
-Commit 62c1bff593b7 added an extra HZ along with msecs_to_jiffies.
-This patch fixes that.
+When the BIOS configures the architectural TSC-adjust MSRs on secondary
+sockets to correct a constant inter-chassis offset, after Linux brings the
+cores online, the TSC sync check later resets the core-local MSR to 0,
+triggering HPET fallback and leading to performance loss.
 
-Cc: stable@vger.kernel.org
-Fixes: 62c1bff593b7 ("net: mana: Configure hwc timeout from hardware")
-Signed-off-by: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
-Link: https://lore.kernel.org/r/1716185104-31658-1-git-send-email-schakrabarti@linux.microsoft.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix this by unconditionally using the initial adjust values read from the
+MSRs. Trusting the initial offsets in this architectural mechanism is a
+better approach than special-casing workarounds for specific platforms.
+
+Signed-off-by: Daniel J Blueman <daniel@quora.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Steffen Persvold <sp@numascale.com>
+Reviewed-by: James Cleverdon <james.cleverdon.external@eviden.com>
+Reviewed-by: Dimitri Sivanich <sivanich@hpe.com>
+Reviewed-by: Prarit Bhargava <prarit@redhat.com>
+Link: https://lore.kernel.org/r/20240419085146.175665-1-daniel@quora.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/hw_channel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/tsc_sync.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
-+++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-@@ -848,7 +848,7 @@ int mana_hwc_send_request(struct hw_chan
- 	}
+--- a/arch/x86/kernel/tsc_sync.c
++++ b/arch/x86/kernel/tsc_sync.c
+@@ -193,11 +193,9 @@ bool tsc_store_and_check_tsc_adjust(bool
+ 	cur->warned = false;
  
- 	if (!wait_for_completion_timeout(&ctx->comp_event,
--					 (msecs_to_jiffies(hwc->hwc_timeout) * HZ))) {
-+					 (msecs_to_jiffies(hwc->hwc_timeout)))) {
- 		dev_err(hwc->dev, "HWC: Request timed out!\n");
- 		err = -ETIMEDOUT;
- 		goto out;
+ 	/*
+-	 * If a non-zero TSC value for socket 0 may be valid then the default
+-	 * adjusted value cannot assumed to be zero either.
++	 * The default adjust value cannot be assumed to be zero on any socket.
+ 	 */
+-	if (tsc_async_resets)
+-		cur->adjusted = bootval;
++	cur->adjusted = bootval;
+ 
+ 	/*
+ 	 * Check whether this CPU is the first in a package to come up. In
 
 
