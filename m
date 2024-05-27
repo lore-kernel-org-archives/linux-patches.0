@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3ED317727;
-	Mon, 27 May 2024 19:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D75C17727;
+	Mon, 27 May 2024 19:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838491; cv=none; b=U0mr56DtV6AU6UMNXY8ZE9Yv/bEh+YoL+6JF05FV4dZHQRjQVZG8196rGGBcEZus4wrPpamJCUBYhcwDOKTDki93tKa9PoSpgZ56UvJjttAtNU6rXIRUPTfaIfcHk18ekR10OkcCvB4/rRj5vobu4M4BwUiBnJalNrKbURJ9zdo=
+	t=1716838493; cv=none; b=mB38bpKwWRhGOIu84+rjShvx3IpJx4vE7XRsMNsWzqCUL5UEGDrb9fD+Q8wHsvTx3jsqeXGzQctwvs3cLzsThpsBG3RukQsip01xcLZynPUvJkx6SfXYphfyxCPA0cG80FWHoV3w7E88K4m6yJGKWqOJSWhicZxj3/lLNGzavAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838491; c=relaxed/simple;
-	bh=ONBEHZ+yu5U5iIzXtqDLvaLdkDdiZUaQR+bjJo/0dRk=;
+	s=arc-20240116; t=1716838493; c=relaxed/simple;
+	bh=IPPGRrwqMRzZIM2d1RWkT/IDJ5CuwWM9kyji5RYeU3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THFiFjxJ9VCmhm3/w90MVXNdFwVEvzycXpDbTvQPwnjwSfzpe3DHPI0NAtC6KIyfqKUZmuQyhF2jeqh9OTp+ym4Xf4gOvzxFk2c49bNQyG5olMABY/moqMFWMOyjx+M1ZtsWYJWK866vcj7iUoMZLKw7ot5X7PCC8Rz+sk2p1b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RV/CMluo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IhdzEKSNkk38wWnAqv/anIxqibC23K+Q2PaEIAfaHDlWXvEJ3d2skfAUlcKDs21EO0oIBt94UhKE3RstuQenBNL2HHRO8CViFR6n6iP68xOiWPnCVz0vOmFFXJF4ne9BETH03g4O0BFBcN5Kkc3Rtt5v7eULCc53pKVB1Cbk80c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oji59yBG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RV/CMluo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89402C2BBFC;
-	Mon, 27 May 2024 19:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oji59yBG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E248C2BBFC;
+	Mon, 27 May 2024 19:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838490;
-	bh=ONBEHZ+yu5U5iIzXtqDLvaLdkDdiZUaQR+bjJo/0dRk=;
+	s=korg; t=1716838493;
+	bh=IPPGRrwqMRzZIM2d1RWkT/IDJ5CuwWM9kyji5RYeU3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RV/CMluo5hyA4DQ7H7wM2HYrLunxujXBJXsOyqCJTJMWQ21wfczx7oUyGo0xNDSrt
-	 mU7O6V6BjsKZLtH+eawZM51zBCY4kmolPg6vYsCDETaXHSTLcEcGGOgLCoEpckpwHc
-	 Tt01KRV4rcaMdts+zG+EHFz6NJcHeTwEtBrDMQGw=
+	b=Oji59yBGZIXAK8l42MJ1nzh5ylc836SrNkxI/yn/BZlsjXVBCiKS1+HQ0cGalMYAy
+	 juR48RDT/F2uxVflGrqs4fdkfmXbS57oW2cIj2GzifjBpvm4FT9KDL3+eMPs6KAmix
+	 OGQLKiieieKu49DwRM7AvvFGNzfAmhhNcDrpr3cU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 413/493] drm/panel: simple: Add missing Innolux G121X1-L03 format, flags, connector
-Date: Mon, 27 May 2024 20:56:55 +0200
-Message-ID: <20240527185643.811660966@linuxfoundation.org>
+Subject: [PATCH 6.8 414/493] ALSA: hda: cs35l41: Remove Speaker ID for Lenovo Legion slim 7 16ARHA7
+Date: Mon, 27 May 2024 20:56:56 +0200
+Message-ID: <20240527185643.843704534@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,47 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit 11ac72d033b9f577e8ba0c7a41d1c312bb232593 ]
+[ Upstream commit 4a1a8065f5d3565677347d34a908ff2d0803b14f ]
 
-The .bpc = 6 implies .bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG ,
-add the missing bus_format. Add missing connector type and bus_flags
-as well.
+These laptops do not have _DSD and must be added by configuration
+table, however, the initial entries for them are incorrect:
+Neither laptop contains a Speaker ID GPIO.
+This issue would not affect audio playback, but may affect which files
+are loaded when loading firmware.
 
-Documentation [1] 1.4 GENERAL SPECIFICATI0NS indicates this panel is
-capable of both RGB 18bit/24bit panel, the current configuration uses
-18bit mode, .bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG , .bpc = 6.
+Fixes: b67a7dc418aa ("ALSA: hda/realtek: Add sound quirks for Lenovo Legion slim 7 16ARHA7 models")
 
-Support for the 24bit mode would require another entry in panel-simple
-with .bus_format = MEDIA_BUS_FMT_RGB666_1X7X4_SPWG and .bpc = 8, which
-is out of scope of this fix.
-
-[1] https://www.distec.de/fileadmin/pdf/produkte/TFT-Displays/Innolux/G121X1-L03_Datasheet.pdf
-
-Fixes: f8fa17ba812b ("drm/panel: simple: Add support for Innolux G121X1-L03")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240328102746.17868-2-marex@denx.de
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Message-ID: <20240411110813.330483-8-sbinding@opensource.cirrus.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/cs35l41_hda_property.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 72fdab8adb088..228c5c48e1588 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -2564,6 +2564,9 @@ static const struct panel_desc innolux_g121x1_l03 = {
- 		.unprepare = 200,
- 		.disable = 400,
- 	},
-+	.bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG,
-+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
-+	.connector_type = DRM_MODE_CONNECTOR_LVDS,
- };
- 
- static const struct display_timing innolux_g156hce_l01_timings = {
+diff --git a/sound/pci/hda/cs35l41_hda_property.c b/sound/pci/hda/cs35l41_hda_property.c
+index 4d1f8734d13f3..c2067e8083c0f 100644
+--- a/sound/pci/hda/cs35l41_hda_property.c
++++ b/sound/pci/hda/cs35l41_hda_property.c
+@@ -99,8 +99,8 @@ static const struct cs35l41_config cs35l41_config_table[] = {
+ 	{ "10431F62", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 0, 0, 0 },
+ 	{ "10433A60", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 1000, 4500, 24 },
+ 	{ "17AA386F", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
+-	{ "17AA3877", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
+-	{ "17AA3878", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
++	{ "17AA3877", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
++	{ "17AA3878", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
+ 	{ "17AA38A9", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 2, -1, 0, 0, 0 },
+ 	{ "17AA38AB", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 2, -1, 0, 0, 0 },
+ 	{ "17AA38B4", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
 -- 
 2.43.0
 
