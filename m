@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5349B17727;
-	Mon, 27 May 2024 19:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B9617727;
+	Mon, 27 May 2024 19:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838385; cv=none; b=g/l/p1Fe/oQDdB5jMR/K6+mGikkfUYer4feTvhRUZsDOkztBdY/VxoDaOjbm7trfnYhCB36+ksTfduUo26Wgb78pWXAc/iqPhAwWfTB72afP6uZpmMKuY+vJc3Q5v8FK9jNq7L6UE5PBxl9PYooZGAHOb9yN3ux71dv/6G5HtZo=
+	t=1716838388; cv=none; b=CNkr4iYJIXB0EN7MQIrcn2HZ57RuX5sTE8Q/xRdVkIYB+uyKIxlDcdNP7jK658ZnnCdyfgF+0spAsHe5XhJ4R9FVql1KK14YhsjzOcP+MxaIO9VCElc6hI+NTaREhxwJ5XpNtfCj9FdiEPHAunmTw5URZeq3BZczNyeAtm47HQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838385; c=relaxed/simple;
-	bh=Cn43QCI0Nz+WIAQAuEuPI3MujVG8aO6w1u1b6JZgbr0=;
+	s=arc-20240116; t=1716838388; c=relaxed/simple;
+	bh=Ao8Ld2Y51rvM9pvyOLG63SfwK1HtYKFoavkJxEjPcHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ashCyzOU93eUgEdfcLiezU2zqkDrVny2aVv/hjybeYI2kjyjxqQz1l+d1WsnAgS1CtZVquZv5+TXaQz3L8fLC9CCLQVOEvQTsNedDiDyNcTNZjA0ArjK7uXh6YTKjK+K3til0U3SZ7HLmjhwsqAShdMi8gpQw9fawN3JdxBtlRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Id15NOg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GkOE0580aUaz4cXmH1RJ1LHm221h6CSQb3h+WzXPWcl+VVgI2YM/0wthpynjyXVvPvwi0CPvZBun8R1IYA5Z5matCs1YPAxG45jSuoE0M6c7P2X3aHjyHK98mwt8A9F+hJQ4wj/jtG5EWWQbyWaJc4Q1OJQRuuDnVVDyhVuE3fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZISlgFxs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Id15NOg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86ACEC2BBFC;
-	Mon, 27 May 2024 19:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZISlgFxs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0FDC2BBFC;
+	Mon, 27 May 2024 19:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838384;
-	bh=Cn43QCI0Nz+WIAQAuEuPI3MujVG8aO6w1u1b6JZgbr0=;
+	s=korg; t=1716838387;
+	bh=Ao8Ld2Y51rvM9pvyOLG63SfwK1HtYKFoavkJxEjPcHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Id15NOgdFjtPdJb0j4A5/5pBPnFF0TBy4mQLZmga0uYhyo3EOfaNEXrAgLpCkIGE
-	 p52cni2BM696LqKeO4LpR1x6hJyq4VyUESxdsh0EkpAcpRtLje8SR7EK3tWPJ6JmBf
-	 ZfcTIK+O30L7H5mAcRuJ5GQmVav0RLK7/xeyAbOE=
+	b=ZISlgFxsK3ses5s0MQPT5KoOHaurFrUtLfO+YeirJI9EsTm9530CQg6G+atSzNdul
+	 tV7xmIgpNIgMhXcSXlR2sglGucP3BhH8WF6F1Mc5FqtwRJ6dPR0EfCSvPS6LUaT58B
+	 ZLxBnYKDzK+XMpSRjou/9zJNpSlO4uEtvh2d1HC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Justin Green <greenjustin@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 372/493] drm/meson: vclk: fix calculation of 59.94 fractional rates
-Date: Mon, 27 May 2024 20:56:14 +0200
-Message-ID: <20240527185642.440990163@linuxfoundation.org>
+Subject: [PATCH 6.8 373/493] drm/mediatek: Add 0 size check to mtk_drm_gem_obj
+Date: Mon, 27 May 2024 20:56:15 +0200
+Message-ID: <20240527185642.476828963@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,63 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Justin Green <greenjustin@chromium.org>
 
-[ Upstream commit bfbc68e4d8695497f858a45a142665e22a512ea3 ]
+[ Upstream commit 1e4350095e8ab2577ee05f8c3b044e661b5af9a0 ]
 
-Playing 4K media with 59.94 fractional rate (typically VP9) causes the screen to lose
-sync with the following error reported in the system log:
+Add a check to mtk_drm_gem_init if we attempt to allocate a GEM object
+of 0 bytes. Currently, no such check exists and the kernel will panic if
+a userspace application attempts to allocate a 0x0 GBM buffer.
 
-[   89.610280] Fatal Error, invalid HDMI vclk freq 593406
+Tested by attempting to allocate a 0x0 GBM buffer on an MT8188 and
+verifying that we now return EINVAL.
 
-Modetest shows the following:
-
-3840x2160 59.94 3840 4016 4104 4400 2160 2168 2178 2250 593407 flags: xxxx, xxxx,
-drm calculated value -------------------------------------^
-
-Change the fractional rate calculation to stop DIV_ROUND_CLOSEST rounding down which
-results in vclk freq failing to match correctly.
-
-Fixes: e5fab2ec9ca4 ("drm/meson: vclk: add support for YUV420 setup")
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240109230704.4120561-1-christianshewitt@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240109230704.4120561-1-christianshewitt@gmail.com
+Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
+Signed-off-by: Justin Green <greenjustin@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20240307180051.4104425-1-greenjustin@chromium.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
-index 2a82119eb58ed..2a942dc6a6dc2 100644
---- a/drivers/gpu/drm/meson/meson_vclk.c
-+++ b/drivers/gpu/drm/meson/meson_vclk.c
-@@ -790,13 +790,13 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv, unsigned int phy_freq,
- 				 FREQ_1000_1001(params[i].pixel_freq));
- 		DRM_DEBUG_DRIVER("i = %d phy_freq = %d alt = %d\n",
- 				 i, params[i].phy_freq,
--				 FREQ_1000_1001(params[i].phy_freq/10)*10);
-+				 FREQ_1000_1001(params[i].phy_freq/1000)*1000);
- 		/* Match strict frequency */
- 		if (phy_freq == params[i].phy_freq &&
- 		    vclk_freq == params[i].vclk_freq)
- 			return MODE_OK;
- 		/* Match 1000/1001 variant */
--		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/10)*10) &&
-+		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/1000)*1000) &&
- 		    vclk_freq == FREQ_1000_1001(params[i].vclk_freq))
- 			return MODE_OK;
- 	}
-@@ -1070,7 +1070,7 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index 4f2e3feabc0f8..1bf229615b018 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -38,6 +38,9 @@ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
  
- 	for (freq = 0 ; params[freq].pixel_freq ; ++freq) {
- 		if ((phy_freq == params[freq].phy_freq ||
--		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/10)*10) &&
-+		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/1000)*1000) &&
- 		    (vclk_freq == params[freq].vclk_freq ||
- 		     vclk_freq == FREQ_1000_1001(params[freq].vclk_freq))) {
- 			if (vclk_freq != params[freq].vclk_freq)
+ 	size = round_up(size, PAGE_SIZE);
+ 
++	if (size == 0)
++		return ERR_PTR(-EINVAL);
++
+ 	mtk_gem_obj = kzalloc(sizeof(*mtk_gem_obj), GFP_KERNEL);
+ 	if (!mtk_gem_obj)
+ 		return ERR_PTR(-ENOMEM);
 -- 
 2.43.0
 
