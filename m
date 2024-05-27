@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547FA15FCFB;
-	Mon, 27 May 2024 19:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC0115FCF0;
+	Mon, 27 May 2024 19:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838612; cv=none; b=Rlbj03V0RV2AQkDWAwgsdTgd3hADp4rIUl3EK3IsZcsrTkHII/7n5gThIy1gse3/Irf3DDEN1GW+4bYIf7UpQOXAQDL79kUh3cesMenSJGdm4wIyVZow/qS5lTAKRMH0ZOPAn6T3kjkPZb6+DWTXmWJUhpOY7UD3GIutqoe9kAg=
+	t=1716838616; cv=none; b=ob9/moX1YsFZn92j0lLz/9HcHZI7RwL9OYyYDv8S48THofyfBPwtuWWN5+epyHRt0WV0AiQn+//Q+oIqsaVR+HOM6vnFNL6KKg2fHZ/XSYhCOTh60z7PXGdYWgdcyciCVhB7zBf3LFvH//v1ryrzW3ZCW9GdJEuzQ/XCmjz8ebE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838612; c=relaxed/simple;
-	bh=/4Vvo/aXdERodqZwGYrPCHesqpsErddK5X2A+8ptGbo=;
+	s=arc-20240116; t=1716838616; c=relaxed/simple;
+	bh=JaXQov4HeVG72utvQ6bHTC3hUYXkj7uM8dm0rF0ZOaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDJpsTWrYzz0+XOYvFA+HirR9L/tiIgz6eILBNXrRHTk20Q77Ki6PtmNVd36yrSY0dVzUr9vnH1mcfg8H601MK33Rz2Nhl88cWiWLNnZniOlt8tflK5ieBiGMMIP2pxkdGfetxa2RgegaKypuZLSZnSna4tZ4FyAYOKfAMb9+Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ya2riV0B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+Umg23eqve45P4oMFA9WPtLNU2QklwJ5++H1EpeQwr1QtjORVJuYvEmtv60cMqXBaGE8F4FWHC8vSU8dIC8AckgH9p+0ppUZL34f7mHooD+UmFKkxIIc7y6eTbAPpHnsMmUj1LVdiORFr+V/ZOSrsdu2bWs8UhQ2WiveqO+Elc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7ChPKV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ya2riV0B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE13FC2BBFC;
-	Mon, 27 May 2024 19:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7ChPKV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725FCC2BBFC;
+	Mon, 27 May 2024 19:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838612;
-	bh=/4Vvo/aXdERodqZwGYrPCHesqpsErddK5X2A+8ptGbo=;
+	s=korg; t=1716838615;
+	bh=JaXQov4HeVG72utvQ6bHTC3hUYXkj7uM8dm0rF0ZOaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ya2riV0BFbb64TutzDA5DIKQCMsOb1EtIiqR80i4LWysFAFrMuOvhfmFkAGvnmqOj
-	 IKErTXG8FNoELnURdvtGZbar30Y9/xGcvNDy1LTAa9DlWjv35Z1uOheJAco96epVsG
-	 eZMwM3CfFt6CWo1L6gdWkp/pnFKV4q9JYnW1/rF0=
+	b=c7ChPKV7jZ+YZm7Deq2OmnJGiEbKBAIDmmjsIb+n8sfQcTSGPPcBWR/Fdb4x4Zw91
+	 aWBf9zp5AzKxjchNj1IC5493X1WjSFWk1GcjTO3L+Qlf+q+cCGcewpqhxTpSR/5chz
+	 noRinseFsJ7ygYnJDO/arjKgJdr1YbbmbqMZUBtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 460/493] clk: qcom: Fix SC_CAMCC_8280XP dependencies
-Date: Mon, 27 May 2024 20:57:42 +0200
-Message-ID: <20240527185645.245446255@linuxfoundation.org>
+Subject: [PATCH 6.8 461/493] clk: qcom: Fix SM_GPUCC_8650 dependencies
+Date: Mon, 27 May 2024 20:57:43 +0200
+Message-ID: <20240527185645.275969899@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -54,24 +54,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit e00f2540a581f8b8c165e5ae8afe52e4ad038550 ]
+[ Upstream commit 07fb0a76bb757990b99fc2ab78ad7d1709cc441d ]
 
-CONFIG_SC_GCC_8280XP depends on ARM64 but it is selected by
-CONFIG_SC_CAMCC_8280XP, which can be selected on ARM, resulting in a
+CONFIG_SM_GCC_8650 depends on ARM64 but it is selected by
+CONFIG_SM_GPUCC_8650, which can be selected on ARM, resulting in a
 Kconfig warning.
 
-WARNING: unmet direct dependencies detected for SC_GCC_8280XP
+WARNING: unmet direct dependencies detected for SM_GCC_8650
   Depends on [n]: COMMON_CLK [=y] && COMMON_CLK_QCOM [=y] && (ARM64 || COMPILE_TEST [=n])
   Selected by [y]:
-  - SC_CAMCC_8280XP [=y] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=y]
+  - SM_GPUCC_8650 [=y] && COMMON_CLK [=y] && COMMON_CLK_QCOM [=y]
 
-Add the same dependencies to CONFIG_SC_CAMCC_8280XP to resolve the
+Add the same dependencies to CONFIG_SM_GPUCC_8650 to resolve the
 warning.
 
-Fixes: ff93872a9c61 ("clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC")
+Fixes: 8676fd4f3874 ("clk: qcom: add the SM8650 GPU Clock Controller driver")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240318-fix-some-qcom-kconfig-deps-v1-1-ea0773e3df5a@kernel.org
+Link: https://lore.kernel.org/r/20240318-fix-some-qcom-kconfig-deps-v1-2-ea0773e3df5a@kernel.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -79,17 +79,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 2a9da0939377a..67f1151a3d2b0 100644
+index 67f1151a3d2b0..be35803c7a4bf 100644
 --- a/drivers/clk/qcom/Kconfig
 +++ b/drivers/clk/qcom/Kconfig
-@@ -439,6 +439,7 @@ config SC_CAMCC_7280
+@@ -1070,6 +1070,7 @@ config SM_GPUCC_8550
  
- config SC_CAMCC_8280XP
- 	tristate "SC8280XP Camera Clock Controller"
+ config SM_GPUCC_8650
+ 	tristate "SM8650 Graphics Clock Controller"
 +	depends on ARM64 || COMPILE_TEST
- 	select SC_GCC_8280XP
+ 	select SM_GCC_8650
  	help
- 	  Support for the camera clock controller on Qualcomm Technologies, Inc
+ 	  Support for the graphics clock controller on SM8650 devices.
 -- 
 2.43.0
 
