@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EA317E90E;
-	Mon, 27 May 2024 19:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E456C17E90E;
+	Mon, 27 May 2024 19:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837124; cv=none; b=lj2WL6wLZ+U7vqRCrq6XVPgyVqcJagbmDX+ZYSRapl6ee+KPcNsYf5MhtOn6pPxsb/H9PgnLBx0Zb0u/GuT1VbNgnSRRDlBVsmy2jptF5dCNAIFYBW7c5py2VfLm/hCh6aZ37hDySbqNTQZgc0re0XWLBzEIz8W+zKLVfwOyq8s=
+	t=1716837127; cv=none; b=PjyWZiuYIbfskrZomj8n/KLBOuq07fpb4HKDGUc1aEDvjLTM9VC12oolnoy4rGE2k9B6CWCJxCHLfQSTduVQYmAmVkmuZ2iwW8XYKvBoIHY+tgWQDXKzvu+dK9wRtrHyS0sB+trseKD/ZGfNW14BqOI8axViuhcJ8L5yVlc5dOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837124; c=relaxed/simple;
-	bh=o9nx1tzujl53h542GoVMld2G3uY6zHskK7ZowzKwK/E=;
+	s=arc-20240116; t=1716837127; c=relaxed/simple;
+	bh=yeJaWIFz80pvd5PVcaGbXhgjURd7ZlC4pTPUKVKVOyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFQ3T8LVxdMKHfNNTZvpdVu4iD33WYeYHDogA7nZZEQO7bIDpnmBAGgtI8UVqb5OA7otZArs/dcWMLLjfWXWLh0bAQc0KuTL/CH9JRGv/Y3QPMfzU5LR5cE7qWyqRYCAZV3nRa7aJdF0J/kLtF+1JbEUPIqPaeHB7QGBEiOqfkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6TdRrdK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a9x4L8VRiblvX5Kt5y/2WiZmpMWjB3PofhOv8C+PsFm0lPz0fZ/Wv2MbquLzEy04AtKyKgUKrted01DEF97y/olbUNDFky1KYAeMos+KA2bVGZaNTofwwmb1IDggBQxedaf+cfnmyAiULq3mNcujkBsK7CzNDSma6lGNKC6Yh9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxpDzZ34; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6TdRrdK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24C4C2BBFC;
-	Mon, 27 May 2024 19:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxpDzZ34"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CF2C2BBFC;
+	Mon, 27 May 2024 19:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837124;
-	bh=o9nx1tzujl53h542GoVMld2G3uY6zHskK7ZowzKwK/E=;
+	s=korg; t=1716837126;
+	bh=yeJaWIFz80pvd5PVcaGbXhgjURd7ZlC4pTPUKVKVOyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6TdRrdKLVXD9Kiw5PDPuYOYz6HOLD8OAhD5OqMo6POKoMnL9SPXLYgE5khBALpHu
-	 yxzlhzNmm3ac5au2NAhSSFQ7sGrLxnCgklnqR65JIHAWe8dj6vH9BsYvg/X2oXUXw1
-	 YDwC25gWYsdSb0oT8Ra3p+MMSdqfYZldGF4bUgK4=
+	b=DxpDzZ346UvybpTFDoAkSPTH9RSD/TViZAc0rLf8lrNfWfcvFaKeiCRgP0sFgcT0W
+	 m+1xwgV4QkGSatDBDjuPeLpGorJ/T/xofulWWTtrKjtwW+cTurNpOzwCMi1vx3vvNt
+	 LzbEOCiGbT4GMirgNDXxE3ilr8CylkEqSDU6F/ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tony Lindgren <tony@atomide.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 277/427] drm/nouveau/dp: Fix incorrect return code in r535_dp_aux_xfer()
-Date: Mon, 27 May 2024 20:55:24 +0200
-Message-ID: <20240527185628.395522847@linuxfoundation.org>
+Subject: [PATCH 6.9 278/427] drm/omapdrm: Fix console by implementing fb_dirty
+Date: Mon, 27 May 2024 20:55:25 +0200
+Message-ID: <20240527185628.468723272@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,46 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 97252d0a4bfbb07079503d059f7522d305fe0f7a ]
+[ Upstream commit 632bac50544c0929ced9eed41e7d04c08adecbb0 ]
 
-I've recently been seeing some unexplained GSP errors on my RTX 6000 from
-failed aux transactions:
+The framebuffer console stopped updating with commit f231af498c29
+("drm/fb-helper: Disconnect damage worker from update logic").
 
-  [  132.915867] nouveau 0000:1f:00.0: gsp: cli:0xc1d00002 obj:0x00730000
-  ctrl cmd:0x00731341 failed: 0x0000ffff
+Let's fix the issue by implementing fb_dirty similar to what was done
+with commit 039a72ce7e57 ("drm/i915/fbdev: Implement fb_dirty for intel
+custom fb helper").
 
-While the cause of these is not yet clear, these messages made me notice
-that the aux transactions causing these transactions were succeeding - not
-failing. As it turns out, this is because we're currently not returning the
-correct variable when r535_dp_aux_xfer() hits an error - causing us to
-never propagate GSP errors for failed aux transactions to userspace.
-
-So, let's fix that.
-
-Fixes: 4ae3a20102b2 ("nouveau/gsp: don't free ctrl messages on errors")
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240315212104.776936-1-lyude@redhat.com
+Fixes: f231af498c29 ("drm/fb-helper: Disconnect damage worker from update logic")
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240228063540.4444-2-tony@atomide.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/disp/r535.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/omapdrm/omap_fbdev.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/disp/r535.c b/drivers/gpu/drm/nouveau/nvkm/engine/disp/r535.c
-index 6a0a4d3b8902d..027867c2a8c5b 100644
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/r535.c
-@@ -1080,7 +1080,7 @@ r535_dp_aux_xfer(struct nvkm_outp *outp, u8 type, u32 addr, u8 *data, u8 *psize)
- 	ret = nvkm_gsp_rm_ctrl_push(&disp->rm.objcom, &ctrl, sizeof(*ctrl));
- 	if (ret) {
- 		nvkm_gsp_rm_ctrl_done(&disp->rm.objcom, ctrl);
--		return PTR_ERR(ctrl);
-+		return ret;
- 	}
+diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+index 6b08b137af1ad..7c5af3de1e727 100644
+--- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
++++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+@@ -238,8 +238,20 @@ static int omap_fbdev_create(struct drm_fb_helper *helper,
+ 	return ret;
+ }
  
- 	memcpy(data, ctrl->data, size);
++static int omap_fbdev_dirty(struct drm_fb_helper *helper, struct drm_clip_rect *clip)
++{
++	if (!(clip->x1 < clip->x2 && clip->y1 < clip->y2))
++		return 0;
++
++	if (helper->fb->funcs->dirty)
++		return helper->fb->funcs->dirty(helper->fb, NULL, 0, 0, clip, 1);
++
++	return 0;
++}
++
+ static const struct drm_fb_helper_funcs omap_fb_helper_funcs = {
+ 	.fb_probe = omap_fbdev_create,
++	.fb_dirty = omap_fbdev_dirty,
+ };
+ 
+ static struct drm_fb_helper *get_fb(struct fb_info *fbi)
 -- 
 2.43.0
 
