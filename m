@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C6E17E90E;
-	Mon, 27 May 2024 19:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD0617E90E;
+	Mon, 27 May 2024 19:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836822; cv=none; b=YG9IMIxBIURwp3vO31vsVTo3rbxm7fmJwV4y43r5D+yVWe+riAes4o2URljELk2lgn5qssaYWwPYVweu9McokqlhR8f96ZFiX+QYCPT8BBvTZV3wM0+ELOmGg0ArekIPJCtfesMcs2C5WBlVyctWai7khwf2buwwp7svFgu11hE=
+	t=1716836824; cv=none; b=bPBsUer9oEabAXdaIcJVSOn4crqEKWrQIUVPrWxhxpyKTdR43HPXfppOd9Y5FSIWHxXaukowZuZz4TnLhWbpQJUOTsasN33yHH8X37bSYM56U4N8okqDYO2mJ/zuUD6rTs3ib9Vf10t6OtK/h2WWMuJngxX2cG+WTbzw89BGU/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836822; c=relaxed/simple;
-	bh=PFu+NSr8S/KPE/+UQR9uXGEvFffl5v1fAUFT2/1Trv4=;
+	s=arc-20240116; t=1716836824; c=relaxed/simple;
+	bh=+4hc+G6NYtea/ZD6zcYhsTAbgL3gy2eMOVuZfeySY98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DzWK2SBek4Jl/abh38C+Bvyl00b02BOIYlGlR4o32Ui8YnN+7gpiENudlBZUo+kbyQcaEJtzT8q/VWYub3jj0EkzWd0tE3TWBjwIwhCNBg39frVVPhfaWnkc4tMcTBYsn4RLtme3stcvmvXMDIrZDuf0dqfeG7utM6pDWJ5C/7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owvXLwe2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SPRloki39LS+MHa/8JB2/HmlOSccjXPHayuBl0NDJUgJbfBh/D/yoygOsL8Wwjo8DlwIv0VzhfQl6elarrg1zeCjPhdMP6XBUT+AQVNAjJw/cJ16ROy1HGmsxWljjBNQOmmBhWiB0P/r4SnQu/89G9SElmgnKrFmYOjpcCE475E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9vRo+TJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owvXLwe2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5B6C2BBFC;
-	Mon, 27 May 2024 19:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9vRo+TJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541C5C2BBFC;
+	Mon, 27 May 2024 19:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836822;
-	bh=PFu+NSr8S/KPE/+UQR9uXGEvFffl5v1fAUFT2/1Trv4=;
+	s=korg; t=1716836824;
+	bh=+4hc+G6NYtea/ZD6zcYhsTAbgL3gy2eMOVuZfeySY98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owvXLwe2nV+j99/Bb77sYngYI+zq9l/YgufDjC9CgHINGpBO8ASHq+0Y7yFJBz6Xd
-	 i5Acf4G/Rz/nap5XcQt5AgzVo5hazjfp90Kzy9RaznYwmstnTMRwkocOARfixN2jk4
-	 ketYdBjxIV3ZqWZElf2eb5yntLpoMbQmQ0Ufkpag=
+	b=v9vRo+TJ2fQHUvmqv+7QuPaoBanW86GSwdFjwp04sChwowM1HWULCu22pa/yrUvsM
+	 3V0SSU9Sl7/aRDgcMpXnMtSdRn6uYUmfCezIzGAh63lWH9JRUz5N4Vd9hGxEPsypZU
+	 pDFcaU+4qF+VYCLYNDP+SlPhSAwMzcZgqYguoPps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 201/427] wifi: mt76: mt7925: ensure 4-byte alignment for suspend & wow command
-Date: Mon, 27 May 2024 20:54:08 +0200
-Message-ID: <20240527185621.033247253@linuxfoundation.org>
+Subject: [PATCH 6.9 202/427] wifi: mt76: mt7996: fix uninitialized variable in mt7996_irq_tasklet()
+Date: Mon, 27 May 2024 20:54:09 +0200
+Message-ID: <20240527185621.168945454@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,47 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit fa46bd62c9a8ab195d9c5108a91abf0680fec10e ]
+[ Upstream commit 1ac710a6e8545c6df7a292f167dd088880a74c05 ]
 
-Before sending suspend & wow command to FW, its length should be
-4-bytes alignd.
+Set intr1 to 0 in mt7996_irq_tasklet() in order to avoid possible
+uninitialized variable usage if wed is not active for hif2.
 
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Fixes: 83eafc9251d6 ("wifi: mt76: mt7996: add wed tx support")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c | 1 +
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.h      | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index 7af60eebe517a..990738a23eee5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -2527,6 +2527,7 @@ int mt76_connac_mcu_set_hif_suspend(struct mt76_dev *dev, bool suspend)
- 			__le16 tag;
- 			__le16 len;
- 			u8 suspend;
-+			u8 pad[7];
- 		} __packed hif_suspend;
- 	} req = {
- 		.hif_suspend = {
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h
-index 2a0bbfe7bfa5e..b8315a89f4a9a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h
-@@ -535,7 +535,7 @@ struct mt7925_wow_pattern_tlv {
- 	u8 offset;
- 	u8 mask[MT76_CONNAC_WOW_MASK_MAX_LEN];
- 	u8 pattern[MT76_CONNAC_WOW_PATTEN_MAX_LEN];
--	u8 rsv[4];
-+	u8 rsv[7];
- } __packed;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+index 304e5fd148034..928a9663b49e0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+@@ -519,7 +519,7 @@ static void mt7996_irq_tasklet(struct tasklet_struct *t)
+ 	struct mt7996_dev *dev = from_tasklet(dev, t, mt76.irq_tasklet);
+ 	struct mtk_wed_device *wed = &dev->mt76.mmio.wed;
+ 	struct mtk_wed_device *wed_hif2 = &dev->mt76.mmio.wed_hif2;
+-	u32 i, intr, mask, intr1;
++	u32 i, intr, mask, intr1 = 0;
  
- static inline enum connac3_mcu_cipher_type
+ 	if (dev->hif2 && mtk_wed_device_active(wed_hif2)) {
+ 		mtk_wed_device_irq_set_mask(wed_hif2, 0);
 -- 
 2.43.0
 
