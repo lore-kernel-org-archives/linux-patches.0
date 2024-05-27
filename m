@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D0717727;
-	Mon, 27 May 2024 19:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C0A17727;
+	Mon, 27 May 2024 19:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838229; cv=none; b=Ze7IFWuuqsUKbpcPige7Z0PfLTapQ4oNQxcG5Fiv5HPfbV9d3f6+BSO3ne5lbbyJx/6BHSRSmMJtXUTKsnrFYU+Hi4PkJnVY6llrPMOVx5OhYXTrzMSbVMzslmBX5cCxAj3iO0CLMgnVSVtbjwMBHzOKVo6YMlabxZXPbyg4tow=
+	t=1716838231; cv=none; b=m0t/To77GG6lzB1ZJ7HjSyahX16G5CjwUIRuBwzHp1p073XmFfaMCLq7qE6UH1NLCw3vul/lwKK8em8Hhk8ykyMTOlZhXowg9yz2076uo3NnB8cJ66XKEkORl2zj2lytRJWu9nYwu0xWWf1qR587/e1NGbpWk6P7GQFooJ8nF8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838229; c=relaxed/simple;
-	bh=LYb24pcTBRvf7+eeNVPlwDOkAsum3E+37QUf1xAUhrs=;
+	s=arc-20240116; t=1716838231; c=relaxed/simple;
+	bh=W7vb8F6XrS3Y3GOwARyVh3J9d4QOr+cl7KMnDrcNKwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bg3Arks2jDdUVIlRC6q1EKyZm7FIJThN4Gz73kpxpHFTLc1FbDflv/18QG1ORgLG2b8pb0q5kYmmK36TqoxITtjTERR25EZ25QjI+sdaJezAbbR/5CZJM1agWC+a+PVBdeO9xGPGo6SWnEDCi5r80xmdrc0txrCaftUnXBVJo14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXPwoJyO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sSyD+rDqckW8SMVl6TIrb72KvK5D2Z4cSh5RMlBs0vRS5oJpBjF479KvmIThWnnGEWRa457wmiQvsHLvXOaZcickEDZ6eVSAgNJOnEgLfmiVqqjxxi6+T65n88cnWb7EeejfDXVYiw6qL5YkN8cWFooPVnFt56j6TnMTXZeJWPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwrZsfB9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXPwoJyO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFC1C2BBFC;
-	Mon, 27 May 2024 19:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwrZsfB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6159BC2BBFC;
+	Mon, 27 May 2024 19:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838229;
-	bh=LYb24pcTBRvf7+eeNVPlwDOkAsum3E+37QUf1xAUhrs=;
+	s=korg; t=1716838231;
+	bh=W7vb8F6XrS3Y3GOwARyVh3J9d4QOr+cl7KMnDrcNKwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXPwoJyOrHFD8TZKbJVYq4/7hG7yTXZXhaa5WjeGlVpKaSaK46dskzxiW4vN4dOyh
-	 QUrJp7zJLOYcAn6dSPp05zgzb0gCAV2tSP2ySx5gmPaWA1WLsyOU9qpQwK6EyUul/J
-	 rujIIHm83MsKLib0GbYtXRDsEY+p4NmRbCHUXBZ0=
+	b=LwrZsfB9V8OSAxouCwR5br1yMm45lP6jKX3lpAqgw7dCBSK7PIBjc4aE3S2m9761V
+	 lztFx2N4PqqSb8wJrglD3NuxMk42oWiivRCJtA6MPq47/B2qR+pQnVgW/iEcPEo2bi
+	 YWJfTHuAQiU/SFRT0X9juuM/1piJ7GINdew2M46o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Dan Nowlin <dan.nowlin@intel.com>,
-	Paul Greenwalt <paul.greenwalt@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.8 307/493] ice: Fix package download algorithm
-Date: Mon, 27 May 2024 20:55:09 +0200
-Message-ID: <20240527185640.341796943@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 316/493] net/mlx5: Reload only IB representors upon lag disable/enable
+Date: Mon, 27 May 2024 20:55:18 +0200
+Message-ID: <20240527185640.623180915@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -56,54 +54,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Nowlin <dan.nowlin@intel.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 6d51d44ecddb5c2962688ef06e55e4fbc949f04a ]
+[ Upstream commit 0f06228d4a2dcc1fca5b3ddb0eefa09c05b102c4 ]
 
-Previously, the driver assumed that all signature segments would contain
-one or more buffers to download. In the future, there will be signature
-segments that will contain no buffers to download.
+On lag disable, the bond IB device along with all of its
+representors are destroyed, and then the slaves' representors get reloaded.
 
-Correct download flow to allow for signature segments that have zero
-download buffers and skip the download in this case.
+In case the slave IB representor load fails, the eswitch error flow
+unloads all representors, including ethernet representors, where the
+netdevs get detached and removed from lag bond. Such flow is inaccurate
+as the lag driver is not responsible for loading/unloading ethernet
+representors. Furthermore, the flow described above begins by holding
+lag lock to prevent bond changes during disable flow. However, when
+reaching the ethernet representors detachment from lag, the lag lock is
+required again, triggering the following deadlock:
 
-Fixes: 3cbdb0343022 ("ice: Add support for E830 DDP package segment")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Dan Nowlin <dan.nowlin@intel.com>
-Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20240508171908.2760776-1-anthony.l.nguyen@intel.com
+Call trace:
+__switch_to+0xf4/0x148
+__schedule+0x2c8/0x7d0
+schedule+0x50/0xe0
+schedule_preempt_disabled+0x18/0x28
+__mutex_lock.isra.13+0x2b8/0x570
+__mutex_lock_slowpath+0x1c/0x28
+mutex_lock+0x4c/0x68
+mlx5_lag_remove_netdev+0x3c/0x1a0 [mlx5_core]
+mlx5e_uplink_rep_disable+0x70/0xa0 [mlx5_core]
+mlx5e_detach_netdev+0x6c/0xb0 [mlx5_core]
+mlx5e_netdev_change_profile+0x44/0x138 [mlx5_core]
+mlx5e_netdev_attach_nic_profile+0x28/0x38 [mlx5_core]
+mlx5e_vport_rep_unload+0x184/0x1b8 [mlx5_core]
+mlx5_esw_offloads_rep_load+0xd8/0xe0 [mlx5_core]
+mlx5_eswitch_reload_reps+0x74/0xd0 [mlx5_core]
+mlx5_disable_lag+0x130/0x138 [mlx5_core]
+mlx5_lag_disable_change+0x6c/0x70 [mlx5_core] // hold ldev->lock
+mlx5_devlink_eswitch_mode_set+0xc0/0x410 [mlx5_core]
+devlink_nl_cmd_eswitch_set_doit+0xdc/0x180
+genl_family_rcv_msg_doit.isra.17+0xe8/0x138
+genl_rcv_msg+0xe4/0x220
+netlink_rcv_skb+0x44/0x108
+genl_rcv+0x40/0x58
+netlink_unicast+0x198/0x268
+netlink_sendmsg+0x1d4/0x418
+sock_sendmsg+0x54/0x60
+__sys_sendto+0xf4/0x120
+__arm64_sys_sendto+0x30/0x40
+el0_svc_common+0x8c/0x120
+do_el0_svc+0x30/0xa0
+el0_svc+0x20/0x30
+el0_sync_handler+0x90/0xb8
+el0_sync+0x160/0x180
+
+Thus, upon lag enable/disable, load and unload only the IB representors
+of the slaves preventing the deadlock mentioned above.
+
+While at it, refactor the mlx5_esw_offloads_rep_load() function to have
+a static helper method for its internal logic, in symmetry with the
+representor unload design.
+
+Fixes: 598fe77df855 ("net/mlx5: Lag, Create shared FDB when in switchdev mode")
+Co-developed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240509112951.590184-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ddp.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/eswitch.h |  4 +--
+ .../mellanox/mlx5/core/eswitch_offloads.c     | 28 ++++++++++++-------
+ .../net/ethernet/mellanox/mlx5/core/lag/lag.c |  6 ++--
+ .../ethernet/mellanox/mlx5/core/lag/mpesw.c   |  4 +--
+ 4 files changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ddp.c b/drivers/net/ethernet/intel/ice/ice_ddp.c
-index 8b7504a9df316..90b9e28ddba91 100644
---- a/drivers/net/ethernet/intel/ice/ice_ddp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ddp.c
-@@ -1424,14 +1424,14 @@ ice_dwnld_sign_and_cfg_segs(struct ice_hw *hw, struct ice_pkg_hdr *pkg_hdr,
- 		goto exit;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index 349e28a6dd8df..ef55674876cb4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -833,7 +833,7 @@ int mlx5_eswitch_offloads_single_fdb_add_one(struct mlx5_eswitch *master_esw,
+ 					     struct mlx5_eswitch *slave_esw, int max_slaves);
+ void mlx5_eswitch_offloads_single_fdb_del_one(struct mlx5_eswitch *master_esw,
+ 					      struct mlx5_eswitch *slave_esw);
+-int mlx5_eswitch_reload_reps(struct mlx5_eswitch *esw);
++int mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw);
+ 
+ bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev);
+ void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev);
+@@ -925,7 +925,7 @@ mlx5_eswitch_offloads_single_fdb_del_one(struct mlx5_eswitch *master_esw,
+ static inline int mlx5_eswitch_get_npeers(struct mlx5_eswitch *esw) { return 0; }
+ 
+ static inline int
+-mlx5_eswitch_reload_reps(struct mlx5_eswitch *esw)
++mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw)
+ {
+ 	return 0;
+ }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index e3cce110e52fd..58529d1a98b37 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -2501,6 +2501,16 @@ void esw_offloads_cleanup(struct mlx5_eswitch *esw)
+ 	esw_offloads_cleanup_reps(esw);
+ }
+ 
++static int __esw_offloads_load_rep(struct mlx5_eswitch *esw,
++				   struct mlx5_eswitch_rep *rep, u8 rep_type)
++{
++	if (atomic_cmpxchg(&rep->rep_data[rep_type].state,
++			   REP_REGISTERED, REP_LOADED) == REP_REGISTERED)
++		return esw->offloads.rep_ops[rep_type]->load(esw->dev, rep);
++
++	return 0;
++}
++
+ static void __esw_offloads_unload_rep(struct mlx5_eswitch *esw,
+ 				      struct mlx5_eswitch_rep *rep, u8 rep_type)
+ {
+@@ -2525,13 +2535,11 @@ static int mlx5_esw_offloads_rep_load(struct mlx5_eswitch *esw, u16 vport_num)
+ 	int err;
+ 
+ 	rep = mlx5_eswitch_get_rep(esw, vport_num);
+-	for (rep_type = 0; rep_type < NUM_REP_TYPES; rep_type++)
+-		if (atomic_cmpxchg(&rep->rep_data[rep_type].state,
+-				   REP_REGISTERED, REP_LOADED) == REP_REGISTERED) {
+-			err = esw->offloads.rep_ops[rep_type]->load(esw->dev, rep);
+-			if (err)
+-				goto err_reps;
+-		}
++	for (rep_type = 0; rep_type < NUM_REP_TYPES; rep_type++) {
++		err = __esw_offloads_load_rep(esw, rep, rep_type);
++		if (err)
++			goto err_reps;
++	}
+ 
+ 	return 0;
+ 
+@@ -3276,7 +3284,7 @@ static void esw_destroy_offloads_acl_tables(struct mlx5_eswitch *esw)
+ 		esw_vport_destroy_offloads_acl_tables(esw, vport);
+ }
+ 
+-int mlx5_eswitch_reload_reps(struct mlx5_eswitch *esw)
++int mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw)
+ {
+ 	struct mlx5_eswitch_rep *rep;
+ 	unsigned long i;
+@@ -3289,13 +3297,13 @@ int mlx5_eswitch_reload_reps(struct mlx5_eswitch *esw)
+ 	if (atomic_read(&rep->rep_data[REP_ETH].state) != REP_LOADED)
+ 		return 0;
+ 
+-	ret = mlx5_esw_offloads_rep_load(esw, MLX5_VPORT_UPLINK);
++	ret = __esw_offloads_load_rep(esw, rep, REP_IB);
+ 	if (ret)
+ 		return ret;
+ 
+ 	mlx5_esw_for_each_rep(esw, i, rep) {
+ 		if (atomic_read(&rep->rep_data[REP_ETH].state) == REP_LOADED)
+-			mlx5_esw_offloads_rep_load(esw, rep->vport);
++			__esw_offloads_load_rep(esw, rep, REP_IB);
  	}
  
--	conf_idx = le32_to_cpu(seg->signed_seg_idx);
--	start = le32_to_cpu(seg->signed_buf_start);
- 	count = le32_to_cpu(seg->signed_buf_count);
--
- 	state = ice_download_pkg_sig_seg(hw, seg);
--	if (state)
-+	if (state || !count)
- 		goto exit;
+ 	return 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index 69d482f7c5a29..37598d116f3b8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -814,7 +814,7 @@ void mlx5_disable_lag(struct mlx5_lag *ldev)
+ 	if (shared_fdb)
+ 		for (i = 0; i < ldev->ports; i++)
+ 			if (!(ldev->pf[i].dev->priv.flags & MLX5_PRIV_FLAGS_DISABLE_ALL_ADEV))
+-				mlx5_eswitch_reload_reps(ldev->pf[i].dev->priv.eswitch);
++				mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+ }
  
-+	conf_idx = le32_to_cpu(seg->signed_seg_idx);
-+	start = le32_to_cpu(seg->signed_buf_start);
-+
- 	state = ice_download_pkg_config_seg(hw, pkg_hdr, conf_idx, start,
- 					    count);
+ static bool mlx5_shared_fdb_supported(struct mlx5_lag *ldev)
+@@ -922,7 +922,7 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
+ 			mlx5_rescan_drivers_locked(dev0);
  
+ 			for (i = 0; i < ldev->ports; i++) {
+-				err = mlx5_eswitch_reload_reps(ldev->pf[i].dev->priv.eswitch);
++				err = mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+ 				if (err)
+ 					break;
+ 			}
+@@ -933,7 +933,7 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
+ 				mlx5_deactivate_lag(ldev);
+ 				mlx5_lag_add_devices(ldev);
+ 				for (i = 0; i < ldev->ports; i++)
+-					mlx5_eswitch_reload_reps(ldev->pf[i].dev->priv.eswitch);
++					mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+ 				mlx5_core_err(dev0, "Failed to enable lag\n");
+ 				return;
+ 			}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
+index 82889f30506ea..571ea26edd0ca 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
+@@ -99,7 +99,7 @@ static int enable_mpesw(struct mlx5_lag *ldev)
+ 	dev0->priv.flags &= ~MLX5_PRIV_FLAGS_DISABLE_IB_ADEV;
+ 	mlx5_rescan_drivers_locked(dev0);
+ 	for (i = 0; i < ldev->ports; i++) {
+-		err = mlx5_eswitch_reload_reps(ldev->pf[i].dev->priv.eswitch);
++		err = mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+ 		if (err)
+ 			goto err_rescan_drivers;
+ 	}
+@@ -113,7 +113,7 @@ static int enable_mpesw(struct mlx5_lag *ldev)
+ err_add_devices:
+ 	mlx5_lag_add_devices(ldev);
+ 	for (i = 0; i < ldev->ports; i++)
+-		mlx5_eswitch_reload_reps(ldev->pf[i].dev->priv.eswitch);
++		mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+ 	mlx5_mpesw_metadata_cleanup(ldev);
+ 	return err;
+ }
 -- 
 2.43.0
 
