@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82F0160784;
-	Mon, 27 May 2024 19:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558977347E;
+	Mon, 27 May 2024 19:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837420; cv=none; b=F6Y6HI4MdYB6xA0AT+18NUyp1j2wGA2Jp6NDkRFc9619MtCIR98cvKCrrzWJFifuDPyVkn3FCw3GVdYQl+fkkt6XU6/iOFof257waS2bng0Jr+H459eVNCNNwX9EE1kYttTzYesZHk+t5JkPjQjQKo2/0PKb3dvQ1JL24nlKPDg=
+	t=1716837423; cv=none; b=VHQKDe8wkXrnDd9WKIzDrUCeL3B3b/TxI7Zevz91VtJQAysLFwtBDqPUT/MGODZC600KSCA2NBy60GxreElVAnhy3UGSM6WLO5Yhh3TCIC8gJpEy/DX7s9x5aPatHTn5AfgxI6lWPkAqHQxoHhn/nJk4XoTtvhGS2FAszqxRQZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837420; c=relaxed/simple;
-	bh=EMnNpouBfgcTffJfGODzYCe0nCGMeUtzvEyQaEUsXYo=;
+	s=arc-20240116; t=1716837423; c=relaxed/simple;
+	bh=vZ0Rg1GfKnbXltQa7daJDKZvSZ4/3liwN+C3rDIJr0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EX5BSP7i+XVtwLGdrFTxGvyQJ8gwsGzfhxg1abv/U/x33b5SkBLUmVp3ybHA+OJAnAPFCF9+/+YfDwT5wCa3dIOA0iYlsuKU5Y6FvrJPsyBEr0cvKfWncGgy8TfXe4MnBJarSiO7aIszOglka5nxP1COEw7vcmPy6L7/HSYH6Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZB8bZDY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ce3hqmbUnTE6/5sMj/DKMcZDD8eX8NVBCJhlgFt0LsUhkqb3nSLDVq1fHQm+c07l7a82HCIADmiHj3N/5w3RFFr+bXEAfVv05ZgJecxg4yHSYvgn/z8QbYI/v9Xx9kmM6wt6aFIcpXpH6JWbp86KrsEBx4jrtbCCgCCgSP9H4FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUVKG5M1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZB8bZDY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E74FC32781;
-	Mon, 27 May 2024 19:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUVKG5M1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10CFC2BBFC;
+	Mon, 27 May 2024 19:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837420;
-	bh=EMnNpouBfgcTffJfGODzYCe0nCGMeUtzvEyQaEUsXYo=;
+	s=korg; t=1716837423;
+	bh=vZ0Rg1GfKnbXltQa7daJDKZvSZ4/3liwN+C3rDIJr0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZB8bZDY5eidGeKnzMwhfDvCnQwLLiN2LIZz14XgW/OYOa/VEFOgF5L3RNAez9KV3
-	 sEym1WwSvc8yAfYCsBbWa8ogRaTmFhdlxbPCLqsxL7TiaRfVHQPD57yDluyC+ovLu7
-	 RntEhhqhQT/9kw6QuAQzjr8jW4JC6qBz6TbaM6Hg=
+	b=uUVKG5M1xftzyqaU/o/E2ae/2RhiZLdZhwDTv+TmriGHhiShm6ykQsnEFtPt0jHwt
+	 LyYqCWWIwQzwjVCzGeCSslVkxWWVHkBWUsuea4lggbIuRngoe9h9+iD1RjHwA87Y/D
+	 Xx19KXQrk/sdYJe45npbHqhDCdXTqndgcb6TztOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a63a1f6a062033cf0f40@syzkaller.appspotmail.com,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 411/427] net: bridge: xmit: make sure we have at least eth header len bytes
-Date: Mon, 27 May 2024 20:57:38 +0200
-Message-ID: <20240527185635.428759338@linuxfoundation.org>
+Subject: [PATCH 6.9 402/427] bnxt_re: avoid shift undefined behavior in bnxt_qplib_alloc_init_hwq
+Date: Mon, 27 May 2024 20:57:29 +0200
+Message-ID: <20240527185635.155334963@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,88 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit 8bd67ebb50c0145fd2ca8681ab65eb7e8cde1afc ]
+[ Upstream commit 78cfd17142ef70599d6409cbd709d94b3da58659 ]
 
-syzbot triggered an uninit value[1] error in bridge device's xmit path
-by sending a short (less than ETH_HLEN bytes) skb. To fix it check if
-we can actually pull that amount instead of assuming.
+Undefined behavior is triggered when bnxt_qplib_alloc_init_hwq is called
+with hwq_attr->aux_depth != 0 and hwq_attr->aux_stride == 0.
+In that case, "roundup_pow_of_two(hwq_attr->aux_stride)" gets called.
+roundup_pow_of_two is documented as undefined for 0.
 
-Tested with dropwatch:
- drop at: br_dev_xmit+0xb93/0x12d0 [bridge] (0xffffffffc06739b3)
- origin: software
- timestamp: Mon May 13 11:31:53 2024 778214037 nsec
- protocol: 0x88a8
- length: 2
- original length: 2
- drop reason: PKT_TOO_SMALL
+Fix it in the one caller that had this combination.
 
-[1]
-BUG: KMSAN: uninit-value in br_dev_xmit+0x61d/0x1cb0 net/bridge/br_device.c:65
- br_dev_xmit+0x61d/0x1cb0 net/bridge/br_device.c:65
- __netdev_start_xmit include/linux/netdevice.h:4903 [inline]
- netdev_start_xmit include/linux/netdevice.h:4917 [inline]
- xmit_one net/core/dev.c:3531 [inline]
- dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3547
- __dev_queue_xmit+0x34db/0x5350 net/core/dev.c:4341
- dev_queue_xmit include/linux/netdevice.h:3091 [inline]
- __bpf_tx_skb net/core/filter.c:2136 [inline]
- __bpf_redirect_common net/core/filter.c:2180 [inline]
- __bpf_redirect+0x14a6/0x1620 net/core/filter.c:2187
- ____bpf_clone_redirect net/core/filter.c:2460 [inline]
- bpf_clone_redirect+0x328/0x470 net/core/filter.c:2432
- ___bpf_prog_run+0x13fe/0xe0f0 kernel/bpf/core.c:1997
- __bpf_prog_run512+0xb5/0xe0 kernel/bpf/core.c:2238
- bpf_dispatcher_nop_func include/linux/bpf.h:1234 [inline]
- __bpf_prog_run include/linux/filter.h:657 [inline]
- bpf_prog_run include/linux/filter.h:664 [inline]
- bpf_test_run+0x499/0xc30 net/bpf/test_run.c:425
- bpf_prog_test_run_skb+0x14ea/0x1f20 net/bpf/test_run.c:1058
- bpf_prog_test_run+0x6b7/0xad0 kernel/bpf/syscall.c:4269
- __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5678
- __do_sys_bpf kernel/bpf/syscall.c:5767 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5765 [inline]
- __x64_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5765
- x64_sys_call+0x96b/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:322
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The undefined behavior was detected by UBSAN:
+  UBSAN: shift-out-of-bounds in ./include/linux/log2.h:57:13
+  shift exponent 64 is too large for 64-bit type 'long unsigned int'
+  CPU: 24 PID: 1075 Comm: (udev-worker) Not tainted 6.9.0-rc6+ #4
+  Hardware name: Abacus electric, s.r.o. - servis@abacus.cz Super Server/H12SSW-iN, BIOS 2.7 10/25/2023
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5d/0x80
+   ubsan_epilogue+0x5/0x30
+   __ubsan_handle_shift_out_of_bounds.cold+0x61/0xec
+   __roundup_pow_of_two+0x25/0x35 [bnxt_re]
+   bnxt_qplib_alloc_init_hwq+0xa1/0x470 [bnxt_re]
+   bnxt_qplib_create_qp+0x19e/0x840 [bnxt_re]
+   bnxt_re_create_qp+0x9b1/0xcd0 [bnxt_re]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? __kmalloc+0x1b6/0x4f0
+   ? create_qp.part.0+0x128/0x1c0 [ib_core]
+   ? __pfx_bnxt_re_create_qp+0x10/0x10 [bnxt_re]
+   create_qp.part.0+0x128/0x1c0 [ib_core]
+   ib_create_qp_kernel+0x50/0xd0 [ib_core]
+   create_mad_qp+0x8e/0xe0 [ib_core]
+   ? __pfx_qp_event_handler+0x10/0x10 [ib_core]
+   ib_mad_init_device+0x2be/0x680 [ib_core]
+   add_client_context+0x10d/0x1a0 [ib_core]
+   enable_device_and_get+0xe0/0x1d0 [ib_core]
+   ib_register_device+0x53c/0x630 [ib_core]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   bnxt_re_probe+0xbd8/0xe50 [bnxt_re]
+   ? __pfx_bnxt_re_probe+0x10/0x10 [bnxt_re]
+   auxiliary_bus_probe+0x49/0x80
+   ? driver_sysfs_add+0x57/0xc0
+   really_probe+0xde/0x340
+   ? pm_runtime_barrier+0x54/0x90
+   ? __pfx___driver_attach+0x10/0x10
+   __driver_probe_device+0x78/0x110
+   driver_probe_device+0x1f/0xa0
+   __driver_attach+0xba/0x1c0
+   bus_for_each_dev+0x8f/0xe0
+   bus_add_driver+0x146/0x220
+   driver_register+0x72/0xd0
+   __auxiliary_driver_register+0x6e/0xd0
+   ? __pfx_bnxt_re_mod_init+0x10/0x10 [bnxt_re]
+   bnxt_re_mod_init+0x3e/0xff0 [bnxt_re]
+   ? __pfx_bnxt_re_mod_init+0x10/0x10 [bnxt_re]
+   do_one_initcall+0x5b/0x310
+   do_init_module+0x90/0x250
+   init_module_from_file+0x86/0xc0
+   idempotent_init_module+0x121/0x2b0
+   __x64_sys_finit_module+0x5e/0xb0
+   do_syscall_64+0x82/0x160
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? syscall_exit_to_user_mode_prepare+0x149/0x170
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? syscall_exit_to_user_mode+0x75/0x230
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? do_syscall_64+0x8e/0x160
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? __count_memcg_events+0x69/0x100
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? count_memcg_events.constprop.0+0x1a/0x30
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? handle_mm_fault+0x1f0/0x300
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? do_user_addr_fault+0x34e/0x640
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x7f4e5132821d
+  Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d e3 db 0c 00 f7 d8 64 89 01 48
+  RSP: 002b:00007ffca9c906a8 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+  RAX: ffffffffffffffda RBX: 0000563ec8a8f130 RCX: 00007f4e5132821d
+  RDX: 0000000000000000 RSI: 00007f4e518fa07d RDI: 000000000000003b
+  RBP: 00007ffca9c90760 R08: 00007f4e513f6b20 R09: 00007ffca9c906f0
+  R10: 0000563ec8a8faa0 R11: 0000000000000246 R12: 00007f4e518fa07d
+  R13: 0000000000020000 R14: 0000563ec8409e90 R15: 0000563ec8a8fa60
+   </TASK>
+  ---[ end trace ]---
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+a63a1f6a062033cf0f40@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a63a1f6a062033cf0f40
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Link: https://lore.kernel.org/r/20240507103929.30003-1-mschmidt@redhat.com
+Acked-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_device.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_device.c b/net/bridge/br_device.c
-index c366ccc8b3db7..ecac7886988b1 100644
---- a/net/bridge/br_device.c
-+++ b/net/bridge/br_device.c
-@@ -27,6 +27,7 @@ EXPORT_SYMBOL_GPL(nf_br_ops);
- /* net device transmit always called with BH disabled */
- netdev_tx_t br_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- {
-+	enum skb_drop_reason reason = pskb_may_pull_reason(skb, ETH_HLEN);
- 	struct net_bridge_mcast_port *pmctx_null = NULL;
- 	struct net_bridge *br = netdev_priv(dev);
- 	struct net_bridge_mcast *brmctx = &br->multicast_ctx;
-@@ -38,6 +39,11 @@ netdev_tx_t br_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- 	const unsigned char *dest;
- 	u16 vid = 0;
- 
-+	if (unlikely(reason != SKB_NOT_DROPPED_YET)) {
-+		kfree_skb_reason(skb, reason);
-+		return NETDEV_TX_OK;
-+	}
-+
- 	memset(skb->cb, 0, sizeof(struct br_input_skb_cb));
- 	br_tc_skb_miss_set(skb, false);
- 
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index 439d0c7c5d0ca..04258676d0726 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -1013,7 +1013,8 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
+ 	hwq_attr.stride = sizeof(struct sq_sge);
+ 	hwq_attr.depth = bnxt_qplib_get_depth(sq);
+ 	hwq_attr.aux_stride = psn_sz;
+-	hwq_attr.aux_depth = bnxt_qplib_set_sq_size(sq, qp->wqe_mode);
++	hwq_attr.aux_depth = psn_sz ? bnxt_qplib_set_sq_size(sq, qp->wqe_mode)
++				    : 0;
+ 	/* Update msn tbl size */
+ 	if (BNXT_RE_HW_RETX(qp->dev_cap_flags) && psn_sz) {
+ 		hwq_attr.aux_depth = roundup_pow_of_two(bnxt_qplib_set_sq_size(sq, qp->wqe_mode));
 -- 
 2.43.0
 
