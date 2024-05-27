@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF141155C81;
-	Mon, 27 May 2024 19:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775AE168C4;
+	Mon, 27 May 2024 19:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837646; cv=none; b=Rbmf7OeY+h3TLTbfd6E00+DEHvNDNLffa6hYjNV0bHUbtzbRezpT5W4/YWsLCMBA7UpvvNGqdcF58562VZc2q9Pk4y+wshbSxp1oSW/bE8WZi1qB4mIDPrwnLc/wSfGT91RHE1+jB7c/uqpwm4Bxr64v8cA36Zln75LJ/4zcPxE=
+	t=1716837648; cv=none; b=ahZhoIe27GuXxFwS+LwyEWc/oq3N9egLtiovOyRsCfET3dsia/yDzS66WIVH+KQh5ZcQsM7rywZ5fV/nlK5Vt2uiA6RNfYYz86bHuMgs15f4VhSZuaYON85UYBJXnyCGeioVngJG+pPRSbfGPMr7pBJT9B/ciqiGLXKH1SQrFV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837646; c=relaxed/simple;
-	bh=0kmKtUvfDo6X7DYb97q/bApYE4OE0gwR2l7W54k7aEM=;
+	s=arc-20240116; t=1716837648; c=relaxed/simple;
+	bh=yl6MdbfESLGKTJOUMqFuZ3UFyEKvoXMEB1hHN4SnzX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tl1YoZqpvNhzWOaKFNDYg03qhAX+w7KB1GYtj9Hp6H8WjTOYUfaCXO6eQO4JKYjBtZNWHs6JcjZTaZUegSRQYhrR1WJ+8xFqrl7QYGEIHnDX5spoPw8ykoNFbyTdeTo6plvmbU+h8tJGONnzma34G/6MMwacTZUAAe/nOC5Wy3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzELW15t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GKoaz1489dYl/GcR27+dGH18ZUWkjNGcdlUt6gajihW9d36HLFS0H2SNzStIWzfynAl3ouUv6RVWwdxPbNX2hG4F9g8ZKu1v9d+Snq6kFLYZ46J6HHV8WV2hQiYoUB3Wnm010Pu4Hic3f96F9J+VP+dqBd1eQlCSeyXI8QpPmG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdA3x5F0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzELW15t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D6EC2BBFC;
-	Mon, 27 May 2024 19:20:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdA3x5F0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06AC6C2BBFC;
+	Mon, 27 May 2024 19:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837645;
-	bh=0kmKtUvfDo6X7DYb97q/bApYE4OE0gwR2l7W54k7aEM=;
+	s=korg; t=1716837648;
+	bh=yl6MdbfESLGKTJOUMqFuZ3UFyEKvoXMEB1hHN4SnzX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xzELW15tK+jrzzlTG150HvrOLauPXS3dDXkIFE3uPHBguBjpaTI5zBdzVnuQQrMwO
-	 72tzONBDrd0cigDw1lclUFxVIWKtvCJyeLkiGvYrzBaXLseYcxOe7Wms5Zo/aYDJeA
-	 AA50EFLY6Eu9rqH1k+jMK7DyzAsJnPUQjw69yWd0=
+	b=OdA3x5F0JwEg5Fzyqv26edovkKFFXAr24sjJ0js0S5Ud/3A9r7K7CGG+Sjwc487Zb
+	 mO3NkK4rBwAklAgJMHMVkeJvMhmsIHSWeehuqhHM0RUQxdSQy9F2AA2Chge+9DvJ5h
+	 16XnYZpxQCfGeTHA4PGRrdYVharf+eFX8FDOF7Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 049/493] drm/amd/pm: Restore config space after reset
-Date: Mon, 27 May 2024 20:50:51 +0200
-Message-ID: <20240527185630.704876740@linuxfoundation.org>
+Subject: [PATCH 6.8 040/493] dmaengine: xilinx: xdma: Clarify kdoc in XDMA driver
+Date: Mon, 27 May 2024 20:50:42 +0200
+Message-ID: <20240527185630.085319039@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,71 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 30d1cda8ce31ab49051ff7159280c542a738b23d ]
+[ Upstream commit 7a71c6dc21d5ae83ab27c39a67845d6d23ac271f ]
 
-During mode-2 reset, pci config space registers are affected at device
-side. However, certain platforms have switches which assign virtual BAR
-addresses and returns the same even after device is reset. This
-affects pci_restore_state() as it doesn't issue another config write, if
-the value read is same as the saved value.
+Clarify the kernel doc of xdma_fill_descs(), especially how big chunks
+will be handled.
 
-Add a workaround to write saved config space values from driver side.
-Presently, these switches are in platforms with SMU v13.0.6 SOCs, hence
-restrict the workaround only to those.
-
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Link: https://lore.kernel.org/stable/20240327-digigram-xdma-fixes-v1-3-45f4a52c0283%40bootlin.com
+Link: https://lore.kernel.org/r/20240327-digigram-xdma-fixes-v1-3-45f4a52c0283@bootlin.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c  | 25 +++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/dma/xilinx/xdma.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-index 78491b04df108..ddb11eb8c3f53 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-@@ -2205,6 +2205,17 @@ static ssize_t smu_v13_0_6_get_gpu_metrics(struct smu_context *smu, void **table
- 	return sizeof(*gpu_metrics);
+diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
+index 5a3a3293b21b5..313b217388fe9 100644
+--- a/drivers/dma/xilinx/xdma.c
++++ b/drivers/dma/xilinx/xdma.c
+@@ -554,12 +554,14 @@ static void xdma_synchronize(struct dma_chan *chan)
  }
  
-+static void smu_v13_0_6_restore_pci_config(struct smu_context *smu)
-+{
-+	struct amdgpu_device *adev = smu->adev;
-+	int i;
-+
-+	for (i = 0; i < 16; i++)
-+		pci_write_config_dword(adev->pdev, i * 4,
-+				       adev->pdev->saved_config_space[i]);
-+	pci_restore_msi_state(adev->pdev);
-+}
-+
- static int smu_v13_0_6_mode2_reset(struct smu_context *smu)
- {
- 	int ret = 0, index;
-@@ -2226,6 +2237,20 @@ static int smu_v13_0_6_mode2_reset(struct smu_context *smu)
- 	/* Restore the config space saved during init */
- 	amdgpu_device_load_pci_state(adev->pdev);
- 
-+	/* Certain platforms have switches which assign virtual BAR values to
-+	 * devices. OS uses the virtual BAR values and device behind the switch
-+	 * is assgined another BAR value. When device's config space registers
-+	 * are queried, switch returns the virtual BAR values. When mode-2 reset
-+	 * is performed, switch is unaware of it, and will continue to return
-+	 * the same virtual values to the OS.This affects
-+	 * pci_restore_config_space() API as it doesn't write the value saved if
-+	 * the current value read from config space is the same as what is
-+	 * saved. As a workaround, make sure the config space is restored
-+	 * always.
-+	 */
-+	if (!(adev->flags & AMD_IS_APU))
-+		smu_v13_0_6_restore_pci_config(smu);
-+
- 	dev_dbg(smu->adev->dev, "wait for reset ack\n");
- 	do {
- 		ret = smu_cmn_wait_for_response(smu);
+ /**
+- * xdma_fill_descs - Fill hardware descriptors with contiguous memory block addresses
+- * @sw_desc: tx descriptor state container
+- * @src_addr: Value for a ->src_addr field of a first descriptor
+- * @dst_addr: Value for a ->dst_addr field of a first descriptor
+- * @size: Total size of a contiguous memory block
+- * @filled_descs_num: Number of filled hardware descriptors for corresponding sw_desc
++ * xdma_fill_descs() - Fill hardware descriptors for one contiguous memory chunk.
++ *		       More than one descriptor will be used if the size is bigger
++ *		       than XDMA_DESC_BLEN_MAX.
++ * @sw_desc: Descriptor container
++ * @src_addr: First value for the ->src_addr field
++ * @dst_addr: First value for the ->dst_addr field
++ * @size: Size of the contiguous memory block
++ * @filled_descs_num: Index of the first descriptor to take care of in @sw_desc
+  */
+ static inline u32 xdma_fill_descs(struct xdma_desc *sw_desc, u64 src_addr,
+ 				  u64 dst_addr, u32 size, u32 filled_descs_num)
 -- 
 2.43.0
 
