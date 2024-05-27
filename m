@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3AF17E90E;
-	Mon, 27 May 2024 19:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83D017E90E;
+	Mon, 27 May 2024 19:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837275; cv=none; b=D7kU4/A2hVVYOwKybr0ZgHn1k/jn75hfIvtM8DuX1MAp1xOR0+/CFj5awr9TcBSO/UbgUk5z4XIHZSJfIhtJIWBTLADlaDEQnE+OeYjG2ZT3DR97vfBw+YG8MJik/xUdDsQAGGKsA3hdpsV9tOWMvRPOIBdEdpI/Rqw5oH42sDI=
+	t=1716837278; cv=none; b=XGwcXIeK4Mo3rZ05ogEWCksSO4uP1t5G9gAuymJDTp+qg38THF63qDqXyB42vdhStfXEeb6rr4Q//ICSXnvY7xjGCtXoDJmd/BzEK2tijbTOrfQei1TagNqlN1Oa8ceXdvy8+I7RI53XkkymKT3/wj6MtP2L9atxOq80Bzv/1hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837275; c=relaxed/simple;
-	bh=koga89g09DwPvTIDOxM4B8ST7RXMKN1v6i+AgHVppDE=;
+	s=arc-20240116; t=1716837278; c=relaxed/simple;
+	bh=NMX/dpRMxtalpi4o1fjwTJ2Zwyh5W6QtdDPJJvA+2lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WK3NKpRMfwnTK4TrtUDgKExkgFjwh92vwxGrGPsafzRsqOPrGRY/fpBvdb64mNkauPOtut1HqM/MbG8O0aYHh+D7YnildpD/FtrA/5/huYKyjtvdd7CpBbGqFicgGX87WgsP8EKxO4fQu7+ZPPRvChXyuOaVC9oP5/g6HxliSYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1MWq/Gh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SMSDE9rtC0e+FeDOjq8xDtIq+awJNJIi+Ry9HRhvWUOiTph/lT9BXb6So8iLnex5bXg3HXKXf1dKABqlCtn0PGgPvMxU2+TqBMOTjnrfue6pQwcK55LyikTwCoUsJrGmwQms6TCn8EKVfaOc9Rrxq2dURJuRFRPvq4/BFcMj9rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jn5UF+FR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1MWq/Gh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E498BC2BBFC;
-	Mon, 27 May 2024 19:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jn5UF+FR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7976AC2BBFC;
+	Mon, 27 May 2024 19:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837275;
-	bh=koga89g09DwPvTIDOxM4B8ST7RXMKN1v6i+AgHVppDE=;
+	s=korg; t=1716837277;
+	bh=NMX/dpRMxtalpi4o1fjwTJ2Zwyh5W6QtdDPJJvA+2lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A1MWq/GhV3M7RiAydK9NfC+HWIwpAOZHTbPs2gFfPQWRCZbczE5I1z3AeWwfDSDXP
-	 uM6HAtmNjiv4BBdk4DHsS4CjE2XINIhXXkRH5XbkbqmXfgWUnBb+lttlaysRj0Gi4R
-	 Ij1qsVE/lbCC7CxzZs/2I1QUICDmeCjvyFwQne4w=
+	b=Jn5UF+FR+rZRv0tEZSfD8htj7USEhz46B0a6QEctjLmDBOGRQGK4wEeXnrDYrIFwp
+	 l6GdKTT3XyPvnwWZ9QQqdtEmgY3vM7dQ+pAmQq9qfgEABqeMTOPdBQ0u3cbJkmehlv
+	 vJ+l77cC4nHjtn0C5YccEAjX4KOVvzuhvVrRgN0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Marc Gonzalez <mgonzalez@freebox.fr>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 379/427] clk: qcom: mmcc-msm8998: fix venus clock issue
-Date: Mon, 27 May 2024 20:57:06 +0200
-Message-ID: <20240527185634.459384075@linuxfoundation.org>
+Subject: [PATCH 6.9 362/427] clk: mediatek: mt8365-mm: fix DPI0 parent
+Date: Mon, 27 May 2024 20:56:49 +0200
+Message-ID: <20240527185633.921198042@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,112 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Gonzalez <mgonzalez@freebox.fr>
+From: Alexandre Mergnat <amergnat@baylibre.com>
 
-[ Upstream commit e20ae5ae9f0c843aded4f06f3d1cab7384789e92 ]
+[ Upstream commit 4c0c087772d7e29bc2489ddb068d5167140bfc38 ]
 
-Right now, msm8998 video decoder (venus) is non-functional:
+To have a working display through DPI, a workaround has been
+implemented downstream to add "mm_dpi0_dpi0" and "dpi0_sel" to
+the DPI node. Shortly, that add an extra clock.
 
-$ time mpv --hwdec=v4l2m2m-copy --vd-lavc-software-fallback=no --vo=null --no-audio --untimed --length=30 --quiet demo-480.webm
- (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
-     Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
-[ffmpeg/video] vp9_v4l2m2m: output VIDIOC_REQBUFS failed: Connection timed out
-[ffmpeg/video] vp9_v4l2m2m: no v4l2 output context's buffers
-[ffmpeg/video] vp9_v4l2m2m: can't configure decoder
-Could not open codec.
-Software decoding fallback is disabled.
-Exiting... (Quit)
+It seems consistent to have the "dpi0_sel" as parent.
+Additionnaly, "vpll_dpix" isn't used/managed.
 
-Bryan O'Donoghue suggested the proper fix:
-- Set required register offsets in venus GDSC structs.
-- Set HW_CTRL flag.
+Then, set the "mm_dpi0_dpi0" parent clock to "dpi0_sel".
 
-$ time mpv --hwdec=v4l2m2m-copy --vd-lavc-software-fallback=no --vo=null --no-audio --untimed --length=30 --quiet demo-480.webm
- (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
-     Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-...
-Using hardware decoding (v4l2m2m-copy).
-VO: [null] 854x480 nv12
-Exiting... (End of file)
-real	0m3.315s
-user	0m1.277s
-sys	0m0.453s
+The new clock tree is:
 
-NOTES:
+clk26m
+  lvdspll
+    lvdspll_X (2, 4, 8, 16)
+      dpi0_sel
+        mm_dpi0_dpi0
 
-GDSC = Globally Distributed Switch Controller
-
-Use same code as mmcc-msm8996 with:
-s/venus_gdsc/video_top_gdsc/
-s/venus_core0_gdsc/video_subcore0_gdsc/
-s/venus_core1_gdsc/video_subcore1_gdsc/
-
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8996.h
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8998.h
-
-0x1024 = MMSS_VIDEO GDSCR (undocumented)
-0x1028 = MMSS_VIDEO_CORE_CBCR
-0x1030 = MMSS_VIDEO_AHB_CBCR
-0x1034 = MMSS_VIDEO_AXI_CBCR
-0x1038 = MMSS_VIDEO_MAXI_CBCR
-0x1040 = MMSS_VIDEO_SUBCORE0 GDSCR (undocumented)
-0x1044 = MMSS_VIDEO_SUBCORE1 GDSCR (undocumented)
-0x1048 = MMSS_VIDEO_SUBCORE0_CBCR
-0x104c = MMSS_VIDEO_SUBCORE1_CBCR
-
-Fixes: d14b15b5931c2b ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Link: https://lore.kernel.org/r/ff4e2e34-a677-4c39-8c29-83655c5512ae@freebox.fr
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: d46adccb7966 ("clk: mediatek: add driver for MT8365 SoC")
+Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
+Link: https://lore.kernel.org/r/20231023-display-support-v3-12-53388f3ed34b@baylibre.com
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-msm8998.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/clk/mediatek/clk-mt8365-mm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
-index 1180e48c687ac..275fb3b71ede4 100644
---- a/drivers/clk/qcom/mmcc-msm8998.c
-+++ b/drivers/clk/qcom/mmcc-msm8998.c
-@@ -2535,6 +2535,8 @@ static struct clk_branch vmem_ahb_clk = {
- 
- static struct gdsc video_top_gdsc = {
- 	.gdscr = 0x1024,
-+	.cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
-+	.cxc_count = 3,
- 	.pd = {
- 		.name = "video_top",
- 	},
-@@ -2543,20 +2545,26 @@ static struct gdsc video_top_gdsc = {
- 
- static struct gdsc video_subcore0_gdsc = {
- 	.gdscr = 0x1040,
-+	.cxcs = (unsigned int []){ 0x1048 },
-+	.cxc_count = 1,
- 	.pd = {
- 		.name = "video_subcore0",
- 	},
- 	.parent = &video_top_gdsc.pd,
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = HW_CTRL,
- };
- 
- static struct gdsc video_subcore1_gdsc = {
- 	.gdscr = 0x1044,
-+	.cxcs = (unsigned int []){ 0x104c },
-+	.cxc_count = 1,
- 	.pd = {
- 		.name = "video_subcore1",
- 	},
- 	.parent = &video_top_gdsc.pd,
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = HW_CTRL,
- };
- 
- static struct gdsc mdss_gdsc = {
+diff --git a/drivers/clk/mediatek/clk-mt8365-mm.c b/drivers/clk/mediatek/clk-mt8365-mm.c
+index 01a2ef8f594ef..3f62ec7507336 100644
+--- a/drivers/clk/mediatek/clk-mt8365-mm.c
++++ b/drivers/clk/mediatek/clk-mt8365-mm.c
+@@ -53,7 +53,7 @@ static const struct mtk_gate mm_clks[] = {
+ 	GATE_MM0(CLK_MM_MM_DSI0, "mm_dsi0", "mm_sel", 17),
+ 	GATE_MM0(CLK_MM_MM_DISP_RDMA1, "mm_disp_rdma1", "mm_sel", 18),
+ 	GATE_MM0(CLK_MM_MM_MDP_RDMA1, "mm_mdp_rdma1", "mm_sel", 19),
+-	GATE_MM0(CLK_MM_DPI0_DPI0, "mm_dpi0_dpi0", "vpll_dpix", 20),
++	GATE_MM0(CLK_MM_DPI0_DPI0, "mm_dpi0_dpi0", "dpi0_sel", 20),
+ 	GATE_MM0(CLK_MM_MM_FAKE, "mm_fake", "mm_sel", 21),
+ 	GATE_MM0(CLK_MM_MM_SMI_COMMON, "mm_smi_common", "mm_sel", 22),
+ 	GATE_MM0(CLK_MM_MM_SMI_LARB0, "mm_smi_larb0", "mm_sel", 23),
 -- 
 2.43.0
 
