@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1A915ECFF;
-	Mon, 27 May 2024 19:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EACF1607B0;
+	Mon, 27 May 2024 19:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836564; cv=none; b=YkSyI5WPUF8bXvXv3LM+3qj2zqSYrqh0zdY0vCvB8QHz5eAzddjox1gnMn3gOYx6PVSf5TMo8T2Va19rEi0Eu5YYeezS/tNN8CXBT1lb5IEZHNtC0e1SZe5rspueCdKXl8R9WNaOXAsY0Vd3S9cuYAddC+64ZyvziwTzcbRCvD8=
+	t=1716836567; cv=none; b=ApUQU62KeMQvenx7V2HxKpe2XQspr/P8Wp6GJqdGPN5p9AaRFHF5R3I+ilUxw3vjwjGUOjvx5Dd1d9DF7yxHSBycfYDmcEZuapUqeAH6RFrja3VZ0fiNgS7g94an2kPLXT7cwkQplFERJG9hO3p0bSKSp4FgCgHkuZpv4S2wbWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836564; c=relaxed/simple;
-	bh=OVgE7XL0N1rsoWYrOyUNd7wW9HWkskPkrWNjbsoHFYM=;
+	s=arc-20240116; t=1716836567; c=relaxed/simple;
+	bh=HQVn0yuVX0pmczZH5B/KYmQUfuEdy+GqYPM81OISfvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KJpU3KpSwmbEpZ+RGhqlynIr8UiKHJFYKrPf9M5R1na4vA9cQ8IBZNwAa0nPPgB2QK0lmknvVLiAFN3YAeyaKLpSCuVAg/h9vZwhr1sWchppAm7afwwhDcqG6TVHz/FHtOezi7uH8OQ56V240cnLpbtCKVxiJON8nDPaHN1cwRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUifmXVQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A4DCkDmDdxPkJbMc18pboWuxyI4vylCgszKtMnv7GdR1esVAyTHzU9LCuUj2F5RhX6kjLrNpBZbNsbBDv8EzbXJWO7gCYUK31IHRCS3WpkJlkRmADsJFLK9E2wpcU8wdE9KTNBqeASfPHmGSaW+d0fsIahsIs8F+OgdYaYzAtRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVV9Pe2j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUifmXVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA85AC4AF0A;
-	Mon, 27 May 2024 19:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVV9Pe2j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE37C32782;
+	Mon, 27 May 2024 19:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836564;
-	bh=OVgE7XL0N1rsoWYrOyUNd7wW9HWkskPkrWNjbsoHFYM=;
+	s=korg; t=1716836566;
+	bh=HQVn0yuVX0pmczZH5B/KYmQUfuEdy+GqYPM81OISfvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UUifmXVQUs44e6WPU77D+h2QDCntAg/LDeaxlbTltfb5aHY+7caDgBqX774WM9S1y
-	 zZhYd3Q3cf2wsb/Ltx3IAWNh1nsxHKnJ7RZdtkj3Eosvp6RULC65rqsiUK+w6kKLoP
-	 otrkRK0yUNuptlvCijdPp+FPHRRSAg3fRtkDNnns=
+	b=vVV9Pe2jvyJJkwIdExI+nD359KANzdqbBiyz68OJGlytYC5SPFdyJJs+zu1BPhrs8
+	 2WYR5wRL3x9rfCqgXB4FY09eEBZ/vZccR1WgwQdWYle2x+91xbZAVjJadNwJFgrOSP
+	 UrSpDHMGVPUjLJSYe3Rma/7MlYgEl33OTLv0UQlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 104/427] wifi: iwlwifi: mvm: fix active link counting during recovery
-Date: Mon, 27 May 2024 20:52:31 +0200
-Message-ID: <20240527185611.466217454@linuxfoundation.org>
+Subject: [PATCH 6.9 105/427] wifi: iwlwifi: mvm: set wider BW OFDMA ignore correctly
+Date: Mon, 27 May 2024 20:52:32 +0200
+Message-ID: <20240527185611.582273775@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,85 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 9737da2f00d6409ae48a79d4dddd9362b230aa31 ]
+[ Upstream commit b97b0c04f895003ec60b08879180068889d19c9e ]
 
-During recovery, the chanctx_conf in mac80211 is still non-NULL even
-though the channel context has not yet been assigned again. In that
-case, the real count is actually lower.
+Clearly, I put this flag into the wrong place: devices using the
+code in mac80211.c only do not support EHT, so this isn't even
+relevant. Fix this by moving the code to the right function.
 
-Switch to instead count the phy_ctx assignment and ensure that the
-assignment is cleared at the start of recovery.
-
-Fixes: 12bacfc2c065 ("wifi: iwlwifi: handle eSR transitions")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 32a5690e9acb ("wifi: iwlwifi: mvm: support wider-bandwidth OFDMA")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240320232419.55f37339e7d1.I57006568a90ffb7a1232def1b2f3264dea711ba6@changeid
+Link: https://msgid.link/20240320232419.0d5fb0e971e4.I3b67c5e0ddcbe6e58143ec0bc4e40dd6dba4f863@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/intel/iwlwifi/mvm/mld-mac80211.c | 20 ++++++++-----------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c     | 3 ---
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 3 +++
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-index 084314bf6f369..d18304ac126cd 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-@@ -189,17 +189,13 @@ static void iwl_mvm_mld_mac_remove_interface(struct ieee80211_hw *hw,
- 	mutex_unlock(&mvm->mutex);
- }
- 
--static unsigned int iwl_mvm_mld_count_active_links(struct ieee80211_vif *vif)
-+static unsigned int iwl_mvm_mld_count_active_links(struct iwl_mvm_vif *mvmvif)
- {
- 	unsigned int n_active = 0;
- 	int i;
- 
- 	for (i = 0; i < IEEE80211_MLD_MAX_NUM_LINKS; i++) {
--		struct ieee80211_bss_conf *link_conf;
--
--		link_conf = link_conf_dereference_protected(vif, i);
--		if (link_conf &&
--		    rcu_access_pointer(link_conf->chanctx_conf))
-+		if (mvmvif->link[i] && mvmvif->link[i]->phy_ctxt)
- 			n_active++;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 8f4b063d6243e..5d937d647d98d 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -1651,9 +1651,6 @@ static int iwl_mvm_mac_add_interface(struct ieee80211_hw *hw,
+ 				     IEEE80211_VIF_SUPPORTS_CQM_RSSI;
  	}
  
-@@ -245,18 +241,18 @@ __iwl_mvm_mld_assign_vif_chanctx(struct iwl_mvm *mvm,
- {
- 	u16 *phy_ctxt_id = (u16 *)ctx->drv_priv;
- 	struct iwl_mvm_phy_ctxt *phy_ctxt = &mvm->phy_ctxts[*phy_ctxt_id];
--	unsigned int n_active = iwl_mvm_mld_count_active_links(vif);
- 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
-+	unsigned int n_active = iwl_mvm_mld_count_active_links(mvmvif);
- 	unsigned int link_id = link_conf->link_id;
- 	int ret;
- 
--	/* if the assigned one was not counted yet, count it now */
--	if (!rcu_access_pointer(link_conf->chanctx_conf))
--		n_active++;
+-	if (vif->p2p || iwl_fw_lookup_cmd_ver(mvm->fw, PHY_CONTEXT_CMD, 1) < 5)
+-		vif->driver_flags |= IEEE80211_VIF_IGNORE_OFDMA_WIDER_BW;
 -
- 	if (WARN_ON_ONCE(!mvmvif->link[link_id]))
- 		return -EINVAL;
+ 	if (vif->type == NL80211_IFTYPE_P2P_DEVICE)
+ 		mvm->p2p_device_vif = vif;
  
-+	/* if the assigned one was not counted yet, count it now */
-+	if (!mvmvif->link[link_id]->phy_ctxt)
-+		n_active++;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index d18304ac126cd..5a4973431c8b7 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -92,6 +92,9 @@ static int iwl_mvm_mld_mac_add_interface(struct ieee80211_hw *hw,
+ 		mvm->csme_vif = vif;
+ 	}
+ 
++	if (vif->p2p || iwl_fw_lookup_cmd_ver(mvm->fw, PHY_CONTEXT_CMD, 1) < 5)
++		vif->driver_flags |= IEEE80211_VIF_IGNORE_OFDMA_WIDER_BW;
 +
- 	/* mac parameters such as HE support can change at this stage
- 	 * For sta, need first to configure correct state from drv_sta_state
- 	 * and only after that update mac config.
-@@ -416,7 +412,7 @@ __iwl_mvm_mld_unassign_vif_chanctx(struct iwl_mvm *mvm,
+ 	goto out_unlock;
  
- {
- 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
--	unsigned int n_active = iwl_mvm_mld_count_active_links(vif);
-+	unsigned int n_active = iwl_mvm_mld_count_active_links(mvmvif);
- 	unsigned int link_id = link_conf->link_id;
- 
- 	/* shouldn't happen, but verify link_id is valid before accessing */
+  out_free_bf:
 -- 
 2.43.0
 
