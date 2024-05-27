@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E9017E8F5;
-	Mon, 27 May 2024 19:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCFBDDA9;
+	Mon, 27 May 2024 19:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836424; cv=none; b=DPTGEoe5yLhaNb+Aete2mBLacXUpvdlbxSW+Q620re5L9n/LkgejS6IBE3GbuzRxTJC+/fRApZoxG0OYemMnSPOpBBjxSJT07atwQLQLsqUhMtEIoQ35wERjxFvg8pB0sIH9Lz9RFyEZM2n06d1Qc4XhCdBgSPw0039q1lyfNUk=
+	t=1716836426; cv=none; b=hVXfDiyQfRky5wDOtC3hww7kMC81dMs4bF0Gm+gKI6qvB1T7bcv9T1GRQvOeKL6FkO8Cv/2+p1LO22HFWadUH1uS7l8dYl9w+EHB53o0RjxJGz6hkaLxAR3t6N9du8Zr1Qjtk6Pun+/9qJ9Sx7+/vqNFeKD26p5+dPrgjz60Kvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836424; c=relaxed/simple;
-	bh=d4p79zdtoa4a313bF/B+tWhT0sKlN59Mktau491PO6E=;
+	s=arc-20240116; t=1716836426; c=relaxed/simple;
+	bh=5vW1KYp1wCvaBDwogPG4pgTatb2LENQkuqIfkC0yUnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFQ0jnOkAuBX5KCdb1lTW9XRd8ViK8mHx2FoEfALPbJzOY6BCIMIspoJs41cAsN/nbcCz4dXEMmJjVYe5aknjdVKQFOxJrHhBB3EM8Td6z2GNGfT2KTaIV2Qv+9munezv1k86r6/diX41fOQadnj68snhmIR2RBNHnsCEEqcgo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6+ZSria; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDaz0LlDmAXgvcmncmxyMHgNj6MzZGw0IOqphZDIkVBDJNBFn1TPsfJEdk4TcpzfX0/jsxeHhdBN9sl8g7NPdZmx+wpxME6HAB5e/K1I8v7/sUUgVtuEIW6TYrRRU0vKVswJHM7pWSqdtp174DzqQdxeK/ZGhv/uXgRct7BZ/Yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMwvO+0a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6+ZSria"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909D3C2BBFC;
-	Mon, 27 May 2024 19:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMwvO+0a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F20C2BBFC;
+	Mon, 27 May 2024 19:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836423;
-	bh=d4p79zdtoa4a313bF/B+tWhT0sKlN59Mktau491PO6E=;
+	s=korg; t=1716836426;
+	bh=5vW1KYp1wCvaBDwogPG4pgTatb2LENQkuqIfkC0yUnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6+ZSriaKDkQ8xYuLi0kDHt3Kc8pNT10lfIRoJRCl6bUWPpakfGRIS3Ln8VUpY/gG
-	 nrd2x38tlC54FvtYtg+zjUIRcLb3XAfaYm1cqbda75Xzjm2LFoSoENcCNlzT/THWQl
-	 /f+dm1ebj5E2iuY5ZzSQEEAz3SX8v8euX+GT1lpI=
+	b=hMwvO+0aaS5dL2437jiMy0+YcPCz/s/dZx0n4xXaGkRWjlAxiUGAeE7At3/37KCsq
+	 9zFfEKsGwV+/IbxxPlmMHMTFpHmGDFmkRK6JVJQVnGRX0JMQo2ZP2t9LPZqghM1hlP
+	 FUSW3A7p11h0pY/H7FW5iFkIeIlDtmDHOzmpDXuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.9 007/427] Reapply "arm64: fpsimd: Implement lazy restore for kernel mode FPSIMD"
-Date: Mon, 27 May 2024 20:50:54 +0200
-Message-ID: <20240527185602.507389437@linuxfoundation.org>
+	j51569436@gmail.com,
+	Daniel Starke <daniel.starke@siemens.com>
+Subject: [PATCH 6.9 008/427] tty: n_gsm: fix possible out-of-bounds in gsm0_receive()
+Date: Mon, 27 May 2024 20:50:55 +0200
+Message-ID: <20240527185602.591947094@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -49,66 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Daniel Starke <daniel.starke@siemens.com>
 
-commit f481bb32d60e45fb3d19ea68ce79c5629f3fc3a0 upstream.
+commit 47388e807f85948eefc403a8a5fdc5b406a65d5a upstream.
 
-This reverts commit b8995a18417088bb53f87c49d200ec72a9dd4ec1.
+Assuming the following:
+- side A configures the n_gsm in basic option mode
+- side B sends the header of a basic option mode frame with data length 1
+- side A switches to advanced option mode
+- side B sends 2 data bytes which exceeds gsm->len
+  Reason: gsm->len is not used in advanced option mode.
+- side A switches to basic option mode
+- side B keeps sending until gsm0_receive() writes past gsm->buf
+  Reason: Neither gsm->state nor gsm->len have been reset after
+  reconfiguration.
 
-Ard managed to reproduce the dm-crypt corruption problem and got to the
-bottom of it, so re-apply the problematic patch in preparation for
-fixing things properly.
+Fix this by changing gsm->count to gsm->len comparison from equal to less
+than. Also add upper limit checks against the constant MAX_MRU in
+gsm0_receive() and gsm1_receive() to harden against memory corruption of
+gsm->len and gsm->mru.
 
+All other checks remain as we still need to limit the data according to the
+user configuration and actual payload size.
+
+Reported-by: j51569436@gmail.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218708
+Tested-by: j51569436@gmail.com
+Fixes: e1eaea46bb40 ("tty: n_gsm line discipline")
 Cc: stable@vger.kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
+Link: https://lore.kernel.org/r/20240424054842.7741-1-daniel.starke@siemens.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/processor.h |    1 +
- arch/arm64/kernel/fpsimd.c         |   18 ++++++++++++++++++
- 2 files changed, 19 insertions(+)
+ drivers/tty/n_gsm.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/include/asm/processor.h
-+++ b/arch/arm64/include/asm/processor.h
-@@ -171,6 +171,7 @@ struct thread_struct {
- 	struct debug_info	debug;		/* debugging */
- 
- 	struct user_fpsimd_state	kernel_fpsimd_state;
-+	unsigned int			kernel_fpsimd_cpu;
- #ifdef CONFIG_ARM64_PTR_AUTH
- 	struct ptrauth_keys_user	keys_user;
- #ifdef CONFIG_ARM64_PTR_AUTH_KERNEL
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -1509,12 +1509,30 @@ void do_fpsimd_exc(unsigned long esr, st
- 
- static void fpsimd_load_kernel_state(struct task_struct *task)
- {
-+	struct cpu_fp_state *last = this_cpu_ptr(&fpsimd_last_state);
-+
-+	/*
-+	 * Elide the load if this CPU holds the most recent kernel mode
-+	 * FPSIMD context of the current task.
-+	 */
-+	if (last->st == &task->thread.kernel_fpsimd_state &&
-+	    task->thread.kernel_fpsimd_cpu == smp_processor_id())
-+		return;
-+
- 	fpsimd_load_state(&task->thread.kernel_fpsimd_state);
- }
- 
- static void fpsimd_save_kernel_state(struct task_struct *task)
- {
-+	struct cpu_fp_state cpu_fp_state = {
-+		.st		= &task->thread.kernel_fpsimd_state,
-+		.to_save	= FP_STATE_FPSIMD,
-+	};
-+
- 	fpsimd_save_state(&task->thread.kernel_fpsimd_state);
-+	fpsimd_bind_state_to_cpu(&cpu_fp_state);
-+
-+	task->thread.kernel_fpsimd_cpu = smp_processor_id();
- }
- 
- /*
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -2913,7 +2913,10 @@ static void gsm0_receive(struct gsm_mux
+ 		break;
+ 	case GSM_DATA:		/* Data */
+ 		gsm->buf[gsm->count++] = c;
+-		if (gsm->count == gsm->len) {
++		if (gsm->count >= MAX_MRU) {
++			gsm->bad_size++;
++			gsm->state = GSM_SEARCH;
++		} else if (gsm->count >= gsm->len) {
+ 			/* Calculate final FCS for UI frames over all data */
+ 			if ((gsm->control & ~PF) != UIH) {
+ 				gsm->fcs = gsm_fcs_add_block(gsm->fcs, gsm->buf,
+@@ -3026,7 +3029,7 @@ static void gsm1_receive(struct gsm_mux
+ 		gsm->state = GSM_DATA;
+ 		break;
+ 	case GSM_DATA:		/* Data */
+-		if (gsm->count > gsm->mru) {	/* Allow one for the FCS */
++		if (gsm->count > gsm->mru || gsm->count > MAX_MRU) {	/* Allow one for the FCS */
+ 			gsm->state = GSM_OVERRUN;
+ 			gsm->bad_size++;
+ 		} else
 
 
