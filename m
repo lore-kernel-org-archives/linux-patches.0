@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1C261FDF;
-	Mon, 27 May 2024 19:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7E661FDF;
+	Mon, 27 May 2024 19:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838671; cv=none; b=oIfsx+B5K/g3EXsQqKY21EFlvzxu3xF4ofDmtpoDZFIUfaREL/G6sGefJfHiJh2hkwDDOLnzoStJMBdA0MDwnn+fCGbAkoIS25EBZQju1h7mMZ+ygCk9Zw7x8/3KztHuVbEUo5sghmkk/y5aN7tShhmscxed3GQNOktmvpm5lM4=
+	t=1716838674; cv=none; b=fxIl355q0ixrBE15zG+az0NImRm+FJZiz2FiBbbFHurMtngmFidzvapqfFQdWqChaXfj7LcQbbrBuQtI1e12qap/MuiFhS6hDUXEkdlvhvzGmvAr3WazxsFQHbVhbuDtwg4SSTLPPhmsQlDGBavTle2zTpNTLoz/92qGOno//ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838671; c=relaxed/simple;
-	bh=Dlq3By1VQbl91H0fXgDW5p/vbOS0UlRXiqcF1xpUVBY=;
+	s=arc-20240116; t=1716838674; c=relaxed/simple;
+	bh=hYk9Zwsc95JeuQQZJ8AFqTcEYolv4Zsb3Rn52WrGJ5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTP7z6gICtcdmoGNilrPIJ/vQCH+iPWmeoffoeYsE1toB5AELAx9PF6ZLyrgw+F0CI46++0P+m78jnJYTcMogY/8v9Hj0+502JQhCTU5u/Bgln8omwSxuB+7QykdQ/i+SAgN7jO9gzbjaxqNtwQ8FpHpjIILfthFexYrg3bLK6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFahT9ZE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O12yLjxlmTfovJPx11lDC8Y/yHwsaaUc50rDtkybBpm7ZKEyLs/+cTBDQKf8I/cokJmTADVw+pU6CLYWDGr1wP8PHmDoyNQokiJNsuqvgCHMTRfaJriG2lA2tqaOSJoMmAgJMd9Fo6jE4nhwV50I1RM7SvMrTFwmGYuZdbiH2kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=benRKdVC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFahT9ZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340AEC2BBFC;
-	Mon, 27 May 2024 19:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="benRKdVC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D8DC32781;
+	Mon, 27 May 2024 19:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838671;
-	bh=Dlq3By1VQbl91H0fXgDW5p/vbOS0UlRXiqcF1xpUVBY=;
+	s=korg; t=1716838674;
+	bh=hYk9Zwsc95JeuQQZJ8AFqTcEYolv4Zsb3Rn52WrGJ5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFahT9ZEaqVPBI/9J/FVfetm5EoqYKMFae0gy8qXTw/Cg9wQZrB2xlPnZO+82PGIq
-	 RC73X4t30G0j9ImzPl9Zg+Dlsyb4tY2LEqr+NKIsBuPbd5zlPXKd6I4310uQKTDz7c
-	 FEpsLQ2RIM6FL4dOrFADjFJ0z7NOn3Lyaev8cAeM=
+	b=benRKdVCB/X18hlDHJO2Pf7BPW8pcWZ2bg3l3YE22+rYx8/Vdb8kq69lfPhjYioh9
+	 ZfXAcyCoMUr4ekE9qLnblXRdID0p/dPVJfRL6XZlCkCqd2HWA8EZQLHJ9IgB/sinh+
+	 0YB/7I8913cLj4hDQpTfOQjkeIfMmlsDqRvs6c3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 440/493] clk: renesas: r9a07g043: Add clock and reset entry for PLIC
-Date: Mon, 27 May 2024 20:57:22 +0200
-Message-ID: <20240527185644.652896542@linuxfoundation.org>
+Subject: [PATCH 6.8 441/493] lib/test_hmm.c: handle src_pfns and dst_pfns allocation failure
+Date: Mon, 27 May 2024 20:57:23 +0200
+Message-ID: <20240527185644.682141913@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -45,63 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 44019387fce230beda35b83da3a2c9fc5787704e ]
+[ Upstream commit c2af060d1c18beaec56351cf9c9bcbbc5af341a3 ]
 
-Add the missing clock and reset entry for PLIC. Also add
-R9A07G043_NCEPLIC_ACLK to the critical clocks list.
+The kcalloc() in dmirror_device_evict_chunk() will return null if the
+physical memory has run out.  As a result, if src_pfns or dst_pfns is
+dereferenced, the null pointer dereference bug will happen.
 
-Fixes: 95d48d270305ad2c ("clk: renesas: r9a07g043: Add support for RZ/Five SoC")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20240403200952.633084-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Moreover, the device is going away.  If the kcalloc() fails, the pages
+mapping a chunk could not be evicted.  So add a __GFP_NOFAIL flag in
+kcalloc().
+
+Finally, as there is no need to have physically contiguous memory, Switch
+kcalloc() to kvcalloc() in order to avoid failing allocations.
+
+Link: https://lkml.kernel.org/r/20240312005905.9939-1-duoming@zju.edu.cn
+Fixes: b2ef9f5a5cb3 ("mm/hmm/test: add selftest driver for HMM")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Cc: Jérôme Glisse <jglisse@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a07g043-cpg.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ lib/test_hmm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/renesas/r9a07g043-cpg.c b/drivers/clk/renesas/r9a07g043-cpg.c
-index 075ade0925d45..9ad7ceb3ab1ba 100644
---- a/drivers/clk/renesas/r9a07g043-cpg.c
-+++ b/drivers/clk/renesas/r9a07g043-cpg.c
-@@ -265,6 +265,10 @@ static struct rzg2l_mod_clk r9a07g043_mod_clks[] = {
- 				0x5a8, 1),
- 	DEF_MOD("tsu_pclk",	R9A07G043_TSU_PCLK, R9A07G043_CLK_TSU,
- 				0x5ac, 0),
-+#ifdef CONFIG_RISCV
-+	DEF_MOD("nceplic_aclk",	R9A07G043_NCEPLIC_ACLK, R9A07G043_CLK_P1,
-+				0x608, 0),
-+#endif
- };
+diff --git a/lib/test_hmm.c b/lib/test_hmm.c
+index 717dcb8301273..b823ba7cb6a15 100644
+--- a/lib/test_hmm.c
++++ b/lib/test_hmm.c
+@@ -1226,8 +1226,8 @@ static void dmirror_device_evict_chunk(struct dmirror_chunk *chunk)
+ 	unsigned long *src_pfns;
+ 	unsigned long *dst_pfns;
  
- static struct rzg2l_reset r9a07g043_resets[] = {
-@@ -318,6 +322,10 @@ static struct rzg2l_reset r9a07g043_resets[] = {
- 	DEF_RST(R9A07G043_ADC_PRESETN, 0x8a8, 0),
- 	DEF_RST(R9A07G043_ADC_ADRST_N, 0x8a8, 1),
- 	DEF_RST(R9A07G043_TSU_PRESETN, 0x8ac, 0),
-+#ifdef CONFIG_RISCV
-+	DEF_RST(R9A07G043_NCEPLIC_ARESETN, 0x908, 0),
-+#endif
-+
- };
+-	src_pfns = kcalloc(npages, sizeof(*src_pfns), GFP_KERNEL);
+-	dst_pfns = kcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL);
++	src_pfns = kvcalloc(npages, sizeof(*src_pfns), GFP_KERNEL | __GFP_NOFAIL);
++	dst_pfns = kvcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL | __GFP_NOFAIL);
  
- static const unsigned int r9a07g043_crit_mod_clks[] __initconst = {
-@@ -327,6 +335,7 @@ static const unsigned int r9a07g043_crit_mod_clks[] __initconst = {
- #endif
- #ifdef CONFIG_RISCV
- 	MOD_CLK_BASE + R9A07G043_IAX45_CLK,
-+	MOD_CLK_BASE + R9A07G043_NCEPLIC_ACLK,
- #endif
- 	MOD_CLK_BASE + R9A07G043_DMAC_ACLK,
- };
+ 	migrate_device_range(src_pfns, start_pfn, npages);
+ 	for (i = 0; i < npages; i++) {
+@@ -1250,8 +1250,8 @@ static void dmirror_device_evict_chunk(struct dmirror_chunk *chunk)
+ 	}
+ 	migrate_device_pages(src_pfns, dst_pfns, npages);
+ 	migrate_device_finalize(src_pfns, dst_pfns, npages);
+-	kfree(src_pfns);
+-	kfree(dst_pfns);
++	kvfree(src_pfns);
++	kvfree(dst_pfns);
+ }
+ 
+ /* Removes free pages from the free list so they can't be re-allocated */
 -- 
 2.43.0
 
