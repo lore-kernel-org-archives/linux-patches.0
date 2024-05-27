@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4109817E90E;
-	Mon, 27 May 2024 19:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7634217E90E;
+	Mon, 27 May 2024 19:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837097; cv=none; b=h4gscfkFQVaKKSlEt+z/FWpIfTt7XA/tYp0jbUt4f5O8eC0IiWwFwQ9/tojz2BNilecewBs5tdJJ+qeUgfbNln0u8QypBrWppZC0nGiQLtAAoZDCdhbce3tJcQlcB1TTxg+gdlfGuCll1qpntK1e/Is6XD9lpa8B+N0uh/NqbCg=
+	t=1716837099; cv=none; b=MKW/45Xt61FEo6PNZ3yezfcjFRrcaiRSHpBd0qjx7G+TlgplPtOYO88LfQTJWqTtwx/VCmM0LX2Xbx5UFZG3JONCZEF3du0BISCs4mvthnxQpNR9XUgVhpGuON02X9T3XfXiKilX+D3IR06K8zJ8EE70UJXov+7cR4Hf9cOg7Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837097; c=relaxed/simple;
-	bh=z7OqTSRDMgM/2owao2NQdIoWqEEH7EJo8nzoFAeL8G8=;
+	s=arc-20240116; t=1716837099; c=relaxed/simple;
+	bh=QfdgAU7LV/FpT1ta6+eE+5azBS3KMe96rl+dCnq8S34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i230QLUNpi0q3Y7GXfMyKZZ5wXuOB/JP+LA1w3o/sj20ctDHXILYFphVxHCHA15RgID5iY7vnf3+5QElr5jAfxXXwWj2BkSk77mvB+OLa2CX9UsnHswI1kCUXWTab767sW+/mvNWIapDwzHgNnq4yupQ2lY+9oqCq4CVSEGjbfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmU+Lga9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETxWf0sBgK4jrnH4B/+34m5tgLmBP/C/GOEs2bGA29N0eG45jx8C0W5xYH+8QtIQyXt2BkzGsPa8+O25a4NZ4bQjhFm1F81E2x+eZp8oHx++7/OCbVXYGh/36L/qh0xp1bumT20jfvx83oIPEfj8Sx84y0sHgpC7PeB89BCVBW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKzjMFpr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmU+Lga9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD2DC2BBFC;
-	Mon, 27 May 2024 19:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKzjMFpr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0B8C2BBFC;
+	Mon, 27 May 2024 19:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837096;
-	bh=z7OqTSRDMgM/2owao2NQdIoWqEEH7EJo8nzoFAeL8G8=;
+	s=korg; t=1716837099;
+	bh=QfdgAU7LV/FpT1ta6+eE+5azBS3KMe96rl+dCnq8S34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmU+Lga9yT6sXo/oWRxwmvGU0O5968csYKBDxOwXDVNTvFIDGuWXNyfA7R2l+QQDa
-	 z5ZceT3o6EGGCd0+l+GgAvNOKEUq8OjEs25Cc30H8M58MT3cXYSUc6JphhjyuJVYCM
-	 wVLz1Mx8sFVE7GAWVmcuUnLDojAcdJtWcdEPYkUE=
+	b=DKzjMFprAOPElhKIySZ6xc8mavgcsJx/kLQEjxnFtxDpVSUhbWZ+0z56OFGuj1VgZ
+	 qgV5GV2eYKPdYrRmRaDy69J1mAXpK0D/E/KoNXIHYyB6oaVDUNMXEAfNBhSo1Hq0nL
+	 +KcNXHw3NSXqFrSj5Rno/Q+vpjn6ALMoAtNSf38Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 308/427] ASoC: Intel: avs: Fix debug-slot offset calculation
-Date: Mon, 27 May 2024 20:55:55 +0200
-Message-ID: <20240527185630.741330863@linuxfoundation.org>
+Subject: [PATCH 6.9 309/427] ASoC: Intel: avs: Fix ASRC module initialization
+Date: Mon, 27 May 2024 20:55:56 +0200
+Message-ID: <20240527185630.810913786@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,42 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit c91b692781c1839fcc389b2a9120e46593c6424b ]
+[ Upstream commit 9d2e26f31c7cc3fa495c423af9b4902ec0dc7be3 ]
 
-For resources with ID other than 0 the current calculus is incorrect.
+The ASRC module configuration consists of several reserved fields. Zero
+them out when initializing the module to avoid sending invalid data.
 
-Fixes: 275b583d047a ("ASoC: Intel: avs: ICL-based platforms support")
+Fixes: 274d79e51875 ("ASoC: Intel: avs: Configure modules according to their type")
 Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://msgid.link/r/20240405090929.1184068-3-cezary.rojewski@intel.com
+Link: https://msgid.link/r/20240405090929.1184068-6-cezary.rojewski@intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/icl.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/soc/intel/avs/path.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/intel/avs/icl.c b/sound/soc/intel/avs/icl.c
-index d2554c8577326..284d38f3b1caf 100644
---- a/sound/soc/intel/avs/icl.c
-+++ b/sound/soc/intel/avs/icl.c
-@@ -66,7 +66,7 @@ struct avs_icl_memwnd2 {
- 		struct avs_icl_memwnd2_desc slot_desc[AVS_ICL_MEMWND2_SLOTS_COUNT];
- 		u8 rsvd[SZ_4K];
- 	};
--	u8 slot_array[AVS_ICL_MEMWND2_SLOTS_COUNT][PAGE_SIZE];
-+	u8 slot_array[AVS_ICL_MEMWND2_SLOTS_COUNT][SZ_4K];
- } __packed;
+diff --git a/sound/soc/intel/avs/path.c b/sound/soc/intel/avs/path.c
+index e785fc2a7008f..a44ed33b56080 100644
+--- a/sound/soc/intel/avs/path.c
++++ b/sound/soc/intel/avs/path.c
+@@ -367,6 +367,7 @@ static int avs_asrc_create(struct avs_dev *adev, struct avs_path_module *mod)
+ 	struct avs_tplg_module *t = mod->template;
+ 	struct avs_asrc_cfg cfg;
  
- #define AVS_ICL_SLOT_UNUSED \
-@@ -89,8 +89,7 @@ static int avs_icl_slot_offset(struct avs_dev *adev, union avs_icl_memwnd2_slot_
- 
- 	for (i = 0; i < AVS_ICL_MEMWND2_SLOTS_COUNT; i++)
- 		if (desc[i].slot_id.val == slot_type.val)
--			return offsetof(struct avs_icl_memwnd2, slot_array) +
--			       avs_skl_log_buffer_offset(adev, i);
-+			return offsetof(struct avs_icl_memwnd2, slot_array) + i * SZ_4K;
- 	return -ENXIO;
- }
- 
++	memset(&cfg, 0, sizeof(cfg));
+ 	cfg.base.cpc = t->cfg_base->cpc;
+ 	cfg.base.ibs = t->cfg_base->ibs;
+ 	cfg.base.obs = t->cfg_base->obs;
 -- 
 2.43.0
 
