@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0FC17727;
-	Mon, 27 May 2024 19:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C7917727;
+	Mon, 27 May 2024 19:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838503; cv=none; b=f3SonAjXPbErVVVTb6lOZcJ4srPtap6vYdJNZ6Wm6F9ERyWDRSBPKGLOkA/365inmJgsGmUFeF/plmk3bb7BoN+W6CtKz+5Bmp7zdmQb6q2tmio9q7cKSqKBEoQhAIOY+7+O79GjAUJ4jCG0Wcfm/ELpFaECQZC+nSKziEb6NZU=
+	t=1716838506; cv=none; b=K9s0JFbRYBWzyyDAG+/nYGR4g7AQ51uQiZK8hiHIBFblr5OpDMmV1WccSBsusNAnxEOp8Li8xocL4KPN5+18QB7TixzBapWhQylsajwbSpFSjSWnJKNmXtdjwFLhz8L+EcLHFB3DbHvCq2Rde2z4YHS/ulCRsy0MAzGpoUNldj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838503; c=relaxed/simple;
-	bh=bY2F+Z83RmnGR/eEZihjho52PdS/DPCzObMKglFcqrM=;
+	s=arc-20240116; t=1716838506; c=relaxed/simple;
+	bh=nh+N0xaj9Jrokr70jYXLfpVJHMNIDeh2eWuS1baMuSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C2ch5Ri8SmR1L9sCuvnKID8qzEjkmShzsceqzV+oGA3IcsMVUKb4sj5uOQ9TLuGo16kPQpRnbH2/WThDN4313XV6tVTWHcbEP4exQ6uK850IHnIe+hMZDX/ryU0j5JWFFhDfXafPz3q/mDmz/pCp/QS0hwzjcciWvVOGUUydPLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9RovcqH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZWM+QOe/9jI6f6bLrkrGT3FJIJU084KazEmSWfZGF660/+PSF6/e4inKdMOc52hLfWUT5RB+6T074GvCrn/Biw1ZkmJF3bXvEj73n5/PxhGW8COLsXntXTvvuqTpEL0JHpcCIV1XCKPTFxkgMkzy+hv25Ce+kDALZltiJ2SG9TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlZXml6X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9RovcqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFC5C2BBFC;
-	Mon, 27 May 2024 19:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlZXml6X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF534C2BBFC;
+	Mon, 27 May 2024 19:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838503;
-	bh=bY2F+Z83RmnGR/eEZihjho52PdS/DPCzObMKglFcqrM=;
+	s=korg; t=1716838506;
+	bh=nh+N0xaj9Jrokr70jYXLfpVJHMNIDeh2eWuS1baMuSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o9RovcqHXGgLM80w48UE9Qqr5wTud/5b4OKS4MEFG4DXJl7m4dbj06/od/Yq14AKG
-	 1U8PZk/QrnSpH/eZ44W9pP+kuPuSa+lnp8B4zbeXWOA3pc8Eq13a3vVdH9CAg1AoMK
-	 wHidHfJnvEyXrZRWJkv1t+NTdK23QQGV345/hoNg=
+	b=UlZXml6XpkUNo7/9+GtpN1CKr3HkDmmsqbmj0hPXnDfX9k9WTcn4E/qSX5DbO/FgP
+	 tr1bh0YWqCI0GH6MD/S563/JKUBOupgWAvVefBJ5c08LXp4XF0AX5VgDMHYr8lhXP2
+	 42537sZU9CFYhLomrIjbAkzzE2Qiutrs8y6EGt/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Pratyush Yadav <p.yadav@ti.com>,
+	Julien Massot <julien.massot@collabora.com>,
+	Changhuang Liang <Changhuang.liang@starfivetech.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 418/493] drm/edid: Parse topology block for all DispID structure v1.x
-Date: Mon, 27 May 2024 20:57:00 +0200
-Message-ID: <20240527185643.962264650@linuxfoundation.org>
+Subject: [PATCH 6.8 419/493] media: cadence: csi2rx: configure DPHY before starting source stream
+Date: Mon, 27 May 2024 20:57:01 +0200
+Message-ID: <20240527185643.995502720@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -46,85 +49,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Pratyush Yadav <p.yadav@ti.com>
 
-[ Upstream commit e0a200ab4b72afd581bd6f82fc1ef510a4fb5478 ]
+[ Upstream commit fd64dda48f7e3f67ada1e1fe47e784ab350da72e ]
 
-DisplayID spec v1.3 revision history notes do claim that
-the toplogy block was added in v1.3 so requiring structure
-v1.2 would seem correct, but there is at least one EDID in
-edid.tv with a topology block and structure v1.0. And
-there are also EDIDs with DisplayID structure v1.3 which
-seems to be totally incorrect as DisplayID spec v1.3 lists
-structure v1.2 as the only legal value.
+When the source device is operating above 1.5 Gbps per lane, it needs to
+send the Skew Calibration Sequence before sending any HS data. If the
+DPHY is initialized after the source stream is started, then it might
+miss the sequence and not be able to receive data properly. Move the
+start of source subdev to the end of the sequence to make sure
+everything is ready to receive data before the source starts streaming.
 
-Unfortunately I couldn't find copies of DisplayID spec
-v1.0-v1.2 anywhere (even on vesa.org), so I'll have to
-go on empirical evidence alone.
-
-We used to parse the topology block on all v1.x
-structures until the check for structure v2.0 was added.
-Let's go back to doing that as the evidence does suggest
-that there are DisplayIDs in the wild that would miss
-out on the topology stuff otherwise.
-
-Also toss out DISPLAY_ID_STRUCTURE_VER_12 entirely as
-it doesn't appear we can really use it for anything.
-
-I *think* we could technically skip all the structure
-version checks as the block tags shouldn't conflict
-between v2.0 and v1.x. But no harm in having a bit of
-extra sanity checks I guess.
-
-So far I'm not aware of any user reported regressions
-from overly strict check, but I do know that it broke
-igt/kms_tiled_display's fake DisplayID as that one
-gets generated with structure v1.0.
-
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Fixes: c5a486af9df7 ("drm/edid: parse Tiled Display Topology Data Block for DisplayID 2.0")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240410180139.21352-1-ville.syrjala@linux.intel.com
-Acked-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
+Fixes: 3295cf1241d3 ("media: cadence: Add support for external dphy")
+Tested-by: Julien Massot <julien.massot@collabora.com>
+Tested-by: Changhuang Liang <Changhuang.liang@starfivetech.com>
+Reviewed-by: Julien Massot <julien.massot@collabora.com>
+Reviewed-by: Changhuang Liang <Changhuang.liang@starfivetech.com>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_edid.c  | 2 +-
- include/drm/drm_displayid.h | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/platform/cadence/cdns-csi2rx.c | 26 +++++++++++---------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-index 69c68804023ff..9ef9a70a836c7 100644
---- a/drivers/gpu/drm/drm_edid.c
-+++ b/drivers/gpu/drm/drm_edid.c
-@@ -7345,7 +7345,7 @@ static void drm_parse_tiled_block(struct drm_connector *connector,
- static bool displayid_is_tiled_block(const struct displayid_iter *iter,
- 				     const struct displayid_block *block)
- {
--	return (displayid_version(iter) == DISPLAY_ID_STRUCTURE_VER_12 &&
-+	return (displayid_version(iter) < DISPLAY_ID_STRUCTURE_VER_20 &&
- 		block->tag == DATA_BLOCK_TILED_DISPLAY) ||
- 		(displayid_version(iter) == DISPLAY_ID_STRUCTURE_VER_20 &&
- 		 block->tag == DATA_BLOCK_2_TILED_DISPLAY_TOPOLOGY);
-diff --git a/include/drm/drm_displayid.h b/include/drm/drm_displayid.h
-index 566497eeb3b81..bc1f6b378195f 100644
---- a/include/drm/drm_displayid.h
-+++ b/include/drm/drm_displayid.h
-@@ -30,7 +30,6 @@ struct drm_edid;
- #define VESA_IEEE_OUI				0x3a0292
+diff --git a/drivers/media/platform/cadence/cdns-csi2rx.c b/drivers/media/platform/cadence/cdns-csi2rx.c
+index 0ea5fa956fe9a..5be75bd4add39 100644
+--- a/drivers/media/platform/cadence/cdns-csi2rx.c
++++ b/drivers/media/platform/cadence/cdns-csi2rx.c
+@@ -235,10 +235,6 @@ static int csi2rx_start(struct csi2rx_priv *csi2rx)
  
- /* DisplayID Structure versions */
--#define DISPLAY_ID_STRUCTURE_VER_12		0x12
- #define DISPLAY_ID_STRUCTURE_VER_20		0x20
+ 	writel(reg, csi2rx->base + CSI2RX_STATIC_CFG_REG);
  
- /* DisplayID Structure v1r2 Data Blocks */
+-	ret = v4l2_subdev_call(csi2rx->source_subdev, video, s_stream, true);
+-	if (ret)
+-		goto err_disable_pclk;
+-
+ 	/* Enable DPHY clk and data lanes. */
+ 	if (csi2rx->dphy) {
+ 		reg = CSI2RX_DPHY_CL_EN | CSI2RX_DPHY_CL_RST;
+@@ -248,6 +244,13 @@ static int csi2rx_start(struct csi2rx_priv *csi2rx)
+ 		}
+ 
+ 		writel(reg, csi2rx->base + CSI2RX_DPHY_LANE_CTRL_REG);
++
++		ret = csi2rx_configure_ext_dphy(csi2rx);
++		if (ret) {
++			dev_err(csi2rx->dev,
++				"Failed to configure external DPHY: %d\n", ret);
++			goto err_disable_pclk;
++		}
+ 	}
+ 
+ 	/*
+@@ -287,14 +290,9 @@ static int csi2rx_start(struct csi2rx_priv *csi2rx)
+ 
+ 	reset_control_deassert(csi2rx->sys_rst);
+ 
+-	if (csi2rx->dphy) {
+-		ret = csi2rx_configure_ext_dphy(csi2rx);
+-		if (ret) {
+-			dev_err(csi2rx->dev,
+-				"Failed to configure external DPHY: %d\n", ret);
+-			goto err_disable_sysclk;
+-		}
+-	}
++	ret = v4l2_subdev_call(csi2rx->source_subdev, video, s_stream, true);
++	if (ret)
++		goto err_disable_sysclk;
+ 
+ 	clk_disable_unprepare(csi2rx->p_clk);
+ 
+@@ -308,6 +306,10 @@ static int csi2rx_start(struct csi2rx_priv *csi2rx)
+ 		clk_disable_unprepare(csi2rx->pixel_clk[i - 1]);
+ 	}
+ 
++	if (csi2rx->dphy) {
++		writel(0, csi2rx->base + CSI2RX_DPHY_LANE_CTRL_REG);
++		phy_power_off(csi2rx->dphy);
++	}
+ err_disable_pclk:
+ 	clk_disable_unprepare(csi2rx->p_clk);
+ 
 -- 
 2.43.0
 
