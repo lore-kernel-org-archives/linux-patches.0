@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DDC15EFC3;
-	Mon, 27 May 2024 19:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971F6168C4;
+	Mon, 27 May 2024 19:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837633; cv=none; b=hcNTYOxIxfoKTcfbzQqyEHihy5XiUNpitdAGlYc3Sep75xslv0heIaVT+OLs5UsMdVjhBz8JHNMDraoBx0QLHDWBe1lBwnBc4+GxFuMPLBGA35+ifBblEgyfOgsa36Mt10W8a85hztBcCpCvA3UPErxPhrXISzn/rlEqem+klXg=
+	t=1716837635; cv=none; b=YeVJRudkFmDRTNqALChWXBk4SV5VUrbEmlTpW2FTr/+XvYJNMf4bPmxql9hfLB0FmOU5wNFTNGUycRekLPYbKF+rIgp3K0cC96kXX8Z+FH/l8mgHXpMSL7/LTiAgb81J0imQP03ioXviYk/PDuKPL2Q2klbhm6Qe+gRuDHO8KjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837633; c=relaxed/simple;
-	bh=Dx236jsBTf/fST+TGdMwbl3HXvellZiT7QGNvPVzMpA=;
+	s=arc-20240116; t=1716837635; c=relaxed/simple;
+	bh=zk54leyV3veHbji2/wQGOO+Ff3MDCuDlCGudtfxM1A0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqa1DAuWp50WgvrwwAXu0Ug8sajb6kNReO/7JGVqZEX7Tt6YWdNYm+D2h/dxLQIu/Duhx+3vrv/DT3G+ez9Vx86IaLIipy1h8G9etVhw6JI9KShwAW05pyvJYrLTv2sy0HIUCfrBZslDoOgPDpLW+X6zuuGnHKZGw0sX3SLbxVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DR7i1SEQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rZwu6u31Rlz5VY0nSwIGcEJ0hUX0bM/F1q9uHNONpcgpWgG5bxFp7n7ji4BAgHyTlDSVNxFCLd0DrhrZWA7II0jTSUkxtma+0oo7IkvEXClAXfsaOxgCzMwJ5e2RzBxa+QFMrlqlKGzkzb30i5/gggLK+MJ6bAB9zpHkmHHxHRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUJNjjWh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DR7i1SEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9FEC2BBFC;
-	Mon, 27 May 2024 19:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUJNjjWh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FEE5C2BBFC;
+	Mon, 27 May 2024 19:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837632;
-	bh=Dx236jsBTf/fST+TGdMwbl3HXvellZiT7QGNvPVzMpA=;
+	s=korg; t=1716837635;
+	bh=zk54leyV3veHbji2/wQGOO+Ff3MDCuDlCGudtfxM1A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DR7i1SEQnytfVklMpSFdIU+DEiQHkLBHx1TvXoyKX8Sd2c1jk0sG0j4bZ4TMiTtr/
-	 q2YXrlEki/zqW840UimUcoJOqr7Opg+tJ673MkqCW4tpihmKS9+LHCmsCggi5iPFI7
-	 EbO/jcI2QidN5dMIVk6NLLqf5Lw2CXsXiCfI7FCg=
+	b=DUJNjjWhk18sKve55QwX9FfrB3pkpEtoovAiAfgb9pRVTfYu7fdcekEcGtCo/fJ5q
+	 xUI8lkYED7C36KAZOVED8ytopwguFXqc4mLx0wOMVUKKyIXftq6v5jlh+fOSCJQjZ9
+	 gGu8qSJAk/O81w7Z7kfrfN9eMNSGsPILSXtrh/z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Abdelrahman Morsy <abdelrahmanhesham94@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 082/493] EDAC/versal: Do not register for NOC errors
-Date: Mon, 27 May 2024 20:51:24 +0200
-Message-ID: <20240527185632.878636026@linuxfoundation.org>
+Subject: [PATCH 6.8 045/493] HID: mcp-2221: cancel delayed_work only when CONFIG_IIO is enabled
+Date: Mon, 27 May 2024 20:50:47 +0200
+Message-ID: <20240527185630.432225039@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,44 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+From: Abdelrahman Morsy <abdelrahmanhesham94@gmail.com>
 
-[ Upstream commit edbe59428eb0da09958769326a6566d4c9242ae7 ]
+[ Upstream commit 3cba9cfcc1520a2307a29f6fab887bcfc121c417 ]
 
-The NOC errors are not handled in the driver. Remove the request for
-registration.
+If the device is unplugged and CONFIG_IIO is not supported, this will
+result in a warning message at kernel/workqueue.
 
-Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240425121942.26378-2-shubhrajyoti.datta@amd.com
+Only cancel delayed work in mcp2221_remove(), when CONFIG_IIO is enabled.
+
+Signed-off-by: Abdelrahman Morsy <abdelrahmanhesham94@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/versal_edac.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/hid/hid-mcp2221.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/edac/versal_edac.c b/drivers/edac/versal_edac.c
-index a840c6922e5b9..4d5b68b6be673 100644
---- a/drivers/edac/versal_edac.c
-+++ b/drivers/edac/versal_edac.c
-@@ -1006,8 +1006,7 @@ static int mc_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
+index f9cceaeffd081..da5ea5a23b087 100644
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -944,9 +944,11 @@ static void mcp2221_hid_unregister(void *ptr)
+ /* This is needed to be sure hid_hw_stop() isn't called twice by the subsystem */
+ static void mcp2221_remove(struct hid_device *hdev)
+ {
++#if IS_REACHABLE(CONFIG_IIO)
+ 	struct mcp2221 *mcp = hid_get_drvdata(hdev);
  
- 	rc = xlnx_register_event(PM_NOTIFY_CB, VERSAL_EVENT_ERROR_PMC_ERR1,
--				 XPM_EVENT_ERROR_MASK_DDRMC_CR | XPM_EVENT_ERROR_MASK_DDRMC_NCR |
--				 XPM_EVENT_ERROR_MASK_NOC_CR | XPM_EVENT_ERROR_MASK_NOC_NCR,
-+				 XPM_EVENT_ERROR_MASK_DDRMC_CR | XPM_EVENT_ERROR_MASK_DDRMC_NCR,
- 				 false, err_callback, mci);
- 	if (rc) {
- 		if (rc == -EACCES)
-@@ -1044,8 +1043,6 @@ static int mc_remove(struct platform_device *pdev)
+ 	cancel_delayed_work_sync(&mcp->init_work);
++#endif
+ }
  
- 	xlnx_unregister_event(PM_NOTIFY_CB, VERSAL_EVENT_ERROR_PMC_ERR1,
- 			      XPM_EVENT_ERROR_MASK_DDRMC_CR |
--			      XPM_EVENT_ERROR_MASK_NOC_CR |
--			      XPM_EVENT_ERROR_MASK_NOC_NCR |
- 			      XPM_EVENT_ERROR_MASK_DDRMC_NCR, err_callback, mci);
- 	edac_mc_del_mc(&pdev->dev);
- 	edac_mc_free(mci);
+ #if IS_REACHABLE(CONFIG_IIO)
 -- 
 2.43.0
 
