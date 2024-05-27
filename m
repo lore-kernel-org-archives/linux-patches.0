@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BEA17727;
-	Mon, 27 May 2024 19:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9657217727;
+	Mon, 27 May 2024 19:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838393; cv=none; b=d4vK6FreAdq5rKEReJhIoALa8giFYm7XyYYLBI1NfqIYop1zA5F17Xer1Y1xKkS9TDZ+nx96QRCyE7T5hYbaYN8VZ4GCvrIE79w60h8JIE2AOgWeM/iZbmjxJUCXEK9mMwl0B/ejAZjlSl7WgoR3brACcbZH9LsaZX53VZOMY2A=
+	t=1716838395; cv=none; b=NPE7FFD32Ori1y1hlyJT/v4CkV1fbtI7F9RjBNK1mGMUlGes0SqB0SV00rthssOO8AMBVgGkaCT1Ag1s0zeDt31sct8NPfytcDdDumrrrI8oQED9HXnZzgzuiAB6Bb7MxM7+VUDhOvkPHIy/qi6votR1o1lkW4gYZC9QmuG9zCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838393; c=relaxed/simple;
-	bh=oHPJF1PiU9HhLeQt3kOkr3BG81XunxH88vybH9NVfS0=;
+	s=arc-20240116; t=1716838395; c=relaxed/simple;
+	bh=SLveVY67oqrNZUg98dT+OenlfAcErMk0R1pMViK5Flg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ku1yWyakFWaS1IdgislBoP+3BA16/AX6xhmKhgErTTC9pFgOa2xN4SoYh5mbidl75JNrhVPKEfm6Jfu7OccFPbH7g5oUq3axle6L0bIWcBO9Tdu+F6Hbq52bts0VkuMvgA3FDcuHWHGo2WpAe3Feb0Rbq9e6BT+UVnpvh5AOQQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6WpAH9L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RZF+8bnBa1RRCF0lRvl5kmC8nr1Sik4GDmQYpwl/h7D5dWFLE0K7XFoetqMIFcc8c9VlZNlQ+mgVORa2VQUxGMpXZg+13hm/vQWkggwgUND42B0g7N5DRUptlSBG0nfoevN0wrJvu73mojF926gL+1R8FSmA67yaM03L83Grs14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvhETcXC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6WpAH9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924A9C2BBFC;
-	Mon, 27 May 2024 19:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvhETcXC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2C7C2BBFC;
+	Mon, 27 May 2024 19:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838392;
-	bh=oHPJF1PiU9HhLeQt3kOkr3BG81XunxH88vybH9NVfS0=;
+	s=korg; t=1716838395;
+	bh=SLveVY67oqrNZUg98dT+OenlfAcErMk0R1pMViK5Flg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H6WpAH9LDkjZNpTuvvDN/j/DtJyKkvtjknRRg1r56DeYqqv0Wt74KOzHhZHwki0Yi
-	 nKuHAllO7r80OBEx0t9vmfvlncJnh8xwbbAk95DazTzWc+YHViSOgfu8dJ7+xEx+6l
-	 YvgIZAqt/Pnya8ImlVZC77AMHZ4K6OhZ8ytvANqs=
+	b=BvhETcXCPA0vLhUna78d3cQpLihbvaZ9DVtbzLOx4IvAGsHRyCEfJB9ZSEg3fYhjd
+	 FXdEHidcY91wI8TqgcMZSyDL8KBqKPop8P7AhKckAtXgWcbAWA46rK1jwFKvEJB6gW
+	 +bFxpIzX+J7Ee1Qlg3G+HELCdcEqv1SjXFYHbHlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 375/493] ASoC: SOF: Intel: hda-dai: fix channel map configuration for aggregated dailink
-Date: Mon, 27 May 2024 20:56:17 +0200
-Message-ID: <20240527185642.540495760@linuxfoundation.org>
+Subject: [PATCH 6.8 376/493] powerpc/fsl-soc: hide unused const variable
+Date: Mon, 27 May 2024 20:56:18 +0200
+Message-ID: <20240527185642.577500673@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,89 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 831045513c8a2ef14c3cf39b33d1ccedf588c4a8 ]
+[ Upstream commit 01acaf3aa75e1641442cc23d8fe0a7bb4226efb1 ]
 
-The existing code derives the channel map used to program the HDaudio
-link DMA from the hw_params, but that is not quite right in the case
-of aggregation. The code in soc-pcm.c splits the hw_params depending
-on the codec_ch_map, and we need to reconstruct the channel-map to
-insert the data in the right places.
+vmpic_msi_feature is only used conditionally, which triggers a rare
+-Werror=unused-const-variable= warning with gcc:
 
-This issue is seen only on amplifier feedback capture where the data
-from the second amplifier was replaced by that of the first amplifier.
+arch/powerpc/sysdev/fsl_msi.c:567:37: error: 'vmpic_msi_feature' defined but not used [-Werror=unused-const-variable=]
+  567 | static const struct fsl_msi_feature vmpic_msi_feature =
 
-Note that the loop iterator of the macro for_each_rtd_cpu_dais() is
-reused in a following loop. This is different to all existing usages
-of that macro, hence the use of a boolean flag to avoid an access to
-an uninitialized variable.
+Hide this one in the same #ifdef as the reference so we can turn on
+the warning by default.
 
-Fixes: 2960ee5c4814 ("ASoC: SOF: Intel: hda-dai: add helpers for SoundWire callbacks")
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://msgid.link/r/20240402151828.175002-2-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 305bcf26128e ("powerpc/fsl-soc: use CONFIG_EPAPR_PARAVIRT for hcalls")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240403080702.3509288-2-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-dai.c | 31 +++++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+ arch/powerpc/sysdev/fsl_msi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/sof/intel/hda-dai.c b/sound/soc/sof/intel/hda-dai.c
-index f4cbc0ad5de3b..0e665c0840d71 100644
---- a/sound/soc/sof/intel/hda-dai.c
-+++ b/sound/soc/sof/intel/hda-dai.c
-@@ -434,10 +434,17 @@ int sdw_hda_dai_hw_params(struct snd_pcm_substream *substream,
- 			  int link_id)
- {
- 	struct snd_soc_dapm_widget *w = snd_soc_dai_get_widget(cpu_dai, substream->stream);
-+	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	const struct hda_dai_widget_dma_ops *ops;
-+	struct snd_soc_dai_link_ch_map *ch_maps;
- 	struct hdac_ext_stream *hext_stream;
-+	struct snd_soc_dai *dai;
- 	struct snd_sof_dev *sdev;
-+	bool cpu_dai_found = false;
-+	int cpu_dai_id;
-+	int ch_mask;
- 	int ret;
-+	int j;
+diff --git a/arch/powerpc/sysdev/fsl_msi.c b/arch/powerpc/sysdev/fsl_msi.c
+index 558ec68d768e6..60a2c5925161a 100644
+--- a/arch/powerpc/sysdev/fsl_msi.c
++++ b/arch/powerpc/sysdev/fsl_msi.c
+@@ -566,10 +566,12 @@ static const struct fsl_msi_feature ipic_msi_feature = {
+ 	.msiir_offset = 0x38,
+ };
  
- 	ret = non_hda_dai_hw_params(substream, params, cpu_dai);
- 	if (ret < 0) {
-@@ -452,9 +459,29 @@ int sdw_hda_dai_hw_params(struct snd_pcm_substream *substream,
- 	if (!hext_stream)
- 		return -ENODEV;
++#ifdef CONFIG_EPAPR_PARAVIRT
+ static const struct fsl_msi_feature vmpic_msi_feature = {
+ 	.fsl_pic_ip = FSL_PIC_IP_VMPIC,
+ 	.msiir_offset = 0,
+ };
++#endif
  
--	/* in the case of SoundWire we need to program the PCMSyCM registers */
-+	/*
-+	 * in the case of SoundWire we need to program the PCMSyCM registers. In case
-+	 * of aggregated devices, we need to define the channel mask for each sublink
-+	 * by reconstructing the split done in soc-pcm.c
-+	 */
-+	for_each_rtd_cpu_dais(rtd, cpu_dai_id, dai) {
-+		if (dai == cpu_dai) {
-+			cpu_dai_found = true;
-+			break;
-+		}
-+	}
-+
-+	if (!cpu_dai_found)
-+		return -ENODEV;
-+
-+	ch_mask = 0;
-+	for_each_link_ch_maps(rtd->dai_link, j, ch_maps) {
-+		if (ch_maps->cpu == cpu_dai_id)
-+			ch_mask |= ch_maps->ch_mask;
-+	}
-+
- 	ret = hdac_bus_eml_sdw_map_stream_ch(sof_to_bus(sdev), link_id, cpu_dai->id,
--					     GENMASK(params_channels(params) - 1, 0),
-+					     ch_mask,
- 					     hdac_stream(hext_stream)->stream_tag,
- 					     substream->stream);
- 	if (ret < 0) {
+ static const struct of_device_id fsl_of_msi_ids[] = {
+ 	{
 -- 
 2.43.0
 
