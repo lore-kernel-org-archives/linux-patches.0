@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39753262BE;
-	Mon, 27 May 2024 19:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98A9262BE;
+	Mon, 27 May 2024 19:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838052; cv=none; b=SoiAYJTjlujiAiRX0Q9Tl6Oj7CG1xgXypHTPEZ2Bd15Z+jSnk7AEmt8totWMTpr85FCNip4OIVEwTlXhA5Fn6lyLe92guKuDLHv+R/GPuQ/jc6rYDCZgN7ZLSB74sTpATuQTt6oo0DuLPNG896+xhPNZG6KHHsO+nVVoxqjcN7U=
+	t=1716838055; cv=none; b=CdqVMMzMM8ek7j0MsOi2CIhrbFTmMF8nONgR1XuGcosZxuonSqknflup8p97v1Uz5BcvKWn7yGQlAmDeT0U91k+VGD06HqSerp5TZ8TcN69qiZusE44BogrVUsCWXFHqjIF5rxFI2DHPHKUQFFelYtcdcWPDlOOQ1CLJs8vTVlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838052; c=relaxed/simple;
-	bh=Dfk/kBjznLIp1A5fVIyU0PdObY1eJ/R3LIkDFHT2qCA=;
+	s=arc-20240116; t=1716838055; c=relaxed/simple;
+	bh=BJzFsmNGI2kRK7/DFLVWa/nXEB+yc6bmhPXfXMw2FRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XKFc7h8l9FLGTqBRfhYYAX9rukA4P6lQAkX6LXnimKKRthYgWVIxCDQyV2HCiaAH8RtguM2x/zcOVwWrmRrjHGG8wZLc4O6He1hRwnz5jEPSQT4YtEgx8GClruoSE78STBovSMXNbfmDJwNF3mZ9E1IpZh9IS19SeCJmWUvCrCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhKkaGOr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fOlZqdd9u61uHHhUjk/xz3pbh0wQT+4vsT4MmwrDBe2NpDYaJ8ElNzmat0KvreGwod00FNq5un+SSdIAOYSSs8uRhHy7XWCGYnwIxrENeGAPu9sbjpsfH5O0PxOiIr8oJak8R2M6JxRI4fPSq04ZcRePm6vp4KlueOeHVVVA0HM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIG4F3aO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhKkaGOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C710CC2BBFC;
-	Mon, 27 May 2024 19:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIG4F3aO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A78AC2BBFC;
+	Mon, 27 May 2024 19:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838052;
-	bh=Dfk/kBjznLIp1A5fVIyU0PdObY1eJ/R3LIkDFHT2qCA=;
+	s=korg; t=1716838054;
+	bh=BJzFsmNGI2kRK7/DFLVWa/nXEB+yc6bmhPXfXMw2FRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NhKkaGOrFQ9SMQuq2M4z13dzbyXj7SG3p98z137FdXhlK1OYIt44pbKx44MF33EWD
-	 Z+SkmkHpdOQ+gAucPSZ6wF/cMikExFgXXGsHNL9Gc5mxY1HGSOnm58QC5hZHOBQ/dQ
-	 Ifz8j6saVA38EkYSf360rTUsQEgdJ/tAqd8tYhlI=
+	b=BIG4F3aOd0rVfunpqwOWwoEQhEEBDRSzcmxRmlGHwbr931mmvhoC9i01H+qAP7wEC
+	 DOJMVjLGpcflnQzO83gPFbPwQDCYyrhbGC+lCtoGHfZgvzLdj9zfLZgu56UlOk8fTv
+	 a5C+T6sS5uZanVFKp7d4Pn62Q13N9ykMuBsQhGAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Junhao He <hejunhao3@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 247/493] pwm: sti: Simplify probe function using devm functions
-Date: Mon, 27 May 2024 20:54:09 +0200
-Message-ID: <20240527185638.385295035@linuxfoundation.org>
+Subject: [PATCH 6.8 248/493] drivers/perf: hisi_pcie: Fix out-of-bound access when valid event group
+Date: Mon, 27 May 2024 20:54:10 +0200
+Message-ID: <20240527185638.413488704@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -44,117 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Junhao He <hejunhao3@huawei.com>
 
-[ Upstream commit 5bb0b194aeee5d5da6881232f4e9989b35957c25 ]
+[ Upstream commit 77fce82678ea5fd51442e62febec2004f79e041b ]
 
-Instead of of_clk_get_by_name() use devm_clk_get_prepared() which has
-several advantages:
+The perf tool allows users to create event groups through following
+cmd [1], but the driver does not check whether the array index is out of
+bounds when writing data to the event_group array. If the number of events
+in an event_group is greater than HISI_PCIE_MAX_COUNTERS, the memory write
+overflow of event_group array occurs.
 
- - Combines getting the clock and a call to clk_prepare(). The latter
-   can be dropped from sti_pwm_probe() accordingly.
- - Cares for calling clk_put() which is missing in both probe's error
-   path and the remove function.
- - Cares for calling clk_unprepare() which can be dropped from the error
-   paths and the remove function. (Note that not all error path got this
-   right.)
+Add array index check to fix the possible array out of bounds violation,
+and return directly when write new events are written to array bounds.
 
-With additionally using devm_pwmchip_add() instead of pwmchip_add() the
-remove callback can be dropped completely. With it the last user of
-platform_get_drvdata() goes away and so platform_set_drvdata() can be
-dropped from the probe function, too.
+There are 9 different events in an event_group.
+[1] perf stat -e '{pmu/event1/, ... ,pmu/event9/}'
 
-Fixes: 378fe115d19d ("pwm: sti: Add new driver for ST's PWM IP")
-Link: https://lore.kernel.org/r/81f0e1d173652f435afda6719adaed1922fe059a.1710068192.git.u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 8404b0fbc7fb ("drivers/perf: hisi: Add driver for HiSilicon PCIe PMU")
+Signed-off-by: Junhao He <hejunhao3@huawei.com>
+Reviewed-by: Jijie Shao <shaojijie@huawei.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20240425124627.13764-2-hejunhao3@huawei.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-sti.c | 39 +++------------------------------------
- 1 file changed, 3 insertions(+), 36 deletions(-)
+ drivers/perf/hisilicon/hisi_pcie_pmu.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
-index 826eb547cc96f..f3df7b1895d35 100644
---- a/drivers/pwm/pwm-sti.c
-+++ b/drivers/pwm/pwm-sti.c
-@@ -624,32 +624,20 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+index b90ba8aca3fa5..ec4d5fc30781c 100644
+--- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
++++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+@@ -337,15 +337,27 @@ static bool hisi_pcie_pmu_validate_event_group(struct perf_event *event)
+ 			return false;
  
- 	if (cdata->pwm_num_devs) {
--		pc->pwm_clk = of_clk_get_by_name(dev->of_node, "pwm");
-+		pc->pwm_clk = devm_clk_get_prepared(dev, "pwm");
- 		if (IS_ERR(pc->pwm_clk)) {
- 			dev_err(dev, "failed to get PWM clock\n");
- 			return PTR_ERR(pc->pwm_clk);
- 		}
--
--		ret = clk_prepare(pc->pwm_clk);
--		if (ret) {
--			dev_err(dev, "failed to prepare clock\n");
--			return ret;
--		}
- 	}
- 
- 	if (cdata->cpt_num_devs) {
--		pc->cpt_clk = of_clk_get_by_name(dev->of_node, "capture");
-+		pc->cpt_clk = devm_clk_get_prepared(dev, "capture");
- 		if (IS_ERR(pc->cpt_clk)) {
- 			dev_err(dev, "failed to get PWM capture clock\n");
- 			return PTR_ERR(pc->cpt_clk);
+ 		for (num = 0; num < counters; num++) {
++			/*
++			 * If we find a related event, then it's a valid group
++			 * since we don't need to allocate a new counter for it.
++			 */
+ 			if (hisi_pcie_pmu_cmp_event(event_group[num], sibling))
+ 				break;
  		}
  
--		ret = clk_prepare(pc->cpt_clk);
--		if (ret) {
--			dev_err(dev, "failed to prepare clock\n");
--			return ret;
--		}
--
- 		cdata->ddata = devm_kzalloc(dev, cdata->cpt_num_devs * sizeof(*cdata->ddata), GFP_KERNEL);
- 		if (!cdata->ddata)
- 			return -ENOMEM;
-@@ -666,27 +654,7 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 		mutex_init(&ddata->lock);
++		/*
++		 * Otherwise it's a new event but if there's no available counter,
++		 * fail the check since we cannot schedule all the events in
++		 * the group simultaneously.
++		 */
++		if (num == HISI_PCIE_MAX_COUNTERS)
++			return false;
++
+ 		if (num == counters)
+ 			event_group[counters++] = sibling;
  	}
  
--	ret = pwmchip_add(chip);
--	if (ret < 0) {
--		clk_unprepare(pc->pwm_clk);
--		clk_unprepare(pc->cpt_clk);
--		return ret;
--	}
--
--	platform_set_drvdata(pdev, chip);
--
--	return 0;
--}
--
--static void sti_pwm_remove(struct platform_device *pdev)
--{
--	struct pwm_chip *chip = platform_get_drvdata(pdev);
--	struct sti_pwm_chip *pc = to_sti_pwmchip(chip);
--
--	pwmchip_remove(chip);
--
--	clk_unprepare(pc->pwm_clk);
--	clk_unprepare(pc->cpt_clk);
-+	return devm_pwmchip_add(dev, chip);
+-	return counters <= HISI_PCIE_MAX_COUNTERS;
++	return true;
  }
  
- static const struct of_device_id sti_pwm_of_match[] = {
-@@ -701,7 +669,6 @@ static struct platform_driver sti_pwm_driver = {
- 		.of_match_table = sti_pwm_of_match,
- 	},
- 	.probe = sti_pwm_probe,
--	.remove_new = sti_pwm_remove,
- };
- module_platform_driver(sti_pwm_driver);
- 
+ static int hisi_pcie_pmu_event_init(struct perf_event *event)
 -- 
 2.43.0
 
