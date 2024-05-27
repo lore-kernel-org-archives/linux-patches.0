@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D64E15DBD8;
-	Mon, 27 May 2024 19:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B2915FA85;
+	Mon, 27 May 2024 19:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837309; cv=none; b=M/1ppWMcmEaWMZDIb3SuG1jJLD+ct3J9AvQazeSG83t6fQLbmKNnxENBdZL4+EbPVML4vy3z7OPInIiOFTMZHMQTUBl9ycrGmgbsOOcaoPU4MCI0Gr0zlVkWmoss96cSTOo/Jos+iCyFhHS4wrupVriK0Si1haTrGloXFPKutLI=
+	t=1716837311; cv=none; b=fdBXGFFTwFXZmPJ1AKwT1h7cjkIz1FPOxOn59v/C6AmZruxFnPO0/K0qvA6tjrtM+EcroRc4f7e/WcSZYuAGO3J/Bk0mgdzpFsDvOZvqMneCv2L1fXluTzXklXRplc1PeO92X+l/5Ivdgl5xkiay84c/olct2hnOASGIpbDFghw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837309; c=relaxed/simple;
-	bh=h6XulrfaPscbKiqmCkC0CkQyvFqD/4PoXUqJ/68FPNQ=;
+	s=arc-20240116; t=1716837311; c=relaxed/simple;
+	bh=Y9qtySFcvXSqSQIkoSF27O722MRDCupfLZGsLIvDvWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cf+eu5+1FcH0qxpJgPDC7vxQUhNXkeJZSrEgO86OCdar6oS2PQ5rzNKRhYBcOMSYhuxF9wBVHkFglXi+1dpxz0bhBZKpUagsx551DdpnYCz40z549zxt7PRvcm5ApjIvzV/47M51hWnC6paQLmtZZBk/8RkTBqa1UuoWMwvrYFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbh26Ph3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bgutkjl1TGPEKWjzCeW/jjB/H8MTwoLgz1ilve6A5s2zf1l9Djnjc5CaCGXYJootA/CKA+SCXnroLyU+gVPcYdET3Sv1/0F46OTKAcN7YAU4fTyetqP/cJiGolNjMk7Mu3C3n/1J/VwUgsZA5vmDw9Nk1rfscmRCKZ8S4WmhN88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycP7PumX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbh26Ph3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E581DC2BBFC;
-	Mon, 27 May 2024 19:15:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycP7PumX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF61C2BBFC;
+	Mon, 27 May 2024 19:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837309;
-	bh=h6XulrfaPscbKiqmCkC0CkQyvFqD/4PoXUqJ/68FPNQ=;
+	s=korg; t=1716837311;
+	bh=Y9qtySFcvXSqSQIkoSF27O722MRDCupfLZGsLIvDvWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbh26Ph3hJA/43ATrzudlIYn2g7InYm6L7yuSOWi+6nFXYBR61YY6Znw+Ef8qx6vy
-	 JUMWakr2IJ/Ldgv3qhNb/s1WqqBNddzKxszi5RlGwIt48ycbtDry7q6seDIlXIZTQE
-	 ZGCn7pQbnGldQHfDcTvAEo2j6gLSorQ8Kxufs/ug=
+	b=ycP7PumXOArxnkyDX/NOKMSkcyel8lZhH1D0sJvG40SsJfmzZioa+no5SV/ztr+ks
+	 VPlCZzB7IjEIko8nJPHGTufVm8VKCLG4ucK8f175SF8qLIjLWhq1EiaCFcMke9IlJj
+	 SqMlMkDAnR/y0UDVAjO8TxaWO7Y+VQjV7eO0e+zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Aprelkov <aaprelkov@usergate.com>,
+	Petr Vorel <pvorel@suse.cz>,
 	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neilb@suse.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 390/427] sunrpc: removed redundant procp check
-Date: Mon, 27 May 2024 20:57:17 +0200
-Message-ID: <20240527185634.792243486@linuxfoundation.org>
+Subject: [PATCH 6.9 391/427] nfsd: dont create nfsv4recoverydir in nfsdfs when not used.
+Date: Mon, 27 May 2024 20:57:18 +0200
+Message-ID: <20240527185634.822742348@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,37 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Aprelkov <aaprelkov@usergate.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit a576f36971ab4097b6aa76433532aa1fb5ee2d3b ]
+[ Upstream commit 0770249b90f9d9f69714b76adc36cf6c895bc1f9 ]
 
-since vs_proc pointer is dereferenced before getting it's address there's
-no need to check for NULL.
+When CONFIG_NFSD_LEGACY_CLIENT_TRACKING is not set, the virtual file
+  /proc/fs/nfsd/nfsv4recoverydir
+is created but responds EINVAL to any access.
+This is not useful, is somewhat surprising, and it causes ltp to
+complain.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The only known user of this file is in nfs-utils, which handles
+non-existence and read-failure equally well.  So there is nothing to
+gain from leaving the file present but inaccessible.
 
-Fixes: 8e5b67731d08 ("SUNRPC: Add a callback to initialise server requests")
-Signed-off-by: Aleksandr Aprelkov <aaprelkov@usergate.com>
+So this patch removes the file when its content is not available - i.e.
+when that config option is not selected.
+
+Also remove the #ifdef which hides some of the enum values when
+CONFIG_NFSD_V$ not selection.  simple_fill_super() quietly ignores array
+entries that are not present, so having slots in the array that don't
+get used is perfectly acceptable.  So there is no value in this #ifdef.
+
+Reported-by: Petr Vorel <pvorel@suse.cz>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 74fd48739d04 ("nfsd: new Kconfig option for legacy client tracking")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svc.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/nfsd/nfsctl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index b33e429336fb7..2b4b1276d4e86 100644
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -1265,8 +1265,6 @@ svc_generic_init_request(struct svc_rqst *rqstp,
- 	if (rqstp->rq_proc >= versp->vs_nproc)
- 		goto err_bad_proc;
- 	rqstp->rq_procinfo = procp = &versp->vs_proc[rqstp->rq_proc];
--	if (!procp)
--		goto err_bad_proc;
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index ecd18bffeebc7..4d23bb1d08c0a 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -48,12 +48,10 @@ enum {
+ 	NFSD_MaxBlkSize,
+ 	NFSD_MaxConnections,
+ 	NFSD_Filecache,
+-#ifdef CONFIG_NFSD_V4
+ 	NFSD_Leasetime,
+ 	NFSD_Gracetime,
+ 	NFSD_RecoveryDir,
+ 	NFSD_V4EndGrace,
+-#endif
+ 	NFSD_MaxReserved
+ };
  
- 	/* Initialize storage for argp and resp */
- 	memset(rqstp->rq_argp, 0, procp->pc_argzero);
+@@ -1360,7 +1358,9 @@ static int nfsd_fill_super(struct super_block *sb, struct fs_context *fc)
+ #ifdef CONFIG_NFSD_V4
+ 		[NFSD_Leasetime] = {"nfsv4leasetime", &transaction_ops, S_IWUSR|S_IRUSR},
+ 		[NFSD_Gracetime] = {"nfsv4gracetime", &transaction_ops, S_IWUSR|S_IRUSR},
++#ifdef CONFIG_NFSD_LEGACY_CLIENT_TRACKING
+ 		[NFSD_RecoveryDir] = {"nfsv4recoverydir", &transaction_ops, S_IWUSR|S_IRUSR},
++#endif
+ 		[NFSD_V4EndGrace] = {"v4_end_grace", &transaction_ops, S_IWUSR|S_IRUGO},
+ #endif
+ 		/* last one */ {""}
 -- 
 2.43.0
 
