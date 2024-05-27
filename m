@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9496117E90E;
-	Mon, 27 May 2024 19:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B8F17E90E;
+	Mon, 27 May 2024 19:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836984; cv=none; b=ETG6x85gGv2xqWqADFlVynY9FrZjCXRzJ3eG7wcmM4HEbvDnevMS79f4lKmWBkgFhe0OXfq4+SLMRLQMPcSqDgbZfUpNgmSDziQjqTYul6r2Y980PGWFdOPy8BEDWIKpU5aUJ34bxxIpwPvnUIkvNEZqLeTppvMQ7NKynlQgkhM=
+	t=1716836987; cv=none; b=cMeDp9POf50z0kREb38gZ/MnRS287gEx6fIQK0zhh2fkm7Zd88x/8/oBBWGmV8KASWNVWgrOLZ1ugRBbAgbs9jaQ0mZOmvX4gJouYrbh3d6NAT54F2Bsgj6XXOU7wS1xPmuPX5jpX2rR5Magf5j8Hf6pNwSlxtF3seB3ARdRDYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836984; c=relaxed/simple;
-	bh=uoxgB93CDJis5fWur4PITK2E+EXVPG/zHD6bb5IIk/E=;
+	s=arc-20240116; t=1716836987; c=relaxed/simple;
+	bh=9j0p0zz4NyKSQe7auRufoHJkSHwIAiEVWU06AOQBemg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=js3nR1X2uxNzLt+DWDwnTJYjmFS2E2daa5BAXTWaCVo55VjIixpKtSsRjlo4n/29hVA47hxn3uD6ypXXmhQb4sX0kxIhA/qS+PSEh0wAUT2yzrefU86Dfvl+k2g3N2O5W995smYyA3AwLTyq3SGIEDkxQTdAVEz9qEXGgXpPU64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQCusfUd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YatW2X9/OziKu/ZECc7o//bMqVQrohF5RuYRvKbRxMvrc6+DJQe47Y+guNAzmDYX+Rkmp15625xUgFEbOJBBt9OTG3lgXBXWI8YallhCqS22xt+r7t9RP7Tyaa2lV/8bzPafmlxH28BU413sWw9vfw7JGuzrpsP0k2H1yd6bfFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJseA+Ku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQCusfUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2091DC2BBFC;
-	Mon, 27 May 2024 19:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJseA+Ku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99004C2BBFC;
+	Mon, 27 May 2024 19:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836984;
-	bh=uoxgB93CDJis5fWur4PITK2E+EXVPG/zHD6bb5IIk/E=;
+	s=korg; t=1716836986;
+	bh=9j0p0zz4NyKSQe7auRufoHJkSHwIAiEVWU06AOQBemg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQCusfUdFzO9aA8zlcefU4G2lxV81douNeTaIT7db1QfnRJ0eTfFlDv8CsVqk3nu7
-	 58xinC89kMRGpZrSWJdRkv0s/3gPO25p0Bg0W8jDRfiwhvL7pGjpSjKgvlJdpPAZ9G
-	 3k6SCcWsnZfU8VwfbXx9w6QVjCbSqyIYKh+eRuqY=
+	b=BJseA+Ku094vxGK4Eu7hZ8Hw8EcJWqTdmgfllHgT+wgxDg3f3cTomGZC/0oSTgfzj
+	 BQFKc9klByEWGkWjASgBEarl75o+vM97IVb38vzLitRg1wOX4MkzFtvDuQaXgLtsz4
+	 8GEO+2bRlbxzbAbIEAut382vvC0M2RMDuyeFg40I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 264/427] mptcp: SO_KEEPALIVE: fix getsockopt support
-Date: Mon, 27 May 2024 20:55:11 +0200
-Message-ID: <20240527185627.103549774@linuxfoundation.org>
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Stan Johnson <userm57@yahoo.com>
+Subject: [PATCH 6.9 229/427] m68k: mac: Fix reboot hang on Mac IIci
+Date: Mon, 27 May 2024 20:54:36 +0200
+Message-ID: <20240527185623.880060307@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,51 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit a65198136eaa15b74ee0abf73f12ef83d469a334 ]
+[ Upstream commit 265a3b322df9a973ff1fc63da70af456ab6ae1d6 ]
 
-SO_KEEPALIVE support has to be set on each subflow: on each TCP socket,
-where sk_prot->keepalive is defined. Technically, nothing has to be done
-on the MPTCP socket. That's why mptcp_sol_socket_sync_intval() was
-called instead of mptcp_sol_socket_intval().
+Calling mac_reset() on a Mac IIci does reset the system, but what
+follows is a POST failure that requires a manual reset to resolve.
+Avoid that by using the 68030 asm implementation instead of the C
+implementation.
 
-Except that when nothing is done on the MPTCP socket, the
-getsockopt(SO_KEEPALIVE), handled in net/core/sock.c:sk_getsockopt(),
-will not know if SO_KEEPALIVE has been set on the different subflows or
-not.
+Apparently the SE/30 has a similar problem as it has used the asm
+implementation since before git. This patch extends that solution to
+other systems with a similar ROM.
 
-The fix is simple: simply call mptcp_sol_socket_intval() which will end
-up calling net/core/sock.c:sk_setsockopt() where the SOCK_KEEPOPEN flag
-will be set, the one used in sk_getsockopt().
+After this patch, the only systems still using the C implementation are
+68040 systems where adb_type is either MAC_ADB_IOP or MAC_ADB_II. This
+implies a 1 MiB Quadra ROM.
 
-So now, getsockopt(SO_KEEPALIVE) on an MPTCP socket will return the same
-value as the one previously set with setsockopt(SO_KEEPALIVE).
+This now includes the Quadra 900/950, which previously fell through to
+the "should never get here" catch-all.
 
-Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20240514011335.176158-2-martineau@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-and-tested-by: Stan Johnson <userm57@yahoo.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/480ebd1249d229c6dc1f3f1c6d599b8505483fd8.1714797072.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/sockopt.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/m68k/mac/misc.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
-index 73fdf423de44e..08b7be2b1b69e 100644
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -181,8 +181,6 @@ static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
+diff --git a/arch/m68k/mac/misc.c b/arch/m68k/mac/misc.c
+index 4c8f8cbfa05f3..e7f0f72c1b36e 100644
+--- a/arch/m68k/mac/misc.c
++++ b/arch/m68k/mac/misc.c
+@@ -453,30 +453,18 @@ void mac_poweroff(void)
  
- 	switch (optname) {
- 	case SO_KEEPALIVE:
--		mptcp_sol_socket_sync_intval(msk, optname, val);
--		return 0;
- 	case SO_DEBUG:
- 	case SO_MARK:
- 	case SO_PRIORITY:
+ void mac_reset(void)
+ {
+-	if (macintosh_config->adb_type == MAC_ADB_II &&
+-	    macintosh_config->ident != MAC_MODEL_SE30) {
+-		/* need ROMBASE in booter */
+-		/* indeed, plus need to MAP THE ROM !! */
+-
+-		if (mac_bi_data.rombase == 0)
+-			mac_bi_data.rombase = 0x40800000;
+-
+-		/* works on some */
+-		rom_reset = (void *) (mac_bi_data.rombase + 0xa);
+-
+-		local_irq_disable();
+-		rom_reset();
+ #ifdef CONFIG_ADB_CUDA
+-	} else if (macintosh_config->adb_type == MAC_ADB_EGRET ||
+-	           macintosh_config->adb_type == MAC_ADB_CUDA) {
++	if (macintosh_config->adb_type == MAC_ADB_EGRET ||
++	    macintosh_config->adb_type == MAC_ADB_CUDA) {
+ 		cuda_restart();
++	} else
+ #endif
+ #ifdef CONFIG_ADB_PMU
+-	} else if (macintosh_config->adb_type == MAC_ADB_PB2) {
++	if (macintosh_config->adb_type == MAC_ADB_PB2) {
+ 		pmu_restart();
++	} else
+ #endif
+-	} else if (CPU_IS_030) {
+-
++	if (CPU_IS_030) {
+ 		/* 030-specific reset routine.  The idea is general, but the
+ 		 * specific registers to reset are '030-specific.  Until I
+ 		 * have a non-030 machine, I can't test anything else.
+@@ -524,6 +512,18 @@ void mac_reset(void)
+ 		    "jmp %/a0@\n\t" /* jump to the reset vector */
+ 		    ".chip 68k"
+ 		    : : "r" (offset), "a" (rombase) : "a0");
++	} else {
++		/* need ROMBASE in booter */
++		/* indeed, plus need to MAP THE ROM !! */
++
++		if (mac_bi_data.rombase == 0)
++			mac_bi_data.rombase = 0x40800000;
++
++		/* works on some */
++		rom_reset = (void *)(mac_bi_data.rombase + 0xa);
++
++		local_irq_disable();
++		rom_reset();
+ 	}
+ 
+ 	/* should never get here */
 -- 
 2.43.0
 
