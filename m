@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80E81078F;
-	Mon, 27 May 2024 19:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F8C17E90E;
+	Mon, 27 May 2024 19:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836678; cv=none; b=A9ufpWY5rJFKpsGCfqDM86Rcb7Q4olYgl9qGF8qRYAe6++SvKAc3e8PILaqPvw9iwhAkjXjyiOV2jLbZuULR2+orYNtxp3itFFDd9zzSWeVe6XcRV8qDtBYyFEYx5w6jDAXwnM3siFgxF9YDYd4GJ8GW5ebSR29eNzDvQNLu/W4=
+	t=1716836680; cv=none; b=cpVOi0xTgdxKl5wvZXlVb8Jo7akKheUHs1BqVTuhhTCuo+xZACPk0CzsEkXA0azGOpI9kTvIuzylE/89vCFF5os5VkYW1jteFGEhEd7UHGWNbqoXdM2GVG4gA4R/L1WgbF8/nS8gyPwPz4/Pjs79LC04gt5zNZKKIj6jRVHHKNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836678; c=relaxed/simple;
-	bh=wpwCmWWebkQCyPf9OOrz0ZKl1HraSmKJobsHmAKeMI8=;
+	s=arc-20240116; t=1716836680; c=relaxed/simple;
+	bh=NU2Q+hD85lp+3aDPcIoU99ZiJn+ZeqcFHLzIIiT24nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/qKVq43LRCfapKMG6r035mspOZbmGxDyt+qzH04TJngA1pxTZ/4RKPaD5zBPE/jn39aIjM6rcW3ZpLwLxS+MP9m1TG+x8WwYqkABHL66oMwcPJULDApWiXM71M/jOvbnmYGexPQF5lvUjj6SqYgkT5vG+lSCGKpaSEHSC6l9bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5HBzAzX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mqPutmxJn1INZlgkVy4jSPPspSnGTbHWVsghyM6CYbl5gZhecuFZ7Ix8lySg8Rblvrkhvu5n4Oc1TMNmP3UMgUsWa7NrmrziGyA6hhsfTDUNO++bkiJj48VfSELB2vq6+K7wjmad40cLf2/NWrNJS/7X+LkGijzAvbxTV+h63V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dv77Ztq6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5HBzAzX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2966DC2BBFC;
-	Mon, 27 May 2024 19:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dv77Ztq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AAAC2BBFC;
+	Mon, 27 May 2024 19:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836677;
-	bh=wpwCmWWebkQCyPf9OOrz0ZKl1HraSmKJobsHmAKeMI8=;
+	s=korg; t=1716836680;
+	bh=NU2Q+hD85lp+3aDPcIoU99ZiJn+ZeqcFHLzIIiT24nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5HBzAzX9i9QtAUWG8UCbQ8nFDm/UBj+qSGWfl+6DDbPpWhXI0ZFIjO1nlEBJi5N9
-	 s8DWQilrjidenT8zIX3sM3sxfFbG/Hjm2VqVZaH2Zg/Y+YqWwdWrnfU3QrEmLshx2L
-	 W6pfXX6kQSfp0DPpaLMMsEQ2JwPGMC1+DYMAOeaU=
+	b=Dv77Ztq6CtODoYzGPZczmZlibdSI8fjggROprWw5O0fuWfZaYDyOC45h3+CiUKZ+y
+	 PKPzbbuCjn6bPjUilDcCT36HVZq7AdC/qbVcmaTH+USoL1jVbGrEgNZslVqQCa1dtV
+	 Ka/+fH/ueheiC9N67WUJoB8OqgJupNCaae/g7rx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lizhe <sensor1010@163.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 146/427] cpufreq: exit() callback is optional
-Date: Mon, 27 May 2024 20:53:13 +0200
-Message-ID: <20240527185615.533116746@linuxfoundation.org>
+Subject: [PATCH 6.9 147/427] x86/pat: Introduce lookup_address_in_pgd_attr()
+Date: Mon, 27 May 2024 20:53:14 +0200
+Message-ID: <20240527185615.668214964@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,56 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit b8f85833c05730d631576008daaa34096bc7f3ce ]
+[ Upstream commit ceb647b4b529fdeca9021cd34486f5a170746bda ]
 
-The exit() callback is optional and shouldn't be called without checking
-a valid pointer first.
+Add lookup_address_in_pgd_attr() doing the same as the already
+existing lookup_address_in_pgd(), but returning the effective settings
+of the NX and RW bits of all walked page table levels, too.
 
-Also, we must clear freq_table pointer even if the exit() callback isn't
-present.
+This will be needed in order to match hardware behavior when looking
+for effective access rights, especially for detecting writable code
+pages.
 
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Fixes: 91a12e91dc39 ("cpufreq: Allow light-weight tear down and bring up of CPUs")
-Fixes: f339f3541701 ("cpufreq: Rearrange locking in cpufreq_remove_dev()")
-Reported-by: Lizhe <sensor1010@163.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+In order to avoid code duplication, let lookup_address_in_pgd() call
+lookup_address_in_pgd_attr() with dummy parameters.
+
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20240412151258.9171-2-jgross@suse.com
+Stable-dep-of: 5bc8b0f5dac0 ("x86/pat: Fix W^X violation false-positives when running as Xen PV guest")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/x86/include/asm/pgtable_types.h |  2 ++
+ arch/x86/mm/pat/set_memory.c         | 33 +++++++++++++++++++++++++---
+ 2 files changed, 32 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 66e10a19d76ab..fd9c3ed21f49c 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -1679,10 +1679,13 @@ static void __cpufreq_offline(unsigned int cpu, struct cpufreq_policy *policy)
- 	 */
- 	if (cpufreq_driver->offline) {
- 		cpufreq_driver->offline(policy);
--	} else if (cpufreq_driver->exit) {
--		cpufreq_driver->exit(policy);
--		policy->freq_table = NULL;
-+		return;
- 	}
+diff --git a/arch/x86/include/asm/pgtable_types.h b/arch/x86/include/asm/pgtable_types.h
+index 9abb8cc4cd474..b786449626267 100644
+--- a/arch/x86/include/asm/pgtable_types.h
++++ b/arch/x86/include/asm/pgtable_types.h
+@@ -567,6 +567,8 @@ static inline void update_page_count(int level, unsigned long pages) { }
+ extern pte_t *lookup_address(unsigned long address, unsigned int *level);
+ extern pte_t *lookup_address_in_pgd(pgd_t *pgd, unsigned long address,
+ 				    unsigned int *level);
++pte_t *lookup_address_in_pgd_attr(pgd_t *pgd, unsigned long address,
++				  unsigned int *level, bool *nx, bool *rw);
+ extern pmd_t *lookup_pmd_address(unsigned long address);
+ extern phys_addr_t slow_virt_to_phys(void *__address);
+ extern int __init kernel_map_pages_in_pgd(pgd_t *pgd, u64 pfn,
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index 80c9037ffadff..bfa0aae45d48c 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -657,20 +657,26 @@ static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long star
+ 
+ /*
+  * Lookup the page table entry for a virtual address in a specific pgd.
+- * Return a pointer to the entry and the level of the mapping.
++ * Return a pointer to the entry, the level of the mapping, and the effective
++ * NX and RW bits of all page table levels.
+  */
+-pte_t *lookup_address_in_pgd(pgd_t *pgd, unsigned long address,
+-			     unsigned int *level)
++pte_t *lookup_address_in_pgd_attr(pgd_t *pgd, unsigned long address,
++				  unsigned int *level, bool *nx, bool *rw)
+ {
+ 	p4d_t *p4d;
+ 	pud_t *pud;
+ 	pmd_t *pmd;
+ 
+ 	*level = PG_LEVEL_NONE;
++	*nx = false;
++	*rw = true;
+ 
+ 	if (pgd_none(*pgd))
+ 		return NULL;
+ 
++	*nx |= pgd_flags(*pgd) & _PAGE_NX;
++	*rw &= pgd_flags(*pgd) & _PAGE_RW;
 +
-+	if (cpufreq_driver->exit)
-+		cpufreq_driver->exit(policy);
+ 	p4d = p4d_offset(pgd, address);
+ 	if (p4d_none(*p4d))
+ 		return NULL;
+@@ -679,6 +685,9 @@ pte_t *lookup_address_in_pgd(pgd_t *pgd, unsigned long address,
+ 	if (p4d_leaf(*p4d) || !p4d_present(*p4d))
+ 		return (pte_t *)p4d;
+ 
++	*nx |= p4d_flags(*p4d) & _PAGE_NX;
++	*rw &= p4d_flags(*p4d) & _PAGE_RW;
 +
-+	policy->freq_table = NULL;
+ 	pud = pud_offset(p4d, address);
+ 	if (pud_none(*pud))
+ 		return NULL;
+@@ -687,6 +696,9 @@ pte_t *lookup_address_in_pgd(pgd_t *pgd, unsigned long address,
+ 	if (pud_leaf(*pud) || !pud_present(*pud))
+ 		return (pte_t *)pud;
+ 
++	*nx |= pud_flags(*pud) & _PAGE_NX;
++	*rw &= pud_flags(*pud) & _PAGE_RW;
++
+ 	pmd = pmd_offset(pud, address);
+ 	if (pmd_none(*pmd))
+ 		return NULL;
+@@ -695,11 +707,26 @@ pte_t *lookup_address_in_pgd(pgd_t *pgd, unsigned long address,
+ 	if (pmd_leaf(*pmd) || !pmd_present(*pmd))
+ 		return (pte_t *)pmd;
+ 
++	*nx |= pmd_flags(*pmd) & _PAGE_NX;
++	*rw &= pmd_flags(*pmd) & _PAGE_RW;
++
+ 	*level = PG_LEVEL_4K;
+ 
+ 	return pte_offset_kernel(pmd, address);
  }
  
- static int cpufreq_offline(unsigned int cpu)
-@@ -1740,7 +1743,7 @@ static void cpufreq_remove_dev(struct device *dev, struct subsys_interface *sif)
- 	}
- 
- 	/* We did light-weight exit earlier, do full tear down now */
--	if (cpufreq_driver->offline)
-+	if (cpufreq_driver->offline && cpufreq_driver->exit)
- 		cpufreq_driver->exit(policy);
- 
- 	up_write(&policy->rwsem);
++/*
++ * Lookup the page table entry for a virtual address in a specific pgd.
++ * Return a pointer to the entry and the level of the mapping.
++ */
++pte_t *lookup_address_in_pgd(pgd_t *pgd, unsigned long address,
++			     unsigned int *level)
++{
++	bool nx, rw;
++
++	return lookup_address_in_pgd_attr(pgd, address, level, &nx, &rw);
++}
++
+ /*
+  * Lookup the page table entry for a virtual address. Return a pointer
+  * to the entry and the level of the mapping.
 -- 
 2.43.0
 
