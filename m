@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2530D17E90E;
-	Mon, 27 May 2024 19:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E715A17E90E;
+	Mon, 27 May 2024 19:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836959; cv=none; b=fPv9N1LVIM+H7n2lT6YNWd+WbRfBk+dTRO8vkDWa3tl8Mt0XcxXbP+niPLEezpetxNzj29+n8NSSY1FLX90md0E1z5KVvz6XVrNk30cT8h+vvXCdp+G234CtDmtbJLiosW+QtIiadBZ4fnk9cy/+9X5LzKtZGE+5795x0W7TIl8=
+	t=1716836962; cv=none; b=sWY3UQPspXV062S0TUKdfxjdLD0yixKzc8j2t4b+GTzJ4O4DoLe+/V4vIG+sN5aNUFX55VHhDg8MKjlDtD008NmIn4HdXc2NW1fMuP9UIDXaAkhngsyW7H4zqhPYrofNrm52OK5A6anw+NGVi6s/knFmwP9dm5qWrGAakhS3LQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836959; c=relaxed/simple;
-	bh=HzPOZHy52jFV0+l1WICobp6NlkPgQFaAUKnZra7fBKU=;
+	s=arc-20240116; t=1716836962; c=relaxed/simple;
+	bh=3Ibr/Vik+Y1VwXyeGfE+4Vgzjt/8o4GpyOvTrAgf5ug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q86twFEVpZgSLEpR5GK8da1qt6yUyD4ODJTEq8oLipiaW5pkd1C5lDctc7XnfQm/dWxfDyD8uN2F/GRmWNldBrm9EXS3V0kXSLJjNEsaKWQF887YXpdPzaU6r/djD1g0xDzk+35bpsCfW0CRbsS/lYyPixfFuVNaE4T+WSwLEmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPlklsNj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JdTk4eNfgc2QjAxIoyji6TtTmwIrv6kqf+D51Y/VTiOMIPmFDjxwwUfmhIRgq+7FzYQqqX777atjb9f+riKxEARtJ7LLAqZslDyT5W9zNrXQlOqgHnXd/Ng6B56af61FrTEF8Gp2Dwju3HzQs2Z3drQ2GIZ/7sW/sEKy11L+P6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6HEcyAo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPlklsNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2B5C2BBFC;
-	Mon, 27 May 2024 19:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6HEcyAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C1AC2BBFC;
+	Mon, 27 May 2024 19:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836959;
-	bh=HzPOZHy52jFV0+l1WICobp6NlkPgQFaAUKnZra7fBKU=;
+	s=korg; t=1716836961;
+	bh=3Ibr/Vik+Y1VwXyeGfE+4Vgzjt/8o4GpyOvTrAgf5ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPlklsNj9FisvPzGA5F/kMNcU6HwV2yx8JyRb//8UeHvq1mJ7j+Yjp1nUAeWMcHqQ
-	 FnxEZkIphKgXjRLM1RSkI/p8bifqXri3Fj3f2wLlg3fr7Nt/2GQVv/Vy+7XjTvOuYn
-	 O+57alhWvYh8r3SMzU0k/qj95vbd7z8j4HZqF+Pc=
+	b=R6HEcyAorQkvPqhlh8bgCIo/LgCpzMIzts+qkRlKS50ZUtdcUNR6m8wZ/VxElWqDV
+	 jqb22FGi7amKYBVdVZXhNaJHb9TibZUKlu521FaToqMFWmXuRjhHc24QLeno4ZpMue
+	 74VC53uG6XRRHFifjO5BgfdNJBv5TyiFXaWIAOaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Akiva Goldberger <agoldberger@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 228/427] m68k: Fix spinlock race in kernel thread creation
-Date: Mon, 27 May 2024 20:54:35 +0200
-Message-ID: <20240527185623.776658845@linuxfoundation.org>
+Subject: [PATCH 6.9 255/427] net/mlx5: Discard command completions in internal error
+Date: Mon, 27 May 2024 20:55:02 +0200
+Message-ID: <20240527185626.327888899@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,75 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Akiva Goldberger <agoldberger@nvidia.com>
 
-[ Upstream commit da89ce46f02470ef08f0f580755d14d547da59ed ]
+[ Upstream commit db9b31aa9bc56ff0d15b78f7e827d61c4a096e40 ]
 
-Context switching does take care to retain the correct lock owner across
-the switch from 'prev' to 'next' tasks.  This does rely on interrupts
-remaining disabled for the entire duration of the switch.
+Fix use after free when FW completion arrives while device is in
+internal error state. Avoid calling completion handler in this case,
+since the device will flush the command interface and trigger all
+completions manually.
 
-This condition is guaranteed for normal process creation and context
-switching between already running processes, because both 'prev' and
-'next' already have interrupts disabled in their saved copies of the
-status register.
+Kernel log:
+------------[ cut here ]------------
+refcount_t: underflow; use-after-free.
+...
+RIP: 0010:refcount_warn_saturate+0xd8/0xe0
+...
+Call Trace:
+<IRQ>
+? __warn+0x79/0x120
+? refcount_warn_saturate+0xd8/0xe0
+? report_bug+0x17c/0x190
+? handle_bug+0x3c/0x60
+? exc_invalid_op+0x14/0x70
+? asm_exc_invalid_op+0x16/0x20
+? refcount_warn_saturate+0xd8/0xe0
+cmd_ent_put+0x13b/0x160 [mlx5_core]
+mlx5_cmd_comp_handler+0x5f9/0x670 [mlx5_core]
+cmd_comp_notifier+0x1f/0x30 [mlx5_core]
+notifier_call_chain+0x35/0xb0
+atomic_notifier_call_chain+0x16/0x20
+mlx5_eq_async_int+0xf6/0x290 [mlx5_core]
+notifier_call_chain+0x35/0xb0
+atomic_notifier_call_chain+0x16/0x20
+irq_int_handler+0x19/0x30 [mlx5_core]
+__handle_irq_event_percpu+0x4b/0x160
+handle_irq_event+0x2e/0x80
+handle_edge_irq+0x98/0x230
+__common_interrupt+0x3b/0xa0
+common_interrupt+0x7b/0xa0
+</IRQ>
+<TASK>
+asm_common_interrupt+0x22/0x40
 
-The situation is different for newly created kernel threads.  The status
-register is set to PS_S in copy_thread(), which does leave the IPL at 0.
-Upon restoring the 'next' thread's status register in switch_to() aka
-resume(), interrupts then become enabled prematurely.  resume() then
-returns via ret_from_kernel_thread() and schedule_tail() where run queue
-lock is released (see finish_task_switch() and finish_lock_switch()).
-
-A timer interrupt calling scheduler_tick() before the lock is released
-in finish_task_switch() will find the lock already taken, with the
-current task as lock owner.  This causes a spinlock recursion warning as
-reported by Guenter Roeck.
-
-As far as I can ascertain, this race has been opened in commit
-533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
-but I haven't done a detailed study of kernel history so it may well
-predate that commit.
-
-Interrupts cannot be disabled in the saved status register copy for
-kernel threads (init will complain about interrupts disabled when
-finally starting user space).  Disable interrupts temporarily when
-switching the tasks' register sets in resume().
-
-Note that a simple oriw 0x700,%sr after restoring sr is not enough here
-- this leaves enough of a race for the 'spinlock recursion' warning to
-still be observed.
-
-Tested on ARAnyM and qemu (Quadra 800 emulation).
-
-Fixes: 533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/all/07811b26-677c-4d05-aeb4-996cd880b789@roeck-us.net
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20240411033631.16335-1-schmitzmic@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: 51d138c2610a ("net/mlx5: Fix health error state handling")
+Signed-off-by: Akiva Goldberger <agoldberger@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20240509112951.590184-6-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/kernel/entry.S | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/m68k/kernel/entry.S b/arch/m68k/kernel/entry.S
-index 3bcdd32a6b366..338b474910f74 100644
---- a/arch/m68k/kernel/entry.S
-+++ b/arch/m68k/kernel/entry.S
-@@ -430,7 +430,9 @@ resume:
- 	movec	%a0,%dfc
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index 511e7fee39ac5..20768ef2e9d2b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -1634,6 +1634,9 @@ static int cmd_comp_notifier(struct notifier_block *nb,
+ 	dev = container_of(cmd, struct mlx5_core_dev, cmd);
+ 	eqe = data;
  
- 	/* restore status register */
--	movew	%a1@(TASK_THREAD+THREAD_SR),%sr
-+	movew	%a1@(TASK_THREAD+THREAD_SR),%d0
-+	oriw	#0x0700,%d0
-+	movew	%d0,%sr
++	if (dev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR)
++		return NOTIFY_DONE;
++
+ 	mlx5_cmd_comp_handler(dev, be32_to_cpu(eqe->data.cmd.vector), false);
  
- 	rts
- 
+ 	return NOTIFY_OK;
 -- 
 2.43.0
 
