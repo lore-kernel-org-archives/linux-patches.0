@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD0917E90E;
-	Mon, 27 May 2024 19:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A71C17E90E;
+	Mon, 27 May 2024 19:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837184; cv=none; b=ibUh2h1MVLZiY9Ih/z53oQ8415NWlsk2USeEeIHi+j5Pwfm3K1LYY1h6EQGzbDAoM9N3r174CqPT+v+NhPVPbAvTbp3iU9YH1v+6DTp7L0FJReielYHuFgk4YR/2cMcK5OW+1VgLXgr2FHvfREO/OsySlanIIOyGQVNUvg7+s3k=
+	t=1716837187; cv=none; b=IQMIU2LWgcO480wudfjfmoq/CqxZ4/c1H7DaxhA4oEDyNEVL7LvR4JEGZkvdg06qkEZowhU73WLkVm1yaqcHWfT9PQB7giwzhHYPOCYKbH+UprMQD2Mnu6jjMGET1zj/sRimMlTiBbp55EKoQHDV9cNlQbzonqZxw+E3AE9pcwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837184; c=relaxed/simple;
-	bh=jCU3RZk/7Ah390ZR0ZsYOBrOebV4RAY5Eri9O9lLPd8=;
+	s=arc-20240116; t=1716837187; c=relaxed/simple;
+	bh=QzgTE8oiDVdUyPeE656PkenTupnZI1ZKbCDYhFeyrzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DmHtwRcXVvTAAhlx/ECAnJDAXuOPd7ffe5puI/PWu3URA4U7QR0qrllnbeU9MPt5ybz7/w9HvR3H6mhL86KB4Hsk5WN5LZ/wvrMxk3c7TQoLu9gnjbhKGAFGHoYnZj1CI7aS6tpDM1DPt0MB4hK87bRfMIgXqBWCV2kYwBFQ0JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khzxtRw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ujtIh2Uo5SoQimQ3jPSRRIuTC0f10htzJGMZ5pvmv/hvExZP8YlWw8HVgvqboqBheECXwcTxAK3i51pPXImPFR7BhPpPno77rQYfSESgGzlqRwsm5F+vDujxgPMBcNllGBcWTr+aPtudRQT6qg31L9pCRAvEkOY+kQ+vtFxFoYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFouv/hl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khzxtRw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8419DC2BBFC;
-	Mon, 27 May 2024 19:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFouv/hl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63B7C2BBFC;
+	Mon, 27 May 2024 19:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837183;
-	bh=jCU3RZk/7Ah390ZR0ZsYOBrOebV4RAY5Eri9O9lLPd8=;
+	s=korg; t=1716837187;
+	bh=QzgTE8oiDVdUyPeE656PkenTupnZI1ZKbCDYhFeyrzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=khzxtRw+jIoAGdzd+J2StvAgV1QVG2ezb8eKcCod1/gLWEN03msLw+tSHe1H3uthP
-	 5bNK2Cj+9DH39lSSsHDM7WOVjooq8QS9uVPr66hWR+FByuNV/mcwzagkhEBu6dzLV3
-	 WmOI7cx+lt0z+t0rvCPWlpwHSnMw8gFihmAHLM04=
+	b=YFouv/hl+mFoSodY1HpjluS6e9ox2NbCf3Gwxyq4LH64Q7QKUHJJO75o59c1aMnk3
+	 IVAfOENsvLSo3/nt1EPDbYGS3VLyDPgN5lpx+bRaoUIbNlDlc14hyBXfNY75SEDSfx
+	 8sWQjfFH6vDf3lg/rY/XN0X5TwSsZ5rn/I/4FdCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devinder Khroad <dkhroad@logitech.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 342/427] media: uvcvideo: Add quirk for Logitech Rally Bar
-Date: Mon, 27 May 2024 20:56:29 +0200
-Message-ID: <20240527185632.968049852@linuxfoundation.org>
+Subject: [PATCH 6.9 343/427] drm/rockchip: vop2: Do not divide height twice for YUV
+Date: Mon, 27 May 2024 20:56:30 +0200
+Message-ID: <20240527185633.036014922@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,104 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Detlev Casanova <detlev.casanova@collabora.com>
 
-[ Upstream commit 07731053d11f7647d5d8bc23caac997a4d562dfe ]
+[ Upstream commit e80c219f52861e756181d7f88b0d341116daac2b ]
 
-Logitech Rally Bar devices, despite behaving as UVC cameras, have a
-different power management system that the other cameras from Logitech.
+For the cbcr format, gt2 and gt4 are computed again after src_h has been
+divided by vsub.
 
-USB_QUIRK_RESET_RESUME is applied to all the UVC cameras from Logitech
-at the usb core. Unfortunately, USB_QUIRK_RESET_RESUME causes undesired
-USB disconnects in the Rally Bar that make them completely unusable.
+As src_h as already been divided by 2 before, introduce cbcr_src_h and
+cbcr_src_w to keep a copy of those values to be used for cbcr gt2 and
+gt4 computation.
 
-There is an open discussion about if we should fix this in the core or
-add a quirk in the UVC driver. In order to enable this hardware, let's
-land this patch first, and we can revert it later if there is a
-different conclusion.
+This fixes yuv planes being unaligned vertically when down scaling to
+1080 pixels from 2160.
 
-Fixes: e387ef5c47dd ("usb: Add USB_QUIRK_RESET_RESUME for all Logitech UVC webcams")
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Devinder Khroad <dkhroad@logitech.com>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://lore.kernel.org/r/20240404-rallybar-v6-1-6d67bb6b69af@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Acked-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240414182706.655270-1-detlev.casanova@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 31 ++++++++++++++++++++++++++++++
- drivers/media/usb/uvc/uvcvideo.h   |  1 +
- 2 files changed, 32 insertions(+)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 22 +++++++++++---------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index bbd90123a4e76..91a41aa3ced24 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -14,6 +14,7 @@
- #include <linux/module.h>
- #include <linux/slab.h>
- #include <linux/usb.h>
-+#include <linux/usb/quirks.h>
- #include <linux/usb/uvc.h>
- #include <linux/videodev2.h>
- #include <linux/vmalloc.h>
-@@ -2232,6 +2233,9 @@ static int uvc_probe(struct usb_interface *intf,
- 		goto error;
- 	}
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index fdd768bbd487c..62ebbdb16253d 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -706,6 +706,8 @@ static void vop2_setup_scale(struct vop2 *vop2, const struct vop2_win *win,
+ 	const struct drm_format_info *info;
+ 	u16 hor_scl_mode, ver_scl_mode;
+ 	u16 hscl_filter_mode, vscl_filter_mode;
++	uint16_t cbcr_src_w = src_w;
++	uint16_t cbcr_src_h = src_h;
+ 	u8 gt2 = 0;
+ 	u8 gt4 = 0;
+ 	u32 val;
+@@ -763,27 +765,27 @@ static void vop2_setup_scale(struct vop2 *vop2, const struct vop2_win *win,
+ 	vop2_win_write(win, VOP2_WIN_YRGB_VSCL_FILTER_MODE, vscl_filter_mode);
  
-+	if (dev->quirks & UVC_QUIRK_NO_RESET_RESUME)
-+		udev->quirks &= ~USB_QUIRK_RESET_RESUME;
-+
- 	uvc_dbg(dev, PROBE, "UVC device initialized\n");
- 	usb_enable_autosuspend(udev);
- 	return 0;
-@@ -2574,6 +2578,33 @@ static const struct usb_device_id uvc_ids[] = {
- 	  .bInterfaceSubClass	= 1,
- 	  .bInterfaceProtocol	= 0,
- 	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_RESTORE_CTRLS_ON_INIT) },
-+	/* Logitech Rally Bar Huddle */
-+	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
-+				| USB_DEVICE_ID_MATCH_INT_INFO,
-+	  .idVendor		= 0x046d,
-+	  .idProduct		= 0x087c,
-+	  .bInterfaceClass	= USB_CLASS_VIDEO,
-+	  .bInterfaceSubClass	= 1,
-+	  .bInterfaceProtocol	= 0,
-+	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
-+	/* Logitech Rally Bar */
-+	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
-+				| USB_DEVICE_ID_MATCH_INT_INFO,
-+	  .idVendor		= 0x046d,
-+	  .idProduct		= 0x089b,
-+	  .bInterfaceClass	= USB_CLASS_VIDEO,
-+	  .bInterfaceSubClass	= 1,
-+	  .bInterfaceProtocol	= 0,
-+	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
-+	/* Logitech Rally Bar Mini */
-+	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
-+				| USB_DEVICE_ID_MATCH_INT_INFO,
-+	  .idVendor		= 0x046d,
-+	  .idProduct		= 0x08d3,
-+	  .bInterfaceClass	= USB_CLASS_VIDEO,
-+	  .bInterfaceSubClass	= 1,
-+	  .bInterfaceProtocol	= 0,
-+	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
- 	/* Chicony CNF7129 (Asus EEE 100HE) */
- 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
- 				| USB_DEVICE_ID_MATCH_INT_INFO,
-diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index 6fb0a78b1b009..88218693f6f0b 100644
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -73,6 +73,7 @@
- #define UVC_QUIRK_FORCE_Y8		0x00000800
- #define UVC_QUIRK_FORCE_BPP		0x00001000
- #define UVC_QUIRK_WAKE_AUTOSUSPEND	0x00002000
-+#define UVC_QUIRK_NO_RESET_RESUME	0x00004000
+ 	if (info->is_yuv) {
+-		src_w /= info->hsub;
+-		src_h /= info->vsub;
++		cbcr_src_w /= info->hsub;
++		cbcr_src_h /= info->vsub;
  
- /* Format flags */
- #define UVC_FMT_FLAG_COMPRESSED		0x00000001
+ 		gt4 = 0;
+ 		gt2 = 0;
+ 
+-		if (src_h >= (4 * dst_h)) {
++		if (cbcr_src_h >= (4 * dst_h)) {
+ 			gt4 = 1;
+-			src_h >>= 2;
+-		} else if (src_h >= (2 * dst_h)) {
++			cbcr_src_h >>= 2;
++		} else if (cbcr_src_h >= (2 * dst_h)) {
+ 			gt2 = 1;
+-			src_h >>= 1;
++			cbcr_src_h >>= 1;
+ 		}
+ 
+-		hor_scl_mode = scl_get_scl_mode(src_w, dst_w);
+-		ver_scl_mode = scl_get_scl_mode(src_h, dst_h);
++		hor_scl_mode = scl_get_scl_mode(cbcr_src_w, dst_w);
++		ver_scl_mode = scl_get_scl_mode(cbcr_src_h, dst_h);
+ 
+-		val = vop2_scale_factor(src_w, dst_w);
++		val = vop2_scale_factor(cbcr_src_w, dst_w);
+ 		vop2_win_write(win, VOP2_WIN_SCALE_CBCR_X, val);
+ 
+-		val = vop2_scale_factor(src_h, dst_h);
++		val = vop2_scale_factor(cbcr_src_h, dst_h);
+ 		vop2_win_write(win, VOP2_WIN_SCALE_CBCR_Y, val);
+ 
+ 		vop2_win_write(win, VOP2_WIN_VSD_CBCR_GT4, gt4);
 -- 
 2.43.0
 
