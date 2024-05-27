@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5303515FA85;
-	Mon, 27 May 2024 19:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBA415FD01;
+	Mon, 27 May 2024 19:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836572; cv=none; b=BpI9WtbZEHR/ETSwky1NDBP2Q3retlPwl2XryQspOOcZW0lrm0apVNhD/DbMTQpHr1UyNfgCMmdM8zEakdqSN8JDHFZK6anWINhH9gH0Ckop2eHAc3LrfQunJGV6wLkixzNNq9LIi1SH+AFTqhFOa1b2+/QLmKLJ+eZBp3OHwgs=
+	t=1716836574; cv=none; b=SYOFAVaUtA/F4yHqFtZW9VorANCG4TvX8yqmnENUN+yAIXfQWHv8BGckzmODGJK22OsFNdUCuiPRvohbS0iIyAdV5EMl1IXf0muIz/IKuG4NekGUcxLw6Q4za+s0EhoiWQiohmHCVpWRR142yQlxK7xUY0374ZtCEdp6NZtNzrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836572; c=relaxed/simple;
-	bh=rVn6hXjLlsrfD+p5xUgbLD011agN8DgJxi2YBjqhQaw=;
+	s=arc-20240116; t=1716836574; c=relaxed/simple;
+	bh=zhx5jqtIqM+cODDhkBexyHuGpLNJmMEPvQzSX12ubQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eef+vyRUe8crOghrtR/8Qr4TcRdnzieTNcyFPPsXdM64e87WFG8+hA7G3dflVTGm1mQ/EyeBbJ6ZvKyiNfmHavLZdQOW4juJot7f1ezha8vQHv4LILlp/DISJCJM2r7VhrJkigwnD7DG45MRfESEbQp9exBe9TrBE/O191ykQow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQwPFMGt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NQK2eiJCHyDWpm8i214ikfXS9uekQvYiVBALQSrdTz1jIVocQm7KEHnIQBxQp3xGs0WmOG3e+31NNUSuET7N7DZhrc2P/eLWjGFo7b7qfacf13jzRBXSoEExO3rz6pZZQIgn8bTmTSktWM7C4JGKm54Ile9gwWalH6NJlOYtOiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwrHzQft; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQwPFMGt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CF1C2BBFC;
-	Mon, 27 May 2024 19:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwrHzQft"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F609C2BBFC;
+	Mon, 27 May 2024 19:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836571;
-	bh=rVn6hXjLlsrfD+p5xUgbLD011agN8DgJxi2YBjqhQaw=;
+	s=korg; t=1716836574;
+	bh=zhx5jqtIqM+cODDhkBexyHuGpLNJmMEPvQzSX12ubQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQwPFMGt7onsRc7V1jO7Esv8FHhZhIAl9UlmT+x1soCbWRjjJ/xtdzcG55BOK97sh
-	 2LqJB83Pg43A+T5ZjlZsSSX2mqCRtGMGOH17fSjZmiPRKCiu1nOz8/VFWx5YsU/ekM
-	 8uEgMp9KH2nVNshiTiMJUI8u5TCqGUlwgD+jE8PI=
+	b=GwrHzQft/qVx6ffDq5J7zXSV5Q5JavjQBgVSUuvZsigCbmuXudNpK/soHQ12drqbF
+	 ll/h/bjQnPIZMf3Ip6FUVv2TKr5JLx+RCkhdMyyi6l/jPvvcPDoMtIxUPzHrX46zpL
+	 knd9p6X6pDy55Qxt4XJNd1bSRohOoki2qI8/yadg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Daniel Gabay <daniel.gabay@intel.com>,
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 107/427] wifi: iwlwifi: reconfigure TLC during HW restart
-Date: Mon, 27 May 2024 20:52:34 +0200
-Message-ID: <20240527185611.801433455@linuxfoundation.org>
+Subject: [PATCH 6.9 108/427] wifi: iwlwifi: mvm: fix check in iwl_mvm_sta_fw_id_mask
+Date: Mon, 27 May 2024 20:52:35 +0200
+Message-ID: <20240527185611.880007144@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,41 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 96833fb3c7abfd57bb3ee2de2534c5a3f52b0838 ]
+[ Upstream commit d69aef8084cc72df7b0f2583096d9b037c647ec8 ]
 
-Since the HW restart flow with multi-link is very similar to
-the initial association, we do need to reconfigure TLC there.
-Remove the check that prevented that.
+In the previous commit, I renamed the variable to differentiate
+mac80211/mvm link STA, but forgot to adjust the check. The one
+from mac80211 is already non-NULL anyway, but the mvm one can
+be NULL when the mac80211 isn't during link switch conditions.
+Fix the check.
 
-Fixes: d2d0468f60cd ("wifi: iwlwifi: mvm: configure TLC on link activation")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240320232419.a00adcfe381a.Ic798beccbb7b7d852dc976d539205353588853b0@changeid
+Fixes: 2783ab506eaa ("wifi: iwlwifi: mvm: select STA mask only for active links")
+Reviewed-by: Daniel Gabay <daniel.gabay@intel.com>
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240325180850.e95b442bafe9.I8c0119fce7b00cb4f65782930d2c167ed5dd0a6e@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-index 5a4973431c8b7..32ccc3b883b2c 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-@@ -295,13 +295,8 @@ __iwl_mvm_mld_assign_vif_chanctx(struct iwl_mvm *mvm,
- 	 * this needs the phy context assigned (and in FW?), and we cannot
- 	 * do it later because it needs to be initialized as soon as we're
- 	 * able to TX on the link, i.e. when active.
--	 *
--	 * Firmware restart isn't quite correct yet for MLO, but we don't
--	 * need to do it in that case anyway since it will happen from the
--	 * normal station state callback.
- 	 */
--	if (mvmvif->ap_sta &&
--	    !test_bit(IWL_MVM_STATUS_IN_HW_RESTART, &mvm->status)) {
-+	if (mvmvif->ap_sta) {
- 		struct ieee80211_link_sta *link_sta;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
+index dffdd00f8ab62..36dc291d98dd6 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
+@@ -36,7 +36,7 @@ u32 iwl_mvm_sta_fw_id_mask(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
+ 		mvm_link_sta =
+ 			rcu_dereference_check(mvmsta->link[link_id],
+ 					      lockdep_is_held(&mvm->mutex));
+-		if (!link_sta)
++		if (!mvm_link_sta)
+ 			continue;
  
- 		rcu_read_lock();
+ 		result |= BIT(mvm_link_sta->sta_id);
 -- 
 2.43.0
 
