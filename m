@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A1F168C4;
-	Mon, 27 May 2024 19:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF906168C4;
+	Mon, 27 May 2024 19:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837988; cv=none; b=VJm+qYheQBrzdxieaSe2V6n1zOmDC8Un19BWJSvkHNtJQzckspwr6w75vBCiZ+TRpcOhXpXKBWpSRoAE/4L/IzmIM012T4Z1dh56U26xojzRaipOhM3GPicq8lM/89QxWcQaX8AioevuayMiC/41eveYfRdYugoub7HuOnrLwPQ=
+	t=1716837991; cv=none; b=YgAQf8Gp6vFLVPvaDzLojavON100PuhnUwi9Tw8EVTm3CA3YpdgPACtAhIKhWU/Y17CJDgC5PyJF4dBHQ9m7tIhGbZDSEzyvpuZSdK6r9kxkRDq9NdelWdDUR0qGtNPcwPhwmEMKGXLtNhg2An96mWsiGz3/5hazQCg+oU2HfIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837988; c=relaxed/simple;
-	bh=UDW7LOJRumGpvNeOAXfys6Vt1EUGEj1SLtLaeO1ja8s=;
+	s=arc-20240116; t=1716837991; c=relaxed/simple;
+	bh=xLTUiq87pqAnmkOmPlHQAK5ECdcr3TjipwfCTCjsixk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R6BDn9EXEwsXfzpcxRDeushrOCk1x9qX0I9eHLDkBQJaT2tysrieeromezjnOY0viIeNGce2q0V48A3MWaPPSHCyY5uUz2ohXeges74SyFvPaLka1GyJM+US57wlT/49e//U+zStu6rZFiyVEnSlxlRmCf1hk4LloxPWxCGoVGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PznJurGt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XoNBoEOE0Emiz42bKTvFhVfyX+dZD75XCItoqOZMUZU25ff5kZoQsalS2WqA8eLEcgT5D1DJagX0MfUw8cD4KMihy9qSlnT36XomqcueDshSnJtGFOhL/blw2stPF1ZVzWDZfkooDBMtQJtUtqzzu/y0SxOJR92Ax8/+v7O9GGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEM+vrL6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PznJurGt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0081C2BBFC;
-	Mon, 27 May 2024 19:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEM+vrL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CAEC2BBFC;
+	Mon, 27 May 2024 19:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837988;
-	bh=UDW7LOJRumGpvNeOAXfys6Vt1EUGEj1SLtLaeO1ja8s=;
+	s=korg; t=1716837990;
+	bh=xLTUiq87pqAnmkOmPlHQAK5ECdcr3TjipwfCTCjsixk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PznJurGtHZPGcmOZLZfP8byGiBWDkivPmc7VCl8iGvEMbki/CScBep7kTcoqXlveH
-	 gDzaBE/KBXc2dAStFpiWoUO88al+SCy4btPcIbWuDi7N9qw3TGYs9pJLQKQpmLEj+0
-	 uAw2qnqPHYXxpbhOEAiTTNyTs5xOO6kT4+AiWX3Y=
+	b=yEM+vrL6vCa0UbPAy1JFG6moHYLIwxrqekM3/xQIGDgLlEGqP51H798ZlSe4hwZgt
+	 srxVbXpt5eDIcfpt2IIki5IyP/dxtC1AVfC5CrkJdTFTW/b9TDzl9FONMEOH293Ude
+	 oV7mfobnpefi8eexYWU3S7Pvilp01rhYAWEDzI+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 170/493] wifi: iwlwifi: mvm: Do not warn on invalid link on scan complete
-Date: Mon, 27 May 2024 20:52:52 +0200
-Message-ID: <20240527185635.918972224@linuxfoundation.org>
+Subject: [PATCH 6.8 217/493] x86/pat: Restructure _lookup_address_cpa()
+Date: Mon, 27 May 2024 20:53:39 +0200
+Message-ID: <20240527185637.409334057@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,42 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 1c78d39f4ede227e50e36165b3a76bc7c37ead02 ]
+[ Upstream commit 02eac06b820c3eae73e5736ae62f986d37fed991 ]
 
-As it is possible that by the time the scan is completed the link was
-already removed.
+Modify _lookup_address_cpa() to no longer use lookup_address(), but
+only lookup_address_in_pgd().
 
-Fixes: 3a5a5cb06700 ("wifi: iwlwifi: mvm: Correctly report TSF data in scan complete")
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.619d3574a757.I0523e92547f0288c8b0119b1fdc5e967a5a8956e@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This is done in preparation of using lookup_address_in_pgd_attr().
+
+No functional change intended.
+
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20240412151258.9171-4-jgross@suse.com
+Stable-dep-of: 5bc8b0f5dac0 ("x86/pat: Fix W^X violation false-positives when running as Xen PV guest")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/mm/pat/set_memory.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 97d44354dbbb5..3dc6fb0600aae 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -3173,8 +3173,13 @@ void iwl_mvm_rx_umac_scan_complete_notif(struct iwl_mvm *mvm,
- 		struct iwl_mvm_vif_link_info *link_info =
- 			scan_vif->link[mvm->scan_link_id];
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index cd09ddd34eff8..9c1dccfd1f67f 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -744,11 +744,14 @@ EXPORT_SYMBOL_GPL(lookup_address);
+ static pte_t *_lookup_address_cpa(struct cpa_data *cpa, unsigned long address,
+ 				  unsigned int *level)
+ {
+-	if (cpa->pgd)
+-		return lookup_address_in_pgd(cpa->pgd + pgd_index(address),
+-					       address, level);
++	pgd_t *pgd;
++
++	if (!cpa->pgd)
++		pgd = pgd_offset_k(address);
++	else
++		pgd = cpa->pgd + pgd_index(address);
  
--		if (!WARN_ON(!link_info))
-+		/* It is possible that by the time the scan is complete the link
-+		 * was already removed and is not valid.
-+		 */
-+		if (link_info)
- 			memcpy(info.tsf_bssid, link_info->bssid, ETH_ALEN);
-+		else
-+			IWL_DEBUG_SCAN(mvm, "Scan link is no longer valid\n");
+-	return lookup_address(address, level);
++	return lookup_address_in_pgd(pgd, address, level);
+ }
  
- 		ieee80211_scan_completed(mvm->hw, &info);
- 		mvm->scan_vif = NULL;
+ /*
 -- 
 2.43.0
 
