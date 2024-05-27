@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833A517E90E;
-	Mon, 27 May 2024 19:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0491078F;
+	Mon, 27 May 2024 19:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837178; cv=none; b=IktdT9KVAMgU6YwhReRcZ18a3K6U6p2EHK7Gu4gqq1pHp7wzfpj0s9g/gWiHLzbyzjSFiGCNWa3gYx8qnucbtsl6IuAtCaNZLUBMDOfm8sKd8snusnAjslws5UnWrSu7oW0ynoveSmXg2PlYryXsA0emTRqK/I/AT0OdYgLMOVY=
+	t=1716837181; cv=none; b=S8X1sBvJad8Uiy+MK5MyTej04bYhBVOU/r7KjG5Wr7MhTavvWt7D6zlCocLE02wy7CO+KHVrwvXPaa7Ot5fTuEfbF8XSY4/uiqb+gZzP9GrqiiTqyrza1DQ7BElPYeLrFHpEeselJ9gK00iLPn54CM5Sx2E8VmRmMpIMO99Q93A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837178; c=relaxed/simple;
-	bh=e3P8AB1YkgACAE76aH1ALsiEdKHnQaU3hjui0bQp9pI=;
+	s=arc-20240116; t=1716837181; c=relaxed/simple;
+	bh=YYOzdrVhi8iLeuptqBgydBWZxMSwDdNcVsJvagUAvMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BigmvMNTJNhzatAXzISqV6WStux3vYGxBuge+xg35E9X/BGbviNzNLAwMRIEEvXR/kguNCnYOQ/XiWvDdc94kopTkVit31d24GVm9Z5+yBBmTnfWdBgY4KweKvp5ny/jtXkdXCzR4d3y/XwZOmb8HTzzErWs4D2P9RG9YSBS/2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tl9b0Fxr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dLWBrUikOeUe67ZkckAlyebSWbccUs0lIgdqoz+Sg+vBNMTscfpnBqQMwcxs5LL7CbooliDomTHU2DbCXw4ZtzH/sjl1QUAjgatk+9yysAZ3QP9st8oBs2Ccx5GMKc+oRypa/9mIdlw8e7ItuRyPxXNCxDBL7xkUEp6S6Sh6gcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVSs1ASP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tl9b0Fxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1874DC2BBFC;
-	Mon, 27 May 2024 19:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVSs1ASP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996B4C2BBFC;
+	Mon, 27 May 2024 19:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837178;
-	bh=e3P8AB1YkgACAE76aH1ALsiEdKHnQaU3hjui0bQp9pI=;
+	s=korg; t=1716837180;
+	bh=YYOzdrVhi8iLeuptqBgydBWZxMSwDdNcVsJvagUAvMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tl9b0Fxrv6E1aPMOPorNFSSzFZmLaFCokJXqGmnUF2TnhEgDbzG51Q8fSGlPzt6IG
-	 ce0u/kDCGe14nrEKHxjeeL8tAmK8qqtbswbVKFH8UHIkQZt6QMg84IQHA7W3Qs63Qs
-	 pMSsILXaX13U2pX1WhLlvdLfZpgo6+u12qthw7/E=
+	b=ZVSs1ASPpi9RM1Ec7Ywz676F5CUK4vUsJFs74i1lBS3hJzKFkDic9sHv1L2J3nJoj
+	 SGB5ThyDVI8Wt3Oh/p5LAIPOgX6yWzZVUbfQP7WyrfBtsV0fI5SyjsogRLAZqscdVK
+	 MV0sAK7Lk0r4KxWncQ5F2jNEBF7BDvypFa0sFECo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 340/427] ALSA: hda: cs35l41: Remove Speaker ID for Lenovo Legion slim 7 16ARHA7
-Date: Mon, 27 May 2024 20:56:27 +0200
-Message-ID: <20240527185632.827289055@linuxfoundation.org>
+Subject: [PATCH 6.9 341/427] drm/mipi-dsi: use correct return type for the DSC functions
+Date: Mon, 27 May 2024 20:56:28 +0200
+Message-ID: <20240527185632.898036233@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,41 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 4a1a8065f5d3565677347d34a908ff2d0803b14f ]
+[ Upstream commit de1c705c50326acaceaf1f02bc5bf6f267c572bd ]
 
-These laptops do not have _DSD and must be added by configuration
-table, however, the initial entries for them are incorrect:
-Neither laptop contains a Speaker ID GPIO.
-This issue would not affect audio playback, but may affect which files
-are loaded when loading firmware.
+The functions mipi_dsi_compression_mode() and
+mipi_dsi_picture_parameter_set() return 0-or-error rather than a buffer
+size. Follow example of other similar MIPI DSI functions and use int
+return type instead of size_t.
 
-Fixes: b67a7dc418aa ("ALSA: hda/realtek: Add sound quirks for Lenovo Legion slim 7 16ARHA7 models")
-
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20240411110813.330483-8-sbinding@opensource.cirrus.com>
+Fixes: f4dea1aaa9a1 ("drm/dsi: add helpers for DSI compression mode and PPS packets")
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240408-lg-sw43408-panel-v5-2-4e092da22991@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l41_hda_property.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_mipi_dsi.c | 6 +++---
+ include/drm/drm_mipi_dsi.h     | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/sound/pci/hda/cs35l41_hda_property.c b/sound/pci/hda/cs35l41_hda_property.c
-index 8fb688e414148..4f5e581cdd5ff 100644
---- a/sound/pci/hda/cs35l41_hda_property.c
-+++ b/sound/pci/hda/cs35l41_hda_property.c
-@@ -110,8 +110,8 @@ static const struct cs35l41_config cs35l41_config_table[] = {
- 	{ "10431F62", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 0, 0, 0 },
- 	{ "10433A60", 2, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 1, 2, 0, 1000, 4500, 24 },
- 	{ "17AA386F", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
--	{ "17AA3877", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
--	{ "17AA3878", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
-+	{ "17AA3877", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
-+	{ "17AA3878", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, -1, -1, 0, 0, 0 },
- 	{ "17AA38A9", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 2, -1, 0, 0, 0 },
- 	{ "17AA38AB", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 2, -1, 0, 0, 0 },
- 	{ "17AA38B4", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
+diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+index ef6e416522f8a..9874ff6d47181 100644
+--- a/drivers/gpu/drm/drm_mipi_dsi.c
++++ b/drivers/gpu/drm/drm_mipi_dsi.c
+@@ -654,7 +654,7 @@ EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
+  *
+  * Return: 0 on success or a negative error code on failure.
+  */
+-ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
++int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+ {
+ 	/* Note: Needs updating for non-default PPS or algorithm */
+ 	u8 tx[2] = { enable << 0, 0 };
+@@ -679,8 +679,8 @@ EXPORT_SYMBOL(mipi_dsi_compression_mode);
+  *
+  * Return: 0 on success or a negative error code on failure.
+  */
+-ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+-				       const struct drm_dsc_picture_parameter_set *pps)
++int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
++				   const struct drm_dsc_picture_parameter_set *pps)
+ {
+ 	struct mipi_dsi_msg msg = {
+ 		.channel = dsi->channel,
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index c0aec0d4d664e..3011d33eccbd2 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -241,9 +241,9 @@ int mipi_dsi_shutdown_peripheral(struct mipi_dsi_device *dsi);
+ int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
+ int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+ 					    u16 value);
+-ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
+-ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+-				       const struct drm_dsc_picture_parameter_set *pps);
++int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
++int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
++				   const struct drm_dsc_picture_parameter_set *pps);
+ 
+ ssize_t mipi_dsi_generic_write(struct mipi_dsi_device *dsi, const void *payload,
+ 			       size_t size);
 -- 
 2.43.0
 
