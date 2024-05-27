@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD5A17727;
-	Mon, 27 May 2024 19:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B3B17727;
+	Mon, 27 May 2024 19:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838447; cv=none; b=DGur9fryErTnmx40txL2spXSI8fPVIW70xFQi02w898H18JFVfCrnAfnVi1i3o7W4+nnGXMbXgpCLXn2OIrgifheZiOVM+Zvxl9tVmqEHf0gf9SN7V6K/t2/TtG0FUPk/dZKZ4fkowJiMrab6YK4OJRkasn9BI/I+zk6Ob7B9TQ=
+	t=1716838450; cv=none; b=qtrt2ZwvGNrvutiogoos8ef1sn5IV9+yJnuv6wOn9aek9NrS0of2Rqk6v+PkI75xQ01x40j33mPO9m97KgWKrgNHJ4nHK9qT+172uFoHnbMmjsSNyxkvT2SYtvbh+uS35tkx/lhTF2fn2J39QPoR65iF+U9c3jxAvZqUGRD+p94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838447; c=relaxed/simple;
-	bh=8R+7lPcn37DcE+PUZ1Q2Dibp3ZSQZp9ieIh8AxKXW7Q=;
+	s=arc-20240116; t=1716838450; c=relaxed/simple;
+	bh=0mSniK1cFbSDgxLbXJ5YNg//wctExtpiNrTRvR4/rmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JVlmo8Rbquuj9b5bY+Y/TtB+RF3EB9bvaVkQw0+kFEvvh0eA/ch6xxVVY/RcJ7TTwfOqNee92XC5QpZ9F3c6ZzO+40Xu3jbCd7TARdEwJ9MGTMEC3ba+Wnnd5zVOqWC5ZxchpLJRZlYdwf5T1U72XyqL15d6UuZVYClI6vxw72k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XrbXlXjd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L6IQtP/jjVr1m326zM3GzItzD/tBG5kMmKWVJLG2j2nSPLZQUQ1/OFQtA+yNPCM6BYDwctJ6Ryh9QbR+UYeNo34T62Z6pF5OO1SVMDmlFUUuvpCatzZJZpWLmifAxBlIKph1II3LQPdDbobXvl8oUGtDJzkQUMhkFiSgKmVf+JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjKRXdD9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrbXlXjd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2E5C2BBFC;
-	Mon, 27 May 2024 19:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjKRXdD9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31F4C2BBFC;
+	Mon, 27 May 2024 19:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838447;
-	bh=8R+7lPcn37DcE+PUZ1Q2Dibp3ZSQZp9ieIh8AxKXW7Q=;
+	s=korg; t=1716838450;
+	bh=0mSniK1cFbSDgxLbXJ5YNg//wctExtpiNrTRvR4/rmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrbXlXjd2alnVVnxEZA/H+ejQFtrKVgBEpps99Un7mJAwpH9UDqAC0smVE2hozddK
-	 ZbGfcUpiO0e6pVq4Ths644cnZDn7u4msnw0YjMZ5Q2Tvurnjr4hpZsOfIF+76D0A5P
-	 SYNr20/Es9XsKBboTrWpfdctuy+LixcgjmBno7f4=
+	b=yjKRXdD9Pim+wMpaUHJtOLs9yd0pa4l2WAT+34DZRKuwKBbvfephO1jWkgvz7LflY
+	 kxwsSdRP4ckqLtKTKLbJ85gPyCn4D9/2eT9X9vhHUiTjiqFpaGIGh74S+rYas0T1xD
+	 comzKvaU5JpnTC34J5kz87a5cPA6FhvbHsvwrNDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Marek Vasut <marex@denx.de>,
+	Steev Klimaszewski <steev@kali.org>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Eizan Miyamoto <eizan@chromium.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 357/493] drm/lcdif: Do not disable clocks on already suspended hardware
-Date: Mon, 27 May 2024 20:55:59 +0200
-Message-ID: <20240527185641.964561014@linuxfoundation.org>
+Subject: [PATCH 6.8 358/493] drm/dp: Dont attempt AUX transfers when eDP panels are not powered
+Date: Mon, 27 May 2024 20:56:00 +0200
+Message-ID: <20240527185641.996850503@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,59 +54,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 172695f145fb4798ab605e8a73f6e87711930124 ]
+[ Upstream commit 8df1ddb5bf11ab820ad991e164dab82c0960add9 ]
 
-In case the LCDIF is enabled in DT but unused, the clocks used by the
-LCDIF are not enabled. Those clocks may even have a use count of 0 in
-case there are no other users of those clocks. This can happen e.g. in
-case the LCDIF drives HDMI bridge which has no panel plugged into the
-HDMI connector.
+If an eDP panel is not powered on then any attempts to talk to it over
+the DP AUX channel will timeout. Unfortunately these attempts may be
+quite slow. Userspace can initiate these attempts either via a
+/dev/drm_dp_auxN device or via the created i2c device.
 
-Do not attempt to disable clocks in the suspend callback and re-enable
-clocks in the resume callback unless the LCDIF is enabled and was in
-use before the system entered suspend, otherwise the driver might end
-up trying to disable clocks which are already disabled with use count
-0, and would trigger a warning from clock core about this condition.
+Making the DP AUX drivers timeout faster is a difficult proposition.
+In theory we could just poll the panel's HPD line in the AUX transfer
+function and immediately return an error there. However, this is
+easier said than done. For one thing, there's no hard requirement to
+hook the HPD line up for eDP panels and it's OK to just delay a fixed
+amount. For another thing, the HPD line may not be fast to probe. On
+parade-ps8640 we need to wait for the bridge chip's firmware to boot
+before we can get the HPD line and this is a slow process.
 
-Note that the lcdif_rpm_suspend() and lcdif_rpm_resume() functions
-internally perform the clocks disable and enable operations and act
-as runtime PM hooks too.
+The fact that the transfers are taking so long to timeout is causing
+real problems. The open source fwupd daemon sometimes scans DP busses
+looking for devices whose firmware need updating. If it happens to
+scan while a panel is turned off this scan can take a long time. The
+fwupd daemon could try to be smarter and only scan when eDP panels are
+turned on, but we can also improve the behavior in the kernel.
 
-Reviewed-by: Liu Ying <victor.liu@nxp.com>
-Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240226082644.32603-1-marex@denx.de
+Let's let eDP panels drivers specify that a panel is turned off and
+then modify the common AUX transfer code not to attempt a transfer in
+this case.
+
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Reviewed-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Tested-by: Eizan Miyamoto <eizan@chromium.org>
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240202141109.1.I24277520ac754ea538c9b14578edc94e1df11b48@changeid
+Stable-dep-of: 5e842d55bad7 ("drm/panel: atna33xc20: Fix unbalanced regulator in the case HPD doesn't assert")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mxsfb/lcdif_drv.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/display/drm_dp_helper.c       | 35 +++++++++++++++++++
+ drivers/gpu/drm/panel/panel-edp.c             |  3 ++
+ .../gpu/drm/panel/panel-samsung-atna33xc20.c  |  2 ++
+ include/drm/display/drm_dp_helper.h           |  6 ++++
+ 4 files changed, 46 insertions(+)
 
-diff --git a/drivers/gpu/drm/mxsfb/lcdif_drv.c b/drivers/gpu/drm/mxsfb/lcdif_drv.c
-index 18de2f17e2491..6494e82707569 100644
---- a/drivers/gpu/drm/mxsfb/lcdif_drv.c
-+++ b/drivers/gpu/drm/mxsfb/lcdif_drv.c
-@@ -340,6 +340,9 @@ static int __maybe_unused lcdif_suspend(struct device *dev)
+diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
+index 26c188ce5f1c3..fb80843e7f2df 100644
+--- a/drivers/gpu/drm/display/drm_dp_helper.c
++++ b/drivers/gpu/drm/display/drm_dp_helper.c
+@@ -532,6 +532,15 @@ static int drm_dp_dpcd_access(struct drm_dp_aux *aux, u8 request,
+ 
+ 	mutex_lock(&aux->hw_mutex);
+ 
++	/*
++	 * If the device attached to the aux bus is powered down then there's
++	 * no reason to attempt a transfer. Error out immediately.
++	 */
++	if (aux->powered_down) {
++		ret = -EBUSY;
++		goto unlock;
++	}
++
+ 	/*
+ 	 * The specification doesn't give any recommendation on how often to
+ 	 * retry native transactions. We used to retry 7 times like for
+@@ -599,6 +608,29 @@ int drm_dp_dpcd_probe(struct drm_dp_aux *aux, unsigned int offset)
+ }
+ EXPORT_SYMBOL(drm_dp_dpcd_probe);
+ 
++/**
++ * drm_dp_dpcd_set_powered() - Set whether the DP device is powered
++ * @aux: DisplayPort AUX channel; for convenience it's OK to pass NULL here
++ *       and the function will be a no-op.
++ * @powered: true if powered; false if not
++ *
++ * If the endpoint device on the DP AUX bus is known to be powered down
++ * then this function can be called to make future transfers fail immediately
++ * instead of needing to time out.
++ *
++ * If this function is never called then a device defaults to being powered.
++ */
++void drm_dp_dpcd_set_powered(struct drm_dp_aux *aux, bool powered)
++{
++	if (!aux)
++		return;
++
++	mutex_lock(&aux->hw_mutex);
++	aux->powered_down = !powered;
++	mutex_unlock(&aux->hw_mutex);
++}
++EXPORT_SYMBOL(drm_dp_dpcd_set_powered);
++
+ /**
+  * drm_dp_dpcd_read() - read a series of bytes from the DPCD
+  * @aux: DisplayPort AUX channel (SST or MST)
+@@ -1858,6 +1890,9 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
+ 	struct drm_dp_aux_msg msg;
+ 	int err = 0;
+ 
++	if (aux->powered_down)
++		return -EBUSY;
++
+ 	dp_aux_i2c_transfer_size = clamp(dp_aux_i2c_transfer_size, 1, DP_AUX_MAX_PAYLOAD_BYTES);
+ 
+ 	memset(&msg, 0, sizeof(msg));
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index e5e3f0b9ca61d..49b8a2484d92b 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -397,6 +397,7 @@ static int panel_edp_suspend(struct device *dev)
+ {
+ 	struct panel_edp *p = dev_get_drvdata(dev);
+ 
++	drm_dp_dpcd_set_powered(p->aux, false);
+ 	gpiod_set_value_cansleep(p->enable_gpio, 0);
+ 	regulator_disable(p->supply);
+ 	p->unprepared_time = ktime_get_boottime();
+@@ -453,6 +454,7 @@ static int panel_edp_prepare_once(struct panel_edp *p)
+ 	}
+ 
+ 	gpiod_set_value_cansleep(p->enable_gpio, 1);
++	drm_dp_dpcd_set_powered(p->aux, true);
+ 
+ 	delay = p->desc->delay.hpd_reliable;
+ 	if (p->no_hpd)
+@@ -489,6 +491,7 @@ static int panel_edp_prepare_once(struct panel_edp *p)
+ 	return 0;
+ 
+ error:
++	drm_dp_dpcd_set_powered(p->aux, false);
+ 	gpiod_set_value_cansleep(p->enable_gpio, 0);
+ 	regulator_disable(p->supply);
+ 	p->unprepared_time = ktime_get_boottime();
+diff --git a/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c b/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
+index 5703f4712d96e..76c2a8f6718c8 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
++++ b/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
+@@ -72,6 +72,7 @@ static int atana33xc20_suspend(struct device *dev)
+ 	if (p->el3_was_on)
+ 		atana33xc20_wait(p->el_on3_off_time, 150);
+ 
++	drm_dp_dpcd_set_powered(p->aux, false);
+ 	ret = regulator_disable(p->supply);
  	if (ret)
  		return ret;
+@@ -93,6 +94,7 @@ static int atana33xc20_resume(struct device *dev)
+ 	ret = regulator_enable(p->supply);
+ 	if (ret)
+ 		return ret;
++	drm_dp_dpcd_set_powered(p->aux, true);
+ 	p->powered_on_time = ktime_get_boottime();
  
-+	if (pm_runtime_suspended(dev))
-+		return 0;
+ 	if (p->no_hpd) {
+diff --git a/include/drm/display/drm_dp_helper.h b/include/drm/display/drm_dp_helper.h
+index 863b2e7add29e..472359a9d6756 100644
+--- a/include/drm/display/drm_dp_helper.h
++++ b/include/drm/display/drm_dp_helper.h
+@@ -463,9 +463,15 @@ struct drm_dp_aux {
+ 	 * @is_remote: Is this AUX CH actually using sideband messaging.
+ 	 */
+ 	bool is_remote;
 +
- 	return lcdif_rpm_suspend(dev);
- }
++	/**
++	 * @powered_down: If true then the remote endpoint is powered down.
++	 */
++	bool powered_down;
+ };
  
-@@ -347,7 +350,8 @@ static int __maybe_unused lcdif_resume(struct device *dev)
- {
- 	struct drm_device *drm = dev_get_drvdata(dev);
- 
--	lcdif_rpm_resume(dev);
-+	if (!pm_runtime_suspended(dev))
-+		lcdif_rpm_resume(dev);
- 
- 	return drm_mode_config_helper_resume(drm);
- }
+ int drm_dp_dpcd_probe(struct drm_dp_aux *aux, unsigned int offset);
++void drm_dp_dpcd_set_powered(struct drm_dp_aux *aux, bool powered);
+ ssize_t drm_dp_dpcd_read(struct drm_dp_aux *aux, unsigned int offset,
+ 			 void *buffer, size_t size);
+ ssize_t drm_dp_dpcd_write(struct drm_dp_aux *aux, unsigned int offset,
 -- 
 2.43.0
 
