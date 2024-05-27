@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1496961FDF;
-	Mon, 27 May 2024 19:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC4F61FDF;
+	Mon, 27 May 2024 19:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838659; cv=none; b=Z15t6LP5O+1tfuc46L1cq2OAGYEX8XOKwKI7xSsBR+z5gTvkCbOCP57dkROumM/K1Fw89R38rvnXXCirlYHUAtvD7+Qa4eoymtwuRRLs6GDBle9cbaWqMFX5NpjDUnhwbHKgUl5Q6oQiONyCnt6AgsoPrT7GpD/3sTnMxUER9pw=
+	t=1716838661; cv=none; b=YKkIpjrquME7Ab26dL4NhTVnyzjG8mq2vu7X7J/GfhwF2bJTFlvRLXy1kZyPf1He+m+nCjNEBXZMgAa/1VqMBHSliPqnF74L2iP9c22Voyl1pntKbXLXRWSt2rwfzgiSd35LQ1KPSf+rLptDGSaAQ7yiGhJO1SVajpJLWMliUmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838659; c=relaxed/simple;
-	bh=vGmju90KMfAaOQpb/0JP98rKEovd4lDb6UEayAs9bs8=;
+	s=arc-20240116; t=1716838661; c=relaxed/simple;
+	bh=uAGgBqNKNA1diVKYHDixC6bYH/3o26XIhp+LKeHwvXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pafPgAZ2VxyEXgpCogsB05N4cNC6KBTuUTWb27ID6oiZLKHQNXHA9LprCZtIOSqn2QxDZApJr8lrKKZjNqKsVqUWKLAHCwj5k/vyX7CNzs0i4cAM/fSe0q0xovXUgt3tIn/c49L8ORbUmxA6q9fWdgvnGf17adF7a1eW/8ahA/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Utk7MCCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NI1Beqvj69Ft9Dp2Mlsz1XtgLnNV3LAHGC7xsj3iOxeN7nKEkSe9cPfNx5a6icALkhrBDwi5y1JvpDLEkYCcolu0g2+cJh6eUkdXnGzesI4MkbZRaNJ4pZRB2fXz0IMV+8X+401DBqJrMS51qaBah2r95ESKHY8Tn8bMrPYeT4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0a2trgAy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Utk7MCCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5554FC2BBFC;
-	Mon, 27 May 2024 19:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0a2trgAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29B1C2BBFC;
+	Mon, 27 May 2024 19:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838658;
-	bh=vGmju90KMfAaOQpb/0JP98rKEovd4lDb6UEayAs9bs8=;
+	s=korg; t=1716838661;
+	bh=uAGgBqNKNA1diVKYHDixC6bYH/3o26XIhp+LKeHwvXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Utk7MCCkgunMvj2wEzmeu9LgnCe/gmoR7w24iysXVJETaEgWXPhpCEfkwtlCubLD8
-	 jjAZnJGD65VinupngvMroLqzuQBjS4Db+DuTdF1L7qYUDDokg7tzkonVpXxZEJkim8
-	 NsG4ItYtlOJg6BIZYMqYejCNnhdoDWG9uIqBAIqU=
+	b=0a2trgAyuZOKQPe0XSv1qUrU9bUZ0OxkQvqxlzQC3Mxnc87K0LI9Nzov+PAm5Upki
+	 h+ZtuxuQz1A68xn3LKccvb4P2hS6ZXXKwNR7PwrWP1VCL7MIc6+vFCXtvWwF7if9jx
+	 JNgn7vExlx5PMNhzGYel+iGSc/Vw9uBm3gBWdCyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fa04eb8a56fd923fc5d8@syzkaller.appspotmail.com,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Simon Horman <horms@kernel.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Chris Lew <quic_clew@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 476/493] net: bridge: mst: fix vlan use-after-free
-Date: Mon, 27 May 2024 20:57:58 +0200
-Message-ID: <20240527185645.720878562@linuxfoundation.org>
+Subject: [PATCH 6.8 477/493] net: qrtr: ns: Fix module refcnt
+Date: Mon, 27 May 2024 20:57:59 +0200
+Message-ID: <20240527185645.751570714@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,121 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Chris Lew <quic_clew@quicinc.com>
 
-[ Upstream commit 3a7c1661ae1383364cd6092d851f5e5da64d476b ]
+[ Upstream commit fd76e5ccc48f9f54eb44909dd7c0b924005f1582 ]
 
-syzbot reported a suspicious rcu usage[1] in bridge's mst code. While
-fixing it I noticed that nothing prevents a vlan to be freed while
-walking the list from the same path (br forward delay timer). Fix the rcu
-usage and also make sure we are not accessing freed memory by making
-br_mst_vlan_set_state use rcu read lock.
+The qrtr protocol core logic and the qrtr nameservice are combined into
+a single module. Neither the core logic or nameservice provide much
+functionality by themselves; combining the two into a single module also
+prevents any possible issues that may stem from client modules loading
+inbetween qrtr and the ns.
 
-[1]
- WARNING: suspicious RCU usage
- 6.9.0-rc6-syzkaller #0 Not tainted
- -----------------------------
- net/bridge/br_private.h:1599 suspicious rcu_dereference_protected() usage!
- ...
- stack backtrace:
- CPU: 1 PID: 8017 Comm: syz-executor.1 Not tainted 6.9.0-rc6-syzkaller #0
- Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
- Call Trace:
-  <IRQ>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  lockdep_rcu_suspicious+0x221/0x340 kernel/locking/lockdep.c:6712
-  nbp_vlan_group net/bridge/br_private.h:1599 [inline]
-  br_mst_set_state+0x1ea/0x650 net/bridge/br_mst.c:105
-  br_set_state+0x28a/0x7b0 net/bridge/br_stp.c:47
-  br_forward_delay_timer_expired+0x176/0x440 net/bridge/br_stp_timer.c:88
-  call_timer_fn+0x18e/0x650 kernel/time/timer.c:1793
-  expire_timers kernel/time/timer.c:1844 [inline]
-  __run_timers kernel/time/timer.c:2418 [inline]
-  __run_timer_base+0x66a/0x8e0 kernel/time/timer.c:2429
-  run_timer_base kernel/time/timer.c:2438 [inline]
-  run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2448
-  __do_softirq+0x2c6/0x980 kernel/softirq.c:554
-  invoke_softirq kernel/softirq.c:428 [inline]
-  __irq_exit_rcu+0xf2/0x1c0 kernel/softirq.c:633
-  irq_exit_rcu+0x9/0x30 kernel/softirq.c:645
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1043 [inline]
-  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1043
-  </IRQ>
-  <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
- RIP: 0010:lock_acquire+0x264/0x550 kernel/locking/lockdep.c:5758
- Code: 2b 00 74 08 4c 89 f7 e8 ba d1 84 00 f6 44 24 61 02 0f 85 85 01 00 00 41 f7 c7 00 02 00 00 74 01 fb 48 c7 44 24 40 0e 36 e0 45 <4b> c7 44 25 00 00 00 00 00 43 c7 44 25 09 00 00 00 00 43 c7 44 25
- RSP: 0018:ffffc90013657100 EFLAGS: 00000206
- RAX: 0000000000000001 RBX: 1ffff920026cae2c RCX: 0000000000000001
- RDX: dffffc0000000000 RSI: ffffffff8bcaca00 RDI: ffffffff8c1eaa60
- RBP: ffffc90013657260 R08: ffffffff92efe507 R09: 1ffffffff25dfca0
- R10: dffffc0000000000 R11: fffffbfff25dfca1 R12: 1ffff920026cae28
- R13: dffffc0000000000 R14: ffffc90013657160 R15: 0000000000000246
+Creating a socket takes two references to the module that owns the
+socket protocol. Since the ns needs to create the control socket, this
+creates a scenario where there are always two references to the qrtr
+module. This prevents the execution of 'rmmod' for qrtr.
 
-Fixes: ec7328b59176 ("net: bridge: mst: Multiple Spanning Tree (MST) mode")
-Reported-by: syzbot+fa04eb8a56fd923fc5d8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fa04eb8a56fd923fc5d8
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
+To resolve this, forcefully put the module refcount for the socket
+opened by the nameservice.
+
+Fixes: a365023a76f2 ("net: qrtr: combine nameservice into main module")
+Reported-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mst.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/qrtr/ns.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/net/bridge/br_mst.c b/net/bridge/br_mst.c
-index ee680adcee179..3c66141d34d62 100644
---- a/net/bridge/br_mst.c
-+++ b/net/bridge/br_mst.c
-@@ -78,7 +78,7 @@ static void br_mst_vlan_set_state(struct net_bridge_port *p, struct net_bridge_v
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index abb0c70ffc8b0..654a3cc0d3479 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -725,6 +725,24 @@ int qrtr_ns_init(void)
+ 	if (ret < 0)
+ 		goto err_wq;
+ 
++	/* As the qrtr ns socket owner and creator is the same module, we have
++	 * to decrease the qrtr module reference count to guarantee that it
++	 * remains zero after the ns socket is created, otherwise, executing
++	 * "rmmod" command is unable to make the qrtr module deleted after the
++	 *  qrtr module is inserted successfully.
++	 *
++	 * However, the reference count is increased twice in
++	 * sock_create_kern(): one is to increase the reference count of owner
++	 * of qrtr socket's proto_ops struct; another is to increment the
++	 * reference count of owner of qrtr proto struct. Therefore, we must
++	 * decrement the module reference count twice to ensure that it keeps
++	 * zero after server's listening socket is created. Of course, we
++	 * must bump the module reference count twice as well before the socket
++	 * is closed.
++	 */
++	module_put(qrtr_ns.sock->ops->owner);
++	module_put(qrtr_ns.sock->sk->sk_prot_creator->owner);
++
+ 	return 0;
+ 
+ err_wq:
+@@ -739,6 +757,15 @@ void qrtr_ns_remove(void)
  {
- 	struct net_bridge_vlan_group *vg = nbp_vlan_group(p);
- 
--	if (v->state == state)
-+	if (br_vlan_get_state(v) == state)
- 		return;
- 
- 	br_vlan_set_state(v, state);
-@@ -100,11 +100,12 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
- 	};
- 	struct net_bridge_vlan_group *vg;
- 	struct net_bridge_vlan *v;
--	int err;
-+	int err = 0;
- 
-+	rcu_read_lock();
- 	vg = nbp_vlan_group(p);
- 	if (!vg)
--		return 0;
-+		goto out;
- 
- 	/* MSTI 0 (CST) state changes are notified via the regular
- 	 * SWITCHDEV_ATTR_ID_PORT_STP_STATE.
-@@ -112,17 +113,20 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
- 	if (msti) {
- 		err = switchdev_port_attr_set(p->dev, &attr, extack);
- 		if (err && err != -EOPNOTSUPP)
--			return err;
-+			goto out;
- 	}
- 
--	list_for_each_entry(v, &vg->vlan_list, vlist) {
-+	err = 0;
-+	list_for_each_entry_rcu(v, &vg->vlan_list, vlist) {
- 		if (v->brvlan->msti != msti)
- 			continue;
- 
- 		br_mst_vlan_set_state(p, v, state);
- 	}
- 
--	return 0;
-+out:
-+	rcu_read_unlock();
-+	return err;
+ 	cancel_work_sync(&qrtr_ns.work);
+ 	destroy_workqueue(qrtr_ns.workqueue);
++
++	/* sock_release() expects the two references that were put during
++	 * qrtr_ns_init(). This function is only called during module remove,
++	 * so try_stop_module() has already set the refcnt to 0. Use
++	 * __module_get() instead of try_module_get() to successfully take two
++	 * references.
++	 */
++	__module_get(qrtr_ns.sock->ops->owner);
++	__module_get(qrtr_ns.sock->sk->sk_prot_creator->owner);
+ 	sock_release(qrtr_ns.sock);
  }
- 
- static void br_mst_vlan_sync_state(struct net_bridge_vlan *pv, u16 msti)
+ EXPORT_SYMBOL_GPL(qrtr_ns_remove);
 -- 
 2.43.0
 
