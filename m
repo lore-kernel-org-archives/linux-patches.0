@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D2817E90E;
-	Mon, 27 May 2024 19:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D2117E90E;
+	Mon, 27 May 2024 19:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837035; cv=none; b=BWRSQzahSLxX6we2MEGMS83pI2gKG2chq6W8cv6X0XJR9zT840VdK83Pl7hK0h7vn9XYPmtt2z49y0oZTuAZ/Dshl9/jGOuBF4nhm/0/kRsjRkHwsL/1ZlSEzDGeoYf66hqZ/9ad0HgHe+kqj4l2YCdNQJtSjTPtnqmQfQ6djzc=
+	t=1716837038; cv=none; b=I9dwu2wPAuadt9hjURuvkVCq8O9PmV0P4sXXrkOT5LdFE8tjEo3ZwvtCCAkLjdB0UzFlJcYEOAuaZ6CajJCoHPCg1+2bbtcq7R23eMEm/xvQSDTzx75pZmJjFqRDXNNPJrGOA09xcbL3x1RvA1utOWcONTRuF74kW6qm3BAH0fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837035; c=relaxed/simple;
-	bh=Q3w0m/FVeO1JkNm14QbeHbGp7A/Ve1LZ472QD3iUs7I=;
+	s=arc-20240116; t=1716837038; c=relaxed/simple;
+	bh=4310eRFM+jHm59xIGJJ1PV/klx3v24uYmCmsHQqmJwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1KKc5/LtXQugEXLO3fZaKsSsOcv77M5ytvjzWS+5OgSQbKDlU/TV0+jbYXoPG7oNluMW9rcVvfQJgsuh7X0s+qWwfOsxis58/LWwTtegbO5MYrwQ1tP0WOJEB9I6f5e2IWiRi/c5je4GqzcDsiiqN4M5HtzsV+ctfDwRfWnu/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9NU1iDc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HvHxA8eX2iiKsLsLA0pNhFMoQv5I6vVpVpnnAT0FD6GO2pToOJSSEOnMk4oTopnqFIURCBCHbkScK626uPJPue0Ht4g767Tg5YWbdYPgWq8nrJnvkQVaLAvnCxESl1JR4rReATd0C2F5sWvvTfIwKZVePRGi0fnc7GGmTYkUdXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eumjT52/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9NU1iDc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D8EC2BBFC;
-	Mon, 27 May 2024 19:10:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eumjT52/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4E4C2BBFC;
+	Mon, 27 May 2024 19:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837035;
-	bh=Q3w0m/FVeO1JkNm14QbeHbGp7A/Ve1LZ472QD3iUs7I=;
+	s=korg; t=1716837037;
+	bh=4310eRFM+jHm59xIGJJ1PV/klx3v24uYmCmsHQqmJwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9NU1iDcGnrQ0wPa1eAYNVJjDAo2XaeJd8OMHCVkYARerrJyOPLdbiv3gYmJniTkV
-	 eykMwYjlTZtM/Jf4ovs9z4570BEAU0AyJ1YzYCNaDh2KL+042JLRk5KRljYArR36pB
-	 jDFm4ySVtrn+ismBUc68b5NrvJ/8YMlTNTUdC9cw=
+	b=eumjT52/Iw4xVDBAeeJ+pZ9U+Pbu5PF1jS3KWsqfznHWR2+y+uNX6p8QUGkPcgXhc
+	 vq0JVgPzZz37PIO3EI+ok5TVphjVogSv2j+Dl9Ft7QBcogN4QgzKLqa1UzzdYQ5b2i
+	 K1uy6qit37KhEjGxCzLvhTPyRc9wOyv7KDDkuJrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 286/427] ASoC: Intel: Disable route checks for Skylake boards
-Date: Mon, 27 May 2024 20:55:33 +0200
-Message-ID: <20240527185629.170085060@linuxfoundation.org>
+Subject: [PATCH 6.9 287/427] ASoC: Intel: avs: ssm4567: Do not ignore route checks
+Date: Mon, 27 May 2024 20:55:34 +0200
+Message-ID: <20240527185629.247598235@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,205 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 0cb3b7fd530b8c107443218ce6db5cb6e7b5dbe1 ]
+[ Upstream commit e6719d48ba6329536c459dcee5a571e535687094 ]
 
-Topology files that are propagated to the world and utilized by the
-skylake-driver carry shortcomings in their SectionGraphs.
+A copy-paste from intel/boards/skl_nau88l25_ssm4567.c made the avs's
+equivalent disable route checks as well. Such behavior is not desired.
 
-Since commit daa480bde6b3 ("ASoC: soc-core: tidyup for
-snd_soc_dapm_add_routes()") route checks are no longer permissive. Probe
-failures for Intel boards have been partially addressed by commit
-a22ae72b86a4 ("ASoC: soc-core: disable route checks for legacy devices")
-and its follow up but only skl_nau88l25_ssm4567.c is patched. Fix the
-problem for the rest of the boards.
-
-Link: https://lore.kernel.org/all/20200309192744.18380-1-pierre-louis.bossart@linux.intel.com/
-Fixes: daa480bde6b3 ("ASoC: soc-core: tidyup for snd_soc_dapm_add_routes()")
+Fixes: 69ea14efe99b ("ASoC: Intel: avs: Add ssm4567 machine board")
 Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://msgid.link/r/20240308090502.2136760-2-cezary.rojewski@intel.com
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://msgid.link/r/20240308090502.2136760-4-cezary.rojewski@intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bxt_da7219_max98357a.c       | 1 +
- sound/soc/intel/boards/bxt_rt298.c                  | 1 +
- sound/soc/intel/boards/glk_rt5682_max98357a.c       | 2 ++
- sound/soc/intel/boards/kbl_da7219_max98357a.c       | 1 +
- sound/soc/intel/boards/kbl_da7219_max98927.c        | 4 ++++
- sound/soc/intel/boards/kbl_rt5660.c                 | 1 +
- sound/soc/intel/boards/kbl_rt5663_max98927.c        | 2 ++
- sound/soc/intel/boards/kbl_rt5663_rt5514_max98927.c | 1 +
- sound/soc/intel/boards/skl_hda_dsp_generic.c        | 2 ++
- sound/soc/intel/boards/skl_nau88l25_max98357a.c     | 1 +
- sound/soc/intel/boards/skl_rt286.c                  | 1 +
- 11 files changed, 17 insertions(+)
+ sound/soc/intel/avs/boards/ssm4567.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/bxt_da7219_max98357a.c b/sound/soc/intel/boards/bxt_da7219_max98357a.c
-index 540f7a29310a9..3fe3f38c6cb69 100644
---- a/sound/soc/intel/boards/bxt_da7219_max98357a.c
-+++ b/sound/soc/intel/boards/bxt_da7219_max98357a.c
-@@ -768,6 +768,7 @@ static struct snd_soc_card broxton_audio_card = {
- 	.dapm_routes = audio_map,
- 	.num_dapm_routes = ARRAY_SIZE(audio_map),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = bxt_card_late_probe,
- };
+diff --git a/sound/soc/intel/avs/boards/ssm4567.c b/sound/soc/intel/avs/boards/ssm4567.c
+index d6f7f046c24e5..f634261e4f604 100644
+--- a/sound/soc/intel/avs/boards/ssm4567.c
++++ b/sound/soc/intel/avs/boards/ssm4567.c
+@@ -172,7 +172,6 @@ static int avs_ssm4567_probe(struct platform_device *pdev)
+ 	card->dapm_routes = card_base_routes;
+ 	card->num_dapm_routes = ARRAY_SIZE(card_base_routes);
+ 	card->fully_routed = true;
+-	card->disable_route_checks = true;
  
-diff --git a/sound/soc/intel/boards/bxt_rt298.c b/sound/soc/intel/boards/bxt_rt298.c
-index c0eb65c14aa97..afc499be8db26 100644
---- a/sound/soc/intel/boards/bxt_rt298.c
-+++ b/sound/soc/intel/boards/bxt_rt298.c
-@@ -574,6 +574,7 @@ static struct snd_soc_card broxton_rt298 = {
- 	.dapm_routes = broxton_rt298_map,
- 	.num_dapm_routes = ARRAY_SIZE(broxton_rt298_map),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = bxt_card_late_probe,
- 
- };
-diff --git a/sound/soc/intel/boards/glk_rt5682_max98357a.c b/sound/soc/intel/boards/glk_rt5682_max98357a.c
-index 657e4658234ce..4098b2d32f9bc 100644
---- a/sound/soc/intel/boards/glk_rt5682_max98357a.c
-+++ b/sound/soc/intel/boards/glk_rt5682_max98357a.c
-@@ -649,6 +649,8 @@ static int geminilake_audio_probe(struct platform_device *pdev)
- 	card = &glk_audio_card_rt5682_m98357a;
- 	card->dev = &pdev->dev;
- 	snd_soc_card_set_drvdata(card, ctx);
-+	if (!snd_soc_acpi_sof_parent(&pdev->dev))
-+		card->disable_route_checks = true;
- 
- 	/* override platform name, if required */
- 	mach = pdev->dev.platform_data;
-diff --git a/sound/soc/intel/boards/kbl_da7219_max98357a.c b/sound/soc/intel/boards/kbl_da7219_max98357a.c
-index a5d8965303a88..9dbc15f9d1c9b 100644
---- a/sound/soc/intel/boards/kbl_da7219_max98357a.c
-+++ b/sound/soc/intel/boards/kbl_da7219_max98357a.c
-@@ -639,6 +639,7 @@ static struct snd_soc_card kabylake_audio_card_da7219_m98357a = {
- 	.dapm_routes = kabylake_map,
- 	.num_dapm_routes = ARRAY_SIZE(kabylake_map),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = kabylake_card_late_probe,
- };
- 
-diff --git a/sound/soc/intel/boards/kbl_da7219_max98927.c b/sound/soc/intel/boards/kbl_da7219_max98927.c
-index 98c11ec0adc01..e662da5af83b5 100644
---- a/sound/soc/intel/boards/kbl_da7219_max98927.c
-+++ b/sound/soc/intel/boards/kbl_da7219_max98927.c
-@@ -1036,6 +1036,7 @@ static struct snd_soc_card kbl_audio_card_da7219_m98927 = {
- 	.codec_conf = max98927_codec_conf,
- 	.num_configs = ARRAY_SIZE(max98927_codec_conf),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = kabylake_card_late_probe,
- };
- 
-@@ -1054,6 +1055,7 @@ static struct snd_soc_card kbl_audio_card_max98927 = {
- 	.codec_conf = max98927_codec_conf,
- 	.num_configs = ARRAY_SIZE(max98927_codec_conf),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = kabylake_card_late_probe,
- };
- 
-@@ -1071,6 +1073,7 @@ static struct snd_soc_card kbl_audio_card_da7219_m98373 = {
- 	.codec_conf = max98373_codec_conf,
- 	.num_configs = ARRAY_SIZE(max98373_codec_conf),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = kabylake_card_late_probe,
- };
- 
-@@ -1088,6 +1091,7 @@ static struct snd_soc_card kbl_audio_card_max98373 = {
- 	.codec_conf = max98373_codec_conf,
- 	.num_configs = ARRAY_SIZE(max98373_codec_conf),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = kabylake_card_late_probe,
- };
- 
-diff --git a/sound/soc/intel/boards/kbl_rt5660.c b/sound/soc/intel/boards/kbl_rt5660.c
-index 30e0aca161cd5..894d127c482a3 100644
---- a/sound/soc/intel/boards/kbl_rt5660.c
-+++ b/sound/soc/intel/boards/kbl_rt5660.c
-@@ -518,6 +518,7 @@ static struct snd_soc_card kabylake_audio_card_rt5660 = {
- 	.dapm_routes = kabylake_rt5660_map,
- 	.num_dapm_routes = ARRAY_SIZE(kabylake_rt5660_map),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = kabylake_card_late_probe,
- };
- 
-diff --git a/sound/soc/intel/boards/kbl_rt5663_max98927.c b/sound/soc/intel/boards/kbl_rt5663_max98927.c
-index 9071b1f1cbd00..646e8ff8e9619 100644
---- a/sound/soc/intel/boards/kbl_rt5663_max98927.c
-+++ b/sound/soc/intel/boards/kbl_rt5663_max98927.c
-@@ -966,6 +966,7 @@ static struct snd_soc_card kabylake_audio_card_rt5663_m98927 = {
- 	.codec_conf = max98927_codec_conf,
- 	.num_configs = ARRAY_SIZE(max98927_codec_conf),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = kabylake_card_late_probe,
- };
- 
-@@ -982,6 +983,7 @@ static struct snd_soc_card kabylake_audio_card_rt5663 = {
- 	.dapm_routes = kabylake_5663_map,
- 	.num_dapm_routes = ARRAY_SIZE(kabylake_5663_map),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = kabylake_card_late_probe,
- };
- 
-diff --git a/sound/soc/intel/boards/kbl_rt5663_rt5514_max98927.c b/sound/soc/intel/boards/kbl_rt5663_rt5514_max98927.c
-index 178fe9c37df62..924d5d1de03ac 100644
---- a/sound/soc/intel/boards/kbl_rt5663_rt5514_max98927.c
-+++ b/sound/soc/intel/boards/kbl_rt5663_rt5514_max98927.c
-@@ -791,6 +791,7 @@ static struct snd_soc_card kabylake_audio_card = {
- 	.codec_conf = max98927_codec_conf,
- 	.num_configs = ARRAY_SIZE(max98927_codec_conf),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = kabylake_card_late_probe,
- };
- 
-diff --git a/sound/soc/intel/boards/skl_hda_dsp_generic.c b/sound/soc/intel/boards/skl_hda_dsp_generic.c
-index 6e172719c9795..4aa7fd2a05e46 100644
---- a/sound/soc/intel/boards/skl_hda_dsp_generic.c
-+++ b/sound/soc/intel/boards/skl_hda_dsp_generic.c
-@@ -227,6 +227,8 @@ static int skl_hda_audio_probe(struct platform_device *pdev)
- 	ctx->common_hdmi_codec_drv = mach->mach_params.common_hdmi_codec_drv;
- 
- 	hda_soc_card.dev = &pdev->dev;
-+	if (!snd_soc_acpi_sof_parent(&pdev->dev))
-+		hda_soc_card.disable_route_checks = true;
- 
- 	if (mach->mach_params.dmic_num > 0) {
- 		snprintf(hda_soc_components, sizeof(hda_soc_components),
-diff --git a/sound/soc/intel/boards/skl_nau88l25_max98357a.c b/sound/soc/intel/boards/skl_nau88l25_max98357a.c
-index 0e7025834594a..e4630c33176e2 100644
---- a/sound/soc/intel/boards/skl_nau88l25_max98357a.c
-+++ b/sound/soc/intel/boards/skl_nau88l25_max98357a.c
-@@ -654,6 +654,7 @@ static struct snd_soc_card skylake_audio_card = {
- 	.dapm_routes = skylake_map,
- 	.num_dapm_routes = ARRAY_SIZE(skylake_map),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = skylake_card_late_probe,
- };
- 
-diff --git a/sound/soc/intel/boards/skl_rt286.c b/sound/soc/intel/boards/skl_rt286.c
-index c59c60e280916..9a80442749081 100644
---- a/sound/soc/intel/boards/skl_rt286.c
-+++ b/sound/soc/intel/boards/skl_rt286.c
-@@ -523,6 +523,7 @@ static struct snd_soc_card skylake_rt286 = {
- 	.dapm_routes = skylake_rt286_map,
- 	.num_dapm_routes = ARRAY_SIZE(skylake_rt286_map),
- 	.fully_routed = true,
-+	.disable_route_checks = true,
- 	.late_probe = skylake_card_late_probe,
- };
- 
+ 	ret = snd_soc_fixup_dai_links_platform_name(card, pname);
+ 	if (ret)
 -- 
 2.43.0
 
