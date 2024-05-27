@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C8317E90E;
-	Mon, 27 May 2024 19:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E3B17E90E;
+	Mon, 27 May 2024 19:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837030; cv=none; b=h61iLvj/juXh301+5D/eJV2aAesUyDsJ7s18j2a7nlWf3np52G1pzQfs8nQLXB/S/XpNarH4ZSTDvTZqLo/7lrDagE58IhyCV3f3oBgjJaV2oFTmaVo7cjJa3Km/8bhzqsJa9e0BDDwP7WHnwSmqajXm8P/Ac/xo2fg632fbp08=
+	t=1716837033; cv=none; b=FLtPq+N9OB7kvBbEjn45Kb2stG+2TsWpjcpNCd72m1Rpd041e9sg8kONCw286hpYwxtV3RtOr9dNyLxe6EuOn208DjIKZvtl+zYmsSUgz13r/a06u4PdCvO+Gov+XJo6/UNarSdVs0L85p3rh6N3uu/6+tXYegCPVVknmThplpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837030; c=relaxed/simple;
-	bh=S3s0rrnUrVKELBCSVo2hjmt/AIyK5RQ4yo8BjzErpVU=;
+	s=arc-20240116; t=1716837033; c=relaxed/simple;
+	bh=nmm9roPr9nAHfmBNea/JF2SoSNbz+dAJ0YDI3QMyMuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PNBIEGDkEoNM8SUulrJJ+gWidwtrineKmVyJQA9K9R0mZSs3Qe0VPeZenzC73e+ThDHNzWGz/b8PZZ5SPnv2aSxMY8pWZu/5z8+7StJ5utjmEVGjTlihVL0Fg8QjKTPU2kUBvt0PRFhViNCcQvwld8a1tRSeoNQ9dIT6fcz0neU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdyBcES8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hrJEzq5kJs1Hb+MDAZ+2OOhO5pKJiJeptbP4Q9dE9az+vHB5N9XemK4Ccy91NjMaPuQaT5zWCePI669F2duSkTOh9urB05xSRctxaVnMAQM59VMq42R2RFK1jB4UQU5L/DQBLlsg/yCIqySDDR1dPzR0d0IGec8CK1UyIViF0/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWOtuFM5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdyBcES8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14627C2BBFC;
-	Mon, 27 May 2024 19:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWOtuFM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90768C32782;
+	Mon, 27 May 2024 19:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837030;
-	bh=S3s0rrnUrVKELBCSVo2hjmt/AIyK5RQ4yo8BjzErpVU=;
+	s=korg; t=1716837032;
+	bh=nmm9roPr9nAHfmBNea/JF2SoSNbz+dAJ0YDI3QMyMuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YdyBcES8RYkfYFODZWvkpHqNK7J1KloEAUMaBmob1shE+uDHsSH111CxwsBsOPZMB
-	 EwX/k+e0XHPt30H0oDuj9mX6rBgP/O/hSKgBhyMe6UBKch9XqeVIj9MbEHrNWh/+mE
-	 LA5YQkGqjwg++GZnWIt4qvJhHZFsAjvNwng11jfE=
+	b=YWOtuFM5r43x+oPM/fPz3InX/udmpDUnLTdNgrPt/OpjsGcgyGeIUBDZSXDs9o95w
+	 9yjrwsigP2cjKemickDBetXTB4b3fTKhK+eM5T2tDSLKvR493V3fzp6l7YKGDHsht5
+	 SF+kT68xksFwUhl23FVljjJ2/6SFw5aS2vN/Mbao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
+	Qingqing Zhuo <Qingqing.Zhuo@amd.com>,
+	Harry Wentland <Harry.Wentland@amd.com>,
 	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
 	Roman Li <roman.li@amd.com>,
 	Aurabindo Pillai <aurabindo.pillai@amd.com>,
@@ -37,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 284/427] drm/amd/display: Fix potential index out of bounds in color transformation function
-Date: Mon, 27 May 2024 20:55:31 +0200
-Message-ID: <20240527185629.035445171@linuxfoundation.org>
+Subject: [PATCH 6.9 285/427] drm/amd/display: Remove redundant condition in dcn35_calc_blocks_to_gate()
+Date: Mon, 27 May 2024 20:55:32 +0200
+Message-ID: <20240527185629.105269212@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -60,53 +59,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 63ae548f1054a0b71678d0349c7dc9628ddd42ca ]
+[ Upstream commit a43dbeaba81eb645a12a004c67722c632ed0d94b ]
 
-Fixes index out of bounds issue in the color transformation function.
-The issue could occur when the index 'i' exceeds the number of transfer
-function points (TRANSFER_FUNC_POINTS).
+pipe_ctx->plane_res.mpcc_inst is of a type that can only hold values
+between 0 and 255, so it's always greater than or equal to 0.
 
-The fix adds a check to ensure 'i' is within bounds before accessing the
-transfer function points. If 'i' is out of bounds, an error message is
-logged and the function returns false to indicate an error.
+Thus the condition 'pipe_ctx->plane_res.mpcc_inst >= 0' was always true
+and has been removed.
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:405 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:406 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:407 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dcn35/dcn35_hwseq.c:1023 dcn35_calc_blocks_to_gate() warn: always true condition '(pipe_ctx->plane_res.mpcc_inst >= 0) => (0-255 >= 0)'
 
-Fixes: b629596072e5 ("drm/amd/display: Build unity lut for shaper")
-Cc: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Cc: Charlene Liu <Charlene.Liu@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
+Fixes: 6f8b7565cca4 ("drm/amd/display: Add DCN35 HWSEQ")
+Cc: Qingqing Zhuo <Qingqing.Zhuo@amd.com>
+Cc: Harry Wentland <Harry.Wentland@amd.com>
 Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 Cc: Roman Li <roman.li@amd.com>
 Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
 Cc: Tom Chung <chiahsuan.chung@amd.com>
 Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-index b7e57aa273619..b0d192c6e63eb 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-@@ -402,6 +402,11 @@ bool cm_helper_translate_curve_to_hw_format(struct dc_context *ctx,
- 				i += increment) {
- 			if (j == hw_points - 1)
- 				break;
-+			if (i >= TRANSFER_FUNC_POINTS) {
-+				DC_LOG_ERROR("Index out of bounds: i=%d, TRANSFER_FUNC_POINTS=%d\n",
-+					     i, TRANSFER_FUNC_POINTS);
-+				return false;
-+			}
- 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
- 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
- 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+index 9067ca78f8511..a14f99f4f14a5 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+@@ -999,8 +999,7 @@ void dcn35_calc_blocks_to_gate(struct dc *dc, struct dc_state *context,
+ 		if (pipe_ctx->plane_res.dpp)
+ 			update_state->pg_pipe_res_update[PG_DPP][pipe_ctx->plane_res.hubp->inst] = false;
+ 
+-		if ((pipe_ctx->plane_res.dpp || pipe_ctx->stream_res.opp) &&
+-			pipe_ctx->plane_res.mpcc_inst >= 0)
++		if (pipe_ctx->plane_res.dpp || pipe_ctx->stream_res.opp)
+ 			update_state->pg_pipe_res_update[PG_MPCC][pipe_ctx->plane_res.mpcc_inst] = false;
+ 
+ 		if (pipe_ctx->stream_res.dsc)
 -- 
 2.43.0
 
