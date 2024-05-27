@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE65015FCF0;
-	Mon, 27 May 2024 19:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFCF15FCF0;
+	Mon, 27 May 2024 19:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838643; cv=none; b=ofrD0kfC+CQ/ocLvzX4EApdV4HdmldoYC2ckhq1T6DIU0UpCuITo8obYz5Kx8XeCBYLHyWniRpMEhkukx9pH60vTHeqGSfTvu6DxPI9IrTJ2tmdQhhWjoN6UlIz6vBqjxElkgLceScW/t6MW47T4oZ+6SXr7I8uSqoaN+CrW8pE=
+	t=1716838646; cv=none; b=nB8M65Yu85WHfumQxdryEeMhL3eJh5pcG9GoasCz1yMc0jJP7tVdGbL144fApsAGAtv0oJwNuBC4y5uIX1Zn74S4sD5AvMQ+BqqljE54NJz7FIF4Fy0Bi+P1+XnHr0Ry61XK+osNhd1DR0DsE3SQQbm1Qbh/R7a30SzzttcrohE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838643; c=relaxed/simple;
-	bh=BhkLqs0XdIjT8ina1YIqeiAjfoDDsr9NqZhArIU1Sas=;
+	s=arc-20240116; t=1716838646; c=relaxed/simple;
+	bh=19mOqV70eHdXTEy1+U68uiH/EtAyu6eKHlaz68oW1cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZwUcGlrOe7073S7hcO3Psvd7KW3W1HpNB2h/jIROX548ldysP9ETgVt3Hdh8WppwcIhE4tNLt6Xe3wxRIsT5q0n8Ns2zEmBz9leOmvbNAhu+QibDGbEdIAgisOyihAdJFsmlCtarPFK8uOv9Kc8UAnU4UxIGKJaJUE+01snVhO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqeNrZ0U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MOLljKTMPqLgYRqmRiQKlIp0rzPpSqj8KLn6h918wkuV+bep/ybpzvXkDTXV8u1a38fTMfKd7tqVAG1hpzLxgMz6H1br0p00JaVmzfuvNM3qvEHd0emTDMoREowXjqFQHFCg3WTR7gvp/hg9wVAz8LB7gweAHP00eD6e6ggpZ7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkXtYvYw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqeNrZ0U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60315C32781;
-	Mon, 27 May 2024 19:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkXtYvYw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2C5C2BBFC;
+	Mon, 27 May 2024 19:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838643;
-	bh=BhkLqs0XdIjT8ina1YIqeiAjfoDDsr9NqZhArIU1Sas=;
+	s=korg; t=1716838646;
+	bh=19mOqV70eHdXTEy1+U68uiH/EtAyu6eKHlaz68oW1cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NqeNrZ0UgxsTpFbS3zcNoST6qGfRdXyuN1iBjhNlV3pk66j+I7LL/bjWOhuUhfl3q
-	 EO4Vl/qRU9BaJFJuyfebEcx0aEnsQd+2HA4LXAjBVrce0GeaB64LWJj+W1wLZKAA1j
-	 ku3v5Us4JAtzsBj4VqA6TJwS23LajolJB1EZEF4Q=
+	b=HkXtYvYw12kl+umreeAa4UsYIwJOEalLYxYsepWxYr7GX7xv1IUtrusJXemeu3C81
+	 OXc8TwJjqSzLTUd0oIduOaBwzZEfYRwiOPO1hvCIcYrqH+bn6G3OEOQ/zpv4CFsZ6T
+	 oZHqmA09rWfi1YKACnrP4AeXxlhlq8PpHVZGtT1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Beau Belgrave <beaub@linux.microsoft.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 471/493] tracing/user_events: Prepare find/delete for same name events
-Date: Mon, 27 May 2024 20:57:53 +0200
-Message-ID: <20240527185645.572845648@linuxfoundation.org>
+Subject: [PATCH 6.8 472/493] tracing/user_events: Fix non-spaced field matching
+Date: Mon, 27 May 2024 20:57:54 +0200
+Message-ID: <20240527185645.599283752@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,230 +53,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Beau Belgrave <beaub@linux.microsoft.com>
 
-[ Upstream commit 1e953de9e9b4ca77a9ce0fc17a0778eba3a4ca64 ]
+[ Upstream commit bd125a084091396f3e796bb3dc009940d9771811 ]
 
-The current code for finding and deleting events assumes that there will
-never be cases when user_events are registered with the same name, but
-different formats. Scenarios exist where programs want to use the same
-name but have different formats. An example is multiple versions of a
-program running side-by-side using the same event name, but with updated
-formats in each version.
+When the ABI was updated to prevent same name w/different args, it
+missed an important corner case when fields don't end with a space.
+Typically, space is used for fields to help separate them, like
+"u8 field1; u8 field2". If no spaces are used, like
+"u8 field1;u8 field2", then the parsing works for the first time.
+However, the match check fails on a subsequent register, leading to
+confusion.
 
-This change does not yet allow for multi-format events. If user_events
-are registered with the same name but different arguments the programs
-see the same return values as before. This change simply makes it
-possible to easily accommodate for this.
+This is because the match check uses argv_split() and assumes that all
+fields will be split upon the space. When spaces are used, we get back
+{ "u8", "field1;" }, without spaces we get back { "u8", "field1;u8" }.
+This causes a mismatch, and the user program gets back -EADDRINUSE.
 
-Update find_user_event() to take in argument parameters and register
-flags to accommodate future multi-format event scenarios. Have find
-validate argument matching and return error pointers to cover when
-an existing event has the same name but different format. Update
-callers to handle error pointer logic.
+Add a method to detect this case before calling argv_split(). If found
+force a space after the field separator character ';'. This ensures all
+cases work properly for matching.
 
-Move delete_user_event() to use hash walking directly now that
-find_user_event() has changed. Delete all events found that match the
-register name, stop if an error occurs and report back to the user.
+With this fix, the following are all treated as matching:
+u8 field1;u8 field2
+u8 field1; u8 field2
+u8 field1;\tu8 field2
+u8 field1;\nu8 field2
 
-Update user_fields_match() to cover list_empty() scenarios now that
-find_user_event() uses it directly. This makes the logic consistent
-across several callsites.
+Link: https://lore.kernel.org/linux-trace-kernel/20240423162338.292-2-beaub@linux.microsoft.com
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240222001807.1463-2-beaub@linux.microsoft.com
-
+Fixes: ba470eebc2f6 ("tracing/user_events: Prevent same name but different args event")
 Signed-off-by: Beau Belgrave <beaub@linux.microsoft.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: bd125a084091 ("tracing/user_events: Fix non-spaced field matching")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_user.c | 107 +++++++++++++++++--------------
- 1 file changed, 59 insertions(+), 48 deletions(-)
+ kernel/trace/trace_events_user.c | 76 +++++++++++++++++++++++++++++++-
+ 1 file changed, 75 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/trace/trace_events_user.c b/kernel/trace/trace_events_user.c
-index e76f5e1efdf2d..fce5ed5fec50f 100644
+index fce5ed5fec50f..704de62f7ae16 100644
 --- a/kernel/trace/trace_events_user.c
 +++ b/kernel/trace/trace_events_user.c
-@@ -202,6 +202,8 @@ static struct user_event_mm *user_event_mm_get(struct user_event_mm *mm);
- static struct user_event_mm *user_event_mm_get_all(struct user_event *user);
- static void user_event_mm_put(struct user_event_mm *mm);
- static int destroy_user_event(struct user_event *user);
-+static bool user_fields_match(struct user_event *user, int argc,
-+			      const char **argv);
- 
- static u32 user_event_key(char *name)
- {
-@@ -1493,17 +1495,24 @@ static int destroy_user_event(struct user_event *user)
+@@ -1923,6 +1923,80 @@ static int user_event_trace_register(struct user_event *user)
+ 	return ret;
  }
  
- static struct user_event *find_user_event(struct user_event_group *group,
--					  char *name, u32 *outkey)
-+					  char *name, int argc, const char **argv,
-+					  u32 flags, u32 *outkey)
- {
- 	struct user_event *user;
- 	u32 key = user_event_key(name);
- 
- 	*outkey = key;
- 
--	hash_for_each_possible(group->register_table, user, node, key)
--		if (!strcmp(EVENT_NAME(user), name))
-+	hash_for_each_possible(group->register_table, user, node, key) {
-+		if (strcmp(EVENT_NAME(user), name))
-+			continue;
++/*
++ * Counts how many ';' without a trailing space are in the args.
++ */
++static int count_semis_no_space(char *args)
++{
++	int count = 0;
 +
-+		if (user_fields_match(user, argc, argv))
- 			return user_event_get(user);
- 
-+		return ERR_PTR(-EADDRINUSE);
++	while ((args = strchr(args, ';'))) {
++		args++;
++
++		if (!isspace(*args))
++			count++;
 +	}
 +
- 	return NULL;
- }
- 
-@@ -1860,6 +1869,9 @@ static bool user_fields_match(struct user_event *user, int argc,
- 	struct list_head *head = &user->fields;
- 	int i = 0;
- 
-+	if (argc == 0)
-+		return list_empty(head);
++	return count;
++}
 +
- 	list_for_each_entry_reverse(field, head, link) {
- 		if (!user_field_match(field, argc, argv, &i))
- 			return false;
-@@ -1880,10 +1892,8 @@ static bool user_event_match(const char *system, const char *event,
- 	match = strcmp(EVENT_NAME(user), event) == 0 &&
- 		(!system || strcmp(system, USER_EVENTS_SYSTEM) == 0);
- 
--	if (match && argc > 0)
-+	if (match)
- 		match = user_fields_match(user, argc, argv);
--	else if (match && argc == 0)
--		match = list_empty(&user->fields);
- 
- 	return match;
- }
-@@ -1922,11 +1932,11 @@ static int user_event_parse(struct user_event_group *group, char *name,
- 			    char *args, char *flags,
- 			    struct user_event **newuser, int reg_flags)
- {
--	int ret;
--	u32 key;
- 	struct user_event *user;
-+	char **argv = NULL;
- 	int argc = 0;
--	char **argv;
-+	int ret;
-+	u32 key;
- 
- 	/* Currently don't support any text based flags */
- 	if (flags != NULL)
-@@ -1935,41 +1945,34 @@ static int user_event_parse(struct user_event_group *group, char *name,
- 	if (!user_event_capable(reg_flags))
++/*
++ * Copies the arguments while ensuring all ';' have a trailing space.
++ */
++static char *insert_space_after_semis(char *args, int count)
++{
++	char *fixed, *pos;
++	int len;
++
++	len = strlen(args) + count;
++	fixed = kmalloc(len + 1, GFP_KERNEL);
++
++	if (!fixed)
++		return NULL;
++
++	pos = fixed;
++
++	/* Insert a space after ';' if there is no trailing space. */
++	while (*args) {
++		*pos = *args++;
++
++		if (*pos++ == ';' && !isspace(*args))
++			*pos++ = ' ';
++	}
++
++	*pos = '\0';
++
++	return fixed;
++}
++
++static char **user_event_argv_split(char *args, int *argc)
++{
++	char **split;
++	char *fixed;
++	int count;
++
++	/* Count how many ';' without a trailing space */
++	count = count_semis_no_space(args);
++
++	/* No fixup is required */
++	if (!count)
++		return argv_split(GFP_KERNEL, args, argc);
++
++	/* We must fixup 'field;field' to 'field; field' */
++	fixed = insert_space_after_semis(args, count);
++
++	if (!fixed)
++		return NULL;
++
++	/* We do a normal split afterwards */
++	split = argv_split(GFP_KERNEL, fixed, argc);
++
++	/* We can free since argv_split makes a copy */
++	kfree(fixed);
++
++	return split;
++}
++
+ /*
+  * Parses the event name, arguments and flags then registers if successful.
+  * The name buffer lifetime is owned by this method for success cases only.
+@@ -1946,7 +2020,7 @@ static int user_event_parse(struct user_event_group *group, char *name,
  		return -EPERM;
  
-+	if (args) {
-+		argv = argv_split(GFP_KERNEL, args, &argc);
-+
-+		if (!argv)
-+			return -ENOMEM;
-+	}
-+
- 	/* Prevent dyn_event from racing */
- 	mutex_lock(&event_mutex);
--	user = find_user_event(group, name, &key);
-+	user = find_user_event(group, name, argc, (const char **)argv,
-+			       reg_flags, &key);
- 	mutex_unlock(&event_mutex);
+ 	if (args) {
+-		argv = argv_split(GFP_KERNEL, args, &argc);
++		argv = user_event_argv_split(args, &argc);
  
--	if (user) {
--		if (args) {
--			argv = argv_split(GFP_KERNEL, args, &argc);
--			if (!argv) {
--				ret = -ENOMEM;
--				goto error;
--			}
-+	if (argv)
-+		argv_free(argv);
- 
--			ret = user_fields_match(user, argc, (const char **)argv);
--			argv_free(argv);
--
--		} else
--			ret = list_empty(&user->fields);
--
--		if (ret) {
--			*newuser = user;
--			/*
--			 * Name is allocated by caller, free it since it already exists.
--			 * Caller only worries about failure cases for freeing.
--			 */
--			kfree(name);
--		} else {
--			ret = -EADDRINUSE;
--			goto error;
--		}
-+	if (IS_ERR(user))
-+		return PTR_ERR(user);
-+
-+	if (user) {
-+		*newuser = user;
-+		/*
-+		 * Name is allocated by caller, free it since it already exists.
-+		 * Caller only worries about failure cases for freeing.
-+		 */
-+		kfree(name);
- 
- 		return 0;
--error:
--		user_event_put(user, false);
--		return ret;
- 	}
- 
- 	user = kzalloc(sizeof(*user), GFP_KERNEL_ACCOUNT);
-@@ -2052,25 +2055,33 @@ static int user_event_parse(struct user_event_group *group, char *name,
- }
- 
- /*
-- * Deletes a previously created event if it is no longer being used.
-+ * Deletes previously created events if they are no longer being used.
-  */
- static int delete_user_event(struct user_event_group *group, char *name)
- {
--	u32 key;
--	struct user_event *user = find_user_event(group, name, &key);
-+	struct user_event *user;
-+	struct hlist_node *tmp;
-+	u32 key = user_event_key(name);
-+	int ret = -ENOENT;
- 
--	if (!user)
--		return -ENOENT;
-+	/* Attempt to delete all event(s) with the name passed in */
-+	hash_for_each_possible_safe(group->register_table, user, tmp, node, key) {
-+		if (strcmp(EVENT_NAME(user), name))
-+			continue;
- 
--	user_event_put(user, true);
-+		if (!user_event_last_ref(user))
-+			return -EBUSY;
- 
--	if (!user_event_last_ref(user))
--		return -EBUSY;
-+		if (!user_event_capable(user->reg_flags))
-+			return -EPERM;
- 
--	if (!user_event_capable(user->reg_flags))
--		return -EPERM;
-+		ret = destroy_user_event(user);
- 
--	return destroy_user_event(user);
-+		if (ret)
-+			goto out;
-+	}
-+out:
-+	return ret;
- }
- 
- /*
+ 		if (!argv)
+ 			return -ENOMEM;
 -- 
 2.43.0
 
