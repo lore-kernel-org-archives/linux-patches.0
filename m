@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B3015FCE9;
-	Mon, 27 May 2024 19:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC0217E90E;
+	Mon, 27 May 2024 19:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837160; cv=none; b=uc102C9/4hE8cabj9l/pUL2lleKVopymRJcV5tdQ842ZJLiIuj3qNp5A4AKMUpxOV1Ts7kQQ0amoOSXurkbIOplZVfIEqXPsJtu0A2Z/++j7uvLMr0U8xM0syEDzMGI1dm9sKQkmPPCZfXRboOeaDNw7XzwG7Ysspos+HSf1kNA=
+	t=1716837162; cv=none; b=eSiHVxg9ZUXKFT2TQdcgMMN3oXTjvWu58MrRZw6rTe1bSnDztluv9iQ+o5AII3MrMOcGktEQNLu5w4yvKPgc7jOt5R5ZEKbFMf8PPFwApyknNG43HtzTockG/E+C7NqvxTGgjiY0ReGR0yyuKMgqhE9VX7aw433/jXrlIgbIPZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837160; c=relaxed/simple;
-	bh=h9vkSWKMKRS7QwwfeQICzDs9D8nevTxonC7/4Swy1ek=;
+	s=arc-20240116; t=1716837162; c=relaxed/simple;
+	bh=CXW7Y1MTZnk1eO/wtu6dIzQnSMhjIpapW29azKIDTGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=coUa9ZJBca7oMlh7VBAnjquqIrjIK8IcyTxn6GMVjwoncGyd4NKuCLLJ5m1HxlzkeR9ka0uhBVmcqqaZhdoLbRySHXvMAEmiWIkTyAE3cHF8amZZB+DEITKrttAZjy4cS1o+ZH3c+vTj/RmGQU5YpxPsD/FycEPsPVXwSeo6Lv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+sQnBtB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O6Qy/ShEWtMuooFeAfQrNPbZw8ff5q3jNTtbE6zG8Zo60AJQxq3Afhc0WUZcSLt5938CAWZ/v3GnndFYo3y5jDJW85yl6J+l2oP8nMOOYUTxhKMycCxLZH0YAemU4htVVPAbdEYl+BsXmsBiIQzqshgm4V5bRcsJRm+29JY1JPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wabdxrr6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+sQnBtB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCB7C2BBFC;
-	Mon, 27 May 2024 19:12:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wabdxrr6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE88C2BBFC;
+	Mon, 27 May 2024 19:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837160;
-	bh=h9vkSWKMKRS7QwwfeQICzDs9D8nevTxonC7/4Swy1ek=;
+	s=korg; t=1716837162;
+	bh=CXW7Y1MTZnk1eO/wtu6dIzQnSMhjIpapW29azKIDTGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+sQnBtBuHudzj9Sw29G4hIm7L9SqYn1UAqsekQdiiTCotMSYLTrqTIILi1HBllXO
-	 3ZqycWQYkpBggb8+mw1wxpEpC4dirLvZEVZD6Rw5OPJIATWz3lFgAN4oeJ25oP9Bex
-	 JYYgPUBIbJgxFIqsvcbAVuq11VVjsFi71B0t8ksY=
+	b=Wabdxrr6uZzhsteutcKgnawnW+HD5B0bvzMLsrlN9+SN6pcgE/68tjkJFdhk/lKri
+	 pOdzn+wcYyHYJVk7fo7Z/0zZsY9d9bGSy+R1Y63QScZztgRz+j6BqXBScUKsakAJIS
+	 cE+Rhp4etYEaxjQfPP21bsHOXpADUmVd+dr75pOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 334/427] drm/bridge: lt9611uxc: Dont log an error when DSI host cant be found
-Date: Mon, 27 May 2024 20:56:21 +0200
-Message-ID: <20240527185632.455223803@linuxfoundation.org>
+Subject: [PATCH 6.9 317/427] platform/x86: xiaomi-wmi: Fix race condition when reporting key events
+Date: Mon, 27 May 2024 20:56:04 +0200
+Message-ID: <20240527185631.355312808@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -48,52 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 6d9e877cde7e9b516a9a99751b8222c87557436d ]
+[ Upstream commit 290680c2da8061e410bcaec4b21584ed951479af ]
 
-Given that failing to find a DSI host causes the driver to defer probe,
-make use of dev_err_probe() to log the reason. This makes the defer
-probe reason available and avoids alerting userspace about something
-that is not necessarily an error.
+Multiple WMI events can be received concurrently, so multiple instances
+of xiaomi_wmi_notify() can be active at the same time. Since the input
+device is shared between those handlers, the key input sequence can be
+disturbed.
 
-Fixes: 0cbbd5b1a012 ("drm: bridge: add support for lontium LT9611UXC bridge")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-5-619a28148e5c@collabora.com
+Fix this by protecting the key input sequence with a mutex.
+
+Compile-tested only.
+
+Fixes: edb73f4f0247 ("platform/x86: wmi: add Xiaomi WMI key driver")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20240402143059.8456-2-W_Armin@gmx.de
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/platform/x86/xiaomi-wmi.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-index f4f593ad8f795..ab702471f3ab1 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-@@ -266,10 +266,8 @@ static struct mipi_dsi_device *lt9611uxc_attach_dsi(struct lt9611uxc *lt9611uxc,
- 	int ret;
+diff --git a/drivers/platform/x86/xiaomi-wmi.c b/drivers/platform/x86/xiaomi-wmi.c
+index 54a2546bb93bf..be80f0bda9484 100644
+--- a/drivers/platform/x86/xiaomi-wmi.c
++++ b/drivers/platform/x86/xiaomi-wmi.c
+@@ -2,8 +2,10 @@
+ /* WMI driver for Xiaomi Laptops */
  
- 	host = of_find_mipi_dsi_host_by_node(dsi_node);
--	if (!host) {
--		dev_err(dev, "failed to find dsi host\n");
--		return ERR_PTR(-EPROBE_DEFER);
--	}
-+	if (!host)
-+		return ERR_PTR(dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n"));
+ #include <linux/acpi.h>
++#include <linux/device.h>
+ #include <linux/input.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/wmi.h>
  
- 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
- 	if (IS_ERR(dsi)) {
+ #include <uapi/linux/input-event-codes.h>
+@@ -20,12 +22,21 @@
+ 
+ struct xiaomi_wmi {
+ 	struct input_dev *input_dev;
++	struct mutex key_lock;	/* Protects the key event sequence */
+ 	unsigned int key_code;
+ };
+ 
++static void xiaomi_mutex_destroy(void *data)
++{
++	struct mutex *lock = data;
++
++	mutex_destroy(lock);
++}
++
+ static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
+ {
+ 	struct xiaomi_wmi *data;
++	int ret;
+ 
+ 	if (wdev == NULL || context == NULL)
+ 		return -EINVAL;
+@@ -35,6 +46,11 @@ static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
+ 		return -ENOMEM;
+ 	dev_set_drvdata(&wdev->dev, data);
+ 
++	mutex_init(&data->key_lock);
++	ret = devm_add_action_or_reset(&wdev->dev, xiaomi_mutex_destroy, &data->key_lock);
++	if (ret < 0)
++		return ret;
++
+ 	data->input_dev = devm_input_allocate_device(&wdev->dev);
+ 	if (data->input_dev == NULL)
+ 		return -ENOMEM;
+@@ -59,10 +75,12 @@ static void xiaomi_wmi_notify(struct wmi_device *wdev, union acpi_object *dummy)
+ 	if (data == NULL)
+ 		return;
+ 
++	mutex_lock(&data->key_lock);
+ 	input_report_key(data->input_dev, data->key_code, 1);
+ 	input_sync(data->input_dev);
+ 	input_report_key(data->input_dev, data->key_code, 0);
+ 	input_sync(data->input_dev);
++	mutex_unlock(&data->key_lock);
+ }
+ 
+ static const struct wmi_device_id xiaomi_wmi_id_table[] = {
 -- 
 2.43.0
 
