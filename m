@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A80168C4;
-	Mon, 27 May 2024 19:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67A7168C4;
+	Mon, 27 May 2024 19:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837914; cv=none; b=FA58fI3+H7E2nPEdYFnfHNeFV5ytUM1qRKu4B0nWbMdkfX8D2VVkv/fMhrNsPuvDyKs0IuG4+KTgPuwhil6EkuyCi/b6PMiZDL1vWNqE1BppGJvWwla2U/23mws25cr4g0jzY7p9fcIQUE5ObhcMblZHpiDsGKQht9tsof2Wnxk=
+	t=1716837916; cv=none; b=nIy4YzdvL7VMK7XQVEeZEFNTMVkwMVhdic2CD1OKgKSsKXVdVeiQzIX7XZLZKMhD4TqkyCjTS2+34zNEqWYqT6ORw6usOqD3KGtYfF0xMElPvnljuPYbv1gWRqrd4P+YDckZ3Tw/YPlFsp3lcExM1MUPoLBT83zBzb3M9Vpfuks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837914; c=relaxed/simple;
-	bh=/LWpP8AwGcy3HZEzW+FEDyJTZ41jBeo5+1OKBTQ3EQM=;
+	s=arc-20240116; t=1716837916; c=relaxed/simple;
+	bh=mz8uBxwzHAgqYqkuLGpb2wx8e+gPGDRzgBMBbeLXGhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HoQxbq4KFdSxOpxsO8Vn3Sb/OYccIubojAtMHlRaSow6oePl9jtPw8TFVzuPe1hq3hlibN62Txx7+hWbAAOkdNpS7xr+sMIJeJIJvfef750Tjn528OjHqV89oXrvc8/J0bZBlDAUovmgvl+2ddeymQln5b7RpEffym7z5bRbQMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+Bor40d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9hq6XCWUKK5KsJlLmgIOoWOQkKK1BYh/7+B6G49ws2+guj8ysroK+Egt5V/ghUR8TePfld110NztOQAY0S8vSz/apkqkuRZtCtedR1io27bI/05P5TBFq+pGYQ5Fxh3782qnnurGkIAsw3pOb4Owsa/mtO4tN92VuupScXfkQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLM1tSvk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+Bor40d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4D9C2BBFC;
-	Mon, 27 May 2024 19:25:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLM1tSvk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 476BBC2BBFC;
+	Mon, 27 May 2024 19:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837914;
-	bh=/LWpP8AwGcy3HZEzW+FEDyJTZ41jBeo5+1OKBTQ3EQM=;
+	s=korg; t=1716837916;
+	bh=mz8uBxwzHAgqYqkuLGpb2wx8e+gPGDRzgBMBbeLXGhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I+Bor40d2rssP5dHBftRVjiIajasWmE6NAsfR6h87YZ4XpFh9BW3VPR7CrW4RW0Lf
-	 hTw9Qvmitbl0oG+RuCj5/vMcDe9i9bYzslgskNLOZsOPPIInhtue17smyRBF0jAdg6
-	 zGL2NuTqOANzZP4vlWukSYwouW3QzXuuM6VQWhME=
+	b=XLM1tSvk7vOgoWvozenmYmd65wsvKWC9VVPNrrv3e9ZTjs6tatcDu2+C8elz5d7Mk
+	 Qaai+Ch4PgfnXihA3ferXXXTyIlth7rm/SC/wwQZEp150kcQS6FcvNROYG1RMybnco
+	 rSuDupwj9JK3iUDdo+nqGJwnvbQv+1/YFNIBM34g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Can Guo <quic_cang@quicinc.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 194/493] x86/microcode/AMD: Avoid -Wformat warning with clang-15
-Date: Mon, 27 May 2024 20:53:16 +0200
-Message-ID: <20240527185636.689346953@linuxfoundation.org>
+Subject: [PATCH 6.8 195/493] scsi: ufs: qcom: Perform read back after writing reset bit
+Date: Mon, 27 May 2024 20:53:17 +0200
+Message-ID: <20240527185636.725076027@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,47 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Andrew Halaney <ahalaney@redhat.com>
 
-[ Upstream commit 9e11fc78e2df7a2649764413029441a0c897fb11 ]
+[ Upstream commit c4d28e06b0c94636f6e35d003fa9ebac0a94e1ae ]
 
-Older versions of clang show a warning for amd.c after a fix for a gcc
-warning:
+Currently, the reset bit for the UFS provided reset controller (used by its
+phy) is written to, and then a mb() happens to try and ensure that hit the
+device. Immediately afterwards a usleep_range() occurs.
 
-  arch/x86/kernel/cpu/microcode/amd.c:478:47: error: format specifies type \
-    'unsigned char' but the argument has type 'u16' (aka 'unsigned short') [-Werror,-Wformat]
-                           "amd-ucode/microcode_amd_fam%02hhxh.bin", family);
-                                                       ~~~~~~        ^~~~~~
-                                                       %02hx
+mb() ensures that the write completes, but completion doesn't mean that it
+isn't stored in a buffer somewhere. The recommendation for ensuring this
+bit has taken effect on the device is to perform a read back to force it to
+make it all the way to the device. This is documented in device-io.rst and
+a talk by Will Deacon on this can be seen over here:
 
-In clang-16 and higher, this warning is disabled by default, but clang-15 is
-still supported, and it's trivial to avoid by adapting the types according
-to the range of the passed data and the format string.
+    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
 
-  [ bp: Massage commit message. ]
+Let's do that to ensure the bit hits the device. By doing so and
+guaranteeing the ordering against the immediately following usleep_range(),
+the mb() can safely be removed.
 
-Fixes: 2e9064faccd1 ("x86/microcode/amd: Fix snprintf() format string warning in W=1 build")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240405204919.1003409-1-arnd@kernel.org
+Fixes: 81c0fc51b7a7 ("ufs-qcom: add support for Qualcomm Technologies Inc platforms")
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-1-181252004586@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/host/ufs-qcom.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/microcode/amd.c
-index 13b45b9c806da..620f0af713ca2 100644
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -465,7 +465,7 @@ static bool early_apply_microcode(u32 cpuid_1_eax, u32 old_rev, void *ucode, siz
- 	return !__apply_microcode_amd(mc);
+diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
+index 9dd9a391ebb76..b9de170983c9e 100644
+--- a/drivers/ufs/host/ufs-qcom.h
++++ b/drivers/ufs/host/ufs-qcom.h
+@@ -151,10 +151,10 @@ static inline void ufs_qcom_assert_reset(struct ufs_hba *hba)
+ 	ufshcd_rmwl(hba, UFS_PHY_SOFT_RESET, UFS_PHY_SOFT_RESET, REG_UFS_CFG1);
+ 
+ 	/*
+-	 * Make sure assertion of ufs phy reset is written to
+-	 * register before returning
++	 * Dummy read to ensure the write takes effect before doing any sort
++	 * of delay
+ 	 */
+-	mb();
++	ufshcd_readl(hba, REG_UFS_CFG1);
  }
  
--static bool get_builtin_microcode(struct cpio_data *cp, unsigned int family)
-+static bool get_builtin_microcode(struct cpio_data *cp, u8 family)
- {
- 	char fw_name[36] = "amd-ucode/microcode_amd.bin";
- 	struct firmware fw;
+ static inline void ufs_qcom_deassert_reset(struct ufs_hba *hba)
+@@ -162,10 +162,10 @@ static inline void ufs_qcom_deassert_reset(struct ufs_hba *hba)
+ 	ufshcd_rmwl(hba, UFS_PHY_SOFT_RESET, 0, REG_UFS_CFG1);
+ 
+ 	/*
+-	 * Make sure de-assertion of ufs phy reset is written to
+-	 * register before returning
++	 * Dummy read to ensure the write takes effect before doing any sort
++	 * of delay
+ 	 */
+-	mb();
++	ufshcd_readl(hba, REG_UFS_CFG1);
+ }
+ 
+ /* Host controller hardware version: major.minor.step */
 -- 
 2.43.0
 
