@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FB415A879;
-	Mon, 27 May 2024 19:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301C71667DB;
+	Mon, 27 May 2024 19:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836462; cv=none; b=gbQaldKByCOoQTNC4J4MYcrwfMiH3jDdPkucane4rGnMpsVbBLTayUIYAaxWtqLHNV6+lg66p6+OvniSM9TDYmzs/lxw9vMXM5INfVN94QJ4vuH0HPPY+XoV3T3HvLVBpc5I3l+/+4FP06lHKWvXvPaRIw0IsmkG9ERDD9TFUj0=
+	t=1716836465; cv=none; b=SCY1tp5rCjASWIPdIVrQt/G2bxwdlBAkdYZfybpneTUywQkbtY7Rq5zXmuJ9gIYFhjPI3IurdOqeQSk67nCE475+RJAoNWImv4ibLtNL/v2W7Bt4axqJAorS+2oSt3uESMxyx5LaJq4IrWNU4Vxs/NrU9mnULpIyIkVuhdDXIqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836462; c=relaxed/simple;
-	bh=Wb5BY/idvhtYqo0Us5eYeQGgP7/LMOAIi3oaX7+VLqo=;
+	s=arc-20240116; t=1716836465; c=relaxed/simple;
+	bh=pJ5gZKqeYoFzbOMXG9nmJOdX9hfraKN8jn1Sa71kxB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYLbZu76stILFeQWgeKfYiDePxKXPG5CatQKUWYhD1/GnSjq39//gbnyV2nKNrEy4OL4UZm9Bq9HlJ6f0zae1tNDg+Uts7aq+GgojEbquHcRU+IBxAU4MjuyDseM4lG4zmNdgWDvITus1upYJfY1RTz+WaRQfhbrlVjRp7triUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omfBNYNZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=seE8lCRly1NljeiNjcrvr2d322QBVbrp37ndM3OtayYC5uIsaAbihCGTVQTEaTWxh+yAbujNWMwDInBsKXLvecQH4wt4fOVUHYm8LYDYvDd42PAejYAK8N5iODoRj0VyBDX+GWeVEpWd7n7+aryJLzf4PaVvVaUTvn/+DBo7R5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvxjlgF/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omfBNYNZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB4CC32789;
-	Mon, 27 May 2024 19:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvxjlgF/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E8EC2BBFC;
+	Mon, 27 May 2024 19:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836462;
-	bh=Wb5BY/idvhtYqo0Us5eYeQGgP7/LMOAIi3oaX7+VLqo=;
+	s=korg; t=1716836465;
+	bh=pJ5gZKqeYoFzbOMXG9nmJOdX9hfraKN8jn1Sa71kxB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omfBNYNZw3lJImtYsBTKz6buZYmV05x86xrz2KMIugWAEMQNmm2ef2gaKiAfnj2Wq
-	 4gHKEM3GW9Zy9pB/q7JdL8Kt1rM4fbvZSaZGPfeYQCsXSHCWDO5ZPbtSZL8rdLLRkn
-	 PCz+4W8x1MCfeidw2KF+hYmvUZQaeSxYqhU9MsJI=
+	b=zvxjlgF/GQTPpQslK6doM+FaEFcEIp7IctrEBqe6qcQWfw2dqErkjEdApGMtTF7Rd
+	 5jckSuug+FOqVNMRz6o4omnyyG/c8znVHWJad3HHYTvByZnG96cBvQJtvwRocTOcPk
+	 ew7BI9cK8kMjZo1TchLixbhg6uTPWZhvVcJNyRiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Glitta <glittao@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Daniel Latypov <dlatypov@google.com>,
-	Marco Elver <elver@google.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 046/427] mm/slub, kunit: Use inverted data to corrupt kmem cache
-Date: Mon, 27 May 2024 20:51:33 +0200
-Message-ID: <20240527185606.047780571@linuxfoundation.org>
+Subject: [PATCH 6.9 064/427] io-wq: write next_work before dropping acct_lock
+Date: Mon, 27 May 2024 20:51:51 +0200
+Message-ID: <20240527185607.886725484@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,67 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Gabriel Krisman Bertazi <krisman@suse.de>
 
-[ Upstream commit b1080c667b3b2c8c38a7fa83ca5567124887abae ]
+[ Upstream commit 068c27e32e51e94e4a9eb30ae85f4097a3602980 ]
 
-Two failure patterns are seen randomly when running slub_kunit tests with
-CONFIG_SLAB_FREELIST_RANDOM and CONFIG_SLAB_FREELIST_HARDENED enabled.
+Commit 361aee450c6e ("io-wq: add intermediate work step between pending
+list and active work") closed a race between a cancellation and the work
+being removed from the wq for execution.  To ensure the request is
+always reachable by the cancellation, we need to move it within the wq
+lock, which also synchronizes the cancellation.  But commit
+42abc95f05bf ("io-wq: decouple work_list protection from the big
+wqe->lock") replaced the wq lock here and accidentally reintroduced the
+race by releasing the acct_lock too early.
 
-Pattern 1:
-     # test_clobber_zone: pass:1 fail:0 skip:0 total:1
-     ok 1 test_clobber_zone
-     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:72
-     Expected 3 == slab_errors, but
-         slab_errors == 0 (0x0)
-     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:84
-     Expected 2 == slab_errors, but
-         slab_errors == 0 (0x0)
-     # test_next_pointer: pass:0 fail:1 skip:0 total:1
-     not ok 2 test_next_pointer
+In other words:
 
-In this case, test_next_pointer() overwrites p[s->offset], but the data
-at p[s->offset] is already 0x12.
+        worker                |     cancellation
+work = io_get_next_work()     |
+raw_spin_unlock(&acct->lock); |
+			      |
+                              | io_acct_cancel_pending_work
+                              | io_wq_worker_cancel()
+worker->next_work = work
 
-Pattern 2:
-     ok 1 test_clobber_zone
-     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:72
-     Expected 3 == slab_errors, but
-         slab_errors == 2 (0x2)
-     # test_next_pointer: pass:0 fail:1 skip:0 total:1
-     not ok 2 test_next_pointer
+Using acct_lock is still enough since we synchronize on it on
+io_acct_cancel_pending_work.
 
-In this case, p[s->offset] has a value other than 0x12, but one of the
-expected failures is nevertheless missing.
-
-Invert data instead of writing a fixed value to corrupt the cache data
-structures to fix the problem.
-
-Fixes: 1f9f78b1b376 ("mm/slub, kunit: add a KUnit test for SLUB debugging functionality")
-Cc: Oliver Glitta <glittao@gmail.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-CC: Daniel Latypov <dlatypov@google.com>
-Cc: Marco Elver <elver@google.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Fixes: 42abc95f05bf ("io-wq: decouple work_list protection from the big wqe->lock")
+Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://lore.kernel.org/r/20240416021054.3940-2-krisman@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/slub_kunit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io-wq.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/lib/slub_kunit.c b/lib/slub_kunit.c
-index d4a3730b08fa7..4ce9604388069 100644
---- a/lib/slub_kunit.c
-+++ b/lib/slub_kunit.c
-@@ -55,7 +55,7 @@ static void test_next_pointer(struct kunit *test)
+diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
+index 522196dfb0ff5..318ed067dbf64 100644
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -564,10 +564,7 @@ static void io_worker_handle_work(struct io_wq_acct *acct,
+ 		 * clear the stalled flag.
+ 		 */
+ 		work = io_get_next_work(acct, worker);
+-		raw_spin_unlock(&acct->lock);
+ 		if (work) {
+-			__io_worker_busy(wq, worker);
+-
+ 			/*
+ 			 * Make sure cancelation can find this, even before
+ 			 * it becomes the active work. That avoids a window
+@@ -578,9 +575,15 @@ static void io_worker_handle_work(struct io_wq_acct *acct,
+ 			raw_spin_lock(&worker->lock);
+ 			worker->next_work = work;
+ 			raw_spin_unlock(&worker->lock);
+-		} else {
+-			break;
+ 		}
++
++		raw_spin_unlock(&acct->lock);
++
++		if (!work)
++			break;
++
++		__io_worker_busy(wq, worker);
++
+ 		io_assign_current_work(worker, work);
+ 		__set_current_state(TASK_RUNNING);
  
- 	ptr_addr = (unsigned long *)(p + s->offset);
- 	tmp = *ptr_addr;
--	p[s->offset] = 0x12;
-+	p[s->offset] = ~p[s->offset];
- 
- 	/*
- 	 * Expecting three errors.
 -- 
 2.43.0
 
