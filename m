@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E3415FA91;
-	Mon, 27 May 2024 19:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B19168C4;
+	Mon, 27 May 2024 19:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837874; cv=none; b=Q6HMgBFLpDn6fA3IE4s8WcDylHE6e7BZzrjIpt7Og9EZbX2tGuc0fgu30cg+CFOw1JQu+9wNMNT242QniLVYKtf9vOglR3j+HGfaiLcGuYzJAz0I/an6Q9nJc+2Sh5uAYxDDCWGycSbEg/wx1qfq6RwtOcEEj9Ya+m0lmYEEylw=
+	t=1716837876; cv=none; b=lBh3vLS2IWLBjzii2LeR6DvRcO1NEc/R0oe2TirTFqM7Y3ivq7ZHBJxn7ioPJwo79UEbLG9p2uvJSab2znXdg/N9MSN8LmYQUnODRt+iwwJgr66surDcH/PjjZkDToTN1pNZPBN7g2zmgQGtBb3Qi6mtv60KojqIO/eJjO9gVJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837874; c=relaxed/simple;
-	bh=lX6uhSRmdp4O+lCrsFXrr7MySbvK72/TjJ//8XJ++sk=;
+	s=arc-20240116; t=1716837876; c=relaxed/simple;
+	bh=um3dkAn63SQKLgqoIZeA7Le2TfzTihvwgjC8hgQwQBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ne6+Andm/ct5IKhMopNDVLI5C0LI/WbAnZO4mt/StpB0Duo9WUyMQX4fJqEdlFU86SK8Ybvu0w42PGxnAiSfSmq8MMrA4ISslS7duJZH0egr344T4AYQIg/9mKY8fk7IyXNxPZCEd19Upyh4uhMazDy40tlGm7c8DaHPP2oh3VU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+i2NrLV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p25ZNfQhfEuanIrDjbzeGYWv1VlkkvBlYgjYVokjg5R99Ddci1Qdhcr5Q0+I4iVIuM0kzycUPP+pggqRHzcsVarH3wN5GMemHjo45emobmVtWXR0KLBHx46bel/TMRfseBXuLSCytrqiYA6umxIeWAQ1j2Nt6F6/TecjnVJKpcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTyx22BZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+i2NrLV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A82C32781;
-	Mon, 27 May 2024 19:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTyx22BZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3EB7C2BBFC;
+	Mon, 27 May 2024 19:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837873;
-	bh=lX6uhSRmdp4O+lCrsFXrr7MySbvK72/TjJ//8XJ++sk=;
+	s=korg; t=1716837876;
+	bh=um3dkAn63SQKLgqoIZeA7Le2TfzTihvwgjC8hgQwQBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+i2NrLVvqisibsPIjVJassupKjRBvbYmPVT25amyy9Ol6cd3NIrThvw3oqIoCgoN
-	 k5EulGB1Hr2uSLkMim0f4yNBB7hlX0iAfPJJHteyg5R76yy3wW2SwlMudFfW4Tcc7e
-	 dQDQNAxqJ2ssEHPcFeB99uh0v3bAQ0iSw3HSx9NA=
+	b=bTyx22BZhltIT6aaJRrWRnsHRyo9BnnJDlGgMQy0nf3gRIrewq0VtaKDPuHYECxxz
+	 4AKE9EDI44UVvfAbKdScI1l+L2fm3uf910cl2i55mDpS5arWh7ItkqG24npcVgPQ5R
+	 J5ElmIzmE9C79/crG1DiyLsp3ZpUqujbltBiVgYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 171/493] wifi: iwlwifi: mvm: allocate STA links only for active links
-Date: Mon, 27 May 2024 20:52:53 +0200
-Message-ID: <20240527185635.945929504@linuxfoundation.org>
+Subject: [PATCH 6.8 180/493] ACPI: bus: Indicate support for more than 16 p-states thru _OSC
+Date: Mon, 27 May 2024 20:53:02 +0200
+Message-ID: <20240527185636.239139264@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 62bdd97598f8be82a24f556f78336b05d1c3e84b ]
+[ Upstream commit 6e8345f23ca37d6d41bb76be5d6a705ddf542817 ]
 
-For the mvm driver, data structures match what's in the firmware,
-we allocate FW IDs for them already etc. During link switch we
-already allocate/free the STA links appropriately, but initially
-we'd allocate them always. Fix this to allocate memory, a STA ID,
-etc. only for active links.
+The code responsible for parsing the available p-states should
+have no problems handling more than 16 p-states.
 
-Fixes: 57974a55d995 ("wifi: iwlwifi: mvm: refactor iwl_mvm_mac_sta_state_common()")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.f2093ff73465.Ie891e1cc9c9df09ae22be6aad5c143e376f40f0e@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Indicate this by setting bit 10 ("Greater Than 16 p-state support")
+when evaluating _OSC.
+
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: a8a967a243d7 ("ACPI: bus: Indicate support for the Generic Event Device thru _OSC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/bus.c   | 1 +
+ include/linux/acpi.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-index 23e64a757cfe8..4ba1599ed71ca 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-@@ -582,14 +582,14 @@ static int iwl_mvm_mld_alloc_sta_links(struct iwl_mvm *mvm,
- 				       struct ieee80211_sta *sta)
- {
- 	struct iwl_mvm_sta *mvm_sta = iwl_mvm_sta_from_mac80211(sta);
-+	struct ieee80211_link_sta *link_sta;
- 	unsigned int link_id;
- 	int ret;
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index 9c5fc12fc13cb..aee91fa2a4596 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -321,6 +321,7 @@ static void acpi_bus_osc_negotiate_platform_control(void)
  
- 	lockdep_assert_held(&mvm->mutex);
- 
--	for (link_id = 0; link_id < ARRAY_SIZE(sta->link); link_id++) {
--		if (!rcu_access_pointer(sta->link[link_id]) ||
--		    mvm_sta->link[link_id])
-+	for_each_sta_active_link(vif, sta, link_sta, link_id) {
-+		if (WARN_ON(mvm_sta->link[link_id]))
- 			continue;
- 
- 		ret = iwl_mvm_mld_alloc_sta_link(mvm, vif, sta, link_id);
+ 	capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_HOTPLUG_OST_SUPPORT;
+ 	capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_PCLPI_SUPPORT;
++	capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_OVER_16_PSTATES_SUPPORT;
+ 	if (IS_ENABLED(CONFIG_ACPI_PRMT))
+ 		capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_PRM_SUPPORT;
+ 	if (IS_ENABLED(CONFIG_ACPI_FFH))
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index e4f4fb67ab55a..7658d06b5bccf 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -574,6 +574,7 @@ acpi_status acpi_run_osc(acpi_handle handle, struct acpi_osc_context *context);
+ #define OSC_SB_PCLPI_SUPPORT			0x00000080
+ #define OSC_SB_OSLPI_SUPPORT			0x00000100
+ #define OSC_SB_FAST_THERMAL_SAMPLING_SUPPORT	0x00000200
++#define OSC_SB_OVER_16_PSTATES_SUPPORT		0x00000400
+ #define OSC_SB_CPC_DIVERSE_HIGH_SUPPORT		0x00001000
+ #define OSC_SB_GENERIC_INITIATOR_SUPPORT	0x00002000
+ #define OSC_SB_CPC_FLEXIBLE_ADR_SPACE		0x00004000
 -- 
 2.43.0
 
