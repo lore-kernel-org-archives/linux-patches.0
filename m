@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C34262BE;
-	Mon, 27 May 2024 19:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D9C262BE;
+	Mon, 27 May 2024 19:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838064; cv=none; b=jkyVofKDqbndsBPw/l49fh9BIhW+eyEfTrKuXvNbZsRHl/urbAWx2fa+k6G3dzr2Fmpoipa0iCy2fzz7afiMQIcKlFmGhsz588PrgJaS/Adaxl2BRyuYOHxVPBpKyIev8bSmnXU7aw+lkjR2GQacTIrI71hzRbpZE7aX49FLL5Q=
+	t=1716838066; cv=none; b=hoYfztgqDFDvIPuLmrbrdenQyF/s4rEAaFf7/GWIY24ofOw+7eS0iotVUN2jcmmBiNTI3vzhLa3Da0tdLQusl+6MWBaMV9VdCX/KXOWaMr2178cTEUONVo0lSdC1k0mfCr5RgMZYg7nMwbSxOa7SyKHIu6vLzv/3PVa8dYZLBW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838064; c=relaxed/simple;
-	bh=NFRKyrySFks6VLAnD4P0gC1/ItMGiItQfS//9TucNg8=;
+	s=arc-20240116; t=1716838066; c=relaxed/simple;
+	bh=nQ0tnJJ3kkTibzvq7zmRS8Bomly2dvnKK/Gw83F+nC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ga9I7ISkHypBMkbRfIXQjtcJFOkmCpzS7TTmyP4/1If9whjNrM4GYlwB5FdNR4swStl9bPsYyQNljf0vXW79kfJOE42Dqef/zV5aELJ2aUEpEm45mrS1EzleGNFGUIdDqHu5m6LoI0kdg21/vWk5cK1JzpCtqYlXauPnS1LI610=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoLpWLZA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PTbBPsmE9vZjnSVPMN1REYm+cNe4+voEvZtzqMx2K2jpIpd3sn6QqCcnUxycroHXLsgFeCoFAmxUeP33XhbNX1JxuPGZUTm+DDkas6dT+57EPpzQTDfA9UI1eCFUWJOmyoq5iy0e0eD5mPyzaQPK87PFSuNNDgphSe127tzJkfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6SGvhWs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoLpWLZA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77779C2BBFC;
-	Mon, 27 May 2024 19:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6SGvhWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029B9C2BBFC;
+	Mon, 27 May 2024 19:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838063;
-	bh=NFRKyrySFks6VLAnD4P0gC1/ItMGiItQfS//9TucNg8=;
+	s=korg; t=1716838066;
+	bh=nQ0tnJJ3kkTibzvq7zmRS8Bomly2dvnKK/Gw83F+nC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DoLpWLZAsOX/58X+KslRIW7mtOfeibRbeyck9+wXQ91tlO2+OKpe12Sfad5BMf212
-	 cYCHKUiR8uzo1AcquiMbEiq5E7td80MDL+PUPNFrZ7TyFOQ5Dy8xjErcO76A4gSFYu
-	 iYaF+PPcse27K3Z7t0YFfsdv3pE81mvVLi0WFqNo=
+	b=E6SGvhWsgvGGKo+sIXR2wxts7eHxjElvs+sBk1BdkzpyoGs9NEOn/5wbEdV68L+mU
+	 o54K1Rqaac4kyBtqFOPkVCPXzAYeIuveb4C1ewJQd7XWAthJKOB1EiQ0rQr19YNChV
+	 fNrc8ahOOF8UzcNpLa5cBcGAJV1uIzjRINyCsP8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 251/493] net: give more chances to rcu in netdev_wait_allrefs_any()
-Date: Mon, 27 May 2024 20:54:13 +0200
-Message-ID: <20240527185638.510114502@linuxfoundation.org>
+Subject: [PATCH 6.8 252/493] macintosh/via-macii: Fix "BUG: sleeping function called from invalid context"
+Date: Mon, 27 May 2024 20:54:14 +0200
+Message-ID: <20240527185638.537476147@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,52 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit cd42ba1c8ac9deb9032add6adf491110e7442040 ]
+[ Upstream commit d301a71c76ee4c384b4e03cdc320a55f5cf1df05 ]
 
-This came while reviewing commit c4e86b4363ac ("net: add two more
-call_rcu_hurry()").
+The via-macii ADB driver calls request_irq() after disabling hard
+interrupts. But disabling interrupts isn't necessary here because the
+VIA shift register interrupt was masked during VIA1 initialization.
 
-Paolo asked if adding one synchronize_rcu() would help.
-
-While synchronize_rcu() does not help, making sure to call
-rcu_barrier() before msleep(wait) is definitely helping
-to make sure lazy call_rcu() are completed.
-
-Instead of waiting ~100 seconds in my tests, the ref_tracker
-splats occurs one time only, and netdev_wait_allrefs_any()
-latency is reduced to the strict minimum.
-
-Ideally we should audit our call_rcu() users to make sure
-no refcount (or cascading call_rcu()) is held too long,
-because rcu_barrier() is quite expensive.
-
-Fixes: 0e4be9e57e8c ("net: use exponential backoff in netdev_wait_allrefs")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/all/28bbf698-befb-42f6-b561-851c67f464aa@kernel.org/T/#m76d73ed6b03cd930778ac4d20a777f22a08d6824
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/419fcc09d0e563b425c419053d02236b044d86b0.1710298421.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/macintosh/via-macii.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index c365aa06f886f..a32811aebde59 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10455,8 +10455,9 @@ static struct net_device *netdev_wait_allrefs_any(struct list_head *list)
- 			rebroadcast_time = jiffies;
- 		}
+diff --git a/drivers/macintosh/via-macii.c b/drivers/macintosh/via-macii.c
+index db9270da5b8e9..b6ddf1d47cb4e 100644
+--- a/drivers/macintosh/via-macii.c
++++ b/drivers/macintosh/via-macii.c
+@@ -140,24 +140,19 @@ static int macii_probe(void)
+ /* Initialize the driver */
+ static int macii_init(void)
+ {
+-	unsigned long flags;
+ 	int err;
  
-+		rcu_barrier();
-+
- 		if (!wait) {
--			rcu_barrier();
- 			wait = WAIT_REFS_MIN_MSECS;
- 		} else {
- 			msleep(wait);
+-	local_irq_save(flags);
+-
+ 	err = macii_init_via();
+ 	if (err)
+-		goto out;
++		return err;
+ 
+ 	err = request_irq(IRQ_MAC_ADB, macii_interrupt, 0, "ADB",
+ 			  macii_interrupt);
+ 	if (err)
+-		goto out;
++		return err;
+ 
+ 	macii_state = idle;
+-out:
+-	local_irq_restore(flags);
+-	return err;
++	return 0;
+ }
+ 
+ /* initialize the hardware */
 -- 
 2.43.0
 
