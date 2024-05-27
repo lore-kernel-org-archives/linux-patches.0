@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA0E168C4;
-	Mon, 27 May 2024 19:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0127C168C4;
+	Mon, 27 May 2024 19:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837927; cv=none; b=Drcm5Kdx1LTHpt6FOV+piq6KkfDeE8ifwjOdT3o07Cwu3z/LWh7NFM+MlYzJx758vLXZOn7APBMcCIRJ3KpYxwRlViq+VDjwqGDpWfH3do7roPLYAhMgQ4sNGEPqY20UwJOd3ZCjnKd4pEwNLdrbsOIeTaFn++eqKvOaZZOI8dA=
+	t=1716837930; cv=none; b=J3MIdSzziqUZWGBfoNpRVySnsCQJ/Ztryd1ALDenNEnva0p/fULCKhe2ArE3iR6ddC0YPHBSEhrpotouuHl29pOVO1wDVbRyhhOmzXQxNzj71yleJ9JC+Z6twOOqWV7FHfbhzQqcE1cx/mC59gzneyPbBmFREhZKGOhDSiDlH8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837927; c=relaxed/simple;
-	bh=Rxaapfwkl+98FrWVwy0tSXvKAWuvUP0hvDeWxIFBoHA=;
+	s=arc-20240116; t=1716837930; c=relaxed/simple;
+	bh=vAYdHzlhCh0eW4X7zHOhYJ95D0XLHe7ss52sfjuK9Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J0sTyQsIR8hGuy+U5qnwUj2Yn72UST1azv1aMutwdidVWaBGm391mwPEv6vg2iOWaQGiMJ4lTl/5v7sIYjBHiPGu8xzBRM9EtEul2cfmbNsDu9AVSwW5Wzon/OK9WjF8gB/OSj/KZvgoCPjBRzM8otf/I1vouzNFRd3S0+o8pt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY6PMzOG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cS29k81fXD0sR23ZnfhecWOEV28+9B2gC+0lFpfG7kOgijZDFTxw98dpH7nu+X06Hn4xTX6EyhGvxTOd0eeMdA2PGOiFkkiQS4ROV8wzYqY851HjrqL2Vvf7TaEi86IIoF69OYylfswUHfmzUdIeEwdjSlU/043Yimx4LBV1XYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtoV2AYF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY6PMzOG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153AEC2BBFC;
-	Mon, 27 May 2024 19:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtoV2AYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC35C2BBFC;
+	Mon, 27 May 2024 19:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837927;
-	bh=Rxaapfwkl+98FrWVwy0tSXvKAWuvUP0hvDeWxIFBoHA=;
+	s=korg; t=1716837929;
+	bh=vAYdHzlhCh0eW4X7zHOhYJ95D0XLHe7ss52sfjuK9Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iY6PMzOGTcFD8KXPe3lJqpGExvUYW25VTPPpB3G7LpSHURhrULke2AY8cxLrCnFjY
-	 HrTJzcdW33Nih0eOps/caWqvXZxbCdOFs/loKS0J/kQRoYHCbD6Jy7hFXbNS4KvKbd
-	 cK89tydcNltCkkNVVXYEh3NJaEgjhy/zJBx8OJjU=
+	b=OtoV2AYF8LWr+Oq4uMyxHRx3i70ZFlV37PWLH2i3SqQsUzLB+7Vy98CK7sZIj2rcB
+	 KXImpkZllfGtBm+Lhej4mP0TrlbPkH5mtHXon1Kt+Xo46y+Exr5iKiHK7+2iYhG3xS
+	 TDPePYX203DX8tvYnUqNrivRY115FffLjpZjQljQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 199/493] scsi: ufs: cdns-pltfrm: Perform read back after writing HCLKDIV
-Date: Mon, 27 May 2024 20:53:21 +0200
-Message-ID: <20240527185636.851435614@linuxfoundation.org>
+Subject: [PATCH 6.8 173/493] wifi: iwlwifi: implement can_activate_links callback
+Date: Mon, 27 May 2024 20:52:55 +0200
+Message-ID: <20240527185636.006011654@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,48 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit b715c55daf598aac8fa339048e4ca8a0916b332e ]
+[ Upstream commit c4d32f2745c75c9041937767f0329f6f1051778b ]
 
-Currently, HCLKDIV is written to and then completed with an mb().
+This callback checks if a given bitmap of active_links
+will be supported by the driver or not.
 
-mb() ensures that the write completes, but completion doesn't mean that it
-isn't stored in a buffer somewhere. The recommendation for ensuring this
-bit has taken effect on the device is to perform a read back to force it to
-make it all the way to the device. This is documented in device-io.rst and
-a talk by Will Deacon on this can be seen over here:
-
-    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
-
-Let's do that to ensure the bit hits the device. Because the mb()'s purpose
-wasn't to add extra ordering (on top of the ordering guaranteed by
-writel()/readl()), it can safely be removed.
-
-Fixes: d90996dae8e4 ("scsi: ufs: Add UFS platform driver for Cadence UFS")
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-6-181252004586@redhat.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://msgid.link/20240123200528.a26fd48bfe3d.I03ae6b4c7fd24e8701660a68cec9403dc3469a0e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 9737da2f00d6 ("wifi: iwlwifi: mvm: fix active link counting during recovery")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/cdns-pltfrm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../wireless/intel/iwlwifi/mvm/mld-mac80211.c  | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ufs/host/cdns-pltfrm.c b/drivers/ufs/host/cdns-pltfrm.c
-index bb30267da4711..66811d8d1929c 100644
---- a/drivers/ufs/host/cdns-pltfrm.c
-+++ b/drivers/ufs/host/cdns-pltfrm.c
-@@ -136,7 +136,7 @@ static int cdns_ufs_set_hclkdiv(struct ufs_hba *hba)
- 	 * Make sure the register was updated,
- 	 * UniPro layer will not work with an incorrect value.
- 	 */
--	mb();
-+	ufshcd_readl(hba, CDNS_UFS_REG_HCLKDIV);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index 893b69fc841b8..1da4fd1c4560b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -254,9 +254,6 @@ __iwl_mvm_mld_assign_vif_chanctx(struct iwl_mvm *mvm,
+ 	if (!rcu_access_pointer(link_conf->chanctx_conf))
+ 		n_active++;
  
- 	return 0;
+-	if (n_active > iwl_mvm_max_active_links(mvm, vif))
+-		return -EOPNOTSUPP;
+-
+ 	if (WARN_ON_ONCE(!mvmvif->link[link_id]))
+ 		return -EINVAL;
+ 
+@@ -1122,17 +1119,12 @@ iwl_mvm_mld_change_vif_links(struct ieee80211_hw *hw,
+ 			     struct ieee80211_bss_conf *old[IEEE80211_MLD_MAX_NUM_LINKS])
+ {
+ 	struct iwl_mvm_vif_link_info *new_link[IEEE80211_MLD_MAX_NUM_LINKS] = {};
+-	unsigned int n_active = iwl_mvm_mld_count_active_links(vif);
+ 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
+ 	struct iwl_mvm *mvm = IWL_MAC80211_GET_MVM(hw);
+ 	u16 removed = old_links & ~new_links;
+ 	u16 added = new_links & ~old_links;
+ 	int err, i;
+ 
+-	if (hweight16(new_links) > 1 &&
+-	    n_active > iwl_mvm_max_active_links(mvm, vif))
+-		return -EOPNOTSUPP;
+-
+ 	for (i = 0; i < IEEE80211_MLD_MAX_NUM_LINKS; i++) {
+ 		int r;
+ 
+@@ -1224,6 +1216,15 @@ iwl_mvm_mld_change_sta_links(struct ieee80211_hw *hw,
+ 	return ret;
  }
+ 
++static bool iwl_mvm_mld_can_activate_links(struct ieee80211_hw *hw,
++					   struct ieee80211_vif *vif,
++					   u16 desired_links)
++{
++	struct iwl_mvm *mvm = IWL_MAC80211_GET_MVM(hw);
++
++	return hweight16(desired_links) <= iwl_mvm_max_active_links(mvm, vif);
++}
++
+ const struct ieee80211_ops iwl_mvm_mld_hw_ops = {
+ 	.tx = iwl_mvm_mac_tx,
+ 	.wake_tx_queue = iwl_mvm_mac_wake_tx_queue,
+@@ -1318,4 +1319,5 @@ const struct ieee80211_ops iwl_mvm_mld_hw_ops = {
+ 
+ 	.change_vif_links = iwl_mvm_mld_change_vif_links,
+ 	.change_sta_links = iwl_mvm_mld_change_sta_links,
++	.can_activate_links = iwl_mvm_mld_can_activate_links,
+ };
 -- 
 2.43.0
 
