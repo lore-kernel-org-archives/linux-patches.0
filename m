@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E766815FCF0;
-	Mon, 27 May 2024 19:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F24015FCF0;
+	Mon, 27 May 2024 19:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838626; cv=none; b=LNI65KtjoJsQlVqR5xPOPdfgdIUYjtzay78zyAu9eIlUUazqhphuRGzBevA/j5kZounJpafUBjNLXRwhbrgBqJuRgiWTY7qQmcAZspjfY0xnpQxUIhRYi+s6QPMVPdEUa/cdY12SGbc0yFkRa1l999LRN3Ugf9B8ChgORb5xdGQ=
+	t=1716838628; cv=none; b=Q8k8nVyvs12qD4Gb4BAwzCTEpQrG/tV/dB+K2vrzamy3zZI58O+HHlQqNGJw+XyV0RqdHGfWuzNq5FqCjJaoAnSpmYh/hgI02t/5NZsVmgHZbWf77xnLj8rgSixBAu8VjF9yEJM3JdcVO3QXbvKf4nJb53ZeCw4eZ/bVh0e2q/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838626; c=relaxed/simple;
-	bh=zYWCEa7915z/Z5eEdHdPEoUj/vJRCQE15g88l1LMWSU=;
+	s=arc-20240116; t=1716838628; c=relaxed/simple;
+	bh=+Sbm/4QnhbO2wCIXkHzfjJuNGrczSqkKMLiC3TgCF8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhZ43lXYd9xz936cXM4BAxvXEGta/SwWz0NUamdilKgleeCZJ7JgjoKQTrwtY3kkQuPuF9zWlT5ZYqweXj3ATUI8d56KZOOc3FDXWTsNaXSm/N0SBpHM9qGNv6gEggR+DMAVSQcQIViB+5bBAbtSn1L1jRsgWUP6t1++jr8UWcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6HDF0kG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DSi3fwRHhyKU4WwyFpt+XriUaKCstkp0ykiShfaG3TWjOGxoTnB0FRDH05POYkT0GfuS8dkqUfo4xj3glO33m7e/j7xPwA7lvYpfe/e9GuptYcg8AQc54eDYY77qmsGL7DGh0ZJ4xFU0WRGVaQ6/A3SGsJuLqkkroZMbdhXKTX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBxpoobv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6HDF0kG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFDBC2BBFC;
-	Mon, 27 May 2024 19:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBxpoobv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05205C32781;
+	Mon, 27 May 2024 19:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838625;
-	bh=zYWCEa7915z/Z5eEdHdPEoUj/vJRCQE15g88l1LMWSU=;
+	s=korg; t=1716838628;
+	bh=+Sbm/4QnhbO2wCIXkHzfjJuNGrczSqkKMLiC3TgCF8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6HDF0kGvUMGcihqxeBb0Tlq72HAfIVP0Fhh4smPfw/SdbOVpyBwMaR4klaow1tR/
-	 Ux9B32MsdkisIlib7bpr+1xWvtsxnAA+xSMN8Mc4E28p54sqoagikFBYmEjBqGIPc4
-	 a+vNbKamh8p/9+URn7rAZ+0+lBQU1JP1cQSKkHFc=
+	b=DBxpoobvX/cXWnKnM7ed3taCvlte3gnjq93oGoBrvUi3bBUEdcEW1HJIET9c69Sk3
+	 lG52tzci81oPLxVIq/oLnWiF0GDcfz2d0o7YhuSI4/rL3rhMmNWoQiuzprqP6cp3LL
+	 +cvekD+Nk0SNybeCufvI6c5ZsCTBkUiJJ3bYKlPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 438/493] IB/mlx5: Use __iowrite64_copy() for write combining stores
-Date: Mon, 27 May 2024 20:57:20 +0200
-Message-ID: <20240527185644.596093295@linuxfoundation.org>
+Subject: [PATCH 6.8 465/493] SUNRPC: Fix gss_free_in_token_pages()
+Date: Mon, 27 May 2024 20:57:47 +0200
+Message-ID: <20240527185645.396003594@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,81 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit ef302283ddfceaba2657923af3f90fd58e6dff06 ]
+[ Upstream commit bafa6b4d95d97877baa61883ff90f7e374427fae ]
 
-mlx5 has a built in self-test at driver startup to evaluate if the
-platform supports write combining to generate a 64 byte PCIe TLP or
-not. This has proven necessary because a lot of common scenarios end up
-with broken write combining (especially inside virtual machines) and there
-is other way to learn this information.
+Dan Carpenter says:
+> Commit 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()") from Oct
+> 24, 2019 (linux-next), leads to the following Smatch static checker
+> warning:
+>
+> 	net/sunrpc/auth_gss/svcauth_gss.c:1039 gss_free_in_token_pages()
+> 	warn: iterator 'i' not incremented
+>
+> net/sunrpc/auth_gss/svcauth_gss.c
+>     1034 static void gss_free_in_token_pages(struct gssp_in_token *in_token)
+>     1035 {
+>     1036         u32 inlen;
+>     1037         int i;
+>     1038
+> --> 1039         i = 0;
+>     1040         inlen = in_token->page_len;
+>     1041         while (inlen) {
+>     1042                 if (in_token->pages[i])
+>     1043                         put_page(in_token->pages[i]);
+>                                                          ^
+> This puts page zero over and over.
+>
+>     1044                 inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
+>     1045         }
+>     1046
+>     1047         kfree(in_token->pages);
+>     1048         in_token->pages = NULL;
+>     1049 }
 
-This self test has been consistently failing on new ARM64 CPU
-designs (specifically with NVIDIA Grace's implementation of Neoverse
-V2). The C loop around writeq() generates some pretty terrible ARM64
-assembly, but historically this has worked on a lot of existing ARM64 CPUs
-till now.
+Based on the way that the ->pages[] array is constructed in
+gss_read_proxy_verf(), we know that once the loop encounters a NULL
+page pointer, the remaining array elements must also be NULL.
 
-We see it succeed about 1 time in 10,000 on the worst effected
-systems. The CPU architects speculate that the load instructions
-interspersed with the stores makes the WC buffers statistically flush too
-often and thus the generation of large TLPs becomes infrequent. This makes
-the boot up test unreliable in that it indicates no write-combining,
-however userspace would be fine since it uses a ST4 instruction.
-
-Further, S390 has similar issues where only the special zpci_memcpy_toio()
-will actually generate large TLPs, and the open coded loop does not
-trigger it at all.
-
-Fix both ARM64 and S390 by switching to __iowrite64_copy() which now
-provides architecture specific variants that have a high change of
-generating a large TLP with write combining. x86 continues to use a
-similar writeq loop in the generate __iowrite64_copy().
-
-Fixes: 11f552e21755 ("IB/mlx5: Test write combining support")
-Link: https://lore.kernel.org/r/6-v3-1893cd8b9369+1925-mlx5_arm_wc_jgg@nvidia.com
-Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Acked-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mem.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/mem.c b/drivers/infiniband/hw/mlx5/mem.c
-index 96ffbbaf0a73d..5a22be14d958f 100644
---- a/drivers/infiniband/hw/mlx5/mem.c
-+++ b/drivers/infiniband/hw/mlx5/mem.c
-@@ -30,6 +30,7 @@
-  * SOFTWARE.
-  */
+diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
+index 24de941847003..96ab50eda9c2e 100644
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1033,17 +1033,11 @@ svcauth_gss_proc_init_verf(struct cache_detail *cd, struct svc_rqst *rqstp,
  
-+#include <linux/io.h>
- #include <rdma/ib_umem_odp.h>
- #include "mlx5_ib.h"
- #include <linux/jiffies.h>
-@@ -108,7 +109,6 @@ static int post_send_nop(struct mlx5_ib_dev *dev, struct ib_qp *ibqp, u64 wr_id,
- 	__be32 mmio_wqe[16] = {};
- 	unsigned long flags;
- 	unsigned int idx;
--	int i;
+ static void gss_free_in_token_pages(struct gssp_in_token *in_token)
+ {
+-	u32 inlen;
+ 	int i;
  
- 	if (unlikely(dev->mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR))
- 		return -EIO;
-@@ -148,10 +148,8 @@ static int post_send_nop(struct mlx5_ib_dev *dev, struct ib_qp *ibqp, u64 wr_id,
- 	 * we hit doorbell
- 	 */
- 	wmb();
--	for (i = 0; i < 8; i++)
--		mlx5_write64(&mmio_wqe[i * 2],
--			     bf->bfreg->map + bf->offset + i * 8);
--	io_stop_wc();
-+	__iowrite64_copy(bf->bfreg->map + bf->offset, mmio_wqe,
-+			 sizeof(mmio_wqe) / 8);
- 
- 	bf->offset ^= bf->buf_size;
- 
+ 	i = 0;
+-	inlen = in_token->page_len;
+-	while (inlen) {
+-		if (in_token->pages[i])
+-			put_page(in_token->pages[i]);
+-		inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
+-	}
+-
++	while (in_token->pages[i])
++		put_page(in_token->pages[i++]);
+ 	kfree(in_token->pages);
+ 	in_token->pages = NULL;
+ }
 -- 
 2.43.0
 
