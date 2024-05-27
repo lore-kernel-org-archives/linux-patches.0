@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC17C26AF2;
-	Mon, 27 May 2024 19:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3E215FD04;
+	Mon, 27 May 2024 19:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836872; cv=none; b=SZZkgAuzwLJtqMR77xq3WImqeeqF8yjhebASu9KI3iU00Ro42nxJvJ9FdAJOTV+cFZ58UNs4fxmk1+O7mVk0j4y/B6osrn7GdYiBKsKPCUO7egERm9Qy/PyXmCatWlTev8q+q3t2s1RtnbZKQBHEK9jmIchO/EtQ12gNg3if8N4=
+	t=1716836875; cv=none; b=j3RVHDzgnlvpIhFff+Sxlt9TElOWkyevbaX8gn76dHZO0btMQqENTrLXSPAUWXB+tIQ26+jSTULX7SJPqpZRjZ86wtylEEra4hOLZDX2tGilAN3TSdKx+0wIbJfQfBCFPE9wXcJKDE9mvY05RhC/LYP3VUSlUDt1gnuS37cFSZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836872; c=relaxed/simple;
-	bh=5g+2gb722gkPOIqQafD+uhelNZuQvUtrMGJtftCwJ40=;
+	s=arc-20240116; t=1716836875; c=relaxed/simple;
+	bh=WDj2G4CvoyyJNd7QF78dcu5rt/tK2M1AGJhHMfonP5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIblz1xavZul6KcJtEIpLDq3ffaQT0Okw6hsaclVUMgUHTX33lNJSRTwoP6d643HWwYPbfW00sYRafPNbl+sbjEqXgFlUIRSXWE77lAdNh6FIGC+Wgije8TUqTp/mDkez50HIKF4vM/6MTnzeSeNFaWoMDVQRdK4HxtlbotlhLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yviHd51a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwCjG6LOiwkIp4MIXDjWHAAI9Y0gG8GpTKvn4DtL2cCAfXjLgo3qSHIeSFujTME95z1a3BI+lPJnDnmwwvX22Wb9oe2rDccjIlmgKaLu5bzzcaC0WAUhUZT8Z9n+vm3HPbLj2tdT5jYSeDZezcxowjr9XxPjeHwSx9X98Ejnqzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUFlajIw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yviHd51a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61540C32782;
-	Mon, 27 May 2024 19:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUFlajIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63ABC2BBFC;
+	Mon, 27 May 2024 19:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836872;
-	bh=5g+2gb722gkPOIqQafD+uhelNZuQvUtrMGJtftCwJ40=;
+	s=korg; t=1716836875;
+	bh=WDj2G4CvoyyJNd7QF78dcu5rt/tK2M1AGJhHMfonP5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yviHd51aqD5ZfXzudyEs6ACDnU9UV6qBIUeHNmpF47Q3WRiUdEx6J68B7CCbnlzhy
-	 risj2DaCcDVjfLsv1NX+JnUImGu5a++UM3NbTPy1vB6j7X4MhretDac1WN2W1MBzRF
-	 ciinRKkUCVRFtvD39h8+AVrw3YLxRE+qSqCWZyZQ=
+	b=IUFlajIwcyHVGvzXGAbWclD1l7V2uP8HT4DoKD5DwHqkF7nOWQv4xDLveSOtxR1mp
+	 iqqnXfa1W1DJYOg/itvr1YsZRakxEiTfAnGFBklKfilI0J8hhsCcyQgaVj4IcgJ0TQ
+	 5doRyk85+VLMwO/Mp5DjG26QlKravLhmcEFXXMV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	Hao Chen <chenhao418@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Will Deacon <will@kernel.org>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 184/427] drivers/perf: hisi: hns3: Fix out-of-bound access when valid event group
-Date: Mon, 27 May 2024 20:53:51 +0200
-Message-ID: <20240527185619.399200571@linuxfoundation.org>
+Subject: [PATCH 6.9 220/427] scsi: qla2xxx: Fix debugfs output for fw_resource_count
+Date: Mon, 27 May 2024 20:54:27 +0200
+Message-ID: <20240527185623.099579454@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,67 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhao He <hejunhao3@huawei.com>
+From: Himanshu Madhani <himanshu.madhani@oracle.com>
 
-[ Upstream commit 81bdd60a3d1d3b05e6cc6674845afb1694dd3a0e ]
+[ Upstream commit 998d09c5ef6183bd8137d1a892ba255b15978bb4 ]
 
-The perf tool allows users to create event groups through following
-cmd [1], but the driver does not check whether the array index is out
-of bounds when writing data to the event_group array. If the number of
-events in an event_group is greater than HNS3_PMU_MAX_HW_EVENTS, the
-memory write overflow of event_group array occurs.
+DebugFS output for fw_resource_count shows:
 
-Add array index check to fix the possible array out of bounds violation,
-and return directly when write new events are written to array bounds.
+estimate exchange used[0] high water limit [1945] n        estimate iocb2 used [0] high water limit [5141]
+        estimate exchange2 used[0] high water limit [1945]
 
-There are 9 different events in an event_group.
-[1] perf stat -e '{pmu/event1/, ... ,pmu/event9/}
+Which shows incorrect display due to missing newline in seq_print().
 
-Fixes: 66637ab137b4 ("drivers/perf: hisi: add driver for HNS3 PMU")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Signed-off-by: Hao Chen <chenhao418@huawei.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://lore.kernel.org/r/20240425124627.13764-3-hejunhao3@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+[mkp: fix checkpatch warning about space before newline]
+
+Fixes: 5f63a163ed2f ("scsi: qla2xxx: Fix exchange oversubscription for management commands")
+Signed-off-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Link: https://lore.kernel.org/r/20240426020056.3639406-1-himanshu.madhani@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/hisilicon/hns3_pmu.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_dfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/perf/hisilicon/hns3_pmu.c b/drivers/perf/hisilicon/hns3_pmu.c
-index 16869bf5bf4cc..cbdd53b0a0342 100644
---- a/drivers/perf/hisilicon/hns3_pmu.c
-+++ b/drivers/perf/hisilicon/hns3_pmu.c
-@@ -1085,15 +1085,27 @@ static bool hns3_pmu_validate_event_group(struct perf_event *event)
- 			return false;
+diff --git a/drivers/scsi/qla2xxx/qla_dfs.c b/drivers/scsi/qla2xxx/qla_dfs.c
+index 55ff3d7482b3e..a1545dad0c0ce 100644
+--- a/drivers/scsi/qla2xxx/qla_dfs.c
++++ b/drivers/scsi/qla2xxx/qla_dfs.c
+@@ -274,7 +274,7 @@ qla_dfs_fw_resource_cnt_show(struct seq_file *s, void *unused)
+ 		seq_printf(s, "Driver: estimate iocb used [%d] high water limit [%d]\n",
+ 			   iocbs_used, ha->base_qpair->fwres.iocbs_limit);
  
- 		for (num = 0; num < counters; num++) {
-+			/*
-+			 * If we find a related event, then it's a valid group
-+			 * since we don't need to allocate a new counter for it.
-+			 */
- 			if (hns3_pmu_cmp_event(event_group[num], sibling))
- 				break;
- 		}
+-		seq_printf(s, "estimate exchange used[%d] high water limit [%d] n",
++		seq_printf(s, "estimate exchange used[%d] high water limit [%d]\n",
+ 			   exch_used, ha->base_qpair->fwres.exch_limit);
  
-+		/*
-+		 * Otherwise it's a new event but if there's no available counter,
-+		 * fail the check since we cannot schedule all the events in
-+		 * the group simultaneously.
-+		 */
-+		if (num == HNS3_PMU_MAX_HW_EVENTS)
-+			return false;
-+
- 		if (num == counters)
- 			event_group[counters++] = sibling;
- 	}
- 
--	return counters <= HNS3_PMU_MAX_HW_EVENTS;
-+	return true;
- }
- 
- static u32 hns3_pmu_get_filter_condition(struct perf_event *event)
+ 		if (ql2xenforce_iocb_limit == 2) {
 -- 
 2.43.0
 
