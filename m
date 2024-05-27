@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2320E1607B8;
-	Mon, 27 May 2024 19:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24AB15FA91;
+	Mon, 27 May 2024 19:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838019; cv=none; b=fcKOk62lri1E+XkN757X7PrhA4XaOkbSI24Gn7GLwMhopxU2Z3VKJhPxUjb8azmADyEjYHehHyss8+8Gvj4neuCMFDHuCq9tytE88nQGtcq6EWgdZQdHJYihz72sbH3RDX1KLZLi4Aa+lA5TU0hm9bkVd3j9lwkAxomQ5boQ/+E=
+	t=1716838021; cv=none; b=KGsulswnwFJiYHMRrczMwJfdZ5GQSvx0dsUMmF4WWACWNlRBIdSd6eCpurbrewLj4Ayulf833WfR2mJ3PTf9+z8l5TevhItkHWNAP4T2AZCTCtiL4yOxnvkSp5Vlv5E07FT4uKh3kVO9+w7ixqXgJ/cM6xG13Yhmcsh+ti2w9G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838019; c=relaxed/simple;
-	bh=x/CWFq067HlmHtr8kdqlmmncP+jJdwyOyYp4Djn5K58=;
+	s=arc-20240116; t=1716838021; c=relaxed/simple;
+	bh=W4scv2E/7gs3KbSyL87GmkVN5wDBLdx4NSqJ+tByKgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y31VYSce0zNlASMhaKDG0p+HHgDNTta5JOKo9GZQahRyVeyKkK8zexDtKIvUVbaBMQkGXJhDDix6xmVaF1IPAYo/A7/vJeOFxn94KQ/qpVk/gaKQm703j8hR9Qp01ySfPkOfWsXSowU/wvCuH2woJjaCSQoyEa08qfem1KBMa3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SDwQiYKE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cxfj31lVwdbWzAa1uFfYtOx7cFWVmQtfvXc95L1nkXaHs6BZ+yvZwvX9x0W2a44Dunmp6Tv1eiOEaT9AlniMv0Vr+rlit/5eZ7x2N+FaxQUQKltdg13rePqZNHYBwQwuht8Q2ubC3GtO6Hp79GFjIWwfiA8FPOoLPlh63i6jR80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hlfre8c6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SDwQiYKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF433C32781;
-	Mon, 27 May 2024 19:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlfre8c6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F37C32782;
+	Mon, 27 May 2024 19:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838019;
-	bh=x/CWFq067HlmHtr8kdqlmmncP+jJdwyOyYp4Djn5K58=;
+	s=korg; t=1716838021;
+	bh=W4scv2E/7gs3KbSyL87GmkVN5wDBLdx4NSqJ+tByKgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SDwQiYKEOPbRu0k4BqvvLx0/vIai0qwP+rRff+3v8JCN/cqiqx/OFd6pSKUBBOWwJ
-	 xo9eqV45mdwwLDVEdQiGS+FLn2SwCjQcKu4HbfydNfxb6GhPDXj9XRVk5E0etkWNoG
-	 GNRSC7IaB9vHu0yMCItfM9DhPWNBWnERL4YBH3oM=
+	b=hlfre8c6qaiNxyTlKDp2rwgX1+qyDje/OQd319NFn0VXxcNPyMyBZB3/UpsjvZ1Hy
+	 OzHSN1PO6vh8gnIa6ImlXEyy4bEf0QLNPWabgmBBPh78lAfsLeCQmx+5WGly3gLAnJ
+	 OwlzyD7blCnlaShA8fQOMQNcpMJCClcsWr5mBx+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Andryuk <jandryuk@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 218/493] x86/pat: Fix W^X violation false-positives when running as Xen PV guest
-Date: Mon, 27 May 2024 20:53:40 +0200
-Message-ID: <20240527185637.437948146@linuxfoundation.org>
+Subject: [PATCH 6.8 236/493] thermal/debugfs: Avoid excessive updates of trip point statistics
+Date: Mon, 27 May 2024 20:53:58 +0200
+Message-ID: <20240527185638.014537807@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,141 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 5bc8b0f5dac04cd4ebe47f8090a5942f2f2647ef ]
+[ Upstream commit 0a293c77580581c4b058eb40287acadac6ffd14a ]
 
-When running as Xen PV guest in some cases W^X violation WARN()s have
-been observed. Those WARN()s are produced by verify_rwx(), which looks
-into the PTE to verify that writable kernel pages have the NX bit set
-in order to avoid code modifications of the kernel by rogue code.
+Since thermal_debug_update_temp() is called before invoking
+thermal_debug_tz_trip_down() for the trips that were crossed by the
+zone temperature on the way up, it updates the statistics for them
+as though the current zone temperature was above the low temperature
+of each of them.  However, if a given trip has just been crossed on the
+way down, the zone temperature is in fact below its low temperature,
+but this is handled by thermal_debug_tz_trip_down() running after the
+update of the trip statistics.
 
-As the NX bits of all levels of translation entries are or-ed and the
-RW bits of all levels are and-ed, looking just into the PTE isn't enough
-for the decision that a writable page is executable, too.
+The remedy is to call thermal_debug_update_temp() after
+thermal_debug_tz_trip_down() has been invoked for all of the
+trips in question, but then thermal_debug_tz_trip_up() needs to
+be adjusted, so it does not update the statistics for the trips
+that has just been crossed on the way up, as that will be taken
+care of by thermal_debug_update_temp() down the road.
 
-When running as a Xen PV guest, the direct map PMDs and kernel high
-map PMDs share the same set of PTEs. Xen kernel initialization will set
-the NX bit in the direct map PMD entries, and not the shared PTEs.
+Modify the code accordingly.
 
-Fixes: 652c5bf380ad ("x86/mm: Refuse W^X violations")
-Reported-by: Jason Andryuk <jandryuk@gmail.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20240412151258.9171-5-jgross@suse.com
+Fixes: 7ef01f228c9f ("thermal/debugfs: Add thermal debugfs information for mitigation episodes")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/pat/set_memory.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ drivers/thermal/thermal_core.c    | 3 ++-
+ drivers/thermal/thermal_debugfs.c | 7 -------
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
-index 9c1dccfd1f67f..b4073fb452b6a 100644
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -619,7 +619,8 @@ static inline pgprot_t static_protections(pgprot_t prot, unsigned long start,
-  * Validate strict W^X semantics.
-  */
- static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long start,
--				  unsigned long pfn, unsigned long npg)
-+				  unsigned long pfn, unsigned long npg,
-+				  bool nx, bool rw)
- {
- 	unsigned long end;
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index dfaa6341694a0..1818901d37ca8 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -432,7 +432,6 @@ static void update_temperature(struct thermal_zone_device *tz)
+ 	trace_thermal_temperature(tz);
  
-@@ -641,6 +642,10 @@ static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long star
- 	if ((pgprot_val(new) & (_PAGE_RW | _PAGE_NX)) != _PAGE_RW)
- 		return new;
- 
-+	/* Non-leaf translation entries can disable writing or execution. */
-+	if (!rw || nx)
-+		return new;
-+
- 	end = start + npg * PAGE_SIZE - 1;
- 	WARN_ONCE(1, "CPA detected W^X violation: %016llx -> %016llx range: 0x%016lx - 0x%016lx PFN %lx\n",
- 		  (unsigned long long)pgprot_val(old),
-@@ -742,7 +747,7 @@ pte_t *lookup_address(unsigned long address, unsigned int *level)
- EXPORT_SYMBOL_GPL(lookup_address);
- 
- static pte_t *_lookup_address_cpa(struct cpa_data *cpa, unsigned long address,
--				  unsigned int *level)
-+				  unsigned int *level, bool *nx, bool *rw)
- {
- 	pgd_t *pgd;
- 
-@@ -751,7 +756,7 @@ static pte_t *_lookup_address_cpa(struct cpa_data *cpa, unsigned long address,
- 	else
- 		pgd = cpa->pgd + pgd_index(address);
- 
--	return lookup_address_in_pgd(pgd, address, level);
-+	return lookup_address_in_pgd_attr(pgd, address, level, nx, rw);
+ 	thermal_genl_sampling_temp(tz->id, temp);
+-	thermal_debug_update_temp(tz);
  }
  
- /*
-@@ -879,12 +884,13 @@ static int __should_split_large_page(pte_t *kpte, unsigned long address,
- 	pgprot_t old_prot, new_prot, req_prot, chk_prot;
- 	pte_t new_pte, *tmp;
- 	enum pg_level level;
-+	bool nx, rw;
+ static void thermal_zone_device_check(struct work_struct *work)
+@@ -476,6 +475,8 @@ void __thermal_zone_device_update(struct thermal_zone_device *tz,
+ 	for_each_trip(tz, trip)
+ 		handle_thermal_trip(tz, trip);
  
- 	/*
- 	 * Check for races, another CPU might have split this page
- 	 * up already:
- 	 */
--	tmp = _lookup_address_cpa(cpa, address, &level);
-+	tmp = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
- 	if (tmp != kpte)
- 		return 1;
++	thermal_debug_update_temp(tz);
++
+ 	monitor_thermal_zone(tz);
+ }
  
-@@ -995,7 +1001,8 @@ static int __should_split_large_page(pte_t *kpte, unsigned long address,
- 	new_prot = static_protections(req_prot, lpaddr, old_pfn, numpages,
- 				      psize, CPA_DETECT);
+diff --git a/drivers/thermal/thermal_debugfs.c b/drivers/thermal/thermal_debugfs.c
+index 5693cc8b231aa..47ab95b3699e9 100644
+--- a/drivers/thermal/thermal_debugfs.c
++++ b/drivers/thermal/thermal_debugfs.c
+@@ -555,7 +555,6 @@ void thermal_debug_tz_trip_up(struct thermal_zone_device *tz,
+ 	struct tz_episode *tze;
+ 	struct tz_debugfs *tz_dbg;
+ 	struct thermal_debugfs *thermal_dbg = tz->debugfs;
+-	int temperature = tz->temperature;
+ 	int trip_id = thermal_zone_trip_id(tz, trip);
+ 	ktime_t now = ktime_get();
  
--	new_prot = verify_rwx(old_prot, new_prot, lpaddr, old_pfn, numpages);
-+	new_prot = verify_rwx(old_prot, new_prot, lpaddr, old_pfn, numpages,
-+			      nx, rw);
+@@ -624,12 +623,6 @@ void thermal_debug_tz_trip_up(struct thermal_zone_device *tz,
  
- 	/*
- 	 * If there is a conflict, split the large page.
-@@ -1076,6 +1083,7 @@ __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
- 	pte_t *pbase = (pte_t *)page_address(base);
- 	unsigned int i, level;
- 	pgprot_t ref_prot;
-+	bool nx, rw;
- 	pte_t *tmp;
+ 	tze = list_first_entry(&tz_dbg->tz_episodes, struct tz_episode, node);
+ 	tze->trip_stats[trip_id].timestamp = now;
+-	tze->trip_stats[trip_id].max = max(tze->trip_stats[trip_id].max, temperature);
+-	tze->trip_stats[trip_id].min = min(tze->trip_stats[trip_id].min, temperature);
+-	tze->trip_stats[trip_id].count++;
+-	tze->trip_stats[trip_id].avg = tze->trip_stats[trip_id].avg +
+-		(temperature - tze->trip_stats[trip_id].avg) /
+-		tze->trip_stats[trip_id].count;
  
- 	spin_lock(&pgd_lock);
-@@ -1083,7 +1091,7 @@ __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
- 	 * Check for races, another CPU might have split this page
- 	 * up for us already:
- 	 */
--	tmp = _lookup_address_cpa(cpa, address, &level);
-+	tmp = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
- 	if (tmp != kpte) {
- 		spin_unlock(&pgd_lock);
- 		return 1;
-@@ -1624,10 +1632,11 @@ static int __change_page_attr(struct cpa_data *cpa, int primary)
- 	int do_split, err;
- 	unsigned int level;
- 	pte_t *kpte, old_pte;
-+	bool nx, rw;
- 
- 	address = __cpa_addr(cpa, cpa->curpage);
- repeat:
--	kpte = _lookup_address_cpa(cpa, address, &level);
-+	kpte = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
- 	if (!kpte)
- 		return __cpa_process_fault(cpa, address, primary);
- 
-@@ -1649,7 +1658,8 @@ static int __change_page_attr(struct cpa_data *cpa, int primary)
- 		new_prot = static_protections(new_prot, address, pfn, 1, 0,
- 					      CPA_PROTECT);
- 
--		new_prot = verify_rwx(old_prot, new_prot, address, pfn, 1);
-+		new_prot = verify_rwx(old_prot, new_prot, address, pfn, 1,
-+				      nx, rw);
- 
- 		new_prot = pgprot_clear_protnone_bits(new_prot);
- 
+ unlock:
+ 	mutex_unlock(&thermal_dbg->lock);
 -- 
 2.43.0
 
