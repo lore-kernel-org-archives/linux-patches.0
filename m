@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71563168C4;
-	Mon, 27 May 2024 19:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6F4168C4;
+	Mon, 27 May 2024 19:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837357; cv=none; b=SUUHJgeIW00y26eizxUAXwf4RNMT3xtZ2xEW71Ljcl/AcDbs9yhm2aHXoAH6BiOohEyHxTTFm+lEAzg11rlmyTCahWzQCO1KckB8tYlB7R93p75wiTbVIC1n4rrTmsFcvL0RzE4vicWBKF3XCRAwfUZmORnKiXyS9Iaqy6qV17I=
+	t=1716837360; cv=none; b=s7srp2rF6iLpBKWwhnnL/5Tgcr/mkP+55MWGyQEmBGGtQNmBxZDd+mnb/HfVK66hpuoXb6sF/Q94EAwq7hNknvXP2N7PDlc8BmnCb7l2YjJ0VQ/Xpdg5N28YZUJfcAdd3JyhAs480BIjtkHK7DnrKoTCj+7o350s7khOxd0FcOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837357; c=relaxed/simple;
-	bh=K5iXjIZNYeAJvBJ6Eontl67GmAI0eepfP5EcaFbn84Y=;
+	s=arc-20240116; t=1716837360; c=relaxed/simple;
+	bh=Vre2ugZBJywnFyNOTNLDJC2fpR3MyEu8+rx4I+qJuCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ED4edrfJRhqu9thiHdnRUUGDCZrzXHqe6C3Fg3ddU7ziJYkAvWY6DzfqqZ32LFdia2TuIhIoMdMTvAfAwqNEOAh7QK7QBPVqA2NHf0dXa83hcQZM96dgRozHv7AnCoakYICtqr5GbWhZTP1+WciePYrKBmgTotkAdlEthKtN7yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVqmqNqV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6Ez71V9BXuV+bgHBFPX9rbhbhYmLNNUOXvewN+oEsb6ESzMFzst5F12fLF2rcqJHG1dvHPQOWCI42ftCUruCBDZggUzbHS+jAxy4L26u77enEGBAZCvVG7nNOflbHvLxHxzhT2D2igPuALNfd4GAYuWatHtXqpqr2/LGb2soCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPW7/FV8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVqmqNqV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DCAC2BBFC;
-	Mon, 27 May 2024 19:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPW7/FV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFE1C2BBFC;
+	Mon, 27 May 2024 19:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837357;
-	bh=K5iXjIZNYeAJvBJ6Eontl67GmAI0eepfP5EcaFbn84Y=;
+	s=korg; t=1716837359;
+	bh=Vre2ugZBJywnFyNOTNLDJC2fpR3MyEu8+rx4I+qJuCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVqmqNqVhKun4OzNKb5t4SFP5YYIXqZeOHL4p+VLKLsh0jMRRsmfNe7IUusAFJKRj
-	 wvBEwh3pniCGoX4AdZEE49AV5V+DYoVpe0Q97tYI2rsLz+3hE/J52NOoZajIVBWUdx
-	 M3X1QCOThg96tuaycgU+O4a5dZ7KmDumhVq2ACGo=
+	b=EPW7/FV8TrjWNjTrQ6U21qBNQBGRQnqPbk9/8CoUFF/iTc8yccqJTF50vhM+28K1h
+	 fpW8QApRA/nkWFPUb9jgfpUVPR/Qg/U8JgDspAkMAUE6Dt1OmCLC8FHFtFqLzHIROV
+	 q9njEgFPsMStCho/DEeS9wSZlr4cnfGyjgxQmqNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 360/427] RDMA/hns: Use complete parentheses in macros
-Date: Mon, 27 May 2024 20:56:47 +0200
-Message-ID: <20240527185633.854510497@linuxfoundation.org>
+Subject: [PATCH 6.9 403/427] SUNRPC: Fix gss_free_in_token_pages()
+Date: Mon, 27 May 2024 20:57:30 +0200
+Message-ID: <20240527185635.185599878@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,50 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 4125269bb9b22e1d8cdf4412c81be8074dbc61ca ]
+[ Upstream commit bafa6b4d95d97877baa61883ff90f7e374427fae ]
 
-Use complete parentheses to ensure that macro expansion does
-not produce unexpected results.
+Dan Carpenter says:
+> Commit 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()") from Oct
+> 24, 2019 (linux-next), leads to the following Smatch static checker
+> warning:
+>
+> 	net/sunrpc/auth_gss/svcauth_gss.c:1039 gss_free_in_token_pages()
+> 	warn: iterator 'i' not incremented
+>
+> net/sunrpc/auth_gss/svcauth_gss.c
+>     1034 static void gss_free_in_token_pages(struct gssp_in_token *in_token)
+>     1035 {
+>     1036         u32 inlen;
+>     1037         int i;
+>     1038
+> --> 1039         i = 0;
+>     1040         inlen = in_token->page_len;
+>     1041         while (inlen) {
+>     1042                 if (in_token->pages[i])
+>     1043                         put_page(in_token->pages[i]);
+>                                                          ^
+> This puts page zero over and over.
+>
+>     1044                 inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
+>     1045         }
+>     1046
+>     1047         kfree(in_token->pages);
+>     1048         in_token->pages = NULL;
+>     1049 }
 
-Fixes: a25d13cbe816 ("RDMA/hns: Add the interfaces to support multi hop addressing for the contexts in hip08")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240412091616.370789-10-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Based on the way that the ->pages[] array is constructed in
+gss_read_proxy_verf(), we know that once the loop encounters a NULL
+page pointer, the remaining array elements must also be NULL.
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.h b/drivers/infiniband/hw/hns/hns_roce_hem.h
-index 6fb51db9682b8..9c415b2541af8 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.h
-@@ -57,16 +57,16 @@ enum {
- };
+diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
+index 24de941847003..96ab50eda9c2e 100644
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1033,17 +1033,11 @@ svcauth_gss_proc_init_verf(struct cache_detail *cd, struct svc_rqst *rqstp,
  
- #define check_whether_bt_num_3(type, hop_num) \
--	(type < HEM_TYPE_MTT && hop_num == 2)
-+	((type) < HEM_TYPE_MTT && (hop_num) == 2)
+ static void gss_free_in_token_pages(struct gssp_in_token *in_token)
+ {
+-	u32 inlen;
+ 	int i;
  
- #define check_whether_bt_num_2(type, hop_num) \
--	((type < HEM_TYPE_MTT && hop_num == 1) || \
--	(type >= HEM_TYPE_MTT && hop_num == 2))
-+	(((type) < HEM_TYPE_MTT && (hop_num) == 1) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == 2))
- 
- #define check_whether_bt_num_1(type, hop_num) \
--	((type < HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0) || \
--	(type >= HEM_TYPE_MTT && hop_num == 1) || \
--	(type >= HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0))
-+	(((type) < HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == 1) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0))
- 
- struct hns_roce_hem {
- 	void *buf;
+ 	i = 0;
+-	inlen = in_token->page_len;
+-	while (inlen) {
+-		if (in_token->pages[i])
+-			put_page(in_token->pages[i]);
+-		inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
+-	}
+-
++	while (in_token->pages[i])
++		put_page(in_token->pages[i++]);
+ 	kfree(in_token->pages);
+ 	in_token->pages = NULL;
+ }
 -- 
 2.43.0
 
