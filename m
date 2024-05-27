@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F3A17E90E;
-	Mon, 27 May 2024 19:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7588817E90E;
+	Mon, 27 May 2024 19:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836989; cv=none; b=obMz4Gp/rrLt9CzJJKy7cIbnNW68qn66Ggb+aLZqyLBAQkjMSdZFnm8iT3pEVYcbGlbJ6h62W3yAms+ek5vBIgpsEYUZgpTkYkNDT2lmLmjfQa5Pw/EDXAby3mKmAfODX4VGZZg3CLwmJ5FrpBhXgll2YkMl9DkrrxY64UntVyc=
+	t=1716836992; cv=none; b=IsGh+KhyoPCqFec6VhHaAzA/0p0Kk9zaxkW6xkP3JEZogFgSTFsYZzj37TCasihE4W1644f+mpsh0gXuPWMnb7A1HlX3zTXlfgKVx1vqWMZPZeWaIjIbsgzOnjmWWMhmBSYRPQPhImoEY43iSzAmVH43pdxSpM79Cyzwh3ifbw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836989; c=relaxed/simple;
-	bh=+xRDzPapW3nLENGLL3nsLD3cMo/NQbteP8UVuwYqcqQ=;
+	s=arc-20240116; t=1716836992; c=relaxed/simple;
+	bh=i/qZHKPqvjebkN7FqUkZMFAK2pA95u3ALqZoqrLN2ug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZFftGFlK1Lk6n7p0Uqc37aX/Nyr6KDU7ggUg6xv8a3YrW6uqY8YVTDyKsyQNY6o+MvRaIfxp3rOaJrRMjh7Sk/iC5uL36py0uvrX0JWCMP6v0Oh9yb+Q5BcAeoMWFCcIYEqYz58eLgd0M+/MLED1dKLrV6zw4JuE4dMYEEgJI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fb0GZkgm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HSEI0i8hmW22JT0akAY/yAhzN3mJkDGLbpGZ6RQqGJPxxHNlKthVTgT9HPGqgCZA/DeMHs2QvMhBDP6Ukl9UjH4x9bJ7l1YVyDLax8oG0XUC0BAhR6oQOklfuRKw2LF6fOQ7ez8Uq0ygeFg1NvvKks19oKmY5ItX3cS8CfM7ci8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIeVQSBA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fb0GZkgm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACA6C2BBFC;
-	Mon, 27 May 2024 19:09:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIeVQSBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06A7C32786;
+	Mon, 27 May 2024 19:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836989;
-	bh=+xRDzPapW3nLENGLL3nsLD3cMo/NQbteP8UVuwYqcqQ=;
+	s=korg; t=1716836992;
+	bh=i/qZHKPqvjebkN7FqUkZMFAK2pA95u3ALqZoqrLN2ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fb0GZkgmZk7N8UUN9VNo0Q11z1wpOaCX9R4iDLdonxPMWg+kqnrbsJd95b2faeNi5
-	 wLs/tOg6oj79dXBoAZ3wbtFUlunTfhHwTjD9foQ4fwWFfPuBOcJY6Iv1ozOAkPq5kn
-	 6yn1agMqIJz2h+ICw0+A/Xqb1ZX0P7kToA/Lh6L0=
+	b=rIeVQSBA8SOSozCaZevavsZODsDlSrN1sZt9f1ivHukZMUQ6m9OHqs8X0WOgCVz+I
+	 vNsYEgzlwG7r2IoA6FQjVhbt48V5Ob+mcdxC8ARl6mGRvU+AGcUYNDDvKfcx3q/cJE
+	 Sqv50Xlz+q5Ylt5C0WWtGdmX6mF6ve2K7HFKLcvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Simon Horman <horms@kernel.org>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 265/427] mptcp: fix full TCP keep-alive support
-Date: Mon, 27 May 2024 20:55:12 +0200
-Message-ID: <20240527185627.197848586@linuxfoundation.org>
+Subject: [PATCH 6.9 266/427] net: stmmac: move the EST lock to struct stmmac_priv
+Date: Mon, 27 May 2024 20:55:13 +0200
+Message-ID: <20240527185627.297592936@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,155 +54,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit bd11dc4fb969ec148e50cd87f88a78246dbc4d0b ]
+[ Upstream commit 36ac9e7f2e5786bd37c5cd91132e1f39c29b8197 ]
 
-SO_KEEPALIVE support has been added a while ago, as part of a series
-"adding SOL_SOCKET" support. To have a full control of this keep-alive
-feature, it is important to also support TCP_KEEP* socket options at the
-SOL_TCP level.
+Reinitialize the whole EST structure would also reset the mutex
+lock which is embedded in the EST structure, and then trigger
+the following warning. To address this, move the lock to struct
+stmmac_priv. We also need to reacquire the mutex lock when doing
+this initialization.
 
-Supporting them on the setsockopt() part is easy, it is just a matter of
-remembering each value in the MPTCP sock structure, and calling
-tcp_sock_set_keep*() helpers on each subflow. If the value is not
-modified (0), calling these helpers will not do anything. For the
-getsockopt() part, the corresponding value from the MPTCP sock structure
-or the default one is simply returned. All of this is very similar to
-other TCP_* socket options supported by MPTCP.
+DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+WARNING: CPU: 3 PID: 505 at kernel/locking/mutex.c:587 __mutex_lock+0xd84/0x1068
+ Modules linked in:
+ CPU: 3 PID: 505 Comm: tc Not tainted 6.9.0-rc6-00053-g0106679839f7-dirty #29
+ Hardware name: NXP i.MX8MPlus EVK board (DT)
+ pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : __mutex_lock+0xd84/0x1068
+ lr : __mutex_lock+0xd84/0x1068
+ sp : ffffffc0864e3570
+ x29: ffffffc0864e3570 x28: ffffffc0817bdc78 x27: 0000000000000003
+ x26: ffffff80c54f1808 x25: ffffff80c9164080 x24: ffffffc080d723ac
+ x23: 0000000000000000 x22: 0000000000000002 x21: 0000000000000000
+ x20: 0000000000000000 x19: ffffffc083bc3000 x18: ffffffffffffffff
+ x17: ffffffc08117b080 x16: 0000000000000002 x15: ffffff80d2d40000
+ x14: 00000000000002da x13: ffffff80d2d404b8 x12: ffffffc082b5a5c8
+ x11: ffffffc082bca680 x10: ffffffc082bb2640 x9 : ffffffc082bb2698
+ x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 : 0000000000000001
+ x5 : ffffff8178fe0d48 x4 : 0000000000000000 x3 : 0000000000000027
+ x2 : ffffff8178fe0d50 x1 : 0000000000000000 x0 : 0000000000000000
+ Call trace:
+  __mutex_lock+0xd84/0x1068
+  mutex_lock_nested+0x28/0x34
+  tc_setup_taprio+0x118/0x68c
+  stmmac_setup_tc+0x50/0xf0
+  taprio_change+0x868/0xc9c
 
-It looks important for kernels supporting SO_KEEPALIVE, to also support
-TCP_KEEP* options as well: some apps seem to (wrongly) consider that if
-the former is supported, the latter ones will be supported as well. But
-also, not having this simple and isolated change is preventing MPTCP
-support in some apps, and libraries like GoLang [1]. This is why this
-patch is seen as a fix.
-
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/383
-Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
-Link: https://github.com/golang/go/issues/56539 [1]
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20240514011335.176158-3-martineau@kernel.org
+Fixes: b2aae654a479 ("net: stmmac: add mutex lock to protect est parameters")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Link: https://lore.kernel.org/r/20240513014346.1718740-2-xiaolei.wang@windriver.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.h |  3 +++
- net/mptcp/sockopt.c  | 58 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 61 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h   |  2 ++
+ .../net/ethernet/stmicro/stmmac/stmmac_ptp.c   |  8 ++++----
+ .../net/ethernet/stmicro/stmmac/stmmac_tc.c    | 18 ++++++++++--------
+ include/linux/stmmac.h                         |  1 -
+ 4 files changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index a10ebf3ee10a1..9d1ee199490bb 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -308,6 +308,9 @@ struct mptcp_sock {
- 			free_first:1,
- 			rcvspace_init:1;
- 	u32		notsent_lowat;
-+	int		keepalive_cnt;
-+	int		keepalive_idle;
-+	int		keepalive_intvl;
- 	struct work_struct work;
- 	struct sk_buff  *ooo_last_skb;
- 	struct rb_root  out_of_order_queue;
-diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
-index 08b7be2b1b69e..19ee684f9e401 100644
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -622,6 +622,31 @@ static int mptcp_setsockopt_sol_tcp_congestion(struct mptcp_sock *msk, sockptr_t
- 	return ret;
- }
- 
-+static int __mptcp_setsockopt_set_val(struct mptcp_sock *msk, int max,
-+				      int (*set_val)(struct sock *, int),
-+				      int *msk_val, int val)
-+{
-+	struct mptcp_subflow_context *subflow;
-+	int err = 0;
-+
-+	mptcp_for_each_subflow(msk, subflow) {
-+		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
-+		int ret;
-+
-+		lock_sock(ssk);
-+		ret = set_val(ssk, val);
-+		err = err ? : ret;
-+		release_sock(ssk);
-+	}
-+
-+	if (!err) {
-+		*msk_val = val;
-+		sockopt_seq_inc(msk);
-+	}
-+
-+	return err;
-+}
-+
- static int __mptcp_setsockopt_sol_tcp_cork(struct mptcp_sock *msk, int val)
- {
- 	struct mptcp_subflow_context *subflow;
-@@ -818,6 +843,22 @@ static int mptcp_setsockopt_sol_tcp(struct mptcp_sock *msk, int optname,
- 	case TCP_NODELAY:
- 		ret = __mptcp_setsockopt_sol_tcp_nodelay(msk, val);
- 		break;
-+	case TCP_KEEPIDLE:
-+		ret = __mptcp_setsockopt_set_val(msk, MAX_TCP_KEEPIDLE,
-+						 &tcp_sock_set_keepidle_locked,
-+						 &msk->keepalive_idle, val);
-+		break;
-+	case TCP_KEEPINTVL:
-+		ret = __mptcp_setsockopt_set_val(msk, MAX_TCP_KEEPINTVL,
-+						 &tcp_sock_set_keepintvl,
-+						 &msk->keepalive_intvl, val);
-+		break;
-+	case TCP_KEEPCNT:
-+		ret = __mptcp_setsockopt_set_val(msk, MAX_TCP_KEEPCNT,
-+						 &tcp_sock_set_keepcnt,
-+						 &msk->keepalive_cnt,
-+						 val);
-+		break;
- 	default:
- 		ret = -ENOPROTOOPT;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+index dddcaa9220cc3..64b21c83e2b84 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+@@ -261,6 +261,8 @@ struct stmmac_priv {
+ 	struct stmmac_extra_stats xstats ____cacheline_aligned_in_smp;
+ 	struct stmmac_safety_stats sstats;
+ 	struct plat_stmmacenet_data *plat;
++	/* Protect est parameters */
++	struct mutex est_lock;
+ 	struct dma_features dma_cap;
+ 	struct stmmac_counters mmc;
+ 	int hw_cap_support;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+index e04830a3a1fb1..0c5aab6dd7a73 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -70,11 +70,11 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
+ 	/* If EST is enabled, disabled it before adjust ptp time. */
+ 	if (priv->plat->est && priv->plat->est->enable) {
+ 		est_rst = true;
+-		mutex_lock(&priv->plat->est->lock);
++		mutex_lock(&priv->est_lock);
+ 		priv->plat->est->enable = false;
+ 		stmmac_est_configure(priv, priv, priv->plat->est,
+ 				     priv->plat->clk_ptp_rate);
+-		mutex_unlock(&priv->plat->est->lock);
++		mutex_unlock(&priv->est_lock);
  	}
-@@ -1320,6 +1361,8 @@ static int mptcp_put_int_option(struct mptcp_sock *msk, char __user *optval,
- static int mptcp_getsockopt_sol_tcp(struct mptcp_sock *msk, int optname,
- 				    char __user *optval, int __user *optlen)
- {
-+	struct sock *sk = (void *)msk;
-+
- 	switch (optname) {
- 	case TCP_ULP:
- 	case TCP_CONGESTION:
-@@ -1338,6 +1381,18 @@ static int mptcp_getsockopt_sol_tcp(struct mptcp_sock *msk, int optname,
- 		return mptcp_put_int_option(msk, optval, optlen, msk->cork);
- 	case TCP_NODELAY:
- 		return mptcp_put_int_option(msk, optval, optlen, msk->nodelay);
-+	case TCP_KEEPIDLE:
-+		return mptcp_put_int_option(msk, optval, optlen,
-+					    msk->keepalive_idle ? :
-+					    READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_keepalive_time) / HZ);
-+	case TCP_KEEPINTVL:
-+		return mptcp_put_int_option(msk, optval, optlen,
-+					    msk->keepalive_intvl ? :
-+					    READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_keepalive_intvl) / HZ);
-+	case TCP_KEEPCNT:
-+		return mptcp_put_int_option(msk, optval, optlen,
-+					    msk->keepalive_cnt ? :
-+					    READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_keepalive_probes));
- 	case TCP_NOTSENT_LOWAT:
- 		return mptcp_put_int_option(msk, optval, optlen, msk->notsent_lowat);
- 	}
-@@ -1455,6 +1510,9 @@ static void sync_socket_options(struct mptcp_sock *msk, struct sock *ssk)
- 		tcp_set_congestion_control(ssk, msk->ca_name, false, true);
- 	__tcp_sock_set_cork(ssk, !!msk->cork);
- 	__tcp_sock_set_nodelay(ssk, !!msk->nodelay);
-+	tcp_sock_set_keepidle_locked(ssk, msk->keepalive_idle);
-+	tcp_sock_set_keepintvl(ssk, msk->keepalive_intvl);
-+	tcp_sock_set_keepcnt(ssk, msk->keepalive_cnt);
  
- 	inet_assign_bit(TRANSPARENT, ssk, inet_test_bit(TRANSPARENT, sk));
- 	inet_assign_bit(FREEBIND, ssk, inet_test_bit(FREEBIND, sk));
+ 	write_lock_irqsave(&priv->ptp_lock, flags);
+@@ -87,7 +87,7 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
+ 		ktime_t current_time_ns, basetime;
+ 		u64 cycle_time;
+ 
+-		mutex_lock(&priv->plat->est->lock);
++		mutex_lock(&priv->est_lock);
+ 		priv->ptp_clock_ops.gettime64(&priv->ptp_clock_ops, &current_time);
+ 		current_time_ns = timespec64_to_ktime(current_time);
+ 		time.tv_nsec = priv->plat->est->btr_reserve[0];
+@@ -104,7 +104,7 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
+ 		priv->plat->est->enable = true;
+ 		ret = stmmac_est_configure(priv, priv, priv->plat->est,
+ 					   priv->plat->clk_ptp_rate);
+-		mutex_unlock(&priv->plat->est->lock);
++		mutex_unlock(&priv->est_lock);
+ 		if (ret)
+ 			netdev_err(priv->dev, "failed to configure EST\n");
+ 	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index cce00719937db..620c16e9be3a6 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -1004,17 +1004,19 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
+ 		if (!plat->est)
+ 			return -ENOMEM;
+ 
+-		mutex_init(&priv->plat->est->lock);
++		mutex_init(&priv->est_lock);
+ 	} else {
++		mutex_lock(&priv->est_lock);
+ 		memset(plat->est, 0, sizeof(*plat->est));
++		mutex_unlock(&priv->est_lock);
+ 	}
+ 
+ 	size = qopt->num_entries;
+ 
+-	mutex_lock(&priv->plat->est->lock);
++	mutex_lock(&priv->est_lock);
+ 	priv->plat->est->gcl_size = size;
+ 	priv->plat->est->enable = qopt->cmd == TAPRIO_CMD_REPLACE;
+-	mutex_unlock(&priv->plat->est->lock);
++	mutex_unlock(&priv->est_lock);
+ 
+ 	for (i = 0; i < size; i++) {
+ 		s64 delta_ns = qopt->entries[i].interval;
+@@ -1045,7 +1047,7 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
+ 		priv->plat->est->gcl[i] = delta_ns | (gates << wid);
+ 	}
+ 
+-	mutex_lock(&priv->plat->est->lock);
++	mutex_lock(&priv->est_lock);
+ 	/* Adjust for real system time */
+ 	priv->ptp_clock_ops.gettime64(&priv->ptp_clock_ops, &current_time);
+ 	current_time_ns = timespec64_to_ktime(current_time);
+@@ -1068,7 +1070,7 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
+ 	tc_taprio_map_maxsdu_txq(priv, qopt);
+ 
+ 	if (fpe && !priv->dma_cap.fpesel) {
+-		mutex_unlock(&priv->plat->est->lock);
++		mutex_unlock(&priv->est_lock);
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+@@ -1079,7 +1081,7 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
+ 
+ 	ret = stmmac_est_configure(priv, priv, priv->plat->est,
+ 				   priv->plat->clk_ptp_rate);
+-	mutex_unlock(&priv->plat->est->lock);
++	mutex_unlock(&priv->est_lock);
+ 	if (ret) {
+ 		netdev_err(priv->dev, "failed to configure EST\n");
+ 		goto disable;
+@@ -1096,7 +1098,7 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
+ 
+ disable:
+ 	if (priv->plat->est) {
+-		mutex_lock(&priv->plat->est->lock);
++		mutex_lock(&priv->est_lock);
+ 		priv->plat->est->enable = false;
+ 		stmmac_est_configure(priv, priv, priv->plat->est,
+ 				     priv->plat->clk_ptp_rate);
+@@ -1105,7 +1107,7 @@ static int tc_taprio_configure(struct stmmac_priv *priv,
+ 			priv->xstats.max_sdu_txq_drop[i] = 0;
+ 			priv->xstats.mtl_est_txq_hlbf[i] = 0;
+ 		}
+-		mutex_unlock(&priv->plat->est->lock);
++		mutex_unlock(&priv->est_lock);
+ 	}
+ 
+ 	priv->plat->fpe_cfg->enable = false;
+diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+index dfa1828cd756a..c0d74f97fd187 100644
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -117,7 +117,6 @@ struct stmmac_axi {
+ 
+ #define EST_GCL		1024
+ struct stmmac_est {
+-	struct mutex lock;
+ 	int enable;
+ 	u32 btr_reserve[2];
+ 	u32 btr_offset[2];
 -- 
 2.43.0
 
