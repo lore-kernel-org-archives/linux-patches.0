@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DEC1078F;
-	Mon, 27 May 2024 19:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5701078F;
+	Mon, 27 May 2024 19:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836672; cv=none; b=Rkg1ZHukVm33MmKzrcjicPpsDf6lCAR9xWb1uOMSicfnqk+Cazrdyt7sHCLubHrL8ioHB7Gm+a5iOqyxw6A2Rzh5yBlIQGOSMYhYhsECHB9O6UAs7YXipRALjFqOAeNFIQMhP+mrNsvHXeJcfyvZicGTeUfoOqkOl3nMBm5PK8s=
+	t=1716836674; cv=none; b=jySDQdvZhpTRaCNPLZtzwOzegv5CZR/i/Buzi8WzLz6BayyTnqUT9qsUFMrjMDE9O8PuweKdXQ/JupCfvqRFXffe0kmRMO2FyWcDf9WLh2vFUhJeAEMatzzSQ+fEtKUkrwc3xu9L/f8x86JxLree+JulzyyiPYeRV/Hk/XVgaBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836672; c=relaxed/simple;
-	bh=4OXvpqCmgwKTAKpI5nONYDTHdtMAUbrp0qZE+mHrgxQ=;
+	s=arc-20240116; t=1716836674; c=relaxed/simple;
+	bh=OE/yyHuKs4BX4bij+7NhVG6IUMLLlJrap7fY6YEKVAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNIV/Ql+ULdCa4ZdEnHANZovKYa8p/5krINWDQ3tM2LAtP9CA2VZcl4TqUQnDUGBMZRCGc/tmjNZrTVP40LDJ9gy7EEp1bcFdcTubEvjfSiSjNvkyba3o/AV1Vc0oGgHlRCMGsM+fMaThvhma2bCsPfXNWS2j20XSXCYt6Ol2sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sO0QbOKJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CQiL41e6F03lO6F9N/z+hQ86WeMmlAqFZqacZAH0Sou84t/pxGZlIK9xbL8cJoexmeQeo9kk+l5rHWUdA9vqzZjGeFnQlFeS2q1ai/yw3KipXc4LwFdYhwYnbmS5yGFtngSbwi14V/CSy3cpVr13z8e5NyBo5YH5gNnCdBnX4o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1Y/ndcZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sO0QbOKJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82765C2BBFC;
-	Mon, 27 May 2024 19:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1Y/ndcZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC62C2BBFC;
+	Mon, 27 May 2024 19:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836671;
-	bh=4OXvpqCmgwKTAKpI5nONYDTHdtMAUbrp0qZE+mHrgxQ=;
+	s=korg; t=1716836674;
+	bh=OE/yyHuKs4BX4bij+7NhVG6IUMLLlJrap7fY6YEKVAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sO0QbOKJK1+cjVy4DRmPEdEZ7qFaf/tEYSfs/q9BxLd6OizUzoWY5n2RvGZkO+dJp
-	 BVxk338sYTIWMUIBmFkUothfuWQMfJDbPg4hWrLoIlxOh349PtOerIZfz7VtpZoFZo
-	 4EG6/Y1Vt5ew8A4LSsOQjePY+l58Ri/GP0qbGyTI=
+	b=Y1Y/ndcZbUL+6ST+C9qYwsgI/M6Ky8UYQ4Z1PaHP0RAK2IapO85FcplYCrBmzUl5x
+	 b1MWpzWzeBDLOs64ix3/4PQB2Z3IADe5qsBMQZKiTamSJK70vdXLsJnHa0wf1Ka12z
+	 PnRcCcs7uk0UazXDigL329gGdIzipN1w6iMASKgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Hechao Li <hli@netflix.com>,
+	Tycho Andersen <tycho@tycho.pizza>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 136/427] locking/atomic/x86: Correct the definition of __arch_try_cmpxchg128()
-Date: Mon, 27 May 2024 20:53:03 +0200
-Message-ID: <20240527185614.581288595@linuxfoundation.org>
+Subject: [PATCH 6.9 145/427] tcp: increase the default TCP scaling ratio
+Date: Mon, 27 May 2024 20:53:12 +0200
+Message-ID: <20240527185615.413380920@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,38 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Hechao Li <hli@netflix.com>
 
-[ Upstream commit 929ad065ba2967be238dfdc0895b79fda62c7f16 ]
+[ Upstream commit 697a6c8cec03c2299f850fa50322641a8bf6b915 ]
 
-Correct the definition of __arch_try_cmpxchg128(), introduced by:
+After commit dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale"),
+we noticed an application-level timeout due to reduced throughput.
 
-  b23e139d0b66 ("arch: Introduce arch_{,try_}_cmpxchg128{,_local}()")
+Before the commit, for a client that sets SO_RCVBUF to 65k, it takes
+around 22 seconds to transfer 10M data. After the commit, it takes 40
+seconds. Because our application has a 30-second timeout, this
+regression broke the application.
 
-Fixes: b23e139d0b66 ("arch: Introduce arch_{,try_}_cmpxchg128{,_local}()")
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Link: https://lore.kernel.org/r/20240408091547.90111-2-ubizjak@gmail.com
+The reason that it takes longer to transfer data is that
+tp->scaling_ratio is initialized to a value that results in ~0.25 of
+rcvbuf. In our case, SO_RCVBUF is set to 65536 by the application, which
+translates to 2 * 65536 = 131,072 bytes in rcvbuf and hence a ~28k
+initial receive window.
+
+Later, even though the scaling_ratio is updated to a more accurate
+skb->len/skb->truesize, which is ~0.66 in our environment, the window
+stays at ~0.25 * rcvbuf. This is because tp->window_clamp does not
+change together with the tp->scaling_ratio update when autotuning is
+disabled due to SO_RCVBUF. As a result, the window size is capped at the
+initial window_clamp, which is also ~0.25 * rcvbuf, and never grows
+bigger.
+
+Most modern applications let the kernel do autotuning, and benefit from
+the increased scaling_ratio. But there are applications such as kafka
+that has a default setting of SO_RCVBUF=64k.
+
+This patch increases the initial scaling_ratio from ~25% to 50% in order
+to make it backward compatible with the original default
+sysctl_tcp_adv_win_scale for applications setting SO_RCVBUF.
+
+Fixes: dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale")
+Signed-off-by: Hechao Li <hli@netflix.com>
+Reviewed-by: Tycho Andersen <tycho@tycho.pizza>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/netdev/20240402215405.432863-1-hli@netflix.com/
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cmpxchg_64.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/tcp.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/include/asm/cmpxchg_64.h b/arch/x86/include/asm/cmpxchg_64.h
-index 44b08b53ab32f..c1d6cd58f8094 100644
---- a/arch/x86/include/asm/cmpxchg_64.h
-+++ b/arch/x86/include/asm/cmpxchg_64.h
-@@ -62,7 +62,7 @@ static __always_inline u128 arch_cmpxchg128_local(volatile u128 *ptr, u128 old,
- 	asm volatile(_lock "cmpxchg16b %[ptr]"				\
- 		     CC_SET(e)						\
- 		     : CC_OUT(e) (ret),					\
--		       [ptr] "+m" (*ptr),				\
-+		       [ptr] "+m" (*(_ptr)),				\
- 		       "+a" (o.low), "+d" (o.high)			\
- 		     : "b" (n.low), "c" (n.high)			\
- 		     : "memory");					\
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 6ae35199d3b3c..2bcf30381d75f 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -1539,11 +1539,10 @@ static inline int tcp_space_from_win(const struct sock *sk, int win)
+ 	return __tcp_space_from_win(tcp_sk(sk)->scaling_ratio, win);
+ }
+ 
+-/* Assume a conservative default of 1200 bytes of payload per 4K page.
++/* Assume a 50% default for skb->len/skb->truesize ratio.
+  * This may be adjusted later in tcp_measure_rcv_mss().
+  */
+-#define TCP_DEFAULT_SCALING_RATIO ((1200 << TCP_RMEM_TO_WIN_SCALE) / \
+-				   SKB_TRUESIZE(4096))
++#define TCP_DEFAULT_SCALING_RATIO (1 << (TCP_RMEM_TO_WIN_SCALE - 1))
+ 
+ static inline void tcp_scaling_ratio_init(struct sock *sk)
+ {
 -- 
 2.43.0
 
