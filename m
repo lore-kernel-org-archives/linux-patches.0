@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C0015FCFC;
-	Mon, 27 May 2024 18:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5270915FA85;
+	Mon, 27 May 2024 18:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836365; cv=none; b=vBc1gDJwOj6cFnjCo5gLq2B4+548R1KZZ8aqja6cmec5cWRlcHu8rCb5tbs1qT1ReG8XVG404LUN232JaWj8sfZM5pdB3h4TxZb8B/C88q2b6wLpFu6OV3mHA1pP7zyo8Rjj688C2rGJgEYTi4kVfUih2MKLZPJj+NZ9w8dW3Uo=
+	t=1716836368; cv=none; b=CS1IUKtcJjLSzRO0VRb53r+iebUOjuJVsX5jbEvr8iK/9BunRCdNLWyGAdQk9Y2UURGkqjuR2bFP7nkmb1jy5Nbs3znYBue+9yDBLdmg7p59OOhWSEzZYyv9C3zN7SLFue+53xwLHgSI/hI+s3+nrW+fzjJ1AOG+Y+j+WPnhggA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836365; c=relaxed/simple;
-	bh=/oXz8Qk14dYfhFl7+4P/C+0glsJNv2Ux/GphCrg4tQU=;
+	s=arc-20240116; t=1716836368; c=relaxed/simple;
+	bh=RvHP4iKUEnbvfIJ0yMDcVZZkLUwZw7lVQfu3OXOXiFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T+y90WaE4un2mIzua1p9NNzV2OXIf80k9DH3ZjTOqWigka9fLFzn4jWVHI0QJVEyn2FtN7widVZBRvia8sjtB5gI9iugHBtVWg7t6hqBcaeLGEG+/15U+EoRRrFVVfwCWMxGzEzy3gHYnCzysMIJ74l4bAJpL05mLHliVIqpFs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLQ9/SOq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aff0BCqjYcfIAOPgnUfdtD+eqJNfMrE5L8w5MlLmwj1+woAriWYzz6p3s1tQErggcP0fjxwgSE8nbPs/4Ap+05R04XZM9vMzjHFvNGmbI9sdRAQAH7P1ZVEuGoBmfbXlEf3/zPCAAut9TJtwSLts/a0cC7T5ZRomeOhfQQDOWZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJVg00VK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLQ9/SOq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A22C2BBFC;
-	Mon, 27 May 2024 18:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJVg00VK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83252C2BBFC;
+	Mon, 27 May 2024 18:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836365;
-	bh=/oXz8Qk14dYfhFl7+4P/C+0glsJNv2Ux/GphCrg4tQU=;
+	s=korg; t=1716836367;
+	bh=RvHP4iKUEnbvfIJ0yMDcVZZkLUwZw7lVQfu3OXOXiFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLQ9/SOqA2evejNYmSFBOCIrQFIkKAgv+wb8gPVI82ALcRIacgv5InJGa6qMALVsi
-	 XZoDCXNOO/ElG/Hywfmo2yj0kBLyAPcO4d41xgnMkyOBBYBHAssm07XNvPcA3w2KLY
-	 xKvjF1XFxGwMaaWwYEChQqYqbmKaLlwDWeYGbQK0=
+	b=BJVg00VK867nmGPWWMi+M6EQHyPzoaaJo+LN5AvPnuZbdAiRiznP8QzRnVOXFsnkf
+	 CM70W/bKJ5Yi8KZ8AZp1knZw/8HXkcRBNDNCiW0b1IxshgBvvXKm2A0qUnLQUfjlcJ
+	 Of0uJBA/NEoDgWAWs1pf3qV0NPSqr/bDgvVX2oqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@toblux.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.9 025/427] net: smc91x: Fix m68k kernel compilation for ColdFire CPU
-Date: Mon, 27 May 2024 20:51:12 +0200
-Message-ID: <20240527185604.031930594@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.9 026/427] f2fs: fix false alarm on invalid block address
+Date: Mon, 27 May 2024 20:51:13 +0200
+Message-ID: <20240527185604.112052394@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -45,62 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@toblux.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit 5eefb477d21a26183bc3499aeefa991198315a2d upstream.
+commit b864ddb57eb00c4ea1e6801c7b2f70f1db2a7f4b upstream.
 
-Compiling the m68k kernel with support for the ColdFire CPU family fails
-with the following error:
+f2fs_ra_meta_pages can try to read ahead on invalid block address which is
+not the corruption case.
 
-In file included from drivers/net/ethernet/smsc/smc91x.c:80:
-drivers/net/ethernet/smsc/smc91x.c: In function ‘smc_reset’:
-drivers/net/ethernet/smsc/smc91x.h:160:40: error: implicit declaration of function ‘_swapw’; did you mean ‘swap’? [-Werror=implicit-function-declaration]
-  160 | #define SMC_outw(lp, v, a, r)   writew(_swapw(v), (a) + (r))
-      |                                        ^~~~~~
-drivers/net/ethernet/smsc/smc91x.h:904:25: note: in expansion of macro ‘SMC_outw’
-  904 |                         SMC_outw(lp, x, ioaddr, BANK_SELECT);           \
-      |                         ^~~~~~~~
-drivers/net/ethernet/smsc/smc91x.c:250:9: note: in expansion of macro ‘SMC_SELECT_BANK’
-  250 |         SMC_SELECT_BANK(lp, 2);
-      |         ^~~~~~~~~~~~~~~
-cc1: some warnings being treated as errors
-
-The function _swapw() was removed in commit d97cf70af097 ("m68k: use
-asm-generic/io.h for non-MMU io access functions"), but is still used in
-drivers/net/ethernet/smsc/smc91x.h.
-
-Use ioread16be() and iowrite16be() to resolve the error.
-
-Cc: stable@vger.kernel.org
-Fixes: d97cf70af097 ("m68k: use asm-generic/io.h for non-MMU io access functions")
-Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240510113054.186648-2-thorsten.blum@toblux.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: <stable@kernel.org> # v6.9+
+Bugzilla: https://bugzilla.kernel.org/show_bug.cgi?id=218770
+Fixes: 31f85ccc84b8 ("f2fs: unify the error handling of f2fs_is_valid_blkaddr")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/smsc/smc91x.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/checkpoint.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/smsc/smc91x.h
-+++ b/drivers/net/ethernet/smsc/smc91x.h
-@@ -156,8 +156,8 @@ static inline void mcf_outsw(void *a, un
- 		writew(*wp++, a);
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index 5d05a413f451..55d444bec5c0 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -179,22 +179,22 @@ static bool __f2fs_is_valid_blkaddr(struct f2fs_sb_info *sbi,
+ 		break;
+ 	case META_SIT:
+ 		if (unlikely(blkaddr >= SIT_BLK_CNT(sbi)))
+-			goto err;
++			goto check_only;
+ 		break;
+ 	case META_SSA:
+ 		if (unlikely(blkaddr >= MAIN_BLKADDR(sbi) ||
+ 			blkaddr < SM_I(sbi)->ssa_blkaddr))
+-			goto err;
++			goto check_only;
+ 		break;
+ 	case META_CP:
+ 		if (unlikely(blkaddr >= SIT_I(sbi)->sit_base_addr ||
+ 			blkaddr < __start_cp_addr(sbi)))
+-			goto err;
++			goto check_only;
+ 		break;
+ 	case META_POR:
+ 		if (unlikely(blkaddr >= MAX_BLKADDR(sbi) ||
+ 			blkaddr < MAIN_BLKADDR(sbi)))
+-			goto err;
++			goto check_only;
+ 		break;
+ 	case DATA_GENERIC:
+ 	case DATA_GENERIC_ENHANCE:
+@@ -228,6 +228,7 @@ static bool __f2fs_is_valid_blkaddr(struct f2fs_sb_info *sbi,
+ 	return true;
+ err:
+ 	f2fs_handle_error(sbi, ERROR_INVALID_BLKADDR);
++check_only:
+ 	return false;
  }
  
--#define SMC_inw(a, r)		_swapw(readw((a) + (r)))
--#define SMC_outw(lp, v, a, r)	writew(_swapw(v), (a) + (r))
-+#define SMC_inw(a, r)		ioread16be((a) + (r))
-+#define SMC_outw(lp, v, a, r)	iowrite16be(v, (a) + (r))
- #define SMC_insw(a, r, p, l)	mcf_insw(a + r, p, l)
- #define SMC_outsw(a, r, p, l)	mcf_outsw(a + r, p, l)
- 
+-- 
+2.45.1
+
 
 
