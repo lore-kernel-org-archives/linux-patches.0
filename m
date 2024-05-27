@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C4726AF2;
-	Mon, 27 May 2024 19:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE94A1DFED;
+	Mon, 27 May 2024 19:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836926; cv=none; b=ug0zTj3DeDqOBjrl+/EFVxZIy0EizbUNRZyoLbpjmsCO75cHVzAGm1HrtkVHX0MudURo5qhksj9iNhjDPNL4zArMFdWTDK7um59K0qxtFnwPpvgqWvkz/zfwH6mXjmb8LduJVp00GeIegs/OVSZRuDThSao3IPYX05YF6rshyKg=
+	t=1716836928; cv=none; b=MnZMYgnzhFJJfml/NE8vW7E/paM/C56/IH81eJxnm6CJ7AbbP7aWDtYnPZYToBzk2iOxBQOGMjV/q9HDJHuXQD7+eAGHDrObKzubgiLzvN7n9FWg0qhn4kRW16SWo8Z83nSp0ZVgFrTWuB83rUl9Umf4Zo+AvFvc5CEtUpHbB3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836926; c=relaxed/simple;
-	bh=2GG6jCS1q5MAI/roPd0MaKkY20DYKGy1bve7VGWLr0o=;
+	s=arc-20240116; t=1716836928; c=relaxed/simple;
+	bh=RsdPAnxZQX41zbbSWAshGbtGFB38mP7fRyT7nXnGjf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BWhd6BXlIqw2UMIMBN5MuV2Cd8rSjfCFRs4PhL6lNCVKFD3YajZZOMjL2bWLz5x0mh78f+czfA6okMVeTYVIGn1V3ZUDAsK+0VAh3pwdkBRpi6uasUKe7qAnJvmZswLwkSeSnLLZ3ZEiRUUCx6oUoRg/mlQ6dCvskeREhDy70no=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2dRhAa8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hbdpCn7LqCqrSULtXbElKaTFO0pYZR5cowpIrEZPNziEYG/sU/eo+nvvKPCkWkzJxwxD2vtTwq1/SYAm9tp+q0WLooxKn4AqC+MOpRHvraJdA4mcM/6WRzXtLKuRY/Gf9HWR3OrIXY1+b99LOfxl81sjBPVrB4KcvrGFgTCrFak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTX75EGP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2dRhAa8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD536C2BBFC;
-	Mon, 27 May 2024 19:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTX75EGP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E5FC2BBFC;
+	Mon, 27 May 2024 19:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836926;
-	bh=2GG6jCS1q5MAI/roPd0MaKkY20DYKGy1bve7VGWLr0o=;
+	s=korg; t=1716836928;
+	bh=RsdPAnxZQX41zbbSWAshGbtGFB38mP7fRyT7nXnGjf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2dRhAa8Nb6SPkFszo+6eHxnuZYdtoWrwpKtsZFUxuVJNqYp2S90mqTeGLW7R8G+a
-	 vBkg+FbHzOuXKJXa0LO5N4+/vtTmi+Xniwfor1buUhu4UrgIGUa2+dR65qVt02+WfV
-	 YCSLZs4rBprJYDbuW3D0NWSDXNrgAdVi6u+kV5r8=
+	b=UTX75EGPCef0m/IT3FHzizjtRsZSg8u+fR8Eai3PBH7sJfasU+/uxy2JBfYkb4khR
+	 CYlcf7OioMCc3UWTENFNoQgDsEuo2TBTOC4PYzyno71VoBBrI+2ZiGK6Ytm/kifZxw
+	 W8fKEQR6OcIdRj9yLCo0rnNyzLidAOh1YMQ9NNSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Dan Nowlin <dan.nowlin@intel.com>,
-	Paul Greenwalt <paul.greenwalt@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.9 243/427] ice: Fix package download algorithm
-Date: Mon, 27 May 2024 20:54:50 +0200
-Message-ID: <20240527185625.262583602@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 244/427] net: ethernet: cortina: Locking fixes
+Date: Mon, 27 May 2024 20:54:51 +0200
+Message-ID: <20240527185625.373677580@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -56,54 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Nowlin <dan.nowlin@intel.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 6d51d44ecddb5c2962688ef06e55e4fbc949f04a ]
+[ Upstream commit 812552808f7ff71133fc59768cdc253c5b8ca1bf ]
 
-Previously, the driver assumed that all signature segments would contain
-one or more buffers to download. In the future, there will be signature
-segments that will contain no buffers to download.
+This fixes a probably long standing problem in the Cortina
+Gemini ethernet driver: there are some paths in the code
+where the IRQ registers are written without taking the proper
+locks.
 
-Correct download flow to allow for signature segments that have zero
-download buffers and skip the download in this case.
-
-Fixes: 3cbdb0343022 ("ice: Add support for E830 DDP package segment")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Dan Nowlin <dan.nowlin@intel.com>
-Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20240508171908.2760776-1-anthony.l.nguyen@intel.com
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240509-gemini-ethernet-locking-v1-1-afd00a528b95@linaro.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ddp.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ddp.c b/drivers/net/ethernet/intel/ice/ice_ddp.c
-index fc91c4d411863..4df561d64bc38 100644
---- a/drivers/net/ethernet/intel/ice/ice_ddp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ddp.c
-@@ -1424,14 +1424,14 @@ ice_dwnld_sign_and_cfg_segs(struct ice_hw *hw, struct ice_pkg_hdr *pkg_hdr,
- 		goto exit;
- 	}
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 705c3eb19cd3f..d1fbadbf86d4a 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1107,10 +1107,13 @@ static void gmac_tx_irq_enable(struct net_device *netdev,
+ {
+ 	struct gemini_ethernet_port *port = netdev_priv(netdev);
+ 	struct gemini_ethernet *geth = port->geth;
++	unsigned long flags;
+ 	u32 val, mask;
  
--	conf_idx = le32_to_cpu(seg->signed_seg_idx);
--	start = le32_to_cpu(seg->signed_buf_start);
- 	count = le32_to_cpu(seg->signed_buf_count);
--
- 	state = ice_download_pkg_sig_seg(hw, seg);
--	if (state)
-+	if (state || !count)
- 		goto exit;
+ 	netdev_dbg(netdev, "%s device %d\n", __func__, netdev->dev_id);
  
-+	conf_idx = le32_to_cpu(seg->signed_seg_idx);
-+	start = le32_to_cpu(seg->signed_buf_start);
++	spin_lock_irqsave(&geth->irq_lock, flags);
 +
- 	state = ice_download_pkg_config_seg(hw, pkg_hdr, conf_idx, start,
- 					    count);
+ 	mask = GMAC0_IRQ0_TXQ0_INTS << (6 * netdev->dev_id + txq);
  
+ 	if (en)
+@@ -1119,6 +1122,8 @@ static void gmac_tx_irq_enable(struct net_device *netdev,
+ 	val = readl(geth->base + GLOBAL_INTERRUPT_ENABLE_0_REG);
+ 	val = en ? val | mask : val & ~mask;
+ 	writel(val, geth->base + GLOBAL_INTERRUPT_ENABLE_0_REG);
++
++	spin_unlock_irqrestore(&geth->irq_lock, flags);
+ }
+ 
+ static void gmac_tx_irq(struct net_device *netdev, unsigned int txq_num)
+@@ -1415,15 +1420,19 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	union gmac_rxdesc_3 word3;
+ 	struct page *page = NULL;
+ 	unsigned int page_offs;
++	unsigned long flags;
+ 	unsigned short r, w;
+ 	union dma_rwptr rw;
+ 	dma_addr_t mapping;
+ 	int frag_nr = 0;
+ 
++	spin_lock_irqsave(&geth->irq_lock, flags);
+ 	rw.bits32 = readl(ptr_reg);
+ 	/* Reset interrupt as all packages until here are taken into account */
+ 	writel(DEFAULT_Q0_INT_BIT << netdev->dev_id,
+ 	       geth->base + GLOBAL_INTERRUPT_STATUS_1_REG);
++	spin_unlock_irqrestore(&geth->irq_lock, flags);
++
+ 	r = rw.bits.rptr;
+ 	w = rw.bits.wptr;
+ 
+@@ -1726,10 +1735,9 @@ static irqreturn_t gmac_irq(int irq, void *data)
+ 		gmac_update_hw_stats(netdev);
+ 
+ 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
++		spin_lock(&geth->irq_lock);
+ 		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
+ 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
+-
+-		spin_lock(&geth->irq_lock);
+ 		u64_stats_update_begin(&port->ir_stats_syncp);
+ 		++port->stats.rx_fifo_errors;
+ 		u64_stats_update_end(&port->ir_stats_syncp);
 -- 
 2.43.0
 
