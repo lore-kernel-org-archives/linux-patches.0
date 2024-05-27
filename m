@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5721754B;
-	Mon, 27 May 2024 19:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136A11754B;
+	Mon, 27 May 2024 19:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836592; cv=none; b=jMiJfLeA6dgO4Irl4gYU/rnBHGnRmmwjjikmDUrUDdfp8zl+q2uYEv9Bgn7VbGQ5nKK2ocfBMS/7XKWdiA75y6gSSPZnLwgiy1olZlmvgIDSezms9bUiEbIrGUKngnHBR+t8aD2+ItzCSN91pGLjLiKZeXJwyumfHwTRxzcCz2A=
+	t=1716836595; cv=none; b=UNGCKoEVDFxl3aJvwWWyfyzWDUBQS2H6HVaH6bBbOvEbGbMCNkC7xE4STqXN581m+vR2u+8AYuq6LrWnNo0ZFC1Tdxn4wh1jSTyC0PhaXt+E2ApYDJddUuxonLw+JpPrCyPN5FbS/q33uVfFpDFnIj64Uz3EIP4K891L7JXISBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836592; c=relaxed/simple;
-	bh=1vosxzuqwiljRV/YSEv6SXb0Qi0TVjlsSuPhf3OyRQU=;
+	s=arc-20240116; t=1716836595; c=relaxed/simple;
+	bh=TN0QdzCNMGNzhWfmIa2+PJSUWUa/riqKweqTVOZPVZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nh59dJwl6eZDSayiY/bGi+ltNJbSkvV3GbCQ3rNf4XxPj/fHoQTJzYgQj9/QOe3+V1WeyeBdR92p/+JctKqLKj8HLxgBfuAe0OYkVLBMOcpirmPhLCCrUnK+xs8+0rbth61+rB16412Xz5+rh2c0wMMvMWfhYAzlyw6MRUeeyQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4viDN3Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A3mEpWLpxfja6HJNsguqWmpMB+XGPk8FHItGjoE0RgkE9yN48V2T5I0VV7krf0Y0WZFn8JMayLRqoxqiPT4t6YsFCLm4WQuEj5OalGPYnBadjqR1RgmTHBzs0G4MdVvb4yQXsiIj1QnQUWS8GSVZVU/CatoyS3sZv7e/hm0EvJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvTOuNff; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4viDN3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B79C2BBFC;
-	Mon, 27 May 2024 19:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvTOuNff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FC8C2BBFC;
+	Mon, 27 May 2024 19:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836592;
-	bh=1vosxzuqwiljRV/YSEv6SXb0Qi0TVjlsSuPhf3OyRQU=;
+	s=korg; t=1716836594;
+	bh=TN0QdzCNMGNzhWfmIa2+PJSUWUa/riqKweqTVOZPVZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v4viDN3YI9tDksrptPHihMFeVUTtwVA7mNKArHsFTjJS8/YB/FGiQpie4ja7crxv5
-	 Zss45TbQTIQYwAPoyUzpv9RRKSIWpFBzhgi6tpbGv4l3nsCFB/dYhEcJX7tFoa0Fb2
-	 aFalMOZTlWrdC4t98OulaRDBokJn4RudfqKHKB08=
+	b=QvTOuNff/pcNLSTZ3fkh9fN2YeTrCZT5pmeYsDGkJdDsosR1EyGoPl5RT5FGoNWcS
+	 D8fYPpUg4j60Bbt8IqlglwRUo+DGVpfeh7yGXydYis+M/WuehCs2+LUhWWewkl7DpV
+	 Fr9ba6n7jn20ovPlMYb3PmoPP/SEPXpyrvkcD0Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 114/427] ACPI: bus: Indicate support for IRQ ResourceSource thru _OSC
-Date: Mon, 27 May 2024 20:52:41 +0200
-Message-ID: <20240527185612.410807835@linuxfoundation.org>
+Subject: [PATCH 6.9 115/427] enetc: avoid truncating error message
+Date: Mon, 27 May 2024 20:52:42 +0200
+Message-ID: <20240527185612.532510486@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,49 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 403ad17c06509794fdf6e4d4b3070bd5b56e2a8e ]
+[ Upstream commit 9046d581ed586f3c715357638ca12c0e84402002 ]
 
-The ACPI IRQ mapping code supports parsing of ResourceSource,
-but this is not reported thru _OSC.
+As clang points out, the error message in enetc_setup_xdp_prog()
+still does not fit in the buffer and will be truncated:
 
-Fix this by setting bit 13 ("Interrupt ResourceSource support")
-when evaluating _OSC.
+drivers/net/ethernet/freescale/enetc/enetc.c:2771:3: error: 'snprintf' will always be truncated; specified size is 80, but format string expands to at least 87 [-Werror,-Wformat-truncation]
 
-Fixes: d44fa3d46079 ("ACPI: Add support for ResourceSource/IRQ domain mapping")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Replace it with an even shorter message that should fit.
+
+Fixes: f968c56417f0 ("net: enetc: shorten enetc_setup_xdp_prog() error message to fit NETLINK_MAX_FMTMSG_LEN")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240326223825.4084412-3-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/bus.c   | 1 +
- include/linux/acpi.h | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
-index 0c48b603098a8..a87b10eef77df 100644
---- a/drivers/acpi/bus.c
-+++ b/drivers/acpi/bus.c
-@@ -323,6 +323,7 @@ static void acpi_bus_osc_negotiate_platform_control(void)
- 	capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_PCLPI_SUPPORT;
- 	capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_OVER_16_PSTATES_SUPPORT;
- 	capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_GED_SUPPORT;
-+	capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_IRQ_RESOURCE_SOURCE_SUPPORT;
- 	if (IS_ENABLED(CONFIG_ACPI_PRMT))
- 		capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_PRM_SUPPORT;
- 	if (IS_ENABLED(CONFIG_ACPI_FFH))
-diff --git a/include/linux/acpi.h b/include/linux/acpi.h
-index e77783e101c36..168201e4c7827 100644
---- a/include/linux/acpi.h
-+++ b/include/linux/acpi.h
-@@ -577,6 +577,7 @@ acpi_status acpi_run_osc(acpi_handle handle, struct acpi_osc_context *context);
- #define OSC_SB_OVER_16_PSTATES_SUPPORT		0x00000400
- #define OSC_SB_GED_SUPPORT			0x00000800
- #define OSC_SB_CPC_DIVERSE_HIGH_SUPPORT		0x00001000
-+#define OSC_SB_IRQ_RESOURCE_SOURCE_SUPPORT	0x00002000
- #define OSC_SB_CPC_FLEXIBLE_ADR_SPACE		0x00004000
- #define OSC_SB_GENERIC_INITIATOR_SUPPORT	0x00020000
- #define OSC_SB_NATIVE_USB4_SUPPORT		0x00040000
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 9f07f4947b631..5c45f42232d32 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -2769,7 +2769,7 @@ static int enetc_setup_xdp_prog(struct net_device *ndev, struct bpf_prog *prog,
+ 	if (priv->min_num_stack_tx_queues + num_xdp_tx_queues >
+ 	    priv->num_tx_rings) {
+ 		NL_SET_ERR_MSG_FMT_MOD(extack,
+-				       "Reserving %d XDP TXQs does not leave a minimum of %d for stack (total %d)",
++				       "Reserving %d XDP TXQs leaves under %d for stack (total %d)",
+ 				       num_xdp_tx_queues,
+ 				       priv->min_num_stack_tx_queues,
+ 				       priv->num_tx_rings);
 -- 
 2.43.0
 
