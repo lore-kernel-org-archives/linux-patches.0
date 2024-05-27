@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0491078F;
-	Mon, 27 May 2024 19:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD0917E90E;
+	Mon, 27 May 2024 19:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837181; cv=none; b=S8X1sBvJad8Uiy+MK5MyTej04bYhBVOU/r7KjG5Wr7MhTavvWt7D6zlCocLE02wy7CO+KHVrwvXPaa7Ot5fTuEfbF8XSY4/uiqb+gZzP9GrqiiTqyrza1DQ7BElPYeLrFHpEeselJ9gK00iLPn54CM5Sx2E8VmRmMpIMO99Q93A=
+	t=1716837184; cv=none; b=ibUh2h1MVLZiY9Ih/z53oQ8415NWlsk2USeEeIHi+j5Pwfm3K1LYY1h6EQGzbDAoM9N3r174CqPT+v+NhPVPbAvTbp3iU9YH1v+6DTp7L0FJReielYHuFgk4YR/2cMcK5OW+1VgLXgr2FHvfREO/OsySlanIIOyGQVNUvg7+s3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837181; c=relaxed/simple;
-	bh=YYOzdrVhi8iLeuptqBgydBWZxMSwDdNcVsJvagUAvMQ=;
+	s=arc-20240116; t=1716837184; c=relaxed/simple;
+	bh=jCU3RZk/7Ah390ZR0ZsYOBrOebV4RAY5Eri9O9lLPd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dLWBrUikOeUe67ZkckAlyebSWbccUs0lIgdqoz+Sg+vBNMTscfpnBqQMwcxs5LL7CbooliDomTHU2DbCXw4ZtzH/sjl1QUAjgatk+9yysAZ3QP9st8oBs2Ccx5GMKc+oRypa/9mIdlw8e7ItuRyPxXNCxDBL7xkUEp6S6Sh6gcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVSs1ASP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DmHtwRcXVvTAAhlx/ECAnJDAXuOPd7ffe5puI/PWu3URA4U7QR0qrllnbeU9MPt5ybz7/w9HvR3H6mhL86KB4Hsk5WN5LZ/wvrMxk3c7TQoLu9gnjbhKGAFGHoYnZj1CI7aS6tpDM1DPt0MB4hK87bRfMIgXqBWCV2kYwBFQ0JU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khzxtRw+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVSs1ASP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996B4C2BBFC;
-	Mon, 27 May 2024 19:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khzxtRw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8419DC2BBFC;
+	Mon, 27 May 2024 19:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837180;
-	bh=YYOzdrVhi8iLeuptqBgydBWZxMSwDdNcVsJvagUAvMQ=;
+	s=korg; t=1716837183;
+	bh=jCU3RZk/7Ah390ZR0ZsYOBrOebV4RAY5Eri9O9lLPd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVSs1ASPpi9RM1Ec7Ywz676F5CUK4vUsJFs74i1lBS3hJzKFkDic9sHv1L2J3nJoj
-	 SGB5ThyDVI8Wt3Oh/p5LAIPOgX6yWzZVUbfQP7WyrfBtsV0fI5SyjsogRLAZqscdVK
-	 MV0sAK7Lk0r4KxWncQ5F2jNEBF7BDvypFa0sFECo=
+	b=khzxtRw+jIoAGdzd+J2StvAgV1QVG2ezb8eKcCod1/gLWEN03msLw+tSHe1H3uthP
+	 5bNK2Cj+9DH39lSSsHDM7WOVjooq8QS9uVPr66hWR+FByuNV/mcwzagkhEBu6dzLV3
+	 WmOI7cx+lt0z+t0rvCPWlpwHSnMw8gFihmAHLM04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Devinder Khroad <dkhroad@logitech.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 341/427] drm/mipi-dsi: use correct return type for the DSC functions
-Date: Mon, 27 May 2024 20:56:28 +0200
-Message-ID: <20240527185632.898036233@linuxfoundation.org>
+Subject: [PATCH 6.9 342/427] media: uvcvideo: Add quirk for Logitech Rally Bar
+Date: Mon, 27 May 2024 20:56:29 +0200
+Message-ID: <20240527185632.968049852@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,67 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit de1c705c50326acaceaf1f02bc5bf6f267c572bd ]
+[ Upstream commit 07731053d11f7647d5d8bc23caac997a4d562dfe ]
 
-The functions mipi_dsi_compression_mode() and
-mipi_dsi_picture_parameter_set() return 0-or-error rather than a buffer
-size. Follow example of other similar MIPI DSI functions and use int
-return type instead of size_t.
+Logitech Rally Bar devices, despite behaving as UVC cameras, have a
+different power management system that the other cameras from Logitech.
 
-Fixes: f4dea1aaa9a1 ("drm/dsi: add helpers for DSI compression mode and PPS packets")
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240408-lg-sw43408-panel-v5-2-4e092da22991@linaro.org
+USB_QUIRK_RESET_RESUME is applied to all the UVC cameras from Logitech
+at the usb core. Unfortunately, USB_QUIRK_RESET_RESUME causes undesired
+USB disconnects in the Rally Bar that make them completely unusable.
+
+There is an open discussion about if we should fix this in the core or
+add a quirk in the UVC driver. In order to enable this hardware, let's
+land this patch first, and we can revert it later if there is a
+different conclusion.
+
+Fixes: e387ef5c47dd ("usb: Add USB_QUIRK_RESET_RESUME for all Logitech UVC webcams")
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Devinder Khroad <dkhroad@logitech.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20240404-rallybar-v6-1-6d67bb6b69af@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_mipi_dsi.c | 6 +++---
- include/drm/drm_mipi_dsi.h     | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 31 ++++++++++++++++++++++++++++++
+ drivers/media/usb/uvc/uvcvideo.h   |  1 +
+ 2 files changed, 32 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-index ef6e416522f8a..9874ff6d47181 100644
---- a/drivers/gpu/drm/drm_mipi_dsi.c
-+++ b/drivers/gpu/drm/drm_mipi_dsi.c
-@@ -654,7 +654,7 @@ EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
-  *
-  * Return: 0 on success or a negative error code on failure.
-  */
--ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
-+int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
- {
- 	/* Note: Needs updating for non-default PPS or algorithm */
- 	u8 tx[2] = { enable << 0, 0 };
-@@ -679,8 +679,8 @@ EXPORT_SYMBOL(mipi_dsi_compression_mode);
-  *
-  * Return: 0 on success or a negative error code on failure.
-  */
--ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
--				       const struct drm_dsc_picture_parameter_set *pps)
-+int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-+				   const struct drm_dsc_picture_parameter_set *pps)
- {
- 	struct mipi_dsi_msg msg = {
- 		.channel = dsi->channel,
-diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-index c0aec0d4d664e..3011d33eccbd2 100644
---- a/include/drm/drm_mipi_dsi.h
-+++ b/include/drm/drm_mipi_dsi.h
-@@ -241,9 +241,9 @@ int mipi_dsi_shutdown_peripheral(struct mipi_dsi_device *dsi);
- int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
- int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
- 					    u16 value);
--ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
--ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
--				       const struct drm_dsc_picture_parameter_set *pps);
-+int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
-+int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-+				   const struct drm_dsc_picture_parameter_set *pps);
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index bbd90123a4e76..91a41aa3ced24 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -14,6 +14,7 @@
+ #include <linux/module.h>
+ #include <linux/slab.h>
+ #include <linux/usb.h>
++#include <linux/usb/quirks.h>
+ #include <linux/usb/uvc.h>
+ #include <linux/videodev2.h>
+ #include <linux/vmalloc.h>
+@@ -2232,6 +2233,9 @@ static int uvc_probe(struct usb_interface *intf,
+ 		goto error;
+ 	}
  
- ssize_t mipi_dsi_generic_write(struct mipi_dsi_device *dsi, const void *payload,
- 			       size_t size);
++	if (dev->quirks & UVC_QUIRK_NO_RESET_RESUME)
++		udev->quirks &= ~USB_QUIRK_RESET_RESUME;
++
+ 	uvc_dbg(dev, PROBE, "UVC device initialized\n");
+ 	usb_enable_autosuspend(udev);
+ 	return 0;
+@@ -2574,6 +2578,33 @@ static const struct usb_device_id uvc_ids[] = {
+ 	  .bInterfaceSubClass	= 1,
+ 	  .bInterfaceProtocol	= 0,
+ 	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_RESTORE_CTRLS_ON_INIT) },
++	/* Logitech Rally Bar Huddle */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x046d,
++	  .idProduct		= 0x087c,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
++	/* Logitech Rally Bar */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x046d,
++	  .idProduct		= 0x089b,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
++	/* Logitech Rally Bar Mini */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x046d,
++	  .idProduct		= 0x08d3,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
+ 	/* Chicony CNF7129 (Asus EEE 100HE) */
+ 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
+ 				| USB_DEVICE_ID_MATCH_INT_INFO,
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index 6fb0a78b1b009..88218693f6f0b 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -73,6 +73,7 @@
+ #define UVC_QUIRK_FORCE_Y8		0x00000800
+ #define UVC_QUIRK_FORCE_BPP		0x00001000
+ #define UVC_QUIRK_WAKE_AUTOSUSPEND	0x00002000
++#define UVC_QUIRK_NO_RESET_RESUME	0x00004000
+ 
+ /* Format flags */
+ #define UVC_FMT_FLAG_COMPRESSED		0x00000001
 -- 
 2.43.0
 
