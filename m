@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB36B1DFED;
-	Mon, 27 May 2024 19:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADA31DFED;
+	Mon, 27 May 2024 19:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836580; cv=none; b=KWhqVLfYXwVAkkCt2qVyVGKj5xqeCOvL7Hj4b3RRL3jcOt0LJ3p//+Y+O8wO8dokGrzG6ZQWHFILKOVbIu8093d7hFlKLpZ4XkQik3iVGb07pMVQesdi0fd8k5pa4XO987tgHuBps6TfAL8rxp8tA1I6UOcHkx+MtLOM6AEEyOY=
+	t=1716836582; cv=none; b=dvHT8nzeeDmt8Rcs3yYzg0k+KYiYzd0K5vy0F3JgzBw86cXra6DNvGyY5cuogHjdfIMlRbfrdPRKGpFymm744jsUPv5EfSqETYm2ZUFonfiH8nAThzQL8GpymeWJ+rnz8LbKiPp6lQKV+lwFzDQ5kocDd9g1nTCxsqd+4jCSrdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836580; c=relaxed/simple;
-	bh=ZjLfQARKemWw47i1MkjTXnLRoxc+th4SAfF6JD6jfNI=;
+	s=arc-20240116; t=1716836582; c=relaxed/simple;
+	bh=NOov26tKIYYUF9lfxCcD0RkHGOz3OTLe3hAWSuXVc7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f0KfhH2JFAenO3sQfXtSTka9chhkd+Pd+zo1I1uwyz9PHscFBxMqPEzq1Wa9Pyu5bYSSTuLVIsCJh6XhOc2n5YFT+L86L/xA+xMW9gWLVFCBsggJoAM2YOGM3Dn48deCGUmQ30Kpg1sIKfF8CtJNw/3MqZNt1e931Sl3eCqWCHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVYgHL67; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W1bqBXdbLITHe5nSki0FHURDROUgdQuRwWQbX0AoEteVMFarIckvmZGEYr3DzOuIAF+KKAinL1Wn4E1pVUXLv2K8l37xXV0X05ApdzN2BXVDXiTv5lGSH5/o6z9K9GH9ZjNhum4G3dcWtcoTBpLhw6J/6bilQCSC9dlPRwx67II=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyBMeIIF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVYgHL67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26550C2BBFC;
-	Mon, 27 May 2024 19:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyBMeIIF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A514CC2BBFC;
+	Mon, 27 May 2024 19:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836579;
-	bh=ZjLfQARKemWw47i1MkjTXnLRoxc+th4SAfF6JD6jfNI=;
+	s=korg; t=1716836582;
+	bh=NOov26tKIYYUF9lfxCcD0RkHGOz3OTLe3hAWSuXVc7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tVYgHL67hZgRvPJ64uRoZJwXquC4tSu4PjuSrgbWwbnCedboJCuTXWYHisRYvI9+/
-	 P8uujxBUINzBvpE84+mux+iaCI7nHF+scM8cbVFX31hOoNkc0g0PPYhst0O6rEIfCC
-	 lVtSBCBtYi7+h+nPyHRKBbXoGr60LlzURLedtGAs=
+	b=MyBMeIIF9nYRAHE8pQapq9IwnsjK9SfLdqnd6ynKrUTCzg7u/274CKcTmjcAnWAOg
+	 JFATBmThBN9DMdhkpB4AkHL+DRANgh3Al+ubez9J8WoAJOvdQZkleQqCoSxWksgKnw
+	 SKMkO68NduWpC/4bBgCT0wL5ZA8k0PDakNYm8bJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Qais Yousef <qyousef@layalina.io>,
-	Srikar Dronamraju <srikar@linux.ibm.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 109/427] sched/fair: Add EAS checks before updating root_domain::overutilized
-Date: Mon, 27 May 2024 20:52:36 +0200
-Message-ID: <20240527185611.965412689@linuxfoundation.org>
+Subject: [PATCH 6.9 110/427] ACPI: bus: Indicate support for _TFP thru _OSC
+Date: Mon, 27 May 2024 20:52:37 +0200
+Message-ID: <20240527185612.055894016@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,146 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit be3a51e68f2f1b17250ce40d8872c7645b7a2991 ]
+[ Upstream commit 95d43290f1e476b3be782dd17642e452d0436266 ]
 
-root_domain::overutilized is only used for EAS(energy aware scheduler)
-to decide whether to do load balance or not. It is not used if EAS
-not possible.
+The ACPI thermal driver already uses the _TPF ACPI method to retrieve
+precise sampling time values, but this is not reported thru _OSC.
 
-Currently enqueue_task_fair and task_tick_fair accesses, sometime updates
-this field. In update_sd_lb_stats it is updated often. This causes cache
-contention due to true sharing and burns a lot of cycles. ::overload and
-::overutilized are part of the same cacheline. Updating it often invalidates
-the cacheline. That causes access to ::overload to slow down due to
-false sharing. Hence add EAS check before accessing/updating this field.
-EAS check is optimized at compile time or it is a static branch.
-Hence it shouldn't cost much.
+Fix this by setting bit 9 ("Fast Thermal Sampling support") when
+evaluating _OSC.
 
-With the patch, both enqueue_task_fair and newidle_balance don't show
-up as hot routines in perf profile.
-
-  6.8-rc4:
-  7.18%  swapper          [kernel.vmlinux]              [k] enqueue_task_fair
-  6.78%  s                [kernel.vmlinux]              [k] newidle_balance
-
-  +patch:
-  0.14%  swapper          [kernel.vmlinux]              [k] enqueue_task_fair
-  0.00%  swapper          [kernel.vmlinux]              [k] newidle_balance
-
-While at it: trace_sched_overutilized_tp expect that second argument to
-be bool. So do a int to bool conversion for that.
-
-Fixes: 2802bf3cd936 ("sched/fair: Add over-utilization/tipping point indicator")
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Qais Yousef <qyousef@layalina.io>
-Reviewed-by: Srikar Dronamraju <srikar@linux.ibm.com>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20240307085725.444486-2-sshegde@linux.ibm.com
+Fixes: a2ee7581afd5 ("ACPI: thermal: Add Thermal fast Sampling Period (_TFP) support")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 53 +++++++++++++++++++++++++++++----------------
- 1 file changed, 34 insertions(+), 19 deletions(-)
+ drivers/acpi/bus.c   | 2 ++
+ include/linux/acpi.h | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index c62805dbd6088..213c94d027a4c 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6675,22 +6675,42 @@ static inline void hrtick_update(struct rq *rq)
- #ifdef CONFIG_SMP
- static inline bool cpu_overutilized(int cpu)
- {
--	unsigned long rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
--	unsigned long rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
-+	unsigned long  rq_util_min, rq_util_max;
-+
-+	if (!sched_energy_enabled())
-+		return false;
-+
-+	rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
-+	rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index d9fa730416f19..9c13a4e43fa82 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -316,6 +316,8 @@ static void acpi_bus_osc_negotiate_platform_control(void)
+ 		capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_PAD_SUPPORT;
+ 	if (IS_ENABLED(CONFIG_ACPI_PROCESSOR))
+ 		capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_PPC_OST_SUPPORT;
++	if (IS_ENABLED(CONFIG_ACPI_THERMAL))
++		capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_FAST_THERMAL_SAMPLING_SUPPORT;
  
- 	/* Return true only if the utilization doesn't fit CPU's capacity */
- 	return !util_fits_cpu(cpu_util_cfs(cpu), rq_util_min, rq_util_max, cpu);
- }
- 
--static inline void update_overutilized_status(struct rq *rq)
-+static inline void set_rd_overutilized_status(struct root_domain *rd,
-+					      unsigned int status)
- {
--	if (!READ_ONCE(rq->rd->overutilized) && cpu_overutilized(rq->cpu)) {
--		WRITE_ONCE(rq->rd->overutilized, SG_OVERUTILIZED);
--		trace_sched_overutilized_tp(rq->rd, SG_OVERUTILIZED);
--	}
-+	if (!sched_energy_enabled())
-+		return;
-+
-+	WRITE_ONCE(rd->overutilized, status);
-+	trace_sched_overutilized_tp(rd, !!status);
-+}
-+
-+static inline void check_update_overutilized_status(struct rq *rq)
-+{
-+	/*
-+	 * overutilized field is used for load balancing decisions only
-+	 * if energy aware scheduler is being used
-+	 */
-+	if (!sched_energy_enabled())
-+		return;
-+
-+	if (!READ_ONCE(rq->rd->overutilized) && cpu_overutilized(rq->cpu))
-+		set_rd_overutilized_status(rq->rd, SG_OVERUTILIZED);
- }
- #else
--static inline void update_overutilized_status(struct rq *rq) { }
-+static inline void check_update_overutilized_status(struct rq *rq) { }
- #endif
- 
- /* Runqueue only has SCHED_IDLE tasks enqueued */
-@@ -6791,7 +6811,7 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
- 	 * and the following generally works well enough in practice.
- 	 */
- 	if (!task_new)
--		update_overutilized_status(rq);
-+		check_update_overutilized_status(rq);
- 
- enqueue_throttle:
- 	assert_list_leaf_cfs_rq(rq);
-@@ -10608,19 +10628,14 @@ static inline void update_sd_lb_stats(struct lb_env *env, struct sd_lb_stats *sd
- 		env->fbq_type = fbq_classify_group(&sds->busiest_stat);
- 
- 	if (!env->sd->parent) {
--		struct root_domain *rd = env->dst_rq->rd;
--
- 		/* update overload indicator if we are at root domain */
--		WRITE_ONCE(rd->overload, sg_status & SG_OVERLOAD);
-+		WRITE_ONCE(env->dst_rq->rd->overload, sg_status & SG_OVERLOAD);
- 
- 		/* Update over-utilization (tipping point, U >= 0) indicator */
--		WRITE_ONCE(rd->overutilized, sg_status & SG_OVERUTILIZED);
--		trace_sched_overutilized_tp(rd, sg_status & SG_OVERUTILIZED);
-+		set_rd_overutilized_status(env->dst_rq->rd,
-+					   sg_status & SG_OVERUTILIZED);
- 	} else if (sg_status & SG_OVERUTILIZED) {
--		struct root_domain *rd = env->dst_rq->rd;
--
--		WRITE_ONCE(rd->overutilized, SG_OVERUTILIZED);
--		trace_sched_overutilized_tp(rd, SG_OVERUTILIZED);
-+		set_rd_overutilized_status(env->dst_rq->rd, SG_OVERUTILIZED);
- 	}
- 
- 	update_idle_cpu_scan(env, sum_util);
-@@ -12621,7 +12636,7 @@ static void task_tick_fair(struct rq *rq, struct task_struct *curr, int queued)
- 		task_tick_numa(rq, curr);
- 
- 	update_misfit_status(curr, rq);
--	update_overutilized_status(task_rq(curr));
-+	check_update_overutilized_status(task_rq(curr));
- 
- 	task_tick_core(rq, curr);
- }
+ 	capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_HOTPLUG_OST_SUPPORT;
+ 	capbuf[OSC_SUPPORT_DWORD] |= OSC_SB_PCLPI_SUPPORT;
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index 34829f2c517ac..51bdd9e08f6da 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -573,6 +573,7 @@ acpi_status acpi_run_osc(acpi_handle handle, struct acpi_osc_context *context);
+ #define OSC_SB_CPCV2_SUPPORT			0x00000040
+ #define OSC_SB_PCLPI_SUPPORT			0x00000080
+ #define OSC_SB_OSLPI_SUPPORT			0x00000100
++#define OSC_SB_FAST_THERMAL_SAMPLING_SUPPORT	0x00000200
+ #define OSC_SB_CPC_DIVERSE_HIGH_SUPPORT		0x00001000
+ #define OSC_SB_GENERIC_INITIATOR_SUPPORT	0x00002000
+ #define OSC_SB_CPC_FLEXIBLE_ADR_SPACE		0x00004000
 -- 
 2.43.0
 
