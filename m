@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B30262BE;
-	Mon, 27 May 2024 19:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAF8262BE;
+	Mon, 27 May 2024 19:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838079; cv=none; b=I0/OI4npvK/f9fnVLYZ/XtpyGuCQG5XRIN8XMbGQxhrC5qCVXKG7jtGAG3Ee7JH9yJ6rFlJmiDhKl4p2fedJBLNu4pYetGJp57l4qu0hw/7cePL7PPCjY5RcsgCu+uRUIIC2RSNSvp0AWjjCL11oN9Uxw0rpH8jm3CXVky0RUZ0=
+	t=1716838081; cv=none; b=M42D3y9sCy/RkviLc6Brw8E6ckThQuK6Tr2SAIbkcZF/jmiWWu9FFubWHS3mipp4UwhApqkm4kuFWhFPnjVJDYQgg93lpeqWHSIOORS97r3BtvDV82GWOlpK/ZQN6huYqL2lfqjp4iejBu+lhV/GbcSQLOrpNfKUZNFIp1mJiVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838079; c=relaxed/simple;
-	bh=ymWdjf3GD9bSXRjPw94zRP9RcoEV/SebhFkkxBNoRbs=;
+	s=arc-20240116; t=1716838081; c=relaxed/simple;
+	bh=5g/XY3sspELp0Dwgvg4j47m0aRDIJPyCZCLFaG5I08g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZrowGLtk3MIbfiC5+4Cz4YzJaZ1lOq4+wRCshyfw3hZE9dOnHffWQQ3irXjWOGd76OFxQtwWw2Zh3SJaLuvpIHAbt4zMCv4J/J7k8TPzyiDcLxAaNZX+Gr2DwqWQ7BH++cSdqp4yj26ueBqxJfqyhDr5phcpDRwCB7b7WuQLRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KWaMYU5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pfb3rq1nfGQKSNUz8rfv92qXdxESoIbcv5gumPYrLBkJILXOna4B9+3WWMZZa0dh/pLu7LdR+yNl0MJuka8z6WJFrl3IPbNcJom9+3VSe1jxl9OT0BXZQ7I35c1zMhy6nTSdfn3QY89EekAGgvC1qq2h+fALgMvhWtzI7S9DE6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOexW590; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KWaMYU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A235BC2BBFC;
-	Mon, 27 May 2024 19:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOexW590"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DC8C2BBFC;
+	Mon, 27 May 2024 19:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838079;
-	bh=ymWdjf3GD9bSXRjPw94zRP9RcoEV/SebhFkkxBNoRbs=;
+	s=korg; t=1716838081;
+	bh=5g/XY3sspELp0Dwgvg4j47m0aRDIJPyCZCLFaG5I08g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2KWaMYU5SPQYPbKJnDSkmebry6eA5g/lq54p0Zr7SToFqshlsJF+U76NyBriW8FTj
-	 tg0dnRViqZLmO+5DX5hjpHiEozN4JK2foe5cbyLTGR3X6eKDt05AxAHDokqSxFL74Z
-	 nClzQpkNd49ZyTixzC/xApXSjBp3aexEdUiwtPJA=
+	b=bOexW590iUzbVdmYmOymbQj2OoJJZXfF3gscIs9sEKiikFAk/jkan1GhAKzhDxAH3
+	 246gwHQIbvp/eXfb9nBi5cr7iQzstj4sS7kLEMkc3fpMbMxLMqnuSfUNKy4t1BKZaF
+	 tWE8PjTAZyTKEo+rXNcD9M2QH15yw+jV/26R5BkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+1bc2c2afd44f820a669f@syzkaller.appspotmail.com
-Subject: [PATCH 6.8 256/493] wifi: ar5523: enable proper endpoint verification
-Date: Mon, 27 May 2024 20:54:18 +0200
-Message-ID: <20240527185638.665670964@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.8 257/493] pwm: Drop useless member .of_pwm_n_cells of struct pwm_chip
+Date: Mon, 27 May 2024 20:54:19 +0200
+Message-ID: <20240527185638.700189244@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -46,103 +45,163 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit e120b6388d7d88635d67dcae6483f39c37111850 ]
+[ Upstream commit 4e77431cda4973f03d063c47f6ea313dfceebf16 ]
 
-Syzkaller reports [1] hitting a warning about an endpoint in use
-not having an expected type to it.
+Apart from the two of_xlate implementations this member is write-only.
+In the of_xlate functions of_pwm_xlate_with_flags() and
+of_pwm_single_xlate() it's more sensible to check for args->args_count
+because this is what is actually used in the device tree.
 
-Fix the issue by checking for the existence of all proper
-endpoints with their according types intact.
-
-Sadly, this patch has not been tested on real hardware.
-
-[1] Syzkaller report:
-------------[ cut here ]------------
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 0 PID: 3643 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
-...
-Call Trace:
- <TASK>
- ar5523_cmd+0x41b/0x780 drivers/net/wireless/ath/ar5523/ar5523.c:275
- ar5523_cmd_read drivers/net/wireless/ath/ar5523/ar5523.c:302 [inline]
- ar5523_host_available drivers/net/wireless/ath/ar5523/ar5523.c:1376 [inline]
- ar5523_probe+0x14b0/0x1d10 drivers/net/wireless/ath/ar5523/ar5523.c:1655
- usb_probe_interface+0x30f/0x7f0 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:560 [inline]
- really_probe+0x249/0xb90 drivers/base/dd.c:639
- __driver_probe_device+0x1df/0x4d0 drivers/base/dd.c:778
- driver_probe_device+0x4c/0x1a0 drivers/base/dd.c:808
- __device_attach_driver+0x1d4/0x2e0 drivers/base/dd.c:936
- bus_for_each_drv+0x163/0x1e0 drivers/base/bus.c:427
- __device_attach+0x1e4/0x530 drivers/base/dd.c:1008
- bus_probe_device+0x1e8/0x2a0 drivers/base/bus.c:487
- device_add+0xbd9/0x1e90 drivers/base/core.c:3517
- usb_set_configuration+0x101d/0x1900 drivers/usb/core/message.c:2170
- usb_generic_driver_probe+0xbe/0x100 drivers/usb/core/generic.c:238
- usb_probe_device+0xd8/0x2c0 drivers/usb/core/driver.c:293
- call_driver_probe drivers/base/dd.c:560 [inline]
- really_probe+0x249/0xb90 drivers/base/dd.c:639
- __driver_probe_device+0x1df/0x4d0 drivers/base/dd.c:778
- driver_probe_device+0x4c/0x1a0 drivers/base/dd.c:808
- __device_attach_driver+0x1d4/0x2e0 drivers/base/dd.c:936
- bus_for_each_drv+0x163/0x1e0 drivers/base/bus.c:427
- __device_attach+0x1e4/0x530 drivers/base/dd.c:1008
- bus_probe_device+0x1e8/0x2a0 drivers/base/bus.c:487
- device_add+0xbd9/0x1e90 drivers/base/core.c:3517
- usb_new_device.cold+0x685/0x10ad drivers/usb/core/hub.c:2573
- hub_port_connect drivers/usb/core/hub.c:5353 [inline]
- hub_port_connect_change drivers/usb/core/hub.c:5497 [inline]
- port_event drivers/usb/core/hub.c:5653 [inline]
- hub_event+0x26cb/0x45d0 drivers/usb/core/hub.c:5735
- process_one_work+0x9bf/0x1710 kernel/workqueue.c:2289
- worker_thread+0x669/0x1090 kernel/workqueue.c:2436
- kthread+0x2e8/0x3a0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
- </TASK>
-
-Reported-and-tested-by: syzbot+1bc2c2afd44f820a669f@syzkaller.appspotmail.com
-Fixes: b7d572e1871d ("ar5523: Add new driver")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240408121425.29392-1-n.zhandarovich@fintech.ru
+Acked-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/53d8c545aa8f79a920358be9e72e382b3981bdc4.1704835845.git.u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Stable-dep-of: 3e551115aee0 ("pwm: meson: Add check for error from clk_round_rate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ar5523/ar5523.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c |  1 -
+ drivers/pwm/core.c                    | 22 +++-------------------
+ drivers/pwm/pwm-clps711x.c            |  1 -
+ drivers/pwm/pwm-cros-ec.c             |  1 -
+ drivers/pwm/pwm-pxa.c                 |  4 +---
+ include/linux/pwm.h                   |  2 --
+ 6 files changed, 4 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ar5523/ar5523.c b/drivers/net/wireless/ath/ar5523/ar5523.c
-index a742cec44e3db..91ddbe6136e00 100644
---- a/drivers/net/wireless/ath/ar5523/ar5523.c
-+++ b/drivers/net/wireless/ath/ar5523/ar5523.c
-@@ -1590,6 +1590,20 @@ static int ar5523_probe(struct usb_interface *intf,
- 	struct ar5523 *ar;
- 	int error = -ENOMEM;
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 62cc3893dca5d..1f6e929c2f6a3 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -1591,7 +1591,6 @@ static int ti_sn_pwm_probe(struct auxiliary_device *adev,
+ 	pdata->pchip.ops = &ti_sn_pwm_ops;
+ 	pdata->pchip.npwm = 1;
+ 	pdata->pchip.of_xlate = of_pwm_single_xlate;
+-	pdata->pchip.of_pwm_n_cells = 1;
  
-+	static const u8 bulk_ep_addr[] = {
-+		AR5523_CMD_TX_PIPE | USB_DIR_OUT,
-+		AR5523_DATA_TX_PIPE | USB_DIR_OUT,
-+		AR5523_CMD_RX_PIPE | USB_DIR_IN,
-+		AR5523_DATA_RX_PIPE | USB_DIR_IN,
-+		0};
-+
-+	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr)) {
-+		dev_err(&dev->dev,
-+			"Could not find all expected endpoints\n");
-+		error = -ENODEV;
-+		goto out;
-+	}
-+
- 	/*
- 	 * Load firmware if the device requires it.  This will return
- 	 * -ENXIO on success and we'll get called back afer the usb
+ 	devm_pm_runtime_enable(&adev->dev);
+ 
+diff --git a/drivers/pwm/core.c b/drivers/pwm/core.c
+index f2728ee787d7a..31f210872a079 100644
+--- a/drivers/pwm/core.c
++++ b/drivers/pwm/core.c
+@@ -107,9 +107,6 @@ of_pwm_xlate_with_flags(struct pwm_chip *chip, const struct of_phandle_args *arg
+ {
+ 	struct pwm_device *pwm;
+ 
+-	if (chip->of_pwm_n_cells < 2)
+-		return ERR_PTR(-EINVAL);
+-
+ 	/* flags in the third cell are optional */
+ 	if (args->args_count < 2)
+ 		return ERR_PTR(-EINVAL);
+@@ -124,10 +121,8 @@ of_pwm_xlate_with_flags(struct pwm_chip *chip, const struct of_phandle_args *arg
+ 	pwm->args.period = args->args[1];
+ 	pwm->args.polarity = PWM_POLARITY_NORMAL;
+ 
+-	if (chip->of_pwm_n_cells >= 3) {
+-		if (args->args_count > 2 && args->args[2] & PWM_POLARITY_INVERTED)
+-			pwm->args.polarity = PWM_POLARITY_INVERSED;
+-	}
++	if (args->args_count > 2 && args->args[2] & PWM_POLARITY_INVERTED)
++		pwm->args.polarity = PWM_POLARITY_INVERSED;
+ 
+ 	return pwm;
+ }
+@@ -138,9 +133,6 @@ of_pwm_single_xlate(struct pwm_chip *chip, const struct of_phandle_args *args)
+ {
+ 	struct pwm_device *pwm;
+ 
+-	if (chip->of_pwm_n_cells < 1)
+-		return ERR_PTR(-EINVAL);
+-
+ 	/* validate that one cell is specified, optionally with flags */
+ 	if (args->args_count != 1 && args->args_count != 2)
+ 		return ERR_PTR(-EINVAL);
+@@ -164,16 +156,8 @@ static void of_pwmchip_add(struct pwm_chip *chip)
+ 	if (!chip->dev || !chip->dev->of_node)
+ 		return;
+ 
+-	if (!chip->of_xlate) {
+-		u32 pwm_cells;
+-
+-		if (of_property_read_u32(chip->dev->of_node, "#pwm-cells",
+-					 &pwm_cells))
+-			pwm_cells = 2;
+-
++	if (!chip->of_xlate)
+ 		chip->of_xlate = of_pwm_xlate_with_flags;
+-		chip->of_pwm_n_cells = pwm_cells;
+-	}
+ 
+ 	of_node_get(chip->dev->of_node);
+ }
+diff --git a/drivers/pwm/pwm-clps711x.c b/drivers/pwm/pwm-clps711x.c
+index 42179b3f7ec39..06562d4bb9633 100644
+--- a/drivers/pwm/pwm-clps711x.c
++++ b/drivers/pwm/pwm-clps711x.c
+@@ -103,7 +103,6 @@ static int clps711x_pwm_probe(struct platform_device *pdev)
+ 	priv->chip.dev = &pdev->dev;
+ 	priv->chip.npwm = 2;
+ 	priv->chip.of_xlate = clps711x_pwm_xlate;
+-	priv->chip.of_pwm_n_cells = 1;
+ 
+ 	spin_lock_init(&priv->lock);
+ 
+diff --git a/drivers/pwm/pwm-cros-ec.c b/drivers/pwm/pwm-cros-ec.c
+index 5fe303b8656de..339cedf3a7b18 100644
+--- a/drivers/pwm/pwm-cros-ec.c
++++ b/drivers/pwm/pwm-cros-ec.c
+@@ -279,7 +279,6 @@ static int cros_ec_pwm_probe(struct platform_device *pdev)
+ 	chip->dev = dev;
+ 	chip->ops = &cros_ec_pwm_ops;
+ 	chip->of_xlate = cros_ec_pwm_xlate;
+-	chip->of_pwm_n_cells = 1;
+ 
+ 	if (ec_pwm->use_pwm_type) {
+ 		chip->npwm = CROS_EC_PWM_DT_COUNT;
+diff --git a/drivers/pwm/pwm-pxa.c b/drivers/pwm/pwm-pxa.c
+index 76685f926c758..61b74fa1d3481 100644
+--- a/drivers/pwm/pwm-pxa.c
++++ b/drivers/pwm/pwm-pxa.c
+@@ -180,10 +180,8 @@ static int pwm_probe(struct platform_device *pdev)
+ 	pc->chip.ops = &pxa_pwm_ops;
+ 	pc->chip.npwm = (id->driver_data & HAS_SECONDARY_PWM) ? 2 : 1;
+ 
+-	if (IS_ENABLED(CONFIG_OF)) {
++	if (IS_ENABLED(CONFIG_OF))
+ 		pc->chip.of_xlate = of_pwm_single_xlate;
+-		pc->chip.of_pwm_n_cells = 1;
+-	}
+ 
+ 	pc->mmio_base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(pc->mmio_base))
+diff --git a/include/linux/pwm.h b/include/linux/pwm.h
+index fcc2c4496f731..8ffe9ae7a23a9 100644
+--- a/include/linux/pwm.h
++++ b/include/linux/pwm.h
+@@ -271,7 +271,6 @@ struct pwm_ops {
+  * @id: unique number of this PWM chip
+  * @npwm: number of PWMs controlled by this chip
+  * @of_xlate: request a PWM device given a device tree PWM specifier
+- * @of_pwm_n_cells: number of cells expected in the device tree PWM specifier
+  * @atomic: can the driver's ->apply() be called in atomic context
+  * @pwms: array of PWM devices allocated by the framework
+  */
+@@ -284,7 +283,6 @@ struct pwm_chip {
+ 
+ 	struct pwm_device * (*of_xlate)(struct pwm_chip *chip,
+ 					const struct of_phandle_args *args);
+-	unsigned int of_pwm_n_cells;
+ 	bool atomic;
+ 
+ 	/* only used internally by the PWM framework */
 -- 
 2.43.0
 
