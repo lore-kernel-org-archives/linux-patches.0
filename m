@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114B815FD03;
-	Mon, 27 May 2024 18:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CC415FA87;
+	Mon, 27 May 2024 18:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836322; cv=none; b=s6lbDXe7dhOJ/cc06m1ybtTWoUNFnxGOl6NKFWc5kFiMT1lo5h1BwvLnuQzk1jvH5lUSDTFVonu7WZQSZvcqkCp01u/a2UV4eNJdAHACaY+TbACx12eK9Evrgy24BEWvngOxC2vJyqaYeylwkTLXiE6gfTtPBjPxdP0fCNW4zRg=
+	t=1716836324; cv=none; b=GRA2LYg86GJ2TxMbMTjo0YxvOfw1WZ8fCqKw+YKdfWNL4l8EU6xqwZtOasrCuonaEPhAcoE+whQnzrFhE/UPIuqdOtsNF5rDkzNW88DWt9nz23SeqxotqKGIqhUXE/ZCfWc8jIdyZyfil4EfWC0NSHwKACcQp/Zv8Tjs0Kwkr6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836322; c=relaxed/simple;
-	bh=RtF9lHLMC8tXMqEeqHfgWfeeOITQNAByM/mIgpb9QTk=;
+	s=arc-20240116; t=1716836324; c=relaxed/simple;
+	bh=e39dQ5JvBZ3J08TKCCsQOEsK8rejlWCWO1FmSkadTq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NqIxj7D8XT93a7Dx0/CS9OzQucDduWCxVyMav/8EoT7mmHSkqeiRXpJK2x3HP55qR/ULJdPEZjR4dnjP5V4kT6atmeRX6CRL0YT3kUib5EdSsMZYa86ZTBh+oIVUc4icgcpj9NiB8vDZQhPOCx36SVlVAh/mn8kGxOsKcOFL5ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oq+tuVun; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iSfiVJtW9oe7ZuyMRkf3i1z3cnaQ8rLXHM/xjce/vkKKx065qTky1gX7DAPeWwPDdPu1MU0U6iIhD4eAAH8Y6hFb2IBiD8GMpRbSggItBMrEORV4IqiVG+J3x7k8QDY6JDuOV2guGf/vVjMRZokh73/1fmygBH2OtuATwYnlKfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwznSGMr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oq+tuVun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3711EC2BBFC;
-	Mon, 27 May 2024 18:58:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwznSGMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA7AC2BBFC;
+	Mon, 27 May 2024 18:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836321;
-	bh=RtF9lHLMC8tXMqEeqHfgWfeeOITQNAByM/mIgpb9QTk=;
+	s=korg; t=1716836324;
+	bh=e39dQ5JvBZ3J08TKCCsQOEsK8rejlWCWO1FmSkadTq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oq+tuVunrPdldSQQRcp/VyiSw/TaGx9WFeqFhkIElHIGW2s8B9whQRYLtn5kK1KSY
-	 4PpWsbRm3RKAEGSrBuVq+g4ZAm5ksMNROHlix69YLQQKT3ZgRNauO50JrK8M1tnPC6
-	 nBvaQcZAfeTqDBCGbKN1hW7H6BPw5iNgjRk/HTC8=
+	b=EwznSGMrgjTyvN3OECJkXA+rJI7zwtOsUZ/5Zr1D5rDtBSNlVzDawTORP8/lm6OvM
+	 AvQ2yZAzititBf839hSc0z4alb2prTTMU0NnksqMcM6gOI9KqnIbCNcLXXKUjf5oE+
+	 9/YwzAfAjI8/7dvNZZcwrEjBXQPcF7QA4AkKUTYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel J Blueman <daniel@quora.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Steffen Persvold <sp@numascale.com>,
-	James Cleverdon <james.cleverdon.external@eviden.com>,
-	Dimitri Sivanich <sivanich@hpe.com>,
-	Prarit Bhargava <prarit@redhat.com>
-Subject: [PATCH 6.9 001/427] x86/tsc: Trust initial offset in architectural TSC-adjust MSRs
-Date: Mon, 27 May 2024 20:50:48 +0200
-Message-ID: <20240527185601.873913485@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>
+Subject: [PATCH 6.9 010/427] speakup: Fix sizeof() vs ARRAY_SIZE() bug
+Date: Mon, 27 May 2024 20:50:57 +0200
+Message-ID: <20240527185602.772648458@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,46 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel J Blueman <daniel@quora.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 455f9075f14484f358b3c1d6845b4a438de198a7 upstream.
+commit 008ab3c53bc4f0b2f20013c8f6c204a3203d0b8b upstream.
 
-When the BIOS configures the architectural TSC-adjust MSRs on secondary
-sockets to correct a constant inter-chassis offset, after Linux brings the
-cores online, the TSC sync check later resets the core-local MSR to 0,
-triggering HPET fallback and leading to performance loss.
+The "buf" pointer is an array of u16 values.  This code should be
+using ARRAY_SIZE() (which is 256) instead of sizeof() (which is 512),
+otherwise it can the still got out of bounds.
 
-Fix this by unconditionally using the initial adjust values read from the
-MSRs. Trusting the initial offsets in this architectural mechanism is a
-better approach than special-casing workarounds for specific platforms.
-
-Signed-off-by: Daniel J Blueman <daniel@quora.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Steffen Persvold <sp@numascale.com>
-Reviewed-by: James Cleverdon <james.cleverdon.external@eviden.com>
-Reviewed-by: Dimitri Sivanich <sivanich@hpe.com>
-Reviewed-by: Prarit Bhargava <prarit@redhat.com>
-Link: https://lore.kernel.org/r/20240419085146.175665-1-daniel@quora.org
+Fixes: c8d2f34ea96e ("speakup: Avoid crash on very long word")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Link: https://lore.kernel.org/r/d16f67d2-fd0a-4d45-adac-75ddd11001aa@moroto.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/tsc_sync.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/accessibility/speakup/main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/tsc_sync.c
-+++ b/arch/x86/kernel/tsc_sync.c
-@@ -193,11 +193,9 @@ bool tsc_store_and_check_tsc_adjust(bool
- 	cur->warned = false;
- 
- 	/*
--	 * If a non-zero TSC value for socket 0 may be valid then the default
--	 * adjusted value cannot assumed to be zero either.
-+	 * The default adjust value cannot be assumed to be zero on any socket.
- 	 */
--	if (tsc_async_resets)
--		cur->adjusted = bootval;
-+	cur->adjusted = bootval;
- 
- 	/*
- 	 * Check whether this CPU is the first in a package to come up. In
+--- a/drivers/accessibility/speakup/main.c
++++ b/drivers/accessibility/speakup/main.c
+@@ -574,7 +574,7 @@ static u_long get_word(struct vc_data *v
+ 	}
+ 	attr_ch = get_char(vc, (u_short *)tmp_pos, &spk_attr);
+ 	buf[cnt++] = attr_ch;
+-	while (tmpx < vc->vc_cols - 1 && cnt < sizeof(buf) - 1) {
++	while (tmpx < vc->vc_cols - 1 && cnt < ARRAY_SIZE(buf) - 1) {
+ 		tmp_pos += 2;
+ 		tmpx++;
+ 		ch = get_char(vc, (u_short *)tmp_pos, &temp);
 
 
