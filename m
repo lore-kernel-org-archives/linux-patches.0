@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D9515FA85;
-	Mon, 27 May 2024 18:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24ACA15FA8C;
+	Mon, 27 May 2024 18:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836388; cv=none; b=p7554ienc1GILnuFR9hF5QLx4yKqqhspZ1DIeTibWuJ13ctq5G8ZjODVe3VvfJNb2g+B3eCNIcMsNLjIdaGAM3hht55NGdZ3h/A1upADbeQs69B8w3tTNMUw5Z5/ClxirRm2GG7aYlhFE9BAk0uR7tL1wsBR9FaVEpBe5rheExU=
+	t=1716836391; cv=none; b=NOtDoxvzrZMekjAxQAgYg0Z+HSt08FCyHSwCe0VKRq83vBfaYkC8WjgGB+hLN/yxj4gnPLIk0dwS1C0H+BUTjTA3/hGw6MCs5oR8HATjHwbwm2Kglzzln2FhbgZGLQ0l+1OmwgRBfwY19/zkoGRTI4Przwgavbx388ycdSpS7Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836388; c=relaxed/simple;
-	bh=9fF1HuWHuqoKTkqflum+SVkYnN14ILJsSVLJkQTpiDY=;
+	s=arc-20240116; t=1716836391; c=relaxed/simple;
+	bh=sx8dtVQkY/kJuWaCoHkHqua6a709Sh0+Q46IkyGjzPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ew87Ly2Y0178jJbxDiTlSMf1zgfUmwaCv+GZRcrkiFvy/H8GXNUA3pZCmH4nPNzSpJmhyWYGcxCg/wECYDlNpmRZeSSNDldfmz8oyuKJgSwOV9aly2N1ZUCwzAjcZe/7Z/C3u2sEJfimPNf/VmPlRL0n/gCCTxcWOk9c50wfdGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7DfKVl9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mQCosfxlOrbBwQTUWPH9ecoDG2zSJ6UOdxHa/S2NBKphI6BV++Pp8FMdR/Rs/MtQhpaCQRJsTO9V2EMCo5bZtfRy/9dBbxRqaep7e1KWA+Exmk3hOvfw5Xf3JS722tLnCeDKVAtzBvoWbsRXqJmQBBuO0zj2B/OUnI7WwWaVuXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=geXYoweY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7DfKVl9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CBDC2BBFC;
-	Mon, 27 May 2024 18:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="geXYoweY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C81C2BBFC;
+	Mon, 27 May 2024 18:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836388;
-	bh=9fF1HuWHuqoKTkqflum+SVkYnN14ILJsSVLJkQTpiDY=;
+	s=korg; t=1716836391;
+	bh=sx8dtVQkY/kJuWaCoHkHqua6a709Sh0+Q46IkyGjzPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7DfKVl91J6V3CR0cRMhDZdgp/7NEUNIUiYx32gWsRseETs/3r+jUte0/XpjhsJ5q
-	 nWy2vF/XLCTHcVNd47XJD8W3fmDWSl4YsXfZvxcS+WsFcED7Ing1ZWju1qM9cqMBFR
-	 WfV47tQJnmpJnRAN8oOHIvLbUZFgGlBX1wngqth4=
+	b=geXYoweYceaD+3S7jEyRLcmFu3oTkdVCAyWbDpMDSwn88nHeo6faMZ/m6nLgpVtLP
+	 RyZSYj3apH6Bv+SG3m1T4I/6sEFsuARUb31R7KtxjjOPLetDG4DSFeK0nY6pZl0YYT
+	 Y3kbI1psTvoVIQnwruxuvitEE6mP54bZUyc//Kj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.9 033/427] fs/ntfs3: Fix case when index is reused during tree transformation
-Date: Mon, 27 May 2024 20:51:20 +0200
-Message-ID: <20240527185604.749710718@linuxfoundation.org>
+Subject: [PATCH 6.9 034/427] fs/ntfs3: Break dir enumeration if directory contents error
+Date: Mon, 27 May 2024 20:51:21 +0200
+Message-ID: <20240527185604.834206541@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,49 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 05afeeebcac850a016ec4fb1f681ceda11963562 upstream.
+commit 302e9dca8428979c9c99f2dbb44dc1783f5011c3 upstream.
 
-In most cases when adding a cluster to the directory index,
-they are placed at the end, and in the bitmap, this cluster corresponds
-to the last bit. The new directory size is calculated as follows:
+If we somehow attempt to read beyond the directory size, an error
+is supposed to be returned.
 
-	data_size = (u64)(bit + 1) << indx->index_bits;
+However, in some cases, read requests do not stop and instead enter
+into a loop.
 
-In the case of reusing a non-final cluster from the index,
-data_size is calculated incorrectly, resulting in the directory size
-differing from the actual size.
+To avoid this, we set the position in the directory to the end.
 
-A check for cluster reuse has been added, and the size update is skipped.
-
-Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ntfs3/dir.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1533,6 +1533,11 @@ static int indx_add_allocate(struct ntfs
- 		goto out1;
- 	}
- 
-+	if (data_size <= le64_to_cpu(alloc->nres.data_size)) {
-+		/* Reuse index. */
-+		goto out;
-+	}
-+
- 	/* Increase allocation. */
- 	err = attr_set_size(ni, ATTR_ALLOC, in->name, in->name_len,
- 			    &indx->alloc_run, data_size, &data_size, true,
-@@ -1546,6 +1551,7 @@ static int indx_add_allocate(struct ntfs
- 	if (in->name == I30_NAME)
- 		i_size_write(&ni->vfs_inode, data_size);
- 
-+out:
- 	*vbn = bit << indx->idx2vbn_bits;
- 
- 	return 0;
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -475,6 +475,7 @@ static int ntfs_readdir(struct file *fil
+ 		vbo = (u64)bit << index_bits;
+ 		if (vbo >= i_size) {
+ 			ntfs_inode_err(dir, "Looks like your dir is corrupt");
++			ctx->pos = eod;
+ 			err = -EINVAL;
+ 			goto out;
+ 		}
 
 
