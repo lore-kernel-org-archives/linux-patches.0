@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66402D518;
-	Mon, 27 May 2024 19:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF6FD518;
+	Mon, 27 May 2024 19:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836613; cv=none; b=dbdMDAGYWXYF48uPVojV4vlk9iDrPNMFVULR6iIffLXnuHuhw+JdEt5Hy2cgi59F5aeNMI3qUOmPKa4lMTTrEQCMBlQrSBk49hPq2MK57Edlz9pBwTin6y8k/rTdOPNsHcmKRqEw5PZ5M+zp64qRSd6Z9e0OM0awIZiteEdC6Bo=
+	t=1716836616; cv=none; b=ujNCCbURju+624e04J+Li0/UFAaOwE+MsajGMztOo9/XXrNN+f7pSOwqdIGBaJihMAAznixVSg7mnKO69wfvcol3og22W1JE6YjgDCpokJjl9GJHfY2kMBhNrpRfgsWd2BW4OuhU2K4x5pj9SdIER+os/UdR4zPfhI58ErYtgSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836613; c=relaxed/simple;
-	bh=st70cTuNPs7w+GJ+QfpSr3bRuvEJGhfZJC5qVQApDvg=;
+	s=arc-20240116; t=1716836616; c=relaxed/simple;
+	bh=8wkMzuEatgjSLdln2/k9Ghr1Y9RPs+Mg/VDd2SYpDeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gyq8gSHLGlj9Ky9gW1dcoympVxaJcSZtk5yITnfShAAygF1t7xbVSj8/OAlAmLyNyobS7W3uKiO3FzgtPSyJMsXZbooc9N4dP+ecEdTZ4ALV1/cTdz31oMz/yZW2rDzR+8lN48vYzFrHIWrYQ1FjoHjCl5px2lUIFSDU1BeRIhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7eFsxEx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OC9BmH3yudr2aGP7sTzka7KeY+a+KcdtTS6Fw7X/zpPFlD9A8Dx6xJA/RFGAjX50SCDqh3PwfoABHR51RYHwxEMe69ppsl10a5XEP1nC1mfZVjlThvooTrcNh3oRW8F3EDXCInlrDPpIOfWw5tunGBdoijj+23oCpoDseZhOu1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByTLYce1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7eFsxEx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2285C2BBFC;
-	Mon, 27 May 2024 19:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByTLYce1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C98C2BBFC;
+	Mon, 27 May 2024 19:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836613;
-	bh=st70cTuNPs7w+GJ+QfpSr3bRuvEJGhfZJC5qVQApDvg=;
+	s=korg; t=1716836615;
+	bh=8wkMzuEatgjSLdln2/k9Ghr1Y9RPs+Mg/VDd2SYpDeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7eFsxExFHzsXXqAyoN6bNG+nhBKUfmtdV0WLie5g0rzMS11dQEnfmerdXnQS63C1
-	 TyA1Lz18uq90KxLINkFbD0XJ9vstW+C7rsKMr/oGdtCAjUVK75r0xSuGo8RWTbu7/4
-	 u0OWTtsLEbXSv/wWtyigkX1XYR2pgf3eNa4MVu/Y=
+	b=ByTLYce1lWCspB7SDCWBCP8xerN6ZYGkoe3JnRIODhUhVsqZ6b0JFrYlpEuX0hXSz
+	 B4ekCySnw2IvOaHIrMTK3+SJ7kZvOge7M1Yt+cchPu8kMDRqrpAhgFurfETR1XBuxo
+	 tPNZw60o+e48f5/w4baD8zeqMEVwTiVXBBHfe/q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <keescook@chromium.org>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sahil Siddiq <icegambit91@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 121/427] wifi: carl9170: re-fix fortified-memset warning
-Date: Mon, 27 May 2024 20:52:48 +0200
-Message-ID: <20240527185613.143272379@linuxfoundation.org>
+Subject: [PATCH 6.9 122/427] bpftool: Mount bpffs on provided dir instead of parent dir
+Date: Mon, 27 May 2024 20:52:49 +0200
+Message-ID: <20240527185613.260098433@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,58 +51,262 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Sahil Siddiq <icegambit91@gmail.com>
 
-[ Upstream commit 066afafc10c9476ee36c47c9062527a17e763901 ]
+[ Upstream commit 478a535ae54ad3831371904d93b5dfc403222e17 ]
 
-The carl9170_tx_release() function sometimes triggers a fortified-memset
-warning in my randconfig builds:
+When pinning programs/objects under PATH (eg: during "bpftool prog
+loadall") the bpffs is mounted on the parent dir of PATH in the
+following situations:
+- the given dir exists but it is not bpffs.
+- the given dir doesn't exist and the parent dir is not bpffs.
 
-In file included from include/linux/string.h:254,
-                 from drivers/net/wireless/ath/carl9170/tx.c:40:
-In function 'fortify_memset_chk',
-    inlined from 'carl9170_tx_release' at drivers/net/wireless/ath/carl9170/tx.c:283:2,
-    inlined from 'kref_put' at include/linux/kref.h:65:3,
-    inlined from 'carl9170_tx_put_skb' at drivers/net/wireless/ath/carl9170/tx.c:342:9:
-include/linux/fortify-string.h:493:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
-  493 |                         __write_overflow_field(p_size_field, size);
+Mounting on the parent dir can also have the unintentional side-
+effect of hiding other files located under the parent dir.
 
-Kees previously tried to avoid this by using memset_after(), but it seems
-this does not fully address the problem. I noticed that the memset_after()
-here is done on a different part of the union (status) than the original
-cast was from (rate_driver_data), which may confuse the compiler.
+If the given dir exists but is not bpffs, then the bpffs should
+be mounted on the given dir and not its parent dir.
 
-Unfortunately, the memset_after() trick does not work on driver_rates[]
-because that is part of an anonymous struct, and I could not get
-struct_group() to do this either. Using two separate memset() calls
-on the two members does address the warning though.
+Similarly, if the given dir doesn't exist and its parent dir is not
+bpffs, then the given dir should be created and the bpffs should be
+mounted on this new dir.
 
-Fixes: fb5f6a0e8063b ("mac80211: Use memset_after() to clear tx status")
-Link: https://lore.kernel.org/lkml/20230623152443.2296825-1-arnd@kernel.org/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240328135509.3755090-2-arnd@kernel.org
+Fixes: 2a36c26fe3b8 ("bpftool: Support bpffs mountpoint as pin path for prog loadall")
+Signed-off-by: Sahil Siddiq <icegambit91@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/2da44d24-74ae-a564-1764-afccf395eeec@isovalent.com/T/#t
+Link: https://lore.kernel.org/bpf/20240404192219.52373-1-icegambit91@gmail.com
+
+Closes: https://github.com/libbpf/bpftool/issues/100
+
+Changes since v1:
+ - Split "mount_bpffs_for_pin" into two functions.
+   This is done to improve maintainability and readability.
+
+Changes since v2:
+- mount_bpffs_for_pin: rename to "create_and_mount_bpffs_dir".
+- mount_bpffs_given_file: rename to "mount_bpffs_given_file".
+- create_and_mount_bpffs_dir:
+  - introduce "dir_exists" boolean.
+  - remove new dir if "mnt_fs" fails.
+- improve error handling and error messages.
+
+Changes since v3:
+- Rectify function name.
+- Improve error messages and formatting.
+- mount_bpffs_for_file:
+  - Check if dir exists before block_mount check.
+
+Changes since v4:
+- Use strdup instead of strcpy.
+- create_and_mount_bpffs_dir:
+  - Use S_IRWXU instead of 0700.
+- Improve error handling and formatting.
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/carl9170/tx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/bpf/bpftool/common.c     | 96 +++++++++++++++++++++++++++++-----
+ tools/bpf/bpftool/iter.c       |  2 +-
+ tools/bpf/bpftool/main.h       |  3 +-
+ tools/bpf/bpftool/prog.c       |  5 +-
+ tools/bpf/bpftool/struct_ops.c |  2 +-
+ 5 files changed, 92 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/carl9170/tx.c b/drivers/net/wireless/ath/carl9170/tx.c
-index e902ca80eba78..0226c31a6cae2 100644
---- a/drivers/net/wireless/ath/carl9170/tx.c
-+++ b/drivers/net/wireless/ath/carl9170/tx.c
-@@ -280,7 +280,8 @@ static void carl9170_tx_release(struct kref *ref)
- 	 * carl9170_tx_fill_rateinfo() has filled the rate information
- 	 * before we get to this point.
- 	 */
--	memset_after(&txinfo->status, 0, rates);
-+	memset(&txinfo->pad, 0, sizeof(txinfo->pad));
-+	memset(&txinfo->rate_driver_data, 0, sizeof(txinfo->rate_driver_data));
+diff --git a/tools/bpf/bpftool/common.c b/tools/bpf/bpftool/common.c
+index cc6e6aae2447d..958e92acca8e2 100644
+--- a/tools/bpf/bpftool/common.c
++++ b/tools/bpf/bpftool/common.c
+@@ -244,29 +244,101 @@ int open_obj_pinned_any(const char *path, enum bpf_obj_type exp_type)
+ 	return fd;
+ }
  
- 	if (atomic_read(&ar->tx_total_queued))
- 		ar->tx_schedule = true;
+-int mount_bpffs_for_pin(const char *name, bool is_dir)
++int create_and_mount_bpffs_dir(const char *dir_name)
+ {
+ 	char err_str[ERR_MAX_LEN];
+-	char *file;
+-	char *dir;
++	bool dir_exists;
+ 	int err = 0;
+ 
+-	if (is_dir && is_bpffs(name))
++	if (is_bpffs(dir_name))
+ 		return err;
+ 
+-	file = malloc(strlen(name) + 1);
+-	if (!file) {
++	dir_exists = access(dir_name, F_OK) == 0;
++
++	if (!dir_exists) {
++		char *temp_name;
++		char *parent_name;
++
++		temp_name = strdup(dir_name);
++		if (!temp_name) {
++			p_err("mem alloc failed");
++			return -1;
++		}
++
++		parent_name = dirname(temp_name);
++
++		if (is_bpffs(parent_name)) {
++			/* nothing to do if already mounted */
++			free(temp_name);
++			return err;
++		}
++
++		if (access(parent_name, F_OK) == -1) {
++			p_err("can't create dir '%s' to pin BPF object: parent dir '%s' doesn't exist",
++			      dir_name, parent_name);
++			free(temp_name);
++			return -1;
++		}
++
++		free(temp_name);
++	}
++
++	if (block_mount) {
++		p_err("no BPF file system found, not mounting it due to --nomount option");
++		return -1;
++	}
++
++	if (!dir_exists) {
++		err = mkdir(dir_name, S_IRWXU);
++		if (err) {
++			p_err("failed to create dir '%s': %s", dir_name, strerror(errno));
++			return err;
++		}
++	}
++
++	err = mnt_fs(dir_name, "bpf", err_str, ERR_MAX_LEN);
++	if (err) {
++		err_str[ERR_MAX_LEN - 1] = '\0';
++		p_err("can't mount BPF file system on given dir '%s': %s",
++		      dir_name, err_str);
++
++		if (!dir_exists)
++			rmdir(dir_name);
++	}
++
++	return err;
++}
++
++int mount_bpffs_for_file(const char *file_name)
++{
++	char err_str[ERR_MAX_LEN];
++	char *temp_name;
++	char *dir;
++	int err = 0;
++
++	if (access(file_name, F_OK) != -1) {
++		p_err("can't pin BPF object: path '%s' already exists", file_name);
++		return -1;
++	}
++
++	temp_name = strdup(file_name);
++	if (!temp_name) {
+ 		p_err("mem alloc failed");
+ 		return -1;
+ 	}
+ 
+-	strcpy(file, name);
+-	dir = dirname(file);
++	dir = dirname(temp_name);
+ 
+ 	if (is_bpffs(dir))
+ 		/* nothing to do if already mounted */
+ 		goto out_free;
+ 
++	if (access(dir, F_OK) == -1) {
++		p_err("can't pin BPF object: dir '%s' doesn't exist", dir);
++		err = -1;
++		goto out_free;
++	}
++
+ 	if (block_mount) {
+ 		p_err("no BPF file system found, not mounting it due to --nomount option");
+ 		err = -1;
+@@ -276,12 +348,12 @@ int mount_bpffs_for_pin(const char *name, bool is_dir)
+ 	err = mnt_fs(dir, "bpf", err_str, ERR_MAX_LEN);
+ 	if (err) {
+ 		err_str[ERR_MAX_LEN - 1] = '\0';
+-		p_err("can't mount BPF file system to pin the object (%s): %s",
+-		      name, err_str);
++		p_err("can't mount BPF file system to pin the object '%s': %s",
++		      file_name, err_str);
+ 	}
+ 
+ out_free:
+-	free(file);
++	free(temp_name);
+ 	return err;
+ }
+ 
+@@ -289,7 +361,7 @@ int do_pin_fd(int fd, const char *name)
+ {
+ 	int err;
+ 
+-	err = mount_bpffs_for_pin(name, false);
++	err = mount_bpffs_for_file(name);
+ 	if (err)
+ 		return err;
+ 
+diff --git a/tools/bpf/bpftool/iter.c b/tools/bpf/bpftool/iter.c
+index 6b0e5202ca7a9..5c39c2ed36a2b 100644
+--- a/tools/bpf/bpftool/iter.c
++++ b/tools/bpf/bpftool/iter.c
+@@ -76,7 +76,7 @@ static int do_pin(int argc, char **argv)
+ 		goto close_obj;
+ 	}
+ 
+-	err = mount_bpffs_for_pin(path, false);
++	err = mount_bpffs_for_file(path);
+ 	if (err)
+ 		goto close_link;
+ 
+diff --git a/tools/bpf/bpftool/main.h b/tools/bpf/bpftool/main.h
+index b8bb08d10dec9..9eb764fe4cc8b 100644
+--- a/tools/bpf/bpftool/main.h
++++ b/tools/bpf/bpftool/main.h
+@@ -142,7 +142,8 @@ const char *get_fd_type_name(enum bpf_obj_type type);
+ char *get_fdinfo(int fd, const char *key);
+ int open_obj_pinned(const char *path, bool quiet);
+ int open_obj_pinned_any(const char *path, enum bpf_obj_type exp_type);
+-int mount_bpffs_for_pin(const char *name, bool is_dir);
++int mount_bpffs_for_file(const char *file_name);
++int create_and_mount_bpffs_dir(const char *dir_name);
+ int do_pin_any(int argc, char **argv, int (*get_fd_by_id)(int *, char ***));
+ int do_pin_fd(int fd, const char *name);
+ 
+diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
+index 9cb42a3366c07..4c4cf16a40ba7 100644
+--- a/tools/bpf/bpftool/prog.c
++++ b/tools/bpf/bpftool/prog.c
+@@ -1778,7 +1778,10 @@ static int load_with_options(int argc, char **argv, bool first_prog_only)
+ 		goto err_close_obj;
+ 	}
+ 
+-	err = mount_bpffs_for_pin(pinfile, !first_prog_only);
++	if (first_prog_only)
++		err = mount_bpffs_for_file(pinfile);
++	else
++		err = create_and_mount_bpffs_dir(pinfile);
+ 	if (err)
+ 		goto err_close_obj;
+ 
+diff --git a/tools/bpf/bpftool/struct_ops.c b/tools/bpf/bpftool/struct_ops.c
+index d573f2640d8e9..aa43dead249cb 100644
+--- a/tools/bpf/bpftool/struct_ops.c
++++ b/tools/bpf/bpftool/struct_ops.c
+@@ -515,7 +515,7 @@ static int do_register(int argc, char **argv)
+ 	if (argc == 1)
+ 		linkdir = GET_ARG();
+ 
+-	if (linkdir && mount_bpffs_for_pin(linkdir, true)) {
++	if (linkdir && create_and_mount_bpffs_dir(linkdir)) {
+ 		p_err("can't mount bpffs for pinning");
+ 		return -1;
+ 	}
 -- 
 2.43.0
 
