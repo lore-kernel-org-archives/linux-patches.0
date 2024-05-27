@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A4517727;
-	Mon, 27 May 2024 19:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C7B17727;
+	Mon, 27 May 2024 19:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838542; cv=none; b=qloJytIh31PdH5YEdBy46Cy2uUQBLEmK8hcCxeqnuw2PpaUnTVN7aA4OS/DVNuNxj+W4cRpTV65OXdzMtcQF5ZTgEsMSo6MSPmYGUJjB4xxWAtlSkxkrvx+EVxdRLCm/gKek4RLlnsN0Og17i59QldMWFhZ7Rpu9uHpRN2ujldw=
+	t=1716838545; cv=none; b=i39RUkRBv/LTu14jUaMgyLOLoGrhSybwHTeowySA2BO37oKLdeabVgZARNDL/W7+nIxAe6gFkV0EIlPfGLG4ye0v9/dBRvtt8b98IfDi850hekXN3ek/HoHvi8FDCA2HAWeZtFDjEvkcdKrU4isAQgSbkGiXsEy6gN5k43ki18Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838542; c=relaxed/simple;
-	bh=Zbp82yHssFYgUYgWA/AYteX66HZheTkHkYx5Q6wXxmk=;
+	s=arc-20240116; t=1716838545; c=relaxed/simple;
+	bh=sm3Nbmo9oj5f6S2n3lGo9/z4bLovY+OGRr5cE3cuJjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vi3e5mRIkHDip2gjhK8ddvQctdCz4mUzsKZHSTZAgwNuz4hgJyCYIQBx58ueboOw7hx5wo4td8iV3ZNuEhx43+XkaKBqWt3aapLaBNRkI5x4RIlnnn30tkSAfoVd2eoziuX/O3m7d0wBBHwJIjIQO+yrO4m0hrl24oCfoGBdRCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5WCdt3r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dOAYpyvUpVCwQXCBNnMLi4DUymPusstCZPcwpN+BAr6NXQQq2BjI+1nA71gAEEeFVEBcQiZiWkw9VAjOBWXwx7H12OpAQoap5/54tJX6ld1dMlfR7fYh1OeHIobowrLToAAa8dlUzzAcDacBFqowRGtAiStzZ2MTFAhXK6AJwIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvtDkmX9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5WCdt3r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F86C2BBFC;
-	Mon, 27 May 2024 19:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvtDkmX9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3418C2BBFC;
+	Mon, 27 May 2024 19:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838542;
-	bh=Zbp82yHssFYgUYgWA/AYteX66HZheTkHkYx5Q6wXxmk=;
+	s=korg; t=1716838545;
+	bh=sm3Nbmo9oj5f6S2n3lGo9/z4bLovY+OGRr5cE3cuJjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5WCdt3rr7GjXp5iYxjQkZhCGuNyKE1Z04NygixbYQQTEcF+NYs5tk/jSmt+xecc1
-	 DwDNrUmTdbrOTAN6Fpj5rvhhKcI1df9xuBYGrnfHekeFMH/tkmxAk5URnWDnWG6dwh
-	 McJ8WYWNMUKfS0RJA0kMQGKwewc27vMK0ASNOWHA=
+	b=vvtDkmX9SugWOO9J7YQ6qEtNgOY04XzVXPs1IhBxov1EiLYdw76LAqySvKCTCi7uo
+	 vjQZoKag1x2mEoFhZgsMAxtcNUv7O/KgYXJTzrZcb5HqWjutC1mmCItWNV1lQ+RbQc
+	 kgHsGqO50UbLM07ea1xI5RhnmtGUGefb2X+sD4lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Rob Herring <robh@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 396/493] media: dt-bindings: ovti,ov2680: Fix the power supply names
-Date: Mon, 27 May 2024 20:56:38 +0200
-Message-ID: <20240527185643.227001095@linuxfoundation.org>
+Subject: [PATCH 6.8 432/493] clk: mediatek: mt8365-mm: fix DPI0 parent
+Date: Mon, 27 May 2024 20:57:14 +0200
+Message-ID: <20240527185644.410833307@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,75 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Alexandre Mergnat <amergnat@baylibre.com>
 
-[ Upstream commit e2f6ea61b6f3e4ebbb7dff857eea6220c18cd17b ]
+[ Upstream commit 4c0c087772d7e29bc2489ddb068d5167140bfc38 ]
 
-The original .txt bindings had the OV2680 power supply names correct,
-but the transition from .txt to yaml spelled them incorrectly.
+To have a working display through DPI, a workaround has been
+implemented downstream to add "mm_dpi0_dpi0" and "dpi0_sel" to
+the DPI node. Shortly, that add an extra clock.
 
-Fix the OV2680 power supply names as the original .txt bindings
-as these are the names used by the OV2680 driver and in devicetree.
+It seems consistent to have the "dpi0_sel" as parent.
+Additionnaly, "vpll_dpix" isn't used/managed.
 
-Fixes: 57226cd8c8bf ("media: dt-bindings: ov2680: convert bindings to yaml")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Then, set the "mm_dpi0_dpi0" parent clock to "dpi0_sel".
+
+The new clock tree is:
+
+clk26m
+  lvdspll
+    lvdspll_X (2, 4, 8, 16)
+      dpi0_sel
+        mm_dpi0_dpi0
+
+Fixes: d46adccb7966 ("clk: mediatek: add driver for MT8365 SoC")
+Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
+Link: https://lore.kernel.org/r/20231023-display-support-v3-12-53388f3ed34b@baylibre.com
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/media/i2c/ovti,ov2680.yaml        | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/clk/mediatek/clk-mt8365-mm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml b/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
-index cf456f8d9ddcb..c87677f5e2a25 100644
---- a/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
-+++ b/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
-@@ -37,15 +37,15 @@ properties:
-       active low.
-     maxItems: 1
- 
--  dovdd-supply:
-+  DOVDD-supply:
-     description:
-       Definition of the regulator used as interface power supply.
- 
--  avdd-supply:
-+  AVDD-supply:
-     description:
-       Definition of the regulator used as analog power supply.
- 
--  dvdd-supply:
-+  DVDD-supply:
-     description:
-       Definition of the regulator used as digital power supply.
- 
-@@ -59,9 +59,9 @@ required:
-   - reg
-   - clocks
-   - clock-names
--  - dovdd-supply
--  - avdd-supply
--  - dvdd-supply
-+  - DOVDD-supply
-+  - AVDD-supply
-+  - DVDD-supply
-   - reset-gpios
-   - port
- 
-@@ -82,9 +82,9 @@ examples:
-                 clock-names = "xvclk";
-                 reset-gpios = <&gpio1 3 GPIO_ACTIVE_LOW>;
- 
--                dovdd-supply = <&sw2_reg>;
--                dvdd-supply = <&sw2_reg>;
--                avdd-supply = <&reg_peri_3p15v>;
-+                DOVDD-supply = <&sw2_reg>;
-+                DVDD-supply = <&sw2_reg>;
-+                AVDD-supply = <&reg_peri_3p15v>;
- 
-                 port {
-                         ov2680_to_mipi: endpoint {
+diff --git a/drivers/clk/mediatek/clk-mt8365-mm.c b/drivers/clk/mediatek/clk-mt8365-mm.c
+index 01a2ef8f594ef..3f62ec7507336 100644
+--- a/drivers/clk/mediatek/clk-mt8365-mm.c
++++ b/drivers/clk/mediatek/clk-mt8365-mm.c
+@@ -53,7 +53,7 @@ static const struct mtk_gate mm_clks[] = {
+ 	GATE_MM0(CLK_MM_MM_DSI0, "mm_dsi0", "mm_sel", 17),
+ 	GATE_MM0(CLK_MM_MM_DISP_RDMA1, "mm_disp_rdma1", "mm_sel", 18),
+ 	GATE_MM0(CLK_MM_MM_MDP_RDMA1, "mm_mdp_rdma1", "mm_sel", 19),
+-	GATE_MM0(CLK_MM_DPI0_DPI0, "mm_dpi0_dpi0", "vpll_dpix", 20),
++	GATE_MM0(CLK_MM_DPI0_DPI0, "mm_dpi0_dpi0", "dpi0_sel", 20),
+ 	GATE_MM0(CLK_MM_MM_FAKE, "mm_fake", "mm_sel", 21),
+ 	GATE_MM0(CLK_MM_MM_SMI_COMMON, "mm_smi_common", "mm_sel", 22),
+ 	GATE_MM0(CLK_MM_MM_SMI_LARB0, "mm_smi_larb0", "mm_sel", 23),
 -- 
 2.43.0
 
