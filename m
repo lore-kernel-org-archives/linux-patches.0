@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A384B26AF2;
-	Mon, 27 May 2024 19:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C4726AF2;
+	Mon, 27 May 2024 19:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836923; cv=none; b=NK/tVBKnuwGxNbJXQITJqQmUm3UcaLlJBt12Dl4U86bhlfRGa6v8fpzvZ3vHrY6+a6meiIojEP+wGK2MHpCw8ChIbb4Ro9Hon0CKecQ8g28A/Xg9WaIpC4o5zk2qDmUqAxufl4VTYixR6HEoWudCjNpoqJSkSNqohFQAtZVs5WQ=
+	t=1716836926; cv=none; b=ug0zTj3DeDqOBjrl+/EFVxZIy0EizbUNRZyoLbpjmsCO75cHVzAGm1HrtkVHX0MudURo5qhksj9iNhjDPNL4zArMFdWTDK7um59K0qxtFnwPpvgqWvkz/zfwH6mXjmb8LduJVp00GeIegs/OVSZRuDThSao3IPYX05YF6rshyKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836923; c=relaxed/simple;
-	bh=6zX9VKnjnQAmIdID/elI0fokUB0tSJXL2hV+BeeaCIc=;
+	s=arc-20240116; t=1716836926; c=relaxed/simple;
+	bh=2GG6jCS1q5MAI/roPd0MaKkY20DYKGy1bve7VGWLr0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfwF30HO1YMPDS357YYFY09TfNNzrv0nwcVRp+ILTF9s5nPZ+seFBsnBRvLRfog5sF4be+2vC6KZlejaC+CECEmDVzs7XU6J7QU13tPVgpGDV93g8YZ6HooU9PjkJiDL0gaeA6Fie3JjP9Qzb1Slo055lNJ+u85qNs+04m9BZLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KUpINUk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BWhd6BXlIqw2UMIMBN5MuV2Cd8rSjfCFRs4PhL6lNCVKFD3YajZZOMjL2bWLz5x0mh78f+czfA6okMVeTYVIGn1V3ZUDAsK+0VAh3pwdkBRpi6uasUKe7qAnJvmZswLwkSeSnLLZ3ZEiRUUCx6oUoRg/mlQ6dCvskeREhDy70no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2dRhAa8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KUpINUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F687C2BBFC;
-	Mon, 27 May 2024 19:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2dRhAa8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD536C2BBFC;
+	Mon, 27 May 2024 19:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836923;
-	bh=6zX9VKnjnQAmIdID/elI0fokUB0tSJXL2hV+BeeaCIc=;
+	s=korg; t=1716836926;
+	bh=2GG6jCS1q5MAI/roPd0MaKkY20DYKGy1bve7VGWLr0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2KUpINUkGtjk0pT3n2bo+q9Anq4T0x9mtx6YsapJEPV63t2fj/er/8QclvYsf64/g
-	 0gRpReUTE1NyHcVHkiKFQ4c88es1J/Cu0/03w9JKJt9pRDTFVNrQcIGvPqQl3CMKQf
-	 dMJGVpu2xwgmgGo3ZmaiWC7OeSZhxoqcLUn7e9YI=
+	b=Q2dRhAa8Nb6SPkFszo+6eHxnuZYdtoWrwpKtsZFUxuVJNqYp2S90mqTeGLW7R8G+a
+	 vBkg+FbHzOuXKJXa0LO5N4+/vtTmi+Xniwfor1buUhu4UrgIGUa2+dR65qVt02+WfV
+	 YCSLZs4rBprJYDbuW3D0NWSDXNrgAdVi6u+kV5r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Daniel Golle <daniel@makrotopia.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Dan Nowlin <dan.nowlin@intel.com>,
+	Paul Greenwalt <paul.greenwalt@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 242/427] net: ethernet: mediatek: use ADMAv1 instead of ADMAv2.0 on MT7981 and MT7986
-Date: Mon, 27 May 2024 20:54:49 +0200
-Message-ID: <20240527185625.185433611@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.9 243/427] ice: Fix package download algorithm
+Date: Mon, 27 May 2024 20:54:50 +0200
+Message-ID: <20240527185625.262583602@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,134 +56,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Dan Nowlin <dan.nowlin@intel.com>
 
-[ Upstream commit 5e69ff84f3e6cc54502a902043847b37ed78afd4 ]
+[ Upstream commit 6d51d44ecddb5c2962688ef06e55e4fbc949f04a ]
 
-ADMAv2.0 is plagued by RX hangs which can't easily detected and happen upon
-receival of a corrupted Ethernet frame.
+Previously, the driver assumed that all signature segments would contain
+one or more buffers to download. In the future, there will be signature
+segments that will contain no buffers to download.
 
-Use ADMAv1 instead which is also still present and usable, and doesn't
-suffer from that problem.
+Correct download flow to allow for signature segments that have zero
+download buffers and skip the download in this case.
 
-Fixes: 197c9e9b17b1 ("net: ethernet: mtk_eth_soc: introduce support for mt7986 chipset")
-Co-developed-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://lore.kernel.org/r/57cef74bbd0c243366ad1ff4221e3f72f437ec80.1715164770.git.daniel@makrotopia.org
+Fixes: 3cbdb0343022 ("ice: Add support for E830 DDP package segment")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Dan Nowlin <dan.nowlin@intel.com>
+Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240508171908.2760776-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 46 ++++++++++-----------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ddp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 3eefb735ce197..d7d73295f0dc4 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -110,16 +110,16 @@ static const struct mtk_reg_map mt7986_reg_map = {
- 	.tx_irq_mask		= 0x461c,
- 	.tx_irq_status		= 0x4618,
- 	.pdma = {
--		.rx_ptr		= 0x6100,
--		.rx_cnt_cfg	= 0x6104,
--		.pcrx_ptr	= 0x6108,
--		.glo_cfg	= 0x6204,
--		.rst_idx	= 0x6208,
--		.delay_irq	= 0x620c,
--		.irq_status	= 0x6220,
--		.irq_mask	= 0x6228,
--		.adma_rx_dbg0	= 0x6238,
--		.int_grp	= 0x6250,
-+		.rx_ptr		= 0x4100,
-+		.rx_cnt_cfg	= 0x4104,
-+		.pcrx_ptr	= 0x4108,
-+		.glo_cfg	= 0x4204,
-+		.rst_idx	= 0x4208,
-+		.delay_irq	= 0x420c,
-+		.irq_status	= 0x4220,
-+		.irq_mask	= 0x4228,
-+		.adma_rx_dbg0	= 0x4238,
-+		.int_grp	= 0x4250,
- 	},
- 	.qdma = {
- 		.qtx_cfg	= 0x4400,
-@@ -1107,7 +1107,7 @@ static bool mtk_rx_get_desc(struct mtk_eth *eth, struct mtk_rx_dma_v2 *rxd,
- 	rxd->rxd1 = READ_ONCE(dma_rxd->rxd1);
- 	rxd->rxd3 = READ_ONCE(dma_rxd->rxd3);
- 	rxd->rxd4 = READ_ONCE(dma_rxd->rxd4);
--	if (mtk_is_netsys_v2_or_greater(eth)) {
-+	if (mtk_is_netsys_v3_or_greater(eth)) {
- 		rxd->rxd5 = READ_ONCE(dma_rxd->rxd5);
- 		rxd->rxd6 = READ_ONCE(dma_rxd->rxd6);
+diff --git a/drivers/net/ethernet/intel/ice/ice_ddp.c b/drivers/net/ethernet/intel/ice/ice_ddp.c
+index fc91c4d411863..4df561d64bc38 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ddp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ddp.c
+@@ -1424,14 +1424,14 @@ ice_dwnld_sign_and_cfg_segs(struct ice_hw *hw, struct ice_pkg_hdr *pkg_hdr,
+ 		goto exit;
  	}
-@@ -2028,7 +2028,7 @@ static int mtk_poll_rx(struct napi_struct *napi, int budget,
- 			break;
  
- 		/* find out which mac the packet come from. values start at 1 */
--		if (mtk_is_netsys_v2_or_greater(eth)) {
-+		if (mtk_is_netsys_v3_or_greater(eth)) {
- 			u32 val = RX_DMA_GET_SPORT_V2(trxd.rxd5);
+-	conf_idx = le32_to_cpu(seg->signed_seg_idx);
+-	start = le32_to_cpu(seg->signed_buf_start);
+ 	count = le32_to_cpu(seg->signed_buf_count);
+-
+ 	state = ice_download_pkg_sig_seg(hw, seg);
+-	if (state)
++	if (state || !count)
+ 		goto exit;
  
- 			switch (val) {
-@@ -2140,7 +2140,7 @@ static int mtk_poll_rx(struct napi_struct *napi, int budget,
- 		skb->dev = netdev;
- 		bytes += skb->len;
- 
--		if (mtk_is_netsys_v2_or_greater(eth)) {
-+		if (mtk_is_netsys_v3_or_greater(eth)) {
- 			reason = FIELD_GET(MTK_RXD5_PPE_CPU_REASON, trxd.rxd5);
- 			hash = trxd.rxd5 & MTK_RXD5_FOE_ENTRY;
- 			if (hash != MTK_RXD5_FOE_ENTRY)
-@@ -2690,7 +2690,7 @@ static int mtk_rx_alloc(struct mtk_eth *eth, int ring_no, int rx_flag)
- 
- 		rxd->rxd3 = 0;
- 		rxd->rxd4 = 0;
--		if (mtk_is_netsys_v2_or_greater(eth)) {
-+		if (mtk_is_netsys_v3_or_greater(eth)) {
- 			rxd->rxd5 = 0;
- 			rxd->rxd6 = 0;
- 			rxd->rxd7 = 0;
-@@ -3893,7 +3893,7 @@ static int mtk_hw_init(struct mtk_eth *eth, bool reset)
- 	else
- 		mtk_hw_reset(eth);
- 
--	if (mtk_is_netsys_v2_or_greater(eth)) {
-+	if (mtk_is_netsys_v3_or_greater(eth)) {
- 		/* Set FE to PDMAv2 if necessary */
- 		val = mtk_r32(eth, MTK_FE_GLO_MISC);
- 		mtk_w32(eth,  val | BIT(4), MTK_FE_GLO_MISC);
-@@ -5169,11 +5169,11 @@ static const struct mtk_soc_data mt7981_data = {
- 		.dma_len_offset = 8,
- 	},
- 	.rx = {
--		.desc_size = sizeof(struct mtk_rx_dma_v2),
--		.irq_done_mask = MTK_RX_DONE_INT_V2,
-+		.desc_size = sizeof(struct mtk_rx_dma),
-+		.irq_done_mask = MTK_RX_DONE_INT,
- 		.dma_l4_valid = RX_DMA_L4_VALID_V2,
--		.dma_max_len = MTK_TX_DMA_BUF_LEN_V2,
--		.dma_len_offset = 8,
-+		.dma_max_len = MTK_TX_DMA_BUF_LEN,
-+		.dma_len_offset = 16,
- 	},
- };
- 
-@@ -5195,11 +5195,11 @@ static const struct mtk_soc_data mt7986_data = {
- 		.dma_len_offset = 8,
- 	},
- 	.rx = {
--		.desc_size = sizeof(struct mtk_rx_dma_v2),
--		.irq_done_mask = MTK_RX_DONE_INT_V2,
-+		.desc_size = sizeof(struct mtk_rx_dma),
-+		.irq_done_mask = MTK_RX_DONE_INT,
- 		.dma_l4_valid = RX_DMA_L4_VALID_V2,
--		.dma_max_len = MTK_TX_DMA_BUF_LEN_V2,
--		.dma_len_offset = 8,
-+		.dma_max_len = MTK_TX_DMA_BUF_LEN,
-+		.dma_len_offset = 16,
- 	},
- };
++	conf_idx = le32_to_cpu(seg->signed_seg_idx);
++	start = le32_to_cpu(seg->signed_buf_start);
++
+ 	state = ice_download_pkg_config_seg(hw, pkg_hdr, conf_idx, start,
+ 					    count);
  
 -- 
 2.43.0
