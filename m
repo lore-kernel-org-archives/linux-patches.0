@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A55115FA8C;
-	Mon, 27 May 2024 19:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FB415A879;
+	Mon, 27 May 2024 19:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836460; cv=none; b=JymSWo35f1Ju2FoWwCBWM65EYQXl3dTTViAlwBHgDTRAFK2IwIAIh+eIxDTA/AGfLV1Hrfeufa2bGSQfrOdzAPczB7PsoRnbuoemyu81qeu+TCcuv1Y40kTaOA8sQy8jqm9N3wa0V6wrePJmN2XD/VVvG7eCgrxsY1D0t0biug0=
+	t=1716836462; cv=none; b=gbQaldKByCOoQTNC4J4MYcrwfMiH3jDdPkucane4rGnMpsVbBLTayUIYAaxWtqLHNV6+lg66p6+OvniSM9TDYmzs/lxw9vMXM5INfVN94QJ4vuH0HPPY+XoV3T3HvLVBpc5I3l+/+4FP06lHKWvXvPaRIw0IsmkG9ERDD9TFUj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836460; c=relaxed/simple;
-	bh=MIy8J3pIvysAR9oCBGy5wcOZsLDjf9lJuPc+rknwT/s=;
+	s=arc-20240116; t=1716836462; c=relaxed/simple;
+	bh=Wb5BY/idvhtYqo0Us5eYeQGgP7/LMOAIi3oaX7+VLqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zwc8Wp0SqZJlNnuXjiNYyzFX4oMIaHEk1C7OpoEV4FWZcqQwKcqaEuZIpYH8uu4Yutx+MoU+vIc0VwnVSobT6bQuSwohrrMcaKM17/jxZD9RrR3BrI5KTrjcHKBZ6UEbIYO9qeGaPkQT7aMPnZY0VhIjMkR1IRSGZSIByrjzxz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3Vdo+gR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SYLbZu76stILFeQWgeKfYiDePxKXPG5CatQKUWYhD1/GnSjq39//gbnyV2nKNrEy4OL4UZm9Bq9HlJ6f0zae1tNDg+Uts7aq+GgojEbquHcRU+IBxAU4MjuyDseM4lG4zmNdgWDvITus1upYJfY1RTz+WaRQfhbrlVjRp7triUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omfBNYNZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3Vdo+gR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E1CC2BBFC;
-	Mon, 27 May 2024 19:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omfBNYNZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB4CC32789;
+	Mon, 27 May 2024 19:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836459;
-	bh=MIy8J3pIvysAR9oCBGy5wcOZsLDjf9lJuPc+rknwT/s=;
+	s=korg; t=1716836462;
+	bh=Wb5BY/idvhtYqo0Us5eYeQGgP7/LMOAIi3oaX7+VLqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q3Vdo+gRa2VeKdqryWeOyzEEvhayvL8yzp2lIycFrAJ5B4xZHJsq2VsThf1MYwnoC
-	 uihES/rKiW1MsyE5MooLZs+8Y/Lk06tY8vNAmuHxYYb73tRq+boMQnObHPA4+K/O26
-	 ns8AgXvNeBQJ8SQj75P2x4r7kfoDeM4qrQc8wVc0=
+	b=omfBNYNZw3lJImtYsBTKz6buZYmV05x86xrz2KMIugWAEMQNmm2ef2gaKiAfnj2Wq
+	 4gHKEM3GW9Zy9pB/q7JdL8Kt1rM4fbvZSaZGPfeYQCsXSHCWDO5ZPbtSZL8rdLLRkn
+	 PCz+4W8x1MCfeidw2KF+hYmvUZQaeSxYqhU9MsJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Oliver Glitta <glittao@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Daniel Latypov <dlatypov@google.com>,
+	Marco Elver <elver@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 063/427] shmem: Fix shmem_rename2()
-Date: Mon, 27 May 2024 20:51:50 +0200
-Message-ID: <20240527185607.812770881@linuxfoundation.org>
+Subject: [PATCH 6.9 046/427] mm/slub, kunit: Use inverted data to corrupt kmem cache
+Date: Mon, 27 May 2024 20:51:33 +0200
+Message-ID: <20240527185606.047780571@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,53 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit ad191eb6d6942bb835a0b20b647f7c53c1d99ca4 ]
+[ Upstream commit b1080c667b3b2c8c38a7fa83ca5567124887abae ]
 
-When renaming onto an existing directory entry, user space expects
-the replacement entry to have the same directory offset as the
-original one.
+Two failure patterns are seen randomly when running slub_kunit tests with
+CONFIG_SLAB_FREELIST_RANDOM and CONFIG_SLAB_FREELIST_HARDENED enabled.
 
-Link: https://gitlab.alpinelinux.org/alpine/aports/-/issues/15966
-Fixes: a2e459555c5f ("shmem: stable directory offsets")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://lore.kernel.org/r/20240415152057.4605-4-cel@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Pattern 1:
+     # test_clobber_zone: pass:1 fail:0 skip:0 total:1
+     ok 1 test_clobber_zone
+     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:72
+     Expected 3 == slab_errors, but
+         slab_errors == 0 (0x0)
+     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:84
+     Expected 2 == slab_errors, but
+         slab_errors == 0 (0x0)
+     # test_next_pointer: pass:0 fail:1 skip:0 total:1
+     not ok 2 test_next_pointer
+
+In this case, test_next_pointer() overwrites p[s->offset], but the data
+at p[s->offset] is already 0x12.
+
+Pattern 2:
+     ok 1 test_clobber_zone
+     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:72
+     Expected 3 == slab_errors, but
+         slab_errors == 2 (0x2)
+     # test_next_pointer: pass:0 fail:1 skip:0 total:1
+     not ok 2 test_next_pointer
+
+In this case, p[s->offset] has a value other than 0x12, but one of the
+expected failures is nevertheless missing.
+
+Invert data instead of writing a fixed value to corrupt the cache data
+structures to fix the problem.
+
+Fixes: 1f9f78b1b376 ("mm/slub, kunit: add a KUnit test for SLUB debugging functionality")
+Cc: Oliver Glitta <glittao@gmail.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+CC: Daniel Latypov <dlatypov@google.com>
+Cc: Marco Elver <elver@google.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/libfs.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ lib/slub_kunit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/libfs.c b/fs/libfs.c
-index c392a6edd3930..b635ee5adbcce 100644
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -366,6 +366,9 @@ int simple_offset_empty(struct dentry *dentry)
-  *
-  * Caller provides appropriate serialization.
-  *
-+ * User space expects the directory offset value of the replaced
-+ * (new) directory entry to be unchanged after a rename.
-+ *
-  * Returns zero on success, a negative errno value on failure.
-  */
- int simple_offset_rename(struct inode *old_dir, struct dentry *old_dentry,
-@@ -373,8 +376,14 @@ int simple_offset_rename(struct inode *old_dir, struct dentry *old_dentry,
- {
- 	struct offset_ctx *old_ctx = old_dir->i_op->get_offset_ctx(old_dir);
- 	struct offset_ctx *new_ctx = new_dir->i_op->get_offset_ctx(new_dir);
-+	long new_offset = dentry2offset(new_dentry);
+diff --git a/lib/slub_kunit.c b/lib/slub_kunit.c
+index d4a3730b08fa7..4ce9604388069 100644
+--- a/lib/slub_kunit.c
++++ b/lib/slub_kunit.c
+@@ -55,7 +55,7 @@ static void test_next_pointer(struct kunit *test)
  
- 	simple_offset_remove(old_ctx, old_dentry);
-+
-+	if (new_offset) {
-+		offset_set(new_dentry, 0);
-+		return simple_offset_replace(new_ctx, old_dentry, new_offset);
-+	}
- 	return simple_offset_add(new_ctx, old_dentry);
- }
+ 	ptr_addr = (unsigned long *)(p + s->offset);
+ 	tmp = *ptr_addr;
+-	p[s->offset] = 0x12;
++	p[s->offset] = ~p[s->offset];
  
+ 	/*
+ 	 * Expecting three errors.
 -- 
 2.43.0
 
