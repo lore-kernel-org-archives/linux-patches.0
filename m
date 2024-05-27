@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF0717E90E;
-	Mon, 27 May 2024 19:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550F717E90E;
+	Mon, 27 May 2024 19:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837060; cv=none; b=XOzXpMrKkLA4lQBZ2TBcvEx8kpjaVC6vzy8n799IsO5hNJlcoi1MwrkEww336rx6hNxwNU+Lb4+cRBNXuZoMcs7TqmNkrccPvc+VOQGUwzxH7AoOfPoAuTvcbIIrC2k6nw2qe7ov8Rb+zfIgA91NW0npxP5Z/DnXNXGbzQ6aKjo=
+	t=1716837063; cv=none; b=FWjQcOhHjJ9a2eMAPb9wOb/HmvsppvIzIJGBPmlci+OgGIjz7tcLMQIn63I9+KQd7+/4vuzSesjw9Vjj10CvZja2b66aBtyBQwWyu3wQqF7rInu3zEurc+ha2uzcDTJtpeikSyI1PfG9JXCCsos0eMgMOKG2gIALDaMQ6jSAAxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837060; c=relaxed/simple;
-	bh=Y9T20/hfTeFu2lFne3ph2clbhV+xxjrw4f6hgl+LPLs=;
+	s=arc-20240116; t=1716837063; c=relaxed/simple;
+	bh=SsLuUx2HuUB10vhI4fVEga4p5s7FdyDQIuTlnX0Y66U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5ZNKY5wCxS75x5f46jAcc65EVbZ+BqP8Ufr5sMNvMqwP71yE6pILgT6DGWSEXvNbiim/N8ozBUp5UH+pyT7TkWhUIhbn14pOQj4LiMViIVNtqC3VXfauOCLXuspxKMRLRf7tHFB5NaWa08xB4kSJ890/JeIkPFKUChTBGFc+UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJNSpLQE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CWGspJzfAH0Fd244nXZy9XWlcROx3pJCNL464b42a8Zaxw2L4VsNQC2sCG1bPV1nF/Q+1tTu6HQrCRihhHI5GY3xNthA4BBdveT2LHw9WpRlju5OXPELXZKvZ3WMr2V945KIjh+qvP7E7t8LAiqhN6CUr29fm1zn3S7gwKvCLKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l8z3GAyP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJNSpLQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571F2C2BBFC;
-	Mon, 27 May 2024 19:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l8z3GAyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE541C2BBFC;
+	Mon, 27 May 2024 19:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837060;
-	bh=Y9T20/hfTeFu2lFne3ph2clbhV+xxjrw4f6hgl+LPLs=;
+	s=korg; t=1716837063;
+	bh=SsLuUx2HuUB10vhI4fVEga4p5s7FdyDQIuTlnX0Y66U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJNSpLQEBo0/RP++n0gH426xxFQIBu7zb2un99tqrmExOvoij3EYFSRDJvBLY5HnS
-	 XJeayOGQC2I837jPug1sFfp4HOr/xiceKrOg0tg2tgTgLtVZheGo7KnetZUVUHrdUB
-	 c+kcVjZWuHXovi2J5YVMrcudfMNJfzv/EQjIdKTY=
+	b=l8z3GAyPOwZmeP47Xld5xl4e+JTwqCzNboLI4accLQZ4xSCslBMyNbH/j5Pe7ZqOL
+	 +//dHNbRpzA4ZP5eMl+kiRMmjijsP3gt02RDbBH3rRNnVpEMboXCbsfDkvowTtVD4l
+	 oBbppk4QisQYT42so3MncFscuo4mIC4iMJ/QJHSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Mark Brown <broonie@kernel.org>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 295/427] ASoC: kirkwood: Fix potential NULL dereference
-Date: Mon, 27 May 2024 20:55:42 +0200
-Message-ID: <20240527185629.861677250@linuxfoundation.org>
+Subject: [PATCH 6.9 296/427] drm/meson: vclk: fix calculation of 59.94 fractional rates
+Date: Mon, 27 May 2024 20:55:43 +0200
+Message-ID: <20240527185629.928196200@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,39 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-[ Upstream commit ea60ab95723f5738e7737b56dda95e6feefa5b50 ]
+[ Upstream commit bfbc68e4d8695497f858a45a142665e22a512ea3 ]
 
-In kirkwood_dma_hw_params() mv_mbus_dram_info() returns NULL if
-CONFIG_PLAT_ORION macro is not defined.
-Fix this bug by adding NULL check.
+Playing 4K media with 59.94 fractional rate (typically VP9) causes the screen to lose
+sync with the following error reported in the system log:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+[   89.610280] Fatal Error, invalid HDMI vclk freq 593406
 
-Fixes: bb6a40fc5a83 ("ASoC: kirkwood: Fix reference to PCM buffer address")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Link: https://msgid.link/r/20240328173337.21406-1-amishin@t-argos.ru
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Modetest shows the following:
+
+3840x2160 59.94 3840 4016 4104 4400 2160 2168 2178 2250 593407 flags: xxxx, xxxx,
+drm calculated value -------------------------------------^
+
+Change the fractional rate calculation to stop DIV_ROUND_CLOSEST rounding down which
+results in vclk freq failing to match correctly.
+
+Fixes: e5fab2ec9ca4 ("drm/meson: vclk: add support for YUV420 setup")
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240109230704.4120561-1-christianshewitt@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240109230704.4120561-1-christianshewitt@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/kirkwood/kirkwood-dma.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/kirkwood/kirkwood-dma.c b/sound/soc/kirkwood/kirkwood-dma.c
-index dd2f806526c10..ef00792e1d49a 100644
---- a/sound/soc/kirkwood/kirkwood-dma.c
-+++ b/sound/soc/kirkwood/kirkwood-dma.c
-@@ -182,6 +182,9 @@ static int kirkwood_dma_hw_params(struct snd_soc_component *component,
- 	const struct mbus_dram_target_info *dram = mv_mbus_dram_info();
- 	unsigned long addr = substream->runtime->dma_addr;
+diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
+index 2a82119eb58ed..2a942dc6a6dc2 100644
+--- a/drivers/gpu/drm/meson/meson_vclk.c
++++ b/drivers/gpu/drm/meson/meson_vclk.c
+@@ -790,13 +790,13 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv, unsigned int phy_freq,
+ 				 FREQ_1000_1001(params[i].pixel_freq));
+ 		DRM_DEBUG_DRIVER("i = %d phy_freq = %d alt = %d\n",
+ 				 i, params[i].phy_freq,
+-				 FREQ_1000_1001(params[i].phy_freq/10)*10);
++				 FREQ_1000_1001(params[i].phy_freq/1000)*1000);
+ 		/* Match strict frequency */
+ 		if (phy_freq == params[i].phy_freq &&
+ 		    vclk_freq == params[i].vclk_freq)
+ 			return MODE_OK;
+ 		/* Match 1000/1001 variant */
+-		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/10)*10) &&
++		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/1000)*1000) &&
+ 		    vclk_freq == FREQ_1000_1001(params[i].vclk_freq))
+ 			return MODE_OK;
+ 	}
+@@ -1070,7 +1070,7 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
  
-+	if (!dram)
-+		return 0;
-+
- 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
- 		kirkwood_dma_conf_mbus_windows(priv->io,
- 			KIRKWOOD_PLAYBACK_WIN, addr, dram);
+ 	for (freq = 0 ; params[freq].pixel_freq ; ++freq) {
+ 		if ((phy_freq == params[freq].phy_freq ||
+-		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/10)*10) &&
++		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/1000)*1000) &&
+ 		    (vclk_freq == params[freq].vclk_freq ||
+ 		     vclk_freq == FREQ_1000_1001(params[freq].vclk_freq))) {
+ 			if (vclk_freq != params[freq].vclk_freq)
 -- 
 2.43.0
 
