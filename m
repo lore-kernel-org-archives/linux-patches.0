@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11ED1168C4;
-	Mon, 27 May 2024 19:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BDC168C4;
+	Mon, 27 May 2024 19:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837447; cv=none; b=aWs1JNk7cgSuDVma++8TjPjJKif2ZQoXPPAzRkqOJ48zBPQ5NX4CL6a0NbSidiszSaIZEUOeTtVHpAULKVjWFxFTWPpNfUw35RpAhlKsAy3OYoDzSvBw378CJQwHJlSFnl1SbHOkQpbvB6wjNl6HdUgoiMzS0Azt25ZuruwRii0=
+	t=1716837450; cv=none; b=cJlK2bb9rSsbYr0bLBqXjdOB2LYjk7gDVF4J17xn2qeXZOIRmIUJamOm8af+1VgqMf/150bWtUTJ7vaFjjV/GZt2VkPYbwQ4MDk+Qsr4cYDpyE/7tqqViny9pUhqFn0eK4krHq1NgmfhgYpPXz1QvdUMQriUjoWIAlUJLjxzQNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837447; c=relaxed/simple;
-	bh=eUjoJPjLxtkuz2rySdVCI6lgldYbdUsAIm0YGSgTEDg=;
+	s=arc-20240116; t=1716837450; c=relaxed/simple;
+	bh=XAUXloq99t26pW34L30KU/6RoXTCx/XVttNYG3d16vM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p7/n2zYDoX816x9ZdG7OEu/cE+H/fJo16mLlvSFPoBVRqYCrY3sW//c2r5zh4KSEGwIVlDnqWmq9TT055+8pDgvkp7lciWI9o5UcAxMN52GbBZ1J5gdlq/UVNXvRrVnLac48T5FrhmL2to8cPQU4XmUjtpsHtbdZjh3GgsEKuIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kgyoR5On; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HrTivgBAbDJql1w7Cuhl+Z9b9tUiyyzoWBqdjNeStBLOpmLNBqTFbM620gsqy+rDW4B7T5vwxwWiq0VrjvsAFrwJ/DQ3K67SpU5twr3Mm3cWw1ToYcM7UtAKXQqQKt/vrsUg+c+9/UuT6NrjbAqCK2os6vjGZwLBZxj+pVtGBe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7roJObP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgyoR5On"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42001C2BBFC;
-	Mon, 27 May 2024 19:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7roJObP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F0FC2BBFC;
+	Mon, 27 May 2024 19:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837446;
-	bh=eUjoJPjLxtkuz2rySdVCI6lgldYbdUsAIm0YGSgTEDg=;
+	s=korg; t=1716837450;
+	bh=XAUXloq99t26pW34L30KU/6RoXTCx/XVttNYG3d16vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kgyoR5OnMQdx2a+JV7kGMDDvBxsQV2kzPu8jjK9SloGazqrVHG4G8eTSEWhxXGfcu
-	 MW7HU5/gSzuz+HAt2wIEM/LCYr771DE0/YTITq6Otr4CPLr/yon/MxmHRwt2o1f5B8
-	 CW4irogI3y4xT279WE4liOYhrRdsRbqRrjpi0bgI=
+	b=O7roJObPI87ymeOt8aWULmKeMVzhEEFemAXxJcLHLU5Zd6BIFl5I+Rtb7gQMExDHJ
+	 rCDM5A8tOIqJubbTZlY24uAlryVflGIx80kAadk+mjcrqWX6eNv85VW8cshoLmDBo1
+	 2V5u+RqTI6TCl4C9J6JHOo8SIzIFYmQEg403QSG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ken Milmore <ken.milmore@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.8 017/493] r8169: Fix possible ring buffer corruption on fragmented Tx packets.
-Date: Mon, 27 May 2024 20:50:19 +0200
-Message-ID: <20240527185628.215502159@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.8 018/493] ring-buffer: Fix a race between readers and resize checks
+Date: Mon, 27 May 2024 20:50:20 +0200
+Message-ID: <20240527185628.338475402@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,55 +52,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ken Milmore <ken.milmore@gmail.com>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-commit c71e3a5cffd5309d7f84444df03d5b72600cc417 upstream.
+commit c2274b908db05529980ec056359fae916939fdaa upstream.
 
-An issue was found on the RTL8125b when transmitting small fragmented
-packets, whereby invalid entries were inserted into the transmit ring
-buffer, subsequently leading to calls to dma_unmap_single() with a null
-address.
+The reader code in rb_get_reader_page() swaps a new reader page into the
+ring buffer by doing cmpxchg on old->list.prev->next to point it to the
+new page. Following that, if the operation is successful,
+old->list.next->prev gets updated too. This means the underlying
+doubly-linked list is temporarily inconsistent, page->prev->next or
+page->next->prev might not be equal back to page for some page in the
+ring buffer.
 
-This was caused by rtl8169_start_xmit() not noticing changes to nr_frags
-which may occur when small packets are padded (to work around hardware
-quirks) in rtl8169_tso_csum_v2().
+The resize operation in ring_buffer_resize() can be invoked in parallel.
+It calls rb_check_pages() which can detect the described inconsistency
+and stop further tracing:
 
-To fix this, postpone inspecting nr_frags until after any padding has been
-applied.
+[  190.271762] ------------[ cut here ]------------
+[  190.271771] WARNING: CPU: 1 PID: 6186 at kernel/trace/ring_buffer.c:1467 rb_check_pages.isra.0+0x6a/0xa0
+[  190.271789] Modules linked in: [...]
+[  190.271991] Unloaded tainted modules: intel_uncore_frequency(E):1 skx_edac(E):1
+[  190.272002] CPU: 1 PID: 6186 Comm: cmd.sh Kdump: loaded Tainted: G            E      6.9.0-rc6-default #5 158d3e1e6d0b091c34c3b96bfd99a1c58306d79f
+[  190.272011] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552c-rebuilt.opensuse.org 04/01/2014
+[  190.272015] RIP: 0010:rb_check_pages.isra.0+0x6a/0xa0
+[  190.272023] Code: [...]
+[  190.272028] RSP: 0018:ffff9c37463abb70 EFLAGS: 00010206
+[  190.272034] RAX: ffff8eba04b6cb80 RBX: 0000000000000007 RCX: ffff8eba01f13d80
+[  190.272038] RDX: ffff8eba01f130c0 RSI: ffff8eba04b6cd00 RDI: ffff8eba0004c700
+[  190.272042] RBP: ffff8eba0004c700 R08: 0000000000010002 R09: 0000000000000000
+[  190.272045] R10: 00000000ffff7f52 R11: ffff8eba7f600000 R12: ffff8eba0004c720
+[  190.272049] R13: ffff8eba00223a00 R14: 0000000000000008 R15: ffff8eba067a8000
+[  190.272053] FS:  00007f1bd64752c0(0000) GS:ffff8eba7f680000(0000) knlGS:0000000000000000
+[  190.272057] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  190.272061] CR2: 00007f1bd6662590 CR3: 000000010291e001 CR4: 0000000000370ef0
+[  190.272070] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  190.272073] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  190.272077] Call Trace:
+[  190.272098]  <TASK>
+[  190.272189]  ring_buffer_resize+0x2ab/0x460
+[  190.272199]  __tracing_resize_ring_buffer.part.0+0x23/0xa0
+[  190.272206]  tracing_resize_ring_buffer+0x65/0x90
+[  190.272216]  tracing_entries_write+0x74/0xc0
+[  190.272225]  vfs_write+0xf5/0x420
+[  190.272248]  ksys_write+0x67/0xe0
+[  190.272256]  do_syscall_64+0x82/0x170
+[  190.272363]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[  190.272373] RIP: 0033:0x7f1bd657d263
+[  190.272381] Code: [...]
+[  190.272385] RSP: 002b:00007ffe72b643f8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+[  190.272391] RAX: ffffffffffffffda RBX: 0000000000000002 RCX: 00007f1bd657d263
+[  190.272395] RDX: 0000000000000002 RSI: 0000555a6eb538e0 RDI: 0000000000000001
+[  190.272398] RBP: 0000555a6eb538e0 R08: 000000000000000a R09: 0000000000000000
+[  190.272401] R10: 0000555a6eb55190 R11: 0000000000000246 R12: 00007f1bd6662500
+[  190.272404] R13: 0000000000000002 R14: 00007f1bd6667c00 R15: 0000000000000002
+[  190.272412]  </TASK>
+[  190.272414] ---[ end trace 0000000000000000 ]---
 
-Fixes: 9020845fb5d6 ("r8169: improve rtl8169_start_xmit")
+Note that ring_buffer_resize() calls rb_check_pages() only if the parent
+trace_buffer has recording disabled. Recent commit d78ab792705c
+("tracing: Stop current tracer when resizing buffer") causes that it is
+now always the case which makes it more likely to experience this issue.
+
+The window to hit this race is nonetheless very small. To help
+reproducing it, one can add a delay loop in rb_get_reader_page():
+
+ ret = rb_head_page_replace(reader, cpu_buffer->reader_page);
+ if (!ret)
+ 	goto spin;
+ for (unsigned i = 0; i < 1U << 26; i++)  /* inserted delay loop */
+ 	__asm__ __volatile__ ("" : : : "memory");
+ rb_list_head(reader->list.next)->prev = &cpu_buffer->reader_page->list;
+
+.. and then run the following commands on the target system:
+
+ echo 1 > /sys/kernel/tracing/events/sched/sched_switch/enable
+ while true; do
+ 	echo 16 > /sys/kernel/tracing/buffer_size_kb; sleep 0.1
+ 	echo 8 > /sys/kernel/tracing/buffer_size_kb; sleep 0.1
+ done &
+ while true; do
+ 	for i in /sys/kernel/tracing/per_cpu/*; do
+ 		timeout 0.1 cat $i/trace_pipe; sleep 0.2
+ 	done
+ done
+
+To fix the problem, make sure ring_buffer_resize() doesn't invoke
+rb_check_pages() concurrently with a reader operating on the same
+ring_buffer_per_cpu by taking its cpu_buffer->reader_lock.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240517134008.24529-3-petr.pavlu@suse.com
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Ken Milmore <ken.milmore@gmail.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/27ead18b-c23d-4f49-a020-1fc482c5ac95@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 659f451ff213 ("ring-buffer: Add integrity check at end of iter read")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+[ Fixed whitespace ]
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4221,11 +4221,11 @@ static void rtl8169_doorbell(struct rtl8
- static netdev_tx_t rtl8169_start_xmit(struct sk_buff *skb,
- 				      struct net_device *dev)
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1456,6 +1456,11 @@ static void rb_check_bpage(struct ring_b
+  *
+  * As a safety measure we check to make sure the data pages have not
+  * been corrupted.
++ *
++ * Callers of this function need to guarantee that the list of pages doesn't get
++ * modified during the check. In particular, if it's possible that the function
++ * is invoked with concurrent readers which can swap in a new reader page then
++ * the caller should take cpu_buffer->reader_lock.
+  */
+ static void rb_check_pages(struct ring_buffer_per_cpu *cpu_buffer)
  {
--	unsigned int frags = skb_shinfo(skb)->nr_frags;
- 	struct rtl8169_private *tp = netdev_priv(dev);
- 	unsigned int entry = tp->cur_tx % NUM_TX_DESC;
- 	struct TxDesc *txd_first, *txd_last;
- 	bool stop_queue, door_bell;
-+	unsigned int frags;
- 	u32 opts[2];
- 
- 	if (unlikely(!rtl_tx_slots_avail(tp))) {
-@@ -4248,6 +4248,7 @@ static netdev_tx_t rtl8169_start_xmit(st
- 
- 	txd_first = tp->TxDescArray + entry;
- 
-+	frags = skb_shinfo(skb)->nr_frags;
- 	if (frags) {
- 		if (rtl8169_xmit_frags(tp, skb, opts, entry))
- 			goto err_dma_1;
+@@ -2205,8 +2210,12 @@ int ring_buffer_resize(struct trace_buff
+ 		 */
+ 		synchronize_rcu();
+ 		for_each_buffer_cpu(buffer, cpu) {
++			unsigned long flags;
++
+ 			cpu_buffer = buffer->buffers[cpu];
++			raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
+ 			rb_check_pages(cpu_buffer);
++			raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
+ 		}
+ 		atomic_dec(&buffer->record_disabled);
+ 	}
 
 
