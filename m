@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A4D168C4;
-	Mon, 27 May 2024 19:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BE7155C81;
+	Mon, 27 May 2024 19:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837742; cv=none; b=Kxr7OFv4DSD0qDg22KxXKzDxadCduIp3YSLIGsMz/83ISz5/IuIjmU2r53LpgfiE7SOx7bTJUFeAQ1XIyZqsZpt83Mm456kVHX4Y0T+YVF2UeHOaaeN430rA6sgG4IuIle5PdVeuBjfk0lSQCrsoyOAyUYN2siwoEk4T+yiz+bE=
+	t=1716837745; cv=none; b=TkikJo+cHkTxxJZj5A5m1/E+8bHVBipHyoBqRhQIPgS9eGQIfkQljtc9ZiFXG5osPNIrUnm4uMMv1UfZksKH5nrl2BMeBnDYe4FQxxRY/3P+tAVSUCkQoB49Qsp89pnfBzFZWe2AZHH66xMFGvfUs6mPKQqbQ21jU8yuh41gx2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837742; c=relaxed/simple;
-	bh=TxjhbMQGK2IWdrTuImzW0qPHUH0BxEc9nt+PygRqqIw=;
+	s=arc-20240116; t=1716837745; c=relaxed/simple;
+	bh=VSgWEWHfeHBVkD5SMsj18lmAh7TElLKou2vcVSXee14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/2Mut8P/M3vyONaAg6gNKCeb8NZ7G0udXD6SMkwyZWeg+ZzShLGXqVqw3yhCjfXGkroPzncFhmqKfVXxDBGykpBpaAwmVWxWHWno6y2v8kZsyDPbfpjo6eW1dycYONTzAF0re/8zciIVzv5lLevS6YTyuHmUVHPHFirC66DSQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sVc6U5K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eWHGSVywIgNK8NSUxRTk/P4BsF1w05IztrcSyc1u2bhi1qb9Ex/t8CtExB3DGAjgp/BUJDEkQ+1Is6d5h9LfILiuQ62Ar0KEEk5YM50LtFxK41MgwuAYiy45wLjO0VjtOIuOI0RGYjCfESYJLtO2dcyRY0CWdGdFL+VjbATKehY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzC0GjCg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sVc6U5K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598EDC2BBFC;
-	Mon, 27 May 2024 19:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzC0GjCg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A09C2BBFC;
+	Mon, 27 May 2024 19:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837742;
-	bh=TxjhbMQGK2IWdrTuImzW0qPHUH0BxEc9nt+PygRqqIw=;
+	s=korg; t=1716837745;
+	bh=VSgWEWHfeHBVkD5SMsj18lmAh7TElLKou2vcVSXee14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1sVc6U5KYLd2FYCDM1cpE3GE+3eI2Z+TC/NL+w4xVMm5k7eqFvNrybV0dh9/+qEVb
-	 2a5DuIwk2ID56XajJWJiQdMITtw2hQy5S+8yL2CYNuWZkHdf9tcxwRkvpU95kRmCiC
-	 RGMarjdIkhHA8/ezpQMVsjkmOlxnJxcz62JJlH5s=
+	b=rzC0GjCgHi3bk6SuBlDGSbhIsRSmu/d+GKLN8Pa6EAkOllC+9AYFHN4rbNLzntloK
+	 R+HtGpxel76LHPzRrq///71tUJL7KgiL3TGpWlLLY58CwDJTi8402Ni+EgSgEuKA1t
+	 JouO7VEdx0RF9+F/nLYT8DVeM08y4aJyRXnSzVrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Kiryushin <kiryushin@ancud.ru>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 125/493] rcu: Fix buffer overflow in print_cpu_stall_info()
-Date: Mon, 27 May 2024 20:52:07 +0200
-Message-ID: <20240527185634.585189232@linuxfoundation.org>
+Subject: [PATCH 6.8 088/493] ASoC: da7219-aad: fix usage of device_get_named_child_node()
+Date: Mon, 27 May 2024 20:51:30 +0200
+Message-ID: <20240527185633.239047019@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,49 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Kiryushin <kiryushin@ancud.ru>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 3758f7d9917bd7ef0482c4184c0ad673b4c4e069 ]
+[ Upstream commit e8a6a5ad73acbafd98e8fd3f0cbf6e379771bb76 ]
 
-The rcuc-starvation output from print_cpu_stall_info() might overflow the
-buffer if there is a huge difference in jiffies difference.  The situation
-might seem improbable, but computers sometimes get very confused about
-time, which can result in full-sized integers, and, in this case,
-buffer overflow.
+The documentation for device_get_named_child_node() mentions this
+important point:
 
-Also, the unsigned jiffies difference is printed using %ld, which is
-normally for signed integers.  This is intentional for debugging purposes,
-but it is not obvious from the code.
+"
+The caller is responsible for calling fwnode_handle_put() on the
+returned fwnode pointer.
+"
 
-This commit therefore changes sprintf() to snprintf() and adds a
-clarifying comment about intention of %ld format.
+Add fwnode_handle_put() to avoid a leaked reference.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 245a62982502 ("rcu: Dump rcuc kthread status for CPUs not reporting quiescent state")
-Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20240426153033.38500-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree_stall.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/da7219-aad.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
-index 5d666428546b0..b5ec62b2d850a 100644
---- a/kernel/rcu/tree_stall.h
-+++ b/kernel/rcu/tree_stall.h
-@@ -504,7 +504,8 @@ static void print_cpu_stall_info(int cpu)
- 			rcu_dynticks_in_eqs(rcu_dynticks_snap(cpu));
- 	rcuc_starved = rcu_is_rcuc_kthread_starving(rdp, &j);
- 	if (rcuc_starved)
--		sprintf(buf, " rcuc=%ld jiffies(starved)", j);
-+		// Print signed value, as negative values indicate a probable bug.
-+		snprintf(buf, sizeof(buf), " rcuc=%ld jiffies(starved)", j);
- 	pr_err("\t%d-%c%c%c%c: (%lu %s) idle=%04x/%ld/%#lx softirq=%u/%u fqs=%ld%s%s\n",
- 	       cpu,
- 	       "O."[!!cpu_online(cpu)],
+diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
+index 6bc068cdcbe2a..15e5e3eb592b3 100644
+--- a/sound/soc/codecs/da7219-aad.c
++++ b/sound/soc/codecs/da7219-aad.c
+@@ -671,8 +671,10 @@ static struct da7219_aad_pdata *da7219_aad_fw_to_pdata(struct device *dev)
+ 		return NULL;
+ 
+ 	aad_pdata = devm_kzalloc(dev, sizeof(*aad_pdata), GFP_KERNEL);
+-	if (!aad_pdata)
++	if (!aad_pdata) {
++		fwnode_handle_put(aad_np);
+ 		return NULL;
++	}
+ 
+ 	aad_pdata->irq = i2c->irq;
+ 
+@@ -753,6 +755,8 @@ static struct da7219_aad_pdata *da7219_aad_fw_to_pdata(struct device *dev)
+ 	else
+ 		aad_pdata->adc_1bit_rpt = DA7219_AAD_ADC_1BIT_RPT_1;
+ 
++	fwnode_handle_put(aad_np);
++
+ 	return aad_pdata;
+ }
+ 
 -- 
 2.43.0
 
