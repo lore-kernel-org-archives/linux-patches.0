@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF6C168C4;
-	Mon, 27 May 2024 19:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449DF168C4;
+	Mon, 27 May 2024 19:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837372; cv=none; b=kZSjHccBhaYqTkIaC954Ny8wTYn4beD219FPi9P4mYiwgwD6K06iDIl/ZoYCZT9gX5Vn2mOQFvPW5jzVdkmRbJisNvaRIRJRTG8r0vrAhm3tLfRfYuqC9LpLC7yRqJDiOoqOV2XsZ9eD9g7Lg3c4DBlnrMpiwJWfjr3A02UPUcA=
+	t=1716837375; cv=none; b=JrwltbWsiUJebtedUsXLz7L4nj16M3+VELrZx+uXajDcOx0HIuXFpuEMVsJEBvr0BMSiQ0OyBhH8hh8uv2eY8I6Dh9W21tWvTsvkUBw0RdWmfrD3KXNsxyc6VECPFx5A5ksPNKjYS7ahm/QpIi1R7M0kIIMfrFk0UBbnu2o8Cps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837372; c=relaxed/simple;
-	bh=nFKaDEfmBS+KL0wf3k6080fPrP0vo2yhYVlO+tLYhzs=;
+	s=arc-20240116; t=1716837375; c=relaxed/simple;
+	bh=ZZzQY6Nd9VWISDrRvARb/ueGZ32CSbD2uL6ZI2tPGRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6W4sSpnO+T4hdSVApCXJJsrC5egYHiTbR0Z9aXMFfqC/BnQbsDt/VyLu15IBDiESrVFYIKWtgqoqmCHveWrFxDbkm7t/vdfabJJ+OKtAhWMWjVhr7EI2GNTohQIddA/5hSefkmwsk7Y4DLC+HIxWkONhmfHMRuNMXghnTTr4rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KItLkxdt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jk6T2g6erG0oXEHECcEYBnafex2oByncqDttXRhzDb96Ln+28ffLPXeDe+14oZzLu4nvpp30XsK2pwVFDz6nbUXig9cxF1OcgfbauzSLQQFYVTkZaFKHFIVfOSBLQmikN+LWG0vWRExLETUQGYk9yzq8wcV97yQT9m0aw6G4dmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTaA0kvT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KItLkxdt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE98C2BBFC;
-	Mon, 27 May 2024 19:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTaA0kvT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA65C2BBFC;
+	Mon, 27 May 2024 19:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837372;
-	bh=nFKaDEfmBS+KL0wf3k6080fPrP0vo2yhYVlO+tLYhzs=;
+	s=korg; t=1716837375;
+	bh=ZZzQY6Nd9VWISDrRvARb/ueGZ32CSbD2uL6ZI2tPGRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KItLkxdtKn2doZ6W7pe9h8Lls/VGg0xQ3ej3LOud7/p2CvrVyEIkIiw8UFjys3E58
-	 Te6YsZ1Rv2HuLtZ18PHw0WDIwocXB4kf6hkEcpO52a7V4HkgEyQfUG+RqZ0m1BjnGN
-	 9/jrkHK8CELGweEQxEcVN3klZIVJCzcVUm+Z03vE=
+	b=MTaA0kvTsPWaVM4byy8P3JwNM8Px7Gmn7BL/tr7ArPH1cVRSXPSAzx1LQW2w/jFhe
+	 Dni9qMmWgzMeWXrmBxK8AlD9Y/4h4vaqUqdtt3ge2qk1aTatRsR/Ud46CBe4LxRitc
+	 taoSwlUsPkIbpszrfpe1w+Tr032w+0G2FVCg9ADI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xu Du <xudu@redhat.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 416/427] selftests/net/lib: no need to record ns name if it already exist
-Date: Mon, 27 May 2024 20:57:43 +0200
-Message-ID: <20240527185635.584092439@linuxfoundation.org>
+Subject: [PATCH 6.9 417/427] idpf: dont skip over ethtool tcp-data-split setting
+Date: Mon, 27 May 2024 20:57:44 +0200
+Message-ID: <20240527185635.616882105@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,54 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit 83e93942796db58652288f0391ac00072401816f ]
+[ Upstream commit 67708158e732bf03d076fba1e3d4453fbf8292a2 ]
 
-There is no need to add the name to ns_list again if the netns already
-recoreded.
+Disabling tcp-data-split on idpf silently fails:
+  # ethtool -G $NETDEV tcp-data-split off
+  # ethtool -g $NETDEV | grep 'TCP data split'
+  TCP data split:        on
 
-Fixes: 25ae948b4478 ("selftests/net: add lib.sh")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+But it works if you also change 'tx' or 'rx':
+  # ethtool -G $NETDEV tcp-data-split off tx 256
+  # ethtool -g $NETDEV | grep 'TCP data split'
+  TCP data split:        off
+
+The bug is in idpf_set_ringparam, where it takes a shortcut out if the
+TX and RX sizes are not changing. Fix it by checking also if the
+tcp-data-split setting remains unchanged. Only then can the soft reset
+be skipped.
+
+Fixes: 9b1aa3ef2328 ("idpf: add get/set for Ethtool's header split ringparam")
+Reported-by: Xu Du <xudu@redhat.com>
+Closes: https://issues.redhat.com/browse/RHEL-36182
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://lore.kernel.org/r/20240515092414.158079-1-mschmidt@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/lib.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_ethtool.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/lib.sh b/tools/testing/selftests/net/lib.sh
-index f9fe182dfbd44..56a9454b7ba35 100644
---- a/tools/testing/selftests/net/lib.sh
-+++ b/tools/testing/selftests/net/lib.sh
-@@ -73,15 +73,17 @@ setup_ns()
- 	local ns=""
- 	local ns_name=""
- 	local ns_list=""
-+	local ns_exist=
- 	for ns_name in "$@"; do
- 		# Some test may setup/remove same netns multi times
- 		if unset ${ns_name} 2> /dev/null; then
- 			ns="${ns_name,,}-$(mktemp -u XXXXXX)"
- 			eval readonly ${ns_name}="$ns"
-+			ns_exist=false
- 		else
- 			eval ns='$'${ns_name}
- 			cleanup_ns "$ns"
--
-+			ns_exist=true
- 		fi
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_ethtool.c b/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
+index 986d429d11755..6972d728431cb 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
+@@ -376,7 +376,8 @@ static int idpf_set_ringparam(struct net_device *netdev,
+ 			    new_tx_count);
  
- 		if ! ip netns add "$ns"; then
-@@ -90,7 +92,7 @@ setup_ns()
- 			return $ksft_skip
- 		fi
- 		ip -n "$ns" link set lo up
--		ns_list="$ns_list $ns"
-+		! $ns_exist && ns_list="$ns_list $ns"
- 	done
- 	NS_LIST="$NS_LIST $ns_list"
- }
+ 	if (new_tx_count == vport->txq_desc_count &&
+-	    new_rx_count == vport->rxq_desc_count)
++	    new_rx_count == vport->rxq_desc_count &&
++	    kring->tcp_data_split == idpf_vport_get_hsplit(vport))
+ 		goto unlock_mutex;
+ 
+ 	if (!idpf_vport_set_hsplit(vport, kring->tcp_data_split)) {
 -- 
 2.43.0
 
