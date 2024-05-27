@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EF1168C4;
-	Mon, 27 May 2024 19:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3AC160783;
+	Mon, 27 May 2024 19:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837385; cv=none; b=t474LeMU3AFnooSKSA+bXzYKptaJuS5LpkDStuEx8V3Jxk2xQaECGFWhfzTcm7i53+WxuCl2QTI9P0P4B+havsNOgqEmXqaS5ok3z257Ki8HzD/VfZISJ6p5xb/FX0k9kRDAe4Elc4HYlxZJXk8kdK6O+5xNCyhCtE+wrL74Cdw=
+	t=1716837388; cv=none; b=VRyMjFFIFjBAqdTEn7R3t94c381joy+hPH0BSVLbB6jR4m+GM+CJm7lBDQxKrXtUcY7tmfENZCH2WgeeSLyFTBWZ14rety62Q8jjRUAHnRgten4zA8uDXNxy6hGgXdEfM8/IjlOUPdGajFTqL+3G5Govxv5l8mYRpL8ud+UnsXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837385; c=relaxed/simple;
-	bh=4rbyc3hAFglCVosixIW69Zx66pu7vJoLvG0XIg5wvTE=;
+	s=arc-20240116; t=1716837388; c=relaxed/simple;
+	bh=m1T5gtK9OdVuzj8i/VI5/lUN5kQRje37I8Kdn75su5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DCYkYUuNGRdZHbiIMeku32l61udIsb00fCCk037a1mNczhhg32Z12JK9mz5JzXeM+9tRXhtjNF5k/Jx7CkTS6ecB9bthQJ4VWLeMgNfELHplUz3VVZlr+IEDKfVvRJFW+toxSwoxx+ZrJWUwmHj/pbwfww4Wry0cgHrhKC/bvpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edfBbOAu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rv5WWf9rnHWSjlgyMpQxi6RNecWdQ1paZLn42UDpdAi5X7BEL9u/W/k/DFnhKayN9GlLNn43jS/w/g1Vk/5lgiOnXoBc9HLNYumFS0ImMzczKRjBiZMezWiyOf0Ig4SJIBuIdsxdaTMdDMmtMzIhot015VZFWjsrtNV9LDMwrd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRAJz7Ld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edfBbOAu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 095C0C2BBFC;
-	Mon, 27 May 2024 19:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRAJz7Ld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83918C2BBFC;
+	Mon, 27 May 2024 19:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837385;
-	bh=4rbyc3hAFglCVosixIW69Zx66pu7vJoLvG0XIg5wvTE=;
+	s=korg; t=1716837387;
+	bh=m1T5gtK9OdVuzj8i/VI5/lUN5kQRje37I8Kdn75su5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=edfBbOAuCNVDCsmjPOjTNJfpCwyuW7hyFw4UTRha5icnD0bYg7aVEOis3s+RKFFXa
-	 WNY1l7dn9QB+EzTYG/x70khS3I0zzxBYTsTtYqh4zs4IB6Cazv8Nzvswe+oD2m2Z/0
-	 dOgRRQNovqdDgTg4Oz90SKCgTZWzf10m1j6J2/Hs=
+	b=qRAJz7LdHqFONxJS+99qVjW/9kbJ0inyhVm79eG11ZrRc13XvIMyHy7yL0/dZO7Lm
+	 k0Re+pXK2Uz1HRW4xG4Y8SJLKHy4N0aPdR9xuI2kYx5Ts+9j5kG7dolf1ygd3b0h4e
+	 TZib06CUNRr4ru3pXNIZldUiS3dqJLoFr56KidLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qixin Liao <liaoqixin@huawei.com>,
-	Cheng Yu <serein.chengyu@huawei.com>,
-	Zhang Qiao <zhangqiao22@huawei.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	SeongJae Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 421/427] sched/core: Fix incorrect initialization of the burst parameter in cpu_max_write()
-Date: Mon, 27 May 2024 20:57:48 +0200
-Message-ID: <20240527185635.733745107@linuxfoundation.org>
+Subject: [PATCH 6.9 404/427] selftests/damon/_damon_sysfs: check errors from nr_schemes file reads
+Date: Mon, 27 May 2024 20:57:31 +0200
+Message-ID: <20240527185635.217046153@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,68 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yu <serein.chengyu@huawei.com>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 49217ea147df7647cb89161b805c797487783fc0 ]
+[ Upstream commit 732b8815c079199d29b0426d9372bb098c63cdc7 ]
 
-In the cgroup v2 CPU subsystem, assuming we have a
-cgroup named 'test', and we set cpu.max and cpu.max.burst:
+DAMON context staging method in _damon_sysfs.py is not checking the
+returned error from nr_schemes file read.  Check it.
 
-    # echo 1000000 > /sys/fs/cgroup/test/cpu.max
-    # echo 1000000 > /sys/fs/cgroup/test/cpu.max.burst
-
-then we check cpu.max and cpu.max.burst:
-
-    # cat /sys/fs/cgroup/test/cpu.max
-    1000000 100000
-    # cat /sys/fs/cgroup/test/cpu.max.burst
-    1000000
-
-Next we set cpu.max again and check cpu.max and
-cpu.max.burst:
-
-    # echo 2000000 > /sys/fs/cgroup/test/cpu.max
-    # cat /sys/fs/cgroup/test/cpu.max
-    2000000 100000
-
-    # cat /sys/fs/cgroup/test/cpu.max.burst
-    1000
-
-... we find that the cpu.max.burst value changed unexpectedly.
-
-In cpu_max_write(), the unit of the burst value returned
-by tg_get_cfs_burst() is microseconds, while in cpu_max_write(),
-the burst unit used for calculation should be nanoseconds,
-which leads to the bug.
-
-To fix it, get the burst value directly from tg->cfs_bandwidth.burst.
-
-Fixes: f4183717b370 ("sched/fair: Introduce the burstable CFS controller")
-Reported-by: Qixin Liao <liaoqixin@huawei.com>
-Signed-off-by: Cheng Yu <serein.chengyu@huawei.com>
-Signed-off-by: Zhang Qiao <zhangqiao22@huawei.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Tested-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20240424132438.514720-1-serein.chengyu@huawei.com
+Link: https://lkml.kernel.org/r/20240503180318.72798-3-sj@kernel.org
+Fixes: f5f0e5a2bef9 ("selftests/damon/_damon_sysfs: implement kdamonds start function")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/damon/_damon_sysfs.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 7019a40457a6d..d211d40a2edc9 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -11402,7 +11402,7 @@ static ssize_t cpu_max_write(struct kernfs_open_file *of,
- {
- 	struct task_group *tg = css_tg(of_css(of));
- 	u64 period = tg_get_cfs_period(tg);
--	u64 burst = tg_get_cfs_burst(tg);
-+	u64 burst = tg->cfs_bandwidth.burst;
- 	u64 quota;
- 	int ret;
- 
+diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
+index d23d7398a27a8..fe77d7e73a25b 100644
+--- a/tools/testing/selftests/damon/_damon_sysfs.py
++++ b/tools/testing/selftests/damon/_damon_sysfs.py
+@@ -287,6 +287,8 @@ class DamonCtx:
+         nr_schemes_file = os.path.join(
+                 self.sysfs_dir(), 'schemes', 'nr_schemes')
+         content, err = read_file(nr_schemes_file)
++        if err is not None:
++            return err
+         if int(content) != len(self.schemes):
+             err = write_file(nr_schemes_file, '%d' % len(self.schemes))
+             if err != None:
 -- 
 2.43.0
 
