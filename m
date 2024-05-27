@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B06168C4;
-	Mon, 27 May 2024 19:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE51E168C4;
+	Mon, 27 May 2024 19:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837456; cv=none; b=cVYxjXY528DcrWUXQ4gW6XK0fz1OMPY7G97on7DiNobWI4rbI3PCup+gYcjhpDMONXI3vj+gLcmZHvs5IQU2xBkFDuyE+2uUFUA0pLc8HTzGTbWx+WIakfmNheXjPvsbS2dC7xlsUkh+iMgBixnzclc2SRxpsERi7CrRViuEkYM=
+	t=1716837461; cv=none; b=QJsW+KW6aZ8O+eRT7aOBH5FLwtk893B/LDe4vP2/O+Uz4hweUTR8vDxhNMslHNLR4BHksRTJ7pthqako6qrMIWLRxcI7cfIWXuBd/f048kXLNDWqvbpkyUsSbll3vcnmKGG/eoDWfEY7i63JPAHp5n0P+GG7AnsNkG/tVJsypzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837456; c=relaxed/simple;
-	bh=eG4y+dqm8iBqyhfGuR/xSRzzLShdRuub2V9Uc/lADHk=;
+	s=arc-20240116; t=1716837461; c=relaxed/simple;
+	bh=PJpwb/acKnxI6u9YOszAQz1QO0P4MiBZvP2NKWYBgsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFUqbrOoEGCAzTU9JBGLNEc0FB7WmNRgWVk0IxgmKp2h9LLOcRKFPT7KZGjbrVHk9QeCpGiOcNsxDuDAV820hrXMTp5PGyFNxk5zGHAn5wVSWdBrRQUXZ8+CzuEkE0tikhMAdmCN1a/qRwL+h/Oa/yxDaS/o/DVUjn1fsRKWDb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uko7g2Mk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P3cIwulGwGEyGF1iyck/dQBtRFz7uDwOk9ASUDaa4bKUksifdB1hd4bLpmf46bll+9XLFdhd7sLg77it91JFFK6wgBT8JsV3JS9b4iwaIx6xKqiTaZPISaeG6+Z8b2uq0KiMBZh9uTKSJg9WT9UUjwlEBuKnkravKTjr0aA/6GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WS9veLuS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uko7g2Mk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C45AC2BBFC;
-	Mon, 27 May 2024 19:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WS9veLuS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D04C2BBFC;
+	Mon, 27 May 2024 19:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837456;
-	bh=eG4y+dqm8iBqyhfGuR/xSRzzLShdRuub2V9Uc/lADHk=;
+	s=korg; t=1716837461;
+	bh=PJpwb/acKnxI6u9YOszAQz1QO0P4MiBZvP2NKWYBgsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uko7g2Mk0C0DsEXqqGF77Hq6u4FXrke+mMAClEooUw5478iRQZgWe6N3jccSQHq9v
-	 2YJCOa+wnDPn3M/KXzwCYbEtY35fxTpxCnuBQ5b5Fey+CfEDJhjgCH4UG3RJu0UHrw
-	 VOft4T8D+FvgkPvOvuy843qYqYXpZ2rbxm1JzxII=
+	b=WS9veLuSyWBiFx9r0syZMbPFuc69zSzELQjcu087LdwpV+nTg5gxwaqObGKebOQd+
+	 MMUTPUzRbdtawuAMQIjJsrXZUkSFrEon/ehHcF556PoqJ0teyhMm9jGXD+7Md3TRXz
+	 CaGf9U/jUjluWhmEcWl4Z+nadoR9ziSYe0GsV4aY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel J Blueman <daniel@quora.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Steffen Persvold <sp@numascale.com>,
-	James Cleverdon <james.cleverdon.external@eviden.com>,
-	Dimitri Sivanich <sivanich@hpe.com>,
-	Prarit Bhargava <prarit@redhat.com>
-Subject: [PATCH 6.8 002/493] x86/tsc: Trust initial offset in architectural TSC-adjust MSRs
-Date: Mon, 27 May 2024 20:50:04 +0200
-Message-ID: <20240527185626.760223171@linuxfoundation.org>
+	Shuah Khan <skhan@linuxfoundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.8 020/493] tools/latency-collector: Fix -Wformat-security compile warns
+Date: Mon, 27 May 2024 20:50:22 +0200
+Message-ID: <20240527185628.519584307@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -48,52 +44,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel J Blueman <daniel@quora.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
 
-commit 455f9075f14484f358b3c1d6845b4a438de198a7 upstream.
+commit df73757cf8f66fa54c4721c53b0916af3c4d9818 upstream.
 
-When the BIOS configures the architectural TSC-adjust MSRs on secondary
-sockets to correct a constant inter-chassis offset, after Linux brings the
-cores online, the TSC sync check later resets the core-local MSR to 0,
-triggering HPET fallback and leading to performance loss.
+Fix the following -Wformat-security compile warnings adding missing
+format arguments:
 
-Fix this by unconditionally using the initial adjust values read from the
-MSRs. Trusting the initial offsets in this architectural mechanism is a
-better approach than special-casing workarounds for specific platforms.
+latency-collector.c: In function ‘show_available’:
+latency-collector.c:938:17: warning: format not a string literal and
+no format arguments [-Wformat-security]
+  938 |                 warnx(no_tracer_msg);
+      |                 ^~~~~
 
-Signed-off-by: Daniel J Blueman <daniel@quora.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Steffen Persvold <sp@numascale.com>
-Reviewed-by: James Cleverdon <james.cleverdon.external@eviden.com>
-Reviewed-by: Dimitri Sivanich <sivanich@hpe.com>
-Reviewed-by: Prarit Bhargava <prarit@redhat.com>
-Link: https://lore.kernel.org/r/20240419085146.175665-1-daniel@quora.org
+latency-collector.c:943:17: warning: format not a string literal and
+no format arguments [-Wformat-security]
+  943 |                 warnx(no_latency_tr_msg);
+      |                 ^~~~~
+
+latency-collector.c: In function ‘find_default_tracer’:
+latency-collector.c:986:25: warning: format not a string literal and
+no format arguments [-Wformat-security]
+  986 |                         errx(EXIT_FAILURE, no_tracer_msg);
+      |
+                         ^~~~
+latency-collector.c: In function ‘scan_arguments’:
+latency-collector.c:1881:33: warning: format not a string literal and
+no format arguments [-Wformat-security]
+ 1881 |                                 errx(EXIT_FAILURE, no_tracer_msg);
+      |                                 ^~~~
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240404011009.32945-1-skhan@linuxfoundation.org
+
+Cc: stable@vger.kernel.org
+Fixes: e23db805da2df ("tracing/tools: Add the latency-collector to tools directory")
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/tsc_sync.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ tools/tracing/latency/latency-collector.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/tsc_sync.c
-+++ b/arch/x86/kernel/tsc_sync.c
-@@ -193,11 +193,9 @@ bool tsc_store_and_check_tsc_adjust(bool
- 	cur->warned = false;
+--- a/tools/tracing/latency/latency-collector.c
++++ b/tools/tracing/latency/latency-collector.c
+@@ -935,12 +935,12 @@ static void show_available(void)
+ 	}
  
- 	/*
--	 * If a non-zero TSC value for socket 0 may be valid then the default
--	 * adjusted value cannot assumed to be zero either.
-+	 * The default adjust value cannot be assumed to be zero on any socket.
- 	 */
--	if (tsc_async_resets)
--		cur->adjusted = bootval;
-+	cur->adjusted = bootval;
+ 	if (!tracers) {
+-		warnx(no_tracer_msg);
++		warnx("%s", no_tracer_msg);
+ 		return;
+ 	}
  
- 	/*
- 	 * Check whether this CPU is the first in a package to come up. In
+ 	if (!found) {
+-		warnx(no_latency_tr_msg);
++		warnx("%s", no_latency_tr_msg);
+ 		tracefs_list_free(tracers);
+ 		return;
+ 	}
+@@ -983,7 +983,7 @@ static const char *find_default_tracer(v
+ 	for (i = 0; relevant_tracers[i]; i++) {
+ 		valid = tracer_valid(relevant_tracers[i], &notracer);
+ 		if (notracer)
+-			errx(EXIT_FAILURE, no_tracer_msg);
++			errx(EXIT_FAILURE, "%s", no_tracer_msg);
+ 		if (valid)
+ 			return relevant_tracers[i];
+ 	}
+@@ -1878,7 +1878,7 @@ static void scan_arguments(int argc, cha
+ 			}
+ 			valid = tracer_valid(current_tracer, &notracer);
+ 			if (notracer)
+-				errx(EXIT_FAILURE, no_tracer_msg);
++				errx(EXIT_FAILURE, "%s", no_tracer_msg);
+ 			if (!valid)
+ 				errx(EXIT_FAILURE,
+ "The tracer %s is not supported by your kernel!\n", current_tracer);
 
 
