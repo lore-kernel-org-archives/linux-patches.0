@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8127317E90E;
-	Mon, 27 May 2024 19:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0355D17E90E;
+	Mon, 27 May 2024 19:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837040; cv=none; b=W6lkdl/B5heEiAHRFDeZ9+dENY1Nd0/9DFwnwcC6zgZYS/qN1uvCqbRtrzPidXroHUcG2Q4lNU4JTdbyg02uRYIkpRR06czqYvgOUtFDzgdDgW5w5iii0DYpMH4h1GcE4bNbKN6YhhP9vPYcgH5p1kwddrLoPx95uXEcHa87vVE=
+	t=1716837043; cv=none; b=u4qkd+2vTwpJHL8wOG03AaQaOWM4vnmzCHkZCqEdfLy3gA2ujAEpOsriH2GG7yhfDCTWlG1tce7u78cOGpQLGzX6TIvCGh30BgVecAfos6dPGQf+b1OSOCty7jlbQY2YPgYMpAg07Q2rbiSdPWTskZ3h372ioWh4SK//lsvL+Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837040; c=relaxed/simple;
-	bh=rEToUy8LqG0OmfWuWT6c7jK/aGLcD+AV1HtxETxcyTY=;
+	s=arc-20240116; t=1716837043; c=relaxed/simple;
+	bh=xxyZ79YceEx264L06C+1aNlEV4Ty4mZ8uP3VXvVmmeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aoy0+hdwqLKd8dXP3I1hNYbHPb5cw1ryve0TZirYxz28lzUTdagQ3gSolD496OdP11uUaGOmBIxr94uJ88bDP2hdR2FnbZiYpnWakmPE5WWBbgaccrNjQFEVyFMFRVZuBbLshh0TE09rFTeCTrxSnoq4XJd4IjziTYmt/U5FJDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJLLRuPu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kzPlkwRAFTMUFL3yWiACq6mey4ZwFL2mtLCtaDvAojkmrb9bGauI8Ms1uD3BoPmjhjFNyhmbHECdShcz4VLcnah31pw1K8lrX89YJJsAixIeMTwpjp0EZnAgYMr2MxUkajowHSisDtB4wWBksA7YeCKjlFn+bRl5YyZZ8ElUNE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNdW5ZKG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJLLRuPu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16835C2BBFC;
-	Mon, 27 May 2024 19:10:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNdW5ZKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F93C2BBFC;
+	Mon, 27 May 2024 19:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837040;
-	bh=rEToUy8LqG0OmfWuWT6c7jK/aGLcD+AV1HtxETxcyTY=;
+	s=korg; t=1716837042;
+	bh=xxyZ79YceEx264L06C+1aNlEV4Ty4mZ8uP3VXvVmmeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJLLRuPuaUZUBFM4th2PhRO7muy7YepwSU8/iGAmEG6Vz93LdWyrYWjXzK4E8r/IU
-	 4Rcky7rGO9bU4yWCb9vYNAe0LkfElU8FGnmQhl/9csHP8wU5WJZEii7PVy1/r5owqd
-	 SgfHbK7S/fKZ6gp2kvWdNKURgUosoENskA75LPwU=
+	b=mNdW5ZKGiwwHccsWNh93K0SfMREzENpZSjwyRIegOx5JxxK/hTWYF0lGRjqP/TNQw
+	 HmosZoWIcVudhFA+JUxXQJzQsF5RbXGOqdDV2owDTgVDE/D48ImLt3T1ZB1em4O17Z
+	 NV0sDCOEg0x3ex9kqCw0EBHRyHq6/O3x+UtLROc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aapo Vienamo <aapo.vienamo@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Michael Walle <mwalle@kernel.org>,
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 288/427] mtd: core: Report error if first mtd_otp_size() call fails in mtd_otp_nvmem_add()
-Date: Mon, 27 May 2024 20:55:35 +0200
-Message-ID: <20240527185629.318730251@linuxfoundation.org>
+Subject: [PATCH 6.9 289/427] mtd: rawnand: hynix: fixed typo
+Date: Mon, 27 May 2024 20:55:36 +0200
+Message-ID: <20240527185629.392964291@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -53,41 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aapo Vienamo <aapo.vienamo@linux.intel.com>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-[ Upstream commit d44f0bbbd8d182debcce88bda55b05269f3d33d6 ]
+[ Upstream commit 6819db94e1cd3ce24a432f3616cd563ed0c4eaba ]
 
-Jump to the error reporting code in mtd_otp_nvmem_add() if the
-mtd_otp_size() call fails. Without this fix, the error is not logged.
+The function hynix_nand_rr_init() should probably return an error code.
+Judging by the usage, it seems that the return code is passed up
+the call stack.
+Right now, it always returns 0 and the function hynix_nand_cleanup()
+in hynix_nand_init() has never been called.
 
-Signed-off-by: Aapo Vienamo <aapo.vienamo@linux.intel.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Fixes: 4b361cfa8624 ("mtd: core: add OTP nvmem provider support")
+Found by RASU JSC and Linux Verification Center (linuxtesting.org)
+
+Fixes: 626994e07480 ("mtd: nand: hynix: Add read-retry support for 1x nm MLC NANDs")
+
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240313173425.1325790-2-aapo.vienamo@linux.intel.com
+Link: https://lore.kernel.org/linux-mtd/20240313102721.1991299-1-korotkov.maxim.s@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/nand_hynix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 0de87bc638405..6d5c755411de0 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -956,8 +956,10 @@ static int mtd_otp_nvmem_add(struct mtd_info *mtd)
+diff --git a/drivers/mtd/nand/raw/nand_hynix.c b/drivers/mtd/nand/raw/nand_hynix.c
+index a74e64e0cfa32..c02e50608816a 100644
+--- a/drivers/mtd/nand/raw/nand_hynix.c
++++ b/drivers/mtd/nand/raw/nand_hynix.c
+@@ -401,7 +401,7 @@ static int hynix_nand_rr_init(struct nand_chip *chip)
+ 	if (ret)
+ 		pr_warn("failed to initialize read-retry infrastructure");
  
- 	if (mtd->_get_user_prot_info && mtd->_read_user_prot_reg) {
- 		size = mtd_otp_size(mtd, true);
--		if (size < 0)
--			return size;
-+		if (size < 0) {
-+			err = size;
-+			goto err;
-+		}
+-	return 0;
++	return ret;
+ }
  
- 		if (size > 0) {
- 			nvmem = mtd_otp_nvmem_register(mtd, "user-otp", size,
+ static void hynix_nand_extract_oobsize(struct nand_chip *chip,
 -- 
 2.43.0
 
