@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B9617727;
-	Mon, 27 May 2024 19:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4DA17727;
+	Mon, 27 May 2024 19:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838388; cv=none; b=CNkr4iYJIXB0EN7MQIrcn2HZ57RuX5sTE8Q/xRdVkIYB+uyKIxlDcdNP7jK658ZnnCdyfgF+0spAsHe5XhJ4R9FVql1KK14YhsjzOcP+MxaIO9VCElc6hI+NTaREhxwJ5XpNtfCj9FdiEPHAunmTw5URZeq3BZczNyeAtm47HQ4=
+	t=1716838390; cv=none; b=mcDeEZURl95X1mng5RVA3Md4ljRva5oV8Ievfx9JBZEYcY/xQaYxXMGzFUiZ/6KTxoXL+OOT8lElD+AkThCH8hZgie9ct5pVcMAmHeGH05CnEJhQVEJsojhPAszM1qzWO6PkK97seIpM19L11V1pPBwXQ0Q+VhjQNBtwn/M7E0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838388; c=relaxed/simple;
-	bh=Ao8Ld2Y51rvM9pvyOLG63SfwK1HtYKFoavkJxEjPcHg=;
+	s=arc-20240116; t=1716838390; c=relaxed/simple;
+	bh=n5tgwrA58kOgr0fyflpO2pNO4qpTgejlmyObSnycTE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GkOE0580aUaz4cXmH1RJ1LHm221h6CSQb3h+WzXPWcl+VVgI2YM/0wthpynjyXVvPvwi0CPvZBun8R1IYA5Z5matCs1YPAxG45jSuoE0M6c7P2X3aHjyHK98mwt8A9F+hJQ4wj/jtG5EWWQbyWaJc4Q1OJQRuuDnVVDyhVuE3fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZISlgFxs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t21hl5hwMQ3bVRy/Izhh+yEGZmJMk4H/+j5kQNQsjnp+3xfIc3Y+1gXDm8wVjCj8EkOlAKKxDpR6lO5rtD//SsbfrsFKb8lT9IcqW6hgQZynrPTwrdZAkTZdIA3d249LOlZYKrCsxydXCJ6IIzYOMIsZUUzb0VeMKSkP/Zvn7DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHlPE3zL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZISlgFxs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0FDC2BBFC;
-	Mon, 27 May 2024 19:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHlPE3zL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1ABC2BBFC;
+	Mon, 27 May 2024 19:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838387;
-	bh=Ao8Ld2Y51rvM9pvyOLG63SfwK1HtYKFoavkJxEjPcHg=;
+	s=korg; t=1716838390;
+	bh=n5tgwrA58kOgr0fyflpO2pNO4qpTgejlmyObSnycTE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZISlgFxsK3ses5s0MQPT5KoOHaurFrUtLfO+YeirJI9EsTm9530CQg6G+atSzNdul
-	 tV7xmIgpNIgMhXcSXlR2sglGucP3BhH8WF6F1Mc5FqtwRJ6dPR0EfCSvPS6LUaT58B
-	 ZLxBnYKDzK+XMpSRjou/9zJNpSlO4uEtvh2d1HC4=
+	b=KHlPE3zLFqGNy+vb8YkVX7Iz6elG3yrcbjXpxLLtA1h8mwqB2Su3VjbiedMC8+t8d
+	 WWbLtxddKtUDxv3cw2zVFCAPq/xq6c+kESGzIwMCZmnXBgxcG55R2Y0/nX+KkGf+Uj
+	 tdIVzTx+LZ/yBSN9AnTKZMHtRimHlMYvAqncWomg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Green <greenjustin@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	CK Hu <ck.hu@mediatek.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 373/493] drm/mediatek: Add 0 size check to mtk_drm_gem_obj
-Date: Mon, 27 May 2024 20:56:15 +0200
-Message-ID: <20240527185642.476828963@linuxfoundation.org>
+Subject: [PATCH 6.8 374/493] drm/mediatek: Init `ddp_comp` with devm_kcalloc()
+Date: Mon, 27 May 2024 20:56:16 +0200
+Message-ID: <20240527185642.510155631@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,42 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Green <greenjustin@chromium.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 1e4350095e8ab2577ee05f8c3b044e661b5af9a0 ]
+[ Upstream commit 01a2c5123e27b3c4685bf2fc4c2e879f6e0c7b33 ]
 
-Add a check to mtk_drm_gem_init if we attempt to allocate a GEM object
-of 0 bytes. Currently, no such check exists and the kernel will panic if
-a userspace application attempts to allocate a 0x0 GBM buffer.
+In the case where `conn_routes` is true we allocate an extra slot in
+the `ddp_comp` array but mtk_drm_crtc_create() never seemed to
+initialize it in the test case I ran. For me, this caused a later
+crash when we looped through the array in mtk_drm_crtc_mode_valid().
+This showed up for me when I booted with `slub_debug=FZPUA` which
+poisons the memory initially. Without `slub_debug` I couldn't
+reproduce, presumably because the later code handles the value being
+NULL and in most cases (not guaranteed in all cases) the memory the
+allocator returned started out as 0.
 
-Tested by attempting to allocate a 0x0 GBM buffer on an MT8188 and
-verifying that we now return EINVAL.
+It really doesn't hurt to initialize the array with devm_kcalloc()
+since the array is small and the overhead of initting a handful of
+elements to 0 is small. In general initting memory to zero is a safer
+practice and usually it's suggested to only use the non-initting alloc
+functions if you really need to.
 
-Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
-Signed-off-by: Justin Green <greenjustin@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Let's switch the function to use an allocation function that zeros the
+memory. For me, this avoids the crash.
+
+Fixes: 01389b324c97 ("drm/mediatek: Add connector dynamic selection capability")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240307180051.4104425-1-greenjustin@chromium.org/
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20240328092248.1.I2e73c38c0f264ee2fa4a09cdd83994e37ba9f541@changeid/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_gem.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-index 4f2e3feabc0f8..1bf229615b018 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-@@ -38,6 +38,9 @@ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+index 3d17de34d72bd..d398fa1871165 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+@@ -992,10 +992,10 @@ int mtk_drm_crtc_create(struct drm_device *drm_dev,
  
- 	size = round_up(size, PAGE_SIZE);
+ 	mtk_crtc->mmsys_dev = priv->mmsys_dev;
+ 	mtk_crtc->ddp_comp_nr = path_len;
+-	mtk_crtc->ddp_comp = devm_kmalloc_array(dev,
+-						mtk_crtc->ddp_comp_nr + (conn_routes ? 1 : 0),
+-						sizeof(*mtk_crtc->ddp_comp),
+-						GFP_KERNEL);
++	mtk_crtc->ddp_comp = devm_kcalloc(dev,
++					  mtk_crtc->ddp_comp_nr + (conn_routes ? 1 : 0),
++					  sizeof(*mtk_crtc->ddp_comp),
++					  GFP_KERNEL);
+ 	if (!mtk_crtc->ddp_comp)
+ 		return -ENOMEM;
  
-+	if (size == 0)
-+		return ERR_PTR(-EINVAL);
-+
- 	mtk_gem_obj = kzalloc(sizeof(*mtk_gem_obj), GFP_KERNEL);
- 	if (!mtk_gem_obj)
- 		return ERR_PTR(-ENOMEM);
 -- 
 2.43.0
 
