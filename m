@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFFB168C4;
-	Mon, 27 May 2024 19:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE14A168C4;
+	Mon, 27 May 2024 19:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837493; cv=none; b=bVNWq5b2DjryuzUNsvyewXuiT9HbtkSCJ/lXxi1xDuXI/FeXIKhjazd6n5FhXSwftmwsG+aTOUI0VceVyu/jyGRloHZD572xiOATrLPJdgq/SQru8Pj4CUqApTYcoxXIQSCefrVQc0U0zDxBDOkGnx2Itfo09x4oKt7hLP4YYtk=
+	t=1716837495; cv=none; b=jFZ8SvKxy1AuH0BYvU7l2Cp076/68wUAmTiBbpi0kL86K+6TI4LR+6uvcOn2ZeTDmkc9roKuytQmZLJJ1X33TSgtFdIpWX7uh3lFSSJaTYzmLyZpiBeDliw/qFERGv53MiqG/CJhNk6kHNxXxtGVEvDs989IvTLc7y6RTVjwv9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837493; c=relaxed/simple;
-	bh=qt4evT/fkdXzWf82o8QO2UDA6orF8zq1GjKPAw1amHg=;
+	s=arc-20240116; t=1716837495; c=relaxed/simple;
+	bh=1o4HSpaflHZCBZI1HVP2ybS+npokdLg4FEJv425+gKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCc+whVTft7GHEJ0qz4dMBpY0ZEa0Uj+44vLtBaabc0zKQ6b6bF3+AxCbu/pAq9NJiHPXpmKCXbxt/ilRPHqvUQB7STNRPyV3K+ag2ij7/IXayW6dbTevVr2VGvuSEsR8sLoG4U8cBJDKdM8aXyympUmvmw6KrK3j1/Alcc/8po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZWEvW+6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jW/FuC95EzSNzWBCJ4JyKUwNsq7UfAVToO9GqZRRUdRoXFzFrqfs/IIdW0T8rUkw7LEQNggjf8NtBbGy2RD1l0lVWFGvX6KD2aq8ONeS0o8LzPB/GJ6HmN/zzQr854VCMnsI8ufwMTTKmgM0kPfFBd0q+OLxW6XrjQFDFnSfNFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKP4s9Gz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZWEvW+6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1014C2BBFC;
-	Mon, 27 May 2024 19:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKP4s9Gz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 609F2C2BBFC;
+	Mon, 27 May 2024 19:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837493;
-	bh=qt4evT/fkdXzWf82o8QO2UDA6orF8zq1GjKPAw1amHg=;
+	s=korg; t=1716837495;
+	bh=1o4HSpaflHZCBZI1HVP2ybS+npokdLg4FEJv425+gKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oZWEvW+609Ua0rytOUBdUNIZxzE9wIhph0Px42KHZ7bPeKhF/N/M1teVetRMi1KUm
-	 he90aR8AdNmpM6BvbIXLpiL7hP4Y6SjJXvEc7ESUYmOW7e8tG9vjEBYSd8Ejg2j2X5
-	 CKB8lUNM2aZSA6ilxpsUs94UuZy//K8bio7PdWiI=
+	b=fKP4s9GzFj9qQwaAFY9C1KmCaoxyC7g9bVs/LqO/fSLPCv1LRThI9gLJzuvwFkSBb
+	 xlH//wY4l3pGeA9mh+j1NHxJZ5w76na5q5xJZnizIAPjaCvxbhflQznWJoaIyFO41h
+	 OcwVcjWqLF9KCsDaLTZOXWv++mYeH5atMcgyGurI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.8 031/493] fs/ntfs3: Break dir enumeration if directory contents error
-Date: Mon, 27 May 2024 20:50:33 +0200
-Message-ID: <20240527185629.423375623@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.8 032/493] ksmbd: avoid to send duplicate oplock break notifications
+Date: Mon, 27 May 2024 20:50:34 +0200
+Message-ID: <20240527185629.492032955@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -49,34 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 302e9dca8428979c9c99f2dbb44dc1783f5011c3 upstream.
+commit c91ecba9e421e4f2c9219cf5042fa63a12025310 upstream.
 
-If we somehow attempt to read beyond the directory size, an error
-is supposed to be returned.
+This patch fixes generic/011 when oplocks is enable.
 
-However, in some cases, read requests do not stop and instead enter
-into a loop.
+Avoid to send duplicate oplock break notifications like smb2 leases
+case.
 
-To avoid this, we set the position in the directory to the end.
-
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 97c2ec64667b ("ksmbd: avoid to send duplicate lease break notifications")
 Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/dir.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/server/oplock.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -475,6 +475,7 @@ static int ntfs_readdir(struct file *fil
- 		vbo = (u64)bit << index_bits;
- 		if (vbo >= i_size) {
- 			ntfs_inode_err(dir, "Looks like your dir is corrupt");
-+			ctx->pos = eod;
- 			err = -EINVAL;
- 			goto out;
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -613,19 +613,24 @@ static int oplock_break_pending(struct o
+ 		if (opinfo->op_state == OPLOCK_CLOSING)
+ 			return -ENOENT;
+ 		else if (opinfo->level <= req_op_level) {
+-			if (opinfo->is_lease &&
+-			    opinfo->o_lease->state !=
+-			     (SMB2_LEASE_HANDLE_CACHING_LE |
+-			      SMB2_LEASE_READ_CACHING_LE))
++			if (opinfo->is_lease == false)
++				return 1;
++
++			if (opinfo->o_lease->state !=
++			    (SMB2_LEASE_HANDLE_CACHING_LE |
++			     SMB2_LEASE_READ_CACHING_LE))
+ 				return 1;
+ 		}
+ 	}
+ 
+ 	if (opinfo->level <= req_op_level) {
+-		if (opinfo->is_lease &&
+-		    opinfo->o_lease->state !=
+-		     (SMB2_LEASE_HANDLE_CACHING_LE |
+-		      SMB2_LEASE_READ_CACHING_LE)) {
++		if (opinfo->is_lease == false) {
++			wake_up_oplock_break(opinfo);
++			return 1;
++		}
++		if (opinfo->o_lease->state !=
++		    (SMB2_LEASE_HANDLE_CACHING_LE |
++		     SMB2_LEASE_READ_CACHING_LE)) {
+ 			wake_up_oplock_break(opinfo);
+ 			return 1;
  		}
 
 
