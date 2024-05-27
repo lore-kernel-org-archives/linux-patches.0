@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB181DFED;
-	Mon, 27 May 2024 19:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29BF917E90E;
+	Mon, 27 May 2024 19:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836733; cv=none; b=rI0p5q65ZflBwG90lZ4eFVXqa2TZPpnvZj3VF0jR2MhJTvdigbY44z16mxniJ8uKstNgcmck7IZr6AgsdID5bp9tfk2KY8XBJJyyw97D6M1p4BWKOE7p0SVWjId1c+fZlVWmsDiJESxKz50OP4RsXM0T9Ob+Git/wb2e90xMCUE=
+	t=1716836735; cv=none; b=LQJUm9CLbF8tN/5nKHo7LlXgpWK/+ZaVhfx9cOP7u4qGF2tRSnuMYH9bVSEAIoRYMg3M5sHcXIsgOgLC2RHmFwKycEX++y+bSTf+WUI/ud/mWaopDNKyKmFkhFelIgwBZZNJZvXpYlYqWKdr230EQMs46FB830gejSXq3rJ+2ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836733; c=relaxed/simple;
-	bh=pYiT2Bwv2U4Dj9prs7we4rJ3xP/RiWXoKzlUucYTUME=;
+	s=arc-20240116; t=1716836735; c=relaxed/simple;
+	bh=w43UkdPHjp3eicED17OWPF5Fj2B/hNDKKiqnPulFVOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZbIb1c6BUSyX21sJCkQ0fjUQZgacaMqhc7raYCrD4VD3iKAz7iDJ6QclSlgchzjcavPjGMEAc4LNAdTc02gTCi20+sLP6eYpZ96BizbpdlyzCGgVLxGeGmbuoRB1tMzm+jXKr5uXHlTl9cjhltQzRqX4C2HA98NGujg4t+RWejM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZq+rsgJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jo8DRzY109tdTkpjVR8Rrj+SwvZGBwUedJbkFfk080hc3lIqxMJqB7S/fzZDxo1elJdHX3w82YPnwGOrS+pqRbE3QJnk09HzKD9BobFZim2YTiA/YP4oimTndFMDJ/qUuH0LZ/gdlt3JZC0ksqC/svEccYYx5cwQgId7HnldWhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0+bQy6i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZq+rsgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E10FC2BBFC;
-	Mon, 27 May 2024 19:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0+bQy6i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E5FC2BBFC;
+	Mon, 27 May 2024 19:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836732;
-	bh=pYiT2Bwv2U4Dj9prs7we4rJ3xP/RiWXoKzlUucYTUME=;
+	s=korg; t=1716836735;
+	bh=w43UkdPHjp3eicED17OWPF5Fj2B/hNDKKiqnPulFVOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZq+rsgJU8WrGqPUx3McNL1gMfILA1ImtP429GPMv1c/hGaLB1mnH5Zaccseha00k
-	 7Br/T7LvnB39OqVyDniM2ubO7TnD9mn1IkQAtRPeo2kmv8wjAaDENhUlzUICzo/s3h
-	 uk1OxZ6BkFDvhlr+Ua1Pl40Uu0cQR5/rONisfMsc=
+	b=A0+bQy6iWlhRpOrLGamQGMXUHABb4d6f/VD96Rsj9oaT/vx+wx0YyeW5GbAmNPVN1
+	 kHjvkYxVrqZC3qNanAKwtplz4nTlyPCTswUINxv3e/y2DA0sLjfDdJZeyH8PSC4M7t
+	 uxv9QGdw8mT9EI8FR2Ilnq3kFCikpCG0Av7Ji1UY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yinbo Zhu <zhuyinbo@loongson.cn>,
 	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 165/427] dt-bindings: thermal: loongson,ls2k-thermal: Add Loongson-2K0500 compatible
-Date: Mon, 27 May 2024 20:53:32 +0200
-Message-ID: <20240527185617.796024134@linuxfoundation.org>
+Subject: [PATCH 6.9 166/427] dt-bindings: thermal: loongson,ls2k-thermal: Fix incorrect compatible definition
+Date: Mon, 27 May 2024 20:53:33 +0200
+Message-ID: <20240527185617.878249611@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -55,35 +56,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Binbin Zhou <zhoubinbin@loongson.cn>
 
-[ Upstream commit 25c7d8472f6e90390931e93f59135478af3e5d86 ]
+[ Upstream commit c8c4353685778e75e186103411e9d01a4a3f2b90 ]
 
-The thermal on the Loongson-2K0500 shares the design with the
-Loongson-2K1000. Define corresponding compatible string, having the
-loongson,ls2k1000-thermal as a fallback.
+The temperature output register of the Loongson-2K2000 is defined in the
+chip configuration domain, which is different from the Loongson-2K1000,
+so it can't be fallbacked.
 
+We need to use two groups of registers to describe it: the first group
+is the high and low temperature threshold setting register; the second
+group is the temperature output register.
+
+It is true that this fix will cause ABI corruption, but it is necessary
+otherwise the Loongson-2K2000 temperature sensor will not work properly.
+
+Fixes: 72684d99a854 ("thermal: dt-bindings: add loongson-2 thermal")
+Cc: Yinbo Zhu <zhuyinbo@loongson.cn>
 Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Acked-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/26524a63abd2d032e4c45efe6ce3fedb46841768.1713837379.git.zhoubinbin@loongson.cn
-Stable-dep-of: c8c435368577 ("dt-bindings: thermal: loongson,ls2k-thermal: Fix incorrect compatible definition")
+Link: https://lore.kernel.org/r/5198999d679f1a1c3457385acb9fadfc85da1f1e.1713837379.git.zhoubinbin@loongson.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/thermal/loongson,ls2k-thermal.yaml       | 1 +
- 1 file changed, 1 insertion(+)
+ .../thermal/loongson,ls2k-thermal.yaml        | 23 +++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml b/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
-index b634f57cd011d..9748a479dcd4d 100644
+index 9748a479dcd4d..ca81c8afba79c 100644
 --- a/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
 +++ b/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
-@@ -20,6 +20,7 @@ properties:
+@@ -18,14 +18,15 @@ properties:
+     oneOf:
+       - enum:
            - loongson,ls2k1000-thermal
++          - loongson,ls2k2000-thermal
        - items:
            - enum:
-+              - loongson,ls2k0500-thermal
-               - loongson,ls2k2000-thermal
+               - loongson,ls2k0500-thermal
+-              - loongson,ls2k2000-thermal
            - const: loongson,ls2k1000-thermal
  
+   reg:
+-    maxItems: 1
++    minItems: 1
++    maxItems: 2
+ 
+   interrupts:
+     maxItems: 1
+@@ -39,6 +40,24 @@ required:
+   - interrupts
+   - '#thermal-sensor-cells'
+ 
++if:
++  properties:
++    compatible:
++      contains:
++        enum:
++          - loongson,ls2k2000-thermal
++
++then:
++  properties:
++    reg:
++      minItems: 2
++      maxItems: 2
++
++else:
++  properties:
++    reg:
++      maxItems: 1
++
+ unevaluatedProperties: false
+ 
+ examples:
 -- 
 2.43.0
 
