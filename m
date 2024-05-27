@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CE1168C4;
-	Mon, 27 May 2024 19:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A270F168C4;
+	Mon, 27 May 2024 19:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837488; cv=none; b=X/+qY3kA3tglZsBW9LGj9IOrHthH3TOar2kqUheYlt3GDneaicSfG1Y4LrPfR6LLhz8fFJGUfeIvAhWoWZ71fMJJyXyb2C8hX6yN6nzAbb1a86LyaPdsY3yy7RgCItuMSuzqHmC7hqrcYA6f7T76cnefGtRVHxjBISsJXxfhkEo=
+	t=1716837490; cv=none; b=dkuIVp4utfbhSTrwy2yUt8OzhFHWVE9J35MduKIp+WDhfkkdGep0G4qviEJxnUo3L/nTtvdAvfwOtKSTMyke3F9F8NvZ7P0TjxwFm66jlXSxUUxMxeTueJo96K01qyJrHl3f3E4mAN0ltSniPtD0dLCHJnlgBQoCalRMwktjGq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837488; c=relaxed/simple;
-	bh=jBd7MlCeFRsPxH1nPnYK2tBTtabE6cVJmF+Lgi9F4OU=;
+	s=arc-20240116; t=1716837490; c=relaxed/simple;
+	bh=1NVt+IzFEY6m2Ro7y7DswQpm1uWnT2U4GRhChWcVjAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gqjq79mw/4zmqzEt30bPwtmiandhnYANne8ZS2iLFZPlCW9cFQkYZRH74wtdnVNOGXExZsCeMUpVpX+5QuU/5bAlToE3W/EOP4fJORcXooUFrqvHQdxoFwjQoMsUiJS+QFyfPcdFYKt8CpD/LALYvAiQvZcr+6muEswZZPW6tPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b82S3VTg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WmKSMbe5mi4xTo1QOlfGshnZ46vrCTaztHihXGJAxH5ItP8fSj2rQfv1Q5cSkkeYihXFdwnutbz4W0Ynz+p81AcSGBxToM20mOF7Pxo6qfN8dl3ViZXqAvQ8/Z9SY4mWTmtX3mpsSbgCoTXXrAolAV6PuMJsKe8OO5+lVnDwAzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpbOC0R1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b82S3VTg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0F6C2BBFC;
-	Mon, 27 May 2024 19:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpbOC0R1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385DAC2BBFC;
+	Mon, 27 May 2024 19:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837488;
-	bh=jBd7MlCeFRsPxH1nPnYK2tBTtabE6cVJmF+Lgi9F4OU=;
+	s=korg; t=1716837490;
+	bh=1NVt+IzFEY6m2Ro7y7DswQpm1uWnT2U4GRhChWcVjAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b82S3VTg7Vo33l1bYyAwbGj1aohvl5aFCfXaIxwuSIvHWfjAyu2ujXNILHkZ/DPBd
-	 3MtzWeJU1++3cAiTa+/Ojrwqk86rBoraDYoBAbuSZRIAtRay61294bEmbXPRa2ReEt
-	 pruasCOIk+U1d4iG6dg/tbyydXOTRkIhvkCO4OF4=
+	b=IpbOC0R19+AMoaU8f/YZ1Zi0yCm80iT1cp7gJ27dFqVxSifp9eyE9oHP7aJLGhMNY
+	 i+79FZKq4IvG2ms38dznFYSlV6cFURD5dkEqRWx82/Mwcv6YN7afmm2fIswx67Kdnn
+	 y3DOwlI+bKKrgaM8DG/QeXqSsbgy/ED4fVgKrsEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.8 003/493] selftests/ftrace: Fix BTFARG testcase to check fprobe is enabled correctly
-Date: Mon, 27 May 2024 20:50:05 +0200
-Message-ID: <20240527185626.882185105@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.8 030/493] fs/ntfs3: Fix case when index is reused during tree transformation
+Date: Mon, 27 May 2024 20:50:32 +0200
+Message-ID: <20240527185629.358400887@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -50,34 +49,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 2fd3ef1b9265eda7f53b9506f1ebfb67eb6435a2 upstream.
+commit 05afeeebcac850a016ec4fb1f681ceda11963562 upstream.
 
-Since the dynevent/add_remove_btfarg.tc test case forgets to ensure that
-fprobe is enabled for some structure field access tests which uses the
-fprobe, it fails if CONFIG_FPROBE=n or CONFIG_FPROBE_EVENTS=n.
-Fixes it to ensure the fprobe events are supported.
+In most cases when adding a cluster to the directory index,
+they are placed at the end, and in the bitmap, this cluster corresponds
+to the last bit. The new directory size is calculated as follows:
 
-Fixes: d892d3d3d885 ("selftests/ftrace: Add BTF fields access testcases")
+	data_size = (u64)(bit + 1) << indx->index_bits;
+
+In the case of reusing a non-final cluster from the index,
+data_size is calculated incorrectly, resulting in the directory size
+differing from the actual size.
+
+A check for cluster reuse has been added, and the size update is skipped.
+
+Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ftrace/test.d/dynevent/add_remove_btfarg.tc |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/index.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_btfarg.tc
-+++ b/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_btfarg.tc
-@@ -53,7 +53,7 @@ fi
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1533,6 +1533,11 @@ static int indx_add_allocate(struct ntfs
+ 		goto out1;
+ 	}
  
- echo > dynamic_events
++	if (data_size <= le64_to_cpu(alloc->nres.data_size)) {
++		/* Reuse index. */
++		goto out;
++	}
++
+ 	/* Increase allocation. */
+ 	err = attr_set_size(ni, ATTR_ALLOC, in->name, in->name_len,
+ 			    &indx->alloc_run, data_size, &data_size, true,
+@@ -1546,6 +1551,7 @@ static int indx_add_allocate(struct ntfs
+ 	if (in->name == I30_NAME)
+ 		i_size_write(&ni->vfs_inode, data_size);
  
--if [ "$FIELDS" ] ; then
-+if [ "$FIELDS" -a "$FPROBES" ] ; then
- echo "t:tpevent ${TP2} obj_size=s->object_size" >> dynamic_events
- echo "f:fpevent ${TP3}%return path=\$retval->name:string" >> dynamic_events
- echo "t:tpevent2 ${TP4} p->se.group_node.next->prev" >> dynamic_events
++out:
+ 	*vbn = bit << indx->idx2vbn_bits;
+ 
+ 	return 0;
 
 
