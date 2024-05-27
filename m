@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB73262BE;
-	Mon, 27 May 2024 19:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6314B17727;
+	Mon, 27 May 2024 19:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838517; cv=none; b=bNm00vALqA/4/sP1VDkLQe8f+7MSpmbzECe1tVQaiOLyg646lWa4tueW/ojoxRV2P5SmomSzIzC/oIC6HjvG0JKo0Ek99tkdA665OnaExqHOBvJbiql4PGG8H3K7NyeMec1RZi0z1G/VrLxLs+1lm4ZD+25hFHO8DeV6j6oyDSQ=
+	t=1716838519; cv=none; b=bL7zTwqSAGPP7yYw7rOQ5kWKkE0+6EJTM13NXI5CKdZiQfV76O3RAXgEmAhGflKw+1yXo9Xlq4xIQWnTNsqsptn/cx5KchQIuytBv0pzuO8hU9wwF8d4LBGxl0YQ77k0gQcRjqj/gOtK5LSJ5BRvyUx8uB2NI5dCszCfRP12zkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838517; c=relaxed/simple;
-	bh=OAeQbCFK3AOq37dwitME1o3GruZTLcg62NVUjxT1dHs=;
+	s=arc-20240116; t=1716838519; c=relaxed/simple;
+	bh=1W5lGN8EhE0DMGa9WmRadiLy+xBCAwRFhe6XmkrVrJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fsvxfHl8W+5V/XZh6GNUIovZgpG+XiV+r5J9OiJAlNPc0ZuweWitUId6VSxtEP2jxtRNY5KlTqbwYKVHOMYChLUrDuCXiHeUfTJQ/pvJ7+CY6NXghn3v1nQjZz81o2AXsD0dB4Z2n+fx+ElNPDeuAj71PLL7MxaMIS9OREGmQZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQz6tCYh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HM+LNFcFzBjznvXSzntqUgm0N06Ow8QwFemV3RlsAoZFq0UGZSbZ+X+SCSP9sJjH5m7sL43pQZm36Fz84Lq3eBndMpRTLGUHcEnPqOicSdHSgrPOpk+dTdd7cREsMCbKFQHVfnsEE6qH6qGWuCQw0I3so2NYSuXNmzoO81tc37I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hzw3DRkU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQz6tCYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B85EC2BBFC;
-	Mon, 27 May 2024 19:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hzw3DRkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CACC2BBFC;
+	Mon, 27 May 2024 19:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838516;
-	bh=OAeQbCFK3AOq37dwitME1o3GruZTLcg62NVUjxT1dHs=;
+	s=korg; t=1716838519;
+	bh=1W5lGN8EhE0DMGa9WmRadiLy+xBCAwRFhe6XmkrVrJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQz6tCYhaEGE7hkno/M3pH4xdoCAZTbmhZCb2dRhrUfmLt3WfYDGek3ViWgH29tMB
-	 SvFdSQZ2o87A/5zaVe80WcB4plh6adeQQZXSw9lnSsb/jdUj7xEmK2Vmdo38GTSF6h
-	 0uoCRB1fhT0rXHbGqsuVVsBZDPVasWK7gbbXyDd8=
+	b=Hzw3DRkUj4Buv/GQ7oHiDzk+76Xk2GU0qLTeIsKUVWB2OeqQKYn1TIY7/kjjjjsZc
+	 2EMZ8HWoltzzvideNUgCHw0ZKwEV/OnsMxlMY0h/s75bP/qIuO0jpzDgBP1gN3Mr45
+	 gqHnGTgChaprXRFj4qB8KtHSWGEOQ/TCjyalZBFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Or Har-Toov <ohartoov@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 422/493] RDMA/mlx5: Change check for cacheable mkeys
-Date: Mon, 27 May 2024 20:57:04 +0200
-Message-ID: <20240527185644.103659157@linuxfoundation.org>
+Subject: [PATCH 6.8 423/493] RDMA/mlx5: Adding remote atomic access flag to updatable flags
+Date: Mon, 27 May 2024 20:57:05 +0200
+Message-ID: <20240527185644.130771845@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,99 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit 8c1185fef68cc603b954fece2a434c9f851d6a86 ]
+[ Upstream commit 2ca7e93bc963d9ec2f5c24d117176851454967af ]
 
-umem can be NULL for user application mkeys in some cases. Therefore
-umem can't be used for checking if the mkey is cacheable and it is
-changed for checking a flag that indicates it. Also make sure that
-all mkeys which are not returned to the cache will be destroyed.
+Currently IB_ACCESS_REMOTE_ATOMIC is blocked from being updated via UMR
+although in some cases it should be possible. These cases are checked in
+mlx5r_umr_can_reconfig function.
 
-Fixes: dd1b913fb0d0 ("RDMA/mlx5: Cache all user cacheable mkeys on dereg MR flow")
+Fixes: ef3642c4f54d ("RDMA/mlx5: Fix error unwinds for rereg_mr")
 Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Link: https://lore.kernel.org/r/2690bc5c6896bcb937f89af16a1ff0343a7ab3d0.1712140377.git.leon@kernel.org
+Link: https://lore.kernel.org/r/24dac73e2fa48cb806f33a932d97f3e402a5ea2c.1712140377.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/mlx5_ib.h |  1 +
- drivers/infiniband/hw/mlx5/mr.c      | 32 +++++++++++++++++++---------
- 2 files changed, 23 insertions(+), 10 deletions(-)
+ drivers/infiniband/hw/mlx5/mr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-index 989968ba74153..79ebafecca22a 100644
---- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
-+++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-@@ -646,6 +646,7 @@ struct mlx5_ib_mkey {
- 	/* Cacheable user Mkey must hold either a rb_key or a cache_ent. */
- 	struct mlx5r_cache_rb_key rb_key;
- 	struct mlx5_cache_ent *cache_ent;
-+	u8 cacheable : 1;
- };
- 
- #define MLX5_IB_MTT_PRESENT (MLX5_IB_MTT_READ | MLX5_IB_MTT_WRITE)
 diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index a8ee2ca1f4a17..7f7b1f59b5f05 100644
+index 7f7b1f59b5f05..ecc111ed5d86e 100644
 --- a/drivers/infiniband/hw/mlx5/mr.c
 +++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -1158,6 +1158,7 @@ static struct mlx5_ib_mr *alloc_cacheable_mr(struct ib_pd *pd,
- 		if (IS_ERR(mr))
- 			return mr;
- 		mr->mmkey.rb_key = rb_key;
-+		mr->mmkey.cacheable = true;
- 		return mr;
- 	}
+@@ -1572,7 +1572,8 @@ static bool can_use_umr_rereg_access(struct mlx5_ib_dev *dev,
+ 	unsigned int diffs = current_access_flags ^ target_access_flags;
  
-@@ -1168,6 +1169,7 @@ static struct mlx5_ib_mr *alloc_cacheable_mr(struct ib_pd *pd,
- 	mr->ibmr.pd = pd;
- 	mr->umem = umem;
- 	mr->page_shift = order_base_2(page_size);
-+	mr->mmkey.cacheable = true;
- 	set_mr_fields(dev, mr, umem->length, access_flags, iova);
- 
- 	return mr;
-@@ -1835,6 +1837,23 @@ static int cache_ent_find_and_store(struct mlx5_ib_dev *dev,
- 	return ret;
- }
- 
-+static int mlx5_revoke_mr(struct mlx5_ib_mr *mr)
-+{
-+	struct mlx5_ib_dev *dev = to_mdev(mr->ibmr.device);
-+	struct mlx5_cache_ent *ent = mr->mmkey.cache_ent;
-+
-+	if (mr->mmkey.cacheable && !mlx5r_umr_revoke_mr(mr) && !cache_ent_find_and_store(dev, mr))
-+		return 0;
-+
-+	if (ent) {
-+		spin_lock_irq(&ent->mkeys_queue.lock);
-+		ent->in_use--;
-+		mr->mmkey.cache_ent = NULL;
-+		spin_unlock_irq(&ent->mkeys_queue.lock);
-+	}
-+	return destroy_mkey(dev, mr);
-+}
-+
- int mlx5_ib_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
- {
- 	struct mlx5_ib_mr *mr = to_mmr(ibmr);
-@@ -1880,16 +1899,9 @@ int mlx5_ib_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
- 	}
- 
- 	/* Stop DMA */
--	if (mr->umem && mlx5r_umr_can_load_pas(dev, mr->umem->length))
--		if (mlx5r_umr_revoke_mr(mr) ||
--		    cache_ent_find_and_store(dev, mr))
--			mr->mmkey.cache_ent = NULL;
--
--	if (!mr->mmkey.cache_ent) {
--		rc = destroy_mkey(to_mdev(mr->ibmr.device), mr);
--		if (rc)
--			return rc;
--	}
-+	rc = mlx5_revoke_mr(mr);
-+	if (rc)
-+		return rc;
- 
- 	if (mr->umem) {
- 		bool is_odp = is_odp_mr(mr);
+ 	if (diffs & ~(IB_ACCESS_LOCAL_WRITE | IB_ACCESS_REMOTE_WRITE |
+-		      IB_ACCESS_REMOTE_READ | IB_ACCESS_RELAXED_ORDERING))
++		      IB_ACCESS_REMOTE_READ | IB_ACCESS_RELAXED_ORDERING |
++		      IB_ACCESS_REMOTE_ATOMIC))
+ 		return false;
+ 	return mlx5r_umr_can_reconfig(dev, current_access_flags,
+ 				      target_access_flags);
 -- 
 2.43.0
 
