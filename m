@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EDB17E8F5;
-	Mon, 27 May 2024 19:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C64C26ACA;
+	Mon, 27 May 2024 19:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836403; cv=none; b=cpUXOW4wYGsZyyZXqseFbd+lm6XzwVGbzfaxZvQXrTWRikCb2QB77JHGhw0kTpEgnqsdg4s92bjX6fKE3KeilP0uOHDX2xSnwkKxzC9moh8hDtjyEKhaHimY2xRuabRdcJ29DVHJ7j5K73btd+K4H1dys76H1twftw9RcDERpIQ=
+	t=1716836406; cv=none; b=Ou2pNfV6zOoRAg52N6kzvfaFNmEtf3hZEI2a1lQ7AOMjnjQ62k7Ha/HXH4jb4MBK+iXPtROjfGfkCw5eX8WEq9KBR17lo0R5AHgnIvPDDBY8QVwqybItSFt9YvaD6Cyze91ECMJWJeo5YAQ+t8eqC7fODtlVd8Obh4dj3N0wx+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836403; c=relaxed/simple;
-	bh=lJHyrgezMFoNID80NhIdK7Vspcb0jsUBhaWSGmJOrW0=;
+	s=arc-20240116; t=1716836406; c=relaxed/simple;
+	bh=5W/fCRXQe8HyRZ2C3UAoOACfbDeqAm3cPJueZYJD3wU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BAZmYk++cfXrcnboiE/lUmW/gOw17h8ME4kn15jdzU+Y+h+hz28/hhQ1+uSn6TKitiD9in7OK5DsopOE+2aH3oXE5XwEklJIPznb1C1trOF4UCECGYoxMN8631ELzMC6q3nr4kAoMnujJDaHsArBGjvWCc81A5ZzRX0pbnUItTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLGTW0QV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mAkeTXVKH5MrAo/JRuv2RKIDb4RrDyyLQFLZ59n2MoAp3D9+lrXG23WlmkS4K3MOUxWlRLbYqxicVuATGc8W6XFV8+degwDbLoPrfvfXvLrWUWWm6qmTZt385YsQuWUuvjSxwLBLSFIlYTEfhFDlA9Xfkok+kSRC3+l60S4GxOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fu62ES6A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLGTW0QV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CAAC2BBFC;
-	Mon, 27 May 2024 19:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fu62ES6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0035BC2BBFC;
+	Mon, 27 May 2024 19:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836403;
-	bh=lJHyrgezMFoNID80NhIdK7Vspcb0jsUBhaWSGmJOrW0=;
+	s=korg; t=1716836406;
+	bh=5W/fCRXQe8HyRZ2C3UAoOACfbDeqAm3cPJueZYJD3wU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLGTW0QVBItL54fRdBHWpnfmevTZfB/YGYf9G9Gg7cNSq61oecZ71t1dGAzFS8gBm
-	 7eld+qU04GAbxQqlWHDQRhz+36P43XgX5+zAT18PuSQqC/pHc7vu1czsYK4fw2IE6q
-	 CXAtjcAaF4HivbpAGR9tCUO+nR7rX04k7NfFnpME=
+	b=Fu62ES6ALczZu5VbFJlkQrD7Fj/CIrP5j8CiMFCr1jee9XVGL6MfJNakv7JCdVbp9
+	 VIaynqb00rIBi6SPK1WxCJif1lz0VW+taE6F113FGgAAXBGfPH1RTfdu8IdymtgBMS
+	 HCwkE9trCwJKH7d7YXoIFrlvZXjVaKO/J1TL88yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+43120c2af6ca2938cc38@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.9 039/427] ALSA: timer: Set lower bound of start tick time
-Date: Mon, 27 May 2024 20:51:26 +0200
-Message-ID: <20240527185605.328089202@linuxfoundation.org>
+	mhiramat@kernel.org,
+	mark.rutland@arm.com,
+	mathieu.desnoyers@efficios.com,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>
+Subject: [PATCH 6.9 004/427] ftrace: Fix possible use-after-free issue in ftrace_location()
+Date: Mon, 27 May 2024 20:50:51 +0200
+Message-ID: <20240527185602.156674328@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -50,47 +53,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 4a63bd179fa8d3fcc44a0d9d71d941ddd62f0c4e upstream.
+commit e60b613df8b6253def41215402f72986fee3fc8d upstream.
 
-Currently ALSA timer doesn't have the lower limit of the start tick
-time, and it allows a very small size, e.g. 1 tick with 1ns resolution
-for hrtimer.  Such a situation may lead to an unexpected RCU stall,
-where  the callback repeatedly queuing the expire update, as reported
-by fuzzer.
+KASAN reports a bug:
 
-This patch introduces a sanity check of the timer start tick time, so
-that the system returns an error when a too small start size is set.
-As of this patch, the lower limit is hard-coded to 100us, which is
-small enough but can still work somehow.
+  BUG: KASAN: use-after-free in ftrace_location+0x90/0x120
+  Read of size 8 at addr ffff888141d40010 by task insmod/424
+  CPU: 8 PID: 424 Comm: insmod Tainted: G        W          6.9.0-rc2+
+  [...]
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x68/0xa0
+   print_report+0xcf/0x610
+   kasan_report+0xb5/0xe0
+   ftrace_location+0x90/0x120
+   register_kprobe+0x14b/0xa40
+   kprobe_init+0x2d/0xff0 [kprobe_example]
+   do_one_initcall+0x8f/0x2d0
+   do_init_module+0x13a/0x3c0
+   load_module+0x3082/0x33d0
+   init_module_from_file+0xd2/0x130
+   __x64_sys_finit_module+0x306/0x440
+   do_syscall_64+0x68/0x140
+   entry_SYSCALL_64_after_hwframe+0x71/0x79
 
-Reported-by: syzbot+43120c2af6ca2938cc38@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/000000000000fa00a1061740ab6d@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240514182745.4015-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The root cause is that, in lookup_rec(), ftrace record of some address
+is being searched in ftrace pages of some module, but those ftrace pages
+at the same time is being freed in ftrace_release_mod() as the
+corresponding module is being deleted:
+
+           CPU1                       |      CPU2
+  register_kprobes() {                | delete_module() {
+    check_kprobe_address_safe() {     |
+      arch_check_ftrace_location() {  |
+        ftrace_location() {           |
+          lookup_rec() // USE!        |   ftrace_release_mod() // Free!
+
+To fix this issue:
+  1. Hold rcu lock as accessing ftrace pages in ftrace_location_range();
+  2. Use ftrace_location_range() instead of lookup_rec() in
+     ftrace_location();
+  3. Call synchronize_rcu() before freeing any ftrace pages both in
+     ftrace_process_locs()/ftrace_release_mod()/ftrace_free_mem().
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240509192859.1273558-1-zhengyejian1@huawei.com
+
+Cc: stable@vger.kernel.org
+Cc: <mhiramat@kernel.org>
+Cc: <mark.rutland@arm.com>
+Cc: <mathieu.desnoyers@efficios.com>
+Fixes: ae6aa16fdc16 ("kprobes: introduce ftrace based optimization")
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/timer.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/trace/ftrace.c |   39 +++++++++++++++++++++++----------------
+ 1 file changed, 23 insertions(+), 16 deletions(-)
 
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -544,6 +544,14 @@ static int snd_timer_start1(struct snd_t
- 			     SNDRV_TIMER_IFLG_START))
- 		return -EBUSY;
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1595,12 +1595,15 @@ static struct dyn_ftrace *lookup_rec(uns
+ unsigned long ftrace_location_range(unsigned long start, unsigned long end)
+ {
+ 	struct dyn_ftrace *rec;
++	unsigned long ip = 0;
  
-+	/* check the actual time for the start tick;
-+	 * bail out as error if it's way too low (< 100us)
-+	 */
-+	if (start) {
-+		if ((u64)snd_timer_hw_resolution(timer) * ticks < 100000)
-+			return -EINVAL;
++	rcu_read_lock();
+ 	rec = lookup_rec(start, end);
+ 	if (rec)
+-		return rec->ip;
++		ip = rec->ip;
++	rcu_read_unlock();
+ 
+-	return 0;
++	return ip;
+ }
+ 
+ /**
+@@ -1614,25 +1617,22 @@ unsigned long ftrace_location_range(unsi
+  */
+ unsigned long ftrace_location(unsigned long ip)
+ {
+-	struct dyn_ftrace *rec;
++	unsigned long loc;
+ 	unsigned long offset;
+ 	unsigned long size;
+ 
+-	rec = lookup_rec(ip, ip);
+-	if (!rec) {
++	loc = ftrace_location_range(ip, ip);
++	if (!loc) {
+ 		if (!kallsyms_lookup_size_offset(ip, &size, &offset))
+ 			goto out;
+ 
+ 		/* map sym+0 to __fentry__ */
+ 		if (!offset)
+-			rec = lookup_rec(ip, ip + size - 1);
++			loc = ftrace_location_range(ip, ip + size - 1);
+ 	}
+ 
+-	if (rec)
+-		return rec->ip;
+-
+ out:
+-	return 0;
++	return loc;
+ }
+ 
+ /**
+@@ -6596,6 +6596,8 @@ static int ftrace_process_locs(struct mo
+ 	/* We should have used all pages unless we skipped some */
+ 	if (pg_unuse) {
+ 		WARN_ON(!skipped);
++		/* Need to synchronize with ftrace_location_range() */
++		synchronize_rcu();
+ 		ftrace_free_pages(pg_unuse);
+ 	}
+ 	return ret;
+@@ -6809,6 +6811,9 @@ void ftrace_release_mod(struct module *m
+  out_unlock:
+ 	mutex_unlock(&ftrace_lock);
+ 
++	/* Need to synchronize with ftrace_location_range() */
++	if (tmp_page)
++		synchronize_rcu();
+ 	for (pg = tmp_page; pg; pg = tmp_page) {
+ 
+ 		/* Needs to be called outside of ftrace_lock */
+@@ -7142,6 +7147,7 @@ void ftrace_free_mem(struct module *mod,
+ 	unsigned long start = (unsigned long)(start_ptr);
+ 	unsigned long end = (unsigned long)(end_ptr);
+ 	struct ftrace_page **last_pg = &ftrace_pages_start;
++	struct ftrace_page *tmp_page = NULL;
+ 	struct ftrace_page *pg;
+ 	struct dyn_ftrace *rec;
+ 	struct dyn_ftrace key;
+@@ -7183,12 +7189,8 @@ void ftrace_free_mem(struct module *mod,
+ 		ftrace_update_tot_cnt--;
+ 		if (!pg->index) {
+ 			*last_pg = pg->next;
+-			if (pg->records) {
+-				free_pages((unsigned long)pg->records, pg->order);
+-				ftrace_number_of_pages -= 1 << pg->order;
+-			}
+-			ftrace_number_of_groups--;
+-			kfree(pg);
++			pg->next = tmp_page;
++			tmp_page = pg;
+ 			pg = container_of(last_pg, struct ftrace_page, next);
+ 			if (!(*last_pg))
+ 				ftrace_pages = pg;
+@@ -7205,6 +7207,11 @@ void ftrace_free_mem(struct module *mod,
+ 		clear_func_from_hashes(func);
+ 		kfree(func);
+ 	}
++	/* Need to synchronize with ftrace_location_range() */
++	if (tmp_page) {
++		synchronize_rcu();
++		ftrace_free_pages(tmp_page);
 +	}
-+
- 	if (start)
- 		timeri->ticks = timeri->cticks = ticks;
- 	else if (!timeri->cticks)
+ }
+ 
+ void __init ftrace_free_init_mem(void)
 
 
