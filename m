@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17912168C4;
-	Mon, 27 May 2024 19:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE67168C4;
+	Mon, 27 May 2024 19:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837501; cv=none; b=cmIDfNz0OY5EtGYubruZHqvuqkIiaFblDksUtJm7ZnKHzfKryTXduNVHEzTktZ6R5FGBlo5mVpk/hogMla3XoOLRyBlXxu8+NSL7TkxC9k4brZE9qeGzkDcXYeNdkCQkctkL0rRiQr8TjQFGIkaeKz9EDp8cVbN/QnJQzKrNaOY=
+	t=1716837503; cv=none; b=ddn47Wj8TPW+mpdIzWIhdikj3RTXH2fLmS4AephkYbcRpyPioBIqZ75qb8W4HnmQPcUnrR0HUxtuMPDBQ3zetTn5txQl5vIJCM27SO/granG6IW/AtjEOMqqt4gQhRotlcr+otT6N1BKLwozZZffUpS0ejnMtCuKRtrlpV82ESM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837501; c=relaxed/simple;
-	bh=P8HEcHgVlQyot1oyKLDmqfWyErb5O57HTIXCFl2JITY=;
+	s=arc-20240116; t=1716837503; c=relaxed/simple;
+	bh=4zjYosT/g84sdt2F36+j2Irz7CLaFIhKQm2sjW1vGwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxixzHo6wtEv3Polhc19Yc7Y2hH8olxzhsi1NhMWgbW1DHjdD88kr014BHKNqin+GxP4MhhW0q9glhZKl4/rktvHikjps+72Cq5syiEWa87Puvcb1d3y8P9fqPtSErV/ykPUnrf+Xq7pUY7DplBEhGoT+YAZgHj4Lurl+NW/4vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9Hx7m/m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rkfYuTryISIfh82hMyRQPc/kucq/i5TjkeBPrwRoBByRBxjrAXzzkvs/cfM236+VASfA7H1NiEZ5ta8mt1FOAWCOkERzZze7aJqsm0yCumNcFXZuTO/I4dV/N5CV9qoErqUAk0Q8YeE8mbB+0Xe3pNCGwLE4NCuaP7KYf2NA8iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FvvdMXJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9Hx7m/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A556BC2BBFC;
-	Mon, 27 May 2024 19:18:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FvvdMXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2E6C32781;
+	Mon, 27 May 2024 19:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837501;
-	bh=P8HEcHgVlQyot1oyKLDmqfWyErb5O57HTIXCFl2JITY=;
+	s=korg; t=1716837503;
+	bh=4zjYosT/g84sdt2F36+j2Irz7CLaFIhKQm2sjW1vGwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9Hx7m/mxsRGfIXzFpTV3DhRfwiNRcmbHSCgW2hvCiLvb6Lg72quUBuYndmkxCGN1
-	 kpkpUs3uVBiF/B/OY+Xxg1qVn09byXd1fVz3IsCUXZ9rPrs1OvJLqzd55bmgXrkwcS
-	 JPlovo//g1/SURDcNL4JE94Yx5rL/3+DMeT/NIwU=
+	b=2FvvdMXJSG738tkS8NIOYX/i5atnh+UBCL5/pWHHsur0xHoc2IT2iRXQ57oythPiy
+	 536zTQbiA6P8rJpNXq5ApzX7a7J0jki2JEQ7hKiqrRs7bBQkdPAG0n60GDmZyOt0pq
+	 akXJZ0Ul5OaoPFf/m/Ue2mxQCbLVcg5VnCiQrc/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Chi <andy.chi@canonical.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.8 034/493] ALSA: hda/realtek: fix mute/micmute LEDs dont work for ProBook 440/460 G11.
-Date: Mon, 27 May 2024 20:50:36 +0200
-Message-ID: <20240527185629.636982383@linuxfoundation.org>
+Subject: [PATCH 6.8 035/493] ALSA: core: Fix NULL module pointer assignment at card init
+Date: Mon, 27 May 2024 20:50:37 +0200
+Message-ID: <20240527185629.718269735@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -50,35 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Chi <andy.chi@canonical.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit b3b6f125da2773cbc681316842afba63ca9869aa upstream.
+commit 39381fe7394e5eafac76e7e9367e7351138a29c1 upstream.
 
-HP ProBook 440/460 G11 needs ALC236_FIXUP_HP_GPIO_LED quirk to
-make mic-mute/audio-mute working.
+The commit 81033c6b584b ("ALSA: core: Warn on empty module")
+introduced a WARN_ON() for a NULL module pointer passed at snd_card
+object creation, and it also wraps the code around it with '#ifdef
+MODULE'.  This works in most cases, but the devils are always in
+details.  "MODULE" is defined when the target code (i.e. the sound
+core) is built as a module; but this doesn't mean that the caller is
+also built-in or not.  Namely, when only the sound core is built-in
+(CONFIG_SND=y) while the driver is a module (CONFIG_SND_USB_AUDIO=m),
+the passed module pointer is ignored even if it's non-NULL, and
+card->module remains as NULL.  This would result in the missing module
+reference up/down at the device open/close, leading to a race with the
+code execution after the module removal.
 
-Signed-off-by: Andy Chi <andy.chi@canonical.com>
+For addressing the bug, move the assignment of card->module again out
+of ifdef.  The WARN_ON() is still wrapped with ifdef because the
+module can be really NULL when all sound drivers are built-in.
+
+Note that we keep 'ifdef MODULE' for WARN_ON(), otherwise it would
+lead to a false-positive NULL module check.  Admittedly it won't catch
+perfectly, i.e. no check is performed when CONFIG_SND=y.  But, it's no
+real problem as it's only for debugging, and the condition is pretty
+rare.
+
+Fixes: 81033c6b584b ("ALSA: core: Warn on empty module")
+Reported-by: Xu Yang <xu.yang_2@nxp.com>
+Closes: https://lore.kernel.org/r/20240520170349.2417900-1-xu.yang_2@nxp.com
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240523061832.607500-1-andy.chi@canonical.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Tested-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20240522070442.17786-1-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/core/init.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10089,8 +10089,11 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8c70, "HP EliteBook 835 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c71, "HP EliteBook 845 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c72, "HP EliteBook 865 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8c89, "HP ProBook 460 G11", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c8a, "HP EliteBook 630", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c8c, "HP EliteBook 660", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8c8d, "HP ProBook 440 G11", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8c8e, "HP ProBook 460 G11", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c90, "HP EliteBook 640", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c91, "HP EliteBook 660", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c96, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -312,8 +312,8 @@ static int snd_card_init(struct snd_card
+ 	card->number = idx;
+ #ifdef MODULE
+ 	WARN_ON(!module);
+-	card->module = module;
+ #endif
++	card->module = module;
+ 	INIT_LIST_HEAD(&card->devices);
+ 	init_rwsem(&card->controls_rwsem);
+ 	rwlock_init(&card->ctl_files_rwlock);
 
 
