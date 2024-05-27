@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FC017E90E;
-	Mon, 27 May 2024 19:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE0717E90E;
+	Mon, 27 May 2024 19:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837109; cv=none; b=Ai5La0SkykQgsDWSq8f4le3BhuP9zyB4bxnfKXdqDD8AhmqDZFpfV6QSSyT+ZiJuHCj4cpt88XStr43UVHY27J/wesuP0Zstkg2q13EzXBDlARP3d8e1BPu7dxyFmM3X6+EIxMRFdHd6kf6YQR/Gl5BZMd93hY9zg2iCI8hrmmw=
+	t=1716837112; cv=none; b=u0IzUVqFvuX5KW4fPVfL2FSmg5VRC498K53Vo9R04YWBNJ3HwnxjcNH8XSpbowGGqpu9b/qqBYwxM+Yr8ZTeHGquizN+uu+PJQ9liT6YV4iNNt3h9Xto5meGq2+3E+CF9jg4hUEh/NJMdGwF5ZBE8SBX6SGiZEWlvGFik5lZT/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837109; c=relaxed/simple;
-	bh=mCBJ2vCj8Qi2Nm2Q3b3y+e4qszUK6MMXrtTjcCO2QAM=;
+	s=arc-20240116; t=1716837112; c=relaxed/simple;
+	bh=+fmCdDRRtwi2OVWXN5GNtva2gAZ9s8gsrB1j/GIzkg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uyJwRbNoln4KrHJAGKetl8mWB6VmRvzsTPdYiP6Fqq/37z1W8kyrcfuMqrdUETTpKyrV28ozQ6651UqPlDj0MYuVwf0SV+VsUaxDgIE/hN4Q0wRTLaM1newbcdpzCyLI1j5FgG/W2sL0ZMaNnHkOo8J1JPi48qJKpBIpGT/mz6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edR0U80+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DFweLaT/YPrqMEUDvkLgKAzA5jSMP4AI9ZNuInICHiQNsrGz0VrAUOP+AjSfm6hnq3WQ7LCdjg+Sox+nLikhALduiLolG0ZZQiQw0Lm7B8YVv9zoag9c4LiM9Z7wJD8Ca12suoOGRDPQIYsuQE6JWKUZvR1u7PJoumSi/k9R0Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjnnxzLC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edR0U80+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E5EC2BBFC;
-	Mon, 27 May 2024 19:11:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjnnxzLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F07C2BBFC;
+	Mon, 27 May 2024 19:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837109;
-	bh=mCBJ2vCj8Qi2Nm2Q3b3y+e4qszUK6MMXrtTjcCO2QAM=;
+	s=korg; t=1716837112;
+	bh=+fmCdDRRtwi2OVWXN5GNtva2gAZ9s8gsrB1j/GIzkg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=edR0U80+vEsycn+K1OAhUnMoPrTNsqfnMNeUrEjM0oJXZyZwR8nTT7/dpNlvpDYaF
-	 QNtsDAjcaWz8yrWlCMAgciu0ItXJabrCDg74sLhg3U6ynicwcUdG11ZNYDqTF3EG/e
-	 O7FLy1bh7RjQ5ehGg5U0w8nvH1keXaVP6+HAJuAc=
+	b=JjnnxzLCCSb6WCJe9bnrNBD5PfYa+b0b/Vl/0ZHiViveXTdrObwKTTYS13T9azDAr
+	 /K9OVDtP9GeD66UuD51JecY6JzAXj43kisCsbF4oMB3chEeh6LocNymMglJvBASH1d
+	 6St0PZvVH4njRdxSZVi1bDRQN608Gl4UDClkdG04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Burakov <a.burakov@rosalinux.ru>,
+	Changhuang Liang <changhuang.liang@starfivetech.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 312/427] media: ngene: Add dvb_ca_en50221_init return value check
-Date: Mon, 27 May 2024 20:55:59 +0200
-Message-ID: <20240527185631.012995343@linuxfoundation.org>
+Subject: [PATCH 6.9 313/427] staging: media: starfive: Remove links when unregistering devices
+Date: Mon, 27 May 2024 20:56:00 +0200
+Message-ID: <20240527185631.074146698@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,38 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Burakov <a.burakov@rosalinux.ru>
+From: Changhuang Liang <changhuang.liang@starfivetech.com>
 
-[ Upstream commit 9bb1fd7eddcab2d28cfc11eb20f1029154dac718 ]
+[ Upstream commit 810dd605e917c716f6f83e6cd8ea23d9155d32a2 ]
 
-The return value of dvb_ca_en50221_init() is not checked here that may
-cause undefined behavior in case of nonzero value return.
+Need to remove links when unregistering devices.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fixes: ac7da4a73b10 ("media: staging: media: starfive: camss: Register devices")
 
-Fixes: 25aee3debe04 ("[media] Rename media/dvb as media/pci")
-Signed-off-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
+Signed-off-by: Changhuang Liang <changhuang.liang@starfivetech.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/ngene/ngene-core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/staging/media/starfive/camss/stf-camss.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/pci/ngene/ngene-core.c b/drivers/media/pci/ngene/ngene-core.c
-index 7481f553f9595..24ec576dc3bff 100644
---- a/drivers/media/pci/ngene/ngene-core.c
-+++ b/drivers/media/pci/ngene/ngene-core.c
-@@ -1488,7 +1488,9 @@ static int init_channel(struct ngene_channel *chan)
- 	}
+diff --git a/drivers/staging/media/starfive/camss/stf-camss.c b/drivers/staging/media/starfive/camss/stf-camss.c
+index a587f860101ae..323aa70fdeaf1 100644
+--- a/drivers/staging/media/starfive/camss/stf-camss.c
++++ b/drivers/staging/media/starfive/camss/stf-camss.c
+@@ -162,6 +162,12 @@ static int stfcamss_register_devs(struct stfcamss *stfcamss)
  
- 	if (dev->ci.en && (io & NGENE_IO_TSOUT)) {
--		dvb_ca_en50221_init(adapter, dev->ci.en, 0, 1);
-+		ret = dvb_ca_en50221_init(adapter, dev->ci.en, 0, 1);
-+		if (ret != 0)
-+			goto err;
- 		set_transfer(chan, 1);
- 		chan->dev->channel[2].DataFormatFlags = DF_SWAP32;
- 		set_transfer(&chan->dev->channel[2], 1);
+ static void stfcamss_unregister_devs(struct stfcamss *stfcamss)
+ {
++	struct stf_capture *cap_yuv = &stfcamss->captures[STF_CAPTURE_YUV];
++	struct stf_isp_dev *isp_dev = &stfcamss->isp_dev;
++
++	media_entity_remove_links(&isp_dev->subdev.entity);
++	media_entity_remove_links(&cap_yuv->video.vdev.entity);
++
+ 	stf_isp_unregister(&stfcamss->isp_dev);
+ 	stf_capture_unregister(stfcamss);
+ }
 -- 
 2.43.0
 
