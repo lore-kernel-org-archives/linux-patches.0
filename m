@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA93017E90E;
-	Mon, 27 May 2024 19:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2224A17E90E;
+	Mon, 27 May 2024 19:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837212; cv=none; b=CEr4Vg0nbscUwISl56YLgwh7/kZVdX+wHUeqh464cxod+DNSktidhapZudbnsT2DQNZ4Ru+3HmWs25TLRM3XEUPnLHUMHOxKIzjYNRAOFJ+MlyYWZZfw6wqGQLKbgLF825vyYlODOmSoAfOx5gKvXW4AbBeSZaXLVDasrn8puF0=
+	t=1716837215; cv=none; b=SQ34BE+rKsWHZvIJBL8ptialKrSemtCnDs/Y6DeGi4mP5KFiVyHNSe6krLIs535luCkYbSeT5O452Y4zY3wMyq5rXX0CXCLWrvB/JO2fnktWZY4+cpQc0ulSdzZDq34vgc2tJqjwh4BU6tmpke8nCjF/3tbcG0XnsErkkKUVKPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837212; c=relaxed/simple;
-	bh=DV5kxkxTrpcK7qKygeU3eeeGCdw1JauFlQM2atrTx6Q=;
+	s=arc-20240116; t=1716837215; c=relaxed/simple;
+	bh=umYKObinYUHrICYhmQAIIVa7wE3teQYhlpgILj1eA8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LjVpiulGqxVLIbWuoxflVCY+8BBMT1ucOtwfZIJTEm72NBiMeXAp3aFpov/1VPU+2pX0fp92TlBmwfuosHjzjLCh2ltZNMDFvGw98mcfWgyX3/ajuHRnJA0+yjQtSr6e/mEyt7GG6xllgSWeiYvOT1J3zsY7x4+BSOJHNjGa8mE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1AfM+KYh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NE9rxsifK6KJcc3k/0h9eT6ZjfUomaBo9Q+G8x8Rezkpt0RMGr3TRN9WW/ejDMb5xNWLDgJ4K1/iit+lWZmbC40vbp8d26E/Q/q/1P7dvIrokU2hVCJONJx/NLZqaj1n3QRH0ZOzzBSX1j498YgFJQG7DWRootSgIJuT0za3BgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gspLKoa4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AfM+KYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F90EC2BBFC;
-	Mon, 27 May 2024 19:13:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gspLKoa4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7F4C2BBFC;
+	Mon, 27 May 2024 19:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837212;
-	bh=DV5kxkxTrpcK7qKygeU3eeeGCdw1JauFlQM2atrTx6Q=;
+	s=korg; t=1716837215;
+	bh=umYKObinYUHrICYhmQAIIVa7wE3teQYhlpgILj1eA8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AfM+KYhJlmDI+ZvBu66JaQ3Ln3V0cFDCxFS21vLA4pAjEERAP2wTKXl+tXdNnjbd
-	 dSEaSmHn+LZ8+k+3iR/dojn4zOyLm3JEhohyU2t07QsCxXlQkHXGS4IfgLaN4Injhg
-	 +qTklvh7mGr/H6UmaIAac4cicc47ShXnjmSzezNM=
+	b=gspLKoa4DzOJX0RvJgK8zx1ae/AWiXn3BY0IO895i79n83r5vmjYY0c3jrnZDmTQF
+	 zWzHN0+535oakIAUyO7F9MGTgtqxPFXDv23Dp2EIV3tPotlThyUQkVhwMPbcOg8k8P
+	 zGeSpoXP2U0qbyTY1BXCpfddAX5WL/ICe/Y1QKVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 352/427] clk: mediatek: pllfh: Dont log error for missing fhctl node
-Date: Mon, 27 May 2024 20:56:39 +0200
-Message-ID: <20240527185633.484189614@linuxfoundation.org>
+Subject: [PATCH 6.9 353/427] iommu: Undo pasid attachment only for the devices that have succeeded
+Date: Mon, 27 May 2024 20:56:40 +0200
+Message-ID: <20240527185633.537447296@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -46,54 +48,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Yi Liu <yi.l.liu@intel.com>
 
-[ Upstream commit bb7b3c8e7180f36de75cdea200ab7127f93f58cc ]
+[ Upstream commit b025dea63cded0d82bccd591fa105d39efc6435d ]
 
-Support for fhctl clocks in apmixedsys was introduced at a later point
-and to this moment only one mt6795 based platform has a fhctl DT node
-present. Therefore the fhctl support in apmixedsys should be seen as
-optional and not cause an error when it is missing.
+There is no error handling now in __iommu_set_group_pasid(), it relies on
+its caller to loop all the devices to undo the pasid attachment. This is
+not self-contained and has drawbacks. It would result in unnecessary
+remove_dev_pasid() calls on the devices that have not been attached to the
+new domain. But the remove_dev_pasid() callback would get the new domain
+from the group->pasid_array. So for such devices, the iommu driver won't
+find the attachment under the domain, hence unable to do cleanup. This may
+not be a real problem today. But it depends on the implementation of the
+underlying iommu driver. e.g. the intel iommu driver would warn for such
+devices. Such warnings are unnecessary.
 
-Change the message's log level to warning. The warning level is chosen
-so that it will still alert the fact that fhctl support might be
-unintentionally missing, but without implying that this is necessarily
-an issue.
+To solve the above problem, it is necessary to handle the error within
+__iommu_set_group_pasid(). It only loops the devices that have attached
+to the new domain, and undo it.
 
-Even if the FHCTL DT nodes are added to all current platforms moving
-forward, since those changes won't be backported, this ensures stable
-kernel releases won't have live with this error.
-
-Fixes: d7964de8a8ea ("clk: mediatek: Add new clock driver to handle FHCTL hardware")
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20240308-mtk-fhctl-no-node-error-v1-1-51e446eb149a@collabora.com
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 16603704559c ("iommu: Add attach/detach_dev_pasid iommu interfaces")
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20240328122958.83332-2-yi.l.liu@intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-pllfh.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/iommu.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-pllfh.c b/drivers/clk/mediatek/clk-pllfh.c
-index 3a2b3f90be25d..094ec8a26d668 100644
---- a/drivers/clk/mediatek/clk-pllfh.c
-+++ b/drivers/clk/mediatek/clk-pllfh.c
-@@ -68,7 +68,7 @@ void fhctl_parse_dt(const u8 *compatible_node, struct mtk_pllfh_data *pllfhs,
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index a95a483def2d2..659a77f7bb833 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -3317,15 +3317,26 @@ EXPORT_SYMBOL_GPL(iommu_group_dma_owner_claimed);
+ static int __iommu_set_group_pasid(struct iommu_domain *domain,
+ 				   struct iommu_group *group, ioasid_t pasid)
+ {
+-	struct group_device *device;
+-	int ret = 0;
++	struct group_device *device, *last_gdev;
++	int ret;
  
- 	node = of_find_compatible_node(NULL, NULL, compatible_node);
- 	if (!node) {
--		pr_err("cannot find \"%s\"\n", compatible_node);
-+		pr_warn("cannot find \"%s\"\n", compatible_node);
- 		return;
+ 	for_each_group_device(group, device) {
+ 		ret = domain->ops->set_dev_pasid(domain, device->dev, pasid);
+ 		if (ret)
+-			break;
++			goto err_revert;
  	}
  
++	return 0;
++
++err_revert:
++	last_gdev = device;
++	for_each_group_device(group, device) {
++		const struct iommu_ops *ops = dev_iommu_ops(device->dev);
++
++		if (device == last_gdev)
++			break;
++		ops->remove_dev_pasid(device->dev, pasid);
++	}
+ 	return ret;
+ }
+ 
+@@ -3383,10 +3394,8 @@ int iommu_attach_device_pasid(struct iommu_domain *domain,
+ 	}
+ 
+ 	ret = __iommu_set_group_pasid(domain, group, pasid);
+-	if (ret) {
+-		__iommu_remove_group_pasid(group, pasid);
++	if (ret)
+ 		xa_erase(&group->pasid_array, pasid);
+-	}
+ out_unlock:
+ 	mutex_unlock(&group->mutex);
+ 	return ret;
 -- 
 2.43.0
 
