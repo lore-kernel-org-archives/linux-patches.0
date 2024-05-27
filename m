@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94033168C4;
-	Mon, 27 May 2024 19:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18044155C81;
+	Mon, 27 May 2024 19:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837574; cv=none; b=rEO4Zccxdr0wBmSRvNhwZwYvFBzbO9OqmdDvpwTHRNtJ49XmI0aW2/lYPqByc5IHQqBdpLx7DBfL0pKWQZiiUgFuMemub8EcPnb1WNmi2Kv0uWL0lZ3uvr583CUVMXWDII1/nYXwI2YijkuVGBjaJTYr492TCC004PSkQx3xsSU=
+	t=1716837577; cv=none; b=At5BwqYN3WZRM2ePzM/a+bauEEz9YxCBWwGObK4JW4DgulykxSKVsOysTpwwyiAn4ihTpAsywCXcK85HEhmsny589FKz/HUs7JMWrIX9s2gbiGa0Z3k6slrb86tHttRG9YsFER5f0CByN4svA3jpyu9urKAu5xY0/yrygqABZl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837574; c=relaxed/simple;
-	bh=8aVOomUMFjH8eqJqRAuFo+h6DjxaOgBsGKwP8YKdo6E=;
+	s=arc-20240116; t=1716837577; c=relaxed/simple;
+	bh=D2DMctfSqDfVJjNPXg5D2g6KFA6YksbTFQttr7HU8bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptCppxxf1TL2ATRJUZY9NcD0gzdkYXQnbjNLCd+eqHK/QyMdPEW3A4BGIrJbL/zTDS5AZ3Nma02oUSJkjkhbXseEGC2cdsa9CuxF6JcJ+/YE04UU5DAw9dW+7/2DgbLpPK8skO7FFwZVy+JAIaKWCxh8RbxzUK/vJTZCA4Kp1/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQH8Dc2V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFSxstjbY9cqga68/1w8izk1+TEmwAaILoHsafWW897sNVM24qIDzBqb7Rr6/jw1fw4dvYjAQPR+0grY5Qypm0uscLcxU722pOXUpOOHitTt7+AsDaZRDWcIexekVwIbOkDfOcrRvdg+gtJNiEAod/i7F4NY4bOg27gxAGpW4ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KeCn0lUv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQH8Dc2V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFE6C2BBFC;
-	Mon, 27 May 2024 19:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KeCn0lUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A168CC2BBFC;
+	Mon, 27 May 2024 19:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837574;
-	bh=8aVOomUMFjH8eqJqRAuFo+h6DjxaOgBsGKwP8YKdo6E=;
+	s=korg; t=1716837577;
+	bh=D2DMctfSqDfVJjNPXg5D2g6KFA6YksbTFQttr7HU8bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQH8Dc2VSFpB24l248Uo2rWzER3DZCiK62jn4rCSA74LYtK14ePl83qq9pPAC4jL7
-	 aLU3LToZGKVVMkPMa/3O/ZlGhD9K6IMcWAuRm0IfQpHKyqttYAtCATi61vt7pbLgaR
-	 ND5qzhK4FPI4Oj3v7Aov06Ao60ZIgFyVjiw37xaM=
+	b=KeCn0lUvnRlGQdNcJuLkfg3T/h1P6G6+bGoL3Q9oiaIQNq97+dcUzxIMeVxbVDvHZ
+	 YfHdNVtWQ2UnP7jkri+yxt9ZWe1lSut4n5dJ8guHatVPIZhZ83wHegcp08B86f+ZKe
+	 WtSCFeaOLelAgis3Q7uMCkdDuZJYgaWQ/xxtEuzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 063/493] regulator: irq_helpers: duplicate IRQ name
-Date: Mon, 27 May 2024 20:51:05 +0200
-Message-ID: <20240527185631.649664150@linuxfoundation.org>
+Subject: [PATCH 6.8 064/493] ALSA: hda: cs35l56: Exit cache-only after cs35l56_wait_for_firmware_boot()
+Date: Mon, 27 May 2024 20:51:06 +0200
+Message-ID: <20240527185631.714965217@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,41 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 7ab681ddedd4b6dd2b047c74af95221c5f827e1d ]
+[ Upstream commit 73580ec607dfe125b140ed30c7c0a074db78c558 ]
 
-The regulator IRQ helper requires caller to provide pointer to IRQ name
-which is kept in memory by caller. All other data passed to the helper
-in the regulator_irq_desc structure is copied. This can cause some
-confusion and unnecessary complexity.
+Adds calls to disable regmap cache-only after a successful return from
+cs35l56_wait_for_firmware_boot().
 
-Make the regulator_irq_helper() to copy also the provided IRQ name
-information so caller can discard the name after the call to
-regulator_irq_helper() completes.
+This is to prepare for a change in the shared ASoC module that will
+leave regmap in cache-only mode after cs35l56_system_reset(). This is
+to prevent register accesses going to the hardware while it is
+rebooting.
 
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://msgid.link/r/ZhJMuUYwaZbBXFGP@drtxq0yyyyyyyyyyyyydy-3.rev.dnainternet.fi
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://msgid.link/r/20240408101803.43183-3-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/irq_helpers.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/cs35l56_hda.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/regulator/irq_helpers.c b/drivers/regulator/irq_helpers.c
-index fe7ae0f3f46af..5ab1a0befe12f 100644
---- a/drivers/regulator/irq_helpers.c
-+++ b/drivers/regulator/irq_helpers.c
-@@ -352,6 +352,9 @@ void *regulator_irq_helper(struct device *dev,
+diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
+index 43a445bd961fb..de58a953b48d2 100644
+--- a/sound/pci/hda/cs35l56_hda.c
++++ b/sound/pci/hda/cs35l56_hda.c
+@@ -629,6 +629,8 @@ static int cs35l56_hda_fw_load(struct cs35l56_hda *cs35l56)
+ 		ret = cs35l56_wait_for_firmware_boot(&cs35l56->base);
+ 		if (ret)
+ 			goto err_powered_up;
++
++		regcache_cache_only(cs35l56->base.regmap, false);
+ 	}
  
- 	h->irq = irq;
- 	h->desc = *d;
-+	h->desc.name = devm_kstrdup(dev, d->name, GFP_KERNEL);
-+	if (!h->desc.name)
-+		return ERR_PTR(-ENOMEM);
+ 	/* Disable auto-hibernate so that runtime_pm has control */
+@@ -978,6 +980,8 @@ int cs35l56_hda_common_probe(struct cs35l56_hda *cs35l56, int id)
+ 	if (ret)
+ 		goto err;
  
- 	ret = init_rdev_state(dev, h, rdev, common_errs, per_rdev_errs,
- 			      rdev_amount);
++	regcache_cache_only(cs35l56->base.regmap, false);
++
+ 	ret = cs35l56_set_patch(&cs35l56->base);
+ 	if (ret)
+ 		goto err;
 -- 
 2.43.0
 
