@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A6017E90E;
-	Mon, 27 May 2024 19:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4F217E90E;
+	Mon, 27 May 2024 19:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836788; cv=none; b=R/UystBTdPJP8t1Z+jo5n8boYzydxz5g+voN0ns2/pkvpYJPc9uQraUH1J3LUsJpzNTy1kEE8hNUBEs/+Pc/civdhP9Fg83pMxrauR5ZaTOfP1D8Ofc4k5Un+7AxBCtDrsaHRQjnRRNWWT7VhpgqteA3oo7XmpaS5f1riqyFak4=
+	t=1716836792; cv=none; b=ZmqWdb6DMHhYQY6pY1sHlRgHWYP6udED8TXaARxvn7qdR7KYmyPjadsTc+it2Bx1av+YaIAb/9wyqZ8GfKyxQHDG6rDjdbqEgnoxrU+2BUEySdvFi5AR0VToaQS3RtEkyuiZ30JRXWrTEEiibE53skFVls7skdBFizGWwMSHu8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836788; c=relaxed/simple;
-	bh=omJT04MiZWvgAmEshlQrvq32ORe6WKeLpHoz7HwXuOg=;
+	s=arc-20240116; t=1716836792; c=relaxed/simple;
+	bh=QW1IdSnZmRjHJp2NdxOK+xsEBNCzeLlVkAeg8Rf73lE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jEV+4ZOaMt4xg9cmEO+EldPeLItli1ZJ8QWVorwNKkv0Ig95Dwh9Iif6Qp5mA3kFQyYFqg35FMpnXwRYPif3WIja9gzG3W7kZCb1a9LjzuFuNLXX3atY5UdjZIdCaGUZFK31uK7Kwxdyez2jxFLoefeoVL/BxAnZFbKz+URi854=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m24eh1xB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GU44P9SK5eAbbtf/OYo360/wlswceAI5BOMa5p509fbdtZS9rrwPK/maQAlwuBOJ8eFaZ91I7CQKS+lfmjWmX/DNTrIRj3Fr1fXSlZ/2ELx6B20FWQ0BiuJhoRejgTSVSM9gJPYWsYOPGlKceNSa9Fcra6IX+m/eqxcRtWzE9RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfVTBvBl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m24eh1xB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B5AC2BBFC;
-	Mon, 27 May 2024 19:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfVTBvBl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6DFBC2BBFC;
+	Mon, 27 May 2024 19:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836788;
-	bh=omJT04MiZWvgAmEshlQrvq32ORe6WKeLpHoz7HwXuOg=;
+	s=korg; t=1716836791;
+	bh=QW1IdSnZmRjHJp2NdxOK+xsEBNCzeLlVkAeg8Rf73lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m24eh1xB1YNVy4sYbXRQSsc5yptjzE2ifj7HBlf7wRYTPuOqZyWMUK3R61zv72EDL
-	 xUN/65qW2yn840QLFMOFYo6zAwsPr0O3lCineedeq2Fkx9mj5ebVsXSnshaJAwYSpw
-	 GenI+OgX9m3cHS1rPce1R0TT+vjR40BC2AxWRuWc=
+	b=QfVTBvBlD8+DzlwC9EdATEphwsNKsqQ14gYuEGTOiD1LCAmBfMP5/5rMxXDhKVrkA
+	 HqqvkimlNl8R7oaoXxk2rll2Vf92pg1jCfeCmr4JPSaSOOGz48ZDP+w4UmT9P5w7fb
+	 hWCG5nPbRbeplm+aAhB17oX9wF5a2wHSCzLfUFaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Viktor Malik <vmalik@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 181/427] thermal/debugfs: Pass cooling device state to thermal_debug_cdev_add()
-Date: Mon, 27 May 2024 20:53:48 +0200
-Message-ID: <20240527185619.126950782@linuxfoundation.org>
+Subject: [PATCH 6.9 190/427] selftests/bpf: Run cgroup1_hierarchy test in own mount namespace
+Date: Mon, 27 May 2024 20:53:57 +0200
+Message-ID: <20240527185619.998088295@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,128 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Viktor Malik <vmalik@redhat.com>
 
-[ Upstream commit 31a0fa0019b022024cc082ae292951a596b06f8c ]
+[ Upstream commit 19468ed51488dae19254e8a67c75d583b05fa5e3 ]
 
-If cdev_dt_seq_show() runs before the first state transition of a cooling
-device, it will not print any state residency information for it, even
-though it might be reasonably expected to print residency information for
-the initial state of the cooling device.
+The cgroup1_hierarchy test uses setup_classid_environment to setup
+cgroupv1 environment. The problem is that the environment is set in
+/sys/fs/cgroup and therefore, if not run under an own mount namespace,
+effectively deletes all system cgroups:
 
-For this reason, rearrange the code to get the initial state of a cooling
-device at the registration time and pass it to thermal_debug_cdev_add(),
-so that the latter can create a duration record for that state which will
-allow cdev_dt_seq_show() to print its residency information.
+    $ ls /sys/fs/cgroup | wc -l
+    27
+    $ sudo ./test_progs -t cgroup1_hierarchy
+    #41/1    cgroup1_hierarchy/test_cgroup1_hierarchy:OK
+    #41/2    cgroup1_hierarchy/test_root_cgid:OK
+    #41/3    cgroup1_hierarchy/test_invalid_level:OK
+    #41/4    cgroup1_hierarchy/test_invalid_cgid:OK
+    #41/5    cgroup1_hierarchy/test_invalid_hid:OK
+    #41/6    cgroup1_hierarchy/test_invalid_cgrp_name:OK
+    #41/7    cgroup1_hierarchy/test_invalid_cgrp_name2:OK
+    #41/8    cgroup1_hierarchy/test_sleepable_prog:OK
+    #41      cgroup1_hierarchy:OK
+    Summary: 1/8 PASSED, 0 SKIPPED, 0 FAILED
+    $ ls /sys/fs/cgroup | wc -l
+    1
 
-Fixes: 755113d76786 ("thermal/debugfs: Add thermal cooling device debugfs information")
-Reported-by: Lukasz Luba <lukasz.luba@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Tested-by: Lukasz Luba <lukasz.luba@arm.com>
+To avoid this, run setup_cgroup_environment first which will create an
+own mount namespace. This only affects the cgroupv1_hierarchy test as
+all other cgroup1 test progs already run setup_cgroup_environment prior
+to running setup_classid_environment.
+
+Also add a comment to the header of setup_classid_environment to warn
+against this invalid usage in future.
+
+Fixes: 360769233cc9 ("selftests/bpf: Add selftests for cgroup1 hierarchy")
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240429112311.402497-1-vmalik@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c    |  9 +++++++--
- drivers/thermal/thermal_debugfs.c | 12 ++++++++++--
- drivers/thermal/thermal_debugfs.h |  4 ++--
- 3 files changed, 19 insertions(+), 6 deletions(-)
+ tools/testing/selftests/bpf/cgroup_helpers.c               | 3 +++
+ tools/testing/selftests/bpf/prog_tests/cgroup1_hierarchy.c | 7 ++++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 015d41a9a368b..38b7d02384d7c 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -898,6 +898,7 @@ __thermal_cooling_device_register(struct device_node *np,
- {
- 	struct thermal_cooling_device *cdev;
- 	struct thermal_zone_device *pos = NULL;
-+	unsigned long current_state;
- 	int id, ret;
+diff --git a/tools/testing/selftests/bpf/cgroup_helpers.c b/tools/testing/selftests/bpf/cgroup_helpers.c
+index 19be9c63d5e84..e812876d79c7e 100644
+--- a/tools/testing/selftests/bpf/cgroup_helpers.c
++++ b/tools/testing/selftests/bpf/cgroup_helpers.c
+@@ -508,6 +508,9 @@ int cgroup_setup_and_join(const char *path) {
+ /**
+  * setup_classid_environment() - Setup the cgroupv1 net_cls environment
+  *
++ * This function should only be called in a custom mount namespace, e.g.
++ * created by running setup_cgroup_environment.
++ *
+  * After calling this function, cleanup_classid_environment should be called
+  * once testing is complete.
+  *
+diff --git a/tools/testing/selftests/bpf/prog_tests/cgroup1_hierarchy.c b/tools/testing/selftests/bpf/prog_tests/cgroup1_hierarchy.c
+index 74d6d7546f40f..25332e596750f 100644
+--- a/tools/testing/selftests/bpf/prog_tests/cgroup1_hierarchy.c
++++ b/tools/testing/selftests/bpf/prog_tests/cgroup1_hierarchy.c
+@@ -87,9 +87,12 @@ void test_cgroup1_hierarchy(void)
+ 		goto destroy;
  
- 	if (!ops || !ops->get_max_state || !ops->get_cur_state ||
-@@ -935,6 +936,10 @@ __thermal_cooling_device_register(struct device_node *np,
- 	if (ret)
- 		goto out_cdev_type;
+ 	/* Setup cgroup1 hierarchy */
++	err = setup_cgroup_environment();
++	if (!ASSERT_OK(err, "setup_cgroup_environment"))
++		goto destroy;
+ 	err = setup_classid_environment();
+ 	if (!ASSERT_OK(err, "setup_classid_environment"))
+-		goto destroy;
++		goto cleanup_cgroup;
  
-+	ret = cdev->ops->get_cur_state(cdev, &current_state);
-+	if (ret)
-+		goto out_cdev_type;
-+
- 	thermal_cooling_device_setup_sysfs(cdev);
+ 	err = join_classid();
+ 	if (!ASSERT_OK(err, "join_cgroup1"))
+@@ -153,6 +156,8 @@ void test_cgroup1_hierarchy(void)
  
- 	ret = dev_set_name(&cdev->device, "cooling_device%d", cdev->id);
-@@ -948,6 +953,8 @@ __thermal_cooling_device_register(struct device_node *np,
- 		return ERR_PTR(ret);
- 	}
- 
-+	thermal_debug_cdev_add(cdev, current_state);
-+
- 	/* Add 'this' new cdev to the global cdev list */
- 	mutex_lock(&thermal_list_lock);
- 
-@@ -963,8 +970,6 @@ __thermal_cooling_device_register(struct device_node *np,
- 
- 	mutex_unlock(&thermal_list_lock);
- 
--	thermal_debug_cdev_add(cdev);
--
- 	return cdev;
- 
- out_cooling_dev:
-diff --git a/drivers/thermal/thermal_debugfs.c b/drivers/thermal/thermal_debugfs.c
-index 2891d2ab4875c..403f74d663dce 100644
---- a/drivers/thermal/thermal_debugfs.c
-+++ b/drivers/thermal/thermal_debugfs.c
-@@ -468,8 +468,9 @@ void thermal_debug_cdev_state_update(const struct thermal_cooling_device *cdev,
-  * Allocates a cooling device object for debug, initializes the
-  * statistics and create the entries in sysfs.
-  * @cdev: a pointer to a cooling device
-+ * @state: current state of the cooling device
-  */
--void thermal_debug_cdev_add(struct thermal_cooling_device *cdev)
-+void thermal_debug_cdev_add(struct thermal_cooling_device *cdev, int state)
- {
- 	struct thermal_debugfs *thermal_dbg;
- 	struct cdev_debugfs *cdev_dbg;
-@@ -486,9 +487,16 @@ void thermal_debug_cdev_add(struct thermal_cooling_device *cdev)
- 		INIT_LIST_HEAD(&cdev_dbg->durations[i]);
- 	}
- 
--	cdev_dbg->current_state = 0;
-+	cdev_dbg->current_state = state;
- 	cdev_dbg->timestamp = ktime_get();
- 
-+	/*
-+	 * Create a record for the initial cooling device state, so its
-+	 * duration will be printed by cdev_dt_seq_show() as expected if it
-+	 * runs before the first state transition.
-+	 */
-+	thermal_debugfs_cdev_record_get(thermal_dbg, cdev_dbg->durations, state);
-+
- 	debugfs_create_file("trans_table", 0400, thermal_dbg->d_top,
- 			    thermal_dbg, &tt_fops);
- 
-diff --git a/drivers/thermal/thermal_debugfs.h b/drivers/thermal/thermal_debugfs.h
-index 155b9af5fe870..c28bd4c114124 100644
---- a/drivers/thermal/thermal_debugfs.h
-+++ b/drivers/thermal/thermal_debugfs.h
-@@ -2,7 +2,7 @@
- 
- #ifdef CONFIG_THERMAL_DEBUGFS
- void thermal_debug_init(void);
--void thermal_debug_cdev_add(struct thermal_cooling_device *cdev);
-+void thermal_debug_cdev_add(struct thermal_cooling_device *cdev, int state);
- void thermal_debug_cdev_remove(struct thermal_cooling_device *cdev);
- void thermal_debug_cdev_state_update(const struct thermal_cooling_device *cdev, int state);
- void thermal_debug_tz_add(struct thermal_zone_device *tz);
-@@ -14,7 +14,7 @@ void thermal_debug_tz_trip_down(struct thermal_zone_device *tz,
- void thermal_debug_update_temp(struct thermal_zone_device *tz);
- #else
- static inline void thermal_debug_init(void) {}
--static inline void thermal_debug_cdev_add(struct thermal_cooling_device *cdev) {}
-+static inline void thermal_debug_cdev_add(struct thermal_cooling_device *cdev, int state) {}
- static inline void thermal_debug_cdev_remove(struct thermal_cooling_device *cdev) {}
- static inline void thermal_debug_cdev_state_update(const struct thermal_cooling_device *cdev,
- 						   int state) {}
+ cleanup:
+ 	cleanup_classid_environment();
++cleanup_cgroup:
++	cleanup_cgroup_environment();
+ destroy:
+ 	test_cgroup1_hierarchy__destroy(skel);
+ }
 -- 
 2.43.0
 
