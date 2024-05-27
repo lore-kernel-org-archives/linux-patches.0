@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87613168C4;
-	Mon, 27 May 2024 19:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1751715EFC3;
+	Mon, 27 May 2024 19:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837845; cv=none; b=lmwFVFiyxwo7+kRLzxHf38G/uYHxC3fWwCkJpy3QFFUPI5YNtDZUjjyXbBQEZKW1VknbIKkI3oi8gajv5js9Tu0d2i/KMIqOgl7Pm2QAzJ/iHGJ/se5z7FeYlD7hyV6RztPGMqJEPEdK+ggPU1KJiNH70M5yCJNL3dsyGpGl7Ks=
+	t=1716837848; cv=none; b=jRrKdw/dUVI2jucTp96UdvCMrTpBEdi1nwnp7Yv1ygElt7svO1+yvqi2A/fSsR/Biu+84Zkn3yCkY5pEeRvToqueLkNo3OFWgAwbVibIEBB0bionPm7EB1K8w2phaS2zjBih40l0RtRQv+EIHxdv+GB8DHjh+qYZRyRHskSJcTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837845; c=relaxed/simple;
-	bh=5vE6MmrPDwAXiLkaJGrkmVAPNHFs7XnG/hAsB6Gxoaw=;
+	s=arc-20240116; t=1716837848; c=relaxed/simple;
+	bh=7DPJXShouZSaVfmKRJy+J00BHADVAXifQPGp9CJHRlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swaM7+oqi6G240C6XN0iISg2knRDeWfphPP7gV+qRI8YkI2sevMiPS0ROMR3pFPFNsngALwv8vYebl6vDfdWHBoZfNsUr+e2gxvUAnSrLqwDw4RY+gIngW1efadC+pWa8Oanel2PIQ1iq8qegYwGQtwKioQFhUbi2EXiK/9IRKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ElaUZopL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E8V/5MQoYFEuuuVmvKNsc5uf3g0EQY4derwmWRLdFZvEvApaV5Ay+ecyZxYvA40RADhnlSjTo++csUV7kZ3URkO6V0ot90k4GR+ME79hbMw1NIrThfXRgCpvOVeSYe/W31AD+YbD0To2rhB0mP03O/U7O9p0G/7wc3+WfEdoznI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezaG1mpl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ElaUZopL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173CDC2BBFC;
-	Mon, 27 May 2024 19:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezaG1mpl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99AB1C2BBFC;
+	Mon, 27 May 2024 19:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837845;
-	bh=5vE6MmrPDwAXiLkaJGrkmVAPNHFs7XnG/hAsB6Gxoaw=;
+	s=korg; t=1716837847;
+	bh=7DPJXShouZSaVfmKRJy+J00BHADVAXifQPGp9CJHRlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ElaUZopL79Sxuu4T8F7hInyQx8s4GGzzVUp9c0BtRNDS2E0YrpGBJvtTnich7PXIT
-	 D9/mJd2E3ejzP89gBNQB3bhkiOyauGCBAM7D0+8bJgr25tgAJtxvee4gw37tkBvFGM
-	 tsuNDRj3ta9F8moRbIBfBaEHaLuKaWje479ti6e4=
+	b=ezaG1mpl/g189iBrxvr26ACyJZKxRTRZsv8yonZ+G9+pA2j3Gf5LFNig5ymhF3iE1
+	 OBkFCjBIzdayMBs7kDsSD6E8ZLUwd2y25w1ZmDkw5JPK3axQ4TIOodPsfWWHSIPidm
+	 6lXI6HXOz4beHu57Xm0NlRNkbsfqRGDtjr64sI+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Aloka Dixit <quic_alokad@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 130/493] libfs: Add simple_offset_empty()
-Date: Mon, 27 May 2024 20:52:12 +0200
-Message-ID: <20240527185634.735560043@linuxfoundation.org>
+Subject: [PATCH 6.8 166/493] wifi: ath12k: use correct flag field for 320 MHz channels
+Date: Mon, 27 May 2024 20:52:48 +0200
+Message-ID: <20240527185635.794896979@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,109 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Aloka Dixit <quic_alokad@quicinc.com>
 
-[ Upstream commit ecba88a3b32d733d41e27973e25b2bc580f64281 ]
+[ Upstream commit 020e08ae5e68cbc0791e8d842443a86eb6aa99f6 ]
 
-For simple filesystems that use directory offset mapping, rely
-strictly on the directory offset map to tell when a directory has
-no children.
+Due to an error during rebasing the patchset 320 MHz channel support got
+broken. ath12k was setting the QoS bit instead of the correct flag.
+WMI_PEER_EXT_320MHZ (0x2) is defined as an extended flag, replace
+peer_flags by peer_flags_ext while sending peer data.
 
-After this patch is applied, the emptiness test holds only the RCU
-read lock when the directory being tested has no children.
+This affected both QCN9274 and WCN7850 which use the same flag.
 
-In addition, this adds another layer of confirmation that
-simple_offset_add/remove() are working as expected.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
 
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://lore.kernel.org/r/170820143463.6328.7872919188371286951.stgit@91.116.238.104.host.secureserver.net
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 23cdd0eed3f1 ("libfs: Fix simple_offset_rename_exchange()")
+Fixes: 6734cf9b4cc7 ("wifi: ath12k: peer assoc for 320 MHz")
+Signed-off-by: Aloka Dixit <quic_alokad@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240314204651.11075-1-quic_alokad@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/libfs.c         | 32 ++++++++++++++++++++++++++++++++
- include/linux/fs.h |  1 +
- mm/shmem.c         |  4 ++--
- 3 files changed, 35 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/libfs.c b/fs/libfs.c
-index f0045db739df8..f7f92a49a4182 100644
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -313,6 +313,38 @@ void simple_offset_remove(struct offset_ctx *octx, struct dentry *dentry)
- 	offset_set(dentry, 0);
- }
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index 11cc3005c0f98..035d8f247e23e 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -1836,7 +1836,7 @@ static void ath12k_wmi_copy_peer_flags(struct wmi_peer_assoc_complete_cmd *cmd,
+ 		if (arg->bw_160)
+ 			cmd->peer_flags |= cpu_to_le32(WMI_PEER_160MHZ);
+ 		if (arg->bw_320)
+-			cmd->peer_flags |= cpu_to_le32(WMI_PEER_EXT_320MHZ);
++			cmd->peer_flags_ext |= cpu_to_le32(WMI_PEER_EXT_320MHZ);
  
-+/**
-+ * simple_offset_empty - Check if a dentry can be unlinked
-+ * @dentry: dentry to be tested
-+ *
-+ * Returns 0 if @dentry is a non-empty directory; otherwise returns 1.
-+ */
-+int simple_offset_empty(struct dentry *dentry)
-+{
-+	struct inode *inode = d_inode(dentry);
-+	struct offset_ctx *octx;
-+	struct dentry *child;
-+	unsigned long index;
-+	int ret = 1;
-+
-+	if (!inode || !S_ISDIR(inode->i_mode))
-+		return ret;
-+
-+	index = DIR_OFFSET_MIN;
-+	octx = inode->i_op->get_offset_ctx(inode);
-+	xa_for_each(&octx->xa, index, child) {
-+		spin_lock(&child->d_lock);
-+		if (simple_positive(child)) {
-+			spin_unlock(&child->d_lock);
-+			ret = 0;
-+			break;
-+		}
-+		spin_unlock(&child->d_lock);
-+	}
-+
-+	return ret;
-+}
-+
- /**
-  * simple_offset_rename_exchange - exchange rename with directory offsets
-  * @old_dir: parent of dentry being moved
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 08ecac9d7b8ba..e684b9fa64819 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3266,6 +3266,7 @@ struct offset_ctx {
- void simple_offset_init(struct offset_ctx *octx);
- int simple_offset_add(struct offset_ctx *octx, struct dentry *dentry);
- void simple_offset_remove(struct offset_ctx *octx, struct dentry *dentry);
-+int simple_offset_empty(struct dentry *dentry);
- int simple_offset_rename_exchange(struct inode *old_dir,
- 				  struct dentry *old_dentry,
- 				  struct inode *new_dir,
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 5853f3ae36e53..0e951fe9f44cc 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -3368,7 +3368,7 @@ static int shmem_unlink(struct inode *dir, struct dentry *dentry)
- 
- static int shmem_rmdir(struct inode *dir, struct dentry *dentry)
- {
--	if (!simple_empty(dentry))
-+	if (!simple_offset_empty(dentry))
- 		return -ENOTEMPTY;
- 
- 	drop_nlink(d_inode(dentry));
-@@ -3425,7 +3425,7 @@ static int shmem_rename2(struct mnt_idmap *idmap,
- 		return simple_offset_rename_exchange(old_dir, old_dentry,
- 						     new_dir, new_dentry);
- 
--	if (!simple_empty(new_dentry))
-+	if (!simple_offset_empty(new_dentry))
- 		return -ENOTEMPTY;
- 
- 	if (flags & RENAME_WHITEOUT) {
+ 		/* Typically if STBC is enabled for VHT it should be enabled
+ 		 * for HT as well
 -- 
 2.43.0
 
