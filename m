@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131D461FDF;
-	Mon, 27 May 2024 19:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1C261FDF;
+	Mon, 27 May 2024 19:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838669; cv=none; b=sn6aHmmeeTSkiKZmjtRbc9mGtlWOQmmHWVFD9WA8Ys46xWJFFoRuPpS9rnc9zd++cEfRWwfzuBIp45TLYr8n6XW6ej+oUzhR2LaxjO+VvXVEXP5Vq9T3kNipW6M+WgswIzLD4lisexhcXTTa3TpDHsRbgkiRz0kFDAfHMupz+WE=
+	t=1716838671; cv=none; b=oIfsx+B5K/g3EXsQqKY21EFlvzxu3xF4ofDmtpoDZFIUfaREL/G6sGefJfHiJh2hkwDDOLnzoStJMBdA0MDwnn+fCGbAkoIS25EBZQju1h7mMZ+ygCk9Zw7x8/3KztHuVbEUo5sghmkk/y5aN7tShhmscxed3GQNOktmvpm5lM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838669; c=relaxed/simple;
-	bh=kcmmGzSKqwHUDQeuNHyifjZU/xM2t08roVubaU4kl9c=;
+	s=arc-20240116; t=1716838671; c=relaxed/simple;
+	bh=Dlq3By1VQbl91H0fXgDW5p/vbOS0UlRXiqcF1xpUVBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JRAMgB0jTEGJQfyKJ6AXJxZOBewiRceGXVecdYAicsWDzwpBGpFbVADZp7EnTKXtBlUNz2WwdI/dsC6hYwhd/k0y4K7IEBsf7WD8F6FbSmDsgVwJDYJgYPui6T70ufuYtNp8oVf8xpZXmLLWHeDURZBRFE/jFWCa8ureM5p71kY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iD5s9iAg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BTP7z6gICtcdmoGNilrPIJ/vQCH+iPWmeoffoeYsE1toB5AELAx9PF6ZLyrgw+F0CI46++0P+m78jnJYTcMogY/8v9Hj0+502JQhCTU5u/Bgln8omwSxuB+7QykdQ/i+SAgN7jO9gzbjaxqNtwQ8FpHpjIILfthFexYrg3bLK6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFahT9ZE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iD5s9iAg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D21C2BBFC;
-	Mon, 27 May 2024 19:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFahT9ZE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340AEC2BBFC;
+	Mon, 27 May 2024 19:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838668;
-	bh=kcmmGzSKqwHUDQeuNHyifjZU/xM2t08roVubaU4kl9c=;
+	s=korg; t=1716838671;
+	bh=Dlq3By1VQbl91H0fXgDW5p/vbOS0UlRXiqcF1xpUVBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iD5s9iAgb46jo9AbWIlUW/a7DDuM5olRY3f8La4Ns/v6CD92pltA8QfjtwazDqYpD
-	 YITi8PJX9zK/3yYjaHw1WP6GdYs+mstwFbWYUJ3WQh3D1sHk3cVLFbGII+Xg7i/oms
-	 6EiSxdImvna9bMRsZz0/1wczcHnXy31qdEceOQhE=
+	b=zFahT9ZEaqVPBI/9J/FVfetm5EoqYKMFae0gy8qXTw/Cg9wQZrB2xlPnZO+82PGIq
+	 RC73X4t30G0j9ImzPl9Zg+Dlsyb4tY2LEqr+NKIsBuPbd5zlPXKd6I4310uQKTDz7c
+	 FEpsLQ2RIM6FL4dOrFADjFJ0z7NOn3Lyaev8cAeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 480/493] netrom: fix possible dead-lock in nr_rt_ioctl()
-Date: Mon, 27 May 2024 20:58:02 +0200
-Message-ID: <20240527185645.851765134@linuxfoundation.org>
+Subject: [PATCH 6.8 440/493] clk: renesas: r9a07g043: Add clock and reset entry for PLIC
+Date: Mon, 27 May 2024 20:57:22 +0200
+Message-ID: <20240527185644.652896542@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,190 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit e03e7f20ebf7e1611d40d1fdc1bde900fd3335f6 ]
+[ Upstream commit 44019387fce230beda35b83da3a2c9fc5787704e ]
 
-syzbot loves netrom, and found a possible deadlock in nr_rt_ioctl [1]
+Add the missing clock and reset entry for PLIC. Also add
+R9A07G043_NCEPLIC_ACLK to the critical clocks list.
 
-Make sure we always acquire nr_node_list_lock before nr_node_lock(nr_node)
-
-[1]
-WARNING: possible circular locking dependency detected
-6.9.0-rc7-syzkaller-02147-g654de42f3fc6 #0 Not tainted
-------------------------------------------------------
-syz-executor350/5129 is trying to acquire lock:
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_node_lock include/net/netrom.h:152 [inline]
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:464 [inline]
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
-
-but task is already holding lock:
- ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
- ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:462 [inline]
- ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_rt_ioctl+0x10a/0x1090 net/netrom/nr_route.c:697
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (nr_node_list_lock){+...}-{2:2}:
-        lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-        __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
-        _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
-        spin_lock_bh include/linux/spinlock.h:356 [inline]
-        nr_remove_node net/netrom/nr_route.c:299 [inline]
-        nr_del_node+0x4b4/0x820 net/netrom/nr_route.c:355
-        nr_rt_ioctl+0xa95/0x1090 net/netrom/nr_route.c:683
-        sock_do_ioctl+0x158/0x460 net/socket.c:1222
-        sock_ioctl+0x629/0x8e0 net/socket.c:1341
-        vfs_ioctl fs/ioctl.c:51 [inline]
-        __do_sys_ioctl fs/ioctl.c:904 [inline]
-        __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
-        do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-        do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
-       entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
--> #0 (&nr_node->node_lock){+...}-{2:2}:
-        check_prev_add kernel/locking/lockdep.c:3134 [inline]
-        check_prevs_add kernel/locking/lockdep.c:3253 [inline]
-        validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
-        __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
-        lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-        __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
-        _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
-        spin_lock_bh include/linux/spinlock.h:356 [inline]
-        nr_node_lock include/net/netrom.h:152 [inline]
-        nr_dec_obs net/netrom/nr_route.c:464 [inline]
-        nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
-        sock_do_ioctl+0x158/0x460 net/socket.c:1222
-        sock_ioctl+0x629/0x8e0 net/socket.c:1341
-        vfs_ioctl fs/ioctl.c:51 [inline]
-        __do_sys_ioctl fs/ioctl.c:904 [inline]
-        __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
-        do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-        do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
-       entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(nr_node_list_lock);
-                               lock(&nr_node->node_lock);
-                               lock(nr_node_list_lock);
-  lock(&nr_node->node_lock);
-
- *** DEADLOCK ***
-
-1 lock held by syz-executor350/5129:
-  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
-  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:462 [inline]
-  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_rt_ioctl+0x10a/0x1090 net/netrom/nr_route.c:697
-
-stack backtrace:
-CPU: 0 PID: 5129 Comm: syz-executor350 Not tainted 6.9.0-rc7-syzkaller-02147-g654de42f3fc6 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  check_noncircular+0x36a/0x4a0 kernel/locking/lockdep.c:2187
-  check_prev_add kernel/locking/lockdep.c:3134 [inline]
-  check_prevs_add kernel/locking/lockdep.c:3253 [inline]
-  validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
-  __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
-  lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-  __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
-  _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
-  spin_lock_bh include/linux/spinlock.h:356 [inline]
-  nr_node_lock include/net/netrom.h:152 [inline]
-  nr_dec_obs net/netrom/nr_route.c:464 [inline]
-  nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
-  sock_do_ioctl+0x158/0x460 net/socket.c:1222
-  sock_ioctl+0x629/0x8e0 net/socket.c:1341
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:904 [inline]
-  __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240515142934.3708038-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 95d48d270305ad2c ("clk: renesas: r9a07g043: Add support for RZ/Five SoC")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20240403200952.633084-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_route.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ drivers/clk/renesas/r9a07g043-cpg.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index 70480869ad1c5..bd2b17b219ae9 100644
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -285,22 +285,14 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 	return 0;
- }
+diff --git a/drivers/clk/renesas/r9a07g043-cpg.c b/drivers/clk/renesas/r9a07g043-cpg.c
+index 075ade0925d45..9ad7ceb3ab1ba 100644
+--- a/drivers/clk/renesas/r9a07g043-cpg.c
++++ b/drivers/clk/renesas/r9a07g043-cpg.c
+@@ -265,6 +265,10 @@ static struct rzg2l_mod_clk r9a07g043_mod_clks[] = {
+ 				0x5a8, 1),
+ 	DEF_MOD("tsu_pclk",	R9A07G043_TSU_PCLK, R9A07G043_CLK_TSU,
+ 				0x5ac, 0),
++#ifdef CONFIG_RISCV
++	DEF_MOD("nceplic_aclk",	R9A07G043_NCEPLIC_ACLK, R9A07G043_CLK_P1,
++				0x608, 0),
++#endif
+ };
  
--static inline void __nr_remove_node(struct nr_node *nr_node)
-+static void nr_remove_node_locked(struct nr_node *nr_node)
- {
-+	lockdep_assert_held(&nr_node_list_lock);
+ static struct rzg2l_reset r9a07g043_resets[] = {
+@@ -318,6 +322,10 @@ static struct rzg2l_reset r9a07g043_resets[] = {
+ 	DEF_RST(R9A07G043_ADC_PRESETN, 0x8a8, 0),
+ 	DEF_RST(R9A07G043_ADC_ADRST_N, 0x8a8, 1),
+ 	DEF_RST(R9A07G043_TSU_PRESETN, 0x8ac, 0),
++#ifdef CONFIG_RISCV
++	DEF_RST(R9A07G043_NCEPLIC_ARESETN, 0x908, 0),
++#endif
 +
- 	hlist_del_init(&nr_node->node_node);
- 	nr_node_put(nr_node);
- }
+ };
  
--#define nr_remove_node_locked(__node) \
--	__nr_remove_node(__node)
--
--static void nr_remove_node(struct nr_node *nr_node)
--{
--	spin_lock_bh(&nr_node_list_lock);
--	__nr_remove_node(nr_node);
--	spin_unlock_bh(&nr_node_list_lock);
--}
--
- static inline void __nr_remove_neigh(struct nr_neigh *nr_neigh)
- {
- 	hlist_del_init(&nr_neigh->neigh_node);
-@@ -339,6 +331,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 		return -EINVAL;
- 	}
- 
-+	spin_lock_bh(&nr_node_list_lock);
- 	nr_node_lock(nr_node);
- 	for (i = 0; i < nr_node->count; i++) {
- 		if (nr_node->routes[i].neighbour == nr_neigh) {
-@@ -352,7 +345,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 			nr_node->count--;
- 
- 			if (nr_node->count == 0) {
--				nr_remove_node(nr_node);
-+				nr_remove_node_locked(nr_node);
- 			} else {
- 				switch (i) {
- 				case 0:
-@@ -367,12 +360,14 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 				nr_node_put(nr_node);
- 			}
- 			nr_node_unlock(nr_node);
-+			spin_unlock_bh(&nr_node_list_lock);
- 
- 			return 0;
- 		}
- 	}
- 	nr_neigh_put(nr_neigh);
- 	nr_node_unlock(nr_node);
-+	spin_unlock_bh(&nr_node_list_lock);
- 	nr_node_put(nr_node);
- 
- 	return -EINVAL;
+ static const unsigned int r9a07g043_crit_mod_clks[] __initconst = {
+@@ -327,6 +335,7 @@ static const unsigned int r9a07g043_crit_mod_clks[] __initconst = {
+ #endif
+ #ifdef CONFIG_RISCV
+ 	MOD_CLK_BASE + R9A07G043_IAX45_CLK,
++	MOD_CLK_BASE + R9A07G043_NCEPLIC_ACLK,
+ #endif
+ 	MOD_CLK_BASE + R9A07G043_DMAC_ACLK,
+ };
 -- 
 2.43.0
 
