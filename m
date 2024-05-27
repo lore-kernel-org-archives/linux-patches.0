@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF4115FA91;
-	Mon, 27 May 2024 19:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7E815FCFC;
+	Mon, 27 May 2024 19:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837850; cv=none; b=bW852vbJ6f2aI45cNAD+080EzCvn+TvksOuD+kx3eLPcxsu2Wp6aSgWRlBZuGzPp8KLwBE53HmJqzFFmv6XR2ae6zqRfdZIZYm6dcbvl5kv2Emviocm9drbNcHoU/JJi0IDLpmnQj1YwfSJ2tpGe7m/T0sBCJ6faGP1OV1wzv0Q=
+	t=1716837853; cv=none; b=WVKyyB4bp8YywS722JwiC/kmt7lX+LX8MnzOu8IKddPUuNWzFWQep0VqkLNn6dT37kPaj0jP9CkRthO1+WZ7qilrpLgtsp8ccUadn9zDclPuyrqQGaxDfyTDoah1DWiZyZhYReq2lH/KCfgPdAfbS5oRogJMlOLhXUmx/gwbifU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837850; c=relaxed/simple;
-	bh=f+rQuSKyiGBPcCD+/rNjcw0mP8fGULCPs2nA85konzU=;
+	s=arc-20240116; t=1716837853; c=relaxed/simple;
+	bh=9GMZeknBZnZRoQWriG0demUMh1PZNX4Ll4jc+Yq5ies=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HezgYZFN/ou6hKELQBUi8e2Rt0qVaUW7O96eagfgNre/k4Sdz5G+Ws3tUQEAi0hV74h3fAbtCAuTj8/2HdY2c9e8qxrVuMa7zDMg+dkdlRwLDU6mLJiOi1+4NJvQVG08tmTU7YzpPD28tix5UjHRudE4EXY98+iwOZdvEEHBpuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pS96OtaU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZDPA51lXJsuJlmulbBcJ2OmMZKzaR51QfzHCHWcqFVIINopt/y/wFEJQVpRAwcf7cgggMffQoW7kxSJnP2ftipx8/IUIWBda2/CLcqF1o2CdCm1wzxUpPDr3b9NKmPaC+TebrbGtICOpish6Q0tMwoNgKZmIIuCBHeq+Es6oso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApZ0lSpt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pS96OtaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22378C2BBFC;
-	Mon, 27 May 2024 19:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApZ0lSpt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3CCC32781;
+	Mon, 27 May 2024 19:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837850;
-	bh=f+rQuSKyiGBPcCD+/rNjcw0mP8fGULCPs2nA85konzU=;
+	s=korg; t=1716837852;
+	bh=9GMZeknBZnZRoQWriG0demUMh1PZNX4Ll4jc+Yq5ies=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pS96OtaULpoqK/qnhDl6fciLLCKNbyrj+GeEc4eGpt6eKtenu3u2vax7r4Mq5c6Ex
-	 wECTlNwwmcA6835O7x/yAd0NcrSAfCTX3P2D/uRQVL+oYB6QXJSWmDx3XwYV/9r9Ws
-	 UhAoXim1lnCQhhXlRORB2MTMMOveeZb2d0DW38As=
+	b=ApZ0lSptaba7tyYF3EQbN349KTxzsLddaHl4SQ/12kb7Efhb8h1JEa/5MvGWiYru8
+	 y/DFm8qwCtfuk/3t7P1AOmJ7JoOrcKpU5q/alf8zYYw6brqZvW3pBefSK2jgUd9Eqs
+	 4sf+dyNBxsZef+/JfDpmB9LMSU70CMNep9KirJuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
-	Kalle Valo <kvalo@kernel.org>,
+	Guixiong Wei <weiguixiong@bytedance.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 167/493] wifi: mt76: mt7915: workaround too long expansion sparse warnings
-Date: Mon, 27 May 2024 20:52:49 +0200
-Message-ID: <20240527185635.828419819@linuxfoundation.org>
+Subject: [PATCH 6.8 168/493] x86/boot: Ignore relocations in .notes sections in walk_relocs() too
+Date: Mon, 27 May 2024 20:52:50 +0200
+Message-ID: <20240527185635.854889864@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,60 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Guixiong Wei <weiguixiong@bytedance.com>
 
-[ Upstream commit 2d5cde1143eca31c72547dfd589702c6b4a7e684 ]
+[ Upstream commit 76e9762d66373354b45c33b60e9a53ef2a3c5ff2 ]
 
-Fix the following sparse warnings:
+Commit:
 
-drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c:1133:29: error: too long token expansion
-drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c:1133:29: error: too long token expansion
-drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c:1133:29: error: too long token expansion
-drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c:1133:29: error: too long token expansion
+  aaa8736370db ("x86, relocs: Ignore relocations in .notes section")
 
-No functional changes, compile tested only.
+... only started ignoring the .notes sections in print_absolute_relocs(),
+but the same logic should also by applied in walk_relocs() to avoid
+such relocations.
 
-Fixes: e3296759f347 ("wifi: mt76: mt7915: enable per bandwidth power limit support")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Acked-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/5457b92e41909dd75ab3db7a0e9ec372b917a386.1710858172.git.lorenzo@kernel.org
+[ mingo: Fixed various typos in the changelog, removed extra curly braces from the code. ]
+
+Fixes: aaa8736370db ("x86, relocs: Ignore relocations in .notes section")
+Fixes: 5ead97c84fa7 ("xen: Core Xen implementation")
+Fixes: da1a679cde9b ("Add /sys/kernel/notes")
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20240317150547.24910-1-weiguixiong@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/tools/relocs.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
-index 6c3696c8c7002..450f4d221184b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
-@@ -1049,6 +1049,7 @@ static ssize_t
- mt7915_rate_txpower_set(struct file *file, const char __user *user_buf,
- 			size_t count, loff_t *ppos)
- {
-+	int i, ret, pwr, pwr160 = 0, pwr80 = 0, pwr40 = 0, pwr20 = 0;
- 	struct mt7915_phy *phy = file->private_data;
- 	struct mt7915_dev *dev = phy->dev;
- 	struct mt76_phy *mphy = phy->mt76;
-@@ -1057,7 +1058,6 @@ mt7915_rate_txpower_set(struct file *file, const char __user *user_buf,
- 		.band_idx = phy->mt76->band_idx,
- 	};
- 	char buf[100];
--	int i, ret, pwr160 = 0, pwr80 = 0, pwr40 = 0, pwr20 = 0;
- 	enum mac80211_rx_encoding mode;
- 	u32 offs = 0, len = 0;
- 
-@@ -1130,8 +1130,8 @@ mt7915_rate_txpower_set(struct file *file, const char __user *user_buf,
- 	if (ret)
- 		goto out;
- 
--	mphy->txpower_cur = max(mphy->txpower_cur,
--				max(pwr160, max(pwr80, max(pwr40, pwr20))));
-+	pwr = max3(pwr80, pwr40, pwr20);
-+	mphy->txpower_cur = max3(mphy->txpower_cur, pwr160, pwr);
- out:
- 	mutex_unlock(&dev->mt76.mutex);
- 
+diff --git a/arch/x86/tools/relocs.c b/arch/x86/tools/relocs.c
+index b029fb81ebeee..e7a44a7f617fb 100644
+--- a/arch/x86/tools/relocs.c
++++ b/arch/x86/tools/relocs.c
+@@ -746,6 +746,15 @@ static void walk_relocs(int (*process)(struct section *sec, Elf_Rel *rel,
+ 		if (!(sec_applies->shdr.sh_flags & SHF_ALLOC)) {
+ 			continue;
+ 		}
++
++		/*
++		 * Do not perform relocations in .notes sections; any
++		 * values there are meant for pre-boot consumption (e.g.
++		 * startup_xen).
++		 */
++		if (sec_applies->shdr.sh_type == SHT_NOTE)
++			continue;
++
+ 		sh_symtab = sec_symtab->symtab;
+ 		sym_strtab = sec_symtab->link->strtab;
+ 		for (j = 0; j < sec->shdr.sh_size/sizeof(Elf_Rel); j++) {
 -- 
 2.43.0
 
