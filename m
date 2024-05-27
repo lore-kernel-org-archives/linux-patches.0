@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1224D61FDF;
-	Mon, 27 May 2024 19:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC78761FDF;
+	Mon, 27 May 2024 19:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838654; cv=none; b=EcCDE+zrV7vjR5PIX78GYAPZYmI86thZiyI3lLn1B8gi/zOxb193hmgI/HJ497CddNaR55GO0ASzZ0XxbaQPYx54GE3uB+tK/A17pEKvTOuL+UCa+Ev+1vs1U+SdljRQSfFWFDZswhkJI0efIKNeKG6Yj80v8SPpyT1/DcgLySY=
+	t=1716838656; cv=none; b=SGzbIeA8fEPDOGTG6iSlQI26MCCvxR68nHMSZgj5EFSZc8qD703lRE00c/U4v9Xq3lgLdPcJisDrQxmxa/n9R5VJ9gGgNnZ65WA6HvXYJrdCfFyDeGAnyRYv6Jf4qMLaCKKtTzbZ+p5zKCEgWR9xCfy8un+qqf7Nrs+Y8OsQWcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838654; c=relaxed/simple;
-	bh=aw1XKAT2iHOlPeK2i7VDDMadj6UL0LYHLwBkjajEFLo=;
+	s=arc-20240116; t=1716838656; c=relaxed/simple;
+	bh=PvR8480+yjINrNJpZtQ+2N941f2oahhGmCv9u+KFGjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j1mQyClD+BKb8w0g3ab1jXeXAGVPK0Fd/9TacUHL4yE31hhwg4OuLqB1UvxI9wJYUpg5pE9KA2hRxApunieULZlRgwttyEaqQTyxrmi5vB4sUFpZzLNgYokgzFgrB62NfCyQ/vLWZTOylQTUVSsaQsw24lINy0t30H7Xi+j1KQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2mb/kqm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OYoWUUEN4SQmOPifiVpe9J42Zva1EjYtY1/TvWSYy36Wc83rvQU8bR66e40KNFVOxcmjEkPeAQp8Tr53DX35ZxQ7PA9qFwE5KwGicDLEufbEgm1a/ECSlqzWe1Co9VVdE6yOb3Menqtp2EmlHYJtJx5pj4nVEy9lG/BDNPig1/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x02eMIV/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2mb/kqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C222C2BBFC;
-	Mon, 27 May 2024 19:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x02eMIV/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A8DC2BBFC;
+	Mon, 27 May 2024 19:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838653;
-	bh=aw1XKAT2iHOlPeK2i7VDDMadj6UL0LYHLwBkjajEFLo=;
+	s=korg; t=1716838656;
+	bh=PvR8480+yjINrNJpZtQ+2N941f2oahhGmCv9u+KFGjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2mb/kqmOFpHvsU89Hx7CQrSWefd4CPhZ1zXVWmo6PXbva719DeCPMOCebVEDABBU
-	 KzVd0G85ha9/1gNIVJC98bUcUo1vRiTNUZAROpd6yBOEmovmF+ftsXPlOxNsqkRd5m
-	 7l86RJj3BpMGjFtOvRPwQqsw6YbRTdsi1VCgEZjU=
+	b=x02eMIV/P3ofmJ2/b2u2dLPnrw05FzPEQFEE87MnVMhZLhvSdrzKwYVaKNVGTBARn
+	 3A6h51TnTGFVt+zg0i6IvGr28MnRwa4IZJ1TyQV4Ybz/GjMeRKb6Mj55n4UuiCvqkA
+	 /IoRo/kL2eOW8ciYLpk2GqHxEI6UA8CnyqPFPhwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 439/493] clk: renesas: r8a779a0: Fix CANFD parent clock
-Date: Mon, 27 May 2024 20:57:21 +0200
-Message-ID: <20240527185644.623549916@linuxfoundation.org>
+Subject: [PATCH 6.8 475/493] selftests: net: bridge: increase IGMP/MLD exclude timeout membership interval
+Date: Mon, 27 May 2024 20:57:57 +0200
+Message-ID: <20240527185645.690759411@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -44,42 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 3b23118bdbd898dc2f4de8f549d598d492c42ba8 ]
+[ Upstream commit 06080ea23095afe04a2cb7a8d05fab4311782623 ]
 
-According to Figure 52A.1 ("RS-CANFD Module Block Diagram (in classical
-CAN mode)") in the R-Car V3U Series User’s Manual Rev. 0.5, the parent
-clock for the CANFD peripheral module clock is the S3D2 clock.
+When running the bridge IGMP/MLD selftests on debug kernels we can get
+spurious errors when setting up the IGMP/MLD exclude timeout tests
+because the membership interval is just 3 seconds and the setup has 2
+seconds of sleep plus various validations, the one second that is left
+is not enough. Increase the membership interval from 3 to 5 seconds to
+make room for the setup validation and 2 seconds of sleep.
 
-Fixes: 9b621b6adff53346 ("clk: renesas: r8a779a0: Add CANFD module clock")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/aef9300f44c9141b1465343f91c5cc7303249b6e.1713279523.git.geert+renesas@glider.be
+Fixes: 34d7ecb3d4f7 ("selftests: net: bridge: update IGMP/MLD membership interval value")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r8a779a0-cpg-mssr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/forwarding/bridge_igmp.sh | 6 +++---
+ tools/testing/selftests/net/forwarding/bridge_mld.sh  | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/renesas/r8a779a0-cpg-mssr.c b/drivers/clk/renesas/r8a779a0-cpg-mssr.c
-index 4c2872f45387f..ff3f85e906fe1 100644
---- a/drivers/clk/renesas/r8a779a0-cpg-mssr.c
-+++ b/drivers/clk/renesas/r8a779a0-cpg-mssr.c
-@@ -139,7 +139,7 @@ static const struct mssr_mod_clk r8a779a0_mod_clks[] __initconst = {
- 	DEF_MOD("avb3",		214,	R8A779A0_CLK_S3D2),
- 	DEF_MOD("avb4",		215,	R8A779A0_CLK_S3D2),
- 	DEF_MOD("avb5",		216,	R8A779A0_CLK_S3D2),
--	DEF_MOD("canfd0",	328,	R8A779A0_CLK_CANFD),
-+	DEF_MOD("canfd0",	328,	R8A779A0_CLK_S3D2),
- 	DEF_MOD("csi40",	331,	R8A779A0_CLK_CSI0),
- 	DEF_MOD("csi41",	400,	R8A779A0_CLK_CSI0),
- 	DEF_MOD("csi42",	401,	R8A779A0_CLK_CSI0),
+diff --git a/tools/testing/selftests/net/forwarding/bridge_igmp.sh b/tools/testing/selftests/net/forwarding/bridge_igmp.sh
+index 2aa66d2a1702b..e6a3e04fd83f3 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_igmp.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_igmp.sh
+@@ -478,10 +478,10 @@ v3exc_timeout_test()
+ 	RET=0
+ 	local X=("192.0.2.20" "192.0.2.30")
+ 
+-	# GMI should be 3 seconds
++	# GMI should be 5 seconds
+ 	ip link set dev br0 type bridge mcast_query_interval 100 \
+ 					mcast_query_response_interval 100 \
+-					mcast_membership_interval 300
++					mcast_membership_interval 500
+ 
+ 	v3exclude_prepare $h1 $ALL_MAC $ALL_GROUP
+ 	ip link set dev br0 type bridge mcast_query_interval 500 \
+@@ -489,7 +489,7 @@ v3exc_timeout_test()
+ 					mcast_membership_interval 1500
+ 
+ 	$MZ $h1 -c 1 -b $ALL_MAC -B $ALL_GROUP -t ip "proto=2,p=$MZPKT_ALLOW2" -q
+-	sleep 3
++	sleep 5
+ 	bridge -j -d -s mdb show dev br0 \
+ 		| jq -e ".[].mdb[] | \
+ 			 select(.grp == \"$TEST_GROUP\" and \
+diff --git a/tools/testing/selftests/net/forwarding/bridge_mld.sh b/tools/testing/selftests/net/forwarding/bridge_mld.sh
+index e2b9ff773c6b6..f84ab2e657547 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_mld.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_mld.sh
+@@ -478,10 +478,10 @@ mldv2exc_timeout_test()
+ 	RET=0
+ 	local X=("2001:db8:1::20" "2001:db8:1::30")
+ 
+-	# GMI should be 3 seconds
++	# GMI should be 5 seconds
+ 	ip link set dev br0 type bridge mcast_query_interval 100 \
+ 					mcast_query_response_interval 100 \
+-					mcast_membership_interval 300
++					mcast_membership_interval 500
+ 
+ 	mldv2exclude_prepare $h1
+ 	ip link set dev br0 type bridge mcast_query_interval 500 \
+@@ -489,7 +489,7 @@ mldv2exc_timeout_test()
+ 					mcast_membership_interval 1500
+ 
+ 	$MZ $h1 -c 1 $MZPKT_ALLOW2 -q
+-	sleep 3
++	sleep 5
+ 	bridge -j -d -s mdb show dev br0 \
+ 		| jq -e ".[].mdb[] | \
+ 			 select(.grp == \"$TEST_GROUP\" and \
 -- 
 2.43.0
 
