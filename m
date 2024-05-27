@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680CA17E90E;
-	Mon, 27 May 2024 19:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E175417E90E;
+	Mon, 27 May 2024 19:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837007; cv=none; b=Tcxw23qgJ9CjUaWt+Z6CEyiCK+JpBa3Bs9XfmGFCLkDFb/RMys7D8BbnRuwngIQp6HbmEv8jS/2cS2b20XR9ltCTfNN+81dDq0KW8iAnzL+EsKc3K+VbbSC0VT9BD4vkpipunc6RcYDQoNm+fp5CxQrOg3n1/GWu1LTD7pHIp6k=
+	t=1716837010; cv=none; b=UdheY+4zG7xXwLAfCK2UKZuxh6PktypAtVafqSoGzixiVwWFrqC0CByFn2dIts/9u22PHVN2e1YBn1bRGarss0SQw+e3MeboPvn5/ghEwEOfzWFdo5IahM55y1Cw6bEHlS2bw44cAbqWo+oEr/9OX44QFCwNn6K7yl+Ulz/y+n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837007; c=relaxed/simple;
-	bh=37G+OoQCRz9xLz4i30K1Xq5Us2Rq6Ln0LyjXY3drSKo=;
+	s=arc-20240116; t=1716837010; c=relaxed/simple;
+	bh=TJyKCcmvBHkddlO5DEkPLmJ5QfWo+eTUviEUPyB/F5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ricZDg6rynI7OdGoRZlqutXZAl6UZfQkVuN/C0eIxIbIyMIMhh9l1ckH4E3HJI3lVY6fVEIHZxqbsxZbeqqFJLD5TDpLsm72m5Def/rmtn8tQvfiHEX6OWkpXUftstv3vYVdfRsEp7K4u08jwj+h2pNo0V06P6IAq9VuRIU/N5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2e7wCZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KHi67J+GfP7OMUe7YEFoCNLkkf4TmUOWbyN8mjJjnFb95mjyLMBPl7yJoBB6mVo9jx80IKylMmIGuPJme9SJnqZJHwlfk4bXQsg9dUw03talwNtfy+fXTnHsuZTf+76dUJ0LtK0S2YhhcODGq4ncbnYblVAjVtry861PYw9TONg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZHCQEZ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2e7wCZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0574C2BBFC;
-	Mon, 27 May 2024 19:10:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZHCQEZ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C2EC32781;
+	Mon, 27 May 2024 19:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837007;
-	bh=37G+OoQCRz9xLz4i30K1Xq5Us2Rq6Ln0LyjXY3drSKo=;
+	s=korg; t=1716837009;
+	bh=TJyKCcmvBHkddlO5DEkPLmJ5QfWo+eTUviEUPyB/F5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2e7wCZGoWuCGkSRd2FjBw/rpF74VgFCX1js9JxlJnegCJpe7AS5UIdBlvVxy1+R5
-	 ihOT2QFTAxvOFfElzwBw3p91eriwQ1mDSeXEEVc1pkYlfjop4YpecBXFo5MAL0XoIp
-	 xbp59m9U3mrg1u+zWAPzwPtapNJ/uGta/LmToxyc=
+	b=fZHCQEZ2l9mmgQjjiu/QXKb+cqp6AJN4xTR5jFMtBNdCQOOwAP+udASjcvxJ8nBpg
+	 FgZuS0YMFvpUw8lk3/LFnUyc8yfcHpgqFOkiEwi08Z3/kj2dR9HHt9zGE8+bRfloVR
+	 +JtAbpw7RZPAvH6xrxtYgEeTGnl9adgLgCTHE0vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Edward Liaw <edliaw@google.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 232/427] selftests/sgx: Include KHDR_INCLUDES in Makefile
-Date: Mon, 27 May 2024 20:54:39 +0200
-Message-ID: <20240527185624.147695746@linuxfoundation.org>
+Subject: [PATCH 6.9 233/427] dm-delay: fix workqueue delay_timer race
+Date: Mon, 27 May 2024 20:54:40 +0200
+Message-ID: <20240527185624.233011604@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -56,56 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Liaw <edliaw@google.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit 2c3b8f8f37c6c0c926d584cf4158db95e62b960c ]
+[ Upstream commit 8d24790ed08ab4e619ce58ed4a1b353ab77ffdc5 ]
 
-Add KHDR_INCLUDES to the CFLAGS to pull in the kselftest harness
-dependencies (-D_GNU_SOURCE).
+delay_timer could be pending when delay_dtr() is called. It needs to be
+shut down before kdelayd_wq is destroyed, so it won't try queueing more
+work to kdelayd_wq while that's getting destroyed.
 
-Also, remove redefinitions of _GNU_SOURCE in the source code.
+Also the del_timer_sync() call in delay_presuspend() doesn't protect
+against the timer getting immediately rearmed by the queued call to
+flush_delayed_bios(), but there's no real harm if that does happen.
+timer_delete() is less work, and is basically just as likely to stop a
+pointless call to flush_delayed_bios().
 
-Fixes: 809216233555 ("selftests/harness: remove use of LINE_MAX")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202404301040.3bea5782-oliver.sang@intel.com
-Signed-off-by: Edward Liaw <edliaw@google.com>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 26b9f228703f ("dm: delay target")
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/sgx/Makefile    | 2 +-
- tools/testing/selftests/sgx/sigstruct.c | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ drivers/md/dm-delay.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/sgx/Makefile b/tools/testing/selftests/sgx/Makefile
-index 867f88ce2570a..26ea30fae23ca 100644
---- a/tools/testing/selftests/sgx/Makefile
-+++ b/tools/testing/selftests/sgx/Makefile
-@@ -12,7 +12,7 @@ OBJCOPY := $(CROSS_COMPILE)objcopy
- endif
+diff --git a/drivers/md/dm-delay.c b/drivers/md/dm-delay.c
+index 5eabdb06c6498..eec0daa4b227a 100644
+--- a/drivers/md/dm-delay.c
++++ b/drivers/md/dm-delay.c
+@@ -154,8 +154,10 @@ static void delay_dtr(struct dm_target *ti)
+ {
+ 	struct delay_c *dc = ti->private;
  
- INCLUDES := -I$(top_srcdir)/tools/include
--HOST_CFLAGS := -Wall -Werror -g $(INCLUDES) -fPIC
-+HOST_CFLAGS := -Wall -Werror $(KHDR_INCLUDES) -g $(INCLUDES) -fPIC
- HOST_LDFLAGS := -z noexecstack -lcrypto
- ENCL_CFLAGS += -Wall -Werror -static-pie -nostdlib -ffreestanding -fPIE \
- 	       -fno-stack-protector -mrdrnd $(INCLUDES)
-diff --git a/tools/testing/selftests/sgx/sigstruct.c b/tools/testing/selftests/sgx/sigstruct.c
-index d73b29becf5b0..200034a0fee51 100644
---- a/tools/testing/selftests/sgx/sigstruct.c
-+++ b/tools/testing/selftests/sgx/sigstruct.c
-@@ -1,7 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- /*  Copyright(c) 2016-20 Intel Corporation. */
+-	if (dc->kdelayd_wq)
++	if (dc->kdelayd_wq) {
++		timer_shutdown_sync(&dc->delay_timer);
+ 		destroy_workqueue(dc->kdelayd_wq);
++	}
  
--#define _GNU_SOURCE
- #include <assert.h>
- #include <getopt.h>
- #include <stdbool.h>
+ 	if (dc->read.dev)
+ 		dm_put_device(ti, dc->read.dev);
+@@ -335,7 +337,7 @@ static void delay_presuspend(struct dm_target *ti)
+ 	mutex_unlock(&delayed_bios_lock);
+ 
+ 	if (!delay_is_fast(dc))
+-		del_timer_sync(&dc->delay_timer);
++		timer_delete(&dc->delay_timer);
+ 	flush_delayed_bios(dc, true);
+ }
+ 
 -- 
 2.43.0
 
