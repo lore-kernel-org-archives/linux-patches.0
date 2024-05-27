@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5FD262BE;
-	Mon, 27 May 2024 19:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E8E262BE;
+	Mon, 27 May 2024 19:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838092; cv=none; b=bU+kyVAirP0pMehJoD30n/7axAbpbpXaFMnUJSK7qUNWworNMqZZP1w+LqotcSb9C1r5rAVUPIO2hDt9wzrugeDT9HfLGLONBFNIJuH+cw1pp3Xvn3XgNA1/5zqH/RbQvQOukL7f0yQxIm1mZxYudal27581qCTcA+f7C2qdYAc=
+	t=1716838094; cv=none; b=hLX7acGKSx4DIsJNVgwTdWA693eyNDd5y3tbA5DRAoUf7uaDN8Yt1R46c5Vd33serHeTykwoMkKMDS0bkwtjs0co2VDyf/y7PG2klhrYWPNku0SOjtcxFlf9sMb/w7SiwjwIbA57wE6ijLf4sUzB9Cq1UzKvKg8kmGTSsRpq3Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838092; c=relaxed/simple;
-	bh=7Awt9Ru4gDnvmUgcxbOCPWgbh2fzmVL9ZCVpCUtXIkU=;
+	s=arc-20240116; t=1716838094; c=relaxed/simple;
+	bh=bqQ57iN8N5BvLiL/gYhPLoGhi8lzg4+NpWJXNX7TVes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kthWLgRo4BCtPdxnuWmVjl6AvTm+6YH20dHlcbacfR+hmjOql43azEqaCMOdAij6KxlI0QNdvwnCM1X98BTlF5AAhuLYMUCQgF0yR16I3cIrjiXaX2DUBcEx5JPi4kPRzogBFmtpx9pBLxShHNejzpiZncG08oq2XyOO7qE6WVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BboFJD1z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QmHW1DUIhmBjzi/r/sLN5M2Y+gVVTlLNptam+V3h88kUhJtyt6IPWs3FRWQkUXaHBpyXygsPLukuFps6iQRQNAGtJsx8H5KsMs1C2EVM//Mmrdmu6uDrX0v4uLfedKa7uNKuW4dWqkbkHLKw2fOsH38Y50DPpu8pBJ9y3masPeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lO9UqfXg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BboFJD1z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76061C2BBFC;
-	Mon, 27 May 2024 19:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lO9UqfXg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0220CC2BBFC;
+	Mon, 27 May 2024 19:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838091;
-	bh=7Awt9Ru4gDnvmUgcxbOCPWgbh2fzmVL9ZCVpCUtXIkU=;
+	s=korg; t=1716838094;
+	bh=bqQ57iN8N5BvLiL/gYhPLoGhi8lzg4+NpWJXNX7TVes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BboFJD1zZvam4gTy3ePkkuh8ZPwwsTteZiLEDQ8nURlwZzrvwZYxqaflsEtaGRhJC
-	 m818HtvSjppiIKEZOSxbdloGTZuzoDw49yya3bCQW6ZIu3SpOFOYCXFj0FWvhTEZ7g
-	 pwh4cU2MkwM2cayD+eLgDlGH2/I6aDb6fZ4Yrmwo=
+	b=lO9UqfXgwUqIvSTo4SzWIRtgLPZCZSz2OcWpjXzvzfOKCysNLfHndm7nA3ZQLbVW/
+	 bCv1HJW9X8YXC8KqWBTEwCAAVxXB4CQdf7igAQjwCLYHZ8bz+M5Lbb5Up6HPg2eR+n
+	 h2KEBtVaQLsnU5/TbZy2Hq5/AoHiC1yTjPyhdjVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 221/493] cppc_cpufreq: Fix possible null pointer dereference
-Date: Mon, 27 May 2024 20:53:43 +0200
-Message-ID: <20240527185637.534571122@linuxfoundation.org>
+Subject: [PATCH 6.8 222/493] wifi: iwlwifi: mvm: init vif works only once
+Date: Mon, 27 May 2024 20:53:44 +0200
+Message-ID: <20240527185637.567527435@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -51,63 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit cf7de25878a1f4508c69dc9f6819c21ba177dbfe ]
+[ Upstream commit 0bcc2155983e03c41b21a356af87ae839a6b3ead ]
 
-cppc_cpufreq_get_rate() and hisi_cppc_cpufreq_get_rate() can be called from
-different places with various parameters. So cpufreq_cpu_get() can return
-null as 'policy' in some circumstances.
-Fix this bug by adding null return check.
+It's dangerous to re-initialize works repeatedly, especially
+delayed ones that have an associated timer, and even more so
+if they're not necessarily canceled inbetween. This can be
+the case for these workers here during FW restart scenarios,
+so make sure to initialize it only once.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+While at it, also ensure it is cancelled correctly.
 
-Fixes: a28b2bfc099c ("cppc_cpufreq: replace per-cpu data array with a list")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: f67806140220 ("iwlwifi: mvm: disconnect in case of bad channel switch parameters")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240416134215.ddf8eece5eac.I4164f5c9c444b64a9abbaab14c23858713778e35@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ .../net/wireless/intel/iwlwifi/mvm/mac80211.c | 19 +++++++++++++++++--
+ .../wireless/intel/iwlwifi/mvm/mld-mac80211.c |  2 ++
+ drivers/net/wireless/intel/iwlwifi/mvm/mvm.h  |  2 ++
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
-index 64420d9cfd1ed..15f1d41920a33 100644
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -741,10 +741,15 @@ static unsigned int cppc_cpufreq_get_rate(unsigned int cpu)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index e321d41d1aba2..05735817918be 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -1547,6 +1547,17 @@ static int iwl_mvm_alloc_bcast_mcast_sta(struct iwl_mvm *mvm,
+ 					IWL_STA_MULTICAST);
+ }
+ 
++void iwl_mvm_mac_init_mvmvif(struct iwl_mvm *mvm, struct iwl_mvm_vif *mvmvif)
++{
++	lockdep_assert_held(&mvm->mutex);
++
++	if (test_bit(IWL_MVM_STATUS_IN_HW_RESTART, &mvm->status))
++		return;
++
++	INIT_DELAYED_WORK(&mvmvif->csa_work,
++			  iwl_mvm_channel_switch_disconnect_wk);
++}
++
+ static int iwl_mvm_mac_add_interface(struct ieee80211_hw *hw,
+ 				     struct ieee80211_vif *vif)
  {
- 	struct cppc_perf_fb_ctrs fb_ctrs_t0 = {0}, fb_ctrs_t1 = {0};
- 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
--	struct cppc_cpudata *cpu_data = policy->driver_data;
-+	struct cppc_cpudata *cpu_data;
- 	u64 delivered_perf;
- 	int ret;
+@@ -1557,6 +1568,8 @@ static int iwl_mvm_mac_add_interface(struct ieee80211_hw *hw,
  
-+	if (!policy)
-+		return -ENODEV;
-+
-+	cpu_data = policy->driver_data;
-+
- 	cpufreq_cpu_put(policy);
+ 	mutex_lock(&mvm->mutex);
  
- 	ret = cppc_get_perf_ctrs(cpu, &fb_ctrs_t0);
-@@ -822,10 +827,15 @@ static struct cpufreq_driver cppc_cpufreq_driver = {
- static unsigned int hisi_cppc_cpufreq_get_rate(unsigned int cpu)
++	iwl_mvm_mac_init_mvmvif(mvm, mvmvif);
++
+ 	mvmvif->mvm = mvm;
+ 
+ 	/* the first link always points to the default one */
+@@ -1632,8 +1645,6 @@ static int iwl_mvm_mac_add_interface(struct ieee80211_hw *hw,
+ 		mvm->p2p_device_vif = vif;
+ 
+ 	iwl_mvm_tcm_add_vif(mvm, vif);
+-	INIT_DELAYED_WORK(&mvmvif->csa_work,
+-			  iwl_mvm_channel_switch_disconnect_wk);
+ 
+ 	if (vif->type == NL80211_IFTYPE_MONITOR) {
+ 		mvm->monitor_on = true;
+@@ -1671,6 +1682,8 @@ static int iwl_mvm_mac_add_interface(struct ieee80211_hw *hw,
+ void iwl_mvm_prepare_mac_removal(struct iwl_mvm *mvm,
+ 				 struct ieee80211_vif *vif)
  {
- 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
--	struct cppc_cpudata *cpu_data = policy->driver_data;
-+	struct cppc_cpudata *cpu_data;
- 	u64 desired_perf;
- 	int ret;
- 
-+	if (!policy)
-+		return -ENODEV;
++	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
 +
-+	cpu_data = policy->driver_data;
+ 	if (vif->type == NL80211_IFTYPE_P2P_DEVICE) {
+ 		/*
+ 		 * Flush the ROC worker which will flush the OFFCHANNEL queue.
+@@ -1679,6 +1692,8 @@ void iwl_mvm_prepare_mac_removal(struct iwl_mvm *mvm,
+ 		 */
+ 		flush_work(&mvm->roc_done_wk);
+ 	}
 +
- 	cpufreq_cpu_put(policy);
++	cancel_delayed_work_sync(&mvmvif->csa_work);
+ }
  
- 	ret = cppc_get_desired_perf(cpu, &desired_perf);
+ /* This function is doing the common part of removing the interface for
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index 935cbe2026491..1b39c9ea55fa3 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -14,6 +14,8 @@ static int iwl_mvm_mld_mac_add_interface(struct ieee80211_hw *hw,
+ 
+ 	mutex_lock(&mvm->mutex);
+ 
++	iwl_mvm_mac_init_mvmvif(mvm, mvmvif);
++
+ 	mvmvif->mvm = mvm;
+ 
+ 	/* Not much to do here. The stack will not allow interface
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+index fe0fa9ff533d7..4653f608355cc 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+@@ -1769,6 +1769,8 @@ int iwl_mvm_load_d3_fw(struct iwl_mvm *mvm);
+ 
+ int iwl_mvm_mac_setup_register(struct iwl_mvm *mvm);
+ 
++void iwl_mvm_mac_init_mvmvif(struct iwl_mvm *mvm, struct iwl_mvm_vif *mvmvif);
++
+ /*
+  * FW notifications / CMD responses handlers
+  * Convention: iwl_mvm_rx_<NAME OF THE CMD>
 -- 
 2.43.0
 
