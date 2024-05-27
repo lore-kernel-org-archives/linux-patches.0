@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BE017727;
-	Mon, 27 May 2024 19:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF59C17727;
+	Mon, 27 May 2024 19:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838318; cv=none; b=jRCMeLLcELS9xezS4oVYLGuna3Sylh0YBmnoQME/cT70H5qS4L/x0sEhbpJoEo9MrIcjk2Fn2b7bAO9+huuQLZgK1Qo5A4F5tFmGcRTElgIOnUAOOHqN+EWcLs0RIB+Sm0cYbfS6K1vrn9BoByxl1K71qo6L7FjZQ3xDDDXT4G8=
+	t=1716838320; cv=none; b=e78kW1j++X2VCV/joZgmCdE4X+AzOi+rlUNpcGjjQQ4aZFrNzB+OVWA6UrI5megMAzxmaXrBwj+oQQsNGdLvpHIIvuE5OT7wpyvnQQd8NxaqnKsRf84OAzMb9NpZd1jkKpz+22d1mj8r4a405FmIiARb0AvCXIXk21N1i64B4/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838318; c=relaxed/simple;
-	bh=NfVmApfkV2Ttb9fzN5BELGHj83YC1YZ9tWIIzGLK3pM=;
+	s=arc-20240116; t=1716838320; c=relaxed/simple;
+	bh=DSVu94BTwnofbe99S/WqH0Mmq2B5+OYtJy42vmpmark=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IGNhX2SzXdL+KpRbHKl1FPVlQi9mWGWp5l2Pr2hEihuStQh5f/KVgtSI3ftuQ2ikbfxj+I7oD20DCYvjHI2MXwo9lTj8mxKPjexoNW9uq7Pxeq+2vXCYU9lxCMer+76kqZC/qIJGD0kZcPqNbnIUH6ebD8ThjfkZntOJxDSCaGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdudTdlS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HmyEMRj+rdw35rzEE2zAfgTYVN/ddjaP1ODe3yaTQQNT45K2TvYT5JUD2JqvRzojV+H/K678ewGycXe6XIHNqYtuCxQFIxqi+boaPIcNSRPdwCRB5JA7qSzmNRVkkNxMOchb5yS5nZ3U9ZEKBBei9uBfV1Y2FYP0kWwC4jOUFLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHxIBfnA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdudTdlS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75EFC2BBFC;
-	Mon, 27 May 2024 19:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHxIBfnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB03C2BBFC;
+	Mon, 27 May 2024 19:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838318;
-	bh=NfVmApfkV2Ttb9fzN5BELGHj83YC1YZ9tWIIzGLK3pM=;
+	s=korg; t=1716838320;
+	bh=DSVu94BTwnofbe99S/WqH0Mmq2B5+OYtJy42vmpmark=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MdudTdlSz9GT2TtItW1lCOFXK2lL6rUAdA0dbNkre+Vrbhrw40169zP0CikCFO8hv
-	 xWVR4Z+v8FqwbwUCeN4TXJt4BTukdnhBUc78WGIHLaE9q3bSpn9xBn79aiRth2WQJk
-	 MHNDiYvVz1RI+txBdBXBggLAg1uv+MFBfvg+2OIs=
+	b=QHxIBfnADRIIaTgz7MRvEyEEZRqGjo0nnAigI55bH8r5Ix5uMmQzEMfblGszoWnPO
+	 lWD2DHXSkh7sYz1W6h1b9lsE/m9fJgGGa4C60RfMKe17MLRFsi5f8UkQXk0l8t7oGv
+	 Oq+PaAtbnnJZwlJK6ZVY5HxaUEaUia3JRbNzg4lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Steve Glendinning <steve.glendinning@shawell.net>,
-	UNGLinuxDriver@microchip.com,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 310/493] net: usb: smsc95xx: stop lying about skb->truesize
-Date: Mon, 27 May 2024 20:55:12 +0200
-Message-ID: <20240527185640.433825533@linuxfoundation.org>
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 6.8 346/493] ice: make ice_vsi_cfg_txq() static
+Date: Mon, 27 May 2024 20:55:48 +0200
+Message-ID: <20240527185641.596850106@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -54,85 +54,308 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit d50729f1d60bca822ef6d9c1a5fb28d486bd7593 ]
+[ Upstream commit a292ba981324ec790eb671df1c64fae5c98c4b3d ]
 
-Some usb drivers try to set small skb->truesize and break
-core networking stacks.
+Currently, XSK control path in ice driver calls directly
+ice_vsi_cfg_txq() whereas we have ice_vsi_cfg_single_txq() for that
+purpose. Use the latter from XSK side and make ice_vsi_cfg_txq() static.
 
-In this patch, I removed one of the skb->truesize override.
+ice_vsi_cfg_txq() resides in ice_base.c and is rather big, so to reduce
+the code churn let us move the callers of it from ice_lib.c to
+ice_base.c.
 
-I also replaced one skb_clone() by an allocation of a fresh
-and small skb, to get minimally sized skbs, like we did
-in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
-in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
-stop lying about skb->truesize")
+This change puts ice_qp_ena() on nice diet due to the checks and
+operations that ice_vsi_cfg_single_{r,t}xq() do internally.
 
-v3: also fix a sparse error ( https://lore.kernel.org/oe-kbuild-all/202405091310.KvncIecx-lkp@intel.com/ )
-v2: leave the skb_trim() game because smsc95xx_rx_csum_offload()
-    needs the csum part. (Jakub)
-    While we are it, use get_unaligned() in smsc95xx_rx_csum_offload().
+add/remove: 0/0 grow/shrink: 0/1 up/down: 0/-182 (-182)
+Function                                     old     new   delta
+ice_xsk_pool_setup                          2165    1983    -182
+Total: Before=472597, After=472415, chg -0.04%
 
-Fixes: 2f7ca802bdae ("net: Add SMSC LAN9500 USB2.0 10/100 ethernet adapter driver")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steve Glendinning <steve.glendinning@shawell.net>
-Cc: UNGLinuxDriver@microchip.com
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240509083313.2113832-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: e77f43d531af ("Bluetooth: hci_core: Fix not handling hdev->le_num_of_adv_sets=1")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc95xx.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_base.c | 76 ++++++++++++++++++++++-
+ drivers/net/ethernet/intel/ice/ice_base.h |  7 ++-
+ drivers/net/ethernet/intel/ice/ice_lib.c  | 73 ----------------------
+ drivers/net/ethernet/intel/ice/ice_lib.h  |  6 --
+ drivers/net/ethernet/intel/ice/ice_xsk.c  | 20 +-----
+ 5 files changed, 82 insertions(+), 100 deletions(-)
 
-diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
-index 2fa46baa589e5..cbea246664795 100644
---- a/drivers/net/usb/smsc95xx.c
-+++ b/drivers/net/usb/smsc95xx.c
-@@ -1810,9 +1810,11 @@ static int smsc95xx_reset_resume(struct usb_interface *intf)
- 
- static void smsc95xx_rx_csum_offload(struct sk_buff *skb)
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
+index 9263754c9525d..d2fd315556a39 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -882,7 +882,7 @@ void ice_vsi_free_q_vectors(struct ice_vsi *vsi)
+  * @ring: Tx ring to be configured
+  * @qg_buf: queue group buffer
+  */
+-int
++static int
+ ice_vsi_cfg_txq(struct ice_vsi *vsi, struct ice_tx_ring *ring,
+ 		struct ice_aqc_add_tx_qgrp *qg_buf)
  {
--	skb->csum = *(u16 *)(skb_tail_pointer(skb) - 2);
-+	u16 *csum_ptr = (u16 *)(skb_tail_pointer(skb) - 2);
-+
-+	skb->csum = (__force __wsum)get_unaligned(csum_ptr);
- 	skb->ip_summed = CHECKSUM_COMPLETE;
--	skb_trim(skb, skb->len - 2);
-+	skb_trim(skb, skb->len - 2); /* remove csum */
+@@ -953,6 +953,80 @@ ice_vsi_cfg_txq(struct ice_vsi *vsi, struct ice_tx_ring *ring,
+ 	return 0;
  }
  
- static int smsc95xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
-@@ -1870,25 +1872,22 @@ static int smsc95xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 				if (dev->net->features & NETIF_F_RXCSUM)
- 					smsc95xx_rx_csum_offload(skb);
- 				skb_trim(skb, skb->len - 4); /* remove fcs */
--				skb->truesize = size + sizeof(struct sk_buff);
++int ice_vsi_cfg_single_txq(struct ice_vsi *vsi, struct ice_tx_ring **tx_rings,
++			   u16 q_idx)
++{
++	DEFINE_FLEX(struct ice_aqc_add_tx_qgrp, qg_buf, txqs, 1);
++
++	if (q_idx >= vsi->alloc_txq || !tx_rings || !tx_rings[q_idx])
++		return -EINVAL;
++
++	qg_buf->num_txqs = 1;
++
++	return ice_vsi_cfg_txq(vsi, tx_rings[q_idx], qg_buf);
++}
++
++/**
++ * ice_vsi_cfg_txqs - Configure the VSI for Tx
++ * @vsi: the VSI being configured
++ * @rings: Tx ring array to be configured
++ * @count: number of Tx ring array elements
++ *
++ * Return 0 on success and a negative value on error
++ * Configure the Tx VSI for operation.
++ */
++static int
++ice_vsi_cfg_txqs(struct ice_vsi *vsi, struct ice_tx_ring **rings, u16 count)
++{
++	DEFINE_FLEX(struct ice_aqc_add_tx_qgrp, qg_buf, txqs, 1);
++	int err = 0;
++	u16 q_idx;
++
++	qg_buf->num_txqs = 1;
++
++	for (q_idx = 0; q_idx < count; q_idx++) {
++		err = ice_vsi_cfg_txq(vsi, rings[q_idx], qg_buf);
++		if (err)
++			break;
++	}
++
++	return err;
++}
++
++/**
++ * ice_vsi_cfg_lan_txqs - Configure the VSI for Tx
++ * @vsi: the VSI being configured
++ *
++ * Return 0 on success and a negative value on error
++ * Configure the Tx VSI for operation.
++ */
++int ice_vsi_cfg_lan_txqs(struct ice_vsi *vsi)
++{
++	return ice_vsi_cfg_txqs(vsi, vsi->tx_rings, vsi->num_txq);
++}
++
++/**
++ * ice_vsi_cfg_xdp_txqs - Configure Tx queues dedicated for XDP in given VSI
++ * @vsi: the VSI being configured
++ *
++ * Return 0 on success and a negative value on error
++ * Configure the Tx queues dedicated for XDP in given VSI for operation.
++ */
++int ice_vsi_cfg_xdp_txqs(struct ice_vsi *vsi)
++{
++	int ret;
++	int i;
++
++	ret = ice_vsi_cfg_txqs(vsi, vsi->xdp_rings, vsi->num_xdp_txq);
++	if (ret)
++		return ret;
++
++	ice_for_each_rxq(vsi, i)
++		ice_tx_xsk_pool(vsi, i);
++
++	return 0;
++}
++
+ /**
+  * ice_cfg_itr - configure the initial interrupt throttle values
+  * @hw: pointer to the HW structure
+diff --git a/drivers/net/ethernet/intel/ice/ice_base.h b/drivers/net/ethernet/intel/ice/ice_base.h
+index 85e6076445602..b711bc921928d 100644
+--- a/drivers/net/ethernet/intel/ice/ice_base.h
++++ b/drivers/net/ethernet/intel/ice/ice_base.h
+@@ -15,9 +15,10 @@ int ice_vsi_wait_one_rx_ring(struct ice_vsi *vsi, bool ena, u16 rxq_idx);
+ int ice_vsi_alloc_q_vectors(struct ice_vsi *vsi);
+ void ice_vsi_map_rings_to_vectors(struct ice_vsi *vsi);
+ void ice_vsi_free_q_vectors(struct ice_vsi *vsi);
+-int
+-ice_vsi_cfg_txq(struct ice_vsi *vsi, struct ice_tx_ring *ring,
+-		struct ice_aqc_add_tx_qgrp *qg_buf);
++int ice_vsi_cfg_single_txq(struct ice_vsi *vsi, struct ice_tx_ring **tx_rings,
++			   u16 q_idx);
++int ice_vsi_cfg_lan_txqs(struct ice_vsi *vsi);
++int ice_vsi_cfg_xdp_txqs(struct ice_vsi *vsi);
+ void ice_cfg_itr(struct ice_hw *hw, struct ice_q_vector *q_vector);
+ void
+ ice_cfg_txq_interrupt(struct ice_vsi *vsi, u16 txq, u16 msix_idx, u16 itr_idx);
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 27b3423c9ff23..15bdf6ef3c099 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -1774,79 +1774,6 @@ ice_write_qrxflxp_cntxt(struct ice_hw *hw, u16 pf_q, u32 rxdid, u32 prio,
+ 	wr32(hw, QRXFLXP_CNTXT(pf_q), regval);
+ }
  
- 				return 1;
- 			}
+-int ice_vsi_cfg_single_txq(struct ice_vsi *vsi, struct ice_tx_ring **tx_rings, u16 q_idx)
+-{
+-	DEFINE_FLEX(struct ice_aqc_add_tx_qgrp, qg_buf, txqs, 1);
+-
+-	if (q_idx >= vsi->alloc_txq || !tx_rings || !tx_rings[q_idx])
+-		return -EINVAL;
+-
+-	qg_buf->num_txqs = 1;
+-
+-	return ice_vsi_cfg_txq(vsi, tx_rings[q_idx], qg_buf);
+-}
+-
+-/**
+- * ice_vsi_cfg_txqs - Configure the VSI for Tx
+- * @vsi: the VSI being configured
+- * @rings: Tx ring array to be configured
+- * @count: number of Tx ring array elements
+- *
+- * Return 0 on success and a negative value on error
+- * Configure the Tx VSI for operation.
+- */
+-static int
+-ice_vsi_cfg_txqs(struct ice_vsi *vsi, struct ice_tx_ring **rings, u16 count)
+-{
+-	DEFINE_FLEX(struct ice_aqc_add_tx_qgrp, qg_buf, txqs, 1);
+-	int err = 0;
+-	u16 q_idx;
+-
+-	qg_buf->num_txqs = 1;
+-
+-	for (q_idx = 0; q_idx < count; q_idx++) {
+-		err = ice_vsi_cfg_txq(vsi, rings[q_idx], qg_buf);
+-		if (err)
+-			break;
+-	}
+-
+-	return err;
+-}
+-
+-/**
+- * ice_vsi_cfg_lan_txqs - Configure the VSI for Tx
+- * @vsi: the VSI being configured
+- *
+- * Return 0 on success and a negative value on error
+- * Configure the Tx VSI for operation.
+- */
+-int ice_vsi_cfg_lan_txqs(struct ice_vsi *vsi)
+-{
+-	return ice_vsi_cfg_txqs(vsi, vsi->tx_rings, vsi->num_txq);
+-}
+-
+-/**
+- * ice_vsi_cfg_xdp_txqs - Configure Tx queues dedicated for XDP in given VSI
+- * @vsi: the VSI being configured
+- *
+- * Return 0 on success and a negative value on error
+- * Configure the Tx queues dedicated for XDP in given VSI for operation.
+- */
+-int ice_vsi_cfg_xdp_txqs(struct ice_vsi *vsi)
+-{
+-	int ret;
+-	int i;
+-
+-	ret = ice_vsi_cfg_txqs(vsi, vsi->xdp_rings, vsi->num_xdp_txq);
+-	if (ret)
+-		return ret;
+-
+-	ice_for_each_rxq(vsi, i)
+-		ice_tx_xsk_pool(vsi, i);
+-
+-	return 0;
+-}
+-
+ /**
+  * ice_intrl_usec_to_reg - convert interrupt rate limit to register value
+  * @intrl: interrupt rate limit in usecs
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.h b/drivers/net/ethernet/intel/ice/ice_lib.h
+index 95505a501a935..b5a1ed7cc4b17 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.h
++++ b/drivers/net/ethernet/intel/ice/ice_lib.h
+@@ -54,10 +54,6 @@ bool ice_pf_state_is_nominal(struct ice_pf *pf);
  
--			ax_skb = skb_clone(skb, GFP_ATOMIC);
-+			ax_skb = netdev_alloc_skb_ip_align(dev->net, size);
- 			if (unlikely(!ax_skb)) {
- 				netdev_warn(dev->net, "Error allocating skb\n");
- 				return 0;
- 			}
+ void ice_update_eth_stats(struct ice_vsi *vsi);
  
--			ax_skb->len = size;
--			ax_skb->data = packet;
--			skb_set_tail_pointer(ax_skb, size);
-+			skb_put(ax_skb, size);
-+			memcpy(ax_skb->data, packet, size);
+-int ice_vsi_cfg_single_txq(struct ice_vsi *vsi, struct ice_tx_ring **tx_rings, u16 q_idx);
+-
+-int ice_vsi_cfg_lan_txqs(struct ice_vsi *vsi);
+-
+ void ice_vsi_cfg_msix(struct ice_vsi *vsi);
  
- 			if (dev->net->features & NETIF_F_RXCSUM)
- 				smsc95xx_rx_csum_offload(ax_skb);
- 			skb_trim(ax_skb, ax_skb->len - 4); /* remove fcs */
--			ax_skb->truesize = size + sizeof(struct sk_buff);
+ int ice_vsi_start_all_rx_rings(struct ice_vsi *vsi);
+@@ -68,8 +64,6 @@ int
+ ice_vsi_stop_lan_tx_rings(struct ice_vsi *vsi, enum ice_disq_rst_src rst_src,
+ 			  u16 rel_vmvf_num);
  
- 			usbnet_skb_return(dev, ax_skb);
- 		}
+-int ice_vsi_cfg_xdp_txqs(struct ice_vsi *vsi);
+-
+ int ice_vsi_stop_xdp_tx_rings(struct ice_vsi *vsi);
+ 
+ void ice_cfg_sw_lldp(struct ice_vsi *vsi, bool tx, bool create);
+diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
+index 9e01f410af772..1857220d27fee 100644
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -218,32 +218,17 @@ static int ice_qp_dis(struct ice_vsi *vsi, u16 q_idx)
+  */
+ static int ice_qp_ena(struct ice_vsi *vsi, u16 q_idx)
+ {
+-	DEFINE_FLEX(struct ice_aqc_add_tx_qgrp, qg_buf, txqs, 1);
+-	u16 size = __struct_size(qg_buf);
+ 	struct ice_q_vector *q_vector;
+-	struct ice_tx_ring *tx_ring;
+-	struct ice_rx_ring *rx_ring;
+ 	int err;
+ 
+-	if (q_idx >= vsi->num_rxq || q_idx >= vsi->num_txq)
+-		return -EINVAL;
+-
+-	qg_buf->num_txqs = 1;
+-
+-	tx_ring = vsi->tx_rings[q_idx];
+-	rx_ring = vsi->rx_rings[q_idx];
+-	q_vector = rx_ring->q_vector;
+-
+-	err = ice_vsi_cfg_txq(vsi, tx_ring, qg_buf);
++	err = ice_vsi_cfg_single_txq(vsi, vsi->tx_rings, q_idx);
+ 	if (err)
+ 		return err;
+ 
+ 	if (ice_is_xdp_ena_vsi(vsi)) {
+ 		struct ice_tx_ring *xdp_ring = vsi->xdp_rings[q_idx];
+ 
+-		memset(qg_buf, 0, size);
+-		qg_buf->num_txqs = 1;
+-		err = ice_vsi_cfg_txq(vsi, xdp_ring, qg_buf);
++		err = ice_vsi_cfg_single_txq(vsi, vsi->xdp_rings, q_idx);
+ 		if (err)
+ 			return err;
+ 		ice_set_ring_xdp(xdp_ring);
+@@ -254,6 +239,7 @@ static int ice_qp_ena(struct ice_vsi *vsi, u16 q_idx)
+ 	if (err)
+ 		return err;
+ 
++	q_vector = vsi->rx_rings[q_idx]->q_vector;
+ 	ice_qvec_cfg_msix(vsi, q_vector);
+ 
+ 	err = ice_vsi_ctrl_one_rx_ring(vsi, true, q_idx, true);
 -- 
 2.43.0
 
