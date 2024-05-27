@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A50168C4;
-	Mon, 27 May 2024 19:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356BE15EFC3;
+	Mon, 27 May 2024 19:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837793; cv=none; b=Nmr8vlb9KgeOLKEyGlcYhpUP6wVtMt0EYLKuENLoc5iRCwCIiaN/BVnO2yWo3Ib3Ww2yQDR+esyCJ86X2AmXi7PqzOnHk3jLMJESvd8bcDk2KPjPGh45z2yZ7ByVB5nUkz77xEJDB50gmkxKl5sL/ZaF2x+yZKJOkUCeZHWYUzE=
+	t=1716837796; cv=none; b=o9JPQSYAMXII4X3Z3RZm6++qb5QmeGTkDNexdLtfSWzfr2azK62rvDY9Cpd5CiYItDscKBea04YcBZ+ZS6F/P19nCXtvemos96PD8nlp/qKJmzYBTRVWkwLCfjYZFQQttsag9HxOgoAuWwDJaEJB9+CUDtuAkTP3Uo/DMAm9Twg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837793; c=relaxed/simple;
-	bh=8sQibg7ngBLiZgpROLEZlZN9WGh4EZ9yBc0Q65B7UmM=;
+	s=arc-20240116; t=1716837796; c=relaxed/simple;
+	bh=QxrsMTxIu9AveLLpzfGep58pYikIOx3qf77zOnHIg2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Us9IEbpBtLnqzi2Ddggm6DK2sz45HqFjOfUSL6bLYvPvjAqW46XbJiS9qefUWLvwjPKeCHCFOel+mfAznzJbH3a9XRfMzqyNd3VENdY+NS1cpLN2uQTmno6C0IXLLGGRWK5EyyOSGjFWmutpdqxd2+LQgWWHf5GdrWfoPukhh3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqzcbVPN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EgjL4KYbYjsZbXHvh/H5GWuNpILhqz8jgGeFHxEw6htEqji5yRSVdpuOi6+ey8Rq7gMdaHKH+MTTFzKKV7HxMxQOR11GAvk/vqX4kK+/2LpnhUrLXiifDkZ/3WN++AOicD7zUQ6AxldH5aHrRgr2DMbZ8aSnK93fMlkNvUcgIeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZAZ/igQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqzcbVPN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCE1C2BBFC;
-	Mon, 27 May 2024 19:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZAZ/igQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD947C32786;
+	Mon, 27 May 2024 19:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837793;
-	bh=8sQibg7ngBLiZgpROLEZlZN9WGh4EZ9yBc0Q65B7UmM=;
+	s=korg; t=1716837796;
+	bh=QxrsMTxIu9AveLLpzfGep58pYikIOx3qf77zOnHIg2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aqzcbVPNHGuyNBPVLqH1mto6Xcq4jG6gb5oocHUk5ZjLLaD7vd5EVGjUFaqa/Yf41
-	 Q9mHOKGeSy1CTExS0Tc8Vr158iYDuC/mjG26834GQcbH9Ap/LQFH/hKLIeRSmyvUUS
-	 zHYuOtBw9AzX8Eqw6PiUpo8VuwlofjyNwa/0XafY=
+	b=VZAZ/igQNAogJNfWWzhmNY6tb5ds055HRNAUh+QsWy95AX1Hrn2bK6IaV6sHe2crN
+	 iX23aZPehGyb1WiuTsrb9fyDSkareKeYMtCwJ02gOmen6A2v40FwqL7iEmrk8gc88A
+	 DdbhJAjl3FBTEJvdoncb3ytvGix3YvzkhL216TtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Segarra Fernandez <lucas.segarra.fernandez@intel.com>,
-	Damian Muszynski <damian.muszynski@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Marek Vasut <marex@denx.de>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 147/493] crypto: qat - validate slices count returned by FW
-Date: Mon, 27 May 2024 20:52:29 +0200
-Message-ID: <20240527185635.249119605@linuxfoundation.org>
+Subject: [PATCH 6.8 148/493] hwrng: stm32 - use logical OR in conditional
+Date: Mon, 27 May 2024 20:52:30 +0200
+Message-ID: <20240527185635.280878757@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -53,99 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Segarra Fernandez <lucas.segarra.fernandez@intel.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 483fd65ce29317044d1d00757e3fd23503b6b04c ]
+[ Upstream commit 31b57788a5024d3a114b28dad224a93831b90b5f ]
 
-The function adf_send_admin_tl_start() enables the telemetry (TL)
-feature on a QAT device by sending the ICP_QAT_FW_TL_START message to
-the firmware. This triggers the FW to start writing TL data to a DMA
-buffer in memory and returns an array containing the number of
-accelerators of each type (slices) supported by this HW.
-The pointer to this array is stored in the adf_tl_hw_data data
-structure called slice_cnt.
+The conditional is used to check whether err is non-zero OR whether
+reg variable is non-zero after clearing bits from it. This should be
+done using logical OR, not bitwise OR, fix it.
 
-The array slice_cnt is then used in the function tl_print_dev_data()
-to report in debugfs only statistics about the supported accelerators.
-An incorrect value of the elements in slice_cnt might lead to an out
-of bounds memory read.
-At the moment, there isn't an implementation of FW that returns a wrong
-value, but for robustness validate the slice count array returned by FW.
-
-Fixes: 69e7649f7cc2 ("crypto: qat - add support for device telemetry")
-Signed-off-by: Lucas Segarra Fernandez <lucas.segarra.fernandez@intel.com>
-Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Fixes: 6b85a7e141cb ("hwrng: stm32 - implement STM32MP13x support")
+Signed-off-by: Marek Vasut <marex@denx.de>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/intel/qat/qat_common/adf_gen4_tl.c |  1 +
- .../intel/qat/qat_common/adf_telemetry.c      | 21 +++++++++++++++++++
- .../intel/qat/qat_common/adf_telemetry.h      |  1 +
- 3 files changed, 23 insertions(+)
+ drivers/char/hw_random/stm32-rng.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen4_tl.c b/drivers/crypto/intel/qat/qat_common/adf_gen4_tl.c
-index 7fc7a77f6aed9..c7ad8cf07863b 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_gen4_tl.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_gen4_tl.c
-@@ -149,5 +149,6 @@ void adf_gen4_init_tl_data(struct adf_tl_hw_data *tl_data)
- 	tl_data->sl_exec_counters = sl_exec_counters;
- 	tl_data->rp_counters = rp_counters;
- 	tl_data->num_rp_counters = ARRAY_SIZE(rp_counters);
-+	tl_data->max_sl_cnt = ADF_GEN4_TL_MAX_SLICES_PER_TYPE;
- }
- EXPORT_SYMBOL_GPL(adf_gen4_init_tl_data);
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_telemetry.c b/drivers/crypto/intel/qat/qat_common/adf_telemetry.c
-index 2ff714d11bd2f..74fb0c2ed2412 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_telemetry.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_telemetry.c
-@@ -41,6 +41,20 @@ static int validate_tl_data(struct adf_tl_hw_data *tl_data)
- 	return 0;
- }
- 
-+static int validate_tl_slice_counters(struct icp_qat_fw_init_admin_slice_cnt *slice_count,
-+				      u8 max_slices_per_type)
-+{
-+	u8 *sl_counter = (u8 *)slice_count;
-+	int i;
-+
-+	for (i = 0; i < ADF_TL_SL_CNT_COUNT; i++) {
-+		if (sl_counter[i] > max_slices_per_type)
-+			return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static int adf_tl_alloc_mem(struct adf_accel_dev *accel_dev)
- {
- 	struct adf_tl_hw_data *tl_data = &GET_TL_DATA(accel_dev);
-@@ -214,6 +228,13 @@ int adf_tl_run(struct adf_accel_dev *accel_dev, int state)
- 		return ret;
- 	}
- 
-+	ret = validate_tl_slice_counters(&telemetry->slice_cnt, tl_data->max_sl_cnt);
-+	if (ret) {
-+		dev_err(dev, "invalid value returned by FW\n");
-+		adf_send_admin_tl_stop(accel_dev);
-+		return ret;
-+	}
-+
- 	telemetry->hbuffs = state;
- 	atomic_set(&telemetry->state, state);
- 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_telemetry.h b/drivers/crypto/intel/qat/qat_common/adf_telemetry.h
-index 9be81cd3b8860..e54a406cc1b4a 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_telemetry.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_telemetry.h
-@@ -40,6 +40,7 @@ struct adf_tl_hw_data {
- 	u8 num_dev_counters;
- 	u8 num_rp_counters;
- 	u8 max_rp;
-+	u8 max_sl_cnt;
- };
- 
- struct adf_telemetry {
+diff --git a/drivers/char/hw_random/stm32-rng.c b/drivers/char/hw_random/stm32-rng.c
+index 379bc245c5202..1cc61ef8ee54c 100644
+--- a/drivers/char/hw_random/stm32-rng.c
++++ b/drivers/char/hw_random/stm32-rng.c
+@@ -353,7 +353,7 @@ static int stm32_rng_init(struct hwrng *rng)
+ 	err = readl_relaxed_poll_timeout_atomic(priv->base + RNG_SR, reg,
+ 						reg & RNG_SR_DRDY,
+ 						10, 100000);
+-	if (err | (reg & ~RNG_SR_DRDY)) {
++	if (err || (reg & ~RNG_SR_DRDY)) {
+ 		clk_disable_unprepare(priv->clk);
+ 		dev_err((struct device *)priv->rng.priv,
+ 			"%s: timeout:%x SR: %x!\n", __func__, err, reg);
 -- 
 2.43.0
 
