@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDBC17727;
-	Mon, 27 May 2024 19:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A03F17727;
+	Mon, 27 May 2024 19:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838552; cv=none; b=UsxBMoAFbYtdprOw+PP7dr0Y6iCXrbk8wKCeGVrof1q7ElO9hyOjtQQvi9u/gbeuqKpqYJsc06724UlVUv+DciIrbZs4TqMmeYiP1kpJWmfRhfYQ3qA2U49RNpr9+2p5jRpyvJs2Mj7gI1mMxTiJ3c6MyeLyd48QG+TJoB0qoTw=
+	t=1716838555; cv=none; b=bHrh9BRR+BiLeRm+NhjYfQJ+Wg9zDs4KpRbzIj95HtshJ9kJws1c023fDZFtXLe+lojPx0fm2PibEVfbSnCLIdB5qykO7XGprOTszIfFOCilzSB1sz0R0xLMNeJdihZcRh4MDml10zRWxO5mqZ+9lze0LApZXljjYSsnUMiWmC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838552; c=relaxed/simple;
-	bh=8AGymlFH+ZLlrFEzJ5P1SnSDrzJyd01WElJ+4A6JsYk=;
+	s=arc-20240116; t=1716838555; c=relaxed/simple;
+	bh=Rml015BulBf0mcVK/dwqY9Lh1PfeI8aQ8YMw/9skfFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YTadcJ3DvWxgAPiZ9x2oI7+TeOz70BOkGJ23XSE4stM5C9DcBQB4trrc7vG+s+nFlvHolrfHmcpXFDObCqqaV57lI/u85314cOQU1CpVP+X96/+1bdXrefC/HmB0bZzNi649y956DSvbFwqbx5beoySVnMtWpD74/0G0YwFxVCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ol04nIP/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMFA8DWj0ski3iYYYj/FS8x4oJcJrvx59yvIpX0JpwlOk/m8+SVM889cxoCj5XPhxM9s8yiRXxr6Fd8js03aaqQSvTntRNsdZUjsrmmMZVeEj/NpA2IkdDS4sv50DYW5Chg/WRF+S8nO0bcfFQCRPLdfFw6X6brtwaPqDuFboho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wce3Xpgr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ol04nIP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B893C2BBFC;
-	Mon, 27 May 2024 19:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wce3Xpgr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8090C2BBFC;
+	Mon, 27 May 2024 19:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838552;
-	bh=8AGymlFH+ZLlrFEzJ5P1SnSDrzJyd01WElJ+4A6JsYk=;
+	s=korg; t=1716838555;
+	bh=Rml015BulBf0mcVK/dwqY9Lh1PfeI8aQ8YMw/9skfFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ol04nIP/yk90aMCviUVdMNQVirs4nFe/6I8mg4hnIcmysg41iS4rIULkVS3AY0K0N
-	 5Niiz8f3iFcNEUyAkBGSoC6VrB6oGZ+pnJElElw+hQFvp0eGMqpYFx3NVQqiia4i5z
-	 PqyXLV+DS+j04YUlxRbzzi/d+2SDSuyRX/0Zfg7Q=
+	b=wce3XpgrdIIVRSwAcV/dfc3K0WnuXpMrjGDaNHCGiEmbLXkIHq+05YrWZtntHeVOQ
+	 b0uQFgzIDmiggrYZQ087XAqwT9Zld0ygNDukCxkgT4US9JpuRqTuinHoB7IvA++V22
+	 qA9dRF5kgEnnv77fsOD1xbtdnrC9JNl7pW1hr4eA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 397/493] media: i2c: et8ek8: Dont strip remove function when driver is builtin
-Date: Mon, 27 May 2024 20:56:39 +0200
-Message-ID: <20240527185643.259267649@linuxfoundation.org>
+Subject: [PATCH 6.8 398/493] media: v4l2-subdev: Fix stream handling for crop API
+Date: Mon, 27 May 2024 20:56:40 +0200
+Message-ID: <20240527185643.293509545@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -46,57 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 545b215736c5c4b354e182d99c578a472ac9bfce ]
+[ Upstream commit 34d7bf1c8e59f5fbf438ee32c96389ebe41ca2e8 ]
 
-Using __exit for the remove function results in the remove callback
-being discarded with CONFIG_VIDEO_ET8EK8=y. When such a device gets
-unbound (e.g. using sysfs or hotplug), the driver is just removed
-without the cleanup being performed. This results in resource leaks. Fix
-it by compiling in the remove callback unconditionally.
+When support for streams was added to the V4L2 subdev API, the
+v4l2_subdev_crop structure was extended with a stream field, but the
+field was not handled in the core code that translates the
+VIDIOC_SUBDEV_[GS]_CROP ioctls to the selection API. Fix it.
 
-This also fixes a W=1 modpost warning:
-
-	WARNING: modpost: drivers/media/i2c/et8ek8/et8ek8: section mismatch in reference: et8ek8_i2c_driver+0x10 (section: .data) -> et8ek8_remove (section: .exit.text)
-
-Fixes: c5254e72b8ed ("[media] media: Driver for Toshiba et8ek8 5MP sensor")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Fixes: 2f91e10ee6fd ("media: subdev: add stream based configuration")
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/et8ek8/et8ek8_driver.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/v4l2-core/v4l2-subdev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/i2c/et8ek8/et8ek8_driver.c b/drivers/media/i2c/et8ek8/et8ek8_driver.c
-index f548b1bb75fb9..e932d25ca7b3a 100644
---- a/drivers/media/i2c/et8ek8/et8ek8_driver.c
-+++ b/drivers/media/i2c/et8ek8/et8ek8_driver.c
-@@ -1475,7 +1475,7 @@ static int et8ek8_probe(struct i2c_client *client)
- 	return ret;
- }
+diff --git a/drivers/media/v4l2-core/v4l2-subdev.c b/drivers/media/v4l2-core/v4l2-subdev.c
+index 4c6198c48dd61..45836f0a2b0a7 100644
+--- a/drivers/media/v4l2-core/v4l2-subdev.c
++++ b/drivers/media/v4l2-core/v4l2-subdev.c
+@@ -732,6 +732,7 @@ static long subdev_do_ioctl(struct file *file, unsigned int cmd, void *arg,
+ 		memset(&sel, 0, sizeof(sel));
+ 		sel.which = crop->which;
+ 		sel.pad = crop->pad;
++		sel.stream = crop->stream;
+ 		sel.target = V4L2_SEL_TGT_CROP;
  
--static void __exit et8ek8_remove(struct i2c_client *client)
-+static void et8ek8_remove(struct i2c_client *client)
- {
- 	struct v4l2_subdev *subdev = i2c_get_clientdata(client);
- 	struct et8ek8_sensor *sensor = to_et8ek8_sensor(subdev);
-@@ -1517,7 +1517,7 @@ static struct i2c_driver et8ek8_i2c_driver = {
- 		.of_match_table	= et8ek8_of_table,
- 	},
- 	.probe		= et8ek8_probe,
--	.remove		= __exit_p(et8ek8_remove),
-+	.remove		= et8ek8_remove,
- 	.id_table	= et8ek8_id_table,
- };
+ 		rval = v4l2_subdev_call(
+@@ -756,6 +757,7 @@ static long subdev_do_ioctl(struct file *file, unsigned int cmd, void *arg,
+ 		memset(&sel, 0, sizeof(sel));
+ 		sel.which = crop->which;
+ 		sel.pad = crop->pad;
++		sel.stream = crop->stream;
+ 		sel.target = V4L2_SEL_TGT_CROP;
+ 		sel.r = crop->rect;
  
 -- 
 2.43.0
