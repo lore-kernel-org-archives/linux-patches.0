@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D381917E90E;
-	Mon, 27 May 2024 19:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5AA17E90E;
+	Mon, 27 May 2024 19:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836829; cv=none; b=bWjzojJiqqHOk4SZ2ZN4A42KmbtSKuyhS5vcMcXxr5FPJ2dT8g62fMcSZw18UNRK5XPoph8ZXfy2UYD68jKIgZa0IX23iJ5RUgNyF//iUZK/Z7DKp5NqL7MFiv8GXWC+Hs9x7DOXB968EqL3ygZrc181rQ0SBXHCpEol5QGlSRw=
+	t=1716836832; cv=none; b=CfBLRwZOQv5M51l0NmCAXLNWMwgfnrJgPAS7eBVmDAI5t5pi2WefV0A+Jn3kVSsNm/OYyy14G+U9HfHSK2fw2HxbgXrChMcnyEFcoSaFFuOmLSunVYB2mAXM5AnONN6muX67R+bxxfg3GhV0xuukEvYYlk88S+fGHVLIYLgOSX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836829; c=relaxed/simple;
-	bh=PQQEnlEZaHqJMDtAuLCkqcQOgItp3QeboKpZs0pna1g=;
+	s=arc-20240116; t=1716836832; c=relaxed/simple;
+	bh=+3t0+BxcvoNxVcjl0/75hdS6BShXJt396YOwR4qbLf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAPkmYcUBOnHUwdEJgKSRZoqelsfP9uv1CFjwUhDWi7XtmIg0HhZc2F/tutxNYy3jaRxRgL8ddgmiw2sSTmdIL7XRo8P7nR2p2cVyZ1Z2706DuSTSaTY/x3PpxZtXL8f/hzPUj+fscuY91Wv1dIX8sSQfdAGO0nSoWHbT12afpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5Ce+Hzd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ewx49zVo/eKtBBRwfE+qaV3jrrz4/s5tgpssRd0i0nCvXkNmFm0Ij7KXMx6tHASYrlUWvXv5wlLrKrTJQ1WlQR7D4EAcIZdxOJAfttDWLDlGqfcQg95U4dwD8UxH3g2mO+VYgri0LoWOsm+BNXjKhcwGAXann1ZQWBK0G7bQ5N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUbIQuCO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5Ce+Hzd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6764DC2BBFC;
-	Mon, 27 May 2024 19:07:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUbIQuCO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9023C2BBFC;
+	Mon, 27 May 2024 19:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836829;
-	bh=PQQEnlEZaHqJMDtAuLCkqcQOgItp3QeboKpZs0pna1g=;
+	s=korg; t=1716836832;
+	bh=+3t0+BxcvoNxVcjl0/75hdS6BShXJt396YOwR4qbLf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K5Ce+HzdeKjaNqjhQ8ThyrDuwtAt/+wsN1Qaivvxe037KmBJacxji2V9i7v7ppCb5
-	 8eJ1No2NLCGS8aUt29+P+QpitjpSQBilB1OYM5p1SgoVdbjxIYoda+MAPvV+AlOcey
-	 KKuHK83Wh1qKWgohqulpGWMi2+/pRuaeRfPVrYUY=
+	b=bUbIQuCO/DlGwaM31XrY5ql1CLLpb60yqif1kzRfOY3tgqD+StwJIj44dt1+0Ott5
+	 cixmb841CBUFQtYCyttgnlEq7ZSN6/t6z0m5DVpeNXaGv9VdV31+PHjq4jO6USJQfJ
+	 VvfTof2HtLH9zukH64WXoBIBUU2bowxaZm7s10mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 204/427] wifi: mt76: connac: use muar idx 0xe for non-mt799x as well
-Date: Mon, 27 May 2024 20:54:11 +0200
-Message-ID: <20240527185621.372491672@linuxfoundation.org>
+Subject: [PATCH 6.9 205/427] libbpf: Fix error message in attach_kprobe_multi
+Date: Mon, 27 May 2024 20:54:12 +0200
+Message-ID: <20240527185621.453656298@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -50,33 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 64bfcdbe025699d3d81ec11af24bd4895c0f6ddd ]
+[ Upstream commit 7c13ef16e87ac2e44d16c0468b1191bceb06f95c ]
 
-This is expected by the firmware of older chipsets as well, though it may
-not have been as strongly required as on mt799x
+We just failed to retrieve pattern, so we need to print spec instead.
 
-Fixes: 098428c400ff ("wifi: mt76: connac: set correct muar_idx for mt799x chipsets")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: ddc6b04989eb ("libbpf: Add bpf_program__attach_kprobe_multi_opts function")
+Reported-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240502075541.1425761-2-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c | 2 +-
+ tools/lib/bpf/libbpf.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index 990738a23eee5..fb8bd50eb7de8 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -283,7 +283,7 @@ __mt76_connac_mcu_alloc_sta_req(struct mt76_dev *dev, struct mt76_vif *mvif,
- 	};
- 	struct sk_buff *skb;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 4980ed4f7559b..f515cf264a0a2 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -11475,7 +11475,7 @@ static int attach_kprobe_multi(const struct bpf_program *prog, long cookie, stru
  
--	if (is_mt799x(dev) && wcid && !wcid->sta)
-+	if (wcid && !wcid->sta)
- 		hdr.muar_idx = 0xe;
+ 	n = sscanf(spec, "%m[a-zA-Z0-9_.*?]", &pattern);
+ 	if (n < 1) {
+-		pr_warn("kprobe multi pattern is invalid: %s\n", pattern);
++		pr_warn("kprobe multi pattern is invalid: %s\n", spec);
+ 		return -EINVAL;
+ 	}
  
- 	mt76_connac_mcu_get_wlan_idx(dev, wcid, &hdr.wlan_idx_lo,
 -- 
 2.43.0
 
