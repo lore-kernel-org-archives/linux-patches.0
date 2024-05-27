@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC8D16079B;
-	Mon, 27 May 2024 19:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2320E1607B8;
+	Mon, 27 May 2024 19:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838016; cv=none; b=l4ueP0THhXYTEhhxy3jaadUwF4IPJvQ0yA32OyN52VGdW2YyE/yfGKvJEv3QECE6XFsXzQud5WvEWOSAaAWpKJDuMmmTEmlRFDmKn+vZg/ojdaUmtrd808ll05nQszA8G2VVy2IzXWWGXGvPpBuh0ZU/FJLLbVoBJOjk9p2Bwyk=
+	t=1716838019; cv=none; b=fcKOk62lri1E+XkN757X7PrhA4XaOkbSI24Gn7GLwMhopxU2Z3VKJhPxUjb8azmADyEjYHehHyss8+8Gvj4neuCMFDHuCq9tytE88nQGtcq6EWgdZQdHJYihz72sbH3RDX1KLZLi4Aa+lA5TU0hm9bkVd3j9lwkAxomQ5boQ/+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838016; c=relaxed/simple;
-	bh=zMOJ6XMwf+BoJK0h+rXXjjQ/sFwPl+X/KtfC5XOLXk4=;
+	s=arc-20240116; t=1716838019; c=relaxed/simple;
+	bh=x/CWFq067HlmHtr8kdqlmmncP+jJdwyOyYp4Djn5K58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+8MiG9IXPcRKQt7QGZ/JXxP5dpckhktP3n/FXpS9pNaD2Aox1yJWwkCXTVRcroi1xWh9Fr/0OXjvHgf0FCSjT0j9Iguku+GR65b4Gp+OrfQIKntLbxt/D7X8P97gwB28iEEaovi4zghGX0znmvPqOyg7UVcyE26TbxW21QmWlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9cP76kP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y31VYSce0zNlASMhaKDG0p+HHgDNTta5JOKo9GZQahRyVeyKkK8zexDtKIvUVbaBMQkGXJhDDix6xmVaF1IPAYo/A7/vJeOFxn94KQ/qpVk/gaKQm703j8hR9Qp01ySfPkOfWsXSowU/wvCuH2woJjaCSQoyEa08qfem1KBMa3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SDwQiYKE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9cP76kP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2202DC32789;
-	Mon, 27 May 2024 19:26:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SDwQiYKE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF433C32781;
+	Mon, 27 May 2024 19:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838016;
-	bh=zMOJ6XMwf+BoJK0h+rXXjjQ/sFwPl+X/KtfC5XOLXk4=;
+	s=korg; t=1716838019;
+	bh=x/CWFq067HlmHtr8kdqlmmncP+jJdwyOyYp4Djn5K58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s9cP76kP7hP6Ojd2DesZ//VRamAS8ytEqFRqJG2bWyvYDAAiCz1WYYi7mcOkW8IRK
-	 taQb8gO8yGRv+avv/BSr9ZXHH6iM2kJQWvaHmQTuFl4TWsHumdl7+aWfOwgDabKA3N
-	 /lQoPSpvwgVaJoYFlbGK0fbsIgUJT6ZMcY/Yyafk=
+	b=SDwQiYKEOPbRu0k4BqvvLx0/vIai0qwP+rRff+3v8JCN/cqiqx/OFd6pSKUBBOWwJ
+	 xo9eqV45mdwwLDVEdQiGS+FLn2SwCjQcKu4HbfydNfxb6GhPDXj9XRVk5E0etkWNoG
+	 GNRSC7IaB9vHu0yMCItfM9DhPWNBWnERL4YBH3oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Jason Andryuk <jandryuk@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 235/493] gfs2: do_xmote fixes
-Date: Mon, 27 May 2024 20:53:57 +0200
-Message-ID: <20240527185637.981638451@linuxfoundation.org>
+Subject: [PATCH 6.8 218/493] x86/pat: Fix W^X violation false-positives when running as Xen PV guest
+Date: Mon, 27 May 2024 20:53:40 +0200
+Message-ID: <20240527185637.437948146@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -50,126 +52,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 9947a06d29c0a30da88cdc6376ca5fd87083e130 ]
+[ Upstream commit 5bc8b0f5dac04cd4ebe47f8090a5942f2f2647ef ]
 
-Function do_xmote() is called with the glock spinlock held.  Commit
-86934198eefa added a 'goto skip_inval' statement at the beginning of the
-function to further below where the glock spinlock is expected not to be
-held anymore.  Then it added code there that requires the glock spinlock
-to be held.  This doesn't make sense; fix this up by dropping and
-retaking the spinlock where needed.
+When running as Xen PV guest in some cases W^X violation WARN()s have
+been observed. Those WARN()s are produced by verify_rwx(), which looks
+into the PTE to verify that writable kernel pages have the NX bit set
+in order to avoid code modifications of the kernel by rogue code.
 
-In addition, when ->lm_lock() returned an error, do_xmote() didn't fail
-the locking operation, and simply left the glock hanging; fix that as
-well.  (This is a much older error.)
+As the NX bits of all levels of translation entries are or-ed and the
+RW bits of all levels are and-ed, looking just into the PTE isn't enough
+for the decision that a writable page is executable, too.
 
-Fixes: 86934198eefa ("gfs2: Clear flags when withdraw prevents xmote")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+When running as a Xen PV guest, the direct map PMDs and kernel high
+map PMDs share the same set of PTEs. Xen kernel initialization will set
+the NX bit in the direct map PMD entries, and not the shared PTEs.
+
+Fixes: 652c5bf380ad ("x86/mm: Refuse W^X violations")
+Reported-by: Jason Andryuk <jandryuk@gmail.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20240412151258.9171-5-jgross@suse.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 44 +++++++++++++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 19 deletions(-)
+ arch/x86/mm/pat/set_memory.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 0c719fcd4fbc5..2507fe34cbdf0 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -713,6 +713,7 @@ __acquires(&gl->gl_lockref.lock)
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index 9c1dccfd1f67f..b4073fb452b6a 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -619,7 +619,8 @@ static inline pgprot_t static_protections(pgprot_t prot, unsigned long start,
+  * Validate strict W^X semantics.
+  */
+ static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long start,
+-				  unsigned long pfn, unsigned long npg)
++				  unsigned long pfn, unsigned long npg,
++				  bool nx, bool rw)
  {
- 	const struct gfs2_glock_operations *glops = gl->gl_ops;
- 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
-+	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
- 	unsigned int lck_flags = (unsigned int)(gh ? gh->gh_flags : 0);
- 	int ret;
+ 	unsigned long end;
  
-@@ -741,6 +742,9 @@ __acquires(&gl->gl_lockref.lock)
- 	    (gl->gl_state == LM_ST_EXCLUSIVE) ||
- 	    (lck_flags & (LM_FLAG_TRY|LM_FLAG_TRY_1CB)))
- 		clear_bit(GLF_BLOCKING, &gl->gl_flags);
-+	if (!glops->go_inval && !glops->go_sync)
-+		goto skip_inval;
+@@ -641,6 +642,10 @@ static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long star
+ 	if ((pgprot_val(new) & (_PAGE_RW | _PAGE_NX)) != _PAGE_RW)
+ 		return new;
+ 
++	/* Non-leaf translation entries can disable writing or execution. */
++	if (!rw || nx)
++		return new;
 +
- 	spin_unlock(&gl->gl_lockref.lock);
- 	if (glops->go_sync) {
- 		ret = glops->go_sync(gl);
-@@ -753,6 +757,7 @@ __acquires(&gl->gl_lockref.lock)
- 				fs_err(sdp, "Error %d syncing glock \n", ret);
- 				gfs2_dump_glock(NULL, gl, true);
- 			}
-+			spin_lock(&gl->gl_lockref.lock);
- 			goto skip_inval;
- 		}
- 	}
-@@ -773,9 +778,10 @@ __acquires(&gl->gl_lockref.lock)
- 		glops->go_inval(gl, target == LM_ST_DEFERRED ? 0 : DIO_METADATA);
- 		clear_bit(GLF_INVALIDATE_IN_PROGRESS, &gl->gl_flags);
- 	}
-+	spin_lock(&gl->gl_lockref.lock);
+ 	end = start + npg * PAGE_SIZE - 1;
+ 	WARN_ONCE(1, "CPA detected W^X violation: %016llx -> %016llx range: 0x%016lx - 0x%016lx PFN %lx\n",
+ 		  (unsigned long long)pgprot_val(old),
+@@ -742,7 +747,7 @@ pte_t *lookup_address(unsigned long address, unsigned int *level)
+ EXPORT_SYMBOL_GPL(lookup_address);
  
- skip_inval:
--	gfs2_glock_hold(gl);
-+	gl->gl_lockref.count++;
- 	/*
- 	 * Check for an error encountered since we called go_sync and go_inval.
- 	 * If so, we can't withdraw from the glock code because the withdraw
-@@ -817,37 +823,37 @@ __acquires(&gl->gl_lockref.lock)
- 			 */
- 			clear_bit(GLF_LOCK, &gl->gl_flags);
- 			clear_bit(GLF_DEMOTE_IN_PROGRESS, &gl->gl_flags);
--			gfs2_glock_queue_work(gl, GL_GLOCK_DFT_HOLD);
--			goto out;
-+			__gfs2_glock_queue_work(gl, GL_GLOCK_DFT_HOLD);
-+			return;
- 		} else {
- 			clear_bit(GLF_INVALIDATE_IN_PROGRESS, &gl->gl_flags);
- 		}
- 	}
+ static pte_t *_lookup_address_cpa(struct cpa_data *cpa, unsigned long address,
+-				  unsigned int *level)
++				  unsigned int *level, bool *nx, bool *rw)
+ {
+ 	pgd_t *pgd;
  
--	if (sdp->sd_lockstruct.ls_ops->lm_lock)	{
--		struct lm_lockstruct *ls = &sdp->sd_lockstruct;
-+	if (ls->ls_ops->lm_lock) {
-+		spin_unlock(&gl->gl_lockref.lock);
-+		ret = ls->ls_ops->lm_lock(gl, target, lck_flags);
-+		spin_lock(&gl->gl_lockref.lock);
+@@ -751,7 +756,7 @@ static pte_t *_lookup_address_cpa(struct cpa_data *cpa, unsigned long address,
+ 	else
+ 		pgd = cpa->pgd + pgd_index(address);
  
--		/* lock_dlm */
--		ret = sdp->sd_lockstruct.ls_ops->lm_lock(gl, target, lck_flags);
- 		if (ret == -EINVAL && gl->gl_target == LM_ST_UNLOCKED &&
- 		    target == LM_ST_UNLOCKED &&
- 		    test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
--			spin_lock(&gl->gl_lockref.lock);
--			finish_xmote(gl, target);
--			__gfs2_glock_queue_work(gl, 0);
--			spin_unlock(&gl->gl_lockref.lock);
-+			/*
-+			 * The lockspace has been released and the lock has
-+			 * been unlocked implicitly.
-+			 */
- 		} else if (ret) {
- 			fs_err(sdp, "lm_lock ret %d\n", ret);
--			GLOCK_BUG_ON(gl, !gfs2_withdrawing_or_withdrawn(sdp));
-+			target = gl->gl_state | LM_OUT_ERROR;
-+		} else {
-+			/* The operation will be completed asynchronously. */
-+			return;
- 		}
--	} else { /* lock_nolock */
--		spin_lock(&gl->gl_lockref.lock);
--		finish_xmote(gl, target);
--		__gfs2_glock_queue_work(gl, 0);
--		spin_unlock(&gl->gl_lockref.lock);
- 	}
--out:
--	spin_lock(&gl->gl_lockref.lock);
-+
-+	/* Complete the operation now. */
-+	finish_xmote(gl, target);
-+	__gfs2_glock_queue_work(gl, 0);
+-	return lookup_address_in_pgd(pgd, address, level);
++	return lookup_address_in_pgd_attr(pgd, address, level, nx, rw);
  }
  
- /**
+ /*
+@@ -879,12 +884,13 @@ static int __should_split_large_page(pte_t *kpte, unsigned long address,
+ 	pgprot_t old_prot, new_prot, req_prot, chk_prot;
+ 	pte_t new_pte, *tmp;
+ 	enum pg_level level;
++	bool nx, rw;
+ 
+ 	/*
+ 	 * Check for races, another CPU might have split this page
+ 	 * up already:
+ 	 */
+-	tmp = _lookup_address_cpa(cpa, address, &level);
++	tmp = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
+ 	if (tmp != kpte)
+ 		return 1;
+ 
+@@ -995,7 +1001,8 @@ static int __should_split_large_page(pte_t *kpte, unsigned long address,
+ 	new_prot = static_protections(req_prot, lpaddr, old_pfn, numpages,
+ 				      psize, CPA_DETECT);
+ 
+-	new_prot = verify_rwx(old_prot, new_prot, lpaddr, old_pfn, numpages);
++	new_prot = verify_rwx(old_prot, new_prot, lpaddr, old_pfn, numpages,
++			      nx, rw);
+ 
+ 	/*
+ 	 * If there is a conflict, split the large page.
+@@ -1076,6 +1083,7 @@ __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
+ 	pte_t *pbase = (pte_t *)page_address(base);
+ 	unsigned int i, level;
+ 	pgprot_t ref_prot;
++	bool nx, rw;
+ 	pte_t *tmp;
+ 
+ 	spin_lock(&pgd_lock);
+@@ -1083,7 +1091,7 @@ __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
+ 	 * Check for races, another CPU might have split this page
+ 	 * up for us already:
+ 	 */
+-	tmp = _lookup_address_cpa(cpa, address, &level);
++	tmp = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
+ 	if (tmp != kpte) {
+ 		spin_unlock(&pgd_lock);
+ 		return 1;
+@@ -1624,10 +1632,11 @@ static int __change_page_attr(struct cpa_data *cpa, int primary)
+ 	int do_split, err;
+ 	unsigned int level;
+ 	pte_t *kpte, old_pte;
++	bool nx, rw;
+ 
+ 	address = __cpa_addr(cpa, cpa->curpage);
+ repeat:
+-	kpte = _lookup_address_cpa(cpa, address, &level);
++	kpte = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
+ 	if (!kpte)
+ 		return __cpa_process_fault(cpa, address, primary);
+ 
+@@ -1649,7 +1658,8 @@ static int __change_page_attr(struct cpa_data *cpa, int primary)
+ 		new_prot = static_protections(new_prot, address, pfn, 1, 0,
+ 					      CPA_PROTECT);
+ 
+-		new_prot = verify_rwx(old_prot, new_prot, address, pfn, 1);
++		new_prot = verify_rwx(old_prot, new_prot, address, pfn, 1,
++				      nx, rw);
+ 
+ 		new_prot = pgprot_clear_protnone_bits(new_prot);
+ 
 -- 
 2.43.0
 
