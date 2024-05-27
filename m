@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E456C17E90E;
-	Mon, 27 May 2024 19:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA6317E90E;
+	Mon, 27 May 2024 19:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837127; cv=none; b=PjyWZiuYIbfskrZomj8n/KLBOuq07fpb4HKDGUc1aEDvjLTM9VC12oolnoy4rGE2k9B6CWCJxCHLfQSTduVQYmAmVkmuZ2iwW8XYKvBoIHY+tgWQDXKzvu+dK9wRtrHyS0sB+trseKD/ZGfNW14BqOI8axViuhcJ8L5yVlc5dOM=
+	t=1716837129; cv=none; b=aWxnKl4OnkeklWqlC5Lds3x/ZQlOLgs9SWTEh/kp+SgzN4CUcFRxJG8ZkKkHYv969hvPp6ZzqCwumCRUMmfhOpRu+e2RACvnqA8NA1Zwq1xvoy8vhvHsNlXilW1Ac9foQtYQar+7xYcqI4tHAzLTDMt1ZUQ9RhdoALnYOf0y0GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837127; c=relaxed/simple;
-	bh=yeJaWIFz80pvd5PVcaGbXhgjURd7ZlC4pTPUKVKVOyc=;
+	s=arc-20240116; t=1716837129; c=relaxed/simple;
+	bh=RdnW7KkoPc0CFkKRTdra/e8LRP2TqXjWhtOTm2ogF/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9x4L8VRiblvX5Kt5y/2WiZmpMWjB3PofhOv8C+PsFm0lPz0fZ/Wv2MbquLzEy04AtKyKgUKrted01DEF97y/olbUNDFky1KYAeMos+KA2bVGZaNTofwwmb1IDggBQxedaf+cfnmyAiULq3mNcujkBsK7CzNDSma6lGNKC6Yh9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxpDzZ34; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n6bDPm2ypz0yHiBu7Vt5Op1TfzSivFifML7TqvfPbaLrYqNucfEOKP56Hbieb1JLSVRYy1x5XLz2t7AYKxsocpZS1yEwzfBfymRy5vLH/7glK6Ir+mcfXXN1inlygj2K4NhKvTQyW1FdaqY/OYqV/XrJReKr/+bcgxumPr4xBEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAJX6jfq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxpDzZ34"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CF2C2BBFC;
-	Mon, 27 May 2024 19:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAJX6jfq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0383BC2BBFC;
+	Mon, 27 May 2024 19:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837126;
-	bh=yeJaWIFz80pvd5PVcaGbXhgjURd7ZlC4pTPUKVKVOyc=;
+	s=korg; t=1716837129;
+	bh=RdnW7KkoPc0CFkKRTdra/e8LRP2TqXjWhtOTm2ogF/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DxpDzZ346UvybpTFDoAkSPTH9RSD/TViZAc0rLf8lrNfWfcvFaKeiCRgP0sFgcT0W
-	 m+1xwgV4QkGSatDBDjuPeLpGorJ/T/xofulWWTtrKjtwW+cTurNpOzwCMi1vx3vvNt
-	 LzbEOCiGbT4GMirgNDXxE3ilr8CylkEqSDU6F/ss=
+	b=dAJX6jfqmRLpt1tmZDh+RjXXvSJpRSXa0fYjxXkp4JcDaH8QsWs5SuvlMBcWF07Gn
+	 8IJpW6Bzubv7Ea9EyidUJWMotV6HnTMwPX2XD7PZC8s+hDrfrST3LR4OVupgheLo6R
+	 j2+H4eD1gbnEBfWsVwS3QlDpcBDvEsoO1cLr1DiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Lindgren <tony@atomide.com>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 278/427] drm/omapdrm: Fix console by implementing fb_dirty
-Date: Mon, 27 May 2024 20:55:25 +0200
-Message-ID: <20240527185628.468723272@linuxfoundation.org>
+Subject: [PATCH 6.9 279/427] drm/omapdrm: Fix console with deferred ops
+Date: Mon, 27 May 2024 20:55:26 +0200
+Message-ID: <20240527185628.592956113@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,50 +54,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 632bac50544c0929ced9eed41e7d04c08adecbb0 ]
+[ Upstream commit 01c0cce88c5480cc2505b79330246ef12eda938f ]
 
-The framebuffer console stopped updating with commit f231af498c29
-("drm/fb-helper: Disconnect damage worker from update logic").
+Commit 95da53d63dcf ("drm/omapdrm: Use regular fbdev I/O helpers")
+stopped console from updating for command mode displays because there is
+no damage handling in fb_sys_write() unlike we had earlier in
+drm_fb_helper_sys_write().
 
-Let's fix the issue by implementing fb_dirty similar to what was done
-with commit 039a72ce7e57 ("drm/i915/fbdev: Implement fb_dirty for intel
-custom fb helper").
+Let's fix the issue by adding FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS and
+FB_DMAMEM_HELPERS_DEFERRED as suggested by Thomas. We cannot use the
+FB_DEFAULT_DEFERRED_OPS as fb_deferred_io_mmap() won't work properly
+for write-combine.
 
-Fixes: f231af498c29 ("drm/fb-helper: Disconnect damage worker from update logic")
+Fixes: 95da53d63dcf ("drm/omapdrm: Use regular fbdev I/O helpers")
+Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
 Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240228063540.4444-2-tony@atomide.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20240228063540.4444-3-tony@atomide.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/omapdrm/omap_fbdev.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/omapdrm/Kconfig      |  2 +-
+ drivers/gpu/drm/omapdrm/omap_fbdev.c | 28 ++++++++++++++++++++++------
+ drivers/video/fbdev/core/Kconfig     |  6 ++++++
+ include/linux/fb.h                   |  4 ++++
+ 4 files changed, 33 insertions(+), 7 deletions(-)
 
+diff --git a/drivers/gpu/drm/omapdrm/Kconfig b/drivers/gpu/drm/omapdrm/Kconfig
+index b715301ec79f6..6c49270cb290a 100644
+--- a/drivers/gpu/drm/omapdrm/Kconfig
++++ b/drivers/gpu/drm/omapdrm/Kconfig
+@@ -4,7 +4,7 @@ config DRM_OMAP
+ 	depends on DRM && OF
+ 	depends on ARCH_OMAP2PLUS
+ 	select DRM_KMS_HELPER
+-	select FB_DMAMEM_HELPERS if DRM_FBDEV_EMULATION
++	select FB_DMAMEM_HELPERS_DEFERRED if DRM_FBDEV_EMULATION
+ 	select VIDEOMODE_HELPERS
+ 	select HDMI
+ 	default n
 diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-index 6b08b137af1ad..7c5af3de1e727 100644
+index 7c5af3de1e727..523be34682caf 100644
 --- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
 +++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-@@ -238,8 +238,20 @@ static int omap_fbdev_create(struct drm_fb_helper *helper,
- 	return ret;
+@@ -51,6 +51,10 @@ static void pan_worker(struct work_struct *work)
+ 	omap_gem_roll(bo, fbi->var.yoffset * npages);
  }
  
-+static int omap_fbdev_dirty(struct drm_fb_helper *helper, struct drm_clip_rect *clip)
-+{
-+	if (!(clip->x1 < clip->x2 && clip->y1 < clip->y2))
-+		return 0;
++FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS(omap_fbdev,
++				   drm_fb_helper_damage_range,
++				   drm_fb_helper_damage_area)
 +
-+	if (helper->fb->funcs->dirty)
-+		return helper->fb->funcs->dirty(helper->fb, NULL, 0, 0, clip, 1);
-+
-+	return 0;
-+}
-+
- static const struct drm_fb_helper_funcs omap_fb_helper_funcs = {
- 	.fb_probe = omap_fbdev_create,
-+	.fb_dirty = omap_fbdev_dirty,
- };
+ static int omap_fbdev_pan_display(struct fb_var_screeninfo *var,
+ 		struct fb_info *fbi)
+ {
+@@ -78,11 +82,9 @@ static int omap_fbdev_pan_display(struct fb_var_screeninfo *var,
  
- static struct drm_fb_helper *get_fb(struct fb_info *fbi)
+ static int omap_fbdev_fb_mmap(struct fb_info *info, struct vm_area_struct *vma)
+ {
+-	struct drm_fb_helper *helper = info->par;
+-	struct drm_framebuffer *fb = helper->fb;
+-	struct drm_gem_object *bo = drm_gem_fb_get_obj(fb, 0);
++	vma->vm_page_prot = pgprot_writecombine(vm_get_page_prot(vma->vm_flags));
+ 
+-	return drm_gem_mmap_obj(bo, omap_gem_mmap_size(bo), vma);
++	return fb_deferred_io_mmap(info, vma);
+ }
+ 
+ static void omap_fbdev_fb_destroy(struct fb_info *info)
+@@ -94,6 +96,7 @@ static void omap_fbdev_fb_destroy(struct fb_info *info)
+ 
+ 	DBG();
+ 
++	fb_deferred_io_cleanup(info);
+ 	drm_fb_helper_fini(helper);
+ 
+ 	omap_gem_unpin(bo);
+@@ -104,15 +107,19 @@ static void omap_fbdev_fb_destroy(struct fb_info *info)
+ 	kfree(fbdev);
+ }
+ 
++/*
++ * For now, we cannot use FB_DEFAULT_DEFERRED_OPS and fb_deferred_io_mmap()
++ * because we use write-combine.
++ */
+ static const struct fb_ops omap_fb_ops = {
+ 	.owner = THIS_MODULE,
+-	__FB_DEFAULT_DMAMEM_OPS_RDWR,
++	__FB_DEFAULT_DEFERRED_OPS_RDWR(omap_fbdev),
+ 	.fb_check_var	= drm_fb_helper_check_var,
+ 	.fb_set_par	= drm_fb_helper_set_par,
+ 	.fb_setcmap	= drm_fb_helper_setcmap,
+ 	.fb_blank	= drm_fb_helper_blank,
+ 	.fb_pan_display = omap_fbdev_pan_display,
+-	__FB_DEFAULT_DMAMEM_OPS_DRAW,
++	__FB_DEFAULT_DEFERRED_OPS_DRAW(omap_fbdev),
+ 	.fb_ioctl	= drm_fb_helper_ioctl,
+ 	.fb_mmap	= omap_fbdev_fb_mmap,
+ 	.fb_destroy	= omap_fbdev_fb_destroy,
+@@ -213,6 +220,15 @@ static int omap_fbdev_create(struct drm_fb_helper *helper,
+ 	fbi->fix.smem_start = dma_addr;
+ 	fbi->fix.smem_len = bo->size;
+ 
++	/* deferred I/O */
++	helper->fbdefio.delay = HZ / 20;
++	helper->fbdefio.deferred_io = drm_fb_helper_deferred_io;
++
++	fbi->fbdefio = &helper->fbdefio;
++	ret = fb_deferred_io_init(fbi);
++	if (ret)
++		goto fail;
++
+ 	/* if we have DMM, then we can use it for scrolling by just
+ 	 * shuffling pages around in DMM rather than doing sw blit.
+ 	 */
+diff --git a/drivers/video/fbdev/core/Kconfig b/drivers/video/fbdev/core/Kconfig
+index db09fe87fcd4f..0ab8848ba2f10 100644
+--- a/drivers/video/fbdev/core/Kconfig
++++ b/drivers/video/fbdev/core/Kconfig
+@@ -144,6 +144,12 @@ config FB_DMAMEM_HELPERS
+ 	select FB_SYS_IMAGEBLIT
+ 	select FB_SYSMEM_FOPS
+ 
++config FB_DMAMEM_HELPERS_DEFERRED
++	bool
++	depends on FB_CORE
++	select FB_DEFERRED_IO
++	select FB_DMAMEM_HELPERS
++
+ config FB_IOMEM_FOPS
+ 	tristate
+ 	depends on FB_CORE
+diff --git a/include/linux/fb.h b/include/linux/fb.h
+index 0dd27364d56fe..811e47f9d1c3f 100644
+--- a/include/linux/fb.h
++++ b/include/linux/fb.h
+@@ -694,6 +694,10 @@ extern int fb_deferred_io_fsync(struct file *file, loff_t start,
+ 	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, sys) \
+ 	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, sys)
+ 
++#define FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS(__prefix, __damage_range, __damage_area) \
++	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, sys) \
++	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, sys)
++
+ /*
+  * Initializes struct fb_ops for deferred I/O.
+  */
 -- 
 2.43.0
 
