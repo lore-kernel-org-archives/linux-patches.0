@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449A317E90E;
-	Mon, 27 May 2024 19:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967BF1754B;
+	Mon, 27 May 2024 19:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836794; cv=none; b=opUJIHMrB3XD0abvUyLY+a8zppLApeVBvuMk/gVseXHEM6mVi90+KRQaLZMvgBb5hCsbJY2yppMC/91wo6I9krYPHVl3K29lIb0s/zMogS6Y/qbdETC39ccT+m4PhIAD30IYua1DiB2bhujgSHfYaEwPx9MsIHA5/pLSatomrBs=
+	t=1716836796; cv=none; b=RGmViGkLmqhAE07eGtzx1dq74KWT5rrmh4uP8tSJUxZ4xoa96wm4o7DtLVNmC6CoV3mGTkkj+Frqj9EFCIrEmLEoCv/2yw5ajchvq562/Ht7Sy9nWePnsZ4r4Qy6jXDr8W3MO4zGIBQBao4pL9t3iKPSJdLu6tjGoND2hpiCfuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836794; c=relaxed/simple;
-	bh=Nni1Bhc2wjhvFTvIr7Y7HW0HmrRDhvuSfZglcyrbmvM=;
+	s=arc-20240116; t=1716836796; c=relaxed/simple;
+	bh=rioEFapkFWQbhNWzzIYkfHHKnkZTDCTPafj/iFA9fcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rd/5ME4flhRtBzK+2aQl+a9BD40Lclez4g2uu04Xe/53UrtHNd3QYe+k+6kyh+lyiurlmog0ASWWj0nTNM6Dh1UuVJ0ZqR8AAfc82gcly/SoECZs28/TzP7aAZ2+BmCh8bSu1ddEf4FMbqB4ISwjqKfosWCAgOnXukc49WrYHYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PkdT+7AY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PAuL3UuTUMRoUGf8DmLBgtN12fLSMjYdPr6d1TL5s8J+glhFMPJ/In0ixgwCEOlUZbOssToRBBeWExf38D2ovHgzFkRAi2LDiFMBFwqVWOdWvoFRi+QrGpwrGtxi5H9Tu98Xg1m4NzICvoGYf70fgR87jvF6OOmW2SdOdDdMv74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OzZuIAoa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PkdT+7AY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4E2C2BBFC;
-	Mon, 27 May 2024 19:06:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OzZuIAoa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA72C2BBFC;
+	Mon, 27 May 2024 19:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836793;
-	bh=Nni1Bhc2wjhvFTvIr7Y7HW0HmrRDhvuSfZglcyrbmvM=;
+	s=korg; t=1716836796;
+	bh=rioEFapkFWQbhNWzzIYkfHHKnkZTDCTPafj/iFA9fcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PkdT+7AY+tLFooFxTLgQZum05rgs9c4HhzcNoerfagqyWYcR4BRuIxKUqa3kBGOeO
-	 Uz/qrG8iZMQOoIltfD+INSYKqwScVOSQ8PLb+zx5kcH3yUWRHq0bsqHPMpzUVTswOr
-	 bZcHg5Eb1TF+IENp8hqEhhdQcm4/QyacmA4X+SPQ=
+	b=OzZuIAoa5Ovjny4EedF0Pgg3H5ecCkasLfL/k/fUM4D4+6adJkChdVwLcjdxXIsY6
+	 ORsSmEe789+a0Pgsj4UrUJOkq+oPnW+ECakmiMKimHz7yej5LBgtge6aedWbp2XQJq
+	 /fdbZ+9e+klWyQxcLLhR+UD1eUm4gxjWzzR/EB7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+1bc2c2afd44f820a669f@syzkaller.appspotmail.com
-Subject: [PATCH 6.9 191/427] wifi: ar5523: enable proper endpoint verification
-Date: Mon, 27 May 2024 20:53:58 +0200
-Message-ID: <20240527185620.079763770@linuxfoundation.org>
+	Dmitry Rokosov <ddrokosov@salutedevices.com>,
+	George Stark <gnstark@salutedevices.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 192/427] pwm: meson: Add check for error from clk_round_rate()
+Date: Mon, 27 May 2024 20:53:59 +0200
+Message-ID: <20240527185620.176312311@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -46,103 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: George Stark <gnstark@salutedevices.com>
 
-[ Upstream commit e120b6388d7d88635d67dcae6483f39c37111850 ]
+[ Upstream commit 3e551115aee079931b82e1ec78c05f3d5033473f ]
 
-Syzkaller reports [1] hitting a warning about an endpoint in use
-not having an expected type to it.
+clk_round_rate() can return not only zero if requested frequency can not
+be provided but also negative error code so add check for it too.
 
-Fix the issue by checking for the existence of all proper
-endpoints with their according types intact.
+Also change type of variable holding clk_round_rate() result from
+unsigned long to long. It's safe due to clk_round_rate() returns long.
 
-Sadly, this patch has not been tested on real hardware.
-
-[1] Syzkaller report:
-------------[ cut here ]------------
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 0 PID: 3643 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
-...
-Call Trace:
- <TASK>
- ar5523_cmd+0x41b/0x780 drivers/net/wireless/ath/ar5523/ar5523.c:275
- ar5523_cmd_read drivers/net/wireless/ath/ar5523/ar5523.c:302 [inline]
- ar5523_host_available drivers/net/wireless/ath/ar5523/ar5523.c:1376 [inline]
- ar5523_probe+0x14b0/0x1d10 drivers/net/wireless/ath/ar5523/ar5523.c:1655
- usb_probe_interface+0x30f/0x7f0 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:560 [inline]
- really_probe+0x249/0xb90 drivers/base/dd.c:639
- __driver_probe_device+0x1df/0x4d0 drivers/base/dd.c:778
- driver_probe_device+0x4c/0x1a0 drivers/base/dd.c:808
- __device_attach_driver+0x1d4/0x2e0 drivers/base/dd.c:936
- bus_for_each_drv+0x163/0x1e0 drivers/base/bus.c:427
- __device_attach+0x1e4/0x530 drivers/base/dd.c:1008
- bus_probe_device+0x1e8/0x2a0 drivers/base/bus.c:487
- device_add+0xbd9/0x1e90 drivers/base/core.c:3517
- usb_set_configuration+0x101d/0x1900 drivers/usb/core/message.c:2170
- usb_generic_driver_probe+0xbe/0x100 drivers/usb/core/generic.c:238
- usb_probe_device+0xd8/0x2c0 drivers/usb/core/driver.c:293
- call_driver_probe drivers/base/dd.c:560 [inline]
- really_probe+0x249/0xb90 drivers/base/dd.c:639
- __driver_probe_device+0x1df/0x4d0 drivers/base/dd.c:778
- driver_probe_device+0x4c/0x1a0 drivers/base/dd.c:808
- __device_attach_driver+0x1d4/0x2e0 drivers/base/dd.c:936
- bus_for_each_drv+0x163/0x1e0 drivers/base/bus.c:427
- __device_attach+0x1e4/0x530 drivers/base/dd.c:1008
- bus_probe_device+0x1e8/0x2a0 drivers/base/bus.c:487
- device_add+0xbd9/0x1e90 drivers/base/core.c:3517
- usb_new_device.cold+0x685/0x10ad drivers/usb/core/hub.c:2573
- hub_port_connect drivers/usb/core/hub.c:5353 [inline]
- hub_port_connect_change drivers/usb/core/hub.c:5497 [inline]
- port_event drivers/usb/core/hub.c:5653 [inline]
- hub_event+0x26cb/0x45d0 drivers/usb/core/hub.c:5735
- process_one_work+0x9bf/0x1710 kernel/workqueue.c:2289
- worker_thread+0x669/0x1090 kernel/workqueue.c:2436
- kthread+0x2e8/0x3a0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
- </TASK>
-
-Reported-and-tested-by: syzbot+1bc2c2afd44f820a669f@syzkaller.appspotmail.com
-Fixes: b7d572e1871d ("ar5523: Add new driver")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240408121425.29392-1-n.zhandarovich@fintech.ru
+Fixes: 329db102a26d ("pwm: meson: make full use of common clock framework")
+Signed-off-by: Dmitry Rokosov <ddrokosov@salutedevices.com>
+Signed-off-by: George Stark <gnstark@salutedevices.com>
+Link: https://lore.kernel.org/r/20240425171253.2752877-3-gnstark@salutedevices.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ar5523/ar5523.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/pwm/pwm-meson.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ar5523/ar5523.c b/drivers/net/wireless/ath/ar5523/ar5523.c
-index 815f8f599f5d1..5a55db349cb57 100644
---- a/drivers/net/wireless/ath/ar5523/ar5523.c
-+++ b/drivers/net/wireless/ath/ar5523/ar5523.c
-@@ -1594,6 +1594,20 @@ static int ar5523_probe(struct usb_interface *intf,
- 	struct ar5523 *ar;
- 	int error = -ENOMEM;
+diff --git a/drivers/pwm/pwm-meson.c b/drivers/pwm/pwm-meson.c
+index a02fdbc612562..b5d5fe4669993 100644
+--- a/drivers/pwm/pwm-meson.c
++++ b/drivers/pwm/pwm-meson.c
+@@ -147,7 +147,7 @@ static int meson_pwm_calc(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	struct meson_pwm *meson = to_meson_pwm(chip);
+ 	struct meson_pwm_channel *channel = &meson->channels[pwm->hwpwm];
+ 	unsigned int cnt, duty_cnt;
+-	unsigned long fin_freq;
++	long fin_freq;
+ 	u64 duty, period, freq;
  
-+	static const u8 bulk_ep_addr[] = {
-+		AR5523_CMD_TX_PIPE | USB_DIR_OUT,
-+		AR5523_DATA_TX_PIPE | USB_DIR_OUT,
-+		AR5523_CMD_RX_PIPE | USB_DIR_IN,
-+		AR5523_DATA_RX_PIPE | USB_DIR_IN,
-+		0};
-+
-+	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr)) {
-+		dev_err(&dev->dev,
-+			"Could not find all expected endpoints\n");
-+		error = -ENODEV;
-+		goto out;
-+	}
-+
- 	/*
- 	 * Load firmware if the device requires it.  This will return
- 	 * -ENXIO on success and we'll get called back afer the usb
+ 	duty = state->duty_cycle;
+@@ -167,12 +167,13 @@ static int meson_pwm_calc(struct pwm_chip *chip, struct pwm_device *pwm,
+ 		freq = ULONG_MAX;
+ 
+ 	fin_freq = clk_round_rate(channel->clk, freq);
+-	if (fin_freq == 0) {
+-		dev_err(pwmchip_parent(chip), "invalid source clock frequency\n");
+-		return -EINVAL;
++	if (fin_freq <= 0) {
++		dev_err(pwmchip_parent(chip),
++			"invalid source clock frequency %llu\n", freq);
++		return fin_freq ? fin_freq : -EINVAL;
+ 	}
+ 
+-	dev_dbg(pwmchip_parent(chip), "fin_freq: %lu Hz\n", fin_freq);
++	dev_dbg(pwmchip_parent(chip), "fin_freq: %ld Hz\n", fin_freq);
+ 
+ 	cnt = div_u64(fin_freq * period, NSEC_PER_SEC);
+ 	if (cnt > 0xffff) {
 -- 
 2.43.0
 
