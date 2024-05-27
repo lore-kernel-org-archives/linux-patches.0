@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A73B1DFED;
-	Mon, 27 May 2024 19:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB181DFED;
+	Mon, 27 May 2024 19:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836730; cv=none; b=ojsSk/bjvbY0vVwhWxC532C7mXZ8Eenh6umpzZUug8JS3gibZRkzVTt4L6stHcPF8eJ1U40DHSxXp4PYMRe7B706sgmPLEIAbWHs330G6wT/I5reVB6+LhzVZ+j+jcF6Bxkx0ffOWmF7QOHzuITLN/xWrnE1UsTLhwzuTdhrMCo=
+	t=1716836733; cv=none; b=rI0p5q65ZflBwG90lZ4eFVXqa2TZPpnvZj3VF0jR2MhJTvdigbY44z16mxniJ8uKstNgcmck7IZr6AgsdID5bp9tfk2KY8XBJJyyw97D6M1p4BWKOE7p0SVWjId1c+fZlVWmsDiJESxKz50OP4RsXM0T9Ob+Git/wb2e90xMCUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836730; c=relaxed/simple;
-	bh=rNKid9Aw+HKHjpAM7kiqXg8WQyMrIt4xlulIhrAwAVQ=;
+	s=arc-20240116; t=1716836733; c=relaxed/simple;
+	bh=pYiT2Bwv2U4Dj9prs7we4rJ3xP/RiWXoKzlUucYTUME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xdm/Wu4obLWbLSdUzb8BY2JHw2WyT29rnOF29YEspfFMG35Zb5xaI25SJltKVmbyKmYr+/8N8wcKRPLhLCQvZ33NLjWfcY0pvUKnT4EUxarAsy1t18fMQ1ayo5hLr6YYsto3pLo37a4hyzjyBeEBpGDl+meMzhgf7Wx0fFpC1PI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xEHLoER; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZbIb1c6BUSyX21sJCkQ0fjUQZgacaMqhc7raYCrD4VD3iKAz7iDJ6QclSlgchzjcavPjGMEAc4LNAdTc02gTCi20+sLP6eYpZ96BizbpdlyzCGgVLxGeGmbuoRB1tMzm+jXKr5uXHlTl9cjhltQzRqX4C2HA98NGujg4t+RWejM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZq+rsgJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xEHLoER"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BD9C2BBFC;
-	Mon, 27 May 2024 19:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZq+rsgJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E10FC2BBFC;
+	Mon, 27 May 2024 19:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836730;
-	bh=rNKid9Aw+HKHjpAM7kiqXg8WQyMrIt4xlulIhrAwAVQ=;
+	s=korg; t=1716836732;
+	bh=pYiT2Bwv2U4Dj9prs7we4rJ3xP/RiWXoKzlUucYTUME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1xEHLoERQ9wqx/Nh09GPLqndw6SD9T7wB6vjEaq44qj/wmKVA9pLdwUT5Z8Ym3Oez
-	 5HMndS0MdAMnSYDpUv/XrDR7jnrxuLePKKDq71cTH8ccGWij9QDYz2iiALF/5In0s0
-	 X9I1stUy0V/yIbKlnAsN+uRrCgwyWEkw8ZuhiloM=
+	b=aZq+rsgJU8WrGqPUx3McNL1gMfILA1ImtP429GPMv1c/hGaLB1mnH5Zaccseha00k
+	 7Br/T7LvnB39OqVyDniM2ubO7TnD9mn1IkQAtRPeo2kmv8wjAaDENhUlzUICzo/s3h
+	 uk1OxZ6BkFDvhlr+Ua1Pl40Uu0cQR5/rONisfMsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Rob Herring <robh@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 138/427] irqchip/loongson-pch-msi: Fix off-by-one on allocation error path
-Date: Mon, 27 May 2024 20:53:05 +0200
-Message-ID: <20240527185614.772067607@linuxfoundation.org>
+Subject: [PATCH 6.9 165/427] dt-bindings: thermal: loongson,ls2k-thermal: Add Loongson-2K0500 compatible
+Date: Mon, 27 May 2024 20:53:32 +0200
+Message-ID: <20240527185617.796024134@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,39 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenghui Yu <yuzenghui@huawei.com>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
 
-[ Upstream commit b327708798809328f21da8dc14cc8883d1e8a4b3 ]
+[ Upstream commit 25c7d8472f6e90390931e93f59135478af3e5d86 ]
 
-When pch_msi_parent_domain_alloc() returns an error, there is an off-by-one
-in the number of interrupts to be freed.
+The thermal on the Loongson-2K0500 shares the design with the
+Loongson-2K1000. Define corresponding compatible string, having the
+loongson,ls2k1000-thermal as a fallback.
 
-Fix it by passing the number of successfully allocated interrupts, instead of the
-relative index of the last allocated one.
-
-Fixes: 632dcc2c75ef ("irqchip: Add Loongson PCH MSI controller")
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Link: https://lore.kernel.org/r/20240327142334.1098-1-yuzenghui@huawei.com
+Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Acked-by: Rob Herring <robh@kernel.org>
+Acked-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/26524a63abd2d032e4c45efe6ce3fedb46841768.1713837379.git.zhoubinbin@loongson.cn
+Stable-dep-of: c8c435368577 ("dt-bindings: thermal: loongson,ls2k-thermal: Fix incorrect compatible definition")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-loongson-pch-msi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/thermal/loongson,ls2k-thermal.yaml       | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/irqchip/irq-loongson-pch-msi.c b/drivers/irqchip/irq-loongson-pch-msi.c
-index 6e1e1f011bb29..dd4d699170f4e 100644
---- a/drivers/irqchip/irq-loongson-pch-msi.c
-+++ b/drivers/irqchip/irq-loongson-pch-msi.c
-@@ -136,7 +136,7 @@ static int pch_msi_middle_domain_alloc(struct irq_domain *domain,
+diff --git a/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml b/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
+index b634f57cd011d..9748a479dcd4d 100644
+--- a/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
++++ b/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
+@@ -20,6 +20,7 @@ properties:
+           - loongson,ls2k1000-thermal
+       - items:
+           - enum:
++              - loongson,ls2k0500-thermal
+               - loongson,ls2k2000-thermal
+           - const: loongson,ls2k1000-thermal
  
- err_hwirq:
- 	pch_msi_free_hwirq(priv, hwirq, nr_irqs);
--	irq_domain_free_irqs_parent(domain, virq, i - 1);
-+	irq_domain_free_irqs_parent(domain, virq, i);
- 
- 	return err;
- }
 -- 
 2.43.0
 
