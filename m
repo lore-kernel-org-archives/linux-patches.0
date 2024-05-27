@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FEA15FCF0;
-	Mon, 27 May 2024 19:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE14415FCF0;
+	Mon, 27 May 2024 19:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838633; cv=none; b=YKf1UTRTjvb/0kpuAFyuH4ab/29t9FDGMt5fX9rGqmRR6AaVzmaWGJ9vdWOWLya96wmWMs47XNkB8BrtsQq5VcR0lCX7trxna/B/ktuPv8aAA/60v5U7Y9rICM0J1zVSxoavyTgNmwbncRw5HENU73+Y+547e4+K9stnbsBSJFE=
+	t=1716838636; cv=none; b=JZE4EYHaNM36vHXJmALlTAN2zoNDffRremm5NAZks0Oyc4K/1E/yGoup7lLrBrzMMGi0AMFN6E3dB5XxBeNLkIPx5DF/VLhzgU/iMU86xn8DTqzTreSzRTtmCC8Ltk0nXUqRFgc/GdMBwMc0316NKgRPCqMn+rqoBa8epYLev2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838633; c=relaxed/simple;
-	bh=yC0vwy+yu/+a008ygCDlIkYAXb4O2m0S2MeOGFOvaM8=;
+	s=arc-20240116; t=1716838636; c=relaxed/simple;
+	bh=R3QMetAzd21alebnVK2oTg5W+6uskbddBTy3LA5z9OU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=crzPoRJnvsS/s24QmDhvT/RfDtju496FbKkeQw+s5IJZMz3F4uKjhDP0FgDYIQx321iTPrwLwoXjmm1O448pJ1esug74XP+eXC9avrsJ/2XM221/fzvsN0XvFpSBQWcXpR5DklWqYiyKRFEiDTrntiwSs9tnOJzliwkDUyirQjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bam8Gb5F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V1EtpeJbKH6kDcb/Vrchj1J5RW6wwArXFNvCZSM/nqG8dK7DLJOytg/uMbcw3a4JAqjw+dbbyCjQ9flJnZIygaoDdnMolYQFiYMMMZlMCeMrScQCOv3xoRIHeQ0hTgmd2CUtNUvSceQhVrQwc9O3DRzW+JWJunSuexjrHrrsT0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZpu7YdW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bam8Gb5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFA0C2BBFC;
-	Mon, 27 May 2024 19:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZpu7YdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852EAC2BBFC;
+	Mon, 27 May 2024 19:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838633;
-	bh=yC0vwy+yu/+a008ygCDlIkYAXb4O2m0S2MeOGFOvaM8=;
+	s=korg; t=1716838635;
+	bh=R3QMetAzd21alebnVK2oTg5W+6uskbddBTy3LA5z9OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bam8Gb5FNFcup61sOAOFWBnKF2xKQuT390Q+dnwCCROVEtoxh7QutfjdjpaVq9YYR
-	 MC7owC4R6Mhx+/4qc/1Ht2tGx2f+Z6wdwCIj2wiwl63Hw47HcIAp7Ag3IX9J5NtruU
-	 11r2PctEI8a86OLJF5lgg1qZ/lDPORJQIii8AH18=
+	b=FZpu7YdWmvS7kT+nyWGX1FPDyyvv/lL5AiihERLvsbzpkPDmq6gsaulwo27/wLAIz
+	 7+hCiS9iEAdhf3mn9h+MhWiI+9DwUeji/HvAa4ZwWecflgUhEbP+PU2tmhCt2zLvk0
+	 M5GyoR6ffQrfzmAUvoA0Eoq/9q0gwId1h4M/g4vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Liaw <edliaw@google.com>,
-	Cyrill Gorcunov <gorcunov@gmail.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 467/493] selftests/kcmp: remove unused open mode
-Date: Mon, 27 May 2024 20:57:49 +0200
-Message-ID: <20240527185645.455281228@linuxfoundation.org>
+Subject: [PATCH 6.8 468/493] RDMA/IPoIB: Fix format truncation compilation errors
+Date: Mon, 27 May 2024 20:57:50 +0200
+Message-ID: <20240527185645.482518780@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -48,46 +44,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Liaw <edliaw@google.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit eb59a58113717df04b8a8229befd8ab1e5dbf86e ]
+[ Upstream commit 49ca2b2ef3d003402584c68ae7b3055ba72e750a ]
 
-Android bionic warns that open modes are ignored if O_CREAT or O_TMPFILE
-aren't specified.  The permissions for the file are set above:
+Truncate the device name to store IPoIB VLAN name.
 
-	fd1 = open(kpath, O_RDWR | O_CREAT | O_TRUNC, 0644);
+[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 allmodconfig
+[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 W=1 drivers/infiniband/ulp/ipoib/
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c: In function ‘ipoib_vlan_add’:
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:52: error: ‘%04x’
+directive output may be truncated writing 4 bytes into a region of size
+between 0 and 15 [-Werror=format-truncation=]
+  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+      |                                                    ^~~~
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:48: note: directive
+argument in the range [0, 65535]
+  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+      |                                                ^~~~~~~~~
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:9: note: ‘snprintf’ output
+between 6 and 21 bytes into a destination of size 16
+  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  188 |                  ppriv->dev->name, pkey);
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:244: drivers/infiniband/ulp/ipoib/ipoib_vlan.o] Error 1
+make[6]: *** Waiting for unfinished jobs....
 
-Link: https://lkml.kernel.org/r/20240429234610.191144-1-edliaw@google.com
-Fixes: d97b46a64674 ("syscalls, x86: add __NR_kcmp syscall")
-Signed-off-by: Edward Liaw <edliaw@google.com>
-Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
+Link: https://lore.kernel.org/r/e9d3e1fef69df4c9beaf402cc3ac342bad680791.1715240029.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kcmp/kcmp_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/ulp/ipoib/ipoib_vlan.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/kcmp/kcmp_test.c b/tools/testing/selftests/kcmp/kcmp_test.c
-index 25110c7c0b3ed..d7a8e321bb16b 100644
---- a/tools/testing/selftests/kcmp/kcmp_test.c
-+++ b/tools/testing/selftests/kcmp/kcmp_test.c
-@@ -91,7 +91,7 @@ int main(int argc, char **argv)
- 		ksft_print_header();
- 		ksft_set_plan(3);
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
+index 4bd161e86f8dd..562df2b3ef187 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
+@@ -184,8 +184,12 @@ int ipoib_vlan_add(struct net_device *pdev, unsigned short pkey)
  
--		fd2 = open(kpath, O_RDWR, 0644);
-+		fd2 = open(kpath, O_RDWR);
- 		if (fd2 < 0) {
- 			perror("Can't open file");
- 			ksft_exit_fail();
+ 	ppriv = ipoib_priv(pdev);
+ 
+-	snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+-		 ppriv->dev->name, pkey);
++	/* If you increase IFNAMSIZ, update snprintf below
++	 * to allow longer names.
++	 */
++	BUILD_BUG_ON(IFNAMSIZ != 16);
++	snprintf(intf_name, sizeof(intf_name), "%.10s.%04x", ppriv->dev->name,
++		 pkey);
+ 
+ 	ndev = ipoib_intf_alloc(ppriv->ca, ppriv->port, intf_name);
+ 	if (IS_ERR(ndev)) {
 -- 
 2.43.0
 
