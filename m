@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E113317727;
-	Mon, 27 May 2024 19:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B49B17727;
+	Mon, 27 May 2024 19:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838380; cv=none; b=Ity9xYRcE1bkDi+JePzsQWTcSZ1x4xdFouQ+Edc7JZ7DE+4EJQ0N8mDt6bteoo4fmVWMHl7AQoxIO7tgvuRFHHaw1ISkR+EBE8XAbrlfKbhCK0HUKw6s+yuINymO7A/YCSvTXp7zzUaGDNXx0EsqBaXtlXUspUbQlEt4/6EFx+I=
+	t=1716838382; cv=none; b=KI/wJagvVcLZR5q9Ycto1mWLtQTrF3U5g4JIWB0kbIfNF3vFWBhuwXsmkaVQpx+NmywaANa6ScKAIcKnoMaGiBm92r29pC0u/mjORtraz0UboaMk2LAzvSd6Bd+M5ayGsGADGcUZ4LqstZsWirJyxi7FcNl6iR66fkAXsSLAfuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838380; c=relaxed/simple;
-	bh=rTik0pc86XrhDkNnYy1xIJLcUWyLGi7naGHRFfsHudU=;
+	s=arc-20240116; t=1716838382; c=relaxed/simple;
+	bh=QDwSFyelHK8hZGlNhwWNHQRuS6sN88SqSJdm4vLVDew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aH+NZVGawNAay+5OQo3Pa1LNw1X3SDRRFqFDFw15UGNoEaqTcgq6F2YD7QxEyX22cnc59HOS5jvkF210z2lk9Ecdv2Jm2HV1lecZNsBEKg8vvBCacofw9PiXx0MchTLjIDRKURK2rKS6WcmkQHOiNq1GtorAvAfITN3HDUIiNi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtaSub6P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YMkrEmODJYPwv5rV0LlW1Hn7vWhlUpqDEmckGxYvsJDZwwbRQPo6CsAcIMqa8BxggiOqdw+GkM+zHDygbBbpk5zWjo9ckGxYgXFdePTJlNG2k5LPrcyoogZ+x3yN9lYoUFA5fPODSa8eGVXDos2IeMcauheuV43x04sXorLqqZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/t5dE7I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtaSub6P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775BCC2BBFC;
-	Mon, 27 May 2024 19:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/t5dE7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09094C2BBFC;
+	Mon, 27 May 2024 19:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838379;
-	bh=rTik0pc86XrhDkNnYy1xIJLcUWyLGi7naGHRFfsHudU=;
+	s=korg; t=1716838382;
+	bh=QDwSFyelHK8hZGlNhwWNHQRuS6sN88SqSJdm4vLVDew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtaSub6POiNGKbJuRX+kvg+8KgxJ6ocZGZWoYG0UwPz6tNjCU6K8mQect/M1cbcm2
-	 3zLrnrprAnAtaWhnuHe5NJmS3rRQXsWbJj+zPpcPwkNt9GFAddwjywF78ldWBu/9lu
-	 ZbJip5cSfClMUB68rJ+qx0QchMNa3SHIMP/7+qUE=
+	b=A/t5dE7Isb2jyN4+xuf6oNyXqpR+e/ivDF7TU6a4/hlnNzCPGO5flfns0/eep7iFj
+	 ubBqR6NYDkmlSB854CTUgONTZAm4+YaFqmGIDlAB4Z7qWrx8USut0OecSAbqpmDsiz
+	 W5pjgSMTCfA0fTOnCUEhavnk8xe9uEcJduV6jtYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Helge Deller <deller@gmx.de>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 370/493] fbdev: shmobile: fix snprintf truncation
-Date: Mon, 27 May 2024 20:56:12 +0200
-Message-ID: <20240527185642.375025486@linuxfoundation.org>
+Subject: [PATCH 6.8 371/493] ASoC: kirkwood: Fix potential NULL dereference
+Date: Mon, 27 May 2024 20:56:13 +0200
+Message-ID: <20240527185642.406280458@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -52,38 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 26c8cfb9d1e4b252336d23dd5127a8cbed414a32 ]
+[ Upstream commit ea60ab95723f5738e7737b56dda95e6feefa5b50 ]
 
-The name of the overlay does not fit into the fixed-length field:
+In kirkwood_dma_hw_params() mv_mbus_dram_info() returns NULL if
+CONFIG_PLAT_ORION macro is not defined.
+Fix this bug by adding NULL check.
 
-drivers/video/fbdev/sh_mobile_lcdcfb.c:1577:2: error: 'snprintf' will always be truncated; specified size is 16, but format string expands to at least 25
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Make it short enough by changing the string.
-
-Fixes: c5deac3c9b22 ("fbdev: sh_mobile_lcdc: Implement overlays support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: bb6a40fc5a83 ("ASoC: kirkwood: Fix reference to PCM buffer address")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Link: https://msgid.link/r/20240328173337.21406-1-amishin@t-argos.ru
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sh_mobile_lcdcfb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/kirkwood/kirkwood-dma.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/video/fbdev/sh_mobile_lcdcfb.c b/drivers/video/fbdev/sh_mobile_lcdcfb.c
-index eb2297b37504c..d35d2cf999988 100644
---- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
-+++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
-@@ -1575,7 +1575,7 @@ sh_mobile_lcdc_overlay_fb_init(struct sh_mobile_lcdc_overlay *ovl)
- 	 */
- 	info->fix = sh_mobile_lcdc_overlay_fix;
- 	snprintf(info->fix.id, sizeof(info->fix.id),
--		 "SH Mobile LCDC Overlay %u", ovl->index);
-+		 "SHMobile ovl %u", ovl->index);
- 	info->fix.smem_start = ovl->dma_handle;
- 	info->fix.smem_len = ovl->fb_size;
- 	info->fix.line_length = ovl->pitch;
+diff --git a/sound/soc/kirkwood/kirkwood-dma.c b/sound/soc/kirkwood/kirkwood-dma.c
+index dd2f806526c10..ef00792e1d49a 100644
+--- a/sound/soc/kirkwood/kirkwood-dma.c
++++ b/sound/soc/kirkwood/kirkwood-dma.c
+@@ -182,6 +182,9 @@ static int kirkwood_dma_hw_params(struct snd_soc_component *component,
+ 	const struct mbus_dram_target_info *dram = mv_mbus_dram_info();
+ 	unsigned long addr = substream->runtime->dma_addr;
+ 
++	if (!dram)
++		return 0;
++
+ 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+ 		kirkwood_dma_conf_mbus_windows(priv->io,
+ 			KIRKWOOD_PLAYBACK_WIN, addr, dram);
 -- 
 2.43.0
 
