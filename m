@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9EA17E90E;
-	Mon, 27 May 2024 19:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB42E17E90E;
+	Mon, 27 May 2024 19:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837240; cv=none; b=GP80KsXcQmA6Y/8ahauPXdbUKiV4BZ1XP2QZJ+PH5v54GriZ0A9x76edcplnUPjXRsPHBctRWaHa8u28BicvqJ7jJZ/Imi1vd7ZqmbZBMEYd/j74WwOWItyzVJVgGDFHCvqhWkLEuVL0fx0MyPQIH4IlJFrYFUA7PRormTxbdc4=
+	t=1716837242; cv=none; b=bqTxIaYP5hVAnBgk+igwRsvVz/O8Jf6G99qUPKsbSBAGfjELx5f5n0MQ64Kqh0ZvHfjKjsAZFiGk/v+Cvsf7kpXFwxu0xU1QYsmBGo3MedZ+ISQPbjuXdK0B9IjGE3lDFSV6hZniKQd7Jjoz9HAG8H/E8bEBrU+soI3R7LfLPi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837240; c=relaxed/simple;
-	bh=Xr21Fc+LEPYLo0GMBzU9u1y8bnJL1XA4+Xt9GIcGqn0=;
+	s=arc-20240116; t=1716837242; c=relaxed/simple;
+	bh=B9AaKuQ0IoUlf8Noaz6Yi60kqBcd9V6WbVEfdDIF3nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCH5f1KwjB1J+xcXLKxEIqByIwW6ljd4sXm2iP4+H143WShce7/fnt1aMa25SUdzxq1f6g1mFsYU7nVwBM48i/X4sO5uhjJzKC47i5dDHfi6truNBeAciW/JMU5WCfeKIkHSzEPTFNpPgD+VcGeUcT7r+ZT8SfSaujN5dzo1W7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCkm9daL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=j9Wxk8uUZPem5UxNxjvCQEMhJjJF+XbFU+8kwtM1+njfwd+Qs9Z3RejA6BOHh6Q5lEwNAmCL3gEQvWucfqew+AV+hHSSVSlvyoYAkdlWzhxYMMCzNUfQBpI3UK1mqM9HBYawNYs3sjejo8cuYO+ZwFyiHgK5/TZfZnpAgFzUV9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Za2zf8OD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCkm9daL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7810C2BBFC;
-	Mon, 27 May 2024 19:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Za2zf8OD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5B2C2BBFC;
+	Mon, 27 May 2024 19:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837240;
-	bh=Xr21Fc+LEPYLo0GMBzU9u1y8bnJL1XA4+Xt9GIcGqn0=;
+	s=korg; t=1716837242;
+	bh=B9AaKuQ0IoUlf8Noaz6Yi60kqBcd9V6WbVEfdDIF3nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iCkm9daLSz5HFPq5xqkvDOruVXfqWPbPKr3BVkfJ+SOWh3ifQBZ96QJtpsSn3sBP1
-	 Pdhm+QwfWXANItR6RVSpTLz7WXQ667AiVUIq2xkN8vA3XO0sSAgFjcInGvJjaplGfV
-	 Jj2Lg1I44BsRixhFkE94mREoHBj3rMdJsiqhVyr0=
+	b=Za2zf8ODrtayHQ9vJuNlv9N7o44uFHOaVWHgHJv0zsigW4fzNsd0qIVhCJYen1/2l
+	 L52cZ4L9Kuhxx4TnL/IGpJX4IQs2UbWh38VFZ33fz3SpBA4bWT4QvlE1w+7Z5kKvpQ
+	 zACCj0IApPq7xyXbLEB2NZ2KDwbypYKeBU2xsp6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Rob Herring <robh@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 322/427] media: dt-bindings: ovti,ov2680: Fix the power supply names
-Date: Mon, 27 May 2024 20:56:09 +0200
-Message-ID: <20240527185631.680296890@linuxfoundation.org>
+Subject: [PATCH 6.9 323/427] media: i2c: et8ek8: Dont strip remove function when driver is builtin
+Date: Mon, 27 May 2024 20:56:10 +0200
+Message-ID: <20240527185631.755062606@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -47,81 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit e2f6ea61b6f3e4ebbb7dff857eea6220c18cd17b ]
+[ Upstream commit 545b215736c5c4b354e182d99c578a472ac9bfce ]
 
-The original .txt bindings had the OV2680 power supply names correct,
-but the transition from .txt to yaml spelled them incorrectly.
+Using __exit for the remove function results in the remove callback
+being discarded with CONFIG_VIDEO_ET8EK8=y. When such a device gets
+unbound (e.g. using sysfs or hotplug), the driver is just removed
+without the cleanup being performed. This results in resource leaks. Fix
+it by compiling in the remove callback unconditionally.
 
-Fix the OV2680 power supply names as the original .txt bindings
-as these are the names used by the OV2680 driver and in devicetree.
+This also fixes a W=1 modpost warning:
 
-Fixes: 57226cd8c8bf ("media: dt-bindings: ov2680: convert bindings to yaml")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Rob Herring <robh@kernel.org>
+	WARNING: modpost: drivers/media/i2c/et8ek8/et8ek8: section mismatch in reference: et8ek8_i2c_driver+0x10 (section: .data) -> et8ek8_remove (section: .exit.text)
+
+Fixes: c5254e72b8ed ("[media] media: Driver for Toshiba et8ek8 5MP sensor")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/media/i2c/ovti,ov2680.yaml        | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/media/i2c/et8ek8/et8ek8_driver.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml b/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
-index cf456f8d9ddcb..c87677f5e2a25 100644
---- a/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
-+++ b/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
-@@ -37,15 +37,15 @@ properties:
-       active low.
-     maxItems: 1
+diff --git a/drivers/media/i2c/et8ek8/et8ek8_driver.c b/drivers/media/i2c/et8ek8/et8ek8_driver.c
+index f548b1bb75fb9..e932d25ca7b3a 100644
+--- a/drivers/media/i2c/et8ek8/et8ek8_driver.c
++++ b/drivers/media/i2c/et8ek8/et8ek8_driver.c
+@@ -1475,7 +1475,7 @@ static int et8ek8_probe(struct i2c_client *client)
+ 	return ret;
+ }
  
--  dovdd-supply:
-+  DOVDD-supply:
-     description:
-       Definition of the regulator used as interface power supply.
+-static void __exit et8ek8_remove(struct i2c_client *client)
++static void et8ek8_remove(struct i2c_client *client)
+ {
+ 	struct v4l2_subdev *subdev = i2c_get_clientdata(client);
+ 	struct et8ek8_sensor *sensor = to_et8ek8_sensor(subdev);
+@@ -1517,7 +1517,7 @@ static struct i2c_driver et8ek8_i2c_driver = {
+ 		.of_match_table	= et8ek8_of_table,
+ 	},
+ 	.probe		= et8ek8_probe,
+-	.remove		= __exit_p(et8ek8_remove),
++	.remove		= et8ek8_remove,
+ 	.id_table	= et8ek8_id_table,
+ };
  
--  avdd-supply:
-+  AVDD-supply:
-     description:
-       Definition of the regulator used as analog power supply.
- 
--  dvdd-supply:
-+  DVDD-supply:
-     description:
-       Definition of the regulator used as digital power supply.
- 
-@@ -59,9 +59,9 @@ required:
-   - reg
-   - clocks
-   - clock-names
--  - dovdd-supply
--  - avdd-supply
--  - dvdd-supply
-+  - DOVDD-supply
-+  - AVDD-supply
-+  - DVDD-supply
-   - reset-gpios
-   - port
- 
-@@ -82,9 +82,9 @@ examples:
-                 clock-names = "xvclk";
-                 reset-gpios = <&gpio1 3 GPIO_ACTIVE_LOW>;
- 
--                dovdd-supply = <&sw2_reg>;
--                dvdd-supply = <&sw2_reg>;
--                avdd-supply = <&reg_peri_3p15v>;
-+                DOVDD-supply = <&sw2_reg>;
-+                DVDD-supply = <&sw2_reg>;
-+                AVDD-supply = <&reg_peri_3p15v>;
- 
-                 port {
-                         ov2680_to_mipi: endpoint {
 -- 
 2.43.0
 
