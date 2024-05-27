@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB3B15FCE0;
-	Mon, 27 May 2024 19:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418F715FCFB;
+	Mon, 27 May 2024 19:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836518; cv=none; b=MYKEcg/uxikOOm/tCUn7UWnT9/Oqh90kjnHunJNMC6wGWnHCBiJMXUhTEbIpnKyHUKMWVtQLkY10asZjdIS538FDcqYgRl9n7fbKpAz3rB/1wrFRQmBBSo3KPbFqLmixrZGZh7XnFRKEwbRTu8Sluqn2VQO+ZikTkJCD8tXfXQE=
+	t=1716836521; cv=none; b=l5icptpz3HF7ZBfkiZ5crVn/i95kV+Pq3By+nfEeeD+HrTgZyxRtL6+8TkIHFmgzhFB4Xl2rXRrQUZOvr2R2Px06+l7Y7mTmBIcOp0Aos+GHZqJ904xW2NCLsJ/1oQupXinSL8wpSZ4m5tMfNBPFuA1j5ZtgkIQzm4PeNI6zOl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836518; c=relaxed/simple;
-	bh=Abcg8WDcXCnqgpiitvY6B51GSIHsiDvfSgqXr+ihhJI=;
+	s=arc-20240116; t=1716836521; c=relaxed/simple;
+	bh=+QUpV39nzMPafkA6/M9FOAz33uiI3J7WriqZjqR71f0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7TyCjkkFH4oEdcWYbTUUG1qdDqEgwRnybP0G9u8mk1Yy50+rBPJm689/LHFiCpQzeO93HpS1H2fhJBRefKyhA3MsXdPXdDFf3RCFJXipyyF55lK7uROAki1ztEI3rxr17L76j3Lg9Hh5PUvrOdHbGH/vWSuQXEyMOspuFh5eM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCo7MUoh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tu9XMCrHURuiaEUnivlMZ7O1+1vQ08ZY6RkInf8LrwraqOLshgEh/qd1PofTctRrZfTZ2PzOL70NQ5DpTKOJB2MNmwHBZhGnZwaXHdYykjaDuPqW+7DvjzWOM+YxM7nycMztYPmtVjxHhcZ50ekmRThH2xeV03mTtUpq7rA15QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S48h1I+R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCo7MUoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BDBC2BBFC;
-	Mon, 27 May 2024 19:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S48h1I+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB0CC2BBFC;
+	Mon, 27 May 2024 19:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836518;
-	bh=Abcg8WDcXCnqgpiitvY6B51GSIHsiDvfSgqXr+ihhJI=;
+	s=korg; t=1716836521;
+	bh=+QUpV39nzMPafkA6/M9FOAz33uiI3J7WriqZjqR71f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KCo7MUohVsZIBfX9h8l077mRl8YaODRJ193IPIqEHrbrM8Q2vK5vBi37u0VfqoUqn
-	 GAsBWd6ITP5icQkND6c7WQM/417F6E2gWilruKdJzB0sPB0Gz7Riws8jVeuuTJ5Ok6
-	 pOUbLgs+44TJ69lPIEwxm7wG1NBTFQ7hxhrHYbQg=
+	b=S48h1I+RFzsnHf+tfGBIINp+TSl4nh4gK/GFlrCX8sTHOjocIQ6DSefrDjYuSqoY6
+	 3hdhHpfweYOMJXUNUwyDHXPYTEirmQD7Eh3fsgw1F+DRTy2GHehWm45xMbTadnZ5VK
+	 Oee8h0Jj1TqBTI6PKZOUjGKH7pAeDfOUGT3yHnOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Kubisiak <brian@kubisiak.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 048/427] ecryptfs: Fix buffer size for tag 66 packet
-Date: Mon, 27 May 2024 20:51:35 +0200
-Message-ID: <20240527185606.210796411@linuxfoundation.org>
+Subject: [PATCH 6.9 084/427] kunit/fortify: Fix replaced failure path to unbreak __alloc_size
+Date: Mon, 27 May 2024 20:52:11 +0200
+Message-ID: <20240527185609.600516232@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -51,114 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Kubisiak <brian@kubisiak.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 85a6a1aff08ec9f5b929d345d066e2830e8818e5 ]
+[ Upstream commit 74df22453c51392476117d7330bf02cee6e987cf ]
 
-The 'TAG 66 Packet Format' description is missing the cipher code and
-checksum fields that are packed into the message packet. As a result,
-the buffer allocated for the packet is 3 bytes too small and
-write_tag_66_packet() will write up to 3 bytes past the end of the
-buffer.
+The __alloc_size annotation for kmemdup() was getting disabled under
+KUnit testing because the replaced fortify_panic macro implementation
+was using "return NULL" as a way to survive the sanity checking. But
+having the chance to return NULL invalidated __alloc_size, so kmemdup
+was not passing the __builtin_dynamic_object_size() tests any more:
 
-Fix this by increasing the size of the allocation so the whole packet
-will always fit in the buffer.
+[23:26:18] [PASSED] fortify_test_alloc_size_kmalloc_const
+[23:26:19]     # fortify_test_alloc_size_kmalloc_dynamic: EXPECTATION FAILED at lib/fortify_kunit.c:265
+[23:26:19]     Expected __builtin_dynamic_object_size(p, 1) == expected, but
+[23:26:19]         __builtin_dynamic_object_size(p, 1) == -1 (0xffffffffffffffff)
+[23:26:19]         expected == 11 (0xb)
+[23:26:19] __alloc_size() not working with __bdos on kmemdup("hello there", len, gfp)
+[23:26:19] [FAILED] fortify_test_alloc_size_kmalloc_dynamic
 
-This fixes the below kasan slab-out-of-bounds bug:
+Normal builds were not affected: __alloc_size continued to work there.
 
-  BUG: KASAN: slab-out-of-bounds in ecryptfs_generate_key_packet_set+0x7d6/0xde0
-  Write of size 1 at addr ffff88800afbb2a5 by task touch/181
+Use a zero-sized allocation instead, which allows __alloc_size to
+behave.
 
-  CPU: 0 PID: 181 Comm: touch Not tainted 6.6.13-gnu #1 4c9534092be820851bb687b82d1f92a426598dc6
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2/GNU Guix 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4c/0x70
-   print_report+0xc5/0x610
-   ? ecryptfs_generate_key_packet_set+0x7d6/0xde0
-   ? kasan_complete_mode_report_info+0x44/0x210
-   ? ecryptfs_generate_key_packet_set+0x7d6/0xde0
-   kasan_report+0xc2/0x110
-   ? ecryptfs_generate_key_packet_set+0x7d6/0xde0
-   __asan_store1+0x62/0x80
-   ecryptfs_generate_key_packet_set+0x7d6/0xde0
-   ? __pfx_ecryptfs_generate_key_packet_set+0x10/0x10
-   ? __alloc_pages+0x2e2/0x540
-   ? __pfx_ovl_open+0x10/0x10 [overlay 30837f11141636a8e1793533a02e6e2e885dad1d]
-   ? dentry_open+0x8f/0xd0
-   ecryptfs_write_metadata+0x30a/0x550
-   ? __pfx_ecryptfs_write_metadata+0x10/0x10
-   ? ecryptfs_get_lower_file+0x6b/0x190
-   ecryptfs_initialize_file+0x77/0x150
-   ecryptfs_create+0x1c2/0x2f0
-   path_openat+0x17cf/0x1ba0
-   ? __pfx_path_openat+0x10/0x10
-   do_filp_open+0x15e/0x290
-   ? __pfx_do_filp_open+0x10/0x10
-   ? __kasan_check_write+0x18/0x30
-   ? _raw_spin_lock+0x86/0xf0
-   ? __pfx__raw_spin_lock+0x10/0x10
-   ? __kasan_check_write+0x18/0x30
-   ? alloc_fd+0xf4/0x330
-   do_sys_openat2+0x122/0x160
-   ? __pfx_do_sys_openat2+0x10/0x10
-   __x64_sys_openat+0xef/0x170
-   ? __pfx___x64_sys_openat+0x10/0x10
-   do_syscall_64+0x60/0xd0
-   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-  RIP: 0033:0x7f00a703fd67
-  Code: 25 00 00 41 00 3d 00 00 41 00 74 37 64 8b 04 25 18 00 00 00 85 c0 75 5b 44 89 e2 48 89 ee bf 9c ff ff ff b8 01 01 00 00 0f 05 <48> 3d 00 f0 ff ff 0f 87 85 00 00 00 48 83 c4 68 5d 41 5c c3 0f 1f
-  RSP: 002b:00007ffc088e30b0 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
-  RAX: ffffffffffffffda RBX: 00007ffc088e3368 RCX: 00007f00a703fd67
-  RDX: 0000000000000941 RSI: 00007ffc088e48d7 RDI: 00000000ffffff9c
-  RBP: 00007ffc088e48d7 R08: 0000000000000001 R09: 0000000000000000
-  R10: 00000000000001b6 R11: 0000000000000246 R12: 0000000000000941
-  R13: 0000000000000000 R14: 00007ffc088e48d7 R15: 00007f00a7180040
-   </TASK>
-
-  Allocated by task 181:
-   kasan_save_stack+0x2f/0x60
-   kasan_set_track+0x29/0x40
-   kasan_save_alloc_info+0x25/0x40
-   __kasan_kmalloc+0xc5/0xd0
-   __kmalloc+0x66/0x160
-   ecryptfs_generate_key_packet_set+0x6d2/0xde0
-   ecryptfs_write_metadata+0x30a/0x550
-   ecryptfs_initialize_file+0x77/0x150
-   ecryptfs_create+0x1c2/0x2f0
-   path_openat+0x17cf/0x1ba0
-   do_filp_open+0x15e/0x290
-   do_sys_openat2+0x122/0x160
-   __x64_sys_openat+0xef/0x170
-   do_syscall_64+0x60/0xd0
-   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Fixes: dddfa461fc89 ("[PATCH] eCryptfs: Public key; packet management")
-Signed-off-by: Brian Kubisiak <brian@kubisiak.com>
-Link: https://lore.kernel.org/r/5j2q56p6qkhezva6b2yuqfrsurmvrrqtxxzrnp3wqu7xrz22i7@hoecdztoplbl
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 4ce615e798a7 ("fortify: Provide KUnit counters for failure testing")
+Fixes: fa4a3f86d498 ("fortify: Add KUnit tests for runtime overflows")
+Link: https://lore.kernel.org/r/20240501232937.work.532-kees@kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ecryptfs/keystore.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/fortify-string.h | 3 ++-
+ lib/fortify_kunit.c            | 6 +++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ecryptfs/keystore.c b/fs/ecryptfs/keystore.c
-index 3fe41964c0d8d..7f9f68c00ef63 100644
---- a/fs/ecryptfs/keystore.c
-+++ b/fs/ecryptfs/keystore.c
-@@ -300,9 +300,11 @@ write_tag_66_packet(char *signature, u8 cipher_code,
- 	 *         | Key Identifier Size      | 1 or 2 bytes |
- 	 *         | Key Identifier           | arbitrary    |
- 	 *         | File Encryption Key Size | 1 or 2 bytes |
-+	 *         | Cipher Code              | 1 byte       |
- 	 *         | File Encryption Key      | arbitrary    |
-+	 *         | Checksum                 | 2 bytes      |
- 	 */
--	data_len = (5 + ECRYPTFS_SIG_SIZE_HEX + crypt_stat->key_size);
-+	data_len = (8 + ECRYPTFS_SIG_SIZE_HEX + crypt_stat->key_size);
- 	*packet = kmalloc(data_len, GFP_KERNEL);
- 	message = *packet;
- 	if (!message) {
+diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.h
+index 6aeebe0a67770..6eaa190d0083c 100644
+--- a/include/linux/fortify-string.h
++++ b/include/linux/fortify-string.h
+@@ -734,7 +734,8 @@ __FORTIFY_INLINE void *kmemdup(const void * const POS0 p, size_t size, gfp_t gfp
+ 	if (__compiletime_lessthan(p_size, size))
+ 		__read_overflow();
+ 	if (p_size < size)
+-		fortify_panic(FORTIFY_FUNC_kmemdup, FORTIFY_READ, p_size, size, NULL);
++		fortify_panic(FORTIFY_FUNC_kmemdup, FORTIFY_READ, p_size, size,
++			      __real_kmemdup(p, 0, gfp));
+ 	return __real_kmemdup(p, size, gfp);
+ }
+ 
+diff --git a/lib/fortify_kunit.c b/lib/fortify_kunit.c
+index 86c1b1a6e2c89..fdba0eaf19a59 100644
+--- a/lib/fortify_kunit.c
++++ b/lib/fortify_kunit.c
+@@ -917,19 +917,19 @@ static void kmemdup_test(struct kunit *test)
+ 
+ 	/* Out of bounds by 1 byte. */
+ 	copy = kmemdup(src, len + 1, GFP_KERNEL);
+-	KUNIT_EXPECT_NULL(test, copy);
++	KUNIT_EXPECT_PTR_EQ(test, copy, ZERO_SIZE_PTR);
+ 	KUNIT_EXPECT_EQ(test, fortify_read_overflows, 1);
+ 	kfree(copy);
+ 
+ 	/* Way out of bounds. */
+ 	copy = kmemdup(src, len * 2, GFP_KERNEL);
+-	KUNIT_EXPECT_NULL(test, copy);
++	KUNIT_EXPECT_PTR_EQ(test, copy, ZERO_SIZE_PTR);
+ 	KUNIT_EXPECT_EQ(test, fortify_read_overflows, 2);
+ 	kfree(copy);
+ 
+ 	/* Starting offset causing out of bounds. */
+ 	copy = kmemdup(src + 1, len, GFP_KERNEL);
+-	KUNIT_EXPECT_NULL(test, copy);
++	KUNIT_EXPECT_PTR_EQ(test, copy, ZERO_SIZE_PTR);
+ 	KUNIT_EXPECT_EQ(test, fortify_read_overflows, 3);
+ 	kfree(copy);
+ }
 -- 
 2.43.0
 
