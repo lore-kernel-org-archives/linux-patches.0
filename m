@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D12915FA60;
-	Mon, 27 May 2024 19:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDBC17727;
+	Mon, 27 May 2024 19:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716838550; cv=none; b=l9mKEodSpQI9TvTTjQjRK+JczYQHmG4bHtAvGXVuUgBmVVcQFv3ExWuBHKVAVviRK3y0aim3R1aDuia5jcxe1XHNv+Cxk9lVTtw5jnyr2currmL23UVKxf71tnIPE3mwaP4VuaLmHJ5IuXCcOzgRvnKHLfCL8u2/wAs8gdsLWbQ=
+	t=1716838552; cv=none; b=UsxBMoAFbYtdprOw+PP7dr0Y6iCXrbk8wKCeGVrof1q7ElO9hyOjtQQvi9u/gbeuqKpqYJsc06724UlVUv+DciIrbZs4TqMmeYiP1kpJWmfRhfYQ3qA2U49RNpr9+2p5jRpyvJs2Mj7gI1mMxTiJ3c6MyeLyd48QG+TJoB0qoTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716838550; c=relaxed/simple;
-	bh=eEIoeQBRTmccXOfwpcnesYET6gY+sIORQ28b7YQdlEE=;
+	s=arc-20240116; t=1716838552; c=relaxed/simple;
+	bh=8AGymlFH+ZLlrFEzJ5P1SnSDrzJyd01WElJ+4A6JsYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNuy+h8CG22ROrTs0nasG6lWHVDuZ/vaUWwaC42bkI9LQNRCbu1FRwNTP+XKzK/5IlZGlGvXbWfIf5m2C0K6VlocVC3vam/Q32AJHEn+gQMDLbIUKPgjt5723w62YYnnZuUgqJLtXFEgpElN4vhUICxQ6YHhxHMcoW+444kBg+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GFOguU1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YTadcJ3DvWxgAPiZ9x2oI7+TeOz70BOkGJ23XSE4stM5C9DcBQB4trrc7vG+s+nFlvHolrfHmcpXFDObCqqaV57lI/u85314cOQU1CpVP+X96/+1bdXrefC/HmB0bZzNi649y956DSvbFwqbx5beoySVnMtWpD74/0G0YwFxVCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ol04nIP/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GFOguU1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D650EC2BBFC;
-	Mon, 27 May 2024 19:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ol04nIP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B893C2BBFC;
+	Mon, 27 May 2024 19:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716838550;
-	bh=eEIoeQBRTmccXOfwpcnesYET6gY+sIORQ28b7YQdlEE=;
+	s=korg; t=1716838552;
+	bh=8AGymlFH+ZLlrFEzJ5P1SnSDrzJyd01WElJ+4A6JsYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1GFOguU1tVBO/zZ3vc+gkzZNBux57OVb+f7Av7fMySoa53mZD2/km+DyLf/JWZMpC
-	 MkU2Mbs/Hh2A28eBpD6m6oWZ4rms7Jomlwp1vOA1ZG58tlQITrZ2HiszBGLUHBZlNG
-	 Cyqa4K56Uf5qx9bPsXpCW/Zm0/gFqog0iaOJqN6E=
+	b=ol04nIP/yk90aMCviUVdMNQVirs4nFe/6I8mg4hnIcmysg41iS4rIULkVS3AY0K0N
+	 5Niiz8f3iFcNEUyAkBGSoC6VrB6oGZ+pnJElElw+hQFvp0eGMqpYFx3NVQqiia4i5z
+	 PqyXLV+DS+j04YUlxRbzzi/d+2SDSuyRX/0Zfg7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.8 434/493] clk: qcom: clk-alpha-pll: remove invalid Stromer register offset
-Date: Mon, 27 May 2024 20:57:16 +0200
-Message-ID: <20240527185644.468773883@linuxfoundation.org>
+Subject: [PATCH 6.8 397/493] media: i2c: et8ek8: Dont strip remove function when driver is builtin
+Date: Mon, 27 May 2024 20:56:39 +0200
+Message-ID: <20240527185643.259267649@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 References: <20240527185626.546110716@linuxfoundation.org>
@@ -46,55 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.8-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 4f2bc4acbb1916b8cd2ce4bb3ba7b1cd7cb705fa ]
+[ Upstream commit 545b215736c5c4b354e182d99c578a472ac9bfce ]
 
-The offset of the CONFIG_CTL_U register defined for the Stromer
-PLL is wrong. It is not aligned on a 4 bytes boundary which might
-causes errors in regmap operations.
+Using __exit for the remove function results in the remove callback
+being discarded with CONFIG_VIDEO_ET8EK8=y. When such a device gets
+unbound (e.g. using sysfs or hotplug), the driver is just removed
+without the cleanup being performed. This results in resource leaks. Fix
+it by compiling in the remove callback unconditionally.
 
-Maybe the intention behind of using the 0xff value was to indicate
-that the register is not implemented in the PLL, but this is not
-verified anywhere in the code. Moreover, this value is not used
-even in other register offset arrays despite that those PLLs also
-have unimplemented registers.
+This also fixes a W=1 modpost warning:
 
-Additionally, on the Stromer PLLs the current code only touches
-the CONFIG_CTL_U register if the result of pll_has_64bit_config()
-is true which condition is not affected by the change.
+	WARNING: modpost: drivers/media/i2c/et8ek8/et8ek8: section mismatch in reference: et8ek8_i2c_driver+0x10 (section: .data) -> et8ek8_remove (section: .exit.text)
 
-Due to the reasons above, simply remove the CONFIG_CTL_U entry
-from the Stromer specific array.
-
-Fixes: e47a4f55f240 ("clk: qcom: clk-alpha-pll: Add support for Stromer PLLs")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240311-alpha-pll-stromer-cleanup-v1-1-f7c0c5607cca@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: c5254e72b8ed ("[media] media: Driver for Toshiba et8ek8 5MP sensor")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/i2c/et8ek8/et8ek8_driver.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 05898d2a8b22c..58ae732959803 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -212,7 +212,6 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 		[PLL_OFF_USER_CTL] = 0x18,
- 		[PLL_OFF_USER_CTL_U] = 0x1c,
- 		[PLL_OFF_CONFIG_CTL] = 0x20,
--		[PLL_OFF_CONFIG_CTL_U] = 0xff,
- 		[PLL_OFF_TEST_CTL] = 0x30,
- 		[PLL_OFF_TEST_CTL_U] = 0x34,
- 		[PLL_OFF_STATUS] = 0x28,
+diff --git a/drivers/media/i2c/et8ek8/et8ek8_driver.c b/drivers/media/i2c/et8ek8/et8ek8_driver.c
+index f548b1bb75fb9..e932d25ca7b3a 100644
+--- a/drivers/media/i2c/et8ek8/et8ek8_driver.c
++++ b/drivers/media/i2c/et8ek8/et8ek8_driver.c
+@@ -1475,7 +1475,7 @@ static int et8ek8_probe(struct i2c_client *client)
+ 	return ret;
+ }
+ 
+-static void __exit et8ek8_remove(struct i2c_client *client)
++static void et8ek8_remove(struct i2c_client *client)
+ {
+ 	struct v4l2_subdev *subdev = i2c_get_clientdata(client);
+ 	struct et8ek8_sensor *sensor = to_et8ek8_sensor(subdev);
+@@ -1517,7 +1517,7 @@ static struct i2c_driver et8ek8_i2c_driver = {
+ 		.of_match_table	= et8ek8_of_table,
+ 	},
+ 	.probe		= et8ek8_probe,
+-	.remove		= __exit_p(et8ek8_remove),
++	.remove		= et8ek8_remove,
+ 	.id_table	= et8ek8_id_table,
+ };
+ 
 -- 
 2.43.0
 
