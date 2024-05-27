@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A71C17E90E;
-	Mon, 27 May 2024 19:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57C817E90E;
+	Mon, 27 May 2024 19:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837187; cv=none; b=IQMIU2LWgcO480wudfjfmoq/CqxZ4/c1H7DaxhA4oEDyNEVL7LvR4JEGZkvdg06qkEZowhU73WLkVm1yaqcHWfT9PQB7giwzhHYPOCYKbH+UprMQD2Mnu6jjMGET1zj/sRimMlTiBbp55EKoQHDV9cNlQbzonqZxw+E3AE9pcwM=
+	t=1716837189; cv=none; b=OXx4mqmAztd6YqIG/MW2mKnbYxuzoMXpx/ewgB9rIrrErml4AAwUkig/P5BRB+47uFCFqNJjkiEFRKW6CaLDfEpyHrCbvd3bjRRXXx8ES6hpQ71wQymiQ5nNhmFSHS0kYzB4pSTh9gYFvaXWH8Vow9VMDtaS9XegB24VayBoIpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837187; c=relaxed/simple;
-	bh=QzgTE8oiDVdUyPeE656PkenTupnZI1ZKbCDYhFeyrzI=;
+	s=arc-20240116; t=1716837189; c=relaxed/simple;
+	bh=40uFVohz+nLU61IqcDrmF1tit1zvAjtrh8fskC21dJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ujtIh2Uo5SoQimQ3jPSRRIuTC0f10htzJGMZ5pvmv/hvExZP8YlWw8HVgvqboqBheECXwcTxAK3i51pPXImPFR7BhPpPno77rQYfSESgGzlqRwsm5F+vDujxgPMBcNllGBcWTr+aPtudRQT6qg31L9pCRAvEkOY+kQ+vtFxFoYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFouv/hl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=N63KEpViowTjrHeIQbjHghXnlk3XcdTCHZlo0ST2jC3pfNT/o9VH5rMUBZhZlX5LB2jn0hV0goNiL8+vPIMKrclJoTXIh8t1nAo0pcLwipYaHXX7ONeR79d9tG636ABY1m8YGiGZsezwrZPXKW2vceAbg5nR5UrRFYuccYmpSfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zijztP8N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFouv/hl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63B7C2BBFC;
-	Mon, 27 May 2024 19:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zijztP8N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2A0C2BBFC;
+	Mon, 27 May 2024 19:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837187;
-	bh=QzgTE8oiDVdUyPeE656PkenTupnZI1ZKbCDYhFeyrzI=;
+	s=korg; t=1716837189;
+	bh=40uFVohz+nLU61IqcDrmF1tit1zvAjtrh8fskC21dJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YFouv/hl+mFoSodY1HpjluS6e9ox2NbCf3Gwxyq4LH64Q7QKUHJJO75o59c1aMnk3
-	 IVAfOENsvLSo3/nt1EPDbYGS3VLyDPgN5lpx+bRaoUIbNlDlc14hyBXfNY75SEDSfx
-	 8sWQjfFH6vDf3lg/rY/XN0X5TwSsZ5rn/I/4FdCk=
+	b=zijztP8NfoL6zSceEXv3+7WsKqFdJ/DhnlerbNHvTv0bXZgiwWF6Apks1xuqEqH0P
+	 kt/p4pf2F5IlXwZA7LoALq7JJjGwyNGib6983x0cskTIGY4Wdn1/11/JdwZAaev9qQ
+	 65A/lyf3WXRXgmgSStt2tvisfvJVgZ5BrXahGiYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Anup Patel <anup@brainfault.org>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Atish Patra <atishp@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 343/427] drm/rockchip: vop2: Do not divide height twice for YUV
-Date: Mon, 27 May 2024 20:56:30 +0200
-Message-ID: <20240527185633.036014922@linuxfoundation.org>
+Subject: [PATCH 6.9 344/427] RISC-V: Fix the typo in Scountovf CSR name
+Date: Mon, 27 May 2024 20:56:31 +0200
+Message-ID: <20240527185633.101598259@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -46,87 +49,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Detlev Casanova <detlev.casanova@collabora.com>
+From: Atish Patra <atishp@rivosinc.com>
 
-[ Upstream commit e80c219f52861e756181d7f88b0d341116daac2b ]
+[ Upstream commit d1927f64e0e1094f296842e127138cb5f3bf3c6d ]
 
-For the cbcr format, gt2 and gt4 are computed again after src_h has been
-divided by vsub.
+The counter overflow CSR name is "scountovf" not "sscountovf".
 
-As src_h as already been divided by 2 before, introduce cbcr_src_h and
-cbcr_src_w to keep a copy of those values to be used for cbcr gt2 and
-gt4 computation.
+Fix the csr name.
 
-This fixes yuv planes being unaligned vertically when down scaling to
-1080 pixels from 2160.
-
-Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
-Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
-Acked-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240414182706.655270-1-detlev.casanova@collabora.com
+Fixes: 4905ec2fb7e6 ("RISC-V: Add sscofpmf extension support")
+Reviewed-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
+Link: https://lore.kernel.org/r/20240420151741.962500-2-atishp@rivosinc.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 22 +++++++++++---------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ arch/riscv/include/asm/csr.h | 2 +-
+ drivers/perf/riscv_pmu_sbi.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index fdd768bbd487c..62ebbdb16253d 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -706,6 +706,8 @@ static void vop2_setup_scale(struct vop2 *vop2, const struct vop2_win *win,
- 	const struct drm_format_info *info;
- 	u16 hor_scl_mode, ver_scl_mode;
- 	u16 hscl_filter_mode, vscl_filter_mode;
-+	uint16_t cbcr_src_w = src_w;
-+	uint16_t cbcr_src_h = src_h;
- 	u8 gt2 = 0;
- 	u8 gt4 = 0;
- 	u32 val;
-@@ -763,27 +765,27 @@ static void vop2_setup_scale(struct vop2 *vop2, const struct vop2_win *win,
- 	vop2_win_write(win, VOP2_WIN_YRGB_VSCL_FILTER_MODE, vscl_filter_mode);
+diff --git a/arch/riscv/include/asm/csr.h b/arch/riscv/include/asm/csr.h
+index 2468c55933cd0..9d1b07932794e 100644
+--- a/arch/riscv/include/asm/csr.h
++++ b/arch/riscv/include/asm/csr.h
+@@ -281,7 +281,7 @@
+ #define CSR_HPMCOUNTER30H	0xc9e
+ #define CSR_HPMCOUNTER31H	0xc9f
  
- 	if (info->is_yuv) {
--		src_w /= info->hsub;
--		src_h /= info->vsub;
-+		cbcr_src_w /= info->hsub;
-+		cbcr_src_h /= info->vsub;
+-#define CSR_SSCOUNTOVF		0xda0
++#define CSR_SCOUNTOVF		0xda0
  
- 		gt4 = 0;
- 		gt2 = 0;
+ #define CSR_SSTATUS		0x100
+ #define CSR_SIE			0x104
+diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
+index 8cbe6e5f9c39a..3e44d2fb8bf81 100644
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -27,7 +27,7 @@
  
--		if (src_h >= (4 * dst_h)) {
-+		if (cbcr_src_h >= (4 * dst_h)) {
- 			gt4 = 1;
--			src_h >>= 2;
--		} else if (src_h >= (2 * dst_h)) {
-+			cbcr_src_h >>= 2;
-+		} else if (cbcr_src_h >= (2 * dst_h)) {
- 			gt2 = 1;
--			src_h >>= 1;
-+			cbcr_src_h >>= 1;
- 		}
- 
--		hor_scl_mode = scl_get_scl_mode(src_w, dst_w);
--		ver_scl_mode = scl_get_scl_mode(src_h, dst_h);
-+		hor_scl_mode = scl_get_scl_mode(cbcr_src_w, dst_w);
-+		ver_scl_mode = scl_get_scl_mode(cbcr_src_h, dst_h);
- 
--		val = vop2_scale_factor(src_w, dst_w);
-+		val = vop2_scale_factor(cbcr_src_w, dst_w);
- 		vop2_win_write(win, VOP2_WIN_SCALE_CBCR_X, val);
- 
--		val = vop2_scale_factor(src_h, dst_h);
-+		val = vop2_scale_factor(cbcr_src_h, dst_h);
- 		vop2_win_write(win, VOP2_WIN_SCALE_CBCR_Y, val);
- 
- 		vop2_win_write(win, VOP2_WIN_VSD_CBCR_GT4, gt4);
+ #define ALT_SBI_PMU_OVERFLOW(__ovl)					\
+ asm volatile(ALTERNATIVE_2(						\
+-	"csrr %0, " __stringify(CSR_SSCOUNTOVF),			\
++	"csrr %0, " __stringify(CSR_SCOUNTOVF),				\
+ 	"csrr %0, " __stringify(THEAD_C9XX_CSR_SCOUNTEROF),		\
+ 		THEAD_VENDOR_ID, ERRATA_THEAD_PMU,			\
+ 		CONFIG_ERRATA_THEAD_PMU,				\
 -- 
 2.43.0
 
