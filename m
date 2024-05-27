@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4579517E90E;
-	Mon, 27 May 2024 19:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C7617E90E;
+	Mon, 27 May 2024 19:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836969; cv=none; b=U3MEnPxKRbHsYnavReBtE9fPdeGRfj8gHfu5QLEPVnVxpvx3FXnqkiqnR+Dt3jOMEyeCS3EDH8ZHTKYqVx/PO7Kkkkg4LZUqhsYnzkZ212Om9RvEtx2LPzWOtTCQpKsQjwSWszjSdGcGY1YBPGW6iv7z2i83rwmLhEzGKmI9BLg=
+	t=1716836971; cv=none; b=Ed+ktIeN71UEL4CcfE655j5XMzqKqwj7AhUTjdBJ/ohaz8w34CbW7bLglHlPSGNvpez1fRm2nxHgDOxmcdHr6KLiTG7kIgZT84xiFYJ1VTRYmP/+1BlmLjmx6m8SGgvn529HdJqsSjEoMnIBcrNZ9JGz+IcwUHAltKiReTbDqC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836969; c=relaxed/simple;
-	bh=HFBnGmgT2X+uNRMdO5KYYcOCMj7b/c/5+dXAWUEYgdk=;
+	s=arc-20240116; t=1716836971; c=relaxed/simple;
+	bh=gii06g8a7GVbme021u1Ke7xwboG9SyOVclaQ5CeU3dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2Z7U/LIudYkr0f8dqjz7UH7jkyxTaY8u/1dJBq6RdjOVYKmwa9G7ZZS1EEhQjeY3+S4tyualxoDaEZ6ZfZHDFNCqMyYRYqqXI0qb8Scr8eKVF4o1faiTp9ft8O4odNq/0Pmplbt+G6ApzNjznuhhVsPLseMDXbP6fdvzZppNr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hq2bCe3E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BDSfOLztqBshf53kDZRz7NiXtMAP9HerHIz6l2rv9yH92wb7a50wTP8xma3IQAP5RtBF6h5VTDM5UZb9NjeyYiMJ4Nmq2lOX4PBzWKj8XE+EfqymYd49lwJiyeiwVe4m7Lkb0Lp/ov8iM8N1V0pttiCit79GjaBL5o6Rl6ikIZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bzzWWRE+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hq2bCe3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEFFC2BBFC;
-	Mon, 27 May 2024 19:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzzWWRE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DBCC2BBFC;
+	Mon, 27 May 2024 19:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836969;
-	bh=HFBnGmgT2X+uNRMdO5KYYcOCMj7b/c/5+dXAWUEYgdk=;
+	s=korg; t=1716836971;
+	bh=gii06g8a7GVbme021u1Ke7xwboG9SyOVclaQ5CeU3dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hq2bCe3EDm3eOQ51CW0x7xE1ipjRh/+0bnI4Ts3H1t9cVy6lt64RYiZ+7bYrXuuUi
-	 O0rCnX+A3IQiHH0t1tERLaYWvdMY0TRRs0XjUyAj2S0uaJ3ZXkkhp+Id9naV0vdbmj
-	 8YAKK3+UTqeAd0x4plqXSgmmCMSeArUHJwGum9aY=
+	b=bzzWWRE+J6TvkpB33HzMvrVHvJjU1wgkZZPUnoRyMjFBfTQO0VKw5r2rhF97X7WGD
+	 hQZ7y7fMqU+cJSEAVKD32YapCyafeeHUrKYzrTfAiY9ea5jEejCQWEbiQ5A0KKmjVd
+	 JJUdr0gIA3dE7BaOj77VyNi8heHfVeUMkIzZx9n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Watanabe <watanabe.yu@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	David Ahern <dsahern@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 258/427] inet: fix inet_fill_ifaddr() flags truncation
-Date: Mon, 27 May 2024 20:55:05 +0200
-Message-ID: <20240527185626.544529700@linuxfoundation.org>
+Subject: [PATCH 6.9 259/427] ax25: Use kernel universal linked list to implement ax25_dev_list
+Date: Mon, 27 May 2024 20:55:06 +0200
+Message-ID: <20240527185626.623871276@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,75 +52,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 1af7f88af269c4e06a4dc3bc920ff6cdf7471124 ]
+[ Upstream commit a7d6e36b9ad052926ba2ecba3a59d8bb67dabcb4 ]
 
-I missed that (struct ifaddrmsg)->ifa_flags was only 8bits,
-while (struct in_ifaddr)->ifa_flags is 32bits.
+The origin ax25_dev_list implements its own single linked list,
+which is complicated and error-prone. For example, when deleting
+the node of ax25_dev_list in ax25_dev_device_down(), we have to
+operate on the head node and other nodes separately.
 
-Use a temporary 32bit variable as I did in set_ifa_lifetime()
-and check_lifetime().
+This patch uses kernel universal linked list to replace original
+ax25_dev_list, which make the operation of ax25_dev_list easier.
 
-Fixes: 3ddc2231c810 ("inet: annotate data-races around ifa->ifa_flags")
-Reported-by: Yu Watanabe <watanabe.yu@gmail.com>
-Dianosed-by: Yu Watanabe <watanabe.yu@gmail.com>
-Closes: https://github.com/systemd/systemd/pull/32666#issuecomment-2103977928
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240510072932.2678952-1-edumazet@google.com
+We should do "dev->ax25_ptr = ax25_dev;" and "dev->ax25_ptr = NULL;"
+while holding the spinlock, otherwise the ax25_dev_device_up() and
+ax25_dev_device_down() could race.
+
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/85bba3af651ca0e1a519da8d0d715b949891171c.1715247018.git.duoming@zju.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: b505e0319852 ("ax25: Fix reference count leak issues of ax25_dev")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/devinet.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ include/net/ax25.h  |  3 +--
+ net/ax25/ax25_dev.c | 40 +++++++++++++++-------------------------
+ 2 files changed, 16 insertions(+), 27 deletions(-)
 
-diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
-index 7a437f0d41905..7e45c34c8340a 100644
---- a/net/ipv4/devinet.c
-+++ b/net/ipv4/devinet.c
-@@ -1683,6 +1683,7 @@ static int inet_fill_ifaddr(struct sk_buff *skb, const struct in_ifaddr *ifa,
- 	struct nlmsghdr  *nlh;
- 	unsigned long tstamp;
- 	u32 preferred, valid;
-+	u32 flags;
+diff --git a/include/net/ax25.h b/include/net/ax25.h
+index 0d939e5aee4ec..c2a85fd3f5ea4 100644
+--- a/include/net/ax25.h
++++ b/include/net/ax25.h
+@@ -216,7 +216,7 @@ typedef struct {
+ struct ctl_table;
  
- 	nlh = nlmsg_put(skb, args->portid, args->seq, args->event, sizeof(*ifm),
- 			args->flags);
-@@ -1692,7 +1693,13 @@ static int inet_fill_ifaddr(struct sk_buff *skb, const struct in_ifaddr *ifa,
- 	ifm = nlmsg_data(nlh);
- 	ifm->ifa_family = AF_INET;
- 	ifm->ifa_prefixlen = ifa->ifa_prefixlen;
--	ifm->ifa_flags = READ_ONCE(ifa->ifa_flags);
-+
-+	flags = READ_ONCE(ifa->ifa_flags);
-+	/* Warning : ifm->ifa_flags is an __u8, it holds only 8 bits.
-+	 * The 32bit value is given in IFA_FLAGS attribute.
-+	 */
-+	ifm->ifa_flags = (__u8)flags;
-+
- 	ifm->ifa_scope = ifa->ifa_scope;
- 	ifm->ifa_index = ifa->ifa_dev->dev->ifindex;
+ typedef struct ax25_dev {
+-	struct ax25_dev		*next;
++	struct list_head	list;
  
-@@ -1701,7 +1708,7 @@ static int inet_fill_ifaddr(struct sk_buff *skb, const struct in_ifaddr *ifa,
- 		goto nla_put_failure;
+ 	struct net_device	*dev;
+ 	netdevice_tracker	dev_tracker;
+@@ -330,7 +330,6 @@ int ax25_addr_size(const ax25_digi *);
+ void ax25_digi_invert(const ax25_digi *, ax25_digi *);
  
- 	tstamp = READ_ONCE(ifa->ifa_tstamp);
--	if (!(ifm->ifa_flags & IFA_F_PERMANENT)) {
-+	if (!(flags & IFA_F_PERMANENT)) {
- 		preferred = READ_ONCE(ifa->ifa_preferred_lft);
- 		valid = READ_ONCE(ifa->ifa_valid_lft);
- 		if (preferred != INFINITY_LIFE_TIME) {
-@@ -1732,7 +1739,7 @@ static int inet_fill_ifaddr(struct sk_buff *skb, const struct in_ifaddr *ifa,
- 	     nla_put_string(skb, IFA_LABEL, ifa->ifa_label)) ||
- 	    (ifa->ifa_proto &&
- 	     nla_put_u8(skb, IFA_PROTO, ifa->ifa_proto)) ||
--	    nla_put_u32(skb, IFA_FLAGS, ifm->ifa_flags) ||
-+	    nla_put_u32(skb, IFA_FLAGS, flags) ||
- 	    (ifa->ifa_rt_priority &&
- 	     nla_put_u32(skb, IFA_RT_PRIORITY, ifa->ifa_rt_priority)) ||
- 	    put_cacheinfo(skb, READ_ONCE(ifa->ifa_cstamp), tstamp,
+ /* ax25_dev.c */
+-extern ax25_dev *ax25_dev_list;
+ extern spinlock_t ax25_dev_lock;
+ 
+ #if IS_ENABLED(CONFIG_AX25)
+diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
+index 282ec581c0720..f16ee5c09d07a 100644
+--- a/net/ax25/ax25_dev.c
++++ b/net/ax25/ax25_dev.c
+@@ -22,11 +22,12 @@
+ #include <net/sock.h>
+ #include <linux/uaccess.h>
+ #include <linux/fcntl.h>
++#include <linux/list.h>
+ #include <linux/mm.h>
+ #include <linux/interrupt.h>
+ #include <linux/init.h>
+ 
+-ax25_dev *ax25_dev_list;
++static LIST_HEAD(ax25_dev_list);
+ DEFINE_SPINLOCK(ax25_dev_lock);
+ 
+ ax25_dev *ax25_addr_ax25dev(ax25_address *addr)
+@@ -34,7 +35,7 @@ ax25_dev *ax25_addr_ax25dev(ax25_address *addr)
+ 	ax25_dev *ax25_dev, *res = NULL;
+ 
+ 	spin_lock_bh(&ax25_dev_lock);
+-	for (ax25_dev = ax25_dev_list; ax25_dev != NULL; ax25_dev = ax25_dev->next)
++	list_for_each_entry(ax25_dev, &ax25_dev_list, list)
+ 		if (ax25cmp(addr, (const ax25_address *)ax25_dev->dev->dev_addr) == 0) {
+ 			res = ax25_dev;
+ 			ax25_dev_hold(ax25_dev);
+@@ -59,7 +60,6 @@ void ax25_dev_device_up(struct net_device *dev)
+ 	}
+ 
+ 	refcount_set(&ax25_dev->refcount, 1);
+-	dev->ax25_ptr     = ax25_dev;
+ 	ax25_dev->dev     = dev;
+ 	netdev_hold(dev, &ax25_dev->dev_tracker, GFP_KERNEL);
+ 	ax25_dev->forward = NULL;
+@@ -85,8 +85,8 @@ void ax25_dev_device_up(struct net_device *dev)
+ #endif
+ 
+ 	spin_lock_bh(&ax25_dev_lock);
+-	ax25_dev->next = ax25_dev_list;
+-	ax25_dev_list  = ax25_dev;
++	list_add(&ax25_dev->list, &ax25_dev_list);
++	dev->ax25_ptr     = ax25_dev;
+ 	spin_unlock_bh(&ax25_dev_lock);
+ 	ax25_dev_hold(ax25_dev);
+ 
+@@ -111,32 +111,25 @@ void ax25_dev_device_down(struct net_device *dev)
+ 	/*
+ 	 *	Remove any packet forwarding that points to this device.
+ 	 */
+-	for (s = ax25_dev_list; s != NULL; s = s->next)
++	list_for_each_entry(s, &ax25_dev_list, list)
+ 		if (s->forward == dev)
+ 			s->forward = NULL;
+ 
+-	if ((s = ax25_dev_list) == ax25_dev) {
+-		ax25_dev_list = s->next;
+-		goto unlock_put;
+-	}
+-
+-	while (s != NULL && s->next != NULL) {
+-		if (s->next == ax25_dev) {
+-			s->next = ax25_dev->next;
++	list_for_each_entry(s, &ax25_dev_list, list) {
++		if (s == ax25_dev) {
++			list_del(&s->list);
+ 			goto unlock_put;
+ 		}
+-
+-		s = s->next;
+ 	}
+-	spin_unlock_bh(&ax25_dev_lock);
+ 	dev->ax25_ptr = NULL;
++	spin_unlock_bh(&ax25_dev_lock);
+ 	ax25_dev_put(ax25_dev);
+ 	return;
+ 
+ unlock_put:
++	dev->ax25_ptr = NULL;
+ 	spin_unlock_bh(&ax25_dev_lock);
+ 	ax25_dev_put(ax25_dev);
+-	dev->ax25_ptr = NULL;
+ 	netdev_put(dev, &ax25_dev->dev_tracker);
+ 	ax25_dev_put(ax25_dev);
+ }
+@@ -200,16 +193,13 @@ struct net_device *ax25_fwd_dev(struct net_device *dev)
+  */
+ void __exit ax25_dev_free(void)
+ {
+-	ax25_dev *s, *ax25_dev;
++	ax25_dev *s, *n;
+ 
+ 	spin_lock_bh(&ax25_dev_lock);
+-	ax25_dev = ax25_dev_list;
+-	while (ax25_dev != NULL) {
+-		s        = ax25_dev;
+-		netdev_put(ax25_dev->dev, &ax25_dev->dev_tracker);
+-		ax25_dev = ax25_dev->next;
++	list_for_each_entry_safe(s, n, &ax25_dev_list, list) {
++		netdev_put(s->dev, &s->dev_tracker);
++		list_del(&s->list);
+ 		kfree(s);
+ 	}
+-	ax25_dev_list = NULL;
+ 	spin_unlock_bh(&ax25_dev_lock);
+ }
 -- 
 2.43.0
 
