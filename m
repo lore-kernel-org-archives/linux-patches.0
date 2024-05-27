@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19E017E90E;
-	Mon, 27 May 2024 19:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E7017E90E;
+	Mon, 27 May 2024 19:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837222; cv=none; b=mtnyJyafkDZQvPt1/U0OCMVYqxXruj9qNeU/p5ni+2iZRHnAfpwZyiPsAicqZPG6OZKzYLLfy7/hAbvxtABDY+fde7SEwapy3RD/cZ98sAdq1+sVmMItMbc0/JH5bh3BdZKcHD3msd/BlcBe07qh9QrZYqq9JQgMyiIBM3I68+o=
+	t=1716837225; cv=none; b=nn/Bd0YqbxY6utl2clqhSecVfkgn7lB91p/wRGM59mK0AqMmUuIocrgFosCWAowfFYf9DXvW72EHWYfkDuoYcWpx30qU295a5zu5FqFtDdRuYEfc7WJwgC7lBf+MFxqTNK96o/+QtTh8NGadg+jPeKshiTyTg40SgI2LVG1aCVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837222; c=relaxed/simple;
-	bh=vfSb5NdAchSC8A9t1RcHDk1F6lHke1WhT4Y6JJWfSAQ=;
+	s=arc-20240116; t=1716837225; c=relaxed/simple;
+	bh=OMjUcKK22gMHnl+oBUzByazwt8qhcO4IqGWA64daq58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PBJIBxKOLedusCFO6vaFMsYxEIYE5qTLgcqWddhN/09ZQfR0sNPbJ3zF1NsiwZ3BYGvZTV19LqfpA320BzYWgGqa3rMu4THVmFA90aHaVYWy2i74bVAzBa+9sIK4/fqCqKivAD8NTEVravFd3NhW6z7QDlmqyc1DLpB8GpMwkp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzpvEs8L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aMYaj6TAQGx5lPblIs2cCRW6zF5l2enVJnZJlxccDua/1GcIqVPhndysV9UU+9WH42/U9I5AdEsNqqkIL1wksW8v2Jl0qFU5CtExKBOD7hKzNMANCPdkYDxs1EX8g1zl2K8MasYg53N5MqX3y1xpp/3spnIKY4vPV/Rt7yloeO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgtVxWLU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzpvEs8L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDDDC2BBFC;
-	Mon, 27 May 2024 19:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgtVxWLU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4CF6C2BBFC;
+	Mon, 27 May 2024 19:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837222;
-	bh=vfSb5NdAchSC8A9t1RcHDk1F6lHke1WhT4Y6JJWfSAQ=;
+	s=korg; t=1716837225;
+	bh=OMjUcKK22gMHnl+oBUzByazwt8qhcO4IqGWA64daq58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzpvEs8LZR9m5oHWkTsY1Yaf/1yACc0aJybjRy92GYqf/l5k7B+78OBhjacOuLMcD
-	 P5yekbYzAoBNIrP/bfZ1uIlvcNK6bhZXNrRSuX5jxx4OR7zwqT6TzKH+sxTaZROWb1
-	 dTcCu9QHU63sLLyLSnP83i0E7NLS2QmsF/mmIkZ0=
+	b=dgtVxWLUTnWGEQtqPJgeLvdCrIxt+Ps0K2vma3ElHX3WSjIXslKskDR4nuvmCA2Iq
+	 2wKgX49jjkI9FFatQlyoSQTY7ugJPdQtDHj8p5AMsXVqxiQj7Mnjp7t/Swtfil7Ug+
+	 IUYii2mAlgZRF1TWQz+OKIJGA+gFDE8PgPguiHnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 355/427] RDMA/hns: Add max_ah and cq moderation capacities in query_device()
-Date: Mon, 27 May 2024 20:56:42 +0200
-Message-ID: <20240527185633.641957483@linuxfoundation.org>
+Subject: [PATCH 6.9 356/427] RDMA/hns: Fix deadlock on SRQ async events.
+Date: Mon, 27 May 2024 20:56:43 +0200
+Message-ID: <20240527185633.697728411@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -54,88 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 2ce384307f2ddf39dc662878e151722199afc9ae ]
+[ Upstream commit b46494b6f9c19f141114a57729e198698f40af37 ]
 
-Add max_ah and cq moderation capacities to hns_roce_query_device().
+xa_lock for SRQ table may be required in AEQ. Use xa_store_irq()/
+xa_erase_irq() to avoid deadlock.
 
-Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
+Fixes: 81fce6291d99 ("RDMA/hns: Add SRQ asynchronous event support")
 Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240412091616.370789-4-huangjunxian6@hisilicon.com
+Link: https://lore.kernel.org/r/20240412091616.370789-5-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_device.h | 3 +++
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 2 +-
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h  | 2 +-
- drivers/infiniband/hw/hns/hns_roce_main.c   | 7 +++++++
- 4 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_main.c | 1 +
+ drivers/infiniband/hw/hns/hns_roce_srq.c  | 6 +++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
-index c3cbd0a494bfd..0b47c6d68804f 100644
---- a/drivers/infiniband/hw/hns/hns_roce_device.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_device.h
-@@ -100,6 +100,9 @@
- #define CQ_BANKID_SHIFT 2
- #define CQ_BANKID_MASK GENMASK(1, 0)
- 
-+#define HNS_ROCE_MAX_CQ_COUNT 0xFFFF
-+#define HNS_ROCE_MAX_CQ_PERIOD 0xFFFF
-+
- enum {
- 	SERV_TYPE_RC,
- 	SERV_TYPE_UC,
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index ba7ae792d279d..99f6ae6135c2f 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5802,7 +5802,7 @@ static int hns_roce_v2_modify_cq(struct ib_cq *cq, u16 cq_count, u16 cq_period)
- 			dev_info(hr_dev->dev,
- 				 "cq_period(%u) reached the upper limit, adjusted to 65.\n",
- 				 cq_period);
--			cq_period = HNS_ROCE_MAX_CQ_PERIOD;
-+			cq_period = HNS_ROCE_MAX_CQ_PERIOD_HIP08;
- 		}
- 		cq_period *= HNS_ROCE_CLOCK_ADJUST;
- 	}
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index df04bc8ede57b..dfed6b4ddb04d 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -1334,7 +1334,7 @@ struct fmea_ram_ecc {
- 
- /* only for RNR timeout issue of HIP08 */
- #define HNS_ROCE_CLOCK_ADJUST 1000
--#define HNS_ROCE_MAX_CQ_PERIOD 65
-+#define HNS_ROCE_MAX_CQ_PERIOD_HIP08 65
- #define HNS_ROCE_MAX_EQ_PERIOD 65
- #define HNS_ROCE_RNR_TIMER_10NS 1
- #define HNS_ROCE_1US_CFG 999
 diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 1dc60c2b2b7ab..4d94fcb8685ab 100644
+index 4d94fcb8685ab..d202258368ed9 100644
 --- a/drivers/infiniband/hw/hns/hns_roce_main.c
 +++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -40,6 +40,7 @@
+@@ -37,6 +37,7 @@
+ #include <rdma/ib_smi.h>
+ #include <rdma/ib_user_verbs.h>
+ #include <rdma/ib_cache.h>
++#include "hnae3.h"
  #include "hns_roce_common.h"
  #include "hns_roce_device.h"
  #include "hns_roce_hem.h"
-+#include "hns_roce_hw_v2.h"
+diff --git a/drivers/infiniband/hw/hns/hns_roce_srq.c b/drivers/infiniband/hw/hns/hns_roce_srq.c
+index 4abae94778544..8f48c6723e07e 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_srq.c
++++ b/drivers/infiniband/hw/hns/hns_roce_srq.c
+@@ -123,7 +123,7 @@ static int alloc_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
+ 		return ret;
+ 	}
  
- static int hns_roce_set_mac(struct hns_roce_dev *hr_dev, u32 port,
- 			    const u8 *addr)
-@@ -192,6 +193,12 @@ static int hns_roce_query_device(struct ib_device *ib_dev,
- 			    IB_ATOMIC_HCA : IB_ATOMIC_NONE;
- 	props->max_pkeys = 1;
- 	props->local_ca_ack_delay = hr_dev->caps.local_ca_ack_delay;
-+	props->max_ah = INT_MAX;
-+	props->cq_caps.max_cq_moderation_period = HNS_ROCE_MAX_CQ_PERIOD;
-+	props->cq_caps.max_cq_moderation_count = HNS_ROCE_MAX_CQ_COUNT;
-+	if (hr_dev->pci_dev->revision == PCI_REVISION_ID_HIP08)
-+		props->cq_caps.max_cq_moderation_period = HNS_ROCE_MAX_CQ_PERIOD_HIP08;
-+
- 	if (hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_SRQ) {
- 		props->max_srq = hr_dev->caps.num_srqs;
- 		props->max_srq_wr = hr_dev->caps.max_srq_wrs;
+-	ret = xa_err(xa_store(&srq_table->xa, srq->srqn, srq, GFP_KERNEL));
++	ret = xa_err(xa_store_irq(&srq_table->xa, srq->srqn, srq, GFP_KERNEL));
+ 	if (ret) {
+ 		ibdev_err(ibdev, "failed to store SRQC, ret = %d.\n", ret);
+ 		goto err_put;
+@@ -136,7 +136,7 @@ static int alloc_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
+ 	return 0;
+ 
+ err_xa:
+-	xa_erase(&srq_table->xa, srq->srqn);
++	xa_erase_irq(&srq_table->xa, srq->srqn);
+ err_put:
+ 	hns_roce_table_put(hr_dev, &srq_table->table, srq->srqn);
+ 
+@@ -154,7 +154,7 @@ static void free_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
+ 		dev_err(hr_dev->dev, "DESTROY_SRQ failed (%d) for SRQN %06lx\n",
+ 			ret, srq->srqn);
+ 
+-	xa_erase(&srq_table->xa, srq->srqn);
++	xa_erase_irq(&srq_table->xa, srq->srqn);
+ 
+ 	if (refcount_dec_and_test(&srq->refcount))
+ 		complete(&srq->free);
 -- 
 2.43.0
 
