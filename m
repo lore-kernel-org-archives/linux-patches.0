@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AC31078F;
-	Mon, 27 May 2024 19:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C2117E90E;
+	Mon, 27 May 2024 19:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716836783; cv=none; b=AirlgNrEFn9opQGoThDaC1YceNFFDD0qya4i0sZgaDQ/zGK/y/JeBaY0zaX9DkCmgFKspan3pm8hbhXtqhe9aOcB6zVy762Pxg0ZE+LaBaJKxxqvOktmd5zRlprMv4b/qHEtneKIxU2BIA3GXws4XpS3oUnDPtERTUJyshYRILc=
+	t=1716836786; cv=none; b=A7atwtfvUIJOV2AnD5wnpp1QS6yx1WHfX07/JTh7zbfqZWcphUuRP/RnzB/4/kE4MzR0yEkwnTdRxOHh9PJL+/f+s1ZKioe2iW2cYf0C1SndNhD0Nv2IzZtl2S8gwtgnSqkAuCdFakoEMV95zTDQ03+qDTMbRb0AB+1vYBhnBbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716836783; c=relaxed/simple;
-	bh=+t4hf7s5EpjtKIwjRlL/eladGeSn2UByBeNhSDC4vF0=;
+	s=arc-20240116; t=1716836786; c=relaxed/simple;
+	bh=9cxUG7XVLpEmlAVDdW5HICZ0du52RqqEWYAHWKw43ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gvGGyP7f53z0iElR5g9fyqCiDjmwKYvxVjB4k4pCvSeq6TqszFYFtpCIk+rGx6pDbK9hU2uk15FTpMTbQfJRqX6I0yrq0NPDBDbsMropFvU9J+9KfXLUwA/IJ1cjTEUVJY/Z+W82Gy+idicy2wj9CT9Z6BX0+yYLALIDnhzN9Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZwhY4zJp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G2A775g1PBwXWsU8PxaoWLti7VNK5tca076nOj+YfuiwHuN8oPU+c3LT+WCnj3vfSya227z4PQ48vCP+TVlZj0ehi1tnEzv1AAi80e+v/pFjcwE0QTUhuv5RXzXRFIw4XmUQ6CnqfpVpjW3w37jLT4K3l6lR4C6g/T4rOBVD9Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAbYZPH6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZwhY4zJp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4813CC2BBFC;
-	Mon, 27 May 2024 19:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAbYZPH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0175C32781;
+	Mon, 27 May 2024 19:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716836783;
-	bh=+t4hf7s5EpjtKIwjRlL/eladGeSn2UByBeNhSDC4vF0=;
+	s=korg; t=1716836786;
+	bh=9cxUG7XVLpEmlAVDdW5HICZ0du52RqqEWYAHWKw43ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZwhY4zJppuSny2NI3bjSJQ7DEX3MJYqm/Wr1VRws/W/ILiFOicfVSC9FLs4p0GJxl
-	 d2qilQ6nTM6Gkghi/XKwEJJlieuWaXsSIGM6MnzBuUbr2n7S+ysOFg54/GSiFpcPRu
-	 WeRiB2eWA9rng4n7mbFEuRcweVwZ8cT8PEUurn/w=
+	b=WAbYZPH6/EoJMn4cdLLhPCCx13R+x2lKQzd36kT2WxMdv95MoCWScLykusetAr/Sj
+	 px/AhKecK2riz1hiD+r0S80KIkind6KFhfvjtbfci5eyqptz3KylCF9sySODMQXuaY
+	 yqdEm4xBn6TYy+NkTh0GEkS1slKnX4693AJ6S+lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 144/427] selftests/bpf: Fix umount cgroup2 error in test_sockmap
-Date: Mon, 27 May 2024 20:53:11 +0200
-Message-ID: <20240527185615.306745242@linuxfoundation.org>
+Subject: [PATCH 6.9 135/427] EDAC/skx_common: Allow decoding of SGX addresses
+Date: Mon, 27 May 2024 20:53:02 +0200
+Message-ID: <20240527185614.466318168@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,41 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit d75142dbeb2bd1587b9cc19f841578f541275a64 ]
+[ Upstream commit e0d335077831196bffe6a634ffe385fc684192ca ]
 
-This patch fixes the following "umount cgroup2" error in test_sockmap.c:
+There are no "struct page" associations with SGX pages, causing the check
+pfn_to_online_page() to fail. This results in the inability to decode the
+SGX addresses and warning messages like:
 
- (cgroup_helpers.c:353: errno: Device or resource busy) umount cgroup2
+  Invalid address 0x34cc9a98840 in IA32_MC17_ADDR
 
-Cgroup fd cg_fd should be closed before cleanup_cgroup_environment().
+Add an additional check to allow the decoding of the error address and to
+skip the warning message, if the error address is an SGX address.
 
-Fixes: 13a5f3ffd202 ("bpf: Selftests, sockmap test prog run without setting cgroup")
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/0399983bde729708773416b8488bac2cd5e022b8.1712639568.git.tanggeliang@kylinos.cn
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 1e92af09fab1 ("EDAC/skx_common: Filter out the invalid address")
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/r/20240408120419.50234-1-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 2 +-
+ drivers/edac/skx_common.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 024a0faafb3be..43612de44fbf5 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -2104,9 +2104,9 @@ int main(int argc, char **argv)
- 		free(options.whitelist);
- 	if (options.blacklist)
- 		free(options.blacklist);
-+	close(cg_fd);
- 	if (cg_created)
- 		cleanup_cgroup_environment();
--	close(cg_fd);
- 	return err;
- }
- 
+diff --git a/drivers/edac/skx_common.c b/drivers/edac/skx_common.c
+index 9c5b6f8bd8bd5..27996b7924c82 100644
+--- a/drivers/edac/skx_common.c
++++ b/drivers/edac/skx_common.c
+@@ -648,7 +648,7 @@ int skx_mce_check_error(struct notifier_block *nb, unsigned long val,
+ 	memset(&res, 0, sizeof(res));
+ 	res.mce  = mce;
+ 	res.addr = mce->addr & MCI_ADDR_PHYSADDR;
+-	if (!pfn_to_online_page(res.addr >> PAGE_SHIFT)) {
++	if (!pfn_to_online_page(res.addr >> PAGE_SHIFT) && !arch_is_platform_page(res.addr)) {
+ 		pr_err("Invalid address 0x%llx in IA32_MC%d_ADDR\n", mce->addr, mce->bank);
+ 		return NOTIFY_DONE;
+ 	}
 -- 
 2.43.0
 
