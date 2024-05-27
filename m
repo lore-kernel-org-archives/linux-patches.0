@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9966C17E90E;
-	Mon, 27 May 2024 19:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0DE17E90E;
+	Mon, 27 May 2024 19:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716837217; cv=none; b=ER4vaN7k8CmKOGfTDmQzu++UiUc8jZb916x48+YTQNAGUPSqL/AI1Q/Mpf2kQByVdZ8PS6VQjCuow+X/er9gwz5mSjWaMbhkQ+sJdzCjHczLo632sYhwhUr00k5ovhSiCekJHRCqLJW5NwLTS1Tm0Catg6usB6lq9hby9aUHF0Q=
+	t=1716837220; cv=none; b=M0MM2+kxZ8dorj1/+Agz71Sm870Ogq0MmDUBRjTs4jMaDB7XybAaZG2rXqWm6FzsE74GUmhaD/REC1QzwIkWRRnqtUysfRfssI2Hhdb+RHZRyPiqKPmWqQcciKVyeVTtE0qk8DT2YBap2I5QMhrYtRxIqijTu3/LHcIJ/Q3kltI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716837217; c=relaxed/simple;
-	bh=n2oDqFJrsAQJ3gQJr+LtsnqRH/VQejLXMgt5JoT6Nrk=;
+	s=arc-20240116; t=1716837220; c=relaxed/simple;
+	bh=bQKdAmVog69FzqQtoo5rL66oKVvEEf8xWFrsOCuupLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0BKOfkMfEfr5/M5AkEZlPggxzp3plz4Ip75UKJkQ1wDQ2Jv7dSW0hkt4LfpI9uOYEM6LtCq/5dzqMmJ8Esm3IKBZpYvQM2SKpm8PRW/2ggLIVIsFndCNqIU7dlt1ZkeK8V61xunToJGpYCvKgMUMWwCXi/UW2wqOawlOjkjOd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRwKdLTX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e4IB7Xmrjod2KI9qWJUTti6VWEDvROwnkkeXgVBWBVJjCrxGcRAhwU7TbW5eMmAPPVUResmVhZtZxlKiIIdPE4aNlimtSLiDpwVx24cURzT8DAorDNl+5+01HCdY8Nm7zreKqUL7eNxrvH+rb7Abg9gUZK6wNxPfRdU1MH0XPbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXhPoUQ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRwKdLTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F04C2BBFC;
-	Mon, 27 May 2024 19:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXhPoUQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85B9C2BBFC;
+	Mon, 27 May 2024 19:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716837217;
-	bh=n2oDqFJrsAQJ3gQJr+LtsnqRH/VQejLXMgt5JoT6Nrk=;
+	s=korg; t=1716837220;
+	bh=bQKdAmVog69FzqQtoo5rL66oKVvEEf8xWFrsOCuupLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRwKdLTXLJ/UAqdVNK53reMzOygfgqXJt9uDLGfLh64nA5LCjuC1/CfIx5fkYSHnG
-	 Hh2dp21Hk7e22lmTOU1lDOVKceXkJfHZAApX938pBaWhYAAPeba1VGsSj/R46WdlrF
-	 KiKh0gfpQXOohw9FF3mRpYlXzhGwruoOQnxeD/HE=
+	b=lXhPoUQ6U1ck+Bh8RMvBZjLk3+w4ocWc8UpR0Cek6e+f5IR0ZcahrXjcYY/HflHx1
+	 UyuG/tM0gCs3l4ElfPATxQZ03NnxB/xapR+R7i9qdNRevFl9rhdsGhI253nN9SBD31
+	 xALQMG30Uj1k3c5AOoxVipkp6kcOJnf2+gITRgZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 354/427] RDMA/hns: Fix return value in hns_roce_map_mr_sg
-Date: Mon, 27 May 2024 20:56:41 +0200
-Message-ID: <20240527185633.576251788@linuxfoundation.org>
+Subject: [PATCH 6.9 319/427] drm/msm/dp: Avoid a long timeout for AUX transfer if nothing connected
+Date: Mon, 27 May 2024 20:56:06 +0200
+Message-ID: <20240527185631.490961011@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
 References: <20240527185601.713589927@linuxfoundation.org>
@@ -52,73 +53,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 203b70fda63425a4eb29f03f9074859afe821a39 ]
+[ Upstream commit 5d1a7493343cc00d9019880b686e4e0a0f649531 ]
 
-As described in the ib_map_mr_sg function comment, it returns the number
-of sg elements that were mapped to the memory region. However,
-hns_roce_map_mr_sg returns the number of pages required for mapping the
-DMA area. Fix it.
+As documented in the description of the transfer() function of
+"struct drm_dp_aux", the transfer() function can be called at any time
+regardless of the state of the DP port. Specifically if the kernel has
+the DP AUX character device enabled and userspace accesses
+"/dev/drm_dp_auxN" directly then the AUX transfer function will be
+called regardless of whether a DP device is connected.
 
-Fixes: 9b2cf76c9f05 ("RDMA/hns: Optimize PBL buffer allocation process")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20240411033851.2884771-1-shaozhengchao@huawei.com
-Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+For eDP panels we have a special rule where we wait (with a 5 second
+timeout) for HPD to go high. This rule was important before all panels
+drivers were converted to call wait_hpd_asserted() and actually can be
+removed in a future commit.
+
+For external DP devices we never checked for HPD. That means that
+trying to access the DP AUX character device (AKA `hexdump -C
+/dev/drm_dp_auxN`) would very, very slowly timeout. Specifically on my
+system:
+  $ time hexdump -C /dev/drm_dp_aux0
+  hexdump: /dev/drm_dp_aux0: Connection timed out
+  real    0m8.200s
+We want access to the drm_dp_auxN character device to fail faster than
+8 seconds when no DP cable is plugged in.
+
+Let's add a test to make transfers fail right away if a device isn't
+plugged in. Rather than testing the HPD line directly, we have the
+dp_display module tell us when AUX transfers should be enabled so we
+can handle cases where HPD is signaled out of band like with Type C.
+
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/583127/
+Link: https://lore.kernel.org/r/20240315143621.v2.1.I16aff881c9fe82b5e0fc06ca312da017aa7b5b3e@changeid
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_mr.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_aux.c     | 20 ++++++++++++++++++++
+ drivers/gpu/drm/msm/dp/dp_aux.h     |  1 +
+ drivers/gpu/drm/msm/dp/dp_display.c |  4 ++++
+ 3 files changed, 25 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
-index 9e05b57a2d67d..80c050d7d0ea6 100644
---- a/drivers/infiniband/hw/hns/hns_roce_mr.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
-@@ -441,18 +441,18 @@ int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
- 	struct ib_device *ibdev = &hr_dev->ib_dev;
- 	struct hns_roce_mr *mr = to_hr_mr(ibmr);
- 	struct hns_roce_mtr *mtr = &mr->pbl_mtr;
--	int ret = 0;
-+	int ret, sg_num = 0;
+diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
+index adbd5a367395c..f98d089ea5b1a 100644
+--- a/drivers/gpu/drm/msm/dp/dp_aux.c
++++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+@@ -38,6 +38,7 @@ struct dp_aux_private {
+ 	bool no_send_stop;
+ 	bool initted;
+ 	bool is_edp;
++	bool enable_xfers;
+ 	u32 offset;
+ 	u32 segment;
  
- 	mr->npages = 0;
- 	mr->page_list = kvcalloc(mr->pbl_mtr.hem_cfg.buf_pg_count,
- 				 sizeof(dma_addr_t), GFP_KERNEL);
- 	if (!mr->page_list)
--		return ret;
-+		return sg_num;
- 
--	ret = ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset, hns_roce_set_page);
--	if (ret < 1) {
-+	sg_num = ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset, hns_roce_set_page);
-+	if (sg_num < 1) {
- 		ibdev_err(ibdev, "failed to store sg pages %u %u, cnt = %d.\n",
--			  mr->npages, mr->pbl_mtr.hem_cfg.buf_pg_count, ret);
-+			  mr->npages, mr->pbl_mtr.hem_cfg.buf_pg_count, sg_num);
- 		goto err_page_list;
+@@ -304,6 +305,17 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
+ 		goto exit;
  	}
  
-@@ -463,17 +463,16 @@ int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
- 	ret = hns_roce_mtr_map(hr_dev, mtr, mr->page_list, mr->npages);
- 	if (ret) {
- 		ibdev_err(ibdev, "failed to map sg mtr, ret = %d.\n", ret);
--		ret = 0;
-+		sg_num = 0;
- 	} else {
- 		mr->pbl_mtr.hem_cfg.buf_pg_shift = (u32)ilog2(ibmr->page_size);
--		ret = mr->npages;
- 	}
- 
- err_page_list:
- 	kvfree(mr->page_list);
- 	mr->page_list = NULL;
- 
--	return ret;
-+	return sg_num;
++	/*
++	 * If we're using DP and an external display isn't connected then the
++	 * transfer won't succeed. Return right away. If we don't do this we
++	 * can end up with long timeouts if someone tries to access the DP AUX
++	 * character device when no DP device is connected.
++	 */
++	if (!aux->is_edp && !aux->enable_xfers) {
++		ret = -ENXIO;
++		goto exit;
++	}
++
+ 	/*
+ 	 * For eDP it's important to give a reasonably long wait here for HPD
+ 	 * to be asserted. This is because the panel driver may have _just_
+@@ -436,6 +448,14 @@ irqreturn_t dp_aux_isr(struct drm_dp_aux *dp_aux)
+ 	return IRQ_HANDLED;
  }
  
- static void hns_roce_mw_free(struct hns_roce_dev *hr_dev,
++void dp_aux_enable_xfers(struct drm_dp_aux *dp_aux, bool enabled)
++{
++	struct dp_aux_private *aux;
++
++	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
++	aux->enable_xfers = enabled;
++}
++
+ void dp_aux_reconfig(struct drm_dp_aux *dp_aux)
+ {
+ 	struct dp_aux_private *aux;
+diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h b/drivers/gpu/drm/msm/dp/dp_aux.h
+index f47d591c1f54e..4f65e892a8076 100644
+--- a/drivers/gpu/drm/msm/dp/dp_aux.h
++++ b/drivers/gpu/drm/msm/dp/dp_aux.h
+@@ -12,6 +12,7 @@
+ int dp_aux_register(struct drm_dp_aux *dp_aux);
+ void dp_aux_unregister(struct drm_dp_aux *dp_aux);
+ irqreturn_t dp_aux_isr(struct drm_dp_aux *dp_aux);
++void dp_aux_enable_xfers(struct drm_dp_aux *dp_aux, bool enabled);
+ void dp_aux_init(struct drm_dp_aux *dp_aux);
+ void dp_aux_deinit(struct drm_dp_aux *dp_aux);
+ void dp_aux_reconfig(struct drm_dp_aux *dp_aux);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index ffbfde9225898..36a0ef1cdc1b9 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -555,6 +555,8 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+ 	int ret;
+ 	struct platform_device *pdev = dp->dp_display.pdev;
+ 
++	dp_aux_enable_xfers(dp->aux, true);
++
+ 	mutex_lock(&dp->event_mutex);
+ 
+ 	state =  dp->hpd_state;
+@@ -620,6 +622,8 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ 	u32 state;
+ 	struct platform_device *pdev = dp->dp_display.pdev;
+ 
++	dp_aux_enable_xfers(dp->aux, false);
++
+ 	mutex_lock(&dp->event_mutex);
+ 
+ 	state = dp->hpd_state;
 -- 
 2.43.0
 
