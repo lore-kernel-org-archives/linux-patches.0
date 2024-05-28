@@ -1,282 +1,181 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2048.outbound.protection.outlook.com [40.107.95.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AB34C97;
-	Tue, 28 May 2024 11:58:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716897523; cv=none; b=Auolt+LdTLITLbQTW9kQvYjRLox+0WLzF0aFaP7Q9ZHLonFPPrhCEMqxE206XBDKto25C3xFlBzfpnQqewJqUgbSKmSLWAL1Yzb01Z+hK4WNuQ95iXlMZI8bwo7d51g1OTWMCOf1Ko9jYQ2wfR7mG4+5PmBfMS/T16fOqZhfvVc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716897523; c=relaxed/simple;
-	bh=W54KWxQHpl3PzZqGGkYBStAUFhc0S0djsvP/O0XlSK8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JlEVQ1gCMKPyJn6J8rJA4e2K3QZ0xW3Dk79OLOzBVutHG+L7Ad5lHkcuvC6MlaazpK7YxJ3gU725IpxW+kcuv6AfZb1rhakPhrBF6r+HN57mZY3RObk7ce41xbPrSoQkNKuUN6ibobIujPmxWKMtKIIe8dy12r6LguYu8XyWmCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=BBd5r2JU; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE2316A39F
+	for <patches@lists.linux.dev>; Tue, 28 May 2024 12:14:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.95.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1716898486; cv=fail; b=DGnHOaa89TXbz7qyRfRV9s0vkT3IXH61ouY5VZXpQ9KyYcSpxvqlxzFF07cFWMbY2VyV/bG5OVXxZFaPwa+iygMSkcwct3vNqBRMzi3KFLln2NQpxcFdqr9i2W1ZUKRLwAv0eTECEtib8teGHWFQJg6l8tMQvNaS3Zoqak5umys=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1716898486; c=relaxed/simple;
+	bh=mrXQgVwiwI0ZgiL5dDuiaZ4pkAzuHRCF2/uwHKrG764=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=nbhd1gyNMPBI2G6OZ19I0MZ85lbPuvDecYdBJN9Ch3I7lZEzrBXgbdLUN1NuSf28AMIX3UFkSvT2nj+8e/bA59dYQoYfeGKN1sURQH3UYdEBY0FnauaTEUdFW6LNcDO9nSmB16+VSQX0a5sqiI+jOlgqqFmZcdCmpx8Q+xBzFtk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=t4maeNy/; arc=fail smtp.client-ip=40.107.95.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="BBd5r2JU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2213EC3277B;
-	Tue, 28 May 2024 11:58:42 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="BBd5r2JU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1716897519;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+nGuYm96JeVQ572oVGzlcjPq4VFKf/Vijj/WoTvzHM4=;
-	b=BBd5r2JU+wTLYuKr/OgX741kfjittztnF44jNI14mS6It+Nwu2Y9/Txm1p+DHjYld+XIT+
-	pZnU3NwQ63QIXeTPIWlHcjlScEvjm585blL9k4uWD6hq4O23VKef3x3W6EGzd5PMuaKqxI
-	CbexsMfOf1RhN+VIvELm7JiuZfpNt38=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id dfd12217 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 May 2024 11:58:38 +0000 (UTC)
-Date: Tue, 28 May 2024 13:58:35 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: David Hildenbrand <dhildenb@redhat.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-mm@kvack.org
-Subject: Re: [PATCH v15 1/5] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-Message-ID: <ZlXG69UxJVKd_7h4@zx2c4.com>
-References: <20240521111958.2384173-1-Jason@zx2c4.com>
- <20240521111958.2384173-2-Jason@zx2c4.com>
- <2c943e16-e8f1-4311-b707-1be94d883948@redhat.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="t4maeNy/"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DGTLyUu8tQ65CI62OwUD07XwyskhySCLqzHlN4s3YWDbKM1y0pk2pF+rU1l6HIkqi1Rt005gVePjybojqgCz6FE0CfMTykEVuMGT5BrC2vH8I6wwZaNBr/ZnU83yA0U/yGNMV4DnTleV0GDmbjXivJoaqwgDpn+IrUv8QkmZrqJF+cUtjDFEmz8b7rhXvAMRPcYPC/bvhq2lnBHyiOLBDUhYhQsydJOzRBl8/CUiGK9y/Wsvd5AkhTaE8cwtyIxPkCkWGaqtVcIPrJ7lYWtxzPAc/Lna9gn1o+NW3k8v9I/bW2rw52+cJ74283+ocbxCNDdJSzWFf97ThPJuvFoJZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=MjHfeVrjENcaNrexZ/Kzekdojf2GsK/4NDtwMqQOrz0=;
+ b=Fcjzk+VMMuE67sJjP52mP+YWgsiGrMvV9HK3ar1GqaXh8pMgeMS7jzEy95JxhYuBmD24UoKfDAdLfXfUrEnniNjU5cnKl4YuS/CU6DAsKecLBeUmGfJWkPd1GobP6PLGpQm0malpE4nSPNqv3dpbC/tAYIURN8BTxw7QJ448N1xczOpqlgCn45TSqjlHQ4TosqF5eI+LCLt2tQs8MWghNcN9krIXGLCQ4GT7kQ5Jt4dkjlKoIOrqYTUVdlhjpPVQyHvAYoxzNcGJg/Ff3aMbJaunAyWgVXHNcUDfBHQr6Hd2XGCqK5n63vOGKQhtyKCVjWBt5/Csk6TPg71bmU8CPw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MjHfeVrjENcaNrexZ/Kzekdojf2GsK/4NDtwMqQOrz0=;
+ b=t4maeNy/Or5X5EFUPSd5w1gQnskC982EgGmv9U3ZcJizSBCI9kEmLkdaRjdF6i15GYCZFz02Is4vppbPEZfvNzINLC+rLH063/QWZg8NPDxgU4P4tYq+i3sLyLDPo8t/yr5krMSbzKkMnCNZUR+RIh0r4NcDl4vVeEMXnvFZPfrUXDovPoWY40y7okIB/sfeIeJZHlCI/6fVhN/MJo2BGTeBDlRrACwvEG7yrI85LyLP+jji3PkDlJ/ZNJOilJKUSaSLCPf73l1KcbmY7EsAodZAokQc+Hg8b7hxJcw3qE+34cTwwakNhs/Oou4LfQjNjBrDeCksJXBm+lDIH2CGkw==
+Received: from DM6PR12CA0027.namprd12.prod.outlook.com (2603:10b6:5:1c0::40)
+ by DM4PR12MB7502.namprd12.prod.outlook.com (2603:10b6:8:112::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.17; Tue, 28 May
+ 2024 12:14:40 +0000
+Received: from DS1PEPF0001709B.namprd05.prod.outlook.com
+ (2603:10b6:5:1c0:cafe::57) by DM6PR12CA0027.outlook.office365.com
+ (2603:10b6:5:1c0::40) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7611.31 via Frontend
+ Transport; Tue, 28 May 2024 12:14:40 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ DS1PEPF0001709B.mail.protection.outlook.com (10.167.18.105) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7633.15 via Frontend Transport; Tue, 28 May 2024 12:14:40 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 28 May
+ 2024 05:14:25 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 28 May
+ 2024 05:14:25 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Tue, 28 May 2024 05:14:25 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
+	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 6.8 000/493] 6.8.12-rc1 review
+In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
+References: <20240527185626.546110716@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2c943e16-e8f1-4311-b707-1be94d883948@redhat.com>
+Message-ID: <03eb034e-5adb-4003-9149-3598f4b57f6f@rnnvmail204.nvidia.com>
+Date: Tue, 28 May 2024 05:14:25 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS1PEPF0001709B:EE_|DM4PR12MB7502:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9a5b245e-9b88-487e-11bb-08dc7f0fc011
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230031|1800799015|7416005|82310400017|376005|36860700004;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?NWRJdVBybUQwUUIweEZHcXlSZ1lRYmhwRWM2T2tJanJpMHRyK3JqTUt0cjdx?=
+ =?utf-8?B?eFZ6WXczY0p1VDRjZUFUN2d0a0doclNuKzBEZTVDVmkwQm5pdXBkZ3Z3TTlB?=
+ =?utf-8?B?NFJ2UFBCMlpET1F4TmFIZGxVb24ybnZOdk9iVTAwMTFCbHBoQ2RzL0VrS05Q?=
+ =?utf-8?B?SkxKbko4NDR5dVg1aW9YdDBKNTVISGg2bjJoWHVJR0tWbmNDdEVYbkoxV1Rp?=
+ =?utf-8?B?TU1RdHZkcnI0VUtYQlRqaUF4SUdiNUpHOE1hZm51WUtqYmVvN1BjY0ttNmJy?=
+ =?utf-8?B?TWVsa0ZZSU1TdlZORkF4dEYrT0kzTlRLcTEvN1NlVFBEUFhnN2QzQ0ZwVC85?=
+ =?utf-8?B?d1FXdkVXVTRpYmFMQWY2MEJTbEdjaSs3QW9ZdTNqZ3AyVG5idUdRUjk5SnFU?=
+ =?utf-8?B?REg2cnlRMk5aZDF1WThNbWg0aVIvZWZtaHFqSXhrU0QrbEpPTmRBbVd1YmE2?=
+ =?utf-8?B?dStPYjZEamliN0tyeG5iUlg0bFgvWTZwb1V1QUdkeU5rMjdzTlhYaWlCZmJN?=
+ =?utf-8?B?QlYzN2tZOGtnR3Zvc0lTVGhwY2swMTF1ZGRHUWxJOVlZaUR5WjBtRUp5NXJQ?=
+ =?utf-8?B?QUp1OUdmR241ZFJMYWJwMFBiRHUrOWg4UXR6OTlNQjk0ZHFhMGp2OXRqTGta?=
+ =?utf-8?B?WlR6SDdxeGh4ZEhrejc0TEQrZldnL2FPWE9ZS1Z3VjlsSXlZNW5XSEplY1Vt?=
+ =?utf-8?B?eEJYVWozcVl3eS9OeHQzUUtCOGhRVFpwRFQvakdaSW94ZzFTZlBVUEc0TVZZ?=
+ =?utf-8?B?a29nTHpzQ1g5c0NiVGFwdjRtOCtFdjl5OFNsdTVxcEFlV0pCTkg3ajZVdmZs?=
+ =?utf-8?B?UkN6UFVZWE96MWIzbFVIelQ1bU1Vc0pSbjJ5TnZnUjlxTVVGZEVRT21EcmlC?=
+ =?utf-8?B?UTU2NGpkak40L0lodE5rdTZwTU1SYVZNbzlreWFodFduZlY2bUtPT3gzcjVz?=
+ =?utf-8?B?bWZXVTk5UnAreU5hbFJQOFdnM0NobnlnT1JUeUlla0tTK0pVWDl3Q0JCWU8v?=
+ =?utf-8?B?cFJwWDNMdm54UUhaSS9kUGRQaElxSExZZGVhZW1SN3BxbWVmcndvT3Z4QWtK?=
+ =?utf-8?B?ZERWT1RuRU9kUjFoSU9ENXMzd0JHU0kvQVJYWWFFMUJZd1dEckxJQjcwajNm?=
+ =?utf-8?B?cm43U1htMjB4SDF6Z0tPcjl5QzhtTkVtamRRellhbHdtcVRuVVdTNjY1UGxq?=
+ =?utf-8?B?ZVB0ajJtSDdVTUROTVROQ20raFdRaTY1Z3VIemp0U1VuY2hRSFNzQ3IrUjNL?=
+ =?utf-8?B?UlFqUVViWmE1NmdXQktrbm1iZTNxUDNmWGtsMVR6ajZaUTBvenJpdzUrQzMw?=
+ =?utf-8?B?Q3U0cys4TE9qN2gwUEdKSnphSGVQVUJQaElucERlaXIyUEFIQW1CNk9OYzgw?=
+ =?utf-8?B?YUZwK1g2OFdvek1qL1dMTmtRZldWeUdDVHd5WjZ2YWtta3UvVXZCdTF3UDdn?=
+ =?utf-8?B?b2N1SENlUGxUaTBwSEVYbVI2dlNOWklZT1lna29xcDdHQUlxb0Rsc2d1aUdm?=
+ =?utf-8?B?eElOZDRLMWdMSE5SRU1Dd2lxZjZwMmdlOW5DaUFCcFdqWkRKeXRZWDEwcHpH?=
+ =?utf-8?B?YjkrdEtWRTJoazNPaHNiTGVHKzhST1c4SzBLaU1qYzF1d1c3RTBwNGVjMHZO?=
+ =?utf-8?B?dWpBUXFHTXVKTlpZaG9nZ012SjJINFNYTXNtRy9pTGJDc1J2d2VqdTJ4bzdw?=
+ =?utf-8?B?d2Y3M2tpNU1mbG9KRytWVkRvaFBVYjlHakpkYjZ0N1I5OGQ5aWRjSXBIQno0?=
+ =?utf-8?B?RFZGZmZvcGlXYkMxbDA2RkR6L3V1OFo1WXJ2YmxtQ29qUW15RU82aUJScFU0?=
+ =?utf-8?B?eW5DYjRGS213N0tTbExLa1dYOUtrUjBOWUZmOXNCZk5BdjVkZS84aXFxRlg3?=
+ =?utf-8?Q?1vR6m8d2czH+F?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(1800799015)(7416005)(82310400017)(376005)(36860700004);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2024 12:14:40.1786
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a5b245e-9b88-487e-11bb-08dc7f0fc011
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS1PEPF0001709B.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7502
 
-On Mon, May 27, 2024 at 03:34:33PM +0200, David Hildenbrand wrote:
+On Mon, 27 May 2024 20:50:02 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.8.12 release.
+> There are 493 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
+> Responses should be made by Wed, 29 May 2024 18:53:22 +0000.
+> Anything received after that time might be too late.
 > 
-> Am 21.05.24 um 13:18 schrieb Jason A. Donenfeld:
-> > The vDSO getrandom() implementation works with a buffer allocated with a
-> > new system call that has certain requirements:
-> > 
-> > - It shouldn't be written to core dumps.
-> >    * Easy: VM_DONTDUMP.
-> > - It should be zeroed on fork.
-> >    * Easy: VM_WIPEONFORK.
-> > 
-> > - It shouldn't be written to swap.
-> >    * Uh-oh: mlock is rlimited.
-> >    * Uh-oh: mlock isn't inherited by forks.
-> > 
-> > - It shouldn't reserve actual memory, but it also shouldn't crash when
-> >    page faulting in memory if none is available
-> >    * Uh-oh: MAP_NORESERVE respects vm.overcommit_memory=2.
-> >    * Uh-oh: VM_NORESERVE means segfaults.
-> > 
-> > It turns out that the vDSO getrandom() function has three really nice
-> > characteristics that we can exploit to solve this problem:
-> > 
-> > 1) Due to being wiped during fork(), the vDSO code is already robust to
-> >     having the contents of the pages it reads zeroed out midway through
-> >     the function's execution.
-> > 
-> > 2) In the absolute worst case of whatever contingency we're coding for,
-> >     we have the option to fallback to the getrandom() syscall, and
-> >     everything is fine.
-> > 
-> > 3) The buffers the function uses are only ever useful for a maximum of
-> >     60 seconds -- a sort of cache, rather than a long term allocation.
-> > 
-> > These characteristics mean that we can introduce VM_DROPPABLE, which
-> > has the following semantics:
-> > 
-> > a) It never is written out to swap.
-> > b) Under memory pressure, mm can just drop the pages (so that they're
-> >     zero when read back again).
-> > c) If there's not enough memory to service a page fault, it's not fatal.
-> > d) It is inherited by fork.
-> > e) It doesn't count against the mlock budget, since nothing is locked.
-> > 
-> > This is fairly simple to implement, with the one snag that we have to
-> > use 64-bit VM_* flags, but this shouldn't be a problem, since the only
-> > consumers will probably be 64-bit anyway.
-> > 
-> > This way, allocations used by vDSO getrandom() can use:
-> > 
-> >      VM_DROPPABLE | VM_DONTDUMP | VM_WIPEONFORK | VM_NORESERVE
-> > 
-> > And there will be no problem with OOMing, crashing on overcommitment,
-> > using memory when not in use, not wiping on fork(), coredumps, or
-> > writing out to swap.
-> > 
-> > Cc: linux-mm@kvack.org
-> > Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-> > ---
-> >   fs/proc/task_mmu.c             | 3 +++
-> >   include/linux/mm.h             | 8 ++++++++
-> >   include/trace/events/mmflags.h | 7 +++++++
-> >   mm/Kconfig                     | 3 +++
-> >   mm/memory.c                    | 4 ++++
-> >   mm/mempolicy.c                 | 3 +++
-> >   mm/mprotect.c                  | 2 +-
-> >   mm/rmap.c                      | 5 +++--
-> >   8 files changed, 32 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-> > index e5a5f015ff03..b5a59e57bde1 100644
-> > --- a/fs/proc/task_mmu.c
-> > +++ b/fs/proc/task_mmu.c
-> > @@ -706,6 +706,9 @@ static void show_smap_vma_flags(struct seq_file *m, struct vm_area_struct *vma)
-> >   #endif /* CONFIG_HAVE_ARCH_USERFAULTFD_MINOR */
-> >   #ifdef CONFIG_X86_USER_SHADOW_STACK
-> >   		[ilog2(VM_SHADOW_STACK)] = "ss",
-> > +#endif
-> > +#ifdef CONFIG_NEED_VM_DROPPABLE
-> > +		[ilog2(VM_DROPPABLE)]	= "dp",
-> >   #endif
-> >   	};
-> >   	size_t i;
-> > diff --git a/include/linux/mm.h b/include/linux/mm.h
-> > index 9849dfda44d4..5978cb4cc21c 100644
-> > --- a/include/linux/mm.h
-> > +++ b/include/linux/mm.h
-> > @@ -321,12 +321,14 @@ extern unsigned int kobjsize(const void *objp);
-> >   #define VM_HIGH_ARCH_BIT_3	35	/* bit only usable on 64-bit architectures */
-> >   #define VM_HIGH_ARCH_BIT_4	36	/* bit only usable on 64-bit architectures */
-> >   #define VM_HIGH_ARCH_BIT_5	37	/* bit only usable on 64-bit architectures */
-> > +#define VM_HIGH_ARCH_BIT_6	38	/* bit only usable on 64-bit architectures */
-> >   #define VM_HIGH_ARCH_0	BIT(VM_HIGH_ARCH_BIT_0)
-> >   #define VM_HIGH_ARCH_1	BIT(VM_HIGH_ARCH_BIT_1)
-> >   #define VM_HIGH_ARCH_2	BIT(VM_HIGH_ARCH_BIT_2)
-> >   #define VM_HIGH_ARCH_3	BIT(VM_HIGH_ARCH_BIT_3)
-> >   #define VM_HIGH_ARCH_4	BIT(VM_HIGH_ARCH_BIT_4)
-> >   #define VM_HIGH_ARCH_5	BIT(VM_HIGH_ARCH_BIT_5)
-> > +#define VM_HIGH_ARCH_6	BIT(VM_HIGH_ARCH_BIT_6)
-> >   #endif /* CONFIG_ARCH_USES_HIGH_VMA_FLAGS */
-> >   
-> >   #ifdef CONFIG_ARCH_HAS_PKEYS
-> > @@ -357,6 +359,12 @@ extern unsigned int kobjsize(const void *objp);
-> >   # define VM_SHADOW_STACK	VM_NONE
-> >   #endif
-> >   
-> > +#ifdef CONFIG_NEED_VM_DROPPABLE
-> > +# define VM_DROPPABLE		VM_HIGH_ARCH_6
-> > +#else
-> > +# define VM_DROPPABLE		VM_NONE
-> > +#endif
-> > +
-> >   #if defined(CONFIG_X86)
-> >   # define VM_PAT		VM_ARCH_1	/* PAT reserves whole VMA at once (x86) */
-> >   #elif defined(CONFIG_PPC)
-> > diff --git a/include/trace/events/mmflags.h b/include/trace/events/mmflags.h
-> > index e46d6e82765e..fab7848df50a 100644
-> > --- a/include/trace/events/mmflags.h
-> > +++ b/include/trace/events/mmflags.h
-> > @@ -165,6 +165,12 @@ IF_HAVE_PG_ARCH_X(arch_3)
-> >   # define IF_HAVE_UFFD_MINOR(flag, name)
-> >   #endif
-> >   
-> > +#ifdef CONFIG_NEED_VM_DROPPABLE
-> > +# define IF_HAVE_VM_DROPPABLE(flag, name) {flag, name},
-> > +#else
-> > +# define IF_HAVE_VM_DROPPABLE(flag, name)
-> > +#endif
-> > +
-> >   #define __def_vmaflag_names						\
-> >   	{VM_READ,			"read"		},		\
-> >   	{VM_WRITE,			"write"		},		\
-> > @@ -197,6 +203,7 @@ IF_HAVE_VM_SOFTDIRTY(VM_SOFTDIRTY,	"softdirty"	)		\
-> >   	{VM_MIXEDMAP,			"mixedmap"	},		\
-> >   	{VM_HUGEPAGE,			"hugepage"	},		\
-> >   	{VM_NOHUGEPAGE,			"nohugepage"	},		\
-> > +IF_HAVE_VM_DROPPABLE(VM_DROPPABLE,	"droppable"	)		\
-> >   	{VM_MERGEABLE,			"mergeable"	}		\
-> >   
-> >   #define show_vma_flags(flags)						\
-> > diff --git a/mm/Kconfig b/mm/Kconfig
-> > index b4cb45255a54..6cd65ea4b3ad 100644
-> > --- a/mm/Kconfig
-> > +++ b/mm/Kconfig
-> > @@ -1056,6 +1056,9 @@ config ARCH_USES_HIGH_VMA_FLAGS
-> >   	bool
-> >   config ARCH_HAS_PKEYS
-> >   	bool
-> > +config NEED_VM_DROPPABLE
-> > +	select ARCH_USES_HIGH_VMA_FLAGS
-> > +	bool
-> >   
-> >   config ARCH_USES_PG_ARCH_X
-> >   	bool
-> > diff --git a/mm/memory.c b/mm/memory.c
-> > index b5453b86ec4b..57b03fc73159 100644
-> > --- a/mm/memory.c
-> > +++ b/mm/memory.c
-> > @@ -5689,6 +5689,10 @@ vm_fault_t handle_mm_fault(struct vm_area_struct *vma, unsigned long address,
-> >   
-> >   	lru_gen_exit_fault();
-> >   
-> > +	/* If the mapping is droppable, then errors due to OOM aren't fatal. */
-> > +	if (vma->vm_flags & VM_DROPPABLE)
-> > +		ret &= ~VM_FAULT_OOM;
-> > +
-> >   	if (flags & FAULT_FLAG_USER) {
-> >   		mem_cgroup_exit_user_fault();
-> >   		/*
-> > diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-> > index aec756ae5637..a66289f1d931 100644
-> > --- a/mm/mempolicy.c
-> > +++ b/mm/mempolicy.c
-> > @@ -2300,6 +2300,9 @@ struct folio *vma_alloc_folio_noprof(gfp_t gfp, int order, struct vm_area_struct
-> >   	pgoff_t ilx;
-> >   	struct page *page;
-> >   
-> > +	if (vma->vm_flags & VM_DROPPABLE)
-> > +		gfp |= __GFP_NOWARN | __GFP_NORETRY;
-> > +
-> >   	pol = get_vma_policy(vma, addr, order, &ilx);
-> >   	page = alloc_pages_mpol_noprof(gfp | __GFP_COMP, order,
-> >   				       pol, ilx, numa_node_id());
-> > diff --git a/mm/mprotect.c b/mm/mprotect.c
-> > index 94878c39ee32..88ff3ecc08a1 100644
-> > --- a/mm/mprotect.c
-> > +++ b/mm/mprotect.c
-> > @@ -622,7 +622,7 @@ mprotect_fixup(struct vma_iterator *vmi, struct mmu_gather *tlb,
-> >   				may_expand_vm(mm, oldflags, nrpages))
-> >   			return -ENOMEM;
-> >   		if (!(oldflags & (VM_ACCOUNT|VM_WRITE|VM_HUGETLB|
-> > -						VM_SHARED|VM_NORESERVE))) {
-> > +				  VM_SHARED|VM_NORESERVE|VM_DROPPABLE))) {
-> >   			charged = nrpages;
-> >   			if (security_vm_enough_memory_mm(mm, charged))
-> >   				return -ENOMEM;
-> > diff --git a/mm/rmap.c b/mm/rmap.c
-> > index e8fc5ecb59b2..f23b9f796aae 100644
-> > --- a/mm/rmap.c
-> > +++ b/mm/rmap.c
-> > @@ -1397,7 +1397,8 @@ void folio_add_new_anon_rmap(struct folio *folio, struct vm_area_struct *vma,
-> >   	VM_WARN_ON_FOLIO(folio_test_hugetlb(folio), folio);
-> >   	VM_BUG_ON_VMA(address < vma->vm_start ||
-> >   			address + (nr << PAGE_SHIFT) > vma->vm_end, vma);
-> > -	__folio_set_swapbacked(folio);
-> > +	if (!(vma->vm_flags & VM_DROPPABLE))
-> > +		__folio_set_swapbacked(folio);
-> >   	__folio_set_anon(folio, vma, address, true);
-> >   
-> >   	if (likely(!folio_test_large(folio))) {
-> > @@ -1841,7 +1842,7 @@ static bool try_to_unmap_one(struct folio *folio, struct vm_area_struct *vma,
-> >   				 * plus the rmap(s) (dropped by discard:).
-> >   				 */
-> >   				if (ref_count == 1 + map_count &&
-> > -				    !folio_test_dirty(folio)) {
-> > +				    (!folio_test_dirty(folio) || (vma->vm_flags & VM_DROPPABLE))) {
-> >   					dec_mm_counter(mm, MM_ANONPAGES);
-> >   					goto discard;
-> >   				}
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.12-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
+> and the diffstat can be found below.
 > 
-> If there is any unexpected temporary folio reference (ref_count != 1 + 
-> map_count), you'll end up calling folio_set_swapbacked() and the next swapout 
-> round will write that folio to swap.
+> thanks,
+> 
+> greg k-h
 
-Thanks, nice call. I'll guard the re-setting of folio_set_swapbacked()
-in that case.
+All tests passing for Tegra ...
 
-Jason
+Test results for stable-v6.8:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    116 tests:	116 pass, 0 fail
+
+Linux version:	6.8.12-rc1-g5a8ebc9c48a6
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
+
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
