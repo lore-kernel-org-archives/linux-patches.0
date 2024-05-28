@@ -1,337 +1,147 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gate2.alliedtelesis.co.nz (gate2.alliedtelesis.co.nz [202.36.163.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BBE179665
-	for <patches@lists.linux.dev>; Tue, 28 May 2024 20:42:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49862179650
+	for <patches@lists.linux.dev>; Tue, 28 May 2024 20:47:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.36.163.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716928925; cv=none; b=dary3U58b9xJWimdphYWKNAAfrcVyVJSCOgVkAvwfNZcLzbyP45PKiXJcVrzC1cmW/ccAtp/uWpIVbDJOiuZUqPP8uaYewND0Mu5vJMPfNoPJkaOse2fArnVArMO/vjym44omXIQdBYtXCzGpRiijd1im5IzTww6DJEDkpPmsM0=
+	t=1716929262; cv=none; b=azBP7+LqEh53kCucHdlKz5mFpud1F21pWvIaAeZlYjpUS9vrP+T2L4WtjmpC+hwd6CGW2xWBzzg7aUcepM8zJm/K0uwb7Wc4dCt+lt1TfVuu1IEOSg4a9cl5yYWpZXSLyr06Ilyxa6IfhRCz9H6bZ3JywEiqOEB61UMku8BxiGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716928925; c=relaxed/simple;
-	bh=JGjMkvgaW/hGTfG4fKvV7NZfiLuik0PgrgzQn2JRERA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hN2g3uU3VbcYK78yeLxhvsyv3cJgWvZx2iMcYpOTJwwWzu5fdYtfyM6LFmOq5Nw3cenNtjSUNs/bUlvyNYIbnVKbaxnisXBhBf8MHc045qWc2pTQO9V5YnwkKdrnj3aac2DyB53oa/HG4MmnrVL6Q+ny+6F7i4k2MRTr0KMr6Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kselUf8T; arc=none smtp.client-ip=209.85.222.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1716929262; c=relaxed/simple;
+	bh=CJ0wRt39wry877MFi5yLNi/ccKGSRy4FwAIVIEaqIF4=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=GNhiT0B/L9Nwnznt/YP4NhYaKzsaIRYP8MbVmOu+EK2i2WCvp/j709jPNeqJhHwPDoxojFI8l9Y8j+lZiY5um1ZUNKD+KSGKRrRwecWDYZLkz4pfwqmI5i5I/3L+V9x/19EtzLlUUWPcXib1UJbqr5EjmAPIAu/x8USKPb45Se0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=alliedtelesis.co.nz; spf=pass smtp.mailfrom=alliedtelesis.co.nz; dkim=pass (2048-bit key) header.d=alliedtelesis.co.nz header.i=@alliedtelesis.co.nz header.b=IXtvp3bx; arc=none smtp.client-ip=202.36.163.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=alliedtelesis.co.nz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alliedtelesis.co.nz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kselUf8T"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-804efaa51c2so441958241.3
-        for <patches@lists.linux.dev>; Tue, 28 May 2024 13:42:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1716928921; x=1717533721; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2tS6xXCxVy/LqyXJiba1u7hR4DE1wkaxKXxNrHJ7f2Q=;
-        b=kselUf8TXk7xOVGWSdwDIJdKqpkbNJ3/Xa6iJISLXRVbuH+PztEWrTHGH/VZ5oH7r1
-         KbERQ0bLhOfVWrrbMr8axWh3MXLJ0kVRcEL0uhctxidLOmScDlLV1qX3pb3O473gPY1n
-         VqNF4biEzDL+r51xQagakJm8TO/SVGe2hqGD1c7fZAoKTTS3Hnzy4qqakF1Dd8srjZOe
-         x5loOjUDYC6V/SFfIxUB5A5bRlOklWudKwMDF5IJ39TD2BdM9OlkogGqlgkVH17TAcwq
-         FR7gl/nMGNXw3DoeHfnpzL34dExf6uX92Efhb3/oViyId2I4E0gqfAdAeprQjLw6xgJy
-         UDsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716928921; x=1717533721;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2tS6xXCxVy/LqyXJiba1u7hR4DE1wkaxKXxNrHJ7f2Q=;
-        b=UIEGBOZrUv80Ir8y/UiYWMVeA4T9YYWWipy034cn0jWU94cJjLCpXaRb7G3I1ahkjY
-         UrX+S2iri2ie8ALS7DKjipLtT7D1MegAl4dA7p3rcx2WGINpdxfw9kHHP7JhgTkLktwq
-         S1zlHiHG5W1q/S6iyGVcLU5fA2EH0eQ+xri74R4IS4kkzz9rlzxyy+0VLhI3UEIWbZ2F
-         wSH3FZyboG/4okcKfq/K7wheisQdMuPnd53jIP/AUIJEZ4dM8yQsnl+KbuOxzkLFcfRD
-         2kW4tcmg+2O5sGSbH5ZLEGkuWRLuGuf9VmYF1VB79vr8z10Y6nOp48gjg7scA4B3T4lZ
-         4MOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUwO5RtDu6o3+bSpmdOejVbb9ljY4TVxyNssSKeJcslNZlKO0vHCVBa4DO6GD71f+QwpvSOlF/Pm3hPzL6MU2wjOjCRxqqKSw==
-X-Gm-Message-State: AOJu0Yw3TVwB1cdFKwyOPjm2CbOrlOLJUyJSrPYH4NhJyKNqvOh1Cz2s
-	orSQmHgjZs+vbnsWWwbBNX71MumgWm8V6a+eh4Ob1Z0Byi/GHMrKY5aiv650oBehEkXG5bjoEel
-	8ykPGpKE0Rm5ZwVhyBrKtTkulegae2ABBpnGb
-X-Google-Smtp-Source: AGHT+IHBOt+yJuqVz4kWO3s7wm5GrNfxrhrfFQWpzXtoqn1G1zQvvTJwI9D7NLsJKgAT8jJo2F3DvxerxddRcFeD0R0=
-X-Received: by 2002:a67:b34a:0:b0:486:6998:d773 with SMTP id
- ada2fe7eead31-48a38527321mr13094417137.9.1716928921389; Tue, 28 May 2024
- 13:42:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=alliedtelesis.co.nz header.i=@alliedtelesis.co.nz header.b="IXtvp3bx"
+Received: from svr-chch-seg1.atlnz.lc (mmarshal3.atlnz.lc [10.32.18.43])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	by gate2.alliedtelesis.co.nz (Postfix) with ESMTPS id B87412C02CC;
+	Wed, 29 May 2024 08:38:12 +1200 (NZST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alliedtelesis.co.nz;
+	s=mail181024; t=1716928692;
+	bh=CJ0wRt39wry877MFi5yLNi/ccKGSRy4FwAIVIEaqIF4=;
+	h=From:To:CC:Subject:Date:References:In-Reply-To:From;
+	b=IXtvp3bxuBBtDxhgwIhDwpa76JmTbmCqM5KyQLNPZJvRniJmAoZUFRDVqKg1t+NQx
+	 +mbtDasFYzQLVk09VJONheuxtxNSHYbed5IAHNbW+MjEYvpsPbvhQm5muzPrGRcM6g
+	 mlQiPa+0+TPLM1xRhgJz39QL5+qEBeHFu9Tq3zjEGq8hHDhDEM3tOzHs4rl06g32ap
+	 SusXAS9vgP/eZoOdQqMs+P3tJH48sSKR2TfvzHoC/7Ho+b9bZidJdfgy7kXlD6MRYH
+	 FYFG/8PM2TuSsDPGBrRvaQf7tjTMkOeJzZ1Z42qwPF24am/osa1AjvJGRYYoFjwRiZ
+	 j9YuXFla7MB9Q==
+Received: from svr-chch-ex2.atlnz.lc (Not Verified[2001:df5:b000:bc8::76]) by svr-chch-seg1.atlnz.lc with Trustwave SEG (v8,2,6,11305)
+	id <B665640b40000>; Wed, 29 May 2024 08:38:12 +1200
+Received: from svr-chch-ex1.atlnz.lc (2001:df5:b000:bc8::77) by
+ svr-chch-ex2.atlnz.lc (2001:df5:b000:bc8:f753:6de:11c0:a008) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.2.1544.11; Wed, 29 May 2024 08:38:12 +1200
+Received: from svr-chch-ex2.atlnz.lc (2001:df5:b000:bc8::76) by
+ svr-chch-ex1.atlnz.lc (2001:df5:b000:bc8::77) with Microsoft SMTP Server
+ (TLS) id 15.0.1497.48; Wed, 29 May 2024 08:38:12 +1200
+Received: from svr-chch-ex2.atlnz.lc ([fe80::a9eb:c9b7:8b52:9567]) by
+ svr-chch-ex2.atlnz.lc ([fe80::a9eb:c9b7:8b52:9567%15]) with mapi id
+ 15.02.1544.011; Wed, 29 May 2024 08:38:12 +1200
+From: Chris Packham <Chris.Packham@alliedtelesis.co.nz>
+To: Jon Hunter <jonathanh@nvidia.com>, Chuck Lever III
+	<chuck.lever@oracle.com>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Neil Brown
+	<neilb@suse.de>, linux-stable <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>, "Linux Kernel Mailing
+ List" <linux-kernel@vger.kernel.org>, Linus Torvalds
+	<torvalds@linux-foundation.org>, Andrew Morton <akpm@linux-foundation.org>,
+	Guenter Roeck <linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
+	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
+	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
+	"f.fainelli@gmail.com" <f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
+	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
+	"rwarsow@gmx.de" <rwarsow@gmx.de>, "conor@kernel.org" <conor@kernel.org>,
+	"allen.lkml@gmail.com" <allen.lkml@gmail.com>, "broonie@kernel.org"
+	<broonie@kernel.org>, "linux-tegra@vger.kernel.org"
+	<linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 5.15 00/23] 5.15.160-rc1 review
+Thread-Topic: [PATCH 5.15 00/23] 5.15.160-rc1 review
+Thread-Index: AQHasN4TfgxwqfFZfEKH0FZYU7evErGr1xiAgAARtgCAAGozAA==
+Date: Tue, 28 May 2024 20:38:12 +0000
+Message-ID: <d5adc4a4-81b6-46f6-bcf6-7debf48d2bbf@alliedtelesis.co.nz>
+References: <20240523130327.956341021@linuxfoundation.org>
+ <8e60522f-22db-4308-bb7d-3c71a0c7d447@nvidia.com>
+ <2024052541-likeness-banjo-e147@gregkh>
+ <8ddb4da3-49e4-4d96-bec3-66a209bff71b@nvidia.com>
+ <968E3378-1B38-4519-BB85-5B1C45E3A16A@oracle.com>
+ <8b6fe99f-7fa9-493c-afe7-8e75b7f59852@nvidia.com>
+In-Reply-To: <8b6fe99f-7fa9-493c-afe7-8e75b7f59852@nvidia.com>
+Accept-Language: en-NZ, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <6E74215606E9154889788EFD7A709BB7@atlnz.lc>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240528122352.2485958-1-Jason@zx2c4.com> <20240528122352.2485958-2-Jason@zx2c4.com>
-In-Reply-To: <20240528122352.2485958-2-Jason@zx2c4.com>
-From: Frank van der Linden <fvdl@google.com>
-Date: Tue, 28 May 2024 13:41:50 -0700
-Message-ID: <CAPTztWbDvrrCQH49q0GTk54--Hzh1V_A7KRw4-z38eGQupPKJg@mail.gmail.com>
-Subject: Re: [PATCH v16 1/5] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, tglx@linutronix.de, 
-	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>, 
-	Christian Brauner <brauner@kernel.org>, David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-SEG-SpamProfiler-Analysis: v=2.4 cv=F9L0dbhN c=1 sm=1 tr=0 ts=665640b4 a=Xf/6aR1Nyvzi7BryhOrcLQ==:117 a=xqWC_Br6kY4A:10 a=75chYTbOgJ0A:10 a=IkcTkHD0fZMA:10 a=TpHVaj0NuXgA:10 a=Ikd4Dj_1AAAA:8 a=VwQbUJbxAAAA:8 a=yDejyKqjGvIJSoj4HikA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22
+X-SEG-SpamProfiler-Score: 0
 
-On Tue, May 28, 2024 at 5:24=E2=80=AFAM Jason A. Donenfeld <Jason@zx2c4.com=
-> wrote:
->
-> The vDSO getrandom() implementation works with a buffer allocated with a
-> new system call that has certain requirements:
->
-> - It shouldn't be written to core dumps.
->   * Easy: VM_DONTDUMP.
-> - It should be zeroed on fork.
->   * Easy: VM_WIPEONFORK.
->
-> - It shouldn't be written to swap.
->   * Uh-oh: mlock is rlimited.
->   * Uh-oh: mlock isn't inherited by forks.
->
-> - It shouldn't reserve actual memory, but it also shouldn't crash when
->   page faulting in memory if none is available
->   * Uh-oh: MAP_NORESERVE respects vm.overcommit_memory=3D2.
->   * Uh-oh: VM_NORESERVE means segfaults.
->
-> It turns out that the vDSO getrandom() function has three really nice
-> characteristics that we can exploit to solve this problem:
->
-> 1) Due to being wiped during fork(), the vDSO code is already robust to
->    having the contents of the pages it reads zeroed out midway through
->    the function's execution.
->
-> 2) In the absolute worst case of whatever contingency we're coding for,
->    we have the option to fallback to the getrandom() syscall, and
->    everything is fine.
->
-> 3) The buffers the function uses are only ever useful for a maximum of
->    60 seconds -- a sort of cache, rather than a long term allocation.
->
-> These characteristics mean that we can introduce VM_DROPPABLE, which
-> has the following semantics:
->
-> a) It never is written out to swap.
-> b) Under memory pressure, mm can just drop the pages (so that they're
->    zero when read back again).
-> c) If there's not enough memory to service a page fault, it's not fatal.
-> d) It is inherited by fork.
-> e) It doesn't count against the mlock budget, since nothing is locked.
->
-> This is fairly simple to implement, with the one snag that we have to
-> use 64-bit VM_* flags, but this shouldn't be a problem, since the only
-> consumers will probably be 64-bit anyway.
->
-> This way, allocations used by vDSO getrandom() can use:
->
->     VM_DROPPABLE | VM_DONTDUMP | VM_WIPEONFORK | VM_NORESERVE
->
-> And there will be no problem with OOMing, crashing on overcommitment,
-> using memory when not in use, not wiping on fork(), coredumps, or
-> writing out to swap.
->
-> Cc: linux-mm@kvack.org
-> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-> ---
->  fs/proc/task_mmu.c             | 3 +++
->  include/linux/mm.h             | 8 ++++++++
->  include/trace/events/mmflags.h | 7 +++++++
->  mm/Kconfig                     | 3 +++
->  mm/memory.c                    | 4 ++++
->  mm/mempolicy.c                 | 3 +++
->  mm/mprotect.c                  | 2 +-
->  mm/rmap.c                      | 8 +++++---
->  8 files changed, 34 insertions(+), 4 deletions(-)
->
-> diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-> index e5a5f015ff03..b5a59e57bde1 100644
-> --- a/fs/proc/task_mmu.c
-> +++ b/fs/proc/task_mmu.c
-> @@ -706,6 +706,9 @@ static void show_smap_vma_flags(struct seq_file *m, s=
-truct vm_area_struct *vma)
->  #endif /* CONFIG_HAVE_ARCH_USERFAULTFD_MINOR */
->  #ifdef CONFIG_X86_USER_SHADOW_STACK
->                 [ilog2(VM_SHADOW_STACK)] =3D "ss",
-> +#endif
-> +#ifdef CONFIG_NEED_VM_DROPPABLE
-> +               [ilog2(VM_DROPPABLE)]   =3D "dp",
->  #endif
->         };
->         size_t i;
-> diff --git a/include/linux/mm.h b/include/linux/mm.h
-> index 9849dfda44d4..5978cb4cc21c 100644
-> --- a/include/linux/mm.h
-> +++ b/include/linux/mm.h
-> @@ -321,12 +321,14 @@ extern unsigned int kobjsize(const void *objp);
->  #define VM_HIGH_ARCH_BIT_3     35      /* bit only usable on 64-bit arch=
-itectures */
->  #define VM_HIGH_ARCH_BIT_4     36      /* bit only usable on 64-bit arch=
-itectures */
->  #define VM_HIGH_ARCH_BIT_5     37      /* bit only usable on 64-bit arch=
-itectures */
-> +#define VM_HIGH_ARCH_BIT_6     38      /* bit only usable on 64-bit arch=
-itectures */
->  #define VM_HIGH_ARCH_0 BIT(VM_HIGH_ARCH_BIT_0)
->  #define VM_HIGH_ARCH_1 BIT(VM_HIGH_ARCH_BIT_1)
->  #define VM_HIGH_ARCH_2 BIT(VM_HIGH_ARCH_BIT_2)
->  #define VM_HIGH_ARCH_3 BIT(VM_HIGH_ARCH_BIT_3)
->  #define VM_HIGH_ARCH_4 BIT(VM_HIGH_ARCH_BIT_4)
->  #define VM_HIGH_ARCH_5 BIT(VM_HIGH_ARCH_BIT_5)
-> +#define VM_HIGH_ARCH_6 BIT(VM_HIGH_ARCH_BIT_6)
->  #endif /* CONFIG_ARCH_USES_HIGH_VMA_FLAGS */
->
->  #ifdef CONFIG_ARCH_HAS_PKEYS
-> @@ -357,6 +359,12 @@ extern unsigned int kobjsize(const void *objp);
->  # define VM_SHADOW_STACK       VM_NONE
->  #endif
->
-> +#ifdef CONFIG_NEED_VM_DROPPABLE
-> +# define VM_DROPPABLE          VM_HIGH_ARCH_6
-> +#else
-> +# define VM_DROPPABLE          VM_NONE
-> +#endif
-> +
->  #if defined(CONFIG_X86)
->  # define VM_PAT                VM_ARCH_1       /* PAT reserves whole VMA=
- at once (x86) */
->  #elif defined(CONFIG_PPC)
-> diff --git a/include/trace/events/mmflags.h b/include/trace/events/mmflag=
-s.h
-> index e46d6e82765e..fab7848df50a 100644
-> --- a/include/trace/events/mmflags.h
-> +++ b/include/trace/events/mmflags.h
-> @@ -165,6 +165,12 @@ IF_HAVE_PG_ARCH_X(arch_3)
->  # define IF_HAVE_UFFD_MINOR(flag, name)
->  #endif
->
-> +#ifdef CONFIG_NEED_VM_DROPPABLE
-> +# define IF_HAVE_VM_DROPPABLE(flag, name) {flag, name},
-> +#else
-> +# define IF_HAVE_VM_DROPPABLE(flag, name)
-> +#endif
-> +
->  #define __def_vmaflag_names                                            \
->         {VM_READ,                       "read"          },              \
->         {VM_WRITE,                      "write"         },              \
-> @@ -197,6 +203,7 @@ IF_HAVE_VM_SOFTDIRTY(VM_SOFTDIRTY,  "softdirty"     )=
-               \
->         {VM_MIXEDMAP,                   "mixedmap"      },              \
->         {VM_HUGEPAGE,                   "hugepage"      },              \
->         {VM_NOHUGEPAGE,                 "nohugepage"    },              \
-> +IF_HAVE_VM_DROPPABLE(VM_DROPPABLE,     "droppable"     )               \
->         {VM_MERGEABLE,                  "mergeable"     }               \
->
->  #define show_vma_flags(flags)                                          \
-> diff --git a/mm/Kconfig b/mm/Kconfig
-> index b4cb45255a54..6cd65ea4b3ad 100644
-> --- a/mm/Kconfig
-> +++ b/mm/Kconfig
-> @@ -1056,6 +1056,9 @@ config ARCH_USES_HIGH_VMA_FLAGS
->         bool
->  config ARCH_HAS_PKEYS
->         bool
-> +config NEED_VM_DROPPABLE
-> +       select ARCH_USES_HIGH_VMA_FLAGS
-> +       bool
->
->  config ARCH_USES_PG_ARCH_X
->         bool
-> diff --git a/mm/memory.c b/mm/memory.c
-> index b5453b86ec4b..57b03fc73159 100644
-> --- a/mm/memory.c
-> +++ b/mm/memory.c
-> @@ -5689,6 +5689,10 @@ vm_fault_t handle_mm_fault(struct vm_area_struct *=
-vma, unsigned long address,
->
->         lru_gen_exit_fault();
->
-> +       /* If the mapping is droppable, then errors due to OOM aren't fat=
-al. */
-> +       if (vma->vm_flags & VM_DROPPABLE)
-> +               ret &=3D ~VM_FAULT_OOM;
-> +
->         if (flags & FAULT_FLAG_USER) {
->                 mem_cgroup_exit_user_fault();
->                 /*
-> diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-> index aec756ae5637..a66289f1d931 100644
-> --- a/mm/mempolicy.c
-> +++ b/mm/mempolicy.c
-> @@ -2300,6 +2300,9 @@ struct folio *vma_alloc_folio_noprof(gfp_t gfp, int=
- order, struct vm_area_struct
->         pgoff_t ilx;
->         struct page *page;
->
-> +       if (vma->vm_flags & VM_DROPPABLE)
-> +               gfp |=3D __GFP_NOWARN | __GFP_NORETRY;
-> +
->         pol =3D get_vma_policy(vma, addr, order, &ilx);
->         page =3D alloc_pages_mpol_noprof(gfp | __GFP_COMP, order,
->                                        pol, ilx, numa_node_id());
-> diff --git a/mm/mprotect.c b/mm/mprotect.c
-> index 94878c39ee32..88ff3ecc08a1 100644
-> --- a/mm/mprotect.c
-> +++ b/mm/mprotect.c
-> @@ -622,7 +622,7 @@ mprotect_fixup(struct vma_iterator *vmi, struct mmu_g=
-ather *tlb,
->                                 may_expand_vm(mm, oldflags, nrpages))
->                         return -ENOMEM;
->                 if (!(oldflags & (VM_ACCOUNT|VM_WRITE|VM_HUGETLB|
-> -                                               VM_SHARED|VM_NORESERVE)))=
- {
-> +                                 VM_SHARED|VM_NORESERVE|VM_DROPPABLE))) =
-{
->                         charged =3D nrpages;
->                         if (security_vm_enough_memory_mm(mm, charged))
->                                 return -ENOMEM;
-> diff --git a/mm/rmap.c b/mm/rmap.c
-> index e8fc5ecb59b2..d873a3f06506 100644
-> --- a/mm/rmap.c
-> +++ b/mm/rmap.c
-> @@ -1397,7 +1397,8 @@ void folio_add_new_anon_rmap(struct folio *folio, s=
-truct vm_area_struct *vma,
->         VM_WARN_ON_FOLIO(folio_test_hugetlb(folio), folio);
->         VM_BUG_ON_VMA(address < vma->vm_start ||
->                         address + (nr << PAGE_SHIFT) > vma->vm_end, vma);
-> -       __folio_set_swapbacked(folio);
-> +       if (!(vma->vm_flags & VM_DROPPABLE))
-> +               __folio_set_swapbacked(folio);
->         __folio_set_anon(folio, vma, address, true);
->
->         if (likely(!folio_test_large(folio))) {
-> @@ -1841,7 +1842,7 @@ static bool try_to_unmap_one(struct folio *folio, s=
-truct vm_area_struct *vma,
->                                  * plus the rmap(s) (dropped by discard:)=
-.
->                                  */
->                                 if (ref_count =3D=3D 1 + map_count &&
-> -                                   !folio_test_dirty(folio)) {
-> +                                   (!folio_test_dirty(folio) || (vma->vm=
-_flags & VM_DROPPABLE))) {
->                                         dec_mm_counter(mm, MM_ANONPAGES);
->                                         goto discard;
->                                 }
-> @@ -1851,7 +1852,8 @@ static bool try_to_unmap_one(struct folio *folio, s=
-truct vm_area_struct *vma,
->                                  * discarded. Remap the page to page tabl=
-e.
->                                  */
->                                 set_pte_at(mm, address, pvmw.pte, pteval)=
-;
-> -                               folio_set_swapbacked(folio);
-> +                               if (!(vma->vm_flags & VM_DROPPABLE))
-> +                                       folio_set_swapbacked(folio);
->                                 ret =3D false;
->                                 page_vma_mapped_walk_done(&pvmw);
->                                 break;
-> --
-> 2.44.0
->
->
-
-This seems like an obvious question, but I can't seem to find a
-message asking this in the long history of this patchset: VM_DROPPABLE
-seems very close to MADV_FREE lazyfree memory.
-
-Could those functionalities be folded in to one?
-
-- Frank
+DQpPbiAyOS8wNS8yNCAwMjoxOCwgSm9uIEh1bnRlciB3cm90ZToNCj4NCj4gT24gMjgvMDUvMjAy
+NCAxNDoxNCwgQ2h1Y2sgTGV2ZXIgSUlJIHdyb3RlOg0KPj4NCj4+DQo+Pj4gT24gTWF5IDI4LCAy
+MDI0LCBhdCA1OjA04oCvQU0sIEpvbiBIdW50ZXIgPGpvbmF0aGFuaEBudmlkaWEuY29tPiB3cm90
+ZToNCj4+Pg0KPj4+DQo+Pj4gT24gMjUvMDUvMjAyNCAxNToyMCwgR3JlZyBLcm9haC1IYXJ0bWFu
+IHdyb3RlOg0KPj4+PiBPbiBTYXQsIE1heSAyNSwgMjAyNCBhdCAxMjoxMzoyOEFNICswMTAwLCBK
+b24gSHVudGVyIHdyb3RlOg0KPj4+Pj4gSGkgR3JlZywNCj4+Pj4+DQo+Pj4+PiBPbiAyMy8wNS8y
+MDI0IDE0OjEyLCBHcmVnIEtyb2FoLUhhcnRtYW4gd3JvdGU6DQo+Pj4+Pj4gVGhpcyBpcyB0aGUg
+c3RhcnQgb2YgdGhlIHN0YWJsZSByZXZpZXcgY3ljbGUgZm9yIHRoZSA1LjE1LjE2MCANCj4+Pj4+
+PiByZWxlYXNlLg0KPj4+Pj4+IFRoZXJlIGFyZSAyMyBwYXRjaGVzIGluIHRoaXMgc2VyaWVzLCBh
+bGwgd2lsbCBiZSBwb3N0ZWQgYXMgYSANCj4+Pj4+PiByZXNwb25zZQ0KPj4+Pj4+IHRvIHRoaXMg
+b25lLsKgIElmIGFueW9uZSBoYXMgYW55IGlzc3VlcyB3aXRoIHRoZXNlIGJlaW5nIGFwcGxpZWQs
+IA0KPj4+Pj4+IHBsZWFzZQ0KPj4+Pj4+IGxldCBtZSBrbm93Lg0KPj4+Pj4+DQo+Pj4+Pj4gUmVz
+cG9uc2VzIHNob3VsZCBiZSBtYWRlIGJ5IFNhdCwgMjUgTWF5IDIwMjQgMTM6MDM6MTUgKzAwMDAu
+DQo+Pj4+Pj4gQW55dGhpbmcgcmVjZWl2ZWQgYWZ0ZXIgdGhhdCB0aW1lIG1pZ2h0IGJlIHRvbyBs
+YXRlLg0KPj4+Pj4+DQo+Pj4+Pj4gVGhlIHdob2xlIHBhdGNoIHNlcmllcyBjYW4gYmUgZm91bmQg
+aW4gb25lIHBhdGNoIGF0Og0KPj4+Pj4+IGh0dHBzOi8vd3d3Lmtlcm5lbC5vcmcvcHViL2xpbnV4
+L2tlcm5lbC92NS54L3N0YWJsZS1yZXZpZXcvcGF0Y2gtNS4xNS4xNjAtcmMxLmd6IA0KPj4+Pj4+
+DQo+Pj4+Pj4gb3IgaW4gdGhlIGdpdCB0cmVlIGFuZCBicmFuY2ggYXQ6DQo+Pj4+Pj4gZ2l0Oi8v
+Z2l0Lmtlcm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L3N0YWJsZS9saW51eC1zdGFi
+bGUtcmMuZ2l0IA0KPj4+Pj4+IGxpbnV4LTUuMTUueQ0KPj4+Pj4+IGFuZCB0aGUgZGlmZnN0YXQg
+Y2FuIGJlIGZvdW5kIGJlbG93Lg0KPj4+Pj4+DQo+Pj4+Pj4gdGhhbmtzLA0KPj4+Pj4+DQo+Pj4+
+Pj4gZ3JlZyBrLWgNCj4+Pj4+Pg0KPj4+Pj4+IC0tLS0tLS0tLS0tLS0NCj4+Pj4+PiBQc2V1ZG8t
+U2hvcnRsb2cgb2YgY29tbWl0czoNCj4+Pj4+DQo+Pj4+PiAuLi4NCj4+Pj4+DQo+Pj4+Pj4gTmVp
+bEJyb3duIDxuZWlsYkBzdXNlLmRlPg0KPj4+Pj4+IMKgwqDCoMKgwqAgbmZzZDogZG9uJ3QgYWxs
+b3cgbmZzZCB0aHJlYWRzIHRvIGJlIHNpZ25hbGxlZC4NCj4+Pj4+DQo+Pj4+Pg0KPj4+Pj4gSSBh
+bSBzZWVpbmcgYSBzdXNwZW5kIHJlZ3Jlc3Npb24gb24gYSBjb3VwbGUgYm9hcmRzIGFuZCBiaXNl
+Y3QgaXMgDQo+Pj4+PiBwb2ludGluZw0KPj4+Pj4gdG8gdGhlIGFib3ZlIGNvbW1pdC4gUmV2ZXJ0
+aW5nIHRoaXMgY29tbWl0IGRvZXMgZml4IHRoZSBpc3N1ZS4NCj4+Pj4gVWdoLCB0aGF0IGZpeGVz
+IHRoZSByZXBvcnQgZnJvbSBvdGhlcnMuwqAgQ2FuIHlvdSBjYzogZXZlcnlvbmUgb24gdGhhdA0K
+Pj4+PiBhbmQgZmlndXJlIG91dCB3aGF0IGlzIGdvaW5nIG9uLCBhcyB0aGlzIGtlZXBzIGdvaW5n
+IGJhY2sgYW5kIGZvcnRoLi4uDQo+Pj4NCj4+Pg0KPj4+IEFkZGluZyBDaHVjaywgTmVpbCBhbmQg
+Q2hyaXMgZnJvbSB0aGUgYnVnIHJlcG9ydCBoZXJlIFswXS4NCj4+Pg0KPj4+IFdpdGggdGhlIGFi
+b3ZlIGFwcGxpZWQgdG8gdjUuMTUueSwgSSBhbSBzZWVpbmcgc3VzcGVuZCBvbiAyIG9mIG91ciAN
+Cj4+PiBib2FyZHMgZmFpbC4gVGhlc2UgYm9hcmRzIGFyZSB1c2luZyBORlMgYW5kIG9uIGVudHJ5
+IHRvIHN1c3BlbmQgSSBhbSANCj4+PiBub3cgc2VlaW5nIC4uLg0KPj4+DQo+Pj4gRnJlZXppbmcg
+b2YgdGFza3MgZmFpbGVkIGFmdGVyIDIwLjAwMiBzZWNvbmRzICgxIHRhc2tzIHJlZnVzaW5nIHRv
+DQo+Pj4gZnJlZXplLCB3cV9idXN5PTApOg0KPj4+DQo+Pj4gVGhlIGJvYXJkcyBhcHBlYXIgdG8g
+aGFuZyBhdCB0aGF0IHBvaW50LiBTbyBtYXkgYmUgc29tZXRoaW5nIGVsc2UgDQo+Pj4gbWlzc2lu
+Zz8NCj4+DQo+PiBOb3RlIHRoYXQgd2UgZG9uJ3QgaGF2ZSBhY2Nlc3MgdG8gaGFyZHdhcmUgbGlr
+ZSB0aGlzLCBzbw0KPj4gd2UgaGF2ZW4ndCB0ZXN0ZWQgdGhhdCBwYXRjaCAoZXZlbiB0aGUgdXBz
+dHJlYW0gdmVyc2lvbikNCj4+IHdpdGggc3VzcGVuZCBvbiB0aGF0IGhhcmR3YXJlLg0KPg0KPg0K
+PiBObyBwcm9ibGVtLCBJIHdvdWxkIG5vdCBleHBlY3QgeW91IHRvIGhhdmUgdGhpcyBwYXJ0aWN1
+bGFyIGhhcmR3YXJlIDotKQ0KPg0KSXQncyBwcm9iYWJseSBub3QgbXVjaCBoZWxwIGJ1dCBmb3Ig
+dGhlIG9vcHMgSSBvcmlnaW5hbGx5IHJlcG9ydGVkIHdlJ3ZlIA0KYmVlbiBjYXJyeWluZyAibmZz
+ZDogZG9uJ3QgYWxsb3cgbmZzZCB0aHJlYWRzIHRvIGJlIHNpZ25hbGxlZCIgbG9jYWxseSANCmFu
+ZCB0aGF0IHJlc29sdmVkIGl0LiBOb3cgdGhhdCB3ZSd2ZSB1cGRhdGVkIHRvIDUuMTUuMTYwIGFu
+ZCBkcm9wcGVkIHRoZSANCmxvY2FsIHBhdGNoIGl0J3Mgc3RpbGwgcmVzb2x2ZWQgZm9yIHVzLiBP
+dXIgc3lzdGVtcyBkb24ndCBtYWtlIHVzZSBvZiANCnN1c3BlbmQgc28gdGhleSB3b24ndCBoaXQg
+YW55IGlzc3VlIHJlbGF0ZWQgdG8gdGhhdC4NCj4+IFNvLCBpdCBjb3VsZCBiZSBzb21ldGhpbmcg
+bWlzc2luZywgb3IgaXQgY291bGQgYmUgdGhhdA0KPj4gcGF0Y2ggaGFzIGEgcHJvYmxlbS4NCj4+
+DQo+PiBJdCB3b3VsZCBoZWxwIHVzIHRvIGtub3cgaWYgeW91IG9ic2VydmUgdGhlIHNhbWUgaXNz
+dWUNCj4+IHdpdGggYW4gdXBzdHJlYW0ga2VybmVsLCBpZiB0aGF0IGlzIHBvc3NpYmxlLg0KPg0K
+Pg0KPiBJIGRvbid0IG9ic2VydmUgdGhpcyB3aXRoIGVpdGhlciBtYWlubGluZSwgLW5leHQgb3Ig
+YW55IG90aGVyIHN0YWJsZSANCj4gYnJhbmNoLiBTbyB0aGF0IHdvdWxkIHN1Z2dlc3QgdGhhdCBz
+b21ldGhpbmcgZWxzZSBpcyBtaXNzaW5nIGZyb20gDQo+IGxpbnV4LTUuMTUueS4NCj4NCj4gSm9u
+DQo+
