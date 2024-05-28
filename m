@@ -1,235 +1,128 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A33A286AE
-	for <patches@lists.linux.dev>; Tue, 28 May 2024 22:01:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899A513DDAC;
+	Tue, 28 May 2024 22:18:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716933681; cv=none; b=G5c1zwiQAoqx6k4KNYG5DgGc2MxtSOuUeORYQk1HudcsC94gQes+ONn++cHImmYHDZ3gtzIiyT4nDE/MMPUHlFQzXasV2Sv7wceEPHuhWApuMHQi506DcjonX3ITqjnoDJiiOfIBYXb34x6IZEkX1TzDzvtDxPFYt4HKe4ho8kU=
+	t=1716934687; cv=none; b=epHq+aKb1p6ZeMHG7NONhoXVpvISUVjYUPoLxYmtcJaXLtLZO9HJ3v9Hn1KBh+MDAo+IYJB2Mco/5KF4fB7MuZg75odo+N2ii5LipaGLW7b0hUZmvh87p/Iza1z+JqiUXsUwuZyQuU9K2a0xaJL4M2x9Mp9Sh+sLvGvSgjRrweg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716933681; c=relaxed/simple;
-	bh=WI31Zz1Kfrefr37hCh9djoc5/qTCeMavpwA/4HPS+48=;
-	h=Content-Type:MIME-Version:From:To:Cc:Subject:In-reply-to:
-	 References:Date:Message-id; b=cn7f4VzogMHw6eQ2isfuatsMAf2/aWIjMAtef+tJqDfqXReXHyUUuJqf0kWNRQLiOsJhBfD43J7bGnj9iO+oZloOlzqqwQs8qUMm6yzKjXdww+M4urYgRIoXtiLGfjp2dvhEOjWf26YpJtWy3hUPahh4qwq1kKjb9WMxI31cxGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GZQtokq7; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=cVgAbUAI; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GZQtokq7; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=cVgAbUAI; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1716934687; c=relaxed/simple;
+	bh=aYqfC/oav3Dxx6nj+EL0nvP4OEdvuUFeY3OLYMBdOrQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E7cBLcO+HCAqPwhqngogWfo0CfBXAyAxJ2dKyvFD6rbZk5cpotcP01q2fIKJ6v1iSyTtBOZOHT+nIaCeNzRS7cVWQ3NqXRuFqLRbbKFRApLD3tKho5t9czg+dle1m/Bp9MZqiT5wyQf8HPxdvceeliu5kOsSaC/xQlc0gE8Pzac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=AHnOiUSk; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="GZQtokq7";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="cVgAbUAI";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="GZQtokq7";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="cVgAbUAI"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 4626C2046E;
-	Tue, 28 May 2024 22:01:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1716933678; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zfSGWDgr33/9sxMd3r5XOziIsBx80sOwhjsqJXrqAts=;
-	b=GZQtokq7I254BGmODnsmDw0fQZQuk39s7GPrLkFkgQ8rO6gzPyirpHPlAiV4FV7xHi01d9
-	4iLU1kSowAfeOPrSFZviFs91PKzj8R2WRJUAQZVEK2+biBivW8wc7Y+hgeXiaBEdU/6VDB
-	NR7HA529sAU1aOS2lydWADM9d6s2bI0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1716933678;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zfSGWDgr33/9sxMd3r5XOziIsBx80sOwhjsqJXrqAts=;
-	b=cVgAbUAI4i9soi0gbihIuzDCfJPZ/9wFVwwaWwJV4SZdBB4M/hhMUwxf3LHJEcY5ND9KvR
-	PCf5ityAY/o1gdBg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1716933678; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zfSGWDgr33/9sxMd3r5XOziIsBx80sOwhjsqJXrqAts=;
-	b=GZQtokq7I254BGmODnsmDw0fQZQuk39s7GPrLkFkgQ8rO6gzPyirpHPlAiV4FV7xHi01d9
-	4iLU1kSowAfeOPrSFZviFs91PKzj8R2WRJUAQZVEK2+biBivW8wc7Y+hgeXiaBEdU/6VDB
-	NR7HA529sAU1aOS2lydWADM9d6s2bI0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1716933678;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zfSGWDgr33/9sxMd3r5XOziIsBx80sOwhjsqJXrqAts=;
-	b=cVgAbUAI4i9soi0gbihIuzDCfJPZ/9wFVwwaWwJV4SZdBB4M/hhMUwxf3LHJEcY5ND9KvR
-	PCf5ityAY/o1gdBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A654E13A5D;
-	Tue, 28 May 2024 22:01:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id GYtxEiVUVmaDXgAAD6G6ig
-	(envelope-from <neilb@suse.de>); Tue, 28 May 2024 22:01:09 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="AHnOiUSk"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=vZOElQpuiaEqJ+AG1PBLgmWzbdI73uxou6h0r1JT0ks=; b=AHnOiUSkWSU4HKBy7vrDX/EvGv
+	YkyxVRxAWfTW/nfZVF8/dVFazNj9PVaPddeFpEbtqXITNSGOzk9wSnPXnIlY6UwPdOlx8/GyErJ0A
+	HecYU1rwk+MhPS1BebegwFDIbsdXvVmh4qeClzqWi0P5uYnFnkxYYTxkTr1I78yd2fRsgTBYMLF7S
+	1yDnc/Vi5QCSl5peVNT0s6t/xtwQQ6MmWzK5kBNYvM+XiiTYvxOE2/TFcASrph1rRENoFTm4j2RL1
+	6mF38fCR8CeG9e0RZoXfhAWmN6NwtxNpBQA0NGxedQvUCmdFbKqU1LLjg7objCQ8Hye8PNkD1NY7u
+	0Dgycd8Q==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1sC58t-00000002B1c-3x2y;
+	Tue, 28 May 2024 22:18:03 +0000
+Date: Tue, 28 May 2024 15:18:03 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: "Darrick J. Wong" <djwong@kernel.org>, da.gomez@samsung.com
+Cc: fstests@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	willy@infradead.org, p.raghav@samsung.com, hare@suse.de,
+	john.g.garry@oracle.com, linux-xfs@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [RFC] fstests: add mmap page boundary tests
+Message-ID: <ZlZYG7-9-3NR4tdv@bombadil.infradead.org>
+References: <20240415081054.1782715-1-mcgrof@kernel.org>
+ <20240415155825.GC11948@frogsfrogsfrogs>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: "NeilBrown" <neilb@suse.de>
-To: "Chuck Lever III" <chuck.lever@oracle.com>
-Cc: "Jon Hunter" <jonathanh@nvidia.com>,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
- "Chris Packham" <Chris.Packham@alliedtelesis.co.nz>,
- "linux-stable" <stable@vger.kernel.org>,
- "patches@lists.linux.dev" <patches@lists.linux.dev>,
- "Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>,
- "Linus Torvalds" <torvalds@linux-foundation.org>,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Guenter Roeck" <linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
- "patches@kernelci.org" <patches@kernelci.org>,
- "lkft-triage@lists.linaro.org" <lkft-triage@lists.linaro.org>,
- "pavel@denx.de" <pavel@denx.de>,
- "f.fainelli@gmail.com" <f.fainelli@gmail.com>,
- "sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>,
- "srw@sladewatkins.net" <srw@sladewatkins.net>,
- "rwarsow@gmx.de" <rwarsow@gmx.de>, "conor@kernel.org" <conor@kernel.org>,
- "allen.lkml@gmail.com" <allen.lkml@gmail.com>,
- "broonie@kernel.org" <broonie@kernel.org>,
- "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 5.15 00/23] 5.15.160-rc1 review
-In-reply-to: <0377C58A-6E28-4007-9C90-273DE234BC44@oracle.com>
-References: <>, <0377C58A-6E28-4007-9C90-273DE234BC44@oracle.com>
-Date: Wed, 29 May 2024 08:01:01 +1000
-Message-id: <171693366194.27191.14418409153038406865@noble.neil.brown.name>
-X-Spam-Level: 
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	ARC_NA(0.00)[];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
-	R_RATELIMIT(0.00)[from(RLewrxuus8mos16izbn)];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[nvidia.com,linuxfoundation.org,alliedtelesis.co.nz,vger.kernel.org,lists.linux.dev,linux-foundation.org,roeck-us.net,kernel.org,kernelci.org,lists.linaro.org,denx.de,gmail.com,sladewatkins.net,gmx.de];
-	RCVD_TLS_ALL(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	RCVD_COUNT_TWO(0.00)[2];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo]
-X-Spam-Score: -2.80
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240415155825.GC11948@frogsfrogsfrogs>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Wed, 29 May 2024, Chuck Lever III wrote:
->=20
->=20
-> > On May 28, 2024, at 10:18=E2=80=AFAM, Jon Hunter <jonathanh@nvidia.com> w=
-rote:
-> >=20
-> >=20
-> > On 28/05/2024 14:14, Chuck Lever III wrote:
-> >>> On May 28, 2024, at 5:04=E2=80=AFAM, Jon Hunter <jonathanh@nvidia.com> =
-wrote:
-> >>>=20
-> >>>=20
-> >>> On 25/05/2024 15:20, Greg Kroah-Hartman wrote:
-> >>>> On Sat, May 25, 2024 at 12:13:28AM +0100, Jon Hunter wrote:
-> >>>>> Hi Greg,
-> >>>>>=20
-> >>>>> On 23/05/2024 14:12, Greg Kroah-Hartman wrote:
-> >>>>>> This is the start of the stable review cycle for the 5.15.160 releas=
-e.
-> >>>>>> There are 23 patches in this series, all will be posted as a response
-> >>>>>> to this one.  If anyone has any issues with these being applied, ple=
-ase
-> >>>>>> let me know.
-> >>>>>>=20
-> >>>>>> Responses should be made by Sat, 25 May 2024 13:03:15 +0000.
-> >>>>>> Anything received after that time might be too late.
-> >>>>>>=20
-> >>>>>> The whole patch series can be found in one patch at:
-> >>>>>> https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.1=
-5.160-rc1.gz
-> >>>>>> or in the git tree and branch at:
-> >>>>>> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
-.git linux-5.15.y
-> >>>>>> and the diffstat can be found below.
-> >>>>>>=20
-> >>>>>> thanks,
-> >>>>>>=20
-> >>>>>> greg k-h
-> >>>>>>=20
-> >>>>>> -------------
-> >>>>>> Pseudo-Shortlog of commits:
-> >>>>>=20
-> >>>>> ...
-> >>>>>=20
-> >>>>>> NeilBrown <neilb@suse.de>
-> >>>>>>      nfsd: don't allow nfsd threads to be signalled.
-> >>>>>=20
-> >>>>>=20
-> >>>>> I am seeing a suspend regression on a couple boards and bisect is poi=
-nting
-> >>>>> to the above commit. Reverting this commit does fix the issue.
-> >>>> Ugh, that fixes the report from others.  Can you cc: everyone on that
-> >>>> and figure out what is going on, as this keeps going back and forth...
-> >>>=20
-> >>>=20
-> >>> Adding Chuck, Neil and Chris from the bug report here [0].
-> >>>=20
-> >>> With the above applied to v5.15.y, I am seeing suspend on 2 of our boar=
-ds fail. These boards are using NFS and on entry to suspend I am now seeing .=
-..
-> >>>=20
-> >>> Freezing of tasks failed after 20.002 seconds (1 tasks refusing to
-> >>> freeze, wq_busy=3D0):
-> >>>=20
-> >>> The boards appear to hang at that point. So may be something else missi=
-ng?
-> >> Note that we don't have access to hardware like this, so
-> >> we haven't tested that patch (even the upstream version)
-> >> with suspend on that hardware.
-> >=20
-> >=20
-> > No problem, I would not expect you to have this particular hardware :-)
-> >=20
-> >> So, it could be something missing, or it could be that
-> >> patch has a problem.
-> >> It would help us to know if you observe the same issue
-> >> with an upstream kernel, if that is possible.
-> >=20
-> >=20
-> > I don't observe this with either mainline, -next or any other stable bran=
-ch. So that would suggest that something else is missing from linux-5.15.y.
->=20
-> That helps. It would be very helpful to have a reproducer I can
-> use to confirm we have a fix. I'm sure this will be a process
-> that involves a non-trivial number of iterations.
+On Mon, Apr 15, 2024 at 08:58:25AM -0700, Darrick J. Wong wrote:
+> On Mon, Apr 15, 2024 at 01:10:54AM -0700, Luis Chamberlain wrote:
+> > +round_up_to_page_boundary()
+> > +{
+> > +	local n=$1
+> > +	local page_size=$(_get_page_size)
+> > +
+> > +	echo $(( (n + page_size - 1) & ~(page_size - 1) ))
+> 
+> Does iomap put a large folio into the pagecache that crosses EOF
 
-Missing upstream patch is
+When minorder is used care had to be taken to ensure the EOF is properly
+respected.  Refer to the patch titled "filemap: cap PTE range to be
+created to allowed zero fill in folio_map_range()", with that, we fix
+that case to respect the EOF. But since minorder is used the folio is
+there.
 
-Commit 9bd4161c5917 ("SUNRPC: change service idle list to be an llist")
+> > +mread()
+> > +{
+> > +	local file=$1
+> > +	local map_len=$2
+> > +	local offset=$3
+> > +	local length=$4
+> > +
+> > +	# Some callers expect xfs_io to crash with SIGBUS due to the mread,
+> > +	# causing the shell to print "Bus error" to stderr.  To allow this
+> > +	# message to be redirected, execute xfs_io in a new shell instance.
+> > +	# However, for this to work reliably, we also need to prevent the new
+> > +	# shell instance from optimizing out the fork and directly exec'ing
+> > +	# xfs_io.  The easiest way to do that is to append 'true' to the
+> > +	# commands, so that xfs_io is no longer the last command the shell sees.
+> > +	bash -c "trap '' SIGBUS; $XFS_IO_PROG -r $file \
+> > +		-c 'mmap -r 0 $map_len' \
+> > +		-c 'mread $offset $length'; true"
+> 
+> Please hoist the mread() function with generic/574 to common; your copy
+> is out of date with the original.
 
-This contains some freezer-related changes which probably should
-have been a separate patch.
+Sure thing! Shall we add _mwrite to common/rc too while at it or do we
+wait to get a user for that?
 
-We probably just need to add "| TASK_FREEZABLE" in one or two places.
-I'll post a patch for testing in a little while.
+> > +	# A couple of mmap() tests:
+> > +	#
+> > +	# We are allowed to mmap() up to the boundary of the page size of a
+> > +	# data object, but there a few rules to follow we must check for:
+> > +	#
+> > +	# a) zero-fill test for the data: POSIX says we should zero fill any
+> > +	#    partial page after the end of the object. Verify zero-fill.
+> > +	# b) do not write this bogus data to disk: on Linux, if we write data
+> > +	#    to a partially filled page, it will stay in the page cache even
+> > +	#    after the file is closed and unmapped even if it never reaches the
+> > +	#    file. Subsequent mappings *may* see the modified content, but it
+> > +	#    also can get other data. Since the data read after the actual
+> 
+> What does "other data" mean?
 
-NeilBrown
+That depends on the filesystem implementation, it just means we don't
+provide a consistent behaviour or enforce a strategy for all filesystems.
+
+> > +	#    object data can vary we just verify the filesize does not change.
+> > +	#    This is not true for tmpfs.
+> 
+> Er... is this file size change a bug?
+
+There is no filesize bug, the comment about tmpfs always ensuring seeing
+the actual data since, well, there its kind of write-through. Since we
+share the same filemap_map_pages() I'd expect the rest should behave the
+same with tmpfs, but since I didn't test that the test skips it for now.
+
+We'll test it, with all the patch "filemap: cap PTE range to be             
+created to allowed zero fill in folio_map_range()" on tmpfs, and see if
+we can just enable this test there too. Might as well as we're driving
+by and sprinkling large folios there too.
+
+  Luis
