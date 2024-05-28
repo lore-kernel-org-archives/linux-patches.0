@@ -1,74 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1B51411EE;
-	Tue, 28 May 2024 03:33:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DF050297
+	for <patches@lists.linux.dev>; Tue, 28 May 2024 08:01:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716867196; cv=none; b=mjoQcpIbzLML+rOuRkg2wm8N7x3LIiK4gES1vPez7p0hFqQZEauNgpXrpimXbblCzHUfTqzD3QieWfIidiTc5rpuNQg9DX3qSWN02SpGQjS54UaMm9hdO8rer9jFkALfgO2h+HmqDP6zDNQ22Y77DnWYOH9lra6EXY5khYe+VvQ=
+	t=1716883302; cv=none; b=l6ZRNRJkuH85e6LoXNIt9xKnExJ95sYM5EucNQSr5DMLboemtV2qXCKdrWWC6bKnUNClKsl2rLJ2bEKIHUz5eryOJzXa/3i2XuRQ7wNfZvNFmcbVY9xpM5+k3jf0Gb0OISnwK1fRoDu6GQtSWfpe5w/C1iuOQz+Nvq+08UEZf2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716867196; c=relaxed/simple;
-	bh=ePolhgu5YoE8VC+tgwK1GBDAtJFQCMUH13dsPkQNicA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NJQrVxAcmly6vy7VqYhybyAfSukagtsj8UPvTjJPIXjtCro9K0LcKiWJs/3jEsAAYUuwyeHOPOVGC21Ft4xsGrJqaEs5ocJy4pDz/R6SAfUevqhbQPksPAIdlxgKqg6kADTCAefWtTkQiChPYipa0GRE3bgXZ32S/rFTVsNiWGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bVnESjZq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1716883302; c=relaxed/simple;
+	bh=4H9cFlulqedFws2ELO1wUMUgihOiv3ZYDtZ7xTuTPvk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p9aN/Rk27k7sFAwW5NfxFCvg9nZ2c+aikmuEw6mtpCziRh0GW245NHNC2LAtfJ0wmiHpwm0WJ0zfNUOy+D7C7QqVyh2gtM+zgmyS0hRmdUXXuDMj/HUUG6cGmmfofK8JjhLqayGDojFoQRtGYb7mbPPmydABI10ffu0nZQTO00c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K4tCy1hd; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bVnESjZq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684BEC32782;
-	Tue, 28 May 2024 03:33:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716867196;
-	bh=ePolhgu5YoE8VC+tgwK1GBDAtJFQCMUH13dsPkQNicA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVnESjZq5kKpQGW0UD/44OL6keNLrYU/4xNMGGz6LuGn0IHaoyPlzCtu+Y2NsI6C+
-	 qDZY5Lw8Kjlwdz58ApVycu8M2kZYAEEpZ7AIbM3S5jLc6/VKUcscSJNAfKHGnR9a4d
-	 PHJmEpDTaFgx6GUHdsRaSY72HavZ6X7W2KMMR4vC+yfPVo728CauvjvbZkQR8TN710
-	 V96vtzUp9FP1iJvriuttBfFay4kGyJOGUbzjX2TfJ+7VBYfhFlbh45MKso77W1SOTz
-	 BOzKkfuj7m4JdSBDUNCCZRVwdZTIBZYZGv0ImZ1qD5X9SYwuimXUHOxQ6vzVy9RHXr
-	 qHtCmoT/3Bt3w==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Ensure irqs aren't disabled by rpmh_rsc_send_data() callers
-Date: Mon, 27 May 2024 22:32:35 -0500
-Message-ID: <171686715159.523693.11051218263082972635.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240509184129.3924422-1-swboyd@chromium.org>
-References: <20240509184129.3924422-1-swboyd@chromium.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K4tCy1hd"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-65894e58b8aso419502a12.0
+        for <patches@lists.linux.dev>; Tue, 28 May 2024 01:01:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716883300; x=1717488100; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9A1HK7uMZTsEiYLsWkAO7fFC+9pdvWjOj3bR/6+kgQM=;
+        b=K4tCy1hdQHHKYfkdTXhtBUzgvr3QoB2HI3NkgOO5FElu0xqgsPvl+C2nJuYIc7eiOg
+         pLG9X99qApWkjIJUH0Lgr2eztUR2KDzyxqil5CjkOaH3Z30ET9qiFSZVsUUaZO/7jZAt
+         ccMA6+UZOR1CkBzrgx+aSiO1UnnVPqgQwcg0EzjWJvWDuPkTU8xWFXttzm20m5l/1dBQ
+         0Nue/mWDl2maOAcLR9lkGKBzAzZ3VC5/HyPAZzQL7YM8fFgvpXJKPeWKEWOIQ45qTcE8
+         +TgIiLIRQ6XbwduR0uXZh8MOMvIjEbzwxPQXDg3uGNWu4E51r+pgf+XdAyb6sJNp9arA
+         tOHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716883300; x=1717488100;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9A1HK7uMZTsEiYLsWkAO7fFC+9pdvWjOj3bR/6+kgQM=;
+        b=tlycBpIdW3g8NotavVZBXjSzUXPZ4yIXe4xEurydK6xvPTr5zA0qJ+Kjiarnl2bH7c
+         Ap67uHl7z+gcvlVTx+1LCMGlD3ZsFkyrbZw1pxoWs37oHUp90HEj48ghAHLhBq9wIxYa
+         QrtmUZOr9MoU12qM11R4N6L30U5V59pNa1uuczzRQFZPMUOnK64RSm5q/WBnkYnMHTvR
+         ydlRrW+W9nLRX/dF8fv2ESYt/8voz/v0a0B6x9GCMXX9wPiWcj8bLSfNnLEMJ2QuShSC
+         xEakKXj3zCYEf8JTv5iocAFKGalrmblJAdGuDXGv2EcOP7ViJh6L9n/j+ptK9GWqrzM/
+         iSwA==
+X-Gm-Message-State: AOJu0YwAp2XmR9yicEuUsxbCdHe/YN0mNsdzELrD/FZBoEyzxqeUEpU1
+	BKxrb/6dW55r8UEKa1rHJR39S/GWjCicQ0hSfKWJ1XqQCaEXEpLd
+X-Google-Smtp-Source: AGHT+IEJ6aceDOomDqURkRUNgS+9piMb9beoRjZInDw1nHavLfkOAVtKIoDkY7FT9cEeOUBTgDxyvg==
+X-Received: by 2002:a05:6a21:8188:b0:1ad:1c9d:f682 with SMTP id adf61e73a8af0-1b212e3aa44mr10271937637.35.1716883299638;
+        Tue, 28 May 2024 01:01:39 -0700 (PDT)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-6f8fc36d22fsm5939450b3a.86.2024.05.28.01.01.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 May 2024 01:01:38 -0700 (PDT)
+Received: by archie.me (Postfix, from userid 1000)
+	id 78DD018479822; Tue, 28 May 2024 15:01:28 +0700 (WIB)
+Date: Tue, 28 May 2024 15:01:27 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.8 000/493] 6.8.12-rc1 review
+Message-ID: <ZlWPV3O9RM0-8HEs@archie.me>
+References: <20240527185626.546110716@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="nMrHX7joLy6h3Dw8"
+Content-Disposition: inline
+In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
 
 
-On Thu, 09 May 2024 11:41:28 -0700, Stephen Boyd wrote:
-> Dan pointed out that Smatch is concerned about this code because it uses
-> spin_lock_irqsave() and then calls wait_event_lock_irq() which enables
-> irqs before going to sleep. The comment above the function says it
-> should be called with interrupts enabled, but we simply hope that's true
-> without really confirming that. Let's add a might_sleep() here to
-> confirm that interrupts and preemption aren't disabled. Once we do that,
-> we can change the lock to be non-saving, spin_lock_irq(), to clarify
-> that we don't expect irqs to be disabled. If irqs are disabled by
-> callers they're going to be enabled anyway in the wait_event_lock_irq()
-> call which would be bad.
-> 
-> [...]
+--nMrHX7joLy6h3Dw8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Applied, thanks!
+On Mon, May 27, 2024 at 08:50:02PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.8.12 release.
+> There are 493 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
-[1/1] soc: qcom: rpmh-rsc: Ensure irqs aren't disabled by rpmh_rsc_send_data() callers
-      commit: e43111f52b9ec5c2d700f89a1d61c8d10dc2d9e9
+Successfully compiled and installed the kernel on my computer (Acer
+Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--nMrHX7joLy6h3Dw8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZlWPSQAKCRD2uYlJVVFO
+o2NpAQDxIa33gd6wIvlou7jNwGSyvHiyO867qMsfr8H0gZtovAEAsN3b+pJGFQTK
+iPV8y8iqOYiIwHSvhaNjM7igI4SssQI=
+=AK79
+-----END PGP SIGNATURE-----
+
+--nMrHX7joLy6h3Dw8--
