@@ -1,102 +1,235 @@
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3F5626DF
-	for <patches@lists.linux.dev>; Tue, 28 May 2024 21:53:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A33A286AE
+	for <patches@lists.linux.dev>; Tue, 28 May 2024 22:01:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716933241; cv=none; b=OJgnwXljwduHmsKbrcz9tGNueDV5zvQ3xPBdQZYYpgRsqOuOB+4Ck1kQvDrcgDUlxZZyZscuAJjaJ72VdFFS2uBBXYEhEfFfv3dhfZQRy8/5jm5/Zb7a3KLJmzfgi+Y80lr+hwM0F1XBU9Vg9ktFp5tBVtu22Wzw4xIJKul8MI4=
+	t=1716933681; cv=none; b=G5c1zwiQAoqx6k4KNYG5DgGc2MxtSOuUeORYQk1HudcsC94gQes+ONn++cHImmYHDZ3gtzIiyT4nDE/MMPUHlFQzXasV2Sv7wceEPHuhWApuMHQi506DcjonX3ITqjnoDJiiOfIBYXb34x6IZEkX1TzDzvtDxPFYt4HKe4ho8kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716933241; c=relaxed/simple;
-	bh=1qdczpPOuQX42ByroNXbNe+HO1MN3jMHmqL4n2GjsDo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Dsmgp/GrVV/zHQCvm/4V7M+lj0SoKW7FwrXLIdp3ysF0q9Id8qB0unbq0IzLOxoeD02u30aT9cSP8KJf3qV940MhwsnB9+5+jq5M0aSMu663XcyZ9gDwZXkP4xkSEORwpflcPrNlmXX5Qoaud08pOT/JRi0RxDDORGuTmcpPeYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJ8Qsxwn; arc=none smtp.client-ip=209.85.166.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1716933681; c=relaxed/simple;
+	bh=WI31Zz1Kfrefr37hCh9djoc5/qTCeMavpwA/4HPS+48=;
+	h=Content-Type:MIME-Version:From:To:Cc:Subject:In-reply-to:
+	 References:Date:Message-id; b=cn7f4VzogMHw6eQ2isfuatsMAf2/aWIjMAtef+tJqDfqXReXHyUUuJqf0kWNRQLiOsJhBfD43J7bGnj9iO+oZloOlzqqwQs8qUMm6yzKjXdww+M4urYgRIoXtiLGfjp2dvhEOjWf26YpJtWy3hUPahh4qwq1kKjb9WMxI31cxGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GZQtokq7; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=cVgAbUAI; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GZQtokq7; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=cVgAbUAI; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJ8Qsxwn"
-Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-7ead7e95c91so4794839f.3
-        for <patches@lists.linux.dev>; Tue, 28 May 2024 14:53:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1716933239; x=1717538039; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FfACfrliUC8RvUZvSpo29lWjHhmcZI934D2GcMw4Ck8=;
-        b=WJ8Qsxwnsdo5wPLWd4jKiWsMJ9mnPv/iLTptGrdGFWv2/BlTceB5iPCfcIKdGBtc6I
-         ThiQ3mITqGjLlDBXy9VjziL6NNwf9p8VTjjFNJ1Uk4L/kXrFCEeWd2oRppwiZD/v15TK
-         f18vMNJsrkULj5nWUXap0mAhG5SJ/gkaevBVU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716933239; x=1717538039;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FfACfrliUC8RvUZvSpo29lWjHhmcZI934D2GcMw4Ck8=;
-        b=IOjZi+IZ3/0HF3+0rGwBfxfJkgVm+bh7MpK3/mi/gL6oMXiUmbcgS3WXXydpZuthAs
-         vL/UxJUqzYWvTNk0wCAZ7/d4D31OjvVCSv0rVYJrc5YVa6IBJoXNV/Tg+nMKbXfCgDzK
-         MPC1+wRmsOHmLGwF0nxomhSGKlxzWSVdAWEvb+TGsabSin6fze2sJlIXCd1HMDyTbY3B
-         C/LLFcXb0zXyzvFLSf0/JUuaQVo2hy50xPtzLBcmR3zFvjA5vEfObrBQu6sS6SswQOP9
-         ZAK6AwT3b5zMLpTOlbir1F3NIv4Nk/YydXoU+qxjnxcTEvWvWO4i4tzBWSPOPyhZwqGT
-         sNiQ==
-X-Gm-Message-State: AOJu0Yy6rUd//uxiljBFWQFFqTSKb81RaGweSuu4+VTvOef/g6fdGPDJ
-	dJj6Q66PsaCOGxB6F5tFnHH1aP36OCXxzcIrpS+K3gwHHWyWYi76/PXAZH9+HnE=
-X-Google-Smtp-Source: AGHT+IGlp+f9XTmGdfRN8ZCb2asH0wxF0ge73+1BXthKHmMYyHK/ofz+zklI+icES/RDoyHkhVbhgA==
-X-Received: by 2002:a6b:ee11:0:b0:7e1:7e15:6471 with SMTP id ca18e2360f4ac-7e8c5f86536mr1456721639f.1.1716933238758;
-        Tue, 28 May 2024 14:53:58 -0700 (PDT)
-Received: from [192.168.1.128] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4b0f70c8acesm611762173.84.2024.05.28.14.53.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 May 2024 14:53:58 -0700 (PDT)
-Message-ID: <073f7048-5c3c-4581-a6ef-2e46f7d35ade@linuxfoundation.org>
-Date: Tue, 28 May 2024 15:53:57 -0600
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="GZQtokq7";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="cVgAbUAI";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="GZQtokq7";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="cVgAbUAI"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 4626C2046E;
+	Tue, 28 May 2024 22:01:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1716933678; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zfSGWDgr33/9sxMd3r5XOziIsBx80sOwhjsqJXrqAts=;
+	b=GZQtokq7I254BGmODnsmDw0fQZQuk39s7GPrLkFkgQ8rO6gzPyirpHPlAiV4FV7xHi01d9
+	4iLU1kSowAfeOPrSFZviFs91PKzj8R2WRJUAQZVEK2+biBivW8wc7Y+hgeXiaBEdU/6VDB
+	NR7HA529sAU1aOS2lydWADM9d6s2bI0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1716933678;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zfSGWDgr33/9sxMd3r5XOziIsBx80sOwhjsqJXrqAts=;
+	b=cVgAbUAI4i9soi0gbihIuzDCfJPZ/9wFVwwaWwJV4SZdBB4M/hhMUwxf3LHJEcY5ND9KvR
+	PCf5ityAY/o1gdBg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1716933678; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zfSGWDgr33/9sxMd3r5XOziIsBx80sOwhjsqJXrqAts=;
+	b=GZQtokq7I254BGmODnsmDw0fQZQuk39s7GPrLkFkgQ8rO6gzPyirpHPlAiV4FV7xHi01d9
+	4iLU1kSowAfeOPrSFZviFs91PKzj8R2WRJUAQZVEK2+biBivW8wc7Y+hgeXiaBEdU/6VDB
+	NR7HA529sAU1aOS2lydWADM9d6s2bI0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1716933678;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zfSGWDgr33/9sxMd3r5XOziIsBx80sOwhjsqJXrqAts=;
+	b=cVgAbUAI4i9soi0gbihIuzDCfJPZ/9wFVwwaWwJV4SZdBB4M/hhMUwxf3LHJEcY5ND9KvR
+	PCf5ityAY/o1gdBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A654E13A5D;
+	Tue, 28 May 2024 22:01:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id GYtxEiVUVmaDXgAAD6G6ig
+	(envelope-from <neilb@suse.de>); Tue, 28 May 2024 22:01:09 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.8 000/493] 6.8.12-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20240527185626.546110716@linuxfoundation.org>
-Content-Language: en-US
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20240527185626.546110716@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: "NeilBrown" <neilb@suse.de>
+To: "Chuck Lever III" <chuck.lever@oracle.com>
+Cc: "Jon Hunter" <jonathanh@nvidia.com>,
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ "Chris Packham" <Chris.Packham@alliedtelesis.co.nz>,
+ "linux-stable" <stable@vger.kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ "Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>,
+ "Linus Torvalds" <torvalds@linux-foundation.org>,
+ "Andrew Morton" <akpm@linux-foundation.org>,
+ "Guenter Roeck" <linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
+ "patches@kernelci.org" <patches@kernelci.org>,
+ "lkft-triage@lists.linaro.org" <lkft-triage@lists.linaro.org>,
+ "pavel@denx.de" <pavel@denx.de>,
+ "f.fainelli@gmail.com" <f.fainelli@gmail.com>,
+ "sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>,
+ "srw@sladewatkins.net" <srw@sladewatkins.net>,
+ "rwarsow@gmx.de" <rwarsow@gmx.de>, "conor@kernel.org" <conor@kernel.org>,
+ "allen.lkml@gmail.com" <allen.lkml@gmail.com>,
+ "broonie@kernel.org" <broonie@kernel.org>,
+ "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 5.15 00/23] 5.15.160-rc1 review
+In-reply-to: <0377C58A-6E28-4007-9C90-273DE234BC44@oracle.com>
+References: <>, <0377C58A-6E28-4007-9C90-273DE234BC44@oracle.com>
+Date: Wed, 29 May 2024 08:01:01 +1000
+Message-id: <171693366194.27191.14418409153038406865@noble.neil.brown.name>
+X-Spam-Level: 
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	ARC_NA(0.00)[];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
+	R_RATELIMIT(0.00)[from(RLewrxuus8mos16izbn)];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[nvidia.com,linuxfoundation.org,alliedtelesis.co.nz,vger.kernel.org,lists.linux.dev,linux-foundation.org,roeck-us.net,kernel.org,kernelci.org,lists.linaro.org,denx.de,gmail.com,sladewatkins.net,gmx.de];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	RCVD_COUNT_TWO(0.00)[2];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Score: -2.80
+X-Spam-Flag: NO
 
-On 5/27/24 12:50, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.8.12 release.
-> There are 493 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 29 May 2024 18:53:22 +0000.
-> Anything received after that time might be too late.
-> 
+On Wed, 29 May 2024, Chuck Lever III wrote:
+>=20
+>=20
+> > On May 28, 2024, at 10:18=E2=80=AFAM, Jon Hunter <jonathanh@nvidia.com> w=
+rote:
+> >=20
+> >=20
+> > On 28/05/2024 14:14, Chuck Lever III wrote:
+> >>> On May 28, 2024, at 5:04=E2=80=AFAM, Jon Hunter <jonathanh@nvidia.com> =
+wrote:
+> >>>=20
+> >>>=20
+> >>> On 25/05/2024 15:20, Greg Kroah-Hartman wrote:
+> >>>> On Sat, May 25, 2024 at 12:13:28AM +0100, Jon Hunter wrote:
+> >>>>> Hi Greg,
+> >>>>>=20
+> >>>>> On 23/05/2024 14:12, Greg Kroah-Hartman wrote:
+> >>>>>> This is the start of the stable review cycle for the 5.15.160 releas=
+e.
+> >>>>>> There are 23 patches in this series, all will be posted as a response
+> >>>>>> to this one.  If anyone has any issues with these being applied, ple=
+ase
+> >>>>>> let me know.
+> >>>>>>=20
+> >>>>>> Responses should be made by Sat, 25 May 2024 13:03:15 +0000.
+> >>>>>> Anything received after that time might be too late.
+> >>>>>>=20
+> >>>>>> The whole patch series can be found in one patch at:
+> >>>>>> https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.1=
+5.160-rc1.gz
+> >>>>>> or in the git tree and branch at:
+> >>>>>> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
+.git linux-5.15.y
+> >>>>>> and the diffstat can be found below.
+> >>>>>>=20
+> >>>>>> thanks,
+> >>>>>>=20
+> >>>>>> greg k-h
+> >>>>>>=20
+> >>>>>> -------------
+> >>>>>> Pseudo-Shortlog of commits:
+> >>>>>=20
+> >>>>> ...
+> >>>>>=20
+> >>>>>> NeilBrown <neilb@suse.de>
+> >>>>>>      nfsd: don't allow nfsd threads to be signalled.
+> >>>>>=20
+> >>>>>=20
+> >>>>> I am seeing a suspend regression on a couple boards and bisect is poi=
+nting
+> >>>>> to the above commit. Reverting this commit does fix the issue.
+> >>>> Ugh, that fixes the report from others.  Can you cc: everyone on that
+> >>>> and figure out what is going on, as this keeps going back and forth...
+> >>>=20
+> >>>=20
+> >>> Adding Chuck, Neil and Chris from the bug report here [0].
+> >>>=20
+> >>> With the above applied to v5.15.y, I am seeing suspend on 2 of our boar=
+ds fail. These boards are using NFS and on entry to suspend I am now seeing .=
+..
+> >>>=20
+> >>> Freezing of tasks failed after 20.002 seconds (1 tasks refusing to
+> >>> freeze, wq_busy=3D0):
+> >>>=20
+> >>> The boards appear to hang at that point. So may be something else missi=
+ng?
+> >> Note that we don't have access to hardware like this, so
+> >> we haven't tested that patch (even the upstream version)
+> >> with suspend on that hardware.
+> >=20
+> >=20
+> > No problem, I would not expect you to have this particular hardware :-)
+> >=20
+> >> So, it could be something missing, or it could be that
+> >> patch has a problem.
+> >> It would help us to know if you observe the same issue
+> >> with an upstream kernel, if that is possible.
+> >=20
+> >=20
+> > I don't observe this with either mainline, -next or any other stable bran=
+ch. So that would suggest that something else is missing from linux-5.15.y.
+>=20
+> That helps. It would be very helpful to have a reproducer I can
+> use to confirm we have a fix. I'm sure this will be a process
+> that involves a non-trivial number of iterations.
 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.8.12-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.8.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+Missing upstream patch is
 
-Compiled and booted on my test system. No dmesg regressions.
+Commit 9bd4161c5917 ("SUNRPC: change service idle list to be an llist")
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+This contains some freezer-related changes which probably should
+have been a separate patch.
 
-thanks,
--- Shuah
+We probably just need to add "| TASK_FREEZABLE" in one or two places.
+I'll post a patch for testing in a little while.
+
+NeilBrown
