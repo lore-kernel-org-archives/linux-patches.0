@@ -1,84 +1,74 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D18517E8F6
-	for <patches@lists.linux.dev>; Mon, 27 May 2024 21:23:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1B51411EE;
+	Tue, 28 May 2024 03:33:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716845024; cv=none; b=nt6BZM1XQ9jXkZpE36LCNrmuIBuz3u1NDr6KhJXAkkrGUrm7oGEdMtwQdyafT+2ARteatQCZhT/8DHxNLLrWZSMqUJ1dkaJLrnK2EEgvu2YITGYd1EaHYJdu4FDdXTpUBd8NGUcaFEt/WnH1RkNrqvHgm5qQ5Kn4PBLPP4CVBfc=
+	t=1716867196; cv=none; b=mjoQcpIbzLML+rOuRkg2wm8N7x3LIiK4gES1vPez7p0hFqQZEauNgpXrpimXbblCzHUfTqzD3QieWfIidiTc5rpuNQg9DX3qSWN02SpGQjS54UaMm9hdO8rer9jFkALfgO2h+HmqDP6zDNQ22Y77DnWYOH9lra6EXY5khYe+VvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716845024; c=relaxed/simple;
-	bh=EuG0n7WjdidwMNkKKCkD66ipaMdifKkclzGEPwS4AWc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ucWwLIgmQArdJ6Lz3zsKmGtRk0I+A67bdmXxFXNQZbFf7rhp5MqBMfWIXNWfdeGKsj9xg/9pw16V1mDZjkmNs49kPJVX9aIMZvnKbHtzQ26yRi6PXW0Qws2fZ1DrH2edlAZlGo35F1AHYMcsHdtdUa3qM36VxhB4/0T8uk7241A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 80E861C0096; Mon, 27 May 2024 23:23:32 +0200 (CEST)
-Date: Mon, 27 May 2024 23:23:31 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.9 000/427] 6.9.3-rc1 review
-Message-ID: <ZlT506xwTYWg72Jj@duo.ucw.cz>
-References: <20240527185601.713589927@linuxfoundation.org>
+	s=arc-20240116; t=1716867196; c=relaxed/simple;
+	bh=ePolhgu5YoE8VC+tgwK1GBDAtJFQCMUH13dsPkQNicA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=NJQrVxAcmly6vy7VqYhybyAfSukagtsj8UPvTjJPIXjtCro9K0LcKiWJs/3jEsAAYUuwyeHOPOVGC21Ft4xsGrJqaEs5ocJy4pDz/R6SAfUevqhbQPksPAIdlxgKqg6kADTCAefWtTkQiChPYipa0GRE3bgXZ32S/rFTVsNiWGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bVnESjZq; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bVnESjZq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684BEC32782;
+	Tue, 28 May 2024 03:33:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716867196;
+	bh=ePolhgu5YoE8VC+tgwK1GBDAtJFQCMUH13dsPkQNicA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bVnESjZq5kKpQGW0UD/44OL6keNLrYU/4xNMGGz6LuGn0IHaoyPlzCtu+Y2NsI6C+
+	 qDZY5Lw8Kjlwdz58ApVycu8M2kZYAEEpZ7AIbM3S5jLc6/VKUcscSJNAfKHGnR9a4d
+	 PHJmEpDTaFgx6GUHdsRaSY72HavZ6X7W2KMMR4vC+yfPVo728CauvjvbZkQR8TN710
+	 V96vtzUp9FP1iJvriuttBfFay4kGyJOGUbzjX2TfJ+7VBYfhFlbh45MKso77W1SOTz
+	 BOzKkfuj7m4JdSBDUNCCZRVwdZTIBZYZGv0ImZ1qD5X9SYwuimXUHOxQ6vzVy9RHXr
+	 qHtCmoT/3Bt3w==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	patches@lists.linux.dev,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: Re: [PATCH] soc: qcom: rpmh-rsc: Ensure irqs aren't disabled by rpmh_rsc_send_data() callers
+Date: Mon, 27 May 2024 22:32:35 -0500
+Message-ID: <171686715159.523693.11051218263082972635.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240509184129.3924422-1-swboyd@chromium.org>
+References: <20240509184129.3924422-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="15VYIY5feoL7t89D"
-Content-Disposition: inline
-In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
 
---15VYIY5feoL7t89D
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, 09 May 2024 11:41:28 -0700, Stephen Boyd wrote:
+> Dan pointed out that Smatch is concerned about this code because it uses
+> spin_lock_irqsave() and then calls wait_event_lock_irq() which enables
+> irqs before going to sleep. The comment above the function says it
+> should be called with interrupts enabled, but we simply hope that's true
+> without really confirming that. Let's add a might_sleep() here to
+> confirm that interrupts and preemption aren't disabled. Once we do that,
+> we can change the lock to be non-saving, spin_lock_irq(), to clarify
+> that we don't expect irqs to be disabled. If irqs are disabled by
+> callers they're going to be enabled anyway in the wait_event_lock_irq()
+> call which would be bad.
+> 
+> [...]
 
-Hi!
+Applied, thanks!
 
-> This is the start of the stable review cycle for the 6.9.3 release.
-> There are 427 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.9.y
-
-6.8 passes our testing, too:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.8.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+[1/1] soc: qcom: rpmh-rsc: Ensure irqs aren't disabled by rpmh_rsc_send_data() callers
+      commit: e43111f52b9ec5c2d700f89a1d61c8d10dc2d9e9
 
 Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---15VYIY5feoL7t89D
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZlT50wAKCRAw5/Bqldv6
-8m84AKCwNIbOu2dtCTmq4emwR03HGhNdbgCgttMkKHVcTqgMZa0ibekr1ZEe77c=
-=2atT
------END PGP SIGNATURE-----
-
---15VYIY5feoL7t89D--
+-- 
+Bjorn Andersson <andersson@kernel.org>
