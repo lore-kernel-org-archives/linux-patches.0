@@ -1,82 +1,115 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6661B13DDC7;
-	Tue, 28 May 2024 22:23:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423A213DBB1
+	for <patches@lists.linux.dev>; Tue, 28 May 2024 22:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716935037; cv=none; b=R/0ufSndIOuH7O10ToBLiw/0lYDHehdxViof3I0fqWV4G6KScMNrwTa3o/I8XWc4Zyf/8J98S9rtLyzp1F0DynOnZq3pG3pnaFeMJle6ZBx6tVp6k3RFR16AUolWKbtarUGF6Ie5ckv/0n5ANCc5M99AtQqyyL8mekHfJH7GAQI=
+	t=1716935189; cv=none; b=Tj1oXBdVCI5G2yBrDsBimVH6JynnMrXda6p09qJwxSB5oxjZ/pYDn9RaXgm1ah8O7egdi1mvSye2q4XEzADYoJpsH8Y6rFRigF1mxeaPSXA7lm14yJbGjirS9vmbbQflGQ8ryG1nSIBszP5cBGIctlQIDugQ06+vIP31V72/sMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716935037; c=relaxed/simple;
-	bh=G3YierNArA4BFLLcWX+JHQ7e9EYFI0xTNkmufDNDMug=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PMOXLOq3Rt+3wEIvgZ7CxWD5LM+ztPtYEZGYU76sXG1liV9YPqP2/zi0KbhlArN9CqIJRgnLiBBc0lGhsLNfR/+pXdPMKf3Yx70A45z4yfmcxqbKxWFYC542kTc620PAPqZfGQVkb4fqnkZ6I//SmdHs0GEnmqGUjR4Osfbd4pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=m6DeYh3K; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1716935189; c=relaxed/simple;
+	bh=jMfkznnnfae76gAqqY2DsKGqCOvHFrVXmQnewsFd08Q=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=q/068PbGHESJcu+8WBWKrm2mUwjRjQNus8N60ZkG0w3ytS2T14lVE8G9sWjPz8S6+4FFa25BfhbMhLCEpqRQikhhS7yYqgA+jHaImWW81BgWAdQGg5LuZcKjkTHb5bdzgf9oIpYo0KkvBmsbtqzG9E3g5HZZ47J59BBgHcuId0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=ZDpCT2Yj; arc=none smtp.client-ip=44.202.169.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="m6DeYh3K"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=sOt3kmCrcl0gPb1/Ru/FCAYrnK6kWas/sJfOYmKK23Q=; b=m6DeYh3KLu18Fl4IPvC4OVLaOx
-	CfP/wQPOg8HhGZyGGqTCCKii7vC3gWhWLwaD20m6nrDWd8b8Sv3aaPuaF/N+Yc0lPysT6Vm94T/Dm
-	wkEfOMigPKpenFE+ZBpFeCorM3pVEZnuQUZhkJ+mAOUKQdQhEBZPF3NzKyrbvSfOpx7Ym8WsCqa5C
-	MjpKk+LAlM8RWXSVty4+SEgsKAY2BbW37aWAu1WtoLGEL6JA0unyuvXa7cjVz95gfs5O8stA2o1l+
-	6DKBjqN5rQ9mgY4PMrQr8qVDfnN251LhbNStR5C6N5O+I23smWixeIoW2d2YewQ0PMNG9/fe6uNHr
-	apii4wYw==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1sC5EY-00000002CII-2jKi;
-	Tue, 28 May 2024 22:23:54 +0000
-Date: Tue, 28 May 2024 15:23:54 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Zorro Lang <zlang@redhat.com>
-Cc: fstests@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	willy@infradead.org, p.raghav@samsung.com, da.gomez@samsung.com,
-	hare@suse.de, john.g.garry@oracle.com, linux-xfs@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [RFC] fstests: add mmap page boundary tests
-Message-ID: <ZlZZeksxGmXuTGpU@bombadil.infradead.org>
-References: <20240415081054.1782715-1-mcgrof@kernel.org>
- <20240415200542.bww7gupflrq3mqoo@dell-per750-06-vm-08.rhts.eng.pek2.redhat.com>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="ZDpCT2Yj"
+Received: from eig-obgw-6007a.ext.cloudfilter.net ([10.0.30.247])
+	by cmsmtp with ESMTPS
+	id BwXRsikzuSqshC5GzseX0h; Tue, 28 May 2024 22:26:25 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id C5GysKmlb1Q4GC5GysEA7v; Tue, 28 May 2024 22:26:24 +0000
+X-Authority-Analysis: v=2.4 cv=Jor3rt4C c=1 sm=1 tr=0 ts=66565a10
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=TpHVaj0NuXgA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=bS3Jp/lKIo3aDuxQIqM+MR8qJ9frs81TUT5DmdlVLpY=; b=ZDpCT2YjSS8pK55UUOdKwenFA1
+	NXS/+xyYciJfIqddW5I8BuANwjImqQ0VzEAHiSjQbBwXkGwxaaCndy2p8wFDIcsUmIMtwDXvDhap/
+	h14V/rO47N1O/GynaeM6bmIspT7oICWL7rw7GIw5GoDkNfz9lxgUw3MtrQgvLYV70EqPI0sIkSZCz
+	oYTfI2WW5P5fXgX+dGtoJWPDwh/CH94bESGJKrnJ5UthE6QMBSyGJ2IKCyEBV0uYI0lujoJO2Z1mN
+	qUxm6H3r6VivLh3QAS3Uf8DS5mUpXB2bRRworH7KK7yyq2hmRIBfMjfcOu4yEcLX78DO2h8w/jlTQ
+	4cJy87rQ==;
+Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:40666 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1sC5Gv-002lPC-2k;
+	Tue, 28 May 2024 16:26:21 -0600
+Subject: Re: [PATCH 6.9 000/427] 6.9.3-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240527185601.713589927@linuxfoundation.org>
+In-Reply-To: <20240527185601.713589927@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <db3b85cb-7edd-5404-f6ca-c9db8b1b0255@w6rz.net>
+Date: Tue, 28 May 2024 15:26:19 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240415200542.bww7gupflrq3mqoo@dell-per750-06-vm-08.rhts.eng.pek2.redhat.com>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 98.207.139.8
+X-Source-L: No
+X-Exim-ID: 1sC5Gv-002lPC-2k
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:40666
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfAg0kIqTM5UJ+31GrHDulBE9CsBtVVWweFDJ9a3+guviLFe4E41jta2ca7TZSdNxLigoyzNcgYrzAvS6ICFHcSJ4hU974y6+nq0iaUIPljgr2r/4DwHf
+ oN8U4FndDA8d9kn+hSr1Rny2k+8mjWk9pyxJHwaUdmJU9pDmhVHhGuxnfPAC3c4rD4h1acUV2xs8vg==
 
-On Tue, Apr 16, 2024 at 04:05:42AM +0800, Zorro Lang wrote:
-> On Mon, Apr 15, 2024 at 01:10:54AM -0700, Luis Chamberlain wrote:
-> > diff --git a/common/filter b/common/filter
-> > index 36d51bd957dd..d7add06f3be7 100644
-> > --- a/common/filter
-> > +++ b/common/filter
-> > @@ -194,6 +194,12 @@ _filter_xfs_io_unique()
-> >      common_line_filter | _filter_xfs_io
-> >  }
-> >  
-> > +_filter_xfs_io_data_unique()
-> > +{
-> > +    _filter_xfs_io_offset | sed -e 's| |\n|g' | egrep -v "\.|XX|\*" | \
-> 
-> The egrep is deprecated, please use 'grep -E'.
-> 
-> > +	sort | uniq | tr -d '\n'
-> 
-> Isn't "sort | uniq" equal to "sort -u" ?
+On 5/27/24 11:50 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.9.3 release.
+> There are 427 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 29 May 2024 18:53:20 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.3-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-I'll try both suggestions.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-> Do we need this filter to be a common helper? Will it be used widely? If not,
-> this can be a local function of below single test case.
+Tested-by: Ron Economos <re@w6rz.net>
 
-I suspect it will be but its OK I can stuff it alone, same as for
-_mwrite() too then.
-
-  Luis
