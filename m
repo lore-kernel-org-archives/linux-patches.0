@@ -1,109 +1,186 @@
-Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871CB187554;
-	Thu, 30 May 2024 15:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B802D05D
+	for <patches@lists.linux.dev>; Thu, 30 May 2024 16:36:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717082491; cv=none; b=qjlXXj/oOHKZY7x/2Tx9CeT95nEDX/ti8jW0551E2WgpyC40rxlF+q56aenr1kNJ/CtbY96EdzsHTybzbG3m8l64qj9RpKWtjj/5OVSlpcV288VW9fUanLchfJKGXbWHiDcAB4QwuMvqfnsb/2jhF4dFJHWihi/cSzNHiuxUPWk=
+	t=1717087013; cv=none; b=CSt6q4TNLCwhPHAN3gw0BrXXBiLyUcEsfHHGQNR7JPtMSwhdXkMhoLZ9grakjWRhvp2iyrn6vDzkgOW6LcVTx4EEesAoR3V0JtmuFmY3dkYZHJhdejfzU6UrPkT1y2N/cuM/dfXOORtYKdZ28bCpqj4uP7KnOZeGNMGarb3l6+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717082491; c=relaxed/simple;
-	bh=U5TgF7VIYvKSRNdp67128508jDwSIOgx0w/UYpTd0Uo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WEO7YXIeA7f5SeNJ0UM2864itpOicNwkSvhuiKVLWLSI9ihduA6S2jLbppNJJBdFSZtIKm8Tmx4Ufy2J810xy11MaoNwJvbQpZqtC3RkSE6YAw6tzApu69FF++kVKQOAwhU6lywOfrqii1xspG/UCmV7s7I9r26vF4AgNfFy0sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embeddedor.com; spf=pass smtp.mailfrom=embeddedor.com; dkim=pass (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b=WI2EPLYT; arc=none smtp.client-ip=35.89.44.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embeddedor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=embeddedor.com
+	s=arc-20240116; t=1717087013; c=relaxed/simple;
+	bh=6sXrUOOyEizRFbd17/Di8hFMxQsHdChcWlX/tTCPTic=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oL5aMKRkFPQiEmkDsf076Y6pZISZx/x7ZizsyvybsU2/cuJSGGLpA480VosIyq7kVpUnNJ4TXsZ5f5T37O2AYjyf+2h9xEap+2kdo0ZRfkWx9dcu8TsZNwUYsS3KDCPrp/5j4q/B/Cplu4YGsGGElM8EnuTFakQ38K+Ho6G54pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jhceymwd; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b="WI2EPLYT"
-Received: from eig-obgw-5005a.ext.cloudfilter.net ([10.0.29.234])
-	by cmsmtp with ESMTPS
-	id CZlbsLI7RSLKxChalsA1PK; Thu, 30 May 2024 15:21:23 +0000
-Received: from gator4166.hostgator.com ([108.167.133.22])
-	by cmsmtp with ESMTPS
-	id ChajskCaIYakKChajsyJEi; Thu, 30 May 2024 15:21:21 +0000
-X-Authority-Analysis: v=2.4 cv=a4T79lSF c=1 sm=1 tr=0 ts=66589971
- a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=7eglLlv4HFOW3sTsDH6Jqg==:17
- a=IkcTkHD0fZMA:10 a=TpHVaj0NuXgA:10 a=wYkD_t78qR0A:10 a=VwQbUJbxAAAA:8
- a=VjqEAW4Pdxq5hPAZ8QEA:9 a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=U5TgF7VIYvKSRNdp67128508jDwSIOgx0w/UYpTd0Uo=; b=WI2EPLYTdZl9H0MLSza743CvOT
-	1xSH/pmM1S9t7kmGMjm2n0Be+KYEmaP6IrWjZrupFcuKsoHRKMRmIhYkFQPfxNgXiiIyvfCvN+Fvx
-	3a9gI9uwjVPIX+WncjfkZwfz9OP/ygWuJf+B/AlUnvWqqBBfEXGvIDDo9Fcc+s0h8jFw1yY73TvdF
-	9RnhV6p5q+F4BZK+a7D0OI6csw1ffZhGzrDMu0WM1KkB9me+LMHlgWJBrkgO4uXV448+vuC9Bdjgc
-	6ev6XphlrZ5D6syOHR2rNh6EYQXK3zIudkhLSUDKSLSmLOjFWaw7OgF7+7BenED2BWq63+OAIre3P
-	or6LJIFg==;
-Received: from d58c58c2.rev.dansknet.dk ([213.140.88.194]:46746 helo=[10.0.0.182])
-	by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <gustavo@embeddedor.com>)
-	id 1sCbQI-000zIv-2W;
-	Thu, 30 May 2024 03:46:10 -0500
-Message-ID: <bee7240b-d143-4613-bde4-822d9c598834@embeddedor.com>
-Date: Thu, 30 May 2024 10:46:05 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jhceymwd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1717087012; x=1748623012;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=6sXrUOOyEizRFbd17/Di8hFMxQsHdChcWlX/tTCPTic=;
+  b=jhceymwd0n2uaEEZCjXuPK+pIYPkz/6kHRAwI+cWsIJFBZdS22QlBhsd
+   rm/n4TFpz5yTc5q0k/xZr44Ap5dG2dFc7OKoOUbVtTX2qYs77Xu+X7sD9
+   O/sBPOI0sLvx+JRhAUR9/tPElyP2iZZyW4Oc0ifz+2BW/ePrMr1ReBLi8
+   t4lZWYFw/iUwzwwHVSfarEh6ch4jmMdQrLD6Lr8simlGz3icvj356juEt
+   8D2tVh46cpJoCTUqh74fdxjCFT+rHrSeYEnPtwG2+GfR7LdAn4p1F9z3D
+   DWon1RXoMxp+o6VBjFjPp23c6okTntvXQaLwa2bGvNYr9EFnjOrZkSpdM
+   g==;
+X-CSE-ConnectionGUID: vZX5eVnlRy+TmDYv4H3JUw==
+X-CSE-MsgGUID: Ez40UYzPTUqCLlJmvyI1UA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11088"; a="24707715"
+X-IronPort-AV: E=Sophos;i="6.08,202,1712646000"; 
+   d="scan'208";a="24707715"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2024 09:36:51 -0700
+X-CSE-ConnectionGUID: EAP1kPC6QTu3NnjQF0hFdA==
+X-CSE-MsgGUID: wghjxJLASyWE4jUhhrhtsQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,202,1712646000"; 
+   d="scan'208";a="59043046"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2024 09:36:51 -0700
+Date: Thu, 30 May 2024 09:36:49 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v19 00/20] Add support for Sub-NUMA cluster (SNC) systems
+Message-ID: <ZlirIUbLw8fLHe0j@agluck-desk3.sc.intel.com>
+References: <20240528222006.58283-1-tony.luck@intel.com>
+ <08ca8fe7-9da6-41da-aad2-0081b789326c@intel.com>
+ <ZleODtL_6D-Q_OMX@agluck-desk3.sc.intel.com>
+ <a4d37f57-328f-4456-92bc-5e6469d092c8@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tty: mxser: Remove __counted_by from mxser_board.ports[]
-To: Bill Wendling <morbo@google.com>, Jiri Slaby <jirislaby@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Nathan Chancellor <nathan@kernel.org>, Kees Cook <keescook@chromium.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>,
- Justin Stitt <justinstitt@google.com>, linux-serial@vger.kernel.org,
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
- linux-hardening@vger.kernel.org, llvm@lists.linux.dev,
- patches@lists.linux.dev, stable@vger.kernel.org
-References: <20240529-drop-counted-by-ports-mxser-board-v1-1-0ab217f4da6d@kernel.org>
- <d7c19866-6883-4f98-b178-a5ccf8726895@kernel.org>
- <2024053008-sadly-skydiver-92be@gregkh>
- <09445a96-4f86-4d34-9984-4769bd6f4bc1@embeddedor.com>
- <68293959-9141-4184-a436-ea67efa9aa7c@kernel.org>
- <6170ad64-ee1c-4049-97d3-33ce26b4b715@kernel.org>
- <CAGG=3QU6kREyhAoRC+68UFX4txAKK-qK-HNvgzeqphj5-1te_g@mail.gmail.com>
-Content-Language: en-US
-From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-In-Reply-To: <CAGG=3QU6kREyhAoRC+68UFX4txAKK-qK-HNvgzeqphj5-1te_g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 213.140.88.194
-X-Source-L: No
-X-Exim-ID: 1sCbQI-000zIv-2W
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: d58c58c2.rev.dansknet.dk ([10.0.0.182]) [213.140.88.194]:46746
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 0
-X-Org: HG=hgshared;ORG=hostgator;
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfJeUL40EbDi7GYdCnB9W0LClbZgpgcu7jVLXZkeqw/uaIDqphcecTRitJMvZgKJjrWJwxQePvB/Pe3YP2oCNv2HiVTI4AUW+RO22xXJfUPTWqCQAfBGE
- 7zH6VVlRdV+lTE6nu9oD6/3OaaQYRmJh7YrC12YrYh+mrABbuDKbQ6PxGvdAHRssXEhsonIJl4aEHM0z4drdQUrHieuuW/NEG3g7sTXs8dG6d2+NDixrnrjy
- gULHhH3gzBBq+TQcKxSxgNb5cfVsW9yJZW/1rpcGheU=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a4d37f57-328f-4456-92bc-5e6469d092c8@intel.com>
 
+On Wed, May 29, 2024 at 07:46:27PM -0700, Reinette Chatre wrote:
+> Hi Tony,
+> 
+> On 5/29/24 1:20 PM, Tony Luck wrote:
+> > On Tue, May 28, 2024 at 03:55:29PM -0700, Reinette Chatre wrote:
+> > > Hi Tony,
+> > > > 13:	Wordsmith commit into imperative.
+> > > > 	I looked at using kobject_has_children() to check for empty
+> > > > 	directory, but it needs a "struct kobject *" and all I have
+> > > > 	is "struct kernfs_node *". I'm now checking how many CPUs
+> > > 
+> > > Consider how kobject_has_children() uses that struct kobject *.
+> > > Specifically:
+> > > 	return kobj->sd && kobj->sd->dir.subdirs
+> > > 
+> > > It operates on kobj->sd, which is exactly what you have: struct kernfs_node.
+> > 
+> > So right. My turn to grumble about other peoples choice of names. If
+> > that field was named "kn" instead of "sd" I would have spotted this
+> > too.
+> > 
+> > > > 	remain in ci->shared_cpu_map to detect whether this is the
+> > > > 	last SNC node.
+> > > 
+> > > hmmm, ok, will take a look ... but please finalize discussion of a patch series
+> > > before submitting a new series that rejects feedback without discussion and
+> > > does something completely different in new version.
+> > 
+> > Reinette,
+> > 
+> > So here's what rmdir_mondata_subdir_allrdtgrp() looks like using the
+> > subdirs check. It might need an update/better header comment.
+> > 
+> > -Tony
+> > 
+> > ---
+> > 
+> > /*
+> >   * Remove all subdirectories of mon_data of ctrl_mon groups
+> >   * and monitor groups with given domain id.
+> 
+> (note comment still considers that domain id is parameter)
 
->> So we should get rid of all those. Sooner than later.
->>
-> Yes! Please do this.
+Will fix.
 
-Definitely, we are working on that already[1]. :)
+> >   */
+> > static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
+> > 					   struct rdt_mon_domain *d)
+> > {
+> > 	struct rdtgroup *prgrp, *crgrp;
+> > 	struct kernfs_node *kn;
+> > 	char subname[32];
+> 
+> I wonder if static checkers will know that this cannot be used
+> uninitialized?
 
---
-Gustavo
+I wondered that too. There are no complaints from gcc. How do people
+deal with false positives from static checkers? Simplest would be to
+provide an initializer:
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=-Wflex-array-member-not-at-end
+	char subname[32] = "";
+
+While that might shut up the static check, it would be more confusing
+for human readers.
+
+> > 	char name[32];
+> > 
+> > 	sprintf(name, "mon_%s_%02d", r->name, d->ci->id);
+> > 	if (r->mon_scope != RESCTRL_L3_CACHE) {
+> > 		/*
+> > 		 * SNC mode: Unless the last domain is being removed must
+> > 		 * just remove the SNC subdomain.
+> > 		 */
+> > 		sprintf(subname, "mon_sub_%s_%02d", r->name, d->hdr.id);
+> > 	}
+> > 
+> > 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
+> > 		kn = kernfs_find_and_get(prgrp->mon.mon_data_kn, name);
+> > 		if (!kn)
+> > 			continue;
+> > 
+> > 		if (kn->dir.subdirs <= 1)
+> > 			kernfs_remove(kn);
+> > 		else
+> > 			kernfs_remove_by_name(kn, subname);
+> > 
+> > 		list_for_each_entry(crgrp, &prgrp->mon.crdtgrp_list, mon.crdtgrp_list) {
+> > 			kn = kernfs_find_and_get(crgrp->mon.mon_data_kn, name);
+> > 			if (!kn)
+> > 				continue;
+> > 
+> > 			if (kn->dir.subdirs <= 1)
+> > 				kernfs_remove(kn);
+> > 			else
+> > 				kernfs_remove_by_name(kn, subname);
+> > 		}
+> > 	}
+> > }
+> 
+> This solution looks more intuitive to me. I do think that it may be
+> missing some kernfs_put()'s?
+
+There aren't any kernfs_put()'s in the existing code.  Resctrl takes
+an extra hold on the CTRL_MON and MON directories and jumps though some
+hoops to drop that after the directory has been removed. But the monitor
+directories have nothing like that.
+
+> Reinette
+> 
+> ps. Please do give me a couple of days more with this series before you
+>     submit a new version.
+
+Sure. Will do.
+
+-Tony
