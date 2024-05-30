@@ -1,129 +1,105 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta034.useast.a.cloudfilter.net (omta034.useast.a.cloudfilter.net [44.202.169.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBB0176198
-	for <patches@lists.linux.dev>; Thu, 30 May 2024 08:43:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820CC16F0C4;
+	Thu, 30 May 2024 10:02:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717058604; cv=none; b=KhaRgmWkv5Kdu7gJK7UtwSK0t/ZuxTCeXaIXR+xRv24IaQaZSNcSNlZIXRVeiSm06qsdBLVcFO+5YAy4IqyHNQmmwnG9IncneRUQlBi5jvTyOplukArYWNDqfdFmI5m2R83fg1Gi24APM9Z0fbeaq+O/F7gpS4UCA/8eUxigkE8=
+	t=1717063360; cv=none; b=lShtGbLs8BiOLTYc9JWgxug5W/zKxbiEq4hefz8wGFRbJeyLDPwSFBg8noaS9zMCfYlFPuXVaaRQdCGqJXu4seX7mza2wdiHdkmH8PYUOKgiYGisio2PyWbqC+sRiFB27N8l1tl3IVHJAwZ+diXn7vBddEyGypw+fyWpMYEPhDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717058604; c=relaxed/simple;
-	bh=5lPEc5yVvXfy5xHN7NJ1MGi4/BA5kf2rdtCVoPXAHLo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dBw4rbbXbgunjLAVDTVG+Ev47Jjp2rfAR+eoHpy63UY9DKHPWEFl4I+1b26yqA9U8pVdGHNBVetxe3SmU9HKite3+GINeu3S7hl1ruikh25ZtwDh/otLDau2/KsaY6YV+TlRJZgylVQn0CW7uss6wRC/Y9MEVMUKKBkmUv0WfJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LfR53lYz; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1717063360; c=relaxed/simple;
+	bh=DKCn8idYu1vHktXieRhr32FGpakQmNwEfEL37/FE5Dk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OA7Uyxt/S4k7MURqIv5t7MigALRMY4WYZ5i4QMuOMM5WoSHJW3D87jYhpw9IaqNPeoVCWw2u2bCRn0iTBfKKO2fgXmvX2qc1Q7p/BAFjxOrSDl8P74SR1CWtC1Zp/rBpTy3P9OgwneC43Hb3tTziLYtQSvjLZV20KJbjjco1spk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embeddedor.com; spf=pass smtp.mailfrom=embeddedor.com; dkim=pass (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b=ZjIUBXRA; arc=none smtp.client-ip=44.202.169.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embeddedor.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=embeddedor.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LfR53lYz"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-57a1b122718so4669a12.1
-        for <patches@lists.linux.dev>; Thu, 30 May 2024 01:43:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1717058601; x=1717663401; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UIungYlLLm/88bUfHAWA9yyqvj5B21yLMgFZirqe2GE=;
-        b=LfR53lYzXQlPAEv4qaKDuT1bcJdWWHImo5vBiHRwJ4Ejr3AID1ZsuVXQ9uc9j1d445
-         CqWfHtji7Ot1A4CTaFmajcKBmJwzOO7oO9poVXydidyzOZVV7VUcfcQu4vZ6/mqsLjCe
-         U64q8yNiwz979W6xCisJjWJPYtgsTzvtx6Lw3K6ZkwGrP+KzhxMT+JaRJHDthCQCz3/S
-         MizE6u/YHriCd579n+1YVjGDzPSbVf66/PVWxO9d5yspUWEKCooHF2Dvatsv+uZUCtPT
-         Rf8x1ih8h/KRPXfsehCtPd4TraUZ5AQguADQMgV6075WxSz9l8ZBEHYAMIDawZwhmka5
-         z1/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717058601; x=1717663401;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UIungYlLLm/88bUfHAWA9yyqvj5B21yLMgFZirqe2GE=;
-        b=XI0mJzsyKMSoBtBktn1+mbA9Du9QQQJm8lzByxJyvYySNLtCsiYiK1lrl572kALwaK
-         ma5SlhNazjhHWfZhyGxPTLXUW6PqpdvxqITrIrR5dFDq24InTiS1Ii8qIVhxG61QaL+Q
-         ridBedlextUFH5ey5dQpjhiOUDTEU1FEG+VVPbhj0EvxpnxANkjGIq7/AjPiKWgeqlYq
-         t5Mb7L/JDlnUNbdmiLbMF/xPYwtc/YuasfjWUyXJmmZgAgsMyqvz0nIrEqClanOjwukw
-         BYee4hfWGPiPyNGkjHKYkSYv9oDJuLZmnXzHS/2q8CEHqUtdjXL5ioOzafCw7QL2Jhnc
-         CsVw==
-X-Forwarded-Encrypted: i=1; AJvYcCUUrcqbX2nASGZrMW003ODQpBrXLese0b0HRor2k9BuvF+P05Q4GaE4b6rHBl60Jda7ATrIITBr3yr1Cn+Xdmmg2klXMLrGiw==
-X-Gm-Message-State: AOJu0YyTtMZCcLI+5dlzfMsOS4czNxhZPu+yUlkpErK/nPu4hJbebxQ3
-	LEEeoG3UyM45ASgvnyCji3KJz3++vm0UHPF6FHpieUzTa7q/gM7WdGRDndrTEwAhEu4iPjkvYbM
-	7g+VaDqUrki4gXPXhm323/PFwhIczR1Ks6yo=
-X-Google-Smtp-Source: AGHT+IHx8Dydq+riFuMhZGjUR/rHUsDceSADAwx6lobyo5M6S2EYM9iJat5JNucibeh4gaWqYkUQDP3ROcddvlVakTs=
-X-Received: by 2002:a05:6402:31b8:b0:57a:1a30:f5cf with SMTP id
- 4fb4d7f45d1cf-57a1a30fcd5mr81193a12.0.1717058600679; Thu, 30 May 2024
- 01:43:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b="ZjIUBXRA"
+Received: from eig-obgw-5003a.ext.cloudfilter.net ([10.0.29.159])
+	by cmsmtp with ESMTPS
+	id CcaAsTmsExs4FCccHsAIlX; Thu, 30 May 2024 10:02:37 +0000
+Received: from gator4166.hostgator.com ([108.167.133.22])
+	by cmsmtp with ESMTPS
+	id CccFs1R8RsT9BCccFs20sY; Thu, 30 May 2024 10:02:36 +0000
+X-Authority-Analysis: v=2.4 cv=LIutQ4W9 c=1 sm=1 tr=0 ts=66584ebc
+ a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=7eglLlv4HFOW3sTsDH6Jqg==:17
+ a=IkcTkHD0fZMA:10 a=TpHVaj0NuXgA:10 a=wYkD_t78qR0A:10
+ a=wEqYQv3dOdCw8QfXo94A:9 a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=DKCn8idYu1vHktXieRhr32FGpakQmNwEfEL37/FE5Dk=; b=ZjIUBXRAbxd7YuFLrFymQGWgFR
+	sCftGX6RPmhqmQ802FhA/OqnkVQ3j5onKBoXDVrjjGoiokYc+NInfGOOrfnG347/h/5+2qvh+ZnKO
+	2uYPFMtx1Hcr084hltyAFuCh0A9EociAjt/XPJKozBnCmUajGHTq7LgHG+E4OMxOR1ohv4xUA4xK4
+	sITPubykCzD9qfb3dEC5NjZdimmJ5hT7VOkoIAbb8jJKsnMoSx8Cnw4GCntCERzrIWcevOvKTcRqx
+	C9pgrXqs/XO1tKj2y6m1YWkoqDFpkI6+EjDXd64BD2uoPZDxG6400uH5ObK+iFHgy4il8V/0iL8Kc
+	Aei7+frA==;
+Received: from d58c58c2.rev.dansknet.dk ([213.140.88.194]:38378 helo=[10.0.0.182])
+	by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <gustavo@embeddedor.com>)
+	id 1sCbMg-000tFs-1A;
+	Thu, 30 May 2024 03:42:27 -0500
+Message-ID: <0899cab2-2772-4001-98de-9bd2306442f2@embeddedor.com>
+Date: Thu, 30 May 2024 10:42:15 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240529-drop-counted-by-ports-mxser-board-v1-1-0ab217f4da6d@kernel.org>
- <d7c19866-6883-4f98-b178-a5ccf8726895@kernel.org> <2024053008-sadly-skydiver-92be@gregkh>
- <09445a96-4f86-4d34-9984-4769bd6f4bc1@embeddedor.com> <68293959-9141-4184-a436-ea67efa9aa7c@kernel.org>
- <6170ad64-ee1c-4049-97d3-33ce26b4b715@kernel.org>
-In-Reply-To: <6170ad64-ee1c-4049-97d3-33ce26b4b715@kernel.org>
-From: Bill Wendling <morbo@google.com>
-Date: Thu, 30 May 2024 01:43:03 -0700
-Message-ID: <CAGG=3QU6kREyhAoRC+68UFX4txAKK-qK-HNvgzeqphj5-1te_g@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] tty: mxser: Remove __counted_by from mxser_board.ports[]
-To: Jiri Slaby <jirislaby@kernel.org>
-Cc: "Gustavo A. R. Silva" <gustavo@embeddedor.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Kees Cook <keescook@chromium.org>, 
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Justin Stitt <justinstitt@google.com>, 
-	linux-serial@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: Jiri Slaby <jirislaby@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Nathan Chancellor <nathan@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
+ linux-serial@vger.kernel.org, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+References: <20240529-drop-counted-by-ports-mxser-board-v1-1-0ab217f4da6d@kernel.org>
+ <d7c19866-6883-4f98-b178-a5ccf8726895@kernel.org>
+ <2024053008-sadly-skydiver-92be@gregkh>
+ <09445a96-4f86-4d34-9984-4769bd6f4bc1@embeddedor.com>
+ <68293959-9141-4184-a436-ea67efa9aa7c@kernel.org>
+Content-Language: en-US
+From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+In-Reply-To: <68293959-9141-4184-a436-ea67efa9aa7c@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - embeddedor.com
+X-BWhitelist: no
+X-Source-IP: 213.140.88.194
+X-Source-L: No
+X-Exim-ID: 1sCbMg-000tFs-1A
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: d58c58c2.rev.dansknet.dk ([10.0.0.182]) [213.140.88.194]:38378
+X-Source-Auth: gustavo@embeddedor.com
+X-Email-Count: 0
+X-Org: HG=hgshared;ORG=hostgator;
+X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfKmCc+WbVafpLzhO14UxOGGWZ/EgLlFC87aZzFJE5RilR88R+pyZYz1O0IUNFdXRp+DoIE3sLp6ARN+U9qVC64twzm+DThmst0u2BxUwnZwqX1b5NSVo
+ lmQ79RywrjzLwGuosJYWe6Zcfku+U8O7X1oBMaMscp9G2PRLPcCwmBRHSb+OHmftegZDiasva/iSDnxtJhFQtElRCQs+PQHld0PCJE9g9JGNFdKpQKwiJWXz
+ krzteEhZqP7nEhIGKDDkkxrzJPuJYaBp1Cepn0VgXE4=
 
-On Thu, May 30, 2024 at 1:41=E2=80=AFAM Jiri Slaby <jirislaby@kernel.org> w=
-rote:
->
-> On 30. 05. 24, 10:33, Jiri Slaby wrote:
-> > On 30. 05. 24, 10:12, Gustavo A. R. Silva wrote:
-> >>
-> >>
-> >> On 30/05/24 09:40, Greg Kroah-Hartman wrote:
-> >>> On Thu, May 30, 2024 at 08:22:03AM +0200, Jiri Slaby wrote:
-> >>>>>   This will be an error in a future compiler version
-> >>>>> [-Werror,-Wbounds-safety-counted-by-elt-type-unknown-size]
-> >>>>>       291 |         struct mxser_port ports[] __counted_by(nports);
-> >>>>>           |         ^~~~~~~~~~~~~~~~~~~~~~~~~
-> >>>>>     1 error generated.
-> >>>>>
-> >>>>> Remove this use of __counted_by to fix the warning/error. However,
-> >>>>> rather than remove it altogether, leave it commented, as it may be
-> >>>>> possible to support this in future compiler releases.
-> >>>>
-> >>>> This looks like a compiler bug/deficiency.
-> >>>
-> >>> I agree, why not just turn that option off in the compiler so that th=
-ese
-> >>> "warnings" will not show up?
-> >>
-> >> It's not a compiler bug.
-> >
-> > It is, provided the code compiles and runs.
-> >
-> >> The flexible array is nested four struct layers deep, see:
-> >>
-> >> ports[].port.buf.sentinel.data[]
-> >>
-> >> The error report could be more specific, though.
-> >
-> > Ah, ok. The assumption is sentinel.data[] shall be unused. That's why i=
-t
-> > all works. The size is well known, [] is zero size, right?
-> >
-> > Still, fix the compiler, not the code.
->
-> Or fix the code (properly).
->
-> Flex arrays (even empty) in the middle of structs (like
-> ports[].port.buf.sentinel.data[] above is) are deprecated since gcc 14:
-> https://gcc.gnu.org/pipermail/gcc-patches/2023-August/626516.html
->
-> So we should get rid of all those. Sooner than later.
->
-Yes! Please do this.
 
--bw
+> Ah, ok. The assumption is sentinel.data[] shall be unused.
+
+This snippet is useful information.
+
+Thanks
+--
+Gustavo
