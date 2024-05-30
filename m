@@ -1,46 +1,46 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B345155336;
-	Thu, 30 May 2024 06:22:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D65A210197;
+	Thu, 30 May 2024 06:41:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717050128; cv=none; b=qnakHcMbxxOmI6PuhvG8P19PM9nM92XuF0gbU4a2W1MvilLTxVTuo1k9nOXqJI2c5iWYFd9E3Zc0HrpGm9jxDygjtJjpJRnJ2TRzZtvcXh5WVgqBd8AUgKjEylXShvC5+lIvTXYBDpMqH6tZm4kFu6iiH8LJDsFrhJ6/mvQ11Sw=
+	t=1717051283; cv=none; b=pExKuJqL5JDKLaVJnxLMgKk08N+CTaojFeowsaOPUWyidU05QuaOhf9kbw0iFynL6XbDPU30UUkhqsycxArPhFRTJ6ak71w7aXR7ROf11Q59IQE31dTZj6d4p1sIX3fmynsh94e869rDUXMidzK2/JmyP+mdAMCArUsDcHwz3as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717050128; c=relaxed/simple;
-	bh=l9+XfNU1PImZakE7pZoE0Rp+a8gf1C0ee0ya5BBnFx8=;
+	s=arc-20240116; t=1717051283; c=relaxed/simple;
+	bh=D4gXSqADnOk0iOGCbNIKB51H95GuHOPiUKdJBP+R1PI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S9CSuUtifBy/oPWdPk5Dw06TLdRP4UoaTWD2RWsbT82b4luukrYBhxXaTG8bSIJKnjEVI4xFtKql9y74yacJgCDMKiwq4NeDDCO0fJ7y55e56IJ2X59x/tyy6CCgQ0ll++dyN3Bokq753O150i8gX4rwz5r2FUzvjSS3Wbn+I8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.49
+	 In-Reply-To:Content-Type; b=CFza2RUzLhjj7fUg1RRIC3FDcXBSrTS1uyLKuLFgOvABLt7lZQe/5T1sJQWPcQMcsI2W0ytuJjJTiM52mv/LX3T2Zcf7OUgi0Agauna+6dHkdFnnAWxY6ay+ePgwWPiiiDZLS2SgFvTjzQ/yJoFPs5Jeh29aaZox0751ttZOU1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42108856c33so3608525e9.1;
-        Wed, 29 May 2024 23:22:06 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4211249fdf4so6411085e9.3;
+        Wed, 29 May 2024 23:41:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717050125; x=1717654925;
+        d=1e100.net; s=20230601; t=1717051280; x=1717656080;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9abOIANtUFAdiRrEhSy3lHHZlzhzRD52Y0DRlShRTQs=;
-        b=I73dlGjQLnZigFXb+rNj8zz42+zCVpJE3mgHxHPvhvbrijjA9ojSr4jvAOH5qjfuyw
-         7hD0PfoCY0ILFCtvEqx4O1qAIKgIGBVXG5bVWvIDHjnglN30xYwbfeGOp8P/nHYLINqK
-         4R49C9jTMXt+nZ8QoV/sn7ML+3iyY+kvxNkSMreF0PxJyCPjtpjzeBv0D41D4ZRmCvcZ
-         Ergt6PsPwKtokMlx069TDUoogRMk6Ll054stQ465bt46HzaWvLpAt7fiZpecJEA3E/TP
-         k8Os0P3a1sk9WIlWLS0J87KGVNt0aHSKgIhZzeeP2BALzB6lZ+TmEdo1OoYRRDxKOrGv
-         zVsw==
-X-Forwarded-Encrypted: i=1; AJvYcCW6EpU5nY519vLCBgDOSr92qDbNlSyCYWZC8pGXmpPIrA1qPIg4TVwv3qsV9R0Q37aVgqmefSDNKDEjDnUtWa/tpuUJ8lI8MvQ81cAgaHlbRa723eiDuiUN11JiZ6ejydVmPcKbPBXBFN6otyh9xf3UC9s=
-X-Gm-Message-State: AOJu0YwWhfsEqbRuful1sugfXAK/GBMj1olb2fPPBpV8JUNxLdRX2lF4
-	U9eW3qxpRwl1ZTu90B0zq7k55n+uetVta9HgBEaHQvDg2zWijKbaXWeW8A==
-X-Google-Smtp-Source: AGHT+IGs5JBtoA7uXaeGL1MNMQclVfCH2sNp/kA2U36B22flaurOU4tPIhja6hXqTQr+1dIlg2fQJg==
-X-Received: by 2002:a05:600c:4fc3:b0:41a:56b7:eb37 with SMTP id 5b1f17b1804b1-4212810404cmr5712365e9.20.1717050125214;
-        Wed, 29 May 2024 23:22:05 -0700 (PDT)
+        bh=P2UinUncKMG3mfEDsS3Xt/JMMJoyLDA5LlKHUtD/VBs=;
+        b=YdjKJaOGV+nZHq7KIPau2hI74o4fUbPUKeHjiQHMMwMGQ5F8K9U4oV/GNSErB85gL7
+         LPpM+y0Ys83egm+jaApIhULL8gXX7nj65O7ST3J4/d7DIVw3lycq2MZZKunnO4I29pIt
+         Nss0j90A8j5J68OHcYPPYHsnd6gu8c1omlSjLe043Br7JOiazxfVPrAjfkM6Dmau2+rx
+         wPNCXgUHbFfOr9Qk9V3pXJaTPomwItr0niGgy/lOtbCqEU1dSoUM973gAVkqbl/rJlDR
+         PIFM+8KVwHFmMJpiFGob7M2eg6g5R2vrpdmP3Xy5VAiieIDdY40FU1n+RsRTTIsstuyZ
+         ZTnA==
+X-Forwarded-Encrypted: i=1; AJvYcCWDkTSCPT9bbCYZT0uaGXEr3fz4Xwu7lTD/wAcdiGbTR/O3Z8h8b4WXiMX+/bslfDPcehkl0NbIlfThYyNVpiGs8NAIkfkUGZbQ/9IAPmmqt5cjkeo7gkf1H+mlqOs=
+X-Gm-Message-State: AOJu0YwtB41nfz8+tbAaCPsAR9kzcqHBgyOMCohf0IBHKdQzNIE6jgw9
+	KZcJ0vpoT+VJOmFwiIzMAk5DmLg5jy1rDBvDIFzjcEbjLjtNiCKW
+X-Google-Smtp-Source: AGHT+IHArpXGtxZDQ1OBgqkI9aalQ8VjHT6AsZ0RHXdpUsKojMGevnqYYYdjAWulbOzH8edJo+7aLQ==
+X-Received: by 2002:a05:600c:1d05:b0:421:29b4:532a with SMTP id 5b1f17b1804b1-42129b45590mr1343955e9.16.1717051280198;
+        Wed, 29 May 2024 23:41:20 -0700 (PDT)
 Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:69? ([2a0b:e7c0:0:107::aaaa:69])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42127084ca2sm14202265e9.41.2024.05.29.23.22.04
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3557a1c9546sm16439884f8f.82.2024.05.29.23.41.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 May 2024 23:22:04 -0700 (PDT)
-Message-ID: <d7c19866-6883-4f98-b178-a5ccf8726895@kernel.org>
-Date: Thu, 30 May 2024 08:22:03 +0200
+        Wed, 29 May 2024 23:41:19 -0700 (PDT)
+Message-ID: <0b2b4a2a-83df-4b79-a295-4da91c841587@kernel.org>
+Date: Thu, 30 May 2024 08:41:18 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,16 +48,18 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tty: mxser: Remove __counted_by from mxser_board.ports[]
+Subject: Re: [PATCH] nvmet-fc: Remove __counted_by from
+ nvmet_fc_tgt_queue.fod[]
 To: Nathan Chancellor <nathan@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ James Smart <james.smart@broadcom.com>, Christoph Hellwig <hch@lst.de>,
+ Sagi Grimberg <sagi@grimberg.me>, Chaitanya Kulkarni <kch@nvidia.com>
 Cc: Kees Cook <keescook@chromium.org>,
  "Gustavo A. R. Silva" <gustavoars@kernel.org>,
  Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
- linux-serial@vger.kernel.org, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ Keith Busch <kbusch@kernel.org>, linux-nvme@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
  llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
-References: <20240529-drop-counted-by-ports-mxser-board-v1-1-0ab217f4da6d@kernel.org>
+References: <20240529-drop-counted-by-fod-nvmet-fc-tgt-queue-v1-1-286adbc25943@kernel.org>
 Content-Language: en-US
 From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
@@ -102,108 +104,49 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20240529-drop-counted-by-ports-mxser-board-v1-1-0ab217f4da6d@kernel.org>
+In-Reply-To: <20240529-drop-counted-by-fod-nvmet-fc-tgt-queue-v1-1-286adbc25943@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 29. 05. 24, 23:29, Nathan Chancellor wrote:
-> Work for __counted_by on generic pointers in structures (not just
-> flexible array members) has started landing in Clang 19 (current tip of
-> tree). During the development of this feature, a restriction was added
-> to __counted_by to prevent the flexible array member's element type from
-> including a flexible array member itself such as:
-> 
->    struct foo {
->      int count;
->      char buf[];
->    };
-> 
->    struct bar {
->      int count;
->      struct foo data[] __counted_by(count);
->    };
-> 
-> because the size of data cannot be calculated with the standard array
-> size formula:
-> 
->    sizeof(struct foo) * count
-> 
-> This restriction was downgraded to a warning but due to CONFIG_WERROR,
-> it can still break the build. The application of __counted_by on the
-> ports member of 'struct mxser_board' triggers this restriction,
-> resulting in:
-> 
->    drivers/tty/mxser.c:291:2: error: 'counted_by' should not be applied to an array with element of unknown size because 'struct mxser_port' is a struct type with a flexible array member.
+On 29. 05. 24, 23:42, Nathan Chancellor wrote:
+>    drivers/nvme/target/fc.c:151:2: error: 'counted_by' should not be applied to an array with element of unknown size because 'struct nvmet_fc_fcp_iod' is a struct type with a flexible array member.
 
-Huh -- what am I missing:
+The same as for mxser_port:
 
-struct mxser_port {
-         struct tty_port port;
-         struct mxser_board *board;
+struct nvmet_fc_fcp_iod {
+         struct nvmefc_tgt_fcp_req       *fcpreq;
 
-         unsigned long ioaddr;
-         unsigned long opmode_ioaddr;
+         struct nvme_fc_cmd_iu           cmdiubuf;
+         struct nvme_fc_ersp_iu          rspiubuf;
+         dma_addr_t                      rspdma;
+         struct scatterlist              *next_sg;
+         struct scatterlist              *data_sg;
+         int                             data_sg_cnt;
+         u32                             offset;
+         enum nvmet_fcp_datadir          io_dir;
+         bool                            active;
+         bool                            abort;
+         bool                            aborted;
+         bool                            writedataactive;
+         spinlock_t                      flock;
 
-         u8 rx_high_water;
-         u8 rx_low_water;
-         int type;               /* UART type */
+         struct nvmet_req                req;
+         struct work_struct              defer_work;
 
-         u8 x_char;              /* xon/xoff character */
-         u8 IER;                 /* Interrupt Enable Register */
-         u8 MCR;                 /* Modem control register */
-         u8 FCR;                 /* FIFO control register */
+         struct nvmet_fc_tgtport         *tgtport;
+         struct nvmet_fc_tgt_queue       *queue;
 
-         struct async_icount icount;
-         unsigned int timeout;
-
-         u8 read_status_mask;
-         u8 ignore_status_mask;
-         u8 xmit_fifo_size;
-
-         spinlock_t slock;
+         struct list_head                fcp_list;       /* 
+tgtport->fcp_list */
 };
 
-?
+The error appears to be invalid.
 
->  This will be an error in a future compiler version [-Werror,-Wbounds-safety-counted-by-elt-type-unknown-size]
->      291 |         struct mxser_port ports[] __counted_by(nports);
->          |         ^~~~~~~~~~~~~~~~~~~~~~~~~
+> This will be an error in a future compiler version [-Werror,-Wbounds-safety-counted-by-elt-type-unknown-size]
+>      151 |         struct nvmet_fc_fcp_iod         fod[] __counted_by(sqsize);
+>          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 >    1 error generated.
-> 
-> Remove this use of __counted_by to fix the warning/error. However,
-> rather than remove it altogether, leave it commented, as it may be
-> possible to support this in future compiler releases.
-
-This looks like a compiler bug/deficiency.
-
-What does gcc say BTW?
-
-> Cc: stable@vger.kernel.org
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/2026
-> Fixes: f34907ecca71 ("mxser: Annotate struct mxser_board with __counted_by")
-
-I would not say "Fixes" here. It only works around a broken compiler.
-
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->   drivers/tty/mxser.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/tty/mxser.c b/drivers/tty/mxser.c
-> index 458bb1280ebf..5b97e420a95f 100644
-> --- a/drivers/tty/mxser.c
-> +++ b/drivers/tty/mxser.c
-> @@ -288,7 +288,7 @@ struct mxser_board {
->   	enum mxser_must_hwid must_hwid;
->   	speed_t max_baud;
->   
-> -	struct mxser_port ports[] __counted_by(nports);
-> +	struct mxser_port ports[] /* __counted_by(nports) */;
->   };
->   
->   static DECLARE_BITMAP(mxser_boards, MXSER_BOARDS);
-
-thanks,
+-- 
 -- 
 js
 suse labs
