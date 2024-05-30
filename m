@@ -1,285 +1,210 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E3E8480
-	for <patches@lists.linux.dev>; Thu, 30 May 2024 02:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.21
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717037194; cv=fail; b=P4bdA9CLE1vcLm/f4qBJh1GYrkfBbHHfORgme7pUVPCPdL3CoLhCRYvdHiCguJ5pfsUrFQML5GzzO6MhKW8Qv95dLrv9IunH5u3baT/VGSUijuReoVj9nFubcnfYUzwTC4XCKCDP4n1xVOXiB68/YQhSwYGI13HqIY8tXHweya4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717037194; c=relaxed/simple;
-	bh=z/2w3VbFp7zneUdkizQOYtSqwIO8i3drLekLQXNSBxI=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=JkyEC8pBhStk0GbdHHUZxN17J3jZuI9NqgKTYpMAsJqfzrIDX2UH3YnBJe612wmdLHgxVNMlKWrxCrg10+DLpk13+mceMrzeOe6tDzZHcqrsXPft2ZaBhsDGQsXMlOiGltSQPGl2Sg55NG/tIbYx00byIInw0BvUJP3UCzYBXPE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=STwzVoQR; arc=fail smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="STwzVoQR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717037193; x=1748573193;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=z/2w3VbFp7zneUdkizQOYtSqwIO8i3drLekLQXNSBxI=;
-  b=STwzVoQRuE1LxVtC93halKw3XwRABk/pwjqcVZz0VooLe5TC6fdjG+5/
-   0GapzDsC0DiNjs2576zBbqjoQu39uKhSB/FCfnw+9/jeQHnppilwGFnvA
-   vm4fDBG/1B827+hu0QH08RuTnYz41A9+Mfysyc2S1UgIQ3drQawqhwbGv
-   wZsDPa6diBCpxe2dUzeaqaqCDM0BYEaJq5J6BW+b7I9j6lUwBTC3H28Y6
-   yMv0QTqoA2DGywLg+mllB7pbMsNd+qhcr7d8gzDWyT46+A/9X6+dDT9Er
-   +cv5Tpf0iZvfIbzXLcMEysZPBKW65D/ZYO0Dnr78kq/brKCS/L+ixWnIF
-   g==;
-X-CSE-ConnectionGUID: knzx+k7NRJiQZxnroAd6Cg==
-X-CSE-MsgGUID: +PJ0t7nEQ7CQVwoepK6a8g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11087"; a="13434790"
-X-IronPort-AV: E=Sophos;i="6.08,199,1712646000"; 
-   d="scan'208";a="13434790"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 May 2024 19:46:32 -0700
-X-CSE-ConnectionGUID: g8hIZ9I9T9u23LnbiBBgEA==
-X-CSE-MsgGUID: 2EWJA3crTVO1JL2FtcBe8g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,199,1712646000"; 
-   d="scan'208";a="35634440"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by fmviesa008.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 29 May 2024 19:46:32 -0700
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 29 May 2024 19:46:31 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Wed, 29 May 2024 19:46:31 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.168)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 29 May 2024 19:46:31 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ATNeApqPTE3uh163VPF5FKqK05qUknL7c1dfsjghhsnQWTwJJEc/H8/Lw1vfdfwZf+tG5Fuz3yo6wgr75TusxP7/MQemWQBmAsvu0HnqlbqSW/bxTJGi2AThFoAIAIVDEDjjnLLKgppYrD0ay75FzTmvF/YtJcPZMOXCQkBWIU5j8Hcgo1goqAwe7/9DqNZbjFGfrtKI3dp63xOV24h9Yuc827m2oBDWlrro2iHOwKTGVg1FAtzrjDd89EC3XheaoEP+AGMTlkSHrKw4OIKSJmBos6zpX4R+N6j3AA1fxDWoFaa/HWdGjEEtmkbQ8BRH3JgcoSatfPWCL7qCkpwUzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OxxkNJ9a3tinPrqloyOT7hBYEv3Zti1iy2CzjTiaick=;
- b=gX+NUQpZ2Hv1D76B03zxeYqHl3s9WkHJUZGOPW/yVr6/5+/XBN6OUyryGrFr0zViUvEWLCEO33DdQdlDwaeJ/Q7yR0I4Hz6wPfWKoD7rW0ImlMzk/asDAxMsRndvrM57lRNBoM3DQlSFXE5fhQJl3g3CFkdZDFMf/UK+JbUE8o7rWZSxnytdsXHK5UNXwsQ9e+Bbu+B2hJZIZy9LQ2vr/QO9SdqC70Y+VYge85O1bE/70Dcr5XevVjnoP55XUb24jwL//P4fy7PwbjWGZQ9hPrWihpOlsxuGru4xVCrIEw+Ofs7ovlJqJYiHu58JDOTuTDI88qmhNk8/qGZiwURMJQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by SA1PR11MB8492.namprd11.prod.outlook.com (2603:10b6:806:3a3::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.17; Thu, 30 May
- 2024 02:46:29 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf%3]) with mapi id 15.20.7633.017; Thu, 30 May 2024
- 02:46:29 +0000
-Message-ID: <a4d37f57-328f-4456-92bc-5e6469d092c8@intel.com>
-Date: Wed, 29 May 2024 19:46:27 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 00/20] Add support for Sub-NUMA cluster (SNC) systems
-To: Tony Luck <tony.luck@intel.com>
-CC: Fenghua Yu <fenghua.yu@intel.com>, Maciej Wieczor-Retman
-	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
- Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>,
-	<x86@kernel.org>, <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
-References: <20240528222006.58283-1-tony.luck@intel.com>
- <08ca8fe7-9da6-41da-aad2-0081b789326c@intel.com>
- <ZleODtL_6D-Q_OMX@agluck-desk3.sc.intel.com>
-Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <ZleODtL_6D-Q_OMX@agluck-desk3.sc.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0320.namprd04.prod.outlook.com
- (2603:10b6:303:82::25) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B345155336;
+	Thu, 30 May 2024 06:22:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717050128; cv=none; b=qnakHcMbxxOmI6PuhvG8P19PM9nM92XuF0gbU4a2W1MvilLTxVTuo1k9nOXqJI2c5iWYFd9E3Zc0HrpGm9jxDygjtJjpJRnJ2TRzZtvcXh5WVgqBd8AUgKjEylXShvC5+lIvTXYBDpMqH6tZm4kFu6iiH8LJDsFrhJ6/mvQ11Sw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717050128; c=relaxed/simple;
+	bh=l9+XfNU1PImZakE7pZoE0Rp+a8gf1C0ee0ya5BBnFx8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S9CSuUtifBy/oPWdPk5Dw06TLdRP4UoaTWD2RWsbT82b4luukrYBhxXaTG8bSIJKnjEVI4xFtKql9y74yacJgCDMKiwq4NeDDCO0fJ7y55e56IJ2X59x/tyy6CCgQ0ll++dyN3Bokq753O150i8gX4rwz5r2FUzvjSS3Wbn+I8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42108856c33so3608525e9.1;
+        Wed, 29 May 2024 23:22:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717050125; x=1717654925;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9abOIANtUFAdiRrEhSy3lHHZlzhzRD52Y0DRlShRTQs=;
+        b=I73dlGjQLnZigFXb+rNj8zz42+zCVpJE3mgHxHPvhvbrijjA9ojSr4jvAOH5qjfuyw
+         7hD0PfoCY0ILFCtvEqx4O1qAIKgIGBVXG5bVWvIDHjnglN30xYwbfeGOp8P/nHYLINqK
+         4R49C9jTMXt+nZ8QoV/sn7ML+3iyY+kvxNkSMreF0PxJyCPjtpjzeBv0D41D4ZRmCvcZ
+         Ergt6PsPwKtokMlx069TDUoogRMk6Ll054stQ465bt46HzaWvLpAt7fiZpecJEA3E/TP
+         k8Os0P3a1sk9WIlWLS0J87KGVNt0aHSKgIhZzeeP2BALzB6lZ+TmEdo1OoYRRDxKOrGv
+         zVsw==
+X-Forwarded-Encrypted: i=1; AJvYcCW6EpU5nY519vLCBgDOSr92qDbNlSyCYWZC8pGXmpPIrA1qPIg4TVwv3qsV9R0Q37aVgqmefSDNKDEjDnUtWa/tpuUJ8lI8MvQ81cAgaHlbRa723eiDuiUN11JiZ6ejydVmPcKbPBXBFN6otyh9xf3UC9s=
+X-Gm-Message-State: AOJu0YwWhfsEqbRuful1sugfXAK/GBMj1olb2fPPBpV8JUNxLdRX2lF4
+	U9eW3qxpRwl1ZTu90B0zq7k55n+uetVta9HgBEaHQvDg2zWijKbaXWeW8A==
+X-Google-Smtp-Source: AGHT+IGs5JBtoA7uXaeGL1MNMQclVfCH2sNp/kA2U36B22flaurOU4tPIhja6hXqTQr+1dIlg2fQJg==
+X-Received: by 2002:a05:600c:4fc3:b0:41a:56b7:eb37 with SMTP id 5b1f17b1804b1-4212810404cmr5712365e9.20.1717050125214;
+        Wed, 29 May 2024 23:22:05 -0700 (PDT)
+Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:69? ([2a0b:e7c0:0:107::aaaa:69])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42127084ca2sm14202265e9.41.2024.05.29.23.22.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 May 2024 23:22:04 -0700 (PDT)
+Message-ID: <d7c19866-6883-4f98-b178-a5ccf8726895@kernel.org>
+Date: Thu, 30 May 2024 08:22:03 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SA1PR11MB8492:EE_
-X-MS-Office365-Filtering-Correlation-Id: b3e438b6-674c-492e-76d3-08dc8052b529
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|376005|366007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Zyt1UkNtV2NLS3owb3ZGNHZTR0Z0Y1VvTUlnZDlCYk1HL1I1YzFpN1RzOHNr?=
- =?utf-8?B?VkpqL0J2T053bTBxWXIycjF0cFRvZlBwSzdrbk1CakJOOXh0T3BJV3c5cXZE?=
- =?utf-8?B?TStDTzRLaytja0NCMUZNbkEvUU15UDNCQTk4bXdieGRmQWFSQVdib0hibFBn?=
- =?utf-8?B?Y3JCcmhNU2Q1cnFId21kZ2R2MVdYS05zaVlwK1ZBcnBDZFRzV1RMb1dabmNo?=
- =?utf-8?B?VXhxZjU1MWg4RXV1STBScFMvczhhN01wQUUyUUN2VHRCRHp0WWhiNHk1MWRl?=
- =?utf-8?B?eW5jUzJaOFBvQm9CUkFvV1NlLzRzS1VyU1k3L2J2STBEWkFGWm0zaW9BakxJ?=
- =?utf-8?B?Z2x0L3dsWmNrOWJiYm5KczVwV3ZrWTdWV3pCTW90QXhHYmpLSnNWdVN4UzhZ?=
- =?utf-8?B?RVlzQVBZU1l1dWdsL3Z3Tnh0NjdoS1ZpSGhHdE51cWhtQ3FSNmpSNjVNMFU4?=
- =?utf-8?B?ZVJ3USthQXF4dXNyVTVyZmxGcHVuOWtrNndxTVdHN3pWcXlTbFpMWmxJejFO?=
- =?utf-8?B?V21Ob2ZGWHlxWUVMYjdnTklSb3VtUVRubGRrckVnRVRrZStvRWloN2ZnRGRZ?=
- =?utf-8?B?WmViZERJVTB6WE1hWG9DS2ZUN0NyUVNkVEdtUE1OaTk4Z05HSDE5TDdXZDRl?=
- =?utf-8?B?dmFvR0NFd21kRWs4azk0OVFrQklTTWQ2ZzhiUEIrckxwQW9RWHBmQlc5OWFr?=
- =?utf-8?B?bEF0dXlMMGhmU2RzVERNZHRnWjJ0Mm1GQnJOem9QOVo1OXpSMGdJa0M1QVQv?=
- =?utf-8?B?Ryt2OTUraXZSSG5GUis4QndKako3OThGVTJZV0lWK292SU42clpiSTZUYkRq?=
- =?utf-8?B?MGU2dUJha3hDZXZJTEFibWIwUlFXWjVOZnlMcHNkdlE2TitMbUVsSnFDQi90?=
- =?utf-8?B?K1hmZWdNRm00cHJCUGpYZnR6NnBCb2kydnN1ZzloV3VLQSsvSFREZzNXeWtt?=
- =?utf-8?B?YkttU3V4bkFIZmFyWTUzNlhObUNrUGlmTDdxNEZ3RnNYZkJweHBSdzVtQlAw?=
- =?utf-8?B?YVNrbWFtVllDM3J5UEo2UENFTEZpWDFzYVlzcjFPcmxoSHp1eVZueEU2Sm04?=
- =?utf-8?B?aXVockk3OFk2MjVycXpSSTc2MlJUdkorUVkxTy9ZRW9TOXJqVmlobU0zWjlj?=
- =?utf-8?B?VloycWwyVGQrbWtSR2ROU3FiQ1dSTzZ5MjlhYjYwUXFmUWplYzNRa1AvQ252?=
- =?utf-8?B?T2txR1hrTTBsRzZsVzhTcDhtSnNKZXdyc1pSeVZOaXZjbkl0NEx0OW9CZjh5?=
- =?utf-8?B?SSswd2trQWtabTRZanBjL0o4SkZEbkRTaVMyMWpGbW1TbjNvTUdYRUhObm93?=
- =?utf-8?B?RUw2cnNQSmpNMzdTMk9hdGZIdm5KeC9MNENnYkZKbUswSCsyQmpPV2Ztbk9C?=
- =?utf-8?B?a0tnNVVKbHdGc1oxZEhXSnNNTStpRzc0V3JpTWpZSVM1bGVnanFwclRROUpT?=
- =?utf-8?B?NEliT2dyeWFOYW9ZZEQreWRKNTl2WVVjTXMrbDRaU25ySHNhc0c5MXQ4MlFE?=
- =?utf-8?B?TjBkWFBqaUVCcTNwWDJva2dpRmNKM09FR2Q1SWNmWTltZ0dqblZCdEpTNVNr?=
- =?utf-8?B?enNrMWFFY1phNis3TU5ZdU5aNWZHbU16Y0NwcVh1eHRuUWx6Qk55WDEzM2Rr?=
- =?utf-8?B?UHFuM0w1MmR6YzVCa3BiQ093S1BXdXRFdjdFQ1p6Y1VVMFJDb1JwenNyQk5s?=
- =?utf-8?B?V2U2R3N4cVFJQ3pnRStFUUZxcnFwYTVseFVMV1ZTK0g3Rmk4R2NUVzZnPT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?clRjUTh6eDRZbklpd1ZRMWdvN0JGNEZNYXYvdnRJMC9ZN0h5MVNkbHIwR1Y3?=
- =?utf-8?B?Z1pKblpwNFd6Q3VvQmNISTdhTnIxZEZaVlpXbGJvOUJNbFVJYm1XUGtJbi8z?=
- =?utf-8?B?MlNVMmk2WkpmcXFxbjJxL1U2TFcvb0c3Rk8waHBoSXFNZFh4UEVpcUxSZzJz?=
- =?utf-8?B?SWtQYTYrTDFoZE03bmxINVlpZGxpMUJobFJtUUczWjcyYXdkU0REK1pMYzkr?=
- =?utf-8?B?RmdwSzdqTkFIdVRzOERzaWY4cU4zOW9pM2dUZ1NDeStaUXNFSHdnRktwWDUv?=
- =?utf-8?B?cEY5ZnlhbWdKbU0zYnNsSFdRWGZ4MTFTYnh1SStxeElNNENiRzNRUWFyV0d0?=
- =?utf-8?B?SlBJL3RuZkF2Mjlhb1habmNDMFVxckNxc0hyaTQrV3lWb2NsYXNtZVVEeWFn?=
- =?utf-8?B?L0pYZmJHU2d2MFhYQ0ZNYXcyUUhnYXVFcWw1SWtqcXVKMW9BTHJRYXRqNTRE?=
- =?utf-8?B?Nm1sVFJPd3Nkb1ZMZGNjS2NOakIvd0dXY3JOcm5WQ09vSVN1OHM5ZlNqNzdz?=
- =?utf-8?B?MWxGckozYXJwQmd2WXQ4NGs2UDhVbWNMaXl4M0tiLy9RRXVDMDlzd1dVbFEv?=
- =?utf-8?B?aE9wbzZkUUUvZzhialN4ZWkxVkZHZW5VU2s4NkdUcERUTTlPQWJYRXpDYjJY?=
- =?utf-8?B?aWlLSTl3ZXdiU00rNGhpZWVSWFpSWDVSUlJhRmdtNkY5Ry92SWFEdVdTUERa?=
- =?utf-8?B?NG0ybU5sU0VDd2VTSCt5Q1JKdjVwL05SWTliNzFSM2pCUytadStreEZlTWJV?=
- =?utf-8?B?My8wakpDY1QrSjhJbVJIODlZSis1T2FwWk02U2V5Y1NKZXdmSVFwZXM3djVM?=
- =?utf-8?B?dzhpcS9xcC91eDJ1d2FzTU9hNjJaY2JST0RNUWdQYXNHcWt5SG96U2F4V3RF?=
- =?utf-8?B?b2NaaVBZTXMwZHJueCtPajdkTmF0T3RCOTFCdkxZVlVzcDhsTzJlU0Uza3ZS?=
- =?utf-8?B?dHRTdEFpY2NRWk0rdkpmR3FlRkwyTjRYVHp4RDV2WW5KWXRMc2FsZTJ0UDRl?=
- =?utf-8?B?NXdrVldZTWNLWlh1RC92aUtuZHpHYk5yeHBNNllleXZxWUpoOUcxQTVEbmJq?=
- =?utf-8?B?NEVvYkNRTkNweTRCOE96YTdTZmRPQ1lxeklkSGVaR1BFa3pqTXBPa3k5QzAy?=
- =?utf-8?B?Vm84T2xIcFU1U21Xelp3cjlzZkFaZjYzRkJSeW9GNXBtc2ZKcmsvUjFYNkRw?=
- =?utf-8?B?VGovVHBJYTVsWWlYdmUwazAyWFAyd3RCcjMreVlwY2xhblRSclBIWXRhU0w0?=
- =?utf-8?B?RXk0Rk1GYUFGTDR1MWNQcHVYKzBmeDJTUU1teWdCMk4zSDFQdGsvSmtkUW5y?=
- =?utf-8?B?bkdYYnRybXJFV2ZvMDBFTGxpTFJCNW1zM3dtMXlpNlIzVXNTS3VFcFpNU1oz?=
- =?utf-8?B?Q2NmYlhYbWlROEI1TmUyeldLMC8rYXNtcjluZXF2OXlwMEVMeTQyZ2JyTU9v?=
- =?utf-8?B?VGVTd3dRc2RBd1VJS3FzNzBkVU54TklQTkF0TXRmRTlRV1NjdnpJNU1QdDJQ?=
- =?utf-8?B?ZjRsQW5tMlBjNTc0emZGY2l3Mk1MS1FiRlpVaXFSOFVRWjczRlAyaGdINksx?=
- =?utf-8?B?MDQrd1d3a3MyUkhjekRZSWVPVnV4RDNOYisyRXN6T3lsQnoweTlhVUZxbEpI?=
- =?utf-8?B?VVBDNEMzWlFRYVc0V3orZ1VvQjhWWURDc2ZlVzQyaVVjMTFBNHVRbDRWZkli?=
- =?utf-8?B?MFlaVEtOQTQ3TXFldjNRZk1xV2VwOGQ4eFdHL2xtdFRraGxQOHhYMGMyTVZD?=
- =?utf-8?B?VmwwK3l5Tk9aMnZORkM5c0RURGJhYngrTzhaK3N6Y2U1alhKRWNFNEM0Sys4?=
- =?utf-8?B?cUx6WGdiemhkZGlYaFRsc1M0MVV5Sk9xcjJUMFg3bWhWbURDdlc0Q0t3YkVE?=
- =?utf-8?B?RWd0bEtaUlAxQzlheU1YNitMcTBkd1FMMkVvK2drL2JFVWFKaGJGcGc4WWw5?=
- =?utf-8?B?bzF1K3FrMDNwdmxmcHZnR1ltb2pvbDlreUxvQmp3bTFkeXpKT2UrVHhHUzVq?=
- =?utf-8?B?Ym81WDE0NllFK3Q4MkdDYUJwTm1TSEhXUWllNnZvSHU0d1dzalVkWEtTZmIr?=
- =?utf-8?B?ZTZrR3RsRW5zNmtsQkVzU1N6cHQ0OXJ4cmkzdDdhazkrWGZRQU1SSy9EVHdt?=
- =?utf-8?B?bGQ0N0JUUjdyV0FSM2NUTjFMaWtEV29kYm1hNFl5NzNZSFdYQXF0K1ZwakZO?=
- =?utf-8?B?ckE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: b3e438b6-674c-492e-76d3-08dc8052b529
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 02:46:29.5827
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ln/5Ua9cbcP7rUIPTXiIOmqmzs5x2xxBm4LiPig/nRZnNgHu1iw0dhE3LrgRqYET70j2vtbNOlUxBURU+prkecJ3WUpn8YOc182d0Khwy8g=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB8492
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tty: mxser: Remove __counted_by from mxser_board.ports[]
+To: Nathan Chancellor <nathan@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kees Cook <keescook@chromium.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
+ linux-serial@vger.kernel.org, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+References: <20240529-drop-counted-by-ports-mxser-board-v1-1-0ab217f4da6d@kernel.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20240529-drop-counted-by-ports-mxser-board-v1-1-0ab217f4da6d@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Tony,
+On 29. 05. 24, 23:29, Nathan Chancellor wrote:
+> Work for __counted_by on generic pointers in structures (not just
+> flexible array members) has started landing in Clang 19 (current tip of
+> tree). During the development of this feature, a restriction was added
+> to __counted_by to prevent the flexible array member's element type from
+> including a flexible array member itself such as:
+> 
+>    struct foo {
+>      int count;
+>      char buf[];
+>    };
+> 
+>    struct bar {
+>      int count;
+>      struct foo data[] __counted_by(count);
+>    };
+> 
+> because the size of data cannot be calculated with the standard array
+> size formula:
+> 
+>    sizeof(struct foo) * count
+> 
+> This restriction was downgraded to a warning but due to CONFIG_WERROR,
+> it can still break the build. The application of __counted_by on the
+> ports member of 'struct mxser_board' triggers this restriction,
+> resulting in:
+> 
+>    drivers/tty/mxser.c:291:2: error: 'counted_by' should not be applied to an array with element of unknown size because 'struct mxser_port' is a struct type with a flexible array member.
 
-On 5/29/24 1:20 PM, Tony Luck wrote:
-> On Tue, May 28, 2024 at 03:55:29PM -0700, Reinette Chatre wrote:
->> Hi Tony,
->>> 13:	Wordsmith commit into imperative.
->>> 	I looked at using kobject_has_children() to check for empty
->>> 	directory, but it needs a "struct kobject *" and all I have
->>> 	is "struct kernfs_node *". I'm now checking how many CPUs
->>
->> Consider how kobject_has_children() uses that struct kobject *.
->> Specifically:
->> 	return kobj->sd && kobj->sd->dir.subdirs
->>
->> It operates on kobj->sd, which is exactly what you have: struct kernfs_node.
+Huh -- what am I missing:
+
+struct mxser_port {
+         struct tty_port port;
+         struct mxser_board *board;
+
+         unsigned long ioaddr;
+         unsigned long opmode_ioaddr;
+
+         u8 rx_high_water;
+         u8 rx_low_water;
+         int type;               /* UART type */
+
+         u8 x_char;              /* xon/xoff character */
+         u8 IER;                 /* Interrupt Enable Register */
+         u8 MCR;                 /* Modem control register */
+         u8 FCR;                 /* FIFO control register */
+
+         struct async_icount icount;
+         unsigned int timeout;
+
+         u8 read_status_mask;
+         u8 ignore_status_mask;
+         u8 xmit_fifo_size;
+
+         spinlock_t slock;
+};
+
+?
+
+>  This will be an error in a future compiler version [-Werror,-Wbounds-safety-counted-by-elt-type-unknown-size]
+>      291 |         struct mxser_port ports[] __counted_by(nports);
+>          |         ^~~~~~~~~~~~~~~~~~~~~~~~~
+>    1 error generated.
 > 
-> So right. My turn to grumble about other peoples choice of names. If
-> that field was named "kn" instead of "sd" I would have spotted this
-> too.
-> 
->>> 	remain in ci->shared_cpu_map to detect whether this is the
->>> 	last SNC node.
->>
->> hmmm, ok, will take a look ... but please finalize discussion of a patch series
->> before submitting a new series that rejects feedback without discussion and
->> does something completely different in new version.
-> 
-> Reinette,
-> 
-> So here's what rmdir_mondata_subdir_allrdtgrp() looks like using the
-> subdirs check. It might need an update/better header comment.
-> 
-> -Tony
-> 
+> Remove this use of __counted_by to fix the warning/error. However,
+> rather than remove it altogether, leave it commented, as it may be
+> possible to support this in future compiler releases.
+
+This looks like a compiler bug/deficiency.
+
+What does gcc say BTW?
+
+> Cc: stable@vger.kernel.org
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/2026
+> Fixes: f34907ecca71 ("mxser: Annotate struct mxser_board with __counted_by")
+
+I would not say "Fixes" here. It only works around a broken compiler.
+
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
+>   drivers/tty/mxser.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> /*
->   * Remove all subdirectories of mon_data of ctrl_mon groups
->   * and monitor groups with given domain id.
+> diff --git a/drivers/tty/mxser.c b/drivers/tty/mxser.c
+> index 458bb1280ebf..5b97e420a95f 100644
+> --- a/drivers/tty/mxser.c
+> +++ b/drivers/tty/mxser.c
+> @@ -288,7 +288,7 @@ struct mxser_board {
+>   	enum mxser_must_hwid must_hwid;
+>   	speed_t max_baud;
+>   
+> -	struct mxser_port ports[] __counted_by(nports);
+> +	struct mxser_port ports[] /* __counted_by(nports) */;
+>   };
+>   
+>   static DECLARE_BITMAP(mxser_boards, MXSER_BOARDS);
 
-(note comment still considers that domain id is parameter)
+thanks,
+-- 
+js
+suse labs
 
->   */
-> static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
-> 					   struct rdt_mon_domain *d)
-> {
-> 	struct rdtgroup *prgrp, *crgrp;
-> 	struct kernfs_node *kn;
-> 	char subname[32];
-
-I wonder if static checkers will know that this cannot be used
-uninitialized?
-
-> 	char name[32];
-> 
-> 	sprintf(name, "mon_%s_%02d", r->name, d->ci->id);
-> 	if (r->mon_scope != RESCTRL_L3_CACHE) {
-> 		/*
-> 		 * SNC mode: Unless the last domain is being removed must
-> 		 * just remove the SNC subdomain.
-> 		 */
-> 		sprintf(subname, "mon_sub_%s_%02d", r->name, d->hdr.id);
-> 	}
-> 
-> 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
-> 		kn = kernfs_find_and_get(prgrp->mon.mon_data_kn, name);
-> 		if (!kn)
-> 			continue;
-> 
-> 		if (kn->dir.subdirs <= 1)
-> 			kernfs_remove(kn);
-> 		else
-> 			kernfs_remove_by_name(kn, subname);
-> 
-> 		list_for_each_entry(crgrp, &prgrp->mon.crdtgrp_list, mon.crdtgrp_list) {
-> 			kn = kernfs_find_and_get(crgrp->mon.mon_data_kn, name);
-> 			if (!kn)
-> 				continue;
-> 
-> 			if (kn->dir.subdirs <= 1)
-> 				kernfs_remove(kn);
-> 			else
-> 				kernfs_remove_by_name(kn, subname);
-> 		}
-> 	}
-> }
-
-This solution looks more intuitive to me. I do think that it may be
-missing some kernfs_put()'s?
-
-Reinette
-
-ps. Please do give me a couple of days more with this series before you
-     submit a new version.
