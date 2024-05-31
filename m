@@ -1,48 +1,38 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from abb.hmeau.com (abb.hmeau.com [144.6.53.87])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714A9208B0;
-	Fri, 31 May 2024 03:59:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AFA134402;
+	Fri, 31 May 2024 09:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.6.53.87
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717127960; cv=none; b=pQCzfh/xCKfhh5+74Isq9nSXKzYQxQDehEjejzlnDdD/XjfhF87+R2IUew2yWI77Ts+GYen1bMHPuCGlT14WpDN0NJB1rQkbthS+KgI+7DnmzxA+pZx91UM3IpoDe2BRFdOYZO2q40ynOgF18nhXaePE+LjC2yUtoVTYQbJ4KVk=
+	t=1717148287; cv=none; b=kUz+yoZv99L1sgJBEwbApuQ5csp/kwAiJCuYwhf044apldETPjlHXUv8czek+sHdcVQ9t0eBOg9SV+64zXT79FymyvtcWPKetPTfdNn0Ovr8AdqWKulvMDo/qfHEczvcJlkLgjJuIkzFLELWawzH2bj2OL8H7x2PQkbsV2WAFE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717127960; c=relaxed/simple;
-	bh=ij84ftjLq17UMND5+v6nnm7ghMRL7JGp0DPy0qootgA=;
+	s=arc-20240116; t=1717148287; c=relaxed/simple;
+	bh=TmJQi0bSiVuBkD2H9lgA70T1zw++y/0cUfaqaDuFVR4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pn8Htg3AWQ77SvgR/GpUaYuJpdF7+JAEk4UDJe8JroFACKRcBnE6NuUSHjtjty2ZCFjLonFKmfP3xfD8oPxRnxlMTY3be2e+Vf9db76b+GKO9oHePHnBmb9+QFrQ7n0V99BhoNBJY4rwNdQZAttBQkshFMKEJqwA5FkrlG0ZIa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZHuUihYY; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZHuUihYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F39C116B1;
-	Fri, 31 May 2024 03:59:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717127960;
-	bh=ij84ftjLq17UMND5+v6nnm7ghMRL7JGp0DPy0qootgA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZHuUihYY3H1mZo+OnyfBgJCQi6EDgy2Hus3yDQojqJxyJHM72Le9e9JXg9PE8D29Q
-	 hi9L33nMEg4Pq0iI+zKB8zG708Qp7bfpuRDSWmp3YSMtCX141hqhHryS0DvD8CVm4L
-	 fv0Q3CmTmnsQJyL1dOAtpRwAxCZDEVIgxWwo3U8WlE9FcGqdIasY3DOgPxOD0i8aJP
-	 TGx5XnzU9zB5Pkpu59XKmKfLSwEb7SlHehrvO9+WZJZIr8TcKGGqXW75ODNvCERoyN
-	 73ntDcXnJJYp3O4xRVHHyPA1mdpcRjgLSujSiX4Y82V/+0m89IGsnNagoBr77K+UCP
-	 Xu59fDNYqwqJA==
-Date: Thu, 30 May 2024 20:59:17 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	David Hildenbrand <dhildenb@redhat.com>
-Subject: Re: [PATCH v16 2/5] random: add vgetrandom_alloc() syscall
-Message-ID: <20240531035917.GD6505@sol.localdomain>
-References: <20240528122352.2485958-1-Jason@zx2c4.com>
- <20240528122352.2485958-3-Jason@zx2c4.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=NVIDngF/IizFVHxUCXaeTl2n2zTiCX8Jf+KdRxI/0BQa7FucYGRfizR5plbrjfwFQiKKTkSp1TSB6IZRYBd2bRJ9HHQ0f01eDXSSS6mg7MVM6A9ICqu4vlkLfWW7V5A+Db5FR2Hsrs0M9s5wwmVJQucLNcm9etnafLDkjZxj10U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; arc=none smtp.client-ip=144.6.53.87
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
+	id 1sCyhZ-0049sD-1x;
+	Fri, 31 May 2024 17:37:34 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 31 May 2024 17:37:35 +0800
+Date: Fri, 31 May 2024 17:37:35 +0800
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>, "David S. Miller" <davem@davemloft.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>, linux-crypto@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v4 16/71] crypto: x86/poly1305 - Switch to new Intel CPU
+ model defines
+Message-ID: <ZlmaXyWpH779vJQM@gondor.apana.org.au>
+References: <20240424181245.41141-1-tony.luck@intel.com>
+ <20240424181458.41462-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,41 +41,18 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240528122352.2485958-3-Jason@zx2c4.com>
+In-Reply-To: <20240424181458.41462-1-tony.luck@intel.com>
 
-On Tue, May 28, 2024 at 02:19:51PM +0200, Jason A. Donenfeld wrote:
-> +/**
-> + * sys_vgetrandom_alloc - Allocate opaque states for use with vDSO getrandom().
-> + *
-> + * @num:	   On input, a pointer to a suggested hint of how many states to
-> + * 		   allocate, and on return the number of states actually allocated.
-> + *
-> + * @size_per_each: On input, must be zero. On return, the size of each state allocated,
-> + * 		   so that the caller can split up the returned allocation into
-> + * 		   individual states.
-> + *
-> + * @addr:	   Reserved, must be zero.
-> + *
-> + * @flags:	   Reserved, must be zero.
-> + *
-> + * The getrandom() vDSO function in userspace requires an opaque state, which
-> + * this function allocates by mapping a certain number of special pages into
-> + * the calling process. It takes a hint as to the number of opaque states
-> + * desired, and provides the caller with the number of opaque states actually
-> + * allocated, the size of each one in bytes, and the address of the first
-> + * state, which may be split up into @num states of @size_per_each bytes each,
-> + * by adding @size_per_each to the returned first state @num times, while
-> + * ensuring that no single state straddles a page boundary.
-> + *
-> + * Returns the address of the first state in the allocation on success, or a
-> + * negative error value on failure.
-> + *
-> + * The returned address of the first state may be passed to munmap(2) with a
-> + * length of `(size_t)num * (size_t)size_per_each`, in order to deallocate the
-> + * memory, after which it is invalid to pass it to vDSO getrandom().
+On Wed, Apr 24, 2024 at 11:14:58AM -0700, Tony Luck wrote:
+> New CPU #defines encode vendor and family as well as model.
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  arch/x86/crypto/poly1305_glue.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Wouldn't a munmap with '(size_t)num * (size_t)size_per_each' be potentially too
-short, due to how the allocation is sized such that states don't cross page
-boundaries?
-
-- Eric
+Both applied.  Thanks.
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
