@@ -1,216 +1,234 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41930183991
-	for <patches@lists.linux.dev>; Thu, 30 May 2024 23:10:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717110613; cv=fail; b=CoC/POhvYscW9wqKpY+CasqRJcI6a2zopfoasjqmVKMaAeUXb9wxSQ6IkO40+YegFCqNPiiS2KIJHd6oplHkdhV5ORR4BdUW/o4yc02Lyu8tI2bBqvWWzUYhOtJayQuBYEoAbDVf38W+YmGPFrXlfRAa7wk9tfsz8tE1z9V9BWM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717110613; c=relaxed/simple;
-	bh=wudzwiPhAGpNQmvY2/r/WPQjs55qa3uWo/YJ+u3hoPo=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=DOnAPotYM5ZyFE+MmDQDI7UoYrLYRjjNv3rvbRKdhkTTUaBqFcOG1mHuZLXnuINMDivG9lAsfoSoKboV4qrG5N/6TkKhoYXXoXHf3BHnlVjupknbDan/KFwEO1pnkq/RDa3fvS3Pb8LXz/BJhBJynLmI+kpgkwKCpboC9vi6Jdc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Dy3J5/Jq; arc=fail smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F3B1367
+	for <patches@lists.linux.dev>; Fri, 31 May 2024 00:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717115168; cv=none; b=sEq1uoLCo0LJGWox9TQ1OmXyGbRerRupfWM6zO/3K4AkyZeiqP2+38iZB2OyJjUfTHXBzhr4NS1kr98/XBdhAROvO0QbDkWwVLcRplVrItcSpUbNR7zCZU2lDwP45+6f7RUXPM/fF01D6CkVTnhEUd6J7DWuSAL/mpYgYQdh4uY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717115168; c=relaxed/simple;
+	bh=2Ky422DEIg3Jw2hTeXVdbGZmfah7IqL0/fd8RjVrXYQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LWU+nrV7qtyjoy7eFDIwPttQxTBsm9lmaWJ1TpPFNO8qa021ZIU4UGlS6TZ1mFO7sG6Fkd6tihKY3FjyLJvNBj/bfyD3nI0vd745AhtMoK2m9/pvE20dZWcFpbFId4u5U/PHYHmFC8Eb79B+eEqSU778tKHqLUrZOwCOH5JKFnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bw96Wql6; arc=none smtp.client-ip=192.198.163.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Dy3J5/Jq"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bw96Wql6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717110612; x=1748646612;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=wudzwiPhAGpNQmvY2/r/WPQjs55qa3uWo/YJ+u3hoPo=;
-  b=Dy3J5/JqVX1VZlLmk41CPuTPU7hYQTzn9jN9ZIUv1RMBP+DcU9nkDxw/
-   OyLys/uF3MVBVsdBNXRFIq/iKwjZbHeBz1+YzAOVlge+et3OKAqE0g8jp
-   9/QbPrDPHtE9VEYDEWHs9WiQRP0+XhUHehDuTDbmOiBeuHfcycjKpjuAG
-   I2eMm/lT5mebUS8N9CNtKIDC8q2IUXY2wSbGfIPPrHm3NmwBRwX145Amj
-   pzQqUX4KyxOUiYO4yV1A6abD9oUrK1yMnzqvGo+zzsRyIWqE+xEEvywfn
-   WW5jRyptnbP3f8zjEDFak8Oz8Ai7MhxbQdKaIRAQJK7U9sTE/e8w+q4qd
+  t=1717115166; x=1748651166;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=2Ky422DEIg3Jw2hTeXVdbGZmfah7IqL0/fd8RjVrXYQ=;
+  b=bw96Wql6p9A2pYMVBIXbr+vg5HN8h0jheMR7d+/8UmSrQjLjYPGnXqhk
+   nGge/yOn1Y5syDNLy4p3W3fleDeUsMmrOxW96piQAfZkJifd2+V7zh0+7
+   R2RDpACg8oGIqtLWFmHZ/bnzNKiUrXh73UU8ecX4b1Pa2tQB1HidBVlw3
+   g2KFcS2YWyGe2XsepXGcnCF364tshAyjb7cD1lBm1+kOqjDajuob3QHeh
+   Q1JrUR8WgNa2lY5pbZ+/8yqq6mqSgASDbc0NLlsF6t3gE8rxol0wGXw64
+   ux6/tNBppwV9x5fuWlA221mv5w5t46ljzgao/1oIzQXwLe+6ciyg2V7WQ
    Q==;
-X-CSE-ConnectionGUID: rLhVI632Sz2k7HxMzHyHYQ==
-X-CSE-MsgGUID: 3To4M5tURLWDh8sL66NAHQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11088"; a="16584335"
+X-CSE-ConnectionGUID: KOfRYkBIQG6aEb7hvCntaw==
+X-CSE-MsgGUID: q6GMiBpCTfqIXoliA5n0aw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11088"; a="31174388"
 X-IronPort-AV: E=Sophos;i="6.08,202,1712646000"; 
-   d="scan'208";a="16584335"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2024 16:10:10 -0700
-X-CSE-ConnectionGUID: OAZN/tlwRVuEGMXpToCk3A==
-X-CSE-MsgGUID: P/O0MHN+QNetOBrJ2MLQ1Q==
+   d="scan'208";a="31174388"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2024 17:26:05 -0700
+X-CSE-ConnectionGUID: t983usbUQuSTBLOpcIAgLA==
+X-CSE-MsgGUID: K5mKGmECQnWD1/FSUh7mbg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,202,1712646000"; 
-   d="scan'208";a="35905847"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by fmviesa007.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 30 May 2024 16:10:11 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Thu, 30 May 2024 16:10:10 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Thu, 30 May 2024 16:10:09 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Thu, 30 May 2024 16:10:09 -0700
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.169)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 30 May 2024 16:10:09 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=e3W5rzVxKoQ72SULJqbZv6VBbK1Z1M4EC9wfmKZI9WVQCw7SYWQ4fAecgIoaVGp6X4NxYqHLmGJhVYOYIFyk/DPuEvYPBq05MWCROY8KQDGCftzfM79X6VWbbOWs8Vc9oXAlax6aaA7NFdAT7eXa3MBDeOHgrgaujxGMFyCwBXr7OXTU3cu0fOwQOdnv69DSXZM+GObyRJg6oAFlW4jgYdtOAFEmrelEy+VD/uEAKJkF6cJrsInRArje0Kdpoe2gWQHrWaiiXejBbriSglfhfkeK9esGuRa+8FBSOMkyqg5aP0Yg+r65pBPusDC7MLOolkAIIlB1ZRaH0Z9leSoG9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xE1IF8QPwcMBU4k7YVNhSSzFWJShbOkzNsli0u7wPWU=;
- b=bcMq/jUsjGZpRLbGFBJ2cRrh4N/q7Xga6NjGO23lfY+laqP1FYyttIrnVmXMIW9fuxvft1eL6+okYvwAXAUQg8ffJ9DMIdZSUSVUWXZ8kjyJkXhQhjBN94FPP3/Dh08zCtS0884GYy6/Nx8SevgwUTwiOxpdXPzcO+4/r6ErMAbOuobd36QaBoavo+q2ETLL9wCAG4c7H4I4wrX3FOm2RT5dKuuumo1jj/SW16Qf7Ek5k1ULEj5CPSV9pY+X23lcKhtnuXsZXu/mNScwm02hIcLaNnNTuzwX5ZdTzNJlemSzUixlbIhZUykg+KhMqU1v+3zEH88UC+11ilnbbzNytg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by PH0PR11MB4981.namprd11.prod.outlook.com (2603:10b6:510:39::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.21; Thu, 30 May
- 2024 23:10:07 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf%3]) with mapi id 15.20.7633.017; Thu, 30 May 2024
- 23:10:07 +0000
-Message-ID: <9a72eaf6-d750-4898-be75-6c27512750b1@intel.com>
-Date: Thu, 30 May 2024 16:10:04 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 00/20] Add support for Sub-NUMA cluster (SNC) systems
-To: "Luck, Tony" <tony.luck@intel.com>
-CC: "Yu, Fenghua" <fenghua.yu@intel.com>, "Wieczor-Retman, Maciej"
-	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
- Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>,
-	"x86@kernel.org" <x86@kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
+   d="scan'208";a="35952940"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
+  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2024 17:26:04 -0700
+Date: Thu, 30 May 2024 17:26:03 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v19 08/20] x86/resctrl: Prepare for new Sub-NUMA Cluster
+ (SNC) monitor files
+Message-ID: <ZlkZG5bgsU6hY0Ok@agluck-desk3.sc.intel.com>
 References: <20240528222006.58283-1-tony.luck@intel.com>
- <08ca8fe7-9da6-41da-aad2-0081b789326c@intel.com>
- <ZleODtL_6D-Q_OMX@agluck-desk3.sc.intel.com>
- <a4d37f57-328f-4456-92bc-5e6469d092c8@intel.com>
- <ZlirIUbLw8fLHe0j@agluck-desk3.sc.intel.com>
- <2a761266-e934-4740-bf15-95dbfe4e4d5d@intel.com>
- <SJ1PR11MB60836D413A87A0351ABD90A2FCF32@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <SJ1PR11MB60836D413A87A0351ABD90A2FCF32@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0241.namprd03.prod.outlook.com
- (2603:10b6:303:b4::6) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+ <20240528222006.58283-9-tony.luck@intel.com>
+ <fe9a4cd5-f74d-4c89-8667-8b5b1841b84e@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|PH0PR11MB4981:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1a5fba92-fd31-4322-dda7-08dc80fda588
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|366007|376005;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VXpnZjJ2bG4vU1F6Y283SzZ1dzNJbzBOMjI4UWE0MFg2aWQ1Rm5wcTJ4RmlM?=
- =?utf-8?B?RjMzazdCK3lwSThuZWllSzBMRVVZaWdwSitvOWM1ZWdXeDZYZkJ0cS9CNS9U?=
- =?utf-8?B?Y0laMWtTaVhwZGd1LzlsdzNDaW1nY0ZhaUdON0JMOWdDMHEyUVVlQkpFb3pX?=
- =?utf-8?B?OFg5N01mQkg5cGk3QUJaazZhU2RPSmFaVW1SL1NnZC9Oc0IxZHdpWmNod0V2?=
- =?utf-8?B?RzkrMnZKSHU1blBWSjl2YVU4VElOYlE1NEw5RlNhZzBZU1RsR0g1ZXcwYlhZ?=
- =?utf-8?B?ekJiVEc5cVlTWEgrV2ViSE9VVmliRU45MjlyQXd4WGEwcnJMeVRtU0lmSDl0?=
- =?utf-8?B?Z3Y1ajhNL2wyeXBYeWZPMXlEcEhCNzNjUVVZWXFDdjFmQXJCSFoyWDlKSkhD?=
- =?utf-8?B?M3NKQ0hxYnh0b0Q4Y0pVVGlzTUpZdjhIZzRBVndORHYwWjVyam5PQUN1SFBn?=
- =?utf-8?B?em9xbWllejZOV0w5VkVEcWNDRW40L3lJVTZoazBEaEZWSVNFdWd0eUpLTlIv?=
- =?utf-8?B?ZXBlVHhmT2MxQjRaVGJIalNRTVZmR1ZuQmppMHZpYXEyRk5jUDBpTUhiZmpZ?=
- =?utf-8?B?YUV1WGZQTVFMbTJQREM3NTVsNU5DT29BaXAzcTB5bkZMNHBHZjNuUHA0cUMv?=
- =?utf-8?B?dnhzSnJNLzBmWU1mSVU0OFNQdkd3N2ttUjJnODNGeSttWklHVHFSdGV2NUNy?=
- =?utf-8?B?SUNhUCsvU3RqTitZM0hnNjY5UnRCb0FuSlQzMzhPSG5LL0ZYbFVKMWIweWdL?=
- =?utf-8?B?RmQ2YUE2bzBtVUNHeFR2c0gxZlJLditwN1dZMXJvVzBac1RmOXpVZndpMWc5?=
- =?utf-8?B?TzQ1QWhCV3VIcFFwazkyRDlZY2cwUEM5dXBOclEwMHoycUQ1VDhzOTlma1ZP?=
- =?utf-8?B?clpLb2U1Y0diSXY0T05zdzgrSG15Z2FKSUZ4encvYXlLMTFBcGJpVC8xMmdF?=
- =?utf-8?B?SzRTcHpYMUJYUkNoUWQ5d0pzaE9aZVFpKzlCRi9Ybi9jV253dXhQS0o0VVpO?=
- =?utf-8?B?OFVwblRxeFhyL0NXSXc2Y0U5aThWYmJPanlDbEFSSWJZT3ZOL25vTE1sL2FT?=
- =?utf-8?B?bm9aN1JteHlhSkVTc0JIZ0xMbk1LVFdNazNxYU54Q1VDMmExZVRqYlNmeVlG?=
- =?utf-8?B?WUZFSXQyNGI5Q3UxSnZRcGd0L0krQVNhN3RHWlRvYjhDdDZzeXJZTlRIZkdj?=
- =?utf-8?B?NnJoUTBBZy9WVlI3NVlrZEFwZVNmalgvTXVrOHFCdFNiOXRtNUxocWQ1Q0w1?=
- =?utf-8?B?eGJzYmZlcWxNWnRTN3poRE1KbWQ3cldUNFBnY0UzZVJGT2l1V1hsZXdobkM0?=
- =?utf-8?B?azNqUllhTEJWazQrYzhtR1hvV2tSSVRYZStNSEc2Y1ArSmFKVWcwZ3hESjU5?=
- =?utf-8?B?ZjZ6aXhvTzM5bkhnWWIwYld1TWc1OThPcEQ2MkpicnhSS0dCU2gyVy9QNTdN?=
- =?utf-8?B?NDg5MEpEQzJwOGtmeG0xSzk1ZHhOR01xY2MyUnIrdnl3L2dBUVdLTXZ3elox?=
- =?utf-8?B?aXJvM2FZZzRMUnJydklWQS9wbFlsMnhmODcrSHRnbkpMRzRnNUhPWWljKzFx?=
- =?utf-8?B?eWYrWjkzTERwcVd1Y2dSWXM2M29NVlRGSW9IWTVGL3drWC82ZnRQWmJ3cHpJ?=
- =?utf-8?B?dzFGK1VMRnFJN21KZEh1MlVjcklIZ3BkOWdPcC9IV1BKUEQ0YXJsekRvZ3NO?=
- =?utf-8?B?dFYyK1ZCSVYvMlIyb3Z5djZSY01JVWV0TWlGYWFYbWR6YzhYT3JJWktnPT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(366007)(376005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NHY4SVBRRlRKUmNkZWVrNnpkRHNMc1hKZzJwd3c3RzVHc1dEVitRdzk5K01o?=
- =?utf-8?B?UDhMT3QzV2xIeFNLcTJpTnY4ZlJ6VXduQXJ6S1Fyb2VPYlBuOWdySi9yVlFx?=
- =?utf-8?B?a2RMY213cm9rOEhHK0huMSt1SUJUVCtvNElUVHBhL0dlZXlEZW5YS1E2dEww?=
- =?utf-8?B?SENzY0hST2ozTmpCNGxLMkZST2Q2c2RzOUI1amdXek5hS01BMzdEVHppaWho?=
- =?utf-8?B?SC96K3lraFBGV2NRV2JyT0NKM3lPeFlCN2dWZHRWTTZ6UW5TeWtXdllUUTJY?=
- =?utf-8?B?N052SjI0MmFEV2xUeGhUalBENVhJdFloUUw5eEtibVRlWXhtTS9tUktnbi8v?=
- =?utf-8?B?bXZWOWdWLzJ1aGk4ck9qS0krWmJRaXAwd0R2MGphcXpuUzBMNFB0Z2p1QS93?=
- =?utf-8?B?MVFURldNcWpnT0tOcWJ1RXFYUkZWbTBQM1JwT0t5OGticXBLTnA2NDJycFNk?=
- =?utf-8?B?Zno1N1BnZzFwWGtIbks5L2VWNU9LVmJCcWI1Z0ZMSkI4RjN3ZWtlRUhoKzFi?=
- =?utf-8?B?bnBtTVVscmVlMlpDdWlWRGpINEE5Y0N5SDBOZ3JiaXRhS1Q4Q1VMc2JUdk1L?=
- =?utf-8?B?OVRTZDIxT09OazZLemJ0dlQrcWh6NUI3SjRKd2o5WWZ0RjUya3FRRTdQbkxk?=
- =?utf-8?B?ZXBMTUtaWHcyVjZ4dGprOWJMMGU5dGRndFAwT05rTlduV0lLeG1pMWQ5TDY5?=
- =?utf-8?B?YlhJSDduY3A4SmF2UVpGUlZMcTl4dTA1SDlQQWlaSlMydVo5VExxOTJlVnFk?=
- =?utf-8?B?aE5ldGppM0IvcGxwZWNFUmtPazZJTkhheEFqam1GNk5vMkNocmF3dWxRdURh?=
- =?utf-8?B?b08xTzhBZ0kxaGF3ZFk4cWNweEdtVTdZQW1lcUFUakZpUlMwWDFJeDJNWC94?=
- =?utf-8?B?Q2xEblNNS2I0SGY1OVYrTUl5eXQ1RjNxTUxBT0ticmxXOWJzTEZKeTljS0tw?=
- =?utf-8?B?aXFtQmpiK3p5MEtsWFNxL2FVaUdDK1JGUm5waVRsWDhQdHBRVzVwbWxaOU1S?=
- =?utf-8?B?MjAwK1Zab1E1VTJReDJmTlI5WUlEU3B5U3diaTNkY3QweUJUL1NQZlpZRnVh?=
- =?utf-8?B?T1lPLzFnMGhXcXVpOW10TllncU00cS92bnVjNWlwYzExakFGVmNtUTVKemsr?=
- =?utf-8?B?czhaM1h2U0xyb0NyVDNCV2NsSTJkN29MSC9QV280V2J2d1dtZ1IyalNHTzc4?=
- =?utf-8?B?bGxJMjR3MVFmandhYlNVcGlGTE1OSFhLbTN0akdUZk44OHhWTU5jenlhMWF0?=
- =?utf-8?B?dEJid3QzR0tRcGV2NU9tWG1Rc0NGeGdVQkVhcnhYNUlHZytlb0VtVE1jWGJ1?=
- =?utf-8?B?bUZwWjQvMWRXS1JWeTVEQ21tdk5sWHB0MTN6R0wzaU4vcTlpUUd5V0JObm1G?=
- =?utf-8?B?SU5wa2F1eGtxcDFNVkNTdEd4UTdWM2FVSlVwYmNnSkpxOWovNjNQVE0yZ3kv?=
- =?utf-8?B?dCtOVzNYV045dE1Hc0QxN0Z3aUFNY2tYRVNKTVY5S0dtL3pDN2RiRm1oUXZX?=
- =?utf-8?B?eVprYkFxRFBsTEhBNE1MY0dqUzIwc1BOdTBHa3YrbmJLQ2UxOG10V2NNcTBD?=
- =?utf-8?B?emd0cDhWTEV3dnl2R0UxMUZQU2Q2T0RrRGJSNFhQY0NDT25aNDROVDhvUjNp?=
- =?utf-8?B?YnVEZVNoNXhSZlZMbFpDZFJUMFZIa2x2Y01rTkdLdytNT1BXR0NBK3Z2eEFG?=
- =?utf-8?B?ZjBBdnpOaHFpZzlmeTQ0ZC9oOWdNdFJSWVJWNVRqaWZJS1JjVEtUUkdWc1BZ?=
- =?utf-8?B?UDRTTVh4OVNIVnVvNUpJK0dmemxKQ04wa3lFQ3M4R1MxL1lhTVhYbkhnakRm?=
- =?utf-8?B?NEJ6SDFLa2JrVkV0ZUJqWVBqZU1UN2d5VjBIZVdZdjVnQ3lYc2xpWkJlb3Ra?=
- =?utf-8?B?cHlobERic1VVaWhiSTR4WjQxSWFmamxDVmNQQTJyb04zaDlnYW1FTStoZUNs?=
- =?utf-8?B?MlM0aS9kblRiRVByUjNoUzZzVzBmUk9nWTY4NmpseER0NTdLOWc0SkhkZkhP?=
- =?utf-8?B?NTRjUFE5VWIzRCt4bVZ2SThQejY2SVY2dExYUElEaTBGcTdiS3RvMHhaUHRI?=
- =?utf-8?B?Q2piVTRvQVVYQUlnK3hCOUtiZ1dsdDJUSXpHb250UCtZSm5GMDh1cGlXSGc3?=
- =?utf-8?B?RFBJZGZqY1dOb3VkS3BQalh3R2hJNy9uNzR1L3BnZHhEZXFjYnRUaG54U2VS?=
- =?utf-8?B?YkE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a5fba92-fd31-4322-dda7-08dc80fda588
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 23:10:07.3033
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3fpNMA5DSe7XbqfQtErFr5xkOZE4fqs8wsrWd5C2lKHKGsK5GzQpkLQC2bf00nOK6qGoF16NFMQuJUUphR7Xc/IKfW2NwBJXDHZ8uyaiwhM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4981
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fe9a4cd5-f74d-4c89-8667-8b5b1841b84e@intel.com>
 
-Hi Tony,
-
-On 5/30/24 3:49 PM, Luck, Tony wrote:
->> btw ... the static checker I ran did have four other complaints, three about
->> uninitialized data and one about divide by zero. Most problems appear to be
->> in mbm_update() that does not initialize rr.sumdomains nor rr.ci before
->> calling __mon_event_count().
->>
->> Please use available tools to check code before posting.
+On Thu, May 30, 2024 at 01:21:01PM -0700, Reinette Chatre wrote:
+> Hi Tony,
 > 
-> Which static checker?  I tried smatch and it only finds one:
+> On 5/28/24 3:19 PM, Tony Luck wrote:
+> > When SNC is enabled monitoring data is collected at the SNC node
+> > granularity, but must be reported at L3-cache granularity for
+> > backwards compatibility in addition to reporting at the node
+> > level.
+> > 
+> > Add a "ci" field to the rdt_mon_domain structure to save the
+> > cache information about the enclosing L3 cache for the domain.
+> > This provides:
+> > 
+> > 1) The cache id which is needed to compose the name of the legacy
+> > monitoring directory, and to determine which domains should be
+> > summed to provide L3-scoped data.
+> > 
+> > 2) The shared_cpu_map which is needed to determine which CPUs can
+> > be used to read the RMID counters with the MSR interface.
+> > 
+> > This is the first step to an eventual goal of monitor reporting files
+> > like this (for a system with two SNC nodes per L3):
+> > 
+> > $ cd /sys/fs/resctrl/mon_data
+> > $ tree mon_L3_00
+> > mon_L3_00			<- 00 here is L3 cache id
+> > ├── llc_occupancy		\  These files provide legacy support
+> > ├── mbm_local_bytes		 > for non-SNC aware monitor apps
+> > ├── mbm_total_bytes		/  that expect data at L3 cache level
+> > ├── mon_sub_L3_00		<- 00 here is SNC node id
+> > │   ├── llc_occupancy		\  These files are finer grained
+> > │   ├── mbm_local_bytes		 > data from each SNC node
+> > │   └── mbm_total_bytes		/
+> > └── mon_sub_L3_01
+> >      ├── llc_occupancy		\
+> >      ├── mbm_local_bytes		 > As above, but for node 1.
+> >      └── mbm_total_bytes		/
+> > 
+> > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > ---
+> >   include/linux/resctrl.h                   |  2 ++
+> >   arch/x86/kernel/cpu/resctrl/internal.h    | 21 +++++++++++++++++++++
+> >   arch/x86/kernel/cpu/resctrl/core.c        |  7 ++++++-
+> >   arch/x86/kernel/cpu/resctrl/pseudo_lock.c |  1 -
+> >   arch/x86/kernel/cpu/resctrl/rdtgroup.c    |  1 -
+> >   5 files changed, 29 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> > index 64b6ad1b22a1..d733e1f6485d 100644
+> > --- a/include/linux/resctrl.h
+> > +++ b/include/linux/resctrl.h
+> > @@ -96,6 +96,7 @@ struct rdt_ctrl_domain {
+> >   /**
+> >    * struct rdt_mon_domain - group of CPUs sharing a resctrl monitor resource
+> >    * @hdr:		common header for different domain types
+> > + * @ci:			cache info for this domain
+> >    * @rmid_busy_llc:	bitmap of which limbo RMIDs are above threshold
+> >    * @mbm_total:		saved state for MBM total bandwidth
+> >    * @mbm_local:		saved state for MBM local bandwidth
+> > @@ -106,6 +107,7 @@ struct rdt_ctrl_domain {
+> >    */
+> >   struct rdt_mon_domain {
+> >   	struct rdt_domain_hdr		hdr;
+> > +	struct cacheinfo		*ci;
+> >   	unsigned long			*rmid_busy_llc;
+> >   	struct mbm_state		*mbm_total;
+> >   	struct mbm_state		*mbm_local;
+> > diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+> > index 135190e0711c..eb70d3136ced 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/internal.h
+> > +++ b/arch/x86/kernel/cpu/resctrl/internal.h
+> > @@ -2,6 +2,7 @@
+> >   #ifndef _ASM_X86_RESCTRL_INTERNAL_H
+> >   #define _ASM_X86_RESCTRL_INTERNAL_H
+> > +#include <linux/cacheinfo.h>
+> >   #include <linux/resctrl.h>
+> >   #include <linux/sched.h>
+> >   #include <linux/kernfs.h>
+> > @@ -509,6 +510,26 @@ static inline bool resctrl_arch_get_cdp_enabled(enum resctrl_res_level l)
+> >   int resctrl_arch_set_cdp_enabled(enum resctrl_res_level l, bool enable);
+> > +/*
+> > + * Get the cacheinfo structure of the cache associated with @cpu at level @level.
+> > + * cpuhp lock must be held.
+> > + */
+> > +static inline struct cacheinfo *get_cpu_cacheinfo_level(int cpu, int level)
+> > +{
+> > +	struct cpu_cacheinfo *ci = get_cpu_cacheinfo(cpu);
+> > +	int i;
+> > +
+> > +	for (i = 0; i < ci->num_leaves; i++) {
+> > +		if (ci->info_list[i].level == level) {
+> > +			if (ci->info_list[i].attributes & CACHE_ID)
+> > +				return &ci->info_list[i];
+> > +			break;
+> > +		}
+> > +	}
+> > +
+> > +	return NULL;
+> > +}
+> > +
+> 
+> This does not belong in resctrl. It really looks to partner well with existing
+> cache helpers in include/linux/cacheinfo.h that already contains get_cpu_cacheinfo_id().
+> Considering the existing naming get_cpu_cacheinfo() may be more appropriate.
 
-I used coverity this time.
+Reinette,
 
-Reinette
+The name get_cpu_cacheinfo() already exists and does something different
+(returns a "struct cpu_cacheinfo *" rather than a "struct cacheinfo *").
+
+How does this look for the change to <linux/cacheinfo.h> ... add a new
+function get_cpu_cacheinfo_level() and then use it as a helper for the
+existing get_cpu_cacheinfo_id()
+
+-Tony
+
+---
+
+diff --git a/include/linux/cacheinfo.h b/include/linux/cacheinfo.h
+index 2cb15fe4fe12..301b0b24f446 100644
+--- a/include/linux/cacheinfo.h
++++ b/include/linux/cacheinfo.h
+@@ -113,10 +113,10 @@ int acpi_get_cache_info(unsigned int cpu,
+ const struct attribute_group *cache_get_priv_group(struct cacheinfo *this_leaf);
+ 
+ /*
+- * Get the id of the cache associated with @cpu at level @level.
++ * Get the cacheinfo structure for cache associated with @cpu at level @level.
+  * cpuhp lock must be held.
+  */
+-static inline int get_cpu_cacheinfo_id(int cpu, int level)
++static inline struct cacheinfo *get_cpu_cacheinfo_level(int cpu, int level)
+ {
+ 	struct cpu_cacheinfo *ci = get_cpu_cacheinfo(cpu);
+ 	int i;
+@@ -124,12 +124,23 @@ static inline int get_cpu_cacheinfo_id(int cpu, int level)
+ 	for (i = 0; i < ci->num_leaves; i++) {
+ 		if (ci->info_list[i].level == level) {
+ 			if (ci->info_list[i].attributes & CACHE_ID)
+-				return ci->info_list[i].id;
+-			return -1;
++				return &ci->info_list[i];
++			return NULL;
+ 		}
+ 	}
+ 
+-	return -1;
++	return NULL;
++}
++
++/*
++ * Get the id of the cache associated with @cpu at level @level.
++ * cpuhp lock must be held.
++ */
++static inline int get_cpu_cacheinfo_id(int cpu, int level)
++{
++	struct cacheinfo *ci = get_cpu_cacheinfo_level(cpu, level);
++
++	return ci ? ci->id : -1;
+ }
+ 
+ #ifdef CONFIG_ARM64
