@@ -1,79 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D055BAD58;
-	Sat,  1 Jun 2024 05:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E5A208A4;
+	Sat,  1 Jun 2024 10:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717220360; cv=none; b=czNd9zGrU8fljcrSokWeaj4HfkRggszmlNLq3WP34/lfCehx2zJNOEm3LXGG/V/0pDhoOq+/q+JEWkuWAY1d2SLjlyv12gRruB6vERZ8xlDAFtFrY6lLIqO/4LE+U5cd2pnssEmBw30I82Cd9JZuOnbgq521FWoxe6FhJuMQqcY=
+	t=1717239409; cv=none; b=LuVD/gsEYlVkpfF5/3r6BmZ12r23hMeNMaZxSQT0JmfV0tWgizr4SEeRx0ABykp7xjgvN5xM0pdm+UJocHjgQHs3qSZvGncACnF1Egv3zeTtvepGsUuHNFv+8loTrQde5/ejdnQixwzF8RCpJ3cZJTCFpPxBY9vzVlhlLkg2oj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717220360; c=relaxed/simple;
-	bh=59YtFcTEIgzORMsEBTpAtFOGt6Bg8PbHfMg7i59X/jE=;
+	s=arc-20240116; t=1717239409; c=relaxed/simple;
+	bh=41DY8TV8S+YxvFiEAbKmnGhANeol4FJ3Mp4MdCpmIck=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lK+RhrVAml64R5vK3I9B+eC28wpgjl02S3kEFwV61K5ccJFHXPyhon0fNYBRAGGszPY8f3xVCAjl26yGE2dhD2daptungXoA5Oxb2lJa2zmmOnt/PFSMewcOngJmssvqWWzuVa31SUZACyxdgS9smfQNJ4z5UmeBvSnQaXfh78M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FocJHcXg; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=l71T74QMv8ruHcPdlJ3OYw4jLXLBqTIMODQ5BJTIfjAb7jlOMz7G0AXbczP7CdlBzmukeilcRMZKn7Rwi718Rx5Pm//m2YKTp0NG13JmarfF35Lk7aoLGyTe5Ese/bAjtZou7CZzP0U/vS86GBee1ocUgjE1AgKylqyvQiyGJIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=jxWlgk+Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FocJHcXg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A73DC116B1;
-	Sat,  1 Jun 2024 05:39:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717220359;
-	bh=59YtFcTEIgzORMsEBTpAtFOGt6Bg8PbHfMg7i59X/jE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FocJHcXgSZMU56/ixCIudr+HGloHAcGbcnejZz3S0xVLFrox9rZ33sJU5M5JAIcAJ
-	 JPvopBiCsVI5QCCTB+bBABWTtnLxjQAXmhkQANPkM5if+cdhh5RPRTa7fWIn/SMMHp
-	 ScGM64Kx8GfJLfpdd0rsEy6s57IeXmX/yHWfC6dY=
-Date: Sat, 1 Jun 2024 07:39:25 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.8 000/493] 6.8.12-rc1 review
-Message-ID: <2024060112-exile-staring-e25c@gregkh>
-References: <20240527185626.546110716@linuxfoundation.org>
- <60fd8015-9fd0-4454-a11c-763c06cef66a@roeck-us.net>
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="jxWlgk+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF40C116B1;
+	Sat,  1 Jun 2024 10:56:46 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="jxWlgk+Z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1717239405;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=F3C8N1q5G5CmnDvpi3COJ8xyMm2eULKtCWXP4Sq6GaE=;
+	b=jxWlgk+ZWOpZZh5mjiYsYeT/ujL0Csc153a4DS7n5KhpFm2UZaHWVIpItNQEQwnh76T0Vp
+	VN/fbYyhjP/HQWQEvumkcMGyMOUQjoLcxrXSQSoVRzyBcc0pSpukUXkcdDReiYMpvZ9t5N
+	qRJXEQKGpsiYqCh4XdXcwNEkBWpL4zw=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c390d7bc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sat, 1 Jun 2024 10:56:43 +0000 (UTC)
+Date: Sat, 1 Jun 2024 12:56:40 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Hildenbrand <dhildenb@redhat.com>
+Subject: Re: [PATCH v16 2/5] random: add vgetrandom_alloc() syscall
+Message-ID: <Zlr-aMJdAEgHOj9-@zx2c4.com>
+References: <20240528122352.2485958-1-Jason@zx2c4.com>
+ <20240528122352.2485958-3-Jason@zx2c4.com>
+ <20240531035917.GD6505@sol.localdomain>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <60fd8015-9fd0-4454-a11c-763c06cef66a@roeck-us.net>
+In-Reply-To: <20240531035917.GD6505@sol.localdomain>
 
-On Fri, May 31, 2024 at 01:27:44PM -0700, Guenter Roeck wrote:
-> On 5/27/24 11:50, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.8.12 release.
-> > There are 493 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Wed, 29 May 2024 18:53:22 +0000.
-> > Anything received after that time might be too late.
-> > 
+On Thu, May 30, 2024 at 08:59:17PM -0700, Eric Biggers wrote:
+> On Tue, May 28, 2024 at 02:19:51PM +0200, Jason A. Donenfeld wrote:
+> > +/**
+> > + * sys_vgetrandom_alloc - Allocate opaque states for use with vDSO getrandom().
+> > + *
+> > + * @num:	   On input, a pointer to a suggested hint of how many states to
+> > + * 		   allocate, and on return the number of states actually allocated.
+> > + *
+> > + * @size_per_each: On input, must be zero. On return, the size of each state allocated,
+> > + * 		   so that the caller can split up the returned allocation into
+> > + * 		   individual states.
+> > + *
+> > + * @addr:	   Reserved, must be zero.
+> > + *
+> > + * @flags:	   Reserved, must be zero.
+> > + *
+> > + * The getrandom() vDSO function in userspace requires an opaque state, which
+> > + * this function allocates by mapping a certain number of special pages into
+> > + * the calling process. It takes a hint as to the number of opaque states
+> > + * desired, and provides the caller with the number of opaque states actually
+> > + * allocated, the size of each one in bytes, and the address of the first
+> > + * state, which may be split up into @num states of @size_per_each bytes each,
+> > + * by adding @size_per_each to the returned first state @num times, while
+> > + * ensuring that no single state straddles a page boundary.
+> > + *
+> > + * Returns the address of the first state in the allocation on success, or a
+> > + * negative error value on failure.
+> > + *
+> > + * The returned address of the first state may be passed to munmap(2) with a
+> > + * length of `(size_t)num * (size_t)size_per_each`, in order to deallocate the
+> > + * memory, after which it is invalid to pass it to vDSO getrandom().
 > 
-> Build failures in v6.8.12:
-> 
-> Building csky:allmodconfig ... failed
-> Building m68k:allmodconfig ... failed
-> Building xtensa:allmodconfig ... failed
-> 
-> --------------
-> Error log:
-> In file included from kernel/sched/build_utility.c:104:
-> kernel/sched/isolation.c: In function 'housekeeping_setup':
-> kernel/sched/isolation.c:134:53: error: 'setup_max_cpus' undeclared (first use in this function)
->   134 |         if (first_cpu >= nr_cpu_ids || first_cpu >= setup_max_cpus) {
-> 
-> Commit 3c2f8859ae1ce ("smp: Provide 'setup_max_cpus' definition on UP too")
-> might solve the problem.
+> Wouldn't a munmap with '(size_t)num * (size_t)size_per_each' be potentially too
+> short, due to how the allocation is sized such that states don't cross page
+> boundaries?
 
-Thanks for the report, but 6.8.y is now end-of-life :(
+You're right, I think. The calculation should instead be something like:
 
-greg k-h
+    DIV_ROUND_UP(num, PAGE_SIZE / size_per_each) * PAGE_SIZE
+
+Does that seem correct to you?
+
+Jason
