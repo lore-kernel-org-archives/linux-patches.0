@@ -1,70 +1,63 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F781CD38;
-	Mon,  3 Jun 2024 18:42:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C619613A244
+	for <patches@lists.linux.dev>; Mon,  3 Jun 2024 20:46:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=176.9.242.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717440173; cv=none; b=jp5ccXD3ah5LAsXGt3DK/4EdF4RyiOpp8s77ouwq1PE0fWMfuE4XofexgLtbxKM5AzAirf8zeRXw1a0v3DC0xTAi/50HeamwiBXO0JhPdIDN1K/AUKz30QBtWWOdPgvy1xZrEobIAt+Oq16tfI1rNofs4fN8lpqtV68GPGyuQCQ=
+	t=1717447605; cv=none; b=NeKOILm8TeLKafZPvDRpABtxJhtk+j9PsdMM72ONhGLcUGA1+fGGo9dcdOBgrvtasYHBIf7et50CmybGdxTIMTM+w8IOLi9g8VM7Q/Swde4GaZkY7wOELSZlzo/8uwgyRdME/0+0ll21TwZXcAjP23oJnSMTLTo2YZ+UymPNlcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717440173; c=relaxed/simple;
-	bh=nW1jlc/m9thV6uF+r0tV6tWnOtpg0higsRLy7TBagJ8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cZE7Bxmn0A8c9uURNcHAJ1ouw30dCPKFQhXqbv6mdBop9qphr5F8gepTnwdJVrZuT1tf2Dort8/QCpszLXLCpRoco7ZgpFSN16MmB6KOtyeki5WDOucrZ+1M2JUdxdcDBRZsFm4X1gIuNV+Vuu0njDNhwFuPUWTixnKtBOrTDaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ca7B5HyH; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ca7B5HyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6FFC2BD10;
-	Mon,  3 Jun 2024 18:42:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717440172;
-	bh=nW1jlc/m9thV6uF+r0tV6tWnOtpg0higsRLy7TBagJ8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=Ca7B5HyH9cEPGGyTQxh10LS2F4upi3uZuqCrsvjzvbvUBqaHBJf3zgZQ3ve8h5zCx
-	 Yufh4XpPuC78dKOD/g/70o3il1Auw/7LM0gRmoUfq31dG9NLsjQnTp/ITfUYc9d/g+
-	 PvnenDfdBZxHm4w2/N2j3wTfTq+pABCE54hjTLbTJPk+Qha6b2u3E6rK5hU+d/7gk4
-	 20QdFDQJa27PXBGubHm+yvsbakYoAcHaU6uHQV3doq+VJF/7pO4yWqC2CHhWvXxhle
-	 slW9G/u+ConSfHoIjTT0Fw5Rec/VESNCEYsLCDZtBlYsUfurSnbMbwc2Y5LVxK34dA
-	 hbHpP/582vefQ==
-Date: Mon, 3 Jun 2024 11:42:50 -0700
-From: Jakub Kicinski <kuba@kernel.org>
+	s=arc-20240116; t=1717447605; c=relaxed/simple;
+	bh=FsvxSX/KBaDFhi+ZDmk2mVbiVY6TXD1Hp+ZfY7jSulQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nTQerzEH9QF4YM4bu0ScmD5QbSKCPki+xXhwugwaMPQemSPfQbAefB1YBJS3fJVMWK74EfuqKEBOe3aCyND/trh3nYpKaKX8aWrail9VuXZijxD5vn09wqRW6TU6Z8qBpvKsNyG50G3qP4Hjc0WSF2D0BJkWOWIOErbk9VVD2wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=176.9.242.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout3.hostsharing.net (Postfix) with ESMTPS id 131C3100EF4A2;
+	Mon,  3 Jun 2024 22:46:35 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id CC119FAB5C; Mon,  3 Jun 2024 22:46:34 +0200 (CEST)
+Date: Mon, 3 Jun 2024 22:46:34 +0200
+From: Lukas Wunner <lukas@wunner.de>
 To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
- Leon Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
- linux-rdma@vger.kernel.org, netdev@vger.kernel.org, Paolo Abeni
- <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>, Tariq Toukan
- <tariqt@nvidia.com>, Andy Gospodarek <andrew.gospodarek@broadcom.com>, Aron
- Silverton <aron.silverton@oracle.com>, Dan Williams
- <dan.j.williams@intel.com>, David Ahern <dsahern@kernel.org>, Christoph
- Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>, Leonid Bloch
- <lbloch@nvidia.com>, Leon Romanovsky <leonro@nvidia.com>,
- linux-cxl@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 0/8] Introduce fwctl subystem
-Message-ID: <20240603114250.5325279c@kernel.org>
-In-Reply-To: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
-References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Ard Biesheuvel <ardb@kernel.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: Re: [PATCH] sysfs: Add stub sysfs_bin_attr_simple_read() for
+ !CONFIG_SYSFS
+Message-ID: <Zl4rqswlbGM-eRY6@wunner.de>
+References: <0-v1-44baae71b833+ab-sysfs_simple_read_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0-v1-44baae71b833+ab-sysfs_simple_read_jgg@nvidia.com>
 
-On Mon,  3 Jun 2024 12:53:16 -0300 Jason Gunthorpe wrote:
-> fwctl is a new subsystem intended to bring some common rules and order to
-> the growing pattern of exposing a secure FW interface directly to
-> userspace. Unlike existing places like RDMA/DRM/VFIO/uacce that are
-> exposing a device for datapath operations fwctl is focused on debugging,
-> configuration and provisioning of the device. It will not have the
-> necessary features like interrupt delivery to support a datapath.
+On Mon, Jun 03, 2024 at 02:30:45PM -0300, Jason Gunthorpe wrote:
+> Since the only declaration for sysfs_bin_attr_simple_read() is inside the
+> "#ifdef CONFIG_SYSFS". Add a stub to the #else section too.
+[...]
+> I don't see a patch for this yet, but I did find a 0-day robot complaint:
+> 
+> https://lore.kernel.org/all/202404200345.eGdn5uxW-lkp@intel.com/
 
-If you have debug problems in your subsystem, put the APIs in your
-subsystem. Don't force your choices on all the subsystems your device
-interacts with:
+I already submitted a patch on May 23, but it hasn't been applied yet:
 
-Nacked-by: Jakub Kicinski <kuba@kernel.org>
+https://lore.kernel.org/all/05f4290439a58730738a15b0c99cd8576c4aa0d9.1716461752.git.lukas@wunner.de/
 
-Somewhat related, I saw nVidia sells various interesting features in
-its DOCA stack. Is that Open Source?
+(My patch returns 0, yours -EINVAL, but I don't think that matters.)
+
+Thanks (and sorry for the breakage)!
+
+Lukas
