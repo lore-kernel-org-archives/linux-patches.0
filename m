@@ -1,643 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2073.outbound.protection.outlook.com [40.107.102.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A94813E884;
-	Mon,  3 Jun 2024 22:38:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717454304; cv=none; b=Pj1Ga7lIg7t3e1x5KG0NJj8znDAn8op5qYT849WG62Rj1g4GfzlJqQ+NFvMFe2HMjrLPRxdf0aJV+Ux7obXReZUIlF1Eag01QRpQqK0HXRwdn9ySMoluwxuqYHpTiXhw6APUGSKTmXNEok8mQ7cgkhX/nyrexp9cYp7pkK5qSsM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717454304; c=relaxed/simple;
-	bh=FHObO1SlNftrQfO3Lm1ic6PFG1ccVcewMo732BKi9+c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfhBURsQTicg07B0g5ouZnW8bP9l4DHtBEoa5SblaY7ApG/G13mN3iYog8wM5x6jai9F2GEEyCy/47GjXrIy4EAVwuoElsL2wa/Lnr3VT/mcayPFylZBr/YYFmawLXSA3nNcQJBi8E8DO4THO9LAb5JbAFi4st2b1WF0yK1lT8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pjfO1NiM; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0433E13CF8A;
+	Mon,  3 Jun 2024 22:41:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.102.73
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717454496; cv=fail; b=Woe8MZHxkVscXZPN6rpgLXe/MAyLS03B9jg4tnHih0hdhCqmhU2b35BoFJnIvUIgq5hQPYGgWUQqRG7VHgi9eno/yaurg0RM33NtJXFZ3QUxSNuzlZL34MehzuTGHXBZak9G0ko+bEhe9G6//QwYIo6LRn0oJgxx0GtenMjYOyE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717454496; c=relaxed/simple;
+	bh=dGdNOSu8EvfAcqqd8nvSoAJ9+1T7mEN1sDuzjIgTAB4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NtcRe6Z8dus/HSGaM4oBjngtaxx4Wo+EK+9d1TdMGGjlLZB7RMRqvEvcwinbuyujzWYe7vAsO1C/i47FGkbt3KXyUNFqkFsXDgNbwYTUeXwfMlXKC2SSSMCHjz/+Fj1j8/eFZG3GFUQfE9rUwv+VYi+rHxVFip13UzIZcpKtg7s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Wkc5stIi; arc=fail smtp.client-ip=40.107.102.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pjfO1NiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D91C4AF0E;
-	Mon,  3 Jun 2024 22:38:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717454304;
-	bh=FHObO1SlNftrQfO3Lm1ic6PFG1ccVcewMo732BKi9+c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pjfO1NiMoEjVqI4vPlQBAQZa3/WBEJN3aQdj1Bt1BsbADA/v/2Oud74SHHqBAJmYk
-	 VOoNeG/kXhrehExtqgnQeVebdwluQX514nMF61NhvwUfGhqpEaPz6pSVGOqPR8BKNe
-	 KkcRzXY3AdL4OgGE/8wt1UFXAPhcUZbDtkw5BmB3oKpihA817D3gnT+0IrtuSCVIT1
-	 /ClKJH2Kdy70mWL6h+CJalZdJvhwvIK6gKwRGMJoSuxD6jsm7V+koaOx5t0CjEhOCV
-	 Gc2Iapbgl8aDEf9B9/Sx61cKdHr6rrjWXMaC0v2LIOljyd6ZNd7+skswaNI9y5kY7I
-	 7NolpBWtmmomA==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Rae Moar <rmoar@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Daniel Latypov <dlatypov@google.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Maxime Ripard <maxime@cerno.tech>
-Subject: [PATCH v5 11/11] clk: Add KUnit tests for clks registered with struct clk_parent_data
-Date: Mon,  3 Jun 2024 15:38:08 -0700
-Message-ID: <20240603223811.3815762-12-sboyd@kernel.org>
-X-Mailer: git-send-email 2.45.1.288.g0e0cd299f1-goog
-In-Reply-To: <20240603223811.3815762-1-sboyd@kernel.org>
-References: <20240603223811.3815762-1-sboyd@kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Wkc5stIi"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Vex1fwy85t51W6Br7QNMt4IKh+WL/3pLcft77M5B5injSnKYPsnrRkSGenYo+jE2uet6yuQ4KckXtIhVLD1h8snz+Mtrqp2ddJzBsm+J3Iksx5b+wpc1D7Lqf27DjRK+JAEGCthwzHpSqtS0ThcB3nWLx/FR2pNDcXbCoJwmwbhoVcu2HVOZg03LFTXzBVXxOZ00j1UZJhs+ad0jzYcB3FPfGcZCwAcEqWZxC/gZwFrUSd7KjtysS/ee0N6eJJjrB3/xGxeb+ppb7B/8eEEwGUjAXZaSpkDO/0efN7QbtzFuuuFnfw7YKGcHDg5k5NlrGKsva/jxzY4EwaF9m9ylvw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iZP5X/hlCPLgN/7bdf/G/Td3XH76hoViTbakuPOeuOc=;
+ b=a4xprbxtRFkSG8T79rjAK+T6f2Ny4N3KSOACl4Afc0V6iF+8ltpBQuM1vyMI/hWPJcUbT3tRO9WSZVz4TIUH8ME70/fvxL0CgA8cbKKqnPU9D1LHRwkHZwLP9WEW4KT+Ssjr8beQlHhOu0d3shMNP4NwUb3rKrc3tg8Nf+TCHdNoNoCOf3j+pERSJ5GQV5zlsLqk6WtkWPmt50tiHvfNrycQXl6F1kcummQX0WXxE5cT+yu1yWUljYzDMijE07/BC+3mDnor1LQv8NpnvAUawXDe5AZD2CcoAjLLIQvIR0tCE2IKNrg9nbz/WbiHiWd5cJqIBr0865Jlp5xQw7/5+Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iZP5X/hlCPLgN/7bdf/G/Td3XH76hoViTbakuPOeuOc=;
+ b=Wkc5stIi73t35Jai/29riKLmA8/59lAvw7B0nzBZO3ArSKLZgSfPospCg+GCKv7XQXr3MA2i5RhAg0wgWfh7ROpMgCjfwQiQQIN5KfU8MlhosjhAiIweIzCaryFPJ6SH0fDzxMkJhW1PVZZclMrZP/xfdzRi6UIuj32pMWpqyhE2PWsPtcBCvMdLsUnSTlV/zfm4mS0QETTG9bE0xKkX/NFwIi9Zc8BK8rrBmr0fVbBbodpoMaX0ZjB9Lyx1TRh3FHHJWlJXCqcr+984vMZ6n7kMc3Jrd4MzPbmzrwrAaveMQxJ53hmUQhK8046ODYud9CvOKLguALamo9McnJQ7nw==
+Received: from PH1PEPF000132F8.NAMP220.PROD.OUTLOOK.COM (2603:10b6:518:1::29)
+ by CY5PR12MB6573.namprd12.prod.outlook.com (2603:10b6:930:43::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.17; Mon, 3 Jun
+ 2024 22:41:31 +0000
+Received: from CY4PEPF0000EE32.namprd05.prod.outlook.com
+ (2a01:111:f403:f913::1) by PH1PEPF000132F8.outlook.office365.com
+ (2603:1036:903:47::3) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.30 via Frontend
+ Transport; Mon, 3 Jun 2024 22:41:31 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CY4PEPF0000EE32.mail.protection.outlook.com (10.167.242.38) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7633.15 via Frontend Transport; Mon, 3 Jun 2024 22:41:30 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 3 Jun 2024
+ 15:41:18 -0700
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 3 Jun 2024
+ 15:41:17 -0700
+Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Mon, 3 Jun 2024 15:41:16 -0700
+Date: Mon, 3 Jun 2024 15:41:15 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>,
+	<linux-arm-kernel@lists.infradead.org>, Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>, Michael Shavit <mshavit@google.com>,
+	<patches@lists.linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, Mostafa Saleh
+	<smostafa@google.com>
+Subject: Re: [PATCH 0/7] Tidy some minor things in the stream table/cd table
+ area
+Message-ID: <Zl5Gi/dHIvlbPdA7@Asurada-Nvidia>
+References: <0-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <0-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE32:EE_|CY5PR12MB6573:EE_
+X-MS-Office365-Filtering-Correlation-Id: 610eb43c-527a-4525-9d55-08dc841e5039
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230031|1800799015|376005|36860700004|82310400017;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?CQkgCfF4tsdmhUBv0jVS6cRPJPEUn79vaV/QJK5QB4OOZZA05O96xWagkiuC?=
+ =?us-ascii?Q?LgH6/4zvqtvU9Dkec9A9z7XkCF9wW/fuVA4sPJ6ibHSJKtr+V9M3jFGMVtJM?=
+ =?us-ascii?Q?NfyowE4HGAPY434SFDVCIEtg5apwBpexxRQlE6nRl0dGq1nPxukFV4DsWxmJ?=
+ =?us-ascii?Q?sPeBdmaAsVVidbnI1MWhobpUed+Kap11kjOBkN3tnc1zr4Mf3c/JZ4GpVLe6?=
+ =?us-ascii?Q?jHEy43tcmSls9jOpRUEFRqY7EYyNpYGMEm/DkX/GZ8To+cwiQJsZk0vdMK4/?=
+ =?us-ascii?Q?d8QXSifkgrBX2phstIjPNjjSVNbb6p0fUasmk2EN7oSx7l//VQJ0eTBe87gy?=
+ =?us-ascii?Q?emypu86EuI2V85KC5Ha5M1i/FjpCfuDajeFkrigY1NzIJBcIXusuduou9jru?=
+ =?us-ascii?Q?hffewqqsvWkDbGKNET4c7ksq9r3tiJiIRk45I6m8bZkjOBAkDsqIHkQRBFUK?=
+ =?us-ascii?Q?8O831dVRjOpA3dSEgIzcm6OGnbhdfkaAXjmcB9VCE9rlIzHKfZYLw+8kj40j?=
+ =?us-ascii?Q?jO7hlmDKbH4TU1AwnAQhnEcQc8cIcPjhBsrGhMZfujtVvLIFLkemrj8mH4aS?=
+ =?us-ascii?Q?TCVrKPBrxK/T79MXsNKslvMA8TM6rcTTdjbPTPp7POVViBEtQHErAhqgWbZO?=
+ =?us-ascii?Q?e4ALH54cM3nzwB9Ps31dYF8Fefs8PyZvOmZau5/qgw5XiuM51hEZo7RukyWu?=
+ =?us-ascii?Q?LQnifa8yuIzEWKZXjH0ZNRbSZffHL879DUAFtE3SDqVpS/ISN0Jw62q1pc1t?=
+ =?us-ascii?Q?w8ePVabfrU4OvBiX8zZg2ptwwAw0lpxmndU1R6BpHL4tarEpPw6NXBYHpnHA?=
+ =?us-ascii?Q?/s9eS4VyHR4bxJpanxBDjtQsMRqn+h4I9JFGIgx3FD7KRgsddRKO2wpsDKhg?=
+ =?us-ascii?Q?tK6FaWPFZZmmonm1b/PUyWu34ROtynq5Dl5ZRKbLIjX2eXsUSX02LFVZbZe0?=
+ =?us-ascii?Q?ceFSa+1XLC7PnF4El6pG/aJCHJzPYa2vCLW/H5AgZuRCd3sJOPVm3XCTHpZa?=
+ =?us-ascii?Q?vfOZftwYs1a/gaY8jUP26lbFVIWGPzxvb9b35Tvk2YCQutLbxQIm+yIo4smx?=
+ =?us-ascii?Q?FsTenfWeBj9DX/e6HvlIDTxn5jbCEZN78b5tucCmfr9FeWhEtYloRnc7AVTs?=
+ =?us-ascii?Q?pBw/DwL7CbpYj8WEiq9OCLdh25SBRhK5Lk4mzk6ZrVYdXnsQpMiw+cJoMOrw?=
+ =?us-ascii?Q?2VlbaIFLap1KMRvVklHcuR0Mh0tEfkidPIuun8VVuMw3ssAIm6UcEP1zAlOe?=
+ =?us-ascii?Q?Ul1khbqAamqrGR0WCPHgdd4S+kF/LpsoKTevPA/JwnkfsnCxgv0icYEiJ4RY?=
+ =?us-ascii?Q?zud53jsH1eCj8rRqJpZIv6GvHQu/7r2fHD61qyNAGOTvxKSgErMwPeMYoKdo?=
+ =?us-ascii?Q?KxzGH22a6Zv0sbmfSwJc3U1iKP5So8roaZvFePFqaqvxh/zPUw=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(1800799015)(376005)(36860700004)(82310400017);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2024 22:41:30.8199
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 610eb43c-527a-4525-9d55-08dc841e5039
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CY4PEPF0000EE32.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6573
 
-Test that clks registered with 'struct clk_parent_data' work as
-intended and can find their parents.
+On Mon, Jun 03, 2024 at 07:31:26PM -0300, Jason Gunthorpe wrote:
+> Will pointed out that two places referring to the CD/STE struct did not
+> get the new types. While auditing this code a few more oddities were
+> noticed.
+> 
+> - Correct types for the linear stream/cd table pointers struct
+> - Remove redundant dma_addr_t's and save some memory
+> - Remove redundant devm usage
+> - Use the modern rbtree API
+> 
+> Nothing is particularly profound here, I've been sitting on these for
+> awhile, enough is merged now that they can be cleanly based and are
+> seperate from my other series.
+> 
+> Jason Gunthorpe (7):
+>   iommu/arm-smmu-v3: Split struct arm_smmu_strtab_cfg.strtab
+>   iommu/arm-smmu-v3: Do not zero the strtab twice
+>   iommu/arm-smmu-v3: Shrink the strtab l1_desc array
+>   iommu/arm-smmu-v3: Split struct arm_smmu_ctx_desc_cfg.cdtab
+>   iommu/arm-smmu-v3: Do not use devm for the cd table allocations
+>   iommu/arm-smmu-v3: Shrink the cdtab l1_desc array
+>   iommu/arm-smmu-v3: Use the new rb tree helpers
+> 
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 234 +++++++++-----------
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  30 +--
+>  2 files changed, 119 insertions(+), 145 deletions(-)
 
-Cc: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@google.com>
-Cc: Rae Moar <rmoar@google.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/clk/Kconfig                         |   1 +
- drivers/clk/Makefile                        |   3 +-
- drivers/clk/clk_parent_data_test.h          |  10 +
- drivers/clk/clk_test.c                      | 451 +++++++++++++++++++-
- drivers/clk/kunit_clk_parent_data_test.dtso |  28 ++
- 5 files changed, 491 insertions(+), 2 deletions(-)
- create mode 100644 drivers/clk/clk_parent_data_test.h
- create mode 100644 drivers/clk/kunit_clk_parent_data_test.dtso
+Didn't try something too particular for the changes, yet boot
+and sanity tests work fine with this series:
 
-diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
-index f649f2a0279c..c33fdf9fdcd6 100644
---- a/drivers/clk/Kconfig
-+++ b/drivers/clk/Kconfig
-@@ -508,6 +508,7 @@ config CLK_KUNIT_TEST
- 	tristate "Basic Clock Framework Kunit Tests" if !KUNIT_ALL_TESTS
- 	depends on KUNIT
- 	default KUNIT_ALL_TESTS
-+	select OF_OVERLAY if OF
- 	help
- 	  Kunit tests for the common clock framework.
- 
-diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
-index 7b57e3d22cee..ed4e1a0e6943 100644
---- a/drivers/clk/Makefile
-+++ b/drivers/clk/Makefile
-@@ -2,7 +2,8 @@
- # common clock types
- obj-$(CONFIG_HAVE_CLK)		+= clk-devres.o clk-bulk.o clkdev.o
- obj-$(CONFIG_COMMON_CLK)	+= clk.o
--obj-$(CONFIG_CLK_KUNIT_TEST)	+= clk_test.o
-+obj-$(CONFIG_CLK_KUNIT_TEST)	+= clk_test.o \
-+				   kunit_clk_parent_data_test.dtbo.o
- obj-$(CONFIG_COMMON_CLK)	+= clk-divider.o
- obj-$(CONFIG_COMMON_CLK)	+= clk-fixed-factor.o
- obj-$(CONFIG_COMMON_CLK)	+= clk-fixed-rate.o
-diff --git a/drivers/clk/clk_parent_data_test.h b/drivers/clk/clk_parent_data_test.h
-new file mode 100644
-index 000000000000..eedd53ae910d
---- /dev/null
-+++ b/drivers/clk/clk_parent_data_test.h
-@@ -0,0 +1,10 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef _CLK_PARENT_DATA_TEST_H
-+#define _CLK_PARENT_DATA_TEST_H
-+
-+#define CLK_PARENT_DATA_1MHZ_NAME	"1mhz_fixed_legacy"
-+#define CLK_PARENT_DATA_PARENT1		"parent_fwname"
-+#define CLK_PARENT_DATA_PARENT2		"50"
-+#define CLK_PARENT_DATA_50MHZ_NAME	"50_clk"
-+
-+#endif
-diff --git a/drivers/clk/clk_test.c b/drivers/clk/clk_test.c
-index 39e2b5ff4f51..bdf3c4bb2243 100644
---- a/drivers/clk/clk_test.c
-+++ b/drivers/clk/clk_test.c
-@@ -4,12 +4,19 @@
-  */
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
- 
- /* Needed for clk_hw_get_clk() */
- #include "clk.h"
- 
-+#include <kunit/clk.h>
-+#include <kunit/of.h>
-+#include <kunit/platform_device.h>
- #include <kunit/test.h>
- 
-+#include "clk_parent_data_test.h"
-+
- static const struct clk_ops empty_clk_ops = { };
- 
- #define DUMMY_CLOCK_INIT_RATE	(42 * 1000 * 1000)
-@@ -2659,6 +2666,446 @@ static struct kunit_suite clk_mux_no_reparent_test_suite = {
- 	.test_cases = clk_mux_no_reparent_test_cases,
- };
- 
-+struct clk_register_clk_parent_data_test_case {
-+	const char *desc;
-+	struct clk_parent_data pdata;
-+};
-+
-+static void
-+clk_register_clk_parent_data_test_case_to_desc(
-+		const struct clk_register_clk_parent_data_test_case *t, char *desc)
-+{
-+	strcpy(desc, t->desc);
-+}
-+
-+static const struct clk_register_clk_parent_data_test_case
-+clk_register_clk_parent_data_of_cases[] = {
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device_node can
-+		 * find a parent based on struct clk_parent_data::index.
-+		 */
-+		.desc = "clk_parent_data_of_index_test",
-+		.pdata.index = 0,
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device_node can
-+		 * find a parent based on struct clk_parent_data::fwname.
-+		 */
-+		.desc = "clk_parent_data_of_fwname_test",
-+		.pdata.fw_name = CLK_PARENT_DATA_PARENT1,
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device_node can
-+		 * find a parent based on struct clk_parent_data::name.
-+		 */
-+		.desc = "clk_parent_data_of_name_test",
-+		/* The index must be negative to indicate firmware not used */
-+		.pdata.index = -1,
-+		.pdata.name = CLK_PARENT_DATA_1MHZ_NAME,
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device_node can
-+		 * find a parent based on struct
-+		 * clk_parent_data::{fw_name,name}.
-+		 */
-+		.desc = "clk_parent_data_of_fwname_name_test",
-+		.pdata.fw_name = CLK_PARENT_DATA_PARENT1,
-+		.pdata.name = "not_matching",
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device_node can
-+		 * find a parent based on struct clk_parent_data::{index,name}.
-+		 * Index takes priority.
-+		 */
-+		.desc = "clk_parent_data_of_index_name_priority_test",
-+		.pdata.index = 0,
-+		.pdata.name = "not_matching",
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device_node can
-+		 * find a parent based on struct
-+		 * clk_parent_data::{index,fwname,name}. The fw_name takes
-+		 * priority over index and name.
-+		 */
-+		.desc = "clk_parent_data_of_index_fwname_name_priority_test",
-+		.pdata.index = 1,
-+		.pdata.fw_name = CLK_PARENT_DATA_PARENT1,
-+		.pdata.name = "not_matching",
-+	},
-+};
-+
-+KUNIT_ARRAY_PARAM(clk_register_clk_parent_data_of_test, clk_register_clk_parent_data_of_cases,
-+		  clk_register_clk_parent_data_test_case_to_desc)
-+
-+/**
-+ * struct clk_register_clk_parent_data_of_ctx - Context for clk_parent_data OF tests
-+ * @np: device node of clk under test
-+ * @hw: clk_hw for clk under test
-+ */
-+struct clk_register_clk_parent_data_of_ctx {
-+	struct device_node *np;
-+	struct clk_hw hw;
-+};
-+
-+static int clk_register_clk_parent_data_of_test_init(struct kunit *test)
-+{
-+	struct clk_register_clk_parent_data_of_ctx *ctx;
-+
-+	KUNIT_ASSERT_EQ(test, 0,
-+			of_overlay_apply_kunit(test, kunit_clk_parent_data_test));
-+
-+	ctx = kunit_kzalloc(test, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+	test->priv = ctx;
-+
-+	ctx->np = of_find_compatible_node(NULL, NULL, "test,clk-parent-data");
-+	if (!ctx->np)
-+		return -ENODEV;
-+
-+	return kunit_add_action_or_reset(test, (kunit_action_t *)&of_node_put, ctx->np);
-+}
-+
-+/*
-+ * Test that a clk registered with a struct device_node can find a parent based on
-+ * struct clk_parent_data when the hw member isn't set.
-+ */
-+static void clk_register_clk_parent_data_of_test(struct kunit *test)
-+{
-+	struct clk_register_clk_parent_data_of_ctx *ctx = test->priv;
-+	struct clk_hw *parent_hw;
-+	const struct clk_register_clk_parent_data_test_case *test_param;
-+	struct clk_init_data init = { };
-+	struct clk *expected_parent, *actual_parent;
-+
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx->np);
-+
-+	expected_parent = of_clk_get_kunit(test, ctx->np, 0);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, expected_parent);
-+
-+	test_param = test->param_value;
-+	init.parent_data = &test_param->pdata;
-+	init.num_parents = 1;
-+	init.name = "parent_data_of_test_clk";
-+	init.ops = &clk_dummy_single_parent_ops;
-+	ctx->hw.init = &init;
-+	KUNIT_ASSERT_EQ(test, 0, of_clk_hw_register_kunit(test, ctx->np, &ctx->hw));
-+
-+	parent_hw = clk_hw_get_parent(&ctx->hw);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, parent_hw);
-+
-+	actual_parent = clk_hw_get_clk_kunit(test, parent_hw, __func__);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, actual_parent);
-+
-+	KUNIT_EXPECT_TRUE(test, clk_is_match(expected_parent, actual_parent));
-+}
-+
-+static struct kunit_case clk_register_clk_parent_data_of_test_cases[] = {
-+	KUNIT_CASE_PARAM(clk_register_clk_parent_data_of_test,
-+			 clk_register_clk_parent_data_of_test_gen_params),
-+	{}
-+};
-+
-+/*
-+ * Test suite for registering clks with struct clk_parent_data and a struct
-+ * device_node.
-+ */
-+static struct kunit_suite clk_register_clk_parent_data_of_suite = {
-+	.name = "clk_register_clk_parent_data_of",
-+	.init = clk_register_clk_parent_data_of_test_init,
-+	.test_cases = clk_register_clk_parent_data_of_test_cases,
-+};
-+
-+/**
-+ * struct clk_register_clk_parent_data_device_ctx - Context for clk_parent_data device tests
-+ * @dev: device of clk under test
-+ * @hw: clk_hw for clk under test
-+ * @pdrv: driver to attach to find @dev
-+ */
-+struct clk_register_clk_parent_data_device_ctx {
-+	struct device *dev;
-+	struct clk_hw hw;
-+	struct platform_driver pdrv;
-+};
-+
-+static inline struct clk_register_clk_parent_data_device_ctx *
-+clk_register_clk_parent_data_driver_to_test_context(struct platform_device *pdev)
-+{
-+	return container_of(to_platform_driver(pdev->dev.driver),
-+			    struct clk_register_clk_parent_data_device_ctx, pdrv);
-+}
-+
-+static int clk_register_clk_parent_data_device_probe(struct platform_device *pdev)
-+{
-+	struct clk_register_clk_parent_data_device_ctx *ctx;
-+
-+	ctx = clk_register_clk_parent_data_driver_to_test_context(pdev);
-+	ctx->dev = &pdev->dev;
-+
-+	return 0;
-+}
-+
-+static void clk_register_clk_parent_data_device_driver(struct kunit *test)
-+{
-+	struct clk_register_clk_parent_data_device_ctx *ctx = test->priv;
-+	static const struct of_device_id match_table[] = {
-+		{ .compatible = "test,clk-parent-data" },
-+		{ }
-+	};
-+
-+	ctx->pdrv.probe = clk_register_clk_parent_data_device_probe;
-+	ctx->pdrv.driver.of_match_table = match_table;
-+	ctx->pdrv.driver.name = __func__;
-+	ctx->pdrv.driver.owner = THIS_MODULE;
-+
-+	KUNIT_ASSERT_EQ(test, 0, kunit_platform_driver_register(test, &ctx->pdrv));
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx->dev);
-+}
-+
-+static const struct clk_register_clk_parent_data_test_case
-+clk_register_clk_parent_data_device_cases[] = {
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::index.
-+		 */
-+		.desc = "clk_parent_data_device_index_test",
-+		.pdata.index = 1,
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::fwname.
-+		 */
-+		.desc = "clk_parent_data_device_fwname_test",
-+		.pdata.fw_name = CLK_PARENT_DATA_PARENT2,
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::name.
-+		 */
-+		.desc = "clk_parent_data_device_name_test",
-+		/* The index must be negative to indicate firmware not used */
-+		.pdata.index = -1,
-+		.pdata.name = CLK_PARENT_DATA_50MHZ_NAME,
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::{fw_name,name}.
-+		 */
-+		.desc = "clk_parent_data_device_fwname_name_test",
-+		.pdata.fw_name = CLK_PARENT_DATA_PARENT2,
-+		.pdata.name = "not_matching",
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::{index,name}. Index
-+		 * takes priority.
-+		 */
-+		.desc = "clk_parent_data_device_index_name_priority_test",
-+		.pdata.index = 1,
-+		.pdata.name = "not_matching",
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::{index,fwname,name}.
-+		 * The fw_name takes priority over index and name.
-+		 */
-+		.desc = "clk_parent_data_device_index_fwname_name_priority_test",
-+		.pdata.index = 0,
-+		.pdata.fw_name = CLK_PARENT_DATA_PARENT2,
-+		.pdata.name = "not_matching",
-+	},
-+};
-+
-+KUNIT_ARRAY_PARAM(clk_register_clk_parent_data_device_test,
-+		  clk_register_clk_parent_data_device_cases,
-+		  clk_register_clk_parent_data_test_case_to_desc)
-+
-+/*
-+ * Test that a clk registered with a struct device can find a parent based on
-+ * struct clk_parent_data when the hw member isn't set.
-+ */
-+static void clk_register_clk_parent_data_device_test(struct kunit *test)
-+{
-+	struct clk_register_clk_parent_data_device_ctx *ctx;
-+	const struct clk_register_clk_parent_data_test_case *test_param;
-+	struct clk_hw *parent_hw;
-+	struct clk_init_data init = { };
-+	struct clk *expected_parent, *actual_parent;
-+
-+	ctx = kunit_kzalloc(test, sizeof(*ctx), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+	test->priv = ctx;
-+
-+	clk_register_clk_parent_data_device_driver(test);
-+
-+	expected_parent = clk_get_kunit(test, ctx->dev, "50");
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, expected_parent);
-+
-+	test_param = test->param_value;
-+	init.parent_data = &test_param->pdata;
-+	init.num_parents = 1;
-+	init.name = "parent_data_device_test_clk";
-+	init.ops = &clk_dummy_single_parent_ops;
-+	ctx->hw.init = &init;
-+	KUNIT_ASSERT_EQ(test, 0, clk_hw_register_kunit(test, ctx->dev, &ctx->hw));
-+
-+	parent_hw = clk_hw_get_parent(&ctx->hw);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, parent_hw);
-+
-+	actual_parent = clk_hw_get_clk_kunit(test, parent_hw, __func__);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, actual_parent);
-+
-+	KUNIT_EXPECT_TRUE(test, clk_is_match(expected_parent, actual_parent));
-+}
-+
-+static const struct clk_register_clk_parent_data_test_case
-+clk_register_clk_parent_data_device_hw_cases[] = {
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::hw.
-+		 */
-+		.desc = "clk_parent_data_device_hw_index_test",
-+		/* The index must be negative to indicate firmware not used */
-+		.pdata.index = -1,
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::hw when
-+		 * struct clk_parent_data::fw_name is set.
-+		 */
-+		.desc = "clk_parent_data_device_hw_fwname_test",
-+		.pdata.fw_name = CLK_PARENT_DATA_PARENT2,
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::hw when struct
-+		 * clk_parent_data::name is set.
-+		 */
-+		.desc = "clk_parent_data_device_hw_name_test",
-+		/* The index must be negative to indicate firmware not used */
-+		.pdata.index = -1,
-+		.pdata.name = CLK_PARENT_DATA_50MHZ_NAME,
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::hw when struct
-+		 * clk_parent_data::{fw_name,name} are set.
-+		 */
-+		.desc = "clk_parent_data_device_hw_fwname_name_test",
-+		.pdata.fw_name = CLK_PARENT_DATA_PARENT2,
-+		.pdata.name = "not_matching",
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::hw when struct
-+		 * clk_parent_data::index is set. The hw pointer takes
-+		 * priority.
-+		 */
-+		.desc = "clk_parent_data_device_hw_index_priority_test",
-+		.pdata.index = 0,
-+	},
-+	{
-+		/*
-+		 * Test that a clk registered with a struct device can find a
-+		 * parent based on struct clk_parent_data::hw when
-+		 * struct clk_parent_data::{index,fwname,name} are set.
-+		 * The hw pointer takes priority over everything else.
-+		 */
-+		.desc = "clk_parent_data_device_hw_index_fwname_name_priority_test",
-+		.pdata.index = 0,
-+		.pdata.fw_name = CLK_PARENT_DATA_PARENT2,
-+		.pdata.name = "not_matching",
-+	},
-+};
-+
-+KUNIT_ARRAY_PARAM(clk_register_clk_parent_data_device_hw_test,
-+		  clk_register_clk_parent_data_device_hw_cases,
-+		  clk_register_clk_parent_data_test_case_to_desc)
-+
-+/*
-+ * Test that a clk registered with a struct device can find a
-+ * parent based on struct clk_parent_data::hw.
-+ */
-+static void clk_register_clk_parent_data_device_hw_test(struct kunit *test)
-+{
-+	struct clk_register_clk_parent_data_device_ctx *ctx;
-+	const struct clk_register_clk_parent_data_test_case *test_param;
-+	struct clk_dummy_context *parent;
-+	struct clk_hw *parent_hw;
-+	struct clk_parent_data pdata = { };
-+	struct clk_init_data init = { };
-+
-+	ctx = kunit_kzalloc(test, sizeof(*ctx), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-+	test->priv = ctx;
-+
-+	clk_register_clk_parent_data_device_driver(test);
-+
-+	parent = kunit_kzalloc(test, sizeof(*parent), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, parent);
-+
-+	parent_hw = &parent->hw;
-+	parent_hw->init = CLK_HW_INIT_NO_PARENT("parent-clk",
-+						&clk_dummy_rate_ops, 0);
-+
-+	KUNIT_ASSERT_EQ(test, 0, clk_hw_register_kunit(test, ctx->dev, parent_hw));
-+
-+	test_param = test->param_value;
-+	memcpy(&pdata, &test_param->pdata, sizeof(pdata));
-+	pdata.hw = parent_hw;
-+	init.parent_data = &pdata;
-+	init.num_parents = 1;
-+	init.ops = &clk_dummy_single_parent_ops;
-+	init.name = "parent_data_device_hw_test_clk";
-+	ctx->hw.init = &init;
-+	KUNIT_ASSERT_EQ(test, 0, clk_hw_register_kunit(test, ctx->dev, &ctx->hw));
-+
-+	KUNIT_EXPECT_PTR_EQ(test, parent_hw, clk_hw_get_parent(&ctx->hw));
-+}
-+
-+static struct kunit_case clk_register_clk_parent_data_device_test_cases[] = {
-+	KUNIT_CASE_PARAM(clk_register_clk_parent_data_device_test,
-+			 clk_register_clk_parent_data_device_test_gen_params),
-+	KUNIT_CASE_PARAM(clk_register_clk_parent_data_device_hw_test,
-+			 clk_register_clk_parent_data_device_hw_test_gen_params),
-+	{}
-+};
-+
-+static int clk_register_clk_parent_data_device_init(struct kunit *test)
-+{
-+	KUNIT_ASSERT_EQ(test, 0,
-+			of_overlay_apply_kunit(test, kunit_clk_parent_data_test));
-+
-+	return 0;
-+}
-+
-+/*
-+ * Test suite for registering clks with struct clk_parent_data and a struct
-+ * device.
-+ */
-+static struct kunit_suite clk_register_clk_parent_data_device_suite = {
-+	.name = "clk_register_clk_parent_data_device",
-+	.init = clk_register_clk_parent_data_device_init,
-+	.test_cases = clk_register_clk_parent_data_device_test_cases,
-+};
-+
- kunit_test_suites(
- 	&clk_leaf_mux_set_rate_parent_test_suite,
- 	&clk_test_suite,
-@@ -2671,7 +3118,9 @@ kunit_test_suites(
- 	&clk_range_test_suite,
- 	&clk_range_maximize_test_suite,
- 	&clk_range_minimize_test_suite,
-+	&clk_register_clk_parent_data_of_suite,
-+	&clk_register_clk_parent_data_device_suite,
- 	&clk_single_parent_mux_test_suite,
--	&clk_uncached_test_suite
-+	&clk_uncached_test_suite,
- );
- MODULE_LICENSE("GPL v2");
-diff --git a/drivers/clk/kunit_clk_parent_data_test.dtso b/drivers/clk/kunit_clk_parent_data_test.dtso
-new file mode 100644
-index 000000000000..7d3ed9a5a2e8
---- /dev/null
-+++ b/drivers/clk/kunit_clk_parent_data_test.dtso
-@@ -0,0 +1,28 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/dts-v1/;
-+/plugin/;
-+
-+#include "clk_parent_data_test.h"
-+
-+&{/} {
-+	fixed_50: kunit-clock-50MHz {
-+		compatible = "fixed-clock";
-+		#clock-cells = <0>;
-+		clock-frequency = <50000000>;
-+		clock-output-names = CLK_PARENT_DATA_50MHZ_NAME;
-+	};
-+
-+	fixed_parent: kunit-clock-1MHz {
-+		compatible = "fixed-clock";
-+		#clock-cells = <0>;
-+		clock-frequency = <1000000>;
-+		clock-output-names = CLK_PARENT_DATA_1MHZ_NAME;
-+	};
-+
-+	kunit-clock-controller {
-+		compatible = "test,clk-parent-data";
-+		clocks = <&fixed_parent>, <&fixed_50>;
-+		clock-names = CLK_PARENT_DATA_PARENT1, CLK_PARENT_DATA_PARENT2;
-+		#clock-cells = <1>;
-+	};
-+};
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
-
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
