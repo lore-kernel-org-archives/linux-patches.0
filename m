@@ -1,78 +1,106 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2088.outbound.protection.outlook.com [40.107.92.88])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375B613775C
-	for <patches@lists.linux.dev>; Mon,  3 Jun 2024 15:53:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.88
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D3913699A
+	for <patches@lists.linux.dev>; Mon,  3 Jun 2024 16:55:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.19
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717430024; cv=fail; b=LG5zMc6hCjaGrLijFVJFgMC3eBv7FM2fWbBGX/sFqiXqap4ALvMW752/8OV60LwSTLpEzquZttzfIS5hayjXMjooec82nvWi37frtldq+rZ1hu3xnzJ2NxxWh7nhoNIoky/IopUV8HKMi15M9K1/uZoaSyEzYSU7Y5Ccif33x7E=
+	t=1717433734; cv=fail; b=dqbc5NNXw+Ts9IP6JD2y2CmQPtOnnaxrvwN6TkelHhVntfzgzwOeGrGHdJXnjHZABHl9SlopHaDCxAnpfRk4ychn8hpsu7lmmLSD6QHtBlmsWKw4KC5MBO2CJfR9yElO17nyUqo8ddiXjeenP5VPv7raBfR/4H63bFvha3lItFM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717430024; c=relaxed/simple;
-	bh=yzd9LFChuvNGxQtPPK1v3a5VDRZ/rTTXvAaWOf/u1bk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=NOnme1OAhK1wj6Ls6tyPsXF02eBXu6rLgnPFoVQ3QaVjWVNkkfXjr4DN1Gd4q5qJcDFMnKLu5HwcgqTdIkIpqTEehew4Wrh4ef019MpDmahJ55zbv+RSfYsih17B77zHdd45cMHs0XMhWFifeW2LhDmE/KL9sdfrwgxxq0ryLOM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Hc2i7TyM; arc=fail smtp.client-ip=40.107.92.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1717433734; c=relaxed/simple;
+	bh=NjTBHvVJ99u3PPofrPRoI0LUWVNbrRUav+xpgUWSMfE=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=CEcEps+xvaNP7othNkWGCoxYXaeVKlmOlDakKlqOf6/FVGxrq4Rggk/E4Q/f5v9B0bvdwf7d5QiRAm2fX23sJ04Y2NkLUpjAmF8BP/o+HajNoD4+MolY6IXrXChRtIItuaishVg0b4Gn9gJ6iEXaRXvcHr4Slg97ikAbMT17aT8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bVgZeX6A; arc=fail smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Hc2i7TyM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bVgZeX6A"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1717433732; x=1748969732;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=NjTBHvVJ99u3PPofrPRoI0LUWVNbrRUav+xpgUWSMfE=;
+  b=bVgZeX6AoTLwiGgfDwsk4nCCvJ0DnQ3MT0oeBhhR1ycqlH2zb82eUDb7
+   CQpoLIa9gxkwChjEPZp0dnAAvbUTsJZBzmTHBzic+XKE8v1l7DCOFOFQa
+   oRsRbJHhL9/neO9UX3CjZy0vtXGG0KrxLKaSlZD/PxcUxRVLioS/eisHi
+   jjfvw8GB6nEOKdCQBv8Ss5ix6GH+NHJHx6gHR5nGW2MabHpjhJ1WmYbqD
+   EEoXwDOEIsmTera26Zh2AIjX3mTHxgWwE1ccYsWDjmX8NwxWrNhpzipos
+   IPGf9QiqeGkevux0qjcXC5soM0OwJgl4QsaVCgLLAkgnEgiwz6H/66iWB
+   w==;
+X-CSE-ConnectionGUID: eC4SD4aQTEm352BeLwP93Q==
+X-CSE-MsgGUID: Cc7CJRjOQIGYEyVifoDfUQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11092"; a="13747990"
+X-IronPort-AV: E=Sophos;i="6.08,212,1712646000"; 
+   d="scan'208";a="13747990"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2024 09:55:31 -0700
+X-CSE-ConnectionGUID: dJe0A0vmT+maAqBxH0SVoQ==
+X-CSE-MsgGUID: CUfSNh6ZTxaA2kzkDzSJ1g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,212,1712646000"; 
+   d="scan'208";a="36964248"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by fmviesa006.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 03 Jun 2024 09:55:30 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Mon, 3 Jun 2024 09:55:29 -0700
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Mon, 3 Jun 2024 09:55:29 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Mon, 3 Jun 2024 09:55:29 -0700
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.44) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 3 Jun 2024 09:55:29 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DAXuw43w+k9oGsT8gtDDa13ypBXfHRjVk0dOp3ADjEhGstVYgMtuMPZ2q4ezvkNOM6FhA5saAna+Mq/W8hBNRgDibuHFWS2yAXjx1WXu8hgqhN7dbqmsDtKQMebBpxwObIVoHg9w/uROaIRXIfiAafIbaDIrLjUrzK5QRRCVEmohVMubDv4OwJaIj1PVZqEBK1uDR1uHq+MfJcTr/+2Nr7isGeNheaQOsIdNoOCSdl1lg8WgdVgzMqCK96IjoTwewfwrpr/Zj0Arn8q92hG34Jt+YyaPCdmEdb/3OU6bs4T0ZizgMITyXR1/nhRklXsTMhJaFjjN+dtfvdRkjX/YFA==
+ b=nPalMXvAYmS8Xm0sAkOkNnzv66ovh8rvYfG1rrfgCTGP5R0NH8wVnhyM1zxu0GkCbxjw4PmbraoUReXH04TVrl9LYIDhLM3tPD3zxDeF231R8yAj2dkVzEwzfxsg3X+WJMaZCV0cgEDBzaf35ezi/qPwh3IqHI2YcDo2882BXmRgvJ3y2wr53cIq76V1+z9QVX9TKj0EuRd8UBs5Rs4yQ75p0s4GdzPr+SGO4XDAfTj+6Xi7cJ2vDBlB8Ytu5R4AH/62fmnHSAWR2z6j3PaDZKErg0StTvmIpKbp4OCyPe7DeBW2qG65HqGaYmjpcthOuGefziCAfw73x7yAImFrmQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uGAnx4YWzQEavI8LVDlznh8j1reXAQpI6iiRXSb7ilk=;
- b=HbCRcFnelAqpeP6BNXrG94pbPwuT4SJ6SlhCHjDn4T2b6jP5T2ByadJJzLVaUvzciDRB3WyUbxJZ40LuPZe8+VPNCXAp5GeIeNZ5aCLYR9HU5YDTca8/DIGF7F7V4/zW686UuaUS5OXzoBxy/1Zn8GrGbX/dKOyWdK8aOWXDYXzlG2ZS0Trvr1O8Vv/tVApf8FwFnNB5F77g2FQy3z6Yh0wFNTgn5x9+Xdccfo3i0yWDKLZbwGIni5JlNk1ILK/vw6k8qx4p9F1G8BbQpSHoeeLhrBpop94Yt/9z2F1+01twiSRYcY04N7fMmaQdYmAZJ82ZqDyZ71BR92r0yn0/8A==
+ bh=C3AXHAucbcqpAiczSGxcQ+CJeqSFKGxuTvyTZja5mjc=;
+ b=AjMx/u/i/ibQWzVQ3N8OTtFsmGTV1iyiiA2wnEs4e5DSOmyk0fu+MgEN8z9WRcr+/xaLOzsrQN45aWDcq9ICVmgi9wbaV1NzvRIR/LcVL6Rdd2/40v0cEX3R/32y1jN3Pw5Tl+KRIiDGQA4X/0UFXGOc29XhQINpGsrjVtkhcioyc6Jtk5wpzH8f7ZpzJdhUD4+boe8GfJKvVNfSXNv+MHFMcmoqK1qg5futEFO5FBWUOZKP5zDgrOBBgREcTPA+n/1L+De8ZDYV7+pzJF0xSwYW14TZumqXazyDYTa6e/ZAxaKueBribD6FQFzMNqSyUphRP5xGsIbGrCfaMSIG7w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uGAnx4YWzQEavI8LVDlznh8j1reXAQpI6iiRXSb7ilk=;
- b=Hc2i7TyMTuu1Tdl/c/rGI8DKDGFs/DHb3PrUAjfB5AB6/0z7cTTSwJfr3Mbt4uuxFnoRnJO47NFsexRrSAAIDZAZIUFhQ7CvGxpfosnUtaI3uOHFGCK7R+Et97EwrA3+gT6Ld9CG8gjvv6tbSVNgsEkRVp31x4rbdN6FlHRvS0EvyDLsIFyWNmHeAiGnye0eA/2NQgUSBPegFv/ytAMBK6eCIDC1lAKhJtnqEQETlNKAqMHgr33pmmOP/52SUmJAeQYuDGYeD9vJPFz4MhUA8cYBJ7JNUnxojXIcf+SiAQzJ7+7y5uJYeKXyMvRqXfOWuCdyCbzndTpSC149nq9I5w==
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
- by MN0PR12MB6197.namprd12.prod.outlook.com (2603:10b6:208:3c6::22) with
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by MW4PR11MB6863.namprd11.prod.outlook.com (2603:10b6:303:222::16) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.21; Mon, 3 Jun
- 2024 15:53:31 +0000
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7633.021; Mon, 3 Jun 2024
- 15:53:31 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Jonathan Corbet <corbet@lwn.net>,
-	Itay Avraham <itayavr@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Leon Romanovsky <leon@kernel.org>,
-	linux-doc@vger.kernel.org,
-	linux-rdma@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>
-Cc: Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	David Ahern <dsahern@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Leonid Bloch <lbloch@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	linux-cxl@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH 6/8] fwctl: Add documentation
-Date: Mon,  3 Jun 2024 12:53:22 -0300
-Message-ID: <6-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
-In-Reply-To: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
-References:
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: YT3PR01CA0007.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:86::19) To DM6PR12MB3849.namprd12.prod.outlook.com
- (2603:10b6:5:1c7::26)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.19; Mon, 3 Jun
+ 2024 16:55:26 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::61a:aa57:1d81:a9cf%3]) with mapi id 15.20.7633.017; Mon, 3 Jun 2024
+ 16:55:26 +0000
+Message-ID: <22569491-1b29-4b3d-8e9c-a5d10b73b6ab@intel.com>
+Date: Mon, 3 Jun 2024 09:55:24 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] Add and use get_cpu_cacheinfo_level()
+To: Tony Luck <tony.luck@intel.com>, Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>, Andrew Morton <akpm@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>, Borislav Petkov <bp@alien8.de>
+CC: Fenghua Yu <fenghua.yu@intel.com>, Maciej Wieczor-Retman
+	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
+ Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>,
+	<linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+References: <20240531195720.232561-1-tony.luck@intel.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
+Content-Language: en-US
+In-Reply-To: <20240531195720.232561-1-tony.luck@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR04CA0318.namprd04.prod.outlook.com
+ (2603:10b6:303:82::23) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -80,393 +108,157 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|MN0PR12MB6197:EE_
-X-MS-Office365-Filtering-Correlation-Id: 593812fc-76e6-4d96-6956-08dc83e54fbe
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|MW4PR11MB6863:EE_
+X-MS-Office365-Filtering-Correlation-Id: e39cd1b7-df1a-48ba-bd60-08dc83edf7c0
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230031|1800799015|7416005|366007|376005|921011;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?MmNDZWVsUEJPMmhGcy9TeVhEWWlTUzM5R3hmc0tEcTRSdWtHWGsySmpTSWZD?=
- =?utf-8?B?ZEoyeGxaRkFvV2wyWTNjVnZNdGlWdHd1Q1MvSWRlamxwd2xxc3g4TXVVcUs5?=
- =?utf-8?B?UjhzcFV5d1NOZ2xjSUZWTHArVGo0cE4xSFk3WjNRUHk4UzQ0VkxQaXJncVJX?=
- =?utf-8?B?S0RERzcvQlZtMzIvbkJScXlUVVQzRW9KbENIaG1vSmw4SkkvcnRvN2tGdkNk?=
- =?utf-8?B?eE05aUdDVm9lbWE0aUN0QXprdWttck53RFlqZ0w4czJYdGMwRXJBNHJiMkJu?=
- =?utf-8?B?enZ2SXhFMnR4T1RNZmxRSTM1NEl1aDl6bGVQa1ZveG5yR2Evb3hnZXc5ckNq?=
- =?utf-8?B?SGpNYkpxQTF3NitNbk9NZ1V6U3lxRGNRNndlYkFkTk1nOGF1c0t0YWc2N1NS?=
- =?utf-8?B?cUdYVmpPallORzlzYlh6RDVoSy83SDRLdWI5V0F6MHVYSFFDWW9MTEJKSTgx?=
- =?utf-8?B?ajRNMkZQUStlY3dWOGZ6eFNIR1NsL0dvci9QYjBibWdsWjEzaVd4cFFWWFBS?=
- =?utf-8?B?cUhUVitMdkRNN3FQbWtxWjJFQWZMN2FhS0d1SmpYUVF3M3M0dGZmVUZQN2ha?=
- =?utf-8?B?d0NGcDJhaXNJWjVNN0JrYlRXQXNjZjU4MVNOKzhLaS9tL29Nem9rQWdRM0JE?=
- =?utf-8?B?RWc2YWxaazBYbXF3cVpJMmJacnplcDB6U3lBS2dTSityeU5qMHBKRXNnZ1R6?=
- =?utf-8?B?bFdpQndmbzBlRUpYOXYrK1VnVzlpSERpSXhvczV3b0dwZnpYWFBuQi93RzFT?=
- =?utf-8?B?RzA1dkkyNnl6U0w0R1VBVTJyTE9KeEpKUFNWcVoxUkFObXFFZUI5ZThsMlpm?=
- =?utf-8?B?VEQrVDc2WFNydnVQTlhFNzNtemFkL2lQTjdRK2dEdjJPTlh0N2tzbjNuZWRC?=
- =?utf-8?B?aXNGREQ0TEV2YmJXTm9WdDhpbmhocDd2Yy8vWTFLbHVkVHltemV6M0h3ODBN?=
- =?utf-8?B?Vjh1ZGo1Zm91Q201dTBKcG05NEhBVGw1UEVyQnRHYVc4SUtRVmNCV0VPSlB6?=
- =?utf-8?B?ekJObjNST2dxQVpQRXBDR3MrODAwZHpuMGF1WWduZ2hLRGdOTlhvWnhrN1Vw?=
- =?utf-8?B?VVVybVdXdjRRRVlIQ3ZlRWNlOHZFby80TSttNER4cXh1S1I3RjRPN0hEQkNO?=
- =?utf-8?B?S0JkcXdPNStOaTZDc2JNdGtpV1VxdUwvSmY1R0VGeTJEZVNoSXZ6MHVlaWNq?=
- =?utf-8?B?NWlVSUtTbTc0UkMvUC9OMGgvY1ByY3RxSStDQm92RG40eGFpSVJySVZrL1Fa?=
- =?utf-8?B?bGYvYjJBaG55OXNEWWgzdXFmdjdqM1IvWHdqcnFCa1Z3U241ZmpMTUxVVWhV?=
- =?utf-8?B?K0ZSS1ZSUjF3OUVNZU4vVGtYai92SXBIcnc0WnZCM2s3TW5yNE96ZkYrbmds?=
- =?utf-8?B?RUhZSVBBS1hBWmoreG9Tb1lVL0F1SGhKc253OE41dlYvek0zR2RwVzZTZDZT?=
- =?utf-8?B?TWJhdDFjeXE0dkNwNnFNcHp0cHB6dzVnaUxrSlFqTVhPakdwZWVpN2g5SUNy?=
- =?utf-8?B?YzE4RDJHMDBITjhpUjhZbjdrT2R5cHF3RG9TblBDbzY1L2NjSXgvMWF1N0pQ?=
- =?utf-8?B?ZDdzbThzVmY3TWRQY25sQmdxdm92ZCtqSTNsRzV3WVdoZnFqZEozaXZHM1Ir?=
- =?utf-8?B?UXJJcUxVYlZucTdjb0JZZEJHamF4MUpPM09nRHlDMkVobkdmZEN1TVVQWTdr?=
- =?utf-8?B?N3NSRlE2ZnZMUHNsa3lXMmk0SjZsU3JjeG5KYUlKQU5EZ1pCOHJheDc3QS9z?=
- =?utf-8?Q?oexziRzcmO4jfsuQRyLr+GM21xpHBwYzQos8SY/?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(7416005)(366007)(376005)(921011);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|7416005|376005|366007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?MWpZS0FpcHVXM2phS2hMRGdCaGdmN1hIWjlNVC9YZG1HRG4wb2NjM0tGSUh6?=
+ =?utf-8?B?TE44LytMR3pJU2FSdm14amFqeW4zbEpKejNTUy9QQlVpM1FUSkJUR0Jsbktr?=
+ =?utf-8?B?bSt3WEI1WFFMVUxxOGdJTlhOYmlIRE9GZSt4bk1IeUJrYkoyZjRCV0E5dXRj?=
+ =?utf-8?B?cmMyRWY3YjRlV1UvTC93Yy84MU4vNGRJblUyTWFWZnRQV0xROElCUmpNMnp6?=
+ =?utf-8?B?cWQ4dnVSUnBoenUzeFJFUVpXTGFYckdYeE1LZ0ZjNG0zZW9tQm84UFBCZ0Rp?=
+ =?utf-8?B?TzZ4L1BsY0FTUnExdUNRTFhNUnJyekdQSTNwS2hoWHRRY1FrNnhIeTE3NTgz?=
+ =?utf-8?B?NGg0VjNBNjlCemh5c1NjM25RQ3dJVHZWTDYwaGE0YW1SZ2swRXViNG9uMVhv?=
+ =?utf-8?B?eUFsLzRFbU5za1k3VlRDMDkyY1lFdi9PcXVCZjFYM3dUa2JublNIMnNCa1p4?=
+ =?utf-8?B?YkZ4NzFWU1BhSzN6bTNFcXRXbUwxdGh3TVVKaFViVDZubEdhVUxkZlhMcjlq?=
+ =?utf-8?B?SHh0UDdzdnlBQzB2MTJlbnNtVi9iWFJYcXVhcERPNm9rcW1sNnFEa1pXNTg5?=
+ =?utf-8?B?SGNhTHNmRGtaaW9Pd1BRTjdqa1V4REhIZzJUZXFrS2VPSGx4QU01WFJrQVRO?=
+ =?utf-8?B?UnhRZFdmTVUyUyt1bEFtN21NNG1BeDIwUnEyVFg2ald3NVZPb2FBZHhKVmdY?=
+ =?utf-8?B?V09oVWVuQ25OdnZsZURkdDdSZlZSaEtjNEU5aTVHaTdPVU5HcmlRNHp6d2lB?=
+ =?utf-8?B?N2VuSHZWdEJmbVdxVjJkYy9FcWNVYXZlcTNJNXY2Yzh5VUQ2ZzlORGNxNGNQ?=
+ =?utf-8?B?NUxGeDNaUm8vako1RzRIdlk3RnBwWkJmS2xaUmxjcVNqdGtWVG9VMkZTU1p1?=
+ =?utf-8?B?aFhIRzQzcUpHVGd6UHFGUGdqN1ZDTzIvODZGMXZhVUpIUjFiMFJaTmxpZjVO?=
+ =?utf-8?B?ZnRLM2RycWYwTVRzdlM5OVVQbWJxSGNZd2cxZngvSitWS3p6Y09LZDhrOVpE?=
+ =?utf-8?B?cWl6VHZxYkhQQ3ZybUhvOUxvbWYwRlNTVGI0Y2JjQ2EwY0FLazVrS2MxcGtX?=
+ =?utf-8?B?Vnk3WVhyTEJ4UHpmVWtlRGxMcXRaMHc1TUNUYVZWemwvRlpVNGRvWUdvT28w?=
+ =?utf-8?B?b1NkeFIvd2p0SFY1dDlDbnhRVS93aXloMXEzbmpZa1dVRWFVREVWbFpiNXdw?=
+ =?utf-8?B?OXFMWnkvMmN5eXlxS1JUcm1uVE9vSWdqSlBwbkNQVjFDbS9SR1lLRmVNS05V?=
+ =?utf-8?B?QXUrUXhBWG15eU0yd0FmS1VEdmR4WHBPck9lT0NuTTFnWXV1WmNJZ3FWZmlK?=
+ =?utf-8?B?eFlvQXIyRDFENGF1ZFpraUVNMDVKUGxUVVVJT1NFRDh0VlF5TjBQMkZCeWdy?=
+ =?utf-8?B?Z2ttdS9HZlRPOStoRlYweXpQWlB2TmhGZ1F3UXJHNzlaM3ZobWhrYXk3L2py?=
+ =?utf-8?B?cGlyWXFRTTZzdmtOSzFXU1JRcG1GSHVzeGpXQUp1aTdKS3RtNHEzNDRKY21o?=
+ =?utf-8?B?WGM4c1ZZY28rTzAvVis5WVJKeFZBbHN6WWo0OXNLdHVxOUo1YjdqcCtVaWFw?=
+ =?utf-8?B?SXBjKzNtNVQ1WmhZRk1zTDFhUUgzVkdYazFzR0tFdXZ1ODFmWXIxclMrU3Iz?=
+ =?utf-8?B?S2hXbno2VXRQN3lxV3J2cEtYbkNwYkJRYlBaMU1pQ09lKzJJekZEaC84S2RS?=
+ =?utf-8?B?RlZ3eFI4c1lSMXF5K2V1REZlcktJL2JHTlBxcTdyWEhBZXdtdGJUbU5XcVFp?=
+ =?utf-8?Q?+oAIEZttvYGFrozotk=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(7416005)(376005)(366007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RVpwZ2pQd2pmTVZ2MC9hVGdvM24vb2ViYjNEQ1hLai9GRWlvdlVOTlo3eVIv?=
- =?utf-8?B?WS8rbU9BcysvaWhBS1E5eUZ6M0twUFlyNXlpVnk5Slc2WW4wNzRVdWJCbjZC?=
- =?utf-8?B?bGR2UmdGUjlmcWlWS0pEdGlNZTFhWlV4aWhaMjFieTB1N2xTV21DbVJPYUND?=
- =?utf-8?B?V3NFRWVmSXFEcExHNWltUVZOdlUxVk1NZnIrWnE3STYyNWFHYVJ5d05tUVNR?=
- =?utf-8?B?OTI5TzN5Z1Z3RHlMbHZSeWdTMmFGYmJtaWJNc0lJckMzRi9Ma2lwSit1emVC?=
- =?utf-8?B?VnhpcHB0c09QQUpUdDE3MVJjUFFZSjlUVk1hYkgvOGVHNjlBRis1NDNMdTBX?=
- =?utf-8?B?aS9MOCtwc1hoWVFnYjBHWUFBR2IvM2RFOUVzRTNQWWRuczNwY0ovNTBGY2U3?=
- =?utf-8?B?N210bk5FZWpxZm5VWEdSWjY4TktnaS9pVUJkZGE0YUJLSjJRZjJoRlhrZTBO?=
- =?utf-8?B?cnk3Mm5QUlp4RUtWZkNKemUxV3B3YWp4cmpaOXFkYTBQTmszVlEyZ2hDbmh6?=
- =?utf-8?B?NDVwZzJCN08xZDdQRlA2M2w5RVJtSXluQjFCcktmc2JldGdXZnNCMGtVRlFH?=
- =?utf-8?B?bTBCeWgyOEliV3ZTVGVTRG1LSjE1T1ZITnlSTTlmRG55UFlUSnFad2oreG9K?=
- =?utf-8?B?Q2FBZ3ROYnF2WEIzY24vRXJSRVh2ZE5yU0E3YUNhalpNb0ttWUdGb2x6OXFE?=
- =?utf-8?B?b0MwTE5iSi9nRFZOOXJVY1plRU82cnRobU5JcmxRZ2wxZ3FiU0RKb1Y4WVFn?=
- =?utf-8?B?YnhPUGFRbnpDL2RtQkpTYk5BdzFmTDYxd1Q1QzEwaytWOGxQSmtsOFZLOVJj?=
- =?utf-8?B?SW5zV2hhc2VJL1ZDckRRaG05WGhNTkxZMWdUTm1seEc2K2xiaENnQWNrYzJI?=
- =?utf-8?B?ZWhuWEpMNEp2Y1VyVmZnN21HRnlXeThoZWQram9xQy9qdWxLMUxSTUp1aXY4?=
- =?utf-8?B?REJrUzhYS0Q1K1I5NmQ5VmFSbUU3YUw5a1RXLzJWYmxDa1B6cjdVeFlVekVO?=
- =?utf-8?B?M25GMmF1cUxOTE9BL2swNFlZSDBnemYzeVVmNUpzTTNjTlJ0ZUYzTDZYOVB1?=
- =?utf-8?B?TUlhNDZhTTlGak9ESWFKSmo2T2Y1QytXM3JlbHN4S2x3TEkrRDNYRTJEd3RZ?=
- =?utf-8?B?KzA3UUd2S2N6RFJ1Q09RbmNCNkQ0OTNmWGk0bmVwRjR4MnRGQ3ZQSkFia29T?=
- =?utf-8?B?eUdaUFVXNEdXZkhqTEduaEJ4a09DQmpHUGFrMDlvM2drYWFJTGhDL0lLSHNR?=
- =?utf-8?B?aVhWUE9BSC96MktXSi9MeHBhMnE3ZXlmRStiMjNCQ1ZJT0VLYjk1QnY2UFJD?=
- =?utf-8?B?L1VRdTVwZ3NKbFBvS3c1REg5RjZ1Yys2VnlVZ0N4NjNRNzJ0OUpLa3N2ckRr?=
- =?utf-8?B?b3ZQY1U5aDFPaDdqcWxDSE9BcVUyaU8zTDA2bkQ5d1JBcDMrRGdkYUhxZlgv?=
- =?utf-8?B?VHoxNThrYkdHVUtuczVreXFyVldXQUxHOTd4NjhvVi9FNE9JTk5GTjVaVG1J?=
- =?utf-8?B?b2VXSVJjSy94amYrTURyL2dyYm9JV3dEL1ZBUlNJVEJnUVlvRGRLeGJhK2s3?=
- =?utf-8?B?dlpnRDFVSmpkTUw2eWFURkN4dUprWWRLZ3ZRRkViUEVTWUhHRUFMb2Rncm1Z?=
- =?utf-8?B?VVcrR1VXQUtUd3BGVHNJbDEwbGNPa2VFcTJZZFppQmtLYm5sWkU1aXdOS0lJ?=
- =?utf-8?B?TC9oS2xjdEZPYmkrQVJNdlpSeUtFMzkrQ2dnZ1JIQUVFbWVOYlZkUW5EUFNX?=
- =?utf-8?B?cXQ4UGx3bHhKYnNWOWR1SUY0WWFoMzZ5UzVDT1VETmFkRncxa09jMUVSQUVG?=
- =?utf-8?B?MnM5MFNSWDlZb3BaWWFUL2hMN2sxaUtEUUxuaHo1cmVHVzg5MEk2TFhLNHhC?=
- =?utf-8?B?cTZYU2xoTy9SMURhRkZGcCszRXhXL0Mzd3dCVlkwU01GVmxsRHk5NWEycUFR?=
- =?utf-8?B?TVlmUnVtVEdwREJrN0pIbnpRcUpiSXhiRHVGOTl1K2c2Q0lhRE9vNkVoWGdW?=
- =?utf-8?B?MHZJVWVSeFpqRDBuYUVod1BjblVBSm85dW5ydklrQ2RYNkx1V0s2TXY3SmFS?=
- =?utf-8?B?Rmc3c3RHeDRUM1FOaTlqZDRubndocE03R3FyWmlvTjhnOERwV2VDMDF1N1c3?=
- =?utf-8?Q?TOyT8YNvrg/b/zHRh3RptYf4G?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 593812fc-76e6-4d96-6956-08dc83e54fbe
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZVZrUEdRZk9uRUVzZGZhM2RnWERTY1lrakhkTkxMcGZsemVrZnl2SmdYckF2?=
+ =?utf-8?B?SU5mUnRxNVRtNGlrZUp6WFhtZWdRYlJXdkRkbTk0YW5xL0pERVJ5T1Z2R014?=
+ =?utf-8?B?S2pSQm0zdDVIMkVGMXRFWXBRL2dlWGlZbWUzYTlzUHFXL2htWmo0WnZ3emp3?=
+ =?utf-8?B?R3NXdVFQMjg4QUdtVVYzRGxlMFZSYldzUWcvZmFOVGovZ25pbVljRkhmQi9u?=
+ =?utf-8?B?UEhMdTN1QnlLcnFPaGdXMUhFcW1vUkE1NFlRZzN3YXpZUlBiNkZTM0xQMGly?=
+ =?utf-8?B?Y3dNWXZPOUZtV1Y3SG9vcFBURFg3Yno5WWI5ZEZtVlJiTVU4R3FlQmR0T0JB?=
+ =?utf-8?B?dmV1OVpaS3daUW94MmhMaDZtZm5JWExydzRCcHBNYW11d0xIUWMvcUFBd0NT?=
+ =?utf-8?B?cTVwUUYwcnZlVTdkZXJ0YlV2Skl4LzBEOFZGd2xRdXRLRU1ZWGxja3BYbmNy?=
+ =?utf-8?B?cVA1RWVUNmk2WkUvMk9XRFRnR3NDcWF6UkVSM0dPMCtJMHVwL2crNkRDR3la?=
+ =?utf-8?B?SXFDNFZMZjFFWHptOFVBeVdBdklpYytIOXVadEg5L0ZJT3lwNTJNYmxRdWRD?=
+ =?utf-8?B?Q0R5SkF1L0ozbVovRjcvK2VONjJ3Nmpkdk55L0l0akNuZ2R3NTF4VVNtbVlX?=
+ =?utf-8?B?OTRYWkU1SEdTTG54TkdvM2hiOVo2VDIvai82a2N4MEZrWFg4cmJqcGFjNERh?=
+ =?utf-8?B?MGsvQWpZek1PMUpxSHJ1RTVNVWpHZFNNOU1CbGQwb0E0R3BON3I5NTdCUTR1?=
+ =?utf-8?B?UW82M2UyeTNUbmxsYWplZzQ0RlB0Y1ZQZy9KdU1vUjRVV1kvOUZNTkJEcHF6?=
+ =?utf-8?B?WEU4M0VDTVN1ZHBJUzJGalRGWlhLVjlBcjJvd05IMHJOREMrWFVSS0dIM0JK?=
+ =?utf-8?B?TnFjaC9jQUtCYUFtdUd4dHVMOC84eXB2ZFdqVDFhdEhiaHFVSjhnbVp2dTNN?=
+ =?utf-8?B?MU82amwzekRtL0Y5NGkydmR4ZFpBYzkvcElCZmExUkUzbzhhL2pjVXNwMlZv?=
+ =?utf-8?B?MDQzSVFQRi9BVnY0UkM3UWtQSld4UDhQVUFrbG5IZ3V0djh4WmJpNTVsYllw?=
+ =?utf-8?B?NVhGcHZaNEVWYTJVWFNiVWhxS2JITWpzTVlxaFlsNGJxUm00bHBsMkNOK2V5?=
+ =?utf-8?B?bXNYVWlWY3lqK3cyQ1Y0WVZWWjIxSmxvZ1dGbkt3T1NnWXQzMFRQbHkrQ2JG?=
+ =?utf-8?B?ZFhZMlQ5Y2hBZUw5YVRxUENqbXY2MFFpeWUvUHQyRVVna3BtM2xDLzEvWUda?=
+ =?utf-8?B?U3lPWTZpZmlNMGp1VjFmNUtNZTl6R011WitOZlNSQitzdFVCNUNFN1Y0UGNn?=
+ =?utf-8?B?Z1h1dHBSQ3hDaks3V1RJRno0a3lRanZEY2w1RVVhajMvOG9KZms4UVlkM0hy?=
+ =?utf-8?B?RVlQNzl2SkpBR2Zzc1Vkd2J0V2krUEhTSVVMVk4wRmt6OU1SSlJ1VXFzcXh1?=
+ =?utf-8?B?VXlIVllXcGtLUVF3SVJBdGtRM2V6YnBNWGR5ZHRkN210ZGR6aHlwQ2h5VHhX?=
+ =?utf-8?B?bUZWQURELzVtTk4xMnBTWWxMcjB1eWVSRUJrbTRDdVNRTVdZdUhmKy8yR0V6?=
+ =?utf-8?B?MkFXN1lQSmptc1h0MGJPeElFdmdPWUZQOEhnUUxoWXo1MkltcTJrbHBrSFIy?=
+ =?utf-8?B?NEZHL25IMGxJdVdPck8rQWFmRWdDQ0t0eGZ3djhCTnNRN3NYcGVBWjZOakNr?=
+ =?utf-8?B?MEV3Y0d4eUVDM28xVGsvbHpUOS9JMlNxdnJ6cUx6VUI0WHl5YkZmdGx2VEpE?=
+ =?utf-8?B?ZnVCRUdYcE1KM0hRTTJpd3FpODk0Zno1c0RNMDN2SVF5dnd4N2F1eGNZeWVs?=
+ =?utf-8?B?OTNJZXUzTDF1VmdaRlh2L21wcmRVQWZBdWdXY0cxWjRJYWI3ZHRXNVZJd3lB?=
+ =?utf-8?B?b1BKU3A5QklPZ0FlOWtlVGhYdGJZVFg4eWg3ZWtQVEN3dForQjRSRFpGR285?=
+ =?utf-8?B?ZU5FejJtT284MXIrV2lEWEVwODR2K2pjU0diZG1EQndFc1BWemVxdzRsbVFx?=
+ =?utf-8?B?VFBJTjgwTnlPamI3YmdNSTNhUHMrbHZ4Q2I0VlNqelhjYW9DRFY1RjZPSFpl?=
+ =?utf-8?B?eTJiYnp6L1dnS1FEc1kwMXp4WTd3a2ZUZUV1aUJvNVp0VXh0MU9mcUY3Z2Ix?=
+ =?utf-8?B?eEZOYU9UaVlOQlhvMUVXaVVEa2w1Z085TXN6VWpZNXRHSUlJNEg3bllSbXVt?=
+ =?utf-8?B?bWc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: e39cd1b7-df1a-48ba-bd60-08dc83edf7c0
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2024 15:53:29.0570
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2024 16:55:26.8073
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zuNUOgAn9lQMLWeV3fNUDmaRoTkorbcV9V5IiaRpjTBtONkjb3EZCJaEAlN+3ocJ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6197
+X-MS-Exchange-CrossTenant-UserPrincipalName: FsSaFrJMs/ZFpdXgYLSpe+gq1+gfjcUJRdXcRkw6sDRhPUC+vNpbFHpeMIRv2mXoKHMghS6Y62vN9nBRtALW4mWjwyjkhETfskxtm51Ad0Y=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB6863
+X-OriginatorOrg: intel.com
 
-Document the purpose and rules for the fwctl subsystem.
+Dear Maintainers,
 
-Link in kdocs to the doc tree.
+On 5/31/24 12:57 PM, Tony Luck wrote:
+> [get_maintainer.pl is vague about who owns <linux/cacheinfo.h>
+>   to I've scattershooted some of the folks that committed changes
+>   for this file]
 
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- Documentation/userspace-api/fwctl.rst | 269 ++++++++++++++++++++++++++
- Documentation/userspace-api/index.rst |   1 +
- 2 files changed, 270 insertions(+)
- create mode 100644 Documentation/userspace-api/fwctl.rst
+Thank you to Andrew for picking up this series into the
+mm-nonmm-unstable branch. I am not familiar with how patches flow
+from this repo/branch but I expect that this inclusion will require some
+high level coordination between the big repos since resctrl changes
+usually flow upstream through x86/cache branch of tip and I
+anticipate some conflicts and also needing to figure out how to deal
+with this new dependency in planned resctrl changes.
 
-diff --git a/Documentation/userspace-api/fwctl.rst b/Documentation/userspace-api/fwctl.rst
-new file mode 100644
-index 00000000000000..630e75a91838f0
---- /dev/null
-+++ b/Documentation/userspace-api/fwctl.rst
-@@ -0,0 +1,269 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+===============
-+fwctl subsystem
-+===============
-+
-+:Author: Jason Gunthorpe
-+
-+Overview
-+========
-+
-+Modern devices contain extensive amounts of FW, and in many cases, are largely
-+software defined pieces of hardware. The evolution of this approach is largely a
-+reaction to Moore's Law where a chip tape out is now highly expensive, and the
-+chip design is extremely large. Replacing fixed HW logic with a flexible and
-+tightly coupled FW/HW combination is an effective risk mitigation against chip
-+respin. Problems in the HW design can be counteracted in device FW. This is
-+especially true for devices which present a stable and backwards compatible
-+interface to the operating system driver (such as NVMe).
-+
-+The FW layer in devices has grown to incredible sizes and devices frequently
-+integrate clusters of fast processors to run it. For example, mlx5 devices have
-+over 30MB of FW code, and big configurations operate with over 1GB of FW managed
-+runtime state.
-+
-+The availability of such a flexible layer has created quite a variety in the
-+industry where single pieces of silicon are now configurable software defined
-+devices and can operate in substantially different ways depending on the need.
-+Further we often see cases where specific sites wish to operate devices in ways
-+that are highly specialized and require applications that have been tailored to
-+their unique configuration.
-+
-+Further, devices have become multi-functional and integrated to the point they
-+no longer fit neatly into the kernel's division of subsystems. Modern
-+multi-functional devices have drivers, such as bnxt/ice/mlx5/pds, that span many
-+subsystems while sharing the underlying hardware using the auxiliary device
-+system.
-+
-+All together this creates a challenge for the operating system, where devices
-+have an expansive FW environment that needs robust device-specific debugging
-+support, and FW driven functionality that is not well suited to “generic”
-+interfaces. fwctl seeks to allow access to the full device functionality from
-+user space in the areas of debuggability, management, and first-boot/nth-boot
-+provisioning.
-+
-+fwctl is aimed at the common device design pattern where the OS and FW
-+communicate via an RPC message layer constructed with a queue or mailbox scheme.
-+In this case the driver will typically have some layer to deliver RPC messages
-+and collect RPC responses from device FW. The in-kernel subsystem drivers that
-+operate the device for its primary purposes will use these RPCs to build their
-+drivers, but devices also usually have a set of ancillary RPCs that don't really
-+fit into any specific subsystem. For example, a HW RAID controller is primarily
-+operated by the block layer but also comes with a set of RPCs to administer the
-+construction of drives within the HW RAID.
-+
-+In the past when devices were more single function individual subsystems would
-+grow different approaches to solving some of these common problems, for instance
-+monitoring device health, manipulating its FLASH, debugging the FW,
-+provisioning, all have various unique interfaces across the kernel.
-+
-+fwctl's purpose is to define a common set of limited rules, described below,
-+that allow user space to securely construct and execute RPCs inside device FW.
-+The rules serve as an agreement between the operating system and FW on how to
-+correctly design the RPC interface. As a uAPI the subsystem provides a thin
-+layer of discovery and a generic uAPI to deliver the RPCs and collect the
-+response. It supports a system of user space libraries and tools which will
-+use this interface to control the device using the device native protocols.
-+
-+Scope of Action
-+---------------
-+
-+fwctl drivers are strictly restricted to being a way to operate the device FW.
-+It is not an avenue to access random kernel internals, or other operating system
-+SW states.
-+
-+fwctl instances must operate on a well-defined device function, and the device
-+should have a well-defined security model for what scope within the physical
-+device the function is permitted to access. For instance, the most complex PCIe
-+device today may broadly have several function level scopes:
-+
-+ 1. A privileged function with full access to the on-device global state and
-+    configuration
-+
-+ 2. Multiple hypervisor functions with control over itself and child functions
-+    used with VMs
-+
-+ 3. Multiple VM functions tightly scoped within the VM
-+
-+The device may create a logical parent/child relationship between these scopes,
-+for instance a child VM's FW may be within the scope of the hypervisor FW. It is
-+quite common in the VFIO world that the hypervisor environment has a complex
-+provisioning/profiling/configuration responsibility for the function VFIO
-+assigns to the VM.
-+
-+Further, within the function, devices often have RPC commands that fall within
-+some general scopes of action:
-+
-+ 1. Access to function & child configuration, flash, etc that becomes live at a
-+    function reset.
-+
-+ 2. Access to function & child runtime configuration that kernel drivers can
-+    discover at runtime.
-+
-+ 3. Read only access to function debug information that may report on FW objects
-+    in the function & child, including FW objects owned by other kernel
-+    subsystems.
-+
-+ 4. Write access to function & child debug information strictly compatible with
-+    the principles of kernel lockdown and kernel integrity protection. Triggers
-+    a kernel Taint.
-+
-+ 5. Full debug device access. Triggers a kernel Taint, requires CAP_SYS_RAWIO.
-+
-+Userspace will provide a scope label on each RPC and the kernel must enforce the
-+above CAP's and taints based on that scope. A combination of kernel and FW can
-+enforce that RPCs are placed in the correct scope by userspace.
-+
-+Denied behavior
-+---------------
-+
-+There are many things this interface must not allow user space to do (without a
-+Taint or CAP), broadly derived from the principles of kernel lockdown. Some
-+examples:
-+
-+ 1. DMA to/from arbitrary memory, hang the system, run code in the device, or
-+    otherwise compromise device or system security and integrity.
-+
-+ 2. Provide an abnormal “back door” to kernel drivers. No manipulation of kernel
-+    objects owned by kernel drivers.
-+
-+ 3. Directly configure or otherwise control kernel drivers. A subsystem kernel
-+    driver can react to the device configuration at function reset/driver load
-+    time, but otherwise should not be coupled to fwctl.
-+
-+ 4. Operate the HW in a way that overlaps with the core purpose of another
-+    primary kernel subsystem, such as read/write to LBAs, send/receive of
-+    network packets, or operate an accelerator's data plane.
-+
-+fwctl is not a replacement for device direct access subsystems like uacce or
-+VFIO.
-+
-+fwctl User API
-+==============
-+
-+.. kernel-doc:: include/uapi/fwctl/fwctl.h
-+.. kernel-doc:: include/uapi/fwctl/mlx5.h
-+
-+sysfs Class
-+-----------
-+
-+fwctl has a sysfs class (/sys/class/fwctl/fwctlNN/) and character devices
-+(/dev/fwctl/fwctlNN) with a simple numbered scheme. The character device
-+operates the iotcl uAPI described above.
-+
-+fwctl devices can be related to driver components in other subsystems through
-+sysfs::
-+
-+    $ ls /sys/class/fwctl/fwctl0/device/infiniband/
-+    ibp0s10f0
-+
-+    $ ls /sys/class/infiniband/ibp0s10f0/device/fwctl/
-+    fwctl0/
-+
-+    $ ls /sys/devices/pci0000:00/0000:00:0a.0/fwctl/fwctl0
-+    dev  device  power  subsystem  uevent
-+
-+User space Community
-+--------------------
-+
-+Drawing inspiration from nvme-cli, participating in the kernel side must come
-+with a user space in a common TBD git tree, at a minimum to usefully operate the
-+kernel driver. Providing such an implementation is a pre-condition to merging a
-+kernel driver.
-+
-+The goal is to build user space community around some of the shared problems
-+we all have, and ideally develop some common user space programs with some
-+starting themes of:
-+
-+ - Device in-field debugging
-+
-+ - HW provisioning
-+
-+ - VFIO child device profiling before VM boot
-+
-+ - Confidential Compute topics (attestation, secure provisioning)
-+
-+That stretches across all subsystems in the kernel. fwupd is a great example of
-+how an excellent user space experience can emerge out of kernel-side diversity.
-+
-+fwctl Kernel API
-+================
-+
-+.. kernel-doc:: drivers/fwctl/main.c
-+   :export:
-+.. kernel-doc:: include/linux/fwctl.h
-+
-+fwctl Driver design
-+-------------------
-+
-+In many cases a fwctl driver is going to be part of a larger cross-subsystem
-+device possibly using the auxiliary_device mechanism. In that case several
-+subsystems are going to be sharing the same device and FW interface layer so the
-+device design must already provide for isolation and co-operation between kernel
-+subsystems. fwctl should fit into that same model.
-+
-+Part of the driver should include a description of how its scope restrictions
-+and security model work. The driver and FW together must ensure that RPCs
-+provided by user space are mapped to the appropriate scope. If the validation is
-+done in the driver then the validation can read a 'command effects' report from
-+the device, or hardwire the enforcement. If the validation is done in the FW,
-+then the driver should pass the fwctl_rpc_scope to the FW along with the command.
-+
-+The driver and FW must co-operate to ensure that either fwctl cannot allocate
-+any FW resources, or any resources it does allocate are freed on FD closure.  A
-+driver primarily constructed around FW RPCs may find that its core PCI function
-+and RPC layer belongs under fwctl with auxiliary devices connecting to other
-+subsystems.
-+
-+Each device type must represent a stable FW ABI, such that the userspace
-+components have the same general stability we expect from the kernel. FW upgrade
-+should not break the userspace tools.
-+
-+Security Response
-+=================
-+
-+The kernel remains the gatekeeper for this interface. If violations of the
-+scopes, security or isolation principles are found, we have options to let
-+devices fix them with a FW update, push a kernel patch to parse and block RPC
-+commands or push a kernel patch to block entire firmware versions, or devices.
-+
-+While the kernel can always directly parse and restrict RPCs, it is expected
-+that the existing kernel pattern of allowing drivers to delegate validation to
-+FW to be a useful design.
-+
-+Existing Similar Examples
-+=========================
-+
-+The approach described in this document is not a new idea. Direct, or near
-+direct device access has been offered by the kernel in different areas for
-+decades. With more devices wanting to follow this design pattern it is becoming
-+clear that it is not entirely well understood and, more importantly, the
-+security considerations are not well defined or agreed upon.
-+
-+Some examples:
-+
-+ - HW RAID controllers. This includes RPCs to do things like compose drives into
-+   a RAID volume, configure RAID parameters, monitor the HW and more.
-+
-+ - Baseboard managers. RPCs for configuring settings in the device and more
-+
-+ - NVMe vendor command capsules. nvme-cli provides access to some monitoring
-+   functions that different products have defined, but more exists.
-+
-+ - CXL also has a NVMe like vendor command system.
-+
-+ - DRM allows user space drivers to send commands to the device via kernel
-+   mediation
-+
-+ - RDMA allows user space drivers to directly push commands to the device
-+   without kernel involvement
-+
-+ - Various “raw” APIs, raw HID (SDL2), raw USB, NVMe Generic Interface, etc
-+
-+The first 4 would be examples of areas that fwctl intends to cover.
-+
-+Some key lessons learned from these past efforts are the importance of having a
-+common user space project to use as a pre-condition for obtaining a kernel
-+driver. Developing good community around useful software in user space is key to
-+getting companies to fund participation to enable their products.
-diff --git a/Documentation/userspace-api/index.rst b/Documentation/userspace-api/index.rst
-index 5926115ec0ed86..9685942fc8a21f 100644
---- a/Documentation/userspace-api/index.rst
-+++ b/Documentation/userspace-api/index.rst
-@@ -43,6 +43,7 @@ Devices and I/O
- 
-    accelerators/ocxl
-    dma-buf-alloc-exchange
-+   fwctl
-    gpio/index
-    iommu
-    iommufd
--- 
-2.45.2
+As Tony mentioned upcoming resctrl changes depend on this new
+include/linux/cacheinfo.h addition while some other planned
+resctrl changes [2] will conflict with patch #2 and #3 of this series.
 
+A previous change to include/linux/cacheinfo.h (commit
+709c4362725a ("cacheinfo: Move resctrl's get_cache_id() to the
+cacheinfo header file")) was able to accompany the resctrl
+changes via x86/cache of tip. Could it be possible to repeat
+such a patch flow?
+
+Looking at mm-nonmm-unstable there is indeed one other pending
+change that touches include/linux/cacheinfo.h ("cpumask: make
+core headers including cpumask_types.h where possible"). I
+confirmed that there is no conflict between it and patch #1
+from this series, the two can be applied in any order. Of course,
+this means nothing for any other changes to this file
+that may arrive later during this cycle.
+
+Could you please provide your guidance on how to achieve a smooth
+upstream of this work?
+
+Thank you
+
+Reinette
+
+[2] https://lore.kernel.org/lkml/20240321165106.31602-1-james.morse@arm.com/
+
+> This helper function came up in discussion of the resctrl patches
+> for Sub-NUMA Cluster (SNC) support. Reinette pointed out[1] that there
+> are already two places where it would clean things up by avoiding
+> open coding. The SNC patches will add two additional call sites.
+> 
+> So rather than have this jammed up as part of the SNC series, I'm
+> posting it as a simple standalone cleanup.
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> 
+> [1] https://lore.kernel.org/all/050c64b3-20b3-4db6-b782-f5124ebaab31@intel.com/
+> 
+> Tony Luck (3):
+>    cacheinfo: Add function to get cacheinfo for a given (cpu, cachelevel)
+>    x86/resctrl: Replace open code cacheinfo search in
+>      pseudo_lock_region_init()
+>    x86/resctrl: Replace open code cacheinfo search in
+>      rdtgroup_cbm_to_size()
+> 
+>   include/linux/cacheinfo.h                 | 21 ++++++++++++++++-----
+>   arch/x86/kernel/cpu/resctrl/pseudo_lock.c | 17 ++++++-----------
+>   arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 14 +++++---------
+>   3 files changed, 27 insertions(+), 25 deletions(-)
+> 
+> 
+> base-commit: 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0
