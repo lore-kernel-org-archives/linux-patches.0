@@ -1,63 +1,98 @@
-Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C619613A244
-	for <patches@lists.linux.dev>; Mon,  3 Jun 2024 20:46:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=176.9.242.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE0113C91F;
+	Mon,  3 Jun 2024 22:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717447605; cv=none; b=NeKOILm8TeLKafZPvDRpABtxJhtk+j9PsdMM72ONhGLcUGA1+fGGo9dcdOBgrvtasYHBIf7et50CmybGdxTIMTM+w8IOLi9g8VM7Q/Swde4GaZkY7wOELSZlzo/8uwgyRdME/0+0ll21TwZXcAjP23oJnSMTLTo2YZ+UymPNlcM=
+	t=1717452124; cv=none; b=Bu+ZgwHxxbiVTdWNgdK1YkLS7ornT+DeL+Ifoq3Jik04SDRLBAatKN8UJqaM3ekf8yfG0JZrh8wWsDEcpbNcueeLRpPG17I+wasB+lrN8an6ljje9DLLTvhXSJBaTRsUiAeP058LYFUHW/dFQBjUYhv/d5VZD1yukP4FSlTWsdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717447605; c=relaxed/simple;
-	bh=FsvxSX/KBaDFhi+ZDmk2mVbiVY6TXD1Hp+ZfY7jSulQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nTQerzEH9QF4YM4bu0ScmD5QbSKCPki+xXhwugwaMPQemSPfQbAefB1YBJS3fJVMWK74EfuqKEBOe3aCyND/trh3nYpKaKX8aWrail9VuXZijxD5vn09wqRW6TU6Z8qBpvKsNyG50G3qP4Hjc0WSF2D0BJkWOWIOErbk9VVD2wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=176.9.242.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
-Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
-	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
-	by bmailout3.hostsharing.net (Postfix) with ESMTPS id 131C3100EF4A2;
-	Mon,  3 Jun 2024 22:46:35 +0200 (CEST)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id CC119FAB5C; Mon,  3 Jun 2024 22:46:34 +0200 (CEST)
-Date: Mon, 3 Jun 2024 22:46:34 +0200
-From: Lukas Wunner <lukas@wunner.de>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Ard Biesheuvel <ardb@kernel.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: Re: [PATCH] sysfs: Add stub sysfs_bin_attr_simple_read() for
- !CONFIG_SYSFS
-Message-ID: <Zl4rqswlbGM-eRY6@wunner.de>
-References: <0-v1-44baae71b833+ab-sysfs_simple_read_jgg@nvidia.com>
+	s=arc-20240116; t=1717452124; c=relaxed/simple;
+	bh=djC34ORqw2xb3Cf7QYPDabOUVU/AAmQubNKuizP0gBg=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=MME8c1aDgZzKR2dIU1T57v79dehSE+yCQCAKIPQpesZb/JB/Y1Nw9E24Y6NZGVB4yYouts4rz9Bc8EG5mmEDFV6xX/mmYTTkgRmhhKMLvfiZ5naIA3AXRORPvmMrYSPBi4E5OeMCX4gjqR6geNMj7uHcka5WlWWcELEY3mpZYRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tbRzgWfi; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tbRzgWfi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867CAC2BD10;
+	Mon,  3 Jun 2024 22:02:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717452123;
+	bh=djC34ORqw2xb3Cf7QYPDabOUVU/AAmQubNKuizP0gBg=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=tbRzgWfixxLCCAnv86IJhJm3P/kq8T5W9Nv/ov0UFl8E8KFqBurN17GHgyofXsMrD
+	 pgEPlwTODDI97U0KPzHTUvLA7ro/O/NMFPJrBkuEgEaok154AUrdZQMLkqhmgBH04b
+	 F2nARv+gmHL8NxRGcT+bgM6wnJIvk45H8jqzl7soKWoFCwPpiwJIlR2OQ73F7cwkLG
+	 /rVtdIACiJNv8VJjbNht4RoaTqve4DGL4AapG1+dsnMuOJaIIAAxFwdDVJhgSRuhKl
+	 nduLa666srYuD7qNk06xHNEAfGKdiRszER/GhC/naKhAWhdng7C+rirXbplWGnD9E+
+	 APXqfKXj/LK8A==
+Message-ID: <ac141363f0b6c44b11c421f752776ef9.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v1-44baae71b833+ab-sysfs_simple_read_jgg@nvidia.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240422232404.213174-7-sboyd@kernel.org>
+References: <20240422232404.213174-1-sboyd@kernel.org> <20240422232404.213174-7-sboyd@kernel.org>
+Subject: Re: [PATCH v4 06/10] dt-bindings: kunit: Add fixed rate clk consumer test
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
+To: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Date: Mon, 03 Jun 2024 15:02:01 -0700
+User-Agent: alot/0.10
 
-On Mon, Jun 03, 2024 at 02:30:45PM -0300, Jason Gunthorpe wrote:
-> Since the only declaration for sysfs_bin_attr_simple_read() is inside the
-> "#ifdef CONFIG_SYSFS". Add a stub to the #else section too.
-[...]
-> I don't see a patch for this yet, but I did find a 0-day robot complaint:
-> 
-> https://lore.kernel.org/all/202404200345.eGdn5uxW-lkp@intel.com/
+Quoting Stephen Boyd (2024-04-22 16:23:59)
+> diff --git a/Documentation/devicetree/bindings/test/test,clk-fixed-rate.y=
+aml b/Documentation/devicetree/bindings/test/test,clk-fixed-rate.yaml
+> new file mode 100644
+> index 000000000000..b9f58cba944c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/test/test,clk-fixed-rate.yaml
+> @@ -0,0 +1,35 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/test/test,clk-fixed-rate.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: KUnit clk fixed rate test clk consumer
 
-I already submitted a patch on May 23, but it hasn't been applied yet:
+Removed KUnit from the title.
 
-https://lore.kernel.org/all/05f4290439a58730738a15b0c99cd8576c4aa0d9.1716461752.git.lukas@wunner.de/
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +
+> +description:
+> +  A clk consumer of a fixed rate clk used to test the fixed rate clk
+> +  implementation.
+> +
+> +properties:
+> +  compatible:
+> +    const: test,clk-fixed-rate
 
-(My patch returns 0, yours -EINVAL, but I don't think that matters.)
+None of this is really fixed rate clk specific. I'm going to rename this
+to "test,single-clk-consumer" so that it can be used anywhere we want to
+consume a single clock cell. Someone can introduce a double/multiple
+binding as needed.
 
-Thanks (and sorry for the breakage)!
-
-Lukas
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    clock-consumer {
+> +      compatible =3D "test,clk-fixed-rate";
+> +      clocks =3D <&fixed_clk>;
+> +    };
+> +...
