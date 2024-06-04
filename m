@@ -1,58 +1,58 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3651315E97
-	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 15:56:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C16E17597
+	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 16:01:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717516571; cv=none; b=pnL/D5cpMdZEgxLxsW6oL5XbD5fCGZ/rAwVf2UoswJgFdnIcyalix+91jmgp7HWoVJWUBtA3Gxaw5S26fh8/Zzz79SZ7fpyepaEfYQTpOmZ3Gu5XfF8EQiKPx4+5IoE8i/ECvMUCZSb7Xh4FonG0vssuyWvfFENQ26/fRoKkm/k=
+	t=1717516902; cv=none; b=XOpZFx5vzTy3o+Z0dvpCLjt5ZzZDZLeiJ9FtgF3HCnjeqrEufexDMU6F0AeDP/akSa4Ij3yjaQLPtw3qeeIwJ8Bezm2k2iqM8K1nD998vAvYuxqJlwltQMasHrPWD/OrYh8tK8BnAaEmDlro+rgARbGGDtI8dfia+HTBMP0ebSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717516571; c=relaxed/simple;
-	bh=QItl/PKg+wwAMDiPxK9zBoZTc6Wj9x9La9g18aR8r00=;
+	s=arc-20240116; t=1717516902; c=relaxed/simple;
+	bh=R+jDvWtyrjG2OM7iDEB4WKKq+nY6RPTFbp8Br2Pc0OU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jy85YRXjgab8pNF9EEpFhsOBnNkLmY/LXqFVY2CyHvl7rMZ2w9bTnQ6wW8eSEUpfzUNHMDyRopB4O5jyzSELyoQ9BIus0+SFQSukfJoszRZF8MQ7tTEB5DQymSUeXquznEyRUZ8hStPhghdW1CVwllCKNvqDF6MF1OicDR5hCTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UlT2Gqjh; arc=none smtp.client-ip=209.85.128.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=ACUVrc3oZwV8zdAPEWWAbRHlQm2m8yqJm7w+1jcLyTrUtIiXAnYNRTK9XNQ//4Ws6y4LGTG+b9VnLDamX71f0ttoVblwmrsRBlC0/v3VdEU2nb5rUdQ5CbMVelkPz19J+RQhAmm82jjf/Tpm14Dme5PjF/CfcvdPzJGJx3txLK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lARXnf4U; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UlT2Gqjh"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4213a2acc59so107735e9.1
-        for <patches@lists.linux.dev>; Tue, 04 Jun 2024 08:56:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lARXnf4U"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-57a16f4b8bfso15515a12.0
+        for <patches@lists.linux.dev>; Tue, 04 Jun 2024 09:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1717516569; x=1718121369; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1717516899; x=1718121699; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=d7Sgp9L6slntE6nZTy+7vKK0+zJTJ2LPyv+9VPLgyrQ=;
-        b=UlT2GqjhmiT1Ok7J+MtleWoEVUEAEC4BV/2UcDaXLotEG/k8E8GLB86gi5dwNgW3jl
-         PvetxkPnxvYe5tQkU3cLCT2sd+0u9YKd1GhWtz+okKw3JKL9noecLpgD5BOLjWjP/VxL
-         JKakD0Kj3s/H5o18lDsI0HS4iiDZd6XVqws64I8fMxUk+3r5OCohfGyHWPzJQ6bQoDxr
-         rVsW/rzFDX3QQ2mVRu7dkuFck4Av2TK7UkgDnvpJCyWQc18/ZXOrQwR5AbegEt29Lnq/
-         lKsz2OqQQAFtenPbcIIJA0F0wAFSmUTnGvg5fwZ1zkfIlxULa6O8NThaYvPofSqE0BqH
-         zcmg==
+        bh=5sDyHX8QmmV3/QPRkJPGCst6kWW/P8hQxMehL8hNX3Y=;
+        b=lARXnf4UIxkfNVHRzMVbn2M3KiRJl+FLSlRMph7OxEd3FzMoLKCg5XhtL6UIeGsgph
+         PKqJPqzzrsg79GmMfdddcsfKoeONTsnbczYvgHMxLP1uoLZZSDWo9AO6m+hXa1+Ohfuz
+         J14h0LYlUfi/K5Bb4BfV0bkFhjXwc8/3Epw3cS9IaHWjsKTQoEOy8Ssvw4qR+RLyvMhq
+         9RGx4se1MFIZ0+j99e8UnjqKj8Pu5pBxxtBvW4co/qv1K/emmFDz5nXOJXMDcwDVgI3R
+         TSZLEqf6qZwMffQiTfO66//vI0QOXxJyJcl2Z436KC2jk2lgpHBA8dO3rZKGixs8q8r2
+         SwOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717516569; x=1718121369;
+        d=1e100.net; s=20230601; t=1717516899; x=1718121699;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d7Sgp9L6slntE6nZTy+7vKK0+zJTJ2LPyv+9VPLgyrQ=;
-        b=uHPyDnmaGqoeggbhCYSJ2+4caBEc2mwnOi6n4dMDQGsMFc5zIzgV2RxiQ80vdzsHzN
-         yfl6UOZ+22ZEIQjx6pKxfOrnSFIwogoR3YneeBg66NAr+V49IS3g4NOjZpT4watPE/eW
-         0gspMRHfuPIuj5O25UvlE22KskgCy+hBeuwrI0G1GI69Q/YW++LNsVBQQ5dlIyE0W4OZ
-         0nJRY3YyxLJu17D1socyGyGYF1vd/lL6pvK+LMCzqptc7kwwSR1jAVDfPdm6UPhVRviy
-         yfHpFfEM+S/It71QLw3wWaj2ZBnEeawFuv7/wuhUoBplwrnw9E0qJAIi9BkNDzCs0R73
-         u98g==
-X-Forwarded-Encrypted: i=1; AJvYcCXFUzqIj/w9f6p8RKf04h5n9SZMYKffhsImzeEfYMfL/MsCUC8pSmU524R9DxDVDMoxhkl39Lxd+RPMVPlMOLu75MrAn1MSXw==
-X-Gm-Message-State: AOJu0YyGqJMhitdcIVhAYkCf2vEepajOdEMXnwjtCmwxQ3JZ6fFnw+Hf
-	1JAiomGWbIaA6x15K+g0CKu3EgBBK7ME/KkvEC0KFEcj31/r08fR463RM4dL7g==
-X-Google-Smtp-Source: AGHT+IEd0pzHoP5jvawRJjsZ+1PlUhqKmRf0LfUuo7vArLwPTh4pkSqjwEUKKAPDDlnZpwywPSy9lw==
-X-Received: by 2002:a05:600c:5122:b0:41c:ab7:f9af with SMTP id 5b1f17b1804b1-4214b1cc21dmr2318855e9.3.1717516568484;
-        Tue, 04 Jun 2024 08:56:08 -0700 (PDT)
+        bh=5sDyHX8QmmV3/QPRkJPGCst6kWW/P8hQxMehL8hNX3Y=;
+        b=tYgxwW0fm71AzSFNhe8fITFfwVLwA8BFMa5g4vKgH18T04pHt5ZYoMMxwYuPx+HwH4
+         XGBAQ0Aa0q19OndT5sFMB+Rc7KgotPGeLNY0IFLlHqFmCqcK2zDMAli/1LmraLX0fEuL
+         pT/NDH6fczQWVTKD3VQOYo4TYzocHenOIerephL54HBuLXRrZWNALSP28pOvzEYOH6/r
+         RymAla5t4oH6mGMVecW9Csil3DPyLsIMHFJzWhJn2p3lhHwa044MSAmbq6nVkcb+LqXR
+         SstCQwQeueLvRfpniailXfiKMQahuE2dlqGca4Ne++dBAtP8CFP8KAjRWSqtLwa0cMzz
+         5/PQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWyLhGcKRWsCC9cvdB1WD81sZp5eAV76yNZzNa1RpOWfs3Cnx0eFCGuMSF5fHtYjjhGfAxnt5Ckj8eKPTupTdBL/mkWivcITw==
+X-Gm-Message-State: AOJu0YyNB8b9hkKk7omIoyDMF2gGWlcO1rJXw6tuqqNuBDy3ZGEcsUNO
+	ZUdVvY/wEbG/93TESXEgHUUuRzEUFQaKteY7s/sQr1MYOGyC9ZtNZrap9QjMRQ==
+X-Google-Smtp-Source: AGHT+IF/Y8fneq1ZfCQ8Xb1nbB2+gLqpJQuXXgr/ND/41kEm1jE0lksXx31VmwPCgMLeHPLBErO9xg==
+X-Received: by 2002:aa7:d752:0:b0:576:b1a9:2960 with SMTP id 4fb4d7f45d1cf-57a805b202bmr134474a12.5.1717516898500;
+        Tue, 04 Jun 2024 09:01:38 -0700 (PDT)
 Received: from google.com (230.213.79.34.bc.googleusercontent.com. [34.79.213.230])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd04d9364sm11958910f8f.53.2024.06.04.08.56.07
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd04c0f47sm11988161f8f.8.2024.06.04.09.01.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 08:56:08 -0700 (PDT)
-Date: Tue, 4 Jun 2024 15:56:04 +0000
+        Tue, 04 Jun 2024 09:01:38 -0700 (PDT)
+Date: Tue, 4 Jun 2024 16:01:34 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
@@ -61,10 +61,10 @@ Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
 	Michael Shavit <mshavit@google.com>,
 	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
 	Ryan Roberts <ryan.roberts@arm.com>
-Subject: Re: [PATCH 2/7] iommu/arm-smmu-v3: Do not zero the strtab twice
-Message-ID: <Zl85FOpIrQSeto4W@google.com>
+Subject: Re: [PATCH 3/7] iommu/arm-smmu-v3: Shrink the strtab l1_desc array
+Message-ID: <Zl86XhrWGcBTLFAl@google.com>
 References: <0-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
- <2-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
+ <3-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -74,81 +74,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <2-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
+In-Reply-To: <3-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
 
 Hi Jason,
 
-On Mon, Jun 03, 2024 at 07:31:28PM -0300, Jason Gunthorpe wrote:
-> dmam_alloc_coherent() already returns zero'd memory so cfg->strtab.l1_desc
-> (the list of DMA addresses for the L2 entries) is already zero'd.
+On Mon, Jun 03, 2024 at 07:31:29PM -0300, Jason Gunthorpe wrote:
+> The top of the 2 level stream table is (at most) 128k entries big, and two
+> high order allocations are required. One of __le64 which is programmed
+> into the HW (1M), and one of struct arm_smmu_strtab_l1_desc which holds
+> the CPU pointer (3M).
 > 
-> arm_smmu_init_l1_strtab() goes through and calls
-> arm_smmu_write_strtab_l1_desc() on the newly allocated (and zero'd) struct
-> arm_smmu_strtab_l1_desc, which ends up computing 'val = 0' and zeroing it
-> again.
+> There is no reason to store the l2ptr_dma as nothing reads it. devm stores
+> a copy of it and the DMA memory will be freed via devm mechanisms. span is
+> a constant of 8+1. Remove both.
 > 
-> Remove arm_smmu_init_l1_strtab() and just call devm_kcalloc() from
-> arm_smmu_init_strtab_2lvl to allocate the companion struct.
+This caught my eye before, I imagine(although I was not there) there was some
+thought about having different spans per SMMUs maybe, but that’s not the case.
+
+> This removes 16 bytes from each arm_smmu_l1_ctx_desc and saves up to 2M of
+> memory per iommu instance.
 > 
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Looking at the code for dmam_alloc_coherent(basically dma_alloc_coherent)
-I see that the memory is zeroed for both DMA direct and IOMMU, however
-I don’t see that documented (in DMA-API.txt).
-
-Assuming that’s guaranteed to be zeroed (maybe we should update the docs
-if I am not missing something)
 Reviewed-by: Mostafa Saleh <smostafa@google.com>
 
 > ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 27 +++++++--------------
->  1 file changed, 9 insertions(+), 18 deletions(-)
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 14 +++++++-------
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  3 ---
+>  2 files changed, 7 insertions(+), 10 deletions(-)
 > 
 > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index 6b4f1a664288db..d27dd0600bf1df 100644
+> index d27dd0600bf1df..735dd9ff61890e 100644
 > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -3220,23 +3220,6 @@ static int arm_smmu_init_queues(struct arm_smmu_device *smmu)
->  				       PRIQ_ENT_DWORDS, "priq");
->  }
+> @@ -1448,12 +1448,12 @@ bool arm_smmu_free_asid(struct arm_smmu_ctx_desc *cd)
 >  
-> -static int arm_smmu_init_l1_strtab(struct arm_smmu_device *smmu)
-> -{
-> -	unsigned int i;
-> -	struct arm_smmu_strtab_cfg *cfg = &smmu->strtab_cfg;
-> -
-> -	cfg->l1_desc = devm_kcalloc(smmu->dev, cfg->num_l1_ents,
-> -				    sizeof(*cfg->l1_desc), GFP_KERNEL);
-> -	if (!cfg->l1_desc)
-> -		return -ENOMEM;
-> -
-> -	for (i = 0; i < cfg->num_l1_ents; ++i)
-> -		arm_smmu_write_strtab_l1_desc(
-> -			&smmu->strtab_cfg.strtab.l1_desc[i], &cfg->l1_desc[i]);
-> -
-> -	return 0;
-> -}
-> -
->  static int arm_smmu_init_strtab_2lvl(struct arm_smmu_device *smmu)
+>  /* Stream table manipulation functions */
+>  static void
+> -arm_smmu_write_strtab_l1_desc(__le64 *dst, struct arm_smmu_strtab_l1_desc *desc)
+> +arm_smmu_write_strtab_l1_desc(__le64 *dst, dma_addr_t l2ptr_dma, u8 span)
 >  {
->  	void *strtab;
-> @@ -3272,7 +3255,15 @@ static int arm_smmu_init_strtab_2lvl(struct arm_smmu_device *smmu)
->  	reg |= FIELD_PREP(STRTAB_BASE_CFG_SPLIT, STRTAB_SPLIT);
->  	cfg->strtab_base_cfg = reg;
+>  	u64 val = 0;
 >  
-> -	return arm_smmu_init_l1_strtab(smmu);
-> +	cfg->l1_desc = devm_kcalloc(smmu->dev, cfg->num_l1_ents,
-> +				    sizeof(*cfg->l1_desc), GFP_KERNEL);
-> +	if (!cfg->l1_desc) {
-> +		dev_err(smmu->dev,
-> +			"failed to allocate l1 stream table (%zu bytes)\n",
-> +			cfg->num_l1_ents * sizeof(*cfg->l1_desc));
-> +		return -ENOMEM;
-> +	}
-> +	return 0;
+> -	val |= FIELD_PREP(STRTAB_L1_DESC_SPAN, desc->span);
+> -	val |= desc->l2ptr_dma & STRTAB_L1_DESC_L2PTR_MASK;
+> +	val |= FIELD_PREP(STRTAB_L1_DESC_SPAN, span);
+> +	val |= l2ptr_dma & STRTAB_L1_DESC_L2PTR_MASK;
+>  
+>  	/* The HW has 64 bit atomicity with stores to the L2 STE table */
+>  	WRITE_ONCE(*dst, cpu_to_le64(val));
+> @@ -1655,6 +1655,7 @@ static int arm_smmu_init_l2_strtab(struct arm_smmu_device *smmu, u32 sid)
+>  {
+>  	size_t size;
+>  	void *strtab;
+> +	dma_addr_t l2ptr_dma;
+>  	struct arm_smmu_strtab_cfg *cfg = &smmu->strtab_cfg;
+>  	struct arm_smmu_strtab_l1_desc *desc = &cfg->l1_desc[sid >> STRTAB_SPLIT];
+>  
+> @@ -1664,9 +1665,8 @@ static int arm_smmu_init_l2_strtab(struct arm_smmu_device *smmu, u32 sid)
+>  	size = (1 << STRTAB_SPLIT) * sizeof(struct arm_smmu_ste);
+>  	strtab = &cfg->strtab.l1_desc[sid >> STRTAB_SPLIT];
+>  
+> -	desc->span = STRTAB_SPLIT + 1;
+> -	desc->l2ptr = dmam_alloc_coherent(smmu->dev, size, &desc->l2ptr_dma,
+> -					  GFP_KERNEL);
+> +	desc->l2ptr =
+> +		dmam_alloc_coherent(smmu->dev, size, &l2ptr_dma, GFP_KERNEL);
+>  	if (!desc->l2ptr) {
+>  		dev_err(smmu->dev,
+>  			"failed to allocate l2 stream table for SID %u\n",
+> @@ -1675,7 +1675,7 @@ static int arm_smmu_init_l2_strtab(struct arm_smmu_device *smmu, u32 sid)
+>  	}
+>  
+>  	arm_smmu_init_initial_stes(desc->l2ptr, 1 << STRTAB_SPLIT);
+> -	arm_smmu_write_strtab_l1_desc(strtab, desc);
+> +	arm_smmu_write_strtab_l1_desc(strtab, l2ptr_dma, STRTAB_SPLIT + 1);
+>  	return 0;
 >  }
 >  
->  static int arm_smmu_init_strtab_linear(struct arm_smmu_device *smmu)
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> index 4769780259affc..280a04bfb7230c 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> @@ -577,10 +577,7 @@ struct arm_smmu_priq {
+>  
+>  /* High-level stream table and context descriptor structures */
+>  struct arm_smmu_strtab_l1_desc {
+> -	u8				span;
+> -
+>  	struct arm_smmu_ste		*l2ptr;
+> -	dma_addr_t			l2ptr_dma;
+>  };
+>  
+>  struct arm_smmu_ctx_desc {
 > -- 
 > 2.45.2
 > 
