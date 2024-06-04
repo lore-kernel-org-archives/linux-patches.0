@@ -1,146 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0DC23776;
-	Tue,  4 Jun 2024 09:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F134313CF98
+	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 12:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717493544; cv=none; b=mewwhq6mDYaq71xcCB2zhVU4S2us/NSoc8zSP5F5OIhel2xaHxiDieElWFxYRoTDvJD5NBXjy3FuyNps2rgxoaex/Qq/KVkgCfGbMawlyWZIpfqoa/VW5uIpZw6tGV+FOGMcCIDArTc46bEAU1Xip0w1qRvGAT/aGpuL59n1jdU=
+	t=1717502663; cv=none; b=ts/BdoHB6A4786BeU0dasH/sTblv/CRwaWB95ljnoncZsVrQ11oR2VqwpuGwZJ95Ak6hHC4qhSIkntxo0LJjptiCkYdVUz1bORgLoENPNWFxBWa/Ke/u8q1KSaJd11qMhGZJzv8qf/arG53631eJF9yAFARaaMlQ3t9Yf+gasik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717493544; c=relaxed/simple;
-	bh=WbnbTofHxkrx5spG4fYxe59Me3aK8kFxL4l5hleeJcU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VcXYrPAr1qRiGyEgM+CEmckiHtVsGQXH/FKzDUGNCrWPUwHbVttAWRE7do6gFWHKNVE+ztMlLCo6BiDrSGPEgHtaCYm2g+85vUerU3dGQgf+afNrKVTb4TNTw5iRfAtPn1aD7eaJvid9qiRYmA64Hn3SyAeeqAfAbITtr9bDoLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n0jRI4mi; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n0jRI4mi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29689C2BBFC;
-	Tue,  4 Jun 2024 09:32:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717493543;
-	bh=WbnbTofHxkrx5spG4fYxe59Me3aK8kFxL4l5hleeJcU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=n0jRI4mi3EdRcQYgF9pEa/gRYlCHIf6sBhGXBmPndUxYbrsyeeLEW/8Sfm3a20Fzg
-	 MeLOvwKBiPo1OWfEl2uDOMB5FUbJ/Y4uav2hZeuNO8u9Ps+pw/Bh0cpWp+6jFxLPNp
-	 kRar1fbeX+gaqiEP4V4+r6xUT4FCaufoJKKwj9nfQhyOpJSMBExEQsOUha/7P9jj2f
-	 dYEbWrsjT69gMxDctMlj/JTo7xMp1UY0mbPIfZbbsbhzB5tPMvydaGjC5oGWQQvH+J
-	 6MLj4wLAjtZE2lONLJA49KHrh80nJyX0FPEn0tsw61x5NKwtFtN2opIVtgoN0OkRM7
-	 UPkA2bZvvIjEQ==
-Date: Tue, 4 Jun 2024 12:32:19 +0300
-From: Leon Romanovsky <leon@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>, linux-doc@vger.kernel.org,
-	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	David Ahern <dsahern@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
-	Leonid Bloch <lbloch@nvidia.com>, linux-cxl@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 1/8] fwctl: Add basic structure for a class subsystem
- with a cdev
-Message-ID: <20240604093219.GN3884@unreal>
-References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
- <1-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
+	s=arc-20240116; t=1717502663; c=relaxed/simple;
+	bh=7CCd+ELQS0Pw7I+mbe5/2yK4WvO7RYXmFWE2193Egq4=;
+	h=From:To:Cc:Date:Message-Id:Subject; b=gBNXzs0BGUC7Y0luIARimzJZYdlwrSpshq0fyGWwjZHuCVKjO+z5l2Y7PseSpXBDYKmlq6sCiNnWxZCZNwoxAjlpdDyG/fdv0EiX0KqWN62IFaSeI0M5N31Mf5xQnaU/OQx4NAY/8oOjvxDYo5Rxv+FPo3cYXQZdI9ksRNv4rwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05ECDC3277B
+	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 12:04:21 +0000 (UTC)
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Tue, 4 Jun 2024 13:04:19 +0100
+Resent-Message-ID: <Zl8Cw-XKkpu-DmeX@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Tue, 04 Jun 2024 03:22:26 +0100
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=h71I=NG=everest-semi.com=zhangyi@kernel.org>)
+	id 1sEJod-004USf-T4
+	for broonie@sirena.co.uk; Tue, 04 Jun 2024 03:22:26 +0100
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sin.source.kernel.org (Postfix) with ESMTP id DA24BCE0F02
+	for <broonie@sirena.co.uk>; Tue,  4 Jun 2024 02:22:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id 28BCBC32781; Tue,  4 Jun 2024 02:22:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5D84DC2BD10
+	for <broonie@kernel.org>; Tue,  4 Jun 2024 02:22:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 5D84DC2BD10
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=everest-semi.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=everest-semi.com
+Received: from unknown (HELO zy-virtual-machine.localdomain)([116.233.72.63])
+	by sina.net (10.75.30.235) with ESMTP
+	id 665E79C30002F642; Tue, 4 Jun 2024 10:19:49 +0800 (CST)
+X-Sender: zhangyi@everest-semi.com
+X-Auth-ID: zhangyi@everest-semi.com
+Authentication-Results: sina.net;
+	 spf=none smtp.mailfrom=zhangyi@everest-semi.com;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=zhangyi@everest-semi.com
+X-SMAIL-MID: F5FA6652DF9A444D9A15FF87BE51FAD7
+X-SMAIL-UIID: F5FA6652DF9A444D9A15FF87BE51FAD7-20240604-101949
+From: Zhang Yi <zhangyi@everest-semi.com>
+To: alsa-devel@alsa-project.org,
+	broonie@kernel.org
+Cc: tiwai@suse.com,
+	amadeuszx.slawinski@linux.intel.com,
+	yangxiaohua@everest-semi.com,
+	zhuning@everest-semi.com,
+	zhangyi@everest-semi.com
+Date: Tue,  4 Jun 2024 10:19:46 +0800
+Message-Id: <20240604021946.2911-1-zhangyi@everest-semi.com>
+X-Mailer: git-send-email 2.17.1
+X-SA-Exim-Connect-IP: 2604:1380:40e1:4800::1
+X-SA-Exim-Mail-From: SRS0=h71I=NG=everest-semi.com=zhangyi@kernel.org
+Subject: [PATCH] ASoC: codecs: ES8326: Slove headphone detection issue
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: OnnQZG6c4Qn7
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
 
-On Mon, Jun 03, 2024 at 12:53:17PM -0300, Jason Gunthorpe wrote:
-> Create the class, character device and functions for a fwctl driver to
-> un/register to the subsystem.
-> 
-> A typical fwctl driver has a sysfs presence like:
-> 
-> $ ls -l /dev/fwctl/fwctl0
-> crw------- 1 root root 250, 0 Apr 25 19:16 /dev/fwctl/fwctl0
-> 
-> $ ls /sys/class/fwctl/fwctl0
-> dev  device  power  subsystem  uevent
-> 
-> $ ls /sys/class/fwctl/fwctl0/device/infiniband/
-> ibp0s10f0
-> 
-> $ ls /sys/class/infiniband/ibp0s10f0/device/fwctl/
-> fwctl0/
-> 
-> $ ls /sys/devices/pci0000:00/0000:00:0a.0/fwctl/fwctl0
-> dev  device  power  subsystem  uevent
-> 
-> Which allows userspace to link all the multi-subsystem driver components
-> together and learn the subsystem specific names for the device's
-> components.
-> 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  MAINTAINERS            |   8 ++
->  drivers/Kconfig        |   2 +
->  drivers/Makefile       |   1 +
->  drivers/fwctl/Kconfig  |   9 +++
->  drivers/fwctl/Makefile |   4 +
->  drivers/fwctl/main.c   | 174 +++++++++++++++++++++++++++++++++++++++++
->  include/linux/fwctl.h  |  68 ++++++++++++++++
->  7 files changed, 266 insertions(+)
->  create mode 100644 drivers/fwctl/Kconfig
->  create mode 100644 drivers/fwctl/Makefile
->  create mode 100644 drivers/fwctl/main.c
->  create mode 100644 include/linux/fwctl.h
+When switching between OMTP and CTIA headset, we can hear pop noise.
+To solve this issue, We modified the configuration for headphone detection
 
-<...>
+Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
+---
+ sound/soc/codecs/es8326.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-> +static struct fwctl_device *
-> +_alloc_device(struct device *parent, const struct fwctl_ops *ops, size_t size)
-> +{
-> +	struct fwctl_device *fwctl __free(kfree) = kzalloc(size, GFP_KERNEL);
-> +
-> +	if (!fwctl)
-> +		return NULL;
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index 3031699a14c4..4d87bebca5c1 100755
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -857,12 +857,16 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 			 * set auto-check mode, then restart jack_detect_work after 400ms.
+ 			 * Don't report jack status.
+ 			 */
+-			regmap_write(es8326->regmap, ES8326_INT_SOURCE,
+-					(ES8326_INT_SRC_PIN9 | ES8326_INT_SRC_BUTTON));
++			regmap_write(es8326->regmap, ES8326_INT_SOURCE, 0x00);
+ 			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x01);
++			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x10, 0x00);
+ 			es8326_enable_micbias(es8326->component);
+ 			usleep_range(50000, 70000);
+ 			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x00);
++			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x10, 0x10);
++			usleep_range(50000, 70000);
++			regmap_write(es8326->regmap, ES8326_INT_SOURCE,
++					(ES8326_INT_SRC_PIN9 | ES8326_INT_SRC_BUTTON));
+ 			regmap_write(es8326->regmap, ES8326_SYS_BIAS, 0x1f);
+ 			regmap_update_bits(es8326->regmap, ES8326_HP_DRIVER_REF, 0x0f, 0x08);
+ 			queue_delayed_work(system_wq, &es8326->jack_detect_work,
+-- 
+2.17.1
 
-<...>
-
-> +/* Drivers use the fwctl_alloc_device() wrapper */
-> +struct fwctl_device *_fwctl_alloc_device(struct device *parent,
-> +					 const struct fwctl_ops *ops,
-> +					 size_t size)
-> +{
-> +	struct fwctl_device *fwctl __free(fwctl) =
-> +		_alloc_device(parent, ops, size);
-
-I'm not a big fan of cleanup.h pattern as it hides important to me
-information about memory object lifetime and by "solving" one class of
-problems it creates another one.
-
-You didn't check if fwctl is NULL before using it.
-
-> +	int devnum;
-> +
-> +	devnum = ida_alloc_max(&fwctl_ida, FWCTL_MAX_DEVICES - 1, GFP_KERNEL);
-> +	if (devnum < 0)
-> +		return NULL;
-> +	fwctl->dev.devt = fwctl_dev + devnum;
-> +
-> +	cdev_init(&fwctl->cdev, &fwctl_fops);
-> +	fwctl->cdev.owner = THIS_MODULE;
-> +
-> +	if (dev_set_name(&fwctl->dev, "fwctl%d", fwctl->dev.devt - fwctl_dev))
-
-Did you miss ida_free() here?
-
-> +		return NULL;
-> +
-> +	fwctl->ops = ops;
-> +	return_ptr(fwctl);
-> +}
-> +EXPORT_SYMBOL_NS_GPL(_fwctl_alloc_device, FWCTL);
-
-Thanks
