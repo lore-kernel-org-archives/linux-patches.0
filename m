@@ -1,74 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F40DDD8;
-	Tue,  4 Jun 2024 14:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A526A134409;
+	Tue,  4 Jun 2024 14:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717509893; cv=none; b=iEZii3chAA4kvhVPYmqMdBhvESI2GT6833ePzfw1dhrNzykcwR3pfnlF2mfr1kBOwtBlFMNDknAmcddh8fdZpxbFEr10X/4UBroFYxo0gi7+WGid374e6BrrJ5NPxf8H0VUMaLdV9Q/2IxbM+ivZWMoxEE3ooeVgm2PIhXxnIEY=
+	t=1717510340; cv=none; b=UDpmcvsbddak9Gn/32awk7JxTqqnNW+8IYNo3M4fhe++wTwHkhr9daI3jQYRVV0toAvuHCNRpwVphJPy4oIXQWe7xDmN2ntUzN3efmh04Sb6hGPnPQpQbMFK9KJ3DXJScyIYwmJ4yUJxpl9aI/0/US2fBEqvVVCV6ZysdauBGzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717509893; c=relaxed/simple;
-	bh=m56D1HG4TMAp7Ua7lG8n8m71RA05vQrWG6ab/U1JnzE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bf7MiMLq+14hRsHTmoYxSwLmyWqK8r+hFfM1TfL0HL6b+M26wb4r+t83RZR1AeCBvGIMAlB/nE4xJ2EmY5v8ZCDmKAxdLi05X3FRl/e/6Y+nBGF/vOT4VO00I71nFP08OrlvFTGgv/otav+FxmefLVzUGqSrwPX7Gv0Dw5OaVzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CnVc8vTk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717510340; c=relaxed/simple;
+	bh=a+dh7jhzlHhwln90offyZoiN+B1RFJofWEM3+SwHlVk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rTtR5yqnjCKNwYjpd0+0gu+1P4joD7L2YAP55Mk2+ehaptlJzNY7zdtdevVXNMZkRqscZa0/ANLXUlTKsWzZHniLZsW7wtCOQWFl9Woqg9jED/stHvPlTo99jkfMt0cLNunVN6GfaXYbdeRow4LrqbQqFrpW9nF7YnSUBB0PjEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pd1OgHOf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CnVc8vTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC5DC2BBFC;
-	Tue,  4 Jun 2024 14:04:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717509893;
-	bh=m56D1HG4TMAp7Ua7lG8n8m71RA05vQrWG6ab/U1JnzE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=CnVc8vTkWsUBY6czpccOVE7VnFFYHTLsvUwkfK2iG9NDzCoVc2U41OrYHX7EO+HZV
-	 AJ1CQOwCimEIxxO1jQPHfN8Gu8Y58hg64hovDVUqmJvac9CxU9tDgQaG9PiFUbXZl1
-	 p+n0Fxgxfz4nwLlKZkU0u6WAeyeouCQ+hUQIonQa4thNqTwel3wgQTZDeDR8YG2EKc
-	 dgvzrv9C0uCpQkgl6zSe97VqlV8BDpXXxsyLn0e/qpAFGfF8sBYp7dJuOM11cmrZTH
-	 B+tD/T/nhQ5ZiZYdazwOnISUSeoe4gFf+LXvY97rtbwo9MxtzJJyYDNHG0vIocXGj9
-	 H5cTYbCkbf8bw==
-Date: Tue, 4 Jun 2024 07:04:51 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: David Ahern <dsahern@kernel.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, Jonathan Corbet <corbet@lwn.net>, Itay
- Avraham <itayavr@nvidia.com>, Leon Romanovsky <leon@kernel.org>,
- linux-doc@vger.kernel.org, linux-rdma@vger.kernel.org,
- netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed
- <saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>, Andy Gospodarek
- <andrew.gospodarek@broadcom.com>, Aron Silverton
- <aron.silverton@oracle.com>, Dan Williams <dan.j.williams@intel.com>,
- Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>, Leonid
- Bloch <lbloch@nvidia.com>, Leon Romanovsky <leonro@nvidia.com>,
- linux-cxl@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 0/8] Introduce fwctl subystem
-Message-ID: <20240604070451.79cfb280@kernel.org>
-In-Reply-To: <214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
-References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
-	<20240603114250.5325279c@kernel.org>
-	<214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pd1OgHOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F7BC32786;
+	Tue,  4 Jun 2024 14:12:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1717510340;
+	bh=a+dh7jhzlHhwln90offyZoiN+B1RFJofWEM3+SwHlVk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pd1OgHOfoDM8EnggG7+pJFqnZGPBRXKf1p19Hkw8gIOj0vTIDFd8tqcqkmGwpKdyo
+	 tofQyVfh5WlIA/S31F61Z5naCXDj855GpWEYV+cYU7QcJnHh9hNoMCXgKsAsf0lmV1
+	 AUb21ZBtGnjdRUE3Nyb6ltfmQ4lRiHCQxMQ8wVJo=
+Date: Tue, 4 Jun 2024 15:48:58 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+	patches@lists.linux.dev, kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Daniel Latypov <dlatypov@google.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Maxime Ripard <maxime@cerno.tech>
+Subject: Re: [PATCH v5 06/11] platform: Add test managed
+ platform_device/driver APIs
+Message-ID: <2024060445-reverse-defendant-ec52@gregkh>
+References: <20240603223811.3815762-1-sboyd@kernel.org>
+ <20240603223811.3815762-7-sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240603223811.3815762-7-sboyd@kernel.org>
 
-On Mon, 3 Jun 2024 21:01:58 -0600 David Ahern wrote:
-> On 6/3/24 12:42 PM, Jakub Kicinski wrote:
-> > Somewhat related, I saw nVidia sells various interesting features in its
-> > DOCA stack. Is that Open Source?  
+On Mon, Jun 03, 2024 at 03:38:03PM -0700, Stephen Boyd wrote:
+> Introduce KUnit resource wrappers around platform_driver_register(),
+> platform_device_alloc(), and platform_device_add() so that test authors
+> can register platform drivers/devices from their tests and have the
+> drivers/devices automatically be unregistered when the test is done.
 > 
-> Seriously, Jakub, how is that in any way related to this patch set?
+> This makes test setup code simpler when a platform driver or platform
+> device is needed. Add a few test cases at the same time to make sure the
+> APIs work as intended.
+> 
+> Cc: Brendan Higgins <brendan.higgins@linux.dev>
+> Cc: David Gow <davidgow@google.com>
+> Cc: Rae Moar <rmoar@google.com>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> ---
+>  Documentation/dev-tools/kunit/api/index.rst   |   5 +
+>  .../dev-tools/kunit/api/platformdevice.rst    |  10 +
+>  include/kunit/platform_device.h               |  20 ++
+>  lib/kunit/Makefile                            |   4 +-
+>  lib/kunit/platform-test.c                     | 223 +++++++++++++
+>  lib/kunit/platform.c                          | 302 ++++++++++++++++++
+>  6 files changed, 563 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/dev-tools/kunit/api/platformdevice.rst
+>  create mode 100644 include/kunit/platform_device.h
+>  create mode 100644 lib/kunit/platform-test.c
+>  create mode 100644 lib/kunit/platform.c
 
-Whether they admit it or not, DOCA is a major reason nVidia wants
-this to be standalone rather than part of RDMA.
-
-> You are basically suggesting that if any vendor ever has an out of tree
-> option for its hardware every patch it sends should be considered a ruse
-> to enable or simplify proprietary options.
-
-Ooo, is that a sore spot?
-
-I don't begrudge anyone building proprietary options, but leave
-upstream out of it.
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
