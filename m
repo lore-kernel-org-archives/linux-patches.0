@@ -1,320 +1,123 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CE914C5A9
-	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 21:42:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018F728DC7;
+	Tue,  4 Jun 2024 22:32:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717537361; cv=none; b=j8z56kicZVit/5j52JiCOdnAUyubR6rgz5WTO4UEo1HNGMT5DJlL2awd9m3sLvQe9yOmNGZX3+uOWwsrz/m2Dyu6YqpaHdeTxOYVtoWOVfiL42kyK4ikfjRLuBrRWo34Sc4aK0vLg+As7MT634I9+AGbnadloOUNYpYj0wRypbg=
+	t=1717540339; cv=none; b=eBRFNxLZFE6mdV9qnUVMz8DnSGvnImyzxytFcWG6EcY8x7DGHQD9cwLhmP+T0LLcpqMIZaDOHxUTq9g6Fr9uNG9GWelPeuGMpyEaj4APrSFvw0dkW8Y3tymrWPMGHagV9p3wheO17Kxt9SH8/Gg1ppNcCIKamMAfWlqSXmBHUZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717537361; c=relaxed/simple;
-	bh=xAp5WZlsM/Hkn85zeDB+4PP5CKeQf8054xAI8p5QoAA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4k7Q87aV3bLNUy9uE0itOvsjpuF7Oar33imeqs2rbqhu7/muyQ9F8uZKJyXtZnPNlyLSW+/4RRIcKzoGQtqGm5jgzVV6pKhOZGOngRA3ijjow9qaNg8fDJ9BnySY/dNYbLlDH8gLxPiec5wd9hPFe5cBTU0sjiOf+GSMnfF8H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=DQt+kvrk; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1717540339; c=relaxed/simple;
+	bh=QHMdG4wTh/4cAxLzxOS5+p4F6ixCHuPUEV8qdu/4hJ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=l3i0e3AinW1LeahlthfVQyBC2kJ5t9uOKxupLecYCDm4uVlnmy3Y8i3vImTYnaAjI6DR26MSTZ3ochRdyeOVYVoYEOiDtJMfsbTbAX7LQ+VYI/iv6QryTBXlUSVkhtesYSRx0QQuB+opxE3MI4hnBdL2XOi561bkf3XjI6l785I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gut0Ft8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="DQt+kvrk"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1f44b42d1caso46993195ad.0
-        for <patches@lists.linux.dev>; Tue, 04 Jun 2024 14:42:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1717537359; x=1718142159; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UdCQAM7e5bMqyS7h48dH9IJa2aicn6jIduH8LQ8/gwo=;
-        b=DQt+kvrkeyXQNwOCcCHiJmmD3OmyDjWJjh5kKzNr6el+JMVC9th9TlANm9mepYSQOS
-         9r5PEjlxVH4NLmcld/4xmQfDPMPjjj842ENoB6m1SxeL+CLJRd5tefjrTTApsTvn4Z2D
-         UIes/Wi+8JKoAbVAomlXWPstzNNZVgzfzadMM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717537359; x=1718142159;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UdCQAM7e5bMqyS7h48dH9IJa2aicn6jIduH8LQ8/gwo=;
-        b=dRR80rJMW0IqAzrtScPKeuTfpAFQzivZnVUhtsT4fEbEGgQEX1fk1N4n8wX2bnyycV
-         vi2XOCaSgFKijXnxcfi1OLPiawW/403zHiJIgr2IWYlB6sjtBWa8LRleysIiQ2MAus25
-         JGnm8lAFEy8jyRqK4yhkkjOM+8PjJHl4ZcnVUTkKZyqXE2dnfA+jAxcNCvlqB+m/ITwI
-         M+D2mhBdF1F3DHckCk03+KWPfhAgjUg6YJfhQUlwZPx8Bv6DEcmk113CAvQIa/J2LGz+
-         ZRd47L+hsSuIn5ZTNckpC3+EHOjycbuqMl5wDNHFynCzoqx8CxKqBRdsaHMHG9MNp7Tg
-         LCLA==
-X-Forwarded-Encrypted: i=1; AJvYcCUEy9eqhk2RSDhMpcyH0B6y0Te5taxdvkS5MObPP0zYYBA/rTIFcZj7TuXPcaGcMqnzIDxXtEBAN5xJk0tYHbgbXEyPyAXFbA==
-X-Gm-Message-State: AOJu0YxBCVBUMKT3pPhXA+k5aCncYPSZCia+DWO10GtsJvAiDuv+f/cV
-	X88gv7KlCCxqZ+y+aJR3pkmPL+xzeIPZ3UEvFTpATBWeDJvhQVU3sB4CyAb2UA==
-X-Google-Smtp-Source: AGHT+IHACVwMOBPFrf+eB5iYX0aACOfsfuqCORLFufTgaSTpclbakbGsz+yHvN2MJs5N4qePFzU54w==
-X-Received: by 2002:a17:902:ec91:b0:1f6:8290:175a with SMTP id d9443c01a7336-1f6a5a1a254mr8417235ad.40.1717537359406;
-        Tue, 04 Jun 2024 14:42:39 -0700 (PDT)
-Received: from localhost (132.197.125.34.bc.googleusercontent.com. [34.125.197.132])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-1f63240134fsm88399035ad.243.2024.06.04.14.42.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jun 2024 14:42:39 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	patches@lists.linux.dev,
-	cros-qcom-dts-watchers@chromium.org,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	devicetree@vger.kernel.org,
-	Pin-yen Lin <treapking@chromium.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sc7180-trogdor: Make clamshell/detachable fragments
-Date: Tue,  4 Jun 2024 14:42:32 -0700
-Message-ID: <20240604214233.3551692-4-swboyd@chromium.org>
-X-Mailer: git-send-email 2.45.1.288.g0e0cd299f1-goog
-In-Reply-To: <20240604214233.3551692-1-swboyd@chromium.org>
-References: <20240604214233.3551692-1-swboyd@chromium.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gut0Ft8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9647AC2BBFC;
+	Tue,  4 Jun 2024 22:32:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717540338;
+	bh=QHMdG4wTh/4cAxLzxOS5+p4F6ixCHuPUEV8qdu/4hJ4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=gut0Ft8ueLeR2XIJbV66BFcgFaOcIs3ZISZo3gfkRqqHjDfDLPwUcfNlUn7BxIwbN
+	 SW5VkKgIW9wP8m0DWmIuQ4wlRHf1aLSh1LJ2BM54QMNi8xY2A39jhAOwM4rykGaWRb
+	 0nPLtkbNdQU+EePtXvAB49zRFfkWzncye9vMaLzJO89qJ3KUGg7DqkxZUYkHd7MP0l
+	 Fwl6DHqCYhCwI4Ul/CIhDkvLl4bJLnhPbVkvfynjuRiK6u6n6p1lvsuFIBwnHeMlEA
+	 Ck6EIp39zbPSbwVUqxlpRv1tF8TE5li5OOloi03w5gmAJOKpajE+NSfr4uKihmgoP9
+	 b2xbykeru/l0g==
+Date: Tue, 4 Jun 2024 15:32:16 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Saeed Mahameed <saeed@kernel.org>
+Cc: David Ahern <dsahern@kernel.org>, Jason Gunthorpe <jgg@nvidia.com>,
+ Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>, Leon
+ Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
+ linux-rdma@vger.kernel.org, netdev@vger.kernel.org, Paolo Abeni
+ <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>, Tariq Toukan
+ <tariqt@nvidia.com>, Andy Gospodarek <andrew.gospodarek@broadcom.com>, Aron
+ Silverton <aron.silverton@oracle.com>, Dan Williams
+ <dan.j.williams@intel.com>, Christoph Hellwig <hch@infradead.org>, Jiri
+ Pirko <jiri@nvidia.com>, Leonid Bloch <lbloch@nvidia.com>, Leon Romanovsky
+ <leonro@nvidia.com>, linux-cxl@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 0/8] Introduce fwctl subystem
+Message-ID: <20240604153216.1977bd90@kernel.org>
+In-Reply-To: <Zl-G5SRFztx_77a2@x130>
+References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
+	<20240603114250.5325279c@kernel.org>
+	<214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
+	<20240604070451.79cfb280@kernel.org>
+	<Zl-G5SRFztx_77a2@x130>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-At a high-level, detachable Trogdors (sometimes known as Strongbads)
-don't have a cros_ec keyboard, while all clamshell Trogdors (only known
-as Trogdors) always have a cros_ec keyboard. Looking closer though, all
-clamshells have a USB type-A connector and a hardwired USB camera. And
-all detachables replace the USB camera with a MIPI based one and swap
-the USB type-a connector for the detachable keyboard pogo pins.
+On Tue, 4 Jun 2024 14:28:05 -0700 Saeed Mahameed wrote:
+> On 04 Jun 07:04, Jakub Kicinski wrote:
+> >On Mon, 3 Jun 2024 21:01:58 -0600 David Ahern wrote:  
+> >> Seriously, Jakub, how is that in any way related to this patch set?  
+> >
+> >Whether they admit it or not, DOCA is a major reason nVidia wants
+> >this to be standalone rather than part of RDMA.
+> 
+> No, DOCA isn't on the agenda for this new interface. But what is the point
+> in arguing?
 
-Split the detachable and clamshell bits into different files so we can
-describe these differences in one place instead of in each board that
-includes sc7180-trogdor.dtsi. For now this is just the keyboard part,
-but eventually this will include the type-a port and the pogo pins.
+I'm not arguing any point, we argued enough. But you failed to disclose
+that DOCA is very likely user of this interface. So whoever you're
+planning to submit it to should know.
 
-Cc: <cros-qcom-dts-watchers@chromium.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: Conor Dooley <conor+dt@kernel.org>
-Cc: <linux-arm-msm@vger.kernel.org>
-Cc: <devicetree@vger.kernel.org>
-Cc: Pin-yen Lin <treapking@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- .../boot/dts/qcom/sc7180-trogdor-clamshell.dtsi     |  9 +++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi |  5 +----
- .../boot/dts/qcom/sc7180-trogdor-detachable.dtsi    | 13 +++++++++++++
- .../boot/dts/qcom/sc7180-trogdor-homestar.dtsi      |  9 +--------
- .../boot/dts/qcom/sc7180-trogdor-kingoftown.dts     |  2 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi  |  3 +--
- .../arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |  3 +--
- arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi |  3 +--
- .../boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi |  7 +------
- arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts      |  3 +--
- .../boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi   |  5 +----
- 11 files changed, 31 insertions(+), 31 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
+DOCA was top of mind for me because I noticed it has PSP support, and
+I wanted to take a look at the implementation.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
-new file mode 100644
-index 000000000000..d91533b80e76
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
-@@ -0,0 +1,9 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Trogdor dts fragment for clamshells
-+ *
-+ * Copyright 2024 Google LLC.
-+ */
-+
-+/* This file must be included after sc7180-trogdor.dtsi to modify cros_ec */
-+#include <arm/cros-ec-keyboard.dtsi>
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index 7765c8f64905..6e6a4643c4dd 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -7,6 +7,7 @@
- 
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
-+#include "sc7180-trogdor-detachable.dtsi"
- 
- /* Deleted nodes from sc7180-trogdor.dtsi */
- 
-@@ -80,10 +81,6 @@ &camcc {
- };
- 
- &cros_ec {
--	keyboard-controller {
--		compatible = "google,cros-ec-keyb-switches";
--	};
--
- 	cros_ec_proximity: proximity {
- 		compatible = "google,cros-ec-mkbp-proximity";
- 		label = "proximity-wifi";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
-new file mode 100644
-index 000000000000..7c5d8a57ef7f
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
-@@ -0,0 +1,13 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Trogdor dts fragment for detachables
-+ *
-+ * Copyright 2024 Google LLC.
-+ */
-+
-+/* This file must be included after sc7180-trogdor.dtsi to modify cros_ec */
-+&cros_ec {
-+	keyboard-controller {
-+		compatible = "google,cros-ec-keyb-switches";
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index 2ba3bbf3b9ad..8846a7c4e636 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -5,9 +5,8 @@
-  * Copyright 2021 Google LLC.
-  */
- 
--/* This file must be included after sc7180-trogdor.dtsi */
--
- #include "sc7180-trogdor-rt5682i-sku.dtsi"
-+#include "sc7180-trogdor-detachable.dtsi"
- 
- / {
- 	/* BOARD-SPECIFIC TOP LEVEL NODES */
-@@ -135,12 +134,6 @@ &camcc {
- 	status = "okay";
- };
- 
--&cros_ec {
--	keyboard-controller {
--		compatible = "google,cros-ec-keyb-switches";
--	};
--};
--
- &panel {
- 	compatible = "samsung,atna33xc20";
- 	enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts
-index d6db7d83adcf..655bea928e52 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts
-@@ -9,7 +9,7 @@
- 
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-parade-ps8640.dtsi"
--#include <arm/cros-ec-keyboard.dtsi>
-+#include "sc7180-trogdor-clamshell.dtsi"
- #include "sc7180-trogdor-lte-sku.dtsi"
- #include "sc7180-trogdor-rt5682s-sku.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index e9f213d27711..c3fd6760de7a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -5,8 +5,7 @@
-  * Copyright 2020 Google LLC.
-  */
- 
--/* This file must be included after sc7180-trogdor.dtsi */
--#include <arm/cros-ec-keyboard.dtsi>
-+#include "sc7180-trogdor-clamshell.dtsi"
- 
- &ap_sar_sensor {
- 	semtech,cs0-ground;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
-index 73aa75621721..cc2c5610a279 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
-@@ -5,8 +5,7 @@
-  * Copyright 2021 Google LLC.
-  */
- 
--/* This file must be included after sc7180-trogdor.dtsi */
--#include <arm/cros-ec-keyboard.dtsi>
-+#include "sc7180-trogdor-clamshell.dtsi"
- 
- &ap_sar_sensor {
- 	compatible = "semtech,sx9324";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-index 067813f5f437..8214a61276fe 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-@@ -6,8 +6,7 @@
-  */
- 
- #include "sc7180-trogdor.dtsi"
--/* Must come after sc7180-trogdor.dtsi to modify cros_ec */
--#include <arm/cros-ec-keyboard.dtsi>
-+#include "sc7180-trogdor-clamshell.dtsi"
- #include "sc7180-trogdor-rt5682i-sku.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-index b7de9fd3fa20..00229b1515e6 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-@@ -9,6 +9,7 @@
- 
- #include "sc7180-trogdor.dtsi"
- #include "sc7180-trogdor-rt5682i-sku.dtsi"
-+#include "sc7180-trogdor-detachable.dtsi"
- 
- / {
- 	ppvar_lcd: ppvar-lcd-regulator {
-@@ -44,12 +45,6 @@ &camcc {
- 	status = "okay";
- };
- 
--&cros_ec {
--	keyboard-controller {
--		compatible = "google,cros-ec-keyb-switches";
--	};
--};
--
- &gpio_keys {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index c9667751a990..d393a2712ce6 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -8,8 +8,7 @@
- /dts-v1/;
- 
- #include "sc7180-trogdor.dtsi"
--/* Must come after sc7180-trogdor.dtsi to modify cros_ec */
--#include <arm/cros-ec-keyboard.dtsi>
-+#include "sc7180-trogdor-clamshell.dtsi"
- #include "sc7180-trogdor-rt5682i-sku.dtsi"
- #include "sc7180-trogdor-ti-sn65dsi86.dtsi"
- 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-index 305ad127246e..1d9fc61b6550 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-@@ -8,6 +8,7 @@
- /dts-v1/;
- 
- #include "sc7180-trogdor.dtsi"
-+#include "sc7180-trogdor-detachable.dtsi"
- 
- / {
- 	avdd_lcd: avdd-lcd-regulator {
-@@ -104,10 +105,6 @@ &cros_ec {
- 	base_detection: cbas {
- 		compatible = "google,cros-cbas";
- 	};
--
--	keyboard-controller {
--		compatible = "google,cros-ec-keyb-switches";
--	};
- };
- 
- &i2c4 {
--- 
-https://chromeos.dev
+> Apparently the vendor is not credible enough in your opinion.
 
+You're creating an interface where you depend on a pinky promise from
+a black box that the RPC is not a write. I trust you personally not to
+write a patch which abuses this interface. But this cannot possibly
+extend to all developers, most of who just want to ship features.
+
+> Which is an absolute outrageous grounds for a NAK.
+> 
+> Anyway I don't see your point in bringing up DOCA here, but obviously once 
+> this interface is accepted, all developers are welcome to use it,
+> including DOCA developers of course..
+
+Of course.
+
+> That being said, the why we need this is crystal clear in the 
+> cover-letter and previous submission discussions, bringing random SDKs
+> into this discussion is not objective and counter productive to the
+> technical discussion.
+> 
+> >> You are basically suggesting that if any vendor ever has an out of tree
+> >> option for its hardware every patch it sends should be considered a ruse
+> >> to enable or simplify proprietary options.
+> 
+> It's apparent that you're attributing sinister agendas to patchsets when
+> you fail to offer valid technical opinions regarding the NAK nature. Let's
+> address this outside of this patchset, as this isn't the first occurrence.
+> Consistency in evaluating patches is crucial;
+
+Exactly :| Netdev people, including multiple prominent developers from
+Mellanox/nVidia have been nacking SDK interfaces in Linux networking
+for 20 years. How are we going to look to all the companies which have
+been doing IPUs for over a decade if we change the rules for nVidia?
+
+> some, like the fbnic and idpf, seem to go unquestioned, while others
+> face scrutiny.
+
+fbnic got a nack for any core changes or uAPI not used by other drivers.
+idpf got a nack for pretending to be a standard.
+
+You keep saying that I'm nacking your interface because I have some
+hatred and distrust for you or nVidia. I really, really don't.
+Any vendor posting this would get exactly the same nack from me.
+
+If by "let's address this outside of this patchset" you mean that we
+should have a discussion about maintainer favoritism, and subsystem
+capture by vendors - you have my full support!
