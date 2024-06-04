@@ -1,57 +1,57 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504C81422B0
-	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 16:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC2D38396
+	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 16:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717517698; cv=none; b=Ph239U1uY3+4w1FkJxXx4zgsdgTs6JC1bxcWlcO5hqj8oq9atqJfadAKqT0Ti6/+xRzH/w4ERV4bsSpjlqeIbd2AkSokERzaCqqrGYwDSWCvYjkVDOcgn+/QNXj/hrGrIzI+Wr2ULuUSfhu4K20mcPhcoVDNud24juztbT9xLPg=
+	t=1717518139; cv=none; b=ODDqCyXDH/dOnEU5Zu6IQ4HZwKmjfYoWARoAn/IQzJUlsqnlW61t9bbUQPjYZP6Jq10s/MW2g2chqdL4bnboQfmHFbEm6i0snqgLvW420ateDbd6J6sEEJm/FG8/N1oBTCkgVN2TkIe8kzosaX2ZkRY1F0nBqYG6rmBIrCYmCVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717517698; c=relaxed/simple;
-	bh=A+KJEf62r+PQJ2NFLQQYh/BjL05TFImeAFPqIdGD1J8=;
+	s=arc-20240116; t=1717518139; c=relaxed/simple;
+	bh=OJ36AuwpQLqkzU+IdAeCvginO1HJqjJkAx1SAuyFiwg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GO0DlCZS+/xS4LZ/UNK0SWPzyhWDcRzpOF9JB/S8JJRDdz4NnqVpcSrlfNvrii+wv+B8Td54QO7kxnWKep0fEaKnH9J7SEJlfk8rQvcTp1nzBuZuu3MVJW7f0fO+03INrRrs5+LAFlFCdGvLY8NzmuV81Rgjgfh6/9RvQgAO5+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hQQTOzxc; arc=none smtp.client-ip=209.85.128.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=Tq42Sm2f3or20hHKxfknOmvE14Qy0MO2V38tqwsg2pqbJl0JUIG+zlduIWzF23KpdAQz9pxSHGZLGWJ2/k4i//1skiC0kF1hfpHEkxcJSfEx2UU6ROMeHJfpP8+l7pzTbIa2Co8u0/nyYFoU9oLIxs6U34d4uhMwOoHbcTEdtFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=j9P8ksHY; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hQQTOzxc"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42135a497c3so143465e9.0
-        for <patches@lists.linux.dev>; Tue, 04 Jun 2024 09:14:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="j9P8ksHY"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42152bb7b81so79545e9.0
+        for <patches@lists.linux.dev>; Tue, 04 Jun 2024 09:22:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1717517694; x=1718122494; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1717518135; x=1718122935; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sog84U7Wd5TBpIF8EHL5jNYn8tkvMRV0fzjn9o9wjNM=;
-        b=hQQTOzxc9vK82yakLewcK2B+zz1+1q/rSPmmBKHJ+sORokgnEBah543BKF/WhjyW+R
-         vMxhu8qbKUGWXePZx7gvhsqlX5gICX1Q1frlqavrblm3J6Mw3ZMu5CneSWGQYoWs2/Is
-         vUm6IO3JKeIHeBIbvnfVbZOzD1gM8peHnRSSjo6ISXuMZgYkHWgMViS5Im5e7Xf2jzOH
-         tyXrjq2+3dKZkNyZaKfoT+CFsQW9gbRYkXJOeRa3+VxiqBo6YupxdXNfpw8NSJJU9XWi
-         7rJdpCVN8ncbLzDSIv2EzyCH42nW4wjfnkuFDXdh3HsFihtVdC/Fd0Kapl61f/cknCYl
-         hQYQ==
+        bh=69kRpuWxh68+JQDUzakiT+9vSzXmOCgYFNcr5dAKA5M=;
+        b=j9P8ksHYNmktqOLIq6LQLOO7KFWlWNECDBxrbFIgqCQ7enF5EHn6SdwdO2azVADwnv
+         Px6C8fc+bOdfvuIFkeSAn/6WEDpww0K6dSbdwoFdGg2B0Yyuck+dSQeHV6USOmYwyEkd
+         TVoOQOBSkfDfpoUOA1TIrgeu3SqslE5B8lTbsLyw61/8P0B5X1Kbagkrf8/dqF4vULsQ
+         dRpmNsypVPKLQ+LoOv8pk12nVwIF4V9O6Jly5SXlQsk9nsnsel/YCjUXIMcZRW6DScyx
+         DB795jiR0cBCffvcwTD/MAN4GpoeUowE/xcX1aytnbAKsaKBiJpL2JHngvdxXxtBLYAa
+         OHbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717517695; x=1718122495;
+        d=1e100.net; s=20230601; t=1717518135; x=1718122935;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sog84U7Wd5TBpIF8EHL5jNYn8tkvMRV0fzjn9o9wjNM=;
-        b=LDo1Cq2YDFrch1RYy0yq+2CtkKgqkrrA6Bmim2pFfYg8nhdzqRCK02JpSPO0CLjj8y
-         QtFByDKWplCMh10dY+ibUxzPukuQyGDocg0eNbse/LkbDNso/9rwBXXKOkq/gnY4fWYc
-         +diLPFuoeCetRIcbkNmbFMJJSMyrqAOGXtKsumeTyx8T9nvYnbN05+827mtTNiTQ9Ymk
-         5R7s1tf+xRi2pABOrl2aXz4hZ2kYsJU4IWa59sGfUAQEDs3MXMtbbjUPr6x169dUuj+x
-         FNoyx7PBpYLvfgY9qRVGn2wmLrjGvzvXpQfhDw9OR4q6HwyVMhG1u+TnYfrkppmMkqPE
-         Mq3g==
-X-Forwarded-Encrypted: i=1; AJvYcCVzFAO+Aqgj8o698xfCP8AVrn2AzWn+y7DPRKQpi8ilWTDHNAzz8yFMJ7Q1vr8IjlmunSPeKvI+bomSxlqLl44Pu5hA+G+hNA==
-X-Gm-Message-State: AOJu0Yzs8p1xueEr0P1SlMISW29miExeZfgAoxgpY5+3tmrsvsgmW4sP
-	O2OtTBQaMxqp2wdMeBWbl+LL7irDAO5RrFFPuVTClA3I/FNkUTWQ7GhWPcjweA==
-X-Google-Smtp-Source: AGHT+IHORJ6oTFX5Gt9IksIYn5pHPDh+i7h51QlKwFVCpGyoweS9KLKWHiKZzbzJ90ofU21HdPIECA==
-X-Received: by 2002:a05:600c:5122:b0:41b:e55c:8dca with SMTP id 5b1f17b1804b1-4214b226851mr2552395e9.7.1717517694401;
-        Tue, 04 Jun 2024 09:14:54 -0700 (PDT)
+        bh=69kRpuWxh68+JQDUzakiT+9vSzXmOCgYFNcr5dAKA5M=;
+        b=KlSq4996QfN6ZJEnb9vXRz4t0MAH/HJGBHu6i7xe1+hAHFJwp5tEP+6l9wPmujhJWr
+         9DWK7PB4SmuBcCbvQD4H8ZjK57swwKDrZnraCs+CndiAjp/ba2fMjSfU2KTwEtc9qPAU
+         mWTXws9pq+7stUvUamGyOyvtyeBOl4u3uOPp+qnYzvC+2y4Ij38lXWdVCkS8qSWC5lS5
+         ClDyTIwpvMCx76YB+GiZ/K72EM75hTru2GMLT6pJRKfTCF/mZocVZPtNm/5+EtQOvFlj
+         X3gm+nhsFKPrbKBFfKmafgh4cwzmL3I1HoWAxK1Sjkn/QRafhLkPes5zmY1dQjqCi4sj
+         LQag==
+X-Forwarded-Encrypted: i=1; AJvYcCWX7NFNrGxUFMPF5QpYcMNGFmRBI6MgGc5beSWa2iCG1TrfZEryN6Urwjgcvl+IimkApOv+a0PYAS2tkWQRNiPVWFn+2DRyPA==
+X-Gm-Message-State: AOJu0Yx7EtxhrzTijeaazlpTlswMvVL/RYwmbtel3sEwnQVo0HLtfiRy
+	6Li/5TCD2j5bxPJU6fkIQtut45F3mvUOYm0p75372yo3MkYJiY7hUfNMpUR+Ow==
+X-Google-Smtp-Source: AGHT+IFHEt2e3Pj1nYGPA3j0RWpr3Krfpq7OpnL3UxZ5y5n1w2lAF8qBJKCqPcvPTCGtPLzRttnNNA==
+X-Received: by 2002:a7b:ca46:0:b0:41b:8715:1158 with SMTP id 5b1f17b1804b1-4214947b20amr2926995e9.6.1717518135213;
+        Tue, 04 Jun 2024 09:22:15 -0700 (PDT)
 Received: from google.com (230.213.79.34.bc.googleusercontent.com. [34.79.213.230])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4214f46edd4sm26319855e9.45.2024.06.04.09.14.53
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd062fe2csm12068058f8f.69.2024.06.04.09.22.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 09:14:54 -0700 (PDT)
-Date: Tue, 4 Jun 2024 16:14:50 +0000
+        Tue, 04 Jun 2024 09:22:14 -0700 (PDT)
+Date: Tue, 4 Jun 2024 16:22:11 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
@@ -60,10 +60,10 @@ Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
 	Michael Shavit <mshavit@google.com>,
 	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
 	Ryan Roberts <ryan.roberts@arm.com>
-Subject: Re: [PATCH 6/7] iommu/arm-smmu-v3: Shrink the cdtab l1_desc array
-Message-ID: <Zl89eleAaHzdNYjV@google.com>
+Subject: Re: [PATCH 7/7] iommu/arm-smmu-v3: Use the new rb tree helpers
+Message-ID: <Zl8_M0_Vc6-_h7WH@google.com>
 References: <0-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
- <6-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
+ <7-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -72,116 +72,135 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
+In-Reply-To: <7-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
 
 Hi Jason,
 
-On Mon, Jun 03, 2024 at 07:31:32PM -0300, Jason Gunthorpe wrote:
-> The top of the 2 level CD table is (at most) 1024 entries big, and two
-> high order allocations are required. One of __le64 which is programmed
-> into the HW (8k) and one of struct arm_smmu_l1_ctx_desc which holds the
-> CPU pointer (16k).
+On Mon, Jun 03, 2024 at 07:31:33PM -0300, Jason Gunthorpe wrote:
+> Since v5.12 the rbtree has gained some simplifying helpers aimed at making
+> rb tree users write less convoluted boiler plate code. Instead the caller
+> provides a single comparison function and the helpers generate the prior
+> open-coded stuff.
 > 
-> There are two copies of the l2ptr_dma, one is stored in the struct
-> arm_smmu_l1_ctx_desc, and another is encoded in the __le64 for the HW to
-> use. Instead of storing two copies just decode the value from the __le64.
+> Update smmu->streams to use rb_find_add() and rb_find().
 > 
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+
 > ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 35 ++++++++++-----------
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  1 -
->  2 files changed, 16 insertions(+), 20 deletions(-)
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 68 ++++++++++-----------
+>  1 file changed, 31 insertions(+), 37 deletions(-)
 > 
 > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index 3f2e0462433d2d..7a6c9aac4cd450 100644
+> index 7a6c9aac4cd450..25bae0b05a488c 100644
 > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -1167,28 +1167,19 @@ static void arm_smmu_sync_cd(struct arm_smmu_master *master,
->  	arm_smmu_cmdq_batch_submit(smmu, &cmds);
+> @@ -1667,26 +1667,37 @@ static int arm_smmu_init_l2_strtab(struct arm_smmu_device *smmu, u32 sid)
+>  	return 0;
 >  }
 >  
-> -static int arm_smmu_alloc_cd_leaf_table(struct arm_smmu_device *smmu,
-> -					struct arm_smmu_l1_ctx_desc *l1_desc)
-> +static void arm_smmu_write_cd_l1_desc(__le64 *dst, dma_addr_t l2ptr_dma)
->  {
-> -	size_t size = CTXDESC_L2_ENTRIES * sizeof(struct arm_smmu_cd);
-> -
-> -	l1_desc->l2ptr = dma_alloc_coherent(smmu->dev, size,
-> -					    &l1_desc->l2ptr_dma, GFP_KERNEL);
-> -	if (!l1_desc->l2ptr)
-> -		return -ENOMEM;
-> -	return 0;
-> -}
-> -
-> -static void arm_smmu_write_cd_l1_desc(__le64 *dst,
-> -				      struct arm_smmu_l1_ctx_desc *l1_desc)
-> -{
-> -	u64 val = (l1_desc->l2ptr_dma & CTXDESC_L1_DESC_L2PTR_MASK) |
-> -		  CTXDESC_L1_DESC_V;
-> +	u64 val = (l2ptr_dma & CTXDESC_L1_DESC_L2PTR_MASK) | CTXDESC_L1_DESC_V;
->  
->  	/* The HW has 64 bit atomicity with stores to the L2 CD table */
->  	WRITE_ONCE(*dst, cpu_to_le64(val));
->  }
->  
-> +static dma_addr_t arm_smmu_cd_l1_get_desc(__le64 *src)
+> +static int arm_smmu_streams_cmp_key(const void *lhs, const struct rb_node *rhs)
 > +{
-> +	return le64_to_cpu(*src) & CTXDESC_L1_DESC_L2PTR_MASK;
+> +	struct arm_smmu_stream *stream_rhs =
+> +		rb_entry(rhs, struct arm_smmu_stream, node);
+> +	const u32 *sid_lhs = lhs;
+> +
+> +	if (*sid_lhs < stream_rhs->id)
+> +		return -1;
+> +	if (*sid_lhs > stream_rhs->id)
+> +		return 1;
+> +	return 0;
 > +}
 > +
->  struct arm_smmu_cd *arm_smmu_get_cd_ptr(struct arm_smmu_master *master,
->  					u32 ssid)
+> +static int arm_smmu_streams_cmp_node(struct rb_node *lhs,
+> +				     const struct rb_node *rhs)
+> +{
+> +	return arm_smmu_streams_cmp_key(
+> +		&rb_entry(lhs, struct arm_smmu_stream, node)->id, rhs);
+> +}
+> +
+>  static struct arm_smmu_master *
+>  arm_smmu_find_master(struct arm_smmu_device *smmu, u32 sid)
 >  {
-> @@ -1227,13 +1218,18 @@ struct arm_smmu_cd *arm_smmu_alloc_cd_ptr(struct arm_smmu_master *master,
+>  	struct rb_node *node;
+> -	struct arm_smmu_stream *stream;
 >  
->  		l1_desc = &cd_table->l1_desc[idx];
->  		if (!l1_desc->l2ptr) {
-> +			dma_addr_t l2ptr_dma;
->  			__le64 *l1ptr;
+>  	lockdep_assert_held(&smmu->streams_mutex);
 >  
-> -			if (arm_smmu_alloc_cd_leaf_table(smmu, l1_desc))
-> +			l1_desc->l2ptr = dma_alloc_coherent(
-> +				smmu->dev,
-> +				CTXDESC_L2_ENTRIES * sizeof(struct arm_smmu_cd),
-> +				&l2ptr_dma, GFP_KERNEL);
-> +			if (!l1_desc->l2ptr)
->  				return NULL;
+> -	node = smmu->streams.rb_node;
+> -	while (node) {
+> -		stream = rb_entry(node, struct arm_smmu_stream, node);
+> -		if (stream->id < sid)
+> -			node = node->rb_right;
+> -		else if (stream->id > sid)
+> -			node = node->rb_left;
+> -		else
+> -			return stream->master;
+> -	}
+> -
+> -	return NULL;
+> +	node = rb_find(&sid, &smmu->streams, arm_smmu_streams_cmp_key);
+> +	if (!node)
+> +		return NULL;
+> +	return rb_entry(node, struct arm_smmu_stream, node)->master;
+>  }
 >  
->  			l1ptr = &cd_table->cdtab.l1_desc[idx];
-> -			arm_smmu_write_cd_l1_desc(l1ptr, l1_desc);
-> +			arm_smmu_write_cd_l1_desc(l1ptr, l2ptr_dma);
->  			/* An invalid L1CD can be cached */
->  			arm_smmu_sync_cd(master, ssid, false);
->  		}
-> @@ -1406,7 +1402,8 @@ static void arm_smmu_free_cd_tables(struct arm_smmu_master *master)
+>  /* IRQ and event handlers */
+> @@ -2795,8 +2806,6 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
+>  {
+>  	int i;
+>  	int ret = 0;
+> -	struct arm_smmu_stream *new_stream, *cur_stream;
+> -	struct rb_node **new_node, *parent_node = NULL;
+>  	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(master->dev);
 >  
->  			dma_free_coherent(smmu->dev, size,
->  					  cd_table->l1_desc[i].l2ptr,
-> -					  cd_table->l1_desc[i].l2ptr_dma);
-> +					  arm_smmu_cd_l1_get_desc(
-> +						  &cd_table->cdtab.l1_desc[i]));
->  		}
->  		kfree(cd_table->l1_desc);
+>  	master->streams = kcalloc(fwspec->num_ids, sizeof(*master->streams),
+> @@ -2807,9 +2816,9 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
 >  
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> index 21c1acf34dd29c..1ffe2fdfd3755f 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> @@ -587,7 +587,6 @@ struct arm_smmu_ctx_desc {
+>  	mutex_lock(&smmu->streams_mutex);
+>  	for (i = 0; i < fwspec->num_ids; i++) {
+> +		struct arm_smmu_stream *new_stream = &master->streams[i];
+>  		u32 sid = fwspec->ids[i];
 >  
->  struct arm_smmu_l1_ctx_desc {
->  	struct arm_smmu_cd		*l2ptr;
-> -	dma_addr_t			l2ptr_dma;
-
-Maybe now we can also get rid of arm_smmu_l1_ctx_desc, and embed l2ptr directly
-in arm_smmu_ctx_desc_cfg?
-
->  };
+> -		new_stream = &master->streams[i];
+>  		new_stream->id = sid;
+>  		new_stream->master = master;
 >  
->  struct arm_smmu_ctx_desc_cfg {
+> @@ -2818,28 +2827,13 @@ static int arm_smmu_insert_master(struct arm_smmu_device *smmu,
+>  			break;
+>  
+>  		/* Insert into SID tree */
+> -		new_node = &(smmu->streams.rb_node);
+> -		while (*new_node) {
+> -			cur_stream = rb_entry(*new_node, struct arm_smmu_stream,
+> -					      node);
+> -			parent_node = *new_node;
+> -			if (cur_stream->id > new_stream->id) {
+> -				new_node = &((*new_node)->rb_left);
+> -			} else if (cur_stream->id < new_stream->id) {
+> -				new_node = &((*new_node)->rb_right);
+> -			} else {
+> -				dev_warn(master->dev,
+> -					 "stream %u already in tree\n",
+> -					 cur_stream->id);
+> -				ret = -EINVAL;
+> -				break;
+> -			}
+> -		}
+> -		if (ret)
+> +		if (rb_find_add(&new_stream->node, &smmu->streams,
+> +				arm_smmu_streams_cmp_node)) {
+> +			dev_warn(master->dev, "stream %u already in tree\n",
+> +				 sid);
+> +			ret = -EINVAL;
+>  			break;
+> -
+> -		rb_link_node(&new_stream->node, parent_node, new_node);
+> -		rb_insert_color(&new_stream->node, &smmu->streams);
+> +		}
+>  	}
+>  
+>  	if (ret) {
 > -- 
 > 2.45.2
 > 
-
-Thanks,
-Mostafa
