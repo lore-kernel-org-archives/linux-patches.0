@@ -1,101 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9A48174E;
-	Tue,  4 Jun 2024 21:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4177614BF91
+	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 21:42:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717536487; cv=none; b=h0ixMyUb+MMFfLJomZuJw1byyD+KE7ukSKm9617cPvmycUDSgqX0ZAb59toZ3VenCOA8FBwME2gliX5fKcmGd/cXU492q1SX3kt3qeQQkTft1QmSaWoW1aQjHNM/YAGUqLW4Uj9SYIYL2KkrVzQ7RNaIh3dJlU6z4Wzu+/byYsI=
+	t=1717537359; cv=none; b=m8Udin1lgoLzFBo2b3Rcirf7SpClHCGeEcu8xD1plJpQJheN8akFeekn0jNFpWIs9iqPI4uXWsu/MiPcayI6ApKBn/glxhLG4ktCHStJWThhOuOCSIumhBquBZPDOInxbbo/vveusZexXHkzp3kJ3kTYbKQQWt7yxG3tfdE+yXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717536487; c=relaxed/simple;
-	bh=T52kcXJ7mL4Q4PqNXSfJ7Kdnz9pHXcZRoLVIr7LNdKs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dorcuH0pJQ5c9PjxKJiA7PAcvS3uuZ71rHudJcblXz7HDuWa4SYMUl3dDkSJLBODmg8cqizgOz5NN7JQa8vgEqBsA+cW3hQkICw+PHvcoJN3oP1N64kq8ceruXgJFZxRkeKDABtXu87/4Vys1UxlWGVWnd2uF+WWuAYjeP1TiRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cr2NIPV/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717537359; c=relaxed/simple;
+	bh=vDctSeMuSiGp9PwhggSWKoGFj8wcUjkUW53LOQym6rc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=B/iebOFOhstZVU2GLipQUi+/yK7MGHaNkjvC45bs4itPiCjaWQ5pzS1c9v/IrBe2zwYvg3sHqft25Iqv9/KW03d/W7RfnXeFfE0dbtNX0SkW4CI4ugFU1cxZdMDivfH4Eq+3I4N2bZ801/h3wKIHH2jLUOiifyp7bgh4ho0+cwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=aEzA1Io6; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cr2NIPV/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BCA3C2BBFC;
-	Tue,  4 Jun 2024 21:28:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717536486;
-	bh=T52kcXJ7mL4Q4PqNXSfJ7Kdnz9pHXcZRoLVIr7LNdKs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Cr2NIPV/oQGKb92AMrQQcg2dZTKnQS0n5ymAAgJVUt2i4U6ikH2V+13JFun/U8G5+
-	 ov6jr2E2HN69k+07HS9uU33fse0K+fLl9v+ANdVOF0emNH63EVsVf430yOTuaeI7MP
-	 Px/rgXmwEluM2uo4RvIau0IkYhXlFKD1aOQLJyfMDiJ+/7bo2SKLvNp2/buqr6RGsG
-	 hDeR6LbqH08PSVjNUNor6Kcq6tCdVDLsDl/UW5HZpGEa5/RxjiOwxVgQE5aVaOWzEZ
-	 PdI3TdxcXNJl5KB4vTVJ2dQNBCfchIu2BoNaqr3HxIKP9CHihbg7TDDk5gy0hyMKUC
-	 1wCpZHxtXfArw==
-Date: Tue, 4 Jun 2024 14:28:05 -0700
-From: Saeed Mahameed <saeed@kernel.org>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: David Ahern <dsahern@kernel.org>, Jason Gunthorpe <jgg@nvidia.com>,
-	Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
-	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
-	Leonid Bloch <lbloch@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 0/8] Introduce fwctl subystem
-Message-ID: <Zl-G5SRFztx_77a2@x130>
-References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
- <20240603114250.5325279c@kernel.org>
- <214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
- <20240604070451.79cfb280@kernel.org>
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="aEzA1Io6"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7024791a950so197234b3a.0
+        for <patches@lists.linux.dev>; Tue, 04 Jun 2024 14:42:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1717537355; x=1718142155; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q6Vw66yFGizo7QKpTFL7E/hug1hRafbghl++kv8rPPs=;
+        b=aEzA1Io6KnNdtSXYJfyrHM8NT1lvIm6EJjzVedE/78ckp/cqT1zEvQwnlSI4Ef4rcG
+         hLOG+2Nxx3NT2mNnpzapqJDZFft9cPuApqkK/tEEZU1WMOiyHlHEh9eVa82LEXqpaPM6
+         Dd2r/hvEWC3yVw0liQSsRb7ZPk2R7JyFFZdPU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717537355; x=1718142155;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q6Vw66yFGizo7QKpTFL7E/hug1hRafbghl++kv8rPPs=;
+        b=SBmwom1uZkaaFddPp6S8L9pqDkowvQGGNoYHyIupnFdDuue7r7vzh1CzJYSwQdjh5H
+         UItjW6E/9zcXDVCFwxssfr5IOGLCBp+HIQT0eR5k0N2PNP8xVeLHb31p1SPIqE3Axvj9
+         51NWw3r4GYTQWi8pMCwemLA5ZODL12TxNnmaa8rayHYwHOB+iW30/DQgouzgP99Et2VQ
+         wn+ILVipOeDioW1F02qyMtDWDjIByTkVKhOwBdFXSa6oThqtEo0EDX6crN6imVHcuLAU
+         ojK2gZ9AnmzPXMRn43GXrgczF0G6VLtZXq8/pCwHV/xx+Q+2CYnqN9Dg+76J7UQyvmrx
+         A1/w==
+X-Forwarded-Encrypted: i=1; AJvYcCWOKUMiIx97PWoWrGvSgSx6bjek+QNaZpvL5gsB0Sp+QMfThrfjCAM5MSYi59Zvo6V6u8y04+PCIeo7+s8CvoADf4fPuInoSg==
+X-Gm-Message-State: AOJu0YyVBlOVT0iU5XsizcfV1sjTuL1MrXFm5cA6ak3dUyZ/yaOFURP+
+	74U0bJCruWVU3DGiwi14ZzYe4NXWgnlVZo9nmKlHExTqOwMH1k15+m7hCMe4Sw==
+X-Google-Smtp-Source: AGHT+IFdOXCjV6WYTt/zwkB5UuQ0oRkBJqqgAgDp2qIDzzYVNu8sLTUOmr2dbUeuVyqxGp6ldB13nA==
+X-Received: by 2002:a05:6a20:3ca9:b0:1ad:7e4f:9564 with SMTP id adf61e73a8af0-1b2b6eb668bmr1221578637.9.1717537355547;
+        Tue, 04 Jun 2024 14:42:35 -0700 (PDT)
+Received: from localhost (132.197.125.34.bc.googleusercontent.com. [34.125.197.132])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-6c35a4b973csm6365068a12.79.2024.06.04.14.42.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Jun 2024 14:42:35 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	patches@lists.linux.dev,
+	cros-qcom-dts-watchers@chromium.org,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	devicetree@vger.kernel.org,
+	Pin-yen Lin <treapking@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 0/3] arm64: dts: qcom: sc7180-trogdor: clamshell/detachable fragments
+Date: Tue,  4 Jun 2024 14:42:29 -0700
+Message-ID: <20240604214233.3551692-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.45.1.288.g0e0cd299f1-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20240604070451.79cfb280@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On 04 Jun 07:04, Jakub Kicinski wrote:
->On Mon, 3 Jun 2024 21:01:58 -0600 David Ahern wrote:
->> On 6/3/24 12:42 PM, Jakub Kicinski wrote:
->> > Somewhat related, I saw nVidia sells various interesting features in its
->> > DOCA stack. Is that Open Source?
->>
->> Seriously, Jakub, how is that in any way related to this patch set?
->
->Whether they admit it or not, DOCA is a major reason nVidia wants
->this to be standalone rather than part of RDMA.
->
+This is a followup to a series I sent a few months ago[1]. I've split out
+the dts patches and dropped the one that ties everything together for
+DP/USB as that whole solution is still working it's way through and I
+doubt I'll be able to get that done in the next couple weeks. Instead,
+I'm sending these patches to reduce the patch stack and make that DP
+series more manageable.
 
-No, DOCA isn't on the agenda for this new interface. But what is the point
-in arguing? Apparently the vendor is not credible enough in your opinion.
-Which is an absolute outrageous grounds for a NAK.
+Cc: <cros-qcom-dts-watchers@chromium.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Conor Dooley <conor+dt@kernel.org>
+Cc: <devicetree@vger.kernel.org>
+Cc: Pin-yen Lin <treapking@chromium.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Douglas Anderson <dianders@chromium.org>
 
-Anyway I don't see your point in bringing up DOCA here, but obviously once 
-this interface is accepted, all developers are welcome to use it,
-including DOCA developers of course..
+[1] https://lore.kernel.org/r/20240210070934.2549994-1-swboyd@chromium.org
 
-That being said, the why we need this is crystal clear in the 
-cover-letter and previous submission discussions, bringing random SDKs
-into this discussion is not objective and counter productive to the
-technical discussion.
+Stephen Boyd (3):
+  arm64: dts: qcom: sc7180: quackingstick: Disable instead of delete
+    usb_c1
+  arm64: dts: qcom: sc7180: pazquel: Add missing comment header
+  arm64: dts: qcom: sc7180-trogdor: Make clamshell/detachable fragments
 
->> You are basically suggesting that if any vendor ever has an out of tree
->> option for its hardware every patch it sends should be considered a ruse
->> to enable or simplify proprietary options.
->
+ .../boot/dts/qcom/sc7180-trogdor-clamshell.dtsi   |  9 +++++++++
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi      |  5 +----
+ .../boot/dts/qcom/sc7180-trogdor-detachable.dtsi  | 13 +++++++++++++
+ .../boot/dts/qcom/sc7180-trogdor-homestar.dtsi    |  9 +--------
+ .../boot/dts/qcom/sc7180-trogdor-kingoftown.dts   |  2 +-
+ .../arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi |  3 +--
+ .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi     |  5 +++--
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi      |  3 +--
+ .../dts/qcom/sc7180-trogdor-quackingstick.dtsi    | 15 ++++++---------
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts    |  3 +--
+ .../boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi |  5 +----
+ 11 files changed, 38 insertions(+), 34 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
 
-It's apparent that you're attributing sinister agendas to patchsets when
-you fail to offer valid technical opinions regarding the NAK nature. Let's
-address this outside of this patchset, as this isn't the first occurrence.
-Consistency in evaluating patches is crucial; some, like the fbnic and
-idpf, seem to go unquestioned, while others face scrutiny.
+base-commit: c3f38fa61af77b49866b006939479069cd451173
+-- 
+https://chromeos.dev
 
->Ooo, is that a sore spot?
->
->I don't begrudge anyone building proprietary options, but leave
->upstream out of it.
->
