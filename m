@@ -1,225 +1,270 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2082.outbound.protection.outlook.com [40.107.93.82])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB308374C4
-	for <patches@lists.linux.dev>; Mon,  3 Jun 2024 23:15:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717456542; cv=none; b=rUGfLxdZQjC+GPRgqp811iU5B/CoGdylFHmdRbuad9hJWI2JGI0HiumwAs4hMPiCvnJgagERK9hVXkxw+cT6esEEhOibWq+KR58qYUb04Qbb9PvJcNMcw0nPzs3LlUX9OAFGTzuazpbisNc0/FQ/sz+3CRekVGzBp7dLc7Q5loU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717456542; c=relaxed/simple;
-	bh=8oem86It5+4h0XVIcJq2Hk0hjpuSoibDwTR1LSjFAg0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PbDMqNJmjVnOIDsb1iDChWdz2hl6d9VzvpMgLnQBcZG3cVXCB41Bl7fepjVXaiBKdsQF/AMsXDqUeIYnEuvtLn/2Dj7PkPRzJByjWRQHfVGZu3kBP8yTdBOmilpDauVKECcQhrSXrXazna3kebat8gJSYWHlf2YXKEoczT5wZ1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LlHGu8eb; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6977FD;
+	Tue,  4 Jun 2024 00:16:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.82
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717460170; cv=fail; b=Tfn81pJyXJmjMWVjPmsOMOZbzQWQezOeEvg6hrbGtCHwWcdmE022EsAA/VmpBwBgoFwWwp8evmtvQj2YAstMfD5sLOOHu9PcJjrqfoqwqx66znKxqeqxMf1wOOqyGSfKd5oMO0PL2kBfpq0MT0eBhaX4HpgCQdQEE+EBoHLaP50=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717460170; c=relaxed/simple;
+	bh=Q4WQCNQIVuSjmnvK2WJ9XLCT90nz8ve0LP38XMmGUJc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=m30UDgq2hRwNR9xyQNE0NjR2UlyCdpOQOL+2U2lGMCJwawI62vZ6+jpR/0jnsQPJqtIKmuLMARru6OGke651FJXdc+sQCHqNJ+MqhHIc3Tf0wcXlLBkv4B2x1AjCXR9z9enbTp2PjAJDNzb71w36eDXelx9CDoidwT01H0EHJBw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jqeVHnQK; arc=fail smtp.client-ip=40.107.93.82
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LlHGu8eb"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717456540; x=1748992540;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=8oem86It5+4h0XVIcJq2Hk0hjpuSoibDwTR1LSjFAg0=;
-  b=LlHGu8eboKLsN/WRE7eYtcdRcZZsk8O5Ve1t7a8RgvxF6prQf3vpGmyJ
-   +mfCT3jPMqDq22q69PN37KSX3b+syX3on0x72/WvUoi8cBvF92XgpnZ+5
-   7vQwt1TKypu/XvYohqwvIIyV2+nF7w1MCqyLkmqMBLDNVe6i/fttBejc/
-   AVwu3kRqcpD15uDc8U9A35dOY2JZYsgLMShk6KYL3ffVecX5c6JPy4rxb
-   XK+AET/B7M/iMe+2fbAu6Zm3+r3PK0mG/1H3H2T08Hme8BPJ8y1SFQiGj
-   AjLvnI0rlHqC9eTBUdNLJraA4xP9+2rz4E4wNW8C5lSIvVrrKwM2sWCdF
-   w==;
-X-CSE-ConnectionGUID: xujBfPgvQsilGSo50bZJEA==
-X-CSE-MsgGUID: zWHho+VEQ7qHQncn8X+uIQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11092"; a="24599704"
-X-IronPort-AV: E=Sophos;i="6.08,212,1712646000"; 
-   d="scan'208";a="24599704"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2024 16:15:39 -0700
-X-CSE-ConnectionGUID: uZc91RJCTIeBnvfs/FjpgA==
-X-CSE-MsgGUID: qG5yKnFLQ0WqpNYOBzRnNQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,212,1712646000"; 
-   d="scan'208";a="37481514"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2024 16:15:39 -0700
-Date: Mon, 3 Jun 2024 16:15:37 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>, x86@kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v19 16/20] x86/resctrl: Make resctrl_arch_rmid_read()
- handle sum over domains
-Message-ID: <Zl5OmVWFpBtA509j@agluck-desk3.sc.intel.com>
-References: <20240528222006.58283-1-tony.luck@intel.com>
- <20240528222006.58283-17-tony.luck@intel.com>
- <9818c304-9056-4d79-acbe-2b35cb847ecd@intel.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jqeVHnQK"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jIr6DmEjSa0v3eTC3mpW+yiALalUy5Wlw692ZOyURG2FszQdp/CiWPrBvaGtgteLNrxoxLXaFmdLx/5/Hgo+8ALAkQay98fW8fACd+PdMsNGcmf0yYOBfVDk8y/MMQZHLaTEQvCmJXOEUQv7g+AI1DiIidxUKdpVOLM7xSqEqP4ralnnIauarNS0+S+1I4hX2blWB7VQFgq0wsT6BdWsrMnr4aqrNIQmu8W571QzJDDdOIHg7g9XwuDTJm+H1ip+Ytu4r3fIovBZK5lkl977Qtp/B6D41wzCwti78KuEVcIPKD5nIPBOp91GEayMdP4w6Xrw/gXjhxkBSPIKJOzH2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=avdBgAJxEmMvTklD4lK2mlU8xg+oDLKwffa5vs/jyok=;
+ b=II3feL8LkOdrARLpvBbziVtaIjDjIwD1FPefHEGoOw+QS89fuklwWdXBZkYYr/qAhyLf4WzNPjMzjC294xRAacM7UlkewhdcuxVv4q3CLq2XuwfnqOzXw4KYmZsARbHFkHYXvNgswTcg7Xg3vofBZHGZw5vE/gJ3gliujM5H7VCjszN0nhsAipt5e9S1+t0yC95WTx9S78DUArBWG1W1EOARQIE41t7WsIOst4BhrCaOv9OWmyQs2X2FSXNVwPnmTs9H4/LvdjXo2gKoorVOUT5yZ0hjZnnUG0Ano+hp/SOeUsMekpPJwjoU7mhJMynhaZSY+2dYjhiwLPmpMmFOog==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=avdBgAJxEmMvTklD4lK2mlU8xg+oDLKwffa5vs/jyok=;
+ b=jqeVHnQKOiUwoJ/SBcf0GTmJ09HfWzG/aqcg9vNlSJp0LOz6JUkP8DFaJaQTkBE9McoG2yJUIH2m0cRso2nj6lBaCaGkWcjfTWdgkevI/X1babJtwlx19p0x49kbQC6lP3uAOa3R/X9Vd5wHE8qj6P+JDc67eU75wudRzJaR0YFRDO8jn25CjkfN307vNqw77fKfODmLo7m6ZRIlXSiDy9xdiO4VlFf6aUPtpl/jmEisvV20I07Z9EtcWzMJHDXOtwbSqHUkyFZETrVdYnf/GZL1kprgv93JrTj/VwXeFUBsSBA4tl7x0zX50WgRNmBdHUuh4TgNUXC+7+vy8rpFcA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+ by MN0PR12MB6296.namprd12.prod.outlook.com (2603:10b6:208:3d3::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.21; Tue, 4 Jun
+ 2024 00:16:03 +0000
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7633.021; Tue, 4 Jun 2024
+ 00:16:03 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Cc: Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Moritz Fischer <mdf@kernel.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	patches@lists.linux.dev,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Subject: [PATCH v8 07/14] iommu/arm-smmu-v3: Thread SSID through the arm_smmu_attach_*() interface
+Date: Mon,  3 Jun 2024 21:15:52 -0300
+Message-ID: <7-v8-6f85cdc10ce7+563e-smmuv3_newapi_p2b_jgg@nvidia.com>
+In-Reply-To: <0-v8-6f85cdc10ce7+563e-smmuv3_newapi_p2b_jgg@nvidia.com>
+References:
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BLAP220CA0005.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:208:32c::10) To DM6PR12MB3849.namprd12.prod.outlook.com
+ (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9818c304-9056-4d79-acbe-2b35cb847ecd@intel.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|MN0PR12MB6296:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2300a7e2-0261-42bc-581b-08dc842b849c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|7416005|1800799015|366007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?ECFv/XVQXazhb3CvaXKV8hR9eicKg7cd9scOz9wIFD3eK4IeaJE/GS+KCzPb?=
+ =?us-ascii?Q?bvr6grfgjBldEaVsM+YVJGHv4KYngO3UyKNtE++tkZCkmzIMRotPGrQie0hL?=
+ =?us-ascii?Q?+VOtz+OeZ8ULVb+O8aLXeaU+Lgs5nsNOUlZ0xUaPR0tEwVz330zxKTMkNbjw?=
+ =?us-ascii?Q?Nkp61lIGp0R5UGSHYCA8tvOXsFtq+cJ6LbETc9F799+Ih9Joi0uAEu6aaZzx?=
+ =?us-ascii?Q?HXQjJZfC9G+9Lg2Oouz9UgY0XxE4rojA2mzp/4nlEzKJtN6eZst+ry/WTRkS?=
+ =?us-ascii?Q?9Z7lAyKy9wD4I1DuXJ7tzciUS0GsGD2hMzlcvgrKTU7epUXFPvwNL4I4lPLI?=
+ =?us-ascii?Q?NkJXFLA7L3QNGOnLHoX6aTeuH6ToF1V4G1EkQ1B1V4m5iPkB0vdUOUa+Mqxi?=
+ =?us-ascii?Q?g+KtH/CBtmWyGSjnQlRxXW6iJxontnpDfSWeAnA7vZItR4SD4k6RJlasJjab?=
+ =?us-ascii?Q?fZmVCZ3lHVQXu4wcaT9Pupmfb0akYMp68DWRHvJ/xIyzRq6noH43ELv7+WF4?=
+ =?us-ascii?Q?O885B4LKSh4SoRomxOcW5/EBL/tkMhvYIxtN+karRB5EQWAxRKQ/mAp7tvJT?=
+ =?us-ascii?Q?3N6+1tp1AvLnVAlNKjM7uw7nKBGCecZaFvlAws2RgJuABW5goWFwD6IlI45o?=
+ =?us-ascii?Q?pT/bpEbOq0eBEx904Fg3MEfOK612BgMCnS2PWF+oGpNEsnHoWGaOxUme0nO+?=
+ =?us-ascii?Q?HsNITqPf+uMC6S18oMYzyU3aOgaENuHD9HlEhjQb+OqQ6iI6WvqZSu4AVWde?=
+ =?us-ascii?Q?VbUwTVPNVYVqquLNTw4uixeQ/5D+4fwd9nsDvDnF3qz5GpOYqOyWcpMl2TVO?=
+ =?us-ascii?Q?vKHjEWRyPTFpoj6MV+KA5yJ5E5b6gGrZ8RgcAK+tOqjB1wnklWGWzIvONDON?=
+ =?us-ascii?Q?lN1/jx0WqVWXhescxF/moxK8VxF58BVNyxw7jY1B+tXXYpygoCgpqJ/wgGaI?=
+ =?us-ascii?Q?y3fV0GO6EISA8HgCwaVWbLtUJWaieBLpywKdc0Ki5a/vNcGVWbzWkldInTYr?=
+ =?us-ascii?Q?PbrukRmWAk+vm/yJS2JbpkTCqewsAtki7/2NUeJU68KlBW7awqjw3W1tB4Qi?=
+ =?us-ascii?Q?j/BXp63qIauYwewqaLMfXXmLjNjvqfJb7sodtn8iRRAJ8QbINq4J8oCWX2e7?=
+ =?us-ascii?Q?CFVXe9HyfG7IoHVntVOkrbuiC8vSGJvR5EyN9/JRmzswt7k93VjUPeNaFKLu?=
+ =?us-ascii?Q?eSiODb6wZxOZRrfMAVsvhBollo6hrGRPE24n6gkIRqpDEeR3H9JUWNUf0HMF?=
+ =?us-ascii?Q?OopOuHMmEfo17AqUSoD8zQQSjjriHKSFiXANhqJ1/w=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(7416005)(1800799015)(366007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?OmUZ9SjUUp4Zjr8LNv4wr//u/MIQJwBeKIpJKLpVU+oya+4kqzbdfAGfbtWC?=
+ =?us-ascii?Q?DL8huhmTS0lG0HykzMq1ZoODHXuNZl1FE3g0a2x0LbEXe4vchA0eJ0CeLGZS?=
+ =?us-ascii?Q?cuc4xxNzuGaHgZbEZ1AXbF96qxyCJUO7/PNhbFvx9RqHEw64Wja3uFI5ydS1?=
+ =?us-ascii?Q?WUgyoYV1xQO5+QCt6FzEzEz5YK9tHll56SK267BmpiHYFD5v7g3R79bWAM2h?=
+ =?us-ascii?Q?7jpTKmipZvsCaRC2XhcdHBVlvoWhX9jpKTu2jOOV7HYEf/2Q96NjgcMnuhiE?=
+ =?us-ascii?Q?gcmeM9Z5K3uNwkLARYdaOFuJeczF1jFn1vtbkjOVEYFSFHpj9FIdiRRmvja2?=
+ =?us-ascii?Q?2QvtQk6YWCRK4lkvJB3Y+jO12bg+9LI/hNWMkd53O90mmFnqNxAojvyLd9e2?=
+ =?us-ascii?Q?SdSSlBZ7VddXQaaq2lKwvDKfjmIIIobSxd1u67pBZR/lPzouxwtqecwR3SJe?=
+ =?us-ascii?Q?AwFmyGSA4jIVYm8oxVcffbpeDYSytuK0gyQQjGWlZl60PjLnVPeToReO3XIe?=
+ =?us-ascii?Q?GGUIyPBT1mODuay7huhzCn0VLHvEecWVFNhpDp3s/ExBuJmCd0IcWiI154VN?=
+ =?us-ascii?Q?Aihmx/ELE/odTjH5JuKp5wXevaLK+3ygwYa3XcxbiUVDJpYmrNxx3yiuBB0H?=
+ =?us-ascii?Q?KQPIvDBP+FOYN9iidVMlsXONQx55p4Q1FCp/4UCJzAqRfYE/acgWe8EsbITg?=
+ =?us-ascii?Q?SRZ1vg55caJal9Q8lMZBRqYRwEaFUxB/jt1gDeVn/aGjHpSn+NpAQTDG2ufT?=
+ =?us-ascii?Q?SbWRbtC/PqXB9kQBExeQwyqRMTCNEpBH7rkAvi8lX4ma6Xvt7Tt7qYh3jbUr?=
+ =?us-ascii?Q?GvLlIQosNVeY3DEIxegShx3DlN2uOwc5h8e560gBN+ZgP1YoirbfV0UkgW98?=
+ =?us-ascii?Q?vTspia+nOu8wZMIlUK+Bb0cMGRmlYRJXcNzvco8mOzVZ4TcxJL2dm3RfQb7U?=
+ =?us-ascii?Q?gOkFXbbnj45/9VqNo6kgi/Sz6UIZvVVEzWrIoBiCQSgZdbW6+es/LEs0P8tG?=
+ =?us-ascii?Q?oFT8n9Z72aeWqMjAUfMN0rxUDYC44lyHR80XD+TEjmPOgCT61NBxFT6KRA/o?=
+ =?us-ascii?Q?VUOG17GaPi/TVcMSA9+NNxnfW0PX4jBpj3u0T6nh0jtEfOROG5bKHuRiyb3i?=
+ =?us-ascii?Q?NcuZUHV4qOrAJCQ0XQNghhLJS3l910e5ZknvfEMc7kyLm47DfaSpsQJ5jYpf?=
+ =?us-ascii?Q?l6M80jpfrmrGe32bwJvcElLYM+n8roS9t0eIX/3buGM1pcZC3ja1GW3QR6oB?=
+ =?us-ascii?Q?H+di23pZ09ralSeD5PO4kQoPB8ld1ysOX7mYwGVKR6QBKIUPKbEMENempZbM?=
+ =?us-ascii?Q?7M1pfIIWwqJohjiPMMk6tfdqXbrhU/e3X9Q8ZPuAwnFEsa7TuuZUF8giAwGi?=
+ =?us-ascii?Q?12o1DcEoBjSvrIc1HDI5YWxcs6pwwtRBGxUVTxO2Rwgeb6RegNY/vjKNAM81?=
+ =?us-ascii?Q?EvjNvJY4hpsTH02Gh8I47aiLgEQR3E73eFxX37r90AtzyCrTX4dyGWbqwM+J?=
+ =?us-ascii?Q?hwkKzLBW4X/hvsIxLogjfXcgDm2vukKct0o29aPizWkClqFLmiNd8zwcMtl5?=
+ =?us-ascii?Q?vIOfvujM7jSvQH9RtJU=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2300a7e2-0261-42bc-581b-08dc842b849c
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2024 00:16:02.4201
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: nyQeUAoxyfwT+C23oGr1IXYjH6Vc6QblIZ+k56IZr0Jw/hO5Qvj5EvCtDSDILt0q
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6296
 
-On Thu, May 30, 2024 at 01:24:57PM -0700, Reinette Chatre wrote:
-> Hi Tony,
-> 
-> On 5/28/24 3:20 PM, Tony Luck wrote:
-> > Legacy resctrl monitor files must provide the sum of event values across
-> > all Sub-NUMA Cluster (SNC) domains that share an L3 cache instance.
-> > 
-> > Rename the existing resctrl_arch_rmid_read() function as
-> > resctrl_arch_rmid_read_one() (with some small refactoring to drop
-> > arguments that are not needed.
-> 
-> Missing closing ")".
+Allow creating and managing arm_smmu_mater_domain's with a non-zero SSID
+through the arm_smmu_attach_*() family of functions. This triggers ATC
+invalidation for the correct SSID in PASID cases and tracks the
+per-attachment SSID in the struct arm_smmu_master_domain.
 
-Will add.
+Generalize arm_smmu_attach_remove() to be able to remove SSID's as well by
+ensuring the ATC for the PASID is flushed properly.
 
-> > 
-> > Create a new resctrl_arch_rmid_read() that iterates across
-> > domains when necessary. Pass a CPU number from the right domain to
-> > resctrl_arch_rmid_read_one().
-> 
-> "when necessary"? Can you elaborate?
-> "Pass a CPU ..." that just describes code that can be learned from patch.
-> Please describe the changes not the code.
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 26 ++++++++++++++-------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-Will re-write.
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index e7cd1ddc03517d..56e2fe52df530d 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2005,13 +2005,14 @@ arm_smmu_atc_inv_to_cmd(int ssid, unsigned long iova, size_t size,
+ 	cmd->atc.size	= log2_span;
+ }
+ 
+-static int arm_smmu_atc_inv_master(struct arm_smmu_master *master)
++static int arm_smmu_atc_inv_master(struct arm_smmu_master *master,
++				   ioasid_t ssid)
+ {
+ 	int i;
+ 	struct arm_smmu_cmdq_ent cmd;
+ 	struct arm_smmu_cmdq_batch cmds;
+ 
+-	arm_smmu_atc_inv_to_cmd(IOMMU_NO_PASID, 0, 0, &cmd);
++	arm_smmu_atc_inv_to_cmd(ssid, 0, 0, &cmd);
+ 
+ 	cmds.num = 0;
+ 	for (i = 0; i < master->num_streams; i++) {
+@@ -2494,7 +2495,7 @@ static void arm_smmu_enable_ats(struct arm_smmu_master *master)
+ 	/*
+ 	 * ATC invalidation of PASID 0 causes the entire ATC to be flushed.
+ 	 */
+-	arm_smmu_atc_inv_master(master);
++	arm_smmu_atc_inv_master(master, IOMMU_NO_PASID);
+ 	if (pci_enable_ats(pdev, stu))
+ 		dev_err(master->dev, "Failed to enable ATS (STU %zu)\n", stu);
+ }
+@@ -2581,7 +2582,8 @@ to_smmu_domain_devices(struct iommu_domain *domain)
+ }
+ 
+ static void arm_smmu_remove_master_domain(struct arm_smmu_master *master,
+-					  struct iommu_domain *domain)
++					  struct iommu_domain *domain,
++					  ioasid_t ssid)
+ {
+ 	struct arm_smmu_domain *smmu_domain = to_smmu_domain_devices(domain);
+ 	struct arm_smmu_master_domain *master_domain;
+@@ -2591,8 +2593,7 @@ static void arm_smmu_remove_master_domain(struct arm_smmu_master *master,
+ 		return;
+ 
+ 	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
+-	master_domain = arm_smmu_find_master_domain(smmu_domain, master,
+-						    IOMMU_NO_PASID);
++	master_domain = arm_smmu_find_master_domain(smmu_domain, master, ssid);
+ 	if (master_domain) {
+ 		list_del(&master_domain->devices_elm);
+ 		kfree(master_domain);
+@@ -2606,6 +2607,7 @@ struct arm_smmu_attach_state {
+ 	/* Inputs */
+ 	struct iommu_domain *old_domain;
+ 	struct arm_smmu_master *master;
++	ioasid_t ssid;
+ 	/* Resulting state */
+ 	bool ats_enabled;
+ };
+@@ -2664,6 +2666,7 @@ static int arm_smmu_attach_prepare(struct arm_smmu_attach_state *state,
+ 		if (!master_domain)
+ 			return -ENOMEM;
+ 		master_domain->master = master;
++		master_domain->ssid = state->ssid;
+ 
+ 		/*
+ 		 * During prepare we want the current smmu_domain and new
+@@ -2711,17 +2714,20 @@ static void arm_smmu_attach_commit(struct arm_smmu_attach_state *state)
+ 
+ 	if (state->ats_enabled && !master->ats_enabled) {
+ 		arm_smmu_enable_ats(master);
+-	} else if (master->ats_enabled) {
++	} else if (state->ats_enabled && master->ats_enabled) {
+ 		/*
+ 		 * The translation has changed, flush the ATC. At this point the
+ 		 * SMMU is translating for the new domain and both the old&new
+ 		 * domain will issue invalidations.
+ 		 */
+-		arm_smmu_atc_inv_master(master);
++		arm_smmu_atc_inv_master(master, state->ssid);
++	} else if (!state->ats_enabled && master->ats_enabled) {
++		/* ATS is being switched off, invalidate the entire ATC */
++		arm_smmu_atc_inv_master(master, IOMMU_NO_PASID);
+ 	}
+ 	master->ats_enabled = state->ats_enabled;
+ 
+-	arm_smmu_remove_master_domain(master, state->old_domain);
++	arm_smmu_remove_master_domain(master, state->old_domain, state->ssid);
+ }
+ 
+ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+@@ -2733,6 +2739,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+ 	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
+ 	struct arm_smmu_attach_state state = {
+ 		.old_domain = iommu_get_domain_for_dev(dev),
++		.ssid = IOMMU_NO_PASID,
+ 	};
+ 	struct arm_smmu_master *master;
+ 	struct arm_smmu_cd *cdptr;
+@@ -2830,6 +2837,7 @@ static int arm_smmu_attach_dev_ste(struct iommu_domain *domain,
+ 	struct arm_smmu_attach_state state = {
+ 		.master = master,
+ 		.old_domain = iommu_get_domain_for_dev(dev),
++		.ssid = IOMMU_NO_PASID,
+ 	};
+ 
+ 	if (arm_smmu_ssids_in_use(&master->cd_table))
+-- 
+2.45.2
 
-> > 
-> > Signed-off-by: Tony Luck <tony.luck@intel.com>
-> > ---
-> >   arch/x86/kernel/cpu/resctrl/monitor.c | 41 ++++++++++++++++++++-------
-> >   1 file changed, 31 insertions(+), 10 deletions(-)
-> > 
-> > diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-> > index 5f89ed4823ee..c9dd6ec68fcd 100644
-> > --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> > +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> > @@ -200,10 +200,9 @@ static inline struct rmid_entry *__rmid_entry(u32 idx)
-> >    * Caller is responsible to make sure execution running on a CPU in
-> >    * the domain to be read.
-> >    */
-> > -static int logical_rmid_to_physical_rmid(int lrmid)
-> > +static int logical_rmid_to_physical_rmid(int cpu, int lrmid)
-> >   {
-> >   	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
-> > -	int cpu = smp_processor_id();
-> >   	if (snc_nodes_per_l3_cache  == 1)
-> >   		return lrmid;
-> > @@ -211,13 +210,13 @@ static int logical_rmid_to_physical_rmid(int lrmid)
-> >   	return lrmid + (cpu_to_node(cpu) % snc_nodes_per_l3_cache) * r->num_rmid;
-> >   }
-> > -static int __rmid_read(u32 lrmid,
-> > +static int __rmid_read(int cpu, u32 lrmid,
-> >   		       enum resctrl_event_id eventid, u64 *val)
-> >   {
-> >   	u64 msr_val;
-> >   	int prmid;
-> > -	prmid = logical_rmid_to_physical_rmid(lrmid);
-> > +	prmid = logical_rmid_to_physical_rmid(cpu, lrmid);
-> >   	/*
-> 
-> Passing CPU as parameter to __rmid_read(), which is run via IPI, really
-> obfuscates the code. How about renaming it to "__rmid_read_phys()"
-> and provide it the "physical RMID" as parameter to make it clear what it is
-> doing?
-> That would mean an extra call to determine "physical RMID" before calling
-> __rmid_read_phys() but making it clear that it needs a physical RMID should
-> help to explain what is going on.
-> 
-> 
-> >   	 * As per the SDM, when IA32_QM_EVTSEL.EvtID (bits 7:0) is configured
-> >   	 * with a valid event code for supported resource type and the bits
-> > @@ -269,7 +268,7 @@ void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_mon_domain *d,
-> >   		memset(am, 0, sizeof(*am));
-> >   		/* Record any initial, non-zero count value. */
-> > -		__rmid_read(rmid, eventid, &am->prev_msr);
-> > +		__rmid_read(smp_processor_id(), rmid, eventid, &am->prev_msr);
-> >   	}
-> >   }
-> > @@ -298,9 +297,8 @@ static u64 mbm_overflow_count(u64 prev_msr, u64 cur_msr, unsigned int width)
-> >   	return chunks >> shift;
-> >   }
-> > -int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_mon_domain *d,
-> > -			   u32 unused, u32 rmid, enum resctrl_event_id eventid,
-> > -			   u64 *val, bool sum, struct cacheinfo *ci, void *ignored)
-> > +static int resctrl_arch_rmid_read_one(struct rdt_resource *r, struct rdt_mon_domain *d,
-> > +				      int cpu, u32 rmid, enum resctrl_event_id eventid, u64 *val)
-> >   {
-> >   	struct rdt_hw_mon_domain *hw_dom = resctrl_to_arch_mon_dom(d);
-> >   	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
-> > @@ -313,7 +311,7 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_mon_domain *d,
-> >   	if (!cpumask_test_cpu(smp_processor_id(), &d->hdr.cpu_mask))
-> >   		return -EINVAL;
-> > -	ret = __rmid_read(rmid, eventid, &msr_val);
-> > +	ret = __rmid_read(cpu, rmid, eventid, &msr_val);
-> >   	if (ret)
-> >   		return ret;
-> > @@ -327,7 +325,30 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_mon_domain *d,
-> >   		chunks = msr_val;
-> >   	}
-> > -	*val = chunks * hw_res->mon_scale;
-> > +	*val += chunks * hw_res->mon_scale;
-> 
-> The various new layers of indirection with SNC logic scattered between them
-> makes this change hard to understand.
-> 
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_mon_domain *d,
-> > +			   u32 unused, u32 rmid, enum resctrl_event_id eventid,
-> > +			   u64 *val, bool sum, struct cacheinfo *ci, void *ignored)
-> 
-> This is not architecture specific code.
-
-Can you explain further? I've dropped the "sum" argument. As you pointed
-out elsewhere this can be inferred from "d == NULL".  But I do need the
-cacheinfo information in resctrl_arch_rmid_read() to:
-1) determine which domains to sum (those that match ci->id).
-2) sanity check code is executing on a CPU in ci->shared_cpu_map.
-
-> > +{
-> > +	int cpu = smp_processor_id();
-> > +	int ret;
-> > +
-> > +	*val = 0;
-> > +	if (!sum)
-> > +		return resctrl_arch_rmid_read_one(r, d, cpu, rmid, eventid, val);
-> > +
-> 
-> 	/* SNC quirk that needs to be documented */
-> 
-> > +	list_for_each_entry(d, &r->mon_domains, hdr.list) {
-> > +		if (d->ci->id != ci->id)
-> > +			continue;
-> > +		cpu = cpumask_any(&d->hdr.cpu_mask);
-> > +		ret = resctrl_arch_rmid_read_one(r, d, cpu, rmid, eventid, val);
-> 
-> The cpu parameter can be dropped, no? With the domain provided to resctrl_arch_rmid_read_one()
-> it is not necessary to again split the SNC logic (in this case the "reading from any CPU
-> in the cache domain is ok but still need accurate arch state") across multiple layers,
-> just contain this in (documented portion of) resctrl_arch_rmid_read_one().
-
-You are correct. I will drop the cpu argument.
-
-> > +		if (ret)
-> > +			return ret;
-> > +	}
-> >   	return 0;
-> >   }
-> 
-> Reinette
-
--Tony
