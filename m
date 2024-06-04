@@ -1,206 +1,216 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2070.outbound.protection.outlook.com [40.107.93.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F230E1487EA
-	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 15:50:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.70
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717516223; cv=fail; b=n0EZb7Q3YZSKXuH/F/Lr3z/Xr7Jw8pUDBkeZ5+6D5osrqNVCkIz/UZjbeWfD0gQUcRXaZQgNKZvM8CXDDGGMbNqTdqkfc83e01kIvQzSAcHmpH1vrja8biiVecBaazVAAm7AzK4DYDBeULsf/9dtiTAIfuXVb2d9ahsbF3pr7nU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717516223; c=relaxed/simple;
-	bh=P4/J27uVQMz0gcbuLHtyyMIqL5AidUBZsyeKiYM9i4g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=jRpHpX+tT4p9OfqCo5PEa1FWzoQDdHp5PcjZgGWjenBVmQW+n58NiyJcYjqyujLjQt/GxxIl+qsxNHbK3WILhFK370g4M6lNeVMrNmEPGgTo3Y2Ll4N461cQ3YAnxAY8xuO4coEENumsntvGShadEav++E/U2DaCDQrxFI9TEM4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=H0/JthRU; arc=fail smtp.client-ip=40.107.93.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35DE15E97
+	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 15:52:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717516336; cv=none; b=SZCwslUoSxG9++RfqK7xIw2N88bPMXrkxWRwuUMvlaY8TXchr22l8VaaUuJ04y3wJipG8BvoElErXQI4K2lN0bO6mky5aK7raDlgmY5zpncXzk6ilPPolgUNIzuVE/Xe2+mCKjkz38Jig5f6AvEo/SVA9NWhd+5ufvbfjb5gBLA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717516336; c=relaxed/simple;
+	bh=TOps5EdBi75u5ZcYuVYrOvbwiftCi2guW3u/3eQwrNw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EgTEJkVW6mS5YkUghPksGJm2vp6ipRB1Gj7XXp64RYnnyLvKZYxUYn3xFU4XfdBlvS09+hg4bPez/aqIT88+Eyk7XAEQ44j6+bpyATdCH7PI8Qyu6HyV8cowM3/KKrRdDjTg3siJge6+OEsALQ+lxzmTxYd96o969JPXAeyr1rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xraZNUGl; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="H0/JthRU"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=eJdVgi9iGCQc/SPpZDjHqsdu7kjBS1WKVniKAQ1ZZM1zF3VeiIygkhv6DhEdvHU3O8Y6Hnfty9mZyN+pmEGnCQ6/ip6XGy+n5jwoLaRe+Y4YykWYP33IYsA96+xQSf3QC2GaBPl01NDzYUTb4BsD78ckTdTxmesLzWgcMqCgiaBEkvN7qd0i/4afUTiyd01rvfdX2gWteydv+TaPNhN0Yn7RWG5UgJxm4IoEQ9C5ppB/YDsZ5xoGjjrykxQdOa86px3OIAfFGMLlNeqAGGmENrN5XugvpiJPhbOvJmXUP0TcqqzY64oUbHgQnJAvXYhX09zTPZZ6Ub9eCUiNQK2bxQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jHqCcgwQcrzjVMeESMfBl3auqThfpEQsEYCxWo9nu/c=;
- b=Swq9Nms9BQ+HfZJ9oIvLeSAwBhVF06HxZsvFdODGn7tKHHezD6k5hTtB5AXAIUH9Roq4qM5ds+wsdifvRhIgurlVPuF8TDaeoHZxxgDFfoGTYqWptnX9QvOzdxJRI2v4odh95sJbxAbfenUsHsNnxOz04JsNVezounMwaRenqNlt2fsz3FYqUNtvI/xb5BWmgNCWn1dr5KLJJcR8K8TYJeKKZzkyou53qsS8I0vP1j3T3RLGBtkqt1h9cB9KDIdYqfAjpwEwBiaDqY96dNhT//sqF8E9Hp1WFTDthfMpQFeglL17x/ecl581EH/uXaJFfQehSD2POYutDZp09xXXzg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jHqCcgwQcrzjVMeESMfBl3auqThfpEQsEYCxWo9nu/c=;
- b=H0/JthRUwvbaWWp2l5MrnpIdgR89hzUo8mg2NgZ1kj139xy3/OmyV58AczGbODRysVptk3vhZlXrlyaK2INJTWRR67jeesqL4gNZqT8Rva/SyZuD0kveJV3ICBtMDyBL2VnrCS1E+2ISMxhfSt274gRPwoC7nMEQWOeX6YHWQOOhjrjwGo3YFraDL2M4VGusxX5GGxEcXu0gYiGhLkAeMLefPpcNr6Ni9v8OXFOQAzEyVusv27+IWvGrg5SVUKnSM5IBJhNpzdODpu95VHCEoc+wd5lHJgX8XU6Ye0PAMVyws7zaFaElQeplK8wwShjWD3754ehuRLUY43LTfCpAmA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
- by IA1PR12MB6043.namprd12.prod.outlook.com (2603:10b6:208:3d5::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.24; Tue, 4 Jun
- 2024 15:50:13 +0000
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7633.021; Tue, 4 Jun 2024
- 15:50:12 +0000
-Date: Tue, 4 Jun 2024 12:50:09 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Leon Romanovsky <leon@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>, linux-doc@vger.kernel.org,
-	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	David Ahern <dsahern@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
-	Leonid Bloch <lbloch@nvidia.com>, linux-cxl@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 1/8] fwctl: Add basic structure for a class subsystem
- with a cdev
-Message-ID: <20240604155009.GJ19897@nvidia.com>
-References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
- <1-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
- <20240604093219.GN3884@unreal>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240604093219.GN3884@unreal>
-X-ClientProxiedBy: MN2PR07CA0008.namprd07.prod.outlook.com
- (2603:10b6:208:1a0::18) To DM6PR12MB3849.namprd12.prod.outlook.com
- (2603:10b6:5:1c7::26)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xraZNUGl"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4213a2acc59so106955e9.1
+        for <patches@lists.linux.dev>; Tue, 04 Jun 2024 08:52:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1717516332; x=1718121132; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XCdS47Jjik47nX2nSjJ2PEp6CsHEP/Y97QHuIuLAPao=;
+        b=xraZNUGlP98tn30F4jzeV7rGWWQL2Tc8YFqYCfOL2/CaFSCPXWD2D2uXjh5ctHD5Fb
+         sCtCKSvKZiq09B3MYpWZvPPAKVjR8/7Tynq/4LfWlDgsTg8QpjFbFi2FnE8k91ykiX4r
+         Ggnqe55gMPZGXBVb91NjOK22sy11/KbAyq4grlzt/ffI9K1VhEd9XxsUcIBiGCnZKOs/
+         4566RrhwXKsGRY6AQt65wIOaxqvBMcOz2wv6f3JmiXURl4zzuzE2wU/4dlgUKL3AF1j/
+         EVu1h0QUF/Jal8pSYL62ckzQ+yeizbhziqIEhJoCVVpClp22xR/OQgiKAHIg1LssCvwG
+         jU0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717516332; x=1718121132;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XCdS47Jjik47nX2nSjJ2PEp6CsHEP/Y97QHuIuLAPao=;
+        b=o3cdfJDJ9Lhs9BTBRGA4+p8kzj+eZx2z654OcwkXyceph6Zh4DNyFCyb1XaSP9kTw7
+         TpwW6/+ldr1htJaiE2+gdWoGGicb8BgfMUG5Br0TxErP0CcH7C5/BQw5JpgKkAKGv90R
+         2S1v6nMcxtvO7TG61Rxy7LRAlmMrJpTHqK2SA0TfuD5VUdD6gPLyLTyJ7QZei7MkaHa2
+         GCY/2zTdWbekU32vAhAznJzAmvvKchgR1SIRbvZvpC3DHp+hM+GGDRtg5I6rUq7jjuxS
+         mSJ9LcVrVnwqUvJJ+iTIaiLpr7oXclJIXmZ0OgLmyVKhlEWnZUyeje5UzeBwPSeIM3+A
+         qyGw==
+X-Forwarded-Encrypted: i=1; AJvYcCXbHNiv3zdKYn8AONFrqd4SisloO4lawpZL8yCk8TAEXJUt3AMySz+u+KZyllNeIf8g73iX8ouFstBEK8YSgm3y+QMH9SXE3g==
+X-Gm-Message-State: AOJu0YwHkKiq242RkbDegBX9jToFKFU9AUTCrnPZxHcfj04ghOP1RENq
+	q8VdqVw/QTV+JPKxN92qkf1mMcfftPsUFKrqlrxa8VKbt0R7iWZOkrk1spqqIw==
+X-Google-Smtp-Source: AGHT+IFOCUx5Ay7RqRiZBzGJp1w//hF8q5ga1kKSPjgi4QBVSW7P23SXxDegTK2FAV28330J45fUdw==
+X-Received: by 2002:a7b:c8d7:0:b0:41b:4c6a:de6d with SMTP id 5b1f17b1804b1-4214b21954cmr2343775e9.5.1717516331925;
+        Tue, 04 Jun 2024 08:52:11 -0700 (PDT)
+Received: from google.com (230.213.79.34.bc.googleusercontent.com. [34.79.213.230])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4214beb7fa9sm26018005e9.48.2024.06.04.08.52.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jun 2024 08:52:11 -0700 (PDT)
+Date: Tue, 4 Jun 2024 15:52:07 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Ryan Roberts <ryan.roberts@arm.com>
+Subject: Re: [PATCH 1/7] iommu/arm-smmu-v3: Split struct
+ arm_smmu_strtab_cfg.strtab
+Message-ID: <Zl84JwoxGFOLzKSC@google.com>
+References: <0-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
+ <1-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|IA1PR12MB6043:EE_
-X-MS-Office365-Filtering-Correlation-Id: 86f81bbd-19dc-4ec5-1ebb-08dc84ae04fd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|7416005|376005|366007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?8VZpJo5IoiP+zcrYFv0UPj34p7JMgOD31Ocqzg/GT0VcyRVMAVXmPBMyeoMJ?=
- =?us-ascii?Q?TBz6O+YNtp5NltlgtFwl4tS4hnrRIB1Y9b4ZsTsKuwq0airXW+fxXdgbmVOX?=
- =?us-ascii?Q?3Ytj5njgRPJkTWQHBVH0RjuQDl415aw9lYLOaECTs0f36guSEKqoM6ms1qgX?=
- =?us-ascii?Q?T86UQ2vXUS8znCI6sSMzXxwwHNvmaexYP4wJRYIaMaNT+3xKy/PrC/jVVNGJ?=
- =?us-ascii?Q?Ea7Bg9X4Sh8eQTibP7cYVIPJo6u9nWzjXUg8h6xsV86r6ZzFi7Lp0kxcnELI?=
- =?us-ascii?Q?EbjHJkyJNDMfQ/sxN1Oj6J99nHf0nq4U2hoj6kCJSF4psh2ojlMvFy92KUDi?=
- =?us-ascii?Q?R1v6aCBSPgv0XbZxZkoyrOH30vEcMkqDIevI1gIOCyE2c2hiunzR1DeTXeo8?=
- =?us-ascii?Q?2Twzu2sR3yxLvMCSyi+Tydqq3uMYh3IQUxgHByrlEYj19Qy/+BA4UfOuR201?=
- =?us-ascii?Q?uWeznmgq1YuaVwtcT0yG4Z3mN9oFBnoU2+s1BIAu4yKPUfFvozTJ1KWOY6e3?=
- =?us-ascii?Q?1oAC3h9XcAVtlg2Oyg+rYSPxKK7fKffCWYYjnyALIRuUovMObizsO2ZUj9PX?=
- =?us-ascii?Q?sY4r/URs8UGOqSSeV43YYyweUBCL2sc9tpoaBpdWqhbWKxfo3OrQXzODftkp?=
- =?us-ascii?Q?n72ADhGaWmqqCzc0S4ai7cn298Vyj94RxVCy3PX43FwzLjl4ASJe7+UEaofr?=
- =?us-ascii?Q?JNDjQmn//F9I/gppdzeArgDcxM1o5ycJ+g+3Ol6FcyfG/7dXU/ZE1fzrmumy?=
- =?us-ascii?Q?m6FT1OHnG+NjK5+1ZzPcrLPRltImeHGdfntkeGvXLGDDmYkveKEGOMUDpxDI?=
- =?us-ascii?Q?7bkisAL/BQN0oyfXI9kLVqKVmuZMIyMDesTiUAnR1rE0z3SB+vEtg/3ThLKX?=
- =?us-ascii?Q?fds+ekuKDJQ6aocxEyv1nI9F1TPVtey/w74xpYWSWV8qZFMRXpRuCgVYWYiZ?=
- =?us-ascii?Q?vg5EG8jrv5Ya1/00UAgnJo6mapRDhskRB1CTqr9pZYTuZRKb0yL1s8Qoot0Z?=
- =?us-ascii?Q?+Bb8/ldO+fflL92hiUkfVPTKgsGCHpx84/0al8UyC9bRvihZyTc3gAIxedlG?=
- =?us-ascii?Q?ggAa7GNvqgCTdtXZLXYwYRSemtms5HaPyxXsQsTXIvqkYhQevSsta26381WC?=
- =?us-ascii?Q?4cy+WA0fFn0lakiuAWrJ26/HI6pbg4Z2oRZeTEm80khsWCqbXvu4cohj+QQF?=
- =?us-ascii?Q?hHW1yAS9dz1iHGETabEt5DGpCLpCYxZJYAQJBlv3yKPlK7/hUlduPDVjnS7w?=
- =?us-ascii?Q?CD18IzIovWRhnYW13ZoOovMr1tad6WRDje/STI+fgQEtBvdJKW2wDIg2jqYs?=
- =?us-ascii?Q?ydYKrWOZfbDa44h97MCjzOV7?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(7416005)(376005)(366007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?+8dyNJUM3Snf+96Lw/EuuSpPsdykXnyw4PGOEPrFUZsoxPO256Gq6OJuV8j3?=
- =?us-ascii?Q?A5Pnukhvy7Kh8emDgdWIXDA4F9bXgs7TGPaWGtFQ+yylyEMUiKxL45jD99rZ?=
- =?us-ascii?Q?g1EmbSme14y7fwodJSLR2nDDenunu4eiKLxrDmnGnr062dICPsYd4OkvEDW6?=
- =?us-ascii?Q?eK5hnBhCa0dtbPSiR3dUIuTdyq+Kt3gWEa6Jdnieb2QC8cTRxw/RYZ66N9pB?=
- =?us-ascii?Q?+mY+CWLL2vsH/LYWDOpB9wTp4MGvpOn3n0z0xoXzcloB1A1JGex7i5jyE5xg?=
- =?us-ascii?Q?fJJIieHjj0iIDbVKYvBmZQGJmjnLC+BjgxIjaSdj6Da0wOTPAVA99olH8DdK?=
- =?us-ascii?Q?FrCcwbofa55KqGx+tZavNxCDPHaaycDzUxOpY24YT0HtgWW2Qfr8MBUhIYkC?=
- =?us-ascii?Q?R8cSDxn5yTRslyhL5BQCkrdEKUCmz7u/vWRz9p7Jm13GLqpBwGbOBYuPxE6c?=
- =?us-ascii?Q?AP9E9/h4IP/izwdjf9kWGwVGw3B7/Uwp7TiGOgo5QNXMQ/Kgr510aBQ7mJig?=
- =?us-ascii?Q?vzFTZOSw/J6Cjdkx4faL7g+5J+7aiCicVV6f1d9qOGyqvMEc0P6mvLTjl3vs?=
- =?us-ascii?Q?taTBMSmV8AfiroJnmn5BWE2Sn442Uvq7SI4o2kDYVrpWYUu73zILbxh1fapa?=
- =?us-ascii?Q?c2XiF2J3GLs2elyuEnWi8q7D6XjwcAYOpjWOs1nS/6s479YmvuHaw0a5WDqw?=
- =?us-ascii?Q?hT2JKOUG5fRqmcjhush5QoTjS5IyY3rlmkGFJykNPptWeFZdyYTzq8HJdxmq?=
- =?us-ascii?Q?PIsHyMWHd9e2Ya4QSf1OPncdp7jxD7phvfuqBSQt3zRWpgVD/fZlwtYQOPLm?=
- =?us-ascii?Q?RY/p6mrz66MzeroEQuChoKL8EIF+3ZqBT0/dlLANH/yfXHdXYKnFkq1YAflA?=
- =?us-ascii?Q?4Q9QBcxndufqW/2fbQBiy6hDWDH++c2hLbN+GzVZ7iQiS4ENpwDGTl5QKysd?=
- =?us-ascii?Q?aSD/qkU389s2masJFLOTjaeRAUMWeNx0njLNGLZgsmbSKPIv3Z19W61UIMLL?=
- =?us-ascii?Q?2X6ksat/ZoiyfndIxCDn5q+Ln+A3F17i8EAVVcCJmJxkE47wCAIiI6WNyr5K?=
- =?us-ascii?Q?HnN4Aj9m8kEtwITv12LRh/nnOToI1AWmFw+hQKjqOM2C1m773F2XMU/zxzTx?=
- =?us-ascii?Q?6M6xyA8mjStWl6U87CzvxBk9LqELyT9ztgHCcItblyw+Hl7cbwTEkfmD3+61?=
- =?us-ascii?Q?emPDZhUZoUhlOArWE5VH2tTbK9vAZFVbCleZvUMgqLdj9pMYAW5YrDaclCQK?=
- =?us-ascii?Q?Q2Tedcsq+FiWjn3EFM2QdOgi8No6seAfoDRdkiQKEwHPJkGQfmj0GWS5uFEo?=
- =?us-ascii?Q?ulVXzVaoYPjOA0zxEQQt5ctrR8dG6lummVDR+xS/p/vHnBQRovoo1D06Ubkr?=
- =?us-ascii?Q?9IJEL/lCqMWZKNlZ4frGN8nLITjTnTHzO1TOBMC9g4F4O4sxQ+/FWOsCjD2+?=
- =?us-ascii?Q?5IodjRjSTfdlLPMfgk4LAe1QeNqtt1Wl49vGiBzt0P8BSH5c/y0tNfyvA3Bg?=
- =?us-ascii?Q?Em71nZWx69Z7JkB6W/JRvaSpkUt5LvlQv8BufodflXjYhL9XJICoZoBiN/8g?=
- =?us-ascii?Q?zJQEk/I6Wv1jRxTLPww=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 86f81bbd-19dc-4ec5-1ebb-08dc84ae04fd
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2024 15:50:12.4329
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6K4q7RKBL8GzSLO9o3dvWstqoAR1YOATeMxniEz+nb7sR8GF3YtScpJpSKAf1oz0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6043
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
 
-On Tue, Jun 04, 2024 at 12:32:19PM +0300, Leon Romanovsky wrote:
-> > +static struct fwctl_device *
-> > +_alloc_device(struct device *parent, const struct fwctl_ops *ops, size_t size)
-> > +{
-> > +	struct fwctl_device *fwctl __free(kfree) = kzalloc(size, GFP_KERNEL);
-> > +
-> > +	if (!fwctl)
-> > +		return NULL;
+Hi Jason,
+
+On Mon, Jun 03, 2024 at 07:31:27PM -0300, Jason Gunthorpe wrote:
+> This is being used as both an array of STEs and an array of L1
+> descriptors.
 > 
-> <...>
+> Give the two usages different names and correct types.
 > 
-> > +/* Drivers use the fwctl_alloc_device() wrapper */
-> > +struct fwctl_device *_fwctl_alloc_device(struct device *parent,
-> > +					 const struct fwctl_ops *ops,
-> > +					 size_t size)
-> > +{
-> > +	struct fwctl_device *fwctl __free(fwctl) =
-> > +		_alloc_device(parent, ops, size);
+> Remove STRTAB_STE_DWORDS as most usages were indexing or sizing an array
+> of struct arm_smmu_ste.
 > 
-> I'm not a big fan of cleanup.h pattern as it hides important to me
-> information about memory object lifetime and by "solving" one class of
-> problems it creates another one.
-
-I'm trying it here. One of the most common bugs I end up fixing is
-error unwind and cleanup.h has successfully removed all of it. Let's
-find out, others thought it was a good idea to add the infrastructure.
-
-One thing that seems clear in my work here is that you should not use
-cleanup.h if you don't have simple memory lifetime, like the above
-case where the memory is freed if the function fails.
-
-> You didn't check if fwctl is NULL before using it.
-
-Oops, yes
-
-> > +	int devnum;
-> > +
-> > +	devnum = ida_alloc_max(&fwctl_ida, FWCTL_MAX_DEVICES - 1, GFP_KERNEL);
-> > +	if (devnum < 0)
-> > +		return NULL;
-> > +	fwctl->dev.devt = fwctl_dev + devnum;
-> > +
-> > +	cdev_init(&fwctl->cdev, &fwctl_fops);
-> > +	fwctl->cdev.owner = THIS_MODULE;
-> > +
-> > +	if (dev_set_name(&fwctl->dev, "fwctl%d", fwctl->dev.devt - fwctl_dev))
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 21 +++++++++------------
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  9 +++++----
+>  2 files changed, 14 insertions(+), 16 deletions(-)
 > 
-> Did you miss ida_free() here?
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> index ab415e107054c1..6b4f1a664288db 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -1661,8 +1661,8 @@ static int arm_smmu_init_l2_strtab(struct arm_smmu_device *smmu, u32 sid)
+>  	if (desc->l2ptr)
+>  		return 0;
+>  
+> -	size = 1 << (STRTAB_SPLIT + ilog2(STRTAB_STE_DWORDS) + 3);
+> -	strtab = &cfg->strtab[(sid >> STRTAB_SPLIT) * STRTAB_L1_DESC_DWORDS];
 
-No, the put_device() does it in the release function. The __free
-always calls fwctl_put()/put_device() on failure, and within all
-functions except _alloc_device() the put_device() is the correct way
-to free this memory.
+I believe also STRTAB_L1_DESC_DWORDS isn’t needed as l1_desc has the same size.
+Especially I already see sizeof(*cfg->l1_desc) used in some places instead of the macro.
+So we can remove it also as STRTAB_STE_DWORDS.
+
+> +	size = (1 << STRTAB_SPLIT) * sizeof(struct arm_smmu_ste);
+> +	strtab = &cfg->strtab.l1_desc[sid >> STRTAB_SPLIT];
+>  
+>  	desc->span = STRTAB_SPLIT + 1;
+>  	desc->l2ptr = dmam_alloc_coherent(smmu->dev, size, &desc->l2ptr_dma,
+> @@ -2409,8 +2409,7 @@ arm_smmu_get_step_for_sid(struct arm_smmu_device *smmu, u32 sid)
+>  		return &cfg->l1_desc[idx1].l2ptr[idx2];
+>  	} else {
+>  		/* Simple linear lookup */
+> -		return (struct arm_smmu_ste *)&cfg
+> -			       ->strtab[sid * STRTAB_STE_DWORDS];
+> +		return &cfg->strtab.linear[sid];
+>  	}
+>  }
+>  
+> @@ -3225,17 +3224,15 @@ static int arm_smmu_init_l1_strtab(struct arm_smmu_device *smmu)
+>  {
+>  	unsigned int i;
+>  	struct arm_smmu_strtab_cfg *cfg = &smmu->strtab_cfg;
+> -	void *strtab = smmu->strtab_cfg.strtab;
+>  
+>  	cfg->l1_desc = devm_kcalloc(smmu->dev, cfg->num_l1_ents,
+>  				    sizeof(*cfg->l1_desc), GFP_KERNEL);
+>  	if (!cfg->l1_desc)
+>  		return -ENOMEM;
+>  
+> -	for (i = 0; i < cfg->num_l1_ents; ++i) {
+> -		arm_smmu_write_strtab_l1_desc(strtab, &cfg->l1_desc[i]);
+> -		strtab += STRTAB_L1_DESC_DWORDS << 3;
+> -	}
+> +	for (i = 0; i < cfg->num_l1_ents; ++i)
+> +		arm_smmu_write_strtab_l1_desc(
+> +			&smmu->strtab_cfg.strtab.l1_desc[i], &cfg->l1_desc[i]);
+>  
+>  	return 0;
+>  }
+> @@ -3267,7 +3264,7 @@ static int arm_smmu_init_strtab_2lvl(struct arm_smmu_device *smmu)
+>  			l1size);
+>  		return -ENOMEM;
+>  	}
+> -	cfg->strtab = strtab;
+> +	cfg->strtab.l1_desc = strtab;
+>  
+>  	/* Configure strtab_base_cfg for 2 levels */
+>  	reg  = FIELD_PREP(STRTAB_BASE_CFG_FMT, STRTAB_BASE_CFG_FMT_2LVL);
+> @@ -3285,7 +3282,7 @@ static int arm_smmu_init_strtab_linear(struct arm_smmu_device *smmu)
+>  	u32 size;
+>  	struct arm_smmu_strtab_cfg *cfg = &smmu->strtab_cfg;
+>  
+> -	size = (1 << smmu->sid_bits) * (STRTAB_STE_DWORDS << 3);
+> +	size = (1 << smmu->sid_bits) * sizeof(cfg->strtab.linear[0]);
+
+nit: maybe be consistent with "sizeof(struct arm_smmu_ste)" which was used earlier
+this patch and "sizeof(cfg->strtab.linear[0])"
+
+>  	strtab = dmam_alloc_coherent(smmu->dev, size, &cfg->strtab_dma,
+>  				     GFP_KERNEL);
+>  	if (!strtab) {
+> @@ -3294,7 +3291,7 @@ static int arm_smmu_init_strtab_linear(struct arm_smmu_device *smmu)
+>  			size);
+>  		return -ENOMEM;
+>  	}
+> -	cfg->strtab = strtab;
+> +	cfg->strtab.linear = strtab;
+>  	cfg->num_l1_ents = 1 << smmu->sid_bits;
+>  
+>  	/* Configure strtab_base_cfg for a linear table covering all SIDs */
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> index 1242a086c9f948..4769780259affc 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> @@ -206,10 +206,8 @@
+>  #define STRTAB_L1_DESC_SPAN		GENMASK_ULL(4, 0)
+>  #define STRTAB_L1_DESC_L2PTR_MASK	GENMASK_ULL(51, 6)
+>  
+> -#define STRTAB_STE_DWORDS		8
+> -
+>  struct arm_smmu_ste {
+> -	__le64 data[STRTAB_STE_DWORDS];
+> +	__le64 data[8];
+>  };
+>  
+>  #define STRTAB_STE_0_V			(1UL << 0)
+> @@ -612,7 +610,10 @@ struct arm_smmu_s2_cfg {
+>  };
+>  
+>  struct arm_smmu_strtab_cfg {
+> -	__le64				*strtab;
+> +	union {
+> +		struct arm_smmu_ste *linear;
+> +		__le64 *l1_desc;
+
+I agree with Nicolin, that it is confusing to have both l1_desc,
+I guess a rename is sufficient.
+
+> +	} strtab;
+>  	dma_addr_t			strtab_dma;
+>  	struct arm_smmu_strtab_l1_desc	*l1_desc;
+>  	unsigned int			num_l1_ents;
+> -- 
+> 2.45.2
+> 
 
 Thanks,
-Jason
+Mostafa
