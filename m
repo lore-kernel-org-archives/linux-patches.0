@@ -1,164 +1,105 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE64149C4F
-	for <patches@lists.linux.dev>; Tue,  4 Jun 2024 17:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A127148820;
+	Tue,  4 Jun 2024 17:22:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717520783; cv=none; b=jRJUebQevlIabXkA1tFVNN6UdMMshsvGePvg1w0D/a7CftZ05WE/L8EK27/7K+fxV0Me4VnfoUShEfKe4XWgQk3zOMPqX5AwvmwlDCv9nOzSBN80l+h1iLTdFdl7FNareb8Y0yJhbZHZV5jH6EgfotXNpEcOM77o89aKeR07lpM=
+	t=1717521772; cv=none; b=qWfRQmld7pB6aL0XtEou4Xno6lt2DNAan/IwsLsLwN/ZQkGOqs86fl3Q0l5mHGEgRGtLfzOdTE0kgqGLnrv8K1p94PF3SGem+N2c2QgNr+uYUlVEaWj/lhGTwi7h63ngnoc66Cv3klfdn1xuhkb2crE6nb1mtQ6AWsWBj2A5Zbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717520783; c=relaxed/simple;
-	bh=nMub7fB/QtlS4oR8KJcOZ9lRXmuFltunoQGGtWqHGuY=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fWhlV64WQjjGtyeVAtuhoQ8RFgj+XMYpwcTlGU/ZdvlsVyOu8zSLw76y4292iGQayQpFKrRnOraZfhKPHdoqkvzQoO/fXasyBGPxF3x9TGdB/nfcbj7HdlVEfEfujTfjqqUo1/feQclPhRAZkaG/nM0jLJMCnD/6tD947LNK8lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.31])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vtxlz03rpz6K9Sn;
-	Wed,  5 Jun 2024 01:04:47 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
-	by mail.maildlp.com (Postfix) with ESMTPS id C322A140A87;
-	Wed,  5 Jun 2024 01:05:56 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 4 Jun
- 2024 18:05:56 +0100
-Date: Tue, 4 Jun 2024 18:05:55 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: Leon Romanovsky <leon@kernel.org>, Jonathan Corbet <corbet@lwn.net>, Itay
- Avraham <itayavr@nvidia.com>, Jakub Kicinski <kuba@kernel.org>,
-	<linux-doc@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
-	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed
-	<saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>, Andy Gospodarek
-	<andrew.gospodarek@broadcom.com>, Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>, "David Ahern" <dsahern@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, "Jiri Pirko" <jiri@nvidia.com>, Leonid
- Bloch <lbloch@nvidia.com>, <linux-cxl@vger.kernel.org>,
-	<patches@lists.linux.dev>
-Subject: Re: [PATCH 1/8] fwctl: Add basic structure for a class subsystem
- with a cdev
-Message-ID: <20240604180555.000063c2@Huawei.com>
-In-Reply-To: <20240604155009.GJ19897@nvidia.com>
-References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
-	<1-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
-	<20240604093219.GN3884@unreal>
-	<20240604155009.GJ19897@nvidia.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+	s=arc-20240116; t=1717521772; c=relaxed/simple;
+	bh=xKwDmlTQgHxY0OuUUcdVyJs4Yi3XufURqPsGe3qRrKY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OCW90HEW7M+kH7UXimY2DRI0GZc6ChIdZsDs8y7Y4gmupPZA56arLXwUjVjDa73mZgBIYIsAzpmhugO+bE4uaAVJLkw2gAFK+lboltPNL4nlmWVJBQF8Og/AaY2XW7XXCrPZ8BezvgQxmP9zYD9lyIcDcNTN22KzOGfiVymIzoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hRX8huRT; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hRX8huRT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9BFC2BBFC;
+	Tue,  4 Jun 2024 17:22:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717521771;
+	bh=xKwDmlTQgHxY0OuUUcdVyJs4Yi3XufURqPsGe3qRrKY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hRX8huRTHJdpJsxH0u9OAGIOKUvWIt22seynnj5Xh6CNtBAxPPyJhJvdvj4QJaJzG
+	 kiNAXice3ersyCVMJnmCcBd8MaVLhFEcpDElXyqtX3OwFHTfk8Tjw8aI4CxWjAN1D4
+	 vRbXrrXLHYX//5binCIN9/yEZLKLR5PAgrCUOeRt2TuGH5p+8wyRrSA3vVAEhG5suQ
+	 fissWp3QxeCp/mCSezWQ8sZvK0qaiRbxsPWLyuo1k6RvhBjAZs10ErlbpjCo7P7vtQ
+	 hANCAoeWBC2WfVMcUfiDkJqwomlT3P5uY4/YFXy/+gFLSwVtBITp7hZMrJq5adIR7w
+	 rcnO7MIcYIp9A==
+Date: Tue, 4 Jun 2024 10:22:49 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Hildenbrand <dhildenb@redhat.com>
+Subject: Re: [PATCH v16 2/5] random: add vgetrandom_alloc() syscall
+Message-ID: <20240604172249.GA1566@sol.localdomain>
+References: <20240528122352.2485958-1-Jason@zx2c4.com>
+ <20240528122352.2485958-3-Jason@zx2c4.com>
+ <20240531035917.GD6505@sol.localdomain>
+ <Zlr-aMJdAEgHOj9-@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zlr-aMJdAEgHOj9-@zx2c4.com>
 
-On Tue, 4 Jun 2024 12:50:09 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
-
-> On Tue, Jun 04, 2024 at 12:32:19PM +0300, Leon Romanovsky wrote:
-> > > +static struct fwctl_device *
-> > > +_alloc_device(struct device *parent, const struct fwctl_ops *ops, size_t size)
-> > > +{
-> > > +	struct fwctl_device *fwctl __free(kfree) = kzalloc(size, GFP_KERNEL);
-> > > +
-> > > +	if (!fwctl)
-> > > +		return NULL;  
+On Sat, Jun 01, 2024 at 12:56:40PM +0200, Jason A. Donenfeld wrote:
+> On Thu, May 30, 2024 at 08:59:17PM -0700, Eric Biggers wrote:
+> > On Tue, May 28, 2024 at 02:19:51PM +0200, Jason A. Donenfeld wrote:
+> > > +/**
+> > > + * sys_vgetrandom_alloc - Allocate opaque states for use with vDSO getrandom().
+> > > + *
+> > > + * @num:	   On input, a pointer to a suggested hint of how many states to
+> > > + * 		   allocate, and on return the number of states actually allocated.
+> > > + *
+> > > + * @size_per_each: On input, must be zero. On return, the size of each state allocated,
+> > > + * 		   so that the caller can split up the returned allocation into
+> > > + * 		   individual states.
+> > > + *
+> > > + * @addr:	   Reserved, must be zero.
+> > > + *
+> > > + * @flags:	   Reserved, must be zero.
+> > > + *
+> > > + * The getrandom() vDSO function in userspace requires an opaque state, which
+> > > + * this function allocates by mapping a certain number of special pages into
+> > > + * the calling process. It takes a hint as to the number of opaque states
+> > > + * desired, and provides the caller with the number of opaque states actually
+> > > + * allocated, the size of each one in bytes, and the address of the first
+> > > + * state, which may be split up into @num states of @size_per_each bytes each,
+> > > + * by adding @size_per_each to the returned first state @num times, while
+> > > + * ensuring that no single state straddles a page boundary.
+> > > + *
+> > > + * Returns the address of the first state in the allocation on success, or a
+> > > + * negative error value on failure.
+> > > + *
+> > > + * The returned address of the first state may be passed to munmap(2) with a
+> > > + * length of `(size_t)num * (size_t)size_per_each`, in order to deallocate the
+> > > + * memory, after which it is invalid to pass it to vDSO getrandom().
 > > 
-> > <...>
-> >   
-> > > +/* Drivers use the fwctl_alloc_device() wrapper */
-> > > +struct fwctl_device *_fwctl_alloc_device(struct device *parent,
-> > > +					 const struct fwctl_ops *ops,
-> > > +					 size_t size)
-> > > +{
-> > > +	struct fwctl_device *fwctl __free(fwctl) =
-> > > +		_alloc_device(parent, ops, size);  
-> > 
-> > I'm not a big fan of cleanup.h pattern as it hides important to me
-> > information about memory object lifetime and by "solving" one class of
-> > problems it creates another one.  
+> > Wouldn't a munmap with '(size_t)num * (size_t)size_per_each' be potentially too
+> > short, due to how the allocation is sized such that states don't cross page
+> > boundaries?
 > 
-> I'm trying it here. One of the most common bugs I end up fixing is
-> error unwind and cleanup.h has successfully removed all of it. Let's
-> find out, others thought it was a good idea to add the infrastructure.
+> You're right, I think. The calculation should instead be something like:
 > 
-> One thing that seems clear in my work here is that you should not use
-> cleanup.h if you don't have simple memory lifetime, like the above
-> case where the memory is freed if the function fails.
+>     DIV_ROUND_UP(num, PAGE_SIZE / size_per_each) * PAGE_SIZE
 > 
-> > You didn't check if fwctl is NULL before using it.  
-> 
-> Oops, yes
-> 
-> > > +	int devnum;
-> > > +
-> > > +	devnum = ida_alloc_max(&fwctl_ida, FWCTL_MAX_DEVICES - 1, GFP_KERNEL);
-> > > +	if (devnum < 0)
-> > > +		return NULL;
-> > > +	fwctl->dev.devt = fwctl_dev + devnum;
-> > > +
-> > > +	cdev_init(&fwctl->cdev, &fwctl_fops);
-> > > +	fwctl->cdev.owner = THIS_MODULE;
-> > > +
-> > > +	if (dev_set_name(&fwctl->dev, "fwctl%d", fwctl->dev.devt - fwctl_dev))  
-> > 
-> > Did you miss ida_free() here?  
-> 
-> No, the put_device() does it in the release function. The __free
-> always calls fwctl_put()/put_device() on failure, and within all
-> functions except _alloc_device() the put_device() is the correct way
-> to free this memory.
-
-The conditional handling of the ida having been allocated or not is a bit ugly
-as I think it's just papering over this corner case.
-Can fwctl_dev and devnum both be zero? In practice no, but is that guaranteed
-for all time? Maybe...
-
-We got some kick back from Linus a while back in CXL and the outcome was
-a few more helpers rather than too much cleverness in the use of __free.
-
-Trick for this is often to define a small function that allocates both the
-ida and the device. With in that micro function handle the one error path
-or if you only have two things to do, you can use __free() for the allocation.
-
-Something like
-
-static struct fwctl_device *__alloc_device_and_devt(sizet_t size)
-{
-	struct fw_ctl_device *fwctl;
-	int devnum;
-
-	fwctl = ida_alloc_max(&fwct ...);
-	if (!fwctl)
-		return NULL;
-
-	devnum = ida_alloc_max(&fwct ...);
-	if (devnum < 0) {
-		kfree(fwctl);
-		return NULL;
-	}	
-
-	fwctl->dev.devt = fwctl_Ddev + devnum;
-
-	reutrn fwctl;
-}
-
-Then call device_initialize() on the returned structure ->dev as you know
-you ida and the containing structure are both in a state where the put_device()
-call doesn't need conditions on 'how initialized' it is.
-
-Still, maybe the ugly is fine.  
-
-
-> 
-> Thanks,
-> Jason
-> 
+> Does that seem correct to you?
 > 
 
+Yes, though I wonder if it would be better to give userspace the number of pages
+instead of the number of states.
+
+- Eric
