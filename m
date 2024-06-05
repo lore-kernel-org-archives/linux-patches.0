@@ -1,473 +1,183 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2067.outbound.protection.outlook.com [40.107.212.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAF33F8E2
-	for <patches@lists.linux.dev>; Wed,  5 Jun 2024 21:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717621385; cv=none; b=pBM3EP/Ym5kRY2R4VyqQiMarm5TItLnS+YJeeKQ5UElfEyr/9lfJkqPGEYdF7sq13XVz/dSqhhlsDyiXoQekYvRjlp+6VHvEOXgkL61oZYj72DWPidtOa83k5SUCYUb/p3b8LiBq3lVLd4cx+ntAXRuLHpg4XyxTgEeubxx1vp0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717621385; c=relaxed/simple;
-	bh=vfI+XyntMxmAI6O3/rFI5Y7+85AiQSh7448Su6HkL0I=;
-	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:MIME-Version:
-	 Content-Type; b=p/gNpew35q3JuCZL00i2uuK26O8vxBhHpULHtWkfv3+clT9z3CQ2HB0/HPRkMrKWRqNkus+Ld7vk7dTyOhnrl4B7i2Y8g3xMPaEY5BdmrzESkoVXlOCc36RCs0RTa6svNuN62rmOS7NEP4UT4WgE1fsYAspuZXsgiA3hTcQypE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=fNorgy+J; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=LPepGnJX; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5482D139D00;
+	Wed,  5 Jun 2024 21:23:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.212.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717622582; cv=fail; b=nKjzpx0AuZR3IJO0/ICsquq2lq74jBAzgf2Eq8BBSzlPEbld6OukNEm4/mDbmqg7rP6WN3HCYyoUfoWTynQ1CNNbILZ/E4zlFKFD8caI9aOGGNc7+YnrQxms7H8G75xHXysgHZrvv87ROMm56F+iNTc1d6dx5n9fX/EBxNaqVVs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717622582; c=relaxed/simple;
+	bh=oVAjUqW4SV1W2eBBhCqQV3mMZ2aRJZFoguYRT4GIIfQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=cdWWx506T500eND8KpBYofFgjKJjZgS9tQo4O2GjD0e+TWv5hJd35zjJHUCbTBCEsAoZLfa8Za05uFmJyeFa+uC4VRtkbLlRUq2bBEgNJmXl+va0gNmwSqRh7ujZRezD/2tf6mPnw3AY2y5wiPhsSpDmhIIvc0ySuMxlM77tWNM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=kEqghvW7; arc=fail smtp.client-ip=40.107.212.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="fNorgy+J";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="LPepGnJX"
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1717621381;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:  in-reply-to:in-reply-to;
-	bh=8DOUd1z26K2knCIWSgj8FMgcXpFTrWvUtY/7BVdEfEw=;
-	b=fNorgy+JGm9AENDN8YUp+RbIqtXI8EnmdN5qHvaLEyTlRGW1KBrkhUNJ2HWqoA8jsl9xNk
-	3zQmTQ3FuNHwZMhK6R7JVXtchsxmZ1arGW+3eS8v5X+2wmqkoDNVjXJi7ldoUXAnUpf+Ds
-	gqmuJZwkE1ZEoXQJDofwze5nbFaKvPocTpGXj/k673g1TTNYl1Nzz+oUY9zRrKPnnS9/H8
-	VnjohfoLJI1qFLHevai8WwaAIJj6CGiPZvBaCgHLSRrPHBmeSgF8JYIK88vqo9alzcssF0
-	rcRPyjwsAIbCE/rrkdp+64Ltbr1+BOdwyilfefZJcQf8Oe/aC8IUeQU8yfeUWA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1717621381;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:  in-reply-to:in-reply-to;
-	bh=8DOUd1z26K2knCIWSgj8FMgcXpFTrWvUtY/7BVdEfEw=;
-	b=LPepGnJXLg7QRH7lIFbHZYS9VUJlzcUZ36zts/3nj/l+4PtPABkc5yZE5owExP9aZvQyZV
-	Y8ozeupyt1/ybkAA==
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-crypto@vger.kernel.org,
- linux-api@vger.kernel.org, x86@kernel.org, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Adhemerval Zanella Netto
- <adhemerval.zanella@linaro.org>, Carlos O'Donell <carlos@redhat.com>,
- Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann
- Horn <jannh@google.com>, Christian Brauner <brauner@kernel.org>, David
- Hildenbrand <dhildenb@redhat.com>
-Subject: Re: [PATCH v16 4/5] random: introduce generic vDSO getrandom()
- implementation
-In-Reply-To: <20240528122352.2485958-5-Jason@zx2c4.com>
-Date: Wed, 05 Jun 2024 23:03:00 +0200
-Message-ID: <874ja73xx7.ffs@tglx>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="kEqghvW7"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=FZNHDYinY2Sg8DKRjaV+ZvnEC6wBsKO94i7urYHHrCK6NWSweP7k1XJwGFPXAntMzLqeqU/ReGcyNdUwhwIYOiPXAWhNIdohJImEYdm1v+9PbO9EvMo6wiIaNjs7z0g8J59wkTRFREHwBLf3NktIwwy9N3QVzsDRJjs1Z7AZarufLEd1wx5Ectxo4SGZNk/pj/0BYseeGdfXi/8DKfgrbvVVIITpXchTGxTBqytpTF1UAOLbo1C1cy6ajL8SQS7zmZarOD6sIcxMvHzqL+xXBHx0arc5nPUJPNbgBOnmfTQlw0jsrOcKEA+JuBDQxTl0yaFVBFQ3BwdbORbMoRVZAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JxXE8L6Y7pB0SEu5a+nEk7PTsw+huSPD4SrdBpEd7lk=;
+ b=Xj3edDCtB/s8366QF5Xym2hcCtXD07jCPzhoOlQvBzfKSHGY66gK1LkQtKTyutcy7JiLouq5Tkg+xt0hP+IBGysgP9YnLz6xVpIW/ppk3AGpjNsHK0zqXHDP3LzwOerhz2zBd0LSTkXiITsPOdC7sD13dwSZAHjtNE+niOajFgLyuhW+dxa/N2Me1aHFXbJay3my4Qfn9Af0zR1Mu/DHUNgSX8bo+w9BEVW4qlZ7Jqa5aiRKDJIzVmfghbn43HLSgIJ4CpRz++c3LVFbZ4+vM05vasDp6UMg4tnki5CXFhR7iJthin3jV6nOpsigKOpOHSImAJavxt0bGgi82wrJoA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JxXE8L6Y7pB0SEu5a+nEk7PTsw+huSPD4SrdBpEd7lk=;
+ b=kEqghvW7cdIWDsCWTf/6oJNq17UkPZODWQ2fv8yO/dLvCjTRJ3S/XH4V/uv/2jZLB2iYdU+17nadpw5tznWmRTuwF7O5gB+/C2ek1z3RQc2EGf4P55T4Jaiur2NSPMuKnq2xNmSJ4ODCwIRs3/RPG2gzckMPUP+1WCHo+jTTV17IpTD8ncPiqrahjZkQ3yKM6PlG6EhSqHemCk0vbcPy1P5oEweC6L24AqsmbqRvVGIaMKc9mPwcpGm1FfEmKSj7ZAwJEFIBOd5OWL7WpyL10xhMdsrF6Tr/Ww6mEIyBAopfdRHOEYmXsUE251mT9vgctasM82IeJqehWR9ZZ3IMpg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+ by CH3PR12MB8901.namprd12.prod.outlook.com (2603:10b6:610:180::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.31; Wed, 5 Jun
+ 2024 21:22:55 +0000
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7633.021; Wed, 5 Jun 2024
+ 21:22:53 +0000
+Date: Wed, 5 Jun 2024 18:22:52 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Mostafa Saleh <smostafa@google.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Ryan Roberts <ryan.roberts@arm.com>
+Subject: Re: [PATCH 2/7] iommu/arm-smmu-v3: Do not zero the strtab twice
+Message-ID: <20240605212252.GA2030792@nvidia.com>
+References: <0-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
+ <2-v1-1b720dce51d1+4f44-smmuv3_tidy_jgg@nvidia.com>
+ <Zl85FOpIrQSeto4W@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zl85FOpIrQSeto4W@google.com>
+X-ClientProxiedBy: MN2PR03CA0016.namprd03.prod.outlook.com
+ (2603:10b6:208:23a::21) To DM6PR12MB3849.namprd12.prod.outlook.com
+ (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|CH3PR12MB8901:EE_
+X-MS-Office365-Filtering-Correlation-Id: 31ee0417-8001-4e90-59ed-08dc85a5a948
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|1800799015|376005;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?SzBCUERXTlkyTDV6NGU2TGdMejVuYXJrZEpzU2RrT1ZlVStXcXA4OW50QlVt?=
+ =?utf-8?B?Unk1YVZzYWxTTDMvY0E4cjl3V0ViNjB5NmgreFQ5dkZHbjBkTlBlajBmeGVY?=
+ =?utf-8?B?Yk1yd2tnaXpReTRySStsdm1YQjhLb1kzT2lVZ09EUGlDMWhnVW5PZTFPVUxp?=
+ =?utf-8?B?SEVjTityMWFMS2J0Y1dzN2R4dG10R0dJRE5YVitFeXJrZ1hrcmF3QW95YkpJ?=
+ =?utf-8?B?M3pYTmRoWXlYZWFDUFJQaG1jOUZwcjAwc2ZHR3l0cmVHNkhNdnVVS0h4d0tU?=
+ =?utf-8?B?VHA0S0l3L2xMVGd4YzMyeHA4MjFSeFdvMlA0OUdVMzZWWDgxZDFaN0IvQTZO?=
+ =?utf-8?B?QnBLQlZXV0J4OTJoblVWUmo4U2ttNVVyeDlHRUEzbG92SURBUUtvY01lRkFL?=
+ =?utf-8?B?QlBpWGR2S0xGRnBvKzd5RXQ5Y05CQ2dlOERsN29SaEphWDZDN3dnQ0JxS1dY?=
+ =?utf-8?B?RW9CdGExQlhHRDJraVl5Q2t4YkJDL1F4SlRzT3FIejgxbHlyM1NibHZnNzF5?=
+ =?utf-8?B?Qk5ySXNxb0h4OWlHTXF5KytoWDE5aVNDYXZLajcwK3pIeCtTRmpiajZoNEdp?=
+ =?utf-8?B?ZlEyZldpUkhBTGh1YmtvZVFFUEI4NkQ3Z1VXSHpiNjcyOHJhTVB6b1FVRER3?=
+ =?utf-8?B?NHhYRE0zeHVkS3RSSnpNNTd4NG9paUxuYk8xdUY4dnNCMkJ1QVpjejF5cnZ3?=
+ =?utf-8?B?TkdWTFk4OUU3UkJXdXFFWTJOQmpxaGlIbzM1bmtUWU84ZTg1L21iQko0VHRi?=
+ =?utf-8?B?WGIrZ0pJZDFKaXYzMm9nTHByWW5sSUUxblVrSHQxZk5aYjRocVV5YUUzNnlK?=
+ =?utf-8?B?bDIreFdjMHA4MUdFRGxQOHRyT2JsRGthcUFhdkdnU3M5ZnlXZVpRN1RVdHJo?=
+ =?utf-8?B?WWJxVkZsRHBBcmNCL09JZTJ2WHN2QXRoMjBobWFoeDh3bDNieXZPWlpTS0Yx?=
+ =?utf-8?B?Q082dWkxTVQ5Z2s1czlhcHYrY2luVVN4em02b3h6QXNHL1doT05jRm5Qekl2?=
+ =?utf-8?B?ZEdhQnYxVUJmNmVUNzFRK2pZczFoYmRjZjdSTkx1U1RsRm0wL3A0b3ZBajVr?=
+ =?utf-8?B?RjdQNHV1YlllbkJPTFRsZG5aT0F3MnBNK0YwcmMxdW9FWC8rbjBZSFRNTzFm?=
+ =?utf-8?B?cGQxeEI4OHFVYmF0dUR2cUZwWTRnWlJWU1hkdis0eWtjWFlrTzhFSnFhZFJ1?=
+ =?utf-8?B?TVhqTWZqdWZXN2NYRWFzcituS0VMeStEU1hhZDZTdE44TUtpaDZWT2JBbVU4?=
+ =?utf-8?B?TTFrVkMwSzlsMStQalFnQWpRdGllU2NzeVBsQ2xHMHRMQWl6dVpEdW1Rb3RO?=
+ =?utf-8?B?VlNFNDI3clBZcXV3c24xYkhlNTBVc1RLWDhZT0pIdndvLytmcXVMT1ZWK044?=
+ =?utf-8?B?TGkwbTJ2LzBMTFZpV3lQWTVmWVJ3OXBrVXloTHVpaVlxaHdZYUpBV3dTYVRH?=
+ =?utf-8?B?SHhqSU1adHV4TnZlZ0ZmbmxnMTNUSG5ZRllTSS9YaWNZMnJaK2pGT2x6SFNQ?=
+ =?utf-8?B?V1l3WXB5bVpDMXhNbk5wclJxVmpsODJjQ1I5UFR1WEgwVlZxZlMvaEdxT255?=
+ =?utf-8?B?YUZRYTc5dS9RTDV3N1FkakZhck5CMVdnYW45OThGcmpyaERDeTZSa2hTSEFE?=
+ =?utf-8?B?SzVoU2Y4Tkp6dkZJUW5XN1hKRXZRY3dvUkMzaWpmaWkvUDRzaU9XbmRSUVU4?=
+ =?utf-8?B?Qm1FVWdwUjloUWwvUTN4Vm1hcUpZOWx2YVVKckRuSXcvOW9FMU15a1Z3PT0=?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(1800799015)(376005);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?elNqNUEzelZjZ1NObVRTdmYrbnMyMWoyWjhnQStZTG00Ky9rQkc1TVJxT2Vo?=
+ =?utf-8?B?R0ZPSGpqK1dmNThnQWExSG1BMmtHQ0padjB5REQ5VS9WUlZFZnRHdjdzRy9n?=
+ =?utf-8?B?M1l2bVdyRVpESmVBeG1ZSFdSOFFmdTlETjhyc3Jsd0VZbHdHWS9GZm1pc2dw?=
+ =?utf-8?B?WEhzT2I5ZHlFSjZlQlM2MkljVjVMTFVTa1hQYUt4MGdQMm5jTEc2andVbTNG?=
+ =?utf-8?B?THRwdEp6YTM4RUNuRDRFV1p4bUoxMXNlQlRuY0pxMENmbWtrNVNET1BMR0F0?=
+ =?utf-8?B?eEJBUWl2WElrU3R3dS9DaGlKWStMb3g3Nk9GVWQyRWRQemx4U2hRL3NTQjlz?=
+ =?utf-8?B?OGZNTmlOQmtOeUZuRVBIZWI4VWRvdnM1NmV4R2ZNMGNKZWsvemlHaStuRGlo?=
+ =?utf-8?B?L0hUQ2sxN3dJckxoa2YrSGlBNUdSaE1VbDZkSm9HSXM4VW5RQ2VHQkFScEhB?=
+ =?utf-8?B?b0tFWUpIVGw4U2VoK1NuZTdKQ0l2SXFxaXZGZjJGZ2RqMFZ2OHBkajgrclJV?=
+ =?utf-8?B?ajBwMnNpZ0lTTzg4aVFVamI2VjdLVTNHbHFNMkhJRE8wOStpYTRKOXFsYW9W?=
+ =?utf-8?B?RDVTSnErTlJDTitPeitDa3RHb1kzMlZVRnZ3UzRvSHpEa1UxNHdjVWNNbk1n?=
+ =?utf-8?B?TTJOVEVjdGt1MjdLTWRINjB4enhiVU56dnRaZ09IUzIvQm9WTTNOd3o4d3pS?=
+ =?utf-8?B?clM5dExNaW9FSXhCQVB2R1NzcjdaUFJEalExakd6MnFFWFpyQ09KaUh4UVNK?=
+ =?utf-8?B?MjdpOXVLVTVId2VYYnp4TGRISmRXVDhKQy8rcG44cXRNMEtobGRSWG9HQVZE?=
+ =?utf-8?B?dmlUblRRWlZpc1hBaEtYNms3R3JuNUpFRTh0QmJpdEp4dWlsZ1NIZFg2K25y?=
+ =?utf-8?B?ODB1NmdvM1JvbW4vbUo2TVdGYnR2OUswZlFFVEtQdkZBTHVrL24rN0RsNDRy?=
+ =?utf-8?B?ODlTQ3R3SHQwVHdub1dGSDdrZFVQQ3Y1TFFLVVpwckpJdEVTVGhNb1Fhd0Iy?=
+ =?utf-8?B?ZkRvNFRVSitrME1nLzZyQU53Y0xSdjV3YTdvS2ZIY3ZPbmJ2Si9IYTZLNlRu?=
+ =?utf-8?B?dlA0S0I3YnBrMGpGU2d2QzI5NnFiSldueE1LdEdlZGRVZ3VYOXltQ3JWU2xo?=
+ =?utf-8?B?ZW0wREs4NHVDNFEzY250SENMNDZHSjAvcjdCMWRxRnk5K2l4eGk3cDl2UjFl?=
+ =?utf-8?B?ZnNYaWkzK2lTcVBoN25mL0F2YUtmbVhTUyt6VlZHUDZRSUg5eDdXRVE0VTFL?=
+ =?utf-8?B?ZXhZUU1sUkUwZTcwR0FxTW4vYzN5eGNBb2hmcDlzb3FLRlJpWS9oTzFIS2VM?=
+ =?utf-8?B?SUsrYWhuUlpzQWJTQUhvcGh6Y3BXV0NRc0NiQWg5Yk9GNG4xd2hzeTlyWTJh?=
+ =?utf-8?B?TS81dENoNnRxdHpuR09FNjhRQ1dxN2Iva2oxRmt5QzljZm5WeWhubFpCMzlL?=
+ =?utf-8?B?Y2tGNjY3YVYvMTB3aFJ0dVpLZFRyVWYxSGFIanpNRXV4OFFYRWVUdXlMOXN3?=
+ =?utf-8?B?OGVwR0VXWUtDQ2NhaGNzaERUSitDRFBBQngrSHVaS3UyeFZUSW1DM2RnL0c4?=
+ =?utf-8?B?dVpRZ3I5YnNLd3hrY0tKaXpvUXE5SUdkTE9BQVFpQ0piYm8rbTczWjlGV3U5?=
+ =?utf-8?B?ZHpaNFhscSs5WFM4eTUzclM0d1laZlhUNzYvWTFWamNhQlREVXd4RWVETzJI?=
+ =?utf-8?B?WlBMdjhCdEpPUWtoRmNCY2ZxZkRpTDFMSkp1M2N4bU9HOXdXZW5lckNnVkNS?=
+ =?utf-8?B?V1ZFMmdmalNFMHVPTitoVGZSbFhXRGZjTTJYNzM4VUlRdnVsSzBXTk5MSWRK?=
+ =?utf-8?B?azkxSDVxZjdnSk5DL2RnRWMvb1JzSmZHMXExU2lzbFp6dWxuK1ZCNU1lMVdL?=
+ =?utf-8?B?NjhSTDBFTHVJTDdOMVhiSENUQm9Gc2piY0Z6YU40OVNxeWRDN0tuY0xYc2Z1?=
+ =?utf-8?B?UklHNlQ4MTMyR1VFdlRkcUZTRWVFNytZcGM2NHAyQzhkWlhBKy85V2dWNHJT?=
+ =?utf-8?B?ODM4VkhSbTNlSHZQOGwxZ2lDdnFWYkx5YTJkSXp5T250aElJRHI1NlhaNXRy?=
+ =?utf-8?B?KzdrS2FDaUxsOCtsVlFVWTRGTUVNdWVEQVdMZks3bFBNQ2d5dFQ5Tnk3Q2hm?=
+ =?utf-8?Q?k6AOaN6B+Pbjolej7+4fHvccf?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 31ee0417-8001-4e90-59ed-08dc85a5a948
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2024 21:22:53.7095
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: j4EZ+CSEEBUCEahJu6mr3fjO0zxFdf4Pse+8uwb8ujqNzGQHfewhsIANP/wAjKOz
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8901
 
-Jason!
+On Tue, Jun 04, 2024 at 03:56:04PM +0000, Mostafa Saleh wrote:
 
-On Tue, May 28 2024 at 14:19, Jason A. Donenfeld wrote:
-> diff --git a/include/vdso/getrandom.h b/include/vdso/getrandom.h
-> index e3ceb1976386..7dc93d5f72dc 100644
-> --- a/include/vdso/getrandom.h
-> +++ b/include/vdso/getrandom.h
-> @@ -6,11 +6,39 @@
->  #ifndef _VDSO_GETRANDOM_H
->  #define _VDSO_GETRANDOM_H
->=20=20
-> +#include <crypto/chacha.h>
+> > arm_smmu_init_l1_strtab() goes through and calls
+> > arm_smmu_write_strtab_l1_desc() on the newly allocated (and zero'd) struct
+> > arm_smmu_strtab_l1_desc, which ends up computing 'val = 0' and zeroing it
+> > again.
+> > 
+> > Remove arm_smmu_init_l1_strtab() and just call devm_kcalloc() from
+> > arm_smmu_init_strtab_2lvl to allocate the companion struct.
+> > 
+> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> 
+> Looking at the code for dmam_alloc_coherent(basically dma_alloc_coherent)
+> I see that the memory is zeroed for both DMA direct and IOMMU, however
+> I don’t see that documented (in DMA-API.txt).
 
-Can you please split the required defines into a seperate header
-preferrably in include/vdso/ and include that from crypto/chacha.h
+> Assuming that’s guaranteed to be zeroed (maybe we should update the docs
+> if I am not missing something)
 
-The point is that VDSO is very intentionally not using anything outside
-include/uapi/ and include/vdso/ except for include/linux/compiler.h and
-include/linux/types.h.
-
-We've had too much trouble of random include chains which magically
-break the build dependent on architectures and configurations. VDSO is a us=
-erspace
-library after all.
-
-> +#include <vdso/types.h>
-> +
->  /**
->   * struct vgetrandom_state - State used by vDSO getrandom() and allocate=
-d by vgetrandom_alloc().
->   *
-> - * Currently empty, as the vDSO getrandom() function has not yet been im=
-plemented.
-> + * @batch:	One and a half ChaCha20 blocks of buffered RNG output.
-> + *
-> + * @key:	Key to be used for generating next batch.
-> + *
-> + * @batch_key:	Union of the prior two members, which is exactly two full
-> + * 		ChaCha20 blocks in size, so that @batch and @key can be filled
-> + * 		together.
-> + *
-> + * @generation:	Snapshot of @rng_info->generation in the vDSO data page =
-at
-> + *		the time @key was generated.
-> + *
-> + * @pos:	Offset into @batch of the next available random byte.
-> + *
-> + * @in_use:	Reentrancy guard for reusing a state within the same thread
-> + *		due to signal handlers.
->   */
-> -struct vgetrandom_state { int placeholder; };
-> +struct vgetrandom_state {
-> +	union {
-> +		struct {
-> +			u8	batch[CHACHA_BLOCK_SIZE * 3 / 2];
-> +			u32	key[CHACHA_KEY_SIZE / sizeof(u32)];
-
-CHACHA_STATE_WORDS ?
-
-> +		};
-> +		u8		batch_key[CHACHA_BLOCK_SIZE * 2];
-
-Lot's of magic constants here *3/2 *2 ....
-
-> +	};
-> +	vdso_kernel_ulong	generation;
-> +	u8			pos;
-
-What does the u8 buy here over a simple unsigned int?
-
-> +	bool 			in_use;
-> +};
->=20=20
->  #endif /* _VDSO_GETRANDOM_H */
-> diff --git a/include/vdso/types.h b/include/vdso/types.h
-> new file mode 100644
-> index 000000000000..ce131463aeff
-> --- /dev/null
-> +++ b/include/vdso/types.h
-> @@ -0,0 +1,35 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-
-Why does this need an extra header when it's clearly getrandom specific?
-Please put this into getrandom.h
-
-> +/*
-> + * Copyright (C) 2022 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights R=
-eserved.
-> + */
-> +#ifndef __VDSO_TYPES_H
-> +#define __VDSO_TYPES_H
-> +
-> +#include <linux/types.h>
-> +
-> +/**
-> + * type vdso_kernel_ulong - unsigned long type that matches kernel's uns=
-igned long
-> + *
-> + * Data shared between userspace and the kernel must operate the same wa=
-y in both 64-bit code and in
-> + * 32-bit compat code, over the same potentially 64-bit kernel. This typ=
-e represents the size of an
-> + * unsigned long as used by kernel code. This isn't necessarily the same=
- as an unsigned long as used
-> + * by userspace, however.
-
-This is confusing at best.
-
-First of all 64-bit code can run only on a 64-bit kernel, so what does
-'the same potentially 64-bit kernel' even mean in that sentence?
-
-What means: 'This type represents the size of an unsigned long as used by k=
-ernel
-code'?=20
-
-> + *                 +-------------------+-------------------+------------=
-------+-------------------+
-> + *                 | 32-bit userspace  | 32-bit userspace  | 64-bit user=
-space | 64-bit userspace  |
-> + *                 | unsigned long     | vdso_kernel_ulong | unsigned lo=
-ng    | vdso_kernel_ulong |
-> + * +---------------+-------------------+-------------------+------------=
-------+-------------------+
-> + * | 32-bit kernel | =E2=9C=93 same size       | =E2=9C=93 same size    =
-   |
-> + * | unsigned long |                   |                   |
-> + * +---------------+-------------------+-------------------+------------=
-------+-------------------+
-> + * | 64-bit kernel | =E2=9C=98 different size! | =E2=9C=93 same size    =
-   | =E2=9C=93 same size      | =E2=9C=93 same size       |
-> + * | unsigned long |                   |                   |            =
-      |                   |
-> + * +---------------+-------------------+-------------------+------------=
-------+-------------------+
-
-I have no idea what this table tries to tell me, but I clearly can see
-what you are trying to achieve here:
-
-> + */
-> +#ifdef CONFIG_64BIT
-> +typedef u64 vdso_kernel_ulong;
-> +#else
-> +typedef u32 vdso_kernel_ulong;
-> +#endif
-
-All of this is pointless because if a 32-bit application runs on a
-64-bit kernel it has to use the 64-bit 'generation'. So why on earth do
-we need magic here for a 32-bit kernel?
-
-Just use u64 for both and spare all this voodoo. We're seriously not
-"optimizing" for 32-bit kernels.
-
-> +/**
-> + * __cvdso_getrandom_data - Generic vDSO implementation of getrandom() s=
-yscall.
-> + * @rng_info:		Describes state of kernel RNG, memory shared with kernel.
-> + * @buffer:		Destination buffer to fill with random bytes.
-> + * @len:		Size of @buffer in bytes.
-> + * @flags:		Zero or more GRND_* flags.
-> + * @opaque_state:	Pointer to an opaque state area.
-> + *
-> + * This implements a "fast key erasure" RNG using ChaCha20, in the same =
-way that the kernel's
-> + * getrandom() syscall does. It periodically reseeds its key from the ke=
-rnel's RNG, at the same
-> + * schedule that the kernel's RNG is reseeded. If the kernel's RNG is no=
-t ready, then this always
-> + * calls into the syscall.
-> + *
-> + * @opaque_state *must* be allocated using the vgetrandom_alloc() syscal=
-l.  Unless external locking
-> + * is used, one state must be allocated per thread, as it is not safe to=
- call this function
-> + * concurrently with the same @opaque_state. However, it is safe to call=
- this using the same
-> + * @opaque_state that is shared between main code and signal handling co=
-de, within the same thread.
-> + *
-> + * Returns the number of random bytes written to @buffer, or a negative =
-value indicating an error.
-> + */
-> +static __always_inline ssize_t
-> +__cvdso_getrandom_data(const struct vdso_rng_data *rng_info, void *buffe=
-r, size_t len,
-> +		       unsigned int flags, void *opaque_state)
-> +{
-> +	ssize_t ret =3D min_t(size_t, INT_MAX & PAGE_MASK /* =3D MAX_RW_COUNT *=
-/, len);
-
-We really need to allow reading almost 2GB of random data in one go?
-
-> +	struct vgetrandom_state *state =3D opaque_state;
-> +	size_t batch_len, nblocks, orig_len =3D len;
-> +	unsigned long current_generation;
-> +	void *orig_buffer =3D buffer;
-> +	u32 counter[2] =3D { 0 };
-> +	bool in_use, have_retried =3D false;
-
-Please keep the reverse fir tree order.
-
-> +	/* The state must not straddle a page, since pages can be zeroed at any=
- time. */
-> +	if (unlikely(((unsigned long)opaque_state & ~PAGE_MASK) + sizeof(*state=
-) > PAGE_SIZE))
-> +		goto fallback_syscall;
-> +
-> +	/*
-> +	 * If the kernel's RNG is not yet ready, then it's not possible to prov=
-ide random bytes from
-> +	 * userspace, because A) the various @flags require this to block, or n=
-ot, depending on
-> +	 * various factors unavailable to userspace, and B) the kernel's behavi=
-or before the RNG is
-> +	 * ready is to reseed from the entropy pool at every invocation.
-> +	 */
-> +	if (unlikely(!READ_ONCE(rng_info->is_ready)))
-> +		goto fallback_syscall;
-> +
-> +	/*
-> +	 * This condition is checked after @rng_info->is_ready, because before =
-the kernel's RNG is
-> +	 * initialized, the @flags parameter may require this to block or retur=
-n an error, even when
-> +	 * len is zero.
-> +	 */
-> +	if (unlikely(!len))
-> +		return 0;
-> +
-> +	/*
-> +	 * @state->in_use is basic reentrancy protection against this running i=
-n a signal handler
-> +	 * with the same @opaque_state, but obviously not atomic wrt multiple C=
-PUs or more than one
-> +	 * level of reentrancy. If a signal interrupts this after reading @stat=
-e->in_use, but before
-> +	 * writing @state->in_use, there is still no race, because the signal h=
-andler will run to
-> +	 * its completion before returning execution.
-
-Can you please add an explanation that the syscall does not touch the
-state and just fills the buffer?
-
-> +	 */
-> +	in_use =3D READ_ONCE(state->in_use);
-> +	if (unlikely(in_use))
-> +		goto fallback_syscall;
-> +	WRITE_ONCE(state->in_use, true);
-> +
-> +retry_generation:
-> +	/*
-> +	 * @rng_info->generation must always be read here, as it serializes @st=
-ate->key with the
-> +	 * kernel's RNG reseeding schedule.
-> +	 */
-> +	current_generation =3D READ_ONCE(rng_info->generation);
-> +
-> +	/*
-> +	 * If @state->generation doesn't match the kernel RNG's generation, the=
-n it means the
-> +	 * kernel's RNG has reseeded, and so @state->key is reseeded as well.
-> +	 */
-> +	if (unlikely(state->generation !=3D current_generation)) {
-> +		/*
-> +		 * Write the generation before filling the key, in case of fork. If th=
-ere is a fork
-> +		 * just after this line, the two forks will get different random bytes=
- from the
-
-the two forks? You mean the parent and the child, no?
-
-> +		 * syscall, which is good. However, were this line to occur after the =
-getrandom
-> +		 * syscall, then both child and parent could have the same bytes and t=
-he same
-> +		 * generation counter, so the fork would not be detected. Therefore, w=
-rite
-> +		 * @state->generation before the call to the getrandom syscall.
-> +		 */
-> +		WRITE_ONCE(state->generation, current_generation);
-> +
-> +		/* Prevent the syscall from being reordered wrt current_generation. */
-> +		barrier();
-> +
-> +		/* Reseed @state->key using fresh bytes from the kernel. */
-> +		if (getrandom_syscall(state->key, sizeof(state->key), 0) !=3D sizeof(s=
-tate->key)) {
-> +			/*
-> +			 * If the syscall failed to refresh the key, then @state->key is now
-> +			 * invalid, so invalidate the generation so that it is not used again=
-, and
-> +			 * fallback to using the syscall entirely.
-> +			 */
-> +			WRITE_ONCE(state->generation, 0);
-> +
-> +			/*
-> +			 * Set @state->in_use to false only after the last write to @state in=
- the
-> +			 * line above.
-> +			 */
-> +			WRITE_ONCE(state->in_use, false);
-
-So here you rely on the compiler not reordering vs. WRITE_ONCE(),
-i.e. volatile, but above you have a barrier() to prevent the write being
-reordered vs. the syscall, confused.
-
-But even when the compiler does not reorder, what prevents a weakly
-ordered CPU from doing so?
-
-> +			goto fallback_syscall;
-> +		}
-> +
-> +		/*
-> +		 * Set @state->pos to beyond the end of the batch, so that the batch i=
-s refilled
-> +		 * using the new key.
-> +		 */
-> +		state->pos =3D sizeof(state->batch);
-> +	}
-> +
-> +	/* Set len to the total amount of bytes that this function is allowed t=
-o read, ret. */
-> +	len =3D ret;
-> +more_batch:
-> +	/*
-> +	 * First use bytes out of @state->batch, which may have been filled by =
-the last call to this
-> +	 * function.
-> +	 */
-> +	batch_len =3D min_t(size_t, sizeof(state->batch) - state->pos, len);
-> +	if (batch_len) {
-> +		/* Zeroing at the same time as memcpying helps preserve forward secrec=
-y. */
-> +		memcpy_and_zero_src(buffer, state->batch + state->pos, batch_len);
-> +		state->pos +=3D batch_len;
-> +		buffer +=3D batch_len;
-> +		len -=3D batch_len;
-> +	}
-> +
-> +	if (!len) {
-> +		/* Prevent the loop from being reordered wrt ->generation. */
-> +		barrier();
-
-Same question as above.
-
-> +		/*
-> +		 * Since @rng_info->generation will never be 0, re-read @state->genera=
-tion, rather
-> +		 * than using the local current_generation variable, to learn whether =
-a fork
-> +		 * occurred or if @state was zeroed due to memory pressure. Primarily,=
- though, this
-> +		 * indicates whether the kernel's RNG has reseeded, in which case gene=
-rate a new key
-> +		 * and start over.
-> +		 */
-> +		if (unlikely(READ_ONCE(state->generation) !=3D READ_ONCE(rng_info->gen=
-eration))) {
-> +			/*
-> +			 * Prevent this from looping forever in case of low memory or racing =
-with a
-> +			 * user force-reseeding the kernel's RNG using the ioctl.
-> +			 */
-> +			if (have_retried) {
-> +				WRITE_ONCE(state->in_use, false);
-> +				goto fallback_syscall;
-> +			}
-> +
-> +			have_retried =3D true;
-> +			buffer =3D orig_buffer;
-> +			goto retry_generation;
-> +		}
-> +
-> +		/*
-> +		 * Set @state->in_use to false only when there will be no more reads o=
-r writes of
-> +		 * @state.
-> +		 */
-> +		WRITE_ONCE(state->in_use, false);
-> +		return ret;
-> +	}
-> +
-> +	/* Generate blocks of RNG output directly into @buffer while there's en=
-ough room left. */
-> +	nblocks =3D len / CHACHA_BLOCK_SIZE;
-> +	if (nblocks) {
-> +		__arch_chacha20_blocks_nostack(buffer, state->key, counter, nblocks);
-> +		buffer +=3D nblocks * CHACHA_BLOCK_SIZE;
-> +		len -=3D nblocks * CHACHA_BLOCK_SIZE;
-> +	}
-> +
-> +	BUILD_BUG_ON(sizeof(state->batch_key) % CHACHA_BLOCK_SIZE !=3D 0);
-> +
-> +	/* Refill the batch and then overwrite the key, in order to preserve fo=
-rward secrecy. */
-
-'and then overwrite'?
-
-Isn't this overwriting it implicitely because batch_key and key are at
-the same place in the union?
-
-> +	__arch_chacha20_blocks_nostack(state->batch_key, state->key, counter,
-> +				       sizeof(state->batch_key) / CHACHA_BLOCK_SIZE);
-> +
-> +	/* Since the batch was just refilled, set the position back to 0 to ind=
-icate a full batch. */
-> +	state->pos =3D 0;
-> +	goto more_batch;
+Yeah, people have been sending clean ups removing zeroing and GFP_ZERO's
+in this space for a bit now. There are many places that rely on it.
 
 Thanks,
-
-        tglx
+Jason
