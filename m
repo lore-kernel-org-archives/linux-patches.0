@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B82197A75;
-	Thu,  6 Jun 2024 14:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21669197A75;
+	Thu,  6 Jun 2024 14:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683237; cv=none; b=s2Jgch0n24v/bUJteIxudIYtdPtWM9WotXfy7NX2Cfs7EmvOQ/ChK/aH1yQYRSBNzyT2O1x6X18SEUMY11lnNN7Qqrrvjkye22F3xKGnxxciICqinICaqb2y3JTv6xrVUvwSxnQQW90A/S7jmBYhmdGd25g0OZT8tcC34RxB26Y=
+	t=1717683238; cv=none; b=cpJxzJRtC+QQDUzJVUMzD62kPuH/GdmKacvfFYe7RhA6P8nNAm0P7hG9452guDOGLifAu76R5usEgljYPllqNJd0kAuigF3itC87Y3OpJJdSGu7Y+Kf3Hp/hujQvJ1DxB4/vs+ElipkFtfwtrH5EE4iWIn0a8xJyhvwPmuDRdhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683237; c=relaxed/simple;
-	bh=PG9VtGQ0o+hg/x1npRmmPwH/awCQ2ek5wARnTSB8m3g=;
+	s=arc-20240116; t=1717683238; c=relaxed/simple;
+	bh=1VwTZhfn9W1RDV+7Qho0wyi8ma4hl4ROxAi1iJlAea8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CFp18OzGDM5zuhVNVU6DFOjaDN+Z9zwMtn4TZe1Kj/O/Q/XIG3G5iDVhjNkc70M5PO0oLsKMK7mZnEJq9bHg8B9fXroechKYLcFI8w4m0I6CtBDUnigKDkKkK5rn/jn3Yix8QD2apgooQSddK62xlNv0otHoY1GK+lLvtIEcZwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxp+GhTH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wfz0YAGjl3QyI3YZtDusJRBKszgXuC5ie5CuGyrRpSE9LJHkb89vgPTnACgzvNEWy3LTRr3NBGg7iVz3RLT/vUv8hrrMxruYCRJ84xvKwNsabJIkOnBlCZ//Yhsj3pkHhvcSIXFooGHESWDWIfGC1kImud7rIGeZwNVJwLBC1KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hlLGz0nD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxp+GhTH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D09EC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlLGz0nD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B90C32781;
 	Thu,  6 Jun 2024 14:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683237;
-	bh=PG9VtGQ0o+hg/x1npRmmPwH/awCQ2ek5wARnTSB8m3g=;
+	s=korg; t=1717683238;
+	bh=1VwTZhfn9W1RDV+7Qho0wyi8ma4hl4ROxAi1iJlAea8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxp+GhTHmMUTLyAfdytkScBcyDeBZuNP/YsqGls0IJqVkuJWdZ76lG55sKUChzcue
-	 CBSwfzcZnIKnNfKI6lvOrerAy7ncxilHvjttRp36qs0USFmYj8UIQLKZ0mL/pha+Kr
-	 plIm6gHR5RpSvWOGOqlFJNTHlqXLBBO3P6xVAoIM=
+	b=hlLGz0nDYOpcA96e9LtOGgAByrRSJb2hW/tKuwff0ATn3rLH1XgWgulG/eoO5UrcW
+	 +sYHi978TEUwUTR1kGCEpxMCOjzHY3mBdjlqmv38bnnG9LYGdNavXHc/M2fACBXhf6
+	 YE2YklyUkpuVdcEaug/PIXYAEa6hsiAkMH3RHmC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Stafford Horne <shorne@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/473] ACPI: disable -Wstringop-truncation
-Date: Thu,  6 Jun 2024 16:00:44 +0200
-Message-ID: <20240606131703.741701523@linuxfoundation.org>
+Subject: [PATCH 6.6 174/744] openrisc: traps: Dont send signals to kernel mode threads
+Date: Thu,  6 Jun 2024 15:57:26 +0200
+Message-ID: <20240606131738.009707660@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +46,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Stafford Horne <shorne@gmail.com>
 
-[ Upstream commit a3403d304708f60565582d60af4316289d0316a0 ]
+[ Upstream commit c88cfb5cea5f8f9868ef02cc9ce9183a26dcf20f ]
 
-gcc -Wstringop-truncation warns about copying a string that results in a
-missing nul termination:
+OpenRISC exception handling sends signals to user processes on floating
+point exceptions and trap instructions (for debugging) among others.
+There is a bug where the trap handling logic may send signals to kernel
+threads, we should not send these signals to kernel threads, if that
+happens we treat it as an error.
 
-drivers/acpi/acpica/tbfind.c: In function 'acpi_tb_find_table':
-drivers/acpi/acpica/tbfind.c:60:9: error: 'strncpy' specified bound 6 equals destination size [-Werror=stringop-truncation]
-   60 |         strncpy(header.oem_id, oem_id, ACPI_OEM_ID_SIZE);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/acpi/acpica/tbfind.c:61:9: error: 'strncpy' specified bound 8 equals destination size [-Werror=stringop-truncation]
-   61 |         strncpy(header.oem_table_id, oem_table_id, ACPI_OEM_TABLE_ID_SIZE);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This patch adds conditions to die if the kernel receives these
+exceptions in kernel mode code.
 
-The code works as intended, and the warning could be addressed by using
-a memcpy(), but turning the warning off for this file works equally well
-and may be easier to merge.
-
-Fixes: 47c08729bf1c ("ACPICA: Fix for LoadTable operator, input strings")
-Link: https://lore.kernel.org/lkml/CAJZ5v0hoUfv54KW7y4223Mn9E7D4xvR7whRFNLTBqCZMUxT50Q@mail.gmail.com/#t
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 27267655c531 ("openrisc: Support floating point user api")
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ arch/openrisc/kernel/traps.c | 48 ++++++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/acpi/acpica/Makefile b/drivers/acpi/acpica/Makefile
-index f919811156b1f..b6cf9c9bd6396 100644
---- a/drivers/acpi/acpica/Makefile
-+++ b/drivers/acpi/acpica/Makefile
-@@ -5,6 +5,7 @@
+diff --git a/arch/openrisc/kernel/traps.c b/arch/openrisc/kernel/traps.c
+index 9370888c9a7e3..90554a5558fbc 100644
+--- a/arch/openrisc/kernel/traps.c
++++ b/arch/openrisc/kernel/traps.c
+@@ -180,29 +180,39 @@ asmlinkage void unhandled_exception(struct pt_regs *regs, int ea, int vector)
  
- ccflags-y			:= -D_LINUX -DBUILDING_ACPICA
- ccflags-$(CONFIG_ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
-+CFLAGS_tbfind.o 		+= $(call cc-disable-warning, stringop-truncation)
+ asmlinkage void do_fpe_trap(struct pt_regs *regs, unsigned long address)
+ {
+-	int code = FPE_FLTUNK;
+-	unsigned long fpcsr = regs->fpcsr;
+-
+-	if (fpcsr & SPR_FPCSR_IVF)
+-		code = FPE_FLTINV;
+-	else if (fpcsr & SPR_FPCSR_OVF)
+-		code = FPE_FLTOVF;
+-	else if (fpcsr & SPR_FPCSR_UNF)
+-		code = FPE_FLTUND;
+-	else if (fpcsr & SPR_FPCSR_DZF)
+-		code = FPE_FLTDIV;
+-	else if (fpcsr & SPR_FPCSR_IXF)
+-		code = FPE_FLTRES;
+-
+-	/* Clear all flags */
+-	regs->fpcsr &= ~SPR_FPCSR_ALLF;
+-
+-	force_sig_fault(SIGFPE, code, (void __user *)regs->pc);
++	if (user_mode(regs)) {
++		int code = FPE_FLTUNK;
++		unsigned long fpcsr = regs->fpcsr;
++
++		if (fpcsr & SPR_FPCSR_IVF)
++			code = FPE_FLTINV;
++		else if (fpcsr & SPR_FPCSR_OVF)
++			code = FPE_FLTOVF;
++		else if (fpcsr & SPR_FPCSR_UNF)
++			code = FPE_FLTUND;
++		else if (fpcsr & SPR_FPCSR_DZF)
++			code = FPE_FLTDIV;
++		else if (fpcsr & SPR_FPCSR_IXF)
++			code = FPE_FLTRES;
++
++		/* Clear all flags */
++		regs->fpcsr &= ~SPR_FPCSR_ALLF;
++
++		force_sig_fault(SIGFPE, code, (void __user *)regs->pc);
++	} else {
++		pr_emerg("KERNEL: Illegal fpe exception 0x%.8lx\n", regs->pc);
++		die("Die:", regs, SIGFPE);
++	}
+ }
  
- # use acpi.o to put all files here into acpi.o modparam namespace
- obj-y	+= acpi.o
+ asmlinkage void do_trap(struct pt_regs *regs, unsigned long address)
+ {
+-	force_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->pc);
++	if (user_mode(regs)) {
++		force_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->pc);
++	} else {
++		pr_emerg("KERNEL: Illegal trap exception 0x%.8lx\n", regs->pc);
++		die("Die:", regs, SIGILL);
++	}
+ }
+ 
+ asmlinkage void do_unaligned_access(struct pt_regs *regs, unsigned long address)
 -- 
 2.43.0
 
