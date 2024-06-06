@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFE21A2557;
-	Thu,  6 Jun 2024 14:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514751CB308;
+	Thu,  6 Jun 2024 14:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683750; cv=none; b=rJ3Q7ASc5ptLC+47hB4RhHoJ/f2ZTX184lF/i1JgHKRbBiVk8hokH/iTv/OYYMB1U9umfA3lSKGPD51k0ZLu3DpKQclcrAqJlNZRngirCYS7eojoiWwHexluKVu8RRjyBbhp/W2wfbG4b/NIsPSqBUDyC+EyNoq0CNIe+BqOyJM=
+	t=1717683750; cv=none; b=gzzPE99TTWlq1dDlap4/DaTgCVDVgmaKhjvXzc5oEJZfpwOyMCVcNh3XqwI/owSAr6SeFKN1n/wCfNcU+nOxGErqoEJVnwpXtJkhy45B3isSA1YxbSW9Is+KHgrmIDnBh6ld0lMwJ08HS94HbA+KB6zx2El8bR2Jqhtnusqz/9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683750; c=relaxed/simple;
-	bh=d71tUZe1DGxwDV9LGFE19EhSmwjngx0bYZI3wEDSnvo=;
+	bh=aM8umIuD/cjPvluhTMrha4krKGE4IWKeep4CkFzz6vM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cJHKqFHrNTafhZ+4JpmaamwKmGUtLH0Ahd/rsafH5KjkmMKXlDjWEOSdF0JHgsnPH+T7D/03qpgVek7GZyWkiYmg7Q8xjQPhSMWP5fL0ISmtSTqft+40XWtLJzFw5b4U5MgihWpDLaIGltYYHoDZk1119Iqh2S2kghol1LrY978=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gu3J0NEB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S9puRHJiRaQ4Uf6OtoFaBENW+TdG6vMAlQJCLJXG1XZm8hRN/eSZEhEfNpb75MUr+k0dkbz3wE3GuhDTrCMVHURQiWQ6MXjU9CQxOUwZtXwtwHd5Q2kJxCM4Vow6pSWpC0zDALOgFN4NtJ8c49Avw9ocIjOrMY7/r3tz2zw6YZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=doDYO/3L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gu3J0NEB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDA5C2BD10;
-	Thu,  6 Jun 2024 14:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="doDYO/3L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A69CC2BD10;
+	Thu,  6 Jun 2024 14:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683749;
-	bh=d71tUZe1DGxwDV9LGFE19EhSmwjngx0bYZI3wEDSnvo=;
+	s=korg; t=1717683750;
+	bh=aM8umIuD/cjPvluhTMrha4krKGE4IWKeep4CkFzz6vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gu3J0NEBRtNynM62iF77CGgXizcg294EqyY1NEYibv6tQIsFKvQtPCatjYOF/Ei+W
-	 3IyqFAfwFnvTpuwOl7Kxm9dMhy1sAGE4KwkYS4P0oH8FQdqmLF6c6thBltKQcENDiA
-	 G5pYUCpxKPPgsAcdCmcP7z5Tjuc1Gg38BDRnUI/I=
+	b=doDYO/3Lu+FOhBjnO3DM+TtrJnahvocrk/vwhnQtRv93Sy2XwTcfv1WbHW2rfird2
+	 lLdLrgmEbqln/EZ+fatCGvRQhPj9K3N/B9WV8IshLR2qFaLA5AU2F4sSiCuoArJ8Rq
+	 Egxcfc4UsVzGEzD+PdiCxcULuejb5s7IWBXXUQ8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Julia Filipchuk <julia.filipchuk@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 717/744] kconfig: fix comparison to constant symbols, m, n
-Date: Thu,  6 Jun 2024 16:06:29 +0200
-Message-ID: <20240606131755.466903021@linuxfoundation.org>
+Subject: [PATCH 6.6 718/744] drm/i915/guc: avoid FIELD_PREP warning
+Date: Thu,  6 Jun 2024 16:06:30 +0200
+Message-ID: <20240606131755.496805522@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -50,126 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit aabdc960a283ba78086b0bf66ee74326f49e218e ]
+[ Upstream commit d4f36db62396b73bed383c0b6e48d36278cafa78 ]
 
-Currently, comparisons to 'm' or 'n' result in incorrect output.
+With gcc-7 and earlier, there are lots of warnings like
 
-[Test Code]
+In file included from <command-line>:0:0:
+In function '__guc_context_policy_add_priority.isra.66',
+    inlined from '__guc_context_set_prio.isra.67' at drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c:3292:3,
+    inlined from 'guc_context_set_prio' at drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c:3320:2:
+include/linux/compiler_types.h:399:38: error: call to '__compiletime_assert_631' declared with attribute error: FIELD_PREP: mask is not constant
+  _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+                                      ^
+...
+drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c:2422:3: note: in expansion of macro 'FIELD_PREP'
+   FIELD_PREP(GUC_KLV_0_KEY, GUC_CONTEXT_POLICIES_KLV_ID_##id) | \
+   ^~~~~~~~~~
 
-    config MODULES
-            def_bool y
-            modules
+Make sure that GUC_KLV_0_KEY is an unsigned value to avoid the warning.
 
-    config A
-            def_tristate m
-
-    config B
-            def_bool A > n
-
-CONFIG_B is unset, while CONFIG_B=y is expected.
-
-The reason for the issue is because Kconfig compares the tristate values
-as strings.
-
-Currently, the .type fields in the constant symbol definitions,
-symbol_{yes,mod,no} are unspecified, i.e., S_UNKNOWN.
-
-When expr_calc_value() evaluates 'A > n', it checks the types of 'A' and
-'n' to determine how to compare them.
-
-The left-hand side, 'A', is a tristate symbol with a value of 'm', which
-corresponds to a numeric value of 1. (Internally, 'y', 'm', and 'n' are
-represented as 2, 1, and 0, respectively.)
-
-The right-hand side, 'n', has an unknown type, so it is treated as the
-string "n" during the comparison.
-
-expr_calc_value() compares two values numerically only when both can
-have numeric values. Otherwise, they are compared as strings.
-
-    symbol    numeric value    ASCII code
-    -------------------------------------
-      y           2             0x79
-      m           1             0x6d
-      n           0             0x6e
-
-'m' is greater than 'n' if compared numerically (since 1 is greater
-than 0), but smaller than 'n' if compared as strings (since the ASCII
-code 0x6d is smaller than 0x6e).
-
-Specifying .type=S_TRISTATE for symbol_{yes,mod,no} fixes the above
-test code.
-
-Doing so, however, would cause a regression to the following test code.
-
-[Test Code 2]
-
-    config MODULES
-            def_bool n
-            modules
-
-    config A
-            def_tristate n
-
-    config B
-            def_bool A = m
-
-You would get CONFIG_B=y, while CONFIG_B should not be set.
-
-The reason is because sym_get_string_value() turns 'm' into 'n' when the
-module feature is disabled. Consequently, expr_calc_value() evaluates
-'A = n' instead of 'A = m'. This oddity has been hidden because the type
-of 'm' was previously S_UNKNOWN instead of S_TRISTATE.
-
-sym_get_string_value() should not tweak the string because the tristate
-value has already been correctly calculated. There is no reason to
-return the string "n" where its tristate value is mod.
-
-Fixes: 31847b67bec0 ("kconfig: allow use of relations other than (in)equality")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 77b6f79df66e ("drm/i915/guc: Update to GuC version 69.0.3")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Signed-off-by: Julia Filipchuk <julia.filipchuk@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240430164809.482131-1-julia.filipchuk@intel.com
+(cherry picked from commit 364e039827ef628c650c21c1afe1c54d9c3296d9)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/symbol.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/gt/uc/abi/guc_klvs_abi.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
-index a76925b46ce63..7b1df55b01767 100644
---- a/scripts/kconfig/symbol.c
-+++ b/scripts/kconfig/symbol.c
-@@ -13,18 +13,21 @@
+diff --git a/drivers/gpu/drm/i915/gt/uc/abi/guc_klvs_abi.h b/drivers/gpu/drm/i915/gt/uc/abi/guc_klvs_abi.h
+index 58012edd4eb0e..4f4f53c42a9c5 100644
+--- a/drivers/gpu/drm/i915/gt/uc/abi/guc_klvs_abi.h
++++ b/drivers/gpu/drm/i915/gt/uc/abi/guc_klvs_abi.h
+@@ -29,9 +29,9 @@
+  */
  
- struct symbol symbol_yes = {
- 	.name = "y",
-+	.type = S_TRISTATE,
- 	.curr = { "y", yes },
- 	.flags = SYMBOL_CONST|SYMBOL_VALID,
- };
+ #define GUC_KLV_LEN_MIN				1u
+-#define GUC_KLV_0_KEY				(0xffff << 16)
+-#define GUC_KLV_0_LEN				(0xffff << 0)
+-#define GUC_KLV_n_VALUE				(0xffffffff << 0)
++#define GUC_KLV_0_KEY				(0xffffu << 16)
++#define GUC_KLV_0_LEN				(0xffffu << 0)
++#define GUC_KLV_n_VALUE				(0xffffffffu << 0)
  
- struct symbol symbol_mod = {
- 	.name = "m",
-+	.type = S_TRISTATE,
- 	.curr = { "m", mod },
- 	.flags = SYMBOL_CONST|SYMBOL_VALID,
- };
- 
- struct symbol symbol_no = {
- 	.name = "n",
-+	.type = S_TRISTATE,
- 	.curr = { "n", no },
- 	.flags = SYMBOL_CONST|SYMBOL_VALID,
- };
-@@ -775,8 +778,7 @@ const char *sym_get_string_value(struct symbol *sym)
- 		case no:
- 			return "n";
- 		case mod:
--			sym_calc_value(modules_sym);
--			return (modules_sym->curr.tri == no) ? "n" : "m";
-+			return "m";
- 		case yes:
- 			return "y";
- 		}
+ /**
+  * DOC: GuC Self Config KLVs
 -- 
 2.43.0
 
