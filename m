@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327191A2548;
-	Thu,  6 Jun 2024 14:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896061A2555;
+	Thu,  6 Jun 2024 14:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683741; cv=none; b=k/kZTr0mL+Jrs5N+K/tMONS0o8KzKJoLV8D++gXVrBGuuVsqN7oRw/FyaWbMD6t6DaSc/ZF/ijo1W2ZkhRB137mHJiYr71YlLih+H1gW0i/Yx4nM+8XIwqwkIW5upG8UX3Eayi3pM4Iedn49vA22cZ8TQ27PTKeR7kbiCSz2Qog=
+	t=1717683741; cv=none; b=OXATKSRrysxQIJxJhn8ne88lxOb9hmZ+hAj54eO74q8P4FB5kXdhUqX3wmseJrcUaVCeeNksHTgAcbDm3OMknEXY6D95a4ANag2T5U9LFjETnahrMXV1q++HUkmdpSgweqpCRMV3Y3NRbmd8PePMEdaOpLE+1aSChfTSWoQN5No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683741; c=relaxed/simple;
-	bh=hdlHSrwCnJ4AclETDCM6IURPaQBRhyXuSJaAvB0hHDw=;
+	bh=T9aKEDmE+GEEPSY0qTiu0lUQONiDDyyqdvdM4l684N8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PU9NyoCv3BunCC0KzQ1ECvRR12scC2U8oMvaJSL96MGdxPpJ9hUXVdC+vb4m+qDvHlOShB74VixCgOma3Q/Iz8qxGciu1HMFqzrNrR4SqfydVkU3MsLYFyn0ttS+K0EPln0TWjjAyycXm3tDGeBmdzbUpk2WyfgEHMNtZFkLOQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AL4mFn5h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HeQRNHX4Feo1LvaGtGBLCl1RJtltF4eREdgto3efK4s4gx9DyE3G4G6hZNI5z9WdgzWXHStVeO/XdBjT0tnHgspzyqOmzNYUWRZDMjT78oc09dHO8PIQXK7E3UFIWLmcUNfY+YwIybcGpUpWRJnTbjZW3CH/ZWZm9jTGVBJ//5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7j69fuj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AL4mFn5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8626C32782;
-	Thu,  6 Jun 2024 14:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7j69fuj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6784FC2BD10;
+	Thu,  6 Jun 2024 14:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683740;
-	bh=hdlHSrwCnJ4AclETDCM6IURPaQBRhyXuSJaAvB0hHDw=;
+	s=korg; t=1717683741;
+	bh=T9aKEDmE+GEEPSY0qTiu0lUQONiDDyyqdvdM4l684N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AL4mFn5hPVWLuB0Z5UY0uQxr1JH+sEh3MpFbgvKiHixTj61j72o3Y/y+US46dvMtY
-	 SKYqKID5UGvV3DAGaAKpyExA5dEwRZs5++WoawsOL4rqvg5C4LxbOQcRgQ8YGEnDoE
-	 yoI0VWM4wkEkhf3rg1m933kYdBGQQF2HR57k9GqA=
+	b=j7j69fujgXqakVyd3mHyaLya8gL9A7auSe3sBbQYii9rZ0AcziSIzW2I5vHCRh4TN
+	 ztZ10zLpTYLeMYW8yfFlEb042dOmEGeIJknfWAZtvQY/6yjRduk3dF7o1rFTY0o/2I
+	 qrp9/nIbrQZsP7wuH88XVSI5IaQtbGchUVj+t8ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Bystrin <dev.mbstr@gmail.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jeff Daly <jeffd@silicom-usa.com>,
+	kernel.org-fo5k2w@ycharbi.fr,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 660/744] riscv: stacktrace: fixed walk_stackframe()
-Date: Thu,  6 Jun 2024 16:05:32 +0200
-Message-ID: <20240606131753.624283003@linuxfoundation.org>
+Subject: [PATCH 6.6 661/744] Revert "ixgbe: Manual AN-37 for troublesome link partners for X550 SFI"
+Date: Thu,  6 Jun 2024 16:05:33 +0200
+Message-ID: <20240606131753.657748236@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,130 +54,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Bystrin <dev.mbstr@gmail.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit a2a4d4a6a0bf5eba66f8b0b32502cc20d82715a0 ]
+[ Upstream commit b35b1c0b4e166a427395deaf61e3140495dfcb89 ]
 
-If the load access fault occures in a leaf function (with
-CONFIG_FRAME_POINTER=y), when wrong stack trace will be displayed:
+This reverts commit 565736048bd5f9888990569993c6b6bfdf6dcb6d.
 
-[<ffffffff804853c2>] regmap_mmio_read32le+0xe/0x1c
----[ end trace 0000000000000000 ]---
+According to the commit, it implements a manual AN-37 for some
+"troublesome" Juniper MX5 switches. This appears to be a workaround for a
+particular switch.
 
-Registers dump:
-    ra     0xffffffff80485758 <regmap_mmio_read+36>
-    sp     0xffffffc80200b9a0
-    fp     0xffffffc80200b9b0
-    pc     0xffffffff804853ba <regmap_mmio_read32le+6>
+It has been reported that this causes a severe breakage for other switches,
+including a Cisco 3560CX-12PD-S.
 
-Stack dump:
-    0xffffffc80200b9a0:  0xffffffc80200b9e0  0xffffffc80200b9e0
-    0xffffffc80200b9b0:  0xffffffff8116d7e8  0x0000000000000100
-    0xffffffc80200b9c0:  0xffffffd8055b9400  0xffffffd8055b9400
-    0xffffffc80200b9d0:  0xffffffc80200b9f0  0xffffffff8047c526
-    0xffffffc80200b9e0:  0xffffffc80200ba30  0xffffffff8047fe9a
+The code appears to be a workaround for a specific switch which fails to
+link in SFI mode. It expects to see AN-37 auto negotiation in order to
+link. The Cisco switch is not expecting AN-37 auto negotiation. When the
+device starts the manual AN-37, the Cisco switch decides that the port is
+confused and stops attempting to link with it. This persists until a power
+cycle. A simple driver unload and reload does not resolve the issue, even
+if loading with a version of the driver which lacks this workaround.
 
-The assembler dump of the function preambula:
-    add     sp,sp,-16
-    sd      s0,8(sp)
-    add     s0,sp,16
+The authors of the workaround commit have not responded with
+clarifications, and the result of the workaround is complete failure to
+connect with other switches.
 
-In the fist stack frame, where ra is not stored on the stack we can
-observe:
+This appears to be a case where the driver can either "correctly" link with
+the Juniper MX5 switch, at the cost of bricking the link with the Cisco
+switch, or it can behave properly for the Cisco switch, but fail to link
+with the Junipir MX5 switch. I do not know enough about the standards
+involved to clearly determine whether either switch is at fault or behaving
+incorrectly. Nor do I know whether there exists some alternative fix which
+corrects behavior with both switches.
 
-        0(sp)                  8(sp)
-        .---------------------------------------------.
-    sp->|       frame->fp      | frame->ra (saved fp) |
-        |---------------------------------------------|
-    fp->|         ....         |         ....         |
-        |---------------------------------------------|
-        |                      |                      |
+Revert the workaround for the Juniper switch.
 
-and in the code check is performed:
-	if (regs && (regs->epc == pc) && (frame->fp & 0x7))
-
-I see no reason to check frame->fp value at all, because it is can be
-uninitialized value on the stack. A better way is to check frame->ra to
-be an address on the stack. After the stacktrace shows as expect:
-
-[<ffffffff804853c2>] regmap_mmio_read32le+0xe/0x1c
-[<ffffffff80485758>] regmap_mmio_read+0x24/0x52
-[<ffffffff8047c526>] _regmap_bus_reg_read+0x1a/0x22
-[<ffffffff8047fe9a>] _regmap_read+0x5c/0xea
-[<ffffffff80480376>] _regmap_update_bits+0x76/0xc0
-...
----[ end trace 0000000000000000 ]---
-As pointed by Samuel Holland it is incorrect to remove check of the stackframe
-entirely.
-
-Changes since v2 [2]:
- - Add accidentally forgotten curly brace
-
-Changes since v1 [1]:
- - Instead of just dropping frame->fp check, replace it with validation of
-   frame->ra, which should be a stack address.
- - Move frame pointer validation into the separate function.
-
-[1] https://lore.kernel.org/linux-riscv/20240426072701.6463-1-dev.mbstr@gmail.com/
-[2] https://lore.kernel.org/linux-riscv/20240521131314.48895-1-dev.mbstr@gmail.com/
-
-Fixes: f766f77a74f5 ("riscv/stacktrace: Fix stack output without ra on the stack top")
-Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
-Reviewed-by: Samuel Holland <samuel.holland@sifive.com>
-Link: https://lore.kernel.org/r/20240521191727.62012-1-dev.mbstr@gmail.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 565736048bd5 ("ixgbe: Manual AN-37 for troublesome link partners for X550 SFI")
+Link: https://lore.kernel.org/netdev/cbe874db-9ac9-42b8-afa0-88ea910e1e99@intel.com/T/
+Link: https://forum.proxmox.com/threads/intel-x553-sfp-ixgbe-no-go-on-pve8.135129/#post-612291
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Cc: Jeff Daly <jeffd@silicom-usa.com>
+Cc: kernel.org-fo5k2w@ycharbi.fr
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240520-net-2024-05-20-revert-silicom-switch-workaround-v1-1-50f80f261c94@intel.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_type.h |  3 -
+ drivers/net/ethernet/intel/ixgbe/ixgbe_x550.c | 56 +------------------
+ 2 files changed, 3 insertions(+), 56 deletions(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 64a9c093aef93..528ec7cc9a622 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -18,6 +18,16 @@
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_type.h b/drivers/net/ethernet/intel/ixgbe/ixgbe_type.h
+index 61b9774b3d31e..c24a72d1e2737 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_type.h
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_type.h
+@@ -3673,9 +3673,7 @@ struct ixgbe_info {
+ #define IXGBE_KRM_LINK_S1(P)		((P) ? 0x8200 : 0x4200)
+ #define IXGBE_KRM_LINK_CTRL_1(P)	((P) ? 0x820C : 0x420C)
+ #define IXGBE_KRM_AN_CNTL_1(P)		((P) ? 0x822C : 0x422C)
+-#define IXGBE_KRM_AN_CNTL_4(P)		((P) ? 0x8238 : 0x4238)
+ #define IXGBE_KRM_AN_CNTL_8(P)		((P) ? 0x8248 : 0x4248)
+-#define IXGBE_KRM_PCS_KX_AN(P)		((P) ? 0x9918 : 0x5918)
+ #define IXGBE_KRM_SGMII_CTRL(P)		((P) ? 0x82A0 : 0x42A0)
+ #define IXGBE_KRM_LP_BASE_PAGE_HIGH(P)	((P) ? 0x836C : 0x436C)
+ #define IXGBE_KRM_DSP_TXFFE_STATE_4(P)	((P) ? 0x8634 : 0x4634)
+@@ -3685,7 +3683,6 @@ struct ixgbe_info {
+ #define IXGBE_KRM_PMD_FLX_MASK_ST20(P)	((P) ? 0x9054 : 0x5054)
+ #define IXGBE_KRM_TX_COEFF_CTRL_1(P)	((P) ? 0x9520 : 0x5520)
+ #define IXGBE_KRM_RX_ANA_CTL(P)		((P) ? 0x9A00 : 0x5A00)
+-#define IXGBE_KRM_FLX_TMRS_CTRL_ST31(P)	((P) ? 0x9180 : 0x5180)
  
- extern asmlinkage void ret_from_exception(void);
- 
-+static inline int fp_is_valid(unsigned long fp, unsigned long sp)
-+{
-+	unsigned long low, high;
-+
-+	low = sp + sizeof(struct stackframe);
-+	high = ALIGN(sp, THREAD_SIZE);
-+
-+	return !(fp < low || fp > high || fp & 0x07);
-+}
-+
- void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 			     bool (*fn)(void *, unsigned long), void *arg)
- {
-@@ -41,21 +51,19 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+ #define IXGBE_KRM_PMD_FLX_MASK_ST20_SFI_10G_DA		~(0x3 << 20)
+ #define IXGBE_KRM_PMD_FLX_MASK_ST20_SFI_10G_SR		BIT(20)
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_x550.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_x550.c
+index c1adc94a5a657..f806fbf25ec7c 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_x550.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_x550.c
+@@ -1722,59 +1722,9 @@ static s32 ixgbe_setup_sfi_x550a(struct ixgbe_hw *hw, ixgbe_link_speed *speed)
+ 		return -EINVAL;
  	}
  
- 	for (;;) {
--		unsigned long low, high;
- 		struct stackframe *frame;
+-	(void)mac->ops.write_iosf_sb_reg(hw,
+-			IXGBE_KRM_PMD_FLX_MASK_ST20(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, reg_val);
+-
+-	/* change mode enforcement rules to hybrid */
+-	(void)mac->ops.read_iosf_sb_reg(hw,
+-			IXGBE_KRM_FLX_TMRS_CTRL_ST31(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, &reg_val);
+-	reg_val |= 0x0400;
+-
+-	(void)mac->ops.write_iosf_sb_reg(hw,
+-			IXGBE_KRM_FLX_TMRS_CTRL_ST31(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, reg_val);
+-
+-	/* manually control the config */
+-	(void)mac->ops.read_iosf_sb_reg(hw,
+-			IXGBE_KRM_LINK_CTRL_1(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, &reg_val);
+-	reg_val |= 0x20002240;
+-
+-	(void)mac->ops.write_iosf_sb_reg(hw,
+-			IXGBE_KRM_LINK_CTRL_1(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, reg_val);
+-
+-	/* move the AN base page values */
+-	(void)mac->ops.read_iosf_sb_reg(hw,
+-			IXGBE_KRM_PCS_KX_AN(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, &reg_val);
+-	reg_val |= 0x1;
+-
+-	(void)mac->ops.write_iosf_sb_reg(hw,
+-			IXGBE_KRM_PCS_KX_AN(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, reg_val);
+-
+-	/* set the AN37 over CB mode */
+-	(void)mac->ops.read_iosf_sb_reg(hw,
+-			IXGBE_KRM_AN_CNTL_4(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, &reg_val);
+-	reg_val |= 0x20000000;
+-
+-	(void)mac->ops.write_iosf_sb_reg(hw,
+-			IXGBE_KRM_AN_CNTL_4(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, reg_val);
+-
+-	/* restart AN manually */
+-	(void)mac->ops.read_iosf_sb_reg(hw,
+-			IXGBE_KRM_LINK_CTRL_1(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, &reg_val);
+-	reg_val |= IXGBE_KRM_LINK_CTRL_1_TETH_AN_RESTART;
+-
+-	(void)mac->ops.write_iosf_sb_reg(hw,
+-			IXGBE_KRM_LINK_CTRL_1(hw->bus.lan_id),
+-			IXGBE_SB_IOSF_TARGET_KR_PHY, reg_val);
++	status = mac->ops.write_iosf_sb_reg(hw,
++				IXGBE_KRM_PMD_FLX_MASK_ST20(hw->bus.lan_id),
++				IXGBE_SB_IOSF_TARGET_KR_PHY, reg_val);
  
- 		if (unlikely(!__kernel_text_address(pc) || (level++ >= 0 && !fn(arg, pc))))
- 			break;
- 
--		/* Validate frame pointer */
--		low = sp + sizeof(struct stackframe);
--		high = ALIGN(sp, THREAD_SIZE);
--		if (unlikely(fp < low || fp > high || fp & 0x7))
-+		if (unlikely(!fp_is_valid(fp, sp)))
- 			break;
-+
- 		/* Unwind stack frame */
- 		frame = (struct stackframe *)fp - 1;
- 		sp = fp;
--		if (regs && (regs->epc == pc) && (frame->fp & 0x7)) {
-+		if (regs && (regs->epc == pc) && fp_is_valid(frame->ra, sp)) {
-+			/* We hit function where ra is not saved on the stack */
- 			fp = frame->ra;
- 			pc = regs->ra;
- 		} else {
+ 	/* Toggle port SW reset by AN reset. */
+ 	status = ixgbe_restart_an_internal_phy_x550em(hw);
 -- 
 2.43.0
 
