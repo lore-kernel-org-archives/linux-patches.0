@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902C3199EB5;
-	Thu,  6 Jun 2024 14:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EFA199EB5;
+	Thu,  6 Jun 2024 14:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683262; cv=none; b=QxD1B9bH7VCAHaLqoSl04a7nuqXT1buks6IGX4WYd9lZwTGKVQDdMrpT08EshzLzQM62gzGI1VJbZXUZZl/FK01en9/8iK9Wbm+m1IcvT1wmoU6mCtksMJaSzhT7nzufmvcjzx14pqFDlFT2MWpTCl+IJX5fhOl3aYBL+7meLmk=
+	t=1717683263; cv=none; b=WFnfgo7KEWJ2oDfmoy94hqt9BBT9Cb7H2FTOFM2Y/EOl7frEKzSN8keZlaeJr3hLGUZFhAdZX/vaEHfRH5WxJgnwwOECeNvLcw4TJZD1SZgIUkLA9IOzvuxKLnO47HD6qhUe+q4odP20rfSjV0J/4+Txd7bddtYLwBYfC9EDSIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683262; c=relaxed/simple;
-	bh=A3TOCVZ/I4oUQA13+fV9+dH+6l/RJ9JokZIPtL4OnV0=;
+	s=arc-20240116; t=1717683263; c=relaxed/simple;
+	bh=hrozAHyWk0Ui8F4hBz8pmdwdypMTbALYCmbBL05egbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLdrdjlgkSTAxOWch/8mYnlJtz8fRg4mzmbIcQyYCvBlV2s3MLdk7DuFVKzdOD0GjX79OoaOysNf+8yYlTT9wLkTpqlF/ZEUmAT5dB94SSeq+buFlkSXPt06o/bkNwba6Fxa/wRtGeDUNA1OFIYJcp79d3pwqkWQZsfEsfhTqxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAqrTnhZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=McBq1SObyFH2778nKc8p8RfjHS3Qi7JFUJM39qR5T/TSFfdc7yp2OgRyy65DsDLF14TKxEEZ9XlMv4hu07M66sQ3hIVVawei8ju9OYomYicZo1Yl9YuQq7rXfuWcRFW1C6OsxiJH3mz6uxojWS10hz7TsW/g6+CbZq7LL8eX/lM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wl4eOGjr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAqrTnhZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D700C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wl4eOGjr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF19C32781;
 	Thu,  6 Jun 2024 14:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683262;
-	bh=A3TOCVZ/I4oUQA13+fV9+dH+6l/RJ9JokZIPtL4OnV0=;
+	s=korg; t=1717683263;
+	bh=hrozAHyWk0Ui8F4hBz8pmdwdypMTbALYCmbBL05egbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAqrTnhZpsnscvsX0nSTcFDr4KEALxaaxM5Nj498SWYJZpQlZ5GUi8WSTuGNmdEQl
-	 5kpPekXzUnhhRimxgANuKIb+aB1ZxIQOe6zG9DaS4+R5Q1YXa/G9MBjWBGTHUqiVFV
-	 Y5ndHE2qgMmip1t9azACfDrLJCw4As2NGw8jAzVY=
+	b=Wl4eOGjrTL0eBDIt+o4TkhJ5OH0TWTYBfVJxRA425b3BrZqfD1vSt7z42OZSgenxq
+	 ShtAp7aijNL75xkGNNRzNCU4eOJH/nghDN3idwxjmdWBwRfUy4Oy3GjBlEX5c4ROXw
+	 YTrQ/c3ThB8cx59OuGn8IZO3KXZ4IV0/sq2EaRhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Xingui Yang <yangxingui@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/473] scsi: ufs: cdns-pltfrm: Perform read back after writing HCLKDIV
-Date: Thu,  6 Jun 2024 16:00:38 +0200
-Message-ID: <20240606131703.524679160@linuxfoundation.org>
+Subject: [PATCH 6.6 177/744] scsi: libsas: Fix the failure of adding phy with zero-address to port
+Date: Thu,  6 Jun 2024 15:57:29 +0200
+Message-ID: <20240606131738.109064261@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit b715c55daf598aac8fa339048e4ca8a0916b332e ]
+[ Upstream commit 06036a0a5db34642c5dbe22021a767141f010b7a ]
 
-Currently, HCLKDIV is written to and then completed with an mb().
+As of commit 7d1d86518118 ("[SCSI] libsas: fix false positive 'device
+attached' conditions"), reset the phy->entacted_sas_addr address to a
+zero-address when the link rate is less than 1.5G.
 
-mb() ensures that the write completes, but completion doesn't mean that it
-isn't stored in a buffer somewhere. The recommendation for ensuring this
-bit has taken effect on the device is to perform a read back to force it to
-make it all the way to the device. This is documented in device-io.rst and
-a talk by Will Deacon on this can be seen over here:
+Currently we find that when a new device is attached, and the link rate is
+less than 1.5G, but the device type is not NO_DEVICE, for example: the link
+rate is SAS_PHY_RESET_IN_PROGRESS and the device type is stp. After setting
+the phy->entacted_sas_addr address to the zero address, the port will
+continue to be created for the phy with the zero-address, and other phys
+with the zero-address will be tried to be added to the new port:
 
-    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
+[562240.051197] sas: ex 500e004aaaaaaa1f phy19:U:0 attached: 0000000000000000 (no device)
+// phy19 is deleted but still on the parent port's phy_list
+[562240.062536] sas: ex 500e004aaaaaaa1f phy0 new device attached
+[562240.062616] sas: ex 500e004aaaaaaa1f phy00:U:5 attached: 0000000000000000 (stp)
+[562240.062680] port-7:7:0: trying to add phy phy-7:7:19 fails: it's already part of another port
 
-Let's do that to ensure the bit hits the device. Because the mb()'s purpose
-wasn't to add extra ordering (on top of the ordering guaranteed by
-writel()/readl()), it can safely be removed.
+Therefore, it should be the same as sas_get_phy_attached_dev(). Only when
+device_type is SAS_PHY_UNUSED, sas_address is set to the 0 address.
 
-Fixes: d90996dae8e4 ("scsi: ufs: Add UFS platform driver for Cadence UFS")
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-6-181252004586@redhat.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Fixes: 7d1d86518118 ("[SCSI] libsas: fix false positive 'device attached' conditions")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Link: https://lore.kernel.org/r/20240312141103.31358-5-yangxingui@huawei.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/cdns-pltfrm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/libsas/sas_expander.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/ufs/host/cdns-pltfrm.c b/drivers/ufs/host/cdns-pltfrm.c
-index e05c0ae64eea4..38a238eaa2133 100644
---- a/drivers/ufs/host/cdns-pltfrm.c
-+++ b/drivers/ufs/host/cdns-pltfrm.c
-@@ -137,7 +137,7 @@ static int cdns_ufs_set_hclkdiv(struct ufs_hba *hba)
- 	 * Make sure the register was updated,
- 	 * UniPro layer will not work with an incorrect value.
+diff --git a/drivers/scsi/libsas/sas_expander.c b/drivers/scsi/libsas/sas_expander.c
+index f6e6db8b8aba9..e97f4e01a865a 100644
+--- a/drivers/scsi/libsas/sas_expander.c
++++ b/drivers/scsi/libsas/sas_expander.c
+@@ -239,8 +239,7 @@ static void sas_set_ex_phy(struct domain_device *dev, int phy_id,
+ 	/* help some expanders that fail to zero sas_address in the 'no
+ 	 * device' case
  	 */
--	mb();
-+	ufshcd_readl(hba, CDNS_UFS_REG_HCLKDIV);
- 
- 	return 0;
- }
+-	if (phy->attached_dev_type == SAS_PHY_UNUSED ||
+-	    phy->linkrate < SAS_LINK_RATE_1_5_GBPS)
++	if (phy->attached_dev_type == SAS_PHY_UNUSED)
+ 		memset(phy->attached_sas_addr, 0, SAS_ADDR_SIZE);
+ 	else
+ 		memcpy(phy->attached_sas_addr, dr->attached_sas_addr, SAS_ADDR_SIZE);
 -- 
 2.43.0
 
