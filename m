@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9417619AA40;
-	Thu,  6 Jun 2024 14:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2981ABCCD;
+	Thu,  6 Jun 2024 14:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683289; cv=none; b=eY2okQxrXnjOul2ZhW5+H+I3cjUGd0rA9Dt7ksw88xQ7EmbWaf1ENPq9+uzLo1+DNxV/LH4JQzIcmFWyz4fh5LmtC8pLZhBf55NExsLKBcsgvMtguwKLbdzLmfmk9eaMYnHUJlzhIbCC9T+tCY8Pe476DfSt7NoPFR0P4gVQXT0=
+	t=1717683290; cv=none; b=AeBx+lMtsEK03O3NbKbTQqB8NygyqzHECdtCsvKQswphDgeWml3s71OUCGmX+G/ShvJ78p+cFETA96EwMPNfL1NpLeGZGsGykK5MrDtSuF8fHnDInWCbsGlvHzQ40CdqY9JPNoGrD6F7E25s+/qxq64j76I16L7XMEyfE9G7ZW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683289; c=relaxed/simple;
-	bh=hbueTeak9SY41ZlhMMMw9PdjcPJpiOL473K/QIahxks=;
+	s=arc-20240116; t=1717683290; c=relaxed/simple;
+	bh=gUOWRfuIcZpBxn0axGaFsXYksG0edeBswwScMcpC1mU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCfMFnG8x0BamrKaFnfQ4TbiurfgknLFKy5Ugyc3M4Aw+6AWb1LLFywEdBO+d3b8z28Xny/PLMjT8ylk0VD0WxbpITwmkF45G+zk4UCZ+85JmP5+mfhR0y3i2MNyuldeGsnvW5aPEwpHNFCCo2GB3KiqrBStCOGRd0mi0fwSpvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSmf3Elz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jr38p3Nz5YblAb8saXv/Kz4ZqU1e2gWLZZ0z1JxBMndgN9pT9NjcHFTZy/YfO8id8goTdfwuFW2qP1vvXJF3umIQyR6QAT8v6ZxoTfRK8UcymM+TiM/sSrY2onUNS7uMCr1EWKFNKZq2jB/uSZG+gbgM4m0FDf9W8tT5eq+Eirw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiXHrUtP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSmf3Elz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744F6C4AF08;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiXHrUtP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85BCC4AF0C;
 	Thu,  6 Jun 2024 14:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683289;
-	bh=hbueTeak9SY41ZlhMMMw9PdjcPJpiOL473K/QIahxks=;
+	bh=gUOWRfuIcZpBxn0axGaFsXYksG0edeBswwScMcpC1mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kSmf3ElzPRBoqErCeUTijRQ08ecV1GqOPPNTYF8U9L/RLo0Zi1fTmw4REZZay+2p8
-	 fqO0XRvbjWSumfgtj0T+4W/ck7RfnuJRGq1H2/jk2ovSzotHGtdd0fq7aYlCW+hjNt
-	 SGCGrfakqbCAYbYtmoCdf/Z9niPeUJHaKvDQpSzs=
+	b=CiXHrUtPYu0EBuGAs+dEIDIuM5Db5LEwMX4IJpccqKFo6/loPQx0XHYjeOCl0dKJl
+	 VibfQcGsiv9A4fuTQGH9nUmIfZaiwD+UrwdN2o8ZzkV4dMFO3gCdHU7QvlAv5/74Pb
+	 Xr1puqvcnSz9PjEQRPTW0C4Sn2e2UuIIgTg/G/1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <dan.j.williams@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Robert Richter <rrichter@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 230/744] x86/numa: Fix SRAT lookup of CFMWS ranges with numa_fill_memblks()
-Date: Thu,  6 Jun 2024 15:58:22 +0200
-Message-ID: <20240606131739.766819168@linuxfoundation.org>
+Subject: [PATCH 6.1 166/473] m68k: Fix spinlock race in kernel thread creation
+Date: Thu,  6 Jun 2024 16:01:35 +0200
+Message-ID: <20240606131705.435446586@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,120 +48,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robert Richter <rrichter@amd.com>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-[ Upstream commit f9f67e5adc8dc2e1cc51ab2d3d6382fa97f074d4 ]
+[ Upstream commit da89ce46f02470ef08f0f580755d14d547da59ed ]
 
-For configurations that have the kconfig option NUMA_KEEP_MEMINFO
-disabled, numa_fill_memblks() only returns with NUMA_NO_MEMBLK (-1).
-SRAT lookup fails then because an existing SRAT memory range cannot be
-found for a CFMWS address range. This causes the addition of a
-duplicate numa_memblk with a different node id and a subsequent page
-fault and kernel crash during boot.
+Context switching does take care to retain the correct lock owner across
+the switch from 'prev' to 'next' tasks.  This does rely on interrupts
+remaining disabled for the entire duration of the switch.
 
-Fix this by making numa_fill_memblks() always available regardless of
-NUMA_KEEP_MEMINFO.
+This condition is guaranteed for normal process creation and context
+switching between already running processes, because both 'prev' and
+'next' already have interrupts disabled in their saved copies of the
+status register.
 
-As Dan suggested, the fix is implemented to remove numa_fill_memblks()
-from sparsemem.h and alos using __weak for the function.
+The situation is different for newly created kernel threads.  The status
+register is set to PS_S in copy_thread(), which does leave the IPL at 0.
+Upon restoring the 'next' thread's status register in switch_to() aka
+resume(), interrupts then become enabled prematurely.  resume() then
+returns via ret_from_kernel_thread() and schedule_tail() where run queue
+lock is released (see finish_task_switch() and finish_lock_switch()).
 
-Note that the issue was initially introduced with [1]. But since
-phys_to_target_node() was originally used that returned the valid node
-0, an additional numa_memblk was not added. Though, the node id was
-wrong too, a message is seen then in the logs:
+A timer interrupt calling scheduler_tick() before the lock is released
+in finish_task_switch() will find the lock already taken, with the
+current task as lock owner.  This causes a spinlock recursion warning as
+reported by Guenter Roeck.
 
- kernel/numa.c:  pr_info_once("Unknown target node for memory at 0x%llx, assuming node 0\n",
+As far as I can ascertain, this race has been opened in commit
+533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
+but I haven't done a detailed study of kernel history so it may well
+predate that commit.
 
-[1] commit fd49f99c1809 ("ACPI: NUMA: Add a node and memblk for each
-    CFMWS not in SRAT")
+Interrupts cannot be disabled in the saved status register copy for
+kernel threads (init will complain about interrupts disabled when
+finally starting user space).  Disable interrupts temporarily when
+switching the tasks' register sets in resume().
 
-Suggested-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://lore.kernel.org/all/66271b0072317_69102944c@dwillia2-xfh.jf.intel.com.notmuch/
-Fixes: 8f1004679987 ("ACPI/NUMA: Apply SRAT proximity domain to entire CFMWS window")
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Note that a simple oriw 0x700,%sr after restoring sr is not enough here
+- this leaves enough of a race for the 'spinlock recursion' warning to
+still be observed.
+
+Tested on ARAnyM and qemu (Quadra 800 emulation).
+
+Fixes: 533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/07811b26-677c-4d05-aeb4-996cd880b789@roeck-us.net
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20240411033631.16335-1-schmitzmic@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/sparsemem.h | 2 --
- arch/x86/mm/numa.c               | 4 ++--
- drivers/acpi/numa/srat.c         | 5 +++++
- include/linux/numa.h             | 7 +------
- 4 files changed, 8 insertions(+), 10 deletions(-)
+ arch/m68k/kernel/entry.S | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/sparsemem.h b/arch/x86/include/asm/sparsemem.h
-index 1be13b2dfe8bf..64df897c0ee30 100644
---- a/arch/x86/include/asm/sparsemem.h
-+++ b/arch/x86/include/asm/sparsemem.h
-@@ -37,8 +37,6 @@ extern int phys_to_target_node(phys_addr_t start);
- #define phys_to_target_node phys_to_target_node
- extern int memory_add_physaddr_to_nid(u64 start);
- #define memory_add_physaddr_to_nid memory_add_physaddr_to_nid
--extern int numa_fill_memblks(u64 start, u64 end);
--#define numa_fill_memblks numa_fill_memblks
- #endif
- #endif /* __ASSEMBLY__ */
+diff --git a/arch/m68k/kernel/entry.S b/arch/m68k/kernel/entry.S
+index 42879e6eb651d..1219318304b26 100644
+--- a/arch/m68k/kernel/entry.S
++++ b/arch/m68k/kernel/entry.S
+@@ -430,7 +430,9 @@ resume:
+ 	movec	%a0,%dfc
  
-diff --git a/arch/x86/mm/numa.c b/arch/x86/mm/numa.c
-index dae5c952735c7..c7fa5396c0f05 100644
---- a/arch/x86/mm/numa.c
-+++ b/arch/x86/mm/numa.c
-@@ -956,6 +956,8 @@ int memory_add_physaddr_to_nid(u64 start)
- }
- EXPORT_SYMBOL_GPL(memory_add_physaddr_to_nid);
+ 	/* restore status register */
+-	movew	%a1@(TASK_THREAD+THREAD_SR),%sr
++	movew	%a1@(TASK_THREAD+THREAD_SR),%d0
++	oriw	#0x0700,%d0
++	movew	%d0,%sr
  
-+#endif
-+
- static int __init cmp_memblk(const void *a, const void *b)
- {
- 	const struct numa_memblk *ma = *(const struct numa_memblk **)a;
-@@ -1028,5 +1030,3 @@ int __init numa_fill_memblks(u64 start, u64 end)
- 	}
- 	return 0;
- }
--
--#endif
-diff --git a/drivers/acpi/numa/srat.c b/drivers/acpi/numa/srat.c
-index b57de78fbf14f..a44c0761fd1c0 100644
---- a/drivers/acpi/numa/srat.c
-+++ b/drivers/acpi/numa/srat.c
-@@ -206,6 +206,11 @@ int __init srat_disabled(void)
- 	return acpi_numa < 0;
- }
+ 	rts
  
-+__weak int __init numa_fill_memblks(u64 start, u64 end)
-+{
-+	return NUMA_NO_MEMBLK;
-+}
-+
- #if defined(CONFIG_X86) || defined(CONFIG_ARM64) || defined(CONFIG_LOONGARCH)
- /*
-  * Callback for SLIT parsing.  pxm_to_node() returns NUMA_NO_NODE for
-diff --git a/include/linux/numa.h b/include/linux/numa.h
-index 915033a757315..1d43371fafd2f 100644
---- a/include/linux/numa.h
-+++ b/include/linux/numa.h
-@@ -36,12 +36,7 @@ int memory_add_physaddr_to_nid(u64 start);
- int phys_to_target_node(u64 start);
- #endif
- 
--#ifndef numa_fill_memblks
--static inline int __init numa_fill_memblks(u64 start, u64 end)
--{
--	return NUMA_NO_MEMBLK;
--}
--#endif
-+int numa_fill_memblks(u64 start, u64 end);
- 
- #else /* !CONFIG_NUMA */
- static inline int numa_nearest_node(int node, unsigned int state)
 -- 
 2.43.0
 
