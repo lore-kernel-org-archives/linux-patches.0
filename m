@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E0F19753C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DD819753C;
 	Thu,  6 Jun 2024 14:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683171; cv=none; b=R5zik5x8y3mbKaKAV/A25Ojq3bbjOL94e+VNuFAujFxwd0kahbkKUnreHVlfgNory8LzS1xtTi4bgMFCv/RVGJF9hgFKQrsVMQ6fJuQ599CvjzhOIo9OX0ldElAApNswxT9KsPxdHGaMSLlZj9L/yCTt66sQP4nsevWxCamMvVc=
+	t=1717683172; cv=none; b=qQStq9cGO/NQWJKAL8jK3UTfPnARuxnaHp7ryO5UhERMfAedJBoJ+zdY0Mf52T5bWpYt/WacevF6pTZZbMIoVDxDjlGs2SUoupO3VYfVK/Svkt7+FI/N2vRihgIqjNZMc3lFs/a4K8EeePONw03LtQd5AR6niBnVPKkzMo3ZjLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683171; c=relaxed/simple;
-	bh=XA9a+DdUCMcRnjsBhaJVYDfr7Gv9sqMTO+6LLYlHxfg=;
+	s=arc-20240116; t=1717683172; c=relaxed/simple;
+	bh=1UM61JJp+Xii0u2PxM5O8SY9Kblajv2VWqwY3fOEbFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VhaJsG0SQYkqY0vWliUejku+qU5yG78/3pwJ3r33zpsWhSPtH1P2P1D1qxeyvDF2Nhp53eMMjiX8tnxl0bRSlYtAbOUZ2+jFE2pT2jvZ30Q6a+NGWZtmNltzdcjGENYqYsQoPiZ1iF8mRDaBojQujQM9tOUDsOQo05WgOUGrsaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6Dyk0O7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eukb4WPWV0jpOTeHvIP1iSQx7iyv8PEWzgZqVFCyqqfjMdhQGhAxfGwW1/Ro+sC81kkKvf2/IPWz8KIIyz/eU55lghN1q5PwMx/ZVo94aAD11XHX9gu9FdRgjgcn36ebFqUPix20eZLDvJniroYwgmAKzCqGcy8MVx28fh1OT4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+9CQYJK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6Dyk0O7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6237CC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+9CQYJK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C968FC32786;
 	Thu,  6 Jun 2024 14:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683171;
-	bh=XA9a+DdUCMcRnjsBhaJVYDfr7Gv9sqMTO+6LLYlHxfg=;
+	bh=1UM61JJp+Xii0u2PxM5O8SY9Kblajv2VWqwY3fOEbFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V6Dyk0O7sJfZhD/bclHSkRE6FMlhGAGvabhg0DNfSToxsq+cGq1F9PgUDwpPrSnJe
-	 QEgNjMlUx55eS3fh9moG09VEPL4oGLh/USgylMbHfG4jl8qlgMR+IMLbzN5L3vbbbn
-	 wc0Gof9HszHfdD/t+wB+VXPCS6AfBYRSDyT5s8OE=
+	b=f+9CQYJKhU/g5rF0YElAyD/5gS5PbhBFg3D1tsGuO6Xn+8s9b2XSQUojIhkdZWbZR
+	 C3fMZn0h4ZP2z54BXxNOfSmXKG12q+eZEqV5PKl461QYETze6kzmf0QpaG+Fn1OYuM
+	 oahWInskt8wB7J1ybeB5sGZURbM/NPq6o/NIgvQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 116/744] soc: mediatek: cmdq: Fix typo of CMDQ_JUMP_RELATIVE
-Date: Thu,  6 Jun 2024 15:56:28 +0200
-Message-ID: <20240606131736.121205199@linuxfoundation.org>
+	Ben Chaney <bchaney@akamai.com>,
+	Kees Cook <keescook@chromium.org>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 047/473] x86/efistub: Omit physical KASLR when memory reservations exist
+Date: Thu,  6 Jun 2024 15:59:36 +0200
+Message-ID: <20240606131701.442284898@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +47,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit ed4d5ab179b9f0a60da87c650a31f1816db9b4b4 ]
+commit 15aa8fb852f995dd234a57f12dfb989044968bb6 upstream.
 
-For cmdq jump command, offset 0 means relative jump and offset 1
-means absolute jump. cmdq_pkt_jump() is absolute jump, so fix the
-typo of CMDQ_JUMP_RELATIVE in cmdq_pkt_jump().
+The legacy decompressor has elaborate logic to ensure that the
+randomized physical placement of the decompressed kernel image does not
+conflict with any memory reservations, including ones specified on the
+command line using mem=, memmap=, efi_fake_mem= or hugepages=, which are
+taken into account by the kernel proper at a later stage.
 
-Fixes: 946f1792d3d7 ("soc: mediatek: cmdq: add jump function")
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240222154120.16959-2-chunkuang.hu@kernel.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When booting in EFI mode, it is the firmware's job to ensure that the
+chosen range does not conflict with any memory reservations that it
+knows about, and this is trivially achieved by using the firmware's
+memory allocation APIs.
+
+That leaves reservations specified on the command line, though, which
+the firmware knows nothing about, as these regions have no other special
+significance to the platform. Since commit
+
+  a1b87d54f4e4 ("x86/efistub: Avoid legacy decompressor when doing EFI boot")
+
+these reservations are not taken into account when randomizing the
+physical placement, which may result in conflicts where the memory
+cannot be reserved by the kernel proper because its own executable image
+resides there.
+
+To avoid having to duplicate or reuse the existing complicated logic,
+disable physical KASLR entirely when such overrides are specified. These
+are mostly diagnostic tools or niche features, and physical KASLR (as
+opposed to virtual KASLR, which is much more important as it affects the
+memory addresses observed by code executing in the kernel) is something
+we can live without.
+
+Closes: https://lkml.kernel.org/r/FA5F6719-8824-4B04-803E-82990E65E627%40akamai.com
+Reported-by: Ben Chaney <bchaney@akamai.com>
+Fixes: a1b87d54f4e4 ("x86/efistub: Avoid legacy decompressor when doing EFI boot")
+Cc:  <stable@vger.kernel.org> # v6.1+
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/mediatek/mtk-cmdq-helper.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/libstub/x86-stub.c |   28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/mediatek/mtk-cmdq-helper.c b/drivers/soc/mediatek/mtk-cmdq-helper.c
-index b0cd071c4719b..0b2e5690dacfa 100644
---- a/drivers/soc/mediatek/mtk-cmdq-helper.c
-+++ b/drivers/soc/mediatek/mtk-cmdq-helper.c
-@@ -14,7 +14,8 @@
- #define CMDQ_POLL_ENABLE_MASK	BIT(0)
- #define CMDQ_EOC_IRQ_EN		BIT(0)
- #define CMDQ_REG_TYPE		1
--#define CMDQ_JUMP_RELATIVE	1
-+#define CMDQ_JUMP_RELATIVE	0
-+#define CMDQ_JUMP_ABSOLUTE	1
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -736,6 +736,26 @@ static void error(char *str)
+ 	efi_warn("Decompression failed: %s\n", str);
+ }
  
- struct cmdq_instruction {
- 	union {
-@@ -397,7 +398,7 @@ int cmdq_pkt_jump(struct cmdq_pkt *pkt, dma_addr_t addr)
- 	struct cmdq_instruction inst = {};
++static const char *cmdline_memmap_override;
++
++static efi_status_t parse_options(const char *cmdline)
++{
++	static const char opts[][14] = {
++		"mem=", "memmap=", "efi_fake_mem=", "hugepages="
++	};
++
++	for (int i = 0; i < ARRAY_SIZE(opts); i++) {
++		const char *p = strstr(cmdline, opts[i]);
++
++		if (p == cmdline || (p > cmdline && isspace(p[-1]))) {
++			cmdline_memmap_override = opts[i];
++			break;
++		}
++	}
++
++	return efi_parse_options(cmdline);
++}
++
+ static efi_status_t efi_decompress_kernel(unsigned long *kernel_entry)
+ {
+ 	unsigned long virt_addr = LOAD_PHYSICAL_ADDR;
+@@ -767,6 +787,10 @@ static efi_status_t efi_decompress_kerne
+ 		    !memcmp(efistub_fw_vendor(), ami, sizeof(ami))) {
+ 			efi_debug("AMI firmware v2.0 or older detected - disabling physical KASLR\n");
+ 			seed[0] = 0;
++		} else if (cmdline_memmap_override) {
++			efi_info("%s detected on the kernel command line - disabling physical KASLR\n",
++				 cmdline_memmap_override);
++			seed[0] = 0;
+ 		}
  
- 	inst.op = CMDQ_CODE_JUMP;
--	inst.offset = CMDQ_JUMP_RELATIVE;
-+	inst.offset = CMDQ_JUMP_ABSOLUTE;
- 	inst.value = addr >>
- 		cmdq_get_shift_pa(((struct cmdq_client *)pkt->cl)->chan);
- 	return cmdq_pkt_append_command(pkt, inst);
--- 
-2.43.0
-
+ 		boot_params_ptr->hdr.loadflags |= KASLR_FLAG;
+@@ -843,7 +867,7 @@ void __noreturn efi_stub_entry(efi_handl
+ 	}
+ 
+ #ifdef CONFIG_CMDLINE_BOOL
+-	status = efi_parse_options(CONFIG_CMDLINE);
++	status = parse_options(CONFIG_CMDLINE);
+ 	if (status != EFI_SUCCESS) {
+ 		efi_err("Failed to parse options\n");
+ 		goto fail;
+@@ -852,7 +876,7 @@ void __noreturn efi_stub_entry(efi_handl
+ 	if (!IS_ENABLED(CONFIG_CMDLINE_OVERRIDE)) {
+ 		unsigned long cmdline_paddr = ((u64)hdr->cmd_line_ptr |
+ 					       ((u64)boot_params->ext_cmd_line_ptr << 32));
+-		status = efi_parse_options((char *)cmdline_paddr);
++		status = parse_options((char *)cmdline_paddr);
+ 		if (status != EFI_SUCCESS) {
+ 			efi_err("Failed to parse options\n");
+ 			goto fail;
 
 
