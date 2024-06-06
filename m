@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B981C2324;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76971C2339;
 	Thu,  6 Jun 2024 14:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683647; cv=none; b=iL8adOPzUVTFFLnWk1MCnWfdReq+iTcK6tgdmUtVYs+t89JP0TIoJpbDvdiO6rHahgM4eS6fp8VGHn6iIWAWgzFUSN0fiiC4VQ6f7mXazoBTUW4Vva56bMpI2+wdRRgjE7MXZRrwjTVns7uFGIaZJHZXq7nuFmEOmgayI1UXjyI=
+	t=1717683647; cv=none; b=DiJjOSsw/QhAF4wRWysQme1xTgwoykFg/jaAfl7JPJy3bcJH3MdnsSnua8i38MEugqvoa51V4YFWduZB5h1sWrcg/ItPTEiSvVL8dXeYUKybF3pMmxNjLAJFl/Ndgq+CJnDiSL8OFYOWW+3RGmHAwbxCfaWlBxwREFT4my4gw0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683647; c=relaxed/simple;
-	bh=3SymHkJBg4LjPDXY2J0RVqoYJBM/xw5iPS4ddcS4QQQ=;
+	bh=oQzssqvE/Q4q4vCMKE5agqm0JbRgfTwrFYs8fSw5/iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f0tn0T2joSMco0bO38ACYT44CToxdhwwuqFnS+H5IsIxfCw/9zCsaeIGSvEE0JKQ+AtFaJDuaPrdxzry0RcLtRnWhIZt5Dn536Xeu5M8Q5sd6Z6vuXVusdGa9xldDDlETjh/IxafpW4bq94FWYua2jnU57tAF1LmTuQSWedXnYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muaM2AOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IO3+o7jlA+05WiPO6Ksvdk63X4Xp9ld0RkPTZCtqhjJ/ls+DSJmmSbYtIlIqwhRqwiCkQA954xSdPCZcWfyeODrBu3gs11BI7gRoRAAvdmhiF0gnROiEAZEctefo0Na7hvnYJkDvM2FP4bolAYMD4KhSTpbhau4HudlLo5HFH74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFN9ydzH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muaM2AOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE01C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFN9ydzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9747CC32781;
 	Thu,  6 Jun 2024 14:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683647;
-	bh=3SymHkJBg4LjPDXY2J0RVqoYJBM/xw5iPS4ddcS4QQQ=;
+	bh=oQzssqvE/Q4q4vCMKE5agqm0JbRgfTwrFYs8fSw5/iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=muaM2AODm8JrFz9ok5wszH0i2+g7XUpV7UkZofqsNZ9nmGUHfQIBVl5EX1FpS4xt2
-	 8Byt7hCj3tVHyR58W44Qn7JJkQbzeA6qPTBj+sZRBMsb5p/7slWhYUaP13KlPy+8Nb
-	 QNAsNghBngbPiOMi9GliRZE8M0c1rm+R/7QlrsN4=
+	b=WFN9ydzHJCG9sryFf1fP6KDqRbON0kaKQxN5Cy3WU0kEYaKFryJ2m84bH5l45DrB9
+	 ERTxd23PeId2vEtCDLP4rmSsQcmpXAHz/mUJESeJ3DiTNp4J6rEwrslNuOegkK1yea
+	 yKBuhyTzaFAnUeZTtEtxD4eKhYpQJxmYSJOkluyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Shay Agroskin <shayagr@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 518/744] f2fs: compress: dont allow unaligned truncation on released compress inode
-Date: Thu,  6 Jun 2024 16:03:10 +0200
-Message-ID: <20240606131749.056135759@linuxfoundation.org>
+Subject: [PATCH 6.1 467/473] net: ena: Fix redundant device NUMA node override
+Date: Thu,  6 Jun 2024 16:06:36 +0200
+Message-ID: <20240606131715.123478829@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,66 +47,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Shay Agroskin <shayagr@amazon.com>
 
-[ Upstream commit 29ed2b5dd521ce7c5d8466cd70bf0cc9d07afeee ]
+[ Upstream commit 2dc8b1e7177d4f49f492ce648440caf2de0c3616 ]
 
-f2fs image may be corrupted after below testcase:
-- mkfs.f2fs -O extra_attr,compression -f /dev/vdb
-- mount /dev/vdb /mnt/f2fs
-- touch /mnt/f2fs/file
-- f2fs_io setflags compression /mnt/f2fs/file
-- dd if=/dev/zero of=/mnt/f2fs/file bs=4k count=4
-- f2fs_io release_cblocks /mnt/f2fs/file
-- truncate -s 8192 /mnt/f2fs/file
-- umount /mnt/f2fs
-- fsck.f2fs /dev/vdb
+The driver overrides the NUMA node id of the device regardless of
+whether it knows its correct value (often setting it to -1 even though
+the node id is advertised in 'struct device'). This can lead to
+suboptimal configurations.
 
-[ASSERT] (fsck_chk_inode_blk:1256)  --> ino: 0x5 has i_blocks: 0x00000002, but has 0x3 blocks
-[FSCK] valid_block_count matching with CP             [Fail] [0x4, 0x5]
-[FSCK] other corrupted bugs                           [Fail]
+This patch fixes this behavior and makes the shared memory allocation
+functions use the NUMA node id advertised by the underlying device.
 
-The reason is: partial truncation assume compressed inode has reserved
-blocks, after partial truncation, valid block count may change w/o
-.i_blocks and .total_valid_block_count update, result in corruption.
-
-This patch only allow cluster size aligned truncation on released
-compress inode for fixing.
-
-Fixes: c61404153eb6 ("f2fs: introduce FI_COMPRESS_RELEASED instead of using IMMUTABLE bit")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
+Signed-off-by: Shay Agroskin <shayagr@amazon.com>
+Link: https://lore.kernel.org/r/20240528170912.1204417-1-shayagr@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_com.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index ac592059c68be..154c55c1a0f47 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -929,9 +929,14 @@ int f2fs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 				  ATTR_GID | ATTR_TIMES_SET))))
- 		return -EPERM;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_com.c b/drivers/net/ethernet/amazon/ena/ena_com.c
+index e733419dd3f49..276f6a8631fb1 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_com.c
++++ b/drivers/net/ethernet/amazon/ena/ena_com.c
+@@ -312,7 +312,6 @@ static int ena_com_init_io_sq(struct ena_com_dev *ena_dev,
+ 			      struct ena_com_io_sq *io_sq)
+ {
+ 	size_t size;
+-	int dev_node = 0;
  
--	if ((attr->ia_valid & ATTR_SIZE) &&
--		!f2fs_is_compress_backend_ready(inode))
--		return -EOPNOTSUPP;
-+	if ((attr->ia_valid & ATTR_SIZE)) {
-+		if (!f2fs_is_compress_backend_ready(inode))
-+			return -EOPNOTSUPP;
-+		if (is_inode_flag_set(inode, FI_COMPRESS_RELEASED) &&
-+			!IS_ALIGNED(attr->ia_size,
-+			F2FS_BLK_TO_BYTES(F2FS_I(inode)->i_cluster_size)))
-+			return -EINVAL;
-+	}
+ 	memset(&io_sq->desc_addr, 0x0, sizeof(io_sq->desc_addr));
  
- 	err = setattr_prepare(idmap, dentry, attr);
- 	if (err)
+@@ -325,12 +324,9 @@ static int ena_com_init_io_sq(struct ena_com_dev *ena_dev,
+ 	size = io_sq->desc_entry_size * io_sq->q_depth;
+ 
+ 	if (io_sq->mem_queue_type == ENA_ADMIN_PLACEMENT_POLICY_HOST) {
+-		dev_node = dev_to_node(ena_dev->dmadev);
+-		set_dev_node(ena_dev->dmadev, ctx->numa_node);
+ 		io_sq->desc_addr.virt_addr =
+ 			dma_alloc_coherent(ena_dev->dmadev, size, &io_sq->desc_addr.phys_addr,
+ 					   GFP_KERNEL);
+-		set_dev_node(ena_dev->dmadev, dev_node);
+ 		if (!io_sq->desc_addr.virt_addr) {
+ 			io_sq->desc_addr.virt_addr =
+ 				dma_alloc_coherent(ena_dev->dmadev, size,
+@@ -354,10 +350,7 @@ static int ena_com_init_io_sq(struct ena_com_dev *ena_dev,
+ 		size = (size_t)io_sq->bounce_buf_ctrl.buffer_size *
+ 			io_sq->bounce_buf_ctrl.buffers_num;
+ 
+-		dev_node = dev_to_node(ena_dev->dmadev);
+-		set_dev_node(ena_dev->dmadev, ctx->numa_node);
+ 		io_sq->bounce_buf_ctrl.base_buffer = devm_kzalloc(ena_dev->dmadev, size, GFP_KERNEL);
+-		set_dev_node(ena_dev->dmadev, dev_node);
+ 		if (!io_sq->bounce_buf_ctrl.base_buffer)
+ 			io_sq->bounce_buf_ctrl.base_buffer =
+ 				devm_kzalloc(ena_dev->dmadev, size, GFP_KERNEL);
+@@ -397,7 +390,6 @@ static int ena_com_init_io_cq(struct ena_com_dev *ena_dev,
+ 			      struct ena_com_io_cq *io_cq)
+ {
+ 	size_t size;
+-	int prev_node = 0;
+ 
+ 	memset(&io_cq->cdesc_addr, 0x0, sizeof(io_cq->cdesc_addr));
+ 
+@@ -409,11 +401,8 @@ static int ena_com_init_io_cq(struct ena_com_dev *ena_dev,
+ 
+ 	size = io_cq->cdesc_entry_size_in_bytes * io_cq->q_depth;
+ 
+-	prev_node = dev_to_node(ena_dev->dmadev);
+-	set_dev_node(ena_dev->dmadev, ctx->numa_node);
+ 	io_cq->cdesc_addr.virt_addr =
+ 		dma_alloc_coherent(ena_dev->dmadev, size, &io_cq->cdesc_addr.phys_addr, GFP_KERNEL);
+-	set_dev_node(ena_dev->dmadev, prev_node);
+ 	if (!io_cq->cdesc_addr.virt_addr) {
+ 		io_cq->cdesc_addr.virt_addr =
+ 			dma_alloc_coherent(ena_dev->dmadev, size, &io_cq->cdesc_addr.phys_addr,
 -- 
 2.43.0
 
