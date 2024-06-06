@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5B01B5831;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8586819D073;
 	Thu,  6 Jun 2024 14:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683466; cv=none; b=VvQnoYMmpsIZZObsV3T/hGfyIVxG98JSFxYCw9HRmIiB5rXqJ445LQaCpVybVOer7XwdQXauDekNMzA9Wa3xwYj9y8cryBvGXcNUtsFdoKJeFugAB9aJmriOWXOE6T7jIzUVkPJLKCqck6Oaan3KoKmqtZ4J9i+zGy3rG85yp/A=
+	t=1717683466; cv=none; b=Y+Qg42kTb5Uko6q5b6v4Pq+NjaW/y094byqwEYNYW5NFOuYc+b1Wk3PzrLkLVumjgwOfvg8g4/K2OBrCZiXlDyxyQ6+76TFstDt+YA+DcabVHs9TFm/g3JP/tg95fMSPh+hWT7X70nrxn6CkK2Zbe2+WVXzlrvG4g+nThjaxi8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683466; c=relaxed/simple;
-	bh=Mv5JH9VWk4MQUvOCeRk3YGtY7fkNO0A4aQD312XuAU4=;
+	bh=mhHWH/dzVe8rIf84z+TpfNFKxWqp3UvaBYYDraIaDdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nLu3MxllFUBV0rosT55i6n22s45Pc6I/YLd10PCL0/g5JSeim5E3wXyV0+6RcOLoQTaTrToVmcTL7CwZN7Ysz8xQCH7pJ3YrVbJNzkWrUsAiziUTk4p89sXAKYI5cACIHffKreiIhusluX4ZLN4EmdNQo0YSzIpqtFoDmLa2XZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOw+nPt2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XsJDGM1aoWe17Ebk2ghpzvML99iUOhpvUbFZMooPlaT+So8Ve+EL1ZBFY9bMeHNB0VEvzXqXxwS7QsRPFfoxY32xlonXZbAHkW9hePgqr4TVSk9kNrz0jfZ5VpAGHXeC9c9pyRQFcU5Bf9bj6Q2oxZd7e0Acjhle58Q0N7nh+E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwU1p8rO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOw+nPt2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE972C32781;
-	Thu,  6 Jun 2024 14:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwU1p8rO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E7CC2BD10;
+	Thu,  6 Jun 2024 14:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683465;
-	bh=Mv5JH9VWk4MQUvOCeRk3YGtY7fkNO0A4aQD312XuAU4=;
+	s=korg; t=1717683466;
+	bh=mhHWH/dzVe8rIf84z+TpfNFKxWqp3UvaBYYDraIaDdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOw+nPt2rGRV685W54Y0Ko6OhkNdACyuZLCcXKXOwxDNPOjaVNPr+a0IurJYO60Te
-	 5WY2eSEySMd+NyiVAQfkUvD6lYvnjWXMdoBY4nn68bC2XvHb3IebPnxc7ur41RSC61
-	 VJIVGvF1V1Okzwte0U5BA+z+DJKBTyYZT9ZKDAn4=
+	b=KwU1p8rO/iDA5h6vqd8WxnN5e8LdvUr9FQs1mCbKH2El8rcjxK1iV24quPJ5oYLi6
+	 sQahrVFA1CjIi5zX686uK4p4fknJDcXrlGDZ+Mo7xC/zeqGiSGRMoGwMVOCrsLZf0R
+	 27Xi3GitucJFARzk8mktd2RM31IFXYYNUfDAmQaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 352/473] s390/vdso64: filter out munaligned-symbols flag for vdso
-Date: Thu,  6 Jun 2024 16:04:41 +0200
-Message-ID: <20240606131711.549572655@linuxfoundation.org>
+Subject: [PATCH 6.6 410/744] perf annotate: Introduce global annotation_options
+Date: Thu,  6 Jun 2024 16:01:22 +0200
+Message-ID: <20240606131745.616624206@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +52,212 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sumanth Korikkar <sumanthk@linux.ibm.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 8192a1b3807510d0ed5be1f8988c08f8d41cced9 ]
+[ Upstream commit 9d03194a36345796d4f0f8d6b72eb770a45d614e ]
 
-Gcc recently implemented an optimization [1] for loading symbols without
-explicit alignment, aligning with the IBM Z ELF ABI. This ABI mandates
-symbols to reside on a 2-byte boundary, enabling the use of the larl
-instruction. However, kernel linker scripts may still generate unaligned
-symbols. To address this, a new -munaligned-symbols option has been
-introduced [2] in recent gcc versions.
+The annotation options are to control the behavior of objdump and the
+output.  It's basically used by 'perf annotate' but 'perf report' and
+'perf top' can call it on TUI dynamically.
 
-[1] https://gcc.gnu.org/pipermail/gcc-patches/2023-June/622872.html
-[2] https://gcc.gnu.org/pipermail/gcc-patches/2023-August/625986.html
+But it doesn't need to have a copy of annotation options in many places.
 
-However, when -munaligned-symbols  is used in vdso code, it leads to the
-following compilation error:
-`.data.rel.ro.local' referenced in section `.text' of
-arch/s390/kernel/vdso64/vdso64_generic.o: defined in discarded section
-`.data.rel.ro.local' of arch/s390/kernel/vdso64/vdso64_generic.o
+As most of the work is done in the util/annotate.c file, add a global
+variable and set/use it instead of having their own copies.
 
-vdso linker script discards .data section to make it lightweight.
-However, -munaligned-symbols in vdso object files references literal
-pool and accesses _vdso_data. Hence, compile vdso code without
--munaligned-symbols.  This means in the future, vdso code should deal
-with alignment of newly introduced unaligned linker symbols.
-
-Acked-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240219132734.22881-2-sumanthk@linux.ibm.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Stable-dep-of: 10f705253651 ("s390/vdso: Generate unwind information for C modules")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20231128175441.721579-2-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: aaf494cf483a ("perf annotate: Fix annotation_calc_lines() to pass correct address to get_srcline()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vdso64/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/builtin-annotate.c | 43 +++++++++++++++++------------------
+ tools/perf/util/annotate.c    |  3 +++
+ tools/perf/util/annotate.h    |  2 ++
+ 3 files changed, 26 insertions(+), 22 deletions(-)
 
-diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
-index 08e87b083647c..e2e031e4d9243 100644
---- a/arch/s390/kernel/vdso64/Makefile
-+++ b/arch/s390/kernel/vdso64/Makefile
-@@ -26,6 +26,7 @@ KBUILD_AFLAGS_64 += -m64 -s
+diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
+index 16757ea9b1a7a..d3d410cdd9ba5 100644
+--- a/tools/perf/builtin-annotate.c
++++ b/tools/perf/builtin-annotate.c
+@@ -45,7 +45,6 @@
+ struct perf_annotate {
+ 	struct perf_tool tool;
+ 	struct perf_session *session;
+-	struct annotation_options opts;
+ #ifdef HAVE_SLANG_SUPPORT
+ 	bool	   use_tui;
+ #endif
+@@ -315,9 +314,9 @@ static int hist_entry__tty_annotate(struct hist_entry *he,
+ 				    struct perf_annotate *ann)
+ {
+ 	if (!ann->use_stdio2)
+-		return symbol__tty_annotate(&he->ms, evsel, &ann->opts);
++		return symbol__tty_annotate(&he->ms, evsel, &annotate_opts);
  
- KBUILD_CFLAGS_64 := $(filter-out -m64,$(KBUILD_CFLAGS))
- KBUILD_CFLAGS_64 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_64))
-+KBUILD_CFLAGS_64 := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_64))
- KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin
- ldflags-y := -shared -soname=linux-vdso64.so.1 \
- 	     --hash-style=both --build-id=sha1 -T
+-	return symbol__tty_annotate2(&he->ms, evsel, &ann->opts);
++	return symbol__tty_annotate2(&he->ms, evsel, &annotate_opts);
+ }
+ 
+ static void hists__find_annotations(struct hists *hists,
+@@ -373,14 +372,14 @@ static void hists__find_annotations(struct hists *hists,
+ 				return;
+ 			}
+ 
+-			ret = annotate(he, evsel, &ann->opts, NULL);
++			ret = annotate(he, evsel, &annotate_opts, NULL);
+ 			if (!ret || !ann->skip_missing)
+ 				return;
+ 
+ 			/* skip missing symbols */
+ 			nd = rb_next(nd);
+ 		} else if (use_browser == 1) {
+-			key = hist_entry__tui_annotate(he, evsel, NULL, &ann->opts);
++			key = hist_entry__tui_annotate(he, evsel, NULL, &annotate_opts);
+ 
+ 			switch (key) {
+ 			case -1:
+@@ -422,9 +421,9 @@ static int __cmd_annotate(struct perf_annotate *ann)
+ 			goto out;
+ 	}
+ 
+-	if (!ann->opts.objdump_path) {
++	if (!annotate_opts.objdump_path) {
+ 		ret = perf_env__lookup_objdump(&session->header.env,
+-					       &ann->opts.objdump_path);
++					       &annotate_opts.objdump_path);
+ 		if (ret)
+ 			goto out;
+ 	}
+@@ -558,9 +557,9 @@ int cmd_annotate(int argc, const char **argv)
+ 		   "file", "vmlinux pathname"),
+ 	OPT_BOOLEAN('m', "modules", &symbol_conf.use_modules,
+ 		    "load module symbols - WARNING: use only with -k and LIVE kernel"),
+-	OPT_BOOLEAN('l', "print-line", &annotate.opts.print_lines,
++	OPT_BOOLEAN('l', "print-line", &annotate_opts.print_lines,
+ 		    "print matching source lines (may be slow)"),
+-	OPT_BOOLEAN('P', "full-paths", &annotate.opts.full_path,
++	OPT_BOOLEAN('P', "full-paths", &annotate_opts.full_path,
+ 		    "Don't shorten the displayed pathnames"),
+ 	OPT_BOOLEAN(0, "skip-missing", &annotate.skip_missing,
+ 		    "Skip symbols that cannot be annotated"),
+@@ -571,15 +570,15 @@ int cmd_annotate(int argc, const char **argv)
+ 	OPT_CALLBACK(0, "symfs", NULL, "directory",
+ 		     "Look for files with symbols relative to this directory",
+ 		     symbol__config_symfs),
+-	OPT_BOOLEAN(0, "source", &annotate.opts.annotate_src,
++	OPT_BOOLEAN(0, "source", &annotate_opts.annotate_src,
+ 		    "Interleave source code with assembly code (default)"),
+-	OPT_BOOLEAN(0, "asm-raw", &annotate.opts.show_asm_raw,
++	OPT_BOOLEAN(0, "asm-raw", &annotate_opts.show_asm_raw,
+ 		    "Display raw encoding of assembly instructions (default)"),
+ 	OPT_STRING('M', "disassembler-style", &disassembler_style, "disassembler style",
+ 		   "Specify disassembler style (e.g. -M intel for intel syntax)"),
+-	OPT_STRING(0, "prefix", &annotate.opts.prefix, "prefix",
++	OPT_STRING(0, "prefix", &annotate_opts.prefix, "prefix",
+ 		    "Add prefix to source file path names in programs (with --prefix-strip)"),
+-	OPT_STRING(0, "prefix-strip", &annotate.opts.prefix_strip, "N",
++	OPT_STRING(0, "prefix-strip", &annotate_opts.prefix_strip, "N",
+ 		    "Strip first N entries of source file path name in programs (with --prefix)"),
+ 	OPT_STRING(0, "objdump", &objdump_path, "path",
+ 		   "objdump binary to use for disassembly and annotations"),
+@@ -596,7 +595,7 @@ int cmd_annotate(int argc, const char **argv)
+ 	OPT_CALLBACK_DEFAULT(0, "stdio-color", NULL, "mode",
+ 			     "'always' (default), 'never' or 'auto' only applicable to --stdio mode",
+ 			     stdio__config_color, "always"),
+-	OPT_CALLBACK(0, "percent-type", &annotate.opts, "local-period",
++	OPT_CALLBACK(0, "percent-type", &annotate_opts, "local-period",
+ 		     "Set percent type local/global-period/hits",
+ 		     annotate_parse_percent_type),
+ 	OPT_CALLBACK(0, "percent-limit", &annotate, "percent",
+@@ -612,13 +611,13 @@ int cmd_annotate(int argc, const char **argv)
+ 	set_option_flag(options, 0, "show-total-period", PARSE_OPT_EXCLUSIVE);
+ 	set_option_flag(options, 0, "show-nr-samples", PARSE_OPT_EXCLUSIVE);
+ 
+-	annotation_options__init(&annotate.opts);
++	annotation_options__init(&annotate_opts);
+ 
+ 	ret = hists__init();
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	annotation_config__init(&annotate.opts);
++	annotation_config__init(&annotate_opts);
+ 
+ 	argc = parse_options(argc, argv, options, annotate_usage, 0);
+ 	if (argc) {
+@@ -633,13 +632,13 @@ int cmd_annotate(int argc, const char **argv)
+ 	}
+ 
+ 	if (disassembler_style) {
+-		annotate.opts.disassembler_style = strdup(disassembler_style);
+-		if (!annotate.opts.disassembler_style)
++		annotate_opts.disassembler_style = strdup(disassembler_style);
++		if (!annotate_opts.disassembler_style)
+ 			return -ENOMEM;
+ 	}
+ 	if (objdump_path) {
+-		annotate.opts.objdump_path = strdup(objdump_path);
+-		if (!annotate.opts.objdump_path)
++		annotate_opts.objdump_path = strdup(objdump_path);
++		if (!annotate_opts.objdump_path)
+ 			return -ENOMEM;
+ 	}
+ 	if (addr2line_path) {
+@@ -648,7 +647,7 @@ int cmd_annotate(int argc, const char **argv)
+ 			return -ENOMEM;
+ 	}
+ 
+-	if (annotate_check_args(&annotate.opts) < 0)
++	if (annotate_check_args(&annotate_opts) < 0)
+ 		return -EINVAL;
+ 
+ #ifdef HAVE_GTK2_SUPPORT
+@@ -729,7 +728,7 @@ int cmd_annotate(int argc, const char **argv)
+ #ifndef NDEBUG
+ 	perf_session__delete(annotate.session);
+ #endif
+-	annotation_options__exit(&annotate.opts);
++	annotation_options__exit(&annotate_opts);
+ 
+ 	return ret;
+ }
+diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
+index 99ff3bb9cad8d..2a22bd30a98b7 100644
+--- a/tools/perf/util/annotate.c
++++ b/tools/perf/util/annotate.c
+@@ -57,6 +57,9 @@
+ 
+ #include <linux/ctype.h>
+ 
++/* global annotation options */
++struct annotation_options annotate_opts;
++
+ static regex_t	 file_lineno;
+ 
+ static struct ins_ops *ins__find(struct arch *arch, const char *name);
+diff --git a/tools/perf/util/annotate.h b/tools/perf/util/annotate.h
+index 19bc2f0391757..d45a777f7229b 100644
+--- a/tools/perf/util/annotate.h
++++ b/tools/perf/util/annotate.h
+@@ -101,6 +101,8 @@ struct annotation_options {
+ 	unsigned int percent_type;
+ };
+ 
++extern struct annotation_options annotate_opts;
++
+ enum {
+ 	ANNOTATION__OFFSET_JUMP_TARGETS = 1,
+ 	ANNOTATION__OFFSET_CALL,
 -- 
 2.43.0
 
