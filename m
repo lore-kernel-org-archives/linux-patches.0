@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570AE1CBE85;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC92C19754F;
 	Thu,  6 Jun 2024 14:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683761; cv=none; b=XeSlQOELuFmjEB2IahGQTTVjRNHC8iYJRfVGFhjueu/15n1iorES/fUF+GtMdXXWe0rlycOrR6AgWBwavw/scGQazta3t+XXpv0yafbZZImZCOy1R6IcSSCxZzyhgD6w0ysfB2ahmOaWfZUFnVeUABWmKTsErHuvIRKlsr/bBUs=
+	t=1717683761; cv=none; b=FPEQTlEjQmf/ipxtK+/2xzFzsmYqsrW5n0KXAqLmCKjyrFbNJhXyZmsq7RY97f5lIJxWMfDCbyokfGZDZnSL3PXgndW74FnnP6WeS9fmw9P4fAiqG/gVWqLfhPTPnXTr1Lu6xRA2VLZi1yQUEqpyp71nlt+8ssiExK4QL7/JTlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683761; c=relaxed/simple;
-	bh=MQPSTY6ZgOOkA6RY7oSnWW+6trILqsdfjVq//MZfQko=;
+	bh=aT/5XW+dU3bwFJ2HwIbQHBklHYJ3KRCtNO5KLBr7FRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYfhK/2PgQ93KUj0QQOSDv7+zEdknzy+BdOl2PBSGU3ZOPjZwL/9Iw918JHsYDLCLgCjvDfTFj4USyS0mH6fpvlzLFRoUBA+YnGkRjaAruuNIXeQ6cSvNqK6od44NgrDTMguFvYhWSaSMX9I7aLr095b12WLVuH8IIGLVr2mCE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cc7ktxVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VlKy8NgCzdh9jxRZ9CQwSBl/n30NlIQI08Xh2+kh6QsIA+og26uaFXRarrLg6sqsM1w/9BeIaVtPLiS52jfobESGJPiLq2sZlL+Lcsvkn+HAvYAv01C6QW0DrxL5VmLWe6qKzAQ7e5p64d0HCEVGQA55be6++nYrlUEIFwKO4eE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HclHUOE8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cc7ktxVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375ADC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HclHUOE8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA57C2BD10;
 	Thu,  6 Jun 2024 14:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683761;
-	bh=MQPSTY6ZgOOkA6RY7oSnWW+6trILqsdfjVq//MZfQko=;
+	bh=aT/5XW+dU3bwFJ2HwIbQHBklHYJ3KRCtNO5KLBr7FRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cc7ktxVbI1npkn9GM4MhEIUJydKxH7Bv3P06naqL/7RPPgTwceQyDFAGSssu+JiqF
-	 5ZStSyE83fyQF43UiAOI1TvT6qkle9qRcuN8Jphds4RDL3QeAmmk+ggUhz+exL4sdG
-	 JXEJrH2nvln0xUKKEdc/ZJBoz2TNkspPVKNW5fPk=
+	b=HclHUOE8lun8f2nnNKk2R6sEvXWB6OSuodu5hJGmZJjAcwYt9go1Oio5SVS9jf+Qd
+	 LRzvaplGILmgGC2GFHsMaGvMhqUtgKCH2OZVzsQPRFqgU767Hcdvby2ziSz+8sAp1C
+	 edtCatefaTjr6yEdrTWFJf9chbxZpjGI8uQNhuCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Chaney <bchaney@akamai.com>,
-	Kees Cook <keescook@chromium.org>,
+	Hagar Hemdan <hagarhem@amazon.com>,
 	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.6 738/744] x86/efistub: Omit physical KASLR when memory reservations exist
-Date: Thu,  6 Jun 2024 16:06:50 +0200
-Message-ID: <20240606131756.137048779@linuxfoundation.org>
+Subject: [PATCH 6.6 739/744] efi: libstub: only free priv.runtime_map when allocated
+Date: Thu,  6 Jun 2024 16:06:51 +0200
+Message-ID: <20240606131756.172093402@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,107 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Hagar Hemdan <hagarhem@amazon.com>
 
-commit 15aa8fb852f995dd234a57f12dfb989044968bb6 upstream.
+commit 4b2543f7e1e6b91cfc8dd1696e3cdf01c3ac8974 upstream.
 
-The legacy decompressor has elaborate logic to ensure that the
-randomized physical placement of the decompressed kernel image does not
-conflict with any memory reservations, including ones specified on the
-command line using mem=, memmap=, efi_fake_mem= or hugepages=, which are
-taken into account by the kernel proper at a later stage.
+priv.runtime_map is only allocated when efi_novamap is not set.
+Otherwise, it is an uninitialized value.  In the error path, it is freed
+unconditionally.  Avoid passing an uninitialized value to free_pool.
+Free priv.runtime_map only when it was allocated.
 
-When booting in EFI mode, it is the firmware's job to ensure that the
-chosen range does not conflict with any memory reservations that it
-knows about, and this is trivially achieved by using the firmware's
-memory allocation APIs.
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
 
-That leaves reservations specified on the command line, though, which
-the firmware knows nothing about, as these regions have no other special
-significance to the platform. Since commit
-
-  a1b87d54f4e4 ("x86/efistub: Avoid legacy decompressor when doing EFI boot")
-
-these reservations are not taken into account when randomizing the
-physical placement, which may result in conflicts where the memory
-cannot be reserved by the kernel proper because its own executable image
-resides there.
-
-To avoid having to duplicate or reuse the existing complicated logic,
-disable physical KASLR entirely when such overrides are specified. These
-are mostly diagnostic tools or niche features, and physical KASLR (as
-opposed to virtual KASLR, which is much more important as it affects the
-memory addresses observed by code executing in the kernel) is something
-we can live without.
-
-Closes: https://lkml.kernel.org/r/FA5F6719-8824-4B04-803E-82990E65E627%40akamai.com
-Reported-by: Ben Chaney <bchaney@akamai.com>
-Fixes: a1b87d54f4e4 ("x86/efistub: Avoid legacy decompressor when doing EFI boot")
-Cc:  <stable@vger.kernel.org> # v6.1+
-Reviewed-by: Kees Cook <keescook@chromium.org>
+Fixes: f80d26043af9 ("efi: libstub: avoid efi_get_memory_map() for allocating the virt map")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/x86-stub.c |   28 ++++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/libstub/fdt.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/firmware/efi/libstub/x86-stub.c
-+++ b/drivers/firmware/efi/libstub/x86-stub.c
-@@ -776,6 +776,26 @@ static void error(char *str)
- 	efi_warn("Decompression failed: %s\n", str);
+--- a/drivers/firmware/efi/libstub/fdt.c
++++ b/drivers/firmware/efi/libstub/fdt.c
+@@ -335,8 +335,8 @@ fail_free_new_fdt:
+ 
+ fail:
+ 	efi_free(fdt_size, fdt_addr);
+-
+-	efi_bs_call(free_pool, priv.runtime_map);
++	if (!efi_novamap)
++		efi_bs_call(free_pool, priv.runtime_map);
+ 
+ 	return EFI_LOAD_ERROR;
  }
- 
-+static const char *cmdline_memmap_override;
-+
-+static efi_status_t parse_options(const char *cmdline)
-+{
-+	static const char opts[][14] = {
-+		"mem=", "memmap=", "efi_fake_mem=", "hugepages="
-+	};
-+
-+	for (int i = 0; i < ARRAY_SIZE(opts); i++) {
-+		const char *p = strstr(cmdline, opts[i]);
-+
-+		if (p == cmdline || (p > cmdline && isspace(p[-1]))) {
-+			cmdline_memmap_override = opts[i];
-+			break;
-+		}
-+	}
-+
-+	return efi_parse_options(cmdline);
-+}
-+
- static efi_status_t efi_decompress_kernel(unsigned long *kernel_entry)
- {
- 	unsigned long virt_addr = LOAD_PHYSICAL_ADDR;
-@@ -807,6 +827,10 @@ static efi_status_t efi_decompress_kerne
- 		    !memcmp(efistub_fw_vendor(), ami, sizeof(ami))) {
- 			efi_debug("AMI firmware v2.0 or older detected - disabling physical KASLR\n");
- 			seed[0] = 0;
-+		} else if (cmdline_memmap_override) {
-+			efi_info("%s detected on the kernel command line - disabling physical KASLR\n",
-+				 cmdline_memmap_override);
-+			seed[0] = 0;
- 		}
- 	}
- 
-@@ -881,7 +905,7 @@ void __noreturn efi_stub_entry(efi_handl
- 	}
- 
- #ifdef CONFIG_CMDLINE_BOOL
--	status = efi_parse_options(CONFIG_CMDLINE);
-+	status = parse_options(CONFIG_CMDLINE);
- 	if (status != EFI_SUCCESS) {
- 		efi_err("Failed to parse options\n");
- 		goto fail;
-@@ -890,7 +914,7 @@ void __noreturn efi_stub_entry(efi_handl
- 	if (!IS_ENABLED(CONFIG_CMDLINE_OVERRIDE)) {
- 		unsigned long cmdline_paddr = ((u64)hdr->cmd_line_ptr |
- 					       ((u64)boot_params->ext_cmd_line_ptr << 32));
--		status = efi_parse_options((char *)cmdline_paddr);
-+		status = parse_options((char *)cmdline_paddr);
- 		if (status != EFI_SUCCESS) {
- 			efi_err("Failed to parse options\n");
- 			goto fail;
 
 
