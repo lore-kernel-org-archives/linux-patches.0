@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9964F19645B;
-	Thu,  6 Jun 2024 14:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7B719AA5C;
+	Thu,  6 Jun 2024 14:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683028; cv=none; b=C7Ts8mPtYNmKIVAW1Wb0dvLTLEQ5URxmSvQSHFMcHiTTIW3eSl7UMNpkNE3vTLVMrzwnQv7F1XAzIz41xfQDeVHx2fPKx0xuMbDJGMg2/N/5Hvd02k7AobvHSgTe16oFsSBZxaVx8Q4lmt8kJA94Q/C1v0HWssiBxImVcY/73q0=
+	t=1717683029; cv=none; b=jh5EwzSjjW4VIfgtBrqRP8/cVVYRtLxsnoOjCG9IhujRUkzOCgQDnEzSPfPVXE43YfVoI02SbXcmZMpz/zWEYrv00qjzv4Kb7oMfSe6OdT98z3O/o0pJYGh9bFC+Sc1sw30pcFtLyyzBKN+9otDzwN7YXP+6bAMlmzpftOElKEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683028; c=relaxed/simple;
-	bh=w2CUAcucQkaOs+gpG9RBa3qj6W6AxjXuhBOngF6LqHI=;
+	s=arc-20240116; t=1717683029; c=relaxed/simple;
+	bh=eNE7NWfYPr/gY5KIOl12D9npsrK175Xy0KckwFewDIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KnlIqap9bYHbJxpCU7iGYHVDRYoN9/O4US5clW7PiCyOPRVnIU3u45Mqef3Xu5IBxFTvw47ozFp+KXXdP+oMyhNa5/xURm+7kK6V6u1JONirnjG8RxJLvjdsIofKaJ+82b+XFVRYygE0IlHOU7ladNXtqT5p18K2YSo42Os5Bmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HgtzVW/c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XYSOfxbRWcwO3Eqkykr+ZtHgLT0g1yByniDi5HVu2cIeG1VbhJOdBx27qUcpZnbn+yP3ZFFolUaTlvewEe5Vucvae+6Vq5kE5gz/5aM8BsjRlQN5rRufc0Neeo1+Go/ep32VEVXcbneLsBEuR3U4XZ15A+5PERrCgidm+rIHfJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnaIv7+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgtzVW/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6D8C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnaIv7+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E8DC32781;
 	Thu,  6 Jun 2024 14:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683028;
-	bh=w2CUAcucQkaOs+gpG9RBa3qj6W6AxjXuhBOngF6LqHI=;
+	bh=eNE7NWfYPr/gY5KIOl12D9npsrK175Xy0KckwFewDIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HgtzVW/crW3EPVMEk4LUqPRaHj3EXc/SByJKJvt1wjTNX0SKhyIb6mtrA1wquTaJF
-	 qRdCLvjQfmBV93iW4OdEyUkjV8IikCK7HItHqsDguLNEKrM6+5hJnH05W+G2csdXB+
-	 htZSoeC73p6QtF3wrSWWn7JOn3gvOd+lCNRne0lU=
+	b=FnaIv7+J0BcFJNPUeKY9Z7rvs/+MLXFo4oZPzqv+I9mj4kIx/KSOFKi0/7O1Pv0Dt
+	 7uVrtB1YfwvHoIGbjD5bAQgd07f6hL+xhHCBoQhANkOhjX5/9nSLd0f4ZDElah3sFM
+	 IlSWx0Sap21RMpKXuZvZJl6nX8h45PiO28Ay6e5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Benjamin Poirier <bpoirier@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 249/374] selftests: forwarding: Convert log_test() to recognize RET values
-Date: Thu,  6 Jun 2024 16:03:48 +0200
-Message-ID: <20240606131700.158972117@linuxfoundation.org>
+Subject: [PATCH 6.9 250/374] selftests: net: Unify code of busywait() and slowwait()
+Date: Thu,  6 Jun 2024 16:03:49 +0200
+Message-ID: <20240606131700.197785975@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,173 +55,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit a923af1ceee744c187d1c08a0d7dc9e8ab7ca482 ]
+[ Upstream commit a4022a332f437ae5b10921d66058ce98a2db2c20 ]
 
-In a previous patch, the interpretation of RET value was changed to mean
-the kselftest framework constant with the test outcome: $ksft_pass,
-$ksft_xfail, etc.
+Bodies of busywait() and slowwait() functions are almost identical. Extract
+the common code into a helper, loopy_wait, and convert busywait() and
+slowwait() into trivial wrappers.
 
-Update log_test() to recognize the various possible RET values.
+Moreover, the fact that slowwait() uses seconds for units is really not
+intuitive, and the comment does not help much. Instead make the unit part
+of the name of the argument to further clarify what units are expected.
 
-Then have EXIT_STATUS track the RET value of the current test. This differs
-subtly from the way RET tracks the value: while for RET we want to
-recognize XFAIL as a separate status, for purposes of exit code, we want to
-to conflate XFAIL and PASS, because they both communicate non-failure. Thus
-add a new helper, ksft_exit_status_merge().
-
-With this log_test_skip() and log_test_xfail() can be reexpressed as thin
-wrappers around log_test.
-
+Cc: Hangbin Liu <liuhangbin@gmail.com>
 Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://lore.kernel.org/r/e5f807cb5476ab795fd14ac74da53a731a9fc432.1711464583.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Benjamin Poirier <bpoirier@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: ea63ac142925 ("selftests/net: use tc rule to filter the na packet")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/lib.sh | 92 ++++++++++++++-----
- tools/testing/selftests/net/lib.sh            |  9 ++
- 2 files changed, 77 insertions(+), 24 deletions(-)
+ tools/testing/selftests/net/forwarding/lib.sh | 22 ++-----------------
+ tools/testing/selftests/net/lib.sh            | 16 +++++++++++---
+ 2 files changed, 15 insertions(+), 23 deletions(-)
 
 diff --git a/tools/testing/selftests/net/forwarding/lib.sh b/tools/testing/selftests/net/forwarding/lib.sh
-index 258d2082aa991..99ab42319e3e3 100644
+index 99ab42319e3e3..01322758255f7 100644
 --- a/tools/testing/selftests/net/forwarding/lib.sh
 +++ b/tools/testing/selftests/net/forwarding/lib.sh
-@@ -400,6 +400,62 @@ check_err_fail()
- 	fi
- }
- 
-+log_test_result()
-+{
-+	local test_name=$1; shift
-+	local opt_str=$1; shift
-+	local result=$1; shift
-+	local retmsg=$1; shift
-+
-+	printf "TEST: %-60s  [%s]\n" "$test_name $opt_str" "$result"
-+	if [[ $retmsg ]]; then
-+		printf "\t%s\n" "$retmsg"
-+	fi
-+}
-+
-+pause_on_fail()
-+{
-+	if [[ $PAUSE_ON_FAIL == yes ]]; then
-+		echo "Hit enter to continue, 'q' to quit"
-+		read a
-+		[[ $a == q ]] && exit 1
-+	fi
-+}
-+
-+handle_test_result_pass()
-+{
-+	local test_name=$1; shift
-+	local opt_str=$1; shift
-+
-+	log_test_result "$test_name" "$opt_str" " OK "
-+}
-+
-+handle_test_result_fail()
-+{
-+	local test_name=$1; shift
-+	local opt_str=$1; shift
-+
-+	log_test_result "$test_name" "$opt_str" FAIL "$retmsg"
-+	pause_on_fail
-+}
-+
-+handle_test_result_xfail()
-+{
-+	local test_name=$1; shift
-+	local opt_str=$1; shift
-+
-+	log_test_result "$test_name" "$opt_str" XFAIL "$retmsg"
-+	pause_on_fail
-+}
-+
-+handle_test_result_skip()
-+{
-+	local test_name=$1; shift
-+	local opt_str=$1; shift
-+
-+	log_test_result "$test_name" "$opt_str" SKIP "$retmsg"
-+}
-+
- log_test()
+@@ -41,27 +41,9 @@ source "$net_forwarding_dir/../lib.sh"
+ # timeout in seconds
+ slowwait()
  {
- 	local test_name=$1
-@@ -409,40 +465,28 @@ log_test()
- 		opt_str="($opt_str)"
- 	fi
- 
--	if [[ $RET -ne 0 ]]; then
--		EXIT_STATUS=1
--		printf "TEST: %-60s  [FAIL]\n" "$test_name $opt_str"
--		if [[ ! -z "$retmsg" ]]; then
--			printf "\t%s\n" "$retmsg"
--		fi
--		if [ "${PAUSE_ON_FAIL}" = "yes" ]; then
--			echo "Hit enter to continue, 'q' to quit"
--			read a
--			[ "$a" = "q" ] && exit 1
--		fi
--		return 1
-+	if ((RET == ksft_pass)); then
-+		handle_test_result_pass "$test_name" "$opt_str"
-+	elif ((RET == ksft_xfail)); then
-+		handle_test_result_xfail "$test_name" "$opt_str"
-+	elif ((RET == ksft_skip)); then
-+		handle_test_result_skip "$test_name" "$opt_str"
-+	else
-+		handle_test_result_fail "$test_name" "$opt_str"
- 	fi
- 
--	printf "TEST: %-60s  [ OK ]\n" "$test_name $opt_str"
--	return 0
-+	EXIT_STATUS=$(ksft_exit_status_merge $EXIT_STATUS $RET)
-+	return $RET
- }
- 
- log_test_skip()
- {
--	local test_name=$1
--	local opt_str=$2
+-	local timeout=$1; shift
 -
--	printf "TEST: %-60s  [SKIP]\n" "$test_name $opt_str"
--	return 0
-+	RET=$ksft_skip retmsg= log_test "$@"
- }
+-	local start_time="$(date -u +%s)"
+-	while true
+-	do
+-		local out
+-		out=$("$@")
+-		local ret=$?
+-		if ((!ret)); then
+-			echo -n "$out"
+-			return 0
+-		fi
++	local timeout_sec=$1; shift
  
- log_test_xfail()
- {
--	local test_name=$1
--	local opt_str=$2
+-		local current_time="$(date -u +%s)"
+-		if ((current_time - start_time > timeout)); then
+-			echo -n "$out"
+-			return 1
+-		fi
 -
--	printf "TEST: %-60s  [XFAIL]\n" "$test_name $opt_str"
--	return 0
-+	RET=$ksft_xfail retmsg= log_test "$@"
+-		sleep 0.1
+-	done
++	loopy_wait "sleep 0.1" "$((timeout_sec * 1000))" "$@"
  }
  
- log_info()
+ ##############################################################################
 diff --git a/tools/testing/selftests/net/lib.sh b/tools/testing/selftests/net/lib.sh
-index b0bbde83b8461..e826ec1cc9d88 100644
+index e826ec1cc9d88..308c3b0bcf210 100644
 --- a/tools/testing/selftests/net/lib.sh
 +++ b/tools/testing/selftests/net/lib.sh
-@@ -44,6 +44,15 @@ ksft_status_merge()
- 		$ksft_pass $ksft_xfail $ksft_skip $ksft_fail
+@@ -53,9 +53,10 @@ ksft_exit_status_merge()
+ 		$ksft_xfail $ksft_pass $ksft_skip $ksft_fail
  }
  
-+ksft_exit_status_merge()
-+{
-+	local a=$1; shift
-+	local b=$1; shift
+-busywait()
++loopy_wait()
+ {
+-	local timeout=$1; shift
++	local sleep_cmd=$1; shift
++	local timeout_ms=$1; shift
+ 
+ 	local start_time="$(date -u +%s%3N)"
+ 	while true
+@@ -69,13 +70,22 @@ busywait()
+ 		fi
+ 
+ 		local current_time="$(date -u +%s%3N)"
+-		if ((current_time - start_time > timeout)); then
++		if ((current_time - start_time > timeout_ms)); then
+ 			echo -n "$out"
+ 			return 1
+ 		fi
 +
-+	__ksft_status_merge "$a" "$b" \
-+		$ksft_xfail $ksft_pass $ksft_skip $ksft_fail
++		$sleep_cmd
+ 	done
+ }
+ 
++busywait()
++{
++	local timeout_ms=$1; shift
++
++	loopy_wait : "$timeout_ms" "$@"
 +}
 +
- busywait()
+ cleanup_ns()
  {
- 	local timeout=$1; shift
+ 	local ns=""
 -- 
 2.43.0
 
