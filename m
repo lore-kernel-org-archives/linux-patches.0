@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD781A186B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C506199231;
 	Thu,  6 Jun 2024 14:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683184; cv=none; b=mrLh1BdPE1a2swWscaEWc21kW1DkSJMGmGDu2netFy9ySxi0gc95KBUU0B5FQCw+RJ/ApETN16VWlTM/jbAMGAe7xUlMp9ddcvBwev3vhpB58FfDItBtKlEBHC/Ctg3gHvrNPmKIvu688QlzJebvcx+KpGUmqn53b0E9AesuFiQ=
+	t=1717683184; cv=none; b=mfoiQOWVXioEoyt9Zr6NETjWVFmmACioVZukpOH4I6butAwURmgDDRje3JrczevN+ywmDPoU6UxN3DvxHx4zAwEnSgDBiEIAaP7+5Ga7/gUmJ7tnipy8hdLkWtf4LUae24fJMBcyYl6y4q4K5+leNslXFfvTHEV72Axa3DAw98c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683184; c=relaxed/simple;
-	bh=iaJBjcSCNYxOIBUwVlVOKMJAofRzPVEdTU9Nquoh1+U=;
+	bh=fXU9QkWb1q7e9Lhq7c7mTuQBM6uifCW3nHMAZpR0T94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y40jX0S7EbAKU0lSuYfbVZAoB7TA88FRoU8h44QHypvndQTkXrf9+q1I21ZmBe/2oZb/3RJNQz7iZvv28MZU3HOl5XWez/CiCa27A4D+Qa3GIeAuhHHG1jZ9rpeBtkbMf2AHcUNvx8m0Xa8A8caKN74FfCtTI0XI/s76ZstG1ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4UWnTTw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a3xa3H2/tf469DLo//SUNUUww9OATgXFhc63xei0wH7VUHq/XznX0sbVU/uIIuSXRfhv2wU6g9ce7RCV46t1MzweWno1ow+bEXeHFj2MVtnTnk5P21iaemjNrkZTKQrcLO6vT+iHOiKC/PJosztobupZfFdTv1zznsZt5QcZtWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Me93YK21; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4UWnTTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB48C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Me93YK21"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FBAC2BD10;
 	Thu,  6 Jun 2024 14:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683184;
-	bh=iaJBjcSCNYxOIBUwVlVOKMJAofRzPVEdTU9Nquoh1+U=;
+	bh=fXU9QkWb1q7e9Lhq7c7mTuQBM6uifCW3nHMAZpR0T94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z4UWnTTwDb2RgDcoqabD5a/LbatqErMFqDEcg0hhS6pNe6cI2+l7iltTzJDuDeJ5X
-	 GtmHxUPZstfxskcfbhhPhctUhl2nQWMhXCkmjWOwT/GZ/bwpuOB6g/7IaEUyi7P05h
-	 4W5ZMdTa1b8rw2roFNmxVIIbc/9ue1nP8lHpbQh8=
+	b=Me93YK21HaCxlNOLEmjhzv/vpszDDsWEQpL1BfI7dxIqhThg90g+cpeSa9s//QMJP
+	 dmjgusTT6WouRWl6fUmFa+P/sJui+whRFiWpNIJGn70Zz2R3EtPVs+ffwqk8pMLhzV
+	 /4t2tcNJB0xmdtpAWvXI/g+nLyJyM7OhXJRrT+0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+83e7f982ca045ab4405c@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 058/473] x86/mm: Remove broken vsyscall emulation code from the page fault code
-Date: Thu,  6 Jun 2024 15:59:47 +0200
-Message-ID: <20240606131701.797098556@linuxfoundation.org>
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 128/744] wifi: ath11k: dont force enable power save on non-running vdevs
+Date: Thu,  6 Jun 2024 15:56:40 +0200
+Message-ID: <20240606131736.529752014@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,233 +47,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 02b670c1f88e78f42a6c5aee155c7b26960ca054 ]
+[ Upstream commit 01296b39d3515f20a1db64d3c421c592b1e264a0 ]
 
-The syzbot-reported stack trace from hell in this discussion thread
-actually has three nested page faults:
+Currently we force enable power save on non-running vdevs, this results
+in unexpected ping latency in below scenarios:
+	1. disable power save from userspace.
+	2. trigger suspend/resume.
 
-  https://lore.kernel.org/r/000000000000d5f4fc0616e816d4@google.com
+With step 1 power save is disabled successfully and we get a good latency:
 
-... and I think that's actually the important thing here:
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+64 bytes from 192.168.1.1: icmp_seq=1 ttl=64 time=5.13 ms
+64 bytes from 192.168.1.1: icmp_seq=2 ttl=64 time=5.45 ms
+64 bytes from 192.168.1.1: icmp_seq=3 ttl=64 time=5.99 ms
+64 bytes from 192.168.1.1: icmp_seq=4 ttl=64 time=6.34 ms
+64 bytes from 192.168.1.1: icmp_seq=5 ttl=64 time=4.47 ms
+64 bytes from 192.168.1.1: icmp_seq=6 ttl=64 time=6.45 ms
 
- - the first page fault is from user space, and triggers the vsyscall
-   emulation.
+While after step 2, the latency becomes much larger:
 
- - the second page fault is from __do_sys_gettimeofday(), and that should
-   just have caused the exception that then sets the return value to
-   -EFAULT
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+64 bytes from 192.168.1.1: icmp_seq=1 ttl=64 time=17.7 ms
+64 bytes from 192.168.1.1: icmp_seq=2 ttl=64 time=15.0 ms
+64 bytes from 192.168.1.1: icmp_seq=3 ttl=64 time=14.3 ms
+64 bytes from 192.168.1.1: icmp_seq=4 ttl=64 time=16.5 ms
+64 bytes from 192.168.1.1: icmp_seq=5 ttl=64 time=20.1 ms
 
- - the third nested page fault is due to _raw_spin_unlock_irqrestore() ->
-   preempt_schedule() -> trace_sched_switch(), which then causes a BPF
-   trace program to run, which does that bpf_probe_read_compat(), which
-   causes that page fault under pagefault_disable().
+The reason is, with step 2, power save is force enabled due to vdev not
+running, although mac80211 was trying to disable it to honor userspace
+configuration:
 
-It's quite the nasty backtrace, and there's a lot going on.
+ath11k_pci 0000:03:00.0: wmi cmd sta powersave mode psmode 1 vdev id 0
+Call Trace:
+ ath11k_wmi_pdev_set_ps_mode
+ ath11k_mac_op_bss_info_changed
+ ieee80211_bss_info_change_notify
+ ieee80211_reconfig
+ ieee80211_resume
+ wiphy_resume
 
-The problem is literally the vsyscall emulation, which sets
+This logic is taken from ath10k where it was added due to below comment:
 
-        current->thread.sig_on_uaccess_err = 1;
+	Firmware doesn't behave nicely and consumes more power than
+	necessary if PS is disabled on a non-started vdev.
 
-and that causes the fixup_exception() code to send the signal *despite* the
-exception being caught.
+However we don't know whether such an issue also occurs to ath11k firmware
+or not. But even if it does, it's not appropriate because it goes against
+userspace, even cfg/mac80211 don't know we have enabled it in fact.
 
-And I think that is in fact completely bogus.  It's completely bogus
-exactly because it sends that signal even when it *shouldn't* be sent -
-like for the BPF user mode trace gathering.
+Remove it to fix this issue. In this way we not only get a better latency,
+but also, and the most important, keeps the consistency between userspace
+and kernel/driver. The biggest price for that would be the power consumption,
+which is not that important, compared with the consistency.
 
-In other words, I think the whole "sig_on_uaccess_err" thing is entirely
-broken, because it makes any nested page-faults do all the wrong things.
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
 
-Now, arguably, I don't think anybody should enable vsyscall emulation any
-more, but this test case clearly does.
-
-I think we should just make the "send SIGSEGV" be something that the
-vsyscall emulation does on its own, not this broken per-thread state for
-something that isn't actually per thread.
-
-The x86 page fault code actually tried to deal with the "incorrect nesting"
-by having that:
-
-                if (in_interrupt())
-                        return;
-
-which ignores the sig_on_uaccess_err case when it happens in interrupts,
-but as shown by this example, these nested page faults do not need to be
-about interrupts at all.
-
-IOW, I think the only right thing is to remove that horrendously broken
-code.
-
-The attached patch looks like the ObviouslyCorrect(tm) thing to do.
-
-NOTE! This broken code goes back to this commit in 2011:
-
-  4fc3490114bb ("x86-64: Set siginfo and context on vsyscall emulation faults")
-
-... and back then the reason was to get all the siginfo details right.
-Honestly, I do not for a moment believe that it's worth getting the siginfo
-details right here, but part of the commit says:
-
-    This fixes issues with UML when vsyscall=emulate.
-
-... and so my patch to remove this garbage will probably break UML in this
-situation.
-
-I do not believe that anybody should be running with vsyscall=emulate in
-2024 in the first place, much less if you are doing things like UML. But
-let's see if somebody screams.
-
-Reported-and-tested-by: syzbot+83e7f982ca045ab4405c@syzkaller.appspotmail.com
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Andy Lutomirski <luto@kernel.org>
-Link: https://lore.kernel.org/r/CAHk-=wh9D6f7HUkDgZHKmDCHUQmp+Co89GP+b8+z+G56BKeyNg@mail.gmail.com
+Fixes: b2beffa7d9a6 ("ath11k: enable 802.11 power save mode in station mode")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240309113115.11498-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/vsyscall/vsyscall_64.c | 28 ++---------------------
- arch/x86/include/asm/processor.h      |  1 -
- arch/x86/mm/fault.c                   | 33 +--------------------------
- 3 files changed, 3 insertions(+), 59 deletions(-)
+ drivers/net/wireless/ath/ath11k/mac.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/arch/x86/entry/vsyscall/vsyscall_64.c b/arch/x86/entry/vsyscall/vsyscall_64.c
-index 4af81df133ee8..5d4ca8b942939 100644
---- a/arch/x86/entry/vsyscall/vsyscall_64.c
-+++ b/arch/x86/entry/vsyscall/vsyscall_64.c
-@@ -98,11 +98,6 @@ static int addr_to_vsyscall_nr(unsigned long addr)
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index b75cb49c27466..445f59ad1fc08 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -1233,14 +1233,7 @@ static int ath11k_mac_vif_setup_ps(struct ath11k_vif *arvif)
  
- static bool write_ok_or_segv(unsigned long ptr, size_t size)
- {
--	/*
--	 * XXX: if access_ok, get_user, and put_user handled
--	 * sig_on_uaccess_err, this could go away.
--	 */
--
- 	if (!access_ok((void __user *)ptr, size)) {
- 		struct thread_struct *thread = &current->thread;
+ 	enable_ps = arvif->ps;
  
-@@ -120,10 +115,8 @@ static bool write_ok_or_segv(unsigned long ptr, size_t size)
- bool emulate_vsyscall(unsigned long error_code,
- 		      struct pt_regs *regs, unsigned long address)
- {
--	struct task_struct *tsk;
- 	unsigned long caller;
- 	int vsyscall_nr, syscall_nr, tmp;
--	int prev_sig_on_uaccess_err;
- 	long ret;
- 	unsigned long orig_dx;
- 
-@@ -172,8 +165,6 @@ bool emulate_vsyscall(unsigned long error_code,
- 		goto sigsegv;
- 	}
- 
--	tsk = current;
--
- 	/*
- 	 * Check for access_ok violations and find the syscall nr.
- 	 *
-@@ -234,12 +225,8 @@ bool emulate_vsyscall(unsigned long error_code,
- 		goto do_ret;  /* skip requested */
- 
- 	/*
--	 * With a real vsyscall, page faults cause SIGSEGV.  We want to
--	 * preserve that behavior to make writing exploits harder.
-+	 * With a real vsyscall, page faults cause SIGSEGV.
- 	 */
--	prev_sig_on_uaccess_err = current->thread.sig_on_uaccess_err;
--	current->thread.sig_on_uaccess_err = 1;
--
- 	ret = -EFAULT;
- 	switch (vsyscall_nr) {
- 	case 0:
-@@ -262,23 +249,12 @@ bool emulate_vsyscall(unsigned long error_code,
- 		break;
- 	}
- 
--	current->thread.sig_on_uaccess_err = prev_sig_on_uaccess_err;
--
- check_fault:
- 	if (ret == -EFAULT) {
- 		/* Bad news -- userspace fed a bad pointer to a vsyscall. */
- 		warn_bad_vsyscall(KERN_INFO, regs,
- 				  "vsyscall fault (exploit attempt?)");
--
--		/*
--		 * If we failed to generate a signal for any reason,
--		 * generate one here.  (This should be impossible.)
+-	if (!arvif->is_started) {
+-		/* mac80211 can update vif powersave state while disconnected.
+-		 * Firmware doesn't behave nicely and consumes more power than
+-		 * necessary if PS is disabled on a non-started vdev. Hence
+-		 * force-enable PS for non-running vdevs.
 -		 */
--		if (WARN_ON_ONCE(!sigismember(&tsk->pending.signal, SIGBUS) &&
--				 !sigismember(&tsk->pending.signal, SIGSEGV)))
--			goto sigsegv;
--
--		return true;  /* Don't emulate the ret. */
-+		goto sigsegv;
- 	}
+-		psmode = WMI_STA_PS_MODE_ENABLED;
+-	} else if (enable_ps) {
++	if (enable_ps) {
+ 		psmode = WMI_STA_PS_MODE_ENABLED;
+ 		param = WMI_STA_PS_PARAM_INACTIVITY_TIME;
  
- 	regs->ax = ret;
-diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
-index 94ea13adb724a..3ed6cc7785037 100644
---- a/arch/x86/include/asm/processor.h
-+++ b/arch/x86/include/asm/processor.h
-@@ -519,7 +519,6 @@ struct thread_struct {
- 	unsigned long		iopl_emul;
- 
- 	unsigned int		iopl_warn:1;
--	unsigned int		sig_on_uaccess_err:1;
- 
- 	/*
- 	 * Protection Keys Register for Userspace.  Loaded immediately on
-diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
-index f20636510eb1e..2fc007752ceb1 100644
---- a/arch/x86/mm/fault.c
-+++ b/arch/x86/mm/fault.c
-@@ -737,39 +737,8 @@ kernelmode_fixup_or_oops(struct pt_regs *regs, unsigned long error_code,
- 	WARN_ON_ONCE(user_mode(regs));
- 
- 	/* Are we prepared to handle this kernel fault? */
--	if (fixup_exception(regs, X86_TRAP_PF, error_code, address)) {
--		/*
--		 * Any interrupt that takes a fault gets the fixup. This makes
--		 * the below recursive fault logic only apply to a faults from
--		 * task context.
--		 */
--		if (in_interrupt())
--			return;
--
--		/*
--		 * Per the above we're !in_interrupt(), aka. task context.
--		 *
--		 * In this case we need to make sure we're not recursively
--		 * faulting through the emulate_vsyscall() logic.
--		 */
--		if (current->thread.sig_on_uaccess_err && signal) {
--			sanitize_error_code(address, &error_code);
--
--			set_signal_archinfo(address, error_code);
--
--			if (si_code == SEGV_PKUERR) {
--				force_sig_pkuerr((void __user *)address, pkey);
--			} else {
--				/* XXX: hwpoison faults will set the wrong code. */
--				force_sig_fault(signal, si_code, (void __user *)address);
--			}
--		}
--
--		/*
--		 * Barring that, we can do the fixup and be happy.
--		 */
-+	if (fixup_exception(regs, X86_TRAP_PF, error_code, address))
- 		return;
--	}
- 
- 	/*
- 	 * AMD erratum #91 manifests as a spurious page fault on a PREFETCH
 -- 
 2.43.0
 
