@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A6C19925E;
-	Thu,  6 Jun 2024 14:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513C8199255;
+	Thu,  6 Jun 2024 14:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682993; cv=none; b=lgEzUaBuKGdsk4VbfXAKLGXZYblI9ba/fK6XgKUvA7Rt5Ohq8NzS21okicC8PQrrjpLYwAU7eO4HDJNHIbKXPBp2CNjU5g1XWfpxs3icnt+g5TJy9PrccE03q0X5tMS5lyRoRAja9mnzXAkKPm1vtnmqd0KE7nyBCXRga9j4fYk=
+	t=1717682994; cv=none; b=gkrk9cpXQHDrKRmRImV3dVsDp0xIgt1acEaqhqeU8VeuY81CzURb7YoCpSZLuHGiU+q7BQ9QzN5dpOyCVATfJykC/vkZQStoBRWfRerC62YdzYtADg6N4e6/1Bsiil8ytHHwWdRgRoGasuweFnzlAYATfR3TGnWyf9i6aEYr6RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682993; c=relaxed/simple;
-	bh=3/hf0RdSxaYSAgOeoAweyTYhe7wJD/L2sakpBF2VsJQ=;
+	s=arc-20240116; t=1717682994; c=relaxed/simple;
+	bh=ZZGsl9QpkR6mN9ZS4c3uaDJZDGm09IrJIYplptqoEN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBM2cqPDlTX9LiFOhsVnvXLbxwmHTl+7Q5/TjfbIvXXSBF/9Sbgzio06FqU/k0YpdJroPjmYKvtkZFQCNJmw/If5HL7U6AK3+BudKxWMghfS4RmTu02MnXsADUjtgjCdS1chTVbLSAzif+x9U+ekn6tgcSZ/5FmQfxs63Ta05TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pD5K6sqa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MA4mXJQlJvhKvBsDyQkp57Lmj3xI71r5/QvsGsIBi6/L5eK/uFMna+S27YZEtssVr9ASFvi2hWlY1xLou4bMMAy8VuZGqEF9B8Pg8Ws9WDsN9g4KVu6qg8QQrTHUBIFMnm6UM/xWCpHUalxtVvK4nuHZkS9C3IDmMrXF3DWI9kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JemI5Hyt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pD5K6sqa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A17C32782;
-	Thu,  6 Jun 2024 14:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JemI5Hyt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C87EC32781;
+	Thu,  6 Jun 2024 14:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682993;
-	bh=3/hf0RdSxaYSAgOeoAweyTYhe7wJD/L2sakpBF2VsJQ=;
+	s=korg; t=1717682994;
+	bh=ZZGsl9QpkR6mN9ZS4c3uaDJZDGm09IrJIYplptqoEN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pD5K6sqaWVT/fzKZyg57muRP9T+rsSW3nii95sM62MQFAYT0woahN56GMTW2SB4fw
-	 selttAaKid0ZOFeV6/li+afWYbLAPebWOAD+aWHTynXFgP6IFhsyL2Fltw3M/F4U9G
-	 Zlja5IitPL16lDp3LBdG7vVCn+Occd8bABKX4qfQ=
+	b=JemI5HytznPC3wXXqmYQAuPrlzCS7fcLIVTrU5wzTLM3YUgJ9ZfOwc6goUa7ZHUJX
+	 6MLZ76efAoxEd8KIihSk0lj+5ZoPaZray66fr897TetZ8G8wpJGrA3d9yRtXpcP4ux
+	 KJPLKS402uZOqGmFqU3SVozlCa2v6m1QlOvkVr08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Le Ma <le.ma@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Marc Herbert <marc.herbert@intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 182/374] drm/amdgpu: init microcode chip name from ip versions
-Date: Thu,  6 Jun 2024 16:02:41 +0200
-Message-ID: <20240606131657.970371370@linuxfoundation.org>
+Subject: [PATCH 6.9 191/374] ASoC: SOF: debug: Handle cases when fw_lib_prefix is not set, NULL
+Date: Thu,  6 Jun 2024 16:02:50 +0200
+Message-ID: <20240606131658.265206089@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,47 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Le Ma <le.ma@amd.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 92ed1e9cd5f6cc4f8c9a9ba6c4d2d2bbc6221296 ]
+[ Upstream commit b32487ca7b51ce430f15ec785269f11c25a6a560 ]
 
-To adapt to different gc versions in gfx_v9_4_3.c file.
+The firmware libraries are not supported by IPC3, the fw_lib_path is not
+a valid parameter and it is always NULL.
+Do not create the debugfs file for IPC3 at all as it is not applicable.
 
-Signed-off-by: Le Ma <le.ma@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: acce6479e30f ("drm/amdgpu: Fix buffer size in gfx_v9_4_3_init_ cp_compute_microcode() and rlc_microcode()")
+With IPC4 some vendors/platforms might not support loadable libraries and
+the fw_lib_prefix is left to NULL to indicate this.
+Handle such case with allocating "Not supported" string.
+
+Reviewed-by: Marc Herbert <marc.herbert@intel.com>
+Fixes: 17f4041244e6 ("ASoC: SOF: debug: show firmware/topology prefix/names")
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20240426153902.39560-2-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/sof/debug.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-index b53c8fd4e8cf3..f4d48d6d7e777 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-@@ -431,16 +431,16 @@ static int gfx_v9_4_3_init_cp_compute_microcode(struct amdgpu_device *adev,
+diff --git a/sound/soc/sof/debug.c b/sound/soc/sof/debug.c
+index 7275437ea8d8a..6481da31826dc 100644
+--- a/sound/soc/sof/debug.c
++++ b/sound/soc/sof/debug.c
+@@ -345,8 +345,27 @@ int snd_sof_dbg_init(struct snd_sof_dev *sdev)
  
- static int gfx_v9_4_3_init_microcode(struct amdgpu_device *adev)
- {
--	const char *chip_name;
-+	char ucode_prefix[30];
- 	int r;
- 
--	chip_name = "gc_9_4_3";
-+	amdgpu_ucode_ip_version_decode(adev, GC_HWIP, ucode_prefix, sizeof(ucode_prefix));
- 
--	r = gfx_v9_4_3_init_rlc_microcode(adev, chip_name);
-+	r = gfx_v9_4_3_init_rlc_microcode(adev, ucode_prefix);
- 	if (r)
- 		return r;
- 
--	r = gfx_v9_4_3_init_cp_compute_microcode(adev, chip_name);
-+	r = gfx_v9_4_3_init_cp_compute_microcode(adev, ucode_prefix);
- 	if (r)
- 		return r;
- 
+ 	debugfs_create_str("fw_path", 0444, fw_profile,
+ 			   (char **)&plat_data->fw_filename_prefix);
+-	debugfs_create_str("fw_lib_path", 0444, fw_profile,
+-			   (char **)&plat_data->fw_lib_prefix);
++	/* library path is not valid for IPC3 */
++	if (plat_data->ipc_type != SOF_IPC_TYPE_3) {
++		/*
++		 * fw_lib_prefix can be NULL if the vendor/platform does not
++		 * support loadable libraries
++		 */
++		if (plat_data->fw_lib_prefix) {
++			debugfs_create_str("fw_lib_path", 0444, fw_profile,
++					   (char **)&plat_data->fw_lib_prefix);
++		} else {
++			static char *fw_lib_path;
++
++			fw_lib_path = devm_kasprintf(sdev->dev, GFP_KERNEL,
++						     "Not supported");
++			if (!fw_lib_path)
++				return -ENOMEM;
++
++			debugfs_create_str("fw_lib_path", 0444, fw_profile,
++					   (char **)&fw_lib_path);
++		}
++	}
+ 	debugfs_create_str("tplg_path", 0444, fw_profile,
+ 			   (char **)&plat_data->tplg_filename_prefix);
+ 	debugfs_create_str("fw_name", 0444, fw_profile,
 -- 
 2.43.0
 
