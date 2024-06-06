@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CECB1A01AF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83ABF1A01AF;
 	Thu,  6 Jun 2024 14:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683144; cv=none; b=W+vFikD0u0H0K6N+jTxf3RC03TCvczu57f5Xmqxg2L9Yt0k2mD45bkDb7d+iT41/DT7Nt0Deatf9g4GEXuYKja2FFcnt9t4uucfXOA/YPz6RL+ADPtmEE9Ec/rUn5T0pLJCE3SKqNrXMa6l0UxA97z7Jt87axvQYa3OWkqb30kY=
+	t=1717683144; cv=none; b=i5oaTHG7stO+okKt33jQcBV56IinFoMLXahPDgt9v1y9luJAQDzpLw2DmS/SbsIaBhAgigz0A0f9UJQRBjB3yghMQjddLFycBAmRqfOB9X2IbFEbBJDOLSQMUROH1MjaNhUWEagvcaWsZ2XIRjex2oNOy5yWGhFY3YJOaVVpKKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683144; c=relaxed/simple;
-	bh=G00kfkXVatdP9cWYZ8ju7tGm4JnS/SkCDA+UiMKxjlg=;
+	bh=BgBjieV6+WDkR0G6F/IeLce9wWNhDHkW3WjiIQ1vb+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gazk0qZmKw4MYY2wYgQyqwltnGVzFBReryWRmqRm0QHVLrHcb/BJcfgvhJ8/MOBDpVzVYTJBEz7MsMhkhF/FpYdV59I/6nbCnC6HUL4AUaWoFIPtfy4eaCdX6CvO7HNPtay3vxXz10fl941vdsLk/NgqoCsii2/RPLGYZMyNIu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kl0zEXrd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pn4fc4Vsj+rbVbF5+JX/EbDtk4i+Wy95t4iinAfDL6+gT8pawvifZTl4l1Wz5Yx5PItxOem8CIGJ+BRC26PqvhychU/ohjKI4MDp8UBxKdT0LdjbjczLho4RLEX4q9/aZydsIfmjJjg1ZrVr1pePFhxcD1rnwpyO5AB9D8DG2aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZ6SGXYX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kl0zEXrd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0F4C2BD10;
-	Thu,  6 Jun 2024 14:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZ6SGXYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6394DC2BD10;
+	Thu,  6 Jun 2024 14:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683143;
-	bh=G00kfkXVatdP9cWYZ8ju7tGm4JnS/SkCDA+UiMKxjlg=;
+	s=korg; t=1717683144;
+	bh=BgBjieV6+WDkR0G6F/IeLce9wWNhDHkW3WjiIQ1vb+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kl0zEXrdj32YCWaCLKjPS31fibpSGt8+/QWZ654cSxj6vvgzO7Ld7+aCSTj/GEJFU
-	 tIEXOuEEm96ctnZcgbPZXVfxv/8ETM1BMD1UZo4ImPNMoOkcwXLXudYuRhaUROSMGv
-	 JsduSsRCiFBRktdqgOXwHCAwxXd62AHf3/WpgyYE=
+	b=WZ6SGXYXwJ1BIByBahjXs8WqNf8fGwercwHdakofw/liO98qMd3tSQK4RvZMvW+jy
+	 sJ4RcoNwSm5B85HBCjHCGT0ZTJgMT4e1QcJAraIHHL3DsQvIhEuQq+4nT+4uPOtjeE
+	 LwO9ZqXYEPAGCtJxB15IJoCjZDZVfo7mQ/f2O3iY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jirong Feng <jirong.feng@easystack.cn>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 089/744] nvmet: fix nvme status code when namespace is disabled
-Date: Thu,  6 Jun 2024 15:56:01 +0200
-Message-ID: <20240606131735.260835704@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com,
+	"Bai, Shuangpeng" <sjb7183@psu.edu>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 016/473] nilfs2: fix potential hang in nilfs_detach_log_writer()
+Date: Thu,  6 Jun 2024 15:59:05 +0200
+Message-ID: <20240606131700.379814906@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,98 +48,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 505363957fad35f7aed9a2b0d8dad73451a80fb5 ]
+commit eb85dace897c5986bc2f36b3c783c6abb8a4292e upstream.
 
-If the user disabled a nvmet namespace, it is removed from the subsystem
-namespaces list. When nvmet processes a command directed to an nsid that
-was disabled, it cannot differentiate between a nsid that is disabled
-vs. a non-existent namespace, and resorts to return NVME_SC_INVALID_NS
-with the dnr bit set.
+Syzbot has reported a potential hang in nilfs_detach_log_writer() called
+during nilfs2 unmount.
 
-This translates to a non-retryable status for the host, which translates
-to a user error. We should expect disabled namespaces to not cause an
-I/O error in a multipath environment.
+Analysis revealed that this is because nilfs_segctor_sync(), which
+synchronizes with the log writer thread, can be called after
+nilfs_segctor_destroy() terminates that thread, as shown in the call trace
+below:
 
-Address this by searching a configfs item for the namespace nvmet failed
-to find, and if we found one, conclude that the namespace is disabled
-(perhaps temporarily). Return NVME_SC_INTERNAL_PATH_ERROR in this case
-and keep DNR bit cleared.
+nilfs_detach_log_writer
+  nilfs_segctor_destroy
+    nilfs_segctor_kill_thread  --> Shut down log writer thread
+    flush_work
+      nilfs_iput_work_func
+        nilfs_dispose_list
+          iput
+            nilfs_evict_inode
+              nilfs_transaction_commit
+                nilfs_construct_segment (if inode needs sync)
+                  nilfs_segctor_sync  --> Attempt to synchronize with
+                                          log writer thread
+                           *** DEADLOCK ***
 
-Reported-by: Jirong Feng <jirong.feng@easystack.cn>
-Tested-by: Jirong Feng <jirong.feng@easystack.cn>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this issue by changing nilfs_segctor_sync() so that the log writer
+thread returns normally without synchronizing after it terminates, and by
+forcing tasks that are already waiting to complete once after the thread
+terminates.
+
+The skipped inode metadata flushout will then be processed together in the
+subsequent cleanup work in nilfs_segctor_destroy().
+
+Link: https://lkml.kernel.org/r/20240520132621.4054-4-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e3973c409251e136fdd0
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Cc: "Bai, Shuangpeng" <sjb7183@psu.edu>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/configfs.c | 13 +++++++++++++
- drivers/nvme/target/core.c     |  5 ++++-
- drivers/nvme/target/nvmet.h    |  1 +
- 3 files changed, 18 insertions(+), 1 deletion(-)
+ fs/nilfs2/segment.c |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index 01b2a3d1a5e6c..3670a1103863b 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -616,6 +616,19 @@ static struct configfs_attribute *nvmet_ns_attrs[] = {
- 	NULL,
- };
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2229,6 +2229,14 @@ static int nilfs_segctor_sync(struct nil
+ 	for (;;) {
+ 		set_current_state(TASK_INTERRUPTIBLE);
  
-+bool nvmet_subsys_nsid_exists(struct nvmet_subsys *subsys, u32 nsid)
-+{
-+	struct config_item *ns_item;
-+	char name[4] = {};
++		/*
++		 * Synchronize only while the log writer thread is alive.
++		 * Leave flushing out after the log writer thread exits to
++		 * the cleanup work in nilfs_segctor_destroy().
++		 */
++		if (!sci->sc_task)
++			break;
 +
-+	if (sprintf(name, "%u", nsid) <= 0)
-+		return false;
-+	mutex_lock(&subsys->namespaces_group.cg_subsys->su_mutex);
-+	ns_item = config_group_find_item(&subsys->namespaces_group, name);
-+	mutex_unlock(&subsys->namespaces_group.cg_subsys->su_mutex);
-+	return ns_item != NULL;
-+}
+ 		if (atomic_read(&wait_req.done)) {
+ 			err = wait_req.err;
+ 			break;
+@@ -2244,7 +2252,7 @@ static int nilfs_segctor_sync(struct nil
+ 	return err;
+ }
+ 
+-static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err)
++static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
+ {
+ 	struct nilfs_segctor_wait_request *wrq, *n;
+ 	unsigned long flags;
+@@ -2252,7 +2260,7 @@ static void nilfs_segctor_wakeup(struct
+ 	spin_lock_irqsave(&sci->sc_wait_request.lock, flags);
+ 	list_for_each_entry_safe(wrq, n, &sci->sc_wait_request.head, wq.entry) {
+ 		if (!atomic_read(&wrq->done) &&
+-		    nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq)) {
++		    (force || nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq))) {
+ 			wrq->err = err;
+ 			atomic_set(&wrq->done, 1);
+ 		}
+@@ -2390,7 +2398,7 @@ static void nilfs_segctor_notify(struct
+ 	if (mode == SC_LSEG_SR) {
+ 		sci->sc_state &= ~NILFS_SEGCTOR_COMMIT;
+ 		sci->sc_seq_done = sci->sc_seq_accepted;
+-		nilfs_segctor_wakeup(sci, err);
++		nilfs_segctor_wakeup(sci, err, false);
+ 		sci->sc_flush_request = 0;
+ 	} else {
+ 		if (mode == SC_FLUSH_FILE)
+@@ -2772,6 +2780,13 @@ static void nilfs_segctor_destroy(struct
+ 		|| sci->sc_seq_request != sci->sc_seq_done);
+ 	spin_unlock(&sci->sc_state_lock);
+ 
++	/*
++	 * Forcibly wake up tasks waiting in nilfs_segctor_sync(), which can
++	 * be called from delayed iput() via nilfs_evict_inode() and can race
++	 * with the above log writer thread termination.
++	 */
++	nilfs_segctor_wakeup(sci, 0, true);
 +
- static void nvmet_ns_release(struct config_item *item)
- {
- 	struct nvmet_ns *ns = to_nvmet_ns(item);
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 3935165048e74..ce7e945cb4f7e 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -425,10 +425,13 @@ void nvmet_stop_keep_alive_timer(struct nvmet_ctrl *ctrl)
- u16 nvmet_req_find_ns(struct nvmet_req *req)
- {
- 	u32 nsid = le32_to_cpu(req->cmd->common.nsid);
-+	struct nvmet_subsys *subsys = nvmet_req_subsys(req);
+ 	if (flush_work(&sci->sc_iput_work))
+ 		flag = true;
  
--	req->ns = xa_load(&nvmet_req_subsys(req)->namespaces, nsid);
-+	req->ns = xa_load(&subsys->namespaces, nsid);
- 	if (unlikely(!req->ns)) {
- 		req->error_loc = offsetof(struct nvme_common_command, nsid);
-+		if (nvmet_subsys_nsid_exists(subsys, nsid))
-+			return NVME_SC_INTERNAL_PATH_ERROR;
- 		return NVME_SC_INVALID_NS | NVME_SC_DNR;
- 	}
- 
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index 8cfd60f3b5648..15b00ed7be16a 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -530,6 +530,7 @@ void nvmet_subsys_disc_changed(struct nvmet_subsys *subsys,
- 		struct nvmet_host *host);
- void nvmet_add_async_event(struct nvmet_ctrl *ctrl, u8 event_type,
- 		u8 event_info, u8 log_page);
-+bool nvmet_subsys_nsid_exists(struct nvmet_subsys *subsys, u32 nsid);
- 
- #define NVMET_QUEUE_SIZE	1024
- #define NVMET_NR_QUEUES		128
--- 
-2.43.0
-
 
 
