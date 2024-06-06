@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE51198E8F;
-	Thu,  6 Jun 2024 14:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AE2198E8F;
+	Thu,  6 Jun 2024 14:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683098; cv=none; b=jWWeiDW64RxP+QPCNUMc2pCnBDtrk9+cy8b015ERdPHK1iJhMSYAqBTslK0zwsYHbj0WqUbLU/qxMtvZ1anCKk827Gx3H17xomuiVBMRc0SAKUIdao9zvuTDf3E9UQ0qESL+2Tq2CGUFum+JORixSOyfbxf+B80OaprVFFcpVUY=
+	t=1717683099; cv=none; b=S/vF5QeFVsD+0EDw5/C6xd2mQbQbubFjn2XlJNqZ9tq6ZlW5SbgrybuR9O3Omk7wdgx4B/kWygDMWUswzVVoY6xIm+O9v6djuEZHHsa8ebdi/KKXO0wJN0XC9duPvkl6eysWSahm3DSpl/g4yR11A7FqShuw+btRFkctqS4cyvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683098; c=relaxed/simple;
-	bh=K5NJWUImKSJdCK9LWcrpQM7Ouho1zh6NIz0skFcWdL4=;
+	s=arc-20240116; t=1717683099; c=relaxed/simple;
+	bh=EZoimYmmBQOIHeFuVQwb82brNzVg6c+oDKi/VZ1BPcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uDK4IdQYoPI8YrHEQWibmoLfyC6CEW0ELdHm4c/OrNp1p6KM1HtTKGlt1nmZC7khZrWN6UDH0gXi7+ZcdvkHhzVtS/zDjxK7b3AjJcw5Snpq6kUCzvJ1hK6yRsZSO8o7AvazQkffTo27wGhvwlysZ/UGF6m1L1jLueFXqgtu8pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+eDXYjO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Uu6yrlA8UqNzxJN0Cn1i+RvxG7G1/dgWBpMeXNNZmEIU/cXfcuWq6P5mdcFoH31F6ITgieKEJrRcXWbXw/jYkiURlDtXYhT4LIh5/Bzl1IsW/FkEIO13En2H76i+hs27DUYAXkKaoTHkxqRamZQMskGJ2VaUICuOd9MTzjAyqgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GfcaB4uC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+eDXYjO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB79CC32781;
-	Thu,  6 Jun 2024 14:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GfcaB4uC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B8CC32781;
+	Thu,  6 Jun 2024 14:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683098;
-	bh=K5NJWUImKSJdCK9LWcrpQM7Ouho1zh6NIz0skFcWdL4=;
+	s=korg; t=1717683099;
+	bh=EZoimYmmBQOIHeFuVQwb82brNzVg6c+oDKi/VZ1BPcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d+eDXYjOTdGij4PjSRHXQ4Hop+8TgfeE5qJVFmp2UubLkAu11MJofhEhJfwXx9AwT
-	 I86jXZ9aEAqk8Uhn7jqjwTfMtrg/IyDVFd3HTOZ4Rg6iLzZnw3TniDNhs1jfrTuW7S
-	 f+SBRJhmGQqMpSod6kih/ISFCETjz/iklG1WpHeg=
+	b=GfcaB4uC6IWQAFNDchxdDZEnRy0MsKI4ta8cYGASGCHS0CTT7/iYpqRSug93h/J6q
+	 1HZ4hjKYeE8EhE72UyiItNpR3J1B26saQJa0PARI72yWXrbxZyBGsLWgnfNQnlqPXq
+	 ER5AYivStOW9m60gkueTnX7CSAf13jxBwEzgsDF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 015/744] tools/latency-collector: Fix -Wformat-security compile warns
-Date: Thu,  6 Jun 2024 15:54:47 +0200
-Message-ID: <20240606131732.939492063@linuxfoundation.org>
+	Brennan Xavier McManus <bxmcmanus@gmail.com>,
+	Ammar Faizi <ammarfaizi2@gnuweeb.org>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>
+Subject: [PATCH 6.6 016/744] tools/nolibc/stdlib: fix memory error in realloc()
+Date: Thu,  6 Jun 2024 15:54:48 +0200
+Message-ID: <20240606131732.971576289@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,81 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuah Khan <skhan@linuxfoundation.org>
+From: Brennan Xavier McManus <bxmcmanus@gmail.com>
 
-commit df73757cf8f66fa54c4721c53b0916af3c4d9818 upstream.
+commit 791f4641142e2aced85de082e5783b4fb0b977c2 upstream.
 
-Fix the following -Wformat-security compile warnings adding missing
-format arguments:
+Pass user_p_len to memcpy() instead of heap->len to prevent realloc()
+from copying an extra sizeof(heap) bytes from beyond the allocated
+region.
 
-latency-collector.c: In function ‘show_available’:
-latency-collector.c:938:17: warning: format not a string literal and
-no format arguments [-Wformat-security]
-  938 |                 warnx(no_tracer_msg);
-      |                 ^~~~~
-
-latency-collector.c:943:17: warning: format not a string literal and
-no format arguments [-Wformat-security]
-  943 |                 warnx(no_latency_tr_msg);
-      |                 ^~~~~
-
-latency-collector.c: In function ‘find_default_tracer’:
-latency-collector.c:986:25: warning: format not a string literal and
-no format arguments [-Wformat-security]
-  986 |                         errx(EXIT_FAILURE, no_tracer_msg);
-      |
-                         ^~~~
-latency-collector.c: In function ‘scan_arguments’:
-latency-collector.c:1881:33: warning: format not a string literal and
-no format arguments [-Wformat-security]
- 1881 |                                 errx(EXIT_FAILURE, no_tracer_msg);
-      |                                 ^~~~
-
-Link: https://lore.kernel.org/linux-trace-kernel/20240404011009.32945-1-skhan@linuxfoundation.org
-
+Signed-off-by: Brennan Xavier McManus <bxmcmanus@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: e23db805da2df ("tracing/tools: Add the latency-collector to tools directory")
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+Fixes: 0e0ff638400be8f497a35b51a4751fd823f6bd6a ("tools/nolibc/stdlib: Implement `malloc()`, `calloc()`, `realloc()` and `free()`")
+Signed-off-by: Willy Tarreau <w@1wt.eu>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/tracing/latency/latency-collector.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/include/nolibc/stdlib.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/tracing/latency/latency-collector.c
-+++ b/tools/tracing/latency/latency-collector.c
-@@ -935,12 +935,12 @@ static void show_available(void)
- 	}
+--- a/tools/include/nolibc/stdlib.h
++++ b/tools/include/nolibc/stdlib.h
+@@ -185,7 +185,7 @@ void *realloc(void *old_ptr, size_t new_
+ 	if (__builtin_expect(!ret, 0))
+ 		return NULL;
  
- 	if (!tracers) {
--		warnx(no_tracer_msg);
-+		warnx("%s", no_tracer_msg);
- 		return;
- 	}
- 
- 	if (!found) {
--		warnx(no_latency_tr_msg);
-+		warnx("%s", no_latency_tr_msg);
- 		tracefs_list_free(tracers);
- 		return;
- 	}
-@@ -983,7 +983,7 @@ static const char *find_default_tracer(v
- 	for (i = 0; relevant_tracers[i]; i++) {
- 		valid = tracer_valid(relevant_tracers[i], &notracer);
- 		if (notracer)
--			errx(EXIT_FAILURE, no_tracer_msg);
-+			errx(EXIT_FAILURE, "%s", no_tracer_msg);
- 		if (valid)
- 			return relevant_tracers[i];
- 	}
-@@ -1878,7 +1878,7 @@ static void scan_arguments(int argc, cha
- 			}
- 			valid = tracer_valid(current_tracer, &notracer);
- 			if (notracer)
--				errx(EXIT_FAILURE, no_tracer_msg);
-+				errx(EXIT_FAILURE, "%s", no_tracer_msg);
- 			if (!valid)
- 				errx(EXIT_FAILURE,
- "The tracer %s is not supported by your kernel!\n", current_tracer);
+-	memcpy(ret, heap->user_p, heap->len);
++	memcpy(ret, heap->user_p, user_p_len);
+ 	munmap(heap, heap->len);
+ 	return ret;
+ }
 
 
