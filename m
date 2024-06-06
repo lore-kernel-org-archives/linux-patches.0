@@ -1,43 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC8419CCE3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EB01B3739;
 	Thu,  6 Jun 2024 14:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683422; cv=none; b=pcW3Fpu8EJngeA9H9dujHhiYj1URPwJfTKoxeYnKUc3rbm6aHMZu5tLguLyIehDd21kgSjCtmCLH7ye4KzjxKQwPRiKvliRfgxwJO0Ze+IRhrfnwTInUFx25uvZQQE77W+MRnXez4g53B8PH/tm1kZbPOtiHEfbWXT8Y8AReK/c=
+	t=1717683422; cv=none; b=XWtc2DSZJXceE/0Cc/0h04rD6BhFrvBWXm1QoDP7Ng7Xc3Vd1THB9QEimo1TYPhN7NoUzE+4flIfJ2jdnLoM266+vHyg3EqcXp2dRITKOAr9xoCenI9VsobtSx7J8OuRUGfYc6qgEXO9frPYiprK/o8WdiLjSfcRBO7GLwDJAdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683422; c=relaxed/simple;
-	bh=+bkJF8xz6SUZ9/qXk69MqNMNdqPq3TRdxA3lFepzr4o=;
+	bh=JdLV5T89apanJB114zcbkfBvw57lMzFYFZj3F35VvFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jatzej3SmR60mAWMADEXtROBsynk3gxcDhIfhRmVzm+EOj82mexjv2fZJcBLkhNGD9ilY6GSVXklBd3yi1C07+M81UIAzqZRAiFdbzDlNaRXr9eSwQW83k4LsGaV26P8ZlADInJHQY/TH8aqatMFk1o+V5oxNuDQM6Q/br2D3WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osdsy9Dz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PQK56pyM8+q6imbF/PFeAnX7wbrsRUiCcO/PnRNB3+W/ZWOcvB2r+8cvSDHLLye6DCNEaUXnBG0kEMQ91T4EWzslHC6Nc0d/KcysrypxLwysJIZjVc/mGUg0iHCGBIv/kxvRLA27BkpG3pXC3b67CjfIe5xrJLTQipdyyFcyMgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ief5pS10; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osdsy9Dz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F023C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ief5pS10"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D0AC32781;
 	Thu,  6 Jun 2024 14:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683422;
-	bh=+bkJF8xz6SUZ9/qXk69MqNMNdqPq3TRdxA3lFepzr4o=;
+	bh=JdLV5T89apanJB114zcbkfBvw57lMzFYFZj3F35VvFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=osdsy9DzJDz1by3zLnBfg5pQA1dURyG2QNMCkH2NUObI16E2gXQGQ26g3XMgN1ktK
-	 obkphyC+PI3E6pFN8kQ+PPprAuCGJOTqm2DFq1V17syzutbRWDPRzM2gk+oUP1VXYT
-	 995NJv1xCuitoYyUDKXBxtpNZe0OtSb0XhouLeOY=
+	b=Ief5pS10S2gtIPD3XXRchEdCu2DGBa24ximc6yYvlGZYKksbiY37NMYX6hldDf5GM
+	 lyhK8Vf3EZhI9RXIUvJd3IgFUbZZI4QO84huRL8PkkpQXs+WPZ3RfCD6aL2UQvnUCl
+	 vIj5iUkDjXyDZKMnKP5TOvGMKYk7UuqnZEhptCTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devinder Khroad <dkhroad@logitech.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Leo Yan <leo.yan@linux.dev>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Spoorthy S <spoorts2@in.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 330/744] media: uvcvideo: Add quirk for Logitech Rally Bar
-Date: Thu,  6 Jun 2024 16:00:02 +0200
-Message-ID: <20240606131743.024096592@linuxfoundation.org>
+Subject: [PATCH 6.1 304/473] perf tests: Make "test data symbol" more robust on Neoverse N1
+Date: Thu,  6 Jun 2024 16:03:53 +0200
+Message-ID: <20240606131709.980054641@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,108 +59,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: James Clark <james.clark@arm.com>
 
-[ Upstream commit 07731053d11f7647d5d8bc23caac997a4d562dfe ]
+[ Upstream commit 256ef072b3842273ce703db18b603b051aca95fe ]
 
-Logitech Rally Bar devices, despite behaving as UVC cameras, have a
-different power management system that the other cameras from Logitech.
+To prevent anyone from seeing a test failure appear as a regression and
+thinking that it was caused by their code change, insert some noise into
+the loop which makes it immune to sampling bias issues (errata 1694299).
 
-USB_QUIRK_RESET_RESUME is applied to all the UVC cameras from Logitech
-at the usb core. Unfortunately, USB_QUIRK_RESET_RESUME causes undesired
-USB disconnects in the Rally Bar that make them completely unusable.
+The "test data symbol" test can fail with any unrelated change that
+shifts the loop into an unfortunate position in the Perf binary which is
+almost impossible to debug as the root cause of the test failure.
+Ultimately it's caused by the referenced errata.
 
-There is an open discussion about if we should fix this in the core or
-add a quirk in the UVC driver. In order to enable this hardware, let's
-land this patch first, and we can revert it later if there is a
-different conclusion.
-
-Fixes: e387ef5c47dd ("usb: Add USB_QUIRK_RESET_RESUME for all Logitech UVC webcams")
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Devinder Khroad <dkhroad@logitech.com>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://lore.kernel.org/r/20240404-rallybar-v6-1-6d67bb6b69af@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: 60abedb8aa902b06 ("perf test: Introduce script for data symbol testing")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: James Clark <james.clark@arm.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Leo Yan <leo.yan@linux.dev>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Spoorthy S <spoorts2@in.ibm.com>
+Link: https://lore.kernel.org/r/20240410103458.813656-2-james.clark@arm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 31 ++++++++++++++++++++++++++++++
- drivers/media/usb/uvc/uvcvideo.h   |  1 +
- 2 files changed, 32 insertions(+)
+ tools/perf/tests/workloads/datasym.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index bbd90123a4e76..91a41aa3ced24 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -14,6 +14,7 @@
- #include <linux/module.h>
- #include <linux/slab.h>
- #include <linux/usb.h>
-+#include <linux/usb/quirks.h>
- #include <linux/usb/uvc.h>
- #include <linux/videodev2.h>
- #include <linux/vmalloc.h>
-@@ -2232,6 +2233,9 @@ static int uvc_probe(struct usb_interface *intf,
- 		goto error;
+diff --git a/tools/perf/tests/workloads/datasym.c b/tools/perf/tests/workloads/datasym.c
+index ddd40bc63448a..8e08fc75a973e 100644
+--- a/tools/perf/tests/workloads/datasym.c
++++ b/tools/perf/tests/workloads/datasym.c
+@@ -16,6 +16,22 @@ static int datasym(int argc __maybe_unused, const char **argv __maybe_unused)
+ {
+ 	for (;;) {
+ 		buf1.data1++;
++		if (buf1.data1 == 123) {
++			/*
++			 * Add some 'noise' in the loop to work around errata
++			 * 1694299 on Arm N1.
++			 *
++			 * Bias exists in SPE sampling which can cause the load
++			 * and store instructions to be skipped entirely. This
++			 * comes and goes randomly depending on the offset the
++			 * linker places the datasym loop at in the Perf binary.
++			 * With an extra branch in the middle of the loop that
++			 * isn't always taken, the instruction stream is no
++			 * longer a continuous repeating pattern that interacts
++			 * badly with the bias.
++			 */
++			buf1.data1++;
++		}
+ 		buf1.data2 += buf1.data1;
  	}
- 
-+	if (dev->quirks & UVC_QUIRK_NO_RESET_RESUME)
-+		udev->quirks &= ~USB_QUIRK_RESET_RESUME;
-+
- 	uvc_dbg(dev, PROBE, "UVC device initialized\n");
- 	usb_enable_autosuspend(udev);
  	return 0;
-@@ -2574,6 +2578,33 @@ static const struct usb_device_id uvc_ids[] = {
- 	  .bInterfaceSubClass	= 1,
- 	  .bInterfaceProtocol	= 0,
- 	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_RESTORE_CTRLS_ON_INIT) },
-+	/* Logitech Rally Bar Huddle */
-+	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
-+				| USB_DEVICE_ID_MATCH_INT_INFO,
-+	  .idVendor		= 0x046d,
-+	  .idProduct		= 0x087c,
-+	  .bInterfaceClass	= USB_CLASS_VIDEO,
-+	  .bInterfaceSubClass	= 1,
-+	  .bInterfaceProtocol	= 0,
-+	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
-+	/* Logitech Rally Bar */
-+	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
-+				| USB_DEVICE_ID_MATCH_INT_INFO,
-+	  .idVendor		= 0x046d,
-+	  .idProduct		= 0x089b,
-+	  .bInterfaceClass	= USB_CLASS_VIDEO,
-+	  .bInterfaceSubClass	= 1,
-+	  .bInterfaceProtocol	= 0,
-+	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
-+	/* Logitech Rally Bar Mini */
-+	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
-+				| USB_DEVICE_ID_MATCH_INT_INFO,
-+	  .idVendor		= 0x046d,
-+	  .idProduct		= 0x08d3,
-+	  .bInterfaceClass	= USB_CLASS_VIDEO,
-+	  .bInterfaceSubClass	= 1,
-+	  .bInterfaceProtocol	= 0,
-+	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
- 	/* Chicony CNF7129 (Asus EEE 100HE) */
- 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
- 				| USB_DEVICE_ID_MATCH_INT_INFO,
-diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index 6fb0a78b1b009..88218693f6f0b 100644
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -73,6 +73,7 @@
- #define UVC_QUIRK_FORCE_Y8		0x00000800
- #define UVC_QUIRK_FORCE_BPP		0x00001000
- #define UVC_QUIRK_WAKE_AUTOSUSPEND	0x00002000
-+#define UVC_QUIRK_NO_RESET_RESUME	0x00004000
- 
- /* Format flags */
- #define UVC_FMT_FLAG_COMPRESSED		0x00000001
 -- 
 2.43.0
 
