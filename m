@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020EA198E79;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0FE198E79;
 	Thu,  6 Jun 2024 14:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683468; cv=none; b=RgqFimZACllzyydU7wrQLUCPyazRCb4oQROG/xw2kIPWrAiC7PTiJCeN0M3dCrBek7BH7QQmB37Fw2nRFXZL6e4bPojJxT7o4ZWW8q7NW8aIQNtH/+Piu2wvwhELvmr+z/6wJnARo5u6bCkcHZtYv/b2sMxiDhP/Qu6tTWcTTMA=
+	t=1717683468; cv=none; b=Nf457pvhOg89HAs6SRGsWxswC2Pb1J5L7v9xPqIp++6PcIsC2fDJLx5f82CN4OEYEJy+81gZ6CHVJjl6bDA4AU3oVC16bB67ezsBZeFaT70PFapOVyQJiihxh1VxGdXZi7iCkOeoyRdowidoaX9xxNdeBCvtcOLzwgmPQLHQD4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683468; c=relaxed/simple;
-	bh=Jt6nlVRIf6KtO2M0w5MjdEGJvRhmi1wV1rn/Gr1fcnY=;
+	bh=T6ckZg4ZBD677xsn0d9t8Ux2Zb6kuvNJADeRnRu6FzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZkfKz2Mdtu1bsv2gqhNT3/A04x716BetH3KOs0r3bIrsW3ZnNR231fLdO3H6saxaym/SDTZEdevdzz2aVxmua3TG9157Bu+0ZSw+t6Ahw3N52LaIIQaU+mDd5gRKwzQta/hhmdX9H0P4yazWC4USRKWUIfSxuV92aRL2aAzUk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFZC+sT3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E5GRmfRU0+5tR9MQHP4+YRzfiUMAy8o48rZkVZ4XQkJYW5D1m2ba8qwttWbaQMXpyzN7TQohE+IXX9bd+FEk0QXOM26oMXapdMN/DH560kZOiyBolfYd3iprWGcOTKrLbg3QWj3hExF4R2VeurgGgoG4spwr0V27BTxrfk04QRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+a4i8Ju; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFZC+sT3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4EF1C32781;
-	Thu,  6 Jun 2024 14:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+a4i8Ju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F870C32786;
+	Thu,  6 Jun 2024 14:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683467;
-	bh=Jt6nlVRIf6KtO2M0w5MjdEGJvRhmi1wV1rn/Gr1fcnY=;
+	s=korg; t=1717683468;
+	bh=T6ckZg4ZBD677xsn0d9t8Ux2Zb6kuvNJADeRnRu6FzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFZC+sT3gMOiP2V9u7WP/dTZhZWrhEu7rBZaoCiR2s1/fB06TfTIdEV4vr6u5eUt+
-	 GCKZEM6Fr+xZ1uiMuKrlmVJneznxhu2i3Jq56iYOllnt/+H4ZJSlg/0DJOHMjPaLs3
-	 EqS02QX0N0ZXwstcST0YDibdmMCqm6lzvDOvbHEA=
+	b=v+a4i8JunZ7w5k/uKwReiqddWI665Jj0/C+qMwRrDcjB5dBZbiPhCpuFwhQa28HMQ
+	 MYjsHkST42ptI4NgvOeGQRHXk+sImZHiqitf2YVvCC1EA77Vo6K41BHsaaKT0uBpkt
+	 ZO+ax0gax2fD+oXJiO3ebxsKxXFUrp4bdHc5A73k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Remus <jremus@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Egorenkov <egorenar@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 354/473] s390/vdso: Use standard stack frame layout
-Date: Thu,  6 Jun 2024 16:04:43 +0200
-Message-ID: <20240606131711.612836142@linuxfoundation.org>
+Subject: [PATCH 6.1 355/473] s390/ipl: Fix incorrect initialization of len fields in nvme reipl block
+Date: Thu,  6 Jun 2024 16:04:44 +0200
+Message-ID: <20240606131711.646022486@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -52,54 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Alexander Egorenkov <egorenar@linux.ibm.com>
 
-[ Upstream commit 185445c7c137822ad856aae91a41e199370cb534 ]
+[ Upstream commit 9c922b73acaf39f867668d9cbe5dc69c23511f84 ]
 
-By default user space is compiled with standard stack frame layout and not
-with the packed stack layout. The vdso code however inherited the
--mpacked-stack compiler option from the kernel. Remove this option to make
-sure the vdso is compiled with standard stack frame layout.
+Use correct symbolic constants IPL_BP_NVME_LEN and IPL_BP0_NVME_LEN
+to initialize nvme reipl block when 'scp_data' sysfs attribute is
+being updated. This bug had not been detected before because
+the corresponding fcp and nvme symbolic constants are equal.
 
-This makes sure that the stack frame backchain location for vdso generated
-stack frames is the same like for calling code (if compiled with default
-options). This allows to manually walk stack frames without DWARF
-information, like the kernel is doing it e.g. with arch_stack_walk_user().
-
-Fixes: 4bff8cb54502 ("s390: convert to GENERIC_VDSO")
-Reviewed-by: Jens Remus <jremus@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 23a457b8d57d ("s390: nvme reipl")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Egorenkov <egorenar@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vdso32/Makefile | 1 +
- arch/s390/kernel/vdso64/Makefile | 1 +
- 2 files changed, 2 insertions(+)
+ arch/s390/kernel/ipl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/kernel/vdso32/Makefile b/arch/s390/kernel/vdso32/Makefile
-index bf30997657ac8..2e1591d97a428 100644
---- a/arch/s390/kernel/vdso32/Makefile
-+++ b/arch/s390/kernel/vdso32/Makefile
-@@ -20,6 +20,7 @@ KBUILD_AFLAGS_32 := $(filter-out -m64,$(KBUILD_AFLAGS))
- KBUILD_AFLAGS_32 += -m31 -s
+diff --git a/arch/s390/kernel/ipl.c b/arch/s390/kernel/ipl.c
+index df5d2ec737d80..b06ec1d8815e3 100644
+--- a/arch/s390/kernel/ipl.c
++++ b/arch/s390/kernel/ipl.c
+@@ -834,8 +834,8 @@ static ssize_t reipl_nvme_scpdata_write(struct file *filp, struct kobject *kobj,
+ 		scpdata_len += padding;
+ 	}
  
- KBUILD_CFLAGS_32 := $(filter-out -m64,$(KBUILD_CFLAGS))
-+KBUILD_CFLAGS_32 := $(filter-out -mpacked-stack,$(KBUILD_CFLAGS))
- KBUILD_CFLAGS_32 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_32))
- KBUILD_CFLAGS_32 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_32))
- KBUILD_CFLAGS_32 += -m31 -fPIC -shared -fno-common -fno-builtin -fasynchronous-unwind-tables
-diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
-index f8643d50ba6a6..b260c0bc90125 100644
---- a/arch/s390/kernel/vdso64/Makefile
-+++ b/arch/s390/kernel/vdso64/Makefile
-@@ -25,6 +25,7 @@ KBUILD_AFLAGS_64 := $(filter-out -m64,$(KBUILD_AFLAGS))
- KBUILD_AFLAGS_64 += -m64 -s
+-	reipl_block_nvme->hdr.len = IPL_BP_FCP_LEN + scpdata_len;
+-	reipl_block_nvme->nvme.len = IPL_BP0_FCP_LEN + scpdata_len;
++	reipl_block_nvme->hdr.len = IPL_BP_NVME_LEN + scpdata_len;
++	reipl_block_nvme->nvme.len = IPL_BP0_NVME_LEN + scpdata_len;
+ 	reipl_block_nvme->nvme.scp_data_len = scpdata_len;
  
- KBUILD_CFLAGS_64 := $(filter-out -m64,$(KBUILD_CFLAGS))
-+KBUILD_CFLAGS_64 := $(filter-out -mpacked-stack,$(KBUILD_CFLAGS_64))
- KBUILD_CFLAGS_64 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_64))
- KBUILD_CFLAGS_64 := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_64))
- KBUILD_CFLAGS_64 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_64))
+ 	return count;
 -- 
 2.43.0
 
