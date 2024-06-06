@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2601993B6;
-	Thu,  6 Jun 2024 14:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC5F196D8C;
+	Thu,  6 Jun 2024 14:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683240; cv=none; b=j9lJF9eHq28+MuUABsoySGD+CDW8jQJavQlV/LBss1wyODjFn0nfRx2KyjfDyl3yZylzz3dta26tabDlAE0cqNcWrnnlzL9BIuDGaBBQnzGGFfaZw53kNyQyBOFcvKZDQsEBVScKI4pcMEzPJttlEpD7XBFQ22pIK/f9BJ1BwwQ=
+	t=1717683241; cv=none; b=CHG6e9iMJl08NW3R3+aOcQXnHSYZUuYPZARidhjC52RufCIQqUPs4DdAuPg3lIs90PDVkH0jDwICBLgVEs46d8GvT32w7LG5kwPg7FG7lYznBhF/TGSGBZUV7J5umoAZVNxCmGAtqnIgq0yo0xfoRV8liM7UzZfEOD38rqs6XJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683240; c=relaxed/simple;
-	bh=BySjaTD8leZuhZLxYUCrEf61wrvnssc46I8NP3bK7z8=;
+	s=arc-20240116; t=1717683241; c=relaxed/simple;
+	bh=4JMXDTxMIHGogg4oNFkSoafb4b7Kx9TJM04XPSoz42c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pxzpdN0ZIasG+LF1vGCuaq7eWqcIjf9+ZquchkqdKGGI2j0Kgyd19UP6OezhlvyhDpPYdwAQ0KTf1Di+5OMpfy80xQ6SGlOv3EmCjdZvcAxt4ommbY9cadhQrhDxrKBVsi8Is0HLu8q2NHwZHN/tOaJIr0wdfv/JAvawHXth3V0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCm3yKbI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ESlWKsWEfvARoiqTWNZhiGUi3toyB83Axa0sg0piHRJpRaRp4BzC51B5tFk0MvzXko7XSGmv1CrQ/2z+KKoRapa/QAW1iQTFqzUhj+DjGYS/kBadI/9BEPYp3q9bL92YuOQZ1am7kbqOAS8B5O5fNQoOJKlJojWJe57NIp+AX8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zMIiU0w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCm3yKbI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE78C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zMIiU0w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F313DC2BD10;
 	Thu,  6 Jun 2024 14:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683240;
-	bh=BySjaTD8leZuhZLxYUCrEf61wrvnssc46I8NP3bK7z8=;
+	s=korg; t=1717683241;
+	bh=4JMXDTxMIHGogg4oNFkSoafb4b7Kx9TJM04XPSoz42c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCm3yKbIrFKroT7HulKfoT8XZ7fJ5trfHo8/QIvk08T1niMi2byZwz2rUKS3myMFj
-	 znxa5L8Djvs5f/dKEuQ4YYG2HPZL33VJGzWjhF0B903O3jm+lMZHOQOSe35rIBkptR
-	 XlDpP3kmdLKpUjfv07yVDOYYGuBDu0LukUCvxXGs=
+	b=0zMIiU0wcf1eLzCtyXm57W4c0/lmiJ2fgEZqjJJrQdGLiDhWuMaXeK0gTZEeCmSxJ
+	 A9rJZqxXLluG7BCt5DroJZUuAKKcv/V8GFAp2+ze7PwrHAsSYvMckcjJXKG3Q81q3s
+	 J0vxcExE/6CBkRx2znPyEStk+MKDFQkXK2uh+1Qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 185/744] wifi: ath10k: Fix an error code problem in ath10k_dbg_sta_write_peer_debug_trigger()
-Date: Thu,  6 Jun 2024 15:57:37 +0200
-Message-ID: <20240606131738.362107512@linuxfoundation.org>
+Subject: [PATCH 6.1 118/473] x86/boot/64: Clear most of CR4 in startup_64(), except PAE, MCE and LA57
+Date: Thu,  6 Jun 2024 16:00:47 +0200
+Message-ID: <20240606131703.841457054@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +49,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit c511a9c12674d246916bb16c479d496b76983193 ]
+[ Upstream commit a0025f587c685e5ff842fb0194036f2ca0b6eaf4 ]
 
-Clang Static Checker (scan-build) warns:
+The early 64-bit boot code must be entered with a 1:1 mapping of the
+bootable image, but it cannot operate without a 1:1 mapping of all the
+assets in memory that it accesses, and therefore, it creates such
+mappings for all known assets upfront, and additional ones on demand
+when a page fault happens on a memory address.
 
-drivers/net/wireless/ath/ath10k/debugfs_sta.c:line 429, column 3
-Value stored to 'ret' is never read.
+These mappings are created with the global bit G set, as the flags used
+to create page table descriptors are based on __PAGE_KERNEL_LARGE_EXEC
+defined by the core kernel, even though the context where these mappings
+are used is very different.
 
-Return 'ret' rather than 'count' when 'ret' stores an error code.
+This means that the TLB maintenance carried out by the decompressor is
+not sufficient if it is entered with CR4.PGE enabled, which has been
+observed to happen with the stage0 bootloader of project Oak. While this
+is a dubious practice if no global mappings are being used to begin
+with, the decompressor is clearly at fault here for creating global
+mappings and not performing the appropriate TLB maintenance.
 
-Fixes: ee8b08a1be82 ("ath10k: add debugfs support to get per peer tids log via tracing")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240422034243.938962-1-suhui@nfschina.com
+Since commit:
+
+  f97b67a773cd84b ("x86/decompressor: Only call the trampoline when changing paging levels")
+
+CR4 is no longer modified by the decompressor if no change in the number
+of paging levels is needed. Before that, CR4 would always be set to a
+consistent value with PGE cleared.
+
+So let's reinstate a simplified version of the original logic to put CR4
+into a known state, and preserve the PAE, MCE and LA57 bits, none of
+which can be modified freely at this point (PAE and LA57 cannot be
+changed while running in long mode, and MCE cannot be cleared when
+running under some hypervisors).
+
+This effectively clears PGE and works around the project Oak bug.
+
+Fixes: f97b67a773cd84b ("x86/decompressor: Only call the trampoline when ...")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Link: https://lore.kernel.org/r/20240410151354.506098-2-ardb+git@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/debugfs_sta.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/boot/compressed/head_64.S | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath10k/debugfs_sta.c b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
-index 87a3365330ff8..5598cf706daab 100644
---- a/drivers/net/wireless/ath/ath10k/debugfs_sta.c
-+++ b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
-@@ -438,7 +438,7 @@ ath10k_dbg_sta_write_peer_debug_trigger(struct file *file,
- 	}
- out:
- 	mutex_unlock(&ar->conf_mutex);
--	return count;
-+	return ret ?: count;
- }
+diff --git a/arch/x86/boot/compressed/head_64.S b/arch/x86/boot/compressed/head_64.S
+index 0d7aef10b19ad..6bc70385314cb 100644
+--- a/arch/x86/boot/compressed/head_64.S
++++ b/arch/x86/boot/compressed/head_64.S
+@@ -390,6 +390,11 @@ SYM_CODE_START(startup_64)
+ 	call	sev_enable
+ #endif
  
- static const struct file_operations fops_peer_debug_trigger = {
++	/* Preserve only the CR4 bits that must be preserved, and clear the rest */
++	movq	%cr4, %rax
++	andl	$(X86_CR4_PAE | X86_CR4_MCE | X86_CR4_LA57), %eax
++	movq	%rax, %cr4
++
+ 	/*
+ 	 * configure_5level_paging() updates the number of paging levels using
+ 	 * a trampoline in 32-bit addressable memory if the current number does
 -- 
 2.43.0
 
