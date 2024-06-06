@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F4219AA7F;
-	Thu,  6 Jun 2024 14:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C8819AA7F;
+	Thu,  6 Jun 2024 14:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683329; cv=none; b=XN5DAL7VEPnwLlL4gdAhhM3iQ4/y4afpYEBvgaI1MI0bYdc3HXmT5SJ/uw4MjQSWyJo/tXRZxoajiCdFQJuOzN9hOxvpZHwOt7vN5ddAjCg/VTPTIFHRzqYeKPcOttcM1PFfcirfjH8JzCfdMKi//FJYb2L/oKTnH6POEQEYf9g=
+	t=1717683329; cv=none; b=VTjLuczDRfjMoakQVcBBv4gvZSG3muHGK80sRRGbcauWK4H9wO4Wuk24W19KKcZGkoeoxs1QuV/4bEA5Kw1AkxEt2kOXS1gXwqSrlpR6ygMmbtQ57KMas/VY28NkIWf+9Mad8iOO9Srq0laTsJDMBoZSLxwV6fpFs/flnsv2xFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683329; c=relaxed/simple;
-	bh=JK/QBOKbq0hIAcHWB/A+xEuaZdUKGWMNb+3UCljb15A=;
+	bh=omVtpLQIeygE6+Beodz26vUiVloQ9Kr2qD3iTXDa0sA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sz5QyYI1f5u8HmDoeDyt0oCUeZILj6N5YnNnUzSQ/rijVQcLeZnhgR2reoDfWXK8mA4TYEgPt1552DwFyZv1cODeQ8yMNFbloXMWyXqT/HS15lpJNVQCA1TWa33HB34il2Nj9ckor7X3kNFbtMK8zr/pumH7OZrmMPbpDLCJAXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6K6nU9L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kfLh09+3DSmghCbpP0F+kKLE0C2EFvjkVrMPUXQjDFUt4Pq7qDjdSdsozNk8gsoURegHARvJLqakeH/ZREGenV+5V41x8WDPiEp8Vq1k0J7+iST/+ds3ugdz0jl71rOetucPq+nLEBDlsxqh3asH5p5EugDA/yxhR6F1YGG8Kzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ozPeuPkB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6K6nU9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5970C2BD10;
-	Thu,  6 Jun 2024 14:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozPeuPkB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F508C2BD10;
+	Thu,  6 Jun 2024 14:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683328;
-	bh=JK/QBOKbq0hIAcHWB/A+xEuaZdUKGWMNb+3UCljb15A=;
+	s=korg; t=1717683329;
+	bh=omVtpLQIeygE6+Beodz26vUiVloQ9Kr2qD3iTXDa0sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P6K6nU9LAJMOd319PZb2+RSXi58p/Vgauf0U2mUq3PGM2Tl1xseCqNnKUmWhlYD/h
-	 u+co6pyGPOmnzueMzmsg+tv4DZtWFaOs/+4JKiD89sqplfVoGtfu/If8uDByhz60H8
-	 eK/J7mwbXjrOAcVDSLX6oqy9kn3Xv4xIIDXrSD8U=
+	b=ozPeuPkBr909MgVXi0VeqFiZZ+tdjQdf7lT250Cjze1gf2JFUQvh/HMLZbHpLCZXc
+	 Cu7uwtA5qCRs5jKlU8oZlcDFXclHt4kJ6jfpGkeeZZRDGjgcprJc75y/7NHyx/zhO1
+	 JsqehlOkLLteZRFCDRovf85cbs2mvtLQfBulDp+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/473] af_unix: Fix data races in unix_release_sock/unix_stream_sendmsg
-Date: Thu,  6 Jun 2024 16:01:41 +0200
-Message-ID: <20240606131705.628601000@linuxfoundation.org>
+Subject: [PATCH 6.1 207/473] ASoC: Intel: avs: Fix ASRC module initialization
+Date: Thu,  6 Jun 2024 16:02:16 +0200
+Message-ID: <20240606131706.772115416@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -52,74 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 540bf24fba16b88c1b3b9353927204b4f1074e25 ]
+[ Upstream commit 9d2e26f31c7cc3fa495c423af9b4902ec0dc7be3 ]
 
-A data-race condition has been identified in af_unix. In one data path,
-the write function unix_release_sock() atomically writes to
-sk->sk_shutdown using WRITE_ONCE. However, on the reader side,
-unix_stream_sendmsg() does not read it atomically. Consequently, this
-issue is causing the following KCSAN splat to occur:
+The ASRC module configuration consists of several reserved fields. Zero
+them out when initializing the module to avoid sending invalid data.
 
-	BUG: KCSAN: data-race in unix_release_sock / unix_stream_sendmsg
-
-	write (marked) to 0xffff88867256ddbb of 1 bytes by task 7270 on cpu 28:
-	unix_release_sock (net/unix/af_unix.c:640)
-	unix_release (net/unix/af_unix.c:1050)
-	sock_close (net/socket.c:659 net/socket.c:1421)
-	__fput (fs/file_table.c:422)
-	__fput_sync (fs/file_table.c:508)
-	__se_sys_close (fs/open.c:1559 fs/open.c:1541)
-	__x64_sys_close (fs/open.c:1541)
-	x64_sys_call (arch/x86/entry/syscall_64.c:33)
-	do_syscall_64 (arch/x86/entry/common.c:?)
-	entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-	read to 0xffff88867256ddbb of 1 bytes by task 989 on cpu 14:
-	unix_stream_sendmsg (net/unix/af_unix.c:2273)
-	__sock_sendmsg (net/socket.c:730 net/socket.c:745)
-	____sys_sendmsg (net/socket.c:2584)
-	__sys_sendmmsg (net/socket.c:2638 net/socket.c:2724)
-	__x64_sys_sendmmsg (net/socket.c:2753 net/socket.c:2750 net/socket.c:2750)
-	x64_sys_call (arch/x86/entry/syscall_64.c:33)
-	do_syscall_64 (arch/x86/entry/common.c:?)
-	entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-	value changed: 0x01 -> 0x03
-
-The line numbers are related to commit dd5a440a31fa ("Linux 6.9-rc7").
-
-Commit e1d09c2c2f57 ("af_unix: Fix data races around sk->sk_shutdown.")
-addressed a comparable issue in the past regarding sk->sk_shutdown.
-However, it overlooked resolving this particular data path.
-This patch only offending unix_stream_sendmsg() function, since the
-other reads seem to be protected by unix_state_lock() as discussed in
-Link: https://lore.kernel.org/all/20240508173324.53565-1-kuniyu@amazon.com/
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240509081459.2807828-1-leitao@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 274d79e51875 ("ASoC: Intel: avs: Configure modules according to their type")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://msgid.link/r/20240405090929.1184068-6-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/avs/path.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index f28e2956fea58..97d22bdfdc73b 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2189,7 +2189,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
- 			goto out_err;
- 	}
+diff --git a/sound/soc/intel/avs/path.c b/sound/soc/intel/avs/path.c
+index ce157a8d65520..989a7a4127cdd 100644
+--- a/sound/soc/intel/avs/path.c
++++ b/sound/soc/intel/avs/path.c
+@@ -308,6 +308,7 @@ static int avs_asrc_create(struct avs_dev *adev, struct avs_path_module *mod)
+ 	struct avs_tplg_module *t = mod->template;
+ 	struct avs_asrc_cfg cfg;
  
--	if (sk->sk_shutdown & SEND_SHUTDOWN)
-+	if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
- 		goto pipe_err;
- 
- 	while (sent < len) {
++	memset(&cfg, 0, sizeof(cfg));
+ 	cfg.base.cpc = t->cfg_base->cpc;
+ 	cfg.base.ibs = t->cfg_base->ibs;
+ 	cfg.base.obs = t->cfg_base->obs;
 -- 
 2.43.0
 
