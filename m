@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F4E1B583F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27C6198E85;
 	Thu,  6 Jun 2024 14:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683470; cv=none; b=sB8Txi31i9fb3tKTWvHOTfNTvVrKbTZRE12K66QAlGnN+jM8VabsketZsSITOXPb7l1/wuuWdaO1nsKY34ievV2+uZEAb/TKIu7NJtkqMGkDQRLHb1dXLDlszP0tbWQ3Z8RhckxwUmAaPJ7Bz1TvUfyFEe29F6zgqjkt9cqVjhY=
+	t=1717683471; cv=none; b=J3JjuzhhDO0Zg0VDC+x5VaAyTjFonAW4f3Vd6F9+OPTErIcE4jNuMVASPZcfRgh9yfqF0NT29ReSUWIyy7tnai3hr68XdYygJYF2qN64G2DMFuqf2Iw5U1xIFxnNWt8xrUtT/vgPZ2iRHP9q748+Y5HRi95SfCs3wsB5MaNKQlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683470; c=relaxed/simple;
-	bh=ppfIB7aLc92fG32Kmw4K4w3ukMYMiCIRHusRM6r2g2g=;
+	s=arc-20240116; t=1717683471; c=relaxed/simple;
+	bh=C7CDtVi1b7b/lubj0MF4DPIyFgk9dObnl4sLKDT5i1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRX6htOnmvSqUacuVxwWyDx4EoCwoJzFYHnkgJFwPNWmeUlw/E2n4chn8l1UbeKu6YOZ6TJcEa0Kzp+uUbwl5+/VO2MXJoTMgbivpsAtjATfdqdxaAvQ+gkcPcY0NtbqQgDLTVdIRW5ahe3SRMbFqpEbWcGHoapysxLzGb752cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxZJ8pDK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z6rEuoEwdc6fKEQ1NLl7whfRs+LDl9ou08IVUvGyLnYnuh/a6IqwNZIpIHuI9FkPraHNMLkFJrx3m5Px1X7aATJaqIR1w3Nsh0jy/38QGGcj6sxghJdA/HI1x9DFjb464KQmgDJtD1US9MrQZFmejg0EI++/nnw8k1O79sBAmyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kiIXTNM8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxZJ8pDK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439B4C4AF09;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiIXTNM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDAEEC2BD10;
 	Thu,  6 Jun 2024 14:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683470;
-	bh=ppfIB7aLc92fG32Kmw4K4w3ukMYMiCIRHusRM6r2g2g=;
+	bh=C7CDtVi1b7b/lubj0MF4DPIyFgk9dObnl4sLKDT5i1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxZJ8pDKIlWPUIqazWnW+ptuT5HrzBNS1iqNWMsHRSydY8GSPns8UHav7NrwJvlUa
-	 nQzJkneWAQ4nBuAESv6SBTn6KEPtw0M8LgvWj0GHvNJcMpn+NT763Qcuk98xIA0NvS
-	 /IWOfGBVw57RAlyEozA52ssGG1v4D5UwrA2SCRhM=
+	b=kiIXTNM8U0QQtUt1rw/lxCOSN/C36enzGsCNWNOD2z+Fhi/jupoEkQ2vdkdWLJOZQ
+	 0Ni1qjWOQqhCgA/GRZ2J7J1IiVJCwj/IMi7wKVlA4Ka5hFMoK2JDkPXYmQs7R9YjKn
+	 KX2gNLUVeviY+2g6Xvk42gh4BfzkH9MpkMbf62uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Leo Yan <leo.yan@linux.dev>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 357/473] s390/boot: Remove alt_stfle_fac_list from decompressor
-Date: Thu,  6 Jun 2024 16:04:46 +0200
-Message-ID: <20240606131711.715745222@linuxfoundation.org>
+Subject: [PATCH 6.1 339/473] perf ui browser: Avoid SEGV on title
+Date: Thu,  6 Jun 2024 16:04:28 +0200
+Message-ID: <20240606131711.113854997@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -51,47 +61,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit e7dec0b7926f3cd493c697c4c389df77e8e8a34c ]
+[ Upstream commit 90f01afb0dfafbc9b094bb61e61a4ac297d9d0d2 ]
 
-It is nowhere used in the decompressor, therefore remove it.
+If the title is NULL then it can lead to a SEGV.
 
-Fixes: 17e89e1340a3 ("s390/facilities: move stfl information from lowcore to global data")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 769e6a1e15bdbbaf ("perf ui browser: Don't save pointer to stack memory")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Leo Yan <leo.yan@linux.dev>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240508035301.1554434-2-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/startup.c | 1 -
- arch/s390/kernel/setup.c | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ tools/perf/ui/browser.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
-index e0863d28759a5..bfb4dec36414a 100644
---- a/arch/s390/boot/startup.c
-+++ b/arch/s390/boot/startup.c
-@@ -30,7 +30,6 @@ int __bootdata(is_full_image) = 1;
- struct initrd_data __bootdata(initrd_data);
+diff --git a/tools/perf/ui/browser.c b/tools/perf/ui/browser.c
+index d09b4cbec6e06..5d6f4f25c33d0 100644
+--- a/tools/perf/ui/browser.c
++++ b/tools/perf/ui/browser.c
+@@ -203,7 +203,7 @@ void ui_browser__refresh_dimensions(struct ui_browser *browser)
+ void ui_browser__handle_resize(struct ui_browser *browser)
+ {
+ 	ui__refresh_dimensions(false);
+-	ui_browser__show(browser, browser->title, ui_helpline__current);
++	ui_browser__show(browser, browser->title ?: "", ui_helpline__current);
+ 	ui_browser__refresh(browser);
+ }
  
- u64 __bootdata_preserved(stfle_fac_list[16]);
--u64 __bootdata_preserved(alt_stfle_fac_list[16]);
- struct oldmem_data __bootdata_preserved(oldmem_data);
- 
- void error(char *x)
-diff --git a/arch/s390/kernel/setup.c b/arch/s390/kernel/setup.c
-index 2ec5f1e0312fa..1f514557fee9d 100644
---- a/arch/s390/kernel/setup.c
-+++ b/arch/s390/kernel/setup.c
-@@ -155,7 +155,7 @@ unsigned int __bootdata_preserved(zlib_dfltcc_support);
- EXPORT_SYMBOL(zlib_dfltcc_support);
- u64 __bootdata_preserved(stfle_fac_list[16]);
- EXPORT_SYMBOL(stfle_fac_list);
--u64 __bootdata_preserved(alt_stfle_fac_list[16]);
-+u64 alt_stfle_fac_list[16];
- struct oldmem_data __bootdata_preserved(oldmem_data);
- 
- unsigned long VMALLOC_START;
 -- 
 2.43.0
 
