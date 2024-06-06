@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E371B4C25;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908581A0DDE;
 	Thu,  6 Jun 2024 14:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683440; cv=none; b=isQm0/Sm84R6B6zKnrNPySbketu0Rzn4317JSjkhC4jjtFlgw7Gf2zqpBITB2YnmJ1myUU2w1oonhUyMeNWYoujaqjqYr2j3535fKQCtVTw8EaDbVyiprjdzX9JiQ/1TIEvTGv6uy6jYeRRdpuxwIsjFu3ieDrmkY5eMQM5jHoo=
+	t=1717683440; cv=none; b=lDeqrceysbXfs2bIpNzn6vGvE2DgYwJpFe+Q78MQgmD8Nrk/l3I0Jqq5xJbivTWascLjMmIfK7YfFau5W9ox2pkUzkdMworTxh+c1nZQL+v7sKTNUAHp4MWgur4YoGdCLHKun6GEysg1WF/UIOdqt5vE4bJ5Gcfsj51kUGMB4Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683440; c=relaxed/simple;
-	bh=i+tIMCTFdxe2NXvyj6ivd8zH9bi2K+wiZUhPibPGO9c=;
+	bh=sEEhDUdz5RxjfIi6kgEydAjqftTmpXvFaApuxb+kO/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVrZ1QzHUK3JdSVe5qHZAwh/KR71FloSdiAYtpFPWgbgFwvhEBDbYAK3zdMJBhzRrNXxZG03cHtGKQpJmq5eRlhgjzlQdNW1GMt2bWu3JlD3yfcs9rx8IcAM0WSMVt8Px5ryqvpaSinnhHs2BFWIGxf8ZHZrucSgpHMNi9+jOGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMalKoCG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jbbMx/LNDgN5YF7DsDTjmzE7neZl7uRGuLeyA5cCUcEzJaUdkzIlrTY5WHGjCZyGNF0n7hLDUX6PsGaCkKndsOXyRrRv2tpujutE9xS3byItzhOz0bH09oJXyZ1c83tZLAmvfr52zvk/urzjYwLfFOSkd8vmXL2HHfzsb5WJS7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkMUHRVp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMalKoCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6D7C32781;
-	Thu,  6 Jun 2024 14:17:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkMUHRVp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BCDCC2BD10;
+	Thu,  6 Jun 2024 14:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683439;
-	bh=i+tIMCTFdxe2NXvyj6ivd8zH9bi2K+wiZUhPibPGO9c=;
+	s=korg; t=1717683440;
+	bh=sEEhDUdz5RxjfIi6kgEydAjqftTmpXvFaApuxb+kO/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZMalKoCG39cXHKxvRT3A8N/8iOIo4ioBFq3o5I1i2lsWjSjdW3g5BNnoQN57B9jz9
-	 0RGV7eUGgDii9PMyRcW7XRwgE5nMXMwG23Gn0DBjhN/m4+JXnU27C4ptBDinPdQobC
-	 dR4gMJArvjTnuf8Em5JY70+ZF6UndKl60ClITPLQ=
+	b=QkMUHRVpvahn9abBYArY+7fMZdoOkEbyOJ8yH4vJ/QLCavV7zdm+3pj12kir5PwjK
+	 b5iLiUG2PStlvztcXfvTMV4qm44UlUWHUOghViDQ0r4lqgIoLcg778NkbwLZ8ldgdL
+	 bWN2hJmMrEZUWzE9v/BAvz4NFGMyZAfBeAbp8Nkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Chris Lew <quic_clew@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 384/744] net: qrtr: ns: Fix module refcnt
-Date: Thu,  6 Jun 2024 16:00:56 +0200
-Message-ID: <20240606131744.787779908@linuxfoundation.org>
+Subject: [PATCH 6.1 325/473] VMCI: Fix an error handling path in vmci_guest_probe_device()
+Date: Thu,  6 Jun 2024 16:04:14 +0200
+Message-ID: <20240606131710.677772778@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,85 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Lew <quic_clew@quicinc.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit fd76e5ccc48f9f54eb44909dd7c0b924005f1582 ]
+[ Upstream commit 73df3d6f2e9533e93a5039a33c40dd7216b81801 ]
 
-The qrtr protocol core logic and the qrtr nameservice are combined into
-a single module. Neither the core logic or nameservice provide much
-functionality by themselves; combining the two into a single module also
-prevents any possible issues that may stem from client modules loading
-inbetween qrtr and the ns.
+After a successful pci_iomap_range() call, pci_iounmap() should be called
+in the error handling path, as already done in the remove function.
 
-Creating a socket takes two references to the module that owns the
-socket protocol. Since the ns needs to create the control socket, this
-creates a scenario where there are always two references to the qrtr
-module. This prevents the execution of 'rmmod' for qrtr.
+Add the missing call.
 
-To resolve this, forcefully put the module refcount for the socket
-opened by the nameservice.
+The corresponding call was added in the remove function in commit
+5ee109828e73 ("VMCI: dma dg: allocate send and receive buffers for DMA
+datagrams")
 
-Fixes: a365023a76f2 ("net: qrtr: combine nameservice into main module")
-Reported-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e283a0e8b7ea ("VMCI: dma dg: add MMIO access to registers")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Vishnu Dasa <vishnu.dasa@broadcom.com>
+Link: https://lore.kernel.org/r/a35bbc3876ae1da70e49dafde4435750e1477be3.1713961553.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/ns.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/misc/vmw_vmci/vmci_guest.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-index abb0c70ffc8b0..654a3cc0d3479 100644
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -725,6 +725,24 @@ int qrtr_ns_init(void)
- 	if (ret < 0)
- 		goto err_wq;
+diff --git a/drivers/misc/vmw_vmci/vmci_guest.c b/drivers/misc/vmw_vmci/vmci_guest.c
+index 4f8d962bb5b2a..1300ccab3d21b 100644
+--- a/drivers/misc/vmw_vmci/vmci_guest.c
++++ b/drivers/misc/vmw_vmci/vmci_guest.c
+@@ -625,7 +625,8 @@ static int vmci_guest_probe_device(struct pci_dev *pdev,
+ 	if (!vmci_dev) {
+ 		dev_err(&pdev->dev,
+ 			"Can't allocate memory for VMCI device\n");
+-		return -ENOMEM;
++		error = -ENOMEM;
++		goto err_unmap_mmio_base;
+ 	}
  
-+	/* As the qrtr ns socket owner and creator is the same module, we have
-+	 * to decrease the qrtr module reference count to guarantee that it
-+	 * remains zero after the ns socket is created, otherwise, executing
-+	 * "rmmod" command is unable to make the qrtr module deleted after the
-+	 *  qrtr module is inserted successfully.
-+	 *
-+	 * However, the reference count is increased twice in
-+	 * sock_create_kern(): one is to increase the reference count of owner
-+	 * of qrtr socket's proto_ops struct; another is to increment the
-+	 * reference count of owner of qrtr proto struct. Therefore, we must
-+	 * decrement the module reference count twice to ensure that it keeps
-+	 * zero after server's listening socket is created. Of course, we
-+	 * must bump the module reference count twice as well before the socket
-+	 * is closed.
-+	 */
-+	module_put(qrtr_ns.sock->ops->owner);
-+	module_put(qrtr_ns.sock->sk->sk_prot_creator->owner);
-+
- 	return 0;
+ 	vmci_dev->dev = &pdev->dev;
+@@ -642,7 +643,8 @@ static int vmci_guest_probe_device(struct pci_dev *pdev,
+ 		if (!vmci_dev->tx_buffer) {
+ 			dev_err(&pdev->dev,
+ 				"Can't allocate memory for datagram tx buffer\n");
+-			return -ENOMEM;
++			error = -ENOMEM;
++			goto err_unmap_mmio_base;
+ 		}
  
- err_wq:
-@@ -739,6 +757,15 @@ void qrtr_ns_remove(void)
- {
- 	cancel_work_sync(&qrtr_ns.work);
- 	destroy_workqueue(qrtr_ns.workqueue);
+ 		vmci_dev->data_buffer = dma_alloc_coherent(&pdev->dev, VMCI_DMA_DG_BUFFER_SIZE,
+@@ -893,6 +895,10 @@ static int vmci_guest_probe_device(struct pci_dev *pdev,
+ err_free_data_buffers:
+ 	vmci_free_dg_buffers(vmci_dev);
+ 
++err_unmap_mmio_base:
++	if (mmio_base != NULL)
++		pci_iounmap(pdev, mmio_base);
 +
-+	/* sock_release() expects the two references that were put during
-+	 * qrtr_ns_init(). This function is only called during module remove,
-+	 * so try_stop_module() has already set the refcnt to 0. Use
-+	 * __module_get() instead of try_module_get() to successfully take two
-+	 * references.
-+	 */
-+	__module_get(qrtr_ns.sock->ops->owner);
-+	__module_get(qrtr_ns.sock->sk->sk_prot_creator->owner);
- 	sock_release(qrtr_ns.sock);
+ 	/* The rest are managed resources and will be freed by PCI core */
+ 	return error;
  }
- EXPORT_SYMBOL_GPL(qrtr_ns_remove);
 -- 
 2.43.0
 
