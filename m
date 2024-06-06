@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650E6198E93;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF001974FC;
 	Thu,  6 Jun 2024 14:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682946; cv=none; b=FHAXyAnMaQ0+frqhlsd57jCrF8zb6E3R/6feKhcgly7/wAMje2cP3E7G42OXNzdaC+AZcey3/u1Ijz9HfwXzjd8aLmOHAWRIbNnDb505q0aMlsyX0OEu2rLfP6GdgvgPn05AyyerEA/hTx1UvfVTLzbHDdsxRNSbqWZi0gAk6TY=
+	t=1717682947; cv=none; b=BFudlkdT4+OOCenailzC9CRCxTS74XRG23qLLwmYax/YX2asplGvN6i6lz76CKBfjAJ9bBL9+sz/ECP6N0Ks05OQxZ/ENv8knWd1x+pmWaoyxOWPXtIfLGDKyLgtGURc1If4jG+nHhc1dYUAqN7PkPG0VfKQ8h7GiivwRIu0r8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682946; c=relaxed/simple;
-	bh=7YzqRFmMqOHqmj1g8zhcmT7K8L4eMqHNWi1izyi5Wd0=;
+	s=arc-20240116; t=1717682947; c=relaxed/simple;
+	bh=4XqMno6kw2aAbAKIvEWr6WhZv1e1nK2ojH50OTRvI5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIU84JeZFGEfyXiNTkGz4UGxsc1fFqQ+luQgCLSgE/QWtcwwLjqUCf1m20qLvhodyMHq+aVKgc44+9TP7MmXD6CbaF+A0S0b7P3Zx4RM5kgy+X4lEZ6dXpg51ZWOLQb6itP8wXZbctq3lZsD6vt6caubH261RbqOoIPw1e5aLOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjOd/m0N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oSVf7jfCZPZMhDhEkZBpJ++lXFElQ5i4yScm2v1hMPO1Lk1Mv3UJOBZlIr7iGa/cBHaGbEpxw1DjN3T8sCRDp3wcNnUoqFJGSLDqgfpm/6zmBV/891E6XYD/KlFgxlsSAK7kr4UZXNXZFpp96KxPMCxIu7ugteprHB8hUiPFdwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0t48EqYn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjOd/m0N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A58C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0t48EqYn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8747C32781;
 	Thu,  6 Jun 2024 14:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682946;
-	bh=7YzqRFmMqOHqmj1g8zhcmT7K8L4eMqHNWi1izyi5Wd0=;
+	bh=4XqMno6kw2aAbAKIvEWr6WhZv1e1nK2ojH50OTRvI5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjOd/m0NpNGMm6yqcm8Iz484bRgCAbKOdH5PYKUdj9l2vwDX5aV8lvAddRXTr8r4g
-	 vUk4K9UTFssw1W8L4YDK0/ror44z0DLuhxc1Gr5EHGybWKqOpgd3BafjrFBuVXlDOh
-	 Ojshm1ehSUX8cOWv+4UOOvw0m0a5s8Vb3lRjpMK8=
+	b=0t48EqYn/hNMBUqZ6aoVSiJ9ZH0NtjthghvBlUmReSRil8cpp5RiKVChP41+ZF7t2
+	 RfjPes8x6QxUzDTAcRzBEINPuWlxRSeuUmMi/3BWfOsTjCJlsInlwgwXiS0eqaGjHq
+	 yIlpk7n5RQtm66GraCsLQhxfQ41GpIzWlmj73XaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 107/374] f2fs: compress: fix to update i_compr_blocks correctly
-Date: Thu,  6 Jun 2024 16:01:26 +0200
-Message-ID: <20240606131655.510105282@linuxfoundation.org>
+Subject: [PATCH 6.9 108/374] f2fs: compress: fix error path of inc_valid_block_count()
+Date: Thu,  6 Jun 2024 16:01:27 +0200
+Message-ID: <20240606131655.538452494@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,78 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 186e7d71534df4589405925caca5597af7626c12 ]
+[ Upstream commit 043c832371cd9023fbd725138ddc6c7f288dc469 ]
 
-Previously, we account reserved blocks and compressed blocks into
-@compr_blocks, then, f2fs_i_compr_blocks_update(,compr_blocks) will
-update i_compr_blocks incorrectly, fix it.
+If inc_valid_block_count() can not allocate all requested blocks,
+it needs to release block count in .total_valid_block_count and
+resevation blocks in inode.
 
-Meanwhile, for the case all blocks in cluster were reserved, fix to
-update dn->ofs_in_node correctly.
-
-Fixes: eb8fbaa53374 ("f2fs: compress: fix to check unreleased compressed cluster")
+Fixes: 54607494875e ("f2fs: compress: fix to avoid inconsistence bewteen i_blocks and dnode")
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ fs/f2fs/f2fs.h | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 2566dc8a777de..34becfc142d80 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -3645,7 +3645,8 @@ static int reserve_compress_blocks(struct dnode_of_data *dn, pgoff_t count,
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index fced2b7652f40..07b3675ea1694 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -2309,7 +2309,7 @@ static inline void f2fs_i_blocks_write(struct inode *, block_t, bool, bool);
+ static inline int inc_valid_block_count(struct f2fs_sb_info *sbi,
+ 				 struct inode *inode, blkcnt_t *count, bool partial)
+ {
+-	blkcnt_t diff = 0, release = 0;
++	long long diff = 0, release = 0;
+ 	block_t avail_user_block_count;
+ 	int ret;
  
- 	while (count) {
- 		int compr_blocks = 0;
--		blkcnt_t reserved;
-+		blkcnt_t reserved = 0;
-+		blkcnt_t to_reserved;
- 		int ret;
+@@ -2329,26 +2329,27 @@ static inline int inc_valid_block_count(struct f2fs_sb_info *sbi,
+ 	percpu_counter_add(&sbi->alloc_valid_block_count, (*count));
  
- 		for (i = 0; i < cluster_size; i++) {
-@@ -3665,20 +3666,26 @@ static int reserve_compress_blocks(struct dnode_of_data *dn, pgoff_t count,
- 			 * fails in release_compress_blocks(), so NEW_ADDR
- 			 * is a possible case.
- 			 */
--			if (blkaddr == NEW_ADDR ||
--				__is_valid_data_blkaddr(blkaddr)) {
-+			if (blkaddr == NEW_ADDR) {
-+				reserved++;
-+				continue;
-+			}
-+			if (__is_valid_data_blkaddr(blkaddr)) {
- 				compr_blocks++;
- 				continue;
- 			}
+ 	spin_lock(&sbi->stat_lock);
+-	sbi->total_valid_block_count += (block_t)(*count);
+-	avail_user_block_count = get_available_block_count(sbi, inode, true);
+ 
+-	if (unlikely(sbi->total_valid_block_count > avail_user_block_count)) {
++	avail_user_block_count = get_available_block_count(sbi, inode, true);
++	diff = (long long)sbi->total_valid_block_count + *count -
++						avail_user_block_count;
++	if (unlikely(diff > 0)) {
+ 		if (!partial) {
+ 			spin_unlock(&sbi->stat_lock);
++			release = *count;
+ 			goto enospc;
  		}
- 
--		reserved = cluster_size - compr_blocks;
-+		to_reserved = cluster_size - compr_blocks - reserved;
- 
- 		/* for the case all blocks in cluster were reserved */
--		if (reserved == 1)
-+		if (to_reserved == 1) {
-+			dn->ofs_in_node += cluster_size;
- 			goto next;
-+		}
- 
--		ret = inc_valid_block_count(sbi, dn->inode, &reserved, false);
-+		ret = inc_valid_block_count(sbi, dn->inode,
-+						&to_reserved, false);
- 		if (unlikely(ret))
- 			return ret;
- 
-@@ -3689,7 +3696,7 @@ static int reserve_compress_blocks(struct dnode_of_data *dn, pgoff_t count,
- 
- 		f2fs_i_compr_blocks_update(dn->inode, compr_blocks, true);
- 
--		*reserved_blocks += reserved;
-+		*reserved_blocks += to_reserved;
- next:
- 		count -= cluster_size;
+-
+-		diff = sbi->total_valid_block_count - avail_user_block_count;
+ 		if (diff > *count)
+ 			diff = *count;
+ 		*count -= diff;
+ 		release = diff;
+-		sbi->total_valid_block_count -= diff;
+ 		if (!*count) {
+ 			spin_unlock(&sbi->stat_lock);
+ 			goto enospc;
+ 		}
  	}
++	sbi->total_valid_block_count += (block_t)(*count);
++
+ 	spin_unlock(&sbi->stat_lock);
+ 
+ 	if (unlikely(release)) {
 -- 
 2.43.0
 
