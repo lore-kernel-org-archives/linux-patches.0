@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A712B196C8D;
-	Thu,  6 Jun 2024 14:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310D7196C8D;
+	Thu,  6 Jun 2024 14:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682948; cv=none; b=RSx0eNnABO2xiy1wxKsF/EGtTygWvyvVyOSsTwOeHsZXP5fFvBLQO5eQ9KdaA+tuh6tcsA3lWzCdE3h/NLW+zmfD2f75lEbucWIocPx6UXzvGZ8h49LhloVMxLw9T56LCHFQBSSfnRKPHQ46oYkh3sh9Viybhu/t5RoDVmZLnWM=
+	t=1717682949; cv=none; b=q/xXvAKLH8Ouv5nLSGA56Td2M2odN2vsAvFFq+9cmcrLqyQgKs2IbZrmeRF2S4lzIEnrJoV2DMAlz52ufvLLFdnc0hIgoeKWyi1t+fOwSdg9hGpRE7j8/6DvZcb0QemmCM3DBSwac1JFQlCe/hF8iUbevjB46k7okDPBvIrrefQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682948; c=relaxed/simple;
-	bh=lYtExvF3zIG9F8kK9YPLmRDeT1FtkKORufkahtk5r7Q=;
+	s=arc-20240116; t=1717682949; c=relaxed/simple;
+	bh=o5wY0glUR+JcnhR1vgw5c9pPHJ/yuwAUmu+BRnZQ0C4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cD2CRFt1rUv3H6eaGNXUuIZDydkFdaL4XkozXDAAxbtsYU32dTNNAMa25VAaQN+3TtExn872U81XPhVq/P8zgjZ36s5V1lKObWxWbqMG88g5pVTLRyL4nbucSZuEiqQTE+khoSpdulyc5tkjCOocA9zWDx4mcDEtVmlptH6YkwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqKNcKoj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C+azjePqY0OyMhz7LlxrgoXQUh0sb+RPlUIPPNMFVXftkgu+C/w1o5mVKWxGZ6eZqEvqIi0blJJeNbEtTVqdVjSXz/YGIcIa9zAYJovmjhDAGj+OjLzfj8HWgXk7pMEiXekswzGGScK7cC4dUajle1KeaQjw0a8c7TtY5Z6dFfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiZmll+t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqKNcKoj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DDBC32781;
-	Thu,  6 Jun 2024 14:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiZmll+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E02CC32781;
+	Thu,  6 Jun 2024 14:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682948;
-	bh=lYtExvF3zIG9F8kK9YPLmRDeT1FtkKORufkahtk5r7Q=;
+	s=korg; t=1717682949;
+	bh=o5wY0glUR+JcnhR1vgw5c9pPHJ/yuwAUmu+BRnZQ0C4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fqKNcKojtYRFXTKbQ+RMcgjaq824iYg+4RfU/qRuHdRraAKi1F6qKN+WRk6ryIcq3
-	 8S0vaqPzQIMLcl2ho1iJu32S6KFBwPwyKXCNPV8qqWASjpKXfPMbVddGPjCfjQERJp
-	 MY0ZKKGnWODTb/m8a+1a1NMoneE8nOFuCJpCB+ho=
+	b=AiZmll+tW1xZ0dJWjBjqsEM4YpQ4jJrN8l6BfjOxQJjkS6bC6BkuhZT+/7NJqCGg/
+	 MUJ3p8XZzoqsSUZwT2lAAjupwqku/kHa6hER9BQdM1fD5/OHj18As2ufYI5hhzmQfk
+	 BvireUWBNKxOIAWqQngI3ZsuiO2u1fkNlSozhcSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 111/374] f2fs: compress: dont allow unaligned truncation on released compress inode
-Date: Thu,  6 Jun 2024 16:01:30 +0200
-Message-ID: <20240606131655.642218490@linuxfoundation.org>
+Subject: [PATCH 6.9 112/374] fuse: set FR_PENDING atomically in fuse_resend()
+Date: Thu,  6 Jun 2024 16:01:31 +0200
+Message-ID: <20240606131655.682560180@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,62 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 29ed2b5dd521ce7c5d8466cd70bf0cc9d07afeee ]
+[ Upstream commit 42815f8ac54c5113bf450ec4b7ccc5b62af0f6a7 ]
 
-f2fs image may be corrupted after below testcase:
-- mkfs.f2fs -O extra_attr,compression -f /dev/vdb
-- mount /dev/vdb /mnt/f2fs
-- touch /mnt/f2fs/file
-- f2fs_io setflags compression /mnt/f2fs/file
-- dd if=/dev/zero of=/mnt/f2fs/file bs=4k count=4
-- f2fs_io release_cblocks /mnt/f2fs/file
-- truncate -s 8192 /mnt/f2fs/file
-- umount /mnt/f2fs
-- fsck.f2fs /dev/vdb
+When fuse_resend() moves the requests from processing lists to pending
+list, it uses __set_bit() to set FR_PENDING bit in req->flags.
 
-[ASSERT] (fsck_chk_inode_blk:1256)  --> ino: 0x5 has i_blocks: 0x00000002, but has 0x3 blocks
-[FSCK] valid_block_count matching with CP             [Fail] [0x4, 0x5]
-[FSCK] other corrupted bugs                           [Fail]
+Using __set_bit() is not safe, because other functions may update
+req->flags concurrently (e.g., request_wait_answer() may call
+set_bit(FR_INTERRUPTED, &flags)).
 
-The reason is: partial truncation assume compressed inode has reserved
-blocks, after partial truncation, valid block count may change w/o
-.i_blocks and .total_valid_block_count update, result in corruption.
+Fix it by using set_bit() instead.
 
-This patch only allow cluster size aligned truncation on released
-compress inode for fixing.
-
-Fixes: c61404153eb6 ("f2fs: introduce FI_COMPRESS_RELEASED instead of using IMMUTABLE bit")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 760eac73f9f6 ("fuse: Introduce a new notification type for resend pending requests")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/fuse/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 30d438bd30ab4..208dedc161d53 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -952,9 +952,14 @@ int f2fs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 				  ATTR_GID | ATTR_TIMES_SET))))
- 		return -EPERM;
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index 3ec8bb5e68ff5..8eb2ce7c0b012 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1813,7 +1813,7 @@ static void fuse_resend(struct fuse_conn *fc)
+ 	spin_unlock(&fc->lock);
  
--	if ((attr->ia_valid & ATTR_SIZE) &&
--		!f2fs_is_compress_backend_ready(inode))
--		return -EOPNOTSUPP;
-+	if ((attr->ia_valid & ATTR_SIZE)) {
-+		if (!f2fs_is_compress_backend_ready(inode))
-+			return -EOPNOTSUPP;
-+		if (is_inode_flag_set(inode, FI_COMPRESS_RELEASED) &&
-+			!IS_ALIGNED(attr->ia_size,
-+			F2FS_BLK_TO_BYTES(F2FS_I(inode)->i_cluster_size)))
-+			return -EINVAL;
-+	}
- 
- 	err = setattr_prepare(idmap, dentry, attr);
- 	if (err)
+ 	list_for_each_entry_safe(req, next, &to_queue, list) {
+-		__set_bit(FR_PENDING, &req->flags);
++		set_bit(FR_PENDING, &req->flags);
+ 		/* mark the request as resend request */
+ 		req->in.h.unique |= FUSE_UNIQUE_RESEND;
+ 	}
 -- 
 2.43.0
 
