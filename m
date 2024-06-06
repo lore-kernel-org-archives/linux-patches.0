@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E366619AD46;
-	Thu,  6 Jun 2024 14:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652A1198824;
+	Thu,  6 Jun 2024 14:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683332; cv=none; b=kfTMr4mTOIhyffyD9YsEOU7hyCuIqS2Uu4qWQr5HraaPJcjMVWmR95HVzX5nP2RpSSPNoYwsrXrG4SaRS9GpF9Ud7sHZ7XqmFsLJADYTVeydYs9W1+O9k/5PRpIuk8pcCeooxrMnC1U+ECoDxDJf5xwbbRv7G1YuZqs9ho/LcyA=
+	t=1717683332; cv=none; b=C6pWj4MuZujP6yPvtIzo0K2sS0hFKMPHE33X3JtxaFTTi6rQfV3p7nfMo1T1qbGiiOIlHGyUKTCRc9DFn93c+D/lTfyK13PYKEyg5I9Q5J0j7H+BwgpCxsrmiV+WrZgTyVBxmZxD37PXQd79SJ1JbIT/GaAmpKKtZvdB85D+zsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683332; c=relaxed/simple;
-	bh=C+dxkKEibI1M2QNL66H1F8YwMtEwuHtXbImeYGByfJI=;
+	bh=uyY8jOx0m36cBOmHl39OhUXNykoOSSbzIcDOyfzXmgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B7KivhTZBb96F9m9zZtTD2v5lFkq7S8AGcf7O33rJoWxzYGsrrP9Owu4AR3oGgeNN7FYZ5XejzwYU3gUSrIjWJ9UUDXJnt3jOLMsevYRfW9iDX+gFE00JH3+GFwAPI0dpnzI8QWPIDhOTN768XCGcnuvQjy+RwCbWRdsx4I8IwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsOOpdmr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gMlg8wNp1kH3z2Kz4lLEfxY7eygniEiUqQlZ78PwklC5nvuuQ+PMQchSyOeBwjJxysRUA260ADU7i7TPAt9HqUhV4iJqKUa3FmRfsKQkeiAyNkU/wmDt8T0SMTbg2QaEQMbRpgaqU/NM6h39UKpRMRdA22ZD7vk6NOArWq9M87M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OPKf9PKr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsOOpdmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC46AC2BD10;
-	Thu,  6 Jun 2024 14:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OPKf9PKr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43487C2BD10;
+	Thu,  6 Jun 2024 14:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683331;
-	bh=C+dxkKEibI1M2QNL66H1F8YwMtEwuHtXbImeYGByfJI=;
+	s=korg; t=1717683332;
+	bh=uyY8jOx0m36cBOmHl39OhUXNykoOSSbzIcDOyfzXmgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gsOOpdmr69n4p1Qed68KDVlnOC39NToau4MvzlpQxQ7GP38zIuyjKwaMssQ8BNy29
-	 SYwhncL0sKwJnHa+XetCzwPb1SShfu9YaPTrfR9Zd27S0zgRWGN3AA8BATUK1npBD4
-	 ivbqLlNRhdR3E6ATnZtJ5/8+85iBTEfMijOwGws8=
+	b=OPKf9PKrsKG7LHSGe5HPXVRlvlIjwYh84HvRrn3dNyEBkzX7/jXpGa6ZBcJYx/zmk
+	 RGp43YY4OR7JHsTcZhNKncJMdS1bQ7tkAcVz6cWpiDJHpNBTu2EbaZlngVmo9l7Fb/
+	 wdmST2NKkx+V+pYMrwAkZX4/gl91tYk8f5H2o+QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tony Lindgren <tony@atomide.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 273/744] drm/omapdrm: Fix console with deferred ops
-Date: Thu,  6 Jun 2024 15:59:05 +0200
-Message-ID: <20240606131741.138442845@linuxfoundation.org>
+Subject: [PATCH 6.1 214/473] drm/msm/dp: allow voltage swing / pre emphasis of 3
+Date: Thu,  6 Jun 2024 16:02:23 +0200
+Message-ID: <20240606131706.990181110@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,158 +47,140 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 01c0cce88c5480cc2505b79330246ef12eda938f ]
+[ Upstream commit 22578178e5dd6d3aa4490879df8b6c2977d980be ]
 
-Commit 95da53d63dcf ("drm/omapdrm: Use regular fbdev I/O helpers")
-stopped console from updating for command mode displays because there is
-no damage handling in fb_sys_write() unlike we had earlier in
-drm_fb_helper_sys_write().
+Both dp_link_adjust_levels() and dp_ctrl_update_vx_px() limit swing and
+pre-emphasis to 2, while the real maximum value for the sum of the
+voltage swing and pre-emphasis is 3. Fix the DP code to remove this
+limitation.
 
-Let's fix the issue by adding FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS and
-FB_DMAMEM_HELPERS_DEFERRED as suggested by Thomas. We cannot use the
-FB_DEFAULT_DEFERRED_OPS as fb_deferred_io_mmap() won't work properly
-for write-combine.
-
-Fixes: 95da53d63dcf ("drm/omapdrm: Use regular fbdev I/O helpers")
-Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240228063540.4444-3-tony@atomide.com
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/577006/
+Link: https://lore.kernel.org/r/20240203-dp-swing-3-v1-1-6545e1706196@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/omapdrm/Kconfig      |  2 +-
- drivers/gpu/drm/omapdrm/omap_fbdev.c | 28 ++++++++++++++++++++++------
- drivers/video/fbdev/core/Kconfig     |  6 ++++++
- include/linux/fb.h                   |  4 ++++
- 4 files changed, 33 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_ctrl.c |  6 +++---
+ drivers/gpu/drm/msm/dp/dp_link.c | 22 +++++++++++-----------
+ drivers/gpu/drm/msm/dp/dp_link.h | 14 +-------------
+ 3 files changed, 15 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/gpu/drm/omapdrm/Kconfig b/drivers/gpu/drm/omapdrm/Kconfig
-index b715301ec79f6..6c49270cb290a 100644
---- a/drivers/gpu/drm/omapdrm/Kconfig
-+++ b/drivers/gpu/drm/omapdrm/Kconfig
-@@ -4,7 +4,7 @@ config DRM_OMAP
- 	depends on DRM && OF
- 	depends on ARCH_OMAP2PLUS
- 	select DRM_KMS_HELPER
--	select FB_DMAMEM_HELPERS if DRM_FBDEV_EMULATION
-+	select FB_DMAMEM_HELPERS_DEFERRED if DRM_FBDEV_EMULATION
- 	select VIDEOMODE_HELPERS
- 	select HDMI
- 	default n
-diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-index 7c5af3de1e727..523be34682caf 100644
---- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
-+++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-@@ -51,6 +51,10 @@ static void pan_worker(struct work_struct *work)
- 	omap_gem_roll(bo, fbi->var.yoffset * npages);
- }
+diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+index b20701893e5b3..2c501261f2323 100644
+--- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
++++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+@@ -1014,14 +1014,14 @@ static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
+ 	if (ret)
+ 		return ret;
  
-+FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS(omap_fbdev,
-+				   drm_fb_helper_damage_range,
-+				   drm_fb_helper_damage_area)
-+
- static int omap_fbdev_pan_display(struct fb_var_screeninfo *var,
- 		struct fb_info *fbi)
+-	if (voltage_swing_level >= DP_TRAIN_VOLTAGE_SWING_MAX) {
++	if (voltage_swing_level >= DP_TRAIN_LEVEL_MAX) {
+ 		drm_dbg_dp(ctrl->drm_dev,
+ 				"max. voltage swing level reached %d\n",
+ 				voltage_swing_level);
+ 		max_level_reached |= DP_TRAIN_MAX_SWING_REACHED;
+ 	}
+ 
+-	if (pre_emphasis_level >= DP_TRAIN_PRE_EMPHASIS_MAX) {
++	if (pre_emphasis_level >= DP_TRAIN_LEVEL_MAX) {
+ 		drm_dbg_dp(ctrl->drm_dev,
+ 				"max. pre-emphasis level reached %d\n",
+ 				pre_emphasis_level);
+@@ -1112,7 +1112,7 @@ static int dp_ctrl_link_train_1(struct dp_ctrl_private *ctrl,
+ 		}
+ 
+ 		if (ctrl->link->phy_params.v_level >=
+-			DP_TRAIN_VOLTAGE_SWING_MAX) {
++			DP_TRAIN_LEVEL_MAX) {
+ 			DRM_ERROR_RATELIMITED("max v_level reached\n");
+ 			return -EAGAIN;
+ 		}
+diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
+index ceb382fa56d5b..e4f9decec970f 100644
+--- a/drivers/gpu/drm/msm/dp/dp_link.c
++++ b/drivers/gpu/drm/msm/dp/dp_link.c
+@@ -1102,6 +1102,7 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
+ int dp_link_adjust_levels(struct dp_link *dp_link, u8 *link_status)
  {
-@@ -78,11 +82,9 @@ static int omap_fbdev_pan_display(struct fb_var_screeninfo *var,
+ 	int i;
++	u8 max_p_level;
+ 	int v_max = 0, p_max = 0;
+ 	struct dp_link_private *link;
  
- static int omap_fbdev_fb_mmap(struct fb_info *info, struct vm_area_struct *vma)
- {
--	struct drm_fb_helper *helper = info->par;
--	struct drm_framebuffer *fb = helper->fb;
--	struct drm_gem_object *bo = drm_gem_fb_get_obj(fb, 0);
-+	vma->vm_page_prot = pgprot_writecombine(vm_get_page_prot(vma->vm_flags));
- 
--	return drm_gem_mmap_obj(bo, omap_gem_mmap_size(bo), vma);
-+	return fb_deferred_io_mmap(info, vma);
- }
- 
- static void omap_fbdev_fb_destroy(struct fb_info *info)
-@@ -94,6 +96,7 @@ static void omap_fbdev_fb_destroy(struct fb_info *info)
- 
- 	DBG();
- 
-+	fb_deferred_io_cleanup(info);
- 	drm_fb_helper_fini(helper);
- 
- 	omap_gem_unpin(bo);
-@@ -104,15 +107,19 @@ static void omap_fbdev_fb_destroy(struct fb_info *info)
- 	kfree(fbdev);
- }
- 
-+/*
-+ * For now, we cannot use FB_DEFAULT_DEFERRED_OPS and fb_deferred_io_mmap()
-+ * because we use write-combine.
-+ */
- static const struct fb_ops omap_fb_ops = {
- 	.owner = THIS_MODULE,
--	__FB_DEFAULT_DMAMEM_OPS_RDWR,
-+	__FB_DEFAULT_DEFERRED_OPS_RDWR(omap_fbdev),
- 	.fb_check_var	= drm_fb_helper_check_var,
- 	.fb_set_par	= drm_fb_helper_set_par,
- 	.fb_setcmap	= drm_fb_helper_setcmap,
- 	.fb_blank	= drm_fb_helper_blank,
- 	.fb_pan_display = omap_fbdev_pan_display,
--	__FB_DEFAULT_DMAMEM_OPS_DRAW,
-+	__FB_DEFAULT_DEFERRED_OPS_DRAW(omap_fbdev),
- 	.fb_ioctl	= drm_fb_helper_ioctl,
- 	.fb_mmap	= omap_fbdev_fb_mmap,
- 	.fb_destroy	= omap_fbdev_fb_destroy,
-@@ -213,6 +220,15 @@ static int omap_fbdev_create(struct drm_fb_helper *helper,
- 	fbi->fix.smem_start = dma_addr;
- 	fbi->fix.smem_len = bo->size;
- 
-+	/* deferred I/O */
-+	helper->fbdefio.delay = HZ / 20;
-+	helper->fbdefio.deferred_io = drm_fb_helper_deferred_io;
-+
-+	fbi->fbdefio = &helper->fbdefio;
-+	ret = fb_deferred_io_init(fbi);
-+	if (ret)
-+		goto fail;
-+
- 	/* if we have DMM, then we can use it for scrolling by just
- 	 * shuffling pages around in DMM rather than doing sw blit.
+@@ -1133,30 +1134,29 @@ int dp_link_adjust_levels(struct dp_link *dp_link, u8 *link_status)
+ 	 * Adjust the voltage swing and pre-emphasis level combination to within
+ 	 * the allowable range.
  	 */
-diff --git a/drivers/video/fbdev/core/Kconfig b/drivers/video/fbdev/core/Kconfig
-index 56f721ebcff05..acb19045d3046 100644
---- a/drivers/video/fbdev/core/Kconfig
-+++ b/drivers/video/fbdev/core/Kconfig
-@@ -145,6 +145,12 @@ config FB_DMAMEM_HELPERS
- 	select FB_SYS_FOPS
- 	select FB_SYS_IMAGEBLIT
+-	if (dp_link->phy_params.v_level > DP_TRAIN_VOLTAGE_SWING_MAX) {
++	if (dp_link->phy_params.v_level > DP_TRAIN_LEVEL_MAX) {
+ 		drm_dbg_dp(link->drm_dev,
+ 			"Requested vSwingLevel=%d, change to %d\n",
+ 			dp_link->phy_params.v_level,
+-			DP_TRAIN_VOLTAGE_SWING_MAX);
+-		dp_link->phy_params.v_level = DP_TRAIN_VOLTAGE_SWING_MAX;
++			DP_TRAIN_LEVEL_MAX);
++		dp_link->phy_params.v_level = DP_TRAIN_LEVEL_MAX;
+ 	}
  
-+config FB_DMAMEM_HELPERS_DEFERRED
-+	bool
-+	depends on FB_CORE
-+	select FB_DEFERRED_IO
-+	select FB_DMAMEM_HELPERS
-+
- config FB_IOMEM_FOPS
- 	tristate
- 	depends on FB_CORE
-diff --git a/include/linux/fb.h b/include/linux/fb.h
-index c14576458228a..322b4d20afa55 100644
---- a/include/linux/fb.h
-+++ b/include/linux/fb.h
-@@ -690,6 +690,10 @@ extern int fb_deferred_io_fsync(struct file *file, loff_t start,
- 	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, sys) \
- 	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, sys)
+-	if (dp_link->phy_params.p_level > DP_TRAIN_PRE_EMPHASIS_MAX) {
++	if (dp_link->phy_params.p_level > DP_TRAIN_LEVEL_MAX) {
+ 		drm_dbg_dp(link->drm_dev,
+ 			"Requested preEmphasisLevel=%d, change to %d\n",
+ 			dp_link->phy_params.p_level,
+-			DP_TRAIN_PRE_EMPHASIS_MAX);
+-		dp_link->phy_params.p_level = DP_TRAIN_PRE_EMPHASIS_MAX;
++			DP_TRAIN_LEVEL_MAX);
++		dp_link->phy_params.p_level = DP_TRAIN_LEVEL_MAX;
+ 	}
  
-+#define FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS(__prefix, __damage_range, __damage_area) \
-+	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, sys) \
-+	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, sys)
-+
- /*
-  * Initializes struct fb_ops for deferred I/O.
-  */
+-	if ((dp_link->phy_params.p_level > DP_TRAIN_PRE_EMPHASIS_LVL_1)
+-		&& (dp_link->phy_params.v_level ==
+-			DP_TRAIN_VOLTAGE_SWING_LVL_2)) {
++	max_p_level = DP_TRAIN_LEVEL_MAX - dp_link->phy_params.v_level;
++	if (dp_link->phy_params.p_level > max_p_level) {
+ 		drm_dbg_dp(link->drm_dev,
+ 			"Requested preEmphasisLevel=%d, change to %d\n",
+ 			dp_link->phy_params.p_level,
+-			DP_TRAIN_PRE_EMPHASIS_LVL_1);
+-		dp_link->phy_params.p_level = DP_TRAIN_PRE_EMPHASIS_LVL_1;
++			max_p_level);
++		dp_link->phy_params.p_level = max_p_level;
+ 	}
+ 
+ 	drm_dbg_dp(link->drm_dev, "adjusted: v_level=%d, p_level=%d\n",
+diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
+index 9dd4dd9265304..79c3a02b8dacd 100644
+--- a/drivers/gpu/drm/msm/dp/dp_link.h
++++ b/drivers/gpu/drm/msm/dp/dp_link.h
+@@ -19,19 +19,7 @@ struct dp_link_info {
+ 	unsigned long capabilities;
+ };
+ 
+-enum dp_link_voltage_level {
+-	DP_TRAIN_VOLTAGE_SWING_LVL_0	= 0,
+-	DP_TRAIN_VOLTAGE_SWING_LVL_1	= 1,
+-	DP_TRAIN_VOLTAGE_SWING_LVL_2	= 2,
+-	DP_TRAIN_VOLTAGE_SWING_MAX	= DP_TRAIN_VOLTAGE_SWING_LVL_2,
+-};
+-
+-enum dp_link_preemaphasis_level {
+-	DP_TRAIN_PRE_EMPHASIS_LVL_0	= 0,
+-	DP_TRAIN_PRE_EMPHASIS_LVL_1	= 1,
+-	DP_TRAIN_PRE_EMPHASIS_LVL_2	= 2,
+-	DP_TRAIN_PRE_EMPHASIS_MAX	= DP_TRAIN_PRE_EMPHASIS_LVL_2,
+-};
++#define DP_TRAIN_LEVEL_MAX	3
+ 
+ struct dp_link_test_video {
+ 	u32 test_video_pattern;
 -- 
 2.43.0
 
