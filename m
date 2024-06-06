@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7421A1870;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6851A1871;
 	Thu,  6 Jun 2024 14:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683717; cv=none; b=uYp97bfT3AczJcjOUSiHwAakG5w1TsI5BzL8sjMCeJD2Yguek2Py5ewanPQjLMrzCE5STmve8z6exziz3gcFKy/fgK2aW+dGbfvXzcyKFzLZBOFmLDQrgQSisSChDp5rN3WC6s9C2qeX2paHVsn1tV2+gddwdF5jsjJ0gsbWqk0=
+	t=1717683717; cv=none; b=DDjcxzsJpJVlVXHlpCSLSdB4MeH5ScDODVTAdb4tRCwqBCvlaXE3OcGQ+AzlDfK2h7Lv8OrwCr/leJCb6Py80VqZJFxZsJX4t8Ar2NRH7u/DpYZoLj1sc932CpE7su7I5N8ejZYl/CL4aFnnzYX6VRLlTxKTkYOa9wriwgVGNk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683717; c=relaxed/simple;
-	bh=vMSTWcmfITR3yfbzNymfrG8pUzUYAb/LQsi1erBdYD8=;
+	bh=AdwWhynfYDj6aESQpjYxLLjoURTr/jf2OpxoE+0DKvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pls2TIehUcRI8a9G6EVRVeluoWO/e3JZ15pIR81M939Rr10PcqswqE2bg5xqdfF1phh0pvEhOAR3V/bCb87EyHMraH1RjsWPMfyyfXcHUqtWlhrLi1IrwT+DsCDurNVim8LT/clcinIbm50jWJKJtT5p7QEjrxfPqKrF822nOMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6LxELvp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fiabiHwRnNCxQK5L1LtgpMbo5quGO1NJe2uwjxTNfa0H0u3G/RnS8PbNmSKm2dF50GytnpVip9xyY48wB8kUCjpaAzXmWwqOeCI3dHKY5RhhsLBtJmTPjCTEFlbZUhplehBeVIuPOMCvd6yUmUSPLmvhr0Fxcut3sASI5NI8T1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSSaMSXI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6LxELvp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE5FC2BD10;
-	Thu,  6 Jun 2024 14:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSSaMSXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A9AC2BD10;
+	Thu,  6 Jun 2024 14:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683717;
-	bh=vMSTWcmfITR3yfbzNymfrG8pUzUYAb/LQsi1erBdYD8=;
+	bh=AdwWhynfYDj6aESQpjYxLLjoURTr/jf2OpxoE+0DKvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6LxELvp9c/2YnRtOPGkuUf5VVvl+H+fjkhk3kqWPzuENXfXQ8TN/0h8WAURSG666
-	 a49S5CEEAQ1hb1EUzmKbZlvNNVVADMDrhHiU6Nf09o3Qii5CdE2YfHZWacrRoiQpob
-	 bcqiOL1mN0cvrBjgk8pLtyaDOhfSnHFSjt7CsX4o=
+	b=MSSaMSXIrys6grfVdXDJOEsnfZsZpV5l9/1WCbDcT+Im2SGpPiaEI05ZIJ2EH7bz1
+	 BXWnCzeU5VTdY9Zh8TRgNYAFEqs4i6MAzlqbB3OmBQ39gZpHaoYohJMsrM3m1zschc
+	 QgaqRjPy87zIQ8/13ad/pcsRjgMUsiraU7Ce9rmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 613/744] selftests/powerpc/dexcr: Add -no-pie to hashchk tests
-Date: Thu,  6 Jun 2024 16:04:45 +0200
-Message-ID: <20240606131752.151515054@linuxfoundation.org>
+Subject: [PATCH 6.6 614/744] drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails
+Date: Thu,  6 Jun 2024 16:04:46 +0200
+Message-ID: <20240606131752.185902358@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,39 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit d7228a58d9438d6f219dc7f33eab0d1980b3bd2f ]
+[ Upstream commit 46d4efcccc688cbacdd70a238bedca510acaa8e4 ]
 
-The hashchk tests want to verify that the hash key is changed over exec.
-It does so by calculating hashes at the same address across an exec.
-This is made simpler by disabling PIE functionality, so we can
-re-execute ourselves and be using the same addresses in the child.
+Calling a6xx_destroy() before adreno_gpu_init() leads to a null pointer
+dereference on:
 
-While -fno-pie is already added, -no-pie is also required.
+msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
 
-Fixes: bdb07f35a52f ("selftests/powerpc/dexcr: Add hashst/hashchk test")
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240417112325.728010-2-bgray@linux.ibm.com
+as gpu->pdev is only assigned in:
+
+a6xx_gpu_init()
+|_ adreno_gpu_init
+    |_ msm_gpu_init()
+
+Instead of relying on handwavy null checks down the cleanup chain,
+explicitly de-allocate the LLC data and free a6xx_gpu instead.
+
+Fixes: 76efc2453d0e ("drm/msm/gpu: Fix crash during system suspend after unbind")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/588919/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/dexcr/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/powerpc/dexcr/Makefile b/tools/testing/selftests/powerpc/dexcr/Makefile
-index 76210f2bcec3c..829ad075b4a44 100644
---- a/tools/testing/selftests/powerpc/dexcr/Makefile
-+++ b/tools/testing/selftests/powerpc/dexcr/Makefile
-@@ -3,7 +3,7 @@ TEST_GEN_FILES := lsdexcr
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 522ca7fe67625..3664c1476a83a 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2343,7 +2343,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
  
- include ../../lib.mk
+ 	ret = a6xx_set_supported_hw(&pdev->dev, config->info);
+ 	if (ret) {
+-		a6xx_destroy(&(a6xx_gpu->base.base));
++		a6xx_llc_slices_destroy(a6xx_gpu);
++		kfree(a6xx_gpu);
+ 		return ERR_PTR(ret);
+ 	}
  
--$(OUTPUT)/hashchk_test: CFLAGS += -fno-pie $(call cc-option,-mno-rop-protect)
-+$(OUTPUT)/hashchk_test: CFLAGS += -fno-pie -no-pie $(call cc-option,-mno-rop-protect)
- 
- $(TEST_GEN_PROGS): ../harness.c ../utils.c ./dexcr.c
- $(TEST_GEN_FILES): ../utils.c ./dexcr.c
 -- 
 2.43.0
 
