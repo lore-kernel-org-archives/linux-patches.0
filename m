@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D391B1424;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65431B1429;
 	Thu,  6 Jun 2024 14:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683375; cv=none; b=OmqC51S3/OwE1VFxbIi+3/mfVOzQQZYFw/kpeigoEWlQhpdwkammOwJUqU3fJxElVv3s99ctmbzxRW1X6e4oW2f05kQ4dqy5ry3NjzkGlRerLsohrTYmRUnWnOhy/zrmCNG8HNkMtahYFChkMZekLDnjhST5s0cG7xQX3bfPCX4=
+	t=1717683375; cv=none; b=ktLE3RkTeAJki8INmMDQqnI558AtUznT8xEp9XRGuLdOR/9lI/UwyRHB50EL0vdSvtfCpqTZ5eeD1Vx69MZolFwXMJmreNtJkhB8P0Xq7Q3VdvNDkwHJ9XaqNBqTpGlVXShNmVWXG7QxMpE99Bomtmg7wcdvqA5jyp93xly6tRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683375; c=relaxed/simple;
-	bh=dgAkcLoUdeIt93pButdZC5GXFVhIC4PnyqbOp06AQPg=;
+	bh=2fQZmFO7QgXG7VvOrjrbEUhTlf8Zu5kfiRVHSTjVdm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9JLSelerNSFR+eXfRtIfglrU7/h0rYq2sQcfxtoMORs8x8foldCGBfk37UXdsiP+9WqPh8eaLAlULAsrjOVvngagy/Lp9RCBm3R51cmrwz4GD9RrL4HA/fleryzgFKiKyrP5zQ2fm8bPCD2whr/boBS0XwO1hjmRGxbqIbMDdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZPUalOQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SENH1Jx5xZhAEo0AHhy6dKK9EVgV5GeNUOBVjl5YktEudNvJASSE+ywH5V+IYRUzIAgtNZspz9XKS9FKtWWppBKqp1I2mNRNuJTvuuBiNnTSJB83GIxMU2wUgCVQI3qFgUOTU3v7TluMcM1hJ7Ea0XjZOIFER/DpXfGMpg9i2DY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tr+o32Hn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZPUalOQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B504C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tr+o32Hn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E3AC2BD10;
 	Thu,  6 Jun 2024 14:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683375;
-	bh=dgAkcLoUdeIt93pButdZC5GXFVhIC4PnyqbOp06AQPg=;
+	bh=2fQZmFO7QgXG7VvOrjrbEUhTlf8Zu5kfiRVHSTjVdm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZPUalOQ6UIj4w4uYMXAQTFKGUwez3iuUr4qQSrcASAT89UoNmaXC/XZDe3/c+Vb2
-	 8bEeF0rc5XHvhbsVU5TdDd0d1s79/vafbkoP2R3btfvFpFxNfuSy2EgEqCMiNeRTiX
-	 S3AJoSFsSDuhUOr7TBzrfPA7oucXlZx4ZYZZYdB0=
+	b=Tr+o32Hn6K1GoiC2qbnZqoZCvi7BetTeeM5Hy0FT13BzcviFDLTCNYygJneMfa7wv
+	 r/fbYxGw66xTSGj+gGQLYpB3pmakIZBw77q0gYWVrAOaGiRCLPq6vlNOvFjf9ELrGS
+	 wEmaEWb4uL0U8doCCrk6SyY7GX21CYKrQC5tYmEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Maxime Ripard <mripard@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Fei Li <fei1.li@intel.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Yonghua Huang <yonghua.huang@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 317/744] drm: vc4: Fix possible null pointer dereference
-Date: Thu,  6 Jun 2024 15:59:49 +0200
-Message-ID: <20240606131742.594212042@linuxfoundation.org>
+Subject: [PATCH 6.1 259/473] drivers/virt/acrn: fix PFNMAP PTE checks in acrn_vm_ram_map()
+Date: Thu,  6 Jun 2024 16:03:08 +0200
+Message-ID: <20240606131708.523892034@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +56,197 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit c534b63bede6cb987c2946ed4d0b0013a52c5ba7 ]
+[ Upstream commit 3d6586008f7b638f91f3332602592caa8b00b559 ]
 
-In vc4_hdmi_audio_init() of_get_address() may return
-NULL which is later dereferenced. Fix this bug by adding NULL check.
+Patch series "mm: follow_pte() improvements and acrn follow_pte() fixes".
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Patch #1 fixes a bunch of issues I spotted in the acrn driver.  It
+compiles, that's all I know.  I'll appreciate some review and testing from
+acrn folks.
 
-Fixes: bb7d78568814 ("drm/vc4: Add HDMI audio support")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240409075622.11783-1-amishin@t-argos.ru
+Patch #2+#3 improve follow_pte(), passing a VMA instead of the MM, adding
+more sanity checks, and improving the documentation.  Gave it a quick test
+on x86-64 using VM_PAT that ends up using follow_pte().
+
+This patch (of 3):
+
+We currently miss handling various cases, resulting in a dangerous
+follow_pte() (previously follow_pfn()) usage.
+
+(1) We're not checking PTE write permissions.
+
+Maybe we should simply always require pte_write() like we do for
+pin_user_pages_fast(FOLL_WRITE)? Hard to tell, so let's check for
+ACRN_MEM_ACCESS_WRITE for now.
+
+(2) We're not rejecting refcounted pages.
+
+As we are not using MMU notifiers, messing with refcounted pages is
+dangerous and can result in use-after-free. Let's make sure to reject them.
+
+(3) We are only looking at the first PTE of a bigger range.
+
+We only lookup a single PTE, but memmap->len may span a larger area.
+Let's loop over all involved PTEs and make sure the PFN range is
+actually contiguous. Reject everything else: it couldn't have worked
+either way, and rather made use access PFNs we shouldn't be accessing.
+
+Link: https://lkml.kernel.org/r/20240410155527.474777-1-david@redhat.com
+Link: https://lkml.kernel.org/r/20240410155527.474777-2-david@redhat.com
+Fixes: 8a6e85f75a83 ("virt: acrn: obtain pa from VMA with PFNMAP flag")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Fei Li <fei1.li@intel.com>
+Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Yonghua Huang <yonghua.huang@intel.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/virt/acrn/mm.c | 63 +++++++++++++++++++++++++++++++-----------
+ 1 file changed, 47 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 4626fe9aac563..643754fa6a8ad 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -2729,6 +2729,8 @@ static int vc4_hdmi_audio_init(struct vc4_hdmi *vc4_hdmi)
- 		index = 1;
+diff --git a/drivers/virt/acrn/mm.c b/drivers/virt/acrn/mm.c
+index ffc1d1136f765..8ef49d7be453c 100644
+--- a/drivers/virt/acrn/mm.c
++++ b/drivers/virt/acrn/mm.c
+@@ -155,23 +155,29 @@ int acrn_vm_memseg_unmap(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
+ int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
+ {
+ 	struct vm_memory_region_batch *regions_info;
+-	int nr_pages, i = 0, order, nr_regions = 0;
++	int nr_pages, i, order, nr_regions = 0;
+ 	struct vm_memory_mapping *region_mapping;
+ 	struct vm_memory_region_op *vm_region;
+ 	struct page **pages = NULL, *page;
+ 	void *remap_vaddr;
+ 	int ret, pinned;
+ 	u64 user_vm_pa;
+-	unsigned long pfn;
+ 	struct vm_area_struct *vma;
  
- 	addr = of_get_address(dev->of_node, index, NULL, NULL);
-+	if (!addr)
+ 	if (!vm || !memmap)
+ 		return -EINVAL;
+ 
++	/* Get the page number of the map region */
++	nr_pages = memmap->len >> PAGE_SHIFT;
++	if (!nr_pages)
 +		return -EINVAL;
++
+ 	mmap_read_lock(current->mm);
+ 	vma = vma_lookup(current->mm, memmap->vma_base);
+ 	if (vma && ((vma->vm_flags & VM_PFNMAP) != 0)) {
++		unsigned long start_pfn, cur_pfn;
+ 		spinlock_t *ptl;
++		bool writable;
+ 		pte_t *ptep;
  
- 	vc4_hdmi->audio.dma_data.addr = be32_to_cpup(addr) + mai_data->offset;
- 	vc4_hdmi->audio.dma_data.addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+ 		if ((memmap->vma_base + memmap->len) > vma->vm_end) {
+@@ -179,25 +185,53 @@ int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
+ 			return -EINVAL;
+ 		}
+ 
+-		ret = follow_pte(vma->vm_mm, memmap->vma_base, &ptep, &ptl);
+-		if (ret < 0) {
+-			mmap_read_unlock(current->mm);
++		for (i = 0; i < nr_pages; i++) {
++			ret = follow_pte(vma->vm_mm,
++					 memmap->vma_base + i * PAGE_SIZE,
++					 &ptep, &ptl);
++			if (ret)
++				break;
++
++			cur_pfn = pte_pfn(ptep_get(ptep));
++			if (i == 0)
++				start_pfn = cur_pfn;
++			writable = !!pte_write(ptep_get(ptep));
++			pte_unmap_unlock(ptep, ptl);
++
++			/* Disallow write access if the PTE is not writable. */
++			if (!writable &&
++			    (memmap->attr & ACRN_MEM_ACCESS_WRITE)) {
++				ret = -EFAULT;
++				break;
++			}
++
++			/* Disallow refcounted pages. */
++			if (pfn_valid(cur_pfn) &&
++			    !PageReserved(pfn_to_page(cur_pfn))) {
++				ret = -EFAULT;
++				break;
++			}
++
++			/* Disallow non-contiguous ranges. */
++			if (cur_pfn != start_pfn + i) {
++				ret = -EINVAL;
++				break;
++			}
++		}
++		mmap_read_unlock(current->mm);
++
++		if (ret) {
+ 			dev_dbg(acrn_dev.this_device,
+ 				"Failed to lookup PFN at VMA:%pK.\n", (void *)memmap->vma_base);
+ 			return ret;
+ 		}
+-		pfn = pte_pfn(ptep_get(ptep));
+-		pte_unmap_unlock(ptep, ptl);
+-		mmap_read_unlock(current->mm);
+ 
+ 		return acrn_mm_region_add(vm, memmap->user_vm_pa,
+-			 PFN_PHYS(pfn), memmap->len,
++			 PFN_PHYS(start_pfn), memmap->len,
+ 			 ACRN_MEM_TYPE_WB, memmap->attr);
+ 	}
+ 	mmap_read_unlock(current->mm);
+ 
+-	/* Get the page number of the map region */
+-	nr_pages = memmap->len >> PAGE_SHIFT;
+ 	pages = vzalloc(array_size(nr_pages, sizeof(*pages)));
+ 	if (!pages)
+ 		return -ENOMEM;
+@@ -241,12 +275,11 @@ int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
+ 	mutex_unlock(&vm->regions_mapping_lock);
+ 
+ 	/* Calculate count of vm_memory_region_op */
+-	while (i < nr_pages) {
++	for (i = 0; i < nr_pages; i += 1 << order) {
+ 		page = pages[i];
+ 		VM_BUG_ON_PAGE(PageTail(page), page);
+ 		order = compound_order(page);
+ 		nr_regions++;
+-		i += 1 << order;
+ 	}
+ 
+ 	/* Prepare the vm_memory_region_batch */
+@@ -263,8 +296,7 @@ int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
+ 	regions_info->regions_num = nr_regions;
+ 	regions_info->regions_gpa = virt_to_phys(vm_region);
+ 	user_vm_pa = memmap->user_vm_pa;
+-	i = 0;
+-	while (i < nr_pages) {
++	for (i = 0; i < nr_pages; i += 1 << order) {
+ 		u32 region_size;
+ 
+ 		page = pages[i];
+@@ -280,7 +312,6 @@ int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
+ 
+ 		vm_region++;
+ 		user_vm_pa += region_size;
+-		i += 1 << order;
+ 	}
+ 
+ 	/* Inform the ACRN Hypervisor to set up EPT mappings */
 -- 
 2.43.0
 
