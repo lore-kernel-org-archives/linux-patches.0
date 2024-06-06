@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675CB19AD42;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DA519AD4A;
 	Thu,  6 Jun 2024 14:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683038; cv=none; b=D+KJqsl6gFon4Vcey6HTLbkyibDhFgfJm8OkQcpRvKH35YExn+2lXtUfd2ihe695hajpem1tMeuJpxVvLzQ7NjwPkUH+2OWlxnmvS9KItkWgTQGIbbdmEuwFRkCShL2G/XHlT6sCDLVZCoohq5F9QNoDfNKP+8CPLLzIawgZ9LE=
+	t=1717683038; cv=none; b=VUVLxaixO3/WS+BIPijWeS7ZQhhMiz9XYRo1ztSnf08sUhps45rGgZz2DGhXFgx+JBFTsY6Cd4XMIDVuIMDm25O/kYEY+u4AnQeioVGMjPOr054FSPLXRSWBxq+63ptlV6i/RI/K/J+C8T7Aea57B8y0JxROTp8+dcyC0KPel0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683038; c=relaxed/simple;
-	bh=5mRl3S1tZE9XzLjdNiqUZuTiArmOBQf0JWOQDbbQkw4=;
+	bh=bElNPHG+1gVvxrKu2wh9nxbnFFfj+Y7NhYc9yRhq8OI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=urFFthyRIfCC3u5XuExyyWCVzZ2DRl/Djn7z9SPbTzAca5ni8hP7JY3ILVA0ptQA6wUdiQledxIBy/SySzTmuvyijnQPYOETQmiogAu78egoM+xdOdmg3muFnE8a5anrbhzdidREFR7t0b+JZHeMpO+TYylUYuv8GPwb1BW3u1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmGrsarb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CC/PNsQHOL5w0yieenz4R+VC6hU8ByENM1lOViRgAor3bZLObff15TvNgoaz3V50+TAUPlBs+vhy4WXu/SWW6PdAJHo8W6nxRf25lmR15yJq+2b6I3Dgj+l5Dn6SVaTsV4leK/dnFdOBgyEEiaLWCeQB3wFRL6VkY1MrAjRtB6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQzaDDUb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmGrsarb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456EDC4DDE1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQzaDDUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABABFC4AF60;
 	Thu,  6 Jun 2024 14:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683038;
-	bh=5mRl3S1tZE9XzLjdNiqUZuTiArmOBQf0JWOQDbbQkw4=;
+	bh=bElNPHG+1gVvxrKu2wh9nxbnFFfj+Y7NhYc9yRhq8OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmGrsarbtcbUCJig4RkSKeVzxCJmG28q+4iwCtubfXp8LDXgjYUJvLwFv2swlejZ8
-	 dq4/Bhj6QBweK6F23Ojt/iGcCHNrRdrPKKvJaPZOzuNTVkolj9oonGyzpdg8OFqNCC
-	 2cDqfuf4Fzq57AQLQ8WqIDa7CFtB/Emj1QDDHPAA=
+	b=TQzaDDUbMA5xfyXM5uqxV2ZF3+1+Y5TQIZvrVTTcuTjihBNmnX51IEhbMsbSyMwZB
+	 +qZqC/PS6iu+ZGqY53jlHS9Sxaf/kf+s9Z9ZFei6l7XNIeIooBr2AaJ+ohqwPTksQw
+	 o6AuQGOmJsLev2cPIQnYLzbM5c1wgHaNPnvB9oOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
+	Yewon Choi <woni9911@gmail.com>,
+	"Dae R. Jeong" <threeearcat@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 267/374] net: fec: avoid lock evasion when reading pps_enable
-Date: Thu,  6 Jun 2024 16:04:06 +0200
-Message-ID: <20240606131700.847838150@linuxfoundation.org>
+Subject: [PATCH 6.9 268/374] tls: fix missing memory barrier in tls_init
+Date: Thu,  6 Jun 2024 16:04:07 +0200
+Message-ID: <20240606131700.881020639@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,60 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Dae R. Jeong <threeearcat@gmail.com>
 
-[ Upstream commit 3b1c92f8e5371700fada307cc8fd2c51fa7bc8c1 ]
+[ Upstream commit 91e61dd7a0af660408e87372d8330ceb218be302 ]
 
-The assignment of pps_enable is protected by tmreg_lock, but the read
-operation of pps_enable is not. So the Coverity tool reports a lock
-evasion warning which may cause data race to occur when running in a
-multithread environment. Although this issue is almost impossible to
-occur, we'd better fix it, at least it seems more logically reasonable,
-and it also prevents Coverity from continuing to issue warnings.
+In tls_init(), a write memory barrier is missing, and store-store
+reordering may cause NULL dereference in tls_{setsockopt,getsockopt}.
 
-Fixes: 278d24047891 ("net: fec: ptp: Enable PPS output based on ptp clock")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://lore.kernel.org/r/20240521023800.17102-1-wei.fang@nxp.com
+CPU0                               CPU1
+-----                              -----
+// In tls_init()
+// In tls_ctx_create()
+ctx = kzalloc()
+ctx->sk_proto = READ_ONCE(sk->sk_prot) -(1)
+
+// In update_sk_prot()
+WRITE_ONCE(sk->sk_prot, tls_prots)     -(2)
+
+                                   // In sock_common_setsockopt()
+                                   READ_ONCE(sk->sk_prot)->setsockopt()
+
+                                   // In tls_{setsockopt,getsockopt}()
+                                   ctx->sk_proto->setsockopt()    -(3)
+
+In the above scenario, when (1) and (2) are reordered, (3) can observe
+the NULL value of ctx->sk_proto, causing NULL dereference.
+
+To fix it, we rely on rcu_assign_pointer() which implies the release
+barrier semantic. By moving rcu_assign_pointer() after ctx->sk_proto is
+initialized, we can ensure that ctx->sk_proto are visible when
+changing sk->sk_prot.
+
+Fixes: d5bee7374b68 ("net/tls: Annotate access to sk_prot with READ_ONCE/WRITE_ONCE")
+Signed-off-by: Yewon Choi <woni9911@gmail.com>
+Signed-off-by: Dae R. Jeong <threeearcat@gmail.com>
+Link: https://lore.kernel.org/netdev/ZU4OJG56g2V9z_H7@dragonet/T/
+Link: https://lore.kernel.org/r/Zkx4vjSFp0mfpjQ2@libra05
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_ptp.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ net/tls/tls_main.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
-index 181d9bfbee220..e32f6724f5681 100644
---- a/drivers/net/ethernet/freescale/fec_ptp.c
-+++ b/drivers/net/ethernet/freescale/fec_ptp.c
-@@ -104,14 +104,13 @@ static int fec_ptp_enable_pps(struct fec_enet_private *fep, uint enable)
- 	struct timespec64 ts;
- 	u64 ns;
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index b4674f03d71a9..90b7f253d3632 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -816,9 +816,17 @@ struct tls_context *tls_ctx_create(struct sock *sk)
+ 		return NULL;
  
--	if (fep->pps_enable == enable)
--		return 0;
--
--	fep->pps_channel = DEFAULT_PPS_CHANNEL;
--	fep->reload_period = PPS_OUPUT_RELOAD_PERIOD;
--
- 	spin_lock_irqsave(&fep->tmreg_lock, flags);
+ 	mutex_init(&ctx->tx_lock);
+-	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
+ 	ctx->sk_proto = READ_ONCE(sk->sk_prot);
+ 	ctx->sk = sk;
++	/* Release semantic of rcu_assign_pointer() ensures that
++	 * ctx->sk_proto is visible before changing sk->sk_prot in
++	 * update_sk_prot(), and prevents reading uninitialized value in
++	 * tls_{getsockopt, setsockopt}. Note that we do not need a
++	 * read barrier in tls_{getsockopt,setsockopt} as there is an
++	 * address dependency between sk->sk_proto->{getsockopt,setsockopt}
++	 * and ctx->sk_proto.
++	 */
++	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
+ 	return ctx;
+ }
  
-+	if (fep->pps_enable == enable) {
-+		spin_unlock_irqrestore(&fep->tmreg_lock, flags);
-+		return 0;
-+	}
-+
- 	if (enable) {
- 		/* clear capture or output compare interrupt status if have.
- 		 */
-@@ -532,6 +531,9 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
- 	int ret = 0;
- 
- 	if (rq->type == PTP_CLK_REQ_PPS) {
-+		fep->pps_channel = DEFAULT_PPS_CHANNEL;
-+		fep->reload_period = PPS_OUPUT_RELOAD_PERIOD;
-+
- 		ret = fec_ptp_enable_pps(fep, on);
- 
- 		return ret;
 -- 
 2.43.0
 
