@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45011A255B;
-	Thu,  6 Jun 2024 14:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198041A186B;
+	Thu,  6 Jun 2024 14:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683745; cv=none; b=tJvTvp+x/Re8aHPVGtTm2uh5tSG9TZExKRo1UzEmrHjjdpzRrNw+AwffnkqMoF5qUqF66a+ebsiuPN8KVhTV3hEdnOtInYWgekgWxVXDW5ec46f9i5Wf6drOuZ1ITPyPj6d7Sh/sQDYS+qJB/CLDmPdny7My8MZrMdQ5a+FK99Q=
+	t=1717683746; cv=none; b=bRkd7R7Wbfe/MjABUSK5te9nkbAfxsJfMfgrQrmbkpreemjgsEa1q5D5uMwwMo0TwSF9o9lxNZDxR2nCgL1cuCPRpfFxk/frav6/EUpRg7uUYZaCKxZPSPmYUzTpStsnJgbBM78Sf6hLwGInWEPqQrrTbHA10MawxJ8GJX2QhRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683745; c=relaxed/simple;
-	bh=Typkk0LDaQPfrzThEGodZCquA6/png3Rzgx28sIp6SE=;
+	s=arc-20240116; t=1717683746; c=relaxed/simple;
+	bh=+VKwCNJN9Ztlk5J7KXeF/Dm6Bply3IpCHCgVtNU1FB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXDG/8m77iV039mvVOoxOQ7ELK9CljREk96YfS8Ii29pp+xYo9+ruTQAR3kMsMwtezMyNQm72h9BdotTMUzqsLKZviswiL4ZE1Recdm3NdnSWRRw8adWn0znrUjj7vgN1IG1+UlNUZnslDnTqXB5ROdqdztX13ixCLVGoubWeKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHXZwR2M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NNRkV+vccqDw1H50eg6ixEJK4zoBkIONUzacP2kb5EDV7Uj3SYtEUXUvMDtkkz0tQoOTGGw0WAwjFcH2RZFlZNoSeCzuQ1nuDwd1WoF3bpKI/nmq0lpctEbEL4l7ht5yJOFHO1vEpB1H+qsHbttVhK0H2gM5hxIHOIg/RIBmHto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vutOD3j3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHXZwR2M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A5DC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vutOD3j3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE738C2BD10;
 	Thu,  6 Jun 2024 14:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683745;
-	bh=Typkk0LDaQPfrzThEGodZCquA6/png3Rzgx28sIp6SE=;
+	s=korg; t=1717683746;
+	bh=+VKwCNJN9Ztlk5J7KXeF/Dm6Bply3IpCHCgVtNU1FB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHXZwR2MuhkdabZxYEB7R2alBArDc8mLYkX0nF3CMKqkM2aRnjDumpTaJlhiHf7yW
-	 UT7caRlDYH382eouF1BX9M2QKyY5zTphiBjjFq5WDVgonchgyL9PKtc59iezlJgkN7
-	 o2KqB5ePq4wN7oxDLfDT/X3KsZwogVrWIa92NEyk=
+	b=vutOD3j31MASSjWvFM0tqf7YyR6Gr8Fyc6FTy/to99DzagH+ofdcYApi5PfyM2eo0
+	 ToSCdpI0Q/cDMH1mZ4Dtbi6x3zw2xpw5H1AyvBtJCWhOiMhxR7UykQJCemAIjb5nVx
+	 Bu1JXc+e2u8iFgOWW/b2UD6nCg9P+1XHTx2rlHKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 710/744] ALSA: seq: Dont clear bank selection at event -> UMP MIDI2 conversion
-Date: Thu,  6 Jun 2024 16:06:22 +0200
-Message-ID: <20240606131755.248376443@linuxfoundation.org>
+Subject: [PATCH 6.6 711/744] net: ti: icssg-prueth: Fix start counter for ft1 filter
+Date: Thu,  6 Jun 2024 16:06:23 +0200
+Message-ID: <20240606131755.281604935@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -50,37 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: MD Danish Anwar <danishanwar@ti.com>
 
-[ Upstream commit a200df7deb3186cd7b55abb77ab96dfefb8a4f09 ]
+[ Upstream commit 56a5cf538c3f2d935b0d81040a8303b6e7fc5fd8 ]
 
-The current code to convert from a legacy sequencer event to UMP MIDI2
-clears the bank selection at each time the program change is
-submitted.  This is confusing and may lead to incorrect bank values
-tranmitted to the destination in the end.
+The start counter for FT1 filter is wrongly set to 0 in the driver.
+FT1 is used for source address violation (SAV) check and source address
+starts at Byte 6 not Byte 0. Fix this by changing start counter to
+ETH_ALEN in icssg_ft1_set_mac_addr().
 
-Drop the line to clear the bank info and keep the provided values.
-
-Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
-Link: https://lore.kernel.org/r/20240527151852.29036-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: e9b4ece7d74b ("net: ti: icssg-prueth: Add Firmware config and classification APIs.")
+Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
+Link: https://lore.kernel.org/r/20240527063015.263748-1-danishanwar@ti.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_ump_convert.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/ti/icssg/icssg_classifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
-index c21be87f5da9e..f5d22dd008426 100644
---- a/sound/core/seq/seq_ump_convert.c
-+++ b/sound/core/seq/seq_ump_convert.c
-@@ -892,7 +892,6 @@ static int pgm_ev_to_ump_midi2(const struct snd_seq_event *event,
- 		data->pg.bank_msb = cc->cc_bank_msb;
- 		data->pg.bank_lsb = cc->cc_bank_lsb;
- 		cc->bank_set = 0;
--		cc->cc_bank_msb = cc->cc_bank_lsb = 0;
- 	}
- 	return 1;
- }
+diff --git a/drivers/net/ethernet/ti/icssg/icssg_classifier.c b/drivers/net/ethernet/ti/icssg/icssg_classifier.c
+index 6df53ab17fbc5..902a2717785cb 100644
+--- a/drivers/net/ethernet/ti/icssg/icssg_classifier.c
++++ b/drivers/net/ethernet/ti/icssg/icssg_classifier.c
+@@ -360,7 +360,7 @@ void icssg_ft1_set_mac_addr(struct regmap *miig_rt, int slice, u8 *mac_addr)
+ {
+ 	const u8 mask_addr[] = { 0, 0, 0, 0, 0, 0, };
+ 
+-	rx_class_ft1_set_start_len(miig_rt, slice, 0, 6);
++	rx_class_ft1_set_start_len(miig_rt, slice, ETH_ALEN, ETH_ALEN);
+ 	rx_class_ft1_set_da(miig_rt, slice, 0, mac_addr);
+ 	rx_class_ft1_set_da_mask(miig_rt, slice, 0, mask_addr);
+ 	rx_class_ft1_cfg_set_type(miig_rt, slice, 0, FT1_CFG_TYPE_EQ);
 -- 
 2.43.0
 
