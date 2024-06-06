@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E9E1BE87D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B262C1BF8E3;
 	Thu,  6 Jun 2024 14:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683549; cv=none; b=r4b6tewmvdwcgp7bjfFfQAgzx+Co2SN3LdKxX6sRjyvvAc1BznH2MnlFNWixrsbOgxxMy1VCGuMkrULAKGfvlQD8iw9HaHuhDXOQ27mN4SRr52TAhYheta1WBecQ95WS53mElHueuPmNJUn+SkTN2GszTPCMYSduV7FvwA1+qZc=
+	t=1717683549; cv=none; b=XV5/m4PAAuqBxr7/nPbc2xMF9TwMIE9hM61TLtgcQoFH3sXbUfclzrZyvfdn77ymdl843/4IKnBSBC7l4EKz6e0i4GfPAw87B/lGCPNNs9SgDyuHn/xT4CXjYNz0B9tlVCCpS0f1Mda3VwuwEwMsP2YMkVyzBZLEsCAFU+fgE0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683549; c=relaxed/simple;
-	bh=JMyNnHXN1YDejErouLNJ72cGJuKxbPx4c1m3/iz2uVI=;
+	bh=hB4L/tKX3x+2sede49v9sPCtiukCIQpd6HkRrQ9R3G8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iZ5AXaY/aWRsJdpUE6/7Fmcy1md83N8AMiYME+1D06siYmdOcqMX+5Ug7tVuQQEq2rNctIw/5kf06oAWcJSXVYYPnGs1YYTK+Dox4MyDaA4VDPWe3Tl5qJPsy5UslL0k4ONWL3GUL8L0tIo8UMwy/I9AVqE3ahiOPy4Rjc01TLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlR3se2u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BUQO0gGsjCc5UnzPPaCxOG5l9402f4aCDv8bqVNxesjuq8fwC67ihbb3F3boybUZ/dOZ/P6qHlohpipw2Mdc94XjhgTz2LJZoiD1NpDLzgDDg2csgG476F153VWsVs8mjEuGMwS35TdBs1+Lh0BL8xzinZd3cvE37z4/olIKyaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ft0Uy8y6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlR3se2u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A7CC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ft0Uy8y6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92699C32782;
 	Thu,  6 Jun 2024 14:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683549;
-	bh=JMyNnHXN1YDejErouLNJ72cGJuKxbPx4c1m3/iz2uVI=;
+	bh=hB4L/tKX3x+2sede49v9sPCtiukCIQpd6HkRrQ9R3G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlR3se2ufoU75il1PmFKyYOM4equ2URMIzMdXvO0AJ3Z2K+GjVS7O6kDYI83eTtgP
-	 LiLbK6sbebfvGjvkFekD282ADNb42ltUK0GoLrWGh9vz11xprPCc0pOfEFuayBPkou
-	 q1z+tLufs0iTvtyabs2Q9fBWmuYKVfw1XHB104rs=
+	b=Ft0Uy8y6m09PKIx7C5qQYWmmhvM0BJ8Ib00qlQ3wfSpHt5MJ1eGoy5d2G2ADwRFmT
+	 81wQxYY+LnIxCK0qIcVbpxDm2q5s1bhlFhw5tBnW69pA6apY5J6G+WsI1dufpSeBW+
+	 wN74FHmr6UpYENnpE9sqFtj3SeOe+pdIKyR02Z9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Dan Aloni <dan.aloni@vastdata.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 438/473] net/mlx5: Lag, do bond only if slaves agree on roce state
-Date: Thu,  6 Jun 2024 16:06:07 +0200
-Message-ID: <20240606131714.211163271@linuxfoundation.org>
+Subject: [PATCH 6.1 409/473] sunrpc: fix NFSACL RPC retry on soft mount
+Date: Thu,  6 Jun 2024 16:05:38 +0200
+Message-ID: <20240606131713.322161580@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -47,76 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Dan Aloni <dan.aloni@vastdata.com>
 
-[ Upstream commit 51ef9305b8f40946d65c40368ffb4c14636d369a ]
+[ Upstream commit 0dc9f430027b8bd9073fdafdfcdeb1a073ab5594 ]
 
-Currently, the driver does not enforce that lag bond slaves must have
-matching roce capabilities. Yet, in mlx5_do_bond(), the driver attempts
-to enable roce on all vports of the bond slaves, causing the following
-syndrome when one slave has no roce fw support:
+It used to be quite awhile ago since 1b63a75180c6 ('SUNRPC: Refactor
+rpc_clone_client()'), in 2012, that `cl_timeout` was copied in so that
+all mount parameters propagate to NFSACL clients. However since that
+change, if mount options as follows are given:
 
-mlx5_cmd_out_err:809:(pid 25427): MODIFY_NIC_VPORT_CONTEXT(0×755) op_mod(0×0)
-failed, status bad parameter(0×3), syndrome (0xc1f678), err(-22)
+    soft,timeo=50,retrans=16,vers=3
 
-Thus, create HW lag only if bond's slaves agree on roce state,
-either all slaves have roce support resulting in a roce lag bond,
-or none do, resulting in a raw eth bond.
+The resultant NFSACL client receives:
 
-Fixes: 7907f23adc18 ("net/mlx5: Implement RoCE LAG feature")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    cl_softrtry: 1
+    cl_timeout: to_initval=60000, to_maxval=60000, to_increment=0, to_retries=2, to_exponential=0
+
+These values lead to NFSACL operations not being retried under the
+condition of transient network outages with soft mount. Instead, getacl
+call fails after 60 seconds with EIO.
+
+The simple fix is to pass the existing client's `cl_timeout` as the new
+client timeout.
+
+Cc: Chuck Lever <chuck.lever@oracle.com>
+Cc: Benjamin Coddington <bcodding@redhat.com>
+Link: https://lore.kernel.org/all/20231105154857.ryakhmgaptq3hb6b@gmail.com/T/
+Fixes: 1b63a75180c6 ('SUNRPC: Refactor rpc_clone_client()')
+Signed-off-by: Dan Aloni <dan.aloni@vastdata.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/sunrpc/clnt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index 01c0e1ee918d8..a283d8ae466b6 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -696,6 +696,7 @@ static bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
- 	struct mlx5_core_dev *dev;
- 	u8 mode;
- #endif
-+	bool roce_support;
- 	int i;
- 
- 	for (i = 0; i < ldev->ports; i++)
-@@ -722,6 +723,11 @@ static bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
- 		if (mlx5_sriov_is_enabled(ldev->pf[i].dev))
- 			return false;
- #endif
-+	roce_support = mlx5_get_roce_state(ldev->pf[MLX5_LAG_P1].dev);
-+	for (i = 1; i < ldev->ports; i++)
-+		if (mlx5_get_roce_state(ldev->pf[i].dev) != roce_support)
-+			return false;
-+
- 	return true;
- }
- 
-@@ -884,8 +890,10 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
- 		} else if (roce_lag) {
- 			dev0->priv.flags &= ~MLX5_PRIV_FLAGS_DISABLE_IB_ADEV;
- 			mlx5_rescan_drivers_locked(dev0);
--			for (i = 1; i < ldev->ports; i++)
--				mlx5_nic_vport_enable_roce(ldev->pf[i].dev);
-+			for (i = 1; i < ldev->ports; i++) {
-+				if (mlx5_get_roce_state(ldev->pf[i].dev))
-+					mlx5_nic_vport_enable_roce(ldev->pf[i].dev);
-+			}
- 		} else if (shared_fdb) {
- 			dev0->priv.flags &= ~MLX5_PRIV_FLAGS_DISABLE_IB_ADEV;
- 			mlx5_rescan_drivers_locked(dev0);
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index b774028e4aa8f..1dbad41c46145 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -1047,6 +1047,7 @@ struct rpc_clnt *rpc_bind_new_program(struct rpc_clnt *old,
+ 		.authflavor	= old->cl_auth->au_flavor,
+ 		.cred		= old->cl_cred,
+ 		.stats		= old->cl_stats,
++		.timeout	= old->cl_timeout,
+ 	};
+ 	struct rpc_clnt *clnt;
+ 	int err;
 -- 
 2.43.0
 
