@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B621AC24F;
-	Thu,  6 Jun 2024 14:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6806219AD46;
+	Thu,  6 Jun 2024 14:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683331; cv=none; b=g3Cuk9y1HkUThvU842DAgJjOsIL5EDh1pQMmQIyDdWQe72bmuebzzZuGU+OXeQ39SAp0xAUI3U43sS8rdFCfr0dpL+Bm5cEYuj2hd/Y8gtPSmBB6VWIpar4Itdju4XHvLOKSgrt7D0mVHt6Q5TZpgaqWk3ZlaB+gp6ZLkf1eG1w=
+	t=1717683331; cv=none; b=YWA1DRxD7WnV1Mq3OVV96POnJ2e55rbNUYUCSfdqQL5XEuWi0qjD4HmfSQtqhn3DQhOSF2G2W94nFr6yirxvvxIB5vjUdYDeVe6XNzGh3+RxxA/bXaBiJ8fNW9rlVdCQf9DoHPsVN5gaZd4dzM3woToDnFFx2F2E9EvRw17Wwgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683331; c=relaxed/simple;
-	bh=FQ1MZ/I9IOmvhbI1AdZUaz+JQD1b4tBOTOTeYs4jdME=;
+	bh=SdXA4d8f7ZkjkIjMOsCfwk2Cw6Dv+RqMahcIuxAJr1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWvV7vBJ6g5/iYJ3lWTpeQ0i3IdzHJvy4vEAhKIHHn1KDdJ77r0Yey8gor9k5icuMXrts3S/qcKXwjEPpX/fBEx1yqbc2Y+dDKCIRvCkeaX8+dq9+1bVJZgaPg7qOl40PXaTp/ASnDlMZ7dII7gHicM59JH/qOxQO8RPwnVyV1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NaF2N+3C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dwy1VdBpH+0Lgul4RouLIGGUsu9vG3giIQBleQbigAvL0d+th8vCKjN2OaB8on6o8uRTaRdL6pWEjEdvaypZM4xfaVHx0ZmayaK1SkHZutFIE7QMC+jy7BUhUD4kRHn9DTKY/12UJgujPDfU7AhO0892akzvvwiMrSMyDdMobig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYmkNQq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NaF2N+3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6EF2C32781;
-	Thu,  6 Jun 2024 14:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYmkNQq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F58C2BD10;
+	Thu,  6 Jun 2024 14:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683330;
-	bh=FQ1MZ/I9IOmvhbI1AdZUaz+JQD1b4tBOTOTeYs4jdME=;
+	s=korg; t=1717683331;
+	bh=SdXA4d8f7ZkjkIjMOsCfwk2Cw6Dv+RqMahcIuxAJr1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NaF2N+3CiC8udX1lsLR/M/ymweEJM/ZWXPr/sC32vafeCvpXwVfOP4cGr9cJeQEVE
-	 swl7MYyfXtoTnZ1MNubcY6vQ6ss4+UirHbPF0E3watg3gpZ73AC6Wssk+EH1ltuYMf
-	 6bhE5+pgJbN1O7df5KTSWQWj40FSsaz7YLowZWK8=
+	b=OYmkNQq0XnW12QAEWi7LTmd7TPu3hponU0WErAsj70Q/NZXbTGuc/wPO61+giuSKA
+	 DzVh4ct1AO/1JU7hTy/fvFPPxmkrGBZOTEuzqW1jO/tyVL7TxA+czRTlbe2EeP0XtY
+	 qGvLd06ud2XAoZ2PMY2NGkImv20TD4bUthqcgVnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 272/744] fbdev: Provide I/O-memory helpers as module
-Date: Thu,  6 Jun 2024 15:59:04 +0200
-Message-ID: <20240606131741.096823247@linuxfoundation.org>
+Subject: [PATCH 6.1 213/473] platform/x86: xiaomi-wmi: Fix race condition when reporting key events
+Date: Thu,  6 Jun 2024 16:02:22 +0200
+Message-ID: <20240606131706.958934841@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,92 +48,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 6b180f66c0dd6266eeb2f74b59ee79a9f14fe430 ]
+[ Upstream commit 290680c2da8061e410bcaec4b21584ed951479af ]
 
-Provide helpers for accessing I/O memory in a helper module. The fbdev
-core uses these helpers, so select the module unconditionally for fbdev.
-Drivers will later be able to select the module individually and the
-helpers will become optional.
+Multiple WMI events can be received concurrently, so multiple instances
+of xiaomi_wmi_notify() can be active at the same time. Since the input
+device is shared between those handlers, the key input sequence can be
+disturbed.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230927074722.6197-2-tzimmermann@suse.de
-Stable-dep-of: 01c0cce88c54 ("drm/omapdrm: Fix console with deferred ops")
+Fix this by protecting the key input sequence with a mutex.
+
+Compile-tested only.
+
+Fixes: edb73f4f0247 ("platform/x86: wmi: add Xiaomi WMI key driver")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20240402143059.8456-2-W_Armin@gmx.de
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/Kconfig      | 6 ++++++
- drivers/video/fbdev/core/Makefile     | 3 ++-
- drivers/video/fbdev/core/fb_io_fops.c | 3 +++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/platform/x86/xiaomi-wmi.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/video/fbdev/core/Kconfig b/drivers/video/fbdev/core/Kconfig
-index 5ac1b06375311..56f721ebcff05 100644
---- a/drivers/video/fbdev/core/Kconfig
-+++ b/drivers/video/fbdev/core/Kconfig
-@@ -4,6 +4,7 @@
- #
+diff --git a/drivers/platform/x86/xiaomi-wmi.c b/drivers/platform/x86/xiaomi-wmi.c
+index 54a2546bb93bf..be80f0bda9484 100644
+--- a/drivers/platform/x86/xiaomi-wmi.c
++++ b/drivers/platform/x86/xiaomi-wmi.c
+@@ -2,8 +2,10 @@
+ /* WMI driver for Xiaomi Laptops */
  
- config FB_CORE
-+	select FB_IOMEM_FOPS
- 	select VIDEO_CMDLINE
- 	tristate
+ #include <linux/acpi.h>
++#include <linux/device.h>
+ #include <linux/input.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/wmi.h>
  
-@@ -144,12 +145,17 @@ config FB_DMAMEM_HELPERS
- 	select FB_SYS_FOPS
- 	select FB_SYS_IMAGEBLIT
+ #include <uapi/linux/input-event-codes.h>
+@@ -20,12 +22,21 @@
  
-+config FB_IOMEM_FOPS
-+	tristate
-+	depends on FB_CORE
+ struct xiaomi_wmi {
+ 	struct input_dev *input_dev;
++	struct mutex key_lock;	/* Protects the key event sequence */
+ 	unsigned int key_code;
+ };
+ 
++static void xiaomi_mutex_destroy(void *data)
++{
++	struct mutex *lock = data;
 +
- config FB_IOMEM_HELPERS
- 	bool
- 	depends on FB_CORE
- 	select FB_CFB_COPYAREA
- 	select FB_CFB_FILLRECT
- 	select FB_CFB_IMAGEBLIT
-+	select FB_IOMEM_FOPS
++	mutex_destroy(lock);
++}
++
+ static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
+ {
+ 	struct xiaomi_wmi *data;
++	int ret;
  
- config FB_SYSMEM_HELPERS
- 	bool
-diff --git a/drivers/video/fbdev/core/Makefile b/drivers/video/fbdev/core/Makefile
-index edfde2948e5c8..d165055ec3fc5 100644
---- a/drivers/video/fbdev/core/Makefile
-+++ b/drivers/video/fbdev/core/Makefile
-@@ -3,7 +3,7 @@ obj-$(CONFIG_FB_NOTIFY)           += fb_notify.o
- obj-$(CONFIG_FB_CORE)             += fb.o
- fb-y                              := fb_info.o \
-                                      fbmem.o fbcmap.o \
--                                     modedb.o fbcvt.o fb_cmdline.o fb_io_fops.o
-+                                     modedb.o fbcvt.o fb_cmdline.o
- ifdef CONFIG_FB
- fb-y                              += fb_backlight.o fbmon.o
- endif
-@@ -26,6 +26,7 @@ endif
- obj-$(CONFIG_FB_CFB_FILLRECT)  += cfbfillrect.o
- obj-$(CONFIG_FB_CFB_COPYAREA)  += cfbcopyarea.o
- obj-$(CONFIG_FB_CFB_IMAGEBLIT) += cfbimgblt.o
-+obj-$(CONFIG_FB_IOMEM_FOPS)    += fb_io_fops.o
- obj-$(CONFIG_FB_SYS_FILLRECT)  += sysfillrect.o
- obj-$(CONFIG_FB_SYS_COPYAREA)  += syscopyarea.o
- obj-$(CONFIG_FB_SYS_IMAGEBLIT) += sysimgblt.o
-diff --git a/drivers/video/fbdev/core/fb_io_fops.c b/drivers/video/fbdev/core/fb_io_fops.c
-index 5985e5e1b040c..871b829521af3 100644
---- a/drivers/video/fbdev/core/fb_io_fops.c
-+++ b/drivers/video/fbdev/core/fb_io_fops.c
-@@ -131,3 +131,6 @@ ssize_t fb_io_write(struct fb_info *info, const char __user *buf, size_t count,
- 	return (cnt) ? cnt : err;
+ 	if (wdev == NULL || context == NULL)
+ 		return -EINVAL;
+@@ -35,6 +46,11 @@ static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
+ 		return -ENOMEM;
+ 	dev_set_drvdata(&wdev->dev, data);
+ 
++	mutex_init(&data->key_lock);
++	ret = devm_add_action_or_reset(&wdev->dev, xiaomi_mutex_destroy, &data->key_lock);
++	if (ret < 0)
++		return ret;
++
+ 	data->input_dev = devm_input_allocate_device(&wdev->dev);
+ 	if (data->input_dev == NULL)
+ 		return -ENOMEM;
+@@ -59,10 +75,12 @@ static void xiaomi_wmi_notify(struct wmi_device *wdev, union acpi_object *dummy)
+ 	if (data == NULL)
+ 		return;
+ 
++	mutex_lock(&data->key_lock);
+ 	input_report_key(data->input_dev, data->key_code, 1);
+ 	input_sync(data->input_dev);
+ 	input_report_key(data->input_dev, data->key_code, 0);
+ 	input_sync(data->input_dev);
++	mutex_unlock(&data->key_lock);
  }
- EXPORT_SYMBOL(fb_io_write);
-+
-+MODULE_DESCRIPTION("Fbdev helpers for framebuffers in I/O memory");
-+MODULE_LICENSE("GPL");
+ 
+ static const struct wmi_device_id xiaomi_wmi_id_table[] = {
 -- 
 2.43.0
 
