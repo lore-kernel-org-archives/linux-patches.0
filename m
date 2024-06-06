@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8670419AA6A;
-	Thu,  6 Jun 2024 14:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1058219AA6A;
+	Thu,  6 Jun 2024 14:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683033; cv=none; b=QCUTrKjyap6HUIXCjgRzzFXIAaLg5mgZf49lhwMfKQxNl4zB+U9w5TcUMyG4d4cSfOCQ0M2p2OCmJ/3fbgRMfwyRYjzu9iT5KlpbNlWJtRvcOOHUFAhXNhWvVtAGw4cb4S/9AFBALbnlXQcXBX9fe1z/3SJUR6WaHebhe1uKv/A=
+	t=1717683034; cv=none; b=UEz4taTMtf1wBCsCisLv7cZDWqDY4NbnlBDpCvUI9MwYYj2JOrSoQ9sbjPoq9zq0rB6K4VeJ1avoAOJL6hn2V/yLPed4feOBlhrpHMuD+YEes0H6zXhhQpyO6xCvpiMw7CcF6OBIySswX8xHjBLFnJZ9y6j5l3bQxN9FwK7d3V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683033; c=relaxed/simple;
-	bh=aAgTHiMz/T5ZpU+Fuo+oUZjUnLqLOZ/5yaVw2GeUlz0=;
+	s=arc-20240116; t=1717683034; c=relaxed/simple;
+	bh=qgeRVi+V7l4NlsFrxVBSoPPzVG5+huE9rvfZPwT0hiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pU+PTZWvo2TUL3lDvPWImu0DbgcUbW03GiyYzbilu1l4bXuBD5p+RwbHKh+BKrWw2/E8ORtSKzF5Y2CzoqOOF6FSfty4xE5UVnh+Tshv7Kv+dNZRttzasLFWstqvLyilCuRSOH5hhLoOIEvTG+BbXu+ilvkg3l0/HR4ZVZeQDaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMSbO5PG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NQXMOgL9tg9jN0HZPuMu0vSfjUC6KAnYs3Zu4JitcbEdKr7PBnYbWwpGw5MQujZ+fdzZmZxyUmBQVodMrTdi8jd2oHIj5vVQB6bsX6mmTSBetE3mMiefm/AY9OE/mxlQE0wTYzt6Za3MmDjrbKYUR6KWwx0VzxeGtZ1JxLcLiGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLAY823T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMSbO5PG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667BBC4AF0D;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLAY823T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F27C4AF10;
 	Thu,  6 Jun 2024 14:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683033;
-	bh=aAgTHiMz/T5ZpU+Fuo+oUZjUnLqLOZ/5yaVw2GeUlz0=;
+	bh=qgeRVi+V7l4NlsFrxVBSoPPzVG5+huE9rvfZPwT0hiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rMSbO5PG4BiAO951H0sjTv2RcckwkDzRc/wDzACWwgMIgc7mJZsjy6XeiXrK+2Wbx
-	 7zldI6gyxA0Fex+PCPEnvcJwdBZzTK1L5S21MqFLqs/ZrdOC5465ZjNsaBV022Z0CL
-	 Br/KiZiVjeypgyTdkFTgDlh6kOCKoQ08CJmzB37c=
+	b=FLAY823TlYm6421AVFtsX7o+m1SQPoRNNR8wPKpxTvdDAL0ZtvIDrZGScrHWatC+P
+	 7MrR3MXAt65K9EGubPnF7m/PIms9ohd1Z1ikdrX0kwnmCprVsxaaOit0X3j21lMjR8
+	 hb/DSIGvcBoIx0QFhPnCs4DjDmf6UUkfC1VZ96ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	David Stevens <stevensd@chromium.org>,
+	David Hildenbrand <david@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 258/374] net: lan966x: Remove ptp traps in case the ptp is not enabled.
-Date: Thu,  6 Jun 2024 16:03:57 +0200
-Message-ID: <20240606131700.511469645@linuxfoundation.org>
+Subject: [PATCH 6.9 259/374] virtio_balloon: Give the balloon its own wakeup source
+Date: Thu,  6 Jun 2024 16:03:58 +0200
+Message-ID: <20240606131700.554448225@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,50 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: David Stevens <stevensd@chromium.org>
 
-[ Upstream commit eda40be3a5ff3fdce513d2bcfeaca8cc16cf962a ]
+[ Upstream commit 810d831bbbf3cbd86e5aa91c8485b4d35186144d ]
 
-Lan966x is adding ptp traps to redirect the ptp frames to the CPU such
-that the HW will not forward these frames anywhere. The issue is that in
-case ptp is not enabled and the timestamping source is et to
-HWTSTAMP_SOURCE_NETDEV then these traps would not be removed on the
-error path.
-Fix this by removing the traps in this case as they are not needed.
+Wakeup sources don't support nesting multiple events, so sharing a
+single object between multiple drivers can result in one driver
+overriding the wakeup event processing period specified by another
+driver. Have the virtio balloon driver use the wakeup source of the
+device it is bound to rather than the wakeup source of the parent
+device, to avoid conflicts with the transport layer.
 
-Fixes: 54e1ed69c40a ("net: lan966x: convert to ndo_hwtstamp_get() and ndo_hwtstamp_set()")
-Suggested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://lore.kernel.org/r/20240517135808.3025435-1-horatiu.vultur@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Note that although the virtio balloon's virtio_device itself isn't what
+actually wakes up the device, it is responsible for processing wakeup
+events. In the same way that EPOLLWAKEUP uses a dedicated wakeup_source
+to prevent suspend when userspace is processing wakeup events, a
+dedicated wakeup_source is necessary when processing wakeup events in a
+higher layer in the kernel.
+
+Fixes: b12fbc3f787e ("virtio_balloon: stay awake while adjusting balloon")
+Signed-off-by: David Stevens <stevensd@chromium.org>
+Acked-by: David Hildenbrand <david@redhat.com>
+Message-Id: <20240321012445.1593685-2-stevensd@google.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/virtio/virtio_balloon.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index 61d88207eed42..6695ed661ef83 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -474,14 +474,14 @@ static int lan966x_port_hwtstamp_set(struct net_device *dev,
- 	    cfg->source != HWTSTAMP_SOURCE_PHYLIB)
- 		return -EOPNOTSUPP;
+diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
+index 1f5b3dd31fcfc..89bc8da80519f 100644
+--- a/drivers/virtio/virtio_balloon.c
++++ b/drivers/virtio/virtio_balloon.c
+@@ -450,7 +450,7 @@ static void start_update_balloon_size(struct virtio_balloon *vb)
+ 	vb->adjustment_signal_pending = true;
+ 	if (!vb->adjustment_in_progress) {
+ 		vb->adjustment_in_progress = true;
+-		pm_stay_awake(vb->vdev->dev.parent);
++		pm_stay_awake(&vb->vdev->dev);
+ 	}
+ 	spin_unlock_irqrestore(&vb->adjustment_lock, flags);
  
-+	if (cfg->source == HWTSTAMP_SOURCE_NETDEV && !port->lan966x->ptp)
-+		return -EOPNOTSUPP;
+@@ -462,7 +462,7 @@ static void end_update_balloon_size(struct virtio_balloon *vb)
+ 	spin_lock_irq(&vb->adjustment_lock);
+ 	if (!vb->adjustment_signal_pending && vb->adjustment_in_progress) {
+ 		vb->adjustment_in_progress = false;
+-		pm_relax(vb->vdev->dev.parent);
++		pm_relax(&vb->vdev->dev);
+ 	}
+ 	spin_unlock_irq(&vb->adjustment_lock);
+ }
+@@ -1029,6 +1029,15 @@ static int virtballoon_probe(struct virtio_device *vdev)
+ 
+ 	spin_lock_init(&vb->adjustment_lock);
+ 
++	/*
++	 * The virtio balloon itself can't wake up the device, but it is
++	 * responsible for processing wakeup events passed up from the transport
++	 * layer. Wakeup sources don't support nesting/chaining calls, so we use
++	 * our own wakeup source to ensure wakeup events are properly handled
++	 * without trampling on the transport layer's wakeup source.
++	 */
++	device_set_wakeup_capable(&vb->vdev->dev, true);
 +
- 	err = lan966x_ptp_setup_traps(port, cfg);
- 	if (err)
- 		return err;
+ 	virtio_device_ready(vdev);
  
- 	if (cfg->source == HWTSTAMP_SOURCE_NETDEV) {
--		if (!port->lan966x->ptp)
--			return -EOPNOTSUPP;
--
- 		err = lan966x_ptp_hwtstamp_set(port, cfg, extack);
- 		if (err) {
- 			lan966x_ptp_del_traps(port);
+ 	if (towards_target(vb))
 -- 
 2.43.0
 
