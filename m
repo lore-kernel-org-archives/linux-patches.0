@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C98197A76;
-	Thu,  6 Jun 2024 14:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A11A197A76;
+	Thu,  6 Jun 2024 14:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683227; cv=none; b=QS2Nbgdm6iti45qLvdat6JuHoatO1U287n6gofIh/D6bXn0+5vW7DJvWLnHEFMkkGSS9EVxus3fZ/Q2vReIG0Y0rVoKf79avx3oi3q9MeZbXmZYECohnLpoj5zkdauNMu/otmQL9nlQcNaVYLsNAdsZIaltSZjfJ8xcmSC0y3VM=
+	t=1717683228; cv=none; b=nxqPnGj2L8+1ug1cG7x7k3E5sqbYX/MSLH7rwFbkJUJXApIoJ9m13ErSHLMOYHAKDCEUgbI6xWaKRD+xJltuQgobHENikO7GpIO2BECtZj8ONPsvJdmqmHO3ugE2qm1H3OsXuPioI56O3D153rpf7yeqs3Ad0d0fXMEg6iIWpg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683227; c=relaxed/simple;
-	bh=nMtzDQd9eiox77Q6levymR/WwDrnH48VwkFcEFX1JaQ=;
+	s=arc-20240116; t=1717683228; c=relaxed/simple;
+	bh=uv7PAI8FARV6e1RFF0h85iXpwaGLyrYSFH67NcQhWUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uL6hjUdO0xi1PjvNezmnmmO5tOtA1YlmtLxHHVWeveirLpj4csJUFclB2jRt76orhuGbF8gFG/UPa+RrODRiNcp69LUA3K9YVnLi2mnPvIbUi0LCDqySIfNCWPXvl5OFP2qZ45m0NAVvTYPEE2ASyHZkSe+JFiy6rAxM+QaVtbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQbKrXZY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XDKFTvVEZL5V6sMre5NSIg+NNR1WtHwceaFqAle9i7gadpZdB6tNpoP+c5drFGFdQnnwieNzqHpNEh0VYCjuify/D4HW/D2PaDeIu+lM+BsqUDm9Rjm5zY3Tpnp1JCqpFezEsnBdr+3nrcMlCgiDZovqx0/yPLtOpDMB8/ZJQ4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgU++mxt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQbKrXZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51AC5C32786;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgU++mxt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A0DC2BD10;
 	Thu,  6 Jun 2024 14:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683227;
-	bh=nMtzDQd9eiox77Q6levymR/WwDrnH48VwkFcEFX1JaQ=;
+	bh=uv7PAI8FARV6e1RFF0h85iXpwaGLyrYSFH67NcQhWUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQbKrXZYtX571Scz8hzXdPgP7SjbWog1ylm8HC1cRTSwxaj4ME+6OGmaOPJI/RBy0
-	 N4UHcUU08NKSed30qxWWAMblOldCK/coUOtB3RHry13VtKMlBCqSEqgbPd44aBaPpA
-	 aJu9SmJxAvKcAjmDz7Xrm2HzGSYJV4mbrueMHxbQ=
+	b=DgU++mxt/ejKIZh0D7SDz+R+zCuY7L9sUIBJHLBPEomHiIZmf6G7ULGjBNrMmJyKe
+	 e3tF95VcBMT7vV2y9y1wnVVyTh0ESukDillzF8ertJsoc3SfDqgvMpLcDNaTQyt+BV
+	 4JnoSXlOTB8KlI97dj+oNdIqGr6gJuPyuhotowB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Can Guo <quic_cang@quicinc.com>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Lizhe <sensor1010@163.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 103/473] scsi: ufs: qcom: Perform read back after writing reset bit
-Date: Thu,  6 Jun 2024 16:00:32 +0200
-Message-ID: <20240606131703.307396996@linuxfoundation.org>
+Subject: [PATCH 6.6 169/744] cpufreq: exit() callback is optional
+Date: Thu,  6 Jun 2024 15:57:21 +0200
+Message-ID: <20240606131737.847175195@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,73 +48,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit c4d28e06b0c94636f6e35d003fa9ebac0a94e1ae ]
+[ Upstream commit b8f85833c05730d631576008daaa34096bc7f3ce ]
 
-Currently, the reset bit for the UFS provided reset controller (used by its
-phy) is written to, and then a mb() happens to try and ensure that hit the
-device. Immediately afterwards a usleep_range() occurs.
+The exit() callback is optional and shouldn't be called without checking
+a valid pointer first.
 
-mb() ensures that the write completes, but completion doesn't mean that it
-isn't stored in a buffer somewhere. The recommendation for ensuring this
-bit has taken effect on the device is to perform a read back to force it to
-make it all the way to the device. This is documented in device-io.rst and
-a talk by Will Deacon on this can be seen over here:
+Also, we must clear freq_table pointer even if the exit() callback isn't
+present.
 
-    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
-
-Let's do that to ensure the bit hits the device. By doing so and
-guaranteeing the ordering against the immediately following usleep_range(),
-the mb() can safely be removed.
-
-Fixes: 81c0fc51b7a7 ("ufs-qcom: add support for Qualcomm Technologies Inc platforms")
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-1-181252004586@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 91a12e91dc39 ("cpufreq: Allow light-weight tear down and bring up of CPUs")
+Fixes: f339f3541701 ("cpufreq: Rearrange locking in cpufreq_remove_dev()")
+Reported-by: Lizhe <sensor1010@163.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/cpufreq/cpufreq.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index 44466a395bb53..8a3a65625db55 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -146,10 +146,10 @@ static inline void ufs_qcom_assert_reset(struct ufs_hba *hba)
- 			1 << OFFSET_UFS_PHY_SOFT_RESET, REG_UFS_CFG1);
- 
- 	/*
--	 * Make sure assertion of ufs phy reset is written to
--	 * register before returning
-+	 * Dummy read to ensure the write takes effect before doing any sort
-+	 * of delay
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 9177265d73b47..06e0294a17a8d 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1670,10 +1670,13 @@ static void __cpufreq_offline(unsigned int cpu, struct cpufreq_policy *policy)
  	 */
--	mb();
-+	ufshcd_readl(hba, REG_UFS_CFG1);
+ 	if (cpufreq_driver->offline) {
+ 		cpufreq_driver->offline(policy);
+-	} else if (cpufreq_driver->exit) {
+-		cpufreq_driver->exit(policy);
+-		policy->freq_table = NULL;
++		return;
+ 	}
++
++	if (cpufreq_driver->exit)
++		cpufreq_driver->exit(policy);
++
++	policy->freq_table = NULL;
  }
  
- static inline void ufs_qcom_deassert_reset(struct ufs_hba *hba)
-@@ -158,10 +158,10 @@ static inline void ufs_qcom_deassert_reset(struct ufs_hba *hba)
- 			0 << OFFSET_UFS_PHY_SOFT_RESET, REG_UFS_CFG1);
+ static int cpufreq_offline(unsigned int cpu)
+@@ -1731,7 +1734,7 @@ static void cpufreq_remove_dev(struct device *dev, struct subsys_interface *sif)
+ 	}
  
- 	/*
--	 * Make sure de-assertion of ufs phy reset is written to
--	 * register before returning
-+	 * Dummy read to ensure the write takes effect before doing any sort
-+	 * of delay
- 	 */
--	mb();
-+	ufshcd_readl(hba, REG_UFS_CFG1);
- }
+ 	/* We did light-weight exit earlier, do full tear down now */
+-	if (cpufreq_driver->offline)
++	if (cpufreq_driver->offline && cpufreq_driver->exit)
+ 		cpufreq_driver->exit(policy);
  
- /* Host controller hardware version: major.minor.step */
+ 	up_write(&policy->rwsem);
 -- 
 2.43.0
 
