@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF8519645C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC0D199386;
 	Thu,  6 Jun 2024 14:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682995; cv=none; b=bDCCZP1QBbUYhW47yCGxcA/bctLOlf6N64L0hjL6nlBu6Uom9UdcyucY12aNYHwwnce0vXZCE/+bOf22DdtaZSQI7yH4TTb1GUdoKgSYWLzGTFExBZpnExJZgb5nZeAF5WIDeyCtRu8Rh72tpfIU8dpf939I6USOUH406s6tP1U=
+	t=1717682995; cv=none; b=ugdDF1DZLRbHaCuANeXKNO5wBv5KaHcPXOxVzm72ziuXtWOdnzLZLsrclLNioUyM6VqMmXFszgLCfgLXoZ/GWV6t5QcoAqIyI/TLFKCqVS8XYLmBiC2GTYLgv9Bp3vNnRJ8U2hyFmCINFEpCdtGkvcoAVKx5XUI456z5bzRIwD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682995; c=relaxed/simple;
-	bh=QTiv5+PT0/U/1rPY2whp3Jv1pNSDmkHWSADbR1P8NPE=;
+	bh=OEk1jluazL4O7lzSMrJrV2ydkS9DUx1s5H2lJQJFpLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dzYKxrZZ7E419C8rj+EOVfyHgxbiedQd0jm2GkbCQRmpyjqPRR3N+IQlgRv0NKNVPCG6C46I+CuDfwZYjjUdVkCfTuCmMmFXUt+KOPESRjdgGI0K95/2mzK+ipnEpjXJkiyfSerPznGsmv1NGzKyGO54JgGT2MDyF4jLfHrFpew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KeUnsmVq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bOVcULaIx3h3WmrxHliK9Ronc07ODfmKOO5n06FYVvnYB/HUs5Av8SYlcQe2sZXpc1oO9MG4SY+tVHAJqDO1UynhG8+TA4xlFuSLhIdafOx7kaPLkjMzETP9qkZO30HU0Qwsir9MTBiJjOLYTx7UVVXDnBoDXoVSGFrK5gCw5qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Weq9Z4UX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KeUnsmVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9DEC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Weq9Z4UX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCEAC2BD10;
 	Thu,  6 Jun 2024 14:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682995;
-	bh=QTiv5+PT0/U/1rPY2whp3Jv1pNSDmkHWSADbR1P8NPE=;
+	bh=OEk1jluazL4O7lzSMrJrV2ydkS9DUx1s5H2lJQJFpLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KeUnsmVqx3kk8uX3lkGaX7kiozNCjhQWGg3uE38h9w0Hdo7UR6RQ90yVDThNy9Fbk
-	 1FW4QJTmN3Fl8wikG/GmOHBSmhOmg30c31DKd+rXLB/WrBnxR38vkLzwouWWKuZ940
-	 hRhfd8q/LI6fpWuw5+8UvciK07IFVGeXyv3ydoYs=
+	b=Weq9Z4UX6hGFTNOirA+t8looniBN4vtg6XuPgUHpQlUARkRu7Jbc4gXU0fy60jOse
+	 PjRxEnJqk458MoDz9TP2HR4HkF4IbhFpWWQmzvvxAtr170F1ZFua9URnkGY5hGnRXt
+	 TWGOBbYKWLCb5tpo3bDKzkjWYlqXn5/C+HrneFyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tiwei Bie <tiwei.btw@antgroup.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 193/374] um: Fix the -Wmissing-prototypes warning for get_thread_reg
-Date: Thu,  6 Jun 2024 16:02:52 +0200
-Message-ID: <20240606131658.322018598@linuxfoundation.org>
+Subject: [PATCH 6.9 194/374] um: Fix the declaration of kasan_map_memory
+Date: Thu,  6 Jun 2024 16:02:53 +0200
+Message-ID: <20240606131658.350089195@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,50 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit 3144013e48f4f6e5127223c4ebc488016815dedb ]
+[ Upstream commit 6a85e34c4d07d2ec0c153067baff338ac0db55ca ]
 
-The get_thread_reg function is defined in the user code, and is
-called by the kernel code. It should be declared in a shared header.
+Make it match its definition (size_t vs unsigned long). And declare
+it in a shared header to fix the -Wmissing-prototypes warning, as it
+is defined in the user code and called in the kernel code.
 
-Fixes: dbba7f704aa0 ("um: stop polluting the namespace with registers.h contents")
+Fixes: 5b301409e8bc ("UML: add support for KASAN under x86_64")
 Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/asm/processor-generic.h | 1 -
- arch/x86/um/shared/sysdep/archsetjmp.h  | 7 +++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ arch/um/include/asm/kasan.h        | 1 -
+ arch/um/include/shared/kern_util.h | 2 ++
+ arch/um/os-Linux/mem.c             | 1 +
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/um/include/asm/processor-generic.h b/arch/um/include/asm/processor-generic.h
-index 6c3779541845b..5a7c05275aa74 100644
---- a/arch/um/include/asm/processor-generic.h
-+++ b/arch/um/include/asm/processor-generic.h
-@@ -94,7 +94,6 @@ extern struct cpuinfo_um boot_cpu_data;
- #define current_cpu_data boot_cpu_data
- #define cache_line_size()	(boot_cpu_data.cache_alignment)
+diff --git a/arch/um/include/asm/kasan.h b/arch/um/include/asm/kasan.h
+index 0d6547f4ec85c..f97bb1f7b8514 100644
+--- a/arch/um/include/asm/kasan.h
++++ b/arch/um/include/asm/kasan.h
+@@ -24,7 +24,6 @@
  
--extern unsigned long get_thread_reg(int reg, jmp_buf *buf);
- #define KSTK_REG(tsk, reg) get_thread_reg(reg, &tsk->thread.switch_buf)
- extern unsigned long __get_wchan(struct task_struct *p);
+ #ifdef CONFIG_KASAN
+ void kasan_init(void);
+-void kasan_map_memory(void *start, unsigned long len);
+ extern int kasan_um_is_ready;
  
-diff --git a/arch/x86/um/shared/sysdep/archsetjmp.h b/arch/x86/um/shared/sysdep/archsetjmp.h
-index 166cedbab9266..8c81d1a604a94 100644
---- a/arch/x86/um/shared/sysdep/archsetjmp.h
-+++ b/arch/x86/um/shared/sysdep/archsetjmp.h
-@@ -1,6 +1,13 @@
- /* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef __X86_UM_SYSDEP_ARCHSETJMP_H
-+#define __X86_UM_SYSDEP_ARCHSETJMP_H
+ #ifdef CONFIG_STATIC_LINK
+diff --git a/arch/um/include/shared/kern_util.h b/arch/um/include/shared/kern_util.h
+index 789b83013f355..af8cdfc75897e 100644
+--- a/arch/um/include/shared/kern_util.h
++++ b/arch/um/include/shared/kern_util.h
+@@ -66,4 +66,6 @@ extern void fatal_sigsegv(void) __attribute__ ((noreturn));
+ 
+ void um_idle_sleep(void);
+ 
++void kasan_map_memory(void *start, size_t len);
 +
- #ifdef __i386__
- #include "archsetjmp_32.h"
- #else
- #include "archsetjmp_64.h"
  #endif
-+
-+unsigned long get_thread_reg(int reg, jmp_buf *buf);
-+
-+#endif /* __X86_UM_SYSDEP_ARCHSETJMP_H */
+diff --git a/arch/um/os-Linux/mem.c b/arch/um/os-Linux/mem.c
+index 8530b2e086049..c6c9495b14321 100644
+--- a/arch/um/os-Linux/mem.c
++++ b/arch/um/os-Linux/mem.c
+@@ -15,6 +15,7 @@
+ #include <sys/vfs.h>
+ #include <linux/magic.h>
+ #include <init.h>
++#include <kern_util.h>
+ #include <os.h>
+ 
+ /*
 -- 
 2.43.0
 
