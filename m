@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83ABF1A01AF;
-	Thu,  6 Jun 2024 14:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA551990DC;
+	Thu,  6 Jun 2024 14:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683144; cv=none; b=i5oaTHG7stO+okKt33jQcBV56IinFoMLXahPDgt9v1y9luJAQDzpLw2DmS/SbsIaBhAgigz0A0f9UJQRBjB3yghMQjddLFycBAmRqfOB9X2IbFEbBJDOLSQMUROH1MjaNhUWEagvcaWsZ2XIRjex2oNOy5yWGhFY3YJOaVVpKKQ=
+	t=1717683145; cv=none; b=JcN/nkzs0daiCSf4rFAs02SysFDcwMGAvlgZa3IfWh8Sfxq7C2tWKvN7AptGcXJaGKLx+CrAR1BIUxqz5/MY5qyAn6IXxNaq3baqxsA1O2mn8CZ8lBwHzC/tYLnl8kRQtGIfWVprAuSyYvwwwoBEYSF8wLXO6xQvHmGb34rM89g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683144; c=relaxed/simple;
-	bh=BgBjieV6+WDkR0G6F/IeLce9wWNhDHkW3WjiIQ1vb+A=;
+	s=arc-20240116; t=1717683145; c=relaxed/simple;
+	bh=HllS7wGNt/7tOi6mZeR8wZZA8VacO8tYzpp7SJNyJ/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pn4fc4Vsj+rbVbF5+JX/EbDtk4i+Wy95t4iinAfDL6+gT8pawvifZTl4l1Wz5Yx5PItxOem8CIGJ+BRC26PqvhychU/ohjKI4MDp8UBxKdT0LdjbjczLho4RLEX4q9/aZydsIfmjJjg1ZrVr1pePFhxcD1rnwpyO5AB9D8DG2aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZ6SGXYX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YSDJhU2IWU+eHWcHTI0MVQRakqPjIya6cqUn1V3wX5ebYKd7ULky2xrppZ1WQboO5R/rg40AU0SyyJMOMYzHzZ1smaoHjzb4WjgZ3wvYZ6dmnwkh7gHiubmgQuSXlA3ZplI59DrB9E+bfoeMgQQJmjfjqN3p32jR2qUiA85ljy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERmNEkZj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZ6SGXYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6394DC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERmNEkZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EC7C2BD10;
 	Thu,  6 Jun 2024 14:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683144;
-	bh=BgBjieV6+WDkR0G6F/IeLce9wWNhDHkW3WjiIQ1vb+A=;
+	bh=HllS7wGNt/7tOi6mZeR8wZZA8VacO8tYzpp7SJNyJ/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZ6SGXYXwJ1BIByBahjXs8WqNf8fGwercwHdakofw/liO98qMd3tSQK4RvZMvW+jy
-	 sJ4RcoNwSm5B85HBCjHCGT0ZTJgMT4e1QcJAraIHHL3DsQvIhEuQq+4nT+4uPOtjeE
-	 LwO9ZqXYEPAGCtJxB15IJoCjZDZVfo7mQ/f2O3iY=
+	b=ERmNEkZjiTjrH93hGGJy74twg0355ISAA9R9o50TyZa1GdkGgaIvzz0wuBvYwp09J
+	 AoGemVoTJI7kDJDIa30IdPQtfD1a9qvNnQ9g/cAr36VkzhUtv51VrKImAzL1O4VHaA
+	 kkaGRpmnCPup0iadSD3IH1aIS/jAn7o4dWEDFvxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com,
-	"Bai, Shuangpeng" <sjb7183@psu.edu>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 016/473] nilfs2: fix potential hang in nilfs_detach_log_writer()
-Date: Thu,  6 Jun 2024 15:59:05 +0200
-Message-ID: <20240606131700.379814906@linuxfoundation.org>
+	syzbot+045b454ab35fd82a35fb@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 090/744] epoll: be better about file lifetimes
+Date: Thu,  6 Jun 2024 15:56:02 +0200
+Message-ID: <20240606131735.288954742@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,114 +48,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit eb85dace897c5986bc2f36b3c783c6abb8a4292e upstream.
+[ Upstream commit 4efaa5acf0a1d2b5947f98abb3acf8bfd966422b ]
 
-Syzbot has reported a potential hang in nilfs_detach_log_writer() called
-during nilfs2 unmount.
+epoll can call out to vfs_poll() with a file pointer that may race with
+the last 'fput()'. That would make f_count go down to zero, and while
+the ep->mtx locking means that the resulting file pointer tear-down will
+be blocked until the poll returns, it means that f_count is already
+dead, and any use of it won't actually get a reference to the file any
+more: it's dead regardless.
 
-Analysis revealed that this is because nilfs_segctor_sync(), which
-synchronizes with the log writer thread, can be called after
-nilfs_segctor_destroy() terminates that thread, as shown in the call trace
-below:
+Make sure we have a valid ref on the file pointer before we call down to
+vfs_poll() from the epoll routines.
 
-nilfs_detach_log_writer
-  nilfs_segctor_destroy
-    nilfs_segctor_kill_thread  --> Shut down log writer thread
-    flush_work
-      nilfs_iput_work_func
-        nilfs_dispose_list
-          iput
-            nilfs_evict_inode
-              nilfs_transaction_commit
-                nilfs_construct_segment (if inode needs sync)
-                  nilfs_segctor_sync  --> Attempt to synchronize with
-                                          log writer thread
-                           *** DEADLOCK ***
-
-Fix this issue by changing nilfs_segctor_sync() so that the log writer
-thread returns normally without synchronizing after it terminates, and by
-forcing tasks that are already waiting to complete once after the thread
-terminates.
-
-The skipped inode metadata flushout will then be processed together in the
-subsequent cleanup work in nilfs_segctor_destroy().
-
-Link: https://lkml.kernel.org/r/20240520132621.4054-4-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e3973c409251e136fdd0
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Cc: "Bai, Shuangpeng" <sjb7183@psu.edu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/lkml/0000000000002d631f0615918f1e@google.com/
+Reported-by: syzbot+045b454ab35fd82a35fb@syzkaller.appspotmail.com
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/segment.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ fs/eventpoll.c | 38 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 37 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2229,6 +2229,14 @@ static int nilfs_segctor_sync(struct nil
- 	for (;;) {
- 		set_current_state(TASK_INTERRUPTIBLE);
- 
-+		/*
-+		 * Synchronize only while the log writer thread is alive.
-+		 * Leave flushing out after the log writer thread exits to
-+		 * the cleanup work in nilfs_segctor_destroy().
-+		 */
-+		if (!sci->sc_task)
-+			break;
-+
- 		if (atomic_read(&wait_req.done)) {
- 			err = wait_req.err;
- 			break;
-@@ -2244,7 +2252,7 @@ static int nilfs_segctor_sync(struct nil
- 	return err;
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 1d9a71a0c4c16..0ed73bc7d4652 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -876,6 +876,34 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
+ 	return res;
  }
  
--static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err)
-+static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
++/*
++ * The ffd.file pointer may be in the process of being torn down due to
++ * being closed, but we may not have finished eventpoll_release() yet.
++ *
++ * Normally, even with the atomic_long_inc_not_zero, the file may have
++ * been free'd and then gotten re-allocated to something else (since
++ * files are not RCU-delayed, they are SLAB_TYPESAFE_BY_RCU).
++ *
++ * But for epoll, users hold the ep->mtx mutex, and as such any file in
++ * the process of being free'd will block in eventpoll_release_file()
++ * and thus the underlying file allocation will not be free'd, and the
++ * file re-use cannot happen.
++ *
++ * For the same reason we can avoid a rcu_read_lock() around the
++ * operation - 'ffd.file' cannot go away even if the refcount has
++ * reached zero (but we must still not call out to ->poll() functions
++ * etc).
++ */
++static struct file *epi_fget(const struct epitem *epi)
++{
++	struct file *file;
++
++	file = epi->ffd.file;
++	if (!atomic_long_inc_not_zero(&file->f_count))
++		file = NULL;
++	return file;
++}
++
+ /*
+  * Differs from ep_eventpoll_poll() in that internal callers already have
+  * the ep->mtx so we need to start from depth=1, such that mutex_lock_nested()
+@@ -884,14 +912,22 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
+ static __poll_t ep_item_poll(const struct epitem *epi, poll_table *pt,
+ 				 int depth)
  {
- 	struct nilfs_segctor_wait_request *wrq, *n;
- 	unsigned long flags;
-@@ -2252,7 +2260,7 @@ static void nilfs_segctor_wakeup(struct
- 	spin_lock_irqsave(&sci->sc_wait_request.lock, flags);
- 	list_for_each_entry_safe(wrq, n, &sci->sc_wait_request.head, wq.entry) {
- 		if (!atomic_read(&wrq->done) &&
--		    nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq)) {
-+		    (force || nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq))) {
- 			wrq->err = err;
- 			atomic_set(&wrq->done, 1);
- 		}
-@@ -2390,7 +2398,7 @@ static void nilfs_segctor_notify(struct
- 	if (mode == SC_LSEG_SR) {
- 		sci->sc_state &= ~NILFS_SEGCTOR_COMMIT;
- 		sci->sc_seq_done = sci->sc_seq_accepted;
--		nilfs_segctor_wakeup(sci, err);
-+		nilfs_segctor_wakeup(sci, err, false);
- 		sci->sc_flush_request = 0;
- 	} else {
- 		if (mode == SC_FLUSH_FILE)
-@@ -2772,6 +2780,13 @@ static void nilfs_segctor_destroy(struct
- 		|| sci->sc_seq_request != sci->sc_seq_done);
- 	spin_unlock(&sci->sc_state_lock);
+-	struct file *file = epi->ffd.file;
++	struct file *file = epi_fget(epi);
+ 	__poll_t res;
  
 +	/*
-+	 * Forcibly wake up tasks waiting in nilfs_segctor_sync(), which can
-+	 * be called from delayed iput() via nilfs_evict_inode() and can race
-+	 * with the above log writer thread termination.
++	 * We could return EPOLLERR | EPOLLHUP or something, but let's
++	 * treat this more as "file doesn't exist, poll didn't happen".
 +	 */
-+	nilfs_segctor_wakeup(sci, 0, true);
++	if (!file)
++		return 0;
 +
- 	if (flush_work(&sci->sc_iput_work))
- 		flag = true;
+ 	pt->_key = epi->event.events;
+ 	if (!is_file_epoll(file))
+ 		res = vfs_poll(file, pt);
+ 	else
+ 		res = __ep_eventpoll_poll(file, pt, depth);
++	fput(file);
+ 	return res & epi->event.events;
+ }
  
+-- 
+2.43.0
+
 
 
