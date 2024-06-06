@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24B8198E9C;
-	Thu,  6 Jun 2024 14:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9D019E7CA;
+	Thu,  6 Jun 2024 14:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683518; cv=none; b=YI08OZvWoCrNHzI2fL6yzYKFFge0irEq0iw6899Oqggme1bNj5YJcsoshej3N1WNa1C8pzjqBscKw54jyeSwDkJ3KUzpR1n/9xYrOtc3/UL0DiFwmRKzT86ps/kOY6e36zbMCJXNe9yjO8ulhM/P+nax6J6Zk6ToeQlhEXMHcCE=
+	t=1717683518; cv=none; b=MVSqd5KvvJ6QFxezG18952AM1KHz136zeF5wg0D9a01dlQnT6nrv9bQy99EKZOUHI7y0KI7u38ILrz1EEKYKwgoP9xxvBZlm8bUjMOv7Bgj33TaSPUpLG5Bfj25l3RwVfVvSQ+G47g62OTbZtTTnD25GwQitnhg7aqTdmaPvJ9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683518; c=relaxed/simple;
-	bh=WVu0mEHRKw8td50gRwYvL23xxBZvak9rkCXeETO+T38=;
+	bh=BxSASIVusnqBgBk/YxsYH2FL8QuWGMEsq8qwNAJG7vA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PAk4N4JRbMnIseK4jfPe4JtUbTDgZEnXXDuWKuQ0GQa7stMx2KI6V+fjIR7hpaeC3If/abjZmVWzliA8siC2jZ6NSEzxBrGp742bZn0jMhdggG9j9KPxLjiIbXt7X92473TnQZT4oVmfoGtRQkezBRwfcPqR0/lN2+kr6N4ayUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Si1GJ2pt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ii0uP0YdLyYO+49pvBNC79y5VmzoODFCGsteuVl+lwxz2Jb2SMFM2TqGOER6FiPyXsJU8e2mUmOEVNLaRo+x253cfAjvIg6rr2XVBcnHR19atTsI0d/DkuXag6fteRvPuZriDIrL9nhbEu/nKrXAX8/pj8tx9noZQV6I9PWFUwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tv3SPyRp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Si1GJ2pt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88BC3C2BD10;
-	Thu,  6 Jun 2024 14:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tv3SPyRp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19867C32781;
+	Thu,  6 Jun 2024 14:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683517;
-	bh=WVu0mEHRKw8td50gRwYvL23xxBZvak9rkCXeETO+T38=;
+	s=korg; t=1717683518;
+	bh=BxSASIVusnqBgBk/YxsYH2FL8QuWGMEsq8qwNAJG7vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Si1GJ2ptgpP4cnqkgaZ7qg1qURS3Bc9BTDKO48iDFRu79jzhAqax9bmAw+rqizGfw
-	 tYb3hMiWNxpsX1qIH5+vw3BGbREKsLQ4E0xvJBBA62FHkf5kRSFR822jhCAYaRKy5c
-	 GKp7INsWPwbwPKKNXMcNhGL9pu4eNRXU9YXQdn0I=
+	b=Tv3SPyRpekL8+S6u9iUwjr2lZwJFp50EwI2cm3mZQRCMUGKJDIGRsrsg9zhdMyI3U
+	 UEkWX+rd0Thux53lvk6NXmhBOOs+E5znhBw59ztwQWxuszP6YEVEKknGRdq2l7Ve9C
+	 aNWbcXQfI/tVZz6v0xoz8NUcK56Dyr0/9DSkYrkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 429/744] dt-bindings: PCI: rcar-pci-host: Add optional regulators
-Date: Thu,  6 Jun 2024 16:01:41 +0200
-Message-ID: <20240606131746.226935527@linuxfoundation.org>
+Subject: [PATCH 6.1 370/473] drm/mediatek: dp: Move PHY registration to new function
+Date: Thu,  6 Jun 2024 16:04:59 +0200
+Message-ID: <20240606131712.127568939@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +48,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit b952f96a57e6fb4528c1d6be19e941c3322f9905 ]
+[ Upstream commit 18ccc237cf646f93e25b802e5cca0788f4f48b39 ]
 
-Support regulators found on the KingFisher board for miniPCIe (1.5 and
-3.3v). For completeness, describe a 12v regulator while we are here.
+In preparation for adding support for eDP, move the PHY registration
+code to a new mtk_dp_register_phy() function for better readability.
 
-Link: https://lore.kernel.org/linux-pci/20231105092908.3792-2-wsa+renesas@sang-engineering.com
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Stable-dep-of: 78d212851f0e ("dt-bindings: PCI: rcar-pci-host: Add missing IOMMU properties")
+This commit brings no functional changes.
+
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Tested-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230725073234.55892-9-angelogioacchino.delregno@collabora.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Stable-dep-of: 8431fff9e0f3 ("drm/mediatek: dp: Fix mtk_dp_aux_transfer return value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/pci/rcar-pci-host.yaml        | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 43 +++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml b/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
-index 8fdfbc763d704..b6a7cb32f61e5 100644
---- a/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
-+++ b/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
-@@ -68,6 +68,15 @@ properties:
-   phy-names:
-     const: pcie
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index 519e23a2a017c..326a536e677cd 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -2490,6 +2490,29 @@ static int mtk_dp_register_audio_driver(struct device *dev)
+ 	return PTR_ERR_OR_ZERO(mtk_dp->audio_pdev);
+ }
  
-+  vpcie1v5-supply:
-+    description: The 1.5v regulator to use for PCIe.
++static int mtk_dp_register_phy(struct mtk_dp *mtk_dp)
++{
++	struct device *dev = mtk_dp->dev;
 +
-+  vpcie3v3-supply:
-+    description: The 3.3v regulator to use for PCIe.
++	mtk_dp->phy_dev = platform_device_register_data(dev, "mediatek-dp-phy",
++							PLATFORM_DEVID_AUTO,
++							&mtk_dp->regs,
++							sizeof(struct regmap *));
++	if (IS_ERR(mtk_dp->phy_dev))
++		return dev_err_probe(dev, PTR_ERR(mtk_dp->phy_dev),
++				     "Failed to create device mediatek-dp-phy\n");
 +
-+  vpcie12v-supply:
-+    description: The 12v regulator to use for PCIe.
++	mtk_dp_get_calibration_data(mtk_dp);
 +
- required:
-   - compatible
-   - reg
-@@ -121,5 +130,7 @@ examples:
-              clock-names = "pcie", "pcie_bus";
-              power-domains = <&sysc R8A7791_PD_ALWAYS_ON>;
-              resets = <&cpg 319>;
-+             vpcie3v3-supply = <&pcie_3v3>;
-+             vpcie12v-supply = <&pcie_12v>;
-          };
-     };
++	mtk_dp->phy = devm_phy_get(&mtk_dp->phy_dev->dev, "dp");
++	if (IS_ERR(mtk_dp->phy)) {
++		platform_device_unregister(mtk_dp->phy_dev);
++		return dev_err_probe(dev, PTR_ERR(mtk_dp->phy), "Failed to get phy\n");
++	}
++
++	return 0;
++}
++
+ static int mtk_dp_probe(struct platform_device *pdev)
+ {
+ 	struct mtk_dp *mtk_dp;
+@@ -2547,23 +2570,9 @@ static int mtk_dp_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
+-	mtk_dp->phy_dev = platform_device_register_data(dev, "mediatek-dp-phy",
+-							PLATFORM_DEVID_AUTO,
+-							&mtk_dp->regs,
+-							sizeof(struct regmap *));
+-	if (IS_ERR(mtk_dp->phy_dev))
+-		return dev_err_probe(dev, PTR_ERR(mtk_dp->phy_dev),
+-				     "Failed to create device mediatek-dp-phy\n");
+-
+-	mtk_dp_get_calibration_data(mtk_dp);
+-
+-	mtk_dp->phy = devm_phy_get(&mtk_dp->phy_dev->dev, "dp");
+-
+-	if (IS_ERR(mtk_dp->phy)) {
+-		platform_device_unregister(mtk_dp->phy_dev);
+-		return dev_err_probe(dev, PTR_ERR(mtk_dp->phy),
+-				     "Failed to get phy\n");
+-	}
++	ret = mtk_dp_register_phy(mtk_dp);
++	if (ret)
++		return ret;
+ 
+ 	mtk_dp->bridge.funcs = &mtk_dp_bridge_funcs;
+ 	mtk_dp->bridge.of_node = dev->of_node;
 -- 
 2.43.0
 
