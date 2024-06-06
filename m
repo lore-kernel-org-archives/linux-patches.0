@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB3A1A0DD5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16641A0DD5;
 	Thu,  6 Jun 2024 14:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683679; cv=none; b=fntvQiRnlLccEI3pi3tWQR8nChVFxCu5bRz9RQOofU3ke+DFjmxoROZmjBmFaWX5/JsTjYvm21qbo7qAZeSj5qpTJ2FyigTWxMrOTvFjQdVHGmE46KZdp9OaUbg03FEkvDFKyJIcHHRuwTsORLn7Lwlx7PKM+vo6MfRoqBNXUt8=
+	t=1717683679; cv=none; b=ukvCg8CicWKvyxLvGnLMusFbkX2gwFLviQD2pFZJ66Pq9be+tz/E9cjxoR54RrhQ0HjRPTrb7wDUcc8z67DxS6BGJsw/HwpUo5Wez2Y6DzZYCSVSF0ahvAsKbeH9314aaT+aCPFD8BAplhCv1sjHW9i1yMY86KsMNRi+4D95ES0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683679; c=relaxed/simple;
-	bh=IkStDNhKf7GNSBkM8M7wcQCubzUa/bRFTJNBunYH+hw=;
+	bh=XwEDPbYWOQpJERMY50WHLw83+ReiMniIFxgT+ZRON0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQuLUUcnYY/zLEj+FlwMnOi+5wVOlM8+dnUf8A98b+CMkY6CxMfkZtE7JUmCX87Dmj8ydlvM8YxjtGlOVypdk3TH7yKX5QtNGUIVSFRroEefwxi77o7PcxulxjO6ig+L+mbEoFo1H5XYbUNN2DkQ095BN6N3F34lgH9bkE8hCJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EtWY71+5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q/bWTr03Ho6bBln/vmbOYnXajLvEoK/VH1bz2L230RR+8eRBlJ9KRSz5aQs+IfordQMeY2l9Bu6L0ORzcCFCY31Pdb64cndCJ73EaYmBGVfr4GwbMm5QqtUvgF5Aj+4xXX4dmpGcx2L9crXyqBIovgpa0NnykPhU+fY/vMmq7zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGwID0L0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EtWY71+5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD45C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGwID0L0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A572EC2BD10;
 	Thu,  6 Jun 2024 14:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683679;
-	bh=IkStDNhKf7GNSBkM8M7wcQCubzUa/bRFTJNBunYH+hw=;
+	bh=XwEDPbYWOQpJERMY50WHLw83+ReiMniIFxgT+ZRON0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EtWY71+5LQ9LrbtxAIRbRRG4XvypigV99f5o3ZhMoTpoSBHN/5+hcKJSXEKYhDj+X
-	 A0kWfhTvwC9BjOolslVijO042H9jHf5pjGr8RSr6vREdxwq1i3qYU9pDQnQW8ju6pJ
-	 AjyDxIweZ9dT+G0kLpcEjK0dw27c5RDYpjuKkdsc=
+	b=vGwID0L0QPdC5YsHoCwjC/u+9mR1ztAT89nfrSVWri2lLEp+mUO0VECxhZV7TMvYZ
+	 gwqn/7JJyzp8mNVNBFYYtt/pWb4/di3v24r1HccNzjaJIcqbiWPLHrIcDUw3xcGoME
+	 jW9/Vvdk3bpuPDmyPYAkrQkd7EwMlahxPXeeUUIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 579/744] fs/ntfs3: Check folio pointer for NULL
-Date: Thu,  6 Jun 2024 16:04:11 +0200
-Message-ID: <20240606131751.029092580@linuxfoundation.org>
+Subject: [PATCH 6.6 580/744] fs/ntfs3: Use 64 bit variable to avoid 32 bit overflow
+Date: Thu,  6 Jun 2024 16:04:12 +0200
+Message-ID: <20240606131751.065970847@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,46 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 1cd6c96219c429ebcfa8e79a865277376c563803 ]
+[ Upstream commit e931f6b630ffb22d66caab202a52aa8cbb10c649 ]
 
-It can be NULL if bmap is called.
+For example, in the expression:
+	vbo = 2 * vbo + skip
 
-Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
+Fixes: b46acd6a6a627 ("fs/ntfs3: Add NTFS journal")
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ fs/ntfs3/fslog.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index be8c8e47d7e27..6af705ccba65a 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -571,13 +571,18 @@ static noinline int ntfs_get_block_vbo(struct inode *inode, u64 vbo,
- 	clear_buffer_uptodate(bh);
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 855519713bf79..4085fe30bf481 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -1184,7 +1184,8 @@ static int read_log_page(struct ntfs_log *log, u32 vbo,
+ static int log_read_rst(struct ntfs_log *log, bool first,
+ 			struct restart_info *info)
+ {
+-	u32 skip, vbo;
++	u32 skip;
++	u64 vbo;
+ 	struct RESTART_HDR *r_page = NULL;
  
- 	if (is_resident(ni)) {
--		ni_lock(ni);
--		err = attr_data_read_resident(ni, &folio->page);
--		ni_unlock(ni);
--
--		if (!err)
--			set_buffer_uptodate(bh);
-+		bh->b_blocknr = RESIDENT_LCN;
- 		bh->b_size = block_size;
-+		if (!folio) {
-+			err = 0;
-+		} else {
-+			ni_lock(ni);
-+			err = attr_data_read_resident(ni, &folio->page);
-+			ni_unlock(ni);
-+
-+			if (!err)
-+				set_buffer_uptodate(bh);
-+		}
- 		return err;
- 	}
- 
+ 	/* Determine which restart area we are looking for. */
 -- 
 2.43.0
 
