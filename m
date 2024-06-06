@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38B2196DBF;
-	Thu,  6 Jun 2024 14:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5674A196C75;
+	Thu,  6 Jun 2024 14:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682908; cv=none; b=qF0SrPZt7utE6FWAP8nUdv8KotfloZBR4MLvRjECPsMwLHfaK7j8DqgMZUxhWu73TTj1P3eGMDTV9hH2J1VtZk5Nhjp9KcUF8xbEODHdFJS82ZYuLwHkaKHwG3AqSAPRrbDYCNeQAGTVFgErWkd++Cl7K3IPu1zdc4car9eHrAg=
+	t=1717682909; cv=none; b=KX89ihzkWwybfkou6RP78DRivrWv70pHRAeGxTMXSDEd4kKQpTOQOe9rAZuLl1zLJnmqd2T0QTeEAYIOZBUYxyOLkpTFYD0zc5VEJMnmdmgam3//FaZRbaQt3/54iBK21mi/qZxli0rOpnubVdP6eOFGb/sYSByqqjFN7v0KRQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682908; c=relaxed/simple;
-	bh=2AUWF9UElftPgnWR46nl5qC4XQNQ1BtYgVu7l6T4DVE=;
+	s=arc-20240116; t=1717682909; c=relaxed/simple;
+	bh=Fs5/e+NfsJWSVHWR8HOVg43MGTvPpqONI/mOZphfJzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dPIfdYHlxXjYJrdV+lQURgNIsM+sOBYnymoaDHhxowKFWjRuplHZqYThgDR64X9RaW2nNL2S/kPAfcD9vs6Ghvh8P3ZVzNslGPO0QntMWiMovU9SPCRbT6AuPD8FUpi3wpmKTId1VwjCGUW89+nQwHySq71KuAerlcLUnd1ih4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwvQ30g/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FIWbdHMdUDFcZAobibHME/xq2KKu7YUxbDbEOk3XqW7tT5wcey7Ps0h9S9Oem+AOoxxU59Sg2hKap3ye31hzXmG9pxh/5uyIeMY4ltBPYdCpYwoq14JHf91fJePZ/Rz5XLrMqtYVFdAvF4GiSsAcazUmsN+vk+3esh9fVFbRZqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMNnFUe0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwvQ30g/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9CDC4AF07;
-	Thu,  6 Jun 2024 14:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMNnFUe0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275EFC2BD10;
+	Thu,  6 Jun 2024 14:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682908;
-	bh=2AUWF9UElftPgnWR46nl5qC4XQNQ1BtYgVu7l6T4DVE=;
+	s=korg; t=1717682909;
+	bh=Fs5/e+NfsJWSVHWR8HOVg43MGTvPpqONI/mOZphfJzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwvQ30g/+K+FhImbIAtYR+IUtgqk8Qg5b7qGRQUJ3OzvIpdMHY0Olfz/9NNAiVzl2
-	 MPDpK+3LKiWaY8626QE1pVucC6BAmLEAL7NgzRfOMuJdY2Id7rfRBPpRnwJiyiVdbq
-	 RdgIY4LDSGUVHxHpVz3hFZVj+JjsX+fC/vfEx5dA=
+	b=EMNnFUe03i3rZxJ7jWF/v/NkqpGj9gst4RZCQiQRpKC9XyqFAnAeDggJ4U+yvnxwb
+	 zJ73tDqnWRJa2AcuPOe0tz957o+iV5HXQamdSgBixgDpY2nRRC/e+Y9RqzwQ1NrGGq
+	 KHnd6YoCuwmUsFNUHleGp6RFTbtBp4zjgAJg3Uu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Leo Yan <leo.yan@linux.dev>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Spoorthy S <spoorts2@in.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 035/374] perf tests: Apply attributes to all events in object code reading test
-Date: Thu,  6 Jun 2024 16:00:14 +0200
-Message-ID: <20240606131653.004764935@linuxfoundation.org>
+Subject: [PATCH 6.9 009/374] f2fs: fix to wait on page writeback in __clone_blkaddrs()
+Date: Thu,  6 Jun 2024 15:59:48 +0200
+Message-ID: <20240606131652.043424685@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -63,67 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 2dade41a533f337447b945239b87ff31a8857890 ]
+[ Upstream commit d3876e34e7e789e2cbdd782360fef2a777391082 ]
 
-PERF_PMU_CAP_EXTENDED_HW_TYPE results in multiple events being opened on
-heterogeneous systems. Currently this test only sets its required
-attributes on the first event. Not disabling enable_on_exec on the other
-events causes the test to fail because the forked objdump processes are
-sampled. No tracking event is opened so Perf only knows about its own
-mappings causing the objdump samples to give the following error:
+In below race condition, dst page may become writeback status
+in __clone_blkaddrs(), it needs to wait writeback before update,
+fix it.
 
-  $ perf test -vvv "object code reading"
+Thread A				GC Thread
+- f2fs_move_file_range
+  - filemap_write_and_wait_range(dst)
+					- gc_data_segment
+					 - f2fs_down_write(dst)
+					 - move_data_page
+					  - set_page_writeback(dst_page)
+					  - f2fs_submit_page_write
+					 - f2fs_up_write(dst)
+  - f2fs_down_write(dst)
+  - __exchange_data_block
+   - __clone_blkaddrs
+    - f2fs_get_new_data_page
+    - memcpy_page
 
-  Reading object code for memory address: 0xffff9aaa55ec
-  thread__find_map failed
-  ---- end(-1) ----
-  24: Object code reading              : FAILED!
-
-Fixes: 251aa040244a3b17 ("perf parse-events: Wildcard most "numeric" events")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: James Clark <james.clark@arm.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Leo Yan <leo.yan@linux.dev>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Spoorthy S <spoorts2@in.ibm.com>
-Link: https://lore.kernel.org/r/20240410103458.813656-3-james.clark@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 0a2aa8fbb969 ("f2fs: refactor __exchange_data_block for speed up")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/code-reading.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/f2fs/file.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/tests/code-reading.c b/tools/perf/tests/code-reading.c
-index 7a3a7bbbec714..29d2f3ee4e10f 100644
---- a/tools/perf/tests/code-reading.c
-+++ b/tools/perf/tests/code-reading.c
-@@ -637,11 +637,11 @@ static int do_test_code_reading(bool try_kcore)
- 
- 		evlist__config(evlist, &opts, NULL);
- 
--		evsel = evlist__first(evlist);
--
--		evsel->core.attr.comm = 1;
--		evsel->core.attr.disabled = 1;
--		evsel->core.attr.enable_on_exec = 0;
-+		evlist__for_each_entry(evlist, evsel) {
-+			evsel->core.attr.comm = 1;
-+			evsel->core.attr.disabled = 1;
-+			evsel->core.attr.enable_on_exec = 0;
-+		}
- 
- 		ret = evlist__open(evlist);
- 		if (ret < 0) {
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 1761ad125f97a..06e3a69b45dc7 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1325,6 +1325,9 @@ static int __clone_blkaddrs(struct inode *src_inode, struct inode *dst_inode,
+ 				f2fs_put_page(psrc, 1);
+ 				return PTR_ERR(pdst);
+ 			}
++
++			f2fs_wait_on_page_writeback(pdst, DATA, true, true);
++
+ 			memcpy_page(pdst, 0, psrc, 0, PAGE_SIZE);
+ 			set_page_dirty(pdst);
+ 			set_page_private_gcing(pdst);
 -- 
 2.43.0
 
