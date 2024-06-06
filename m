@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A271993A0;
-	Thu,  6 Jun 2024 14:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5AB1993A0;
+	Thu,  6 Jun 2024 14:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683246; cv=none; b=XTDhPJabnIAQbky7wW93O29JFKRDbOnu27pgpwl4UzPPa4bNG9A39I5QZOWft+BhWlRATWWQ2X6iJ3dJLOqYCOCt27/s3blrm7Cn5Ved6Ue65MvAwB6C1n5am5pZHnltMgjA+G2hs1q7IeeNzotNpqgu5Rzy+t8Vl3LmSlSWUIU=
+	t=1717683247; cv=none; b=Gx1c9QJx7eTflyTqXjQXfSgxdHRvz4hVRma5cfeANMKkxqyjhgRpVbMVIPwpWXTeFK16we0masa9i1cW6gLVZJWRFAejVwIKLfwkXsiuDy/cjtEB6yhZ3EgrxuYtq6Jxy7Iw7VVrF3KbOTZcIIVmohHDahTd9q6peqZDGHzCHwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683246; c=relaxed/simple;
-	bh=fBgT5EhwqPOGiKuXATOsO2pMVjgmoNPRwfy7aJRUG2w=;
+	s=arc-20240116; t=1717683247; c=relaxed/simple;
+	bh=sbsy61RUZSdPjQq78JzmecTR1wr8rUFcdA6eBS4Ntg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNZItSOLqC1FMrsj8RpHGyEBBKzM3duBQNFHuLhoBT+xz1U0eyRCQY8tcCoccVrLspLb7pplqDfenPLPDu1Hz0kTABoKZ+/VLYAFKk9yqyuJRAUKUKEg1UpBIHcRBydq3B5D+szb0wxiIZuo533wyXx3XRy7qSi0qRsxeag6zsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9NEXz4N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/7RshXt+YWQmUUByJLxle1XGigtvnG0l65KgLwigO9MnyQU+j3Kp5/P9kRQUhyO9uRtmDa7d62QPiw3gBDNwNgBQiLqKbsvj8CL1fR9kzn4EUG5TQ9bBEH4EQwgH0de//DEQf53uvLOMvId8ZbspBT3I+em+7o0SZ3LwEh9TBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01niisFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9NEXz4N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66AB8C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01niisFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E057EC2BD10;
 	Thu,  6 Jun 2024 14:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683246;
-	bh=fBgT5EhwqPOGiKuXATOsO2pMVjgmoNPRwfy7aJRUG2w=;
+	bh=sbsy61RUZSdPjQq78JzmecTR1wr8rUFcdA6eBS4Ntg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q9NEXz4NBdGefiV0MNfAkLGtHoEm2HrZ1Mfmx0rzA9wsMW46N7Qn+TPnST9RE17Is
-	 scj4xcosqGwfurhv69hri9VURX4veH8HqZU4o509yhPrBm3sS6nR4JEmuxfYR7byPo
-	 RbMrRbKU5mxseFHZF+i8MH+uzISTw41F76OeN7oU=
+	b=01niisFVV1OFj8OpoNCRixwucr7OVkfC6A8KZR7CC5x9U+VH7a10JcJFnCXX9Jme4
+	 nB5YE6c4TXkERCu5iLq/Hx11jpqUXW7Bo7Uyjydy3QIhUHlojN3Ua6+tJGbyEwwqkM
+	 jePPgWYSP3ZFTMbOXpueB9v1jrniijsDFw4gxlQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Andryuk <jandryuk@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/473] x86/pat: Fix W^X violation false-positives when running as Xen PV guest
-Date: Thu,  6 Jun 2024 16:00:52 +0200
-Message-ID: <20240606131704.004461697@linuxfoundation.org>
+Subject: [PATCH 6.6 191/744] gfs2: Fix potential glock use-after-free on unmount
+Date: Thu,  6 Jun 2024 15:57:43 +0200
+Message-ID: <20240606131738.563198785@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,145 +47,229 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 5bc8b0f5dac04cd4ebe47f8090a5942f2f2647ef ]
+[ Upstream commit d98779e687726d8f8860f1c54b5687eec5f63a73 ]
 
-When running as Xen PV guest in some cases W^X violation WARN()s have
-been observed. Those WARN()s are produced by verify_rwx(), which looks
-into the PTE to verify that writable kernel pages have the NX bit set
-in order to avoid code modifications of the kernel by rogue code.
+When a DLM lockspace is released and there ares still locks in that
+lockspace, DLM will unlock those locks automatically.  Commit
+fb6791d100d1b started exploiting this behavior to speed up filesystem
+unmount: gfs2 would simply free glocks it didn't want to unlock and then
+release the lockspace.  This didn't take the bast callbacks for
+asynchronous lock contention notifications into account, which remain
+active until until a lock is unlocked or its lockspace is released.
 
-As the NX bits of all levels of translation entries are or-ed and the
-RW bits of all levels are and-ed, looking just into the PTE isn't enough
-for the decision that a writable page is executable, too.
+To prevent those callbacks from accessing deallocated objects, put the
+glocks that should not be unlocked on the sd_dead_glocks list, release
+the lockspace, and only then free those glocks.
 
-When running as a Xen PV guest, the direct map PMDs and kernel high
-map PMDs share the same set of PTEs. Xen kernel initialization will set
-the NX bit in the direct map PMD entries, and not the shared PTEs.
+As an additional measure, ignore unexpected ast and bast callbacks if
+the receiving glock is dead.
 
-Fixes: 652c5bf380ad ("x86/mm: Refuse W^X violations")
-Reported-by: Jason Andryuk <jandryuk@gmail.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20240412151258.9171-5-jgross@suse.com
+Fixes: fb6791d100d1b ("GFS2: skip dlm_unlock calls in unmount")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/pat/set_memory.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ fs/gfs2/glock.c      | 35 ++++++++++++++++++++++++++++++++---
+ fs/gfs2/glock.h      |  1 +
+ fs/gfs2/incore.h     |  1 +
+ fs/gfs2/lock_dlm.c   | 32 ++++++++++++++++++++++----------
+ fs/gfs2/ops_fstype.c |  1 +
+ fs/gfs2/super.c      |  3 ---
+ 6 files changed, 57 insertions(+), 16 deletions(-)
 
-diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
-index cf721614806b9..fd412dec01259 100644
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -583,7 +583,8 @@ static inline pgprot_t static_protections(pgprot_t prot, unsigned long start,
-  * Validate strict W^X semantics.
-  */
- static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long start,
--				  unsigned long pfn, unsigned long npg)
-+				  unsigned long pfn, unsigned long npg,
-+				  bool nx, bool rw)
- {
- 	unsigned long end;
- 
-@@ -609,6 +610,10 @@ static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long star
- 	if ((pgprot_val(new) & (_PAGE_RW | _PAGE_NX)) != _PAGE_RW)
- 		return new;
- 
-+	/* Non-leaf translation entries can disable writing or execution. */
-+	if (!rw || nx)
-+		return new;
-+
- 	end = start + npg * PAGE_SIZE - 1;
- 	WARN_ONCE(1, "CPA detected W^X violation: %016llx -> %016llx range: 0x%016lx - 0x%016lx PFN %lx\n",
- 		  (unsigned long long)pgprot_val(old),
-@@ -710,7 +715,7 @@ pte_t *lookup_address(unsigned long address, unsigned int *level)
- EXPORT_SYMBOL_GPL(lookup_address);
- 
- static pte_t *_lookup_address_cpa(struct cpa_data *cpa, unsigned long address,
--				  unsigned int *level)
-+				  unsigned int *level, bool *nx, bool *rw)
- {
- 	pgd_t *pgd;
- 
-@@ -719,7 +724,7 @@ static pte_t *_lookup_address_cpa(struct cpa_data *cpa, unsigned long address,
- 	else
- 		pgd = cpa->pgd + pgd_index(address);
- 
--	return lookup_address_in_pgd(pgd, address, level);
-+	return lookup_address_in_pgd_attr(pgd, address, level, nx, rw);
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index a2a1935e2eede..c195244d21dfd 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -166,18 +166,45 @@ static bool glock_blocked_by_withdraw(struct gfs2_glock *gl)
+ 	return true;
  }
  
- /*
-@@ -843,12 +848,13 @@ static int __should_split_large_page(pte_t *kpte, unsigned long address,
- 	pgprot_t old_prot, new_prot, req_prot, chk_prot;
- 	pte_t new_pte, *tmp;
- 	enum pg_level level;
-+	bool nx, rw;
+-void gfs2_glock_free(struct gfs2_glock *gl)
++static void __gfs2_glock_free(struct gfs2_glock *gl)
+ {
+-	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
+-
+ 	rhashtable_remove_fast(&gl_hash_table, &gl->gl_node, ht_parms);
+ 	smp_mb();
+ 	wake_up_glock(gl);
+ 	call_rcu(&gl->gl_rcu, gfs2_glock_dealloc);
++}
++
++void gfs2_glock_free(struct gfs2_glock *gl) {
++	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
++
++	__gfs2_glock_free(gl);
+ 	if (atomic_dec_and_test(&sdp->sd_glock_disposal))
+ 		wake_up(&sdp->sd_kill_wait);
+ }
  
- 	/*
- 	 * Check for races, another CPU might have split this page
- 	 * up already:
- 	 */
--	tmp = _lookup_address_cpa(cpa, address, &level);
-+	tmp = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
- 	if (tmp != kpte)
- 		return 1;
++void gfs2_glock_free_later(struct gfs2_glock *gl) {
++	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
++
++	spin_lock(&lru_lock);
++	list_add(&gl->gl_lru, &sdp->sd_dead_glocks);
++	spin_unlock(&lru_lock);
++	if (atomic_dec_and_test(&sdp->sd_glock_disposal))
++		wake_up(&sdp->sd_kill_wait);
++}
++
++static void gfs2_free_dead_glocks(struct gfs2_sbd *sdp)
++{
++	struct list_head *list = &sdp->sd_dead_glocks;
++
++	while(!list_empty(list)) {
++		struct gfs2_glock *gl;
++
++		gl = list_first_entry(list, struct gfs2_glock, gl_lru);
++		list_del_init(&gl->gl_lru);
++		__gfs2_glock_free(gl);
++	}
++}
++
+ /**
+  * gfs2_glock_hold() - increment reference count on glock
+  * @gl: The glock to hold
+@@ -2194,6 +2221,8 @@ void gfs2_gl_hash_clear(struct gfs2_sbd *sdp)
+ 	wait_event_timeout(sdp->sd_kill_wait,
+ 			   atomic_read(&sdp->sd_glock_disposal) == 0,
+ 			   HZ * 600);
++	gfs2_lm_unmount(sdp);
++	gfs2_free_dead_glocks(sdp);
+ 	glock_hash_walk(dump_glock_func, sdp);
+ }
  
-@@ -959,7 +965,8 @@ static int __should_split_large_page(pte_t *kpte, unsigned long address,
- 	new_prot = static_protections(req_prot, lpaddr, old_pfn, numpages,
- 				      psize, CPA_DETECT);
+diff --git a/fs/gfs2/glock.h b/fs/gfs2/glock.h
+index 7a11d5d4de496..f7ee9ca948eee 100644
+--- a/fs/gfs2/glock.h
++++ b/fs/gfs2/glock.h
+@@ -266,6 +266,7 @@ void gfs2_gl_dq_holders(struct gfs2_sbd *sdp);
+ void gfs2_glock_thaw(struct gfs2_sbd *sdp);
+ void gfs2_glock_add_to_lru(struct gfs2_glock *gl);
+ void gfs2_glock_free(struct gfs2_glock *gl);
++void gfs2_glock_free_later(struct gfs2_glock *gl);
  
--	new_prot = verify_rwx(old_prot, new_prot, lpaddr, old_pfn, numpages);
-+	new_prot = verify_rwx(old_prot, new_prot, lpaddr, old_pfn, numpages,
-+			      nx, rw);
+ int __init gfs2_glock_init(void);
+ void gfs2_glock_exit(void);
+diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
+index 95a334d64da2a..60abd7050c998 100644
+--- a/fs/gfs2/incore.h
++++ b/fs/gfs2/incore.h
+@@ -838,6 +838,7 @@ struct gfs2_sbd {
+ 	/* For quiescing the filesystem */
+ 	struct gfs2_holder sd_freeze_gh;
+ 	struct mutex sd_freeze_mutex;
++	struct list_head sd_dead_glocks;
  
- 	/*
- 	 * If there is a conflict, split the large page.
-@@ -1040,6 +1047,7 @@ __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
- 	pte_t *pbase = (pte_t *)page_address(base);
- 	unsigned int i, level;
- 	pgprot_t ref_prot;
-+	bool nx, rw;
- 	pte_t *tmp;
+ 	char sd_fsname[GFS2_FSNAME_LEN + 3 * sizeof(int) + 2];
+ 	char sd_table_name[GFS2_FSNAME_LEN];
+diff --git a/fs/gfs2/lock_dlm.c b/fs/gfs2/lock_dlm.c
+index 59ab18c798890..0bde45fb49630 100644
+--- a/fs/gfs2/lock_dlm.c
++++ b/fs/gfs2/lock_dlm.c
+@@ -121,6 +121,11 @@ static void gdlm_ast(void *arg)
+ 	struct gfs2_glock *gl = arg;
+ 	unsigned ret = gl->gl_state;
  
- 	spin_lock(&pgd_lock);
-@@ -1047,7 +1055,7 @@ __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
- 	 * Check for races, another CPU might have split this page
- 	 * up for us already:
- 	 */
--	tmp = _lookup_address_cpa(cpa, address, &level);
-+	tmp = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
- 	if (tmp != kpte) {
- 		spin_unlock(&pgd_lock);
- 		return 1;
-@@ -1588,10 +1596,11 @@ static int __change_page_attr(struct cpa_data *cpa, int primary)
- 	int do_split, err;
- 	unsigned int level;
- 	pte_t *kpte, old_pte;
-+	bool nx, rw;
++	/* If the glock is dead, we only react to a dlm_unlock() reply. */
++	if (__lockref_is_dead(&gl->gl_lockref) &&
++	    gl->gl_lksb.sb_status != -DLM_EUNLOCK)
++		return;
++
+ 	gfs2_update_reply_times(gl);
+ 	BUG_ON(gl->gl_lksb.sb_flags & DLM_SBF_DEMOTED);
  
- 	address = __cpa_addr(cpa, cpa->curpage);
- repeat:
--	kpte = _lookup_address_cpa(cpa, address, &level);
-+	kpte = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
- 	if (!kpte)
- 		return __cpa_process_fault(cpa, address, primary);
+@@ -171,6 +176,9 @@ static void gdlm_bast(void *arg, int mode)
+ {
+ 	struct gfs2_glock *gl = arg;
  
-@@ -1613,7 +1622,8 @@ static int __change_page_attr(struct cpa_data *cpa, int primary)
- 		new_prot = static_protections(new_prot, address, pfn, 1, 0,
- 					      CPA_PROTECT);
++	if (__lockref_is_dead(&gl->gl_lockref))
++		return;
++
+ 	switch (mode) {
+ 	case DLM_LOCK_EX:
+ 		gfs2_glock_cb(gl, LM_ST_UNLOCKED);
+@@ -291,8 +299,12 @@ static void gdlm_put_lock(struct gfs2_glock *gl)
+ 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
+ 	int error;
  
--		new_prot = verify_rwx(old_prot, new_prot, address, pfn, 1);
-+		new_prot = verify_rwx(old_prot, new_prot, address, pfn, 1,
-+				      nx, rw);
+-	if (gl->gl_lksb.sb_lkid == 0)
+-		goto out_free;
++	BUG_ON(!__lockref_is_dead(&gl->gl_lockref));
++
++	if (gl->gl_lksb.sb_lkid == 0) {
++		gfs2_glock_free(gl);
++		return;
++	}
  
- 		new_prot = pgprot_clear_protnone_bits(new_prot);
+ 	clear_bit(GLF_BLOCKING, &gl->gl_flags);
+ 	gfs2_glstats_inc(gl, GFS2_LKS_DCOUNT);
+@@ -300,13 +312,17 @@ static void gdlm_put_lock(struct gfs2_glock *gl)
+ 	gfs2_update_request_times(gl);
  
+ 	/* don't want to call dlm if we've unmounted the lock protocol */
+-	if (test_bit(DFL_UNMOUNT, &ls->ls_recover_flags))
+-		goto out_free;
++	if (test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
++		gfs2_glock_free(gl);
++		return;
++	}
+ 	/* don't want to skip dlm_unlock writing the lvb when lock has one */
+ 
+ 	if (test_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags) &&
+-	    !gl->gl_lksb.sb_lvbptr)
+-		goto out_free;
++	    !gl->gl_lksb.sb_lvbptr) {
++		gfs2_glock_free_later(gl);
++		return;
++	}
+ 
+ again:
+ 	error = dlm_unlock(ls->ls_dlm, gl->gl_lksb.sb_lkid, DLM_LKF_VALBLK,
+@@ -321,10 +337,6 @@ static void gdlm_put_lock(struct gfs2_glock *gl)
+ 		       gl->gl_name.ln_type,
+ 		       (unsigned long long)gl->gl_name.ln_number, error);
+ 	}
+-	return;
+-
+-out_free:
+-	gfs2_glock_free(gl);
+ }
+ 
+ static void gdlm_cancel(struct gfs2_glock *gl)
+diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
+index 547e279f5f9e6..fc7bc1e59748f 100644
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -136,6 +136,7 @@ static struct gfs2_sbd *init_sbd(struct super_block *sb)
+ 	atomic_set(&sdp->sd_log_in_flight, 0);
+ 	init_waitqueue_head(&sdp->sd_log_flush_wait);
+ 	mutex_init(&sdp->sd_freeze_mutex);
++	INIT_LIST_HEAD(&sdp->sd_dead_glocks);
+ 
+ 	return sdp;
+ 
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index ab095198b627f..2b47a4119591f 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -646,10 +646,7 @@ static void gfs2_put_super(struct super_block *sb)
+ 	gfs2_gl_hash_clear(sdp);
+ 	truncate_inode_pages_final(&sdp->sd_aspace);
+ 	gfs2_delete_debugfs_file(sdp);
+-	/*  Unmount the locking protocol  */
+-	gfs2_lm_unmount(sdp);
+ 
+-	/*  At this point, we're through participating in the lockspace  */
+ 	gfs2_sys_fs_del(sdp);
+ 	free_sbd(sdp);
+ }
 -- 
 2.43.0
 
