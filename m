@@ -1,94 +1,155 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1063019B5AF;
-	Thu,  6 Jun 2024 15:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E53195FC4;
+	Thu,  6 Jun 2024 15:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717686360; cv=none; b=Dl84akiRejCVwE/PO96SkKJzvsCc01p83e4G6yezPqqLn3pyyfPHb6Hja1vlrAZC5b84oCaDH+Ur3TiI7ov3sFOuR3eOsr+966CpbJMdvc6rKYENDRsJh/qh0Mo5TzXSKtWg5nKnCps2OZ6GTHAbRJ0xYRbx9RRT+n/dkh0E7w4=
+	t=1717687413; cv=none; b=BLRLht+k/wqXEaC2/aGSoZepMrU441mL8XnJilNWyB+dqVXvsui/VhcB+p1P/PlUusuNyEjAInkbzSRxpPsfYnKprVbeu5THq6geIUMkgj6e1rONU+O7Js1yDz8lQ3s26pxv6UvSsStrqRHgfr8YApRSV/SclsD59svpwwT+CFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717686360; c=relaxed/simple;
-	bh=Cx1ASgr5Lh9FnhS81vNXx9ifwngxlnqb6mSkxtlQWLo=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KoZiv1i5U2riKVY3i8WIifRLxOqXqz0iXpDceKtP3TNM3hK8yFXFOCdCjrUBSuxkz9iIT1i3aj+zet4CYsJROnOaznuXkM/hdShPK09tYWFTPct9kf77kHnRaOji54TV6z7oaUrBsgGAVIQDf8qUJy4/BVWrDDMi1SYFkH0unkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LJE2V8YE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717687413; c=relaxed/simple;
+	bh=n8Yr0UeoP6wPmeyQGK/cVLGthNtM0TGWP7koLQxIank=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=U7wc7JLUDcTd0Ul92MxvtHIi77i5bTyydXHUjRJbsJR0rrUzxekcUq5a6UyTkQbcAUheSYwzblhTwlgqsbdD7yGS/f4h59DiIGuV96oQKIOQMNQjBS5fFrGUWN4RTvrYWO+mAF1ZjlILqWGJo6HZ12Q0WIgOaDM/pre7VNp2a9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bGDQ3Nz9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LJE2V8YE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE65C32786;
-	Thu,  6 Jun 2024 15:05:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bGDQ3Nz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE53C2BD10;
+	Thu,  6 Jun 2024 15:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717686359;
-	bh=Cx1ASgr5Lh9FnhS81vNXx9ifwngxlnqb6mSkxtlQWLo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=LJE2V8YEAvQg7dOKXsKEM5ZXvqkbYqfFpDavrIE6ibwGQcnoFfSGpEp8uH6O2dBXh
-	 ry6vAyt/lvcu4dyXJSiclI99AznFEB4pNXp6HGBksXMOjk30byH8gnCE5AR7SIVNSO
-	 Kg0dl7aWs5jSK0RUeDauQN0Ju+JQ+594Y3sUss5DvrhtJEsIO+8NAKaHnc/qONUpy6
-	 QVyI5Tz4Lqwh7/c3aVSsFsSevkBTGQbRV5t4hOIerNIAtSSu/LDA5j+SLQmBfCxJdI
-	 0p31Li9bp4O9xYsLd+rxa4GxL2m314+VzaGe2Q1k0q23qZ3DaiXKR2PQVg7zZ++SsW
-	 aMc6qVH8HvpOg==
-Date: Thu, 6 Jun 2024 08:05:57 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: David Ahern <dsahern@kernel.org>, Dan Williams
- <dan.j.williams@intel.com>, Jonathan Corbet <corbet@lwn.net>, Itay Avraham
- <itayavr@nvidia.com>, Leon Romanovsky <leon@kernel.org>,
- linux-doc@vger.kernel.org, linux-rdma@vger.kernel.org,
- netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed
- <saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>, Andy Gospodarek
- <andrew.gospodarek@broadcom.com>, Aron Silverton
- <aron.silverton@oracle.com>, Christoph Hellwig <hch@infradead.org>, Jiri
- Pirko <jiri@nvidia.com>, Leonid Bloch <lbloch@nvidia.com>, Leon Romanovsky
- <leonro@nvidia.com>, linux-cxl@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 0/8] Introduce fwctl subystem
-Message-ID: <20240606080557.00f3163e@kernel.org>
-In-Reply-To: <20240606144818.GC19897@nvidia.com>
-References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
-	<20240603114250.5325279c@kernel.org>
-	<214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
-	<20240604070451.79cfb280@kernel.org>
-	<665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
-	<20240605135911.GT19897@nvidia.com>
-	<d97144db-424f-4efd-bf10-513a0b895eca@kernel.org>
-	<20240606071811.34767cce@kernel.org>
-	<20240606144818.GC19897@nvidia.com>
+	s=k20201202; t=1717687412;
+	bh=n8Yr0UeoP6wPmeyQGK/cVLGthNtM0TGWP7koLQxIank=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=bGDQ3Nz9FJaTI03nkHRRI8Rkbmqyr8quCZRGkaHPS78qF5hhbIu4lQZVvtyfMCwaJ
+	 HNNQFCq99KG4QMX5sAPumvaa8eOxjVdP0f17ulhpsskQ7G4f0MWGcAe45aou2zPUIo
+	 puEO9reNGbm2iTeM2JO3MKqGYKuBjyDajfpZP6CH1fdj1EcSZRdM4UxCM95p1BzN+1
+	 d2W44/s7KjAFeuSgy6+WD9SocKtMJeh7WRL68waquEN4l2jQv20b7Dcv1Jfj+I/yQc
+	 kPZbyvhjJzExje/AobiV3kGiteGFOJxgnfi5obYxJpmbDqewG2Y1hzqQkn2G+xMaPb
+	 LBWRr86Qk3guQ==
+Message-ID: <025da51b45c5234dc05c4bfc6b0570e5.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240605234720.GA3441001-robh@kernel.org>
+References: <20240603223811.3815762-1-sboyd@kernel.org> <20240603223811.3815762-6-sboyd@kernel.org> <20240605234720.GA3441001-robh@kernel.org>
+Subject: Re: [PATCH v5 05/11] of: Add a KUnit test for overlays and test managed APIs
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>
+To: Rob Herring <robh@kernel.org>
+Date: Thu, 06 Jun 2024 08:23:30 -0700
+User-Agent: alot/0.10
 
-On Thu, 6 Jun 2024 11:48:18 -0300 Jason Gunthorpe wrote:
-> > An argument can be made that given somewhat mixed switchdev experience
-> > we should just stay out of the way and let that happen. But just make
-> > that argument then, instead of pretending the use of this API will be
-> > limited to custom very vendor specific things.  
-> 
-> Huh?
+Quoting Rob Herring (2024-06-05 16:47:20)
+> On Mon, Jun 03, 2024 at 03:38:02PM -0700, Stephen Boyd wrote:
+> > diff --git a/drivers/of/Makefile b/drivers/of/Makefile
+> > index 2ae909adde49..abd9c578343b 100644
+> > diff --git a/drivers/of/overlay_test.c b/drivers/of/overlay_test.c
+> > new file mode 100644
+> > index 000000000000..9a8083c3a659
+> > --- /dev/null
+> > +++ b/drivers/of/overlay_test.c
+> > @@ -0,0 +1,116 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * KUnit tests for device tree overlays
+> > + */
+> > +#include <linux/device/bus.h>
+> > +#include <linux/kconfig.h>
+> > +#include <linux/of.h>
+> > +#include <linux/of_platform.h>
+> > +#include <linux/platform_device.h>
+> > +
+> > +#include <kunit/of.h>
+> > +#include <kunit/test.h>
+> > +
+> > +static const char * const kunit_node_name =3D "kunit-test";
+> > +static const char * const kunit_compatible =3D "test,empty";
+> > +
+> > +/* Test that of_overlay_apply_kunit() adds a node to the live tree */
+> > +static void of_overlay_apply_kunit_apply(struct kunit *test)
+> > +{
+> > +     struct device_node *np;
+> > +
+> > +     KUNIT_ASSERT_EQ(test, 0,
+> > +                     of_overlay_apply_kunit(test, kunit_overlay_test));
+> > +
+> > +     np =3D of_find_node_by_name(NULL, kunit_node_name);
+> > +     KUNIT_EXPECT_NOT_ERR_OR_NULL(test, np);
+> > +     of_node_put(np);
+> > +}
+> > +
+> > +/*
+> > + * Test that of_overlay_apply_kunit() creates platform devices with the
+> > + * expected device_node
+> > + */
+> > +static void of_overlay_apply_kunit_platform_device(struct kunit *test)
+> > +{
+> > +     struct platform_device *pdev;
+> > +     struct device_node *np;
+> > +
+> > +     KUNIT_ASSERT_EQ(test, 0,
+> > +                     of_overlay_apply_kunit(test, kunit_overlay_test));
+> > +
+> > +     np =3D of_find_node_by_name(NULL, kunit_node_name);
+> > +     of_node_put_kunit(test, np);
+>=20
+> Moving target, but we now have of_node_put() cleanups. Would that work=20
+> here instead?
 
-I'm sorry, David as been working in netdev for a long time.
-I have a tendency to address the person I'm replying to,
-assuming their level of understanding of the problem space.
-Which makes it harder to understand for bystanders.
+Do you mean cleanup.h? I don't think it will work. The assert logic is
+like an exception handler. If the assertion fails we basically jump out
+of the test and run any test exit code, including kunit resource exits.
+I could introduce another kunit wrapper for of_find_node_by_name() and
+use that here so that the reference is dropped when the test exits.
 
-> At least mlx5 already has a very robust userspace competition to
-> switchdev using RDMA APIs, available in DPDK. This is long since been
-> done and is widely deployed.
+>=20
+> > +     KUNIT_ASSERT_NOT_ERR_OR_NULL(test, np);
+> > +
+> > +     pdev =3D of_find_device_by_node(np);
+> > +     KUNIT_EXPECT_NOT_ERR_OR_NULL(test, pdev);
+> > +     if (pdev)
+> > +             put_device(&pdev->dev);
+> > +}
+> > +
+> > +static int of_overlay_bus_match_compatible(struct device *dev, const v=
+oid *data)
+> > +{
+> > +     return of_device_is_compatible(dev->of_node, data);
+> > +}
+> > +
+> > +/* Test that of_overlay_apply_kunit() cleans up after the test is fini=
+shed */
+> > +static void of_overlay_apply_kunit_cleanup(struct kunit *test)
+> > +{
+> > +     struct kunit fake;
+> > +     struct platform_device *pdev;
+> > +     struct device *dev;
+> > +     struct device_node *np;
+> > +
+> > +     if (!IS_ENABLED(CONFIG_OF_OVERLAY))
+> > +             kunit_skip(test, "requires CONFIG_OF_OVERLAY");
+> > +     if (!IS_ENABLED(CONFIG_OF_EARLY_FLATTREE))
+> > +             kunit_skip(test, "requires CONFIG_OF_EARLY_FLATTREE for r=
+oot node");
+> > +
+> > +     kunit_init_test(&fake, "fake test", NULL);
+> > +     KUNIT_ASSERT_EQ(test, fake.status, KUNIT_SUCCESS);
+> > +
+> > +     KUNIT_ASSERT_EQ(test, 0,
+> > +                     of_overlay_apply_kunit(&fake, kunit_overlay_test)=
+);
+> > +
+> > +     np =3D of_find_node_by_name(NULL, kunit_node_name);
+> > +     of_node_put(np); /* Not derefing 'np' after this */
+> > +     KUNIT_ASSERT_NOT_ERR_OR_NULL(test, np);
+> > +
+> > +     pdev =3D of_find_device_by_node(np);
+>=20
+> Don't you need to hold a ref on np until here?
 
-Yeah, we had this discussion multiple times
-
-> I have no idea where you get this made up idea that fwctl is somehow
-> about dataplane SDKs. The acclerated networking industry long ago
-> moved pasted netdev in upstream, it is well known to everyone. There
-> is no trick here.
-> 
-> fwctl is not some scheme to sneak dataplane SDKs into the kernel, you
-> are just making stuff up.
-
-By dataplane SDK you mean DOCA? I don't even want to go there.
-I just meant forwarding offload _which I said_. You didn't understand
-and now you're accusing me of "making stuff up".
-
-This whole conversation is such a damn waste of time.
+Oh, good catch. We need an of_find_node_by_name_kunit() wrapper then.
