@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2950D197A75;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D37B197A75;
 	Thu,  6 Jun 2024 14:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683236; cv=none; b=kQ7NmIT8iKYBJJZWkHmxeMBALzqbGreYBrnqmsmAPb/DuwPx4vevg1m3iDSx9G7b3zPmBg0KjOvnhO07BOixVdRE/C4W7bH884fienavTJbzhBSe729QMqQroivevp/4yNJ3vpTmoh6PMao6sN4295yJ0FHh4OehBN/RkYQ67uY=
+	t=1717683236; cv=none; b=Nwm/WhjAjM9hWv6ELOeO1D+QqxTY00thFdTkZX5fdbUrnYQHqihr4HW8f1bDb1LNIgz6yR1jY6KPa+Hv4tBKF/SFxXVJRbePvYDv+cJMXMm8G34uuZJlM/3lv8ZhXHr/iX4JQZl72lBOup8Rz1wEcsAV3BEYR2XUgRV87hJ1J8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683236; c=relaxed/simple;
-	bh=CVvrkRcmRrqlHZYFkjbpFxigbpitENuIWPm7DicCYLs=;
+	bh=2C+0iR6lL3Sk+fr8R9T4WQaNplbzPxHYkI+yBeOYiI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AzuJwfm0TyjHJmYHypA+oG6fZg7xefBOZdNNKLelmx5Q/QmHu2XfDVPj/tR2uJ4i0+jICkaYs436A+DhGAWoCqZiwweyT9e5FuxgwShfzGWnpG1KYKtesn69YzswbSjnAQihapcMhrwQSdSsuSK5op8TTZYfmX4iXelOSIErL2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTc/bpeA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WA8alk6J3bB7UbQHcHg3g0nxGX9HXNHEjjfYISLN99onchfe/sDaA6ED74M2oMOkhoo0puQfe9quKT4zNLsie1RQFZ5ea2OUGroHbyIYem+uhe+kzHXYtJE321UJugVw3H4gEH2xNDjR+/QQPoJTah5AZOTmxEtC5Tn490ce5ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+GloCnL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTc/bpeA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E3CC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+GloCnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E99FC2BD10;
 	Thu,  6 Jun 2024 14:13:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683236;
-	bh=CVvrkRcmRrqlHZYFkjbpFxigbpitENuIWPm7DicCYLs=;
+	bh=2C+0iR6lL3Sk+fr8R9T4WQaNplbzPxHYkI+yBeOYiI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DTc/bpeALxhu+x8W0Q/riX/AJ6J/PcECkhCVChNk2ZI0nNVcxhLo7XMrFUogWO0FC
-	 Ad472Ml8S2RcVcUU38q48ZvyaJVFQZ09E1Wzjlx3XOuArS+lfGX1kOgYek/MErRLiE
-	 qqTvCtIynSDfGLMiLmfpTiCVNGFXgesuSde+4cv0=
+	b=I+GloCnLgEZGtnRSBG+Wp3yKOjTUORMoDHo3QhfN9Ku2fJcfxHL2sIRMIp3xaacuR
+	 lrKIDzEVSIrPWFNhVcyT+dpk7avHlX/pei+BPdIXhxzT+seJXQI/pbB97kDYPLKDZm
+	 4wEfkPxWG5JGeiRl6v8T9nAYY9IsNGDSOWFPtfmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 181/744] thermal/drivers/tsens: Fix null pointer dereference
-Date: Thu,  6 Jun 2024 15:57:33 +0200
-Message-ID: <20240606131738.240578198@linuxfoundation.org>
+Subject: [PATCH 6.1 114/473] irqchip/loongson-pch-msi: Fix off-by-one on allocation error path
+Date: Thu,  6 Jun 2024 16:00:43 +0200
+Message-ID: <20240606131703.707861281@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Zenghui Yu <yuzenghui@huawei.com>
 
-[ Upstream commit d998ddc86a27c92140b9f7984ff41e3d1d07a48f ]
+[ Upstream commit b327708798809328f21da8dc14cc8883d1e8a4b3 ]
 
-compute_intercept_slope() is called from calibrate_8960() (in tsens-8960.c)
-as compute_intercept_slope(priv, p1, NULL, ONE_PT_CALIB) which lead to null
-pointer dereference (if DEBUG or DYNAMIC_DEBUG set).
-Fix this bug by adding null pointer check.
+When pch_msi_parent_domain_alloc() returns an error, there is an off-by-one
+in the number of interrupts to be freed.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fix it by passing the number of successfully allocated interrupts, instead of the
+relative index of the last allocated one.
 
-Fixes: dfc1193d4dbd ("thermal/drivers/tsens: Replace custom 8960 apis with generic apis")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20240411114021.12203-1-amishin@t-argos.ru
+Fixes: 632dcc2c75ef ("irqchip: Add Loongson PCH MSI controller")
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Link: https://lore.kernel.org/r/20240327142334.1098-1-yuzenghui@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/tsens.c | 2 +-
+ drivers/irqchip/irq-loongson-pch-msi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 98c356acfe983..ee22672471e81 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -264,7 +264,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
- 	for (i = 0; i < priv->num_sensors; i++) {
- 		dev_dbg(priv->dev,
- 			"%s: sensor%d - data_point1:%#x data_point2:%#x\n",
--			__func__, i, p1[i], p2[i]);
-+			__func__, i, p1[i], p2 ? p2[i] : 0);
+diff --git a/drivers/irqchip/irq-loongson-pch-msi.c b/drivers/irqchip/irq-loongson-pch-msi.c
+index a72ede90ffc69..8b642927b522b 100644
+--- a/drivers/irqchip/irq-loongson-pch-msi.c
++++ b/drivers/irqchip/irq-loongson-pch-msi.c
+@@ -136,7 +136,7 @@ static int pch_msi_middle_domain_alloc(struct irq_domain *domain,
  
- 		if (!priv->sensor[i].slope)
- 			priv->sensor[i].slope = SLOPE_DEFAULT;
+ err_hwirq:
+ 	pch_msi_free_hwirq(priv, hwirq, nr_irqs);
+-	irq_domain_free_irqs_parent(domain, virq, i - 1);
++	irq_domain_free_irqs_parent(domain, virq, i);
+ 
+ 	return err;
+ }
 -- 
 2.43.0
 
