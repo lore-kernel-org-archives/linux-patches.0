@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583861991BE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3051991BE;
 	Thu,  6 Jun 2024 14:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683652; cv=none; b=lLFXn3NT127pE7gbLE853R2N6R4MgkHeVsi7uxGA+5+6JFKVTj33Fb99sj7es7Wi64mP3qu3+v5FVzNm8EoiGnhBUUOs59Mp0OjQuR8ZHqEp4NolAS6TLlev8YwXVBqwhlIj+rJpgcmMJlda7sPn2W80msES0S+5sHaZPR9kcbc=
+	t=1717683653; cv=none; b=haB6fiuouxEd8dLKqyo1G3c0kS6aPQ4CXWQLQWe7EK9t1x2CxHvaX7d3g5xTGO7jJ7kRAmh1th9oCErpLgaj0zmzsDosH1hAGqjHhkj8O9h3yJr5mXIENBDBoCxXMzgIJN3CtN9mQgARsxnCd5MBPXHTm30jVsMJ9f/t6EQSYKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683652; c=relaxed/simple;
-	bh=zM1LkJ+5VzgLT236Y1kg6OwOYH/Tw3RdBGW+ijnFHjU=;
+	s=arc-20240116; t=1717683653; c=relaxed/simple;
+	bh=2SMoHp+eP9pPR2/IjSRJXWyvd4cHMr3HCERqA75Lr6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XEf7MX61IDhL68RN4qihSs2Kd/gdsKdN9r/ZuhTdu5HZBDDdLi4fKDMT3elAHy9WqnvdYrl4dzR+KrCyKNuAXNcPxUpWKr3ov6LfIG+aITOyFQRjat94RGsVfoeOkiJCSmA4GxNtgkcC3pEfoWBq4JJv70BSwqQLp90eKdczb64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCQRB+tY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=spA8Ttew4llIQbx7SRxFK8W4PE9ErNHcoEuMvi6VRIUOirNMMMoQ4TBOXn893zUp+76b2gl97xQsi6doHZyI3OrEbcJp78qppbTacXp9n27vRopMlCT5ydBVSXJbNyv/dhLVJ2n1agIRFODNc2i6WdhTy5PpkgoYJ3+Xd7mJ42s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKTkEgT9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCQRB+tY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348FBC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKTkEgT9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B926BC2BD10;
 	Thu,  6 Jun 2024 14:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683652;
-	bh=zM1LkJ+5VzgLT236Y1kg6OwOYH/Tw3RdBGW+ijnFHjU=;
+	bh=2SMoHp+eP9pPR2/IjSRJXWyvd4cHMr3HCERqA75Lr6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCQRB+tYugDrBqrAo1c7PRnGD4sJcUNf00gZkoyvIt2A0bF4dVo0N/mBhey0SnpRM
-	 XwQXEIdFTiMThMYCYmL51LbUyAo0ptzCQLe8/5A2zZUA/9AQXpwSdoeV1ah0CR2mD6
-	 C2/vqrRiRaOA38P+KwDlrxnlaserUbjqDtk3d2M0=
+	b=xKTkEgT9U5LN9wEaFhxf4UKN0HvtUbtnOIkRT0ZgEuEvdn8H+eLIQRGgWfJXr23+K
+	 OfJfA4Onh5rTgLXpPDkznoVBP2gE1V/RqFm2znxUCy4fTVNpc28BXcn/4tf9YQ88Wx
+	 fcohqw/tQtZuYz83EZi9D4JoGEtFmo8nij9Hakj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Chris Wulff <chris.wulff@biamp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 442/473] dma-buf/sw-sync: dont enable IRQ from sync_print_obj()
-Date: Thu,  6 Jun 2024 16:06:11 +0200
-Message-ID: <20240606131714.335139053@linuxfoundation.org>
+Subject: [PATCH 6.6 488/744] usb: gadget: u_audio: Clear uac pointer when freed.
+Date: Thu,  6 Jun 2024 16:02:40 +0200
+Message-ID: <20240606131748.102793833@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Chris Wulff <Chris.Wulff@biamp.com>
 
-[ Upstream commit b794918961516f667b0c745aebdfebbb8a98df39 ]
+[ Upstream commit a2cf936ebef291ef7395172b9e2f624779fb6dc0 ]
 
-Since commit a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from
-known context") by error replaced spin_unlock_irqrestore() with
-spin_unlock_irq() for both sync_debugfs_show() and sync_print_obj() despite
-sync_print_obj() is called from sync_debugfs_show(), lockdep complains
-inconsistent lock state warning.
+This prevents use of a stale pointer if functions are called after
+g_cleanup that shouldn't be. This doesn't fix any races, but converts
+a possibly silent kernel memory corruption into an obvious NULL pointer
+dereference report.
 
-Use plain spin_{lock,unlock}() for sync_print_obj(), for
-sync_debugfs_show() is already using spin_{lock,unlock}_irq().
-
-Reported-by: syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=a225ee3df7e7f9372dbe
-Fixes: a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from known context")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/c2e46020-aaa6-4e06-bf73-f05823f913f0@I-love.SAKURA.ne.jp
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: eb9fecb9e69b ("usb: gadget: f_uac2: split out audio core")
+Signed-off-by: Chris Wulff <chris.wulff@biamp.com>
+Link: https://lore.kernel.org/stable/CO1PR17MB54194226DA08BFC9EBD8C163E1172%40CO1PR17MB5419.namprd17.prod.outlook.com
+Link: https://lore.kernel.org/r/CO1PR17MB54194226DA08BFC9EBD8C163E1172@CO1PR17MB5419.namprd17.prod.outlook.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/sync_debug.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/u_audio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma-buf/sync_debug.c b/drivers/dma-buf/sync_debug.c
-index 101394f16930f..237bce21d1e72 100644
---- a/drivers/dma-buf/sync_debug.c
-+++ b/drivers/dma-buf/sync_debug.c
-@@ -110,12 +110,12 @@ static void sync_print_obj(struct seq_file *s, struct sync_timeline *obj)
+diff --git a/drivers/usb/gadget/function/u_audio.c b/drivers/usb/gadget/function/u_audio.c
+index c8e8154c59f50..ec1dceb087293 100644
+--- a/drivers/usb/gadget/function/u_audio.c
++++ b/drivers/usb/gadget/function/u_audio.c
+@@ -1419,6 +1419,8 @@ void g_audio_cleanup(struct g_audio *g_audio)
+ 		return;
  
- 	seq_printf(s, "%s: %d\n", obj->name, obj->value);
- 
--	spin_lock_irq(&obj->lock);
-+	spin_lock(&obj->lock); /* Caller already disabled IRQ. */
- 	list_for_each(pos, &obj->pt_list) {
- 		struct sync_pt *pt = container_of(pos, struct sync_pt, link);
- 		sync_print_fence(s, &pt->base, false);
- 	}
--	spin_unlock_irq(&obj->lock);
-+	spin_unlock(&obj->lock);
- }
- 
- static void sync_print_sync_file(struct seq_file *s,
+ 	uac = g_audio->uac;
++	g_audio->uac = NULL;
++
+ 	card = uac->card;
+ 	if (card)
+ 		snd_card_free_when_closed(card);
 -- 
 2.43.0
 
