@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665F019884B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEE819884B;
 	Thu,  6 Jun 2024 14:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683324; cv=none; b=m5X1XdRoivIlpbzYGsNc+8GeDhLK4vOA3RF0YK9AdvXFKGDRvor0R8SOCqExQWmoItlfXDcwbC2OVd6madCvd92EEzXBF0ZUdzdxprQ56PA8zK0J+LkSIw7wmBrFAkGT4TcMYx7DZOPKUOzKk1y004czK8adruHgsnszMeVttT8=
+	t=1717683325; cv=none; b=bKdnCtrg2FpkLdHS6NbOcXHoNfbbg2E+hYsvuOczA6boKIhrYnT6IqmgYU3Cs4hj8MzV3wTVFsYVyiZbcf4fJ1OFSv1JUBwmT+XbhA95TJFkO/uqscrl3lQv8A2PD4VT+3QcY2AXMv2/8TYyCw+1vqKYGygwbvGHoMn9rkW+LhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683324; c=relaxed/simple;
-	bh=ectl5x+NUrTfmMJ20nPv3UQErxMvy+R4oZGGZXcbzEw=;
+	s=arc-20240116; t=1717683325; c=relaxed/simple;
+	bh=fQRZbwc9FGz4PyiQn3KA6zKxlBOvQVY7BJTopg5sdBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6wWTErf2GX/FFcJ/Ar3stVZS1jWMYGgBwLBH9F82gfu6m9o1t+Gl1aaqLAFtMhpEssSIMa1xOZuaJvhPP9/65DO6UCFf5IfjHZluQVDncHmbpulik5RVDsXRVkml+ef5zKp8T2nFzhF+U3Sy0ko32G+IBBTVvA5AwaPmezPY9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8CqR8Lh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KD1OVkzkmnZqgpd9i7IgY+SJdJDBQsFU7h/AU/GEUFX9CECMn74JWrHJEf916chPd9o4wpPRgf/8FJ+hsH6RbXbJzfdaTdqTD+ybMmuGnV2rU85HRVki4rejw1NLEms9uETB7Le5+/tdSf/lJ/CWIp+JYhGoa2nav7WAExdetng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CM4GcUQq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8CqR8Lh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47593C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CM4GcUQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE111C2BD10;
 	Thu,  6 Jun 2024 14:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683324;
-	bh=ectl5x+NUrTfmMJ20nPv3UQErxMvy+R4oZGGZXcbzEw=;
+	bh=fQRZbwc9FGz4PyiQn3KA6zKxlBOvQVY7BJTopg5sdBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A8CqR8LhyjF8SJriJmFCQ7LZaqpjmdwacO0PGuTS0RLqY/bJR+EhJFJC+pDUytSsx
-	 LaInrg7jxwQ6ylR0PT5/9/MAoDLLJZ8zvBUpXlNqg0QEKwtTJePNZ0qFU3v5p2UfDi
-	 n/9iGIVLDIG25VPazIxeD/YK1/CnP20gp0kE76bY=
+	b=CM4GcUQqd53sprXWThENczc10kl2fonNt6OPvNATL9Itsjrq6/JpYQ/6VBCPrEDng
+	 bBNLTeAugxk4tGVuUdbcgQgT6DfL0BNQsy0brPFBLbJkgFymJi/fpLaVK83LAOtj+j
+	 jyDATSRyf3rLMACA4PW3d/EiKUJ7XMg3C0Xog+io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 264/744] Bluetooth: Remove usage of the deprecated ida_simple_xx() API
-Date: Thu,  6 Jun 2024 15:58:56 +0200
-Message-ID: <20240606131740.861264341@linuxfoundation.org>
+Subject: [PATCH 6.1 177/473] ipv6: sr: fix invalid unregister error path
+Date: Thu,  6 Jun 2024 16:01:46 +0200
+Message-ID: <20240606131705.777540627@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,87 +50,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 9c16d0c8d93e3d2a95c5ed927b061f244db75579 ]
+[ Upstream commit 160e9d2752181fcf18c662e74022d77d3164cd45 ]
 
-ida_alloc() and ida_free() should be preferred to the deprecated
-ida_simple_get() and ida_simple_remove().
+The error path of seg6_init() is wrong in case CONFIG_IPV6_SEG6_LWTUNNEL
+is not defined. In that case if seg6_hmac_init() fails, the
+genl_unregister_family() isn't called.
 
-Note that the upper limit of ida_simple_get() is exclusive, but the one of
-ida_alloc_max() is inclusive. So a -1 has been added when needed.
+This issue exist since commit 46738b1317e1 ("ipv6: sr: add option to control
+lwtunnel support"), and commit 5559cea2d5aa ("ipv6: sr: fix possible
+use-after-free and null-ptr-deref") replaced unregister_pernet_subsys()
+with genl_unregister_family() in this error path.
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 84a4bb6548a2 ("Bluetooth: HCI: Remove HCI_AMP support")
+Fixes: 46738b1317e1 ("ipv6: sr: add option to control lwtunnel support")
+Reported-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240509131812.1662197-4-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 9 +++++----
- net/bluetooth/hci_sock.c | 4 ++--
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ net/ipv6/seg6.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index befe645d3f9bf..101ea9137dfef 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2609,10 +2609,11 @@ int hci_register_dev(struct hci_dev *hdev)
- 	 */
- 	switch (hdev->dev_type) {
- 	case HCI_PRIMARY:
--		id = ida_simple_get(&hci_index_ida, 0, HCI_MAX_ID, GFP_KERNEL);
-+		id = ida_alloc_max(&hci_index_ida, HCI_MAX_ID - 1, GFP_KERNEL);
- 		break;
- 	case HCI_AMP:
--		id = ida_simple_get(&hci_index_ida, 1, HCI_MAX_ID, GFP_KERNEL);
-+		id = ida_alloc_range(&hci_index_ida, 1, HCI_MAX_ID - 1,
-+				     GFP_KERNEL);
- 		break;
- 	default:
- 		return -EINVAL;
-@@ -2711,7 +2712,7 @@ int hci_register_dev(struct hci_dev *hdev)
- 	destroy_workqueue(hdev->workqueue);
- 	destroy_workqueue(hdev->req_workqueue);
- err:
--	ida_simple_remove(&hci_index_ida, hdev->id);
-+	ida_free(&hci_index_ida, hdev->id);
- 
- 	return error;
- }
-@@ -2793,7 +2794,7 @@ void hci_release_dev(struct hci_dev *hdev)
- 	hci_dev_unlock(hdev);
- 
- 	ida_destroy(&hdev->unset_handle_ida);
--	ida_simple_remove(&hci_index_ida, hdev->id);
-+	ida_free(&hci_index_ida, hdev->id);
- 	kfree_skb(hdev->sent_cmd);
- 	kfree_skb(hdev->req_skb);
- 	kfree_skb(hdev->recv_event);
-diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
-index 3e7cd330d731a..4ee1b976678b2 100644
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -101,7 +101,7 @@ static bool hci_sock_gen_cookie(struct sock *sk)
- 	int id = hci_pi(sk)->cookie;
- 
- 	if (!id) {
--		id = ida_simple_get(&sock_cookie_ida, 1, 0, GFP_KERNEL);
-+		id = ida_alloc_min(&sock_cookie_ida, 1, GFP_KERNEL);
- 		if (id < 0)
- 			id = 0xffffffff;
- 
-@@ -119,7 +119,7 @@ static void hci_sock_free_cookie(struct sock *sk)
- 
- 	if (id) {
- 		hci_pi(sk)->cookie = 0xffffffff;
--		ida_simple_remove(&sock_cookie_ida, id);
-+		ida_free(&sock_cookie_ida, id);
- 	}
- }
- 
+diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
+index c4ef96c8fdaca..a31521e270f78 100644
+--- a/net/ipv6/seg6.c
++++ b/net/ipv6/seg6.c
+@@ -551,6 +551,8 @@ int __init seg6_init(void)
+ #endif
+ #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
+ out_unregister_genl:
++#endif
++#if IS_ENABLED(CONFIG_IPV6_SEG6_LWTUNNEL) || IS_ENABLED(CONFIG_IPV6_SEG6_HMAC)
+ 	genl_unregister_family(&seg6_genl_family);
+ #endif
+ out_unregister_pernet:
 -- 
 2.43.0
 
