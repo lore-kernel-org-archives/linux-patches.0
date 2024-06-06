@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D8F1A186B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1B21A186B;
 	Thu,  6 Jun 2024 14:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683747; cv=none; b=VrGxA/bsx/UXgS9Uyld65F2VmqMfHEqGW1vA4pTfarY8TkdgA95ehvSsUivow+Fm2Pi+ohFGrdtchoFc04t2JL0Rrtk20Z/HO35hhLtrxhgB849a1oy+IXMkd/deZb/ri8vfyqURD+TI4IsVcQ4kMtec2hDsWRkBcciFqUizkzw=
+	t=1717683747; cv=none; b=jzscuoitcDkPJOMRAXwEZTKDPmiF3UlTpftQ/bC27134qQOrtrIv9Y0bwC8G9eXvAUglze9hEjK9V2dNI+GybRwA6JqyoHBjFWH6a0503gYhP2sNSeKbdP1i5X3JuobR+XyliDGQjq59h5zz/aBxpTi0kUscUbF9/gmbDE148Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683747; c=relaxed/simple;
-	bh=Fzb9WOhf8YlhoDrUigfCIkgQBBffq2NfqVMY+sF6uAY=;
+	bh=p1S3r9C7diZTqdlxWcQNvjlg1R+tcXcpRoVpW+hi1Vk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIpixydSzo+FXKtsiz3/pCUZMTIBEMthfYaSGzAwi1e0w00ieHll/06n2bScZ/+fIzTbs7V/efpJTwGmH4dzw+dcqd/+lo/NDuGGi2cduPPx6qRU6G7eD+bT2LInAGoXnQxsxQt5QGb9JfbX8uAt0ry/bqraF4moYkUgXcfm1Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOutRQaC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y8TuWIH0nBXm07y+oxtb3xQCpml4K2ocHwx4pA+ieHR28+fai585R6tWuJ7U5D6QzhVVG7TnDrNpdeUWJ1rLyfXCwaDG9PsFkHeWTJxApErIRI4KajKcaACReC2zukKxDdDx6CWFrurw6b+K9twkx1LljU6LZUgW661daok2S8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGJtQHLj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOutRQaC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23ADFC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGJtQHLj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A3DC2BD10;
 	Thu,  6 Jun 2024 14:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683747;
-	bh=Fzb9WOhf8YlhoDrUigfCIkgQBBffq2NfqVMY+sF6uAY=;
+	bh=p1S3r9C7diZTqdlxWcQNvjlg1R+tcXcpRoVpW+hi1Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tOutRQaCZG+8PwPfBE5wCItL5Fgcw3WANsHa2g5soxpeYF+5Xz2sEQUt1aAIbQLaR
-	 U9fJii2lyCLdRBCPQeDt1uEklWLTG6MX68EYVEciWRNy3QgpGhyUL5Mqcy8AYEgAw2
-	 7wIa84V/tJ+X7mSBOsIUtRR/FxP1zRywAFpTt5oI=
+	b=UGJtQHLjETh9NJpRCWaN/syXxlxOQbpBK2Pk2mk8/yi+NxTo8qlRcE+jGci6t1Tfl
+	 HqGo3dMqOuBYgRs+1zNRWMHkj+/oE06ottArwxyEJGN1R4nGSgMT08o3JLqmKwFQdx
+	 kG9m8pSEq5Vj14H4zx3/bItIip6FxtoYcFx3pTbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Eric Garver <eric@garver.life>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+b94a6818504ea90d7661@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 713/744] netfilter: tproxy: bail out if IP has been disabled on the device
-Date: Thu,  6 Jun 2024 16:06:25 +0200
-Message-ID: <20240606131755.343360391@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 714/744] netfilter: nft_fib: allow from forward/input without iif selector
+Date: Thu,  6 Jun 2024 16:06:26 +0200
+Message-ID: <20240606131755.373834166@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,43 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Eric Garver <eric@garver.life>
 
-[ Upstream commit 21a673bddc8fd4873c370caf9ae70ffc6d47e8d3 ]
+[ Upstream commit e8ded22ef0f4831279c363c264cd41cd9d59ca9e ]
 
-syzbot reports:
-general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
-[..]
-RIP: 0010:nf_tproxy_laddr4+0xb7/0x340 net/ipv4/netfilter/nf_tproxy_ipv4.c:62
-Call Trace:
- nft_tproxy_eval_v4 net/netfilter/nft_tproxy.c:56 [inline]
- nft_tproxy_eval+0xa9a/0x1a00 net/netfilter/nft_tproxy.c:168
+This removes the restriction of needing iif selector in the
+forward/input hooks for fib lookups when requested result is
+oif/oifname.
 
-__in_dev_get_rcu() can return NULL, so check for this.
+Removing this restriction allows "loose" lookups from the forward hooks.
 
-Reported-and-tested-by: syzbot+b94a6818504ea90d7661@syzkaller.appspotmail.com
-Fixes: cc6eb4338569 ("tproxy: use the interface primary IP address as a default value for --on-ip")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: be8be04e5ddb ("netfilter: nft_fib: reverse path filter for policy-based routing on iif")
+Signed-off-by: Eric Garver <eric@garver.life>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_tproxy_ipv4.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nft_fib.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_tproxy_ipv4.c b/net/ipv4/netfilter/nf_tproxy_ipv4.c
-index 69e3317996043..73e66a088e25e 100644
---- a/net/ipv4/netfilter/nf_tproxy_ipv4.c
-+++ b/net/ipv4/netfilter/nf_tproxy_ipv4.c
-@@ -58,6 +58,8 @@ __be32 nf_tproxy_laddr4(struct sk_buff *skb, __be32 user_laddr, __be32 daddr)
- 
- 	laddr = 0;
- 	indev = __in_dev_get_rcu(skb->dev);
-+	if (!indev)
-+		return daddr;
- 
- 	in_dev_for_each_ifa_rcu(ifa, indev) {
- 		if (ifa->ifa_flags & IFA_F_SECONDARY)
+diff --git a/net/netfilter/nft_fib.c b/net/netfilter/nft_fib.c
+index ca905aa8227e5..bf825f6cb974e 100644
+--- a/net/netfilter/nft_fib.c
++++ b/net/netfilter/nft_fib.c
+@@ -35,11 +35,9 @@ int nft_fib_validate(const struct nft_ctx *ctx, const struct nft_expr *expr,
+ 	switch (priv->result) {
+ 	case NFT_FIB_RESULT_OIF:
+ 	case NFT_FIB_RESULT_OIFNAME:
+-		hooks = (1 << NF_INET_PRE_ROUTING);
+-		if (priv->flags & NFTA_FIB_F_IIF) {
+-			hooks |= (1 << NF_INET_LOCAL_IN) |
+-				 (1 << NF_INET_FORWARD);
+-		}
++		hooks = (1 << NF_INET_PRE_ROUTING) |
++			(1 << NF_INET_LOCAL_IN) |
++			(1 << NF_INET_FORWARD);
+ 		break;
+ 	case NFT_FIB_RESULT_ADDRTYPE:
+ 		if (priv->flags & NFTA_FIB_F_IIF)
 -- 
 2.43.0
 
