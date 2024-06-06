@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5976D1C372B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2761991CD;
 	Thu,  6 Jun 2024 14:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683661; cv=none; b=OwXvWKHoegDigwUqs+Guwi9sJt9byGH2CcFPlDbNq2uy8eecMJbmdmfL+C7ILGdE13W/FcAOzinzWwqthj8yHeLkGAffDzILw4tsfAiY9yzLJgLXQA2bo6gyN0DYUHwwrpX4Qfu1HXvss1uei6SA26C+iTeNxeiIKcse/HeLCaQ=
+	t=1717683661; cv=none; b=hU0BHfQB3IneDE5O6TQrRrDI71n+za8mcddJrmiuuU8B8q0h1rdXuh5QkrOa5owhhjtelJFYb0ATftV0X1vNNWaz8hdR1S9LmHe7RNzx+iNNEYxuQcdcFRPEF8H0if4r4Jc4C+R+6hY5ehgpvjxYnCPQzFrFdRu3lUEyOrAncyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683661; c=relaxed/simple;
-	bh=Nd0DpqHggqYkSRhTH4waLDJchF0CMAmPNHdeWJaa0yE=;
+	bh=ioeqVuBCoDDOcewBIoHEdWQ9afa5nwgjKxGLueZmL68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n7paCNQN0Ntuf3lURV8id2Gf9Fe+zkA0zMJPv0576iCuOGfc/Zl7RTgDG+XOLFPaOLNxSftu2nxwfK1FgmU0uor2+LtUNwDsZj1PB16oTgaZ/I9X5hOWvyA7pZ6OUYx/SmGwKWQjsU20E2r8qwndyv04KBpT/7nHHUr0Rnjgn2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZB8SUlBP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FLJ2CQriktnPIMgPHJ4u+ShccqDJd/9wMK1pVJwk8zA0nHPJNXvAakZHM9B7LUYT/Y4bGRizwXn7CjjZRG8QmpTVWk/jvmHYHXazKnttrbQUV63556+Ip687i8iX0AQbL7LugVkq+GguBymVxwFOV6sjN66CRdHTZufIjjgdMiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQgG8087; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZB8SUlBP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BFFC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQgG8087"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC81C32786;
 	Thu,  6 Jun 2024 14:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683661;
-	bh=Nd0DpqHggqYkSRhTH4waLDJchF0CMAmPNHdeWJaa0yE=;
+	bh=ioeqVuBCoDDOcewBIoHEdWQ9afa5nwgjKxGLueZmL68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZB8SUlBPNyA3h37TGo8IIpWRCSg7dFTbu4Vm7TVAEdJxhJpvwNwmHX+xc7ZX8a7EJ
-	 LctDPWsp/IU2XbAyjjjEaJGOYN2u7IbXBPA4deSBJJoCdBWbfEf8JgOuqsZiG3VlMT
-	 RjRvj5Sitb4sprO317c5s04NsU3DDoTy8QsFAI5g=
+	b=nQgG8087AQAjf0WbT+Xxvc1Gie3urne/0EFwIWOsIKKkALue2bPdz0nU48g6Zt9IE
+	 nRl9vpQ5XtZHSjZysYNv2rnZ1H5L5MwP+KeD5ikvWSfeQzYxHw9NppCldbpMUgvV3O
+	 CmZh/S8/PBTBqno0vawbzKa+WM+ewdLNb5zVWXoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Devyn Liu <liudingyuan@huawei.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 542/744] dt-bindings: PCI: rockchip,rk3399-pcie: Add missing maxItems to ep-gpios
-Date: Thu,  6 Jun 2024 16:03:34 +0200
-Message-ID: <20240606131749.838620197@linuxfoundation.org>
+Subject: [PATCH 6.6 543/744] gpiolib: acpi: Fix failed in acpi_gpiochip_find() by adding parent node match
+Date: Thu,  6 Jun 2024 16:03:35 +0200
+Message-ID: <20240606131749.871039839@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -46,43 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Devyn Liu <liudingyuan@huawei.com>
 
-[ Upstream commit 52d06636a4ae4db24ebfe23fae7a525f7e983604 ]
+[ Upstream commit adbc49a5a8c6fcf7be154c2e30213bbf472940da ]
 
-Properties with GPIOs should define number of actual GPIOs, so add
-missing maxItems to ep-gpios.  Otherwise multiple GPIOs could be
-provided which is not a true hardware description.
+Previous patch modified the standard used by acpi_gpiochip_find()
+to match device nodes. Using the device node set in gc->gpiodev->d-
+ev instead of gc->parent.
 
-Fixes: aa222f9311e1 ("dt-bindings: PCI: Convert Rockchip RK3399 PCIe to DT schema")
-Link: https://lore.kernel.org/linux-pci/20240401100058.15749-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+However, there is a situation in gpio-dwapb where the GPIO device
+driver will set gc->fwnode for each port corresponding to a child
+node under a GPIO device, so gc->gpiodev->dev will be assigned the
+value of each child node in gpiochip_add_data().
+
+gpio-dwapb.c:
+128,31 static int dwapb_gpio_add_port(struct dwapb_gpio *gpio,
+			       struct dwapb_port_property *pp,
+			       unsigned int offs);
+port->gc.fwnode = pp->fwnode;
+
+693,39 static int dwapb_gpio_probe;
+err = dwapb_gpio_add_port(gpio, &pdata->properties[i], i);
+
+When other drivers request GPIO pin resources through the GPIO device
+node provided by ACPI (corresponding to the parent node), the change
+of the matching object to gc->gpiodev->dev in acpi_gpiochip_find()
+only allows finding the value of each port (child node), resulting
+in a failed request.
+
+Reapply the condition of using gc->parent for match in acpi_gpio-
+chip_find() in the code can compatible with the problem of gpio-dwapb,
+and will not affect the two cases mentioned in the patch:
+1. There is no setting for gc->fwnode.
+2. The case that depends on using gc->fwnode for match.
+
+Fixes: 5062e4c14b75 ("gpiolib: acpi: use the fwnode in acpi_gpiochip_find()")
+Fixes: 067dbc1ea5ce ("gpiolib: acpi: Don't use GPIO chip fwnode in acpi_gpiochip_find()")
+Signed-off-by: Devyn Liu <liudingyuan@huawei.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Tested-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/pci/rockchip,rk3399-pcie.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpio/gpiolib-acpi.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/rockchip,rk3399-pcie.yaml b/Documentation/devicetree/bindings/pci/rockchip,rk3399-pcie.yaml
-index 531008f0b6ac3..002b728cbc718 100644
---- a/Documentation/devicetree/bindings/pci/rockchip,rk3399-pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/rockchip,rk3399-pcie.yaml
-@@ -37,6 +37,7 @@ properties:
-     description: This property is needed if using 24MHz OSC for RC's PHY.
+diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+index 4ab33d55aec47..b366b4ca4c40e 100644
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -128,7 +128,24 @@ static bool acpi_gpio_deferred_req_irqs_done;
  
-   ep-gpios:
-+    maxItems: 1
-     description: pre-reset GPIO
+ static int acpi_gpiochip_find(struct gpio_chip *gc, void *data)
+ {
+-	return device_match_acpi_handle(&gc->gpiodev->dev, data);
++	/* First check the actual GPIO device */
++	if (device_match_acpi_handle(&gc->gpiodev->dev, data))
++		return true;
++
++	/*
++	 * When the ACPI device is artificially split to the banks of GPIOs,
++	 * where each of them is represented by a separate GPIO device,
++	 * the firmware node of the physical device may not be shared among
++	 * the banks as they may require different values for the same property,
++	 * e.g., number of GPIOs in a certain bank. In such case the ACPI handle
++	 * of a GPIO device is NULL and can not be used. Hence we have to check
++	 * the parent device to be sure that there is no match before bailing
++	 * out.
++	 */
++	if (gc->parent)
++		return device_match_acpi_handle(gc->parent, data);
++
++	return false;
+ }
  
-   vpcie12v-supply:
+ /**
 -- 
 2.43.0
 
