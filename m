@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABDF197500;
-	Thu,  6 Jun 2024 14:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650E6198E93;
+	Thu,  6 Jun 2024 14:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682946; cv=none; b=IK/+aRpMNKD2b2p9WpcWKUtnv5CIvQlnDggqhxhHYwq71YlivqD4DhLmNVwOESIYXdERwmd0dYyXfk8KZc47hw/7S86J6ONPR4k6Fmg0hkWVXNw2KEmLWnaKaA4wtwHRMBg6k47yylFwqRCIgiSLBtx6graexHsvjkpylR3jJqM=
+	t=1717682946; cv=none; b=FHAXyAnMaQ0+frqhlsd57jCrF8zb6E3R/6feKhcgly7/wAMje2cP3E7G42OXNzdaC+AZcey3/u1Ijz9HfwXzjd8aLmOHAWRIbNnDb505q0aMlsyX0OEu2rLfP6GdgvgPn05AyyerEA/hTx1UvfVTLzbHDdsxRNSbqWZi0gAk6TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682946; c=relaxed/simple;
-	bh=23+oSholP9RC5FIeIzCnaOf+/Gskm/IemT7IovcpNMY=;
+	bh=7YzqRFmMqOHqmj1g8zhcmT7K8L4eMqHNWi1izyi5Wd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Es7EdjHqKq+ry2r2rNDNmVLGI7U4HBl+L81T6hBxbcCRVNPkCnN572Qb6NKGJXXk99ko4vIVNFnjLmptrH8PMPHdbX7bs5jvwZD6rnJXyrxDupGj+lHhvpsXGakBZv2LS6GOSdz8f12wk4aqta4poFhHuZG70hiNwK39jfIL2AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1MSpbeB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YIU84JeZFGEfyXiNTkGz4UGxsc1fFqQ+luQgCLSgE/QWtcwwLjqUCf1m20qLvhodyMHq+aVKgc44+9TP7MmXD6CbaF+A0S0b7P3Zx4RM5kgy+X4lEZ6dXpg51ZWOLQb6itP8wXZbctq3lZsD6vt6caubH261RbqOoIPw1e5aLOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjOd/m0N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1MSpbeB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF543C32781;
-	Thu,  6 Jun 2024 14:09:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjOd/m0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A58C2BD10;
+	Thu,  6 Jun 2024 14:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682945;
-	bh=23+oSholP9RC5FIeIzCnaOf+/Gskm/IemT7IovcpNMY=;
+	s=korg; t=1717682946;
+	bh=7YzqRFmMqOHqmj1g8zhcmT7K8L4eMqHNWi1izyi5Wd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1MSpbeBRf/DT7rvwmka3JTAS9nelCaI8r58ckrEkjclgpuoFZ7bCmJA3mVfeZdCS
-	 Vi9tfF9rl3MZ0vY3yh4pYmhpD6DFFmlJhXLlTMt+dlnS7uHz5KERr7LF6IeFRrs+h2
-	 qmTtMZXp1yzZz5BmXAi9bT8l+eDVlqEoNaUaz5Fc=
+	b=JjOd/m0NpNGMm6yqcm8Iz484bRgCAbKOdH5PYKUdj9l2vwDX5aV8lvAddRXTr8r4g
+	 vUk4K9UTFssw1W8L4YDK0/ror44z0DLuhxc1Gr5EHGybWKqOpgd3BafjrFBuVXlDOh
+	 Ojshm1ehSUX8cOWv+4UOOvw0m0a5s8Vb3lRjpMK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 106/374] perf symbols: Fix ownership of string in dso__load_vmlinux()
-Date: Thu,  6 Jun 2024 16:01:25 +0200
-Message-ID: <20240606131655.472918519@linuxfoundation.org>
+Subject: [PATCH 6.9 107/374] f2fs: compress: fix to update i_compr_blocks correctly
+Date: Thu,  6 Jun 2024 16:01:26 +0200
+Message-ID: <20240606131655.510105282@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -60,89 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 25626e19ae6df34f336f235b6b3dbd1b566d2738 ]
+[ Upstream commit 186e7d71534df4589405925caca5597af7626c12 ]
 
-The linked commit updated dso__load_vmlinux() to call
-dso__set_long_name() before loading the symbols. Loading the symbols may
-not succeed but dso__set_long_name() takes ownership of the string. The
-two callers of this function free the string themselves on failure
-cases, resulting in the following error:
+Previously, we account reserved blocks and compressed blocks into
+@compr_blocks, then, f2fs_i_compr_blocks_update(,compr_blocks) will
+update i_compr_blocks incorrectly, fix it.
 
-  $ perf record -- ls
-  $ perf report
+Meanwhile, for the case all blocks in cluster were reserved, fix to
+update dn->ofs_in_node correctly.
 
-  free(): double free detected in tcache 2
-
-Fix it by always taking ownership of the string, even on failure. This
-means the string is either freed at the very first early exit condition,
-or later when the dso is deleted or the long name is replaced. Now no
-special return value is needed to signify that the caller needs to
-free the string.
-
-Fixes: e59fea47f83e8a9a ("perf symbols: Fix DSO kernel load and symbol process to correctly map DSO to its long_name, type and adjust_symbols")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: James Clark <james.clark@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240507141210.195939-5-james.clark@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: eb8fbaa53374 ("f2fs: compress: fix to check unreleased compressed cluster")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/f2fs/file.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index a1ca1b8156fe5..68dbeae8d2bf6 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -1973,6 +1973,10 @@ int dso__load(struct dso *dso, struct map *map)
- 	return ret;
- }
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 2566dc8a777de..34becfc142d80 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3645,7 +3645,8 @@ static int reserve_compress_blocks(struct dnode_of_data *dn, pgoff_t count,
  
-+/*
-+ * Always takes ownership of vmlinux when vmlinux_allocated == true, even if
-+ * it returns an error.
-+ */
- int dso__load_vmlinux(struct dso *dso, struct map *map,
- 		      const char *vmlinux, bool vmlinux_allocated)
- {
-@@ -1991,8 +1995,11 @@ int dso__load_vmlinux(struct dso *dso, struct map *map,
- 	else
- 		symtab_type = DSO_BINARY_TYPE__VMLINUX;
+ 	while (count) {
+ 		int compr_blocks = 0;
+-		blkcnt_t reserved;
++		blkcnt_t reserved = 0;
++		blkcnt_t to_reserved;
+ 		int ret;
  
--	if (symsrc__init(&ss, dso, symfs_vmlinux, symtab_type))
-+	if (symsrc__init(&ss, dso, symfs_vmlinux, symtab_type)) {
-+		if (vmlinux_allocated)
-+			free((char *) vmlinux);
- 		return -1;
-+	}
+ 		for (i = 0; i < cluster_size; i++) {
+@@ -3665,20 +3666,26 @@ static int reserve_compress_blocks(struct dnode_of_data *dn, pgoff_t count,
+ 			 * fails in release_compress_blocks(), so NEW_ADDR
+ 			 * is a possible case.
+ 			 */
+-			if (blkaddr == NEW_ADDR ||
+-				__is_valid_data_blkaddr(blkaddr)) {
++			if (blkaddr == NEW_ADDR) {
++				reserved++;
++				continue;
++			}
++			if (__is_valid_data_blkaddr(blkaddr)) {
+ 				compr_blocks++;
+ 				continue;
+ 			}
+ 		}
  
- 	/*
- 	 * dso__load_sym() may copy 'dso' which will result in the copies having
-@@ -2035,7 +2042,6 @@ int dso__load_vmlinux_path(struct dso *dso, struct map *map)
- 		err = dso__load_vmlinux(dso, map, filename, true);
- 		if (err > 0)
- 			goto out;
--		free(filename);
+-		reserved = cluster_size - compr_blocks;
++		to_reserved = cluster_size - compr_blocks - reserved;
+ 
+ 		/* for the case all blocks in cluster were reserved */
+-		if (reserved == 1)
++		if (to_reserved == 1) {
++			dn->ofs_in_node += cluster_size;
+ 			goto next;
++		}
+ 
+-		ret = inc_valid_block_count(sbi, dn->inode, &reserved, false);
++		ret = inc_valid_block_count(sbi, dn->inode,
++						&to_reserved, false);
+ 		if (unlikely(ret))
+ 			return ret;
+ 
+@@ -3689,7 +3696,7 @@ static int reserve_compress_blocks(struct dnode_of_data *dn, pgoff_t count,
+ 
+ 		f2fs_i_compr_blocks_update(dn->inode, compr_blocks, true);
+ 
+-		*reserved_blocks += reserved;
++		*reserved_blocks += to_reserved;
+ next:
+ 		count -= cluster_size;
  	}
- out:
- 	return err;
-@@ -2187,7 +2193,6 @@ static int dso__load_kernel_sym(struct dso *dso, struct map *map)
- 		err = dso__load_vmlinux(dso, map, filename, true);
- 		if (err > 0)
- 			return err;
--		free(filename);
- 	}
- 
- 	if (!symbol_conf.ignore_vmlinux && vmlinux_path != NULL) {
 -- 
 2.43.0
 
