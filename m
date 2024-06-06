@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C661A186C;
-	Thu,  6 Jun 2024 14:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E93199230;
+	Thu,  6 Jun 2024 14:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683710; cv=none; b=qpZBWcMKHTzf8nJC8CSw62cUkQh5f3k0x7Hl8tehHOsaMu60eDfPzOfAzxDqjiYu82qmumznzDZ305/HDmIJ27DhRNAoVyJBGwewW0cdHH9PSvOPgoEDEpQZ7+UpgRHGOdQV1998rnS197xgGPO239O0dM/aH2P13a0sUSpCOJU=
+	t=1717683711; cv=none; b=ZC+xm9gSYXN+HxqPkNxwCOfORZLnvUnToplN+ZBoK4gRoSGy3E2nbTzifo08Kd7oDpNNRoqwT342QePWZwsBlcpo9SKqr8iSFeA+o//S2pfkScu6C3htPKjQLWY8P4oaGg9bYqDtAtm2NPuFPmqXKOvs7KhLRaJgdhWjkpFMzHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683710; c=relaxed/simple;
-	bh=xG59/KK5G5sRmxUess8kGaCv16aNOydmlRxn2fjpf3k=;
+	s=arc-20240116; t=1717683711; c=relaxed/simple;
+	bh=jUDrbXe5o9YdqsNQjN7Rp0Ysaqz6sUIWX3WS1+YQd9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KpE1IYRuk9cZrbVXZ5wERoruusbrbYUor+0paXh9Nz6c59f3jE7nrNxFqB/+Qwr1Nf70BunHFrjto5m4M24zJm+ZqBCIaSM4JwX62XO6EjrT85TERGnGF/TuclD1VWoMYIWQ0hIyEz/yrEizkcKHXLGNTRbSzYsvYJH+Sw6eGiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1Y1uf8T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GTs8stmjWzeyYhEznnixZhuE8g/J3XkacMwmLy+ZgE7TdWRLWG4MHbY8XETcXOKUYuwztlWJOHxrgoJPsGp3JoFD0TJoeJK2XYrnYvuJr5a+t0r8FAUuTqtIzdGNV+rxD/97z+nR1aYcvx18Ru1RjxzOOEy5bPXOvEt6C+6kBrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRE1oXZJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1Y1uf8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77061C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRE1oXZJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD39C32781;
 	Thu,  6 Jun 2024 14:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683710;
-	bh=xG59/KK5G5sRmxUess8kGaCv16aNOydmlRxn2fjpf3k=;
+	s=korg; t=1717683711;
+	bh=jUDrbXe5o9YdqsNQjN7Rp0Ysaqz6sUIWX3WS1+YQd9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1Y1uf8TXwBOKCqDlRh0lZGha/HizYdX4OdKf4MQWlTAbgA9H1ioqb/BwKcl17xe2
-	 8ZjHVbgGi+ks3+HOGwJJoo7/wD7RFqiVt4qC3z+npNcqHzf/sza0fJu/jG/fmIqVJg
-	 RbyAPQfaEwSjIgAIArXkIS+fUeqvcwghpCM/VaYQ=
+	b=tRE1oXZJsFDhpEGtaQwtG9bA2i8mSsF+qahzh8xQM0wPYfcwAEN891H2qGIjZevHk
+	 EDBU//mQAcK00NNEWojdKKN5YMPcHa5LqvVph5pHXS5ITsrQmPsMTW81d0SLd7Z1mK
+	 YGdKgzaPyqgUhWOCH3bt3sfj1CWGtti9isPVLsTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Dan Aloni <dan.aloni@vastdata.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 640/744] nfs: keep server info for remounts
-Date: Thu,  6 Jun 2024 16:05:12 +0200
-Message-ID: <20240606131753.002785673@linuxfoundation.org>
+Subject: [PATCH 6.6 641/744] sunrpc: fix NFSACL RPC retry on soft mount
+Date: Thu,  6 Jun 2024 16:05:13 +0200
+Message-ID: <20240606131753.033286055@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,53 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Dan Aloni <dan.aloni@vastdata.com>
 
-[ Upstream commit b322bf9e983addedff0894c55e92d58f4d16d92a ]
+[ Upstream commit 0dc9f430027b8bd9073fdafdfcdeb1a073ab5594 ]
 
-With newer kernels that use fs_context for nfs mounts, remounts fail with
--EINVAL.
+It used to be quite awhile ago since 1b63a75180c6 ('SUNRPC: Refactor
+rpc_clone_client()'), in 2012, that `cl_timeout` was copied in so that
+all mount parameters propagate to NFSACL clients. However since that
+change, if mount options as follows are given:
 
-$ mount -t nfs -o nolock 10.0.0.1:/tmp/test /mnt/test/
-$ mount -t nfs -o remount /mnt/test/
-mount: mounting 10.0.0.1:/tmp/test on /mnt/test failed: Invalid argument
+    soft,timeo=50,retrans=16,vers=3
 
-For remounts, the nfs server address and port are populated by
-nfs_init_fs_context and later overwritten with 0x00 bytes by
-nfs23_parse_monolithic. The remount then fails as the server address is
-invalid.
+The resultant NFSACL client receives:
 
-Fix this by not overwriting nfs server info in nfs23_parse_monolithic if
-we're doing a remount.
+    cl_softrtry: 1
+    cl_timeout: to_initval=60000, to_maxval=60000, to_increment=0, to_retries=2, to_exponential=0
 
-Fixes: f2aedb713c28 ("NFS: Add fs_context support.")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+These values lead to NFSACL operations not being retried under the
+condition of transient network outages with soft mount. Instead, getacl
+call fails after 60 seconds with EIO.
+
+The simple fix is to pass the existing client's `cl_timeout` as the new
+client timeout.
+
+Cc: Chuck Lever <chuck.lever@oracle.com>
+Cc: Benjamin Coddington <bcodding@redhat.com>
+Link: https://lore.kernel.org/all/20231105154857.ryakhmgaptq3hb6b@gmail.com/T/
+Fixes: 1b63a75180c6 ('SUNRPC: Refactor rpc_clone_client()')
+Signed-off-by: Dan Aloni <dan.aloni@vastdata.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/fs_context.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/sunrpc/clnt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
-index 853e8d609bb3b..41126d6dcd760 100644
---- a/fs/nfs/fs_context.c
-+++ b/fs/nfs/fs_context.c
-@@ -1111,9 +1111,12 @@ static int nfs23_parse_monolithic(struct fs_context *fc,
- 		ctx->acdirmax	= data->acdirmax;
- 		ctx->need_mount	= false;
- 
--		memcpy(sap, &data->addr, sizeof(data->addr));
--		ctx->nfs_server.addrlen = sizeof(data->addr);
--		ctx->nfs_server.port = ntohs(data->addr.sin_port);
-+		if (!is_remount_fc(fc)) {
-+			memcpy(sap, &data->addr, sizeof(data->addr));
-+			ctx->nfs_server.addrlen = sizeof(data->addr);
-+			ctx->nfs_server.port = ntohs(data->addr.sin_port);
-+		}
-+
- 		if (sap->ss_family != AF_INET ||
- 		    !nfs_verify_server_address(sap))
- 			goto out_no_address;
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index f4d32cf2cd16a..d3c917c0c8d59 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -1056,6 +1056,7 @@ struct rpc_clnt *rpc_bind_new_program(struct rpc_clnt *old,
+ 		.authflavor	= old->cl_auth->au_flavor,
+ 		.cred		= old->cl_cred,
+ 		.stats		= old->cl_stats,
++		.timeout	= old->cl_timeout,
+ 	};
+ 	struct rpc_clnt *clnt;
+ 	int err;
 -- 
 2.43.0
 
