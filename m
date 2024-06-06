@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B36F19DF79;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D84198E9A;
 	Thu,  6 Jun 2024 14:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683507; cv=none; b=OYR1ffwKjza4xkXAHUrdQJV+yAFXss9ly5OWkZuyWY9PGf4mUSPdIDtlKNUGlV1GjCw4g6EFaVuZIZS3UoO183Miy79HM8/LbKSRFXcv8WxB/YBjqER8JGqnJveI6R6wHQ9LaMNyUHibFZzkrBR03e6xdWpGf5uEWhAzr8c/1yY=
+	t=1717683507; cv=none; b=ImXCN5jYTq9DG7XM5+wOLui0P907ydOfzlbwx31mE/MAdhOn9+G8/+AoEPGQ/RgT04C/tq72wNlmnShtkdhwMqD4MdH9NbgQMqJKUzK6zPMud7SHjVX3x9rmyQ1RQ4lHpvvI11M6zstbOA8MxjKHwWfFP5Fzs+5+I9r9Z9sGLxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683507; c=relaxed/simple;
-	bh=ti69JSkSA9GJVKlN5bNswSsa22VdNh3vPml1F4kC3pY=;
+	bh=lPMmsLXrCMD87bDX71WoTE8HaFHuB/Hf3O9wVcx/bo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZxu9KZzdxssIdY3DSt3tazuBnGWNWU1LOKhWYl3lvEFouvK0JDQ+7JsaMYb+rvPe22XSHxln1VV+68IPj6sjpTwTIB12BM2KtQMdiaELe+OvIJQzM7AXjYdp9MmpeI0BqE+mNHniO1GBisci2ZPmk4u9s+NNIcW6DJ4DEVgNGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uL76zWac; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HQTQeX+LwNqxlNRPr8nqLQUL3OOWNvHp25eH3EvXnOrQVQ0GczdOrjupGjJCRHri5BodAedgQLlRSJ2ExuVm4scSoKzjr7kcQ8bg/do3XpV32Wobb2v5uoNe8si5TpsSVmO/v4v5Ao1j+lClIbgIOok9TOq71vdbTaeEFR00JzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgbNQ7s0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uL76zWac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DD1C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgbNQ7s0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FB3C32781;
 	Thu,  6 Jun 2024 14:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683507;
-	bh=ti69JSkSA9GJVKlN5bNswSsa22VdNh3vPml1F4kC3pY=;
+	bh=lPMmsLXrCMD87bDX71WoTE8HaFHuB/Hf3O9wVcx/bo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uL76zWaccnVRfVEKpSEfUw1gAQISba5EYQA4+Z7/00rHTvAqHYPJ5uGLICEviZ1DU
-	 MaK3oXPiR/PGOV6BjWc2OL4PetRWfrQY1zqbhmKv40A+Lzb5g1l/eWVciJq8yTgL9i
-	 17ZW3lH9u0SfCTyPem7sWdad74Q4+IUxkF80XZ/M=
+	b=JgbNQ7s0/WCqh5SgwbFhfBtGviobY3VUiNyMz4OAxHH20hMUtrX+QmdFlI3IBJzvf
+	 JvZz5X9I6k/8a5MZuFWXQoNWrayglJd62TzU2AalQF07ipRKE3fAd9QOp9yWwd+8cd
+	 Pk8guH6iY2NQ9/PhvCc8tR159Sb75rm/EbZFKKz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	kernel test robot <lkp@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 396/473] nilfs2: make superblock data array index computation sparse friendly
-Date: Thu,  6 Jun 2024 16:05:25 +0200
-Message-ID: <20240606131712.920447805@linuxfoundation.org>
+Subject: [PATCH 6.6 449/744] iio: buffer-dmaengine: export buffer alloc and free functions
+Date: Thu,  6 Jun 2024 16:02:01 +0200
+Message-ID: <20240606131746.901505212@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,75 +48,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 91d743a9c8299de1fc1b47428d8bb4c85face00f ]
+[ Upstream commit 9c446288d7b31402adb454535cb2c3cbdb55bb88 ]
 
-Upon running sparse, "warning: dubious: x & !y" is output at an array
-index calculation within nilfs_load_super_block().
+Export iio_dmaengine_buffer_free() and iio_dmaengine_buffer_alloc().
+This is in preparation of introducing IIO backends support. This will
+allow us to allocate a buffer and control it's lifetime from a device
+different from the one holding the DMA firmware properties. Effectively,
+in this case the struct device holding the firmware information about
+the DMA channels is not the same as iio_dev->dev.parent (typical case).
 
-The calculation is not wrong, but to eliminate the sparse warning, replace
-it with an equivalent calculation.
+While at it, namespace the buffer-dmaengine exports and update the
+current user of these buffers.
 
-Also, add a comment to make it easier to understand what the unintuitive
-array index calculation is doing and whether it's correct.
-
-Link: https://lkml.kernel.org/r/20240430080019.4242-3-konishi.ryusuke@gmail.com
-Fixes: e339ad31f599 ("nilfs2: introduce secondary super block")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: kernel test robot <lkp@intel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240210-iio-backend-v11-4-f5242a5fb42a@analog.com
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: cf1c833f89e7 ("iio: adc: adi-axi-adc: only error out in major version mismatch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/the_nilfs.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/iio/adc/adi-axi-adc.c                      | 1 +
+ drivers/iio/buffer/industrialio-buffer-dmaengine.c | 8 +++++---
+ include/linux/iio/buffer-dmaengine.h               | 3 +++
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
-index 71400496ed365..3e3c1d32da180 100644
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -592,7 +592,7 @@ static int nilfs_load_super_block(struct the_nilfs *nilfs,
- 	struct nilfs_super_block **sbp = nilfs->ns_sbp;
- 	struct buffer_head **sbh = nilfs->ns_sbh;
- 	u64 sb2off, devsize = bdev_nr_bytes(nilfs->ns_bdev);
--	int valid[2], swp = 0;
-+	int valid[2], swp = 0, older;
- 
- 	if (devsize < NILFS_SEG_MIN_BLOCKS * NILFS_MIN_BLOCK_SIZE + 4096) {
- 		nilfs_err(sb, "device size too small");
-@@ -648,9 +648,25 @@ static int nilfs_load_super_block(struct the_nilfs *nilfs,
- 	if (swp)
- 		nilfs_swap_super_block(nilfs);
- 
-+	/*
-+	 * Calculate the array index of the older superblock data.
-+	 * If one has been dropped, set index 0 pointing to the remaining one,
-+	 * otherwise set index 1 pointing to the old one (including if both
-+	 * are the same).
-+	 *
-+	 *  Divided case             valid[0]  valid[1]  swp  ->  older
-+	 *  -------------------------------------------------------------
-+	 *  Both SBs are invalid        0         0       N/A (Error)
-+	 *  SB1 is invalid              0         1       1         0
-+	 *  SB2 is invalid              1         0       0         0
-+	 *  SB2 is newer                1         1       1         0
-+	 *  SB2 is older or the same    1         1       0         1
-+	 */
-+	older = valid[1] ^ swp;
-+
- 	nilfs->ns_sbwcount = 0;
- 	nilfs->ns_sbwtime = le64_to_cpu(sbp[0]->s_wtime);
--	nilfs->ns_prot_seq = le64_to_cpu(sbp[valid[1] & !swp]->s_last_seq);
-+	nilfs->ns_prot_seq = le64_to_cpu(sbp[older]->s_last_seq);
- 	*sbpp = sbp[0];
- 	return 0;
+diff --git a/drivers/iio/adc/adi-axi-adc.c b/drivers/iio/adc/adi-axi-adc.c
+index c247ff1541d28..0f21d1d98b9fa 100644
+--- a/drivers/iio/adc/adi-axi-adc.c
++++ b/drivers/iio/adc/adi-axi-adc.c
+@@ -447,3 +447,4 @@ module_platform_driver(adi_axi_adc_driver);
+ MODULE_AUTHOR("Michael Hennerich <michael.hennerich@analog.com>");
+ MODULE_DESCRIPTION("Analog Devices Generic AXI ADC IP core driver");
+ MODULE_LICENSE("GPL v2");
++MODULE_IMPORT_NS(IIO_DMAENGINE_BUFFER);
+diff --git a/drivers/iio/buffer/industrialio-buffer-dmaengine.c b/drivers/iio/buffer/industrialio-buffer-dmaengine.c
+index 5f85ba38e6f6e..0d53c0a07b0d6 100644
+--- a/drivers/iio/buffer/industrialio-buffer-dmaengine.c
++++ b/drivers/iio/buffer/industrialio-buffer-dmaengine.c
+@@ -159,7 +159,7 @@ static const struct iio_dev_attr *iio_dmaengine_buffer_attrs[] = {
+  * Once done using the buffer iio_dmaengine_buffer_free() should be used to
+  * release it.
+  */
+-static struct iio_buffer *iio_dmaengine_buffer_alloc(struct device *dev,
++struct iio_buffer *iio_dmaengine_buffer_alloc(struct device *dev,
+ 	const char *channel)
+ {
+ 	struct dmaengine_buffer *dmaengine_buffer;
+@@ -210,6 +210,7 @@ static struct iio_buffer *iio_dmaengine_buffer_alloc(struct device *dev,
+ 	kfree(dmaengine_buffer);
+ 	return ERR_PTR(ret);
  }
++EXPORT_SYMBOL_NS_GPL(iio_dmaengine_buffer_alloc, IIO_DMAENGINE_BUFFER);
+ 
+ /**
+  * iio_dmaengine_buffer_free() - Free dmaengine buffer
+@@ -217,7 +218,7 @@ static struct iio_buffer *iio_dmaengine_buffer_alloc(struct device *dev,
+  *
+  * Frees a buffer previously allocated with iio_dmaengine_buffer_alloc().
+  */
+-static void iio_dmaengine_buffer_free(struct iio_buffer *buffer)
++void iio_dmaengine_buffer_free(struct iio_buffer *buffer)
+ {
+ 	struct dmaengine_buffer *dmaengine_buffer =
+ 		iio_buffer_to_dmaengine_buffer(buffer);
+@@ -227,6 +228,7 @@ static void iio_dmaengine_buffer_free(struct iio_buffer *buffer)
+ 
+ 	iio_buffer_put(buffer);
+ }
++EXPORT_SYMBOL_NS_GPL(iio_dmaengine_buffer_free, IIO_DMAENGINE_BUFFER);
+ 
+ static void __devm_iio_dmaengine_buffer_free(void *buffer)
+ {
+@@ -288,7 +290,7 @@ int devm_iio_dmaengine_buffer_setup(struct device *dev,
+ 
+ 	return iio_device_attach_buffer(indio_dev, buffer);
+ }
+-EXPORT_SYMBOL_GPL(devm_iio_dmaengine_buffer_setup);
++EXPORT_SYMBOL_NS_GPL(devm_iio_dmaengine_buffer_setup, IIO_DMAENGINE_BUFFER);
+ 
+ MODULE_AUTHOR("Lars-Peter Clausen <lars@metafoo.de>");
+ MODULE_DESCRIPTION("DMA buffer for the IIO framework");
+diff --git a/include/linux/iio/buffer-dmaengine.h b/include/linux/iio/buffer-dmaengine.h
+index 5c355be898149..cbb8ba957fade 100644
+--- a/include/linux/iio/buffer-dmaengine.h
++++ b/include/linux/iio/buffer-dmaengine.h
+@@ -10,6 +10,9 @@
+ struct iio_dev;
+ struct device;
+ 
++struct iio_buffer *iio_dmaengine_buffer_alloc(struct device *dev,
++					      const char *channel);
++void iio_dmaengine_buffer_free(struct iio_buffer *buffer);
+ int devm_iio_dmaengine_buffer_setup(struct device *dev,
+ 				    struct iio_dev *indio_dev,
+ 				    const char *channel);
 -- 
 2.43.0
 
