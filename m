@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D301ABE36;
-	Thu,  6 Jun 2024 14:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297871974EF;
+	Thu,  6 Jun 2024 14:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683523; cv=none; b=pGp8EnW7XkZsPWFTrPlIq9G87tu+Mz+J4mQFrjosDrlm1bO22vcuKP0yb9M9q8N8SOgLPuQNnZ62mnFdf2JEBQrlJah+LUDXl3wwyJnBZaQaLaKSsFNfnJ5ptlRNDwEmqy2GbVmx22x+FGfFA9n0048ttitpT8auBBbsyxW4vMs=
+	t=1717683524; cv=none; b=nySxfq7T+LU4hfBgAGQRN4qUOMXflNvsEYO5aluYmFy9lxsa+5f23grdJ6kMCcW8mJMs8TMfYuNAG/piKF10LSDAGkAu4gfjtjj39tERw188G3RMYN/hUNV38KvPGmUz0uXu7SHWQDGAs2TcW7r6hmNNvdCEDWpS3P2jp3r6pgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683523; c=relaxed/simple;
-	bh=fZJyBhPcFIEm9ZBaU5bhWz0eWSSfmdgZrLRwqIQ505I=;
+	s=arc-20240116; t=1717683524; c=relaxed/simple;
+	bh=8Mcx8yqRDJ9hv9xzr3JxBBulv9nprExxqY4lthPtEIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ddnRpF0p+Ac+vOxM+mQxtnYrKAobzj/hZh7vmoRhHIqEA91pcao50dtERz9KZUQvv9PzfMm6o9U3NOtXxt2JSpMQ0JMqR1piadV+sy/dXz8vCOQx9F6lGJaJXTfb2+xBVVpgfUxKa8SzXHNG1QCLNULTudOAWE3WV5szqLLzhbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufliWckB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FAcoE/hXm+2pUQR9oMoK4vB6NUA5CTplWWFzXHAs+NUMNtWMuicqFCT5lD66B1J1p6cVNzkjUM9gg2zX2aK6zOJGhOeraxJpL+8Tz8lbyCXyFsjdVSaFjp0O7i/SCoWMXVPAEY0qNIfMELcIqAuIuv9fbPoL+83o0VPFBkS8dL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+rWiDc6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufliWckB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2E2C2BD10;
-	Thu,  6 Jun 2024 14:18:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+rWiDc6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C9DC32782;
+	Thu,  6 Jun 2024 14:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683523;
-	bh=fZJyBhPcFIEm9ZBaU5bhWz0eWSSfmdgZrLRwqIQ505I=;
+	s=korg; t=1717683524;
+	bh=8Mcx8yqRDJ9hv9xzr3JxBBulv9nprExxqY4lthPtEIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ufliWckBM/NLDodcMzgZzaEGRejGKAaYGd3ohqmPBIw56KNclSgdV3zw0wQ+5k4Pb
-	 qDBHp00SJ8rDldsdMxjl10oJFPM4UkGrVQj4GM6EL9sWAtTZeici5oPDd0eDOlogWj
-	 G3oQqUTlm8R7zz2YfS2AM6BWAyaDq/SJLydMMagc=
+	b=h+rWiDc6getx12erqs/wkX/VQ4r2O4gxWa4iQXizO27HnXxO3qJ7LdYmQeY0lyRnR
+	 yOmoHmXffIn8T8DENNbXQtownWl+gF7klrHvjB+BPmryU5gxCOH585OSwZPkvNh4Pj
+	 4pNfPX8JByMbr9Q1K5bqs5SNjmngXh+DGP0uc97I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaime Caamano <jcaamano@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 415/473] openvswitch: Set the skbuff pkt_type for proper pmtud support.
-Date: Thu,  6 Jun 2024 16:05:44 +0200
-Message-ID: <20240606131713.506326575@linuxfoundation.org>
+Subject: [PATCH 6.1 406/473] ASoC: tas2552: Add TX path for capturing AUDIO-OUT data
+Date: Thu,  6 Jun 2024 16:05:35 +0200
+Message-ID: <20240606131713.230779512@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -53,99 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Conole <aconole@redhat.com>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-[ Upstream commit 30a92c9e3d6b073932762bef2ac66f4ee784c657 ]
+[ Upstream commit 7078ac4fd179a68d0bab448004fcd357e7a45f8d ]
 
-Open vSwitch is originally intended to switch at layer 2, only dealing with
-Ethernet frames.  With the introduction of l3 tunnels support, it crossed
-into the realm of needing to care a bit about some routing details when
-making forwarding decisions.  If an oversized packet would need to be
-fragmented during this forwarding decision, there is a chance for pmtu
-to get involved and generate a routing exception.  This is gated by the
-skbuff->pkt_type field.
+TAS2552 is a Smartamp with I/V sense data, add TX path
+to support capturing I/V data.
 
-When a flow is already loaded into the openvswitch module this field is
-set up and transitioned properly as a packet moves from one port to
-another.  In the case that a packet execute is invoked after a flow is
-newly installed this field is not properly initialized.  This causes the
-pmtud mechanism to omit sending the required exception messages across
-the tunnel boundary and a second attempt needs to be made to make sure
-that the routing exception is properly setup.  To fix this, we set the
-outgoing packet's pkt_type to PACKET_OUTGOING, since it can only get
-to the openvswitch module via a port device or packet command.
-
-Even for bridge ports as users, the pkt_type needs to be reset when
-doing the transmit as the packet is truly outgoing and routing needs
-to get involved post packet transformations, in the case of
-VXLAN/GENEVE/udp-tunnel packets.  In general, the pkt_type on output
-gets ignored, since we go straight to the driver, but in the case of
-tunnel ports they go through IP routing layer.
-
-This issue is periodically encountered in complex setups, such as large
-openshift deployments, where multiple sets of tunnel traversal occurs.
-A way to recreate this is with the ovn-heater project that can setup
-a networking environment which mimics such large deployments.  We need
-larger environments for this because we need to ensure that flow
-misses occur.  In these environment, without this patch, we can see:
-
-  ./ovn_cluster.sh start
-  podman exec ovn-chassis-1 ip r a 170.168.0.5/32 dev eth1 mtu 1200
-  podman exec ovn-chassis-1 ip netns exec sw01p1 ip r flush cache
-  podman exec ovn-chassis-1 ip netns exec sw01p1 \
-         ping 21.0.0.3 -M do -s 1300 -c2
-  PING 21.0.0.3 (21.0.0.3) 1300(1328) bytes of data.
-  From 21.0.0.3 icmp_seq=2 Frag needed and DF set (mtu = 1142)
-
-  --- 21.0.0.3 ping statistics ---
-  ...
-
-Using tcpdump, we can also see the expected ICMP FRAG_NEEDED message is not
-sent into the server.
-
-With this patch, setting the pkt_type, we see the following:
-
-  podman exec ovn-chassis-1 ip netns exec sw01p1 \
-         ping 21.0.0.3 -M do -s 1300 -c2
-  PING 21.0.0.3 (21.0.0.3) 1300(1328) bytes of data.
-  From 21.0.0.3 icmp_seq=1 Frag needed and DF set (mtu = 1222)
-  ping: local error: message too long, mtu=1222
-
-  --- 21.0.0.3 ping statistics ---
-  ...
-
-In this case, the first ping request receives the FRAG_NEEDED message and
-a local routing exception is created.
-
-Tested-by: Jaime Caamano <jcaamano@redhat.com>
-Reported-at: https://issues.redhat.com/browse/FDP-164
-Fixes: 58264848a5a7 ("openvswitch: Add vxlan tunneling support.")
-Signed-off-by: Aaron Conole <aconole@redhat.com>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://lore.kernel.org/r/20240516200941.16152-1-aconole@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 38803ce7b53b ("ASoC: codecs: tas*: merge .digital_mute() into .mute_stream()")
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://msgid.link/r/20240518033515.866-1-shenghao-ding@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/actions.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/codecs/tas2552.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
-index a8cf9a88758ef..21102ffe44709 100644
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -924,6 +924,12 @@ static void do_output(struct datapath *dp, struct sk_buff *skb, int out_port,
- 				pskb_trim(skb, ovs_mac_header_len(key));
- 		}
+diff --git a/sound/soc/codecs/tas2552.c b/sound/soc/codecs/tas2552.c
+index 59a4ea5f6e305..7923f9a031ed0 100644
+--- a/sound/soc/codecs/tas2552.c
++++ b/sound/soc/codecs/tas2552.c
+@@ -2,7 +2,8 @@
+ /*
+  * tas2552.c - ALSA SoC Texas Instruments TAS2552 Mono Audio Amplifier
+  *
+- * Copyright (C) 2014 Texas Instruments Incorporated -  https://www.ti.com
++ * Copyright (C) 2014 - 2024 Texas Instruments Incorporated -
++ *	https://www.ti.com
+  *
+  * Author: Dan Murphy <dmurphy@ti.com>
+  */
+@@ -119,12 +120,14 @@ static const struct snd_soc_dapm_widget tas2552_dapm_widgets[] =
+ 			 &tas2552_input_mux_control),
  
-+		/* Need to set the pkt_type to involve the routing layer.  The
-+		 * packet movement through the OVS datapath doesn't generally
-+		 * use routing, but this is needed for tunnel cases.
-+		 */
-+		skb->pkt_type = PACKET_OUTGOING;
-+
- 		if (likely(!mru ||
- 		           (skb->len <= mru + vport->dev->hard_header_len))) {
- 			ovs_vport_send(vport, skb, ovs_key_mac_proto(key));
+ 	SND_SOC_DAPM_AIF_IN("DAC IN", "DAC Playback", 0, SND_SOC_NOPM, 0, 0),
++	SND_SOC_DAPM_AIF_OUT("ASI OUT", "DAC Capture", 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_DAC("DAC", NULL, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_OUT_DRV("ClassD", TAS2552_CFG_2, 7, 0, NULL, 0),
+ 	SND_SOC_DAPM_SUPPLY("PLL", TAS2552_CFG_2, 3, 0, NULL, 0),
+ 	SND_SOC_DAPM_POST("Post Event", tas2552_post_event),
+ 
+-	SND_SOC_DAPM_OUTPUT("OUT")
++	SND_SOC_DAPM_OUTPUT("OUT"),
++	SND_SOC_DAPM_INPUT("DMIC")
+ };
+ 
+ static const struct snd_soc_dapm_route tas2552_audio_map[] = {
+@@ -134,6 +137,7 @@ static const struct snd_soc_dapm_route tas2552_audio_map[] = {
+ 	{"ClassD", NULL, "Input selection"},
+ 	{"OUT", NULL, "ClassD"},
+ 	{"ClassD", NULL, "PLL"},
++	{"ASI OUT", NULL, "DMIC"}
+ };
+ 
+ #ifdef CONFIG_PM
+@@ -538,6 +542,13 @@ static struct snd_soc_dai_driver tas2552_dai[] = {
+ 			.rates = SNDRV_PCM_RATE_8000_192000,
+ 			.formats = TAS2552_FORMATS,
+ 		},
++		.capture = {
++			.stream_name = "Capture",
++			.channels_min = 2,
++			.channels_max = 2,
++			.rates = SNDRV_PCM_RATE_8000_192000,
++			.formats = TAS2552_FORMATS,
++		},
+ 		.ops = &tas2552_speaker_dai_ops,
+ 	},
+ };
 -- 
 2.43.0
 
