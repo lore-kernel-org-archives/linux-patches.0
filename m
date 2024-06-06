@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683D019751E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBCA2BAF1;
 	Thu,  6 Jun 2024 14:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682962; cv=none; b=fEv5o/sO3LgP079MYPnpX0CIVNC3ejldhvZ6S4D76OOgfiSt7ftYyBWrj0PB9yMNn+dPdwEhwZVWKtXpbATcvhXI6L3WgD2JqzSJwU825BD0ohsg9K2WpsF16D7mHsV1BR1zRmG8hGWg+sJI21LedCjY5mK19q0kKWWg+tuijGI=
+	t=1717682963; cv=none; b=GQ1mxnA6jfSnauMO7MsdSwigYNJd6is3pGz59Bf3U3Lg+CGXsLqOsieE+2Y4rQ4VantVsYdWQP3L4ne9QhG2yTKmJc7MXCRE8CC5EfxnwU3qjKHU50DqEpPZOAddicXW2EGZWAhfkBvX1sSgF97gOB1sgeB+6IAyLIKH5HCkRF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682962; c=relaxed/simple;
-	bh=7O2248+SllAvOd8iZ0pJj8OJOZDjzxnbgJBy9860FtI=;
+	s=arc-20240116; t=1717682963; c=relaxed/simple;
+	bh=lpLgc4UQf0zxQHjyV5L/7OEGWZvCHEbASY6BEvTLAS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gqHvUZGTeQn7zjc92w0nWkvdd75HjCsbrgvVMic815HXXQxGkvzdmIU5l3XLueig1DXcyKpGQ3PSwIjk9d5IGiWNoe3dqS/KrW7g29028GiDgIurk9nZFR4PfICM9WD6wrnRKnuttDiSG70vyWmN1rUi0WaDQZfCTXwm/bvNclE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YG4PMCD4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WmbNzbxBKFjHvME7hcmGGVMKLH/V5DghAOWpcuR9/HMhgsXSkh78aYufJmUjYwtZu8Qi1y4kU8nQZyLaoXigL93AciNV6o57YlEseRpdzt9YoxACB47i7fGNl1KSKhFdBoVZumwnHNCy4laU7LpG1u84rUaaS2CAOSi2PIcGh1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deg7JdAv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YG4PMCD4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DB7C32786;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deg7JdAv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB89C32781;
 	Thu,  6 Jun 2024 14:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682962;
-	bh=7O2248+SllAvOd8iZ0pJj8OJOZDjzxnbgJBy9860FtI=;
+	bh=lpLgc4UQf0zxQHjyV5L/7OEGWZvCHEbASY6BEvTLAS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YG4PMCD4amjM9UpBmA4dq0XL+NUFCX1OUdUVvnJWRhBdcOG9v8Kc9XEoVXewVJh9I
-	 lWAnUM46gwX9eeZuWtRvVsKldReezcDuucidnIoCRZQ30weX9JnjWPiv1tC3WQmgN1
-	 2y9WI5dzWOok1j5ue/VorGRt6bhggzy8Zph2+/EA=
+	b=deg7JdAviJkIpRo66KJZE1kbbLHm4iqjVfd3zeIfBEL5YvZ+LqXxHfp4Bj+I1c2S9
+	 TIkTR9WaRYhbp5pYzeyypU6WjnYjq6vf9BqrsVf5jrUVeUW353xHWlmOFweExdl7gF
+	 Uh2M7EwjTiGxS6IQxzPaWihnSTtP6T+y66AJPoQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jens Remus <jremus@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 130/374] s390/ftrace: Use unwinder instead of __builtin_return_address()
-Date: Thu,  6 Jun 2024 16:01:49 +0200
-Message-ID: <20240606131656.254449843@linuxfoundation.org>
+Subject: [PATCH 6.9 131/374] s390/stacktrace: Merge perf_callchain_user() and arch_stack_walk_user()
+Date: Thu,  6 Jun 2024 16:01:50 +0200
+Message-ID: <20240606131656.291318572@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,91 +52,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit cae74ba8c295bc41bda749ef27a8f2b3ee957a41 ]
+[ Upstream commit ebd912ff9919a10609511383d94942362234c077 ]
 
-Using __builtin_return_address(n) might return undefined values
-when used with values of n outside of the stack. This was noticed
-when __builtin_return_address() was called in ftrace on top level
-functions like the interrupt handlers.
+The two functions perf_callchain_user() and arch_stack_walk_user() are
+nearly identical. Reduce code duplication and add a common helper which can
+be called by both functions.
 
-As this behaviour cannot be fixed, use the s390 stack unwinder and
-remove the ftrace compilation flags for unwind_bc.c and stacktrace.c
-to prevent the unwinding function polluting function traces.
-
-Another advantage is that this also works with clang.
-
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Fixes: aa44433ac4ee ("s390: add USER_STACKTRACE support")
+Reviewed-by: Jens Remus <jremus@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Stable-dep-of: ebd912ff9919 ("s390/stacktrace: Merge perf_callchain_user() and arch_stack_walk_user()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/ftrace.h |  8 ++------
- arch/s390/kernel/Makefile      |  2 ++
- arch/s390/kernel/stacktrace.c  | 19 +++++++++++++++++++
- 3 files changed, 23 insertions(+), 6 deletions(-)
+ arch/s390/include/asm/stacktrace.h |  7 ++++++
+ arch/s390/kernel/perf_event.c      | 34 +-----------------------------
+ arch/s390/kernel/stacktrace.c      | 33 ++++++++++++++++++++++++-----
+ 3 files changed, 36 insertions(+), 38 deletions(-)
 
-diff --git a/arch/s390/include/asm/ftrace.h b/arch/s390/include/asm/ftrace.h
-index 621f23d5ae30a..77e479d44f1e3 100644
---- a/arch/s390/include/asm/ftrace.h
-+++ b/arch/s390/include/asm/ftrace.h
-@@ -8,12 +8,8 @@
+diff --git a/arch/s390/include/asm/stacktrace.h b/arch/s390/include/asm/stacktrace.h
+index 433fde85b14ea..4aefbe32265d8 100644
+--- a/arch/s390/include/asm/stacktrace.h
++++ b/arch/s390/include/asm/stacktrace.h
+@@ -2,6 +2,7 @@
+ #ifndef _ASM_S390_STACKTRACE_H
+ #define _ASM_S390_STACKTRACE_H
  
- #ifndef __ASSEMBLY__
++#include <linux/stacktrace.h>
+ #include <linux/uaccess.h>
+ #include <linux/ptrace.h>
  
--#ifdef CONFIG_CC_IS_CLANG
--/* https://llvm.org/pr41424 */
--#define ftrace_return_address(n) 0UL
--#else
--#define ftrace_return_address(n) __builtin_return_address(n)
--#endif
-+unsigned long return_address(unsigned int n);
-+#define ftrace_return_address(n) return_address(n)
+@@ -12,6 +13,12 @@ struct stack_frame_user {
+ 	unsigned long empty2[4];
+ };
  
- void ftrace_caller(void);
++struct perf_callchain_entry_ctx;
++
++void arch_stack_walk_user_common(stack_trace_consume_fn consume_entry, void *cookie,
++				 struct perf_callchain_entry_ctx *entry,
++				 const struct pt_regs *regs, bool perf);
++
+ enum stack_type {
+ 	STACK_TYPE_UNKNOWN,
+ 	STACK_TYPE_TASK,
+diff --git a/arch/s390/kernel/perf_event.c b/arch/s390/kernel/perf_event.c
+index dfa77da2fd2ec..5fff629b1a898 100644
+--- a/arch/s390/kernel/perf_event.c
++++ b/arch/s390/kernel/perf_event.c
+@@ -218,39 +218,7 @@ void perf_callchain_kernel(struct perf_callchain_entry_ctx *entry,
+ void perf_callchain_user(struct perf_callchain_entry_ctx *entry,
+ 			 struct pt_regs *regs)
+ {
+-	struct stack_frame_user __user *sf;
+-	unsigned long ip, sp;
+-	bool first = true;
+-
+-	if (is_compat_task())
+-		return;
+-	perf_callchain_store(entry, instruction_pointer(regs));
+-	sf = (void __user *)user_stack_pointer(regs);
+-	pagefault_disable();
+-	while (entry->nr < entry->max_stack) {
+-		if (__get_user(sp, &sf->back_chain))
+-			break;
+-		if (__get_user(ip, &sf->gprs[8]))
+-			break;
+-		if (ip & 0x1) {
+-			/*
+-			 * If the instruction address is invalid, and this
+-			 * is the first stack frame, assume r14 has not
+-			 * been written to the stack yet. Otherwise exit.
+-			 */
+-			if (first && !(regs->gprs[14] & 0x1))
+-				ip = regs->gprs[14];
+-			else
+-				break;
+-		}
+-		perf_callchain_store(entry, ip);
+-		/* Sanity check: ABI requires SP to be aligned 8 bytes. */
+-		if (!sp || sp & 0x7)
+-			break;
+-		sf = (void __user *)sp;
+-		first = false;
+-	}
+-	pagefault_enable();
++	arch_stack_walk_user_common(NULL, NULL, entry, regs, true);
+ }
  
-diff --git a/arch/s390/kernel/Makefile b/arch/s390/kernel/Makefile
-index fa029d0dc28ff..db2d9ba5a86d2 100644
---- a/arch/s390/kernel/Makefile
-+++ b/arch/s390/kernel/Makefile
-@@ -11,6 +11,8 @@ CFLAGS_REMOVE_ftrace.o		= $(CC_FLAGS_FTRACE)
- # Do not trace early setup code
- CFLAGS_REMOVE_early.o		= $(CC_FLAGS_FTRACE)
- CFLAGS_REMOVE_rethook.o		= $(CC_FLAGS_FTRACE)
-+CFLAGS_REMOVE_stacktrace.o	= $(CC_FLAGS_FTRACE)
-+CFLAGS_REMOVE_unwind_bc.o	= $(CC_FLAGS_FTRACE)
- 
- endif
- 
+ /* Perf definitions for PMU event attributes in sysfs */
 diff --git a/arch/s390/kernel/stacktrace.c b/arch/s390/kernel/stacktrace.c
-index 94f440e383031..7c294da45bf52 100644
+index 7c294da45bf52..e580d4cd2729a 100644
 --- a/arch/s390/kernel/stacktrace.c
 +++ b/arch/s390/kernel/stacktrace.c
-@@ -101,3 +101,22 @@ void arch_stack_walk_user(stack_trace_consume_fn consume_entry, void *cookie,
- 	}
+@@ -5,6 +5,7 @@
+  *  Copyright IBM Corp. 2006
+  */
+ 
++#include <linux/perf_event.h>
+ #include <linux/stacktrace.h>
+ #include <linux/uaccess.h>
+ #include <linux/compat.h>
+@@ -62,8 +63,23 @@ int arch_stack_walk_reliable(stack_trace_consume_fn consume_entry,
+ 	return 0;
+ }
+ 
+-void arch_stack_walk_user(stack_trace_consume_fn consume_entry, void *cookie,
+-			  const struct pt_regs *regs)
++static inline bool store_ip(stack_trace_consume_fn consume_entry, void *cookie,
++			    struct perf_callchain_entry_ctx *entry, bool perf,
++			    unsigned long ip)
++{
++#ifdef CONFIG_PERF_EVENTS
++	if (perf) {
++		if (perf_callchain_store(entry, ip))
++			return false;
++		return true;
++	}
++#endif
++	return consume_entry(cookie, ip);
++}
++
++void arch_stack_walk_user_common(stack_trace_consume_fn consume_entry, void *cookie,
++				 struct perf_callchain_entry_ctx *entry,
++				 const struct pt_regs *regs, bool perf)
+ {
+ 	struct stack_frame_user __user *sf;
+ 	unsigned long ip, sp;
+@@ -71,7 +87,8 @@ void arch_stack_walk_user(stack_trace_consume_fn consume_entry, void *cookie,
+ 
+ 	if (is_compat_task())
+ 		return;
+-	if (!consume_entry(cookie, instruction_pointer(regs)))
++	ip = instruction_pointer(regs);
++	if (!store_ip(consume_entry, cookie, entry, perf, ip))
+ 		return;
+ 	sf = (void __user *)user_stack_pointer(regs);
+ 	pagefault_disable();
+@@ -91,8 +108,8 @@ void arch_stack_walk_user(stack_trace_consume_fn consume_entry, void *cookie,
+ 			else
+ 				break;
+ 		}
+-		if (!consume_entry(cookie, ip))
+-			break;
++		if (!store_ip(consume_entry, cookie, entry, perf, ip))
++			return;
+ 		/* Sanity check: ABI requires SP to be aligned 8 bytes. */
+ 		if (!sp || sp & 0x7)
+ 			break;
+@@ -102,6 +119,12 @@ void arch_stack_walk_user(stack_trace_consume_fn consume_entry, void *cookie,
  	pagefault_enable();
  }
-+
-+unsigned long return_address(unsigned int n)
+ 
++void arch_stack_walk_user(stack_trace_consume_fn consume_entry, void *cookie,
++			  const struct pt_regs *regs)
 +{
-+	struct unwind_state state;
-+	unsigned long addr;
-+
-+	/* Increment to skip current stack entry */
-+	n++;
-+
-+	unwind_for_each_frame(&state, NULL, NULL, 0) {
-+		addr = unwind_get_return_address(&state);
-+		if (!addr)
-+			break;
-+		if (!n--)
-+			return addr;
-+	}
-+	return 0;
++	arch_stack_walk_user_common(consume_entry, cookie, NULL, regs, false);
 +}
-+EXPORT_SYMBOL_GPL(return_address);
++
+ unsigned long return_address(unsigned int n)
+ {
+ 	struct unwind_state state;
 -- 
 2.43.0
 
