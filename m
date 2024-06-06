@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEB21ABCCF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940941ABE34;
 	Thu,  6 Jun 2024 14:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683300; cv=none; b=MVdfYpRlF3Nq6tK+1SJOVpHkLNNS0avN5PwbUaAB1YmXovTCf5J6sgHirkTRjzH++D4MZUXNEJbBkpwJ9JSi6HljgQgYL8PnrNN7hrBmtJLhMKD4wvRqK6Y7BEm4nl+StU8slQdtsO/nEA83u8VNApV96Sn5IEMChV8ZieP3cm4=
+	t=1717683300; cv=none; b=b21LUp7Eg1aCAVUbsvpXPW4A94mWG+pXQgOFYv6I/WNwF5TddbITnrc0FyA/0xLC237X44fUFQZ+3ns4eQC72vJOprlT5fHr/0BHWO5qs11SndGvrd2roLZrc0YRt6/hSOAH3YYSixPHvDyPOcWc6mCZa70GMKp6iOX5FGTAvgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683300; c=relaxed/simple;
-	bh=5kCIZ2v8+L7nl4X3ohGL3B2jXP98dWirE8yxFg/kijM=;
+	bh=GHfzVBhwh5I0WTGPBa1PAbiq5OJqcM9Cak9KKBntHTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mTbXSdxxvHwHS927eHZR+da2SE/zurdeunlwuwn7n/hm1ymGks2magEhXOUrUZ06yub3phGsA6ypy06fvKWqbz4ofBcD8kfL5tH+yKKIs9q44sawbxBbXUlv8ym9UuiHAEUIMVye2JRVpO2teUi+u6+byQhWALipCpY5cgH9c1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpqgaXqD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rDQrPyCqBQsJ/iHaKnsGmcqOTi7xncGEa9D79r46XAlVTB5WP1wQ/cBlRpGa7agNVsAlLz1qfoUjAMlOxYPljfy59xXEhq+UHiwmvQxAnl2gf/1MOQPtv24bNl7LunZCz7m7cD79u2I1ZOnCo8nmC8ZoMULnj9acIe0MVsYVm6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxHfxpfo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpqgaXqD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101F2C32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxHfxpfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738A9C2BD10;
 	Thu,  6 Jun 2024 14:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683300;
-	bh=5kCIZ2v8+L7nl4X3ohGL3B2jXP98dWirE8yxFg/kijM=;
+	bh=GHfzVBhwh5I0WTGPBa1PAbiq5OJqcM9Cak9KKBntHTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpqgaXqD0VZ+7Ns5HsKZr3g73ldtR5jGlkFgkfuWq+6vvBWw9S20fItEHotNFOtzw
-	 9lYUQdKCt6prJXWSiCXCa5TJWCrBx0WkZAXjZM4SZUE2FFpKzViyuwJWH46Pd3QNCp
-	 9NAsy/3n1pXkJTe3Em97zV57q0HI+pDxIzrle2ZE=
+	b=zxHfxpfojExPAQxi3rDRHBN7LnTA8PuowAu5OmuSNu6AWQEQOcRGiFsXo8v/V1D1w
+	 7aUUHDmWAouUfOA9S4rWYTGQWh86V6Loh7yGfnaKALtz7rGIFWR64xsdupoiJajPVH
+	 M0ohYgUXO3IHjahyHJLx0wDt6BoBBZqfCKsq3kvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 241/744] selftests: net: move amt to socat for better compatibility
-Date: Thu,  6 Jun 2024 15:58:33 +0200
-Message-ID: <20240606131740.129041650@linuxfoundation.org>
+Subject: [PATCH 6.1 181/473] riscv, bpf: make some atomic operations fully ordered
+Date: Thu,  6 Jun 2024 16:01:50 +0200
+Message-ID: <20240606131705.913605275@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +48,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Puranjay Mohan <puranjay@kernel.org>
 
-[ Upstream commit 4c639b6a7b9db236c0907aca8e92d1537076f2cd ]
+[ Upstream commit 20a759df3bba35bf5c3ddec0c02ad69b603b584c ]
 
-The test seems to expect that nc will exit after the first
-received message. This is not the case with Ncat 7.94.
-There are multiple versions of nc out there, switch
-to socat for better compatibility.
+The BPF atomic operations with the BPF_FETCH modifier along with
+BPF_XCHG and BPF_CMPXCHG are fully ordered but the RISC-V JIT implements
+all atomic operations except BPF_CMPXCHG with relaxed ordering.
 
-Tell socat to exit after 128 bytes and pad the message.
+Section 8.1 of the "The RISC-V Instruction Set Manual Volume I:
+Unprivileged ISA" [1], titled, "Specifying Ordering of Atomic
+Instructions" says:
 
-Since the test sets -e make sure we don't set exit code
-(|| true) and print the pass / fail rather then silently
-moving over the test and just setting non-zero exit code
-with no output indicating what failed.
+| To provide more efficient support for release consistency [5], each
+| atomic instruction has two bits, aq and rl, used to specify additional
+| memory ordering constraints as viewed by other RISC-V harts.
 
-Fixes: c08e8baea78e ("selftests: add amt interface selftest script")
-Acked-by: Paolo Abeni<pabeni@redhat.com>
-Tested-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://lore.kernel.org/r/20240509161952.3940476-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+and
+
+| If only the aq bit is set, the atomic memory operation is treated as
+| an acquire access.
+| If only the rl bit is set, the atomic memory operation is treated as a
+| release access.
+|
+| If both the aq and rl bits are set, the atomic memory operation is
+| sequentially consistent.
+
+Fix this by setting both aq and rl bits as 1 for operations with
+BPF_FETCH and BPF_XCHG.
+
+[1] https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf
+
+Fixes: dd642ccb45ec ("riscv, bpf: Implement more atomic operations for RV64")
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Link: https://lore.kernel.org/r/20240505201633.123115-1-puranjay@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/amt.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/riscv/net/bpf_jit_comp64.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/net/amt.sh b/tools/testing/selftests/net/amt.sh
-index 75528788cb95e..5175a42cbe8a2 100755
---- a/tools/testing/selftests/net/amt.sh
-+++ b/tools/testing/selftests/net/amt.sh
-@@ -210,8 +210,8 @@ check_features()
- 
- test_ipv4_forward()
- {
--	RESULT4=$(ip netns exec "${LISTENER}" nc -w 1 -l -u 239.0.0.1 4000)
--	if [ "$RESULT4" == "172.17.0.2" ]; then
-+	RESULT4=$(ip netns exec "${LISTENER}" timeout 15 socat - UDP4-LISTEN:4000,readbytes=128 || true)
-+	if echo "$RESULT4" | grep -q "172.17.0.2"; then
- 		printf "TEST: %-60s  [ OK ]\n" "IPv4 amt multicast forwarding"
- 		exit 0
- 	else
-@@ -222,8 +222,8 @@ test_ipv4_forward()
- 
- test_ipv6_forward()
- {
--	RESULT6=$(ip netns exec "${LISTENER}" nc -w 1 -l -u ff0e::5:6 6000)
--	if [ "$RESULT6" == "2001:db8:3::2" ]; then
-+	RESULT6=$(ip netns exec "${LISTENER}" timeout 15 socat - UDP6-LISTEN:6000,readbytes=128 || true)
-+	if echo "$RESULT6" | grep -q "2001:db8:3::2"; then
- 		printf "TEST: %-60s  [ OK ]\n" "IPv6 amt multicast forwarding"
- 		exit 0
- 	else
-@@ -236,14 +236,14 @@ send_mcast4()
- {
- 	sleep 2
- 	ip netns exec "${SOURCE}" bash -c \
--		'echo 172.17.0.2 | nc -w 1 -u 239.0.0.1 4000' &
-+		'printf "%s %128s" 172.17.0.2 | nc -w 1 -u 239.0.0.1 4000' &
- }
- 
- send_mcast6()
- {
- 	sleep 2
- 	ip netns exec "${SOURCE}" bash -c \
--		'echo 2001:db8:3::2 | nc -w 1 -u ff0e::5:6 6000' &
-+		'printf "%s %128s" 2001:db8:3::2 | nc -w 1 -u ff0e::5:6 6000' &
- }
- 
- check_features
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index 8f5d3c57d58ad..4c4ac563326b5 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -503,33 +503,33 @@ static void emit_atomic(u8 rd, u8 rs, s16 off, s32 imm, bool is64,
+ 		break;
+ 	/* src_reg = atomic_fetch_<op>(dst_reg + off16, src_reg) */
+ 	case BPF_ADD | BPF_FETCH:
+-		emit(is64 ? rv_amoadd_d(rs, rs, rd, 0, 0) :
+-		     rv_amoadd_w(rs, rs, rd, 0, 0), ctx);
++		emit(is64 ? rv_amoadd_d(rs, rs, rd, 1, 1) :
++		     rv_amoadd_w(rs, rs, rd, 1, 1), ctx);
+ 		if (!is64)
+ 			emit_zext_32(rs, ctx);
+ 		break;
+ 	case BPF_AND | BPF_FETCH:
+-		emit(is64 ? rv_amoand_d(rs, rs, rd, 0, 0) :
+-		     rv_amoand_w(rs, rs, rd, 0, 0), ctx);
++		emit(is64 ? rv_amoand_d(rs, rs, rd, 1, 1) :
++		     rv_amoand_w(rs, rs, rd, 1, 1), ctx);
+ 		if (!is64)
+ 			emit_zext_32(rs, ctx);
+ 		break;
+ 	case BPF_OR | BPF_FETCH:
+-		emit(is64 ? rv_amoor_d(rs, rs, rd, 0, 0) :
+-		     rv_amoor_w(rs, rs, rd, 0, 0), ctx);
++		emit(is64 ? rv_amoor_d(rs, rs, rd, 1, 1) :
++		     rv_amoor_w(rs, rs, rd, 1, 1), ctx);
+ 		if (!is64)
+ 			emit_zext_32(rs, ctx);
+ 		break;
+ 	case BPF_XOR | BPF_FETCH:
+-		emit(is64 ? rv_amoxor_d(rs, rs, rd, 0, 0) :
+-		     rv_amoxor_w(rs, rs, rd, 0, 0), ctx);
++		emit(is64 ? rv_amoxor_d(rs, rs, rd, 1, 1) :
++		     rv_amoxor_w(rs, rs, rd, 1, 1), ctx);
+ 		if (!is64)
+ 			emit_zext_32(rs, ctx);
+ 		break;
+ 	/* src_reg = atomic_xchg(dst_reg + off16, src_reg); */
+ 	case BPF_XCHG:
+-		emit(is64 ? rv_amoswap_d(rs, rs, rd, 0, 0) :
+-		     rv_amoswap_w(rs, rs, rd, 0, 0), ctx);
++		emit(is64 ? rv_amoswap_d(rs, rs, rd, 1, 1) :
++		     rv_amoswap_w(rs, rs, rd, 1, 1), ctx);
+ 		if (!is64)
+ 			emit_zext_32(rs, ctx);
+ 		break;
 -- 
 2.43.0
 
