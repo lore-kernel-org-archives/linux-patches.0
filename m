@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA4B19DF41;
-	Thu,  6 Jun 2024 14:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F8019DF41;
+	Thu,  6 Jun 2024 14:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683479; cv=none; b=PULLgYqZhWDrYXdTwKQ3dBRT4KHcSaglU99Ze9v5SruSev9Ay5sF1Z2nLz/dOxQ/LyXm96FfXi9Sg8xt91uuTi7go1JKud9ComXhHFqNEvOQdKtNDpA++9CTRM9BEAiJmPLk6ABAs3z5sQ7r7ofZrMlbzWlhNNp11jE9PqmcK5Y=
+	t=1717683480; cv=none; b=JstJlWbQkqa7KDWiDfym6dE4XvRx1p72Iy7zGyC8ZdRJLlQIVW88mwvnrZuyZyWCu1luQMZuYtVvMMwb9PaGNLGin2ljYtF7hS2FmriseXGmQcAWTzs0eUVJo9PStnF5Q/8WW+a3vlUcmq4+GnyG7LcyQwtqcTpgM5BByXt1yKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683479; c=relaxed/simple;
-	bh=OLLKE/IVk1KndQ1z2Veew+xLzShBjV6JJL6zuBSIDtc=;
+	s=arc-20240116; t=1717683480; c=relaxed/simple;
+	bh=p1WvVu5hleUW/lAu3IZCDiWqCRNQvpb5MSBJTWUNe28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YA96/LCp2BuXyrlObgwaqhAcNF5jqq5lbOjesg/jWT2Yvu35U6C/gPNz/AK9/esJsc8DgbMcb1hDwXecVndQ99Xer9EFRo1ymFHvjvFlsEofvQVg8g//Kb91rDv7X/+6tqCnflaTKfU4anZbMowykogRgs3TX/atm7XK/qAZXbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQBDN60J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dlLH/gbpHMZaUji1iTuZ2aLX68xb6d9WyWAnnh18/JPhIFytIp44r/ZMbzde2rQ9lbv0ueJKro1OMJqZ9EOACgSqN56XoA4g6cMPlcl9Nj/e1w4TKdSVMYtrwvQb6pKz6VAnwNcQq90nX1EinRhx2skow2GBFsqLakVxin3qFsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEtw7zDr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQBDN60J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3DEC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEtw7zDr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D658BC2BD10;
 	Thu,  6 Jun 2024 14:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683479;
-	bh=OLLKE/IVk1KndQ1z2Veew+xLzShBjV6JJL6zuBSIDtc=;
+	bh=p1WvVu5hleUW/lAu3IZCDiWqCRNQvpb5MSBJTWUNe28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQBDN60Jg2Xis16XIO0rMURhigCmbus9nelLBVtDAhdTCS0hjijkQbGtLvn7/fuAe
-	 mywhn2/D7d9McOokFGtQ1i0qsUaztKzZHqnHpmxCBHF+FgrNc1rDC9waCx5W7hJ0h3
-	 Sj4B9yesgOXyBKbfRwAsizI042/kUAV9dhAEF3hQ=
+	b=kEtw7zDr3BejZ9KbLaozU0ySfvjgYexii2PLRmYELVpfcu7EdcevencSsfYINZ3pC
+	 rFlfKD+N6qtlqmiVGiictSVg3ZbHImBOCuCMPkQV1C3oOccBmxVxQxTdJaImtFtfAY
+	 18iJCrl+mqYqFxKWyhFqlZ8/clAzVlLvG+4baZQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Judith Mendez <jm@ti.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 422/744] interconnect: qcom: qcm2290: Fix mas_snoc_bimc QoS port assignment
-Date: Thu,  6 Jun 2024 16:01:34 +0200
-Message-ID: <20240606131746.011016316@linuxfoundation.org>
+Subject: [PATCH 6.1 366/473] mmc: sdhci_am654: Fix ITAPDLY for HS400 timing
+Date: Thu,  6 Jun 2024 16:04:55 +0200
+Message-ID: <20240606131712.010038510@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit 230d05b1179f6ce6f8dc8a2b99eba92799ac22d7 ]
+[ Upstream commit d3182932bb070e7518411fd165e023f82afd7d25 ]
 
-The value was wrong, resulting in misprogramming of the hardware.
-Fix it.
+While STRB is currently used for DATA and CRC responses, the CMD
+responses from the device to the host still require ITAPDLY for
+HS400 timing.
 
-Fixes: 1a14b1ac3935 ("interconnect: qcom: Add QCM2290 driver support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240326-topic-rpm_icc_qos_cleanup-v1-2-357e736792be@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Currently what is stored for HS400 is the ITAPDLY from High Speed
+mode which is incorrect. The ITAPDLY for HS400 speed mode should
+be the same as ITAPDLY as HS200 timing after tuning is executed.
+Add the functionality to save ITAPDLY from HS200 tuning and save
+as HS400 ITAPDLY.
+
+Fixes: a161c45f2979 ("mmc: sdhci_am654: Enable DLL only for some speed modes")
+Signed-off-by: Judith Mendez <jm@ti.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240320223837.959900-8-jm@ti.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/qcm2290.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci_am654.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
-index 5bc4b7516608b..52346f7319acc 100644
---- a/drivers/interconnect/qcom/qcm2290.c
-+++ b/drivers/interconnect/qcom/qcm2290.c
-@@ -161,7 +161,7 @@ static struct qcom_icc_node mas_snoc_bimc = {
- 	.name = "mas_snoc_bimc",
- 	.buswidth = 16,
- 	.qos.ap_owned = true,
--	.qos.qos_port = 2,
-+	.qos.qos_port = 6,
- 	.qos.qos_mode = NOC_QOS_MODE_BYPASS,
- 	.mas_rpm_id = 164,
- 	.slv_rpm_id = -1,
+diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
+index c20ec525c9bf8..52d6cc07e38cc 100644
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -300,6 +300,12 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
+ 	if (timing > MMC_TIMING_UHS_SDR25 && clock >= CLOCK_TOO_SLOW_HZ) {
+ 		sdhci_am654_setup_dll(host, clock);
+ 		sdhci_am654->dll_enable = true;
++
++		if (timing == MMC_TIMING_MMC_HS400) {
++			sdhci_am654->itap_del_ena[timing] = 0x1;
++			sdhci_am654->itap_del_sel[timing] = sdhci_am654->itap_del_sel[timing - 1];
++		}
++
+ 		sdhci_am654_write_itapdly(sdhci_am654, sdhci_am654->itap_del_sel[timing],
+ 					  sdhci_am654->itap_del_ena[timing]);
+ 	} else {
+@@ -530,6 +536,9 @@ static int sdhci_am654_platform_execute_tuning(struct sdhci_host *host,
+ 
+ 	sdhci_am654_write_itapdly(sdhci_am654, itap, sdhci_am654->itap_del_ena[timing]);
+ 
++	/* Save ITAPDLY */
++	sdhci_am654->itap_del_sel[timing] = itap;
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
