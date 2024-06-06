@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210BB19CD15;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F55219CD15;
 	Thu,  6 Jun 2024 14:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683442; cv=none; b=BF8MGQpUvZCVDD/8tYp0hOKR3Wy24ktvBRxj5DdUk5jiI6SAqzpWc0tR8Mi3toDVWMWD8dUmg08LctcFDpH2opCPa4i+nQjVck8CYG6eUnX4eYGNEFmLCgY4vMPVz3uYH7N3GdK8IEnpk01PX3EeaO0GKiAyqV36aavGiF3HXAM=
+	t=1717683442; cv=none; b=i9sPr7BVsCXvtS/Z0ioaivnqWkVlmX9a+YjUod61EBNGnDRX1/I2iCDMKxoDbP7APtXkXr8XB+Y1AVZ7V/jbo26257roazSFueeTNeCiB4ZXQtyDJSgKf+tlLLDqLkJ9T1A61Y3YmSPHxHLy+PeLMs6bVdtxbQlTrZH1z3wiNoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683442; c=relaxed/simple;
-	bh=pw2h2HMhCGuI0WylZH27GZBbWzZ9k8HKyUhCNzun5yM=;
+	bh=4CBYpYxfIQhOkCbtMpxbMeXpEeJaoxSwYJjlCAOHSlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+8zgOafzZ+BVSWqll84MRjMr9/7uNOk3LQ1Z+z+vMWd2fgk5sblZvKRlnr8O3zfHDeyfyAOMSfOXKT5FA6C9qaykKHLl1kx9KlZiXkB/KTAqRn0xJzXHJiLeYg+0bBVhBrR4KiiYLQ7XlfMFBR5N+VBLOBxWFiyY2dVnCQM3T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPorjUCJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e1KSepD6SG8iex52T1uBV4CYlXgbxDq4x+PZVlCZhGAKo4XdPahplSznmmO8mHKAVi20X565CjR4dQ8EeUwMFmGWbFfjy1nPj6itB3VLEPRTiKuOLKFZv/9N4WE1gREa8/rjWvy4f5rx6jnpp0bW3FLs34x9Pbxfgx8dX0e+pOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwyazOFg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPorjUCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30EBC2BD10;
-	Thu,  6 Jun 2024 14:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwyazOFg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEB9C2BD10;
+	Thu,  6 Jun 2024 14:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683442;
-	bh=pw2h2HMhCGuI0WylZH27GZBbWzZ9k8HKyUhCNzun5yM=;
+	bh=4CBYpYxfIQhOkCbtMpxbMeXpEeJaoxSwYJjlCAOHSlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPorjUCJwiQ0O4tEnZCGI4H7akxWAC4eYM0WJXY/eg/NbGShDxj564PRiSU/4CbGB
-	 PSgE6PJIl4SJJjgXiCV1NQWC9WHcPwgfDaD+4/+a33/5U852bpybu/YTmZzQodCSuE
-	 xW63Llnbr3oEBaifOZZ6tGGbMdMjuGhpiEYnVj0Y=
+	b=rwyazOFgFwtM/QdujIlGOhkQQwtjZAxUQw4w6e4pJMO72fVbGjJMup+E5+zPqF66/
+	 pAdgUv55i6OIuekku+epLl2j7E1z50KVlYsgz0QsRSHuzC6Yr3piH+AaAcvHM/wo2M
+	 jW6lE8l6vonSnVMLvLdHyF1p+wkgUe7GTX3zqF/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Neil Horman <nhorman@tuxdriver.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 386/744] af_packet: do not call packet_read_pending() from tpacket_destruct_skb()
-Date: Thu,  6 Jun 2024 16:00:58 +0200
-Message-ID: <20240606131744.846127612@linuxfoundation.org>
+Subject: [PATCH 6.1 327/473] watchdog: bd9576: Drop "always-running" property
+Date: Thu,  6 Jun 2024 16:04:16 +0200
+Message-ID: <20240606131710.744220211@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,50 +48,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 581073f626e387d3e7eed55c48c8495584ead7ba ]
+[ Upstream commit e3b3afd34d84efcbe4543deb966b1990f43584b8 ]
 
-trafgen performance considerably sank on hosts with many cores
-after the blamed commit.
+The always-running (from linux,wdt-gpio.yaml) is abused by the BD9576
+watchdog driver. It's defined meaning is "the watchdog is always running
+and can not be stopped". The BD9576 watchdog driver has implemented it
+as "start watchdog when loading the module and prevent it from being
+stopped".
 
-packet_read_pending() is very expensive, and calling it
-in af_packet fast path defeats Daniel intent in commit
-b013840810c2 ("packet: use percpu mmap tx frame pending refcount")
+Furthermore, the implementation does not set the WDOG_HW_RUNNING when
+enabling the watchdog due to the "always-running" at module loading.
+This will end up resulting a watchdog timeout if the device is not
+opened.
 
-tpacket_destruct_skb() makes room for one packet, we can immediately
-wakeup a producer, no need to completely drain the tx ring.
+The culprit was pointed out by Guenter, discussion can be found from
+https://lore.kernel.org/lkml/4fa3a64b-60fb-4e5e-8785-0f14da37eea2@roeck-us.net/
 
-Fixes: 89ed5b519004 ("af_packet: Block execution of tasks waiting for transmit to complete in AF_PACKET")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Neil Horman <nhorman@tuxdriver.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20240515163358.4105915-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Drop the invalid "always-running" handling.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: b237bcac557a ("wdt: Support wdt on ROHM BD9576MUF and BD9573MUF")
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/ZhPAt76yaJMersXf@fedora
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/watchdog/bd9576_wdt.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index f017d7d33da39..ff1ddf544e179 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2528,8 +2528,7 @@ static void tpacket_destruct_skb(struct sk_buff *skb)
- 		ts = __packet_set_timestamp(po, ph, skb);
- 		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
+diff --git a/drivers/watchdog/bd9576_wdt.c b/drivers/watchdog/bd9576_wdt.c
+index 4a20e07fbb699..f00ea1b4e40b6 100644
+--- a/drivers/watchdog/bd9576_wdt.c
++++ b/drivers/watchdog/bd9576_wdt.c
+@@ -29,7 +29,6 @@ struct bd9576_wdt_priv {
+ 	struct gpio_desc	*gpiod_en;
+ 	struct device		*dev;
+ 	struct regmap		*regmap;
+-	bool			always_running;
+ 	struct watchdog_device	wdd;
+ };
  
--		if (!packet_read_pending(&po->tx_ring))
--			complete(&po->skb_completion);
-+		complete(&po->skb_completion);
- 	}
+@@ -62,10 +61,7 @@ static int bd9576_wdt_stop(struct watchdog_device *wdd)
+ {
+ 	struct bd9576_wdt_priv *priv = watchdog_get_drvdata(wdd);
  
- 	sock_wfree(skb);
+-	if (!priv->always_running)
+-		bd9576_wdt_disable(priv);
+-	else
+-		set_bit(WDOG_HW_RUNNING, &wdd->status);
++	bd9576_wdt_disable(priv);
+ 
+ 	return 0;
+ }
+@@ -264,9 +260,6 @@ static int bd9576_wdt_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	priv->always_running = device_property_read_bool(dev->parent,
+-							 "always-running");
+-
+ 	watchdog_set_drvdata(&priv->wdd, priv);
+ 
+ 	priv->wdd.info			= &bd957x_wdt_ident;
+@@ -281,9 +274,6 @@ static int bd9576_wdt_probe(struct platform_device *pdev)
+ 
+ 	watchdog_stop_on_reboot(&priv->wdd);
+ 
+-	if (priv->always_running)
+-		bd9576_wdt_start(&priv->wdd);
+-
+ 	return devm_watchdog_register_device(dev, &priv->wdd);
+ }
+ 
 -- 
 2.43.0
 
