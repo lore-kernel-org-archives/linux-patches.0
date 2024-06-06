@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C07198E9A;
-	Thu,  6 Jun 2024 14:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CE7198E9A;
+	Thu,  6 Jun 2024 14:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683510; cv=none; b=bbIMn8TkiS0PsvsSYgt0Ipt6JouZsiCD/t8vidgv1gZnXPtWK+EIbqxsjs8YfpiAUIk/tUGsDf/oszogfLuXWPmQo4xNFzouUpTatO7aFZBf/ykpUpVqKoGzsmuU+jO+OsSBOBotruq8uPVMK5fMQxZLEbNKLEdny4KiKzGfp5g=
+	t=1717683511; cv=none; b=uV82lD9gFYlL2QzbH3m+VrJHDbVSbWhNckQvKq+hA9b3bKIiaARhoUWkveVf+2M6oZqCYhWdJSEaquPpN0Cjx2YBWk8q9W2OEth6OGX0WFipdGBb73Axh0cQD72radgNB6WkjYQ05s0aN6VjBVez8GV8O9Fp6kTmVI9cBZZSzJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683510; c=relaxed/simple;
-	bh=nwnS6UDzoVaTmdHaa7fI0vOZG9e4TiDTBKsmKT3KdII=;
+	s=arc-20240116; t=1717683511; c=relaxed/simple;
+	bh=P/QvRMwMaTNDrpj1LGlqCNdmvlQMpYfmCbpgWVj3usQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwmg0X2N8PIGXruZxtom2Z/MjnNAL8ykA8ct04D0ORa1GOqSf0VmqJbPCvP5FW2N1DegdQWjw6kOi/RHAdNjMJ/3/bvcrxG/TRA5wK2TzscB4LrPhAyVTuktstwYy3EfDZuxjo6Grdckr+Vwvg6SHYV2f5vP+3kIJh030oKVg0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hC9Xk03o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uPoDg8QMiDwS35zLxjbFs1mO6Bj6JFj3sSAPxiPYb16LPIxd/Eb9NDMrmx2Gp6S46AbWMUKQLfuqqqEsXc5mnKn2ClUiCD5omAIj4D6uRmUoO5vocw1j86VB2vesWkn/NiMpVkzXs/kMcJOGgHUW7DD57lPObYM60N0VYOv6pdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/DvBCiI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hC9Xk03o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974E2C2BD10;
-	Thu,  6 Jun 2024 14:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/DvBCiI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200DDC2BD10;
+	Thu,  6 Jun 2024 14:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683510;
-	bh=nwnS6UDzoVaTmdHaa7fI0vOZG9e4TiDTBKsmKT3KdII=;
+	s=korg; t=1717683511;
+	bh=P/QvRMwMaTNDrpj1LGlqCNdmvlQMpYfmCbpgWVj3usQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hC9Xk03ojp908V8uh18fZqDoy+RmALgLF9+jZottaoPdyiPuPml4d/HG2y7hE1hqS
-	 ms4KwFQ+Sfi4Cz98WQBrPSbFK5JL9QjBTMtg3NRRuXk8ESrXlkUahV1PyH7a71iTwB
-	 ci7qoS8Dm3Z/i9XUxt3rYaTbSvw/qsDwbFcYCqW0=
+	b=m/DvBCiIViFmOgLygvW+wIxSkXeHws3dUAgvOXzQZw7Ihmpy8pMg2QhKifo0C1Ntj
+	 tRmm0JTsFNycZNcRyDGMYG10Z4SQPQ6jdYPyUAI8ACjvtTROAfJHSbPe9ilnhXP6G0
+	 SAjVUT7XJ+uOo/5TilFbViNw5GczdbjUaqqbliko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 399/473] regulator: bd71828: Dont overwrite runtime voltages
-Date: Thu,  6 Jun 2024 16:05:28 +0200
-Message-ID: <20240606131713.012351296@linuxfoundation.org>
+Subject: [PATCH 6.6 452/744] iio: adc: adi-axi-adc: move to backend framework
+Date: Thu,  6 Jun 2024 16:02:04 +0200
+Message-ID: <20240606131746.984060509@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,188 +48,622 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 0f9f7c63c415e287cd57b5c98be61eb320dedcfc ]
+[ Upstream commit 794ef0e57854d794173c8ab6bcce3285032dcd95 ]
 
-Some of the regulators on the BD71828 have common voltage setting for
-RUN/SUSPEND/IDLE/LPSR states. The enable control can be set for each
-state though.
+Move to the IIO backend framework. Devices supported by adi-axi-adc now
+register themselves as backend devices.
 
-The driver allows setting the voltage values for these states via
-device-tree. As a side effect, setting the voltages for
-SUSPEND/IDLE/LPSR will also change the RUN level voltage which is not
-desired and can break the system.
-
-The comment in code reflects this behaviour, but it is likely to not
-make people any happier. The right thing to do is to allow setting the
-enable/disable state at SUSPEND/IDLE/LPSR via device-tree, but to
-disallow setting state specific voltages for those regulators.
-
-BUCK1 is a bit different. It only shares the SUSPEND and LPSR state
-voltages. The former behaviour of allowing to silently overwrite the
-SUSPEND state voltage by LPSR state voltage is also changed here so that
-the SUSPEND voltage is prioritized over LPSR voltage.
-
-Prevent setting PMIC state specific voltages for regulators which do not
-support it.
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 522498f8cb8c ("regulator: bd71828: Basic support for ROHM bd71828 PMIC regulators")
-Link: https://msgid.link/r/e1883ae1e3ae5668f1030455d4750923561f3d68.1715848512.git.mazziesaccount@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240210-iio-backend-v11-7-f5242a5fb42a@analog.com
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: cf1c833f89e7 ("iio: adc: adi-axi-adc: only error out in major version mismatch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/bd71828-regulator.c | 58 +--------------------------
- 1 file changed, 2 insertions(+), 56 deletions(-)
+ drivers/iio/adc/Kconfig             |   2 +-
+ drivers/iio/adc/adi-axi-adc.c       | 384 +++++++---------------------
+ include/linux/iio/adc/adi-axi-adc.h |  68 -----
+ 3 files changed, 96 insertions(+), 358 deletions(-)
+ delete mode 100644 include/linux/iio/adc/adi-axi-adc.h
 
-diff --git a/drivers/regulator/bd71828-regulator.c b/drivers/regulator/bd71828-regulator.c
-index a4f09a5a30cab..d07f0d120ca71 100644
---- a/drivers/regulator/bd71828-regulator.c
-+++ b/drivers/regulator/bd71828-regulator.c
-@@ -207,14 +207,11 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 			.suspend_reg = BD71828_REG_BUCK1_SUSP_VOLT,
- 			.suspend_mask = BD71828_MASK_BUCK1267_VOLT,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
--			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
- 			/*
- 			 * LPSR voltage is same as SUSPEND voltage. Allow
--			 * setting it so that regulator can be set enabled at
--			 * LPSR state
-+			 * only enabling/disabling regulator for LPSR state
- 			 */
--			.lpsr_reg = BD71828_REG_BUCK1_SUSP_VOLT,
--			.lpsr_mask = BD71828_MASK_BUCK1267_VOLT,
-+			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
- 		},
- 		.reg_inits = buck1_inits,
- 		.reg_init_amnt = ARRAY_SIZE(buck1_inits),
-@@ -289,13 +286,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_BUCK3_VOLT,
--			.idle_reg = BD71828_REG_BUCK3_VOLT,
--			.suspend_reg = BD71828_REG_BUCK3_VOLT,
--			.lpsr_reg = BD71828_REG_BUCK3_VOLT,
- 			.run_mask = BD71828_MASK_BUCK3_VOLT,
--			.idle_mask = BD71828_MASK_BUCK3_VOLT,
--			.suspend_mask = BD71828_MASK_BUCK3_VOLT,
--			.lpsr_mask = BD71828_MASK_BUCK3_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -330,13 +321,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_BUCK4_VOLT,
--			.idle_reg = BD71828_REG_BUCK4_VOLT,
--			.suspend_reg = BD71828_REG_BUCK4_VOLT,
--			.lpsr_reg = BD71828_REG_BUCK4_VOLT,
- 			.run_mask = BD71828_MASK_BUCK4_VOLT,
--			.idle_mask = BD71828_MASK_BUCK4_VOLT,
--			.suspend_mask = BD71828_MASK_BUCK4_VOLT,
--			.lpsr_mask = BD71828_MASK_BUCK4_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -371,13 +356,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_BUCK5_VOLT,
--			.idle_reg = BD71828_REG_BUCK5_VOLT,
--			.suspend_reg = BD71828_REG_BUCK5_VOLT,
--			.lpsr_reg = BD71828_REG_BUCK5_VOLT,
- 			.run_mask = BD71828_MASK_BUCK5_VOLT,
--			.idle_mask = BD71828_MASK_BUCK5_VOLT,
--			.suspend_mask = BD71828_MASK_BUCK5_VOLT,
--			.lpsr_mask = BD71828_MASK_BUCK5_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -494,13 +473,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_LDO1_VOLT,
--			.idle_reg = BD71828_REG_LDO1_VOLT,
--			.suspend_reg = BD71828_REG_LDO1_VOLT,
--			.lpsr_reg = BD71828_REG_LDO1_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -534,13 +507,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_LDO2_VOLT,
--			.idle_reg = BD71828_REG_LDO2_VOLT,
--			.suspend_reg = BD71828_REG_LDO2_VOLT,
--			.lpsr_reg = BD71828_REG_LDO2_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -574,13 +541,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_LDO3_VOLT,
--			.idle_reg = BD71828_REG_LDO3_VOLT,
--			.suspend_reg = BD71828_REG_LDO3_VOLT,
--			.lpsr_reg = BD71828_REG_LDO3_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -615,13 +576,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_LDO4_VOLT,
--			.idle_reg = BD71828_REG_LDO4_VOLT,
--			.suspend_reg = BD71828_REG_LDO4_VOLT,
--			.lpsr_reg = BD71828_REG_LDO4_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -656,13 +611,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_LDO5_VOLT,
--			.idle_reg = BD71828_REG_LDO5_VOLT,
--			.suspend_reg = BD71828_REG_LDO5_VOLT,
--			.lpsr_reg = BD71828_REG_LDO5_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -721,9 +670,6 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 			.suspend_reg = BD71828_REG_LDO7_VOLT,
- 			.lpsr_reg = BD71828_REG_LDO7_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+diff --git a/drivers/iio/adc/Kconfig b/drivers/iio/adc/Kconfig
+index ae789d427b213..dfb925cfe38ef 100644
+--- a/drivers/iio/adc/Kconfig
++++ b/drivers/iio/adc/Kconfig
+@@ -293,7 +293,7 @@ config ADI_AXI_ADC
+ 	select IIO_BUFFER_HW_CONSUMER
+ 	select IIO_BUFFER_DMAENGINE
+ 	select REGMAP_MMIO
+-	depends on OF
++	select IIO_BACKEND
+ 	help
+ 	  Say yes here to build support for Analog Devices Generic
+ 	  AXI ADC IP core. The IP core is used for interfacing with
+diff --git a/drivers/iio/adc/adi-axi-adc.c b/drivers/iio/adc/adi-axi-adc.c
+index 0f21d1d98b9fa..4156639b3c8bd 100644
+--- a/drivers/iio/adc/adi-axi-adc.c
++++ b/drivers/iio/adc/adi-axi-adc.c
+@@ -8,6 +8,7 @@
+ 
+ #include <linux/bitfield.h>
+ #include <linux/clk.h>
++#include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/delay.h>
+ #include <linux/module.h>
+@@ -17,13 +18,12 @@
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+ 
+-#include <linux/iio/iio.h>
+-#include <linux/iio/sysfs.h>
+-#include <linux/iio/buffer.h>
+-#include <linux/iio/buffer-dmaengine.h>
+-
+ #include <linux/fpga/adi-axi-common.h>
+-#include <linux/iio/adc/adi-axi-adc.h>
++
++#include <linux/iio/backend.h>
++#include <linux/iio/buffer-dmaengine.h>
++#include <linux/iio/buffer.h>
++#include <linux/iio/iio.h>
+ 
+ /*
+  * Register definitions:
+@@ -44,6 +44,7 @@
+ #define   ADI_AXI_REG_CHAN_CTRL_PN_SEL_OWR	BIT(10)
+ #define   ADI_AXI_REG_CHAN_CTRL_IQCOR_EN	BIT(9)
+ #define   ADI_AXI_REG_CHAN_CTRL_DCFILT_EN	BIT(8)
++#define   ADI_AXI_REG_CHAN_CTRL_FMT_MASK	GENMASK(6, 4)
+ #define   ADI_AXI_REG_CHAN_CTRL_FMT_SIGNEXT	BIT(6)
+ #define   ADI_AXI_REG_CHAN_CTRL_FMT_TYPE	BIT(5)
+ #define   ADI_AXI_REG_CHAN_CTRL_FMT_EN		BIT(4)
+@@ -55,286 +56,100 @@
+ 	 ADI_AXI_REG_CHAN_CTRL_FMT_EN |		\
+ 	 ADI_AXI_REG_CHAN_CTRL_ENABLE)
+ 
+-struct adi_axi_adc_core_info {
+-	unsigned int				version;
+-};
+-
+ struct adi_axi_adc_state {
+-	struct mutex				lock;
+-
+-	struct adi_axi_adc_client		*client;
+ 	struct regmap				*regmap;
+-};
+-
+-struct adi_axi_adc_client {
+-	struct list_head			entry;
+-	struct adi_axi_adc_conv			conv;
+-	struct adi_axi_adc_state		*state;
+ 	struct device				*dev;
+-	const struct adi_axi_adc_core_info	*info;
+ };
+ 
+-static LIST_HEAD(registered_clients);
+-static DEFINE_MUTEX(registered_clients_lock);
+-
+-static struct adi_axi_adc_client *conv_to_client(struct adi_axi_adc_conv *conv)
+-{
+-	return container_of(conv, struct adi_axi_adc_client, conv);
+-}
+-
+-void *adi_axi_adc_conv_priv(struct adi_axi_adc_conv *conv)
+-{
+-	struct adi_axi_adc_client *cl = conv_to_client(conv);
+-
+-	return (char *)cl + ALIGN(sizeof(struct adi_axi_adc_client),
+-				  IIO_DMA_MINALIGN);
+-}
+-EXPORT_SYMBOL_NS_GPL(adi_axi_adc_conv_priv, IIO_ADI_AXI);
+-
+-static int adi_axi_adc_config_dma_buffer(struct device *dev,
+-					 struct iio_dev *indio_dev)
+-{
+-	const char *dma_name;
+-
+-	if (!device_property_present(dev, "dmas"))
+-		return 0;
+-
+-	if (device_property_read_string(dev, "dma-names", &dma_name))
+-		dma_name = "rx";
+-
+-	return devm_iio_dmaengine_buffer_setup(indio_dev->dev.parent,
+-					       indio_dev, dma_name);
+-}
+-
+-static int adi_axi_adc_read_raw(struct iio_dev *indio_dev,
+-				struct iio_chan_spec const *chan,
+-				int *val, int *val2, long mask)
+-{
+-	struct adi_axi_adc_state *st = iio_priv(indio_dev);
+-	struct adi_axi_adc_conv *conv = &st->client->conv;
+-
+-	if (!conv->read_raw)
+-		return -EOPNOTSUPP;
+-
+-	return conv->read_raw(conv, chan, val, val2, mask);
+-}
+-
+-static int adi_axi_adc_write_raw(struct iio_dev *indio_dev,
+-				 struct iio_chan_spec const *chan,
+-				 int val, int val2, long mask)
+-{
+-	struct adi_axi_adc_state *st = iio_priv(indio_dev);
+-	struct adi_axi_adc_conv *conv = &st->client->conv;
+-
+-	if (!conv->write_raw)
+-		return -EOPNOTSUPP;
+-
+-	return conv->write_raw(conv, chan, val, val2, mask);
+-}
+-
+-static int adi_axi_adc_read_avail(struct iio_dev *indio_dev,
+-				  struct iio_chan_spec const *chan,
+-				  const int **vals, int *type, int *length,
+-				  long mask)
+-{
+-	struct adi_axi_adc_state *st = iio_priv(indio_dev);
+-	struct adi_axi_adc_conv *conv = &st->client->conv;
+-
+-	if (!conv->read_avail)
+-		return -EOPNOTSUPP;
+-
+-	return conv->read_avail(conv, chan, vals, type, length, mask);
+-}
+-
+-static int adi_axi_adc_update_scan_mode(struct iio_dev *indio_dev,
+-					const unsigned long *scan_mask)
++static int axi_adc_enable(struct iio_backend *back)
+ {
+-	struct adi_axi_adc_state *st = iio_priv(indio_dev);
+-	struct adi_axi_adc_conv *conv = &st->client->conv;
+-	unsigned int i;
++	struct adi_axi_adc_state *st = iio_backend_get_priv(back);
+ 	int ret;
+ 
+-	for (i = 0; i < conv->chip_info->num_channels; i++) {
+-		if (test_bit(i, scan_mask))
+-			ret = regmap_set_bits(st->regmap,
+-					      ADI_AXI_REG_CHAN_CTRL(i),
+-					      ADI_AXI_REG_CHAN_CTRL_ENABLE);
+-		else
+-			ret = regmap_clear_bits(st->regmap,
+-						ADI_AXI_REG_CHAN_CTRL(i),
+-						ADI_AXI_REG_CHAN_CTRL_ENABLE);
+-		if (ret)
+-			return ret;
+-	}
+-
+-	return 0;
+-}
+-
+-static struct adi_axi_adc_conv *adi_axi_adc_conv_register(struct device *dev,
+-							  size_t sizeof_priv)
+-{
+-	struct adi_axi_adc_client *cl;
+-	size_t alloc_size;
+-
+-	alloc_size = ALIGN(sizeof(struct adi_axi_adc_client), IIO_DMA_MINALIGN);
+-	if (sizeof_priv)
+-		alloc_size += ALIGN(sizeof_priv, IIO_DMA_MINALIGN);
+-
+-	cl = kzalloc(alloc_size, GFP_KERNEL);
+-	if (!cl)
+-		return ERR_PTR(-ENOMEM);
+-
+-	mutex_lock(&registered_clients_lock);
+-
+-	cl->dev = get_device(dev);
+-
+-	list_add_tail(&cl->entry, &registered_clients);
+-
+-	mutex_unlock(&registered_clients_lock);
++	ret = regmap_set_bits(st->regmap, ADI_AXI_REG_RSTN,
++			      ADI_AXI_REG_RSTN_MMCM_RSTN);
++	if (ret)
++		return ret;
+ 
+-	return &cl->conv;
++	fsleep(10000);
++	return regmap_set_bits(st->regmap, ADI_AXI_REG_RSTN,
++			       ADI_AXI_REG_RSTN_RSTN | ADI_AXI_REG_RSTN_MMCM_RSTN);
+ }
+ 
+-static void adi_axi_adc_conv_unregister(struct adi_axi_adc_conv *conv)
++static void axi_adc_disable(struct iio_backend *back)
+ {
+-	struct adi_axi_adc_client *cl = conv_to_client(conv);
+-
+-	mutex_lock(&registered_clients_lock);
+-
+-	list_del(&cl->entry);
+-	put_device(cl->dev);
++	struct adi_axi_adc_state *st = iio_backend_get_priv(back);
+ 
+-	mutex_unlock(&registered_clients_lock);
+-
+-	kfree(cl);
++	regmap_write(st->regmap, ADI_AXI_REG_RSTN, 0);
+ }
+ 
+-static void devm_adi_axi_adc_conv_release(void *conv)
++static int axi_adc_data_format_set(struct iio_backend *back, unsigned int chan,
++				   const struct iio_backend_data_fmt *data)
+ {
+-	adi_axi_adc_conv_unregister(conv);
++	struct adi_axi_adc_state *st = iio_backend_get_priv(back);
++	u32 val;
++
++	if (!data->enable)
++		return regmap_clear_bits(st->regmap,
++					 ADI_AXI_REG_CHAN_CTRL(chan),
++					 ADI_AXI_REG_CHAN_CTRL_FMT_EN);
++
++	val = FIELD_PREP(ADI_AXI_REG_CHAN_CTRL_FMT_EN, true);
++	if (data->sign_extend)
++		val |= FIELD_PREP(ADI_AXI_REG_CHAN_CTRL_FMT_SIGNEXT, true);
++	if (data->type == IIO_BACKEND_OFFSET_BINARY)
++		val |= FIELD_PREP(ADI_AXI_REG_CHAN_CTRL_FMT_TYPE, true);
++
++	return regmap_update_bits(st->regmap, ADI_AXI_REG_CHAN_CTRL(chan),
++				  ADI_AXI_REG_CHAN_CTRL_FMT_MASK, val);
+ }
+ 
+-struct adi_axi_adc_conv *devm_adi_axi_adc_conv_register(struct device *dev,
+-							size_t sizeof_priv)
++static int axi_adc_chan_enable(struct iio_backend *back, unsigned int chan)
+ {
+-	struct adi_axi_adc_conv *conv;
+-	int ret;
+-
+-	conv = adi_axi_adc_conv_register(dev, sizeof_priv);
+-	if (IS_ERR(conv))
+-		return conv;
++	struct adi_axi_adc_state *st = iio_backend_get_priv(back);
+ 
+-	ret = devm_add_action_or_reset(dev, devm_adi_axi_adc_conv_release,
+-				       conv);
+-	if (ret)
+-		return ERR_PTR(ret);
+-
+-	return conv;
++	return regmap_set_bits(st->regmap, ADI_AXI_REG_CHAN_CTRL(chan),
++			       ADI_AXI_REG_CHAN_CTRL_ENABLE);
+ }
+-EXPORT_SYMBOL_NS_GPL(devm_adi_axi_adc_conv_register, IIO_ADI_AXI);
+-
+-static const struct iio_info adi_axi_adc_info = {
+-	.read_raw = &adi_axi_adc_read_raw,
+-	.write_raw = &adi_axi_adc_write_raw,
+-	.update_scan_mode = &adi_axi_adc_update_scan_mode,
+-	.read_avail = &adi_axi_adc_read_avail,
+-};
+-
+-static const struct adi_axi_adc_core_info adi_axi_adc_10_0_a_info = {
+-	.version = ADI_AXI_PCORE_VER(10, 0, 'a'),
+-};
+ 
+-static struct adi_axi_adc_client *adi_axi_adc_attach_client(struct device *dev)
++static int axi_adc_chan_disable(struct iio_backend *back, unsigned int chan)
+ {
+-	const struct adi_axi_adc_core_info *info;
+-	struct adi_axi_adc_client *cl;
+-	struct device_node *cln;
+-
+-	info = of_device_get_match_data(dev);
+-	if (!info)
+-		return ERR_PTR(-ENODEV);
+-
+-	cln = of_parse_phandle(dev->of_node, "adi,adc-dev", 0);
+-	if (!cln) {
+-		dev_err(dev, "No 'adi,adc-dev' node defined\n");
+-		return ERR_PTR(-ENODEV);
+-	}
+-
+-	mutex_lock(&registered_clients_lock);
+-
+-	list_for_each_entry(cl, &registered_clients, entry) {
+-		if (!cl->dev)
+-			continue;
+-
+-		if (cl->dev->of_node != cln)
+-			continue;
+-
+-		if (!try_module_get(cl->dev->driver->owner)) {
+-			mutex_unlock(&registered_clients_lock);
+-			of_node_put(cln);
+-			return ERR_PTR(-ENODEV);
+-		}
+-
+-		get_device(cl->dev);
+-		cl->info = info;
+-		mutex_unlock(&registered_clients_lock);
+-		of_node_put(cln);
+-		return cl;
+-	}
++	struct adi_axi_adc_state *st = iio_backend_get_priv(back);
+ 
+-	mutex_unlock(&registered_clients_lock);
+-	of_node_put(cln);
+-
+-	return ERR_PTR(-EPROBE_DEFER);
++	return regmap_clear_bits(st->regmap, ADI_AXI_REG_CHAN_CTRL(chan),
++				 ADI_AXI_REG_CHAN_CTRL_ENABLE);
+ }
+ 
+-static int adi_axi_adc_setup_channels(struct device *dev,
+-				      struct adi_axi_adc_state *st)
++static struct iio_buffer *axi_adc_request_buffer(struct iio_backend *back,
++						 struct iio_dev *indio_dev)
+ {
+-	struct adi_axi_adc_conv *conv = &st->client->conv;
+-	int i, ret;
++	struct adi_axi_adc_state *st = iio_backend_get_priv(back);
++	struct iio_buffer *buffer;
++	const char *dma_name;
++	int ret;
+ 
+-	if (conv->preenable_setup) {
+-		ret = conv->preenable_setup(conv);
+-		if (ret)
+-			return ret;
+-	}
++	if (device_property_read_string(st->dev, "dma-names", &dma_name))
++		dma_name = "rx";
+ 
+-	for (i = 0; i < conv->chip_info->num_channels; i++) {
+-		ret = regmap_write(st->regmap, ADI_AXI_REG_CHAN_CTRL(i),
+-				   ADI_AXI_REG_CHAN_CTRL_DEFAULTS);
+-		if (ret)
+-			return ret;
++	buffer = iio_dmaengine_buffer_alloc(st->dev, dma_name);
++	if (IS_ERR(buffer)) {
++		dev_err(st->dev, "Could not get DMA buffer, %ld\n",
++			PTR_ERR(buffer));
++		return ERR_CAST(buffer);
+ 	}
+ 
+-	return 0;
+-}
+-
+-static int axi_adc_reset(struct adi_axi_adc_state *st)
+-{
+-	int ret;
+-
+-	ret = regmap_write(st->regmap, ADI_AXI_REG_RSTN, 0);
+-	if (ret)
+-		return ret;
+-
+-	mdelay(10);
+-	ret = regmap_write(st->regmap, ADI_AXI_REG_RSTN,
+-			   ADI_AXI_REG_RSTN_MMCM_RSTN);
++	indio_dev->modes |= INDIO_BUFFER_HARDWARE;
++	ret = iio_device_attach_buffer(indio_dev, buffer);
+ 	if (ret)
+-		return ret;
++		return ERR_PTR(ret);
+ 
+-	mdelay(10);
+-	return regmap_write(st->regmap, ADI_AXI_REG_RSTN,
+-			    ADI_AXI_REG_RSTN_RSTN | ADI_AXI_REG_RSTN_MMCM_RSTN);
++	return buffer;
+ }
+ 
+-static void adi_axi_adc_cleanup(void *data)
++static void axi_adc_free_buffer(struct iio_backend *back,
++				struct iio_buffer *buffer)
+ {
+-	struct adi_axi_adc_client *cl = data;
+-
+-	put_device(cl->dev);
+-	module_put(cl->dev->driver->owner);
++	iio_dmaengine_buffer_free(buffer);
+ }
+ 
+ static const struct regmap_config axi_adc_regmap_config = {
+@@ -344,45 +159,47 @@ static const struct regmap_config axi_adc_regmap_config = {
+ 	.max_register = 0x0800,
+ };
+ 
++static const struct iio_backend_ops adi_axi_adc_generic = {
++	.enable = axi_adc_enable,
++	.disable = axi_adc_disable,
++	.data_format_set = axi_adc_data_format_set,
++	.chan_enable = axi_adc_chan_enable,
++	.chan_disable = axi_adc_chan_disable,
++	.request_buffer = axi_adc_request_buffer,
++	.free_buffer = axi_adc_free_buffer,
++};
++
+ static int adi_axi_adc_probe(struct platform_device *pdev)
+ {
+-	struct adi_axi_adc_conv *conv;
+-	struct iio_dev *indio_dev;
+-	struct adi_axi_adc_client *cl;
++	const unsigned int *expected_ver;
+ 	struct adi_axi_adc_state *st;
+ 	void __iomem *base;
+ 	unsigned int ver;
+ 	int ret;
+ 
+-	cl = adi_axi_adc_attach_client(&pdev->dev);
+-	if (IS_ERR(cl))
+-		return PTR_ERR(cl);
+-
+-	ret = devm_add_action_or_reset(&pdev->dev, adi_axi_adc_cleanup, cl);
+-	if (ret)
+-		return ret;
+-
+-	indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*st));
+-	if (indio_dev == NULL)
++	st = devm_kzalloc(&pdev->dev, sizeof(*st), GFP_KERNEL);
++	if (!st)
+ 		return -ENOMEM;
+ 
+-	st = iio_priv(indio_dev);
+-	st->client = cl;
+-	cl->state = st;
+-	mutex_init(&st->lock);
+-
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
+ 
++	st->dev = &pdev->dev;
+ 	st->regmap = devm_regmap_init_mmio(&pdev->dev, base,
+ 					   &axi_adc_regmap_config);
+ 	if (IS_ERR(st->regmap))
+ 		return PTR_ERR(st->regmap);
+ 
+-	conv = &st->client->conv;
++	expected_ver = device_get_match_data(&pdev->dev);
++	if (!expected_ver)
++		return -ENODEV;
+ 
+-	ret = axi_adc_reset(st);
++	/*
++	 * Force disable the core. Up to the frontend to enable us. And we can
++	 * still read/write registers...
++	 */
++	ret = regmap_write(st->regmap, ADI_AXI_REG_RSTN, 0);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -390,33 +207,19 @@ static int adi_axi_adc_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (cl->info->version > ver) {
++	if (*expected_ver > ver) {
+ 		dev_err(&pdev->dev,
+ 			"IP core version is too old. Expected %d.%.2d.%c, Reported %d.%.2d.%c\n",
+-			ADI_AXI_PCORE_VER_MAJOR(cl->info->version),
+-			ADI_AXI_PCORE_VER_MINOR(cl->info->version),
+-			ADI_AXI_PCORE_VER_PATCH(cl->info->version),
++			ADI_AXI_PCORE_VER_MAJOR(*expected_ver),
++			ADI_AXI_PCORE_VER_MINOR(*expected_ver),
++			ADI_AXI_PCORE_VER_PATCH(*expected_ver),
+ 			ADI_AXI_PCORE_VER_MAJOR(ver),
+ 			ADI_AXI_PCORE_VER_MINOR(ver),
+ 			ADI_AXI_PCORE_VER_PATCH(ver));
+ 		return -ENODEV;
+ 	}
+ 
+-	indio_dev->info = &adi_axi_adc_info;
+-	indio_dev->name = "adi-axi-adc";
+-	indio_dev->modes = INDIO_DIRECT_MODE;
+-	indio_dev->num_channels = conv->chip_info->num_channels;
+-	indio_dev->channels = conv->chip_info->channels;
+-
+-	ret = adi_axi_adc_config_dma_buffer(&pdev->dev, indio_dev);
+-	if (ret)
+-		return ret;
+-
+-	ret = adi_axi_adc_setup_channels(&pdev->dev, st);
+-	if (ret)
+-		return ret;
+-
+-	ret = devm_iio_device_register(&pdev->dev, indio_dev);
++	ret = devm_iio_backend_register(&pdev->dev, &adi_axi_adc_generic, st);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -428,6 +231,8 @@ static int adi_axi_adc_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static unsigned int adi_axi_adc_10_0_a_info = ADI_AXI_PCORE_VER(10, 0, 'a');
++
+ /* Match table for of_platform binding */
+ static const struct of_device_id adi_axi_adc_of_match[] = {
+ 	{ .compatible = "adi,axi-adc-10.0.a", .data = &adi_axi_adc_10_0_a_info },
+@@ -448,3 +253,4 @@ MODULE_AUTHOR("Michael Hennerich <michael.hennerich@analog.com>");
+ MODULE_DESCRIPTION("Analog Devices Generic AXI ADC IP core driver");
+ MODULE_LICENSE("GPL v2");
+ MODULE_IMPORT_NS(IIO_DMAENGINE_BUFFER);
++MODULE_IMPORT_NS(IIO_BACKEND);
+diff --git a/include/linux/iio/adc/adi-axi-adc.h b/include/linux/iio/adc/adi-axi-adc.h
+deleted file mode 100644
+index b7904992d5619..0000000000000
+--- a/include/linux/iio/adc/adi-axi-adc.h
++++ /dev/null
+@@ -1,68 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
+-/*
+- * Analog Devices Generic AXI ADC IP core driver/library
+- * Link: https://wiki.analog.com/resources/fpga/docs/axi_adc_ip
+- *
+- * Copyright 2012-2020 Analog Devices Inc.
+- */
+-#ifndef __ADI_AXI_ADC_H__
+-#define __ADI_AXI_ADC_H__
+-
+-struct device;
+-struct iio_chan_spec;
+-
+-/**
+- * struct adi_axi_adc_chip_info - Chip specific information
+- * @name		Chip name
+- * @id			Chip ID (usually product ID)
+- * @channels		Channel specifications of type @struct iio_chan_spec
+- * @num_channels	Number of @channels
+- * @scale_table		Supported scales by the chip; tuples of 2 ints
+- * @num_scales		Number of scales in the table
+- * @max_rate		Maximum sampling rate supported by the device
+- */
+-struct adi_axi_adc_chip_info {
+-	const char			*name;
+-	unsigned int			id;
+-
+-	const struct iio_chan_spec	*channels;
+-	unsigned int			num_channels;
+-
+-	const unsigned int		(*scale_table)[2];
+-	int				num_scales;
+-
+-	unsigned long			max_rate;
+-};
+-
+-/**
+- * struct adi_axi_adc_conv - data of the ADC attached to the AXI ADC
+- * @chip_info		chip info details for the client ADC
+- * @preenable_setup	op to run in the client before enabling the AXI ADC
+- * @reg_access		IIO debugfs_reg_access hook for the client ADC
+- * @read_raw		IIO read_raw hook for the client ADC
+- * @write_raw		IIO write_raw hook for the client ADC
+- * @read_avail		IIO read_avail hook for the client ADC
+- */
+-struct adi_axi_adc_conv {
+-	const struct adi_axi_adc_chip_info		*chip_info;
+-
+-	int (*preenable_setup)(struct adi_axi_adc_conv *conv);
+-	int (*reg_access)(struct adi_axi_adc_conv *conv, unsigned int reg,
+-			  unsigned int writeval, unsigned int *readval);
+-	int (*read_raw)(struct adi_axi_adc_conv *conv,
+-			struct iio_chan_spec const *chan,
+-			int *val, int *val2, long mask);
+-	int (*write_raw)(struct adi_axi_adc_conv *conv,
+-			 struct iio_chan_spec const *chan,
+-			 int val, int val2, long mask);
+-	int (*read_avail)(struct adi_axi_adc_conv *conv,
+-			  struct iio_chan_spec const *chan,
+-			  const int **val, int *type, int *length, long mask);
+-};
+-
+-struct adi_axi_adc_conv *devm_adi_axi_adc_conv_register(struct device *dev,
+-							size_t sizeof_priv);
+-
+-void *adi_axi_adc_conv_priv(struct adi_axi_adc_conv *conv);
+-
+-#endif
 -- 
 2.43.0
 
