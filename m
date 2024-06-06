@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F57B1A1866;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7DC1C7D6E;
 	Thu,  6 Jun 2024 14:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683702; cv=none; b=g6SrtlOI+Ap6e6lHvOtxcTBEIdA3bitBQgi0A5MW2glKqchncEWqyyPkaGCYK/yVt/cit4I1TBdhf4c7kdnuh49YfdsgGrGVokWnVv+5wbQ5ax8iNbZr5JJGGa8aQsGxRJ8QGepmMtEpQzsPpMW3jB4IXltDH2BtYxsHENQ7QI0=
+	t=1717683702; cv=none; b=dqkL1W+2agNJqGOyQTIlNAuU2d2gEZ6ztRLsejX5xRl3BcSEJQ+qMSUfqYO/vrvDNrkwdBeyetPtLbXBEavT1yx/EXkq5iJjrXk063Ojbw/NZgEb4oo4BMemBcaeSgrqSNwRIWogWwSbYCQVZl/oUxdIxc84ZQYXHm3IFc7A6iQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683702; c=relaxed/simple;
-	bh=HR+NIUSKOVxwVSR/KZ+XKbGrfjVYrurA+a/V6+qnXMg=;
+	bh=a0ZgA15c9VkQ+JhXorJC/Emgzj+SsDtZ4K9XwM9r+rQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fr35XEI6szfqjOlgsSk80Y9eQGWlvw4RJ7Dm7bZmz3o15Js25bqoRvVR7lzquQIHCUbA4RsZSrdWF6rGIlP0Gco18u3oqpDHTL6kYlFRydCmhxcJOiFq7paf12DjTzR9aapGUes9g54Ny7OcKWZJ6a12kDFu3RdQnHfRBTCbs9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N87DcjBJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYrYwidWNDdc8gbjSKEiRX1YvpMk900DFXJg3+qEqRWmdgrxKCYZgOpgt1P7HhmCLBmm4EhOg8+joyoWloqpCZIihylUPkvAFIJeMaZQE385rwgLgk9IaJpfUlprt2DDTRGFlObBDOaYi2HxDmXNHL86jeMOe2eYKINFtnQGGNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iL3fF42j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N87DcjBJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D0FC2BD10;
-	Thu,  6 Jun 2024 14:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iL3fF42j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC0BC2BD10;
+	Thu,  6 Jun 2024 14:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683702;
-	bh=HR+NIUSKOVxwVSR/KZ+XKbGrfjVYrurA+a/V6+qnXMg=;
+	bh=a0ZgA15c9VkQ+JhXorJC/Emgzj+SsDtZ4K9XwM9r+rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N87DcjBJCTV79Dei4ojWiDk0b/NqvizsjU+/bn297l+v5WLhJDaDmTHiP3T65I3Jl
-	 LuUvZCG59Drwtk0e7Pj0Hf/kF5dTSQmX5ZL/1mZKzdHCcuLH01B3pEkc7b33inFC5y
-	 MF2L2qusahHs+9qEmvUY0PJod1ykiXsx4xtp7QUI=
+	b=iL3fF42jGDphFszBynt9LXThXs4f86BeNx0u8TvlJMb8kShbvTYIKGlkQwKT9HDLM
+	 hMaKiFwoQTmb/KjYAyvFg/SAzPQTnfI3j944J42cve1yZ7KPeqpGidzNM4J5rSRWIf
+	 sMp4uv30yNbdCeA4glKBtBtLRneTdpdbhZtwnYt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Jay Shin <jaeshin@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 625/744] drm/nouveau: use tile_mode and pte_kind for VM_BIND bo allocations
-Date: Thu,  6 Jun 2024 16:04:57 +0200
-Message-ID: <20240606131752.543024025@linuxfoundation.org>
+Subject: [PATCH 6.6 626/744] blk-cgroup: fix list corruption from resetting io stat
+Date: Thu,  6 Jun 2024 16:04:58 +0200
+Message-ID: <20240606131752.569619476@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,126 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit aed9a1a4f7106ff99a882ad06318cebfa71016a2 ]
+[ Upstream commit 6da6680632792709cecf2b006f2fe3ca7857e791 ]
 
-Allow PTE kind and tile mode on BO create with VM_BIND, and add a
-GETPARAM to indicate this change. This is needed to support modifiers in
-NVK and ensure correctness when dealing with the nouveau GL driver.
+Since commit 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()"),
+each iostat instance is added to blkcg percpu list, so blkcg_reset_stats()
+can't reset the stat instance by memset(), otherwise the llist may be
+corrupted.
 
-The userspace modifiers implementation this is for can be found here:
-https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/24795
+Fix the issue by only resetting the counter part.
 
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Signed-off-by: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
-Reviewed-by: Faith Ekstrand <faith.ekstrand@collabora.com>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240509204352.7597-1-mohamedahmedegypt2001@gmail.com
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Waiman Long <longman@redhat.com>
+Cc: Jay Shin <jaeshin@redhat.com>
+Fixes: 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Link: https://lore.kernel.org/r/20240515013157.443672-2-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_abi16.c |  3 ++
- drivers/gpu/drm/nouveau/nouveau_bo.c    | 44 +++++++++++--------------
- include/uapi/drm/nouveau_drm.h          |  7 ++++
- 3 files changed, 29 insertions(+), 25 deletions(-)
+ block/blk-cgroup.c | 58 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_abi16.c b/drivers/gpu/drm/nouveau/nouveau_abi16.c
-index 0fbc9c841666e..b3f0e10f83fef 100644
---- a/drivers/gpu/drm/nouveau/nouveau_abi16.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_abi16.c
-@@ -277,6 +277,9 @@ nouveau_abi16_ioctl_getparam(ABI16_IOCTL_ARGS)
- 		getparam->value = (u64)ttm_resource_manager_usage(vram_mgr) << PAGE_SHIFT;
- 		break;
- 	}
-+	case NOUVEAU_GETPARAM_HAS_VMA_TILEMODE:
-+		getparam->value = 1;
-+		break;
- 	default:
- 		NV_PRINTK(dbg, cli, "unknown parameter %lld\n", getparam->param);
- 		return -EINVAL;
-diff --git a/drivers/gpu/drm/nouveau/nouveau_bo.c b/drivers/gpu/drm/nouveau/nouveau_bo.c
-index 254d6c9ef2023..3a7f4ce34aa31 100644
---- a/drivers/gpu/drm/nouveau/nouveau_bo.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_bo.c
-@@ -234,28 +234,28 @@ nouveau_bo_alloc(struct nouveau_cli *cli, u64 *size, int *align, u32 domain,
- 	}
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 4c49a70b46bd1..9359b57545d22 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -619,12 +619,45 @@ static void blkg_destroy_all(struct gendisk *disk)
+ 	spin_unlock_irq(&q->queue_lock);
+ }
  
- 	nvbo->contig = !(tile_flags & NOUVEAU_GEM_TILE_NONCONTIG);
--	if (!nouveau_cli_uvmm(cli) || internal) {
--		/* for BO noVM allocs, don't assign kinds */
--		if (cli->device.info.family >= NV_DEVICE_INFO_V0_FERMI) {
--			nvbo->kind = (tile_flags & 0x0000ff00) >> 8;
--			if (!nvif_mmu_kind_valid(mmu, nvbo->kind)) {
--				kfree(nvbo);
--				return ERR_PTR(-EINVAL);
--			}
- 
--			nvbo->comp = mmu->kind[nvbo->kind] != nvbo->kind;
--		} else if (cli->device.info.family >= NV_DEVICE_INFO_V0_TESLA) {
--			nvbo->kind = (tile_flags & 0x00007f00) >> 8;
--			nvbo->comp = (tile_flags & 0x00030000) >> 16;
--			if (!nvif_mmu_kind_valid(mmu, nvbo->kind)) {
--				kfree(nvbo);
--				return ERR_PTR(-EINVAL);
--			}
--		} else {
--			nvbo->zeta = (tile_flags & 0x00000007);
-+	if (cli->device.info.family >= NV_DEVICE_INFO_V0_FERMI) {
-+		nvbo->kind = (tile_flags & 0x0000ff00) >> 8;
-+		if (!nvif_mmu_kind_valid(mmu, nvbo->kind)) {
-+			kfree(nvbo);
-+			return ERR_PTR(-EINVAL);
-+		}
++static void blkg_iostat_set(struct blkg_iostat *dst, struct blkg_iostat *src)
++{
++	int i;
 +
-+		nvbo->comp = mmu->kind[nvbo->kind] != nvbo->kind;
-+	} else if (cli->device.info.family >= NV_DEVICE_INFO_V0_TESLA) {
-+		nvbo->kind = (tile_flags & 0x00007f00) >> 8;
-+		nvbo->comp = (tile_flags & 0x00030000) >> 16;
-+		if (!nvif_mmu_kind_valid(mmu, nvbo->kind)) {
-+			kfree(nvbo);
-+			return ERR_PTR(-EINVAL);
- 		}
--		nvbo->mode = tile_mode;
-+	} else {
-+		nvbo->zeta = (tile_flags & 0x00000007);
++	for (i = 0; i < BLKG_IOSTAT_NR; i++) {
++		dst->bytes[i] = src->bytes[i];
++		dst->ios[i] = src->ios[i];
 +	}
-+	nvbo->mode = tile_mode;
- 
-+	if (!nouveau_cli_uvmm(cli) || internal) {
- 		/* Determine the desirable target GPU page size for the buffer. */
- 		for (i = 0; i < vmm->page_nr; i++) {
- 			/* Because we cannot currently allow VMM maps to fail
-@@ -297,12 +297,6 @@ nouveau_bo_alloc(struct nouveau_cli *cli, u64 *size, int *align, u32 domain,
- 		}
- 		nvbo->page = vmm->page[pi].shift;
- 	} else {
--		/* reject other tile flags when in VM mode. */
--		if (tile_mode)
--			return ERR_PTR(-EINVAL);
--		if (tile_flags & ~NOUVEAU_GEM_TILE_NONCONTIG)
--			return ERR_PTR(-EINVAL);
--
- 		/* Determine the desirable target GPU page size for the buffer. */
- 		for (i = 0; i < vmm->page_nr; i++) {
- 			/* Because we cannot currently allow VMM maps to fail
-diff --git a/include/uapi/drm/nouveau_drm.h b/include/uapi/drm/nouveau_drm.h
-index 77d7ff0d5b110..c3d8dc7512971 100644
---- a/include/uapi/drm/nouveau_drm.h
-+++ b/include/uapi/drm/nouveau_drm.h
-@@ -68,6 +68,13 @@ extern "C" {
-  */
- #define NOUVEAU_GETPARAM_VRAM_USED 19
- 
-+/*
-+ * NOUVEAU_GETPARAM_HAS_VMA_TILEMODE
-+ *
-+ * Query whether tile mode and PTE kind are accepted with VM allocs or not.
-+ */
-+#define NOUVEAU_GETPARAM_HAS_VMA_TILEMODE 20
++}
 +
- struct drm_nouveau_getparam {
- 	__u64 param;
- 	__u64 value;
++static void __blkg_clear_stat(struct blkg_iostat_set *bis)
++{
++	struct blkg_iostat cur = {0};
++	unsigned long flags;
++
++	flags = u64_stats_update_begin_irqsave(&bis->sync);
++	blkg_iostat_set(&bis->cur, &cur);
++	blkg_iostat_set(&bis->last, &cur);
++	u64_stats_update_end_irqrestore(&bis->sync, flags);
++}
++
++static void blkg_clear_stat(struct blkcg_gq *blkg)
++{
++	int cpu;
++
++	for_each_possible_cpu(cpu) {
++		struct blkg_iostat_set *s = per_cpu_ptr(blkg->iostat_cpu, cpu);
++
++		__blkg_clear_stat(s);
++	}
++	__blkg_clear_stat(&blkg->iostat);
++}
++
+ static int blkcg_reset_stats(struct cgroup_subsys_state *css,
+ 			     struct cftype *cftype, u64 val)
+ {
+ 	struct blkcg *blkcg = css_to_blkcg(css);
+ 	struct blkcg_gq *blkg;
+-	int i, cpu;
++	int i;
+ 
+ 	mutex_lock(&blkcg_pol_mutex);
+ 	spin_lock_irq(&blkcg->lock);
+@@ -635,18 +668,7 @@ static int blkcg_reset_stats(struct cgroup_subsys_state *css,
+ 	 * anyway.  If you get hit by a race, retry.
+ 	 */
+ 	hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node) {
+-		for_each_possible_cpu(cpu) {
+-			struct blkg_iostat_set *bis =
+-				per_cpu_ptr(blkg->iostat_cpu, cpu);
+-			memset(bis, 0, sizeof(*bis));
+-
+-			/* Re-initialize the cleared blkg_iostat_set */
+-			u64_stats_init(&bis->sync);
+-			bis->blkg = blkg;
+-		}
+-		memset(&blkg->iostat, 0, sizeof(blkg->iostat));
+-		u64_stats_init(&blkg->iostat.sync);
+-
++		blkg_clear_stat(blkg);
+ 		for (i = 0; i < BLKCG_MAX_POLS; i++) {
+ 			struct blkcg_policy *pol = blkcg_policy[i];
+ 
+@@ -949,16 +971,6 @@ void blkg_conf_exit(struct blkg_conf_ctx *ctx)
+ }
+ EXPORT_SYMBOL_GPL(blkg_conf_exit);
+ 
+-static void blkg_iostat_set(struct blkg_iostat *dst, struct blkg_iostat *src)
+-{
+-	int i;
+-
+-	for (i = 0; i < BLKG_IOSTAT_NR; i++) {
+-		dst->bytes[i] = src->bytes[i];
+-		dst->ios[i] = src->ios[i];
+-	}
+-}
+-
+ static void blkg_iostat_add(struct blkg_iostat *dst, struct blkg_iostat *src)
+ {
+ 	int i;
 -- 
 2.43.0
 
