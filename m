@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690E619CD1D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D757B19D061;
 	Thu,  6 Jun 2024 14:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683444; cv=none; b=W7/WjlIsg2NmfQ5E3/LLoQKK+3si7oYrXc7vEH8dEZ4F3PQQa8AVqqiOeNkopqJdxk6R8kzdms7t0G5nL/MN0cTngWMHomsIrRP18kNbg5Jh779WzxBecmnx5NGksVIou4A0wdYdjtlJDJmAZi2vPYARtIDLH8LInJmOjiRDZ0U=
+	t=1717683444; cv=none; b=BmDEgoTdpaj8s2rvHgdj5NdRUDP1wvqRAmMOmWi6+DH+W6CmOxYSpmPXzP6cUPOZh3uhqaRQ0U208cIjstTZksx2xs0cPjeUZ20Q67v0PFJFErjbSA1wI7neTyzr9py/GKMgFZSiiKpbFsOYujxC1NOGQCqZ/bOFi2bYDSkZNYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683444; c=relaxed/simple;
-	bh=iqYEQf+Ab+GtWR1bCWcKS3uMQW/bbftkxoBxE3pePBI=;
+	bh=2lzZlFaoNiOFjjjio1sC92zVdGTcquG35rpYKMmzRrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BYfjRbt0matWe8qw8euDd78ZN9JrTqQe4RVwVo4tQL4xRcfvYSMhnS7Sa3Ur5p0WNUJy8OYnrOIaPK9WrgAd5Q/EbywZO61c/TfFiNJVd3ck9koJVv6UG1vF/4NJqpUOSzOH/RDnB5FoQDUh34EO94O44ZpoduxpCyPrnoinBG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bwa+1Ie3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Td2bkBv6SvLGdMUgNHe/+U9S+oIHu/84je3v2yhxqsYq+HZLmlX6jac7jmtJq5OWSCjrv/COgIak0GtxxJpwYqg4k5LSSajznS7z0Gmkp5LqhhS9DfLZdfrLs+6hfwXjpviEXkscOUuN0oI2yyNz6kepYkwEfJcaOp+veVmggBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KE3GySuN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bwa+1Ie3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F259AC32782;
-	Thu,  6 Jun 2024 14:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KE3GySuN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4FAC32781;
+	Thu,  6 Jun 2024 14:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683444;
-	bh=iqYEQf+Ab+GtWR1bCWcKS3uMQW/bbftkxoBxE3pePBI=;
+	bh=2lzZlFaoNiOFjjjio1sC92zVdGTcquG35rpYKMmzRrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bwa+1Ie302fUYnG0xIRjJmkdvu4nQ5Bxkq4HTQZ6hfPBNAXflSVVKnKZ9h2L6goH2
-	 Nnqz+15d1PaqonTXwTz/F6I/jzWZAL1TCBNfRPyg4I9I1OwM8z0CW1eRDahQvA0axr
-	 EjVTpeoOArpooHgmGjBdlu2QchHkXBdoRbyRpdY8=
+	b=KE3GySuNbh1s98xdcdWCfAC1n2nWJsjrV0aDRY/ZaaQOcXgUifoVAU9Snz5Es0lFa
+	 vkFM9ZjoYtDKx7T/hDaekBhJhm3og69m8TYQzm+UGp4bvxmDBM1N/tXq6oQJBS7GdK
+	 +c4wYn75hxsIhDZW908VBCal1jkEMrR9Wpx8CW+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Qixin Liao <liaoqixin@huawei.com>,
+	Cheng Yu <serein.chengyu@huawei.com>,
+	Zhang Qiao <zhangqiao22@huawei.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 306/473] dt-bindings: PCI: rcar-pci-host: Add missing IOMMU properties
-Date: Thu,  6 Jun 2024 16:03:55 +0200
-Message-ID: <20240606131710.055505549@linuxfoundation.org>
+Subject: [PATCH 6.6 388/744] sched/core: Fix incorrect initialization of the burst parameter in cpu_max_write()
+Date: Thu,  6 Jun 2024 16:01:00 +0200
+Message-ID: <20240606131744.908977565@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +48,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Cheng Yu <serein.chengyu@huawei.com>
 
-[ Upstream commit 78d212851f0e56b7d7083c4d5014aa7fa8b77e20 ]
+[ Upstream commit 49217ea147df7647cb89161b805c797487783fc0 ]
 
-make dtbs_check:
+In the cgroup v2 CPU subsystem, assuming we have a
+cgroup named 'test', and we set cpu.max and cpu.max.burst:
 
-    arch/arm64/boot/dts/renesas/r8a77951-salvator-xs.dtb: pcie@fe000000: Unevaluated properties are not allowed ('iommu-map', 'iommu-map-mask' were unexpected)
-	    from schema $id: http://devicetree.org/schemas/pci/rcar-pci-host.yaml#
+    # echo 1000000 > /sys/fs/cgroup/test/cpu.max
+    # echo 1000000 > /sys/fs/cgroup/test/cpu.max.burst
 
-Fix this by adding the missing IOMMU-related properties.
+then we check cpu.max and cpu.max.burst:
 
-[kwilczynski: added missing Fixes: tag]
-Fixes: 0d69ce3c2c63 ("dt-bindings: PCI: rcar-pci-host: Convert bindings to json-schema")
-Link: https://lore.kernel.org/linux-pci/babc878a93cb6461a5d39331f8ecfa654dfda921.1706802597.git.geert+renesas@glider.be
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+    # cat /sys/fs/cgroup/test/cpu.max
+    1000000 100000
+    # cat /sys/fs/cgroup/test/cpu.max.burst
+    1000000
+
+Next we set cpu.max again and check cpu.max and
+cpu.max.burst:
+
+    # echo 2000000 > /sys/fs/cgroup/test/cpu.max
+    # cat /sys/fs/cgroup/test/cpu.max
+    2000000 100000
+
+    # cat /sys/fs/cgroup/test/cpu.max.burst
+    1000
+
+... we find that the cpu.max.burst value changed unexpectedly.
+
+In cpu_max_write(), the unit of the burst value returned
+by tg_get_cfs_burst() is microseconds, while in cpu_max_write(),
+the burst unit used for calculation should be nanoseconds,
+which leads to the bug.
+
+To fix it, get the burst value directly from tg->cfs_bandwidth.burst.
+
+Fixes: f4183717b370 ("sched/fair: Introduce the burstable CFS controller")
+Reported-by: Qixin Liao <liaoqixin@huawei.com>
+Signed-off-by: Cheng Yu <serein.chengyu@huawei.com>
+Signed-off-by: Zhang Qiao <zhangqiao22@huawei.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Tested-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20240424132438.514720-1-serein.chengyu@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/pci/rcar-pci-host.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/sched/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml b/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
-index b6a7cb32f61e5..835b6db00c279 100644
---- a/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
-+++ b/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
-@@ -77,6 +77,9 @@ properties:
-   vpcie12v-supply:
-     description: The 12v regulator to use for PCIe.
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 1f91e2c12731e..dcb30e304871a 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -11429,7 +11429,7 @@ static ssize_t cpu_max_write(struct kernfs_open_file *of,
+ {
+ 	struct task_group *tg = css_tg(of_css(of));
+ 	u64 period = tg_get_cfs_period(tg);
+-	u64 burst = tg_get_cfs_burst(tg);
++	u64 burst = tg->cfs_bandwidth.burst;
+ 	u64 quota;
+ 	int ret;
  
-+  iommu-map: true
-+  iommu-map-mask: true
-+
- required:
-   - compatible
-   - reg
 -- 
 2.43.0
 
