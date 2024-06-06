@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBDB1974FC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0E51974E8;
 	Thu,  6 Jun 2024 14:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682907; cv=none; b=mjw1s/S0IhpX68oBrWIgeSs442Pc52f0rXKeBNqGSOak7aEVR+Qg9dRohWjE/DOobQHRgR3qMq3JWZh5XKgPu/r+0N9w9zgXjvov+Rq5T4kXXykdMlB+fYAdUGIdhppMYIJ5xHB0WgJC9NPDs5yGtzu9asAVQuEahljCBzku1GU=
+	t=1717682908; cv=none; b=Ekrts+ynNuP3mOSZWZBVN8ze+Q0z3kgoody31deSBZFDUcDPBt/e/5yymzMMR90zWCnFC7jDneY/kHerQHyuyszfrfm5xADONM5QmWUUI8XYkJ4kIcOvP5pyR1Tttrsu6QB9fDT7exDa3LRYFTyvrkylEiSDp6IQnXVKn1I7+tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682907; c=relaxed/simple;
-	bh=U1rI5+O751TTacosV3WS5tZl9xbgQRH7uvrkMmNCQSw=;
+	s=arc-20240116; t=1717682908; c=relaxed/simple;
+	bh=HVJpiTLHNuSn3mcpMS6zchnd6FcP6Yi3okUi0oWtT/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j1lRUUniQH4lS5/mMSYteRcfX/ALob3H7jQ8K13LSiVRlVh+twXI5gGLoIvHw2DL+PuQe4+XWXIhCCwJV3iHnEsM8Q3HmtTf2atWVGXVQ0Hg6c6UvESAMPczoknXGq+Yv5nBthJX2Mo2G9oRzoUlCX4xKTeLG8bBy2JRAw++1Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlfMlE0s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dHclme3+bIMSv7Of5d0G5aXY753gEDtULrYCgq8uusX9W6CPF++yEGdu9PM3EQbduZEYtNnpRBnraHThvGXCpZps3JaosryaM0nUJGBHcmm2QDiyy5cZTZAYGGQAdL3coRXvaCKER14rNKhiAsiwKrvooXKr1tuVp6b/ujGgaIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0mLyoqhP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlfMlE0s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F9CC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0mLyoqhP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABFCBC2BD10;
 	Thu,  6 Jun 2024 14:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682907;
-	bh=U1rI5+O751TTacosV3WS5tZl9xbgQRH7uvrkMmNCQSw=;
+	bh=HVJpiTLHNuSn3mcpMS6zchnd6FcP6Yi3okUi0oWtT/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IlfMlE0sJ/GyKK119ko0t9DDdaM27ySYa1gArf7MDOsJLL+4mwuAtAA6TQwFFnF5d
-	 5USnZ1Y+7is7SjbDodU9Ez83OqoMKCMNd2NVIU/Vh1zHymONEAn9Lwg1rF7xM+N8MU
-	 WP3KTkmAEBf2+wHfg9VqEPPb7gUu2F3eWlC9o9LM=
+	b=0mLyoqhPRd2mtnMXbzbxpmccOHcYp4De2IPeUN+jLIFisX7k5QJl1YHtfbGf8SnaP
+	 Inxg1aL5MPueyGgP+Gzk/VzNGW0Vh0olaCCAinX0l1dbbLqgiUaPqBGrdltFPGpbyg
+	 ZbjgIY+LiuFBidIbbrvm3eCdmZOtYdr4aVzQDwkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 032/374] interconnect: qcom: qcm2290: Fix mas_snoc_bimc QoS port assignment
-Date: Thu,  6 Jun 2024 16:00:11 +0200
-Message-ID: <20240606131652.900193421@linuxfoundation.org>
+Subject: [PATCH 6.9 033/374] arm64: dts: meson: fix S4 power-controller node
+Date: Thu,  6 Jun 2024 16:00:12 +0200
+Message-ID: <20240606131652.928796691@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,35 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Xianwei Zhao <xianwei.zhao@amlogic.com>
 
-[ Upstream commit 230d05b1179f6ce6f8dc8a2b99eba92799ac22d7 ]
+[ Upstream commit 72907de9051dc2aa7b55c2a020e2872184ac17cd ]
 
-The value was wrong, resulting in misprogramming of the hardware.
-Fix it.
+The power-controller module works well by adding its parent
+node secure-monitor.
 
-Fixes: 1a14b1ac3935 ("interconnect: qcom: Add QCM2290 driver support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240326-topic-rpm_icc_qos_cleanup-v1-2-357e736792be@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 085f7a298a14 ("arm64: dts: add support for S4 power domain controller")
+Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240412-fix-secpwr-s4-v2-1-3802fd936d77@amlogic.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/qcm2290.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-s4.dtsi | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
-index 96735800b13c0..ba4cc08684d63 100644
---- a/drivers/interconnect/qcom/qcm2290.c
-+++ b/drivers/interconnect/qcom/qcm2290.c
-@@ -164,7 +164,7 @@ static struct qcom_icc_node mas_snoc_bimc = {
- 	.name = "mas_snoc_bimc",
- 	.buswidth = 16,
- 	.qos.ap_owned = true,
--	.qos.qos_port = 2,
-+	.qos.qos_port = 6,
- 	.qos.qos_mode = NOC_QOS_MODE_BYPASS,
- 	.mas_rpm_id = 164,
- 	.slv_rpm_id = -1,
+diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
+index ce90b35686a21..10896f9df682d 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
+@@ -65,10 +65,15 @@ xtal: xtal-clk {
+ 		#clock-cells = <0>;
+ 	};
+ 
+-	pwrc: power-controller {
+-		compatible = "amlogic,meson-s4-pwrc";
+-		#power-domain-cells = <1>;
+-		status = "okay";
++	firmware {
++		sm: secure-monitor {
++			compatible = "amlogic,meson-gxbb-sm";
++
++			pwrc: power-controller {
++				compatible = "amlogic,meson-s4-pwrc";
++				#power-domain-cells = <1>;
++			};
++		};
+ 	};
+ 
+ 	soc {
 -- 
 2.43.0
 
