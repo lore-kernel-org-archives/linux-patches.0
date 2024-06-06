@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C589319644C;
-	Thu,  6 Jun 2024 14:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E761ABE5C;
+	Thu,  6 Jun 2024 14:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683304; cv=none; b=BZGYzgREaVxLAATH109uGI7kzSsePFRpu/3jAeKnuqeEOqwIMBu8stxTbjIr1W1W5ZtVNNojNIvWhmJC62Oghk0/tiV0px8YNvxNY6AzyKxtSU5W5sy4gW6Bl3/Pc+zSbqJerlOiio5leMraxVHJoOLExybbWQUn1pv5Xu6snoU=
+	t=1717683305; cv=none; b=Sr2+vjDx/1xYesAZzHPmC1FZjSipVVhGTW0yBiIofcsjXH5GQa9BU8twSD8QULFMhZEA0UtIMfY1yayMhqFAnR2wFrbDLPzIaDrIxc6ZIH75jfZc4cv0fuZ3KKj6Gp2zL5jX9x97a1gb6T3Kc6xu/dZQ+bg92L5Xdj26+klSRT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683304; c=relaxed/simple;
-	bh=TSxdRAxK4DJsO0Ql3xYCuf+x7bK9ACtpkTWPhW0eBVg=;
+	s=arc-20240116; t=1717683305; c=relaxed/simple;
+	bh=Sj6DK6xhrfn0raDM14rl71TgZWH9Hyp0oV4/7S9m86g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JrY2PlacTn2JR/4wZeBd67GpTh9N3dmdaSMEDCCw0AM6vnKfboMNWdNtdTKdCMs91EUWAo7RsTQyPwQ/ukhkgEMJDm1cNmKJqXLoGzOz2NJtQM8W//f6mApDcByytnV1RZjHfqwl1+d+ejiFuxyZL2Yvijpz7PeYWlZnAs71G3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKOmu9EP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hhcMHvhU8Eio9zdgmCOwutti72+sMjg6UjmTDP+XEG8EM4pb7blV4pIJs9gsxmZgtpR32DNrsVpNHOVDTJN1EARyT9Yxtn2CC18jy4WM0GaR4kJRxzEoEGQv0tEJz7rpzab85bSNZYuUqqfXKDQ1zzbHqx7VLm0hwA6fZVHFGFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7bDTJG5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKOmu9EP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50D5C2BD10;
-	Thu,  6 Jun 2024 14:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7bDTJG5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2345FC2BD10;
+	Thu,  6 Jun 2024 14:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683304;
-	bh=TSxdRAxK4DJsO0Ql3xYCuf+x7bK9ACtpkTWPhW0eBVg=;
+	s=korg; t=1717683305;
+	bh=Sj6DK6xhrfn0raDM14rl71TgZWH9Hyp0oV4/7S9m86g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cKOmu9EPI0Gtke9yi00IvP2XTDi8d7TC6xUc7G15H3g9B1v7SeMHx3kCPCWvIRLe9
-	 xGOcj2mhoGZllx3ueskBkHppfoyEmC7TZBGFicphuPoiUWf+aoOkRT9yU60Wa2EIFI
-	 6WBGEhwfL1CFKGPGS9flCYyTae4u19e/5pT6vgG0=
+	b=w7bDTJG5kNycnaM2Cn4yxorAq+ylrRkYkKnsSumelMEm/lT0J/p6sWEwkWKYyrhZz
+	 p3pmb5iJC6abd+iYdP+VepJbSwXv+0l4NX1IdOm8msXT008gAq3E5V6vOEPTNd2s4I
+	 33jm4aVAbQuhQMkfpfsS31dRmMchZvbSbeyaMQBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 185/473] mptcp: SO_KEEPALIVE: fix getsockopt support
-Date: Thu,  6 Jun 2024 16:01:54 +0200
-Message-ID: <20240606131706.045985360@linuxfoundation.org>
+Subject: [PATCH 6.6 246/744] ipv6: sr: add missing seg6_local_exit
+Date: Thu,  6 Jun 2024 15:58:38 +0200
+Message-ID: <20240606131740.285886717@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,55 +49,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit a65198136eaa15b74ee0abf73f12ef83d469a334 ]
+[ Upstream commit 3321687e321307629c71b664225b861ebf3e5753 ]
 
-SO_KEEPALIVE support has to be set on each subflow: on each TCP socket,
-where sk_prot->keepalive is defined. Technically, nothing has to be done
-on the MPTCP socket. That's why mptcp_sol_socket_sync_intval() was
-called instead of mptcp_sol_socket_intval().
+Currently, we only call seg6_local_exit() in seg6_init() if
+seg6_local_init() failed. But forgot to call it in seg6_exit().
 
-Except that when nothing is done on the MPTCP socket, the
-getsockopt(SO_KEEPALIVE), handled in net/core/sock.c:sk_getsockopt(),
-will not know if SO_KEEPALIVE has been set on the different subflows or
-not.
-
-The fix is simple: simply call mptcp_sol_socket_intval() which will end
-up calling net/core/sock.c:sk_setsockopt() where the SOCK_KEEPOPEN flag
-will be set, the one used in sk_getsockopt().
-
-So now, getsockopt(SO_KEEPALIVE) on an MPTCP socket will return the same
-value as the one previously set with setsockopt(SO_KEEPALIVE).
-
-Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20240514011335.176158-2-martineau@kernel.org
+Fixes: d1df6fd8a1d2 ("ipv6: sr: define core operations for seg6local lightweight tunnel")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240509131812.1662197-2-liuhangbin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/sockopt.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/ipv6/seg6.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
-index 30374fd44228f..e59e46e07b5c9 100644
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -179,8 +179,6 @@ static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
- 
- 	switch (optname) {
- 	case SO_KEEPALIVE:
--		mptcp_sol_socket_sync_intval(msk, optname, val);
--		return 0;
- 	case SO_DEBUG:
- 	case SO_MARK:
- 	case SO_PRIORITY:
+diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
+index 35508abd76f43..5423f1f2aa626 100644
+--- a/net/ipv6/seg6.c
++++ b/net/ipv6/seg6.c
+@@ -564,6 +564,7 @@ void seg6_exit(void)
+ 	seg6_hmac_exit();
+ #endif
+ #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
++	seg6_local_exit();
+ 	seg6_iptunnel_exit();
+ #endif
+ 	unregister_pernet_subsys(&ip6_segments_ops);
 -- 
 2.43.0
 
