@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16A01BF8E3;
-	Thu,  6 Jun 2024 14:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C111BF8E3;
+	Thu,  6 Jun 2024 14:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683550; cv=none; b=sGvKiTRth6D1fou3fhsyrVQDkg3TU2LKc2k/iveIDAgX3Nhb31zgIsxfJYhMyIxxc7vst45e+anEvd1T4odOXn7rG8tlcc81eWwfcbSqMW03h/ur4hIR9VZaFBUHxGZMrEO9iywS2MwCFtl2UrnNe1lTAEq8SDjkMYdK0g31n5A=
+	t=1717683551; cv=none; b=WZoCuBWKxCnjdsebZVaBgdH3TNPazEI3b0hTTikyfl4J9JBUwkL9v/FbLgpHfdgGiO0NVT4PfOIq+B/fUD4XXrgFO8YqUgFqh1FfDomWfNTLApvXtPK80XMb4JtCgZ1m2UxRzzNGMiXP+vnnmiSwr2422i+/X0Xu7DrSJ75lSl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683550; c=relaxed/simple;
-	bh=veog3liX6MYXDc1qlFJSdHQzwRGbpSgFgeypt36pEj8=;
+	s=arc-20240116; t=1717683551; c=relaxed/simple;
+	bh=8vaQF4XI8Jh83cpUUSetyJW6E6xnUJ5CAaTn0882Cek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EyPNQXAWu7mRUGFYYlO12mLFknqX0yBDE/RB/4U4azVCFi+OO4wjGOUkKPPyTMnNHnhIPHwnXPF/1wfcDw0LrGa27kv1V6X+zst3Axq6fknXOu8VOyzHpi/plCh+z9jV12kl2+OpWJB4FWelsVlT2tJVQJxxpjuetVCfgC6lAwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8pifr0Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eukJ9+1oxblwTnBqQYXYKQJdY2YzQA2Nf5VWIC01bWTRXtr9t/S5H8Q/YZIPdOtViE5d9qEYnqW/byKlKVKBxzJfl1kvHKgkTMrHiH0i9pe1UvcH5N7gClu2MYHo2OmN8/NzAh0kNZPieWs3nera3II+CtOLmOoi5fxybqTsNEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZienEmz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8pifr0Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92107C2BD10;
-	Thu,  6 Jun 2024 14:19:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZienEmz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE80C2BD10;
+	Thu,  6 Jun 2024 14:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683550;
-	bh=veog3liX6MYXDc1qlFJSdHQzwRGbpSgFgeypt36pEj8=;
+	s=korg; t=1717683551;
+	bh=8vaQF4XI8Jh83cpUUSetyJW6E6xnUJ5CAaTn0882Cek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h8pifr0QFsMPqxHLUcmMI5v9zB8IPrU5aeEL7TfVLBaH/2PYmqwtCLyBWkp+giKXO
-	 w2cvmINt0iaxo7YvRFjSlrg4Om77dAkNJ3FCNB55cKHmu5pojkRhPsdP6ewtLAiBv8
-	 XA0WMGnWYb4DvLxwDNXPz6VgyllGeq94WVeyfxc4=
+	b=fZienEmz8YJ1i9xUz3zu0yuDfYb/XzZc3Sj4n3Br7xiPs9HoxY2lgGcnQXzYaF7Ar
+	 4gvznS0CrnXDILScyBbm39ORaJySK//T4gILTpxz8Eixm/BHxXI8ydqR5MTkUmKC1G
+	 d17GR4L6Y2ZtXaf1L6TZQKCG45Apb4xBlqoHaPX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi.grimberg@vastdata.com>,
-	Dan Aloni <dan.aloni@vastdata.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 410/473] rpcrdma: fix handling for RDMA_CM_EVENT_DEVICE_REMOVAL
-Date: Thu,  6 Jun 2024 16:05:39 +0200
-Message-ID: <20240606131713.353947129@linuxfoundation.org>
+Subject: [PATCH 6.1 404/473] selftests: net: kill smcrouted in the cleanup logic in amt.sh
+Date: Thu,  6 Jun 2024 16:05:33 +0200
+Message-ID: <20240606131713.167794831@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -54,49 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Aloni <dan.aloni@vastdata.com>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit 4836da219781ec510c4c0303df901aa643507a7a ]
+[ Upstream commit cc563e749810f5636451d4b833fbd689899ecdb9 ]
 
-Under the scenario of IB device bonding, when bringing down one of the
-ports, or all ports, we saw xprtrdma entering a non-recoverable state
-where it is not even possible to complete the disconnect and shut it
-down the mount, requiring a reboot. Following debug, we saw that
-transport connect never ended after receiving the
-RDMA_CM_EVENT_DEVICE_REMOVAL callback.
+The amt.sh requires smcrouted for multicasting routing.
+So, it starts smcrouted before forwarding tests.
+It must be stopped after all tests, but it isn't.
 
-The DEVICE_REMOVAL callback is irrespective of whether the CM_ID is
-connected, and ESTABLISHED may not have happened. So need to work with
-each of these states accordingly.
+To fix this issue, it kills smcrouted in the cleanup logic.
 
-Fixes: 2acc5cae2923 ('xprtrdma: Prevent dereferencing r_xprt->rx_ep after it is freed')
-Cc: Sagi Grimberg <sagi.grimberg@vastdata.com>
-Signed-off-by: Dan Aloni <dan.aloni@vastdata.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: c08e8baea78e ("selftests: add amt interface selftest script")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/amt.sh | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 28c0771c4e8c3..4f71627ba39ce 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -244,7 +244,11 @@ rpcrdma_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
- 	case RDMA_CM_EVENT_DEVICE_REMOVAL:
- 		pr_info("rpcrdma: removing device %s for %pISpc\n",
- 			ep->re_id->device->name, sap);
--		fallthrough;
-+		switch (xchg(&ep->re_connect_status, -ENODEV)) {
-+		case 0: goto wake_connect_worker;
-+		case 1: goto disconnected;
-+		}
-+		return 0;
- 	case RDMA_CM_EVENT_ADDR_CHANGE:
- 		ep->re_connect_status = -ENODEV;
- 		goto disconnected;
+diff --git a/tools/testing/selftests/net/amt.sh b/tools/testing/selftests/net/amt.sh
+index 5175a42cbe8a2..7e7ed6c558da9 100755
+--- a/tools/testing/selftests/net/amt.sh
++++ b/tools/testing/selftests/net/amt.sh
+@@ -77,6 +77,7 @@ readonly LISTENER=$(mktemp -u listener-XXXXXXXX)
+ readonly GATEWAY=$(mktemp -u gateway-XXXXXXXX)
+ readonly RELAY=$(mktemp -u relay-XXXXXXXX)
+ readonly SOURCE=$(mktemp -u source-XXXXXXXX)
++readonly SMCROUTEDIR="$(mktemp -d)"
+ ERR=4
+ err=0
+ 
+@@ -85,6 +86,11 @@ exit_cleanup()
+ 	for ns in "$@"; do
+ 		ip netns delete "${ns}" 2>/dev/null || true
+ 	done
++	if [ -f "$SMCROUTEDIR/amt.pid" ]; then
++		smcpid=$(< $SMCROUTEDIR/amt.pid)
++		kill $smcpid
++	fi
++	rm -rf $SMCROUTEDIR
+ 
+ 	exit $ERR
+ }
+@@ -167,7 +173,7 @@ setup_iptables()
+ 
+ setup_mcast_routing()
+ {
+-	ip netns exec "${RELAY}" smcrouted
++	ip netns exec "${RELAY}" smcrouted -P $SMCROUTEDIR/amt.pid
+ 	ip netns exec "${RELAY}" smcroutectl a relay_src \
+ 		172.17.0.2 239.0.0.1 amtr
+ 	ip netns exec "${RELAY}" smcroutectl a relay_src \
 -- 
 2.43.0
 
