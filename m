@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9C938D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31E11B580B;
 	Thu,  6 Jun 2024 14:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683457; cv=none; b=V+pPQ6D3h5azyQ6PVuNng4FNCiajwkfz8NjLG3Bl2V62p6yLLb5aopTIbjsdGGxVze5B1Q89BHAWO7iAvHAavFi+LGx3CGo/Ih3ELQuLJn3gCoGQoh2OcOADfqn023TtiQR+DhShkeZbkfogtGeo+PD4I9YEr+Y5FqVLpMeK9HI=
+	t=1717683457; cv=none; b=fQIOeywFrtc/K+xil/HEVJn2a7Jp4wGWhb+lPkOXSy/zeOkw+lYp8gxIZKgTSkkZm+fpjsXHmmA3apFguDU+jXxF5za4HHfadz6IA+231HUZBwXhxStEO/NNJeJ/ItGrLOj9cq3BgAyHTc6Zj0ph8y3kSKKBdUN/tXYyopHKgEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683457; c=relaxed/simple;
-	bh=SyUebccWWwPBHgWsHKom0XZqG1C9mqNy0KOBmudkRxg=;
+	bh=tgWjefYsOeeaJGF0f5KVBWHH088UdgmfzA/FYFr9p3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWMp4KDrrqOVNnCdKqH5vAlu/rLNX9Bs1xlf/hc5BC3iwLban8A2mkKz5VXu/OQnECldkqGOspYllhXD0jrst0qnMwnhnGmPHY7TwTnX6CfgdCmJfu16/h1bnamyGseMMAS3RXCXezNOXO5MyRrdq6+pJd0nLqB8fd80M/EM+ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NPgTCtj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OQeLv/EmTW8o1ej2fDdw/gPIGuVTK+MHnwdY7Xgfl2fF/V0BFCzxBi/GBLzio2Y/6P8FdSu5msRE07PDuGYorcastywsnpef/NRqKw9cYIPXcqc6u2gRbmhSbD5AyaOtNv6O3as/m3zm/gafHD053pIMYS7Nh6uMOtNvFn+1ncU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhfnC+lO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NPgTCtj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A75C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhfnC+lO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A042FC32781;
 	Thu,  6 Jun 2024 14:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683457;
-	bh=SyUebccWWwPBHgWsHKom0XZqG1C9mqNy0KOBmudkRxg=;
+	bh=tgWjefYsOeeaJGF0f5KVBWHH088UdgmfzA/FYFr9p3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1NPgTCtjKCRCXUM83Sk3CiA64gHTS6nUypNI89irYhswVgzbFCeI9294pZEGZPUVm
-	 umlaAKr5lxGCWJ0Cf+CVJTJe30KvFIm2SvWS2xETkFDfZaiVkvB2SwFKkTx+6RSKJF
-	 1hu1e/JVZg1tlxhoiRc5eeUOxVO46CbWwBNuNFBU=
+	b=NhfnC+lOWO9vFKhMOSietx52HS4MIl8siVbP/8LqEilvhuUHZABKSzsCNnvV+WTbW
+	 175AeGrjo59AEfbkv8kRdQy0lyx+1X2y0n55f7zZ75ywJBzW2SiPFBma4YgiqUVjHg
+	 iv3cbKYgp3cL6/689IjYnVp/XH640z4MDpiVH0Io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 402/744] usb: typec: ucsi: simplify partners PD caps registration
-Date: Thu,  6 Jun 2024 16:01:14 +0200
-Message-ID: <20240606131745.351354916@linuxfoundation.org>
+Subject: [PATCH 6.1 345/473] serial: sh-sci: protect invalidating RXDMA on shutdown
+Date: Thu,  6 Jun 2024 16:04:34 +0200
+Message-ID: <20240606131711.311924415@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 41e1cd1401fcd1f1ae9e47574af2d9fc44a870b3 ]
+[ Upstream commit aae20f6e34cd0cbd67a1d0e5877561c40109a81b ]
 
-In a way similar to the previous commit, move
-typec_partner_set_usb_power_delivery() to be called after reading the PD
-caps. This also removes calls to
-usb_power_delivery_unregister_capabilities() from the error path. Keep
-all capabilities registered until they are cleared by
-ucsi_unregister_partner_pdos().
+The to-be-fixed commit removed locking when invalidating the DMA RX
+descriptors on shutdown. It overlooked that there is still a rx_timer
+running which may still access the protected data. So, re-add the
+locking.
 
-Fixes: b04e1747fbcc ("usb: typec: ucsi: Register USB Power Delivery Capabilities")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240329-qcom-ucsi-fixes-v2-5-0f5d37ed04db@linaro.org
+Reported-by: Dirk Behme <dirk.behme@de.bosch.com>
+Closes: https://lore.kernel.org/r/ee6c9e16-9f29-450e-81da-4a8dceaa8fc7@de.bosch.com
+Fixes: 2c4ee23530ff ("serial: sh-sci: Postpone DMA release when falling back to PIO")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20240506114016.30498-7-wsa+renesas@sang-engineering.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ drivers/tty/serial/sh-sci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index 4aac2a719b7cd..7f575b9b3debe 100644
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -694,12 +694,6 @@ static int ucsi_register_partner_pdos(struct ucsi_connector *con)
- 			return PTR_ERR(cap);
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index e67d3a886bf4f..08ad5ae411216 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -1244,9 +1244,14 @@ static void sci_dma_rx_chan_invalidate(struct sci_port *s)
+ static void sci_dma_rx_release(struct sci_port *s)
+ {
+ 	struct dma_chan *chan = s->chan_rx_saved;
++	struct uart_port *port = &s->port;
++	unsigned long flags;
  
- 		con->partner_source_caps = cap;
--
--		ret = typec_partner_set_usb_power_delivery(con->partner, con->partner_pd);
--		if (ret) {
--			usb_power_delivery_unregister_capabilities(con->partner_source_caps);
--			return ret;
--		}
- 	}
- 
- 	ret = ucsi_get_pdos(con, TYPEC_SINK, 1, caps.pdo);
-@@ -714,15 +708,9 @@ static int ucsi_register_partner_pdos(struct ucsi_connector *con)
- 			return PTR_ERR(cap);
- 
- 		con->partner_sink_caps = cap;
--
--		ret = typec_partner_set_usb_power_delivery(con->partner, con->partner_pd);
--		if (ret) {
--			usb_power_delivery_unregister_capabilities(con->partner_sink_caps);
--			return ret;
--		}
- 	}
- 
--	return 0;
-+	return typec_partner_set_usb_power_delivery(con->partner, con->partner_pd);
- }
- 
- static void ucsi_unregister_partner_pdos(struct ucsi_connector *con)
++	uart_port_lock_irqsave(port, &flags);
+ 	s->chan_rx_saved = NULL;
+ 	sci_dma_rx_chan_invalidate(s);
++	uart_port_unlock_irqrestore(port, flags);
++
+ 	dmaengine_terminate_sync(chan);
+ 	dma_free_coherent(chan->device->dev, s->buf_len_rx * 2, s->rx_buf[0],
+ 			  sg_dma_address(&s->sg_rx[0]));
 -- 
 2.43.0
 
