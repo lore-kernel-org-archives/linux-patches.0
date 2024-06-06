@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A001A189E;
-	Thu,  6 Jun 2024 14:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F3C1A2548;
+	Thu,  6 Jun 2024 14:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683190; cv=none; b=ar6EE5GPJ8dMWvaKAVDb1DjMwncM75i82517l1GPRMxo2ZbDDRtBuX2+a+a2457YUNxO9+Gbg65Lbl7wFtF+asqIWIqZlqJUNB0UdBO+z2bwITywDcK/SKn8v2XvenqzESCzMhf/2xVoyK5Lxmyl1N+2b5degQnTfSVHqgNX15U=
+	t=1717683190; cv=none; b=T5ZOkfIsybzEYLF/A0ql0Htvj4/P2+TFjbETLCF5j5Gey9w8ylXntkOYbwo39D59AytW6txDNEkRRFWVJusor0pTxkFnuUM/45jWN44gpdwrkzWgKSn8duUVYa4VB12g8XlSJL0SEp0TDTqllzhzFBRa+Zcv+Yg0nxGeFC4NQiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683190; c=relaxed/simple;
-	bh=vhSMXx7WUpfi7of4BSmgYMrh6Sh0zez/ygCZrHG3UWA=;
+	bh=KREnz5jN5VMEQcTd4eTgUUvNxz1vPBaJE88Djr5Rd9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3jl8cJZv5jl0ZXUW5v2AJdnZmVCrWFB+TmlGWIUqcU8rGn1luKhq7EnF12OAwQGmIu/3OF3ife6nsZno3dIcCT+bLkkDQvLAn5+Y1Siz+GxfWTCeUFhwFtVjBTIRiK+Usm6s7cwkV4mkl//hxzy9BnSlgR9w6FpV0IdnpXBb34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qO3mVx1m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rLyc7QdnWtpVl3ssilm3GCc85RvI+SE+lqPsbQVhtOROY8lqtorYf7Q3cSUOry589kD6SJwToyrKrNE4ghYlFhpjsQVYGAyvzsd2ohn0PK4eqHFgWjpHqzciC3Eqv47KzteHttj+Vn6277vDigZYbq/78G1i/cpm1AERBZV164w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=as0WJnpq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qO3mVx1m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4EFCC2BD10;
-	Thu,  6 Jun 2024 14:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="as0WJnpq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4974CC32781;
+	Thu,  6 Jun 2024 14:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683189;
-	bh=vhSMXx7WUpfi7of4BSmgYMrh6Sh0zez/ygCZrHG3UWA=;
+	s=korg; t=1717683190;
+	bh=KREnz5jN5VMEQcTd4eTgUUvNxz1vPBaJE88Djr5Rd9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qO3mVx1m0B+HBOISCYM4gjXFtNEGtl5XSysFyVVbjqguez+Jhi9Big9xGOSqg4ohZ
-	 Yj4mfEC0FdTwzZFemJt9lBkeJvemHDlbJeB1B7JyWMnbDSyZCz/WYWxB1dixcunWvh
-	 Lc1q05p45joq8r4Jx3nOGi3JRMe0K6/qdQTolo8U=
+	b=as0WJnpqNG3Epk5nbn8O9VjeXaxWWcrBmetT9B3JaZZl6Iv6YvEpWtHKLSvNku+bA
+	 jf1GnlWwHqnawfTqWlAeXBH68XV7dcABhqirzCM16YXke03AK9mY/EIyOo+7VMUlQI
+	 etOxVelwf2wppItxNm0MrgZN4A18dONwdKQGdRik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	syzbot+045b454ab35fd82a35fb@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 133/744] wifi: ieee80211: fix ieee80211_mle_basic_sta_prof_size_ok()
-Date: Thu,  6 Jun 2024 15:56:45 +0200
-Message-ID: <20240606131736.691367351@linuxfoundation.org>
+Subject: [PATCH 6.1 064/473] epoll: be better about file lifetimes
+Date: Thu,  6 Jun 2024 15:59:53 +0200
+Message-ID: <20240606131702.003832002@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +48,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit c121514df0daa800cc500dc2738e0b8a1c54af98 ]
+[ Upstream commit 4efaa5acf0a1d2b5947f98abb3acf8bfd966422b ]
 
-If there was a possibility of an MLE basic STA profile without
-subelements, we might reject it because we account for the one
-octet for sta_info_len twice (it's part of itself, and in the
-fixed portion). Like in ieee80211_mle_reconf_sta_prof_size_ok,
-subtract 1 to adjust that.
+epoll can call out to vfs_poll() with a file pointer that may race with
+the last 'fput()'. That would make f_count go down to zero, and while
+the ep->mtx locking means that the resulting file pointer tear-down will
+be blocked until the poll returns, it means that f_count is already
+dead, and any use of it won't actually get a reference to the file any
+more: it's dead regardless.
 
-When reading the elements we did take this into account, and
-since there are always elements, this never really mattered.
+Make sure we have a valid ref on the file pointer before we call down to
+vfs_poll() from the epoll routines.
 
-Fixes: 7b6f08771bf6 ("wifi: ieee80211: Support validating ML station profile length")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240318184907.00bb0b20ed60.I8c41dd6fc14c4b187ab901dea15ade73c79fb98c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/lkml/0000000000002d631f0615918f1e@google.com/
+Reported-by: syzbot+045b454ab35fd82a35fb@syzkaller.appspotmail.com
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ieee80211.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/eventpoll.c | 38 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 37 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
-index 2fa186258e359..aaaa5b90bfe25 100644
---- a/include/linux/ieee80211.h
-+++ b/include/linux/ieee80211.h
-@@ -5081,7 +5081,7 @@ static inline bool ieee80211_mle_basic_sta_prof_size_ok(const u8 *data,
- 		info_len += 1;
- 
- 	return prof->sta_info_len >= info_len &&
--	       fixed + prof->sta_info_len <= len;
-+	       fixed + prof->sta_info_len - 1 <= len;
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index eccecd3fac90c..7221072f39fad 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -839,6 +839,34 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
+ 	return res;
  }
  
- /**
++/*
++ * The ffd.file pointer may be in the process of being torn down due to
++ * being closed, but we may not have finished eventpoll_release() yet.
++ *
++ * Normally, even with the atomic_long_inc_not_zero, the file may have
++ * been free'd and then gotten re-allocated to something else (since
++ * files are not RCU-delayed, they are SLAB_TYPESAFE_BY_RCU).
++ *
++ * But for epoll, users hold the ep->mtx mutex, and as such any file in
++ * the process of being free'd will block in eventpoll_release_file()
++ * and thus the underlying file allocation will not be free'd, and the
++ * file re-use cannot happen.
++ *
++ * For the same reason we can avoid a rcu_read_lock() around the
++ * operation - 'ffd.file' cannot go away even if the refcount has
++ * reached zero (but we must still not call out to ->poll() functions
++ * etc).
++ */
++static struct file *epi_fget(const struct epitem *epi)
++{
++	struct file *file;
++
++	file = epi->ffd.file;
++	if (!atomic_long_inc_not_zero(&file->f_count))
++		file = NULL;
++	return file;
++}
++
+ /*
+  * Differs from ep_eventpoll_poll() in that internal callers already have
+  * the ep->mtx so we need to start from depth=1, such that mutex_lock_nested()
+@@ -847,14 +875,22 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
+ static __poll_t ep_item_poll(const struct epitem *epi, poll_table *pt,
+ 				 int depth)
+ {
+-	struct file *file = epi->ffd.file;
++	struct file *file = epi_fget(epi);
+ 	__poll_t res;
+ 
++	/*
++	 * We could return EPOLLERR | EPOLLHUP or something, but let's
++	 * treat this more as "file doesn't exist, poll didn't happen".
++	 */
++	if (!file)
++		return 0;
++
+ 	pt->_key = epi->event.events;
+ 	if (!is_file_epoll(file))
+ 		res = vfs_poll(file, pt);
+ 	else
+ 		res = __ep_eventpoll_poll(file, pt, depth);
++	fput(file);
+ 	return res & epi->event.events;
+ }
+ 
 -- 
 2.43.0
 
