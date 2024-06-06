@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DF9197A91;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E097C197A91;
 	Thu,  6 Jun 2024 14:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683294; cv=none; b=EJcNkx8v1k/YUewpkQCuorDEZOaUQe83TmMcOvbM6dLG41tVnkueMGBHBe2UeeSUQPnT08IqCn4CGZc8jttKp1aHGKv6YEoxpVz64XAW5hI1euvE3MF4xF54Y+3h/NYkT2tw4SiSzxDQW7ds0j4a1vVcI6iBH91eE69wmyOGito=
+	t=1717683295; cv=none; b=biL6kotJC44XM/JiFL5y+7nYaigojsoEfEfPSaMPINAU3yNe7yX0EIwGSXT3stEafj8CN6t3+0Ap/WE8yZN5op0qpOlG+EUy4r832fp0LRcP9zwifaJAWi3ptyJVWpQXibfrxdhfHA7hGzvdKyNc2v3PHs+X15ljpwZ8HXDkiys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683294; c=relaxed/simple;
-	bh=tx/VeiW4OR7b0Gpk1KDDOcofgJ/lvtPKMdvYKjcrqXU=;
+	s=arc-20240116; t=1717683295; c=relaxed/simple;
+	bh=91i5QrzHG1G+vHB4Dgam1AMTHwio6ktz8VMRvQdcWik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pns720QkcQv+ET2q99pVC9/wa5y4A3+HcM41OuiA3qSg384NN13Ktpc9PNK2dOZCIT4hO7Vls9DgM+IjkKOabSVqtPCqRepw6WDVwZnzFwGCcYvDi5ecK/xqWQnu+zZJs6hAue0E04Jw1e1CoOmQGtL9yaKF2Lq6dWdh5rCFY8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXCsJdjc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b6RNdqiNVqIzzLaBnDIA0uECmv2zQWtCID5KlEYNJPgHgJLpZzM7En+h79fZ5QODOrQZrQ51e3pR13NVTXVFdqpvW+NPhKLH8lZNyM8yOnhPJH0VqVblIJekVnarOL3dYAqoxwJeZPo6HtYjOGj5eOYnA/J3jUq0dDtNjHKXvIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZncMbs3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXCsJdjc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C08C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZncMbs3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CD4C32782;
 	Thu,  6 Jun 2024 14:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683294;
-	bh=tx/VeiW4OR7b0Gpk1KDDOcofgJ/lvtPKMdvYKjcrqXU=;
+	bh=91i5QrzHG1G+vHB4Dgam1AMTHwio6ktz8VMRvQdcWik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXCsJdjcRvn5zieLwclu+82G6Uz8pb41R4a9rvcQmUi3WNgiy38ou7xN8rbwPzq70
-	 HTi8KS6P0IWnRCgYJ/hqK3JxVO7841X8xh2l5sGLYquP0I8BFKIJTvWthis4E8vv+G
-	 AL6j8BofF3+mH15chZtg9DVIhUwPtywU159T++Ys=
+	b=GZncMbs35MsnRzVB1Va8OfYL1wBCgyrgepvhCfu4i71cOjLeDJnvdS5yiCI9uJRkb
+	 bnkU/i7SdT7zFAfbCLwFLL2TypTV1hupOQ6NPJTC8/nSEPrrtN2lhlIEa3VfzHF2Ko
+	 VRo9T77bK1z3TWxlepU/iKTEoSNh9E0oO6KbNtls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 170/473] selftests: net: move amt to socat for better compatibility
-Date: Thu,  6 Jun 2024 16:01:39 +0200
-Message-ID: <20240606131705.563954160@linuxfoundation.org>
+Subject: [PATCH 6.6 235/744] m68k: Fix spinlock race in kernel thread creation
+Date: Thu,  6 Jun 2024 15:58:27 +0200
+Message-ID: <20240606131739.928954461@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +48,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-[ Upstream commit 4c639b6a7b9db236c0907aca8e92d1537076f2cd ]
+[ Upstream commit da89ce46f02470ef08f0f580755d14d547da59ed ]
 
-The test seems to expect that nc will exit after the first
-received message. This is not the case with Ncat 7.94.
-There are multiple versions of nc out there, switch
-to socat for better compatibility.
+Context switching does take care to retain the correct lock owner across
+the switch from 'prev' to 'next' tasks.  This does rely on interrupts
+remaining disabled for the entire duration of the switch.
 
-Tell socat to exit after 128 bytes and pad the message.
+This condition is guaranteed for normal process creation and context
+switching between already running processes, because both 'prev' and
+'next' already have interrupts disabled in their saved copies of the
+status register.
 
-Since the test sets -e make sure we don't set exit code
-(|| true) and print the pass / fail rather then silently
-moving over the test and just setting non-zero exit code
-with no output indicating what failed.
+The situation is different for newly created kernel threads.  The status
+register is set to PS_S in copy_thread(), which does leave the IPL at 0.
+Upon restoring the 'next' thread's status register in switch_to() aka
+resume(), interrupts then become enabled prematurely.  resume() then
+returns via ret_from_kernel_thread() and schedule_tail() where run queue
+lock is released (see finish_task_switch() and finish_lock_switch()).
 
-Fixes: c08e8baea78e ("selftests: add amt interface selftest script")
-Acked-by: Paolo Abeni<pabeni@redhat.com>
-Tested-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://lore.kernel.org/r/20240509161952.3940476-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+A timer interrupt calling scheduler_tick() before the lock is released
+in finish_task_switch() will find the lock already taken, with the
+current task as lock owner.  This causes a spinlock recursion warning as
+reported by Guenter Roeck.
+
+As far as I can ascertain, this race has been opened in commit
+533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
+but I haven't done a detailed study of kernel history so it may well
+predate that commit.
+
+Interrupts cannot be disabled in the saved status register copy for
+kernel threads (init will complain about interrupts disabled when
+finally starting user space).  Disable interrupts temporarily when
+switching the tasks' register sets in resume().
+
+Note that a simple oriw 0x700,%sr after restoring sr is not enough here
+- this leaves enough of a race for the 'spinlock recursion' warning to
+still be observed.
+
+Tested on ARAnyM and qemu (Quadra 800 emulation).
+
+Fixes: 533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/07811b26-677c-4d05-aeb4-996cd880b789@roeck-us.net
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20240411033631.16335-1-schmitzmic@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/amt.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/m68k/kernel/entry.S | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/amt.sh b/tools/testing/selftests/net/amt.sh
-index 75528788cb95e..5175a42cbe8a2 100755
---- a/tools/testing/selftests/net/amt.sh
-+++ b/tools/testing/selftests/net/amt.sh
-@@ -210,8 +210,8 @@ check_features()
+diff --git a/arch/m68k/kernel/entry.S b/arch/m68k/kernel/entry.S
+index 4dd2fd7acba9e..2e1e9ad4f98ca 100644
+--- a/arch/m68k/kernel/entry.S
++++ b/arch/m68k/kernel/entry.S
+@@ -433,7 +433,9 @@ resume:
+ 	movec	%a0,%dfc
  
- test_ipv4_forward()
- {
--	RESULT4=$(ip netns exec "${LISTENER}" nc -w 1 -l -u 239.0.0.1 4000)
--	if [ "$RESULT4" == "172.17.0.2" ]; then
-+	RESULT4=$(ip netns exec "${LISTENER}" timeout 15 socat - UDP4-LISTEN:4000,readbytes=128 || true)
-+	if echo "$RESULT4" | grep -q "172.17.0.2"; then
- 		printf "TEST: %-60s  [ OK ]\n" "IPv4 amt multicast forwarding"
- 		exit 0
- 	else
-@@ -222,8 +222,8 @@ test_ipv4_forward()
+ 	/* restore status register */
+-	movew	%a1@(TASK_THREAD+THREAD_SR),%sr
++	movew	%a1@(TASK_THREAD+THREAD_SR),%d0
++	oriw	#0x0700,%d0
++	movew	%d0,%sr
  
- test_ipv6_forward()
- {
--	RESULT6=$(ip netns exec "${LISTENER}" nc -w 1 -l -u ff0e::5:6 6000)
--	if [ "$RESULT6" == "2001:db8:3::2" ]; then
-+	RESULT6=$(ip netns exec "${LISTENER}" timeout 15 socat - UDP6-LISTEN:6000,readbytes=128 || true)
-+	if echo "$RESULT6" | grep -q "2001:db8:3::2"; then
- 		printf "TEST: %-60s  [ OK ]\n" "IPv6 amt multicast forwarding"
- 		exit 0
- 	else
-@@ -236,14 +236,14 @@ send_mcast4()
- {
- 	sleep 2
- 	ip netns exec "${SOURCE}" bash -c \
--		'echo 172.17.0.2 | nc -w 1 -u 239.0.0.1 4000' &
-+		'printf "%s %128s" 172.17.0.2 | nc -w 1 -u 239.0.0.1 4000' &
- }
+ 	rts
  
- send_mcast6()
- {
- 	sleep 2
- 	ip netns exec "${SOURCE}" bash -c \
--		'echo 2001:db8:3::2 | nc -w 1 -u ff0e::5:6 6000' &
-+		'printf "%s %128s" 2001:db8:3::2 | nc -w 1 -u ff0e::5:6 6000' &
- }
- 
- check_features
 -- 
 2.43.0
 
