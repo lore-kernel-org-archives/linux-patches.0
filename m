@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1B81A0DD5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA171A0DD5;
 	Thu,  6 Jun 2024 14:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683681; cv=none; b=Yfa76TFXFjyPSkZPSlG7SVhkjPULKr5RHIXchvMN5Uz+HG4ei03zxYDUVpNMhX4/qi/6PVCI1AHb9+OLkenAVmnceZtYC6mFEca9YkdTDmyvrO9WMaiHIJIaq0Jsk3FtmI/c4bH85phq1YLp7L0mo7uDmtQRnnTC7w9iiV7N7Us=
+	t=1717683681; cv=none; b=Tkj+R3mYZ67P35kVqEahTDStjX531B8a0iBuBsYEFp+ZpCiSNWf7bYGCZfL1ZaFJIXDYzdMsyYUGdJevEV3ESq69JLbMUzvpoA+G+twqs1gTeeB7h1N6GEQBrB4Qx7gTXfHIqos2qlh+lVVPWfU4fe9XeR9UglfVx33k56SUgeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683681; c=relaxed/simple;
-	bh=EDRf94/P2iyKcZqdInyNfJsdF5Q44y/0P52s/cI+1Kw=;
+	bh=8zzOKdlD46darN+d15jyang52TPJ22ZAmOfRohPRyVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/OlbhWB0lJtR6vvVFgFzp+856pJ3RsVvJZUNQR5Jz3D1TMKasuH+TovEbqXHBdruCwPhEAcZRiNYxUivZuSY5c2EXy2DW1Il+Hos7XgG302nlf0R4zMMBLr35AAh4M67lAhTHGzT9lfnGCpDwFBKv3aqPD1szzGXLtNmt2d4I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKlGyo5n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvQelUJxye9CyF5UAKofmSHc0X3nkVo6uC/vmR1PaAlwqxjxIfonjY88d449NCwovXhnFtkwhEFIgBSzFqAh0rnY/FUhqrq5d0fbGBEmPq9yAbytKnUpxxNC6eNabP5PBPwZ4CUuDLt5A/CpB8uy/ZCck06eKLdA63+Sn+QUdOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQDsaD4+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKlGyo5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE51C32786;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQDsaD4+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9577EC32786;
 	Thu,  6 Jun 2024 14:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683681;
-	bh=EDRf94/P2iyKcZqdInyNfJsdF5Q44y/0P52s/cI+1Kw=;
+	bh=8zzOKdlD46darN+d15jyang52TPJ22ZAmOfRohPRyVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UKlGyo5nFXw6ajBW+fD6x3C+IVPS3+YOPRqhOkHm43+RSvb39OHktJicfydkbBFa0
-	 uzGy6Jd9lvR52/0z5rDGUHrSPbKTDHo1gq3pZJsPi9sfjRSX2tDEDEsClZZ7faJudj
-	 ckkfFH+OQDCE6/i407giN+cW6nwpoytiipr8D+ck=
+	b=kQDsaD4+Z9oTlEDeHqIRayjaHQZaauYIW1oydi7ebguar+JpPWKVid/aPiL3qYHNO
+	 PC0zehK2yw5DHKBYTUPAPmxGEoGHEx33+cxtT5UrIXsR+lCwoNf3QPvO9/rApo8zTO
+	 Rp7dtItuqeYBy0XLBmAa36oVZTmeWFdqrqQaWkiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 565/744] mmc: sdhci_am654: Fix ITAPDLY for HS400 timing
-Date: Thu,  6 Jun 2024 16:03:57 +0200
-Message-ID: <20240606131750.575578104@linuxfoundation.org>
+Subject: [PATCH 6.6 583/744] drm/msm/dpu: extract dpu_core_irq_is_valid() helper
+Date: Thu,  6 Jun 2024 16:04:15 +0200
+Message-ID: <20240606131751.155760314@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,57 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d3182932bb070e7518411fd165e023f82afd7d25 ]
+[ Upstream commit a65264833690d1280b901e3fe8e2825a44b3502c ]
 
-While STRB is currently used for DATA and CRC responses, the CMD
-responses from the device to the host still require ITAPDLY for
-HS400 timing.
+In preparation to reworking IRQ indices, move irq_idx validation to
+a separate helper.
 
-Currently what is stored for HS400 is the ITAPDLY from High Speed
-mode which is incorrect. The ITAPDLY for HS400 speed mode should
-be the same as ITAPDLY as HS200 timing after tuning is executed.
-Add the functionality to save ITAPDLY from HS200 tuning and save
-as HS400 ITAPDLY.
-
-Fixes: a161c45f2979 ("mmc: sdhci_am654: Enable DLL only for some speed modes")
-Signed-off-by: Judith Mendez <jm@ti.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240320223837.959900-8-jm@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/550929/
+Link: https://lore.kernel.org/r/20230802100426.4184892-4-dmitry.baryshkov@linaro.org
+Stable-dep-of: 530f272053a5 ("drm/msm/dpu: Add callback function pointer check before its call")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci_am654.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 22 +++++++++----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
-index 884d1b53180d7..562034af653eb 100644
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -301,6 +301,12 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
- 	if (timing > MMC_TIMING_UHS_SDR25 && clock >= CLOCK_TOO_SLOW_HZ) {
- 		sdhci_am654_setup_dll(host, clock);
- 		sdhci_am654->dll_enable = true;
-+
-+		if (timing == MMC_TIMING_MMC_HS400) {
-+			sdhci_am654->itap_del_ena[timing] = 0x1;
-+			sdhci_am654->itap_del_sel[timing] = sdhci_am654->itap_del_sel[timing - 1];
-+		}
-+
- 		sdhci_am654_write_itapdly(sdhci_am654, sdhci_am654->itap_del_sel[timing],
- 					  sdhci_am654->itap_del_ena[timing]);
- 	} else {
-@@ -531,6 +537,9 @@ static int sdhci_am654_platform_execute_tuning(struct sdhci_host *host,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+index 01a9ccfcd54bf..81d03b6c67d12 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+@@ -200,6 +200,12 @@ static const struct dpu_intr_reg dpu_intr_set_7xxx[] = {
+ #define DPU_IRQ_REG(irq_idx)	(irq_idx / 32)
+ #define DPU_IRQ_MASK(irq_idx)	(BIT(irq_idx % 32))
  
- 	sdhci_am654_write_itapdly(sdhci_am654, itap, sdhci_am654->itap_del_ena[timing]);
- 
-+	/* Save ITAPDLY */
-+	sdhci_am654->itap_del_sel[timing] = itap;
++static inline bool dpu_core_irq_is_valid(struct dpu_hw_intr *intr,
++					 int irq_idx)
++{
++	return irq_idx >= 0 && irq_idx < intr->total_irqs;
++}
 +
- 	return 0;
- }
+ /**
+  * dpu_core_irq_callback_handler - dispatch core interrupts
+  * @dpu_kms:		Pointer to DPU's KMS structure
+@@ -291,7 +297,7 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+ 	if (!intr)
+ 		return -EINVAL;
  
+-	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
++	if (!dpu_core_irq_is_valid(intr, irq_idx)) {
+ 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
+ 		return -EINVAL;
+ 	}
+@@ -344,7 +350,7 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+ 	if (!intr)
+ 		return -EINVAL;
+ 
+-	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
++	if (!dpu_core_irq_is_valid(intr, irq_idx)) {
+ 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
+ 		return -EINVAL;
+ 	}
+@@ -429,13 +435,7 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
+ 	if (!intr)
+ 		return 0;
+ 
+-	if (irq_idx < 0) {
+-		DPU_ERROR("[%pS] invalid irq_idx=%d\n",
+-				__builtin_return_address(0), irq_idx);
+-		return 0;
+-	}
+-
+-	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
++	if (!dpu_core_irq_is_valid(intr, irq_idx)) {
+ 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
+ 		return 0;
+ 	}
+@@ -518,7 +518,7 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
+ 		return -EINVAL;
+ 	}
+ 
+-	if (irq_idx < 0 || irq_idx >= dpu_kms->hw_intr->total_irqs) {
++	if (!dpu_core_irq_is_valid(dpu_kms->hw_intr, irq_idx)) {
+ 		DPU_ERROR("invalid IRQ index: [%d]\n", irq_idx);
+ 		return -EINVAL;
+ 	}
+@@ -555,7 +555,7 @@ int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx)
+ 	unsigned long irq_flags;
+ 	int ret;
+ 
+-	if (irq_idx < 0 || irq_idx >= dpu_kms->hw_intr->total_irqs) {
++	if (!dpu_core_irq_is_valid(dpu_kms->hw_intr, irq_idx)) {
+ 		DPU_ERROR("invalid IRQ index: [%d]\n", irq_idx);
+ 		return -EINVAL;
+ 	}
 -- 
 2.43.0
 
