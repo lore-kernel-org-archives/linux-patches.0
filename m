@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C8819AA7F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02EC1AC24F;
 	Thu,  6 Jun 2024 14:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683329; cv=none; b=VTjLuczDRfjMoakQVcBBv4gvZSG3muHGK80sRRGbcauWK4H9wO4Wuk24W19KKcZGkoeoxs1QuV/4bEA5Kw1AkxEt2kOXS1gXwqSrlpR6ygMmbtQ57KMas/VY28NkIWf+9Mad8iOO9Srq0laTsJDMBoZSLxwV6fpFs/flnsv2xFU=
+	t=1717683330; cv=none; b=SAiCVRk1CVAHOWhU4M+GiEnWC1hBlZR6pH3kbJd1HrsKNZdgcXYGVAN0qtw06Q7O0Hf+tWBAW24R6XYEk8JCKHeZJHt0It/OZP9WLdCW7dI2GREip7U3l/Yhvsvb73M6Nygr0/mU9g6xK3MMf7VjOQZzImR9wpcuO/fR/FHIUh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683329; c=relaxed/simple;
-	bh=omVtpLQIeygE6+Beodz26vUiVloQ9Kr2qD3iTXDa0sA=;
+	s=arc-20240116; t=1717683330; c=relaxed/simple;
+	bh=Q4/gLcdvaBmAJjs5ltWiMROBMsCNlZVHICS4lelOOjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfLh09+3DSmghCbpP0F+kKLE0C2EFvjkVrMPUXQjDFUt4Pq7qDjdSdsozNk8gsoURegHARvJLqakeH/ZREGenV+5V41x8WDPiEp8Vq1k0J7+iST/+ds3ugdz0jl71rOetucPq+nLEBDlsxqh3asH5p5EugDA/yxhR6F1YGG8Kzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ozPeuPkB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N+Sks7qqnwUvekJlItU4aCryRVzMCgchxQVj59YDaHQFFAU1cPXRtasJO1QrtHAhJ0Ds8bI4cVlGoPZgKg1QsZVNbYOGJHv3g+kEYzZZwITsfTwOXb2ZlgaGkJmRwUgmU/v6Z+Et19DyUzpEYEUFircSIBzt2bwVm1oGY26plLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Xud/jHl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozPeuPkB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F508C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Xud/jHl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD270C2BD10;
 	Thu,  6 Jun 2024 14:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683329;
-	bh=omVtpLQIeygE6+Beodz26vUiVloQ9Kr2qD3iTXDa0sA=;
+	bh=Q4/gLcdvaBmAJjs5ltWiMROBMsCNlZVHICS4lelOOjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ozPeuPkBr909MgVXi0VeqFiZZ+tdjQdf7lT250Cjze1gf2JFUQvh/HMLZbHpLCZXc
-	 Cu7uwtA5qCRs5jKlU8oZlcDFXclHt4kJ6jfpGkeeZZRDGjgcprJc75y/7NHyx/zhO1
-	 JsqehlOkLLteZRFCDRovf85cbs2mvtLQfBulDp+s=
+	b=2Xud/jHlDI20Jeox6bRMB4/qted4QXKdflvHkM+eui8PPhRsnpWlP6Fp4p4oyzDuR
+	 RLF6o+PtOS4XjdaDSWHAeoLrpBzmtsh6jzLrblYurzvyxcxKREkabtOQlZa3P9lrpD
+	 emGNfHzzZRK7b33bIOSg9ltFZHBpIitqiqmvJhu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tony Lindgren <tony@atomide.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 207/473] ASoC: Intel: avs: Fix ASRC module initialization
-Date: Thu,  6 Jun 2024 16:02:16 +0200
-Message-ID: <20240606131706.772115416@linuxfoundation.org>
+Subject: [PATCH 6.6 271/744] drm/omapdrm: Fix console by implementing fb_dirty
+Date: Thu,  6 Jun 2024 15:59:03 +0200
+Message-ID: <20240606131741.063469209@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +48,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 9d2e26f31c7cc3fa495c423af9b4902ec0dc7be3 ]
+[ Upstream commit 632bac50544c0929ced9eed41e7d04c08adecbb0 ]
 
-The ASRC module configuration consists of several reserved fields. Zero
-them out when initializing the module to avoid sending invalid data.
+The framebuffer console stopped updating with commit f231af498c29
+("drm/fb-helper: Disconnect damage worker from update logic").
 
-Fixes: 274d79e51875 ("ASoC: Intel: avs: Configure modules according to their type")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://msgid.link/r/20240405090929.1184068-6-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Let's fix the issue by implementing fb_dirty similar to what was done
+with commit 039a72ce7e57 ("drm/i915/fbdev: Implement fb_dirty for intel
+custom fb helper").
+
+Fixes: f231af498c29 ("drm/fb-helper: Disconnect damage worker from update logic")
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240228063540.4444-2-tony@atomide.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/path.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/omapdrm/omap_fbdev.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/soc/intel/avs/path.c b/sound/soc/intel/avs/path.c
-index ce157a8d65520..989a7a4127cdd 100644
---- a/sound/soc/intel/avs/path.c
-+++ b/sound/soc/intel/avs/path.c
-@@ -308,6 +308,7 @@ static int avs_asrc_create(struct avs_dev *adev, struct avs_path_module *mod)
- 	struct avs_tplg_module *t = mod->template;
- 	struct avs_asrc_cfg cfg;
+diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+index 6b08b137af1ad..7c5af3de1e727 100644
+--- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
++++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+@@ -238,8 +238,20 @@ static int omap_fbdev_create(struct drm_fb_helper *helper,
+ 	return ret;
+ }
  
-+	memset(&cfg, 0, sizeof(cfg));
- 	cfg.base.cpc = t->cfg_base->cpc;
- 	cfg.base.ibs = t->cfg_base->ibs;
- 	cfg.base.obs = t->cfg_base->obs;
++static int omap_fbdev_dirty(struct drm_fb_helper *helper, struct drm_clip_rect *clip)
++{
++	if (!(clip->x1 < clip->x2 && clip->y1 < clip->y2))
++		return 0;
++
++	if (helper->fb->funcs->dirty)
++		return helper->fb->funcs->dirty(helper->fb, NULL, 0, 0, clip, 1);
++
++	return 0;
++}
++
+ static const struct drm_fb_helper_funcs omap_fb_helper_funcs = {
+ 	.fb_probe = omap_fbdev_create,
++	.fb_dirty = omap_fbdev_dirty,
+ };
+ 
+ static struct drm_fb_helper *get_fb(struct fb_info *fbi)
 -- 
 2.43.0
 
