@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9C51991C4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10201991C4;
 	Thu,  6 Jun 2024 14:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683658; cv=none; b=k7ujSRtyGZwIEFE/H/NI+KdZy08D44apkKZi44IuPV8MiQwrdaBY1HH1cYf5URUD/WgkqvE1GSy9NZ0z22qQcb3TzhjKC8ALisjcwuhl2XwSShZe+HVj0fnZLeXMadgBpmqKUwwtmK7AWYPEuUTWYD4Y/bNmtvezKf2B71UUdnw=
+	t=1717683659; cv=none; b=m/jPzDWP9quNB+GWbOqYazR7YlK++GKkWvkDtbJJP35E5TsdKLMY5khkCVLFCALdUlKwa+K5/PsSewW7KVSqDiE9EGfYHbMsPaVVRKypE4GDpGAbJeKLV+9jSghLKYLgIC3Hk6iVX2mhkvfHgfjycxLypkFgLL5xmwhlBRNsFRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683658; c=relaxed/simple;
-	bh=tW0XCU/oTRi9tVlOBkuOtchp2sNVQwm8BzoiSjgrv4U=;
+	s=arc-20240116; t=1717683659; c=relaxed/simple;
+	bh=Sj8vSD6sCakhz0yspM+kw/uc+3miWQ97I+sUUGsdI6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q771TYPFbpuwsZxPFrsZLo0eOeOcnEXBeLTiVM3hK6MYgk8/Ogofqqkqh4QK0y09e7dVcYCrO5jSXsKF6Anuec3mCpDe6BYkvzAHhu1kBPeRorOyJLtmqTCucyVC7wnnsVdSiXuDbn10mKR7mMNlYCeX+clxy6zYOoyHNKx6kzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBmI9hWK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GnUowsBoVM1RPmniZmZ+lLCH1+dCvqxfNEYd5gKWreq8g4PqipbAxkd3Ob5PxNqzYlzPuoQWMFLCrAqdVdgMHoZZNoEgi+O23+A88I7kMk3z5TVQO1pPL1AoS+sYhUxOQbOqf6IABmcTBMH/G+j06sh59jkVjBIe58O1kLA15Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/6ovY6O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBmI9hWK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E236C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/6ovY6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE78DC32781;
 	Thu,  6 Jun 2024 14:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683658;
-	bh=tW0XCU/oTRi9tVlOBkuOtchp2sNVQwm8BzoiSjgrv4U=;
+	bh=Sj8vSD6sCakhz0yspM+kw/uc+3miWQ97I+sUUGsdI6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fBmI9hWKM7X/6kx7Ml+QLNZyv9XFFA00KqF7IU2PfrnZVowKUHfZ2Uf28bAZzZTyC
-	 0kmV4/XSk0F47UZ+JoPqObiiHb2wO3r1fXse+9jtecbYPUgkcTYd+kBEJvbKlv7lXc
-	 ZWl3kNnYmPYPMmVoYC28+zTABT71Hnc+oLrXPF3k=
+	b=Z/6ovY6OOBGVErfAeDcR2GKzCBVAfOUES9QpFzKkVia4eHzznb9h1tcu9Z7miVELQ
+	 Wm7tvZsZ0jhtkQUxXNaGs76fqlIAJi9aMze98dv+CXrQVjO3MuK+nyqXH8bDuiBy58
+	 dlLrm4BK7NtVy6hY97nKg7Jkzyjq+AYExfzrFIAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Remus <jremus@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 537/744] s390/vdso: Create .build-id links for unstripped vdso files
-Date: Thu,  6 Jun 2024 16:03:29 +0200
-Message-ID: <20240606131749.686154879@linuxfoundation.org>
+Subject: [PATCH 6.1 472/473] riscv: prevent pt_regs corruption for secondary idle threads
+Date: Thu,  6 Jun 2024 16:06:41 +0200
+Message-ID: <20240606131715.289227358@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +48,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jens Remus <jremus@linux.ibm.com>
+From: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
 
-[ Upstream commit fc2f5f10f9bc5e58d38e9fda7dae107ac04a799f ]
+[ Upstream commit a638b0461b58aa3205cd9d5f14d6f703d795b4af ]
 
-Citing Andy Lutomirski from commit dda1e95cee38 ("x86/vdso: Create
-.build-id links for unstripped vdso files"):
+Top of the kernel thread stack should be reserved for pt_regs. However
+this is not the case for the idle threads of the secondary boot harts.
+Their stacks overlap with their pt_regs, so both may get corrupted.
 
-"With this change, doing 'make vdso_install' and telling gdb:
+Similar issue has been fixed for the primary hart, see c7cdd96eca28
+("riscv: prevent stack corruption by reserving task_pt_regs(p) early").
+However that fix was not propagated to the secondary harts. The problem
+has been noticed in some CPU hotplug tests with V enabled. The function
+smp_callin stored several registers on stack, corrupting top of pt_regs
+structure including status field. As a result, kernel attempted to save
+or restore inexistent V context.
 
-set debug-file-directory /lib/modules/KVER/vdso
-
-will enable vdso debugging with symbols.  This is useful for
-testing, but kernel RPM builds will probably want to manually delete
-these symlinks or otherwise do something sensible when they strip
-the vdso/*.so files."
-
-Fixes: 4bff8cb54502 ("s390: convert to GENERIC_VDSO")
-Signed-off-by: Jens Remus <jremus@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: 9a2451f18663 ("RISC-V: Avoid using per cpu array for ordered booting")
+Fixes: 2875fe056156 ("RISC-V: Add cpu_ops and modify default booting method")
+Signed-off-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240523084327.2013211-1-geomatsi@gmail.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.vdsoinst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/cpu_ops_sbi.c      | 2 +-
+ arch/riscv/kernel/cpu_ops_spinwait.c | 3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/Makefile.vdsoinst b/scripts/Makefile.vdsoinst
-index c477d17b0aa5b..a81ca735003e4 100644
---- a/scripts/Makefile.vdsoinst
-+++ b/scripts/Makefile.vdsoinst
-@@ -21,7 +21,7 @@ $$(dest): $$(src) FORCE
- 	$$(call cmd,install)
+diff --git a/arch/riscv/kernel/cpu_ops_sbi.c b/arch/riscv/kernel/cpu_ops_sbi.c
+index efa0f0816634c..93cbc38d18057 100644
+--- a/arch/riscv/kernel/cpu_ops_sbi.c
++++ b/arch/riscv/kernel/cpu_ops_sbi.c
+@@ -72,7 +72,7 @@ static int sbi_cpu_start(unsigned int cpuid, struct task_struct *tidle)
+ 	/* Make sure tidle is updated */
+ 	smp_mb();
+ 	bdata->task_ptr = tidle;
+-	bdata->stack_ptr = task_stack_page(tidle) + THREAD_SIZE;
++	bdata->stack_ptr = task_pt_regs(tidle);
+ 	/* Make sure boot data is updated */
+ 	smp_mb();
+ 	hsm_data = __pa(bdata);
+diff --git a/arch/riscv/kernel/cpu_ops_spinwait.c b/arch/riscv/kernel/cpu_ops_spinwait.c
+index d98d19226b5f5..691e0c5366d2b 100644
+--- a/arch/riscv/kernel/cpu_ops_spinwait.c
++++ b/arch/riscv/kernel/cpu_ops_spinwait.c
+@@ -34,8 +34,7 @@ static void cpu_update_secondary_bootdata(unsigned int cpuid,
  
- # Some architectures create .build-id symlinks
--ifneq ($(filter arm sparc x86, $(SRCARCH)),)
-+ifneq ($(filter arm s390 sparc x86, $(SRCARCH)),)
- link := $(install-dir)/.build-id/$$(shell $(READELF) -n $$(src) | sed -n 's@^.*Build ID: \(..\)\(.*\)@\1/\2@p').debug
+ 	/* Make sure tidle is updated */
+ 	smp_mb();
+-	WRITE_ONCE(__cpu_spinwait_stack_pointer[hartid],
+-		   task_stack_page(tidle) + THREAD_SIZE);
++	WRITE_ONCE(__cpu_spinwait_stack_pointer[hartid], task_pt_regs(tidle));
+ 	WRITE_ONCE(__cpu_spinwait_task_pointer[hartid], tidle);
+ }
  
- __default: $$(link)
 -- 
 2.43.0
 
