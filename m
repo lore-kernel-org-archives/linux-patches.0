@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF001974FC;
-	Thu,  6 Jun 2024 14:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E82B1974FC;
+	Thu,  6 Jun 2024 14:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682947; cv=none; b=BFudlkdT4+OOCenailzC9CRCxTS74XRG23qLLwmYax/YX2asplGvN6i6lz76CKBfjAJ9bBL9+sz/ECP6N0Ks05OQxZ/ENv8knWd1x+pmWaoyxOWPXtIfLGDKyLgtGURc1If4jG+nHhc1dYUAqN7PkPG0VfKQ8h7GiivwRIu0r8g=
+	t=1717682947; cv=none; b=r9tuJwnPYkQGkWfcDKvPQhk18vPfRFeud92VN5RJyMQVdyHNhsjiTizwjjIX/tG+T+sZfYNSHh2e+zP6rviEh/wJvBYCLprAiS63D8ZBt4G+pFyTuRI+8hq0eifJEVHIaYMiO5jRk+eLHM9tfRTEVOZkRA5koUaZ91cc0D8jGXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682947; c=relaxed/simple;
-	bh=4XqMno6kw2aAbAKIvEWr6WhZv1e1nK2ojH50OTRvI5w=;
+	bh=+Axoq8aGPp8zhB1xgLietfIH7AzIZCWNiAOg/Hgtxes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSVf7jfCZPZMhDhEkZBpJ++lXFElQ5i4yScm2v1hMPO1Lk1Mv3UJOBZlIr7iGa/cBHaGbEpxw1DjN3T8sCRDp3wcNnUoqFJGSLDqgfpm/6zmBV/891E6XYD/KlFgxlsSAK7kr4UZXNXZFpp96KxPMCxIu7ugteprHB8hUiPFdwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0t48EqYn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cXMheIFbrq1x5mivEXwSRKdHxkiyD4V5IjNzX/Q9R7BtYzTOsywTYAcnQpa601KWui+i1K3ByAvqHVZn8ZIu1rDV7ZIP0JkLbT8x+ye/bkFN96Y3WoWJMasF7ElNhKsympd/zizK181gysQFN8Aovp8/NPv1++paX+SoDy31ctI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+Q6+I8H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0t48EqYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8747C32781;
-	Thu,  6 Jun 2024 14:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+Q6+I8H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EDBFC32781;
+	Thu,  6 Jun 2024 14:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682946;
-	bh=4XqMno6kw2aAbAKIvEWr6WhZv1e1nK2ojH50OTRvI5w=;
+	s=korg; t=1717682947;
+	bh=+Axoq8aGPp8zhB1xgLietfIH7AzIZCWNiAOg/Hgtxes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0t48EqYn/hNMBUqZ6aoVSiJ9ZH0NtjthghvBlUmReSRil8cpp5RiKVChP41+ZF7t2
-	 RfjPes8x6QxUzDTAcRzBEINPuWlxRSeuUmMi/3BWfOsTjCJlsInlwgwXiS0eqaGjHq
-	 yIlpk7n5RQtm66GraCsLQhxfQ41GpIzWlmj73XaE=
+	b=b+Q6+I8Hq4nGxNWpKKtayboJHtq7C1tmQ/8DkMMBOVchD/6Jli7Dn7Ni1utGBaqZ5
+	 8kEF841Io+X2DvVNCXsVdvyqZPUNIjcNp2Wy3j8yehzEpKDG2C9+sN7B7pyKKIckgb
+	 oak6xli+30zkAgb2E9jlgTYRI9N+BHKgIvAUOUuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 108/374] f2fs: compress: fix error path of inc_valid_block_count()
-Date: Thu,  6 Jun 2024 16:01:27 +0200
-Message-ID: <20240606131655.538452494@linuxfoundation.org>
+Subject: [PATCH 6.9 109/374] f2fs: compress: fix to cover {reserve,release}_compress_blocks() w/ cp_rwsem lock
+Date: Thu,  6 Jun 2024 16:01:28 +0200
+Message-ID: <20240606131655.571308533@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,67 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 043c832371cd9023fbd725138ddc6c7f288dc469 ]
+[ Upstream commit 0a4ed2d97cb6d044196cc3e726b6699222b41019 ]
 
-If inc_valid_block_count() can not allocate all requested blocks,
-it needs to release block count in .total_valid_block_count and
-resevation blocks in inode.
+It needs to cover {reserve,release}_compress_blocks() w/ cp_rwsem lock
+to avoid racing with checkpoint, otherwise, filesystem metadata including
+blkaddr in dnode, inode fields and .total_valid_block_count may be
+corrupted after SPO case.
 
-Fixes: 54607494875e ("f2fs: compress: fix to avoid inconsistence bewteen i_blocks and dnode")
+Fixes: ef8d563f184e ("f2fs: introduce F2FS_IOC_RELEASE_COMPRESS_BLOCKS")
+Fixes: c75488fb4d82 ("f2fs: introduce F2FS_IOC_RESERVE_COMPRESS_BLOCKS")
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ fs/f2fs/file.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index fced2b7652f40..07b3675ea1694 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -2309,7 +2309,7 @@ static inline void f2fs_i_blocks_write(struct inode *, block_t, bool, bool);
- static inline int inc_valid_block_count(struct f2fs_sb_info *sbi,
- 				 struct inode *inode, blkcnt_t *count, bool partial)
- {
--	blkcnt_t diff = 0, release = 0;
-+	long long diff = 0, release = 0;
- 	block_t avail_user_block_count;
- 	int ret;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 34becfc142d80..30d438bd30ab4 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3574,9 +3574,12 @@ static int f2fs_release_compress_blocks(struct file *filp, unsigned long arg)
+ 		struct dnode_of_data dn;
+ 		pgoff_t end_offset, count;
  
-@@ -2329,26 +2329,27 @@ static inline int inc_valid_block_count(struct f2fs_sb_info *sbi,
- 	percpu_counter_add(&sbi->alloc_valid_block_count, (*count));
- 
- 	spin_lock(&sbi->stat_lock);
--	sbi->total_valid_block_count += (block_t)(*count);
--	avail_user_block_count = get_available_block_count(sbi, inode, true);
- 
--	if (unlikely(sbi->total_valid_block_count > avail_user_block_count)) {
-+	avail_user_block_count = get_available_block_count(sbi, inode, true);
-+	diff = (long long)sbi->total_valid_block_count + *count -
-+						avail_user_block_count;
-+	if (unlikely(diff > 0)) {
- 		if (!partial) {
- 			spin_unlock(&sbi->stat_lock);
-+			release = *count;
- 			goto enospc;
- 		}
--
--		diff = sbi->total_valid_block_count - avail_user_block_count;
- 		if (diff > *count)
- 			diff = *count;
- 		*count -= diff;
- 		release = diff;
--		sbi->total_valid_block_count -= diff;
- 		if (!*count) {
- 			spin_unlock(&sbi->stat_lock);
- 			goto enospc;
- 		}
- 	}
-+	sbi->total_valid_block_count += (block_t)(*count);
++		f2fs_lock_op(sbi);
 +
- 	spin_unlock(&sbi->stat_lock);
+ 		set_new_dnode(&dn, inode, NULL, NULL, 0);
+ 		ret = f2fs_get_dnode_of_data(&dn, page_idx, LOOKUP_NODE);
+ 		if (ret) {
++			f2fs_unlock_op(sbi);
+ 			if (ret == -ENOENT) {
+ 				page_idx = f2fs_get_next_page_offset(&dn,
+ 								page_idx);
+@@ -3594,6 +3597,8 @@ static int f2fs_release_compress_blocks(struct file *filp, unsigned long arg)
  
- 	if (unlikely(release)) {
+ 		f2fs_put_dnode(&dn);
+ 
++		f2fs_unlock_op(sbi);
++
+ 		if (ret < 0)
+ 			break;
+ 
+@@ -3744,9 +3749,12 @@ static int f2fs_reserve_compress_blocks(struct file *filp, unsigned long arg)
+ 		struct dnode_of_data dn;
+ 		pgoff_t end_offset, count;
+ 
++		f2fs_lock_op(sbi);
++
+ 		set_new_dnode(&dn, inode, NULL, NULL, 0);
+ 		ret = f2fs_get_dnode_of_data(&dn, page_idx, LOOKUP_NODE);
+ 		if (ret) {
++			f2fs_unlock_op(sbi);
+ 			if (ret == -ENOENT) {
+ 				page_idx = f2fs_get_next_page_offset(&dn,
+ 								page_idx);
+@@ -3764,6 +3772,8 @@ static int f2fs_reserve_compress_blocks(struct file *filp, unsigned long arg)
+ 
+ 		f2fs_put_dnode(&dn);
+ 
++		f2fs_unlock_op(sbi);
++
+ 		if (ret < 0)
+ 			break;
+ 
 -- 
 2.43.0
 
