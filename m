@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDA3196C6F;
-	Thu,  6 Jun 2024 14:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E920196C6F;
+	Thu,  6 Jun 2024 14:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683383; cv=none; b=kUyEr7AR42HkUPbOHzq3yRtdipZgwiKzKEaNYXHTqYz4A88EbX+1Xdk95O+zpC45chXgTIMcscD8nziFdwsTVnGYTrElj3L5W/Euu52hLSnF9JYSSj/uOsCN90YTJymDiqMTXDcYoXMjwxEnMPjcnizQ+npw51SUPwfA7/fvX0M=
+	t=1717683384; cv=none; b=TYmwWjmWvT5YqVe8ddlcz7W6apKn8ZypG5GH2uNIPplgOKRXE1O8f9EoixwVX6+fd/iy1qp5957svPtactcRPJbxAo7SPwfoROdi/J4bWxd6Y8288Dcvr9h/ibT1C3JtWwyVD/j8wUQ+XTL3UlMbqKfRwXuLXPCejoRzb7rQISQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683383; c=relaxed/simple;
-	bh=D4wHis05izLIPl15EX/9GbyPL7vxRtaAiiD6esCHXVQ=;
+	s=arc-20240116; t=1717683384; c=relaxed/simple;
+	bh=X0tn2SAI2rZovVk3vHtxee2mn4ZztOxkSxnCtZzRHU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IdP8VrSrpQcGZn3/Qi0plvpOngLQ2RH3TAohZPWkfOEuZ6XfhIw1yKgnOTKPIIPWtp4Ug+hA84aXN8L/Y3IiKoKXUBmU/zF/Oo65Y6UJmSPFSjRq4F4NGzNh0PTfpYg1sb3ucJhZVnwCca6CvbX1WsxPQPltHNumHECKae/bnts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+cRZA8s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hhbRZ6IULVFoCIBknMeh3mSMxZFZ2Hsn7vwVwTlQMCeJ67XMZjCM5eCCGcYzQ0EiETuh2yXzzt285T76sx1S2IGlVxu34UfylIU4uml0E29Cy98X1m2aH0qSL+nRAbpd0JAzzCV2l48WyuWHNIMhKgjvX/IOMoxup41K2P52P2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USPZs8MM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+cRZA8s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8595BC32781;
-	Thu,  6 Jun 2024 14:16:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USPZs8MM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C098C2BD10;
+	Thu,  6 Jun 2024 14:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683383;
-	bh=D4wHis05izLIPl15EX/9GbyPL7vxRtaAiiD6esCHXVQ=;
+	s=korg; t=1717683384;
+	bh=X0tn2SAI2rZovVk3vHtxee2mn4ZztOxkSxnCtZzRHU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+cRZA8sJCtcbaxHxmr2wJghLL7pQIh7odstIrnJscAB9qF2ty8rZOkkSK4tD/enu
-	 Jh7DqmgtCUMxGC12wn/0fb3eDuyhXgtfChusIzARSzCT2SF+Cyb5NVuH48BvPKDt2e
-	 l9OurmgIxS5ZBOUcpyb50MmjsJETQ8gaUzyUKGjc=
+	b=USPZs8MM2yAF+oB0PQqPPD9+SY+Whf+8zcRVV4PedxUr1ScQHLasJKbwNqfS6VPn9
+	 DfF8N1rzIGN988mvByJG2nSTDZmwwHkPjQsobonudrsBEGveJddzly/ZvIB4JEdeml
+	 9ipXA9IIx7SJ4+Ay9XKDJ5DC5tQ7SQtzSbt3Ubi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Trond Myklebust <trondmy@hammerspace.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 266/473] SUNRPC: Fix gss_free_in_token_pages()
-Date: Thu,  6 Jun 2024 16:03:15 +0200
-Message-ID: <20240606131708.737351102@linuxfoundation.org>
+Subject: [PATCH 6.6 325/744] drm/bridge: dpc3433: Dont log an error when DSI host cant be found
+Date: Thu,  6 Jun 2024 15:59:57 +0200
+Message-ID: <20240606131742.862214078@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,82 +47,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit bafa6b4d95d97877baa61883ff90f7e374427fae ]
+[ Upstream commit 24f4f575214de776539d346b99b8717bffa8ebba ]
 
-Dan Carpenter says:
-> Commit 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()") from Oct
-> 24, 2019 (linux-next), leads to the following Smatch static checker
-> warning:
->
-> 	net/sunrpc/auth_gss/svcauth_gss.c:1039 gss_free_in_token_pages()
-> 	warn: iterator 'i' not incremented
->
-> net/sunrpc/auth_gss/svcauth_gss.c
->     1034 static void gss_free_in_token_pages(struct gssp_in_token *in_token)
->     1035 {
->     1036         u32 inlen;
->     1037         int i;
->     1038
-> --> 1039         i = 0;
->     1040         inlen = in_token->page_len;
->     1041         while (inlen) {
->     1042                 if (in_token->pages[i])
->     1043                         put_page(in_token->pages[i]);
->                                                          ^
-> This puts page zero over and over.
->
->     1044                 inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
->     1045         }
->     1046
->     1047         kfree(in_token->pages);
->     1048         in_token->pages = NULL;
->     1049 }
+Given that failing to find a DSI host causes the driver to defer probe,
+make use of dev_err_probe() to log the reason. This makes the defer
+probe reason available and avoids alerting userspace about something
+that is not necessarily an error.
 
-Based on the way that the ->pages[] array is constructed in
-gss_read_proxy_verf(), we know that once the loop encounters a NULL
-page pointer, the remaining array elements must also be NULL.
+Also move the "failed to attach" error message so that it's only printed
+when the devm_mipi_dsi_attach() call fails.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
-Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 6352cd451ddb ("drm: bridge: Add TI DLPC3433 DSI to DMD bridge")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-7-619a28148e5c@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/bridge/ti-dlpc3433.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
-index bdc34ea0d939d..9d045aa6805d7 100644
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1132,17 +1132,11 @@ gss_read_verf(struct rpc_gss_wire_cred *gc,
+diff --git a/drivers/gpu/drm/bridge/ti-dlpc3433.c b/drivers/gpu/drm/bridge/ti-dlpc3433.c
+index b65632ec7e7da..3f933ba294682 100644
+--- a/drivers/gpu/drm/bridge/ti-dlpc3433.c
++++ b/drivers/gpu/drm/bridge/ti-dlpc3433.c
+@@ -319,12 +319,11 @@ static int dlpc_host_attach(struct dlpc *dlpc)
+ 		.channel = 0,
+ 		.node = NULL,
+ 	};
++	int ret;
  
- static void gss_free_in_token_pages(struct gssp_in_token *in_token)
- {
--	u32 inlen;
- 	int i;
- 
- 	i = 0;
--	inlen = in_token->page_len;
--	while (inlen) {
--		if (in_token->pages[i])
--			put_page(in_token->pages[i]);
--		inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
+ 	host = of_find_mipi_dsi_host_by_node(dlpc->host_node);
+-	if (!host) {
+-		DRM_DEV_ERROR(dev, "failed to find dsi host\n");
+-		return -EPROBE_DEFER;
 -	}
--
-+	while (in_token->pages[i])
-+		put_page(in_token->pages[i++]);
- 	kfree(in_token->pages);
- 	in_token->pages = NULL;
++	if (!host)
++		return dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n");
+ 
+ 	dlpc->dsi = mipi_dsi_device_register_full(host, &info);
+ 	if (IS_ERR(dlpc->dsi)) {
+@@ -336,7 +335,11 @@ static int dlpc_host_attach(struct dlpc *dlpc)
+ 	dlpc->dsi->format = MIPI_DSI_FMT_RGB565;
+ 	dlpc->dsi->lanes = dlpc->dsi_lanes;
+ 
+-	return devm_mipi_dsi_attach(dev, dlpc->dsi);
++	ret = devm_mipi_dsi_attach(dev, dlpc->dsi);
++	if (ret)
++		DRM_DEV_ERROR(dev, "failed to attach dsi host\n");
++
++	return ret;
  }
+ 
+ static int dlpc3433_probe(struct i2c_client *client)
+@@ -367,10 +370,8 @@ static int dlpc3433_probe(struct i2c_client *client)
+ 	drm_bridge_add(&dlpc->bridge);
+ 
+ 	ret = dlpc_host_attach(dlpc);
+-	if (ret) {
+-		DRM_DEV_ERROR(dev, "failed to attach dsi host\n");
++	if (ret)
+ 		goto err_remove_bridge;
+-	}
+ 
+ 	return 0;
+ 
 -- 
 2.43.0
 
