@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F761C8A0E;
-	Thu,  6 Jun 2024 14:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DFD1C8A0E;
+	Thu,  6 Jun 2024 14:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683714; cv=none; b=bI+gdf4CoVbA1gOxGtVxK4u7u4YIqwzGsGBevb1vxwHNB0/TUdQCTgD8wt706xdnlaWjAn5drIWj8z9sGHJreQHKLEox54VqrmNJcQaiXnwg1mshpXFk4zQ0r8slnZSo1uQMN8WdcbWQQHMhz2u/66DQ58ciLruly0W+6/zUTXM=
+	t=1717683715; cv=none; b=Hmz9e9t073il3dwBny3UmHLMb4hCiu4Uph4VwIxCxIL30zFgtZSuQWbb/mxG7nhJSiSX7dVMOzRpRKZkHC853xOLCjtj7zhJIGZi2rZjY0yeWoAFPy+xHM8EOYF3hVQBzeIRY5hga29UarVFwUaJdvl3aOQsnkC+9BQZSP4Afqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683714; c=relaxed/simple;
-	bh=TQ4r3xY74p4LjtFSL58yMpGVZgj17fBSb4SuL+Mk5bg=;
+	s=arc-20240116; t=1717683715; c=relaxed/simple;
+	bh=fzd3fZiTFBXpCzw93YWq5dBUMzebv8M5sa4Tv+3WW2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UkUIy38TETZMxsMpW2Xnml5T//wxpMlvGBiKOTq+qCSOuXrdHESEmRPSM+aJ1md8aepmYsUeG0eYKHan/dET+CYW/V6CKSp7p0EIiMGROBBJeShlzsD24/nK6GtBQYDWf777XHm8gIRNy4NrHu7V+Y0JYpZZUvOPZOi2CWHde9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZwe1zs9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MxDEuoDNocN6z/TcJN3XGRcn7VBGVHmgSS71KnTZ4bJhQb0Ixai7ET9l4+u3LUjWRaIXk0Vnl6IBN4qboOXePWSL71dcWL+Rs2O2UQTpBYdbYDuzzr/POzXYUYJ0MpW0Fgz2OvHK3sYkAJvNtWprrWSANMPHV08OTh197jmjGr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UB+uCR9h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZwe1zs9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA62C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UB+uCR9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB18DC2BD10;
 	Thu,  6 Jun 2024 14:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683714;
-	bh=TQ4r3xY74p4LjtFSL58yMpGVZgj17fBSb4SuL+Mk5bg=;
+	bh=fzd3fZiTFBXpCzw93YWq5dBUMzebv8M5sa4Tv+3WW2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZwe1zs9VfoSNzB1Q6qxPlPlx9IphKHPn7yNs1Oz2hf+X1tWbXF0u9/lC9OEZeiKv
-	 5hjD/OTXXVe09bPb1ZYDejxe2bvxrfH3fMUnnk+AO6uqoJd+YubdY07+pZPjP2jV9K
-	 HuRkgMNc8UcumiJB03VIrSZGdqxM7YZ1x2BtM7uI=
+	b=UB+uCR9hGJasnRTeR3KbQqmag22wuz6blfH/cZFM14AKBYllRkcsDco1b4JUeUbq7
+	 u2jFM7W63i+MKDERWXAkLx0up4SJBtDu29Is/3qSJP2kJr5CBDNz3Z545mRgIDFjEU
+	 1cNkxdUw9vyB5UAgMrnc2ju8ALkq8ElKRVT3QDMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Yue Sun <samsun1006219@gmail.com>,
+	xingwei lee <xrivendell7@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 612/744] drm: zynqmp_dpsub: Always register bridge
-Date: Thu,  6 Jun 2024 16:04:44 +0200
-Message-ID: <20240606131752.119939731@linuxfoundation.org>
+Subject: [PATCH 6.6 648/744] tcp: Fix shift-out-of-bounds in dctcp_update_alpha().
+Date: Thu,  6 Jun 2024 16:05:20 +0200
+Message-ID: <20240606131753.246761942@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,95 +55,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit be3f3042391d061cfca2bd22630e0d101acea5fc ]
+[ Upstream commit 3ebc46ca8675de6378e3f8f40768e180bb8afa66 ]
 
-We must always register the DRM bridge, since zynqmp_dp_hpd_work_func
-calls drm_bridge_hpd_notify, which in turn expects hpd_mutex to be
-initialized. We do this before zynqmp_dpsub_drm_init since that calls
-drm_bridge_attach. This fixes the following lockdep warning:
+In dctcp_update_alpha(), we use a module parameter dctcp_shift_g
+as follows:
 
-[   19.217084] ------------[ cut here ]------------
-[   19.227530] DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-[   19.227768] WARNING: CPU: 0 PID: 140 at kernel/locking/mutex.c:582 __mutex_lock+0x4bc/0x550
-[   19.241696] Modules linked in:
-[   19.244937] CPU: 0 PID: 140 Comm: kworker/0:4 Not tainted 6.6.20+ #96
-[   19.252046] Hardware name: xlnx,zynqmp (DT)
-[   19.256421] Workqueue: events zynqmp_dp_hpd_work_func
-[   19.261795] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   19.269104] pc : __mutex_lock+0x4bc/0x550
-[   19.273364] lr : __mutex_lock+0x4bc/0x550
-[   19.277592] sp : ffffffc085c5bbe0
-[   19.281066] x29: ffffffc085c5bbe0 x28: 0000000000000000 x27: ffffff88009417f8
-[   19.288624] x26: ffffff8800941788 x25: ffffff8800020008 x24: ffffffc082aa3000
-[   19.296227] x23: ffffffc080d90e3c x22: 0000000000000002 x21: 0000000000000000
-[   19.303744] x20: 0000000000000000 x19: ffffff88002f5210 x18: 0000000000000000
-[   19.311295] x17: 6c707369642e3030 x16: 3030613464662072 x15: 0720072007200720
-[   19.318922] x14: 0000000000000000 x13: 284e4f5f4e524157 x12: 0000000000000001
-[   19.326442] x11: 0001ffc085c5b940 x10: 0001ff88003f388b x9 : 0001ff88003f3888
-[   19.334003] x8 : 0001ff88003f3888 x7 : 0000000000000000 x6 : 0000000000000000
-[   19.341537] x5 : 0000000000000000 x4 : 0000000000001668 x3 : 0000000000000000
-[   19.349054] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffffff88003f3880
-[   19.356581] Call trace:
-[   19.359160]  __mutex_lock+0x4bc/0x550
-[   19.363032]  mutex_lock_nested+0x24/0x30
-[   19.367187]  drm_bridge_hpd_notify+0x2c/0x6c
-[   19.371698]  zynqmp_dp_hpd_work_func+0x44/0x54
-[   19.376364]  process_one_work+0x3ac/0x988
-[   19.380660]  worker_thread+0x398/0x694
-[   19.384736]  kthread+0x1bc/0x1c0
-[   19.388241]  ret_from_fork+0x10/0x20
-[   19.392031] irq event stamp: 183
-[   19.395450] hardirqs last  enabled at (183): [<ffffffc0800b9278>] finish_task_switch.isra.0+0xa8/0x2d4
-[   19.405140] hardirqs last disabled at (182): [<ffffffc081ad3754>] __schedule+0x714/0xd04
-[   19.413612] softirqs last  enabled at (114): [<ffffffc080133de8>] srcu_invoke_callbacks+0x158/0x23c
-[   19.423128] softirqs last disabled at (110): [<ffffffc080133de8>] srcu_invoke_callbacks+0x158/0x23c
-[   19.432614] ---[ end trace 0000000000000000 ]---
+  alpha -= min_not_zero(alpha, alpha >> dctcp_shift_g);
+  ...
+  delivered_ce <<= (10 - dctcp_shift_g);
 
-Fixes: eb2d64bfcc17 ("drm: xlnx: zynqmp_dpsub: Report HPD through the bridge")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240308204741.3631919-1-sean.anderson@linux.dev
-(cherry picked from commit 61ba791c4a7a09a370c45b70a81b8c7d4cf6b2ae)
-Signed-off-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+It seems syzkaller started fuzzing module parameters and triggered
+shift-out-of-bounds [0] by setting 100 to dctcp_shift_g:
+
+  memcpy((void*)0x20000080,
+         "/sys/module/tcp_dctcp/parameters/dctcp_shift_g\000", 47);
+  res = syscall(__NR_openat, /*fd=*/0xffffffffffffff9cul, /*file=*/0x20000080ul,
+                /*flags=*/2ul, /*mode=*/0ul);
+  memcpy((void*)0x20000000, "100\000", 4);
+  syscall(__NR_write, /*fd=*/r[0], /*val=*/0x20000000ul, /*len=*/4ul);
+
+Let's limit the max value of dctcp_shift_g by param_set_uint_minmax().
+
+With this patch:
+
+  # echo 10 > /sys/module/tcp_dctcp/parameters/dctcp_shift_g
+  # cat /sys/module/tcp_dctcp/parameters/dctcp_shift_g
+  10
+  # echo 11 > /sys/module/tcp_dctcp/parameters/dctcp_shift_g
+  -bash: echo: write error: Invalid argument
+
+[0]:
+UBSAN: shift-out-of-bounds in net/ipv4/tcp_dctcp.c:143:12
+shift exponent 100 is too large for 32-bit type 'u32' (aka 'unsigned int')
+CPU: 0 PID: 8083 Comm: syz-executor345 Not tainted 6.9.0-05151-g1b294a1f3561 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.13.0-1ubuntu1.1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x201/0x300 lib/dump_stack.c:114
+ ubsan_epilogue lib/ubsan.c:231 [inline]
+ __ubsan_handle_shift_out_of_bounds+0x346/0x3a0 lib/ubsan.c:468
+ dctcp_update_alpha+0x540/0x570 net/ipv4/tcp_dctcp.c:143
+ tcp_in_ack_event net/ipv4/tcp_input.c:3802 [inline]
+ tcp_ack+0x17b1/0x3bc0 net/ipv4/tcp_input.c:3948
+ tcp_rcv_state_process+0x57a/0x2290 net/ipv4/tcp_input.c:6711
+ tcp_v4_do_rcv+0x764/0xc40 net/ipv4/tcp_ipv4.c:1937
+ sk_backlog_rcv include/net/sock.h:1106 [inline]
+ __release_sock+0x20f/0x350 net/core/sock.c:2983
+ release_sock+0x61/0x1f0 net/core/sock.c:3549
+ mptcp_subflow_shutdown+0x3d0/0x620 net/mptcp/protocol.c:2907
+ mptcp_check_send_data_fin+0x225/0x410 net/mptcp/protocol.c:2976
+ __mptcp_close+0x238/0xad0 net/mptcp/protocol.c:3072
+ mptcp_close+0x2a/0x1a0 net/mptcp/protocol.c:3127
+ inet_release+0x190/0x1f0 net/ipv4/af_inet.c:437
+ __sock_release net/socket.c:659 [inline]
+ sock_close+0xc0/0x240 net/socket.c:1421
+ __fput+0x41b/0x890 fs/file_table.c:422
+ task_work_run+0x23b/0x300 kernel/task_work.c:180
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0x9c8/0x2540 kernel/exit.c:878
+ do_group_exit+0x201/0x2b0 kernel/exit.c:1027
+ __do_sys_exit_group kernel/exit.c:1038 [inline]
+ __se_sys_exit_group kernel/exit.c:1036 [inline]
+ __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1036
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xe4/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x67/0x6f
+RIP: 0033:0x7f6c2b5005b6
+Code: Unable to access opcode bytes at 0x7f6c2b50058c.
+RSP: 002b:00007ffe883eb948 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00007f6c2b5862f0 RCX: 00007f6c2b5005b6
+RDX: 0000000000000001 RSI: 000000000000003c RDI: 0000000000000001
+RBP: 0000000000000001 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 0000000000000006 R11: 0000000000000246 R12: 00007f6c2b5862f0
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+ </TASK>
+
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Reported-by: Yue Sun <samsun1006219@gmail.com>
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAEkJfYNJM=cw-8x7_Vmj1J6uYVCWMbbvD=EFmDPVBGpTsqOxEA@mail.gmail.com/
+Fixes: e3118e8359bb ("net: tcp: add DCTCP congestion control algorithm")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240517091626.32772-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/ipv4/tcp_dctcp.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-index 88eb33acd5f0d..face8d6b2a6fb 100644
---- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-+++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-@@ -256,12 +256,12 @@ static int zynqmp_dpsub_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_dp;
+diff --git a/net/ipv4/tcp_dctcp.c b/net/ipv4/tcp_dctcp.c
+index bb23bb5b387a0..8ad62713b0ba2 100644
+--- a/net/ipv4/tcp_dctcp.c
++++ b/net/ipv4/tcp_dctcp.c
+@@ -58,7 +58,18 @@ struct dctcp {
+ };
  
-+	drm_bridge_add(dpsub->bridge);
+ static unsigned int dctcp_shift_g __read_mostly = 4; /* g = 1/2^4 */
+-module_param(dctcp_shift_g, uint, 0644);
 +
- 	if (dpsub->dma_enabled) {
- 		ret = zynqmp_dpsub_drm_init(dpsub);
- 		if (ret)
- 			goto err_disp;
--	} else {
--		drm_bridge_add(dpsub->bridge);
- 	}
++static int dctcp_shift_g_set(const char *val, const struct kernel_param *kp)
++{
++	return param_set_uint_minmax(val, kp, 0, 10);
++}
++
++static const struct kernel_param_ops dctcp_shift_g_ops = {
++	.set = dctcp_shift_g_set,
++	.get = param_get_uint,
++};
++
++module_param_cb(dctcp_shift_g, &dctcp_shift_g_ops, &dctcp_shift_g, 0644);
+ MODULE_PARM_DESC(dctcp_shift_g, "parameter g for updating dctcp_alpha");
  
- 	dev_info(&pdev->dev, "ZynqMP DisplayPort Subsystem driver probed");
-@@ -288,9 +288,8 @@ static void zynqmp_dpsub_remove(struct platform_device *pdev)
- 
- 	if (dpsub->drm)
- 		zynqmp_dpsub_drm_cleanup(dpsub);
--	else
--		drm_bridge_remove(dpsub->bridge);
- 
-+	drm_bridge_remove(dpsub->bridge);
- 	zynqmp_disp_remove(dpsub);
- 	zynqmp_dp_remove(dpsub);
- 
+ static unsigned int dctcp_alpha_on_init __read_mostly = DCTCP_MAX_ALPHA;
 -- 
 2.43.0
 
