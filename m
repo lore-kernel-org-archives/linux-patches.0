@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC4D1974EC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FD71974EC;
 	Thu,  6 Jun 2024 14:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683088; cv=none; b=dympGYgg3wjDTuRRNfKEF6xCsrKoDNNQddX253NjEd8IrPQjnEs2pPAfgp1NSeS5hHM94m7/YFDfCVrhHyMTFOUqZU84dd7JWaEAJeruyr7agJjhJAQbE2hAhbkcGAlI1zFmu445X13sK798/utAZRxtvFLctgsV003Cwvx9Uv8=
+	t=1717683088; cv=none; b=Leg84ajO9Iv7g4P9dq2goe36SIfGaZAk40qHC0+yvu4G7CFnPHjVG1EllA7OuJx3diJNo1dxKMP+E4MRYrnfkaRgt+Z3l+xxeCQ4yR7L77Zk2yZNhYwbCd9lerW7rWuaw6IZ5vZor3k5SMMwKA3a8oNfnC4T3ljjZXry24umkLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683088; c=relaxed/simple;
-	bh=r/zHN4gnLjcCEtVys50Z/Q4ttAVEkcoPKAgGWRONi2c=;
+	bh=incpsdWh2AC8wQSUhSGld4CCmNDPGBRGl9fjP6MrZcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vn/EFhjfB2iFVwdLtUL5qwBt8vjaNvNphIImqMlECVvULw8MRPnd7fmhY+HXPQxlR4lomJWMY3Dcb2g5bMOvPc1FhLKxTAqbR8QOWs1qT60ldEWov4TVMk04e8GXblUpqAjSo8komS1G4fft5Ql701uOljZcWrbQ2IBGtkkSa+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17QUd9GU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U/1b5R/0gaJAlI23sV+uZQocX8JGUEmwAafp2lm7QmBFsdxqV9DmsI1WI6URfnD0M4qbz8/0mqFwwnkggYue/yuY9CG7p8gOYMDUv//+B1gUJx9iJhKq2DnGfw6p2ObPcWhM9MZMhVF1HKKjLnrvMrqY6r8gFM8aAJZyEPMOrOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hbv0YI71; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17QUd9GU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2C5C32782;
-	Thu,  6 Jun 2024 14:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hbv0YI71"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647CAC32786;
+	Thu,  6 Jun 2024 14:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683087;
-	bh=r/zHN4gnLjcCEtVys50Z/Q4ttAVEkcoPKAgGWRONi2c=;
+	s=korg; t=1717683088;
+	bh=incpsdWh2AC8wQSUhSGld4CCmNDPGBRGl9fjP6MrZcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=17QUd9GU+hLFuwfz4aEHv7wKAUT3kPUKZYQ59o2hj0f3ImQLHPp2uiRB24hOoQbK9
-	 v86d4+vS7wfPSZPoG9SVncuanJJXlsXZckZzhbwmqPd55lgRM3LC/oy12zjluiQIA9
-	 JLwQ5Hk2K/3+snZ57VleGRztyp4ga8qv4j+KUHao=
+	b=Hbv0YI7124XHSMazfVbrHoeARy72FpmyRl1uujqXJjhpQXNdu8S+dUV3U7MSjD7fb
+	 u8SmHc6c4d8M9PSYunrKcz1zPYsk2FfmBXlAoPjwyf++PEVXvnNKZl48+6GmIdygnk
+	 y4/KitgPSr4LIvSOhVB8RU9b/++CnxMJCoW3VWfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carsten Tolkmit <ctolkmit@ennit.de>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.9 368/374] x86/topology: Handle bogus ACPI tables correctly
-Date: Thu,  6 Jun 2024 16:05:47 +0200
-Message-ID: <20240606131704.204411235@linuxfoundation.org>
+	Mateusz Kaduk <mateusz.kaduk@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Subject: [PATCH 6.9 369/374] x86/pci: Skip early E820 check for ECAM region
+Date: Thu,  6 Jun 2024 16:05:48 +0200
+Message-ID: <20240606131704.240746512@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -50,137 +53,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-commit 9d22c96316ac59ed38e80920c698fed38717b91b upstream.
+commit 199f968f1484a14024d0d467211ffc2faf193eb4 upstream.
 
-The ACPI specification clearly states how the processors should be
-enumerated in the MADT:
+Arul, Mateusz, Imcarneiro91, and Aman reported a regression caused by
+07eab0901ede ("efi/x86: Remove EfiMemoryMappedIO from E820 map").  On the
+Lenovo Legion 9i laptop, that commit removes the ECAM area from E820, which
+means the early E820 validation fails, which means we don't enable ECAM in
+the "early MCFG" path.
 
- "To ensure that the boot processor is supported post initialization,
-  two guidelines should be followed. The first is that OSPM should
-  initialize processors in the order that they appear in the MADT. The
-  second is that platform firmware should list the boot processor as the
-  first processor entry in the MADT.
+The static MCFG table describes ECAM without depending on the ACPI
+interpreter.  Many Legion 9i ACPI methods rely on that, so they fail when
+PCI config access isn't available, resulting in the embedded controller,
+PS/2, audio, trackpad, and battery devices not being detected.  The _OSC
+method also fails, so Linux can't take control of the PCIe hotplug, PME,
+and AER features:
+
+  # pci_mmcfg_early_init()
+
+  PCI: ECAM [mem 0xc0000000-0xce0fffff] (base 0xc0000000) for domain 0000 [bus 00-e0]
+  PCI: not using ECAM ([mem 0xc0000000-0xce0fffff] not reserved)
+
+  ACPI Error: AE_ERROR, Returned by Handler for [PCI_Config] (20230628/evregion-300)
+  ACPI: Interpreter enabled
+  ACPI: Ignoring error and continuing table load
+  ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PC00.RP01._SB.PC00], AE_NOT_FOUND (20230628/dswload2-162)
+  ACPI Error: AE_NOT_FOUND, During name lookup/catalog (20230628/psobject-220)
+  ACPI: Skipping parse of AML opcode: OpcodeName unavailable (0x0010)
+  ACPI BIOS Error (bug): Could not resolve symbol [\_SB.PC00.RP01._SB.PC00], AE_NOT_FOUND (20230628/dswload2-162)
+  ACPI Error: AE_NOT_FOUND, During name lookup/catalog (20230628/psobject-220)
   ...
-  Failure of OSPM implementations and platform firmware to abide by
-  these guidelines can result in both unpredictable and non optimal
-  platform operation."
+  ACPI Error: Aborting method \_SB.PC00._OSC due to previous error (AE_NOT_FOUND) (20230628/psparse-529)
+  acpi PNP0A08:00: _OSC: platform retains control of PCIe features (AE_NOT_FOUND)
 
-The kernel relies on that ordering to detect the real BSP on crash kernels
-which is important to avoid sending a INIT IPI to it as that would cause a
-full machine reset.
+  # pci_mmcfg_late_init()
 
-On a Dell XPS 16 9640 the BIOS ignores this rule and enumerates the CPUs in
-the wrong order. As a consequence the kernel falsely detects a crash kernel
-and disables the corresponding CPU.
+  PCI: ECAM [mem 0xc0000000-0xce0fffff] (base 0xc0000000) for domain 0000 [bus 00-e0]
+  PCI: [Firmware Info]: ECAM [mem 0xc0000000-0xce0fffff] not reserved in ACPI motherboard resources
+  PCI: ECAM [mem 0xc0000000-0xce0fffff] is EfiMemoryMappedIO; assuming valid
+  PCI: ECAM [mem 0xc0000000-0xce0fffff] reserved to work around lack of ACPI motherboard _CRS
 
-Prevent this by checking the IA32_APICBASE MSR for the BSP bit on the boot
-CPU. If that bit is set, then the MADT based BSP detection can be safely
-ignored. If the kernel detects a mismatch between the BSP bit and the first
-enumerated MADT entry then emit a firmware bug message.
+Per PCI Firmware r3.3, sec 4.1.2, ECAM space must be reserved by a PNP0C02
+resource, but there's no requirement to mention it in E820, so we shouldn't
+look at E820 to validate the ECAM space described by MCFG.
 
-This obviously also has to be taken into account when the boot APIC ID and
-the first enumerated APIC ID match. If the boot CPU does not have the BSP
-bit set in the APICBASE MSR then there is no way for the boot CPU to
-determine which of the CPUs is the real BSP. Sending an INIT to the real
-BSP would reset the machine so the only sane way to deal with that is to
-limit the number of CPUs to one and emit a corresponding warning message.
+In 2006, 946f2ee5c731 ("[PATCH] i386/x86-64: Check that MCFG points to an
+e820 reserved area") added a sanity check of E820 to work around buggy MCFG
+tables, but that over-aggressive validation causes failures like this one.
 
-Fixes: 5c5682b9f87a ("x86/cpu: Detect real BSP on crash kernels")
-Reported-by: Carsten Tolkmit <ctolkmit@ennit.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Carsten Tolkmit <ctolkmit@ennit.de>
+Keep the E820 validation check for machines older than 2016, an arbitrary
+ten years after 946f2ee5c731, so machines that depend on it don't break.
+
+Skip the early E820 check for 2016 and newer BIOSes since there's no
+requirement to describe ECAM in E820.
+
+Link: https://lore.kernel.org/r/20240417204012.215030-2-helgaas@kernel.org
+Fixes: 07eab0901ede ("efi/x86: Remove EfiMemoryMappedIO from E820 map")
+Reported-by: Mateusz Kaduk <mateusz.kaduk@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218444
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Mateusz Kaduk <mateusz.kaduk@gmail.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/87le48jycb.ffs@tglx
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218837
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/topology.c | 55 +++++++++++++++++++++++++++++++---
- 1 file changed, 51 insertions(+), 4 deletions(-)
+ arch/x86/pci/mmconfig-shared.c |   40 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 29 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/topology.c b/arch/x86/kernel/cpu/topology.c
-index d17c9b71eb4a..621a151ccf7d 100644
---- a/arch/x86/kernel/cpu/topology.c
-+++ b/arch/x86/kernel/cpu/topology.c
-@@ -128,6 +128,9 @@ static void topo_set_cpuids(unsigned int cpu, u32 apic_id, u32 acpi_id)
- 
- static __init bool check_for_real_bsp(u32 apic_id)
+--- a/arch/x86/pci/mmconfig-shared.c
++++ b/arch/x86/pci/mmconfig-shared.c
+@@ -518,7 +518,34 @@ static bool __ref pci_mmcfg_reserved(str
  {
-+	bool is_bsp = false, has_apic_base = boot_cpu_data.x86 >= 6;
-+	u64 msr;
+ 	struct resource *conflict;
+ 
+-	if (!early && !acpi_disabled) {
++	if (early) {
 +
- 	/*
- 	 * There is no real good way to detect whether this a kdump()
- 	 * kernel, but except on the Voyager SMP monstrosity which is not
-@@ -144,17 +147,61 @@ static __init bool check_for_real_bsp(u32 apic_id)
- 	if (topo_info.real_bsp_apic_id != BAD_APICID)
- 		return false;
- 
--	if (apic_id == topo_info.boot_cpu_apic_id) {
--		topo_info.real_bsp_apic_id = apic_id;
--		return false;
-+	/*
-+	 * Check whether the enumeration order is broken by evaluating the
-+	 * BSP bit in the APICBASE MSR. If the CPU does not have the
-+	 * APICBASE MSR then the BSP detection is not possible and the
-+	 * kernel must rely on the firmware enumeration order.
-+	 */
-+	if (has_apic_base) {
-+		rdmsrl(MSR_IA32_APICBASE, msr);
-+		is_bsp = !!(msr & MSR_IA32_APICBASE_BSP);
- 	}
- 
--	pr_warn("Boot CPU APIC ID not the first enumerated APIC ID: %x > %x\n",
-+	if (apic_id == topo_info.boot_cpu_apic_id) {
 +		/*
-+		 * If the boot CPU has the APIC BSP bit set then the
-+		 * firmware enumeration is agreeing. If the CPU does not
-+		 * have the APICBASE MSR then the only choice is to trust
-+		 * the enumeration order.
++		 * Don't try to do this check unless configuration type 1
++		 * is available.  How about type 2?
 +		 */
-+		if (is_bsp || !has_apic_base) {
-+			topo_info.real_bsp_apic_id = apic_id;
-+			return false;
-+		}
++
 +		/*
-+		 * If the boot APIC is enumerated first, but the APICBASE
-+		 * MSR does not have the BSP bit set, then there is no way
-+		 * to discover the real BSP here. Assume a crash kernel and
-+		 * limit the number of CPUs to 1 as an INIT to the real BSP
-+		 * would reset the machine.
++		 * 946f2ee5c731 ("Check that MCFG points to an e820
++		 * reserved area") added this E820 check in 2006 to work
++		 * around BIOS defects.
++		 *
++		 * Per PCI Firmware r3.3, sec 4.1.2, ECAM space must be
++		 * reserved by a PNP0C02 resource, but it need not be
++		 * mentioned in E820.  Before the ACPI interpreter is
++		 * available, we can't check for PNP0C02 resources, so
++		 * there's no reliable way to verify the region in this
++		 * early check.  Keep it only for the old machines that
++		 * motivated 946f2ee5c731.
 +		 */
-+		pr_warn("Enumerated BSP APIC %x is not marked in APICBASE MSR\n", apic_id);
-+		pr_warn("Assuming crash kernel. Limiting to one CPU to prevent machine INIT\n");
-+		set_nr_cpu_ids(1);
-+		goto fwbug;
++		if (dmi_get_bios_year() < 2016 && raw_pci_ops)
++			return is_mmconf_reserved(e820__mapped_all, cfg, dev,
++						  "E820 entry");
++
++		return true;
 +	}
 +
-+	pr_warn("Boot CPU APIC ID not the first enumerated APIC ID: %x != %x\n",
- 		topo_info.boot_cpu_apic_id, apic_id);
-+
-+	if (is_bsp) {
-+		/*
-+		 * The boot CPU has the APIC BSP bit set. Use it and complain
-+		 * about the broken firmware enumeration.
-+		 */
-+		topo_info.real_bsp_apic_id = topo_info.boot_cpu_apic_id;
-+		goto fwbug;
-+	}
-+
- 	pr_warn("Crash kernel detected. Disabling real BSP to prevent machine INIT\n");
- 
- 	topo_info.real_bsp_apic_id = apic_id;
- 	return true;
-+
-+fwbug:
-+	pr_warn(FW_BUG "APIC enumeration order not specification compliant\n");
-+	return false;
++	if (!acpi_disabled) {
+ 		if (is_mmconf_reserved(is_acpi_reserved, cfg, dev,
+ 				       "ACPI motherboard resource"))
+ 			return true;
+@@ -551,16 +578,7 @@ static bool __ref pci_mmcfg_reserved(str
+ 	 * For MCFG information constructed from hotpluggable host bridge's
+ 	 * _CBA method, just assume it's reserved.
+ 	 */
+-	if (pci_mmcfg_running_state)
+-		return true;
+-
+-	/* Don't try to do this check unless configuration
+-	   type 1 is available. how about type 2 ?*/
+-	if (raw_pci_ops)
+-		return is_mmconf_reserved(e820__mapped_all, cfg, dev,
+-					  "E820 entry");
+-
+-	return false;
++	return pci_mmcfg_running_state;
  }
  
- static unsigned int topo_unit_count(u32 lvlid, enum x86_topology_domains at_level,
--- 
-2.45.2
-
+ static void __init pci_mmcfg_reject_broken(int early)
 
 
