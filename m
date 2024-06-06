@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247CD1A2579;
-	Thu,  6 Jun 2024 14:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EBF1CBE8A;
+	Thu,  6 Jun 2024 14:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683766; cv=none; b=R4Ju+5yK0AlreRfI9KS5lVHHOpUixFPIdfJXCPljEyYR1FusNu30jpJsWFPvDe8i+byJzitehfX9FOWnMvUguT3+KzXseCkrqo2nVPbe0C0nfjOe9XVGT1TR7Bfuz6+36r0YiVAgNlLYc9yv14RywadLEPuNFNeXrjI+NYKMXg0=
+	t=1717683766; cv=none; b=YRDjSt6etczzNIH++8Hs0LV0uP/WjP6vjxG5eWs/c1W+Np9HKoZA8fRP9/0OJnQUp905ADQRd8ZU/vBctP0s/aAkYl3hbD6K1SRqTymMJOkIVteOPwu1rWLzto7pNG4cUj+p0oxlT9gZaxW4jPhP1R8GfBBE7CQKWhKiD5Z9JUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683766; c=relaxed/simple;
-	bh=Fy9wMyh9LsBSaKRmdlQSar4iSmQSWqZv14NbJ9ItOEw=;
+	bh=NGK+BqprE4pSM0QERSSILtLSb2/SF+imAwXBFCBVS9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NxCK0pk+ZZIF8smPEqoSsj2yYZ8bKBJvAUcJiFLyDijqDRmOn3ByplFlaInJ08pQfhYKwjuFIbmfJgPUVgoUUdYJUCQ38P4eNpDai+38cEUlOlXNJk4k3le5STUTuW9QPYxEgv24jAyGswRjzv/GK9+TBNH8aXJYIxsRg9C3Dv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1wXDKO6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxNUSkHBLYzxLpK9wNkU2VBce7yMABho/kANzhnZ66Gcm2rLMQ49+nG4SLwEarKs69vuMofB2o+GzSN29HjlqSfl84GHj+SvoW/1y2g0YqOppOCIs/Mn4vE8MPDmK14PGy2hR3IGdplG6DokrZibkf4EeDt65Er9kNAuh56Dyqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wd/ERUm0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1wXDKO6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC645C2BD10;
-	Thu,  6 Jun 2024 14:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wd/ERUm0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48CC4C2BD10;
+	Thu,  6 Jun 2024 14:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683765;
-	bh=Fy9wMyh9LsBSaKRmdlQSar4iSmQSWqZv14NbJ9ItOEw=;
+	s=korg; t=1717683766;
+	bh=NGK+BqprE4pSM0QERSSILtLSb2/SF+imAwXBFCBVS9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1wXDKO6qPHZVav/tRPKuHenAQPasvmW9iVbImeCvIBQtBxHfxIMpMmIBg/RCqOir
-	 hv6zogEM+CY8lqNZxkMqLdykAy9sDZT5WCBFu0aIhGNsX3gbGCsLtp+/12w9jiWyAi
-	 foBsA4zznIknL202sHW6pB2cvfYL8TlPpYF0fSKI=
+	b=Wd/ERUm0Zl6/4GGhks9ycDlIIfPKGlqg1l8dQ9Nr2Pu+MDjnW01EAIvswRjbFDBpP
+	 2wfYntHZsR+tEhJwDYzK5LY4hDcyPVqIfN0ot4Ej83+I9OA9WJ8u1zZ0WOGdlP7JfP
+	 JJgQo2s3g3k2MN6yowd1fTsGcknyrFYmrjFPLEu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 706/744] selftests: mptcp: simult flows: mark unbalanced tests as flaky
-Date: Thu,  6 Jun 2024 16:06:18 +0200
-Message-ID: <20240606131755.118346091@linuxfoundation.org>
+Subject: [PATCH 6.6 697/744] af_unix: Annotate data-race around unix_sk(sk)->addr.
+Date: Thu,  6 Jun 2024 16:06:09 +0200
+Message-ID: <20240606131754.841475359@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,66 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit cc73a6577ae64247898269d138dee6b73ff710cc ]
+[ Upstream commit 97e1db06c7bb948da10ba85acad8030b56886593 ]
 
-These tests are flaky since their introduction. This might be less or
-not visible depending on the CI running the tests, especially if it is
-also busy doing other tasks in parallel.
+Once unix_sk(sk)->addr is assigned under net->unx.table.locks and
+unix_sk(sk)->bindlock, *(unix_sk(sk)->addr) and unix_sk(sk)->path are
+fully set up, and unix_sk(sk)->addr is never changed.
 
-A first analysis shown that the transfer can be slowed down when there
-are some re-injections at the MPTCP level. Such re-injections can of
-course happen, and disturb the transfer, but it looks strange to have
-them in this lab. That could be caused by the kernel having access to
-less CPU cycles -- e.g. when other activities are executed in parallel
--- or by a misinterpretation on the MPTCP packet scheduler side.
+unix_getname() and unix_copy_addr() access the two fields locklessly,
+and commit ae3b564179bf ("missing barriers in some of unix_sock ->addr
+and ->path accesses") added smp_store_release() and smp_load_acquire()
+pairs.
 
-While this is being investigated, the tests are marked as flaky not to
-create noises in other CIs.
+In other functions, we still read unix_sk(sk)->addr locklessly to check
+if the socket is bound, and KCSAN complains about it.  [0]
 
-Fixes: 219d04992b68 ("mptcp: push pending frames when subflow has free space")
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/475
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240524-upstream-net-20240524-selftests-mptcp-flaky-v1-2-a352362f3f8e@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Given these functions have no dependency for *(unix_sk(sk)->addr) and
+unix_sk(sk)->path, READ_ONCE() is enough to annotate the data-race.
+
+Note that it is safe to access unix_sk(sk)->addr locklessly if the socket
+is found in the hash table.  For example, the lockless read of otheru->addr
+in unix_stream_connect() is safe.
+
+Note also that newu->addr there is of the child socket that is still not
+accessible from userspace, and smp_store_release() publishes the address
+in case the socket is accept()ed and unix_getname() / unix_copy_addr()
+is called.
+
+[0]:
+BUG: KCSAN: data-race in unix_bind / unix_listen
+
+write (marked) to 0xffff88805f8d1840 of 8 bytes by task 13723 on cpu 0:
+ __unix_set_addr_hash net/unix/af_unix.c:329 [inline]
+ unix_bind_bsd net/unix/af_unix.c:1241 [inline]
+ unix_bind+0x881/0x1000 net/unix/af_unix.c:1319
+ __sys_bind+0x194/0x1e0 net/socket.c:1847
+ __do_sys_bind net/socket.c:1858 [inline]
+ __se_sys_bind net/socket.c:1856 [inline]
+ __x64_sys_bind+0x40/0x50 net/socket.c:1856
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x4f/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x46/0x4e
+
+read to 0xffff88805f8d1840 of 8 bytes by task 13724 on cpu 1:
+ unix_listen+0x72/0x180 net/unix/af_unix.c:734
+ __sys_listen+0xdc/0x160 net/socket.c:1881
+ __do_sys_listen net/socket.c:1890 [inline]
+ __se_sys_listen net/socket.c:1888 [inline]
+ __x64_sys_listen+0x2e/0x40 net/socket.c:1888
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x4f/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x46/0x4e
+
+value changed: 0x0000000000000000 -> 0xffff88807b5b1b40
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 13724 Comm: syz-executor.4 Not tainted 6.8.0-12822-gcd51db110a7e #12
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240522154002.77857-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/simult_flows.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/unix/af_unix.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/simult_flows.sh b/tools/testing/selftests/net/mptcp/simult_flows.sh
-index 25693b37f820d..6afc3ea211fc0 100755
---- a/tools/testing/selftests/net/mptcp/simult_flows.sh
-+++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
-@@ -262,7 +262,7 @@ run_test()
- 	do_transfer $small $large $time
- 	lret=$?
- 	mptcp_lib_result_code "${lret}" "${msg}"
--	if [ $lret -ne 0 ]; then
-+	if [ $lret -ne 0 ] && ! mptcp_lib_subtest_is_flaky; then
- 		ret=$lret
- 		[ $bail -eq 0 ] || exit $ret
- 	fi
-@@ -272,7 +272,7 @@ run_test()
- 	do_transfer $large $small $time
- 	lret=$?
- 	mptcp_lib_result_code "${lret}" "${msg}"
--	if [ $lret -ne 0 ]; then
-+	if [ $lret -ne 0 ] && ! mptcp_lib_subtest_is_flaky; then
- 		ret=$lret
- 		[ $bail -eq 0 ] || exit $ret
- 	fi
-@@ -305,7 +305,7 @@ run_test 10 10 0 0 "balanced bwidth"
- run_test 10 10 1 25 "balanced bwidth with unbalanced delay"
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index a4c41906faec1..df6bddca08f89 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -732,7 +732,7 @@ static int unix_listen(struct socket *sock, int backlog)
+ 	if (sock->type != SOCK_STREAM && sock->type != SOCK_SEQPACKET)
+ 		goto out;	/* Only stream/seqpacket sockets accept */
+ 	err = -EINVAL;
+-	if (!u->addr)
++	if (!READ_ONCE(u->addr))
+ 		goto out;	/* No listens on an unbound socket */
+ 	unix_state_lock(sk);
+ 	if (sk->sk_state != TCP_CLOSE && sk->sk_state != TCP_LISTEN)
+@@ -1379,7 +1379,7 @@ static int unix_dgram_connect(struct socket *sock, struct sockaddr *addr,
  
- # we still need some additional infrastructure to pass the following test-cases
--run_test 10 3 0 0 "unbalanced bwidth"
-+MPTCP_LIB_SUBTEST_FLAKY=1 run_test 10 3 0 0 "unbalanced bwidth"
- run_test 10 3 1 25 "unbalanced bwidth with unbalanced delay"
- run_test 10 3 25 1 "unbalanced bwidth with opposed, unbalanced delay"
+ 		if ((test_bit(SOCK_PASSCRED, &sock->flags) ||
+ 		     test_bit(SOCK_PASSPIDFD, &sock->flags)) &&
+-		    !unix_sk(sk)->addr) {
++		    !READ_ONCE(unix_sk(sk)->addr)) {
+ 			err = unix_autobind(sk);
+ 			if (err)
+ 				goto out;
+@@ -1487,7 +1487,8 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
+ 		goto out;
  
+ 	if ((test_bit(SOCK_PASSCRED, &sock->flags) ||
+-	     test_bit(SOCK_PASSPIDFD, &sock->flags)) && !u->addr) {
++	     test_bit(SOCK_PASSPIDFD, &sock->flags)) &&
++	    !READ_ONCE(u->addr)) {
+ 		err = unix_autobind(sk);
+ 		if (err)
+ 			goto out;
+@@ -1927,7 +1928,8 @@ static int unix_dgram_sendmsg(struct socket *sock, struct msghdr *msg,
+ 	}
+ 
+ 	if ((test_bit(SOCK_PASSCRED, &sock->flags) ||
+-	     test_bit(SOCK_PASSPIDFD, &sock->flags)) && !u->addr) {
++	     test_bit(SOCK_PASSPIDFD, &sock->flags)) &&
++	    !READ_ONCE(u->addr)) {
+ 		err = unix_autobind(sk);
+ 		if (err)
+ 			goto out;
 -- 
 2.43.0
 
