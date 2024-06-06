@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A609519CD15;
-	Thu,  6 Jun 2024 14:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690E619CD1D;
+	Thu,  6 Jun 2024 14:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683443; cv=none; b=iDaPLIiA4axeHoy8I1bMw16gM4nmjD7VsxjKv2xoFIFWN8ZMSvjk7ElIb6z5aDFIG3mo0QvDaha/W+hGUZiNdwtYa/TK9IuTfv6DgqXHNQDW+IbgOCLIDtQx0LKOhTJQjckdVOJ5RBKlqc/QzWKoF1/sbjo70conxOiAdtsx1U0=
+	t=1717683444; cv=none; b=W7/WjlIsg2NmfQ5E3/LLoQKK+3si7oYrXc7vEH8dEZ4F3PQQa8AVqqiOeNkopqJdxk6R8kzdms7t0G5nL/MN0cTngWMHomsIrRP18kNbg5Jh779WzxBecmnx5NGksVIou4A0wdYdjtlJDJmAZi2vPYARtIDLH8LInJmOjiRDZ0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683443; c=relaxed/simple;
-	bh=n82TMrTSYF3JuL4DuPqX3hHKo71fzYcV/WktfZruGOE=;
+	s=arc-20240116; t=1717683444; c=relaxed/simple;
+	bh=iqYEQf+Ab+GtWR1bCWcKS3uMQW/bbftkxoBxE3pePBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3wWaMC/pMr9EluWjlGXVuunmjsLj0CcLqitXG8HZJtNTuMO+h8t4tDu8k85hMUMFi50Z7G+pcsu2UqvfSdvd0b1+Hizx/5Nx5cv5Ar6Fff66ctMfj07HgerM0q7yFzuk+wg3/L8hfHO+EbW+YGbrBkhJ/h+MrPQtsFixTqAms0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdtaqAxp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BYfjRbt0matWe8qw8euDd78ZN9JrTqQe4RVwVo4tQL4xRcfvYSMhnS7Sa3Ur5p0WNUJy8OYnrOIaPK9WrgAd5Q/EbywZO61c/TfFiNJVd3ck9koJVv6UG1vF/4NJqpUOSzOH/RDnB5FoQDUh34EO94O44ZpoduxpCyPrnoinBG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bwa+1Ie3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdtaqAxp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785EEC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bwa+1Ie3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F259AC32782;
 	Thu,  6 Jun 2024 14:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683443;
-	bh=n82TMrTSYF3JuL4DuPqX3hHKo71fzYcV/WktfZruGOE=;
+	s=korg; t=1717683444;
+	bh=iqYEQf+Ab+GtWR1bCWcKS3uMQW/bbftkxoBxE3pePBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xdtaqAxpM3W7eLfeQ/wtLqZkSuo5RKh3PB6G37ekkkcCpP2N7/xqz0hxaGuUfZKW6
-	 lK+V92BcIGQlNupPzjvy7np0pG54RDsjp/PJKGGj834JUBLrAOO0RyTPboLKqucC9p
-	 4XvDzOKoLsFPyuHUKxmAoDN3gswA0F+zV0wfGLJY=
+	b=Bwa+1Ie302fUYnG0xIRjJmkdvu4nQ5Bxkq4HTQZ6hfPBNAXflSVVKnKZ9h2L6goH2
+	 Nnqz+15d1PaqonTXwTz/F6I/jzWZAL1TCBNfRPyg4I9I1OwM8z0CW1eRDahQvA0axr
+	 EjVTpeoOArpooHgmGjBdlu2QchHkXBdoRbyRpdY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 328/473] watchdog: sa1100: Fix PTR_ERR_OR_ZERO() vs NULL check in sa1100dog_probe()
-Date: Thu,  6 Jun 2024 16:04:17 +0200
-Message-ID: <20240606131710.778261392@linuxfoundation.org>
+Subject: [PATCH 6.1 306/473] dt-bindings: PCI: rcar-pci-host: Add missing IOMMU properties
+Date: Thu,  6 Jun 2024 16:03:55 +0200
+Message-ID: <20240606131710.055505549@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -46,46 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 413bf4e857fd79617524d5dcd35f463e9aa2dd41 ]
+[ Upstream commit 78d212851f0e56b7d7083c4d5014aa7fa8b77e20 ]
 
-devm_ioremap() doesn't return error pointers, it returns NULL on error.
-Update the check accordingly.
+make dtbs_check:
 
-Fixes: e86bd43bcfc5 ("watchdog: sa1100: use platform device registration")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240426075808.1582678-1-nichen@iscas.ac.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+    arch/arm64/boot/dts/renesas/r8a77951-salvator-xs.dtb: pcie@fe000000: Unevaluated properties are not allowed ('iommu-map', 'iommu-map-mask' were unexpected)
+	    from schema $id: http://devicetree.org/schemas/pci/rcar-pci-host.yaml#
+
+Fix this by adding the missing IOMMU-related properties.
+
+[kwilczynski: added missing Fixes: tag]
+Fixes: 0d69ce3c2c63 ("dt-bindings: PCI: rcar-pci-host: Convert bindings to json-schema")
+Link: https://lore.kernel.org/linux-pci/babc878a93cb6461a5d39331f8ecfa654dfda921.1706802597.git.geert+renesas@glider.be
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/sa1100_wdt.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/pci/rcar-pci-host.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/watchdog/sa1100_wdt.c b/drivers/watchdog/sa1100_wdt.c
-index 82ac5d19f519e..1745d7cafb762 100644
---- a/drivers/watchdog/sa1100_wdt.c
-+++ b/drivers/watchdog/sa1100_wdt.c
-@@ -191,9 +191,8 @@ static int sa1100dog_probe(struct platform_device *pdev)
- 	if (!res)
- 		return -ENXIO;
- 	reg_base = devm_ioremap(&pdev->dev, res->start, resource_size(res));
--	ret = PTR_ERR_OR_ZERO(reg_base);
--	if (ret)
--		return ret;
-+	if (!reg_base)
-+		return -ENOMEM;
+diff --git a/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml b/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
+index b6a7cb32f61e5..835b6db00c279 100644
+--- a/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
++++ b/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
+@@ -77,6 +77,9 @@ properties:
+   vpcie12v-supply:
+     description: The 12v regulator to use for PCIe.
  
- 	clk = clk_get(NULL, "OSTIMER0");
- 	if (IS_ERR(clk)) {
++  iommu-map: true
++  iommu-map-mask: true
++
+ required:
+   - compatible
+   - reg
 -- 
 2.43.0
 
