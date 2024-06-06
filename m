@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5641B1434;
-	Thu,  6 Jun 2024 14:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9CF1B1434;
+	Thu,  6 Jun 2024 14:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683388; cv=none; b=ssBrYcRLEAT5F+0XHamU+rIno+rRNaBO18C6eOrC4Ynjpn0+XpU65cmWvQbSOSZ+9WsykwiXBd6/jQ8nH46IFY+NhJHlQtg/Nd9w03fKXto3hjaiTbuesVkvA81xVU/Z6U429od/Mcbco0fQlCdnUe/m2Yivddry+6uwoD4tZ/o=
+	t=1717683389; cv=none; b=WhVA48xz6quqkEhdaWPFM1gm2IeqfEfgao/GXBA6yJCxX/YQbJfLb9XT+uYStmiiy5t1BT34ZNHuqbw/7K2omvjTRlzPXHE+ktADDOH+sP4CV4qCexQW3oDrPv1nMN+bHcnQl5vEMolKcGkSXWjCcejIOOjIBJNK7gYGAKAiB3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683388; c=relaxed/simple;
-	bh=dNh3OSp4ZA4zaddnhRBcG449HoSEgCwf4NK0Tju5Z5o=;
+	s=arc-20240116; t=1717683389; c=relaxed/simple;
+	bh=KHiZlfZlSe86B+a6JFKCUYGB4CCIsuPwEs0Gx3A52BE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUqWkeALU1PfPlX7luI3IapBE6MIxg5C0mP5+5KJJOJnbk3C8RiJW/orZjvOivxiIPV1j40vMwMcil0O4UUWPI12T4aU8K0zdWVg/PReZSz+TmGX5DMK3mC8RBuzOOW9Ts9ZxsSOyr25g+eFdFSexw0phRRVZa0uY4aNktTQz4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dznerViu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d6VpZ3dVFGtvcVI21jzYIUe+XSI/NMRcu3gBFWoH/uCAKCijS8UVh4xLiVy8wgJXOQ3jiR13BCSG8ahjQGUTLAxP/InoKJ8e5Hrw4O1LDsbgSqDmQ/L5F6gA2DQEKzOyNd5JzVjO/yqfj/xNs09QFPHO620SX6amqhf46pUxxKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1Gxane4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dznerViu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E7BC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1Gxane4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46C6C2BD10;
 	Thu,  6 Jun 2024 14:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683388;
-	bh=dNh3OSp4ZA4zaddnhRBcG449HoSEgCwf4NK0Tju5Z5o=;
+	bh=KHiZlfZlSe86B+a6JFKCUYGB4CCIsuPwEs0Gx3A52BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dznerViuyS1ntfVx/Jsd0VxtwAWvpXa6s0/eGlkNx8SAndMeoPsZqxXJdjPtTqaFb
-	 wchhU/5v5gdPcgFhpzFSv35qY/d18gp2QnYES5oqoebOHB4pUBm4udMadXkUq/KA0Z
-	 npEWbX1R2CkA2KAtI52pyom0VXnczJFLNluYpa6A=
+	b=j1Gxane4OAoIuxL+OOTcSZGyOmkPPeRyL8mOf18NXeJnohW0t8utf1w5F4YCXdW0/
+	 cHilnK4N72H2dYu9IwfYSuuUai2tt/nnPbtu3T2BmS+A/wiO5KOl3SJVALWEUAfcSV
+	 DB+qz7KJykEy0MGtZPm8ed+3CTO3mFY3nWGV/y+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 329/744] drm/mipi-dsi: use correct return type for the DSC functions
-Date: Thu,  6 Jun 2024 16:00:01 +0200
-Message-ID: <20240606131742.990222839@linuxfoundation.org>
+Subject: [PATCH 6.1 271/473] selftests: net: bridge: increase IGMP/MLD exclude timeout membership interval
+Date: Thu,  6 Jun 2024 16:03:20 +0200
+Message-ID: <20240606131708.889062960@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,71 +48,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit de1c705c50326acaceaf1f02bc5bf6f267c572bd ]
+[ Upstream commit 06080ea23095afe04a2cb7a8d05fab4311782623 ]
 
-The functions mipi_dsi_compression_mode() and
-mipi_dsi_picture_parameter_set() return 0-or-error rather than a buffer
-size. Follow example of other similar MIPI DSI functions and use int
-return type instead of size_t.
+When running the bridge IGMP/MLD selftests on debug kernels we can get
+spurious errors when setting up the IGMP/MLD exclude timeout tests
+because the membership interval is just 3 seconds and the setup has 2
+seconds of sleep plus various validations, the one second that is left
+is not enough. Increase the membership interval from 3 to 5 seconds to
+make room for the setup validation and 2 seconds of sleep.
 
-Fixes: f4dea1aaa9a1 ("drm/dsi: add helpers for DSI compression mode and PPS packets")
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240408-lg-sw43408-panel-v5-2-4e092da22991@linaro.org
+Fixes: 34d7ecb3d4f7 ("selftests: net: bridge: update IGMP/MLD membership interval value")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_mipi_dsi.c | 6 +++---
- include/drm/drm_mipi_dsi.h     | 6 +++---
+ tools/testing/selftests/net/forwarding/bridge_igmp.sh | 6 +++---
+ tools/testing/selftests/net/forwarding/bridge_mld.sh  | 6 +++---
  2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-index 843a6dbda93a0..52a93149363b4 100644
---- a/drivers/gpu/drm/drm_mipi_dsi.c
-+++ b/drivers/gpu/drm/drm_mipi_dsi.c
-@@ -654,7 +654,7 @@ EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
-  *
-  * Return: 0 on success or a negative error code on failure.
-  */
--ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
-+int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
- {
- 	/* Note: Needs updating for non-default PPS or algorithm */
- 	u8 tx[2] = { enable << 0, 0 };
-@@ -679,8 +679,8 @@ EXPORT_SYMBOL(mipi_dsi_compression_mode);
-  *
-  * Return: 0 on success or a negative error code on failure.
-  */
--ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
--				       const struct drm_dsc_picture_parameter_set *pps)
-+int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-+				   const struct drm_dsc_picture_parameter_set *pps)
- {
- 	struct mipi_dsi_msg msg = {
- 		.channel = dsi->channel,
-diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-index c0aec0d4d664e..3011d33eccbd2 100644
---- a/include/drm/drm_mipi_dsi.h
-+++ b/include/drm/drm_mipi_dsi.h
-@@ -241,9 +241,9 @@ int mipi_dsi_shutdown_peripheral(struct mipi_dsi_device *dsi);
- int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
- int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
- 					    u16 value);
--ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
--ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
--				       const struct drm_dsc_picture_parameter_set *pps);
-+int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
-+int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
-+				   const struct drm_dsc_picture_parameter_set *pps);
+diff --git a/tools/testing/selftests/net/forwarding/bridge_igmp.sh b/tools/testing/selftests/net/forwarding/bridge_igmp.sh
+index 1162836f8f329..6dc3cb4ac6081 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_igmp.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_igmp.sh
+@@ -481,10 +481,10 @@ v3exc_timeout_test()
+ 	RET=0
+ 	local X=("192.0.2.20" "192.0.2.30")
  
- ssize_t mipi_dsi_generic_write(struct mipi_dsi_device *dsi, const void *payload,
- 			       size_t size);
+-	# GMI should be 3 seconds
++	# GMI should be 5 seconds
+ 	ip link set dev br0 type bridge mcast_query_interval 100 \
+ 					mcast_query_response_interval 100 \
+-					mcast_membership_interval 300
++					mcast_membership_interval 500
+ 
+ 	v3exclude_prepare $h1 $ALL_MAC $ALL_GROUP
+ 	ip link set dev br0 type bridge mcast_query_interval 500 \
+@@ -492,7 +492,7 @@ v3exc_timeout_test()
+ 					mcast_membership_interval 1500
+ 
+ 	$MZ $h1 -c 1 -b $ALL_MAC -B $ALL_GROUP -t ip "proto=2,p=$MZPKT_ALLOW2" -q
+-	sleep 3
++	sleep 5
+ 	bridge -j -d -s mdb show dev br0 \
+ 		| jq -e ".[].mdb[] | \
+ 			 select(.grp == \"$TEST_GROUP\" and \
+diff --git a/tools/testing/selftests/net/forwarding/bridge_mld.sh b/tools/testing/selftests/net/forwarding/bridge_mld.sh
+index e2b9ff773c6b6..f84ab2e657547 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_mld.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_mld.sh
+@@ -478,10 +478,10 @@ mldv2exc_timeout_test()
+ 	RET=0
+ 	local X=("2001:db8:1::20" "2001:db8:1::30")
+ 
+-	# GMI should be 3 seconds
++	# GMI should be 5 seconds
+ 	ip link set dev br0 type bridge mcast_query_interval 100 \
+ 					mcast_query_response_interval 100 \
+-					mcast_membership_interval 300
++					mcast_membership_interval 500
+ 
+ 	mldv2exclude_prepare $h1
+ 	ip link set dev br0 type bridge mcast_query_interval 500 \
+@@ -489,7 +489,7 @@ mldv2exc_timeout_test()
+ 					mcast_membership_interval 1500
+ 
+ 	$MZ $h1 -c 1 $MZPKT_ALLOW2 -q
+-	sleep 3
++	sleep 5
+ 	bridge -j -d -s mdb show dev br0 \
+ 		| jq -e ".[].mdb[] | \
+ 			 select(.grp == \"$TEST_GROUP\" and \
 -- 
 2.43.0
 
