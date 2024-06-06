@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAAA197A91;
-	Thu,  6 Jun 2024 14:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD78D197537;
+	Thu,  6 Jun 2024 14:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683298; cv=none; b=llh6IWLvrSbjNmPLJSG0KuPwGhD8PbVpTAgugyesPjf6wwakh9hWRfDVHrYg6f2EzdYMq/BjsALYLdJwNEk9Ax5TEj+gDHgmBkhSPhXoSwwKrIw2qwbF73qYHa15aKAaiNly51X1maMNvrBoLyUyO2F7ZNPj/287rAkYzoUht4M=
+	t=1717683298; cv=none; b=AU0EGuPC4o35V5jDNt/3GGbH1ZB4MyIEv919MU+5+36s37AOAoF/AEThFebR/IAFG+sgPGLwdmf7iTInahx2ZPHRTs5FBkc9FgaueQxn9RmlLCzbYmovEcoozNcYpYFArefIVN3+CBdqE3D8vTJr7PhVur83xcMdEppljbMBJjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683298; c=relaxed/simple;
-	bh=r8c435z/8aNU0EJ27A0CyeONID1FVs0eKzgzHe+ATPM=;
+	bh=GBoZRYHxEfIdF3DkPL1KsBxrgEhNFIoQg0VkfSPOdlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lA1/mlhliVNILhmXldZT0SHdluzcZ/SDm1T18Xb1Ho0yZQXvq5vTLVaZYZwCwHxJCMySQbj9tg4NzL0DR1uFvaBb0I5zQyczZTFuFBAbHZm2Xg/pQS7xK4NTU0sOyP5O4ecIB7M6coBkyKpPWP2qWxX5VpXJ+YtJU/HQiWMXm8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XtOXZchn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C1BejTEjw6eaCihseWCSjdyRc6g9vFQGPDH9cqTyVw6aH9IuLn/fiFiG4CBV1QDMyn4a4PJ4T6cT7oGJqVgRb+2wGUy1RJ2lhP1Yga+qcP+c4BuwLdD9RHDbKP3JdtrBVqh9T36VZ2p/bgj4OOSNSoYiBUcYnTWJXZoV4s4HsI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5D9WJA3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtOXZchn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEC5C32781;
-	Thu,  6 Jun 2024 14:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5D9WJA3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44494C32781;
+	Thu,  6 Jun 2024 14:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683297;
-	bh=r8c435z/8aNU0EJ27A0CyeONID1FVs0eKzgzHe+ATPM=;
+	s=korg; t=1717683298;
+	bh=GBoZRYHxEfIdF3DkPL1KsBxrgEhNFIoQg0VkfSPOdlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XtOXZchnu+Bi+Ux9EJ32xByRAb+fktTlHwm/b+1fW/xER/Gnn3grPW+3z5uNFj4oF
-	 elgmPpgsZ5pesA+X6CNvS5WzwG8pc6z2htJNiKfW5/If/9wpdc126PvEFP2la8mgXU
-	 B8QIz3Z3JgcqAZPaDs4xQCR9DeXeVNfqjcZ00frw=
+	b=C5D9WJA36n/l8wOsY81YYeaWL2WL1iN42ASGrVtsCMyDTifrCzCUDopp5fIJlaF1R
+	 /TbeJcMOFsT1ki8mck4JC5BUA2leJ+KyxUticsztd326hCrkAYmG6f41lGl4YtwLFn
+	 HYGmQYF0pyxnmh56L+OQOcJxt/28ZDGC9xWpYX1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Steve Glendinning <steve.glendinning@shawell.net>,
+	UNGLinuxDriver@microchip.com,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/473] pwm: sti: Convert to platform remove callback returning void
-Date: Thu,  6 Jun 2024 16:01:07 +0200
-Message-ID: <20240606131704.492905609@linuxfoundation.org>
+Subject: [PATCH 6.1 173/473] net: usb: smsc95xx: stop lying about skb->truesize
+Date: Thu,  6 Jun 2024 16:01:42 +0200
+Message-ID: <20240606131705.662240879@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -45,67 +48,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e13cec3617c6ace4fc389b60d2a7d5b305b62683 ]
+[ Upstream commit d50729f1d60bca822ef6d9c1a5fb28d486bd7593 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+Some usb drivers try to set small skb->truesize and break
+core networking stacks.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+In this patch, I removed one of the skb->truesize override.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 5bb0b194aeee ("pwm: sti: Simplify probe function using devm functions")
+I also replaced one skb_clone() by an allocation of a fresh
+and small skb, to get minimally sized skbs, like we did
+in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
+in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
+stop lying about skb->truesize")
+
+v3: also fix a sparse error ( https://lore.kernel.org/oe-kbuild-all/202405091310.KvncIecx-lkp@intel.com/ )
+v2: leave the skb_trim() game because smsc95xx_rx_csum_offload()
+    needs the csum part. (Jakub)
+    While we are it, use get_unaligned() in smsc95xx_rx_csum_offload().
+
+Fixes: 2f7ca802bdae ("net: Add SMSC LAN9500 USB2.0 10/100 ethernet adapter driver")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steve Glendinning <steve.glendinning@shawell.net>
+Cc: UNGLinuxDriver@microchip.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240509083313.2113832-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-sti.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/usb/smsc95xx.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
-index 0a7920cbd4949..c782378dff5e5 100644
---- a/drivers/pwm/pwm-sti.c
-+++ b/drivers/pwm/pwm-sti.c
-@@ -677,7 +677,7 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 	return 0;
- }
+diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
+index 2fa46baa589e5..cbea246664795 100644
+--- a/drivers/net/usb/smsc95xx.c
++++ b/drivers/net/usb/smsc95xx.c
+@@ -1810,9 +1810,11 @@ static int smsc95xx_reset_resume(struct usb_interface *intf)
  
--static int sti_pwm_remove(struct platform_device *pdev)
-+static void sti_pwm_remove(struct platform_device *pdev)
+ static void smsc95xx_rx_csum_offload(struct sk_buff *skb)
  {
- 	struct sti_pwm_chip *pc = platform_get_drvdata(pdev);
- 
-@@ -685,8 +685,6 @@ static int sti_pwm_remove(struct platform_device *pdev)
- 
- 	clk_unprepare(pc->pwm_clk);
- 	clk_unprepare(pc->cpt_clk);
--
--	return 0;
+-	skb->csum = *(u16 *)(skb_tail_pointer(skb) - 2);
++	u16 *csum_ptr = (u16 *)(skb_tail_pointer(skb) - 2);
++
++	skb->csum = (__force __wsum)get_unaligned(csum_ptr);
+ 	skb->ip_summed = CHECKSUM_COMPLETE;
+-	skb_trim(skb, skb->len - 2);
++	skb_trim(skb, skb->len - 2); /* remove csum */
  }
  
- static const struct of_device_id sti_pwm_of_match[] = {
-@@ -701,7 +699,7 @@ static struct platform_driver sti_pwm_driver = {
- 		.of_match_table = sti_pwm_of_match,
- 	},
- 	.probe = sti_pwm_probe,
--	.remove = sti_pwm_remove,
-+	.remove_new = sti_pwm_remove,
- };
- module_platform_driver(sti_pwm_driver);
+ static int smsc95xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+@@ -1870,25 +1872,22 @@ static int smsc95xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 				if (dev->net->features & NETIF_F_RXCSUM)
+ 					smsc95xx_rx_csum_offload(skb);
+ 				skb_trim(skb, skb->len - 4); /* remove fcs */
+-				skb->truesize = size + sizeof(struct sk_buff);
  
+ 				return 1;
+ 			}
+ 
+-			ax_skb = skb_clone(skb, GFP_ATOMIC);
++			ax_skb = netdev_alloc_skb_ip_align(dev->net, size);
+ 			if (unlikely(!ax_skb)) {
+ 				netdev_warn(dev->net, "Error allocating skb\n");
+ 				return 0;
+ 			}
+ 
+-			ax_skb->len = size;
+-			ax_skb->data = packet;
+-			skb_set_tail_pointer(ax_skb, size);
++			skb_put(ax_skb, size);
++			memcpy(ax_skb->data, packet, size);
+ 
+ 			if (dev->net->features & NETIF_F_RXCSUM)
+ 				smsc95xx_rx_csum_offload(ax_skb);
+ 			skb_trim(ax_skb, ax_skb->len - 4); /* remove fcs */
+-			ax_skb->truesize = size + sizeof(struct sk_buff);
+ 
+ 			usbnet_skb_return(dev, ax_skb);
+ 		}
 -- 
 2.43.0
 
