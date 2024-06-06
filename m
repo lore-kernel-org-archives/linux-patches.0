@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC5019B3F3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903DA19B3F3;
 	Thu,  6 Jun 2024 14:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683402; cv=none; b=TO99sAbLZvmiapNR/4a62noVvY2v9pCVwbpO71P52VDAx/UmaBabSODjF0Wu8a//FEDqRpo12G95xdAHeF7MstpGdZGdNHoVjiEXs7/CjYurRB2x5HSku+LRjFwaihxN8ZnutqT09D0hyKvz/qbbWi4UVXFt8Hls8g7YIQYsH6I=
+	t=1717683402; cv=none; b=Vja+htpRZNku1KgCBRipP9+CazTvGG6WSYIL55C1XmXv5e6eJfDgNEzqH3M6D6wCM9SqHCgKQz45MbBxOaTi3vv5qxlcsMEJgr+WwD3YP364fiHgG9JouQeRKx0eew07BLUztGWtLbQxKE70l+YVy420cUvDJ8eutmUZ8TZlFx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683402; c=relaxed/simple;
-	bh=Tlap14aR28FdEfy7slxaN0pz9WJR3H/Nk2dKEH/fDPA=;
+	bh=rS3E/BIzXBtG/Sg0fJKq/WW/xrN8I+QtwWEoiLcrglM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4DN3jaP1VNi1EnztRBgg97PizmSpP70Jrs2zPGXkCfhrhAqiAs+LQrxkSA1lSdWOpKnN78kn7rE9riURj41xtz21FnZaiguy30u42MVuNDxdjGniQB1mMvESZXSD0eXrkGcvQojItPQar7ij5p6vewJ/3jfGucoxmLu6yZj7Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBjoV243; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mIuaCdw1Uq+99tYNYs6eIBStX4VFaugFEMBu7PWoWe0KZhFiCHwz1JqWqkR00O0OSnN0r5JpGSBkxEAlbWnIStzFOy0OuG60lGpBA/0nRXACbRSLn3pcwU0J7XghtiB/6Hh4D7i46RS5UL4DwXbSaT8fVFp6rLTsq5qOKMqzP64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PllaH59p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBjoV243"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0A6C2BD10;
-	Thu,  6 Jun 2024 14:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PllaH59p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718FDC32782;
+	Thu,  6 Jun 2024 14:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683402;
-	bh=Tlap14aR28FdEfy7slxaN0pz9WJR3H/Nk2dKEH/fDPA=;
+	bh=rS3E/BIzXBtG/Sg0fJKq/WW/xrN8I+QtwWEoiLcrglM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UBjoV243f1+bUi6+PDqVY8Sqncefl1uuw7r+nAsqe26T5lDIjc6a2GzhRX19+0xNQ
-	 VhyvEnyJcPAHLxeMZtwAAQQNBABwnI4aqOOUuYoZRz57T4EXoLrQla1VA1Fk4wzuAn
-	 DsoChoI0R2HzH6YtVjnweY3vqDx1YrIZsgMWpFKg=
+	b=PllaH59pK4kZfRttPWlvpQXXgo7UmLx15J3D2FDQjSuzBb65M0F+mJZBDxIatqbid
+	 8K1/9/R/GLEARt+YT2FA0U1H6hbG+5Kf0Zu6Dwtogc9VS2rr8mvOFBiGbMf0JK3fPJ
+	 afHRMQ2abKaZJUbo4WbMvEZ8xOi0GqdlAk/ZrFy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fa04eb8a56fd923fc5d8@syzkaller.appspotmail.com,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Catalin Popescu <catalin.popescu@leica-geosystems.com>,
+	Marek Vasut <marex@denx.de>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 272/473] net: bridge: mst: fix vlan use-after-free
-Date: Thu,  6 Jun 2024 16:03:21 +0200
-Message-ID: <20240606131708.916919848@linuxfoundation.org>
+Subject: [PATCH 6.6 346/744] clk: rs9: fix wrong default value for clock amplitude
+Date: Thu,  6 Jun 2024 16:00:18 +0200
+Message-ID: <20240606131743.565577775@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,125 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Catalin Popescu <catalin.popescu@leica-geosystems.com>
 
-[ Upstream commit 3a7c1661ae1383364cd6092d851f5e5da64d476b ]
+[ Upstream commit 1758c68c81b8b881818fcebaaeb91055362a82f8 ]
 
-syzbot reported a suspicious rcu usage[1] in bridge's mst code. While
-fixing it I noticed that nothing prevents a vlan to be freed while
-walking the list from the same path (br forward delay timer). Fix the rcu
-usage and also make sure we are not accessing freed memory by making
-br_mst_vlan_set_state use rcu read lock.
+According to 9FGV0241, 9FGV0441 & 9FGV0841 datasheets, the default
+value for the clock amplitude is 0.8V, while the driver assumes 0.7V.
 
-[1]
- WARNING: suspicious RCU usage
- 6.9.0-rc6-syzkaller #0 Not tainted
- -----------------------------
- net/bridge/br_private.h:1599 suspicious rcu_dereference_protected() usage!
- ...
- stack backtrace:
- CPU: 1 PID: 8017 Comm: syz-executor.1 Not tainted 6.9.0-rc6-syzkaller #0
- Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
- Call Trace:
-  <IRQ>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  lockdep_rcu_suspicious+0x221/0x340 kernel/locking/lockdep.c:6712
-  nbp_vlan_group net/bridge/br_private.h:1599 [inline]
-  br_mst_set_state+0x1ea/0x650 net/bridge/br_mst.c:105
-  br_set_state+0x28a/0x7b0 net/bridge/br_stp.c:47
-  br_forward_delay_timer_expired+0x176/0x440 net/bridge/br_stp_timer.c:88
-  call_timer_fn+0x18e/0x650 kernel/time/timer.c:1793
-  expire_timers kernel/time/timer.c:1844 [inline]
-  __run_timers kernel/time/timer.c:2418 [inline]
-  __run_timer_base+0x66a/0x8e0 kernel/time/timer.c:2429
-  run_timer_base kernel/time/timer.c:2438 [inline]
-  run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2448
-  __do_softirq+0x2c6/0x980 kernel/softirq.c:554
-  invoke_softirq kernel/softirq.c:428 [inline]
-  __irq_exit_rcu+0xf2/0x1c0 kernel/softirq.c:633
-  irq_exit_rcu+0x9/0x30 kernel/softirq.c:645
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1043 [inline]
-  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1043
-  </IRQ>
-  <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
- RIP: 0010:lock_acquire+0x264/0x550 kernel/locking/lockdep.c:5758
- Code: 2b 00 74 08 4c 89 f7 e8 ba d1 84 00 f6 44 24 61 02 0f 85 85 01 00 00 41 f7 c7 00 02 00 00 74 01 fb 48 c7 44 24 40 0e 36 e0 45 <4b> c7 44 25 00 00 00 00 00 43 c7 44 25 09 00 00 00 00 43 c7 44 25
- RSP: 0018:ffffc90013657100 EFLAGS: 00000206
- RAX: 0000000000000001 RBX: 1ffff920026cae2c RCX: 0000000000000001
- RDX: dffffc0000000000 RSI: ffffffff8bcaca00 RDI: ffffffff8c1eaa60
- RBP: ffffc90013657260 R08: ffffffff92efe507 R09: 1ffffffff25dfca0
- R10: dffffc0000000000 R11: fffffbfff25dfca1 R12: 1ffff920026cae28
- R13: dffffc0000000000 R14: ffffc90013657160 R15: 0000000000000246
+Additionally, define constants for default values for both clock
+amplitude and spread spectrum and use them.
 
-Fixes: ec7328b59176 ("net: bridge: mst: Multiple Spanning Tree (MST) mode")
-Reported-by: syzbot+fa04eb8a56fd923fc5d8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fa04eb8a56fd923fc5d8
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 892e0ddea1aa ("clk: rs9: Add Renesas 9-series PCIe clock generator driver")
+Signed-off-by: Catalin Popescu <catalin.popescu@leica-geosystems.com>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20240415140348.2887619-1-catalin.popescu@leica-geosystems.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mst.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/clk/clk-renesas-pcie.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/bridge/br_mst.c b/net/bridge/br_mst.c
-index ee680adcee179..3c66141d34d62 100644
---- a/net/bridge/br_mst.c
-+++ b/net/bridge/br_mst.c
-@@ -78,7 +78,7 @@ static void br_mst_vlan_set_state(struct net_bridge_port *p, struct net_bridge_v
- {
- 	struct net_bridge_vlan_group *vg = nbp_vlan_group(p);
+diff --git a/drivers/clk/clk-renesas-pcie.c b/drivers/clk/clk-renesas-pcie.c
+index 3b6ad2307a41f..b00c38469cfad 100644
+--- a/drivers/clk/clk-renesas-pcie.c
++++ b/drivers/clk/clk-renesas-pcie.c
+@@ -24,10 +24,12 @@
+ #define RS9_REG_SS_AMP_0V7			0x1
+ #define RS9_REG_SS_AMP_0V8			0x2
+ #define RS9_REG_SS_AMP_0V9			0x3
++#define RS9_REG_SS_AMP_DEFAULT			RS9_REG_SS_AMP_0V8
+ #define RS9_REG_SS_AMP_MASK			0x3
+ #define RS9_REG_SS_SSC_100			0
+ #define RS9_REG_SS_SSC_M025			(1 << 3)
+ #define RS9_REG_SS_SSC_M050			(3 << 3)
++#define RS9_REG_SS_SSC_DEFAULT			RS9_REG_SS_SSC_100
+ #define RS9_REG_SS_SSC_MASK			(3 << 3)
+ #define RS9_REG_SS_SSC_LOCK			BIT(5)
+ #define RS9_REG_SR				0x2
+@@ -211,8 +213,8 @@ static int rs9_get_common_config(struct rs9_driver_data *rs9)
+ 	int ret;
  
--	if (v->state == state)
-+	if (br_vlan_get_state(v) == state)
- 		return;
+ 	/* Set defaults */
+-	rs9->pll_amplitude = RS9_REG_SS_AMP_0V7;
+-	rs9->pll_ssc = RS9_REG_SS_SSC_100;
++	rs9->pll_amplitude = RS9_REG_SS_AMP_DEFAULT;
++	rs9->pll_ssc = RS9_REG_SS_SSC_DEFAULT;
  
- 	br_vlan_set_state(v, state);
-@@ -100,11 +100,12 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
- 	};
- 	struct net_bridge_vlan_group *vg;
- 	struct net_bridge_vlan *v;
--	int err;
-+	int err = 0;
+ 	/* Output clock amplitude */
+ 	ret = of_property_read_u32(np, "renesas,out-amplitude-microvolt",
+@@ -253,13 +255,13 @@ static void rs9_update_config(struct rs9_driver_data *rs9)
+ 	int i;
  
-+	rcu_read_lock();
- 	vg = nbp_vlan_group(p);
- 	if (!vg)
--		return 0;
-+		goto out;
- 
- 	/* MSTI 0 (CST) state changes are notified via the regular
- 	 * SWITCHDEV_ATTR_ID_PORT_STP_STATE.
-@@ -112,17 +113,20 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
- 	if (msti) {
- 		err = switchdev_port_attr_set(p->dev, &attr, extack);
- 		if (err && err != -EOPNOTSUPP)
--			return err;
-+			goto out;
+ 	/* If amplitude is non-default, update it. */
+-	if (rs9->pll_amplitude != RS9_REG_SS_AMP_0V7) {
++	if (rs9->pll_amplitude != RS9_REG_SS_AMP_DEFAULT) {
+ 		regmap_update_bits(rs9->regmap, RS9_REG_SS, RS9_REG_SS_AMP_MASK,
+ 				   rs9->pll_amplitude);
  	}
  
--	list_for_each_entry(v, &vg->vlan_list, vlist) {
-+	err = 0;
-+	list_for_each_entry_rcu(v, &vg->vlan_list, vlist) {
- 		if (v->brvlan->msti != msti)
- 			continue;
- 
- 		br_mst_vlan_set_state(p, v, state);
+ 	/* If SSC is non-default, update it. */
+-	if (rs9->pll_ssc != RS9_REG_SS_SSC_100) {
++	if (rs9->pll_ssc != RS9_REG_SS_SSC_DEFAULT) {
+ 		regmap_update_bits(rs9->regmap, RS9_REG_SS, RS9_REG_SS_SSC_MASK,
+ 				   rs9->pll_ssc);
  	}
- 
--	return 0;
-+out:
-+	rcu_read_unlock();
-+	return err;
- }
- 
- static void br_mst_vlan_sync_state(struct net_bridge_vlan *pv, u16 msti)
 -- 
 2.43.0
 
