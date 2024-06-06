@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2BC19E7F2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70651BE258;
 	Thu,  6 Jun 2024 14:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683535; cv=none; b=aY/lrwd4yY1Ki6gkaCZ6aLkAiXWnielfgs2ZV5NrO67UjrLrn6whYmNTkDUpkCrOZjUgzf4/OEdAKnebkGc6bFuTrqXM9/xmhXaQXJtoAkodgq6b2dHryyKnS9m0ueG2AqYu8d0XU0WI7U0dAS9uTtq4Brjv5D4dpBJ5t1pxmt8=
+	t=1717683535; cv=none; b=KTcrzjU2fd2wV/2mSWQO0yLe0QEtSsR4IQKAoa4f/BKW+/40sOXTl+S3bHtfiIlkeaVoNO7FKl5ceybakKS2VjG82kSW0nuF273gvei+HfhN+BvAvBUl0oMcWl0HkSCiGWN5h6dQqOakD90qfRMJBkkTiEAyixEn6Iipg72yPWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683535; c=relaxed/simple;
-	bh=75zcS0SYcTg/2l4bTR0xMoRsNaoATkh7sIX6aJyXXq4=;
+	bh=qJXexJr/MIjvEZYnAvSjI32v/cvHJYGi0tP9N7PML78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0NV3a04wf4bFL1rS2Pn/hnyYZJv8Zzpm7c6PKIkpd1jifDCyCKu1wtj+XPFM459NKFFAiEiLRfwu0d9uYVlw7I/Gr7WswrHcsalqOgmkQei1Rr576jLWJbU8EgzI5CJg/w3xALvydAWCC2Qsoun0ab6QKmJdP00AHja0IzO7bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvEU7y7F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CSz14rulEJVBpRBOCI/w2E+QsXgPMRufcMtfNZE6PRfPoAPwQ19LECYyaxYRRXCVDoRFiSqD7d8bKcFJBIgqFM77Be0yoySEd3WZhcTpPbcjoJQXc7uqL5/PbChLGFOYms0aUGGfW0jSxHCCxWdPFDCeIJJIQn0Iy5pgWjZO+uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F83qtKXs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvEU7y7F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169A2C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F83qtKXs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886AAC32781;
 	Thu,  6 Jun 2024 14:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683535;
-	bh=75zcS0SYcTg/2l4bTR0xMoRsNaoATkh7sIX6aJyXXq4=;
+	bh=qJXexJr/MIjvEZYnAvSjI32v/cvHJYGi0tP9N7PML78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FvEU7y7FM8Hi5kgx+bIX4w7JStKwSle4Bgssvaink8hrhLI8l+5iitsTUW6FsGbGv
-	 iCH+JiIkcm+ArXgmM/tGhMj2L3pEt82LAUID10gm0VCgzQKe0nhnJScbynx951JPvW
-	 2rx/m9KFHaCayn7Be+OEllj86QahbfNo0n9DbMzw=
+	b=F83qtKXsy101aKLWn7rO6936Ehlo+kg3jxWyVEnAqXHrV5AArbJY5pDDgRuBcVdt9
+	 u8TakHee51rVglLMSuzq8DVp52USCO0GKmZ0nvG24DKVVBHRXH2s5/iXs49AbTcrrk
+	 PI52lK31O+/7RIESrt7WN+wwfOgB1tcQ5daHuSyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yabin Cui <yabinc@google.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 457/744] coresight: etm4x: Fix access to resource selector registers
-Date: Thu,  6 Jun 2024 16:02:09 +0200
-Message-ID: <20240606131747.127714212@linuxfoundation.org>
+Subject: [PATCH 6.6 475/744] VMCI: Fix an error handling path in vmci_guest_probe_device()
+Date: Thu,  6 Jun 2024 16:02:27 +0200
+Message-ID: <20240606131747.688193293@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,49 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit d6fc00d0f640d6010b51054aa8b0fd191177dbc9 ]
+[ Upstream commit 73df3d6f2e9533e93a5039a33c40dd7216b81801 ]
 
-Resource selector pair 0 is always implemented and reserved. We must not
-touch it, even during save/restore for CPU Idle. Rest of the driver is
-well behaved. Fix the offending ones.
+After a successful pci_iomap_range() call, pci_iounmap() should be called
+in the error handling path, as already done in the remove function.
 
-Reported-by: Yabin Cui <yabinc@google.com>
-Fixes: f188b5e76aae ("coresight: etm4x: Save/restore state across CPU low power states")
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Tested-by: Yabin Cui <yabinc@google.com>
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Link: https://lore.kernel.org/r/20240412142702.2882478-5-suzuki.poulose@arm.com
+Add the missing call.
+
+The corresponding call was added in the remove function in commit
+5ee109828e73 ("VMCI: dma dg: allocate send and receive buffers for DMA
+datagrams")
+
+Fixes: e283a0e8b7ea ("VMCI: dma dg: add MMIO access to registers")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Vishnu Dasa <vishnu.dasa@broadcom.com>
+Link: https://lore.kernel.org/r/a35bbc3876ae1da70e49dafde4435750e1477be3.1713961553.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/misc/vmw_vmci/vmci_guest.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index a409872c25717..840e4cccf8c4b 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1720,7 +1720,8 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
- 		state->trccntvr[i] = etm4x_read32(csa, TRCCNTVRn(i));
+diff --git a/drivers/misc/vmw_vmci/vmci_guest.c b/drivers/misc/vmw_vmci/vmci_guest.c
+index 4f8d962bb5b2a..1300ccab3d21b 100644
+--- a/drivers/misc/vmw_vmci/vmci_guest.c
++++ b/drivers/misc/vmw_vmci/vmci_guest.c
+@@ -625,7 +625,8 @@ static int vmci_guest_probe_device(struct pci_dev *pdev,
+ 	if (!vmci_dev) {
+ 		dev_err(&pdev->dev,
+ 			"Can't allocate memory for VMCI device\n");
+-		return -ENOMEM;
++		error = -ENOMEM;
++		goto err_unmap_mmio_base;
  	}
  
--	for (i = 0; i < drvdata->nr_resource * 2; i++)
-+	/* Resource selector pair 0 is reserved */
-+	for (i = 2; i < drvdata->nr_resource * 2; i++)
- 		state->trcrsctlr[i] = etm4x_read32(csa, TRCRSCTLRn(i));
+ 	vmci_dev->dev = &pdev->dev;
+@@ -642,7 +643,8 @@ static int vmci_guest_probe_device(struct pci_dev *pdev,
+ 		if (!vmci_dev->tx_buffer) {
+ 			dev_err(&pdev->dev,
+ 				"Can't allocate memory for datagram tx buffer\n");
+-			return -ENOMEM;
++			error = -ENOMEM;
++			goto err_unmap_mmio_base;
+ 		}
  
- 	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
-@@ -1851,7 +1852,8 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
- 		etm4x_relaxed_write32(csa, state->trccntvr[i], TRCCNTVRn(i));
- 	}
+ 		vmci_dev->data_buffer = dma_alloc_coherent(&pdev->dev, VMCI_DMA_DG_BUFFER_SIZE,
+@@ -893,6 +895,10 @@ static int vmci_guest_probe_device(struct pci_dev *pdev,
+ err_free_data_buffers:
+ 	vmci_free_dg_buffers(vmci_dev);
  
--	for (i = 0; i < drvdata->nr_resource * 2; i++)
-+	/* Resource selector pair 0 is reserved */
-+	for (i = 2; i < drvdata->nr_resource * 2; i++)
- 		etm4x_relaxed_write32(csa, state->trcrsctlr[i], TRCRSCTLRn(i));
- 
- 	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
++err_unmap_mmio_base:
++	if (mmio_base != NULL)
++		pci_iounmap(pdev, mmio_base);
++
+ 	/* The rest are managed resources and will be freed by PCI core */
+ 	return error;
+ }
 -- 
 2.43.0
 
