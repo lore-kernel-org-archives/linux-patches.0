@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DEA1A1894;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010AC1A1894;
 	Thu,  6 Jun 2024 14:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683728; cv=none; b=rbTCt5fJ+9E1BsvRiU2Uo4fZgnPPagVrBBe0pE93AF713Tc3x6I7UZs1tweWH8+ThKWQXNWriOfsC0yWEwMsmVrDcP8Ced4L3y1xY9Drrxo454Eme1Tmpt3YD6foN8B/zCqxWGXmfDomxHQ7AHptyRaR8JSR9OpL7hSkB14Dd8k=
+	t=1717683729; cv=none; b=oHKzJ3SDPWkkF/ohe2zu2uOLb9c4H3s/DfQRvZyLRTNVCTczNDmziuDoMsSqJNljrC6rhyAWuLrSmr2SzBzsdxWzcvSW59Bx8ybfK8oISZjY7aVSHAPRuOdhjvSYm8NRqzzvsAzVh7cv/6Bd6hQrp0AJHtSQvIkACURateE9PGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683728; c=relaxed/simple;
-	bh=T1q0HYYCgsrpuKLdqC6DjK4HtTWtI9aV0EPa/Uoczkc=;
+	s=arc-20240116; t=1717683729; c=relaxed/simple;
+	bh=rp9lS/VYpuYZNcX8IE3vNYIzOZpdtVZR1V4EEpTrlfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/ixA8HZV2VqaUpOHmpucx+5uQe6ogaiNybf3EpLG+9Azvmle52b42prfGFSlsOAqJnMGzvXhY2vKGBVMYcQRena+7g2LhcWHVijzI9qEoLmqG2vofnYDtt1vlHob0phJlaDyNJmMvGBgHaCUI5j8PiptkzuTI0DFByQeOZKhhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+QAe+FI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NaeBbYtNIp2JJ2+IE6qQQRiMbtByRZ50v3olpE1kPcrG5Oa2zD7PLLy2MzD4Bb4iJ3Xsq08CkWhLpJzx2OmaQ3AkkfEWYG8UUO1LODRxtPjGWD21YNEARonUT4MxDoR1DxC5jOBsmZtwA+pukzsnslkmnnDfCi5K7hRbwU2lMOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZVW/ELM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+QAe+FI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FAEC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZVW/ELM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5523C2BD10;
 	Thu,  6 Jun 2024 14:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683728;
-	bh=T1q0HYYCgsrpuKLdqC6DjK4HtTWtI9aV0EPa/Uoczkc=;
+	bh=rp9lS/VYpuYZNcX8IE3vNYIzOZpdtVZR1V4EEpTrlfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+QAe+FIRtBSCGOc+h9rhy2KbR97LVSmlpkVN353oRxXbk393ItRjgC9bLEXwIDGk
-	 T1TD80BG0N9Cso0XxKM6/L8JyGlioE0HFpohUu4LjoJCfvpAQSyjQu/zQD9WrvtfTo
-	 4xSebdWDKq34qu6UjSiEhlpY+oB1xIdHyzhWIFXw=
+	b=qZVW/ELMgjYzdENuqZtDDND/FpI9/pCB25kXE1YElLgC9KgmYSXlAngAmjXjxfHSn
+	 6KYn0ARTYKPibFrn3u2I6mHs7OxoEpuX48q3p4zSC5yliPM+GHmzbQNbF73nMT+nWL
+	 3jJBDCUjGbYdiJdx7nOixsW7/HYAcH6+SSTjC0h4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
 	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Robin Murphy <robin.murphy@arm.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 677/744] dma-mapping: benchmark: fix up kthread-related error handling
-Date: Thu,  6 Jun 2024 16:05:49 +0200
-Message-ID: <20240606131754.213763170@linuxfoundation.org>
+Subject: [PATCH 6.6 678/744] dma-mapping: benchmark: fix node id validation
+Date: Thu,  6 Jun 2024 16:05:50 +0200
+Message-ID: <20240606131754.244118035@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -54,74 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit bb9025f4432f8c158322cf2c04c2b492f23eb511 ]
+[ Upstream commit 1ff05e723f7ca30644b8ec3fb093f16312e408ad ]
 
-kthread creation failure is invalidly handled inside do_map_benchmark().
-The put_task_struct() calls on the error path are supposed to balance the
-get_task_struct() calls which only happen after all the kthreads are
-successfully created. Rollback using kthread_stop() for already created
-kthreads in case of such failure.
+While validating node ids in map_benchmark_ioctl(), node_possible() may
+be provided with invalid argument outside of [0,MAX_NUMNODES-1] range
+leading to:
 
-In normal situation call kthread_stop_put() to gracefully stop kthreads
-and put their task refcounts. This should be done for all started
-kthreads.
+BUG: KASAN: wild-memory-access in map_benchmark_ioctl (kernel/dma/map_benchmark.c:214)
+Read of size 8 at addr 1fffffff8ccb6398 by task dma_map_benchma/971
+CPU: 7 PID: 971 Comm: dma_map_benchma Not tainted 6.9.0-rc6 #37
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+Call Trace:
+ <TASK>
+dump_stack_lvl (lib/dump_stack.c:117)
+kasan_report (mm/kasan/report.c:603)
+kasan_check_range (mm/kasan/generic.c:189)
+variable_test_bit (arch/x86/include/asm/bitops.h:227) [inline]
+arch_test_bit (arch/x86/include/asm/bitops.h:239) [inline]
+_test_bit at (include/asm-generic/bitops/instrumented-non-atomic.h:142) [inline]
+node_state (include/linux/nodemask.h:423) [inline]
+map_benchmark_ioctl (kernel/dma/map_benchmark.c:214)
+full_proxy_unlocked_ioctl (fs/debugfs/file.c:333)
+__x64_sys_ioctl (fs/ioctl.c:890)
+do_syscall_64 (arch/x86/entry/common.c:83)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Compare node ids with sane bounds first. NUMA_NO_NODE is considered a
+special valid case meaning that benchmarking kthreads won't be bound to a
+cpuset of a given node.
 
 Found by Linux Verification Center (linuxtesting.org).
 
 Fixes: 65789daa8087 ("dma-mapping: add benchmark support for streaming DMA APIs")
-Suggested-by: Robin Murphy <robin.murphy@arm.com>
 Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Reviewed-by: Robin Murphy <robin.murphy@arm.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/map_benchmark.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ kernel/dma/map_benchmark.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/dma/map_benchmark.c b/kernel/dma/map_benchmark.c
-index 02205ab53b7e9..2478957cf9f83 100644
+index 2478957cf9f83..59fb3f849b351 100644
 --- a/kernel/dma/map_benchmark.c
 +++ b/kernel/dma/map_benchmark.c
-@@ -118,6 +118,8 @@ static int do_map_benchmark(struct map_benchmark_data *map)
- 		if (IS_ERR(tsk[i])) {
- 			pr_err("create dma_map thread failed\n");
- 			ret = PTR_ERR(tsk[i]);
-+			while (--i >= 0)
-+				kthread_stop(tsk[i]);
- 			goto out;
+@@ -212,7 +212,8 @@ static long map_benchmark_ioctl(struct file *file, unsigned int cmd,
  		}
  
-@@ -139,13 +141,17 @@ static int do_map_benchmark(struct map_benchmark_data *map)
- 
- 	msleep_interruptible(map->bparam.seconds * 1000);
- 
--	/* wait for the completion of benchmark threads */
-+	/* wait for the completion of all started benchmark threads */
- 	for (i = 0; i < threads; i++) {
--		ret = kthread_stop(tsk[i]);
--		if (ret)
--			goto out;
-+		int kthread_ret = kthread_stop_put(tsk[i]);
-+
-+		if (kthread_ret)
-+			ret = kthread_ret;
- 	}
- 
-+	if (ret)
-+		goto out;
-+
- 	loops = atomic64_read(&map->loops);
- 	if (likely(loops > 0)) {
- 		u64 map_variance, unmap_variance;
-@@ -170,8 +176,6 @@ static int do_map_benchmark(struct map_benchmark_data *map)
- 	}
- 
- out:
--	for (i = 0; i < threads; i++)
--		put_task_struct(tsk[i]);
- 	put_device(map->dev);
- 	kfree(tsk);
- 	return ret;
+ 		if (map->bparam.node != NUMA_NO_NODE &&
+-		    !node_possible(map->bparam.node)) {
++		    (map->bparam.node < 0 || map->bparam.node >= MAX_NUMNODES ||
++		     !node_possible(map->bparam.node))) {
+ 			pr_err("invalid numa node\n");
+ 			return -EINVAL;
+ 		}
 -- 
 2.43.0
 
