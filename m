@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876B1199EB9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FAF1AB52A;
 	Thu,  6 Jun 2024 14:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683259; cv=none; b=h4M5rRFFoSnYqAmPj1MkP7fkv5tJI2Hjoyh/wTLpLnS0kopB1XWmDsdMYzY+SdJ5gtNYMw3Uh/gf4YpPwYEeUKUHMea/ARTjL+4boO/beAZig0DfnjMaTykdrO2b8o1s0y5hGHAuWDjuA/z2GKBhY3DVTMxrzrHXfpfXgMsBc3s=
+	t=1717683259; cv=none; b=RdzM+quZqNVxXOuai5PWPxlfwibW5AbNZKK9BaPKdaSwxdI59xQPhp5zRB3GK/fyfGsd06Z3fu7Q/tFMuDNZVizzNfTxZ+M9tDbIIghjslpLxl0C4+QV9/SZ2k8XeOygutImgyr4jXp3z8cCmptd8AYMS8RIVpi0/rzyKrh60uU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683259; c=relaxed/simple;
-	bh=f8UMic8xeSGLQY8acJ5SlRQ4IZgNSROrITKZlLPysiI=;
+	bh=RsPa2wPVI2x4Sz6Gq4SEbkLvsO/O103zshqHFSpHBCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EfzQUugRwh0CS9B836Jy2H2ie5ClgNCWew5el4QfXtifgGEtuyy4Tp44CM2EIN8ccYPvUPcugPAxB7I17+SxlbS221fuOg8lTiiVdyC0twq5xRuDdEWnzH70R6y//0sbsQjJW8cGTbYjPR6DYpg/H4H42TdYEvCLUkE3g0PwGcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIZXU0bm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VrXr4k/bTqL7Y/syNoirCwEOO9paLd9a+0ToyLj/2lCd31Sl1P55mS4bEBYhTGWbKdorWypJiRZFVxUtHzJZ5K/JOTFlFeOKSuWhKphE1XqEjJHxsBXEAsxoO9nXcsaCrRfYGcvaxZIa4jJnLpylign41XlnDpr6/0Bs54wfC/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEG37kGf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIZXU0bm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327A5C32786;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEG37kGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D49C32781;
 	Thu,  6 Jun 2024 14:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683259;
-	bh=f8UMic8xeSGLQY8acJ5SlRQ4IZgNSROrITKZlLPysiI=;
+	bh=RsPa2wPVI2x4Sz6Gq4SEbkLvsO/O103zshqHFSpHBCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIZXU0bm6i/S18UXZg2NAQ+zmVlxQ7i6j29gXaSGnr0RWRLDjCzsk0/+NFQhaP4BH
-	 PbFmle7jVYbNvM/nMLPru2Y3+pq+gufAivulj4k7/5ab+co0EfJzScfielZnqbrLs+
-	 BBHCgvXRVB0SEm+I+ms3Ak0/YyQaE0nBWD9xWYlk=
+	b=aEG37kGfUsgdnAxV0DnBP8iBWSM+iseKVBnKjxPAZvkjU0GHykPyBvISgmOOTCtxP
+	 UYqZbXUw8Bwylc44EoUeF6dk9YvzxWfFNiCOM3USe/cx0sKrdGVsv+VMaNgcyflVpw
+	 flt3k+XWIR03sc2r8KMyO4sjs3XI46CxWH5DHXds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 135/473] net: dsa: mv88e6xxx: Add support for model-specific pre- and post-reset handlers
-Date: Thu,  6 Jun 2024 16:01:04 +0200
-Message-ID: <20240606131704.393434987@linuxfoundation.org>
+Subject: [PATCH 6.6 176/744] wifi: iwlwifi: mvm: init vif works only once
+Date: Thu,  6 Jun 2024 15:57:28 +0200
+Message-ID: <20240606131738.081634082@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,235 +47,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 0fdd27b9d6d7c60bd319d3497ad797934bab13cb ]
+[ Upstream commit 0bcc2155983e03c41b21a356af87ae839a6b3ead ]
 
-Instead of calling mv88e6xxx_g2_eeprom_wait() directly from
-mv88e6xxx_hardware_reset(), add configurable pre- and post-reset hard
-reset handlers. Initially, the handlers are set to
-mv88e6xxx_g2_eeprom_wait() for all families that have get/set_eeprom()
-to match the existing behavior. No functional change intended (except
-for additional error messages on failure).
+It's dangerous to re-initialize works repeatedly, especially
+delayed ones that have an associated timer, and even more so
+if they're not necessarily canceled inbetween. This can be
+the case for these workers here during FW restart scenarios,
+so make sure to initialize it only once.
 
-Fixes: 6ccf50d4d474 ("net: dsa: mv88e6xxx: Avoid EEPROM timeout when EEPROM is absent")
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+While at it, also ensure it is cancelled correctly.
+
+Fixes: f67806140220 ("iwlwifi: mvm: disconnect in case of bad channel switch parameters")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240416134215.ddf8eece5eac.I4164f5c9c444b64a9abbaab14c23858713778e35@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 50 +++++++++++++++++++++++++++++---
- drivers/net/dsa/mv88e6xxx/chip.h |  6 ++++
- 2 files changed, 52 insertions(+), 4 deletions(-)
+ .../net/wireless/intel/iwlwifi/mvm/mac80211.c | 19 +++++++++++++++++--
+ .../wireless/intel/iwlwifi/mvm/mld-mac80211.c |  2 ++
+ drivers/net/wireless/intel/iwlwifi/mvm/mvm.h  |  2 ++
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 517c50d11fbce..b59cdc850a07a 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -3003,6 +3003,7 @@ static int mv88e6xxx_software_reset(struct mv88e6xxx_chip *chip)
- static void mv88e6xxx_hardware_reset(struct mv88e6xxx_chip *chip)
- {
- 	struct gpio_desc *gpiod = chip->reset;
-+	int err;
- 
- 	/* If there is a GPIO connected to the reset pin, toggle it */
- 	if (gpiod) {
-@@ -3011,17 +3012,26 @@ static void mv88e6xxx_hardware_reset(struct mv88e6xxx_chip *chip)
- 		 * mid-byte, causing the first EEPROM read after the reset
- 		 * from the wrong location resulting in the switch booting
- 		 * to wrong mode and inoperable.
-+		 * For this reason, switch families with EEPROM support
-+		 * generally wait for EEPROM loads to complete as their pre-
-+		 * and post-reset handlers.
- 		 */
--		if (chip->info->ops->get_eeprom)
--			mv88e6xxx_g2_eeprom_wait(chip);
-+		if (chip->info->ops->hardware_reset_pre) {
-+			err = chip->info->ops->hardware_reset_pre(chip);
-+			if (err)
-+				dev_err(chip->dev, "pre-reset error: %d\n", err);
-+		}
- 
- 		gpiod_set_value_cansleep(gpiod, 1);
- 		usleep_range(10000, 20000);
- 		gpiod_set_value_cansleep(gpiod, 0);
- 		usleep_range(10000, 20000);
- 
--		if (chip->info->ops->get_eeprom)
--			mv88e6xxx_g2_eeprom_wait(chip);
-+		if (chip->info->ops->hardware_reset_post) {
-+			err = chip->info->ops->hardware_reset_post(chip);
-+			if (err)
-+				dev_err(chip->dev, "post-reset error: %d\n", err);
-+		}
- 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index ee9d14250a261..375f401b14535 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -1513,6 +1513,17 @@ static int iwl_mvm_alloc_bcast_mcast_sta(struct iwl_mvm *mvm,
+ 					IWL_STA_MULTICAST);
  }
  
-@@ -4339,6 +4349,8 @@ static const struct mv88e6xxx_ops mv88e6141_ops = {
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu =  mv88e6390_g1_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6390_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -4529,6 +4541,8 @@ static const struct mv88e6xxx_ops mv88e6172_ops = {
- 	.watchdog_ops = &mv88e6097_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6352_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -4630,6 +4644,8 @@ static const struct mv88e6xxx_ops mv88e6176_ops = {
- 	.watchdog_ops = &mv88e6097_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6352_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -4731,6 +4747,8 @@ static const struct mv88e6xxx_ops mv88e6190_ops = {
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6390_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -4794,6 +4812,8 @@ static const struct mv88e6xxx_ops mv88e6190x_ops = {
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6390_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -4855,6 +4875,8 @@ static const struct mv88e6xxx_ops mv88e6191_ops = {
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6390_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -4919,6 +4941,8 @@ static const struct mv88e6xxx_ops mv88e6240_ops = {
- 	.watchdog_ops = &mv88e6097_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6352_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -4977,6 +5001,8 @@ static const struct mv88e6xxx_ops mv88e6250_ops = {
- 	.watchdog_ops = &mv88e6250_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6250_g1_reset,
- 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
-@@ -5021,6 +5047,8 @@ static const struct mv88e6xxx_ops mv88e6290_ops = {
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6390_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -5085,6 +5113,8 @@ static const struct mv88e6xxx_ops mv88e6320_ops = {
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
-@@ -5129,6 +5159,8 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	.set_egress_port = mv88e6095_g1_set_egress_port,
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
-@@ -5177,6 +5209,8 @@ static const struct mv88e6xxx_ops mv88e6341_ops = {
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu =  mv88e6390_g1_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6390_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -5333,6 +5367,8 @@ static const struct mv88e6xxx_ops mv88e6352_ops = {
- 	.watchdog_ops = &mv88e6097_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6352_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -5400,6 +5436,8 @@ static const struct mv88e6xxx_ops mv88e6390_ops = {
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6390_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -5467,6 +5505,8 @@ static const struct mv88e6xxx_ops mv88e6390x_ops = {
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6390_g1_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6390_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-@@ -5537,6 +5577,8 @@ static const struct mv88e6xxx_ops mv88e6393x_ops = {
- 	.watchdog_ops = &mv88e6393x_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6393x_port_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
-+	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
- 	.rmu_disable = mv88e6390_g1_rmu_disable,
- 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.h b/drivers/net/dsa/mv88e6xxx/chip.h
-index 97a47d8743fd3..b34e96e689d5c 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.h
-+++ b/drivers/net/dsa/mv88e6xxx/chip.h
-@@ -458,6 +458,12 @@ struct mv88e6xxx_ops {
- 	int (*ppu_enable)(struct mv88e6xxx_chip *chip);
- 	int (*ppu_disable)(struct mv88e6xxx_chip *chip);
- 
-+	/* Additional handlers to run before and after hard reset, to make sure
-+	 * that the switch and EEPROM are in a good state.
-+	 */
-+	int (*hardware_reset_pre)(struct mv88e6xxx_chip *chip);
-+	int (*hardware_reset_post)(struct mv88e6xxx_chip *chip);
++void iwl_mvm_mac_init_mvmvif(struct iwl_mvm *mvm, struct iwl_mvm_vif *mvmvif)
++{
++	lockdep_assert_held(&mvm->mutex);
 +
- 	/* Switch Software Reset */
- 	int (*reset)(struct mv88e6xxx_chip *chip);
++	if (test_bit(IWL_MVM_STATUS_IN_HW_RESTART, &mvm->status))
++		return;
++
++	INIT_DELAYED_WORK(&mvmvif->csa_work,
++			  iwl_mvm_channel_switch_disconnect_wk);
++}
++
+ static int iwl_mvm_mac_add_interface(struct ieee80211_hw *hw,
+ 				     struct ieee80211_vif *vif)
+ {
+@@ -1522,6 +1533,8 @@ static int iwl_mvm_mac_add_interface(struct ieee80211_hw *hw,
  
+ 	mutex_lock(&mvm->mutex);
+ 
++	iwl_mvm_mac_init_mvmvif(mvm, mvmvif);
++
+ 	mvmvif->mvm = mvm;
+ 
+ 	/* the first link always points to the default one */
+@@ -1595,8 +1608,6 @@ static int iwl_mvm_mac_add_interface(struct ieee80211_hw *hw,
+ 		mvm->p2p_device_vif = vif;
+ 
+ 	iwl_mvm_tcm_add_vif(mvm, vif);
+-	INIT_DELAYED_WORK(&mvmvif->csa_work,
+-			  iwl_mvm_channel_switch_disconnect_wk);
+ 
+ 	if (vif->type == NL80211_IFTYPE_MONITOR) {
+ 		mvm->monitor_on = true;
+@@ -1638,6 +1649,8 @@ static int iwl_mvm_mac_add_interface(struct ieee80211_hw *hw,
+ void iwl_mvm_prepare_mac_removal(struct iwl_mvm *mvm,
+ 				 struct ieee80211_vif *vif)
+ {
++	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
++
+ 	if (vif->type == NL80211_IFTYPE_P2P_DEVICE) {
+ 		/*
+ 		 * Flush the ROC worker which will flush the OFFCHANNEL queue.
+@@ -1646,6 +1659,8 @@ void iwl_mvm_prepare_mac_removal(struct iwl_mvm *mvm,
+ 		 */
+ 		flush_work(&mvm->roc_done_wk);
+ 	}
++
++	cancel_delayed_work_sync(&mvmvif->csa_work);
+ }
+ 
+ /* This function is doing the common part of removing the interface for
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index e22db69d99909..aef8824469e1e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -13,6 +13,8 @@ static int iwl_mvm_mld_mac_add_interface(struct ieee80211_hw *hw,
+ 
+ 	mutex_lock(&mvm->mutex);
+ 
++	iwl_mvm_mac_init_mvmvif(mvm, mvmvif);
++
+ 	mvmvif->mvm = mvm;
+ 
+ 	/* Not much to do here. The stack will not allow interface
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+index 218f3bc31104b..c780e5ffcd596 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+@@ -1737,6 +1737,8 @@ int iwl_mvm_load_d3_fw(struct iwl_mvm *mvm);
+ 
+ int iwl_mvm_mac_setup_register(struct iwl_mvm *mvm);
+ 
++void iwl_mvm_mac_init_mvmvif(struct iwl_mvm *mvm, struct iwl_mvm_vif *mvmvif);
++
+ /*
+  * FW notifications / CMD responses handlers
+  * Convention: iwl_mvm_rx_<NAME OF THE CMD>
 -- 
 2.43.0
 
