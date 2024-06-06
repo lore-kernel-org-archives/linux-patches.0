@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB28198A28;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF27E19B3E1;
 	Thu,  6 Jun 2024 14:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683060; cv=none; b=Z/XU8i4VSZsZ70TVoy5r4TT75UR39E+ciXwjV2AZynbuZEYbM1A8Gxh6aK65Y4qjxXqZfq2x7LYX3NzoxvDmCXkzjFRcZ0MNRmVNh+9BHjOs4mSV0ocMTbp8N8RdLM1jRay5sYWwq3Hx2C8jaqz9un/lIflfvW3qNrcYYyj+8Hs=
+	t=1717683060; cv=none; b=kZy5DXAE3D1txIB/qn0ht9pq3FahiA/enkp5ADgcOA6rOEmGt/KFB/7/OeJ11RujT7Rvux1gk+mO9Ik7EFfO9cPFNqD6ImZfS8xMmevhYkIpE7yUE0d6vGf6AGhsuEWbFaoeLJs97TZ4t9HibtC5VY8NRi2rt+CoIPegVb/NT98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683060; c=relaxed/simple;
-	bh=1HzS0F++32WkuxtGHnJ4eSbKnChQ5TfnGNikQGwEdrU=;
+	bh=Cd1NOaxCf+J7MqwsjdTcWRLVkBRxxiLu1shyTi74GGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMrSCnEai1JURblJh2M8AxbBsbNBAXe/pG7X3IHQ6UBklfKlurYNo0u6cC0tMcnT4JYX3HfMFAN/H/0EnxYhAKSkFZlEPL/rhJvd+AmUGoP4/FC4Uf4aLq2cQoYiliJUl4tq75c1ivs8p5puDc1EO7xuc4kyiVdk3hGdCHgbEO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzY1El9b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=poScKdNUD2OaV5jK0rV3C/AwgoyZpYeIcyHX11CwsXcu/Uv/MLErDz+f10DxSIyjU6/p8OTm+Z081N1ar4mce+bwS+uRwFSanIEvQJtrI1wRrc452/XAlahhSOVKf5xsMScjJQ8h54lfUibMBQaJh2fEz6EljZ6qNGCZTgN4jYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpcyCC2T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzY1El9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5F6C4AF07;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpcyCC2T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C07C32782;
 	Thu,  6 Jun 2024 14:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683060;
-	bh=1HzS0F++32WkuxtGHnJ4eSbKnChQ5TfnGNikQGwEdrU=;
+	bh=Cd1NOaxCf+J7MqwsjdTcWRLVkBRxxiLu1shyTi74GGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzY1El9b/+sJtCjwy69CmdNozIqpwCmWpNCRcDMQnGDpjTOcsiVr4OPEQEkjyFaU5
-	 z/IJb+6miLMv2zF8O066NiEGb5fey4R+8dcscZPiySoX3X74nXgL7QuxR4b5vF3Kba
-	 POXw1paFapgL2wooKWeWxA/Ct5LL+8/HI+ePeI+E=
+	b=NpcyCC2TB1WRTPr6Q0+3hHBO/5p+ozqdOZjfqBPyxZLnXpzkbhJiTElqPjQ72LfDt
+	 rulTGuZa2+iZro+RY0PgAuXIZ4uFJ2KYoBQ/O8yMM8IGKjg5tjRMN3tFWwKv1z5xyJ
+	 LYiBVquF5QAwapBsG0xV69S0xiT3FCn0mh6ak/5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Roded Zats <rzats@paloaltonetworks.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 273/374] ice: Interpret .set_channels() input differently
-Date: Thu,  6 Jun 2024 16:04:12 +0200
-Message-ID: <20240606131701.044142884@linuxfoundation.org>
+Subject: [PATCH 6.9 309/374] enic: Validate length of nl attributes in enic_set_vf_port
+Date: Thu,  6 Jun 2024 16:04:48 +0200
+Message-ID: <20240606131702.202730135@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -56,88 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Roded Zats <rzats@paloaltonetworks.com>
 
-[ Upstream commit 05d6f442f31f901d27dbc64fd504a8ec7d5013de ]
+[ Upstream commit e8021b94b0412c37bcc79027c2e382086b6ce449 ]
 
-A bug occurs because a safety check guarding AF_XDP-related queues in
-ethnl_set_channels(), does not trigger. This happens, because kernel and
-ice driver interpret the ethtool command differently.
+enic_set_vf_port assumes that the nl attribute IFLA_PORT_PROFILE
+is of length PORT_PROFILE_MAX and that the nl attributes
+IFLA_PORT_INSTANCE_UUID, IFLA_PORT_HOST_UUID are of length PORT_UUID_MAX.
+These attributes are validated (in the function do_setlink in rtnetlink.c)
+using the nla_policy ifla_port_policy. The policy defines IFLA_PORT_PROFILE
+as NLA_STRING, IFLA_PORT_INSTANCE_UUID as NLA_BINARY and
+IFLA_PORT_HOST_UUID as NLA_STRING. That means that the length validation
+using the policy is for the max size of the attributes and not on exact
+size so the length of these attributes might be less than the sizes that
+enic_set_vf_port expects. This might cause an out of bands
+read access in the memcpys of the data of these
+attributes in enic_set_vf_port.
 
-How the bug occurs:
-1. ethtool -l <IFNAME> -> combined: 40
-2. Attach AF_XDP to queue 30
-3. ethtool -L <IFNAME> rx 15 tx 15
-   combined number is not specified, so command becomes {rx_count = 15,
-   tx_count = 15, combined_count = 40}.
-4. ethnl_set_channels checks, if there are any AF_XDP of queues from the
-   new (combined_count + rx_count) to the old one, so from 55 to 40, check
-   does not trigger.
-5. ice interprets `rx 15 tx 15` as 15 combined channels and deletes the
-   queue that AF_XDP is attached to.
-
-Interpret the command in a way that is more consistent with ethtool
-manual [0] (--show-channels and --set-channels).
-
-Considering that in the ice driver only the difference between RX and TX
-queues forms dedicated channels, change the correct way to set number of
-channels to:
-
-ethtool -L <IFNAME> combined 10 /* For symmetric queues */
-ethtool -L <IFNAME> combined 8 tx 2 rx 0 /* For asymmetric queues */
-
-[0] https://man7.org/linux/man-pages/man8/ethtool.8.html
-
-Fixes: 87324e747fde ("ice: Implement ethtool ops for channels")
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Fixes: f8bd909183ac ("net: Add ndo_{set|get}_vf_port support for enic dynamic vnics")
+Signed-off-by: Roded Zats <rzats@paloaltonetworks.com>
+Link: https://lore.kernel.org/r/20240522073044.33519-1-rzats@paloaltonetworks.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c | 19 ++-----------------
- 1 file changed, 2 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/cisco/enic/enic_main.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index 78b833b3e1d7e..62c8205fcebae 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -3593,7 +3593,6 @@ static int ice_set_channels(struct net_device *dev, struct ethtool_channels *ch)
- 	struct ice_pf *pf = vsi->back;
- 	int new_rx = 0, new_tx = 0;
- 	bool locked = false;
--	u32 curr_combined;
- 	int ret = 0;
+diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
+index d266a87297a5e..54798df8e2544 100644
+--- a/drivers/net/ethernet/cisco/enic/enic_main.c
++++ b/drivers/net/ethernet/cisco/enic/enic_main.c
+@@ -1117,18 +1117,30 @@ static int enic_set_vf_port(struct net_device *netdev, int vf,
+ 	pp->request = nla_get_u8(port[IFLA_PORT_REQUEST]);
  
- 	/* do not support changing channels in Safe Mode */
-@@ -3615,22 +3614,8 @@ static int ice_set_channels(struct net_device *dev, struct ethtool_channels *ch)
- 		return -EOPNOTSUPP;
+ 	if (port[IFLA_PORT_PROFILE]) {
++		if (nla_len(port[IFLA_PORT_PROFILE]) != PORT_PROFILE_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_NAME;
+ 		memcpy(pp->name, nla_data(port[IFLA_PORT_PROFILE]),
+ 			PORT_PROFILE_MAX);
  	}
  
--	curr_combined = ice_get_combined_cnt(vsi);
--
--	/* these checks are for cases where user didn't specify a particular
--	 * value on cmd line but we get non-zero value anyway via
--	 * get_channels(); look at ethtool.c in ethtool repository (the user
--	 * space part), particularly, do_schannels() routine
--	 */
--	if (ch->rx_count == vsi->num_rxq - curr_combined)
--		ch->rx_count = 0;
--	if (ch->tx_count == vsi->num_txq - curr_combined)
--		ch->tx_count = 0;
--	if (ch->combined_count == curr_combined)
--		ch->combined_count = 0;
--
--	if (!(ch->combined_count || (ch->rx_count && ch->tx_count))) {
--		netdev_err(dev, "Please specify at least 1 Rx and 1 Tx channel\n");
-+	if (ch->rx_count && ch->tx_count) {
-+		netdev_err(dev, "Dedicated RX or TX channels cannot be used simultaneously\n");
- 		return -EINVAL;
+ 	if (port[IFLA_PORT_INSTANCE_UUID]) {
++		if (nla_len(port[IFLA_PORT_INSTANCE_UUID]) != PORT_UUID_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_INSTANCE;
+ 		memcpy(pp->instance_uuid,
+ 			nla_data(port[IFLA_PORT_INSTANCE_UUID]), PORT_UUID_MAX);
  	}
  
+ 	if (port[IFLA_PORT_HOST_UUID]) {
++		if (nla_len(port[IFLA_PORT_HOST_UUID]) != PORT_UUID_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_HOST;
+ 		memcpy(pp->host_uuid,
+ 			nla_data(port[IFLA_PORT_HOST_UUID]), PORT_UUID_MAX);
 -- 
 2.43.0
 
