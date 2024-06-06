@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09146198A3B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDBA198A3B;
 	Thu,  6 Jun 2024 14:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683405; cv=none; b=FyAdGaZDhnXu2ZhrUdUEzmr2lHDTUqYhuBLtfe25YhDdvLDKUMdgrJCDHZjgTJKBgcDxTLnaFWPC/JkpwSQWUtoqDJFDItg9AMd6Jq70Px071bbfXw9C9kj3w40cVrGwbPSJDk1yU7DuFjBqmkzEg3u4SA0FwbP3QFIdjURF43Y=
+	t=1717683405; cv=none; b=kCJmYN3e/uTdpWK6pw38QRjE/OEmoRtLEHPsc17ABmLsQJKf67Rij6UjVc67vTvz5zTDjkFwi5OdST3CjmmcRDSyKLCLQbWKuJPimR/5QTkv38S9J9Q0nPuAKUoRRH2ikLcwsV/o2sAoJlXIhOFE6EAtq4nCzLLMPiihexBWJ7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683405; c=relaxed/simple;
-	bh=3QEjwKVryvGvCWPBhQUSOnDmKiOpmACo13qDvrhZEB4=;
+	bh=geedD676MrdwoHXh28mk/KWLorJhH19Jy3fqfP1zzto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=flY9pnJxSo1+rCKv6WhMUob9IuvJu4e0QWxenV+lg/pK6eQ75swHOHxijfIVdIbicj4WcekN8Wgj+oMwOE+SeDsxTwC5gvXpJQ51vs7jQmvXcfMQhG7h+sPc85BpGuho2ex8TU9E7DawKyIhwv6/iJlnWZZbBNDG+X4dGSLiOwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqeWBf55; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bxYEONO+CjPDDKgHLR5FmNDDDjdw4azd60g45+tz85rm6X234jNhiRsZZIQ6EtN784nwEuIuCf95gKo7ZWD4x0cdbGZhFfeNkR13MkkVbl84cq/MuyYkCAMyj3QVTvmDj5w2XvcGVBbjTT+LfaUT37KcEnOl+9fAN6QZXVIOzK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZmTii+P4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqeWBf55"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D935BC2BD10;
-	Thu,  6 Jun 2024 14:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmTii+P4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5B4C2BD10;
+	Thu,  6 Jun 2024 14:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683404;
-	bh=3QEjwKVryvGvCWPBhQUSOnDmKiOpmACo13qDvrhZEB4=;
+	s=korg; t=1717683405;
+	bh=geedD676MrdwoHXh28mk/KWLorJhH19Jy3fqfP1zzto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqeWBf55ho8S+9AAGEPiWizqZ++0UyCr1LwQcLxyiGpgIZObYbRqtMLDBrjgUvRj9
-	 uCs3YJSiZmGkNJ5iqopbeRoqKRA6D7XBnyhz2vmNk8/4wHnK8wi02ssJlfPVIH7kuf
-	 x9pNZu7Z4KBYJuhBY8ivJ+K1xW2rhHmkuRG/MO+w=
+	b=ZmTii+P45rdaLdO03cDJACMRWvcMDg/uoIW4721fMMvH32P2A3QjKE4m4+nXv7YnM
+	 RmO0qNifHaOf0mlVOGQxZdziUHWRhLOdmlHib6d9eEIqtPf4hV0MBrRU6GotHz3gCa
+	 b5BWUVJLcTTJQ2HHQur4QadX5zCrAYxleCTSG0rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 288/473] dmaengine: idma64: Add check for dma_set_max_seg_size
-Date: Thu,  6 Jun 2024 16:03:37 +0200
-Message-ID: <20240606131709.409980577@linuxfoundation.org>
+Subject: [PATCH 6.6 349/744] RDMA/rxe: Allow good work requests to be executed
+Date: Thu,  6 Jun 2024 16:00:21 +0200
+Message-ID: <20240606131743.665710112@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +47,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 2b1c1cf08a0addb6df42f16b37133dc7a351de29 ]
+[ Upstream commit b703374837a8f8422fa3f1edcf65505421a65a6a ]
 
-As the possible failure of the dma_set_max_seg_size(), it should be
-better to check the return value of the dma_set_max_seg_size().
+A previous commit incorrectly added an 'if(!err)' before scheduling the
+requester task in rxe_post_send_kernel(). But if there were send wrs
+successfully added to the send queue before a bad wr they might never get
+executed.
 
-Fixes: e3fdb1894cfa ("dmaengine: idma64: set maximum allowed segment size for DMA")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240403024932.3342606-1-nichen@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This commit fixes this by scheduling the requester task if any wqes were
+successfully posted in rxe_post_send_kernel() in rxe_verbs.c.
+
+Link: https://lore.kernel.org/r/20240329145513.35381-5-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Fixes: 5bf944f24129 ("RDMA/rxe: Add error messages")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idma64.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_verbs.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
-index af8777a1ec2e3..89e4a3e1d5198 100644
---- a/drivers/dma/idma64.c
-+++ b/drivers/dma/idma64.c
-@@ -594,7 +594,9 @@ static int idma64_probe(struct idma64_chip *chip)
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+index 48f86839d36a8..0930350522e38 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -888,6 +888,7 @@ static int rxe_post_send_kernel(struct rxe_qp *qp,
+ {
+ 	int err = 0;
+ 	unsigned long flags;
++	int good = 0;
  
- 	idma64->dma.dev = chip->sysdev;
+ 	spin_lock_irqsave(&qp->sq.sq_lock, flags);
+ 	while (ibwr) {
+@@ -895,12 +896,15 @@ static int rxe_post_send_kernel(struct rxe_qp *qp,
+ 		if (err) {
+ 			*bad_wr = ibwr;
+ 			break;
++		} else {
++			good++;
+ 		}
+ 		ibwr = ibwr->next;
+ 	}
+ 	spin_unlock_irqrestore(&qp->sq.sq_lock, flags);
  
--	dma_set_max_seg_size(idma64->dma.dev, IDMA64C_CTLH_BLOCK_TS_MASK);
-+	ret = dma_set_max_seg_size(idma64->dma.dev, IDMA64C_CTLH_BLOCK_TS_MASK);
-+	if (ret)
-+		return ret;
+-	if (!err)
++	/* kickoff processing of any posted wqes */
++	if (good)
+ 		rxe_sched_task(&qp->req.task);
  
- 	ret = dma_async_device_register(&idma64->dma);
- 	if (ret)
+ 	spin_lock_irqsave(&qp->state_lock, flags);
 -- 
 2.43.0
 
