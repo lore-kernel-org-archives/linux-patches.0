@@ -1,49 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460DB1C5399;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C5B196D90;
 	Thu,  6 Jun 2024 14:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683674; cv=none; b=Tu0fSFrJeGsoDO90Z9ZL9mC/f/Sy56Q0qFEgR2gZMOt7/E37zrFWF8GiL6ZQvlS1r4ql7TbRs+/5gFlI3k+tda5kr1KKLjMa5ESedCXLf5SHX9bIQSYvgLRQZYaTBdhJd8HVnH2OKfMYQZiGHUHrQ8PrcJGp39Pj3jPK7Ql6lnQ=
+	t=1717683674; cv=none; b=VydkK/nznzgdvKuJp+QtszqDQzpf1EiKaQGF6le9Vz8PsrqAw2Zm4iLZ60m3e6YweCzGGdnDRLUmTi1lNHHDfEWdwtbqZwx8Y5LmpPLtumuPjRvNUwxVcGVZqkmdmCniYsoEjIy9rDDSD4MB1B2s8s8+9TANimdN/4BIoM7vxX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683674; c=relaxed/simple;
-	bh=FphWuKzQpHoGkIxX/yYWv2ikPHGlVAwzSu6vkUDWBvo=;
+	bh=Eqtd01dAaM6WmM8X1LjdmKtuuUZwTwL4sCuka/4Gb+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jocODWjjoR9kp4w4lC1P5XZJYRFwvvHPSNDVpJBlAVp5ad3wtVxxe+pkKvju6V9JwjoboD7PHCvQsWGiBbBjq6PixslbKNyjN9fIobjLo//+YDWEfEXkRA7Ga6mloyXHRjDLUa+J9SLQ0t8Ky63yxRph8L+sR20+E/+ApqpCZ2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kx3vnuVu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a8HX39Gr2HPWLDnoHF/OYW8okmfWNjcrStsnm46OWtwcAoHzma503kDkjeM8wb+sRU06QX8CZjcdeJWULd4ntGXL9F0ZePZD/hj+8TlgfvkOkTcN3VQ2BABAA4kRu8dcXGbBKyTgbdi0AZ10tUrVEyHPqoU5dURiyF2ODlU1WKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FY9bXw1E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kx3vnuVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EFEC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FY9bXw1E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2A1C2BD10;
 	Thu,  6 Jun 2024 14:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683674;
-	bh=FphWuKzQpHoGkIxX/yYWv2ikPHGlVAwzSu6vkUDWBvo=;
+	bh=Eqtd01dAaM6WmM8X1LjdmKtuuUZwTwL4sCuka/4Gb+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kx3vnuVuOiJLrh7eaP9pmMvRC4/FT81tiFU9Y2THF1J26IC8mMlReRX2WRWO5Jjpc
-	 p2Jrz7/JIxPhmlsoDQVqeilUBYPqjCBY2Fx877NfvUhFmlODqf1Tyypb8xjgX7Opmm
-	 LUWLAmiqIuWvASMslwmlE6YpySwLz7aQSwTy83As=
+	b=FY9bXw1EbQbWy5ioYZAQ3F0pVzKXfx2QELz9a3QAy5gD6o0H4pWge+Jc8uqY+68v4
+	 dBEEGUzzgtu97R3qFROG3ckk8B1CYXuYoGAGQV1bfNtt7nT1AIm1vEP3nNLDRJReFl
+	 qlGlntDj2rpOR8LP+Wj7Osz4FaVyinkASgAI7VOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@arm.com>,
+	Jing Zhang <renyu.zj@linux.alibaba.com>,
 	Ian Rogers <irogers@google.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	James Clark <james.clark@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Leo Yan <leo.yan@linaro.org>,
 	Mike Leach <mike.leach@linaro.org>,
-	Jing Zhang <renyu.zj@linux.alibaba.com>,
-	Haixin Yu <yuhaixin.yhx@linux.alibaba.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Zhuo Song <zhuo.song@linux.alibaba.com>,
+	John Garry <john.g.garry@oracle.com>,
 	linux-arm-kernel@lists.infradead.org,
+	linux-doc@vger.kernel.org,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 526/744] perf pmu: Move pmu__find_core_pmu() to pmus.c
-Date: Thu,  6 Jun 2024 16:03:18 +0200
-Message-ID: <20240606131749.309213383@linuxfoundation.org>
+Subject: [PATCH 6.6 527/744] perf pmu: "Compat" supports regular expression matching identifiers
+Date: Thu,  6 Jun 2024 16:03:19 +0200
+Message-ID: <20240606131749.337542621@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -62,196 +61,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: Jing Zhang <renyu.zj@linux.alibaba.com>
 
-[ Upstream commit 3d0f5f456a5786573ba6a3358178c8db580e4b85 ]
+[ Upstream commit 2879ff36f5ed80deec5f9d82a7a4107f2347630e ]
 
-pmu__find_core_pmu() more logically belongs in pmus.c because it
-iterates over all PMUs, so move it to pmus.c
+The jevent "Compat" is used for uncore PMU alias or metric definitions.
 
-At the same time rename it to perf_pmus__find_core_pmu() to match the
-naming convention in this file.
+The same PMU driver has different PMU identifiers due to different
+hardware versions and types, but they may have some common PMU event.
+Since a Compat value can only match one identifier, when adding the
+same event alias to PMUs with different identifiers, each identifier
+needs to be defined once, which is not streamlined enough.
 
-list_prepare_entry() can't be used in perf_pmus__scan_core() anymore now
-that it's called from the same compilation unit. This is with -O2
-(specifically -O1 -ftree-vrp -finline-functions
--finline-small-functions) which allow the bounds of the array
-access to be determined at compile time. list_prepare_entry() subtracts
-the offset of the 'list' member in struct perf_pmu from &core_pmus,
-which isn't a struct perf_pmu. The compiler sees that pmu results in
-&core_pmus - 8 and refuses to compile. At runtime this works because
-list_for_each_entry_continue() always adds the offset back again before
-dereferencing ->next, but it's technically undefined behavior. With
--fsanitize=undefined an additional warning is generated.
+So let "Compat" support using regular expression to match identifiers
+for uncore PMU alias. For example, if the "Compat" value is set to
+"43401|43c01", it would be able to match PMU identifiers such as "43401"
+or "43c01", which correspond to CMN600_r0p0 or CMN700_r0p0.
 
-Using list_first_entry_or_null() to get the first entry here avoids
-doing &core_pmus - 8 but has the same result and fixes both the compile
-warning and the undefined behavior warning. There are other uses of
-list_prepare_entry() in pmus.c, but the compiler doesn't seem to be
-able to see that they can also be called with &core_pmus, so I won't
-change any at this time.
-
-Signed-off-by: James Clark <james.clark@arm.com>
+Signed-off-by: Jing Zhang <renyu.zj@linux.alibaba.com>
 Reviewed-by: Ian Rogers <irogers@google.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Eduard Zingerman <eddyz87@gmail.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Cc: James Clark <james.clark@arm.com>
 Cc: Will Deacon <will@kernel.org>
 Cc: Leo Yan <leo.yan@linaro.org>
 Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Jing Zhang <renyu.zj@linux.alibaba.com>
-Cc: Haixin Yu <yuhaixin.yhx@linux.alibaba.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Shuai Xue <xueshuai@linux.alibaba.com>
+Cc: Zhuo Song <zhuo.song@linux.alibaba.com>
+Cc: John Garry <john.g.garry@oracle.com>
 Cc: linux-arm-kernel@lists.infradead.org
-Link: https://lore.kernel.org/r/20230913153355.138331-2-james.clark@arm.com
+Cc: linux-doc@vger.kernel.org
+Link: https://lore.kernel.org/r/1695794391-34817-2-git-send-email-renyu.zj@linux.alibaba.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Stable-dep-of: d9c5f5f94c2d ("perf pmu: Count sys and cpuid JSON events separately")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/arm64/util/pmu.c |  6 +++---
- tools/perf/tests/expr.c          |  2 +-
- tools/perf/util/expr.c           |  2 +-
- tools/perf/util/pmu.c            | 17 -----------------
- tools/perf/util/pmu.h            |  2 +-
- tools/perf/util/pmus.c           | 20 +++++++++++++++++++-
- 6 files changed, 25 insertions(+), 24 deletions(-)
+ tools/perf/util/pmu.c | 27 +++++++++++++++++++++++++--
+ tools/perf/util/pmu.h |  1 +
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/arch/arm64/util/pmu.c b/tools/perf/arch/arm64/util/pmu.c
-index 615084eb88d8c..3d9330feebd28 100644
---- a/tools/perf/arch/arm64/util/pmu.c
-+++ b/tools/perf/arch/arm64/util/pmu.c
-@@ -10,7 +10,7 @@
- 
- const struct pmu_metrics_table *pmu_metrics_table__find(void)
- {
--	struct perf_pmu *pmu = pmu__find_core_pmu();
-+	struct perf_pmu *pmu = perf_pmus__find_core_pmu();
- 
- 	if (pmu)
- 		return perf_pmu__find_metrics_table(pmu);
-@@ -20,7 +20,7 @@ const struct pmu_metrics_table *pmu_metrics_table__find(void)
- 
- const struct pmu_events_table *pmu_events_table__find(void)
- {
--	struct perf_pmu *pmu = pmu__find_core_pmu();
-+	struct perf_pmu *pmu = perf_pmus__find_core_pmu();
- 
- 	if (pmu)
- 		return perf_pmu__find_events_table(pmu);
-@@ -32,7 +32,7 @@ double perf_pmu__cpu_slots_per_cycle(void)
- {
- 	char path[PATH_MAX];
- 	unsigned long long slots = 0;
--	struct perf_pmu *pmu = pmu__find_core_pmu();
-+	struct perf_pmu *pmu = perf_pmus__find_core_pmu();
- 
- 	if (pmu) {
- 		perf_pmu__pathname_scnprintf(path, sizeof(path),
-diff --git a/tools/perf/tests/expr.c b/tools/perf/tests/expr.c
-index b177d09078038..cea4a506197db 100644
---- a/tools/perf/tests/expr.c
-+++ b/tools/perf/tests/expr.c
-@@ -76,7 +76,7 @@ static int test__expr(struct test_suite *t __maybe_unused, int subtest __maybe_u
- 	struct expr_parse_ctx *ctx;
- 	bool is_intel = false;
- 	char strcmp_cpuid_buf[256];
--	struct perf_pmu *pmu = pmu__find_core_pmu();
-+	struct perf_pmu *pmu = perf_pmus__find_core_pmu();
- 	char *cpuid = perf_pmu__getcpuid(pmu);
- 	char *escaped_cpuid1, *escaped_cpuid2;
- 
-diff --git a/tools/perf/util/expr.c b/tools/perf/util/expr.c
-index 80cf2478f98fc..b8875aac8f870 100644
---- a/tools/perf/util/expr.c
-+++ b/tools/perf/util/expr.c
-@@ -527,7 +527,7 @@ double expr__strcmp_cpuid_str(const struct expr_parse_ctx *ctx __maybe_unused,
- 		       bool compute_ids __maybe_unused, const char *test_id)
- {
- 	double ret;
--	struct perf_pmu *pmu = pmu__find_core_pmu();
-+	struct perf_pmu *pmu = perf_pmus__find_core_pmu();
- 	char *cpuid = perf_pmu__getcpuid(pmu);
- 
- 	if (!cpuid)
 diff --git a/tools/perf/util/pmu.c b/tools/perf/util/pmu.c
-index 86bfdf5db2135..72b7a1d3225f6 100644
+index 72b7a1d3225f6..64b605a6060e2 100644
 --- a/tools/perf/util/pmu.c
 +++ b/tools/perf/util/pmu.c
-@@ -2058,20 +2058,3 @@ void perf_pmu__delete(struct perf_pmu *pmu)
- 	zfree(&pmu->id);
- 	free(pmu);
+@@ -28,6 +28,7 @@
+ #include "strbuf.h"
+ #include "fncache.h"
+ #include "util/evsel_config.h"
++#include <regex.h>
+ 
+ struct perf_pmu perf_pmu__fake = {
+ 	.name = "fake",
+@@ -874,6 +875,28 @@ static bool pmu_uncore_alias_match(const char *pmu_name, const char *name)
+ 	return res;
  }
--
--struct perf_pmu *pmu__find_core_pmu(void)
--{
--	struct perf_pmu *pmu = NULL;
--
--	while ((pmu = perf_pmus__scan_core(pmu))) {
--		/*
--		 * The cpumap should cover all CPUs. Otherwise, some CPUs may
--		 * not support some events or have different event IDs.
--		 */
--		if (RC_CHK_ACCESS(pmu->cpus)->nr != cpu__max_cpu().cpu)
--			return NULL;
--
--		return pmu;
--	}
--	return NULL;
--}
+ 
++bool pmu_uncore_identifier_match(const char *compat, const char *id)
++{
++	regex_t re;
++	regmatch_t pmatch[1];
++	int match;
++
++	if (regcomp(&re, compat, REG_EXTENDED) != 0) {
++		/* Warn unable to generate match particular string. */
++		pr_info("Invalid regular expression %s\n", compat);
++		return false;
++	}
++
++	match = !regexec(&re, id, 1, pmatch, 0);
++	if (match) {
++		/* Ensure a full match. */
++		match = pmatch[0].rm_so == 0 && (size_t)pmatch[0].rm_eo == strlen(id);
++	}
++	regfree(&re);
++
++	return match;
++}
++
+ static int pmu_add_cpu_aliases_map_callback(const struct pmu_event *pe,
+ 					const struct pmu_events_table *table __maybe_unused,
+ 					void *vdata)
+@@ -914,8 +937,8 @@ static int pmu_add_sys_aliases_iter_fn(const struct pmu_event *pe,
+ 	if (!pe->compat || !pe->pmu)
+ 		return 0;
+ 
+-	if (!strcmp(pmu->id, pe->compat) &&
+-	    pmu_uncore_alias_match(pe->pmu, pmu->name)) {
++	if (pmu_uncore_alias_match(pe->pmu, pmu->name) &&
++			pmu_uncore_identifier_match(pe->compat, pmu->id)) {
+ 		perf_pmu__new_alias(pmu,
+ 				pe->name,
+ 				pe->desc,
 diff --git a/tools/perf/util/pmu.h b/tools/perf/util/pmu.h
-index 6a4e170c61d6b..45079f26abf60 100644
+index 45079f26abf60..c4b4fabe16edc 100644
 --- a/tools/perf/util/pmu.h
 +++ b/tools/perf/util/pmu.h
-@@ -264,6 +264,6 @@ int perf_pmu__pathname_fd(int dirfd, const char *pmu_name, const char *filename,
- struct perf_pmu *perf_pmu__lookup(struct list_head *pmus, int dirfd, const char *lookup_name);
- struct perf_pmu *perf_pmu__create_placeholder_core_pmu(struct list_head *core_pmus);
- void perf_pmu__delete(struct perf_pmu *pmu);
--struct perf_pmu *pmu__find_core_pmu(void);
-+struct perf_pmu *perf_pmus__find_core_pmu(void);
+@@ -240,6 +240,7 @@ void pmu_add_cpu_aliases_table(struct perf_pmu *pmu,
+ char *perf_pmu__getcpuid(struct perf_pmu *pmu);
+ const struct pmu_events_table *pmu_events_table__find(void);
+ const struct pmu_metrics_table *pmu_metrics_table__find(void);
++bool pmu_uncore_identifier_match(const char *compat, const char *id);
  
- #endif /* __PMU_H */
-diff --git a/tools/perf/util/pmus.c b/tools/perf/util/pmus.c
-index 6631367c756fd..cec869cbe163a 100644
---- a/tools/perf/util/pmus.c
-+++ b/tools/perf/util/pmus.c
-@@ -10,6 +10,7 @@
- #include <pthread.h>
- #include <string.h>
- #include <unistd.h>
-+#include "cpumap.h"
- #include "debug.h"
- #include "evsel.h"
- #include "pmus.h"
-@@ -268,7 +269,7 @@ struct perf_pmu *perf_pmus__scan_core(struct perf_pmu *pmu)
- {
- 	if (!pmu) {
- 		pmu_read_sysfs(/*core_only=*/true);
--		pmu = list_prepare_entry(pmu, &core_pmus, list);
-+		return list_first_entry_or_null(&core_pmus, typeof(*pmu), list);
- 	}
- 	list_for_each_entry_continue(pmu, &core_pmus, list)
- 		return pmu;
-@@ -592,3 +593,20 @@ struct perf_pmu *evsel__find_pmu(const struct evsel *evsel)
- 	}
- 	return pmu;
- }
-+
-+struct perf_pmu *perf_pmus__find_core_pmu(void)
-+{
-+	struct perf_pmu *pmu = NULL;
-+
-+	while ((pmu = perf_pmus__scan_core(pmu))) {
-+		/*
-+		 * The cpumap should cover all CPUs. Otherwise, some CPUs may
-+		 * not support some events or have different event IDs.
-+		 */
-+		if (RC_CHK_ACCESS(pmu->cpus)->nr != cpu__max_cpu().cpu)
-+			return NULL;
-+
-+		return pmu;
-+	}
-+	return NULL;
-+}
+ int perf_pmu__convert_scale(const char *scale, char **end, double *sval);
+ 
 -- 
 2.43.0
 
