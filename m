@@ -1,126 +1,94 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B6A195985
-	for <patches@lists.linux.dev>; Thu,  6 Jun 2024 12:43:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899F9196C72
+	for <patches@lists.linux.dev>; Thu,  6 Jun 2024 13:34:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717677809; cv=none; b=CTj9Pk/FraUnQJWuv8bGbsK/faBw+CPDYnQeWLdaAglFucFcXMDpNSb1qwi9JhAAu7n3Np2n6TzRm3jDhUxRS39atLA1CiYiDA+odl6vHk32beX9LYDq8dqspme0SOjIjqPJyjgXfdhYAVO2FnzP8VvR9Fo56owGXzVZVtjHlXI=
+	t=1717680871; cv=none; b=Kjh1Za6WjM0XLHSXuV6JtowAz8Xg/wKId++yive1lmWIv23C12mbT/9ESrpywWW4VaZHoLi6PMuaawXET9eK7dIHpS2Gh5v3cpu6hhH49J1h/EDe71VE8lxLr4mz5Quq4yA8OGx7VDfi2jdJmWuOKDnl+QubEAAe8fw+U+lvqbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717677809; c=relaxed/simple;
-	bh=yeaLzEzJvuDa+m3/Uff7Po27zqgumLOSQUtaxyu5en0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i0COBPEz2tbbQbMVQ20S652WnTHgnQ4zY1WcpnhyWIbGr8pSFX49hpcRNtd4a1GZCCDhxyaTHoY+ZqAeF3VdMs4a2ISlvvoLsQQNAlEjM4GvG+9NQQD575qZ4LDOv5R+83NMNAvAEhvxm4EJ91BTLG1OKOkZUM9hti2tG4QHsO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=DgkphBEY; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="DgkphBEY"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id C07EC40E0177;
-	Thu,  6 Jun 2024 12:43:25 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id cftr_SWYD-Q8; Thu,  6 Jun 2024 12:43:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1717677801; bh=p+KyFhBaucRcYTGBApiIZCCM19WHZeYhUd5Yam8pwIs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DgkphBEYlRfV6LQse3Mv3DAu/Rw9h78h10oBjOtWaLPSAE08OFA7rrRgVe0aEbmJI
-	 YcTm1/p3ISnTcSo+Bm1LLB2zZNHeuCdd3nf8aDviK9JoEz8b3uj4+SbxlLuYRwS4kt
-	 WJrJ5yClBwDCqYStlX07ay0zoWXftsEZILvDF2/UYsHWzMi+oziWxXrSXexw0IQLZg
-	 c6ElT7xGfaL21PBeBXc+gAU2i8rNkGoI8HhfMvU0BngplCCcZFhMwXfAt1oJ15IS27
-	 YzS0VV6jsJgO5RL5ky5ZjYyle6v4eF99iscRO+eQHHl4Dxv7G0XnV9fD5OxNetA2n0
-	 U04JIzNXoLV2iIxK/hrcs5zfmAjsGdjJaBZ0GM5f5A3leKOklSAETEFJPzjsQObUEJ
-	 q+kW4KM+Z1HZa5GL7C6Jh9p+JEpH9xntHRBqaaNE8rqwnVXi+Fhj5jM6wlZrzbw0GP
-	 Jrxj0N2HeoIXa2n7b0ISgQMenlPMVVIp1Nwheu5csP1ryTX4wtZA6gR1YNSwLCnzmb
-	 6tvek0VgpXoXJNOdb4ORwMFk8Gp/o/Qjvx+jwKebdIvrStL3V1mH2MAwVajjQOf9Dg
-	 OjMpXRWL48CEe4otcYw+ZfcXgsqoLLstfxbSjPooen8P/C+1RmD0/om14U/8hpnFQw
-	 Va2PlqVfCCkAye/3XsQCkvfk=
-Received: from zn.tnic (p5de8ee85.dip0.t-ipconnect.de [93.232.238.133])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 2D01540E0031;
-	Thu,  6 Jun 2024 12:43:09 +0000 (UTC)
-Date: Thu, 6 Jun 2024 14:43:08 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
-Cc: x86@kernel.org, Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v2 3/3] x86/resctrl: Replace open code cacheinfo search
- in rdtgroup_cbm_to_size()
-Message-ID: <20240606124308.GCZmGu3Aj3_spSd0WS@fat_crate.local>
-References: <20240605161427.312994-1-tony.luck@intel.com>
- <20240605161427.312994-4-tony.luck@intel.com>
+	s=arc-20240116; t=1717680871; c=relaxed/simple;
+	bh=wVX5LN5wezgSA3E348Yymtojtevb4mWjLp7y2qc+kQw=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=gYVBPoV+tcg0p7IEcEIh39hlx62Du1CSjJZwUDW0fuTBjsf/9HkaJWCXMM07FIblJOxTcREGKdyPYFEs8lRm7EEC2nqugdh2DgvrXT/YdfQ0q1tKrfVgefWKUH21dtwGb0LrdG7dzTP8UoyJlsQdNs7X/hWZlAIpXg52hnF3ODc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vw4tz4dFjz6K6Lf;
+	Thu,  6 Jun 2024 21:29:47 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+	by mail.maildlp.com (Postfix) with ESMTPS id EECED1400D4;
+	Thu,  6 Jun 2024 21:34:26 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 6 Jun
+ 2024 14:34:26 +0100
+Date: Thu, 6 Jun 2024 14:34:24 +0100
+From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: Leon Romanovsky <leon@kernel.org>, Zhu Yanjun <zyjzyj2000@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>, "Jakub
+ Kicinski" <kuba@kernel.org>, <linux-doc@vger.kernel.org>,
+	<linux-rdma@vger.kernel.org>, <netdev@vger.kernel.org>, Paolo Abeni
+	<pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>, Tariq Toukan
+	<tariqt@nvidia.com>, Andy Gospodarek <andrew.gospodarek@broadcom.com>, Aron
+ Silverton <aron.silverton@oracle.com>, Dan Williams
+	<dan.j.williams@intel.com>, David Ahern <dsahern@kernel.org>, "Christoph
+ Hellwig" <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>, Leonid Bloch
+	<lbloch@nvidia.com>, <linux-cxl@vger.kernel.org>, <patches@lists.linux.dev>,
+	Peter Zijlstra <peterz@infradead.org>, "Julia Lawall" <julia.lawall@inria.fr>
+Subject: Re: [PATCH 2/8] fwctl: Basic ioctl dispatch for the character
+ device
+Message-ID: <20240606143424.00001fbd@Huawei.com>
+In-Reply-To: <20240605182726.GX19897@nvidia.com>
+References: <2-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
+	<6cfe00ce-1860-4aba-bcb8-54f8d365d2dc@linux.dev>
+	<20240604122221.GR3884@unreal>
+	<20240604175023.000004e2@Huawei.com>
+	<20240604165844.GM19897@nvidia.com>
+	<20240605120737.00007472@Huawei.com>
+	<20240605182726.GX19897@nvidia.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240605161427.312994-4-tony.luck@intel.com>
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
 
-On Wed, Jun 05, 2024 at 09:14:27AM -0700, Tony Luck wrote:
-> Use get_cpu_cacheinfo_level() instead of open coded search.
+On Wed, 5 Jun 2024 15:27:26 -0300
+Jason Gunthorpe <jgg@nvidia.com> wrote:
+
+> On Wed, Jun 05, 2024 at 12:07:37PM +0100, Jonathan Cameron wrote:
 > 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-> ---
->  arch/x86/kernel/cpu/resctrl/rdtgroup.c | 14 +++++---------
->  1 file changed, 5 insertions(+), 9 deletions(-)
+> > > I don't recall that dramatic conclusion in the discussion, but it does
+> > > make alot of sense to me.  
+> > 
+> > I'll be less lazy (and today found the search foo to track it down).
+> > 
+> > https://lore.kernel.org/all/CAHk-=wicfvWPuRVDG5R1mZSxD8Xg=-0nLOiHay2T_UJ0yDX42g@mail.gmail.com/  
 > 
-> diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> index 02f213f1c51c..cb68a121dabb 100644
-> --- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> +++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-> @@ -1450,18 +1450,14 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
->  unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
->  				  struct rdt_domain *d, unsigned long cbm)
->  {
-> -	struct cpu_cacheinfo *ci;
->  	unsigned int size = 0;
-> -	int num_b, i;
-> +	struct cacheinfo *ci;
-> +	int num_b;
->  
->  	num_b = bitmap_weight(&cbm, r->cache.cbm_len);
-> -	ci = get_cpu_cacheinfo(cpumask_any(&d->cpu_mask));
-> -	for (i = 0; i < ci->num_leaves; i++) {
-> -		if (ci->info_list[i].level == r->cache_level) {
-> -			size = ci->info_list[i].size / r->cache.cbm_len * num_b;
-> -			break;
-> -		}
-> -	}
-> +	ci = get_cpu_cacheinfo_level(cpumask_any(&d->cpu_mask), r->cache_level);
-> +	if (ci)
-> +		size = ci->size / r->cache.cbm_len * num_b;
->  
->  	return size;
->  }
-> -- 
+> Oh that is a bit different discussion than I was thinking of.. I fixed
+> all the cases to follow this advise and checked that all the free
+> functions are proper pairs of whatever is being allocated.
 
-Those last two patches can be a single one which replaces open-coded
-cacheinfo search in resctrl.
+Yes. I think we are approaching the point where maybe we need
+a 'best practice guide' somewhere. It is sort of coding style, but
+it is perhaps rather complex perhaps to put in that doc.
 
-Or is there any particular reason for them to be separate?
+I'm happy to help review such changes, but it would be too far down
+my todo list if I took on writing one.
 
-Because it is a single logical change...
+Maybe there is one I've missed?
 
-Thx.
+Jonathan
+> 
+> Thanks,
+> Jason
 
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
