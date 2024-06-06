@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5B01AC251;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13ED1AC220;
 	Thu,  6 Jun 2024 14:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683309; cv=none; b=RHpc/osrFLr0G3miBtCj87WCqFBXVbl7n7eFdtjeEZ4Kl4zWdbPZ1KOGZPHrDiFzg5JpoSmL9kmokBndWWFOrTvbLzoUJhC2b1tqAZAZOrnUGKyzBnGV6LnamhuK9A4adgt9iujW6uGjQALqWvcUXK6HsKtyvl7HiWVaL5xhQ78=
+	t=1717683309; cv=none; b=IjaLfByehwP91HVgLhKpOCWP9kcJwwv39tHEecvM90hWgwXYY67K6eZ9h9TbMG+B9CWDkhAGSWMHoh77u9FfYjEh4xFA5V3yPuuagcpJ0O/9cKebWLeWpdJbifxV1uGWSflUEzTbQ4PQ/POg0Hs1m7pr6IyMz0mYyqh3ils3tD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683309; c=relaxed/simple;
-	bh=6vX3b8zHVqtuAoQlCOorNJHSCARp9viSdfI9herC94s=;
+	bh=zObzfjlMTizUj+5lKNkdZyKqr80uTFdwNm34s6Su/gE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTcuIDvx9Qzn7DfvJUAlZUYgFp5Q8A0rcDoimqGd6dI94vS/KnFG7jAddU+sxWpSHUfq6nWpsEDAPccMiJcBGS37YQ0BX8J0E+nh+UtZl7e7LwLA5Pha99rR5yPbO/zBpM5NFD9QA7qevf4VN4GrvE1gO8siQ0FZageZMGIhAcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzov2r1H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uw6Fb6lv1cOJjFvzquBzxdjqi6FHIatYgMopE770Tk9749GVb3LKtq+qvDDphxEzOhOk5zLszASabBUI7DjSFKVqtgonGaZJmc4Y84iM5bG5sm22esf3fp+DMIIFrmQ8d5GxoR9gMNkFS6Ip4wXUo86BSmZ5DJUTkHgEXpMYTxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ez9rTSoZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzov2r1H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A06DC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ez9rTSoZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914B3C2BD10;
 	Thu,  6 Jun 2024 14:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683309;
-	bh=6vX3b8zHVqtuAoQlCOorNJHSCARp9viSdfI9herC94s=;
+	bh=zObzfjlMTizUj+5lKNkdZyKqr80uTFdwNm34s6Su/gE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vzov2r1H2HygFow1IZZApH6ZPnWTDZXB4XMlOgs7U+8ry7JUG5eSQEmsPtnjJfQ6T
-	 cD0M47jzRZTKpgsh3N+SPH4VvXce4jJ6KQ+pBRI2dK35T50rcuRY8I6SNC79brEkhA
-	 nM6b0M0gl0J/yF1lgXKrWCzQK1++dW5WR/uiJD1Y=
+	b=Ez9rTSoZGhQ/MyiebhgYMx6/vdQ/Gh8Owa1w5lr2NAjSUrLClEz57ibtqavYmUjdu
+	 gsrQ3vskINw/Cl8nW0CWXP9/3pqkgzHERt8jgUI+ZHaFKYQpThdgi70PiItUCHhHte
+	 O2zcecFaUpka2gVfrLgqJ5WLliWu8sbcz/qHqRew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jagan Teki <jagan@amarulasolutions.com>,
-	Michael Trimarchi <michael@amarulasolutions.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 189/473] drm/bridge: Fix improper bridge init order with pre_enable_prev_first
-Date: Thu,  6 Jun 2024 16:01:58 +0200
-Message-ID: <20240606131706.187407349@linuxfoundation.org>
+Subject: [PATCH 6.6 250/744] net/mlx5: Reload only IB representors upon lag disable/enable
+Date: Thu,  6 Jun 2024 15:58:42 +0200
+Message-ID: <20240606131740.415941062@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,156 +50,224 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jagan Teki <jagan@amarulasolutions.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit e18aeeda0b6905c333df5a0566b99f5c84426098 ]
+[ Upstream commit 0f06228d4a2dcc1fca5b3ddb0eefa09c05b102c4 ]
 
-For a given bridge pipeline if any bridge sets pre_enable_prev_first
-flag then the pre_enable for the previous bridge will be called before
-pre_enable of this bridge and opposite is done for post_disable.
+On lag disable, the bond IB device along with all of its
+representors are destroyed, and then the slaves' representors get reloaded.
 
-These are the potential bridge flags to alter bridge init order in order
-to satisfy the MIPI DSI host and downstream panel or bridge to function.
-However the existing pre_enable_prev_first logic with associated bridge
-ordering has broken for both pre_enable and post_disable calls.
+In case the slave IB representor load fails, the eswitch error flow
+unloads all representors, including ethernet representors, where the
+netdevs get detached and removed from lag bond. Such flow is inaccurate
+as the lag driver is not responsible for loading/unloading ethernet
+representors. Furthermore, the flow described above begins by holding
+lag lock to prevent bond changes during disable flow. However, when
+reaching the ethernet representors detachment from lag, the lag lock is
+required again, triggering the following deadlock:
 
-[pre_enable]
+Call trace:
+__switch_to+0xf4/0x148
+__schedule+0x2c8/0x7d0
+schedule+0x50/0xe0
+schedule_preempt_disabled+0x18/0x28
+__mutex_lock.isra.13+0x2b8/0x570
+__mutex_lock_slowpath+0x1c/0x28
+mutex_lock+0x4c/0x68
+mlx5_lag_remove_netdev+0x3c/0x1a0 [mlx5_core]
+mlx5e_uplink_rep_disable+0x70/0xa0 [mlx5_core]
+mlx5e_detach_netdev+0x6c/0xb0 [mlx5_core]
+mlx5e_netdev_change_profile+0x44/0x138 [mlx5_core]
+mlx5e_netdev_attach_nic_profile+0x28/0x38 [mlx5_core]
+mlx5e_vport_rep_unload+0x184/0x1b8 [mlx5_core]
+mlx5_esw_offloads_rep_load+0xd8/0xe0 [mlx5_core]
+mlx5_eswitch_reload_reps+0x74/0xd0 [mlx5_core]
+mlx5_disable_lag+0x130/0x138 [mlx5_core]
+mlx5_lag_disable_change+0x6c/0x70 [mlx5_core] // hold ldev->lock
+mlx5_devlink_eswitch_mode_set+0xc0/0x410 [mlx5_core]
+devlink_nl_cmd_eswitch_set_doit+0xdc/0x180
+genl_family_rcv_msg_doit.isra.17+0xe8/0x138
+genl_rcv_msg+0xe4/0x220
+netlink_rcv_skb+0x44/0x108
+genl_rcv+0x40/0x58
+netlink_unicast+0x198/0x268
+netlink_sendmsg+0x1d4/0x418
+sock_sendmsg+0x54/0x60
+__sys_sendto+0xf4/0x120
+__arm64_sys_sendto+0x30/0x40
+el0_svc_common+0x8c/0x120
+do_el0_svc+0x30/0xa0
+el0_svc+0x20/0x30
+el0_sync_handler+0x90/0xb8
+el0_sync+0x160/0x180
 
-The altered bridge ordering has failed if two consecutive bridges on a
-given pipeline enables the pre_enable_prev_first flag.
+Thus, upon lag enable/disable, load and unload only the IB representors
+of the slaves preventing the deadlock mentioned above.
 
-Example:
-- Panel
-- Bridge 1
-- Bridge 2 pre_enable_prev_first
-- Bridge 3
-- Bridge 4 pre_enable_prev_first
-- Bridge 5 pre_enable_prev_first
-- Bridge 6
-- Encoder
+While at it, refactor the mlx5_esw_offloads_rep_load() function to have
+a static helper method for its internal logic, in symmetry with the
+representor unload design.
 
-In this example, Bridge 4 and Bridge 5 have pre_enable_prev_first.
-
-The logic looks for a bridge which enabled pre_enable_prev_first flag
-on each iteration and assigned the previou bridge to limit pointer
-if the bridge doesn't enable pre_enable_prev_first flags.
-
-If control found Bridge 2 is pre_enable_prev_first then the iteration
-looks for Bridge 3 and found it is not pre_enable_prev_first and assigns
-it's previous Bridge 4 to limit pointer and calls pre_enable of Bridge 3
-and Bridge 2 and assign iter pointer with limit which is Bridge 4.
-
-Here is the actual problem, for the next iteration control look for
-Bridge 5 instead of Bridge 4 has iter pointer in previous iteration
-moved to Bridge 4 so this iteration skips the Bridge 4. The iteration
-found Bridge 6 doesn't pre_enable_prev_first flags so the limit assigned
-to Encoder. From next iteration Encoder skips as it is the last bridge
-for reverse order pipeline.
-
-So, the resulting pre_enable bridge order would be,
-- Panel, Bridge 1, Bridge 3, Bridge 2, Bridge 6, Bridge 5.
-
-This patch fixes this by assigning limit to next pointer instead of
-previous bridge since the iteration always looks for bridge that does
-NOT request prev so assigning next makes sure the last bridge on a
-given iteration what exactly the limit bridge is.
-
-So, the resulting pre_enable bridge order with fix would be,
-- Panel, Bridge 1, Bridge 3, Bridge 2, Bridge 6, Bridge 5, Bridge 4,
-  Encoder.
-
-[post_disable]
-
-The altered bridge ordering has failed if two consecutive bridges on a
-given pipeline enables the pre_enable_prev_first flag.
-
-Example:
-- Panel
-- Bridge 1
-- Bridge 2 pre_enable_prev_first
-- Bridge 3
-- Bridge 4 pre_enable_prev_first
-- Bridge 5 pre_enable_prev_first
-- Bridge 6
-- Encoder
-
-In this example Bridge 5 and Bridge 4 have pre_enable_prev_first.
-
-The logic looks for a bridge which enabled pre_enable_prev_first flags
-on each iteration and assigned the previou bridge to next and next to
-limit pointer if the bridge does enable pre_enable_prev_first flag.
-
-If control starts from Bridge 6 then it found next Bridge 5 is
-pre_enable_prev_first and immediately the next assigned to previous
-Bridge 6 and limit assignments to next Bridge 6 and call post_enable
-of Bridge 6 even though the next consecutive Bridge 5 is enabled with
-pre_enable_prev_first. This clearly misses the logic to find the state
-of next conducive bridge as everytime the next and limit assigns
-previous bridge if given bridge enabled pre_enable_prev_first.
-
-So, the resulting post_disable bridge order would be,
-- Encoder, Bridge 6, Bridge 5, Bridge 4, Bridge 3, Bridge 2, Bridge 1,
-  Panel.
-
-This patch fixes this by assigning next with previou bridge only if the
-bridge doesn't enable pre_enable_prev_first flag and the next further
-assign it to limit. This way we can find the bridge that NOT requested
-prev to disable last.
-
-So, the resulting pre_enable bridge order with fix would be,
-- Encoder, Bridge 4, Bridge 5, Bridge 6, Bridge 2, Bridge 3, Bridge 1,
-  Panel.
-
-Validated the bridge init ordering by incorporating dummy bridges in
-the sun6i-mipi-dsi pipeline
-
-Fixes: 4fb912e5e190 ("drm/bridge: Introduce pre_enable_prev_first to alter bridge init order")
-Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
-Tested-by: Michael Trimarchi <michael@amarulasolutions.com>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230328170752.1102347-1-jagan@amarulasolutions.com
+Fixes: 598fe77df855 ("net/mlx5: Lag, Create shared FDB when in switchdev mode")
+Co-developed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240509112951.590184-4-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_bridge.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/eswitch.h |  4 +--
+ .../mellanox/mlx5/core/eswitch_offloads.c     | 28 ++++++++++++-------
+ .../net/ethernet/mellanox/mlx5/core/lag/lag.c |  6 ++--
+ .../ethernet/mellanox/mlx5/core/lag/mpesw.c   |  4 +--
+ 4 files changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index 7044e339a82cd..f802548798044 100644
---- a/drivers/gpu/drm/drm_bridge.c
-+++ b/drivers/gpu/drm/drm_bridge.c
-@@ -755,11 +755,17 @@ void drm_atomic_bridge_chain_post_disable(struct drm_bridge *bridge,
- 				 */
- 				list_for_each_entry_from(next, &encoder->bridge_chain,
- 							 chain_node) {
--					if (next->pre_enable_prev_first) {
-+					if (!next->pre_enable_prev_first) {
- 						next = list_prev_entry(next, chain_node);
- 						limit = next;
- 						break;
- 					}
-+
-+					if (list_is_last(&next->chain_node,
-+							 &encoder->bridge_chain)) {
-+						limit = next;
-+						break;
-+					}
- 				}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index b4eb17141edf3..9b771b572593b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -840,7 +840,7 @@ int mlx5_eswitch_offloads_single_fdb_add_one(struct mlx5_eswitch *master_esw,
+ 					     struct mlx5_eswitch *slave_esw, int max_slaves);
+ void mlx5_eswitch_offloads_single_fdb_del_one(struct mlx5_eswitch *master_esw,
+ 					      struct mlx5_eswitch *slave_esw);
+-int mlx5_eswitch_reload_reps(struct mlx5_eswitch *esw);
++int mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw);
  
- 				/* Call these bridges in reverse order */
-@@ -842,7 +848,7 @@ void drm_atomic_bridge_chain_pre_enable(struct drm_bridge *bridge,
- 					/* Found first bridge that does NOT
- 					 * request prev to be enabled first
- 					 */
--					limit = list_prev_entry(next, chain_node);
-+					limit = next;
+ bool mlx5_eswitch_block_encap(struct mlx5_core_dev *dev);
+ void mlx5_eswitch_unblock_encap(struct mlx5_core_dev *dev);
+@@ -932,7 +932,7 @@ mlx5_eswitch_offloads_single_fdb_del_one(struct mlx5_eswitch *master_esw,
+ static inline int mlx5_eswitch_get_npeers(struct mlx5_eswitch *esw) { return 0; }
+ 
+ static inline int
+-mlx5_eswitch_reload_reps(struct mlx5_eswitch *esw)
++mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw)
+ {
+ 	return 0;
+ }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index e3cce110e52fd..58529d1a98b37 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -2501,6 +2501,16 @@ void esw_offloads_cleanup(struct mlx5_eswitch *esw)
+ 	esw_offloads_cleanup_reps(esw);
+ }
+ 
++static int __esw_offloads_load_rep(struct mlx5_eswitch *esw,
++				   struct mlx5_eswitch_rep *rep, u8 rep_type)
++{
++	if (atomic_cmpxchg(&rep->rep_data[rep_type].state,
++			   REP_REGISTERED, REP_LOADED) == REP_REGISTERED)
++		return esw->offloads.rep_ops[rep_type]->load(esw->dev, rep);
++
++	return 0;
++}
++
+ static void __esw_offloads_unload_rep(struct mlx5_eswitch *esw,
+ 				      struct mlx5_eswitch_rep *rep, u8 rep_type)
+ {
+@@ -2525,13 +2535,11 @@ static int mlx5_esw_offloads_rep_load(struct mlx5_eswitch *esw, u16 vport_num)
+ 	int err;
+ 
+ 	rep = mlx5_eswitch_get_rep(esw, vport_num);
+-	for (rep_type = 0; rep_type < NUM_REP_TYPES; rep_type++)
+-		if (atomic_cmpxchg(&rep->rep_data[rep_type].state,
+-				   REP_REGISTERED, REP_LOADED) == REP_REGISTERED) {
+-			err = esw->offloads.rep_ops[rep_type]->load(esw->dev, rep);
+-			if (err)
+-				goto err_reps;
+-		}
++	for (rep_type = 0; rep_type < NUM_REP_TYPES; rep_type++) {
++		err = __esw_offloads_load_rep(esw, rep, rep_type);
++		if (err)
++			goto err_reps;
++	}
+ 
+ 	return 0;
+ 
+@@ -3276,7 +3284,7 @@ static void esw_destroy_offloads_acl_tables(struct mlx5_eswitch *esw)
+ 		esw_vport_destroy_offloads_acl_tables(esw, vport);
+ }
+ 
+-int mlx5_eswitch_reload_reps(struct mlx5_eswitch *esw)
++int mlx5_eswitch_reload_ib_reps(struct mlx5_eswitch *esw)
+ {
+ 	struct mlx5_eswitch_rep *rep;
+ 	unsigned long i;
+@@ -3289,13 +3297,13 @@ int mlx5_eswitch_reload_reps(struct mlx5_eswitch *esw)
+ 	if (atomic_read(&rep->rep_data[REP_ETH].state) != REP_LOADED)
+ 		return 0;
+ 
+-	ret = mlx5_esw_offloads_rep_load(esw, MLX5_VPORT_UPLINK);
++	ret = __esw_offloads_load_rep(esw, rep, REP_IB);
+ 	if (ret)
+ 		return ret;
+ 
+ 	mlx5_esw_for_each_rep(esw, i, rep) {
+ 		if (atomic_read(&rep->rep_data[REP_ETH].state) == REP_LOADED)
+-			mlx5_esw_offloads_rep_load(esw, rep->vport);
++			__esw_offloads_load_rep(esw, rep, REP_IB);
+ 	}
+ 
+ 	return 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index e51cac1e1811e..9b05061a759cc 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -814,7 +814,7 @@ void mlx5_disable_lag(struct mlx5_lag *ldev)
+ 	if (shared_fdb)
+ 		for (i = 0; i < ldev->ports; i++)
+ 			if (!(ldev->pf[i].dev->priv.flags & MLX5_PRIV_FLAGS_DISABLE_ALL_ADEV))
+-				mlx5_eswitch_reload_reps(ldev->pf[i].dev->priv.eswitch);
++				mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+ }
+ 
+ static bool mlx5_shared_fdb_supported(struct mlx5_lag *ldev)
+@@ -922,7 +922,7 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
+ 			mlx5_rescan_drivers_locked(dev0);
+ 
+ 			for (i = 0; i < ldev->ports; i++) {
+-				err = mlx5_eswitch_reload_reps(ldev->pf[i].dev->priv.eswitch);
++				err = mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+ 				if (err)
  					break;
- 				}
  			}
+@@ -933,7 +933,7 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
+ 				mlx5_deactivate_lag(ldev);
+ 				mlx5_lag_add_devices(ldev);
+ 				for (i = 0; i < ldev->ports; i++)
+-					mlx5_eswitch_reload_reps(ldev->pf[i].dev->priv.eswitch);
++					mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+ 				mlx5_core_err(dev0, "Failed to enable lag\n");
+ 				return;
+ 			}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
+index 0857eebf4f07b..6b0413a3987ce 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/mpesw.c
+@@ -99,7 +99,7 @@ static int enable_mpesw(struct mlx5_lag *ldev)
+ 	dev0->priv.flags &= ~MLX5_PRIV_FLAGS_DISABLE_IB_ADEV;
+ 	mlx5_rescan_drivers_locked(dev0);
+ 	for (i = 0; i < ldev->ports; i++) {
+-		err = mlx5_eswitch_reload_reps(ldev->pf[i].dev->priv.eswitch);
++		err = mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+ 		if (err)
+ 			goto err_rescan_drivers;
+ 	}
+@@ -113,7 +113,7 @@ static int enable_mpesw(struct mlx5_lag *ldev)
+ err_add_devices:
+ 	mlx5_lag_add_devices(ldev);
+ 	for (i = 0; i < ldev->ports; i++)
+-		mlx5_eswitch_reload_reps(ldev->pf[i].dev->priv.eswitch);
++		mlx5_eswitch_reload_ib_reps(ldev->pf[i].dev->priv.eswitch);
+ 	mlx5_mpesw_metadata_cleanup(ldev);
+ 	return err;
+ }
 -- 
 2.43.0
 
