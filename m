@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434D51990BA;
-	Thu,  6 Jun 2024 14:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9DF19EEAB;
+	Thu,  6 Jun 2024 14:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683117; cv=none; b=EqJ2fWjMi68GXtvJEw5WyWiVrer2iRBx4HrkuQpv9zy9lznT+TD41cVs63k2sArqUhwVAXVD5l1IwoyMMORy01ntD2aihwt7eXzWz3ElhJX5tIm3OwKZyHorM4CAgTKjSYNXhR4+LDHEtPwNI/C2jlzDdvyjzpKs3pjEyIA/QKA=
+	t=1717683117; cv=none; b=dJIE8Vcr8sz5B8HHSqZyyV9Pethp8fxEZTq/N3YSbs3LmnHyAwLi4UkndtV6WDqYVmpH7EdlZyRESAuG1eYr+7/4Q54CzJoGSQnqXL+NgvmXen81Ht7QP6R9/vbXMNUhkGj/+gMRf08v4ZefLrfrs3UOvftuWzNlVyzovM+KGi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683117; c=relaxed/simple;
-	bh=vPtXuVMP6FTHqJzKdPfiP3vdW5sgM80xY1SGK9O89Dw=;
+	bh=dQR0M6UQucM3Y29CnKnyk/j9XpmAKhulvvpKCyriXM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRrgfIqati8GYKt30YuAi1UoFcH5A/1vsAPZFvr2KKOwDOkEo++OiHZ6nXafRaJYO576ok+LQZIN9qATxB9CE7TXCkQDfK2ApwJPq8x7N8G/qZ4okPlhSyqFSt4lyUmP/DwVgsddpe79U1xe1hZEywnNudIEFX1saJ4lMnTqo7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2kNpUiW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qiBva8Mrbt+MpKHFOGs7NDdZKY2NkIRmzUeGJyVmEOyiS810gbLYoIg+wSD44698brXIhmqrVU21HQo94LrDGlL7OViZ6BYcsYLqtzmcfyvEtDlTuXtHDhGGRkMKtFkTjMRzx8jX08KN8XqHAzpiSrlh/Onysdqva0YZl83XhR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tGZaOZE0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2kNpUiW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48BFC2BD10;
-	Thu,  6 Jun 2024 14:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tGZaOZE0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AF5C32781;
+	Thu,  6 Jun 2024 14:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683116;
-	bh=vPtXuVMP6FTHqJzKdPfiP3vdW5sgM80xY1SGK9O89Dw=;
+	s=korg; t=1717683117;
+	bh=dQR0M6UQucM3Y29CnKnyk/j9XpmAKhulvvpKCyriXM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2kNpUiWxDGbv+T2uBAe8OXp8H2K08QRdny+Pt7svI8OV8hxeRTRtf4veWm6IFftW
-	 VprP/FymPE3MOCXts+6Tdz6CtGAFJOUdwa/mA8ukc2QFRjYhZENgzKHzDAj7D3S5Zr
-	 5O0hXnkK6zBIft0GeI4naCUqcQ306q513wuJHQ54=
+	b=tGZaOZE04T2ugy5OthroJp5Rsr/huIdFOoDGfJxq5q6pbE2wICNYAC1i7SDBky/Tj
+	 YdkU54OtP3QXCqqTYlE6gCTFPFcGC+Rcw2OqLmu9g1dymOUQfMdn6+2liSKbx7+YCS
+	 p9KzPCjykCyIYnDZSD3Oy+yZncBD/Mpc3bGAj3Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Phil Auld <pauld@redhat.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Richard Kinder <richard.kinder@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/744] sched/isolation: Fix boot crash when maxcpus < first housekeeping CPU
-Date: Thu,  6 Jun 2024 15:55:24 +0200
-Message-ID: <20240606131734.110596007@linuxfoundation.org>
+Subject: [PATCH 6.6 035/744] wifi: mac80211: ensure beacon is non-S1G prior to extracting the beacon timestamp field
+Date: Thu,  6 Jun 2024 15:55:07 +0200
+Message-ID: <20240606131733.579484969@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -54,76 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Richard Kinder <richard.kinder@gmail.com>
 
-[ Upstream commit 257bf89d84121280904800acd25cc2c444c717ae ]
+[ Upstream commit d12b9779cc9ba29d65fbfc728eb8a037871dd331 ]
 
-housekeeping_setup() checks cpumask_intersects(present, online) to ensure
-that the kernel will have at least one housekeeping CPU after smp_init(),
-but this doesn't work if the maxcpus= kernel parameter limits the number of
-processors available after bootup.
+Logic inside ieee80211_rx_mgmt_beacon accesses the
+mgmt->u.beacon.timestamp field without first checking whether the beacon
+received is non-S1G format.
 
-For example, a kernel with "maxcpus=2 nohz_full=0-2" parameters crashes at
-boot time on a virtual machine with 4 CPUs.
+Fix the problem by checking the beacon is non-S1G format to avoid access
+of the mgmt->u.beacon.timestamp field.
 
-Change housekeeping_setup() to use cpumask_first_and() and check that the
-returned CPU number is valid and less than setup_max_cpus.
-
-Another corner case is "nohz_full=0" on a machine with a single CPU or with
-the maxcpus=1 kernel argument. In this case non_housekeeping_mask is empty
-and tick_nohz_full_setup() makes no sense. And indeed, the kernel hits the
-WARN_ON(tick_nohz_full_running) in tick_sched_do_timer().
-
-And how should the kernel interpret the "nohz_full=" parameter? It should
-be silently ignored, but currently cpulist_parse() happily returns the
-empty cpumask and this leads to the same problem.
-
-Change housekeeping_setup() to check cpumask_empty(non_housekeeping_mask)
-and do nothing in this case.
-
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/20240413141746.GA10008@redhat.com
+Signed-off-by: Richard Kinder <richard.kinder@gmail.com>
+Link: https://msgid.link/20240328005725.85355-1-richard.kinder@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/isolation.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/mac80211/mlme.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/isolation.c b/kernel/sched/isolation.c
-index 373d42c707bc5..82e2f7fc7c267 100644
---- a/kernel/sched/isolation.c
-+++ b/kernel/sched/isolation.c
-@@ -109,6 +109,7 @@ static void __init housekeeping_setup_type(enum hk_type type,
- static int __init housekeeping_setup(char *str, unsigned long flags)
- {
- 	cpumask_var_t non_housekeeping_mask, housekeeping_staging;
-+	unsigned int first_cpu;
- 	int err = 0;
- 
- 	if ((flags & HK_FLAG_TICK) && !(housekeeping.flags & HK_FLAG_TICK)) {
-@@ -129,7 +130,8 @@ static int __init housekeeping_setup(char *str, unsigned long flags)
- 	cpumask_andnot(housekeeping_staging,
- 		       cpu_possible_mask, non_housekeeping_mask);
- 
--	if (!cpumask_intersects(cpu_present_mask, housekeeping_staging)) {
-+	first_cpu = cpumask_first_and(cpu_present_mask, housekeeping_staging);
-+	if (first_cpu >= nr_cpu_ids || first_cpu >= setup_max_cpus) {
- 		__cpumask_set_cpu(smp_processor_id(), housekeeping_staging);
- 		__cpumask_clear_cpu(smp_processor_id(), non_housekeeping_mask);
- 		if (!housekeeping.flags) {
-@@ -138,6 +140,9 @@ static int __init housekeeping_setup(char *str, unsigned long flags)
- 		}
- 	}
- 
-+	if (cpumask_empty(non_housekeeping_mask))
-+		goto free_housekeeping_staging;
-+
- 	if (!housekeeping.flags) {
- 		/* First setup call ("nohz_full=" or "isolcpus=") */
- 		enum hk_type type;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index cf01f1f298a3b..42e2c84ed2484 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -5979,7 +5979,8 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
+ 			link->u.mgd.dtim_period = elems->dtim_period;
+ 		link->u.mgd.have_beacon = true;
+ 		ifmgd->assoc_data->need_beacon = false;
+-		if (ieee80211_hw_check(&local->hw, TIMING_BEACON_ONLY)) {
++		if (ieee80211_hw_check(&local->hw, TIMING_BEACON_ONLY) &&
++		    !ieee80211_is_s1g_beacon(hdr->frame_control)) {
+ 			link->conf->sync_tsf =
+ 				le64_to_cpu(mgmt->u.beacon.timestamp);
+ 			link->conf->sync_device_ts =
 -- 
 2.43.0
 
