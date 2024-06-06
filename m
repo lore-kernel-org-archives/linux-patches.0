@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17C4198831;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A1319AD4A;
 	Thu,  6 Jun 2024 14:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683039; cv=none; b=BhHlLuzEIJeAsKwe/0yKTtOSWsORbSfTFZUZ7oA42SpLwNlCjEM8m1y57a2aO9zQqHyUEzsyOhQSh2+9VLXfRP+Qes5AgzlhwAWR4AU2MCgQRPQVo74EEneCbu2RdOSG/K0vVJjKrhnx7sh918vUz7YhKFg5PgtHK1OiWo17AwA=
+	t=1717683039; cv=none; b=PCV7gWPU3kF5D87HiV66k9QDabol/Cb7CnbYsphHne7Av2NkkfrjOsRv5q9n3RXKp9N1tlxp3o4J0A6X5snSvw/0tUM7xk83yehZScmMlZVf8BIo8ce/yPKB5ghCM2Hcm+wlw7UatGlqTtPjJtqf+fadr/tE4wA7QeISACwV5r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683039; c=relaxed/simple;
-	bh=NVi1TYPDHju4evz+ts1//jW0cIPnU3XcWSlm/9zBBGY=;
+	bh=7WNxvdo80Za77GKtCti95/2mMl4FEE6Bv/TYYtY05aE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ccf6+5sCA9MNrBAPm7h2BQwZKaF+Ms7Ri9pmsiNgBa7fKlOnBGuWRmFHwPDrsDYl3i4Jeee+nZtPwicyMXWBxfG1ISe3fA2XTuOtEa5KP6D2iX5j6I0LfrVZcmoSVE8EnRGwzReTFAc6hrVkijXMxWh8IVyih2gEi9ca6Ce62eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhC/YHYX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ONOQex5xr09a/2Gs3cE0ku2SL3JKzf4Ceizt16kpBwDAym4Y+7257y76BZyeFVrtHr5EN+R//ko+XIcrcqsaCqIABdrKJk2szfYNW76ciieRCozpz5cQYnWD6w9hwpltUcxMl5DGBHdeQplfdVusOCt6OdJudsGhGYOyOzaCbtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvKeZPEA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhC/YHYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FC9C4DDE9;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvKeZPEA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48F0C2BD10;
 	Thu,  6 Jun 2024 14:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683039;
-	bh=NVi1TYPDHju4evz+ts1//jW0cIPnU3XcWSlm/9zBBGY=;
+	bh=7WNxvdo80Za77GKtCti95/2mMl4FEE6Bv/TYYtY05aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FhC/YHYXRH0zR1PqC16ihIvKCQ2bKaF4RpfZd8ntarmKi0F5euqYBsOQNkR5B25iL
-	 UvmgQ2Gg9gatta1vDRJEmi29BFsDCmou7VKbu8qYS2RBvpK7HQWq+FLbfY/oKhj41v
-	 U2lHpGb4jQkTk5iXh4mxvB8kZ5asRzhrZwYyLq1M=
+	b=lvKeZPEA1YadxyuYeCtdwVEOEbcmBBciPdgsEz0U8ToV/H0xaTRjx5MQgNBXMGx/d
+	 q361yCKMRx0y8GIOrCbPEZK4ppwtU0JIkGpzaNvx4SvfZ4wjP29mdDO709htix9lqv
+	 lbiqDWbQcLSrxZR74I8Dz1JLcpFazb651MTcY0UY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Greg Thelen <gthelen@google.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Tuan Phan <tuanphan@os.amperecomputing.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 230/374] perf/arm-dmc620: Fix lockdep assert in ->event_init()
-Date: Thu,  6 Jun 2024 16:03:29 +0200
-Message-ID: <20240606131659.515826607@linuxfoundation.org>
+Subject: [PATCH 6.9 231/374] ubsan: Restore dependency on ARCH_HAS_UBSAN
+Date: Thu,  6 Jun 2024 16:03:30 +0200
+Message-ID: <20240606131659.550081596@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -55,59 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit a4c5a457c6107dfe9dc65a104af1634811396bac ]
+[ Upstream commit 890a64810d59b1a58ed26efc28cfd821fc068e84 ]
 
-for_each_sibling_event() checks leader's ctx but it doesn't have the ctx
-yet if it's the leader.  Like in perf_event_validate_size(), we should
-skip checking siblings in that case.
+While removing CONFIG_UBSAN_SANITIZE_ALL, ARCH_HAS_UBSAN wasn't correctly
+depended on. Restore this, as we do not want to attempt UBSAN builds
+unless it's actually been tested on a given architecture.
 
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Fixes: f3c0eba28704 ("perf: Add a few assertions")
-Reported-by: Greg Thelen <gthelen@google.com>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Tuan Phan <tuanphan@os.amperecomputing.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/20240514180050.182454-1-namhyung@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Reported-by: Masahiro Yamada <masahiroy@kernel.org>
+Closes: https://lore.kernel.org/all/20240514095427.541201-1-masahiroy@kernel.org
+Fixes: 918327e9b7ff ("ubsan: Remove CONFIG_UBSAN_SANITIZE_ALL")
+Link: https://lore.kernel.org/r/20240514233747.work.441-kees@kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_dmc620_pmu.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ lib/Kconfig.ubsan | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/perf/arm_dmc620_pmu.c b/drivers/perf/arm_dmc620_pmu.c
-index 8a81be2dd5ecf..88c17c1d6d499 100644
---- a/drivers/perf/arm_dmc620_pmu.c
-+++ b/drivers/perf/arm_dmc620_pmu.c
-@@ -542,12 +542,16 @@ static int dmc620_pmu_event_init(struct perf_event *event)
- 	if (event->cpu < 0)
- 		return -EINVAL;
+diff --git a/lib/Kconfig.ubsan b/lib/Kconfig.ubsan
+index e81e1ac4a919b..bdda600f8dfbe 100644
+--- a/lib/Kconfig.ubsan
++++ b/lib/Kconfig.ubsan
+@@ -4,6 +4,7 @@ config ARCH_HAS_UBSAN
  
-+	hwc->idx = -1;
-+
-+	if (event->group_leader == event)
-+		return 0;
-+
- 	/*
- 	 * We can't atomically disable all HW counters so only one event allowed,
- 	 * although software events are acceptable.
- 	 */
--	if (event->group_leader != event &&
--			!is_software_event(event->group_leader))
-+	if (!is_software_event(event->group_leader))
- 		return -EINVAL;
- 
- 	for_each_sibling_event(sibling, event->group_leader) {
-@@ -556,7 +560,6 @@ static int dmc620_pmu_event_init(struct perf_event *event)
- 			return -EINVAL;
- 	}
- 
--	hwc->idx = -1;
- 	return 0;
- }
- 
+ menuconfig UBSAN
+ 	bool "Undefined behaviour sanity checker"
++	depends on ARCH_HAS_UBSAN
+ 	help
+ 	  This option enables the Undefined Behaviour sanity checker.
+ 	  Compile-time instrumentation is used to detect various undefined
 -- 
 2.43.0
 
