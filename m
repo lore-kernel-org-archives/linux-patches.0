@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B461B29C8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CBA198A39;
 	Thu,  6 Jun 2024 14:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683410; cv=none; b=TAoiRL8TZRrdIg+Ffviv8oaOsfJyjTQ09Lq5jw4AJCDxdmr+sZRhRIcO/78fv39JqWswJd8VR1HqX7JmpOs+HoAbe7eljokXj/MJCv+tB0Tz6DbKd6SFodFHaKXQD0GxK7H3khVng5FiUO8KdmifGDJoFk8BCQN0T107waldvgk=
+	t=1717683410; cv=none; b=RWVbcxY+gUp3apQR9r4Xi+XI2P1E82XpIDWQNlEWP3tE+9GFs+JzUlXxrCaoOwGbICFiSnCuVoI7Zr1Z9g/TXTDKxte9I4pOWIEP/mV8XyOICj7xdLcf4BwZSMl5QeC9Cq1n/9rnZAESzIL8AcIltSlAR4fHIsMW4I3C950MNG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683410; c=relaxed/simple;
-	bh=B2GYHS9eY3iJuovRbU+WY9AbqHlusL3gWMI+jxRXGbk=;
+	bh=q64NQL2DLBgn5QECm+y0JBzSP2TwQhnkOiOY8S+UzyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWYFA0ixlJWBXp/47IObF3Io3UQiy3R1yqX5upSm1X5X4LS2jzYKm2eiz0zeNt8wJT0it++6KgJGUJu+ncff9Y1ia4LVWnHQDVVPO88HNS/zNOOjqHeSln28LEI7uHQ6HJQxR0W7xynNUVu76gdRMciXw8wqxcEzF+6t46f6RKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFDP1nf/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fdrIkvScdZcMxMV7AcVKSIuMaaPkCnj+MwT2+H8Y2zDRheTuh+C86pETpR27jUZ2s3nkWuU98jM6WYtJHqFhNodeQ28Yd4dhuo+0e/4L5Q7Whztz5rOSHW+ZfUDMGbiA4ojN15ELFu0FOzWK6BszywGFEtRs8fjaYlbwhAiU1Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PCSR2uiV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFDP1nf/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25944C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCSR2uiV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB511C2BD10;
 	Thu,  6 Jun 2024 14:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683410;
-	bh=B2GYHS9eY3iJuovRbU+WY9AbqHlusL3gWMI+jxRXGbk=;
+	bh=q64NQL2DLBgn5QECm+y0JBzSP2TwQhnkOiOY8S+UzyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFDP1nf/S6+u4cF+ccnxoyuhzMmkv+dZw0PTUwdjZR3CbgLJTIPob5fq7esBt3UD8
-	 3jmCn+oKZAHxgpiN6tgbUpqnvxp8B73KfvZH6h2jrCARbvkNtDoriUynjalHTtq4X2
-	 FOqa/7+bmzCoMAGMIcZRoHPRQjQOsIPstlVHnxrU=
+	b=PCSR2uiVp0f8DcPJs4ah1DT9BtNGso2wQsmtKERZX/BAASCQigjrryHo5oI9v/7BO
+	 cnvAR0CEudW7Mp9mNcWFeDrA0Oek0e/nKcewus74ZCSZPjwvYLpWrcP1hjN1AvRWS8
+	 KFvS8QcgejMJsCQbat06R61zJhHSf18DYnWhB+9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 293/473] greybus: arche-ctrl: move device table to its right location
-Date: Thu,  6 Jun 2024 16:03:42 +0200
-Message-ID: <20240606131709.564965645@linuxfoundation.org>
+Subject: [PATCH 6.6 354/744] lib/test_hmm.c: handle src_pfns and dst_pfns allocation failure
+Date: Thu,  6 Jun 2024 16:00:26 +0200
+Message-ID: <20240606131743.833495335@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,70 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 6a0b8c0da8d8d418cde6894a104cf74e6098ddfa ]
+[ Upstream commit c2af060d1c18beaec56351cf9c9bcbbc5af341a3 ]
 
-The arche-ctrl has two platform drivers and three of_device_id tables,
-but one table is only used for the the module loader, while the other
-two seem to be associated with their drivers.
+The kcalloc() in dmirror_device_evict_chunk() will return null if the
+physical memory has run out.  As a result, if src_pfns or dst_pfns is
+dereferenced, the null pointer dereference bug will happen.
 
-This leads to a W=1 warning when the driver is built-in:
+Moreover, the device is going away.  If the kcalloc() fails, the pages
+mapping a chunk could not be evicted.  So add a __GFP_NOFAIL flag in
+kcalloc().
 
-drivers/staging/greybus/arche-platform.c:623:34: error: 'arche_combined_id' defined but not used [-Werror=unused-const-variable=]
-  623 | static const struct of_device_id arche_combined_id[] = {
+Finally, as there is no need to have physically contiguous memory, Switch
+kcalloc() to kvcalloc() in order to avoid failing allocations.
 
-Drop the extra table and register both tables that are actually
-used as the ones for the module loader instead.
-
-Fixes: 7b62b61c752a ("greybus: arche-ctrl: Don't expose driver internals to arche-platform driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240403080702.3509288-18-arnd@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20240312005905.9939-1-duoming@zju.edu.cn
+Fixes: b2ef9f5a5cb3 ("mm/hmm/test: add selftest driver for HMM")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Cc: Jérôme Glisse <jglisse@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/arche-apb-ctrl.c | 1 +
- drivers/staging/greybus/arche-platform.c | 9 +--------
- 2 files changed, 2 insertions(+), 8 deletions(-)
+ lib/test_hmm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/greybus/arche-apb-ctrl.c b/drivers/staging/greybus/arche-apb-ctrl.c
-index 45afa208d0044..4f9403f3d0cdd 100644
---- a/drivers/staging/greybus/arche-apb-ctrl.c
-+++ b/drivers/staging/greybus/arche-apb-ctrl.c
-@@ -468,6 +468,7 @@ static const struct of_device_id arche_apb_ctrl_of_match[] = {
- 	{ .compatible = "usbffff,2", },
- 	{ },
- };
-+MODULE_DEVICE_TABLE(of, arche_apb_ctrl_of_match);
+diff --git a/lib/test_hmm.c b/lib/test_hmm.c
+index 717dcb8301273..b823ba7cb6a15 100644
+--- a/lib/test_hmm.c
++++ b/lib/test_hmm.c
+@@ -1226,8 +1226,8 @@ static void dmirror_device_evict_chunk(struct dmirror_chunk *chunk)
+ 	unsigned long *src_pfns;
+ 	unsigned long *dst_pfns;
  
- static struct platform_driver arche_apb_ctrl_device_driver = {
- 	.probe		= arche_apb_ctrl_probe,
-diff --git a/drivers/staging/greybus/arche-platform.c b/drivers/staging/greybus/arche-platform.c
-index fcbd5f71eff27..4850bc64d3fd7 100644
---- a/drivers/staging/greybus/arche-platform.c
-+++ b/drivers/staging/greybus/arche-platform.c
-@@ -620,14 +620,7 @@ static const struct of_device_id arche_platform_of_match[] = {
- 	{ .compatible = "google,arche-platform", },
- 	{ },
- };
--
--static const struct of_device_id arche_combined_id[] = {
--	/* Use PID/VID of SVC device */
--	{ .compatible = "google,arche-platform", },
--	{ .compatible = "usbffff,2", },
--	{ },
--};
--MODULE_DEVICE_TABLE(of, arche_combined_id);
-+MODULE_DEVICE_TABLE(of, arche_platform_of_match);
+-	src_pfns = kcalloc(npages, sizeof(*src_pfns), GFP_KERNEL);
+-	dst_pfns = kcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL);
++	src_pfns = kvcalloc(npages, sizeof(*src_pfns), GFP_KERNEL | __GFP_NOFAIL);
++	dst_pfns = kvcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL | __GFP_NOFAIL);
  
- static struct platform_driver arche_platform_device_driver = {
- 	.probe		= arche_platform_probe,
+ 	migrate_device_range(src_pfns, start_pfn, npages);
+ 	for (i = 0; i < npages; i++) {
+@@ -1250,8 +1250,8 @@ static void dmirror_device_evict_chunk(struct dmirror_chunk *chunk)
+ 	}
+ 	migrate_device_pages(src_pfns, dst_pfns, npages);
+ 	migrate_device_finalize(src_pfns, dst_pfns, npages);
+-	kfree(src_pfns);
+-	kfree(dst_pfns);
++	kvfree(src_pfns);
++	kvfree(dst_pfns);
+ }
+ 
+ /* Removes free pages from the free list so they can't be re-allocated */
 -- 
 2.43.0
 
