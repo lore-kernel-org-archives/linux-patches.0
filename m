@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712C619924D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87E419924D;
 	Thu,  6 Jun 2024 14:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683199; cv=none; b=SUL4ClfNc0tF5RNGlQTYvHuFO9l532/XQ4ab3c6W/7lDZpIRX2B4uTRlUBK3eiavDyVWpCL4lAfr78qqDLB6En839LkDqZPQKiP6wIjLSJxv5U7KKiImoQ9xEkoaioHRz6yyPBErKfuI+xSyqakaNd/dzWoqSgVAf1OdinIxPUo=
+	t=1717683200; cv=none; b=icKmxUQq+muKebgFmQzz0Ck4i1137u1aYWYfr1e4r36ubgE47pCZK9K+Os6QwfkFmIgdsGuiAmfIQNZZjNyhK52BtuiY0+QmlkiQg88dR6fojt2rPr3A/cWDQO98nnr1aPhWZFaMERNobDzkPZfGfl+BbiTIajDWRp4ReR7Zq2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683199; c=relaxed/simple;
-	bh=aS2E3CzOBvKwtdoUuzZRNlLM4t6rHl7RYH+dj4qBt5g=;
+	s=arc-20240116; t=1717683200; c=relaxed/simple;
+	bh=SKJTGNp49ZIz/TzbWXiqAkFkkz2GkGq8AU/6VCPldw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TpWIXA84fX5TwyNtiH2V58DtA+LRz4rx4wY38WA9OPiVjhPMprGBH3oYXraS055LF9TQBGxMhoRmf46SiGgVnv09rEJ+hDu9+76e4zWl5DvdTwyK6tLddK9nfXhSusnEiiK5YKIWIHmA/uB9R0wxLWFGutOlpQYLRb+KdZqAhME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QnRlhuwr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qQUabULkmN7HPwXyJ/Nsuxaf3jf0Cfg2XVTFaoUMo5Ah9l6g7hI3vdQH1w0DFkezHXvqShmK6jFey8vgOp4Qyg5+yTameelxiPRcQXT6mfBdRa9czg/iZpIlIqxfEeQS2H31eCWnypbkK64+9DR02mj3k+RTXUY39k6ddpdtYhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnVSX321; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QnRlhuwr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E641C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnVSX321"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C833CC2BD10;
 	Thu,  6 Jun 2024 14:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683199;
-	bh=aS2E3CzOBvKwtdoUuzZRNlLM4t6rHl7RYH+dj4qBt5g=;
+	bh=SKJTGNp49ZIz/TzbWXiqAkFkkz2GkGq8AU/6VCPldw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QnRlhuwrb1b5zAk1U3wueI+BJoS70Kg23fIC4j1NfiA/RNNNroAE8W30ENdMJohO9
-	 ORwS9rCrWzzabnMqHoz6VAj7szqaqce2P1Rxc1p2ZMVfG5AcDPObw8ej5x01MvZhtO
-	 fkEqvGSoWHDnmyRCn9R2Zum3hLB8WqRw3LlUsOxc=
+	b=CnVSX321YCBE91v5C+k+rdyhRXbr6j0jy40Qk9BNMjlZeF5VFh8tyzOpEb9zj7lpJ
+	 PS3NGwDb+eihifwidWww5LTMLMwUKTsa2sTL0DhACpsBZ+zgnwzBL0sJ0/UJX6nvuZ
+	 apC1uS8+0CUlORkL+oOZvTEWNuMYztqIq1x+hP+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/473] LoongArch: Lately init pmu after smp is online
-Date: Thu,  6 Jun 2024 15:59:25 +0200
-Message-ID: <20240606131701.086322505@linuxfoundation.org>
+Subject: [PATCH 6.1 072/473] parisc: add missing export of __cmpxchg_u8()
+Date: Thu,  6 Jun 2024 16:00:01 +0200
+Message-ID: <20240606131702.264219624@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -51,38 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit f3334ebb8a2a1841c2824594dd992e66de19deb2 ]
+[ Upstream commit c57e5dccb06decf3cb6c272ab138c033727149b5 ]
 
-There is an smp function call named reset_counters() to init PMU
-registers of every CPU in PMU initialization state. It requires that all
-CPUs are online. However there is an early_initcall() wrapper for the
-PMU init funciton init_hw_perf_events(), so that pmu init funciton is
-called in do_pre_smp_initcalls() which before function smp_init().
-Function reset_counters() cannot work on other CPUs since they haven't
-boot up still.
+__cmpxchg_u8() had been added (initially) for the sake of
+drivers/phy/ti/phy-tusb1210.c; the thing is, that drivers is
+modular, so we need an export
 
-Here replace the wrapper early_initcall() with pure_initcall(), so that
-the PMU init function is called after every cpu is online.
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: b344d6a83d01 "parisc: add support for cmpxchg on u8 pointers"
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/perf_event.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/parisc/kernel/parisc_ksyms.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/loongarch/kernel/perf_event.c b/arch/loongarch/kernel/perf_event.c
-index 3a2edb157b65a..1563bf47f3e2c 100644
---- a/arch/loongarch/kernel/perf_event.c
-+++ b/arch/loongarch/kernel/perf_event.c
-@@ -884,4 +884,4 @@ static int __init init_hw_perf_events(void)
- 
- 	return 0;
- }
--early_initcall(init_hw_perf_events);
-+pure_initcall(init_hw_perf_events);
+diff --git a/arch/parisc/kernel/parisc_ksyms.c b/arch/parisc/kernel/parisc_ksyms.c
+index 00297e8e1c888..317508493b81c 100644
+--- a/arch/parisc/kernel/parisc_ksyms.c
++++ b/arch/parisc/kernel/parisc_ksyms.c
+@@ -21,6 +21,7 @@ EXPORT_SYMBOL(memset);
+ #include <linux/atomic.h>
+ EXPORT_SYMBOL(__xchg8);
+ EXPORT_SYMBOL(__xchg32);
++EXPORT_SYMBOL(__cmpxchg_u8);
+ EXPORT_SYMBOL(__cmpxchg_u32);
+ EXPORT_SYMBOL(__cmpxchg_u64);
+ #ifdef CONFIG_SMP
 -- 
 2.43.0
 
