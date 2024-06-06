@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5FE1B1406;
-	Thu,  6 Jun 2024 14:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3953119AD8E;
+	Thu,  6 Jun 2024 14:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683370; cv=none; b=NJptSJExA9S8rQcZhgkSgSJYmfe7BiwYop67wANtzlZKLax6P5obnqV9oWsVmdqsLeYr1+/K2j78QADVusiyg3va4lg39YM31aI6FH/Xdc8a4UN2kcwi5DkKDgA+qZNhn4srfdKS87EoUW/k//coL8sw9puzIkJavXif0dCIb40=
+	t=1717683370; cv=none; b=kxE8RM7ynaut9B2BfPgyqWgheV+Q8YGYGKO0sbGtvfkwVk73mItP6OBX85pTqt9w0w7DJnjWqxoEjMa8VQdyMN5axy+HrhZ4PB+mMgs/qsSvD4rbN4whzW9X+OMqWeJ7cJULEiHhy87y2XrdfmXESJYgZ4XN/j8w3M+NBsHhNdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683370; c=relaxed/simple;
-	bh=YK3zgT4BJiaCGj5ZZ5HPX5fBmdEDKAL2ESToI0HgLTI=;
+	bh=UEFpl9WcuCBsm0BRvo67ltCDnOtl3y1r0sVH2LZZORQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DJ+fbueLkHFY3yyMqoM/uW4iVtu2AQ2lsmqol/ftsI4ywWf5R9gQR5RUeZfBc5+F5uEyLht8anU4bhmbUKXUGv3IXG0u4P0lKZY/39LNcTiI3CKnbgiQAhm1pBGnwMzEQRlGFg/oSbINQIKw89NQz1RgaWdWT1ZIaSira6freAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8hq04dK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRDf9HUg2fjzXGhr/hLP3t0HgVN/n25Uu+uFf9iSWmszOGrWKHq5i2X/YPWbhKMS1yGfpqwaAPY5jolt9UgibDMxGkS8lBy8elOAt7TmVmW14q09wdBJA6q+JZdEIo+siP9YkZUXOEvkUAQAXuEbB1KSdxAsAbsjBa3SqqS/LTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=irXQrDmv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8hq04dK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53B7C2BD10;
-	Thu,  6 Jun 2024 14:16:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="irXQrDmv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDBBC32782;
+	Thu,  6 Jun 2024 14:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683368;
-	bh=YK3zgT4BJiaCGj5ZZ5HPX5fBmdEDKAL2ESToI0HgLTI=;
+	s=korg; t=1717683370;
+	bh=UEFpl9WcuCBsm0BRvo67ltCDnOtl3y1r0sVH2LZZORQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8hq04dKaMTpwzam/p/fT9hcb7JlEBRns4Ch/c3zuzo6h84v0CTzgPM+BzqxPeNV6
-	 TaslFv45UDcnsnsdLCMz+CGRPG8dGyXf15fASW+igttC5BRh/6b/QLVzLd5i3D4Abp
-	 4ynosaxADbqAOnAtZDiDX9xUiqyfmV3eI0wTTHbY=
+	b=irXQrDmvjQgFD2Ng3NP6hDVgtTYrMB1FywCnuMgNLHOFQ5RcUee+apfPkFF7S0LL4
+	 yEb3KEf/YbnZHG7yRJx7LCBN54rsHVK/fx4Lv3kENjufw1FoeOmL+NIfEDcrpZsuz3
+	 zhy3x1Rj+vpPIFuaPz9Ku1G3C7p/Bib2sZA+yfQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Marc Gonzalez <mgonzalez@freebox.fr>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 310/744] media: ipu3-cio2: Request IRQ earlier
-Date: Thu,  6 Jun 2024 15:59:42 +0200
-Message-ID: <20240606131742.344870558@linuxfoundation.org>
+Subject: [PATCH 6.1 254/473] clk: qcom: mmcc-msm8998: fix venus clock issue
+Date: Thu,  6 Jun 2024 16:03:03 +0200
+Message-ID: <20240606131708.372149877@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +49,116 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Marc Gonzalez <mgonzalez@freebox.fr>
 
-[ Upstream commit a069f79bfa6ec1ea0744981ea8425c8a25322579 ]
+[ Upstream commit e20ae5ae9f0c843aded4f06f3d1cab7384789e92 ]
 
-Call devm_request_irq() before registering the async notifier, as otherwise
-it would be possible to use the device before the interrupts could be
-delivered to the driver.
+Right now, msm8998 video decoder (venus) is non-functional:
 
-Fixes: c2a6a07afe4a ("media: intel-ipu3: cio2: add new MIPI-CSI2 driver")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+$ time mpv --hwdec=v4l2m2m-copy --vd-lavc-software-fallback=no --vo=null --no-audio --untimed --length=30 --quiet demo-480.webm
+ (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
+     Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
+[ffmpeg/video] vp9_v4l2m2m: output VIDIOC_REQBUFS failed: Connection timed out
+[ffmpeg/video] vp9_v4l2m2m: no v4l2 output context's buffers
+[ffmpeg/video] vp9_v4l2m2m: can't configure decoder
+Could not open codec.
+Software decoding fallback is disabled.
+Exiting... (Quit)
+
+Bryan O'Donoghue suggested the proper fix:
+- Set required register offsets in venus GDSC structs.
+- Set HW_CTRL flag.
+
+$ time mpv --hwdec=v4l2m2m-copy --vd-lavc-software-fallback=no --vo=null --no-audio --untimed --length=30 --quiet demo-480.webm
+ (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
+     Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
+...
+Using hardware decoding (v4l2m2m-copy).
+VO: [null] 854x480 nv12
+Exiting... (End of file)
+real	0m3.315s
+user	0m1.277s
+sys	0m0.453s
+
+NOTES:
+
+GDSC = Globally Distributed Switch Controller
+
+Use same code as mmcc-msm8996 with:
+s/venus_gdsc/video_top_gdsc/
+s/venus_core0_gdsc/video_subcore0_gdsc/
+s/venus_core1_gdsc/video_subcore1_gdsc/
+
+https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8996.h
+https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8998.h
+
+0x1024 = MMSS_VIDEO GDSCR (undocumented)
+0x1028 = MMSS_VIDEO_CORE_CBCR
+0x1030 = MMSS_VIDEO_AHB_CBCR
+0x1034 = MMSS_VIDEO_AXI_CBCR
+0x1038 = MMSS_VIDEO_MAXI_CBCR
+0x1040 = MMSS_VIDEO_SUBCORE0 GDSCR (undocumented)
+0x1044 = MMSS_VIDEO_SUBCORE1 GDSCR (undocumented)
+0x1048 = MMSS_VIDEO_SUBCORE0_CBCR
+0x104c = MMSS_VIDEO_SUBCORE1_CBCR
+
+Fixes: d14b15b5931c2b ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Link: https://lore.kernel.org/r/ff4e2e34-a677-4c39-8c29-83655c5512ae@freebox.fr
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/ipu3/ipu3-cio2.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/clk/qcom/mmcc-msm8998.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/media/pci/intel/ipu3/ipu3-cio2.c b/drivers/media/pci/intel/ipu3/ipu3-cio2.c
-index 5dd69a251b6a9..423842d2a5b2b 100644
---- a/drivers/media/pci/intel/ipu3/ipu3-cio2.c
-+++ b/drivers/media/pci/intel/ipu3/ipu3-cio2.c
-@@ -1803,11 +1803,6 @@ static int cio2_pci_probe(struct pci_dev *pci_dev,
+diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
+index e5a72c2f080f8..c282424bac537 100644
+--- a/drivers/clk/qcom/mmcc-msm8998.c
++++ b/drivers/clk/qcom/mmcc-msm8998.c
+@@ -2578,6 +2578,8 @@ static struct clk_hw *mmcc_msm8998_hws[] = {
  
- 	v4l2_async_nf_init(&cio2->notifier, &cio2->v4l2_dev);
+ static struct gdsc video_top_gdsc = {
+ 	.gdscr = 0x1024,
++	.cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
++	.cxc_count = 3,
+ 	.pd = {
+ 		.name = "video_top",
+ 	},
+@@ -2586,20 +2588,26 @@ static struct gdsc video_top_gdsc = {
  
--	/* Register notifier for subdevices we care */
--	r = cio2_parse_firmware(cio2);
--	if (r)
--		goto fail_clean_notifier;
--
- 	r = devm_request_irq(dev, pci_dev->irq, cio2_irq, IRQF_SHARED,
- 			     CIO2_NAME, cio2);
- 	if (r) {
-@@ -1815,6 +1810,11 @@ static int cio2_pci_probe(struct pci_dev *pci_dev,
- 		goto fail_clean_notifier;
- 	}
+ static struct gdsc video_subcore0_gdsc = {
+ 	.gdscr = 0x1040,
++	.cxcs = (unsigned int []){ 0x1048 },
++	.cxc_count = 1,
+ 	.pd = {
+ 		.name = "video_subcore0",
+ 	},
+ 	.parent = &video_top_gdsc.pd,
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = HW_CTRL,
+ };
  
-+	/* Register notifier for subdevices we care */
-+	r = cio2_parse_firmware(cio2);
-+	if (r)
-+		goto fail_clean_notifier;
-+
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_allow(dev);
+ static struct gdsc video_subcore1_gdsc = {
+ 	.gdscr = 0x1044,
++	.cxcs = (unsigned int []){ 0x104c },
++	.cxc_count = 1,
+ 	.pd = {
+ 		.name = "video_subcore1",
+ 	},
+ 	.parent = &video_top_gdsc.pd,
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = HW_CTRL,
+ };
  
+ static struct gdsc mdss_gdsc = {
 -- 
 2.43.0
 
