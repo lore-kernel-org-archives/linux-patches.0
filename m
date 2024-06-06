@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586C4198A30;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96D719B59D;
 	Thu,  6 Jun 2024 14:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683066; cv=none; b=jVgjc3EvaZWWbemhta1ZvXuBT3mFGuL1/wrmzN+w3a91pPOdlmtjA4zap9mClPBNEUAFmvXV93G1T1DU3cF8rDAn3Mbf8s25E2xKJtq6V4Nr5sdqs1NZV6QKqRXG/3eOfIzfmw3gSsGQHWL7Mjibayme9e0c0MXwq6Y+tgJW1OI=
+	t=1717683066; cv=none; b=lzrY5OdoewUhr9kU4jvAOAT4YMY1K+aD+r50yhioumjsAjWFRBsTFz75qGlbGVR+8jxFzT9wpJ6LECmLwJCUcY/+MPeq3ZUNIKITWrx9HhJM/5zvJXf7XnGY+ViguYdyHv8DaTG6zk6igOG0g78tPUfXqNSDT99Zh/Q12UT5/dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683066; c=relaxed/simple;
-	bh=aSyJoppJ6mE/ZDU942THbgElbuY87FC6cjR5T0fWHz4=;
+	bh=Nclb+sSaf0Dt0vhxIvQnFO/vXeRXt3m2LkDtoTr4V0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuRrmiqGSFkiCvu5rkP0WxiUvg+/fQ9nFZLfXaCD3EtzWaolz4rZ0qvhXJqLrfKYt8dEqLkMu4eie6GxjEk3auslL8B4OEW07R890YX5peE3VK8vu/aipTbQAA8WdFwTLucRlUvEJ1Sfkibn+mM4LB2NNc3gpYNEyAdABPbzhS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8LhFOmQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=po7Y1/pc1SgFH1OpSERTUE96a6iI/fB1IWoAny3FqytPWAgiqJEf9ospAR/n5EQ1rXnu2hvWl+sOodVH2kzTNKKYe/FTDeiyX2RzsVFExvaTM12e0++XzDgYeykHQuyZgFqezGKpAlKj8mpmW57c8GC1MmR+6dh+y7iyiuK/Ua4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jteg06Ms; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8LhFOmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38565C4AF15;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jteg06Ms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF31C32786;
 	Thu,  6 Jun 2024 14:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683066;
-	bh=aSyJoppJ6mE/ZDU942THbgElbuY87FC6cjR5T0fWHz4=;
+	bh=Nclb+sSaf0Dt0vhxIvQnFO/vXeRXt3m2LkDtoTr4V0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8LhFOmQ+pSHUt64keizUSLIipzTSQzllxeUd/9N0vS/CiwgKCUQFJc3K8+O5F7xo
-	 GesWDV82tLOrd20oHPIzEn0ADEIlK07v/lqjflT09k2gZTJqLiDXz73E0wJWXRRW/m
-	 KEnUXmDb+TDsRVQV9husplyAl3GzT1er1hV7cEjg=
+	b=jteg06MsHy2fyjJ6CFWHV7yPESnO76KEZ10iIaC6MiZZdA3lTFzXNaLl/PIUM4zl7
+	 HroPOGqObO9/Wa3tsNUKIctOUojg5nW8oYxU3cLKkwNxLCqqDMGFImRXOWrR7F4oQh
+	 hs6wx/dFmrD0xMKbdHNLqs0V/TYmac2AEydFI0H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
-	syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 315/374] bpf: Allow delete from sockmap/sockhash only if update is allowed
-Date: Thu,  6 Jun 2024 16:04:54 +0200
-Message-ID: <20240606131702.432927753@linuxfoundation.org>
+Subject: [PATCH 6.9 324/374] selftests: mptcp: add ms units for tc-netem delay
+Date: Thu,  6 Jun 2024 16:05:03 +0200
+Message-ID: <20240606131702.721740457@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -54,77 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Sitnicki <jakub@cloudflare.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 98e948fb60d41447fd8d2d0c3b8637fc6b6dc26d ]
+[ Upstream commit 9109853a388b7b2b934f56f4ddb250d72e486555 ]
 
-We have seen an influx of syzkaller reports where a BPF program attached to
-a tracepoint triggers a locking rule violation by performing a map_delete
-on a sockmap/sockhash.
+'delay 1' in tc-netem is confusing, not sure if it's a delay of 1 second or
+1 millisecond. This patch explicitly adds millisecond units to make these
+commands clearer.
 
-We don't intend to support this artificial use scenario. Extend the
-existing verifier allowed-program-type check for updating sockmap/sockhash
-to also cover deleting from a map.
-
->From now on only BPF programs which were previously allowed to update
-sockmap/sockhash can delete from these map types.
-
-Fixes: ff9105993240 ("bpf, sockmap: Prevent lock inversion deadlock in map delete elem")
-Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
-Reported-by: syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com
-Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=ec941d6e24f633a59172
-Link: https://lore.kernel.org/bpf/20240527-sockmap-verify-deletes-v1-1-944b372f2101@cloudflare.com
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 38af56e6668b ("selftests: mptcp: join: mark 'fail' tests as flaky")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh   | 6 +++---
+ tools/testing/selftests/net/mptcp/simult_flows.sh | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 2c90b1eb12e2c..8a29309db4245 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -8845,7 +8845,8 @@ static bool may_update_sockmap(struct bpf_verifier_env *env, int func_id)
- 	enum bpf_attach_type eatype = env->prog->expected_attach_type;
- 	enum bpf_prog_type type = resolve_prog_type(env->prog);
+diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+index 908ef799b13a0..8d16f37cd67f8 100755
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -125,8 +125,8 @@ init_shapers()
+ {
+ 	local i
+ 	for i in $(seq 1 4); do
+-		tc -n $ns1 qdisc add dev ns1eth$i root netem rate 20mbit delay 1
+-		tc -n $ns2 qdisc add dev ns2eth$i root netem rate 20mbit delay 1
++		tc -n $ns1 qdisc add dev ns1eth$i root netem rate 20mbit delay 1ms
++		tc -n $ns2 qdisc add dev ns2eth$i root netem rate 20mbit delay 1ms
+ 	done
+ }
  
--	if (func_id != BPF_FUNC_map_update_elem)
-+	if (func_id != BPF_FUNC_map_update_elem &&
-+	    func_id != BPF_FUNC_map_delete_elem)
- 		return false;
+@@ -3218,7 +3218,7 @@ fail_tests()
  
- 	/* It's not possible to get access to a locked struct sock in these
-@@ -8856,6 +8857,11 @@ static bool may_update_sockmap(struct bpf_verifier_env *env, int func_id)
- 		if (eatype == BPF_TRACE_ITER)
- 			return true;
- 		break;
-+	case BPF_PROG_TYPE_SOCK_OPS:
-+		/* map_update allowed only via dedicated helpers with event type checks */
-+		if (func_id == BPF_FUNC_map_delete_elem)
-+			return true;
-+		break;
- 	case BPF_PROG_TYPE_SOCKET_FILTER:
- 	case BPF_PROG_TYPE_SCHED_CLS:
- 	case BPF_PROG_TYPE_SCHED_ACT:
-@@ -8951,7 +8957,6 @@ static int check_map_func_compatibility(struct bpf_verifier_env *env,
- 	case BPF_MAP_TYPE_SOCKMAP:
- 		if (func_id != BPF_FUNC_sk_redirect_map &&
- 		    func_id != BPF_FUNC_sock_map_update &&
--		    func_id != BPF_FUNC_map_delete_elem &&
- 		    func_id != BPF_FUNC_msg_redirect_map &&
- 		    func_id != BPF_FUNC_sk_select_reuseport &&
- 		    func_id != BPF_FUNC_map_lookup_elem &&
-@@ -8961,7 +8966,6 @@ static int check_map_func_compatibility(struct bpf_verifier_env *env,
- 	case BPF_MAP_TYPE_SOCKHASH:
- 		if (func_id != BPF_FUNC_sk_redirect_hash &&
- 		    func_id != BPF_FUNC_sock_hash_update &&
--		    func_id != BPF_FUNC_map_delete_elem &&
- 		    func_id != BPF_FUNC_msg_redirect_hash &&
- 		    func_id != BPF_FUNC_sk_select_reuseport &&
- 		    func_id != BPF_FUNC_map_lookup_elem &&
+ 	# multiple subflows
+ 	if reset_with_fail "MP_FAIL MP_RST" 2; then
+-		tc -n $ns2 qdisc add dev ns2eth1 root netem rate 1mbit delay 5
++		tc -n $ns2 qdisc add dev ns2eth1 root netem rate 1mbit delay 5ms
+ 		pm_nl_set_limits $ns1 0 1
+ 		pm_nl_set_limits $ns2 0 1
+ 		pm_nl_add_endpoint $ns2 10.0.2.2 dev ns2eth2 flags subflow
+diff --git a/tools/testing/selftests/net/mptcp/simult_flows.sh b/tools/testing/selftests/net/mptcp/simult_flows.sh
+index dfdb7031c187a..7322e1e4e5db6 100755
+--- a/tools/testing/selftests/net/mptcp/simult_flows.sh
++++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
+@@ -216,8 +216,8 @@ run_test()
+ 	shift 4
+ 	local msg=$*
+ 
+-	[ $delay1 -gt 0 ] && delay1="delay $delay1" || delay1=""
+-	[ $delay2 -gt 0 ] && delay2="delay $delay2" || delay2=""
++	[ $delay1 -gt 0 ] && delay1="delay ${delay1}ms" || delay1=""
++	[ $delay2 -gt 0 ] && delay2="delay ${delay2}ms" || delay2=""
+ 
+ 	for dev in ns1eth1 ns1eth2; do
+ 		tc -n $ns1 qdisc del dev $dev root >/dev/null 2>&1
 -- 
 2.43.0
 
