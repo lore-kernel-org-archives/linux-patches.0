@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A933197A94;
-	Thu,  6 Jun 2024 14:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A53196DA8;
+	Thu,  6 Jun 2024 14:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683019; cv=none; b=c5kE4+VTncWrCtt8cGThZiNwmFevM/A3c/lnYfTTxLID9/Ecjux0HBBAxNelpajF9lYAUu+FUbQ0baMW5STcmSr53nlUYS4yxEfsWTnyrv8gOd7A7y4LTXOFAdEBzr2ZD8Ggcr0v3n9M6jJYu+Mnd5qRqjlg16x9Tav4CAE6JDA=
+	t=1717683020; cv=none; b=APU/KWC8y9iwum814LxBvW1ATFTZUXCQNNsQ62hLqlSAOb2hjKp2W7o5O/iKyLkayXRo5exF+Wqm75bng9fcB9EuiU9hiYp2L1ERKDEALl1qF4KXCgDFJYcbmTW89PXcW2PXjH+fEQ1moso6xWSS3L7Mj1uliIbuccOZ7hUdddY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683019; c=relaxed/simple;
-	bh=3rdQX3+jIFmRGztkLTHLftuYKTpHvSdPxr0okm0Qet4=;
+	s=arc-20240116; t=1717683020; c=relaxed/simple;
+	bh=vYAodncs2chlTbGn39+JuzKStNRSYYY+He4Xn61N0hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7LpOCsUL8DjrwqqSDAOQfMKMhWNqv16NfcKX2DpYFvggf/g2I4muOnXRLiw8eWhwDdjQFKUr2ETnhaX8jw1A+o74rTQHkq1LVQqxfg326eUf29fMel6DFk5YPs5kUoJlbw2w037aWv74j7WtPHNhv0mpOWZ4cumh7JVRMpcUL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NayeHf3R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tKlN9sRa7bwFahXwC1za/NA5sAtFDRoILdL5vTX+c/1CHuZLrq/SCER9t9i00EwBG0aw6TnL01hglPzdjZsDoBEamKTJvTC+ZVH67tUeKh6iZ/JvdKghPmJG0szR/Od9GBH6mW0qjdCg8NtzYIMxC8vkJE9Zqsra6+r47TVlAAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqLsXhvw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NayeHf3R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C80C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqLsXhvw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA663C32781;
 	Thu,  6 Jun 2024 14:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683019;
-	bh=3rdQX3+jIFmRGztkLTHLftuYKTpHvSdPxr0okm0Qet4=;
+	s=korg; t=1717683020;
+	bh=vYAodncs2chlTbGn39+JuzKStNRSYYY+He4Xn61N0hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NayeHf3RC2Akh0m94CKBkdYou8DrpMBWUolZ0r90uhmyEH+uZxNlHpAvWOgR9JF7Q
-	 SY4fAYYqjLL2eu2ScKYiLjeSoP/6iOJnaB0h5JuCy6nwurGsOSdcQMiBmXHuBzVFLt
-	 h2MPN7ANQ8wW0XefdGfnIQxTDUHBokQHf87+Iluo=
+	b=bqLsXhvw3tGxf8sFaIcbG+EIxQD3zPdcZO7R4mjMB4k9D/tQ+Hr9pnTsrlD76cazU
+	 qgn2Ra3eETwVJU+Wl1vOMnhMnVruXlSfOysUngAUY1PsToc9w2OpkkcdBKO3i3mM8f
+	 p86aT6LFyeEtwrMmN3aQkfI/pki3hinewOh2mOLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Martin Kaiser <martin@kaiser.cx>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 239/374] NFSv4: Fixup smatch warning for ambiguous return
-Date: Thu,  6 Jun 2024 16:03:38 +0200
-Message-ID: <20240606131659.832874930@linuxfoundation.org>
+Subject: [PATCH 6.9 240/374] nfs: keep server info for remounts
+Date: Thu,  6 Jun 2024 16:03:39 +0200
+Message-ID: <20240606131659.864744099@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,65 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 37ffe06537af3e3ec212e7cbe941046fce0a822f ]
+[ Upstream commit b322bf9e983addedff0894c55e92d58f4d16d92a ]
 
-Dan Carpenter reports smatch warning for nfs4_try_migration() when a memory
-allocation failure results in a zero return value.  In this case, a
-transient allocation failure error will likely be retried the next time the
-server responds with NFS4ERR_MOVED.
+With newer kernels that use fs_context for nfs mounts, remounts fail with
+-EINVAL.
 
-We can fixup the smatch warning with a small refactor: attempt all three
-allocations before testing and returning on a failure.
+$ mount -t nfs -o nolock 10.0.0.1:/tmp/test /mnt/test/
+$ mount -t nfs -o remount /mnt/test/
+mount: mounting 10.0.0.1:/tmp/test on /mnt/test failed: Invalid argument
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: c3ed222745d9 ("NFSv4: Fix free of uninitialized nfs4_label on referral lookup.")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+For remounts, the nfs server address and port are populated by
+nfs_init_fs_context and later overwritten with 0x00 bytes by
+nfs23_parse_monolithic. The remount then fails as the server address is
+invalid.
+
+Fix this by not overwriting nfs server info in nfs23_parse_monolithic if
+we're doing a remount.
+
+Fixes: f2aedb713c28 ("NFS: Add fs_context support.")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4state.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ fs/nfs/fs_context.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index 662e86ea3a2dd..5b452411e8fdf 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -2116,6 +2116,7 @@ static int nfs4_try_migration(struct nfs_server *server, const struct cred *cred
- {
- 	struct nfs_client *clp = server->nfs_client;
- 	struct nfs4_fs_locations *locations = NULL;
-+	struct nfs_fattr *fattr;
- 	struct inode *inode;
- 	struct page *page;
- 	int status, result;
-@@ -2125,19 +2126,16 @@ static int nfs4_try_migration(struct nfs_server *server, const struct cred *cred
- 			(unsigned long long)server->fsid.minor,
- 			clp->cl_hostname);
+diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
+index d0a0956f8a134..cac1157be2c29 100644
+--- a/fs/nfs/fs_context.c
++++ b/fs/nfs/fs_context.c
+@@ -1112,9 +1112,12 @@ static int nfs23_parse_monolithic(struct fs_context *fc,
+ 		ctx->acdirmax	= data->acdirmax;
+ 		ctx->need_mount	= false;
  
--	result = 0;
- 	page = alloc_page(GFP_KERNEL);
- 	locations = kmalloc(sizeof(struct nfs4_fs_locations), GFP_KERNEL);
--	if (page == NULL || locations == NULL) {
--		dprintk("<-- %s: no memory\n", __func__);
--		goto out;
--	}
--	locations->fattr = nfs_alloc_fattr();
--	if (locations->fattr == NULL) {
-+	fattr = nfs_alloc_fattr();
-+	if (page == NULL || locations == NULL || fattr == NULL) {
- 		dprintk("<-- %s: no memory\n", __func__);
-+		result = 0;
- 		goto out;
- 	}
- 
-+	locations->fattr = fattr;
- 	inode = d_inode(server->super->s_root);
- 	result = nfs4_proc_get_locations(server, NFS_FH(inode), locations,
- 					 page, cred);
+-		memcpy(sap, &data->addr, sizeof(data->addr));
+-		ctx->nfs_server.addrlen = sizeof(data->addr);
+-		ctx->nfs_server.port = ntohs(data->addr.sin_port);
++		if (!is_remount_fc(fc)) {
++			memcpy(sap, &data->addr, sizeof(data->addr));
++			ctx->nfs_server.addrlen = sizeof(data->addr);
++			ctx->nfs_server.port = ntohs(data->addr.sin_port);
++		}
++
+ 		if (sap->ss_family != AF_INET ||
+ 		    !nfs_verify_server_address(sap))
+ 			goto out_no_address;
 -- 
 2.43.0
 
