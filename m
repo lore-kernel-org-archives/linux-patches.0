@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6806219AD46;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E366619AD46;
 	Thu,  6 Jun 2024 14:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683331; cv=none; b=YWA1DRxD7WnV1Mq3OVV96POnJ2e55rbNUYUCSfdqQL5XEuWi0qjD4HmfSQtqhn3DQhOSF2G2W94nFr6yirxvvxIB5vjUdYDeVe6XNzGh3+RxxA/bXaBiJ8fNW9rlVdCQf9DoHPsVN5gaZd4dzM3woToDnFFx2F2E9EvRw17Wwgs=
+	t=1717683332; cv=none; b=kfTMr4mTOIhyffyD9YsEOU7hyCuIqS2Uu4qWQr5HraaPJcjMVWmR95HVzX5nP2RpSSPNoYwsrXrG4SaRS9GpF9Ud7sHZ7XqmFsLJADYTVeydYs9W1+O9k/5PRpIuk8pcCeooxrMnC1U+ECoDxDJf5xwbbRv7G1YuZqs9ho/LcyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683331; c=relaxed/simple;
-	bh=SdXA4d8f7ZkjkIjMOsCfwk2Cw6Dv+RqMahcIuxAJr1c=;
+	s=arc-20240116; t=1717683332; c=relaxed/simple;
+	bh=C+dxkKEibI1M2QNL66H1F8YwMtEwuHtXbImeYGByfJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwy1VdBpH+0Lgul4RouLIGGUsu9vG3giIQBleQbigAvL0d+th8vCKjN2OaB8on6o8uRTaRdL6pWEjEdvaypZM4xfaVHx0ZmayaK1SkHZutFIE7QMC+jy7BUhUD4kRHn9DTKY/12UJgujPDfU7AhO0892akzvvwiMrSMyDdMobig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYmkNQq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B7KivhTZBb96F9m9zZtTD2v5lFkq7S8AGcf7O33rJoWxzYGsrrP9Owu4AR3oGgeNN7FYZ5XejzwYU3gUSrIjWJ9UUDXJnt3jOLMsevYRfW9iDX+gFE00JH3+GFwAPI0dpnzI8QWPIDhOTN768XCGcnuvQjy+RwCbWRdsx4I8IwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsOOpdmr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYmkNQq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F58C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsOOpdmr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC46AC2BD10;
 	Thu,  6 Jun 2024 14:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683331;
-	bh=SdXA4d8f7ZkjkIjMOsCfwk2Cw6Dv+RqMahcIuxAJr1c=;
+	bh=C+dxkKEibI1M2QNL66H1F8YwMtEwuHtXbImeYGByfJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OYmkNQq0XnW12QAEWi7LTmd7TPu3hponU0WErAsj70Q/NZXbTGuc/wPO61+giuSKA
-	 DzVh4ct1AO/1JU7hTy/fvFPPxmkrGBZOTEuzqW1jO/tyVL7TxA+czRTlbe2EeP0XtY
-	 qGvLd06ud2XAoZ2PMY2NGkImv20TD4bUthqcgVnQ=
+	b=gsOOpdmr69n4p1Qed68KDVlnOC39NToau4MvzlpQxQ7GP38zIuyjKwaMssQ8BNy29
+	 SYwhncL0sKwJnHa+XetCzwPb1SShfu9YaPTrfR9Zd27S0zgRWGN3AA8BATUK1npBD4
+	 ivbqLlNRhdR3E6ATnZtJ5/8+85iBTEfMijOwGws8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tony Lindgren <tony@atomide.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 213/473] platform/x86: xiaomi-wmi: Fix race condition when reporting key events
-Date: Thu,  6 Jun 2024 16:02:22 +0200
-Message-ID: <20240606131706.958934841@linuxfoundation.org>
+Subject: [PATCH 6.6 273/744] drm/omapdrm: Fix console with deferred ops
+Date: Thu,  6 Jun 2024 15:59:05 +0200
+Message-ID: <20240606131741.138442845@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,96 +48,158 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 290680c2da8061e410bcaec4b21584ed951479af ]
+[ Upstream commit 01c0cce88c5480cc2505b79330246ef12eda938f ]
 
-Multiple WMI events can be received concurrently, so multiple instances
-of xiaomi_wmi_notify() can be active at the same time. Since the input
-device is shared between those handlers, the key input sequence can be
-disturbed.
+Commit 95da53d63dcf ("drm/omapdrm: Use regular fbdev I/O helpers")
+stopped console from updating for command mode displays because there is
+no damage handling in fb_sys_write() unlike we had earlier in
+drm_fb_helper_sys_write().
 
-Fix this by protecting the key input sequence with a mutex.
+Let's fix the issue by adding FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS and
+FB_DMAMEM_HELPERS_DEFERRED as suggested by Thomas. We cannot use the
+FB_DEFAULT_DEFERRED_OPS as fb_deferred_io_mmap() won't work properly
+for write-combine.
 
-Compile-tested only.
-
-Fixes: edb73f4f0247 ("platform/x86: wmi: add Xiaomi WMI key driver")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20240402143059.8456-2-W_Armin@gmx.de
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 95da53d63dcf ("drm/omapdrm: Use regular fbdev I/O helpers")
+Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240228063540.4444-3-tony@atomide.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/xiaomi-wmi.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/gpu/drm/omapdrm/Kconfig      |  2 +-
+ drivers/gpu/drm/omapdrm/omap_fbdev.c | 28 ++++++++++++++++++++++------
+ drivers/video/fbdev/core/Kconfig     |  6 ++++++
+ include/linux/fb.h                   |  4 ++++
+ 4 files changed, 33 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/platform/x86/xiaomi-wmi.c b/drivers/platform/x86/xiaomi-wmi.c
-index 54a2546bb93bf..be80f0bda9484 100644
---- a/drivers/platform/x86/xiaomi-wmi.c
-+++ b/drivers/platform/x86/xiaomi-wmi.c
-@@ -2,8 +2,10 @@
- /* WMI driver for Xiaomi Laptops */
- 
- #include <linux/acpi.h>
-+#include <linux/device.h>
- #include <linux/input.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/wmi.h>
- 
- #include <uapi/linux/input-event-codes.h>
-@@ -20,12 +22,21 @@
- 
- struct xiaomi_wmi {
- 	struct input_dev *input_dev;
-+	struct mutex key_lock;	/* Protects the key event sequence */
- 	unsigned int key_code;
- };
- 
-+static void xiaomi_mutex_destroy(void *data)
-+{
-+	struct mutex *lock = data;
-+
-+	mutex_destroy(lock);
-+}
-+
- static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
- {
- 	struct xiaomi_wmi *data;
-+	int ret;
- 
- 	if (wdev == NULL || context == NULL)
- 		return -EINVAL;
-@@ -35,6 +46,11 @@ static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
- 		return -ENOMEM;
- 	dev_set_drvdata(&wdev->dev, data);
- 
-+	mutex_init(&data->key_lock);
-+	ret = devm_add_action_or_reset(&wdev->dev, xiaomi_mutex_destroy, &data->key_lock);
-+	if (ret < 0)
-+		return ret;
-+
- 	data->input_dev = devm_input_allocate_device(&wdev->dev);
- 	if (data->input_dev == NULL)
- 		return -ENOMEM;
-@@ -59,10 +75,12 @@ static void xiaomi_wmi_notify(struct wmi_device *wdev, union acpi_object *dummy)
- 	if (data == NULL)
- 		return;
- 
-+	mutex_lock(&data->key_lock);
- 	input_report_key(data->input_dev, data->key_code, 1);
- 	input_sync(data->input_dev);
- 	input_report_key(data->input_dev, data->key_code, 0);
- 	input_sync(data->input_dev);
-+	mutex_unlock(&data->key_lock);
+diff --git a/drivers/gpu/drm/omapdrm/Kconfig b/drivers/gpu/drm/omapdrm/Kconfig
+index b715301ec79f6..6c49270cb290a 100644
+--- a/drivers/gpu/drm/omapdrm/Kconfig
++++ b/drivers/gpu/drm/omapdrm/Kconfig
+@@ -4,7 +4,7 @@ config DRM_OMAP
+ 	depends on DRM && OF
+ 	depends on ARCH_OMAP2PLUS
+ 	select DRM_KMS_HELPER
+-	select FB_DMAMEM_HELPERS if DRM_FBDEV_EMULATION
++	select FB_DMAMEM_HELPERS_DEFERRED if DRM_FBDEV_EMULATION
+ 	select VIDEOMODE_HELPERS
+ 	select HDMI
+ 	default n
+diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+index 7c5af3de1e727..523be34682caf 100644
+--- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
++++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
+@@ -51,6 +51,10 @@ static void pan_worker(struct work_struct *work)
+ 	omap_gem_roll(bo, fbi->var.yoffset * npages);
  }
  
- static const struct wmi_device_id xiaomi_wmi_id_table[] = {
++FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS(omap_fbdev,
++				   drm_fb_helper_damage_range,
++				   drm_fb_helper_damage_area)
++
+ static int omap_fbdev_pan_display(struct fb_var_screeninfo *var,
+ 		struct fb_info *fbi)
+ {
+@@ -78,11 +82,9 @@ static int omap_fbdev_pan_display(struct fb_var_screeninfo *var,
+ 
+ static int omap_fbdev_fb_mmap(struct fb_info *info, struct vm_area_struct *vma)
+ {
+-	struct drm_fb_helper *helper = info->par;
+-	struct drm_framebuffer *fb = helper->fb;
+-	struct drm_gem_object *bo = drm_gem_fb_get_obj(fb, 0);
++	vma->vm_page_prot = pgprot_writecombine(vm_get_page_prot(vma->vm_flags));
+ 
+-	return drm_gem_mmap_obj(bo, omap_gem_mmap_size(bo), vma);
++	return fb_deferred_io_mmap(info, vma);
+ }
+ 
+ static void omap_fbdev_fb_destroy(struct fb_info *info)
+@@ -94,6 +96,7 @@ static void omap_fbdev_fb_destroy(struct fb_info *info)
+ 
+ 	DBG();
+ 
++	fb_deferred_io_cleanup(info);
+ 	drm_fb_helper_fini(helper);
+ 
+ 	omap_gem_unpin(bo);
+@@ -104,15 +107,19 @@ static void omap_fbdev_fb_destroy(struct fb_info *info)
+ 	kfree(fbdev);
+ }
+ 
++/*
++ * For now, we cannot use FB_DEFAULT_DEFERRED_OPS and fb_deferred_io_mmap()
++ * because we use write-combine.
++ */
+ static const struct fb_ops omap_fb_ops = {
+ 	.owner = THIS_MODULE,
+-	__FB_DEFAULT_DMAMEM_OPS_RDWR,
++	__FB_DEFAULT_DEFERRED_OPS_RDWR(omap_fbdev),
+ 	.fb_check_var	= drm_fb_helper_check_var,
+ 	.fb_set_par	= drm_fb_helper_set_par,
+ 	.fb_setcmap	= drm_fb_helper_setcmap,
+ 	.fb_blank	= drm_fb_helper_blank,
+ 	.fb_pan_display = omap_fbdev_pan_display,
+-	__FB_DEFAULT_DMAMEM_OPS_DRAW,
++	__FB_DEFAULT_DEFERRED_OPS_DRAW(omap_fbdev),
+ 	.fb_ioctl	= drm_fb_helper_ioctl,
+ 	.fb_mmap	= omap_fbdev_fb_mmap,
+ 	.fb_destroy	= omap_fbdev_fb_destroy,
+@@ -213,6 +220,15 @@ static int omap_fbdev_create(struct drm_fb_helper *helper,
+ 	fbi->fix.smem_start = dma_addr;
+ 	fbi->fix.smem_len = bo->size;
+ 
++	/* deferred I/O */
++	helper->fbdefio.delay = HZ / 20;
++	helper->fbdefio.deferred_io = drm_fb_helper_deferred_io;
++
++	fbi->fbdefio = &helper->fbdefio;
++	ret = fb_deferred_io_init(fbi);
++	if (ret)
++		goto fail;
++
+ 	/* if we have DMM, then we can use it for scrolling by just
+ 	 * shuffling pages around in DMM rather than doing sw blit.
+ 	 */
+diff --git a/drivers/video/fbdev/core/Kconfig b/drivers/video/fbdev/core/Kconfig
+index 56f721ebcff05..acb19045d3046 100644
+--- a/drivers/video/fbdev/core/Kconfig
++++ b/drivers/video/fbdev/core/Kconfig
+@@ -145,6 +145,12 @@ config FB_DMAMEM_HELPERS
+ 	select FB_SYS_FOPS
+ 	select FB_SYS_IMAGEBLIT
+ 
++config FB_DMAMEM_HELPERS_DEFERRED
++	bool
++	depends on FB_CORE
++	select FB_DEFERRED_IO
++	select FB_DMAMEM_HELPERS
++
+ config FB_IOMEM_FOPS
+ 	tristate
+ 	depends on FB_CORE
+diff --git a/include/linux/fb.h b/include/linux/fb.h
+index c14576458228a..322b4d20afa55 100644
+--- a/include/linux/fb.h
++++ b/include/linux/fb.h
+@@ -690,6 +690,10 @@ extern int fb_deferred_io_fsync(struct file *file, loff_t start,
+ 	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, sys) \
+ 	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, sys)
+ 
++#define FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS(__prefix, __damage_range, __damage_area) \
++	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, sys) \
++	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, sys)
++
+ /*
+  * Initializes struct fb_ops for deferred I/O.
+  */
 -- 
 2.43.0
 
