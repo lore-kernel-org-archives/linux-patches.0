@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759DA196DA2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55A41ABE39;
 	Thu,  6 Jun 2024 14:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683301; cv=none; b=ckM3HYKaOucVvwpsMWDe9hNEaoReJTqhdWhBEy9VLPgBfEfobcYmj035UxksERJqJtFJR91PCWj9fJVkofFaOyWX2cvcMmY0SVBWqMsZwDiMt+e/lRF4RgjH2OkCT/RfFMUIAZ5gcMWcYlnqLxFhiZY+ak58NIT89QMXWhoQg4M=
+	t=1717683302; cv=none; b=RLg9mpZph7TqzEOj3pbeUrwer+XbF8IaXc6HRdPGDzsc/F/pvd9yAjd1uV0i+/uxoxYIu210AMxdfg1fQMsdmpXMLoEUHuvsH5Upu4Sveflf7vkvRqcIDCbWDNW/Rmu3NDaBksFcqnrZBAPtthoRMVRecFZb2hXWb/KRGe8YCVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683301; c=relaxed/simple;
-	bh=jgJrVRMICS/joXkUK0KHV9PjLGqOO665CFmz5icET2s=;
+	s=arc-20240116; t=1717683302; c=relaxed/simple;
+	bh=X1oTIJyKzTaJr5/KJ1JQUnV+NobwQwm1T7C8XjVdrhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JkegNaSqTSgzFCC88YKAZi/3pB8Q5CqVQohHEXTHBLnPYimx8sTSLJyl03Me4E8D6BWom0oxiTQ/MWM0zrNgjen/yx3vBBstRTGEJ7LyVeUyzxfuZ4J3Buk+KZmMsjKsgI1SdAopN24OUeh/H9bJPm7q3DD5J6XK2MpIHq6Bb1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ep7Q5CFD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q+b41WC/aQuw1F0j9of0OXFlD9haXoQN3l40A0U3HOPUPRceJAdOEpMQUPuRGcyDa7ruX2RBKrekbg8pTMPdD6URmoreZV+0ZWSVhbc7UdptQZRxJVlJhb+S2m4vbkA7rfMv2VlYwMLuT41U1DWQMjBlsFPMh+nBnaoUQOicbMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWxGw0SF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ep7Q5CFD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55781C32786;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWxGw0SF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DAEC32781;
 	Thu,  6 Jun 2024 14:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683301;
-	bh=jgJrVRMICS/joXkUK0KHV9PjLGqOO665CFmz5icET2s=;
+	bh=X1oTIJyKzTaJr5/KJ1JQUnV+NobwQwm1T7C8XjVdrhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ep7Q5CFDIOaLNHFrW9xp+kmQCNdBDEuW2UUSvwDqIlXhIX1989CklQElD59Fcz2hi
-	 vsTNQE6Gs0IhVFcHEYZfiEnfPt+izMbN3FT16wPGaJ4AQVRJFoF7xnmKmZrYa0sXzy
-	 igSveQnzpXD20mwDzxH0RB8uHtEwb9pUpwLkKaU4=
+	b=PWxGw0SFxyXRiLbqWdUqPpoMCgyNVcNUuVJdEtMLwI37TKP24tz4bo3wS/o1Hfmw2
+	 8tweeECzA9R1YWefdantY+B2jRDfvQLgGDey0lhmBsJ64feCe8KeGhBou0YpjK37o6
+	 1CQnzbqvtJ6LuBm8mJR3yFQI4Jdns4IPDtV0hAeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Breno Leitao <leitao@debian.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 182/473] ax25: Use kernel universal linked list to implement ax25_dev_list
-Date: Thu,  6 Jun 2024 16:01:51 +0200
-Message-ID: <20240606131705.947094867@linuxfoundation.org>
+Subject: [PATCH 6.6 243/744] af_unix: Fix data races in unix_release_sock/unix_stream_sendmsg
+Date: Thu,  6 Jun 2024 15:58:35 +0200
+Message-ID: <20240606131740.190592698@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,165 +48,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit a7d6e36b9ad052926ba2ecba3a59d8bb67dabcb4 ]
+[ Upstream commit 540bf24fba16b88c1b3b9353927204b4f1074e25 ]
 
-The origin ax25_dev_list implements its own single linked list,
-which is complicated and error-prone. For example, when deleting
-the node of ax25_dev_list in ax25_dev_device_down(), we have to
-operate on the head node and other nodes separately.
+A data-race condition has been identified in af_unix. In one data path,
+the write function unix_release_sock() atomically writes to
+sk->sk_shutdown using WRITE_ONCE. However, on the reader side,
+unix_stream_sendmsg() does not read it atomically. Consequently, this
+issue is causing the following KCSAN splat to occur:
 
-This patch uses kernel universal linked list to replace original
-ax25_dev_list, which make the operation of ax25_dev_list easier.
+	BUG: KCSAN: data-race in unix_release_sock / unix_stream_sendmsg
 
-We should do "dev->ax25_ptr = ax25_dev;" and "dev->ax25_ptr = NULL;"
-while holding the spinlock, otherwise the ax25_dev_device_up() and
-ax25_dev_device_down() could race.
+	write (marked) to 0xffff88867256ddbb of 1 bytes by task 7270 on cpu 28:
+	unix_release_sock (net/unix/af_unix.c:640)
+	unix_release (net/unix/af_unix.c:1050)
+	sock_close (net/socket.c:659 net/socket.c:1421)
+	__fput (fs/file_table.c:422)
+	__fput_sync (fs/file_table.c:508)
+	__se_sys_close (fs/open.c:1559 fs/open.c:1541)
+	__x64_sys_close (fs/open.c:1541)
+	x64_sys_call (arch/x86/entry/syscall_64.c:33)
+	do_syscall_64 (arch/x86/entry/common.c:?)
+	entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
 
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/85bba3af651ca0e1a519da8d0d715b949891171c.1715247018.git.duoming@zju.edu.cn
+	read to 0xffff88867256ddbb of 1 bytes by task 989 on cpu 14:
+	unix_stream_sendmsg (net/unix/af_unix.c:2273)
+	__sock_sendmsg (net/socket.c:730 net/socket.c:745)
+	____sys_sendmsg (net/socket.c:2584)
+	__sys_sendmmsg (net/socket.c:2638 net/socket.c:2724)
+	__x64_sys_sendmmsg (net/socket.c:2753 net/socket.c:2750 net/socket.c:2750)
+	x64_sys_call (arch/x86/entry/syscall_64.c:33)
+	do_syscall_64 (arch/x86/entry/common.c:?)
+	entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+	value changed: 0x01 -> 0x03
+
+The line numbers are related to commit dd5a440a31fa ("Linux 6.9-rc7").
+
+Commit e1d09c2c2f57 ("af_unix: Fix data races around sk->sk_shutdown.")
+addressed a comparable issue in the past regarding sk->sk_shutdown.
+However, it overlooked resolving this particular data path.
+This patch only offending unix_stream_sendmsg() function, since the
+other reads seem to be protected by unix_state_lock() as discussed in
+Link: https://lore.kernel.org/all/20240508173324.53565-1-kuniyu@amazon.com/
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240509081459.2807828-1-leitao@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: b505e0319852 ("ax25: Fix reference count leak issues of ax25_dev")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ax25.h  |  3 +--
- net/ax25/ax25_dev.c | 40 +++++++++++++++-------------------------
- 2 files changed, 16 insertions(+), 27 deletions(-)
+ net/unix/af_unix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/ax25.h b/include/net/ax25.h
-index f8cf3629a4193..1d55e8ee08b4f 100644
---- a/include/net/ax25.h
-+++ b/include/net/ax25.h
-@@ -216,7 +216,7 @@ typedef struct {
- struct ctl_table;
- 
- typedef struct ax25_dev {
--	struct ax25_dev		*next;
-+	struct list_head	list;
- 
- 	struct net_device	*dev;
- 	netdevice_tracker	dev_tracker;
-@@ -333,7 +333,6 @@ int ax25_addr_size(const ax25_digi *);
- void ax25_digi_invert(const ax25_digi *, ax25_digi *);
- 
- /* ax25_dev.c */
--extern ax25_dev *ax25_dev_list;
- extern spinlock_t ax25_dev_lock;
- 
- #if IS_ENABLED(CONFIG_AX25)
-diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
-index c5462486dbca1..a56d12fae464b 100644
---- a/net/ax25/ax25_dev.c
-+++ b/net/ax25/ax25_dev.c
-@@ -22,11 +22,12 @@
- #include <net/sock.h>
- #include <linux/uaccess.h>
- #include <linux/fcntl.h>
-+#include <linux/list.h>
- #include <linux/mm.h>
- #include <linux/interrupt.h>
- #include <linux/init.h>
- 
--ax25_dev *ax25_dev_list;
-+static LIST_HEAD(ax25_dev_list);
- DEFINE_SPINLOCK(ax25_dev_lock);
- 
- ax25_dev *ax25_addr_ax25dev(ax25_address *addr)
-@@ -34,7 +35,7 @@ ax25_dev *ax25_addr_ax25dev(ax25_address *addr)
- 	ax25_dev *ax25_dev, *res = NULL;
- 
- 	spin_lock_bh(&ax25_dev_lock);
--	for (ax25_dev = ax25_dev_list; ax25_dev != NULL; ax25_dev = ax25_dev->next)
-+	list_for_each_entry(ax25_dev, &ax25_dev_list, list)
- 		if (ax25cmp(addr, (const ax25_address *)ax25_dev->dev->dev_addr) == 0) {
- 			res = ax25_dev;
- 			ax25_dev_hold(ax25_dev);
-@@ -59,7 +60,6 @@ void ax25_dev_device_up(struct net_device *dev)
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 6eab35a5e2f3b..aaa4d7878b5de 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2199,7 +2199,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
+ 			goto out_err;
  	}
  
- 	refcount_set(&ax25_dev->refcount, 1);
--	dev->ax25_ptr     = ax25_dev;
- 	ax25_dev->dev     = dev;
- 	netdev_hold(dev, &ax25_dev->dev_tracker, GFP_KERNEL);
- 	ax25_dev->forward = NULL;
-@@ -85,8 +85,8 @@ void ax25_dev_device_up(struct net_device *dev)
- #endif
+-	if (sk->sk_shutdown & SEND_SHUTDOWN)
++	if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
+ 		goto pipe_err;
  
- 	spin_lock_bh(&ax25_dev_lock);
--	ax25_dev->next = ax25_dev_list;
--	ax25_dev_list  = ax25_dev;
-+	list_add(&ax25_dev->list, &ax25_dev_list);
-+	dev->ax25_ptr     = ax25_dev;
- 	spin_unlock_bh(&ax25_dev_lock);
- 	ax25_dev_hold(ax25_dev);
- 
-@@ -111,32 +111,25 @@ void ax25_dev_device_down(struct net_device *dev)
- 	/*
- 	 *	Remove any packet forwarding that points to this device.
- 	 */
--	for (s = ax25_dev_list; s != NULL; s = s->next)
-+	list_for_each_entry(s, &ax25_dev_list, list)
- 		if (s->forward == dev)
- 			s->forward = NULL;
- 
--	if ((s = ax25_dev_list) == ax25_dev) {
--		ax25_dev_list = s->next;
--		goto unlock_put;
--	}
--
--	while (s != NULL && s->next != NULL) {
--		if (s->next == ax25_dev) {
--			s->next = ax25_dev->next;
-+	list_for_each_entry(s, &ax25_dev_list, list) {
-+		if (s == ax25_dev) {
-+			list_del(&s->list);
- 			goto unlock_put;
- 		}
--
--		s = s->next;
- 	}
--	spin_unlock_bh(&ax25_dev_lock);
- 	dev->ax25_ptr = NULL;
-+	spin_unlock_bh(&ax25_dev_lock);
- 	ax25_dev_put(ax25_dev);
- 	return;
- 
- unlock_put:
-+	dev->ax25_ptr = NULL;
- 	spin_unlock_bh(&ax25_dev_lock);
- 	ax25_dev_put(ax25_dev);
--	dev->ax25_ptr = NULL;
- 	netdev_put(dev, &ax25_dev->dev_tracker);
- 	ax25_dev_put(ax25_dev);
- }
-@@ -200,16 +193,13 @@ struct net_device *ax25_fwd_dev(struct net_device *dev)
-  */
- void __exit ax25_dev_free(void)
- {
--	ax25_dev *s, *ax25_dev;
-+	ax25_dev *s, *n;
- 
- 	spin_lock_bh(&ax25_dev_lock);
--	ax25_dev = ax25_dev_list;
--	while (ax25_dev != NULL) {
--		s        = ax25_dev;
--		netdev_put(ax25_dev->dev, &ax25_dev->dev_tracker);
--		ax25_dev = ax25_dev->next;
-+	list_for_each_entry_safe(s, n, &ax25_dev_list, list) {
-+		netdev_put(s->dev, &s->dev_tracker);
-+		list_del(&s->list);
- 		kfree(s);
- 	}
--	ax25_dev_list = NULL;
- 	spin_unlock_bh(&ax25_dev_lock);
- }
+ 	while (sent < len) {
 -- 
 2.43.0
 
