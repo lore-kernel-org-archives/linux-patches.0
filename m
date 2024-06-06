@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E811B1420;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF4719B3CA;
 	Thu,  6 Jun 2024 14:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683373; cv=none; b=oY+ubfQCoF1TSnA7/xdaFtSQQSjpsZx7+6pLcaS6VjYte4/I4QZP+UHsCgTRyFAh/XVJ18aa7cpRFpDxRMsWABa2jopKI2S1WbAlV7TK1+/9wa8hRJ3lbr+KJrMUQaSXf7YptSI/mSb9DbwVkihzyAaQOLSknQ5ZlG9pfgWdW+E=
+	t=1717683374; cv=none; b=MvPQdEozIsYChYf6i6lJ9khUuC6ftG7L0K+SxMJ51Ek+yfzYrINB//iOfdQIYlsQtIbI2V0w4qdZbvZhA8gD1hbT785oFZk3CHuojjla2gQANoNU5w1gGlLeP1qyeVLvNyC4syfItfpnyVNZ6Mh9b3L0psGi9geFB9Z8so4O4Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683373; c=relaxed/simple;
-	bh=7BWJQge+IdgB+1SV2kpMyXdefkirL/OzbDDx2zNnIL0=;
+	s=arc-20240116; t=1717683374; c=relaxed/simple;
+	bh=EA2MTJmRdTqm0TS12Slc+Z5R7EfbfaENFRLAISels4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdtV2yWWt+SMshzco82izaK6dKFQ70lbjpbxX0fqWa0wUHaSCHWe++efl91ylOliAegsVBiZGigVFYHUNYQYvEd3FY1t6owuQAz08kL8JTjN6kliAh1qg+lpycibO7geZs+MUin9IBgEQiRqq+RD0B7x+HssmWQ5R60WwWYZ2jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDpnhHtB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RQSidBYkXOYTfY3LbkN8iajmVUtOYK10miQatF9Y5WLZC+U9Du8puMhykViHRtRSi0oZ9VqhVKx7okOiw7W6Mv4SM6I/Nfs8/inVMNQBiGxoXjEk8sfQsIedkM6VSoIRtzchPTnGSCvEKlQMLccCmgdnwWLdzoP9u8OicRTdfiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVFaTwo+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDpnhHtB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52ECFC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVFaTwo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE8BC2BD10;
 	Thu,  6 Jun 2024 14:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683373;
-	bh=7BWJQge+IdgB+1SV2kpMyXdefkirL/OzbDDx2zNnIL0=;
+	bh=EA2MTJmRdTqm0TS12Slc+Z5R7EfbfaENFRLAISels4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XDpnhHtBBdvmvFkGdGchR8XOs2PgCiURPRnyRS1OrN5x/ZE3q7/Oogh89vuS4NnOi
-	 dADjV3xzogzf5eSYyuotTkHCMLtWy0d9BxIhHmvXL+muhhL2Tmxllq/xYX6JqHejTP
-	 cG+3Y0wgWQIWdM/ZgVpKRA5ZtxhrqTXheMHGjgtU=
+	b=iVFaTwo+WFwXvbXT1GfxmQS5ylJMFTzpJD5oDsxc4X3+UyBw+5yrbN8z2+xPCzFG9
+	 ZxXcxy1FLWHETF/y6/sK4bEacPtiG4BZyI996x0Z/4XI+WOjtppLEjb6fZSToQhg/B
+	 RMXsgAG95QjM9ujj29qcY8eUaBfDzKeT/RQzb/oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Luis Henriques <lhenriques@suse.de>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 257/473] ext4: avoid excessive credit estimate in ext4_tmpfile()
-Date: Thu,  6 Jun 2024 16:03:06 +0200
-Message-ID: <20240606131708.463188884@linuxfoundation.org>
+Subject: [PATCH 6.6 315/744] media: atomisp: ssh_css: Fix a null-pointer dereference in load_video_binaries
+Date: Thu,  6 Jun 2024 15:59:47 +0200
+Message-ID: <20240606131742.528738147@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-[ Upstream commit 35a1f12f0ca857fee1d7a04ef52cbd5f1f84de13 ]
+[ Upstream commit 3b621e9e9e148c0928ab109ac3d4b81487469acb ]
 
-A user with minimum journal size (1024 blocks these days) complained
-about the following error triggered by generic/697 test in
-ext4_tmpfile():
+The allocation failure of mycs->yuv_scaler_binary in load_video_binaries()
+is followed with a dereference of mycs->yuv_scaler_binary after the
+following call chain:
 
-run fstests generic/697 at 2024-02-28 05:34:46
-JBD2: vfstest wants too many credits credits:260 rsv_credits:0 max:256
-EXT4-fs error (device loop0) in __ext4_new_inode:1083: error 28
+sh_css_pipe_load_binaries()
+  |-> load_video_binaries(mycs->yuv_scaler_binary == NULL)
+  |
+  |-> sh_css_pipe_unload_binaries()
+        |-> unload_video_binaries()
 
-Indeed the credit estimate in ext4_tmpfile() is huge.
-EXT4_MAXQUOTAS_INIT_BLOCKS() is 219, then 10 credits from ext4_tmpfile()
-itself and then ext4_xattr_credits_for_new_inode() adds more credits
-needed for security attributes and ACLs. Now the
-EXT4_MAXQUOTAS_INIT_BLOCKS() is in fact unnecessary because we've
-already initialized quotas with dquot_init() shortly before and so
-EXT4_MAXQUOTAS_TRANS_BLOCKS() is enough (which boils down to 3 credits).
+In unload_video_binaries(), it calls to ia_css_binary_unload with argument
+&pipe->pipe_settings.video.yuv_scaler_binary[i], which refers to the
+same memory slot as mycs->yuv_scaler_binary. Thus, a null-pointer
+dereference is triggered.
 
-Fixes: af51a2ac36d1 ("ext4: ->tmpfile() support")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Tested-by: Luis Henriques <lhenriques@suse.de>
-Tested-by: Disha Goel <disgoel@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240307115320.28949-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20240118151303.3828292-1-alexious@zju.edu.cn
+
+Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/media/atomisp/pci/sh_css.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index bbfb37390723c..8b13832238484 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -2901,7 +2901,7 @@ static int ext4_tmpfile(struct user_namespace *mnt_userns, struct inode *dir,
- 	inode = ext4_new_inode_start_handle(mnt_userns, dir, mode,
- 					    NULL, 0, NULL,
- 					    EXT4_HT_DIR,
--			EXT4_MAXQUOTAS_INIT_BLOCKS(dir->i_sb) +
-+			EXT4_MAXQUOTAS_TRANS_BLOCKS(dir->i_sb) +
- 			  4 + EXT4_XATTR_TRANS_BLOCKS);
- 	handle = ext4_journal_current_handle();
- 	err = PTR_ERR(inode);
+diff --git a/drivers/staging/media/atomisp/pci/sh_css.c b/drivers/staging/media/atomisp/pci/sh_css.c
+index 4b3fa6d93fe0a..d8a1d4a58db6a 100644
+--- a/drivers/staging/media/atomisp/pci/sh_css.c
++++ b/drivers/staging/media/atomisp/pci/sh_css.c
+@@ -4737,6 +4737,7 @@ static int load_video_binaries(struct ia_css_pipe *pipe)
+ 						  sizeof(struct ia_css_binary),
+ 						  GFP_KERNEL);
+ 		if (!mycs->yuv_scaler_binary) {
++			mycs->num_yuv_scaler = 0;
+ 			err = -ENOMEM;
+ 			return err;
+ 		}
 -- 
 2.43.0
 
