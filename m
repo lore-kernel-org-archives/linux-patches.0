@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3DD1A257D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4981A257D;
 	Thu,  6 Jun 2024 14:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683763; cv=none; b=f2lFxzMbr5MLQtE5/2f06PutWPKi3xQSPMzHMaxQ9BN3PUmMKdJAMTqjBoEMjj9v0Xu1M9jn9LSc164XhFEUC3MmVWCNnY9G8I02pZMhRAcAiNzsnZINKQZVGLGqLil6nVBCJaGlLodUcmSYhh6IN1oCurzPt0Qu9CIu+9xTDLQ=
+	t=1717683764; cv=none; b=jEf87g9ByHgfowEnC/5obulgO8liLXgYSJozTh2ixkLPA+JXG53h9VrIdIHGweezLxi/0gUUc5yG2/b+8/73LVHJNQ5fBo+FxfhPBlWAr3pdtWkAQiw0JIt46A0L4t5Lotmu+3r4cePZKOCIRds8sER/Q4Q0gznDXtPB88u75SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683763; c=relaxed/simple;
-	bh=xsZ+mpuBIeowO7tBn6eW3/eXdO5zlBuPlbRv7XnfW20=;
+	s=arc-20240116; t=1717683764; c=relaxed/simple;
+	bh=fh1L0DzA1oNvpAipzLqEDWL5x29uxq4mq2PaPKl7if8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFwplTtcyD2idisW5hP5HCeL0qXNVPW+TIK8wuzlTo50HEog1wtKaGsSRFmHfaCg6Bwl8ZBXpXDund0NAbwF8ogtUVco3xSH5KgC3Snm9QARXCRI77PO0yvgstJoEO4Es4hL3zm7yNpPMDnBuw9zhwPbS7vu2JNrtYH/ivbXnx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+0aBCf4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RzsjPydEIm9WTIMpuTa8WduDfqafWXZpzrh+G7JBGErLDg/wEx8q1MIgprKZPequJ+zMIqTcVb62EQYCH6sRJqdVEcs1Ea9XUj7BeSOmjsccLAAvT03V+8szSdNs74662oZyXIATVJl9AZrELJVZE+Y8lIG8eYnrViAgLSHhrCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBupHqCo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+0aBCf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD24C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBupHqCo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1638C2BD10;
 	Thu,  6 Jun 2024 14:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683763;
-	bh=xsZ+mpuBIeowO7tBn6eW3/eXdO5zlBuPlbRv7XnfW20=;
+	bh=fh1L0DzA1oNvpAipzLqEDWL5x29uxq4mq2PaPKl7if8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+0aBCf4UZ4SJXd1ztGN6ASeUvoR+oTggzirqvXH6AVumypsAZBHl7KBzdLSJ27uq
-	 tZfqIkHDW97yTzhIAtsM7ekjqhrmBCcmx0lU95Ei8Uwc2gogj3KLGphLYQ3YahcW1n
-	 qvycmaNCF0htYi6xKNyqvHfwAoQRXBPjiGIXUArk=
+	b=cBupHqCoelUZMMjYflRzNyqBM4SEup6XGxc7n+cgAe+5aPbViitV7RUlDOMs6XBaT
+	 Bj4s8j2pxVkyMsDd1gy6yb3pCs5IJs6r6BbU8YlSw2t+0xZXEtwIMxVpx1NJKpWG9j
+	 D4XxNBvIR/3Jb1ucR38T5OslhVj563ZLr053o9C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 742/744] genirq/cpuhotplug, x86/vector: Prevent vector leak during CPU offline
-Date: Thu,  6 Jun 2024 16:06:54 +0200
-Message-ID: <20240606131756.279116134@linuxfoundation.org>
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 702/744] bpf: Allow delete from sockmap/sockhash only if update is allowed
+Date: Thu,  6 Jun 2024 16:06:14 +0200
+Message-ID: <20240606131754.993583455@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -50,123 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-commit a6c11c0a5235fb144a65e0cb2ffd360ddc1f6c32 upstream.
+[ Upstream commit 98e948fb60d41447fd8d2d0c3b8637fc6b6dc26d ]
 
-The absence of IRQD_MOVE_PCNTXT prevents immediate effectiveness of
-interrupt affinity reconfiguration via procfs. Instead, the change is
-deferred until the next instance of the interrupt being triggered on the
-original CPU.
+We have seen an influx of syzkaller reports where a BPF program attached to
+a tracepoint triggers a locking rule violation by performing a map_delete
+on a sockmap/sockhash.
 
-When the interrupt next triggers on the original CPU, the new affinity is
-enforced within __irq_move_irq(). A vector is allocated from the new CPU,
-but the old vector on the original CPU remains and is not immediately
-reclaimed. Instead, apicd->move_in_progress is flagged, and the reclaiming
-process is delayed until the next trigger of the interrupt on the new CPU.
+We don't intend to support this artificial use scenario. Extend the
+existing verifier allowed-program-type check for updating sockmap/sockhash
+to also cover deleting from a map.
 
-Upon the subsequent triggering of the interrupt on the new CPU,
-irq_complete_move() adds a task to the old CPU's vector_cleanup list if it
-remains online. Subsequently, the timer on the old CPU iterates over its
-vector_cleanup list, reclaiming old vectors.
+>From now on only BPF programs which were previously allowed to update
+sockmap/sockhash can delete from these map types.
 
-However, a rare scenario arises if the old CPU is outgoing before the
-interrupt triggers again on the new CPU.
-
-In that case irq_force_complete_move() is not invoked on the outgoing CPU
-to reclaim the old apicd->prev_vector because the interrupt isn't currently
-affine to the outgoing CPU, and irq_needs_fixup() returns false. Even
-though __vector_schedule_cleanup() is later called on the new CPU, it
-doesn't reclaim apicd->prev_vector; instead, it simply resets both
-apicd->move_in_progress and apicd->prev_vector to 0.
-
-As a result, the vector remains unreclaimed in vector_matrix, leading to a
-CPU vector leak.
-
-To address this issue, move the invocation of irq_force_complete_move()
-before the irq_needs_fixup() call to reclaim apicd->prev_vector, if the
-interrupt is currently or used to be affine to the outgoing CPU.
-
-Additionally, reclaim the vector in __vector_schedule_cleanup() as well,
-following a warning message, although theoretically it should never see
-apicd->move_in_progress with apicd->prev_cpu pointing to an offline CPU.
-
-Fixes: f0383c24b485 ("genirq/cpuhotplug: Add support for cleaning up move in progress")
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240522220218.162423-1-dongli.zhang@oracle.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ff9105993240 ("bpf, sockmap: Prevent lock inversion deadlock in map delete elem")
+Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Reported-by: syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=ec941d6e24f633a59172
+Link: https://lore.kernel.org/bpf/20240527-sockmap-verify-deletes-v1-1-944b372f2101@cloudflare.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/apic/vector.c |    9 ++++++---
- kernel/irq/cpuhotplug.c       |   16 ++++++++--------
- 2 files changed, 14 insertions(+), 11 deletions(-)
+ kernel/bpf/verifier.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/apic/vector.c
-+++ b/arch/x86/kernel/apic/vector.c
-@@ -1036,7 +1036,8 @@ static void __vector_schedule_cleanup(st
- 			add_timer_on(&cl->timer, cpu);
- 		}
- 	} else {
--		apicd->prev_vector = 0;
-+		pr_warn("IRQ %u schedule cleanup for offline CPU %u\n", apicd->irq, cpu);
-+		free_moved_vector(apicd);
- 	}
- 	raw_spin_unlock(&vector_lock);
- }
-@@ -1073,6 +1074,7 @@ void irq_complete_move(struct irq_cfg *c
-  */
- void irq_force_complete_move(struct irq_desc *desc)
- {
-+	unsigned int cpu = smp_processor_id();
- 	struct apic_chip_data *apicd;
- 	struct irq_data *irqd;
- 	unsigned int vector;
-@@ -1097,10 +1099,11 @@ void irq_force_complete_move(struct irq_
- 		goto unlock;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 1385d01a21e4f..24d7a32f1710e 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -8742,7 +8742,8 @@ static bool may_update_sockmap(struct bpf_verifier_env *env, int func_id)
+ 	enum bpf_attach_type eatype = env->prog->expected_attach_type;
+ 	enum bpf_prog_type type = resolve_prog_type(env->prog);
  
- 	/*
--	 * If prev_vector is empty, no action required.
-+	 * If prev_vector is empty or the descriptor is neither currently
-+	 * nor previously on the outgoing CPU no action required.
- 	 */
- 	vector = apicd->prev_vector;
--	if (!vector)
-+	if (!vector || (apicd->cpu != cpu && apicd->prev_cpu != cpu))
- 		goto unlock;
+-	if (func_id != BPF_FUNC_map_update_elem)
++	if (func_id != BPF_FUNC_map_update_elem &&
++	    func_id != BPF_FUNC_map_delete_elem)
+ 		return false;
  
- 	/*
---- a/kernel/irq/cpuhotplug.c
-+++ b/kernel/irq/cpuhotplug.c
-@@ -70,6 +70,14 @@ static bool migrate_one_irq(struct irq_d
- 	}
- 
- 	/*
-+	 * Complete an eventually pending irq move cleanup. If this
-+	 * interrupt was moved in hard irq context, then the vectors need
-+	 * to be cleaned up. It can't wait until this interrupt actually
-+	 * happens and this CPU was involved.
-+	 */
-+	irq_force_complete_move(desc);
-+
-+	/*
- 	 * No move required, if:
- 	 * - Interrupt is per cpu
- 	 * - Interrupt is not started
-@@ -88,14 +96,6 @@ static bool migrate_one_irq(struct irq_d
- 	}
- 
- 	/*
--	 * Complete an eventually pending irq move cleanup. If this
--	 * interrupt was moved in hard irq context, then the vectors need
--	 * to be cleaned up. It can't wait until this interrupt actually
--	 * happens and this CPU was involved.
--	 */
--	irq_force_complete_move(desc);
--
--	/*
- 	 * If there is a setaffinity pending, then try to reuse the pending
- 	 * mask, so the last change of the affinity does not get lost. If
- 	 * there is no move pending or the pending mask does not contain
+ 	/* It's not possible to get access to a locked struct sock in these
+@@ -8753,6 +8754,11 @@ static bool may_update_sockmap(struct bpf_verifier_env *env, int func_id)
+ 		if (eatype == BPF_TRACE_ITER)
+ 			return true;
+ 		break;
++	case BPF_PROG_TYPE_SOCK_OPS:
++		/* map_update allowed only via dedicated helpers with event type checks */
++		if (func_id == BPF_FUNC_map_delete_elem)
++			return true;
++		break;
+ 	case BPF_PROG_TYPE_SOCKET_FILTER:
+ 	case BPF_PROG_TYPE_SCHED_CLS:
+ 	case BPF_PROG_TYPE_SCHED_ACT:
+@@ -8848,7 +8854,6 @@ static int check_map_func_compatibility(struct bpf_verifier_env *env,
+ 	case BPF_MAP_TYPE_SOCKMAP:
+ 		if (func_id != BPF_FUNC_sk_redirect_map &&
+ 		    func_id != BPF_FUNC_sock_map_update &&
+-		    func_id != BPF_FUNC_map_delete_elem &&
+ 		    func_id != BPF_FUNC_msg_redirect_map &&
+ 		    func_id != BPF_FUNC_sk_select_reuseport &&
+ 		    func_id != BPF_FUNC_map_lookup_elem &&
+@@ -8858,7 +8863,6 @@ static int check_map_func_compatibility(struct bpf_verifier_env *env,
+ 	case BPF_MAP_TYPE_SOCKHASH:
+ 		if (func_id != BPF_FUNC_sk_redirect_hash &&
+ 		    func_id != BPF_FUNC_sock_hash_update &&
+-		    func_id != BPF_FUNC_map_delete_elem &&
+ 		    func_id != BPF_FUNC_msg_redirect_hash &&
+ 		    func_id != BPF_FUNC_sk_select_reuseport &&
+ 		    func_id != BPF_FUNC_map_lookup_elem &&
+-- 
+2.43.0
+
 
 
