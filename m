@@ -1,74 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C9719D081;
-	Thu,  6 Jun 2024 14:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C841974EB;
+	Thu,  6 Jun 2024 14:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683463; cv=none; b=Db8lmswwgQGZ7L0gT+aWOG6AWgTSHl/1koVleEmaG9BXts/aCaaYKo6tF2gDpYsS5UtdX9NwLXzSLcsaOoSFdBpir/m3mJkhv3v8u3M3y201PDcUy9DsaRv7eDkX4epm0lw6Xs9wf6yxbbIilPtXgQ5vXY3l7Xc+KhWCC6q6nBo=
+	t=1717683463; cv=none; b=r/b03FNlHDRd3MclH3Pa2FoIy9Ql9dQl5W8KrOoaevWO+2nLFO+2/+8Qa8aSNh9XPDYg0qntEyE0fF5S78t6R0TO+uiWIQkLHBJ1Xc7Ge/PnhHR/pJNhp59AhVuZtoLEYtpnUruC0Jbm3PtyVUurrPc7Gj7ekQYmDp+M/AcmIxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683463; c=relaxed/simple;
-	bh=XEHm8iXqyNnrEnD0Ux8r9h6aB9Se15bD3iyRORCuEiU=;
+	bh=vP3lJ1fJuyRdU8P9dkCA/9+49RB1wjvZ0/hmKRA0vek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dujGl51d/djX1+EJ+t3CWfvhk0upGFmHTTP0Kex/PUpxWZ/JoekGLIbQDMxeypqyiUCHxXtCAw9rPOjIuEVClaP8AATBQr4B/cRko1W5spEy1slFb+y52XRzVpctrdAtJrDwvio7ea9tPQYFcnqnQZitEVZQe1A5rzhlcPisq2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F94Z4Sfg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VDRqEG2lCqSViOMOIJOEt61h2zR7qH8oN9UI5QIjSlg8fYw00g8oIZst3t0eW0ETiTfY/5XrAeJiVf19qM+J4vdR8JRPekvt0HSpZZ327q+c/+ioA2wyd5NW9RCGhTrhTGQtYDalnkzC7R8afs4ywqM6Yt8NZ8YZrnx2X+8jGxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puo6qQp+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F94Z4Sfg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD3AC2BD10;
-	Thu,  6 Jun 2024 14:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puo6qQp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7DAC32781;
+	Thu,  6 Jun 2024 14:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683462;
-	bh=XEHm8iXqyNnrEnD0Ux8r9h6aB9Se15bD3iyRORCuEiU=;
+	s=korg; t=1717683463;
+	bh=vP3lJ1fJuyRdU8P9dkCA/9+49RB1wjvZ0/hmKRA0vek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F94Z4SfgtVMVS/CkiPUJf/OUnVz+sVR8NCMfUVFygtjkN7Nletn89pvMircVc/zS5
-	 mfOYXjYmrjMNgXDjazrKl9iZzbCjuGYAJsjL6ljaDZoRAcEOHE8pIVjs2GACUEr2TT
-	 HfJP5jTwUjznJBXTVK3Yf9oB4NJzN5sF+mkcWufM=
+	b=puo6qQp+9mwftTmrH99P+gSxPyBZSJ7pAyVkSm2FUsO9l0UGoc1eKCWBC6R4USO+a
+	 dQbhXdPUqnyPGG0cy4cUXsF/rFquXDNkMAPrk+HiirHQhSxiuvv/IdNS6gCWnEOE1l
+	 IG6tWxLzBIsUbKGBkUPW2ws4t2qaVe8sT1o50F+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Athira Jajeev <atrajeev@linux.vnet.ibm.com>,
-	Changbin Du <changbin.du@huawei.com>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Dmitrii Dolgov <9erthalion6@gmail.com>,
-	German Gomez <german.gomez@arm.com>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	Li Dong <lidong@vivo.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Ming Wang <wangming01@loongson.cn>,
-	Nick Terrell <terrelln@fb.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	"Steinar H. Gunderson" <sesse@google.com>,
-	Vincent Whitchurch <vincent.whitchurch@axis.com>,
-	Wenyu Liu <liuwenyu7@huawei.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 407/744] perf record: Lazy load kernel symbols
-Date: Thu,  6 Jun 2024 16:01:19 +0200
-Message-ID: <20240606131745.517224945@linuxfoundation.org>
+Subject: [PATCH 6.1 350/473] LoongArch: Fix callchain parse error with kernel tracepoint events again
+Date: Thu,  6 Jun 2024 16:04:39 +0200
+Message-ID: <20240606131711.483439370@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -80,131 +46,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 1a27fc01700fbff2f205000edf0d1d315b5f85cc ]
+[ Upstream commit d6af2c76399f98444a5b4de96baf4b362d9f102b ]
 
-Commit 5b7ba82a75915e73 ("perf symbols: Load kernel maps before using")
-changed it so that loading a kernel DSO would cause the symbols for the
-DSO to be eagerly loaded.
+With commit d3119bc985fb645 ("LoongArch: Fix callchain parse error with
+kernel tracepoint events"), perf can parse kernel callchain, but not
+complete and sometimes maybe error. The reason is LoongArch's unwinders
+(guess, prologue and orc) don't really need fp (i.e., regs[22]), and
+they use sp (i.e., regs[3]) as the frame address rather than the current
+stack pointer.
 
-For 'perf record' this is overhead as the symbols won't be used. Add a
-field to 'struct symbol_conf' to control the behavior and disable it for
-'perf record' and 'perf inject'.
+Fix that by removing the assignment of regs[22], and instead assign the
+__builtin_frame_address(0) to regs[3].
 
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Athira Jajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Changbin Du <changbin.du@huawei.com>
-Cc: Colin Ian King <colin.i.king@gmail.com>
-Cc: Dmitrii Dolgov <9erthalion6@gmail.com>
-Cc: German Gomez <german.gomez@arm.com>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Li Dong <lidong@vivo.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>
-Cc: Ming Wang <wangming01@loongson.cn>
-Cc: Nick Terrell <terrelln@fb.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Sandipan Das <sandipan.das@amd.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Steinar H. Gunderson <sesse@google.com>
-Cc: Vincent Whitchurch <vincent.whitchurch@axis.com>
-Cc: Wenyu Liu <liuwenyu7@huawei.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Link: https://lore.kernel.org/r/20231102175735.2272696-3-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: aaf494cf483a ("perf annotate: Fix annotation_calc_lines() to pass correct address to get_srcline()")
+Without fix:
+
+  Children      Self  Command        Shared Object      Symbol
+  ........  ........  .............  .................  ................
+  33.91%    33.91%    swapper        [kernel.vmlinux]   [k] __schedule
+            |
+            |--33.04%--__schedule
+            |
+             --0.87%--__arch_cpu_idle
+                       __schedule
+
+With this fix:
+
+  Children      Self  Command        Shared Object      Symbol
+  ........  ........  .............  .................  ................
+  31.16%    31.16%    swapper        [kernel.vmlinux]   [k] __schedule
+            |
+            |--20.63%--smpboot_entry
+            |          cpu_startup_entry
+            |          schedule_idle
+            |          __schedule
+            |
+             --10.53%--start_kernel
+                       cpu_startup_entry
+                       schedule_idle
+                       __schedule
+
+Fixes: d3119bc985fb645 ("LoongArch: Fix callchain parse error with kernel tracepoint events")
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-inject.c   | 6 ++++++
- tools/perf/builtin-record.c   | 2 ++
- tools/perf/util/event.c       | 4 ++--
- tools/perf/util/symbol_conf.h | 3 ++-
- 4 files changed, 12 insertions(+), 3 deletions(-)
+ arch/loongarch/include/asm/perf_event.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
-index c8cf2fdd9cff9..eb3ef5c24b662 100644
---- a/tools/perf/builtin-inject.c
-+++ b/tools/perf/builtin-inject.c
-@@ -2265,6 +2265,12 @@ int cmd_inject(int argc, const char **argv)
- 		"perf inject [<options>]",
- 		NULL
- 	};
-+
-+	if (!inject.itrace_synth_opts.set) {
-+		/* Disable eager loading of kernel symbols that adds overhead to perf inject. */
-+		symbol_conf.lazy_load_kernel_maps = true;
-+	}
-+
- #ifndef HAVE_JITDUMP
- 	set_option_nobuild(options, 'j', "jit", "NO_LIBELF=1", true);
- #endif
-diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
-index ea80bf4dc4343..5c54fda63b581 100644
---- a/tools/perf/builtin-record.c
-+++ b/tools/perf/builtin-record.c
-@@ -3936,6 +3936,8 @@ int cmd_record(int argc, const char **argv)
- # undef set_nobuild
- #endif
+diff --git a/arch/loongarch/include/asm/perf_event.h b/arch/loongarch/include/asm/perf_event.h
+index 52b638059e40b..f948a0676daf8 100644
+--- a/arch/loongarch/include/asm/perf_event.h
++++ b/arch/loongarch/include/asm/perf_event.h
+@@ -13,8 +13,7 @@
  
-+	/* Disable eager loading of kernel symbols that adds overhead to perf record. */
-+	symbol_conf.lazy_load_kernel_maps = true;
- 	rec->opts.affinity = PERF_AFFINITY_SYS;
+ #define perf_arch_fetch_caller_regs(regs, __ip) { \
+ 	(regs)->csr_era = (__ip); \
+-	(regs)->regs[3] = current_stack_pointer; \
+-	(regs)->regs[22] = (unsigned long) __builtin_frame_address(0); \
++	(regs)->regs[3] = (unsigned long) __builtin_frame_address(0); \
+ }
  
- 	rec->evlist = evlist__new();
-diff --git a/tools/perf/util/event.c b/tools/perf/util/event.c
-index 923c0fb151222..68f45e9e63b6e 100644
---- a/tools/perf/util/event.c
-+++ b/tools/perf/util/event.c
-@@ -617,13 +617,13 @@ struct map *thread__find_map(struct thread *thread, u8 cpumode, u64 addr,
- 	if (cpumode == PERF_RECORD_MISC_KERNEL && perf_host) {
- 		al->level = 'k';
- 		maps = machine__kernel_maps(machine);
--		load_map = true;
-+		load_map = !symbol_conf.lazy_load_kernel_maps;
- 	} else if (cpumode == PERF_RECORD_MISC_USER && perf_host) {
- 		al->level = '.';
- 	} else if (cpumode == PERF_RECORD_MISC_GUEST_KERNEL && perf_guest) {
- 		al->level = 'g';
- 		maps = machine__kernel_maps(machine);
--		load_map = true;
-+		load_map = !symbol_conf.lazy_load_kernel_maps;
- 	} else if (cpumode == PERF_RECORD_MISC_GUEST_USER && perf_guest) {
- 		al->level = 'u';
- 	} else {
-diff --git a/tools/perf/util/symbol_conf.h b/tools/perf/util/symbol_conf.h
-index 0b589570d1d09..2b2fb9e224b00 100644
---- a/tools/perf/util/symbol_conf.h
-+++ b/tools/perf/util/symbol_conf.h
-@@ -42,7 +42,8 @@ struct symbol_conf {
- 			inline_name,
- 			disable_add2line_warn,
- 			buildid_mmap2,
--			guest_code;
-+			guest_code,
-+			lazy_load_kernel_maps;
- 	const char	*vmlinux_name,
- 			*kallsyms_name,
- 			*source_prefix,
+ #endif /* __LOONGARCH_PERF_EVENT_H__ */
 -- 
 2.43.0
 
