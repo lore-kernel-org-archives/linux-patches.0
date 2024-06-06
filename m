@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67CD19B3D5;
-	Thu,  6 Jun 2024 14:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3079419B3D5;
+	Thu,  6 Jun 2024 14:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683382; cv=none; b=Y/2SmMAZ3+udoKl87qhKa66WNQvx95ov9WzNzmqF+Rt/NwbwMqZgAj0rvMY07pY5oo4UWGd6kA1b2gc/7S7smd+lVFffs2DdgMCGoHrV74zDeMaynhMfFT5H7ugc4wBb/zDqC+vLj8elcCaIafGLxKZc6QjfCGKS6KcMBlumceo=
+	t=1717683383; cv=none; b=b6lOviIqYRqUlLvTdrItxNS1xM9OlNfapotN+zEPhgOFI0m5WseRds2FjpLVZfHxed8E/xOnbN8s2z2P18PJ4eLrMMNgEsvSjW0WlX9B/1aQfQKW48xK3O4lORA4en5/8NC7xxYguEJ6fgGMEba4S9JQEfEvDoburNYvm1fcyXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683382; c=relaxed/simple;
-	bh=VgWGRjhhEj0q93eRjICUTyR6+2BThnWphRBhfqK4nxs=;
+	s=arc-20240116; t=1717683383; c=relaxed/simple;
+	bh=sPpqdieAXWvXBcvQ0mWRTO8X5qNw1/67pRfNJuRJFgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EU8gZASZubLglFGvm92lyl8GFsyC5+jvsAFYzvWUiB8DoxOGA0mk659gOrUGmk/qyxquoO6+5rQ0aEmwZBnHgnt7DA4s9r6Nx9DTAbuSitCzZqcV57nB3GHz3ELnQQQl/fbXEAstd0pS/QOasLa6yaNvheT4BQJqnmfclc8q++Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tk1FD4wE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KyeUatocEYZ3J5vyE7HDgp+JcBbUm4UwXI5oGR2liIsWogB7C7qVGBa/p5ugU0J8QnJN23lznotccLK5GkK39O4vF05Rk9rnWZpLCz5QNnB8/TLGw+bZIufPiVabSQE7RKvA/59rZ/fNm8Ve7rp32GxvX2Xv7LoE31O7psqkQKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJvqZauq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tk1FD4wE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8991BC32786;
-	Thu,  6 Jun 2024 14:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJvqZauq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA2EC2BD10;
+	Thu,  6 Jun 2024 14:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683382;
-	bh=VgWGRjhhEj0q93eRjICUTyR6+2BThnWphRBhfqK4nxs=;
+	s=korg; t=1717683383;
+	bh=sPpqdieAXWvXBcvQ0mWRTO8X5qNw1/67pRfNJuRJFgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tk1FD4wEQUjMBVAaVL6tZCKI4Lx9CAagbfgbNjitaMyWhnzbpfG2GDDQFGPxtsHxD
-	 vSWjYgZ/Y4AoJIO4BqggR1BZqj/GuwVaMNekILmrYfMaV+4X3HiUqOLTnATA9hJQ6B
-	 /gzeyvXQGC7M0LdoqMUZ881I/BPeYto8hQWrbVd4=
+	b=iJvqZauqLXQWiEIjgZEk6p3g3vmfWBc8rn08miXA3X6lZbnXuAzbGr+dbqYpY4CmP
+	 e4rAgjqsbuwUyuhbkiYTkcKioXHm1qCAcC4vb6PiledJVu4woK9scH4k8P1B9gJAl0
+	 aAWiJieWixO0/yIADd0oqRsHbUCa73o/uJc6karg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Theodore Tso <tytso@mit.edu>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 265/473] ext4: fix potential unnitialized variable
-Date: Thu,  6 Jun 2024 16:03:14 +0200
-Message-ID: <20240606131708.702470960@linuxfoundation.org>
+Subject: [PATCH 6.6 324/744] drm/bridge: tc358775: Dont log an error when DSI host cant be found
+Date: Thu,  6 Jun 2024 15:59:56 +0200
+Message-ID: <20240606131742.830031100@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,44 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 3f4830abd236d0428e50451e1ecb62e14c365e9b ]
+[ Upstream commit 272377aa0e3dddeec3f568c8bb9d12c7a79d8ef5 ]
 
-Smatch complains "err" can be uninitialized in the caller.
+Given that failing to find a DSI host causes the driver to defer probe,
+make use of dev_err_probe() to log the reason. This makes the defer
+probe reason available and avoids alerting userspace about something
+that is not necessarily an error.
 
-    fs/ext4/indirect.c:349 ext4_alloc_branch()
-    error: uninitialized symbol 'err'.
-
-Set the error to zero on the success path.
-
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/363a4673-0fb8-4adf-b4fb-90a499077276@moroto.mountain
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: b26975593b17 ("display/drm/bridge: TC358775 DSI/LVDS driver")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-6-619a28148e5c@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/tc358775.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 97f4563a97c8e..71ce3ed5ab6ba 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -5672,6 +5672,7 @@ ext4_mb_new_blocks_simple(struct ext4_allocation_request *ar, int *errp)
- 	ext4_mb_mark_bb(sb, block, 1, 1);
- 	ar->len = 1;
+diff --git a/drivers/gpu/drm/bridge/tc358775.c b/drivers/gpu/drm/bridge/tc358775.c
+index 90a89d70d8328..fea4f00a20f83 100644
+--- a/drivers/gpu/drm/bridge/tc358775.c
++++ b/drivers/gpu/drm/bridge/tc358775.c
+@@ -610,10 +610,8 @@ static int tc_attach_host(struct tc_data *tc)
+ 						};
  
-+	*errp = 0;
- 	return block;
- }
+ 	host = of_find_mipi_dsi_host_by_node(tc->host_node);
+-	if (!host) {
+-		dev_err(dev, "failed to find dsi host\n");
+-		return -EPROBE_DEFER;
+-	}
++	if (!host)
++		return dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n");
  
+ 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
+ 	if (IS_ERR(dsi)) {
 -- 
 2.43.0
 
