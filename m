@@ -1,42 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004E5198E92;
-	Thu,  6 Jun 2024 14:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C997198E92;
+	Thu,  6 Jun 2024 14:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683488; cv=none; b=usSOPboCGxzvWvOMmoXcIwKyW1ooLWA2lyF5OA/eLqrhX8il+50uYbNQ/IBuEamWYy0WRph2TZ6otRwVZvbBt2hW4pdHBm4o2CItQ8VGzJp79bVCkgqJxkBkmeJ8TsIBLnJllSJg8z4WLFOjuTGGK0Ulk90UOP6Up6Ff5uC7e4U=
+	t=1717683488; cv=none; b=AzEvbW2kYS+RNxxTjL1aSiTqJm4TMeDcvLcpP5H2HjIjCbDYAcS2o/gUkrmkfOi3jBNEBOkF8nb5JHqOqN0BlRlBBqUfPvzni2nMPuJLW0EKxoDhd4KjWeR/3uaqRZx0+AKGkAxCV7sED16Vmw8tWHupQYvEpJsShKQrteCdCAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683488; c=relaxed/simple;
-	bh=6FSpXIf7oGmTC/yUlWsO2GrGxc15vaPb5FSQdNW1XN4=;
+	bh=9gUXLYPIfX2i1FXnLQ3YLUX9R/VLBpC/QWXmaGCq7sA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JD/eRf04qkA47j9CK6MCPiJe+ttp8+eiIyz4EkQcCYwhHQxQzYQkwLmTyjo5px2P9KIHV/Y+c6raM6xLoVVXhbg6Tvc0SuaGIeuCON7HWbtQ+rsOBCM3wR0QVFuNTcP5NiTCvxaBnp5CsaGKO3GkK0KRBz8ZWuHe5weR3i/BKjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QyZBdTLI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlQ1/waS48AzieYJKs8lru2YDy8qvzA1/R5GeszU1J3h/Ka5oKnho3sWqS9O9uTe4ni5kJ/iEGU4xtkb+UjWPED2jUa9LIv26BZZLDD8vp/Cv98SzDdSzBofrH+WM4bN39o5opNy84nB4OhcgZKgMqzRAy1RqWW2o6C84Yv5y3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaYaeZLr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyZBdTLI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3350C2BD10;
-	Thu,  6 Jun 2024 14:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaYaeZLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F51DC2BD10;
+	Thu,  6 Jun 2024 14:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683487;
-	bh=6FSpXIf7oGmTC/yUlWsO2GrGxc15vaPb5FSQdNW1XN4=;
+	s=korg; t=1717683488;
+	bh=9gUXLYPIfX2i1FXnLQ3YLUX9R/VLBpC/QWXmaGCq7sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QyZBdTLIvLmocx1lcZ8vktuNHQBSN+WNt7WDkpHUtD9BY35nPbPIBe0T2GDsYRUMJ
-	 D6fzm/kbnE8DtZWM70hK3eFJihVjpG4m+kKUDWPbRlwGFSLxvAMgCVLMoXUPf1Aamr
-	 j4X95VFkdEBBzE2LqttFMS8djukAu8lFzqWObe8o=
+	b=oaYaeZLrVDHFKRxViL7Yp2dCLZhPc+hyqUq49NY7hTTTej6RD21bmaF78xvRC1DrE
+	 Z6BcpurQa/qoovVvHhyBnpONUyEC5T+U6iiSozlrPACwBKYxEODVNAA6rEHiY00r8n
+	 SwbXlwo19rYp0CsbpTLASILe39mc8fIGP9wuyo+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andrei Vagin <avagin@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Kees Kook <keescook@chromium.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 378/473] drm/bridge: tc358775: fix support for jeida-18 and jeida-24
-Date: Thu,  6 Jun 2024 16:05:07 +0200
-Message-ID: <20240606131712.366622925@linuxfoundation.org>
+Subject: [PATCH 6.6 431/744] perf bench uprobe: Remove lib64 from libc.so.6 binary path
+Date: Thu,  6 Jun 2024 16:01:43 +0200
+Message-ID: <20240606131746.291336842@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,77 +57,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 30ea09a182cb37c4921b9d477ed18107befe6d78 ]
+[ Upstream commit 459fee7b508231cd4622b3bd94aaa85e8e16b888 ]
 
-The bridge always uses 24bpp internally. Therefore, for jeida-18
-mapping we need to discard the lowest two bits for each channel and thus
-starting with LV_[RGB]2. jeida-24 has the same mapping but uses four
-lanes instead of three, with the forth pair transmitting the lowest two
-bits of each channel. Thus, the mapping between jeida-18 and jeida-24
-is actually the same, except that one channel is turned off (by
-selecting the RGB666 format in VPCTRL).
+bpf_program__attach_uprobe_opts will search LD_LIBRARY_PATH and so
+specifying `/lib64` is unnecessary and causes failures for libc.so.6
+paths like `/lib/x86_64-linux-gnu/libc.so.6`.
 
-While at it, remove the bogus comment about the hardware default because
-the default is overwritten in any case.
-
-Tested with a jeida-18 display (Evervision VGG644804).
-
-Fixes: b26975593b17 ("display/drm/bridge: TC358775 DSI/LVDS driver")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240225062008.33191-5-tony@atomide.com
+Fixes: 7b47623b8cae8149 ("perf bench uprobe trace_printk: Add entry attaching an BPF program that does a trace_printk")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andrei Vagin <avagin@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Kees Kook <keescook@chromium.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240406040911.1603801-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358775.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ tools/perf/bench/uprobe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358775.c b/drivers/gpu/drm/bridge/tc358775.c
-index b1c8ce5d20186..40d6da7743325 100644
---- a/drivers/gpu/drm/bridge/tc358775.c
-+++ b/drivers/gpu/drm/bridge/tc358775.c
-@@ -455,10 +455,6 @@ static void tc_bridge_enable(struct drm_bridge *bridge)
- 	dev_dbg(tc->dev, "bus_formats %04x bpc %d\n",
- 		connector->display_info.bus_formats[0],
- 		tc->bpc);
--	/*
--	 * Default hardware register settings of tc358775 configured
--	 * with MEDIA_BUS_FMT_RGB888_1X7X4_JEIDA jeida-24 format
--	 */
- 	if (connector->display_info.bus_formats[0] ==
- 		MEDIA_BUS_FMT_RGB888_1X7X4_SPWG) {
- 		/* VESA-24 */
-@@ -469,14 +465,15 @@ static void tc_bridge_enable(struct drm_bridge *bridge)
- 		d2l_write(tc->i2c, LV_MX1619, LV_MX(LVI_B6, LVI_B7, LVI_B1, LVI_B2));
- 		d2l_write(tc->i2c, LV_MX2023, LV_MX(LVI_B3, LVI_B4, LVI_B5, LVI_L0));
- 		d2l_write(tc->i2c, LV_MX2427, LV_MX(LVI_HS, LVI_VS, LVI_DE, LVI_R6));
--	} else { /*  MEDIA_BUS_FMT_RGB666_1X7X3_SPWG - JEIDA-18 */
--		d2l_write(tc->i2c, LV_MX0003, LV_MX(LVI_R0, LVI_R1, LVI_R2, LVI_R3));
--		d2l_write(tc->i2c, LV_MX0407, LV_MX(LVI_R4, LVI_L0, LVI_R5, LVI_G0));
--		d2l_write(tc->i2c, LV_MX0811, LV_MX(LVI_G1, LVI_G2, LVI_L0, LVI_L0));
--		d2l_write(tc->i2c, LV_MX1215, LV_MX(LVI_G3, LVI_G4, LVI_G5, LVI_B0));
--		d2l_write(tc->i2c, LV_MX1619, LV_MX(LVI_L0, LVI_L0, LVI_B1, LVI_B2));
--		d2l_write(tc->i2c, LV_MX2023, LV_MX(LVI_B3, LVI_B4, LVI_B5, LVI_L0));
--		d2l_write(tc->i2c, LV_MX2427, LV_MX(LVI_HS, LVI_VS, LVI_DE, LVI_L0));
-+	} else {
-+		/* JEIDA-18 and JEIDA-24 */
-+		d2l_write(tc->i2c, LV_MX0003, LV_MX(LVI_R2, LVI_R3, LVI_R4, LVI_R5));
-+		d2l_write(tc->i2c, LV_MX0407, LV_MX(LVI_R6, LVI_R1, LVI_R7, LVI_G2));
-+		d2l_write(tc->i2c, LV_MX0811, LV_MX(LVI_G3, LVI_G4, LVI_G0, LVI_G1));
-+		d2l_write(tc->i2c, LV_MX1215, LV_MX(LVI_G5, LVI_G6, LVI_G7, LVI_B2));
-+		d2l_write(tc->i2c, LV_MX1619, LV_MX(LVI_B0, LVI_B1, LVI_B3, LVI_B4));
-+		d2l_write(tc->i2c, LV_MX2023, LV_MX(LVI_B5, LVI_B6, LVI_B7, LVI_L0));
-+		d2l_write(tc->i2c, LV_MX2427, LV_MX(LVI_HS, LVI_VS, LVI_DE, LVI_R0));
- 	}
- 
- 	d2l_write(tc->i2c, VFUEN, VFUEN_EN);
+diff --git a/tools/perf/bench/uprobe.c b/tools/perf/bench/uprobe.c
+index 914c0817fe8ad..e8e0afa13f049 100644
+--- a/tools/perf/bench/uprobe.c
++++ b/tools/perf/bench/uprobe.c
+@@ -47,7 +47,7 @@ static const char * const bench_uprobe_usage[] = {
+ #define bench_uprobe__attach_uprobe(prog) \
+ 	skel->links.prog = bpf_program__attach_uprobe_opts(/*prog=*/skel->progs.prog, \
+ 							   /*pid=*/-1, \
+-							   /*binary_path=*/"/lib64/libc.so.6", \
++							   /*binary_path=*/"libc.so.6", \
+ 							   /*func_offset=*/0, \
+ 							   /*opts=*/&uprobe_opts); \
+ 	if (!skel->links.prog) { \
 -- 
 2.43.0
 
