@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC3919CD15;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DF719CD15;
 	Thu,  6 Jun 2024 14:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683441; cv=none; b=jufo9p+GQfaQ9b9qCTKFtp6Xb+BaWnbZVWNsruwPEkYyiHwBC0hhVVRPfsK6gU+63FAs1v5XPXR6kJQk3n4uqtPpi+aVX2SAI23QgD0sIU2z4kTLjYjyx8x5wPPA/TlRbjLJay7UvR+hxIeZuJ4rCXh/1eTBwiRZXJ54snKRJN4=
+	t=1717683441; cv=none; b=gqJ7ydXAEcKWPQGUOYqyTlYY4b/B5SdDcrojaDlkngFUqYTFQdx7Ws0nMx04+oKvKgG0dyVTipUE7S+Fq9NxTqD1C216hiTL0qfoTvlfWM91d2n70OueC+Q2FFrgi7EWMJWHslXp0G6SSpl+08RfVtDoMm4dxzAbpJM+SphHZXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683441; c=relaxed/simple;
-	bh=9JxmAiMnk/afuCHxqlePKQkxzYVRD16QDO8LC3T5QwI=;
+	bh=XpEOcm57TR8tu+8QRC3Kq1FVBfeZZnAAIuO8n8Tj+jY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SDL7F5AisQ9vkaohmGd/aPHTIzrekf3UQlPOMHguKquPGDMtrYKaXFX6wQJO5CbhxSSIp1vQSTL4l5zWFwmOHzumea68TY/amNqrSYbROQ/FKsaY02aysO0T0/B6bTDrAKXZwHn9cXtGAHXGPDBnV2bqoSdIRIBFe/PjZbf3XhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qlSSIWCS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nWOS5t3t/z9ofxGjBnQxXsxqweyfzEOzgS7QUScA5t57CpSY6zUULjdlUtLg/BzwsN6c1fq7A3pKR2JIpyUNPzkG+GOHM1R5SubqUumDd89s3Jzd8f/9evu18Mt63bW5nco7uhgRY7taOcI/VS4wBfbm6P+AtllLXxe7e7hGggk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ax92EBAa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlSSIWCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96B2C2BD10;
-	Thu,  6 Jun 2024 14:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ax92EBAa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76197C2BD10;
+	Thu,  6 Jun 2024 14:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683441;
-	bh=9JxmAiMnk/afuCHxqlePKQkxzYVRD16QDO8LC3T5QwI=;
+	bh=XpEOcm57TR8tu+8QRC3Kq1FVBfeZZnAAIuO8n8Tj+jY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qlSSIWCSFtiqe7EE8wEnhpmkQkrsmzqPGeAeradeXW/tUgU2GEzM4U7/a8S3PoDQm
-	 rRQkPD4bAp8bk+DxZ/vp1Wd/4L8ekNyrtU4wajGddCKvtq6g/OBwagfG3ARdLLd7uw
-	 F7QDckRerzneS/HCtHn43SPYTlnJgpJcY37UvY7Y=
+	b=Ax92EBAarPdcMwMIBAgXQgoeU3YUnLFuJd4WmJqnfrjzRy7teMvRpLiSdqP6WTMCa
+	 7EI57f72oK0Am9s6Xa0ciVr27mCspj4dGo+ne+q8G33dh02P3LNgFZ/6zYkmLwNxfy
+	 ZlnyUQHl23+RyR+PZ5vIaIHY4eHAmshgJ4qb58eA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Rob Herring <robh@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 385/744] netrom: fix possible dead-lock in nr_rt_ioctl()
-Date: Thu,  6 Jun 2024 16:00:57 +0200
-Message-ID: <20240606131744.817361851@linuxfoundation.org>
+Subject: [PATCH 6.1 326/473] dt-bindings: pinctrl: mediatek: mt7622: fix array properties
+Date: Thu,  6 Jun 2024 16:04:15 +0200
+Message-ID: <20240606131710.712229767@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,196 +46,170 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit e03e7f20ebf7e1611d40d1fdc1bde900fd3335f6 ]
+[ Upstream commit 61fcbbf3ca038c048c942ce31bb3d3c846c87581 ]
 
-syzbot loves netrom, and found a possible deadlock in nr_rt_ioctl [1]
+Some properties (function groups & pins) are meant to be arrays and
+should allow multiple entries out of enum sets. Use "items" for those.
 
-Make sure we always acquire nr_node_list_lock before nr_node_lock(nr_node)
+Mistake was noticed during validation of in-kernel DTS files.
 
-[1]
-WARNING: possible circular locking dependency detected
-6.9.0-rc7-syzkaller-02147-g654de42f3fc6 #0 Not tainted
-------------------------------------------------------
-syz-executor350/5129 is trying to acquire lock:
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_node_lock include/net/netrom.h:152 [inline]
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:464 [inline]
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
-
-but task is already holding lock:
- ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
- ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:462 [inline]
- ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_rt_ioctl+0x10a/0x1090 net/netrom/nr_route.c:697
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (nr_node_list_lock){+...}-{2:2}:
-        lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-        __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
-        _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
-        spin_lock_bh include/linux/spinlock.h:356 [inline]
-        nr_remove_node net/netrom/nr_route.c:299 [inline]
-        nr_del_node+0x4b4/0x820 net/netrom/nr_route.c:355
-        nr_rt_ioctl+0xa95/0x1090 net/netrom/nr_route.c:683
-        sock_do_ioctl+0x158/0x460 net/socket.c:1222
-        sock_ioctl+0x629/0x8e0 net/socket.c:1341
-        vfs_ioctl fs/ioctl.c:51 [inline]
-        __do_sys_ioctl fs/ioctl.c:904 [inline]
-        __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
-        do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-        do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
-       entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
--> #0 (&nr_node->node_lock){+...}-{2:2}:
-        check_prev_add kernel/locking/lockdep.c:3134 [inline]
-        check_prevs_add kernel/locking/lockdep.c:3253 [inline]
-        validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
-        __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
-        lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-        __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
-        _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
-        spin_lock_bh include/linux/spinlock.h:356 [inline]
-        nr_node_lock include/net/netrom.h:152 [inline]
-        nr_dec_obs net/netrom/nr_route.c:464 [inline]
-        nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
-        sock_do_ioctl+0x158/0x460 net/socket.c:1222
-        sock_ioctl+0x629/0x8e0 net/socket.c:1341
-        vfs_ioctl fs/ioctl.c:51 [inline]
-        __do_sys_ioctl fs/ioctl.c:904 [inline]
-        __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
-        do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-        do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
-       entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(nr_node_list_lock);
-                               lock(&nr_node->node_lock);
-                               lock(nr_node_list_lock);
-  lock(&nr_node->node_lock);
-
- *** DEADLOCK ***
-
-1 lock held by syz-executor350/5129:
-  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
-  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:462 [inline]
-  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_rt_ioctl+0x10a/0x1090 net/netrom/nr_route.c:697
-
-stack backtrace:
-CPU: 0 PID: 5129 Comm: syz-executor350 Not tainted 6.9.0-rc7-syzkaller-02147-g654de42f3fc6 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  check_noncircular+0x36a/0x4a0 kernel/locking/lockdep.c:2187
-  check_prev_add kernel/locking/lockdep.c:3134 [inline]
-  check_prevs_add kernel/locking/lockdep.c:3253 [inline]
-  validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
-  __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
-  lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-  __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
-  _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
-  spin_lock_bh include/linux/spinlock.h:356 [inline]
-  nr_node_lock include/net/netrom.h:152 [inline]
-  nr_dec_obs net/netrom/nr_route.c:464 [inline]
-  nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
-  sock_do_ioctl+0x158/0x460 net/socket.c:1222
-  sock_ioctl+0x629/0x8e0 net/socket.c:1341
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:904 [inline]
-  __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240515142934.3708038-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b9ffc18c6388 ("dt-bindings: mediatek: convert pinctrl to yaml")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Acked-by: Rob Herring <robh@kernel.org>
+Message-ID: <20240423045502.7778-1-zajec5@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_route.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ .../pinctrl/mediatek,mt7622-pinctrl.yaml      | 92 ++++++++++---------
+ 1 file changed, 49 insertions(+), 43 deletions(-)
 
-diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index 70480869ad1c5..bd2b17b219ae9 100644
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -285,22 +285,14 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 	return 0;
- }
+diff --git a/Documentation/devicetree/bindings/pinctrl/mediatek,mt7622-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/mediatek,mt7622-pinctrl.yaml
+index c9ea0cad489b7..3767981409005 100644
+--- a/Documentation/devicetree/bindings/pinctrl/mediatek,mt7622-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/mediatek,mt7622-pinctrl.yaml
+@@ -97,7 +97,8 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [emmc, emmc_rst]
++                  items:
++                    enum: [emmc, emmc_rst]
+           - if:
+               properties:
+                 function:
+@@ -105,8 +106,9 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [esw, esw_p0_p1, esw_p2_p3_p4, rgmii_via_esw,
+-                         rgmii_via_gmac1, rgmii_via_gmac2, mdc_mdio]
++                  items:
++                    enum: [esw, esw_p0_p1, esw_p2_p3_p4, rgmii_via_esw,
++                           rgmii_via_gmac1, rgmii_via_gmac2, mdc_mdio]
+           - if:
+               properties:
+                 function:
+@@ -123,10 +125,11 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [i2s_in_mclk_bclk_ws, i2s1_in_data, i2s2_in_data,
+-                         i2s3_in_data, i2s4_in_data, i2s_out_mclk_bclk_ws,
+-                         i2s1_out_data, i2s2_out_data, i2s3_out_data,
+-                         i2s4_out_data]
++                  items:
++                    enum: [i2s_in_mclk_bclk_ws, i2s1_in_data, i2s2_in_data,
++                           i2s3_in_data, i2s4_in_data, i2s_out_mclk_bclk_ws,
++                           i2s1_out_data, i2s2_out_data, i2s3_out_data,
++                           i2s4_out_data]
+           - if:
+               properties:
+                 function:
+@@ -159,10 +162,11 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [pcie0_0_waken, pcie0_1_waken, pcie1_0_waken,
+-                         pcie0_0_clkreq, pcie0_1_clkreq, pcie1_0_clkreq,
+-                         pcie0_pad_perst, pcie1_pad_perst, pcie_pereset,
+-                         pcie_wake, pcie_clkreq]
++                  items:
++                    enum: [pcie0_0_waken, pcie0_1_waken, pcie1_0_waken,
++                           pcie0_0_clkreq, pcie0_1_clkreq, pcie1_0_clkreq,
++                           pcie0_pad_perst, pcie1_pad_perst, pcie_pereset,
++                           pcie_wake, pcie_clkreq]
+           - if:
+               properties:
+                 function:
+@@ -178,11 +182,12 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [pwm_ch1_0, pwm_ch1_1, pwm_ch1_2, pwm_ch2_0, pwm_ch2_1,
+-                         pwm_ch2_2, pwm_ch3_0, pwm_ch3_1, pwm_ch3_2, pwm_ch4_0,
+-                         pwm_ch4_1, pwm_ch4_2, pwm_ch4_3, pwm_ch5_0, pwm_ch5_1,
+-                         pwm_ch5_2, pwm_ch6_0, pwm_ch6_1, pwm_ch6_2, pwm_ch6_3,
+-                         pwm_ch7_0, pwm_0, pwm_1]
++                  items:
++                    enum: [pwm_ch1_0, pwm_ch1_1, pwm_ch1_2, pwm_ch2_0, pwm_ch2_1,
++                           pwm_ch2_2, pwm_ch3_0, pwm_ch3_1, pwm_ch3_2, pwm_ch4_0,
++                           pwm_ch4_1, pwm_ch4_2, pwm_ch4_3, pwm_ch5_0, pwm_ch5_1,
++                           pwm_ch5_2, pwm_ch6_0, pwm_ch6_1, pwm_ch6_2, pwm_ch6_3,
++                           pwm_ch7_0, pwm_0, pwm_1]
+           - if:
+               properties:
+                 function:
+@@ -260,33 +265,34 @@ patternProperties:
+           pins:
+             description: |
+               An array of strings. Each string contains the name of a pin.
+-            enum: [GPIO_A, I2S1_IN, I2S1_OUT, I2S_BCLK, I2S_WS, I2S_MCLK, TXD0,
+-                   RXD0, SPI_WP, SPI_HOLD, SPI_CLK, SPI_MOSI, SPI_MISO, SPI_CS,
+-                   I2C_SDA, I2C_SCL, I2S2_IN, I2S3_IN, I2S4_IN, I2S2_OUT,
+-                   I2S3_OUT, I2S4_OUT, GPIO_B, MDC, MDIO, G2_TXD0, G2_TXD1,
+-                   G2_TXD2, G2_TXD3, G2_TXEN, G2_TXC, G2_RXD0, G2_RXD1, G2_RXD2,
+-                   G2_RXD3, G2_RXDV, G2_RXC, NCEB, NWEB, NREB, NDL4, NDL5, NDL6,
+-                   NDL7, NRB, NCLE, NALE, NDL0, NDL1, NDL2, NDL3, MDI_TP_P0,
+-                   MDI_TN_P0, MDI_RP_P0, MDI_RN_P0, MDI_TP_P1, MDI_TN_P1,
+-                   MDI_RP_P1, MDI_RN_P1, MDI_RP_P2, MDI_RN_P2, MDI_TP_P2,
+-                   MDI_TN_P2, MDI_TP_P3, MDI_TN_P3, MDI_RP_P3, MDI_RN_P3,
+-                   MDI_RP_P4, MDI_RN_P4, MDI_TP_P4, MDI_TN_P4, PMIC_SCL,
+-                   PMIC_SDA, SPIC1_CLK, SPIC1_MOSI, SPIC1_MISO, SPIC1_CS,
+-                   GPIO_D, WATCHDOG, RTS3_N, CTS3_N, TXD3, RXD3, PERST0_N,
+-                   PERST1_N, WLED_N, EPHY_LED0_N, AUXIN0, AUXIN1, AUXIN2,
+-                   AUXIN3, TXD4, RXD4, RTS4_N, CST4_N, PWM1, PWM2, PWM3, PWM4,
+-                   PWM5, PWM6, PWM7, GPIO_E, TOP_5G_CLK, TOP_5G_DATA,
+-                   WF0_5G_HB0, WF0_5G_HB1, WF0_5G_HB2, WF0_5G_HB3, WF0_5G_HB4,
+-                   WF0_5G_HB5, WF0_5G_HB6, XO_REQ, TOP_RST_N, SYS_WATCHDOG,
+-                   EPHY_LED0_N_JTDO, EPHY_LED1_N_JTDI, EPHY_LED2_N_JTMS,
+-                   EPHY_LED3_N_JTCLK, EPHY_LED4_N_JTRST_N, WF2G_LED_N,
+-                   WF5G_LED_N, GPIO_9, GPIO_10, GPIO_11, GPIO_12, UART1_TXD,
+-                   UART1_RXD, UART1_CTS, UART1_RTS, UART2_TXD, UART2_RXD,
+-                   UART2_CTS, UART2_RTS, SMI_MDC, SMI_MDIO, PCIE_PERESET_N,
+-                   PWM_0, GPIO_0, GPIO_1, GPIO_2, GPIO_3, GPIO_4, GPIO_5,
+-                   GPIO_6, GPIO_7, GPIO_8, UART0_TXD, UART0_RXD, TOP_2G_CLK,
+-                   TOP_2G_DATA, WF0_2G_HB0, WF0_2G_HB1, WF0_2G_HB2, WF0_2G_HB3,
+-                   WF0_2G_HB4, WF0_2G_HB5, WF0_2G_HB6]
++            items:
++              enum: [GPIO_A, I2S1_IN, I2S1_OUT, I2S_BCLK, I2S_WS, I2S_MCLK, TXD0,
++                     RXD0, SPI_WP, SPI_HOLD, SPI_CLK, SPI_MOSI, SPI_MISO, SPI_CS,
++                     I2C_SDA, I2C_SCL, I2S2_IN, I2S3_IN, I2S4_IN, I2S2_OUT,
++                     I2S3_OUT, I2S4_OUT, GPIO_B, MDC, MDIO, G2_TXD0, G2_TXD1,
++                     G2_TXD2, G2_TXD3, G2_TXEN, G2_TXC, G2_RXD0, G2_RXD1, G2_RXD2,
++                     G2_RXD3, G2_RXDV, G2_RXC, NCEB, NWEB, NREB, NDL4, NDL5, NDL6,
++                     NDL7, NRB, NCLE, NALE, NDL0, NDL1, NDL2, NDL3, MDI_TP_P0,
++                     MDI_TN_P0, MDI_RP_P0, MDI_RN_P0, MDI_TP_P1, MDI_TN_P1,
++                     MDI_RP_P1, MDI_RN_P1, MDI_RP_P2, MDI_RN_P2, MDI_TP_P2,
++                     MDI_TN_P2, MDI_TP_P3, MDI_TN_P3, MDI_RP_P3, MDI_RN_P3,
++                     MDI_RP_P4, MDI_RN_P4, MDI_TP_P4, MDI_TN_P4, PMIC_SCL,
++                     PMIC_SDA, SPIC1_CLK, SPIC1_MOSI, SPIC1_MISO, SPIC1_CS,
++                     GPIO_D, WATCHDOG, RTS3_N, CTS3_N, TXD3, RXD3, PERST0_N,
++                     PERST1_N, WLED_N, EPHY_LED0_N, AUXIN0, AUXIN1, AUXIN2,
++                     AUXIN3, TXD4, RXD4, RTS4_N, CST4_N, PWM1, PWM2, PWM3, PWM4,
++                     PWM5, PWM6, PWM7, GPIO_E, TOP_5G_CLK, TOP_5G_DATA,
++                     WF0_5G_HB0, WF0_5G_HB1, WF0_5G_HB2, WF0_5G_HB3, WF0_5G_HB4,
++                     WF0_5G_HB5, WF0_5G_HB6, XO_REQ, TOP_RST_N, SYS_WATCHDOG,
++                     EPHY_LED0_N_JTDO, EPHY_LED1_N_JTDI, EPHY_LED2_N_JTMS,
++                     EPHY_LED3_N_JTCLK, EPHY_LED4_N_JTRST_N, WF2G_LED_N,
++                     WF5G_LED_N, GPIO_9, GPIO_10, GPIO_11, GPIO_12, UART1_TXD,
++                     UART1_RXD, UART1_CTS, UART1_RTS, UART2_TXD, UART2_RXD,
++                     UART2_CTS, UART2_RTS, SMI_MDC, SMI_MDIO, PCIE_PERESET_N,
++                     PWM_0, GPIO_0, GPIO_1, GPIO_2, GPIO_3, GPIO_4, GPIO_5,
++                     GPIO_6, GPIO_7, GPIO_8, UART0_TXD, UART0_RXD, TOP_2G_CLK,
++                     TOP_2G_DATA, WF0_2G_HB0, WF0_2G_HB1, WF0_2G_HB2, WF0_2G_HB3,
++                     WF0_2G_HB4, WF0_2G_HB5, WF0_2G_HB6]
  
--static inline void __nr_remove_node(struct nr_node *nr_node)
-+static void nr_remove_node_locked(struct nr_node *nr_node)
- {
-+	lockdep_assert_held(&nr_node_list_lock);
-+
- 	hlist_del_init(&nr_node->node_node);
- 	nr_node_put(nr_node);
- }
+           bias-disable: true
  
--#define nr_remove_node_locked(__node) \
--	__nr_remove_node(__node)
--
--static void nr_remove_node(struct nr_node *nr_node)
--{
--	spin_lock_bh(&nr_node_list_lock);
--	__nr_remove_node(nr_node);
--	spin_unlock_bh(&nr_node_list_lock);
--}
--
- static inline void __nr_remove_neigh(struct nr_neigh *nr_neigh)
- {
- 	hlist_del_init(&nr_neigh->neigh_node);
-@@ -339,6 +331,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 		return -EINVAL;
- 	}
- 
-+	spin_lock_bh(&nr_node_list_lock);
- 	nr_node_lock(nr_node);
- 	for (i = 0; i < nr_node->count; i++) {
- 		if (nr_node->routes[i].neighbour == nr_neigh) {
-@@ -352,7 +345,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 			nr_node->count--;
- 
- 			if (nr_node->count == 0) {
--				nr_remove_node(nr_node);
-+				nr_remove_node_locked(nr_node);
- 			} else {
- 				switch (i) {
- 				case 0:
-@@ -367,12 +360,14 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 				nr_node_put(nr_node);
- 			}
- 			nr_node_unlock(nr_node);
-+			spin_unlock_bh(&nr_node_list_lock);
- 
- 			return 0;
- 		}
- 	}
- 	nr_neigh_put(nr_neigh);
- 	nr_node_unlock(nr_node);
-+	spin_unlock_bh(&nr_node_list_lock);
- 	nr_node_put(nr_node);
- 
- 	return -EINVAL;
 -- 
 2.43.0
 
