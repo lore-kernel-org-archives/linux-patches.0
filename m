@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3C9196D99;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57B7196D99;
 	Thu,  6 Jun 2024 14:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683000; cv=none; b=aXtkEOmYeb9YoAVT+2DVeMYMzyjpAhuw/hiXMU6pSF3q2fQKL5WY0CNcevs1MHfucjycVhOBCH7Wdp6mgOZTovuW0PiEdLPRohS2trL5L21E+5eFDJwYSh3i1DYgYaigtb5H+k7EKs9Bvm2fCro8RrjQJgE/ncjHz5m49weXW6g=
+	t=1717683000; cv=none; b=pAKRghQObNJCIzbGzgrp3xoa+ljgOsyE/PWYL8nA0PySHjJtYLvfdSn5ezZrzC0oaDvfr9+CCcSn6tFL7lac+vViDND7HnqPawAqKHDg2inFolvoITE9rcFjP6+tHD66Sm6+2u/Py23otAvjPg0X1dZChJupcODPQmUaqK+2uDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683000; c=relaxed/simple;
-	bh=dmmft5+PkQnwDF49AOcum6P7xXG7dfMqDBqsymoY8Sc=;
+	bh=ZrEhaPC4fVUq2cSW/VJOzXxCSGicvPp5yn1TPkcblb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WF/qH0rLbqW2Y+N5Vv1cUcw4hcq5zVABZqJ9cjFqk9aeuLEXiLSa5dROaEkHd2ZuWGjPkgh2mTrT9zO1sHXhEzG/UFTdZSup9f47JCxWCwC0CQ0kYwrXeMXfG7UgflxaOzdDDfsX0JaG5N0XQNK/LinhIy6tkFizUWh8RW/PgwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TT5bCN+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qVy41GAaBJ2qdHxEnwGF3R94CkyVnuA6JFt6cs3heRO+ePC8MrNllEj67UvtBc8bVuE0F9zmUoO7StXyohB353fNwYRrX/Fx3IBlMGk5yuvWQGmkdlwhcDCpwYL/5T170OkzQNDDS+6swqWDcA9nSPXVyrTRzNXh8JlopN3kEts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXzahBg+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TT5bCN+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EF5C32786;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXzahBg+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947A3C32786;
 	Thu,  6 Jun 2024 14:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683000;
-	bh=dmmft5+PkQnwDF49AOcum6P7xXG7dfMqDBqsymoY8Sc=;
+	bh=ZrEhaPC4fVUq2cSW/VJOzXxCSGicvPp5yn1TPkcblb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TT5bCN+ouyDcFKbjn6xEfnC0r/I8BYtKbnx3SV8vLDROFlmW6bGPkO20hTR34wJzp
-	 PR7QKuFCX6nByC8YG9Q+T8Ami+oS/IUEowXiWByN0rsxVYLV5wC1eyQPdbvGsxN2A+
-	 AZMi7omiKWhIWhWaYuI2pUmaIbt/IAOTXqVTMaRY=
+	b=GXzahBg+/H5QQA3QGAE6fk5fHuK83ovbspnkms+Av+g9NEpIFN5q12F4LRyDsovIc
+	 HzMxGV1/iTbk0VZFLoUxgbg0UwiEq62zEcCkl3RntMGEypml0ASkAaayc53T1k0fLQ
+	 U87q3h3ONXsI6tIasvxsMqD/QdV2kMJZz6PwkRhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 202/374] Revert "drm/bridge: ti-sn65dsi83: Fix enable error path"
-Date: Thu,  6 Jun 2024 16:03:01 +0200
-Message-ID: <20240606131658.600532419@linuxfoundation.org>
+Subject: [PATCH 6.9 203/374] drm: zynqmp_dpsub: Always register bridge
+Date: Thu,  6 Jun 2024 16:03:02 +0200
+Message-ID: <20240606131658.635626461@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,79 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit ad81feb5b6f1f5461641706376dcf7a9914ed2e7 ]
+[ Upstream commit be3f3042391d061cfca2bd22630e0d101acea5fc ]
 
-This reverts commit 8a91b29f1f50ce7742cdbe5cf11d17f128511f3f.
+We must always register the DRM bridge, since zynqmp_dp_hpd_work_func
+calls drm_bridge_hpd_notify, which in turn expects hpd_mutex to be
+initialized. We do this before zynqmp_dpsub_drm_init since that calls
+drm_bridge_attach. This fixes the following lockdep warning:
 
-The regulator_disable() added by the original commit solves one kind of
-regulator imbalance but adds another one as it allows the regulator to be
-disabled one more time than it is enabled in the following scenario:
+[   19.217084] ------------[ cut here ]------------
+[   19.227530] DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+[   19.227768] WARNING: CPU: 0 PID: 140 at kernel/locking/mutex.c:582 __mutex_lock+0x4bc/0x550
+[   19.241696] Modules linked in:
+[   19.244937] CPU: 0 PID: 140 Comm: kworker/0:4 Not tainted 6.6.20+ #96
+[   19.252046] Hardware name: xlnx,zynqmp (DT)
+[   19.256421] Workqueue: events zynqmp_dp_hpd_work_func
+[   19.261795] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   19.269104] pc : __mutex_lock+0x4bc/0x550
+[   19.273364] lr : __mutex_lock+0x4bc/0x550
+[   19.277592] sp : ffffffc085c5bbe0
+[   19.281066] x29: ffffffc085c5bbe0 x28: 0000000000000000 x27: ffffff88009417f8
+[   19.288624] x26: ffffff8800941788 x25: ffffff8800020008 x24: ffffffc082aa3000
+[   19.296227] x23: ffffffc080d90e3c x22: 0000000000000002 x21: 0000000000000000
+[   19.303744] x20: 0000000000000000 x19: ffffff88002f5210 x18: 0000000000000000
+[   19.311295] x17: 6c707369642e3030 x16: 3030613464662072 x15: 0720072007200720
+[   19.318922] x14: 0000000000000000 x13: 284e4f5f4e524157 x12: 0000000000000001
+[   19.326442] x11: 0001ffc085c5b940 x10: 0001ff88003f388b x9 : 0001ff88003f3888
+[   19.334003] x8 : 0001ff88003f3888 x7 : 0000000000000000 x6 : 0000000000000000
+[   19.341537] x5 : 0000000000000000 x4 : 0000000000001668 x3 : 0000000000000000
+[   19.349054] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffffff88003f3880
+[   19.356581] Call trace:
+[   19.359160]  __mutex_lock+0x4bc/0x550
+[   19.363032]  mutex_lock_nested+0x24/0x30
+[   19.367187]  drm_bridge_hpd_notify+0x2c/0x6c
+[   19.371698]  zynqmp_dp_hpd_work_func+0x44/0x54
+[   19.376364]  process_one_work+0x3ac/0x988
+[   19.380660]  worker_thread+0x398/0x694
+[   19.384736]  kthread+0x1bc/0x1c0
+[   19.388241]  ret_from_fork+0x10/0x20
+[   19.392031] irq event stamp: 183
+[   19.395450] hardirqs last  enabled at (183): [<ffffffc0800b9278>] finish_task_switch.isra.0+0xa8/0x2d4
+[   19.405140] hardirqs last disabled at (182): [<ffffffc081ad3754>] __schedule+0x714/0xd04
+[   19.413612] softirqs last  enabled at (114): [<ffffffc080133de8>] srcu_invoke_callbacks+0x158/0x23c
+[   19.423128] softirqs last disabled at (110): [<ffffffc080133de8>] srcu_invoke_callbacks+0x158/0x23c
+[   19.432614] ---[ end trace 0000000000000000 ]---
 
- 1. Start video pipeline -> sn65dsi83_atomic_pre_enable -> regulator_enable
- 2. PLL lock fails -> regulator_disable
- 3. Stop video pipeline -> sn65dsi83_atomic_disable -> regulator_disable
-
-The reason is clear from the code flow, which looks like this (after
-removing unrelated code):
-
-  static void sn65dsi83_atomic_pre_enable()
-  {
-      regulator_enable(ctx->vcc);
-
-      if (PLL failed locking) {
-          regulator_disable(ctx->vcc);  <---- added by patch being reverted
-          return;
-      }
-  }
-
-  static void sn65dsi83_atomic_disable()
-  {
-      regulator_disable(ctx->vcc);
-  }
-
-The use case for introducing the additional regulator_disable() was
-removing the module for debugging (see link below for the discussion). If
-the module is removed after a .atomic_pre_enable, i.e. with an active
-pipeline from the DRM point of view, .atomic_disable is not called and thus
-the regulator would not be disabled.
-
-According to the discussion however there is no actual use case for
-removing the module with an active pipeline, except for
-debugging/development.
-
-On the other hand, the occurrence of a PLL lock failure is possible due to
-any physical reason (e.g. a temporary hardware failure for electrical
-reasons) so handling it gracefully should be supported. As there is no way
-for .atomic[_pre]_enable to report an error to the core, the only clean way
-to support it is calling regulator_disabled() only in .atomic_disable,
-unconditionally, as it was before.
-
-Link: https://lore.kernel.org/all/15244220.uLZWGnKmhe@steina-w/
-Fixes: 8a91b29f1f50 ("drm/bridge: ti-sn65dsi83: Fix enable error path")
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240426122259.46808-1-luca.ceresoli@bootlin.com
-(cherry picked from commit 2940ee03b23281071620dda1d790cd644dabd394)
+Fixes: eb2d64bfcc17 ("drm: xlnx: zynqmp_dpsub: Report HPD through the bridge")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240308204741.3631919-1-sean.anderson@linux.dev
+(cherry picked from commit 61ba791c4a7a09a370c45b70a81b8c7d4cf6b2ae)
 Signed-off-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi83.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-index 4814b7b6d1fd1..57a7ed13f9965 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-@@ -478,7 +478,6 @@ static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
- 		dev_err(ctx->dev, "failed to lock PLL, ret=%i\n", ret);
- 		/* On failure, disable PLL again and exit. */
- 		regmap_write(ctx->regmap, REG_RC_PLL_EN, 0x00);
--		regulator_disable(ctx->vcc);
- 		return;
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+index 88eb33acd5f0d..face8d6b2a6fb 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+@@ -256,12 +256,12 @@ static int zynqmp_dpsub_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_dp;
+ 
++	drm_bridge_add(dpsub->bridge);
++
+ 	if (dpsub->dma_enabled) {
+ 		ret = zynqmp_dpsub_drm_init(dpsub);
+ 		if (ret)
+ 			goto err_disp;
+-	} else {
+-		drm_bridge_add(dpsub->bridge);
  	}
+ 
+ 	dev_info(&pdev->dev, "ZynqMP DisplayPort Subsystem driver probed");
+@@ -288,9 +288,8 @@ static void zynqmp_dpsub_remove(struct platform_device *pdev)
+ 
+ 	if (dpsub->drm)
+ 		zynqmp_dpsub_drm_cleanup(dpsub);
+-	else
+-		drm_bridge_remove(dpsub->bridge);
+ 
++	drm_bridge_remove(dpsub->bridge);
+ 	zynqmp_disp_remove(dpsub);
+ 	zynqmp_dp_remove(dpsub);
  
 -- 
 2.43.0
