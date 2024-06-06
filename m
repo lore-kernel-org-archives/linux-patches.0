@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8781AC431;
-	Thu,  6 Jun 2024 14:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665F019884B;
+	Thu,  6 Jun 2024 14:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683324; cv=none; b=TgTi+Xbjhxj6TIgqJpigi3b6sJW/srGJQ0dpmIsS8nHLXr0aPtn3MA3tqeWOI/BC6suMU9x1iBn/Wj0vwFfvJWneWCPoS6vZ5DShNO1d7ZUyG0n8gyceKGOl6ZLMbgt2+g2iMby2JpAOJOvbbNVB88rPSncf/0t0iCZ4VQ2pqH4=
+	t=1717683324; cv=none; b=m5X1XdRoivIlpbzYGsNc+8GeDhLK4vOA3RF0YK9AdvXFKGDRvor0R8SOCqExQWmoItlfXDcwbC2OVd6madCvd92EEzXBF0ZUdzdxprQ56PA8zK0J+LkSIw7wmBrFAkGT4TcMYx7DZOPKUOzKk1y004czK8adruHgsnszMeVttT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683324; c=relaxed/simple;
-	bh=tzAL0HsFg5aZEr1FmL5GAXhI4Qdi7t4PAjFyxesUTX4=;
+	bh=ectl5x+NUrTfmMJ20nPv3UQErxMvy+R4oZGGZXcbzEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDmVzbP/n4HIVzY9K7fucGMEa7z4yetYwWz7rGwH0LnPYhGl+C6lJItc+//Vnxgo4KI49gc8L/DUO6qeFT3kPcxMuk1jfXGwkkSgKI1OE1gcLzGxavtVNsnNvq8ia5fPfpf7o8aGcoJbyDpsO/z9y/eorgD3kVetBJZ3gIt0yeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cANeMBcd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6wWTErf2GX/FFcJ/Ar3stVZS1jWMYGgBwLBH9F82gfu6m9o1t+Gl1aaqLAFtMhpEssSIMa1xOZuaJvhPP9/65DO6UCFf5IfjHZluQVDncHmbpulik5RVDsXRVkml+ef5zKp8T2nFzhF+U3Sy0ko32G+IBBTVvA5AwaPmezPY9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8CqR8Lh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cANeMBcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE192C2BD10;
-	Thu,  6 Jun 2024 14:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8CqR8Lh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47593C2BD10;
+	Thu,  6 Jun 2024 14:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683323;
-	bh=tzAL0HsFg5aZEr1FmL5GAXhI4Qdi7t4PAjFyxesUTX4=;
+	s=korg; t=1717683324;
+	bh=ectl5x+NUrTfmMJ20nPv3UQErxMvy+R4oZGGZXcbzEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cANeMBcdJzWxSJqhNVfhbGbq/q/O4QUbjtDq6olEqmLr5FpbmRbMKNx6S503DYlr0
-	 fjymTxp/EtO6PUDjSo3if2huYKtevtnpAfFIYMYNkBDurRZQ/7jKEeAhbCHJqtuuYX
-	 i+fIKzJjjAGJFyz16X3lWIyuwwRHIjuoCj4KNK3g=
+	b=A8CqR8LhyjF8SJriJmFCQ7LZaqpjmdwacO0PGuTS0RLqY/bJR+EhJFJC+pDUytSsx
+	 LaInrg7jxwQ6ylR0PT5/9/MAoDLLJZ8zvBUpXlNqg0QEKwtTJePNZ0qFU3v5p2UfDi
+	 n/9iGIVLDIG25VPazIxeD/YK1/CnP20gp0kE76bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 203/473] drm/meson: vclk: fix calculation of 59.94 fractional rates
-Date: Thu,  6 Jun 2024 16:02:12 +0200
-Message-ID: <20240606131706.646322374@linuxfoundation.org>
+Subject: [PATCH 6.6 264/744] Bluetooth: Remove usage of the deprecated ida_simple_xx() API
+Date: Thu,  6 Jun 2024 15:58:56 +0200
+Message-ID: <20240606131740.861264341@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +47,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit bfbc68e4d8695497f858a45a142665e22a512ea3 ]
+[ Upstream commit 9c16d0c8d93e3d2a95c5ed927b061f244db75579 ]
 
-Playing 4K media with 59.94 fractional rate (typically VP9) causes the screen to lose
-sync with the following error reported in the system log:
+ida_alloc() and ida_free() should be preferred to the deprecated
+ida_simple_get() and ida_simple_remove().
 
-[   89.610280] Fatal Error, invalid HDMI vclk freq 593406
+Note that the upper limit of ida_simple_get() is exclusive, but the one of
+ida_alloc_max() is inclusive. So a -1 has been added when needed.
 
-Modetest shows the following:
-
-3840x2160 59.94 3840 4016 4104 4400 2160 2168 2178 2250 593407 flags: xxxx, xxxx,
-drm calculated value -------------------------------------^
-
-Change the fractional rate calculation to stop DIV_ROUND_CLOSEST rounding down which
-results in vclk freq failing to match correctly.
-
-Fixes: e5fab2ec9ca4 ("drm/meson: vclk: add support for YUV420 setup")
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240109230704.4120561-1-christianshewitt@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240109230704.4120561-1-christianshewitt@gmail.com
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 84a4bb6548a2 ("Bluetooth: HCI: Remove HCI_AMP support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_core.c | 9 +++++----
+ net/bluetooth/hci_sock.c | 4 ++--
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
-index 2a82119eb58ed..2a942dc6a6dc2 100644
---- a/drivers/gpu/drm/meson/meson_vclk.c
-+++ b/drivers/gpu/drm/meson/meson_vclk.c
-@@ -790,13 +790,13 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv, unsigned int phy_freq,
- 				 FREQ_1000_1001(params[i].pixel_freq));
- 		DRM_DEBUG_DRIVER("i = %d phy_freq = %d alt = %d\n",
- 				 i, params[i].phy_freq,
--				 FREQ_1000_1001(params[i].phy_freq/10)*10);
-+				 FREQ_1000_1001(params[i].phy_freq/1000)*1000);
- 		/* Match strict frequency */
- 		if (phy_freq == params[i].phy_freq &&
- 		    vclk_freq == params[i].vclk_freq)
- 			return MODE_OK;
- 		/* Match 1000/1001 variant */
--		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/10)*10) &&
-+		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/1000)*1000) &&
- 		    vclk_freq == FREQ_1000_1001(params[i].vclk_freq))
- 			return MODE_OK;
- 	}
-@@ -1070,7 +1070,7 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index befe645d3f9bf..101ea9137dfef 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2609,10 +2609,11 @@ int hci_register_dev(struct hci_dev *hdev)
+ 	 */
+ 	switch (hdev->dev_type) {
+ 	case HCI_PRIMARY:
+-		id = ida_simple_get(&hci_index_ida, 0, HCI_MAX_ID, GFP_KERNEL);
++		id = ida_alloc_max(&hci_index_ida, HCI_MAX_ID - 1, GFP_KERNEL);
+ 		break;
+ 	case HCI_AMP:
+-		id = ida_simple_get(&hci_index_ida, 1, HCI_MAX_ID, GFP_KERNEL);
++		id = ida_alloc_range(&hci_index_ida, 1, HCI_MAX_ID - 1,
++				     GFP_KERNEL);
+ 		break;
+ 	default:
+ 		return -EINVAL;
+@@ -2711,7 +2712,7 @@ int hci_register_dev(struct hci_dev *hdev)
+ 	destroy_workqueue(hdev->workqueue);
+ 	destroy_workqueue(hdev->req_workqueue);
+ err:
+-	ida_simple_remove(&hci_index_ida, hdev->id);
++	ida_free(&hci_index_ida, hdev->id);
  
- 	for (freq = 0 ; params[freq].pixel_freq ; ++freq) {
- 		if ((phy_freq == params[freq].phy_freq ||
--		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/10)*10) &&
-+		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/1000)*1000) &&
- 		    (vclk_freq == params[freq].vclk_freq ||
- 		     vclk_freq == FREQ_1000_1001(params[freq].vclk_freq))) {
- 			if (vclk_freq != params[freq].vclk_freq)
+ 	return error;
+ }
+@@ -2793,7 +2794,7 @@ void hci_release_dev(struct hci_dev *hdev)
+ 	hci_dev_unlock(hdev);
+ 
+ 	ida_destroy(&hdev->unset_handle_ida);
+-	ida_simple_remove(&hci_index_ida, hdev->id);
++	ida_free(&hci_index_ida, hdev->id);
+ 	kfree_skb(hdev->sent_cmd);
+ 	kfree_skb(hdev->req_skb);
+ 	kfree_skb(hdev->recv_event);
+diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
+index 3e7cd330d731a..4ee1b976678b2 100644
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -101,7 +101,7 @@ static bool hci_sock_gen_cookie(struct sock *sk)
+ 	int id = hci_pi(sk)->cookie;
+ 
+ 	if (!id) {
+-		id = ida_simple_get(&sock_cookie_ida, 1, 0, GFP_KERNEL);
++		id = ida_alloc_min(&sock_cookie_ida, 1, GFP_KERNEL);
+ 		if (id < 0)
+ 			id = 0xffffffff;
+ 
+@@ -119,7 +119,7 @@ static void hci_sock_free_cookie(struct sock *sk)
+ 
+ 	if (id) {
+ 		hci_pi(sk)->cookie = 0xffffffff;
+-		ida_simple_remove(&sock_cookie_ida, id);
++		ida_free(&sock_cookie_ida, id);
+ 	}
+ }
+ 
 -- 
 2.43.0
 
