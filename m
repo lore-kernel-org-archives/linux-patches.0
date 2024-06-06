@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6C619CD11;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8902119CD12;
 	Thu,  6 Jun 2024 14:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683439; cv=none; b=CMlwMz21OYHYRZ2P3firFZ9cQyHXkYDIr/UDpqAPKUk5QlXjxjijWGcYxrmlMBY9N98gWC7gaQZPpzX6Q7HgMY5hz05J4FWwCFGC6Vp6OqCm1PZ93hHNx2/l+FM1HO+tQ3nBswk8wWihef4VoMGEt31Kgg0467nOWvit7/UkOZM=
+	t=1717683439; cv=none; b=Fa+p90G6uUHWShoVTEJLEqzeEyLDUxNmVQrtiKauxhQHQtAMaxq/6NMn5rIwYUBKH1O2Tu0Y2/djqrLtNrGSdatGLdSLP9GyGSdBqa873tVV20Bm6j5N1QRgVG3n6c3URjmfH9b48A4jNdsWPlwjV/RVIqkNeRDt4G0ENmELfX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683439; c=relaxed/simple;
-	bh=fFZQvwJ34C5wo1GlEIIXgpqkckE4MTBaxC8PrSVT3QE=;
+	bh=iljrgyoQBfLOT8UFLk0YJgllzbyTDiVH+3WZYW5NZHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iu/6C2s4dE7JzabVD6GlDk5xDDOfeeM1u7lWa7s734w8RDbYDKUSz4RdBErD0i7HjjnRt5MaeZongDTgje1Syq8JH2n+Bk3ihNjp4L4eElYASHyIcswglOwbRrmgpRAs2IVBmdy7rWYApWw6VBpkH0Vp2J8SJxTbb3sho4zms8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZ73LQum; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PNzWBeij+IO9WTXw9neXnnsW9uIciEhIFXQLEjb4nsFie6cVy7pNLpCcZUtZpSqyXFeyOQB9yjBcKKLILO7hbOXKBlBbWKf3riX5B+hGNgXjxXAIIzFgUJwrmOa42z5/MTLPii2VSkdoqdcMiOfR2VkyrWJh2hPJS7ls6zOD1no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDYby8sy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZ73LQum"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB788C32781;
-	Thu,  6 Jun 2024 14:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDYby8sy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6944FC2BD10;
+	Thu,  6 Jun 2024 14:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683439;
-	bh=fFZQvwJ34C5wo1GlEIIXgpqkckE4MTBaxC8PrSVT3QE=;
+	bh=iljrgyoQBfLOT8UFLk0YJgllzbyTDiVH+3WZYW5NZHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZ73LQumaKMT122RDwtZF6pJrFl8AiDeFNwfrEt9+QA1Qus69st2Tth2ZDhzvBimu
-	 hKi60XOrQq/FwCX5aUKjbGTgtdeg2sazCDZw+jxs2yuP+hT1BZCJV13HmbFdiyyv3k
-	 fiQuJPwOsedoohcFS2qhsuBiSYBLnahoMTKpGJO8=
+	b=LDYby8syzlusJEZferUCwYoyMn51OXEe3q7ZESqOBeY0CNW6pgLNM8U6YbBFShL80
+	 qRdK6aQSeFBzJBY8PE/+itzTscmhKN1GeAxfumymQKf9n9OZp4SRA5kBLfqiWK9mA7
+	 Sv+t0xXyoj8bKWsGFdkzQij+016MhvmLePmdHVkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fa04eb8a56fd923fc5d8@syzkaller.appspotmail.com,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 383/744] net: bridge: mst: fix vlan use-after-free
-Date: Thu,  6 Jun 2024 16:00:55 +0200
-Message-ID: <20240606131744.755553019@linuxfoundation.org>
+Subject: [PATCH 6.1 324/473] ovl: remove upper umask handling from ovl_create_upper()
+Date: Thu,  6 Jun 2024 16:04:13 +0200
+Message-ID: <20240606131710.640553834@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,125 +46,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-[ Upstream commit 3a7c1661ae1383364cd6092d851f5e5da64d476b ]
+[ Upstream commit 096802748ea1dea8b476938e0a8dc16f4bd2f1ad ]
 
-syzbot reported a suspicious rcu usage[1] in bridge's mst code. While
-fixing it I noticed that nothing prevents a vlan to be freed while
-walking the list from the same path (br forward delay timer). Fix the rcu
-usage and also make sure we are not accessing freed memory by making
-br_mst_vlan_set_state use rcu read lock.
+This is already done by vfs_prepare_mode() when creating the upper object
+by vfs_create(), vfs_mkdir() and vfs_mknod().
 
-[1]
- WARNING: suspicious RCU usage
- 6.9.0-rc6-syzkaller #0 Not tainted
- -----------------------------
- net/bridge/br_private.h:1599 suspicious rcu_dereference_protected() usage!
- ...
- stack backtrace:
- CPU: 1 PID: 8017 Comm: syz-executor.1 Not tainted 6.9.0-rc6-syzkaller #0
- Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
- Call Trace:
-  <IRQ>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  lockdep_rcu_suspicious+0x221/0x340 kernel/locking/lockdep.c:6712
-  nbp_vlan_group net/bridge/br_private.h:1599 [inline]
-  br_mst_set_state+0x1ea/0x650 net/bridge/br_mst.c:105
-  br_set_state+0x28a/0x7b0 net/bridge/br_stp.c:47
-  br_forward_delay_timer_expired+0x176/0x440 net/bridge/br_stp_timer.c:88
-  call_timer_fn+0x18e/0x650 kernel/time/timer.c:1793
-  expire_timers kernel/time/timer.c:1844 [inline]
-  __run_timers kernel/time/timer.c:2418 [inline]
-  __run_timer_base+0x66a/0x8e0 kernel/time/timer.c:2429
-  run_timer_base kernel/time/timer.c:2438 [inline]
-  run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2448
-  __do_softirq+0x2c6/0x980 kernel/softirq.c:554
-  invoke_softirq kernel/softirq.c:428 [inline]
-  __irq_exit_rcu+0xf2/0x1c0 kernel/softirq.c:633
-  irq_exit_rcu+0x9/0x30 kernel/softirq.c:645
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1043 [inline]
-  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1043
-  </IRQ>
-  <TASK>
- asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
- RIP: 0010:lock_acquire+0x264/0x550 kernel/locking/lockdep.c:5758
- Code: 2b 00 74 08 4c 89 f7 e8 ba d1 84 00 f6 44 24 61 02 0f 85 85 01 00 00 41 f7 c7 00 02 00 00 74 01 fb 48 c7 44 24 40 0e 36 e0 45 <4b> c7 44 25 00 00 00 00 00 43 c7 44 25 09 00 00 00 00 43 c7 44 25
- RSP: 0018:ffffc90013657100 EFLAGS: 00000206
- RAX: 0000000000000001 RBX: 1ffff920026cae2c RCX: 0000000000000001
- RDX: dffffc0000000000 RSI: ffffffff8bcaca00 RDI: ffffffff8c1eaa60
- RBP: ffffc90013657260 R08: ffffffff92efe507 R09: 1ffffffff25dfca0
- R10: dffffc0000000000 R11: fffffbfff25dfca1 R12: 1ffff920026cae28
- R13: dffffc0000000000 R14: ffffc90013657160 R15: 0000000000000246
+No regressions have been observed in xfstests run with posix acls turned
+off for the upper filesystem.
 
-Fixes: ec7328b59176 ("net: bridge: mst: Multiple Spanning Tree (MST) mode")
-Reported-by: syzbot+fa04eb8a56fd923fc5d8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fa04eb8a56fd923fc5d8
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1639a49ccdce ("fs: move S_ISGID stripping into the vfs_*() helpers")
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mst.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ fs/overlayfs/dir.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/net/bridge/br_mst.c b/net/bridge/br_mst.c
-index ee680adcee179..3c66141d34d62 100644
---- a/net/bridge/br_mst.c
-+++ b/net/bridge/br_mst.c
-@@ -78,7 +78,7 @@ static void br_mst_vlan_set_state(struct net_bridge_port *p, struct net_bridge_v
- {
- 	struct net_bridge_vlan_group *vg = nbp_vlan_group(p);
+diff --git a/fs/overlayfs/dir.c b/fs/overlayfs/dir.c
+index 5339ff08bd0f4..582d4bd50a1fb 100644
+--- a/fs/overlayfs/dir.c
++++ b/fs/overlayfs/dir.c
+@@ -327,9 +327,6 @@ static int ovl_create_upper(struct dentry *dentry, struct inode *inode,
+ 	struct dentry *newdentry;
+ 	int err;
  
--	if (v->state == state)
-+	if (br_vlan_get_state(v) == state)
- 		return;
- 
- 	br_vlan_set_state(v, state);
-@@ -100,11 +100,12 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
- 	};
- 	struct net_bridge_vlan_group *vg;
- 	struct net_bridge_vlan *v;
--	int err;
-+	int err = 0;
- 
-+	rcu_read_lock();
- 	vg = nbp_vlan_group(p);
- 	if (!vg)
--		return 0;
-+		goto out;
- 
- 	/* MSTI 0 (CST) state changes are notified via the regular
- 	 * SWITCHDEV_ATTR_ID_PORT_STP_STATE.
-@@ -112,17 +113,20 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
- 	if (msti) {
- 		err = switchdev_port_attr_set(p->dev, &attr, extack);
- 		if (err && err != -EOPNOTSUPP)
--			return err;
-+			goto out;
- 	}
- 
--	list_for_each_entry(v, &vg->vlan_list, vlist) {
-+	err = 0;
-+	list_for_each_entry_rcu(v, &vg->vlan_list, vlist) {
- 		if (v->brvlan->msti != msti)
- 			continue;
- 
- 		br_mst_vlan_set_state(p, v, state);
- 	}
- 
--	return 0;
-+out:
-+	rcu_read_unlock();
-+	return err;
- }
- 
- static void br_mst_vlan_sync_state(struct net_bridge_vlan *pv, u16 msti)
+-	if (!attr->hardlink && !IS_POSIXACL(udir))
+-		attr->mode &= ~current_umask();
+-
+ 	inode_lock_nested(udir, I_MUTEX_PARENT);
+ 	newdentry = ovl_create_real(ofs, udir,
+ 				    ovl_lookup_upper(ofs, dentry->d_name.name,
 -- 
 2.43.0
 
