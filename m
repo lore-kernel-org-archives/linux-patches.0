@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA08198E7B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E061F19D06F;
 	Thu,  6 Jun 2024 14:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683083; cv=none; b=Y6eJkrsUiit9EWqo2uuQdgea64G2ULfRpkRaGywZBPZlyh5Owky+r9t6wdJWEYWQK9EErMrlucHK6PtTVh0hKz34kTMY1u7B4S+h/AzvYZDsng7oKNL2kbYx/zn2155zsjk/+8MAQ8NMp3eR/D9qbXqFq28tp2awsUK/Nn6wJRk=
+	t=1717683084; cv=none; b=f8iu/bHbq8D3srvRSXA0AIbkKEpjnms4iZgu59P1awVBmL9rIZXsFJusTfEpVKPTaUOLJFAP98sbCuZIOrPcluCkyZ5N+47//ltA5IM7N3hANxNWfyr9LUxSgtx44aBz3i33bIJqnekLrSrkTPdAG1sfY4nlmDDDeZko1rV/Azs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683083; c=relaxed/simple;
-	bh=0BZC4dkimIhTVAcS0X3AR3BYRIJK0dzUZFpQciz7AUQ=;
+	s=arc-20240116; t=1717683084; c=relaxed/simple;
+	bh=UxMQZRuHUGihoerQk1eOO5Wn2wxLO8fu5clwDqTrF3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2SgNhLrN/4jWQBYcblqPIq4a5QwEh7WVWzatwMNNuWUEz1D8lPxKGcYFVJzsFvHN+i1P/H1YP5gGUyrC59+tJYsUKsyXE1QViI/KpDI1IPAK/ALZxRBntYAHo8qPsQKW8zkSdwPJ1BuHEkYja6jowYxjwdTdBnKm0w5DL+G3oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfGaflmE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ALbvYjZT7Vymjv/nbrjPCFt7dYJzeyjGPs69dgh2kGxnBitWOx4FhI9wZ7HZKLer1p+qyscjq13/qVNIlGmU/Xt+RHgYPAMtasXTcg7XHbsZ4HdbhgJV52TKk1fLNCIdIZ9DqWP2ZjlNYJTZYNWIjqdyfnaNIF9j+HvHoeWbTZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBOsSwOw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfGaflmE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49931C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBOsSwOw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2D8C32782;
 	Thu,  6 Jun 2024 14:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683083;
-	bh=0BZC4dkimIhTVAcS0X3AR3BYRIJK0dzUZFpQciz7AUQ=;
+	bh=UxMQZRuHUGihoerQk1eOO5Wn2wxLO8fu5clwDqTrF3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfGaflmEzE7rF2O+UN907ZBi2YkrNRXyOZzcSa7ekC3Xlvm94OiZ9rDWW0aUn0+sq
-	 xA82XUSzAhwRalmp92HHzeNRcE1L7WUQmoPP7+ch0NmPkATpdu0UAu6YAlQCWSscn0
-	 V8sbbMhQ7A2EBL4xj6f6AfXThPUMvwrRqigCtG2Y=
+	b=UBOsSwOwo7TBonM3Zv6i43L56bXtZ99ALu6CaX9a9EQc3eCjz41QJ0yUMvm1mWpmp
+	 PDAMgfEuT+FyXaT54JPaMnm/exugxbsYJFysoo3V/s6MkWtkZ7frl46No7bv2Smq7n
+	 2/28SaAXV0ywEqmNfhTk7AeaeSEcjOM51Z8uxCcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 355/374] ALSA: seq: Fix yet another spot for system message conversion
-Date: Thu,  6 Jun 2024 16:05:34 +0200
-Message-ID: <20240606131703.764314382@linuxfoundation.org>
+Subject: [PATCH 6.9 356/374] powerpc/pseries/lparcfg: drop error message from guest name lookup
+Date: Thu,  6 Jun 2024 16:05:35 +0200
+Message-ID: <20240606131703.801440307@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -50,35 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-[ Upstream commit 700fe6fd093d08c6da2bda8efe00479b0e617327 ]
+[ Upstream commit 12870ae3818e39ea65bf710f645972277b634f72 ]
 
-We fixed the incorrect UMP type for system messages in the recent
-commit, but it missed one place in system_ev_to_ump_midi1().
-Fix it now.
+It's not an error or exceptional situation when the hosting
+environment does not expose a name for the LP/guest via RTAS or the
+device tree. This happens with qemu when run without the '-name'
+option. The message also lacks a newline. Remove it.
 
-Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
-Fixes: c2bb79613fed ("ALSA: seq: Fix incorrect UMP type for system messages")
-Link: https://lore.kernel.org/r/20240530101044.17524-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Fixes: eddaa9a40275 ("powerpc/pseries: read the lpar name from the firmware")
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240524-lparcfg-updates-v2-1-62e2e9d28724@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_ump_convert.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/platforms/pseries/lparcfg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
-index f5d22dd008426..903a644b80e25 100644
---- a/sound/core/seq/seq_ump_convert.c
-+++ b/sound/core/seq/seq_ump_convert.c
-@@ -729,6 +729,7 @@ static int system_ev_to_ump_midi1(const struct snd_seq_event *event,
- 				  union snd_ump_midi1_msg *data,
- 				  unsigned char status)
+diff --git a/arch/powerpc/platforms/pseries/lparcfg.c b/arch/powerpc/platforms/pseries/lparcfg.c
+index fb0189af2dea1..0ed56e56271fe 100644
+--- a/arch/powerpc/platforms/pseries/lparcfg.c
++++ b/arch/powerpc/platforms/pseries/lparcfg.c
+@@ -361,8 +361,8 @@ static int read_dt_lpar_name(struct seq_file *m)
+ 
+ static void read_lpar_name(struct seq_file *m)
  {
-+	data->system.type = UMP_MSG_TYPE_SYSTEM; // override
- 	data->system.status = status;
- 	return 1;
+-	if (read_rtas_lpar_name(m) && read_dt_lpar_name(m))
+-		pr_err_once("Error can't get the LPAR name");
++	if (read_rtas_lpar_name(m))
++		read_dt_lpar_name(m);
  }
+ 
+ #define SPLPAR_MAXLENGTH 1026*(sizeof(char))
 -- 
 2.43.0
 
