@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46B4196D91;
-	Thu,  6 Jun 2024 14:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD4F196D91;
+	Thu,  6 Jun 2024 14:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683178; cv=none; b=SL/H09sXS7+mgiS+rw2d0Fwk/pOtGD+jHaGmKvabaj5b+pvZvaNlv8qxSJCpOeBRdCNr+5tUz3IXbhQsnFZyGGCv6yh1Ra6wfwmpACrLb2SflJTy9C4/oOPv99r8V2lzxY2BEvaGZlrbSrYQyk4XmI45t1DCMbdtpl5Uhf32m+c=
+	t=1717683179; cv=none; b=O315NCkA44L0XHQJmD9pIoZWATK9czHXVVemvV7POXo2oZAgYiiPTH3EB0l775gCo4qjZtb5S2NCj3LGPlGIPbzEaWulYx9NNVdlW9i8PL8yyw2EsiaZLwPbzu1/s5FHBuBk6YAZ6UUMgaQgngsiMo9FZwoesawwe/IAUSpVb00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683178; c=relaxed/simple;
-	bh=zVGT7NAsx1k2RxLjcNFv+VG0XeDVJFmJHBHkV+v5DJo=;
+	s=arc-20240116; t=1717683179; c=relaxed/simple;
+	bh=S7DMTdNHZZv/pySDPtO37F/xSW48mpMrQ3p2p3BqC04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0++uqmcbiKPhjaNyD44TuGkVMAFhFSyvgUK7Oq0vk+otI6Ja7FEBRm8h8TIdt8FgL4fNYyT5uI1a4h60uoBAAf3p1YxFcmQL3K4t9h64qYqu2+M/AL2anAIfS596vdoTAeeMgu48PSrk6/wg2wsrwwyhzjzKFK5Wb/x0fdbIkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyXt6st2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qHDniJQK8KK4AlE83L3xrcsdpauaPINj18LWwkb6+RMd80bmXLGL4Dt8MGu++eDSYsd8DwnSm3e7awnxqguT0rj1rlUIzjnM3p03VpF5Bo2ZX1O3I/J28h1c2Ce/7T2ScpGd4J+JHvLwguSMb/lhXwM6/SMxRix4PZZWfXqTGng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBq4oAuK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyXt6st2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48A6C32781;
-	Thu,  6 Jun 2024 14:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBq4oAuK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D9AC2BD10;
+	Thu,  6 Jun 2024 14:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683178;
-	bh=zVGT7NAsx1k2RxLjcNFv+VG0XeDVJFmJHBHkV+v5DJo=;
+	s=korg; t=1717683179;
+	bh=S7DMTdNHZZv/pySDPtO37F/xSW48mpMrQ3p2p3BqC04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DyXt6st2VbV9w0xJLEHeDR9Tf9T7WaeKAg9Br7mDzWRknd8UV7K6eyKxlt/ZAnOEi
-	 ITyQD8OOcgE/Wo8veJGYYS8Xmga245Tz27IZqh3lljeERJQ5ey1hCrP8l0M8ucx/Br
-	 +CmyssI0y5K6x4YdmokV/4lnDtN/kwkAbmN22EUM=
+	b=CBq4oAuKuqjLHTxbSsQbZcg+m+6pWvQSQfLqe0Fca8ayc9avQ2oK8VL6Q+h+9YdkT
+	 uBEhH8n5hn8ionh+Qi+K2BHQ4xHHsqgkKbEzatY+NVnSjtSXCHmkgT+E4PlIw63nrE
+	 W9IgBL+8bK5nK9whLljUqZ9ZKW0bGVMQwwliSyZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+0a3683a0a6fecf909244@syzkaller.appspotmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/473] ASoC: da7219-aad: fix usage of device_get_named_child_node()
-Date: Thu,  6 Jun 2024 15:59:42 +0200
-Message-ID: <20240606131701.632753998@linuxfoundation.org>
+Subject: [PATCH 6.6 123/744] block: refine the EOF check in blkdev_iomap_begin
+Date: Thu,  6 Jun 2024 15:56:35 +0200
+Message-ID: <20240606131736.355136776@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit e8a6a5ad73acbafd98e8fd3f0cbf6e379771bb76 ]
+[ Upstream commit 0c12028aec837f5a002009bbf68d179d506510e8 ]
 
-The documentation for device_get_named_child_node() mentions this
-important point:
+blkdev_iomap_begin rounds down the offset to the logical block size
+before stashing it in iomap->offset and checking that it still is
+inside the inode size.
 
-"
-The caller is responsible for calling fwnode_handle_put() on the
-returned fwnode pointer.
-"
+Check the i_size check to the raw pos value so that we don't try a
+zero size write if iter->pos is unaligned.
 
-Add fwnode_handle_put() to avoid a leaked reference.
-
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20240426153033.38500-1-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 487c607df790 ("block: use iomap for writes to block devices")
+Reported-by: syzbot+0a3683a0a6fecf909244@syzkaller.appspotmail.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Tested-by: syzbot+0a3683a0a6fecf909244@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/20240503081042.2078062-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/da7219-aad.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ block/fops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
-index c8410769188a0..d613f1074524a 100644
---- a/sound/soc/codecs/da7219-aad.c
-+++ b/sound/soc/codecs/da7219-aad.c
-@@ -638,8 +638,10 @@ static struct da7219_aad_pdata *da7219_aad_fw_to_pdata(struct device *dev)
- 		return NULL;
+diff --git a/block/fops.c b/block/fops.c
+index 73e42742543f6..1df187b306792 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -387,7 +387,7 @@ static int blkdev_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
  
- 	aad_pdata = devm_kzalloc(dev, sizeof(*aad_pdata), GFP_KERNEL);
--	if (!aad_pdata)
-+	if (!aad_pdata) {
-+		fwnode_handle_put(aad_np);
- 		return NULL;
-+	}
- 
- 	aad_pdata->irq = i2c->irq;
- 
-@@ -714,6 +716,8 @@ static struct da7219_aad_pdata *da7219_aad_fw_to_pdata(struct device *dev)
- 	else
- 		aad_pdata->adc_1bit_rpt = DA7219_AAD_ADC_1BIT_RPT_1;
- 
-+	fwnode_handle_put(aad_np);
-+
- 	return aad_pdata;
- }
- 
+ 	iomap->bdev = bdev;
+ 	iomap->offset = ALIGN_DOWN(offset, bdev_logical_block_size(bdev));
+-	if (iomap->offset >= isize)
++	if (offset >= isize)
+ 		return -EIO;
+ 	iomap->type = IOMAP_MAPPED;
+ 	iomap->addr = iomap->offset;
 -- 
 2.43.0
 
