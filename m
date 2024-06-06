@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F99219753D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B148B1991D4;
 	Thu,  6 Jun 2024 14:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683167; cv=none; b=H2ZtnBLzd+nq5RNXhZORI/kWQWYGsS/FN9eRdpLL7jqgxy9J5thfAPTDGaALp//oSfr8wcjqbVE4uIquh5IXKDjJMvdWgukBorPf7kn6Lgym3E2p3tcm+FP6OgZYkjaUmBZf0dIYoh+cQTFKDUk/st2U0feX/lS6IdO8jt8WfW0=
+	t=1717683167; cv=none; b=FVgOBpWYU89FunZAJPEFkykzTKXG170qHdqgoo8ZJju5zgK/boyswCdYI3vgoaaYPnwTVX8v3Qwm7PqLbnwWZ2YoLTtq6+b8CRiTdk3oV7M04nu22ub+AMmEu6+AGSbdmu6wO3+TBwQ+u6X6Olt1mHEOrjo+2lJhj3gbzd0zcTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683167; c=relaxed/simple;
-	bh=U9/C1uNNbQDq+1LW1Sp+jQXPIvybYsF0I2JtxVhcDMQ=;
+	bh=B9xFp02fpkl3ejxthwxxJ3tljE6Mg6gVgtT0ExjdT+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcE+04P0mJy5VqgiygxoxPmkZf8f+mmOfNS26FTuCipZTUi7KDxr2yBO3CbwbhGANP4Li+vY+dEWTIHFuIXxzqIwzFYrlG0ZGX3Ep9OznK7+pF6iN5ePJ1Wf3bmTt7x7BClT9CoHPdwHy9bhOifnIVY/x0qB+4Ui0kFfiJmGXGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03P17tCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=urGSDIfDU1royHPH/yLT+Sq98Drv+RPev5l12dWK2KHEhVRy6U3T385no07zIxlDMW+eYVK4BVVEhoELcgsr3hoMZfK4oHjxCwUXapAP7ySNvlaAO955E0dHZgqNcjfvEZBYnQ5l/WztOLxO/D5m5MA9icixISZ43WCVxNc1FD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6S7vh1i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03P17tCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D744C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6S7vh1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89CFBC2BD10;
 	Thu,  6 Jun 2024 14:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683167;
-	bh=U9/C1uNNbQDq+1LW1Sp+jQXPIvybYsF0I2JtxVhcDMQ=;
+	bh=B9xFp02fpkl3ejxthwxxJ3tljE6Mg6gVgtT0ExjdT+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03P17tCcI7VJr19RCbiaEz4eCvD6HKPRTe2IhHWeHO7XNd0DNigP1WuGWBzb7BBOt
-	 Dg1+TqhADVv7cOsZHyJxUs8qDTH6cQnNsTgDO41xY5s4s/yXuK2Ms5IO5mDeveDGnC
-	 w4HtxMb/bhg3fs4ATVnc5KQlJiaINr2fXXmzmXJw=
+	b=V6S7vh1iSPxih6XLy+Ee4hs9H7nXZ+4NOy2XjV9n24AM79XYzyqKPdAFwtdi3VT+5
+	 WddyKL3Pu5xJK4cbZB2joE7EHy3PP+Az6TYMtpqoyAO1s5LoPeUcvXLu5DT4i4kk70
+	 X/+UpPhsMoIfS19lwV92HNWBShm1UH/OCL7WVZJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukul Joshi <mukul.joshi@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/744] drm/amdgpu: Fix VRAM memory accounting
-Date: Thu,  6 Jun 2024 15:55:48 +0200
-Message-ID: <20240606131734.838740237@linuxfoundation.org>
+Subject: [PATCH 6.1 037/473] selftests: sud_test: return correct emulated syscall value on RISC-V
+Date: Thu,  6 Jun 2024 15:59:26 +0200
+Message-ID: <20240606131701.118764950@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,41 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mukul Joshi <mukul.joshi@amd.com>
+From: Clément Léger <cleger@rivosinc.com>
 
-[ Upstream commit f06446ef23216090d1ee8ede1a7d7ae430c22dcc ]
+[ Upstream commit 17c67ed752d6a456602b3dbb25c5ae4d3de5deab ]
 
-Subtract the VRAM pinned memory when checking for available memory
-in amdgpu_amdkfd_reserve_mem_limit function since that memory is not
-available for use.
+Currently, the sud_test expects the emulated syscall to return the
+emulated syscall number. This assumption only works on architectures
+were the syscall calling convention use the same register for syscall
+number/syscall return value. This is not the case for RISC-V and thus
+the return value must be also emulated using the provided ucontext.
 
-Signed-off-by: Mukul Joshi <mukul.joshi@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/r/20231206134438.473166-1-cleger@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../selftests/syscall_user_dispatch/sud_test.c     | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 15c5a2533ba60..704567885c7a4 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -213,7 +213,7 @@ int amdgpu_amdkfd_reserve_mem_limit(struct amdgpu_device *adev,
- 	    (kfd_mem_limit.ttm_mem_used + ttm_mem_needed >
- 	     kfd_mem_limit.max_ttm_mem_limit) ||
- 	    (adev && xcp_id >= 0 && adev->kfd.vram_used[xcp_id] + vram_needed >
--	     vram_size - reserved_for_pt)) {
-+	     vram_size - reserved_for_pt - atomic64_read(&adev->vram_pin_size))) {
- 		ret = -ENOMEM;
- 		goto release;
- 	}
+diff --git a/tools/testing/selftests/syscall_user_dispatch/sud_test.c b/tools/testing/selftests/syscall_user_dispatch/sud_test.c
+index b5d592d4099e8..d975a67673299 100644
+--- a/tools/testing/selftests/syscall_user_dispatch/sud_test.c
++++ b/tools/testing/selftests/syscall_user_dispatch/sud_test.c
+@@ -158,6 +158,20 @@ static void handle_sigsys(int sig, siginfo_t *info, void *ucontext)
+ 
+ 	/* In preparation for sigreturn. */
+ 	SYSCALL_DISPATCH_OFF(glob_sel);
++
++	/*
++	 * The tests for argument handling assume that `syscall(x) == x`. This
++	 * is a NOP on x86 because the syscall number is passed in %rax, which
++	 * happens to also be the function ABI return register.  Other
++	 * architectures may need to swizzle the arguments around.
++	 */
++#if defined(__riscv)
++/* REG_A7 is not defined in libc headers */
++# define REG_A7 (REG_A0 + 7)
++
++	((ucontext_t *)ucontext)->uc_mcontext.__gregs[REG_A0] =
++			((ucontext_t *)ucontext)->uc_mcontext.__gregs[REG_A7];
++#endif
+ }
+ 
+ TEST(dispatch_and_return)
 -- 
 2.43.0
 
