@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7538E198E92;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004E5198E92;
 	Thu,  6 Jun 2024 14:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683487; cv=none; b=D+oppB0kzgrQbvLHPkY3RropEp9mJObsS7M150qcmUj0FEj0FeWX4nYMSvWTNoByaYBOOjihYXcbij2veBVzOcJvOPAZ3XlOTkqD17fC/CCRFivvrjNJWnVeDuZDzYDVAyc8WCd/hty6Owo35VQ5tqfNjA7nVu/7KLGs+IeH++U=
+	t=1717683488; cv=none; b=usSOPboCGxzvWvOMmoXcIwKyW1ooLWA2lyF5OA/eLqrhX8il+50uYbNQ/IBuEamWYy0WRph2TZ6otRwVZvbBt2hW4pdHBm4o2CItQ8VGzJp79bVCkgqJxkBkmeJ8TsIBLnJllSJg8z4WLFOjuTGGK0Ulk90UOP6Up6Ff5uC7e4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683487; c=relaxed/simple;
-	bh=Sq94q6P8gBvvcoB97pK1zx6kjRzHarVVECgfGUemAAE=;
+	s=arc-20240116; t=1717683488; c=relaxed/simple;
+	bh=6FSpXIf7oGmTC/yUlWsO2GrGxc15vaPb5FSQdNW1XN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gLtnyoN9NswUwvYhRpbXMb0vETMdvTvsj1UIm5WChyGxuyQ8cxIfU/NU2nD4k9jbmi8cYQ/g0CpomT16koCtEzioc/Ty0tPKLX98c/FM48ULlD1gXc77cOHMt3V5BvJXTkco96PysLCfSevEmTdOVhNp0Xr5BKoMx6yuxTrLS5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvDx7JKS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JD/eRf04qkA47j9CK6MCPiJe+ttp8+eiIyz4EkQcCYwhHQxQzYQkwLmTyjo5px2P9KIHV/Y+c6raM6xLoVVXhbg6Tvc0SuaGIeuCON7HWbtQ+rsOBCM3wR0QVFuNTcP5NiTCvxaBnp5CsaGKO3GkK0KRBz8ZWuHe5weR3i/BKjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QyZBdTLI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvDx7JKS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B31C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyZBdTLI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3350C2BD10;
 	Thu,  6 Jun 2024 14:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683487;
-	bh=Sq94q6P8gBvvcoB97pK1zx6kjRzHarVVECgfGUemAAE=;
+	bh=6FSpXIf7oGmTC/yUlWsO2GrGxc15vaPb5FSQdNW1XN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jvDx7JKSoFy2w5/5ZOGO3IE09yslum8b3f4tetJKhY8GbW2CebG+aQkVR9C2vKfzj
-	 xo/L3kox+f7S+S+cfPMYboU+QcXjkKBn1rmM9ZRsl/8JMILh1Yx9Yykx5toWnIa6uM
-	 jkMdvikjh92tnQksWgs4bRYfYQ11u2s0+8pk0YjQ=
+	b=QyZBdTLIvLmocx1lcZ8vktuNHQBSN+WNt7WDkpHUtD9BY35nPbPIBe0T2GDsYRUMJ
+	 D6fzm/kbnE8DtZWM70hK3eFJihVjpG4m+kKUDWPbRlwGFSLxvAMgCVLMoXUPf1Aamr
+	 j4X95VFkdEBBzE2LqttFMS8djukAu8lFzqWObe8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 430/744] dt-bindings: PCI: rcar-pci-host: Add missing IOMMU properties
-Date: Thu,  6 Jun 2024 16:01:42 +0200
-Message-ID: <20240606131746.261067221@linuxfoundation.org>
+Subject: [PATCH 6.1 378/473] drm/bridge: tc358775: fix support for jeida-18 and jeida-24
+Date: Thu,  6 Jun 2024 16:05:07 +0200
+Message-ID: <20240606131712.366622925@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +46,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 78d212851f0e56b7d7083c4d5014aa7fa8b77e20 ]
+[ Upstream commit 30ea09a182cb37c4921b9d477ed18107befe6d78 ]
 
-make dtbs_check:
+The bridge always uses 24bpp internally. Therefore, for jeida-18
+mapping we need to discard the lowest two bits for each channel and thus
+starting with LV_[RGB]2. jeida-24 has the same mapping but uses four
+lanes instead of three, with the forth pair transmitting the lowest two
+bits of each channel. Thus, the mapping between jeida-18 and jeida-24
+is actually the same, except that one channel is turned off (by
+selecting the RGB666 format in VPCTRL).
 
-    arch/arm64/boot/dts/renesas/r8a77951-salvator-xs.dtb: pcie@fe000000: Unevaluated properties are not allowed ('iommu-map', 'iommu-map-mask' were unexpected)
-	    from schema $id: http://devicetree.org/schemas/pci/rcar-pci-host.yaml#
+While at it, remove the bogus comment about the hardware default because
+the default is overwritten in any case.
 
-Fix this by adding the missing IOMMU-related properties.
+Tested with a jeida-18 display (Evervision VGG644804).
 
-[kwilczynski: added missing Fixes: tag]
-Fixes: 0d69ce3c2c63 ("dt-bindings: PCI: rcar-pci-host: Convert bindings to json-schema")
-Link: https://lore.kernel.org/linux-pci/babc878a93cb6461a5d39331f8ecfa654dfda921.1706802597.git.geert+renesas@glider.be
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: b26975593b17 ("display/drm/bridge: TC358775 DSI/LVDS driver")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240225062008.33191-5-tony@atomide.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/pci/rcar-pci-host.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/bridge/tc358775.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml b/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
-index b6a7cb32f61e5..835b6db00c279 100644
---- a/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
-+++ b/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
-@@ -77,6 +77,9 @@ properties:
-   vpcie12v-supply:
-     description: The 12v regulator to use for PCIe.
+diff --git a/drivers/gpu/drm/bridge/tc358775.c b/drivers/gpu/drm/bridge/tc358775.c
+index b1c8ce5d20186..40d6da7743325 100644
+--- a/drivers/gpu/drm/bridge/tc358775.c
++++ b/drivers/gpu/drm/bridge/tc358775.c
+@@ -455,10 +455,6 @@ static void tc_bridge_enable(struct drm_bridge *bridge)
+ 	dev_dbg(tc->dev, "bus_formats %04x bpc %d\n",
+ 		connector->display_info.bus_formats[0],
+ 		tc->bpc);
+-	/*
+-	 * Default hardware register settings of tc358775 configured
+-	 * with MEDIA_BUS_FMT_RGB888_1X7X4_JEIDA jeida-24 format
+-	 */
+ 	if (connector->display_info.bus_formats[0] ==
+ 		MEDIA_BUS_FMT_RGB888_1X7X4_SPWG) {
+ 		/* VESA-24 */
+@@ -469,14 +465,15 @@ static void tc_bridge_enable(struct drm_bridge *bridge)
+ 		d2l_write(tc->i2c, LV_MX1619, LV_MX(LVI_B6, LVI_B7, LVI_B1, LVI_B2));
+ 		d2l_write(tc->i2c, LV_MX2023, LV_MX(LVI_B3, LVI_B4, LVI_B5, LVI_L0));
+ 		d2l_write(tc->i2c, LV_MX2427, LV_MX(LVI_HS, LVI_VS, LVI_DE, LVI_R6));
+-	} else { /*  MEDIA_BUS_FMT_RGB666_1X7X3_SPWG - JEIDA-18 */
+-		d2l_write(tc->i2c, LV_MX0003, LV_MX(LVI_R0, LVI_R1, LVI_R2, LVI_R3));
+-		d2l_write(tc->i2c, LV_MX0407, LV_MX(LVI_R4, LVI_L0, LVI_R5, LVI_G0));
+-		d2l_write(tc->i2c, LV_MX0811, LV_MX(LVI_G1, LVI_G2, LVI_L0, LVI_L0));
+-		d2l_write(tc->i2c, LV_MX1215, LV_MX(LVI_G3, LVI_G4, LVI_G5, LVI_B0));
+-		d2l_write(tc->i2c, LV_MX1619, LV_MX(LVI_L0, LVI_L0, LVI_B1, LVI_B2));
+-		d2l_write(tc->i2c, LV_MX2023, LV_MX(LVI_B3, LVI_B4, LVI_B5, LVI_L0));
+-		d2l_write(tc->i2c, LV_MX2427, LV_MX(LVI_HS, LVI_VS, LVI_DE, LVI_L0));
++	} else {
++		/* JEIDA-18 and JEIDA-24 */
++		d2l_write(tc->i2c, LV_MX0003, LV_MX(LVI_R2, LVI_R3, LVI_R4, LVI_R5));
++		d2l_write(tc->i2c, LV_MX0407, LV_MX(LVI_R6, LVI_R1, LVI_R7, LVI_G2));
++		d2l_write(tc->i2c, LV_MX0811, LV_MX(LVI_G3, LVI_G4, LVI_G0, LVI_G1));
++		d2l_write(tc->i2c, LV_MX1215, LV_MX(LVI_G5, LVI_G6, LVI_G7, LVI_B2));
++		d2l_write(tc->i2c, LV_MX1619, LV_MX(LVI_B0, LVI_B1, LVI_B3, LVI_B4));
++		d2l_write(tc->i2c, LV_MX2023, LV_MX(LVI_B5, LVI_B6, LVI_B7, LVI_L0));
++		d2l_write(tc->i2c, LV_MX2427, LV_MX(LVI_HS, LVI_VS, LVI_DE, LVI_R0));
+ 	}
  
-+  iommu-map: true
-+  iommu-map-mask: true
-+
- required:
-   - compatible
-   - reg
+ 	d2l_write(tc->i2c, VFUEN, VFUEN_EN);
 -- 
 2.43.0
 
