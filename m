@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903DA19B3F3;
-	Thu,  6 Jun 2024 14:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C5819B3F3;
+	Thu,  6 Jun 2024 14:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683402; cv=none; b=Vja+htpRZNku1KgCBRipP9+CazTvGG6WSYIL55C1XmXv5e6eJfDgNEzqH3M6D6wCM9SqHCgKQz45MbBxOaTi3vv5qxlcsMEJgr+WwD3YP364fiHgG9JouQeRKx0eew07BLUztGWtLbQxKE70l+YVy420cUvDJ8eutmUZ8TZlFx0=
+	t=1717683403; cv=none; b=VmRGpew8XuUCHWQhksjuR7ZEw0j1+lPHUj4xCqBmuW1qxfXl1ewa8rJrcvNgPKgGYJSSffouovdsz8Cm32G6uuxGMFTAcRwHJoruo2meAQ+H6E2c5kyYJ8PmCc0eo+VqllumO+e2ZIbEh4SJNQUdMGsUvjPiWEA6A2ERglWxb4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683402; c=relaxed/simple;
-	bh=rS3E/BIzXBtG/Sg0fJKq/WW/xrN8I+QtwWEoiLcrglM=;
+	s=arc-20240116; t=1717683403; c=relaxed/simple;
+	bh=U7zux5CapEieOGXS/sUHr5b/I+wu75f2BCwMzzGTUxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mIuaCdw1Uq+99tYNYs6eIBStX4VFaugFEMBu7PWoWe0KZhFiCHwz1JqWqkR00O0OSnN0r5JpGSBkxEAlbWnIStzFOy0OuG60lGpBA/0nRXACbRSLn3pcwU0J7XghtiB/6Hh4D7i46RS5UL4DwXbSaT8fVFp6rLTsq5qOKMqzP64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PllaH59p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rB0XSuQJ2Pqc3VZM1YTPbvLDOLqRwW1E9DcjiAAf/nm03jt+m6U7sqj+0sTnP4+Cf4B4/XDrhByQI5iTxNsA2kYqQAn2zVP4wNJwSpbEV6pOn0+XkUgL2tOn4CEHoa0Ah63aMC2bH9fClYzitK6oqS8NgubecwmnLEGYMIymJfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCzTYe0l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PllaH59p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718FDC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCzTYe0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CCAC32782;
 	Thu,  6 Jun 2024 14:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683402;
-	bh=rS3E/BIzXBtG/Sg0fJKq/WW/xrN8I+QtwWEoiLcrglM=;
+	bh=U7zux5CapEieOGXS/sUHr5b/I+wu75f2BCwMzzGTUxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PllaH59pK4kZfRttPWlvpQXXgo7UmLx15J3D2FDQjSuzBb65M0F+mJZBDxIatqbid
-	 8K1/9/R/GLEARt+YT2FA0U1H6hbG+5Kf0Zu6Dwtogc9VS2rr8mvOFBiGbMf0JK3fPJ
-	 afHRMQ2abKaZJUbo4WbMvEZ8xOi0GqdlAk/ZrFy8=
+	b=CCzTYe0lL6FX6qNC4xLUOyokJ+IYyt4Y5saBsEd+aPg1W8Q9AkeYjfJzrdQxz9bTm
+	 PqB1SyguJt7PvRhjk7XU/S95OCZzdo3cT3KptH9buSZVIu2/UNNsTPi8o2aLpl0G73
+	 Nj50HLLQ4Mn+Du69lzvduk+Ahz51x7zjQFtk5cAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Popescu <catalin.popescu@leica-geosystems.com>,
-	Marek Vasut <marex@denx.de>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jin Yao <yao.jin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 346/744] clk: rs9: fix wrong default value for clock amplitude
-Date: Thu,  6 Jun 2024 16:00:18 +0200
-Message-ID: <20240606131743.565577775@linuxfoundation.org>
+Subject: [PATCH 6.1 286/473] perf annotate: Get rid of duplicate --group option item
+Date: Thu,  6 Jun 2024 16:03:35 +0200
+Message-ID: <20240606131709.344137391@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,74 +54,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Catalin Popescu <catalin.popescu@leica-geosystems.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 1758c68c81b8b881818fcebaaeb91055362a82f8 ]
+[ Upstream commit 374af9f1f06b5e991c810d2e4983d6f58df32136 ]
 
-According to 9FGV0241, 9FGV0441 & 9FGV0841 datasheets, the default
-value for the clock amplitude is 0.8V, while the driver assumes 0.7V.
+The options array in cmd_annotate() has duplicate --group options.  It
+only needs one and let's get rid of the other.
 
-Additionally, define constants for default values for both clock
-amplitude and spread spectrum and use them.
+  $ perf annotate -h 2>&1 | grep group
+        --group           Show event group information together
+        --group           Show event group information together
 
-Fixes: 892e0ddea1aa ("clk: rs9: Add Renesas 9-series PCIe clock generator driver")
-Signed-off-by: Catalin Popescu <catalin.popescu@leica-geosystems.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Link: https://lore.kernel.org/r/20240415140348.2887619-1-catalin.popescu@leica-geosystems.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 7ebaf4890f63eb90 ("perf annotate: Support '--group' option")
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jin Yao <yao.jin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240322224313.423181-1-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-renesas-pcie.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tools/perf/builtin-annotate.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/clk/clk-renesas-pcie.c b/drivers/clk/clk-renesas-pcie.c
-index 3b6ad2307a41f..b00c38469cfad 100644
---- a/drivers/clk/clk-renesas-pcie.c
-+++ b/drivers/clk/clk-renesas-pcie.c
-@@ -24,10 +24,12 @@
- #define RS9_REG_SS_AMP_0V7			0x1
- #define RS9_REG_SS_AMP_0V8			0x2
- #define RS9_REG_SS_AMP_0V9			0x3
-+#define RS9_REG_SS_AMP_DEFAULT			RS9_REG_SS_AMP_0V8
- #define RS9_REG_SS_AMP_MASK			0x3
- #define RS9_REG_SS_SSC_100			0
- #define RS9_REG_SS_SSC_M025			(1 << 3)
- #define RS9_REG_SS_SSC_M050			(3 << 3)
-+#define RS9_REG_SS_SSC_DEFAULT			RS9_REG_SS_SSC_100
- #define RS9_REG_SS_SSC_MASK			(3 << 3)
- #define RS9_REG_SS_SSC_LOCK			BIT(5)
- #define RS9_REG_SR				0x2
-@@ -211,8 +213,8 @@ static int rs9_get_common_config(struct rs9_driver_data *rs9)
- 	int ret;
- 
- 	/* Set defaults */
--	rs9->pll_amplitude = RS9_REG_SS_AMP_0V7;
--	rs9->pll_ssc = RS9_REG_SS_SSC_100;
-+	rs9->pll_amplitude = RS9_REG_SS_AMP_DEFAULT;
-+	rs9->pll_ssc = RS9_REG_SS_SSC_DEFAULT;
- 
- 	/* Output clock amplitude */
- 	ret = of_property_read_u32(np, "renesas,out-amplitude-microvolt",
-@@ -253,13 +255,13 @@ static void rs9_update_config(struct rs9_driver_data *rs9)
- 	int i;
- 
- 	/* If amplitude is non-default, update it. */
--	if (rs9->pll_amplitude != RS9_REG_SS_AMP_0V7) {
-+	if (rs9->pll_amplitude != RS9_REG_SS_AMP_DEFAULT) {
- 		regmap_update_bits(rs9->regmap, RS9_REG_SS, RS9_REG_SS_AMP_MASK,
- 				   rs9->pll_amplitude);
- 	}
- 
- 	/* If SSC is non-default, update it. */
--	if (rs9->pll_ssc != RS9_REG_SS_SSC_100) {
-+	if (rs9->pll_ssc != RS9_REG_SS_SSC_DEFAULT) {
- 		regmap_update_bits(rs9->regmap, RS9_REG_SS, RS9_REG_SS_SSC_MASK,
- 				   rs9->pll_ssc);
- 	}
+diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
+index 517d928c00e3f..21d7582608735 100644
+--- a/tools/perf/builtin-annotate.c
++++ b/tools/perf/builtin-annotate.c
+@@ -571,8 +571,6 @@ int cmd_annotate(int argc, const char **argv)
+ 		    "Enable symbol demangling"),
+ 	OPT_BOOLEAN(0, "demangle-kernel", &symbol_conf.demangle_kernel,
+ 		    "Enable kernel symbol demangling"),
+-	OPT_BOOLEAN(0, "group", &symbol_conf.event_group,
+-		    "Show event group information together"),
+ 	OPT_BOOLEAN(0, "show-total-period", &symbol_conf.show_total_period,
+ 		    "Show a column with the sum of periods"),
+ 	OPT_BOOLEAN('n', "show-nr-samples", &symbol_conf.show_nr_samples,
 -- 
 2.43.0
 
