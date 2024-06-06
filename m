@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85568196DB4;
-	Thu,  6 Jun 2024 14:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ABD196DB4;
+	Thu,  6 Jun 2024 14:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683349; cv=none; b=ktEITAZ+fuojeLPw4UCbp4rIL+4XLn6sTqMgczzPkwobmRzYedBMOY/EXgIbxRdaTyY3RGSNqMbuAyihd2rzC5Fz41ul5CegE8qIj6KqxPpDiMVUNG04L25+jBPmM7gMMZUllmJJwGm/48nWwbHnE8rSs26Av3lKXj6zvTBA670=
+	t=1717683350; cv=none; b=rWU88uslTqGath7BhqzdxORN5W7absszsKQsfNueYPQqccgWYjjY4YTr00v5rDHAvwAg3Jk5Iz/CghYbARu9re2rPclaLwzhIGN+7j3p0AVo1UEq1Ab1Tf5WgQ8ULuu4n0NGp0Qt0FctC4/o30jejJE9jL3DkPJ6BEF1591GPz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683349; c=relaxed/simple;
-	bh=CPgqF1YYrJANJfVyKEfUHj6XIxf/KBI98jQysTbZNyU=;
+	s=arc-20240116; t=1717683350; c=relaxed/simple;
+	bh=MEWw4HsybF8ep8yms4ao/2lTb6OVVdW5mxPx+9zFpmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nI5vjzdfK9HVo46eOeYJ6/wBTNLRUFMPg5tMT3VK40cJOSgtE6MRrcrTn+EWF/pv9dL1DQoZdzZjPh50Il8yat1bidrr1BI4NGdnSK/xq3T3Mov7zW5IqE+FZwWfF+yp0vV12QiOCn0gi2qQ6lpbaZOd/VvKbQ77cI2NEZ47hLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VF9RuiHV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fXVt5Y4Ld1NfxZqSw7+zSFU3y2ajJznkwxQsFz+tc+BtuctwxH/wyNVuDnyz0NX0aDxcLHZeFet/rpyfQQpQpbW7YS8nSwJDe2uh0nbh3Uh/9KgpWyl2O2TRc0vFdxUkpn++5opUTAmxBWJM17EMTKN6bptzvq6yOJA99NVvH6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOXXEJNT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VF9RuiHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EFFC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOXXEJNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9496C2BD10;
 	Thu,  6 Jun 2024 14:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683349;
-	bh=CPgqF1YYrJANJfVyKEfUHj6XIxf/KBI98jQysTbZNyU=;
+	bh=MEWw4HsybF8ep8yms4ao/2lTb6OVVdW5mxPx+9zFpmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VF9RuiHVsD1mDABGpYt3iTNeBu+ITmVVTmFXNt+nI2/M8QkYC17tgJSwcSvr7NDJk
-	 KPf4VVygwZzZ/p9WXcPnlw2b2b+qJJ/jMV8SIMm7VrdYnQh/oPq/EOxsCABGlZruGP
-	 Rb+Fn9ZgwXK+f5b8V2DwjttKCu8J5KTXOlHx6aAI=
+	b=kOXXEJNT0t64yzn+7JUyfanEF+0NLZQrtT1DPhyAXjfVVIPPcDofsHA6JXxrK+dzl
+	 HbAu/vlHCxE55oTx8/Z2l9lHzAlRcfzhmX9vw33NBZRQ3Rj1ToWD3DpJ2LAI3ceA1M
+	 9K0GgaX7DVHKbg1AjhMEjSishn/jc3yhbG6Ushts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun T <arun.t@intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 290/744] ASoC: Intel: common: add ACPI matching tables for Arrow Lake
-Date: Thu,  6 Jun 2024 15:59:22 +0200
-Message-ID: <20240606131741.705555319@linuxfoundation.org>
+Subject: [PATCH 6.1 231/473] drm/panel: novatek-nt35950: Dont log an error when DSI host cant be found
+Date: Thu,  6 Jun 2024 16:02:40 +0200
+Message-ID: <20240606131707.488827656@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,123 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arun T <arun.t@intel.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 24af0d7c0f9f49a243b77e607e3f4a4737386b59 ]
+[ Upstream commit 5ff5505b9a2d827cae3f95dceba258c963138175 ]
 
-Initial support for ARL w/ RT711
+Given that failing to find a DSI host causes the driver to defer probe,
+make use of dev_err_probe() to log the reason. This makes the defer
+probe reason available and avoids alerting userspace about something
+that is not necessarily an error.
 
-Signed-off-by: Arun T <arun.t@intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20230915080635.1619942-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 1f1b820dc3c6 ("ASoC: SOF: Intel: mtl: Correct rom_status_reg")
+Fixes: 623a3531e9cf ("drm/panel: Add driver for Novatek NT35950 DSI DriverIC panels")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-8-619a28148e5c@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc-acpi-intel-match.h          |  2 +
- sound/soc/intel/common/Makefile               |  1 +
- .../intel/common/soc-acpi-intel-arl-match.c   | 51 +++++++++++++++++++
- 3 files changed, 54 insertions(+)
- create mode 100644 sound/soc/intel/common/soc-acpi-intel-arl-match.c
+ drivers/gpu/drm/panel/panel-novatek-nt35950.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/sound/soc-acpi-intel-match.h b/include/sound/soc-acpi-intel-match.h
-index e49b97d9e3ff2..845e7608ac375 100644
---- a/include/sound/soc-acpi-intel-match.h
-+++ b/include/sound/soc-acpi-intel-match.h
-@@ -32,6 +32,7 @@ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_lnl_machines[];
-+extern struct snd_soc_acpi_mach snd_soc_acpi_intel_arl_machines[];
+diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35950.c b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
+index 5d04957b1144f..ec2780be74d10 100644
+--- a/drivers/gpu/drm/panel/panel-novatek-nt35950.c
++++ b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
+@@ -573,10 +573,8 @@ static int nt35950_probe(struct mipi_dsi_device *dsi)
+ 		}
+ 		dsi_r_host = of_find_mipi_dsi_host_by_node(dsi_r);
+ 		of_node_put(dsi_r);
+-		if (!dsi_r_host) {
+-			dev_err(dev, "Cannot get secondary DSI host\n");
+-			return -EPROBE_DEFER;
+-		}
++		if (!dsi_r_host)
++			return dev_err_probe(dev, -EPROBE_DEFER, "Cannot get secondary DSI host\n");
  
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_cnl_sdw_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_cfl_sdw_machines[];
-@@ -42,6 +43,7 @@ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_sdw_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_sdw_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_sdw_machines[];
- extern struct snd_soc_acpi_mach snd_soc_acpi_intel_lnl_sdw_machines[];
-+extern struct snd_soc_acpi_mach snd_soc_acpi_intel_arl_sdw_machines[];
- 
- /*
-  * generic table used for HDA codec-based platforms, possibly with
-diff --git a/sound/soc/intel/common/Makefile b/sound/soc/intel/common/Makefile
-index 07aa37dd90e99..f7370e5b4e9e4 100644
---- a/sound/soc/intel/common/Makefile
-+++ b/sound/soc/intel/common/Makefile
-@@ -10,6 +10,7 @@ snd-soc-acpi-intel-match-objs := soc-acpi-intel-byt-match.o soc-acpi-intel-cht-m
- 	soc-acpi-intel-tgl-match.o soc-acpi-intel-ehl-match.o \
- 	soc-acpi-intel-jsl-match.o soc-acpi-intel-adl-match.o \
- 	soc-acpi-intel-rpl-match.o soc-acpi-intel-mtl-match.o \
-+	soc-acpi-intel-arl-match.o \
- 	soc-acpi-intel-lnl-match.o \
- 	soc-acpi-intel-hda-match.o \
- 	soc-acpi-intel-sdw-mockup-match.o
-diff --git a/sound/soc/intel/common/soc-acpi-intel-arl-match.c b/sound/soc/intel/common/soc-acpi-intel-arl-match.c
-new file mode 100644
-index 0000000000000..e52797aae6e65
---- /dev/null
-+++ b/sound/soc/intel/common/soc-acpi-intel-arl-match.c
-@@ -0,0 +1,51 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * soc-apci-intel-arl-match.c - tables and support for ARL ACPI enumeration.
-+ *
-+ * Copyright (c) 2023 Intel Corporation.
-+ */
-+
-+#include <sound/soc-acpi.h>
-+#include <sound/soc-acpi-intel-match.h>
-+
-+static const struct snd_soc_acpi_endpoint single_endpoint = {
-+	.num = 0,
-+	.aggregated = 0,
-+	.group_position = 0,
-+	.group_id = 0,
-+};
-+
-+static const struct snd_soc_acpi_adr_device rt711_0_adr[] = {
-+	{
-+		.adr = 0x000020025D071100ull,
-+		.num_endpoints = 1,
-+		.endpoints = &single_endpoint,
-+		.name_prefix = "rt711"
-+	}
-+};
-+
-+static const struct snd_soc_acpi_link_adr arl_rvp[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(rt711_0_adr),
-+		.adr_d = rt711_0_adr,
-+	},
-+	{}
-+};
-+
-+struct snd_soc_acpi_mach snd_soc_acpi_intel_arl_machines[] = {
-+	{},
-+};
-+EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_arl_machines);
-+
-+/* this table is used when there is no I2S codec present */
-+struct snd_soc_acpi_mach snd_soc_acpi_intel_arl_sdw_machines[] = {
-+	{
-+		.link_mask = 0x1, /* link0 required */
-+		.links = arl_rvp,
-+		.drv_name = "sof_sdw",
-+		.sof_tplg_filename = "sof-arl-rt711.tplg",
-+	},
-+	{},
-+};
-+EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_arl_sdw_machines);
+ 		nt->dsi[1] = mipi_dsi_device_register_full(dsi_r_host, info);
+ 		if (!nt->dsi[1]) {
 -- 
 2.43.0
 
