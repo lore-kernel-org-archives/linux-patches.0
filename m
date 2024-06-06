@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08E21A0DD0;
-	Thu,  6 Jun 2024 14:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FB31A0DD0;
+	Thu,  6 Jun 2024 14:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683684; cv=none; b=ZCzkm2idYnCviCxfCq4A7ONK4DdilO4xGzAZrIg6v6Fw2cOOIKOHbeuydn6VuT+u73booWA4IbCv5VVS3xdHrEdnx6+1jh5a8MZCbc8HZX9O1l1wpB3MIisU4r/nKGxiDz+WTMyewIEGXf0be9utGIBe3aoBOakCn9wHj4aAIcE=
+	t=1717683685; cv=none; b=thkLP+d/L+tKBRLj1k+oH5Mwa+wppD4FWzSZ2EhzRqTgD9IT1YFa78TTi3I9+Ga7c5PrnCJk0X78qqwj2rjKkMg7avbu99t6IM/qVPwlXy3XvIiGusP3iK2as2Q1AVd5jj0L0jYhlcmSfxITedEwyd4lScgpMdQfO6NDGe0ySAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683684; c=relaxed/simple;
-	bh=2jHDf4fS93+/BFvaIUaYLGBGTbZxR9uAfTsWqsQD8pQ=;
+	s=arc-20240116; t=1717683685; c=relaxed/simple;
+	bh=4spFuGTPE77OrzfTjGp5hkMHpKk/KK8iP98FKkUoU10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YC3jyik+faL7triS/qr2ihK4UmTtQXNZlFVyd7kZPh4Qoed3fSC9O0B0S5GZHe8vUEtIMv8kiipT3oX/zqMvxZttvJk/CLR+yZL7ltixxm/38tpxx5U+9SEu4qYcRf+Xua0lYpRwn9FOK8OwX7IIXNOyketbZ4E4EN3Rs6RA4ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVVnX4pc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=So6f237y1aPtPT8lygrZRtwAH6XzVUqAcWgLAmwomj/3MPJnHUPbWnfQPVUaSmkuPycG6ws2xEeSoHoHbpOJu/p0W0cBAr7/QMjMfQdowQeybyRSm5BtlTr4xH+woH3gYXZveJrevTPKOz0LC2B6tgiqsagF79yMcTY/QzCasFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbYzG2zn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVVnX4pc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBF8C2BD10;
-	Thu,  6 Jun 2024 14:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbYzG2zn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A986C2BD10;
+	Thu,  6 Jun 2024 14:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683684;
-	bh=2jHDf4fS93+/BFvaIUaYLGBGTbZxR9uAfTsWqsQD8pQ=;
+	s=korg; t=1717683685;
+	bh=4spFuGTPE77OrzfTjGp5hkMHpKk/KK8iP98FKkUoU10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVVnX4pcbYEVT4tUVmbguU/tgNK+fR1x0DtoSV+euK5qNztc8VHjwvxop0ELp59qX
-	 0X3KtddkU83IriAUVfPj2LmFggcOhr0O4kZWWX4tjvV7c9gvCe5wKuzuhWPcNM4rwI
-	 5T322X60p1VtPYwtkkNemYohnLdpNq8ROKenMkDI=
+	b=bbYzG2znW7ytncASMIzR3epEA36v/9jcaRXP8Z4j5tt5VcZ4KDkP3ti+O7+MtqyXo
+	 7rFxQdMEH08FX8sIA2vqmXtIwhs4RHPnh7Q7VcPTEMgHEaxkNkFNyr/zOpVfhs9TbY
+	 9uOtaJuerR6w84Cs89st0SU2CBw5shqZAETvLcG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 589/744] media: stk1160: fix bounds checking in stk1160_copy_video()
-Date: Thu,  6 Jun 2024 16:04:21 +0200
-Message-ID: <20240606131751.354545587@linuxfoundation.org>
+Subject: [PATCH 6.6 590/744] Input: cyapa - add missing input core locking to suspend/resume functions
+Date: Thu,  6 Jun 2024 16:04:22 +0200
+Message-ID: <20240606131751.392470456@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,81 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit faa4364bef2ec0060de381ff028d1d836600a381 ]
+[ Upstream commit 7b4e0b39182cf5e677c1fc092a3ec40e621c25b6 ]
 
-The subtract in this condition is reversed.  The ->length is the length
-of the buffer.  The ->bytesused is how many bytes we have copied thus
-far.  When the condition is reversed that means the result of the
-subtraction is always negative but since it's unsigned then the result
-is a very high positive value.  That means the overflow check is never
-true.
+Grab input->mutex during suspend/resume functions like it is done in
+other input drivers. This fixes the following warning during system
+suspend/resume cycle on Samsung Exynos5250-based Snow Chromebook:
 
-Additionally, the ->bytesused doesn't actually work for this purpose
-because we're not writing to "buf->mem + buf->bytesused".  Instead, the
-math to calculate the destination where we are writing is a bit
-involved.  You calculate the number of full lines already written,
-multiply by two, skip a line if necessary so that we start on an odd
-numbered line, and add the offset into the line.
+------------[ cut here ]------------
+WARNING: CPU: 1 PID: 1680 at drivers/input/input.c:2291 input_device_enabled+0x68/0x6c
+Modules linked in: ...
+CPU: 1 PID: 1680 Comm: kworker/u4:12 Tainted: G        W          6.6.0-rc5-next-20231009 #14109
+Hardware name: Samsung Exynos (Flattened Device Tree)
+Workqueue: events_unbound async_run_entry_fn
+ unwind_backtrace from show_stack+0x10/0x14
+ show_stack from dump_stack_lvl+0x58/0x70
+ dump_stack_lvl from __warn+0x1a8/0x1cc
+ __warn from warn_slowpath_fmt+0x18c/0x1b4
+ warn_slowpath_fmt from input_device_enabled+0x68/0x6c
+ input_device_enabled from cyapa_gen3_set_power_mode+0x13c/0x1dc
+ cyapa_gen3_set_power_mode from cyapa_reinitialize+0x10c/0x15c
+ cyapa_reinitialize from cyapa_resume+0x48/0x98
+ cyapa_resume from dpm_run_callback+0x90/0x298
+ dpm_run_callback from device_resume+0xb4/0x258
+ device_resume from async_resume+0x20/0x64
+ async_resume from async_run_entry_fn+0x40/0x15c
+ async_run_entry_fn from process_scheduled_works+0xbc/0x6a8
+ process_scheduled_works from worker_thread+0x188/0x454
+ worker_thread from kthread+0x108/0x140
+ kthread from ret_from_fork+0x14/0x28
+Exception stack(0xf1625fb0 to 0xf1625ff8)
+...
+---[ end trace 0000000000000000 ]---
+...
+------------[ cut here ]------------
+WARNING: CPU: 1 PID: 1680 at drivers/input/input.c:2291 input_device_enabled+0x68/0x6c
+Modules linked in: ...
+CPU: 1 PID: 1680 Comm: kworker/u4:12 Tainted: G        W          6.6.0-rc5-next-20231009 #14109
+Hardware name: Samsung Exynos (Flattened Device Tree)
+Workqueue: events_unbound async_run_entry_fn
+ unwind_backtrace from show_stack+0x10/0x14
+ show_stack from dump_stack_lvl+0x58/0x70
+ dump_stack_lvl from __warn+0x1a8/0x1cc
+ __warn from warn_slowpath_fmt+0x18c/0x1b4
+ warn_slowpath_fmt from input_device_enabled+0x68/0x6c
+ input_device_enabled from cyapa_gen3_set_power_mode+0x13c/0x1dc
+ cyapa_gen3_set_power_mode from cyapa_reinitialize+0x10c/0x15c
+ cyapa_reinitialize from cyapa_resume+0x48/0x98
+ cyapa_resume from dpm_run_callback+0x90/0x298
+ dpm_run_callback from device_resume+0xb4/0x258
+ device_resume from async_resume+0x20/0x64
+ async_resume from async_run_entry_fn+0x40/0x15c
+ async_run_entry_fn from process_scheduled_works+0xbc/0x6a8
+ process_scheduled_works from worker_thread+0x188/0x454
+ worker_thread from kthread+0x108/0x140
+ kthread from ret_from_fork+0x14/0x28
+Exception stack(0xf1625fb0 to 0xf1625ff8)
+...
+---[ end trace 0000000000000000 ]---
 
-To fix this buffer overflow, just take the actual destination where we
-are writing, if the offset is already out of bounds print an error and
-return.  Otherwise, write up to buf->length bytes.
-
-Fixes: 9cb2173e6ea8 ("[media] media: Add stk1160 new driver (easycap replacement)")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: d69f0a43c677 ("Input: use input_device_enabled()")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Link: https://lore.kernel.org/r/20231009121018.1075318-1-m.szyprowski@samsung.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/stk1160/stk1160-video.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/input/mouse/cyapa.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/stk1160/stk1160-video.c b/drivers/media/usb/stk1160/stk1160-video.c
-index 366f0e4a5dc0d..e79c45db60ab5 100644
---- a/drivers/media/usb/stk1160/stk1160-video.c
-+++ b/drivers/media/usb/stk1160/stk1160-video.c
-@@ -99,7 +99,7 @@ void stk1160_buffer_done(struct stk1160 *dev)
- static inline
- void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- {
--	int linesdone, lineoff, lencopy;
-+	int linesdone, lineoff, lencopy, offset;
- 	int bytesperline = dev->width * 2;
- 	struct stk1160_buffer *buf = dev->isoc_ctl.buf;
- 	u8 *dst = buf->mem;
-@@ -139,8 +139,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- 	 * Check if we have enough space left in the buffer.
- 	 * In that case, we force loop exit after copy.
- 	 */
--	if (lencopy > buf->bytesused - buf->length) {
--		lencopy = buf->bytesused - buf->length;
-+	offset = dst - (u8 *)buf->mem;
-+	if (offset > buf->length) {
-+		dev_warn_ratelimited(dev->dev, "out of bounds offset\n");
-+		return;
-+	}
-+	if (lencopy > buf->length - offset) {
-+		lencopy = buf->length - offset;
- 		remain = lencopy;
- 	}
+diff --git a/drivers/input/mouse/cyapa.c b/drivers/input/mouse/cyapa.c
+index 05851bc32541f..40b01cabaa337 100644
+--- a/drivers/input/mouse/cyapa.c
++++ b/drivers/input/mouse/cyapa.c
+@@ -1356,10 +1356,16 @@ static int cyapa_suspend(struct device *dev)
+ 	u8 power_mode;
+ 	int error;
  
-@@ -182,8 +187,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- 		 * Check if we have enough space left in the buffer.
- 		 * In that case, we force loop exit after copy.
- 		 */
--		if (lencopy > buf->bytesused - buf->length) {
--			lencopy = buf->bytesused - buf->length;
-+		offset = dst - (u8 *)buf->mem;
-+		if (offset > buf->length) {
-+			dev_warn_ratelimited(dev->dev, "offset out of bounds\n");
-+			return;
-+		}
-+		if (lencopy > buf->length - offset) {
-+			lencopy = buf->length - offset;
- 			remain = lencopy;
- 		}
+-	error = mutex_lock_interruptible(&cyapa->state_sync_lock);
++	error = mutex_lock_interruptible(&cyapa->input->mutex);
+ 	if (error)
+ 		return error;
+ 
++	error = mutex_lock_interruptible(&cyapa->state_sync_lock);
++	if (error) {
++		mutex_unlock(&cyapa->input->mutex);
++		return error;
++	}
++
+ 	/*
+ 	 * Runtime PM is enable only when device is in operational mode and
+ 	 * users in use, so need check it before disable it to
+@@ -1394,6 +1400,8 @@ static int cyapa_suspend(struct device *dev)
+ 		cyapa->irq_wake = (enable_irq_wake(client->irq) == 0);
+ 
+ 	mutex_unlock(&cyapa->state_sync_lock);
++	mutex_unlock(&cyapa->input->mutex);
++
+ 	return 0;
+ }
+ 
+@@ -1403,6 +1411,7 @@ static int cyapa_resume(struct device *dev)
+ 	struct cyapa *cyapa = i2c_get_clientdata(client);
+ 	int error;
+ 
++	mutex_lock(&cyapa->input->mutex);
+ 	mutex_lock(&cyapa->state_sync_lock);
+ 
+ 	if (device_may_wakeup(dev) && cyapa->irq_wake) {
+@@ -1421,6 +1430,7 @@ static int cyapa_resume(struct device *dev)
+ 	enable_irq(client->irq);
+ 
+ 	mutex_unlock(&cyapa->state_sync_lock);
++	mutex_unlock(&cyapa->input->mutex);
+ 	return 0;
+ }
  
 -- 
 2.43.0
