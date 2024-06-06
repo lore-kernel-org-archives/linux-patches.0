@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553FF19B588;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1563198A30;
 	Thu,  6 Jun 2024 14:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683065; cv=none; b=OQzvfDQHt+Xq63qyRNozgR2z4q10JU1G5H9/eOaxdwN++DdWyzHQL38jHfUnFaTBNiy8W8gz81Kqf3RiN0Gyv4aUtbUJT+vFqP8Z8UqEN0LUlP/5ALKDR171Nm9aKqw4RIoaxbn/3Ks9B1QNQBHNbrr0/P+orTOpq3hD7A3uTvw=
+	t=1717683065; cv=none; b=PBVDaXvMSoMhZYjb0Wip34zv3KZad1f7tcdsUysu1ZUdS2DLuzvuF6ocGeThKcppI2zkHd9UAWzzl/o1sQee9lwQyykwqQpbg0DaPwO3GZ2SAFwzuImWVBU3iSGFP/WIIla8//LSGDCPd1Ye2Axf7AmmdXjR4Qko0BFHfczxeu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683065; c=relaxed/simple;
-	bh=U3tvp00cBml/3/LozcTj/aStuQPzsTggVXKu4P/7SSI=;
+	bh=RA3O63zmGc5RQr4wu2ZhVs+xzcX1mEP+v0itS1ChMdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=on3jfwwsHlterPetPEfIwjv/tTFLkVaDOPrlFUZQ223bK1d5F2S0iXQHSRI6vFHtK0tOJPn/5zBoPC6BEX7867lMzXvw3LC6HQKh64B0nJx3QC8kLBJyVYd+uEfW9YSD74Cl+b3bQAa3U4Q7BW0V0kxbNy61GvkFgEYh03jP7q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZs+KFHs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IANptRFtLqBZY7PT9KHoyFLAxjz6Z4r/T+eN10kay2tmejTGndjqE5G9kBkSFjqkr1qnY1+pOJsKDVvyvXVk8tA0DzONSDtzaxcK0deaRS6xkQSWbvsyNq5aP7XQS4OgAmbfHrxX+colwTeOUBrUEyr/DBEymOGmBzobyBM5bPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vcsu2v9H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZs+KFHs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3273CC4AF08;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vcsu2v9H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1945C4AF0A;
 	Thu,  6 Jun 2024 14:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683065;
-	bh=U3tvp00cBml/3/LozcTj/aStuQPzsTggVXKu4P/7SSI=;
+	bh=RA3O63zmGc5RQr4wu2ZhVs+xzcX1mEP+v0itS1ChMdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZs+KFHsdkWIs7kmCbAYPgru3XNGPrKkim6FCG3qMCFn9P05DuhPl9Wt/els4jQwk
-	 6OKalOMHL05nV+Hnb0Bb7Qv1Q6kwltB5OPrJy4c+BbowjgO3Otkn0gskQSm/PLfpWx
-	 VKbxEPWnTiodV3roZxx/z1/3fiRgJWs/ChiPq8NU=
+	b=Vcsu2v9H0IBShEMrAfvtm0HgTxASSxzvb3Vw+M83EQ8z34lj4ACKnNPoWvCSkyS5W
+	 OujJrpZEk5rLiI5zw80YCovE492YN7MN9V96Q9xyPeNNrdo9rncjyMVkyqYu9GZkAj
+	 YwmsSnXuei82c2WcYtYpYT7drRJ8BiohWUSeSW3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Steve French <sfrench@samba.org>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Rohith Surabattula <rohiths.msft@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	linux-mm@kvack.org,
+	Jason Xing <kernelxing@tencent.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 278/374] cifs: Set zero_point in the copy_file_range() and remap_file_range()
-Date: Thu,  6 Jun 2024 16:04:17 +0200
-Message-ID: <20240606131701.206658882@linuxfoundation.org>
+Subject: [PATCH 6.9 269/374] tcp: remove 64 KByte limit for initial tp->rcv_wnd value
+Date: Thu,  6 Jun 2024 16:04:08 +0200
+Message-ID: <20240606131700.916314597@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -58,60 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 3758c485f6c9124d8ad76b88382004cbc28a0892 ]
+[ Upstream commit 378979e94e953c2070acb4f0e0c98d29260bd09d ]
 
-Set zero_point in the copy_file_range() and remap_file_range()
-implementations so that we don't skip reading data modified on a
-server-side copy.
+Recently, we had some servers upgraded to the latest kernel and noticed
+the indicator from the user side showed worse results than before. It is
+caused by the limitation of tp->rcv_wnd.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Steve French <sfrench@samba.org>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Rohith Surabattula <rohiths.msft@gmail.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-cc: linux-mm@kvack.org
-Stable-dep-of: 93a43155127f ("cifs: Fix missing set of remote_i_size")
+In 2018 commit a337531b942b ("tcp: up initial rmem to 128KB and SYN rwin
+to around 64KB") limited the initial value of tp->rcv_wnd to 65535, most
+CDN teams would not benefit from this change because they cannot have a
+large window to receive a big packet, which will be slowed down especially
+in long RTT. Small rcv_wnd means slow transfer speed, to some extent. It's
+the side effect for the latency/time-sensitive users.
+
+To avoid future confusion, current change doesn't affect the initial
+receive window on the wire in a SYN or SYN+ACK packet which are set within
+65535 bytes according to RFC 7323 also due to the limit in
+__tcp_transmit_skb():
+
+    th->window      = htons(min(tp->rcv_wnd, 65535U));
+
+In one word, __tcp_transmit_skb() already ensures that constraint is
+respected, no matter how large tp->rcv_wnd is. The change doesn't violate
+RFC.
+
+Let me provide one example if with or without the patch:
+Before:
+client   --- SYN: rwindow=65535 ---> server
+client   <--- SYN+ACK: rwindow=65535 ----  server
+client   --- ACK: rwindow=65536 ---> server
+Note: for the last ACK, the calculation is 512 << 7.
+
+After:
+client   --- SYN: rwindow=65535 ---> server
+client   <--- SYN+ACK: rwindow=65535 ----  server
+client   --- ACK: rwindow=175232 ---> server
+Note: I use the following command to make it work:
+ip route change default via [ip] dev eth0 metric 100 initrwnd 120
+For the last ACK, the calculation is 1369 << 7.
+
+When we apply such a patch, having a large rcv_wnd if the user tweak this
+knob can help transfer data more rapidly and save some rtts.
+
+Fixes: a337531b942b ("tcp: up initial rmem to 128KB and SYN rwin to around 64KB")
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20240521134220.12510-1-kerneljasonxing@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv4/tcp_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index 39277c37185ca..c8449f43856c5 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -1342,6 +1342,8 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	rc = cifs_flush_folio(target_inode, destend, &fstart, &fend, false);
- 	if (rc)
- 		goto unlock;
-+	if (fend > target_cifsi->netfs.zero_point)
-+		target_cifsi->netfs.zero_point = fend + 1;
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 02caeb7bcf634..16ef24a37c498 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -229,7 +229,7 @@ void tcp_select_initial_window(const struct sock *sk, int __space, __u32 mss,
+ 	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_workaround_signed_windows))
+ 		(*rcv_wnd) = min(space, MAX_TCP_WINDOW);
+ 	else
+-		(*rcv_wnd) = min_t(u32, space, U16_MAX);
++		(*rcv_wnd) = space;
  
- 	/* Discard all the folios that overlap the destination region. */
- 	cifs_dbg(FYI, "about to discard pages %llx-%llx\n", fstart, fend);
-@@ -1360,6 +1362,8 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 			fscache_resize_cookie(cifs_inode_cookie(target_inode),
- 					      new_size);
- 		}
-+		if (rc == 0 && new_size > target_cifsi->netfs.zero_point)
-+			target_cifsi->netfs.zero_point = new_size;
- 	}
- 
- 	/* force revalidate of size and timestamps of target file now
-@@ -1451,6 +1455,8 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
- 	rc = cifs_flush_folio(target_inode, destend, &fstart, &fend, false);
- 	if (rc)
- 		goto unlock;
-+	if (fend > target_cifsi->netfs.zero_point)
-+		target_cifsi->netfs.zero_point = fend + 1;
- 
- 	/* Discard all the folios that overlap the destination region. */
- 	truncate_inode_pages_range(&target_inode->i_data, fstart, fend);
+ 	if (init_rcv_wnd)
+ 		*rcv_wnd = min(*rcv_wnd, init_rcv_wnd * mss);
 -- 
 2.43.0
 
