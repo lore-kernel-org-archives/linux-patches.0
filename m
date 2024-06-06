@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43DE1A254E;
-	Thu,  6 Jun 2024 14:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD961A186B;
+	Thu,  6 Jun 2024 14:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683191; cv=none; b=M2xK1BHvEJGa3Ri1oH8PzBLJanZ6BotElzdpOyCo3VRm5i4kE2nvE8EXCRX1vtYMdC5qL9FAGJcKXKXbpOO7KsA3D+0JRsJwbGWJqysp8N/i18e5HeKsrEc7XPF9ZXtU/MviXsKrvgaTIuPZ3/gDxU6CY1MD5Z2twsmoW26J83I=
+	t=1717683191; cv=none; b=GUcV9pu2w0jnzI4almyTuNWuOtrWzYoSESmQ7DI6hxltGQyBfOqS0nHEQ3p1PTCTTA1Rw4Y5U1MsE7/6GCNMh/MnrGSG1zzT+PAizW4piQRMFOvjeTx1rxlaccZX5TNnyASfIuKaR4rxQo79pimINMBMOJENEbs0BgQ/BBV0UEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683191; c=relaxed/simple;
-	bh=1LpugzYX+8b7baNrsbY/2hhFsTRErMiskP9Dv8vTsqE=;
+	bh=bQB9tEQXxLncc9QZPgo91/kV3vgXdSmYzkzeXqZ2VdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LfaQUmEXJwxfrGj4bPHfIzHvtXHad96/lS4isUVtIwHtpXLbNtxz4NTWyDV+gnJGH54vvfIyR0jPOE8wt/RMTR+wORwTq+7C32Wm0qglyxvTFHLxItgB1OlzEjf9DKMRSXkNZh5dTnL6FUVu7D+1lifzLZs2MsGcS2IcjT541tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaJIpfwt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gKlHIBe+8q+nIGJklMr4SleUO0yS6kl+dp+8KVxQ7g8/yzTx3ECpy16kvShbPQ+BY4+5EC/DtHKJfyEBdr4RO5SJaw2MC3VrofUjLs3TH6XVyCX/q6t0YqAQNIPzE4r+XXJnvOlulkshuljTLsCDgf8cW/l/EkTXj5m4Cu490Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ka3UL1eM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaJIpfwt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C7CC2BD10;
-	Thu,  6 Jun 2024 14:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ka3UL1eM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5A2C32782;
+	Thu,  6 Jun 2024 14:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683190;
-	bh=1LpugzYX+8b7baNrsbY/2hhFsTRErMiskP9Dv8vTsqE=;
+	s=korg; t=1717683191;
+	bh=bQB9tEQXxLncc9QZPgo91/kV3vgXdSmYzkzeXqZ2VdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TaJIpfwtTdgqyOZIzD9sE39uhQZ+3BrNi7GRomKERg5Ue34CkAdRe8cTX4i0vLGWB
-	 Bb/ZzbzDMzvK3I1Xbv0BocQplNNkv7QzIitA/UnsUimvbqv60Ua678gz5TZ0TYOwF1
-	 HCjOYT/d2o91AKxlBGu9PkmzOKVbZlWSfIdWihXw=
+	b=ka3UL1eMfAuDczITg/B0yVfXHGyxO/ehw326DCatwFIGjMerwWtcIIaDn67IogPYj
+	 yT4eTvaGVcxcogHsLy0qBgJGsoHilWlr0kxkriodEpu3WXJYyayWKWaSiwM028solm
+	 puGcYabuLQ29T9S5P3SzEVbkIl4aBeEAcpiRaBgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 134/744] wifi: iwlwifi: mvm: allocate STA links only for active links
-Date: Thu,  6 Jun 2024 15:56:46 +0200
-Message-ID: <20240606131736.719789222@linuxfoundation.org>
+Subject: [PATCH 6.1 065/473] nvmet: prevent sprintf() overflow in nvmet_subsys_nsid_exists()
+Date: Thu,  6 Jun 2024 15:59:54 +0200
+Message-ID: <20240606131702.036848953@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 62bdd97598f8be82a24f556f78336b05d1c3e84b ]
+[ Upstream commit d15dcd0f1a4753b57e66c64c8dc2a9779ff96aab ]
 
-For the mvm driver, data structures match what's in the firmware,
-we allocate FW IDs for them already etc. During link switch we
-already allocate/free the STA links appropriately, but initially
-we'd allocate them always. Fix this to allocate memory, a STA ID,
-etc. only for active links.
+The nsid value is a u32 that comes from nvmet_req_find_ns().  It's
+endian data and we're on an error path and both of those raise red
+flags.  So let's make this safer.
 
-Fixes: 57974a55d995 ("wifi: iwlwifi: mvm: refactor iwl_mvm_mac_sta_state_common()")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240319100755.f2093ff73465.Ie891e1cc9c9df09ae22be6aad5c143e376f40f0e@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+1) Make the buffer large enough for any u32.
+2) Remove the unnecessary initialization.
+3) Use snprintf() instead of sprintf() for even more safety.
+4) The sprintf() function returns the number of bytes printed, not
+   counting the NUL terminator. It is impossible for the return value to
+   be <= 0 so delete that.
+
+Fixes: 505363957fad ("nvmet: fix nvme status code when namespace is disabled")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nvme/target/configfs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-index 278454c116fee..3907707e87716 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-@@ -582,14 +582,14 @@ static int iwl_mvm_mld_alloc_sta_links(struct iwl_mvm *mvm,
- 				       struct ieee80211_sta *sta)
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index b1f5fa45bb4ac..40c1c3db5d7cd 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -618,10 +618,9 @@ static struct configfs_attribute *nvmet_ns_attrs[] = {
+ bool nvmet_subsys_nsid_exists(struct nvmet_subsys *subsys, u32 nsid)
  {
- 	struct iwl_mvm_sta *mvm_sta = iwl_mvm_sta_from_mac80211(sta);
-+	struct ieee80211_link_sta *link_sta;
- 	unsigned int link_id;
- 	int ret;
+ 	struct config_item *ns_item;
+-	char name[4] = {};
++	char name[12];
  
- 	lockdep_assert_held(&mvm->mutex);
- 
--	for (link_id = 0; link_id < ARRAY_SIZE(sta->link); link_id++) {
--		if (!rcu_access_pointer(sta->link[link_id]) ||
--		    mvm_sta->link[link_id])
-+	for_each_sta_active_link(vif, sta, link_sta, link_id) {
-+		if (WARN_ON(mvm_sta->link[link_id]))
- 			continue;
- 
- 		ret = iwl_mvm_mld_alloc_sta_link(mvm, vif, sta, link_id);
+-	if (sprintf(name, "%u", nsid) <= 0)
+-		return false;
++	snprintf(name, sizeof(name), "%u", nsid);
+ 	mutex_lock(&subsys->namespaces_group.cg_subsys->su_mutex);
+ 	ns_item = config_group_find_item(&subsys->namespaces_group, name);
+ 	mutex_unlock(&subsys->namespaces_group.cg_subsys->su_mutex);
 -- 
 2.43.0
 
