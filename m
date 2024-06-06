@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB8719B5AF;
-	Thu,  6 Jun 2024 14:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80959195FDF;
+	Thu,  6 Jun 2024 14:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683070; cv=none; b=huJD8pDibmgseSKu28hnX4NAZSuFnKd88uYUHnpV+I1aMa8Q9s4Vgl10xXf5lyVhERDeCUNKr7hFJZXW/p+io4c2YsnKFbksKpod0pk+kytxfUoHXGE4h0I+Y4O4jPwv3UvGM9/cz+iIr7RoO6z7O5doN5em1endYDdqUhZ2oCU=
+	t=1717683070; cv=none; b=UYrg58DpBk92YRzc2CgQxnPH7Ur+GeQ83kC4+GiXLFlzO5dPJcdKxrHjtCySWLiyT8gzXnu78u7SCuUHwuYw1doj8rFXwxoH3wXLs1P2CEK6gHYAsd0sf1iVCtma8c3v4U+dcMkojgXr+mD4f6Z+AScaKaN4ZdlWfSo/m0YIowc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683070; c=relaxed/simple;
-	bh=26ZFl6Vhb2f2h0h8u2a51gHV1mX3ZK0GggPLvWG2jvY=;
+	bh=pOCwHl2jSmTW160loekKTXYQLnQH+lA8b6phRRT7QV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X+RrvM5yUaCpAmyjTUWJqe1Pi+PeEMWyQTocKSyYrS8VEv7uEOYI1sgo/fA0vHBvWwqUdGjO4xpZW45Nn/852s7l0/hMZpot77Mjk7YDukybjiHGf8gs26YUQ+kU+q+6i1ferzWA/cBtvy/pG1j+mqfREEjr2CTj58vrOUm03Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGJcyhGZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SP8pYG3Oz8qdhi8HeQY8n6WZJqha+9/HOpMUa2UR5Kn7ZNau8FR9dbDdufss960WGmao2AjtaS8iQNYtUFmOQmAIWxIWb3GFq6j5aYHiQIdyexu+JCnedOefKLKZDvo+6he5x9tVG58s8XILNMRL6tkyA0Axgkkicnm/W7ZjkYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6e6YCVo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGJcyhGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A38C4AF08;
-	Thu,  6 Jun 2024 14:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6e6YCVo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32252C4AF11;
+	Thu,  6 Jun 2024 14:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683070;
-	bh=26ZFl6Vhb2f2h0h8u2a51gHV1mX3ZK0GggPLvWG2jvY=;
+	s=korg; t=1717683069;
+	bh=pOCwHl2jSmTW160loekKTXYQLnQH+lA8b6phRRT7QV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGJcyhGZXHvce9sqKJt7MlZbCd4kJ9njrw7UkWkXvUGyETX8TiBgUg64RhRwKd9AB
-	 zE4yBtQXbuPgeK9uxq/1Qy6rp/9nfetgwyyiVIj6E+ZeqM1Fu1QaRvG8Qk/0bhXKri
-	 6Ninr6OffMI6b615jHz4um0GZR2KSRddY4EDXY3E=
+	b=g6e6YCVo9kuMM6EHUEnJO2SgpgZGPKfveu8dTSwiK9U6gSrS+CDZvURR/Q7S18S93
+	 Xf2UdmZweyrnd2luweR7EyS0Ulre6Lja+7HhEW5XupiwzZB5CzxQ6oksrk2YNxyJev
+	 Q50bPnJ8RQ7isWmMGJ0EmW2Gq7mihEgkUmiQFVAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Brian Welty <brian.welty@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 331/374] ALSA: seq: Dont clear bank selection at event -> UMP MIDI2 conversion
-Date: Thu,  6 Jun 2024 16:05:10 +0200
-Message-ID: <20240606131702.941724949@linuxfoundation.org>
+Subject: [PATCH 6.9 329/374] drm/xe: Only use reserved BCS instances for usm migrate exec queue
+Date: Thu,  6 Jun 2024 16:05:08 +0200
+Message-ID: <20240606131702.881023303@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -44,43 +48,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit a200df7deb3186cd7b55abb77ab96dfefb8a4f09 ]
+[ Upstream commit c8ea2c31f5ea437199b239d76ad5db27343edb0c ]
 
-The current code to convert from a legacy sequencer event to UMP MIDI2
-clears the bank selection at each time the program change is
-submitted.  This is confusing and may lead to incorrect bank values
-tranmitted to the destination in the end.
+The GuC context scheduling queue is 2 entires deep, thus it is possible
+for a migration job to be stuck behind a fault if migration exec queue
+shares engines with user jobs. This can deadlock as the migrate exec
+queue is required to service page faults. Avoid deadlock by only using
+reserved BCS instances for usm migrate exec queue.
 
-Drop the line to clear the bank info and keep the provided values.
-
-Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
-Link: https://lore.kernel.org/r/20240527151852.29036-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: a043fbab7af5 ("drm/xe/pvc: Use fast copy engines as migrate engine on PVC")
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240415190453.696553-2-matthew.brost@intel.com
+Reviewed-by: Brian Welty <brian.welty@intel.com>
+(cherry picked from commit 04f4a70a183a688a60fe3882d6e4236ea02cfc67)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_ump_convert.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/xe/xe_migrate.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
-index c21be87f5da9e..f5d22dd008426 100644
---- a/sound/core/seq/seq_ump_convert.c
-+++ b/sound/core/seq/seq_ump_convert.c
-@@ -892,7 +892,6 @@ static int pgm_ev_to_ump_midi2(const struct snd_seq_event *event,
- 		data->pg.bank_msb = cc->cc_bank_msb;
- 		data->pg.bank_lsb = cc->cc_bank_lsb;
- 		cc->bank_set = 0;
--		cc->cc_bank_msb = cc->cc_bank_lsb = 0;
- 	}
- 	return 1;
+diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
+index 2ba4fb9511f63..aca519f5b85d9 100644
+--- a/drivers/gpu/drm/xe/xe_migrate.c
++++ b/drivers/gpu/drm/xe/xe_migrate.c
+@@ -33,7 +33,6 @@
+ #include "xe_sync.h"
+ #include "xe_trace.h"
+ #include "xe_vm.h"
+-#include "xe_wa.h"
+ 
+ /**
+  * struct xe_migrate - migrate context.
+@@ -299,10 +298,6 @@ static int xe_migrate_prepare_vm(struct xe_tile *tile, struct xe_migrate *m,
  }
+ 
+ /*
+- * Due to workaround 16017236439, odd instance hardware copy engines are
+- * faster than even instance ones.
+- * This function returns the mask involving all fast copy engines and the
+- * reserved copy engine to be used as logical mask for migrate engine.
+  * Including the reserved copy engine is required to avoid deadlocks due to
+  * migrate jobs servicing the faults gets stuck behind the job that faulted.
+  */
+@@ -316,8 +311,7 @@ static u32 xe_migrate_usm_logical_mask(struct xe_gt *gt)
+ 		if (hwe->class != XE_ENGINE_CLASS_COPY)
+ 			continue;
+ 
+-		if (!XE_WA(gt, 16017236439) ||
+-		    xe_gt_is_usm_hwe(gt, hwe) || hwe->instance & 1)
++		if (xe_gt_is_usm_hwe(gt, hwe))
+ 			logical_mask |= BIT(hwe->logical_instance);
+ 	}
+ 
+@@ -368,6 +362,10 @@ struct xe_migrate *xe_migrate_init(struct xe_tile *tile)
+ 		if (!hwe || !logical_mask)
+ 			return ERR_PTR(-EINVAL);
+ 
++		/*
++		 * XXX: Currently only reserving 1 (likely slow) BCS instance on
++		 * PVC, may want to revisit if performance is needed.
++		 */
+ 		m->q = xe_exec_queue_create(xe, vm, logical_mask, 1, hwe,
+ 					    EXEC_QUEUE_FLAG_KERNEL |
+ 					    EXEC_QUEUE_FLAG_PERMANENT |
 -- 
 2.43.0
 
