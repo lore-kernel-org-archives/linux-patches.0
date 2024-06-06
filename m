@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41136196DAB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06680196C62;
 	Thu,  6 Jun 2024 14:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682903; cv=none; b=LCqFGQyt2+aKLpSIulJSwqwKjxP0UxcJmvufvStpahmMjQxm05+dONdnw9m/2821EDZUHij6TXH5X/yC/q40UcktZvPhjumWXDWWGVmADyyuTflW2g+pcu76ODwezar31H7mRB9AlG/Ir8OTYat+xiz6FgxYBgNSCRR2JufZ0ZA=
+	t=1717682904; cv=none; b=guQJScYeCNRLH/yRRkUxF0e4BSeXwztJVGAQrjz/e1ZDk1+YlBkvZrGQSzLOByrweXOIWEQCfcSKxl0F9WXT2n5Vm/sGQMi4v6/TFCTYiUi7I1ANC3wWJQ0chGOF+FkRXVqVVNmna2QjtGdprrLv7YRM7widT8fm9MjaiSqA8fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682903; c=relaxed/simple;
-	bh=R2UZRWyh9Ya3GvNZbUi2wBq+ptnFbH3xHezqDUSM2is=;
+	s=arc-20240116; t=1717682904; c=relaxed/simple;
+	bh=5VWzQKbEpsNnMWaThvLJVy6XcffFL8k4zzPXVI8E0X4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qX8EtBg4zeMfz8019r+004xDXgoVVNyvBJU3GLpAlpgDpEiIFLToDGNPVAh1GUhKhn2E9YtW0l/Luqzhw/AABLLWr3fZ9oU7uvb1gaT1Vy4rE76UMJRlFVAl6mJDR1OucPU09Cjow2n2xo7ztJ8nUvfH4LX3Sncjfm/3LVSiVZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16lQc7u7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YxQ4irSCY3mSn00zqGrO4VhjryfTWbB8a/J3nD3wjpEVTVp/UyFNm0Z1uewpdtsT2NMS1XYRXvzM66//FGusG0sEhKsse+OxPaN/VTcK/fY9Pvi+6HMgpeE77keUi5YPJR5CIUv+w3s+gpkJrHUNQ0PzCipec1JXXcnGmV4lEl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOwpzyNa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16lQc7u7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEEDC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOwpzyNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949F7C2BD10;
 	Thu,  6 Jun 2024 14:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682903;
-	bh=R2UZRWyh9Ya3GvNZbUi2wBq+ptnFbH3xHezqDUSM2is=;
+	bh=5VWzQKbEpsNnMWaThvLJVy6XcffFL8k4zzPXVI8E0X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16lQc7u7qSjT6Tr9SYs/7eVZ5GzXo7seTA3/hY3QiNZKaEBKQWon8XN7s1HqQNrZC
-	 mwkHs74u0d1bc/VISjjS71ReDkCMZBzEM0TywuT8Z9mcRXqs0OWI0BRljUhtXkG6cZ
-	 bXt02l6jvUKb9wUQZ5Oh+eyabv/WMP4/l2gMHSQQ=
+	b=YOwpzyNaa7yiZ6eO3z/rwphbQ+H6aQbMIQG9cD7d6DjZvraHjjLgdv/kRkoWA0aVY
+	 0iuXwywOp4rdzsCDzE6GRIF19xESRs5j+iPjJELy8aair0fYQLwbI+dN8YcqZgYit5
+	 8wDky2yrCp7wIHnN33tbtqJgMH0r+ifpUBtaH8B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 025/374] serial: max3100: Update uart_driver_registered on driver removal
-Date: Thu,  6 Jun 2024 16:00:04 +0200
-Message-ID: <20240606131652.657969048@linuxfoundation.org>
+Subject: [PATCH 6.9 008/374] f2fs: multidev: fix to recognize valid zero block address
+Date: Thu,  6 Jun 2024 15:59:47 +0200
+Message-ID: <20240606131652.004682760@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -45,75 +47,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 712a1fcb38dc7cac6da63ee79a88708fbf9c45ec ]
+[ Upstream commit 33e62cd7b4c281cd737c62e5d8c4f0e602a8c5c5 ]
 
-The removal of the last MAX3100 device triggers the removal of
-the driver. However, code doesn't update the respective global
-variable and after insmod — rmmod — insmod cycle the kernel
-oopses:
+As reported by Yi Zhang in mailing list [1], kernel warning was catched
+during zbd/010 test as below:
 
-  max3100 spi-PRP0001:01: max3100_probe: adding port 0
-  BUG: kernel NULL pointer dereference, address: 0000000000000408
-  ...
-  RIP: 0010:serial_core_register_port+0xa0/0x840
-  ...
-   max3100_probe+0x1b6/0x280 [max3100]
-   spi_probe+0x8d/0xb0
+./check zbd/010
+zbd/010 (test gap zone support with F2FS)                    [failed]
+    runtime    ...  3.752s
+    something found in dmesg:
+    [ 4378.146781] run blktests zbd/010 at 2024-02-18 11:31:13
+    [ 4378.192349] null_blk: module loaded
+    [ 4378.209860] null_blk: disk nullb0 created
+    [ 4378.413285] scsi_debug:sdebug_driver_probe: scsi_debug: trim
+poll_queues to 0. poll_q/nr_hw = (0/1)
+    [ 4378.422334] scsi host15: scsi_debug: version 0191 [20210520]
+                     dev_size_mb=1024, opts=0x0, submit_queues=1, statistics=0
+    [ 4378.434922] scsi 15:0:0:0: Direct-Access-ZBC Linux
+scsi_debug       0191 PQ: 0 ANSI: 7
+    [ 4378.443343] scsi 15:0:0:0: Power-on or device reset occurred
+    [ 4378.449371] sd 15:0:0:0: Attached scsi generic sg5 type 20
+    [ 4378.449418] sd 15:0:0:0: [sdf] Host-managed zoned block device
+    ...
+    (See '/mnt/tests/gitlab.com/api/v4/projects/19168116/repository/archive.zip/storage/blktests/blk/blktests/results/nodev/zbd/010.dmesg'
 
-Update the actual state so next time UART driver will be registered
-again.
+WARNING: CPU: 22 PID: 44011 at fs/iomap/iter.c:51
+CPU: 22 PID: 44011 Comm: fio Not tainted 6.8.0-rc3+ #1
+RIP: 0010:iomap_iter+0x32b/0x350
+Call Trace:
+ <TASK>
+ __iomap_dio_rw+0x1df/0x830
+ f2fs_file_read_iter+0x156/0x3d0 [f2fs]
+ aio_read+0x138/0x210
+ io_submit_one+0x188/0x8c0
+ __x64_sys_io_submit+0x8c/0x1a0
+ do_syscall_64+0x86/0x170
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
 
-Hugo also noticed, that the error path in the probe also affected
-by having the variable set, and not cleared. Instead of clearing it
-move the assignment after the successfull uart_register_driver() call.
+Shinichiro Kawasaki helps to analyse this issue and proposes a potential
+fixing patch in [2].
 
-Fixes: 7831d56b0a35 ("tty: MAX3100")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240402195306.269276-3-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Quoted from reply of Shinichiro Kawasaki:
+
+"I confirmed that the trigger commit is dbf8e63f48af as Yi reported. I took a
+look in the commit, but it looks fine to me. So I thought the cause is not
+in the commit diff.
+
+I found the WARN is printed when the f2fs is set up with multiple devices,
+and read requests are mapped to the very first block of the second device in the
+direct read path. In this case, f2fs_map_blocks() and f2fs_map_blocks_cached()
+modify map->m_pblk as the physical block address from each block device. It
+becomes zero when it is mapped to the first block of the device. However,
+f2fs_iomap_begin() assumes that map->m_pblk is the physical block address of the
+whole f2fs, across the all block devices. It compares map->m_pblk against
+NULL_ADDR == 0, then go into the unexpected branch and sets the invalid
+iomap->length. The WARN catches the invalid iomap->length.
+
+This WARN is printed even for non-zoned block devices, by following steps.
+
+ - Create two (non-zoned) null_blk devices memory backed with 128MB size each:
+   nullb0 and nullb1.
+ # mkfs.f2fs /dev/nullb0 -c /dev/nullb1
+ # mount -t f2fs /dev/nullb0 "${mount_dir}"
+ # dd if=/dev/zero of="${mount_dir}/test.dat" bs=1M count=192
+ # dd if="${mount_dir}/test.dat" of=/dev/null bs=1M count=192 iflag=direct
+
+..."
+
+So, the root cause of this issue is: when multi-devices feature is on,
+f2fs_map_blocks() may return zero blkaddr in non-primary device, which is
+a verified valid block address, however, f2fs_iomap_begin() treats it as
+an invalid block address, and then it triggers the warning in iomap
+framework code.
+
+Finally, as discussed, we decide to use a more simple and direct way that
+checking (map.m_flags & F2FS_MAP_MAPPED) condition instead of
+(map.m_pblk != NULL_ADDR) to fix this issue.
+
+Thanks a lot for the effort of Yi Zhang and Shinichiro Kawasaki on this
+issue.
+
+[1] https://lore.kernel.org/linux-f2fs-devel/CAHj4cs-kfojYC9i0G73PRkYzcxCTex=-vugRFeP40g_URGvnfQ@mail.gmail.com/
+[2] https://lore.kernel.org/linux-f2fs-devel/gngdj77k4picagsfdtiaa7gpgnup6fsgwzsltx6milmhegmjff@iax2n4wvrqye/
+
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Closes: https://lore.kernel.org/linux-f2fs-devel/CAHj4cs-kfojYC9i0G73PRkYzcxCTex=-vugRFeP40g_URGvnfQ@mail.gmail.com/
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
+Fixes: 1517c1a7a445 ("f2fs: implement iomap operations")
+Fixes: 8d3c1fa3fa5e ("f2fs: don't rely on F2FS_MAP_* in f2fs_iomap_begin")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max3100.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/max3100.c b/drivers/tty/serial/max3100.c
-index 45022f2909f0a..b3e63b6a402e1 100644
---- a/drivers/tty/serial/max3100.c
-+++ b/drivers/tty/serial/max3100.c
-@@ -749,13 +749,14 @@ static int max3100_probe(struct spi_device *spi)
- 	mutex_lock(&max3100s_lock);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index d9494b5fc7c18..5ef1874b572a6 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -4185,7 +4185,7 @@ static int f2fs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+ 	if (WARN_ON_ONCE(map.m_pblk == COMPRESS_ADDR))
+ 		return -EINVAL;
  
- 	if (!uart_driver_registered) {
--		uart_driver_registered = 1;
- 		retval = uart_register_driver(&max3100_uart_driver);
- 		if (retval) {
- 			printk(KERN_ERR "Couldn't register max3100 uart driver\n");
- 			mutex_unlock(&max3100s_lock);
- 			return retval;
- 		}
-+
-+		uart_driver_registered = 1;
- 	}
- 
- 	for (i = 0; i < MAX_MAX3100; i++)
-@@ -841,6 +842,7 @@ static void max3100_remove(struct spi_device *spi)
- 		}
- 	pr_debug("removing max3100 driver\n");
- 	uart_unregister_driver(&max3100_uart_driver);
-+	uart_driver_registered = 0;
- 
- 	mutex_unlock(&max3100s_lock);
- }
+-	if (map.m_pblk != NULL_ADDR) {
++	if (map.m_flags & F2FS_MAP_MAPPED) {
+ 		iomap->length = blks_to_bytes(inode, map.m_len);
+ 		iomap->type = IOMAP_MAPPED;
+ 		iomap->flags |= IOMAP_F_MERGED;
 -- 
 2.43.0
 
