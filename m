@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4260E1B3F32;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D681B3F2D;
 	Thu,  6 Jun 2024 14:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683434; cv=none; b=EFG1XgwAqtAgMP1IDCCc9LdsH4kT0FwV5Fj2VRX3COj0PBTdX5O1lki60YHlFXqrdAu1O+/R1i229pXFNnU0QjmgLTBckWO5lMfrKgEJhSfSfqQC8EcdkGrYztbGUJeAqQ51tTcT98UivzE1g8RZys2ABvROIDCUTRKqLHmXJk0=
+	t=1717683434; cv=none; b=pOxXdarqf2rgVDHPuGda9/PSaXqM/2T0LmiLudXv8r0MjEwgeDlc0+bY1MFW9HVesO/Z9CTOL3HHMSQ9YuuiJsLAVmDKZaGKwKyDELfCgOEYVp5Ecm57KLoltJQEDIMN61/FEn7W7ms1r7xtG2mrStAqyXsHPa8I8GeN62g14T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683434; c=relaxed/simple;
-	bh=sExuCXoCSxixjQo/Q0jLJAjZZZ+X6r4JCnD+IRHKjCw=;
+	bh=HgO2mstBLzH3Xho2GCeUso8sYoKm7FKUNhbubfHGZu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qbEGqUkAriqOqPdAWRez/7khiUqWgNMyHWFwJ1IbazwTOQHoPyoBpeIshLSwZH2gqmGNlBnNkFup9WjlLoz4wieTjYX3veA5p7iYkYiptqI5YGMGW1vI/WlfqI5aalI1+oShAoCC0Ba+UDgPn4B1oOJqyIr0RtSTSqRgtYw1lRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/d/8/v3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ze3OopnThfC6avX8VEnNdAuClqcNF9/ENCiH10WzFYmwj8tWY0B0JBbMnp4SKVEcK7lbhD9XmX96t2AIQcAEEd4dpSsnfi65TqkdmZ5IlbI6hPrRO6gpHLAkgnwtDiSd8ZaVNtd7bqj7pyKtVhsq+2jx18UbKjrwwu7KQSgL/Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0c9OJ9JM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/d/8/v3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19002C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0c9OJ9JM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82330C2BD10;
 	Thu,  6 Jun 2024 14:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683434;
-	bh=sExuCXoCSxixjQo/Q0jLJAjZZZ+X6r4JCnD+IRHKjCw=;
+	bh=HgO2mstBLzH3Xho2GCeUso8sYoKm7FKUNhbubfHGZu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/d/8/v39QylCVngaMByFtbNxR37NkYTrfSe1uweNjYbOSaCAROVjqgkNFj1CtvGn
-	 HZ583RHIWhFxWdAL5IEy7sJmMnSZ0GD6kW+uQIuIz/J1Kv1EDUb0m9kdVAyrKsrYoX
-	 gG2lp2rxcPgr5mAp0aZmdA52w+lodIDwiUDJCQec=
+	b=0c9OJ9JMV+2CIUV9BQyUEBOc1RxC/LzHQvCBzoT6s5/CuLFYE9EpRQq8BMdNpO3/b
+	 HBHvIdZlookUAjHZZnEP0ChTZ2oh4/QaanISsTRNw5NMF74oUsQ23B/Yxs2u9bZoWs
+	 cFY3Ub+BdA8OJIVhYflx92gSYPwc6I1iE9dbUsOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yabin Cui <yabinc@google.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
+	Beau Belgrave <beaub@linux.microsoft.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 319/473] coresight: etm4x: Fix access to resource selector registers
-Date: Thu,  6 Jun 2024 16:04:08 +0200
-Message-ID: <20240606131710.477139507@linuxfoundation.org>
+Subject: [PATCH 6.6 379/744] tracing/user_events: Fix non-spaced field matching
+Date: Thu,  6 Jun 2024 16:00:51 +0200
+Message-ID: <20240606131744.633741716@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +47,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Beau Belgrave <beaub@linux.microsoft.com>
 
-[ Upstream commit d6fc00d0f640d6010b51054aa8b0fd191177dbc9 ]
+[ Upstream commit bd125a084091396f3e796bb3dc009940d9771811 ]
 
-Resource selector pair 0 is always implemented and reserved. We must not
-touch it, even during save/restore for CPU Idle. Rest of the driver is
-well behaved. Fix the offending ones.
+When the ABI was updated to prevent same name w/different args, it
+missed an important corner case when fields don't end with a space.
+Typically, space is used for fields to help separate them, like
+"u8 field1; u8 field2". If no spaces are used, like
+"u8 field1;u8 field2", then the parsing works for the first time.
+However, the match check fails on a subsequent register, leading to
+confusion.
 
-Reported-by: Yabin Cui <yabinc@google.com>
-Fixes: f188b5e76aae ("coresight: etm4x: Save/restore state across CPU low power states")
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Tested-by: Yabin Cui <yabinc@google.com>
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Link: https://lore.kernel.org/r/20240412142702.2882478-5-suzuki.poulose@arm.com
+This is because the match check uses argv_split() and assumes that all
+fields will be split upon the space. When spaces are used, we get back
+{ "u8", "field1;" }, without spaces we get back { "u8", "field1;u8" }.
+This causes a mismatch, and the user program gets back -EADDRINUSE.
+
+Add a method to detect this case before calling argv_split(). If found
+force a space after the field separator character ';'. This ensures all
+cases work properly for matching.
+
+With this fix, the following are all treated as matching:
+u8 field1;u8 field2
+u8 field1; u8 field2
+u8 field1;\tu8 field2
+u8 field1;\nu8 field2
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240423162338.292-2-beaub@linux.microsoft.com
+
+Fixes: ba470eebc2f6 ("tracing/user_events: Prevent same name but different args event")
+Signed-off-by: Beau Belgrave <beaub@linux.microsoft.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events_user.c | 76 +++++++++++++++++++++++++++++++-
+ 1 file changed, 75 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index e2e5b1422cdb7..354267edcb45f 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1641,7 +1641,8 @@ static int __etm4_cpu_save(struct etmv4_drvdata *drvdata)
- 		state->trccntvr[i] = etm4x_read32(csa, TRCCNTVRn(i));
- 	}
+diff --git a/kernel/trace/trace_events_user.c b/kernel/trace/trace_events_user.c
+index dda58681247e1..2461786b1e4d2 100644
+--- a/kernel/trace/trace_events_user.c
++++ b/kernel/trace/trace_events_user.c
+@@ -1923,6 +1923,80 @@ static int user_event_trace_register(struct user_event *user)
+ 	return ret;
+ }
  
--	for (i = 0; i < drvdata->nr_resource * 2; i++)
-+	/* Resource selector pair 0 is reserved */
-+	for (i = 2; i < drvdata->nr_resource * 2; i++)
- 		state->trcrsctlr[i] = etm4x_read32(csa, TRCRSCTLRn(i));
++/*
++ * Counts how many ';' without a trailing space are in the args.
++ */
++static int count_semis_no_space(char *args)
++{
++	int count = 0;
++
++	while ((args = strchr(args, ';'))) {
++		args++;
++
++		if (!isspace(*args))
++			count++;
++	}
++
++	return count;
++}
++
++/*
++ * Copies the arguments while ensuring all ';' have a trailing space.
++ */
++static char *insert_space_after_semis(char *args, int count)
++{
++	char *fixed, *pos;
++	int len;
++
++	len = strlen(args) + count;
++	fixed = kmalloc(len + 1, GFP_KERNEL);
++
++	if (!fixed)
++		return NULL;
++
++	pos = fixed;
++
++	/* Insert a space after ';' if there is no trailing space. */
++	while (*args) {
++		*pos = *args++;
++
++		if (*pos++ == ';' && !isspace(*args))
++			*pos++ = ' ';
++	}
++
++	*pos = '\0';
++
++	return fixed;
++}
++
++static char **user_event_argv_split(char *args, int *argc)
++{
++	char **split;
++	char *fixed;
++	int count;
++
++	/* Count how many ';' without a trailing space */
++	count = count_semis_no_space(args);
++
++	/* No fixup is required */
++	if (!count)
++		return argv_split(GFP_KERNEL, args, argc);
++
++	/* We must fixup 'field;field' to 'field; field' */
++	fixed = insert_space_after_semis(args, count);
++
++	if (!fixed)
++		return NULL;
++
++	/* We do a normal split afterwards */
++	split = argv_split(GFP_KERNEL, fixed, argc);
++
++	/* We can free since argv_split makes a copy */
++	kfree(fixed);
++
++	return split;
++}
++
+ /*
+  * Parses the event name, arguments and flags then registers if successful.
+  * The name buffer lifetime is owned by this method for success cases only.
+@@ -1946,7 +2020,7 @@ static int user_event_parse(struct user_event_group *group, char *name,
+ 		return -EPERM;
  
- 	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
-@@ -1772,7 +1773,8 @@ static void __etm4_cpu_restore(struct etmv4_drvdata *drvdata)
- 		etm4x_relaxed_write32(csa, state->trccntvr[i], TRCCNTVRn(i));
- 	}
+ 	if (args) {
+-		argv = argv_split(GFP_KERNEL, args, &argc);
++		argv = user_event_argv_split(args, &argc);
  
--	for (i = 0; i < drvdata->nr_resource * 2; i++)
-+	/* Resource selector pair 0 is reserved */
-+	for (i = 2; i < drvdata->nr_resource * 2; i++)
- 		etm4x_relaxed_write32(csa, state->trcrsctlr[i], TRCRSCTLRn(i));
- 
- 	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
+ 		if (!argv)
+ 			return -ENOMEM;
 -- 
 2.43.0
 
