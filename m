@@ -1,41 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47AF19EEC0;
-	Thu,  6 Jun 2024 14:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230671BF8FF;
+	Thu,  6 Jun 2024 14:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683552; cv=none; b=ZVU7TqlcBDmF9+eyaTdk5ycMgBneBMsyUG88UPIg2NieoKvxkq3aIXGXsyMO2lDadNDTvP4Q5vF5wjVn3Oe7+0ttkIfA4wZnuG/vit5kwUKhYAOsJeMHGI/wp85+S0gQ9CQR9afLivjVSCOEebWgPzWMdYvQhfBqCWta8g9J99Q=
+	t=1717683553; cv=none; b=tJkdcx3n/wN9z47Qbdmfw+19/8OgU2PvObZqb39u+ToeNC0lndegELL6+BeJKMBa/FgnfxUd2TmSLJBzKeWvYGe+d8ZEptE5PvZrDbOZJ8311/W0xH785M6W+XhzzTMngVezYdqx76spJOEJyb4/mEa36Bzco8cZYzm6R6L3WBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683552; c=relaxed/simple;
-	bh=wZQfoSTo92hZNzfnhaQqZ5PvZUV33KFSVdToclpM9gM=;
+	s=arc-20240116; t=1717683553; c=relaxed/simple;
+	bh=zwH71YkgRBFR6Gmlk6IpPwaVRoSux7bXpDFJ9J1JbvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VHV38a3ImvTTShG4FM7/SRmuVE7saCCiGPQFVIazy0k3ukbcxHUJGt5Or8caAsLVLBjMCr6ApJLTsU2jD/2sZ6RIEv5ImH1uGjrG720hcK0Z25xMeJbe04OC0UDE4TddeLJncpmr3YDNTAsw+uPJnUOCncsOE+M3xMetKfs6bPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcsAn6FX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UPuZ5juTUnAVAM2kAnfLgS/svgjQmE4KB2EWqNqIcD/CKKZTOjx5HQtSkS3pTSTRRyHzdGyozkHzNilVhXfLIXZzrCmVynAEER69KrU/L8VOSSVj8GvFIVIsi+ry5NrxHwuSlpaeP8DwGveQ629IVZ1Pm+wfL5nWHKTBsYFmAvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcUmvVQc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcsAn6FX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFF9C2BD10;
-	Thu,  6 Jun 2024 14:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcUmvVQc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0110FC32781;
+	Thu,  6 Jun 2024 14:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683552;
-	bh=wZQfoSTo92hZNzfnhaQqZ5PvZUV33KFSVdToclpM9gM=;
+	s=korg; t=1717683553;
+	bh=zwH71YkgRBFR6Gmlk6IpPwaVRoSux7bXpDFJ9J1JbvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IcsAn6FXyJusStU7vJ2WD3GXFMoq2oOXRGb2wT3kfRx9LqNwdp5C9sYuWD6bamBfj
-	 2tJMjohhYY1KAHH8AAM3OAvYHYcWmCJAHGY4Zg0k2DPVO/XM4pXcNt2fDqrLROo9Ho
-	 oBc+qdQWXQK09xdHLgkaK+5IPXZ2Ke1ARUB+4OIQ=
+	b=DcUmvVQc/k+SPXUOsnCu2+rVoaP0QItCShDKP7JyX41IC1eu2Ftdu9Qz+dOH140t2
+	 1FzvS5v8Z3XisFIk2efXIwsIi54UgmR6g8JtE60tzO+Kme8Y4NlCxWcN9dpKU9yQc/
+	 z4QCjco3PStOG5MIVjOz8bRscZDehueCs8C3mrAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Friedrich Vock <friedrich.vock@gmx.de>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Ben Gainey <ben.gainey@arm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Li Dong <lidong@vivo.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Paran Lee <p4ranlee@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Sun Haiyong <sunhaiyong@loongson.cn>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Yanteng Si <siyanteng@loongson.cn>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 443/473] bpf: Fix potential integer overflow in resolve_btfids
-Date: Thu,  6 Jun 2024 16:06:12 +0200
-Message-ID: <20240606131714.367514251@linuxfoundation.org>
+Subject: [PATCH 6.6 495/744] perf ui browser: Dont save pointer to stack memory
+Date: Thu,  6 Jun 2024 16:02:47 +0200
+Message-ID: <20240606131748.322885849@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +69,145 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Friedrich Vock <friedrich.vock@gmx.de>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 44382b3ed6b2787710c8ade06c0e97f5970a47c8 ]
+[ Upstream commit 769e6a1e15bdbbaf2b0d2f37c24f2c53268bd21f ]
 
-err is a 32-bit integer, but elf_update returns an off_t, which is 64-bit
-at least on 64-bit platforms. If symbols_patch is called on a binary between
-2-4GB in size, the result will be negative when cast to a 32-bit integer,
-which the code assumes means an error occurred. This can wrongly trigger
-build failures when building very large kernel images.
+ui_browser__show() is capturing the input title that is stack allocated
+memory in hist_browser__run().
 
-Fixes: fbbb68de80a4 ("bpf: Add resolve_btfids tool to resolve BTF IDs in ELF object")
-Signed-off-by: Friedrich Vock <friedrich.vock@gmx.de>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240514070931.199694-1-friedrich.vock@gmx.de
+Avoid a use after return by strdup-ing the string.
+
+Committer notes:
+
+Further explanation from Ian Rogers:
+
+My command line using tui is:
+$ sudo bash -c 'rm /tmp/asan.log*; export
+ASAN_OPTIONS="log_path=/tmp/asan.log"; /tmp/perf/perf mem record -a
+sleep 1; /tmp/perf/perf mem report'
+I then go to the perf annotate view and quit. This triggers the asan
+error (from the log file):
+```
+==1254591==ERROR: AddressSanitizer: stack-use-after-return on address
+0x7f2813331920 at pc 0x7f28180
+65991 bp 0x7fff0a21c750 sp 0x7fff0a21bf10
+READ of size 80 at 0x7f2813331920 thread T0
+    #0 0x7f2818065990 in __interceptor_strlen
+../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:461
+    #1 0x7f2817698251 in SLsmg_write_wrapped_string
+(/lib/x86_64-linux-gnu/libslang.so.2+0x98251)
+    #2 0x7f28176984b9 in SLsmg_write_nstring
+(/lib/x86_64-linux-gnu/libslang.so.2+0x984b9)
+    #3 0x55c94045b365 in ui_browser__write_nstring ui/browser.c:60
+    #4 0x55c94045c558 in __ui_browser__show_title ui/browser.c:266
+    #5 0x55c94045c776 in ui_browser__show ui/browser.c:288
+    #6 0x55c94045c06d in ui_browser__handle_resize ui/browser.c:206
+    #7 0x55c94047979b in do_annotate ui/browsers/hists.c:2458
+    #8 0x55c94047fb17 in evsel__hists_browse ui/browsers/hists.c:3412
+    #9 0x55c940480a0c in perf_evsel_menu__run ui/browsers/hists.c:3527
+    #10 0x55c940481108 in __evlist__tui_browse_hists ui/browsers/hists.c:3613
+    #11 0x55c9404813f7 in evlist__tui_browse_hists ui/browsers/hists.c:3661
+    #12 0x55c93ffa253f in report__browse_hists tools/perf/builtin-report.c:671
+    #13 0x55c93ffa58ca in __cmd_report tools/perf/builtin-report.c:1141
+    #14 0x55c93ffaf159 in cmd_report tools/perf/builtin-report.c:1805
+    #15 0x55c94000c05c in report_events tools/perf/builtin-mem.c:374
+    #16 0x55c94000d96d in cmd_mem tools/perf/builtin-mem.c:516
+    #17 0x55c9400e44ee in run_builtin tools/perf/perf.c:350
+    #18 0x55c9400e4a5a in handle_internal_command tools/perf/perf.c:403
+    #19 0x55c9400e4e22 in run_argv tools/perf/perf.c:447
+    #20 0x55c9400e53ad in main tools/perf/perf.c:561
+    #21 0x7f28170456c9 in __libc_start_call_main
+../sysdeps/nptl/libc_start_call_main.h:58
+    #22 0x7f2817045784 in __libc_start_main_impl ../csu/libc-start.c:360
+    #23 0x55c93ff544c0 in _start (/tmp/perf/perf+0x19a4c0) (BuildId:
+84899b0e8c7d3a3eaa67b2eb35e3d8b2f8cd4c93)
+
+Address 0x7f2813331920 is located in stack of thread T0 at offset 32 in frame
+    #0 0x55c94046e85e in hist_browser__run ui/browsers/hists.c:746
+
+  This frame has 1 object(s):
+    [32, 192) 'title' (line 747) <== Memory access at offset 32 is
+inside this variable
+HINT: this may be a false positive if your program uses some custom
+stack unwind mechanism, swapcontext or vfork
+```
+hist_browser__run isn't on the stack so the asan error looks legit.
+There's no clean init/exit on struct ui_browser so I may be trading a
+use-after-return for a memory leak, but that seems look a good trade
+anyway.
+
+Fixes: 05e8b0804ec4 ("perf ui browser: Stop using 'self'")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Ben Gainey <ben.gainey@arm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Li Dong <lidong@vivo.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Cc: Paran Lee <p4ranlee@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Sun Haiyong <sunhaiyong@loongson.cn>
+Cc: Tim Chen <tim.c.chen@linux.intel.com>
+Cc: Yanteng Si <siyanteng@loongson.cn>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Link: https://lore.kernel.org/r/20240507183545.1236093-2-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/resolve_btfids/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/ui/browser.c | 4 +++-
+ tools/perf/ui/browser.h | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
-index ef0764d6891e4..82bffa7cf8659 100644
---- a/tools/bpf/resolve_btfids/main.c
-+++ b/tools/bpf/resolve_btfids/main.c
-@@ -728,7 +728,7 @@ static int sets_patch(struct object *obj)
+diff --git a/tools/perf/ui/browser.c b/tools/perf/ui/browser.c
+index 603d11283cbdc..c4cdf2ea69b72 100644
+--- a/tools/perf/ui/browser.c
++++ b/tools/perf/ui/browser.c
+@@ -287,7 +287,8 @@ int ui_browser__show(struct ui_browser *browser, const char *title,
+ 	mutex_lock(&ui__lock);
+ 	__ui_browser__show_title(browser, title);
  
- static int symbols_patch(struct object *obj)
- {
--	int err;
-+	off_t err;
+-	browser->title = title;
++	free(browser->title);
++	browser->title = strdup(title);
+ 	zfree(&browser->helpline);
  
- 	if (__symbols_patch(obj, &obj->structs)  ||
- 	    __symbols_patch(obj, &obj->unions)   ||
+ 	va_start(ap, helpline);
+@@ -304,6 +305,7 @@ void ui_browser__hide(struct ui_browser *browser)
+ 	mutex_lock(&ui__lock);
+ 	ui_helpline__pop();
+ 	zfree(&browser->helpline);
++	zfree(&browser->title);
+ 	mutex_unlock(&ui__lock);
+ }
+ 
+diff --git a/tools/perf/ui/browser.h b/tools/perf/ui/browser.h
+index 510ce45540501..6e98d5f8f71cc 100644
+--- a/tools/perf/ui/browser.h
++++ b/tools/perf/ui/browser.h
+@@ -21,7 +21,7 @@ struct ui_browser {
+ 	u8	      extra_title_lines;
+ 	int	      current_color;
+ 	void	      *priv;
+-	const char    *title;
++	char	      *title;
+ 	char	      *helpline;
+ 	const char    *no_samples_msg;
+ 	void 	      (*refresh_dimensions)(struct ui_browser *browser);
 -- 
 2.43.0
 
