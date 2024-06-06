@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0958919CD19;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9975519CD19;
 	Thu,  6 Jun 2024 14:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683447; cv=none; b=SuNG4Jyrk9wFXVrngUUaA3FjSSD6YdZByAJuM/2wkL4LIRRm861mbmM2dRv00DM9DXr7ZQtTilV4wpPfsNrGPQ031jVQVcD80gnHjglk2jC201D2ysRnDh29PRfR4nN5NpnBIUcNGQtmD5I9kpcWBkXqRSLdwS3rlmLOaJbgYQI=
+	t=1717683447; cv=none; b=eHUNSKt4krvpcveQiMfFKTt0G8tEZ6llc55KfKbHd/NTRTzgM58dYvxgrotR7Zyh5cLxnupffEILmD3tymCNgaf/Yi3YMAMBAQ40bwKhBXBo1R7j1Cgzupt8EeI7abCX3a+HILsBf+wuJN4G7xXEiDnv5JGHLC1epWc8koUoiYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683447; c=relaxed/simple;
-	bh=mVc7koPVshe8mIpbrDQ9x6jGLT2bu2mGx5Du69LiUBA=;
+	bh=htW6ImnC40S2xBZQtr00989U/0yULfIDGRUaI2SidrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmT5P7datBomOlYolGHlIzMlvxp+jLpksxocrnjZl9Z/KGCCQI0IVx5Ru52hZN36IAvuvgaaN++XoDGzJ6+uYgxeY/qTy7zA5Uv1k+kErukIzphCnIJMdm/Hkl/1BTHgUd6GwqD4+hf0zoGYrTyrdMsa0wzftWj9i9dfPIKYpbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDEtikzo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BNdjdTgfDxTcOiMNC0a5kiQLdsIj27Ydkew4Oo7dGIzUBfKrC+ievpwEwsIdc1Ou9fPCu7UNFHonEG8dlsK0l2fiuZ9oQtHqF2Y1y3eUbttZTs/1lGvedeovlA2ipiW9+ngF5vbGnKCdQrQjrYqyoOje4pC3OubAUUgd7Yd/tvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1ICiW72; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDEtikzo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB992C2BD10;
-	Thu,  6 Jun 2024 14:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1ICiW72"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6882EC32781;
+	Thu,  6 Jun 2024 14:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683446;
-	bh=mVc7koPVshe8mIpbrDQ9x6jGLT2bu2mGx5Du69LiUBA=;
+	s=korg; t=1717683447;
+	bh=htW6ImnC40S2xBZQtr00989U/0yULfIDGRUaI2SidrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YDEtikzoBWFgmZpY8k/4hC7Qtpo9AppsNuiLoOv4zz9hLa3BuJg8IpRQyelg19or7
-	 s1+k5Bg1CjzT+M3ZQS/Fvn3D1PHPaixZcyeuVaE50l9goiy9knwuJPgA/dRAT859Du
-	 yYeKE91xZSw0z0EhxBWsEEgpKX5XUeimbTvwiLOY=
+	b=U1ICiW729XPZkVnaWNYvYfbOgkHQAgdHqopumZZckwoxw32V8cw8SWBwvWp1lioGJ
+	 X9bIx6DWd9n7CiPHRqCrl1kNbHne4CZeGBKgpSmfbYGT78+Nu7nm04bOmkTvKYuIE+
+	 V7xZkPJPwX8I78ibkfuyKY6Z2IoDwlAivMCYBSWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 331/473] stm class: Fix a double free in stm_register_device()
-Date: Thu,  6 Jun 2024 16:04:20 +0200
-Message-ID: <20240606131710.873838540@linuxfoundation.org>
+Subject: [PATCH 6.6 391/744] perf probe: Add missing libgen.h header needed for using basename()
+Date: Thu,  6 Jun 2024 16:01:03 +0200
+Message-ID: <20240606131745.001921469@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,59 +51,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 3df463865ba42b8f88a590326f4c9ea17a1ce459 ]
+[ Upstream commit 581037151910126a7934e369e4b6ac70eda9a703 ]
 
-The put_device(&stm->dev) call will trigger stm_device_release() which
-frees "stm" so the vfree(stm) on the next line is a double free.
+This prototype is obtained indirectly, by luck, from some other header
+in probe-event.c in most systems, but recently exploded on alpine:edge:
 
-Fixes: 389b6699a2aa ("stm class: Fix stm device initialization order")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Link: https://lore.kernel.org/r/20240429130119.1518073-2-alexander.shishkin@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+   8    13.39 alpine:edge                   : FAIL gcc version 13.2.1 20240309 (Alpine 13.2.1_git20240309)
+    util/probe-event.c: In function 'convert_exec_to_group':
+    util/probe-event.c:225:16: error: implicit declaration of function 'basename' [-Werror=implicit-function-declaration]
+      225 |         ptr1 = basename(exec_copy);
+          |                ^~~~~~~~
+    util/probe-event.c:225:14: error: assignment to 'char *' from 'int' makes pointer from integer without a cast [-Werror=int-conversion]
+      225 |         ptr1 = basename(exec_copy);
+          |              ^
+    cc1: all warnings being treated as errors
+    make[3]: *** [/git/perf-6.8.0/tools/build/Makefile.build:158: util] Error 2
+
+Fix it by adding the libgen.h header where basename() is prototyped.
+
+Fixes: fb7345bbf7fad9bf ("perf probe: Support basic dwarf-based operations on uprobe events")
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/lkml/
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/stm/core.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ tools/perf/util/probe-event.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwtracing/stm/core.c b/drivers/hwtracing/stm/core.c
-index 2712e699ba08c..ae9ea3a1fa2aa 100644
---- a/drivers/hwtracing/stm/core.c
-+++ b/drivers/hwtracing/stm/core.c
-@@ -868,8 +868,11 @@ int stm_register_device(struct device *parent, struct stm_data *stm_data,
- 		return -ENOMEM;
- 
- 	stm->major = register_chrdev(0, stm_data->name, &stm_fops);
--	if (stm->major < 0)
--		goto err_free;
-+	if (stm->major < 0) {
-+		err = stm->major;
-+		vfree(stm);
-+		return err;
-+	}
- 
- 	device_initialize(&stm->dev);
- 	stm->dev.devt = MKDEV(stm->major, 0);
-@@ -913,10 +916,8 @@ int stm_register_device(struct device *parent, struct stm_data *stm_data,
- err_device:
- 	unregister_chrdev(stm->major, stm_data->name);
- 
--	/* matches device_initialize() above */
-+	/* calls stm_device_release() */
- 	put_device(&stm->dev);
--err_free:
--	vfree(stm);
- 
- 	return err;
- }
+diff --git a/tools/perf/util/probe-event.c b/tools/perf/util/probe-event.c
+index 1a5b7fa459b23..4026cea9fc3a2 100644
+--- a/tools/perf/util/probe-event.c
++++ b/tools/perf/util/probe-event.c
+@@ -11,6 +11,7 @@
+ #include <sys/stat.h>
+ #include <fcntl.h>
+ #include <errno.h>
++#include <libgen.h>
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <stdlib.h>
 -- 
 2.43.0
 
