@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEED51BE23E;
-	Thu,  6 Jun 2024 14:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4FE1BE23E;
+	Thu,  6 Jun 2024 14:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683531; cv=none; b=CCSgcz3Zx+yzYnG5ifW+TmT23E4ZlwagHYdZ9rjdso9aeb9PyfyjKojaiLdFNPRPKyrwqCEXwhWrf8W00ibje/++93t5eQP3gWlLO2Lslh9Z59oaTzG5REahkWS15s6+7GXXiPcRgdmMVNDwY68uq12yUXb7MaI85kZADMhtixw=
+	t=1717683532; cv=none; b=twk22ZtU+cJycbOKViP5OeZFQVPLODy1nEx34zgkkNPfxNnQmCuEYw3Mk+AcbzACga09pExcfEiLXxCP6w9eweq/GHpLfUI/Ev77pKHQPrOv5n95u4/MDhynvuVmxn0kq/qjc3A1xrYIC/E7lI18CvOkGFM50uQ5aeh4ipa1IlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683531; c=relaxed/simple;
-	bh=wdC8BuKKrK6sbpCyP5tnbMbz7MsObdl6+6j+ZkCrFUw=;
+	s=arc-20240116; t=1717683532; c=relaxed/simple;
+	bh=q/ocA9YPOctYLQj3SsnOcG6HsrM7R8bESiwT6P+pLes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/oFJ6SYYx78drI75A0vzGmEz/BIC+a1i39FMbwDxDY9MH/SdqylMggMTJJeyA+3t04qMlJoEUKGDJZGJN9T4uTOx7giWzEvIOSDamTR8QwE3Fhhj7L4yz+Pm10t6BwMkRRrnzorXCz2VgoNY8uWWaCN5l2NftmChW3x9v9468Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HAfzoA+B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=COnznBOQ/GoJGnlq3jfOpPBJOVJccrCxDvRuNML9EP4L+TCgydg5UPe7r0NFMKtdeVLjR3gwduBLNvxf8z0lSKu7hhyDmpC5faChyzldwKy7TzLKXce7G+F0y/25Z3F+1YHf340s72KdTgxP1WdOGbMeAnb8DFpRwOWmahAJPhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXw8OKxd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HAfzoA+B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED02C2BD10;
-	Thu,  6 Jun 2024 14:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXw8OKxd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1719DC32782;
+	Thu,  6 Jun 2024 14:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683531;
-	bh=wdC8BuKKrK6sbpCyP5tnbMbz7MsObdl6+6j+ZkCrFUw=;
+	s=korg; t=1717683532;
+	bh=q/ocA9YPOctYLQj3SsnOcG6HsrM7R8bESiwT6P+pLes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HAfzoA+BWaUFe0NAEDrJRBU8wzAPRRU4juETKSOL3syR4AdmH873l0oEp5+tZT1xr
-	 2d3N4+RUgXiebl/V9VcunqWVcZmN8W2B6G4yXejW1jqo1rdp6Y51Bhh8D7YQcN4rFG
-	 g6BUZWmnBslBB9ZFqaZ5AzI+JByxzrwzK8m0fqj0=
+	b=vXw8OKxdSfMCGrJ2EzV4vQdZNG+4E4OsEQ9RPXuRqNSWS6FFd/fxEs8zQQi7NGjXY
+	 5heeGguXFZd+uDNgfzFJd960Sek/ZFeQ5Vefg5CCpYz9vEuiTWSMFYcgb7+5/Zf2AB
+	 k6nEZBfuDpt8Koq2MYHvZ1U5YXZgdLgHzK+MoMrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 422/473] net: fec: avoid lock evasion when reading pps_enable
-Date: Thu,  6 Jun 2024 16:05:51 +0200
-Message-ID: <20240606131713.721010928@linuxfoundation.org>
+Subject: [PATCH 6.6 472/744] leds: pwm: Disable PWM when going to suspend
+Date: Thu,  6 Jun 2024 16:02:24 +0200
+Message-ID: <20240606131747.600212143@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,66 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 3b1c92f8e5371700fada307cc8fd2c51fa7bc8c1 ]
+[ Upstream commit 974afccd37947a6951a052ef8118c961e57eaf7b ]
 
-The assignment of pps_enable is protected by tmreg_lock, but the read
-operation of pps_enable is not. So the Coverity tool reports a lock
-evasion warning which may cause data race to occur when running in a
-multithread environment. Although this issue is almost impossible to
-occur, we'd better fix it, at least it seems more logically reasonable,
-and it also prevents Coverity from continuing to issue warnings.
+On stm32mp1xx based machines (and others) a PWM consumer has to disable
+the PWM because an enabled PWM refuses to suspend. So check the
+LED_SUSPENDED flag and depending on that set the .enabled property.
 
-Fixes: 278d24047891 ("net: fec: ptp: Enable PPS output based on ptp clock")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://lore.kernel.org/r/20240521023800.17102-1-wei.fang@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218559
+Fixes: 76fe464c8e64 ("leds: pwm: Don't disable the PWM when the LED should be off")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20240417153846.271751-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_ptp.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/leds/leds-pwm.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
-index cffd9ad499dda..e0393dc159fc7 100644
---- a/drivers/net/ethernet/freescale/fec_ptp.c
-+++ b/drivers/net/ethernet/freescale/fec_ptp.c
-@@ -102,14 +102,13 @@ static int fec_ptp_enable_pps(struct fec_enet_private *fep, uint enable)
- 	struct timespec64 ts;
- 	u64 ns;
+diff --git a/drivers/leds/leds-pwm.c b/drivers/leds/leds-pwm.c
+index 4e3936a39d0ed..e1b414b403534 100644
+--- a/drivers/leds/leds-pwm.c
++++ b/drivers/leds/leds-pwm.c
+@@ -53,7 +53,13 @@ static int led_pwm_set(struct led_classdev *led_cdev,
+ 		duty = led_dat->pwmstate.period - duty;
  
--	if (fep->pps_enable == enable)
--		return 0;
--
--	fep->pps_channel = DEFAULT_PPS_CHANNEL;
--	fep->reload_period = PPS_OUPUT_RELOAD_PERIOD;
--
- 	spin_lock_irqsave(&fep->tmreg_lock, flags);
+ 	led_dat->pwmstate.duty_cycle = duty;
+-	led_dat->pwmstate.enabled = true;
++	/*
++	 * Disabling a PWM doesn't guarantee that it emits the inactive level.
++	 * So keep it on. Only for suspending the PWM should be disabled because
++	 * otherwise it refuses to suspend. The possible downside is that the
++	 * LED might stay (or even go) on.
++	 */
++	led_dat->pwmstate.enabled = !(led_cdev->flags & LED_SUSPENDED);
+ 	return pwm_apply_might_sleep(led_dat->pwm, &led_dat->pwmstate);
+ }
  
-+	if (fep->pps_enable == enable) {
-+		spin_unlock_irqrestore(&fep->tmreg_lock, flags);
-+		return 0;
-+	}
-+
- 	if (enable) {
- 		/* clear capture or output compare interrupt status if have.
- 		 */
-@@ -440,6 +439,9 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
- 	int ret = 0;
- 
- 	if (rq->type == PTP_CLK_REQ_PPS) {
-+		fep->pps_channel = DEFAULT_PPS_CHANNEL;
-+		fep->reload_period = PPS_OUPUT_RELOAD_PERIOD;
-+
- 		ret = fec_ptp_enable_pps(fep, on);
- 
- 		return ret;
 -- 
 2.43.0
 
