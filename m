@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E841719A2B5;
-	Thu,  6 Jun 2024 14:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692A31ABCC4;
+	Thu,  6 Jun 2024 14:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683292; cv=none; b=darESBQyxt1L7A1hFTCs8gkWWrhMvI2X7MPxTEYkkv+Im00lIGQ8EKjWmpteJRVSOa11WwJEFgJiKlqX185npE6FriT3ThKjflgcL4jo005tzMyhLM8TqWaMjZq+HWKGiBVtvmvWikmpIzJQYQFgA9msKC+yLFN5M9/EvaVvO9k=
+	t=1717683292; cv=none; b=srRzb2fRIz2/p+LiOAi9GvN5i/Ii7spqQPiviLIYs4hOx3tsXZyFBCx77nMAa+SFaTUqrc769W12XIkvw7qEHsfxR6CJwkJHLGoivvNYrzOh4vZ+knokOBi0KXAqvVrDEVS0rg2rqrd6U+qhj2PFSaRWOnfYEDREybucBJRmHO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683292; c=relaxed/simple;
-	bh=38XNr6FH1qXAaR5g+T7rWapzYnYhnOrt473FR7Hg4ng=;
+	bh=pzQAreO9kdvwU+P6GdEY8uq+tkqGffmPa6F0ck7WqZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mO9KaCqOh83VqkfnQgVXVqDMgAeOiSZe+drDI/VcYLTf766ddjwNAKqdfi3EmDNKTlWiKG4c2dCGoZpSnOiPRS2OphfbpSySaxysjdGajli4Qg347XDqWNlRalXUPySHDu7qb9VYOgfekcER+jdvNOZdXma/QklWL5exDNUNQnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwVUucD/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WJKAK1IdmT35f4gXZ++kKGjao0eGFv8bGUy2LGUVs+IYiRVU/ufLVenU5Btezz04gsbfxP92d3EjVVQWf4e32hJWLBCFMG+Br8KljRZGz++THsGMaztkPrM+5f4gz/T4+kQhKTV1QhgjKYvRJl0+R6uS82ITLF33RCkrWYZG6Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmmLVqPl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwVUucD/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8911C32781;
-	Thu,  6 Jun 2024 14:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmmLVqPl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49630C2BD10;
+	Thu,  6 Jun 2024 14:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683291;
-	bh=38XNr6FH1qXAaR5g+T7rWapzYnYhnOrt473FR7Hg4ng=;
+	s=korg; t=1717683292;
+	bh=pzQAreO9kdvwU+P6GdEY8uq+tkqGffmPa6F0ck7WqZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FwVUucD/x+6ttvv3lyg5IWmt2w0k60qFinCzfEPanJkH+ObEzHN4gHMavqlAnRt+x
-	 jxqKmDQ36znuOvUCpeIxi7pbhHBOP48Juho8cPpZb3DTTDroIhZtM051VGkYRuCRiY
-	 lcbJ4ha/JBsucrydPQ6kCCSt0nn7LiEy11L+hAfo=
+	b=CmmLVqPleSjofVUCo1XxwZ1tepfYaN2ipvVqVYOMRPw1PVvSA73wv7ipGg6jns0YG
+	 HiWrMelrZae0V2vTGobO5okOptKkik8xVbIpsWNimcZIZuprxy6r5ypIMfgTyhcEHP
+	 Z3+svSxFJAjUqcZi7PQCjkPMAwGhaNQaj/m78JIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xingwang <gaoxingwang1@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/473] net: ipv6: fix wrong start position when receive hop-by-hop fragment
-Date: Thu,  6 Jun 2024 16:01:37 +0200
-Message-ID: <20240606131705.496338900@linuxfoundation.org>
+Subject: [PATCH 6.6 233/744] usb: aqc111: stop lying about skb->truesize
+Date: Thu,  6 Jun 2024 15:58:25 +0200
+Message-ID: <20240606131739.860951183@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: gaoxingwang <gaoxingwang1@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1cd354fe1e4864eeaff62f66ee513080ec946f20 ]
+[ Upstream commit 9aad6e45c4e7d16b2bb7c3794154b828fb4384b4 ]
 
-In IPv6, ipv6_rcv_core will parse the hop-by-hop type extension header and increase skb->transport_header by one extension header length.
-But if there are more other extension headers like fragment header at this time, the skb->transport_header points to the second extension header,
-not the transport layer header or the first extension header.
+Some usb drivers try to set small skb->truesize and break
+core networking stacks.
 
-This will result in the start and nexthdrp variable not pointing to the same position in ipv6frag_thdr_trunced,
-and ipv6_skip_exthdr returning incorrect offset and frag_off.Sometimes,the length of the last sharded packet is smaller than the calculated incorrect offset, resulting in packet loss.
-We can use network header to offset and calculate the correct position to solve this problem.
+I replace one skb_clone() by an allocation of a fresh
+and small skb, to get minimally sized skbs, like we did
+in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
+in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
+stop lying about skb->truesize")
 
-Fixes: 9d9e937b1c8b (ipv6/netfilter: Discard first fragment not including all headers)
-Signed-off-by: Gao Xingwang <gaoxingwang1@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 361459cd9642 ("net: usb: aqc111: Implement RX data path")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240506135546.3641185-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/reassembly.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/aqc111.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
-index ff866f2a879e0..32ba4417eb1de 100644
---- a/net/ipv6/reassembly.c
-+++ b/net/ipv6/reassembly.c
-@@ -364,7 +364,7 @@ static int ipv6_frag_rcv(struct sk_buff *skb)
- 	 * the source of the fragment, with the Pointer field set to zero.
- 	 */
- 	nexthdr = hdr->nexthdr;
--	if (ipv6frag_thdr_truncated(skb, skb_transport_offset(skb), &nexthdr)) {
-+	if (ipv6frag_thdr_truncated(skb, skb_network_offset(skb) + sizeof(struct ipv6hdr), &nexthdr)) {
- 		__IP6_INC_STATS(net, __in6_dev_get_safely(skb->dev),
- 				IPSTATS_MIB_INHDRERRORS);
- 		icmpv6_param_prob(skb, ICMPV6_HDR_INCOMP, 0);
+diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+index 7b8afa589a53c..284375f662f1e 100644
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -1141,17 +1141,15 @@ static int aqc111_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			continue;
+ 		}
+ 
+-		/* Clone SKB */
+-		new_skb = skb_clone(skb, GFP_ATOMIC);
++		new_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
+ 
+ 		if (!new_skb)
+ 			goto err;
+ 
+-		new_skb->len = pkt_len;
++		skb_put(new_skb, pkt_len);
++		memcpy(new_skb->data, skb->data, pkt_len);
+ 		skb_pull(new_skb, AQ_RX_HW_PAD);
+-		skb_set_tail_pointer(new_skb, new_skb->len);
+ 
+-		new_skb->truesize = SKB_TRUESIZE(new_skb->len);
+ 		if (aqc111_data->rx_checksum)
+ 			aqc111_rx_checksum(new_skb, pkt_desc);
+ 
 -- 
 2.43.0
 
