@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FFA197A9B;
-	Thu,  6 Jun 2024 14:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37183197A9B;
+	Thu,  6 Jun 2024 14:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683310; cv=none; b=lDClCfEfD+8OOP92eEQZ7ESZAvC5aUEYBOwvql9aJ1oyjYLqncIGQwydVvg3O0PsQCty4YFPQ7R3EmukJlxgd35q5SoV+Aul3cvYfkNAsI8kZhkip9jNNhJfRMONbsmDCR4zhseJNmufJ4mQljSDtOXyrudZMFBZks4GexFXzLQ=
+	t=1717683311; cv=none; b=EnIRnMRs2f1inNCnAJIC/DVw3/9Sntt8F7hQCRu7uw4PfwF99tJQGcPV5Zz9CJhZ2h1L7Q+LR7/3oiHMPYcoT5NE2iE1O6va32S8+t1anMwItVJqBpSq8sWyPI3ulH9cuoRb5ge5HnXhP4dh995fQQzaYD55dMrLIGE/hoog0IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683310; c=relaxed/simple;
-	bh=7pkr83sqYaMbq8LBPhOc9M6Qzn8cfgCy65suC/jV9PA=;
+	s=arc-20240116; t=1717683311; c=relaxed/simple;
+	bh=hNPSijbu5gk0BNif3nWxmelgykcvoNtNSalHqXJzGwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YbLzPN00PsaPzn6jjpNyjcggGXNWqMJITCbMT63vWBSHpAh/T3kFuu8F6tTyU9Y/nUd2JcHwzhTuLd7AXEJ8OsQlUG0VBYMCzwIudS59CsYt+M1Si471QpSHAZWKAOKnmX3tm45X+898hPZaD3QcF5fMN/m7uWVGZ1DYtbrDLyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQS1j9wb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aQE9lzWMchRldbALOJ+fmdXoUeTm3vj9/PISFMGoARbe94KLOV66o4QLLNzrngSzUXl+JGSY5cnhC/POmdlEN26g4eEHNk0mi3hlMeAjtpGfNyyNZq76DqCFx0wFHFBEF++Xou+jL4CY41g3DJg+8STimZ25ruUqYD12iIXIM8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qc9k+dnX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQS1j9wb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9554AC32781;
-	Thu,  6 Jun 2024 14:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qc9k+dnX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14650C2BD10;
+	Thu,  6 Jun 2024 14:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683310;
-	bh=7pkr83sqYaMbq8LBPhOc9M6Qzn8cfgCy65suC/jV9PA=;
+	s=korg; t=1717683311;
+	bh=hNPSijbu5gk0BNif3nWxmelgykcvoNtNSalHqXJzGwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQS1j9wbY/yGxoVTDydcePk7/NiCdj4U2o5sInC3xh93hr2m6R+aCPknVeO7xcO+Y
-	 fLLPfmCZfitQzZvWza256Y24lXW7jMa47ZyPzUX8SLoFUn63yFIpJSpy7B6LKQO2KN
-	 qzVW1bEg4n1+x+gGz684Lb1Se3qG6i02ITZFlQ3I=
+	b=qc9k+dnXyXPb0Qn8qOMOrQ0ErSm8fPXpPXKitOvymASwqCj7wn4mrCTX3GjwhhwnX
+	 yXLS8+o77De4ZF0bjudGNUy9KEl4/cgLEJSn8s7o8N4q9P3UBO0z3VXzN3tvdjNpTn
+	 13lt9n2Mt/AkzFQbwFKDL4rAZlEfDuCBQsxon50A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akiva Goldberger <agoldberger@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Chris Down <chris@chrisdown.name>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 251/744] net/mlx5: Add a timeout to acquire the command queue semaphore
-Date: Thu,  6 Jun 2024 15:58:43 +0200
-Message-ID: <20240606131740.454620890@linuxfoundation.org>
+Subject: [PATCH 6.1 191/473] dev_printk: Add and use dev_no_printk()
+Date: Thu,  6 Jun 2024 16:02:00 +0200
+Message-ID: <20240606131706.251832165@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,158 +50,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Akiva Goldberger <agoldberger@nvidia.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 485d65e1357123a697c591a5aeb773994b247ad7 ]
+[ Upstream commit c26ec799042a3888935d59b599f33e41efedf5f8 ]
 
-Prevent forced completion handling on an entry that has not yet been
-assigned an index, causing an out of bounds access on idx = -22.
-Instead of waiting indefinitely for the sem, blocking flow now waits for
-index to be allocated or a sem acquisition timeout before beginning the
-timer for FW completion.
+When printk-indexing is enabled, each dev_printk() invocation emits a
+pi_entry structure.  This is even true when the dev_printk() is
+protected by an always-false check, as is typically the case for debug
+messages: while the actual code to print the message is optimized out by
+the compiler, the pi_entry structure is still emitted.
 
-Kernel log example:
-mlx5_core 0000:06:00.0: wait_func_handle_exec_timeout:1128:(pid 185911): cmd[-22]: CREATE_UCTX(0xa04) No done completion
+Avoid emitting pi_entry structures for unavailable dev_printk() kernel
+messages by:
+  1. Introducing a dev_no_printk() helper, mimicked after the existing
+     no_printk() helper, which calls _dev_printk() instead of
+     dev_printk(),
+  2. Replacing all "if (0) dev_printk(...)" constructs by calls to the
+     new helper.
 
-Fixes: 8e715cd613a1 ("net/mlx5: Set command entry semaphore up once got index free")
-Signed-off-by: Akiva Goldberger <agoldberger@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240509112951.590184-5-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This reduces the size of an arm64 defconfig kernel with
+CONFIG_PRINTK_INDEX=y by 957 KiB.
+
+Fixes: ad7d61f159db7397 ("printk: index: Add indexing support to dev_printk")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Chris Down <chris@chrisdown.name>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/8583d54f1687c801c6cda8edddf2cf0344c6e883.1709127473.git.geert+renesas@glider.be
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 41 +++++++++++++++----
- include/linux/mlx5/driver.h                   |  1 +
- 2 files changed, 33 insertions(+), 9 deletions(-)
+ include/linux/dev_printk.h | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index 55efb932ab2cf..3072f1c6c0ff7 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -967,19 +967,32 @@ static void cmd_work_handler(struct work_struct *work)
- 	bool poll_cmd = ent->polling;
- 	struct mlx5_cmd_layout *lay;
- 	struct mlx5_core_dev *dev;
--	unsigned long cb_timeout;
--	struct semaphore *sem;
-+	unsigned long timeout;
- 	unsigned long flags;
- 	int alloc_ret;
- 	int cmd_mode;
+diff --git a/include/linux/dev_printk.h b/include/linux/dev_printk.h
+index 8904063d4c9f0..65eec5be8ccb9 100644
+--- a/include/linux/dev_printk.h
++++ b/include/linux/dev_printk.h
+@@ -129,6 +129,16 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
+ 		_dev_printk(level, dev, fmt, ##__VA_ARGS__);		\
+ 	})
  
-+	complete(&ent->handling);
++/*
++ * Dummy dev_printk for disabled debugging statements to use whilst maintaining
++ * gcc's format checking.
++ */
++#define dev_no_printk(level, dev, fmt, ...)				\
++	({								\
++		if (0)							\
++			_dev_printk(level, dev, fmt, ##__VA_ARGS__);	\
++	})
 +
- 	dev = container_of(cmd, struct mlx5_core_dev, cmd);
--	cb_timeout = msecs_to_jiffies(mlx5_tout_ms(dev, CMD));
-+	timeout = msecs_to_jiffies(mlx5_tout_ms(dev, CMD));
+ /*
+  * #defines for all the dev_<level> macros to prefix with whatever
+  * possible use of #define dev_fmt(fmt) ...
+@@ -158,10 +168,7 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
+ 	dev_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__)
+ #else
+ #define dev_dbg(dev, fmt, ...)						\
+-({									\
+-	if (0)								\
+-		dev_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__); \
+-})
++	dev_no_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__)
+ #endif
  
--	complete(&ent->handling);
--	sem = ent->page_queue ? &cmd->vars.pages_sem : &cmd->vars.sem;
--	down(sem);
- 	if (!ent->page_queue) {
-+		if (down_timeout(&cmd->vars.sem, timeout)) {
-+			mlx5_core_warn(dev, "%s(0x%x) timed out while waiting for a slot.\n",
-+				       mlx5_command_str(ent->op), ent->op);
-+			if (ent->callback) {
-+				ent->callback(-EBUSY, ent->context);
-+				mlx5_free_cmd_msg(dev, ent->out);
-+				free_msg(dev, ent->in);
-+				cmd_ent_put(ent);
-+			} else {
-+				ent->ret = -EBUSY;
-+				complete(&ent->done);
-+			}
-+			complete(&ent->slotted);
-+			return;
-+		}
- 		alloc_ret = cmd_alloc_index(cmd, ent);
- 		if (alloc_ret < 0) {
- 			mlx5_core_err_rl(dev, "failed to allocate command entry\n");
-@@ -992,10 +1005,11 @@ static void cmd_work_handler(struct work_struct *work)
- 				ent->ret = -EAGAIN;
- 				complete(&ent->done);
- 			}
--			up(sem);
-+			up(&cmd->vars.sem);
- 			return;
- 		}
- 	} else {
-+		down(&cmd->vars.pages_sem);
- 		ent->idx = cmd->vars.max_reg_cmds;
- 		spin_lock_irqsave(&cmd->alloc_lock, flags);
- 		clear_bit(ent->idx, &cmd->vars.bitmask);
-@@ -1003,6 +1017,8 @@ static void cmd_work_handler(struct work_struct *work)
- 		spin_unlock_irqrestore(&cmd->alloc_lock, flags);
- 	}
+ #ifdef CONFIG_PRINTK
+@@ -247,20 +254,14 @@ do {									\
+ } while (0)
+ #else
+ #define dev_dbg_ratelimited(dev, fmt, ...)				\
+-do {									\
+-	if (0)								\
+-		dev_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__); \
+-} while (0)
++	dev_no_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__)
+ #endif
  
-+	complete(&ent->slotted);
-+
- 	lay = get_inst(cmd, ent->idx);
- 	ent->lay = lay;
- 	memset(lay, 0, sizeof(*lay));
-@@ -1021,7 +1037,7 @@ static void cmd_work_handler(struct work_struct *work)
- 	ent->ts1 = ktime_get_ns();
- 	cmd_mode = cmd->mode;
+ #ifdef VERBOSE_DEBUG
+ #define dev_vdbg	dev_dbg
+ #else
+ #define dev_vdbg(dev, fmt, ...)						\
+-({									\
+-	if (0)								\
+-		dev_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__); \
+-})
++	dev_no_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__)
+ #endif
  
--	if (ent->callback && schedule_delayed_work(&ent->cb_timeout_work, cb_timeout))
-+	if (ent->callback && schedule_delayed_work(&ent->cb_timeout_work, timeout))
- 		cmd_ent_get(ent);
- 	set_bit(MLX5_CMD_ENT_STATE_PENDING_COMP, &ent->state);
- 
-@@ -1141,6 +1157,9 @@ static int wait_func(struct mlx5_core_dev *dev, struct mlx5_cmd_work_ent *ent)
- 		ent->ret = -ECANCELED;
- 		goto out_err;
- 	}
-+
-+	wait_for_completion(&ent->slotted);
-+
- 	if (cmd->mode == CMD_MODE_POLLING || ent->polling)
- 		wait_for_completion(&ent->done);
- 	else if (!wait_for_completion_timeout(&ent->done, timeout))
-@@ -1155,6 +1174,9 @@ static int wait_func(struct mlx5_core_dev *dev, struct mlx5_cmd_work_ent *ent)
- 	} else if (err == -ECANCELED) {
- 		mlx5_core_warn(dev, "%s(0x%x) canceled on out of queue timeout.\n",
- 			       mlx5_command_str(ent->op), ent->op);
-+	} else if (err == -EBUSY) {
-+		mlx5_core_warn(dev, "%s(0x%x) timeout while waiting for command semaphore.\n",
-+			       mlx5_command_str(ent->op), ent->op);
- 	}
- 	mlx5_core_dbg(dev, "err %d, delivery status %s(%d)\n",
- 		      err, deliv_status_to_str(ent->status), ent->status);
-@@ -1206,6 +1228,7 @@ static int mlx5_cmd_invoke(struct mlx5_core_dev *dev, struct mlx5_cmd_msg *in,
- 	ent->polling = force_polling;
- 
- 	init_completion(&ent->handling);
-+	init_completion(&ent->slotted);
- 	if (!callback)
- 		init_completion(&ent->done);
- 
-@@ -1223,7 +1246,7 @@ static int mlx5_cmd_invoke(struct mlx5_core_dev *dev, struct mlx5_cmd_msg *in,
- 		return 0; /* mlx5_cmd_comp_handler() will put(ent) */
- 
- 	err = wait_func(dev, ent);
--	if (err == -ETIMEDOUT || err == -ECANCELED)
-+	if (err == -ETIMEDOUT || err == -ECANCELED || err == -EBUSY)
- 		goto out_free;
- 
- 	ds = ent->ts2 - ent->ts1;
-diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
-index 5ca4e085d8133..ffb98bc43b2db 100644
---- a/include/linux/mlx5/driver.h
-+++ b/include/linux/mlx5/driver.h
-@@ -852,6 +852,7 @@ struct mlx5_cmd_work_ent {
- 	void		       *context;
- 	int			idx;
- 	struct completion	handling;
-+	struct completion	slotted;
- 	struct completion	done;
- 	struct mlx5_cmd        *cmd;
- 	struct work_struct	work;
+ /*
 -- 
 2.43.0
 
