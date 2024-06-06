@@ -1,49 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490DF196C8C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C195B196C8C;
 	Thu,  6 Jun 2024 14:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682955; cv=none; b=UpxLt4d+gXakc03le7s6YUM6/MtlnnQu7wRweUb4OMosFNeRodGqwJYZVvp623ITcGxfxjiyB5dVJoklszi9MPqTS0+EMeRrs5KbS2kL17Ig1wCaQW1/Ux1BWmsbypHw/YgpBHvJqSfx3SFD0LhypeR4ArJPVaz+EAJBrBBxB5w=
+	t=1717682955; cv=none; b=qA+/ve2sgFoe8vvwSW05he4mLYN1hqSsx5Vf8Z0yxDAjAyW77b5eqmOqT5QzDUJOihAImgzzhDnbmA3O2EVGK3scCTFs1V3Utvrm4ZLLR7rF132AqOct6Wsp/3fwh6YtjolEkmhxU882g3xg+3YKYicgB9QUM2QQ/n28xIfzylA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682955; c=relaxed/simple;
-	bh=qG26IAVIZndYwmsYgXsm2y9jdLl0B2fXEBrh4Su04Sc=;
+	bh=DKsPLVAuv+WdICCIgEI7IXVGAsBluuHyTHZLYvBdgdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvljPbcstAszKLvFxUPctZADJXZS0xEbNHS+bMbEj9nZdOpdZJoDEEyqsUmPlKFS5roe6L2RY5nR/w7vRwF7w4yaRKfbKVbIbfPM0tXf3ZqjpDMEWebAzZSQCppyIjwIHuaOxLp3iFTEMBAHmZdXBbOUKVaFAOiOm0XMEXRhi3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2x51vOO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bwccz9qHg6xUcL/03WAHCZnv/UgV5IYf1S5WqEtrcR5jYKzlrGTxYpQUHVKB/R9pbOUz+/f1Q9vwpKm3fYlBHvEDqjIkg1samJbcpJkeknh6vm9yEOSbkTpS1NTedsxKFk3mIImGKVwIXxX5J7Y2S41FfcXYkhCSVRF4pexTKwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOoU/2uI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2x51vOO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FFEC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOoU/2uI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD6DC2BD10;
 	Thu,  6 Jun 2024 14:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682955;
-	bh=qG26IAVIZndYwmsYgXsm2y9jdLl0B2fXEBrh4Su04Sc=;
+	bh=DKsPLVAuv+WdICCIgEI7IXVGAsBluuHyTHZLYvBdgdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2x51vOOsHbvDyIB5ulrgSyQOLmL0gv25ju7okrJpBDvHrDxXH3wRbBuCZUbIlNSE
-	 nL9XEbhxWJpPO5HhGPHZZ/cLJaGfR4c5rjx8bj8R6W9vB65MTKp5kSAsBEDzbQQfql
-	 q0Z7fnrW0KXyiAF4J7REAL7r8AGDFztk3M+0AH6E=
+	b=OOoU/2uIzRMJANDES/ifyFZprjPbtyhYc2K+U+ZsqC1bk9GkLEPi6K7z6R13NgmYU
+	 Q04dJvGEwt26Wuz7bKjuxULDlz3Jc2pAacfeq2SnYc3I1KOSPR9GwFcuGIACOs49XZ
+	 1laBygW6vrdbtm7O0VXMP4dyrM64x4IJzuzBUcQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Kaige Ye <ye@kaige.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 121/374] perf stat: Dont display metric header for non-leader uncore events
-Date: Thu,  6 Jun 2024 16:01:40 +0200
-Message-ID: <20240606131655.975640705@linuxfoundation.org>
+Subject: [PATCH 6.9 122/374] perf tools: Use pmus to describe type from attribute
+Date: Thu,  6 Jun 2024 16:01:41 +0200
+Message-ID: <20240606131656.002910566@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -64,86 +64,157 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 193a9e30207f54777ff42d0d8be8389edc522277 ]
+[ Upstream commit 7093882067e2e2f88d3449c35c5f0f3f566c8a26 ]
 
-On an Intel tigerlake laptop a metric like:
+When dumping a perf_event_attr, use pmus to find the PMU and its name
+by the type number. This allows dynamically added PMUs to be described.
 
-    {
-        "BriefDescription": "Test",
-        "MetricExpr": "imc_free_running@data_read@ + imc_free_running@data_write@",
-        "MetricGroup": "Test",
-        "MetricName": "Test",
-        "ScaleUnit": "6.103515625e-5MiB"
-    },
+Before:
 
-Will have 4 events:
+  $ perf stat -vv -e data_read true
+  ...
+  perf_event_attr:
+    type                             24
+    size                             136
+    config                           0x20ff
+    sample_type                      IDENTIFIER
+    read_format                      TOTAL_TIME_ENABLED|TOTAL_TIME_RUNNING
+    disabled                         1
+    inherit                          1
+    exclude_guest                    1
+  ...
 
-  uncore_imc_free_running_0/data_read/
-  uncore_imc_free_running_0/data_write/
-  uncore_imc_free_running_1/data_read/
-  uncore_imc_free_running_1/data_write/
+After:
 
-If aggregration is disabled with metric-only 2 column headers are
-needed:
+  $ perf stat -vv -e data_read true
+  ...
+  perf_event_attr:
+    type                             24 (uncore_imc_free_running_0)
+    size                             136
+    config                           0x20ff
+    sample_type                      IDENTIFIER
+    read_format                      TOTAL_TIME_ENABLED|TOTAL_TIME_RUNNING
+    disabled                         1
+    inherit                          1
+    exclude_guest                    1
+  ...
 
-  $ perf stat -M test --metric-only -A -a sleep 1
+However, it also means that when we have a PMU name we prefer it to a
+hard coded name:
 
-   Performance counter stats for 'system wide':
+Before:
 
-                    MiB  Test            MiB  Test
-  CPU0                 1821.0               1820.5
+  $ perf stat -vv -e faults true
+  ...
+  perf_event_attr:
+    type                             1 (PERF_TYPE_SOFTWARE)
+    size                             136
+    config                           0x2 (PERF_COUNT_SW_PAGE_FAULTS)
+    sample_type                      IDENTIFIER
+    read_format                      TOTAL_TIME_ENABLED|TOTAL_TIME_RUNNING
+    disabled                         1
+    inherit                          1
+    enable_on_exec                   1
+    exclude_guest                    1
+  ...
 
-But when not, the counts aggregated in the metric leader and only 1
-column should be shown:
+After:
 
-  $ perf stat -M test --metric-only -a sleep 1
-   Performance counter stats for 'system wide':
+  $ perf stat -vv -e faults true
+  ...
+  perf_event_attr:
+    type                             1 (software)
+    size                             136
+    config                           0x2 (PERF_COUNT_SW_PAGE_FAULTS)
+    sample_type                      IDENTIFIER
+    read_format                      TOTAL_TIME_ENABLED|TOTAL_TIME_RUNNING
+    disabled                         1
+    inherit                          1
+    enable_on_exec                   1
+    exclude_guest                    1
+  ...
 
-              MiB  Test
-                5909.4
+It feels more consistent to do this, rather than only prefer a PMU
+name when a hard coded name isn't available.
 
-         1.001258915 seconds time elapsed
-
-Achieve this by skipping events that aren't metric leaders when
-printing column headers and aggregation isn't disabled.
-
-The bug is long standing, the fixes tag is set to a refactor as that
-is as far back as is reasonable to backport.
-
-Fixes: 088519f318be3a41 ("perf stat: Move the display functions to stat-display.c")
 Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Tested-by: Kan Liang <kan.liang@linux.intel.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kaige Ye <ye@kaige.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20240510051309.2452468-1-irogers@google.com
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Yang Jihong <yangjihong1@huawei.com>
+Link: https://lore.kernel.org/r/20240308001915.4060155-6-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: d9c5f5f94c2d ("perf pmu: Count sys and cpuid JSON events separately")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/stat-display.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/util/perf_event_attr_fprintf.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-display.c
-index bfc1d705f4371..91d2f7f65df74 100644
---- a/tools/perf/util/stat-display.c
-+++ b/tools/perf/util/stat-display.c
-@@ -1223,6 +1223,9 @@ static void print_metric_headers(struct perf_stat_config *config,
+diff --git a/tools/perf/util/perf_event_attr_fprintf.c b/tools/perf/util/perf_event_attr_fprintf.c
+index 8f04d3b7f3ec7..29e66835da3a7 100644
+--- a/tools/perf/util/perf_event_attr_fprintf.c
++++ b/tools/perf/util/perf_event_attr_fprintf.c
+@@ -7,6 +7,8 @@
+ #include <linux/types.h>
+ #include <linux/perf_event.h>
+ #include "util/evsel_fprintf.h"
++#include "util/pmu.h"
++#include "util/pmus.h"
+ #include "trace-event.h"
  
- 	/* Print metrics headers only */
- 	evlist__for_each_entry(evlist, counter) {
-+		if (config->aggr_mode != AGGR_NONE && counter->metric_leader != counter)
-+			continue;
+ struct bit_names {
+@@ -75,9 +77,12 @@ static void __p_read_format(char *buf, size_t size, u64 value)
+ }
+ 
+ #define ENUM_ID_TO_STR_CASE(x) case x: return (#x);
+-static const char *stringify_perf_type_id(u64 value)
++static const char *stringify_perf_type_id(struct perf_pmu *pmu, u32 type)
+ {
+-	switch (value) {
++	if (pmu)
++		return pmu->name;
 +
- 		os.evsel = counter;
++	switch (type) {
+ 	ENUM_ID_TO_STR_CASE(PERF_TYPE_HARDWARE)
+ 	ENUM_ID_TO_STR_CASE(PERF_TYPE_SOFTWARE)
+ 	ENUM_ID_TO_STR_CASE(PERF_TYPE_TRACEPOINT)
+@@ -175,9 +180,9 @@ do {								\
+ #define print_id_unsigned(_s)	PRINT_ID(_s, "%"PRIu64)
+ #define print_id_hex(_s)	PRINT_ID(_s, "%#"PRIx64)
  
- 		perf_stat__print_shadow_stats(config, counter, 0,
+-static void __p_type_id(char *buf, size_t size, u64 value)
++static void __p_type_id(struct perf_pmu *pmu, char *buf, size_t size, u64 value)
+ {
+-	print_id_unsigned(stringify_perf_type_id(value));
++	print_id_unsigned(stringify_perf_type_id(pmu, value));
+ }
+ 
+ static void __p_config_hw_id(char *buf, size_t size, u64 value)
+@@ -246,7 +251,7 @@ static void __p_config_id(char *buf, size_t size, u32 type, u64 value)
+ #define p_sample_type(val)	__p_sample_type(buf, BUF_SIZE, val)
+ #define p_branch_sample_type(val) __p_branch_sample_type(buf, BUF_SIZE, val)
+ #define p_read_format(val)	__p_read_format(buf, BUF_SIZE, val)
+-#define p_type_id(val)		__p_type_id(buf, BUF_SIZE, val)
++#define p_type_id(val)		__p_type_id(pmu, buf, BUF_SIZE, val)
+ #define p_config_id(val)	__p_config_id(buf, BUF_SIZE, attr->type, val)
+ 
+ #define PRINT_ATTRn(_n, _f, _p, _a)			\
+@@ -262,6 +267,7 @@ do {							\
+ int perf_event_attr__fprintf(FILE *fp, struct perf_event_attr *attr,
+ 			     attr__fprintf_f attr__fprintf, void *priv)
+ {
++	struct perf_pmu *pmu = perf_pmus__find_by_type(attr->type);
+ 	char buf[BUF_SIZE];
+ 	int ret = 0;
+ 
 -- 
 2.43.0
 
