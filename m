@@ -1,52 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA3C1BC063;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF66A1BC063;
 	Thu,  6 Jun 2024 14:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683502; cv=none; b=RlUvaJt1FYxpVvbhp2adfAS7uOj2q0FyIN2orXfy79ci3LSkDZxTQJJ5v7Hws5cNZ2533LknNvmU10bddy6QjpuhMsPbrXY5mKh3tR4F/P4YqtNrHZwmkRcaWxboVgX6f1vbLtUzyfC0SiIyuR2gbymV/comp5blfyXnMrETouw=
+	t=1717683502; cv=none; b=m8gn5WiIlAI8NFdNbzETGqLL8N/2Ju9P9Y35xqKioZHWDl9/2dUUx03YIy+BG/fxj5uOYSQNNAKHJ21DJFdboDjCWc6b4X5OBok8O1sEzAszEeLDbhpLJUqslOkW3suDeknGl9vGEw87+hskSoxRkRVTHlWvwVWr3xCkOa4b1DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683502; c=relaxed/simple;
-	bh=Ebhs69Ms08mLnW2FlCb4tMheCVU3wa2QVhxkGEUkzbM=;
+	bh=dxKykkCqzGoQ87HvM1dIKDTygYFPHr0U059n7FSFv9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZA2sNDV/dpBKZ7fAcWDk64Rnb3XSssRbrtfv1fIgCk81oILNyOgicfNsNg88S8x7ne2mFd86yogXRQw4eUY55syGQcXBxdiaX82OVQ+diukHlm5q5f9iykfBUnRc27IRFWhHmYL8pNOqimGgTLAcqI3tCNUUuKE+rnJnD7/dMaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/JIu1Rh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C/uwSaQIoBeZoMmwAP7vC2M2QXld4IWpnKMkz3l/XoONWAi8Hk9ilIcKa4w2X+RKhMnZTWsRUGktDVTapZLrHsF4Bp7L0v8Zn+NueDYMHW1Nh/FcgKcEaSQ4eFwYBsXEoNkFOA2x1S6q4eiVQ1z++5JKnwThr3d5TbXbM5OB9yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZUM8To4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/JIu1Rh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE01C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZUM8To4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95912C32782;
 	Thu,  6 Jun 2024 14:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683502;
-	bh=Ebhs69Ms08mLnW2FlCb4tMheCVU3wa2QVhxkGEUkzbM=;
+	bh=dxKykkCqzGoQ87HvM1dIKDTygYFPHr0U059n7FSFv9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/JIu1RhjLjmGLp2OoQWLZKphWg4uzPhsoi7roawPR1DR6wQHJW+kfP8pUmvh8V6Q
-	 5VBJZonwaDz3PGPH0cfmOOv0g97lvPF7Cdu4O3oa4iDEPrC7nkh+j+cvY45pd4L50l
-	 hVzh++iXkpwgIqO7sCNfnj3JApcSvOmhXlkMyicA=
+	b=gZUM8To48MeSJofdFu9KHDxtCdK2QC4O+UhTU91CiqW4Iri1ZRl+mZX+WpkKD9O8X
+	 4OXNqogfMS9S5K6wpP195pZe09WeSsKHGNwXQIQAN7mqZAwFL7zWVjCa9kBANZfZsg
+	 qAJGOOJ9Tb1t6j5RFQ68G3sR1BPtfh/D7sprvXqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	James Clark <james.clark@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Suzuki Poulouse <suzuki.poulose@arm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 444/744] perf test shell arm_coresight: Increase buffer size for Coresight basic tests
-Date: Thu,  6 Jun 2024 16:01:56 +0200
-Message-ID: <20240606131746.742521749@linuxfoundation.org>
+Subject: [PATCH 6.1 374/473] um: Add winch to winch_handlers before registering winch IRQ
+Date: Thu,  6 Jun 2024 16:05:03 +0200
+Message-ID: <20240606131712.250905021@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -58,59 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit 10b6ee3b597b1b1b4dc390aaf9d589664af31df9 ]
+[ Upstream commit a0fbbd36c156b9f7b2276871d499c9943dfe5101 ]
 
-These tests record in a mode that includes kernel trace but look for
-samples of a userspace process. This makes them sensitive to any kernel
-compilation options that increase the amount of time spent in the
-kernel. If the trace buffer is completely filled before userspace is
-reached then the test will fail. Double the buffer size to fix this.
+Registering a winch IRQ is racy, an interrupt may occur before the winch is
+added to the winch_handlers list.
 
-The other tests in the same file aren't sensitive to this for various
-reasons, for example the iterate devices test filters by userspace trace
-only. But in order to keep coverage of all the modes, increase the
-buffer size rather than filtering by userspace for the basic tests.
+If that happens, register_winch_irq() adds to that list a winch that is
+scheduled to be (or has already been) freed, causing a panic later in
+winch_cleanup().
 
-Fixes: d1efa4a0a696e487 ("perf cs-etm: Add separate decode paths for timeless and per-thread modes")
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Signed-off-by: James Clark <james.clark@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Suzuki Poulouse <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20240326113749.257250-1-james.clark@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Avoid the race by adding the winch to the winch_handlers list before
+registering the IRQ, and rolling back if um_request_irq() fails.
+
+Fixes: 42a359e31a0e ("uml: SIGIO support cleanup")
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/test_arm_coresight.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/um/drivers/line.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/tests/shell/test_arm_coresight.sh b/tools/perf/tests/shell/test_arm_coresight.sh
-index f1bf5621160fb..4d4e685775303 100755
---- a/tools/perf/tests/shell/test_arm_coresight.sh
-+++ b/tools/perf/tests/shell/test_arm_coresight.sh
-@@ -186,7 +186,7 @@ arm_cs_etm_snapshot_test() {
+diff --git a/arch/um/drivers/line.c b/arch/um/drivers/line.c
+index 02b0befd67632..95ad6b190d1d1 100644
+--- a/arch/um/drivers/line.c
++++ b/arch/um/drivers/line.c
+@@ -673,24 +673,26 @@ void register_winch_irq(int fd, int tty_fd, int pid, struct tty_port *port,
+ 		goto cleanup;
+ 	}
  
- arm_cs_etm_basic_test() {
- 	echo "Recording trace with '$*'"
--	perf record -o ${perfdata} "$@" -- ls > /dev/null 2>&1
-+	perf record -o ${perfdata} "$@" -m,8M -- ls > /dev/null 2>&1
+-	*winch = ((struct winch) { .list  	= LIST_HEAD_INIT(winch->list),
+-				   .fd  	= fd,
++	*winch = ((struct winch) { .fd  	= fd,
+ 				   .tty_fd 	= tty_fd,
+ 				   .pid  	= pid,
+ 				   .port 	= port,
+ 				   .stack	= stack });
  
- 	perf_script_branch_samples ls &&
- 	perf_report_branch_samples ls &&
++	spin_lock(&winch_handler_lock);
++	list_add(&winch->list, &winch_handlers);
++	spin_unlock(&winch_handler_lock);
++
+ 	if (um_request_irq(WINCH_IRQ, fd, IRQ_READ, winch_interrupt,
+ 			   IRQF_SHARED, "winch", winch) < 0) {
+ 		printk(KERN_ERR "register_winch_irq - failed to register "
+ 		       "IRQ\n");
++		spin_lock(&winch_handler_lock);
++		list_del(&winch->list);
++		spin_unlock(&winch_handler_lock);
+ 		goto out_free;
+ 	}
+ 
+-	spin_lock(&winch_handler_lock);
+-	list_add(&winch->list, &winch_handlers);
+-	spin_unlock(&winch_handler_lock);
+-
+ 	return;
+ 
+  out_free:
 -- 
 2.43.0
 
