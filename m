@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5521A1AD9C9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3143F1AD9C0;
 	Thu,  6 Jun 2024 14:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683334; cv=none; b=fNonzrzpBBHTjIaiKjpXnsFfk9e1Y0yLW8gpSIiR6zijiJdh/my7lD6efwjX61pynYAa9NtHTxDnagPpoY6MyHbfCaGnvpS8Wf5H1iHO6I6pTsfAWVhGDL2Hf9FiSfeYgV9QP+QMVUgKI4Bxe2vvzESmQaazm3RIaJqxzN/KsVQ=
+	t=1717683335; cv=none; b=g15sOZbsWrTX5nSQ5IiLxeX7UF9dZiWM2l8vD/plyeKlOeIkJOGtCh3rE+u3WEtJ9cjMNg6OKsBzgRYV8f+srLeVtotBsW5Eij5iWF3AKNOEBlnT0i1dSVjTlVCtZ4Y0FPu1kQtLpeTPWP1v0OytqBAwvknXuiDIIV9yhDgO9mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683334; c=relaxed/simple;
-	bh=DCjjPqjAe0id9eJG3SK1dngqVK6gxRlhvA0Ud/J0saA=;
+	s=arc-20240116; t=1717683335; c=relaxed/simple;
+	bh=+LGDIKNryHyJa/TXv4Uk1ARU4MbNhf4EsS+r/QpBz3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3kIGZtZeNh21ko8VlZNCe8Uk6rBGANs1rBfuicay/6ZC9F0ies7Qj8dHVJgTcmUjqu440fh1jtjtpm3ilF2tBSAWxaSYVtOi6keCKt+AuvN8TvaUbZL16cz4P7KPU3HDPWej+iFlzC32Tsoj/F58OcmITZOHiogmibutqW1kio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jmkez9fe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qNyRoQxQK5tGYp8hs2NhXnGfgJplJiniwTAyf/FgxEu0/Ve093Yq6Fv9yZ88Juql9ZXyhuiSAipOeQVtM2VsP71ySj6FITLtpqfzVyIanYwwHRTFZNkc73KsRhBFJBbbbD51p1x6vRDpgat2Aw7djCffAxnb+WBFqfOQCbIPVr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9ifAvGd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jmkez9fe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AE4C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9ifAvGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5985C2BD10;
 	Thu,  6 Jun 2024 14:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683334;
-	bh=DCjjPqjAe0id9eJG3SK1dngqVK6gxRlhvA0Ud/J0saA=;
+	bh=+LGDIKNryHyJa/TXv4Uk1ARU4MbNhf4EsS+r/QpBz3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jmkez9fe7vxzQT2wgh285c9xEnsrC8k4Etat6YR077aOL8VECjSc8dBUxBwaPa0Qz
-	 Qx4SJ4DgOfuEJFERomXszl8ilEEOUZxyoLxLF3dq1ZrTl5VCV8ds2M9TEmCIzx3xmF
-	 qA2R2bM+5US7M881R/zh21xtQJx9TqoH4wkB8Ihk=
+	b=n9ifAvGd6eUC4iyDuE61okRG7U2NLUob5/+8rbIasXHqXu567DMoNOHmplT92OR3d
+	 CFk1aRb8UbLy5RTGrTy6T93sh4IwxlLNim0oiMaZM/MkxFFSdfhupgvJTw0LT0u59Q
+	 NUZaWjLKHzSRXrNn23unJnmsj9Hrhy3fiFr28yxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jagan Teki <jagan@amarulasolutions.com>,
+	Michael Trimarchi <michael@amarulasolutions.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 216/473] drm/msm/dp: Avoid a long timeout for AUX transfer if nothing connected
-Date: Thu,  6 Jun 2024 16:02:25 +0200
-Message-ID: <20240606131707.048881076@linuxfoundation.org>
+Subject: [PATCH 6.6 267/744] drm/bridge: Fix improper bridge init order with pre_enable_prev_first
+Date: Thu,  6 Jun 2024 15:58:59 +0200
+Message-ID: <20240606131740.945509935@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,134 +49,156 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Jagan Teki <jagan@amarulasolutions.com>
 
-[ Upstream commit 5d1a7493343cc00d9019880b686e4e0a0f649531 ]
+[ Upstream commit e18aeeda0b6905c333df5a0566b99f5c84426098 ]
 
-As documented in the description of the transfer() function of
-"struct drm_dp_aux", the transfer() function can be called at any time
-regardless of the state of the DP port. Specifically if the kernel has
-the DP AUX character device enabled and userspace accesses
-"/dev/drm_dp_auxN" directly then the AUX transfer function will be
-called regardless of whether a DP device is connected.
+For a given bridge pipeline if any bridge sets pre_enable_prev_first
+flag then the pre_enable for the previous bridge will be called before
+pre_enable of this bridge and opposite is done for post_disable.
 
-For eDP panels we have a special rule where we wait (with a 5 second
-timeout) for HPD to go high. This rule was important before all panels
-drivers were converted to call wait_hpd_asserted() and actually can be
-removed in a future commit.
+These are the potential bridge flags to alter bridge init order in order
+to satisfy the MIPI DSI host and downstream panel or bridge to function.
+However the existing pre_enable_prev_first logic with associated bridge
+ordering has broken for both pre_enable and post_disable calls.
 
-For external DP devices we never checked for HPD. That means that
-trying to access the DP AUX character device (AKA `hexdump -C
-/dev/drm_dp_auxN`) would very, very slowly timeout. Specifically on my
-system:
-  $ time hexdump -C /dev/drm_dp_aux0
-  hexdump: /dev/drm_dp_aux0: Connection timed out
-  real    0m8.200s
-We want access to the drm_dp_auxN character device to fail faster than
-8 seconds when no DP cable is plugged in.
+[pre_enable]
 
-Let's add a test to make transfers fail right away if a device isn't
-plugged in. Rather than testing the HPD line directly, we have the
-dp_display module tell us when AUX transfers should be enabled so we
-can handle cases where HPD is signaled out of band like with Type C.
+The altered bridge ordering has failed if two consecutive bridges on a
+given pipeline enables the pre_enable_prev_first flag.
 
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/583127/
-Link: https://lore.kernel.org/r/20240315143621.v2.1.I16aff881c9fe82b5e0fc06ca312da017aa7b5b3e@changeid
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Example:
+- Panel
+- Bridge 1
+- Bridge 2 pre_enable_prev_first
+- Bridge 3
+- Bridge 4 pre_enable_prev_first
+- Bridge 5 pre_enable_prev_first
+- Bridge 6
+- Encoder
+
+In this example, Bridge 4 and Bridge 5 have pre_enable_prev_first.
+
+The logic looks for a bridge which enabled pre_enable_prev_first flag
+on each iteration and assigned the previou bridge to limit pointer
+if the bridge doesn't enable pre_enable_prev_first flags.
+
+If control found Bridge 2 is pre_enable_prev_first then the iteration
+looks for Bridge 3 and found it is not pre_enable_prev_first and assigns
+it's previous Bridge 4 to limit pointer and calls pre_enable of Bridge 3
+and Bridge 2 and assign iter pointer with limit which is Bridge 4.
+
+Here is the actual problem, for the next iteration control look for
+Bridge 5 instead of Bridge 4 has iter pointer in previous iteration
+moved to Bridge 4 so this iteration skips the Bridge 4. The iteration
+found Bridge 6 doesn't pre_enable_prev_first flags so the limit assigned
+to Encoder. From next iteration Encoder skips as it is the last bridge
+for reverse order pipeline.
+
+So, the resulting pre_enable bridge order would be,
+- Panel, Bridge 1, Bridge 3, Bridge 2, Bridge 6, Bridge 5.
+
+This patch fixes this by assigning limit to next pointer instead of
+previous bridge since the iteration always looks for bridge that does
+NOT request prev so assigning next makes sure the last bridge on a
+given iteration what exactly the limit bridge is.
+
+So, the resulting pre_enable bridge order with fix would be,
+- Panel, Bridge 1, Bridge 3, Bridge 2, Bridge 6, Bridge 5, Bridge 4,
+  Encoder.
+
+[post_disable]
+
+The altered bridge ordering has failed if two consecutive bridges on a
+given pipeline enables the pre_enable_prev_first flag.
+
+Example:
+- Panel
+- Bridge 1
+- Bridge 2 pre_enable_prev_first
+- Bridge 3
+- Bridge 4 pre_enable_prev_first
+- Bridge 5 pre_enable_prev_first
+- Bridge 6
+- Encoder
+
+In this example Bridge 5 and Bridge 4 have pre_enable_prev_first.
+
+The logic looks for a bridge which enabled pre_enable_prev_first flags
+on each iteration and assigned the previou bridge to next and next to
+limit pointer if the bridge does enable pre_enable_prev_first flag.
+
+If control starts from Bridge 6 then it found next Bridge 5 is
+pre_enable_prev_first and immediately the next assigned to previous
+Bridge 6 and limit assignments to next Bridge 6 and call post_enable
+of Bridge 6 even though the next consecutive Bridge 5 is enabled with
+pre_enable_prev_first. This clearly misses the logic to find the state
+of next conducive bridge as everytime the next and limit assigns
+previous bridge if given bridge enabled pre_enable_prev_first.
+
+So, the resulting post_disable bridge order would be,
+- Encoder, Bridge 6, Bridge 5, Bridge 4, Bridge 3, Bridge 2, Bridge 1,
+  Panel.
+
+This patch fixes this by assigning next with previou bridge only if the
+bridge doesn't enable pre_enable_prev_first flag and the next further
+assign it to limit. This way we can find the bridge that NOT requested
+prev to disable last.
+
+So, the resulting pre_enable bridge order with fix would be,
+- Encoder, Bridge 4, Bridge 5, Bridge 6, Bridge 2, Bridge 3, Bridge 1,
+  Panel.
+
+Validated the bridge init ordering by incorporating dummy bridges in
+the sun6i-mipi-dsi pipeline
+
+Fixes: 4fb912e5e190 ("drm/bridge: Introduce pre_enable_prev_first to alter bridge init order")
+Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
+Tested-by: Michael Trimarchi <michael@amarulasolutions.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230328170752.1102347-1-jagan@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_aux.c     | 20 ++++++++++++++++++++
- drivers/gpu/drm/msm/dp/dp_aux.h     |  1 +
- drivers/gpu/drm/msm/dp/dp_display.c |  4 ++++
- 3 files changed, 25 insertions(+)
+ drivers/gpu/drm/drm_bridge.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-index 8e3b677f35e64..559809a5cbcfb 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -35,6 +35,7 @@ struct dp_aux_private {
- 	bool no_send_stop;
- 	bool initted;
- 	bool is_edp;
-+	bool enable_xfers;
- 	u32 offset;
- 	u32 segment;
- 
-@@ -297,6 +298,17 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
- 		goto exit;
- 	}
- 
-+	/*
-+	 * If we're using DP and an external display isn't connected then the
-+	 * transfer won't succeed. Return right away. If we don't do this we
-+	 * can end up with long timeouts if someone tries to access the DP AUX
-+	 * character device when no DP device is connected.
-+	 */
-+	if (!aux->is_edp && !aux->enable_xfers) {
-+		ret = -ENXIO;
-+		goto exit;
-+	}
+diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+index 67354afbd7168..62d8a291c49c7 100644
+--- a/drivers/gpu/drm/drm_bridge.c
++++ b/drivers/gpu/drm/drm_bridge.c
+@@ -687,11 +687,17 @@ void drm_atomic_bridge_chain_post_disable(struct drm_bridge *bridge,
+ 				 */
+ 				list_for_each_entry_from(next, &encoder->bridge_chain,
+ 							 chain_node) {
+-					if (next->pre_enable_prev_first) {
++					if (!next->pre_enable_prev_first) {
+ 						next = list_prev_entry(next, chain_node);
+ 						limit = next;
+ 						break;
+ 					}
 +
- 	/*
- 	 * For eDP it's important to give a reasonably long wait here for HPD
- 	 * to be asserted. This is because the panel driver may have _just_
-@@ -428,6 +440,14 @@ irqreturn_t dp_aux_isr(struct drm_dp_aux *dp_aux)
- 	return IRQ_HANDLED;
- }
++					if (list_is_last(&next->chain_node,
++							 &encoder->bridge_chain)) {
++						limit = next;
++						break;
++					}
+ 				}
  
-+void dp_aux_enable_xfers(struct drm_dp_aux *dp_aux, bool enabled)
-+{
-+	struct dp_aux_private *aux;
-+
-+	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
-+	aux->enable_xfers = enabled;
-+}
-+
- void dp_aux_reconfig(struct drm_dp_aux *dp_aux)
- {
- 	struct dp_aux_private *aux;
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h b/drivers/gpu/drm/msm/dp/dp_aux.h
-index 511305da4f66d..f3052cb43306b 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.h
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.h
-@@ -12,6 +12,7 @@
- int dp_aux_register(struct drm_dp_aux *dp_aux);
- void dp_aux_unregister(struct drm_dp_aux *dp_aux);
- irqreturn_t dp_aux_isr(struct drm_dp_aux *dp_aux);
-+void dp_aux_enable_xfers(struct drm_dp_aux *dp_aux, bool enabled);
- void dp_aux_init(struct drm_dp_aux *dp_aux);
- void dp_aux_deinit(struct drm_dp_aux *dp_aux);
- void dp_aux_reconfig(struct drm_dp_aux *dp_aux);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index e0551ad7a4252..fd82752e502f1 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -577,6 +577,8 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 	if (!hpd)
- 		return 0;
- 
-+	dp_aux_enable_xfers(dp->aux, true);
-+
- 	mutex_lock(&dp->event_mutex);
- 
- 	state =  dp->hpd_state;
-@@ -641,6 +643,8 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	if (!hpd)
- 		return 0;
- 
-+	dp_aux_enable_xfers(dp->aux, false);
-+
- 	mutex_lock(&dp->event_mutex);
- 
- 	state = dp->hpd_state;
+ 				/* Call these bridges in reverse order */
+@@ -774,7 +780,7 @@ void drm_atomic_bridge_chain_pre_enable(struct drm_bridge *bridge,
+ 					/* Found first bridge that does NOT
+ 					 * request prev to be enabled first
+ 					 */
+-					limit = list_prev_entry(next, chain_node);
++					limit = next;
+ 					break;
+ 				}
+ 			}
 -- 
 2.43.0
 
