@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2DB19753E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4E019753E;
 	Thu,  6 Jun 2024 14:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682978; cv=none; b=PkfWPnEhMGKuOrd240AuA1ufK6DgP3ChD/I/JFnwb/nuIoFjuq1RwYzCOEtXFyA9jHnJilOtAAh1HDls41dvRcYEajOslv0mz/EAZ0UJ5Qr9PUJdLSmmvKBYASKif4DQA0ZUImX90I5dDL7DrTVl3FwtnyHTX6UaLj8TxsiYX/w=
+	t=1717682978; cv=none; b=JzqmUfURU5jYZLidZMOqRp58lI4oXoSxHxFtXTIcdosKgDm0pwJEBKcQ+LO2Z6BkFZcJow0WzKaVzwxvBqSWna2sw6AuztCy4IA047DDn3LFIFulSCs4PPmxnGWR4lbOO4nTj1N1JRnP++1tq1iXR+KtRvtw0pfN9d6CkTixnLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682978; c=relaxed/simple;
-	bh=f8aPqcGHKzh+zX3CS5lX5SaJPDEzvbsZBdlKe97aRsk=;
+	bh=Jk/pjefwXmnQ/sdbHcEbcpSPoJqY1ME1oUr0psUc7xM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6w832Ms1Akc6MFBD+LLzC+w6bJkzr2aTDUs2PhvoTmEPkDtIWI7LsicsSPLxudTL/xnm7259LJHvNCtduqrrnBo06UAoLMA1c6BRdjF+PKHG1sqvxWoO63wVIDtYLQ+dYpI+wr7xOjo6/VUjlUdODSdfRLRoEOQUiimb+jBaU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrfIFgev; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U+OPuNMzud6MIu5HBQcOH0V1M5zvXGZnZh2xvUEuQzL3X9SkWZuC3SFR6Sg4AyBiJks5wVuj0mSZ/nvd00XF88lzd9l0dsW6eb/cBS+7x853Z3S/rXHYUkaEhXTrI5yKMY03QOZqfTdDQT0aMi+3G1HpCaN+32fKlpMsXcncB18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnIiHlYg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrfIFgev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF97C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnIiHlYg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DEC4C2BD10;
 	Thu,  6 Jun 2024 14:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682978;
-	bh=f8aPqcGHKzh+zX3CS5lX5SaJPDEzvbsZBdlKe97aRsk=;
+	bh=Jk/pjefwXmnQ/sdbHcEbcpSPoJqY1ME1oUr0psUc7xM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LrfIFgevwQNIgYEQ16TVUssCBHr+vQYjlzqE76Xft7/P771HzYhliIFCbEntGsaDj
-	 IzBYNLG7LBFKZHThS9VjbBwEFOIrjZh5i5lVC5164inhkwS926E1b3AZlqL3iDNLeX
-	 J/29I7aNp1I0iu3xt+0xTfRk/GBSuA7tU+Dnfs9Q=
+	b=lnIiHlYgHGRkoT/pifxPHWPa3nhQid+B9dJuwoRI/Bp3lbHLV7Smkx6l1d6BY6Z7G
+	 KdXS9O10y2PEneaB1R/Mo+9FAte0BZW4j7p3veAp/RsNS0e0aW1YK5XHGzJ36lk2EH
+	 OBhbGhpUV3iPcUq8VOdk/Ey+1ledt6ig1Jc6hqEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jai Luthra <j-luthra@ti.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Umang Jain <umang.jain@ideasonboard.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 157/374] media: ti: j721e-csi2rx: Fix races while restarting DMA
-Date: Thu,  6 Jun 2024 16:02:16 +0200
-Message-ID: <20240606131657.174201785@linuxfoundation.org>
+Subject: [PATCH 6.9 158/374] media: v4l: Dont turn on privacy LED if streamon fails
+Date: Thu,  6 Jun 2024 16:02:17 +0200
+Message-ID: <20240606131657.206455254@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,48 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jai Luthra <j-luthra@ti.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit ad79c9ecea5baa7b4f19677e4b1c881ed89b0c3b ]
+[ Upstream commit f2bf6cd8f44781349620e30a0af8987fe9af008f ]
 
-After the frame is submitted to DMA, it may happen that the submitted
-list is not updated soon enough, and the DMA callback is triggered
-before that.
+Turn on the privacy LED only if streamon succeeds. This can be done after
+enabling streaming on the sensor.
 
-This can lead to kernel crashes, so move everything in a single
-lock/unlock section to prevent such races.
-
-Fixes: b4a3d877dc92 ("media: ti: Add CSI2RX support for J721E")
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Fixes: b6e10ff6c23d ("media: v4l2-core: Make the v4l2-core code enable/disable the privacy LED if present")
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Reviewed-by: Umang Jain <umang.jain@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/media/v4l2-core/v4l2-subdev.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c b/drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c
-index 6da83d0cffaae..22442fce76078 100644
---- a/drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c
-+++ b/drivers/media/platform/ti/j721e-csi2rx/j721e-csi2rx.c
-@@ -786,15 +786,14 @@ static void ti_csi2rx_buffer_queue(struct vb2_buffer *vb)
- 			dev_warn(csi->dev,
- 				 "Failed to drain DMA. Next frame might be bogus\n");
+diff --git a/drivers/media/v4l2-core/v4l2-subdev.c b/drivers/media/v4l2-core/v4l2-subdev.c
+index 45836f0a2b0a7..19d20871afefa 100644
+--- a/drivers/media/v4l2-core/v4l2-subdev.c
++++ b/drivers/media/v4l2-core/v4l2-subdev.c
+@@ -412,15 +412,6 @@ static int call_s_stream(struct v4l2_subdev *sd, int enable)
+ 	if (WARN_ON(!!sd->enabled_streams == !!enable))
+ 		return 0;
  
-+		spin_lock_irqsave(&dma->lock, flags);
- 		ret = ti_csi2rx_start_dma(csi, buf);
- 		if (ret) {
--			dev_err(csi->dev, "Failed to start DMA: %d\n", ret);
--			spin_lock_irqsave(&dma->lock, flags);
- 			vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_ERROR);
- 			dma->state = TI_CSI2RX_DMA_IDLE;
- 			spin_unlock_irqrestore(&dma->lock, flags);
-+			dev_err(csi->dev, "Failed to start DMA: %d\n", ret);
- 		} else {
--			spin_lock_irqsave(&dma->lock, flags);
- 			list_add_tail(&buf->list, &dma->submitted);
- 			spin_unlock_irqrestore(&dma->lock, flags);
- 		}
+-#if IS_REACHABLE(CONFIG_LEDS_CLASS)
+-	if (!IS_ERR_OR_NULL(sd->privacy_led)) {
+-		if (enable)
+-			led_set_brightness(sd->privacy_led,
+-					   sd->privacy_led->max_brightness);
+-		else
+-			led_set_brightness(sd->privacy_led, 0);
+-	}
+-#endif
+ 	ret = sd->ops->video->s_stream(sd, enable);
+ 
+ 	if (!enable && ret < 0) {
+@@ -428,9 +419,20 @@ static int call_s_stream(struct v4l2_subdev *sd, int enable)
+ 		ret = 0;
+ 	}
+ 
+-	if (!ret)
++	if (!ret) {
+ 		sd->enabled_streams = enable ? BIT(0) : 0;
+ 
++#if IS_REACHABLE(CONFIG_LEDS_CLASS)
++		if (!IS_ERR_OR_NULL(sd->privacy_led)) {
++			if (enable)
++				led_set_brightness(sd->privacy_led,
++						   sd->privacy_led->max_brightness);
++			else
++				led_set_brightness(sd->privacy_led, 0);
++		}
++#endif
++	}
++
+ 	return ret;
+ }
+ 
 -- 
 2.43.0
 
