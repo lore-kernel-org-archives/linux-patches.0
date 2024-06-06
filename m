@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BD819925A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD0B19925A;
 	Thu,  6 Jun 2024 14:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682992; cv=none; b=LX148MfMVRXfAcEF5Ki3G0U6XsatbbobHGZIOVjqNx+MykIVIEle5RT4TTejQNg7Z3DXeqXGEtThTvIKWW6JrJXubkwMAbd1CC1dkwJ3xOAXUj31eygsSEPBgdmhaTTW1oh2ypImYVAQ65LKqn5lHRF15WX+FD0aCRuqiOqdWXM=
+	t=1717682993; cv=none; b=T+SYpGkSTk3Ao+b41X3hCZ0LroIpbOWJ6+nsN2Fgzn+Uvwo0I2uWtrymSnOv0x0Yk3HznHA1eAb5ttUnxCPsFRjYIhffiA23w+8RU6v/5OTeXqpZ9WsLYCBhfvrJL7fMtKlgGhAXttyfpP0z+pqSfgruSVO3f6nS1QEKZa6UKy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682992; c=relaxed/simple;
-	bh=LTk0e6f8jXx9Rhnpfi/XBFMvVwTAv0bUkz0ydOZf7SY=;
+	s=arc-20240116; t=1717682993; c=relaxed/simple;
+	bh=obTpoU3wKrgPjKAvLVBgqm9DVcAe3E3g3Tht6nqHTDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iABViQ5NmgC7XbeNXhDtpmAhyCjhFXAqQKguCOdZ50yQ+HwmBJLUno0SC5NDIZOlrf168HusKKUFyDC4RZX1bNETFXsVr5jkVe+LNWUrlVxoTL1m+aSn32QuFT4w9JlPOhSVMmB8ngcRUJOa2YGRD9m0OklXhHuq2KOb396iqvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4F+bBjc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WaUQ8JcvSLj58Y+vhR/MxzszuewZDRZkGRP9vgbvV0RWatB9JXhn9Za2Fen8I3MFRb6pT7ihDWFTNtuTxKghKSLnVRo+XKKMcLbx71dqxUrT8DWyzwMTIjMw6tATUzGfE4dJ4gnEcA4wJJIO6LkII8jEk2L6qvXJ3tFiXcmHfxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YkGfpLwF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4F+bBjc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36995C32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YkGfpLwF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C36C32782;
 	Thu,  6 Jun 2024 14:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682992;
-	bh=LTk0e6f8jXx9Rhnpfi/XBFMvVwTAv0bUkz0ydOZf7SY=;
+	bh=obTpoU3wKrgPjKAvLVBgqm9DVcAe3E3g3Tht6nqHTDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N4F+bBjcYxRxRo//3BH0cwemrYZ1m+HxheNdKgJBVNv0PzHmItIJGFpJ83AFFQqTP
-	 +bqIPePlUCWfzUa7d0ZISXmuT7kiRLJl28BrpUBF+XzcyuSszbo8YY7Sulj+B+IcPO
-	 ZD1jFuSfEddZjXIzIQMY3L5cawTFDWSvz3dEJb2s=
+	b=YkGfpLwFhHDES1a0VdUTR6l/ZPgRLFPynZ3LsRp7x9hkAbmGjf0WN8CwdGzXKu4uQ
+	 8Aicr4YK71KCMlEXxVaGFfqELZ1CB/iXatn7wOydUnLCuyWw3qV8+o7N3SDKSnhpoA
+	 3X6zD4YUyXDVHjOILQMW86qsK8wxZJgtJH7uN1mU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Devyn Liu <liudingyuan@huawei.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 144/374] mailbox: mtk-cmdq: Fix pm_runtime_get_sync() warning in mbox shutdown
-Date: Thu,  6 Jun 2024 16:02:03 +0200
-Message-ID: <20240606131656.735851181@linuxfoundation.org>
+Subject: [PATCH 6.9 145/374] gpiolib: acpi: Fix failed in acpi_gpiochip_find() by adding parent node match
+Date: Thu,  6 Jun 2024 16:02:04 +0200
+Message-ID: <20240606131656.772785441@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,38 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Devyn Liu <liudingyuan@huawei.com>
 
-[ Upstream commit 747a69a119c469121385543f21c2d08562968ccc ]
+[ Upstream commit adbc49a5a8c6fcf7be154c2e30213bbf472940da ]
 
-The return value of pm_runtime_get_sync() in cmdq_mbox_shutdown()
-will return 1 when pm runtime state is active, and we don't want to
-get the warning message in this case.
+Previous patch modified the standard used by acpi_gpiochip_find()
+to match device nodes. Using the device node set in gc->gpiodev->d-
+ev instead of gc->parent.
 
-So we change the return value < 0 for WARN_ON().
+However, there is a situation in gpio-dwapb where the GPIO device
+driver will set gc->fwnode for each port corresponding to a child
+node under a GPIO device, so gc->gpiodev->dev will be assigned the
+value of each child node in gpiochip_add_data().
 
-Fixes: 8afe816b0c99 ("mailbox: mtk-cmdq-mailbox: Implement Runtime PM with autosuspend")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+gpio-dwapb.c:
+128,31 static int dwapb_gpio_add_port(struct dwapb_gpio *gpio,
+			       struct dwapb_port_property *pp,
+			       unsigned int offs);
+port->gc.fwnode = pp->fwnode;
+
+693,39 static int dwapb_gpio_probe;
+err = dwapb_gpio_add_port(gpio, &pdata->properties[i], i);
+
+When other drivers request GPIO pin resources through the GPIO device
+node provided by ACPI (corresponding to the parent node), the change
+of the matching object to gc->gpiodev->dev in acpi_gpiochip_find()
+only allows finding the value of each port (child node), resulting
+in a failed request.
+
+Reapply the condition of using gc->parent for match in acpi_gpio-
+chip_find() in the code can compatible with the problem of gpio-dwapb,
+and will not affect the two cases mentioned in the patch:
+1. There is no setting for gc->fwnode.
+2. The case that depends on using gc->fwnode for match.
+
+Fixes: 5062e4c14b75 ("gpiolib: acpi: use the fwnode in acpi_gpiochip_find()")
+Fixes: 067dbc1ea5ce ("gpiolib: acpi: Don't use GPIO chip fwnode in acpi_gpiochip_find()")
+Signed-off-by: Devyn Liu <liudingyuan@huawei.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Tested-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mtk-cmdq-mailbox.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpiolib-acpi.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
-index ead2200f39ba0..033aff11f87cf 100644
---- a/drivers/mailbox/mtk-cmdq-mailbox.c
-+++ b/drivers/mailbox/mtk-cmdq-mailbox.c
-@@ -465,7 +465,7 @@ static void cmdq_mbox_shutdown(struct mbox_chan *chan)
- 	struct cmdq_task *task, *tmp;
- 	unsigned long flags;
+diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+index 7f140df40f35b..c1e190d3ea244 100644
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -128,7 +128,24 @@ static bool acpi_gpio_deferred_req_irqs_done;
  
--	WARN_ON(pm_runtime_get_sync(cmdq->mbox.dev));
-+	WARN_ON(pm_runtime_get_sync(cmdq->mbox.dev) < 0);
+ static int acpi_gpiochip_find(struct gpio_chip *gc, const void *data)
+ {
+-	return device_match_acpi_handle(&gc->gpiodev->dev, data);
++	/* First check the actual GPIO device */
++	if (device_match_acpi_handle(&gc->gpiodev->dev, data))
++		return true;
++
++	/*
++	 * When the ACPI device is artificially split to the banks of GPIOs,
++	 * where each of them is represented by a separate GPIO device,
++	 * the firmware node of the physical device may not be shared among
++	 * the banks as they may require different values for the same property,
++	 * e.g., number of GPIOs in a certain bank. In such case the ACPI handle
++	 * of a GPIO device is NULL and can not be used. Hence we have to check
++	 * the parent device to be sure that there is no match before bailing
++	 * out.
++	 */
++	if (gc->parent)
++		return device_match_acpi_handle(gc->parent, data);
++
++	return false;
+ }
  
- 	spin_lock_irqsave(&thread->chan->lock, flags);
- 	if (list_empty(&thread->task_busy_list))
+ /**
 -- 
 2.43.0
 
