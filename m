@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75062197538;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E571991C1;
 	Thu,  6 Jun 2024 14:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683161; cv=none; b=a1z6C1AVGqJCMwvsbn5SELGxMd4iWuM/w+15mI2E8pTd0qmTuWTq8sC/s0WNJZvSuFZNATKgZRdBwM0NIazIRWI+P6PkuEKXWxgkmy2eVq1t3/2nuDe83scwe3oWTxvyCgVsTuhra+AWL2scyVLSpGyTmu4ILkqJWYkPLkTuSJE=
+	t=1717683161; cv=none; b=LXFhye5ITWV3gsjpUA4ibBNHerLjv0Wqk98YsfiBfxpyHO++VSez+qCnvUGiLw3dQoJCFFw2IwcZpHAc7E2Rzze7RYuaPdp7nwdI7C2UU6EpcBBLe5d3InnzTXO5WKTZqbcusEGDZ0dzbc5sHyE4GcxxbMfo4gxyD4hGN4loTz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683161; c=relaxed/simple;
-	bh=AYvZIzyQ++ggfuHP8WVHSGwXjeuNxmdTHzVUpL+g1t0=;
+	bh=R/Mdd7Kl4ew6HznYWAYcZl9Vu8FKrb1lCFcqx8uMggI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6E8r1jPmuacehAaxeim4vaDz8mb0rZlzQLW1BKkwvzOy44VaBpln6U2lsBdQa8Au4mtFq7frE4Ddx4ofCmski7BEWhJZs3DmqqdMBWPb9ByP1qq3R+pc/pDCSouAWxANq+Fc4csb0lgXnz7xKw2/Mqj7PBs0vG3fEWt/M37w0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGeay8A8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=juI/S12Szw6uubxa8FfhPLfE4yqMTuI2hS15MAVGwtXdjG7teo/POUCTZGUPyWzrgeB0i7OYNJTl5r6er9ojvSPeSZDEeAY14SMoqFO/N9uIrC0UDUJuiqf32Cz0lQ+wI2ksMNch04FT5X+RbqR/KrSE+MBN3EEdYYqmlu0wGRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miO2UJYy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGeay8A8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA50C32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miO2UJYy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2838C32781;
 	Thu,  6 Jun 2024 14:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683161;
-	bh=AYvZIzyQ++ggfuHP8WVHSGwXjeuNxmdTHzVUpL+g1t0=;
+	bh=R/Mdd7Kl4ew6HznYWAYcZl9Vu8FKrb1lCFcqx8uMggI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGeay8A8wkbonZ5Fx+gVmiLWcqycnJrnUGt46khc6uK2zmDoVWDcO3CxbAiJNLEDu
-	 BLXIiMommF79dNFeZZRHr+e8SqPAnzVSXvWGmMAwEYjDrG5MP4ZzLPb5J99WEGxgFJ
-	 04givJ3P0iyYEPySldVX6MqYMpm8QRY0Gc/deoEY=
+	b=miO2UJYyMeafVVZMT0VjITgY757EjEcBG8iYtiep9srOrQj+F6gWSAeJSBIorhDWc
+	 nxBHUph+eerUcP4si8v3tQ6PlHBGXvsYZOcdWkjsDtWQeSMkSqVRx2FIKJOkwV7ogx
+	 8T72Q/S2wgTWsArpVXlUWLrqY9ItYz0X98VenHCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Ashton <joshua@froggi.es>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Nikita Kiryushin <kiryushin@ancud.ru>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/473] drm/amd/display: Set color_mgmt_changed to true on unsuspend
-Date: Thu,  6 Jun 2024 15:59:21 +0200
-Message-ID: <20240606131700.950195296@linuxfoundation.org>
+Subject: [PATCH 6.6 106/744] rcu-tasks: Fix show_rcu_tasks_trace_gp_kthread buffer overflow
+Date: Thu,  6 Jun 2024 15:56:18 +0200
+Message-ID: <20240606131735.790546221@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joshua Ashton <joshua@froggi.es>
+From: Nikita Kiryushin <kiryushin@ancud.ru>
 
-[ Upstream commit 2eb9dd497a698dc384c0dd3e0311d541eb2e13dd ]
+[ Upstream commit cc5645fddb0ce28492b15520306d092730dffa48 ]
 
-Otherwise we can end up with a frame on unsuspend where color management
-is not applied when userspace has not committed themselves.
+There is a possibility of buffer overflow in
+show_rcu_tasks_trace_gp_kthread() if counters, passed
+to sprintf() are huge. Counter numbers, needed for this
+are unrealistically high, but buffer overflow is still
+possible.
 
-Fixes re-applying color management on Steam Deck/Gamescope on S3 resume.
+Use snprintf() with buffer size instead of sprintf().
 
-Signed-off-by: Joshua Ashton <joshua@froggi.es>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: edf3775f0ad6 ("rcu-tasks: Add count for idle tasks on offline CPUs")
+Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/rcu/tasks.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index ff460c9802eb2..31bae620aeffc 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2964,6 +2964,7 @@ static int dm_resume(void *handle)
- 			dc_stream_release(dm_new_crtc_state->stream);
- 			dm_new_crtc_state->stream = NULL;
- 		}
-+		dm_new_crtc_state->base.color_mgmt_changed = true;
- 	}
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 65e000ca332cc..305e960c08ac5 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -1938,7 +1938,7 @@ void show_rcu_tasks_trace_gp_kthread(void)
+ {
+ 	char buf[64];
  
- 	for_each_new_plane_in_state(dm->cached_state, plane, new_plane_state, i) {
+-	sprintf(buf, "N%lu h:%lu/%lu/%lu",
++	snprintf(buf, sizeof(buf), "N%lu h:%lu/%lu/%lu",
+ 		data_race(n_trc_holdouts),
+ 		data_race(n_heavy_reader_ofl_updates),
+ 		data_race(n_heavy_reader_updates),
 -- 
 2.43.0
 
