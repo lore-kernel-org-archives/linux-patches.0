@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6077197533;
-	Thu,  6 Jun 2024 14:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D38D197533;
+	Thu,  6 Jun 2024 14:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683155; cv=none; b=HAwOaNEah54+lMJE/g4ilQ5WP8+NZH/dF91Q5RAow59rFZIQEpt1d5N9+36EEZp3rj65ALQaSbYqCSMLuGHphXPTuQMXTUEg4RM4eDE+qq03eQLV0YugXE0Ori0Q9/ZwiwEBepTq7ZGlJa1V5VTz+5OlD+H0Ed6WXexUiQB7wB8=
+	t=1717683156; cv=none; b=pUznyMpzNSxnHFsVdnCeeW7ChyQXd51ODFNuuA2ITISOWLhdpNfM1MSZD04mhswSeTwHEXpbU64qWAArL0bl0PA4vvXUFDj0dH3xtIuswRJKH89RiqA6jzCagVWAucVo0S31+HQwWtjfWPOGukJ/CIfraQ/Yu8zSuhozp7Nusc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683155; c=relaxed/simple;
-	bh=eP+xp2nyasIUm+4p/2ZoRB1FKc9WIU7OWWGQj1Xxq2s=;
+	s=arc-20240116; t=1717683156; c=relaxed/simple;
+	bh=ij8cBWS0KsnNpyomDoqbU3moV5fkzpEeY96DiW4m8Zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SK25yMxaGM2FzEdL2tH9kvLiAUoShWAhsqlf0xqAWoGLylIFXcewB+vvYXZGAdc7/SeZGXE8WU/YyiWaiwRMfsXqnLyDYE3Vfc5wU8tHO1UXIdxjdNHPez2WfU+0P9cXJcu8VMwvvwPZ4g3ZInKruM4agPx+nJo5yeDwUn8Epq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+4/HjW7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M5CruYC5KSoHwONk9S8XQhdh81sQamF6e3Ntb9w79EKfYmT1FkBEHXUX3C0mS/gLMgUCfU0W98nJBKW3DUABQtSszDpWOe7vrJ/HEjz47PDWQOwnrIx3bzaGfyGGtnpyXyTmtUTTZ6PWfpTm6SJW2dQX37RBsRj8YY6y5zsn4cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNFanryw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+4/HjW7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866FAC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNFanryw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02865C2BD10;
 	Thu,  6 Jun 2024 14:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683155;
-	bh=eP+xp2nyasIUm+4p/2ZoRB1FKc9WIU7OWWGQj1Xxq2s=;
+	s=korg; t=1717683156;
+	bh=ij8cBWS0KsnNpyomDoqbU3moV5fkzpEeY96DiW4m8Zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+4/HjW71pbf42/awRXPdA3Zi2tfQyNAhKcvzJhlOtYMJ2aepb/QuUcHtOM5L9NUL
-	 nlzSCwOPJIHvJGfBC22Z1tPF8BFeCLBc3atht9n2HHVriICJ6yulFtA5zO7uS8Pkb0
-	 beYFezaEd0Q7OBvbDyXHQj+CGfR/jQxRoppsQ1SE=
+	b=NNFanryw1sAN9hfXl6aLl4073W/dMqzO6VRhyy/lZIXlGh/uOy0kF4CSnVLICK4n5
+	 trNbWR1nqlTaf8jpgxNyme0HYXfqeFBOZsdoPXaiLrctLXd5TnLp3cNOL+yGiLbNwd
+	 U/kmi4McYUfutf4vKnw6kRnxZ8NzO6lufaI3PRCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot+fdc5123366fb9c3fdc6d@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/744] crypto: ccp - drop platform ifdef checks
-Date: Thu,  6 Jun 2024 15:56:12 +0200
-Message-ID: <20240606131735.597289718@linuxfoundation.org>
+Subject: [PATCH 6.1 027/473] wifi: mac80211: dont use rate mask for scanning
+Date: Thu,  6 Jun 2024 15:59:16 +0200
+Message-ID: <20240606131700.766692554@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,96 +48,121 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 42c2d7d02977ef09d434b1f5b354f5bc6c1027ab ]
+[ Upstream commit ab9177d83c040eba58387914077ebca56f14fae6 ]
 
-When both ACPI and OF are disabled, the dev_vdata variable is unused:
+The rate mask is intended for use during operation, and
+can be set to only have masks for the currently active
+band. As such, it cannot be used for scanning which can
+be on other bands as well.
 
-drivers/crypto/ccp/sp-platform.c:33:34: error: unused variable 'dev_vdata' [-Werror,-Wunused-const-variable]
+Simply ignore the rate masks during scanning to avoid
+warnings from incorrect settings.
 
-This is not a useful configuration, and there is not much point in saving
-a few bytes when only one of the two is enabled, so just remove all
-these ifdef checks and rely on of_match_node() and acpi_match_device()
-returning NULL when these subsystems are disabled.
-
-Fixes: 6c5063434098 ("crypto: ccp - Add ACPI support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported-by: syzbot+fdc5123366fb9c3fdc6d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fdc5123366fb9c3fdc6d
+Co-developed-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Tested-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://msgid.link/20240326220854.9594cbb418ca.I7f86c0ba1f98cf7e27c2bacf6c2d417200ecea5c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sp-platform.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ include/net/mac80211.h |  3 +++
+ net/mac80211/rate.c    |  6 +++++-
+ net/mac80211/scan.c    |  1 +
+ net/mac80211/tx.c      | 13 +++++++++----
+ 4 files changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/crypto/ccp/sp-platform.c b/drivers/crypto/ccp/sp-platform.c
-index 7d79a8744f9a6..c43ad7e1acf7e 100644
---- a/drivers/crypto/ccp/sp-platform.c
-+++ b/drivers/crypto/ccp/sp-platform.c
-@@ -39,44 +39,38 @@ static const struct sp_dev_vdata dev_vdata[] = {
- 	},
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index 43173204d6d5e..87a4f334c22a8 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -885,6 +885,8 @@ enum mac80211_tx_info_flags {
+  *	of their QoS TID or other priority field values.
+  * @IEEE80211_TX_CTRL_MCAST_MLO_FIRST_TX: first MLO TX, used mostly internally
+  *	for sequence number assignment
++ * @IEEE80211_TX_CTRL_SCAN_TX: Indicates that this frame is transmitted
++ *	due to scanning, not in normal operation on the interface.
+  * @IEEE80211_TX_CTRL_MLO_LINK: If not @IEEE80211_LINK_UNSPECIFIED, this
+  *	frame should be transmitted on the specific link. This really is
+  *	only relevant for frames that do not have data present, and is
+@@ -905,6 +907,7 @@ enum mac80211_tx_control_flags {
+ 	IEEE80211_TX_CTRL_NO_SEQNO		= BIT(7),
+ 	IEEE80211_TX_CTRL_DONT_REORDER		= BIT(8),
+ 	IEEE80211_TX_CTRL_MCAST_MLO_FIRST_TX	= BIT(9),
++	IEEE80211_TX_CTRL_SCAN_TX		= BIT(10),
+ 	IEEE80211_TX_CTRL_MLO_LINK		= 0xf0000000,
  };
  
--#ifdef CONFIG_ACPI
- static const struct acpi_device_id sp_acpi_match[] = {
- 	{ "AMDI0C00", (kernel_ulong_t)&dev_vdata[0] },
- 	{ },
- };
- MODULE_DEVICE_TABLE(acpi, sp_acpi_match);
--#endif
+diff --git a/net/mac80211/rate.c b/net/mac80211/rate.c
+index 9d33fd2377c88..a2bc9c5d92b8b 100644
+--- a/net/mac80211/rate.c
++++ b/net/mac80211/rate.c
+@@ -877,6 +877,7 @@ void ieee80211_get_tx_rates(struct ieee80211_vif *vif,
+ 	struct ieee80211_sub_if_data *sdata;
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+ 	struct ieee80211_supported_band *sband;
++	u32 mask = ~0;
  
--#ifdef CONFIG_OF
- static const struct of_device_id sp_of_match[] = {
- 	{ .compatible = "amd,ccp-seattle-v1a",
- 	  .data = (const void *)&dev_vdata[0] },
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, sp_of_match);
--#endif
+ 	rate_control_fill_sta_table(sta, info, dest, max_rates);
  
- static struct sp_dev_vdata *sp_get_of_version(struct platform_device *pdev)
- {
--#ifdef CONFIG_OF
- 	const struct of_device_id *match;
+@@ -889,9 +890,12 @@ void ieee80211_get_tx_rates(struct ieee80211_vif *vif,
+ 	if (ieee80211_is_tx_data(skb))
+ 		rate_control_apply_mask(sdata, sta, sband, dest, max_rates);
  
- 	match = of_match_node(sp_of_match, pdev->dev.of_node);
- 	if (match && match->data)
- 		return (struct sp_dev_vdata *)match->data;
--#endif
++	if (!(info->control.flags & IEEE80211_TX_CTRL_SCAN_TX))
++		mask = sdata->rc_rateidx_mask[info->band];
 +
- 	return NULL;
+ 	if (dest[0].idx < 0)
+ 		__rate_control_send_low(&sdata->local->hw, sband, sta, info,
+-					sdata->rc_rateidx_mask[info->band]);
++					mask);
+ 
+ 	if (sta)
+ 		rate_fixup_ratelist(vif, sband, info, dest, max_rates);
+diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
+index c37e2576f1c13..933d02d7c1284 100644
+--- a/net/mac80211/scan.c
++++ b/net/mac80211/scan.c
+@@ -647,6 +647,7 @@ static void ieee80211_send_scan_probe_req(struct ieee80211_sub_if_data *sdata,
+ 				cpu_to_le16(IEEE80211_SN_TO_SEQ(sn));
+ 		}
+ 		IEEE80211_SKB_CB(skb)->flags |= tx_flags;
++		IEEE80211_SKB_CB(skb)->control.flags |= IEEE80211_TX_CTRL_SCAN_TX;
+ 		ieee80211_tx_skb_tid_band(sdata, skb, 7, channel->band);
+ 	}
  }
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 3d62e8b718740..419baf8efddea 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -720,11 +720,16 @@ ieee80211_tx_h_rate_ctrl(struct ieee80211_tx_data *tx)
+ 	txrc.bss_conf = &tx->sdata->vif.bss_conf;
+ 	txrc.skb = tx->skb;
+ 	txrc.reported_rate.idx = -1;
+-	txrc.rate_idx_mask = tx->sdata->rc_rateidx_mask[info->band];
  
- static struct sp_dev_vdata *sp_get_acpi_version(struct platform_device *pdev)
- {
--#ifdef CONFIG_ACPI
- 	const struct acpi_device_id *match;
- 
- 	match = acpi_match_device(sp_acpi_match, &pdev->dev);
- 	if (match && match->driver_data)
- 		return (struct sp_dev_vdata *)match->driver_data;
--#endif
+-	if (tx->sdata->rc_has_mcs_mask[info->band])
+-		txrc.rate_idx_mcs_mask =
+-			tx->sdata->rc_rateidx_mcs_mask[info->band];
++	if (unlikely(info->control.flags & IEEE80211_TX_CTRL_SCAN_TX)) {
++		txrc.rate_idx_mask = ~0;
++	} else {
++		txrc.rate_idx_mask = tx->sdata->rc_rateidx_mask[info->band];
 +
- 	return NULL;
- }
++		if (tx->sdata->rc_has_mcs_mask[info->band])
++			txrc.rate_idx_mcs_mask =
++				tx->sdata->rc_rateidx_mcs_mask[info->band];
++	}
  
-@@ -214,12 +208,8 @@ static int sp_platform_resume(struct platform_device *pdev)
- static struct platform_driver sp_platform_driver = {
- 	.driver = {
- 		.name = "ccp",
--#ifdef CONFIG_ACPI
- 		.acpi_match_table = sp_acpi_match,
--#endif
--#ifdef CONFIG_OF
- 		.of_match_table = sp_of_match,
--#endif
- 	},
- 	.probe = sp_platform_probe,
- 	.remove = sp_platform_remove,
+ 	txrc.bss = (tx->sdata->vif.type == NL80211_IFTYPE_AP ||
+ 		    tx->sdata->vif.type == NL80211_IFTYPE_MESH_POINT ||
 -- 
 2.43.0
 
