@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF3A1A0DFD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A7B1C68BF;
 	Thu,  6 Jun 2024 14:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683699; cv=none; b=GDSUSXull3WlRTABoj/38lUWrNUUPLNAJSf9WLOWMYZMyfo3tkkMxeoylSVX2udvyv/rqKgj5SFgGkVSvDcCpTEk6JizXjRlOKUL+HY7ql3Y5Czc4/tiazPp3HNsM/WY34NSj7xoOxE28WNQkCf6PEHeTJteOhh8YEskjwLpmNk=
+	t=1717683699; cv=none; b=LY3/PBZ6oQIHGYWqOe3cLsJwjbtjm6C2Rw1vrJz8ThW3UxC8givQA4zYEy6NKOmQBpbhxI6LNAsHjp16Hv8ESickuYwianMdlSJuCUIP+9rJjEhtJWGnZu9NrgawbITzigdIt9VU9KkEnWS3Ml5iIawcxRatvmQK9nuP3fDOI2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683699; c=relaxed/simple;
-	bh=pi/mIJHCRrJCF8A8UWi1xdSP6LqG1rPpqlX2Ef4zAg8=;
+	bh=BdzbaNDxUCxl8bWzJJ3dMJoRx9rMBcxeQ2JigSJIaYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o7OJZKlxUi16LbIw+ZK+YIFFUqk6UscSRLkED/quFHyn5+tdBVTCAjI6vCDPkE1uvsmOj4PyVPOjXflLVz9Jki8o1wIR2BMpGs09/oU3o/AIGVTG2PULHtWigmBnufpmrhJcJe+6xXVgsYvrDGy4DWhZgtJZmf8bZSe8TY88NwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwwDAG/S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n+PUdqvn/xLQganvAAX3zE5+5EKius/da+JpVWmimK664vcMIts48dUrCmgdfI3QLotbyEURpULPSA9CNnTg+GKNhQ6rs3qAYm5esNMfOipL/cUkt2c7+ccM0P0IiwQfxPoI7r8ywwkKkcODm6wCbkM05600uadey6SuLD8AD/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHYj8vC9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwwDAG/S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04576C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHYj8vC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F0EC32781;
 	Thu,  6 Jun 2024 14:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683699;
-	bh=pi/mIJHCRrJCF8A8UWi1xdSP6LqG1rPpqlX2Ef4zAg8=;
+	bh=BdzbaNDxUCxl8bWzJJ3dMJoRx9rMBcxeQ2JigSJIaYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwwDAG/S+74zE9eWimS2hYPV8o0U/V7fXBAsnwZXNUXw+mOZ9mFAi2gIYsNCmQvyh
-	 AZj0TxLWOTU4jH4w4RnJ4xaiVSIvT2BHgMllCagHTnjfF0+XesFKE+5Pjo/tXhLgeP
-	 POcAcD4YBMDAHAK9zAOAg6e+GfsuNPQqO/oOt4x4=
+	b=gHYj8vC9uvDiC5+lvtT/W4SZs5yQwxJwZcnmxYcemm9hc9R4pvHJWn0hoxZ8P5dg8
+	 I3F35qUWGo2z2259yv5TcIOQMFcNRnLuq1DYyN6lZSOqu4r12iq8NVLwZ81c6ES3gc
+	 LDjo6yiSzYdFOO7Lh2JrFjY95v77X/NFCuF4arh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 619/744] ASoC: cs35l56: Fix to ensure ASP1 registers match cache
-Date: Thu,  6 Jun 2024 16:04:51 +0200
-Message-ID: <20240606131752.353066760@linuxfoundation.org>
+Subject: [PATCH 6.6 620/744] ALSA: hda: cs35l56: Initialize all ASP1 registers
+Date: Thu,  6 Jun 2024 16:04:52 +0200
+Message-ID: <20240606131752.388654311@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,168 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 72a77d7631c6e392677c0134343cf5edcd3a4572 ]
+[ Upstream commit 856ce8982169acb31a25c5f2ecd2570ab8a6af46 ]
 
-Add a dummy SUPPLY widget connected to the ASP that forces the
-chip registers to match the regmap cache when the ASP is
-powered-up.
+Add ASP1_FRAME_CONTROL1, ASP1_FRAME_CONTROL5 and the ASP1_TX?_INPUT
+registers to the sequence used to initialize the ASP configuration.
+Write this sequence to the cache and directly to the registers to
+ensure that they match.
 
-On a SoundWire system the ASP is free for use as a chip-to-chip
-interconnect. This can be either for the firmware on multiple
-CS35L56 to share reference audio; or as a bridge to another
-device. If it is a firmware interconnect it is owned by the
-firmware and the Linux driver should avoid writing the registers.
-However. If it is a bridge then Linux may take over and handle
-it as a normal codec-to-codec link.
+A system-specific firmware can patch these registers to values that are
+not the silicon default, so that the CS35L56 boots already in the
+configuration used by Windows or by "driverless" Windows setups such
+as factory tuning.
 
-CS35L56 is designed for SDCA and a generic SDCA driver would
-know nothing about these chip-specific registers. So if the
-ASP is being used on a SoundWire system the firmware sets up the
-ASP registers. This means that we can't assume the default
-state of the ASP registers. But we don't know the initial state
-that the firmware set them to until after the firmware has been
-downloaded and booted, which can take several seconds when
-downloading multiple amps.
-
-To avoid blocking probe() for several seconds waiting for the
-firmware, the silicon defaults are assumed. This allows the machine
-driver to setup the ASP configuration during probe() without being
-blocked. If the ASP is hooked up and used, the SUPPLY widget
-ensures that the chip registers match what was configured in the
-regmap cache.
-
-If the machine driver does not hook up the ASP, it is assumed that
-it won't call any functions to configure the ASP DAI. Therefore
-the regmap cache will be clean for these registers so a
-regcache_sync() will not overwrite the chip registers. If the
-DAI is not hooked up, the dummy SUPPLY widget will not be
-invoked so it will never force-overwrite the chip registers.
-
-Backport note:
-This won't apply cleanly to kernels older than v6.6.
+These may not match how Linux is configuring the HDA codec. And anyway
+on Linux the ALSA controls are used to configure routing options.
 
 Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: e49611252900 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
-Link: https://msgid.link/r/20240129162737.497-8-rf@opensource.cirrus.com
+Fixes: 73cfbfa9caea ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
+Link: https://msgid.link/r/20240129162737.497-10-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: d344873c4cbd ("ALSA: hda: cs35l56: Fix lifetime of cs_dsp instance")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/cs35l56.h           |  1 +
- sound/soc/codecs/cs35l56-shared.c | 41 +++++++++++++++++++++++++++++++
- sound/soc/codecs/cs35l56.c        | 21 ++++++++++++++++
- 3 files changed, 63 insertions(+)
+ sound/pci/hda/cs35l56_hda.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
-index 3950322bf3cbb..4e5f35dc042a1 100644
---- a/include/sound/cs35l56.h
-+++ b/include/sound/cs35l56.h
-@@ -273,6 +273,7 @@ extern const char * const cs35l56_tx_input_texts[CS35L56_NUM_INPUT_SRC];
- extern const unsigned int cs35l56_tx_input_values[CS35L56_NUM_INPUT_SRC];
+diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
+index 05b1412868fc0..e599b287f0961 100644
+--- a/sound/pci/hda/cs35l56_hda.c
++++ b/sound/pci/hda/cs35l56_hda.c
+@@ -29,14 +29,23 @@
+   *  ASP1_RX_WL = 24 bits per sample
+   *  ASP1_TX_WL = 24 bits per sample
+   *  ASP1_RXn_EN 1..3 and ASP1_TXn_EN 1..4 disabled
++  *
++  * Override any Windows-specific mixer settings applied by the firmware.
+   */
+ static const struct reg_sequence cs35l56_hda_dai_config[] = {
+ 	{ CS35L56_ASP1_CONTROL1,	0x00000021 },
+ 	{ CS35L56_ASP1_CONTROL2,	0x20200200 },
+ 	{ CS35L56_ASP1_CONTROL3,	0x00000003 },
++	{ CS35L56_ASP1_FRAME_CONTROL1,	0x03020100 },
++	{ CS35L56_ASP1_FRAME_CONTROL5,	0x00020100 },
+ 	{ CS35L56_ASP1_DATA_CONTROL5,	0x00000018 },
+ 	{ CS35L56_ASP1_DATA_CONTROL1,	0x00000018 },
+ 	{ CS35L56_ASP1_ENABLES1,	0x00000000 },
++	{ CS35L56_ASP1TX1_INPUT,	0x00000018 },
++	{ CS35L56_ASP1TX2_INPUT,	0x00000019 },
++	{ CS35L56_ASP1TX3_INPUT,	0x00000020 },
++	{ CS35L56_ASP1TX4_INPUT,	0x00000028 },
++
+ };
  
- int cs35l56_set_patch(struct cs35l56_base *cs35l56_base);
-+int cs35l56_force_sync_asp1_registers_from_cache(struct cs35l56_base *cs35l56_base);
- int cs35l56_mbox_send(struct cs35l56_base *cs35l56_base, unsigned int command);
- int cs35l56_firmware_shutdown(struct cs35l56_base *cs35l56_base);
- int cs35l56_wait_for_firmware_boot(struct cs35l56_base *cs35l56_base);
-diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
-index afd12d853ce4c..12291242362b4 100644
---- a/sound/soc/codecs/cs35l56-shared.c
-+++ b/sound/soc/codecs/cs35l56-shared.c
-@@ -194,6 +194,47 @@ static bool cs35l56_volatile_reg(struct device *dev, unsigned int reg)
+ static void cs35l56_hda_play(struct cs35l56_hda *cs35l56)
+@@ -132,6 +141,10 @@ static int cs35l56_hda_runtime_resume(struct device *dev)
+ 		}
  	}
- }
  
-+/*
-+ * The firmware boot sequence can overwrite the ASP1 config registers so that
-+ * they don't match regmap's view of their values. Rewrite the values from the
-+ * regmap cache into the hardware registers.
-+ */
-+int cs35l56_force_sync_asp1_registers_from_cache(struct cs35l56_base *cs35l56_base)
-+{
-+	struct reg_sequence asp1_regs[] = {
-+		{ .reg = CS35L56_ASP1_ENABLES1 },
-+		{ .reg = CS35L56_ASP1_CONTROL1 },
-+		{ .reg = CS35L56_ASP1_CONTROL2 },
-+		{ .reg = CS35L56_ASP1_CONTROL3 },
-+		{ .reg = CS35L56_ASP1_FRAME_CONTROL1 },
-+		{ .reg = CS35L56_ASP1_FRAME_CONTROL5 },
-+		{ .reg = CS35L56_ASP1_DATA_CONTROL1 },
-+		{ .reg = CS35L56_ASP1_DATA_CONTROL5 },
-+	};
-+	int i, ret;
-+
-+	/* Read values from regmap cache into a write sequence */
-+	for (i = 0; i < ARRAY_SIZE(asp1_regs); ++i) {
-+		ret = regmap_read(cs35l56_base->regmap, asp1_regs[i].reg, &asp1_regs[i].def);
-+		if (ret)
-+			goto err;
-+	}
-+
-+	/* Write the values cache-bypassed so that they will be written to silicon */
-+	ret = regmap_multi_reg_write_bypassed(cs35l56_base->regmap, asp1_regs,
-+					      ARRAY_SIZE(asp1_regs));
++	ret = cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
 +	if (ret)
 +		goto err;
 +
-+	return 0;
-+
-+err:
-+	dev_err(cs35l56_base->dev, "Failed to sync ASP1 registers: %d\n", ret);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_NS_GPL(cs35l56_force_sync_asp1_registers_from_cache, SND_SOC_CS35L56_SHARED);
-+
- int cs35l56_mbox_send(struct cs35l56_base *cs35l56_base, unsigned int command)
- {
- 	unsigned int val;
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 530f6e06b41d5..c855ef3ec665e 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -277,6 +277,21 @@ static SOC_VALUE_ENUM_SINGLE_DECL(cs35l56_sdw1tx4_enum,
- static const struct snd_kcontrol_new sdw1_tx4_mux =
- 	SOC_DAPM_ENUM("SDW1TX4 SRC", cs35l56_sdw1tx4_enum);
+ 	return 0;
  
-+static int cs35l56_asp1_cfg_event(struct snd_soc_dapm_widget *w,
-+				  struct snd_kcontrol *kcontrol, int event)
-+{
-+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
-+	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
-+
-+	switch (event) {
-+	case SND_SOC_DAPM_PRE_PMU:
-+		/* Override register values set by firmware boot */
-+		return cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
-+	default:
-+		return 0;
-+	}
-+}
-+
- static int cs35l56_play_event(struct snd_soc_dapm_widget *w,
- 			      struct snd_kcontrol *kcontrol, int event)
- {
-@@ -313,6 +328,9 @@ static const struct snd_soc_dapm_widget cs35l56_dapm_widgets[] = {
- 	SND_SOC_DAPM_REGULATOR_SUPPLY("VDD_B", 0, 0),
- 	SND_SOC_DAPM_REGULATOR_SUPPLY("VDD_AMP", 0, 0),
+ err:
+@@ -969,6 +982,9 @@ int cs35l56_hda_common_probe(struct cs35l56_hda *cs35l56, int id)
  
-+	SND_SOC_DAPM_SUPPLY("ASP1 CFG", SND_SOC_NOPM, 0, 0, cs35l56_asp1_cfg_event,
-+			    SND_SOC_DAPM_PRE_PMU),
-+
- 	SND_SOC_DAPM_SUPPLY("PLAY", SND_SOC_NOPM, 0, 0, cs35l56_play_event,
- 			    SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
+ 	regmap_multi_reg_write(cs35l56->base.regmap, cs35l56_hda_dai_config,
+ 			       ARRAY_SIZE(cs35l56_hda_dai_config));
++	ret = cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
++	if (ret)
++		goto err;
  
-@@ -380,6 +398,9 @@ static const struct snd_soc_dapm_route cs35l56_audio_map[] = {
- 	{ "AMP", NULL, "VDD_B" },
- 	{ "AMP", NULL, "VDD_AMP" },
- 
-+	{ "ASP1 Playback", NULL, "ASP1 CFG" },
-+	{ "ASP1 Capture", NULL, "ASP1 CFG" },
-+
- 	{ "ASP1 Playback", NULL, "PLAY" },
- 	{ "SDW1 Playback", NULL, "PLAY" },
- 
+ 	/*
+ 	 * By default only enable one ASP1TXn, where n=amplifier index,
 -- 
 2.43.0
 
