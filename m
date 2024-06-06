@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B93198E6A;
-	Thu,  6 Jun 2024 14:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A02198E6A;
+	Thu,  6 Jun 2024 14:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683426; cv=none; b=YhstKj3kLPUWMFbx3PwVNiCB4/jJrNpFk7RzS0C+1BdJBX0OPTXRPQ2ybH/XHzW/WhJwdbtC490Fb8sYLjKJXKM7aIDyZpiKUN7RNKZtsSRhb4aFRyJWV1Q5nDPRNwXl+WkQzZ70U+/byifC7F4IRoPjdjmTloL6jCuIjfWNlpc=
+	t=1717683427; cv=none; b=If841CdidKD9ayt2wSkKgJbLps7JbVvFjZqnm/vpQJtAbhUJdYXGOZ4tGmQEZ6HRDnBc20YmGoNWhomxYleq4xhrJbN92jtOPnAO4MqFJoVW9oP5k621N3NpxbuxwYrYTladMQWpv1TVCWTuLV0MdSsS/gMuGy9GROuk0/eO9pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683426; c=relaxed/simple;
-	bh=k+l3mWykUKeQdX9XpR+pgJsC4VA8nVNfCXd2UQizCuY=;
+	s=arc-20240116; t=1717683427; c=relaxed/simple;
+	bh=MvPwgqxzGmXfQ4lZc3W3irYbddou3ZQ3hrGPHK0bIKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edjavY1JLHBP+D/haptd0LJVke0Tt1IQGS6U1ICwB/0sVkUxUlh/CpbAXcYPfPNgWySzbzQAsSR1fc351tZpjB1e98dTWcu4L1HTxe+VYeWZ7TXA+1DgV3bCfdfjM9xri3l8uLfSrVMN7yAG7pd8c+BH0HUpwrCza9rU3WGgLd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqgRGMNt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MqNvUrlqQCVHks7w8+8HdwkpcIHk7XhXs1/YeoULpbH/heoWjvFLQ//MCBnNnQGVWXzqQ/FTIiEaS26EEUohh5K4dwx8bqyyK/8TL7WNVnq1O/HYcznpNvLo39L9SgWMWJhTs+OJodCPARLvwUG3DuO9YnUxUviLAvnC5EisdWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=narlHO8N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqgRGMNt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E044C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="narlHO8N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D0FC2BD10;
 	Thu,  6 Jun 2024 14:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683426;
-	bh=k+l3mWykUKeQdX9XpR+pgJsC4VA8nVNfCXd2UQizCuY=;
+	s=korg; t=1717683427;
+	bh=MvPwgqxzGmXfQ4lZc3W3irYbddou3ZQ3hrGPHK0bIKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RqgRGMNtSAjojDlObqYsQD6RIH9WgAI8BqlgUOQ/LdXxUt5m5W8pXE7WbMnXkxPA9
-	 3tYSFMECTUXhwG2bD7R5hY43Upd5wAxo/VunRuRvl7FimU+S6RmGAETBuHrkghojAt
-	 wQSwAVPdgbARWr2WlkqGCvgrRzQ57+qtadYsZ0WA=
+	b=narlHO8N4huyyp3/72pvT/CU1lyC2w6dxYynaIj25Qg/TVMeD3rxYyiKewlYfmMgY
+	 NUbIkNZ2IcNHo/psGoje7zaBTCf++OevS/MZ+FKj4fWtQ1vIczKEWV5AV2GggYPdmc
+	 ZzjvlJQOk8CFaMBNNPL2fwf+CkSByuMacl3asSx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 312/473] iio: adc: stm32: Fixing err code to not indicate success
-Date: Thu,  6 Jun 2024 16:04:01 +0200
-Message-ID: <20240606131710.259680081@linuxfoundation.org>
+Subject: [PATCH 6.6 372/744] bnxt_re: avoid shift undefined behavior in bnxt_qplib_alloc_init_hwq
+Date: Thu,  6 Jun 2024 16:00:44 +0200
+Message-ID: <20240606131744.420072134@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,38 +48,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit 3735ca0b072656c3aa2cedc617a5e639b583a472 ]
+[ Upstream commit 78cfd17142ef70599d6409cbd709d94b3da58659 ]
 
-This path would result in returning 0 / success on an error path.
+Undefined behavior is triggered when bnxt_qplib_alloc_init_hwq is called
+with hwq_attr->aux_depth != 0 and hwq_attr->aux_stride == 0.
+In that case, "roundup_pow_of_two(hwq_attr->aux_stride)" gets called.
+roundup_pow_of_two is documented as undefined for 0.
 
-Cc: Olivier Moysan <olivier.moysan@foss.st.com>
-Fixes: 95bc818404b2 ("iio: adc: stm32-adc: add support of generic channels binding")
-Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/r/20240330185305.1319844-4-jic23@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fix it in the one caller that had this combination.
+
+The undefined behavior was detected by UBSAN:
+  UBSAN: shift-out-of-bounds in ./include/linux/log2.h:57:13
+  shift exponent 64 is too large for 64-bit type 'long unsigned int'
+  CPU: 24 PID: 1075 Comm: (udev-worker) Not tainted 6.9.0-rc6+ #4
+  Hardware name: Abacus electric, s.r.o. - servis@abacus.cz Super Server/H12SSW-iN, BIOS 2.7 10/25/2023
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5d/0x80
+   ubsan_epilogue+0x5/0x30
+   __ubsan_handle_shift_out_of_bounds.cold+0x61/0xec
+   __roundup_pow_of_two+0x25/0x35 [bnxt_re]
+   bnxt_qplib_alloc_init_hwq+0xa1/0x470 [bnxt_re]
+   bnxt_qplib_create_qp+0x19e/0x840 [bnxt_re]
+   bnxt_re_create_qp+0x9b1/0xcd0 [bnxt_re]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? __kmalloc+0x1b6/0x4f0
+   ? create_qp.part.0+0x128/0x1c0 [ib_core]
+   ? __pfx_bnxt_re_create_qp+0x10/0x10 [bnxt_re]
+   create_qp.part.0+0x128/0x1c0 [ib_core]
+   ib_create_qp_kernel+0x50/0xd0 [ib_core]
+   create_mad_qp+0x8e/0xe0 [ib_core]
+   ? __pfx_qp_event_handler+0x10/0x10 [ib_core]
+   ib_mad_init_device+0x2be/0x680 [ib_core]
+   add_client_context+0x10d/0x1a0 [ib_core]
+   enable_device_and_get+0xe0/0x1d0 [ib_core]
+   ib_register_device+0x53c/0x630 [ib_core]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   bnxt_re_probe+0xbd8/0xe50 [bnxt_re]
+   ? __pfx_bnxt_re_probe+0x10/0x10 [bnxt_re]
+   auxiliary_bus_probe+0x49/0x80
+   ? driver_sysfs_add+0x57/0xc0
+   really_probe+0xde/0x340
+   ? pm_runtime_barrier+0x54/0x90
+   ? __pfx___driver_attach+0x10/0x10
+   __driver_probe_device+0x78/0x110
+   driver_probe_device+0x1f/0xa0
+   __driver_attach+0xba/0x1c0
+   bus_for_each_dev+0x8f/0xe0
+   bus_add_driver+0x146/0x220
+   driver_register+0x72/0xd0
+   __auxiliary_driver_register+0x6e/0xd0
+   ? __pfx_bnxt_re_mod_init+0x10/0x10 [bnxt_re]
+   bnxt_re_mod_init+0x3e/0xff0 [bnxt_re]
+   ? __pfx_bnxt_re_mod_init+0x10/0x10 [bnxt_re]
+   do_one_initcall+0x5b/0x310
+   do_init_module+0x90/0x250
+   init_module_from_file+0x86/0xc0
+   idempotent_init_module+0x121/0x2b0
+   __x64_sys_finit_module+0x5e/0xb0
+   do_syscall_64+0x82/0x160
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? syscall_exit_to_user_mode_prepare+0x149/0x170
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? syscall_exit_to_user_mode+0x75/0x230
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? do_syscall_64+0x8e/0x160
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? __count_memcg_events+0x69/0x100
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? count_memcg_events.constprop.0+0x1a/0x30
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? handle_mm_fault+0x1f0/0x300
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? do_user_addr_fault+0x34e/0x640
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x7f4e5132821d
+  Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d e3 db 0c 00 f7 d8 64 89 01 48
+  RSP: 002b:00007ffca9c906a8 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
+  RAX: ffffffffffffffda RBX: 0000563ec8a8f130 RCX: 00007f4e5132821d
+  RDX: 0000000000000000 RSI: 00007f4e518fa07d RDI: 000000000000003b
+  RBP: 00007ffca9c90760 R08: 00007f4e513f6b20 R09: 00007ffca9c906f0
+  R10: 0000563ec8a8faa0 R11: 0000000000000246 R12: 00007f4e518fa07d
+  R13: 0000000000020000 R14: 0000563ec8409e90 R15: 0000563ec8a8fa60
+   </TASK>
+  ---[ end trace ]---
+
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Link: https://lore.kernel.org/r/20240507103929.30003-1-mschmidt@redhat.com
+Acked-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stm32-adc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/stm32-adc.c b/drivers/iio/adc/stm32-adc.c
-index a5d5b7b3823bc..6fede34091cc2 100644
---- a/drivers/iio/adc/stm32-adc.c
-+++ b/drivers/iio/adc/stm32-adc.c
-@@ -2079,6 +2079,7 @@ static int stm32_adc_generic_chan_init(struct iio_dev *indio_dev,
- 			if (vin[0] != val || vin[1] >= adc_info->max_channels) {
- 				dev_err(&indio_dev->dev, "Invalid channel in%d-in%d\n",
- 					vin[0], vin[1]);
-+				ret = -EINVAL;
- 				goto err;
- 			}
- 		} else if (ret != -EINVAL) {
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index b99451b3c10fc..3b28878f62062 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -1010,7 +1010,8 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
+ 	hwq_attr.stride = sizeof(struct sq_sge);
+ 	hwq_attr.depth = bnxt_qplib_get_depth(sq);
+ 	hwq_attr.aux_stride = psn_sz;
+-	hwq_attr.aux_depth = bnxt_qplib_set_sq_size(sq, qp->wqe_mode);
++	hwq_attr.aux_depth = psn_sz ? bnxt_qplib_set_sq_size(sq, qp->wqe_mode)
++				    : 0;
+ 	/* Update msn tbl size */
+ 	if (BNXT_RE_HW_RETX(qp->dev_cap_flags) && psn_sz) {
+ 		hwq_attr.aux_depth = roundup_pow_of_two(bnxt_qplib_set_sq_size(sq, qp->wqe_mode));
 -- 
 2.43.0
 
