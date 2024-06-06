@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8810B1C2231;
-	Thu,  6 Jun 2024 14:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360E0146D54;
+	Thu,  6 Jun 2024 14:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683561; cv=none; b=RxhYlDMS9XRgklMues33xtHz0eOUGv5RupR7NTt0DT1CBa9H6KfOwzApsIoCuJF5kxCjw45RR2vO6wv/KeQrYlg2KbhN5/nHXPErpS8RZ1wAzmWNHGu+VKfaCIgCBuDMiNtwcWAMCAg7+oBH4q+qRKiKPOi4UltkI6K+TidT7Xs=
+	t=1717683631; cv=none; b=M6PYbQCxlWy8PcauKv3XsEbtvt9u8/OajancRlc4aISquUdj84hHVm4p29QqcYok7FCt0xaI8R4w+bjgnUJPLiv0mYDsnUXBg1GZeNGkmLhnkK95fbQxvcGtp3AS8pD2ova+2W7wtz5VgaXfJY6B5ZKJv3acVj/pP3lIKE8Q45I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683561; c=relaxed/simple;
-	bh=WsTB7VtQYHo057Xtf63F3UHKm3SF8ZXcKpeafG7m+cA=;
+	s=arc-20240116; t=1717683631; c=relaxed/simple;
+	bh=M8UpHmSDmc6dsRUm4B5RXyuz4A9WtxgP3en5ni5dqSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bf69XnXQ4MTC+ja5dmqrE1DRFAXiwwFHdsYEUMWsu5ro3aVuAKOc/kU1krpgawOtwM9RUIHVi2lDrAAmmxbwocrEuDmpyH8HaJCBSfaJlFnA4F10CYVX2q6Gym7/L4FvrJoTaDXh6PqeAxED8SMjCZdmUSeWbM81c2VA3xSfgfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wg1bhOY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sN9uI5kdsjLRaRFJpsV5MNAaDe53HvoFbbBL2EDd1d6NmDyWcMIKM18AVwcvBkmLp/gZo4Mrg6M6lKWJA9wM0Ims8XXxggXtQuB8BZM2tQT5qNQcM6jRTxdNEYO9koTQDsO7eMC+jZr9rmM4ZDhGJRUC0oWkUm7X7g7pbs2329s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfDwkLVV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wg1bhOY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F3DC32786;
-	Thu,  6 Jun 2024 14:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfDwkLVV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFABC2BD10;
+	Thu,  6 Jun 2024 14:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683561;
-	bh=WsTB7VtQYHo057Xtf63F3UHKm3SF8ZXcKpeafG7m+cA=;
+	s=korg; t=1717683630;
+	bh=M8UpHmSDmc6dsRUm4B5RXyuz4A9WtxgP3en5ni5dqSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wg1bhOY0pScnsIDeav6j+eA0BsG/lrtzJYbAqO2N4QjyMur2YxDia3KKsM3K0pjl
-	 DafGA8dUm6QPV6jfe3fD00Oo3AhHnJ1j9WYJxuZBEI99F4oRQvHnIaOFpr6xqpgBzL
-	 FASifyXXExZj61v/xoZCXpknB53XGdvqxQ6J8gVg=
+	b=YfDwkLVVCEELc0qP2/eSFsmsgFzue4zHH63Jb24ekJIC9+oPf4pZzFHTJsNKGzfu0
+	 nZchfGn9DwSXCIFUIEHpunuByfKO+DLXULu0R9t7CSPUIjb84fagvVX0NnHFy4fxSV
+	 K5nADaj9ilkkVgrPSPD79mri/Z5RBkMuDICUY1uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 503/744] f2fs: separate f2fs_gc_range() to use GC for a range
-Date: Thu,  6 Jun 2024 16:02:55 +0200
-Message-ID: <20240606131748.576258924@linuxfoundation.org>
+Subject: [PATCH 6.1 452/473] bpf: Allow delete from sockmap/sockhash only if update is allowed
+Date: Thu,  6 Jun 2024 16:06:21 +0200
+Message-ID: <20240606131714.645640912@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,94 +50,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit 2f0209f579d12bd0ea43a01a8696e30a8eeec1da ]
+[ Upstream commit 98e948fb60d41447fd8d2d0c3b8637fc6b6dc26d ]
 
-Make f2fs_gc_range() an extenal function to use it for GC for a range.
+We have seen an influx of syzkaller reports where a BPF program attached to
+a tracepoint triggers a locking rule violation by performing a map_delete
+on a sockmap/sockhash.
 
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: aa4074e8fec4 ("f2fs: fix block migration when section is not aligned to pow2")
+We don't intend to support this artificial use scenario. Extend the
+existing verifier allowed-program-type check for updating sockmap/sockhash
+to also cover deleting from a map.
+
+>From now on only BPF programs which were previously allowed to update
+sockmap/sockhash can delete from these map types.
+
+Fixes: ff9105993240 ("bpf, sockmap: Prevent lock inversion deadlock in map delete elem")
+Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Reported-by: syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=ec941d6e24f633a59172
+Link: https://lore.kernel.org/bpf/20240527-sockmap-verify-deletes-v1-1-944b372f2101@cloudflare.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 49 ++++++++++++++++++++++++++++---------------------
- 1 file changed, 28 insertions(+), 21 deletions(-)
+ kernel/bpf/verifier.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 9c150b2dd9ec2..4cf37f51339c3 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1980,10 +1980,34 @@ void f2fs_build_gc_manager(struct f2fs_sb_info *sbi)
- 	init_atgc_management(sbi);
- }
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 18b3f429abe17..1d851e2f48590 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6492,7 +6492,8 @@ static bool may_update_sockmap(struct bpf_verifier_env *env, int func_id)
+ 	enum bpf_attach_type eatype = env->prog->expected_attach_type;
+ 	enum bpf_prog_type type = resolve_prog_type(env->prog);
  
-+static int f2fs_gc_range(struct f2fs_sb_info *sbi,
-+		unsigned int start_seg, unsigned int end_seg, bool dry_run)
-+{
-+	unsigned int segno;
-+
-+	for (segno = start_seg; segno <= end_seg; segno += SEGS_PER_SEC(sbi)) {
-+		struct gc_inode_list gc_list = {
-+			.ilist = LIST_HEAD_INIT(gc_list.ilist),
-+			.iroot = RADIX_TREE_INIT(gc_list.iroot, GFP_NOFS),
-+		};
-+
-+		do_garbage_collect(sbi, segno, &gc_list, FG_GC, true);
-+		put_gc_inode(&gc_list);
-+
-+		if (!dry_run && get_valid_blocks(sbi, segno, true))
-+			return -EAGAIN;
-+
-+		if (fatal_signal_pending(current))
-+			return -ERESTARTSYS;
-+	}
-+
-+	return 0;
-+}
-+
- static int free_segment_range(struct f2fs_sb_info *sbi,
--				unsigned int secs, bool gc_only)
-+				unsigned int secs, bool dry_run)
- {
--	unsigned int segno, next_inuse, start, end;
-+	unsigned int next_inuse, start, end;
- 	struct cp_control cpc = { CP_RESIZE, 0, 0, 0 };
- 	int gc_mode, gc_type;
- 	int err = 0;
-@@ -2009,25 +2033,8 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
- 		f2fs_allocate_segment_for_resize(sbi, type, start, end);
+-	if (func_id != BPF_FUNC_map_update_elem)
++	if (func_id != BPF_FUNC_map_update_elem &&
++	    func_id != BPF_FUNC_map_delete_elem)
+ 		return false;
  
- 	/* do GC to move out valid blocks in the range */
--	for (segno = start; segno <= end; segno += SEGS_PER_SEC(sbi)) {
--		struct gc_inode_list gc_list = {
--			.ilist = LIST_HEAD_INIT(gc_list.ilist),
--			.iroot = RADIX_TREE_INIT(gc_list.iroot, GFP_NOFS),
--		};
--
--		do_garbage_collect(sbi, segno, &gc_list, FG_GC, true);
--		put_gc_inode(&gc_list);
--
--		if (!gc_only && get_valid_blocks(sbi, segno, true)) {
--			err = -EAGAIN;
--			goto out;
--		}
--		if (fatal_signal_pending(current)) {
--			err = -ERESTARTSYS;
--			goto out;
--		}
--	}
--	if (gc_only)
-+	err = f2fs_gc_range(sbi, start, end, dry_run);
-+	if (err || dry_run)
- 		goto out;
- 
- 	stat_inc_cp_call_count(sbi, TOTAL_CALL);
+ 	/* It's not possible to get access to a locked struct sock in these
+@@ -6503,6 +6504,11 @@ static bool may_update_sockmap(struct bpf_verifier_env *env, int func_id)
+ 		if (eatype == BPF_TRACE_ITER)
+ 			return true;
+ 		break;
++	case BPF_PROG_TYPE_SOCK_OPS:
++		/* map_update allowed only via dedicated helpers with event type checks */
++		if (func_id == BPF_FUNC_map_delete_elem)
++			return true;
++		break;
+ 	case BPF_PROG_TYPE_SOCKET_FILTER:
+ 	case BPF_PROG_TYPE_SCHED_CLS:
+ 	case BPF_PROG_TYPE_SCHED_ACT:
+@@ -6598,7 +6604,6 @@ static int check_map_func_compatibility(struct bpf_verifier_env *env,
+ 	case BPF_MAP_TYPE_SOCKMAP:
+ 		if (func_id != BPF_FUNC_sk_redirect_map &&
+ 		    func_id != BPF_FUNC_sock_map_update &&
+-		    func_id != BPF_FUNC_map_delete_elem &&
+ 		    func_id != BPF_FUNC_msg_redirect_map &&
+ 		    func_id != BPF_FUNC_sk_select_reuseport &&
+ 		    func_id != BPF_FUNC_map_lookup_elem &&
+@@ -6608,7 +6613,6 @@ static int check_map_func_compatibility(struct bpf_verifier_env *env,
+ 	case BPF_MAP_TYPE_SOCKHASH:
+ 		if (func_id != BPF_FUNC_sk_redirect_hash &&
+ 		    func_id != BPF_FUNC_sock_hash_update &&
+-		    func_id != BPF_FUNC_map_delete_elem &&
+ 		    func_id != BPF_FUNC_msg_redirect_hash &&
+ 		    func_id != BPF_FUNC_sk_select_reuseport &&
+ 		    func_id != BPF_FUNC_map_lookup_elem &&
 -- 
 2.43.0
 
