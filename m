@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4D1196D98;
-	Thu,  6 Jun 2024 14:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC22E196D8E;
+	Thu,  6 Jun 2024 14:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682982; cv=none; b=f4T24FxSuaKkMc0q69fToBnETIMEhR5nUUKajmGchSAfyyfMZVRnK6HfLwtIKutSRtsvjlF/uEB/5pHvCEPxqlHo0iGV2MIFj/zGkpRFVAV+kzTO5yW0L7pNCfzaUh141EuWTaZZaWFE2bR2I/2BZBy26HGjbR0pnI0Je6wXo2w=
+	t=1717682983; cv=none; b=iydxqtdrvToQxSkTCFo9A5cXRF1vzWjCq2gnE3cwRSgiLpU8fiDG2+GdF9ecq1BkQw8m3NvY04KeyewN3JWcGAoj/VhoA9a22A0WMrACE+NSgMZLazSTTdAVmxZXTTE358Oo1pUDEAeL+Aq81425ivCCdG0zzE26xw6dTrdK2w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682982; c=relaxed/simple;
-	bh=J/HZdDQDn+auFS4QRi6HvqcOtYzkh5jCOLAaIDW2BzA=;
+	s=arc-20240116; t=1717682983; c=relaxed/simple;
+	bh=TfSpLpSC++aT0MV69eBPIRKn9HUV3JyiojgAO/VXVv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fahJZSQvoLvhqASjaiNE0FbqvrEOrdwvLKaO6lptqPNxYlivc6GPhjFtTIMtI/yMB7REZCkjLEI9OcCvRforDtmTJqG47jtcmjXPnvc2yroZzJJiW+IOIaBm5JkL9hbsqj0T9Bu7jvqYK32uWVZL0ZVNMFgbtNzxpTjngIyfSyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5UgrYeq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fnzrq8F8BvgLRog5pDJ8s2TeVWFHOdgRhaJpKUuSleKyDbovYFZoaIbx956jVJNQC2tuvFzUJ5MEfyfno6IeRNJQrxDfWZWIz1k9rMG+ikayUzNswtBi2HcLLCC6Ld6VX/KqKyvOqfUc9IuGUSR62AzmQWNfDCikaan1T7ND3qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8yoWxXF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5UgrYeq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4D6C2BD10;
-	Thu,  6 Jun 2024 14:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8yoWxXF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB105C32781;
+	Thu,  6 Jun 2024 14:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682981;
-	bh=J/HZdDQDn+auFS4QRi6HvqcOtYzkh5jCOLAaIDW2BzA=;
+	s=korg; t=1717682982;
+	bh=TfSpLpSC++aT0MV69eBPIRKn9HUV3JyiojgAO/VXVv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R5UgrYeqp/cf7rLhixbQw6+JCE5aE9hd15gQbRdf3wtZE+RvU3LjjoFQkeYPKnGYj
-	 Bv7pajUJA60dNODIT6y/q2gLheGFyaxW9lLhgr+lQdLc4NT6RZIKR0Tr5AI5qD+BVP
-	 tsFawuQUtC66A+M2qUu2myD6D2XetpDDB6WSsMpk=
+	b=G8yoWxXFM4TVTTufeAv96gNYJasEBKZV4g5CLPUYNV03nNH6iyvl7yelhmGq5ZBRL
+	 HRj5b2/vyu2LhZfc/iTikha27Zr+8HXXu/BCKOQcpyGS/dGQpAfN5EVXB2p0ximPdp
+	 aLlnF+5GqZN5PzT+o9Q6jhX8Y3usZfnr2Uf5K8MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Nicolas Belin <nbelin@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 164/374] drm/msm/dpu: Allow configuring multiple active DSC blocks
-Date: Thu,  6 Jun 2024 16:02:23 +0200
-Message-ID: <20240606131657.403562294@linuxfoundation.org>
+Subject: [PATCH 6.9 166/374] drm/meson: gate px_clk when setting rate
+Date: Thu,  6 Jun 2024 16:02:25 +0200
+Message-ID: <20240606131657.470868595@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -45,85 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit ca97fa419dfe62a384fdea8b33553c4d6afe034e ]
+[ Upstream commit 5c9837374ecf55a1fa3b7622d365a0456960270f ]
 
-Just like the active interface and writeback block in ctl_intf_cfg_v1(),
-and later the rest of the blocks in followup active-CTL fixes or
-reworks, multiple calls to this function should enable additional DSC
-blocks instead of overwriting the blocks that are enabled.
+Disable the px_clk when setting the rate to recover a fully
+configured and correctly reset VCLK clock tree after the rate
+is set.
 
-This pattern is observed in an active-CTL scenario since DPU 5.0.0 where
-for example bonded-DSI uses a single CTL to drive multiple INTFs, and
-each encoder calls this function individually with the INTF (hence the
-pre-existing update instead of overwrite of this bitmask) and DSC blocks
-it wishes to be enabled, and expects them to be OR'd into the bitmask.
-
-The reverse already exists in reset_intf_cfg_v1() where only specified
-DSC blocks are removed out of the CTL_DSC_ACTIVE bitmask (same for all
-other blocks and ACTIVE bitmasks), leaving the rest enabled.
-
-Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/589902/
-Link: https://lore.kernel.org/r/20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-4-78ae3ee9a697@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 77d9e1e6b846 ("drm/meson: add support for MIPI-DSI transceiver")
+Reviewed-by: Nicolas Belin <nbelin@baylibre.com>
+Link: https://lore.kernel.org/r/20240403-amlogic-v6-4-upstream-dsi-ccf-vim3-v12-4-99ecdfdc87fc@linaro.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240403-amlogic-v6-4-upstream-dsi-ccf-vim3-v12-4-99ecdfdc87fc@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/meson/meson_dw_mipi_dsi.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index a06f69d0b257d..2e50049f2f850 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -545,6 +545,7 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
- {
- 	struct dpu_hw_blk_reg_map *c = &ctx->hw;
- 	u32 intf_active = 0;
-+	u32 dsc_active = 0;
- 	u32 wb_active = 0;
- 	u32 mode_sel = 0;
+diff --git a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c
+index a6bc1bdb3d0d8..a10cff3ca1fef 100644
+--- a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c
++++ b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c
+@@ -95,6 +95,7 @@ static int dw_mipi_dsi_phy_init(void *priv_data)
+ 		return ret;
+ 	}
  
-@@ -560,6 +561,7 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
++	clk_disable_unprepare(mipi_dsi->px_clk);
+ 	ret = clk_set_rate(mipi_dsi->px_clk, mipi_dsi->mode->clock * 1000);
  
- 	intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
- 	wb_active = DPU_REG_READ(c, CTL_WB_ACTIVE);
-+	dsc_active = DPU_REG_READ(c, CTL_DSC_ACTIVE);
+ 	if (ret) {
+@@ -103,6 +104,12 @@ static int dw_mipi_dsi_phy_init(void *priv_data)
+ 		return ret;
+ 	}
  
- 	if (cfg->intf)
- 		intf_active |= BIT(cfg->intf - INTF_0);
-@@ -567,17 +569,18 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
- 	if (cfg->wb)
- 		wb_active |= BIT(cfg->wb - WB_0);
- 
-+	if (cfg->dsc)
-+		dsc_active |= cfg->dsc;
++	ret = clk_prepare_enable(mipi_dsi->px_clk);
++	if (ret) {
++		dev_err(mipi_dsi->dev, "Failed to enable DSI Pixel clock (ret %d)\n", ret);
++		return ret;
++	}
 +
- 	DPU_REG_WRITE(c, CTL_TOP, mode_sel);
- 	DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
- 	DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
-+	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, dsc_active);
- 
- 	if (cfg->merge_3d)
- 		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
- 			      BIT(cfg->merge_3d - MERGE_3D_0));
- 
--	if (cfg->dsc)
--		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
--
- 	if (cfg->cdm)
- 		DPU_REG_WRITE(c, CTL_CDM_ACTIVE, cfg->cdm);
- }
+ 	switch (mipi_dsi->dsi_device->format) {
+ 	case MIPI_DSI_FMT_RGB888:
+ 		dpi_data_format = DPI_COLOR_24BIT;
 -- 
 2.43.0
 
