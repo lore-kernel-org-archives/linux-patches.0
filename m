@@ -1,50 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5629019CCEC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEF819CCEC;
 	Thu,  6 Jun 2024 14:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683420; cv=none; b=jN2N7Kv79HAiM4OoNLFkmOVAAJAaBamM/BQ0Lo4VpxvRxuDM5xu35MpZDR5giPQuq9y3rbJFo0GgpR2FIUP0cu9Qtpt4GPNJ/gJpVgHDXjJUK1jIO/itn5O1dQQ4GjwOZQEHVFhBerHHg86wnNQiczy8keCkXdNlV0kQZEbkNmc=
+	t=1717683420; cv=none; b=nDSTcCis2QO95w5sC64HIxKJY/iE1RMF8u6mKqHv28r/N3Rqb3wLuUrQe0XV8/e5PbT7WwaXSqdRZrTz0bgqP0xJ/sG6y0iMK1VniiGnWk02C8jt5jQZnXkc7KoWiuM997Z+a9CuolWGqPzNbJyp03+WZXe3vyHCf1gBAJCWjSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683420; c=relaxed/simple;
-	bh=Z2F+pok7Ge4ZYzLLF+AfpIHYXIyqJpV9KA3ZVMHvK20=;
+	bh=q607w11IWo5hlynRbyu2+YiNvU7yzrUmq9GcBz6VUQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IxKn83AHWQSXa68JXZJ6cuIFVkAsQt7OKYKOWsXaJuPF25jQ3ovWIlylTGVbEt2Mk3In8tgGD045DkJ5vrLO0SOSmDocFAlyK7a+RRhPo8dVYM91A2qxTlT4yonvEPBiUGHEJnqpTG6ADsOEdqmZaozz4YUmtcYTEiE8sO5BYXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icFvh9MJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cTae8QHMsBL1IfsOKutGUPG5h2lpN4YVOk0P42FvL/HANj4lv6usK1KHztc3/o8DwUhs+km613PDP+VKP0l8w0k5qPTokjrTK+xxHEGsl/E8XrlhlHkgzC+KfUFsYAvXOzxEGmwr5zrQqb9aS1cyib9M6vn73HkJSNrCnStbQpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXZ6B9Jb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icFvh9MJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4F8C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXZ6B9Jb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD254C2BD10;
 	Thu,  6 Jun 2024 14:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683420;
-	bh=Z2F+pok7Ge4ZYzLLF+AfpIHYXIyqJpV9KA3ZVMHvK20=;
+	bh=q607w11IWo5hlynRbyu2+YiNvU7yzrUmq9GcBz6VUQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icFvh9MJI8O8adYUze/uTtWjUhlSz3z+LspNNijFDz+QdIN5M1OJluLqavLrhsfDh
-	 jxv7su/c1kARc/ACx+LfqiIB1anFJ+q9K+YxzRrefincdO4ieRnEG2YLCQbXRqG9ni
-	 qqTkL3NiHoLsD7phPk1ciPjuyrB6PH9AZ6lEeBVw=
+	b=qXZ6B9JbUjwsha43RMaYxfHNrWzzFW6f9pPIp1fG/bVN81w3UJSbErjoyo/3JDrJv
+	 LpvM1KkGicM9pvwH0txYqa0shMXaBEDvItNn9Mi6j0pFZhlK21NEUfkSHeRhxnQISd
+	 lKrLO/c9Q7wg60YXyfrKwuZTL2ptNcNsNFkOWfq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Fei Li <fei1.li@intel.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Yonghua Huang <yonghua.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 363/744] drivers/virt/acrn: fix PFNMAP PTE checks in acrn_vm_ram_map()
-Date: Thu,  6 Jun 2024 16:00:35 +0200
-Message-ID: <20240606131744.123951007@linuxfoundation.org>
+Subject: [PATCH 6.1 274/473] netrom: fix possible dead-lock in nr_rt_ioctl()
+Date: Thu,  6 Jun 2024 16:03:23 +0200
+Message-ID: <20240606131708.981575455@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -56,197 +49,194 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3d6586008f7b638f91f3332602592caa8b00b559 ]
+[ Upstream commit e03e7f20ebf7e1611d40d1fdc1bde900fd3335f6 ]
 
-Patch series "mm: follow_pte() improvements and acrn follow_pte() fixes".
+syzbot loves netrom, and found a possible deadlock in nr_rt_ioctl [1]
 
-Patch #1 fixes a bunch of issues I spotted in the acrn driver.  It
-compiles, that's all I know.  I'll appreciate some review and testing from
-acrn folks.
+Make sure we always acquire nr_node_list_lock before nr_node_lock(nr_node)
 
-Patch #2+#3 improve follow_pte(), passing a VMA instead of the MM, adding
-more sanity checks, and improving the documentation.  Gave it a quick test
-on x86-64 using VM_PAT that ends up using follow_pte().
+[1]
+WARNING: possible circular locking dependency detected
+6.9.0-rc7-syzkaller-02147-g654de42f3fc6 #0 Not tainted
+------------------------------------------------------
+syz-executor350/5129 is trying to acquire lock:
+ ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
+ ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_node_lock include/net/netrom.h:152 [inline]
+ ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:464 [inline]
+ ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
 
-This patch (of 3):
+but task is already holding lock:
+ ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
+ ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:462 [inline]
+ ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_rt_ioctl+0x10a/0x1090 net/netrom/nr_route.c:697
 
-We currently miss handling various cases, resulting in a dangerous
-follow_pte() (previously follow_pfn()) usage.
+which lock already depends on the new lock.
 
-(1) We're not checking PTE write permissions.
+the existing dependency chain (in reverse order) is:
 
-Maybe we should simply always require pte_write() like we do for
-pin_user_pages_fast(FOLL_WRITE)? Hard to tell, so let's check for
-ACRN_MEM_ACCESS_WRITE for now.
+-> #1 (nr_node_list_lock){+...}-{2:2}:
+        lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+        __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
+        _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
+        spin_lock_bh include/linux/spinlock.h:356 [inline]
+        nr_remove_node net/netrom/nr_route.c:299 [inline]
+        nr_del_node+0x4b4/0x820 net/netrom/nr_route.c:355
+        nr_rt_ioctl+0xa95/0x1090 net/netrom/nr_route.c:683
+        sock_do_ioctl+0x158/0x460 net/socket.c:1222
+        sock_ioctl+0x629/0x8e0 net/socket.c:1341
+        vfs_ioctl fs/ioctl.c:51 [inline]
+        __do_sys_ioctl fs/ioctl.c:904 [inline]
+        __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
+        do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+        do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+       entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-(2) We're not rejecting refcounted pages.
+-> #0 (&nr_node->node_lock){+...}-{2:2}:
+        check_prev_add kernel/locking/lockdep.c:3134 [inline]
+        check_prevs_add kernel/locking/lockdep.c:3253 [inline]
+        validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
+        __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
+        lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+        __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
+        _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
+        spin_lock_bh include/linux/spinlock.h:356 [inline]
+        nr_node_lock include/net/netrom.h:152 [inline]
+        nr_dec_obs net/netrom/nr_route.c:464 [inline]
+        nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
+        sock_do_ioctl+0x158/0x460 net/socket.c:1222
+        sock_ioctl+0x629/0x8e0 net/socket.c:1341
+        vfs_ioctl fs/ioctl.c:51 [inline]
+        __do_sys_ioctl fs/ioctl.c:904 [inline]
+        __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
+        do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+        do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+       entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-As we are not using MMU notifiers, messing with refcounted pages is
-dangerous and can result in use-after-free. Let's make sure to reject them.
+other info that might help us debug this:
 
-(3) We are only looking at the first PTE of a bigger range.
+ Possible unsafe locking scenario:
 
-We only lookup a single PTE, but memmap->len may span a larger area.
-Let's loop over all involved PTEs and make sure the PFN range is
-actually contiguous. Reject everything else: it couldn't have worked
-either way, and rather made use access PFNs we shouldn't be accessing.
+       CPU0                    CPU1
+       ----                    ----
+  lock(nr_node_list_lock);
+                               lock(&nr_node->node_lock);
+                               lock(nr_node_list_lock);
+  lock(&nr_node->node_lock);
 
-Link: https://lkml.kernel.org/r/20240410155527.474777-1-david@redhat.com
-Link: https://lkml.kernel.org/r/20240410155527.474777-2-david@redhat.com
-Fixes: 8a6e85f75a83 ("virt: acrn: obtain pa from VMA with PFNMAP flag")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Fei Li <fei1.li@intel.com>
-Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Yonghua Huang <yonghua.huang@intel.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+ *** DEADLOCK ***
+
+1 lock held by syz-executor350/5129:
+  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
+  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:462 [inline]
+  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_rt_ioctl+0x10a/0x1090 net/netrom/nr_route.c:697
+
+stack backtrace:
+CPU: 0 PID: 5129 Comm: syz-executor350 Not tainted 6.9.0-rc7-syzkaller-02147-g654de42f3fc6 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
+  check_noncircular+0x36a/0x4a0 kernel/locking/lockdep.c:2187
+  check_prev_add kernel/locking/lockdep.c:3134 [inline]
+  check_prevs_add kernel/locking/lockdep.c:3253 [inline]
+  validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
+  __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
+  lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+  __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
+  _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
+  spin_lock_bh include/linux/spinlock.h:356 [inline]
+  nr_node_lock include/net/netrom.h:152 [inline]
+  nr_dec_obs net/netrom/nr_route.c:464 [inline]
+  nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
+  sock_do_ioctl+0x158/0x460 net/socket.c:1222
+  sock_ioctl+0x629/0x8e0 net/socket.c:1341
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:904 [inline]
+  __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240515142934.3708038-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/acrn/mm.c | 63 +++++++++++++++++++++++++++++++-----------
- 1 file changed, 47 insertions(+), 16 deletions(-)
+ net/netrom/nr_route.c | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/virt/acrn/mm.c b/drivers/virt/acrn/mm.c
-index ffc1d1136f765..8ef49d7be453c 100644
---- a/drivers/virt/acrn/mm.c
-+++ b/drivers/virt/acrn/mm.c
-@@ -155,23 +155,29 @@ int acrn_vm_memseg_unmap(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
- int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index 70480869ad1c5..bd2b17b219ae9 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -285,22 +285,14 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+ 	return 0;
+ }
+ 
+-static inline void __nr_remove_node(struct nr_node *nr_node)
++static void nr_remove_node_locked(struct nr_node *nr_node)
  {
- 	struct vm_memory_region_batch *regions_info;
--	int nr_pages, i = 0, order, nr_regions = 0;
-+	int nr_pages, i, order, nr_regions = 0;
- 	struct vm_memory_mapping *region_mapping;
- 	struct vm_memory_region_op *vm_region;
- 	struct page **pages = NULL, *page;
- 	void *remap_vaddr;
- 	int ret, pinned;
- 	u64 user_vm_pa;
--	unsigned long pfn;
- 	struct vm_area_struct *vma;
++	lockdep_assert_held(&nr_node_list_lock);
++
+ 	hlist_del_init(&nr_node->node_node);
+ 	nr_node_put(nr_node);
+ }
  
- 	if (!vm || !memmap)
+-#define nr_remove_node_locked(__node) \
+-	__nr_remove_node(__node)
+-
+-static void nr_remove_node(struct nr_node *nr_node)
+-{
+-	spin_lock_bh(&nr_node_list_lock);
+-	__nr_remove_node(nr_node);
+-	spin_unlock_bh(&nr_node_list_lock);
+-}
+-
+ static inline void __nr_remove_neigh(struct nr_neigh *nr_neigh)
+ {
+ 	hlist_del_init(&nr_neigh->neigh_node);
+@@ -339,6 +331,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
  		return -EINVAL;
+ 	}
  
-+	/* Get the page number of the map region */
-+	nr_pages = memmap->len >> PAGE_SHIFT;
-+	if (!nr_pages)
-+		return -EINVAL;
-+
- 	mmap_read_lock(current->mm);
- 	vma = vma_lookup(current->mm, memmap->vma_base);
- 	if (vma && ((vma->vm_flags & VM_PFNMAP) != 0)) {
-+		unsigned long start_pfn, cur_pfn;
- 		spinlock_t *ptl;
-+		bool writable;
- 		pte_t *ptep;
++	spin_lock_bh(&nr_node_list_lock);
+ 	nr_node_lock(nr_node);
+ 	for (i = 0; i < nr_node->count; i++) {
+ 		if (nr_node->routes[i].neighbour == nr_neigh) {
+@@ -352,7 +345,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 			nr_node->count--;
  
- 		if ((memmap->vma_base + memmap->len) > vma->vm_end) {
-@@ -179,25 +185,53 @@ int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
- 			return -EINVAL;
+ 			if (nr_node->count == 0) {
+-				nr_remove_node(nr_node);
++				nr_remove_node_locked(nr_node);
+ 			} else {
+ 				switch (i) {
+ 				case 0:
+@@ -367,12 +360,14 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 				nr_node_put(nr_node);
+ 			}
+ 			nr_node_unlock(nr_node);
++			spin_unlock_bh(&nr_node_list_lock);
+ 
+ 			return 0;
  		}
- 
--		ret = follow_pte(vma->vm_mm, memmap->vma_base, &ptep, &ptl);
--		if (ret < 0) {
--			mmap_read_unlock(current->mm);
-+		for (i = 0; i < nr_pages; i++) {
-+			ret = follow_pte(vma->vm_mm,
-+					 memmap->vma_base + i * PAGE_SIZE,
-+					 &ptep, &ptl);
-+			if (ret)
-+				break;
-+
-+			cur_pfn = pte_pfn(ptep_get(ptep));
-+			if (i == 0)
-+				start_pfn = cur_pfn;
-+			writable = !!pte_write(ptep_get(ptep));
-+			pte_unmap_unlock(ptep, ptl);
-+
-+			/* Disallow write access if the PTE is not writable. */
-+			if (!writable &&
-+			    (memmap->attr & ACRN_MEM_ACCESS_WRITE)) {
-+				ret = -EFAULT;
-+				break;
-+			}
-+
-+			/* Disallow refcounted pages. */
-+			if (pfn_valid(cur_pfn) &&
-+			    !PageReserved(pfn_to_page(cur_pfn))) {
-+				ret = -EFAULT;
-+				break;
-+			}
-+
-+			/* Disallow non-contiguous ranges. */
-+			if (cur_pfn != start_pfn + i) {
-+				ret = -EINVAL;
-+				break;
-+			}
-+		}
-+		mmap_read_unlock(current->mm);
-+
-+		if (ret) {
- 			dev_dbg(acrn_dev.this_device,
- 				"Failed to lookup PFN at VMA:%pK.\n", (void *)memmap->vma_base);
- 			return ret;
- 		}
--		pfn = pte_pfn(ptep_get(ptep));
--		pte_unmap_unlock(ptep, ptl);
--		mmap_read_unlock(current->mm);
- 
- 		return acrn_mm_region_add(vm, memmap->user_vm_pa,
--			 PFN_PHYS(pfn), memmap->len,
-+			 PFN_PHYS(start_pfn), memmap->len,
- 			 ACRN_MEM_TYPE_WB, memmap->attr);
  	}
- 	mmap_read_unlock(current->mm);
+ 	nr_neigh_put(nr_neigh);
+ 	nr_node_unlock(nr_node);
++	spin_unlock_bh(&nr_node_list_lock);
+ 	nr_node_put(nr_node);
  
--	/* Get the page number of the map region */
--	nr_pages = memmap->len >> PAGE_SHIFT;
- 	pages = vzalloc(array_size(nr_pages, sizeof(*pages)));
- 	if (!pages)
- 		return -ENOMEM;
-@@ -241,12 +275,11 @@ int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
- 	mutex_unlock(&vm->regions_mapping_lock);
- 
- 	/* Calculate count of vm_memory_region_op */
--	while (i < nr_pages) {
-+	for (i = 0; i < nr_pages; i += 1 << order) {
- 		page = pages[i];
- 		VM_BUG_ON_PAGE(PageTail(page), page);
- 		order = compound_order(page);
- 		nr_regions++;
--		i += 1 << order;
- 	}
- 
- 	/* Prepare the vm_memory_region_batch */
-@@ -263,8 +296,7 @@ int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
- 	regions_info->regions_num = nr_regions;
- 	regions_info->regions_gpa = virt_to_phys(vm_region);
- 	user_vm_pa = memmap->user_vm_pa;
--	i = 0;
--	while (i < nr_pages) {
-+	for (i = 0; i < nr_pages; i += 1 << order) {
- 		u32 region_size;
- 
- 		page = pages[i];
-@@ -280,7 +312,6 @@ int acrn_vm_ram_map(struct acrn_vm *vm, struct acrn_vm_memmap *memmap)
- 
- 		vm_region++;
- 		user_vm_pa += region_size;
--		i += 1 << order;
- 	}
- 
- 	/* Inform the ACRN Hypervisor to set up EPT mappings */
+ 	return -EINVAL;
 -- 
 2.43.0
 
