@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CF41A2FCF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53B61A2FD9;
 	Thu,  6 Jun 2024 14:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683222; cv=none; b=m3Sesu6PiJ5/AgeGqRmoOGhA3R7Z+4rNggqR/mAbwjhwGy+YQWJm79MrUiYs1X/Wcketgp+JP8V4LomLkXtGsCS1tKPGJC4nZZSpPRMiMn1KR4RUUVuQSsHOHse1OKslT2Z0qEPTG2CeuIk0YvCfME8G1QjcRE88JvWgAvIkTic=
+	t=1717683222; cv=none; b=Jf3oU+fMKI8NiFzCchEoIUIzmrVKWL0h4Uc5r0lwZ1WtBwvI92FDJiMaXmwgVCGwl7Q083LfYcvLI+1bEJ3o5ayxsBW8b/3DS/3Y/1c1naRs4hxvdcZg0DsRHriblvuWL7MRNgbxzrACtHlKQln6baqvwm7Py9VUXaDt4lZVlrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683222; c=relaxed/simple;
-	bh=RXJ2N2+h5rID4jMJkq9hMrK+vguUza1dlm108jJa2Uw=;
+	bh=uZL6h0NbAygCONNuH0nA/JSkoeXBMi2H/Y4NsfykjuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kqk8aKlwXFr4bFXk83peRRtOjBMaXOdJOgMvniejPGV98BOsMwJ4rutqzUpCatGqLhbrMnar8rBx2iRY8TTJTyq1onx7gUZH3951j2o+1hLDgAvJJrwqCdpA0/dPMPfmUB+Yp9h+Sak4Tgc0Et/I7urfoWxkoNvJ9mOoQTduWk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T56GraBK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XAmQEqHp/zzn79/TwokeTXo3999nINXCZTXhJ4Rex02Je+OhRAIkhJsFPoufj493l922eMHP7yAQC4H1OYvtXQuaVMCZeO+p5rvgla2YrL9BH/un+U+1lSlTGObvB89y4epE30adTJf0kS4YjXNuJcHoOkSfbAl2UKYHwH5AtCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bn4vz8w+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T56GraBK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1499C2BD10;
-	Thu,  6 Jun 2024 14:13:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bn4vz8w+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD44C32786;
+	Thu,  6 Jun 2024 14:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683222;
-	bh=RXJ2N2+h5rID4jMJkq9hMrK+vguUza1dlm108jJa2Uw=;
+	bh=uZL6h0NbAygCONNuH0nA/JSkoeXBMi2H/Y4NsfykjuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T56GraBKM8BRaqJ+Ipzy4BgxljVEpML/pxNM3+89Vxf+6BLkzy9l5G8ZRKl2LrubQ
-	 55HPVSiHNo+16bjeZWjPoQNdTwyU7oG5T1XjNlKDVIkxRD8AanIuqgDghkj6Cg31he
-	 q6PfhuFF7dEdWhlbpWC+xPSjCVWItjHgF3hXAYvE=
+	b=bn4vz8w+dTz4LNxQ2i7d7qikiVVOdj7d3EIrUfLjweSl7BGzKAD2HThcMTIrCZVwL
+	 1ZWf93ltPQ7NFQdGeAugAnpcjN2/+740VIErxnQ7i1X155q3IFbz7MkAhPdzpAwOYe
+	 dcaGl79ILDQhL1wgshWOlqgs8OpWXcGTdk1mIXMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adham Faris <afaris@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/473] net/mlx5e: Fail with messages when params are not valid for XSK
-Date: Thu,  6 Jun 2024 16:00:27 +0200
-Message-ID: <20240606131703.134652301@linuxfoundation.org>
+Subject: [PATCH 6.6 164/744] gfs2: Fix "ignore unlock failures after withdraw"
+Date: Thu,  6 Jun 2024 15:57:16 +0200
+Message-ID: <20240606131737.682590043@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,98 +46,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adham Faris <afaris@nvidia.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 130b12079f3732babe2772314ab129bca0d8492f ]
+[ Upstream commit 5d9231111966b6c5a65016d58dcbeab91055bc91 ]
 
-Current XSK prerequisites validation implementation
-(setup.c/mlx5e_validate_xsk_param()) fails silently when xsk
-prerequisites are not fulfilled.
-Add error messages to the kernel log to help the user understand what
-went wrong when params are not valid for XSK.
+Commit 3e11e53041502 tries to suppress dlm_lock() lock conversion errors
+that occur when the lockspace has already been released.
 
-Signed-off-by: Adham Faris <afaris@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Stable-dep-of: a5535e533694 ("mlx5: stop warning for 64KB pages")
+It does that by setting and checking the SDF_SKIP_DLM_UNLOCK flag.  This
+conflicts with the intended meaning of the SDF_SKIP_DLM_UNLOCK flag, so
+check whether the lockspace is still allocated instead.
+
+(Given the current DLM API, checking for this kind of error after the
+fact seems easier that than to make sure that the lockspace is still
+allocated before calling dlm_lock().  Changing the DLM API so that users
+maintain the lockspace references themselves would be an option.)
+
+Fixes: 3e11e53041502 ("GFS2: ignore unlock failures after withdraw")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/en/params.c   |  9 +++++++--
- .../mellanox/mlx5/core/en/xsk/setup.c         | 19 +++++++++++++++++--
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ fs/gfs2/glock.c | 4 +++-
+ fs/gfs2/util.c  | 1 -
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-index d3de1b7a80bf5..be7302aa6f864 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-@@ -581,11 +581,16 @@ int mlx5e_mpwrq_validate_xsk(struct mlx5_core_dev *mdev, struct mlx5e_params *pa
- 	bool unaligned = xsk ? xsk->unaligned : false;
- 	u16 max_mtu_pkts;
- 
--	if (!mlx5e_check_fragmented_striding_rq_cap(mdev, page_shift, umr_mode))
-+	if (!mlx5e_check_fragmented_striding_rq_cap(mdev, page_shift, umr_mode)) {
-+		mlx5_core_err(mdev, "Striding RQ for XSK can't be activated with page_shift %u and umr_mode %d\n",
-+			      page_shift, umr_mode);
- 		return -EOPNOTSUPP;
-+	}
- 
--	if (!mlx5e_rx_mpwqe_is_linear_skb(mdev, params, xsk))
-+	if (!mlx5e_rx_mpwqe_is_linear_skb(mdev, params, xsk)) {
-+		mlx5_core_err(mdev, "Striding RQ linear mode for XSK can't be activated with current params\n");
- 		return -EINVAL;
-+	}
- 
- 	/* Current RQ length is too big for the given frame size, the
- 	 * needed number of WQEs exceeds the maximum.
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c
-index ff03c43833bbf..81a567e172646 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c
-@@ -7,6 +7,18 @@
- #include "en/health.h"
- #include <net/xdp_sock_drv.h>
- 
-+static int mlx5e_legacy_rq_validate_xsk(struct mlx5_core_dev *mdev,
-+					struct mlx5e_params *params,
-+					struct mlx5e_xsk_param *xsk)
-+{
-+	if (!mlx5e_rx_is_linear_skb(mdev, params, xsk)) {
-+		mlx5_core_err(mdev, "Legacy RQ linear mode for XSK can't be activated with current params\n");
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- /* The limitation of 2048 can be altered, but shouldn't go beyond the minimal
-  * stride size of striding RQ.
-  */
-@@ -17,8 +29,11 @@ bool mlx5e_validate_xsk_param(struct mlx5e_params *params,
- 			      struct mlx5_core_dev *mdev)
- {
- 	/* AF_XDP doesn't support frames larger than PAGE_SIZE. */
--	if (xsk->chunk_size > PAGE_SIZE || xsk->chunk_size < MLX5E_MIN_XSK_CHUNK_SIZE)
-+	if (xsk->chunk_size > PAGE_SIZE || xsk->chunk_size < MLX5E_MIN_XSK_CHUNK_SIZE) {
-+		mlx5_core_err(mdev, "XSK chunk size %u out of bounds [%u, %lu]\n", xsk->chunk_size,
-+			      MLX5E_MIN_XSK_CHUNK_SIZE, PAGE_SIZE);
- 		return false;
-+	}
- 
- 	/* frag_sz is different for regular and XSK RQs, so ensure that linear
- 	 * SKB mode is possible.
-@@ -27,7 +42,7 @@ bool mlx5e_validate_xsk_param(struct mlx5e_params *params,
- 	case MLX5_WQ_TYPE_LINKED_LIST_STRIDING_RQ:
- 		return !mlx5e_mpwrq_validate_xsk(mdev, params, xsk);
- 	default: /* MLX5_WQ_TYPE_CYCLIC */
--		return mlx5e_rx_is_linear_skb(mdev, params, xsk);
-+		return !mlx5e_legacy_rq_validate_xsk(mdev, params, xsk);
+diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
+index 4a280be229a65..207b7c23bc0f3 100644
+--- a/fs/gfs2/glock.c
++++ b/fs/gfs2/glock.c
+@@ -785,11 +785,13 @@ __acquires(&gl->gl_lockref.lock)
  	}
- }
  
+ 	if (sdp->sd_lockstruct.ls_ops->lm_lock)	{
++		struct lm_lockstruct *ls = &sdp->sd_lockstruct;
++
+ 		/* lock_dlm */
+ 		ret = sdp->sd_lockstruct.ls_ops->lm_lock(gl, target, lck_flags);
+ 		if (ret == -EINVAL && gl->gl_target == LM_ST_UNLOCKED &&
+ 		    target == LM_ST_UNLOCKED &&
+-		    test_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags)) {
++		    test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
+ 			finish_xmote(gl, target);
+ 			gfs2_glock_queue_work(gl, 0);
+ 		} else if (ret) {
+diff --git a/fs/gfs2/util.c b/fs/gfs2/util.c
+index da29fafb62728..d424691bd3f8a 100644
+--- a/fs/gfs2/util.c
++++ b/fs/gfs2/util.c
+@@ -350,7 +350,6 @@ int gfs2_withdraw(struct gfs2_sbd *sdp)
+ 			fs_err(sdp, "telling LM to unmount\n");
+ 			lm->lm_unmount(sdp);
+ 		}
+-		set_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags);
+ 		fs_err(sdp, "File system withdrawn\n");
+ 		dump_stack();
+ 		clear_bit(SDF_WITHDRAW_IN_PROG, &sdp->sd_flags);
 -- 
 2.43.0
 
