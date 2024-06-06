@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331F3196D99;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1F6196D99;
 	Thu,  6 Jun 2024 14:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682999; cv=none; b=NbOukFollkStM4fJZ9I6orLWH8z7ciURrSuTNbgGfKtFM9mnvjvBUdsXumXBLrZri8J+yNI4CfOmPwahvYTHvm9cjEpnzHbM9pczYlInky+6MXHHpPSK+qz+VHofxSx0rncIVwOxI52EpTZlKREzdwqS5fmtz5NyAqrJydIz7qg=
+	t=1717682999; cv=none; b=IiKcIdOFeUdRpaehpFz89yXwE4RSoti9UqUf3hvZrGr9ASY2QW/GhXlO/a1CAZYsCqM4r6B4OwDgSZrOk2hP6M6kOAhdlGCvAa6RHszvs9mXAP4m1u54MIoKwbh8B2QBSbqQ3tJ+XOl1T4Nu9drkNNsgTvjo2A41uPRfwU4wb1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682999; c=relaxed/simple;
-	bh=Hodao7h8MrVV2SRQkU2GotEZ82pDcxHwhlesq09+aG4=;
+	bh=f3Prjbmfra6Fgc6lt1CQ4aYO7hQY2yPF5vsL/mc4qr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SMrETigZclbBTltRLnPkutKyQhgej9R3C5RknToWMOL6QEHtK83AGn/RM3GNCrhvmpnxyQf0cMIs4z5HJilkmPQNRYUcTjj7LtVYFMZi8sqIYtUKy7qAxgZDfLP0+w34uMhDu8q4wLpi2R0ReCmiPXnIW01HQRNGwl7SEbTYMfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHjhzou8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tS+G3KqAkHhNS7FhIQxPUZ78M8KlzacjvgrqU0MhfvG9XJzWkT4/8Eapcsz+OrXA8ohLNg92/EYUUGQIuK52C8GPpyqXpxnDMZHMtFKhXRoqZ6eAPZmqkgv+lJ1aJLNe4oj8ywiS6VsqNq8MGRJsA2t0R1fen9WigCKjXr/knpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqYol4yH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHjhzou8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD25C32786;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqYol4yH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7E1C32786;
 	Thu,  6 Jun 2024 14:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682999;
-	bh=Hodao7h8MrVV2SRQkU2GotEZ82pDcxHwhlesq09+aG4=;
+	bh=f3Prjbmfra6Fgc6lt1CQ4aYO7hQY2yPF5vsL/mc4qr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHjhzou8WTlgWsXZbCUbR1ATTxpf2VUMcfVLFTQRoaCw8hLyJpEljayKOPUonbDi7
-	 tKs9/WlLmOnHV1lafV/RQKQYnyiKZYYoaZv5mpC5VquOPmd76CQBxfK5CERigQi9M2
-	 LWNV/pQassdJiVLufKG4vpEVb37gmHTbScRVcnYc=
+	b=XqYol4yHoLdwv0q1+cMJ88V/zy1eCOtiGZZ/Xrcz6ARG/Oy+/iLwYmWdFVq4eDojQ
+	 x/lsxUAxX1f1PlQynYn8GFdxZ1o/NcNuT1HqzqsDcZUPn8E6Qy25kV9etOuaLkNmHJ
+	 QBqeyfXSnLx4PFOiEi+H01h2XW+I9A5YSZTKzS9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 183/374] drm/amdgpu: Fix buffer size in gfx_v9_4_3_init_ cp_compute_microcode() and rlc_microcode()
-Date: Thu,  6 Jun 2024 16:02:42 +0200
-Message-ID: <20240606131658.000725256@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	"Yang, Chenyuan" <cy54@illinois.edu>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Yang
+Subject: [PATCH 6.9 201/374] media: cec: core: avoid confusing "transmit timed out" message
+Date: Thu,  6 Jun 2024 16:03:00 +0200
+Message-ID: <20240606131658.563766556@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -48,82 +47,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit acce6479e30f73ab0872e93a75aed1fb791d04ec ]
+[ Upstream commit cbe499977bc36fedae89f0a0d7deb4ccde9798fe ]
 
-The function gfx_v9_4_3_init_microcode in gfx_v9_4_3.c was generating
-about potential truncation of output when using the snprintf function.
-The issue was due to the size of the buffer 'ucode_prefix' being too
-small to accommodate the maximum possible length of the string being
-written into it.
+If, when waiting for a transmit to finish, the wait is interrupted,
+then you might get a "transmit timed out" message, even though the
+transmit was interrupted and did not actually time out.
 
-The string being written is "amdgpu/%s_mec.bin" or "amdgpu/%s_rlc.bin",
-where %s is replaced by the value of 'chip_name'. The length of this
-string without the %s is 16 characters. The warning message indicated
-that 'chip_name' could be up to 29 characters long, resulting in a total
-of 45 characters, which exceeds the buffer size of 30 characters.
+Set transmit_in_progress_aborted to true if the
+wait_for_completion_killable() call was interrupted and ensure
+that the transmit is properly marked as ABORTED.
 
-To resolve this issue, the size of the 'ucode_prefix' buffer has been
-reduced from 30 to 15. This ensures that the maximum possible length of
-the string being written into the buffer will not exceed its size, thus
-preventing potential buffer overflow and truncation issues.
-
-Fixes the below with gcc W=1:
-drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c: In function ‘gfx_v9_4_3_early_init’:
-drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c:379:52: warning: ‘%s’ directive output may be truncated writing up to 29 bytes into a region of size 23 [-Wformat-truncation=]
-  379 |         snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_rlc.bin", chip_name);
-      |                                                    ^~
-......
-  439 |         r = gfx_v9_4_3_init_rlc_microcode(adev, ucode_prefix);
-      |                                                 ~~~~~~~~~~~~
-drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c:379:9: note: ‘snprintf’ output between 16 and 45 bytes into a destination of size 30
-  379 |         snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_rlc.bin", chip_name);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c:413:52: warning: ‘%s’ directive output may be truncated writing up to 29 bytes into a region of size 23 [-Wformat-truncation=]
-  413 |         snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_mec.bin", chip_name);
-      |                                                    ^~
-......
-  443 |         r = gfx_v9_4_3_init_cp_compute_microcode(adev, ucode_prefix);
-      |                                                        ~~~~~~~~~~~~
-drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c:413:9: note: ‘snprintf’ output between 16 and 45 bytes into a destination of size 30
-  413 |         snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_mec.bin", chip_name);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Fixes: 86301129698b ("drm/amdgpu: split gc v9_4_3 functionality from gc v9_0")
-Cc: Hawking Zhang <Hawking.Zhang@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reported-by: Yang, Chenyuan <cy54@illinois.edu>
+Closes: https://lore.kernel.org/linux-media/PH7PR11MB57688E64ADE4FE82E658D86DA09EA@PH7PR11MB5768.namprd11.prod.outlook.com/
+Fixes: 590a8e564c6e ("media: cec: abort if the current transmit was canceled")
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/cec/core/cec-adap.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-index f4d48d6d7e777..d89d6829f1df4 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-@@ -431,7 +431,7 @@ static int gfx_v9_4_3_init_cp_compute_microcode(struct amdgpu_device *adev,
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index a493cbce24567..da09834990b87 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -490,6 +490,15 @@ int cec_thread_func(void *_adap)
+ 			goto unlock;
+ 		}
  
- static int gfx_v9_4_3_init_microcode(struct amdgpu_device *adev)
++		if (adap->transmit_in_progress &&
++		    adap->transmit_in_progress_aborted) {
++			if (adap->transmitting)
++				cec_data_cancel(adap->transmitting,
++						CEC_TX_STATUS_ABORTED, 0);
++			adap->transmit_in_progress = false;
++			adap->transmit_in_progress_aborted = false;
++			goto unlock;
++		}
+ 		if (adap->transmit_in_progress && timeout) {
+ 			/*
+ 			 * If we timeout, then log that. Normally this does
+@@ -771,6 +780,7 @@ int cec_transmit_msg_fh(struct cec_adapter *adap, struct cec_msg *msg,
  {
--	char ucode_prefix[30];
-+	char ucode_prefix[15];
- 	int r;
+ 	struct cec_data *data;
+ 	bool is_raw = msg_is_raw(msg);
++	int err;
  
- 	amdgpu_ucode_ip_version_decode(adev, GC_HWIP, ucode_prefix, sizeof(ucode_prefix));
+ 	if (adap->devnode.unregistered)
+ 		return -ENODEV;
+@@ -935,10 +945,13 @@ int cec_transmit_msg_fh(struct cec_adapter *adap, struct cec_msg *msg,
+ 	 * Release the lock and wait, retake the lock afterwards.
+ 	 */
+ 	mutex_unlock(&adap->lock);
+-	wait_for_completion_killable(&data->c);
++	err = wait_for_completion_killable(&data->c);
+ 	cancel_delayed_work_sync(&data->work);
+ 	mutex_lock(&adap->lock);
+ 
++	if (err)
++		adap->transmit_in_progress_aborted = true;
++
+ 	/* Cancel the transmit if it was interrupted */
+ 	if (!data->completed) {
+ 		if (data->msg.tx_status & CEC_TX_STATUS_OK)
 -- 
 2.43.0
 
