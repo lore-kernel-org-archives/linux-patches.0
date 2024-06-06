@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89471A2579;
-	Thu,  6 Jun 2024 14:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631B41A2579;
+	Thu,  6 Jun 2024 14:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683764; cv=none; b=eYozYCvQffm9lXhpYhcxo67gU2buTnxMJDDiaYFV0AXAq8EEdkuB1UC8sXDiYuqzYEVjgfJXxd2AeEvfG+Yzuxvb0A6T79qLb1hw6AuCrcf81BxGl45ji1JUUX4Zy2SA2+R6/b6Kb/Zw0cuE9Tb1B4xyxMwse4FB95dHvHUWeFY=
+	t=1717683765; cv=none; b=QnqiSua4j/O88XC3uqWfKKq627mkfihIGXhAkqwZuNHX1nWMjiZ7ZGFQYAnPHo5/N+avRYxyM+lBBdfAkcD+HwSVPi0UZph8k/P+VufnGMJTR5s1cM96a0ZO+snpjeZcbdSYeDcKvCA8XCpiiOq4g3Cf7uReP4CE2DmySnXlVc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683764; c=relaxed/simple;
-	bh=jZI463VtpLL9ottAqbeWd5iZkeJiEvFtrr6/l1wUBFw=;
+	s=arc-20240116; t=1717683765; c=relaxed/simple;
+	bh=JC3+1BXb4a7VORjXjw84uEWRgOkA4s29S10yFI0soIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IJD4NrDMTe2PncL57rkeIrim3pSY4S6Cp2tBm9sfN5K4e7HHpFNCokGVvffgX+ms/vU2s5eHOvqil5J33oMn5fbCJ4dVbtHkQV6I5O3Lvi+ejnZPDBj+YasZb1iUEYmTFBqfWtMCA5K1c/MRIA6SjEKTpp55SmJjGykBAhcBcK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOmmGVhL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aJdWD05FtWyhc5uEBXtfgBBHrmw4qDT6QaNpozoLorDmavWtddhKXnEkc+YIOh2bo2VrDuTic49nbvGWp9LnTODvApdtmBSUtq2NG50STvRjXgBCtudVLrUbepkwhaSHNLFRwU1Rs9oQiadhYXoHqdOaYvy8Jmd4PDpUF37gWVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cl3h4lZ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOmmGVhL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B991FC2BD10;
-	Thu,  6 Jun 2024 14:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cl3h4lZ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F536C2BD10;
+	Thu,  6 Jun 2024 14:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683764;
-	bh=jZI463VtpLL9ottAqbeWd5iZkeJiEvFtrr6/l1wUBFw=;
+	s=korg; t=1717683765;
+	bh=JC3+1BXb4a7VORjXjw84uEWRgOkA4s29S10yFI0soIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOmmGVhLSzT9DOGyQz+GPiH+5QTGrT43zccySr8bhPIpXWSEVXnHZY5Xg5/N5F5vg
-	 zv4mwDZcZFCl4JGMAcxcJN+e1v8UV5QTI/XjuB6M7ZYA+XIQg7Up+1eOohb2rq2OoX
-	 HhqvkwtkxnLu3Co6qjmKniAMc/Q1UZvUFDfPp4bI=
+	b=Cl3h4lZ6TEU4MVBo2hbO3kLV50ASIG7XgotwqnbX6doA/C7j4H+DG5+/nMq4AINd0
+	 j3tMfD/LdLKXw08shbzbPWqgZhCF5YJAkVM2khZItzXqW/Y0WRhTFWFGRtArUGaqfR
+	 JGFz4ybEkUJ7kU8CsUvbKtsxXefL3sl48xpcB2CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Suman Ghosh <sumang@marvell.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 704/744] net: micrel: Fix lan8841_config_intr after getting out of sleep mode
-Date: Thu,  6 Jun 2024 16:06:16 +0200
-Message-ID: <20240606131755.055726419@linuxfoundation.org>
+Subject: [PATCH 6.6 705/744] ice: fix accounting if a VLAN already exists
+Date: Thu,  6 Jun 2024 16:06:17 +0200
+Message-ID: <20240606131755.086853137@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -54,60 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 4fb679040d9f758eeb3b4d01bbde6405bf20e64e ]
+[ Upstream commit 82617b9a04649e83ee8731918aeadbb6e6d7cbc7 ]
 
-When the interrupt is enabled, the function lan8841_config_intr tries to
-clear any pending interrupts by reading the interrupt status, then
-checks the return value for errors and then continue to enable the
-interrupt. It has been seen that once the system gets out of sleep mode,
-the interrupt status has the value 0x400 meaning that the PHY detected
-that the link was in low power. That is correct value but the problem is
-that the check is wrong.  We try to check for errors but we return an
-error also in this case which is not an error. Therefore fix this by
-returning only when there is an error.
+The ice_vsi_add_vlan() function is used to add a VLAN filter for the target
+VSI. This function prepares a filter in the switch table for the given VSI.
+If it succeeds, the vsi->num_vlan counter is incremented.
 
-Fixes: a8f1a19d27ef ("net: micrel: Add support for lan8841 PHY")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Suman Ghosh <sumang@marvell.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/r/20240524085350.359812-1-horatiu.vultur@microchip.com
+It is not considered an error to add a VLAN which already exists in the
+switch table, so the function explicitly checks and ignores -EEXIST. The
+vsi->num_vlan counter is still incremented.
+
+This seems incorrect, as it means we can double-count in the case where the
+same VLAN is added twice by the caller. The actual table will have one less
+filter than the count.
+
+The ice_vsi_del_vlan() function similarly checks and handles the -ENOENT
+condition for when deleting a filter that doesn't exist. This flow only
+decrements the vsi->num_vlan if it actually deleted a filter.
+
+The vsi->num_vlan counter is used only in a few places, primarily related
+to tracking the number of non-zero VLANs. If the vsi->num_vlans gets out of
+sync, then ice_vsi_num_non_zero_vlans() will incorrectly report more VLANs
+than are present, and ice_vsi_has_non_zero_vlans() could return true
+potentially in cases where there are only VLAN 0 filters left.
+
+Fix this by only incrementing the vsi->num_vlan in the case where we
+actually added an entry, and not in the case where the entry already
+existed.
+
+Fixes: a1ffafb0b4a4 ("ice: Support configuring the device to Double VLAN Mode")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240523-net-2024-05-23-intel-net-fixes-v1-2-17a923e0bb5f@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index e4c06336bd254..fc31fcfb0cdb4 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -3450,7 +3450,7 @@ static int lan8841_config_intr(struct phy_device *phydev)
+diff --git a/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c b/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
+index 8307902115ff2..3ecab12baea33 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
+@@ -45,14 +45,15 @@ int ice_vsi_add_vlan(struct ice_vsi *vsi, struct ice_vlan *vlan)
+ 		return -EINVAL;
  
- 	if (phydev->interrupts == PHY_INTERRUPT_ENABLED) {
- 		err = phy_read(phydev, LAN8814_INTS);
--		if (err)
-+		if (err < 0)
- 			return err;
- 
- 		/* Enable / disable interrupts. It is OK to enable PTP interrupt
-@@ -3466,6 +3466,14 @@ static int lan8841_config_intr(struct phy_device *phydev)
- 			return err;
- 
- 		err = phy_read(phydev, LAN8814_INTS);
-+		if (err < 0)
-+			return err;
-+
-+		/* Getting a positive value doesn't mean that is an error, it
-+		 * just indicates what was the status. Therefore make sure to
-+		 * clear the value and say that there is no error.
-+		 */
+ 	err = ice_fltr_add_vlan(vsi, vlan);
+-	if (err && err != -EEXIST) {
++	if (!err)
++		vsi->num_vlan++;
++	else if (err == -EEXIST)
 +		err = 0;
- 	}
++	else
+ 		dev_err(ice_pf_to_dev(vsi->back), "Failure Adding VLAN %d on VSI %i, status %d\n",
+ 			vlan->vid, vsi->vsi_num, err);
+-		return err;
+-	}
  
- 	return err;
+-	vsi->num_vlan++;
+-	return 0;
++	return err;
+ }
+ 
+ /**
 -- 
 2.43.0
 
