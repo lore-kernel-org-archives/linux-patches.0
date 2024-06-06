@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FD7199EB7;
-	Thu,  6 Jun 2024 14:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A6619A287;
+	Thu,  6 Jun 2024 14:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683012; cv=none; b=RIebsyfydiZ7UDniE/QCgYVWbkIUbg8/LSItnrscunYCMURoPsATfNG30Bn0jdYsJN3koTGLpUokF1deKL04IEnC2Wcm58kksZpqho1+OvkRMUGQQMVS48WQicvkqGLKoUkWcrW5z1fZ/6CqSpw9MI5GjrBu1SH7mApoNyAYJoc=
+	t=1717683013; cv=none; b=nU03Px8uPvFXYViEzhDpQBtbs7Fa6eyJH6ks2FtUKs0aLk9Aa0kJdd4CSOyCt4c3Dq7jTXOTM+ztdBDQ/HSPo/Z2WOf2SW5I2DDRnNYmCoHXSRlNhRfD4xQbOPJKzcRay/DDQAATKZgWBtz7yoQJKDrOtLv66P2ZEfntDlSuTDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683012; c=relaxed/simple;
-	bh=AAVeWYxPCejQ6HNc6qu6sgeWiKpeonbE/9QuacJ5sfA=;
+	s=arc-20240116; t=1717683013; c=relaxed/simple;
+	bh=er+zm+9XVCMqYBreHw9mFxIEEc4VGM1Pch6rnyxHsh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q3zF4MsKjcLx+nspJCmq7d8R/49B1pCfNMRnT+MD0Fkjc/LUFvXQ/ryMtJAtRpQUtFfDmYik3ygXvRF+uKl7O3Q0l4IPQ4bfxPTHIIiJqhO0vuH4Vw08bkeBLVZ+XMjsCHP2bO82lE/ePGNJjv071hGBYpSP5Opky2CSq6Nl4+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeqHWxCu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fsB1q4zBNy4SUyPvdZyR0pVq9mO4+hbY05nl0Q3ZLifMcZ0jOdMOiC/ABNhBX+tIcvrunTnBM5myz/ng8bYZZ5Z+vDGO0S6q4K/52/GnUeiUJjiosgq7XxrA/AsACr1oS3jCL69uEnFvnDivT1S1z2KJAwUsCMpxdi3bc/wQaKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/0EXepG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeqHWxCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665D6C4AF0A;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/0EXepG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE18C4AF0D;
 	Thu,  6 Jun 2024 14:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683012;
-	bh=AAVeWYxPCejQ6HNc6qu6sgeWiKpeonbE/9QuacJ5sfA=;
+	bh=er+zm+9XVCMqYBreHw9mFxIEEc4VGM1Pch6rnyxHsh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eeqHWxCuLkRr1k3P0dOu3GUCI8PP7Jjn7fvva7K5WcO1Ir87+MUIdJwRCvZ0iPIfg
-	 0cqoo+zS1wq8szY1bHiwBMxk27aWZPpG4rcHIqOPE68AKZ/Es7DIEelHQYdaeBbyJA
-	 HzOrz16pZXM/K0nKFUxhH9fbLxQyez0rgOoAtSwY=
+	b=y/0EXepGJwDqhoS8lfuvbNg+h/pKeDmOZv8gTy4J8sWYRYFJQYW13WMi1fP0H3EfF
+	 ttTw/pQq53MV4+7uOfXHoWQF8X9ez+5BkSJ6144TNsAB/6MivLJUQlX7CpAl0RByVA
+	 vvjz8V98oAqHTbJn7Jp8wmCJjN4uaH5NwZfVWSWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 224/374] Bluetooth: L2CAP: Fix div-by-zero in l2cap_le_flowctl_init()
-Date: Thu,  6 Jun 2024 16:03:23 +0200
-Message-ID: <20240606131659.310331397@linuxfoundation.org>
+Subject: [PATCH 6.9 186/374] tools/arch/x86/intel_sdsi: Fix meter_show display
+Date: Thu,  6 Jun 2024 16:02:45 +0200
+Message-ID: <20240606131658.102033332@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -46,85 +47,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: David E. Box <david.e.box@linux.intel.com>
 
-[ Upstream commit a5b862c6a221459d54e494e88965b48dcfa6cc44 ]
+[ Upstream commit 76f2bc17428c890754d11aa6aea14b332ba130c5 ]
 
-l2cap_le_flowctl_init() can cause both div-by-zero and an integer
-overflow since hdev->le_mtu may not fall in the valid range.
+Fixes sdsi_meter_cert_show() to correctly decode and display the meter
+certificate output. Adds and displays a missing version field, displays the
+ASCII name of the signature, and fixes the print alignment.
 
-Move MTU from hci_dev to hci_conn to validate MTU and stop the connection
-process earlier if MTU is invalid.
-Also, add a missing validation in read_buffer_size() and make it return
-an error value if the validation fails.
-Now hci_conn_add() returns ERR_PTR() as it can fail due to the both a
-kzalloc failure and invalid MTU value.
-
-divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 0 PID: 67 Comm: kworker/u5:0 Tainted: G        W          6.9.0-rc5+ #20
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-Workqueue: hci0 hci_rx_work
-RIP: 0010:l2cap_le_flowctl_init+0x19e/0x3f0 net/bluetooth/l2cap_core.c:547
-Code: e8 17 17 0c 00 66 41 89 9f 84 00 00 00 bf 01 00 00 00 41 b8 02 00 00 00 4c
-89 fe 4c 89 e2 89 d9 e8 27 17 0c 00 44 89 f0 31 d2 <66> f7 f3 89 c3 ff c3 4d 8d
-b7 88 00 00 00 4c 89 f0 48 c1 e8 03 42
-RSP: 0018:ffff88810bc0f858 EFLAGS: 00010246
-RAX: 00000000000002a0 RBX: 0000000000000000 RCX: dffffc0000000000
-RDX: 0000000000000000 RSI: ffff88810bc0f7c0 RDI: ffffc90002dcb66f
-RBP: ffff88810bc0f880 R08: aa69db2dda70ff01 R09: 0000ffaaaaaaaaaa
-R10: 0084000000ffaaaa R11: 0000000000000000 R12: ffff88810d65a084
-R13: dffffc0000000000 R14: 00000000000002a0 R15: ffff88810d65a000
-FS:  0000000000000000(0000) GS:ffff88811ac00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020000100 CR3: 0000000103268003 CR4: 0000000000770ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- l2cap_le_connect_req net/bluetooth/l2cap_core.c:4902 [inline]
- l2cap_le_sig_cmd net/bluetooth/l2cap_core.c:5420 [inline]
- l2cap_le_sig_channel net/bluetooth/l2cap_core.c:5486 [inline]
- l2cap_recv_frame+0xe59d/0x11710 net/bluetooth/l2cap_core.c:6809
- l2cap_recv_acldata+0x544/0x10a0 net/bluetooth/l2cap_core.c:7506
- hci_acldata_packet net/bluetooth/hci_core.c:3939 [inline]
- hci_rx_work+0x5e5/0xb20 net/bluetooth/hci_core.c:4176
- process_one_work kernel/workqueue.c:3254 [inline]
- process_scheduled_works+0x90f/0x1530 kernel/workqueue.c:3335
- worker_thread+0x926/0xe70 kernel/workqueue.c:3416
- kthread+0x2e3/0x380 kernel/kthread.c:388
- ret_from_fork+0x5c/0x90 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
-Modules linked in:
----[ end trace 0000000000000000 ]---
-
-Fixes: 6ed58ec520ad ("Bluetooth: Use LE buffers for LE traffic")
-Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 7fdc03a7370f ("tools/arch/x86: intel_sdsi: Add support for reading meter certificates")
+Signed-off-by: David E. Box <david.e.box@linux.intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20240411025856.2782476-7-david.e.box@linux.intel.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/arch/x86/intel_sdsi/intel_sdsi.c | 29 +++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 5449c6c086aa4..1ed734a7fb313 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6363,7 +6363,7 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
- 	pa_sync = hci_conn_add_unset(hdev, ISO_LINK, BDADDR_ANY,
- 				     HCI_ROLE_SLAVE);
+diff --git a/tools/arch/x86/intel_sdsi/intel_sdsi.c b/tools/arch/x86/intel_sdsi/intel_sdsi.c
+index 7eaffcbff788c..ae29214da1029 100644
+--- a/tools/arch/x86/intel_sdsi/intel_sdsi.c
++++ b/tools/arch/x86/intel_sdsi/intel_sdsi.c
+@@ -153,11 +153,12 @@ struct bundle_encoding {
+ };
  
--	if (!pa_sync)
-+	if (IS_ERR(pa_sync))
- 		goto unlock;
+ struct meter_certificate {
+-	uint32_t block_signature;
+-	uint32_t counter_unit;
++	uint32_t signature;
++	uint32_t version;
+ 	uint64_t ppin;
++	uint32_t counter_unit;
+ 	uint32_t bundle_length;
+-	uint32_t reserved;
++	uint64_t reserved;
+ 	uint32_t mmrc_encoding;
+ 	uint32_t mmrc_counter;
+ };
+@@ -338,6 +339,7 @@ static int sdsi_meter_cert_show(struct sdsi_dev *s)
+ 	uint32_t count = 0;
+ 	FILE *cert_ptr;
+ 	int ret, size;
++	char name[4];
  
- 	pa_sync->sync_handle = le16_to_cpu(ev->handle);
+ 	ret = sdsi_update_registers(s);
+ 	if (ret)
+@@ -379,12 +381,19 @@ static int sdsi_meter_cert_show(struct sdsi_dev *s)
+ 	printf("\n");
+ 	printf("Meter certificate for device %s\n", s->dev_name);
+ 	printf("\n");
+-	printf("Block Signature:       0x%x\n", mc->block_signature);
+-	printf("Count Unit:            %dms\n", mc->counter_unit);
+-	printf("PPIN:                  0x%lx\n", mc->ppin);
+-	printf("Feature Bundle Length: %d\n", mc->bundle_length);
+-	printf("MMRC encoding:         %d\n", mc->mmrc_encoding);
+-	printf("MMRC counter:          %d\n", mc->mmrc_counter);
++
++	get_feature(mc->signature, name);
++	printf("Signature:                    %.4s\n", name);
++
++	printf("Version:                      %d\n", mc->version);
++	printf("Count Unit:                   %dms\n", mc->counter_unit);
++	printf("PPIN:                         0x%lx\n", mc->ppin);
++	printf("Feature Bundle Length:        %d\n", mc->bundle_length);
++
++	get_feature(mc->mmrc_encoding, name);
++	printf("MMRC encoding:                %.4s\n", name);
++
++	printf("MMRC counter:                 %d\n", mc->mmrc_counter);
+ 	if (mc->bundle_length % 8) {
+ 		fprintf(stderr, "Invalid bundle length\n");
+ 		return -1;
+@@ -398,7 +407,7 @@ static int sdsi_meter_cert_show(struct sdsi_dev *s)
+ 
+ 	bec = (void *)(mc) + sizeof(mc);
+ 
+-	printf("Number of Feature Counters:          %d\n", mc->bundle_length / 8);
++	printf("Number of Feature Counters:   %ld\n", BUNDLE_COUNT(mc->bundle_length));
+ 	while (count++ < mc->bundle_length / 8) {
+ 		char feature[5];
+ 
 -- 
 2.43.0
 
