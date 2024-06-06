@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904E3199386;
-	Thu,  6 Jun 2024 14:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E60199386;
+	Thu,  6 Jun 2024 14:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683213; cv=none; b=O1xfUi8rXs7zUXvFRC+Jktu1oVUhCfAcWOZBlZVXLYZ8n4vY5qETqOmT4CqpzIkAV1SASbKopipWgKH1eQ3JcQ0OyONahqWmJL01NetZ7ZP1d2HfGgihpsHco8CIFFLHuzncq95fIhHvJjZEeFJ+5V6z5ymqKWqpOaPd6SKjm88=
+	t=1717683214; cv=none; b=cwt8DdpP0b05i4X3Ul9BJ4DgrCwPdUi+d2mL+sNqo9Vttqa2n7OmzxnPjoofUCFXtlPwjAvwda/0Tyqa4JeW/3mzT6MU0U/xdmATQOfhlKNc55uKDEzFNPskS4DX5hbclCrzqAK1+gO/OeKj7XaNth13mKOvIVPkMpfWFNaDgqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683213; c=relaxed/simple;
-	bh=lUetS9aPcw0Lo/PcYI7E2cnu5l9TpvvUSxOPFk7+jcU=;
+	s=arc-20240116; t=1717683214; c=relaxed/simple;
+	bh=pc4TepDZRifszbojm5BKJOcmwLI4MaT4+/vIh+5KqQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6A6mSQJnd3d4UWhU5JUA104Xky0GTdYWllQDnxVXYn1sHtmZ7gXZ8PN7XHLeQNVVBxDHXatQLrvyJF9gBdFLOemGv9179jeGF6wBVON5Prbcdg/+99u94v5ulw42XH0ATBV5wndOofQOFXksZIX191WWZcIc95SRDsTdVTS0F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+Rc+VSO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pw6TDwna811vVoVugDgMHYiRxTPIf+jGPFvKGhM30vVM1edGRBEZJfEoXx3IReljFFyePWxtmsAyB404j04AeuaadEi0Hm60M8dtWGrWqe+oBrNXYGUedTj0G1ne4Tp5Wfxp5GhP2fdTAU0OpBo3LyfKoy6mCXYyeJCAQ6fg+N4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyU0rQm1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+Rc+VSO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5D5C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyU0rQm1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8672C32782;
 	Thu,  6 Jun 2024 14:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683213;
-	bh=lUetS9aPcw0Lo/PcYI7E2cnu5l9TpvvUSxOPFk7+jcU=;
+	s=korg; t=1717683214;
+	bh=pc4TepDZRifszbojm5BKJOcmwLI4MaT4+/vIh+5KqQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+Rc+VSOVJelgsanUvj443OE5c159hR+HDtL4260xYQ9PhSe7OC1F7n6rGs2YXUmX
-	 cIgZJVWXBdnUBS1jt/m/DNgVIQoIAB5aPqwzslnz/KzLrzV1kyzx8jw9xdW9MPW3D1
-	 FVCOZNSudmJSM+FIREu0I5NoNzC+AvqmpWiiold4=
+	b=nyU0rQm1jdq5Yl4QPs+5Vh2bfh29F23yTYltq0vz5QQd3MJqaQNJvJoMGNp1idzTv
+	 jnhRvzekh1r0MbFKah1JTuPhblRJzxq8O/o91MMKyvcIXXNBfFzp3e2snv2tAGFxLZ
+	 +QmjWyzhxWu6PQ9dMLU/VAInQ5aiEg1KUt61cAhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Can Guo <quic_cang@quicinc.com>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/744] scsi: ufs: core: Perform read back after disabling interrupts
-Date: Thu,  6 Jun 2024 15:57:08 +0200
-Message-ID: <20240606131737.424026055@linuxfoundation.org>
+Subject: [PATCH 6.1 091/473] wifi: brcmfmac: pcie: handle randbuf allocation failure
+Date: Thu,  6 Jun 2024 16:00:20 +0200
+Message-ID: <20240606131702.920586186@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,55 +48,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit e4a628877119bd40164a651d20321247b6f94a8b ]
+[ Upstream commit 316f790ebcf94bdf59f794b7cdea4068dc676d4c ]
 
-Currently, interrupts are cleared and disabled prior to registering the
-interrupt. An mb() is used to complete the clear/disable writes before the
-interrupt is registered.
+The kzalloc() in brcmf_pcie_download_fw_nvram() will return null
+if the physical memory has run out. As a result, if we use
+get_random_bytes() to generate random bytes in the randbuf, the
+null pointer dereference bug will happen.
 
-mb() ensures that the write completes, but completion doesn't mean that it
-isn't stored in a buffer somewhere. The recommendation for ensuring these
-bits have taken effect on the device is to perform a read back to force it
-to make it all the way to the device. This is documented in device-io.rst
-and a talk by Will Deacon on this can be seen over here:
+In order to prevent allocation failure, this patch adds a separate
+function using buffer on kernel stack to generate random bytes in
+the randbuf, which could prevent the kernel stack from overflow.
 
-    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
-
-Let's do that to ensure these bits hit the device. Because the mb()'s
-purpose wasn't to add extra ordering (on top of the ordering guaranteed by
-writel()/readl()), it can safely be removed.
-
-Fixes: 199ef13cac7d ("scsi: ufs: avoid spurious UFS host controller interrupts")
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-8-181252004586@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 91918ce88d9f ("wifi: brcmfmac: pcie: Provide a buffer of random bytes to the device")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240306140437.18177-1-duoming@zju.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../wireless/broadcom/brcm80211/brcmfmac/pcie.c   | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index cd1b9db8543dc..2371b00c56be9 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -10369,7 +10369,7 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 	 * Make sure that UFS interrupts are disabled and any pending interrupt
- 	 * status is cleared before registering UFS interrupt handler.
- 	 */
--	mb();
-+	ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 3b1277a8bd617..99cc41135473a 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -1640,6 +1640,15 @@ struct brcmf_random_seed_footer {
+ #define BRCMF_RANDOM_SEED_MAGIC		0xfeedc0de
+ #define BRCMF_RANDOM_SEED_LENGTH	0x100
  
- 	/* IRQ registration */
- 	err = devm_request_irq(dev, irq, ufshcd_intr, IRQF_SHARED, UFSHCD, hba);
++static noinline_for_stack void
++brcmf_pcie_provide_random_bytes(struct brcmf_pciedev_info *devinfo, u32 address)
++{
++	u8 randbuf[BRCMF_RANDOM_SEED_LENGTH];
++
++	get_random_bytes(randbuf, BRCMF_RANDOM_SEED_LENGTH);
++	memcpy_toio(devinfo->tcm + address, randbuf, BRCMF_RANDOM_SEED_LENGTH);
++}
++
+ static int brcmf_pcie_download_fw_nvram(struct brcmf_pciedev_info *devinfo,
+ 					const struct firmware *fw, void *nvram,
+ 					u32 nvram_len)
+@@ -1682,7 +1691,6 @@ static int brcmf_pcie_download_fw_nvram(struct brcmf_pciedev_info *devinfo,
+ 				.length = cpu_to_le32(rand_len),
+ 				.magic = cpu_to_le32(BRCMF_RANDOM_SEED_MAGIC),
+ 			};
+-			void *randbuf;
+ 
+ 			/* Some Apple chips/firmwares expect a buffer of random
+ 			 * data to be present before NVRAM
+@@ -1694,10 +1702,7 @@ static int brcmf_pcie_download_fw_nvram(struct brcmf_pciedev_info *devinfo,
+ 				    sizeof(footer));
+ 
+ 			address -= rand_len;
+-			randbuf = kzalloc(rand_len, GFP_KERNEL);
+-			get_random_bytes(randbuf, rand_len);
+-			memcpy_toio(devinfo->tcm + address, randbuf, rand_len);
+-			kfree(randbuf);
++			brcmf_pcie_provide_random_bytes(devinfo, address);
+ 		}
+ 	} else {
+ 		brcmf_dbg(PCIE, "No matching NVRAM file found %s\n",
 -- 
 2.43.0
 
