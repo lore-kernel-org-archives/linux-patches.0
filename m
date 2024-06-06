@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF771A0DC6;
-	Thu,  6 Jun 2024 14:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AE71A0DCF;
+	Thu,  6 Jun 2024 14:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683165; cv=none; b=GYpE2INFjponepel1AkGNf1jTra8bbGCG6nw983Y5CpgGGiUiD4awdjl02MK5sk013S38qhUfypGroxxnDaiSdAihSvMraVg8ts8G179Lu8kZuSKEjFBu9Rv6I+Q2IkCJrbh5dNYiyS6idK2IEXaxg5CC1Kwp41gvIJokpKvpE4=
+	t=1717683166; cv=none; b=MaUDlJQs0gMwlKcAN/b9kRcVTbD4pqUGV0nMdoSNRgaoXNM9o3NVYMIytnSo/ghQsvNwRtrTgb+8f3+h4YmdBv301nnrGgu+3Hh1pExvkwd1SxVqBp+kC7ORy6coQAxNi9TJwam7Eh5NRGGJvEP58YrvDLFbyrSJ/GLEqRdnvpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683165; c=relaxed/simple;
-	bh=sC3DSI0dxttBFCBl3a6ZLBhQjs6EdsNgyE6pmOYHUJE=;
+	s=arc-20240116; t=1717683166; c=relaxed/simple;
+	bh=pP5ondk5fPXQ7Sfx7dWAdice/3lP7HAVlfUyvkpSpPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lgt5u8MKsBDkYas8wSvwQamjMqR2dQjnDMaatHhIJDTOY8StnOjkP2FZ5OkmkM/AroRDZ3WdzTKO/uLysDJ2buyrZO84nRpfyzafi3lXdfQTi1U8phxy07/Lpo4z4mzEGLj0F5gYO3cmJVKdr0169Rco6JSkN4SDy59EFxMvJPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2hC4NAn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p1jQU/R2AHFR/UlvapQ6I2bOrI2zGUEc6arAjIrZvNIRN1A/40plQ2Xgx93SqyHXCg0gt2tnrxg3tn3LywnHgsfGyS8Nr3RTcLrOiJMXlNsXXshKX+Lo9oNYxwfdr2BWh904KCAQrti9rNAR+IgFU3SRnPvutTYxSjQw2hYd2dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqfV011g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2hC4NAn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BDEC2BD10;
-	Thu,  6 Jun 2024 14:12:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqfV011g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE9FC2BD10;
+	Thu,  6 Jun 2024 14:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683165;
-	bh=sC3DSI0dxttBFCBl3a6ZLBhQjs6EdsNgyE6pmOYHUJE=;
+	s=korg; t=1717683166;
+	bh=pP5ondk5fPXQ7Sfx7dWAdice/3lP7HAVlfUyvkpSpPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2hC4NAnIFDlyJ8tlrYlhwMfpVxE0KkyZglbqIl/IsyJUCYhHDTB/UcLf1jLnLuWX
-	 rRbE+rG/L3/z0ev/CmOSXTWrtmQhsQeI9lRSGxQ4+u3mViFdfLe7heu1FpWx7J7YHv
-	 k7dckzSk7Y/ELsmWx5yQzlNiT4cOwbIw2gwI4iLw=
+	b=LqfV011gK+kL8nmIgG81Hfq/SgTZu41+HT/qei31gy7GaTRxL6OQ2Mnlm1otxVIfs
+	 xhtwQ4goK03yVJGxM/GQV5/w/l69mzSeLo8Odx5FJibJjkU4jEF8oBIHCvTCBW3eu/
+	 iORG0BjzkEEAPie1Gnd6vAFu+utQyqpo9RJ1ji7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Leo Ma <hanghong.ma@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/744] drm/amd/display: Fix DC mode screen flickering on DCN321
-Date: Thu,  6 Jun 2024 15:55:52 +0200
-Message-ID: <20240606131734.968393180@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Pin-yen Lin <treapking@chromium.org>
+Subject: [PATCH 6.1 007/473] serial: 8520_mtk: Set RTS on shutdown for Rx in-band wakeup
+Date: Thu,  6 Jun 2024 15:58:56 +0200
+Message-ID: <20240606131700.057132691@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,65 +46,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Ma <hanghong.ma@amd.com>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit ce649bd2d834db83ecc2756a362c9a1ec61658a5 ]
+commit 4244f830a56058ee0670d80e7ac9fd7c982eb480 upstream.
 
-[Why && How]
-Screen flickering saw on 4K@60 eDP with high refresh rate external
-monitor when booting up in DC mode. DC Mode Capping is disabled
-which caused wrong UCLK being used.
+When Rx in-band wakeup is enabled, set RTS to true in mtk8250_shutdown()
+so the connected device can still send message and trigger IRQ when the
+system is suspended.
 
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Leo Ma <hanghong.ma@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 18c9d4a3c249 ("serial: When UART is suspended, set RTS to false")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Link: https://lore.kernel.org/r/20240424130619.2924456-1-treapking@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c  | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/tty/serial/8250/8250_mtk.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-index e9345f6554dbc..2428a4763b85f 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
-@@ -547,8 +547,12 @@ static void dcn32_update_clocks(struct clk_mgr *clk_mgr_base,
- 					 * since we calculate mode support based on softmax being the max UCLK
- 					 * frequency.
- 					 */
--					dcn32_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK,
--							dc->clk_mgr->bw_params->dc_mode_softmax_memclk);
-+					if (dc->debug.disable_dc_mode_overwrite) {
-+						dcn30_smu_set_hard_max_by_freq(clk_mgr, PPCLK_UCLK, dc->clk_mgr->bw_params->max_memclk_mhz);
-+						dcn32_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK, dc->clk_mgr->bw_params->max_memclk_mhz);
-+					} else
-+						dcn32_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK,
-+								dc->clk_mgr->bw_params->dc_mode_softmax_memclk);
- 				} else {
- 					dcn32_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK, dc->clk_mgr->bw_params->max_memclk_mhz);
- 				}
-@@ -581,8 +585,13 @@ static void dcn32_update_clocks(struct clk_mgr *clk_mgr_base,
- 		/* set UCLK to requested value if P-State switching is supported, or to re-enable P-State switching */
- 		if (clk_mgr_base->clks.p_state_change_support &&
- 				(update_uclk || !clk_mgr_base->clks.prev_p_state_change_support) &&
--				!dc->work_arounds.clock_update_disable_mask.uclk)
-+				!dc->work_arounds.clock_update_disable_mask.uclk) {
-+			if (dc->clk_mgr->dc_mode_softmax_enabled && dc->debug.disable_dc_mode_overwrite)
-+				dcn30_smu_set_hard_max_by_freq(clk_mgr, PPCLK_UCLK,
-+						max((int)dc->clk_mgr->bw_params->dc_mode_softmax_memclk, khz_to_mhz_ceil(clk_mgr_base->clks.dramclk_khz)));
-+
- 			dcn32_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK, khz_to_mhz_ceil(clk_mgr_base->clks.dramclk_khz));
-+		}
+--- a/drivers/tty/serial/8250/8250_mtk.c
++++ b/drivers/tty/serial/8250/8250_mtk.c
+@@ -209,15 +209,19 @@ static int mtk8250_startup(struct uart_p
  
- 		if (clk_mgr_base->clks.num_ways != new_clocks->num_ways &&
- 				clk_mgr_base->clks.num_ways > new_clocks->num_ways) {
--- 
-2.43.0
-
+ static void mtk8250_shutdown(struct uart_port *port)
+ {
+-#ifdef CONFIG_SERIAL_8250_DMA
+ 	struct uart_8250_port *up = up_to_u8250p(port);
+ 	struct mtk8250_data *data = port->private_data;
++	int irq = data->rx_wakeup_irq;
+ 
++#ifdef CONFIG_SERIAL_8250_DMA
+ 	if (up->dma)
+ 		data->rx_status = DMA_RX_SHUTDOWN;
+ #endif
+ 
+-	return serial8250_do_shutdown(port);
++	serial8250_do_shutdown(port);
++
++	if (irq >= 0)
++		serial8250_do_set_mctrl(&up->port, TIOCM_RTS);
+ }
+ 
+ static void mtk8250_disable_intrs(struct uart_8250_port *up, int mask)
 
 
