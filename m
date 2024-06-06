@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1F6196D99;
-	Thu,  6 Jun 2024 14:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3C9196D99;
+	Thu,  6 Jun 2024 14:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682999; cv=none; b=IiKcIdOFeUdRpaehpFz89yXwE4RSoti9UqUf3hvZrGr9ASY2QW/GhXlO/a1CAZYsCqM4r6B4OwDgSZrOk2hP6M6kOAhdlGCvAa6RHszvs9mXAP4m1u54MIoKwbh8B2QBSbqQ3tJ+XOl1T4Nu9drkNNsgTvjo2A41uPRfwU4wb1o=
+	t=1717683000; cv=none; b=aXtkEOmYeb9YoAVT+2DVeMYMzyjpAhuw/hiXMU6pSF3q2fQKL5WY0CNcevs1MHfucjycVhOBCH7Wdp6mgOZTovuW0PiEdLPRohS2trL5L21E+5eFDJwYSh3i1DYgYaigtb5H+k7EKs9Bvm2fCro8RrjQJgE/ncjHz5m49weXW6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682999; c=relaxed/simple;
-	bh=f3Prjbmfra6Fgc6lt1CQ4aYO7hQY2yPF5vsL/mc4qr8=;
+	s=arc-20240116; t=1717683000; c=relaxed/simple;
+	bh=dmmft5+PkQnwDF49AOcum6P7xXG7dfMqDBqsymoY8Sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tS+G3KqAkHhNS7FhIQxPUZ78M8KlzacjvgrqU0MhfvG9XJzWkT4/8Eapcsz+OrXA8ohLNg92/EYUUGQIuK52C8GPpyqXpxnDMZHMtFKhXRoqZ6eAPZmqkgv+lJ1aJLNe4oj8ywiS6VsqNq8MGRJsA2t0R1fen9WigCKjXr/knpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqYol4yH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WF/qH0rLbqW2Y+N5Vv1cUcw4hcq5zVABZqJ9cjFqk9aeuLEXiLSa5dROaEkHd2ZuWGjPkgh2mTrT9zO1sHXhEzG/UFTdZSup9f47JCxWCwC0CQ0kYwrXeMXfG7UgflxaOzdDDfsX0JaG5N0XQNK/LinhIy6tkFizUWh8RW/PgwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TT5bCN+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqYol4yH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7E1C32786;
-	Thu,  6 Jun 2024 14:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TT5bCN+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EF5C32786;
+	Thu,  6 Jun 2024 14:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682999;
-	bh=f3Prjbmfra6Fgc6lt1CQ4aYO7hQY2yPF5vsL/mc4qr8=;
+	s=korg; t=1717683000;
+	bh=dmmft5+PkQnwDF49AOcum6P7xXG7dfMqDBqsymoY8Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqYol4yHoLdwv0q1+cMJ88V/zy1eCOtiGZZ/Xrcz6ARG/Oy+/iLwYmWdFVq4eDojQ
-	 x/lsxUAxX1f1PlQynYn8GFdxZ1o/NcNuT1HqzqsDcZUPn8E6Qy25kV9etOuaLkNmHJ
-	 QBqeyfXSnLx4PFOiEi+H01h2XW+I9A5YSZTKzS9I=
+	b=TT5bCN+ouyDcFKbjn6xEfnC0r/I8BYtKbnx3SV8vLDROFlmW6bGPkO20hTR34wJzp
+	 PR7QKuFCX6nByC8YG9Q+T8Ami+oS/IUEowXiWByN0rsxVYLV5wC1eyQPdbvGsxN2A+
+	 AZMi7omiKWhIWhWaYuI2pUmaIbt/IAOTXqVTMaRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	"Yang, Chenyuan" <cy54@illinois.edu>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Yang
-Subject: [PATCH 6.9 201/374] media: cec: core: avoid confusing "transmit timed out" message
-Date: Thu,  6 Jun 2024 16:03:00 +0200
-Message-ID: <20240606131658.563766556@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 202/374] Revert "drm/bridge: ti-sn65dsi83: Fix enable error path"
+Date: Thu,  6 Jun 2024 16:03:01 +0200
+Message-ID: <20240606131658.600532419@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,71 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit cbe499977bc36fedae89f0a0d7deb4ccde9798fe ]
+[ Upstream commit ad81feb5b6f1f5461641706376dcf7a9914ed2e7 ]
 
-If, when waiting for a transmit to finish, the wait is interrupted,
-then you might get a "transmit timed out" message, even though the
-transmit was interrupted and did not actually time out.
+This reverts commit 8a91b29f1f50ce7742cdbe5cf11d17f128511f3f.
 
-Set transmit_in_progress_aborted to true if the
-wait_for_completion_killable() call was interrupted and ensure
-that the transmit is properly marked as ABORTED.
+The regulator_disable() added by the original commit solves one kind of
+regulator imbalance but adds another one as it allows the regulator to be
+disabled one more time than it is enabled in the following scenario:
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reported-by: Yang, Chenyuan <cy54@illinois.edu>
-Closes: https://lore.kernel.org/linux-media/PH7PR11MB57688E64ADE4FE82E658D86DA09EA@PH7PR11MB5768.namprd11.prod.outlook.com/
-Fixes: 590a8e564c6e ("media: cec: abort if the current transmit was canceled")
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+ 1. Start video pipeline -> sn65dsi83_atomic_pre_enable -> regulator_enable
+ 2. PLL lock fails -> regulator_disable
+ 3. Stop video pipeline -> sn65dsi83_atomic_disable -> regulator_disable
+
+The reason is clear from the code flow, which looks like this (after
+removing unrelated code):
+
+  static void sn65dsi83_atomic_pre_enable()
+  {
+      regulator_enable(ctx->vcc);
+
+      if (PLL failed locking) {
+          regulator_disable(ctx->vcc);  <---- added by patch being reverted
+          return;
+      }
+  }
+
+  static void sn65dsi83_atomic_disable()
+  {
+      regulator_disable(ctx->vcc);
+  }
+
+The use case for introducing the additional regulator_disable() was
+removing the module for debugging (see link below for the discussion). If
+the module is removed after a .atomic_pre_enable, i.e. with an active
+pipeline from the DRM point of view, .atomic_disable is not called and thus
+the regulator would not be disabled.
+
+According to the discussion however there is no actual use case for
+removing the module with an active pipeline, except for
+debugging/development.
+
+On the other hand, the occurrence of a PLL lock failure is possible due to
+any physical reason (e.g. a temporary hardware failure for electrical
+reasons) so handling it gracefully should be supported. As there is no way
+for .atomic[_pre]_enable to report an error to the core, the only clean way
+to support it is calling regulator_disabled() only in .atomic_disable,
+unconditionally, as it was before.
+
+Link: https://lore.kernel.org/all/15244220.uLZWGnKmhe@steina-w/
+Fixes: 8a91b29f1f50 ("drm/bridge: ti-sn65dsi83: Fix enable error path")
+Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240426122259.46808-1-luca.ceresoli@bootlin.com
+(cherry picked from commit 2940ee03b23281071620dda1d790cd644dabd394)
+Signed-off-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/core/cec-adap.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
-index a493cbce24567..da09834990b87 100644
---- a/drivers/media/cec/core/cec-adap.c
-+++ b/drivers/media/cec/core/cec-adap.c
-@@ -490,6 +490,15 @@ int cec_thread_func(void *_adap)
- 			goto unlock;
- 		}
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+index 4814b7b6d1fd1..57a7ed13f9965 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -478,7 +478,6 @@ static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
+ 		dev_err(ctx->dev, "failed to lock PLL, ret=%i\n", ret);
+ 		/* On failure, disable PLL again and exit. */
+ 		regmap_write(ctx->regmap, REG_RC_PLL_EN, 0x00);
+-		regulator_disable(ctx->vcc);
+ 		return;
+ 	}
  
-+		if (adap->transmit_in_progress &&
-+		    adap->transmit_in_progress_aborted) {
-+			if (adap->transmitting)
-+				cec_data_cancel(adap->transmitting,
-+						CEC_TX_STATUS_ABORTED, 0);
-+			adap->transmit_in_progress = false;
-+			adap->transmit_in_progress_aborted = false;
-+			goto unlock;
-+		}
- 		if (adap->transmit_in_progress && timeout) {
- 			/*
- 			 * If we timeout, then log that. Normally this does
-@@ -771,6 +780,7 @@ int cec_transmit_msg_fh(struct cec_adapter *adap, struct cec_msg *msg,
- {
- 	struct cec_data *data;
- 	bool is_raw = msg_is_raw(msg);
-+	int err;
- 
- 	if (adap->devnode.unregistered)
- 		return -ENODEV;
-@@ -935,10 +945,13 @@ int cec_transmit_msg_fh(struct cec_adapter *adap, struct cec_msg *msg,
- 	 * Release the lock and wait, retake the lock afterwards.
- 	 */
- 	mutex_unlock(&adap->lock);
--	wait_for_completion_killable(&data->c);
-+	err = wait_for_completion_killable(&data->c);
- 	cancel_delayed_work_sync(&data->work);
- 	mutex_lock(&adap->lock);
- 
-+	if (err)
-+		adap->transmit_in_progress_aborted = true;
-+
- 	/* Cancel the transmit if it was interrupted */
- 	if (!data->completed) {
- 		if (data->msg.tx_status & CEC_TX_STATUS_OK)
 -- 
 2.43.0
 
