@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC5F196D8C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9723F196D8C;
 	Thu,  6 Jun 2024 14:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683241; cv=none; b=CHG6e9iMJl08NW3R3+aOcQXnHSYZUuYPZARidhjC52RufCIQqUPs4DdAuPg3lIs90PDVkH0jDwICBLgVEs46d8GvT32w7LG5kwPg7FG7lYznBhF/TGSGBZUV7J5umoAZVNxCmGAtqnIgq0yo0xfoRV8liM7UzZfEOD38rqs6XJ8=
+	t=1717683241; cv=none; b=jgfbTub4iwyEeLPS1r5XuLR7aQnfgsdczu96v24NQtXngQJN4hEWaJm4GVSbcEvfZImKBsN/AcrWSumCXxQkiXKNusQvHPaiXeb4NBnMeNCv6vuu6Hzjz08w6K+p9/8Wpx/4jjP7tie/mreG7fHlIjWUG/TvT8//LiNLs3H/gVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683241; c=relaxed/simple;
-	bh=4JMXDTxMIHGogg4oNFkSoafb4b7Kx9TJM04XPSoz42c=;
+	bh=IjB5LtzpE/QblrI6UXiUfG3ozYnQ+fakhE7q5dDZpYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ESlWKsWEfvARoiqTWNZhiGUi3toyB83Axa0sg0piHRJpRaRp4BzC51B5tFk0MvzXko7XSGmv1CrQ/2z+KKoRapa/QAW1iQTFqzUhj+DjGYS/kBadI/9BEPYp3q9bL92YuOQZ1am7kbqOAS8B5O5fNQoOJKlJojWJe57NIp+AX8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zMIiU0w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IwnRXcfFeogsym6NjEcAeNxTrTTMvo/rpst2+bwP4OnBZHwOEwb/oRUNJeUWmr+/Xtu9HTn7GvupBC08t/GLALSa7hP6nwOWd00WGWzDWqZr+KK4dnvgNF+NYpgD9Lkimz1OVeMr03Juo3/9FVZQBMQ9Eyex5Vc8jkTQiK6al7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybzcj8im; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zMIiU0w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F313DC2BD10;
-	Thu,  6 Jun 2024 14:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybzcj8im"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77930C2BD10;
+	Thu,  6 Jun 2024 14:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683241;
-	bh=4JMXDTxMIHGogg4oNFkSoafb4b7Kx9TJM04XPSoz42c=;
+	bh=IjB5LtzpE/QblrI6UXiUfG3ozYnQ+fakhE7q5dDZpYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0zMIiU0wcf1eLzCtyXm57W4c0/lmiJ2fgEZqjJJrQdGLiDhWuMaXeK0gTZEeCmSxJ
-	 A9rJZqxXLluG7BCt5DroJZUuAKKcv/V8GFAp2+ze7PwrHAsSYvMckcjJXKG3Q81q3s
-	 J0vxcExE/6CBkRx2znPyEStk+MKDFQkXK2uh+1Qg=
+	b=ybzcj8imxiQLrHtVSzU/ktUSciouXrdHremoLa3bWVhlVVXY7n6u4XUkrg6JiKAAC
+	 tFpnN27HgEMXsZKU19EAQxG7PD7KtRHtksfhB/3FGoyU4Mfa1YuYp7O8ce3ONnhBai
+	 mrsrCWobnazhq+oGmh1stC2JnvhQ9nGocje8V5ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 118/473] x86/boot/64: Clear most of CR4 in startup_64(), except PAE, MCE and LA57
-Date: Thu,  6 Jun 2024 16:00:47 +0200
-Message-ID: <20240606131703.841457054@linuxfoundation.org>
+Subject: [PATCH 6.6 186/744] gfs2: Get rid of gfs2_alloc_blocks generation parameter
+Date: Thu,  6 Jun 2024 15:57:38 +0200
+Message-ID: <20240606131738.394913880@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +46,158 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit a0025f587c685e5ff842fb0194036f2ca0b6eaf4 ]
+[ Upstream commit 4c7b3f7fb7c8c66d669d107e717f9de41ef81e92 ]
 
-The early 64-bit boot code must be entered with a 1:1 mapping of the
-bootable image, but it cannot operate without a 1:1 mapping of all the
-assets in memory that it accesses, and therefore, it creates such
-mappings for all known assets upfront, and additional ones on demand
-when a page fault happens on a memory address.
+Get rid of the generation parameter of gfs2_alloc_blocks(): we only ever
+set the generation of the current inode while creating it, so do so
+directly.
 
-These mappings are created with the global bit G set, as the flags used
-to create page table descriptors are based on __PAGE_KERNEL_LARGE_EXEC
-defined by the core kernel, even though the context where these mappings
-are used is very different.
-
-This means that the TLB maintenance carried out by the decompressor is
-not sufficient if it is entered with CR4.PGE enabled, which has been
-observed to happen with the stage0 bootloader of project Oak. While this
-is a dubious practice if no global mappings are being used to begin
-with, the decompressor is clearly at fault here for creating global
-mappings and not performing the appropriate TLB maintenance.
-
-Since commit:
-
-  f97b67a773cd84b ("x86/decompressor: Only call the trampoline when changing paging levels")
-
-CR4 is no longer modified by the decompressor if no change in the number
-of paging levels is needed. Before that, CR4 would always be set to a
-consistent value with PGE cleared.
-
-So let's reinstate a simplified version of the original logic to put CR4
-into a known state, and preserve the PAE, MCE and LA57 bits, none of
-which can be modified freely at this point (PAE and LA57 cannot be
-changed while running in long mode, and MCE cannot be cleared when
-running under some hypervisors).
-
-This effectively clears PGE and works around the project Oak bug.
-
-Fixes: f97b67a773cd84b ("x86/decompressor: Only call the trampoline when ...")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Link: https://lore.kernel.org/r/20240410151354.506098-2-ardb+git@google.com
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: d98779e68772 ("gfs2: Fix potential glock use-after-free on unmount")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/boot/compressed/head_64.S | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/gfs2/bmap.c  |  4 ++--
+ fs/gfs2/dir.c   |  2 +-
+ fs/gfs2/inode.c |  2 +-
+ fs/gfs2/rgrp.c  | 12 +++++++-----
+ fs/gfs2/rgrp.h  |  2 +-
+ fs/gfs2/xattr.c |  6 +++---
+ 6 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/arch/x86/boot/compressed/head_64.S b/arch/x86/boot/compressed/head_64.S
-index 0d7aef10b19ad..6bc70385314cb 100644
---- a/arch/x86/boot/compressed/head_64.S
-+++ b/arch/x86/boot/compressed/head_64.S
-@@ -390,6 +390,11 @@ SYM_CODE_START(startup_64)
- 	call	sev_enable
- #endif
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index 2b578615607e4..7ed276a8f599d 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -106,7 +106,7 @@ static int __gfs2_unstuff_inode(struct gfs2_inode *ip, struct page *page)
+ 		   and write it out to disk */
  
-+	/* Preserve only the CR4 bits that must be preserved, and clear the rest */
-+	movq	%cr4, %rax
-+	andl	$(X86_CR4_PAE | X86_CR4_MCE | X86_CR4_LA57), %eax
-+	movq	%rax, %cr4
+ 		unsigned int n = 1;
+-		error = gfs2_alloc_blocks(ip, &block, &n, 0, NULL);
++		error = gfs2_alloc_blocks(ip, &block, &n, 0);
+ 		if (error)
+ 			goto out_brelse;
+ 		if (isdir) {
+@@ -702,7 +702,7 @@ static int __gfs2_iomap_alloc(struct inode *inode, struct iomap *iomap,
+ 	i = mp->mp_aheight;
+ 	do {
+ 		n = blks - alloced;
+-		ret = gfs2_alloc_blocks(ip, &bn, &n, 0, NULL);
++		ret = gfs2_alloc_blocks(ip, &bn, &n, 0);
+ 		if (ret)
+ 			goto out;
+ 		alloced += n;
+diff --git a/fs/gfs2/dir.c b/fs/gfs2/dir.c
+index 1a2afa88f8bea..3a2a10d6d43d1 100644
+--- a/fs/gfs2/dir.c
++++ b/fs/gfs2/dir.c
+@@ -868,7 +868,7 @@ static struct gfs2_leaf *new_leaf(struct inode *inode, struct buffer_head **pbh,
+ 	struct gfs2_dirent *dent;
+ 	struct timespec64 tv = current_time(inode);
+ 
+-	error = gfs2_alloc_blocks(ip, &bn, &n, 0, NULL);
++	error = gfs2_alloc_blocks(ip, &bn, &n, 0);
+ 	if (error)
+ 		return NULL;
+ 	bh = gfs2_meta_new(ip->i_gl, bn);
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 4e63fbb63151c..587e5bf885c1b 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -417,7 +417,7 @@ static int alloc_dinode(struct gfs2_inode *ip, u32 flags, unsigned *dblocks)
+ 	if (error)
+ 		goto out_ipreserv;
+ 
+-	error = gfs2_alloc_blocks(ip, &ip->i_no_addr, dblocks, 1, &ip->i_generation);
++	error = gfs2_alloc_blocks(ip, &ip->i_no_addr, dblocks, 1);
+ 	if (error)
+ 		goto out_trans_end;
+ 
+diff --git a/fs/gfs2/rgrp.c b/fs/gfs2/rgrp.c
+index 307b952a41f8f..396d0f4a259d5 100644
+--- a/fs/gfs2/rgrp.c
++++ b/fs/gfs2/rgrp.c
+@@ -2411,13 +2411,12 @@ static void gfs2_set_alloc_start(struct gfs2_rbm *rbm,
+  * @bn: Used to return the starting block number
+  * @nblocks: requested number of blocks/extent length (value/result)
+  * @dinode: 1 if we're allocating a dinode block, else 0
+- * @generation: the generation number of the inode
+  *
+  * Returns: 0 or error
+  */
+ 
+ int gfs2_alloc_blocks(struct gfs2_inode *ip, u64 *bn, unsigned int *nblocks,
+-		      bool dinode, u64 *generation)
++		      bool dinode)
+ {
+ 	struct gfs2_sbd *sdp = GFS2_SB(&ip->i_inode);
+ 	struct buffer_head *dibh;
+@@ -2477,10 +2476,13 @@ int gfs2_alloc_blocks(struct gfs2_inode *ip, u64 *bn, unsigned int *nblocks,
+ 	rbm.rgd->rd_free -= *nblocks;
+ 	spin_unlock(&rbm.rgd->rd_rsspin);
+ 	if (dinode) {
++		u64 generation;
 +
- 	/*
- 	 * configure_5level_paging() updates the number of paging levels using
- 	 * a trampoline in 32-bit addressable memory if the current number does
+ 		rbm.rgd->rd_dinodes++;
+-		*generation = rbm.rgd->rd_igeneration++;
+-		if (*generation == 0)
+-			*generation = rbm.rgd->rd_igeneration++;
++		generation = rbm.rgd->rd_igeneration++;
++		if (generation == 0)
++			generation = rbm.rgd->rd_igeneration++;
++		ip->i_generation = generation;
+ 	}
+ 
+ 	gfs2_trans_add_meta(rbm.rgd->rd_gl, rbm.rgd->rd_bits[0].bi_bh);
+diff --git a/fs/gfs2/rgrp.h b/fs/gfs2/rgrp.h
+index 00b30cf893af2..507c914f039b0 100644
+--- a/fs/gfs2/rgrp.h
++++ b/fs/gfs2/rgrp.h
+@@ -42,7 +42,7 @@ extern int gfs2_inplace_reserve(struct gfs2_inode *ip,
+ extern void gfs2_inplace_release(struct gfs2_inode *ip);
+ 
+ extern int gfs2_alloc_blocks(struct gfs2_inode *ip, u64 *bn, unsigned int *n,
+-			     bool dinode, u64 *generation);
++			     bool dinode);
+ 
+ extern void gfs2_rs_deltree(struct gfs2_blkreserv *rs);
+ extern void gfs2_rs_delete(struct gfs2_inode *ip);
+diff --git a/fs/gfs2/xattr.c b/fs/gfs2/xattr.c
+index 4fea70c0fe3d1..2117011c8c577 100644
+--- a/fs/gfs2/xattr.c
++++ b/fs/gfs2/xattr.c
+@@ -639,7 +639,7 @@ static int ea_alloc_blk(struct gfs2_inode *ip, struct buffer_head **bhp)
+ 	u64 block;
+ 	int error;
+ 
+-	error = gfs2_alloc_blocks(ip, &block, &n, 0, NULL);
++	error = gfs2_alloc_blocks(ip, &block, &n, 0);
+ 	if (error)
+ 		return error;
+ 	gfs2_trans_remove_revoke(sdp, block, 1);
+@@ -701,7 +701,7 @@ static int ea_write(struct gfs2_inode *ip, struct gfs2_ea_header *ea,
+ 			int mh_size = sizeof(struct gfs2_meta_header);
+ 			unsigned int n = 1;
+ 
+-			error = gfs2_alloc_blocks(ip, &block, &n, 0, NULL);
++			error = gfs2_alloc_blocks(ip, &block, &n, 0);
+ 			if (error)
+ 				return error;
+ 			gfs2_trans_remove_revoke(sdp, block, 1);
+@@ -1002,7 +1002,7 @@ static int ea_set_block(struct gfs2_inode *ip, struct gfs2_ea_request *er,
+ 	} else {
+ 		u64 blk;
+ 		unsigned int n = 1;
+-		error = gfs2_alloc_blocks(ip, &blk, &n, 0, NULL);
++		error = gfs2_alloc_blocks(ip, &blk, &n, 0);
+ 		if (error)
+ 			return error;
+ 		gfs2_trans_remove_revoke(sdp, blk, 1);
 -- 
 2.43.0
 
