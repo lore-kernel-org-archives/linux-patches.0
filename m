@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF07319CCEE;
-	Thu,  6 Jun 2024 14:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC8419CCE3;
+	Thu,  6 Jun 2024 14:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683421; cv=none; b=P9I/j5CsWr2tRiCq7eynmZ9qvyVNcdFbTzirwVu2k49mk3NO+XVMHFRRDWe+gQUQXuYuR8CEqsdi0Pjy5JFSgSjS6JzYoxMYOLRsh2V3lBAan/G/FfRDPrzSTBrlM/BOBgGTAFWZOYC5YoJJRBlXhWY0dOtfTBglc3Y0X3rg6cw=
+	t=1717683422; cv=none; b=pcW3Fpu8EJngeA9H9dujHhiYj1URPwJfTKoxeYnKUc3rbm6aHMZu5tLguLyIehDd21kgSjCtmCLH7ye4KzjxKQwPRiKvliRfgxwJO0Ze+IRhrfnwTInUFx25uvZQQE77W+MRnXez4g53B8PH/tm1kZbPOtiHEfbWXT8Y8AReK/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683421; c=relaxed/simple;
-	bh=ssHofhTWnlmdSd8nYId4DtXlHqEL3beq5nK43VkFPEs=;
+	s=arc-20240116; t=1717683422; c=relaxed/simple;
+	bh=+bkJF8xz6SUZ9/qXk69MqNMNdqPq3TRdxA3lFepzr4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1bLK0Kg+Vgd3ZfLeJgK2nsj2J0wAw1+BqY4wToa5Pd7arjgC/V/G8nheVRFZv1YbN6uTLsOMnzTgu2WhdqooWhD8EscbqLbIGkJFNHa5/KVwj1pbxXLnADcjDT9uoamu/pyKDQgcxX5vrmAyUOL715jNtScb2mE6RLbxl22hIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbHdW9DN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jatzej3SmR60mAWMADEXtROBsynk3gxcDhIfhRmVzm+EOj82mexjv2fZJcBLkhNGD9ilY6GSVXklBd3yi1C07+M81UIAzqZRAiFdbzDlNaRXr9eSwQW83k4LsGaV26P8ZlADInJHQY/TH8aqatMFk1o+V5oxNuDQM6Q/br2D3WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osdsy9Dz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbHdW9DN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD26C2BD10;
-	Thu,  6 Jun 2024 14:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osdsy9Dz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F023C2BD10;
+	Thu,  6 Jun 2024 14:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683421;
-	bh=ssHofhTWnlmdSd8nYId4DtXlHqEL3beq5nK43VkFPEs=;
+	s=korg; t=1717683422;
+	bh=+bkJF8xz6SUZ9/qXk69MqNMNdqPq3TRdxA3lFepzr4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbHdW9DNKKqwOmttT254onzVAM/PyWWW+kEzTop+wgu7yZj5NbdQb6vzOABtN3YU1
-	 H0XmH82HoUydFyu7runO+ssBDufKQVxcEM8vTRI+ZjBO+Z7c6T1Q5oUNQruWHQk3R3
-	 lCozCnQ9r+01uPXq0Fwh5ORY0BM2RJiTqs6Cg2qo=
+	b=osdsy9DzJDz1by3zLnBfg5pQA1dURyG2QNMCkH2NUObI16E2gXQGQ26g3XMgN1ktK
+	 obkphyC+PI3E6pFN8kQ+PPprAuCGJOTqm2DFq1V17syzutbRWDPRzM2gk+oUP1VXYT
+	 995NJv1xCuitoYyUDKXBxtpNZe0OtSb0XhouLeOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Neil Horman <nhorman@tuxdriver.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Devinder Khroad <dkhroad@logitech.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 275/473] af_packet: do not call packet_read_pending() from tpacket_destruct_skb()
-Date: Thu,  6 Jun 2024 16:03:24 +0200
-Message-ID: <20240606131709.008967431@linuxfoundation.org>
+Subject: [PATCH 6.6 330/744] media: uvcvideo: Add quirk for Logitech Rally Bar
+Date: Thu,  6 Jun 2024 16:00:02 +0200
+Message-ID: <20240606131743.024096592@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,50 +49,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 581073f626e387d3e7eed55c48c8495584ead7ba ]
+[ Upstream commit 07731053d11f7647d5d8bc23caac997a4d562dfe ]
 
-trafgen performance considerably sank on hosts with many cores
-after the blamed commit.
+Logitech Rally Bar devices, despite behaving as UVC cameras, have a
+different power management system that the other cameras from Logitech.
 
-packet_read_pending() is very expensive, and calling it
-in af_packet fast path defeats Daniel intent in commit
-b013840810c2 ("packet: use percpu mmap tx frame pending refcount")
+USB_QUIRK_RESET_RESUME is applied to all the UVC cameras from Logitech
+at the usb core. Unfortunately, USB_QUIRK_RESET_RESUME causes undesired
+USB disconnects in the Rally Bar that make them completely unusable.
 
-tpacket_destruct_skb() makes room for one packet, we can immediately
-wakeup a producer, no need to completely drain the tx ring.
+There is an open discussion about if we should fix this in the core or
+add a quirk in the UVC driver. In order to enable this hardware, let's
+land this patch first, and we can revert it later if there is a
+different conclusion.
 
-Fixes: 89ed5b519004 ("af_packet: Block execution of tasks waiting for transmit to complete in AF_PACKET")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Neil Horman <nhorman@tuxdriver.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20240515163358.4105915-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e387ef5c47dd ("usb: Add USB_QUIRK_RESET_RESUME for all Logitech UVC webcams")
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Devinder Khroad <dkhroad@logitech.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20240404-rallybar-v6-1-6d67bb6b69af@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 31 ++++++++++++++++++++++++++++++
+ drivers/media/usb/uvc/uvcvideo.h   |  1 +
+ 2 files changed, 32 insertions(+)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 7188ca8d84693..8888c09931ce3 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2528,8 +2528,7 @@ static void tpacket_destruct_skb(struct sk_buff *skb)
- 		ts = __packet_set_timestamp(po, ph, skb);
- 		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
- 
--		if (!packet_read_pending(&po->tx_ring))
--			complete(&po->skb_completion);
-+		complete(&po->skb_completion);
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index bbd90123a4e76..91a41aa3ced24 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -14,6 +14,7 @@
+ #include <linux/module.h>
+ #include <linux/slab.h>
+ #include <linux/usb.h>
++#include <linux/usb/quirks.h>
+ #include <linux/usb/uvc.h>
+ #include <linux/videodev2.h>
+ #include <linux/vmalloc.h>
+@@ -2232,6 +2233,9 @@ static int uvc_probe(struct usb_interface *intf,
+ 		goto error;
  	}
  
- 	sock_wfree(skb);
++	if (dev->quirks & UVC_QUIRK_NO_RESET_RESUME)
++		udev->quirks &= ~USB_QUIRK_RESET_RESUME;
++
+ 	uvc_dbg(dev, PROBE, "UVC device initialized\n");
+ 	usb_enable_autosuspend(udev);
+ 	return 0;
+@@ -2574,6 +2578,33 @@ static const struct usb_device_id uvc_ids[] = {
+ 	  .bInterfaceSubClass	= 1,
+ 	  .bInterfaceProtocol	= 0,
+ 	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_RESTORE_CTRLS_ON_INIT) },
++	/* Logitech Rally Bar Huddle */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x046d,
++	  .idProduct		= 0x087c,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
++	/* Logitech Rally Bar */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x046d,
++	  .idProduct		= 0x089b,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
++	/* Logitech Rally Bar Mini */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x046d,
++	  .idProduct		= 0x08d3,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_NO_RESET_RESUME) },
+ 	/* Chicony CNF7129 (Asus EEE 100HE) */
+ 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
+ 				| USB_DEVICE_ID_MATCH_INT_INFO,
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index 6fb0a78b1b009..88218693f6f0b 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -73,6 +73,7 @@
+ #define UVC_QUIRK_FORCE_Y8		0x00000800
+ #define UVC_QUIRK_FORCE_BPP		0x00001000
+ #define UVC_QUIRK_WAKE_AUTOSUSPEND	0x00002000
++#define UVC_QUIRK_NO_RESET_RESUME	0x00004000
+ 
+ /* Format flags */
+ #define UVC_FMT_FLAG_COMPRESSED		0x00000001
 -- 
 2.43.0
 
