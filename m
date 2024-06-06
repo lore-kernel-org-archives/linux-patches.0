@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8844198A39;
-	Thu,  6 Jun 2024 14:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45F8198A3E;
+	Thu,  6 Jun 2024 14:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683068; cv=none; b=b/y5Ln+hyn4hOgoA41RipK5o4EDqs9CfMcX3nNQ4g2Z3D/Bzh6EaQaaJVUYgTsxYlYnzEdikl4p2dZHlXdDKuWEpFpI9GBq3V3hNVl5Y3b6oePKO7LCwH31A3RRs06Eiok/qIOOdzshUlaBiZcqhjcidIxk3GHEoCuT9cvXwzg0=
+	t=1717683069; cv=none; b=IaKCkXsu1O/lxg5Lx0OunPFfDqEECaghLDwiOebsawNnKA92RT4RsVbe1wOc1X50I7RknxjBEjUCyzAumXVQLYiHWhSlgCouyNYDjSW/6EWTm1iwQfZScv0mdL5MPhzYnMcpdtxLt01imtQKN7MMg8eIt5n9ps2DdsdcCZfBtoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683068; c=relaxed/simple;
-	bh=0BLPlyD9iKo2iVCtCvEBRcTgzakcx/qC8zcw7p9SoXE=;
+	s=arc-20240116; t=1717683069; c=relaxed/simple;
+	bh=u5V+qhNRmjFd9yppbwZG23NcgZxm+D6knPhN3XGGqtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mXDHT/XavU2G06Lmmr8euGi1P4yRWML6X5PVsmotS0nS/FGV/CYM+etcxYJJQUJssM5QNEl/etmZ4PQQroZSiccAxgGPMqnTUJ/H1np3EuoemvDvGB/azZLqm4Iw12TP0fqjDIcrE83dCK2VzsG+BVEU9uDLkBDE//Lez9hud/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1wWnGP1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NgOxq7zE33Ye0HpmFpSQkY9XmR7dzFNlfmNeSa1PpxQwcxyN24EGjqgyh/L7njCsk9CgXITB5P8AmMbtIjzXfr8+3rhkbeaSrLPzfAcEKGV3cW7daBrVe3OQWxncOlmFgh+Gf4zyzngY7xLsqALlutuN13hSh5unepoFN+oWDZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdTB/RG0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1wWnGP1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDC9C32781;
-	Thu,  6 Jun 2024 14:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdTB/RG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A428FC4AF0C;
+	Thu,  6 Jun 2024 14:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683068;
-	bh=0BLPlyD9iKo2iVCtCvEBRcTgzakcx/qC8zcw7p9SoXE=;
+	s=korg; t=1717683069;
+	bh=u5V+qhNRmjFd9yppbwZG23NcgZxm+D6knPhN3XGGqtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1wWnGP1tz7vuI7jcPIFsy2C6Lcv8tCihv6/kdPJREWkZVHFRNc7bF+ysmGP4PdIN
-	 EbtZ4E5Gfo14smYMHbEXpcmnvLqFUM6h++qoQioZ9iIyuBb2kwwuUPv5DEaXxxUjl4
-	 aEpkE9J9+uDkfhqrj9+z7TE99MGteV2lDD5BDB/I=
+	b=sdTB/RG0cBcoE5nFKPBU2cn/6jFyAjeMhc1J8guSro00KXGOlMwXEwB0X/I0IeRb2
+	 2eYukr4yg0JE890MrRnD4KLItCUAUys5+gEnnMnUqFAcHwZxGSx1GTJUoFZloFVFtz
+	 iSq9S+8lWkmquw3Px724ztSB/tCZWEjimpBlDxSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 328/374] drm/xe: Change pcode timeout to 50msec while polling again
-Date: Thu,  6 Jun 2024 16:05:07 +0200
-Message-ID: <20240606131702.849269900@linuxfoundation.org>
+Subject: [PATCH 6.9 330/374] ALSA: seq: Fix missing bank setup between MIDI1/MIDI2 UMP conversion
+Date: Thu,  6 Jun 2024 16:05:09 +0200
+Message-ID: <20240606131702.915312492@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -47,54 +44,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 77b79df0268bee3ef38fd5e76e86a076ce02995d ]
+[ Upstream commit 8a42886cae307663f3f999846926bd6e64392000 ]
 
-Polling is initially attempted with timeout_base_ms enabled for
-preemption, and if it exceeds this timeframe, another attempt is made
-without preemption, allowing an additional 50 ms before timing out.
+When a UMP packet is converted between MIDI1 and MIDI2 protocols, the
+bank selection may be lost.  The conversion from MIDI1 to MIDI2 needs
+the encoding of the bank into UMP_MSG_STATUS_PROGRAM bits, while the
+conversion from MIDI2 to MIDI1 needs the extraction from that
+instead.
 
-v2
-- Rebase
+This patch implements the missing bank selection mechanism in those
+conversions.
 
-v3
-- Move warnings to separate patch (Lucas)
-
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Fixes: 7dc9b92dcfef ("drm/xe: Remove i915_utils dependency from xe_pcode.")
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240508152216.3263109-2-himal.prasad.ghimiray@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit c81858eb52266b3d6ba28ca4f62a198231a10cdc)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
+Link: https://lore.kernel.org/r/20240527151852.29036-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pcode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/seq/seq_ump_convert.c | 38 ++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_pcode.c b/drivers/gpu/drm/xe/xe_pcode.c
-index c674c87c7f40b..81f4ae2ea08f3 100644
---- a/drivers/gpu/drm/xe/xe_pcode.c
-+++ b/drivers/gpu/drm/xe/xe_pcode.c
-@@ -191,7 +191,7 @@ int xe_pcode_request(struct xe_gt *gt, u32 mbox, u32 request,
- 	drm_WARN_ON_ONCE(&gt_to_xe(gt)->drm, timeout_base_ms > 1);
- 	preempt_disable();
- 	ret = pcode_try_request(gt, mbox, request, reply_mask, reply, &status,
--				true, timeout_base_ms * 1000, true);
-+				true, 50 * 1000, true);
- 	preempt_enable();
+diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
+index ee6ac649df836..c21be87f5da9e 100644
+--- a/sound/core/seq/seq_ump_convert.c
++++ b/sound/core/seq/seq_ump_convert.c
+@@ -368,6 +368,7 @@ static int cvt_ump_midi1_to_midi2(struct snd_seq_client *dest,
+ 	struct snd_seq_ump_event ev_cvt;
+ 	const union snd_ump_midi1_msg *midi1 = (const union snd_ump_midi1_msg *)event->ump;
+ 	union snd_ump_midi2_msg *midi2 = (union snd_ump_midi2_msg *)ev_cvt.ump;
++	struct snd_seq_ump_midi2_bank *cc;
  
- out:
+ 	ev_cvt = *event;
+ 	memset(&ev_cvt.ump, 0, sizeof(ev_cvt.ump));
+@@ -387,11 +388,29 @@ static int cvt_ump_midi1_to_midi2(struct snd_seq_client *dest,
+ 		midi2->paf.data = upscale_7_to_32bit(midi1->paf.data);
+ 		break;
+ 	case UMP_MSG_STATUS_CC:
++		cc = &dest_port->midi2_bank[midi1->note.channel];
++		switch (midi1->cc.index) {
++		case UMP_CC_BANK_SELECT:
++			cc->bank_set = 1;
++			cc->cc_bank_msb = midi1->cc.data;
++			return 0; // skip
++		case UMP_CC_BANK_SELECT_LSB:
++			cc->bank_set = 1;
++			cc->cc_bank_lsb = midi1->cc.data;
++			return 0; // skip
++		}
+ 		midi2->cc.index = midi1->cc.index;
+ 		midi2->cc.data = upscale_7_to_32bit(midi1->cc.data);
+ 		break;
+ 	case UMP_MSG_STATUS_PROGRAM:
+ 		midi2->pg.program = midi1->pg.program;
++		cc = &dest_port->midi2_bank[midi1->note.channel];
++		if (cc->bank_set) {
++			midi2->pg.bank_valid = 1;
++			midi2->pg.bank_msb = cc->cc_bank_msb;
++			midi2->pg.bank_lsb = cc->cc_bank_lsb;
++			cc->bank_set = 0;
++		}
+ 		break;
+ 	case UMP_MSG_STATUS_CHANNEL_PRESSURE:
+ 		midi2->caf.data = upscale_7_to_32bit(midi1->caf.data);
+@@ -419,6 +438,7 @@ static int cvt_ump_midi2_to_midi1(struct snd_seq_client *dest,
+ 	struct snd_seq_ump_event ev_cvt;
+ 	union snd_ump_midi1_msg *midi1 = (union snd_ump_midi1_msg *)ev_cvt.ump;
+ 	const union snd_ump_midi2_msg *midi2 = (const union snd_ump_midi2_msg *)event->ump;
++	int err;
+ 	u16 v;
+ 
+ 	ev_cvt = *event;
+@@ -443,6 +463,24 @@ static int cvt_ump_midi2_to_midi1(struct snd_seq_client *dest,
+ 		midi1->cc.data = downscale_32_to_7bit(midi2->cc.data);
+ 		break;
+ 	case UMP_MSG_STATUS_PROGRAM:
++		if (midi2->pg.bank_valid) {
++			midi1->cc.status = UMP_MSG_STATUS_CC;
++			midi1->cc.index = UMP_CC_BANK_SELECT;
++			midi1->cc.data = midi2->pg.bank_msb;
++			err = __snd_seq_deliver_single_event(dest, dest_port,
++							     (struct snd_seq_event *)&ev_cvt,
++							     atomic, hop);
++			if (err < 0)
++				return err;
++			midi1->cc.index = UMP_CC_BANK_SELECT_LSB;
++			midi1->cc.data = midi2->pg.bank_lsb;
++			err = __snd_seq_deliver_single_event(dest, dest_port,
++							     (struct snd_seq_event *)&ev_cvt,
++							     atomic, hop);
++			if (err < 0)
++				return err;
++			midi1->note.status = midi2->note.status;
++		}
+ 		midi1->pg.program = midi2->pg.program;
+ 		break;
+ 	case UMP_MSG_STATUS_CHANNEL_PRESSURE:
 -- 
 2.43.0
 
