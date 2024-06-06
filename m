@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446FC196C9F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8723196C9F;
 	Thu,  6 Jun 2024 14:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682977; cv=none; b=UtdNrzTjUiFCDK11+DtFFxsd8uAa+ejb/oFpLc4iDOXpxmNy2Lq3bMScm0lOuUb8BlysMLTOOIjdVFKOhXwLfnb+mfBpeuSQNFQ9wKfyRwYB/4QN1KFFRWVpcMjbB2UPTK4ppQFXP8JY9KAMiRRT6U809R6ByXEunQUHv0cT7ec=
+	t=1717682977; cv=none; b=amr0Sq8rrdyAi12G+whzY+kweWuJdKVzI/lT3gOpRG/UYxSWMi/EbH9tahlj9XhvHqx9+SWxpIbiBVLyTNYG2L89Y+RjhltmquvmfogwTtXn6ktHkWrPV41Y5M3gDHv8V7eycYb2UVh6f/42FJinrwTcVm0YBiVre6scn3krQLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682977; c=relaxed/simple;
-	bh=ZekKCP6fxZKaX1JhZeO2DsDGQ0EInZBUD/dUnNNPIa8=;
+	bh=R+FWY2vJjHuQ2xTaROQDiQgk1lcEzcOAxAYoaoKrEZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0r5PirL74ThG03hYLtrSxWlecpRcOc4jZQFfHBc9pAf8z8zEvdrCzYbW0JlTWdaYVyKODMHzYWD/GA/QuxaOcVMvZDPwY4Mp39nRAxmVBda7vKuvDjzlTnS66SYy6C2Z4a6YKMn8Kj9Qcr7iECwyIZz2Og7PFY5C2EJmVNsKgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9r71Og+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QyaI1/NT+oQjHPubgUCBigfU93qodbJKaCasDBLfxicOch+pwlzdtHUnaVIQ1EmTimcycMN6sbFApInsHsyzxPAEV8sBeHlfuSiw0VyyATy7mt3mVarVdWVJ+YK8nYKUuUNaLn1+uN4QMHzpLSHEA6Wprkkl0A29dzbzy0j2Fkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBbjgmfI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9r71Og+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AD3C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBbjgmfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BA9C2BD10;
 	Thu,  6 Jun 2024 14:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682977;
-	bh=ZekKCP6fxZKaX1JhZeO2DsDGQ0EInZBUD/dUnNNPIa8=;
+	bh=R+FWY2vJjHuQ2xTaROQDiQgk1lcEzcOAxAYoaoKrEZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9r71Og+/7QHWjGhTFJrMNu54QiIaXLMQ7Nj8/RYhlk/DEjeg4zK5g2WTDCFjqsKF
-	 4fSHgKccdHYlmcX5tP24BwNHmNeCeIFdJ9fssPU/yG7vjpqLdrBJARQGd/EaFH4t8g
-	 5hl5B1BfVXoWlgw9wq+/YWFvmu0LnndbvY0kzsq0=
+	b=cBbjgmfIDPYR7qWI9mP1ZQQUWFIBcwFJJ3aEH9JFv8/inrN1nmL5hCMgCklprsFzI
+	 zBLHre54SuOP/Z1DaJfnsU82VW0BSL04fTNsJk9G7jm4+gfuTf+VGQcsa7Zsw8ar/K
+	 isJPHD0q/+gNWfzMbjS3M4+uAlBCcQqucmihF+xY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Hartmayer <mhartmay@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Fenglin Wu <quic_fenglinw@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 138/374] s390/ap: Fix bind complete udev event sent after each AP bus scan
-Date: Thu,  6 Jun 2024 16:01:57 +0200
-Message-ID: <20240606131656.524434054@linuxfoundation.org>
+Subject: [PATCH 6.9 156/374] Input: pm8xxx-vibrator - correct VIB_MAX_LEVELS calculation
+Date: Thu,  6 Jun 2024 16:02:15 +0200
+Message-ID: <20240606131657.142112821@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,57 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Fenglin Wu <quic_fenglinw@quicinc.com>
 
-[ Upstream commit 306d6bda8f97432f9cb69b5cbd86afd3a8ca182f ]
+[ Upstream commit 48c0687a322d54ac7e7a685c0b6db78d78f593af ]
 
-With the mentioned commit (see the fixes tag) on every AP bus scan an
-uevent "AP bus change bindings complete" is emitted.  Furthermore if an AP
-device switched from one driver to another, for example by manipulating the
-apmask, there was never a "bindings complete" uevent generated.
+The output voltage is inclusive hence the max level calculation is
+off-by-one-step. Correct it.
 
-The "bindings complete" event should be sent once when all AP devices have
-been bound to device drivers and again if unbind/bind actions take place
-and finally all AP devices are bound again. Therefore implement this.
+iWhile we are at it also add a define for the step size instead of
+using the magic value.
 
-Fixes: 778412ab915d ("s390/ap: rearm APQNs bindings complete completion")
-Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 11205bb63e5c ("Input: add support for pm8xxx based vibrator driver")
+Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240412-pm8xxx-vibrator-new-design-v10-1-0ec0ad133866@quicinc.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/ap_bus.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/input/misc/pm8xxx-vibrator.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/s390/crypto/ap_bus.c b/drivers/s390/crypto/ap_bus.c
-index cce0bafd4c926..f13837907bd5e 100644
---- a/drivers/s390/crypto/ap_bus.c
-+++ b/drivers/s390/crypto/ap_bus.c
-@@ -767,9 +767,9 @@ static void ap_check_bindings_complete(void)
- 		if (bound == apqns) {
- 			if (!completion_done(&ap_apqn_bindings_complete)) {
- 				complete_all(&ap_apqn_bindings_complete);
-+				ap_send_bindings_complete_uevent();
- 				pr_debug("%s all apqn bindings complete\n", __func__);
- 			}
--			ap_send_bindings_complete_uevent();
- 		}
- 	}
- }
-@@ -929,6 +929,12 @@ static int ap_device_probe(struct device *dev)
- 			goto out;
+diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
+index 5c288fe7accf1..79f478d3a9b37 100644
+--- a/drivers/input/misc/pm8xxx-vibrator.c
++++ b/drivers/input/misc/pm8xxx-vibrator.c
+@@ -13,7 +13,8 @@
+ 
+ #define VIB_MAX_LEVEL_mV	(3100)
+ #define VIB_MIN_LEVEL_mV	(1200)
+-#define VIB_MAX_LEVELS		(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV)
++#define VIB_PER_STEP_mV		(100)
++#define VIB_MAX_LEVELS		(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV + VIB_PER_STEP_mV)
+ 
+ #define MAX_FF_SPEED		0xff
+ 
+@@ -117,10 +118,10 @@ static void pm8xxx_work_handler(struct work_struct *work)
+ 		vib->active = true;
+ 		vib->level = ((VIB_MAX_LEVELS * vib->speed) / MAX_FF_SPEED) +
+ 						VIB_MIN_LEVEL_mV;
+-		vib->level /= 100;
++		vib->level /= VIB_PER_STEP_mV;
+ 	} else {
+ 		vib->active = false;
+-		vib->level = VIB_MIN_LEVEL_mV / 100;
++		vib->level = VIB_MIN_LEVEL_mV / VIB_PER_STEP_mV;
  	}
  
-+	/*
-+	 * Rearm the bindings complete completion to trigger
-+	 * bindings complete when all devices are bound again
-+	 */
-+	reinit_completion(&ap_apqn_bindings_complete);
-+
- 	/* Add queue/card to list of active queues/cards */
- 	spin_lock_bh(&ap_queues_lock);
- 	if (is_queue_dev(dev))
+ 	pm8xxx_vib_set(vib, vib->active);
 -- 
 2.43.0
 
