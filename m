@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2F11AED59;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85568196DB4;
 	Thu,  6 Jun 2024 14:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683349; cv=none; b=bOx3ZyfYJqdHVgXHy0nk+B6+xxPD9CCxEpKhESGJMGCrMkV+Hr2sE2Bp/r7N5WtVdbQZ/vNOBKt0Q0uVB5gkVYQZVEwwzt4UEI2wO13QjwQthcOiLpfu+U9Xj8REv9bF1WT+L5iVZ1b8hnGKIxputoLwXkXwVuUgNbd+9hdGGK8=
+	t=1717683349; cv=none; b=ktEITAZ+fuojeLPw4UCbp4rIL+4XLn6sTqMgczzPkwobmRzYedBMOY/EXgIbxRdaTyY3RGSNqMbuAyihd2rzC5Fz41ul5CegE8qIj6KqxPpDiMVUNG04L25+jBPmM7gMMZUllmJJwGm/48nWwbHnE8rSs26Av3lKXj6zvTBA670=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683349; c=relaxed/simple;
-	bh=RNdudmMnY8fynujVygAgkp1M/SBZb2/GyB5yNMUPo6g=;
+	bh=CPgqF1YYrJANJfVyKEfUHj6XIxf/KBI98jQysTbZNyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AsOjyfn96yCDcmL4N6dDpSaAkNEBpKkjTKvklkBEnN2JBIasO5+53RAlI3FS09XcZXhAra1bmh1+xHu18O/AcOuX8VqH6V2nZ1iv/gIzI54aIKQWFTe47AAh9RScfepD+8nZiZMYILS9aA7O+oRHSZyKbQGpohGXyMHNJfu7KGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKlY70NY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nI5vjzdfK9HVo46eOeYJ6/wBTNLRUFMPg5tMT3VK40cJOSgtE6MRrcrTn+EWF/pv9dL1DQoZdzZjPh50Il8yat1bidrr1BI4NGdnSK/xq3T3Mov7zW5IqE+FZwWfF+yp0vV12QiOCn0gi2qQ6lpbaZOd/VvKbQ77cI2NEZ47hLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VF9RuiHV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKlY70NY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6321C2BD10;
-	Thu,  6 Jun 2024 14:15:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VF9RuiHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EFFC2BD10;
+	Thu,  6 Jun 2024 14:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683349;
-	bh=RNdudmMnY8fynujVygAgkp1M/SBZb2/GyB5yNMUPo6g=;
+	bh=CPgqF1YYrJANJfVyKEfUHj6XIxf/KBI98jQysTbZNyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tKlY70NYlFStv648zLfeQ+siruAT18wSIQSYzaunTiylB+C4JB0DJ11/Bh//YtW+J
-	 mDhE6BDAnmbU5ajjFU5BAgqKkjLTL+NeEYf1k0HVIg0GnUUZJ3RBPSNl8GMdR24nFR
-	 O7icGzJdnaOgEM6sID65po90rvhDQll7UUnX+unc=
+	b=VF9RuiHVsD1mDABGpYt3iTNeBu+ITmVVTmFXNt+nI2/M8QkYC17tgJSwcSvr7NDJk
+	 KPf4VVygwZzZ/p9WXcPnlw2b2b+qJJ/jMV8SIMm7VrdYnQh/oPq/EOxsCABGlZruGP
+	 Rb+Fn9ZgwXK+f5b8V2DwjttKCu8J5KTXOlHx6aAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Arun T <arun.t@intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 230/473] drm/bridge: dpc3433: Dont log an error when DSI host cant be found
-Date: Thu,  6 Jun 2024 16:02:39 +0200
-Message-ID: <20240606131707.461343334@linuxfoundation.org>
+Subject: [PATCH 6.6 290/744] ASoC: Intel: common: add ACPI matching tables for Arrow Lake
+Date: Thu,  6 Jun 2024 15:59:22 +0200
+Message-ID: <20240606131741.705555319@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,82 +49,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Arun T <arun.t@intel.com>
 
-[ Upstream commit 24f4f575214de776539d346b99b8717bffa8ebba ]
+[ Upstream commit 24af0d7c0f9f49a243b77e607e3f4a4737386b59 ]
 
-Given that failing to find a DSI host causes the driver to defer probe,
-make use of dev_err_probe() to log the reason. This makes the defer
-probe reason available and avoids alerting userspace about something
-that is not necessarily an error.
+Initial support for ARL w/ RT711
 
-Also move the "failed to attach" error message so that it's only printed
-when the devm_mipi_dsi_attach() call fails.
-
-Fixes: 6352cd451ddb ("drm: bridge: Add TI DLPC3433 DSI to DMD bridge")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-7-619a28148e5c@collabora.com
+Signed-off-by: Arun T <arun.t@intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20230915080635.1619942-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 1f1b820dc3c6 ("ASoC: SOF: Intel: mtl: Correct rom_status_reg")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-dlpc3433.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ include/sound/soc-acpi-intel-match.h          |  2 +
+ sound/soc/intel/common/Makefile               |  1 +
+ .../intel/common/soc-acpi-intel-arl-match.c   | 51 +++++++++++++++++++
+ 3 files changed, 54 insertions(+)
+ create mode 100644 sound/soc/intel/common/soc-acpi-intel-arl-match.c
 
-diff --git a/drivers/gpu/drm/bridge/ti-dlpc3433.c b/drivers/gpu/drm/bridge/ti-dlpc3433.c
-index 186a9e2ff24dc..d1684e66d9e3d 100644
---- a/drivers/gpu/drm/bridge/ti-dlpc3433.c
-+++ b/drivers/gpu/drm/bridge/ti-dlpc3433.c
-@@ -319,12 +319,11 @@ static int dlpc_host_attach(struct dlpc *dlpc)
- 		.channel = 0,
- 		.node = NULL,
- 	};
-+	int ret;
+diff --git a/include/sound/soc-acpi-intel-match.h b/include/sound/soc-acpi-intel-match.h
+index e49b97d9e3ff2..845e7608ac375 100644
+--- a/include/sound/soc-acpi-intel-match.h
++++ b/include/sound/soc-acpi-intel-match.h
+@@ -32,6 +32,7 @@ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_lnl_machines[];
++extern struct snd_soc_acpi_mach snd_soc_acpi_intel_arl_machines[];
  
- 	host = of_find_mipi_dsi_host_by_node(dlpc->host_node);
--	if (!host) {
--		DRM_DEV_ERROR(dev, "failed to find dsi host\n");
--		return -EPROBE_DEFER;
--	}
-+	if (!host)
-+		return dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n");
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_cnl_sdw_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_cfl_sdw_machines[];
+@@ -42,6 +43,7 @@ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_sdw_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_rpl_sdw_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_mtl_sdw_machines[];
+ extern struct snd_soc_acpi_mach snd_soc_acpi_intel_lnl_sdw_machines[];
++extern struct snd_soc_acpi_mach snd_soc_acpi_intel_arl_sdw_machines[];
  
- 	dlpc->dsi = mipi_dsi_device_register_full(host, &info);
- 	if (IS_ERR(dlpc->dsi)) {
-@@ -336,7 +335,11 @@ static int dlpc_host_attach(struct dlpc *dlpc)
- 	dlpc->dsi->format = MIPI_DSI_FMT_RGB565;
- 	dlpc->dsi->lanes = dlpc->dsi_lanes;
- 
--	return devm_mipi_dsi_attach(dev, dlpc->dsi);
-+	ret = devm_mipi_dsi_attach(dev, dlpc->dsi);
-+	if (ret)
-+		DRM_DEV_ERROR(dev, "failed to attach dsi host\n");
+ /*
+  * generic table used for HDA codec-based platforms, possibly with
+diff --git a/sound/soc/intel/common/Makefile b/sound/soc/intel/common/Makefile
+index 07aa37dd90e99..f7370e5b4e9e4 100644
+--- a/sound/soc/intel/common/Makefile
++++ b/sound/soc/intel/common/Makefile
+@@ -10,6 +10,7 @@ snd-soc-acpi-intel-match-objs := soc-acpi-intel-byt-match.o soc-acpi-intel-cht-m
+ 	soc-acpi-intel-tgl-match.o soc-acpi-intel-ehl-match.o \
+ 	soc-acpi-intel-jsl-match.o soc-acpi-intel-adl-match.o \
+ 	soc-acpi-intel-rpl-match.o soc-acpi-intel-mtl-match.o \
++	soc-acpi-intel-arl-match.o \
+ 	soc-acpi-intel-lnl-match.o \
+ 	soc-acpi-intel-hda-match.o \
+ 	soc-acpi-intel-sdw-mockup-match.o
+diff --git a/sound/soc/intel/common/soc-acpi-intel-arl-match.c b/sound/soc/intel/common/soc-acpi-intel-arl-match.c
+new file mode 100644
+index 0000000000000..e52797aae6e65
+--- /dev/null
++++ b/sound/soc/intel/common/soc-acpi-intel-arl-match.c
+@@ -0,0 +1,51 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * soc-apci-intel-arl-match.c - tables and support for ARL ACPI enumeration.
++ *
++ * Copyright (c) 2023 Intel Corporation.
++ */
 +
-+	return ret;
- }
- 
- static int dlpc3433_probe(struct i2c_client *client)
-@@ -367,10 +370,8 @@ static int dlpc3433_probe(struct i2c_client *client)
- 	drm_bridge_add(&dlpc->bridge);
- 
- 	ret = dlpc_host_attach(dlpc);
--	if (ret) {
--		DRM_DEV_ERROR(dev, "failed to attach dsi host\n");
-+	if (ret)
- 		goto err_remove_bridge;
--	}
- 
- 	return 0;
- 
++#include <sound/soc-acpi.h>
++#include <sound/soc-acpi-intel-match.h>
++
++static const struct snd_soc_acpi_endpoint single_endpoint = {
++	.num = 0,
++	.aggregated = 0,
++	.group_position = 0,
++	.group_id = 0,
++};
++
++static const struct snd_soc_acpi_adr_device rt711_0_adr[] = {
++	{
++		.adr = 0x000020025D071100ull,
++		.num_endpoints = 1,
++		.endpoints = &single_endpoint,
++		.name_prefix = "rt711"
++	}
++};
++
++static const struct snd_soc_acpi_link_adr arl_rvp[] = {
++	{
++		.mask = BIT(0),
++		.num_adr = ARRAY_SIZE(rt711_0_adr),
++		.adr_d = rt711_0_adr,
++	},
++	{}
++};
++
++struct snd_soc_acpi_mach snd_soc_acpi_intel_arl_machines[] = {
++	{},
++};
++EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_arl_machines);
++
++/* this table is used when there is no I2S codec present */
++struct snd_soc_acpi_mach snd_soc_acpi_intel_arl_sdw_machines[] = {
++	{
++		.link_mask = 0x1, /* link0 required */
++		.links = arl_rvp,
++		.drv_name = "sof_sdw",
++		.sof_tplg_filename = "sof-arl-rt711.tplg",
++	},
++	{},
++};
++EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_arl_sdw_machines);
 -- 
 2.43.0
 
