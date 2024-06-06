@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E9E19B3C7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D34D195FC4;
 	Thu,  6 Jun 2024 14:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683054; cv=none; b=A3BTlguLa/uNHhkKNu+UgKaDdZ6bfxGEVcgIHoGfBXP8Iqobmv+VvitrMnAM8ngY5KJirImFeQ8L55WYIcX7YI+Q+2oUuW7wghLVeiGi7qbfuUy1KuL3tb1xZBMjhE/RR8enPIFBjwfC5MxiZF139Gu2c7DsXFOyuRizfZ1O6EM=
+	t=1717683054; cv=none; b=rVtrc06eP3u0Z5qu+TTX+FZG/Rwg/FsMKWiBSqpci58T2bYHQXPY4IBo3fxo6Wmj3F5pqjDhFyAy8aohGWwpDJL3TWZ2Uj/gljKqwmg+XTvRXx2uNyOPL6HNChELv9MV3RoBWj9UOx/TuPtd6fOrPsdiUyJufB2L82ft8GuC3d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683054; c=relaxed/simple;
-	bh=YLFFq32AxL9oTWGPrAtChmBeDBxB5Ik70MdqWYoAUPI=;
+	bh=Zpy2OH7VQD86m/l32Yq1KVZvnMuAY0JY6Ym6whEzLjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4IZBzlq/yIvjJuJ4Qk3AIPAteH/KVZxuA+l9LoB1zmGYfnXK3V3IXT9uEdyXdY7GwKNshoQHIv4JgOI81XrQl6QI1pRt0UNhC+iGybREunxIO8m5FpdNOVWynmomfyM6dnmzeXljuCzvS1zB8m2SY0mZMgMBxPzAOqM+Vo4nx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKsmBbSZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NrDucVYVY+nHClqMyuhYZuEQKDllIZP9LdCnwHZt0LTdbJZsHHEsxq7o6Nvd1Km5eIlo3lmMHTJ6eUQcQAf6Wm9foJXGnTsbpTCAgWIilAYlcbGG/fwyD2P9Ggq4y9iXSb/YK0/TiLmAnFXkqq87I9k0CVvNlO3tVcP7Dc1yClg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrYj4PDp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKsmBbSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8335C2BD10;
-	Thu,  6 Jun 2024 14:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrYj4PDp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641F3C32781;
+	Thu,  6 Jun 2024 14:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683054;
-	bh=YLFFq32AxL9oTWGPrAtChmBeDBxB5Ik70MdqWYoAUPI=;
+	bh=Zpy2OH7VQD86m/l32Yq1KVZvnMuAY0JY6Ym6whEzLjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xKsmBbSZWN4qWuAFND5visWSeiCJ95GqTWEaHzs3lQnFgHZE9H0b9hEfajKDX4OEm
-	 AfMehAv0J/n/KlDR7e/9nvNfKQ5IIaLeg2tZoWaGua1TFF5tT2N9Ddz/B3DP/Nd0uB
-	 5t+eRobJeYke3MW3Yw/h8I6EU6I1M6xR5W0CPHj0=
+	b=DrYj4PDpIVCHJZ4Y4BQBNwUBz+FaICTnIwguk8RbGR9ASV/1SagWMwPIH05R1LZdo
+	 i13hgAnpcRz9IREkDMnOXkNAxWk5QGceRnvhKB+29PHKXUdJr3dHpUwIsYgY1mvuSI
+	 kd+8IrGYxpgz+fnQEGVR2LGDdwx/4d0eXWc3vSEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gal Pressman <gal@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 297/374] net/mlx5: Do not query MPIR on embedded CPU function
-Date: Thu,  6 Jun 2024 16:04:36 +0200
-Message-ID: <20240606131701.816562955@linuxfoundation.org>
+Subject: [PATCH 6.9 298/374] net/mlx5: Fix MTMP register capability offset in MCAM register
+Date: Thu,  6 Jun 2024 16:04:37 +0200
+Message-ID: <20240606131701.851564487@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,57 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tariq Toukan <tariqt@nvidia.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit fca3b4791850b7e2181f0b3195b66d53df83151b ]
+[ Upstream commit 1b9f86c6d53245dab087f1b2c05727b5982142ff ]
 
-A proper query to MPIR needs to set the correct value in the depth field.
-On embedded CPU this value is not necessarily zero. As there is no real
-use case for multi-PF netdev on the embedded CPU of the smart NIC, block
-this option.
+The MTMP register (0x900a) capability offset is off-by-one, move it to
+the right place.
 
-This fixes the following failure:
-ACCESS_REG(0x805) op_mod(0x1) failed, status bad system state(0x4), syndrome (0x685f19), err(-5)
-
-Fixes: 678eb448055a ("net/mlx5: SD, Implement basic query and instantiation")
+Fixes: 1f507e80c700 ("net/mlx5: Expose NIC temperature via hardware monitoring kernel API")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/sd.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/linux/mlx5/mlx5_ifc.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/sd.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/sd.c
-index dd5d186dc6148..f6deb5a3f8202 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/sd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/sd.c
-@@ -100,10 +100,6 @@ static bool ft_create_alias_supported(struct mlx5_core_dev *dev)
+diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
+index c940b329a475f..5e5a9c6774bde 100644
+--- a/include/linux/mlx5/mlx5_ifc.h
++++ b/include/linux/mlx5/mlx5_ifc.h
+@@ -10267,9 +10267,9 @@ struct mlx5_ifc_mcam_access_reg_bits {
+ 	u8         mfrl[0x1];
+ 	u8         regs_39_to_32[0x8];
  
- static bool mlx5_sd_is_supported(struct mlx5_core_dev *dev, u8 host_buses)
- {
--	/* Feature is currently implemented for PFs only */
--	if (!mlx5_core_is_pf(dev))
--		return false;
--
- 	/* Honor the SW implementation limit */
- 	if (host_buses > MLX5_SD_MAX_GROUP_SZ)
- 		return false;
-@@ -162,6 +158,14 @@ static int sd_init(struct mlx5_core_dev *dev)
- 	bool sdm;
- 	int err;
+-	u8         regs_31_to_10[0x16];
++	u8         regs_31_to_11[0x15];
+ 	u8         mtmp[0x1];
+-	u8         regs_8_to_0[0x9];
++	u8         regs_9_to_0[0xa];
+ };
  
-+	/* Feature is currently implemented for PFs only */
-+	if (!mlx5_core_is_pf(dev))
-+		return 0;
-+
-+	/* Block on embedded CPU PFs */
-+	if (mlx5_core_is_ecpf(dev))
-+		return 0;
-+
- 	if (!MLX5_CAP_MCAM_REG(dev, mpir))
- 		return 0;
- 
+ struct mlx5_ifc_mcam_access_reg_bits1 {
 -- 
 2.43.0
 
