@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F018A1B3F18;
-	Thu,  6 Jun 2024 14:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C27219CCF9;
+	Thu,  6 Jun 2024 14:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683430; cv=none; b=I84KkjH+iKRkBQLkgFFKY03RH4HuK5OVT/jrYCF88vUcwftyntz/UUzFX+AGFE5vTi2gZmeAaslEhssyixVlWyCsp99aWmtywIMIOcLRciny9EMavB+33dmwFxH10bF+GCF3FdrjjXIpBWDiOHbo2Mst1pYZ5StiarEG4WB/WNg=
+	t=1717683430; cv=none; b=DLbq634p2Obe6gUch9MufQuY3jI0cgQ0sJtMeHr5syck7BZhipc9WwFqfm2WfN/x1Ip00VsOM5kP2gg+QIJJAqUCHufu1hbQxmseEpOJNGChoDVrr5mezPeKtReMODNVRGY+LzEj1S/bBh0iYr8pFbRkxuyc3ydzwI1Uouv5VJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683430; c=relaxed/simple;
-	bh=1ywmh6MHD2f6sTfvLphYHUGuAV8U04LmFP8kVoKk4gU=;
+	bh=P1+iGhauiYVBbvpqVycRvibLOvnzmh/ZxkJGMfV0ZGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gwTdAYvC44TlzTxIKZG7VkwawjEbSKN9Yx/9BcAvMNV4G19q2Usc5e2zpu50wjAV6qgJRNMDkW3lZHtlcTK+t+Xi4XqnCvGR6YI8GYCecK0fXuxoiMB9QebObbnfPv9/q+g792B+eQn9gukHo/ags457/6pXS3t3Q3HZ4uBDcJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GlRRsFtR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PaFAgJfkPpt15ZBm/if7QBtalh6P2l3vlMztt6WDs1LryENDPhqW1IBTuTzvyV46lUKZfYtO125sfqOexaC4XXs18RagORMo6wyRK2x8Sp0G8sYTzavYMOi2DGrygUf1vy7qEmvkMLsInLo+d3t9qmw8s0EEZfjE0afhO6cgDOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOpeIrNP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlRRsFtR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0245C2BD10;
-	Thu,  6 Jun 2024 14:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOpeIrNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BB00C32781;
+	Thu,  6 Jun 2024 14:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683429;
-	bh=1ywmh6MHD2f6sTfvLphYHUGuAV8U04LmFP8kVoKk4gU=;
+	s=korg; t=1717683430;
+	bh=P1+iGhauiYVBbvpqVycRvibLOvnzmh/ZxkJGMfV0ZGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GlRRsFtRwUELKw5kB9BsyAhLN3L2feAXA9zmwiyL78YDtsn23QzkV7G0TtLpIT8a/
-	 T0Gem1Ca3RWyuLJUNFWTk9VOL8l8ycZzVu9GVQr6TYHu5I63BOT0bRNj5ChKvGEoCj
-	 ucCGZwIrRV8HJcltL5aXh6MgBXC43mqSrn6wadvg=
+	b=MOpeIrNP+9orI5uFdGKZIL8VW6SRtTDXl5lAp7P7xzdj54tcMSZ3wsgifGmj7DbPy
+	 zPpoyhPRf7RuaDIXJftljHxUMKL18BiTuf0Tw8YRqATguN4GGUjeVGtj3YMjSynwg+
+	 kC1ZpKCIrSGtoKGfb0yR8W0GIQpy+y4ugCibU/L8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Haemmerle <thomas.haemmerle@leica-geosystems.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 315/473] iio: pressure: dps310: support negative temperature values
-Date: Thu,  6 Jun 2024 16:04:04 +0200
-Message-ID: <20240606131710.347903726@linuxfoundation.org>
+Subject: [PATCH 6.6 375/744] RDMA/IPoIB: Fix format truncation compilation errors
+Date: Thu,  6 Jun 2024 16:00:47 +0200
+Message-ID: <20240606131744.507043210@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,71 +44,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Haemmerle <thomas.haemmerle@leica-geosystems.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 9dd6b32e76ff714308964cd9ec91466a343dcb8b ]
+[ Upstream commit 49ca2b2ef3d003402584c68ae7b3055ba72e750a ]
 
-The current implementation interprets negative values returned from
-`dps310_calculate_temp` as error codes.
-This has a side effect that when negative temperature values are
-calculated, they are interpreted as error.
+Truncate the device name to store IPoIB VLAN name.
 
-Fix this by using the return value only for error handling and passing a
-pointer for the value.
+[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 allmodconfig
+[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 W=1 drivers/infiniband/ulp/ipoib/
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c: In function ‘ipoib_vlan_add’:
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:52: error: ‘%04x’
+directive output may be truncated writing 4 bytes into a region of size
+between 0 and 15 [-Werror=format-truncation=]
+  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+      |                                                    ^~~~
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:48: note: directive
+argument in the range [0, 65535]
+  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+      |                                                ^~~~~~~~~
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:9: note: ‘snprintf’ output
+between 6 and 21 bytes into a destination of size 16
+  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  188 |                  ppriv->dev->name, pkey);
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:244: drivers/infiniband/ulp/ipoib/ipoib_vlan.o] Error 1
+make[6]: *** Waiting for unfinished jobs....
 
-Fixes: ba6ec48e76bc ("iio: Add driver for Infineon DPS310")
-Signed-off-by: Thomas Haemmerle <thomas.haemmerle@leica-geosystems.com>
-Link: https://lore.kernel.org/r/20240415105030.1161770-2-thomas.haemmerle@leica-geosystems.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
+Link: https://lore.kernel.org/r/e9d3e1fef69df4c9beaf402cc3ac342bad680791.1715240029.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/dps310.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/infiniband/ulp/ipoib/ipoib_vlan.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/pressure/dps310.c b/drivers/iio/pressure/dps310.c
-index db1b1e48225aa..519fcd425b6a3 100644
---- a/drivers/iio/pressure/dps310.c
-+++ b/drivers/iio/pressure/dps310.c
-@@ -730,7 +730,7 @@ static int dps310_read_pressure(struct dps310_data *data, int *val, int *val2,
- 	}
- }
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
+index 4bd161e86f8dd..562df2b3ef187 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
+@@ -184,8 +184,12 @@ int ipoib_vlan_add(struct net_device *pdev, unsigned short pkey)
  
--static int dps310_calculate_temp(struct dps310_data *data)
-+static int dps310_calculate_temp(struct dps310_data *data, int *val)
- {
- 	s64 c0;
- 	s64 t;
-@@ -746,7 +746,9 @@ static int dps310_calculate_temp(struct dps310_data *data)
- 	t = c0 + ((s64)data->temp_raw * (s64)data->c1);
+ 	ppriv = ipoib_priv(pdev);
  
- 	/* Convert to milliCelsius and scale the temperature */
--	return (int)div_s64(t * 1000LL, kt);
-+	*val = (int)div_s64(t * 1000LL, kt);
-+
-+	return 0;
- }
+-	snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+-		 ppriv->dev->name, pkey);
++	/* If you increase IFNAMSIZ, update snprintf below
++	 * to allow longer names.
++	 */
++	BUILD_BUG_ON(IFNAMSIZ != 16);
++	snprintf(intf_name, sizeof(intf_name), "%.10s.%04x", ppriv->dev->name,
++		 pkey);
  
- static int dps310_read_temp(struct dps310_data *data, int *val, int *val2,
-@@ -768,11 +770,10 @@ static int dps310_read_temp(struct dps310_data *data, int *val, int *val2,
- 		if (rc)
- 			return rc;
- 
--		rc = dps310_calculate_temp(data);
--		if (rc < 0)
-+		rc = dps310_calculate_temp(data, val);
-+		if (rc)
- 			return rc;
- 
--		*val = rc;
- 		return IIO_VAL_INT;
- 
- 	case IIO_CHAN_INFO_OVERSAMPLING_RATIO:
+ 	ndev = ipoib_intf_alloc(ppriv->ca, ppriv->port, intf_name);
+ 	if (IS_ERR(ndev)) {
 -- 
 2.43.0
 
