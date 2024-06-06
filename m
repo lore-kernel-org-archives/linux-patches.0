@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2761991CD;
-	Thu,  6 Jun 2024 14:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502A7197532;
+	Thu,  6 Jun 2024 14:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683661; cv=none; b=hU0BHfQB3IneDE5O6TQrRrDI71n+za8mcddJrmiuuU8B8q0h1rdXuh5QkrOa5owhhjtelJFYb0ATftV0X1vNNWaz8hdR1S9LmHe7RNzx+iNNEYxuQcdcFRPEF8H0if4r4Jc4C+R+6hY5ehgpvjxYnCPQzFrFdRu3lUEyOrAncyw=
+	t=1717683662; cv=none; b=lu0lrmQYhjPgqoAAdmPYaa/oL2pHcjkWM5eZsxRTBl/ilDuI5tZrpkbDw49O03pdXJLpK0IO7dLu42BX/BQGoT4cW1sfsZqU3rJ2s/6Rnl6eVj7necjhNCIeCqNl+zlch/BZc6y/XG9k2ip2TiKsbSZN/zAhmdLN9olwrZ9cZZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683661; c=relaxed/simple;
-	bh=ioeqVuBCoDDOcewBIoHEdWQ9afa5nwgjKxGLueZmL68=;
+	s=arc-20240116; t=1717683662; c=relaxed/simple;
+	bh=uZ0MqcViAHAL0bcaofzBWTGvjpP7nVPAlXm8pH6rhgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FLJ2CQriktnPIMgPHJ4u+ShccqDJd/9wMK1pVJwk8zA0nHPJNXvAakZHM9B7LUYT/Y4bGRizwXn7CjjZRG8QmpTVWk/jvmHYHXazKnttrbQUV63556+Ip687i8iX0AQbL7LugVkq+GguBymVxwFOV6sjN66CRdHTZufIjjgdMiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQgG8087; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PIXtYJEmkCBl8d1QCWQcxccfnh7KYWooimn/jsBBlqKqmQHytVuF9I29KH+HNn4DlSk+efWBVg5316N4qMi6T/1WlUv1O7S0jbRcZ1znijPd/k291lscuZclva5OrsNZn9dUtWD0wr2QtwhmbUYYwa8gNRmVugPkP+7xo29SCqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MlITFWQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQgG8087"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC81C32786;
-	Thu,  6 Jun 2024 14:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MlITFWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30540C2BD10;
+	Thu,  6 Jun 2024 14:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683661;
-	bh=ioeqVuBCoDDOcewBIoHEdWQ9afa5nwgjKxGLueZmL68=;
+	s=korg; t=1717683662;
+	bh=uZ0MqcViAHAL0bcaofzBWTGvjpP7nVPAlXm8pH6rhgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQgG8087AQAjf0WbT+Xxvc1Gie3urne/0EFwIWOsIKKkALue2bPdz0nU48g6Zt9IE
-	 nRl9vpQ5XtZHSjZysYNv2rnZ1H5L5MwP+KeD5ikvWSfeQzYxHw9NppCldbpMUgvV3O
-	 CmZh/S8/PBTBqno0vawbzKa+WM+ewdLNb5zVWXoo=
+	b=2MlITFWQz2M+aWU1YU3MPR9kTKpziZpsN41kNxzD16ZfQqgePZU30CiPRyb+1jP/t
+	 2T3VPlYKHuH6H6/YVkZGXIdumR0wtlJbbZOmEi3eJJkcOTD5Z6ElXKxbYvvKo+OApy
+	 E5df24lxzUiEhlYuNY+T2Ex9le1jxT4Z+8atjOkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devyn Liu <liudingyuan@huawei.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Nevenko Stupar <nevenko.stupar@amd.com>,
+	Chaitanya Dhere <chaitanya.dhere@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 543/744] gpiolib: acpi: Fix failed in acpi_gpiochip_find() by adding parent node match
-Date: Thu,  6 Jun 2024 16:03:35 +0200
-Message-ID: <20240606131749.871039839@linuxfoundation.org>
+Subject: [PATCH 6.6 544/744] drm/amd/display: Remove pixle rate limit for subvp
+Date: Thu,  6 Jun 2024 16:03:36 +0200
+Message-ID: <20240606131749.899280113@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,81 +55,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devyn Liu <liudingyuan@huawei.com>
+From: Alvin Lee <alvin.lee2@amd.com>
 
-[ Upstream commit adbc49a5a8c6fcf7be154c2e30213bbf472940da ]
+[ Upstream commit 340383c734f8a4e1663d26356b35fd8050851168 ]
 
-Previous patch modified the standard used by acpi_gpiochip_find()
-to match device nodes. Using the device node set in gc->gpiodev->d-
-ev instead of gc->parent.
+Subvp bugs related to 8K60 have been fixed, so remove the limit that
+blocks 8K60 timings from enabling SubVP.
 
-However, there is a situation in gpio-dwapb where the GPIO device
-driver will set gc->fwnode for each port corresponding to a child
-node under a GPIO device, so gc->gpiodev->dev will be assigned the
-value of each child node in gpiochip_add_data().
-
-gpio-dwapb.c:
-128,31 static int dwapb_gpio_add_port(struct dwapb_gpio *gpio,
-			       struct dwapb_port_property *pp,
-			       unsigned int offs);
-port->gc.fwnode = pp->fwnode;
-
-693,39 static int dwapb_gpio_probe;
-err = dwapb_gpio_add_port(gpio, &pdata->properties[i], i);
-
-When other drivers request GPIO pin resources through the GPIO device
-node provided by ACPI (corresponding to the parent node), the change
-of the matching object to gc->gpiodev->dev in acpi_gpiochip_find()
-only allows finding the value of each port (child node), resulting
-in a failed request.
-
-Reapply the condition of using gc->parent for match in acpi_gpio-
-chip_find() in the code can compatible with the problem of gpio-dwapb,
-and will not affect the two cases mentioned in the patch:
-1. There is no setting for gc->fwnode.
-2. The case that depends on using gc->fwnode for match.
-
-Fixes: 5062e4c14b75 ("gpiolib: acpi: use the fwnode in acpi_gpiochip_find()")
-Fixes: 067dbc1ea5ce ("gpiolib: acpi: Don't use GPIO chip fwnode in acpi_gpiochip_find()")
-Signed-off-by: Devyn Liu <liudingyuan@huawei.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Tested-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Nevenko Stupar <nevenko.stupar@amd.com>
+Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
+Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: cf8c498694a4 ("drm/amd/display: Revert Remove pixle rate limit for subvp")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-acpi.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
-index 4ab33d55aec47..b366b4ca4c40e 100644
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -128,7 +128,24 @@ static bool acpi_gpio_deferred_req_irqs_done;
- 
- static int acpi_gpiochip_find(struct gpio_chip *gc, void *data)
- {
--	return device_match_acpi_handle(&gc->gpiodev->dev, data);
-+	/* First check the actual GPIO device */
-+	if (device_match_acpi_handle(&gc->gpiodev->dev, data))
-+		return true;
-+
-+	/*
-+	 * When the ACPI device is artificially split to the banks of GPIOs,
-+	 * where each of them is represented by a separate GPIO device,
-+	 * the firmware node of the physical device may not be shared among
-+	 * the banks as they may require different values for the same property,
-+	 * e.g., number of GPIOs in a certain bank. In such case the ACPI handle
-+	 * of a GPIO device is NULL and can not be used. Hence we have to check
-+	 * the parent device to be sure that there is no match before bailing
-+	 * out.
-+	 */
-+	if (gc->parent)
-+		return device_match_acpi_handle(gc->parent, data);
-+
-+	return false;
- }
- 
- /**
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index cf3b400c8619b..426902578ca46 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -697,7 +697,6 @@ static bool dcn32_assign_subvp_pipe(struct dc *dc,
+ 		 * - Not TMZ surface
+ 		 */
+ 		if (pipe->plane_state && !pipe->top_pipe && !dcn32_is_center_timing(pipe) &&
+-				!(pipe->stream->timing.pix_clk_100hz / 10000 > DCN3_2_MAX_SUBVP_PIXEL_RATE_MHZ) &&
+ 				(!dcn32_is_psr_capable(pipe) || (context->stream_count == 1 && dc->caps.dmub_caps.subvp_psr)) &&
+ 				pipe->stream->mall_stream_config.type == SUBVP_NONE &&
+ 				(refresh_rate < 120 || dcn32_allow_subvp_high_refresh_rate(dc, context, pipe)) &&
 -- 
 2.43.0
 
