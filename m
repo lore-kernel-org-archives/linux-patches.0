@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFB41991BE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9509A196447;
 	Thu,  6 Jun 2024 14:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683157; cv=none; b=Lj6kylc9F+PnSQNU6GwugkQ20zW98ZhIv2pGVBkYX/RcbWBfxHepGhD/lVB+d4IHgnAUm9wdhG3MrL9WznPPhRdRutKXOys6shoDwy32B3Cgc9n1Ta8BXF+gC7k845pCTUr+8VKcgHvROMTBn3i/tm23dvIsCCus+kr19aOwMwo=
+	t=1717683157; cv=none; b=jJeio9hSE5vtRO+vzoJglU/KViBhVNVa3KZSvD5nmARGTSX+WVdjoi2rlrUkjIgYVE5lxwRZrboOtDneGc2L20x18h0qSny3mc3LNJCmMdH0F783neFPKVioa55104vwujxGRicNzmMqBRuuD+DvETbXw8HpZeuueXPcm24X0EM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683157; c=relaxed/simple;
-	bh=+XBJdTj0Q2asgJYrdzwXlwX5hYNG5MIkX0Gu5NXocW4=;
+	bh=xb6Zsuy4lxG4DTGDbOksy+qy8fEBtVcVTt2lWP+54Io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=deAIt+anuepWu+/Ov63x/uzNAs9upKO6yR+KdRmYhgvHSiAK1vuEsqNJwC0+GmeTiHthZmBPTykXk6mWhjasSAc9VWCCXVbZbw5mYsw8KWqa97QlvQee9J25UeCknZDSEuDcUvvN6RuqXXFaVa2izzx+QPF8Hmdh5wWzhGdnZDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1jvnOnt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BbDkZNlVCS9OMdFt9aWQqXwITM7ogyE4Bxoo5GpWI/9YTbTaXazkldOp1gfUaQveBxK29LiAoIcZwxti2P0FJkY7UGZ13xk/Im0rq9k7vDbmPCKglNu8Qbzx7AC4tj6COuliXmDkj7sTYb0mj3GOwsQL+SPyFJ3w6VeRPmlJVpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AU8KHwD2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1jvnOnt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA2FC2BD10;
-	Thu,  6 Jun 2024 14:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AU8KHwD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA4EC2BD10;
+	Thu,  6 Jun 2024 14:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683157;
-	bh=+XBJdTj0Q2asgJYrdzwXlwX5hYNG5MIkX0Gu5NXocW4=;
+	bh=xb6Zsuy4lxG4DTGDbOksy+qy8fEBtVcVTt2lWP+54Io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r1jvnOntDO6gjOBgpGvdsJsPYGTPv+Xv2mDxuYuCtSfM5jksmI+rLVH9wLa8+LVe1
-	 jEl9US/r11AuH2ujTBdiSug0Wa0B1HX6r2k2muXxSzPiMJfR6JKJ3t4qpkovgg2bGX
-	 G5yVgrw8qfACrQS7VS+zqZrGHv49Uh8uGFJSML4c=
+	b=AU8KHwD2u1d8wzAda5Fc0A98faF407BrCC0t+1Fv6x36Q3KvDRWCCwpxA6WXYXNy1
+	 Vy5KtuiGeEhhgU2wt/BIFLLSpSbNHwo04U0+P6vtkc8lkoHKVmjfLPnpToEoMAn+yC
+	 AovrG8Mdr8b9uifqg0VGc1u+0TUACgUMkBPjFKHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <wayne.lin@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Richard Kinder <richard.kinder@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/744] drm/amd/display: Add VCO speed parameter for DCN31 FPU
-Date: Thu,  6 Jun 2024 15:55:51 +0200
-Message-ID: <20240606131734.936386584@linuxfoundation.org>
+Subject: [PATCH 6.1 028/473] wifi: mac80211: ensure beacon is non-S1G prior to extracting the beacon timestamp field
+Date: Thu,  6 Jun 2024 15:59:17 +0200
+Message-ID: <20240606131700.803215052@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Richard Kinder <richard.kinder@gmail.com>
 
-[ Upstream commit 0e62103bdcbc88281e16add299a946fb3bd02fbe ]
+[ Upstream commit d12b9779cc9ba29d65fbfc728eb8a037871dd331 ]
 
-Add VCO speed parameters in the bounding box array.
+Logic inside ieee80211_rx_mgmt_beacon accesses the
+mgmt->u.beacon.timestamp field without first checking whether the beacon
+received is non-S1G format.
 
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix the problem by checking the beacon is non-S1G format to avoid access
+of the mgmt->u.beacon.timestamp field.
+
+Signed-off-by: Richard Kinder <richard.kinder@gmail.com>
+Link: https://msgid.link/20240328005725.85355-1-richard.kinder@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/mlme.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
-index deb6d162a2d5c..7307b7b8d8ad7 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
-@@ -291,6 +291,7 @@ static struct _vcs_dpi_soc_bounding_box_st dcn3_15_soc = {
- 	.do_urgent_latency_adjustment = false,
- 	.urgent_latency_adjustment_fabric_clock_component_us = 0,
- 	.urgent_latency_adjustment_fabric_clock_reference_mhz = 0,
-+	.dispclk_dppclk_vco_speed_mhz = 2400.0,
- 	.num_chans = 4,
- 	.dummy_pstate_latency_us = 10.0
- };
-@@ -438,6 +439,7 @@ static struct _vcs_dpi_soc_bounding_box_st dcn3_16_soc = {
- 	.do_urgent_latency_adjustment = false,
- 	.urgent_latency_adjustment_fabric_clock_component_us = 0,
- 	.urgent_latency_adjustment_fabric_clock_reference_mhz = 0,
-+	.dispclk_dppclk_vco_speed_mhz = 2500.0,
- };
- 
- void dcn31_zero_pipe_dcc_fraction(display_e2e_pipe_params_st *pipes,
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index f25dc6931a5b1..9a5530ca2f6b2 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -5528,7 +5528,8 @@ static void ieee80211_rx_mgmt_beacon(struct ieee80211_link_data *link,
+ 			link->u.mgd.dtim_period = elems->dtim_period;
+ 		link->u.mgd.have_beacon = true;
+ 		ifmgd->assoc_data->need_beacon = false;
+-		if (ieee80211_hw_check(&local->hw, TIMING_BEACON_ONLY)) {
++		if (ieee80211_hw_check(&local->hw, TIMING_BEACON_ONLY) &&
++		    !ieee80211_is_s1g_beacon(hdr->frame_control)) {
+ 			link->conf->sync_tsf =
+ 				le64_to_cpu(mgmt->u.beacon.timestamp);
+ 			link->conf->sync_device_ts =
 -- 
 2.43.0
 
