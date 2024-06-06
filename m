@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDC01B14EC;
-	Thu,  6 Jun 2024 14:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BE71B1434;
+	Thu,  6 Jun 2024 14:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683385; cv=none; b=SBshBA3Hq2N0fGV0xj34WyeDyrIQWOKAbdbZ0oYOnU8O0HkpP+BkCuFQRjTqGcK4VlYyTJWSYD0qMMtOFIn2YBmjulRYnUoVWYWsgJyA8YAwDVlMuFBokMmQtCZgrlCGB/Ea4cmeN/AK0gr6GYH30oN3uHQybpQ02w2RzTNZuZU=
+	t=1717683386; cv=none; b=R04IW2uTMQk9rRlnF+tbCP3UKg/LNFdp8ZrGLizVhjXrujqAeEJ2xhJ+8EslBqXwP5aBqePdHlJleptYBoks5619EFTs4rvp26QPteA1sNnl0yod0W/9y43+2I6h4pUURDHW+wW4VbP5CETdYHqJJmBB8bzwsWXUPvmbDJhCfuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683385; c=relaxed/simple;
-	bh=3jOv82Q1QHh7fhO55O8llTNjmqlP7BDboAY9OwbCzYE=;
+	s=arc-20240116; t=1717683386; c=relaxed/simple;
+	bh=yjxjfu2Dmw2QiNmp8IAKKTboVJBPqNiTzyHohj+z35Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oKQH3lKrcb9xta9/4+c419ulIFAxQ1HU0DtsNYVGrBHusdXEfZH8jn0MJ5lenAIpgj9RD4u8o7PwHhIcrIXqSaKjKwQXAiKiyzfFv4N3SGd3ekl8Az2P0WJ0mGzpM1fGK1vEqxCJ7C9SQr4L0CIaNDj/+N6Fv+1A2R3m7ZoSdbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fW0OCL2D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OIhTQMn7eu68legK0NmbPPKHVHn+Z8mVgeIJjCTztuOcZbPBRVw+RE8WpviAImkGAk+/QrF24mfa/nMvmIb87v9pdD9hmR2CbNjT7oSOe7qzWQqfRK3ztNa7FIalO6dyawE+mzZN+0QtB93ACb5L//QiPwpxF/e1GBu11rE1LDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHUSXnpE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fW0OCL2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCC2C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHUSXnpE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D848CC2BD10;
 	Thu,  6 Jun 2024 14:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683385;
-	bh=3jOv82Q1QHh7fhO55O8llTNjmqlP7BDboAY9OwbCzYE=;
+	bh=yjxjfu2Dmw2QiNmp8IAKKTboVJBPqNiTzyHohj+z35Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fW0OCL2Dv5dJSHkUfvMrbiPNUh3gCLajkqRZkuPYJTd2XxfNuWG62OmBYo7E35n/5
-	 YH0cvQUjqqoRwvh260FxmZtl4SjL3ZqRIx2M0hzhxZyzMoKOyfkBGtRLLHYM01Q/bU
-	 2L0cW23S0Y7rXx2+eSVGKMcIBLL0J3Egwt3sYNKo=
+	b=FHUSXnpE+iuommYl63bWZDtr1e28AhZRaO7iGx2HPU3bB8f8bONbLViPl6K9PAWeD
+	 ypPz/X28/XkJAU/CzMtsZKLlZeyJn1qNno301+6RRcRuQcXd1OL9eC1Qf4k6E+fIEw
+	 mp7hu9CeSqT3PZ9t7rDj3uo68omI+4m7cnGbSI+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 268/473] RDMA/IPoIB: Fix format truncation compilation errors
-Date: Thu,  6 Jun 2024 16:03:17 +0200
-Message-ID: <20240606131708.801376667@linuxfoundation.org>
+Subject: [PATCH 6.6 327/744] drm/bridge: anx7625: Update audio status while detecting
+Date: Thu,  6 Jun 2024 15:59:59 +0200
+Message-ID: <20240606131742.924974471@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,68 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit 49ca2b2ef3d003402584c68ae7b3055ba72e750a ]
+[ Upstream commit a665b4e60369867cddf50f37f16169a3e2f434ad ]
 
-Truncate the device name to store IPoIB VLAN name.
+Previously, the audio status was not updated during detection, leading
+to a persistent audio despite hot plugging events. To resolve this
+issue, update the audio status during detection.
 
-[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 allmodconfig
-[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 W=1 drivers/infiniband/ulp/ipoib/
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c: In function ‘ipoib_vlan_add’:
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:52: error: ‘%04x’
-directive output may be truncated writing 4 bytes into a region of size
-between 0 and 15 [-Werror=format-truncation=]
-  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
-      |                                                    ^~~~
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:48: note: directive
-argument in the range [0, 65535]
-  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
-      |                                                ^~~~~~~~~
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:9: note: ‘snprintf’ output
-between 6 and 21 bytes into a destination of size 16
-  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  188 |                  ppriv->dev->name, pkey);
-      |                  ~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
-make[6]: *** [scripts/Makefile.build:244: drivers/infiniband/ulp/ipoib/ipoib_vlan.o] Error 1
-make[6]: *** Waiting for unfinished jobs....
-
-Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
-Link: https://lore.kernel.org/r/e9d3e1fef69df4c9beaf402cc3ac342bad680791.1715240029.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 566fef1226c1 ("drm/bridge: anx7625: add HDMI audio function")
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240416-anx7625-v3-1-f916ae31bdd7@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_vlan.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
-index 4bd161e86f8dd..562df2b3ef187 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
-@@ -184,8 +184,12 @@ int ipoib_vlan_add(struct net_device *pdev, unsigned short pkey)
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index 4ee5614a26236..c1191ef5e8e67 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -2479,15 +2479,22 @@ static void anx7625_bridge_atomic_disable(struct drm_bridge *bridge,
+ 	mutex_unlock(&ctx->aux_lock);
+ }
  
- 	ppriv = ipoib_priv(pdev);
++static void
++anx7625_audio_update_connector_status(struct anx7625_data *ctx,
++				      enum drm_connector_status status);
++
+ static enum drm_connector_status
+ anx7625_bridge_detect(struct drm_bridge *bridge)
+ {
+ 	struct anx7625_data *ctx = bridge_to_anx7625(bridge);
+ 	struct device *dev = ctx->dev;
++	enum drm_connector_status status;
  
--	snprintf(intf_name, sizeof(intf_name), "%s.%04x",
--		 ppriv->dev->name, pkey);
-+	/* If you increase IFNAMSIZ, update snprintf below
-+	 * to allow longer names.
-+	 */
-+	BUILD_BUG_ON(IFNAMSIZ != 16);
-+	snprintf(intf_name, sizeof(intf_name), "%.10s.%04x", ppriv->dev->name,
-+		 pkey);
+ 	DRM_DEV_DEBUG_DRIVER(dev, "drm bridge detect\n");
  
- 	ndev = ipoib_intf_alloc(ppriv->ca, ppriv->port, intf_name);
- 	if (IS_ERR(ndev)) {
+-	return anx7625_sink_detect(ctx);
++	status = anx7625_sink_detect(ctx);
++	anx7625_audio_update_connector_status(ctx, status);
++	return status;
+ }
+ 
+ static struct edid *anx7625_bridge_get_edid(struct drm_bridge *bridge,
 -- 
 2.43.0
 
