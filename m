@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF334197A82;
-	Thu,  6 Jun 2024 14:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529CB197559;
+	Thu,  6 Jun 2024 14:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682922; cv=none; b=L0cP/XgkNeWuxC04BUlQbrybmMhsXtVaPXDs4W5dxSijOocQ7AmZP8ZrMdEbKodA1FX4wSSibiOCbrj006XuV+9dOnqFsDy9NR4ZzKF0lQ1Yn40qoc8DpeuKPxfdjJlKuSGF4OxKbXG6Cu1adD1MEPsfZaJvpJXPT8GW4PjDidw=
+	t=1717682923; cv=none; b=MTriUzGThmW+/9QpzWxaBocWzuYChwK7q9OGrdh3lhPyrcAmxDAW+f2cSeBqTW8kjwf1Mo9QYyk+lj2PW4V1TE/iL2AoRJxj6tbrJxteX2oC8qkuKiB3r0m3ozmey62yAy4kqDNlOzyi7CIrwDd9wwh8gu96mxc2GVjZx26cKms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682922; c=relaxed/simple;
-	bh=TolCHHkDrSuc79rRsUo0SvmU6OzL0JBBKmoz/SjdvzE=;
+	s=arc-20240116; t=1717682923; c=relaxed/simple;
+	bh=cKAUM6QXBeMGfJj2zfapWXzTKgOT3WfVt7ZBCXTVCKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZNxCp/b0tJYLSNyK2OTI09GBuL6uTpVIEuAGr3tDmOBqMMxbEF25aT3Sv6m7z+K6FZ7yJnwo5ryLoyYJy5o3qGOjozeLF6DW8zye6C/WyM0Krs4CEUSbtrJXbnSPiufc/JqkHsKGj2rnfLasU7Zhx9vDcf3hxXpH7w2jMrTpMKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awYMBZ3o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qzw2d/KbgzJ8z+AMZYqqchyn8H0zYT+gz7cM4U7o1ebbZOoJjwPsx3M8q5spdqnk+Qezo35vl0poIpRVTstI8IeKLpqWLBWB5U1s6V3ZunLO0d3kYECG+IZ0GGe68pv/0WgOyNO0Y4lV+/CVCJBtN1EZjLSKbBVPirv5/rHVoWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hghPFLkh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awYMBZ3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C966C2BD10;
-	Thu,  6 Jun 2024 14:08:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hghPFLkh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D3EC2BD10;
+	Thu,  6 Jun 2024 14:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682922;
-	bh=TolCHHkDrSuc79rRsUo0SvmU6OzL0JBBKmoz/SjdvzE=;
+	s=korg; t=1717682923;
+	bh=cKAUM6QXBeMGfJj2zfapWXzTKgOT3WfVt7ZBCXTVCKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=awYMBZ3oGETnfPh889mxOJ+t0BebB0eCZhjsxTm+EmLGPzpA7f0MdToPcGmFQEi9A
-	 8/DbO/ESJH0DcbkRJxZdym6g3C7k/yNtuUINdYAN+ckuP4FPsjBcNUQ/M0krJCNjFY
-	 TCOjHufnO+2ovmAXn9wcWGbd2f3PSaCkQxmk5qJU=
+	b=hghPFLkhrucgqTacBOj1Uz/JE1gpAkC3FBbiudQWEujrwFC9F3cIdwO002vayv4nU
+	 49JoJh8blNvqpL+6ctSZ2MNvkj4pL/R0szF27pcg2uSr53GWty4RnGU6H6Eeg0+fHm
+	 yDrgt72GsZ8tC6myILQ29x6TM83CdbDBD9GmOuc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 063/374] microblaze: Remove gcc flag for non existing early_printk.c file
-Date: Thu,  6 Jun 2024 16:00:42 +0200
-Message-ID: <20240606131653.963835867@linuxfoundation.org>
+Subject: [PATCH 6.9 064/374] microblaze: Remove early printk call from cpuinfo-static.c
+Date: Thu,  6 Jun 2024 16:00:43 +0200
+Message-ID: <20240606131653.991663934@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,32 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Michal Simek <michal.simek@amd.com>
 
-[ Upstream commit edc66cf0c4164aa3daf6cc55e970bb94383a6a57 ]
+[ Upstream commit 58d647506c92ccd3cfa0c453c68ddd14f40bf06f ]
 
-early_printk support for removed long time ago but compilation flag for
-ftrace still points to already removed file that's why remove that line
-too.
+Early printk has been removed already that's why also remove calling it.
+Similar change has been done in cpuinfo-pvr-full.c by commit cfbd8d1979af
+("microblaze: Remove early printk setup").
 
 Fixes: 96f0e6fcc9ad ("microblaze: remove redundant early_printk support")
 Signed-off-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/5493467419cd2510a32854e2807bcd263de981a0.1712823702.git.michal.simek@amd.com
+Link: https://lore.kernel.org/r/2f10db506be8188fa07b6ec331caca01af1b10f8.1712824039.git.michal.simek@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/Makefile | 1 -
- 1 file changed, 1 deletion(-)
+ arch/microblaze/kernel/cpu/cpuinfo-static.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/microblaze/kernel/Makefile b/arch/microblaze/kernel/Makefile
-index 4393bee64eaf8..85c4d29ef43e9 100644
---- a/arch/microblaze/kernel/Makefile
-+++ b/arch/microblaze/kernel/Makefile
-@@ -7,7 +7,6 @@ ifdef CONFIG_FUNCTION_TRACER
- # Do not trace early boot code and low level code
- CFLAGS_REMOVE_timer.o = -pg
- CFLAGS_REMOVE_intc.o = -pg
--CFLAGS_REMOVE_early_printk.o = -pg
- CFLAGS_REMOVE_ftrace.o = -pg
- CFLAGS_REMOVE_process.o = -pg
- endif
+diff --git a/arch/microblaze/kernel/cpu/cpuinfo-static.c b/arch/microblaze/kernel/cpu/cpuinfo-static.c
+index 85dbda4a08a81..03da36dc6d9c9 100644
+--- a/arch/microblaze/kernel/cpu/cpuinfo-static.c
++++ b/arch/microblaze/kernel/cpu/cpuinfo-static.c
+@@ -18,7 +18,7 @@ static const char family_string[] = CONFIG_XILINX_MICROBLAZE0_FAMILY;
+ static const char cpu_ver_string[] = CONFIG_XILINX_MICROBLAZE0_HW_VER;
+ 
+ #define err_printk(x) \
+-	early_printk("ERROR: Microblaze " x "-different for kernel and DTS\n");
++	pr_err("ERROR: Microblaze " x "-different for kernel and DTS\n");
+ 
+ void __init set_cpuinfo_static(struct cpuinfo *ci, struct device_node *cpu)
+ {
 -- 
 2.43.0
 
