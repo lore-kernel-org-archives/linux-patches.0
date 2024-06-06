@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA26E19FA9C;
-	Thu,  6 Jun 2024 14:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C879E1A01A5;
+	Thu,  6 Jun 2024 14:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683631; cv=none; b=q7IBl5zBVO4OBiUlzl190SwR8VTCOUB/BmVhngCTzDaMo4G0zViq1AzQyAb27i3J6LImTYMXDjHnmrbaZjvIfXXGOGKtt1i3v0Qeqej8/2SW4g1l3ujcf3EGcJusVW1otAEqEkirHHnKMt5KNIbjzHP+khm5lu2csoBrvvBZFbg=
+	t=1717683632; cv=none; b=EPwL3bT1L9UL7BiCSPfT7DGC4AasujvHrFEt67rumc46KDllUm0+lxvL1Biy9b5hcboMXynTLYzFZP4Ezw5C+XFnWZs/FkmAzX3gxipQ2dQrjXoHHiZfIxeTb8CUR0eZBE3GvlN2H+JDClNnhfnoRRsNu1+EdjPm+i+bSQCQLIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683631; c=relaxed/simple;
-	bh=/cE+X/+97EYafsoYhuJZFsGMYpcZaHlflMw/WZjP9is=;
+	s=arc-20240116; t=1717683632; c=relaxed/simple;
+	bh=4BvJ3rcDHwSpuGZ5sb3lhnWSmGs36GYMuihfUAClvQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dp7TqWNHktFpw03KLa0g9ZvF8KIHgV2vAV+fXE5EsZM1WqliRlqJKZeYRATOfH+9i1ntE/0aF+Haai5IQdQe8XI/Xrm1At/OKNHUmoIgu7WUDWdsU5FZtElne9pzOv+2SHYqCoDwBL4Wl62qh1CakjH5R6MolZxt1tYSZhYZIhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5UVz8M/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ry3N/eizN4TTg6jaIFqYCIz8NR8I2ATqouwdXPulmNi2xBAG0YNf9NGz1erpA0y6qE73Sd7oryks5jJ8K4vQhNBgaVJRFVpdHo+tZH8guzz3eoDO1FMqvjycsuXG6Fe2PC9RnI5gw5X2/xsLmVQYMvYUuWw437zTQPsmcr1S1Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwjQkgu/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5UVz8M/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4576BC32781;
-	Thu,  6 Jun 2024 14:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwjQkgu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693BBC32781;
+	Thu,  6 Jun 2024 14:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683631;
-	bh=/cE+X/+97EYafsoYhuJZFsGMYpcZaHlflMw/WZjP9is=;
+	s=korg; t=1717683632;
+	bh=4BvJ3rcDHwSpuGZ5sb3lhnWSmGs36GYMuihfUAClvQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5UVz8M/mz6P3+/jhpaOI9Xh+l6twsEe0a79KU6LM75Hy9FMGAtLVypRARKm+6B/t
-	 DIV5BcYPcyd0QAZTOVJqVJjA8Mbh7IdtYMdQCu58Wcao6bcRQnMJmhDx/EilN0dgH5
-	 a0nqRv2cLPysudWvjbD5CcvG9Bpw21AqsoICHPg8=
+	b=hwjQkgu/IHsylm7ysLV+tMMTNqjrhfZbUjbZbiA9rwMeHOvsWUn9r4ZHQ2NSTV7G8
+	 LouFTIWIy4Oy8+kxGLCKR4oftLFH5Fy8ZVfYOfbZQFzBjyIrF6kPXvb9/iXKY/E42X
+	 OKjiGIbKQZSekBmYxDeA8SeUlBqfO49uaO4XMMrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 439/473] net/mlx5e: Fix IPsec tunnel mode offload feature check
-Date: Thu,  6 Jun 2024 16:06:08 +0200
-Message-ID: <20240606131714.243080584@linuxfoundation.org>
+Subject: [PATCH 6.1 453/473] net:fec: Add fec_enet_deinit()
+Date: Thu,  6 Jun 2024 16:06:22 +0200
+Message-ID: <20240606131714.675185456@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -53,53 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit 9a52f6d44f4521773b4699b4ed34b8e21d5a175c ]
+[ Upstream commit bf0497f53c8535f99b72041529d3f7708a6e2c0d ]
 
-Remove faulty check disabling checksum offload and GSO for offload of
-simple IPsec tunnel L4 traffic. Comment previously describing the deleted
-code incorrectly claimed the check prevented double tunnel (or three layers
-of ip headers).
+When fec_probe() fails or fec_drv_remove() needs to release the
+fec queue and remove a NAPI context, therefore add a function
+corresponding to fec_enet_init() and call fec_enet_deinit() which
+does the opposite to release memory and remove a NAPI context.
 
-Fixes: f1267798c980 ("net/mlx5: Fix checksum issue of VXLAN and IPsec crypto offload")
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 59d0f7465644 ("net: fec: init multi queue date structure")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240524050528.4115581-1-xiaolei.wang@windriver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en_accel/ipsec_rxtx.h    | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.h b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.h
-index 1878a70b9031d..43ccdf0e6cff8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.h
-@@ -97,18 +97,11 @@ mlx5e_ipsec_feature_check(struct sk_buff *skb, netdev_features_t features)
- 		if (!x || !x->xso.offload_handle)
- 			goto out_disable;
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index ebff14b0837d9..0a3df468316e5 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3732,6 +3732,14 @@ static int fec_enet_init(struct net_device *ndev)
+ 	return ret;
+ }
  
--		if (xo->inner_ipproto) {
--			/* Cannot support tunnel packet over IPsec tunnel mode
--			 * because we cannot offload three IP header csum
--			 */
--			if (x->props.mode == XFRM_MODE_TUNNEL)
--				goto out_disable;
--
--			/* Only support UDP or TCP L4 checksum */
--			if (xo->inner_ipproto != IPPROTO_UDP &&
--			    xo->inner_ipproto != IPPROTO_TCP)
--				goto out_disable;
--		}
-+		/* Only support UDP or TCP L4 checksum */
-+		if (xo->inner_ipproto &&
-+		    xo->inner_ipproto != IPPROTO_UDP &&
-+		    xo->inner_ipproto != IPPROTO_TCP)
-+			goto out_disable;
++static void fec_enet_deinit(struct net_device *ndev)
++{
++	struct fec_enet_private *fep = netdev_priv(ndev);
++
++	netif_napi_del(&fep->napi);
++	fec_enet_free_queue(ndev);
++}
++
+ #ifdef CONFIG_OF
+ static int fec_reset_phy(struct platform_device *pdev)
+ {
+@@ -4136,6 +4144,7 @@ fec_probe(struct platform_device *pdev)
+ 	fec_enet_mii_remove(fep);
+ failed_mii_init:
+ failed_irq:
++	fec_enet_deinit(ndev);
+ failed_init:
+ 	fec_ptp_stop(pdev);
+ failed_reset:
+@@ -4199,6 +4208,7 @@ fec_drv_remove(struct platform_device *pdev)
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
  
- 		return features;
- 
++	fec_enet_deinit(ndev);
+ 	free_netdev(ndev);
+ 	return 0;
+ }
 -- 
 2.43.0
 
