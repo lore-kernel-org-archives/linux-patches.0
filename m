@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF67199384;
-	Thu,  6 Jun 2024 14:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF5B19938D;
+	Thu,  6 Jun 2024 14:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683214; cv=none; b=oXdxThgnm1FqVzfZBg6GtVBV5G2NendpAbkGdOdGtoXjfzsO1gwzpuEX8OeiGraSIMW/X3vVCksmVoCIZc/dP5lh4/AXtw1bK35aR2XgKdjhFQOMxtgVmc2fXkmpeRFeAwN5Midoo499HmqJnmjDNMeMCW2z98knSO5TRJ7WNvI=
+	t=1717683215; cv=none; b=ASMi1MXRbyyfV0Ps656cup9NgU4ZnXLushteP681kQizcF+PbobZvSVgbNoSpxhsn86PDUapxh3GOmKjY5f0rf3T0QzF8attxpF6Y5gPny3piEGH4CfN2/F/L9czlEExR/sG9ES1VVEeosXjOo53Znl3Z33E/NI0b9MtRfAwpZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683214; c=relaxed/simple;
-	bh=3WtBLbz47Flachn3Ae+6fMBm2nFIsxpHecrOgC1QDaQ=;
+	s=arc-20240116; t=1717683215; c=relaxed/simple;
+	bh=o04hx/NAmh0Y+qRgTne+wex8yd+K49QB3scqVtQWeRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+OxnsZvNmxfp7yQ+sWqRI4RyP9iMjM5hlQfDfKRSfJlCQE5jFSdYZWT31unPZfkBjrkC0UjnIfkctHE47UEQEeemtJeaCNOuWu9fSvs8r2EeKOeT0LGsxv8nFmWvSDWd1ZYRlUK9oRrv1+lJlvIvZTAaoIcR1f+BgCcZ+9ZQ9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUQF2Nsv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LKT3xxoevkUhuZVBdx+URwr0++2A9vNivTPnSr04eED52VZPZFzWK0yWCC7EpAX+GWgjz19+Qj97bH8Tu746nPBxRs3jv7TumqapWZZG3CcrFx83SHFillFF6GQJa/C+v/T5N/PQEpxXMUFBTeWA/KHeNij1h3CbDPJveYECngc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxCwoX/E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUQF2Nsv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674E5C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxCwoX/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E22C2BD10;
 	Thu,  6 Jun 2024 14:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683214;
-	bh=3WtBLbz47Flachn3Ae+6fMBm2nFIsxpHecrOgC1QDaQ=;
+	bh=o04hx/NAmh0Y+qRgTne+wex8yd+K49QB3scqVtQWeRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUQF2Nsv7xYe0tQcQ4oizI1CMamQ5xkiLwXI9nDlbmYGPN29vcTQMp4bn6QhRa9g1
-	 xBKJ6mTWYURoHHwklH3HtMewnQ+U8wgcPBN1Q4t72SW0+OV88u8Iq9JIZeYPxB5Lrk
-	 eJeskzjFOXmRFbV2Qu10rcP2+oofZJYGo+RXRrmk=
+	b=kxCwoX/ECkyRnixpAOLN4jW+JW0CIV3D/DInJC80aMYvLG8nRVzL+5wuQz7LcU+BT
+	 nTcljKLtxuv2cTzTahxPFy5D4/kt54O5Zl3jvy7E6zGtgV+A8wEZrl4zUwlGMPuKRm
+	 9jKjOWyrwnAsbZeEHUPv4vdGfekzBBx12LFki9XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Can Guo <quic_cang@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 157/744] scsi: ufs: core: Perform read back after disabling UIC_COMMAND_COMPL
-Date: Thu,  6 Jun 2024 15:57:09 +0200
-Message-ID: <20240606131737.463091283@linuxfoundation.org>
+Subject: [PATCH 6.1 092/473] wifi: ath11k: dont force enable power save on non-running vdevs
+Date: Thu,  6 Jun 2024 16:00:21 +0200
+Message-ID: <20240606131702.953612376@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,54 +47,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 4bf3855497b60765ca03b983d064b25e99b97657 ]
+[ Upstream commit 01296b39d3515f20a1db64d3c421c592b1e264a0 ]
 
-Currently, the UIC_COMMAND_COMPL interrupt is disabled and a wmb() is used
-to complete the register write before any following writes.
+Currently we force enable power save on non-running vdevs, this results
+in unexpected ping latency in below scenarios:
+	1. disable power save from userspace.
+	2. trigger suspend/resume.
 
-wmb() ensures the writes complete in that order, but completion doesn't
-mean that it isn't stored in a buffer somewhere. The recommendation for
-ensuring this bit has taken effect on the device is to perform a read back
-to force it to make it all the way to the device. This is documented in
-device-io.rst and a talk by Will Deacon on this can be seen over here:
+With step 1 power save is disabled successfully and we get a good latency:
 
-    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+64 bytes from 192.168.1.1: icmp_seq=1 ttl=64 time=5.13 ms
+64 bytes from 192.168.1.1: icmp_seq=2 ttl=64 time=5.45 ms
+64 bytes from 192.168.1.1: icmp_seq=3 ttl=64 time=5.99 ms
+64 bytes from 192.168.1.1: icmp_seq=4 ttl=64 time=6.34 ms
+64 bytes from 192.168.1.1: icmp_seq=5 ttl=64 time=4.47 ms
+64 bytes from 192.168.1.1: icmp_seq=6 ttl=64 time=6.45 ms
 
-Let's do that to ensure the bit hits the device. Because the wmb()'s
-purpose wasn't to add extra ordering (on top of the ordering guaranteed by
-writel()/readl()), it can safely be removed.
+While after step 2, the latency becomes much larger:
 
-Fixes: d75f7fe495cf ("scsi: ufs: reduce the interrupts for power mode change requests")
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Can Guo <quic_cang@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-9-181252004586@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+64 bytes from 192.168.1.1: icmp_seq=1 ttl=64 time=17.7 ms
+64 bytes from 192.168.1.1: icmp_seq=2 ttl=64 time=15.0 ms
+64 bytes from 192.168.1.1: icmp_seq=3 ttl=64 time=14.3 ms
+64 bytes from 192.168.1.1: icmp_seq=4 ttl=64 time=16.5 ms
+64 bytes from 192.168.1.1: icmp_seq=5 ttl=64 time=20.1 ms
+
+The reason is, with step 2, power save is force enabled due to vdev not
+running, although mac80211 was trying to disable it to honor userspace
+configuration:
+
+ath11k_pci 0000:03:00.0: wmi cmd sta powersave mode psmode 1 vdev id 0
+Call Trace:
+ ath11k_wmi_pdev_set_ps_mode
+ ath11k_mac_op_bss_info_changed
+ ieee80211_bss_info_change_notify
+ ieee80211_reconfig
+ ieee80211_resume
+ wiphy_resume
+
+This logic is taken from ath10k where it was added due to below comment:
+
+	Firmware doesn't behave nicely and consumes more power than
+	necessary if PS is disabled on a non-started vdev.
+
+However we don't know whether such an issue also occurs to ath11k firmware
+or not. But even if it does, it's not appropriate because it goes against
+userspace, even cfg/mac80211 don't know we have enabled it in fact.
+
+Remove it to fix this issue. In this way we not only get a better latency,
+but also, and the most important, keeps the consistency between userspace
+and kernel/driver. The biggest price for that would be the power consumption,
+which is not that important, compared with the consistency.
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+
+Fixes: b2beffa7d9a6 ("ath11k: enable 802.11 power save mode in station mode")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240309113115.11498-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/mac.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 2371b00c56be9..589c90f4d4021 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -4136,7 +4136,7 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
- 		 * Make sure UIC command completion interrupt is disabled before
- 		 * issuing UIC command.
- 		 */
--		wmb();
-+		ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
- 		reenable_intr = true;
- 	}
- 	spin_unlock_irqrestore(hba->host->host_lock, flags);
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index 51fc77e93de5c..b863ead198bda 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -1226,14 +1226,7 @@ static int ath11k_mac_vif_setup_ps(struct ath11k_vif *arvif)
+ 
+ 	enable_ps = arvif->ps;
+ 
+-	if (!arvif->is_started) {
+-		/* mac80211 can update vif powersave state while disconnected.
+-		 * Firmware doesn't behave nicely and consumes more power than
+-		 * necessary if PS is disabled on a non-started vdev. Hence
+-		 * force-enable PS for non-running vdevs.
+-		 */
+-		psmode = WMI_STA_PS_MODE_ENABLED;
+-	} else if (enable_ps) {
++	if (enable_ps) {
+ 		psmode = WMI_STA_PS_MODE_ENABLED;
+ 		param = WMI_STA_PS_PARAM_INACTIVITY_TIME;
+ 
 -- 
 2.43.0
 
