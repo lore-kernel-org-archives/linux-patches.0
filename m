@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBCE19AD9B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63F919AD9B;
 	Thu,  6 Jun 2024 14:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683049; cv=none; b=Us2m2C8EMw+aaH+72UJ4oLkYvPlQOa9lfGhX36TXPe66fzrVg5FrHPfq17dJLzpZR2SHyd2GOdHNjSJFoCzRseE6u/+nquGHKs5d9zQD0EAwWKe/BTK5bLEvanseBWxBjrOXIwVSrqPYH4GmfRViUshW8c7u8ZO/E4wpfb1Gf1o=
+	t=1717683049; cv=none; b=Y0ctH3GjwHgw3qV1LKbdXleHq7UukaBHYul9Ek3myK9flVl4L4Gl4yoqvFyckWv1Qjx1NEMdNsKFH8/Ol5ZRdpAh35Nk+OoRhuhY03Z8LDYJ4PbBcbvAxHBm11Ohff7MGa7fhhd5qSGH7dMgPUVmfMj9AmSnCxUdNfqbwt2yNJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683049; c=relaxed/simple;
-	bh=NbjjPLa6mGeDoRMOLAcSYiYlek2dLbyYjs+lJ9Sk5ic=;
+	bh=eCu3PT9GjikZqpvgsMa76l9r31WPU+QLNXmfDEf9JXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=loMHA6WgRnr/pvSya+PPN1DWn3M530Fq82qXFyQ6HUXc9BBO8oDfsUeZk3gotlJo2gzOWX5HRpZ474gThwRpD+3aucCR9yxZ+rkEA5Vrb1R71DlXiTgXBRfncoErJYtN6Scozdkx6B67mqz40tCNxcWfkoQyBK05G5KhZAxPOYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPSCCwc+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H5dKntA/Ne46OWNdcGxEzPYBcgIUiHZpSrAQ/L1c/JVN61xdSwz/JC+SEI+Qroqyfv+QZFzvE7DE49FDx7E3OpFHvYeF0LHs0iZiJqq97gJlzhzl+eBMb+QgVEcNx9v8pZMZpktnUusq5N1mv8299uG0ldBkbc/A9I5NAbh7jIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3hBdnqv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPSCCwc+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9D0C32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3hBdnqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859CFC4AF0C;
 	Thu,  6 Jun 2024 14:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683049;
-	bh=NbjjPLa6mGeDoRMOLAcSYiYlek2dLbyYjs+lJ9Sk5ic=;
+	bh=eCu3PT9GjikZqpvgsMa76l9r31WPU+QLNXmfDEf9JXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EPSCCwc+Al2CBXp9vj14T1zpT/ZcpwK5Kn0ifO4xli3eLVxiWwi7fZlWgviIZeMfw
-	 fNrri/pQAczz/SVQoqf4E8n6DYR5tUUTIi9kSYhGuzfYNk2HWREaeaUnPashr9YnQd
-	 Viyn/qbxU7loOcZlfx9bZ5nTrFy1D2cmnx9OFYkw=
+	b=P3hBdnqviHpCn1sHMxpRQZreWedT1Y2o9VolZHdbiORAyfrOt6XP0ubvMVsxCATic
+	 J16ZsZzy8GHUWOkfMy8FlMZfhJQRUSMZPVJU1FZcuStPP0699Ep3oG1EISuQyRsFC+
+	 b2Sa+RzR72uNQbgEfpRtQoZH20Ui6LRmgINJIEJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Christoph Hellwig <hch@lst.de>,
+	Ryosuke Yasuoka <ryasuoka@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 288/374] dma-mapping: benchmark: fix up kthread-related error handling
-Date: Thu,  6 Jun 2024 16:04:27 +0200
-Message-ID: <20240606131701.543239557@linuxfoundation.org>
+Subject: [PATCH 6.9 271/374] nfc: nci: Fix handling of zero-length payload packets in nci_rx_work()
+Date: Thu,  6 Jun 2024 16:04:10 +0200
+Message-ID: <20240606131700.980016923@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,76 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Ryosuke Yasuoka <ryasuoka@redhat.com>
 
-[ Upstream commit bb9025f4432f8c158322cf2c04c2b492f23eb511 ]
+[ Upstream commit 6671e352497ca4bb07a96c48e03907065ff77d8a ]
 
-kthread creation failure is invalidly handled inside do_map_benchmark().
-The put_task_struct() calls on the error path are supposed to balance the
-get_task_struct() calls which only happen after all the kthreads are
-successfully created. Rollback using kthread_stop() for already created
-kthreads in case of such failure.
+When nci_rx_work() receives a zero-length payload packet, it should not
+discard the packet and exit the loop. Instead, it should continue
+processing subsequent packets.
 
-In normal situation call kthread_stop_put() to gracefully stop kthreads
-and put their task refcounts. This should be done for all started
-kthreads.
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 65789daa8087 ("dma-mapping: add benchmark support for streaming DMA APIs")
-Suggested-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: d24b03535e5e ("nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet")
+Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240521153444.535399-1-ryasuoka@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/map_benchmark.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/nfc/nci/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/dma/map_benchmark.c b/kernel/dma/map_benchmark.c
-index 02205ab53b7e9..2478957cf9f83 100644
---- a/kernel/dma/map_benchmark.c
-+++ b/kernel/dma/map_benchmark.c
-@@ -118,6 +118,8 @@ static int do_map_benchmark(struct map_benchmark_data *map)
- 		if (IS_ERR(tsk[i])) {
- 			pr_err("create dma_map thread failed\n");
- 			ret = PTR_ERR(tsk[i]);
-+			while (--i >= 0)
-+				kthread_stop(tsk[i]);
- 			goto out;
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 7a9897fbf4f41..f456a5911e7d1 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1531,8 +1531,7 @@ static void nci_rx_work(struct work_struct *work)
+ 
+ 		if (!nci_valid_size(skb)) {
+ 			kfree_skb(skb);
+-			kcov_remote_stop();
+-			break;
++			continue;
  		}
  
-@@ -139,13 +141,17 @@ static int do_map_benchmark(struct map_benchmark_data *map)
- 
- 	msleep_interruptible(map->bparam.seconds * 1000);
- 
--	/* wait for the completion of benchmark threads */
-+	/* wait for the completion of all started benchmark threads */
- 	for (i = 0; i < threads; i++) {
--		ret = kthread_stop(tsk[i]);
--		if (ret)
--			goto out;
-+		int kthread_ret = kthread_stop_put(tsk[i]);
-+
-+		if (kthread_ret)
-+			ret = kthread_ret;
- 	}
- 
-+	if (ret)
-+		goto out;
-+
- 	loops = atomic64_read(&map->loops);
- 	if (likely(loops > 0)) {
- 		u64 map_variance, unmap_variance;
-@@ -170,8 +176,6 @@ static int do_map_benchmark(struct map_benchmark_data *map)
- 	}
- 
- out:
--	for (i = 0; i < threads; i++)
--		put_task_struct(tsk[i]);
- 	put_device(map->dev);
- 	kfree(tsk);
- 	return ret;
+ 		/* Process frame */
 -- 
 2.43.0
 
