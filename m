@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC9319E7FF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD8A19E7FF;
 	Thu,  6 Jun 2024 14:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683543; cv=none; b=Z8zIKYKoZXhGmt9BlUSwNqGrcF4LFZehfqEUGHQNpsKySLZuUoKZeKqqbn1HayTbqt48HT1iWKcJM/FL+uK8XOHd0nbooWQnZuqkJQ/P4AE82rRGw/yYc0wGJWhYSgD330wLyCO0wgT5sFsVth3AqDj1IlycP+XHsN5KwAi4CI4=
+	t=1717683543; cv=none; b=HIl+4nx96onm3wfr4OkIz/NUKzCXlelfwy3roUA1D2zl6AsyKzZSSx+HJVWpv+nnRhzYhlpI+YJMs6CSEwgZSuSxkA97EHtabmc5ivBXCzr9Yv2CY5cpX5lKoEIaVC6E3IvkF2M6v7ftWaV7Q6G7JV4jtIrwXiqq16H76mEs+ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683543; c=relaxed/simple;
-	bh=gQhuXz5l+t7B1I/6P7sKnBdDvHTOPSIyScrsDFCOdA4=;
+	bh=whXzKEwc2o5sTlzPC+innY/yOdNCFO+Hpk796URxpX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HayDdG04B0lT0vswupCburSWmLrgj5rAK99DCH0KyKxQSxtnOlXErE2ynKtv3FqvbrxmjoBY61yf/vXLJepEu1w5R0UkTmu9Z3mF27+ydkX4E3hncz+qVx1B9eZt2WGM+ngG9045yERNgu8HVJlCjy4WNi8CjKqcDAfKmpXcdYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqQFTGcp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mARgvxANQYwQTn8hdlARK9RyKdZwoX15yD8ozn3gOdJe7QY0XpFKmhD6GC+Cuk4VlTy3hGdLGj6p4tN1kZccNZ/Vv5kRoS54y5MCW9mXXEVZrOhmzUOUEr3Zoz+mo8ukhaARJr2/XDKowJttEfLdrbcxiCI8CWytY4klYaKNBt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5OdLkxq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqQFTGcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D00C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5OdLkxq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C111C2BD10;
 	Thu,  6 Jun 2024 14:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683543;
-	bh=gQhuXz5l+t7B1I/6P7sKnBdDvHTOPSIyScrsDFCOdA4=;
+	bh=whXzKEwc2o5sTlzPC+innY/yOdNCFO+Hpk796URxpX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZqQFTGcp/0psHOkDPIJZFeZzbRceeOPbHFMjcc0ZCrG/TmsVeBiusnI7961iiAC+x
-	 +5zmN6z+4rj7UlXqoHVH/fgg3uOX+inwGRZHTGAZpn+BxR6ywHbUY0cRxByo+QBF9w
-	 +w6uxKPALywG065Rtu2zGCgwm00BAPkkpumLoUFY=
+	b=K5OdLkxq2ecZCOohGOIeawcvV04cGd7LVOSYOswqg0chgcsvyf3pQP14Mc19uKnZ8
+	 1Z+slc3DC2lwmNln7+a8F/CrhcjUSrr96O8XTN9ohqJEWAYjI1oyOYDnujC311chOc
+	 ObYBJ3sxwQqxghDOi7NF8s8Vw0rTS5JyoG79ucFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 482/744] watchdog: bd9576: Drop "always-running" property
-Date: Thu,  6 Jun 2024 16:02:34 +0200
-Message-ID: <20240606131747.922075320@linuxfoundation.org>
+Subject: [PATCH 6.1 433/473] spi: Dont mark message DMA mapped when no transfer in it is
+Date: Thu,  6 Jun 2024 16:06:02 +0200
+Message-ID: <20240606131714.060388623@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,86 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit e3b3afd34d84efcbe4543deb966b1990f43584b8 ]
+[ Upstream commit 9f788ba457b45b0ce422943fcec9fa35c4587764 ]
 
-The always-running (from linux,wdt-gpio.yaml) is abused by the BD9576
-watchdog driver. It's defined meaning is "the watchdog is always running
-and can not be stopped". The BD9576 watchdog driver has implemented it
-as "start watchdog when loading the module and prevent it from being
-stopped".
+There is no need to set the DMA mapped flag of the message if it has
+no mapped transfers. Moreover, it may give the code a chance to take
+the wrong paths, i.e. to exercise DMA related APIs on unmapped data.
+Make __spi_map_msg() to bail earlier on the above mentioned cases.
 
-Furthermore, the implementation does not set the WDOG_HW_RUNNING when
-enabling the watchdog due to the "always-running" at module loading.
-This will end up resulting a watchdog timeout if the device is not
-opened.
-
-The culprit was pointed out by Guenter, discussion can be found from
-https://lore.kernel.org/lkml/4fa3a64b-60fb-4e5e-8785-0f14da37eea2@roeck-us.net/
-
-Drop the invalid "always-running" handling.
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: b237bcac557a ("wdt: Support wdt on ROHM BD9576MUF and BD9573MUF")
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/ZhPAt76yaJMersXf@fedora
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 99adef310f68 ("spi: Provide core support for DMA mapping transfers")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://msgid.link/r/20240522171018.3362521-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/bd9576_wdt.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ drivers/spi/spi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/watchdog/bd9576_wdt.c b/drivers/watchdog/bd9576_wdt.c
-index 4a20e07fbb699..f00ea1b4e40b6 100644
---- a/drivers/watchdog/bd9576_wdt.c
-+++ b/drivers/watchdog/bd9576_wdt.c
-@@ -29,7 +29,6 @@ struct bd9576_wdt_priv {
- 	struct gpio_desc	*gpiod_en;
- 	struct device		*dev;
- 	struct regmap		*regmap;
--	bool			always_running;
- 	struct watchdog_device	wdd;
- };
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 1018feff468c9..50fe5aa450f84 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -1147,6 +1147,7 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
+ 	else
+ 		rx_dev = ctlr->dev.parent;
  
-@@ -62,10 +61,7 @@ static int bd9576_wdt_stop(struct watchdog_device *wdd)
- {
- 	struct bd9576_wdt_priv *priv = watchdog_get_drvdata(wdd);
++	ret = -ENOMSG;
+ 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
+ 		/* The sync is done before each transfer. */
+ 		unsigned long attrs = DMA_ATTR_SKIP_CPU_SYNC;
+@@ -1176,6 +1177,9 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
+ 			}
+ 		}
+ 	}
++	/* No transfer has been mapped, bail out with success */
++	if (ret)
++		return 0;
  
--	if (!priv->always_running)
--		bd9576_wdt_disable(priv);
--	else
--		set_bit(WDOG_HW_RUNNING, &wdd->status);
-+	bd9576_wdt_disable(priv);
- 
- 	return 0;
- }
-@@ -264,9 +260,6 @@ static int bd9576_wdt_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	priv->always_running = device_property_read_bool(dev->parent,
--							 "always-running");
--
- 	watchdog_set_drvdata(&priv->wdd, priv);
- 
- 	priv->wdd.info			= &bd957x_wdt_ident;
-@@ -281,9 +274,6 @@ static int bd9576_wdt_probe(struct platform_device *pdev)
- 
- 	watchdog_stop_on_reboot(&priv->wdd);
- 
--	if (priv->always_running)
--		bd9576_wdt_start(&priv->wdd);
--
- 	return devm_watchdog_register_device(dev, &priv->wdd);
- }
- 
+ 	ctlr->cur_rx_dma_dev = rx_dev;
+ 	ctlr->cur_tx_dma_dev = tx_dev;
 -- 
 2.43.0
 
