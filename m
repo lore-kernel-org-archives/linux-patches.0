@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2770E196DA6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B90F1ABCC4;
 	Thu,  6 Jun 2024 14:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683288; cv=none; b=rD23EZ6VO0AQG4liF8cB/uesfM1avS2ei3tDR8ARJW6B9IqpWJMNOOYuxaoE0nqFQR0YqMlPJry8PHg0kd99oxAtPNfv6PxS5VDo2aWOr9qekFjfmmkzBl8QCSDKC0LiWGWLUJH2rcDeA4rCVe9mYuyD73mfyn9SdAFx60jD9i0=
+	t=1717683288; cv=none; b=qcweRgbtK0F2IFV0JGlChEww+c0b0EgJ3XHv3lq8IxJjbIKcHEWqt0C2dvEd7lTr8gkoD2WCFdcBd4MhB3xDD6Gw+pQPhaSO6uGRxtDImrOKJ3kTp7Phey0T1p6QvIxjnJXaQ4Ho6b0Lqxw8vNMZ6dCL7k3xfKuyS+Ljh/klFdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683288; c=relaxed/simple;
-	bh=XuqGG3jZoC2q+VwpCmyASdcR8Poq5oGqUISe23/OGHI=;
+	bh=jnnu74GelYzaIq7e5PynIy3Nl0MWJ4B914AG+JE6fJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bw7oDFMK2YsucR9Eqw+2KgYMumKEKaqkWbsnY46y5PnP4RAK28FIvRqG1NBpu1HP6i8LoOeR0iiCi52fUleE/Taq7x/QYtiHOUc1OYzlS0b+j2jF1FKS9jDMqclsMSyavDQPdNTTx9PnyedEUcquorYXiQ+Iu5xVel7zIGzmJgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxS9wax+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BG1oTlCcCIYOxNWvzpiODUCv5kvJrA7PFZJpkunqDrxlGpXKd+YZAV6WQDnvmNEgp8l30Ympuk+dQzszyttquu0jMqW8qYGeCBFnid+V2glaBWR0wWdRAyKQ2uaSSyEzOnaKRZJkHJ7grosb0LElzbRNwg1NjV4zQTA/Vj9yZQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npy/e6y8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxS9wax+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF766C2BD10;
-	Thu,  6 Jun 2024 14:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npy/e6y8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A45BC2BD10;
+	Thu,  6 Jun 2024 14:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683288;
-	bh=XuqGG3jZoC2q+VwpCmyASdcR8Poq5oGqUISe23/OGHI=;
+	bh=jnnu74GelYzaIq7e5PynIy3Nl0MWJ4B914AG+JE6fJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxS9wax+wQUgree4T2B7Gy8pJ1zDKlWeSE0fXbsM/IDtugAjqdPU8ZX4zSXAv6/fq
-	 DUy/gro7n5Nzna3mtYfio2g0QWdy9e44mKWyWesTY3lLPc8gSk09YVHap36Hu5AORL
-	 CcewVBbgWx4Hh3PCosTeNBvQ7LwncSvgi40J3YoQ=
+	b=npy/e6y8XKEVlmDDh3DSNrnvUWUZNbvU8YPfUEy9pBrwvzX7J5eJgVbNK1rf12P/w
+	 spDe00NKwS5sPt1rBTAWV2P3esVtVyaAjIs9kJC37yCdGbFyS2zY4UPevo09flCtGc
+	 7skXe70MozDMCZYhhZfbSua5UY5m3n3pzs3dAOhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	Hao Chen <chenhao418@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Will Deacon <will@kernel.org>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/473] drivers/perf: hisi: hns3: Fix out-of-bound access when valid event group
-Date: Thu,  6 Jun 2024 16:01:11 +0200
-Message-ID: <20240606131704.635559997@linuxfoundation.org>
+Subject: [PATCH 6.6 229/744] kernel/numa.c: Move logging out of numa.h
+Date: Thu,  6 Jun 2024 15:58:21 +0200
+Message-ID: <20240606131739.737314826@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,71 +46,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junhao He <hejunhao3@huawei.com>
+From: Kent Overstreet <kent.overstreet@linux.dev>
 
-[ Upstream commit 81bdd60a3d1d3b05e6cc6674845afb1694dd3a0e ]
+[ Upstream commit d7a73e3f089204aee3393687e23fd45a22657b08 ]
 
-The perf tool allows users to create event groups through following
-cmd [1], but the driver does not check whether the array index is out
-of bounds when writing data to the event_group array. If the number of
-events in an event_group is greater than HNS3_PMU_MAX_HW_EVENTS, the
-memory write overflow of event_group array occurs.
+Moving these stub functions to a .c file means we can kill a sched.h
+dependency on printk.h.
 
-Add array index check to fix the possible array out of bounds violation,
-and return directly when write new events are written to array bounds.
-
-There are 9 different events in an event_group.
-[1] perf stat -e '{pmu/event1/, ... ,pmu/event9/}
-
-Fixes: 66637ab137b4 ("drivers/perf: hisi: add driver for HNS3 PMU")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Signed-off-by: Hao Chen <chenhao418@huawei.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://lore.kernel.org/r/20240425124627.13764-3-hejunhao3@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
+Stable-dep-of: f9f67e5adc8d ("x86/numa: Fix SRAT lookup of CFMWS ranges with numa_fill_memblks()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/hisilicon/hns3_pmu.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ include/linux/numa.h | 19 ++++++-------------
+ kernel/Makefile      |  1 +
+ kernel/numa.c        | 26 ++++++++++++++++++++++++++
+ 3 files changed, 33 insertions(+), 13 deletions(-)
+ create mode 100644 kernel/numa.c
 
-diff --git a/drivers/perf/hisilicon/hns3_pmu.c b/drivers/perf/hisilicon/hns3_pmu.c
-index 16869bf5bf4cc..cbdd53b0a0342 100644
---- a/drivers/perf/hisilicon/hns3_pmu.c
-+++ b/drivers/perf/hisilicon/hns3_pmu.c
-@@ -1085,15 +1085,27 @@ static bool hns3_pmu_validate_event_group(struct perf_event *event)
- 			return false;
+diff --git a/include/linux/numa.h b/include/linux/numa.h
+index a904861de8000..915033a757315 100644
+--- a/include/linux/numa.h
++++ b/include/linux/numa.h
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ #ifndef _LINUX_NUMA_H
+ #define _LINUX_NUMA_H
++#include <linux/init.h>
+ #include <linux/types.h>
  
- 		for (num = 0; num < counters; num++) {
-+			/*
-+			 * If we find a related event, then it's a valid group
-+			 * since we don't need to allocate a new counter for it.
-+			 */
- 			if (hns3_pmu_cmp_event(event_group[num], sibling))
- 				break;
- 		}
+ #ifdef CONFIG_NODES_SHIFT
+@@ -22,34 +23,26 @@
+ #endif
  
-+		/*
-+		 * Otherwise it's a new event but if there's no available counter,
-+		 * fail the check since we cannot schedule all the events in
-+		 * the group simultaneously.
-+		 */
-+		if (num == HNS3_PMU_MAX_HW_EVENTS)
-+			return false;
+ #ifdef CONFIG_NUMA
+-#include <linux/printk.h>
+ #include <asm/sparsemem.h>
+ 
+ /* Generic implementation available */
+ int numa_nearest_node(int node, unsigned int state);
+ 
+ #ifndef memory_add_physaddr_to_nid
+-static inline int memory_add_physaddr_to_nid(u64 start)
+-{
+-	pr_info_once("Unknown online node for memory at 0x%llx, assuming node 0\n",
+-			start);
+-	return 0;
+-}
++int memory_add_physaddr_to_nid(u64 start);
+ #endif
 +
- 		if (num == counters)
- 			event_group[counters++] = sibling;
- 	}
- 
--	return counters <= HNS3_PMU_MAX_HW_EVENTS;
-+	return true;
+ #ifndef phys_to_target_node
+-static inline int phys_to_target_node(u64 start)
+-{
+-	pr_info_once("Unknown target node for memory at 0x%llx, assuming node 0\n",
+-			start);
+-	return 0;
+-}
++int phys_to_target_node(u64 start);
+ #endif
++
+ #ifndef numa_fill_memblks
+ static inline int __init numa_fill_memblks(u64 start, u64 end)
+ {
+ 	return NUMA_NO_MEMBLK;
  }
+ #endif
++
+ #else /* !CONFIG_NUMA */
+ static inline int numa_nearest_node(int node, unsigned int state)
+ {
+diff --git a/kernel/Makefile b/kernel/Makefile
+index 3947122d618bf..ce105a5558fcf 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -114,6 +114,7 @@ obj-$(CONFIG_SHADOW_CALL_STACK) += scs.o
+ obj-$(CONFIG_HAVE_STATIC_CALL) += static_call.o
+ obj-$(CONFIG_HAVE_STATIC_CALL_INLINE) += static_call_inline.o
+ obj-$(CONFIG_CFI_CLANG) += cfi.o
++obj-$(CONFIG_NUMA) += numa.o
  
- static u32 hns3_pmu_get_filter_condition(struct perf_event *event)
+ obj-$(CONFIG_PERF_EVENTS) += events/
+ 
+diff --git a/kernel/numa.c b/kernel/numa.c
+new file mode 100644
+index 0000000000000..67ca6b8585c06
+--- /dev/null
++++ b/kernel/numa.c
+@@ -0,0 +1,26 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++#include <linux/printk.h>
++#include <linux/numa.h>
++
++/* Stub functions: */
++
++#ifndef memory_add_physaddr_to_nid
++int memory_add_physaddr_to_nid(u64 start)
++{
++	pr_info_once("Unknown online node for memory at 0x%llx, assuming node 0\n",
++			start);
++	return 0;
++}
++EXPORT_SYMBOL_GPL(memory_add_physaddr_to_nid);
++#endif
++
++#ifndef phys_to_target_node
++int phys_to_target_node(u64 start)
++{
++	pr_info_once("Unknown target node for memory at 0x%llx, assuming node 0\n",
++			start);
++	return 0;
++}
++EXPORT_SYMBOL_GPL(phys_to_target_node);
++#endif
 -- 
 2.43.0
 
