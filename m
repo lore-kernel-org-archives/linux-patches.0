@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E9E1993A8;
-	Thu,  6 Jun 2024 14:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B3E1993A8;
+	Thu,  6 Jun 2024 14:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683231; cv=none; b=qXoxQGaAmoTfDyc3aaPFduTSAXIMhLJ/HLUgTcjX8MdgX4AgirYlfSx4A4NqKAMOJtVsqdB6BInDtU0N61HKsCvQnby9+S13l/clQtGETf405HWdXY4gelIV7SElEiKr/hLZcu8mPFhIoaJSAIhVONw5l4RB8yfF3A0f/eKF5Tk=
+	t=1717683232; cv=none; b=dyXoN3k3PuXTwzXJ9vsdcUja4EwSEeEcHY9FvDjD9D+8/CysupfYTPv9TMmevqRlEToZiCsyTVWfM0oIqk0GJEJK+9TPoJaXJeLGCwKj0kz4znpvxtY/g+Lt9Womo3YxT0dMplUg9JiF/aSo7jaESMrINCuWIynDni67PvZZJVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683231; c=relaxed/simple;
-	bh=AhuTzB4mUg1Vx5/r27cyOwdVdsSayRhj4denapFZNlA=;
+	s=arc-20240116; t=1717683232; c=relaxed/simple;
+	bh=gGu/pMAH9zkLRJZlBccYCwPlmEPI+kHICWTWVaW2rGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5mzGlq+bhFGRIf1f5l6MNuCn3//kPj/wmhsebBB+PoHcgCusxCa77l88ZfpwLf7BfstI+ZksVn+wTmpjjHvAVzXtzdd1qaF6nh7M+TZuulJ6yXkQYbS6hHnnV9jqbkWJKvs5/NXY7ELmK2frwf6bZoQsBSXGJuscXa9cO+3hc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXlqw2NZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dc/nJucLYdub1kprCHpCR24QjpYCS3UWrAnb/YeimMNV7U5NGZtjHN4mCDmLNYEV6faZyKgl/uMasywY4kZAO2We/LTNsn7WGJZi6bhZM4Y3rHcZDutD58PqQTKDda8QXTkaN47+ZKg78KswhDrf070jsXwH2A2Sg9ndqRhoRN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6vqut5P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXlqw2NZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62FEC32781;
-	Thu,  6 Jun 2024 14:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6vqut5P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E8BC2BD10;
+	Thu,  6 Jun 2024 14:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683231;
-	bh=AhuTzB4mUg1Vx5/r27cyOwdVdsSayRhj4denapFZNlA=;
+	s=korg; t=1717683232;
+	bh=gGu/pMAH9zkLRJZlBccYCwPlmEPI+kHICWTWVaW2rGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXlqw2NZ1sYr612JiT2Njh1ciS6EDXSmxWJ9oQMXX+oBo27MPUZ+AyPWlwI0y+ksZ
-	 fAnNLnD4AjWqH47Q1zrAZfTuLAiueq4rLiwUj2aGrH8kXhCp0ea6Gp3rjF7AzNno0x
-	 Tsz0RzrehqNQgzCP9CuZpkaOYjjwIfvedSNDT0/U=
+	b=J6vqut5Pif7ZLJXaNi/50W1uo/4JLfrgYuuGqZext2uAEq6XGz/ICRB3wpcN5+bLB
+	 iNj3ArYqnRLI4n/3hv/XKFHAAJyNjU2ucBbAuiw5zlvmIreYCn10jt0VIjsek21DxT
+	 aD8hQUCqmG2Z8u/OiqD6cRwSQRMftqHVncq9EEnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Arnd Bergmann <arnd@arndb.de>,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	Justin Stitt <justinstitt@google.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 143/744] mlx5: stop warning for 64KB pages
-Date: Thu,  6 Jun 2024 15:56:55 +0200
-Message-ID: <20240606131737.007835657@linuxfoundation.org>
+Subject: [PATCH 6.1 071/473] nilfs2: fix out-of-range warning
+Date: Thu,  6 Jun 2024 16:00:00 +0200
+Message-ID: <20240606131702.226304814@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,59 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a5535e5336943b33689f558199366102387b7bbf ]
+[ Upstream commit c473bcdd80d4ab2ae79a7a509a6712818366e32a ]
 
-When building with 64KB pages, clang points out that xsk->chunk_size
-can never be PAGE_SIZE:
+clang-14 points out that v_size is always smaller than a 64KB
+page size if that is configured by the CPU architecture:
 
-drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c:19:22: error: result of comparison of constant 65536 with expression of type 'u16' (aka 'unsigned short') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
-        if (xsk->chunk_size > PAGE_SIZE ||
-            ~~~~~~~~~~~~~~~ ^ ~~~~~~~~~
+fs/nilfs2/ioctl.c:63:19: error: result of comparison of constant 65536 with expression of type '__u16' (aka 'unsigned short') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+        if (argv->v_size > PAGE_SIZE)
+            ~~~~~~~~~~~~ ^ ~~~~~~~~~
 
-In older versions of this code, using PAGE_SIZE was the only
-possibility, so this would have never worked on 64KB page kernels,
-but the patch apparently did not address this case completely.
+This is ok, so just shut up that warning with a cast.
 
-As Maxim Mikityanskiy suggested, 64KB chunks are really not all that
-useful, so just shut up the warning by adding a cast.
-
-Fixes: 282c0c798f8e ("net/mlx5e: Allow XSK frames smaller than a page")
-Link: https://lore.kernel.org/netdev/20211013150232.2942146-1-arnd@kernel.org/
-Link: https://lore.kernel.org/lkml/a7b27541-0ebb-4f2d-bd06-270a4d404613@app.fastmail.com/
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Link: https://lore.kernel.org/r/20240328143051.1069575-7-arnd@kernel.org
+Fixes: 3358b4aaa84f ("nilfs2: fix problems of memory allocation in ioctl")
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Reviewed-by: Justin Stitt <justinstitt@google.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240328143051.1069575-9-arnd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/nilfs2/ioctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c
-index 36826b5824847..78739fe138ca4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c
-@@ -28,8 +28,10 @@ bool mlx5e_validate_xsk_param(struct mlx5e_params *params,
- 			      struct mlx5e_xsk_param *xsk,
- 			      struct mlx5_core_dev *mdev)
- {
--	/* AF_XDP doesn't support frames larger than PAGE_SIZE. */
--	if (xsk->chunk_size > PAGE_SIZE || xsk->chunk_size < MLX5E_MIN_XSK_CHUNK_SIZE) {
-+	/* AF_XDP doesn't support frames larger than PAGE_SIZE,
-+	 * and xsk->chunk_size is limited to 65535 bytes.
-+	 */
-+	if ((size_t)xsk->chunk_size > PAGE_SIZE || xsk->chunk_size < MLX5E_MIN_XSK_CHUNK_SIZE) {
- 		mlx5_core_err(mdev, "XSK chunk size %u out of bounds [%u, %lu]\n", xsk->chunk_size,
- 			      MLX5E_MIN_XSK_CHUNK_SIZE, PAGE_SIZE);
- 		return false;
+diff --git a/fs/nilfs2/ioctl.c b/fs/nilfs2/ioctl.c
+index ef9f9a2511b72..1d4d610bd82b5 100644
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -60,7 +60,7 @@ static int nilfs_ioctl_wrap_copy(struct the_nilfs *nilfs,
+ 	if (argv->v_nmembs == 0)
+ 		return 0;
+ 
+-	if (argv->v_size > PAGE_SIZE)
++	if ((size_t)argv->v_size > PAGE_SIZE)
+ 		return -EINVAL;
+ 
+ 	/*
 -- 
 2.43.0
 
