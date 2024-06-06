@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C681E1A2560;
-	Thu,  6 Jun 2024 14:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515FD1A255D;
+	Thu,  6 Jun 2024 14:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683748; cv=none; b=gz4Px/VUhHUcbFdOdJa+c+BdY45fNxWZGQff3X+t1pBqA3rIfFovnyIR9M+oIf3E1an+0VNM/U1iuKsUabRm0jH0vn6X4V/cDlY/UEGX76dxMe30nEonAEXI29CI+Jl+YmEZZB8ZoRwMHt+RmN97pJ8AgOtgMOXZkqXlOCwc4v4=
+	t=1717683749; cv=none; b=i62ZyYn6A3k9YIU+puST/lg1diHPRaoIZKj4VwrUJQ3Nd07QwZm19rJHt/LAfwf3eP8ACyYFQse4YAeed/+MCnOCkdI0IwBjEhordxGnfIg/S9l4Rg1RXiAZja8TYRKl/ZBsqcNr6ykbbiMS3pMXSHiF6666NPmlMIQsAdhsODk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683748; c=relaxed/simple;
-	bh=uP5txpySRG7URDpLtLdxr3Oct+nMvUYlS5Zq+O8aU9E=;
+	s=arc-20240116; t=1717683749; c=relaxed/simple;
+	bh=CJcEr8fiR++Vdmou8s2N3gcNsRFdYp3GVxoMMawYRRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ev5YaFVWJXfMbsQD6Vy2IBY5Sb+/SQeFlclN7BMMY9DDKZqYrvw2l1XxO2GP8j7J6g4F+f9J+19UA0U3BWgIZUP0IMp9iZDMK0MX0FgNV2Mi+c0RCTEJ0gWf59gQ9WaToPZ8/PM7BYzZ8tqBdth8n9ID8iQVnQYNOHbnJ7RJdQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpk8yBTz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qnLtrhckjI6WRaTGWlnkdwpA/pOLJc0s7ZStpH7ON+9Cru0AH0LL6iUjJO4Ek25i5x+07/6LR4EnViIrXHIwZKuv4UaECaKl6WzbqCxH4kIeN5n3BNvDx439nzwywTU6EXSplOeZ1ZEDw46VBNQQgKXT8l338Em25BoLwqy119A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2ozHs/s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpk8yBTz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A682BC2BD10;
-	Thu,  6 Jun 2024 14:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2ozHs/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F306C2BD10;
+	Thu,  6 Jun 2024 14:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683748;
-	bh=uP5txpySRG7URDpLtLdxr3Oct+nMvUYlS5Zq+O8aU9E=;
+	s=korg; t=1717683749;
+	bh=CJcEr8fiR++Vdmou8s2N3gcNsRFdYp3GVxoMMawYRRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpk8yBTzcadtRFBKdrIxZa+tNacZFchM2VLgiDhBqJA6bGuFe0dMaBbvH52UdUWWu
-	 yIqJpF4XkFBK/1MxxWkidzcmW3siWZEWGc+TpovDd8CqSPmnoQM4hW6B8X8RDsocFv
-	 ucEpbQu8Boqx3191+pezXezAQnP3Ge74mUhbL4zE=
+	b=A2ozHs/sxSE7rN+swqI2T+MNBmTZ6Djpva5WXKUw2TJJArW7+p4ngjmjRQVVktGTn
+	 TjUFHam29V9WELGn7oyZIs2NNblHGuYm+t88z5agBkgdRIgqGmP/wFWkFM456kSGuV
+	 Yug1CVhKRqoYbu8M4QfVK9fKYdn0JDLmhQsbjvC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a7d2b1d5d1af83035567@syzkaller.appspotmail.com,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 716/744] net/sched: taprio: extend minimum interval restriction to entire cycle too
-Date: Thu,  6 Jun 2024 16:06:28 +0200
-Message-ID: <20240606131755.435937288@linuxfoundation.org>
+Subject: [PATCH 6.6 699/744] Octeontx2-pf: Free send queue buffers incase of leaf to inner
+Date: Thu,  6 Jun 2024 16:06:11 +0200
+Message-ID: <20240606131754.899038610@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,97 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit fb66df20a7201e60f2b13d7f95d031b31a8831d3 ]
+[ Upstream commit 1684842147677a1279bcff95f8adb6de9a656e30 ]
 
-It is possible for syzbot to side-step the restriction imposed by the
-blamed commit in the Fixes: tag, because the taprio UAPI permits a
-cycle-time different from (and potentially shorter than) the sum of
-entry intervals.
+There are two type of classes. "Leaf classes" that are  the
+bottom of the class hierarchy. "Inner classes" that are neither
+the root class nor leaf classes. QoS rules can only specify leaf
+classes as targets for traffic.
 
-We need one more restriction, which is that the cycle time itself must
-be larger than N * ETH_ZLEN bit times, where N is the number of schedule
-entries. This restriction needs to apply regardless of whether the cycle
-time came from the user or was the implicit, auto-calculated value, so
-we move the existing "cycle == 0" check outside the "if "(!new->cycle_time)"
-branch. This way covers both conditions and scenarios.
+			 Root
+		        /  \
+		       /    \
+                      1      2
+                             /\
+                            /  \
+                           4    5
+               classes 1,4 and 5 are leaf classes.
+               class 2 is a inner class.
 
-Add a selftest which illustrates the issue triggered by syzbot.
+When a leaf class made as inner, or vice versa, resources associated
+with send queue (send queue buffers and transmit schedulers) are not
+getting freed.
 
-Fixes: b5b73b26b3ca ("taprio: Fix allowing too small intervals")
-Reported-by: syzbot+a7d2b1d5d1af83035567@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/0000000000007d66bc06196e7c66@google.com/
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20240527153955.553333-2-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5e6808b4c68d ("octeontx2-pf: Add support for HTB offload")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Link: https://lore.kernel.org/r/20240523073626.4114-1-hkelam@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c                        | 10 ++++-----
- .../tc-testing/tc-tests/qdiscs/taprio.json    | 22 +++++++++++++++++++
- 2 files changed, 27 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/qos.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index c0b846918400a..a315748a5e531 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -1161,11 +1161,6 @@ static int parse_taprio_schedule(struct taprio_sched *q, struct nlattr **tb,
- 		list_for_each_entry(entry, &new->entries, list)
- 			cycle = ktime_add_ns(cycle, entry->interval);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+index 1723e9912ae07..6cddb4da85b71 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+@@ -1407,7 +1407,10 @@ static int otx2_qos_leaf_to_inner(struct otx2_nic *pfvf, u16 classid,
+ 	otx2_qos_read_txschq_cfg(pfvf, node, old_cfg);
  
--		if (!cycle) {
--			NL_SET_ERR_MSG(extack, "'cycle_time' can never be 0");
--			return -EINVAL;
--		}
--
- 		if (cycle < 0 || cycle > INT_MAX) {
- 			NL_SET_ERR_MSG(extack, "'cycle_time' is too big");
- 			return -EINVAL;
-@@ -1174,6 +1169,11 @@ static int parse_taprio_schedule(struct taprio_sched *q, struct nlattr **tb,
- 		new->cycle_time = cycle;
- 	}
+ 	/* delete the txschq nodes allocated for this node */
++	otx2_qos_disable_sq(pfvf, qid);
++	otx2_qos_free_hw_node_schq(pfvf, node);
+ 	otx2_qos_free_sw_node_schq(pfvf, node);
++	pfvf->qos.qid_to_sqmap[qid] = OTX2_QOS_INVALID_SQ;
  
-+	if (new->cycle_time < new->num_entries * length_to_duration(q, ETH_ZLEN)) {
-+		NL_SET_ERR_MSG(extack, "'cycle_time' is too small");
-+		return -EINVAL;
-+	}
-+
- 	taprio_calculate_gate_durations(q, new);
+ 	/* mark this node as htb inner node */
+ 	WRITE_ONCE(node->qid, OTX2_QOS_QID_INNER);
+@@ -1554,6 +1557,7 @@ static int otx2_qos_leaf_del_last(struct otx2_nic *pfvf, u16 classid, bool force
+ 		dwrr_del_node = true;
  
- 	return 0;
-diff --git a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json
-index 3644434cf681b..6a6f61ac48587 100644
---- a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json
-+++ b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json
-@@ -154,6 +154,28 @@
-             "echo \"1\" > /sys/bus/netdevsim/del_device"
-         ]
-     },
-+    {
-+        "id": "831f",
-+        "name": "Add taprio Qdisc with too short cycle-time",
-+        "category": [
-+            "qdisc",
-+            "taprio"
-+        ],
-+        "plugins": {
-+            "requires": "nsPlugin"
-+        },
-+        "setup": [
-+            "echo \"1 1 8\" > /sys/bus/netdevsim/new_device"
-+        ],
-+        "cmdUnderTest": "$TC qdisc add dev $ETH root handle 1: taprio num_tc 2 queues 1@0 1@1 sched-entry S 01 200000 sched-entry S 02 200000 cycle-time 100 clockid CLOCK_TAI",
-+        "expExitCode": "2",
-+        "verifyCmd": "$TC qdisc show dev $ETH",
-+        "matchPattern": "qdisc taprio 1: root refcnt",
-+        "matchCount": "0",
-+        "teardown": [
-+            "echo \"1\" > /sys/bus/netdevsim/del_device"
-+        ]
-+    },
-     {
-         "id": "3e1e",
-         "name": "Add taprio Qdisc with an invalid cycle-time",
+ 	/* destroy the leaf node */
++	otx2_qos_disable_sq(pfvf, qid);
+ 	otx2_qos_destroy_node(pfvf, node);
+ 	pfvf->qos.qid_to_sqmap[qid] = OTX2_QOS_INVALID_SQ;
+ 
 -- 
 2.43.0
 
