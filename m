@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A2A196D8C;
-	Thu,  6 Jun 2024 14:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E921A3BCF;
+	Thu,  6 Jun 2024 14:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683243; cv=none; b=BjWj4qHmJMVQGmOsPtl5EdYf4FZFP7VeBstVM9ixKlzf0/eJ8DRoOxfipbZy+O81fnhzZfGLXsf97ul8lXbEzNsXVRETVxeeu8L3jiz0xcQwS/L1Xi1TZPpKlXcDq/ftI8vVqmjPCXAKK97q9d/7upDvhbQDvFLi+J7VbMwWp0w=
+	t=1717683244; cv=none; b=AqvKP6lf5YOKlbVDIuymdKNW+FalhbbmO/jgTDx3esJ85olL+OFQ/wp4+0O0IAv2sVd/qcIi2mATAjaRwJS+0eU9F2Iy90LbI/MEfUmF7SAlXMPn5WOvAKnbdVJOP4H09yuUXAfkFaD+jWB0kA59cT7d6n4Md8Jd5i7Kspz6Zjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683243; c=relaxed/simple;
-	bh=bM/hYyGw+K0uJvJSEWIYGjV302OgxXuAQQgSpqvyq8o=;
+	s=arc-20240116; t=1717683244; c=relaxed/simple;
+	bh=0Rp8XTnqiUtByU3evNnNFj2y5QAFQrW6ZdnhpSG3PgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=celhDbbaYVmYjnJM9T35oZF3MW2bRO8403i0QYYPUt4pxMw6GXmZ27POVbMQYijplzJtdpA9oShkzHM03BNWCHiLhiR1B2ckkNWZloE2uFtuDMj1K1oPOMRvP/TrJZPrdGGN1M7JBBgYBD2Ws3yr27Wr7i/hTP2UdoLWDiTlP/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPMUm4VQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M5ZDmIZjP1skPglBZnXdiaiYrqDBFe4rBr3UYH0eM6Y5yELVEpni64tdIoCQgKDtzEsvpB+sKLN1iq2nBzu+7Miz5XoslrLsbkXF3x6X1saNZQwsEQmHLZlZ/2rtlqR2djJBcYufdeKOzhRkgmNba9SjbWl8Ctul3lwpRXYyoLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UU4mzyDB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPMUm4VQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700C9C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU4mzyDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB26C2BD10;
 	Thu,  6 Jun 2024 14:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683243;
-	bh=bM/hYyGw+K0uJvJSEWIYGjV302OgxXuAQQgSpqvyq8o=;
+	bh=0Rp8XTnqiUtByU3evNnNFj2y5QAFQrW6ZdnhpSG3PgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPMUm4VQmLvLhNf9Z80bCc2gfS8LQvh18eMGxrjeARR07hMLOxLv6HeMsyeynWkk5
-	 gfYW7t7Vdr/UVv8wCUW4tYYhD1XsxYsxZZB6D9YYI4GPX01gWySqiHE672z2VgRZ0L
-	 J62tFr7Cd3N3EZUzgQwkkWaCMp3UJu09Q1W7fkWs=
+	b=UU4mzyDBRWqBWmLLsrTAyOG8QJ3obBXU1ftEW1PTmNAkwpvs9eNRIA98hvK1AUfp5
+	 bb43RpSZ5ClfGwoH7xKpHXqWmqEBDHmze3adDGsOqN6sDH8ljAaNZyQUi1D/0G+ZhW
+	 lt/ZFNRb33+yyDYt1d8wa5bGgaPdR9Rd5yO68a5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/473] scsi: ufs: qcom: Perform read back after writing unipro mode
-Date: Thu,  6 Jun 2024 16:00:36 +0200
-Message-ID: <20240606131703.454490996@linuxfoundation.org>
+Subject: [PATCH 6.6 188/744] gfs2: Rename gfs2_lookup_{ simple => meta }
+Date: Thu,  6 Jun 2024 15:57:40 +0200
+Message-ID: <20240606131738.461566092@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +46,145 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 823150ecf04f958213cf3bf162187cd1a91c885c ]
+[ Upstream commit 062fb903895a035ed382a0d3f9b9d459b2718217 ]
 
-Currently, the QUNIPRO_SEL bit is written to and then an mb() is used to
-ensure that completes before continuing.
+Function gfs2_lookup_simple() is used for looking up inodes in the
+metadata directory tree, so rename it to gfs2_lookup_meta() to closer
+match its purpose.  Clean the function up a little on the way.
 
-mb() ensures that the write completes, but completion doesn't mean that it
-isn't stored in a buffer somewhere. The recommendation for ensuring this
-bit has taken effect on the device is to perform a read back to force it to
-make it all the way to the device. This is documented in device-io.rst and
-a talk by Will Deacon on this can be seen over here:
-
-    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
-
-But, there's really no reason to even ensure completion before
-continuing. The only requirement here is that this write is ordered to this
-endpoint (which readl()/writel() guarantees already). For that reason the
-mb() can be dropped altogether without anything forcing completion.
-
-Fixes: f06fcc7155dc ("scsi: ufs-qcom: add QUniPro hardware support and power optimizations")
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-4-181252004586@redhat.com
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Stable-dep-of: d98779e68772 ("gfs2: Fix potential glock use-after-free on unmount")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/gfs2/inode.c      | 13 +++++++------
+ fs/gfs2/inode.h      |  2 +-
+ fs/gfs2/ops_fstype.c | 16 ++++++++--------
+ 3 files changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index ce18c43937a22..edbd3d7cf83aa 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -229,9 +229,6 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
- 
- 	if (host->hw_ver.major == 0x05)
- 		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
--
--	/* make sure above configuration is applied before we return */
--	mb();
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 587e5bf885c1b..3de0d8ab42eaf 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -265,17 +265,18 @@ struct inode *gfs2_lookup_by_inum(struct gfs2_sbd *sdp, u64 no_addr,
  }
  
- /*
+ 
+-struct inode *gfs2_lookup_simple(struct inode *dip, const char *name)
++/**
++ * gfs2_lookup_meta - Look up an inode in a metadata directory
++ * @dip: The directory
++ * @name: The name of the inode
++ */
++struct inode *gfs2_lookup_meta(struct inode *dip, const char *name)
+ {
+ 	struct qstr qstr;
+ 	struct inode *inode;
++
+ 	gfs2_str2qstr(&qstr, name);
+ 	inode = gfs2_lookupi(dip, &qstr, 1);
+-	/* gfs2_lookupi has inconsistent callers: vfs
+-	 * related routines expect NULL for no entry found,
+-	 * gfs2_lookup_simple callers expect ENOENT
+-	 * and do not check for NULL.
+-	 */
+ 	if (IS_ERR_OR_NULL(inode))
+ 		return inode ? inode : ERR_PTR(-ENOENT);
+ 
+diff --git a/fs/gfs2/inode.h b/fs/gfs2/inode.h
+index 75e662949f04d..1b291b58d4d23 100644
+--- a/fs/gfs2/inode.h
++++ b/fs/gfs2/inode.h
+@@ -101,7 +101,7 @@ extern struct inode *gfs2_lookupi(struct inode *dir, const struct qstr *name,
+ 				  int is_root);
+ extern int gfs2_permission(struct mnt_idmap *idmap,
+ 			   struct inode *inode, int mask);
+-extern struct inode *gfs2_lookup_simple(struct inode *dip, const char *name);
++extern struct inode *gfs2_lookup_meta(struct inode *dip, const char *name);
+ extern void gfs2_dinode_out(const struct gfs2_inode *ip, void *buf);
+ extern int gfs2_open_common(struct inode *inode, struct file *file);
+ extern loff_t gfs2_seek_data(struct file *file, loff_t offset);
+diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
+index dd64140ae6d7b..547e279f5f9e6 100644
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -648,7 +648,7 @@ static int init_statfs(struct gfs2_sbd *sdp)
+ 	struct gfs2_jdesc *jd;
+ 	struct gfs2_inode *ip;
+ 
+-	sdp->sd_statfs_inode = gfs2_lookup_simple(master, "statfs");
++	sdp->sd_statfs_inode = gfs2_lookup_meta(master, "statfs");
+ 	if (IS_ERR(sdp->sd_statfs_inode)) {
+ 		error = PTR_ERR(sdp->sd_statfs_inode);
+ 		fs_err(sdp, "can't read in statfs inode: %d\n", error);
+@@ -657,7 +657,7 @@ static int init_statfs(struct gfs2_sbd *sdp)
+ 	if (sdp->sd_args.ar_spectator)
+ 		goto out;
+ 
+-	pn = gfs2_lookup_simple(master, "per_node");
++	pn = gfs2_lookup_meta(master, "per_node");
+ 	if (IS_ERR(pn)) {
+ 		error = PTR_ERR(pn);
+ 		fs_err(sdp, "can't find per_node directory: %d\n", error);
+@@ -674,7 +674,7 @@ static int init_statfs(struct gfs2_sbd *sdp)
+ 			goto free_local;
+ 		}
+ 		sprintf(buf, "statfs_change%u", jd->jd_jid);
+-		lsi->si_sc_inode = gfs2_lookup_simple(pn, buf);
++		lsi->si_sc_inode = gfs2_lookup_meta(pn, buf);
+ 		if (IS_ERR(lsi->si_sc_inode)) {
+ 			error = PTR_ERR(lsi->si_sc_inode);
+ 			fs_err(sdp, "can't find local \"sc\" file#%u: %d\n",
+@@ -739,7 +739,7 @@ static int init_journal(struct gfs2_sbd *sdp, int undo)
+ 	if (undo)
+ 		goto fail_statfs;
+ 
+-	sdp->sd_jindex = gfs2_lookup_simple(master, "jindex");
++	sdp->sd_jindex = gfs2_lookup_meta(master, "jindex");
+ 	if (IS_ERR(sdp->sd_jindex)) {
+ 		fs_err(sdp, "can't lookup journal index: %d\n", error);
+ 		return PTR_ERR(sdp->sd_jindex);
+@@ -888,7 +888,7 @@ static int init_inodes(struct gfs2_sbd *sdp, int undo)
+ 		goto fail;
+ 
+ 	/* Read in the resource index inode */
+-	sdp->sd_rindex = gfs2_lookup_simple(master, "rindex");
++	sdp->sd_rindex = gfs2_lookup_meta(master, "rindex");
+ 	if (IS_ERR(sdp->sd_rindex)) {
+ 		error = PTR_ERR(sdp->sd_rindex);
+ 		fs_err(sdp, "can't get resource index inode: %d\n", error);
+@@ -897,7 +897,7 @@ static int init_inodes(struct gfs2_sbd *sdp, int undo)
+ 	sdp->sd_rindex_uptodate = 0;
+ 
+ 	/* Read in the quota inode */
+-	sdp->sd_quota_inode = gfs2_lookup_simple(master, "quota");
++	sdp->sd_quota_inode = gfs2_lookup_meta(master, "quota");
+ 	if (IS_ERR(sdp->sd_quota_inode)) {
+ 		error = PTR_ERR(sdp->sd_quota_inode);
+ 		fs_err(sdp, "can't get quota file inode: %d\n", error);
+@@ -941,7 +941,7 @@ static int init_per_node(struct gfs2_sbd *sdp, int undo)
+ 	if (undo)
+ 		goto fail_qc_gh;
+ 
+-	pn = gfs2_lookup_simple(master, "per_node");
++	pn = gfs2_lookup_meta(master, "per_node");
+ 	if (IS_ERR(pn)) {
+ 		error = PTR_ERR(pn);
+ 		fs_err(sdp, "can't find per_node directory: %d\n", error);
+@@ -949,7 +949,7 @@ static int init_per_node(struct gfs2_sbd *sdp, int undo)
+ 	}
+ 
+ 	sprintf(buf, "quota_change%u", sdp->sd_jdesc->jd_jid);
+-	sdp->sd_qc_inode = gfs2_lookup_simple(pn, buf);
++	sdp->sd_qc_inode = gfs2_lookup_meta(pn, buf);
+ 	if (IS_ERR(sdp->sd_qc_inode)) {
+ 		error = PTR_ERR(sdp->sd_qc_inode);
+ 		fs_err(sdp, "can't find local \"qc\" file: %d\n", error);
 -- 
 2.43.0
 
