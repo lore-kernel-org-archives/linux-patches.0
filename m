@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1229419754E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C69819754E;
 	Thu,  6 Jun 2024 14:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683719; cv=none; b=KKD//8S4Z6dOm34w1i6Q96stc+3s0SnIlSMYJrY9iYDLZps2RjtzyH0H/VRkEP1GGZCcps3yWwLvbEtI+4VO5Vys9H1E4B7NdAuxQbnBT/eFKLcKnsH6rOn7bavgj9zpZ/4OrmnEAu8fWa5tvF68XNmW+Myzu9H3nYPO5yWwdzE=
+	t=1717683719; cv=none; b=jNgRgM2/vWhm6w+ELMiA6QPCSRVuo27t/KaZ7o2GsMkkpmPwGOjeNi67IkSCC3oMH6vS6ZMmoxJ4ZgUEl2bmfxOtVQ3DHaBlH4yU7piJxBSJE7HZ32OL89MdKAAuphljfbLMgWVndDcPzulEC8wKxhe+G1/dZ2SGshhYknQN4IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683719; c=relaxed/simple;
-	bh=LKnffkIVAGBlbUt/YZm1L2+JaBVA3raQLY0ZLbWUCok=;
+	bh=NBkfdUaFjuazjyvN5fEAuwGHPf+CnW++DY+3VRl9RQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJ7B4NZGEtiozktqOcrJ0C8X+fKxq5CNyFrNRZY7zDgiwxUqKheW9yuumEzgndvrET8gIDL0jpzSjDqY7cnkrWT81HmM3SLXSO6/xdtqYM8HFW5/1fV3bRlRJBnS+HzqaLQ2lJvBIn41fwhX+H6Wj5WsW7MGkO6GXHlmKkibyO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDyx5kwT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fnlczqdHunc3OEdsE60OoH10JRj21O0goMWesAVJ0fUQv1x2Q/AR22UUYluBowwtHgfiOE6Ir6uqtA7PuR1aOzPgZgR0PTl03GMgE9oZoB4nt0hdX+8gaWitqDKgHHHuV1GTZzWQRU/orGy5UYgkgW2fxppv9dFgYcgclSeZH/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWlUrZg1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDyx5kwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E637DC2BD10;
-	Thu,  6 Jun 2024 14:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWlUrZg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B88EC32781;
+	Thu,  6 Jun 2024 14:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683719;
-	bh=LKnffkIVAGBlbUt/YZm1L2+JaBVA3raQLY0ZLbWUCok=;
+	bh=NBkfdUaFjuazjyvN5fEAuwGHPf+CnW++DY+3VRl9RQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDyx5kwTQtEA6gfPm5R/etlUq309z3g9F0pVIbXRI0DvqFHt40QHII+rAqWzRnDTy
-	 xzSoWURsSo23GiLVwq7Ec+oEtQ8NN37Iy5DnVYpPIHQhHvGRfuzjQphlGU1uq9vI3q
-	 28kr9DI1yXMCOh1c/4FKKVCnDZDXmaJrxtQ0DA0E=
+	b=xWlUrZg1xlXJbN9t8QNDh/IOxChWanOiWiuuIJ2iHoXP+FSCY40ZGRfyd91DOqF/E
+	 4/DoaYgnk9qSUCJx+nKQNee/R7NDqYJ9zFjr8ehulLcaIlhgWxd2/H/A+vggZ64bsa
+	 rvUHF2otenruve2LBdDXJ/aTVaRYpLoOqyY0Go9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	kernel test robot <lkp@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 617/744] nilfs2: make superblock data array index computation sparse friendly
-Date: Thu,  6 Jun 2024 16:04:49 +0200
-Message-ID: <20240606131752.295435490@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	"Yang, Chenyuan" <cy54@illinois.edu>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Yang
+Subject: [PATCH 6.6 608/744] media: cec: cec-api: add locking in cec_release()
+Date: Thu,  6 Jun 2024 16:04:40 +0200
+Message-ID: <20240606131751.987029459@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -54,71 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 91d743a9c8299de1fc1b47428d8bb4c85face00f ]
+[ Upstream commit 42bcaacae924bf18ae387c3f78c202df0b739292 ]
 
-Upon running sparse, "warning: dubious: x & !y" is output at an array
-index calculation within nilfs_load_super_block().
+When cec_release() uses fh->msgs it has to take fh->lock,
+otherwise the list can get corrupted.
 
-The calculation is not wrong, but to eliminate the sparse warning, replace
-it with an equivalent calculation.
-
-Also, add a comment to make it easier to understand what the unintuitive
-array index calculation is doing and whether it's correct.
-
-Link: https://lkml.kernel.org/r/20240430080019.4242-3-konishi.ryusuke@gmail.com
-Fixes: e339ad31f599 ("nilfs2: introduce secondary super block")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: kernel test robot <lkp@intel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reported-by: Yang, Chenyuan <cy54@illinois.edu>
+Closes: https://lore.kernel.org/linux-media/PH7PR11MB57688E64ADE4FE82E658D86DA09EA@PH7PR11MB5768.namprd11.prod.outlook.com/
+Fixes: ca684386e6e2 ("[media] cec: add HDMI CEC framework (api)")
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/the_nilfs.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/media/cec/core/cec-api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
-index 71400496ed365..3e3c1d32da180 100644
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -592,7 +592,7 @@ static int nilfs_load_super_block(struct the_nilfs *nilfs,
- 	struct nilfs_super_block **sbp = nilfs->ns_sbp;
- 	struct buffer_head **sbh = nilfs->ns_sbh;
- 	u64 sb2off, devsize = bdev_nr_bytes(nilfs->ns_bdev);
--	int valid[2], swp = 0;
-+	int valid[2], swp = 0, older;
- 
- 	if (devsize < NILFS_SEG_MIN_BLOCKS * NILFS_MIN_BLOCK_SIZE + 4096) {
- 		nilfs_err(sb, "device size too small");
-@@ -648,9 +648,25 @@ static int nilfs_load_super_block(struct the_nilfs *nilfs,
- 	if (swp)
- 		nilfs_swap_super_block(nilfs);
- 
-+	/*
-+	 * Calculate the array index of the older superblock data.
-+	 * If one has been dropped, set index 0 pointing to the remaining one,
-+	 * otherwise set index 1 pointing to the old one (including if both
-+	 * are the same).
-+	 *
-+	 *  Divided case             valid[0]  valid[1]  swp  ->  older
-+	 *  -------------------------------------------------------------
-+	 *  Both SBs are invalid        0         0       N/A (Error)
-+	 *  SB1 is invalid              0         1       1         0
-+	 *  SB2 is invalid              1         0       0         0
-+	 *  SB2 is newer                1         1       1         0
-+	 *  SB2 is older or the same    1         1       0         1
-+	 */
-+	older = valid[1] ^ swp;
+diff --git a/drivers/media/cec/core/cec-api.c b/drivers/media/cec/core/cec-api.c
+index 67dc79ef17050..d64bb716f9c68 100644
+--- a/drivers/media/cec/core/cec-api.c
++++ b/drivers/media/cec/core/cec-api.c
+@@ -664,6 +664,8 @@ static int cec_release(struct inode *inode, struct file *filp)
+ 		list_del_init(&data->xfer_list);
+ 	}
+ 	mutex_unlock(&adap->lock);
 +
- 	nilfs->ns_sbwcount = 0;
- 	nilfs->ns_sbwtime = le64_to_cpu(sbp[0]->s_wtime);
--	nilfs->ns_prot_seq = le64_to_cpu(sbp[valid[1] & !swp]->s_last_seq);
-+	nilfs->ns_prot_seq = le64_to_cpu(sbp[older]->s_last_seq);
- 	*sbpp = sbp[0];
- 	return 0;
- }
++	mutex_lock(&fh->lock);
+ 	while (!list_empty(&fh->msgs)) {
+ 		struct cec_msg_entry *entry =
+ 			list_first_entry(&fh->msgs, struct cec_msg_entry, list);
+@@ -681,6 +683,7 @@ static int cec_release(struct inode *inode, struct file *filp)
+ 			kfree(entry);
+ 		}
+ 	}
++	mutex_unlock(&fh->lock);
+ 	kfree(fh);
+ 
+ 	cec_put_device(devnode);
 -- 
 2.43.0
 
