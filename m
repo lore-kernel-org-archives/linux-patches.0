@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D351A19D070;
-	Thu,  6 Jun 2024 14:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C7519D069;
+	Thu,  6 Jun 2024 14:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683453; cv=none; b=JZbx5Eb6Ien8+tIicRkauKmI5cjg3XXYeUSJEXRDZ1LERGB2XG3URDV5MJ8UhA37SoNmwTUZSlSh6PyeeC2ukAuFdhD35axaPGRtVJn+/fsmEYJX1+QtqdWnuTLHip9XFnfjAvTuE79Ji6axes2lgqes4VmPsnvSwHihmQIHqYs=
+	t=1717683454; cv=none; b=gPzv5jvj1H6wB3doHA93Rv3rcP6rIroX9kBNXenhzXA6lP+1V7oV3SJ5yoJndP5u+Vuera2Wkx3vMNB1km6NYBHHKs1GAqVhuM/5gRCUkpsQK9d0dHk9A+2BF77jaXixAsf7ZwMqJMmyuQga6aV4ePjYfihd6f9s+DEfs+6p8tA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683453; c=relaxed/simple;
-	bh=9b2BB0t4pVh9zGTHczWTygCSW/Q373vW8uPZG7YzvI0=;
+	s=arc-20240116; t=1717683454; c=relaxed/simple;
+	bh=wYdByVeXDIXel4YRTpdrp/COLpctXl4hbQLJClSmn5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3iL4adC2x3Ssd3UiR1cU4f4rz00OjiRl/thXnHyfpKwk0PR7sJaXwQoQPSRIj0DnNKmp7iFwVPhf3mh4dsaBcqb8JLk00/TlISm46KlMSpn0xBJPCvi3kudzonociRFMpN8K11E0iol/uxOQOo1HHo48WNnlMqu/AlAxupEng8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK4XKnf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LqEud41j90TpfyJc79OVLEbnbVvaC1ZtYoVwA0fTy2WDMUy6WWzqiOciycI3MduAQwa0bqnAlhs/eJ4k/ogVnnn2AnYi2FCeiywwA+jh4RcgHmB3XikjYnR11x59CDJd1R+WquarPZrCVs4PWjPKFpvNs7J/bwYsdWVhKIGcCGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z699kNAc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK4XKnf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC988C2BD10;
-	Thu,  6 Jun 2024 14:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z699kNAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D7CFC2BD10;
+	Thu,  6 Jun 2024 14:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683453;
-	bh=9b2BB0t4pVh9zGTHczWTygCSW/Q373vW8uPZG7YzvI0=;
+	s=korg; t=1717683454;
+	bh=wYdByVeXDIXel4YRTpdrp/COLpctXl4hbQLJClSmn5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VK4XKnf8CVUsbOt9bew6OTkN5rz6IiINZn5MNS+EqKsQfcVNTu1ogPE/lRMAhHQYd
-	 ImCFN6ur3nDaL5eaCIKWT0aVCSgH3yvXMdA7AT6iZ+//BxaHZy7qjrHznZLrJm4YTB
-	 H06f4VyFmrK+s8MpEQyEbm8AxeQnYqr7pvAaSClI=
+	b=Z699kNAcIDrWnRteKUk+qqC6Qt2atlbfP3ZvLd+/l5aEVcvaDkJPLz8uZdVe7mxXa
+	 zQ//ofB69SEHIyiwOGAraVNl7w4dI/Q2uhuYn5eovHzUzj/yDwQu2evI2OnXr3oryC
+	 1M0p7OKvOlBUj2tSpf8c/KtbGqqPpUeic9DQ5so8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Athira Jajeev <atrajeev@linux.vnet.ibm.com>,
-	German Gomez <german.gomez@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Zhengjun Xing <zhengjun.xing@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 303/473] perf test: Add datasym test workload
-Date: Thu,  6 Jun 2024 16:03:52 +0200
-Message-ID: <20240606131709.948667976@linuxfoundation.org>
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com>
+Subject: [PATCH 6.1 337/473] PCI/EDR: Align EDR_PORT_DPC_ENABLE_DSM with PCI Firmware r3.3
+Date: Thu,  6 Jun 2024 16:04:26 +0200
+Message-ID: <20240606131711.059367260@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -61,115 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-[ Upstream commit 3dfc01fe9d12a1e832f49deab37279faa8a9ebc8 ]
+[ Upstream commit f24ba846133d0edec785ac6430d4daf6e9c93a09 ]
 
-The datasym workload is to check if perf mem command gets the data
-addresses precisely.  This is needed for data symbol test.
+The "Downstream Port Containment related Enhancements" ECN of Jan 28, 2019
+(document 12888 below), defined the EDR_PORT_DPC_ENABLE_DSM function with
+Revision ID 5 with Arg3 being an integer.  But when the ECN was integrated
+into PCI Firmware r3.3, sec 4.6.12, it was defined as Revision ID 6 with
+Arg3 being a package containing an integer.
 
-  $ perf test -w datasym
+The implementation in acpi_enable_dpc() supplies a package as Arg3 (arg4 in
+the code), but it previously specified Revision ID 5.  Align this with PCI
+Firmware r3.3 by using Revision ID 6.
 
-I had to keep the buf1 in the data section, otherwise it could end
-up in the BSS and was mmaped as a separate //anon region, then it
-was not symbolized at all.  It needs to be fixed separately.
+If firmware implemented per the ECN, its Revision 5 function would receive
+a package as Arg3 when it expects an integer, so acpi_enable_dpc() would
+likely fail.  If such firmware exists and lacks a Revision 6 function that
+expects a package, we may have to add support for Revision 5.
 
-Committer notes:
-
-Add a -U _FORTIFY_SOURCE to the datasym CFLAGS, as the main perf flags
-set it and it requires building with optimization, and this new test has
-a -O0.
-
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Athira Jajeev <atrajeev@linux.vnet.ibm.com>
-Cc: German Gomez <german.gomez@arm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Zhengjun Xing <zhengjun.xing@linux.intel.com>
-Link: https://lore.kernel.org/r/20221116233854.1596378-12-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 256ef072b384 ("perf tests: Make "test data symbol" more robust on Neoverse N1")
+Link: https://lore.kernel.org/r/20240501022543.1626025-1-sathyanarayanan.kuppuswamy@linux.intel.com
+Link: https://members.pcisig.com/wg/PCI-SIG/document/12888
+Fixes: ac1c8e35a326 ("PCI/DPC: Add Error Disconnect Recover (EDR) support")
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+[bhelgaas: split into two patches, update commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com> # one platform
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c      |  1 +
- tools/perf/tests/tests.h             |  1 +
- tools/perf/tests/workloads/Build     |  2 ++
- tools/perf/tests/workloads/datasym.c | 24 ++++++++++++++++++++++++
- 4 files changed, 28 insertions(+)
- create mode 100644 tools/perf/tests/workloads/datasym.c
+ drivers/pci/pcie/edr.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index 69fa56939309b..4c6ae59a4dfd7 100644
---- a/tools/perf/tests/builtin-test.c
-+++ b/tools/perf/tests/builtin-test.c
-@@ -124,6 +124,7 @@ static struct test_workload *workloads[] = {
- 	&workload__leafloop,
- 	&workload__sqrtloop,
- 	&workload__brstack,
-+	&workload__datasym,
- };
+diff --git a/drivers/pci/pcie/edr.c b/drivers/pci/pcie/edr.c
+index 87734e4c3c204..5b5a502363c00 100644
+--- a/drivers/pci/pcie/edr.c
++++ b/drivers/pci/pcie/edr.c
+@@ -32,10 +32,10 @@ static int acpi_enable_dpc(struct pci_dev *pdev)
+ 	int status = 0;
  
- static int num_subtests(const struct test_suite *t)
-diff --git a/tools/perf/tests/tests.h b/tools/perf/tests/tests.h
-index dc96f59cac2ef..e15f24cfc9094 100644
---- a/tools/perf/tests/tests.h
-+++ b/tools/perf/tests/tests.h
-@@ -205,5 +205,6 @@ DECLARE_WORKLOAD(thloop);
- DECLARE_WORKLOAD(leafloop);
- DECLARE_WORKLOAD(sqrtloop);
- DECLARE_WORKLOAD(brstack);
-+DECLARE_WORKLOAD(datasym);
+ 	/*
+-	 * Behavior when calling unsupported _DSM functions is undefined,
+-	 * so check whether EDR_PORT_DPC_ENABLE_DSM is supported.
++	 * Per PCI Firmware r3.3, sec 4.6.12, EDR_PORT_DPC_ENABLE_DSM is
++	 * optional. Return success if it's not implemented.
+ 	 */
+-	if (!acpi_check_dsm(adev->handle, &pci_acpi_dsm_guid, 5,
++	if (!acpi_check_dsm(adev->handle, &pci_acpi_dsm_guid, 6,
+ 			    1ULL << EDR_PORT_DPC_ENABLE_DSM))
+ 		return 0;
  
- #endif /* TESTS_H */
-diff --git a/tools/perf/tests/workloads/Build b/tools/perf/tests/workloads/Build
-index ae06a5538b171..a1f34d5861e36 100644
---- a/tools/perf/tests/workloads/Build
-+++ b/tools/perf/tests/workloads/Build
-@@ -5,7 +5,9 @@ perf-y += thloop.o
- perf-y += leafloop.o
- perf-y += sqrtloop.o
- perf-y += brstack.o
-+perf-y += datasym.o
+@@ -46,12 +46,7 @@ static int acpi_enable_dpc(struct pci_dev *pdev)
+ 	argv4.package.count = 1;
+ 	argv4.package.elements = &req;
  
- CFLAGS_sqrtloop.o         = -g -O0 -fno-inline -U_FORTIFY_SOURCE
- CFLAGS_leafloop.o         = -g -O0 -fno-inline -fno-omit-frame-pointer -U_FORTIFY_SOURCE
- CFLAGS_brstack.o          = -g -O0 -fno-inline -U_FORTIFY_SOURCE
-+CFLAGS_datasym.o          = -g -O0 -fno-inline -U_FORTIFY_SOURCE
-diff --git a/tools/perf/tests/workloads/datasym.c b/tools/perf/tests/workloads/datasym.c
-new file mode 100644
-index 0000000000000..ddd40bc63448a
---- /dev/null
-+++ b/tools/perf/tests/workloads/datasym.c
-@@ -0,0 +1,24 @@
-+#include <linux/compiler.h>
-+#include "../tests.h"
-+
-+typedef struct _buf {
-+	char data1;
-+	char reserved[55];
-+	char data2;
-+} buf __attribute__((aligned(64)));
-+
-+static buf buf1 = {
-+	/* to have this in the data section */
-+	.reserved[0] = 1,
-+};
-+
-+static int datasym(int argc __maybe_unused, const char **argv __maybe_unused)
-+{
-+	for (;;) {
-+		buf1.data1++;
-+		buf1.data2 += buf1.data1;
-+	}
-+	return 0;
-+}
-+
-+DEFINE_WORKLOAD(datasym);
+-	/*
+-	 * Per Downstream Port Containment Related Enhancements ECN to PCI
+-	 * Firmware Specification r3.2, sec 4.6.12, EDR_PORT_DPC_ENABLE_DSM is
+-	 * optional.  Return success if it's not implemented.
+-	 */
+-	obj = acpi_evaluate_dsm(adev->handle, &pci_acpi_dsm_guid, 5,
++	obj = acpi_evaluate_dsm(adev->handle, &pci_acpi_dsm_guid, 6,
+ 				EDR_PORT_DPC_ENABLE_DSM, &argv4);
+ 	if (!obj)
+ 		return 0;
 -- 
 2.43.0
 
