@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6866C1A0DEA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F631A0DEA;
 	Thu,  6 Jun 2024 14:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683173; cv=none; b=stXqEg7fgGUlndDYDJQ1DJnC92Lbr9iBpSvWClnmYlJ7oSk9ACETRajHYYM6lwm2zY3N5hbLS1Acpr7YUTKwvbLg0WBiRBeuM7CTsxlQEEzr8NrnyZxc/CJ9m4SXPflNbyf8+zl/hJ4OxMWog4WN0KPl6jRGiedNFiYpE2A+p/c=
+	t=1717683174; cv=none; b=tFcH+XbpWp/imx6NAWjojFY0mcE5TYyan0ePVELTCQfBH0LbO1HPELEOFSNbwgxwQoMADGaXKyYY6HODjbMlFbDlRDRWH4SLLo7Ls3ZiIMAmRLgAk+nhCO4YcMP+AuuEqLzb9qcy4SVfZcJs8RD/oPdY22K/p664npXU6Z8zFr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683173; c=relaxed/simple;
-	bh=deoJlH3l5Q/HMzdLck8BoicEcfiIi4yM8oxT67E6IkQ=;
+	s=arc-20240116; t=1717683174; c=relaxed/simple;
+	bh=bXfKrkmVA0KnT/NF+KADiHOu4etp9CMHHMaStWuMIy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WfadqRoyaMQqX2tkDya1wCN0nuSWOpD5HqCt0eUjvSSeJmxtKhq9NZiamVnD/8J7e8JpL2p5J0qjMLOfsMFXfQoY0DgoWOG7QM5MsxigDxf8lOXKmQUxcjvj48CFU4b511O9NhTyScdeiYRJ3rU0Reyot8DlS8CcaaChIvVjxio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xU0uTlhf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZtLW0hNnhJk3FhdTuaKcYrX/e7AI7V5e62WBvsK6mkwJA6qri+pqLIJAg3pk90ltY0N0eu9456C/2kmKXffrrdHntqQHBgT05LcOtlfDSzjsyPgLGCPncxevYBd1pvz8DAE335q0SLEwvyWkum7II3PpZkIc5he02OOgSP7nUzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZuDakru; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xU0uTlhf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482E5C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZuDakru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A82C4AF07;
 	Thu,  6 Jun 2024 14:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683173;
-	bh=deoJlH3l5Q/HMzdLck8BoicEcfiIi4yM8oxT67E6IkQ=;
+	bh=bXfKrkmVA0KnT/NF+KADiHOu4etp9CMHHMaStWuMIy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xU0uTlhf/0jnNM+Y3VN8dClFdQmnAVTDyn95HrMhxBmGPy/d6vxGLkMHXoBuRsXG6
-	 ZGKMhbmWxAkFVGRqoY9ZO+Fj1oGdqaHVU4SFYQxdK50qsoX8CRsSXMsZqH1RIwsmvz
-	 inFv9DPURLAU4m87OYocPLMQM+0b/WI90TLIBrC0=
+	b=BZuDakruAArR/6zJj6Mvwf7gXnMXWLOm3OePMk6+WS7BTPyaQNTXt8YNDDze8UyvX
+	 iZZ9xJSmllZQiGdJdg04H3Wem/s+lhFlembGUdLWGVtnPWnKFUdoLVQPLQJmMiDJgi
+	 K6zOZxNPu89/8rTA78hUCQBQytRXldfrvwtNY29Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hagar Hemdan <hagarhem@amazon.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 048/473] efi: libstub: only free priv.runtime_map when allocated
-Date: Thu,  6 Jun 2024 15:59:37 +0200
-Message-ID: <20240606131701.472072800@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 118/744] kunit/fortify: Fix mismatched kvalloc()/vfree() usage
+Date: Thu,  6 Jun 2024 15:56:30 +0200
+Message-ID: <20240606131736.197403565@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +46,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hagar Hemdan <hagarhem@amazon.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 4b2543f7e1e6b91cfc8dd1696e3cdf01c3ac8974 upstream.
+[ Upstream commit 998b18072ceb0613629c256b409f4d299829c7ec ]
 
-priv.runtime_map is only allocated when efi_novamap is not set.
-Otherwise, it is an uninitialized value.  In the error path, it is freed
-unconditionally.  Avoid passing an uninitialized value to free_pool.
-Free priv.runtime_map only when it was allocated.
+The kv*() family of tests were accidentally freeing with vfree() instead
+of kvfree(). Use kvfree() instead.
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
-
-Fixes: f80d26043af9 ("efi: libstub: avoid efi_get_memory_map() for allocating the virt map")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9124a2640148 ("kunit/fortify: Validate __alloc_size attribute results")
+Link: https://lore.kernel.org/r/20240425230619.work.299-kees@kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/fdt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ lib/fortify_kunit.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/fdt.c b/drivers/firmware/efi/libstub/fdt.c
-index 70e9789ff9de..6a337f1f8787 100644
---- a/drivers/firmware/efi/libstub/fdt.c
-+++ b/drivers/firmware/efi/libstub/fdt.c
-@@ -335,8 +335,8 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
- 
- fail:
- 	efi_free(fdt_size, fdt_addr);
--
--	efi_bs_call(free_pool, priv.runtime_map);
-+	if (!efi_novamap)
-+		efi_bs_call(free_pool, priv.runtime_map);
- 
- 	return EFI_LOAD_ERROR;
- }
+diff --git a/lib/fortify_kunit.c b/lib/fortify_kunit.c
+index c8c33cbaae9ec..24f8d6fda2b3b 100644
+--- a/lib/fortify_kunit.c
++++ b/lib/fortify_kunit.c
+@@ -228,28 +228,28 @@ DEFINE_ALLOC_SIZE_TEST_PAIR(vmalloc)
+ 									\
+ 	checker((expected_pages) * PAGE_SIZE,				\
+ 		kvmalloc((alloc_pages) * PAGE_SIZE, gfp),		\
+-		vfree(p));						\
++		kvfree(p));						\
+ 	checker((expected_pages) * PAGE_SIZE,				\
+ 		kvmalloc_node((alloc_pages) * PAGE_SIZE, gfp, NUMA_NO_NODE), \
+-		vfree(p));						\
++		kvfree(p));						\
+ 	checker((expected_pages) * PAGE_SIZE,				\
+ 		kvzalloc((alloc_pages) * PAGE_SIZE, gfp),		\
+-		vfree(p));						\
++		kvfree(p));						\
+ 	checker((expected_pages) * PAGE_SIZE,				\
+ 		kvzalloc_node((alloc_pages) * PAGE_SIZE, gfp, NUMA_NO_NODE), \
+-		vfree(p));						\
++		kvfree(p));						\
+ 	checker((expected_pages) * PAGE_SIZE,				\
+ 		kvcalloc(1, (alloc_pages) * PAGE_SIZE, gfp),		\
+-		vfree(p));						\
++		kvfree(p));						\
+ 	checker((expected_pages) * PAGE_SIZE,				\
+ 		kvcalloc((alloc_pages) * PAGE_SIZE, 1, gfp),		\
+-		vfree(p));						\
++		kvfree(p));						\
+ 	checker((expected_pages) * PAGE_SIZE,				\
+ 		kvmalloc_array(1, (alloc_pages) * PAGE_SIZE, gfp),	\
+-		vfree(p));						\
++		kvfree(p));						\
+ 	checker((expected_pages) * PAGE_SIZE,				\
+ 		kvmalloc_array((alloc_pages) * PAGE_SIZE, 1, gfp),	\
+-		vfree(p));						\
++		kvfree(p));						\
+ 									\
+ 	prev_size = (expected_pages) * PAGE_SIZE;			\
+ 	orig = kvmalloc(prev_size, gfp);				\
 -- 
-2.45.2
+2.43.0
 
 
 
