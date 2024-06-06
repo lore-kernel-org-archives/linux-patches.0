@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C69819754E;
-	Thu,  6 Jun 2024 14:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A8419754E;
+	Thu,  6 Jun 2024 14:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683719; cv=none; b=jNgRgM2/vWhm6w+ELMiA6QPCSRVuo27t/KaZ7o2GsMkkpmPwGOjeNi67IkSCC3oMH6vS6ZMmoxJ4ZgUEl2bmfxOtVQ3DHaBlH4yU7piJxBSJE7HZ32OL89MdKAAuphljfbLMgWVndDcPzulEC8wKxhe+G1/dZ2SGshhYknQN4IQ=
+	t=1717683720; cv=none; b=XEJCODgIMHt26Kpo6/rV6QC3tb0+D5hy5GtfAoXBD5SEHSvNrSeGHCfiGUZWUOLe1jmPIUg18eurwDrK8hfDo87jzAlyUIWYYRKlHPIaFlVdM75XxWzaACOCj3ztZ0e18WWuasPs+LFT06Po6P09C8qbPahtxY5CMLBSD1p/uiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683719; c=relaxed/simple;
-	bh=NBkfdUaFjuazjyvN5fEAuwGHPf+CnW++DY+3VRl9RQQ=;
+	s=arc-20240116; t=1717683720; c=relaxed/simple;
+	bh=PZIUx6y2Nxvg2T5BLF+woZg444nS4Ri0RjifHuWI0uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fnlczqdHunc3OEdsE60OoH10JRj21O0goMWesAVJ0fUQv1x2Q/AR22UUYluBowwtHgfiOE6Ir6uqtA7PuR1aOzPgZgR0PTl03GMgE9oZoB4nt0hdX+8gaWitqDKgHHHuV1GTZzWQRU/orGy5UYgkgW2fxppv9dFgYcgclSeZH/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWlUrZg1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aNTmVEv6fBullNv8Cu36q0OC5G2KfE7t3KOnSTeRwAgLXrLhIqR2Us1Z48KCnbgHQODjYbOH7aT0HdEq4pEcg4JvjdAcOImUuq4OnVDJw3/VQ5CpbOlFWNpr4argY6PxGUMR39LxY+CS8CETIvlu8qwh7IHu8f+YrYT21ohu0bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTp+7Aj/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWlUrZg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B88EC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTp+7Aj/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0752C2BD10;
 	Thu,  6 Jun 2024 14:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683719;
-	bh=NBkfdUaFjuazjyvN5fEAuwGHPf+CnW++DY+3VRl9RQQ=;
+	bh=PZIUx6y2Nxvg2T5BLF+woZg444nS4Ri0RjifHuWI0uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xWlUrZg1xlXJbN9t8QNDh/IOxChWanOiWiuuIJ2iHoXP+FSCY40ZGRfyd91DOqF/E
-	 4/DoaYgnk9qSUCJx+nKQNee/R7NDqYJ9zFjr8ehulLcaIlhgWxd2/H/A+vggZ64bsa
-	 rvUHF2otenruve2LBdDXJ/aTVaRYpLoOqyY0Go9s=
+	b=WTp+7Aj/q/2KhCalqnstLuchqrJ5tYJb/a67DkvUMuG8eMpF0oW7LqFkmRCMHYXXv
+	 uW3w5Fdw5z7olpRkngirUXPos/cbn4K6yoQfsUiUvEDCMRRdB0BDzpIqgrVIcxjy11
+	 WKNoRx9OhHz/OkrzvzeSiKvMIoBvlNX4Nng1nlf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	"Yang, Chenyuan" <cy54@illinois.edu>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Yang
-Subject: [PATCH 6.6 608/744] media: cec: cec-api: add locking in cec_release()
-Date: Thu,  6 Jun 2024 16:04:40 +0200
-Message-ID: <20240606131751.987029459@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 653/744] net: lan966x: Remove ptp traps in case the ptp is not enabled.
+Date: Thu,  6 Jun 2024 16:05:25 +0200
+Message-ID: <20240606131753.412875086@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,44 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 42bcaacae924bf18ae387c3f78c202df0b739292 ]
+[ Upstream commit eda40be3a5ff3fdce513d2bcfeaca8cc16cf962a ]
 
-When cec_release() uses fh->msgs it has to take fh->lock,
-otherwise the list can get corrupted.
+Lan966x is adding ptp traps to redirect the ptp frames to the CPU such
+that the HW will not forward these frames anywhere. The issue is that in
+case ptp is not enabled and the timestamping source is et to
+HWTSTAMP_SOURCE_NETDEV then these traps would not be removed on the
+error path.
+Fix this by removing the traps in this case as they are not needed.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reported-by: Yang, Chenyuan <cy54@illinois.edu>
-Closes: https://lore.kernel.org/linux-media/PH7PR11MB57688E64ADE4FE82E658D86DA09EA@PH7PR11MB5768.namprd11.prod.outlook.com/
-Fixes: ca684386e6e2 ("[media] cec: add HDMI CEC framework (api)")
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 54e1ed69c40a ("net: lan966x: convert to ndo_hwtstamp_get() and ndo_hwtstamp_set()")
+Suggested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://lore.kernel.org/r/20240517135808.3025435-1-horatiu.vultur@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/core/cec-api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/microchip/lan966x/lan966x_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/cec/core/cec-api.c b/drivers/media/cec/core/cec-api.c
-index 67dc79ef17050..d64bb716f9c68 100644
---- a/drivers/media/cec/core/cec-api.c
-+++ b/drivers/media/cec/core/cec-api.c
-@@ -664,6 +664,8 @@ static int cec_release(struct inode *inode, struct file *filp)
- 		list_del_init(&data->xfer_list);
- 	}
- 	mutex_unlock(&adap->lock);
-+
-+	mutex_lock(&fh->lock);
- 	while (!list_empty(&fh->msgs)) {
- 		struct cec_msg_entry *entry =
- 			list_first_entry(&fh->msgs, struct cec_msg_entry, list);
-@@ -681,6 +683,7 @@ static int cec_release(struct inode *inode, struct file *filp)
- 			kfree(entry);
- 		}
- 	}
-+	mutex_unlock(&fh->lock);
- 	kfree(fh);
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index 3f1033abd462d..c3f6c10bc2393 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -474,14 +474,14 @@ static int lan966x_port_hwtstamp_set(struct net_device *dev,
+ 	    cfg->source != HWTSTAMP_SOURCE_PHYLIB)
+ 		return -EOPNOTSUPP;
  
- 	cec_put_device(devnode);
++	if (cfg->source == HWTSTAMP_SOURCE_NETDEV && !port->lan966x->ptp)
++		return -EOPNOTSUPP;
++
+ 	err = lan966x_ptp_setup_traps(port, cfg);
+ 	if (err)
+ 		return err;
+ 
+ 	if (cfg->source == HWTSTAMP_SOURCE_NETDEV) {
+-		if (!port->lan966x->ptp)
+-			return -EOPNOTSUPP;
+-
+ 		err = lan966x_ptp_hwtstamp_set(port, cfg, extack);
+ 		if (err) {
+ 			lan966x_ptp_del_traps(port);
 -- 
 2.43.0
 
