@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C8B196C98;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05DB19925C;
 	Thu,  6 Jun 2024 14:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683204; cv=none; b=AGiwDMG2+XevlVvUzzcQwVmedPiWjuucpAiP1VyWW50XIqxWbuHQJiX9RfmT/C0iIWWbU56SP50TdExuLtoA1q7sGWwhRUnD+zKyaZ3gqYoesL4oPIZ5EDHjDIyAxI4a7XnrezRKP4ZC57bMtcXAg2J6pX+Xk3/+iZV41G2ReHg=
+	t=1717683205; cv=none; b=X4jEoPdJOfHPezXdwyUXMF7xN44wGVEc38sLPPY7sIJ9MnsdzB1dizjQV+bckZE+aJSAUGFNsUco4XuJtxRWU2DnI+tOSNUGpF22XiLkYoA4y3qo+IELslqIyr4ZuH2O2/Ik1hu6TIkFbu1Ne5NWpNzJxMGOCzyGvjvb0uFOBjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683204; c=relaxed/simple;
-	bh=KILxAP2TfLCY2uDdrPcehXqnDe/2em/uOoZzQ3gLpsE=;
+	s=arc-20240116; t=1717683205; c=relaxed/simple;
+	bh=zaeMdZ/e3mEnIGmnp/z90U8vEsjf7dDAQwf+KMlvCdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozrA7/JfWLcn9P27RdQap4QEZGH0ucLEm6EeZGOrnp/4pvSiazdEou11Y2zcDSHJvrqbu/AdAJYyBV/Y87lel4pE7d6ZW71NwWdSk+bQOCaKXYUFLNwfzYB41Hplf6JrH3D1ekJnJBp9N3/EqsQMmMQq8WnCsKfNMGOTv6pZvGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bax+/Q4s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KrL4EvDvIViP6MNCCHXzHcMi4yUXPaYHxnJMUE3yiztFD5MbBSxjN05WO9IqGjKhSM4A+bFIfOQ8mSAGy7W0GG+qdbM4zngh5TDBY6cgaGfar7gt+0GJnS04bUytOFljPBmUgAbBhyr8ZFZzMdoqI2TFbhPcOCD6LxBD1ptNGuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qsmSx2p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bax+/Q4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E29C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qsmSx2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD13CC2BD10;
 	Thu,  6 Jun 2024 14:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683204;
-	bh=KILxAP2TfLCY2uDdrPcehXqnDe/2em/uOoZzQ3gLpsE=;
+	bh=zaeMdZ/e3mEnIGmnp/z90U8vEsjf7dDAQwf+KMlvCdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bax+/Q4spHVhdQu5qapzKF8mQ+dHkaigVuUSPHXS6bQ0aLNEiGP07Wn0Qi9MOxN5x
-	 mPPN2ClKWklXiZG7XPPNBlV7UMgFZV3mBhdGZzmmzL/rm7JTEDTgglS9K/qn5iIHmY
-	 a++9m/7BoY8JtpvK3HzurNGeZPdCONs2bEv1fncg=
+	b=2qsmSx2pHFzAAK0XsS5mHkPcKGMamWL6LD0Tm2XYwJ/VfPmg/Ga9qU/K57cFW3P30
+	 PQ8/5Fuxd6m+Giw1oehSQlZCmfbs45/wo3hWe+PfGPbqfQdRcsPJlyDfdtIvrombXu
+	 iSPelkWwVnH0T2Qt1wum3dH9SlcB0QH2LxOpL+DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Anton Protopopov <aspsk@isovalent.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/473] ARM: configs: sunxi: Enable DRM_DW_HDMI
-Date: Thu,  6 Jun 2024 16:00:11 +0200
-Message-ID: <20240606131702.621483290@linuxfoundation.org>
+Subject: [PATCH 6.6 148/744] bpf: Pack struct bpf_fib_lookup
+Date: Thu,  6 Jun 2024 15:57:00 +0200
+Message-ID: <20240606131737.159558216@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,43 +50,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Anton Protopopov <aspsk@isovalent.com>
 
-[ Upstream commit deff401b14e2d832b25b55862ad6c73378fe034e ]
+[ Upstream commit f91717007217d975aa975ddabd91ae1a107b9bff ]
 
-Commit 4fc8cb47fcfd ("drm/display: Move HDMI helpers into display-helper
-module") turned the DRM_DW_HDMI dependency of DRM_SUN8I_DW_HDMI into a
-depends on which ended up disabling the driver in the defconfig. Make
-sure it's still enabled.
+The struct bpf_fib_lookup is supposed to be of size 64. A recent commit
+59b418c7063d ("bpf: Add a check for struct bpf_fib_lookup size") added
+a static assertion to check this property so that future changes to the
+structure will not accidentally break this assumption.
 
-Fixes: 4fc8cb47fcfd ("drm/display: Move HDMI helpers into display-helper module")
-Reported-by: Mark Brown <broonie@kernel.org>
-Reported-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20240403-fix-dw-hdmi-kconfig-v1-5-afbc4a835c38@kernel.org
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+As it immediately turned out, on some 32-bit arm systems, when AEABI=n,
+the total size of the structure was equal to 68, see [1]. This happened
+because the bpf_fib_lookup structure contains a union of two 16-bit
+fields:
+
+    union {
+            __u16 tot_len;
+            __u16 mtu_result;
+    };
+
+which was supposed to compile to a 16-bit-aligned 16-bit field. On the
+aforementioned setups it was instead both aligned and padded to 32-bits.
+
+Declare this inner union as __attribute__((packed, aligned(2))) such
+that it always is of size 2 and is aligned to 16 bits.
+
+  [1] https://lore.kernel.org/all/CA+G9fYtsoP51f-oP_Sp5MOq-Ffv8La2RztNpwvE6+R1VtFiLrw@mail.gmail.com/#t
+
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Fixes: e1850ea9bd9e ("bpf: bpf_fib_lookup return MTU value as output when looked up")
+Signed-off-by: Anton Protopopov <aspsk@isovalent.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20240403123303.1452184-1-aspsk@isovalent.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/configs/sunxi_defconfig | 1 +
- 1 file changed, 1 insertion(+)
+ include/uapi/linux/bpf.h       | 2 +-
+ tools/include/uapi/linux/bpf.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/configs/sunxi_defconfig b/arch/arm/configs/sunxi_defconfig
-index bddc82f789421..a83d29fed1756 100644
---- a/arch/arm/configs/sunxi_defconfig
-+++ b/arch/arm/configs/sunxi_defconfig
-@@ -110,6 +110,7 @@ CONFIG_DRM_PANEL_LVDS=y
- CONFIG_DRM_PANEL_SIMPLE=y
- CONFIG_DRM_PANEL_EDP=y
- CONFIG_DRM_SIMPLE_BRIDGE=y
-+CONFIG_DRM_DW_HDMI=y
- CONFIG_DRM_LIMA=y
- CONFIG_FB_SIMPLE=y
- CONFIG_BACKLIGHT_CLASS_DEVICE=y
+diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
+index 366df8a1a5fc8..fb09fd1767f28 100644
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -6994,7 +6994,7 @@ struct bpf_fib_lookup {
+ 
+ 		/* output: MTU value */
+ 		__u16	mtu_result;
+-	};
++	} __attribute__((packed, aligned(2)));
+ 	/* input: L3 device index for lookup
+ 	 * output: device index from FIB lookup
+ 	 */
+diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
+index 366df8a1a5fc8..fb09fd1767f28 100644
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -6994,7 +6994,7 @@ struct bpf_fib_lookup {
+ 
+ 		/* output: MTU value */
+ 		__u16	mtu_result;
+-	};
++	} __attribute__((packed, aligned(2)));
+ 	/* input: L3 device index for lookup
+ 	 * output: device index from FIB lookup
+ 	 */
 -- 
 2.43.0
 
