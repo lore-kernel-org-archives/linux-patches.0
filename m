@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE465198E9A;
-	Thu,  6 Jun 2024 14:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41033198E9A;
+	Thu,  6 Jun 2024 14:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683509; cv=none; b=ojX/EX5h527y1HeiRy4A/HHsEl7VJQ9vtx/b/tmyNWC4RWVPNd5QfCqZ0VxWX61IaxKb0EhniNBuDKbPiX8dhMlCllgI21O/EOrvu5qM0Z3hvmvd4tm2jEeWh5kHon53N/ba+Lyp5m0rIPLVKCfem94Xq8I6HOZBAqaZmlAB8h0=
+	t=1717683510; cv=none; b=hSvltdNk2gdv6Sl+1Y1obCSLy2N+CCPwBM11FV5Od4ynBsfoVTqlc6n985itfcfXFJVZ0WOHC/Fzj9uWwGCxVMVVDcHshXQjV0z9MUG0V0OIusARae2IaD2BUFfvT1tPtJ05XfC/LHQYwDZdSCGfz/gJFhTSQvXWBUi+g+9VB7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683509; c=relaxed/simple;
-	bh=nbY+WKW2/zYfdjc1NFO9s3FnSMeZN6Dw8tZc6w/l0AA=;
+	s=arc-20240116; t=1717683510; c=relaxed/simple;
+	bh=GAA1pi2Bsl8gpWbTXU8UhoHlVmK+xCjqLVeqd10zdW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lo0+PNluB/oVpDTSt5WGV9xwsS58ildLPr0Dr463/qnU1sX4d2ad4RYQKeWqwCAwZdHW4RfTf3UBc2df1/fN0JmDwBZ+JQ8TfEXjvkHYgwQpjkjIw/yLZX5aDO+gYDthVvJSzcbMJSFupMdaffEzukHXyAopECAPz7Y+YHAm8lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xm5lpeid; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rZyMuWIDs9Ub9q5RpO63onGH50UXSHfikoN2PkkDmeu2143QG9YAa2xaqY0cEY+4Ww8bsrI0NulgurFCKAH1h0uK4IuNIrjX5gPYYQu51MGkH0DvZNzujyNXhdALrYA4aJIRwVYhUKc+qjcBeZAs8dDC2NetbGz3LJp3ZLm9egY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pt3qhMBF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xm5lpeid"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E77CC2BD10;
-	Thu,  6 Jun 2024 14:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pt3qhMBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168CCC2BD10;
+	Thu,  6 Jun 2024 14:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683509;
-	bh=nbY+WKW2/zYfdjc1NFO9s3FnSMeZN6Dw8tZc6w/l0AA=;
+	s=korg; t=1717683510;
+	bh=GAA1pi2Bsl8gpWbTXU8UhoHlVmK+xCjqLVeqd10zdW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xm5lpeid22Hwe7E9ghgi2coiIl1LzKmJmKd6Yk6eGmxFke4ZvnrWdpsaz0vZxpyYQ
-	 U98PrmONK4ET7YTaee1wwoBvilDe0IpOuc/h6AYAg9BSBbPgRxmtinm1f1MoOxQHUv
-	 5OXHN8/8VFsvlMTXiWA6PPsbqz4NJxg3M4OLD7d0=
+	b=Pt3qhMBFSqRsYye2/MtR5y4sSFFQShMSCpWwKDnT4HbYVlP7psiy12J7JimPjc46M
+	 LkhMrB6XjpXaru6rYaKgfzkbQtqVV/U1tvwbk/pg2k3QEzjHjKdaOPx2QxTd4YlrOf
+	 /pbuLKUscv3VA2ClkvxECQZCbO+WWPb7quNFKKfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 398/473] ASoC: mediatek: mt8192: fix register configuration for tdm
-Date: Thu,  6 Jun 2024 16:05:27 +0200
-Message-ID: <20240606131712.979033215@linuxfoundation.org>
+Subject: [PATCH 6.6 451/744] iio: adc: ad9467: convert to backend framework
+Date: Thu,  6 Jun 2024 16:02:03 +0200
+Message-ID: <20240606131746.958542973@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +48,517 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hsin-Te Yuan <yuanhsinte@chromium.org>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit a85ed162f0efcfdd664954414a05d1d560cc95dc ]
+[ Upstream commit bb42191f85c389bf816373d25c3e4c94045cf4ff ]
 
-For DSP_A, data is a BCK cycle behind LRCK trigger edge. For DSP_B, this
-delay doesn't exist. Fix the delay configuration to match the standard.
+Convert the driver to use the new IIO backend framework. The device
+functionality is expected to be the same (meaning no added or removed
+features).
 
-Fixes: 52fcd65414abfc ("ASoC: mediatek: mt8192: support tdm in platform driver")
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20240509-8192-tdm-v1-1-530b54645763@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Also note this patch effectively breaks ABI and that's needed so we can
+properly support this device and add needed features making use of the
+new IIO framework.
+
+Given the lack of features (and devices supported) in the ad9467 driver
+compared with the ADI out of tree version, we don't expect any user of
+the upstream driver so no one should notice the ABI breakage. However,
+if someone is affected by this, ADI will happily support transitioning
+to the backend framework.
+
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240210-iio-backend-v11-6-f5242a5fb42a@analog.com
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: cf1c833f89e7 ("iio: adc: adi-axi-adc: only error out in major version mismatch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-dai-tdm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/Kconfig  |   2 +-
+ drivers/iio/adc/ad9467.c | 267 ++++++++++++++++++++++++++-------------
+ 2 files changed, 178 insertions(+), 91 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-index f3bebed2428a7..360259e60de84 100644
---- a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-@@ -566,10 +566,10 @@ static int mtk_dai_tdm_hw_params(struct snd_pcm_substream *substream,
- 		tdm_con |= 1 << DELAY_DATA_SFT;
- 		tdm_con |= get_tdm_lrck_width(format) << LRCK_TDM_WIDTH_SFT;
- 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_A) {
--		tdm_con |= 0 << DELAY_DATA_SFT;
-+		tdm_con |= 1 << DELAY_DATA_SFT;
- 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
- 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_B) {
--		tdm_con |= 1 << DELAY_DATA_SFT;
-+		tdm_con |= 0 << DELAY_DATA_SFT;
- 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
+diff --git a/drivers/iio/adc/Kconfig b/drivers/iio/adc/Kconfig
+index 0b94bda8be361..ae789d427b213 100644
+--- a/drivers/iio/adc/Kconfig
++++ b/drivers/iio/adc/Kconfig
+@@ -275,7 +275,7 @@ config AD799X
+ config AD9467
+ 	tristate "Analog Devices AD9467 High Speed ADC driver"
+ 	depends on SPI
+-	depends on ADI_AXI_ADC
++	select IIO_BACKEND
+ 	help
+ 	  Say yes here to build support for Analog Devices:
+ 	  * AD9467 16-Bit, 200 MSPS/250 MSPS Analog-to-Digital Converter
+diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
+index c5ed62cc86465..863dca5db161e 100644
+--- a/drivers/iio/adc/ad9467.c
++++ b/drivers/iio/adc/ad9467.c
+@@ -17,13 +17,12 @@
+ #include <linux/of.h>
+ 
+ 
++#include <linux/iio/backend.h>
+ #include <linux/iio/iio.h>
+ #include <linux/iio/sysfs.h>
+ 
+ #include <linux/clk.h>
+ 
+-#include <linux/iio/adc/adi-axi-adc.h>
+-
+ /*
+  * ADI High-Speed ADC common spi interface registers
+  * See Application-Note AN-877:
+@@ -102,15 +101,20 @@
+ #define AD9467_REG_VREF_MASK		0x0F
+ 
+ struct ad9467_chip_info {
+-	struct adi_axi_adc_chip_info	axi_adc_info;
+-	unsigned int			default_output_mode;
+-	unsigned int			vref_mask;
++	const char		*name;
++	unsigned int		id;
++	const struct		iio_chan_spec *channels;
++	unsigned int		num_channels;
++	const unsigned int	(*scale_table)[2];
++	int			num_scales;
++	unsigned long		max_rate;
++	unsigned int		default_output_mode;
++	unsigned int		vref_mask;
+ };
+ 
+-#define to_ad9467_chip_info(_info)	\
+-	container_of(_info, struct ad9467_chip_info, axi_adc_info)
+-
+ struct ad9467_state {
++	const struct ad9467_chip_info	*info;
++	struct iio_backend		*back;
+ 	struct spi_device		*spi;
+ 	struct clk			*clk;
+ 	unsigned int			output_mode;
+@@ -151,10 +155,10 @@ static int ad9467_spi_write(struct spi_device *spi, unsigned int reg,
+ 	return spi_write(spi, buf, ARRAY_SIZE(buf));
+ }
+ 
+-static int ad9467_reg_access(struct adi_axi_adc_conv *conv, unsigned int reg,
++static int ad9467_reg_access(struct iio_dev *indio_dev, unsigned int reg,
+ 			     unsigned int writeval, unsigned int *readval)
+ {
+-	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
++	struct ad9467_state *st = iio_priv(indio_dev);
+ 	struct spi_device *spi = st->spi;
+ 	int ret;
+ 
+@@ -191,10 +195,10 @@ static const unsigned int ad9467_scale_table[][2] = {
+ 	{2300, 8}, {2400, 9}, {2500, 10},
+ };
+ 
+-static void __ad9467_get_scale(struct adi_axi_adc_conv *conv, int index,
++static void __ad9467_get_scale(struct ad9467_state *st, int index,
+ 			       unsigned int *val, unsigned int *val2)
+ {
+-	const struct adi_axi_adc_chip_info *info = conv->chip_info;
++	const struct ad9467_chip_info *info = st->info;
+ 	const struct iio_chan_spec *chan = &info->channels[0];
+ 	unsigned int tmp;
+ 
+@@ -229,52 +233,44 @@ static const struct iio_chan_spec ad9467_channels[] = {
+ };
+ 
+ static const struct ad9467_chip_info ad9467_chip_tbl = {
+-	.axi_adc_info = {
+-		.name = "ad9467",
+-		.id = CHIPID_AD9467,
+-		.max_rate = 250000000UL,
+-		.scale_table = ad9467_scale_table,
+-		.num_scales = ARRAY_SIZE(ad9467_scale_table),
+-		.channels = ad9467_channels,
+-		.num_channels = ARRAY_SIZE(ad9467_channels),
+-	},
++	.name = "ad9467",
++	.id = CHIPID_AD9467,
++	.max_rate = 250000000UL,
++	.scale_table = ad9467_scale_table,
++	.num_scales = ARRAY_SIZE(ad9467_scale_table),
++	.channels = ad9467_channels,
++	.num_channels = ARRAY_SIZE(ad9467_channels),
+ 	.default_output_mode = AD9467_DEF_OUTPUT_MODE,
+ 	.vref_mask = AD9467_REG_VREF_MASK,
+ };
+ 
+ static const struct ad9467_chip_info ad9434_chip_tbl = {
+-	.axi_adc_info = {
+-		.name = "ad9434",
+-		.id = CHIPID_AD9434,
+-		.max_rate = 500000000UL,
+-		.scale_table = ad9434_scale_table,
+-		.num_scales = ARRAY_SIZE(ad9434_scale_table),
+-		.channels = ad9434_channels,
+-		.num_channels = ARRAY_SIZE(ad9434_channels),
+-	},
++	.name = "ad9434",
++	.id = CHIPID_AD9434,
++	.max_rate = 500000000UL,
++	.scale_table = ad9434_scale_table,
++	.num_scales = ARRAY_SIZE(ad9434_scale_table),
++	.channels = ad9434_channels,
++	.num_channels = ARRAY_SIZE(ad9434_channels),
+ 	.default_output_mode = AD9434_DEF_OUTPUT_MODE,
+ 	.vref_mask = AD9434_REG_VREF_MASK,
+ };
+ 
+ static const struct ad9467_chip_info ad9265_chip_tbl = {
+-	.axi_adc_info = {
+-		.name = "ad9265",
+-		.id = CHIPID_AD9265,
+-		.max_rate = 125000000UL,
+-		.scale_table = ad9265_scale_table,
+-		.num_scales = ARRAY_SIZE(ad9265_scale_table),
+-		.channels = ad9467_channels,
+-		.num_channels = ARRAY_SIZE(ad9467_channels),
+-	},
++	.name = "ad9265",
++	.id = CHIPID_AD9265,
++	.max_rate = 125000000UL,
++	.scale_table = ad9265_scale_table,
++	.num_scales = ARRAY_SIZE(ad9265_scale_table),
++	.channels = ad9467_channels,
++	.num_channels = ARRAY_SIZE(ad9467_channels),
+ 	.default_output_mode = AD9265_DEF_OUTPUT_MODE,
+ 	.vref_mask = AD9265_REG_VREF_MASK,
+ };
+ 
+-static int ad9467_get_scale(struct adi_axi_adc_conv *conv, int *val, int *val2)
++static int ad9467_get_scale(struct ad9467_state *st, int *val, int *val2)
+ {
+-	const struct adi_axi_adc_chip_info *info = conv->chip_info;
+-	const struct ad9467_chip_info *info1 = to_ad9467_chip_info(info);
+-	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
++	const struct ad9467_chip_info *info = st->info;
+ 	unsigned int i, vref_val;
+ 	int ret;
+ 
+@@ -282,7 +278,7 @@ static int ad9467_get_scale(struct adi_axi_adc_conv *conv, int *val, int *val2)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	vref_val = ret & info1->vref_mask;
++	vref_val = ret & info->vref_mask;
+ 
+ 	for (i = 0; i < info->num_scales; i++) {
+ 		if (vref_val == info->scale_table[i][1])
+@@ -292,15 +288,14 @@ static int ad9467_get_scale(struct adi_axi_adc_conv *conv, int *val, int *val2)
+ 	if (i == info->num_scales)
+ 		return -ERANGE;
+ 
+-	__ad9467_get_scale(conv, i, val, val2);
++	__ad9467_get_scale(st, i, val, val2);
+ 
+ 	return IIO_VAL_INT_PLUS_MICRO;
+ }
+ 
+-static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
++static int ad9467_set_scale(struct ad9467_state *st, int val, int val2)
+ {
+-	const struct adi_axi_adc_chip_info *info = conv->chip_info;
+-	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
++	const struct ad9467_chip_info *info = st->info;
+ 	unsigned int scale_val[2];
+ 	unsigned int i;
+ 	int ret;
+@@ -309,7 +304,7 @@ static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
+ 		return -EINVAL;
+ 
+ 	for (i = 0; i < info->num_scales; i++) {
+-		__ad9467_get_scale(conv, i, &scale_val[0], &scale_val[1]);
++		__ad9467_get_scale(st, i, &scale_val[0], &scale_val[1]);
+ 		if (scale_val[0] != val || scale_val[1] != val2)
+ 			continue;
+ 
+@@ -326,15 +321,15 @@ static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
+ 	return -EINVAL;
+ }
+ 
+-static int ad9467_read_raw(struct adi_axi_adc_conv *conv,
++static int ad9467_read_raw(struct iio_dev *indio_dev,
+ 			   struct iio_chan_spec const *chan,
+ 			   int *val, int *val2, long m)
+ {
+-	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
++	struct ad9467_state *st = iio_priv(indio_dev);
+ 
+ 	switch (m) {
+ 	case IIO_CHAN_INFO_SCALE:
+-		return ad9467_get_scale(conv, val, val2);
++		return ad9467_get_scale(st, val, val2);
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
+ 		*val = clk_get_rate(st->clk);
+ 
+@@ -344,17 +339,17 @@ static int ad9467_read_raw(struct adi_axi_adc_conv *conv,
+ 	}
+ }
+ 
+-static int ad9467_write_raw(struct adi_axi_adc_conv *conv,
++static int ad9467_write_raw(struct iio_dev *indio_dev,
+ 			    struct iio_chan_spec const *chan,
+ 			    int val, int val2, long mask)
+ {
+-	const struct adi_axi_adc_chip_info *info = conv->chip_info;
+-	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
++	struct ad9467_state *st = iio_priv(indio_dev);
++	const struct ad9467_chip_info *info = st->info;
+ 	long r_clk;
+ 
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_SCALE:
+-		return ad9467_set_scale(conv, val, val2);
++		return ad9467_set_scale(st, val, val2);
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
+ 		r_clk = clk_round_rate(st->clk, val);
+ 		if (r_clk < 0 || r_clk > info->max_rate) {
+@@ -369,13 +364,13 @@ static int ad9467_write_raw(struct adi_axi_adc_conv *conv,
+ 	}
+ }
+ 
+-static int ad9467_read_avail(struct adi_axi_adc_conv *conv,
++static int ad9467_read_avail(struct iio_dev *indio_dev,
+ 			     struct iio_chan_spec const *chan,
+ 			     const int **vals, int *type, int *length,
+ 			     long mask)
+ {
+-	const struct adi_axi_adc_chip_info *info = conv->chip_info;
+-	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
++	struct ad9467_state *st = iio_priv(indio_dev);
++	const struct ad9467_chip_info *info = st->info;
+ 
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_SCALE:
+@@ -389,6 +384,33 @@ static int ad9467_read_avail(struct adi_axi_adc_conv *conv,
+ 	}
+ }
+ 
++static int ad9467_update_scan_mode(struct iio_dev *indio_dev,
++				   const unsigned long *scan_mask)
++{
++	struct ad9467_state *st = iio_priv(indio_dev);
++	unsigned int c;
++	int ret;
++
++	for (c = 0; c < st->info->num_channels; c++) {
++		if (test_bit(c, scan_mask))
++			ret = iio_backend_chan_enable(st->back, c);
++		else
++			ret = iio_backend_chan_disable(st->back, c);
++		if (ret)
++			return ret;
++	}
++
++	return 0;
++}
++
++static const struct iio_info ad9467_info = {
++	.read_raw = ad9467_read_raw,
++	.write_raw = ad9467_write_raw,
++	.update_scan_mode = ad9467_update_scan_mode,
++	.debugfs_reg_access = ad9467_reg_access,
++	.read_avail = ad9467_read_avail,
++};
++
+ static int ad9467_outputmode_set(struct spi_device *spi, unsigned int mode)
+ {
+ 	int ret;
+@@ -401,10 +423,9 @@ static int ad9467_outputmode_set(struct spi_device *spi, unsigned int mode)
+ 				AN877_ADC_TRANSFER_SYNC);
+ }
+ 
+-static int ad9467_scale_fill(struct adi_axi_adc_conv *conv)
++static int ad9467_scale_fill(struct ad9467_state *st)
+ {
+-	const struct adi_axi_adc_chip_info *info = conv->chip_info;
+-	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
++	const struct ad9467_chip_info *info = st->info;
+ 	unsigned int i, val1, val2;
+ 
+ 	st->scales = devm_kmalloc_array(&st->spi->dev, info->num_scales,
+@@ -413,7 +434,7 @@ static int ad9467_scale_fill(struct adi_axi_adc_conv *conv)
+ 		return -ENOMEM;
+ 
+ 	for (i = 0; i < info->num_scales; i++) {
+-		__ad9467_get_scale(conv, i, &val1, &val2);
++		__ad9467_get_scale(st, i, &val1, &val2);
+ 		st->scales[i][0] = val1;
+ 		st->scales[i][1] = val2;
+ 	}
+@@ -421,11 +442,27 @@ static int ad9467_scale_fill(struct adi_axi_adc_conv *conv)
+ 	return 0;
+ }
+ 
+-static int ad9467_preenable_setup(struct adi_axi_adc_conv *conv)
++static int ad9467_setup(struct ad9467_state *st)
+ {
+-	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
++	struct iio_backend_data_fmt data = {
++		.sign_extend = true,
++		.enable = true,
++	};
++	unsigned int c, mode;
++	int ret;
++
++	mode = st->info->default_output_mode | AN877_ADC_OUTPUT_MODE_TWOS_COMPLEMENT;
++	ret = ad9467_outputmode_set(st->spi, mode);
++	if (ret)
++		return ret;
+ 
+-	return ad9467_outputmode_set(st->spi, st->output_mode);
++	for (c = 0; c < st->info->num_channels; c++) {
++		ret = iio_backend_data_format_set(st->back, c, &data);
++		if (ret)
++			return ret;
++	}
++
++	return 0;
+ }
+ 
+ static int ad9467_reset(struct device *dev)
+@@ -443,25 +480,65 @@ static int ad9467_reset(struct device *dev)
+ 	return 0;
+ }
+ 
++static int ad9467_iio_backend_get(struct ad9467_state *st)
++{
++	struct device *dev = &st->spi->dev;
++	struct device_node *__back;
++
++	st->back = devm_iio_backend_get(dev, NULL);
++	if (!IS_ERR(st->back))
++		return 0;
++	/* If not found, don't error out as we might have legacy DT property */
++	if (PTR_ERR(st->back) != -ENOENT)
++		return PTR_ERR(st->back);
++
++	/*
++	 * if we don't get the backend using the normal API's, use the legacy
++	 * 'adi,adc-dev' property. So we get all nodes with that property, and
++	 * look for the one pointing at us. Then we directly lookup that fwnode
++	 * on the backend list of registered devices. This is done so we don't
++	 * make io-backends mandatory which would break DT ABI.
++	 */
++	for_each_node_with_property(__back, "adi,adc-dev") {
++		struct device_node *__me;
++
++		__me = of_parse_phandle(__back, "adi,adc-dev", 0);
++		if (!__me)
++			continue;
++
++		if (!device_match_of_node(dev, __me)) {
++			of_node_put(__me);
++			continue;
++		}
++
++		of_node_put(__me);
++		st->back = __devm_iio_backend_get_from_fwnode_lookup(dev,
++								     of_fwnode_handle(__back));
++		of_node_put(__back);
++		return PTR_ERR_OR_ZERO(st->back);
++	}
++
++	return -ENODEV;
++}
++
+ static int ad9467_probe(struct spi_device *spi)
+ {
+-	const struct ad9467_chip_info *info;
+-	struct adi_axi_adc_conv *conv;
++	struct iio_dev *indio_dev;
+ 	struct ad9467_state *st;
+ 	unsigned int id;
+ 	int ret;
+ 
+-	info = spi_get_device_match_data(spi);
+-	if (!info)
+-		return -ENODEV;
+-
+-	conv = devm_adi_axi_adc_conv_register(&spi->dev, sizeof(*st));
+-	if (IS_ERR(conv))
+-		return PTR_ERR(conv);
++	indio_dev = devm_iio_device_alloc(&spi->dev, sizeof(*st));
++	if (!indio_dev)
++		return -ENOMEM;
+ 
+-	st = adi_axi_adc_conv_priv(conv);
++	st = iio_priv(indio_dev);
+ 	st->spi = spi;
+ 
++	st->info = spi_get_device_match_data(spi);
++	if (!st->info)
++		return -ENODEV;
++
+ 	st->clk = devm_clk_get_enabled(&spi->dev, "adc-clk");
+ 	if (IS_ERR(st->clk))
+ 		return PTR_ERR(st->clk);
+@@ -475,29 +552,39 @@ static int ad9467_probe(struct spi_device *spi)
+ 	if (ret)
+ 		return ret;
+ 
+-	conv->chip_info = &info->axi_adc_info;
+-
+-	ret = ad9467_scale_fill(conv);
++	ret = ad9467_scale_fill(st);
+ 	if (ret)
+ 		return ret;
+ 
+ 	id = ad9467_spi_read(spi, AN877_ADC_REG_CHIP_ID);
+-	if (id != conv->chip_info->id) {
++	if (id != st->info->id) {
+ 		dev_err(&spi->dev, "Mismatch CHIP_ID, got 0x%X, expected 0x%X\n",
+-			id, conv->chip_info->id);
++			id, st->info->id);
+ 		return -ENODEV;
  	}
  
+-	conv->reg_access = ad9467_reg_access;
+-	conv->write_raw = ad9467_write_raw;
+-	conv->read_raw = ad9467_read_raw;
+-	conv->read_avail = ad9467_read_avail;
+-	conv->preenable_setup = ad9467_preenable_setup;
++	indio_dev->name = st->info->name;
++	indio_dev->channels = st->info->channels;
++	indio_dev->num_channels = st->info->num_channels;
++	indio_dev->info = &ad9467_info;
+ 
+-	st->output_mode = info->default_output_mode |
+-			  AN877_ADC_OUTPUT_MODE_TWOS_COMPLEMENT;
++	ret = ad9467_iio_backend_get(st);
++	if (ret)
++		return ret;
+ 
+-	return 0;
++	ret = devm_iio_backend_request_buffer(&spi->dev, st->back, indio_dev);
++	if (ret)
++		return ret;
++
++	ret = devm_iio_backend_enable(&spi->dev, st->back);
++	if (ret)
++		return ret;
++
++	ret = ad9467_setup(st);
++	if (ret)
++		return ret;
++
++	return devm_iio_device_register(&spi->dev, indio_dev);
+ }
+ 
+ static const struct of_device_id ad9467_of_match[] = {
+@@ -529,4 +616,4 @@ module_spi_driver(ad9467_driver);
+ MODULE_AUTHOR("Michael Hennerich <michael.hennerich@analog.com>");
+ MODULE_DESCRIPTION("Analog Devices AD9467 ADC driver");
+ MODULE_LICENSE("GPL v2");
+-MODULE_IMPORT_NS(IIO_ADI_AXI);
++MODULE_IMPORT_NS(IIO_BACKEND);
 -- 
 2.43.0
 
