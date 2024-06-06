@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53B61A2FD9;
-	Thu,  6 Jun 2024 14:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD7A1A2FCF;
+	Thu,  6 Jun 2024 14:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683222; cv=none; b=Jf3oU+fMKI8NiFzCchEoIUIzmrVKWL0h4Uc5r0lwZ1WtBwvI92FDJiMaXmwgVCGwl7Q083LfYcvLI+1bEJ3o5ayxsBW8b/3DS/3Y/1c1naRs4hxvdcZg0DsRHriblvuWL7MRNgbxzrACtHlKQln6baqvwm7Py9VUXaDt4lZVlrw=
+	t=1717683223; cv=none; b=oSWL1oLdkkBJu7hxGUGY3b2oAxucPrYIxGPuFeM/Og5eh/csubyZGGTumksDv8tprkQtbLymaU6zOs2EZTNyA93CuWranyvqKWugYhCunV/OOQavYVbhKZslIwYJjVyrwd0z4UE/XtOmAkVi8Z0WEo1513MxD67PLLqAR3QZVHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683222; c=relaxed/simple;
-	bh=uZL6h0NbAygCONNuH0nA/JSkoeXBMi2H/Y4NsfykjuY=;
+	s=arc-20240116; t=1717683223; c=relaxed/simple;
+	bh=/E3s6Wv+9WZr6+VcWSz75P4/Yo/x2bv9i47wXf4KCqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAmQEqHp/zzn79/TwokeTXo3999nINXCZTXhJ4Rex02Je+OhRAIkhJsFPoufj493l922eMHP7yAQC4H1OYvtXQuaVMCZeO+p5rvgla2YrL9BH/un+U+1lSlTGObvB89y4epE30adTJf0kS4YjXNuJcHoOkSfbAl2UKYHwH5AtCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bn4vz8w+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UeIu16Dc0gpRXIooOGZHkBVYJ74LjMTi4RN8G0ELXoxpYFQ9sKEfUEuqLqzVXt6qOWepLcifihMurG6+VgWNWVBzmTDflvF8o7x4noQaopNz7aWSsboKbFaMyAwwIaMB2G10acVmuMcly5wXgRVC6u9VG+3P5GREVQi41DG1yd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iiDOImn2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bn4vz8w+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD44C32786;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiDOImn2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0601C2BD10;
 	Thu,  6 Jun 2024 14:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683222;
-	bh=uZL6h0NbAygCONNuH0nA/JSkoeXBMi2H/Y4NsfykjuY=;
+	bh=/E3s6Wv+9WZr6+VcWSz75P4/Yo/x2bv9i47wXf4KCqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bn4vz8w+dTz4LNxQ2i7d7qikiVVOdj7d3EIrUfLjweSl7BGzKAD2HThcMTIrCZVwL
-	 1ZWf93ltPQ7NFQdGeAugAnpcjN2/+740VIErxnQ7i1X155q3IFbz7MkAhPdzpAwOYe
-	 dcaGl79ILDQhL1wgshWOlqgs8OpWXcGTdk1mIXMs=
+	b=iiDOImn2HFeC13RJHeGRvMkpBBT+EYzH2G1HOQmcfnpCUJ1Tp/s0g9rd5eX4gtNEp
+	 rEDM5YEV3kXGZxh9+h8/PG+IUHpRvk62lRxTt5sTPl/fookLwZC3+pXTboiJxYTyRq
+	 0Qz4tIxUdeqW+apTXkHb/F4NGjRkeFAYvUeDjZpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 164/744] gfs2: Fix "ignore unlock failures after withdraw"
-Date: Thu,  6 Jun 2024 15:57:16 +0200
-Message-ID: <20240606131737.682590043@linuxfoundation.org>
+Subject: [PATCH 6.1 099/473] mlx5: stop warning for 64KB pages
+Date: Thu,  6 Jun 2024 16:00:28 +0200
+Message-ID: <20240606131703.172889820@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,65 +50,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5d9231111966b6c5a65016d58dcbeab91055bc91 ]
+[ Upstream commit a5535e5336943b33689f558199366102387b7bbf ]
 
-Commit 3e11e53041502 tries to suppress dlm_lock() lock conversion errors
-that occur when the lockspace has already been released.
+When building with 64KB pages, clang points out that xsk->chunk_size
+can never be PAGE_SIZE:
 
-It does that by setting and checking the SDF_SKIP_DLM_UNLOCK flag.  This
-conflicts with the intended meaning of the SDF_SKIP_DLM_UNLOCK flag, so
-check whether the lockspace is still allocated instead.
+drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c:19:22: error: result of comparison of constant 65536 with expression of type 'u16' (aka 'unsigned short') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+        if (xsk->chunk_size > PAGE_SIZE ||
+            ~~~~~~~~~~~~~~~ ^ ~~~~~~~~~
 
-(Given the current DLM API, checking for this kind of error after the
-fact seems easier that than to make sure that the lockspace is still
-allocated before calling dlm_lock().  Changing the DLM API so that users
-maintain the lockspace references themselves would be an option.)
+In older versions of this code, using PAGE_SIZE was the only
+possibility, so this would have never worked on 64KB page kernels,
+but the patch apparently did not address this case completely.
 
-Fixes: 3e11e53041502 ("GFS2: ignore unlock failures after withdraw")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+As Maxim Mikityanskiy suggested, 64KB chunks are really not all that
+useful, so just shut up the warning by adding a cast.
+
+Fixes: 282c0c798f8e ("net/mlx5e: Allow XSK frames smaller than a page")
+Link: https://lore.kernel.org/netdev/20211013150232.2942146-1-arnd@kernel.org/
+Link: https://lore.kernel.org/lkml/a7b27541-0ebb-4f2d-bd06-270a4d404613@app.fastmail.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Reviewed-by: Justin Stitt <justinstitt@google.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20240328143051.1069575-9-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 4 +++-
- fs/gfs2/util.c  | 1 -
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 4a280be229a65..207b7c23bc0f3 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -785,11 +785,13 @@ __acquires(&gl->gl_lockref.lock)
- 	}
- 
- 	if (sdp->sd_lockstruct.ls_ops->lm_lock)	{
-+		struct lm_lockstruct *ls = &sdp->sd_lockstruct;
-+
- 		/* lock_dlm */
- 		ret = sdp->sd_lockstruct.ls_ops->lm_lock(gl, target, lck_flags);
- 		if (ret == -EINVAL && gl->gl_target == LM_ST_UNLOCKED &&
- 		    target == LM_ST_UNLOCKED &&
--		    test_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags)) {
-+		    test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
- 			finish_xmote(gl, target);
- 			gfs2_glock_queue_work(gl, 0);
- 		} else if (ret) {
-diff --git a/fs/gfs2/util.c b/fs/gfs2/util.c
-index da29fafb62728..d424691bd3f8a 100644
---- a/fs/gfs2/util.c
-+++ b/fs/gfs2/util.c
-@@ -350,7 +350,6 @@ int gfs2_withdraw(struct gfs2_sbd *sdp)
- 			fs_err(sdp, "telling LM to unmount\n");
- 			lm->lm_unmount(sdp);
- 		}
--		set_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags);
- 		fs_err(sdp, "File system withdrawn\n");
- 		dump_stack();
- 		clear_bit(SDF_WITHDRAW_IN_PROG, &sdp->sd_flags);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c
+index 81a567e172646..608d4253799de 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/setup.c
+@@ -28,8 +28,10 @@ bool mlx5e_validate_xsk_param(struct mlx5e_params *params,
+ 			      struct mlx5e_xsk_param *xsk,
+ 			      struct mlx5_core_dev *mdev)
+ {
+-	/* AF_XDP doesn't support frames larger than PAGE_SIZE. */
+-	if (xsk->chunk_size > PAGE_SIZE || xsk->chunk_size < MLX5E_MIN_XSK_CHUNK_SIZE) {
++	/* AF_XDP doesn't support frames larger than PAGE_SIZE,
++	 * and xsk->chunk_size is limited to 65535 bytes.
++	 */
++	if ((size_t)xsk->chunk_size > PAGE_SIZE || xsk->chunk_size < MLX5E_MIN_XSK_CHUNK_SIZE) {
+ 		mlx5_core_err(mdev, "XSK chunk size %u out of bounds [%u, %lu]\n", xsk->chunk_size,
+ 			      MLX5E_MIN_XSK_CHUNK_SIZE, PAGE_SIZE);
+ 		return false;
 -- 
 2.43.0
 
