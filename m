@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1B21A186B;
-	Thu,  6 Jun 2024 14:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8631A186B;
+	Thu,  6 Jun 2024 14:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683747; cv=none; b=jzscuoitcDkPJOMRAXwEZTKDPmiF3UlTpftQ/bC27134qQOrtrIv9Y0bwC8G9eXvAUglze9hEjK9V2dNI+GybRwA6JqyoHBjFWH6a0503gYhP2sNSeKbdP1i5X3JuobR+XyliDGQjq59h5zz/aBxpTi0kUscUbF9/gmbDE148Ck=
+	t=1717683748; cv=none; b=Q6bpOk5MEvB9y53U6pgfGElSuc5nDewBdUtQwlis9oQX9iRCx2c09rQlveSLQRsemtWBk8aktTPA93v2qoFVzwhKf3HFZLaLlraJUFlR/FSiqGceNOn5+ZmT7ODLDyEA2z52RnYyRS3Phwk+x/P/Q2tJ1rwTChHtPgE3fzFKlMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683747; c=relaxed/simple;
-	bh=p1S3r9C7diZTqdlxWcQNvjlg1R+tcXcpRoVpW+hi1Vk=;
+	s=arc-20240116; t=1717683748; c=relaxed/simple;
+	bh=t2nRyyYJiKO5lnbHYY+TLShFP53UDsVk9sgqdwGXSUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8TuWIH0nBXm07y+oxtb3xQCpml4K2ocHwx4pA+ieHR28+fai585R6tWuJ7U5D6QzhVVG7TnDrNpdeUWJ1rLyfXCwaDG9PsFkHeWTJxApErIRI4KajKcaACReC2zukKxDdDx6CWFrurw6b+K9twkx1LljU6LZUgW661daok2S8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGJtQHLj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PcpMZViRTYtSzY0dVz5gSWG/c+w5I1pV6lUqM57UvOWVzWi6z0ishIc6O+uySM8vPepjDdG3VIxLKOGVlSFFcBMfIbUl1uArkoEKaog+KJcURGXYQBM8zoX55UgM3MgAvrW3fx3JX3b0Vm406gBrXtDcKuHe3QC9GgwFuPaCNtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1uJ7VASh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGJtQHLj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A3DC2BD10;
-	Thu,  6 Jun 2024 14:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uJ7VASh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B91C32781;
+	Thu,  6 Jun 2024 14:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683747;
-	bh=p1S3r9C7diZTqdlxWcQNvjlg1R+tcXcpRoVpW+hi1Vk=;
+	s=korg; t=1717683748;
+	bh=t2nRyyYJiKO5lnbHYY+TLShFP53UDsVk9sgqdwGXSUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGJtQHLjETh9NJpRCWaN/syXxlxOQbpBK2Pk2mk8/yi+NxTo8qlRcE+jGci6t1Tfl
-	 HqGo3dMqOuBYgRs+1zNRWMHkj+/oE06ottArwxyEJGN1R4nGSgMT08o3JLqmKwFQdx
-	 kG9m8pSEq5Vj14H4zx3/bItIip6FxtoYcFx3pTbI=
+	b=1uJ7VAShzuCOzpf9LYQrx2i6loZVBkxwjK4AtHIG44H8TsA5NupOEPO0Qnhg9kNne
+	 aL47cPs+G6iP9PQvxgJNhMZBd2hmzEIII8vmk8UKTmNocT4a1zTYwc4Ioiad5XJzpb
+	 qhaomOU5vWE04tDOfqwCaHwIUuMYbb5qfP787GTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Garver <eric@garver.life>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 714/744] netfilter: nft_fib: allow from forward/input without iif selector
-Date: Thu,  6 Jun 2024 16:06:26 +0200
-Message-ID: <20240606131755.373834166@linuxfoundation.org>
+Subject: [PATCH 6.6 715/744] net/sched: taprio: make q->picos_per_byte available to fill_sched_entry()
+Date: Thu,  6 Jun 2024 16:06:27 +0200
+Message-ID: <20240606131755.404330244@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,43 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Garver <eric@garver.life>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit e8ded22ef0f4831279c363c264cd41cd9d59ca9e ]
+[ Upstream commit e634134180885574d1fe7aa162777ba41e7fcd5b ]
 
-This removes the restriction of needing iif selector in the
-forward/input hooks for fib lookups when requested result is
-oif/oifname.
+In commit b5b73b26b3ca ("taprio: Fix allowing too small intervals"), a
+comparison of user input against length_to_duration(q, ETH_ZLEN) was
+introduced, to avoid RCU stalls due to frequent hrtimers.
 
-Removing this restriction allows "loose" lookups from the forward hooks.
+The implementation of length_to_duration() depends on q->picos_per_byte
+being set for the link speed. The blamed commit in the Fixes: tag has
+moved this too late, so the checks introduced above are ineffective.
+The q->picos_per_byte is zero at parse_taprio_schedule() ->
+parse_sched_list() -> parse_sched_entry() -> fill_sched_entry() time.
 
-Fixes: be8be04e5ddb ("netfilter: nft_fib: reverse path filter for policy-based routing on iif")
-Signed-off-by: Eric Garver <eric@garver.life>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Move the taprio_set_picos_per_byte() call as one of the first things in
+taprio_change(), before the bulk of the netlink attribute parsing is
+done. That's because it is needed there.
+
+Add a selftest to make sure the issue doesn't get reintroduced.
+
+Fixes: 09dbdf28f9f9 ("net/sched: taprio: fix calculation of maximum gate durations")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240527153955.553333-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_fib.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ net/sched/sch_taprio.c                        |  4 +++-
+ .../tc-testing/tc-tests/qdiscs/taprio.json    | 22 +++++++++++++++++++
+ 2 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_fib.c b/net/netfilter/nft_fib.c
-index ca905aa8227e5..bf825f6cb974e 100644
---- a/net/netfilter/nft_fib.c
-+++ b/net/netfilter/nft_fib.c
-@@ -35,11 +35,9 @@ int nft_fib_validate(const struct nft_ctx *ctx, const struct nft_expr *expr,
- 	switch (priv->result) {
- 	case NFT_FIB_RESULT_OIF:
- 	case NFT_FIB_RESULT_OIFNAME:
--		hooks = (1 << NF_INET_PRE_ROUTING);
--		if (priv->flags & NFTA_FIB_F_IIF) {
--			hooks |= (1 << NF_INET_LOCAL_IN) |
--				 (1 << NF_INET_FORWARD);
--		}
-+		hooks = (1 << NF_INET_PRE_ROUTING) |
-+			(1 << NF_INET_LOCAL_IN) |
-+			(1 << NF_INET_FORWARD);
- 		break;
- 	case NFT_FIB_RESULT_ADDRTYPE:
- 		if (priv->flags & NFTA_FIB_F_IIF)
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index 87d8070fffbe7..c0b846918400a 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -1871,6 +1871,9 @@ static int taprio_change(struct Qdisc *sch, struct nlattr *opt,
+ 
+ 	q->flags = err;
+ 
++	/* Needed for length_to_duration() during netlink attribute parsing */
++	taprio_set_picos_per_byte(dev, q);
++
+ 	err = taprio_parse_mqprio_opt(dev, mqprio, extack, q->flags);
+ 	if (err < 0)
+ 		return err;
+@@ -1930,7 +1933,6 @@ static int taprio_change(struct Qdisc *sch, struct nlattr *opt,
+ 	if (err < 0)
+ 		goto free_sched;
+ 
+-	taprio_set_picos_per_byte(dev, q);
+ 	taprio_update_queue_max_sdu(q, new_admin, stab);
+ 
+ 	if (FULL_OFFLOAD_IS_ENABLED(q->flags))
+diff --git a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json
+index 0599635c4bc65..3644434cf681b 100644
+--- a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json
++++ b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/taprio.json
+@@ -132,6 +132,28 @@
+             "echo \"1\" > /sys/bus/netdevsim/del_device"
+         ]
+     },
++    {
++        "id": "6f62",
++        "name": "Add taprio Qdisc with too short interval",
++        "category": [
++            "qdisc",
++            "taprio"
++        ],
++        "plugins": {
++            "requires": "nsPlugin"
++        },
++        "setup": [
++            "echo \"1 1 8\" > /sys/bus/netdevsim/new_device"
++        ],
++        "cmdUnderTest": "$TC qdisc add dev $ETH root handle 1: taprio num_tc 2 queues 1@0 1@1 sched-entry S 01 300 sched-entry S 02 1700 clockid CLOCK_TAI",
++        "expExitCode": "2",
++        "verifyCmd": "$TC qdisc show dev $ETH",
++        "matchPattern": "qdisc taprio 1: root refcnt",
++        "matchCount": "0",
++        "teardown": [
++            "echo \"1\" > /sys/bus/netdevsim/del_device"
++        ]
++    },
+     {
+         "id": "3e1e",
+         "name": "Add taprio Qdisc with an invalid cycle-time",
 -- 
 2.43.0
 
