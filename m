@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF22819A2A7;
-	Thu,  6 Jun 2024 14:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF7119A2A7;
+	Thu,  6 Jun 2024 14:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683016; cv=none; b=BpwkXBtxbNwz0OzmrpFuOT/kMlaZxzbw4YTtT9KBTEgvx6TyxtfpuxTS6P6QGp18CdbQ3WRlsaUkJnUoGFPx5Ip9vsZ2TytTkOlzE9FYhMl8fQ8x0nUXbbVIPSXYSbW48EudaoJBvEffkDdX/6S/ZtdjLueh6Xteb4P7pLVJFaQ=
+	t=1717683016; cv=none; b=DDBITisMsv4g0NjUmNz1jyUhwnD2ZYB0LZU5B4wK3evuTFUyEisHxDBZ7bwa+YfbKcDLrlEPkk99FfhYDbDVla4jRG0L0mX52Owm2O8qrfQHksjvMghXoLyr9OJqc3oRHUt62byFy6cBGl+M9ynkEnDSn0DX4vVqLEF2hohjjtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683016; c=relaxed/simple;
-	bh=jNnYtc3amKCe9J+9a94BmImvtgqiS596qo6EQQrBN88=;
+	bh=GkllS0O51hHRP7YI9PqwSTia7AsI13fENTq/cJJX6v8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tb3KjgH4P15yA4N+MQRD6Bqtoj8k48TE7AbRXQ8xlcJR/tF+tvnPj4dAKSNfa0YDtirBtO9i1Mj4aOR4ADwfRNQjmyfkfK2XPXp8W7yFQYL5CziIDrB8PtUazFwQc8HsZIXqbaW3q13AJU9WXxGtYOXoN4ThGFM1T3cEro53KFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCLh51Oi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n8H1z3RXhOmgicCB8D58L2xD2p4aT1496Me92q6SHZCCksOf6R9CNkt7swgu5aAQAv51eBCxHQBlSJMlEgPcTBwkBE7wYpNfV8PnyaktW8moKeTmc6tUddjNX90S7d+s6tVk0xWBj1SZgPHbeY8EfDmRRfwzpe5kLN6jBaSZUdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pF92vaJk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCLh51Oi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE869C32781;
-	Thu,  6 Jun 2024 14:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pF92vaJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFC2C32781;
+	Thu,  6 Jun 2024 14:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683015;
-	bh=jNnYtc3amKCe9J+9a94BmImvtgqiS596qo6EQQrBN88=;
+	s=korg; t=1717683016;
+	bh=GkllS0O51hHRP7YI9PqwSTia7AsI13fENTq/cJJX6v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCLh51Oidg+NJEXMylAK1nOX0+/xtcDj4GR54XaU7qqG6lnd4qohfrObgcC8qnR5Y
-	 xC6hlq17PyYOSLrHP/Dt1MOjcyFy08B1T+jgPuH+f12UPLIjbKD193TyYEBmf2YfEO
-	 1e5X58qAVYdRL3hOKevs6K//x5WUycAvb8oNz9Ho=
+	b=pF92vaJkOGI3AGTyv7757zjqIckcpm1Rcf0sXcmgAonF6yYboTmzLLVDf6hgO0pde
+	 EvVk4+4+HdXiebJ9ihT+lOHdSLIl8pBfB+8Y01/o8LH7hVRVT9n/DnxNtkHFdLM3je
+	 RmQtCYQSZO65eJEd7BvNSfRw1vWc/eJa+bgjRqKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 181/374] Input: cyapa - add missing input core locking to suspend/resume functions
-Date: Thu,  6 Jun 2024 16:02:40 +0200
-Message-ID: <20240606131657.932258632@linuxfoundation.org>
+Subject: [PATCH 6.9 226/374] blk-cgroup: fix list corruption from reorder of WRITE ->lqueued
+Date: Thu,  6 Jun 2024 16:03:25 +0200
+Message-ID: <20240606131659.373989414@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,123 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 7b4e0b39182cf5e677c1fc092a3ec40e621c25b6 ]
+[ Upstream commit d0aac2363549e12cc79b8e285f13d5a9f42fd08e ]
 
-Grab input->mutex during suspend/resume functions like it is done in
-other input drivers. This fixes the following warning during system
-suspend/resume cycle on Samsung Exynos5250-based Snow Chromebook:
+__blkcg_rstat_flush() can be run anytime, especially when blk_cgroup_bio_start
+is being executed.
 
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 1680 at drivers/input/input.c:2291 input_device_enabled+0x68/0x6c
-Modules linked in: ...
-CPU: 1 PID: 1680 Comm: kworker/u4:12 Tainted: G        W          6.6.0-rc5-next-20231009 #14109
-Hardware name: Samsung Exynos (Flattened Device Tree)
-Workqueue: events_unbound async_run_entry_fn
- unwind_backtrace from show_stack+0x10/0x14
- show_stack from dump_stack_lvl+0x58/0x70
- dump_stack_lvl from __warn+0x1a8/0x1cc
- __warn from warn_slowpath_fmt+0x18c/0x1b4
- warn_slowpath_fmt from input_device_enabled+0x68/0x6c
- input_device_enabled from cyapa_gen3_set_power_mode+0x13c/0x1dc
- cyapa_gen3_set_power_mode from cyapa_reinitialize+0x10c/0x15c
- cyapa_reinitialize from cyapa_resume+0x48/0x98
- cyapa_resume from dpm_run_callback+0x90/0x298
- dpm_run_callback from device_resume+0xb4/0x258
- device_resume from async_resume+0x20/0x64
- async_resume from async_run_entry_fn+0x40/0x15c
- async_run_entry_fn from process_scheduled_works+0xbc/0x6a8
- process_scheduled_works from worker_thread+0x188/0x454
- worker_thread from kthread+0x108/0x140
- kthread from ret_from_fork+0x14/0x28
-Exception stack(0xf1625fb0 to 0xf1625ff8)
-...
----[ end trace 0000000000000000 ]---
-...
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 1680 at drivers/input/input.c:2291 input_device_enabled+0x68/0x6c
-Modules linked in: ...
-CPU: 1 PID: 1680 Comm: kworker/u4:12 Tainted: G        W          6.6.0-rc5-next-20231009 #14109
-Hardware name: Samsung Exynos (Flattened Device Tree)
-Workqueue: events_unbound async_run_entry_fn
- unwind_backtrace from show_stack+0x10/0x14
- show_stack from dump_stack_lvl+0x58/0x70
- dump_stack_lvl from __warn+0x1a8/0x1cc
- __warn from warn_slowpath_fmt+0x18c/0x1b4
- warn_slowpath_fmt from input_device_enabled+0x68/0x6c
- input_device_enabled from cyapa_gen3_set_power_mode+0x13c/0x1dc
- cyapa_gen3_set_power_mode from cyapa_reinitialize+0x10c/0x15c
- cyapa_reinitialize from cyapa_resume+0x48/0x98
- cyapa_resume from dpm_run_callback+0x90/0x298
- dpm_run_callback from device_resume+0xb4/0x258
- device_resume from async_resume+0x20/0x64
- async_resume from async_run_entry_fn+0x40/0x15c
- async_run_entry_fn from process_scheduled_works+0xbc/0x6a8
- process_scheduled_works from worker_thread+0x188/0x454
- worker_thread from kthread+0x108/0x140
- kthread from ret_from_fork+0x14/0x28
-Exception stack(0xf1625fb0 to 0xf1625ff8)
-...
----[ end trace 0000000000000000 ]---
+If WRITE of `->lqueued` is re-ordered with READ of 'bisc->lnode.next' in
+the loop of __blkcg_rstat_flush(), `next_bisc` can be assigned with one
+stat instance being added in blk_cgroup_bio_start(), then the local
+list in __blkcg_rstat_flush() could be corrupted.
 
-Fixes: d69f0a43c677 ("Input: use input_device_enabled()")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Link: https://lore.kernel.org/r/20231009121018.1075318-1-m.szyprowski@samsung.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fix the issue by adding one barrier.
+
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Waiman Long <longman@redhat.com>
+Fixes: 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20240515013157.443672-3-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/cyapa.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ block/blk-cgroup.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/input/mouse/cyapa.c b/drivers/input/mouse/cyapa.c
-index 5979deabe23d1..256f757a13267 100644
---- a/drivers/input/mouse/cyapa.c
-+++ b/drivers/input/mouse/cyapa.c
-@@ -1347,10 +1347,16 @@ static int cyapa_suspend(struct device *dev)
- 	u8 power_mode;
- 	int error;
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 86752b1652b5b..b36ba1d40ba1d 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1036,6 +1036,16 @@ static void __blkcg_rstat_flush(struct blkcg *blkcg, int cpu)
+ 		struct blkg_iostat cur;
+ 		unsigned int seq;
  
--	error = mutex_lock_interruptible(&cyapa->state_sync_lock);
-+	error = mutex_lock_interruptible(&cyapa->input->mutex);
- 	if (error)
- 		return error;
- 
-+	error = mutex_lock_interruptible(&cyapa->state_sync_lock);
-+	if (error) {
-+		mutex_unlock(&cyapa->input->mutex);
-+		return error;
-+	}
++		/*
++		 * Order assignment of `next_bisc` from `bisc->lnode.next` in
++		 * llist_for_each_entry_safe and clearing `bisc->lqueued` for
++		 * avoiding to assign `next_bisc` with new next pointer added
++		 * in blk_cgroup_bio_start() in case of re-ordering.
++		 *
++		 * The pair barrier is implied in llist_add() in blk_cgroup_bio_start().
++		 */
++		smp_mb();
 +
- 	/*
- 	 * Runtime PM is enable only when device is in operational mode and
- 	 * users in use, so need check it before disable it to
-@@ -1385,6 +1391,8 @@ static int cyapa_suspend(struct device *dev)
- 		cyapa->irq_wake = (enable_irq_wake(client->irq) == 0);
+ 		WRITE_ONCE(bisc->lqueued, false);
  
- 	mutex_unlock(&cyapa->state_sync_lock);
-+	mutex_unlock(&cyapa->input->mutex);
-+
- 	return 0;
- }
- 
-@@ -1394,6 +1402,7 @@ static int cyapa_resume(struct device *dev)
- 	struct cyapa *cyapa = i2c_get_clientdata(client);
- 	int error;
- 
-+	mutex_lock(&cyapa->input->mutex);
- 	mutex_lock(&cyapa->state_sync_lock);
- 
- 	if (device_may_wakeup(dev) && cyapa->irq_wake) {
-@@ -1412,6 +1421,7 @@ static int cyapa_resume(struct device *dev)
- 	enable_irq(client->irq);
- 
- 	mutex_unlock(&cyapa->state_sync_lock);
-+	mutex_unlock(&cyapa->input->mutex);
- 	return 0;
- }
- 
+ 		/* fetch the current per-cpu values */
 -- 
 2.43.0
 
