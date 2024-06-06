@@ -1,123 +1,94 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE45196C62
-	for <patches@lists.linux.dev>; Thu,  6 Jun 2024 14:58:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1063019B5AF;
+	Thu,  6 Jun 2024 15:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717685927; cv=none; b=FjqiXvEhmbJbfPdVrnm7GPr5+g8YUA14QrVMrvJCWf0nYCE7thrnYtjMetR1LCwhp1JO3llV6OxOjEK/3d+OG+kZeikqLMh13dexn9bO53wpcb2HkNy+SYm1ja3MqhfwZI9woJ3+UossyFEapyBxupa7ULlpaI+EqiA8BBj9ORg=
+	t=1717686360; cv=none; b=Dl84akiRejCVwE/PO96SkKJzvsCc01p83e4G6yezPqqLn3pyyfPHb6Hja1vlrAZC5b84oCaDH+Ur3TiI7ov3sFOuR3eOsr+966CpbJMdvc6rKYENDRsJh/qh0Mo5TzXSKtWg5nKnCps2OZ6GTHAbRJ0xYRbx9RRT+n/dkh0E7w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717685927; c=relaxed/simple;
-	bh=0o6p+V1J6yLyKmZ9jOGsFhFyWTDmMqsXGUWl5SigVCM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LkItMKPM7M9/Te814YC2Emn9g7Y2KODDezKiNppzlhSajb9pRysgz4lYk5EnFEOuVpSKIM4aFFCz9ZwsqGD2HRcikHxMzDXik7n7iXexbYqAQpRskS79ZnT4Y2KOrRwSBJXfPvHTms5KhLhhOemNX4PFLSj6vkyLJhZ+ce3ZKV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=jIiukAas; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=RGKYD4dw; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	s=arc-20240116; t=1717686360; c=relaxed/simple;
+	bh=Cx1ASgr5Lh9FnhS81vNXx9ifwngxlnqb6mSkxtlQWLo=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KoZiv1i5U2riKVY3i8WIifRLxOqXqz0iXpDceKtP3TNM3hK8yFXFOCdCjrUBSuxkz9iIT1i3aj+zet4CYsJROnOaznuXkM/hdShPK09tYWFTPct9kf77kHnRaOji54TV6z7oaUrBsgGAVIQDf8qUJy4/BVWrDDMi1SYFkH0unkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LJE2V8YE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="jIiukAas";
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="RGKYD4dw"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 1DC1540E016C;
-	Thu,  6 Jun 2024 14:58:44 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id k1_UB62DkMC4; Thu,  6 Jun 2024 14:58:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1717685922; bh=3576AH5H4x9z3mYbuSXmwnA+NGdBLod9a4iXIVW20mw=;
-	h=Resent-From:Resent-Date:Resent-To:Date:From:To:Cc:Subject:
-	 References:In-Reply-To:From;
-	b=jIiukAasiH3iURcai8TU5ANLrc2BeEzT7n8SlQHFaBOUaJCryIq4mLLRJMfuZOcET
-	 ffT09P5KfWr3hhP9kL3nJaihzmNgAYM4MfV0qTgSRyZtO7bZMWYfKCaoIImwYi70if
-	 OyeiWOCLfiZjaa5mkcT6Nab2DB99IfPRWhrJS4Dg5JZI1ZxFJKdNK8AWhKgRKcJvq4
-	 tXloN0hqYWu5FRT4+dKTtvXk2dEeHNDbyK/xwHHLvmUGLaV9/oieJqfCl24/WH8GBA
-	 CA9BTyRAlr0EcZfzxMAJm4/lKJ8tqycnlt0SzOxP6dSD79AuliXxL2bO4PJS+R+FmC
-	 iwQcbdfQQlonWQywtfcKCckD3nnzVZp9ZfI2kguiTbvLMfnNUS21GkIxhgAVTSoO84
-	 UEzOve3BY3fL4kVw4NNWXf+H7+aZO2jKLrJ0vPI6hG9bKGJBQyJ3YPSlIx1KX5HMMj
-	 sBsYnNBgCVXlDonFA7fflcDyR4rvzy5FUwZpEQ+H1NgOjFab7Wn8IRgYeedI+Bm9Nk
-	 sx4RgBpdQP4nG2m8ETnl3wCR+UC68h0Xvwpmm3LB8zk4J6rKv2HUCmnB0p89Di17zP
-	 iOXebFkvwmgICi4EcpukZIMxxxrdQlrSPDzDmx2fddC2kdKRIibcBzKfKjgaZ6muRB
-	 dC+kDxOCUaBatoK3q+iER1j0=
-Received: from zn.tnic (p5de8ee85.dip0.t-ipconnect.de [93.232.238.133])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id E645C40E016A;
-	Thu,  6 Jun 2024 14:58:40 +0000 (UTC)
-Resent-From: Borislav Petkov <bp@alien8.de>
-Resent-Date: Thu, 6 Jun 2024 16:58:28 +0200
-Resent-Message-ID: <20240606145828.GBZmHOlJhp2j9ETtiv@fat_crate.local>
-Resent-To: patches <patches@lists.linux.dev>,
-	lkml <linux-kernel@vger.kernel.org>
-Received: from mail.alien8.de
-	by mad with LMTP
-	id 3LAtG5jLYWYEWT0Ac81XFw
-	(envelope-from <bp@alien8.de>)
-	for <bp@alien8.de>; Thu, 06 Jun 2024 14:45:44 +0000
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 54FFB40E016A;
-	Thu,  6 Jun 2024 14:45:44 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id bAO1HlD8nstW; Thu,  6 Jun 2024 14:45:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1717685140; bh=3576AH5H4x9z3mYbuSXmwnA+NGdBLod9a4iXIVW20mw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RGKYD4dwI+oFIMSBvC0a2DcqQ32IvOhvt3auQnLh92NVRawpcPUuFh4jiM03uLyeZ
-	 QAnodwI1FbKYzaoIZdFNga0HIx/3tKqSvCLaxTgnm+Q/nTIw1PK1D94r+9IktTrgLv
-	 Fp1sKuD8NqXV4NtP/yx80xW0a06uXlItejWw5E6yURsqNuJEDg0dtuPNppISt1gPAB
-	 8M2CM4y5Gg9Qb2uy1VdNk9/XinlWFZTSojU+A42hW2QR7mTxPGp/ibTHs6L30gG28X
-	 fzjoIShp8TzeN1B5aUpFZk7V4GXZxBWa7TJCC3poW6M4VjS1d9G7OXTZp68MTHvSK1
-	 vwG0C+gs3s8IR/68Kxbkt+qlXiDEDXSMQVme6juOeWA1LX9yo6YZH/wmH2yqyo2jQb
-	 e3e0dRsPne40l3npE9tq0XU3CIwO8BecSotz/0EBJrApoKEiElFD1m87z438RsXHEX
-	 N094nw1br4PQ1X0CMKoCUg51aChGvmJ+qrJHBHg2BPEpJiz7Y1mYLq13McD1VPGDtN
-	 xBg99Goa7WaXXEszx1fEiAbx6RSregWNdkKWaWGNjIiw7bNPv0a6qlGVeW0KVx3oKJ
-	 eTdAoaDamnDlQOEwFOhN8zCOG4eRPEiKqh55FTN6jTgMXuouo+CkraTbHzcmanoPRi
-	 29boWIdFkQrlhMWpz+Z/ovJg=
-Received: from zn.tnic (p5de8ee85.dip0.t-ipconnect.de [93.232.238.133])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id AA79540E0031;
-	Thu,  6 Jun 2024 14:45:37 +0000 (UTC)
-Date: Thu, 6 Jun 2024 16:45:36 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Christian Heusel <christian@heusel.eu>
-Cc: x86-ml <x86@kernel.org>, mlinux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND] tools/x86/kcpuid: Add missing dir via Makefile
-Message-ID: <20240606144536.GAZmHLkLuK9h6Pwqop@fat_crate.local>
-References: <20240531111757.719528-2-christian@heusel.eu>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LJE2V8YE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE65C32786;
+	Thu,  6 Jun 2024 15:05:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717686359;
+	bh=Cx1ASgr5Lh9FnhS81vNXx9ifwngxlnqb6mSkxtlQWLo=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=LJE2V8YEAvQg7dOKXsKEM5ZXvqkbYqfFpDavrIE6ibwGQcnoFfSGpEp8uH6O2dBXh
+	 ry6vAyt/lvcu4dyXJSiclI99AznFEB4pNXp6HGBksXMOjk30byH8gnCE5AR7SIVNSO
+	 Kg0dl7aWs5jSK0RUeDauQN0Ju+JQ+594Y3sUss5DvrhtJEsIO+8NAKaHnc/qONUpy6
+	 QVyI5Tz4Lqwh7/c3aVSsFsSevkBTGQbRV5t4hOIerNIAtSSu/LDA5j+SLQmBfCxJdI
+	 0p31Li9bp4O9xYsLd+rxa4GxL2m314+VzaGe2Q1k0q23qZ3DaiXKR2PQVg7zZ++SsW
+	 aMc6qVH8HvpOg==
+Date: Thu, 6 Jun 2024 08:05:57 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: David Ahern <dsahern@kernel.org>, Dan Williams
+ <dan.j.williams@intel.com>, Jonathan Corbet <corbet@lwn.net>, Itay Avraham
+ <itayavr@nvidia.com>, Leon Romanovsky <leon@kernel.org>,
+ linux-doc@vger.kernel.org, linux-rdma@vger.kernel.org,
+ netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed
+ <saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>, Andy Gospodarek
+ <andrew.gospodarek@broadcom.com>, Aron Silverton
+ <aron.silverton@oracle.com>, Christoph Hellwig <hch@infradead.org>, Jiri
+ Pirko <jiri@nvidia.com>, Leonid Bloch <lbloch@nvidia.com>, Leon Romanovsky
+ <leonro@nvidia.com>, linux-cxl@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 0/8] Introduce fwctl subystem
+Message-ID: <20240606080557.00f3163e@kernel.org>
+In-Reply-To: <20240606144818.GC19897@nvidia.com>
+References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
+	<20240603114250.5325279c@kernel.org>
+	<214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
+	<20240604070451.79cfb280@kernel.org>
+	<665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
+	<20240605135911.GT19897@nvidia.com>
+	<d97144db-424f-4efd-bf10-513a0b895eca@kernel.org>
+	<20240606071811.34767cce@kernel.org>
+	<20240606144818.GC19897@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240531111757.719528-2-christian@heusel.eu>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Fri, May 31, 2024 at 01:17:58PM +0200, Christian Heusel wrote:
-> So far the Makefile just installed the csv into $(HWDATADIR)/cpuid.csv,
-> which made it unaware about $DESTDIR. Add $DESTDIR to the install
-> command and while we are at it also create the directory, should it not
-> exist already. This eases the packaging of kcpuid and allows i.e. for
-> the install on arch to look like this:
+On Thu, 6 Jun 2024 11:48:18 -0300 Jason Gunthorpe wrote:
+> > An argument can be made that given somewhat mixed switchdev experience
+> > we should just stay out of the way and let that happen. But just make
+> > that argument then, instead of pretending the use of this API will be
+> > limited to custom very vendor specific things.  
 > 
->     make BINDIR=/usr/bin DESTDIR="$pkgdir" -C tools/arch/x86/kcpuid install
+> Huh?
 
-Stupid question: is DESTDIR something that distro packaging machinery
-uses? Dunno, some Linux packaging standards thing or so?
+I'm sorry, David as been working in netdev for a long time.
+I have a tendency to address the person I'm replying to,
+assuming their level of understanding of the problem space.
+Which makes it harder to understand for bystanders.
 
-I.e., I wanna make sure this as generic and as easy for packaging as
-possible.
+> At least mlx5 already has a very robust userspace competition to
+> switchdev using RDMA APIs, available in DPDK. This is long since been
+> done and is widely deployed.
 
-Thx.
+Yeah, we had this discussion multiple times
 
--- 
-Regards/Gruss,
-    Boris.
+> I have no idea where you get this made up idea that fwctl is somehow
+> about dataplane SDKs. The acclerated networking industry long ago
+> moved pasted netdev in upstream, it is well known to everyone. There
+> is no trick here.
+> 
+> fwctl is not some scheme to sneak dataplane SDKs into the kernel, you
+> are just making stuff up.
 
-https://people.kernel.org/tglx/notes-about-netiquette
+By dataplane SDK you mean DOCA? I don't even want to go there.
+I just meant forwarding offload _which I said_. You didn't understand
+and now you're accusing me of "making stuff up".
+
+This whole conversation is such a damn waste of time.
