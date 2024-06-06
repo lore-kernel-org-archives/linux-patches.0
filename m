@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C5819B3F3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D57C19B3F3;
 	Thu,  6 Jun 2024 14:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683403; cv=none; b=VmRGpew8XuUCHWQhksjuR7ZEw0j1+lPHUj4xCqBmuW1qxfXl1ewa8rJrcvNgPKgGYJSSffouovdsz8Cm32G6uuxGMFTAcRwHJoruo2meAQ+H6E2c5kyYJ8PmCc0eo+VqllumO+e2ZIbEh4SJNQUdMGsUvjPiWEA6A2ERglWxb4M=
+	t=1717683403; cv=none; b=fWjJYCDidQCpjfT3jSDsn/LaldCnVMq3VS5zl5GTkVA1mLlip9bTOMNqxcnjdfHXx5Z9p+PnG7eQmXdd2QMcLXXJqm2c33sTnXSsL0MQndflKqIu5IGMkYgGS9JVEpVqmnyEAiA9RG1/D0bv0mYf8t44LvVHbBWVsWmN5Guz6so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683403; c=relaxed/simple;
-	bh=U7zux5CapEieOGXS/sUHr5b/I+wu75f2BCwMzzGTUxo=;
+	bh=n+7WWibWjur7AIQaaRStphCk7NUYYcwp2eO4LEn9tIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rB0XSuQJ2Pqc3VZM1YTPbvLDOLqRwW1E9DcjiAAf/nm03jt+m6U7sqj+0sTnP4+Cf4B4/XDrhByQI5iTxNsA2kYqQAn2zVP4wNJwSpbEV6pOn0+XkUgL2tOn4CEHoa0Ah63aMC2bH9fClYzitK6oqS8NgubecwmnLEGYMIymJfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCzTYe0l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dptlNPXn2juusaBAatJUwzW1FUtmqdliTOusa0Gq3sjtfWlNaCJJBcL6qK/P/8I62gfMEFIWgAzQixVBbLJvHmx5pUBvJLMhvJcjPT/2BCneekEvwyuVeYjrEOZz2J1A18HHc7BcBp13hE8Fvzj73gl6kT+xHcHY3AvzNGXX+ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhPk8OgD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCzTYe0l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CCAC32782;
-	Thu,  6 Jun 2024 14:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhPk8OgD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE3DC2BD10;
+	Thu,  6 Jun 2024 14:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683402;
-	bh=U7zux5CapEieOGXS/sUHr5b/I+wu75f2BCwMzzGTUxo=;
+	s=korg; t=1717683403;
+	bh=n+7WWibWjur7AIQaaRStphCk7NUYYcwp2eO4LEn9tIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CCzTYe0lL6FX6qNC4xLUOyokJ+IYyt4Y5saBsEd+aPg1W8Q9AkeYjfJzrdQxz9bTm
-	 PqB1SyguJt7PvRhjk7XU/S95OCZzdo3cT3KptH9buSZVIu2/UNNsTPi8o2aLpl0G73
-	 Nj50HLLQ4Mn+Du69lzvduk+Ahz51x7zjQFtk5cAk=
+	b=MhPk8OgD6DUJcgNuyVT+zt/1GsbczXPET6aS43JVJNW9/3hX9L3wlbiGQpG3yeKSj
+	 2pccvr5A2awDf9iGtWuZ6hnORUoTq7E4+65134AlWiOErs/dM8r8Yo4RPnzM3i7p7S
+	 b4QmQrwAlnIST7xYc0DRWD/lK3GJTa9umySnZYyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jin Yao <yao.jin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 286/473] perf annotate: Get rid of duplicate --group option item
-Date: Thu,  6 Jun 2024 16:03:35 +0200
-Message-ID: <20240606131709.344137391@linuxfoundation.org>
+Subject: [PATCH 6.6 347/744] clk: qcom: clk-alpha-pll: remove invalid Stromer register offset
+Date: Thu,  6 Jun 2024 16:00:19 +0200
+Message-ID: <20240606131743.597685797@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,50 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 374af9f1f06b5e991c810d2e4983d6f58df32136 ]
+[ Upstream commit 4f2bc4acbb1916b8cd2ce4bb3ba7b1cd7cb705fa ]
 
-The options array in cmd_annotate() has duplicate --group options.  It
-only needs one and let's get rid of the other.
+The offset of the CONFIG_CTL_U register defined for the Stromer
+PLL is wrong. It is not aligned on a 4 bytes boundary which might
+causes errors in regmap operations.
 
-  $ perf annotate -h 2>&1 | grep group
-        --group           Show event group information together
-        --group           Show event group information together
+Maybe the intention behind of using the 0xff value was to indicate
+that the register is not implemented in the PLL, but this is not
+verified anywhere in the code. Moreover, this value is not used
+even in other register offset arrays despite that those PLLs also
+have unimplemented registers.
 
-Fixes: 7ebaf4890f63eb90 ("perf annotate: Support '--group' option")
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jin Yao <yao.jin@linux.intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240322224313.423181-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Additionally, on the Stromer PLLs the current code only touches
+the CONFIG_CTL_U register if the result of pll_has_64bit_config()
+is true which condition is not affected by the change.
+
+Due to the reasons above, simply remove the CONFIG_CTL_U entry
+from the Stromer specific array.
+
+Fixes: e47a4f55f240 ("clk: qcom: clk-alpha-pll: Add support for Stromer PLLs")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240311-alpha-pll-stromer-cleanup-v1-1-f7c0c5607cca@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-annotate.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
-index 517d928c00e3f..21d7582608735 100644
---- a/tools/perf/builtin-annotate.c
-+++ b/tools/perf/builtin-annotate.c
-@@ -571,8 +571,6 @@ int cmd_annotate(int argc, const char **argv)
- 		    "Enable symbol demangling"),
- 	OPT_BOOLEAN(0, "demangle-kernel", &symbol_conf.demangle_kernel,
- 		    "Enable kernel symbol demangling"),
--	OPT_BOOLEAN(0, "group", &symbol_conf.event_group,
--		    "Show event group information together"),
- 	OPT_BOOLEAN(0, "show-total-period", &symbol_conf.show_total_period,
- 		    "Show a column with the sum of periods"),
- 	OPT_BOOLEAN('n', "show-nr-samples", &symbol_conf.show_nr_samples,
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 892f2efc1c32c..82420e81da35b 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -212,7 +212,6 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+ 		[PLL_OFF_USER_CTL] = 0x18,
+ 		[PLL_OFF_USER_CTL_U] = 0x1c,
+ 		[PLL_OFF_CONFIG_CTL] = 0x20,
+-		[PLL_OFF_CONFIG_CTL_U] = 0xff,
+ 		[PLL_OFF_TEST_CTL] = 0x30,
+ 		[PLL_OFF_TEST_CTL_U] = 0x34,
+ 		[PLL_OFF_STATUS] = 0x28,
 -- 
 2.43.0
 
