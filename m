@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C7D19AA7F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F4219AA7F;
 	Thu,  6 Jun 2024 14:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683328; cv=none; b=awRQ1lfsnAjTQMGaadLMZn87QuI9yiTQr+1sqEAAA7ydEny4U0uQbvZqNszD4MOmEZdQUFxc5sn02RduuHAoWkD64aIZHeUe+4sRNQWB8z8uoLuRw3ik4BK69tTVRja43sewoiplj7Uj40i6n2kim3vL6tFKravUrK80Iw11ARg=
+	t=1717683329; cv=none; b=XN5DAL7VEPnwLlL4gdAhhM3iQ4/y4afpYEBvgaI1MI0bYdc3HXmT5SJ/uw4MjQSWyJo/tXRZxoajiCdFQJuOzN9hOxvpZHwOt7vN5ddAjCg/VTPTIFHRzqYeKPcOttcM1PFfcirfjH8JzCfdMKi//FJYb2L/oKTnH6POEQEYf9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683328; c=relaxed/simple;
-	bh=LS3yPtAdbZZlVj45aaWmo7VVyo4dbouIB8GGaAlhwpM=;
+	s=arc-20240116; t=1717683329; c=relaxed/simple;
+	bh=JK/QBOKbq0hIAcHWB/A+xEuaZdUKGWMNb+3UCljb15A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L9Ll+GIwPoDtunMD5mJ20Q+ot8OS7qlkkFhWui7rZofWyWmJHjo3TCdWjiZ2wWK5zYQjMFSabgLYji4aLO4s755D7ppDJ0l/tLM8fnY++iGnQDjorOdxw72KBeRMLZh68+vF3/vF9DAuQkROFYHjrA2DcWDFcQ4VZHi/G5ueU64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLFQX9Zw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sz5QyYI1f5u8HmDoeDyt0oCUeZILj6N5YnNnUzSQ/rijVQcLeZnhgR2reoDfWXK8mA4TYEgPt1552DwFyZv1cODeQ8yMNFbloXMWyXqT/HS15lpJNVQCA1TWa33HB34il2Nj9ckor7X3kNFbtMK8zr/pumH7OZrmMPbpDLCJAXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6K6nU9L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLFQX9Zw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451E9C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6K6nU9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5970C2BD10;
 	Thu,  6 Jun 2024 14:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683328;
-	bh=LS3yPtAdbZZlVj45aaWmo7VVyo4dbouIB8GGaAlhwpM=;
+	bh=JK/QBOKbq0hIAcHWB/A+xEuaZdUKGWMNb+3UCljb15A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLFQX9ZwfA3GsnbBdiu78yyyYu68kxnBXay+7S/2DF3uqxIPpwbzRJTLgBgD/gars
-	 pYvayJIw8IJ9BF9iTfWxD/DgliXe0Zqfaw0DQ8X2+7Mg+AlWQFB00c+i037vG5FTS7
-	 kPaE2ZD+GroN58hLJEe5BMdXkukSVx0jnxrBNjRY=
+	b=P6K6nU9LAJMOd319PZb2+RSXi58p/Vgauf0U2mUq3PGM2Tl1xseCqNnKUmWhlYD/h
+	 u+co6pyGPOmnzueMzmsg+tv4DZtWFaOs/+4JKiD89sqplfVoGtfu/If8uDByhz60H8
+	 eK/J7mwbXjrOAcVDSLX6oqy9kn3Xv4xIIDXrSD8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 239/744] selftests: net: add more missing kernel config
-Date: Thu,  6 Jun 2024 15:58:31 +0200
-Message-ID: <20240606131740.066442570@linuxfoundation.org>
+Subject: [PATCH 6.1 172/473] af_unix: Fix data races in unix_release_sock/unix_stream_sendmsg
+Date: Thu,  6 Jun 2024 16:01:41 +0200
+Message-ID: <20240606131705.628601000@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +48,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 02d9009f4e8c27dcf10c3e39bc0666436686a219 ]
+[ Upstream commit 540bf24fba16b88c1b3b9353927204b4f1074e25 ]
 
-The reuseport_addr_any.sh is currently skipping DCCP tests and
-pmtu.sh is skipping all the FOU/GUE related cases: add the missing
-options.
+A data-race condition has been identified in af_unix. In one data path,
+the write function unix_release_sock() atomically writes to
+sk->sk_shutdown using WRITE_ONCE. However, on the reader side,
+unix_stream_sendmsg() does not read it atomically. Consequently, this
+issue is causing the following KCSAN splat to occur:
 
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/38d3ca7f909736c1aef56e6244d67c82a9bba6ff.1707326987.git.pabeni@redhat.com
+	BUG: KCSAN: data-race in unix_release_sock / unix_stream_sendmsg
+
+	write (marked) to 0xffff88867256ddbb of 1 bytes by task 7270 on cpu 28:
+	unix_release_sock (net/unix/af_unix.c:640)
+	unix_release (net/unix/af_unix.c:1050)
+	sock_close (net/socket.c:659 net/socket.c:1421)
+	__fput (fs/file_table.c:422)
+	__fput_sync (fs/file_table.c:508)
+	__se_sys_close (fs/open.c:1559 fs/open.c:1541)
+	__x64_sys_close (fs/open.c:1541)
+	x64_sys_call (arch/x86/entry/syscall_64.c:33)
+	do_syscall_64 (arch/x86/entry/common.c:?)
+	entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+	read to 0xffff88867256ddbb of 1 bytes by task 989 on cpu 14:
+	unix_stream_sendmsg (net/unix/af_unix.c:2273)
+	__sock_sendmsg (net/socket.c:730 net/socket.c:745)
+	____sys_sendmsg (net/socket.c:2584)
+	__sys_sendmmsg (net/socket.c:2638 net/socket.c:2724)
+	__x64_sys_sendmmsg (net/socket.c:2753 net/socket.c:2750 net/socket.c:2750)
+	x64_sys_call (arch/x86/entry/syscall_64.c:33)
+	do_syscall_64 (arch/x86/entry/common.c:?)
+	entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+	value changed: 0x01 -> 0x03
+
+The line numbers are related to commit dd5a440a31fa ("Linux 6.9-rc7").
+
+Commit e1d09c2c2f57 ("af_unix: Fix data races around sk->sk_shutdown.")
+addressed a comparable issue in the past regarding sk->sk_shutdown.
+However, it overlooked resolving this particular data path.
+This patch only offending unix_stream_sendmsg() function, since the
+other reads seem to be protected by unix_state_lock() as discussed in
+Link: https://lore.kernel.org/all/20240508173324.53565-1-kuniyu@amazon.com/
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240509081459.2807828-1-leitao@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c499fe96d3f7 ("selftests: net: add missing config for amt.sh")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/config | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/unix/af_unix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/config b/tools/testing/selftests/net/config
-index 3b749addd3640..5e4390cac17ed 100644
---- a/tools/testing/selftests/net/config
-+++ b/tools/testing/selftests/net/config
-@@ -24,10 +24,14 @@ CONFIG_IFB=y
- CONFIG_INET_DIAG=y
- CONFIG_INET_ESP=y
- CONFIG_INET_ESP_OFFLOAD=y
-+CONFIG_NET_FOU=y
-+CONFIG_NET_FOU_IP_TUNNELS=y
- CONFIG_IP_GRE=m
- CONFIG_NETFILTER=y
- CONFIG_NETFILTER_ADVANCED=y
- CONFIG_NF_CONNTRACK=m
-+CONFIG_IPV6_SIT=y
-+CONFIG_IP_DCCP=m
- CONFIG_NF_NAT=m
- CONFIG_IP6_NF_IPTABLES=m
- CONFIG_IP_NF_IPTABLES=m
-@@ -62,6 +66,7 @@ CONFIG_NET_CLS_MATCHALL=m
- CONFIG_NET_CLS_U32=m
- CONFIG_NET_IPGRE_DEMUX=m
- CONFIG_NET_IPGRE=m
-+CONFIG_NET_IPIP=y
- CONFIG_NET_SCH_FQ_CODEL=m
- CONFIG_NET_SCH_HTB=m
- CONFIG_NET_SCH_FQ=m
-@@ -78,7 +83,6 @@ CONFIG_TLS=m
- CONFIG_TRACEPOINTS=y
- CONFIG_NET_DROP_MONITOR=m
- CONFIG_NETDEVSIM=m
--CONFIG_NET_FOU=m
- CONFIG_MPLS_ROUTING=m
- CONFIG_MPLS_IPTUNNEL=m
- CONFIG_NET_SCH_INGRESS=m
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index f28e2956fea58..97d22bdfdc73b 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2189,7 +2189,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
+ 			goto out_err;
+ 	}
+ 
+-	if (sk->sk_shutdown & SEND_SHUTDOWN)
++	if (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN)
+ 		goto pipe_err;
+ 
+ 	while (sent < len) {
 -- 
 2.43.0
 
