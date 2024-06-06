@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605B81BBBD0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EA61BB6AF;
 	Thu,  6 Jun 2024 14:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683494; cv=none; b=XfEs34hLUJThiJZ4cUJjcTUD7fbzPEwyOMZhpVD34S+h+1lJeo84D2JcC4HlydcY6TI7VC9Wi/3zibE7rfVbYy/YXB4tOIhUcfphgCInh6GwVJ/72KgoCFSwDuSzDPybWDyI0EqtkRRr0oXtbhuad2z97iOocF2YWG+o87N5fTE=
+	t=1717683494; cv=none; b=bgyAutrDis8HMDJgPDSd93rVaCkU9Qh3xLIRz/4x4ZIH5b9l4arYh20b8x6JwRucayhNEymbN9WPdIuvWz2gqeE/5MuUF624anSpfRVZwCI4OMqpjtaB4GcF6A5PSIkB6/hDV51bU82EvzKyPmdLhy19izPXPmVhAJpbkcYX/vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683494; c=relaxed/simple;
-	bh=OPfFgP6+/ItiK0rBhKHmLob0nvGk0lu8GfnXbmWKqzE=;
+	bh=VSiHb8hGKXD1T4Az9TGQY4YlBBptCxDl8CWIY5Zf0rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ziwg2DJiMgbON7k93GGSzvxAG5fh71mud9AJ7radcrk1tRfXqbN2GfeL49ANT8911fhbSHwmHaZXMbmoYgBFEPHbTYUdf38MY8ly3jyjIFVrDzMHhZUU1OneVZMnJjCG4pSd+sT96JuJsZ3e/EWysnr+0bN0A7UBdQ+SuvPElJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYicXtHr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gkgdf1jXVlpzhO6ilKINTA4bv4bdD3qOvptyWhQuXhgOvOohMVAEyJUHGpp0i8stWulOjqKMpLZQnC9ARwii3IZ50vGQzvS4XB0wML9ELRLMvH+mBtLUCFjP3diyGVQeVn8yQaqTnMvGKozFM8izERk7N6mHNxqa9VzmumggkdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqNNkj1F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYicXtHr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1381EC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqNNkj1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8628EC2BD10;
 	Thu,  6 Jun 2024 14:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683494;
-	bh=OPfFgP6+/ItiK0rBhKHmLob0nvGk0lu8GfnXbmWKqzE=;
+	bh=VSiHb8hGKXD1T4Az9TGQY4YlBBptCxDl8CWIY5Zf0rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYicXtHr8YXqF2nvdaoI5WBuFDK1QlZpSADwR2YSIpRU5Dlz0a4Bvhb9xtFW/8PVP
-	 Mp6Ez3BpN+0sVcbEdtkMBaJq+wcSIP9ABpEnoNH5OpKQyWPDG4sb7AizxhLLrNUs7+
-	 oFnNugLovTmcVAUJs6n6ozdimLn6/epUEcXkP1Bw=
+	b=RqNNkj1F6XKk6QurzSPKXsrQIMDSyH5w402yLh4vmURwLPSyEBqdpaP44PNuLoCB9
+	 ZWZKeN3DG2H2qVvNvoj66STuaH0efTwWQgjHm4ViNXdFlWKiLwKRfysbOsY3yTfb4/
+	 PTcAFyNYwbt+egM1AgVZjVqaf8mHXj7gXcnoWNeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Richard Weinberger <richard@nod.at>,
+	Hannah Peuckmann <hannah.peuckmann@canonical.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 384/473] um: Fix the -Wmissing-prototypes warning for __switch_mm
-Date: Thu,  6 Jun 2024 16:05:13 +0200
-Message-ID: <20240606131712.550956625@linuxfoundation.org>
+Subject: [PATCH 6.6 437/744] riscv: dts: starfive: visionfive 2: Remove non-existing TDM hardware
+Date: Thu,  6 Jun 2024 16:01:49 +0200
+Message-ID: <20240606131746.495613556@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +48,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Hannah Peuckmann <hannah.peuckmann@canonical.com>
 
-[ Upstream commit 2cbade17b18c0f0fd9963f26c9fc9b057eb1cb3a ]
+[ Upstream commit dcde4e97b122ac318aaa71e8bcd2857dc28a0d12 ]
 
-The __switch_mm function is defined in the user code, and is called
-by the kernel code. It should be declared in a shared header.
+This partially reverts
+commit e7c304c0346d ("riscv: dts: starfive: jh7110: add the node and pins configuration for tdm")
 
-Fixes: 4dc706c2f292 ("um: take um_mmu.h to asm/mmu.h, clean asm/mmu_context.h a bit")
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+This added device tree nodes for TDM hardware that is not actually on the
+VisionFive 2 board, but connected on the 40pin header. Many different extension
+boards could be added on those pins, so this should be handled by overlays
+instead.
+This also conflicts with the I2S node which also attempts to grab GPIO 44:
+
+  starfive-jh7110-sys-pinctrl 13040000.pinctrl: pin GPIO44 already requested by 10090000.tdm; cannot claim for 120c0000.i2s
+
+Fixes: e7c304c0346d ("riscv: dts: starfive: jh7110: add the node and pins configuration for tdm")
+Signed-off-by: Hannah Peuckmann <hannah.peuckmann@canonical.com>
+Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Tested-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/asm/mmu.h           | 2 --
- arch/um/include/shared/skas/mm_id.h | 2 ++
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ .../jh7110-starfive-visionfive-2.dtsi         | 40 -------------------
+ 1 file changed, 40 deletions(-)
 
-diff --git a/arch/um/include/asm/mmu.h b/arch/um/include/asm/mmu.h
-index 5b072aba5b658..a7cb380c0b5c0 100644
---- a/arch/um/include/asm/mmu.h
-+++ b/arch/um/include/asm/mmu.h
-@@ -15,8 +15,6 @@ typedef struct mm_context {
- 	struct page *stub_pages[2];
- } mm_context_t;
+diff --git a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
+index 2c02358abd711..c9b212c0eaa8f 100644
+--- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
++++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
+@@ -440,40 +440,6 @@ GPOEN_ENABLE,
+ 		};
+ 	};
  
--extern void __switch_mm(struct mm_id * mm_idp);
+-	tdm_pins: tdm-0 {
+-		tx-pins {
+-			pinmux = <GPIOMUX(44, GPOUT_SYS_TDM_TXD,
+-					      GPOEN_ENABLE,
+-					      GPI_NONE)>;
+-			bias-pull-up;
+-			drive-strength = <2>;
+-			input-disable;
+-			input-schmitt-disable;
+-			slew-rate = <0>;
+-		};
 -
- /* Avoid tangled inclusion with asm/ldt.h */
- extern long init_new_ldt(struct mm_context *to_mm, struct mm_context *from_mm);
- extern void free_ldt(struct mm_context *mm);
-diff --git a/arch/um/include/shared/skas/mm_id.h b/arch/um/include/shared/skas/mm_id.h
-index e82e203f5f419..92dbf727e3842 100644
---- a/arch/um/include/shared/skas/mm_id.h
-+++ b/arch/um/include/shared/skas/mm_id.h
-@@ -15,4 +15,6 @@ struct mm_id {
- 	int kill;
+-		rx-pins {
+-			pinmux = <GPIOMUX(61, GPOUT_HIGH,
+-					      GPOEN_DISABLE,
+-					      GPI_SYS_TDM_RXD)>;
+-			input-enable;
+-		};
+-
+-		sync-pins {
+-			pinmux = <GPIOMUX(63, GPOUT_HIGH,
+-					      GPOEN_DISABLE,
+-					      GPI_SYS_TDM_SYNC)>;
+-			input-enable;
+-		};
+-
+-		pcmclk-pins {
+-			pinmux = <GPIOMUX(38, GPOUT_HIGH,
+-					      GPOEN_DISABLE,
+-					      GPI_SYS_TDM_CLK)>;
+-			input-enable;
+-		};
+-	};
+-
+ 	uart0_pins: uart0-0 {
+ 		tx-pins {
+ 			pinmux = <GPIOMUX(5, GPOUT_SYS_UART0_TX,
+@@ -499,12 +465,6 @@ GPOEN_DISABLE,
+ 	};
  };
  
-+void __switch_mm(struct mm_id *mm_idp);
-+
- #endif
+-&tdm {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&tdm_pins>;
+-	status = "okay";
+-};
+-
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_pins>;
 -- 
 2.43.0
 
