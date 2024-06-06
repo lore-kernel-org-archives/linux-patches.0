@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44D3198A35;
-	Thu,  6 Jun 2024 14:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5707A198A35;
+	Thu,  6 Jun 2024 14:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683395; cv=none; b=LUa5caFNqKLaI1wEumJekX9W5SSWqtx6LsI/KIQIxVY0WJZh7OLH1hKOzRaDWHZjIndL+Xz9WdLEiBNOaLx1/fuTHM8zrfJNYFoF+HP5kXgnMx6sxDITQTVQTE7WwW8+JrJtI/3f//ERyGDC1v70Ev9XmFDUVw8kFQ8R7WGQAe4=
+	t=1717683396; cv=none; b=Nmeuuio3FS331eUqHHfj0JMKCnvuuPVsNuKrWhIl2fgtE3lU7oOwC0X59d6VDGmCPwZL7XD6ggE2LlN1rx7MCodt+cqrAKlIbTlWscGCNruqSZg2yy9mDCcV/3Lmloa7yU0htAwnaO08COjAIrkssE9KO6BCz5MzcokrWYeBpDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683395; c=relaxed/simple;
-	bh=b8HBJz/y+mQ18Q3Um9C7nwqy3K7OFM//de6/DoPG7xI=;
+	s=arc-20240116; t=1717683396; c=relaxed/simple;
+	bh=XWbiNX+If1tAe2mpZw0K0UJOBYT/Y4unW+sDbA9OkWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+x+jkTKvQ5WxglCFOQQHnPhDOfNBcMLI6d6hbfcu8PDrvCbfdiuc/SG9i7O1tTjZ6FwINmtJB98zMy7HAyUxMfMjjiIcUJ6fAyzJbR6hGDCRzWDnbEqsOEHGE8uU3hbVqbtQ3Qn4YEUboR3+55ynySSNbZ9c3JXB16sIRPDeeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T4o6iml/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=geW0xUi79FPk5Nte262CIYhSB8EgA+GuzZcCzvFaAy28ia2k20bgSp5qARKWNJvez2Qd/n28+c97fKQKKMX9Z4h7FDh86I28CZ2Fya30bDgTUjaY4NlrGoXgvhzi425o5fTtMnwUEQgf7K8ORIQXpawC1y/VcpR4Dfp+ZGB04cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnOyk6V3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T4o6iml/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B09C2BD10;
-	Thu,  6 Jun 2024 14:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnOyk6V3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FD0C2BD10;
+	Thu,  6 Jun 2024 14:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683395;
-	bh=b8HBJz/y+mQ18Q3Um9C7nwqy3K7OFM//de6/DoPG7xI=;
+	s=korg; t=1717683396;
+	bh=XWbiNX+If1tAe2mpZw0K0UJOBYT/Y4unW+sDbA9OkWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T4o6iml/IEDTWuLVerUrs2FO4uX6N77AhKt7BaDcwwuMYmTYzIGuMjvK7O04Jk1ei
-	 2Ud0+JqVZryLCWut01HzGLtVQsJCNWolGbz+g0rsCUFjP3yvG1bmOZhop3FfKjTn7g
-	 XkZ/8hS2FUjK1LsEf5llP1lSIOzGjdcq0YnpbMPg=
+	b=TnOyk6V3FWFqBab0YssA7/kWZoSM8B3RqD1d/PUp57XWG/SkNMETMLymg+ytzNINh
+	 k0BvK5PFWTWV0HmR+kqOte1yUfA3CmMJHQhihjDtP9E7TpvsjAOvwLAgd7KeAhkPOI
+	 F6iqLl3RhcbkCYpyv3nexRuLLS/7FK0iCAyHYh/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 340/744] RDMA/hns: Fix deadlock on SRQ async events.
-Date: Thu,  6 Jun 2024 16:00:12 +0200
-Message-ID: <20240606131743.372350853@linuxfoundation.org>
+Subject: [PATCH 6.1 280/473] perf probe: Add missing libgen.h header needed for using basename()
+Date: Thu,  6 Jun 2024 16:03:29 +0200
+Message-ID: <20240606131709.164107708@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,71 +51,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit b46494b6f9c19f141114a57729e198698f40af37 ]
+[ Upstream commit 581037151910126a7934e369e4b6ac70eda9a703 ]
 
-xa_lock for SRQ table may be required in AEQ. Use xa_store_irq()/
-xa_erase_irq() to avoid deadlock.
+This prototype is obtained indirectly, by luck, from some other header
+in probe-event.c in most systems, but recently exploded on alpine:edge:
 
-Fixes: 81fce6291d99 ("RDMA/hns: Add SRQ asynchronous event support")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240412091616.370789-5-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+   8    13.39 alpine:edge                   : FAIL gcc version 13.2.1 20240309 (Alpine 13.2.1_git20240309)
+    util/probe-event.c: In function 'convert_exec_to_group':
+    util/probe-event.c:225:16: error: implicit declaration of function 'basename' [-Werror=implicit-function-declaration]
+      225 |         ptr1 = basename(exec_copy);
+          |                ^~~~~~~~
+    util/probe-event.c:225:14: error: assignment to 'char *' from 'int' makes pointer from integer without a cast [-Werror=int-conversion]
+      225 |         ptr1 = basename(exec_copy);
+          |              ^
+    cc1: all warnings being treated as errors
+    make[3]: *** [/git/perf-6.8.0/tools/build/Makefile.build:158: util] Error 2
+
+Fix it by adding the libgen.h header where basename() is prototyped.
+
+Fixes: fb7345bbf7fad9bf ("perf probe: Support basic dwarf-based operations on uprobe events")
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/lkml/
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_main.c | 1 +
- drivers/infiniband/hw/hns/hns_roce_srq.c  | 6 +++---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ tools/perf/util/probe-event.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index 4a9cd4d21bc99..c8c49110a3378 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -37,6 +37,7 @@
- #include <rdma/ib_smi.h>
- #include <rdma/ib_user_verbs.h>
- #include <rdma/ib_cache.h>
-+#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include "hns_roce_hem.h"
-diff --git a/drivers/infiniband/hw/hns/hns_roce_srq.c b/drivers/infiniband/hw/hns/hns_roce_srq.c
-index 8dae98f827eb2..6a4923c21cbc6 100644
---- a/drivers/infiniband/hw/hns/hns_roce_srq.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_srq.c
-@@ -122,7 +122,7 @@ static int alloc_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
- 		return ret;
- 	}
- 
--	ret = xa_err(xa_store(&srq_table->xa, srq->srqn, srq, GFP_KERNEL));
-+	ret = xa_err(xa_store_irq(&srq_table->xa, srq->srqn, srq, GFP_KERNEL));
- 	if (ret) {
- 		ibdev_err(ibdev, "failed to store SRQC, ret = %d.\n", ret);
- 		goto err_put;
-@@ -135,7 +135,7 @@ static int alloc_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
- 	return 0;
- 
- err_xa:
--	xa_erase(&srq_table->xa, srq->srqn);
-+	xa_erase_irq(&srq_table->xa, srq->srqn);
- err_put:
- 	hns_roce_table_put(hr_dev, &srq_table->table, srq->srqn);
- 
-@@ -153,7 +153,7 @@ static void free_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
- 		dev_err(hr_dev->dev, "DESTROY_SRQ failed (%d) for SRQN %06lx\n",
- 			ret, srq->srqn);
- 
--	xa_erase(&srq_table->xa, srq->srqn);
-+	xa_erase_irq(&srq_table->xa, srq->srqn);
- 
- 	if (refcount_dec_and_test(&srq->refcount))
- 		complete(&srq->free);
+diff --git a/tools/perf/util/probe-event.c b/tools/perf/util/probe-event.c
+index 0c24bc7afbca2..66ff8420ce2b0 100644
+--- a/tools/perf/util/probe-event.c
++++ b/tools/perf/util/probe-event.c
+@@ -11,6 +11,7 @@
+ #include <sys/stat.h>
+ #include <fcntl.h>
+ #include <errno.h>
++#include <libgen.h>
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <stdlib.h>
 -- 
 2.43.0
 
