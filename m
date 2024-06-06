@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F52619308A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4181B1AC235;
 	Thu,  6 Jun 2024 14:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683306; cv=none; b=jtMFeCgULDfulu9mPwUNA2KZ5L+dcBF5Jq96D3NVc9Qmsard1ijJvkPkW/zyGCtWvzLGvP9TbkBezxjxxWYQDzGjluBckcb8cWdMAbloRhA1gDETahka8T2uzGqOWeQ/GKMJLi+/czwcd3L/u0zgxb42oEd5iIssZLNRPdutNfY=
+	t=1717683307; cv=none; b=Bo8BZa9YY7L96LdLbjmM/SpUyHS7J+uX5UrkNMOirfkOZDabIgKt++uAhqU1QPrj9c+jqzoHOmet8/rgkFaVSnNGeDtqru9pbrwTj6qrfXVihmur2Npf8LFOddImaihCB92fBpCp2OnooXKscRcgkyR22sWZ4IrrhQ3BoG/UP1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683306; c=relaxed/simple;
-	bh=n/Q5AhP2de+NbhDpwAWRXK3IUhLCBPN7C94IFf8mVjs=;
+	s=arc-20240116; t=1717683307; c=relaxed/simple;
+	bh=omeLEayjmG+YS10xecSMkAuCpcLFyhb+kD0D6khmF6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ivDTbPFaKdUJLIZGXDQuzoxBDcD3ZuaU/6DfNkHcwIIVyYEhig2QERkKUzXaVUp1IgSNW6GEwFLcfFngvQKhn6dvqornfPxVKBz7xbc0LoeQqQW/SSoQTyjKgAj9YBmF1SAqx/qZzwYp5yqeZppNtpIDku8xxV9rnSm9mEyJNLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDX8gozR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qQG1WBuXI48pr/e+a0RmFG0Tss0WAy+jKTDDLmz/MZFExE1jroycdCVmAnPFcH63Q/cWbbaZ7VheReiq9DKGvm2LJIuyfepUB3S/TnsYWS0DBnGHMuJKcykX/5C0HQoMxgYDJglz4R4jyFjIZVX4VR+gvlX6qPL7sWOab0oQE30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4/UOEdc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDX8gozR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E609C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4/UOEdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CABC2BD10;
 	Thu,  6 Jun 2024 14:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683306;
-	bh=n/Q5AhP2de+NbhDpwAWRXK3IUhLCBPN7C94IFf8mVjs=;
+	bh=omeLEayjmG+YS10xecSMkAuCpcLFyhb+kD0D6khmF6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDX8gozRYfl45XyS5UuVgJC8unqyS9LRQ094dLffRsNiN7ErcEO6L9XlxtMtkKQKu
-	 iEr4hfmJIMraJW7TUKTiaUnwDD90UWVVUVub7oEV0m6goeHpjqwlaJAtkRg9q5AXxi
-	 tKgA4Km0Viuwcf0mKhpxGFF4XUCLA2bLR1fgsDK8=
+	b=z4/UOEdc8uiBv2hsCdLGTwF6Y/ThivI8Lq36PUXWdTh9TE5Do9oJqgxz5L+7OMVd5
+	 PAh7kbN5tuEHm76PVEORs0M3A2WP4vRDwgTnqghieIn1LBOrP+d/5CO+nE6TdHrEte
+	 7cED9b3ryZh6Pckk3nObuvC0rvELEY5XRcZ+zVlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sebastian Urban <surban@surban.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 247/744] ipv6: sr: fix incorrect unregister order
-Date: Thu,  6 Jun 2024 15:58:39 +0200
-Message-ID: <20240606131740.320448142@linuxfoundation.org>
+Subject: [PATCH 6.1 187/473] Bluetooth: compute LE flow credits based on recvbuf space
+Date: Thu,  6 Jun 2024 16:01:56 +0200
+Message-ID: <20240606131706.116981381@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,41 +47,390 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Sebastian Urban <surban@surban.net>
 
-[ Upstream commit 6e370a771d2985107e82d0f6174381c1acb49c20 ]
+[ Upstream commit ce60b9231b66710b6ee24042ded26efee120ecfc ]
 
-Commit 5559cea2d5aa ("ipv6: sr: fix possible use-after-free and
-null-ptr-deref") changed the register order in seg6_init(). But the
-unregister order in seg6_exit() is not updated.
+Previously LE flow credits were returned to the
+sender even if the socket's receive buffer was
+full. This meant that no back-pressure
+was applied to the sender, thus it continued to
+send data, resulting in data loss without any
+error being reported. Furthermore, the amount
+of credits was essentially fixed to a small
+amount, leading to reduced performance.
 
-Fixes: 5559cea2d5aa ("ipv6: sr: fix possible use-after-free and null-ptr-deref")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240509131812.1662197-3-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This is fixed by computing the number of returned
+LE flow credits based on the estimated available
+space in the receive buffer of an L2CAP socket.
+Consequently, if the receive buffer is full, no
+credits are returned until the buffer is read and
+thus cleared by user-space.
+
+Since the computation of available receive buffer
+space can only be performed approximately (due to
+sk_buff overhead) and the receive buffer size may
+be changed by user-space after flow credits have
+been sent, superfluous received data is temporary
+stored within l2cap_pinfo. This is necessary
+because Bluetooth LE provides no retransmission
+mechanism once the data has been acked by the
+physical layer.
+
+If receive buffer space estimation is not possible
+at the moment, we fall back to providing credits
+for one full packet as before. This is currently
+the case during connection setup, when MPS is not
+yet available.
+
+Fixes: b1c325c23d75 ("Bluetooth: Implement returning of LE L2CAP credits")
+Signed-off-by: Sebastian Urban <surban@surban.net>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/bluetooth/l2cap.h | 11 ++++-
+ net/bluetooth/l2cap_core.c    | 56 ++++++++++++++++++---
+ net/bluetooth/l2cap_sock.c    | 91 ++++++++++++++++++++++++++++-------
+ 3 files changed, 132 insertions(+), 26 deletions(-)
 
-diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
-index 5423f1f2aa626..c4ef96c8fdaca 100644
---- a/net/ipv6/seg6.c
-+++ b/net/ipv6/seg6.c
-@@ -567,6 +567,6 @@ void seg6_exit(void)
- 	seg6_local_exit();
- 	seg6_iptunnel_exit();
- #endif
--	unregister_pernet_subsys(&ip6_segments_ops);
- 	genl_unregister_family(&seg6_genl_family);
-+	unregister_pernet_subsys(&ip6_segments_ops);
+diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
+index 2f766e3437ce2..d46f1335cf9ac 100644
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -584,6 +584,9 @@ struct l2cap_chan {
+ 	__u16		tx_credits;
+ 	__u16		rx_credits;
+ 
++	/* estimated available receive buffer space or -1 if unknown */
++	ssize_t		rx_avail;
++
+ 	__u8		tx_state;
+ 	__u8		rx_state;
+ 
+@@ -724,10 +727,15 @@ struct l2cap_user {
+ /* ----- L2CAP socket info ----- */
+ #define l2cap_pi(sk) ((struct l2cap_pinfo *) sk)
+ 
++struct l2cap_rx_busy {
++	struct list_head	list;
++	struct sk_buff		*skb;
++};
++
+ struct l2cap_pinfo {
+ 	struct bt_sock		bt;
+ 	struct l2cap_chan	*chan;
+-	struct sk_buff		*rx_busy_skb;
++	struct list_head	rx_busy;
+ };
+ 
+ enum {
+@@ -985,6 +993,7 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ int l2cap_chan_reconfigure(struct l2cap_chan *chan, __u16 mtu);
+ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len);
+ void l2cap_chan_busy(struct l2cap_chan *chan, int busy);
++void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail);
+ int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator);
+ void l2cap_chan_set_defaults(struct l2cap_chan *chan);
+ int l2cap_ertm_init(struct l2cap_chan *chan);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index c34011113d4c5..5f9a599baa34d 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -477,6 +477,9 @@ struct l2cap_chan *l2cap_chan_create(void)
+ 	/* Set default lock nesting level */
+ 	atomic_set(&chan->nesting, L2CAP_NESTING_NORMAL);
+ 
++	/* Available receive buffer space is initially unknown */
++	chan->rx_avail = -1;
++
+ 	write_lock(&chan_list_lock);
+ 	list_add(&chan->global_l, &chan_list);
+ 	write_unlock(&chan_list_lock);
+@@ -558,6 +561,28 @@ void l2cap_chan_set_defaults(struct l2cap_chan *chan)
  }
+ EXPORT_SYMBOL_GPL(l2cap_chan_set_defaults);
+ 
++static __u16 l2cap_le_rx_credits(struct l2cap_chan *chan)
++{
++	size_t sdu_len = chan->sdu ? chan->sdu->len : 0;
++
++	if (chan->mps == 0)
++		return 0;
++
++	/* If we don't know the available space in the receiver buffer, give
++	 * enough credits for a full packet.
++	 */
++	if (chan->rx_avail == -1)
++		return (chan->imtu / chan->mps) + 1;
++
++	/* If we know how much space is available in the receive buffer, give
++	 * out as many credits as would fill the buffer.
++	 */
++	if (chan->rx_avail <= sdu_len)
++		return 0;
++
++	return DIV_ROUND_UP(chan->rx_avail - sdu_len, chan->mps);
++}
++
+ static void l2cap_le_flowctl_init(struct l2cap_chan *chan, u16 tx_credits)
+ {
+ 	chan->sdu = NULL;
+@@ -566,8 +591,7 @@ static void l2cap_le_flowctl_init(struct l2cap_chan *chan, u16 tx_credits)
+ 	chan->tx_credits = tx_credits;
+ 	/* Derive MPS from connection MTU to stop HCI fragmentation */
+ 	chan->mps = min_t(u16, chan->imtu, chan->conn->mtu - L2CAP_HDR_SIZE);
+-	/* Give enough credits for a full packet */
+-	chan->rx_credits = (chan->imtu / chan->mps) + 1;
++	chan->rx_credits = l2cap_le_rx_credits(chan);
+ 
+ 	skb_queue_head_init(&chan->tx_q);
+ }
+@@ -579,7 +603,7 @@ static void l2cap_ecred_init(struct l2cap_chan *chan, u16 tx_credits)
+ 	/* L2CAP implementations shall support a minimum MPS of 64 octets */
+ 	if (chan->mps < L2CAP_ECRED_MIN_MPS) {
+ 		chan->mps = L2CAP_ECRED_MIN_MPS;
+-		chan->rx_credits = (chan->imtu / chan->mps) + 1;
++		chan->rx_credits = l2cap_le_rx_credits(chan);
+ 	}
+ }
+ 
+@@ -7529,9 +7553,7 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
+ {
+ 	struct l2cap_conn *conn = chan->conn;
+ 	struct l2cap_le_credits pkt;
+-	u16 return_credits;
+-
+-	return_credits = (chan->imtu / chan->mps) + 1;
++	u16 return_credits = l2cap_le_rx_credits(chan);
+ 
+ 	if (chan->rx_credits >= return_credits)
+ 		return;
+@@ -7550,6 +7572,19 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
+ 	l2cap_send_cmd(conn, chan->ident, L2CAP_LE_CREDITS, sizeof(pkt), &pkt);
+ }
+ 
++void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail)
++{
++	if (chan->rx_avail == rx_avail)
++		return;
++
++	BT_DBG("chan %p has %zd bytes avail for rx", chan, rx_avail);
++
++	chan->rx_avail = rx_avail;
++
++	if (chan->state == BT_CONNECTED)
++		l2cap_chan_le_send_credits(chan);
++}
++
+ static int l2cap_ecred_recv(struct l2cap_chan *chan, struct sk_buff *skb)
+ {
+ 	int err;
+@@ -7559,6 +7594,12 @@ static int l2cap_ecred_recv(struct l2cap_chan *chan, struct sk_buff *skb)
+ 	/* Wait recv to confirm reception before updating the credits */
+ 	err = chan->ops->recv(chan, skb);
+ 
++	if (err < 0 && chan->rx_avail != -1) {
++		BT_ERR("Queueing received LE L2CAP data failed");
++		l2cap_send_disconn_req(chan, ECONNRESET);
++		return err;
++	}
++
+ 	/* Update credits whenever an SDU is received */
+ 	l2cap_chan_le_send_credits(chan);
+ 
+@@ -7581,7 +7622,8 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
+ 	}
+ 
+ 	chan->rx_credits--;
+-	BT_DBG("rx_credits %u -> %u", chan->rx_credits + 1, chan->rx_credits);
++	BT_DBG("chan %p: rx_credits %u -> %u",
++	       chan, chan->rx_credits + 1, chan->rx_credits);
+ 
+ 	/* Update if remote had run out of credits, this should only happens
+ 	 * if the remote is not using the entire MPS.
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index bca399a9d21be..af6d4e3b8c065 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1165,6 +1165,34 @@ static int l2cap_sock_sendmsg(struct socket *sock, struct msghdr *msg,
+ 	return err;
+ }
+ 
++static void l2cap_publish_rx_avail(struct l2cap_chan *chan)
++{
++	struct sock *sk = chan->data;
++	ssize_t avail = sk->sk_rcvbuf - atomic_read(&sk->sk_rmem_alloc);
++	int expected_skbs, skb_overhead;
++
++	if (avail <= 0) {
++		l2cap_chan_rx_avail(chan, 0);
++		return;
++	}
++
++	if (!chan->mps) {
++		l2cap_chan_rx_avail(chan, -1);
++		return;
++	}
++
++	/* Correct available memory by estimated sk_buff overhead.
++	 * This is significant due to small transfer sizes. However, accept
++	 * at least one full packet if receive space is non-zero.
++	 */
++	expected_skbs = DIV_ROUND_UP(avail, chan->mps);
++	skb_overhead = expected_skbs * sizeof(struct sk_buff);
++	if (skb_overhead < avail)
++		l2cap_chan_rx_avail(chan, avail - skb_overhead);
++	else
++		l2cap_chan_rx_avail(chan, -1);
++}
++
+ static int l2cap_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 			      size_t len, int flags)
+ {
+@@ -1201,28 +1229,33 @@ static int l2cap_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	else
+ 		err = bt_sock_recvmsg(sock, msg, len, flags);
+ 
+-	if (pi->chan->mode != L2CAP_MODE_ERTM)
++	if (pi->chan->mode != L2CAP_MODE_ERTM &&
++	    pi->chan->mode != L2CAP_MODE_LE_FLOWCTL &&
++	    pi->chan->mode != L2CAP_MODE_EXT_FLOWCTL)
+ 		return err;
+ 
+-	/* Attempt to put pending rx data in the socket buffer */
+-
+ 	lock_sock(sk);
+ 
+-	if (!test_bit(CONN_LOCAL_BUSY, &pi->chan->conn_state))
+-		goto done;
++	l2cap_publish_rx_avail(pi->chan);
+ 
+-	if (pi->rx_busy_skb) {
+-		if (!__sock_queue_rcv_skb(sk, pi->rx_busy_skb))
+-			pi->rx_busy_skb = NULL;
+-		else
++	/* Attempt to put pending rx data in the socket buffer */
++	while (!list_empty(&pi->rx_busy)) {
++		struct l2cap_rx_busy *rx_busy =
++			list_first_entry(&pi->rx_busy,
++					 struct l2cap_rx_busy,
++					 list);
++		if (__sock_queue_rcv_skb(sk, rx_busy->skb) < 0)
+ 			goto done;
++		list_del(&rx_busy->list);
++		kfree(rx_busy);
+ 	}
+ 
+ 	/* Restore data flow when half of the receive buffer is
+ 	 * available.  This avoids resending large numbers of
+ 	 * frames.
+ 	 */
+-	if (atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf >> 1)
++	if (test_bit(CONN_LOCAL_BUSY, &pi->chan->conn_state) &&
++	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf >> 1)
+ 		l2cap_chan_busy(pi->chan, 0);
+ 
+ done:
+@@ -1483,17 +1516,20 @@ static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
+ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+ {
+ 	struct sock *sk = chan->data;
++	struct l2cap_pinfo *pi = l2cap_pi(sk);
+ 	int err;
+ 
+ 	lock_sock(sk);
+ 
+-	if (l2cap_pi(sk)->rx_busy_skb) {
++	if (chan->mode == L2CAP_MODE_ERTM && !list_empty(&pi->rx_busy)) {
+ 		err = -ENOMEM;
+ 		goto done;
+ 	}
+ 
+ 	if (chan->mode != L2CAP_MODE_ERTM &&
+-	    chan->mode != L2CAP_MODE_STREAMING) {
++	    chan->mode != L2CAP_MODE_STREAMING &&
++	    chan->mode != L2CAP_MODE_LE_FLOWCTL &&
++	    chan->mode != L2CAP_MODE_EXT_FLOWCTL) {
+ 		/* Even if no filter is attached, we could potentially
+ 		 * get errors from security modules, etc.
+ 		 */
+@@ -1504,7 +1540,9 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+ 
+ 	err = __sock_queue_rcv_skb(sk, skb);
+ 
+-	/* For ERTM, handle one skb that doesn't fit into the recv
++	l2cap_publish_rx_avail(chan);
++
++	/* For ERTM and LE, handle a skb that doesn't fit into the recv
+ 	 * buffer.  This is important to do because the data frames
+ 	 * have already been acked, so the skb cannot be discarded.
+ 	 *
+@@ -1513,8 +1551,18 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+ 	 * acked and reassembled until there is buffer space
+ 	 * available.
+ 	 */
+-	if (err < 0 && chan->mode == L2CAP_MODE_ERTM) {
+-		l2cap_pi(sk)->rx_busy_skb = skb;
++	if (err < 0 &&
++	    (chan->mode == L2CAP_MODE_ERTM ||
++	     chan->mode == L2CAP_MODE_LE_FLOWCTL ||
++	     chan->mode == L2CAP_MODE_EXT_FLOWCTL)) {
++		struct l2cap_rx_busy *rx_busy =
++			kmalloc(sizeof(*rx_busy), GFP_KERNEL);
++		if (!rx_busy) {
++			err = -ENOMEM;
++			goto done;
++		}
++		rx_busy->skb = skb;
++		list_add_tail(&rx_busy->list, &pi->rx_busy);
+ 		l2cap_chan_busy(chan, 1);
+ 		err = 0;
+ 	}
+@@ -1740,6 +1788,8 @@ static const struct l2cap_ops l2cap_chan_ops = {
+ 
+ static void l2cap_sock_destruct(struct sock *sk)
+ {
++	struct l2cap_rx_busy *rx_busy, *next;
++
+ 	BT_DBG("sk %p", sk);
+ 
+ 	if (l2cap_pi(sk)->chan) {
+@@ -1747,9 +1797,10 @@ static void l2cap_sock_destruct(struct sock *sk)
+ 		l2cap_chan_put(l2cap_pi(sk)->chan);
+ 	}
+ 
+-	if (l2cap_pi(sk)->rx_busy_skb) {
+-		kfree_skb(l2cap_pi(sk)->rx_busy_skb);
+-		l2cap_pi(sk)->rx_busy_skb = NULL;
++	list_for_each_entry_safe(rx_busy, next, &l2cap_pi(sk)->rx_busy, list) {
++		kfree_skb(rx_busy->skb);
++		list_del(&rx_busy->list);
++		kfree(rx_busy);
+ 	}
+ 
+ 	skb_queue_purge(&sk->sk_receive_queue);
+@@ -1833,6 +1884,8 @@ static void l2cap_sock_init(struct sock *sk, struct sock *parent)
+ 
+ 	chan->data = sk;
+ 	chan->ops = &l2cap_chan_ops;
++
++	l2cap_publish_rx_avail(chan);
+ }
+ 
+ static struct proto l2cap_proto = {
+@@ -1854,6 +1907,8 @@ static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
+ 	sk->sk_destruct = l2cap_sock_destruct;
+ 	sk->sk_sndtimeo = L2CAP_CONN_TIMEOUT;
+ 
++	INIT_LIST_HEAD(&l2cap_pi(sk)->rx_busy);
++
+ 	chan = l2cap_chan_create();
+ 	if (!chan) {
+ 		sk_free(sk);
 -- 
 2.43.0
 
