@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E097C197A91;
-	Thu,  6 Jun 2024 14:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0A9197A91;
+	Thu,  6 Jun 2024 14:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683295; cv=none; b=biL6kotJC44XM/JiFL5y+7nYaigojsoEfEfPSaMPINAU3yNe7yX0EIwGSXT3stEafj8CN6t3+0Ap/WE8yZN5op0qpOlG+EUy4r832fp0LRcP9zwifaJAWi3ptyJVWpQXibfrxdhfHA7hGzvdKyNc2v3PHs+X15ljpwZ8HXDkiys=
+	t=1717683295; cv=none; b=YxpGk7jpBVnZoIyGdhL42I82v5aVXcL1TPbJspeji2l7Yix33hbv3o+i1n8vkV1fAwi0fc0cqgynu0MNqECGf4A847Z1oT1GwZXQ/VB/R8rYOnD/BtnmYVFn64MXt8gqHi2xdsO7DDfez35skudUYSkbA6Lrycr6f0Oc/9i+Lv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683295; c=relaxed/simple;
-	bh=91i5QrzHG1G+vHB4Dgam1AMTHwio6ktz8VMRvQdcWik=;
+	bh=TmGpOMoZKnFGjwrx9KjWkWhiiE4Z7LndUiVUbbYifp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6RNdqiNVqIzzLaBnDIA0uECmv2zQWtCID5KlEYNJPgHgJLpZzM7En+h79fZ5QODOrQZrQ51e3pR13NVTXVFdqpvW+NPhKLH8lZNyM8yOnhPJH0VqVblIJekVnarOL3dYAqoxwJeZPo6HtYjOGj5eOYnA/J3jUq0dDtNjHKXvIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZncMbs3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KENrIESYyAsdmeLFUZ1OZ5HHoUSRkfi6pPo0GmoaE1f2N5NhShJUioexZDw625TDUoyzcSxIoWwHzGankOgmoiElGtBO5y9R8JV3omOopJk2MTcw2wHAM5/Wk29Uqu3xeJFymL22rEGR48occjaDbSpW4JctWunUp8aOy9qSwjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fq8ZpW87; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZncMbs3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CD4C32782;
-	Thu,  6 Jun 2024 14:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fq8ZpW87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4117AC2BD10;
+	Thu,  6 Jun 2024 14:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683294;
-	bh=91i5QrzHG1G+vHB4Dgam1AMTHwio6ktz8VMRvQdcWik=;
+	s=korg; t=1717683295;
+	bh=TmGpOMoZKnFGjwrx9KjWkWhiiE4Z7LndUiVUbbYifp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZncMbs35MsnRzVB1Va8OfYL1wBCgyrgepvhCfu4i71cOjLeDJnvdS5yiCI9uJRkb
-	 bnkU/i7SdT7zFAfbCLwFLL2TypTV1hupOQ6NPJTC8/nSEPrrtN2lhlIEa3VfzHF2Ko
-	 VRo9T77bK1z3TWxlepU/iKTEoSNh9E0oO6KbNtls=
+	b=Fq8ZpW87XxinVvpGx6YTtohFG1cdrA1geh+H23uYYPS51czjiViSIAjhql60yR27y
+	 x9L2nWQiPpgq0ESyjcu1eH6IU0SeV2e6gbjESK5yUsbd2FF/IUOdICsYq2wKXdlAQV
+	 lGK6IU18YabmbdLlHIRpcR5FhNzOgGMp0dCZrKgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 235/744] m68k: Fix spinlock race in kernel thread creation
-Date: Thu,  6 Jun 2024 15:58:27 +0200
-Message-ID: <20240606131739.928954461@linuxfoundation.org>
+Subject: [PATCH 6.1 171/473] net: ethernet: cortina: Locking fixes
+Date: Thu,  6 Jun 2024 16:01:40 +0200
+Message-ID: <20240606131705.598276714@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +48,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Schmitz <schmitzmic@gmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit da89ce46f02470ef08f0f580755d14d547da59ed ]
+[ Upstream commit 812552808f7ff71133fc59768cdc253c5b8ca1bf ]
 
-Context switching does take care to retain the correct lock owner across
-the switch from 'prev' to 'next' tasks.  This does rely on interrupts
-remaining disabled for the entire duration of the switch.
+This fixes a probably long standing problem in the Cortina
+Gemini ethernet driver: there are some paths in the code
+where the IRQ registers are written without taking the proper
+locks.
 
-This condition is guaranteed for normal process creation and context
-switching between already running processes, because both 'prev' and
-'next' already have interrupts disabled in their saved copies of the
-status register.
-
-The situation is different for newly created kernel threads.  The status
-register is set to PS_S in copy_thread(), which does leave the IPL at 0.
-Upon restoring the 'next' thread's status register in switch_to() aka
-resume(), interrupts then become enabled prematurely.  resume() then
-returns via ret_from_kernel_thread() and schedule_tail() where run queue
-lock is released (see finish_task_switch() and finish_lock_switch()).
-
-A timer interrupt calling scheduler_tick() before the lock is released
-in finish_task_switch() will find the lock already taken, with the
-current task as lock owner.  This causes a spinlock recursion warning as
-reported by Guenter Roeck.
-
-As far as I can ascertain, this race has been opened in commit
-533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
-but I haven't done a detailed study of kernel history so it may well
-predate that commit.
-
-Interrupts cannot be disabled in the saved status register copy for
-kernel threads (init will complain about interrupts disabled when
-finally starting user space).  Disable interrupts temporarily when
-switching the tasks' register sets in resume().
-
-Note that a simple oriw 0x700,%sr after restoring sr is not enough here
-- this leaves enough of a race for the 'spinlock recursion' warning to
-still be observed.
-
-Tested on ARAnyM and qemu (Quadra 800 emulation).
-
-Fixes: 533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/all/07811b26-677c-4d05-aeb4-996cd880b789@roeck-us.net
-Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20240411033631.16335-1-schmitzmic@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240509-gemini-ethernet-locking-v1-1-afd00a528b95@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/kernel/entry.S | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cortina/gemini.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/m68k/kernel/entry.S b/arch/m68k/kernel/entry.S
-index 4dd2fd7acba9e..2e1e9ad4f98ca 100644
---- a/arch/m68k/kernel/entry.S
-+++ b/arch/m68k/kernel/entry.S
-@@ -433,7 +433,9 @@ resume:
- 	movec	%a0,%dfc
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 7c0b0bc033c9c..19fb8c4caab87 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1108,10 +1108,13 @@ static void gmac_tx_irq_enable(struct net_device *netdev,
+ {
+ 	struct gemini_ethernet_port *port = netdev_priv(netdev);
+ 	struct gemini_ethernet *geth = port->geth;
++	unsigned long flags;
+ 	u32 val, mask;
  
- 	/* restore status register */
--	movew	%a1@(TASK_THREAD+THREAD_SR),%sr
-+	movew	%a1@(TASK_THREAD+THREAD_SR),%d0
-+	oriw	#0x0700,%d0
-+	movew	%d0,%sr
+ 	netdev_dbg(netdev, "%s device %d\n", __func__, netdev->dev_id);
  
- 	rts
++	spin_lock_irqsave(&geth->irq_lock, flags);
++
+ 	mask = GMAC0_IRQ0_TXQ0_INTS << (6 * netdev->dev_id + txq);
  
+ 	if (en)
+@@ -1120,6 +1123,8 @@ static void gmac_tx_irq_enable(struct net_device *netdev,
+ 	val = readl(geth->base + GLOBAL_INTERRUPT_ENABLE_0_REG);
+ 	val = en ? val | mask : val & ~mask;
+ 	writel(val, geth->base + GLOBAL_INTERRUPT_ENABLE_0_REG);
++
++	spin_unlock_irqrestore(&geth->irq_lock, flags);
+ }
+ 
+ static void gmac_tx_irq(struct net_device *netdev, unsigned int txq_num)
+@@ -1426,15 +1431,19 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	union gmac_rxdesc_3 word3;
+ 	struct page *page = NULL;
+ 	unsigned int page_offs;
++	unsigned long flags;
+ 	unsigned short r, w;
+ 	union dma_rwptr rw;
+ 	dma_addr_t mapping;
+ 	int frag_nr = 0;
+ 
++	spin_lock_irqsave(&geth->irq_lock, flags);
+ 	rw.bits32 = readl(ptr_reg);
+ 	/* Reset interrupt as all packages until here are taken into account */
+ 	writel(DEFAULT_Q0_INT_BIT << netdev->dev_id,
+ 	       geth->base + GLOBAL_INTERRUPT_STATUS_1_REG);
++	spin_unlock_irqrestore(&geth->irq_lock, flags);
++
+ 	r = rw.bits.rptr;
+ 	w = rw.bits.wptr;
+ 
+@@ -1737,10 +1746,9 @@ static irqreturn_t gmac_irq(int irq, void *data)
+ 		gmac_update_hw_stats(netdev);
+ 
+ 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
++		spin_lock(&geth->irq_lock);
+ 		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
+ 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
+-
+-		spin_lock(&geth->irq_lock);
+ 		u64_stats_update_begin(&port->ir_stats_syncp);
+ 		++port->stats.rx_fifo_errors;
+ 		u64_stats_update_end(&port->ir_stats_syncp);
 -- 
 2.43.0
 
