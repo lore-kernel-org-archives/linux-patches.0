@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9EA19D082;
-	Thu,  6 Jun 2024 14:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3C519D085;
+	Thu,  6 Jun 2024 14:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683085; cv=none; b=mDSnayqQ3SQGWrqcyFfXYhd1Z7PRvMqy0O32ic1j3ezdLS8fMjtHlPNKQixYdcPp0g2XU94UhR30FqjWT6vk7RAnGVFd6IxoXFOQ07n3HngVjBjf5hFwfdOCtIwuytr12DHABACv412QZSIU6KnQa1rqI+PZ3PFJr/AgAhr/Apw=
+	t=1717683086; cv=none; b=IGvkK/yKCbppqB2B5ePvmVVqCVSKUhcGey2+/zNZqA4RUxMNeJwDrEsTUL4qysCAn5Np1NZmVaFhJi1RHu2Zk4qOVueIzjjaJsp/y+eIZ2kv3bOhFD3FmZvAcKcNTBo0ynPQUdLX0Zp4xESCGif3zaUU9GBDA7Z81Lz1KWp4dBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683085; c=relaxed/simple;
-	bh=lNSPcU2XwUVeuhVhxO45z0CBsESpO6RNcE3w2HfcOV4=;
+	s=arc-20240116; t=1717683086; c=relaxed/simple;
+	bh=UL0y7AmzpLtbKncJVqo7bxIFZjwIDhguQzstjNF9wq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1ddnh0TJZhvhsxz1rlaapHQBZTgvmRWdCOShRkZZBAb2XLlzecb6RqbcfgK58VYOKGoFN4fqpuQQJkREa1S854qCfH3FJWtf0eiADP5sIG9j5ZwEutg32+DLLahXY4cAbOtlFwk2p0FtXoyBhjylTsadffewnl2++DsS7KXPME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBhGqi5P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k8eVi6NVFJkiEPzVDPBBYkkZTDJn33CwopeWtMnX00co6GSt25rtso/CoLWcm38iSfbm0+RlfNkdrznerEiyZs6xQuKrZwTrY461QW3Tl+WlTzc86N9hlOMWBPk9QIegvIqc8oHMH9RlbeKX+7Gh5zuJlLtZlJsurfePivTvcxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JObsRjbB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBhGqi5P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3F6C32782;
-	Thu,  6 Jun 2024 14:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JObsRjbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114F7C32781;
+	Thu,  6 Jun 2024 14:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683085;
-	bh=lNSPcU2XwUVeuhVhxO45z0CBsESpO6RNcE3w2HfcOV4=;
+	s=korg; t=1717683086;
+	bh=UL0y7AmzpLtbKncJVqo7bxIFZjwIDhguQzstjNF9wq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBhGqi5Pw7M6ji+eLUVg1IJnR5XVJDVjIP2or05xIw5vQx1NgwCKpN1IrLjAgy1xu
-	 GqlIyXz6xAqbIJVoVNQ2TTjtnvytw+KFdYIubeuoOlYwPyZX4LwjbdDXzULbnRxI9S
-	 dRU8OIa2coEakWdGx55GKEIj9gxYB3jWvsCGZoR4=
+	b=JObsRjbBZkyT4FJFvZWDuUOQ8j+DJSliFRpAhNiADuzKWZtCRbOBuM63Ce+3WfL5u
+	 OBek9Paq1iqqGOIPUbm5vzk/YpnI5HZqAatL5L1CipMqZHsCSI+CMSq+5cnqNnj9Fp
+	 35ROlvv47rgQ+UNa/o3puhB0gN85A9Pp6mhQQ6MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 321/374] ice: fix accounting if a VLAN already exists
-Date: Thu,  6 Jun 2024 16:05:00 +0200
-Message-ID: <20240606131702.620511390@linuxfoundation.org>
+Subject: [PATCH 6.9 322/374] selftests: mptcp: simult flows: mark unbalanced tests as flaky
+Date: Thu,  6 Jun 2024 16:05:01 +0200
+Message-ID: <20240606131702.655427813@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,72 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 82617b9a04649e83ee8731918aeadbb6e6d7cbc7 ]
+[ Upstream commit cc73a6577ae64247898269d138dee6b73ff710cc ]
 
-The ice_vsi_add_vlan() function is used to add a VLAN filter for the target
-VSI. This function prepares a filter in the switch table for the given VSI.
-If it succeeds, the vsi->num_vlan counter is incremented.
+These tests are flaky since their introduction. This might be less or
+not visible depending on the CI running the tests, especially if it is
+also busy doing other tasks in parallel.
 
-It is not considered an error to add a VLAN which already exists in the
-switch table, so the function explicitly checks and ignores -EEXIST. The
-vsi->num_vlan counter is still incremented.
+A first analysis shown that the transfer can be slowed down when there
+are some re-injections at the MPTCP level. Such re-injections can of
+course happen, and disturb the transfer, but it looks strange to have
+them in this lab. That could be caused by the kernel having access to
+less CPU cycles -- e.g. when other activities are executed in parallel
+-- or by a misinterpretation on the MPTCP packet scheduler side.
 
-This seems incorrect, as it means we can double-count in the case where the
-same VLAN is added twice by the caller. The actual table will have one less
-filter than the count.
+While this is being investigated, the tests are marked as flaky not to
+create noises in other CIs.
 
-The ice_vsi_del_vlan() function similarly checks and handles the -ENOENT
-condition for when deleting a filter that doesn't exist. This flow only
-decrements the vsi->num_vlan if it actually deleted a filter.
-
-The vsi->num_vlan counter is used only in a few places, primarily related
-to tracking the number of non-zero VLANs. If the vsi->num_vlans gets out of
-sync, then ice_vsi_num_non_zero_vlans() will incorrectly report more VLANs
-than are present, and ice_vsi_has_non_zero_vlans() could return true
-potentially in cases where there are only VLAN 0 filters left.
-
-Fix this by only incrementing the vsi->num_vlan in the case where we
-actually added an entry, and not in the case where the entry already
-existed.
-
-Fixes: a1ffafb0b4a4 ("ice: Support configuring the device to Double VLAN Mode")
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240523-net-2024-05-23-intel-net-fixes-v1-2-17a923e0bb5f@intel.com
+Fixes: 219d04992b68 ("mptcp: push pending frames when subflow has free space")
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/475
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240524-upstream-net-20240524-selftests-mptcp-flaky-v1-2-a352362f3f8e@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ tools/testing/selftests/net/mptcp/simult_flows.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c b/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
-index 2e9ad27cb9d13..6e8f2aab60801 100644
---- a/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
-@@ -45,14 +45,15 @@ int ice_vsi_add_vlan(struct ice_vsi *vsi, struct ice_vlan *vlan)
- 		return -EINVAL;
+diff --git a/tools/testing/selftests/net/mptcp/simult_flows.sh b/tools/testing/selftests/net/mptcp/simult_flows.sh
+index 1b23662203881..dfdb7031c187a 100755
+--- a/tools/testing/selftests/net/mptcp/simult_flows.sh
++++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
+@@ -243,7 +243,7 @@ run_test()
+ 	do_transfer $small $large $time
+ 	lret=$?
+ 	mptcp_lib_result_code "${lret}" "${msg}"
+-	if [ $lret -ne 0 ]; then
++	if [ $lret -ne 0 ] && ! mptcp_lib_subtest_is_flaky; then
+ 		ret=$lret
+ 		[ $bail -eq 0 ] || exit $ret
+ 	fi
+@@ -253,7 +253,7 @@ run_test()
+ 	do_transfer $large $small $time
+ 	lret=$?
+ 	mptcp_lib_result_code "${lret}" "${msg}"
+-	if [ $lret -ne 0 ]; then
++	if [ $lret -ne 0 ] && ! mptcp_lib_subtest_is_flaky; then
+ 		ret=$lret
+ 		[ $bail -eq 0 ] || exit $ret
+ 	fi
+@@ -286,7 +286,7 @@ run_test 10 10 0 0 "balanced bwidth"
+ run_test 10 10 1 25 "balanced bwidth with unbalanced delay"
  
- 	err = ice_fltr_add_vlan(vsi, vlan);
--	if (err && err != -EEXIST) {
-+	if (!err)
-+		vsi->num_vlan++;
-+	else if (err == -EEXIST)
-+		err = 0;
-+	else
- 		dev_err(ice_pf_to_dev(vsi->back), "Failure Adding VLAN %d on VSI %i, status %d\n",
- 			vlan->vid, vsi->vsi_num, err);
--		return err;
--	}
+ # we still need some additional infrastructure to pass the following test-cases
+-run_test 10 3 0 0 "unbalanced bwidth"
++MPTCP_LIB_SUBTEST_FLAKY=1 run_test 10 3 0 0 "unbalanced bwidth"
+ run_test 10 3 1 25 "unbalanced bwidth with unbalanced delay"
+ run_test 10 3 25 1 "unbalanced bwidth with opposed, unbalanced delay"
  
--	vsi->num_vlan++;
--	return 0;
-+	return err;
- }
- 
- /**
 -- 
 2.43.0
 
