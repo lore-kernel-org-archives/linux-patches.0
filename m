@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D764D1974EB;
-	Thu,  6 Jun 2024 14:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6151974EB;
+	Thu,  6 Jun 2024 14:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683460; cv=none; b=o8GhKGRDXi8Tx22OJvNMDlb2sbO28yhJ8rd/hHK7UKk6fBX856ZTHbOzqeSdBaHDwE0N7rBQpBmFr+TPW1bUKeJwEc2xziaHtabjNy4irH4BT2i23RxBbXV3mTdueI/I8b9RZpBlAMWGfgZ3bM1i1GvvgvYMsA+y7oFkwt+Dj6Q=
+	t=1717683461; cv=none; b=KRE6J+WlU/6lx+GKLqnP4Ll8c8CWpvq29R/KVKJaWkaIuJYyB65lzyTarsRZ8xglD+gLBVIY8RtR0WMtpaPApHpf2CIdWBs0MaJK83M3Sqjt2e0xb1DdoW5yD2F6IqhForSR4eySyU+JpCAEpq4llbkWx0/xsE4gpavxersL/vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683460; c=relaxed/simple;
-	bh=4NrrewIIrkvxLD98vGZWp8Zpwo/8PBKcdyDLlOGKqbg=;
+	s=arc-20240116; t=1717683461; c=relaxed/simple;
+	bh=m6MCqIrbAq4fzaPw6BCU+f34OxEUTxYvlEMURG9Vtto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llhfePcXDPMrS3tamU4sozr18sKW1R7Pd5mEAu0KlRiXnyIjXmy42zlqfcH/KVeoS6huA5mo3TXHYTurYx6Ttqk8GphfzsAZYqFobITWstiYF/2O5YbMDlHiHO9CuD4GJ+6LzlCYKVgfhnWd2Qt35TbsCP22ADPa4zH8F6BtSM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uy3dVnPe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OI5yqmpaqu/A0Xw+Dm4EBKvy9R4QdfG4Dp8pg+k54JAuUpXJajwvYvsFEOKZPmzMA7odC3TAoDyz1e/1aoNZV2dw44mSMRDtMCCYaZl4mo6PHuPpvMgPnMXu51PkSb3N9eXU9q/Fw8hS0dRFu/xejxeih8X6bx8BRL6dZKFH8gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHVUxb8X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uy3dVnPe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B567DC2BD10;
-	Thu,  6 Jun 2024 14:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHVUxb8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6AAC32781;
+	Thu,  6 Jun 2024 14:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683460;
-	bh=4NrrewIIrkvxLD98vGZWp8Zpwo/8PBKcdyDLlOGKqbg=;
+	s=korg; t=1717683461;
+	bh=m6MCqIrbAq4fzaPw6BCU+f34OxEUTxYvlEMURG9Vtto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uy3dVnPe2qeqXn+WqFY6VG0O3A3SEY9/aorU52+g4jafL/410Z1dBo5KHXR79b//N
-	 CnIFoiqKruVyWN6OcAdSYeOtHK21xaiViWfgr2UTGt0WRP3rE3tnpSkkkNoBTUBCHa
-	 fgbBvHKkQ6onPSjW/pLmGRypygV/4ddcZ70vJhu4=
+	b=DHVUxb8XuasdRLlKa1A1Rm5dercWyPXoSz30DYMNnwzUE1psswRlFq2YexyKOxkpb
+	 qeTS8v8ZzoNuCwY/Us21N7gfXTk/m+7EdT9Q8fkuLmzEXdQ1g1YW67HPCYuhBotF8y
+	 Dy3+SoXuSqhpAxkStEWpNEh1q7jSfxnGqnrNQk60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 405/744] dmaengine: idma64: Add check for dma_set_max_seg_size
-Date: Thu,  6 Jun 2024 16:01:17 +0200
-Message-ID: <20240606131745.451642420@linuxfoundation.org>
+Subject: [PATCH 6.1 348/473] f2fs: fix to add missing iput() in gc_data_segment()
+Date: Thu,  6 Jun 2024 16:04:37 +0200
+Message-ID: <20240606131711.414859301@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 2b1c1cf08a0addb6df42f16b37133dc7a351de29 ]
+[ Upstream commit a798ff17cd2dabe47d5d4ed3d509631793c36e19 ]
 
-As the possible failure of the dma_set_max_seg_size(), it should be
-better to check the return value of the dma_set_max_seg_size().
+During gc_data_segment(), if inode state is abnormal, it missed to call
+iput(), fix it.
 
-Fixes: e3fdb1894cfa ("dmaengine: idma64: set maximum allowed segment size for DMA")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240403024932.3342606-1-nichen@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: b73e52824c89 ("f2fs: reposition unlock_new_inode to prevent accessing invalid inode")
+Fixes: 9056d6489f5a ("f2fs: fix to do sanity check on inode type during garbage collection")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idma64.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/gc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
-index f86939fa33b95..6fa797fd85017 100644
---- a/drivers/dma/idma64.c
-+++ b/drivers/dma/idma64.c
-@@ -598,7 +598,9 @@ static int idma64_probe(struct idma64_chip *chip)
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index d4662ccb94c8f..5a661a0e76632 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1566,10 +1566,15 @@ static int gc_data_segment(struct f2fs_sb_info *sbi, struct f2fs_summary *sum,
+ 			int err;
  
- 	idma64->dma.dev = chip->sysdev;
+ 			inode = f2fs_iget(sb, dni.ino);
+-			if (IS_ERR(inode) || is_bad_inode(inode) ||
+-					special_file(inode->i_mode))
++			if (IS_ERR(inode))
+ 				continue;
  
--	dma_set_max_seg_size(idma64->dma.dev, IDMA64C_CTLH_BLOCK_TS_MASK);
-+	ret = dma_set_max_seg_size(idma64->dma.dev, IDMA64C_CTLH_BLOCK_TS_MASK);
-+	if (ret)
-+		return ret;
- 
- 	ret = dma_async_device_register(&idma64->dma);
- 	if (ret)
++			if (is_bad_inode(inode) ||
++					special_file(inode->i_mode)) {
++				iput(inode);
++				continue;
++			}
++
+ 			err = f2fs_gc_pinned_control(inode, gc_type, segno);
+ 			if (err == -EAGAIN) {
+ 				iput(inode);
 -- 
 2.43.0
 
