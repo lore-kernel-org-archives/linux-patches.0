@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE1E197537;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02601ABE49;
 	Thu,  6 Jun 2024 14:15:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683303; cv=none; b=tAdkKPPkLfK2bbXf2WbkGQg4mjlMpTPciZ6bsSxubfQG7oNjZ7N8SDHvL9vWEeBWxTnmkwVbh/WziHwBCxH5mjPQAwlHEFuHmbJnn7wtbw16N+2IGayt8KqvlDmuP40AVJBvXdVPOUI+yFSKUw2LGk4RAFh2jSD8tPB0Mv+LyYE=
+	t=1717683303; cv=none; b=CVYD58imXGNSNDT+tl0ioSvLc8ApdyLDCL9Uc8WGkbzdgPc+WHxdLcX50nc/nEGxvJ/91u4NAJbycjAHYZa8tAUkgXZTPFZlvFC1w6Yb3ZzFl1ek6TTm5Nl2lN0eK+QWr2gTRYacGnxtflPhqLqbC0CrFas5hAAQLNFM3fSAEbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683303; c=relaxed/simple;
-	bh=HZqZAvryNye6rhbjtEcTgnCpEeavxJO1W4h7CTxh0fE=;
+	bh=IDJXIzfL/2/nNyJNiauIb7PAPUUARwU4iKumhRwFYaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HAIC37xAwKxfcOFcTHyW2hnZWSt4Y8JPBO/Iz6tEzN8uN1DsT08B5ApNdfxqdTcw25VM3PtoYalNuKxVkanmxtFjBxc08zfmIyavx2ZLa8JU1Qjq7AxismbZDXDLeqSfURlBGWk2ZBshZqISpYTvnGcc0RLrxTJ/YnwQWKOOsn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeIYysVa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y/sN6qy8kSJziJElhTbNFBAZLzV8J7inyCsGhZ4cyYmo3FStlXKRkVuZJpBsldZ+jmrD1mqO19KiJKHUzd54vOIHnQ5H+b7akkO8HOfcR6ErqvdJn8kUTEVNzUGZ/xilm4+GrO7ToNZQOXTxPiFH5xxqCJ+d71deixt0o0g6VIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/1FtC5S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeIYysVa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33447C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/1FtC5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F45BC32781;
 	Thu,  6 Jun 2024 14:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683303;
-	bh=HZqZAvryNye6rhbjtEcTgnCpEeavxJO1W4h7CTxh0fE=;
+	bh=IDJXIzfL/2/nNyJNiauIb7PAPUUARwU4iKumhRwFYaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oeIYysVaSajtefC4VXXh0fshF7rGi0IoPbbnTwI8yE6mg8JuqNtL44VzlbZ83453h
-	 gZPYh4l+E1DXsNLNuOH55VbynD8rAhaiFhgMXtY77Vr899mLzYmKlEGQl9DRTaDvbC
-	 6tncPQ7slKuX+LsHHTQ2fXrY6H9DF/X34Na+Vy/s=
+	b=F/1FtC5S3DwEFhH9KJWA+II3PYoJEdZllM1PISsYirv0V/7simyjjFUYyEKVkA2d8
+	 olviF+e0ksn1j8ie5j4R41JQVGUaqsmLe7JCZSqA4OlAeJsKhTvnRaTCN5BcvmX2DK
+	 dA75wgzBsYes/7q+duIqlu1FO0x3oC7Y6Kx2+qQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonin Bas <antonin.bas@broadcom.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Eelco Chaudron <echaudro@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 174/473] net: openvswitch: fix overwriting ct original tuple for ICMPv6
-Date: Thu,  6 Jun 2024 16:01:43 +0200
-Message-ID: <20240606131705.691224533@linuxfoundation.org>
+Subject: [PATCH 6.1 184/473] ax25: Fix reference count leak issue of net_device
+Date: Thu,  6 Jun 2024 16:01:53 +0200
+Message-ID: <20240606131706.015934747@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -54,84 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 7c988176b6c16c516474f6fceebe0f055af5eb56 ]
+[ Upstream commit 36e56b1b002bb26440403053f19f9e1a8bc075b2 ]
 
-OVS_PACKET_CMD_EXECUTE has 3 main attributes:
- - OVS_PACKET_ATTR_KEY - Packet metadata in a netlink format.
- - OVS_PACKET_ATTR_PACKET - Binary packet content.
- - OVS_PACKET_ATTR_ACTIONS - Actions to execute on the packet.
+There is a reference count leak issue of the object "net_device" in
+ax25_dev_device_down(). When the ax25 device is shutting down, the
+ax25_dev_device_down() drops the reference count of net_device one
+or zero times depending on if we goto unlock_put or not, which will
+cause memory leak.
 
-OVS_PACKET_ATTR_KEY is parsed first to populate sw_flow_key structure
-with the metadata like conntrack state, input port, recirculation id,
-etc.  Then the packet itself gets parsed to populate the rest of the
-keys from the packet headers.
+In order to solve the above issue, decrease the reference count of
+net_device after dev->ax25_ptr is set to null.
 
-Whenever the packet parsing code starts parsing the ICMPv6 header, it
-first zeroes out fields in the key corresponding to Neighbor Discovery
-information even if it is not an ND packet.
-
-It is an 'ipv6.nd' field.  However, the 'ipv6' is a union that shares
-the space between 'nd' and 'ct_orig' that holds the original tuple
-conntrack metadata parsed from the OVS_PACKET_ATTR_KEY.
-
-ND packets should not normally have conntrack state, so it's fine to
-share the space, but normal ICMPv6 Echo packets or maybe other types of
-ICMPv6 can have the state attached and it should not be overwritten.
-
-The issue results in all but the last 4 bytes of the destination
-address being wiped from the original conntrack tuple leading to
-incorrect packet matching and potentially executing wrong actions
-in case this packet recirculates within the datapath or goes back
-to userspace.
-
-ND fields should not be accessed in non-ND packets, so not clearing
-them should be fine.  Executing memset() only for actual ND packets to
-avoid the issue.
-
-Initializing the whole thing before parsing is needed because ND packet
-may not contain all the options.
-
-The issue only affects the OVS_PACKET_CMD_EXECUTE path and doesn't
-affect packets entering OVS datapath from network interfaces, because
-in this case CT metadata is populated from skb after the packet is
-already parsed.
-
-Fixes: 9dd7f8907c37 ("openvswitch: Add original direction conntrack tuple to sw_flow_key.")
-Reported-by: Antonin Bas <antonin.bas@broadcom.com>
-Closes: https://github.com/openvswitch/ovs-issues/issues/327
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://lore.kernel.org/r/20240509094228.1035477-1-i.maximets@ovn.org
+Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/7ce3b23a40d9084657ba1125432f0ecc380cbc80.1715247018.git.duoming@zju.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ax25/ax25_dev.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
-index e20d1a9734175..78960a8a38925 100644
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -558,7 +558,6 @@ static int parse_icmpv6(struct sk_buff *skb, struct sw_flow_key *key,
- 	 */
- 	key->tp.src = htons(icmp->icmp6_type);
- 	key->tp.dst = htons(icmp->icmp6_code);
--	memset(&key->ipv6.nd, 0, sizeof(key->ipv6.nd));
+diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
+index dd1d616dab367..fcc64645bbf5e 100644
+--- a/net/ax25/ax25_dev.c
++++ b/net/ax25/ax25_dev.c
+@@ -118,15 +118,10 @@ void ax25_dev_device_down(struct net_device *dev)
+ 	list_for_each_entry(s, &ax25_dev_list, list) {
+ 		if (s == ax25_dev) {
+ 			list_del(&s->list);
+-			goto unlock_put;
++			break;
+ 		}
+ 	}
+-	dev->ax25_ptr = NULL;
+-	spin_unlock_bh(&ax25_dev_lock);
+-	ax25_dev_put(ax25_dev);
+-	return;
  
- 	if (icmp->icmp6_code == 0 &&
- 	    (icmp->icmp6_type == NDISC_NEIGHBOUR_SOLICITATION ||
-@@ -567,6 +566,8 @@ static int parse_icmpv6(struct sk_buff *skb, struct sw_flow_key *key,
- 		struct nd_msg *nd;
- 		int offset;
- 
-+		memset(&key->ipv6.nd, 0, sizeof(key->ipv6.nd));
-+
- 		/* In order to process neighbor discovery options, we need the
- 		 * entire packet.
- 		 */
+-unlock_put:
+ 	dev->ax25_ptr = NULL;
+ 	spin_unlock_bh(&ax25_dev_lock);
+ 	netdev_put(dev, &ax25_dev->dev_tracker);
 -- 
 2.43.0
 
