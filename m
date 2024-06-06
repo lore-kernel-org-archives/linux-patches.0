@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758351AED3E;
-	Thu,  6 Jun 2024 14:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EAE19AD75;
+	Thu,  6 Jun 2024 14:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683344; cv=none; b=Qtoj3yhC5K3qaH0P1u6BP1wq4Q08CA3u/IQSHNleLGlnmThZ5Fszgaht8CFEJLMn+TbWQEzt4dMqboyNfBc+S5HbE9pwLAPO74QRSSSq5YFfMyZmXl3mI4C11hqLS51na3rxLBWVXU0UbG13qVi4MSt9PBKrxFdRRNm1RyInsSU=
+	t=1717683345; cv=none; b=envIt1lIIMYzuNbCO8UDyabjL0b8W8zhHVM84s//cHsKLjVN1Ap7a52eV3sGNWxSjbq1HxgBOG8xBXaWpsls3KBmV/6qA30mtTWqFGgerFnUVesXddJwDDZ3zpcCXgtUBWUw7WdehM2IORPuj8NSXhLnv8xFY8gL/Ix2x3oUSM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683344; c=relaxed/simple;
-	bh=Il7tkWgSVvHWA+qWiP+emPYld1aB5XDyf8eGdwsV9iY=;
+	s=arc-20240116; t=1717683345; c=relaxed/simple;
+	bh=Z7Hl2JpSpPgqymYbKeRtPbuIayS85YwijNWPO9FPhhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kx/3Wg6yxnAHFhsJvNpXYJxwki0U+ZOjsX/Ub456EzvyTRvYz22B8RIR9cioEWZS/3OjeRqIlr5viaoHKrD9a+Do8ZnYJ4fDTVd4sScXiPvtJOoXYZCLrMpxCO4i+zKy/6ixZleY4bIewrn/bzR98JWDXZdKmoYTbMRrKjrg8ZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMT2mpq3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ukB6c9tJDpYNpc3CIChNf6X3WxzB0A53QELXHXOcF2mBE5CXcDnjCTXoFVmva47j1HkSYw0pIdzRqO62/31Ua4avouVrmn9eaYeJJE9jJP/h31uDKaVNXwoClF3SwGsEJDB54TjA47Hk2Tdxnc2j0ZRgwVsr86np6P6KtJDwnkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKXlf2wK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMT2mpq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56951C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKXlf2wK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52DBC2BD10;
 	Thu,  6 Jun 2024 14:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683344;
-	bh=Il7tkWgSVvHWA+qWiP+emPYld1aB5XDyf8eGdwsV9iY=;
+	bh=Z7Hl2JpSpPgqymYbKeRtPbuIayS85YwijNWPO9FPhhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SMT2mpq38HCCj8RXxf17LVJSLChT1MzPiwWBteoL2GuGgD1/Nm9ArbMYIg3AwrCSQ
-	 mXZQdfpM6u37lHlVNDEuzJT42Mvj7et5i2eMFCycfmw+zFst1vGHk0mqqZexa+zH5Q
-	 dvTQquLfaok+ZsWv21YB3YdviyLPxi8u5G7EQBrY=
+	b=MKXlf2wKjP9VKsY+YO28A6VJZ4Oef/XVrLPpOqKBhlFWUTC5edbivuemRXobggAWU
+	 l/7OR+dNjAJcOOHUoRTxivkM9sL/i46wns11lnCdevV4F23igHLYAcfZKpL0TiM+X3
+	 zPeulU9ZhXs/JJwX96PyHrelg4dVsd9ugkWbnI6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Helge Deller <deller@gmx.de>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 285/744] fbdev: shmobile: fix snprintf truncation
-Date: Thu,  6 Jun 2024 15:59:17 +0200
-Message-ID: <20240606131741.545231542@linuxfoundation.org>
+Subject: [PATCH 6.1 226/473] drm/bridge: lt8912b: Dont log an error when DSI host cant be found
+Date: Thu,  6 Jun 2024 16:02:35 +0200
+Message-ID: <20240606131707.348575351@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 26c8cfb9d1e4b252336d23dd5127a8cbed414a32 ]
+[ Upstream commit b3b4695ff47c4964d4ccb930890c9ffd8e455e20 ]
 
-The name of the overlay does not fit into the fixed-length field:
+Given that failing to find a DSI host causes the driver to defer probe,
+make use of dev_err_probe() to log the reason. This makes the defer
+probe reason available and avoids alerting userspace about something
+that is not necessarily an error.
 
-drivers/video/fbdev/sh_mobile_lcdcfb.c:1577:2: error: 'snprintf' will always be truncated; specified size is 16, but format string expands to at least 25
-
-Make it short enough by changing the string.
-
-Fixes: c5deac3c9b22 ("fbdev: sh_mobile_lcdc: Implement overlays support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-3-619a28148e5c@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sh_mobile_lcdcfb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/video/fbdev/sh_mobile_lcdcfb.c b/drivers/video/fbdev/sh_mobile_lcdcfb.c
-index 1364dafaadb1d..2a4794ec19473 100644
---- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
-+++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
-@@ -1575,7 +1575,7 @@ sh_mobile_lcdc_overlay_fb_init(struct sh_mobile_lcdc_overlay *ovl)
- 	 */
- 	info->fix = sh_mobile_lcdc_overlay_fix;
- 	snprintf(info->fix.id, sizeof(info->fix.id),
--		 "SH Mobile LCDC Overlay %u", ovl->index);
-+		 "SHMobile ovl %u", ovl->index);
- 	info->fix.smem_start = ovl->dma_handle;
- 	info->fix.smem_len = ovl->fb_size;
- 	info->fix.line_length = ovl->pitch;
+diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+index ac76c23635892..55a7fa4670a7a 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
++++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+@@ -485,10 +485,8 @@ static int lt8912_attach_dsi(struct lt8912 *lt)
+ 						 };
+ 
+ 	host = of_find_mipi_dsi_host_by_node(lt->host_node);
+-	if (!host) {
+-		dev_err(dev, "failed to find dsi host\n");
+-		return -EPROBE_DEFER;
+-	}
++	if (!host)
++		return dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n");
+ 
+ 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
+ 	if (IS_ERR(dsi)) {
 -- 
 2.43.0
 
