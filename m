@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E261C68BF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE141C6893;
 	Thu,  6 Jun 2024 14:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683700; cv=none; b=EHYrJwHW33YMFwFBa4try6CWtZjftNLA5aagT0VqfT4Ln3pc6IV0Oxny+8jE/Ip2iAb3KHqHzdx2bxwYOT55GxMyDxSc8esSV8VMNZoUROmzBxVqMFZ0vQM9OHeFbKaLyAjvQhQWifnu+3bNyHCzyR9J7mCwT8LmafYEkb/tkYI=
+	t=1717683700; cv=none; b=lpEn5lenhg7ei882muGsynrMW4RSDORQU+owUR5chSMQ+N78B0kHCaTiWvoCYHK1RGJK1rLokJ/feTD6sI+NZPtx+JAUHhi5NIc2t0V4H0FO7xh5ok8+F1hh8e4fLe7BjhwjKcl1etsTAX07FkCHINR+ZtgyjGteeZd4AmTYd54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683700; c=relaxed/simple;
-	bh=x+rrnpRa1hMj4sucEFwz2ZUbmRPPjL2s/gLymw/+JvE=;
+	bh=EKvlSGNJOgBL1vVCuXQgn3l1a2H12GoaMwTP7SrzAQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cf5+q1mlh0iXQzXIjvT5dYpKxwsc2F0NjZtLEKu2JHxaBzm3UIASRR1mwoZU5HZfKv29jR4QssFGMcRedjCUS/WLy8x+BolqFNOGK5XyB+3XaMPudjmFgzcodbNrf9hmb9KqKq1vm6ICkNrmyjKlW79mJ7s2RvG+G8VoBzzbrUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DhdXX/3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jgQZBS39vXvO2ftgnBL6hRlC1CxBziLAoMj2OA09kKrR/+esFnX11ELmkTAOrH/kuUW5sEhIww2IOgBx0geLiNz99ChnphyYNcPpid/UjZcGAxKR/UVv88cGQumTMhhNrGcfP6fscZg/XLlf5FNM+C88IxCb3tv52Jjbb+k2DYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMQe/im+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DhdXX/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00208C32781;
-	Thu,  6 Jun 2024 14:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMQe/im+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80089C32786;
+	Thu,  6 Jun 2024 14:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683700;
-	bh=x+rrnpRa1hMj4sucEFwz2ZUbmRPPjL2s/gLymw/+JvE=;
+	bh=EKvlSGNJOgBL1vVCuXQgn3l1a2H12GoaMwTP7SrzAQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1DhdXX/3wLhP69IokSRinWTSFZrWOhjCGI4HKWLe2MAyGV5KUWsfUf1gZcd2t1dL2
-	 ZCqVZrwl7m1711yYkZmr/HDhi6NB8auZ95AWtf+abSyxgpnUinLy8A7HFFvhAnYlj9
-	 LomcyyynqKUw6M+pckP7NZGuB46RibgkRjmuWFek=
+	b=fMQe/im+43uq9F0wz9+SNjFcGzHHAZtKy+S+lestEl0986rvYOcdWqXOrNjbIdUQP
+	 KSOsB458/Jz9/DR+h2CLFCl+Mg2mRF0BPTPTGcqJggw4xoyP1q39AncR426mPBi/H0
+	 n4QAOTvcr1/AAK1WyQUx+g1U0V0dAOqnYZqLGlus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 621/744] ALSA: hda: cs35l56: Fix lifetime of cs_dsp instance
-Date: Thu,  6 Jun 2024 16:04:53 +0200
-Message-ID: <20240606131752.417738960@linuxfoundation.org>
+Subject: [PATCH 6.6 622/744] ASoC: mediatek: mt8192: fix register configuration for tdm
+Date: Thu,  6 Jun 2024 16:04:54 +0200
+Message-ID: <20240606131752.445742977@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,72 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit d344873c4cbde249b7152d36a273bcc45864001e ]
+[ Upstream commit a85ed162f0efcfdd664954414a05d1d560cc95dc ]
 
-The cs_dsp instance is initialized in the driver probe() so it
-should be freed in the driver remove(). Also fix a missing call
-to cs_dsp_remove() in the error path of cs35l56_hda_common_probe().
+For DSP_A, data is a BCK cycle behind LRCK trigger edge. For DSP_B, this
+delay doesn't exist. Fix the delay configuration to match the standard.
 
-The call to cs_dsp_remove() was being done in the component unbind
-callback cs35l56_hda_unbind(). This meant that if the driver was
-unbound and then re-bound it would be using an uninitialized cs_dsp
-instance.
-
-It is best to initialize the cs_dsp instance in probe() so that it
-can return an error if it fails. The component binding API doesn't
-have any error handling so there's no way to handle a failure if
-cs_dsp was initialized in the bind.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 73cfbfa9caea ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
-Link: https://lore.kernel.org/r/20240508100811.49514-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 52fcd65414abfc ("ASoC: mediatek: mt8192: support tdm in platform driver")
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20240509-8192-tdm-v1-1-530b54645763@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l56_hda.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-dai-tdm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index e599b287f0961..15e20d9261393 100644
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -699,8 +699,6 @@ static void cs35l56_hda_unbind(struct device *dev, struct device *master, void *
- 	if (cs35l56->base.fw_patched)
- 		cs_dsp_power_down(&cs35l56->cs_dsp);
- 
--	cs_dsp_remove(&cs35l56->cs_dsp);
--
- 	if (comps[cs35l56->index].dev == dev)
- 		memset(&comps[cs35l56->index], 0, sizeof(*comps));
- 
-@@ -984,7 +982,7 @@ int cs35l56_hda_common_probe(struct cs35l56_hda *cs35l56, int id)
- 			       ARRAY_SIZE(cs35l56_hda_dai_config));
- 	ret = cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
- 	if (ret)
--		goto err;
-+		goto dsp_err;
- 
- 	/*
- 	 * By default only enable one ASP1TXn, where n=amplifier index,
-@@ -1010,6 +1008,8 @@ int cs35l56_hda_common_probe(struct cs35l56_hda *cs35l56, int id)
- 
- pm_err:
- 	pm_runtime_disable(cs35l56->base.dev);
-+dsp_err:
-+	cs_dsp_remove(&cs35l56->cs_dsp);
- err:
- 	gpiod_set_value_cansleep(cs35l56->base.reset_gpio, 0);
- 
-@@ -1027,6 +1027,8 @@ void cs35l56_hda_remove(struct device *dev)
- 
- 	component_del(cs35l56->base.dev, &cs35l56_hda_comp_ops);
- 
-+	cs_dsp_remove(&cs35l56->cs_dsp);
-+
- 	kfree(cs35l56->system_name);
- 	pm_runtime_put_noidle(cs35l56->base.dev);
+diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
+index 9ce06821c7d0f..49440db370af0 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
++++ b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
+@@ -566,10 +566,10 @@ static int mtk_dai_tdm_hw_params(struct snd_pcm_substream *substream,
+ 		tdm_con |= 1 << DELAY_DATA_SFT;
+ 		tdm_con |= get_tdm_lrck_width(format) << LRCK_TDM_WIDTH_SFT;
+ 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_A) {
+-		tdm_con |= 0 << DELAY_DATA_SFT;
++		tdm_con |= 1 << DELAY_DATA_SFT;
+ 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
+ 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_B) {
+-		tdm_con |= 1 << DELAY_DATA_SFT;
++		tdm_con |= 0 << DELAY_DATA_SFT;
+ 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
+ 	}
  
 -- 
 2.43.0
