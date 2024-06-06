@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2FB197A81;
-	Thu,  6 Jun 2024 14:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA50197A81;
+	Thu,  6 Jun 2024 14:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683007; cv=none; b=XNyOIPXcsdYATHHi/hP1mLI2MPE0tZHu84Xcy0pUUHNfUAF1vrnNgf2Gkqm2ai+WEZ5nswhumqepr9M/LqO67E4AJr3wW0FA7JhH2nZteNgFzG0UQ7kpgAm9u3AWH5OU+lNMwhkN6NUlX0nqQhPoNWYOvtuLKvNh4yOaKo7UZV0=
+	t=1717683007; cv=none; b=omKC3F/mcX8SfARpl6DWJytkubW9xKrCpxvDvyqQBRdKYp/o/q5hLcTCAi1Ia9JOMdP12Ha2b6L3D0r1YzDOfTc3yyTHCHnU0Gxr9tVXQW2L//RnLw5SgICMFhH3VUz4Mi1aEjIYtgC5QW4A9T1mMOB+cIAk7FuMdaRWilIpVkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683007; c=relaxed/simple;
-	bh=bitw/NDyHYdot8opRQ+dikPj3j3/wAmLB9ofpn+t74s=;
+	bh=po7z/lWGKkCR95urOLmBDDUDOB6z0ZYQWcbTr4yK9CM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfLTwsJKamkYQgG0ZVKOpT523tV2m5+JkPU8H1b7w2aVRFyetQeUGP9pBBUWsUf67lc9My+kvyh06biO3Pp/6pnJ61IB+iYMF4aW6izDD6cHX7k92Esb77TWKPkZMSI9zWC8AqNC0cPlqEqRkopPTPerG5IIu3SVCUbZ/oHoakY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgXj425y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bZDxPUijbrp6ycGtHSyWG2Xd2LhOZ48OfU7a3myefbCl50FrEE0NOZj/zj6Vm7R6MmUkMjmxjt/kDYF5NPa6pKUoprAel70P1xZ/OHGJrPwKqGNElXgPOhOFFU0uTtZfPMhIlSaHwQpbSJCAlQPFWt1h6tkMMUYCv3MSrCw+p0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+TIy2bY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgXj425y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D6AC4AF0C;
-	Thu,  6 Jun 2024 14:10:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+TIy2bY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A420C32781;
+	Thu,  6 Jun 2024 14:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683006;
-	bh=bitw/NDyHYdot8opRQ+dikPj3j3/wAmLB9ofpn+t74s=;
+	s=korg; t=1717683007;
+	bh=po7z/lWGKkCR95urOLmBDDUDOB6z0ZYQWcbTr4yK9CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgXj425y0FeECWtMi3grosqbI+Rb4Jwg6yqgi+d7TcQ7v9LcsgSGKDZf55cnu4w7s
-	 hJqeOaYxnAXZD03stJIKrgrnXU0PhTJQhJvtPORx27faiVR/t0wJ+5oQkJ8O0g4qnW
-	 CNVKneOWo/3765653uNee7eduJLttje3YMq6WBfM=
+	b=X+TIy2bYA3Un1FBsj1BueGWAL919SNJj4iBoY48kH1A9M9IJRG/sIrc5CGPAFu+tb
+	 nyZgjIYC96okqbDmc0YKcQAMGBRztpsHi+y/xn79FWC8axrcvEf7p6JIWGi2A2im/E
+	 dQVQSqNuCg8hbJPeD3lcopOnf/N4vkeHO83VcP1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	kernel test robot <lkp@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 214/374] KVM: arm64: Destroy mpidr_data for late vCPU creation
-Date: Thu,  6 Jun 2024 16:03:13 +0200
-Message-ID: <20240606131658.978339880@linuxfoundation.org>
+Subject: [PATCH 6.9 215/374] nilfs2: make superblock data array index computation sparse friendly
+Date: Thu,  6 Jun 2024 16:03:14 +0200
+Message-ID: <20240606131659.013946194@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,137 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit ce5d2448eb8fe83aed331db53a08612286a137dd ]
+[ Upstream commit 91d743a9c8299de1fc1b47428d8bb4c85face00f ]
 
-A particularly annoying userspace could create a vCPU after KVM has
-computed mpidr_data for the VM, either by racing against VGIC
-initialization or having a userspace irqchip.
+Upon running sparse, "warning: dubious: x & !y" is output at an array
+index calculation within nilfs_load_super_block().
 
-In any case, this means mpidr_data no longer fully describes the VM, and
-attempts to find the new vCPU with kvm_mpidr_to_vcpu() will fail. The
-fix is to discard mpidr_data altogether, as it is only a performance
-optimization and not required for correctness. In all likelihood KVM
-will recompute the mappings when KVM_RUN is called on the new vCPU.
+The calculation is not wrong, but to eliminate the sparse warning, replace
+it with an equivalent calculation.
 
-Note that reads of mpidr_data are not guarded by a lock; promote to RCU
-to cope with the possibility of mpidr_data being invalidated at runtime.
+Also, add a comment to make it easier to understand what the unintuitive
+array index calculation is doing and whether it's correct.
 
-Fixes: 54a8006d0b49 ("KVM: arm64: Fast-track kvm_mpidr_to_vcpu() when mpidr_data is available")
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20240508071952.2035422-1-oliver.upton@linux.dev
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lkml.kernel.org/r/20240430080019.4242-3-konishi.ryusuke@gmail.com
+Fixes: e339ad31f599 ("nilfs2: introduce secondary super block")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: kernel test robot <lkp@intel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/arm.c | 50 ++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 41 insertions(+), 9 deletions(-)
+ fs/nilfs2/the_nilfs.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index c4a0a35e02c72..6cda738a41577 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -195,6 +195,23 @@ void kvm_arch_create_vm_debugfs(struct kvm *kvm)
- 	kvm_sys_regs_create_debugfs(kvm);
- }
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index 2ae2c1bbf6d17..adbc6e87471ab 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -592,7 +592,7 @@ static int nilfs_load_super_block(struct the_nilfs *nilfs,
+ 	struct nilfs_super_block **sbp = nilfs->ns_sbp;
+ 	struct buffer_head **sbh = nilfs->ns_sbh;
+ 	u64 sb2off, devsize = bdev_nr_bytes(nilfs->ns_bdev);
+-	int valid[2], swp = 0;
++	int valid[2], swp = 0, older;
  
-+static void kvm_destroy_mpidr_data(struct kvm *kvm)
-+{
-+	struct kvm_mpidr_data *data;
-+
-+	mutex_lock(&kvm->arch.config_lock);
-+
-+	data = rcu_dereference_protected(kvm->arch.mpidr_data,
-+					 lockdep_is_held(&kvm->arch.config_lock));
-+	if (data) {
-+		rcu_assign_pointer(kvm->arch.mpidr_data, NULL);
-+		synchronize_rcu();
-+		kfree(data);
-+	}
-+
-+	mutex_unlock(&kvm->arch.config_lock);
-+}
-+
- /**
-  * kvm_arch_destroy_vm - destroy the VM data structure
-  * @kvm:	pointer to the KVM struct
-@@ -209,7 +226,8 @@ void kvm_arch_destroy_vm(struct kvm *kvm)
- 	if (is_protected_kvm_enabled())
- 		pkvm_destroy_hyp_vm(kvm);
- 
--	kfree(kvm->arch.mpidr_data);
-+	kvm_destroy_mpidr_data(kvm);
-+
- 	kfree(kvm->arch.sysreg_masks);
- 	kvm_destroy_vcpus(kvm);
- 
-@@ -395,6 +413,13 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
- 
- 	vcpu->arch.hw_mmu = &vcpu->kvm->arch.mmu;
+ 	if (devsize < NILFS_SEG_MIN_BLOCKS * NILFS_MIN_BLOCK_SIZE + 4096) {
+ 		nilfs_err(sb, "device size too small");
+@@ -648,9 +648,25 @@ static int nilfs_load_super_block(struct the_nilfs *nilfs,
+ 	if (swp)
+ 		nilfs_swap_super_block(nilfs);
  
 +	/*
-+	 * This vCPU may have been created after mpidr_data was initialized.
-+	 * Throw out the pre-computed mappings if that is the case which forces
-+	 * KVM to fall back to iteratively searching the vCPUs.
++	 * Calculate the array index of the older superblock data.
++	 * If one has been dropped, set index 0 pointing to the remaining one,
++	 * otherwise set index 1 pointing to the old one (including if both
++	 * are the same).
++	 *
++	 *  Divided case             valid[0]  valid[1]  swp  ->  older
++	 *  -------------------------------------------------------------
++	 *  Both SBs are invalid        0         0       N/A (Error)
++	 *  SB1 is invalid              0         1       1         0
++	 *  SB2 is invalid              1         0       0         0
++	 *  SB2 is newer                1         1       1         0
++	 *  SB2 is older or the same    1         1       0         1
 +	 */
-+	kvm_destroy_mpidr_data(vcpu->kvm);
++	older = valid[1] ^ swp;
 +
- 	err = kvm_vgic_vcpu_init(vcpu);
- 	if (err)
- 		return err;
-@@ -594,7 +619,8 @@ static void kvm_init_mpidr_data(struct kvm *kvm)
- 
- 	mutex_lock(&kvm->arch.config_lock);
- 
--	if (kvm->arch.mpidr_data || atomic_read(&kvm->online_vcpus) == 1)
-+	if (rcu_access_pointer(kvm->arch.mpidr_data) ||
-+	    atomic_read(&kvm->online_vcpus) == 1)
- 		goto out;
- 
- 	kvm_for_each_vcpu(c, vcpu, kvm) {
-@@ -631,7 +657,7 @@ static void kvm_init_mpidr_data(struct kvm *kvm)
- 		data->cmpidr_to_idx[index] = c;
- 	}
- 
--	kvm->arch.mpidr_data = data;
-+	rcu_assign_pointer(kvm->arch.mpidr_data, data);
- out:
- 	mutex_unlock(&kvm->arch.config_lock);
+ 	nilfs->ns_sbwcount = 0;
+ 	nilfs->ns_sbwtime = le64_to_cpu(sbp[0]->s_wtime);
+-	nilfs->ns_prot_seq = le64_to_cpu(sbp[valid[1] & !swp]->s_last_seq);
++	nilfs->ns_prot_seq = le64_to_cpu(sbp[older]->s_last_seq);
+ 	*sbpp = sbp[0];
+ 	return 0;
  }
-@@ -2470,21 +2496,27 @@ static int __init init_hyp_mode(void)
- 
- struct kvm_vcpu *kvm_mpidr_to_vcpu(struct kvm *kvm, unsigned long mpidr)
- {
--	struct kvm_vcpu *vcpu;
-+	struct kvm_vcpu *vcpu = NULL;
-+	struct kvm_mpidr_data *data;
- 	unsigned long i;
- 
- 	mpidr &= MPIDR_HWID_BITMASK;
- 
--	if (kvm->arch.mpidr_data) {
--		u16 idx = kvm_mpidr_index(kvm->arch.mpidr_data, mpidr);
-+	rcu_read_lock();
-+	data = rcu_dereference(kvm->arch.mpidr_data);
- 
--		vcpu = kvm_get_vcpu(kvm,
--				    kvm->arch.mpidr_data->cmpidr_to_idx[idx]);
-+	if (data) {
-+		u16 idx = kvm_mpidr_index(data, mpidr);
-+
-+		vcpu = kvm_get_vcpu(kvm, data->cmpidr_to_idx[idx]);
- 		if (mpidr != kvm_vcpu_get_mpidr_aff(vcpu))
- 			vcpu = NULL;
-+	}
- 
-+	rcu_read_unlock();
-+
-+	if (vcpu)
- 		return vcpu;
--	}
- 
- 	kvm_for_each_vcpu(i, vcpu, kvm) {
- 		if (mpidr == kvm_vcpu_get_mpidr_aff(vcpu))
 -- 
 2.43.0
 
