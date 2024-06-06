@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E1E198E7E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0FB1974EC;
 	Thu,  6 Jun 2024 14:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683087; cv=none; b=fXg+4kHKJ4WGf+H48wPYQT3Ig6ztNvnsAQW3lPkocp75rK6CI9u8GfHQHDJbsdwdzrLnWxcF8Lj3JpXnmfov/0Kp9PrepY6d9akgDKedbDkgiCGbbDcfB9vFh66IvPhEdykt/iHdr6Nl7MaPabqP/PIJnb6lA0DjkixqVXZ5aQo=
+	t=1717683087; cv=none; b=FCuz9i6qgSoPYlR7HCsnfb/KVbz5Gh51VU2xPaCZv7KbyCw8xRnCX3d4dSIZp7WRrKIVYEjV6wLrhWlr1lmJPLmnoYAqXTZWQQJtqD2xSU3nG5R8AATDqYF7uZB5CFknbKVY4KjamunRBJZWjj3FHuTsy1x/8qKz/pn7EJZUfzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683087; c=relaxed/simple;
-	bh=FbZWwZCorWbEAGQvBtD+Rq/umFJAv+4DcAJk4vkRma0=;
+	bh=kt3IOSaS6b32Gxy03Tt840TQeGNNbZ5CY8L/Vfe1uek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFUVM6gvyTI5GGjv4fqHDM43karoLTeoiHXjVCI5iVJWENNpMX7zLb2yxTWXdxmAwvUw3m+jGrOxl8ZWzkVS3nV8sAXVd8iIv3/81xcIM475z3Rn1/eN0P/amq7jHFj6ugC6mVqkHrd6rOBk+Sspj5vRSnaHSqwChjDLgLjCZnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Prp2mpIQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AV+ME4s2KfVlOdzXjyZJo8/XzPQ3N6dIJqv9+fQGTGCO16MZ8Hp2n7lYSa6xFbibp28aV1IXaBJYcHektSu5+3wSXN1ppI0C2DUMxFmoHhxM5iHSutq3ITm/JLAWRAF3AyzYFZBoVg8HAnyn1VMWDAbbgWyWzwch6GhZC/00Mx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzGBVhTM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Prp2mpIQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BE8C2BD10;
-	Thu,  6 Jun 2024 14:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzGBVhTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A59DC32781;
+	Thu,  6 Jun 2024 14:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683087;
-	bh=FbZWwZCorWbEAGQvBtD+Rq/umFJAv+4DcAJk4vkRma0=;
+	bh=kt3IOSaS6b32Gxy03Tt840TQeGNNbZ5CY8L/Vfe1uek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Prp2mpIQVEJBmprAIFybqU691MenwTBsGcPZCdNgrY6GFEv+Fife4jLuKIdKDyqcb
-	 kmqUe8qu5fc7D+SU1jTRtpy/XfuDpAr8khuMnIEK8eQ4thgbU8Ew4FRpa246nFtYHm
-	 0NSo2+fXdt3PxsvFbgpvvcDANaSmC2igULQWl5TQ=
+	b=CzGBVhTMo2cpI/KsQZkveGHvgyPoJJh04P6thQIp1Htlop8gagps0ZNswy3GJqJrh
+	 3PctCdFIXR7X3lr8YnHcuEedrvTzozgixcnZfj+iHaaXJYklywy3kuAyoMG83cuOPK
+	 agWQErFsV2qJszdalkyCVHlWcvoO3J1ETCY00C/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gerald Loacker <gerald.loacker@wolfvision.net>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 314/374] ASoC: cs42l43: Only restrict 44.1kHz for the ASP
-Date: Thu,  6 Jun 2024 16:04:53 +0200
-Message-ID: <20240606131702.397039144@linuxfoundation.org>
+Subject: [PATCH 6.9 359/374] drm/panel: sitronix-st7789v: tweak timing for jt240mhqs_hwt_ek_e3 panel
+Date: Thu,  6 Jun 2024 16:05:38 +0200
+Message-ID: <20240606131703.909785758@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,40 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Gerald Loacker <gerald.loacker@wolfvision.net>
 
-[ Upstream commit 797c525e85d1e44cf0e6f338890e8e0c661f524a ]
+[ Upstream commit 2ba50582634d0bfe3a333ab7575a7f0122a7cde8 ]
 
-The SoundWire interface can always support 44.1kHz using flow controlled
-mode, and whether the ASP is in master mode should obviously only affect
-the ASP. Update cs42l43_startup() to only restrict the rates for the ASP
-DAI.
+Use the default timing parameters to get a refresh rate of about 60 Hz for
+a clock of 6 MHz.
 
-Fixes: fc918cbe874e ("ASoC: cs42l43: Add support for the cs42l43")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://msgid.link/r/20240527100840.439832-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0fbbe96bfa08 ("drm/panel: sitronix-st7789v: add jasonic jt240mhqs-hwt-ek-e3 support")
+Signed-off-by: Gerald Loacker <gerald.loacker@wolfvision.net>
+Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://lore.kernel.org/r/20240409-bugfix-jt240mhqs_hwt_ek_e3-timing-v2-2-e4821802443d@wolfvision.net
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240409-bugfix-jt240mhqs_hwt_ek_e3-timing-v2-2-e4821802443d@wolfvision.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l43.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-sitronix-st7789v.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/cs42l43.c b/sound/soc/codecs/cs42l43.c
-index 94685449f0f48..92674314227c4 100644
---- a/sound/soc/codecs/cs42l43.c
-+++ b/sound/soc/codecs/cs42l43.c
-@@ -310,8 +310,9 @@ static int cs42l43_startup(struct snd_pcm_substream *substream, struct snd_soc_d
- 	struct snd_soc_component *component = dai->component;
- 	struct cs42l43_codec *priv = snd_soc_component_get_drvdata(component);
- 	struct cs42l43 *cs42l43 = priv->core;
--	int provider = !!regmap_test_bits(cs42l43->regmap, CS42L43_ASP_CLK_CONFIG2,
--					  CS42L43_ASP_MASTER_MODE_MASK);
-+	int provider = !dai->id || !!regmap_test_bits(cs42l43->regmap,
-+						      CS42L43_ASP_CLK_CONFIG2,
-+						      CS42L43_ASP_MASTER_MODE_MASK);
- 
- 	if (provider)
- 		priv->constraint.mask = CS42L43_PROVIDER_RATE_MASK;
+diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7789v.c b/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
+index 32e5c03480381..c7e3f1280404d 100644
+--- a/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
++++ b/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
+@@ -282,9 +282,9 @@ static const struct drm_display_mode et028013dma_mode = {
+ static const struct drm_display_mode jt240mhqs_hwt_ek_e3_mode = {
+ 	.clock = 6000,
+ 	.hdisplay = 240,
+-	.hsync_start = 240 + 28,
+-	.hsync_end = 240 + 28 + 10,
+-	.htotal = 240 + 28 + 10 + 10,
++	.hsync_start = 240 + 38,
++	.hsync_end = 240 + 38 + 10,
++	.htotal = 240 + 38 + 10 + 10,
+ 	.vdisplay = 280,
+ 	.vsync_start = 280 + 48,
+ 	.vsync_end = 280 + 48 + 4,
 -- 
 2.43.0
 
