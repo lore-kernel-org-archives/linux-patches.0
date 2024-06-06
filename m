@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD74196D9B;
-	Thu,  6 Jun 2024 14:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613F8196D9B;
+	Thu,  6 Jun 2024 14:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683004; cv=none; b=cgNt2/dDHLYB96bJIlk83G6fTIw4JG6WWxjVtQw6ohOEx3sF7tbkfxwIDM5nVB8jJRaKV6dX2/D5n1coEaYOPD+jXFC0pqLba3L0lI9xxbUG2pe6L5JzJbEJzyHvoMYbaNDyfCUtT8n5AhoFNzR2HD3Jsa3XxyEW/F1xbe7T9e4=
+	t=1717683005; cv=none; b=pYS8mmPVVEGSo4BnzPo/rSZBIg6e+45EQO/a0Ew5aOPDTGAlprJtYm32FhK0aPVChR7Te/Ly1cEydKakCPu+bubC2nwe/NtVHzlvKKRqo3fSL61nsrNYLlGmTtfAhPFoqdZ49bH9IrgV/StTdcBOAcdRTvV/hIfu8YqLA9+yIfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683004; c=relaxed/simple;
-	bh=O6My57oRLoHZoSnvkU1CP8psroloR3wNvvYosbOj4pY=;
+	s=arc-20240116; t=1717683005; c=relaxed/simple;
+	bh=bnRQTsfgjJs6iRUNNT0hqUP+82wURI8lYjdUaMmgdiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmWiFh4vKgjhmOm3D0Kw/Kg5Wl+8CVE7/0gcF4I3BVPZgMHuNYRWjEcb1cx1+bW/Y02miMDTAVOneV+Q3jgrnW6Nd8re5spUD04vSLhtrbOiPZQ/OX1E7P+3KAO3xfbd0AbIW6N7wHQVS6GuBoKPOp4osrj48+ReXTSQYfPp9xM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ssiw+Oku; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GXx4Uuf5+q3umF4k3kq3liAQ1ett3C5hiiorDLUgWT5D+c0L2u80uRasUTvF8ndiFg4rHdD9Ubfd60JcGSl5jF5Ht1h6yAwQaamTFR7XkEUrDZa6wljpLC27mVxFH5Ovkh3tzZnwrAIAvkeJpry4Khimb6nFTFAzTXubCXmjlEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RH4CLEUY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ssiw+Oku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8ADDC2BD10;
-	Thu,  6 Jun 2024 14:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RH4CLEUY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40525C2BD10;
+	Thu,  6 Jun 2024 14:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683004;
-	bh=O6My57oRLoHZoSnvkU1CP8psroloR3wNvvYosbOj4pY=;
+	s=korg; t=1717683005;
+	bh=bnRQTsfgjJs6iRUNNT0hqUP+82wURI8lYjdUaMmgdiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ssiw+OkuToXd0bKUaf+1GE5Z09zzXF82CCevIT5tnPe1aMq/vybj79ZR725U0x4el
-	 iDg48hemikPK3nLKTSst4J/SMgWEajz3YyHdaV6YI+h8QNBa1e1eRKhEpEIFHRF84W
-	 buwyA7lKMnjitgb/BgBS7XablesqOrJ5h2lf4DNo=
+	b=RH4CLEUYJwpjWAk8MCXOl1EazW6kxspczFv2QEcyydafBVTk8KEvo/sVCz/Fla1WJ
+	 86w521mWylJ7DMBOolCrln+sAEpAki6WkVyo2UGC6MFn2wDxXvc8QYiQYeBVHlZjOY
+	 Ha0+nbMobCMq6RvjEApS7/sP4kSMvuDYPGuyQTeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <eugen.hristev@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 184/374] media: mediatek: vcodec: fix possible unbalanced PM counter
-Date: Thu,  6 Jun 2024 16:02:43 +0200
-Message-ID: <20240606131658.034705080@linuxfoundation.org>
+Subject: [PATCH 6.9 211/374] powerpc/bpf/32: Fix failing test_bpf tests
+Date: Thu,  6 Jun 2024 16:03:10 +0200
+Message-ID: <20240606131658.878222586@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -54,86 +51,353 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugen Hristev <eugen.hristev@collabora.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit c28d4921a1e3ce0a0374b7e9d68593be8802c42a ]
+[ Upstream commit 8ecf3c1dab1c675721d3d0255556abe2306fa340 ]
 
-It is possible that mtk_vcodec_enc_pw_on fails, and in that scenario
-the PM counter is not incremented, and subsequent call to
-mtk_vcodec_enc_pw_off decrements the counter, leading to a PM imbalance.
-Fix by bailing out of venc_if_encode in the case when mtk_vcodec_enc_pw_on
-fails.
+Recent additions in BPF like cpu v4 instructions, test_bpf module
+exhibits the following failures:
 
-Fixes: 4e855a6efa54 ("[media] vcodec: mediatek: Add Mediatek V4L2 Video Encoder Driver")
-Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+  test_bpf: #82 ALU_MOVSX | BPF_B jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+  test_bpf: #83 ALU_MOVSX | BPF_H jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+  test_bpf: #84 ALU64_MOVSX | BPF_B jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+  test_bpf: #85 ALU64_MOVSX | BPF_H jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+  test_bpf: #86 ALU64_MOVSX | BPF_W jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+
+  test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
+  test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
+
+  test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
+  test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
+
+  test_bpf: #172 ALU64_SMOD_K: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
+
+  test_bpf: #313 BSWAP 16: 0x0123456789abcdef -> 0xefcd
+  eBPF filter opcode 00d7 (@2) unsupported
+  jited:0 301 PASS
+  test_bpf: #314 BSWAP 32: 0x0123456789abcdef -> 0xefcdab89
+  eBPF filter opcode 00d7 (@2) unsupported
+  jited:0 555 PASS
+  test_bpf: #315 BSWAP 64: 0x0123456789abcdef -> 0x67452301
+  eBPF filter opcode 00d7 (@2) unsupported
+  jited:0 268 PASS
+  test_bpf: #316 BSWAP 64: 0x0123456789abcdef >> 32 -> 0xefcdab89
+  eBPF filter opcode 00d7 (@2) unsupported
+  jited:0 269 PASS
+  test_bpf: #317 BSWAP 16: 0xfedcba9876543210 -> 0x1032
+  eBPF filter opcode 00d7 (@2) unsupported
+  jited:0 460 PASS
+  test_bpf: #318 BSWAP 32: 0xfedcba9876543210 -> 0x10325476
+  eBPF filter opcode 00d7 (@2) unsupported
+  jited:0 320 PASS
+  test_bpf: #319 BSWAP 64: 0xfedcba9876543210 -> 0x98badcfe
+  eBPF filter opcode 00d7 (@2) unsupported
+  jited:0 222 PASS
+  test_bpf: #320 BSWAP 64: 0xfedcba9876543210 >> 32 -> 0x10325476
+  eBPF filter opcode 00d7 (@2) unsupported
+  jited:0 273 PASS
+
+  test_bpf: #344 BPF_LDX_MEMSX | BPF_B
+  eBPF filter opcode 0091 (@5) unsupported
+  jited:0 432 PASS
+  test_bpf: #345 BPF_LDX_MEMSX | BPF_H
+  eBPF filter opcode 0089 (@5) unsupported
+  jited:0 381 PASS
+  test_bpf: #346 BPF_LDX_MEMSX | BPF_W
+  eBPF filter opcode 0081 (@5) unsupported
+  jited:0 505 PASS
+
+  test_bpf: #490 JMP32_JA: Unconditional jump: if (true) return 1
+  eBPF filter opcode 0006 (@1) unsupported
+  jited:0 261 PASS
+
+  test_bpf: Summary: 1040 PASSED, 10 FAILED, [924/1038 JIT'ed]
+
+Fix them by adding missing processing.
+
+Fixes: daabb2b098e0 ("bpf/tests: add tests for cpuv4 instructions")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/91de862dda99d170697eb79ffb478678af7e0b27.1709652689.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/mediatek/vcodec/encoder/mtk_vcodec_enc_pm.c     | 4 +++-
- .../platform/mediatek/vcodec/encoder/mtk_vcodec_enc_pm.h     | 2 +-
- drivers/media/platform/mediatek/vcodec/encoder/venc_drv_if.c | 5 ++++-
- 3 files changed, 8 insertions(+), 3 deletions(-)
+ arch/powerpc/include/asm/ppc-opcode.h |   4 +
+ arch/powerpc/net/bpf_jit_comp32.c     | 137 ++++++++++++++++++++------
+ 2 files changed, 110 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_pm.c b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_pm.c
-index a22b7dfc656e1..1a2b14a3e219c 100644
---- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_pm.c
-+++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_pm.c
-@@ -58,13 +58,15 @@ int mtk_vcodec_init_enc_clk(struct mtk_vcodec_enc_dev *mtkdev)
- 	return 0;
- }
+diff --git a/arch/powerpc/include/asm/ppc-opcode.h b/arch/powerpc/include/asm/ppc-opcode.h
+index 005601243dda4..076ae60b4a55d 100644
+--- a/arch/powerpc/include/asm/ppc-opcode.h
++++ b/arch/powerpc/include/asm/ppc-opcode.h
+@@ -510,6 +510,7 @@
+ #define PPC_RAW_STB(r, base, i)		(0x98000000 | ___PPC_RS(r) | ___PPC_RA(base) | IMM_L(i))
+ #define PPC_RAW_LBZ(r, base, i)		(0x88000000 | ___PPC_RT(r) | ___PPC_RA(base) | IMM_L(i))
+ #define PPC_RAW_LDX(r, base, b)		(0x7c00002a | ___PPC_RT(r) | ___PPC_RA(base) | ___PPC_RB(b))
++#define PPC_RAW_LHA(r, base, i)		(0xa8000000 | ___PPC_RT(r) | ___PPC_RA(base) | IMM_L(i))
+ #define PPC_RAW_LHZ(r, base, i)		(0xa0000000 | ___PPC_RT(r) | ___PPC_RA(base) | IMM_L(i))
+ #define PPC_RAW_LHBRX(r, base, b)	(0x7c00062c | ___PPC_RT(r) | ___PPC_RA(base) | ___PPC_RB(b))
+ #define PPC_RAW_LWBRX(r, base, b)	(0x7c00042c | ___PPC_RT(r) | ___PPC_RA(base) | ___PPC_RB(b))
+@@ -532,6 +533,7 @@
+ #define PPC_RAW_MULW(d, a, b)		(0x7c0001d6 | ___PPC_RT(d) | ___PPC_RA(a) | ___PPC_RB(b))
+ #define PPC_RAW_MULHWU(d, a, b)		(0x7c000016 | ___PPC_RT(d) | ___PPC_RA(a) | ___PPC_RB(b))
+ #define PPC_RAW_MULI(d, a, i)		(0x1c000000 | ___PPC_RT(d) | ___PPC_RA(a) | IMM_L(i))
++#define PPC_RAW_DIVW(d, a, b)		(0x7c0003d6 | ___PPC_RT(d) | ___PPC_RA(a) | ___PPC_RB(b))
+ #define PPC_RAW_DIVWU(d, a, b)		(0x7c000396 | ___PPC_RT(d) | ___PPC_RA(a) | ___PPC_RB(b))
+ #define PPC_RAW_DIVDU(d, a, b)		(0x7c000392 | ___PPC_RT(d) | ___PPC_RA(a) | ___PPC_RB(b))
+ #define PPC_RAW_DIVDE(t, a, b)		(0x7c000352 | ___PPC_RT(t) | ___PPC_RA(a) | ___PPC_RB(b))
+@@ -550,6 +552,8 @@
+ #define PPC_RAW_XOR(d, a, b)		(0x7c000278 | ___PPC_RA(d) | ___PPC_RS(a) | ___PPC_RB(b))
+ #define PPC_RAW_XORI(d, a, i)		(0x68000000 | ___PPC_RA(d) | ___PPC_RS(a) | IMM_L(i))
+ #define PPC_RAW_XORIS(d, a, i)		(0x6c000000 | ___PPC_RA(d) | ___PPC_RS(a) | IMM_L(i))
++#define PPC_RAW_EXTSB(d, a)		(0x7c000774 | ___PPC_RA(d) | ___PPC_RS(a))
++#define PPC_RAW_EXTSH(d, a)		(0x7c000734 | ___PPC_RA(d) | ___PPC_RS(a))
+ #define PPC_RAW_EXTSW(d, a)		(0x7c0007b4 | ___PPC_RA(d) | ___PPC_RS(a))
+ #define PPC_RAW_SLW(d, a, s)		(0x7c000030 | ___PPC_RA(d) | ___PPC_RS(a) | ___PPC_RB(s))
+ #define PPC_RAW_SLD(d, a, s)		(0x7c000036 | ___PPC_RA(d) | ___PPC_RS(a) | ___PPC_RB(s))
+diff --git a/arch/powerpc/net/bpf_jit_comp32.c b/arch/powerpc/net/bpf_jit_comp32.c
+index 2f39c50ca729e..43b97032a91c0 100644
+--- a/arch/powerpc/net/bpf_jit_comp32.c
++++ b/arch/powerpc/net/bpf_jit_comp32.c
+@@ -450,10 +450,16 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 			}
+ 			break;
+ 		case BPF_ALU | BPF_DIV | BPF_X: /* (u32) dst /= (u32) src */
+-			EMIT(PPC_RAW_DIVWU(dst_reg, src2_reg, src_reg));
++			if (off)
++				EMIT(PPC_RAW_DIVW(dst_reg, src2_reg, src_reg));
++			else
++				EMIT(PPC_RAW_DIVWU(dst_reg, src2_reg, src_reg));
+ 			break;
+ 		case BPF_ALU | BPF_MOD | BPF_X: /* (u32) dst %= (u32) src */
+-			EMIT(PPC_RAW_DIVWU(_R0, src2_reg, src_reg));
++			if (off)
++				EMIT(PPC_RAW_DIVW(_R0, src2_reg, src_reg));
++			else
++				EMIT(PPC_RAW_DIVWU(_R0, src2_reg, src_reg));
+ 			EMIT(PPC_RAW_MULW(_R0, src_reg, _R0));
+ 			EMIT(PPC_RAW_SUB(dst_reg, src2_reg, _R0));
+ 			break;
+@@ -467,10 +473,16 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 			if (imm == 1) {
+ 				EMIT(PPC_RAW_MR(dst_reg, src2_reg));
+ 			} else if (is_power_of_2((u32)imm)) {
+-				EMIT(PPC_RAW_SRWI(dst_reg, src2_reg, ilog2(imm)));
++				if (off)
++					EMIT(PPC_RAW_SRAWI(dst_reg, src2_reg, ilog2(imm)));
++				else
++					EMIT(PPC_RAW_SRWI(dst_reg, src2_reg, ilog2(imm)));
+ 			} else {
+ 				PPC_LI32(_R0, imm);
+-				EMIT(PPC_RAW_DIVWU(dst_reg, src2_reg, _R0));
++				if (off)
++					EMIT(PPC_RAW_DIVW(dst_reg, src2_reg, _R0));
++				else
++					EMIT(PPC_RAW_DIVWU(dst_reg, src2_reg, _R0));
+ 			}
+ 			break;
+ 		case BPF_ALU | BPF_MOD | BPF_K: /* (u32) dst %= (u32) imm */
+@@ -480,11 +492,19 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 			if (!is_power_of_2((u32)imm)) {
+ 				bpf_set_seen_register(ctx, tmp_reg);
+ 				PPC_LI32(tmp_reg, imm);
+-				EMIT(PPC_RAW_DIVWU(_R0, src2_reg, tmp_reg));
++				if (off)
++					EMIT(PPC_RAW_DIVW(_R0, src2_reg, tmp_reg));
++				else
++					EMIT(PPC_RAW_DIVWU(_R0, src2_reg, tmp_reg));
+ 				EMIT(PPC_RAW_MULW(_R0, tmp_reg, _R0));
+ 				EMIT(PPC_RAW_SUB(dst_reg, src2_reg, _R0));
+ 			} else if (imm == 1) {
+ 				EMIT(PPC_RAW_LI(dst_reg, 0));
++			} else if (off) {
++				EMIT(PPC_RAW_SRAWI(_R0, src2_reg, ilog2(imm)));
++				EMIT(PPC_RAW_ADDZE(_R0, _R0));
++				EMIT(PPC_RAW_SLWI(_R0, _R0, ilog2(imm)));
++				EMIT(PPC_RAW_SUB(dst_reg, src2_reg, _R0));
+ 			} else {
+ 				imm = ilog2((u32)imm);
+ 				EMIT(PPC_RAW_RLWINM(dst_reg, src2_reg, 0, 32 - imm, 31));
+@@ -497,11 +517,21 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 				imm = -imm;
+ 			if (!is_power_of_2(imm))
+ 				return -EOPNOTSUPP;
+-			if (imm == 1)
++			if (imm == 1) {
+ 				EMIT(PPC_RAW_LI(dst_reg, 0));
+-			else
++				EMIT(PPC_RAW_LI(dst_reg_h, 0));
++			} else if (off) {
++				EMIT(PPC_RAW_SRAWI(dst_reg_h, src2_reg_h, 31));
++				EMIT(PPC_RAW_XOR(dst_reg, src2_reg, dst_reg_h));
++				EMIT(PPC_RAW_SUBFC(dst_reg, dst_reg_h, dst_reg));
++				EMIT(PPC_RAW_RLWINM(dst_reg, dst_reg, 0, 32 - ilog2(imm), 31));
++				EMIT(PPC_RAW_XOR(dst_reg, dst_reg, dst_reg_h));
++				EMIT(PPC_RAW_SUBFC(dst_reg, dst_reg_h, dst_reg));
++				EMIT(PPC_RAW_SUBFE(dst_reg_h, dst_reg_h, dst_reg_h));
++			} else {
+ 				EMIT(PPC_RAW_RLWINM(dst_reg, src2_reg, 0, 32 - ilog2(imm), 31));
+-			EMIT(PPC_RAW_LI(dst_reg_h, 0));
++				EMIT(PPC_RAW_LI(dst_reg_h, 0));
++			}
+ 			break;
+ 		case BPF_ALU64 | BPF_DIV | BPF_K: /* dst /= imm */
+ 			if (!imm)
+@@ -727,15 +757,30 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 		 * MOV
+ 		 */
+ 		case BPF_ALU64 | BPF_MOV | BPF_X: /* dst = src */
+-			if (dst_reg == src_reg)
+-				break;
+-			EMIT(PPC_RAW_MR(dst_reg, src_reg));
+-			EMIT(PPC_RAW_MR(dst_reg_h, src_reg_h));
++			if (off == 8) {
++				EMIT(PPC_RAW_EXTSB(dst_reg, src_reg));
++				EMIT(PPC_RAW_SRAWI(dst_reg_h, dst_reg, 31));
++			} else if (off == 16) {
++				EMIT(PPC_RAW_EXTSH(dst_reg, src_reg));
++				EMIT(PPC_RAW_SRAWI(dst_reg_h, dst_reg, 31));
++			} else if (off == 32 && dst_reg == src_reg) {
++				EMIT(PPC_RAW_SRAWI(dst_reg_h, src_reg, 31));
++			} else if (off == 32) {
++				EMIT(PPC_RAW_MR(dst_reg, src_reg));
++				EMIT(PPC_RAW_SRAWI(dst_reg_h, src_reg, 31));
++			} else if (dst_reg != src_reg) {
++				EMIT(PPC_RAW_MR(dst_reg, src_reg));
++				EMIT(PPC_RAW_MR(dst_reg_h, src_reg_h));
++			}
+ 			break;
+ 		case BPF_ALU | BPF_MOV | BPF_X: /* (u32) dst = src */
+ 			/* special mov32 for zext */
+ 			if (imm == 1)
+ 				EMIT(PPC_RAW_LI(dst_reg_h, 0));
++			else if (off == 8)
++				EMIT(PPC_RAW_EXTSB(dst_reg, src_reg));
++			else if (off == 16)
++				EMIT(PPC_RAW_EXTSH(dst_reg, src_reg));
+ 			else if (dst_reg != src_reg)
+ 				EMIT(PPC_RAW_MR(dst_reg, src_reg));
+ 			break;
+@@ -751,6 +796,7 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 		 * BPF_FROM_BE/LE
+ 		 */
+ 		case BPF_ALU | BPF_END | BPF_FROM_LE:
++		case BPF_ALU64 | BPF_END | BPF_FROM_LE:
+ 			switch (imm) {
+ 			case 16:
+ 				/* Copy 16 bits to upper part */
+@@ -785,6 +831,8 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 				EMIT(PPC_RAW_MR(dst_reg_h, tmp_reg));
+ 				break;
+ 			}
++			if (BPF_CLASS(code) == BPF_ALU64 && imm != 64)
++				EMIT(PPC_RAW_LI(dst_reg_h, 0));
+ 			break;
+ 		case BPF_ALU | BPF_END | BPF_FROM_BE:
+ 			switch (imm) {
+@@ -918,11 +966,17 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 		 * BPF_LDX
+ 		 */
+ 		case BPF_LDX | BPF_MEM | BPF_B: /* dst = *(u8 *)(ul) (src + off) */
++		case BPF_LDX | BPF_MEMSX | BPF_B:
+ 		case BPF_LDX | BPF_PROBE_MEM | BPF_B:
++		case BPF_LDX | BPF_PROBE_MEMSX | BPF_B:
+ 		case BPF_LDX | BPF_MEM | BPF_H: /* dst = *(u16 *)(ul) (src + off) */
++		case BPF_LDX | BPF_MEMSX | BPF_H:
+ 		case BPF_LDX | BPF_PROBE_MEM | BPF_H:
++		case BPF_LDX | BPF_PROBE_MEMSX | BPF_H:
+ 		case BPF_LDX | BPF_MEM | BPF_W: /* dst = *(u32 *)(ul) (src + off) */
++		case BPF_LDX | BPF_MEMSX | BPF_W:
+ 		case BPF_LDX | BPF_PROBE_MEM | BPF_W:
++		case BPF_LDX | BPF_PROBE_MEMSX | BPF_W:
+ 		case BPF_LDX | BPF_MEM | BPF_DW: /* dst = *(u64 *)(ul) (src + off) */
+ 		case BPF_LDX | BPF_PROBE_MEM | BPF_DW:
+ 			/*
+@@ -931,7 +985,7 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 			 * load only if addr is kernel address (see is_kernel_addr()), otherwise
+ 			 * set dst_reg=0 and move on.
+ 			 */
+-			if (BPF_MODE(code) == BPF_PROBE_MEM) {
++			if (BPF_MODE(code) == BPF_PROBE_MEM || BPF_MODE(code) == BPF_PROBE_MEMSX) {
+ 				PPC_LI32(_R0, TASK_SIZE - off);
+ 				EMIT(PPC_RAW_CMPLW(src_reg, _R0));
+ 				PPC_BCC_SHORT(COND_GT, (ctx->idx + 4) * 4);
+@@ -953,30 +1007,48 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 				 * as there are two load instructions for dst_reg_h & dst_reg
+ 				 * respectively.
+ 				 */
+-				if (size == BPF_DW)
++				if (size == BPF_DW ||
++				    (size == BPF_B && BPF_MODE(code) == BPF_PROBE_MEMSX))
+ 					PPC_JMP((ctx->idx + 3) * 4);
+ 				else
+ 					PPC_JMP((ctx->idx + 2) * 4);
+ 			}
  
--void mtk_vcodec_enc_pw_on(struct mtk_vcodec_pm *pm)
-+int mtk_vcodec_enc_pw_on(struct mtk_vcodec_pm *pm)
- {
- 	int ret;
+-			switch (size) {
+-			case BPF_B:
+-				EMIT(PPC_RAW_LBZ(dst_reg, src_reg, off));
+-				break;
+-			case BPF_H:
+-				EMIT(PPC_RAW_LHZ(dst_reg, src_reg, off));
+-				break;
+-			case BPF_W:
+-				EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off));
+-				break;
+-			case BPF_DW:
+-				EMIT(PPC_RAW_LWZ(dst_reg_h, src_reg, off));
+-				EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off + 4));
+-				break;
+-			}
++			if (BPF_MODE(code) == BPF_MEMSX || BPF_MODE(code) == BPF_PROBE_MEMSX) {
++				switch (size) {
++				case BPF_B:
++					EMIT(PPC_RAW_LBZ(dst_reg, src_reg, off));
++					EMIT(PPC_RAW_EXTSB(dst_reg, dst_reg));
++					break;
++				case BPF_H:
++					EMIT(PPC_RAW_LHA(dst_reg, src_reg, off));
++					break;
++				case BPF_W:
++					EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off));
++					break;
++				}
++				if (!fp->aux->verifier_zext)
++					EMIT(PPC_RAW_SRAWI(dst_reg_h, dst_reg, 31));
  
- 	ret = pm_runtime_resume_and_get(pm->dev);
- 	if (ret)
- 		dev_err(pm->dev, "pm_runtime_resume_and_get fail: %d", ret);
-+
-+	return ret;
- }
+-			if (size != BPF_DW && !fp->aux->verifier_zext)
+-				EMIT(PPC_RAW_LI(dst_reg_h, 0));
++			} else {
++				switch (size) {
++				case BPF_B:
++					EMIT(PPC_RAW_LBZ(dst_reg, src_reg, off));
++					break;
++				case BPF_H:
++					EMIT(PPC_RAW_LHZ(dst_reg, src_reg, off));
++					break;
++				case BPF_W:
++					EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off));
++					break;
++				case BPF_DW:
++					EMIT(PPC_RAW_LWZ(dst_reg_h, src_reg, off));
++					EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off + 4));
++					break;
++				}
++				if (size != BPF_DW && !fp->aux->verifier_zext)
++					EMIT(PPC_RAW_LI(dst_reg_h, 0));
++			}
  
- void mtk_vcodec_enc_pw_off(struct mtk_vcodec_pm *pm)
-diff --git a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_pm.h b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_pm.h
-index 157ea08ba9e36..2e28f25e36cc4 100644
---- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_pm.h
-+++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_pm.h
-@@ -10,7 +10,7 @@
- #include "mtk_vcodec_enc_drv.h"
+ 			if (BPF_MODE(code) == BPF_PROBE_MEM) {
+ 				int insn_idx = ctx->idx - 1;
+@@ -1068,6 +1140,9 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
+ 		case BPF_JMP | BPF_JA:
+ 			PPC_JMP(addrs[i + 1 + off]);
+ 			break;
++		case BPF_JMP32 | BPF_JA:
++			PPC_JMP(addrs[i + 1 + imm]);
++			break;
  
- int mtk_vcodec_init_enc_clk(struct mtk_vcodec_enc_dev *dev);
--void mtk_vcodec_enc_pw_on(struct mtk_vcodec_pm *pm);
-+int mtk_vcodec_enc_pw_on(struct mtk_vcodec_pm *pm);
- void mtk_vcodec_enc_pw_off(struct mtk_vcodec_pm *pm);
- void mtk_vcodec_enc_clock_on(struct mtk_vcodec_pm *pm);
- void mtk_vcodec_enc_clock_off(struct mtk_vcodec_pm *pm);
-diff --git a/drivers/media/platform/mediatek/vcodec/encoder/venc_drv_if.c b/drivers/media/platform/mediatek/vcodec/encoder/venc_drv_if.c
-index c402a686f3cb2..e83747b8d69ab 100644
---- a/drivers/media/platform/mediatek/vcodec/encoder/venc_drv_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/encoder/venc_drv_if.c
-@@ -64,7 +64,9 @@ int venc_if_encode(struct mtk_vcodec_enc_ctx *ctx,
- 	ctx->dev->curr_ctx = ctx;
- 	spin_unlock_irqrestore(&ctx->dev->irqlock, flags);
- 
--	mtk_vcodec_enc_pw_on(&ctx->dev->pm);
-+	ret = mtk_vcodec_enc_pw_on(&ctx->dev->pm);
-+	if (ret)
-+		goto venc_if_encode_pw_on_err;
- 	mtk_vcodec_enc_clock_on(&ctx->dev->pm);
- 	ret = ctx->enc_if->encode(ctx->drv_handle, opt, frm_buf,
- 				  bs_buf, result);
-@@ -75,6 +77,7 @@ int venc_if_encode(struct mtk_vcodec_enc_ctx *ctx,
- 	ctx->dev->curr_ctx = NULL;
- 	spin_unlock_irqrestore(&ctx->dev->irqlock, flags);
- 
-+venc_if_encode_pw_on_err:
- 	mtk_venc_unlock(ctx);
- 	return ret;
- }
+ 		case BPF_JMP | BPF_JGT | BPF_K:
+ 		case BPF_JMP | BPF_JGT | BPF_X:
 -- 
 2.43.0
 
