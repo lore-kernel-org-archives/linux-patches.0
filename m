@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E991991D3;
-	Thu,  6 Jun 2024 14:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569C31991D3;
+	Thu,  6 Jun 2024 14:21:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683677; cv=none; b=VNMSoji15Hq7LwaxImkJXCDU6Rf7PJdEKZYxdHO+pvig+NFtlwWFQJVuQW6mx5hVOQW3j1fYKX76sK4SHXmsYXft3snohhZzdF0+1Q5jEeFaKVr1E9+lD312/+1oYVinbYG19nyiai2vqtpuio36Rj1g84JhdVQdnBDgo/9SZQo=
+	t=1717683678; cv=none; b=IMb05PyXA3BqsBjOBMSbhCLAcbh5aIBTqJGJYk4nQFgo1d3mbVCJz6N35uyF1891T+n2JB1lF3iKViaSoUtNHfYBZxk23db9Gh2IZM3Hj4UuGO7mL8gv2TH23lw0r+HXVStuPOMnNeLyXSgZB6pJo99XU+pL+niaQZin4e2Rda4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683677; c=relaxed/simple;
-	bh=IsR42NrRNfqM47xRrydJPf3Eu8ASJuwERsxMqELOrzM=;
+	s=arc-20240116; t=1717683678; c=relaxed/simple;
+	bh=YePGCs4UfH2bEdac8AskEMe20QfTI2CPhe9/c/PpM5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GqlimRLeeYTTMSafJdCb9ktVUJmivqs/pHJpEf+g6N+9ZM+//mw6wrpkPI0w+j+LlqyLHPBGb0vv6l7x5qZJVAyXJQxTLfZSfiUnZjbgmQX6BXWV0WmnkazD4VtCUjrcsDPN7qX80Hgp8p8TPRAf9D1orNqD67ww6uUWiAIgVtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4pSaQPH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pQeumhXSzrzixiAXfXcLPgctNYqOvLZHNOSpD3WFRNQRc5Fg3shpmpI7d37vtJT5TLwvSpTgdkRIYfTZE3R5Yc7sI9yfCsgR1Dm+kwJSlV62kV017sfJiiXLomgjaEUuLyH5dJaijvYSzqnC7dtXgbBEHYi2akc7tv+bT/76i2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKYg2eG5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4pSaQPH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B89C2BD10;
-	Thu,  6 Jun 2024 14:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKYg2eG5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E350C32782;
+	Thu,  6 Jun 2024 14:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683677;
-	bh=IsR42NrRNfqM47xRrydJPf3Eu8ASJuwERsxMqELOrzM=;
+	s=korg; t=1717683678;
+	bh=YePGCs4UfH2bEdac8AskEMe20QfTI2CPhe9/c/PpM5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S4pSaQPHXzSIJT+EaSfO7m6YGNbI7RONEIJp6W2Vf0nJmbR3b+bFU1nm8F9hjCF2H
-	 oBx/EfrONQLcFiLsT+U+RSdWEAvPmVOXtXmAP7ei4oOVCNmu+pZH3RbnAhMXbljFkC
-	 y9D0RJPUNXJQ470Gn2vIw7+9w1+rbp7Rjcu8ED6c=
+	b=AKYg2eG5QjPh2bE5Cezcj3oKq60kdpkfX1ni+pmK0CivuTZKxzs4nOtCOixwcLdkM
+	 9gHlMXdQorAZLlYhTFAXXXw2qQccMBQ44ZAJ7Ay3o3aOYFbB+cfUK1HdlfrLSKZeta
+	 b/jXRPbmkdrn9+rUawnL9aEy8eEaLu9UdCwCZQWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
 	Johannes Berg <johannes@sipsolutions.net>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 576/744] um: Fix return value in ubd_init()
-Date: Thu,  6 Jun 2024 16:04:08 +0200
-Message-ID: <20240606131750.934287426@linuxfoundation.org>
+Subject: [PATCH 6.6 577/744] um: Add winch to winch_handlers before registering winch IRQ
+Date: Thu,  6 Jun 2024 16:04:09 +0200
+Message-ID: <20240606131750.964511788@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,44 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit 31a5990ed253a66712d7ddc29c92d297a991fdf2 ]
+[ Upstream commit a0fbbd36c156b9f7b2276871d499c9943dfe5101 ]
 
-When kmalloc_array() fails to allocate memory, the ubd_init()
-should return -ENOMEM instead of -1. So, fix it.
+Registering a winch IRQ is racy, an interrupt may occur before the winch is
+added to the winch_handlers list.
 
-Fixes: f88f0bdfc32f ("um: UBD Improvements")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+If that happens, register_winch_irq() adds to that list a winch that is
+scheduled to be (or has already been) freed, causing a panic later in
+winch_cleanup().
+
+Avoid the race by adding the winch to the winch_handlers list before
+registering the IRQ, and rolling back if um_request_irq() fails.
+
+Fixes: 42a359e31a0e ("uml: SIGIO support cleanup")
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
 Reviewed-by: Johannes Berg <johannes@sipsolutions.net>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/ubd_kern.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/um/drivers/line.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/arch/um/drivers/ubd_kern.c b/arch/um/drivers/ubd_kern.c
-index 50206feac577d..81405aeab8bf1 100644
---- a/arch/um/drivers/ubd_kern.c
-+++ b/arch/um/drivers/ubd_kern.c
-@@ -1099,7 +1099,7 @@ static int __init ubd_init(void)
- 
- 	if (irq_req_buffer == NULL) {
- 		printk(KERN_ERR "Failed to initialize ubd buffering\n");
--		return -1;
-+		return -ENOMEM;
+diff --git a/arch/um/drivers/line.c b/arch/um/drivers/line.c
+index b98545f3edb50..375200e9aba9a 100644
+--- a/arch/um/drivers/line.c
++++ b/arch/um/drivers/line.c
+@@ -673,24 +673,26 @@ void register_winch_irq(int fd, int tty_fd, int pid, struct tty_port *port,
+ 		goto cleanup;
  	}
- 	io_req_buffer = kmalloc_array(UBD_REQ_BUFFER_SIZE,
- 				      sizeof(struct io_thread_req *),
-@@ -1110,7 +1110,7 @@ static int __init ubd_init(void)
  
- 	if (io_req_buffer == NULL) {
- 		printk(KERN_ERR "Failed to initialize ubd buffering\n");
--		return -1;
-+		return -ENOMEM;
+-	*winch = ((struct winch) { .list  	= LIST_HEAD_INIT(winch->list),
+-				   .fd  	= fd,
++	*winch = ((struct winch) { .fd  	= fd,
+ 				   .tty_fd 	= tty_fd,
+ 				   .pid  	= pid,
+ 				   .port 	= port,
+ 				   .stack	= stack });
+ 
++	spin_lock(&winch_handler_lock);
++	list_add(&winch->list, &winch_handlers);
++	spin_unlock(&winch_handler_lock);
++
+ 	if (um_request_irq(WINCH_IRQ, fd, IRQ_READ, winch_interrupt,
+ 			   IRQF_SHARED, "winch", winch) < 0) {
+ 		printk(KERN_ERR "register_winch_irq - failed to register "
+ 		       "IRQ\n");
++		spin_lock(&winch_handler_lock);
++		list_del(&winch->list);
++		spin_unlock(&winch_handler_lock);
+ 		goto out_free;
  	}
- 	platform_driver_register(&ubd_driver);
- 	mutex_lock(&ubd_lock);
+ 
+-	spin_lock(&winch_handler_lock);
+-	list_add(&winch->list, &winch_handlers);
+-	spin_unlock(&winch_handler_lock);
+-
+ 	return;
+ 
+  out_free:
 -- 
 2.43.0
 
