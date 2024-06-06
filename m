@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0DC1B151C;
-	Thu,  6 Jun 2024 14:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDC419B591;
+	Thu,  6 Jun 2024 14:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683398; cv=none; b=Qo+U3A5jl8oGx4R3TVERLWAiyH2kv/mLrSXi+HoFtN/i426vKO7DIwOil7D66l1dw0LxyWpwuvRW8Mnx35TWoJ4ctsySDSDvdhMrxlONkuMKy9QkMAEn/7R+vtGcsY/9Yo0SYKPAof7RF18YF5BdTYDQu8UVrCPPEXKV48bmT0s=
+	t=1717683399; cv=none; b=rqUXvP9Ikqiznizg5zNptnAb2NSA364co4wX3djdzZ4QPyLieDMNPqzfl1FbK8S0oFSc5mB8tJuD0zjjKWyCVYOHTN7ZENMFaPb9C+39zHe09EIa8O5AMIULzqgCF89uoMaaYVA8F/b6YFYnW+TrxW0DJ7JzfHxvwuJwkhFNVJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683398; c=relaxed/simple;
-	bh=MdC2a4jZVXHasEZoCIel0mXw+HJWDmXRGfE+1nrGJEE=;
+	s=arc-20240116; t=1717683399; c=relaxed/simple;
+	bh=bQyCn3cHwWpiruJRJr2j20SAQkiYIV7ebpeh0C0yt2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzXU4RM8IkdlI6iRSLwkI7I/fcG3jVEnh1hwuHZe2qdEPZ1UjNRaF9x6cf27spIo5lbIxDPh/2kNFPZAVuzeuPxRpgL5wEp3L+x0b1JgsI+YR1IyD+mmqGJ3TD9NhdSVGZaJwU/4LMH/q6zCgBUwpXJsFH9TaTEfFY+twcoF3Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wILuJM0S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k5Z3ogXjYJonF5YirJwyL4TYmIK7KXdKEhAiOprjemOoXxLXkoZNK6gHUOY5wjaEw2aWYd2j9Sb6RoQOTeCn6NonIxn+kPuj5uL1UIPwLsmkGoQo8ljMUrt5GEmVkxyN6qxrVcfJLdeTlNJRiQiJOANQOREbgc5NSQNmyWVmmeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfLbCzFj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wILuJM0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B64C2BD10;
-	Thu,  6 Jun 2024 14:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfLbCzFj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3D3C2BD10;
+	Thu,  6 Jun 2024 14:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683398;
-	bh=MdC2a4jZVXHasEZoCIel0mXw+HJWDmXRGfE+1nrGJEE=;
+	s=korg; t=1717683399;
+	bh=bQyCn3cHwWpiruJRJr2j20SAQkiYIV7ebpeh0C0yt2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wILuJM0SBnztszDwWYadAZIVnA6khNMQW1Q2ZQZuzMovhfeh0sB1cEQxDU0eBnUGz
-	 87dQv7o+bEZWcgHgrj+N99rhyi2F8+WTmCrdti7+dpfCMOOesF5XIbC/f3CbPfVgl2
-	 slsE42LzlHX64jXjN+g2apvRUaJRlUaPJyD9XLUE=
+	b=CfLbCzFjYd1Pib7T3Xl7SQ13i4m3G8zxOK2ltokC7jjyyNoV66oqGwWFT/wmnwMqq
+	 yVFOvYyG4PIuwGn2J+kfYtPfW5nk0Uz8PAybbXvraGfcea6K2DQcV2Buqgd+9XBATs
+	 r1EjxVm0nMf5NfseLwLlWYYqJF0XO0FihvenK7BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
-	Alex Elder <elder@ieee.org>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 282/473] greybus: lights: check return of get_channel_from_mode
-Date: Thu,  6 Jun 2024 16:03:31 +0200
-Message-ID: <20240606131709.224969082@linuxfoundation.org>
+Subject: [PATCH 6.6 343/744] RDMA/hns: Use complete parentheses in macros
+Date: Thu,  6 Jun 2024 16:00:15 +0200
+Message-ID: <20240606131743.476564925@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rui Miguel Silva <rmfrfs@gmail.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit a1ba19a1ae7cd1e324685ded4ab563e78fe68648 ]
+[ Upstream commit 4125269bb9b22e1d8cdf4412c81be8074dbc61ca ]
 
-If channel for the given node is not found we return null from
-get_channel_from_mode. Make sure we validate the return pointer
-before using it in two of the missing places.
+Use complete parentheses to ensure that macro expansion does
+not produce unexpected results.
 
-This was originally reported in [0]:
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-[0] https://lore.kernel.org/all/20240301190425.120605-1-m.lobanov@rosalinux.ru
-
-Fixes: 2870b52bae4c ("greybus: lights: add lights implementation")
-Reported-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
-Suggested-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
-Suggested-by: Alex Elder <elder@ieee.org>
-Signed-off-by: Rui Miguel Silva <rmfrfs@gmail.com>
-Link: https://lore.kernel.org/r/20240325221549.2185265-1-rmfrfs@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a25d13cbe816 ("RDMA/hns: Add the interfaces to support multi hop addressing for the contexts in hip08")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240412091616.370789-10-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/light.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_hem.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/staging/greybus/light.c b/drivers/staging/greybus/light.c
-index c6bd86a5335ab..9999f84016992 100644
---- a/drivers/staging/greybus/light.c
-+++ b/drivers/staging/greybus/light.c
-@@ -147,6 +147,9 @@ static int __gb_lights_flash_brightness_set(struct gb_channel *channel)
- 		channel = get_channel_from_mode(channel->light,
- 						GB_CHANNEL_MODE_TORCH);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.h b/drivers/infiniband/hw/hns/hns_roce_hem.h
+index 7d23d3c51da46..fea6d7d508b60 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.h
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.h
+@@ -61,16 +61,16 @@ enum {
+ 	 (sizeof(struct scatterlist) + sizeof(void *)))
  
-+	if (!channel)
-+		return -EINVAL;
-+
- 	/* For not flash we need to convert brightness to intensity */
- 	intensity = channel->intensity_uA.min +
- 			(channel->intensity_uA.step * channel->led->brightness);
-@@ -549,7 +552,10 @@ static int gb_lights_light_v4l2_register(struct gb_light *light)
- 	}
+ #define check_whether_bt_num_3(type, hop_num) \
+-	(type < HEM_TYPE_MTT && hop_num == 2)
++	((type) < HEM_TYPE_MTT && (hop_num) == 2)
  
- 	channel_flash = get_channel_from_mode(light, GB_CHANNEL_MODE_FLASH);
--	WARN_ON(!channel_flash);
-+	if (!channel_flash) {
-+		dev_err(dev, "failed to get flash channel from mode\n");
-+		return -EINVAL;
-+	}
+ #define check_whether_bt_num_2(type, hop_num) \
+-	((type < HEM_TYPE_MTT && hop_num == 1) || \
+-	(type >= HEM_TYPE_MTT && hop_num == 2))
++	(((type) < HEM_TYPE_MTT && (hop_num) == 1) || \
++	((type) >= HEM_TYPE_MTT && (hop_num) == 2))
  
- 	fled = &channel_flash->fled;
+ #define check_whether_bt_num_1(type, hop_num) \
+-	((type < HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0) || \
+-	(type >= HEM_TYPE_MTT && hop_num == 1) || \
+-	(type >= HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0))
++	(((type) < HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0) || \
++	((type) >= HEM_TYPE_MTT && (hop_num) == 1) || \
++	((type) >= HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0))
  
+ struct hns_roce_hem_chunk {
+ 	struct list_head	 list;
 -- 
 2.43.0
 
