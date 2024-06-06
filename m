@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5AB1993A0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94771993A0;
 	Thu,  6 Jun 2024 14:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683247; cv=none; b=Gx1c9QJx7eTflyTqXjQXfSgxdHRvz4hVRma5cfeANMKkxqyjhgRpVbMVIPwpWXTeFK16we0masa9i1cW6gLVZJWRFAejVwIKLfwkXsiuDy/cjtEB6yhZ3EgrxuYtq6Jxy7Iw7VVrF3KbOTZcIIVmohHDahTd9q6peqZDGHzCHwg=
+	t=1717683247; cv=none; b=F4VbGPiSWw4oWnLdMb0K55lTfgNF5cszMntbT1prtQUHlIKd3Ws+cQ4L6ZxaidiBppaSTJf2Nriw/PtHcbtOGYNAhgUVz98f7eM/Cm1XPz1ywAFLDL3y8/WiEOUlU5IEMxIAVqvpWFSFOJzHkUIsECgr6eiYNsy0av9KbSzVd3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683247; c=relaxed/simple;
-	bh=sbsy61RUZSdPjQq78JzmecTR1wr8rUFcdA6eBS4Ntg4=;
+	bh=w4ScFNT04OyHFzRZbmskHmi+UW4AzVKrG+TwVtVa914=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/7RshXt+YWQmUUByJLxle1XGigtvnG0l65KgLwigO9MnyQU+j3Kp5/P9kRQUhyO9uRtmDa7d62QPiw3gBDNwNgBQiLqKbsvj8CL1fR9kzn4EUG5TQ9bBEH4EQwgH0de//DEQf53uvLOMvId8ZbspBT3I+em+7o0SZ3LwEh9TBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01niisFV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jUcBUm9HjPdYItkpTLgZIMnZaVxBtCDITfDgccWH44R9HQcd6DpawB0UoFp9YVnx4HeexrIJ32BqE9Ju4H0dtdeA0kEdAaTozhxRDHXH8HgF7FYU93dk782MW0JV5Rfcv3YtysZDEfamroF666kHy6J1gHJ8ygI18BgtHB+pdRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpJrC0kv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01niisFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E057EC2BD10;
-	Thu,  6 Jun 2024 14:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpJrC0kv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2A7C2BD10;
+	Thu,  6 Jun 2024 14:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683246;
-	bh=sbsy61RUZSdPjQq78JzmecTR1wr8rUFcdA6eBS4Ntg4=;
+	s=korg; t=1717683247;
+	bh=w4ScFNT04OyHFzRZbmskHmi+UW4AzVKrG+TwVtVa914=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=01niisFVV1OFj8OpoNCRixwucr7OVkfC6A8KZR7CC5x9U+VH7a10JcJFnCXX9Jme4
-	 nB5YE6c4TXkERCu5iLq/Hx11jpqUXW7Bo7Uyjydy3QIhUHlojN3Ua6+tJGbyEwwqkM
-	 jePPgWYSP3ZFTMbOXpueB9v1jrniijsDFw4gxlQQ=
+	b=SpJrC0kvktXxJAvjmwdUXBee74FvWaDXrEFDma2Es1/EHZdfFVA1hkqkFwtlTvNOp
+	 z0/FY39F3HUGnqNAI3jbArISm4f41abVcJKwx7Zg9U/mj2TO81AmJBXW+IadYoC2li
+	 Ondo5P6o2NrUStcOBOGkIrkYhJCB2jF3VaaPxHnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Lorenz Bauer <lmb@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 191/744] gfs2: Fix potential glock use-after-free on unmount
-Date: Thu,  6 Jun 2024 15:57:43 +0200
-Message-ID: <20240606131738.563198785@linuxfoundation.org>
+Subject: [PATCH 6.1 124/473] net: export inet_lookup_reuseport and inet6_lookup_reuseport
+Date: Thu,  6 Jun 2024 16:00:53 +0200
+Message-ID: <20240606131704.037933390@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,229 +48,165 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Lorenz Bauer <lmb@isovalent.com>
 
-[ Upstream commit d98779e687726d8f8860f1c54b5687eec5f63a73 ]
+[ Upstream commit ce796e60b3b196b61fcc565df195443cbb846ef0 ]
 
-When a DLM lockspace is released and there ares still locks in that
-lockspace, DLM will unlock those locks automatically.  Commit
-fb6791d100d1b started exploiting this behavior to speed up filesystem
-unmount: gfs2 would simply free glocks it didn't want to unlock and then
-release the lockspace.  This didn't take the bast callbacks for
-asynchronous lock contention notifications into account, which remain
-active until until a lock is unlocked or its lockspace is released.
+Rename the existing reuseport helpers for IPv4 and IPv6 so that they
+can be invoked in the follow up commit. Export them so that building
+DCCP and IPv6 as a module works.
 
-To prevent those callbacks from accessing deallocated objects, put the
-glocks that should not be unlocked on the sd_dead_glocks list, release
-the lockspace, and only then free those glocks.
+No change in functionality.
 
-As an additional measure, ignore unexpected ast and bast callbacks if
-the receiving glock is dead.
-
-Fixes: fb6791d100d1b ("GFS2: skip dlm_unlock calls in unmount")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Cc: David Teigland <teigland@redhat.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Lorenz Bauer <lmb@isovalent.com>
+Link: https://lore.kernel.org/r/20230720-so-reuseport-v6-3-7021b683cdae@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Stable-dep-of: 50aee97d1511 ("udp: Avoid call to compute_score on multiple sites")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c      | 35 ++++++++++++++++++++++++++++++++---
- fs/gfs2/glock.h      |  1 +
- fs/gfs2/incore.h     |  1 +
- fs/gfs2/lock_dlm.c   | 32 ++++++++++++++++++++++----------
- fs/gfs2/ops_fstype.c |  1 +
- fs/gfs2/super.c      |  3 ---
- 6 files changed, 57 insertions(+), 16 deletions(-)
+ include/net/inet6_hashtables.h |  7 +++++++
+ include/net/inet_hashtables.h  |  5 +++++
+ net/ipv4/inet_hashtables.c     | 15 ++++++++-------
+ net/ipv6/inet6_hashtables.c    | 19 ++++++++++---------
+ 4 files changed, 30 insertions(+), 16 deletions(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index a2a1935e2eede..c195244d21dfd 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -166,18 +166,45 @@ static bool glock_blocked_by_withdraw(struct gfs2_glock *gl)
- 	return true;
+diff --git a/include/net/inet6_hashtables.h b/include/net/inet6_hashtables.h
+index 56f1286583d3c..032ddab48f8f8 100644
+--- a/include/net/inet6_hashtables.h
++++ b/include/net/inet6_hashtables.h
+@@ -48,6 +48,13 @@ struct sock *__inet6_lookup_established(struct net *net,
+ 					const u16 hnum, const int dif,
+ 					const int sdif);
+ 
++struct sock *inet6_lookup_reuseport(struct net *net, struct sock *sk,
++				    struct sk_buff *skb, int doff,
++				    const struct in6_addr *saddr,
++				    __be16 sport,
++				    const struct in6_addr *daddr,
++				    unsigned short hnum);
++
+ struct sock *inet6_lookup_listener(struct net *net,
+ 				   struct inet_hashinfo *hashinfo,
+ 				   struct sk_buff *skb, int doff,
+diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
+index 99bd823e97f62..8734f3488f5d0 100644
+--- a/include/net/inet_hashtables.h
++++ b/include/net/inet_hashtables.h
+@@ -379,6 +379,11 @@ struct sock *__inet_lookup_established(struct net *net,
+ 				       const __be32 daddr, const u16 hnum,
+ 				       const int dif, const int sdif);
+ 
++struct sock *inet_lookup_reuseport(struct net *net, struct sock *sk,
++				   struct sk_buff *skb, int doff,
++				   __be32 saddr, __be16 sport,
++				   __be32 daddr, unsigned short hnum);
++
+ static inline struct sock *
+ 	inet_lookup_established(struct net *net, struct inet_hashinfo *hashinfo,
+ 				const __be32 saddr, const __be16 sport,
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index 0ad25e6783ac7..eb8da8d113fe2 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -338,10 +338,10 @@ static inline int compute_score(struct sock *sk, struct net *net,
+ 	return score;
  }
  
--void gfs2_glock_free(struct gfs2_glock *gl)
-+static void __gfs2_glock_free(struct gfs2_glock *gl)
+-static inline struct sock *lookup_reuseport(struct net *net, struct sock *sk,
+-					    struct sk_buff *skb, int doff,
+-					    __be32 saddr, __be16 sport,
+-					    __be32 daddr, unsigned short hnum)
++struct sock *inet_lookup_reuseport(struct net *net, struct sock *sk,
++				   struct sk_buff *skb, int doff,
++				   __be32 saddr, __be16 sport,
++				   __be32 daddr, unsigned short hnum)
  {
--	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
--
- 	rhashtable_remove_fast(&gl_hash_table, &gl->gl_node, ht_parms);
- 	smp_mb();
- 	wake_up_glock(gl);
- 	call_rcu(&gl->gl_rcu, gfs2_glock_dealloc);
-+}
-+
-+void gfs2_glock_free(struct gfs2_glock *gl) {
-+	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
-+
-+	__gfs2_glock_free(gl);
- 	if (atomic_dec_and_test(&sdp->sd_glock_disposal))
- 		wake_up(&sdp->sd_kill_wait);
- }
- 
-+void gfs2_glock_free_later(struct gfs2_glock *gl) {
-+	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
-+
-+	spin_lock(&lru_lock);
-+	list_add(&gl->gl_lru, &sdp->sd_dead_glocks);
-+	spin_unlock(&lru_lock);
-+	if (atomic_dec_and_test(&sdp->sd_glock_disposal))
-+		wake_up(&sdp->sd_kill_wait);
-+}
-+
-+static void gfs2_free_dead_glocks(struct gfs2_sbd *sdp)
-+{
-+	struct list_head *list = &sdp->sd_dead_glocks;
-+
-+	while(!list_empty(list)) {
-+		struct gfs2_glock *gl;
-+
-+		gl = list_first_entry(list, struct gfs2_glock, gl_lru);
-+		list_del_init(&gl->gl_lru);
-+		__gfs2_glock_free(gl);
-+	}
-+}
-+
- /**
-  * gfs2_glock_hold() - increment reference count on glock
-  * @gl: The glock to hold
-@@ -2194,6 +2221,8 @@ void gfs2_gl_hash_clear(struct gfs2_sbd *sdp)
- 	wait_event_timeout(sdp->sd_kill_wait,
- 			   atomic_read(&sdp->sd_glock_disposal) == 0,
- 			   HZ * 600);
-+	gfs2_lm_unmount(sdp);
-+	gfs2_free_dead_glocks(sdp);
- 	glock_hash_walk(dump_glock_func, sdp);
- }
- 
-diff --git a/fs/gfs2/glock.h b/fs/gfs2/glock.h
-index 7a11d5d4de496..f7ee9ca948eee 100644
---- a/fs/gfs2/glock.h
-+++ b/fs/gfs2/glock.h
-@@ -266,6 +266,7 @@ void gfs2_gl_dq_holders(struct gfs2_sbd *sdp);
- void gfs2_glock_thaw(struct gfs2_sbd *sdp);
- void gfs2_glock_add_to_lru(struct gfs2_glock *gl);
- void gfs2_glock_free(struct gfs2_glock *gl);
-+void gfs2_glock_free_later(struct gfs2_glock *gl);
- 
- int __init gfs2_glock_init(void);
- void gfs2_glock_exit(void);
-diff --git a/fs/gfs2/incore.h b/fs/gfs2/incore.h
-index 95a334d64da2a..60abd7050c998 100644
---- a/fs/gfs2/incore.h
-+++ b/fs/gfs2/incore.h
-@@ -838,6 +838,7 @@ struct gfs2_sbd {
- 	/* For quiescing the filesystem */
- 	struct gfs2_holder sd_freeze_gh;
- 	struct mutex sd_freeze_mutex;
-+	struct list_head sd_dead_glocks;
- 
- 	char sd_fsname[GFS2_FSNAME_LEN + 3 * sizeof(int) + 2];
- 	char sd_table_name[GFS2_FSNAME_LEN];
-diff --git a/fs/gfs2/lock_dlm.c b/fs/gfs2/lock_dlm.c
-index 59ab18c798890..0bde45fb49630 100644
---- a/fs/gfs2/lock_dlm.c
-+++ b/fs/gfs2/lock_dlm.c
-@@ -121,6 +121,11 @@ static void gdlm_ast(void *arg)
- 	struct gfs2_glock *gl = arg;
- 	unsigned ret = gl->gl_state;
- 
-+	/* If the glock is dead, we only react to a dlm_unlock() reply. */
-+	if (__lockref_is_dead(&gl->gl_lockref) &&
-+	    gl->gl_lksb.sb_status != -DLM_EUNLOCK)
-+		return;
-+
- 	gfs2_update_reply_times(gl);
- 	BUG_ON(gl->gl_lksb.sb_flags & DLM_SBF_DEMOTED);
- 
-@@ -171,6 +176,9 @@ static void gdlm_bast(void *arg, int mode)
- {
- 	struct gfs2_glock *gl = arg;
- 
-+	if (__lockref_is_dead(&gl->gl_lockref))
-+		return;
-+
- 	switch (mode) {
- 	case DLM_LOCK_EX:
- 		gfs2_glock_cb(gl, LM_ST_UNLOCKED);
-@@ -291,8 +299,12 @@ static void gdlm_put_lock(struct gfs2_glock *gl)
- 	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
- 	int error;
- 
--	if (gl->gl_lksb.sb_lkid == 0)
--		goto out_free;
-+	BUG_ON(!__lockref_is_dead(&gl->gl_lockref));
-+
-+	if (gl->gl_lksb.sb_lkid == 0) {
-+		gfs2_glock_free(gl);
-+		return;
-+	}
- 
- 	clear_bit(GLF_BLOCKING, &gl->gl_flags);
- 	gfs2_glstats_inc(gl, GFS2_LKS_DCOUNT);
-@@ -300,13 +312,17 @@ static void gdlm_put_lock(struct gfs2_glock *gl)
- 	gfs2_update_request_times(gl);
- 
- 	/* don't want to call dlm if we've unmounted the lock protocol */
--	if (test_bit(DFL_UNMOUNT, &ls->ls_recover_flags))
--		goto out_free;
-+	if (test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
-+		gfs2_glock_free(gl);
-+		return;
-+	}
- 	/* don't want to skip dlm_unlock writing the lvb when lock has one */
- 
- 	if (test_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags) &&
--	    !gl->gl_lksb.sb_lvbptr)
--		goto out_free;
-+	    !gl->gl_lksb.sb_lvbptr) {
-+		gfs2_glock_free_later(gl);
-+		return;
-+	}
- 
- again:
- 	error = dlm_unlock(ls->ls_dlm, gl->gl_lksb.sb_lkid, DLM_LKF_VALBLK,
-@@ -321,10 +337,6 @@ static void gdlm_put_lock(struct gfs2_glock *gl)
- 		       gl->gl_name.ln_type,
- 		       (unsigned long long)gl->gl_name.ln_number, error);
+ 	struct sock *reuse_sk = NULL;
+ 	u32 phash;
+@@ -352,6 +352,7 @@ static inline struct sock *lookup_reuseport(struct net *net, struct sock *sk,
  	}
--	return;
--
--out_free:
--	gfs2_glock_free(gl);
+ 	return reuse_sk;
+ }
++EXPORT_SYMBOL_GPL(inet_lookup_reuseport);
+ 
+ /*
+  * Here are some nice properties to exploit here. The BSD API
+@@ -375,8 +376,8 @@ static struct sock *inet_lhash2_lookup(struct net *net,
+ 	sk_nulls_for_each_rcu(sk, node, &ilb2->nulls_head) {
+ 		score = compute_score(sk, net, hnum, daddr, dif, sdif);
+ 		if (score > hiscore) {
+-			result = lookup_reuseport(net, sk, skb, doff,
+-						  saddr, sport, daddr, hnum);
++			result = inet_lookup_reuseport(net, sk, skb, doff,
++						       saddr, sport, daddr, hnum);
+ 			if (result)
+ 				return result;
+ 
+@@ -405,7 +406,7 @@ static inline struct sock *inet_lookup_run_bpf(struct net *net,
+ 	if (no_reuseport || IS_ERR_OR_NULL(sk))
+ 		return sk;
+ 
+-	reuse_sk = lookup_reuseport(net, sk, skb, doff, saddr, sport, daddr, hnum);
++	reuse_sk = inet_lookup_reuseport(net, sk, skb, doff, saddr, sport, daddr, hnum);
+ 	if (reuse_sk)
+ 		sk = reuse_sk;
+ 	return sk;
+diff --git a/net/ipv6/inet6_hashtables.c b/net/ipv6/inet6_hashtables.c
+index b64b49012655e..b7c56867314ed 100644
+--- a/net/ipv6/inet6_hashtables.c
++++ b/net/ipv6/inet6_hashtables.c
+@@ -111,12 +111,12 @@ static inline int compute_score(struct sock *sk, struct net *net,
+ 	return score;
  }
  
- static void gdlm_cancel(struct gfs2_glock *gl)
-diff --git a/fs/gfs2/ops_fstype.c b/fs/gfs2/ops_fstype.c
-index 547e279f5f9e6..fc7bc1e59748f 100644
---- a/fs/gfs2/ops_fstype.c
-+++ b/fs/gfs2/ops_fstype.c
-@@ -136,6 +136,7 @@ static struct gfs2_sbd *init_sbd(struct super_block *sb)
- 	atomic_set(&sdp->sd_log_in_flight, 0);
- 	init_waitqueue_head(&sdp->sd_log_flush_wait);
- 	mutex_init(&sdp->sd_freeze_mutex);
-+	INIT_LIST_HEAD(&sdp->sd_dead_glocks);
- 
- 	return sdp;
- 
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index ab095198b627f..2b47a4119591f 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -646,10 +646,7 @@ static void gfs2_put_super(struct super_block *sb)
- 	gfs2_gl_hash_clear(sdp);
- 	truncate_inode_pages_final(&sdp->sd_aspace);
- 	gfs2_delete_debugfs_file(sdp);
--	/*  Unmount the locking protocol  */
--	gfs2_lm_unmount(sdp);
- 
--	/*  At this point, we're through participating in the lockspace  */
- 	gfs2_sys_fs_del(sdp);
- 	free_sbd(sdp);
+-static inline struct sock *lookup_reuseport(struct net *net, struct sock *sk,
+-					    struct sk_buff *skb, int doff,
+-					    const struct in6_addr *saddr,
+-					    __be16 sport,
+-					    const struct in6_addr *daddr,
+-					    unsigned short hnum)
++struct sock *inet6_lookup_reuseport(struct net *net, struct sock *sk,
++				    struct sk_buff *skb, int doff,
++				    const struct in6_addr *saddr,
++				    __be16 sport,
++				    const struct in6_addr *daddr,
++				    unsigned short hnum)
+ {
+ 	struct sock *reuse_sk = NULL;
+ 	u32 phash;
+@@ -127,6 +127,7 @@ static inline struct sock *lookup_reuseport(struct net *net, struct sock *sk,
+ 	}
+ 	return reuse_sk;
  }
++EXPORT_SYMBOL_GPL(inet6_lookup_reuseport);
+ 
+ /* called with rcu_read_lock() */
+ static struct sock *inet6_lhash2_lookup(struct net *net,
+@@ -143,8 +144,8 @@ static struct sock *inet6_lhash2_lookup(struct net *net,
+ 	sk_nulls_for_each_rcu(sk, node, &ilb2->nulls_head) {
+ 		score = compute_score(sk, net, hnum, daddr, dif, sdif);
+ 		if (score > hiscore) {
+-			result = lookup_reuseport(net, sk, skb, doff,
+-						  saddr, sport, daddr, hnum);
++			result = inet6_lookup_reuseport(net, sk, skb, doff,
++							saddr, sport, daddr, hnum);
+ 			if (result)
+ 				return result;
+ 
+@@ -175,7 +176,7 @@ static inline struct sock *inet6_lookup_run_bpf(struct net *net,
+ 	if (no_reuseport || IS_ERR_OR_NULL(sk))
+ 		return sk;
+ 
+-	reuse_sk = lookup_reuseport(net, sk, skb, doff, saddr, sport, daddr, hnum);
++	reuse_sk = inet6_lookup_reuseport(net, sk, skb, doff, saddr, sport, daddr, hnum);
+ 	if (reuse_sk)
+ 		sk = reuse_sk;
+ 	return sk;
 -- 
 2.43.0
 
