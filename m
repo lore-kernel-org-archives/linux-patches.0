@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D9419E7E3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9C31ABE36;
 	Thu,  6 Jun 2024 14:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683522; cv=none; b=BQVfUAi30RHi9eIgGKpBzwwALJcSMu9XTPJV1aBAXJxrsYAtKMn21K5JMl6hwOJr9k9Wtky9lhnjnYg1n/2tceIprA6t/C3hUFoNRlPnmVoFjtxlq2PsWehRRCRyA2716YQ4gXdiF2buRPkS9pYu78ROrAQCrglV25jrSo7yD8g=
+	t=1717683522; cv=none; b=hr7pH+IF4Ne6L/CwK3pnYokHh3D47qLDw7WX3aanze+EewQtmUKGgbhm5AcFjLX0zZU8y4V2xL9+dFyp+6KpZcHMuY5Fat0A67rQzOi/oxSEKaOAEI/JhOz/cL32GZLq42lwRxRWNfMQwuYmG6XMst3T3yqQQAVg7C1gsLhu1B0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683522; c=relaxed/simple;
-	bh=yrmvln2ageEiyDq+JGbJoUrWQ/BSXm2ZPgaO1i4jLJw=;
+	bh=ZchhFG9OkxeqZR98q8rBfd1WidsacEqKSYguyhjKqRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YB4UnNgDxT8knTXZE+v45pGg68MLdgkebzI9qkWVR7Mds2oOe6RxTHH8AWrzF4vkWacQXRKOvTHsKLTjHT9F0XUrxBgFMitWhHyky86vvypVpzhsjYpUtlkOFzv5L8Sngx++fo6mKA2Cxk46BjFCP3D3uZhSMbht2nch9OG02hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oODbcTOv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i6tEEwkzTiefJAVctfBSSMj9TWbMbmlPrnZm1THv3a8zxM8RXbfihl3Q/fKmiS9dC6TwXwonFfD8bFKOePAlDxSGWCbBLbtdFx+2nM1OGrgfasKvSkJ4Js9K+zUb0e6YT8csxYjyThmovh0DmkHbu4dE38idgRL1GI+2nk94HEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMEOnS9/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oODbcTOv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0472FC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMEOnS9/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79015C2BD10;
 	Thu,  6 Jun 2024 14:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683522;
-	bh=yrmvln2ageEiyDq+JGbJoUrWQ/BSXm2ZPgaO1i4jLJw=;
+	bh=ZchhFG9OkxeqZR98q8rBfd1WidsacEqKSYguyhjKqRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oODbcTOvEhi1/d8Ckpb4KAXmF+iCANbeC3Vqhlx/z7NNxrQSCi3XN8Z3Ha/g+mZxr
-	 3vmZEr5wKXOlwc5IeiQTC1HFIlS6Xd7xYdYF9bC3AV+Wt/IH2AIq9VrQOCOEtlkPRI
-	 QojGB8WYqpf7aSFjfJp+RRQ0A+r5+tAYpPZIDxkk=
+	b=bMEOnS9/xZYjAuMnBovuH6wMUqaRKgK+iLcEguxSl8idSVSp3kItpqE9lF3zWbuo/
+	 +x7yLvbmP/kEt0Z1WFHd062nE+pZfTw2OSx9qiEnFifQ4WeG14jUJwOWUwEZ22n7JT
+	 SOTy9NG7O8cYJ8F8eaAfu7gx06rdzl0g0QgRVVnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 463/744] xfs: require XFS_SB_FEAT_INCOMPAT_LOG_XATTRS for attr log intent item recovery
-Date: Thu,  6 Jun 2024 16:02:15 +0200
-Message-ID: <20240606131747.322385394@linuxfoundation.org>
+Subject: [PATCH 6.1 414/473] pNFS/filelayout: fixup pNfs allocation modes
+Date: Thu,  6 Jun 2024 16:05:43 +0200
+Message-ID: <20240606131713.477415524@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Olga Kornievskaia <kolga@netapp.com>
 
-[ Upstream commit 8ef1d96a985e4dc07ffbd71bd7fc5604a80cc644 ]
+[ Upstream commit 3ebcb24646f8c5bfad2866892d3f3cff05514452 ]
 
-The XFS_SB_FEAT_INCOMPAT_LOG_XATTRS feature bit protects a filesystem
-from old kernels that do not know how to recover extended attribute log
-intent items.  Make this check mandatory instead of a debugging assert.
+Change left over allocation flags.
 
-Fixes: fd920008784ea ("xfs: Set up infrastructure for log attribute replay")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fixes: a245832aaa99 ("pNFS/files: Ensure pNFS allocation modes are consistent with nfsiod")
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_attr_item.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/nfs/filelayout/filelayout.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/xfs/xfs_attr_item.c b/fs/xfs/xfs_attr_item.c
-index 82775e9537df8..ebf656aaf3012 100644
---- a/fs/xfs/xfs_attr_item.c
-+++ b/fs/xfs/xfs_attr_item.c
-@@ -510,6 +510,9 @@ xfs_attri_validate(
- 	unsigned int			op = attrp->alfi_op_flags &
- 					     XFS_ATTRI_OP_FLAGS_TYPE_MASK;
- 
-+	if (!xfs_sb_version_haslogxattrs(&mp->m_sb))
-+		return false;
-+
- 	if (attrp->__pad != 0)
- 		return false;
- 
-@@ -602,8 +605,6 @@ xfs_attri_item_recover(
- 	args->op_flags = XFS_DA_OP_RECOVERY | XFS_DA_OP_OKNOENT |
- 			 XFS_DA_OP_LOGGED;
- 
--	ASSERT(xfs_sb_version_haslogxattrs(&mp->m_sb));
--
- 	switch (attr->xattri_op_flags) {
- 	case XFS_ATTRI_OP_FLAGS_SET:
- 	case XFS_ATTRI_OP_FLAGS_REPLACE:
+diff --git a/fs/nfs/filelayout/filelayout.c b/fs/nfs/filelayout/filelayout.c
+index 4974cd18ca468..b363e1bdacdac 100644
+--- a/fs/nfs/filelayout/filelayout.c
++++ b/fs/nfs/filelayout/filelayout.c
+@@ -881,7 +881,7 @@ filelayout_pg_init_read(struct nfs_pageio_descriptor *pgio,
+ 						      NFS4_MAX_UINT64,
+ 						      IOMODE_READ,
+ 						      false,
+-						      GFP_KERNEL);
++						      nfs_io_gfp_mask());
+ 		if (IS_ERR(pgio->pg_lseg)) {
+ 			pgio->pg_error = PTR_ERR(pgio->pg_lseg);
+ 			pgio->pg_lseg = NULL;
+@@ -905,7 +905,7 @@ filelayout_pg_init_write(struct nfs_pageio_descriptor *pgio,
+ 						      NFS4_MAX_UINT64,
+ 						      IOMODE_RW,
+ 						      false,
+-						      GFP_NOFS);
++						      nfs_io_gfp_mask());
+ 		if (IS_ERR(pgio->pg_lseg)) {
+ 			pgio->pg_error = PTR_ERR(pgio->pg_lseg);
+ 			pgio->pg_lseg = NULL;
 -- 
 2.43.0
 
