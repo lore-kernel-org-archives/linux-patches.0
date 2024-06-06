@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738FC1AED31;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D7B1AED31;
 	Thu,  6 Jun 2024 14:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683341; cv=none; b=CZu3ictC/D0/ev83TnmlPyZsx7CRVXx5FDNwpYKYG5Qjj0TPSfOySJEGRnWA1oOONu8QgbAX9uP7juIIeLrcLvaKWTEka2+Z9/WxATzQ4gI5MMMOCrAm4+yA2mkqwGoxpEOWJ0Fsm+JzbNablBohaH5qOUvRgkvd0W1zgosHOsE=
+	t=1717683342; cv=none; b=Smnd1GTnRlmT7dICx9Y5D6UzaB95YiKKqPFVzTDMuYUQO4hFsQep/k+zoAflWBPMOvoy4PMnJ3XIiMAe/Pd10x6J3UH/0djHfbUvGzCSkCvDUmvzIRA6E3HClE0k/3kMfCsHxLLxJrvuddZbdAxdnGaklch/s4dhyeNKN3ybim0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683341; c=relaxed/simple;
-	bh=c3BGmr0cVSEc9Wv5s80mKlTv5D5HQGAJBJysXrzGYjk=;
+	s=arc-20240116; t=1717683342; c=relaxed/simple;
+	bh=oa1EteXfyaV59KUdQCypBRGG91n5XjLLYIVxQyYFG04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZHKkm9uRzkxo1M1BfXvZXN9PGLSrmk+lUiAO5E63ZXCmtzGg/eKMVJPw73Cu6e9vUUlkwMTOXupXg8bQARqs8sSXYejqS5sDyOukaqjqjhsb7kikQP2OLEeEE3Ar7SYM0FOUnWzKlBG0mwdYtE6+JPExmGYLNIHgTGeLkCcFxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mluILfJo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hSS29ivCYpd73c46W8en2KPYOmgNW2a6rEVos2KFaPjURzk5A74n8Xj8Hmfsl0Upk/sjnmvA6aUYQ6XFPEFqAPvpQqsw7ZFQW0M7bF8QP2qYhGBu6wgMlfHYodzQ3MAadSi8RQLrUxIh6AFNWma+1j0iPI5K0yowYHjhR8Xin5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaiHvLnl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mluILfJo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D9AC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaiHvLnl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D086AC2BD10;
 	Thu,  6 Jun 2024 14:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683341;
-	bh=c3BGmr0cVSEc9Wv5s80mKlTv5D5HQGAJBJysXrzGYjk=;
+	bh=oa1EteXfyaV59KUdQCypBRGG91n5XjLLYIVxQyYFG04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mluILfJoIxqQMdXe5qd23gr6TR3kFdWzyab/NI/1IyOx16paG+xRYGB6mdkiLRyPZ
-	 qN3s+uo0ZaEu7PPBQd2uDnXAh9EcMkp/GVBRrFPPrIZLe9YVF0Cah7k89lKsBovf0b
-	 YYRbZU6Z5uIAqOwCi408LtDT59cSMhv3dvQZPJZU=
+	b=vaiHvLnlV9WcnGnqIptnd9sYnJJVhOeRs5IzOARxOI1bSXKc0U0q+o6Lg7DXRniFE
+	 zCotdAOum/lg5XvnrbKGhmqLqfrCuXQmFXMnTKRt4WpZYgTmN4CtGnVMIifIqOQVci
+	 DDLvGDMBR93HnlUnxHQ/pY0H47mIMDTmywTPydvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aapo Vienamo <aapo.vienamo@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 282/744] mtd: core: Report error if first mtd_otp_size() call fails in mtd_otp_nvmem_add()
-Date: Thu,  6 Jun 2024 15:59:14 +0200
-Message-ID: <20240606131741.453020967@linuxfoundation.org>
+Subject: [PATCH 6.1 223/473] ASoC: tracing: Export SND_SOC_DAPM_DIR_OUT to its value
+Date: Thu,  6 Jun 2024 16:02:32 +0200
+Message-ID: <20240606131707.254970510@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aapo Vienamo <aapo.vienamo@linux.intel.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit d44f0bbbd8d182debcce88bda55b05269f3d33d6 ]
+[ Upstream commit 58300f8d6a48e58d1843199be743f819e2791ea3 ]
 
-Jump to the error reporting code in mtd_otp_nvmem_add() if the
-mtd_otp_size() call fails. Without this fix, the error is not logged.
+The string SND_SOC_DAPM_DIR_OUT is printed in the snd_soc_dapm_path trace
+event instead of its value:
 
-Signed-off-by: Aapo Vienamo <aapo.vienamo@linux.intel.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Fixes: 4b361cfa8624 ("mtd: core: add OTP nvmem provider support")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240313173425.1325790-2-aapo.vienamo@linux.intel.com
+   (((REC->path_dir) == SND_SOC_DAPM_DIR_OUT) ? "->" : "<-")
+
+User space cannot parse this, as it has no idea what SND_SOC_DAPM_DIR_OUT
+is. Use TRACE_DEFINE_ENUM() to convert it to its value:
+
+   (((REC->path_dir) == 1) ? "->" : "<-")
+
+So that user space tools, such as perf and trace-cmd, can parse it
+correctly.
+
+Reported-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 6e588a0d839b5 ("ASoC: dapm: Consolidate path trace events")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20240416000303.04670cdf@rorschach.local.home
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/trace/events/asoc.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 5c32208b17a1d..97ca2a897f1d4 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -955,8 +955,10 @@ static int mtd_otp_nvmem_add(struct mtd_info *mtd)
+diff --git a/include/trace/events/asoc.h b/include/trace/events/asoc.h
+index 4d8ef71090af1..97a434d021356 100644
+--- a/include/trace/events/asoc.h
++++ b/include/trace/events/asoc.h
+@@ -12,6 +12,8 @@
+ #define DAPM_DIRECT "(direct)"
+ #define DAPM_ARROW(dir) (((dir) == SND_SOC_DAPM_DIR_OUT) ? "->" : "<-")
  
- 	if (mtd->_get_user_prot_info && mtd->_read_user_prot_reg) {
- 		size = mtd_otp_size(mtd, true);
--		if (size < 0)
--			return size;
-+		if (size < 0) {
-+			err = size;
-+			goto err;
-+		}
- 
- 		if (size > 0) {
- 			nvmem = mtd_otp_nvmem_register(mtd, "user-otp", size,
++TRACE_DEFINE_ENUM(SND_SOC_DAPM_DIR_OUT);
++
+ struct snd_soc_jack;
+ struct snd_soc_card;
+ struct snd_soc_dapm_widget;
 -- 
 2.43.0
 
