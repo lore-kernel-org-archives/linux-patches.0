@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF8E1993A0;
-	Thu,  6 Jun 2024 14:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247311993A0;
+	Thu,  6 Jun 2024 14:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683250; cv=none; b=uA1H6V5ng6G6LFd+sfNug1sMn0kKTjxOBfCsl5j4jfoIPi5ylHr0oHK+IinmA/8rTizjdv+kKzxggmPUQlni8Zo1NUD+27ohGdhXkQ24UNkHPv8ZW863sYGUeN6nbN9ZLiWnnxGGNU0Rid59e3Z6bryqrbtfVWpQpbkBGMOBIvQ=
+	t=1717683251; cv=none; b=hTDRJ8l8tkzXsa3O2RkTdgYT5sygVxbW5yJl/UamfD5YwOZzcu4PDwPh2PgQrr/41a0zUfRnxHWqV7BPWF1SdUNJUauVdDN05QmLVcFCTRjMSlCQGNs50A6dQC5wzabw1b0tl3Z+QDak3QZL1OG650LJu9GnM+Qj6FyhslZePlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683250; c=relaxed/simple;
-	bh=xj8ShCJk2CHgP+VsAkP0xFVqwigOFQdm+GXbvdOsfS8=;
+	s=arc-20240116; t=1717683251; c=relaxed/simple;
+	bh=G4tKwEePAqqVfdacfwcFx308VNBwCcpSZsx8oy1E7K4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fYtFa1qDI7cK+QpOGAhna7P5i13r+mCnyFaWIEAdBI9YFXO2/hBZAkvgBhFGLEzOj9bdRvK+GPTL6JxpM6bHmDo7qMyztai7NT5FmagRvTE++wmUsCbHCtr1gp4JcotOTFMMeBns8/GQP5gYrMUNVe+XNqiovvAlVQjCGi5JnEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LD+Lo8ZE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nd/VQajpmrh1esvdfQaNxJcLLjidshZLQ8diHqC/Pqu1BhsitgykvK4VNGqycUThuLYjU0JUA+Yss10T1h4iyOCaOVn3rjY/Q3xb0uEaj1cd35rZqeVu2Z1s0GwFSkmTOxz2D8fcY4y++aEnE2EFHn3bbLT9TMa/FL4QLWJqotI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RX6HVej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LD+Lo8ZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A831C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RX6HVej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B99C2BD10;
 	Thu,  6 Jun 2024 14:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683250;
-	bh=xj8ShCJk2CHgP+VsAkP0xFVqwigOFQdm+GXbvdOsfS8=;
+	s=korg; t=1717683251;
+	bh=G4tKwEePAqqVfdacfwcFx308VNBwCcpSZsx8oy1E7K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LD+Lo8ZE+98s18f2vQdSPUNBPzJrzpa+n47BtXkXE5ObbRseStWB2ouJjteNyqOwX
-	 3GTNbXHEjLSOdp4UgMWME9mLcK+LOD2qXwOq1fo/or8lDiAOs3uZxUVgEC9EvUvQUP
-	 8agyvXh0R8JReUq6WLwM+9LSucFMU/bcXqA5Gu3c=
+	b=1RX6HVejE7hrNHazRSoHJ2/5SAVga4qv45YTAsiC+zxEYc1gNfj08Q7cVsSwEzsbm
+	 ZNqgQTwlJ9NAU/UQfgD5VQXOjxIgZ5LQ7mmBnamLehNVNGTE8sVWm4eeOcvRYXlQDt
+	 BNZ0UEHG80+vFt0Jc4SzLJtJflV0yuvgxkbhQExw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 194/744] gfs2: finish_xmote cleanup
-Date: Thu,  6 Jun 2024 15:57:46 +0200
-Message-ID: <20240606131738.661861042@linuxfoundation.org>
+Subject: [PATCH 6.1 127/473] cppc_cpufreq: Fix possible null pointer dereference
+Date: Thu,  6 Jun 2024 16:00:56 +0200
+Message-ID: <20240606131704.137943127@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,110 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 1cd28e15864054f3c48baee9eecda1c0441c48ac ]
+[ Upstream commit cf7de25878a1f4508c69dc9f6819c21ba177dbfe ]
 
-Currently, function finish_xmote() takes and releases the glock
-spinlock.  However, all of its callers immediately take that spinlock
-again, so it makes more sense to take the spin lock before calling
-finish_xmote() already.
+cppc_cpufreq_get_rate() and hisi_cppc_cpufreq_get_rate() can be called from
+different places with various parameters. So cpufreq_cpu_get() can return
+null as 'policy' in some circumstances.
+Fix this bug by adding null return check.
 
-With that, thaw_glock() is the only place that sets the GLF_HAVE_REPLY
-flag outside of the glock spinlock, but it also takes that spinlock
-immediately thereafter.  Change that to set the bit when the spinlock is
-already held.  This allows to switch from test_and_clear_bit() to
-test_bit() and clear_bit() in glock_work_func().
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Stable-dep-of: 9947a06d29c0 ("gfs2: do_xmote fixes")
+Fixes: a28b2bfc099c ("cppc_cpufreq: replace per-cpu data array with a list")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/cpufreq/cppc_cpufreq.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 7af12c8fb577d..009a6a6312c2f 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -600,7 +600,6 @@ static void finish_xmote(struct gfs2_glock *gl, unsigned int ret)
- 	struct gfs2_holder *gh;
- 	unsigned state = ret & LM_OUT_ST_MASK;
+diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+index 022e3555407c8..8791a88c7741c 100644
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -841,10 +841,15 @@ static unsigned int cppc_cpufreq_get_rate(unsigned int cpu)
+ {
+ 	struct cppc_perf_fb_ctrs fb_ctrs_t0 = {0}, fb_ctrs_t1 = {0};
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
+-	struct cppc_cpudata *cpu_data = policy->driver_data;
++	struct cppc_cpudata *cpu_data;
+ 	u64 delivered_perf;
+ 	int ret;
  
--	spin_lock(&gl->gl_lockref.lock);
- 	trace_gfs2_glock_state_change(gl, state);
- 	state_change(gl, state);
- 	gh = find_first_waiter(gl);
-@@ -648,7 +647,6 @@ static void finish_xmote(struct gfs2_glock *gl, unsigned int ret)
- 			       gl->gl_target, state);
- 			GLOCK_BUG_ON(gl, 1);
- 		}
--		spin_unlock(&gl->gl_lockref.lock);
- 		return;
- 	}
- 
-@@ -671,7 +669,6 @@ static void finish_xmote(struct gfs2_glock *gl, unsigned int ret)
- 	}
- out:
- 	clear_bit(GLF_LOCK, &gl->gl_flags);
--	spin_unlock(&gl->gl_lockref.lock);
- }
- 
- static bool is_system_glock(struct gfs2_glock *gl)
-@@ -818,15 +815,19 @@ __acquires(&gl->gl_lockref.lock)
- 		if (ret == -EINVAL && gl->gl_target == LM_ST_UNLOCKED &&
- 		    target == LM_ST_UNLOCKED &&
- 		    test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
-+			spin_lock(&gl->gl_lockref.lock);
- 			finish_xmote(gl, target);
--			gfs2_glock_queue_work(gl, 0);
-+			__gfs2_glock_queue_work(gl, 0);
-+			spin_unlock(&gl->gl_lockref.lock);
- 		} else if (ret) {
- 			fs_err(sdp, "lm_lock ret %d\n", ret);
- 			GLOCK_BUG_ON(gl, !gfs2_withdrawing_or_withdrawn(sdp));
- 		}
- 	} else { /* lock_nolock */
-+		spin_lock(&gl->gl_lockref.lock);
- 		finish_xmote(gl, target);
--		gfs2_glock_queue_work(gl, 0);
-+		__gfs2_glock_queue_work(gl, 0);
-+		spin_unlock(&gl->gl_lockref.lock);
- 	}
- out:
- 	spin_lock(&gl->gl_lockref.lock);
-@@ -1082,11 +1083,12 @@ static void glock_work_func(struct work_struct *work)
- 	struct gfs2_glock *gl = container_of(work, struct gfs2_glock, gl_work.work);
- 	unsigned int drop_refs = 1;
- 
--	if (test_and_clear_bit(GLF_REPLY_PENDING, &gl->gl_flags)) {
-+	spin_lock(&gl->gl_lockref.lock);
-+	if (test_bit(GLF_REPLY_PENDING, &gl->gl_flags)) {
-+		clear_bit(GLF_REPLY_PENDING, &gl->gl_flags);
- 		finish_xmote(gl, gl->gl_reply);
- 		drop_refs++;
- 	}
--	spin_lock(&gl->gl_lockref.lock);
- 	if (test_bit(GLF_PENDING_DEMOTE, &gl->gl_flags) &&
- 	    gl->gl_state != LM_ST_UNLOCKED &&
- 	    gl->gl_demote_state != LM_ST_EXCLUSIVE) {
-@@ -2144,8 +2146,11 @@ static void thaw_glock(struct gfs2_glock *gl)
- 		return;
- 	if (!lockref_get_not_dead(&gl->gl_lockref))
- 		return;
++	if (!policy)
++		return -ENODEV;
 +
-+	spin_lock(&gl->gl_lockref.lock);
- 	set_bit(GLF_REPLY_PENDING, &gl->gl_flags);
--	gfs2_glock_queue_work(gl, 0);
-+	__gfs2_glock_queue_work(gl, 0);
-+	spin_unlock(&gl->gl_lockref.lock);
- }
++	cpu_data = policy->driver_data;
++
+ 	cpufreq_cpu_put(policy);
  
- /**
+ 	ret = cppc_get_perf_ctrs(cpu, &fb_ctrs_t0);
+@@ -924,10 +929,15 @@ static struct cpufreq_driver cppc_cpufreq_driver = {
+ static unsigned int hisi_cppc_cpufreq_get_rate(unsigned int cpu)
+ {
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
+-	struct cppc_cpudata *cpu_data = policy->driver_data;
++	struct cppc_cpudata *cpu_data;
+ 	u64 desired_perf;
+ 	int ret;
+ 
++	if (!policy)
++		return -ENODEV;
++
++	cpu_data = policy->driver_data;
++
+ 	cpufreq_cpu_put(policy);
+ 
+ 	ret = cppc_get_desired_perf(cpu, &desired_perf);
 -- 
 2.43.0
 
