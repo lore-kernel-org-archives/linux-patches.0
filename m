@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1563198A30;
-	Thu,  6 Jun 2024 14:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586C4198A30;
+	Thu,  6 Jun 2024 14:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683065; cv=none; b=PBVDaXvMSoMhZYjb0Wip34zv3KZad1f7tcdsUysu1ZUdS2DLuzvuF6ocGeThKcppI2zkHd9UAWzzl/o1sQee9lwQyykwqQpbg0DaPwO3GZ2SAFwzuImWVBU3iSGFP/WIIla8//LSGDCPd1Ye2Axf7AmmdXjR4Qko0BFHfczxeu4=
+	t=1717683066; cv=none; b=jVgjc3EvaZWWbemhta1ZvXuBT3mFGuL1/wrmzN+w3a91pPOdlmtjA4zap9mClPBNEUAFmvXV93G1T1DU3cF8rDAn3Mbf8s25E2xKJtq6V4Nr5sdqs1NZV6QKqRXG/3eOfIzfmw3gSsGQHWL7Mjibayme9e0c0MXwq6Y+tgJW1OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683065; c=relaxed/simple;
-	bh=RA3O63zmGc5RQr4wu2ZhVs+xzcX1mEP+v0itS1ChMdI=;
+	s=arc-20240116; t=1717683066; c=relaxed/simple;
+	bh=aSyJoppJ6mE/ZDU942THbgElbuY87FC6cjR5T0fWHz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IANptRFtLqBZY7PT9KHoyFLAxjz6Z4r/T+eN10kay2tmejTGndjqE5G9kBkSFjqkr1qnY1+pOJsKDVvyvXVk8tA0DzONSDtzaxcK0deaRS6xkQSWbvsyNq5aP7XQS4OgAmbfHrxX+colwTeOUBrUEyr/DBEymOGmBzobyBM5bPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vcsu2v9H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UuRrmiqGSFkiCvu5rkP0WxiUvg+/fQ9nFZLfXaCD3EtzWaolz4rZ0qvhXJqLrfKYt8dEqLkMu4eie6GxjEk3auslL8B4OEW07R890YX5peE3VK8vu/aipTbQAA8WdFwTLucRlUvEJ1Sfkibn+mM4LB2NNc3gpYNEyAdABPbzhS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8LhFOmQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vcsu2v9H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1945C4AF0A;
-	Thu,  6 Jun 2024 14:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8LhFOmQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38565C4AF15;
+	Thu,  6 Jun 2024 14:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683065;
-	bh=RA3O63zmGc5RQr4wu2ZhVs+xzcX1mEP+v0itS1ChMdI=;
+	s=korg; t=1717683066;
+	bh=aSyJoppJ6mE/ZDU942THbgElbuY87FC6cjR5T0fWHz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vcsu2v9H0IBShEMrAfvtm0HgTxASSxzvb3Vw+M83EQ8z34lj4ACKnNPoWvCSkyS5W
-	 OujJrpZEk5rLiI5zw80YCovE492YN7MN9V96Q9xyPeNNrdo9rncjyMVkyqYu9GZkAj
-	 YwmsSnXuei82c2WcYtYpYT7drRJ8BiohWUSeSW3o=
+	b=a8LhFOmQ+pSHUt64keizUSLIipzTSQzllxeUd/9N0vS/CiwgKCUQFJc3K8+O5F7xo
+	 GesWDV82tLOrd20oHPIzEn0ADEIlK07v/lqjflT09k2gZTJqLiDXz73E0wJWXRRW/m
+	 KEnUXmDb+TDsRVQV9husplyAl3GzT1er1hV7cEjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 269/374] tcp: remove 64 KByte limit for initial tp->rcv_wnd value
-Date: Thu,  6 Jun 2024 16:04:08 +0200
-Message-ID: <20240606131700.916314597@linuxfoundation.org>
+Subject: [PATCH 6.9 315/374] bpf: Allow delete from sockmap/sockhash only if update is allowed
+Date: Thu,  6 Jun 2024 16:04:54 +0200
+Message-ID: <20240606131702.432927753@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,74 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit 378979e94e953c2070acb4f0e0c98d29260bd09d ]
+[ Upstream commit 98e948fb60d41447fd8d2d0c3b8637fc6b6dc26d ]
 
-Recently, we had some servers upgraded to the latest kernel and noticed
-the indicator from the user side showed worse results than before. It is
-caused by the limitation of tp->rcv_wnd.
+We have seen an influx of syzkaller reports where a BPF program attached to
+a tracepoint triggers a locking rule violation by performing a map_delete
+on a sockmap/sockhash.
 
-In 2018 commit a337531b942b ("tcp: up initial rmem to 128KB and SYN rwin
-to around 64KB") limited the initial value of tp->rcv_wnd to 65535, most
-CDN teams would not benefit from this change because they cannot have a
-large window to receive a big packet, which will be slowed down especially
-in long RTT. Small rcv_wnd means slow transfer speed, to some extent. It's
-the side effect for the latency/time-sensitive users.
+We don't intend to support this artificial use scenario. Extend the
+existing verifier allowed-program-type check for updating sockmap/sockhash
+to also cover deleting from a map.
 
-To avoid future confusion, current change doesn't affect the initial
-receive window on the wire in a SYN or SYN+ACK packet which are set within
-65535 bytes according to RFC 7323 also due to the limit in
-__tcp_transmit_skb():
+>From now on only BPF programs which were previously allowed to update
+sockmap/sockhash can delete from these map types.
 
-    th->window      = htons(min(tp->rcv_wnd, 65535U));
-
-In one word, __tcp_transmit_skb() already ensures that constraint is
-respected, no matter how large tp->rcv_wnd is. The change doesn't violate
-RFC.
-
-Let me provide one example if with or without the patch:
-Before:
-client   --- SYN: rwindow=65535 ---> server
-client   <--- SYN+ACK: rwindow=65535 ----  server
-client   --- ACK: rwindow=65536 ---> server
-Note: for the last ACK, the calculation is 512 << 7.
-
-After:
-client   --- SYN: rwindow=65535 ---> server
-client   <--- SYN+ACK: rwindow=65535 ----  server
-client   --- ACK: rwindow=175232 ---> server
-Note: I use the following command to make it work:
-ip route change default via [ip] dev eth0 metric 100 initrwnd 120
-For the last ACK, the calculation is 1369 << 7.
-
-When we apply such a patch, having a large rcv_wnd if the user tweak this
-knob can help transfer data more rapidly and save some rtts.
-
-Fixes: a337531b942b ("tcp: up initial rmem to 128KB and SYN rwin to around 64KB")
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20240521134220.12510-1-kerneljasonxing@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ff9105993240 ("bpf, sockmap: Prevent lock inversion deadlock in map delete elem")
+Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Reported-by: syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=ec941d6e24f633a59172
+Link: https://lore.kernel.org/bpf/20240527-sockmap-verify-deletes-v1-1-944b372f2101@cloudflare.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 02caeb7bcf634..16ef24a37c498 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -229,7 +229,7 @@ void tcp_select_initial_window(const struct sock *sk, int __space, __u32 mss,
- 	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_workaround_signed_windows))
- 		(*rcv_wnd) = min(space, MAX_TCP_WINDOW);
- 	else
--		(*rcv_wnd) = min_t(u32, space, U16_MAX);
-+		(*rcv_wnd) = space;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 2c90b1eb12e2c..8a29309db4245 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -8845,7 +8845,8 @@ static bool may_update_sockmap(struct bpf_verifier_env *env, int func_id)
+ 	enum bpf_attach_type eatype = env->prog->expected_attach_type;
+ 	enum bpf_prog_type type = resolve_prog_type(env->prog);
  
- 	if (init_rcv_wnd)
- 		*rcv_wnd = min(*rcv_wnd, init_rcv_wnd * mss);
+-	if (func_id != BPF_FUNC_map_update_elem)
++	if (func_id != BPF_FUNC_map_update_elem &&
++	    func_id != BPF_FUNC_map_delete_elem)
+ 		return false;
+ 
+ 	/* It's not possible to get access to a locked struct sock in these
+@@ -8856,6 +8857,11 @@ static bool may_update_sockmap(struct bpf_verifier_env *env, int func_id)
+ 		if (eatype == BPF_TRACE_ITER)
+ 			return true;
+ 		break;
++	case BPF_PROG_TYPE_SOCK_OPS:
++		/* map_update allowed only via dedicated helpers with event type checks */
++		if (func_id == BPF_FUNC_map_delete_elem)
++			return true;
++		break;
+ 	case BPF_PROG_TYPE_SOCKET_FILTER:
+ 	case BPF_PROG_TYPE_SCHED_CLS:
+ 	case BPF_PROG_TYPE_SCHED_ACT:
+@@ -8951,7 +8957,6 @@ static int check_map_func_compatibility(struct bpf_verifier_env *env,
+ 	case BPF_MAP_TYPE_SOCKMAP:
+ 		if (func_id != BPF_FUNC_sk_redirect_map &&
+ 		    func_id != BPF_FUNC_sock_map_update &&
+-		    func_id != BPF_FUNC_map_delete_elem &&
+ 		    func_id != BPF_FUNC_msg_redirect_map &&
+ 		    func_id != BPF_FUNC_sk_select_reuseport &&
+ 		    func_id != BPF_FUNC_map_lookup_elem &&
+@@ -8961,7 +8966,6 @@ static int check_map_func_compatibility(struct bpf_verifier_env *env,
+ 	case BPF_MAP_TYPE_SOCKHASH:
+ 		if (func_id != BPF_FUNC_sk_redirect_hash &&
+ 		    func_id != BPF_FUNC_sock_hash_update &&
+-		    func_id != BPF_FUNC_map_delete_elem &&
+ 		    func_id != BPF_FUNC_msg_redirect_hash &&
+ 		    func_id != BPF_FUNC_sk_select_reuseport &&
+ 		    func_id != BPF_FUNC_map_lookup_elem &&
 -- 
 2.43.0
 
