@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76971C2339;
-	Thu,  6 Jun 2024 14:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407591C2309;
+	Thu,  6 Jun 2024 14:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683647; cv=none; b=DiJjOSsw/QhAF4wRWysQme1xTgwoykFg/jaAfl7JPJy3bcJH3MdnsSnua8i38MEugqvoa51V4YFWduZB5h1sWrcg/ItPTEiSvVL8dXeYUKybF3pMmxNjLAJFl/Ndgq+CJnDiSL8OFYOWW+3RGmHAwbxCfaWlBxwREFT4my4gw0k=
+	t=1717683648; cv=none; b=F72JUZMr4UFNEzO6OG+vyS7sJXV9TyB/5CEBiPciBb0s3+ymneGqqu3u6EIAp9WYbFlHKPoxf4r0sC9mjALFD//Mg65KtoZhz9BSjiz7s7B7FZcziHNXN1brsJ7EDvxy0zCq4n/CMF3RaU4xoSRxTqt2NfcC4U2fC8iOlh1yQYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683647; c=relaxed/simple;
-	bh=oQzssqvE/Q4q4vCMKE5agqm0JbRgfTwrFYs8fSw5/iI=;
+	s=arc-20240116; t=1717683648; c=relaxed/simple;
+	bh=xRX22CkQzUzzsGd4wkyvmw9pEzqmxlNvpFBQViUmEOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IO3+o7jlA+05WiPO6Ksvdk63X4Xp9ld0RkPTZCtqhjJ/ls+DSJmmSbYtIlIqwhRqwiCkQA954xSdPCZcWfyeODrBu3gs11BI7gRoRAAvdmhiF0gnROiEAZEctefo0Na7hvnYJkDvM2FP4bolAYMD4KhSTpbhau4HudlLo5HFH74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFN9ydzH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TvRh+A9q+WMclaTWhcVUc/qsUYDRYpMh14Cj0sA+fIUssNgbZ99Xk5E12l/23+J1dzjCIzO6sFwv5hc54rGMb93NlE2tZuyNxMJOsuE8arBtGvkk+wvszFxuiZxuIfgNEorQZ7HUM5kMoZDUndJwcnAeMBiqg/eLPUXLZyiZolE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXKLXG2W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFN9ydzH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9747CC32781;
-	Thu,  6 Jun 2024 14:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXKLXG2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE37C32781;
+	Thu,  6 Jun 2024 14:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683647;
-	bh=oQzssqvE/Q4q4vCMKE5agqm0JbRgfTwrFYs8fSw5/iI=;
+	s=korg; t=1717683648;
+	bh=xRX22CkQzUzzsGd4wkyvmw9pEzqmxlNvpFBQViUmEOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFN9ydzHJCG9sryFf1fP6KDqRbON0kaKQxN5Cy3WU0kEYaKFryJ2m84bH5l45DrB9
-	 ERTxd23PeId2vEtCDLP4rmSsQcmpXAHz/mUJESeJ3DiTNp4J6rEwrslNuOegkK1yea
-	 yKBuhyTzaFAnUeZTtEtxD4eKhYpQJxmYSJOkluyA=
+	b=zXKLXG2WkGz0L8EJYTeS8gFCBUhniSlaTw+0oR94UWPM17o0P2ftHWnktRsWzxh7J
+	 bAbwZx7srnhXOoIYjhDYkwGIvBGfCasR7pMCaw7yfKkmo4EF3epX9VfQO0RQPLKAEb
+	 ZuLec9oZW9a/O13WJvTGydQLJDH+S1Z3AsCWcR4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Agroskin <shayagr@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 467/473] net: ena: Fix redundant device NUMA node override
-Date: Thu,  6 Jun 2024 16:06:36 +0200
-Message-ID: <20240606131715.123478829@linuxfoundation.org>
+Subject: [PATCH 6.6 492/744] i2c: cadence: Avoid fifo clear after start
+Date: Thu,  6 Jun 2024 16:02:44 +0200
+Message-ID: <20240606131748.224396198@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,87 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shay Agroskin <shayagr@amazon.com>
+From: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
 
-[ Upstream commit 2dc8b1e7177d4f49f492ce648440caf2de0c3616 ]
+[ Upstream commit c2e55b449de7298a751ed0256251019d302af453 ]
 
-The driver overrides the NUMA node id of the device regardless of
-whether it knows its correct value (often setting it to -1 even though
-the node id is advertised in 'struct device'). This can lead to
-suboptimal configurations.
+The Driver unintentionally programs ctrl reg to clear the fifo, which
+happens after the start of transaction. Previously, this was not an issue
+as it involved read-modified-write. However, this issue breaks i2c reads
+on QEMU, as i2c-read is executed before guest starts programming control
+register.
 
-This patch fixes this behavior and makes the shared memory allocation
-functions use the NUMA node id advertised by the underlying device.
-
-Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
-Signed-off-by: Shay Agroskin <shayagr@amazon.com>
-Link: https://lore.kernel.org/r/20240528170912.1204417-1-shayagr@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ff0cf7bca630 ("i2c: cadence: Remove unnecessary register reads")
+Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_com.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ drivers/i2c/busses/i2c-cadence.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_com.c b/drivers/net/ethernet/amazon/ena/ena_com.c
-index e733419dd3f49..276f6a8631fb1 100644
---- a/drivers/net/ethernet/amazon/ena/ena_com.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_com.c
-@@ -312,7 +312,6 @@ static int ena_com_init_io_sq(struct ena_com_dev *ena_dev,
- 			      struct ena_com_io_sq *io_sq)
- {
- 	size_t size;
--	int dev_node = 0;
+diff --git a/drivers/i2c/busses/i2c-cadence.c b/drivers/i2c/busses/i2c-cadence.c
+index de3f58b60dce5..6f7d753a8197c 100644
+--- a/drivers/i2c/busses/i2c-cadence.c
++++ b/drivers/i2c/busses/i2c-cadence.c
+@@ -633,6 +633,7 @@ static void cdns_i2c_mrecv(struct cdns_i2c *id)
  
- 	memset(&io_sq->desc_addr, 0x0, sizeof(io_sq->desc_addr));
- 
-@@ -325,12 +324,9 @@ static int ena_com_init_io_sq(struct ena_com_dev *ena_dev,
- 	size = io_sq->desc_entry_size * io_sq->q_depth;
- 
- 	if (io_sq->mem_queue_type == ENA_ADMIN_PLACEMENT_POLICY_HOST) {
--		dev_node = dev_to_node(ena_dev->dmadev);
--		set_dev_node(ena_dev->dmadev, ctx->numa_node);
- 		io_sq->desc_addr.virt_addr =
- 			dma_alloc_coherent(ena_dev->dmadev, size, &io_sq->desc_addr.phys_addr,
- 					   GFP_KERNEL);
--		set_dev_node(ena_dev->dmadev, dev_node);
- 		if (!io_sq->desc_addr.virt_addr) {
- 			io_sq->desc_addr.virt_addr =
- 				dma_alloc_coherent(ena_dev->dmadev, size,
-@@ -354,10 +350,7 @@ static int ena_com_init_io_sq(struct ena_com_dev *ena_dev,
- 		size = (size_t)io_sq->bounce_buf_ctrl.buffer_size *
- 			io_sq->bounce_buf_ctrl.buffers_num;
- 
--		dev_node = dev_to_node(ena_dev->dmadev);
--		set_dev_node(ena_dev->dmadev, ctx->numa_node);
- 		io_sq->bounce_buf_ctrl.base_buffer = devm_kzalloc(ena_dev->dmadev, size, GFP_KERNEL);
--		set_dev_node(ena_dev->dmadev, dev_node);
- 		if (!io_sq->bounce_buf_ctrl.base_buffer)
- 			io_sq->bounce_buf_ctrl.base_buffer =
- 				devm_kzalloc(ena_dev->dmadev, size, GFP_KERNEL);
-@@ -397,7 +390,6 @@ static int ena_com_init_io_cq(struct ena_com_dev *ena_dev,
- 			      struct ena_com_io_cq *io_cq)
- {
- 	size_t size;
--	int prev_node = 0;
- 
- 	memset(&io_cq->cdesc_addr, 0x0, sizeof(io_cq->cdesc_addr));
- 
-@@ -409,11 +401,8 @@ static int ena_com_init_io_cq(struct ena_com_dev *ena_dev,
- 
- 	size = io_cq->cdesc_entry_size_in_bytes * io_cq->q_depth;
- 
--	prev_node = dev_to_node(ena_dev->dmadev);
--	set_dev_node(ena_dev->dmadev, ctx->numa_node);
- 	io_cq->cdesc_addr.virt_addr =
- 		dma_alloc_coherent(ena_dev->dmadev, size, &io_cq->cdesc_addr.phys_addr, GFP_KERNEL);
--	set_dev_node(ena_dev->dmadev, prev_node);
- 	if (!io_cq->cdesc_addr.virt_addr) {
- 		io_cq->cdesc_addr.virt_addr =
- 			dma_alloc_coherent(ena_dev->dmadev, size, &io_cq->cdesc_addr.phys_addr,
+ 	if (hold_clear) {
+ 		ctrl_reg &= ~CDNS_I2C_CR_HOLD;
++		ctrl_reg &= ~CDNS_I2C_CR_CLR_FIFO;
+ 		/*
+ 		 * In case of Xilinx Zynq SOC, clear the HOLD bit before transfer size
+ 		 * register reaches '0'. This is an IP bug which causes transfer size
 -- 
 2.43.0
 
