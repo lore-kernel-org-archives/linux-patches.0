@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613F8196D9B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBCE196D9B;
 	Thu,  6 Jun 2024 14:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683005; cv=none; b=pYS8mmPVVEGSo4BnzPo/rSZBIg6e+45EQO/a0Ew5aOPDTGAlprJtYm32FhK0aPVChR7Te/Ly1cEydKakCPu+bubC2nwe/NtVHzlvKKRqo3fSL61nsrNYLlGmTtfAhPFoqdZ49bH9IrgV/StTdcBOAcdRTvV/hIfu8YqLA9+yIfM=
+	t=1717683005; cv=none; b=Iokq5X/+tCD6lTI4X/IBrbIKmK7Lc8ZI7RZzdRoVbkrDdSbzDgcfSWQ/C25UGXNqECiBVruM8b9ggsYnqyY9DfaivrDRKJ+R/nSIop8nQsPdpVcFhwAlYCHHMyJ6dzJuPQktHUUqmJAgt9JBNXpOxaC+3/fz5f/AwAmCDFswgGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683005; c=relaxed/simple;
-	bh=bnRQTsfgjJs6iRUNNT0hqUP+82wURI8lYjdUaMmgdiA=;
+	bh=G5723X7617AI+tONuSEEeEtr8Qye1PaFpbQdnLKD7+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GXx4Uuf5+q3umF4k3kq3liAQ1ett3C5hiiorDLUgWT5D+c0L2u80uRasUTvF8ndiFg4rHdD9Ubfd60JcGSl5jF5Ht1h6yAwQaamTFR7XkEUrDZa6wljpLC27mVxFH5Ovkh3tzZnwrAIAvkeJpry4Khimb6nFTFAzTXubCXmjlEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RH4CLEUY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TxidrYSdCiFO+PvdKWPVRH47VNansL7HQ93MptRPQfxqy9NLOHLmv8OLapU5Dg2UEoaVkshMjjRoE3uI7GZcU0679fffNXR4wjX0UdlbLATR1AWsSliuYSix6D16zl7JL8/wCFSmCxnOGZshGwwM096gmpN/9yjkpD7T4kWd9XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sq+J+MLL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RH4CLEUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40525C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sq+J+MLL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8063C2BD10;
 	Thu,  6 Jun 2024 14:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683005;
-	bh=bnRQTsfgjJs6iRUNNT0hqUP+82wURI8lYjdUaMmgdiA=;
+	bh=G5723X7617AI+tONuSEEeEtr8Qye1PaFpbQdnLKD7+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RH4CLEUYJwpjWAk8MCXOl1EazW6kxspczFv2QEcyydafBVTk8KEvo/sVCz/Fla1WJ
-	 86w521mWylJ7DMBOolCrln+sAEpAki6WkVyo2UGC6MFn2wDxXvc8QYiQYeBVHlZjOY
-	 Ha0+nbMobCMq6RvjEApS7/sP4kSMvuDYPGuyQTeI=
+	b=sq+J+MLLRSltBC5BWLTJEDYE/4/SYIJNoTWW1+w34WTK2Tz3AdJpRrGfOyOhFjv2E
+	 WIvvNTeZjoZxWWw7LiRX9lIaMl4gSk+yu9aRRHIijyV4b73aF/xAUM9SfsxuOg4m8u
+	 qxDbuj2WQK/cOXTpA1Eq+KmJApm0H6abdeUQkzPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Vaibhav Jain <vaibhav@linux.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 211/374] powerpc/bpf/32: Fix failing test_bpf tests
-Date: Thu,  6 Jun 2024 16:03:10 +0200
-Message-ID: <20240606131658.878222586@linuxfoundation.org>
+Subject: [PATCH 6.9 212/374] KVM: PPC: Book3S HV nestedv2: Cancel pending DEC exception
+Date: Thu,  6 Jun 2024 16:03:11 +0200
+Message-ID: <20240606131658.913706104@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,353 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Vaibhav Jain <vaibhav@linux.ibm.com>
 
-[ Upstream commit 8ecf3c1dab1c675721d3d0255556abe2306fa340 ]
+[ Upstream commit 7be6ce7043b4cf293c8826a48fd9f56931cef2cf ]
 
-Recent additions in BPF like cpu v4 instructions, test_bpf module
-exhibits the following failures:
+This reverts commit 180c6b072bf3 ("KVM: PPC: Book3S HV nestedv2: Do not
+cancel pending decrementer exception") [1] which prevented canceling a
+pending HDEC exception for nestedv2 KVM guests. It was done to avoid
+overhead of a H_GUEST_GET_STATE hcall to read the 'DEC expiry TB' register
+which was higher compared to handling extra decrementer exceptions.
 
-  test_bpf: #82 ALU_MOVSX | BPF_B jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
-  test_bpf: #83 ALU_MOVSX | BPF_H jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
-  test_bpf: #84 ALU64_MOVSX | BPF_B jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
-  test_bpf: #85 ALU64_MOVSX | BPF_H jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
-  test_bpf: #86 ALU64_MOVSX | BPF_W jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
+However recent benchmarks indicate that overhead of not handling 'DECR'
+expiry for Nested KVM Guest(L2) is higher and results in much larger exits
+to Pseries Host(L1) as indicated by the Unixbench-arithoh bench[2]
 
-  test_bpf: #165 ALU_SDIV_X: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
-  test_bpf: #166 ALU_SDIV_K: -6 / 2 = -3 jited:1 ret 2147483645 != -3 (0x7ffffffd != 0xfffffffd)FAIL (1 times)
+Metric	    	      | Current upstream    | Revert [1]  | Difference %
+========================================================================
+arithoh-count (10)    |	3244831634	    | 3403089673  | +04.88%
+kvm_hv:kvm_guest_exit |	513558		    | 152441	  | -70.32%
+probe:kvmppc_gsb_recv |	28060		    | 28110	  | +00.18%
 
-  test_bpf: #169 ALU_SMOD_X: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
-  test_bpf: #170 ALU_SMOD_K: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
+N=1
 
-  test_bpf: #172 ALU64_SMOD_K: -7 % 2 = -1 jited:1 ret 1 != -1 (0x1 != 0xffffffff)FAIL (1 times)
+As indicated by the data above that reverting [1] results in substantial
+reduction in number of L2->L1 exits with only slight increase in number of
+H_GUEST_GET_STATE hcalls to read the value of 'DEC expiry TB'. This results
+in an overall ~4% improvement of arithoh[2] throughput.
 
-  test_bpf: #313 BSWAP 16: 0x0123456789abcdef -> 0xefcd
-  eBPF filter opcode 00d7 (@2) unsupported
-  jited:0 301 PASS
-  test_bpf: #314 BSWAP 32: 0x0123456789abcdef -> 0xefcdab89
-  eBPF filter opcode 00d7 (@2) unsupported
-  jited:0 555 PASS
-  test_bpf: #315 BSWAP 64: 0x0123456789abcdef -> 0x67452301
-  eBPF filter opcode 00d7 (@2) unsupported
-  jited:0 268 PASS
-  test_bpf: #316 BSWAP 64: 0x0123456789abcdef >> 32 -> 0xefcdab89
-  eBPF filter opcode 00d7 (@2) unsupported
-  jited:0 269 PASS
-  test_bpf: #317 BSWAP 16: 0xfedcba9876543210 -> 0x1032
-  eBPF filter opcode 00d7 (@2) unsupported
-  jited:0 460 PASS
-  test_bpf: #318 BSWAP 32: 0xfedcba9876543210 -> 0x10325476
-  eBPF filter opcode 00d7 (@2) unsupported
-  jited:0 320 PASS
-  test_bpf: #319 BSWAP 64: 0xfedcba9876543210 -> 0x98badcfe
-  eBPF filter opcode 00d7 (@2) unsupported
-  jited:0 222 PASS
-  test_bpf: #320 BSWAP 64: 0xfedcba9876543210 >> 32 -> 0x10325476
-  eBPF filter opcode 00d7 (@2) unsupported
-  jited:0 273 PASS
+[1] commit 180c6b072bf3 ("KVM: PPC: Book3S HV nestedv2: Do not cancel pending decrementer exception")
+[2] https://github.com/kdlucas/byte-unixbench/
 
-  test_bpf: #344 BPF_LDX_MEMSX | BPF_B
-  eBPF filter opcode 0091 (@5) unsupported
-  jited:0 432 PASS
-  test_bpf: #345 BPF_LDX_MEMSX | BPF_H
-  eBPF filter opcode 0089 (@5) unsupported
-  jited:0 381 PASS
-  test_bpf: #346 BPF_LDX_MEMSX | BPF_W
-  eBPF filter opcode 0081 (@5) unsupported
-  jited:0 505 PASS
-
-  test_bpf: #490 JMP32_JA: Unconditional jump: if (true) return 1
-  eBPF filter opcode 0006 (@1) unsupported
-  jited:0 261 PASS
-
-  test_bpf: Summary: 1040 PASSED, 10 FAILED, [924/1038 JIT'ed]
-
-Fix them by adding missing processing.
-
-Fixes: daabb2b098e0 ("bpf/tests: add tests for cpuv4 instructions")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Fixes: 180c6b072bf3 ("KVM: PPC: Book3S HV nestedv2: Do not cancel pending decrementer exception")
+Signed-off-by: Vaibhav Jain <vaibhav@linux.ibm.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/91de862dda99d170697eb79ffb478678af7e0b27.1709652689.git.christophe.leroy@csgroup.eu
+Link: https://msgid.link/20240415035731.103097-1-vaibhav@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/ppc-opcode.h |   4 +
- arch/powerpc/net/bpf_jit_comp32.c     | 137 ++++++++++++++++++++------
- 2 files changed, 110 insertions(+), 31 deletions(-)
+ arch/powerpc/kvm/book3s_hv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/ppc-opcode.h b/arch/powerpc/include/asm/ppc-opcode.h
-index 005601243dda4..076ae60b4a55d 100644
---- a/arch/powerpc/include/asm/ppc-opcode.h
-+++ b/arch/powerpc/include/asm/ppc-opcode.h
-@@ -510,6 +510,7 @@
- #define PPC_RAW_STB(r, base, i)		(0x98000000 | ___PPC_RS(r) | ___PPC_RA(base) | IMM_L(i))
- #define PPC_RAW_LBZ(r, base, i)		(0x88000000 | ___PPC_RT(r) | ___PPC_RA(base) | IMM_L(i))
- #define PPC_RAW_LDX(r, base, b)		(0x7c00002a | ___PPC_RT(r) | ___PPC_RA(base) | ___PPC_RB(b))
-+#define PPC_RAW_LHA(r, base, i)		(0xa8000000 | ___PPC_RT(r) | ___PPC_RA(base) | IMM_L(i))
- #define PPC_RAW_LHZ(r, base, i)		(0xa0000000 | ___PPC_RT(r) | ___PPC_RA(base) | IMM_L(i))
- #define PPC_RAW_LHBRX(r, base, b)	(0x7c00062c | ___PPC_RT(r) | ___PPC_RA(base) | ___PPC_RB(b))
- #define PPC_RAW_LWBRX(r, base, b)	(0x7c00042c | ___PPC_RT(r) | ___PPC_RA(base) | ___PPC_RB(b))
-@@ -532,6 +533,7 @@
- #define PPC_RAW_MULW(d, a, b)		(0x7c0001d6 | ___PPC_RT(d) | ___PPC_RA(a) | ___PPC_RB(b))
- #define PPC_RAW_MULHWU(d, a, b)		(0x7c000016 | ___PPC_RT(d) | ___PPC_RA(a) | ___PPC_RB(b))
- #define PPC_RAW_MULI(d, a, i)		(0x1c000000 | ___PPC_RT(d) | ___PPC_RA(a) | IMM_L(i))
-+#define PPC_RAW_DIVW(d, a, b)		(0x7c0003d6 | ___PPC_RT(d) | ___PPC_RA(a) | ___PPC_RB(b))
- #define PPC_RAW_DIVWU(d, a, b)		(0x7c000396 | ___PPC_RT(d) | ___PPC_RA(a) | ___PPC_RB(b))
- #define PPC_RAW_DIVDU(d, a, b)		(0x7c000392 | ___PPC_RT(d) | ___PPC_RA(a) | ___PPC_RB(b))
- #define PPC_RAW_DIVDE(t, a, b)		(0x7c000352 | ___PPC_RT(t) | ___PPC_RA(a) | ___PPC_RB(b))
-@@ -550,6 +552,8 @@
- #define PPC_RAW_XOR(d, a, b)		(0x7c000278 | ___PPC_RA(d) | ___PPC_RS(a) | ___PPC_RB(b))
- #define PPC_RAW_XORI(d, a, i)		(0x68000000 | ___PPC_RA(d) | ___PPC_RS(a) | IMM_L(i))
- #define PPC_RAW_XORIS(d, a, i)		(0x6c000000 | ___PPC_RA(d) | ___PPC_RS(a) | IMM_L(i))
-+#define PPC_RAW_EXTSB(d, a)		(0x7c000774 | ___PPC_RA(d) | ___PPC_RS(a))
-+#define PPC_RAW_EXTSH(d, a)		(0x7c000734 | ___PPC_RA(d) | ___PPC_RS(a))
- #define PPC_RAW_EXTSW(d, a)		(0x7c0007b4 | ___PPC_RA(d) | ___PPC_RS(a))
- #define PPC_RAW_SLW(d, a, s)		(0x7c000030 | ___PPC_RA(d) | ___PPC_RS(a) | ___PPC_RB(s))
- #define PPC_RAW_SLD(d, a, s)		(0x7c000036 | ___PPC_RA(d) | ___PPC_RS(a) | ___PPC_RB(s))
-diff --git a/arch/powerpc/net/bpf_jit_comp32.c b/arch/powerpc/net/bpf_jit_comp32.c
-index 2f39c50ca729e..43b97032a91c0 100644
---- a/arch/powerpc/net/bpf_jit_comp32.c
-+++ b/arch/powerpc/net/bpf_jit_comp32.c
-@@ -450,10 +450,16 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 			}
- 			break;
- 		case BPF_ALU | BPF_DIV | BPF_X: /* (u32) dst /= (u32) src */
--			EMIT(PPC_RAW_DIVWU(dst_reg, src2_reg, src_reg));
-+			if (off)
-+				EMIT(PPC_RAW_DIVW(dst_reg, src2_reg, src_reg));
-+			else
-+				EMIT(PPC_RAW_DIVWU(dst_reg, src2_reg, src_reg));
- 			break;
- 		case BPF_ALU | BPF_MOD | BPF_X: /* (u32) dst %= (u32) src */
--			EMIT(PPC_RAW_DIVWU(_R0, src2_reg, src_reg));
-+			if (off)
-+				EMIT(PPC_RAW_DIVW(_R0, src2_reg, src_reg));
-+			else
-+				EMIT(PPC_RAW_DIVWU(_R0, src2_reg, src_reg));
- 			EMIT(PPC_RAW_MULW(_R0, src_reg, _R0));
- 			EMIT(PPC_RAW_SUB(dst_reg, src2_reg, _R0));
- 			break;
-@@ -467,10 +473,16 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 			if (imm == 1) {
- 				EMIT(PPC_RAW_MR(dst_reg, src2_reg));
- 			} else if (is_power_of_2((u32)imm)) {
--				EMIT(PPC_RAW_SRWI(dst_reg, src2_reg, ilog2(imm)));
-+				if (off)
-+					EMIT(PPC_RAW_SRAWI(dst_reg, src2_reg, ilog2(imm)));
-+				else
-+					EMIT(PPC_RAW_SRWI(dst_reg, src2_reg, ilog2(imm)));
- 			} else {
- 				PPC_LI32(_R0, imm);
--				EMIT(PPC_RAW_DIVWU(dst_reg, src2_reg, _R0));
-+				if (off)
-+					EMIT(PPC_RAW_DIVW(dst_reg, src2_reg, _R0));
-+				else
-+					EMIT(PPC_RAW_DIVWU(dst_reg, src2_reg, _R0));
- 			}
- 			break;
- 		case BPF_ALU | BPF_MOD | BPF_K: /* (u32) dst %= (u32) imm */
-@@ -480,11 +492,19 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 			if (!is_power_of_2((u32)imm)) {
- 				bpf_set_seen_register(ctx, tmp_reg);
- 				PPC_LI32(tmp_reg, imm);
--				EMIT(PPC_RAW_DIVWU(_R0, src2_reg, tmp_reg));
-+				if (off)
-+					EMIT(PPC_RAW_DIVW(_R0, src2_reg, tmp_reg));
-+				else
-+					EMIT(PPC_RAW_DIVWU(_R0, src2_reg, tmp_reg));
- 				EMIT(PPC_RAW_MULW(_R0, tmp_reg, _R0));
- 				EMIT(PPC_RAW_SUB(dst_reg, src2_reg, _R0));
- 			} else if (imm == 1) {
- 				EMIT(PPC_RAW_LI(dst_reg, 0));
-+			} else if (off) {
-+				EMIT(PPC_RAW_SRAWI(_R0, src2_reg, ilog2(imm)));
-+				EMIT(PPC_RAW_ADDZE(_R0, _R0));
-+				EMIT(PPC_RAW_SLWI(_R0, _R0, ilog2(imm)));
-+				EMIT(PPC_RAW_SUB(dst_reg, src2_reg, _R0));
- 			} else {
- 				imm = ilog2((u32)imm);
- 				EMIT(PPC_RAW_RLWINM(dst_reg, src2_reg, 0, 32 - imm, 31));
-@@ -497,11 +517,21 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 				imm = -imm;
- 			if (!is_power_of_2(imm))
- 				return -EOPNOTSUPP;
--			if (imm == 1)
-+			if (imm == 1) {
- 				EMIT(PPC_RAW_LI(dst_reg, 0));
--			else
-+				EMIT(PPC_RAW_LI(dst_reg_h, 0));
-+			} else if (off) {
-+				EMIT(PPC_RAW_SRAWI(dst_reg_h, src2_reg_h, 31));
-+				EMIT(PPC_RAW_XOR(dst_reg, src2_reg, dst_reg_h));
-+				EMIT(PPC_RAW_SUBFC(dst_reg, dst_reg_h, dst_reg));
-+				EMIT(PPC_RAW_RLWINM(dst_reg, dst_reg, 0, 32 - ilog2(imm), 31));
-+				EMIT(PPC_RAW_XOR(dst_reg, dst_reg, dst_reg_h));
-+				EMIT(PPC_RAW_SUBFC(dst_reg, dst_reg_h, dst_reg));
-+				EMIT(PPC_RAW_SUBFE(dst_reg_h, dst_reg_h, dst_reg_h));
-+			} else {
- 				EMIT(PPC_RAW_RLWINM(dst_reg, src2_reg, 0, 32 - ilog2(imm), 31));
--			EMIT(PPC_RAW_LI(dst_reg_h, 0));
-+				EMIT(PPC_RAW_LI(dst_reg_h, 0));
-+			}
- 			break;
- 		case BPF_ALU64 | BPF_DIV | BPF_K: /* dst /= imm */
- 			if (!imm)
-@@ -727,15 +757,30 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 		 * MOV
- 		 */
- 		case BPF_ALU64 | BPF_MOV | BPF_X: /* dst = src */
--			if (dst_reg == src_reg)
--				break;
--			EMIT(PPC_RAW_MR(dst_reg, src_reg));
--			EMIT(PPC_RAW_MR(dst_reg_h, src_reg_h));
-+			if (off == 8) {
-+				EMIT(PPC_RAW_EXTSB(dst_reg, src_reg));
-+				EMIT(PPC_RAW_SRAWI(dst_reg_h, dst_reg, 31));
-+			} else if (off == 16) {
-+				EMIT(PPC_RAW_EXTSH(dst_reg, src_reg));
-+				EMIT(PPC_RAW_SRAWI(dst_reg_h, dst_reg, 31));
-+			} else if (off == 32 && dst_reg == src_reg) {
-+				EMIT(PPC_RAW_SRAWI(dst_reg_h, src_reg, 31));
-+			} else if (off == 32) {
-+				EMIT(PPC_RAW_MR(dst_reg, src_reg));
-+				EMIT(PPC_RAW_SRAWI(dst_reg_h, src_reg, 31));
-+			} else if (dst_reg != src_reg) {
-+				EMIT(PPC_RAW_MR(dst_reg, src_reg));
-+				EMIT(PPC_RAW_MR(dst_reg_h, src_reg_h));
-+			}
- 			break;
- 		case BPF_ALU | BPF_MOV | BPF_X: /* (u32) dst = src */
- 			/* special mov32 for zext */
- 			if (imm == 1)
- 				EMIT(PPC_RAW_LI(dst_reg_h, 0));
-+			else if (off == 8)
-+				EMIT(PPC_RAW_EXTSB(dst_reg, src_reg));
-+			else if (off == 16)
-+				EMIT(PPC_RAW_EXTSH(dst_reg, src_reg));
- 			else if (dst_reg != src_reg)
- 				EMIT(PPC_RAW_MR(dst_reg, src_reg));
- 			break;
-@@ -751,6 +796,7 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 		 * BPF_FROM_BE/LE
- 		 */
- 		case BPF_ALU | BPF_END | BPF_FROM_LE:
-+		case BPF_ALU64 | BPF_END | BPF_FROM_LE:
- 			switch (imm) {
- 			case 16:
- 				/* Copy 16 bits to upper part */
-@@ -785,6 +831,8 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 				EMIT(PPC_RAW_MR(dst_reg_h, tmp_reg));
- 				break;
- 			}
-+			if (BPF_CLASS(code) == BPF_ALU64 && imm != 64)
-+				EMIT(PPC_RAW_LI(dst_reg_h, 0));
- 			break;
- 		case BPF_ALU | BPF_END | BPF_FROM_BE:
- 			switch (imm) {
-@@ -918,11 +966,17 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 		 * BPF_LDX
- 		 */
- 		case BPF_LDX | BPF_MEM | BPF_B: /* dst = *(u8 *)(ul) (src + off) */
-+		case BPF_LDX | BPF_MEMSX | BPF_B:
- 		case BPF_LDX | BPF_PROBE_MEM | BPF_B:
-+		case BPF_LDX | BPF_PROBE_MEMSX | BPF_B:
- 		case BPF_LDX | BPF_MEM | BPF_H: /* dst = *(u16 *)(ul) (src + off) */
-+		case BPF_LDX | BPF_MEMSX | BPF_H:
- 		case BPF_LDX | BPF_PROBE_MEM | BPF_H:
-+		case BPF_LDX | BPF_PROBE_MEMSX | BPF_H:
- 		case BPF_LDX | BPF_MEM | BPF_W: /* dst = *(u32 *)(ul) (src + off) */
-+		case BPF_LDX | BPF_MEMSX | BPF_W:
- 		case BPF_LDX | BPF_PROBE_MEM | BPF_W:
-+		case BPF_LDX | BPF_PROBE_MEMSX | BPF_W:
- 		case BPF_LDX | BPF_MEM | BPF_DW: /* dst = *(u64 *)(ul) (src + off) */
- 		case BPF_LDX | BPF_PROBE_MEM | BPF_DW:
- 			/*
-@@ -931,7 +985,7 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 			 * load only if addr is kernel address (see is_kernel_addr()), otherwise
- 			 * set dst_reg=0 and move on.
- 			 */
--			if (BPF_MODE(code) == BPF_PROBE_MEM) {
-+			if (BPF_MODE(code) == BPF_PROBE_MEM || BPF_MODE(code) == BPF_PROBE_MEMSX) {
- 				PPC_LI32(_R0, TASK_SIZE - off);
- 				EMIT(PPC_RAW_CMPLW(src_reg, _R0));
- 				PPC_BCC_SHORT(COND_GT, (ctx->idx + 4) * 4);
-@@ -953,30 +1007,48 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 				 * as there are two load instructions for dst_reg_h & dst_reg
- 				 * respectively.
- 				 */
--				if (size == BPF_DW)
-+				if (size == BPF_DW ||
-+				    (size == BPF_B && BPF_MODE(code) == BPF_PROBE_MEMSX))
- 					PPC_JMP((ctx->idx + 3) * 4);
- 				else
- 					PPC_JMP((ctx->idx + 2) * 4);
- 			}
- 
--			switch (size) {
--			case BPF_B:
--				EMIT(PPC_RAW_LBZ(dst_reg, src_reg, off));
--				break;
--			case BPF_H:
--				EMIT(PPC_RAW_LHZ(dst_reg, src_reg, off));
--				break;
--			case BPF_W:
--				EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off));
--				break;
--			case BPF_DW:
--				EMIT(PPC_RAW_LWZ(dst_reg_h, src_reg, off));
--				EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off + 4));
--				break;
--			}
-+			if (BPF_MODE(code) == BPF_MEMSX || BPF_MODE(code) == BPF_PROBE_MEMSX) {
-+				switch (size) {
-+				case BPF_B:
-+					EMIT(PPC_RAW_LBZ(dst_reg, src_reg, off));
-+					EMIT(PPC_RAW_EXTSB(dst_reg, dst_reg));
-+					break;
-+				case BPF_H:
-+					EMIT(PPC_RAW_LHA(dst_reg, src_reg, off));
-+					break;
-+				case BPF_W:
-+					EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off));
-+					break;
-+				}
-+				if (!fp->aux->verifier_zext)
-+					EMIT(PPC_RAW_SRAWI(dst_reg_h, dst_reg, 31));
- 
--			if (size != BPF_DW && !fp->aux->verifier_zext)
--				EMIT(PPC_RAW_LI(dst_reg_h, 0));
-+			} else {
-+				switch (size) {
-+				case BPF_B:
-+					EMIT(PPC_RAW_LBZ(dst_reg, src_reg, off));
-+					break;
-+				case BPF_H:
-+					EMIT(PPC_RAW_LHZ(dst_reg, src_reg, off));
-+					break;
-+				case BPF_W:
-+					EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off));
-+					break;
-+				case BPF_DW:
-+					EMIT(PPC_RAW_LWZ(dst_reg_h, src_reg, off));
-+					EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off + 4));
-+					break;
-+				}
-+				if (size != BPF_DW && !fp->aux->verifier_zext)
-+					EMIT(PPC_RAW_LI(dst_reg_h, 0));
-+			}
- 
- 			if (BPF_MODE(code) == BPF_PROBE_MEM) {
- 				int insn_idx = ctx->idx - 1;
-@@ -1068,6 +1140,9 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 		case BPF_JMP | BPF_JA:
- 			PPC_JMP(addrs[i + 1 + off]);
- 			break;
-+		case BPF_JMP32 | BPF_JA:
-+			PPC_JMP(addrs[i + 1 + imm]);
-+			break;
- 
- 		case BPF_JMP | BPF_JGT | BPF_K:
- 		case BPF_JMP | BPF_JGT | BPF_X:
+diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+index 8e86eb577eb8e..692a7c6f5fd91 100644
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -4857,7 +4857,7 @@ int kvmhv_run_single_vcpu(struct kvm_vcpu *vcpu, u64 time_limit,
+ 	 * entering a nested guest in which case the decrementer is now owned
+ 	 * by L2 and the L1 decrementer is provided in hdec_expires
+ 	 */
+-	if (!kvmhv_is_nestedv2() && kvmppc_core_pending_dec(vcpu) &&
++	if (kvmppc_core_pending_dec(vcpu) &&
+ 			((tb < kvmppc_dec_expires_host_tb(vcpu)) ||
+ 			 (trap == BOOK3S_INTERRUPT_SYSCALL &&
+ 			  kvmppc_get_gpr(vcpu, 3) == H_ENTER_NESTED)))
 -- 
 2.43.0
 
