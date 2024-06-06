@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA6A19922D;
-	Thu,  6 Jun 2024 14:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DB019922D;
+	Thu,  6 Jun 2024 14:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683180; cv=none; b=g04S8EddWbmjmOh2/yHju0cGScJcvlhE6abJi8NPPGqHYstlHlDc2i0i4m30KrK/3yjtyV7Lsgd7f3BLM1bRint0/UTZP5WuroYZWUVMrZQ7f/f4pjYP5vUIjrCHXMScvGbA8rvW3FMJ+qiMVgwV6Sk0PdXzU3XhHqc3u59IuyA=
+	t=1717683181; cv=none; b=ilaAXmRigq4b9yZYcvIYygbimE5C+/Xh4Z9ipOyecMtqeKa9+6TKFe/dxfPLKFuruAOTpAfJYO0Jd3WS+SPplIjgpc9DG4hwKuTYUZh0ASRsx67kbWkcn2snPelmi0WAfcgiiw2xvbs62gsz5eQ6n8Oza8UzN8zGYaVJEnW2W14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683180; c=relaxed/simple;
-	bh=POmjn2+6EgiD+B3T4YUU8TNSet+RD9WQQ2QXdrg951o=;
+	s=arc-20240116; t=1717683181; c=relaxed/simple;
+	bh=kE9iYZSrxeJTNyBmvGt+YHzrEPbDQNyHW0cRBPpxOJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EW9Pgq7m9KDvvp8Ha58WSJysI6SKrQLO/M2j4qvYVN5qIGHMDFSZjmUYrAbwYgxp0mumvb6RaKSrnI0GI9ea0SKdJGmbW7PZ6oswqNhBc+CrfnrFl63SxDpa9RfHFTsFNWC/75c615sZzTXmjt2mNRzFnA5s4BlOKDeFuc+IV3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/f3zJas; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZLUzX1o0191bZY5irw+yiwCLo7+6XB6kazy2DCRaz1DdIOLnE3gLpb9Pg844NL8HgNc1CN0eUY0O5ZsGo9ae4nfektGJ+UgMFAacAfPSZb8RQtwYPt5/pCzwfHsmqzhJ6foVh3vjHg4a8k6RVPNIJFtYOagNA4MR+LKvxR2FqEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeuqO8sn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/f3zJas"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB8CC4AF0D;
-	Thu,  6 Jun 2024 14:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeuqO8sn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12863C32781;
+	Thu,  6 Jun 2024 14:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683180;
-	bh=POmjn2+6EgiD+B3T4YUU8TNSet+RD9WQQ2QXdrg951o=;
+	s=korg; t=1717683181;
+	bh=kE9iYZSrxeJTNyBmvGt+YHzrEPbDQNyHW0cRBPpxOJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/f3zJasXQaJM++Ww05MwMQT0DvR5oVFw9vgFDdH1fBe9DRRiUipmmM7a/GPotxnA
-	 J3c4I5wYkxebf9ZAJuFHb8n0uChI1xqm8b+my2sBG1TwpxzQWlQ3bWwxYrcH/vNT/J
-	 +XGGfP/OoZYsCGvn5P5NCEm7R/u3waU2J/VA0Ldw=
+	b=UeuqO8snpfrIgKPKvFDpAq23XYQFJEdknbAv9bF2qGdCEbKwQkgS4QYiaZ7rl7mGO
+	 antko5MjoFj397DAxMPkohEcIwpX968VAzp2dXruMKF7+ygolihlMf8Vv52bVYaGRA
+	 pCNByfyBpW5PQDZdTQnGl6IsGNgMoVOI89UxKf0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Swapnil Patel <swapnil.patel@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/473] drm/amd/display: Add dtbclk access to dcn315
-Date: Thu,  6 Jun 2024 15:59:44 +0200
-Message-ID: <20240606131701.703081851@linuxfoundation.org>
+Subject: [PATCH 6.6 125/744] block: support to account io_ticks precisely
+Date: Thu,  6 Jun 2024 15:56:37 +0200
+Message-ID: <20240606131736.427046096@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,57 +47,154 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Swapnil Patel <swapnil.patel@amd.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit a01b64f31d65bdc917d1afb4cec9915beb6931be ]
+[ Upstream commit 99dc422335d8b2bd4d105797241d3e715bae90e9 ]
 
-[Why & How]
+Currently, io_ticks is accounted based on sampling, specifically
+update_io_ticks() will always account io_ticks by 1 jiffies from
+bdev_start_io_acct()/blk_account_io_start(), and the result can be
+inaccurate, for example(HZ is 250):
 
-Currently DCN315 clk manager is missing code to enable/disable dtbclk.
-Because of this, "optimized_required" flag is constantly set
-and this prevents FreeSync from engaging for certain high bandwidth
-display Modes which require DTBCLK.
+Test script:
+fio -filename=/dev/sda -bs=4k -rw=write -direct=1 -name=test -thinktime=4ms
 
-Reviewed-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Swapnil Patel <swapnil.patel@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Test result: util is about 90%, while the disk is really idle.
+
+This behaviour is introduced by commit 5b18b5a73760 ("block: delete
+part_round_stats and switch to less precise counting"), however, there
+was a key point that is missed that this patch also improve performance
+a lot:
+
+Before the commit:
+part_round_stats:
+  if (part->stamp != now)
+   stats |= 1;
+
+  part_in_flight()
+  -> there can be lots of task here in 1 jiffies.
+  part_round_stats_single()
+   __part_stat_add()
+  part->stamp = now;
+
+After the commit:
+update_io_ticks:
+  stamp = part->bd_stamp;
+  if (time_after(now, stamp))
+   if (try_cmpxchg())
+    __part_stat_add()
+    -> only one task can reach here in 1 jiffies.
+
+Hence in order to account io_ticks precisely, we only need to know if
+there are IO inflight at most once in one jiffies. Noted that for
+rq-based device, iterating tags should not be used here because
+'tags->lock' is grabbed in blk_mq_find_and_get_req(), hence
+part_stat_lock_inc/dec() and part_in_flight() is used to trace inflight.
+The additional overhead is quite little:
+
+ - per cpu add/dec for each IO for rq-based device;
+ - per cpu sum for each jiffies;
+
+And it's verified by null-blk that there are no performance degration
+under heavy IO pressure.
+
+Fixes: 5b18b5a73760 ("block: delete part_round_stats and switch to less precise counting")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240509123717.3223892-2-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c    | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ block/blk-core.c  | 9 +++++----
+ block/blk-merge.c | 2 ++
+ block/blk-mq.c    | 4 ++++
+ block/blk.h       | 1 +
+ block/genhd.c     | 2 +-
+ 5 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-index 28b83133db910..09eb1bc9aa030 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
-@@ -131,6 +131,10 @@ static void dcn315_update_clocks(struct clk_mgr *clk_mgr_base,
- 	 */
- 	clk_mgr_base->clks.zstate_support = new_clocks->zstate_support;
- 	if (safe_to_lower) {
-+		if (clk_mgr_base->clks.dtbclk_en && !new_clocks->dtbclk_en) {
-+			dcn315_smu_set_dtbclk(clk_mgr, false);
-+			clk_mgr_base->clks.dtbclk_en = new_clocks->dtbclk_en;
-+		}
- 		/* check that we're not already in lower */
- 		if (clk_mgr_base->clks.pwr_state != DCN_PWR_STATE_LOW_POWER) {
- 			display_count = dcn315_get_active_display_cnt_wa(dc, context);
-@@ -146,6 +150,10 @@ static void dcn315_update_clocks(struct clk_mgr *clk_mgr_base,
- 			}
- 		}
- 	} else {
-+		if (!clk_mgr_base->clks.dtbclk_en && new_clocks->dtbclk_en) {
-+			dcn315_smu_set_dtbclk(clk_mgr, true);
-+			clk_mgr_base->clks.dtbclk_en = new_clocks->dtbclk_en;
-+		}
- 		/* check that we're not already in D0 */
- 		if (clk_mgr_base->clks.pwr_state != DCN_PWR_STATE_MISSION_MODE) {
- 			union display_idle_optimization_u idle_info = { 0 };
+diff --git a/block/blk-core.c b/block/blk-core.c
+index a3726d8cf8738..bf058cea9016a 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -950,10 +950,11 @@ void update_io_ticks(struct block_device *part, unsigned long now, bool end)
+ 	unsigned long stamp;
+ again:
+ 	stamp = READ_ONCE(part->bd_stamp);
+-	if (unlikely(time_after(now, stamp))) {
+-		if (likely(try_cmpxchg(&part->bd_stamp, &stamp, now)))
+-			__part_stat_add(part, io_ticks, end ? now - stamp : 1);
+-	}
++	if (unlikely(time_after(now, stamp)) &&
++	    likely(try_cmpxchg(&part->bd_stamp, &stamp, now)) &&
++	    (end || part_in_flight(part)))
++		__part_stat_add(part, io_ticks, now - stamp);
++
+ 	if (part->bd_partno) {
+ 		part = bdev_whole(part);
+ 		goto again;
+diff --git a/block/blk-merge.c b/block/blk-merge.c
+index 65e75efa9bd36..07bf758c523a9 100644
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -783,6 +783,8 @@ static void blk_account_io_merge_request(struct request *req)
+ 	if (blk_do_io_stat(req)) {
+ 		part_stat_lock();
+ 		part_stat_inc(req->part, merges[op_stat_group(req_op(req))]);
++		part_stat_local_dec(req->part,
++				    in_flight[op_is_write(req_op(req))]);
+ 		part_stat_unlock();
+ 	}
+ }
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 257b0addd47e5..4c91889affa7c 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -994,6 +994,8 @@ static inline void blk_account_io_done(struct request *req, u64 now)
+ 		update_io_ticks(req->part, jiffies, true);
+ 		part_stat_inc(req->part, ios[sgrp]);
+ 		part_stat_add(req->part, nsecs[sgrp], now - req->start_time_ns);
++		part_stat_local_dec(req->part,
++				    in_flight[op_is_write(req_op(req))]);
+ 		part_stat_unlock();
+ 	}
+ }
+@@ -1016,6 +1018,8 @@ static inline void blk_account_io_start(struct request *req)
+ 
+ 		part_stat_lock();
+ 		update_io_ticks(req->part, jiffies, false);
++		part_stat_local_inc(req->part,
++				    in_flight[op_is_write(req_op(req))]);
+ 		part_stat_unlock();
+ 	}
+ }
+diff --git a/block/blk.h b/block/blk.h
+index 08a358bc0919e..67915b04b3c17 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -344,6 +344,7 @@ static inline bool blk_do_io_stat(struct request *rq)
+ }
+ 
+ void update_io_ticks(struct block_device *part, unsigned long now, bool end);
++unsigned int part_in_flight(struct block_device *part);
+ 
+ static inline void req_set_nomerge(struct request_queue *q, struct request *req)
+ {
+diff --git a/block/genhd.c b/block/genhd.c
+index 2ef1e08d70ecd..33b1ebf6ef82d 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -118,7 +118,7 @@ static void part_stat_read_all(struct block_device *part,
+ 	}
+ }
+ 
+-static unsigned int part_in_flight(struct block_device *part)
++unsigned int part_in_flight(struct block_device *part)
+ {
+ 	unsigned int inflight = 0;
+ 	int cpu;
 -- 
 2.43.0
 
