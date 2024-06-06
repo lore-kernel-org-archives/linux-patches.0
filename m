@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A28B198A16;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9213B198A16;
 	Thu,  6 Jun 2024 14:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683053; cv=none; b=JS8PRKFNsSi3BuexipOGJWBbPS2rKxmHuNA8sYStHKAaClM8cE2uXeAJotnzi6fbg8g+R7TANcrRdioKkyHMehpZY0oUl4d6aY4HVlxwjobFjlb73pVI2yf99XrKI8RR5cU6yGsOpagt1U7weT8T+3ryr4Q89OISh2Ld1xTGjaw=
+	t=1717683053; cv=none; b=DhI8u3gaHLKgvIiDQ2XBky48YzqyHskcFnFXhvh0TIS9s2VDAbggzPJLJpEUVxu/Gf1GnFHiDT8Ljm8wKuI1uFA5BDMteQZGmQ4Qk+OO7xWb5d63NazogwQPfsXYyAmkUqnOOK7tHkLPvS6LsCY7jOFvUhs6g8Pc72kNdCN6+mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683053; c=relaxed/simple;
-	bh=WyjiUSOxG9wuSn558O2V8qfIHTA/GX4U28j1uwQkjuw=;
+	bh=PaqVYdCi6PYxcip1gQiGoSVuRnhP1krP94sxBScjzSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KVmO6HTMEr8y3nvyPzWium6qtRPXKHgN30k5qk+L2+MEnR5QSVs61nOvwsqZSVR4N+6hhtrj98N3gBxA6p/ke0pZnkR4u3vvM5ZkkSpjLPqtA34IMYQrdNYS2sjTTV3GazJqmOejH/By5cpazJSNh5FbL6Bbt9oh+JNeAVjuXhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NzcqDcpk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Rk2YpwPIRwxeb5vp/u4NfB8Fd+/2Lin6M/uHtQl6WdbCOBvVd4lSN5o0cCnubjkbKsQsoulKboAvWJNasyfYhodm4Y2U3QdD2WSkjyCGXlMwWFd5eOMVoesaZzpBwlPPcT9XsYWDyN9nDCPHumdN8v9IExM3Y6rV2JCfhwxbm64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cE5J7BAJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NzcqDcpk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3ACC4AF0D;
-	Thu,  6 Jun 2024 14:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cE5J7BAJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF84C4AF19;
+	Thu,  6 Jun 2024 14:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683053;
-	bh=WyjiUSOxG9wuSn558O2V8qfIHTA/GX4U28j1uwQkjuw=;
+	bh=PaqVYdCi6PYxcip1gQiGoSVuRnhP1krP94sxBScjzSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NzcqDcpkOsNGFEXSRZXJDmhOC286ImTMcCxad1lLRuspR+cCfqJeZjOdRrJGtYAa2
-	 iu1dc/KguVJp0tj4aT1Ptw9zUldGtQsC52O+CSFtF8d9hR1FafTM5DEcl+vs5uGuOC
-	 /sQtqHTekxE6VeAQKZcAWUMY4jTmXZmYNb6NTjHQ=
+	b=cE5J7BAJJ+NTK6vCnQ5vIvhyluOf0yhOcT+T3AfG8htuPy3weHi5vhngnBLS2vHUE
+	 MU3jFHHwgwRF/oaVWRoZzUb8X6EX02E2zsnRJz0856bsRB5PxGSNY5VDFF8vb0Z8Ka
+	 OvmpUiIZPfeiswKliSe5x2gOKVRdiv+ew3heIeLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karim Ben Houcine <karim.benhoucine@landisgyr.com>,
-	Mathieu Othacehe <othacehe@gnu.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 295/374] net: phy: micrel: set soft_reset callback to genphy_soft_reset for KSZ8061
-Date: Thu,  6 Jun 2024 16:04:34 +0200
-Message-ID: <20240606131701.754032231@linuxfoundation.org>
+Subject: [PATCH 6.9 296/374] net/mlx5: Lag, do bond only if slaves agree on roce state
+Date: Thu,  6 Jun 2024 16:04:35 +0200
+Message-ID: <20240606131701.789374276@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -48,49 +47,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathieu Othacehe <othacehe@gnu.org>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 128d54fbcb14b8717ecf596d3dbded327b9980b3 ]
+[ Upstream commit 51ef9305b8f40946d65c40368ffb4c14636d369a ]
 
-Following a similar reinstate for the KSZ8081 and KSZ9031.
+Currently, the driver does not enforce that lag bond slaves must have
+matching roce capabilities. Yet, in mlx5_do_bond(), the driver attempts
+to enable roce on all vports of the bond slaves, causing the following
+syndrome when one slave has no roce fw support:
 
-Older kernels would use the genphy_soft_reset if the PHY did not implement
-a .soft_reset.
+mlx5_cmd_out_err:809:(pid 25427): MODIFY_NIC_VPORT_CONTEXT(0×755) op_mod(0×0)
+failed, status bad parameter(0×3), syndrome (0xc1f678), err(-22)
 
-The KSZ8061 errata described here:
-https://ww1.microchip.com/downloads/en/DeviceDoc/KSZ8061-Errata-DS80000688B.pdf
-and worked around with 232ba3a51c ("net: phy: Micrel KSZ8061: link failure after cable connect")
-is back again without this soft reset.
+Thus, create HW lag only if bond's slaves agree on roce state,
+either all slaves have roce support resulting in a roce lag bond,
+or none do, resulting in a raw eth bond.
 
-Fixes: 6e2d85ec0559 ("net: phy: Stop with excessive soft reset")
-Tested-by: Karim Ben Houcine <karim.benhoucine@landisgyr.com>
-Signed-off-by: Mathieu Othacehe <othacehe@gnu.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Fixes: 7907f23adc18 ("net/mlx5: Implement RoCE LAG feature")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index 87780465cd0d5..18dee364e2b31 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -4814,6 +4814,7 @@ static struct phy_driver ksphy_driver[] = {
- 	/* PHY_BASIC_FEATURES */
- 	.probe		= kszphy_probe,
- 	.config_init	= ksz8061_config_init,
-+	.soft_reset	= genphy_soft_reset,
- 	.config_intr	= kszphy_config_intr,
- 	.handle_interrupt = kszphy_handle_interrupt,
- 	.suspend	= kszphy_suspend,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index 37598d116f3b8..58a452d20daf7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -720,6 +720,7 @@ bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
+ 	struct mlx5_core_dev *dev;
+ 	u8 mode;
+ #endif
++	bool roce_support;
+ 	int i;
+ 
+ 	for (i = 0; i < ldev->ports; i++)
+@@ -746,6 +747,11 @@ bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
+ 		if (mlx5_sriov_is_enabled(ldev->pf[i].dev))
+ 			return false;
+ #endif
++	roce_support = mlx5_get_roce_state(ldev->pf[MLX5_LAG_P1].dev);
++	for (i = 1; i < ldev->ports; i++)
++		if (mlx5_get_roce_state(ldev->pf[i].dev) != roce_support)
++			return false;
++
+ 	return true;
+ }
+ 
+@@ -913,8 +919,10 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
+ 		} else if (roce_lag) {
+ 			dev0->priv.flags &= ~MLX5_PRIV_FLAGS_DISABLE_IB_ADEV;
+ 			mlx5_rescan_drivers_locked(dev0);
+-			for (i = 1; i < ldev->ports; i++)
+-				mlx5_nic_vport_enable_roce(ldev->pf[i].dev);
++			for (i = 1; i < ldev->ports; i++) {
++				if (mlx5_get_roce_state(ldev->pf[i].dev))
++					mlx5_nic_vport_enable_roce(ldev->pf[i].dev);
++			}
+ 		} else if (shared_fdb) {
+ 			int i;
+ 
 -- 
 2.43.0
 
