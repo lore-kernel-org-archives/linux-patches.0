@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE74F196C8D;
-	Thu,  6 Jun 2024 14:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A3A196C8D;
+	Thu,  6 Jun 2024 14:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682949; cv=none; b=m05itrxL/kKZwSRtmmyPLviyW+xCeeArFqU5bvHVwSfVWvh156cs/qm5apApPHJVRrif9xdPj/HuVxj60nGN7s3QNB6wyVFaKZjbQI7TYwZepzWl0TUYFZbay63kqzoVnQmCPEiU1PJ8rCKeOjf0ryss1BPI7Sole6VipwgrAxI=
+	t=1717682950; cv=none; b=dqqZmEgJ9DaOKjPnp7yXMgbUXchD9KsF0MOBSQ5udFQ6KtmwYAILhPO7tvLcFOeOotSRlmpkGJWMyf0vMrbcYQoGTQH3VJup9KN7MPEJHcrJY1QgUUus5jSE9Ucd8Q5ErlvdChnl2zqqW71KyxP2sfK4IrccG2HWkNtoYDV55GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682949; c=relaxed/simple;
-	bh=VId0kwqDIYkXhFNxKId0L3tA3FyknH8JXNe1wNgOPUE=;
+	s=arc-20240116; t=1717682950; c=relaxed/simple;
+	bh=zFPWwVjlS7jWIcYTpbo6tod+ebIUaaW74tZ+5Q3Huus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hvX6WquCRg5PaL/jh5ay70CK6SGGLNYgvJQQPd/pGHYERHBAja0duG2SE+SPTmQoqeeOdAFDQFWEEJ1z5flNrAhMjfs720lWR0QdIkMgIZJaYuPcy1Hhq/u+6x9ZfixImAFvIviI2iLeuryN9G2XEUyjjg9Yv98HfgFsaZS3h7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MANauAkj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CdTfrLrB52uh7l3BCSTVHE1LDqZKwqMIfuV11Ic1aaEL56aEwkD6lHcjlL+nuGKBTz9iUlbTW2WxzjAk8Gok3AQXW9/LW7071HcyZ5PhMbTLZVdfZe5Cu+Yv/3BuuFrk/4L78QufdSTkA9N+V95iAbnym0tSFY8vCSdoXVFrSkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPLqnIn4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MANauAkj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB52C2BD10;
-	Thu,  6 Jun 2024 14:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPLqnIn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0984DC2BD10;
+	Thu,  6 Jun 2024 14:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682949;
-	bh=VId0kwqDIYkXhFNxKId0L3tA3FyknH8JXNe1wNgOPUE=;
+	s=korg; t=1717682950;
+	bh=zFPWwVjlS7jWIcYTpbo6tod+ebIUaaW74tZ+5Q3Huus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MANauAkj2A3bg1rl2qGk9kkchFvHoJu3axlg5u/arrUvAOXgB1KpTw/5sIA4MNLK9
-	 dIxa4m8GP3+C7T8k5nNfEFp7kRgLVCDBPILBZvYuLLgy/P3fFEUEkdRzJEGXCRFK7T
-	 /LGiRGS0bL/rr+URmX57MKzM9SI8bRmLt/Eqb004=
+	b=PPLqnIn4Fpx7/5Wp1FMKFYanWV2RV+7TbnjuzocwW/sdzPpG82730qS+V+cZ0IVDW
+	 k6mO12nnoDIXJupt16+JuxTUz5BdmeaS/h0jw9TR++61hdN/vRrtQa+cRnL/O4cOzz
+	 UUsnuzSbqjB2KYY2neTe4btQ1iduNuqa0nQX/Bh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	David Collins <quic_collinsd@quicinc.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	xingwei lee <xrivendell7@gmail.com>,
+	yue sun <samsun1006219@gmail.com>,
+	Hou Tao <houtao1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 095/374] spmi: pmic-arb: Replace three IS_ERR() calls by null pointer checks in spmi_pmic_arb_probe()
-Date: Thu,  6 Jun 2024 16:01:14 +0200
-Message-ID: <20240606131655.083232675@linuxfoundation.org>
+Subject: [PATCH 6.9 113/374] fuse: clear FR_SENT when re-adding requests into pending list
+Date: Thu,  6 Jun 2024 16:01:32 +0200
+Message-ID: <20240606131655.717047985@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -54,67 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit c86f90e30a347ef0a28d0df3975c46389d0cc7fc ]
+[ Upstream commit 246014876d782bbf2e652267482cd2e799fb5fcd ]
 
-The devm_ioremap() function does not return error pointers.
-It returns NULL on error.
-This issue was detected once more also by using the Coccinelle software.
+The following warning was reported by lee bruce:
 
-Update three checks (and corresponding error codes) for failed
-function calls accordingly.
+  ------------[ cut here ]------------
+  WARNING: CPU: 0 PID: 8264 at fs/fuse/dev.c:300
+  fuse_request_end+0x685/0x7e0 fs/fuse/dev.c:300
+  Modules linked in:
+  CPU: 0 PID: 8264 Comm: ab2 Not tainted 6.9.0-rc7
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+  RIP: 0010:fuse_request_end+0x685/0x7e0 fs/fuse/dev.c:300
+  ......
+  Call Trace:
+  <TASK>
+  fuse_dev_do_read.constprop.0+0xd36/0x1dd0 fs/fuse/dev.c:1334
+  fuse_dev_read+0x166/0x200 fs/fuse/dev.c:1367
+  call_read_iter include/linux/fs.h:2104 [inline]
+  new_sync_read fs/read_write.c:395 [inline]
+  vfs_read+0x85b/0xba0 fs/read_write.c:476
+  ksys_read+0x12f/0x260 fs/read_write.c:619
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xce/0x260 arch/x86/entry/common.c:83
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  ......
+  </TASK>
 
-Fixes: ffdfbafdc4f4 ("spmi: Use devm_spmi_controller_alloc()")
-Fixes: 231601cd22bd ("spmi: pmic-arb: Add support for PMIC v7")
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Link: https://lore.kernel.org/r/82a0768e-95b0-4091-bdd1-14c3e893726b@web.de
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: David Collins <quic_collinsd@quicinc.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20240507210809.3479953-6-sboyd@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The warning is due to the FUSE_NOTIFY_RESEND notify sent by the write()
+syscall in the reproducer program and it happens as follows:
+
+(1) calls fuse_dev_read() to read the INIT request
+The read succeeds. During the read, bit FR_SENT will be set on the
+request.
+(2) calls fuse_dev_write() to send an USE_NOTIFY_RESEND notify
+The resend notify will resend all processing requests, so the INIT
+request is moved from processing list to pending list again.
+(3) calls fuse_dev_read() with an invalid output address
+fuse_dev_read() will try to copy the same INIT request to the output
+address, but it will fail due to the invalid address, so the INIT
+request is ended and triggers the warning in fuse_request_end().
+
+Fix it by clearing FR_SENT when re-adding requests into pending list.
+
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Reported-by: yue sun <samsun1006219@gmail.com>
+Closes: https://lore.kernel.org/linux-fsdevel/58f13e47-4765-fce4-daf4-dffcc5ae2330@huaweicloud.com/T/#m091614e5ea2af403b259e7cea6a49e51b9ee07a7
+Fixes: 760eac73f9f6 ("fuse: Introduce a new notification type for resend pending requests")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spmi/spmi-pmic-arb.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/fuse/dev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index 9ed1180fe31f1..937c15324513f 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -1462,8 +1462,8 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 	 */
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "core");
- 	core = devm_ioremap(&ctrl->dev, res->start, resource_size(res));
--	if (IS_ERR(core))
--		return PTR_ERR(core);
-+	if (!core)
-+		return -ENOMEM;
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index 8eb2ce7c0b012..9eb191b5c4de1 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1814,6 +1814,7 @@ static void fuse_resend(struct fuse_conn *fc)
  
- 	pmic_arb->core_size = resource_size(res);
- 
-@@ -1495,15 +1495,15 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 						   "obsrvr");
- 		pmic_arb->rd_base = devm_ioremap(&ctrl->dev, res->start,
- 						 resource_size(res));
--		if (IS_ERR(pmic_arb->rd_base))
--			return PTR_ERR(pmic_arb->rd_base);
-+		if (!pmic_arb->rd_base)
-+			return -ENOMEM;
- 
- 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
- 						   "chnls");
- 		pmic_arb->wr_base = devm_ioremap(&ctrl->dev, res->start,
- 						 resource_size(res));
--		if (IS_ERR(pmic_arb->wr_base))
--			return PTR_ERR(pmic_arb->wr_base);
-+		if (!pmic_arb->wr_base)
-+			return -ENOMEM;
+ 	list_for_each_entry_safe(req, next, &to_queue, list) {
+ 		set_bit(FR_PENDING, &req->flags);
++		clear_bit(FR_SENT, &req->flags);
+ 		/* mark the request as resend request */
+ 		req->in.h.unique |= FUSE_UNIQUE_RESEND;
  	}
- 
- 	pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS;
 -- 
 2.43.0
 
