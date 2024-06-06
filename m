@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1F81C95E7;
-	Thu,  6 Jun 2024 14:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A991C95E2;
+	Thu,  6 Jun 2024 14:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683732; cv=none; b=bDEgWedFd6DLYAhIQlrgTu6FXWsxlzPnJvTm3MQzojlxtOOPGo/zIdPDe3U8uzB7VyCGzRZkVm5FHu+vjuuIkbYor1dE+wHJ68UYdK0rTMKE4aeeVWG5j/NWm9Vk1aT0jo4oTM+C7/MWokUDvHdsxtclGiyZQCXw3p5gCUowHnU=
+	t=1717683733; cv=none; b=X0LXQkKZaC5FjacYcv08upro2cB2wqskkyn1Sme9MXs9gpqnQzCjpe5cqIdxMgFziSpxYwAdne+8ZB/ZNn6Zkq16R729u+h5BURqt/BkceAZcTebBizvj9VJsMrhmVNKv3tD94ZAIP7yYC1dqosMeljFhqq4csJZ0pkZxjtbxuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683732; c=relaxed/simple;
-	bh=YuFHx/DVXgIulbEEe2Hyeu42entjb4DDqOFCgR1QsyU=;
+	s=arc-20240116; t=1717683733; c=relaxed/simple;
+	bh=B69ZOMYnEMdiUoD7Cc0QsL58HSU91LpmTtszqQAfN+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YmUKIAwiS8aD9im0zng13eu7G8N8bJiD5H/L+xTL4fSSGtkYnM1zteEN7j4Wx4oWaVE/bftH8dnbAoRa7c7sM8nWMKUYf3uxTPKuOJZU4LvuhQoxtJP4SySCdP9bO8hhYciWITsUe3aY99xnEoaTA627UOs/7NuceYEpGBzZ9gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=niaDvOPM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e1J95/+AOB6lIBTuzgQlMsH6TIzAhQBCC+ocKTaTFHA39e+u8u1F0x6nKMkMoVgv8E6dwT3Pf3zQuiorAaZYNoBJC68rvOYKaFVgDY6pFqc0kjQb5WjCkE+Ab3bpP0+lIF5+Krzpc8CPi3KaeGUG9MsWhcmEhnzZGn/Ko1F2Fu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLEFxEqC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="niaDvOPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD87C32781;
-	Thu,  6 Jun 2024 14:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLEFxEqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FDFC2BD10;
+	Thu,  6 Jun 2024 14:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683732;
-	bh=YuFHx/DVXgIulbEEe2Hyeu42entjb4DDqOFCgR1QsyU=;
+	s=korg; t=1717683733;
+	bh=B69ZOMYnEMdiUoD7Cc0QsL58HSU91LpmTtszqQAfN+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=niaDvOPMQfCWFJ5dyvMUOpMhccRGRV+ihkQGr6jD5PKRIq5ncRIOU8vnvR1rAq3xZ
-	 2tK9cgcKBHKXP1IdD8m8/X5OdPpCcue+U8qnY1tqOKGoXzILA0EVyl5kgphAyCEPEZ
-	 OMRBTDb/JpCYYPhy7RUqvIUFlEqPibWm75pprelw=
+	b=CLEFxEqCJEbRE5wUklY3gBPPzUZkUpqpHIpZT1jf/qMGXjTQuWNmB0RcFLe52xZoE
+	 MViLJ3qFmU8kLKzndvalQMliKoMg9sZ/kLWOSINmUDV6kT+GrT+u1lL8unLF0UvRLl
+	 9sSqmDyd5fN02D/9JHeOp5S8dTDKH1ZzT7iJ8d1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 685/744] net/mlx5: Lag, do bond only if slaves agree on roce state
-Date: Thu,  6 Jun 2024 16:05:57 +0200
-Message-ID: <20240606131754.456183495@linuxfoundation.org>
+Subject: [PATCH 6.6 686/744] net/mlx5: Fix MTMP register capability offset in MCAM register
+Date: Thu,  6 Jun 2024 16:05:58 +0200
+Message-ID: <20240606131754.495107652@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -47,76 +48,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 51ef9305b8f40946d65c40368ffb4c14636d369a ]
+[ Upstream commit 1b9f86c6d53245dab087f1b2c05727b5982142ff ]
 
-Currently, the driver does not enforce that lag bond slaves must have
-matching roce capabilities. Yet, in mlx5_do_bond(), the driver attempts
-to enable roce on all vports of the bond slaves, causing the following
-syndrome when one slave has no roce fw support:
+The MTMP register (0x900a) capability offset is off-by-one, move it to
+the right place.
 
-mlx5_cmd_out_err:809:(pid 25427): MODIFY_NIC_VPORT_CONTEXT(0×755) op_mod(0×0)
-failed, status bad parameter(0×3), syndrome (0xc1f678), err(-22)
-
-Thus, create HW lag only if bond's slaves agree on roce state,
-either all slaves have roce support resulting in a roce lag bond,
-or none do, resulting in a raw eth bond.
-
-Fixes: 7907f23adc18 ("net/mlx5: Implement RoCE LAG feature")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Fixes: 1f507e80c700 ("net/mlx5: Expose NIC temperature via hardware monitoring kernel API")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ include/linux/mlx5/mlx5_ifc.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index 9b05061a759cc..dfc2ba6f780a2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -720,6 +720,7 @@ bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
- 	struct mlx5_core_dev *dev;
- 	u8 mode;
- #endif
-+	bool roce_support;
- 	int i;
+diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
+index 58128de5dbdda..3d1cd726df347 100644
+--- a/include/linux/mlx5/mlx5_ifc.h
++++ b/include/linux/mlx5/mlx5_ifc.h
+@@ -10158,9 +10158,9 @@ struct mlx5_ifc_mcam_access_reg_bits {
+ 	u8         mfrl[0x1];
+ 	u8         regs_39_to_32[0x8];
  
- 	for (i = 0; i < ldev->ports; i++)
-@@ -746,6 +747,11 @@ bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
- 		if (mlx5_sriov_is_enabled(ldev->pf[i].dev))
- 			return false;
- #endif
-+	roce_support = mlx5_get_roce_state(ldev->pf[MLX5_LAG_P1].dev);
-+	for (i = 1; i < ldev->ports; i++)
-+		if (mlx5_get_roce_state(ldev->pf[i].dev) != roce_support)
-+			return false;
-+
- 	return true;
- }
+-	u8         regs_31_to_10[0x16];
++	u8         regs_31_to_11[0x15];
+ 	u8         mtmp[0x1];
+-	u8         regs_8_to_0[0x9];
++	u8         regs_9_to_0[0xa];
+ };
  
-@@ -913,8 +919,10 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
- 		} else if (roce_lag) {
- 			dev0->priv.flags &= ~MLX5_PRIV_FLAGS_DISABLE_IB_ADEV;
- 			mlx5_rescan_drivers_locked(dev0);
--			for (i = 1; i < ldev->ports; i++)
--				mlx5_nic_vport_enable_roce(ldev->pf[i].dev);
-+			for (i = 1; i < ldev->ports; i++) {
-+				if (mlx5_get_roce_state(ldev->pf[i].dev))
-+					mlx5_nic_vport_enable_roce(ldev->pf[i].dev);
-+			}
- 		} else if (shared_fdb) {
- 			int i;
- 
+ struct mlx5_ifc_mcam_access_reg_bits1 {
 -- 
 2.43.0
 
