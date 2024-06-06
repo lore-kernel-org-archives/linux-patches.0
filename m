@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186881BD501;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D301ABE36;
 	Thu,  6 Jun 2024 14:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683523; cv=none; b=eS6LfCtSCwK2juIp6lF5uAiZZmcyJ7K9U2eJjmvFeHJHmxvQ8icbsZlOF3Y8bxM2MTleJNd+cOkr/jzRg5cNsVfvsZAiOrG+bScyHYox/CUrzPnVhCWZKLhS495OMQHOeePj2HWwEDLPTIDdjBJwgphwr7Dgju8FVwf5KIn1AF0=
+	t=1717683523; cv=none; b=pGp8EnW7XkZsPWFTrPlIq9G87tu+Mz+J4mQFrjosDrlm1bO22vcuKP0yb9M9q8N8SOgLPuQNnZ62mnFdf2JEBQrlJah+LUDXl3wwyJnBZaQaLaKSsFNfnJ5ptlRNDwEmqy2GbVmx22x+FGfFA9n0048ttitpT8auBBbsyxW4vMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683523; c=relaxed/simple;
-	bh=4hT7IC9fOEhwpe5bcOlD6nWlisBdRg74Vu7xFZBfHo4=;
+	bh=fZJyBhPcFIEm9ZBaU5bhWz0eWSSfmdgZrLRwqIQ505I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0BYd+KGeeZWIIMvxuWL6nfdnazC6YDfVNpA1gmH3/6JsJLHIspLeFzjUhA24NT3+AYd/YSE7UIpmigK9Ekq4DIZE0hw8psg9gYAEPrMldXNJwqUwLLkcHAfWDzx0wBhzAy8pTsrplpJ0cuZieWmL/XOG89UxJIS0dDCw65Ezp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBUUy6id; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ddnRpF0p+Ac+vOxM+mQxtnYrKAobzj/hZh7vmoRhHIqEA91pcao50dtERz9KZUQvv9PzfMm6o9U3NOtXxt2JSpMQ0JMqR1piadV+sy/dXz8vCOQx9F6lGJaJXTfb2+xBVVpgfUxKa8SzXHNG1QCLNULTudOAWE3WV5szqLLzhbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufliWckB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBUUy6id"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A28C4AF07;
-	Thu,  6 Jun 2024 14:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufliWckB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2E2C2BD10;
+	Thu,  6 Jun 2024 14:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683523;
-	bh=4hT7IC9fOEhwpe5bcOlD6nWlisBdRg74Vu7xFZBfHo4=;
+	bh=fZJyBhPcFIEm9ZBaU5bhWz0eWSSfmdgZrLRwqIQ505I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lBUUy6idCieQn5L9nu4tHal38QqDlAFD3MKdVUPQgxBo7rRu99W6BtybD5HQRSr/A
-	 tCT+jjGlyzCJZc8OCa5Pj9qCAALzKIAUWUlzHJ9gnXLqzhgpStaVdOfT4xunSu/2m3
-	 wOPLJaF2W6tP7HREf/H74ABpBfkeBQbb9OputIeQ=
+	b=ufliWckBM/NLDodcMzgZzaEGRejGKAaYGd3ohqmPBIw56KNclSgdV3zw0wQ+5k4Pb
+	 qDBHp00SJ8rDldsdMxjl10oJFPM4UkGrVQj4GM6EL9sWAtTZeici5oPDd0eDOlogWj
+	 G3oQqUTlm8R7zz2YfS2AM6BWAyaDq/SJLydMMagc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
+	Jaime Caamano <jcaamano@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 464/744] microblaze: Remove gcc flag for non existing early_printk.c file
-Date: Thu,  6 Jun 2024 16:02:16 +0200
-Message-ID: <20240606131747.354529095@linuxfoundation.org>
+Subject: [PATCH 6.1 415/473] openvswitch: Set the skbuff pkt_type for proper pmtud support.
+Date: Thu,  6 Jun 2024 16:05:44 +0200
+Message-ID: <20240606131713.506326575@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +49,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: Aaron Conole <aconole@redhat.com>
 
-[ Upstream commit edc66cf0c4164aa3daf6cc55e970bb94383a6a57 ]
+[ Upstream commit 30a92c9e3d6b073932762bef2ac66f4ee784c657 ]
 
-early_printk support for removed long time ago but compilation flag for
-ftrace still points to already removed file that's why remove that line
-too.
+Open vSwitch is originally intended to switch at layer 2, only dealing with
+Ethernet frames.  With the introduction of l3 tunnels support, it crossed
+into the realm of needing to care a bit about some routing details when
+making forwarding decisions.  If an oversized packet would need to be
+fragmented during this forwarding decision, there is a chance for pmtu
+to get involved and generate a routing exception.  This is gated by the
+skbuff->pkt_type field.
 
-Fixes: 96f0e6fcc9ad ("microblaze: remove redundant early_printk support")
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/5493467419cd2510a32854e2807bcd263de981a0.1712823702.git.michal.simek@amd.com
+When a flow is already loaded into the openvswitch module this field is
+set up and transitioned properly as a packet moves from one port to
+another.  In the case that a packet execute is invoked after a flow is
+newly installed this field is not properly initialized.  This causes the
+pmtud mechanism to omit sending the required exception messages across
+the tunnel boundary and a second attempt needs to be made to make sure
+that the routing exception is properly setup.  To fix this, we set the
+outgoing packet's pkt_type to PACKET_OUTGOING, since it can only get
+to the openvswitch module via a port device or packet command.
+
+Even for bridge ports as users, the pkt_type needs to be reset when
+doing the transmit as the packet is truly outgoing and routing needs
+to get involved post packet transformations, in the case of
+VXLAN/GENEVE/udp-tunnel packets.  In general, the pkt_type on output
+gets ignored, since we go straight to the driver, but in the case of
+tunnel ports they go through IP routing layer.
+
+This issue is periodically encountered in complex setups, such as large
+openshift deployments, where multiple sets of tunnel traversal occurs.
+A way to recreate this is with the ovn-heater project that can setup
+a networking environment which mimics such large deployments.  We need
+larger environments for this because we need to ensure that flow
+misses occur.  In these environment, without this patch, we can see:
+
+  ./ovn_cluster.sh start
+  podman exec ovn-chassis-1 ip r a 170.168.0.5/32 dev eth1 mtu 1200
+  podman exec ovn-chassis-1 ip netns exec sw01p1 ip r flush cache
+  podman exec ovn-chassis-1 ip netns exec sw01p1 \
+         ping 21.0.0.3 -M do -s 1300 -c2
+  PING 21.0.0.3 (21.0.0.3) 1300(1328) bytes of data.
+  From 21.0.0.3 icmp_seq=2 Frag needed and DF set (mtu = 1142)
+
+  --- 21.0.0.3 ping statistics ---
+  ...
+
+Using tcpdump, we can also see the expected ICMP FRAG_NEEDED message is not
+sent into the server.
+
+With this patch, setting the pkt_type, we see the following:
+
+  podman exec ovn-chassis-1 ip netns exec sw01p1 \
+         ping 21.0.0.3 -M do -s 1300 -c2
+  PING 21.0.0.3 (21.0.0.3) 1300(1328) bytes of data.
+  From 21.0.0.3 icmp_seq=1 Frag needed and DF set (mtu = 1222)
+  ping: local error: message too long, mtu=1222
+
+  --- 21.0.0.3 ping statistics ---
+  ...
+
+In this case, the first ping request receives the FRAG_NEEDED message and
+a local routing exception is created.
+
+Tested-by: Jaime Caamano <jcaamano@redhat.com>
+Reported-at: https://issues.redhat.com/browse/FDP-164
+Fixes: 58264848a5a7 ("openvswitch: Add vxlan tunneling support.")
+Signed-off-by: Aaron Conole <aconole@redhat.com>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://lore.kernel.org/r/20240516200941.16152-1-aconole@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/Makefile | 1 -
- 1 file changed, 1 deletion(-)
+ net/openvswitch/actions.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/microblaze/kernel/Makefile b/arch/microblaze/kernel/Makefile
-index 4393bee64eaf8..85c4d29ef43e9 100644
---- a/arch/microblaze/kernel/Makefile
-+++ b/arch/microblaze/kernel/Makefile
-@@ -7,7 +7,6 @@ ifdef CONFIG_FUNCTION_TRACER
- # Do not trace early boot code and low level code
- CFLAGS_REMOVE_timer.o = -pg
- CFLAGS_REMOVE_intc.o = -pg
--CFLAGS_REMOVE_early_printk.o = -pg
- CFLAGS_REMOVE_ftrace.o = -pg
- CFLAGS_REMOVE_process.o = -pg
- endif
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index a8cf9a88758ef..21102ffe44709 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -924,6 +924,12 @@ static void do_output(struct datapath *dp, struct sk_buff *skb, int out_port,
+ 				pskb_trim(skb, ovs_mac_header_len(key));
+ 		}
+ 
++		/* Need to set the pkt_type to involve the routing layer.  The
++		 * packet movement through the OVS datapath doesn't generally
++		 * use routing, but this is needed for tunnel cases.
++		 */
++		skb->pkt_type = PACKET_OUTGOING;
++
+ 		if (likely(!mru ||
+ 		           (skb->len <= mru + vport->dev->hard_header_len))) {
+ 			ovs_vport_send(vport, skb, ovs_key_mac_proto(key));
 -- 
 2.43.0
 
