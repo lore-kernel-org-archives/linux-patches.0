@@ -1,42 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8500C1B375C;
-	Thu,  6 Jun 2024 14:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0612013BAEB;
+	Thu,  6 Jun 2024 14:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683428; cv=none; b=P/Kr8mk4Lwtm/zH264b1PasBGOb/tm9hXciAIkyU2DPwhaEan1yWHg0fF/me0lvxbJEz32zSbCtANhD3kR/ZWlV0CBASnvJHXYBwqFDDcK7kmuNaqNBhRiEHKLnrpC5D2Q4tDQB4CxVOvM+Ovzle3s6ieAenVtSjTYSjQjgbd30=
+	t=1717683429; cv=none; b=bPQrzNiVZeQDhHM5Ks6Mle9P22CII4A+W3BvodGnDZIs53XufbOqo5jY23S2uMq6eO40WgrNZaP5YuaRa0WdVx5E+yXoSqCRfJVdqD61g6P/N1BAsPdfGKAYR++QwZFJnQIJb4G3XpXcX1SF4xAB5kyqPhBTdYGrUjKIYFzOKuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683428; c=relaxed/simple;
-	bh=B/C1mP9cmWU/OgH9ybNa7NmuHpdOXo+cZnAcRbk91AM=;
+	s=arc-20240116; t=1717683429; c=relaxed/simple;
+	bh=7A+fG8RMS1ovUq6lS2F3PAaP2ZrWfEv+gIQdX+QtxNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=maBBUs/7nAJmuB+jkcnPtMFN4thTtBtNNGJTbcmAjBkkX3tRNwE6FBPssw7tkisAvcEjOyfYoO6v7uIcELOnByTzzYSuxxB02x4rX6w12JnDhuFkfB0zaIo4hr0Ym4iLxJvRdmeDhOuIYubQyOz/wFB8pKAOO2NHgoG8WP7N1bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyzUNFB8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BpLoTLukWpkBtTbvG7ks7z1BEZMBmLvcqwkXNA0+dKOFHSWx829hNOg7uGlkf+AKkfQMoYAUDsRi+95M06zrEWf9S/QmrTr5GbaxS3yenLdfd90qGSPwpUeDfu7WJrQ3bIEYS8MqmBS6jFnBNhICIYRtyoELv0os/H5n9ABJZ+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Amy4F1oI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyzUNFB8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61643C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Amy4F1oI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75E2C32781;
 	Thu,  6 Jun 2024 14:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683428;
-	bh=B/C1mP9cmWU/OgH9ybNa7NmuHpdOXo+cZnAcRbk91AM=;
+	bh=7A+fG8RMS1ovUq6lS2F3PAaP2ZrWfEv+gIQdX+QtxNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yyzUNFB85jXVLZUSL4sr2xYBMXrfo5ufzLW1+aJ0N8zrQeNDHTbeHyBhafPCsSU74
-	 nJS5nmD6nb922+BW/2s5bmSOSWfpP3F3qVsToH+qzSDzvCTx6XPMZ0dualLIJP0/Ye
-	 HCXAKQEWxnfNGmgVMknXSOcFq1T3AqETEiSD5sBI=
+	b=Amy4F1oIzPmHgeTKAjJT0MN+KG6Zub/cTP72dUTXnnBSAatWXDZ+Rg3VVFI5o9NSi
+	 t02T1Ov+domMdsRVsbdgDtxffU3JOdvmdJKU6TE6pP5syVBGoMNk1967c6vSQCG4dE
+	 1iIq96zH5FhuiAQZ4IXHqHJIFtsPmcuh50cr4U/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Trond Myklebust <trondmy@hammerspace.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Song Liu <song@kernel.org>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 373/744] SUNRPC: Fix gss_free_in_token_pages()
-Date: Thu,  6 Jun 2024 16:00:45 +0200
-Message-ID: <20240606131744.447570670@linuxfoundation.org>
+Subject: [PATCH 6.1 314/473] perf docs: Document bpf event modifier
+Date: Thu,  6 Jun 2024 16:04:03 +0200
+Message-ID: <20240606131710.318009104@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +59,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit bafa6b4d95d97877baa61883ff90f7e374427fae ]
+[ Upstream commit eb4d27cf9aef3e6c9bcaf8fa1a1cadc2433d847b ]
 
-Dan Carpenter says:
-> Commit 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()") from Oct
-> 24, 2019 (linux-next), leads to the following Smatch static checker
-> warning:
->
-> 	net/sunrpc/auth_gss/svcauth_gss.c:1039 gss_free_in_token_pages()
-> 	warn: iterator 'i' not incremented
->
-> net/sunrpc/auth_gss/svcauth_gss.c
->     1034 static void gss_free_in_token_pages(struct gssp_in_token *in_token)
->     1035 {
->     1036         u32 inlen;
->     1037         int i;
->     1038
-> --> 1039         i = 0;
->     1040         inlen = in_token->page_len;
->     1041         while (inlen) {
->     1042                 if (in_token->pages[i])
->     1043                         put_page(in_token->pages[i]);
->                                                          ^
-> This puts page zero over and over.
->
->     1044                 inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
->     1045         }
->     1046
->     1047         kfree(in_token->pages);
->     1048         in_token->pages = NULL;
->     1049 }
+Document that 'b' is used as a modifier to make an event use a BPF
+counter.
 
-Based on the way that the ->pages[] array is constructed in
-gss_read_proxy_verf(), we know that once the loop encounters a NULL
-page pointer, the remaining array elements must also be NULL.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
-Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 01bd8efcec444468 ("perf stat: Introduce ':b' modifier")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Song Liu <song@kernel.org>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240416170014.985191-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ tools/perf/Documentation/perf-list.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
-index 18734e70c5ddb..708297f338752 100644
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1043,17 +1043,11 @@ svcauth_gss_proc_init_verf(struct cache_detail *cd, struct svc_rqst *rqstp,
+diff --git a/tools/perf/Documentation/perf-list.txt b/tools/perf/Documentation/perf-list.txt
+index 57384a97c04f4..3dae696b748a6 100644
+--- a/tools/perf/Documentation/perf-list.txt
++++ b/tools/perf/Documentation/perf-list.txt
+@@ -63,6 +63,7 @@ counted. The following modifiers exist:
+  D - pin the event to the PMU
+  W - group is weak and will fallback to non-group if not schedulable,
+  e - group or event are exclusive and do not share the PMU
++ b - use BPF aggregration (see perf stat --bpf-counters)
  
- static void gss_free_in_token_pages(struct gssp_in_token *in_token)
- {
--	u32 inlen;
- 	int i;
- 
- 	i = 0;
--	inlen = in_token->page_len;
--	while (inlen) {
--		if (in_token->pages[i])
--			put_page(in_token->pages[i]);
--		inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
--	}
--
-+	while (in_token->pages[i])
-+		put_page(in_token->pages[i++]);
- 	kfree(in_token->pages);
- 	in_token->pages = NULL;
- }
+ The 'p' modifier can be used for specifying how precise the instruction
+ address should be. The 'p' modifier can be specified multiple times:
 -- 
 2.43.0
 
