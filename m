@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962BA199237;
-	Thu,  6 Jun 2024 14:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0F61A187A;
+	Thu,  6 Jun 2024 14:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683187; cv=none; b=UgUbKUW3JAYjlmV2/n47THSntq/I04wWe9KNyUksL6c+WxxJRGBBNiRGT2yWrB03U79ARHoSvCEkIBa9aN074qrEV8/JP0SpkDaZOrx4r+XNMkmhsdZlZnCbDuM0rzn2zSlzaKkwlVcXTwEwqhLSSqWvw9M+kMkk94DuXNFwP1A=
+	t=1717683188; cv=none; b=tIISLYDZg6fzlz5SejOaZL+sS7LyJldM8u9MUinFeDfOufOxSrWwIKVn/4Se3RijFoDlmfzNZRY1Ay9bI45pvvCCjbz1K7mgJARP+wi5oE5HibaWdsKq5O5OLmO0P3fKn/ZWV3batytpBPuftWn7J77lew/pa3hpYR6VBnmiDv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683187; c=relaxed/simple;
-	bh=VNbSQQ1/2CtS+AOOfhhKXYZHu1envVop4N334ZdAEMI=;
+	s=arc-20240116; t=1717683188; c=relaxed/simple;
+	bh=vorI8YKbZFJG3nubjsASGYz4aNgE35jPCE5e47K5wVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1ZdPTx/GXxPTioxSMZhLVYdW98qU5lzxlcHMWDGqi28pPaEaaKxSDgHqxS6OmtjKb/poEV9uqDj0/fJhavoYdF2yAmO8lydo4l+zQCdsdQWEVyY5/j8uwdj8KyB0sy/uJ1LWMa6IVEJpVV2NV0LAuGWL6EViGc8GzkbGxUqkGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=magY3mFW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nnd0yXn8X6j4tJtcR9hdDWmjykKu7ufdKMpm2SfQQmpKI/zcaid7Btc+z7PVO8s4w+I6WvPqhsFFkdYzhgBm58FKNWoW1AWN3L8UbRUoqyK5jf2WUi1znPpD1BBsYZwefs5jU+VsxAd65gmFe96MBtQjMnKxMjuZX278x6NHP4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miRrwrgv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="magY3mFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8C7C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miRrwrgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D94FBC2BD10;
 	Thu,  6 Jun 2024 14:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683187;
-	bh=VNbSQQ1/2CtS+AOOfhhKXYZHu1envVop4N334ZdAEMI=;
+	bh=vorI8YKbZFJG3nubjsASGYz4aNgE35jPCE5e47K5wVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=magY3mFWIvzssgZpFfV/eK6HihDPlDVCQf4zHv65ls1X7QzoavmQaxYFOLb+/VAcI
-	 GOLX262RmNfX2QsDL4aHLxrHRRN5uWni0w98BNmf/qUyk+TBXgDe6W/7LDZQNM2blA
-	 iUL2aTSP3PJgNPhkF4+r/q+fMEXd2aL+8vrEgJAE=
+	b=miRrwrgv8h6+jkt3fLRNWGXE+64kC7fOY3JpzkRb2glhQGOeHygCBPRgwLZLAWCex
+	 Z8jaC5DgpO9GmTF7l4veAPF2uIjpqa7o317VEIKlKmDWIe3skQ5VYqvskPOihE+JTL
+	 BENx7+O6UrCQZ4juv9o8T+ngndUEZ4m/l+HJz1Tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
-	Kalle Valo <kvalo@kernel.org>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 131/744] wifi: mt76: mt7915: workaround too long expansion sparse warnings
-Date: Thu,  6 Jun 2024 15:56:43 +0200
-Message-ID: <20240606131736.631029287@linuxfoundation.org>
+Subject: [PATCH 6.1 062/473] nvmet-tcp: fix possible memory leak when tearing down a controller
+Date: Thu,  6 Jun 2024 15:59:51 +0200
+Message-ID: <20240606131701.945251727@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,64 +49,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit 2d5cde1143eca31c72547dfd589702c6b4a7e684 ]
+[ Upstream commit 6825bdde44340c5a9121f6d6fa25cc885bd9e821 ]
 
-Fix the following sparse warnings:
+When we teardown the controller, we wait for pending I/Os to complete
+(sq->ref on all queues to drop to zero) and then we go over the commands,
+and free their command buffers in case they are still fetching data from
+the host (e.g. processing nvme writes) and have yet to take a reference
+on the sq.
 
-drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c:1133:29: error: too long token expansion
-drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c:1133:29: error: too long token expansion
-drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c:1133:29: error: too long token expansion
-drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c:1133:29: error: too long token expansion
+However, we may miss the case where commands have failed before executing
+and are queued for sending a response, but will never occur because the
+queue socket is already down. In this case we may miss deallocating command
+buffers.
 
-No functional changes, compile tested only.
+Solve this by freeing all commands buffers as nvmet_tcp_free_cmd_buffers is
+idempotent anyways.
 
-Fixes: e3296759f347 ("wifi: mt76: mt7915: enable per bandwidth power limit support")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Acked-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/5457b92e41909dd75ab3db7a0e9ec372b917a386.1710858172.git.lorenzo@kernel.org
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nvme/target/tcp.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
-index 6c3696c8c7002..450f4d221184b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
-@@ -1049,6 +1049,7 @@ static ssize_t
- mt7915_rate_txpower_set(struct file *file, const char __user *user_buf,
- 			size_t count, loff_t *ppos)
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 3480768274699..5556f55880411 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -297,6 +297,7 @@ static int nvmet_tcp_check_ddgst(struct nvmet_tcp_queue *queue, void *pdu)
+ 	return 0;
+ }
+ 
++/* If cmd buffers are NULL, no operation is performed */
+ static void nvmet_tcp_free_cmd_buffers(struct nvmet_tcp_cmd *cmd)
  {
-+	int i, ret, pwr, pwr160 = 0, pwr80 = 0, pwr40 = 0, pwr20 = 0;
- 	struct mt7915_phy *phy = file->private_data;
- 	struct mt7915_dev *dev = phy->dev;
- 	struct mt76_phy *mphy = phy->mt76;
-@@ -1057,7 +1058,6 @@ mt7915_rate_txpower_set(struct file *file, const char __user *user_buf,
- 		.band_idx = phy->mt76->band_idx,
- 	};
- 	char buf[100];
--	int i, ret, pwr160 = 0, pwr80 = 0, pwr40 = 0, pwr20 = 0;
- 	enum mac80211_rx_encoding mode;
- 	u32 offs = 0, len = 0;
+ 	kfree(cmd->iov);
+@@ -1437,13 +1438,9 @@ static void nvmet_tcp_free_cmd_data_in_buffers(struct nvmet_tcp_queue *queue)
+ 	struct nvmet_tcp_cmd *cmd = queue->cmds;
+ 	int i;
  
-@@ -1130,8 +1130,8 @@ mt7915_rate_txpower_set(struct file *file, const char __user *user_buf,
- 	if (ret)
- 		goto out;
+-	for (i = 0; i < queue->nr_cmds; i++, cmd++) {
+-		if (nvmet_tcp_need_data_in(cmd))
+-			nvmet_tcp_free_cmd_buffers(cmd);
+-	}
+-
+-	if (!queue->nr_cmds && nvmet_tcp_need_data_in(&queue->connect))
+-		nvmet_tcp_free_cmd_buffers(&queue->connect);
++	for (i = 0; i < queue->nr_cmds; i++, cmd++)
++		nvmet_tcp_free_cmd_buffers(cmd);
++	nvmet_tcp_free_cmd_buffers(&queue->connect);
+ }
  
--	mphy->txpower_cur = max(mphy->txpower_cur,
--				max(pwr160, max(pwr80, max(pwr40, pwr20))));
-+	pwr = max3(pwr80, pwr40, pwr20);
-+	mphy->txpower_cur = max3(mphy->txpower_cur, pwr160, pwr);
- out:
- 	mutex_unlock(&dev->mt76.mutex);
- 
+ static void nvmet_tcp_release_queue_work(struct work_struct *w)
 -- 
 2.43.0
 
