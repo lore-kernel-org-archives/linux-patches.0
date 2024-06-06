@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E445B19EEA1;
-	Thu,  6 Jun 2024 14:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699331990BA;
+	Thu,  6 Jun 2024 14:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683116; cv=none; b=CQvPmPkbSDlCTIfizTdVPZCRf7MH9FoYGcIOd8nuSsa93qRNnyTfEqJlLDr9ExZOQmaLQ3P4zFHbM6FAsdU2zCEB2frNZCZ5+l+M4ip9B//7R1GO+NvTssBPfVVNpC+nH5fTzVwMN321GO7dk3F7524TcJ7VeWFeFMC1vYtB8ZU=
+	t=1717683116; cv=none; b=F8hgOdLIaUoaMiXE6Hq5DUtJIEYlrSONcPn1ylCXyo3ylKOseaQdi8RmeqcXBzTGQ3xAKUaUayd70Rp4dLN72gEEUqnTTIpXotDuZnhK7vA6vlMvUVwAWzHcEprHAwuOBKMMkBFUk2PxEZ39c4Owv4VKU2gporpCv8SrXUO1Jjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683116; c=relaxed/simple;
-	bh=o4SKiWa0uZBdcivBJiBumXor8sX+9HTCgTTXBbRRhPw=;
+	bh=+Lr6WZGxgAeu7/I9mjb6xDj7uopFzCfEkytKcfugN6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKx9P3O5zVBOKThaO+zxgFxRVV1OZWCmyS6ImMXlZ40FUOY+HiwmABYhO6Xvxu9Ey4AIF7vs36dlkt699DGJlK0ZOHXVA4Q0EdTpN9IIT1RklxJASo9sntNIy2VaGVZol+hvTawrvS1PvCRF8ULIQC8HaWaKd+bBos58pfVs6s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDVXwRWO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W26r1B0iIJixJM6nJx28M5XTKyREVwe1rg0zpkgdlreSX/+sILmUR404WEQYw+ywjzRTID638pcjjWtkOpoVYPiHMFuTJuyTvus3jBZyaSyHjwvqABRN0m5DgwduZNWt5ZQ3jKHbkeKHqIIgntBGViZWOhDp3P3j3f6XIoZACPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6wMTV5+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDVXwRWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1006C32781;
-	Thu,  6 Jun 2024 14:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6wMTV5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B14C2BD10;
+	Thu,  6 Jun 2024 14:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683115;
-	bh=o4SKiWa0uZBdcivBJiBumXor8sX+9HTCgTTXBbRRhPw=;
+	s=korg; t=1717683116;
+	bh=+Lr6WZGxgAeu7/I9mjb6xDj7uopFzCfEkytKcfugN6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDVXwRWOY6Rnb0M4xZ9RUoAX6E5jXK3VA0o3AzjZp7jcINaNk3upeZZ7w+r8QHfbB
-	 bfDvi07JHlN4YkUxbZwwT7ttZXIz4GRx6X5kXbTUEWvUm1CpG3bLCAC5ZlhSHjrTyl
-	 ZZYuGei72pLeOIVOgyeOT+RiV8zJHLH05mK6QSwA=
+	b=j6wMTV5+ZBEcFckUdonfcQFQ8HRcW40AW9I1ZYIaH5PbYEzMZp/jOpmlRThTEcQ5O
+	 gPYzwJts4r5milSPFSaA0Lkh9aTg6Sb0bPr2f21Dmy0DuZMlEjgXkdbxPc3Iz69G1U
+	 Wy0fbcLZ1AXmkt8vz5J9e2/LR4On4EHyEDPxkSCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Foreman <derek.foreman@collabora.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/744] drm/etnaviv: fix tx clock gating on some GC7000 variants
-Date: Thu,  6 Jun 2024 15:55:22 +0200
-Message-ID: <20240606131734.046731645@linuxfoundation.org>
+Subject: [PATCH 6.6 051/744] selftests: sud_test: return correct emulated syscall value on RISC-V
+Date: Thu,  6 Jun 2024 15:55:23 +0200
+Message-ID: <20240606131734.077732206@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -45,47 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Derek Foreman <derek.foreman@collabora.com>
+From: Clément Léger <cleger@rivosinc.com>
 
-[ Upstream commit d7a5c9de99b3a9a43dce49f2084eb69b5f6a9752 ]
+[ Upstream commit 17c67ed752d6a456602b3dbb25c5ae4d3de5deab ]
 
-commit 4bce244272513 ("drm/etnaviv: disable tx clock gating for GC7000
-rev6203") accidentally applied the fix for i.MX8MN errata ERR050226 to
-GC2000 instead of GC7000, failing to disable tx clock gating for GC7000
-rev 0x6023 as intended.
+Currently, the sud_test expects the emulated syscall to return the
+emulated syscall number. This assumption only works on architectures
+were the syscall calling convention use the same register for syscall
+number/syscall return value. This is not the case for RISC-V and thus
+the return value must be also emulated using the provided ucontext.
 
-Additional clean-up further propagated this issue, partially breaking
-the clock gating fixes added for GC7000 rev 6202 in commit 432f51e7deeda
-("drm/etnaviv: add clock gating workaround for GC7000 r6202").
-
-Signed-off-by: Derek Foreman <derek.foreman@collabora.com>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/r/20231206134438.473166-1-cleger@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../selftests/syscall_user_dispatch/sud_test.c     | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-index 9276756e1397d..371e1f2733f6f 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-@@ -632,8 +632,8 @@ static void etnaviv_gpu_enable_mlcg(struct etnaviv_gpu *gpu)
- 	/* Disable TX clock gating on affected core revisions. */
- 	if (etnaviv_is_model_rev(gpu, GC4000, 0x5222) ||
- 	    etnaviv_is_model_rev(gpu, GC2000, 0x5108) ||
--	    etnaviv_is_model_rev(gpu, GC2000, 0x6202) ||
--	    etnaviv_is_model_rev(gpu, GC2000, 0x6203))
-+	    etnaviv_is_model_rev(gpu, GC7000, 0x6202) ||
-+	    etnaviv_is_model_rev(gpu, GC7000, 0x6203))
- 		pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_TX;
+diff --git a/tools/testing/selftests/syscall_user_dispatch/sud_test.c b/tools/testing/selftests/syscall_user_dispatch/sud_test.c
+index b5d592d4099e8..d975a67673299 100644
+--- a/tools/testing/selftests/syscall_user_dispatch/sud_test.c
++++ b/tools/testing/selftests/syscall_user_dispatch/sud_test.c
+@@ -158,6 +158,20 @@ static void handle_sigsys(int sig, siginfo_t *info, void *ucontext)
  
- 	/* Disable SE and RA clock gating on affected core revisions. */
+ 	/* In preparation for sigreturn. */
+ 	SYSCALL_DISPATCH_OFF(glob_sel);
++
++	/*
++	 * The tests for argument handling assume that `syscall(x) == x`. This
++	 * is a NOP on x86 because the syscall number is passed in %rax, which
++	 * happens to also be the function ABI return register.  Other
++	 * architectures may need to swizzle the arguments around.
++	 */
++#if defined(__riscv)
++/* REG_A7 is not defined in libc headers */
++# define REG_A7 (REG_A0 + 7)
++
++	((ucontext_t *)ucontext)->uc_mcontext.__gregs[REG_A0] =
++			((ucontext_t *)ucontext)->uc_mcontext.__gregs[REG_A7];
++#endif
+ }
+ 
+ TEST(dispatch_and_return)
 -- 
 2.43.0
 
