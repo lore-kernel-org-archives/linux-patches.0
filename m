@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B83197542;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887AA1C618F;
 	Thu,  6 Jun 2024 14:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683695; cv=none; b=NrEQ1bRr5rfBhCPJ1quBEmlBLlxPowUAIXKOy/okPBBtSvK9WrB2jac9yiz9eBks2hNqUBNNWWcz25hpU2Fb4iHMFuAnJoTrv+eS2j+3lwxLRvNUyIjKoAUgx+wPRL08EOHVbcHWN7kWdfSPq37ztDAUymi4fPwqEs1A2FWo478=
+	t=1717683695; cv=none; b=HVVF/2YA/kMxKTe1cJSd/ltQWttqDYKsqnlwdxGJmdycAYN3LBVxvHfa+zDUIY+ppSCb9dQ7q69xMV14VZTLWORfyWvCe78K2qXRyT9DWryXYD/zZaXEidmHRCvoJg2aEyXWa3Bhv2XvVX1eThRCoTKhWUkq0th53eI7yXIlBds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683695; c=relaxed/simple;
-	bh=RcZENCftesLMumIVRYOzihaquGfAAmUJ5Ao5eoe3UW0=;
+	bh=/0XqRQE0mEzcV6lBqF+4xYbYMGL4hGqUlBm/MzYYjSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wu2ftmdnkzL9Fu46Ov3uD/ItOHfPt+b+JDf2VscETbbAGRrcdv2rqbwxDxOEbPvE8JAYadZlrzX+WNMUrdum+qWSloFSkKkK/0wckpBeJEVPLJu6akgPU69tJOfnvCoENuTdfkaLq7q/4yItgeFtcHImXQhvmJ4b2gFAgvFT6xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cs9Uo5O9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g4cP56FU2dHC/ZVDzFPOApF86IZofOOnzJGZZshEgI3qdO+gIT5dmE7IXuDf/PQ2Sm0cYNTNdoWNJnF2Kex79lyalTK4edEraNb3gyYJyVfjbpNfXmm7ofyGraktioM/oYaJnZGgc4bFN25tCHmQ6ilArZuGc1Vvt3yV75FcqLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkUaRWPk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cs9Uo5O9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36B0C2BD10;
-	Thu,  6 Jun 2024 14:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkUaRWPk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67940C2BD10;
+	Thu,  6 Jun 2024 14:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683694;
-	bh=RcZENCftesLMumIVRYOzihaquGfAAmUJ5Ao5eoe3UW0=;
+	s=korg; t=1717683695;
+	bh=/0XqRQE0mEzcV6lBqF+4xYbYMGL4hGqUlBm/MzYYjSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cs9Uo5O94jqUtRR9Cwwc6O5zZzId6+uDZxLXb32dsuLn52kkrntzcGfVFweFnxhOc
-	 bM/H8qdqD5d5neyMVkK7ONvF5XSEXBMD1ZvClh1LZfcysSirSYQwhjoNmPAoB7NMQD
-	 7zdsBaAFsaF+WNytKqn4XdZVv8YdyUcskjh0KHn0=
+	b=KkUaRWPkfYmhKWDpYOqmq5cClgfNfkERNngn6d3GaaxiPleCz1b40efJ2tEtP7gSv
+	 in2bHeNB092EyCaP8KetmOMvJ6+qo0u3WXaa9odGuKr54B2FHuVOJ/P3U4OCNjxVMi
+	 rq7/J76pjbOMlwW3OPBiAWoNvfntAxsbqHhIxV6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Umang Jain <umang.jain@ideasonboard.com>,
+	Fabio Estevam <festevam@denx.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 568/744] media: v4l: Dont turn on privacy LED if streamon fails
-Date: Thu,  6 Jun 2024 16:04:00 +0200
-Message-ID: <20240606131750.672667650@linuxfoundation.org>
+Subject: [PATCH 6.6 569/744] media: ov2680: Clear the ret variable on success
+Date: Thu,  6 Jun 2024 16:04:01 +0200
+Message-ID: <20240606131750.703220860@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -54,66 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit f2bf6cd8f44781349620e30a0af8987fe9af008f ]
+[ Upstream commit 49a9bad83b4ab5dac1d7aba2615c77978bcf3984 ]
 
-Turn on the privacy LED only if streamon succeeds. This can be done after
-enabling streaming on the sensor.
+Since commit 63b0cd30b78e ("media: ov2680: Add bus-cfg / endpoint
+property verification") even when the correct 'link-frequencies'
+property is passed in the devicetree, the driver fails to probe:
 
-Fixes: b6e10ff6c23d ("media: v4l2-core: Make the v4l2-core code enable/disable the privacy LED if present")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+ov2680 1-0036: probe with driver ov2680 failed with error -22
+
+The reason is that the variable 'ret' may contain the -EINVAL value
+from a previous assignment:
+
+ret = fwnode_property_read_u32(dev_fwnode(dev), "clock-frequency",
+			       &rate);
+
+Fix the problem by clearing 'ret' on the successful path.
+
+Tested on imx7s-warp board with the following devicetree:
+
+port {
+	ov2680_to_mipi: endpoint {
+		remote-endpoint = <&mipi_from_sensor>;
+		clock-lanes = <0>;
+		data-lanes = <1>;
+		link-frequencies = /bits/ 64 <330000000>;
+	};
+};
+
+Cc: stable@vger.kernel.org
+Fixes: 63b0cd30b78e ("media: ov2680: Add bus-cfg / endpoint property verification")
+Suggested-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Reviewed-by: Umang Jain <umang.jain@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 24034af644fc ("media: ov2680: Do not fail if data-lanes property is absent")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-subdev.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/media/i2c/ov2680.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/v4l2-core/v4l2-subdev.c b/drivers/media/v4l2-core/v4l2-subdev.c
-index f481d1ca32abb..a32ef739eb449 100644
---- a/drivers/media/v4l2-core/v4l2-subdev.c
-+++ b/drivers/media/v4l2-core/v4l2-subdev.c
-@@ -371,15 +371,6 @@ static int call_s_stream(struct v4l2_subdev *sd, int enable)
- 	if (WARN_ON(!!sd->enabled_streams == !!enable))
- 		return 0;
- 
--#if IS_REACHABLE(CONFIG_LEDS_CLASS)
--	if (!IS_ERR_OR_NULL(sd->privacy_led)) {
--		if (enable)
--			led_set_brightness(sd->privacy_led,
--					   sd->privacy_led->max_brightness);
--		else
--			led_set_brightness(sd->privacy_led, 0);
--	}
--#endif
- 	ret = sd->ops->video->s_stream(sd, enable);
- 
- 	if (!enable && ret < 0) {
-@@ -387,9 +378,20 @@ static int call_s_stream(struct v4l2_subdev *sd, int enable)
- 		ret = 0;
+diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
+index 72bab0ff8a36a..7b1d9bd0b60f3 100644
+--- a/drivers/media/i2c/ov2680.c
++++ b/drivers/media/i2c/ov2680.c
+@@ -1123,6 +1123,7 @@ static int ov2680_parse_dt(struct ov2680_dev *sensor)
+ 		goto out_free_bus_cfg;
  	}
  
--	if (!ret)
-+	if (!ret) {
- 		sd->enabled_streams = enable ? BIT(0) : 0;
- 
-+#if IS_REACHABLE(CONFIG_LEDS_CLASS)
-+		if (!IS_ERR_OR_NULL(sd->privacy_led)) {
-+			if (enable)
-+				led_set_brightness(sd->privacy_led,
-+						   sd->privacy_led->max_brightness);
-+			else
-+				led_set_brightness(sd->privacy_led, 0);
-+		}
-+#endif
-+	}
-+
++	ret = 0;
+ out_free_bus_cfg:
+ 	v4l2_fwnode_endpoint_free(&bus_cfg);
  	return ret;
- }
- 
 -- 
 2.43.0
 
