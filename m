@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411541BE862;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AD719EEB3;
 	Thu,  6 Jun 2024 14:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683546; cv=none; b=WZEq+jCBYxQHoFLgafxb3SK59rVaUAknDciAkLYrsk/LMXaWHjil9KUyhnQBMUxfuzbLRSK5/PnSOUxnHdEbRaItYpGRnmUeNghhDcWyw5J8F+xUphnbZ+rjUd9icPvSTdTvvU/ot2TVup0izeZGIaxUf4hw5damyCZtdntgqyM=
+	t=1717683546; cv=none; b=mLtcYsKOQpPW4frC5facDO40+2VfOBHafixAnUrXGNaVk5aBtE7olWGt1z+DGm5yRLqO41zsfM/6kLpLOj/YOLtURTz4OdFg0MhmrAqfnSEmFiBPG/SFLj4IoFr81lU1iaNMz2w8rMcofOG58vEHvhnheU43PnkCNrJe/+WRb4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683546; c=relaxed/simple;
-	bh=U2dTqW78BBUwRKBXi8N9FZituDOtefBzfUqwXKpzLog=;
+	bh=Gxvhj/Te6+XYlovXdHhjx7c8V311ge2hIZITbqxMo6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOMWMVTw+76LNJxtC2O4EEjcAsqdezr7KII1aRsgs4p2lek4cr/FLjUYH1CDW1IR+AlPMd9cVszuFDjk5N2InBSpljsaEuOldXNJUuENFS4+wAjD3jHVYhM2uCuYPsLn08aak3C9JiRvITgw9Juvm39bZVPIAjf/64NFdYvPrWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsUYmBRL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SA5TfChhsxlOTc0fjfPSzx6B3xejEnrqjz21guTGBGYwAUWgSmhqKG5DNfqF0hkJTlYu+7tL4E1WIhT5+waPJS+9sAYq54we5IT2POvzOy/Og0fMLifl8uCNPpYXzIMo13yAQ0mVutKsNIy3hB9CQXxTIuWD7B+GAI/nwAY4pxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4TYD6gT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsUYmBRL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6FDC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4TYD6gT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE61C2BD10;
 	Thu,  6 Jun 2024 14:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683546;
-	bh=U2dTqW78BBUwRKBXi8N9FZituDOtefBzfUqwXKpzLog=;
+	bh=Gxvhj/Te6+XYlovXdHhjx7c8V311ge2hIZITbqxMo6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VsUYmBRLfy6xkniA2OqZXF0b3p2BzngDZBAztqpm4pRyGHB/TcE1lb6KyxEm045FZ
-	 IQ6a2mFj9juZZIzGU6OMXE0idVt/R/A/cTbLa7ZqtJzbmHjHUioVCxzqdzdwNP8CrI
-	 OY3u4lGWK7Ct/gFRBwOubZvXGhRkx3pD46TqxOzY=
+	b=o4TYD6gThrIvbO5ZSABtqtr2PwulhGQvB6ePlDwQejxzWeZE0zeMrN8NpyzPRiQsj
+	 yVLrWYyCBx9zYItgFKMGDdQ4zYXCE+1m22mLXlzygHvjiA0Sxcs8shSHOi3jhPq1RL
+	 38mipm0JkQoCEwIr1KtMz2fISyBMMlVw95Y79hKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zhenyu Wang <zhenyuw@linux.intel.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Christian Brauner <brauner@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 458/744] i915: make inject_virtual_interrupt() void
-Date: Thu,  6 Jun 2024 16:02:10 +0200
-Message-ID: <20240606131747.155571564@linuxfoundation.org>
+Subject: [PATCH 6.6 485/744] dt-bindings: phy: qcom,usb-snps-femto-v2: use correct fallback for sc8180x
+Date: Thu,  6 Jun 2024 16:02:37 +0200
+Message-ID: <20240606131748.018583963@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,65 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 85884871921000b9bca2184077b1159771e50047 ]
+[ Upstream commit 960b3f023d3bda0efd6e573a0647227d1115d266 ]
 
-The single caller of inject_virtual_interrupt() ignores the return value
-anyway. This allows us to simplify eventfd_signal() in follow-up
-patches.
+The qcom,sc8180x-usb-hs-phy device uses qcom,usb-snps-hs-7nm-phy
+fallback. Correct the schema for this platform.
 
-Link: https://lore.kernel.org/r/20231122-vfs-eventfd-signal-v2-1-bd549b14ce0c@kernel.org
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhenyu Wang <zhenyuw@linux.intel.com>
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 82b951e6fbd3 ("vfio/pci: fix potential memory leak in vfio_intx_enable()")
+Fixes: 9160fb7c39a1 ("dt-bindings: phy: qcom,usb-snps-femto-v2: use fallback compatibles")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240501-qcom-phy-fixes-v1-3-f1fd15c33fb3@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gvt/interrupt.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ .../devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml       | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gvt/interrupt.c b/drivers/gpu/drm/i915/gvt/interrupt.c
-index 68eca023bbc68..80301472ac988 100644
---- a/drivers/gpu/drm/i915/gvt/interrupt.c
-+++ b/drivers/gpu/drm/i915/gvt/interrupt.c
-@@ -405,7 +405,7 @@ static void init_irq_map(struct intel_gvt_irq *irq)
- #define MSI_CAP_DATA(offset) (offset + 8)
- #define MSI_CAP_EN 0x1
- 
--static int inject_virtual_interrupt(struct intel_vgpu *vgpu)
-+static void inject_virtual_interrupt(struct intel_vgpu *vgpu)
- {
- 	unsigned long offset = vgpu->gvt->device_info.msi_cap_offset;
- 	u16 control, data;
-@@ -417,10 +417,10 @@ static int inject_virtual_interrupt(struct intel_vgpu *vgpu)
- 
- 	/* Do not generate MSI if MSIEN is disabled */
- 	if (!(control & MSI_CAP_EN))
--		return 0;
-+		return;
- 
- 	if (WARN(control & GENMASK(15, 1), "only support one MSI format\n"))
--		return -EINVAL;
-+		return;
- 
- 	trace_inject_msi(vgpu->id, addr, data);
- 
-@@ -434,10 +434,9 @@ static int inject_virtual_interrupt(struct intel_vgpu *vgpu)
- 	 * returned and don't inject interrupt into guest.
- 	 */
- 	if (!test_bit(INTEL_VGPU_STATUS_ATTACHED, vgpu->status))
--		return -ESRCH;
--	if (vgpu->msi_trigger && eventfd_signal(vgpu->msi_trigger, 1) != 1)
--		return -EFAULT;
--	return 0;
-+		return;
-+	if (vgpu->msi_trigger)
-+		eventfd_signal(vgpu->msi_trigger, 1);
- }
- 
- static void propagate_event(struct intel_gvt_irq *irq,
+diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+index 0f200e3f97a9a..fce7f8a19e9c0 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+@@ -15,9 +15,6 @@ description: |
+ properties:
+   compatible:
+     oneOf:
+-      - enum:
+-          - qcom,sc8180x-usb-hs-phy
+-          - qcom,usb-snps-femto-v2-phy
+       - items:
+           - enum:
+               - qcom,sa8775p-usb-hs-phy
+@@ -26,6 +23,7 @@ properties:
+       - items:
+           - enum:
+               - qcom,sc7280-usb-hs-phy
++              - qcom,sc8180x-usb-hs-phy
+               - qcom,sdx55-usb-hs-phy
+               - qcom,sdx65-usb-hs-phy
+               - qcom,sm6375-usb-hs-phy
 -- 
 2.43.0
 
