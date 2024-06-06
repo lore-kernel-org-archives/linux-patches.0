@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2F1198A06;
-	Thu,  6 Jun 2024 14:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096C7198A06;
+	Thu,  6 Jun 2024 14:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683343; cv=none; b=h48OHXrCTnaAahJeQzuwNxeO2gSFs6Ee34Nhfdc7fnrs3I1IDTyzsLPhoSgAyn+gzcy2iED7tuHYgtcZP1xdZ5gg4kaMEtP8emLU8znHJ+tzO1MjkzKglmjU9zteyegz7stuBSwR+FKGX+6QrHrRUP8BGohZItGd5t6r0WxkMig=
+	t=1717683344; cv=none; b=XR4uOOhU1lP6EmZ1kjiC1YWe9OIeAwt+ACgVt2anx8SwBCFbz55Yrc2JdRJ+vAQ/EwrLq1gFOfIXdbFdMqWQgMHtLB24DmkeG8BPJc6U9Y1T8YXY271vvVIR4N2He9gDIkdwFLJmq08J2hB4H/f3W281AIq7ByueEKnqZt3IRV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683343; c=relaxed/simple;
-	bh=N22RFA4pwrq7yI2EEo8CdkYv701tu+4HVGxmG6V1qa4=;
+	s=arc-20240116; t=1717683344; c=relaxed/simple;
+	bh=DMgJEGiIjFLnjqfJXvBdpZE3naYUJBrNADvJZHpiqQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ieKQBhKR9o5DeQyuAOR61s2bSRbwscml4V/8sFQBdzwLoDKYeOKqQiNqXuWu71i9uHrxpWsOamBOvt/0HiD+msXuNMQ4iHULynE5Ge8e6RYAQ6ci42rv5eOK/ksbp6twIBoBrWj61r0Acuv0SWqjCKkanYTeNDn7QviXbxURI5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/rxV1i0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hSAaliHQ2B+K5qpHSZ57eJLdNZbVF2waSnczNjN9e8FdJZ/8NKTXfYPT9OQJH2GhktA1VOAulqL7HY8E/GgmDgkbaoejiZnmfWr1k+A51X7b1MXsEhvHFeAZc3CyLcnwNquWVnCmaJ/oI8QO0ggbzlgwC1T2soy+zP7BQ0Parf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04n79hke; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/rxV1i0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACBBC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04n79hke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0E8C2BD10;
 	Thu,  6 Jun 2024 14:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683343;
-	bh=N22RFA4pwrq7yI2EEo8CdkYv701tu+4HVGxmG6V1qa4=;
+	bh=DMgJEGiIjFLnjqfJXvBdpZE3naYUJBrNADvJZHpiqQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/rxV1i0Ahyjr3EA4fMLmLc1gU96g1QnZl5xUMWOPkzueRHn6vX4qWHpCsS0A/kvS
-	 K2GV/0I+ML74x22Bwg9QaEu1/W/xt99+tGltOUG4mpsZP6mvo2YQ+hks0dY22gaSTn
-	 2h3edZeigjsiAoWX28AdtzCPiTTj/7B8SgzKmUkU=
+	b=04n79hkeuXtDIskEhMvn8hWhx5o05UgSI77VqTSPwKmGke0Hhh6vrLfl9ef/0olXl
+	 idGgsWzvVAdidDvbiWgjt1AwOKVmxPfzXZHtSRtcOb7eE+n8Ur78zmzBhg8OEvJ6kU
+	 h7Ov6qU7CKAFPolVKoDX5qwMKwxko4ib76oI5DJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 284/744] ASoC: mediatek: Assign dummy when codec not specified for a DAI link
-Date: Thu,  6 Jun 2024 15:59:16 +0200
-Message-ID: <20240606131741.517225578@linuxfoundation.org>
+Subject: [PATCH 6.1 225/473] drm/bridge: icn6211: Dont log an error when DSI host cant be found
+Date: Thu,  6 Jun 2024 16:02:34 +0200
+Message-ID: <20240606131707.317519066@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,49 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 5f39231888c63f0a7708abc86b51b847476379d8 ]
+[ Upstream commit 275fafe58faa7fdb10fa245412696ecef676aac5 ]
 
-MediaTek sound card drivers are checking whether a DAI link is present
-and used on a board to assign the correct parameters and this is done
-by checking the codec DAI names at probe time.
+Given that failing to find a DSI host causes the driver to defer probe,
+make use of dev_err_probe() to log the reason. This makes the defer
+probe reason available and avoids alerting userspace about something
+that is not necessarily an error.
 
-If no real codec is present, assign the dummy codec to the DAI link
-to avoid NULL pointer during string comparison.
-
-Fixes: 4302187d955f ("ASoC: mediatek: common: add soundcard driver common code")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://msgid.link/r/20240313110147.1267793-5-angelogioacchino.delregno@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8dde6f7452a1 ("drm: bridge: icn6211: Add I2C configuration support")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-2-619a28148e5c@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/common/mtk-soundcard-driver.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/chipone-icn6211.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/mediatek/common/mtk-soundcard-driver.c b/sound/soc/mediatek/common/mtk-soundcard-driver.c
-index a58e1e3674dec..000a086a8cf44 100644
---- a/sound/soc/mediatek/common/mtk-soundcard-driver.c
-+++ b/sound/soc/mediatek/common/mtk-soundcard-driver.c
-@@ -22,7 +22,11 @@ static int set_card_codec_info(struct snd_soc_card *card,
+diff --git a/drivers/gpu/drm/bridge/chipone-icn6211.c b/drivers/gpu/drm/bridge/chipone-icn6211.c
+index bf920c3503aa3..3459a696b34fc 100644
+--- a/drivers/gpu/drm/bridge/chipone-icn6211.c
++++ b/drivers/gpu/drm/bridge/chipone-icn6211.c
+@@ -563,10 +563,8 @@ static int chipone_dsi_host_attach(struct chipone *icn)
  
- 	codec_node = of_get_child_by_name(sub_node, "codec");
- 	if (!codec_node) {
--		dev_dbg(dev, "%s no specified codec\n", dai_link->name);
-+		dev_dbg(dev, "%s no specified codec: setting dummy.\n", dai_link->name);
-+
-+		dai_link->codecs = &snd_soc_dummy_dlc;
-+		dai_link->num_codecs = 1;
-+		dai_link->dynamic = 1;
- 		return 0;
- 	}
+ 	host = of_find_mipi_dsi_host_by_node(host_node);
+ 	of_node_put(host_node);
+-	if (!host) {
+-		dev_err(dev, "failed to find dsi host\n");
+-		return -EPROBE_DEFER;
+-	}
++	if (!host)
++		return dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n");
  
+ 	dsi = mipi_dsi_device_register_full(host, &info);
+ 	if (IS_ERR(dsi)) {
 -- 
 2.43.0
 
