@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36708196C9C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92AB197539;
 	Thu,  6 Jun 2024 14:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682975; cv=none; b=QljzwgP3aAfvwOejNs1brt1/LqypDyFHNr0Yn3XOj4t0DBimA+p1Bx7AxmxooJhM4ScF9EyYow7gCjBKFyshV460X/Ub+2OLkRqAk7i4aJqmIimNuGRnP8jJ9VlCvUioOkznFwJ6g0PTjyA4Kgkl61U4i3QzwW/nKXPp/hcEU0U=
+	t=1717682975; cv=none; b=XW7N5IKc117q2gG359taKM+cT3H8oIzJkQVVRH/r0eiaeZv7xlKsEe1be4ug0IsVqi42MGYe8xeDLu9CGZssT8pW2k7hxuJhV2nRI+jnnS/um8wdpuibdcZr8+CthylISq6PWjdUXJncsNIMS2WzwFoCKYO0PNdkimVK1CUlCeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682975; c=relaxed/simple;
-	bh=w8LhlaBHNETn3VLnKrwMSoIfK4OrJVkd4LrIv2EzeXY=;
+	bh=fMLltmphxMArrw0HJZI5K/sn47QGAy9aVPjTPb4oi2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TPs79Ils2jEKo+X12QhJs/fKq6oZsgEjkresK4wF45MbaVcWpxL05huGQLUyHZ90+5h4phwb24q9shltDx+V9vzSaz1Z0y4VlVu7vEhufd1Si9JUSlHB6jto0uBfGsFsu1Lc7sA5tC3VFlT8CcIW1QyKWS/VkH7q478TjVCCGo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FjrI5ALq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oWzrTyOukel+B4dmSXFGQ7132ybguDMFZAlAIRdw2SJBVEF+lcB7YY9mz49LbvVB9wKR7HxniiZ/PQ8V4RrrV92zPLI5/L/Exd2D5mlCGzJqN5zsm5MZIFgkA3WF8lOwrdgY/n4OzvJ16ENYweIG8bE4fvuk+kelhrsU8VJaCKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3ejzOBl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FjrI5ALq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16725C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3ejzOBl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DBEC2BD10;
 	Thu,  6 Jun 2024 14:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682975;
-	bh=w8LhlaBHNETn3VLnKrwMSoIfK4OrJVkd4LrIv2EzeXY=;
+	bh=fMLltmphxMArrw0HJZI5K/sn47QGAy9aVPjTPb4oi2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjrI5ALqhkqCLfY/kv8OBC5wDnIGglr0BHtR2ZxIZwayQ25ehsYQY7GGPJJ6Sxj6M
-	 mEDeiZjK+LFgpza/5vKYzqPRR4ihS9KjL8SPdAFNPr4Y2vBjeYcMlxkHZ+uRx5z7Px
-	 iVchMgfJEZFC7p+wS0P5vZdRoshzFWMedhubwDI4=
+	b=B3ejzOBl+42nsqNEGS2DKn/pvnwSOybYtYhVWAXdYlBuzAD5Uv2JXe7LvtJpYrnO/
+	 1WsuiqUwVEhQPZ1ACD1gH0h9B7nTBSLvemzsTEi94YpqP/jO8KDAFmmwWdV6EQ/0cO
+	 Og1KWDnqCIapVkqgpeCTBN/q1okAgDxOM8JTQnDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 152/374] mmc: sdhci_am654: Fix ITAPDLY for HS400 timing
-Date: Thu,  6 Jun 2024 16:02:11 +0200
-Message-ID: <20240606131657.014497505@linuxfoundation.org>
+Subject: [PATCH 6.9 153/374] x86/percpu: Unify arch_raw_cpu_ptr() defines
+Date: Thu,  6 Jun 2024 16:02:12 +0200
+Message-ID: <20240606131657.046821378@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,56 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit d3182932bb070e7518411fd165e023f82afd7d25 ]
+[ Upstream commit 4e5b0e8003df05983b6dabcdde7ff447d53b49d7 ]
 
-While STRB is currently used for DATA and CRC responses, the CMD
-responses from the device to the host still require ITAPDLY for
-HS400 timing.
+When building a 32-bit vDSO for a 64-bit kernel, games are played with
+CONFIG_X86_64. {this,raw}_cpu_read_8() macros are conditionally defined
+on CONFIG_X86_64 and when CONFIG_X86_64 is undefined in fake_32bit_build.h
+various build failures in generic percpu header files can happen. To make
+things worse, the build of 32-bit vDSO for a 64-bit kernel grew dependency
+on arch_raw_cpu_ptr() macro and the build fails if arch_raw_cpu_ptr()
+macro is not defined.
 
-Currently what is stored for HS400 is the ITAPDLY from High Speed
-mode which is incorrect. The ITAPDLY for HS400 speed mode should
-be the same as ITAPDLY as HS200 timing after tuning is executed.
-Add the functionality to save ITAPDLY from HS200 tuning and save
-as HS400 ITAPDLY.
+To mitigate these issues, x86 carefully defines arch_raw_cpu_ptr() to
+avoid any dependency on raw_cpu_read_8() and thus CONFIG_X86_64. W/o
+segment register support, the definition uses size-agnostic MOV asm
+mnemonic and hopes that _ptr argument won't ever be 64-bit size on
+32-bit targets (although newer GCCs warn for this situation with
+"unsupported size for integer register"), and w/ segment register
+support the definition uses size-agnostic __raw_cpu_read() macro.
 
-Fixes: a161c45f2979 ("mmc: sdhci_am654: Enable DLL only for some speed modes")
-Signed-off-by: Judith Mendez <jm@ti.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240320223837.959900-8-jm@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fortunately, raw_cpu_read() is not used in 32-bit vDSO for a 64-bit kernel.
+However, we can't simply omit the definition of arch_raw_cpu_read(),
+since the build will fail when building vdso/vdso32/vclock_gettime.o.
+
+The patch defines arch_raw_cpu_ptr to BUILD_BUG() when BUILD_VDSO32_64
+macro is defined. This way, we are sure that arch_raw_cpu_ptr() won't
+actually be used in 32-bit VDSO for a 64-bit kernel, but it is still
+defined to prevent build failure.
+
+Finally, we can unify arch_raw_cpu_ptr() between builds w/ and w/o
+x86 segment register support, substituting two tricky macro definitions
+with a straightforward implementation.
+
+There is no size difference and no difference in number of this_cpu_off
+accesses between patched and unpatched kernel when the kernel is built
+either w/ and w/o segment register support.
+
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20240322102730.209141-1-ubizjak@gmail.com
+Stable-dep-of: a55c1fdad5f6 ("x86/percpu: Use __force to cast from __percpu address space")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci_am654.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/x86/include/asm/percpu.h | 42 +++++++++++++++--------------------
+ 1 file changed, 18 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
-index 884d1b53180d7..562034af653eb 100644
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -301,6 +301,12 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
- 	if (timing > MMC_TIMING_UHS_SDR25 && clock >= CLOCK_TOO_SLOW_HZ) {
- 		sdhci_am654_setup_dll(host, clock);
- 		sdhci_am654->dll_enable = true;
-+
-+		if (timing == MMC_TIMING_MMC_HS400) {
-+			sdhci_am654->itap_del_ena[timing] = 0x1;
-+			sdhci_am654->itap_del_sel[timing] = sdhci_am654->itap_del_sel[timing - 1];
-+		}
-+
- 		sdhci_am654_write_itapdly(sdhci_am654, sdhci_am654->itap_del_sel[timing],
- 					  sdhci_am654->itap_del_ena[timing]);
- 	} else {
-@@ -531,6 +537,9 @@ static int sdhci_am654_platform_execute_tuning(struct sdhci_host *host,
+diff --git a/arch/x86/include/asm/percpu.h b/arch/x86/include/asm/percpu.h
+index b77bbb67e77b0..dbfde44d88a31 100644
+--- a/arch/x86/include/asm/percpu.h
++++ b/arch/x86/include/asm/percpu.h
+@@ -59,36 +59,30 @@
+ #define __force_percpu_prefix	"%%"__stringify(__percpu_seg)":"
+ #define __my_cpu_offset		this_cpu_read(this_cpu_off)
  
- 	sdhci_am654_write_itapdly(sdhci_am654, itap, sdhci_am654->itap_del_ena[timing]);
- 
-+	/* Save ITAPDLY */
-+	sdhci_am654->itap_del_sel[timing] = itap;
+-#ifdef CONFIG_USE_X86_SEG_SUPPORT
+-/*
+- * Efficient implementation for cases in which the compiler supports
+- * named address spaces.  Allows the compiler to perform additional
+- * optimizations that can save more instructions.
+- */
+-#define arch_raw_cpu_ptr(ptr)					\
+-({								\
+-	unsigned long tcp_ptr__;				\
+-	tcp_ptr__ = __raw_cpu_read(, this_cpu_off);		\
+-								\
+-	tcp_ptr__ += (__force unsigned long)(ptr);		\
+-	(typeof(*(ptr)) __kernel __force *)tcp_ptr__;		\
+-})
+-#else /* CONFIG_USE_X86_SEG_SUPPORT */
++#ifdef CONFIG_X86_64
++#define __raw_my_cpu_offset	raw_cpu_read_8(this_cpu_off);
++#else
++#define __raw_my_cpu_offset	raw_cpu_read_4(this_cpu_off);
++#endif
 +
- 	return 0;
- }
+ /*
+  * Compared to the generic __my_cpu_offset version, the following
+  * saves one instruction and avoids clobbering a temp register.
++ *
++ * arch_raw_cpu_ptr should not be used in 32-bit VDSO for a 64-bit
++ * kernel, because games are played with CONFIG_X86_64 there and
++ * sizeof(this_cpu_off) becames 4.
+  */
+-#define arch_raw_cpu_ptr(ptr)					\
++#ifndef BUILD_VDSO32_64
++#define arch_raw_cpu_ptr(_ptr)					\
+ ({								\
+-	unsigned long tcp_ptr__;				\
+-	asm ("mov " __percpu_arg(1) ", %0"			\
+-	     : "=r" (tcp_ptr__)					\
+-	     : "m" (__my_cpu_var(this_cpu_off)));		\
+-								\
+-	tcp_ptr__ += (unsigned long)(ptr);			\
+-	(typeof(*(ptr)) __kernel __force *)tcp_ptr__;		\
++	unsigned long tcp_ptr__ = __raw_my_cpu_offset;		\
++	tcp_ptr__ += (unsigned long)(_ptr);			\
++	(typeof(*(_ptr)) __kernel __force *)tcp_ptr__;		\
+ })
+-#endif /* CONFIG_USE_X86_SEG_SUPPORT */
++#else
++#define arch_raw_cpu_ptr(_ptr) ({ BUILD_BUG(); (typeof(_ptr))0; })
++#endif
+ 
+ #define PER_CPU_VAR(var)	%__percpu_seg:(var)__percpu_rel
  
 -- 
 2.43.0
