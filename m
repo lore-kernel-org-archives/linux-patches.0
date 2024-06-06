@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92AB197539;
-	Thu,  6 Jun 2024 14:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2854F196C9F;
+	Thu,  6 Jun 2024 14:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682975; cv=none; b=XW7N5IKc117q2gG359taKM+cT3H8oIzJkQVVRH/r0eiaeZv7xlKsEe1be4ug0IsVqi42MGYe8xeDLu9CGZssT8pW2k7hxuJhV2nRI+jnnS/um8wdpuibdcZr8+CthylISq6PWjdUXJncsNIMS2WzwFoCKYO0PNdkimVK1CUlCeY=
+	t=1717682976; cv=none; b=ndKEtWqgHqa3VT6sZmSGcj4n3D5H6UIIxJarTiP9ukS0xJIVRsTbuNLn45ee0vr4Fq2KTRsMmthjtSAdoQVbEYGLilWwmmCmJOFu0j28JxlmHCxk3EaOd3tZ7KcIBDG/mL+SQFf+Sy7YIx4D0bPrZ2GUtqygBKb9TZciz57TpNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682975; c=relaxed/simple;
-	bh=fMLltmphxMArrw0HJZI5K/sn47QGAy9aVPjTPb4oi2o=;
+	s=arc-20240116; t=1717682976; c=relaxed/simple;
+	bh=sw28r/rB/YIOgw0NLCO8Du+ORUpv9vQ/tB0KC7VwiFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWzrTyOukel+B4dmSXFGQ7132ybguDMFZAlAIRdw2SJBVEF+lcB7YY9mz49LbvVB9wKR7HxniiZ/PQ8V4RrrV92zPLI5/L/Exd2D5mlCGzJqN5zsm5MZIFgkA3WF8lOwrdgY/n4OzvJ16ENYweIG8bE4fvuk+kelhrsU8VJaCKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3ejzOBl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M06kOSakzmye6iWXGMVC/Ry86NQSlaZbh6R+bkeUoxJGAqtQh0e9/UMJy7yDYAqAVLBkEmbzCeiDNt2Ux8oRyga7if43VQejC92j531EVP3PgmmtuUDCzXPRFRemSDdJvQhB8PH10H79icqLc/l1K+x35wMXhDhGsDKO0aHFb2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJo7mENd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3ejzOBl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DBEC2BD10;
-	Thu,  6 Jun 2024 14:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJo7mENd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087BDC2BD10;
+	Thu,  6 Jun 2024 14:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682975;
-	bh=fMLltmphxMArrw0HJZI5K/sn47QGAy9aVPjTPb4oi2o=;
+	s=korg; t=1717682976;
+	bh=sw28r/rB/YIOgw0NLCO8Du+ORUpv9vQ/tB0KC7VwiFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3ejzOBl+42nsqNEGS2DKn/pvnwSOybYtYhVWAXdYlBuzAD5Uv2JXe7LvtJpYrnO/
-	 1WsuiqUwVEhQPZ1ACD1gH0h9B7nTBSLvemzsTEi94YpqP/jO8KDAFmmwWdV6EQ/0cO
-	 Og1KWDnqCIapVkqgpeCTBN/q1okAgDxOM8JTQnDI=
+	b=rJo7mENdoXWROhvPS7LNz24p7OeY2PB5EG4zrny+tXLBK+uTfZZjgKhc8awuFVNlb
+	 Z+waLtT8Ncop2FUI46PQ3rsKGCijXmcUfI+lkZ1aBWeOrYB2UjRSVN7Mo8g1tNdwlM
+	 +S1UrEgp+qXtscFjvISyqmEyPDbVwgV3OWvOxu34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Charlemagne Lasse <charlemagnelasse@gmail.com>,
 	Uros Bizjak <ubizjak@gmail.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 153/374] x86/percpu: Unify arch_raw_cpu_ptr() defines
-Date: Thu,  6 Jun 2024 16:02:12 +0200
-Message-ID: <20240606131657.046821378@linuxfoundation.org>
+Subject: [PATCH 6.9 154/374] x86/percpu: Use __force to cast from __percpu address space
+Date: Thu,  6 Jun 2024 16:02:13 +0200
+Message-ID: <20240606131657.074546439@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -55,111 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit 4e5b0e8003df05983b6dabcdde7ff447d53b49d7 ]
+[ Upstream commit a55c1fdad5f61b4bfe42319694b23671a758cb28 ]
 
-When building a 32-bit vDSO for a 64-bit kernel, games are played with
-CONFIG_X86_64. {this,raw}_cpu_read_8() macros are conditionally defined
-on CONFIG_X86_64 and when CONFIG_X86_64 is undefined in fake_32bit_build.h
-various build failures in generic percpu header files can happen. To make
-things worse, the build of 32-bit vDSO for a 64-bit kernel grew dependency
-on arch_raw_cpu_ptr() macro and the build fails if arch_raw_cpu_ptr()
-macro is not defined.
+Fix Sparse warning when casting from __percpu address space by using
+__force in the cast. x86 named address spaces are not considered to
+be subspaces of the generic (flat) address space, so explicit casts
+are required to convert pointers between these address spaces and the
+generic address space (the application should cast to uintptr_t and
+apply the segment base offset). The cast to uintptr_t removes
+__percpu address space tag and Sparse reports:
 
-To mitigate these issues, x86 carefully defines arch_raw_cpu_ptr() to
-avoid any dependency on raw_cpu_read_8() and thus CONFIG_X86_64. W/o
-segment register support, the definition uses size-agnostic MOV asm
-mnemonic and hopes that _ptr argument won't ever be 64-bit size on
-32-bit targets (although newer GCCs warn for this situation with
-"unsupported size for integer register"), and w/ segment register
-support the definition uses size-agnostic __raw_cpu_read() macro.
+  warning: cast removes address space '__percpu' of expression
 
-Fortunately, raw_cpu_read() is not used in 32-bit vDSO for a 64-bit kernel.
-However, we can't simply omit the definition of arch_raw_cpu_read(),
-since the build will fail when building vdso/vdso32/vclock_gettime.o.
+Use __force to inform Sparse that the cast is intentional.
 
-The patch defines arch_raw_cpu_ptr to BUILD_BUG() when BUILD_VDSO32_64
-macro is defined. This way, we are sure that arch_raw_cpu_ptr() won't
-actually be used in 32-bit VDSO for a 64-bit kernel, but it is still
-defined to prevent build failure.
-
-Finally, we can unify arch_raw_cpu_ptr() between builds w/ and w/o
-x86 segment register support, substituting two tricky macro definitions
-with a straightforward implementation.
-
-There is no size difference and no difference in number of this_cpu_off
-accesses between patched and unpatched kernel when the kernel is built
-either w/ and w/o segment register support.
-
+Fixes: 9a462b9eafa6 ("x86/percpu: Use compiler segment prefix qualifier")
+Reported-by: Charlemagne Lasse <charlemagnelasse@gmail.com>
 Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/r/20240322102730.209141-1-ubizjak@gmail.com
-Stable-dep-of: a55c1fdad5f6 ("x86/percpu: Use __force to cast from __percpu address space")
+Link: https://lore.kernel.org/r/20240402175058.52649-1-ubizjak@gmail.com
+
+Closes: https://lore.kernel.org/lkml/CAFGhKbzev7W4aHwhFPWwMZQEHenVgZUj7=aunFieVqZg3mt14A@mail.gmail.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/percpu.h | 42 +++++++++++++++--------------------
- 1 file changed, 18 insertions(+), 24 deletions(-)
+ arch/x86/include/asm/percpu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/x86/include/asm/percpu.h b/arch/x86/include/asm/percpu.h
-index b77bbb67e77b0..dbfde44d88a31 100644
+index dbfde44d88a31..ce5111cec36e2 100644
 --- a/arch/x86/include/asm/percpu.h
 +++ b/arch/x86/include/asm/percpu.h
-@@ -59,36 +59,30 @@
- #define __force_percpu_prefix	"%%"__stringify(__percpu_seg)":"
- #define __my_cpu_offset		this_cpu_read(this_cpu_off)
- 
--#ifdef CONFIG_USE_X86_SEG_SUPPORT
--/*
-- * Efficient implementation for cases in which the compiler supports
-- * named address spaces.  Allows the compiler to perform additional
-- * optimizations that can save more instructions.
-- */
--#define arch_raw_cpu_ptr(ptr)					\
--({								\
--	unsigned long tcp_ptr__;				\
--	tcp_ptr__ = __raw_cpu_read(, this_cpu_off);		\
--								\
--	tcp_ptr__ += (__force unsigned long)(ptr);		\
--	(typeof(*(ptr)) __kernel __force *)tcp_ptr__;		\
--})
--#else /* CONFIG_USE_X86_SEG_SUPPORT */
-+#ifdef CONFIG_X86_64
-+#define __raw_my_cpu_offset	raw_cpu_read_8(this_cpu_off);
-+#else
-+#define __raw_my_cpu_offset	raw_cpu_read_4(this_cpu_off);
-+#endif
-+
- /*
-  * Compared to the generic __my_cpu_offset version, the following
-  * saves one instruction and avoids clobbering a temp register.
-+ *
-+ * arch_raw_cpu_ptr should not be used in 32-bit VDSO for a 64-bit
-+ * kernel, because games are played with CONFIG_X86_64 there and
-+ * sizeof(this_cpu_off) becames 4.
-  */
--#define arch_raw_cpu_ptr(ptr)					\
-+#ifndef BUILD_VDSO32_64
-+#define arch_raw_cpu_ptr(_ptr)					\
+@@ -77,7 +77,7 @@
+ #define arch_raw_cpu_ptr(_ptr)					\
  ({								\
--	unsigned long tcp_ptr__;				\
--	asm ("mov " __percpu_arg(1) ", %0"			\
--	     : "=r" (tcp_ptr__)					\
--	     : "m" (__my_cpu_var(this_cpu_off)));		\
--								\
--	tcp_ptr__ += (unsigned long)(ptr);			\
--	(typeof(*(ptr)) __kernel __force *)tcp_ptr__;		\
-+	unsigned long tcp_ptr__ = __raw_my_cpu_offset;		\
-+	tcp_ptr__ += (unsigned long)(_ptr);			\
-+	(typeof(*(_ptr)) __kernel __force *)tcp_ptr__;		\
+ 	unsigned long tcp_ptr__ = __raw_my_cpu_offset;		\
+-	tcp_ptr__ += (unsigned long)(_ptr);			\
++	tcp_ptr__ += (__force unsigned long)(_ptr);		\
+ 	(typeof(*(_ptr)) __kernel __force *)tcp_ptr__;		\
  })
--#endif /* CONFIG_USE_X86_SEG_SUPPORT */
-+#else
-+#define arch_raw_cpu_ptr(_ptr) ({ BUILD_BUG(); (typeof(_ptr))0; })
-+#endif
- 
- #define PER_CPU_VAR(var)	%__percpu_seg:(var)__percpu_rel
- 
+ #else
 -- 
 2.43.0
 
