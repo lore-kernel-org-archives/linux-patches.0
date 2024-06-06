@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED84198E8C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14CF1BA89C;
 	Thu,  6 Jun 2024 14:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683485; cv=none; b=EWhWP+rS7MGufDllv5uGOxpBLHdOjUQytWyKmgI15499nyRx+d+GbNByjeLl/SGgmbAF57yeJerIuBhtapKvvGyAOhgmeOqs4MH0ELONP+dUJaHxvsl7N9DW0dXbXgGdq0+rLhcVWbIxiUN01HdivvNRC5++U2Yb4kyM2Fh0ElQ=
+	t=1717683486; cv=none; b=sOWbJg/WXaPoVU5oK+mHrV40srzWd6h7hfmy2IEafoAcu9XI+LWB9fP9mmINP+nmZCuhk45jZjFxbyKAFT5OJs/v8b/dnHnltQL66G1GGgoF9roNalRkxJIZenNDVQ2wF07aC23nzJxcLVrNSFVyCqD2u1xEHERc4JBzgetVDbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683485; c=relaxed/simple;
-	bh=IomuwyPTm365lLJNz8bLhfasbvJgSXT2ozggnUUBuMY=;
+	s=arc-20240116; t=1717683486; c=relaxed/simple;
+	bh=nOoadrH0Ai7HfWRTYw5+C7hWubiCzZ33ZXcM0DpOAPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mvd05PzYoIIwBQyDMSgGhS5zraRl9wUIG+buQ0iguTAYn8CwV5zeeQZCQDzmzZB5eGwFeEn5EfkrrKpEA2TskWg3ZmW958Iy8MJeMZ/1O8M4UEGM+BRgl4lY/iCu1+l+rIDvOnlV9J+x98dXj+42CrN/5We14sBUHCJdGTYyQ/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZncqGDQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UY++0yo1Afz7dM8xovvg0lvdSY/UBkCaIdJzN6Lgof5ayF87PnX72CEpSzdAbPJ5SQ4pD+q9c0Lh3CCXFA5sYorA48retIPIElq07VNsn3raz3VH07k1HX59AE1T6bQ7tW2nlWzP9WXNKzv+D+9NzpvgTfbHaj8CgkCzdslnPMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiQzm2ud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZncqGDQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6384DC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiQzm2ud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A0CC32782;
 	Thu,  6 Jun 2024 14:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683485;
-	bh=IomuwyPTm365lLJNz8bLhfasbvJgSXT2ozggnUUBuMY=;
+	bh=nOoadrH0Ai7HfWRTYw5+C7hWubiCzZ33ZXcM0DpOAPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IZncqGDQc95ndcdkPKeShXIW9YYebQC5ZDV8ToAIe4LZCe84oKiEU+8Qew5HQ6uuY
-	 MjC96AUhMZ69jLv5NZl0h/jYSUx+jAFW73uT3Y1M6ysiA9hgoHWgJfUOpj7HWfps8a
-	 bYOp1DSLFZyqJrAxhcnmFF5PLy7LGAI936Nj19IY=
+	b=KiQzm2udoQTyOzIh2c0RL39+xHdal2ZoaXIARfee57gLWrZJZ9BSH3nASRkrK+JLJ
+	 iq/X6pqsj7IxVBiKH3+OT5/NcodLVnvqATxSqXtKCNmTj0B4xCQu2l1JzqZudx9n4X
+	 aZ/UperIlbW+TLC9CfhfQG7M/2EoaeXFyqJJdgB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Randy Dunlap <rdunlap@infradead.org>,
-	William Breathitt Gray <william.gray@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 399/744] counter: linux/counter.h: fix Excess kernel-doc description warning
-Date: Thu,  6 Jun 2024 16:01:11 +0200
-Message-ID: <20240606131745.256456610@linuxfoundation.org>
+Subject: [PATCH 6.1 336/473] extcon: max8997: select IRQ_DOMAIN instead of depending on it
+Date: Thu,  6 Jun 2024 16:04:25 +0200
+Message-ID: <20240606131711.031115010@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 416bdb89605d960405178b9bf04df512d1ace1a3 ]
+[ Upstream commit b1781d0a1458070d40134e4f3412ec9d70099bec ]
 
-Remove the @priv: line to prevent the kernel-doc warning:
+IRQ_DOMAIN is a hidden (not user visible) symbol. Users cannot set
+it directly thru "make *config", so drivers should select it instead
+of depending on it if they need it.
+Relying on it being set for a dependency is risky.
 
-include/linux/counter.h:400: warning: Excess struct member 'priv' description in 'counter_device'
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
+Therefore, change EXTCON_MAX8997's use of "depends on" for
+IRQ_DOMAIN to "select".
+
+Link: https://lore.kernel.org/lkml/20240213060028.9744-1-rdunlap@infradead.org/
+Fixes: dca1a71e4108 ("extcon: Add support irq domain for MAX8997 muic")
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Fixes: f2ee4759fb70 ("counter: remove old and now unused registration API")
-Link: https://lore.kernel.org/r/20231223050511.13849-1-rdunlap@infradead.org
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/counter.h | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/extcon/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/counter.h b/include/linux/counter.h
-index 702e9108bbb44..b767b5c821f58 100644
---- a/include/linux/counter.h
-+++ b/include/linux/counter.h
-@@ -359,7 +359,6 @@ struct counter_ops {
-  * @num_counts:		number of Counts specified in @counts
-  * @ext:		optional array of Counter device extensions
-  * @num_ext:		number of Counter device extensions specified in @ext
-- * @priv:		optional private data supplied by driver
-  * @dev:		internal device structure
-  * @chrdev:		internal character device structure
-  * @events_list:	list of current watching Counter events
+diff --git a/drivers/extcon/Kconfig b/drivers/extcon/Kconfig
+index 4dd52a6a5b48d..e54e5e64d9abe 100644
+--- a/drivers/extcon/Kconfig
++++ b/drivers/extcon/Kconfig
+@@ -116,7 +116,8 @@ config EXTCON_MAX77843
+ 
+ config EXTCON_MAX8997
+ 	tristate "Maxim MAX8997 EXTCON Support"
+-	depends on MFD_MAX8997 && IRQ_DOMAIN
++	depends on MFD_MAX8997
++	select IRQ_DOMAIN
+ 	help
+ 	  If you say yes here you get support for the MUIC device of
+ 	  Maxim MAX8997 PMIC. The MAX8997 MUIC is a USB port accessory
 -- 
 2.43.0
 
