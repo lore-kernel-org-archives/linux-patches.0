@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420DE1991D3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9561991D3;
 	Thu,  6 Jun 2024 14:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683676; cv=none; b=CeOvRyvc6EWSRFLzroL4y2NPSu5NesgXLcePkKsNw5E9Tat1BRMpmjd9XRqyvkCpcwl7rlo7ajEWOxPbeiwWJpW5RO0WQnMSGkJ9uTmDcexUE9uLe1bRxlG84uGsR9I1uPbsWe26WDeBUQQxXwNxcUC1xUc7dkkKgQ4hDQX8UeQ=
+	t=1717683676; cv=none; b=KWNgu2TvLNW+cX2gqjsGzXUdYaFYvSwn5s7L9tkt/A8s+c0OL7xsHbBDM9P2ym3BwXnt4aTwQSSwPRActrmYhaeoGi6w7kOAabWlzOYPHFKBKyOYO3lp1fBFjVkniBohv4dcKRNPznV2Ghh3/46Cu/Rr4kGZ4o2DJcWmndOUzGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683676; c=relaxed/simple;
-	bh=5xuk3AF+v/sDmwUTLcVIEVs6zOSFSlt0w3Wx37ktrFc=;
+	bh=KaFDxI31qN4V1KkVl2mjeuitre4M4Wq6CX0qds9yqps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGEsAMRNorDUhS3lBfevFre9ohDL2u6BSJMbr5iHAX4Jr/gdF0D3wg7ZwDaFFFU1SE5pv7oi0HKWTwtjjAELU2H70P2NLMKIEbcXtOxfQnHmzw2eOkmaUFukcAdXLgpBMVGIg+mLUl9BI/oROB5cqpANw03vVgloGWO8CAjmrg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/kT9lPN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQevqYtTdNKsx+S3GvKKHdH+ruY3MAJ/qRN66ra2cYyOn82se6nGMZLghqr9IDK0ILvy+UMDvLtZVaVfD1NsM16cOUO8IOvC9BRiNQB/pkzdkv8YZJf+dPc5QB1Phxv0j2mWgbd0dDo2DKRtTTvGLLvbQLAJlis+J2TkxluJDiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LW5/Lnqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/kT9lPN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2226AC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LW5/Lnqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4AFC2BD10;
 	Thu,  6 Jun 2024 14:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683676;
-	bh=5xuk3AF+v/sDmwUTLcVIEVs6zOSFSlt0w3Wx37ktrFc=;
+	bh=KaFDxI31qN4V1KkVl2mjeuitre4M4Wq6CX0qds9yqps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w/kT9lPNs6jKq+hBwQxvOYpkk27lbrTqPV7mQm1TgGDSQO5atdsYePxBL5CDPoJ6Y
-	 OAOoNekF7jlbjHjNtIt3bD0dAUuDY/k/5aIIdLdPuAItw2Z2HUsF+E6lki/H6g/PfR
-	 aoVFtLENT9+9uweSqESacPIg/CC5pT6qzaUIPH7k=
+	b=LW5/LnquxscQ5Ey3fcTBOtwEgGQ/GZSGN2RuJUABFaji8ckf+PWHuqP7BBJeQOKpe
+	 7Lbnovqiuyl2mOG5djXJDqWRPT8IhbJFrKQ++97/ERnFamfLVjfr92JWrFUUU7tWH5
+	 1kv73hm0hQyEAVPviX5wH3gRSzLveKbaVGmUIIGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Wojciech Macek <wmacek@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 573/744] drm/msm/dpu: Always flush the slave INTF on the CTL
-Date: Thu,  6 Jun 2024 16:04:05 +0200
-Message-ID: <20240606131750.839379262@linuxfoundation.org>
+Subject: [PATCH 6.6 574/744] drm/mediatek: dp: Fix mtk_dp_aux_transfer return value
+Date: Thu,  6 Jun 2024 16:04:06 +0200
+Message-ID: <20240606131750.874154042@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,47 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Wojciech Macek <wmacek@chromium.org>
 
-[ Upstream commit 2b938c3ab0a69ec6ea587bbf6fc2aec3db4a8736 ]
+[ Upstream commit 8431fff9e0f3fc1c5844cf99a73b49b63ceed481 ]
 
-As we can clearly see in a downstream kernel [1], flushing the slave INTF
-is skipped /only if/ the PPSPLIT topology is active.
+In case there is no DP device attached to the port the
+transfer function should return IO error, similar to what
+other drivers do.
+In case EAGAIN is returned then any read from /dev/drm_dp_aux
+device ends up in an infinite loop as the upper layers
+constantly repeats the transfer request.
 
-However, when DPU was originally submitted to mainline PPSPLIT was no
-longer part of it (seems to have been ripped out before submission), but
-this clause was incorrectly ported from the original SDE driver.  Given
-that there is no support for PPSPLIT (currently), flushing the slave
-INTF should /never/ be skipped (as the `if (ppsplit && !master) goto
-skip;` clause downstream never becomes true).
-
-[1]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.4.r1-rel/msm/sde/sde_encoder_phys_cmd.c?ref_type=heads#L1131-1139
-
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/589901/
-Link: https://lore.kernel.org/r/20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-3-78ae3ee9a697@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
+Signed-off-by: Wojciech Macek <wmacek@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20240417103819.990512-1-wmacek@chromium.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index df88358e7037b..0f7c5deb5e52d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -449,9 +449,6 @@ static void dpu_encoder_phys_cmd_enable_helper(
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index 4052a3133b576..af03a22772fed 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -2080,7 +2080,7 @@ static ssize_t mtk_dp_aux_transfer(struct drm_dp_aux *mtk_aux,
  
- 	_dpu_encoder_phys_cmd_pingpong_config(phys_enc);
+ 	if (mtk_dp->bridge.type != DRM_MODE_CONNECTOR_eDP &&
+ 	    !mtk_dp->train_info.cable_plugged_in) {
+-		ret = -EAGAIN;
++		ret = -EIO;
+ 		goto err;
+ 	}
  
--	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
--		return;
--
- 	ctl = phys_enc->hw_ctl;
- 	ctl->ops.update_pending_flush_intf(ctl, phys_enc->hw_intf->idx);
- }
 -- 
 2.43.0
 
