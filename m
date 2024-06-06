@@ -1,38 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE26F196D90;
-	Thu,  6 Jun 2024 14:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596E5196D90;
+	Thu,  6 Jun 2024 14:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683672; cv=none; b=khXMAqYGdqvdPWy4k7laA5FWV0zJju2b9ybKuP115w9LmId3+MrgYc7qWXF08UTk20Tim7KIHWiQHNs2X1MN58XYiXZO83UuQDcGXapJ3RLELsz0Kswt7vvM61yCibyh24JkIZkEOYdPjtrbxMOYpVv3pGef9VqJiBXbEOEsJAA=
+	t=1717683673; cv=none; b=Pd90d6E+ylVILOQ5lnhKS1szLfhLYZ+beczJ33k2EHV5Ke/pRmE1ybFBWCBQ+HYm3y/2mgm1sOoaEIaf9vzTjuSZvNuoykpPaL6M8dAzgkumziZrFrjNoCiG1U6qS8QC9t8mt9S37z5AXgfbBGQHIb2FFK0KWx7il20xvIQZvj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683672; c=relaxed/simple;
-	bh=8kcvULjBdULHRcWQRHyi1/araJ5pPxOSVJCgWuMY+rQ=;
+	s=arc-20240116; t=1717683673; c=relaxed/simple;
+	bh=uTbaq+RNaE89DRsq35IppZShW+xlSgzEbaaXvKBLk1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+TExLcaWNjefbi4xkuJYQaA3OE/IoUSqzAnkUdCaasXfC7v6OFvXMRRkZsSTuTcmc7bxSSKDoYi8qAbeCuALLv2ih/kOiDA5CxFmk0DKEhCfSQi7xutbVuBQfUbOzGuAvome7nB9D9LhU6CpY05aaNhHwXg39okFuYBXU4a1ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWicAOAz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sCj8b9eaU2mzf5xu+FuPRNc76PfSRcQhZn2qeIKPITfYNMfO3bYYPVAolsQOgTkX3Blj811XtKab4tfW2ENeD+rc0bqCnmIDYbAdr2Gc9N9BfnWo2aR8eaWzSTy53lcck6tpy/Ww4yVkZZKXMWaT8A/7c7ikXNwYUj2EPu59q1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fu59dD/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWicAOAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC759C2BD10;
-	Thu,  6 Jun 2024 14:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fu59dD/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342CEC2BD10;
+	Thu,  6 Jun 2024 14:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683672;
-	bh=8kcvULjBdULHRcWQRHyi1/araJ5pPxOSVJCgWuMY+rQ=;
+	s=korg; t=1717683673;
+	bh=uTbaq+RNaE89DRsq35IppZShW+xlSgzEbaaXvKBLk1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EWicAOAzV/rdcqLFFspGChYIKHnKX1OUYxuDyM+myVwHobysFcWpZZhJdmPOzllkQ
-	 nWlMTxs3VA0Zg6O2ihb1mbhrPF25e9E3iykHP/YsC/ftKUYrZzIWUK7r11XIgfRSQv
-	 2V307y2Tl/LOFKcL2jpqzudaejsF/2ieX/sOIf0Y=
+	b=Fu59dD/7eSzEczhhCOG4VqDjuJbL7mtHQF6z/qVy6ksH9MoOYzpV5He88iEfslUNW
+	 MHQgypTQlHD1CNpLLvhuz7fP2U1GJnjiI/KKxSuubTpl3wbgemViLaU54sYrKdl/tz
+	 ZtIR48o9aPePKzUPlnvEzxxVXVmJLireeFZig4x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kaige Ye <ye@kaige.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 523/744] usb: fotg210: Add missing kernel doc description
-Date: Thu,  6 Jun 2024 16:03:15 +0200
-Message-ID: <20240606131749.219652833@linuxfoundation.org>
+Subject: [PATCH 6.6 524/744] perf stat: Dont display metric header for non-leader uncore events
+Date: Thu,  6 Jun 2024 16:03:16 +0200
+Message-ID: <20240606131749.251950240@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,38 +62,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 4b653e82ae18f2dc91c7132b54f5785c4d56bab4 ]
+[ Upstream commit 193a9e30207f54777ff42d0d8be8389edc522277 ]
 
-kernel-doc validator is not happy:
+On an Intel tigerlake laptop a metric like:
 
-  warning: Function parameter or struct member 'fotg' not described in 'fotg210_vbus'
+    {
+        "BriefDescription": "Test",
+        "MetricExpr": "imc_free_running@data_read@ + imc_free_running@data_write@",
+        "MetricGroup": "Test",
+        "MetricName": "Test",
+        "ScaleUnit": "6.103515625e-5MiB"
+    },
 
-Add missing description.
+Will have 4 events:
 
-Fixes: 3e679bde529e ("usb: fotg210-udc: Implement VBUS session")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20240510152641.2421298-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  uncore_imc_free_running_0/data_read/
+  uncore_imc_free_running_0/data_write/
+  uncore_imc_free_running_1/data_read/
+  uncore_imc_free_running_1/data_write/
+
+If aggregration is disabled with metric-only 2 column headers are
+needed:
+
+  $ perf stat -M test --metric-only -A -a sleep 1
+
+   Performance counter stats for 'system wide':
+
+                    MiB  Test            MiB  Test
+  CPU0                 1821.0               1820.5
+
+But when not, the counts aggregated in the metric leader and only 1
+column should be shown:
+
+  $ perf stat -M test --metric-only -a sleep 1
+   Performance counter stats for 'system wide':
+
+              MiB  Test
+                5909.4
+
+         1.001258915 seconds time elapsed
+
+Achieve this by skipping events that aren't metric leaders when
+printing column headers and aggregation isn't disabled.
+
+The bug is long standing, the fixes tag is set to a refactor as that
+is as far back as is reasonable to backport.
+
+Fixes: 088519f318be3a41 ("perf stat: Move the display functions to stat-display.c")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kaige Ye <ye@kaige.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Link: https://lore.kernel.org/r/20240510051309.2452468-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/fotg210/fotg210-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/util/stat-display.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/fotg210/fotg210-core.c b/drivers/usb/fotg210/fotg210-core.c
-index 958fc40eae86b..0655afe7f9779 100644
---- a/drivers/usb/fotg210/fotg210-core.c
-+++ b/drivers/usb/fotg210/fotg210-core.c
-@@ -95,6 +95,7 @@ static int fotg210_gemini_init(struct fotg210 *fotg, struct resource *res,
+diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-display.c
+index 969ce40096330..0abe35388ab15 100644
+--- a/tools/perf/util/stat-display.c
++++ b/tools/perf/util/stat-display.c
+@@ -1207,6 +1207,9 @@ static void print_metric_headers(struct perf_stat_config *config,
  
- /**
-  * fotg210_vbus() - Called by gadget driver to enable/disable VBUS
-+ * @fotg: pointer to a private fotg210 object
-  * @enable: true to enable VBUS, false to disable VBUS
-  */
- void fotg210_vbus(struct fotg210 *fotg, bool enable)
+ 	/* Print metrics headers only */
+ 	evlist__for_each_entry(evlist, counter) {
++		if (config->aggr_mode != AGGR_NONE && counter->metric_leader != counter)
++			continue;
++
+ 		os.evsel = counter;
+ 
+ 		perf_stat__print_shadow_stats(config, counter, 0,
 -- 
 2.43.0
 
