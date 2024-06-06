@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEE819884B;
-	Thu,  6 Jun 2024 14:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69FE4198845;
+	Thu,  6 Jun 2024 14:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683325; cv=none; b=bKdnCtrg2FpkLdHS6NbOcXHoNfbbg2E+hYsvuOczA6boKIhrYnT6IqmgYU3Cs4hj8MzV3wTVFsYVyiZbcf4fJ1OFSv1JUBwmT+XbhA95TJFkO/uqscrl3lQv8A2PD4VT+3QcY2AXMv2/8TYyCw+1vqKYGygwbvGHoMn9rkW+LhM=
+	t=1717683325; cv=none; b=ZT7dX4NGeDYVc/8bTNGJ1lzb26Z/2mMk1SVXlWSoq1xO+ucR0JfQnCiKMn9YGbXsD4N9P6+mt1EJde991WMkc0ystvBPTylnvUzzjejmgRX+RfEhit1+U66qeVU5lXgMxI2p+W7ScSbCz8HuVwhjbJo9FfCYMJdpWgGyxQs/ykU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683325; c=relaxed/simple;
-	bh=fQRZbwc9FGz4PyiQn3KA6zKxlBOvQVY7BJTopg5sdBQ=;
+	bh=VMeoGio6RWE+CgXjYMHHBDPxUHlrq+oYJTCpzt9tDeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KD1OVkzkmnZqgpd9i7IgY+SJdJDBQsFU7h/AU/GEUFX9CECMn74JWrHJEf916chPd9o4wpPRgf/8FJ+hsH6RbXbJzfdaTdqTD+ybMmuGnV2rU85HRVki4rejw1NLEms9uETB7Le5+/tdSf/lJ/CWIp+JYhGoa2nav7WAExdetng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CM4GcUQq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LLNe4PjCRABrTkjgW0hJOGGMGguBeKoK3Fk3W3OGzYih3ZJGmAN4yIhgB5i4J1ZidtMtOMiowKNbQe70lYDDfewl8ewDtN334mkvdnJThn9dFAwnb8Yxdme7JMea4n8WxVfNcd9vGw53UaQBYV5mOWnNkxPVn9IARZ+W7G6ewwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Voopdu/F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CM4GcUQq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE111C2BD10;
-	Thu,  6 Jun 2024 14:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Voopdu/F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CB0C32781;
+	Thu,  6 Jun 2024 14:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683324;
-	bh=fQRZbwc9FGz4PyiQn3KA6zKxlBOvQVY7BJTopg5sdBQ=;
+	s=korg; t=1717683325;
+	bh=VMeoGio6RWE+CgXjYMHHBDPxUHlrq+oYJTCpzt9tDeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CM4GcUQqd53sprXWThENczc10kl2fonNt6OPvNATL9Itsjrq6/JpYQ/6VBCPrEDng
-	 bBNLTeAugxk4tGVuUdbcgQgT6DfL0BNQsy0brPFBLbJkgFymJi/fpLaVK83LAOtj+j
-	 jyDATSRyf3rLMACA4PW3d/EiKUJ7XMg3C0Xog+io=
+	b=Voopdu/Fv3RWNWDvgIJFGCGV+NM5elfqDeYPyEEWKi3IFfRFQWECzw2Ht1xD7XNxo
+	 ffc2TTarC/9vnVlM2XwO5/WK1FlSnhct2YiogKaipkVNqB36yP7TWTSslXyRx1Xvp2
+	 xBGUtC0aqSlaKbHz/oHE+elEA+yUaWDK4FeY2pYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Justin Green <greenjustin@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 177/473] ipv6: sr: fix invalid unregister error path
-Date: Thu,  6 Jun 2024 16:01:46 +0200
-Message-ID: <20240606131705.777540627@linuxfoundation.org>
+Subject: [PATCH 6.1 204/473] drm/mediatek: Add 0 size check to mtk_drm_gem_obj
+Date: Thu,  6 Jun 2024 16:02:13 +0200
+Message-ID: <20240606131706.677889594@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -54,44 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Justin Green <greenjustin@chromium.org>
 
-[ Upstream commit 160e9d2752181fcf18c662e74022d77d3164cd45 ]
+[ Upstream commit 1e4350095e8ab2577ee05f8c3b044e661b5af9a0 ]
 
-The error path of seg6_init() is wrong in case CONFIG_IPV6_SEG6_LWTUNNEL
-is not defined. In that case if seg6_hmac_init() fails, the
-genl_unregister_family() isn't called.
+Add a check to mtk_drm_gem_init if we attempt to allocate a GEM object
+of 0 bytes. Currently, no such check exists and the kernel will panic if
+a userspace application attempts to allocate a 0x0 GBM buffer.
 
-This issue exist since commit 46738b1317e1 ("ipv6: sr: add option to control
-lwtunnel support"), and commit 5559cea2d5aa ("ipv6: sr: fix possible
-use-after-free and null-ptr-deref") replaced unregister_pernet_subsys()
-with genl_unregister_family() in this error path.
+Tested by attempting to allocate a 0x0 GBM buffer on an MT8188 and
+verifying that we now return EINVAL.
 
-Fixes: 46738b1317e1 ("ipv6: sr: add option to control lwtunnel support")
-Reported-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240509131812.1662197-4-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
+Signed-off-by: Justin Green <greenjustin@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20240307180051.4104425-1-greenjustin@chromium.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
-index c4ef96c8fdaca..a31521e270f78 100644
---- a/net/ipv6/seg6.c
-+++ b/net/ipv6/seg6.c
-@@ -551,6 +551,8 @@ int __init seg6_init(void)
- #endif
- #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
- out_unregister_genl:
-+#endif
-+#if IS_ENABLED(CONFIG_IPV6_SEG6_LWTUNNEL) || IS_ENABLED(CONFIG_IPV6_SEG6_HMAC)
- 	genl_unregister_family(&seg6_genl_family);
- #endif
- out_unregister_pernet:
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index fb4f0e336b60e..21e584038581d 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -33,6 +33,9 @@ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
+ 
+ 	size = round_up(size, PAGE_SIZE);
+ 
++	if (size == 0)
++		return ERR_PTR(-EINVAL);
++
+ 	mtk_gem_obj = kzalloc(sizeof(*mtk_gem_obj), GFP_KERNEL);
+ 	if (!mtk_gem_obj)
+ 		return ERR_PTR(-ENOMEM);
 -- 
 2.43.0
 
