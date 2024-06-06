@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F007E199399;
-	Thu,  6 Jun 2024 14:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC7C1A2FC7;
+	Thu,  6 Jun 2024 14:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683221; cv=none; b=JywobbdFh1u1/jxcKIw2JhLwcbCkQzhGOHufnNIJEv/VE8SEQ2D6ZLPxeGu2zh0AOR2TBdDNp+3cIjjhs+nF7ABPgt+MnB6MVSiJyanx4a30HjmyXrV8clpge8BXwOKMN+04lcIgV8mGHwX8QHWV0AV/jmyH+qsrqWm04c+IK/E=
+	t=1717683221; cv=none; b=E+gaCA1fN9c0PbfQrFUa5olrdbNqNKdRMQq5ZhVYQNnq7EPahuATN/zB5URY+yyiYJ9rA2uKzPt0M2V3LRei6pVF88hbeIeyi53Pnai3WUwF4KiUzH7l0Cli31sHTfGyTMbEIWvqhimztr10ErERkOtcHXYHjCDIrnhtUQsYCek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683221; c=relaxed/simple;
-	bh=2tNo4PpblXLc58I0NXqqRb0QVuSnEkcn5G9IPY7WSvA=;
+	bh=rb3EhEwDoY2hLNwaQCV3tRxWPFbtfOL8x+ICuiX9QzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBddlqS25NvgtKUOt+ERxCpMgh+he0Z7w8mBbD5irnW9/Aqic9ou6+iKKp5A0K3YkQwAeKnteTAQKV0aUnn5FL6mF49UT2Hbaxg9wtQez//ZdrtpKD/HfIBD8P2AffcXuhp+OpCjwoX2lAMOSuCZIJeby7sOjcUkPjcTJDM1NSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ors5DQkV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VeLUy/Ll1/UQDkIKyCgvS7EwZj9w+rQFVhQMWzkqfx5b9S4abwwjD7M8MmkfddvVPoFkBAdYPt6sfa+ZXhxKbvIXUTI3NjMid8v25C7FoC4UPllSGNev2ymyUp44UMaZ0154CSZ8WW6xXhegNPz9mz1yLuiq/8WSln2t0FbkOOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNs1Z2KE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ors5DQkV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81038C2BD10;
-	Thu,  6 Jun 2024 14:13:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNs1Z2KE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1E2C32782;
+	Thu,  6 Jun 2024 14:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683220;
-	bh=2tNo4PpblXLc58I0NXqqRb0QVuSnEkcn5G9IPY7WSvA=;
+	s=korg; t=1717683221;
+	bh=rb3EhEwDoY2hLNwaQCV3tRxWPFbtfOL8x+ICuiX9QzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ors5DQkVdz29RFwwuV9YGcIIlA1Fs0PIq244sh41yA3WoU26YgTn1K6XE2LjakhVQ
-	 XsyIbxAfmnfG6tNYgkT5lhsOqITMPbPY3reWNDSplx8POWLI6ItM7EJQtYoglN4rDh
-	 UyLDXDnL3KdzwtWpcUokuk+tzwI2EDcrSxRS1zYI=
+	b=NNs1Z2KEEVORoR7fKBp3R6VOD25r2ukdkUOBrIz4IATX8EdeYZgsB7WCs1xu64FyD
+	 boXFW+9AKdUFO/VwfGO2sDUdzC5b4N8nPnpmlcQp836tS3X2Ugl1f95T5YxMFNBjIl
+	 zlJztd/EQwsB2yjWYy+eqgj10Ij89cUfdGyZnOTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/473] qed: avoid truncating work queue length
-Date: Thu,  6 Jun 2024 16:00:26 +0200
-Message-ID: <20240606131703.103032010@linuxfoundation.org>
+Subject: [PATCH 6.6 163/744] gfs2: Dont forget to complete delayed withdraw
+Date: Thu,  6 Jun 2024 15:57:15 +0200
+Message-ID: <20240606131737.653316216@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +46,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 954fd908f177604d4cce77e2a88cc50b29bad5ff ]
+[ Upstream commit b01189333ee91c1ae6cd96dfd1e3a3c2e69202f0 ]
 
-clang complains that the temporary string for the name passed into
-alloc_workqueue() is too short for its contents:
+Commit fffe9bee14b0 ("gfs2: Delay withdraw from atomic context")
+switched from gfs2_withdraw() to gfs2_withdraw_delayed() in
+gfs2_ail_error(), but failed to then check if a delayed withdraw had
+occurred.  Fix that by adding the missing check in __gfs2_ail_flush(),
+where the spin locks are already dropped and a withdraw is possible.
 
-drivers/net/ethernet/qlogic/qed/qed_main.c:1218:3: error: 'snprintf' will always be truncated; specified size is 16, but format string expands to at least 18 [-Werror,-Wformat-truncation]
-
-There is no need for a temporary buffer, and the actual name of a workqueue
-is 32 bytes (WQ_NAME_LEN), so just use the interface as intended to avoid
-the truncation.
-
-Fixes: 59ccf86fe69a ("qed: Add driver infrastucture for handling mfw requests.")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240326223825.4084412-4-arnd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fffe9bee14b0 ("gfs2: Delay withdraw from atomic context")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_main.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/gfs2/glops.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_main.c b/drivers/net/ethernet/qlogic/qed/qed_main.c
-index 25d9c254288b5..956ae0206a1f9 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_main.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_main.c
-@@ -1215,7 +1215,6 @@ static void qed_slowpath_task(struct work_struct *work)
- static int qed_slowpath_wq_start(struct qed_dev *cdev)
- {
- 	struct qed_hwfn *hwfn;
--	char name[NAME_SIZE];
- 	int i;
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index f41ca89d216bc..3c6f508383fe2 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -82,6 +82,9 @@ static void __gfs2_ail_flush(struct gfs2_glock *gl, bool fsync,
+ 	GLOCK_BUG_ON(gl, !fsync && atomic_read(&gl->gl_ail_count));
+ 	spin_unlock(&sdp->sd_ail_lock);
+ 	gfs2_log_unlock(sdp);
++
++	if (gfs2_withdrawing(sdp))
++		gfs2_withdraw(sdp);
+ }
  
- 	if (IS_VF(cdev))
-@@ -1224,11 +1223,11 @@ static int qed_slowpath_wq_start(struct qed_dev *cdev)
- 	for_each_hwfn(cdev, i) {
- 		hwfn = &cdev->hwfns[i];
  
--		snprintf(name, NAME_SIZE, "slowpath-%02x:%02x.%02x",
--			 cdev->pdev->bus->number,
--			 PCI_SLOT(cdev->pdev->devfn), hwfn->abs_pf_id);
-+		hwfn->slowpath_wq = alloc_workqueue("slowpath-%02x:%02x.%02x",
-+					 0, 0, cdev->pdev->bus->number,
-+					 PCI_SLOT(cdev->pdev->devfn),
-+					 hwfn->abs_pf_id);
- 
--		hwfn->slowpath_wq = alloc_workqueue(name, 0, 0);
- 		if (!hwfn->slowpath_wq) {
- 			DP_NOTICE(hwfn, "Cannot create slowpath workqueue\n");
- 			return -ENOMEM;
 -- 
 2.43.0
 
