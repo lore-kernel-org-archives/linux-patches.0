@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC22E196D8E;
-	Thu,  6 Jun 2024 14:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B61196D8E;
+	Thu,  6 Jun 2024 14:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682983; cv=none; b=iydxqtdrvToQxSkTCFo9A5cXRF1vzWjCq2gnE3cwRSgiLpU8fiDG2+GdF9ecq1BkQw8m3NvY04KeyewN3JWcGAoj/VhoA9a22A0WMrACE+NSgMZLazSTTdAVmxZXTTE358Oo1pUDEAeL+Aq81425ivCCdG0zzE26xw6dTrdK2w4=
+	t=1717682983; cv=none; b=s2TDPVkkUCeat5O/sjgljhOjq9eFpoGyIdQ/57y+oZGQcItIe+e7mN5iaK9kiAPJVf5elFAz7kliot8jAjq+r+HzhoVyxulXUyXi8PIfVCVx5mr/0jeRz0SwOQanvn+dYfJnf5utv6QPW/VnqMB0N0Yiv8VCdhNrnwKMHSa6Frg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682983; c=relaxed/simple;
-	bh=TfSpLpSC++aT0MV69eBPIRKn9HUV3JyiojgAO/VXVv8=;
+	bh=ydC1U5xxYIm+/x6Q7hySbkyy0u0vHgQHeMVBK898w+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fnzrq8F8BvgLRog5pDJ8s2TeVWFHOdgRhaJpKUuSleKyDbovYFZoaIbx956jVJNQC2tuvFzUJ5MEfyfno6IeRNJQrxDfWZWIz1k9rMG+ikayUzNswtBi2HcLLCC6Ld6VX/KqKyvOqfUc9IuGUSR62AzmQWNfDCikaan1T7ND3qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8yoWxXF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CmZfLifZLqIRR+HoycsEDCt1GJTeI7oP6GmhOKd9HNUa8qn90VTM+nD4FYTo5lFWG4tvUvnL6DZANF8qfqMNq2FIDtFMfEd0TntRmZHIQPjh7PnWXKfkd1pPaBKND0qKEd36GUoYKYlTLcjHRTNgvQe3piiapIonehcsanXm4I4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5S6sF8f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8yoWxXF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB105C32781;
-	Thu,  6 Jun 2024 14:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5S6sF8f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BFAC2BD10;
+	Thu,  6 Jun 2024 14:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682982;
-	bh=TfSpLpSC++aT0MV69eBPIRKn9HUV3JyiojgAO/VXVv8=;
+	s=korg; t=1717682983;
+	bh=ydC1U5xxYIm+/x6Q7hySbkyy0u0vHgQHeMVBK898w+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G8yoWxXFM4TVTTufeAv96gNYJasEBKZV4g5CLPUYNV03nNH6iyvl7yelhmGq5ZBRL
-	 HRj5b2/vyu2LhZfc/iTikha27Zr+8HXXu/BCKOQcpyGS/dGQpAfN5EVXB2p0ximPdp
-	 aLlnF+5GqZN5PzT+o9Q6jhX8Y3usZfnr2Uf5K8MU=
+	b=r5S6sF8f5Y1XNQrv8YRQc4oEMZ2FozuayJqCuzCz1XNtQF3iU7Ljk0aGihufDVsL/
+	 xTqnuVlj70mWQj1j4U2a288Y0QUfRWeJAotVA12IQSqX2x/sZvGzImY3u5a3Uv0RyW
+	 ip6QNeJkvcBjBlqOq0g9bJeGzJPjgTQAEPbaoazU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Belin <nbelin@baylibre.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 166/374] drm/meson: gate px_clk when setting rate
-Date: Thu,  6 Jun 2024 16:02:25 +0200
-Message-ID: <20240606131657.470868595@linuxfoundation.org>
+Subject: [PATCH 6.9 167/374] um: Fix return value in ubd_init()
+Date: Thu,  6 Jun 2024 16:02:26 +0200
+Message-ID: <20240606131657.498040095@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,49 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 5c9837374ecf55a1fa3b7622d365a0456960270f ]
+[ Upstream commit 31a5990ed253a66712d7ddc29c92d297a991fdf2 ]
 
-Disable the px_clk when setting the rate to recover a fully
-configured and correctly reset VCLK clock tree after the rate
-is set.
+When kmalloc_array() fails to allocate memory, the ubd_init()
+should return -ENOMEM instead of -1. So, fix it.
 
-Fixes: 77d9e1e6b846 ("drm/meson: add support for MIPI-DSI transceiver")
-Reviewed-by: Nicolas Belin <nbelin@baylibre.com>
-Link: https://lore.kernel.org/r/20240403-amlogic-v6-4-upstream-dsi-ccf-vim3-v12-4-99ecdfdc87fc@linaro.org
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240403-amlogic-v6-4-upstream-dsi-ccf-vim3-v12-4-99ecdfdc87fc@linaro.org
+Fixes: f88f0bdfc32f ("um: UBD Improvements")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_dw_mipi_dsi.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/um/drivers/ubd_kern.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c
-index a6bc1bdb3d0d8..a10cff3ca1fef 100644
---- a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c
-+++ b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c
-@@ -95,6 +95,7 @@ static int dw_mipi_dsi_phy_init(void *priv_data)
- 		return ret;
+diff --git a/arch/um/drivers/ubd_kern.c b/arch/um/drivers/ubd_kern.c
+index 63fc062add708..ef805eaa9e013 100644
+--- a/arch/um/drivers/ubd_kern.c
++++ b/arch/um/drivers/ubd_kern.c
+@@ -1092,7 +1092,7 @@ static int __init ubd_init(void)
+ 
+ 	if (irq_req_buffer == NULL) {
+ 		printk(KERN_ERR "Failed to initialize ubd buffering\n");
+-		return -1;
++		return -ENOMEM;
  	}
+ 	io_req_buffer = kmalloc_array(UBD_REQ_BUFFER_SIZE,
+ 				      sizeof(struct io_thread_req *),
+@@ -1103,7 +1103,7 @@ static int __init ubd_init(void)
  
-+	clk_disable_unprepare(mipi_dsi->px_clk);
- 	ret = clk_set_rate(mipi_dsi->px_clk, mipi_dsi->mode->clock * 1000);
- 
- 	if (ret) {
-@@ -103,6 +104,12 @@ static int dw_mipi_dsi_phy_init(void *priv_data)
- 		return ret;
+ 	if (io_req_buffer == NULL) {
+ 		printk(KERN_ERR "Failed to initialize ubd buffering\n");
+-		return -1;
++		return -ENOMEM;
  	}
- 
-+	ret = clk_prepare_enable(mipi_dsi->px_clk);
-+	if (ret) {
-+		dev_err(mipi_dsi->dev, "Failed to enable DSI Pixel clock (ret %d)\n", ret);
-+		return ret;
-+	}
-+
- 	switch (mipi_dsi->dsi_device->format) {
- 	case MIPI_DSI_FMT_RGB888:
- 		dpi_data_format = DPI_COLOR_24BIT;
+ 	platform_driver_register(&ubd_driver);
+ 	mutex_lock(&ubd_lock);
 -- 
 2.43.0
 
