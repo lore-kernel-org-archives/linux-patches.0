@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EBF19D073;
-	Thu,  6 Jun 2024 14:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E1E198E7E;
+	Thu,  6 Jun 2024 14:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683086; cv=none; b=guhvLSviX3bniNpFKxumNd3Q8I3zcToiI5gcVYj2M7y40xY8GWkd7H0V3dBYzUdjhSq3Bd7NO31y17xa0JOTTvFBj9llL7V2nE0aMdR4A/7eVzFpBeuouc5MfCmLBXP2Qefqg4iN4zkgZeaD0uRBIkuW2jc40JttBvsGW1xWtA4=
+	t=1717683087; cv=none; b=fXg+4kHKJ4WGf+H48wPYQT3Ig6ztNvnsAQW3lPkocp75rK6CI9u8GfHQHDJbsdwdzrLnWxcF8Lj3JpXnmfov/0Kp9PrepY6d9akgDKedbDkgiCGbbDcfB9vFh66IvPhEdykt/iHdr6Nl7MaPabqP/PIJnb6lA0DjkixqVXZ5aQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683086; c=relaxed/simple;
-	bh=WuXWWCZXz3EU0rGZrdikQMDVnJqifYsKufl1H2OVH8M=;
+	s=arc-20240116; t=1717683087; c=relaxed/simple;
+	bh=FbZWwZCorWbEAGQvBtD+Rq/umFJAv+4DcAJk4vkRma0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/V6HfjGtA7sB88RjOldajn6kk24RTdGGxp1BtaG5Ej1VL0Lk5CdKH/Ux43oPZHrw/lASAPwl6kXGwhR9+7g2vIqfI9eVQCErx71PPUBA0W34O96hgxunfMlNJuoWCC3DTN7e2f086AETficMAEWAsQs2yoHZvSPGUZqPNpfb7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijAbc0Rj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QFUVM6gvyTI5GGjv4fqHDM43karoLTeoiHXjVCI5iVJWENNpMX7zLb2yxTWXdxmAwvUw3m+jGrOxl8ZWzkVS3nV8sAXVd8iIv3/81xcIM475z3Rn1/eN0P/amq7jHFj6ugC6mVqkHrd6rOBk+Sspj5vRSnaHSqwChjDLgLjCZnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Prp2mpIQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijAbc0Rj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80596C4AF0A;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Prp2mpIQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BE8C2BD10;
 	Thu,  6 Jun 2024 14:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683086;
-	bh=WuXWWCZXz3EU0rGZrdikQMDVnJqifYsKufl1H2OVH8M=;
+	s=korg; t=1717683087;
+	bh=FbZWwZCorWbEAGQvBtD+Rq/umFJAv+4DcAJk4vkRma0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ijAbc0Rj8/pPJwj6pguLizifFS233uMQmliFlmzj6NYc4ryqSXotPuFFfpuo7FkWm
-	 scZnyhlBMNN3EZ2HUM5Sz0gSDpzvre2Z67pU19VaVMVGFNwWf+sZTZV61Ysv5qulSH
-	 4HPeB6bqxL15X/kplhfgxuxYF9Hg/I8NKiG+Yo+w=
+	b=Prp2mpIQVEJBmprAIFybqU691MenwTBsGcPZCdNgrY6GFEv+Fife4jLuKIdKDyqcb
+	 kmqUe8qu5fc7D+SU1jTRtpy/XfuDpAr8khuMnIEK8eQ4thgbU8Ew4FRpa246nFtYHm
+	 0NSo2+fXdt3PxsvFbgpvvcDANaSmC2igULQWl5TQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 323/374] selftests: mptcp: join: mark fastclose tests as flaky
-Date: Thu,  6 Jun 2024 16:05:02 +0200
-Message-ID: <20240606131702.687601035@linuxfoundation.org>
+Subject: [PATCH 6.9 314/374] ASoC: cs42l43: Only restrict 44.1kHz for the ASP
+Date: Thu,  6 Jun 2024 16:04:53 +0200
+Message-ID: <20240606131702.397039144@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,70 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 8c06ac2178a9dee887929232226e35a5cdda1793 ]
+[ Upstream commit 797c525e85d1e44cf0e6f338890e8e0c661f524a ]
 
-These tests are flaky since their introduction. This might be less or
-not visible depending on the CI running the tests, especially if it is
-also busy doing other tasks in parallel, and if a debug kernel config is
-being used.
+The SoundWire interface can always support 44.1kHz using flow controlled
+mode, and whether the ASP is in master mode should obviously only affect
+the ASP. Update cs42l43_startup() to only restrict the rates for the ASP
+DAI.
 
-It looks like this issue is often present with the NetDev CI. While this
-is being investigated, the tests are marked as flaky not to create
-noises on such CIs.
-
-Fixes: 01542c9bf9ab ("selftests: mptcp: add fastclose testcase")
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/324
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240524-upstream-net-20240524-selftests-mptcp-flaky-v1-3-a352362f3f8e@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fc918cbe874e ("ASoC: cs42l43: Add support for the cs42l43")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://msgid.link/r/20240527100840.439832-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ sound/soc/codecs/cs42l43.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-index e4403236f6554..908ef799b13a0 100755
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -262,6 +262,8 @@ reset()
+diff --git a/sound/soc/codecs/cs42l43.c b/sound/soc/codecs/cs42l43.c
+index 94685449f0f48..92674314227c4 100644
+--- a/sound/soc/codecs/cs42l43.c
++++ b/sound/soc/codecs/cs42l43.c
+@@ -310,8 +310,9 @@ static int cs42l43_startup(struct snd_pcm_substream *substream, struct snd_soc_d
+ 	struct snd_soc_component *component = dai->component;
+ 	struct cs42l43_codec *priv = snd_soc_component_get_drvdata(component);
+ 	struct cs42l43 *cs42l43 = priv->core;
+-	int provider = !!regmap_test_bits(cs42l43->regmap, CS42L43_ASP_CLK_CONFIG2,
+-					  CS42L43_ASP_MASTER_MODE_MASK);
++	int provider = !dai->id || !!regmap_test_bits(cs42l43->regmap,
++						      CS42L43_ASP_CLK_CONFIG2,
++						      CS42L43_ASP_MASTER_MODE_MASK);
  
- 	TEST_NAME="${1}"
- 
-+	MPTCP_LIB_SUBTEST_FLAKY=0 # reset if modified
-+
- 	if skip_test; then
- 		MPTCP_LIB_TEST_COUNTER=$((MPTCP_LIB_TEST_COUNTER+1))
- 		last_test_ignored=1
-@@ -449,7 +451,9 @@ reset_with_tcp_filter()
- # $1: err msg
- fail_test()
- {
--	ret=${KSFT_FAIL}
-+	if ! mptcp_lib_subtest_is_flaky; then
-+		ret=${KSFT_FAIL}
-+	fi
- 
- 	if [ ${#} -gt 0 ]; then
- 		print_fail "${@}"
-@@ -3178,6 +3182,7 @@ fullmesh_tests()
- fastclose_tests()
- {
- 	if reset_check_counter "fastclose test" "MPTcpExtMPFastcloseTx"; then
-+		MPTCP_LIB_SUBTEST_FLAKY=1
- 		test_linkfail=1024 fastclose=client \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 0 0 0
-@@ -3186,6 +3191,7 @@ fastclose_tests()
- 	fi
- 
- 	if reset_check_counter "fastclose server test" "MPTcpExtMPFastcloseRx"; then
-+		MPTCP_LIB_SUBTEST_FLAKY=1
- 		test_linkfail=1024 fastclose=server \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 0 0 0 0 0 0 1
+ 	if (provider)
+ 		priv->constraint.mask = CS42L43_PROVIDER_RATE_MASK;
 -- 
 2.43.0
 
