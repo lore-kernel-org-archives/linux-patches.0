@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBED1B0127;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7711B011D;
 	Thu,  6 Jun 2024 14:16:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683361; cv=none; b=L0dRIo91w3AwndcDwUajrFT0z8/x+YJYgU0pcSnuO+abmBCOEtIG+HiUp0GKFNllFkkdW2S8/oHh7gvwrWLqYpUsLBhhc0+9bnoQdwy58GX1rlfA006lF/0w3o4jlFjOP72EG2P3DU4/sJn/I+On7zp1UBYrHSv27OZRDSUwKJ8=
+	t=1717683361; cv=none; b=nk57grwjzaUBUX8H71q7P7LuoJRcBAo/kT5yc5p98ObuIvf/ue1GfIuQT0ijB3GFZCAauJkRSwKcfa4PiWc6Wn2LblUTnjgJZCdTjUps9dwndWipAgA7W7KgMUYKmTgoSK7e9v+867+gKwyZ+rFeP4CqD3w/E6x2V4+aacaX7hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683361; c=relaxed/simple;
-	bh=91arC5zov+W+WEC4uz4msqAInt24lxWi84wl5ehuUzA=;
+	bh=fPNUiZKlUZsz+kMbS3jl9Z0jmVt8YNWVn8uX96VrAZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ppB0WAXu1WicwEHPTSYGMHUz8NLBcsmtM4AUJDfZHekPUFhU5Pdf7DZkJRJjxbF2cTYPQeDV57lxrPpI4MGXXQIIZAekk18R99hJndDGHRbcmPkPtuLxTihMXo6dE+Pc6+bLAAZMO3PISl2KNoTwpdW8PCirCApB9t2p47FgPpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNjnwZzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rHlxxF2ucG/ZmRwq7av/wsMZRjjGXIwgoPNZ2DOfDtnDz/RwY7FAkV1G2iQET6n8lgjQMKlSJxrngjgrDONsoN7Nfh3+8QKPKv9cUawTYOFcYR71pVKDTuOYsZvyptlDmCuwe5V+0T71lI7+JDzLyag7qMCH6zeHJldxiRptObY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s80N0zt3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNjnwZzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA25DC32781;
-	Thu,  6 Jun 2024 14:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s80N0zt3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FFFC32782;
+	Thu,  6 Jun 2024 14:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683360;
-	bh=91arC5zov+W+WEC4uz4msqAInt24lxWi84wl5ehuUzA=;
+	s=korg; t=1717683361;
+	bh=fPNUiZKlUZsz+kMbS3jl9Z0jmVt8YNWVn8uX96VrAZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BNjnwZzUnT5FnsBa4dt8ErbevJ60SWILhJzHIgyhPUGLVJ/QG4rKVDWOONRFZsfz5
-	 S3YYWSTX5gBpf8kIzFUklVcO4LPJrHcsrEACpO/DtILBmNUWWR0mh20DFnOXBxc2IC
-	 vyedbdp0BqgefZUWVvouYzmZS4rtn/Esg68rYYME=
+	b=s80N0zt3FafDZS7ifcaluKaoB1J3833s2DgnFtqVWqlVXESJBoxK+5TdHxzWrn9Kc
+	 9H7QIsLdLvfmK6i+1XkKamhgXJFh98QYzACYWvDPMHz5deMM7rxQj91yv8knGhCUA4
+	 had17hfhWjTJXrqHkFsRBzQXBY0iUBI0JqIh5XTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Pearson <rpearsonhpe@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Aleksandr Burakov <a.burakov@rosalinux.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 245/473] RDMA/rxe: Fix seg fault in rxe_comp_queue_pkt
-Date: Thu,  6 Jun 2024 16:02:54 +0200
-Message-ID: <20240606131708.047176292@linuxfoundation.org>
+Subject: [PATCH 6.6 303/744] media: ngene: Add dvb_ca_en50221_init return value check
+Date: Thu,  6 Jun 2024 15:59:35 +0200
+Message-ID: <20240606131742.102451996@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bob Pearson <rpearsonhpe@gmail.com>
+From: Aleksandr Burakov <a.burakov@rosalinux.ru>
 
-[ Upstream commit 2b23b6097303ed0ba5f4bc036a1c07b6027af5c6 ]
+[ Upstream commit 9bb1fd7eddcab2d28cfc11eb20f1029154dac718 ]
 
-In rxe_comp_queue_pkt() an incoming response packet skb is enqueued to the
-resp_pkts queue and then a decision is made whether to run the completer
-task inline or schedule it. Finally the skb is dereferenced to bump a 'hw'
-performance counter. This is wrong because if the completer task is
-already running in a separate thread it may have already processed the skb
-and freed it which can cause a seg fault.  This has been observed
-infrequently in testing at high scale.
+The return value of dvb_ca_en50221_init() is not checked here that may
+cause undefined behavior in case of nonzero value return.
 
-This patch fixes this by changing the order of enqueuing the packet until
-after the counter is accessed.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Link: https://lore.kernel.org/r/20240329145513.35381-4-rpearsonhpe@gmail.com
-Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
-Fixes: 0b1e5b99a48b ("IB/rxe: Add port protocol stats")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 25aee3debe04 ("[media] Rename media/dvb as media/pci")
+Signed-off-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_comp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/pci/ngene/ngene-core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_comp.c b/drivers/infiniband/sw/rxe/rxe_comp.c
-index d2a2501236174..c238fa61815aa 100644
---- a/drivers/infiniband/sw/rxe/rxe_comp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_comp.c
-@@ -126,12 +126,12 @@ void rxe_comp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb)
- {
- 	int must_sched;
+diff --git a/drivers/media/pci/ngene/ngene-core.c b/drivers/media/pci/ngene/ngene-core.c
+index 7481f553f9595..24ec576dc3bff 100644
+--- a/drivers/media/pci/ngene/ngene-core.c
++++ b/drivers/media/pci/ngene/ngene-core.c
+@@ -1488,7 +1488,9 @@ static int init_channel(struct ngene_channel *chan)
+ 	}
  
--	skb_queue_tail(&qp->resp_pkts, skb);
--
--	must_sched = skb_queue_len(&qp->resp_pkts) > 1;
-+	must_sched = skb_queue_len(&qp->resp_pkts) > 0;
- 	if (must_sched != 0)
- 		rxe_counter_inc(SKB_TO_PKT(skb)->rxe, RXE_CNT_COMPLETER_SCHED);
- 
-+	skb_queue_tail(&qp->resp_pkts, skb);
-+
- 	if (must_sched)
- 		rxe_sched_task(&qp->comp.task);
- 	else
+ 	if (dev->ci.en && (io & NGENE_IO_TSOUT)) {
+-		dvb_ca_en50221_init(adapter, dev->ci.en, 0, 1);
++		ret = dvb_ca_en50221_init(adapter, dev->ci.en, 0, 1);
++		if (ret != 0)
++			goto err;
+ 		set_transfer(chan, 1);
+ 		chan->dev->channel[2].DataFormatFlags = DF_SWAP32;
+ 		set_transfer(&chan->dev->channel[2], 1);
 -- 
 2.43.0
 
