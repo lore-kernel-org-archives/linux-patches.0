@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34761990B7;
-	Thu,  6 Jun 2024 14:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411541BE862;
+	Thu,  6 Jun 2024 14:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683545; cv=none; b=WSsSJ6RuxxG7bvDQph5p7qrbVOawQunNdxR0VSkVWEb7WXBPa75QmOdDdEBQUdteBaSky2OjCMOLRQK21k+5evNNDDl8sSC02FhdgtWsDl4V/ykf+Yx457E4UVBKe2dFutpJGaS1krMoIwzsZI9EnGsn56Wcp7iLz+3TA/77yOU=
+	t=1717683546; cv=none; b=WZEq+jCBYxQHoFLgafxb3SK59rVaUAknDciAkLYrsk/LMXaWHjil9KUyhnQBMUxfuzbLRSK5/PnSOUxnHdEbRaItYpGRnmUeNghhDcWyw5J8F+xUphnbZ+rjUd9icPvSTdTvvU/ot2TVup0izeZGIaxUf4hw5damyCZtdntgqyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683545; c=relaxed/simple;
-	bh=19daNyLOKULDCGwT/a3LiRsvOeZysORq9dBYgt6/IXU=;
+	s=arc-20240116; t=1717683546; c=relaxed/simple;
+	bh=U2dTqW78BBUwRKBXi8N9FZituDOtefBzfUqwXKpzLog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYvg4DPJ52YIcjqpiS5n8bVnK+hmY4AFooxzG2MG3nuFbWdBwnesvRakO2psPvlrWOvNpH9TJ3aoNIq9VSrdM505t77LjA6LMMt6CvvueaHVwbjoO3uqJNL3tjlay0/9+cK6mkhpu/50KscQNP9RFtvRLy8knXVtTrIDfE8w7B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsHFfJKc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sOMWMVTw+76LNJxtC2O4EEjcAsqdezr7KII1aRsgs4p2lek4cr/FLjUYH1CDW1IR+AlPMd9cVszuFDjk5N2InBSpljsaEuOldXNJUuENFS4+wAjD3jHVYhM2uCuYPsLn08aak3C9JiRvITgw9Juvm39bZVPIAjf/64NFdYvPrWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsUYmBRL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsHFfJKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17B2C2BD10;
-	Thu,  6 Jun 2024 14:19:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsUYmBRL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6FDC2BD10;
+	Thu,  6 Jun 2024 14:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683545;
-	bh=19daNyLOKULDCGwT/a3LiRsvOeZysORq9dBYgt6/IXU=;
+	s=korg; t=1717683546;
+	bh=U2dTqW78BBUwRKBXi8N9FZituDOtefBzfUqwXKpzLog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VsHFfJKcm1B+3mRahlef1WdknK0ez6KRap5a3dFwDhA1BfcdYsJBz+GZqqixWAbKr
-	 UNaa0Q+1nIQEOHiUeh3yVAieF1kDPS+EKjwep0cHmJRHrRJwyZQmuKtWluT3fLMDfa
-	 os1jG2R+Tm4kYbTYwpt9rEpIKTRys1aiUI2+ie4g=
+	b=VsUYmBRLfy6xkniA2OqZXF0b3p2BzngDZBAztqpm4pRyGHB/TcE1lb6KyxEm045FZ
+	 IQ6a2mFj9juZZIzGU6OMXE0idVt/R/A/cTbLa7ZqtJzbmHjHUioVCxzqdzdwNP8CrI
+	 OY3u4lGWK7Ct/gFRBwOubZvXGhRkx3pD46TqxOzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Barry Song <baohua@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
+	Zhenyu Wang <zhenyuw@linux.intel.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 435/473] dma-mapping: benchmark: handle NUMA_NO_NODE correctly
-Date: Thu,  6 Jun 2024 16:06:04 +0200
-Message-ID: <20240606131714.125694288@linuxfoundation.org>
+Subject: [PATCH 6.6 458/744] i915: make inject_virtual_interrupt() void
+Date: Thu,  6 Jun 2024 16:02:10 +0200
+Message-ID: <20240606131747.155571564@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +49,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit e64746e74f717961250a155e14c156616fcd981f ]
+[ Upstream commit 85884871921000b9bca2184077b1159771e50047 ]
 
-cpumask_of_node() can be called for NUMA_NO_NODE inside do_map_benchmark()
-resulting in the following sanitizer report:
+The single caller of inject_virtual_interrupt() ignores the return value
+anyway. This allows us to simplify eventfd_signal() in follow-up
+patches.
 
-UBSAN: array-index-out-of-bounds in ./arch/x86/include/asm/topology.h:72:28
-index -1 is out of range for type 'cpumask [64][1]'
-CPU: 1 PID: 990 Comm: dma_map_benchma Not tainted 6.9.0-rc6 #29
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-Call Trace:
- <TASK>
-dump_stack_lvl (lib/dump_stack.c:117)
-ubsan_epilogue (lib/ubsan.c:232)
-__ubsan_handle_out_of_bounds (lib/ubsan.c:429)
-cpumask_of_node (arch/x86/include/asm/topology.h:72) [inline]
-do_map_benchmark (kernel/dma/map_benchmark.c:104)
-map_benchmark_ioctl (kernel/dma/map_benchmark.c:246)
-full_proxy_unlocked_ioctl (fs/debugfs/file.c:333)
-__x64_sys_ioctl (fs/ioctl.c:890)
-do_syscall_64 (arch/x86/entry/common.c:83)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-Use cpumask_of_node() in place when binding a kernel thread to a cpuset
-of a particular node.
-
-Note that the provided node id is checked inside map_benchmark_ioctl().
-It's just a NUMA_NO_NODE case which is not handled properly later.
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 65789daa8087 ("dma-mapping: add benchmark support for streaming DMA APIs")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Barry Song <baohua@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20231122-vfs-eventfd-signal-v2-1-bd549b14ce0c@kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 82b951e6fbd3 ("vfio/pci: fix potential memory leak in vfio_intx_enable()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/map_benchmark.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/i915/gvt/interrupt.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/dma/map_benchmark.c b/kernel/dma/map_benchmark.c
-index 11ad1c43833d1..af661734e8f90 100644
---- a/kernel/dma/map_benchmark.c
-+++ b/kernel/dma/map_benchmark.c
-@@ -101,7 +101,6 @@ static int do_map_benchmark(struct map_benchmark_data *map)
- 	struct task_struct **tsk;
- 	int threads = map->bparam.threads;
- 	int node = map->bparam.node;
--	const cpumask_t *cpu_mask = cpumask_of_node(node);
- 	u64 loops;
- 	int ret = 0;
- 	int i;
-@@ -122,7 +121,7 @@ static int do_map_benchmark(struct map_benchmark_data *map)
- 		}
+diff --git a/drivers/gpu/drm/i915/gvt/interrupt.c b/drivers/gpu/drm/i915/gvt/interrupt.c
+index 68eca023bbc68..80301472ac988 100644
+--- a/drivers/gpu/drm/i915/gvt/interrupt.c
++++ b/drivers/gpu/drm/i915/gvt/interrupt.c
+@@ -405,7 +405,7 @@ static void init_irq_map(struct intel_gvt_irq *irq)
+ #define MSI_CAP_DATA(offset) (offset + 8)
+ #define MSI_CAP_EN 0x1
  
- 		if (node != NUMA_NO_NODE)
--			kthread_bind_mask(tsk[i], cpu_mask);
-+			kthread_bind_mask(tsk[i], cpumask_of_node(node));
- 	}
+-static int inject_virtual_interrupt(struct intel_vgpu *vgpu)
++static void inject_virtual_interrupt(struct intel_vgpu *vgpu)
+ {
+ 	unsigned long offset = vgpu->gvt->device_info.msi_cap_offset;
+ 	u16 control, data;
+@@ -417,10 +417,10 @@ static int inject_virtual_interrupt(struct intel_vgpu *vgpu)
  
- 	/* clear the old value in the previous benchmark */
+ 	/* Do not generate MSI if MSIEN is disabled */
+ 	if (!(control & MSI_CAP_EN))
+-		return 0;
++		return;
+ 
+ 	if (WARN(control & GENMASK(15, 1), "only support one MSI format\n"))
+-		return -EINVAL;
++		return;
+ 
+ 	trace_inject_msi(vgpu->id, addr, data);
+ 
+@@ -434,10 +434,9 @@ static int inject_virtual_interrupt(struct intel_vgpu *vgpu)
+ 	 * returned and don't inject interrupt into guest.
+ 	 */
+ 	if (!test_bit(INTEL_VGPU_STATUS_ATTACHED, vgpu->status))
+-		return -ESRCH;
+-	if (vgpu->msi_trigger && eventfd_signal(vgpu->msi_trigger, 1) != 1)
+-		return -EFAULT;
+-	return 0;
++		return;
++	if (vgpu->msi_trigger)
++		eventfd_signal(vgpu->msi_trigger, 1);
+ }
+ 
+ static void propagate_event(struct intel_gvt_irq *irq,
 -- 
 2.43.0
 
