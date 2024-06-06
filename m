@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BA519884D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2E719ADBC;
 	Thu,  6 Jun 2024 14:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683364; cv=none; b=WL2fOtpckhgTB0l/NH8kDTbhZtun0zzUIBQ4YAP6mF4vnwdcveYa2lrW44XkD9jlb7Lkb/HpKsX1YlamVK6mquuBn+8lT+MBlMUp/8ib9sXMvx7WIw4UwAVjtfIIEkjiJljFWwXtEbbRss+eivfkVWsAS9kGu2BPz/81yzp7lqE=
+	t=1717683365; cv=none; b=EkJ8ot1ThsXyoXV/lxaFwEn7o22SYuG1+R6kVoZdI42PVhtoxoGmedix/+BQ1nzcmfEBqqohn8os2vg/KyhG7yYb2LDBN9ogz6cWJWcAE21I/Hev75I4oUVlQc1nRGEAAhXCbTfZH5a0nk8+GGZ9Wj0N8p1edpyzBv1Diku1hpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683364; c=relaxed/simple;
-	bh=hXvUTBEBUSCV86+MWcIijESYZ4zs6wiMX02ddJkk6q4=;
+	s=arc-20240116; t=1717683365; c=relaxed/simple;
+	bh=ObAtphp2THCVK7N6h2gYYgiJlhhb2jSdNDJmc5+7eog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFemkrWFt/U9qtGeut6YncQ35LOovp5UPFk4Ei+G4yRNJQyS/RQljY7ZEwCqy/qnznZjjFqwYn8HfpBXlbcE0q2x9hGLl6UtAeQsL+AMWYWrct/paoLPAjz/YFtPkNtU/x93VjNuZRfy6qu/+cyNog3pEdki/k+9A2Xdo8Nrtiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXT0NB6b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uB1UxauNlrWlUPV7cJlq8CNQZz303pcyLPjNTxT0Vfg0RhTfcoDG+qYuJsmYv3Jg++AF1A/lkt6CRUKAy+eJIrrM8u05DUZ1hRcpUTnX4Cui2bt8OK//VO06iGBEmmcIDyV7/XZ2XzBEyx8k+ST44ldoTFnHBER2W9zqSxPUbQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaZnFS85; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXT0NB6b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6EAC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaZnFS85"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE3BC32781;
 	Thu,  6 Jun 2024 14:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683364;
-	bh=hXvUTBEBUSCV86+MWcIijESYZ4zs6wiMX02ddJkk6q4=;
+	bh=ObAtphp2THCVK7N6h2gYYgiJlhhb2jSdNDJmc5+7eog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXT0NB6bElujYiOs4cJ7vU0tjUDZR3m64halxJR+PJQfnXcUMOyTOZ7FEqj8iDMcn
-	 xs1IaJXmk4rD9xWYC/B13OwI3/HGsyvrqP2bkzSSIWwv9pglQNUVhdlmv+kXhryO+f
-	 K3RZT+xHkw8GEksc6Bq5xR43ZC9wxcEs4ww5LUqQ=
+	b=WaZnFS858LMLo/WlpEr1uHdA/7QDLgkFY50KEiAfA8DbFI/czP+qtdg1sVQTMSpO+
+	 QtbBgexdwJNDKUVQCH0pbWbKxWATo/kccKIP1tcX/nc3fqGsPoCsT4pmwkYFK2EF/l
+	 9XN6A+wdR/6rBZ123OMG10Na3w0zGWINZfIPZsGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Robert Foss <rfoss@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 306/744] drm: bridge: cdns-mhdp8546: Fix possible null pointer dereference
-Date: Thu,  6 Jun 2024 15:59:38 +0200
-Message-ID: <20240606131742.199403315@linuxfoundation.org>
+Subject: [PATCH 6.1 249/473] clk: renesas: r8a779a0: Fix CANFD parent clock
+Date: Thu,  6 Jun 2024 16:02:58 +0200
+Message-ID: <20240606131708.222327348@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,47 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 935a92a1c400285545198ca2800a4c6c519c650a ]
+[ Upstream commit 3b23118bdbd898dc2f4de8f549d598d492c42ba8 ]
 
-In cdns_mhdp_atomic_enable(), the return value of drm_mode_duplicate() is
-assigned to mhdp_state->current_mode, and there is a dereference of it in
-drm_mode_set_name(), which will lead to a NULL pointer dereference on
-failure of drm_mode_duplicate().
+According to Figure 52A.1 ("RS-CANFD Module Block Diagram (in classical
+CAN mode)") in the R-Car V3U Series User’s Manual Rev. 0.5, the parent
+clock for the CANFD peripheral module clock is the S3D2 clock.
 
-Fix this bug add a check of mhdp_state->current_mode.
-
-Fixes: fb43aa0acdfd ("drm: bridge: Add support for Cadence MHDP8546 DPI/DP bridge")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240408125810.21899-1-amishin@t-argos.ru
+Fixes: 9b621b6adff53346 ("clk: renesas: r8a779a0: Add CANFD module clock")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/aef9300f44c9141b1465343f91c5cc7303249b6e.1713279523.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/renesas/r8a779a0-cpg-mssr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-index 6af565ac307ae..858f5b6508491 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-@@ -2057,6 +2057,9 @@ static void cdns_mhdp_atomic_enable(struct drm_bridge *bridge,
- 	mhdp_state = to_cdns_mhdp_bridge_state(new_state);
- 
- 	mhdp_state->current_mode = drm_mode_duplicate(bridge->dev, mode);
-+	if (!mhdp_state->current_mode)
-+		return;
-+
- 	drm_mode_set_name(mhdp_state->current_mode);
- 
- 	dev_dbg(mhdp->dev, "%s: Enabling mode %s\n", __func__, mode->name);
+diff --git a/drivers/clk/renesas/r8a779a0-cpg-mssr.c b/drivers/clk/renesas/r8a779a0-cpg-mssr.c
+index e02542ca24a06..5c908c8c5180d 100644
+--- a/drivers/clk/renesas/r8a779a0-cpg-mssr.c
++++ b/drivers/clk/renesas/r8a779a0-cpg-mssr.c
+@@ -139,7 +139,7 @@ static const struct mssr_mod_clk r8a779a0_mod_clks[] __initconst = {
+ 	DEF_MOD("avb3",		214,	R8A779A0_CLK_S3D2),
+ 	DEF_MOD("avb4",		215,	R8A779A0_CLK_S3D2),
+ 	DEF_MOD("avb5",		216,	R8A779A0_CLK_S3D2),
+-	DEF_MOD("canfd0",	328,	R8A779A0_CLK_CANFD),
++	DEF_MOD("canfd0",	328,	R8A779A0_CLK_S3D2),
+ 	DEF_MOD("csi40",	331,	R8A779A0_CLK_CSI0),
+ 	DEF_MOD("csi41",	400,	R8A779A0_CLK_CSI0),
+ 	DEF_MOD("csi42",	401,	R8A779A0_CLK_CSI0),
 -- 
 2.43.0
 
