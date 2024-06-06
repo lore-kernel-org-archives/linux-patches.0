@@ -1,51 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27C6198E85;
-	Thu,  6 Jun 2024 14:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F16198E85;
+	Thu,  6 Jun 2024 14:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683471; cv=none; b=J3JjuzhhDO0Zg0VDC+x5VaAyTjFonAW4f3Vd6F9+OPTErIcE4jNuMVASPZcfRgh9yfqF0NT29ReSUWIyy7tnai3hr68XdYygJYF2qN64G2DMFuqf2Iw5U1xIFxnNWt8xrUtT/vgPZ2iRHP9q748+Y5HRi95SfCs3wsB5MaNKQlk=
+	t=1717683471; cv=none; b=Z95fhCFYQ+DHHlde7RAKeyP4Ews2gOstG7dCB7BN3GOh5gQkxkpENZwDHIDplE0cyZw2zc48nuW26n8l2ipDlRZNfzzjv9NrtUMz5Ckbd1wEdS1SBxauEQDzKXQvhQygRvqQwzZ5+0TuTkkFrfy6uumU9agKoqCzy/EAy3jp4gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683471; c=relaxed/simple;
-	bh=C7CDtVi1b7b/lubj0MF4DPIyFgk9dObnl4sLKDT5i1I=;
+	bh=iqBvnF9VSSXCeXP7s3ghWVAfxwnpaoKO8E+LHqQW6FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6rEuoEwdc6fKEQ1NLl7whfRs+LDl9ou08IVUvGyLnYnuh/a6IqwNZIpIHuI9FkPraHNMLkFJrx3m5Px1X7aATJaqIR1w3Nsh0jy/38QGGcj6sxghJdA/HI1x9DFjb464KQmgDJtD1US9MrQZFmejg0EI++/nnw8k1O79sBAmyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kiIXTNM8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ey9EmtYVl+WqCXL90A/BOezPDPO0uKxVfa7LCJoyyVkky4zPTiR5mrjtXR5nmDSnb2ckVIAJ9yMNNo4zC3H9AS19zeCJx9r/+nF/BxraFB5nmtsWqS/KTZXn3rx5Qm08U31GubKHUBSm+B0FjUt0AIlXySsLiJwwqAOLnCLVvbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpMfYdAI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiIXTNM8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDAEEC2BD10;
-	Thu,  6 Jun 2024 14:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpMfYdAI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43013C2BD10;
+	Thu,  6 Jun 2024 14:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683470;
-	bh=C7CDtVi1b7b/lubj0MF4DPIyFgk9dObnl4sLKDT5i1I=;
+	s=korg; t=1717683471;
+	bh=iqBvnF9VSSXCeXP7s3ghWVAfxwnpaoKO8E+LHqQW6FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kiIXTNM8U0QQtUt1rw/lxCOSN/C36enzGsCNWNOD2z+Fhi/jupoEkQ2vdkdWLJOZQ
-	 0Ni1qjWOQqhCgA/GRZ2J7J1IiVJCwj/IMi7wKVlA4Ka5hFMoK2JDkPXYmQs7R9YjKn
-	 KX2gNLUVeviY+2g6Xvk42gh4BfzkH9MpkMbf62uE=
+	b=fpMfYdAIqrRC7emb988KJFbxKr3xHd4E2+G0zEQ+xDgvbE9dZ6pBfN5obSCCLoHJG
+	 aWUfmCVL2fuqWtBfsA2lI9b0WWgzQN8p+yx+BqPfwcCZoJg99dMaOTYnXFd4+1/hoN
+	 vy7fq4H7JbgQuHabB7HSV3++dbOX5QHoB7nWZDZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Kan Liang <kan.liang@linux.intel.com>,
-	Leo Yan <leo.yan@linux.dev>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 339/473] perf ui browser: Avoid SEGV on title
-Date: Thu,  6 Jun 2024 16:04:28 +0200
-Message-ID: <20240606131711.113854997@linuxfoundation.org>
+Subject: [PATCH 6.6 414/744] perf annotate: Fix annotation_calc_lines() to pass correct address to get_srcline()
+Date: Thu,  6 Jun 2024 16:01:26 +0200
+Message-ID: <20240606131745.756393236@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,48 +53,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 90f01afb0dfafbc9b094bb61e61a4ac297d9d0d2 ]
+[ Upstream commit aaf494cf483a1a835c44e942861429b30a00cab0 ]
 
-If the title is NULL then it can lead to a SEGV.
+It should pass a proper address (i.e. suitable for objdump or addr2line)
+to get_srcline() in order to work correctly.  It used to pass an address
+with map__rip_2objdump() as the second argument but later it's changed
+to use notes->start.  It's ok in normal cases but it can be changed when
+annotate_opts.full_addr is set.  So let's convert the address directly
+instead of using the notes->start.
 
-Fixes: 769e6a1e15bdbbaf ("perf ui browser: Don't save pointer to stack memory")
-Signed-off-by: Ian Rogers <irogers@google.com>
+Also the last argument is an IP to print symbol offset if requested.  So
+it should pass symbol-relative address.
+
+Fixes: 7d18a824b5e57ddd ("perf annotate: Toggle full address <-> offset display")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Leo Yan <leo.yan@linux.dev>
-Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240508035301.1554434-2-irogers@google.com
+Link: https://lore.kernel.org/r/20240404175716.1225482-2-namhyung@kernel.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browser.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/annotate.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/ui/browser.c b/tools/perf/ui/browser.c
-index d09b4cbec6e06..5d6f4f25c33d0 100644
---- a/tools/perf/ui/browser.c
-+++ b/tools/perf/ui/browser.c
-@@ -203,7 +203,7 @@ void ui_browser__refresh_dimensions(struct ui_browser *browser)
- void ui_browser__handle_resize(struct ui_browser *browser)
- {
- 	ui__refresh_dimensions(false);
--	ui_browser__show(browser, browser->title, ui_helpline__current);
-+	ui_browser__show(browser, browser->title ?: "", ui_helpline__current);
- 	ui_browser__refresh(browser);
+diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
+index 5fa4831631140..83da2bceb5959 100644
+--- a/tools/perf/util/annotate.c
++++ b/tools/perf/util/annotate.c
+@@ -2906,7 +2906,7 @@ void annotation__toggle_full_addr(struct annotation *notes, struct map_symbol *m
+ 	annotation__update_column_widths(notes);
  }
  
+-static void annotation__calc_lines(struct annotation *notes, struct map *map,
++static void annotation__calc_lines(struct annotation *notes, struct map_symbol *ms,
+ 				   struct rb_root *root)
+ {
+ 	struct annotation_line *al;
+@@ -2914,6 +2914,7 @@ static void annotation__calc_lines(struct annotation *notes, struct map *map,
+ 
+ 	list_for_each_entry(al, &notes->src->source, node) {
+ 		double percent_max = 0.0;
++		u64 addr;
+ 		int i;
+ 
+ 		for (i = 0; i < al->data_nr; i++) {
+@@ -2929,8 +2930,9 @@ static void annotation__calc_lines(struct annotation *notes, struct map *map,
+ 		if (percent_max <= 0.5)
+ 			continue;
+ 
+-		al->path = get_srcline(map__dso(map), notes->start + al->offset, NULL,
+-				       false, true, notes->start + al->offset);
++		addr = map__rip_2objdump(ms->map, ms->sym->start);
++		al->path = get_srcline(map__dso(ms->map), addr + al->offset, NULL,
++				       false, true, ms->sym->start + al->offset);
+ 		insert_source_line(&tmp_root, al);
+ 	}
+ 
+@@ -2941,7 +2943,7 @@ static void symbol__calc_lines(struct map_symbol *ms, struct rb_root *root)
+ {
+ 	struct annotation *notes = symbol__annotation(ms->sym);
+ 
+-	annotation__calc_lines(notes, ms->map, root);
++	annotation__calc_lines(notes, ms, root);
+ }
+ 
+ int symbol__tty_annotate2(struct map_symbol *ms, struct evsel *evsel)
 -- 
 2.43.0
 
