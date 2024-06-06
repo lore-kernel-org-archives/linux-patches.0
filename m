@@ -1,221 +1,315 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2063.outbound.protection.outlook.com [40.107.94.63])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23547198E6E
-	for <patches@lists.linux.dev>; Thu,  6 Jun 2024 14:35:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717684504; cv=none; b=ttOyXP9lQDw18DvttgtzkOTxE2nqd/lUvDVGzxoKoYsSWWsnINmeROnbrWJO6jVDal1sZuSh8SnTndLyKjIaVjB4DeUeWJYpUguGbNncx1oAoMMUhXulHh8Lkktu/U8vxCi9ZwwNt8aMlHD88VMckx6zbZMp1RQlnVdvg6oZ/Tk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717684504; c=relaxed/simple;
-	bh=h9ZaPrAmxAPQehpDzjStkeIg6YJXxVarWCaYU2WS9kQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VK6Dvdx9XWLGKywPh54WtIFXlnGa89UV/qeAD93/uesoaRJPCOTWb5Txq6ADF725R/hYHvbcQ61Nu8Z4I61ELNdYYSd1M4UU7b8fi7fUSt+lSYy4hjEHloBE+YVSIBjRRCZX3Mz7CgO9EzhPAfv9Qw8EH/4/Qbnp24Wy0vb3NJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PjM4tU27; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5141B3F1C
+	for <patches@lists.linux.dev>; Thu,  6 Jun 2024 14:41:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.63
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717684871; cv=fail; b=h1XgoiTwyXqlfVuciByn2bNDtlhloE1zCB3mv36u6NIul1rtINyExJUc2vvcWvdnUDQiobh4IIg77Rm+G6NU/Xdy15GbWBogParnn7+WHPKukm0R7Y/+uFy+BSckKpdHHJBRKtU1JJ7pUj28XzSYDITYyOwwdd7Az+wpxoLbOeY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717684871; c=relaxed/simple;
+	bh=nuXw+mKVF58vlrbZPQCqkIoo03U4GQ8kJsOLwF8gJ3U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=UVdiq/O18epe79mBcfpwXBvSv2gBu5kda7bx+vpMtS4JmMeWZFaSUXYaeSVY/v2TCcDaPVKGfggr+yXtvaf7+AiiaAT4HHPwp3kE8hM1xt5OoXL6/X7wtEjb1htCDMv9Y3KwrkojSQOGz34MbEg7y4ZLO4T6Bu/L2FfgLC27GzY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=FLsJGeed; arc=fail smtp.client-ip=40.107.94.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PjM4tU27"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-795174a500aso43361985a.3
-        for <patches@lists.linux.dev>; Thu, 06 Jun 2024 07:35:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717684502; x=1718289302; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Fk/yBrg3lB0eIyTR1z2aQPbvwHEOsAf8ISJq44rsaRI=;
-        b=PjM4tU27xOy1sBva8TPjFwUOqC/INdO0E6rrE7xKKGphCB5vHaRab7N/rQHd4tA8x4
-         1iCwbPS+q8fgMVAUZ2DlX115y3js/CrVDz58e1Jpjkr0TNSRQXDzKNNRdkSM908Yv17j
-         +nXMalk7PgVBzBgYSZLLsz33UzC28ZKfGRobbbjd9ArNdt8QxMn0C+ecpmUZfiC8CrSo
-         9w96bdYgCc2ZSvLxcxfWy3p9eJfB+exhAsPxtLBM+3i80DCJBFfNmxYGGt1hNVbDES4g
-         7BbqVKCzZCKofwI+hznOhMvAGTLkWQLJvA4AMEaXSGfA9BVen2c8bvLsbybk31JKAw0A
-         57wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717684502; x=1718289302;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Fk/yBrg3lB0eIyTR1z2aQPbvwHEOsAf8ISJq44rsaRI=;
-        b=V3RKWlE2pIE3COz/iKZS2LYjJ+LGvwzMsU80s7u5M2xa6yGVfR68j5e32DxpvOagoc
-         IPi4HoUjQtLX4uZ9wfQlvHn/KfbCbrLFTfDgbCBsOM+g1k0lkHjtgdUit390GE+PNL+h
-         d8iMchNMn6rI1pCDVIndqNFI9WkNlNUd1aoOBjntMCJUADEgiSivV0iodJWUENoPw/39
-         ZXwkJHzkVTgRbeamlgTxTNAknzqKrjD1yuUFr/5zYRi7E3abG9sG0Dv6MvSsFutcA3j0
-         yiXLshNX8XccUs66q8PQHoBVTpiCH/0LtL8i233Ap9n3HcBisHgiNiHrNUMM02XRdMFP
-         D1tA==
-X-Forwarded-Encrypted: i=1; AJvYcCX84OJ4fvffMqFDVVztqDg0swc9S0rNJs/Xht7YOWkr0dKPZhRsmpL6liS13MA0aI5A5cTo966SEIsBminl5o6Yordoz54yRQ==
-X-Gm-Message-State: AOJu0YytE5l4R3wUsvySZvxVtAdb6LiQB3p4trZ6UYupdaDH6PHH+fvW
-	LvSKjHBw5nIzhux8w5BLuXev2hGknB89wkZZsiWbixK8Gul1nG+7Ru2ymMUoFlTSOfqGIlo1r3u
-	AaTR0xyzJXGzdGkx6/2XadE6uW5c=
-X-Google-Smtp-Source: AGHT+IGialW1cgUFYrkwgo6znlv+dlJDrhpohenFUSsh7AtWMA1/F9Ae5x0lyonf7iHbyWTdszun78wPTkmnnYgf2WU=
-X-Received: by 2002:a05:620a:2005:b0:792:c683:1f48 with SMTP id
- af79cd13be357-79523d4f6bamr611477785a.36.1717684501908; Thu, 06 Jun 2024
- 07:35:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="FLsJGeed"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jSXOLAXKpvfxvXWDacHweLw1ap6ClFZVmO3yMlpcDDUOBDLQ31+SWwraChoSe+YEwI1KoNoFh4yVWYUd4rkzPU/yBAaBDEeEJ//oK4ExI0WBF0x8Q0V9+OjFjCZvsbf+/K6xdNBSif5VqZk8Mmco4A8cJ7COb7mbCMXRwJe2oT54E2Dy7ugu2Y7WtFOKdGu2Em/w6zWOrBbK9uPq72RkTy/qOp0+HMJSW/wDwkItad5pcgG54dtTxCjwfCyFJUDeR36MZ7VUeam33vLAhFiwXNJfYcin51dLAXC3V4d0XHbmrcD4ef1rHefvuIhUueLbhzQwWA5wAb96ET8g1DRC4Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4lFTd0/k13dQope2W6dT2+/9+hW4KCuEFWcz5Dpp8Pc=;
+ b=LA7XtUue66QWNJafM1YYWb/u/xhMInrIRxhYdUDXuNr/zgR0dmheYVIHVBmmw3Q22VffcM1fklVK4sonr7yhHJD+AHV/tAk7sjUO6axYGiJ7UZtTyNodAvz+3EtSjS6pdjDNFMTdcH9SYFHaldbUR2mESfRBdhSu+280EhbRaPgJutkKKAE3Ft4fnlnuF6UKTIoEyQP8djTIi83O9GHjfs1qIBsNjhXO3EDRAF9/QyzWbRqct4GNho5fUWt2fQPaK5RZapwjpcAzWEMAiXHk8wF2h0mrEoX5Ow3WkE/mNCUl1/UafffbeAmlUiNn3UHpyDytY33Q9i1t3ZfWMXElLg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4lFTd0/k13dQope2W6dT2+/9+hW4KCuEFWcz5Dpp8Pc=;
+ b=FLsJGeedvF6pIYA3i/t4wvsU+difkjURWCWIbRk278bmhlsPSQl6IUjcmcKVVmrtLWC4dfpi1cV1vmQoiowA2hzSodcKx5eUpwjDH29vG1pS+1doCAnw07qmoxEl+Q4iVMat82Ch/yWfpnmN3VGi+cZCqQgTJfluxe41zBS2Izmu8nk/jEx6847uqV1tLMiWSxdqmU2Oh6fstHRoKZxaruwP0mGyP4WyGWBJ+/P+H7uO3wU+duTWF1PKAP8f4lrwl2JC1cTsGV+s8XnCvby5wVoWji/PODQAHIG+Ehi0Xy/T4MWGkoGAcmI1Ibj4Ayfn5TjNYTcoh3St6S0Dv7eRPA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+ by SJ2PR12MB9189.namprd12.prod.outlook.com (2603:10b6:a03:55b::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.34; Thu, 6 Jun
+ 2024 14:41:04 +0000
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7633.033; Thu, 6 Jun 2024
+ 14:41:04 +0000
+Date: Thu, 6 Jun 2024 11:41:02 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Dan Williams <dan.j.williams@intel.com>
+Cc: Jakub Kicinski <kuba@kernel.org>, David Ahern <dsahern@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
+	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Aron Silverton <aron.silverton@oracle.com>,
+	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
+	Leonid Bloch <lbloch@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 0/8] Introduce fwctl subystem
+Message-ID: <20240606144102.GB19897@nvidia.com>
+References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
+ <20240603114250.5325279c@kernel.org>
+ <214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
+ <20240604070451.79cfb280@kernel.org>
+ <665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
+ <20240605135911.GT19897@nvidia.com>
+ <6661416ed4334_2d412294a1@dwillia2-mobl3.amr.corp.intel.com.notmuch>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6661416ed4334_2d412294a1@dwillia2-mobl3.amr.corp.intel.com.notmuch>
+X-ClientProxiedBy: BLAPR03CA0150.namprd03.prod.outlook.com
+ (2603:10b6:208:32e::35) To DM6PR12MB3849.namprd12.prod.outlook.com
+ (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240606131732.440653204@linuxfoundation.org> <20240606131746.600659628@linuxfoundation.org>
-In-Reply-To: <20240606131746.600659628@linuxfoundation.org>
-From: Amir Goldstein <amir73il@gmail.com>
-Date: Thu, 6 Jun 2024 17:34:50 +0300
-Message-ID: <CAOQ4uxifOH00rFOgOb50-XySScixowqa3YfrFLDDcsdfmtEMCQ@mail.gmail.com>
-Subject: Re: [PATCH 6.6 440/744] fs: move kiocb_start_write() into vfs_iocb_iter_write()
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, Jan Kara <jack@suse.cz>, 
-	Josef Bacik <josef@toxicpanda.com>, Christian Brauner <brauner@kernel.org>, 
-	Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|SJ2PR12MB9189:EE_
+X-MS-Office365-Filtering-Correlation-Id: f1ebe90e-2c92-4ce2-f284-08dc8636b107
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|7416005|366007|376005;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?o6ZacMwvtPs4v9hxNb6Qkk+VNs0MB5HU3rAGk4nY1MakExyTgI83ZoEtp8ap?=
+ =?us-ascii?Q?Es+Wncy048C++kq1efjveHKRzwB7O1H41kM77wF6huGL6nqgioJP/p/cDPZ4?=
+ =?us-ascii?Q?Bc7ucpZ3nGzOXRN2Y13FgDlV3F8o3saRi1diU/S1AVuULgYpQwaPmWYEi+Dz?=
+ =?us-ascii?Q?hWq7ySGiZBuYw+q34j6phHRSl8HFP1LtUf3m1OuQDqXZdJSLlwuINDfC2L5w?=
+ =?us-ascii?Q?h5sNhUWbHAnf0C3vUZhVwgdhdHu9aX4OH7buTvsvaTPRWH/SGY93JAWkDhKe?=
+ =?us-ascii?Q?ptmSYHwXL6udMYV5AT0j9MBqJjDff9RZToF91nC0+Spc0XYPeJObB6QpeA3g?=
+ =?us-ascii?Q?cNQtpE8P5Irw5kWQMCOBSrcrSj+hhve5VCnAB7vSujs4s5oMyurfZA5qFh0F?=
+ =?us-ascii?Q?xi2CluFeJdQ7o21P3fa8IdQ0weIMv1DxVxjLS9QIoONVZg9Z5sSVErQ+piRC?=
+ =?us-ascii?Q?ZhQRauQFRV731ZsSvk0ZId2w3q9gopu2PYa5Twwg/pm7eRCDCESieJfNiaec?=
+ =?us-ascii?Q?G4FL6llsCsGsWhYCa1I0+t7SX49XfAWbWBTE5qEhDBsRF8d9zFzEVHB8bIE5?=
+ =?us-ascii?Q?ix8XCyOY6iRpyknBXpIXDux86H/yyYRK4EKSoZTbmgzT5UpJSgZxICoB3lUi?=
+ =?us-ascii?Q?jwvlXQCE0VrKQMR1f8PwC4Ex0YI6e3OUnGSUcC0XDzal0zI3xACujCG//o63?=
+ =?us-ascii?Q?BL0R0vO8AJyd/dHgcEaeF2Caa387Rqr2jrY6TyaGP6wIoc3rI4w0l8R0Ebr4?=
+ =?us-ascii?Q?3fbAGGYW5cyg1tz3yYJ7aLqJD/pGQTDNbr1Q11z6vcZr1UsiPk53tA8p61x/?=
+ =?us-ascii?Q?kTWLxllG8Po9xFE+Ohdg1A4UTp5eFEuqtOSSNy6seSO3AyA0TsZX9Vut+zKe?=
+ =?us-ascii?Q?me7n9tZFgQxdroWFueM5oEDlXaMfQOTLnRolSx4UuNP/XTU1qlXVHyaY6sYL?=
+ =?us-ascii?Q?9fW/2aQD7GtUcU3i2MO+mZoSW/fpRJH/dcuWFsLiNH4rK7AZaa91b2cUsVQR?=
+ =?us-ascii?Q?PErzE65+kuMmL+nBlIal7A0ZDc16SBNT+CZykVsNNYG+yO+R2ifcU/bp8eAT?=
+ =?us-ascii?Q?aSMZ7sv8L41MU2nTbPU9cy26d3iU0cwupr6CgL/029/DzanpeE9lLj0Agxen?=
+ =?us-ascii?Q?0geaYOqv7DbrDB6MdXJtFx1wdyzHc2umYFzC3uZy2+lwMLOJFfnmIHDJGXBB?=
+ =?us-ascii?Q?mb9FKE02aqFeHGIrcfEUh7L0nmsC4lRc2NP5dXb53b2fNq3VA0XKweT3ECsX?=
+ =?us-ascii?Q?HNL0jsRQ2OyTtWSn+dmjD8blTkWMOSUjo45e0JamTY2FErcVkmgyJvG4VEKS?=
+ =?us-ascii?Q?/Dol3CX7+zAy4h240r9o3ckS?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(7416005)(366007)(376005);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?egOY5GuiieeCfJH8PYaTm9rXtu9Yx2E5m9063h1jSCNbdFadXvPBJKWEw1N9?=
+ =?us-ascii?Q?bWcFI3su+rwWRelT/oXDIAOftp2nGAYbCg50xElO1U/11Q+QsvxtTPzTgP02?=
+ =?us-ascii?Q?pIEhnLwgc1kfBRLAybYqhstjDoERHdD4y8ruSR9pXptlGkwqutxpjfqJLf+a?=
+ =?us-ascii?Q?ARkxlZOWLJvgJv0jZQToQWJ6941UkEuECWJ6AH0/MRSremixYDuPPox3Tgt7?=
+ =?us-ascii?Q?dpU12sCmN+GbC825XqbuueHxrrJqlYPPNTntAsGQKNfxKXMOJixYX8b2jjOO?=
+ =?us-ascii?Q?GfdeWFV/XLtAe3NIBwQJovhIQF1Kiby35tvrGfDrwaNE0mNg43Wh3LO0x7PM?=
+ =?us-ascii?Q?h2HOCafNXpfj3WSHaaozUINJXbhtm3D3f7qIpTkPpRkStroAv+damgwiuguL?=
+ =?us-ascii?Q?PPzP+s3i3ETPuL0Pn7hQxblOsGdiQPUfjlgiZS6REt02ALVBDxYaHMRUvZp5?=
+ =?us-ascii?Q?sEyOr00lefcbYobB1IW01cCMof+HFGBZQIE0ln6TTa88Ow4Rix7mdi4bCtuI?=
+ =?us-ascii?Q?mDoJC5w+OT32cKFSVqmYvLncoh7wdvyQ3eVGNu0RJiMa5GlexVQEpWokzcom?=
+ =?us-ascii?Q?g7mb2H2552xalALnsujuA72vh07SHrZF+hC0VspYisUcRT9l2YTryY6gleUN?=
+ =?us-ascii?Q?BvsKkwUwqqxc5EvvdWpALYG5ZYak/AzGqMWRFhVNnqI5nd6uizrY8TKj+qK2?=
+ =?us-ascii?Q?J8lJ12fpNQ4fGl2DOUh/UiS09jTg2nQUNjszy08dlCN9mlcdN+FAWtgPLu5N?=
+ =?us-ascii?Q?40gfhAMR2OdKYKYJCY5i85vzmG+O4MBXM9DzRxTjDY3hqd6EYcgLrx1krlMN?=
+ =?us-ascii?Q?xehN2jj0A6byqBGOsBOVWckMV8pXlcBMVAw8H+X08QuBALDEuTp9Kp7ar24D?=
+ =?us-ascii?Q?UEepTA6uC1HJeIGb14hGMFYKM4H3JyUgVp6bG7+k/4C436Zldu8b39UZq6uT?=
+ =?us-ascii?Q?PEVClrMVaT21Fc88+owg0Tr462FvGo9XwzLBtchsx0m72Emg1NHKDW/E4FhG?=
+ =?us-ascii?Q?h3XBg+Vw+lRw9BLrckpMjXwqH+yVuFjfdJwag6BjlO8diB2JfW+mkmrt48Fe?=
+ =?us-ascii?Q?tABByWifFiU1Lq7bAv9AWbfC3UcN9kclUUHeotDyA2cNyFnxPW5itV769qvE?=
+ =?us-ascii?Q?EpyMNnCQOl9DgZXSdpLbGyNsbDVF6I9LBLPKY64pMRPCUi8nXSrBr7YoO6Kc?=
+ =?us-ascii?Q?BE/N7xzcc6qbXal8kMiE5MIqdLM/yAvAvLLa+ecqPaWi046aFGDwORIULATi?=
+ =?us-ascii?Q?fxXrXVnYABJhsndlQGQBvvE5eScX9NqJ5PX4+oC6GYUrmJQZu3saD8H52O5l?=
+ =?us-ascii?Q?3x8EGowqb6tUbiEuuE6u0benIc3G7xsI86LMcylPY3joRNJKr8rTpBbbe4Dn?=
+ =?us-ascii?Q?YMSuyvSWD4N4QWxl6dLI7suI5reo7udLA1O6Y6Xu+/zrynLRJ14y3R2zTASa?=
+ =?us-ascii?Q?xVI8ny5SoPw2OfwT+LImVR2Yp5AMkI0u7OZhHcQBKDqs7by3N561qD0Ta9xq?=
+ =?us-ascii?Q?+iUFaGY9dKiYKyxL4PKwLn2gtaagiAlIxFLgQhtK2mJkugb6UMBJqJR3pqD3?=
+ =?us-ascii?Q?i4Cq7yMDQbUQekLVqKyd1xoRN9miTcjflmNw6Hyd?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f1ebe90e-2c92-4ce2-f284-08dc8636b107
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2024 14:41:03.8900
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: A7lvoVL3cXAqr2kpY96Ig8sMaiuznYk/VEmakGhmqNc2p9md459HNoCbz3iho18Z
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9189
 
-On Thu, Jun 6, 2024 at 5:18=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 6.6-stable review patch.  If anyone has any objections, please let me kno=
-w.
->
+On Wed, Jun 05, 2024 at 09:56:14PM -0700, Dan Williams wrote:
 
-I have objections and I wrote them when Sasha posted the patch for review:
+> > If people come and say we need X and the maintainer says no, they
+> > don't just give up and stop doing X, the go and do X anyhow out of
+> > tree. This has become especially true now that the center of business
+> > activity in server-Linux is driven by the hyperscale crowd that don't
+> > care much about upstream.
+> 
+> "...don't care much about upstream...". This could be a whole separate
+> thread unto itself.
 
-https://lore.kernel.org/stable/CAOQ4uxg1Ce31UDDeb9ADYgEBvr582j4hqmJ-B72iAL+=
-2xsAYzw@mail.gmail.com/
+Heh, it is a topic, but perhaps not one for polite company :)
 
-Where did this objection get lost?
+> > Linux maintainer's don't actually have the power to force the industry
+> > to do things, though people do keep trying.. Maintainers can only
+> > lead, and productive leading is not done with a NO.
+> > 
+> > You will start to see this pain in maybe 5-10 years if CXL starts to
+> > be something deployed in an enterprise RedHat/Dell/etc sort of
+> > environment. Then that missing X becomes a critical issue because it
+> > turns out the hyperscale folks long since figured out it is really
+> > important but didn't do anything to enable it upstream.
+> 
+> This matches other feedback I have heard recently. Yes, distros hate
+> contending with every vendor's userspace toolkit, that was the
+> original
+
+I'm not sure that is 100% true. Sure nobody likes that you have to
+type 'abc X' and 'def Y' to do a similar thing, but from a distro
+perpective if abc and def are both open sourced and packaged in the
+distro it is still a far better outcome than users doing OOT drivers
+and binary-only tools.
+
+eg one of the long standing main Mellanox tools that is being ported
+to fwctl is open source and in all distros:
+
+ https://rpmfind.net/linux/rpm2html/search.php?query=mstflint
+
+Projects have already experimented building tooling on top of it to
+make a more cross-vendor experience in some areas.
+
+In my view it is wrong to think the kernel is the only place we can
+make generic things or that allowing userspace to see the raw device
+interface immediately means fragmentation and chaos. The industry is
+more robust than that. Giving people working in userspace room to
+invent their own solutions is actually helpful to driving some
+commonality. There are already soft targets in the K8S that people
+need to fit into, if the first few steps are with abc/def tools and
+that brings us to an eventual true commonality, then great.
+
+> distro feedback motivating CONFIG_CXL_MEM_RAW_COMMANDS to have a poison
+> pill of WARN() on use. However, allowing more vendor commands is more
+> preferable than contending with vendor out-of-tree drivers that likely
+> help keep the enterprise-distro-kernel stable-ABI train rolling. In
+> other words, legalize it in order to centrally regulate it.
+
+I also liked Jakub's idea of putting a taint in for things that were
+likely to have an impact on support and debug, I included that concept
+in fwctl.
+
+> > >   Effects Log". In that "trust Command Effects" scenario the kernel still
+> > >   has no idea what the command is actually doing, but it can at least
+> > >   assert that the device does not claim that the command changes the
+> > >   contents of system-memory. Now, you might say, "the device can just
+> > >   lie", but that betrays a conceit of the kernel restriction. A device
+> > >   could lie that a Linux wrapped command when passed certain payloads does
+> > >   not in turn proxy to a restricted command.
+> > 
+> > Yeah, we have to trust the device. If the device is hostile toward the
+> > OS then there are already big problems. We need to allow for
+> > unintentional defects in the devices, but we don't need to be
+> > paranoid.
+> > 
+> > IMHO a command effects report, in conjunction with a robust OS centric
+> > defintion is something we can trust in.
+> 
+> So this is where I want to start and see if we can bridge the trust gap.
+> 
+> I am warming to your assertion that there is a wide array of
+> vendor-specific configuration and debug that are not an efficient use of
+> upstream's time to wrap in a shared Linux ABI. I want to explore fwctl
+> for CXL for that use case, I personally don't want to marshal a Linux
+> command to each vendor's slightly different backend CXL toggles.
+
+Personally I think this idea to marshal/unmarshal everything in the
+kernel is often misguided. If it is truely obvious and actually shared
+multi-vendor capability then by all means go and do it.
+
+But if you are spending weeks/months fighting about uAPI because all
+the vendors are so different, it isn't obvious what is "generic" then
+you've probably already lost. The very worst outcome is a per-device
+uAPI masquerading as an obfuscated "generic" uAPI that wasted ages of
+peoples time to argue out.
+
+> At the same time, I also agree with the contention that a "do anything
+> you want and get away with it" tunnel invites shenanigans from folks
+> that may not care about the long term health of the Linux kernel vs
+> their short term interests.
+
+IMHO this is disproven by history. The above mstflint I linked to is
+as old as as mlx5 HW, it runs today over PCI config space and an OOT
+driver. Where is real the damage to the long term health of Linux or
+the ecosystem?
+
+Like I said before I view there is a difference between DRM wanting a
+Vulkan stack and doing some device specific
+configuration/debugging. One has vastly more open source value than
+the other.
+
+> So my questions to try to understand the specific sticking points more
+> are:
+> 
+> 1/ Can you think of a Command Effect that the device could enumerate to
+> address the specific shenanigan's that netdev is worried about? 
+
+Nothing comes to mind..
+
+> In other words if every command a device enables has the stated
+> effect of "Configuration Change after Reset" does that cut out a
+> significant portion of the concern?
+
+Related to configuration - one of Saeed's oringinal ideas was to
+implement a devlink command to set the configurables in the flash in a
+way that mlx5 could implement all of its options, ideally with
+configurables discovered dynamically from the running device. This LPC
+presentation was so agressively rejected by Jakub that Saeed abandoned
+it. In the discussion it was clear Jakub is requesting to review and
+possibly reject every configurable.
+
+On this topic, unfortunately, I don't see any technical middle ground
+between "netdev is the gatekeeper for all FLASH configurables" and
+"devices can be fully configured regardless of their design".
+
+> 2/ About the "what if the device lies?" question. We can't revert code
+> that used to work, but we can definitely work with enterprise distros to
+> turn off fwctl where there is concern it may lead or is leading to
+> shenanigans. 
+
+Security is the one place where Linus has tolerated userspace
+regressions. In this specific case I documented (or at least that was
+the intent) there would be regression consequences to breaking the
+security rules. Commands can be retroactively restricted to higher CAP
+levels and rejected from lockdown if the device attracts a CVE.
+
+IMHO the ecosystem is strongly motived to do security seriously these
+days, I am not so worried.
+
+> So, document what each subsystem's stance towards fwctl is,
+> like maybe a distro only wants fwctl to front publicly documented vendor
+> commands, or maybe private vendor commands ok, but only with a
+> constrained set of Command Effects (I potentially see CXL here). 
+
+I wouldn't say subsystem here, but techonology. I think it is
+reasonable that a CXL fwctl driver have some kconfig tunables like you
+already have. This idea works alot better if the underlying thing is
+already standards based.
+
+Linux subsystem isn't a meaningful concept for a multi-function device
+like mlx5 and others.
 
 Thanks,
-Amir.
-
-> ------------------
->
-> From: Amir Goldstein <amir73il@gmail.com>
->
-> [ Upstream commit 6ae654392bb516a0baa47fed1f085d84e8cad739 ]
->
-> In vfs code, sb_start_write() is usually called after the permission hook
-> in rw_verify_area().  vfs_iocb_iter_write() is an exception to this rule,
-> where kiocb_start_write() is called by its callers.
->
-> Move kiocb_start_write() from the callers into vfs_iocb_iter_write()
-> after the rw_verify_area() checks, to make them "start-write-safe".
->
-> The semantics of vfs_iocb_iter_write() is changed, so that the caller is
-> responsible for calling kiocb_end_write() on completion only if async
-> iocb was queued.  The completion handlers of both callers were adapted
-> to this semantic change.
->
-> This is needed for fanotify "pre content" events.
->
-> Suggested-by: Jan Kara <jack@suse.cz>
-> Suggested-by: Josef Bacik <josef@toxicpanda.com>
-> Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-> Link: https://lore.kernel.org/r/20231122122715.2561213-14-amir73il@gmail.=
-com
-> Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-> Reviewed-by: Jan Kara <jack@suse.cz>
-> Signed-off-by: Christian Brauner <brauner@kernel.org>
-> Stable-dep-of: 7c98f7cb8fda ("remove call_{read,write}_iter() functions")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  fs/cachefiles/io.c  | 5 ++---
->  fs/overlayfs/file.c | 8 ++++----
->  fs/read_write.c     | 7 +++++++
->  3 files changed, 13 insertions(+), 7 deletions(-)
->
-> diff --git a/fs/cachefiles/io.c b/fs/cachefiles/io.c
-> index 009d23cd435b5..5857241c59181 100644
-> --- a/fs/cachefiles/io.c
-> +++ b/fs/cachefiles/io.c
-> @@ -259,7 +259,8 @@ static void cachefiles_write_complete(struct kiocb *i=
-ocb, long ret)
->
->         _enter("%ld", ret);
->
-> -       kiocb_end_write(iocb);
-> +       if (ki->was_async)
-> +               kiocb_end_write(iocb);
->
->         if (ret < 0)
->                 trace_cachefiles_io_error(object, inode, ret,
-> @@ -319,8 +320,6 @@ int __cachefiles_write(struct cachefiles_object *obje=
-ct,
->                 ki->iocb.ki_complete =3D cachefiles_write_complete;
->         atomic_long_add(ki->b_writing, &cache->b_writing);
->
-> -       kiocb_start_write(&ki->iocb);
-> -
->         get_file(ki->iocb.ki_filp);
->         cachefiles_grab_object(object, cachefiles_obj_get_ioreq);
->
-> diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
-> index 9fd88579bfbfb..a1c64c2b8e204 100644
-> --- a/fs/overlayfs/file.c
-> +++ b/fs/overlayfs/file.c
-> @@ -295,10 +295,8 @@ static void ovl_aio_cleanup_handler(struct ovl_aio_r=
-eq *aio_req)
->         struct kiocb *iocb =3D &aio_req->iocb;
->         struct kiocb *orig_iocb =3D aio_req->orig_iocb;
->
-> -       if (iocb->ki_flags & IOCB_WRITE) {
-> -               kiocb_end_write(iocb);
-> +       if (iocb->ki_flags & IOCB_WRITE)
->                 ovl_file_modified(orig_iocb->ki_filp);
-> -       }
->
->         orig_iocb->ki_pos =3D iocb->ki_pos;
->         ovl_aio_put(aio_req);
-> @@ -310,6 +308,9 @@ static void ovl_aio_rw_complete(struct kiocb *iocb, l=
-ong res)
->                                                    struct ovl_aio_req, io=
-cb);
->         struct kiocb *orig_iocb =3D aio_req->orig_iocb;
->
-> +       if (iocb->ki_flags & IOCB_WRITE)
-> +               kiocb_end_write(iocb);
-> +
->         ovl_aio_cleanup_handler(aio_req);
->         orig_iocb->ki_complete(orig_iocb, res);
->  }
-> @@ -421,7 +422,6 @@ static ssize_t ovl_write_iter(struct kiocb *iocb, str=
-uct iov_iter *iter)
->                 aio_req->iocb.ki_flags =3D ifl;
->                 aio_req->iocb.ki_complete =3D ovl_aio_rw_complete;
->                 refcount_set(&aio_req->ref, 2);
-> -               kiocb_start_write(&aio_req->iocb);
->                 ret =3D vfs_iocb_iter_write(real.file, &aio_req->iocb, it=
-er);
->                 ovl_aio_put(aio_req);
->                 if (ret !=3D -EIOCBQUEUED)
-> diff --git a/fs/read_write.c b/fs/read_write.c
-> index 4771701c896ba..9a56949f3b8d1 100644
-> --- a/fs/read_write.c
-> +++ b/fs/read_write.c
-> @@ -865,6 +865,10 @@ static ssize_t do_iter_write(struct file *file, stru=
-ct iov_iter *iter,
->         return ret;
->  }
->
-> +/*
-> + * Caller is responsible for calling kiocb_end_write() on completion
-> + * if async iocb was queued.
-> + */
->  ssize_t vfs_iocb_iter_write(struct file *file, struct kiocb *iocb,
->                             struct iov_iter *iter)
->  {
-> @@ -885,7 +889,10 @@ ssize_t vfs_iocb_iter_write(struct file *file, struc=
-t kiocb *iocb,
->         if (ret < 0)
->                 return ret;
->
-> +       kiocb_start_write(iocb);
->         ret =3D call_write_iter(file, iocb, iter);
-> +       if (ret !=3D -EIOCBQUEUED)
-> +               kiocb_end_write(iocb);
->         if (ret > 0)
->                 fsnotify_modify(file);
->
-> --
-> 2.43.0
->
->
->
+Jason
