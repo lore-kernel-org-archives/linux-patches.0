@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F941BF917;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4201C0DC0;
 	Thu,  6 Jun 2024 14:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683558; cv=none; b=aB1GaLBwqGLIHDXuB6lYa0batOfZgX4HgpPBCS1dKgtvzaYTpxvs+ybia7RyvJWpErKwsbjI/mKGUICe2Ht13eidpdPxtC2dyEG66LvCH7wQLbuSg5vQJCIZFGADezusSt8Tc3OctlYGdfO95aFgj0eMiy8fjHBnop3KjUM/Tu4=
+	t=1717683558; cv=none; b=Dzu0sApqkQSaRYDg3PmK31MGa0130YukZBrtIllvrOTa4oHGEAuDbuM1/j9URe7s6d6hFBVYmHcMV6MDKPugLQcyt8NyXC+8gjip0lj9WJvG9WQVKEtBEDv6vrTaNc9KL5Xp7DXNsOaveWpy2VaudJM1QOKYFFMjdVtcO2XMjm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683558; c=relaxed/simple;
-	bh=cIutm8C6uXW9QeUCXS2TqUtsPvD1LqFM1yJjNSH8Ghc=;
+	bh=31x/cBW2r5Tm/ZAiJIDy599WR2A/NvK72YA5JLfQ4fI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZkgXlKdEP2KhUoSAIIR8aln8mccznoGicG66AoI8teBkKvlAwA1wIOnQpu78v6Y9XzsclZ3WTA2oXo+ll+h2SEaQj+VjqSxZc6k49RcyF+xtr5CO6fu3nIHIesQSAxWnc2B3bfG5BZPqE5ida8/OkIgm/2eP5QC8s+AvAFzw64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4XpuCNA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pnERL5P+HfIkdo6IbXWwGjzbrHJQ+zmxTfjv4qnObFkyiFlnK+6YT4Il5B7j7UG8smClZ/t1muRw6/i2tBxCjsT8dC9ARTQD2KdDyzY7zIHzOh5fMsKgHAPQEWB/3D/S0Vz6ks7/X5F6THhssySwxERJj1V682LPyK8a9gcbI88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGOeiheA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4XpuCNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02545C32782;
-	Thu,  6 Jun 2024 14:19:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGOeiheA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C941C2BD10;
+	Thu,  6 Jun 2024 14:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683558;
-	bh=cIutm8C6uXW9QeUCXS2TqUtsPvD1LqFM1yJjNSH8Ghc=;
+	bh=31x/cBW2r5Tm/ZAiJIDy599WR2A/NvK72YA5JLfQ4fI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z4XpuCNAMK76ykcW2RRXJDmNhEDEL1BGL7wChFbbUN7jedWwJHOQOH3s9F8qkfO3C
-	 AkY+qHAJY8bXfRFl7S3x92hTs/cM0UF2hnvRi+vYJl7k57A7zOAb4pEDecLUw+5yvz
-	 A3Yw/845yikAvmpSzkE/rDUC60QYY0rzrwA1kjd4=
+	b=NGOeiheAy0ug0NW77WDBbajlUlSCJn94DHhoEdhHtl/AqBwDn8Cw8cALkIXbT5qdU
+	 oO5CeFy6yCUIg7v0BspjXmYTGODZv4MwD17QuiBnd1LkLVz6RqqIFhUgpdtSC4XFdt
+	 p84AvVnIQ7i4YRVQaQhIeetz0Jo3yg+ZjlOkWpnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luke D. Jones" <luke@ljones.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	KaiLong Wang <wangkailong@jari.cn>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 448/473] ALSA: hda/realtek: Adjust G814JZR to use SPI init for amp
-Date: Thu,  6 Jun 2024 16:06:17 +0200
-Message-ID: <20240606131714.527958965@linuxfoundation.org>
+Subject: [PATCH 6.6 500/744] f2fs: Clean up errors in segment.h
+Date: Thu,  6 Jun 2024 16:02:52 +0200
+Message-ID: <20240606131748.476829432@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luke D. Jones <luke@ljones.dev>
+From: KaiLong Wang <wangkailong@jari.cn>
 
-[ Upstream commit 2be46155d792d629e8fe3188c2cde176833afe36 ]
+[ Upstream commit 37768434b7a7d00ac5a08b2c1d31aa7aaa0846a0 ]
 
-The 2024 ASUS ROG G814J model is much the same as the 2023 model
-and the 2023 16" version. We can use the same Cirrus Amp quirk.
+Fix the following errors reported by checkpatch:
 
-Fixes: 811dd426a9b1 ("ALSA: hda/realtek: Add quirks for Asus ROG 2024 laptops using CS35L41")
-Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Link: https://lore.kernel.org/r/20240526091032.114545-1-luke@ljones.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+ERROR: spaces required around that ':' (ctx:VxW)
+
+Signed-off-by: KaiLong Wang <wangkailong@jari.cn>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: aa4074e8fec4 ("f2fs: fix block migration when section is not aligned to pow2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/segment.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index c08bf42c602dd..3a7104f72cabd 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9893,7 +9893,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x3030, "ASUS ZN270IE", ALC256_FIXUP_ASUS_AIO_GPIO2),
- 	SND_PCI_QUIRK(0x1043, 0x3a20, "ASUS G614JZR", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x3a30, "ASUS G814JVR/JIR", ALC245_FIXUP_CS35L41_SPI_2),
--	SND_PCI_QUIRK(0x1043, 0x3a40, "ASUS G814JZR", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x3a40, "ASUS G814JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
- 	SND_PCI_QUIRK(0x1043, 0x3a50, "ASUS G834JYR/JZR", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x3a60, "ASUS G634JYR/JZR", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x831a, "ASUS P901", ALC269_FIXUP_STEREO_DMIC),
+diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
+index 20580ebd24138..c77a562831493 100644
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -108,11 +108,11 @@ static inline void sanity_check_seg_type(struct f2fs_sb_info *sbi,
+ 	((sbi)->segs_per_sec - ((sbi)->unusable_blocks_per_sec >>\
+ 	(sbi)->log_blocks_per_seg))
+ #define GET_SEC_FROM_SEG(sbi, segno)				\
+-	(((segno) == -1) ? -1: (segno) / (sbi)->segs_per_sec)
++	(((segno) == -1) ? -1 : (segno) / (sbi)->segs_per_sec)
+ #define GET_SEG_FROM_SEC(sbi, secno)				\
+ 	((secno) * (sbi)->segs_per_sec)
+ #define GET_ZONE_FROM_SEC(sbi, secno)				\
+-	(((secno) == -1) ? -1: (secno) / (sbi)->secs_per_zone)
++	(((secno) == -1) ? -1 : (secno) / (sbi)->secs_per_zone)
+ #define GET_ZONE_FROM_SEG(sbi, segno)				\
+ 	GET_ZONE_FROM_SEC(sbi, GET_SEC_FROM_SEG(sbi, segno))
+ 
 -- 
 2.43.0
 
