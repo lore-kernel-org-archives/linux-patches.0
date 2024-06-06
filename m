@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8616119AA78;
-	Thu,  6 Jun 2024 14:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AC1198845;
+	Thu,  6 Jun 2024 14:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683320; cv=none; b=F1nozT7q2zuFf96wPRgYMZI6kqD6BHrptJQOl3ebu4y8RoM+B/IGTF0ePZKjdaeNNnl4GQUGUBZboxofidy99en5CMUf+AjH0DwAGBguVbFLkrAXJnZH17qKv7mGTdndxw+n2JRa+TW266jr4jRN4Z+S91/8ixQo9RjZ5jgwDO8=
+	t=1717683321; cv=none; b=USuMXsK5bXVVWByK7eMCmBkpGtnOkMY4f7roe5x1RmZa4gIIRlEgEfI9+u3+He2/7zRm9XaGHaCLn3kugvvWaE/VzH/vSeqYce/FUl5iVZuCG0FpgK+uKBPep2NYP6m4vVl2gPqFoSEyNYpGte0BicwdGAgOp956fAwDtQUi1oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683320; c=relaxed/simple;
-	bh=s98C1BIOCyNXNIVBvWBxpXfEPZHaZlGIL0jtPM2O54c=;
+	s=arc-20240116; t=1717683321; c=relaxed/simple;
+	bh=NAkNn/OVQlct4FRMVbvfrkzHePV84IVLIVHxjEwMIP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhpwFivUL3xm9t7R6B+aNsPqe0Ccd32WoAC04BBVuX8Gd3SmdrNhBwRUxaGjy2H6WcRk7I1LWhBa41uwwcv4HGDcz4Uc2D1EvUWL4vTuBFV7hlfRcULNEvTGOzXfJPdAV6HRTA2tokz6OsNfV8iufQaiudKzcdtLRdtloNU/Qzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uU8EjUcK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k0mQ8MdAvGw7vmHVOBepMnBCHwZLpdKV+7Zr+kFX5MPejy/+KFNkXFyLuv8I7qeCIOGTtJbivcXC/+3ORzoz6vK+/6HbvgArywUvNhA+S1GrPZi2/AMPdNzdT6Cs8nQoOxYBDgNeZ9o8h172YgT7eA8cA48NEc6G+0oZlWzqeMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYJptKJD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uU8EjUcK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D65C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYJptKJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE223C2BD10;
 	Thu,  6 Jun 2024 14:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683320;
-	bh=s98C1BIOCyNXNIVBvWBxpXfEPZHaZlGIL0jtPM2O54c=;
+	bh=NAkNn/OVQlct4FRMVbvfrkzHePV84IVLIVHxjEwMIP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uU8EjUcKEyPrte3SSRhGJ2ZPNP7tJtmhi6KVvGwVMQ1I4pCt2C2VK13EXuCEN04JG
-	 /gTTJoRPiZnlIjdbjrhxwDssieaAmHgArmTkORCZPJiQxrBGRNRkTLEbE1jCLZKnkD
-	 0UxJDs5LNeOghKv3AK/VxH9vvgc87VSerdKW6x0c=
+	b=zYJptKJD4wH4CcvNxCtGjKJl1riM2W4eTWnMwp3sla86TWEOrEsQ+ngU0wbgEWkcp
+	 XujFLB4fF7Jv6+4VKXfrKAYNUPNwDyibZQgvPwHJSX1taO5GqPqdUi1a+VEUKprgwQ
+	 s3NP/PYcBouZZbET167UNrngrtut9UbM2AOzYJf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 260/744] net: micrel: Fix receiving the timestamp in the frame for lan8841
-Date: Thu,  6 Jun 2024 15:58:52 +0200
-Message-ID: <20240606131740.743319111@linuxfoundation.org>
+Subject: [PATCH 6.1 200/473] mtd: rawnand: hynix: fixed typo
+Date: Thu,  6 Jun 2024 16:02:09 +0200
+Message-ID: <20240606131706.553829592@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-[ Upstream commit aea27a92a41dae14843f92c79e9e42d8f570105c ]
+[ Upstream commit 6819db94e1cd3ce24a432f3616cd563ed0c4eaba ]
 
-The blamed commit started to use the ptp workqueue to get the second
-part of the timestamp. And when the port was set down, then this
-workqueue is stopped. But if the config option NETWORK_PHY_TIMESTAMPING
-is not enabled, then the ptp_clock is not initialized so then it would
-crash when it would try to access the delayed work.
-So then basically by setting up and then down the port, it would crash.
-The fix consists in checking if the ptp_clock is initialized and only
-then cancel the delayed work.
+The function hynix_nand_rr_init() should probably return an error code.
+Judging by the usage, it seems that the return code is passed up
+the call stack.
+Right now, it always returns 0 and the function hynix_nand_cleanup()
+in hynix_nand_init() has never been called.
 
-Fixes: cc7554954848 ("net: micrel: Change to receive timestamp in the frame for lan8841")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Found by RASU JSC and Linux Verification Center (linuxtesting.org)
+
+Fixes: 626994e07480 ("mtd: nand: hynix: Add read-retry support for 1x nm MLC NANDs")
+
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240313102721.1991299-1-korotkov.maxim.s@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/nand_hynix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index cbd98ea4a84af..538a5f59d7a73 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -4612,7 +4612,8 @@ static int lan8841_suspend(struct phy_device *phydev)
- 	struct kszphy_priv *priv = phydev->priv;
- 	struct kszphy_ptp_priv *ptp_priv = &priv->ptp_priv;
+diff --git a/drivers/mtd/nand/raw/nand_hynix.c b/drivers/mtd/nand/raw/nand_hynix.c
+index 0d4d4bbfdecea..49e36767d8f76 100644
+--- a/drivers/mtd/nand/raw/nand_hynix.c
++++ b/drivers/mtd/nand/raw/nand_hynix.c
+@@ -402,7 +402,7 @@ static int hynix_nand_rr_init(struct nand_chip *chip)
+ 	if (ret)
+ 		pr_warn("failed to initialize read-retry infrastructure");
  
--	ptp_cancel_worker_sync(ptp_priv->ptp_clock);
-+	if (ptp_priv->ptp_clock)
-+		ptp_cancel_worker_sync(ptp_priv->ptp_clock);
- 
- 	return genphy_suspend(phydev);
+-	return 0;
++	return ret;
  }
+ 
+ static void hynix_nand_extract_oobsize(struct nand_chip *chip,
 -- 
 2.43.0
 
