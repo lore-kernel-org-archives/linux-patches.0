@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB401B0118;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0211419ADA4;
 	Thu,  6 Jun 2024 14:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683357; cv=none; b=HSu60bOCGLsseZdRVnDgsKGfstWKYIDqd6lzB99TqLyMcBwSNzwUkUmMPrs4UceeIbAW7JnImkOsR44yfWVO0kscezwUJnvvbYpSmfh1c48S9kw0RwcvdXr2Hbwsy5b6jOKVA/m937hVoomt3o6GFHgvJ3tqimr/oFkGJ8y9v/M=
+	t=1717683358; cv=none; b=O8Lz35wh4Ke1ngNpAWny+Wdo1E/cbrXH32f4cTcCHopB4ORu6FpGQl8/mtsFWM4oUPgXPC+0XvQkz0inaBW/IWvmuvyy8eN9SJNW37C+SNHy9nzAcQaprpotyStm3N7eUSNQUGyBCN6LzbDIArK6BSoWPLjtMTuYdnHscvnpydg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683357; c=relaxed/simple;
-	bh=I4LCwm06IrFHC92QLvJKl/PLUKJzNynkAbtyt04rF80=;
+	s=arc-20240116; t=1717683358; c=relaxed/simple;
+	bh=9M8UKkBCpo9mp8mraY64yW2TqjJDRLcmHYfmmrjKgeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfieMdnpZq8/r9E5PIx5ZK1Dy23JQUP7T4LE+A5PFOGrac3eQg4STieEUer9/VUG7PASFuv45yJfSb6Hr0vID7wOw+e8rbm3BWdUNi+KU+Zo/xBrZlNE9imcptMw9VL+F+HEH/Hw8HsH3goT8mrmGdr+tfihoOj6CTho8txet4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9p/L7pU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u6Emv39D+ZfKmpVJsNVIcvIA97+zSAUxGCAsQgb9iDMCKLT81Azfk94qyR5p3FdjyD3hbAo8zXmtx4FP2mPLgU65G+5Za8rz9PWW218dEyMHPv/feEEgA/fQ8XlzUDByjMcuUoybduR35G4wk6pemdl376yzoizTo+tIwk5PYt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N635mIQx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9p/L7pU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2620EC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N635mIQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927AAC32782;
 	Thu,  6 Jun 2024 14:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683357;
-	bh=I4LCwm06IrFHC92QLvJKl/PLUKJzNynkAbtyt04rF80=;
+	bh=9M8UKkBCpo9mp8mraY64yW2TqjJDRLcmHYfmmrjKgeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9p/L7pUEolXY+YtfmeQCKgNUWOfTuth7gAOkBvkhAl3o2Ykz2gqlwelYb1VLrRaH
-	 3JsvTJETz+kgusLEm15R8GDBFTwOmwmgHaPtzPbmDXJhocrtNvsn84movvei7DC3dx
-	 qADJfhLUALKvJL3m2x8cMisZexw7PC58UDHM1nQY=
+	b=N635mIQx2DeyPJkHihg6x8G2q3el0B3Dckl8GjgIvS55Wdxv7YZKOk+lrHtdCXmrc
+	 r57Y7kWPbOnqHzNSQY2gGGrJwtIRUKPzMZKdhRh+YzQQVmXDTT+uDtbla4UVJRBJlW
+	 VVS3KuWQme94DpGETtWYSGG44n/TXJknjBCLdJhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 297/744] ASoC: SOF: Intel: mtl: Implement firmware boot state check
-Date: Thu,  6 Jun 2024 15:59:29 +0200
-Message-ID: <20240606131741.922058080@linuxfoundation.org>
+Subject: [PATCH 6.1 238/473] RDMA/hns: Fix deadlock on SRQ async events.
+Date: Thu,  6 Jun 2024 16:02:47 +0200
+Message-ID: <20240606131707.700047637@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,90 +48,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 6b1c1c47e76f0161bda2b1ac2e86a219fe70244f ]
+[ Upstream commit b46494b6f9c19f141114a57729e198698f40af37 ]
 
-With the corrected rom_status_reg values we can now add a check for target
-boot status for firmware booting.
-With the check now we can identify failed firmware boots (IMR boots) and
-we can use the fallback to purge boot the DSP.
+xa_lock for SRQ table may be required in AEQ. Use xa_store_irq()/
+xa_erase_irq() to avoid deadlock.
 
-Fixes: 064520e8aeaa ("ASoC: SOF: Intel: Add support for MeteorLake (MTL)")
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Link: https://msgid.link/r/20240403105210.17949-6-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 81fce6291d99 ("RDMA/hns: Add SRQ asynchronous event support")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240412091616.370789-5-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/mtl.c | 37 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 32 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_main.c | 1 +
+ drivers/infiniband/hw/hns/hns_roce_srq.c  | 6 +++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/sof/intel/mtl.c b/sound/soc/sof/intel/mtl.c
-index e3ecd48ccc4da..7d7a017c2e1f7 100644
---- a/sound/soc/sof/intel/mtl.c
-+++ b/sound/soc/sof/intel/mtl.c
-@@ -436,7 +436,7 @@ int mtl_dsp_cl_init(struct snd_sof_dev *sdev, int stream_tag, bool imr_boot)
- {
- 	struct sof_intel_hda_dev *hda = sdev->pdata->hw_pdata;
- 	const struct sof_intel_dsp_desc *chip = hda->desc;
--	unsigned int status;
-+	unsigned int status, target_status;
- 	u32 ipc_hdr, flags;
- 	char *dump_msg;
- 	int ret;
-@@ -482,13 +482,40 @@ int mtl_dsp_cl_init(struct snd_sof_dev *sdev, int stream_tag, bool imr_boot)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
+index da1b33d818d82..afe7523eca909 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_main.c
++++ b/drivers/infiniband/hw/hns/hns_roce_main.c
+@@ -37,6 +37,7 @@
+ #include <rdma/ib_smi.h>
+ #include <rdma/ib_user_verbs.h>
+ #include <rdma/ib_cache.h>
++#include "hnae3.h"
+ #include "hns_roce_common.h"
+ #include "hns_roce_device.h"
+ #include "hns_roce_hem.h"
+diff --git a/drivers/infiniband/hw/hns/hns_roce_srq.c b/drivers/infiniband/hw/hns/hns_roce_srq.c
+index 8dae98f827eb2..6a4923c21cbc6 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_srq.c
++++ b/drivers/infiniband/hw/hns/hns_roce_srq.c
+@@ -122,7 +122,7 @@ static int alloc_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
+ 		return ret;
+ 	}
  
- 	mtl_enable_ipc_interrupts(sdev);
+-	ret = xa_err(xa_store(&srq_table->xa, srq->srqn, srq, GFP_KERNEL));
++	ret = xa_err(xa_store_irq(&srq_table->xa, srq->srqn, srq, GFP_KERNEL));
+ 	if (ret) {
+ 		ibdev_err(ibdev, "failed to store SRQC, ret = %d.\n", ret);
+ 		goto err_put;
+@@ -135,7 +135,7 @@ static int alloc_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
+ 	return 0;
  
-+	if (chip->rom_status_reg == MTL_DSP_ROM_STS) {
-+		/*
-+		 * Workaround: when the ROM status register is pointing to
-+		 * the SRAM window (MTL_DSP_ROM_STS) the platform cannot catch
-+		 * ROM_INIT_DONE because of a very short timing window.
-+		 * Follow the recommendations and skip target state waiting.
-+		 */
-+		return 0;
-+	}
-+
- 	/*
--	 * ACE workaround: don't wait for ROM INIT.
--	 * The platform cannot catch ROM_INIT_DONE because of a very short
--	 * timing window. Follow the recommendations and skip this part.
-+	 * step 7:
-+	 * - Cold/Full boot: wait for ROM init to proceed to download the firmware
-+	 * - IMR boot: wait for ROM firmware entered (firmware booted up from IMR)
- 	 */
-+	if (imr_boot)
-+		target_status = FSR_STATE_FW_ENTERED;
-+	else
-+		target_status = FSR_STATE_INIT_DONE;
+ err_xa:
+-	xa_erase(&srq_table->xa, srq->srqn);
++	xa_erase_irq(&srq_table->xa, srq->srqn);
+ err_put:
+ 	hns_roce_table_put(hr_dev, &srq_table->table, srq->srqn);
  
--	return 0;
-+	ret = snd_sof_dsp_read_poll_timeout(sdev, HDA_DSP_BAR,
-+					chip->rom_status_reg, status,
-+					(FSR_TO_STATE_CODE(status) == target_status),
-+					HDA_DSP_REG_POLL_INTERVAL_US,
-+					chip->rom_init_timeout *
-+					USEC_PER_MSEC);
-+
-+	if (!ret)
-+		return 0;
-+
-+	if (hda->boot_iteration == HDA_FW_BOOT_ATTEMPTS)
-+		dev_err(sdev->dev,
-+			"%s: timeout with rom_status_reg (%#x) read\n",
-+			__func__, chip->rom_status_reg);
+@@ -153,7 +153,7 @@ static void free_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
+ 		dev_err(hr_dev->dev, "DESTROY_SRQ failed (%d) for SRQN %06lx\n",
+ 			ret, srq->srqn);
  
- err:
- 	flags = SOF_DBG_DUMP_PCI | SOF_DBG_DUMP_MBOX | SOF_DBG_DUMP_OPTIONAL;
+-	xa_erase(&srq_table->xa, srq->srqn);
++	xa_erase_irq(&srq_table->xa, srq->srqn);
+ 
+ 	if (refcount_dec_and_test(&srq->refcount))
+ 		complete(&srq->free);
 -- 
 2.43.0
 
