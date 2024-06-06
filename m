@@ -1,51 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F9B19FA9F;
-	Thu,  6 Jun 2024 14:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B55819FA9F;
+	Thu,  6 Jun 2024 14:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683415; cv=none; b=JIA3W1bL26bnhkUsU0aBvoGLwzlSPohDTvrNlxBJQnbTkfpy0IaYlgkbEQ9EAt9pCOuTwNFm6EyzeF2B4a+BgXPgaxay55M0XQMUEzOonEFJ8lIK8+yRkgHKUYOwLr4m82tRlVRvWDsCRwCIre2yBTa6BfeEIbKZQX+VH+0JrpA=
+	t=1717683416; cv=none; b=n0mRUJaz/S6kh1KZeOrMjB3ZoYow+M3LWGMPW3P00pv7em+FeAi5hDlmSr1Y3UbUa6CNu+8xCRuCxWaw7pLHDm3lNA5uKgJZwS/KsgpG7KJ3mo9ojjNo9fTm86HY4rZDIV/P/dWZEo4r+by6zWLvskgvAPpbqPJ3hslblXh8sck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683415; c=relaxed/simple;
-	bh=1nhihlHXM0w+5YPPKpFi3s81ft/auojFWxKo7+nVbDQ=;
+	s=arc-20240116; t=1717683416; c=relaxed/simple;
+	bh=8veSNe0CVLTdt9rThlzWDljWShHURCkaq3vpUonjbn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dpmI1jlcJdvUVReHA3UAFxBh3TZGgnfk9I26gcU7BCZLdUnJjsMmLsAFSW0ZEN1TQX3hnGqe9hRMlJBnlU0l2dPTXVBNI8QhNqlxGoB8lNUd0kpnSSV56V0Lo7ZSW7Sav78LE158pS637XKThLjrS/WKm30vLdoybPN4VxurAHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBY/mzAa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d0xaUSRvHtLLPdezrVH3t5O0/fpSikuwcOJ7h+zSW2YMe1c+6WBGCZofP+nnv9JaY/EXypl8X9qfdwYy9WHimB8IbqwPM+V78XsavfjyGrIKSg5Pf1zLhpB6I0RNzPBa1Ewdsfjq/nIhZ5ohi6N94ur0Qw5L7nN9YzmQG1HW3e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVg01Agc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBY/mzAa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDC6C32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVg01Agc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5EE7C2BD10;
 	Thu,  6 Jun 2024 14:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683415;
-	bh=1nhihlHXM0w+5YPPKpFi3s81ft/auojFWxKo7+nVbDQ=;
+	s=korg; t=1717683416;
+	bh=8veSNe0CVLTdt9rThlzWDljWShHURCkaq3vpUonjbn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBY/mzAaNcR7Q4SgJ/PFpPafmPf63w8h1HRnIfS1f9q8uEOJjRqd7YwVu26FG6NaX
-	 PgsfBBzeDBj4HJSP5w77lEgH57Xzb4MiZZVxiIE8EhNjHrdxYjRIz0NIMfnQiIQ0z+
-	 sbwVG4TtI/ILhGyxyqw7VBghC5ppkTgrYK/9mkxw=
+	b=MVg01Agcr7kuFudSDE6VBkB3SpR69xqV5V7K8wrO2Vl0mQmm8G3ypp797sLVe9PtF
+	 vAszSZ69VOYl0ML/xy6mMPY/RGG6Tq53YkIZSauV4S9nHfJ34Tq3lVTomtIyKoB3ZC
+	 up+l2K5OWDVGBF17k+MO1DmCNJ/BP3zLFo6LjjAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
-	Athira Jajeev <atrajeev@linux.vnet.ibm.com>,
-	German Gomez <german.gomez@arm.com>,
-	Ian Rogers <irogers@google.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Zhengjun Xing <zhengjun.xing@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 298/473] perf test: Add -w/--workload option
-Date: Thu,  6 Jun 2024 16:03:47 +0200
-Message-ID: <20240606131709.760199357@linuxfoundation.org>
+Subject: [PATCH 6.6 359/744] x86/insn: Fix PUSH instruction in x86 instruction decoder opcode map
+Date: Thu,  6 Jun 2024 16:00:31 +0200
+Message-ID: <20240606131743.993327934@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,198 +47,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit f215054d749b17c56e014fdca2fcc592dac4529c ]
+[ Upstream commit 59162e0c11d7257cde15f907d19fefe26da66692 ]
 
-The -w/--workload option is to run a simple workload used by testing.
-This adds a basic framework to run the workloads and 'noploop' workload
-as an example.
+The x86 instruction decoder is used not only for decoding kernel
+instructions. It is also used by perf uprobes (user space probes) and by
+perf tools Intel Processor Trace decoding. Consequently, it needs to
+support instructions executed by user space also.
 
-  $ perf test -w noploop
+Opcode 0x68 PUSH instruction is currently defined as 64-bit operand size
+only i.e. (d64). That was based on Intel SDM Opcode Map. However that is
+contradicted by the Instruction Set Reference section for PUSH in the
+same manual.
 
-The noploop does a loop doing nothing (NOP) for a second by default.
-It can have an optional argument to specify the time in seconds.
+Remove 64-bit operand size only annotation from opcode 0x68 PUSH
+instruction.
 
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Athira Jajeev <atrajeev@linux.vnet.ibm.com>
-Cc: German Gomez <german.gomez@arm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Zhengjun Xing <zhengjun.xing@linux.intel.com>
-Link: https://lore.kernel.org/r/20221116233854.1596378-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 256ef072b384 ("perf tests: Make "test data symbol" more robust on Neoverse N1")
+Example:
+
+  $ cat pushw.s
+  .global  _start
+  .text
+  _start:
+          pushw   $0x1234
+          mov     $0x1,%eax   # system call number (sys_exit)
+          int     $0x80
+  $ as -o pushw.o pushw.s
+  $ ld -s -o pushw pushw.o
+  $ objdump -d pushw | tail -4
+  0000000000401000 <.text>:
+    401000:       66 68 34 12             pushw  $0x1234
+    401004:       b8 01 00 00 00          mov    $0x1,%eax
+    401009:       cd 80                   int    $0x80
+  $ perf record -e intel_pt//u ./pushw
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.014 MB perf.data ]
+
+ Before:
+
+  $ perf script --insn-trace=disasm
+  Warning:
+  1 instruction trace errors
+           pushw   10349 [000] 10586.869237014:            401000 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           pushw $0x1234
+           pushw   10349 [000] 10586.869237014:            401006 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb %al, (%rax)
+           pushw   10349 [000] 10586.869237014:            401008 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb %cl, %ch
+           pushw   10349 [000] 10586.869237014:            40100a [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb $0x2e, (%rax)
+   instruction trace error type 1 time 10586.869237224 cpu 0 pid 10349 tid 10349 ip 0x40100d code 6: Trace doesn't match instruction
+
+ After:
+
+  $ perf script --insn-trace=disasm
+             pushw   10349 [000] 10586.869237014:            401000 [unknown] (./pushw)           pushw $0x1234
+             pushw   10349 [000] 10586.869237014:            401004 [unknown] (./pushw)           movl $1, %eax
+
+Fixes: eb13296cfaf6 ("x86: Instruction decoder API")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20240502105853.5338-3-adrian.hunter@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/Build               |  2 ++
- tools/perf/tests/builtin-test.c      | 24 +++++++++++++++++++++
- tools/perf/tests/tests.h             | 22 +++++++++++++++++++
- tools/perf/tests/workloads/Build     |  3 +++
- tools/perf/tests/workloads/noploop.c | 32 ++++++++++++++++++++++++++++
- 5 files changed, 83 insertions(+)
- create mode 100644 tools/perf/tests/workloads/Build
- create mode 100644 tools/perf/tests/workloads/noploop.c
+ arch/x86/lib/x86-opcode-map.txt       | 2 +-
+ tools/arch/x86/lib/x86-opcode-map.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/tests/Build b/tools/perf/tests/Build
-index 2064a640facbe..11b69023011b0 100644
---- a/tools/perf/tests/Build
-+++ b/tools/perf/tests/Build
-@@ -103,3 +103,5 @@ endif
- CFLAGS_attr.o         += -DBINDIR="BUILD_STR($(bindir_SQ))" -DPYTHON="BUILD_STR($(PYTHON_WORD))"
- CFLAGS_python-use.o   += -DPYTHONPATH="BUILD_STR($(OUTPUT)python)" -DPYTHON="BUILD_STR($(PYTHON_WORD))"
- CFLAGS_dwarf-unwind.o += -fno-optimize-sibling-calls
-+
-+perf-y += workloads/
-diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index 7122eae1d98d9..ce641ccfcf814 100644
---- a/tools/perf/tests/builtin-test.c
-+++ b/tools/perf/tests/builtin-test.c
-@@ -118,6 +118,10 @@ static struct test_suite **tests[] = {
- 	arch_tests,
- };
- 
-+static struct test_workload *workloads[] = {
-+	&workload__noploop,
-+};
-+
- static int num_subtests(const struct test_suite *t)
- {
- 	int num;
-@@ -475,6 +479,21 @@ static int perf_test__list(int argc, const char **argv)
- 	return 0;
- }
- 
-+static int run_workload(const char *work, int argc, const char **argv)
-+{
-+	unsigned int i = 0;
-+	struct test_workload *twl;
-+
-+	for (i = 0; i < ARRAY_SIZE(workloads); i++) {
-+		twl = workloads[i];
-+		if (!strcmp(twl->name, work))
-+			return twl->func(argc, argv);
-+	}
-+
-+	pr_info("No workload found: %s\n", work);
-+	return -1;
-+}
-+
- int cmd_test(int argc, const char **argv)
- {
- 	const char *test_usage[] = {
-@@ -482,12 +501,14 @@ int cmd_test(int argc, const char **argv)
- 	NULL,
- 	};
- 	const char *skip = NULL;
-+	const char *workload = NULL;
- 	const struct option test_options[] = {
- 	OPT_STRING('s', "skip", &skip, "tests", "tests to skip"),
- 	OPT_INCR('v', "verbose", &verbose,
- 		    "be more verbose (show symbol address, etc)"),
- 	OPT_BOOLEAN('F', "dont-fork", &dont_fork,
- 		    "Do not fork for testcase"),
-+	OPT_STRING('w', "workload", &workload, "work", "workload to run for testing"),
- 	OPT_END()
- 	};
- 	const char * const test_subcommands[] = { "list", NULL };
-@@ -504,6 +525,9 @@ int cmd_test(int argc, const char **argv)
- 	if (argc >= 1 && !strcmp(argv[0], "list"))
- 		return perf_test__list(argc - 1, argv + 1);
- 
-+	if (workload)
-+		return run_workload(workload, argc, argv);
-+
- 	symbol_conf.priv_size = sizeof(int);
- 	symbol_conf.sort_by_name = true;
- 	symbol_conf.try_vmlinux_path = true;
-diff --git a/tools/perf/tests/tests.h b/tools/perf/tests/tests.h
-index 5bbb8f6a48fcb..d315d0d6fc977 100644
---- a/tools/perf/tests/tests.h
-+++ b/tools/perf/tests/tests.h
-@@ -180,4 +180,26 @@ int test__arch_unwind_sample(struct perf_sample *sample,
- DECLARE_SUITE(vectors_page);
- #endif
- 
-+/*
-+ * Define test workloads to be used in test suites.
-+ */
-+typedef int (*workload_fnptr)(int argc, const char **argv);
-+
-+struct test_workload {
-+	const char	*name;
-+	workload_fnptr	func;
-+};
-+
-+#define DECLARE_WORKLOAD(work) \
-+	extern struct test_workload workload__##work
-+
-+#define DEFINE_WORKLOAD(work) \
-+struct test_workload workload__##work = {	\
-+	.name = #work,				\
-+	.func = work,				\
-+}
-+
-+/* The list of test workloads */
-+DECLARE_WORKLOAD(noploop);
-+
- #endif /* TESTS_H */
-diff --git a/tools/perf/tests/workloads/Build b/tools/perf/tests/workloads/Build
-new file mode 100644
-index 0000000000000..f98e968d4633a
---- /dev/null
-+++ b/tools/perf/tests/workloads/Build
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+perf-y += noploop.o
-diff --git a/tools/perf/tests/workloads/noploop.c b/tools/perf/tests/workloads/noploop.c
-new file mode 100644
-index 0000000000000..940ea5910a84c
---- /dev/null
-+++ b/tools/perf/tests/workloads/noploop.c
-@@ -0,0 +1,32 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#include <stdlib.h>
-+#include <signal.h>
-+#include <unistd.h>
-+#include <linux/compiler.h>
-+#include "../tests.h"
-+
-+static volatile sig_atomic_t done;
-+
-+static void sighandler(int sig __maybe_unused)
-+{
-+	done = 1;
-+}
-+
-+static int noploop(int argc, const char **argv)
-+{
-+	int sec = 1;
-+
-+	if (argc > 0)
-+		sec = atoi(argv[0]);
-+
-+	signal(SIGINT, sighandler);
-+	signal(SIGALRM, sighandler);
-+	alarm(sec);
-+
-+	while (!done)
-+		continue;
-+
-+	return 0;
-+}
-+
-+DEFINE_WORKLOAD(noploop);
+diff --git a/arch/x86/lib/x86-opcode-map.txt b/arch/x86/lib/x86-opcode-map.txt
+index 5168ee0360b24..940913550ed83 100644
+--- a/arch/x86/lib/x86-opcode-map.txt
++++ b/arch/x86/lib/x86-opcode-map.txt
+@@ -148,7 +148,7 @@ AVXcode:
+ 65: SEG=GS (Prefix)
+ 66: Operand-Size (Prefix)
+ 67: Address-Size (Prefix)
+-68: PUSH Iz (d64)
++68: PUSH Iz
+ 69: IMUL Gv,Ev,Iz
+ 6a: PUSH Ib (d64)
+ 6b: IMUL Gv,Ev,Ib
+diff --git a/tools/arch/x86/lib/x86-opcode-map.txt b/tools/arch/x86/lib/x86-opcode-map.txt
+index 5168ee0360b24..940913550ed83 100644
+--- a/tools/arch/x86/lib/x86-opcode-map.txt
++++ b/tools/arch/x86/lib/x86-opcode-map.txt
+@@ -148,7 +148,7 @@ AVXcode:
+ 65: SEG=GS (Prefix)
+ 66: Operand-Size (Prefix)
+ 67: Address-Size (Prefix)
+-68: PUSH Iz (d64)
++68: PUSH Iz
+ 69: IMUL Gv,Ev,Iz
+ 6a: PUSH Ib (d64)
+ 6b: IMUL Gv,Ev,Ib
 -- 
 2.43.0
 
