@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FEB197A67;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E06196D8C;
 	Thu,  6 Jun 2024 14:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682920; cv=none; b=fRa6uytVi8hS+QMTo4mKgZiKtjHfox/LCAEu9BMF6KGYSb0x3s0G/ZYOJRdLM/gfJaD5Q5yNoT7t5fUIZuxor9B+puSVexEk/jJJc0PhbZ7z3mjJ6f235RFhuH1rU/AodCwFgYWa/x0jq2aWagPjoqVCOABjfKfrVqDSUpP2voA=
+	t=1717682920; cv=none; b=set8mCAqvsZXOd/C9j4S3KjpJjSqN9ScpuRqYkQ//pjNSmE/gh1BSnDzyX8kJFSTvsRoHLospi9CYiKcG1lF8F4ugWiC0BUdZyat+WKSvzqZEXpN4i3j/QYvXCf7wvVGr0APzzPHc7aXrC1UL05rdSlEdmxke0u/qItkoT1305Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682920; c=relaxed/simple;
-	bh=weyoj2ndVQbt1k6PoSAx4g+GIm21NyOibk6eyN88gBQ=;
+	bh=HKzUL7aHnbZ13mO6lNmw8nteaKbGJrnxXBMJNAJ+eKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rzqN2+p9ULryWO+w256SsefzG+y1Dm0gYr/6Ul8fkRtBpYwaXliVjZcP8TSO/Ffyc61d71oC9LPTWZUaHJ9y2ShXDYPNGwVp36OwCfkUAOk7pAhS10pC+W5fPgVkAmk1cdZ0T+Veg++j7LCdKKsb1thXZsPhCpEKzsK53HIB5l4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUxDtx+C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c0SrJ9PpI+hXKfWkpHgbQK1LwwWaKVlO2cyMETs9+C888ivhzC/s3EY0mB9ED0Eex+Am0gv033qKVFhU8kSRLkzHJ5TngsXQkZp2uYkBU/luFkw7m0pRXezKapZBICkvear+zyn+AW0shxlanb3N2mWtDuLd6y5APLUnzXlBls0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBfFREdv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUxDtx+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F60C32786;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBfFREdv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FA3C32781;
 	Thu,  6 Jun 2024 14:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682920;
-	bh=weyoj2ndVQbt1k6PoSAx4g+GIm21NyOibk6eyN88gBQ=;
+	bh=HKzUL7aHnbZ13mO6lNmw8nteaKbGJrnxXBMJNAJ+eKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PUxDtx+CMmbTWZbF66sz2j8tEVbg8l2l84F+7wT6FsHqpGA5dNLtKnPQguCiHKMp9
-	 kUiglLUg1R/orpq5OT2Bt8DrdfNgZfCcvlTC35z/3POO10nx/Yh0an+szcLdN0Agy+
-	 U9ZYYYan6BV2yxEGZIRvgx34jYBVMDnRi/hGtbBU=
+	b=XBfFREdvAgJ9T6f3fhcpRltEXCjIqhwuPGh6TlO8eFYJJCZhlnKMJaml0sIvkTbWn
+	 jtLgucpTIPZ1eDHzUxxfsemWsk4gwS3MnBZA59d43jBKPSTBBy2UMXNGWHHQv45iCN
+	 1pSaaJam3f1Te0gHBeCLBppRaFcn5y0Tl0zifUYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
-	Alex Elder <elder@ieee.org>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Song Liu <song@kernel.org>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 006/374] greybus: lights: check return of get_channel_from_mode
-Date: Thu,  6 Jun 2024 15:59:45 +0200
-Message-ID: <20240606131651.934513393@linuxfoundation.org>
+Subject: [PATCH 6.9 051/374] perf docs: Document bpf event modifier
+Date: Thu,  6 Jun 2024 16:00:30 +0200
+Message-ID: <20240606131653.537196703@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,57 +63,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rui Miguel Silva <rmfrfs@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit a1ba19a1ae7cd1e324685ded4ab563e78fe68648 ]
+[ Upstream commit eb4d27cf9aef3e6c9bcaf8fa1a1cadc2433d847b ]
 
-If channel for the given node is not found we return null from
-get_channel_from_mode. Make sure we validate the return pointer
-before using it in two of the missing places.
+Document that 'b' is used as a modifier to make an event use a BPF
+counter.
 
-This was originally reported in [0]:
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-[0] https://lore.kernel.org/all/20240301190425.120605-1-m.lobanov@rosalinux.ru
-
-Fixes: 2870b52bae4c ("greybus: lights: add lights implementation")
-Reported-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
-Suggested-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
-Suggested-by: Alex Elder <elder@ieee.org>
-Signed-off-by: Rui Miguel Silva <rmfrfs@gmail.com>
-Link: https://lore.kernel.org/r/20240325221549.2185265-1-rmfrfs@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 01bd8efcec444468 ("perf stat: Introduce ':b' modifier")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Song Liu <song@kernel.org>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240416170014.985191-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/light.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/Documentation/perf-list.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/staging/greybus/light.c b/drivers/staging/greybus/light.c
-index a5c2fe963866d..00360f4a04854 100644
---- a/drivers/staging/greybus/light.c
-+++ b/drivers/staging/greybus/light.c
-@@ -142,6 +142,9 @@ static int __gb_lights_flash_brightness_set(struct gb_channel *channel)
- 		channel = get_channel_from_mode(channel->light,
- 						GB_CHANNEL_MODE_TORCH);
+diff --git a/tools/perf/Documentation/perf-list.txt b/tools/perf/Documentation/perf-list.txt
+index 3b12595193c9f..6bf2468f59d31 100644
+--- a/tools/perf/Documentation/perf-list.txt
++++ b/tools/perf/Documentation/perf-list.txt
+@@ -71,6 +71,7 @@ counted. The following modifiers exist:
+  D - pin the event to the PMU
+  W - group is weak and will fallback to non-group if not schedulable,
+  e - group or event are exclusive and do not share the PMU
++ b - use BPF aggregration (see perf stat --bpf-counters)
  
-+	if (!channel)
-+		return -EINVAL;
-+
- 	/* For not flash we need to convert brightness to intensity */
- 	intensity = channel->intensity_uA.min +
- 			(channel->intensity_uA.step * channel->led->brightness);
-@@ -528,7 +531,10 @@ static int gb_lights_light_v4l2_register(struct gb_light *light)
- 	}
- 
- 	channel_flash = get_channel_from_mode(light, GB_CHANNEL_MODE_FLASH);
--	WARN_ON(!channel_flash);
-+	if (!channel_flash) {
-+		dev_err(dev, "failed to get flash channel from mode\n");
-+		return -EINVAL;
-+	}
- 
- 	fled = &channel_flash->fled;
- 
+ The 'p' modifier can be used for specifying how precise the instruction
+ address should be. The 'p' modifier can be specified multiple times:
 -- 
 2.43.0
 
