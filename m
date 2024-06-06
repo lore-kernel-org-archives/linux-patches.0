@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7983C19750E;
-	Thu,  6 Jun 2024 14:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0299E19750E;
+	Thu,  6 Jun 2024 14:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683132; cv=none; b=JBHC7Nelef8deU1YupOZO6jpaZsa5FM1rytmswCuaduKYydYdr0k1tlwG6q21XcM+oUbsC4TnJ6tFbJLRz+etwmITga01tFud4ucHxhXhyeqPyL3IMpFfb48kZyswW8Vtcvggsrq2ZDlUm0SuW0j+EzvpTo1PrQuhdGhx/8l1qI=
+	t=1717683133; cv=none; b=FbNAEuDWFKixY9cttWWiiYTU7DEiOI5HYit2j4kqYUi5cu233VcNg3Zz8D64z1ia7pgxMhozkaW9H7lR46jdbS2h6VNT5qH4JujCTxHXj7k2Jlu5O85o/hYySf/xwhvMYOpONnw1EPDEWuU4BYXO6wr5G5Ot2jZFyLeRFtqJh9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683132; c=relaxed/simple;
-	bh=XCK++zJcWdGnoedSXfj8wi9ar+wOlyR/9DzIoIpCWIA=;
+	s=arc-20240116; t=1717683133; c=relaxed/simple;
+	bh=NGXX+7LAMX/0lTRt96jwsT/b4w6kxEF75sBkC0Pe3Qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkWWW2p4hmDiTo9T2D+BvhnxJK0w9soAtjYCNNBvRsY3CGTzrV8/0+mR5WIRC5zrFWvemx+vH7uuWHgMKad4LKr5lAwfeLflDK+OCBt7hmugLKTh90kBBGXAV8PULA1NJ/ENxFGi8UNB9nfgCZa2Ccap4e01niu0mp4o6XKAFKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AG//CEWJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7hC9Ur7Et0Axgw6j9PJhaqyL+G/d6VZc+FcCwiev91fBFtJ3lJr0IXWc5hqtz+NDJj3iS4IqGupFudxJ6m5ar/kUtFsdpPdkFX3zt2CC9vbCQElNsMqqSaSIGOo2DNM0pwg0oRWHscdm6CZrnvAv47P5NvqbT02Tv6CUiyEX28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKbd20ra; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AG//CEWJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D3EC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKbd20ra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D88C2BD10;
 	Thu,  6 Jun 2024 14:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683132;
-	bh=XCK++zJcWdGnoedSXfj8wi9ar+wOlyR/9DzIoIpCWIA=;
+	bh=NGXX+7LAMX/0lTRt96jwsT/b4w6kxEF75sBkC0Pe3Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AG//CEWJ4AsZhPATQfGIRSssf8Lj1IGmgrRbTbSBcBdNkODzTM5o/dkoOpf0FmQ79
-	 yUfhEQzqggF5J9wkXk2TuRqeEWZn0qAIliBZl99yS/ug/vR5L5EFSFel6YUpgi+Jxi
-	 p0Yk+NA/zoj6DDcJU1Y5LLkwgesFf/Kb5NW0EZzo=
+	b=YKbd20rabLShefa/gItOgfKk5IkKYqDF+teX5ybEAlL5CTsJPHFhdpOEreiGQ3acx
+	 oZwchEh0gFFYFYwdtJI0yWcFPwLZ2KD6KLGeuuH74pM8EmTGpwnLsqjzzxbiVliWdx
+	 kMeMBsfJrolpppX9zd9S9ua8oTpnbQiPF7+aGbMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	j51569436@gmail.com,
-	Daniel Starke <daniel.starke@siemens.com>
-Subject: [PATCH 6.1 003/473] tty: n_gsm: fix possible out-of-bounds in gsm0_receive()
-Date: Thu,  6 Jun 2024 15:58:52 +0200
-Message-ID: <20240606131659.920595506@linuxfoundation.org>
+	Abdelrahman Morsy <abdelrahmanhesham94@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 038/744] HID: mcp-2221: cancel delayed_work only when CONFIG_IIO is enabled
+Date: Thu,  6 Jun 2024 15:55:10 +0200
+Message-ID: <20240606131733.676338287@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,67 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Starke <daniel.starke@siemens.com>
+From: Abdelrahman Morsy <abdelrahmanhesham94@gmail.com>
 
-commit 47388e807f85948eefc403a8a5fdc5b406a65d5a upstream.
+[ Upstream commit 3cba9cfcc1520a2307a29f6fab887bcfc121c417 ]
 
-Assuming the following:
-- side A configures the n_gsm in basic option mode
-- side B sends the header of a basic option mode frame with data length 1
-- side A switches to advanced option mode
-- side B sends 2 data bytes which exceeds gsm->len
-  Reason: gsm->len is not used in advanced option mode.
-- side A switches to basic option mode
-- side B keeps sending until gsm0_receive() writes past gsm->buf
-  Reason: Neither gsm->state nor gsm->len have been reset after
-  reconfiguration.
+If the device is unplugged and CONFIG_IIO is not supported, this will
+result in a warning message at kernel/workqueue.
 
-Fix this by changing gsm->count to gsm->len comparison from equal to less
-than. Also add upper limit checks against the constant MAX_MRU in
-gsm0_receive() and gsm1_receive() to harden against memory corruption of
-gsm->len and gsm->mru.
+Only cancel delayed work in mcp2221_remove(), when CONFIG_IIO is enabled.
 
-All other checks remain as we still need to limit the data according to the
-user configuration and actual payload size.
-
-Reported-by: j51569436@gmail.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218708
-Tested-by: j51569436@gmail.com
-Fixes: e1eaea46bb40 ("tty: n_gsm line discipline")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://lore.kernel.org/r/20240424054842.7741-1-daniel.starke@siemens.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Abdelrahman Morsy <abdelrahmanhesham94@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/hid/hid-mcp2221.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -2325,7 +2325,10 @@ static void gsm0_receive(struct gsm_mux
- 		break;
- 	case GSM_DATA:		/* Data */
- 		gsm->buf[gsm->count++] = c;
--		if (gsm->count == gsm->len) {
-+		if (gsm->count >= MAX_MRU) {
-+			gsm->bad_size++;
-+			gsm->state = GSM_SEARCH;
-+		} else if (gsm->count >= gsm->len) {
- 			/* Calculate final FCS for UI frames over all data */
- 			if ((gsm->control & ~PF) != UIH) {
- 				gsm->fcs = gsm_fcs_add_block(gsm->fcs, gsm->buf,
-@@ -2438,7 +2441,7 @@ static void gsm1_receive(struct gsm_mux
- 		gsm->state = GSM_DATA;
- 		break;
- 	case GSM_DATA:		/* Data */
--		if (gsm->count > gsm->mru) {	/* Allow one for the FCS */
-+		if (gsm->count > gsm->mru || gsm->count > MAX_MRU) {	/* Allow one for the FCS */
- 			gsm->state = GSM_OVERRUN;
- 			gsm->bad_size++;
- 		} else
+diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
+index aef0785c91cc2..c5bfca8ac5e6e 100644
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -922,9 +922,11 @@ static void mcp2221_hid_unregister(void *ptr)
+ /* This is needed to be sure hid_hw_stop() isn't called twice by the subsystem */
+ static void mcp2221_remove(struct hid_device *hdev)
+ {
++#if IS_REACHABLE(CONFIG_IIO)
+ 	struct mcp2221 *mcp = hid_get_drvdata(hdev);
+ 
+ 	cancel_delayed_work_sync(&mcp->init_work);
++#endif
+ }
+ 
+ #if IS_REACHABLE(CONFIG_IIO)
+-- 
+2.43.0
+
 
 
