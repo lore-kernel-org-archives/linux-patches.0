@@ -1,44 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B29198E78;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A84196C7D;
 	Thu,  6 Jun 2024 14:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682939; cv=none; b=kzpppTgPcot1WRzXCx75WFjgOS7i/yL9cDb9axnrDrOhIaDOzc/hk8dUmsW/CjQ1JbmKMFjIPJigUVCatM0CatCyLz6nD6cRBjq+cavQDzmmTJJ243Ths7Tl9WZQLpgIXZj5xDVa/u5SRg31OoFF7g3j7uRcyRW8tFofVKUyRfM=
+	t=1717682939; cv=none; b=rnnpUpY3+JXvKrVnTlKYZomWVkq00giMwDqCTdXCQuNiUDMVB7SsgGPMTIMsWRxNZtAu7LvNA5hSRiHuAkHINSHtiC7HD1p94+ulFb5cGDbTJ8LtFZajLS9JNrA0003AEQorZsWpMDFxF2nF1YOuqo7VlKUrQVoCTs2j+vuL/pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682939; c=relaxed/simple;
-	bh=6PfrXKZdvpkh7jDc8zJn/5syKN18L+Czwie857rKgxA=;
+	bh=Z7VW2ozS4+ItS+CWo4JwGdIZYB2Cx6Ovh0ecbHuHBgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YccTb0p+ItHQZPFkB5Asr7Gmvi3RMesJ+GbqF8A1qkKd4qBoiZvk6/Oe4OqcKqo53rmA19F01BA2LtwvqqZtx7vC49MAfbVkbbUVrGsz7ubXg7Z9LJAyphB+PeBAs7Ic4f3q67D+UbM/ykRG71gyUYBZSyiTsniBabaAZYtARrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIft5eew; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jZwx4voRhNwxK9L7fvyCWTRo4KMAjMQsytM2+gsZ5K9B7P4ZC/nJuUsfsFDfUozakc6tX6hCHt2NHrXGyDj64wYnms+NoXr9miLsczRGH52O5Ydms3rlLU/wB3tvb8zWNyRNfhoPH8jydygdbZPpKsy077kV6oTN4m/C9Ku6Z3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPE2t5KS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIft5eew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8FCC32781;
-	Thu,  6 Jun 2024 14:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPE2t5KS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76473C32781;
+	Thu,  6 Jun 2024 14:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682939;
-	bh=6PfrXKZdvpkh7jDc8zJn/5syKN18L+Czwie857rKgxA=;
+	bh=Z7VW2ozS4+ItS+CWo4JwGdIZYB2Cx6Ovh0ecbHuHBgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fIft5eewfdteVHb9KcMQUUTvYC41WaZiJBp/vEdkxaITq1CIgEQJCRKnFxyb0p9Rn
-	 oTne0IpHfukHzwrpj4QuNGdAqduBi+OE/EVdgQJAVsuBXWsagSISRsdWxCtn8jkjX7
-	 Y8zcTDKfttixWXXO11WfHDVjZOmJ/MBZkznYAQA8=
+	b=WPE2t5KSeIlodVSRM3CeastRhhpaZX3Ef/opYXQPKemlVsUoStsspNP/GOV316+Ed
+	 mRCct66SHrR5Gdqva6qDuCkrsllf+zzDMUAchQNFUb4H7nkBsyWL8Xenj91z7tkuRX
+	 tmHNKt67ckYq0YHtEVu5BU2poNkkJfTm2l/CPjjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	He Zhe <zhe.he@windriver.com>,
+	Ian Rogers <irogers@google.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Ben Gainey <ben.gainey@arm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
 	Jiri Olsa <jolsa@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Li Dong <lidong@vivo.com>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Paran Lee <p4ranlee@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Sun Haiyong <sunhaiyong@loongson.cn>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Yanteng Si <siyanteng@loongson.cn>,
+	Yicong Yang <yangyicong@hisilicon.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 091/374] perf bench internals inject-build-id: Fix trap divide when collecting just one DSO
-Date: Thu,  6 Jun 2024 16:01:10 +0200
-Message-ID: <20240606131654.933763245@linuxfoundation.org>
+Subject: [PATCH 6.9 092/374] perf ui browser: Dont save pointer to stack memory
+Date: Thu,  6 Jun 2024 16:01:11 +0200
+Message-ID: <20240606131654.971358222@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -57,52 +73,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: He Zhe <zhe.he@windriver.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit d9180e23fbfa3875424d3a6b28b71b072862a52a ]
+[ Upstream commit 769e6a1e15bdbbaf2b0d2f37c24f2c53268bd21f ]
 
-'perf bench internals inject-build-id' suffers from the following error when
-only one DSO is collected.
+ui_browser__show() is capturing the input title that is stack allocated
+memory in hist_browser__run().
 
-  # perf bench internals inject-build-id -v
-    Collected 1 DSOs
-  traps: internals-injec[2305] trap divide error
-  ip:557566ba6394 sp:7ffd4de97fe0 error:0 in perf[557566b2a000+23d000]
-    Build-id injection benchmark
-    Iteration #1
-  Floating point exception
+Avoid a use after return by strdup-ing the string.
 
-This patch removes the unnecessary minus one from the divisor which also
-corrects the randomization range.
+Committer notes:
 
-Signed-off-by: He Zhe <zhe.he@windriver.com>
-Fixes: 0bf02a0d80427f26 ("perf bench: Add build-id injection benchmark")
+Further explanation from Ian Rogers:
+
+My command line using tui is:
+$ sudo bash -c 'rm /tmp/asan.log*; export
+ASAN_OPTIONS="log_path=/tmp/asan.log"; /tmp/perf/perf mem record -a
+sleep 1; /tmp/perf/perf mem report'
+I then go to the perf annotate view and quit. This triggers the asan
+error (from the log file):
+```
+==1254591==ERROR: AddressSanitizer: stack-use-after-return on address
+0x7f2813331920 at pc 0x7f28180
+65991 bp 0x7fff0a21c750 sp 0x7fff0a21bf10
+READ of size 80 at 0x7f2813331920 thread T0
+    #0 0x7f2818065990 in __interceptor_strlen
+../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:461
+    #1 0x7f2817698251 in SLsmg_write_wrapped_string
+(/lib/x86_64-linux-gnu/libslang.so.2+0x98251)
+    #2 0x7f28176984b9 in SLsmg_write_nstring
+(/lib/x86_64-linux-gnu/libslang.so.2+0x984b9)
+    #3 0x55c94045b365 in ui_browser__write_nstring ui/browser.c:60
+    #4 0x55c94045c558 in __ui_browser__show_title ui/browser.c:266
+    #5 0x55c94045c776 in ui_browser__show ui/browser.c:288
+    #6 0x55c94045c06d in ui_browser__handle_resize ui/browser.c:206
+    #7 0x55c94047979b in do_annotate ui/browsers/hists.c:2458
+    #8 0x55c94047fb17 in evsel__hists_browse ui/browsers/hists.c:3412
+    #9 0x55c940480a0c in perf_evsel_menu__run ui/browsers/hists.c:3527
+    #10 0x55c940481108 in __evlist__tui_browse_hists ui/browsers/hists.c:3613
+    #11 0x55c9404813f7 in evlist__tui_browse_hists ui/browsers/hists.c:3661
+    #12 0x55c93ffa253f in report__browse_hists tools/perf/builtin-report.c:671
+    #13 0x55c93ffa58ca in __cmd_report tools/perf/builtin-report.c:1141
+    #14 0x55c93ffaf159 in cmd_report tools/perf/builtin-report.c:1805
+    #15 0x55c94000c05c in report_events tools/perf/builtin-mem.c:374
+    #16 0x55c94000d96d in cmd_mem tools/perf/builtin-mem.c:516
+    #17 0x55c9400e44ee in run_builtin tools/perf/perf.c:350
+    #18 0x55c9400e4a5a in handle_internal_command tools/perf/perf.c:403
+    #19 0x55c9400e4e22 in run_argv tools/perf/perf.c:447
+    #20 0x55c9400e53ad in main tools/perf/perf.c:561
+    #21 0x7f28170456c9 in __libc_start_call_main
+../sysdeps/nptl/libc_start_call_main.h:58
+    #22 0x7f2817045784 in __libc_start_main_impl ../csu/libc-start.c:360
+    #23 0x55c93ff544c0 in _start (/tmp/perf/perf+0x19a4c0) (BuildId:
+84899b0e8c7d3a3eaa67b2eb35e3d8b2f8cd4c93)
+
+Address 0x7f2813331920 is located in stack of thread T0 at offset 32 in frame
+    #0 0x55c94046e85e in hist_browser__run ui/browsers/hists.c:746
+
+  This frame has 1 object(s):
+    [32, 192) 'title' (line 747) <== Memory access at offset 32 is
+inside this variable
+HINT: this may be a false positive if your program uses some custom
+stack unwind mechanism, swapcontext or vfork
+```
+hist_browser__run isn't on the stack so the asan error looks legit.
+There's no clean init/exit on struct ui_browser so I may be trading a
+use-after-return for a memory leak, but that seems look a good trade
+anyway.
+
+Fixes: 05e8b0804ec4 ("perf ui browser: Stop using 'self'")
+Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Ben Gainey <ben.gainey@arm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Li Dong <lidong@vivo.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20240507065026.2652929-1-zhe.he@windriver.com
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Cc: Paran Lee <p4ranlee@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Sun Haiyong <sunhaiyong@loongson.cn>
+Cc: Tim Chen <tim.c.chen@linux.intel.com>
+Cc: Yanteng Si <siyanteng@loongson.cn>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Link: https://lore.kernel.org/r/20240507183545.1236093-2-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/bench/inject-buildid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/ui/browser.c | 4 +++-
+ tools/perf/ui/browser.h | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/bench/inject-buildid.c b/tools/perf/bench/inject-buildid.c
-index 49331743c7439..a759eb2328bea 100644
---- a/tools/perf/bench/inject-buildid.c
-+++ b/tools/perf/bench/inject-buildid.c
-@@ -362,7 +362,7 @@ static int inject_build_id(struct bench_data *data, u64 *max_rss)
- 		return -1;
+diff --git a/tools/perf/ui/browser.c b/tools/perf/ui/browser.c
+index 603d11283cbdc..c4cdf2ea69b72 100644
+--- a/tools/perf/ui/browser.c
++++ b/tools/perf/ui/browser.c
+@@ -287,7 +287,8 @@ int ui_browser__show(struct ui_browser *browser, const char *title,
+ 	mutex_lock(&ui__lock);
+ 	__ui_browser__show_title(browser, title);
  
- 	for (i = 0; i < nr_mmaps; i++) {
--		int idx = rand() % (nr_dsos - 1);
-+		int idx = rand() % nr_dsos;
- 		struct bench_dso *dso = &dsos[idx];
- 		u64 timestamp = rand() % 1000000;
+-	browser->title = title;
++	free(browser->title);
++	browser->title = strdup(title);
+ 	zfree(&browser->helpline);
  
+ 	va_start(ap, helpline);
+@@ -304,6 +305,7 @@ void ui_browser__hide(struct ui_browser *browser)
+ 	mutex_lock(&ui__lock);
+ 	ui_helpline__pop();
+ 	zfree(&browser->helpline);
++	zfree(&browser->title);
+ 	mutex_unlock(&ui__lock);
+ }
+ 
+diff --git a/tools/perf/ui/browser.h b/tools/perf/ui/browser.h
+index 510ce45540501..6e98d5f8f71cc 100644
+--- a/tools/perf/ui/browser.h
++++ b/tools/perf/ui/browser.h
+@@ -21,7 +21,7 @@ struct ui_browser {
+ 	u8	      extra_title_lines;
+ 	int	      current_color;
+ 	void	      *priv;
+-	const char    *title;
++	char	      *title;
+ 	char	      *helpline;
+ 	const char    *no_samples_msg;
+ 	void 	      (*refresh_dimensions)(struct ui_browser *browser);
 -- 
 2.43.0
 
