@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B90F1ABCC4;
-	Thu,  6 Jun 2024 14:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1957719AA40;
+	Thu,  6 Jun 2024 14:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683288; cv=none; b=qcweRgbtK0F2IFV0JGlChEww+c0b0EgJ3XHv3lq8IxJjbIKcHEWqt0C2dvEd7lTr8gkoD2WCFdcBd4MhB3xDD6Gw+pQPhaSO6uGRxtDImrOKJ3kTp7Phey0T1p6QvIxjnJXaQ4Ho6b0Lqxw8vNMZ6dCL7k3xfKuyS+Ljh/klFdQ=
+	t=1717683289; cv=none; b=TQt332Dny74mzsaS+cqv9CRwQLpHdkyj8SMMJ/+szMDV4zmrDCdHWS0Qi4750WQchdxyQY10edp9QYsJt/CjOzo78utskuASxWcjlbEAL0KGPB1um41Ng8ZZmFIsQ98kcuSNXMmjESvSnSBQO6JND0PuZJrQMVyk3FpUJQ4cN9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683288; c=relaxed/simple;
-	bh=jnnu74GelYzaIq7e5PynIy3Nl0MWJ4B914AG+JE6fJg=;
+	s=arc-20240116; t=1717683289; c=relaxed/simple;
+	bh=5NX8PTCyTjaZ71hf8uTaKej8E+hc1KOGYE6GktIZk3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BG1oTlCcCIYOxNWvzpiODUCv5kvJrA7PFZJpkunqDrxlGpXKd+YZAV6WQDnvmNEgp8l30Ympuk+dQzszyttquu0jMqW8qYGeCBFnid+V2glaBWR0wWdRAyKQ2uaSSyEzOnaKRZJkHJ7grosb0LElzbRNwg1NjV4zQTA/Vj9yZQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npy/e6y8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qHCVRljRvAE/xa4m8ceqevOe4avBcPipDaRuxpFubvdCN54qYuIqnD0r8jAr1pjasjU57JhTf3c4eA4yBLaVI53rtL3EMb34OBgtaH6czB48ssD/Z+OA8vGfFuiuSYG/b80ctSQap8WgOI4KvRuKvnXKjAkfnMkbYBJWlSeKDFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbtZZBxr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npy/e6y8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A45BC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbtZZBxr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2C9C2BD10;
 	Thu,  6 Jun 2024 14:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683288;
-	bh=jnnu74GelYzaIq7e5PynIy3Nl0MWJ4B914AG+JE6fJg=;
+	s=korg; t=1717683289;
+	bh=5NX8PTCyTjaZ71hf8uTaKej8E+hc1KOGYE6GktIZk3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npy/e6y8XKEVlmDDh3DSNrnvUWUZNbvU8YPfUEy9pBrwvzX7J5eJgVbNK1rf12P/w
-	 spDe00NKwS5sPt1rBTAWV2P3esVtVyaAjIs9kJC37yCdGbFyS2zY4UPevo09flCtGc
-	 7skXe70MozDMCZYhhZfbSua5UY5m3n3pzs3dAOhg=
+	b=WbtZZBxrBuw+Ptl44LGHPfrq7IaF0aEQY8UOPkzusmeqcwqHbryVI1QysavjKKZtB
+	 CPeq9fY6GxPT3s5TS5dy5oAbbvrfQbymq/EWPEb6cHkClxcu3lGT0YddGlr9uTLPwp
+	 H4X1syWEUSAgKtt4gQUrX2oHIebP2O+QAxnGN6k8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Overstreet <kent.overstreet@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 229/744] kernel/numa.c: Move logging out of numa.h
-Date: Thu,  6 Jun 2024 15:58:21 +0200
-Message-ID: <20240606131739.737314826@linuxfoundation.org>
+Subject: [PATCH 6.1 165/473] net: usb: sr9700: stop lying about skb->truesize
+Date: Thu,  6 Jun 2024 16:01:34 +0200
+Message-ID: <20240606131705.402398243@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,123 +47,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kent Overstreet <kent.overstreet@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit d7a73e3f089204aee3393687e23fd45a22657b08 ]
+[ Upstream commit 05417aa9c0c038da2464a0c504b9d4f99814a23b ]
 
-Moving these stub functions to a .c file means we can kill a sched.h
-dependency on printk.h.
+Some usb drivers set small skb->truesize and break
+core networking stacks.
 
-Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
-Stable-dep-of: f9f67e5adc8d ("x86/numa: Fix SRAT lookup of CFMWS ranges with numa_fill_memblks()")
+In this patch, I removed one of the skb->truesize override.
+
+I also replaced one skb_clone() by an allocation of a fresh
+and small skb, to get minimally sized skbs, like we did
+in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
+in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
+stop lying about skb->truesize")
+
+Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240506143939.3673865-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/numa.h | 19 ++++++-------------
- kernel/Makefile      |  1 +
- kernel/numa.c        | 26 ++++++++++++++++++++++++++
- 3 files changed, 33 insertions(+), 13 deletions(-)
- create mode 100644 kernel/numa.c
+ drivers/net/usb/sr9700.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/numa.h b/include/linux/numa.h
-index a904861de8000..915033a757315 100644
---- a/include/linux/numa.h
-+++ b/include/linux/numa.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- #ifndef _LINUX_NUMA_H
- #define _LINUX_NUMA_H
-+#include <linux/init.h>
- #include <linux/types.h>
+diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
+index 3164451e1010c..0a662e42ed965 100644
+--- a/drivers/net/usb/sr9700.c
++++ b/drivers/net/usb/sr9700.c
+@@ -421,19 +421,15 @@ static int sr9700_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			skb_pull(skb, 3);
+ 			skb->len = len;
+ 			skb_set_tail_pointer(skb, len);
+-			skb->truesize = len + sizeof(struct sk_buff);
+ 			return 2;
+ 		}
  
- #ifdef CONFIG_NODES_SHIFT
-@@ -22,34 +23,26 @@
- #endif
+-		/* skb_clone is used for address align */
+-		sr_skb = skb_clone(skb, GFP_ATOMIC);
++		sr_skb = netdev_alloc_skb_ip_align(dev->net, len);
+ 		if (!sr_skb)
+ 			return 0;
  
- #ifdef CONFIG_NUMA
--#include <linux/printk.h>
- #include <asm/sparsemem.h>
+-		sr_skb->len = len;
+-		sr_skb->data = skb->data + 3;
+-		skb_set_tail_pointer(sr_skb, len);
+-		sr_skb->truesize = len + sizeof(struct sk_buff);
++		skb_put(sr_skb, len);
++		memcpy(sr_skb->data, skb->data + 3, len);
+ 		usbnet_skb_return(dev, sr_skb);
  
- /* Generic implementation available */
- int numa_nearest_node(int node, unsigned int state);
- 
- #ifndef memory_add_physaddr_to_nid
--static inline int memory_add_physaddr_to_nid(u64 start)
--{
--	pr_info_once("Unknown online node for memory at 0x%llx, assuming node 0\n",
--			start);
--	return 0;
--}
-+int memory_add_physaddr_to_nid(u64 start);
- #endif
-+
- #ifndef phys_to_target_node
--static inline int phys_to_target_node(u64 start)
--{
--	pr_info_once("Unknown target node for memory at 0x%llx, assuming node 0\n",
--			start);
--	return 0;
--}
-+int phys_to_target_node(u64 start);
- #endif
-+
- #ifndef numa_fill_memblks
- static inline int __init numa_fill_memblks(u64 start, u64 end)
- {
- 	return NUMA_NO_MEMBLK;
- }
- #endif
-+
- #else /* !CONFIG_NUMA */
- static inline int numa_nearest_node(int node, unsigned int state)
- {
-diff --git a/kernel/Makefile b/kernel/Makefile
-index 3947122d618bf..ce105a5558fcf 100644
---- a/kernel/Makefile
-+++ b/kernel/Makefile
-@@ -114,6 +114,7 @@ obj-$(CONFIG_SHADOW_CALL_STACK) += scs.o
- obj-$(CONFIG_HAVE_STATIC_CALL) += static_call.o
- obj-$(CONFIG_HAVE_STATIC_CALL_INLINE) += static_call_inline.o
- obj-$(CONFIG_CFI_CLANG) += cfi.o
-+obj-$(CONFIG_NUMA) += numa.o
- 
- obj-$(CONFIG_PERF_EVENTS) += events/
- 
-diff --git a/kernel/numa.c b/kernel/numa.c
-new file mode 100644
-index 0000000000000..67ca6b8585c06
---- /dev/null
-+++ b/kernel/numa.c
-@@ -0,0 +1,26 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+#include <linux/printk.h>
-+#include <linux/numa.h>
-+
-+/* Stub functions: */
-+
-+#ifndef memory_add_physaddr_to_nid
-+int memory_add_physaddr_to_nid(u64 start)
-+{
-+	pr_info_once("Unknown online node for memory at 0x%llx, assuming node 0\n",
-+			start);
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(memory_add_physaddr_to_nid);
-+#endif
-+
-+#ifndef phys_to_target_node
-+int phys_to_target_node(u64 start)
-+{
-+	pr_info_once("Unknown target node for memory at 0x%llx, assuming node 0\n",
-+			start);
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(phys_to_target_node);
-+#endif
+ 		skb_pull(skb, len + SR_RX_OVERHEAD);
 -- 
 2.43.0
 
