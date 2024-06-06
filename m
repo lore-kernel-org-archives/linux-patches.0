@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3209A2233B;
-	Thu,  6 Jun 2024 14:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A071991CE;
+	Thu,  6 Jun 2024 14:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683164; cv=none; b=XhGXLCxUB2GOj0pAGFFMSQU+jGsyjDkW8sn+1EapXpuUAjVZ0EQOIxeNull1yZHVzlgvMgkYWfgYvCQfOI5qhyyzSEwXq+ybK873tTYEu75XimhLkrN6UyWCLwOjHUDeMTy3Yu/udfQCuPudPLxM6qSzViFBr7gKBBpa8DPXLH8=
+	t=1717683164; cv=none; b=Q3mhOI92sRZyh/MyDsT0O8gJDaoCU/Ay+YZ18st9toT2+5iKsbLhJCjWLyyHU/Y+xjKKROLjZbWZMjozh6uAZGYk+mWdpyk6md/MHUkJfMEFBj6MUksMKLV0yzPo3tQCKlqf587kJcpgP6EhkV9J+RmbB3UWViWVTec+byFUiPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683164; c=relaxed/simple;
-	bh=lIuXNzm7c/xjzQDR7SMxV+GoKy8ElHpyelsMNSOmE1c=;
+	bh=QexsfiIlW/iLfEskw6pcTAG0B9yFctLFdP4SwfqbGmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vE/y9PYQiT0Fvmj+XMOvBqjJHmehWZNoI/vxeeVfF81rotuPCw0NGZCo+rLi3byaNcdBXO8khA56jr9ASwwS2DsnIbHp99cCA1YPen/eMiJ9jZisSc9S89UK1jbaiIMMu3IZrPgzoNpYL5abAF2Jcqys1o9woooklz/arlHnJmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uw+aUbZw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=upV8YszH2FelPbr7V6gbr1eOZK8kKDtcfqUW3KjHPesBUXuYgoKarF/t/z4d1t49RNMlb2UNoR2gfMQHs6h9Ypu+XEjmX+vpgw0uBAS7L9nCqFot/v69l/me5HEP2TnID6XZggAZ/L8P1WsaT/spXuMLlW7xVPoZApCZhCPf630=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gdo7SKJJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uw+aUbZw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1006C2BD10;
-	Thu,  6 Jun 2024 14:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gdo7SKJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327C0C32781;
+	Thu,  6 Jun 2024 14:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683163;
-	bh=lIuXNzm7c/xjzQDR7SMxV+GoKy8ElHpyelsMNSOmE1c=;
+	s=korg; t=1717683164;
+	bh=QexsfiIlW/iLfEskw6pcTAG0B9yFctLFdP4SwfqbGmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uw+aUbZwo03Hw0T2pVrKQ2TnuYAOJkvpVNSC0r5OnO6dywHXlGqnJSzTTL7i3vhDL
-	 gY81uWilOZJi9mo0zHjm1gLz8kBnChQK8/r1D0+WtjiNtQq2efx5nk9yEHuoCgRi0g
-	 4eI4Cv4PiL56xFS/kSyFb4Z6fPfloqOAtXMD9s3M=
+	b=Gdo7SKJJCX4akXWv/T4DhEJ2Q+mwLVkfjIbZb97bdZ1jey/tQWwY3lCBdQIy5pclr
+	 +FOJuYbRj1Eq66zW/CEDjy9g3xM73jScUzljIdjtOvKOUNOoR6iadPD4FJh8Mb+sKM
+	 ZacS7fUPANQyVGCo1JWX6V0uJrTdTucK7EHfHy4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/473] drm/amdgpu: Fix the ring buffer size for queue VM flush
-Date: Thu,  6 Jun 2024 15:59:23 +0200
-Message-ID: <20240606131701.020463477@linuxfoundation.org>
+Subject: [PATCH 6.6 108/744] ARM: configs: sunxi: Enable DRM_DW_HDMI
+Date: Thu,  6 Jun 2024 15:56:20 +0200
+Message-ID: <20240606131735.864190373@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,96 +47,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit fe93b0927bc58cb1d64230f45744e527d9d8482c ]
+[ Upstream commit deff401b14e2d832b25b55862ad6c73378fe034e ]
 
-Here are the corrections needed for the queue ring buffer size
-calculation for the following cases:
-- Remove the KIQ VM flush ring usage.
-- Add the invalidate TLBs packet for gfx10 and gfx11 queue.
-- There's no VM flush and PFP sync, so remove the gfx9 real
-  ring and compute ring buffer usage.
+Commit 4fc8cb47fcfd ("drm/display: Move HDMI helpers into display-helper
+module") turned the DRM_DW_HDMI dependency of DRM_SUN8I_DW_HDMI into a
+depends on which ended up disabling the driver in the defconfig. Make
+sure it's still enabled.
 
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 4fc8cb47fcfd ("drm/display: Move HDMI helpers into display-helper module")
+Reported-by: Mark Brown <broonie@kernel.org>
+Reported-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20240403-fix-dw-hdmi-kconfig-v1-5-afbc4a835c38@kernel.org
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c | 3 +--
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 3 +--
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c  | 2 --
- 3 files changed, 2 insertions(+), 6 deletions(-)
+ arch/arm/configs/sunxi_defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-index 84a36b50ddd87..f8382b227ad46 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-@@ -9352,7 +9352,7 @@ static const struct amdgpu_ring_funcs gfx_v10_0_ring_funcs_gfx = {
- 		7 + /* PIPELINE_SYNC */
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 5 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 7 +
--		2 + /* VM_FLUSH */
-+		4 + /* VM_FLUSH */
- 		8 + /* FENCE for VM_FLUSH */
- 		20 + /* GDS switch */
- 		4 + /* double SWITCH_BUFFER,
-@@ -9445,7 +9445,6 @@ static const struct amdgpu_ring_funcs gfx_v10_0_ring_funcs_kiq = {
- 		7 + /* gfx_v10_0_ring_emit_pipeline_sync */
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 5 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 7 +
--		2 + /* gfx_v10_0_ring_emit_vm_flush */
- 		8 + 8 + 8, /* gfx_v10_0_ring_emit_fence_kiq x3 for user fence, vm fence */
- 	.emit_ib_size =	7, /* gfx_v10_0_ring_emit_ib_compute */
- 	.emit_ib = gfx_v10_0_ring_emit_ib_compute,
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-index 5a5787bfbce7f..1f9f7fdd4b8e0 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -6157,7 +6157,7 @@ static const struct amdgpu_ring_funcs gfx_v11_0_ring_funcs_gfx = {
- 		7 + /* PIPELINE_SYNC */
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 5 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 7 +
--		2 + /* VM_FLUSH */
-+		4 + /* VM_FLUSH */
- 		8 + /* FENCE for VM_FLUSH */
- 		20 + /* GDS switch */
- 		5 + /* COND_EXEC */
-@@ -6243,7 +6243,6 @@ static const struct amdgpu_ring_funcs gfx_v11_0_ring_funcs_kiq = {
- 		7 + /* gfx_v11_0_ring_emit_pipeline_sync */
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 5 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 7 +
--		2 + /* gfx_v11_0_ring_emit_vm_flush */
- 		8 + 8 + 8, /* gfx_v11_0_ring_emit_fence_kiq x3 for user fence, vm fence */
- 	.emit_ib_size =	7, /* gfx_v11_0_ring_emit_ib_compute */
- 	.emit_ib = gfx_v11_0_ring_emit_ib_compute,
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-index 195b298923543..6a1fe21685149 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -6742,7 +6742,6 @@ static const struct amdgpu_ring_funcs gfx_v9_0_ring_funcs_compute = {
- 		7 + /* gfx_v9_0_ring_emit_pipeline_sync */
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 5 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 7 +
--		2 + /* gfx_v9_0_ring_emit_vm_flush */
- 		8 + 8 + 8 + /* gfx_v9_0_ring_emit_fence x3 for user fence, vm fence */
- 		7 + /* gfx_v9_0_emit_mem_sync */
- 		5 + /* gfx_v9_0_emit_wave_limit for updating mmSPI_WCL_PIPE_PERCENT_GFX register */
-@@ -6781,7 +6780,6 @@ static const struct amdgpu_ring_funcs gfx_v9_0_ring_funcs_kiq = {
- 		7 + /* gfx_v9_0_ring_emit_pipeline_sync */
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 5 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 7 +
--		2 + /* gfx_v9_0_ring_emit_vm_flush */
- 		8 + 8 + 8, /* gfx_v9_0_ring_emit_fence_kiq x3 for user fence, vm fence */
- 	.emit_ib_size =	7, /* gfx_v9_0_ring_emit_ib_compute */
- 	.emit_fence = gfx_v9_0_ring_emit_fence_kiq,
+diff --git a/arch/arm/configs/sunxi_defconfig b/arch/arm/configs/sunxi_defconfig
+index bddc82f789421..a83d29fed1756 100644
+--- a/arch/arm/configs/sunxi_defconfig
++++ b/arch/arm/configs/sunxi_defconfig
+@@ -110,6 +110,7 @@ CONFIG_DRM_PANEL_LVDS=y
+ CONFIG_DRM_PANEL_SIMPLE=y
+ CONFIG_DRM_PANEL_EDP=y
+ CONFIG_DRM_SIMPLE_BRIDGE=y
++CONFIG_DRM_DW_HDMI=y
+ CONFIG_DRM_LIMA=y
+ CONFIG_FB_SIMPLE=y
+ CONFIG_BACKLIGHT_CLASS_DEVICE=y
 -- 
 2.43.0
 
