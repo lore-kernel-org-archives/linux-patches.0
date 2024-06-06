@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA22A19CCF2;
-	Thu,  6 Jun 2024 14:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A80C19CCF2;
+	Thu,  6 Jun 2024 14:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683423; cv=none; b=R83/GPryIJkkOgjOh3y2zBx7wSvHodfxbSP9vxje79h6CwubBeltbU8sKn6+5DDQMrJAsMZeMIk41uG53LekpnuMyp5FLcwJCzSem80678zrqSaVOd4ArhUJh8CVaTL+ADqvUng2t3nFsJbi/fkume+sGMEad07iDRTJVEAgR+c=
+	t=1717683424; cv=none; b=Tlcho5/A7wvZ2xEJiL6H0j5RDshbLZGRudQdl+CQqH0W6cH90ubV1OjUvizIGOnUU/jaTEQw2rL+RDxBLtVMkFVz1t0jR418LswoHaemx7KCLio7wcD/pNefnKocsjA8WcQMxttPQgkxTYHYo0gyBpc3CVvkUZ6ckumGYUqXFvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683423; c=relaxed/simple;
-	bh=VqCwrDlwpPzmrS3keS3fkFEzPgAYH5RGb2Mq8JjZMLg=;
+	s=arc-20240116; t=1717683424; c=relaxed/simple;
+	bh=/bMz8cEwwYkMlVm6yvs8hz4gV23Pjz2Dotsw6Wq3O1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LejGloKi4DYu9IUm6O+Ukah0v44/UAB1MzkAT/IFr+jxecRo45ATKBPnYhLVv6UmjxEN1O0vmIv+Z92EbtJt7V3Mt/ehENoqNHycgnBvQQHHn7KF27cQfkGO0Lriwmq0IGXidQN4pAPUF5Qh5k04vm+ZzbbepaaM30cF/Pfn+B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrXjpkU+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=guB5qXXGHVoeCNXbvqRGJfSd8aiQu94sE5UDIs0XFpod0bxheL+9n8Q/7Bo/XWu83HHp4VOZquusU4VLX7DwxagnzW0rf6Pz7VFHp3LBq5RPJIOhvMcxdCiSFR354cYu05gArRXhWYHAyaHXIobSZe9E0F+yj46ShVdwaIfUV08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3G2bSwF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrXjpkU+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFD4C32781;
-	Thu,  6 Jun 2024 14:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3G2bSwF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C0FC32781;
+	Thu,  6 Jun 2024 14:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683423;
-	bh=VqCwrDlwpPzmrS3keS3fkFEzPgAYH5RGb2Mq8JjZMLg=;
+	s=korg; t=1717683424;
+	bh=/bMz8cEwwYkMlVm6yvs8hz4gV23Pjz2Dotsw6Wq3O1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrXjpkU+2UmjTfSqVwI3yaBbq6pjDJlxcYw5bfcTdRI9AVgcpLPV6RNEPD3O9bB6/
-	 EFnUb4+N6+WEOiT+cBBivu57IRONTr1NU5cC20ZztT5ARWxDl60WQwnBG80yLlm5Kf
-	 xjRl4Y3nWyxMVOErb9o3bnDEcuUvNmW8OThuf15w=
+	b=F3G2bSwFnRzla7XhU4DKKTW2KOqGkUD9iqHx94wQ7x9p6n4gp6Ja/Mn4thpLAsjs5
+	 Q+au4dtJmO3H+/sXL27ovI37OO/LIM6rpKbFFoO0XS2K5Pc66+xuuSEOyJ9aGG1FV5
+	 8EMgrKUDxhBseN4Ybq0EHJ0Mkhp1eWZL7yORtO9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinyoung Choi <j-young.choi@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Chandramohan Akula <chandramohan.akula@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 309/473] f2fs: fix typos in comments
-Date: Thu,  6 Jun 2024 16:03:58 +0200
-Message-ID: <20240606131710.158376607@linuxfoundation.org>
+Subject: [PATCH 6.6 369/744] RDMA/bnxt_re: Remove roundup_pow_of_two depth for all hardware queue resources
+Date: Thu,  6 Jun 2024 16:00:41 +0200
+Message-ID: <20240606131744.323008449@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,185 +48,306 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinyoung CHOI <j-young.choi@samsung.com>
+From: Chandramohan Akula <chandramohan.akula@broadcom.com>
 
-[ Upstream commit 146949defda868378992171b9e42318b06fcd482 ]
+[ Upstream commit 48f996d4adf15a0a0af8b8184d3ec6042a684ea4 ]
 
-This patch is to fix typos in f2fs files.
+Rounding up the queue depth to power of two is not a hardware requirement.
+In order to optimize the per connection memory usage, removing drivers
+implementation which round up to the queue depths to the power of 2.
 
-Signed-off-by: Jinyoung Choi <j-young.choi@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 278a6253a673 ("f2fs: fix to relocate check condition in f2fs_fallocate()")
+Implements a mask to maintain backward compatibility with older
+library.
+
+Signed-off-by: Chandramohan Akula <chandramohan.akula@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://lore.kernel.org/r/1698069803-1787-3-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 78cfd17142ef ("bnxt_re: avoid shift undefined behavior in bnxt_qplib_alloc_init_hwq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/checkpoint.c   | 4 ++--
- fs/f2fs/compress.c     | 2 +-
- fs/f2fs/data.c         | 8 ++++----
- fs/f2fs/extent_cache.c | 4 ++--
- fs/f2fs/file.c         | 6 +++---
- fs/f2fs/namei.c        | 2 +-
- fs/f2fs/segment.c      | 2 +-
- 7 files changed, 14 insertions(+), 14 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 57 ++++++++++++++++--------
+ drivers/infiniband/hw/bnxt_re/ib_verbs.h |  7 +++
+ include/uapi/rdma/bnxt_re-abi.h          |  9 ++++
+ 3 files changed, 54 insertions(+), 19 deletions(-)
 
-diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
-index 3ec203bbd5593..13d8774706758 100644
---- a/fs/f2fs/checkpoint.c
-+++ b/fs/f2fs/checkpoint.c
-@@ -797,7 +797,7 @@ static void write_orphan_inodes(struct f2fs_sb_info *sbi, block_t start_blk)
- 	 */
- 	head = &im->ino_list;
- 
--	/* loop for each orphan inode entry and write them in Jornal block */
-+	/* loop for each orphan inode entry and write them in journal block */
- 	list_for_each_entry(orphan, head, list) {
- 		if (!page) {
- 			page = f2fs_grab_meta_page(sbi, start_blk++);
-@@ -1127,7 +1127,7 @@ int f2fs_sync_dirty_inodes(struct f2fs_sb_info *sbi, enum inode_type type,
- 	} else {
- 		/*
- 		 * We should submit bio, since it exists several
--		 * wribacking dentry pages in the freeing inode.
-+		 * writebacking dentry pages in the freeing inode.
- 		 */
- 		f2fs_submit_merged_write(sbi, DATA);
- 		cond_resched();
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index df6dfd7de6d0d..84585dba86a57 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -1264,7 +1264,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
- 	int i, err;
- 	bool quota_inode = IS_NOQUOTA(inode);
- 
--	/* we should bypass data pages to proceed the kworkder jobs */
-+	/* we should bypass data pages to proceed the kworker jobs */
- 	if (unlikely(f2fs_cp_error(sbi))) {
- 		mapping_set_error(cc->rpages[0]->mapping, -EIO);
- 		goto out_free;
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index ea9b78b5a1ebe..0b0e3d44e158e 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2363,7 +2363,7 @@ static int f2fs_mpage_readpages(struct inode *inode,
- 
- #ifdef CONFIG_F2FS_FS_COMPRESSION
- 		if (f2fs_compressed_file(inode)) {
--			/* there are remained comressed pages, submit them */
-+			/* there are remained compressed pages, submit them */
- 			if (!f2fs_cluster_can_merge_page(&cc, page->index)) {
- 				ret = f2fs_read_multi_pages(&cc, &bio,
- 							max_nr_pages,
-@@ -2779,7 +2779,7 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
- 
- 	trace_f2fs_writepage(page, DATA);
- 
--	/* we should bypass data pages to proceed the kworkder jobs */
-+	/* we should bypass data pages to proceed the kworker jobs */
- 	if (unlikely(f2fs_cp_error(sbi))) {
- 		mapping_set_error(page->mapping, -EIO);
- 		/*
-@@ -2898,7 +2898,7 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
- redirty_out:
- 	redirty_page_for_writepage(wbc, page);
- 	/*
--	 * pageout() in MM traslates EAGAIN, so calls handle_write_error()
-+	 * pageout() in MM translates EAGAIN, so calls handle_write_error()
- 	 * -> mapping_set_error() -> set_bit(AS_EIO, ...).
- 	 * file_write_and_wait_range() will see EIO error, which is critical
- 	 * to return value of fsync() followed by atomic_write failure to user.
-@@ -2932,7 +2932,7 @@ static int f2fs_write_data_page(struct page *page,
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index cc466dfd792b0..fd69be982ce06 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1184,7 +1184,8 @@ static struct bnxt_re_qp *bnxt_re_create_shadow_qp
  }
  
- /*
-- * This function was copied from write_cche_pages from mm/page-writeback.c.
-+ * This function was copied from write_cache_pages from mm/page-writeback.c.
-  * The major change is making write step of cold data page separately from
-  * warm/hot data page.
-  */
-diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
-index 16692c96e7650..c55359267d438 100644
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -205,7 +205,7 @@ struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
-  * @prev_ex: extent before ofs
-  * @next_ex: extent after ofs
-  * @insert_p: insert point for new extent at ofs
-- * in order to simpfy the insertion after.
-+ * in order to simplify the insertion after.
-  * tree must stay unchanged between lookup and insertion.
-  */
- struct rb_entry *f2fs_lookup_rb_tree_ret(struct rb_root_cached *root,
-@@ -662,7 +662,7 @@ static void __update_extent_tree_range(struct inode *inode,
- 	if (!en)
- 		en = next_en;
- 
--	/* 2. invlidate all extent nodes in range [fofs, fofs + len - 1] */
-+	/* 2. invalidate all extent nodes in range [fofs, fofs + len - 1] */
- 	while (en && en->ei.fofs < end) {
- 		unsigned int org_end;
- 		int parts = 0;	/* # of parts current extent split into */
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 46b6f06a4a76a..423b9150dc0a8 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -305,7 +305,7 @@ static int f2fs_do_sync_file(struct file *file, loff_t start, loff_t end,
- 		 * for OPU case, during fsync(), node can be persisted before
- 		 * data when lower device doesn't support write barrier, result
- 		 * in data corruption after SPO.
--		 * So for strict fsync mode, force to use atomic write sematics
-+		 * So for strict fsync mode, force to use atomic write semantics
- 		 * to keep write order in between data/node and last node to
- 		 * avoid potential data corruption.
- 		 */
-@@ -1805,7 +1805,7 @@ static long f2fs_fallocate(struct file *file, int mode,
- 		return -EOPNOTSUPP;
- 
- 	/*
--	 * Pinned file should not support partial trucation since the block
-+	 * Pinned file should not support partial truncation since the block
- 	 * can be used by applications.
- 	 */
- 	if ((f2fs_compressed_file(inode) || f2fs_is_pinned_file(inode)) &&
-@@ -1855,7 +1855,7 @@ static long f2fs_fallocate(struct file *file, int mode,
- static int f2fs_release_file(struct inode *inode, struct file *filp)
+ static int bnxt_re_init_rq_attr(struct bnxt_re_qp *qp,
+-				struct ib_qp_init_attr *init_attr)
++				struct ib_qp_init_attr *init_attr,
++				struct bnxt_re_ucontext *uctx)
  {
+ 	struct bnxt_qplib_dev_attr *dev_attr;
+ 	struct bnxt_qplib_qp *qplqp;
+@@ -1213,7 +1214,7 @@ static int bnxt_re_init_rq_attr(struct bnxt_re_qp *qp,
+ 		/* Allocate 1 more than what's provided so posting max doesn't
+ 		 * mean empty.
+ 		 */
+-		entries = roundup_pow_of_two(init_attr->cap.max_recv_wr + 1);
++		entries = bnxt_re_init_depth(init_attr->cap.max_recv_wr + 1, uctx);
+ 		rq->max_wqe = min_t(u32, entries, dev_attr->max_qp_wqes + 1);
+ 		rq->q_full_delta = 0;
+ 		rq->sg_info.pgsize = PAGE_SIZE;
+@@ -1243,7 +1244,7 @@ static void bnxt_re_adjust_gsi_rq_attr(struct bnxt_re_qp *qp)
+ 
+ static int bnxt_re_init_sq_attr(struct bnxt_re_qp *qp,
+ 				struct ib_qp_init_attr *init_attr,
+-				struct ib_udata *udata)
++				struct bnxt_re_ucontext *uctx)
+ {
+ 	struct bnxt_qplib_dev_attr *dev_attr;
+ 	struct bnxt_qplib_qp *qplqp;
+@@ -1272,7 +1273,7 @@ static int bnxt_re_init_sq_attr(struct bnxt_re_qp *qp,
+ 	/* Allocate 128 + 1 more than what's provided */
+ 	diff = (qplqp->wqe_mode == BNXT_QPLIB_WQE_MODE_VARIABLE) ?
+ 		0 : BNXT_QPLIB_RESERVED_QP_WRS;
+-	entries = roundup_pow_of_two(entries + diff + 1);
++	entries = bnxt_re_init_depth(entries + diff + 1, uctx);
+ 	sq->max_wqe = min_t(u32, entries, dev_attr->max_qp_wqes + diff + 1);
+ 	sq->q_full_delta = diff + 1;
  	/*
--	 * f2fs_relase_file is called at every close calls. So we should
-+	 * f2fs_release_file is called at every close calls. So we should
- 	 * not drop any inmemory pages by close called by other process.
+@@ -1288,7 +1289,8 @@ static int bnxt_re_init_sq_attr(struct bnxt_re_qp *qp,
+ }
+ 
+ static void bnxt_re_adjust_gsi_sq_attr(struct bnxt_re_qp *qp,
+-				       struct ib_qp_init_attr *init_attr)
++				       struct ib_qp_init_attr *init_attr,
++				       struct bnxt_re_ucontext *uctx)
+ {
+ 	struct bnxt_qplib_dev_attr *dev_attr;
+ 	struct bnxt_qplib_qp *qplqp;
+@@ -1300,7 +1302,7 @@ static void bnxt_re_adjust_gsi_sq_attr(struct bnxt_re_qp *qp,
+ 	dev_attr = &rdev->dev_attr;
+ 
+ 	if (!bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx)) {
+-		entries = roundup_pow_of_two(init_attr->cap.max_send_wr + 1);
++		entries = bnxt_re_init_depth(init_attr->cap.max_send_wr + 1, uctx);
+ 		qplqp->sq.max_wqe = min_t(u32, entries,
+ 					  dev_attr->max_qp_wqes + 1);
+ 		qplqp->sq.q_full_delta = qplqp->sq.max_wqe -
+@@ -1338,6 +1340,7 @@ static int bnxt_re_init_qp_attr(struct bnxt_re_qp *qp, struct bnxt_re_pd *pd,
+ 				struct ib_udata *udata)
+ {
+ 	struct bnxt_qplib_dev_attr *dev_attr;
++	struct bnxt_re_ucontext *uctx;
+ 	struct bnxt_qplib_qp *qplqp;
+ 	struct bnxt_re_dev *rdev;
+ 	struct bnxt_re_cq *cq;
+@@ -1347,6 +1350,7 @@ static int bnxt_re_init_qp_attr(struct bnxt_re_qp *qp, struct bnxt_re_pd *pd,
+ 	qplqp = &qp->qplib_qp;
+ 	dev_attr = &rdev->dev_attr;
+ 
++	uctx = rdma_udata_to_drv_context(udata, struct bnxt_re_ucontext, ib_uctx);
+ 	/* Setup misc params */
+ 	ether_addr_copy(qplqp->smac, rdev->netdev->dev_addr);
+ 	qplqp->pd = &pd->qplib_pd;
+@@ -1388,18 +1392,18 @@ static int bnxt_re_init_qp_attr(struct bnxt_re_qp *qp, struct bnxt_re_pd *pd,
+ 	}
+ 
+ 	/* Setup RQ/SRQ */
+-	rc = bnxt_re_init_rq_attr(qp, init_attr);
++	rc = bnxt_re_init_rq_attr(qp, init_attr, uctx);
+ 	if (rc)
+ 		goto out;
+ 	if (init_attr->qp_type == IB_QPT_GSI)
+ 		bnxt_re_adjust_gsi_rq_attr(qp);
+ 
+ 	/* Setup SQ */
+-	rc = bnxt_re_init_sq_attr(qp, init_attr, udata);
++	rc = bnxt_re_init_sq_attr(qp, init_attr, uctx);
+ 	if (rc)
+ 		goto out;
+ 	if (init_attr->qp_type == IB_QPT_GSI)
+-		bnxt_re_adjust_gsi_sq_attr(qp, init_attr);
++		bnxt_re_adjust_gsi_sq_attr(qp, init_attr, uctx);
+ 
+ 	if (udata) /* This will update DPI and qp_handle */
+ 		rc = bnxt_re_init_user_qp(rdev, pd, qp, udata);
+@@ -1715,6 +1719,7 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ {
+ 	struct bnxt_qplib_dev_attr *dev_attr;
+ 	struct bnxt_qplib_nq *nq = NULL;
++	struct bnxt_re_ucontext *uctx;
+ 	struct bnxt_re_dev *rdev;
+ 	struct bnxt_re_srq *srq;
+ 	struct bnxt_re_pd *pd;
+@@ -1739,13 +1744,14 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ 		goto exit;
+ 	}
+ 
++	uctx = rdma_udata_to_drv_context(udata, struct bnxt_re_ucontext, ib_uctx);
+ 	srq->rdev = rdev;
+ 	srq->qplib_srq.pd = &pd->qplib_pd;
+ 	srq->qplib_srq.dpi = &rdev->dpi_privileged;
+ 	/* Allocate 1 more than what's provided so posting max doesn't
+ 	 * mean empty
  	 */
- 	if (!(filp->f_mode & FMODE_WRITE) ||
-diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
-index 328cd20b16a54..6dcc73ca32172 100644
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -970,7 +970,7 @@ static int f2fs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+-	entries = roundup_pow_of_two(srq_init_attr->attr.max_wr + 1);
++	entries = bnxt_re_init_depth(srq_init_attr->attr.max_wr + 1, uctx);
+ 	if (entries > dev_attr->max_srq_wqes + 1)
+ 		entries = dev_attr->max_srq_wqes + 1;
+ 	srq->qplib_srq.max_wqe = entries;
+@@ -2102,6 +2108,9 @@ int bnxt_re_modify_qp(struct ib_qp *ib_qp, struct ib_qp_attr *qp_attr,
+ 		qp->qplib_qp.max_dest_rd_atomic = qp_attr->max_dest_rd_atomic;
+ 	}
+ 	if (qp_attr_mask & IB_QP_CAP) {
++		struct bnxt_re_ucontext *uctx =
++			rdma_udata_to_drv_context(udata, struct bnxt_re_ucontext, ib_uctx);
++
+ 		qp->qplib_qp.modify_flags |=
+ 				CMDQ_MODIFY_QP_MODIFY_MASK_SQ_SIZE |
+ 				CMDQ_MODIFY_QP_MODIFY_MASK_RQ_SIZE |
+@@ -2118,7 +2127,7 @@ int bnxt_re_modify_qp(struct ib_qp *ib_qp, struct ib_qp_attr *qp_attr,
+ 				  "Create QP failed - max exceeded");
+ 			return -EINVAL;
+ 		}
+-		entries = roundup_pow_of_two(qp_attr->cap.max_send_wr);
++		entries = bnxt_re_init_depth(qp_attr->cap.max_send_wr, uctx);
+ 		qp->qplib_qp.sq.max_wqe = min_t(u32, entries,
+ 						dev_attr->max_qp_wqes + 1);
+ 		qp->qplib_qp.sq.q_full_delta = qp->qplib_qp.sq.max_wqe -
+@@ -2131,7 +2140,7 @@ int bnxt_re_modify_qp(struct ib_qp *ib_qp, struct ib_qp_attr *qp_attr,
+ 		qp->qplib_qp.sq.q_full_delta -= 1;
+ 		qp->qplib_qp.sq.max_sge = qp_attr->cap.max_send_sge;
+ 		if (qp->qplib_qp.rq.max_wqe) {
+-			entries = roundup_pow_of_two(qp_attr->cap.max_recv_wr);
++			entries = bnxt_re_init_depth(qp_attr->cap.max_recv_wr, uctx);
+ 			qp->qplib_qp.rq.max_wqe =
+ 				min_t(u32, entries, dev_attr->max_qp_wqes + 1);
+ 			qp->qplib_qp.rq.q_full_delta = qp->qplib_qp.rq.max_wqe -
+@@ -2919,9 +2928,11 @@ int bnxt_re_destroy_cq(struct ib_cq *ib_cq, struct ib_udata *udata)
+ int bnxt_re_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 		      struct ib_udata *udata)
+ {
++	struct bnxt_re_cq *cq = container_of(ibcq, struct bnxt_re_cq, ib_cq);
+ 	struct bnxt_re_dev *rdev = to_bnxt_re_dev(ibcq->device, ibdev);
++	struct bnxt_re_ucontext *uctx =
++		rdma_udata_to_drv_context(udata, struct bnxt_re_ucontext, ib_uctx);
+ 	struct bnxt_qplib_dev_attr *dev_attr = &rdev->dev_attr;
+-	struct bnxt_re_cq *cq = container_of(ibcq, struct bnxt_re_cq, ib_cq);
+ 	int rc, entries;
+ 	int cqe = attr->cqe;
+ 	struct bnxt_qplib_nq *nq = NULL;
+@@ -2940,7 +2951,7 @@ int bnxt_re_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 	cq->rdev = rdev;
+ 	cq->qplib_cq.cq_handle = (u64)(unsigned long)(&cq->qplib_cq);
  
- 	/*
- 	 * If new_inode is null, the below renaming flow will
--	 * add a link in old_dir which can conver inline_dir.
-+	 * add a link in old_dir which can convert inline_dir.
- 	 * After then, if we failed to get the entry due to other
- 	 * reasons like ENOMEM, we had to remove the new entry.
- 	 * Instead of adding such the error handling routine, let's
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 205216c1db91f..e19b569d938d8 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -3615,7 +3615,7 @@ void f2fs_wait_on_page_writeback(struct page *page,
+-	entries = roundup_pow_of_two(cqe + 1);
++	entries = bnxt_re_init_depth(cqe + 1, uctx);
+ 	if (entries > dev_attr->max_cq_wqes + 1)
+ 		entries = dev_attr->max_cq_wqes + 1;
  
- 		/* submit cached LFS IO */
- 		f2fs_submit_merged_write_cond(sbi, NULL, page, 0, type);
--		/* sbumit cached IPU IO */
-+		/* submit cached IPU IO */
- 		f2fs_submit_merged_ipu_write(sbi, NULL, page);
- 		if (ordered) {
- 			wait_on_page_writeback(page);
+@@ -2948,8 +2959,6 @@ int bnxt_re_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 	cq->qplib_cq.sg_info.pgshft = PAGE_SHIFT;
+ 	if (udata) {
+ 		struct bnxt_re_cq_req req;
+-		struct bnxt_re_ucontext *uctx = rdma_udata_to_drv_context(
+-			udata, struct bnxt_re_ucontext, ib_uctx);
+ 		if (ib_copy_from_udata(&req, udata, sizeof(req))) {
+ 			rc = -EFAULT;
+ 			goto fail;
+@@ -3071,12 +3080,11 @@ int bnxt_re_resize_cq(struct ib_cq *ibcq, int cqe, struct ib_udata *udata)
+ 		return -EINVAL;
+ 	}
+ 
+-	entries = roundup_pow_of_two(cqe + 1);
++	uctx = rdma_udata_to_drv_context(udata, struct bnxt_re_ucontext, ib_uctx);
++	entries = bnxt_re_init_depth(cqe + 1, uctx);
+ 	if (entries > dev_attr->max_cq_wqes + 1)
+ 		entries = dev_attr->max_cq_wqes + 1;
+ 
+-	uctx = rdma_udata_to_drv_context(udata, struct bnxt_re_ucontext,
+-					 ib_uctx);
+ 	/* uverbs consumer */
+ 	if (ib_copy_from_udata(&req, udata, sizeof(req))) {
+ 		rc = -EFAULT;
+@@ -4107,6 +4115,7 @@ int bnxt_re_alloc_ucontext(struct ib_ucontext *ctx, struct ib_udata *udata)
+ 	struct bnxt_qplib_dev_attr *dev_attr = &rdev->dev_attr;
+ 	struct bnxt_re_user_mmap_entry *entry;
+ 	struct bnxt_re_uctx_resp resp = {};
++	struct bnxt_re_uctx_req ureq = {};
+ 	u32 chip_met_rev_num = 0;
+ 	int rc;
+ 
+@@ -4156,6 +4165,16 @@ int bnxt_re_alloc_ucontext(struct ib_ucontext *ctx, struct ib_udata *udata)
+ 	if (rdev->pacing.dbr_pacing)
+ 		resp.comp_mask |= BNXT_RE_UCNTX_CMASK_DBR_PACING_ENABLED;
+ 
++	if (udata->inlen >= sizeof(ureq)) {
++		rc = ib_copy_from_udata(&ureq, udata, min(udata->inlen, sizeof(ureq)));
++		if (rc)
++			goto cfail;
++		if (ureq.comp_mask & BNXT_RE_COMP_MASK_REQ_UCNTX_POW2_SUPPORT) {
++			resp.comp_mask |= BNXT_RE_UCNTX_CMASK_POW2_DISABLED;
++			uctx->cmask |= BNXT_RE_UCNTX_CMASK_POW2_DISABLED;
++		}
++	}
++
+ 	rc = ib_copy_to_udata(udata, &resp, min(udata->outlen, sizeof(resp)));
+ 	if (rc) {
+ 		ibdev_err(ibdev, "Failed to copy user context");
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.h b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
+index 84715b7e7a4e4..98baea98fc176 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.h
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
+@@ -140,6 +140,7 @@ struct bnxt_re_ucontext {
+ 	void			*shpg;
+ 	spinlock_t		sh_lock;	/* protect shpg */
+ 	struct rdma_user_mmap_entry *shpage_mmap;
++	u64 cmask;
+ };
+ 
+ enum bnxt_re_mmap_flag {
+@@ -167,6 +168,12 @@ static inline u16 bnxt_re_get_rwqe_size(int nsge)
+ 	return sizeof(struct rq_wqe_hdr) + (nsge * sizeof(struct sq_sge));
+ }
+ 
++static inline u32 bnxt_re_init_depth(u32 ent, struct bnxt_re_ucontext *uctx)
++{
++	return uctx ? (uctx->cmask & BNXT_RE_UCNTX_CMASK_POW2_DISABLED) ?
++		ent : roundup_pow_of_two(ent) : ent;
++}
++
+ int bnxt_re_query_device(struct ib_device *ibdev,
+ 			 struct ib_device_attr *ib_attr,
+ 			 struct ib_udata *udata);
+diff --git a/include/uapi/rdma/bnxt_re-abi.h b/include/uapi/rdma/bnxt_re-abi.h
+index 6e7c67a0cca3a..a1b896d6d9405 100644
+--- a/include/uapi/rdma/bnxt_re-abi.h
++++ b/include/uapi/rdma/bnxt_re-abi.h
+@@ -54,6 +54,7 @@ enum {
+ 	BNXT_RE_UCNTX_CMASK_HAVE_MODE = 0x02ULL,
+ 	BNXT_RE_UCNTX_CMASK_WC_DPI_ENABLED = 0x04ULL,
+ 	BNXT_RE_UCNTX_CMASK_DBR_PACING_ENABLED = 0x08ULL,
++	BNXT_RE_UCNTX_CMASK_POW2_DISABLED = 0x10ULL,
+ };
+ 
+ enum bnxt_re_wqe_mode {
+@@ -62,6 +63,14 @@ enum bnxt_re_wqe_mode {
+ 	BNXT_QPLIB_WQE_MODE_INVALID	= 0x02,
+ };
+ 
++enum {
++	BNXT_RE_COMP_MASK_REQ_UCNTX_POW2_SUPPORT = 0x01,
++};
++
++struct bnxt_re_uctx_req {
++	__aligned_u64 comp_mask;
++};
++
+ struct bnxt_re_uctx_resp {
+ 	__u32 dev_id;
+ 	__u32 max_qp;
 -- 
 2.43.0
 
