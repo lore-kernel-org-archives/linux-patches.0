@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F1419AA6D;
-	Thu,  6 Jun 2024 14:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4871AC25F;
+	Thu,  6 Jun 2024 14:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683316; cv=none; b=kTa1wpuDi2bMWIgwuNTXHVAvMMZTLsIO7ZwyfYCmjlVOgYTnHXeMfQzx/ObgKR0y1EWt3mMmIR9SH4Mul9Z/6aOsKWOG5IuUaE48MLDqGYUlPcXU1xOz6hUEGZz0c3sQefj+wXK0G93l/iiHRMaLQsEiW6inu3C/098fuaP7Iyk=
+	t=1717683317; cv=none; b=GU5VhI/AkDHARkwJxwRcimGO0hU2v91tY4aXo3L8X8/P82M6wA4HQVpgWIOGxhJhJc6JeBQV5hDtTGwywSnlW1WO9sGaZ0HmEQ2sc+JmFa/EY/oQVCkkl1mkKpxue9sRvMo4TWBY2+KqnPc7TOjHbnAfgPOMiOzSlfsrXUNGhMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683316; c=relaxed/simple;
-	bh=CcDVmKAJhNtxAbrgT7H2xEhmMTBFyJpSM959/J6ShzE=;
+	s=arc-20240116; t=1717683317; c=relaxed/simple;
+	bh=BP9b7CGACDeHDt+9ZsbdlkLCDkueZF8RCkIkOQno5dU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aiA7vZ4O68jp5PrnzdxWUOfJvmAxfmEcGotSkvpR+sRx3gw+/74e7AZ6brM4OOMHb+yyOOwEk2/akrdupD3cC/vgdQY2O6B4MGBVER0PcPn/W4DMTJF/g4l/m792MpZRI62Z5WrktIiqpTTIgwEDUMGNZjHHBLxOrz9fBY6oVgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJ8h7D1d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xa+rinz0mawzZ+rtmtGVr08KY9i1m+we7HcRdPDqt/YJg4HiU4RONjdxPpMrnD1yAGPLjwVl3MsAT3wPXjsY3aNqZtdVUw0UYBUwYu6IBrMVueTOyFTYOfXW30C4maHRzBmi29msz9jWA2QFycVJfnMB7LN6FvPQZh7ZqzTZTaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8lWlebL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJ8h7D1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C75AC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8lWlebL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CB9C32781;
 	Thu,  6 Jun 2024 14:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683316;
-	bh=CcDVmKAJhNtxAbrgT7H2xEhmMTBFyJpSM959/J6ShzE=;
+	bh=BP9b7CGACDeHDt+9ZsbdlkLCDkueZF8RCkIkOQno5dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sJ8h7D1d5OHRJgqthz10JfNFIe1YkT+HtQzE5T+YKdIEmnLxRMRlTn2d/TUTSwAhl
-	 WZSRuq+Zqk1Ilsuvc4lLVLp/mMncTJxV97GUFGa3APws13ESTAd3ILcEQ6UxTIW9sG
-	 r8kk1oTYUhPpFcPOIZPJDta8Ur2xl8CMmoYT00BU=
+	b=P8lWlebLeFmkAw2N1L+EAYgiAQWhSXwALkXz6eYjAo8LUPwSUuj4hcL6rTMdYZnn/
+	 dkl6W4QTCi+zqK0CkCL/7ftdDz9jnhQQuQNLPZpRN5YqkRN6hZaro0NWah+Xjeghx9
+	 1MW1f69kjcx1M57iwGHaATPse2gZ+Mjyg0xUzcos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 196/473] drm/amd/display: Fix potential index out of bounds in color transformation function
-Date: Thu,  6 Jun 2024 16:02:05 +0200
-Message-ID: <20240606131706.424678471@linuxfoundation.org>
+Subject: [PATCH 6.6 257/744] ax25: Fix reference count leak issue of net_device
+Date: Thu,  6 Jun 2024 15:58:49 +0200
+Message-ID: <20240606131740.648114066@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,59 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 63ae548f1054a0b71678d0349c7dc9628ddd42ca ]
+[ Upstream commit 36e56b1b002bb26440403053f19f9e1a8bc075b2 ]
 
-Fixes index out of bounds issue in the color transformation function.
-The issue could occur when the index 'i' exceeds the number of transfer
-function points (TRANSFER_FUNC_POINTS).
+There is a reference count leak issue of the object "net_device" in
+ax25_dev_device_down(). When the ax25 device is shutting down, the
+ax25_dev_device_down() drops the reference count of net_device one
+or zero times depending on if we goto unlock_put or not, which will
+cause memory leak.
 
-The fix adds a check to ensure 'i' is within bounds before accessing the
-transfer function points. If 'i' is out of bounds, an error message is
-logged and the function returns false to indicate an error.
+In order to solve the above issue, decrease the reference count of
+net_device after dev->ax25_ptr is set to null.
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:405 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:406 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:407 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
-
-Fixes: b629596072e5 ("drm/amd/display: Build unity lut for shaper")
-Cc: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Cc: Charlene Liu <Charlene.Liu@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: d01ffb9eee4a ("ax25: add refcount in ax25_dev to avoid UAF bugs")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/7ce3b23a40d9084657ba1125432f0ecc380cbc80.1715247018.git.duoming@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ax25/ax25_dev.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-index 3538973bd0c6c..c0372aa4ec838 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-@@ -382,6 +382,11 @@ bool cm_helper_translate_curve_to_hw_format(struct dc_context *ctx,
- 				i += increment) {
- 			if (j == hw_points - 1)
- 				break;
-+			if (i >= TRANSFER_FUNC_POINTS) {
-+				DC_LOG_ERROR("Index out of bounds: i=%d, TRANSFER_FUNC_POINTS=%d\n",
-+					     i, TRANSFER_FUNC_POINTS);
-+				return false;
-+			}
- 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
- 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
- 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
+diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
+index 52ccc37d5687a..c9d55b99a7a57 100644
+--- a/net/ax25/ax25_dev.c
++++ b/net/ax25/ax25_dev.c
+@@ -118,15 +118,10 @@ void ax25_dev_device_down(struct net_device *dev)
+ 	list_for_each_entry(s, &ax25_dev_list, list) {
+ 		if (s == ax25_dev) {
+ 			list_del(&s->list);
+-			goto unlock_put;
++			break;
+ 		}
+ 	}
+-	dev->ax25_ptr = NULL;
+-	spin_unlock_bh(&ax25_dev_lock);
+-	ax25_dev_put(ax25_dev);
+-	return;
+ 
+-unlock_put:
+ 	dev->ax25_ptr = NULL;
+ 	spin_unlock_bh(&ax25_dev_lock);
+ 	netdev_put(dev, &ax25_dev->dev_tracker);
 -- 
 2.43.0
 
