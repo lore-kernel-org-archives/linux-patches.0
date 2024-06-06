@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4201C0DC0;
-	Thu,  6 Jun 2024 14:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0627A1C0DC6;
+	Thu,  6 Jun 2024 14:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683558; cv=none; b=Dzu0sApqkQSaRYDg3PmK31MGa0130YukZBrtIllvrOTa4oHGEAuDbuM1/j9URe7s6d6hFBVYmHcMV6MDKPugLQcyt8NyXC+8gjip0lj9WJvG9WQVKEtBEDv6vrTaNc9KL5Xp7DXNsOaveWpy2VaudJM1QOKYFFMjdVtcO2XMjm0=
+	t=1717683559; cv=none; b=ZQsWagHvsq3lUXVMvAQLza1aoHq70fLxJy8ig9Oo9jUDnRAA50kVQavFYwxS2Q2JsZMi1BT8sU4CKdwPNVCH+w6Hay9FyzN5cIcHg5ZvULjjYjxtI7iqW5l/gWzD3srzO92oViIfZZN3YUhKPOinMMuijVPwjZSz5Fr23orunWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683558; c=relaxed/simple;
-	bh=31x/cBW2r5Tm/ZAiJIDy599WR2A/NvK72YA5JLfQ4fI=;
+	s=arc-20240116; t=1717683559; c=relaxed/simple;
+	bh=/15TydVnmgOoQuJman+uQKWvxPF1mEVgnUnGXwNFtBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnERL5P+HfIkdo6IbXWwGjzbrHJQ+zmxTfjv4qnObFkyiFlnK+6YT4Il5B7j7UG8smClZ/t1muRw6/i2tBxCjsT8dC9ARTQD2KdDyzY7zIHzOh5fMsKgHAPQEWB/3D/S0Vz6ks7/X5F6THhssySwxERJj1V682LPyK8a9gcbI88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGOeiheA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oAMefCHCOUkQNDzcCDXWwddJirgn41ODJmVjmQIFgfqJpB0AuTqx0Sqenz99GSF/KSgblzf8/VplFQL2k6ys4kjuGgl43vj7PPFobCdOQNfpH7+EAx05ZYwU49hQxNDoEx8ViWeIsr/OXKtS8AJPMNtVqlofCtei205OfoshApU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XU3hFbVT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGOeiheA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C941C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XU3hFbVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1F3C32786;
 	Thu,  6 Jun 2024 14:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683558;
-	bh=31x/cBW2r5Tm/ZAiJIDy599WR2A/NvK72YA5JLfQ4fI=;
+	bh=/15TydVnmgOoQuJman+uQKWvxPF1mEVgnUnGXwNFtBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NGOeiheAy0ug0NW77WDBbajlUlSCJn94DHhoEdhHtl/AqBwDn8Cw8cALkIXbT5qdU
-	 oO5CeFy6yCUIg7v0BspjXmYTGODZv4MwD17QuiBnd1LkLVz6RqqIFhUgpdtSC4XFdt
-	 p84AvVnIQ7i4YRVQaQhIeetz0Jo3yg+ZjlOkWpnY=
+	b=XU3hFbVTgzFrDFcEgfbbVmPou+qFodG366+ToRjYIlziWDoMMhUWPNAMPvPF//KOz
+	 7e+CtYotPnpgEJ55Z81SL+29DJK1AW0nO0C7CP0aVy8PBhlG3fSMHF7hjmb12P0JiH
+	 JV/WUfpzjz2G6MK8mrLE5wj9Jhy61PINIzvBXJvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KaiLong Wang <wangkailong@jari.cn>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Roded Zats <rzats@paloaltonetworks.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 500/744] f2fs: Clean up errors in segment.h
-Date: Thu,  6 Jun 2024 16:02:52 +0200
-Message-ID: <20240606131748.476829432@linuxfoundation.org>
+Subject: [PATCH 6.1 449/473] enic: Validate length of nl attributes in enic_set_vf_port
+Date: Thu,  6 Jun 2024 16:06:18 +0200
+Message-ID: <20240606131714.554032161@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +47,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: KaiLong Wang <wangkailong@jari.cn>
+From: Roded Zats <rzats@paloaltonetworks.com>
 
-[ Upstream commit 37768434b7a7d00ac5a08b2c1d31aa7aaa0846a0 ]
+[ Upstream commit e8021b94b0412c37bcc79027c2e382086b6ce449 ]
 
-Fix the following errors reported by checkpatch:
+enic_set_vf_port assumes that the nl attribute IFLA_PORT_PROFILE
+is of length PORT_PROFILE_MAX and that the nl attributes
+IFLA_PORT_INSTANCE_UUID, IFLA_PORT_HOST_UUID are of length PORT_UUID_MAX.
+These attributes are validated (in the function do_setlink in rtnetlink.c)
+using the nla_policy ifla_port_policy. The policy defines IFLA_PORT_PROFILE
+as NLA_STRING, IFLA_PORT_INSTANCE_UUID as NLA_BINARY and
+IFLA_PORT_HOST_UUID as NLA_STRING. That means that the length validation
+using the policy is for the max size of the attributes and not on exact
+size so the length of these attributes might be less than the sizes that
+enic_set_vf_port expects. This might cause an out of bands
+read access in the memcpys of the data of these
+attributes in enic_set_vf_port.
 
-ERROR: spaces required around that ':' (ctx:VxW)
-
-Signed-off-by: KaiLong Wang <wangkailong@jari.cn>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: aa4074e8fec4 ("f2fs: fix block migration when section is not aligned to pow2")
+Fixes: f8bd909183ac ("net: Add ndo_{set|get}_vf_port support for enic dynamic vnics")
+Signed-off-by: Roded Zats <rzats@paloaltonetworks.com>
+Link: https://lore.kernel.org/r/20240522073044.33519-1-rzats@paloaltonetworks.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/cisco/enic/enic_main.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index 20580ebd24138..c77a562831493 100644
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -108,11 +108,11 @@ static inline void sanity_check_seg_type(struct f2fs_sb_info *sbi,
- 	((sbi)->segs_per_sec - ((sbi)->unusable_blocks_per_sec >>\
- 	(sbi)->log_blocks_per_seg))
- #define GET_SEC_FROM_SEG(sbi, segno)				\
--	(((segno) == -1) ? -1: (segno) / (sbi)->segs_per_sec)
-+	(((segno) == -1) ? -1 : (segno) / (sbi)->segs_per_sec)
- #define GET_SEG_FROM_SEC(sbi, secno)				\
- 	((secno) * (sbi)->segs_per_sec)
- #define GET_ZONE_FROM_SEC(sbi, secno)				\
--	(((secno) == -1) ? -1: (secno) / (sbi)->secs_per_zone)
-+	(((secno) == -1) ? -1 : (secno) / (sbi)->secs_per_zone)
- #define GET_ZONE_FROM_SEG(sbi, segno)				\
- 	GET_ZONE_FROM_SEC(sbi, GET_SEC_FROM_SEG(sbi, segno))
+diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
+index 29500d32e3626..2065c26f394db 100644
+--- a/drivers/net/ethernet/cisco/enic/enic_main.c
++++ b/drivers/net/ethernet/cisco/enic/enic_main.c
+@@ -1117,18 +1117,30 @@ static int enic_set_vf_port(struct net_device *netdev, int vf,
+ 	pp->request = nla_get_u8(port[IFLA_PORT_REQUEST]);
  
+ 	if (port[IFLA_PORT_PROFILE]) {
++		if (nla_len(port[IFLA_PORT_PROFILE]) != PORT_PROFILE_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_NAME;
+ 		memcpy(pp->name, nla_data(port[IFLA_PORT_PROFILE]),
+ 			PORT_PROFILE_MAX);
+ 	}
+ 
+ 	if (port[IFLA_PORT_INSTANCE_UUID]) {
++		if (nla_len(port[IFLA_PORT_INSTANCE_UUID]) != PORT_UUID_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_INSTANCE;
+ 		memcpy(pp->instance_uuid,
+ 			nla_data(port[IFLA_PORT_INSTANCE_UUID]), PORT_UUID_MAX);
+ 	}
+ 
+ 	if (port[IFLA_PORT_HOST_UUID]) {
++		if (nla_len(port[IFLA_PORT_HOST_UUID]) != PORT_UUID_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_HOST;
+ 		memcpy(pp->host_uuid,
+ 			nla_data(port[IFLA_PORT_HOST_UUID]), PORT_UUID_MAX);
 -- 
 2.43.0
 
