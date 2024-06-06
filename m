@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE141C6893;
-	Thu,  6 Jun 2024 14:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F75B1A1861;
+	Thu,  6 Jun 2024 14:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683700; cv=none; b=lpEn5lenhg7ei882muGsynrMW4RSDORQU+owUR5chSMQ+N78B0kHCaTiWvoCYHK1RGJK1rLokJ/feTD6sI+NZPtx+JAUHhi5NIc2t0V4H0FO7xh5ok8+F1hh8e4fLe7BjhwjKcl1etsTAX07FkCHINR+ZtgyjGteeZd4AmTYd54=
+	t=1717683701; cv=none; b=txWHvUarptSk2bf7IPJjLkqZyNsxDCSmwcmg9NqQHrTAk0BD3QpUmTfQfQdd65yrfc8920cZg9IvvV6vN/TrHnrNrfGG/bXVZ0XJzGDSI3wVypYi0Hc4oOysGGAgemA1yhsVhtLCK0Aw0MuOTaX7v1YfNKRLhI3BASpfXo0fAZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683700; c=relaxed/simple;
-	bh=EKvlSGNJOgBL1vVCuXQgn3l1a2H12GoaMwTP7SrzAQU=;
+	s=arc-20240116; t=1717683701; c=relaxed/simple;
+	bh=fAI4Ab9LL7OW3A/S8pOV9XMo+ysgjaVvOryfHmyyMeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jgQZBS39vXvO2ftgnBL6hRlC1CxBziLAoMj2OA09kKrR/+esFnX11ELmkTAOrH/kuUW5sEhIww2IOgBx0geLiNz99ChnphyYNcPpid/UjZcGAxKR/UVv88cGQumTMhhNrGcfP6fscZg/XLlf5FNM+C88IxCb3tv52Jjbb+k2DYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMQe/im+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tu5M+oVGux8aJxDltb4ABgYuPtscPemUKrkf1CZ/mOza3EkY0oTjeG5FPXB0s2jZBnfBHfGnj5OYziSn/bgjZTACO7Svyq5BWN5nycocU0OsdDiXov6DXbvI4fdXaTGLqAVA9mDjVzWUM6wgqjFBTwmw1wzs9dGzNryvtbyWUZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osCtzln7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMQe/im+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80089C32786;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osCtzln7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00DBC32781;
 	Thu,  6 Jun 2024 14:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683700;
-	bh=EKvlSGNJOgBL1vVCuXQgn3l1a2H12GoaMwTP7SrzAQU=;
+	s=korg; t=1717683701;
+	bh=fAI4Ab9LL7OW3A/S8pOV9XMo+ysgjaVvOryfHmyyMeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fMQe/im+43uq9F0wz9+SNjFcGzHHAZtKy+S+lestEl0986rvYOcdWqXOrNjbIdUQP
-	 KSOsB458/Jz9/DR+h2CLFCl+Mg2mRF0BPTPTGcqJggw4xoyP1q39AncR426mPBi/H0
-	 n4QAOTvcr1/AAK1WyQUx+g1U0V0dAOqnYZqLGlus=
+	b=osCtzln7NiabNVn/7dxZ2Q4pvlvhus6Plz88gQP4OossvxDhWbbIhVUhBL1bDOAc+
+	 kMOPvX9aYE8L6jt3AoqW8tKczFq9wb4Wj07HYbb3vcpii8br+pdw2F03tWByyxuLwf
+	 whUCaqsfrJZlvyXP9HKcA5wXJU/oEvfgOuB6fVQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Faith Ekstrand <faith.ekstrand@collabora.com>,
+	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 622/744] ASoC: mediatek: mt8192: fix register configuration for tdm
-Date: Thu,  6 Jun 2024 16:04:54 +0200
-Message-ID: <20240606131752.445742977@linuxfoundation.org>
+Subject: [PATCH 6.6 623/744] nouveau: add an ioctl to return vram bar size.
+Date: Thu,  6 Jun 2024 16:04:55 +0200
+Message-ID: <20240606131752.478517629@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,41 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Te Yuan <yuanhsinte@chromium.org>
+From: Dave Airlie <airlied@redhat.com>
 
-[ Upstream commit a85ed162f0efcfdd664954414a05d1d560cc95dc ]
+[ Upstream commit 3f4d8aac6e768c2215ce68275256971c2f54f0c8 ]
 
-For DSP_A, data is a BCK cycle behind LRCK trigger edge. For DSP_B, this
-delay doesn't exist. Fix the delay configuration to match the standard.
+This returns the BAR resources size so userspace can make
+decisions based on rebar support.
 
-Fixes: 52fcd65414abfc ("ASoC: mediatek: mt8192: support tdm in platform driver")
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20240509-8192-tdm-v1-1-530b54645763@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+userspace using this has been proposed for nvk, but
+it's a rather trivial uapi addition.
+
+Reviewed-by: Faith Ekstrand <faith.ekstrand@collabora.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Stable-dep-of: aed9a1a4f710 ("drm/nouveau: use tile_mode and pte_kind for VM_BIND bo allocations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-dai-tdm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_abi16.c | 4 ++++
+ include/uapi/drm/nouveau_drm.h          | 7 +++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-index 9ce06821c7d0f..49440db370af0 100644
---- a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-@@ -566,10 +566,10 @@ static int mtk_dai_tdm_hw_params(struct snd_pcm_substream *substream,
- 		tdm_con |= 1 << DELAY_DATA_SFT;
- 		tdm_con |= get_tdm_lrck_width(format) << LRCK_TDM_WIDTH_SFT;
- 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_A) {
--		tdm_con |= 0 << DELAY_DATA_SFT;
-+		tdm_con |= 1 << DELAY_DATA_SFT;
- 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
- 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_B) {
--		tdm_con |= 1 << DELAY_DATA_SFT;
-+		tdm_con |= 0 << DELAY_DATA_SFT;
- 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_abi16.c b/drivers/gpu/drm/nouveau/nouveau_abi16.c
+index 2edd7bb13faea..d05bd0ecea2b5 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_abi16.c
++++ b/drivers/gpu/drm/nouveau/nouveau_abi16.c
+@@ -204,6 +204,7 @@ nouveau_abi16_ioctl_getparam(ABI16_IOCTL_ARGS)
+ 	struct nouveau_cli *cli = nouveau_cli(file_priv);
+ 	struct nouveau_drm *drm = nouveau_drm(dev);
+ 	struct nvif_device *device = &drm->client.device;
++	struct nvkm_device *nvkm_device = nvxx_device(&drm->client.device);
+ 	struct nvkm_gr *gr = nvxx_gr(device);
+ 	struct drm_nouveau_getparam *getparam = data;
+ 	struct pci_dev *pdev = to_pci_dev(dev->dev);
+@@ -268,6 +269,9 @@ nouveau_abi16_ioctl_getparam(ABI16_IOCTL_ARGS)
+ 		getparam->value = nouveau_exec_push_max_from_ib_max(ib_max);
+ 		break;
  	}
++	case NOUVEAU_GETPARAM_VRAM_BAR_SIZE:
++		getparam->value = nvkm_device->func->resource_size(nvkm_device, 1);
++		break;
+ 	default:
+ 		NV_PRINTK(dbg, cli, "unknown parameter %lld\n", getparam->param);
+ 		return -EINVAL;
+diff --git a/include/uapi/drm/nouveau_drm.h b/include/uapi/drm/nouveau_drm.h
+index 0bade1592f34f..10a917639d8d3 100644
+--- a/include/uapi/drm/nouveau_drm.h
++++ b/include/uapi/drm/nouveau_drm.h
+@@ -54,6 +54,13 @@ extern "C" {
+  */
+ #define NOUVEAU_GETPARAM_EXEC_PUSH_MAX   17
  
++/*
++ * NOUVEAU_GETPARAM_VRAM_BAR_SIZE - query bar size
++ *
++ * Query the VRAM BAR size.
++ */
++#define NOUVEAU_GETPARAM_VRAM_BAR_SIZE 18
++
+ struct drm_nouveau_getparam {
+ 	__u64 param;
+ 	__u64 value;
 -- 
 2.43.0
 
