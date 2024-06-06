@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BDD196C8C;
-	Thu,  6 Jun 2024 14:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4341019750D;
+	Thu,  6 Jun 2024 14:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682952; cv=none; b=DhKGBCP+Z2ZKyFfq+9OlLCyXcEzl+u8gT6SV06oBx9OSdUqhN8We172QK/RexVwvi2XzR7akIyh9jtSocUwYgD49Velahn82zoXF+9gI+nvArJH3MotnzcsfSkO5hP/Lt+N//N1T45OG0EknvVI/xN+5B8X+sCzXIi9Z529yWBc=
+	t=1717682953; cv=none; b=dRKSV/p2DycbcRwH6HTn3tl4PcRgemFQ/iiHNXueShL5SPkbzfA/eHbIG/HEktWVG/1OeEQx0ULLL3BlMTqQ9KZ+poYvVzRCD+ActytqrHOGJPm1327CLKhFi6SnbhA5YeWQxlP17mFpKue02LBaXVpzUrWdeVJwZbunOX7q6U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682952; c=relaxed/simple;
-	bh=oKj8q/q/3ZMOjknCHwwpC6t5y9sBP7qKsBfEZJ8wXpg=;
+	s=arc-20240116; t=1717682953; c=relaxed/simple;
+	bh=jaSLzcnKWXMWfogY6WKoE2+30ihdCfNcMPgTwKA/8RI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9mZxwpVBFs/m39r0LKg9lhAjDlT4AliyULDvpeF+c0Zri/kFHsQoJH73sNQ8Ra9b//JbGvXdvI2yUj4odwgcfvoQrce3ikigvEzevdzPVAvP2nVsceC68OnBX/IZgXf6oWqVaSBeb3tFk9RmMlIEK9WL4clvdGU/lxH0Glow9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9iIeG83; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fSfXfdfw9Idf2a3jR3R+UK394CUwcROEHNRd9WgUg4w9FYErOff/uKkNRY1sUfRa0SO2G+o6BmX7Hpom0kyR0kJFkCgpudQLI1oEeTk+JZpcA5eXs7Q+5Qge/TouwnCKwIgE4ywHjNHYtCwzecLAmhC09BhjJWU2PHf/4BweRgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Npo05qT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9iIeG83"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929E0C2BD10;
-	Thu,  6 Jun 2024 14:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Npo05qT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197EDC2BD10;
+	Thu,  6 Jun 2024 14:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682952;
-	bh=oKj8q/q/3ZMOjknCHwwpC6t5y9sBP7qKsBfEZJ8wXpg=;
+	s=korg; t=1717682953;
+	bh=jaSLzcnKWXMWfogY6WKoE2+30ihdCfNcMPgTwKA/8RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9iIeG83CPLmABBKcvLOUOpJN3ns+NaiUM39oO6xxn707AYLTxNrJZEu4Y6guJ+Ep
-	 APJ56LEkxBMMlAxK4U8+9LyUieCJO+N/Nioy0a+Gzajs4SaaJI23XRROgtXf9HgzZ/
-	 2Bikj8H2sj8bBS6+t9KVAlAxsZbS8O/UHK5z2edA=
+	b=Npo05qT1hM8i92Q6wEw81rRHPLLGJMl22oU4EcBIVuAnlqtQyBV6uVFsFrE7nPDrr
+	 8grq80UyxG4+Dc/zfb3LdRsW0Xj5JEvuwieuZulN8poCruqQxYpi2yE0H56w37yaUR
+	 rxqeK32RiVUJtZiK9d0DOpURKtmE5mZrdKc0lIQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Flavio Suligoi <f.suligoi@asem.it>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 116/374] perf daemon: Fix file leak in daemon_session__control
-Date: Thu,  6 Jun 2024 16:01:35 +0200
-Message-ID: <20240606131655.815556934@linuxfoundation.org>
+Subject: [PATCH 6.9 117/374] backlight: mp3309c: Fix signedness bug in mp3309c_parse_fwnode()
+Date: Thu,  6 Jun 2024 16:01:36 +0200
+Message-ID: <20240606131655.849180887@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -59,57 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 09541603462c399c7408d50295db99b4b8042eaa ]
+[ Upstream commit e962f13b1e86272a5dcdaede2dfb649152e981e9 ]
 
-The open() function returns -1 on error.
+The "num_levels" variable is used to store error codes from
+device_property_count_u32() so it needs to be signed.  This doesn't
+cause an issue at runtime because devm_kcalloc() won't allocate negative
+sizes.  However, it's still worth fixing.
 
-The 'control' and 'ack' file descriptors are both initialized with
-open() and further validated with 'if' statement.
-
-'if (!control)' would evaluate to 'true' if returned value on error were
-'0' but it is actually '-1'.
-
-Fixes: edcaa47958c7438b ("perf daemon: Add 'ping' command")
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240510003424.2016914-1-samasth.norway.ananda@oracle.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b54c828bdba9 ("backlight: mp3309c: Make use of device properties")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Tested-by: Flavio Suligoi <f.suligoi@asem.it>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/74347f67-360d-4513-8939-595e3c4764fa@moroto.mountain
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-daemon.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/video/backlight/mp3309c.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-daemon.c b/tools/perf/builtin-daemon.c
-index 83954af36753a..de76bbc50bfbc 100644
---- a/tools/perf/builtin-daemon.c
-+++ b/tools/perf/builtin-daemon.c
-@@ -523,7 +523,7 @@ static int daemon_session__control(struct daemon_session *session,
- 		  session->base, SESSION_CONTROL);
+diff --git a/drivers/video/backlight/mp3309c.c b/drivers/video/backlight/mp3309c.c
+index c80a1481e742b..4e98e60417d23 100644
+--- a/drivers/video/backlight/mp3309c.c
++++ b/drivers/video/backlight/mp3309c.c
+@@ -205,8 +205,9 @@ static int mp3309c_parse_fwnode(struct mp3309c_chip *chip,
+ 				struct mp3309c_platform_data *pdata)
+ {
+ 	int ret, i;
+-	unsigned int num_levels, tmp_value;
++	unsigned int tmp_value;
+ 	struct device *dev = chip->dev;
++	int num_levels;
  
- 	control = open(control_path, O_WRONLY|O_NONBLOCK);
--	if (!control)
-+	if (control < 0)
- 		return -1;
- 
- 	if (do_ack) {
-@@ -532,7 +532,7 @@ static int daemon_session__control(struct daemon_session *session,
- 			  session->base, SESSION_ACK);
- 
- 		ack = open(ack_path, O_RDONLY, O_NONBLOCK);
--		if (!ack) {
-+		if (ack < 0) {
- 			close(control);
- 			return -1;
- 		}
+ 	if (!dev_fwnode(dev))
+ 		return dev_err_probe(dev, -ENODEV, "failed to get firmware node\n");
 -- 
 2.43.0
 
