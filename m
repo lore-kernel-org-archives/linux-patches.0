@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B33A1AED4B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB09196DB4;
 	Thu,  6 Jun 2024 14:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683347; cv=none; b=ot1IxshlndUlGZFWDkRvoOn3omueOe5cGdqrrozMUV+MDT5TnyJozw6X7d2wANRzaMS/Pl/CBcpOhZY+797Omnk2KbSg6TffWTMwOOONEiC5yOOVSUbZjuNxWnLUfcgD8HYBqxVfI8egaA/dHlf7av4Xck5ZCK6fSlNSgisQfmY=
+	t=1717683348; cv=none; b=ZbSJolfQ+fxtQYc05skXeN7rLDOrFkIdun6n7sVZgq9dNDOnbzgRkUvEm5rkwF6CXCUzIeuTM4zixKYlOVjW5GsIDd8NlIvhIaa8Nqb8xIKW7Me8aXDpm1k7WdabA4qAlE+uG6S9FS0tAOMbSWfQvdCkdlEAvhPv7N79y7ojVxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683347; c=relaxed/simple;
-	bh=aSNdwmlWliPQMY08SDBvRCzaIoPTuIIG5gi8iS8wuq8=;
+	s=arc-20240116; t=1717683348; c=relaxed/simple;
+	bh=gKNO321xs9oPsK4JEQdKlPRv9x46YcES/PR49haCKp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PPlb20YGJf96UJjIWnsOXA4y+fzZ1r9cGT5nm+FhBmM9qwEl5iwFHDQb8Qdj20DmORSY1d/k+Eu4jXeASXwBBa1vM4FHMkipuGYZkHfYL9sAavlZun7ZbpXAno30kMBMaZvzce3O9qjpad6tz0uFoo8r0NOm0C8TsQJn9/X4G0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaKkVF0V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W8gfmwy9SyXTdlKWcz1aOPRxmhri2lPSsM6hZIcNLFcGoh9kcW2oL9AU7ZYit3fk2KDwmFFLHXS6sDgFNT1mlvtqo4hrFbeWZwJCObkl5DYOU+n6ue90uIjs0+rm2ZzccyZZrzSYOHBvTEdrQ/BhNEl4oBazCIf61bGtf95uwuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G786Ri0W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaKkVF0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BACBC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G786Ri0W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5D7C32781;
 	Thu,  6 Jun 2024 14:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683347;
-	bh=aSNdwmlWliPQMY08SDBvRCzaIoPTuIIG5gi8iS8wuq8=;
+	bh=gKNO321xs9oPsK4JEQdKlPRv9x46YcES/PR49haCKp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oaKkVF0VZFZ3Sh2z5j/I1sPc7w7qAWiar0MnwEuGpwIw/owzlYBZuRTMXWUA5Tsur
-	 xFKZsi0vzwMcRyzkT7PWXB6jfwV3eD4WYfKix6DisjyfxdLF4ytOXCg1w73I96t6eH
-	 7wDGkKR6kbQQLeRkFPgzrHy5wRI270gFajRnuIRQ=
+	b=G786Ri0WqgNDte+T/2rMbou8IqRAAZo2tzAEEmEtnqvOwEIVTGiGw9+jgv5Qz08Ie
+	 Rb1iK6i1JRZ3LbXjv43FUJ3cWKRfwjHD4JdOClG8DGOFGQgHGkmZ6e+KVDdQT1Ds+3
+	 q8CzEmO+jESPnSPy+l4A4i8E/uxSl6C7ZY9b5oZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Justin Green <greenjustin@chromium.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 228/473] drm/bridge: lt9611uxc: Dont log an error when DSI host cant be found
-Date: Thu,  6 Jun 2024 16:02:37 +0200
-Message-ID: <20240606131707.404028586@linuxfoundation.org>
+Subject: [PATCH 6.6 288/744] drm/mediatek: Add 0 size check to mtk_drm_gem_obj
+Date: Thu,  6 Jun 2024 15:59:20 +0200
+Message-ID: <20240606131741.642027693@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Justin Green <greenjustin@chromium.org>
 
-[ Upstream commit 6d9e877cde7e9b516a9a99751b8222c87557436d ]
+[ Upstream commit 1e4350095e8ab2577ee05f8c3b044e661b5af9a0 ]
 
-Given that failing to find a DSI host causes the driver to defer probe,
-make use of dev_err_probe() to log the reason. This makes the defer
-probe reason available and avoids alerting userspace about something
-that is not necessarily an error.
+Add a check to mtk_drm_gem_init if we attempt to allocate a GEM object
+of 0 bytes. Currently, no such check exists and the kernel will panic if
+a userspace application attempts to allocate a 0x0 GBM buffer.
 
-Fixes: 0cbbd5b1a012 ("drm: bridge: add support for lontium LT9611UXC bridge")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Tested by attempting to allocate a 0x0 GBM buffer on an MT8188 and
+verifying that we now return EINVAL.
+
+Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
+Signed-off-by: Justin Green <greenjustin@chromium.org>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-5-619a28148e5c@collabora.com
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20240307180051.4104425-1-greenjustin@chromium.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-index 818848b2c04dd..cb75da940b890 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-@@ -263,10 +263,8 @@ static struct mipi_dsi_device *lt9611uxc_attach_dsi(struct lt9611uxc *lt9611uxc,
- 	int ret;
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+index 4f2e3feabc0f8..1bf229615b018 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
+@@ -38,6 +38,9 @@ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
  
- 	host = of_find_mipi_dsi_host_by_node(dsi_node);
--	if (!host) {
--		dev_err(dev, "failed to find dsi host\n");
--		return ERR_PTR(-EPROBE_DEFER);
--	}
-+	if (!host)
-+		return ERR_PTR(dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n"));
+ 	size = round_up(size, PAGE_SIZE);
  
- 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
- 	if (IS_ERR(dsi)) {
++	if (size == 0)
++		return ERR_PTR(-EINVAL);
++
+ 	mtk_gem_obj = kzalloc(sizeof(*mtk_gem_obj), GFP_KERNEL);
+ 	if (!mtk_gem_obj)
+ 		return ERR_PTR(-ENOMEM);
 -- 
 2.43.0
 
