@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D26419AA75;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69F619AA76;
 	Thu,  6 Jun 2024 14:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683318; cv=none; b=Dy9CIUOkEYgw9lvBYFct0YUUmbN2RGNK4JGNL9RPD+6G79XsnAvBSKqC+o9m7F/DcS797GVJRcUevb2SOKu7hadeizN9O3ZeKByes90t14gxuKKUdrq0uijAR4kY2S2oMH6t8HrMwwn5X1MEwc+cimOxKxcqJ+U3MFo/65TRuGM=
+	t=1717683319; cv=none; b=k2tA4NwpD9N5sRxztItw+B81rVjcca2mKEIg5KC4M7PrkjBZ2h97QrTEULJnJNBb0mU9Ad394jJWEhWRiRSnX3+NjHsn+zEDaVA/3MiMAtiMzGxAUXchIH5Boq/tjvfpmdHieq1np8VgNf+0gtloklCbvGVxqH3j4NN5Dp+POGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683318; c=relaxed/simple;
-	bh=NO2BMn8h1RWyaINLraLXyPHj0a5xJg8hi4qwgA4xvX8=;
+	s=arc-20240116; t=1717683319; c=relaxed/simple;
+	bh=IxB738m6TL0/IK2hj0ou2GYz5dUCgUnfMpG7uvoBwrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AwyQ1keQrCkgGKGRepBRNhfeuiIrZ5XVlUWvyEsCml42/6dk/FEoeVixxYJ/oiD3j4aUCodxPYC2LxV9t36KmoWn0utvi/yxcbYSa1WWVAXW5KMj5GWURk8+WW6mWG3YBikyM8tW545JuWIa8V+QIVryl0kLRrnoKR0Cb434iWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y02f4TIm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MLzTliZ8MTjq/WA0MEUA9TNdStla61V3CERGu+c5HRHS9+GVNC7CV3BSOK9rEf91j542QNAI56bXhqRAATbm+6X3qTRo+EeBSamcRlb3nk9NLTO/nc9n6geNdFfmyv/FlrPR7nskhj2ra/H2S4qvWKzfKRivOhFwdu2x/ODuQnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaWwl6+6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y02f4TIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D61CC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaWwl6+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5EBDC2BD10;
 	Thu,  6 Jun 2024 14:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683318;
-	bh=NO2BMn8h1RWyaINLraLXyPHj0a5xJg8hi4qwgA4xvX8=;
+	bh=IxB738m6TL0/IK2hj0ou2GYz5dUCgUnfMpG7uvoBwrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y02f4TImc+bcBuV2XeteU+QoF0cv9Mk66wG7LdtUGwRzY0i4IDo9DVWxLhT2wsPWM
-	 SPsr1Dz9gCd3VPjwd6WXouW2lHCcIRl8MfC0RK4cu4mYwVbRbpI22DnB+0iDnf7cWz
-	 JenQIYqDLJkztGZB2yfYx58g2OHi0oe7vQ0TxXDE=
+	b=gaWwl6+61QJzHc9Z9EysoDpA8bkHRy9KPwTA822ZzsLHSp/ca27+9Kr1NUJSU41j6
+	 L/Sq5lp5LaNb6MrTFtBumEflvvSCr1Dj9Rd1b35IHoSc2OnhOBPSeiLon1ux3HtNmn
+	 o/E+RHNNmwLQ0n3tBDslT/leqBFxjO9fz507so0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 198/473] ASoC: Intel: avs: ssm4567: Do not ignore route checks
-Date: Thu,  6 Jun 2024 16:02:07 +0200
-Message-ID: <20240606131706.490514599@linuxfoundation.org>
+Subject: [PATCH 6.6 259/744] mptcp: SO_KEEPALIVE: fix getsockopt support
+Date: Thu,  6 Jun 2024 15:58:51 +0200
+Message-ID: <20240606131740.706842106@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +49,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit e6719d48ba6329536c459dcee5a571e535687094 ]
+[ Upstream commit a65198136eaa15b74ee0abf73f12ef83d469a334 ]
 
-A copy-paste from intel/boards/skl_nau88l25_ssm4567.c made the avs's
-equivalent disable route checks as well. Such behavior is not desired.
+SO_KEEPALIVE support has to be set on each subflow: on each TCP socket,
+where sk_prot->keepalive is defined. Technically, nothing has to be done
+on the MPTCP socket. That's why mptcp_sol_socket_sync_intval() was
+called instead of mptcp_sol_socket_intval().
 
-Fixes: 69ea14efe99b ("ASoC: Intel: avs: Add ssm4567 machine board")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://msgid.link/r/20240308090502.2136760-4-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Except that when nothing is done on the MPTCP socket, the
+getsockopt(SO_KEEPALIVE), handled in net/core/sock.c:sk_getsockopt(),
+will not know if SO_KEEPALIVE has been set on the different subflows or
+not.
+
+The fix is simple: simply call mptcp_sol_socket_intval() which will end
+up calling net/core/sock.c:sk_setsockopt() where the SOCK_KEEPOPEN flag
+will be set, the one used in sk_getsockopt().
+
+So now, getsockopt(SO_KEEPALIVE) on an MPTCP socket will return the same
+value as the one previously set with setsockopt(SO_KEEPALIVE).
+
+Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20240514011335.176158-2-martineau@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/boards/ssm4567.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/mptcp/sockopt.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/intel/avs/boards/ssm4567.c b/sound/soc/intel/avs/boards/ssm4567.c
-index 51a8867326b47..c1c936b73475d 100644
---- a/sound/soc/intel/avs/boards/ssm4567.c
-+++ b/sound/soc/intel/avs/boards/ssm4567.c
-@@ -217,7 +217,6 @@ static int avs_ssm4567_probe(struct platform_device *pdev)
- 	card->dapm_routes = routes;
- 	card->num_dapm_routes = num_routes;
- 	card->fully_routed = true;
--	card->disable_route_checks = true;
+diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
+index 116e3008231bd..1afa8245f27c0 100644
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -181,8 +181,6 @@ static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
  
- 	ret = snd_soc_fixup_dai_links_platform_name(card, pname);
- 	if (ret)
+ 	switch (optname) {
+ 	case SO_KEEPALIVE:
+-		mptcp_sol_socket_sync_intval(msk, optname, val);
+-		return 0;
+ 	case SO_DEBUG:
+ 	case SO_MARK:
+ 	case SO_PRIORITY:
 -- 
 2.43.0
 
