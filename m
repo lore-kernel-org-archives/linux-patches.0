@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E22196D87;
-	Thu,  6 Jun 2024 14:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1158B196D87;
+	Thu,  6 Jun 2024 14:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683009; cv=none; b=ox5Z7IExP6W9y+xo3LruChbPOzDDjIJu7iAap7ApfQyZBr9cjtsgiEB3PnHE50va56IujtR0K0Kq5QWT7bUajGq10Wplhtp49rtWwfDXJsMC6HzpB0ZKGGID9MU5ghRT8cgJ93TuS8gIVSocgLECjK0Ezeh42HQvbhM0UMlVvjw=
+	t=1717683010; cv=none; b=AyMMeOIWoyMHF5uVzb4pwxBQ4bYjGz0sFi2rSPo7HtOdGsgWuREE6Ijn5Rt0lrDYrhir+9XnMKbaSuljHcT4PbKpTBcQAXYYnvl2pic81ZOfFlAPPXg8A2CK3inO/kQqM613b0g2uWH3BuCarlWUwcMrwlfkBBtGCqi01ES6mEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683009; c=relaxed/simple;
-	bh=8vZOB/mkdFBls8Ut3qP6bLyRl3r5W8Q5k0+5FRExro4=;
+	s=arc-20240116; t=1717683010; c=relaxed/simple;
+	bh=xT5qo6Gikfjr+4NThpYg1qpioAewX+HWPhiGYO12slc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9zrc2ouy6iYLxg0EycW8BKIudj/E7KLPVBMR9T8QmviHhx9UMfxPBCesBhroZ27I//7Lxf9GPdYCcwslVt83DeQNXqaHTjAISWva6rXARhF8hm5nfJ1KYt+5ZjeWKPFfHyhWrW8BWfA1hmeoVNoTqjTjFI5WEfE/IQY+vsnKLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFPqHnQh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bYDdy165r4RVydvJNk7z2wVx1eh+bgBu94i37EsnwKNS10219GeedHoD234iDUZdXMtqBWUE7TSECWOMYJYBB8T9Iiv6iVKm4KsvNypwzqJntNGzcLjrUvy/mdaoUh+DBEtLGbgo6d4tTZvXvGAstpD/TQL8MB8uvAKF54LBIiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aC+Xqpxg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFPqHnQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F44C4AF18;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aC+Xqpxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4773C4AF1D;
 	Thu,  6 Jun 2024 14:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683009;
-	bh=8vZOB/mkdFBls8Ut3qP6bLyRl3r5W8Q5k0+5FRExro4=;
+	s=korg; t=1717683010;
+	bh=xT5qo6Gikfjr+4NThpYg1qpioAewX+HWPhiGYO12slc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFPqHnQhZrxkXBzhKPlOKRzU2lr1bLxuZe3uI52BCmxeSWPqcilXicOcVg8wKLg+Y
-	 8LHaPREdM4i5rRzawx8NbwSBgCdeqY8JIdrNpcMokfkYUDcDNMo3kda4suySvccbHr
-	 rR0tm5hkiTiMJzpychVv8W5Dsaqu7yOcTjPNxwiA=
+	b=aC+XqpxgZTsmyQ4Qj6hoPbIT0dcXOJkSuUVfo0ANgQ5q87K7UDtHxwuLcW9rwIMiD
+	 IboV87U35McxX0Vv/lS2eoKPeHtP3Sq1GkT5WJ6c8DwjB5Wql/5SXg1fNUfa93FVUU
+	 M+UP5CbMvEQflTNVm0Jw0knjZXnfPQ5BiXfvMdN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 219/374] ASoC: mediatek: mt8192: fix register configuration for tdm
-Date: Thu,  6 Jun 2024 16:03:18 +0200
-Message-ID: <20240606131659.132845639@linuxfoundation.org>
+Subject: [PATCH 6.9 220/374] ASoC: rt715-sdca-sdw: Fix wrong complete waiting in rt715_dev_resume()
+Date: Thu,  6 Jun 2024 16:03:19 +0200
+Message-ID: <20240606131659.163262523@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,41 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Te Yuan <yuanhsinte@chromium.org>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit a85ed162f0efcfdd664954414a05d1d560cc95dc ]
+[ Upstream commit c8bdf9e727acb6e1b37febf422ef1751e5a2c7d1 ]
 
-For DSP_A, data is a BCK cycle behind LRCK trigger edge. For DSP_B, this
-delay doesn't exist. Fix the delay configuration to match the standard.
+enumeration_complete will be completed when a peripheral is attached.
+And initialization_complete will be completed when a peripheral is
+initialized. rt715_dev_resume() should wait for initialization_complete
+instead of enumeration_complete.
 
-Fixes: 52fcd65414abfc ("ASoC: mediatek: mt8192: support tdm in platform driver")
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20240509-8192-tdm-v1-1-530b54645763@chromium.org
+the issue exists since commit 20d17057f0a8 ("ASoC: rt715-sdca: Add RT715
+sdca vendor-specific driver"), but the commit can only apply to
+commit f892e66fcabc ("ASoC: rt-sdw*: add __func__ to all error logs").
+
+Fixes: f892e66fcabc ("ASoC: rt-sdw*: add __func__ to all error logs")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20240509163658.68062-1-pierre-louis.bossart@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-dai-tdm.c | 4 ++--
+ sound/soc/codecs/rt715-sdca-sdw.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-index 9ce06821c7d0f..49440db370af0 100644
---- a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-@@ -566,10 +566,10 @@ static int mtk_dai_tdm_hw_params(struct snd_pcm_substream *substream,
- 		tdm_con |= 1 << DELAY_DATA_SFT;
- 		tdm_con |= get_tdm_lrck_width(format) << LRCK_TDM_WIDTH_SFT;
- 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_A) {
--		tdm_con |= 0 << DELAY_DATA_SFT;
-+		tdm_con |= 1 << DELAY_DATA_SFT;
- 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
- 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_B) {
--		tdm_con |= 1 << DELAY_DATA_SFT;
-+		tdm_con |= 0 << DELAY_DATA_SFT;
- 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
- 	}
+diff --git a/sound/soc/codecs/rt715-sdca-sdw.c b/sound/soc/codecs/rt715-sdca-sdw.c
+index ee450126106f9..9a55e77af02fe 100644
+--- a/sound/soc/codecs/rt715-sdca-sdw.c
++++ b/sound/soc/codecs/rt715-sdca-sdw.c
+@@ -234,10 +234,10 @@ static int __maybe_unused rt715_dev_resume(struct device *dev)
+ 	if (!slave->unattach_request)
+ 		goto regmap_sync;
  
+-	time = wait_for_completion_timeout(&slave->enumeration_complete,
++	time = wait_for_completion_timeout(&slave->initialization_complete,
+ 					   msecs_to_jiffies(RT715_PROBE_TIMEOUT));
+ 	if (!time) {
+-		dev_err(&slave->dev, "%s: Enumeration not complete, timed out\n", __func__);
++		dev_err(&slave->dev, "%s: Initialization not complete, timed out\n", __func__);
+ 		sdw_show_ping_status(slave->bus, true);
+ 
+ 		return -ETIMEDOUT;
 -- 
 2.43.0
 
