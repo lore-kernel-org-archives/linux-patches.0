@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41033198E9A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C07198E9A;
 	Thu,  6 Jun 2024 14:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683510; cv=none; b=hSvltdNk2gdv6Sl+1Y1obCSLy2N+CCPwBM11FV5Od4ynBsfoVTqlc6n985itfcfXFJVZ0WOHC/Fzj9uWwGCxVMVVDcHshXQjV0z9MUG0V0OIusARae2IaD2BUFfvT1tPtJ05XfC/LHQYwDZdSCGfz/gJFhTSQvXWBUi+g+9VB7w=
+	t=1717683510; cv=none; b=bbIMn8TkiS0PsvsSYgt0Ipt6JouZsiCD/t8vidgv1gZnXPtWK+EIbqxsjs8YfpiAUIk/tUGsDf/oszogfLuXWPmQo4xNFzouUpTatO7aFZBf/ykpUpVqKoGzsmuU+jO+OsSBOBotruq8uPVMK5fMQxZLEbNKLEdny4KiKzGfp5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683510; c=relaxed/simple;
-	bh=GAA1pi2Bsl8gpWbTXU8UhoHlVmK+xCjqLVeqd10zdW0=;
+	bh=nwnS6UDzoVaTmdHaa7fI0vOZG9e4TiDTBKsmKT3KdII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZyMuWIDs9Ub9q5RpO63onGH50UXSHfikoN2PkkDmeu2143QG9YAa2xaqY0cEY+4Ww8bsrI0NulgurFCKAH1h0uK4IuNIrjX5gPYYQu51MGkH0DvZNzujyNXhdALrYA4aJIRwVYhUKc+qjcBeZAs8dDC2NetbGz3LJp3ZLm9egY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pt3qhMBF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kwmg0X2N8PIGXruZxtom2Z/MjnNAL8ykA8ct04D0ORa1GOqSf0VmqJbPCvP5FW2N1DegdQWjw6kOi/RHAdNjMJ/3/bvcrxG/TRA5wK2TzscB4LrPhAyVTuktstwYy3EfDZuxjo6Grdckr+Vwvg6SHYV2f5vP+3kIJh030oKVg0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hC9Xk03o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pt3qhMBF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168CCC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hC9Xk03o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974E2C2BD10;
 	Thu,  6 Jun 2024 14:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683510;
-	bh=GAA1pi2Bsl8gpWbTXU8UhoHlVmK+xCjqLVeqd10zdW0=;
+	bh=nwnS6UDzoVaTmdHaa7fI0vOZG9e4TiDTBKsmKT3KdII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pt3qhMBFSqRsYye2/MtR5y4sSFFQShMSCpWwKDnT4HbYVlP7psiy12J7JimPjc46M
-	 LkhMrB6XjpXaru6rYaKgfzkbQtqVV/U1tvwbk/pg2k3QEzjHjKdaOPx2QxTd4YlrOf
-	 /pbuLKUscv3VA2ClkvxECQZCbO+WWPb7quNFKKfI=
+	b=hC9Xk03ojp908V8uh18fZqDoy+RmALgLF9+jZottaoPdyiPuPml4d/HG2y7hE1hqS
+	 ms4KwFQ+Sfi4Cz98WQBrPSbFK5JL9QjBTMtg3NRRuXk8ESrXlkUahV1PyH7a71iTwB
+	 ci7qoS8Dm3Z/i9XUxt3rYaTbSvw/qsDwbFcYCqW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 451/744] iio: adc: ad9467: convert to backend framework
-Date: Thu,  6 Jun 2024 16:02:03 +0200
-Message-ID: <20240606131746.958542973@linuxfoundation.org>
+Subject: [PATCH 6.1 399/473] regulator: bd71828: Dont overwrite runtime voltages
+Date: Thu,  6 Jun 2024 16:05:28 +0200
+Message-ID: <20240606131713.012351296@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,517 +47,188 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit bb42191f85c389bf816373d25c3e4c94045cf4ff ]
+[ Upstream commit 0f9f7c63c415e287cd57b5c98be61eb320dedcfc ]
 
-Convert the driver to use the new IIO backend framework. The device
-functionality is expected to be the same (meaning no added or removed
-features).
+Some of the regulators on the BD71828 have common voltage setting for
+RUN/SUSPEND/IDLE/LPSR states. The enable control can be set for each
+state though.
 
-Also note this patch effectively breaks ABI and that's needed so we can
-properly support this device and add needed features making use of the
-new IIO framework.
+The driver allows setting the voltage values for these states via
+device-tree. As a side effect, setting the voltages for
+SUSPEND/IDLE/LPSR will also change the RUN level voltage which is not
+desired and can break the system.
 
-Given the lack of features (and devices supported) in the ad9467 driver
-compared with the ADI out of tree version, we don't expect any user of
-the upstream driver so no one should notice the ABI breakage. However,
-if someone is affected by this, ADI will happily support transitioning
-to the backend framework.
+The comment in code reflects this behaviour, but it is likely to not
+make people any happier. The right thing to do is to allow setting the
+enable/disable state at SUSPEND/IDLE/LPSR via device-tree, but to
+disallow setting state specific voltages for those regulators.
 
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20240210-iio-backend-v11-6-f5242a5fb42a@analog.com
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: cf1c833f89e7 ("iio: adc: adi-axi-adc: only error out in major version mismatch")
+BUCK1 is a bit different. It only shares the SUSPEND and LPSR state
+voltages. The former behaviour of allowing to silently overwrite the
+SUSPEND state voltage by LPSR state voltage is also changed here so that
+the SUSPEND voltage is prioritized over LPSR voltage.
+
+Prevent setting PMIC state specific voltages for regulators which do not
+support it.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 522498f8cb8c ("regulator: bd71828: Basic support for ROHM bd71828 PMIC regulators")
+Link: https://msgid.link/r/e1883ae1e3ae5668f1030455d4750923561f3d68.1715848512.git.mazziesaccount@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/Kconfig  |   2 +-
- drivers/iio/adc/ad9467.c | 267 ++++++++++++++++++++++++++-------------
- 2 files changed, 178 insertions(+), 91 deletions(-)
+ drivers/regulator/bd71828-regulator.c | 58 +--------------------------
+ 1 file changed, 2 insertions(+), 56 deletions(-)
 
-diff --git a/drivers/iio/adc/Kconfig b/drivers/iio/adc/Kconfig
-index 0b94bda8be361..ae789d427b213 100644
---- a/drivers/iio/adc/Kconfig
-+++ b/drivers/iio/adc/Kconfig
-@@ -275,7 +275,7 @@ config AD799X
- config AD9467
- 	tristate "Analog Devices AD9467 High Speed ADC driver"
- 	depends on SPI
--	depends on ADI_AXI_ADC
-+	select IIO_BACKEND
- 	help
- 	  Say yes here to build support for Analog Devices:
- 	  * AD9467 16-Bit, 200 MSPS/250 MSPS Analog-to-Digital Converter
-diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
-index c5ed62cc86465..863dca5db161e 100644
---- a/drivers/iio/adc/ad9467.c
-+++ b/drivers/iio/adc/ad9467.c
-@@ -17,13 +17,12 @@
- #include <linux/of.h>
- 
- 
-+#include <linux/iio/backend.h>
- #include <linux/iio/iio.h>
- #include <linux/iio/sysfs.h>
- 
- #include <linux/clk.h>
- 
--#include <linux/iio/adc/adi-axi-adc.h>
--
- /*
-  * ADI High-Speed ADC common spi interface registers
-  * See Application-Note AN-877:
-@@ -102,15 +101,20 @@
- #define AD9467_REG_VREF_MASK		0x0F
- 
- struct ad9467_chip_info {
--	struct adi_axi_adc_chip_info	axi_adc_info;
--	unsigned int			default_output_mode;
--	unsigned int			vref_mask;
-+	const char		*name;
-+	unsigned int		id;
-+	const struct		iio_chan_spec *channels;
-+	unsigned int		num_channels;
-+	const unsigned int	(*scale_table)[2];
-+	int			num_scales;
-+	unsigned long		max_rate;
-+	unsigned int		default_output_mode;
-+	unsigned int		vref_mask;
- };
- 
--#define to_ad9467_chip_info(_info)	\
--	container_of(_info, struct ad9467_chip_info, axi_adc_info)
--
- struct ad9467_state {
-+	const struct ad9467_chip_info	*info;
-+	struct iio_backend		*back;
- 	struct spi_device		*spi;
- 	struct clk			*clk;
- 	unsigned int			output_mode;
-@@ -151,10 +155,10 @@ static int ad9467_spi_write(struct spi_device *spi, unsigned int reg,
- 	return spi_write(spi, buf, ARRAY_SIZE(buf));
- }
- 
--static int ad9467_reg_access(struct adi_axi_adc_conv *conv, unsigned int reg,
-+static int ad9467_reg_access(struct iio_dev *indio_dev, unsigned int reg,
- 			     unsigned int writeval, unsigned int *readval)
- {
--	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
-+	struct ad9467_state *st = iio_priv(indio_dev);
- 	struct spi_device *spi = st->spi;
- 	int ret;
- 
-@@ -191,10 +195,10 @@ static const unsigned int ad9467_scale_table[][2] = {
- 	{2300, 8}, {2400, 9}, {2500, 10},
- };
- 
--static void __ad9467_get_scale(struct adi_axi_adc_conv *conv, int index,
-+static void __ad9467_get_scale(struct ad9467_state *st, int index,
- 			       unsigned int *val, unsigned int *val2)
- {
--	const struct adi_axi_adc_chip_info *info = conv->chip_info;
-+	const struct ad9467_chip_info *info = st->info;
- 	const struct iio_chan_spec *chan = &info->channels[0];
- 	unsigned int tmp;
- 
-@@ -229,52 +233,44 @@ static const struct iio_chan_spec ad9467_channels[] = {
- };
- 
- static const struct ad9467_chip_info ad9467_chip_tbl = {
--	.axi_adc_info = {
--		.name = "ad9467",
--		.id = CHIPID_AD9467,
--		.max_rate = 250000000UL,
--		.scale_table = ad9467_scale_table,
--		.num_scales = ARRAY_SIZE(ad9467_scale_table),
--		.channels = ad9467_channels,
--		.num_channels = ARRAY_SIZE(ad9467_channels),
--	},
-+	.name = "ad9467",
-+	.id = CHIPID_AD9467,
-+	.max_rate = 250000000UL,
-+	.scale_table = ad9467_scale_table,
-+	.num_scales = ARRAY_SIZE(ad9467_scale_table),
-+	.channels = ad9467_channels,
-+	.num_channels = ARRAY_SIZE(ad9467_channels),
- 	.default_output_mode = AD9467_DEF_OUTPUT_MODE,
- 	.vref_mask = AD9467_REG_VREF_MASK,
- };
- 
- static const struct ad9467_chip_info ad9434_chip_tbl = {
--	.axi_adc_info = {
--		.name = "ad9434",
--		.id = CHIPID_AD9434,
--		.max_rate = 500000000UL,
--		.scale_table = ad9434_scale_table,
--		.num_scales = ARRAY_SIZE(ad9434_scale_table),
--		.channels = ad9434_channels,
--		.num_channels = ARRAY_SIZE(ad9434_channels),
--	},
-+	.name = "ad9434",
-+	.id = CHIPID_AD9434,
-+	.max_rate = 500000000UL,
-+	.scale_table = ad9434_scale_table,
-+	.num_scales = ARRAY_SIZE(ad9434_scale_table),
-+	.channels = ad9434_channels,
-+	.num_channels = ARRAY_SIZE(ad9434_channels),
- 	.default_output_mode = AD9434_DEF_OUTPUT_MODE,
- 	.vref_mask = AD9434_REG_VREF_MASK,
- };
- 
- static const struct ad9467_chip_info ad9265_chip_tbl = {
--	.axi_adc_info = {
--		.name = "ad9265",
--		.id = CHIPID_AD9265,
--		.max_rate = 125000000UL,
--		.scale_table = ad9265_scale_table,
--		.num_scales = ARRAY_SIZE(ad9265_scale_table),
--		.channels = ad9467_channels,
--		.num_channels = ARRAY_SIZE(ad9467_channels),
--	},
-+	.name = "ad9265",
-+	.id = CHIPID_AD9265,
-+	.max_rate = 125000000UL,
-+	.scale_table = ad9265_scale_table,
-+	.num_scales = ARRAY_SIZE(ad9265_scale_table),
-+	.channels = ad9467_channels,
-+	.num_channels = ARRAY_SIZE(ad9467_channels),
- 	.default_output_mode = AD9265_DEF_OUTPUT_MODE,
- 	.vref_mask = AD9265_REG_VREF_MASK,
- };
- 
--static int ad9467_get_scale(struct adi_axi_adc_conv *conv, int *val, int *val2)
-+static int ad9467_get_scale(struct ad9467_state *st, int *val, int *val2)
- {
--	const struct adi_axi_adc_chip_info *info = conv->chip_info;
--	const struct ad9467_chip_info *info1 = to_ad9467_chip_info(info);
--	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
-+	const struct ad9467_chip_info *info = st->info;
- 	unsigned int i, vref_val;
- 	int ret;
- 
-@@ -282,7 +278,7 @@ static int ad9467_get_scale(struct adi_axi_adc_conv *conv, int *val, int *val2)
- 	if (ret < 0)
- 		return ret;
- 
--	vref_val = ret & info1->vref_mask;
-+	vref_val = ret & info->vref_mask;
- 
- 	for (i = 0; i < info->num_scales; i++) {
- 		if (vref_val == info->scale_table[i][1])
-@@ -292,15 +288,14 @@ static int ad9467_get_scale(struct adi_axi_adc_conv *conv, int *val, int *val2)
- 	if (i == info->num_scales)
- 		return -ERANGE;
- 
--	__ad9467_get_scale(conv, i, val, val2);
-+	__ad9467_get_scale(st, i, val, val2);
- 
- 	return IIO_VAL_INT_PLUS_MICRO;
- }
- 
--static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
-+static int ad9467_set_scale(struct ad9467_state *st, int val, int val2)
- {
--	const struct adi_axi_adc_chip_info *info = conv->chip_info;
--	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
-+	const struct ad9467_chip_info *info = st->info;
- 	unsigned int scale_val[2];
- 	unsigned int i;
- 	int ret;
-@@ -309,7 +304,7 @@ static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
- 		return -EINVAL;
- 
- 	for (i = 0; i < info->num_scales; i++) {
--		__ad9467_get_scale(conv, i, &scale_val[0], &scale_val[1]);
-+		__ad9467_get_scale(st, i, &scale_val[0], &scale_val[1]);
- 		if (scale_val[0] != val || scale_val[1] != val2)
- 			continue;
- 
-@@ -326,15 +321,15 @@ static int ad9467_set_scale(struct adi_axi_adc_conv *conv, int val, int val2)
- 	return -EINVAL;
- }
- 
--static int ad9467_read_raw(struct adi_axi_adc_conv *conv,
-+static int ad9467_read_raw(struct iio_dev *indio_dev,
- 			   struct iio_chan_spec const *chan,
- 			   int *val, int *val2, long m)
- {
--	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
-+	struct ad9467_state *st = iio_priv(indio_dev);
- 
- 	switch (m) {
- 	case IIO_CHAN_INFO_SCALE:
--		return ad9467_get_scale(conv, val, val2);
-+		return ad9467_get_scale(st, val, val2);
- 	case IIO_CHAN_INFO_SAMP_FREQ:
- 		*val = clk_get_rate(st->clk);
- 
-@@ -344,17 +339,17 @@ static int ad9467_read_raw(struct adi_axi_adc_conv *conv,
- 	}
- }
- 
--static int ad9467_write_raw(struct adi_axi_adc_conv *conv,
-+static int ad9467_write_raw(struct iio_dev *indio_dev,
- 			    struct iio_chan_spec const *chan,
- 			    int val, int val2, long mask)
- {
--	const struct adi_axi_adc_chip_info *info = conv->chip_info;
--	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
-+	struct ad9467_state *st = iio_priv(indio_dev);
-+	const struct ad9467_chip_info *info = st->info;
- 	long r_clk;
- 
- 	switch (mask) {
- 	case IIO_CHAN_INFO_SCALE:
--		return ad9467_set_scale(conv, val, val2);
-+		return ad9467_set_scale(st, val, val2);
- 	case IIO_CHAN_INFO_SAMP_FREQ:
- 		r_clk = clk_round_rate(st->clk, val);
- 		if (r_clk < 0 || r_clk > info->max_rate) {
-@@ -369,13 +364,13 @@ static int ad9467_write_raw(struct adi_axi_adc_conv *conv,
- 	}
- }
- 
--static int ad9467_read_avail(struct adi_axi_adc_conv *conv,
-+static int ad9467_read_avail(struct iio_dev *indio_dev,
- 			     struct iio_chan_spec const *chan,
- 			     const int **vals, int *type, int *length,
- 			     long mask)
- {
--	const struct adi_axi_adc_chip_info *info = conv->chip_info;
--	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
-+	struct ad9467_state *st = iio_priv(indio_dev);
-+	const struct ad9467_chip_info *info = st->info;
- 
- 	switch (mask) {
- 	case IIO_CHAN_INFO_SCALE:
-@@ -389,6 +384,33 @@ static int ad9467_read_avail(struct adi_axi_adc_conv *conv,
- 	}
- }
- 
-+static int ad9467_update_scan_mode(struct iio_dev *indio_dev,
-+				   const unsigned long *scan_mask)
-+{
-+	struct ad9467_state *st = iio_priv(indio_dev);
-+	unsigned int c;
-+	int ret;
-+
-+	for (c = 0; c < st->info->num_channels; c++) {
-+		if (test_bit(c, scan_mask))
-+			ret = iio_backend_chan_enable(st->back, c);
-+		else
-+			ret = iio_backend_chan_disable(st->back, c);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static const struct iio_info ad9467_info = {
-+	.read_raw = ad9467_read_raw,
-+	.write_raw = ad9467_write_raw,
-+	.update_scan_mode = ad9467_update_scan_mode,
-+	.debugfs_reg_access = ad9467_reg_access,
-+	.read_avail = ad9467_read_avail,
-+};
-+
- static int ad9467_outputmode_set(struct spi_device *spi, unsigned int mode)
- {
- 	int ret;
-@@ -401,10 +423,9 @@ static int ad9467_outputmode_set(struct spi_device *spi, unsigned int mode)
- 				AN877_ADC_TRANSFER_SYNC);
- }
- 
--static int ad9467_scale_fill(struct adi_axi_adc_conv *conv)
-+static int ad9467_scale_fill(struct ad9467_state *st)
- {
--	const struct adi_axi_adc_chip_info *info = conv->chip_info;
--	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
-+	const struct ad9467_chip_info *info = st->info;
- 	unsigned int i, val1, val2;
- 
- 	st->scales = devm_kmalloc_array(&st->spi->dev, info->num_scales,
-@@ -413,7 +434,7 @@ static int ad9467_scale_fill(struct adi_axi_adc_conv *conv)
- 		return -ENOMEM;
- 
- 	for (i = 0; i < info->num_scales; i++) {
--		__ad9467_get_scale(conv, i, &val1, &val2);
-+		__ad9467_get_scale(st, i, &val1, &val2);
- 		st->scales[i][0] = val1;
- 		st->scales[i][1] = val2;
- 	}
-@@ -421,11 +442,27 @@ static int ad9467_scale_fill(struct adi_axi_adc_conv *conv)
- 	return 0;
- }
- 
--static int ad9467_preenable_setup(struct adi_axi_adc_conv *conv)
-+static int ad9467_setup(struct ad9467_state *st)
- {
--	struct ad9467_state *st = adi_axi_adc_conv_priv(conv);
-+	struct iio_backend_data_fmt data = {
-+		.sign_extend = true,
-+		.enable = true,
-+	};
-+	unsigned int c, mode;
-+	int ret;
-+
-+	mode = st->info->default_output_mode | AN877_ADC_OUTPUT_MODE_TWOS_COMPLEMENT;
-+	ret = ad9467_outputmode_set(st->spi, mode);
-+	if (ret)
-+		return ret;
- 
--	return ad9467_outputmode_set(st->spi, st->output_mode);
-+	for (c = 0; c < st->info->num_channels; c++) {
-+		ret = iio_backend_data_format_set(st->back, c, &data);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
- }
- 
- static int ad9467_reset(struct device *dev)
-@@ -443,25 +480,65 @@ static int ad9467_reset(struct device *dev)
- 	return 0;
- }
- 
-+static int ad9467_iio_backend_get(struct ad9467_state *st)
-+{
-+	struct device *dev = &st->spi->dev;
-+	struct device_node *__back;
-+
-+	st->back = devm_iio_backend_get(dev, NULL);
-+	if (!IS_ERR(st->back))
-+		return 0;
-+	/* If not found, don't error out as we might have legacy DT property */
-+	if (PTR_ERR(st->back) != -ENOENT)
-+		return PTR_ERR(st->back);
-+
-+	/*
-+	 * if we don't get the backend using the normal API's, use the legacy
-+	 * 'adi,adc-dev' property. So we get all nodes with that property, and
-+	 * look for the one pointing at us. Then we directly lookup that fwnode
-+	 * on the backend list of registered devices. This is done so we don't
-+	 * make io-backends mandatory which would break DT ABI.
-+	 */
-+	for_each_node_with_property(__back, "adi,adc-dev") {
-+		struct device_node *__me;
-+
-+		__me = of_parse_phandle(__back, "adi,adc-dev", 0);
-+		if (!__me)
-+			continue;
-+
-+		if (!device_match_of_node(dev, __me)) {
-+			of_node_put(__me);
-+			continue;
-+		}
-+
-+		of_node_put(__me);
-+		st->back = __devm_iio_backend_get_from_fwnode_lookup(dev,
-+								     of_fwnode_handle(__back));
-+		of_node_put(__back);
-+		return PTR_ERR_OR_ZERO(st->back);
-+	}
-+
-+	return -ENODEV;
-+}
-+
- static int ad9467_probe(struct spi_device *spi)
- {
--	const struct ad9467_chip_info *info;
--	struct adi_axi_adc_conv *conv;
-+	struct iio_dev *indio_dev;
- 	struct ad9467_state *st;
- 	unsigned int id;
- 	int ret;
- 
--	info = spi_get_device_match_data(spi);
--	if (!info)
--		return -ENODEV;
--
--	conv = devm_adi_axi_adc_conv_register(&spi->dev, sizeof(*st));
--	if (IS_ERR(conv))
--		return PTR_ERR(conv);
-+	indio_dev = devm_iio_device_alloc(&spi->dev, sizeof(*st));
-+	if (!indio_dev)
-+		return -ENOMEM;
- 
--	st = adi_axi_adc_conv_priv(conv);
-+	st = iio_priv(indio_dev);
- 	st->spi = spi;
- 
-+	st->info = spi_get_device_match_data(spi);
-+	if (!st->info)
-+		return -ENODEV;
-+
- 	st->clk = devm_clk_get_enabled(&spi->dev, "adc-clk");
- 	if (IS_ERR(st->clk))
- 		return PTR_ERR(st->clk);
-@@ -475,29 +552,39 @@ static int ad9467_probe(struct spi_device *spi)
- 	if (ret)
- 		return ret;
- 
--	conv->chip_info = &info->axi_adc_info;
--
--	ret = ad9467_scale_fill(conv);
-+	ret = ad9467_scale_fill(st);
- 	if (ret)
- 		return ret;
- 
- 	id = ad9467_spi_read(spi, AN877_ADC_REG_CHIP_ID);
--	if (id != conv->chip_info->id) {
-+	if (id != st->info->id) {
- 		dev_err(&spi->dev, "Mismatch CHIP_ID, got 0x%X, expected 0x%X\n",
--			id, conv->chip_info->id);
-+			id, st->info->id);
- 		return -ENODEV;
- 	}
- 
--	conv->reg_access = ad9467_reg_access;
--	conv->write_raw = ad9467_write_raw;
--	conv->read_raw = ad9467_read_raw;
--	conv->read_avail = ad9467_read_avail;
--	conv->preenable_setup = ad9467_preenable_setup;
-+	indio_dev->name = st->info->name;
-+	indio_dev->channels = st->info->channels;
-+	indio_dev->num_channels = st->info->num_channels;
-+	indio_dev->info = &ad9467_info;
- 
--	st->output_mode = info->default_output_mode |
--			  AN877_ADC_OUTPUT_MODE_TWOS_COMPLEMENT;
-+	ret = ad9467_iio_backend_get(st);
-+	if (ret)
-+		return ret;
- 
--	return 0;
-+	ret = devm_iio_backend_request_buffer(&spi->dev, st->back, indio_dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_iio_backend_enable(&spi->dev, st->back);
-+	if (ret)
-+		return ret;
-+
-+	ret = ad9467_setup(st);
-+	if (ret)
-+		return ret;
-+
-+	return devm_iio_device_register(&spi->dev, indio_dev);
- }
- 
- static const struct of_device_id ad9467_of_match[] = {
-@@ -529,4 +616,4 @@ module_spi_driver(ad9467_driver);
- MODULE_AUTHOR("Michael Hennerich <michael.hennerich@analog.com>");
- MODULE_DESCRIPTION("Analog Devices AD9467 ADC driver");
- MODULE_LICENSE("GPL v2");
--MODULE_IMPORT_NS(IIO_ADI_AXI);
-+MODULE_IMPORT_NS(IIO_BACKEND);
+diff --git a/drivers/regulator/bd71828-regulator.c b/drivers/regulator/bd71828-regulator.c
+index a4f09a5a30cab..d07f0d120ca71 100644
+--- a/drivers/regulator/bd71828-regulator.c
++++ b/drivers/regulator/bd71828-regulator.c
+@@ -207,14 +207,11 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 			.suspend_reg = BD71828_REG_BUCK1_SUSP_VOLT,
+ 			.suspend_mask = BD71828_MASK_BUCK1267_VOLT,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+-			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+ 			/*
+ 			 * LPSR voltage is same as SUSPEND voltage. Allow
+-			 * setting it so that regulator can be set enabled at
+-			 * LPSR state
++			 * only enabling/disabling regulator for LPSR state
+ 			 */
+-			.lpsr_reg = BD71828_REG_BUCK1_SUSP_VOLT,
+-			.lpsr_mask = BD71828_MASK_BUCK1267_VOLT,
++			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+ 		},
+ 		.reg_inits = buck1_inits,
+ 		.reg_init_amnt = ARRAY_SIZE(buck1_inits),
+@@ -289,13 +286,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_BUCK3_VOLT,
+-			.idle_reg = BD71828_REG_BUCK3_VOLT,
+-			.suspend_reg = BD71828_REG_BUCK3_VOLT,
+-			.lpsr_reg = BD71828_REG_BUCK3_VOLT,
+ 			.run_mask = BD71828_MASK_BUCK3_VOLT,
+-			.idle_mask = BD71828_MASK_BUCK3_VOLT,
+-			.suspend_mask = BD71828_MASK_BUCK3_VOLT,
+-			.lpsr_mask = BD71828_MASK_BUCK3_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -330,13 +321,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_BUCK4_VOLT,
+-			.idle_reg = BD71828_REG_BUCK4_VOLT,
+-			.suspend_reg = BD71828_REG_BUCK4_VOLT,
+-			.lpsr_reg = BD71828_REG_BUCK4_VOLT,
+ 			.run_mask = BD71828_MASK_BUCK4_VOLT,
+-			.idle_mask = BD71828_MASK_BUCK4_VOLT,
+-			.suspend_mask = BD71828_MASK_BUCK4_VOLT,
+-			.lpsr_mask = BD71828_MASK_BUCK4_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -371,13 +356,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_BUCK5_VOLT,
+-			.idle_reg = BD71828_REG_BUCK5_VOLT,
+-			.suspend_reg = BD71828_REG_BUCK5_VOLT,
+-			.lpsr_reg = BD71828_REG_BUCK5_VOLT,
+ 			.run_mask = BD71828_MASK_BUCK5_VOLT,
+-			.idle_mask = BD71828_MASK_BUCK5_VOLT,
+-			.suspend_mask = BD71828_MASK_BUCK5_VOLT,
+-			.lpsr_mask = BD71828_MASK_BUCK5_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -494,13 +473,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_LDO1_VOLT,
+-			.idle_reg = BD71828_REG_LDO1_VOLT,
+-			.suspend_reg = BD71828_REG_LDO1_VOLT,
+-			.lpsr_reg = BD71828_REG_LDO1_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -534,13 +507,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_LDO2_VOLT,
+-			.idle_reg = BD71828_REG_LDO2_VOLT,
+-			.suspend_reg = BD71828_REG_LDO2_VOLT,
+-			.lpsr_reg = BD71828_REG_LDO2_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -574,13 +541,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_LDO3_VOLT,
+-			.idle_reg = BD71828_REG_LDO3_VOLT,
+-			.suspend_reg = BD71828_REG_LDO3_VOLT,
+-			.lpsr_reg = BD71828_REG_LDO3_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -615,13 +576,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_LDO4_VOLT,
+-			.idle_reg = BD71828_REG_LDO4_VOLT,
+-			.suspend_reg = BD71828_REG_LDO4_VOLT,
+-			.lpsr_reg = BD71828_REG_LDO4_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -656,13 +611,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_LDO5_VOLT,
+-			.idle_reg = BD71828_REG_LDO5_VOLT,
+-			.suspend_reg = BD71828_REG_LDO5_VOLT,
+-			.lpsr_reg = BD71828_REG_LDO5_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -721,9 +670,6 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 			.suspend_reg = BD71828_REG_LDO7_VOLT,
+ 			.lpsr_reg = BD71828_REG_LDO7_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
 -- 
 2.43.0
 
