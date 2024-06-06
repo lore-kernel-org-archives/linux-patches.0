@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4341019750D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1BA19750D;
 	Thu,  6 Jun 2024 14:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682953; cv=none; b=dRKSV/p2DycbcRwH6HTn3tl4PcRgemFQ/iiHNXueShL5SPkbzfA/eHbIG/HEktWVG/1OeEQx0ULLL3BlMTqQ9KZ+poYvVzRCD+ActytqrHOGJPm1327CLKhFi6SnbhA5YeWQxlP17mFpKue02LBaXVpzUrWdeVJwZbunOX7q6U0=
+	t=1717682953; cv=none; b=fYfuvydletTCOEIkyv0vSe5usLHh6HjPhAdJS5/1pEojqcjm6mHXgQqSSb+mGcc6/gen5waQ8NUj/FAOCBFL/56tGeDQbb8pTAjsCfWWHcCdUXiKV+ahOxNBU9yjsE1PmxzVqeCESzGK9kagTolOxSacLus875jZg0g3rtVq9ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682953; c=relaxed/simple;
-	bh=jaSLzcnKWXMWfogY6WKoE2+30ihdCfNcMPgTwKA/8RI=;
+	bh=AzpNvo/aLXW2BV65ih4uprZcnwasEmpm5Yz3K/7BSMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fSfXfdfw9Idf2a3jR3R+UK394CUwcROEHNRd9WgUg4w9FYErOff/uKkNRY1sUfRa0SO2G+o6BmX7Hpom0kyR0kJFkCgpudQLI1oEeTk+JZpcA5eXs7Q+5Qge/TouwnCKwIgE4ywHjNHYtCwzecLAmhC09BhjJWU2PHf/4BweRgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Npo05qT1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eh0Esaa+n9S9WS1UxPAMJxMMNygsIbVtzCXkEQP1OaZ3Lh4M6kyQkUmnDDlNEEriX/pZYLx8zLiUnb8vemg1DmaQWrVzZtXyfcqJyzeG0ubBI2i7tJpYklF3S7cGHOgxc8ehDbgKDsATvakDZ4020GTrxWBmcd0MqwIeExKvvvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9uLV8JG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Npo05qT1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197EDC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9uLV8JG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B43EC2BD10;
 	Thu,  6 Jun 2024 14:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682953;
-	bh=jaSLzcnKWXMWfogY6WKoE2+30ihdCfNcMPgTwKA/8RI=;
+	bh=AzpNvo/aLXW2BV65ih4uprZcnwasEmpm5Yz3K/7BSMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Npo05qT1hM8i92Q6wEw81rRHPLLGJMl22oU4EcBIVuAnlqtQyBV6uVFsFrE7nPDrr
-	 8grq80UyxG4+Dc/zfb3LdRsW0Xj5JEvuwieuZulN8poCruqQxYpi2yE0H56w37yaUR
-	 rxqeK32RiVUJtZiK9d0DOpURKtmE5mZrdKc0lIQw=
+	b=T9uLV8JGWiRmR3L2HzAYVAvFhmZ8KexO31KsXQnEgkLQMTdIgyUo0329ZdAozwFPx
+	 XBcBtJS+kEIJlIdO7usOlVStNaSQfoAYB2yiT4jCyp6kWHIx26vKR6hlUvLEC+cUxI
+	 j5BsJ9MiANTxHz2H9fLjBXvyvZHzwGhiFOvkiLXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Flavio Suligoi <f.suligoi@asem.it>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 117/374] backlight: mp3309c: Fix signedness bug in mp3309c_parse_fwnode()
-Date: Thu,  6 Jun 2024 16:01:36 +0200
-Message-ID: <20240606131655.849180887@linuxfoundation.org>
+Subject: [PATCH 6.9 118/374] f2fs: fix to add missing iput() in gc_data_segment()
+Date: Thu,  6 Jun 2024 16:01:37 +0200
+Message-ID: <20240606131655.878939084@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -54,42 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit e962f13b1e86272a5dcdaede2dfb649152e981e9 ]
+[ Upstream commit a798ff17cd2dabe47d5d4ed3d509631793c36e19 ]
 
-The "num_levels" variable is used to store error codes from
-device_property_count_u32() so it needs to be signed.  This doesn't
-cause an issue at runtime because devm_kcalloc() won't allocate negative
-sizes.  However, it's still worth fixing.
+During gc_data_segment(), if inode state is abnormal, it missed to call
+iput(), fix it.
 
-Fixes: b54c828bdba9 ("backlight: mp3309c: Make use of device properties")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-Tested-by: Flavio Suligoi <f.suligoi@asem.it>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/74347f67-360d-4513-8939-595e3c4764fa@moroto.mountain
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: b73e52824c89 ("f2fs: reposition unlock_new_inode to prevent accessing invalid inode")
+Fixes: 9056d6489f5a ("f2fs: fix to do sanity check on inode type during garbage collection")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/mp3309c.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/gc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/backlight/mp3309c.c b/drivers/video/backlight/mp3309c.c
-index c80a1481e742b..4e98e60417d23 100644
---- a/drivers/video/backlight/mp3309c.c
-+++ b/drivers/video/backlight/mp3309c.c
-@@ -205,8 +205,9 @@ static int mp3309c_parse_fwnode(struct mp3309c_chip *chip,
- 				struct mp3309c_platform_data *pdata)
- {
- 	int ret, i;
--	unsigned int num_levels, tmp_value;
-+	unsigned int tmp_value;
- 	struct device *dev = chip->dev;
-+	int num_levels;
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 8852814dab7f6..e86c7f01539a7 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1554,10 +1554,15 @@ static int gc_data_segment(struct f2fs_sb_info *sbi, struct f2fs_summary *sum,
+ 			int err;
  
- 	if (!dev_fwnode(dev))
- 		return dev_err_probe(dev, -ENODEV, "failed to get firmware node\n");
+ 			inode = f2fs_iget(sb, dni.ino);
+-			if (IS_ERR(inode) || is_bad_inode(inode) ||
+-					special_file(inode->i_mode))
++			if (IS_ERR(inode))
+ 				continue;
+ 
++			if (is_bad_inode(inode) ||
++					special_file(inode->i_mode)) {
++				iput(inode);
++				continue;
++			}
++
+ 			err = f2fs_gc_pinned_control(inode, gc_type, segno);
+ 			if (err == -EAGAIN) {
+ 				iput(inode);
 -- 
 2.43.0
 
