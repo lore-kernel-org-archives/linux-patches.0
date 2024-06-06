@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B476019E7FF;
-	Thu,  6 Jun 2024 14:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC9319E7FF;
+	Thu,  6 Jun 2024 14:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683542; cv=none; b=QMlq8bTGDjZFD+zb+ZCusBMBzsgUt/wD4x/6yI2snatxca9RWZ53cJhSQX2kNqC0fHt3byhc3nhrMU3RB8+GkoIl7k17hRNQDz+OkmO19hrS/60qk6o5jmeKJzmPAtCJnz1rLOkiExc5uRv0fLf08+VC7RVQCxz1mBQUeeY9mAw=
+	t=1717683543; cv=none; b=Z8zIKYKoZXhGmt9BlUSwNqGrcF4LFZehfqEUGHQNpsKySLZuUoKZeKqqbn1HayTbqt48HT1iWKcJM/FL+uK8XOHd0nbooWQnZuqkJQ/P4AE82rRGw/yYc0wGJWhYSgD330wLyCO0wgT5sFsVth3AqDj1IlycP+XHsN5KwAi4CI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683542; c=relaxed/simple;
-	bh=AFNPBt5EYgUO9I5Wen26gAcdnLfSuY7+GxzD5r56+hk=;
+	s=arc-20240116; t=1717683543; c=relaxed/simple;
+	bh=gQhuXz5l+t7B1I/6P7sKnBdDvHTOPSIyScrsDFCOdA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfKby1wiBV/lF9NERCpTt1X6rkWK9m9dtVptXMPdQxBNghE+0MdhVj1iH81hg4HiiwortooKy1/uM1B91JKrPqxrOXbSHcLVu+JffNJPfl0BxnqaslNSVXj1n8qA1R+AqHLFnUWsJ223nY4xEbCWkN1z3V9836p9jkmNdLkdlNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+LF6gKV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HayDdG04B0lT0vswupCburSWmLrgj5rAK99DCH0KyKxQSxtnOlXErE2ynKtv3FqvbrxmjoBY61yf/vXLJepEu1w5R0UkTmu9Z3mF27+ydkX4E3hncz+qVx1B9eZt2WGM+ngG9045yERNgu8HVJlCjy4WNi8CjKqcDAfKmpXcdYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqQFTGcp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+LF6gKV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96395C32781;
-	Thu,  6 Jun 2024 14:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqQFTGcp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D00C2BD10;
+	Thu,  6 Jun 2024 14:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683542;
-	bh=AFNPBt5EYgUO9I5Wen26gAcdnLfSuY7+GxzD5r56+hk=;
+	s=korg; t=1717683543;
+	bh=gQhuXz5l+t7B1I/6P7sKnBdDvHTOPSIyScrsDFCOdA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+LF6gKVzaJicUuHbTQfOXYxfs+ZASBSotBPggiDn4g20zA/dYYIRVpb0Y18wRJVy
-	 SC0QzPbxoLAQTv3KnqGAHQ3GVEy5pQJOgrP+FCbT3J/zUx2EBMEN+aaJL/JEfrVg8k
-	 HwS5SAbCnyfcYtGjl2Crc/zndeukkHA7n1sqn58c=
+	b=ZqQFTGcp/0psHOkDPIJZFeZzbRceeOPbHFMjcc0ZCrG/TmsVeBiusnI7961iiAC+x
+	 +5zmN6z+4rj7UlXqoHVH/fgg3uOX+inwGRZHTGAZpn+BxR6ywHbUY0cRxByo+QBF9w
+	 +w6uxKPALywG065Rtu2zGCgwm00BAPkkpumLoUFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 432/473] netfilter: nft_payload: restore vlan q-in-q match support
-Date: Thu,  6 Jun 2024 16:06:01 +0200
-Message-ID: <20240606131714.028053966@linuxfoundation.org>
+Subject: [PATCH 6.6 482/744] watchdog: bd9576: Drop "always-running" property
+Date: Thu,  6 Jun 2024 16:02:34 +0200
+Message-ID: <20240606131747.922075320@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,76 +48,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit aff5c01fa1284d606f8e7cbdaafeef2511bb46c1 ]
+[ Upstream commit e3b3afd34d84efcbe4543deb966b1990f43584b8 ]
 
-Revert f6ae9f120dad ("netfilter: nft_payload: add C-VLAN support").
+The always-running (from linux,wdt-gpio.yaml) is abused by the BD9576
+watchdog driver. It's defined meaning is "the watchdog is always running
+and can not be stopped". The BD9576 watchdog driver has implemented it
+as "start watchdog when loading the module and prevent it from being
+stopped".
 
-f41f72d09ee1 ("netfilter: nft_payload: simplify vlan header handling")
-already allows to match on inner vlan tags by subtract the vlan header
-size to the payload offset which has been popped and stored in skbuff
-metadata fields.
+Furthermore, the implementation does not set the WDOG_HW_RUNNING when
+enabling the watchdog due to the "always-running" at module loading.
+This will end up resulting a watchdog timeout if the device is not
+opened.
 
-Fixes: f6ae9f120dad ("netfilter: nft_payload: add C-VLAN support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The culprit was pointed out by Guenter, discussion can be found from
+https://lore.kernel.org/lkml/4fa3a64b-60fb-4e5e-8785-0f14da37eea2@roeck-us.net/
+
+Drop the invalid "always-running" handling.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: b237bcac557a ("wdt: Support wdt on ROHM BD9576MUF and BD9573MUF")
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/ZhPAt76yaJMersXf@fedora
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_payload.c | 23 +++++++----------------
- 1 file changed, 7 insertions(+), 16 deletions(-)
+ drivers/watchdog/bd9576_wdt.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
-index f44f2eaf32172..70d8d87848fc0 100644
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -44,36 +44,27 @@ nft_payload_copy_vlan(u32 *d, const struct sk_buff *skb, u8 offset, u8 len)
- 	int mac_off = skb_mac_header(skb) - skb->data;
- 	u8 *vlanh, *dst_u8 = (u8 *) d;
- 	struct vlan_ethhdr veth;
--	u8 vlan_hlen = 0;
+diff --git a/drivers/watchdog/bd9576_wdt.c b/drivers/watchdog/bd9576_wdt.c
+index 4a20e07fbb699..f00ea1b4e40b6 100644
+--- a/drivers/watchdog/bd9576_wdt.c
++++ b/drivers/watchdog/bd9576_wdt.c
+@@ -29,7 +29,6 @@ struct bd9576_wdt_priv {
+ 	struct gpio_desc	*gpiod_en;
+ 	struct device		*dev;
+ 	struct regmap		*regmap;
+-	bool			always_running;
+ 	struct watchdog_device	wdd;
+ };
+ 
+@@ -62,10 +61,7 @@ static int bd9576_wdt_stop(struct watchdog_device *wdd)
+ {
+ 	struct bd9576_wdt_priv *priv = watchdog_get_drvdata(wdd);
+ 
+-	if (!priv->always_running)
+-		bd9576_wdt_disable(priv);
+-	else
+-		set_bit(WDOG_HW_RUNNING, &wdd->status);
++	bd9576_wdt_disable(priv);
+ 
+ 	return 0;
+ }
+@@ -264,9 +260,6 @@ static int bd9576_wdt_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	priv->always_running = device_property_read_bool(dev->parent,
+-							 "always-running");
 -
--	if ((skb->protocol == htons(ETH_P_8021AD) ||
--	     skb->protocol == htons(ETH_P_8021Q)) &&
--	    offset >= VLAN_ETH_HLEN && offset < VLAN_ETH_HLEN + VLAN_HLEN)
--		vlan_hlen += VLAN_HLEN;
+ 	watchdog_set_drvdata(&priv->wdd, priv);
  
- 	vlanh = (u8 *) &veth;
--	if (offset < VLAN_ETH_HLEN + vlan_hlen) {
-+	if (offset < VLAN_ETH_HLEN) {
- 		u8 ethlen = len;
+ 	priv->wdd.info			= &bd957x_wdt_ident;
+@@ -281,9 +274,6 @@ static int bd9576_wdt_probe(struct platform_device *pdev)
  
--		if (vlan_hlen &&
--		    skb_copy_bits(skb, mac_off, &veth, VLAN_ETH_HLEN) < 0)
--			return false;
--		else if (!nft_payload_rebuild_vlan_hdr(skb, mac_off, &veth))
-+		if (!nft_payload_rebuild_vlan_hdr(skb, mac_off, &veth))
- 			return false;
+ 	watchdog_stop_on_reboot(&priv->wdd);
  
--		if (offset + len > VLAN_ETH_HLEN + vlan_hlen)
--			ethlen -= offset + len - VLAN_ETH_HLEN - vlan_hlen;
-+		if (offset + len > VLAN_ETH_HLEN)
-+			ethlen -= offset + len - VLAN_ETH_HLEN;
+-	if (priv->always_running)
+-		bd9576_wdt_start(&priv->wdd);
+-
+ 	return devm_watchdog_register_device(dev, &priv->wdd);
+ }
  
--		memcpy(dst_u8, vlanh + offset - vlan_hlen, ethlen);
-+		memcpy(dst_u8, vlanh + offset, ethlen);
- 
- 		len -= ethlen;
- 		if (len == 0)
- 			return true;
- 
- 		dst_u8 += ethlen;
--		offset = ETH_HLEN + vlan_hlen;
-+		offset = ETH_HLEN;
- 	} else {
--		offset -= VLAN_HLEN + vlan_hlen;
-+		offset -= VLAN_HLEN;
- 	}
- 
- 	return skb_copy_bits(skb, offset + mac_off, dst_u8, len) == 0;
 -- 
 2.43.0
 
