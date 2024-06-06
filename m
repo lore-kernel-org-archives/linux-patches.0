@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9725A198E70;
-	Thu,  6 Jun 2024 14:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB6F1B4C40;
+	Thu,  6 Jun 2024 14:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683445; cv=none; b=pdS1Yk1ML6B+UPvO0VJuvQ0IPiSoc7Yt6zxPGK6t/pLJssH9t/J++PhzIszfpwD4yeqA0RL5PcqArCfhnYc6UMd54mG1/DuTVgBv2UKX4sWzGLkJsUqXVh5lWIZJLj6bQCyqnSQdykYnZGpIx2Lz+GiCxRsxov9chhSSF1hFMZk=
+	t=1717683446; cv=none; b=pF0egPY3VOGiXsT+XloiLPcuUPJTOLa+XlI09dY+iRLTg9AxKk1OPmRalV5vE7YF7IOtN2hI12ZDTEKvziSrCh8qiSCLpNY69wp5+vIy4WeLeJjxXYMhlNWoFs2nMXyz7r+3Q1JFLzD6SZIQB3mWIqH3CACz4ftbt7bWqk1tVdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683445; c=relaxed/simple;
-	bh=g4asM2f2VTEZaFRCRTQ8rQTmUNDSrIiAj/9ziJCM5mc=;
+	s=arc-20240116; t=1717683446; c=relaxed/simple;
+	bh=RxxCfO+OXqtz+nxdAhc11dGmTo+YT0iFXGShEmJfCU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBrEAx+cqKu4ijuk3mO8PAazoFDTIzoOrGAK3BA6YGBt7ka70F1vtGhzvqfUOKYUDClXtIqbmypvCABPIP0kp7BjpP4RmtHR6gbnPE8zTHjsYdv+KnZrKpv1uE4KjYs6ZhQfz2TOGhIlMiJX0r1ifWV5QdZ1/NBODs7zlEwW8dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1btvGEF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DaKbHUZmJ5IHTjvEv66MazFkq0tVO5/ZAG1Pr2RGvGVxenPptWWg9tRxb7mf6H1zC1RoKfMg0vBTLMcxM0wrPOKT58/K6M9LYWQf4QQHULbY6CfAeJcUeQKbcGFjH7lb9Je4tw3iEwv5Bl+GWVyhHsHI/0FGlI+TypAIRCXBZu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ml5IM6x1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1btvGEF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6801EC4AF07;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ml5IM6x1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB676C2BD10;
 	Thu,  6 Jun 2024 14:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683445;
-	bh=g4asM2f2VTEZaFRCRTQ8rQTmUNDSrIiAj/9ziJCM5mc=;
+	bh=RxxCfO+OXqtz+nxdAhc11dGmTo+YT0iFXGShEmJfCU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1btvGEFBHuYyzxUckVH5xeFx65D+6UI/2ObI99eb+osOqqxeLlZQEHzUd5dAbCBc
-	 dP9CkXkmYb1RqtY9KUgIcDkRU8kY5MbgEm69lo59+uxpYVWKC27mgwuDHasVvybHLe
-	 zhKIDvqz4mlY6XtQBp7zvIsYOVzmzcUravfe6eTo=
+	b=Ml5IM6x1p9Rt+EnRqoWdQ991GhXzm6JCaISkGzXyWgEsSy6h+lJL6QjEgryvfNQC3
+	 JuicMkIb2eewTfFFTXwlqXgy/pk7+QR34IokG+yR5r/iCatC4kZO/6RhryugGO2Li3
+	 S73PYfFe1a3FWRSZ1TzxtiECEJrzw2/lb8oXBaII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chris Wulff <chris.wulff@biamp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 389/744] net: wangxun: fix to change Rx features
-Date: Thu,  6 Jun 2024 16:01:01 +0200
-Message-ID: <20240606131744.942617277@linuxfoundation.org>
+Subject: [PATCH 6.1 330/473] usb: gadget: u_audio: Clear uac pointer when freed.
+Date: Thu,  6 Jun 2024 16:04:19 +0200
+Message-ID: <20240606131710.843874981@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Chris Wulff <Chris.Wulff@biamp.com>
 
-[ Upstream commit 68067f065ee730c7c67b361c3c81808d25d5a90b ]
+[ Upstream commit a2cf936ebef291ef7395172b9e2f624779fb6dc0 ]
 
-Fix the issue where some Rx features cannot be changed.
+This prevents use of a stale pointer if functions are called after
+g_cleanup that shouldn't be. This doesn't fix any races, but converts
+a possibly silent kernel memory corruption into an obvious NULL pointer
+dereference report.
 
-When using ethtool -K to turn off rx offload, it returns error and
-displays "Could not change any device features". And netdev->features
-is not assigned a new value to actually configure the hardware.
-
-Fixes: 6dbedcffcf54 ("net: libwx: Implement xx_set_features ops")
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: eb9fecb9e69b ("usb: gadget: f_uac2: split out audio core")
+Signed-off-by: Chris Wulff <chris.wulff@biamp.com>
+Link: https://lore.kernel.org/stable/CO1PR17MB54194226DA08BFC9EBD8C163E1172%40CO1PR17MB5419.namprd17.prod.outlook.com
+Link: https://lore.kernel.org/r/CO1PR17MB54194226DA08BFC9EBD8C163E1172@CO1PR17MB5419.namprd17.prod.outlook.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_audio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-index be434c833c69c..e9310d9ca67c9 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -2646,12 +2646,14 @@ int wx_set_features(struct net_device *netdev, netdev_features_t features)
- 	else
- 		wr32m(wx, WX_RDB_RA_CTL, WX_RDB_RA_CTL_RSS_EN, 0);
+diff --git a/drivers/usb/gadget/function/u_audio.c b/drivers/usb/gadget/function/u_audio.c
+index c8e8154c59f50..ec1dceb087293 100644
+--- a/drivers/usb/gadget/function/u_audio.c
++++ b/drivers/usb/gadget/function/u_audio.c
+@@ -1419,6 +1419,8 @@ void g_audio_cleanup(struct g_audio *g_audio)
+ 		return;
  
-+	netdev->features = features;
+ 	uac = g_audio->uac;
++	g_audio->uac = NULL;
 +
- 	if (changed &
- 	    (NETIF_F_HW_VLAN_CTAG_RX |
- 	     NETIF_F_HW_VLAN_STAG_RX))
- 		wx_set_rx_mode(netdev);
- 
--	return 1;
-+	return 0;
- }
- EXPORT_SYMBOL(wx_set_features);
- 
+ 	card = uac->card;
+ 	if (card)
+ 		snd_card_free_when_closed(card);
 -- 
 2.43.0
 
