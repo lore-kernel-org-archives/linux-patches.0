@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02EC1AC24F;
-	Thu,  6 Jun 2024 14:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7060F1AC24F;
+	Thu,  6 Jun 2024 14:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683330; cv=none; b=SAiCVRk1CVAHOWhU4M+GiEnWC1hBlZR6pH3kbJd1HrsKNZdgcXYGVAN0qtw06Q7O0Hf+tWBAW24R6XYEk8JCKHeZJHt0It/OZP9WLdCW7dI2GREip7U3l/Yhvsvb73M6Nygr0/mU9g6xK3MMf7VjOQZzImR9wpcuO/fR/FHIUh0=
+	t=1717683330; cv=none; b=q1EpXriznCuIX+Z6dnxffQzqneHnxsODs5TKH4GF4pYZCBztTZFmP/LchqiIf4YOX6CYdq3HU1Rdcq59Tnhwlqw+q0jcf5uAxH4bsVdo7elJ+oLeRaypvSLAc5MLuE05W8+iQWT/5cvYhO+3fUQ2CxPEGbUNjqunrAO3AyiDjes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683330; c=relaxed/simple;
-	bh=Q4/gLcdvaBmAJjs5ltWiMROBMsCNlZVHICS4lelOOjk=;
+	bh=XlsqbfZmhN9Vg2qml271kTdrSs97XoH2GfzMokTFK6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+Sks7qqnwUvekJlItU4aCryRVzMCgchxQVj59YDaHQFFAU1cPXRtasJO1QrtHAhJ0Ds8bI4cVlGoPZgKg1QsZVNbYOGJHv3g+kEYzZZwITsfTwOXb2ZlgaGkJmRwUgmU/v6Z+Et19DyUzpEYEUFircSIBzt2bwVm1oGY26plLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Xud/jHl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rv99FGz2qhxxInFZndH8O0o6OFIivTcZKGR0w1Whw+bZcLFNMJaY2wDShDwe3AhraJIlmCglTSrZFcfXj9cQNnPtTR/jjbnXgR39mWDNq+jYbD2Dgve1pUCWpM8fEQXLf46FplfXei7WcFjWpLvf8HgumiL1hxP83tjQuaNYUlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLVS8y/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Xud/jHl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD270C2BD10;
-	Thu,  6 Jun 2024 14:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLVS8y/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1A5C2BD10;
+	Thu,  6 Jun 2024 14:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683329;
-	bh=Q4/gLcdvaBmAJjs5ltWiMROBMsCNlZVHICS4lelOOjk=;
+	s=korg; t=1717683330;
+	bh=XlsqbfZmhN9Vg2qml271kTdrSs97XoH2GfzMokTFK6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Xud/jHlDI20Jeox6bRMB4/qted4QXKdflvHkM+eui8PPhRsnpWlP6Fp4p4oyzDuR
-	 RLF6o+PtOS4XjdaDSWHAeoLrpBzmtsh6jzLrblYurzvyxcxKREkabtOQlZa3P9lrpD
-	 emGNfHzzZRK7b33bIOSg9ltFZHBpIitqiqmvJhu8=
+	b=JLVS8y/aXHL3qbBrDMdesSa1d/QwL7T8ELH3HxFsJnL6I7wyXzWUVQiy6sVZN3tMu
+	 //b7+Xd5g1qVzrOl/9bz7pE7dPKseWTahIoNmyiJLTn/4DjDaVCXkpFMneRlJY3TBp
+	 etxRiNfuqmPWQ7vjQFKYg/DLeukDnDUS2GyuzeQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tony Lindgren <tony@atomide.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 271/744] drm/omapdrm: Fix console by implementing fb_dirty
-Date: Thu,  6 Jun 2024 15:59:03 +0200
-Message-ID: <20240606131741.063469209@linuxfoundation.org>
+Subject: [PATCH 6.1 212/473] drm: bridge: cdns-mhdp8546: Fix possible null pointer dereference
+Date: Thu,  6 Jun 2024 16:02:21 +0200
+Message-ID: <20240606131706.927607359@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 632bac50544c0929ced9eed41e7d04c08adecbb0 ]
+[ Upstream commit 935a92a1c400285545198ca2800a4c6c519c650a ]
 
-The framebuffer console stopped updating with commit f231af498c29
-("drm/fb-helper: Disconnect damage worker from update logic").
+In cdns_mhdp_atomic_enable(), the return value of drm_mode_duplicate() is
+assigned to mhdp_state->current_mode, and there is a dereference of it in
+drm_mode_set_name(), which will lead to a NULL pointer dereference on
+failure of drm_mode_duplicate().
 
-Let's fix the issue by implementing fb_dirty similar to what was done
-with commit 039a72ce7e57 ("drm/i915/fbdev: Implement fb_dirty for intel
-custom fb helper").
+Fix this bug add a check of mhdp_state->current_mode.
 
-Fixes: f231af498c29 ("drm/fb-helper: Disconnect damage worker from update logic")
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240228063540.4444-2-tony@atomide.com
+Fixes: fb43aa0acdfd ("drm: bridge: Add support for Cadence MHDP8546 DPI/DP bridge")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240408125810.21899-1-amishin@t-argos.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/omapdrm/omap_fbdev.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-index 6b08b137af1ad..7c5af3de1e727 100644
---- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
-+++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-@@ -238,8 +238,20 @@ static int omap_fbdev_create(struct drm_fb_helper *helper,
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+index 31442a9225029..1b7c14d7c5ee3 100644
+--- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+@@ -2042,6 +2042,9 @@ static void cdns_mhdp_atomic_enable(struct drm_bridge *bridge,
+ 	mhdp_state = to_cdns_mhdp_bridge_state(new_state);
  
-+static int omap_fbdev_dirty(struct drm_fb_helper *helper, struct drm_clip_rect *clip)
-+{
-+	if (!(clip->x1 < clip->x2 && clip->y1 < clip->y2))
-+		return 0;
+ 	mhdp_state->current_mode = drm_mode_duplicate(bridge->dev, mode);
++	if (!mhdp_state->current_mode)
++		return;
 +
-+	if (helper->fb->funcs->dirty)
-+		return helper->fb->funcs->dirty(helper->fb, NULL, 0, 0, clip, 1);
-+
-+	return 0;
-+}
-+
- static const struct drm_fb_helper_funcs omap_fb_helper_funcs = {
- 	.fb_probe = omap_fbdev_create,
-+	.fb_dirty = omap_fbdev_dirty,
- };
+ 	drm_mode_set_name(mhdp_state->current_mode);
  
- static struct drm_fb_helper *get_fb(struct fb_info *fbi)
+ 	dev_dbg(mhdp->dev, "%s: Enabling mode %s\n", __func__, mode->name);
 -- 
 2.43.0
 
