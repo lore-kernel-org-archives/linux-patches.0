@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE87B196D8C;
-	Thu,  6 Jun 2024 14:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1F9196D8C;
+	Thu,  6 Jun 2024 14:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682921; cv=none; b=KMBdgn6RATjDjB65WJ9SC2GWvxziAD+7aXkKz3AADALkl5sThY0XD61EYelRpZnZA6QeqCUu3+wb8vDnHaOndzm8/kQVLpi7MyUE7/IA6L8aswuAiOo3doz+ffC+GQvoqNDP9Vd1ZnTdRGQKXOth3p6ovn4DQuzln2dvfYYN+iU=
+	t=1717682922; cv=none; b=ev70WXp4twNxcRlol9ldDIOqQsSX1ywPrtUYzwG7GocNeR3/utPgD12fBakSxuvy4RHa/G6Ye6PuWEI5SoXkmkqeD7vAvKiBjAG+BajzoTLY3vQFWbiAg3rPv3Aopfa4YZqtg9hA/OKufKsbsbFV8k9yRQmyVoGOl+XUgSJplr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682921; c=relaxed/simple;
-	bh=RohI7eUCKElc195ywQ74OfIw1WRMywN0swFYfqG9scE=;
+	s=arc-20240116; t=1717682922; c=relaxed/simple;
+	bh=XcPkhZ9oCYH89D/GuhIzJ6hm50cD4/lg9XHJwUbrAY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuepMmhv1S8YBzi3ciPws20ucA5FcE8rW0zGtS9W/z1yhUSVREvlVhJjX+91K4uw8mLT3nwIwRvjo/kLNinPC1WhUaPN9hWlijoo49HCfgpsLUVdUpRSPF2+jM+9uvPGzwX7cedTk3qFeibnwb4EQeRvFsTuqmXWYKhU1wAJre0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dkb2lEa4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b+buayek8KwI0Hp0YoOdv+InQTXXybCZ9KsicbxEYdPMcTKCYockGCplHt04ftHyJvA8+t/CsWE9D3vcy6GU/L+6/uo8J8mEZikZVls+C90+oXG5H7lOFcRONalMF1PUg+sAMOeDkA2ccqqIahKXFVj9g+JrRmjvANprGj4emBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwgIw+Jl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dkb2lEa4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E91C2BD10;
-	Thu,  6 Jun 2024 14:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwgIw+Jl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24986C2BD10;
+	Thu,  6 Jun 2024 14:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682921;
-	bh=RohI7eUCKElc195ywQ74OfIw1WRMywN0swFYfqG9scE=;
+	s=korg; t=1717682922;
+	bh=XcPkhZ9oCYH89D/GuhIzJ6hm50cD4/lg9XHJwUbrAY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dkb2lEa4QlbgZl6tFACf7ej4YymSnsZSZoEoCgE37pkYw/Tq/ZIiZgkzqFE4akS6v
-	 dZIcqJBe220H6c/+Urhzb2fUv9iHE1rcakj2qCxwr7fzEbOhsmFDFhMiqbos0/rTfK
-	 RKMAsN2XuIUuiiuHcMfmxgIycBYOxyKRTDba9bCc=
+	b=HwgIw+JlwIqFeFDh+pdvSj/r75pzbCTD7yduSS8YgQX5cf9yHZB2P8r2x/5R07gY1
+	 uA/HQlk47U8D2bt7cghvFpgAPfBz0QAVR+6TFTcPrTq9WjFDufv2A41Use7g0czyV2
+	 qvIbaAuJcvypqKHku7bmYtPwRlycbMs8zNMFrrFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 061/374] pinctrl: renesas: r8a779h0: Fix IRQ suffixes
-Date: Thu,  6 Jun 2024 16:00:40 +0200
-Message-ID: <20240606131653.904309605@linuxfoundation.org>
+Subject: [PATCH 6.9 062/374] udf: Convert udf_expand_file_adinicb() to use a folio
+Date: Thu,  6 Jun 2024 16:00:41 +0200
+Message-ID: <20240606131653.931689628@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -50,78 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit c3bec9547c1be0cce3060368dd92abf610c65f24 ]
+[ Upstream commit db6754090a4f99c67e05ae6b87343ba6e013531f ]
 
-The suffixes of the IRQ identifiers, as used for pins related to the
-Interrupt Controller for External Devices (INTC-EX), are inconsistent.
-Correct them to match the Pin Multiplex attachment in Rev.0.51 of the
-R-Car V4M Series Hardware User's Manual.
+Use the folio APIs throughout this function.
 
-Fixes: 291f7856fc451cbe ("pinctrl: renesas: Initial R8A779H0 (R-Car V4M) PFC support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/7d3c7498d9e8eda5583b15f9163eb25bb797ed24.1713282028.git.geert+renesas@glider.be
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: 1eeceaec794e ("udf: Convert udf_expand_file_adinicb() to avoid kmap_atomic()")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Message-Id: <20240417150416.752929-4-willy@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pfc-r8a779h0.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ fs/udf/inode.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pfc-r8a779h0.c b/drivers/pinctrl/renesas/pfc-r8a779h0.c
-index afa8f06c85cf5..0cbfe7637fc97 100644
---- a/drivers/pinctrl/renesas/pfc-r8a779h0.c
-+++ b/drivers/pinctrl/renesas/pfc-r8a779h0.c
-@@ -75,10 +75,10 @@
- #define GPSR0_9		F_(MSIOF5_SYNC,		IP1SR0_7_4)
- #define GPSR0_8		F_(MSIOF5_SS1,		IP1SR0_3_0)
- #define GPSR0_7		F_(MSIOF5_SS2,		IP0SR0_31_28)
--#define GPSR0_6		F_(IRQ0,		IP0SR0_27_24)
--#define GPSR0_5		F_(IRQ1,		IP0SR0_23_20)
--#define GPSR0_4		F_(IRQ2,		IP0SR0_19_16)
--#define GPSR0_3		F_(IRQ3,		IP0SR0_15_12)
-+#define GPSR0_6		F_(IRQ0_A,		IP0SR0_27_24)
-+#define GPSR0_5		F_(IRQ1_A,		IP0SR0_23_20)
-+#define GPSR0_4		F_(IRQ2_A,		IP0SR0_19_16)
-+#define GPSR0_3		F_(IRQ3_A,		IP0SR0_15_12)
- #define GPSR0_2		F_(GP0_02,		IP0SR0_11_8)
- #define GPSR0_1		F_(GP0_01,		IP0SR0_7_4)
- #define GPSR0_0		F_(GP0_00,		IP0SR0_3_0)
-@@ -265,10 +265,10 @@
- #define IP0SR0_3_0	F_(0, 0)		FM(ERROROUTC_N_B)	FM(TCLK2_B)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP0SR0_7_4	F_(0, 0)		FM(MSIOF3_SS1)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP0SR0_11_8	F_(0, 0)		FM(MSIOF3_SS2)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR0_15_12	FM(IRQ3)		FM(MSIOF3_SCK)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR0_19_16	FM(IRQ2)		FM(MSIOF3_TXD)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR0_23_20	FM(IRQ1)		FM(MSIOF3_RXD)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR0_27_24	FM(IRQ0)		FM(MSIOF3_SYNC)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR0_15_12	FM(IRQ3_A)		FM(MSIOF3_SCK)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR0_19_16	FM(IRQ2_A)		FM(MSIOF3_TXD)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR0_23_20	FM(IRQ1_A)		FM(MSIOF3_RXD)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR0_27_24	FM(IRQ0_A)		FM(MSIOF3_SYNC)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP0SR0_31_28	FM(MSIOF5_SS2)		F_(0, 0)		F_(0, 0)	F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+diff --git a/fs/udf/inode.c b/fs/udf/inode.c
+index 2f831a3a91afe..bbf8918417fd8 100644
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -341,7 +341,7 @@ const struct address_space_operations udf_aops = {
+  */
+ int udf_expand_file_adinicb(struct inode *inode)
+ {
+-	struct page *page;
++	struct folio *folio;
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
+ 	int err;
  
- /* IP1SR0 */		/* 0 */			/* 1 */			/* 2 */		/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
-@@ -672,16 +672,16 @@ static const u16 pinmux_data[] = {
+@@ -357,12 +357,13 @@ int udf_expand_file_adinicb(struct inode *inode)
+ 		return 0;
+ 	}
  
- 	PINMUX_IPSR_GPSR(IP0SR0_11_8,	MSIOF3_SS2),
+-	page = find_or_create_page(inode->i_mapping, 0, GFP_KERNEL);
+-	if (!page)
+-		return -ENOMEM;
++	folio = __filemap_get_folio(inode->i_mapping, 0,
++			FGP_LOCK | FGP_ACCESSED | FGP_CREAT, GFP_KERNEL);
++	if (IS_ERR(folio))
++		return PTR_ERR(folio);
  
--	PINMUX_IPSR_GPSR(IP0SR0_15_12,	IRQ3),
-+	PINMUX_IPSR_GPSR(IP0SR0_15_12,	IRQ3_A),
- 	PINMUX_IPSR_GPSR(IP0SR0_15_12,	MSIOF3_SCK),
+-	if (!PageUptodate(page))
+-		udf_adinicb_readpage(page);
++	if (!folio_test_uptodate(folio))
++		udf_adinicb_readpage(&folio->page);
+ 	down_write(&iinfo->i_data_sem);
+ 	memset(iinfo->i_data + iinfo->i_lenEAttr, 0x00,
+ 	       iinfo->i_lenAlloc);
+@@ -371,22 +372,22 @@ int udf_expand_file_adinicb(struct inode *inode)
+ 		iinfo->i_alloc_type = ICBTAG_FLAG_AD_SHORT;
+ 	else
+ 		iinfo->i_alloc_type = ICBTAG_FLAG_AD_LONG;
+-	set_page_dirty(page);
+-	unlock_page(page);
++	folio_mark_dirty(folio);
++	folio_unlock(folio);
+ 	up_write(&iinfo->i_data_sem);
+ 	err = filemap_fdatawrite(inode->i_mapping);
+ 	if (err) {
+ 		/* Restore everything back so that we don't lose data... */
+-		lock_page(page);
++		folio_lock(folio);
+ 		down_write(&iinfo->i_data_sem);
+-		memcpy_to_page(page, 0, iinfo->i_data + iinfo->i_lenEAttr,
+-			       inode->i_size);
+-		unlock_page(page);
++		memcpy_from_folio(iinfo->i_data + iinfo->i_lenEAttr,
++				folio, 0, inode->i_size);
++		folio_unlock(folio);
+ 		iinfo->i_alloc_type = ICBTAG_FLAG_AD_IN_ICB;
+ 		iinfo->i_lenAlloc = inode->i_size;
+ 		up_write(&iinfo->i_data_sem);
+ 	}
+-	put_page(page);
++	folio_put(folio);
+ 	mark_inode_dirty(inode);
  
--	PINMUX_IPSR_GPSR(IP0SR0_19_16,	IRQ2),
-+	PINMUX_IPSR_GPSR(IP0SR0_19_16,	IRQ2_A),
- 	PINMUX_IPSR_GPSR(IP0SR0_19_16,	MSIOF3_TXD),
- 
--	PINMUX_IPSR_GPSR(IP0SR0_23_20,	IRQ1),
-+	PINMUX_IPSR_GPSR(IP0SR0_23_20,	IRQ1_A),
- 	PINMUX_IPSR_GPSR(IP0SR0_23_20,	MSIOF3_RXD),
- 
--	PINMUX_IPSR_GPSR(IP0SR0_27_24,	IRQ0),
-+	PINMUX_IPSR_GPSR(IP0SR0_27_24,	IRQ0_A),
- 	PINMUX_IPSR_GPSR(IP0SR0_27_24,	MSIOF3_SYNC),
- 
- 	PINMUX_IPSR_GPSR(IP0SR0_31_28,	MSIOF5_SS2),
+ 	return err;
 -- 
 2.43.0
 
