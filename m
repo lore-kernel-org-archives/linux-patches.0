@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2B81A0DFB;
-	Thu,  6 Jun 2024 14:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF3A1A0DFD;
+	Thu,  6 Jun 2024 14:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683698; cv=none; b=Yh/VPqti/X4XmjVCTdmZnEoVaGIbykC4+LGfi2ojR4knF/2Y6AD6hU0wgWsP0uGSLg5Rq6L9ag+WGn4rbU52wi3kRji17N2EFdvEag1bdsPZ4hQlf3yjaKVUlx1yZ2bXvUqaC+LBWjCohO3R2pnGS8coskb+cIKo349rgJlIIUk=
+	t=1717683699; cv=none; b=GDSUSXull3WlRTABoj/38lUWrNUUPLNAJSf9WLOWMYZMyfo3tkkMxeoylSVX2udvyv/rqKgj5SFgGkVSvDcCpTEk6JizXjRlOKUL+HY7ql3Y5Czc4/tiazPp3HNsM/WY34NSj7xoOxE28WNQkCf6PEHeTJteOhh8YEskjwLpmNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683698; c=relaxed/simple;
-	bh=jOKTcvo5nN1m8KDpnqxiz/Jzw6woKLVqz13y1OviAJg=;
+	s=arc-20240116; t=1717683699; c=relaxed/simple;
+	bh=pi/mIJHCRrJCF8A8UWi1xdSP6LqG1rPpqlX2Ef4zAg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqE3+Mo7DWIYzYiKKg0h76tVfHJhbCS0aqvPrXbj/qxO/haUiSbYlcZ2S/KfQtzaA5OBajHQJqfgSX1cA24uln1BaknwrMXvp8JviZBekVUKwG4OfxmBmt+V5wOkAgoB3VyxP4uetIVuLglL5ub3BoOvRZjwS6QQssMQ7yfMiMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BlrJhc27; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o7OJZKlxUi16LbIw+ZK+YIFFUqk6UscSRLkED/quFHyn5+tdBVTCAjI6vCDPkE1uvsmOj4PyVPOjXflLVz9Jki8o1wIR2BMpGs09/oU3o/AIGVTG2PULHtWigmBnufpmrhJcJe+6xXVgsYvrDGy4DWhZgtJZmf8bZSe8TY88NwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwwDAG/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlrJhc27"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC87C2BD10;
-	Thu,  6 Jun 2024 14:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwwDAG/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04576C2BD10;
+	Thu,  6 Jun 2024 14:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683698;
-	bh=jOKTcvo5nN1m8KDpnqxiz/Jzw6woKLVqz13y1OviAJg=;
+	s=korg; t=1717683699;
+	bh=pi/mIJHCRrJCF8A8UWi1xdSP6LqG1rPpqlX2Ef4zAg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BlrJhc27HTY5KKLyTtUE5b3NNhiwU5bGO1RyOjbBSuqhJ8FSKp2m3DZL2KfssUBif
-	 0Nnh3oLresRR0L1Xtx9ebHsBBd8xo782vgxlKzdYKLx0Ttv8KUyux2IXBPMGWvvSrE
-	 J4iZSNABuXW8Oy880TuvJ21O+uYSJikFateQ3HBM=
+	b=pwwDAG/S+74zE9eWimS2hYPV8o0U/V7fXBAsnwZXNUXw+mOZ9mFAi2gIYsNCmQvyh
+	 AZj0TxLWOTU4jH4w4RnJ4xaiVSIvT2BHgMllCagHTnjfF0+XesFKE+5Pjo/tXhLgeP
+	 POcAcD4YBMDAHAK9zAOAg6e+GfsuNPQqO/oOt4x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 618/744] ALSA: hda/cs_dsp_ctl: Use private_free for control cleanup
-Date: Thu,  6 Jun 2024 16:04:50 +0200
-Message-ID: <20240606131752.326242125@linuxfoundation.org>
+Subject: [PATCH 6.6 619/744] ASoC: cs35l56: Fix to ensure ASP1 registers match cache
+Date: Thu,  6 Jun 2024 16:04:51 +0200
+Message-ID: <20240606131752.353066760@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,141 +53,167 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 172811e3a557d8681a5e2d0f871dc04a2d17eb13 ]
+[ Upstream commit 72a77d7631c6e392677c0134343cf5edcd3a4572 ]
 
-Use the control private_free callback to free the associated data
-block. This ensures that the memory won't leak, whatever way the
-control gets destroyed.
+Add a dummy SUPPLY widget connected to the ASP that forces the
+chip registers to match the regmap cache when the ASP is
+powered-up.
 
-The original implementation didn't actually remove the ALSA
-controls in hda_cs_dsp_control_remove(). It only freed the internal
-tracking structure. This meant it was possible to remove/unload the
-amp driver while leaving its ALSA controls still present in the
-soundcard. Obviously attempting to access them could cause segfaults
-or at least dereferencing stale pointers.
+On a SoundWire system the ASP is free for use as a chip-to-chip
+interconnect. This can be either for the firmware on multiple
+CS35L56 to share reference audio; or as a bridge to another
+device. If it is a firmware interconnect it is owned by the
+firmware and the Linux driver should avoid writing the registers.
+However. If it is a bridge then Linux may take over and handle
+it as a normal codec-to-codec link.
+
+CS35L56 is designed for SDCA and a generic SDCA driver would
+know nothing about these chip-specific registers. So if the
+ASP is being used on a SoundWire system the firmware sets up the
+ASP registers. This means that we can't assume the default
+state of the ASP registers. But we don't know the initial state
+that the firmware set them to until after the firmware has been
+downloaded and booted, which can take several seconds when
+downloading multiple amps.
+
+To avoid blocking probe() for several seconds waiting for the
+firmware, the silicon defaults are assumed. This allows the machine
+driver to setup the ASP configuration during probe() without being
+blocked. If the ASP is hooked up and used, the SUPPLY widget
+ensures that the chip registers match what was configured in the
+regmap cache.
+
+If the machine driver does not hook up the ASP, it is assumed that
+it won't call any functions to configure the ASP DAI. Therefore
+the regmap cache will be clean for these registers so a
+regcache_sync() will not overwrite the chip registers. If the
+DAI is not hooked up, the dummy SUPPLY widget will not be
+invoked so it will never force-overwrite the chip registers.
+
+Backport note:
+This won't apply cleanly to kernels older than v6.6.
 
 Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 3233b978af23 ("ALSA: hda: hda_cs_dsp_ctl: Add Library to support CS_DSP ALSA controls")
-Link: https://lore.kernel.org/r/20240508095627.44476-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: e49611252900 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
+Link: https://msgid.link/r/20240129162737.497-8-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: d344873c4cbd ("ALSA: hda: cs35l56: Fix lifetime of cs_dsp instance")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_cs_dsp_ctl.c | 47 ++++++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 16 deletions(-)
+ include/sound/cs35l56.h           |  1 +
+ sound/soc/codecs/cs35l56-shared.c | 41 +++++++++++++++++++++++++++++++
+ sound/soc/codecs/cs35l56.c        | 21 ++++++++++++++++
+ 3 files changed, 63 insertions(+)
 
-diff --git a/sound/pci/hda/hda_cs_dsp_ctl.c b/sound/pci/hda/hda_cs_dsp_ctl.c
-index 463ca06036bfe..9db45d7c17e5f 100644
---- a/sound/pci/hda/hda_cs_dsp_ctl.c
-+++ b/sound/pci/hda/hda_cs_dsp_ctl.c
-@@ -8,6 +8,7 @@
+diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
+index 3950322bf3cbb..4e5f35dc042a1 100644
+--- a/include/sound/cs35l56.h
++++ b/include/sound/cs35l56.h
+@@ -273,6 +273,7 @@ extern const char * const cs35l56_tx_input_texts[CS35L56_NUM_INPUT_SRC];
+ extern const unsigned int cs35l56_tx_input_values[CS35L56_NUM_INPUT_SRC];
  
- #include <linux/module.h>
- #include <sound/soc.h>
-+#include <linux/cleanup.h>
- #include <linux/firmware/cirrus/cs_dsp.h>
- #include <linux/firmware/cirrus/wmfw.h>
- #include "hda_cs_dsp_ctl.h"
-@@ -97,11 +98,23 @@ static unsigned int wmfw_convert_flags(unsigned int in)
- 	return out;
+ int cs35l56_set_patch(struct cs35l56_base *cs35l56_base);
++int cs35l56_force_sync_asp1_registers_from_cache(struct cs35l56_base *cs35l56_base);
+ int cs35l56_mbox_send(struct cs35l56_base *cs35l56_base, unsigned int command);
+ int cs35l56_firmware_shutdown(struct cs35l56_base *cs35l56_base);
+ int cs35l56_wait_for_firmware_boot(struct cs35l56_base *cs35l56_base);
+diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
+index afd12d853ce4c..12291242362b4 100644
+--- a/sound/soc/codecs/cs35l56-shared.c
++++ b/sound/soc/codecs/cs35l56-shared.c
+@@ -194,6 +194,47 @@ static bool cs35l56_volatile_reg(struct device *dev, unsigned int reg)
+ 	}
  }
  
--static void hda_cs_dsp_add_kcontrol(struct hda_cs_dsp_coeff_ctl *ctl, const char *name)
-+static void hda_cs_dsp_free_kcontrol(struct snd_kcontrol *kctl)
- {
-+	struct hda_cs_dsp_coeff_ctl *ctl = (struct hda_cs_dsp_coeff_ctl *)snd_kcontrol_chip(kctl);
- 	struct cs_dsp_coeff_ctl *cs_ctl = ctl->cs_ctl;
++/*
++ * The firmware boot sequence can overwrite the ASP1 config registers so that
++ * they don't match regmap's view of their values. Rewrite the values from the
++ * regmap cache into the hardware registers.
++ */
++int cs35l56_force_sync_asp1_registers_from_cache(struct cs35l56_base *cs35l56_base)
++{
++	struct reg_sequence asp1_regs[] = {
++		{ .reg = CS35L56_ASP1_ENABLES1 },
++		{ .reg = CS35L56_ASP1_CONTROL1 },
++		{ .reg = CS35L56_ASP1_CONTROL2 },
++		{ .reg = CS35L56_ASP1_CONTROL3 },
++		{ .reg = CS35L56_ASP1_FRAME_CONTROL1 },
++		{ .reg = CS35L56_ASP1_FRAME_CONTROL5 },
++		{ .reg = CS35L56_ASP1_DATA_CONTROL1 },
++		{ .reg = CS35L56_ASP1_DATA_CONTROL5 },
++	};
++	int i, ret;
 +
-+	/* NULL priv to prevent a double-free in hda_cs_dsp_control_remove() */
-+	cs_ctl->priv = NULL;
-+	kfree(ctl);
++	/* Read values from regmap cache into a write sequence */
++	for (i = 0; i < ARRAY_SIZE(asp1_regs); ++i) {
++		ret = regmap_read(cs35l56_base->regmap, asp1_regs[i].reg, &asp1_regs[i].def);
++		if (ret)
++			goto err;
++	}
++
++	/* Write the values cache-bypassed so that they will be written to silicon */
++	ret = regmap_multi_reg_write_bypassed(cs35l56_base->regmap, asp1_regs,
++					      ARRAY_SIZE(asp1_regs));
++	if (ret)
++		goto err;
++
++	return 0;
++
++err:
++	dev_err(cs35l56_base->dev, "Failed to sync ASP1 registers: %d\n", ret);
++
++	return ret;
++}
++EXPORT_SYMBOL_NS_GPL(cs35l56_force_sync_asp1_registers_from_cache, SND_SOC_CS35L56_SHARED);
++
+ int cs35l56_mbox_send(struct cs35l56_base *cs35l56_base, unsigned int command)
+ {
+ 	unsigned int val;
+diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
+index 530f6e06b41d5..c855ef3ec665e 100644
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -277,6 +277,21 @@ static SOC_VALUE_ENUM_SINGLE_DECL(cs35l56_sdw1tx4_enum,
+ static const struct snd_kcontrol_new sdw1_tx4_mux =
+ 	SOC_DAPM_ENUM("SDW1TX4 SRC", cs35l56_sdw1tx4_enum);
+ 
++static int cs35l56_asp1_cfg_event(struct snd_soc_dapm_widget *w,
++				  struct snd_kcontrol *kcontrol, int event)
++{
++	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
++	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
++
++	switch (event) {
++	case SND_SOC_DAPM_PRE_PMU:
++		/* Override register values set by firmware boot */
++		return cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
++	default:
++		return 0;
++	}
 +}
 +
-+static void hda_cs_dsp_add_kcontrol(struct cs_dsp_coeff_ctl *cs_ctl,
-+				    const struct hda_cs_dsp_ctl_info *info,
-+				    const char *name)
-+{
- 	struct snd_kcontrol_new kcontrol = {0};
- 	struct snd_kcontrol *kctl;
-+	struct hda_cs_dsp_coeff_ctl *ctl __free(kfree) = NULL;
- 	int ret = 0;
- 
- 	if (cs_ctl->len > ADSP_MAX_STD_CTRL_SIZE) {
-@@ -110,6 +123,13 @@ static void hda_cs_dsp_add_kcontrol(struct hda_cs_dsp_coeff_ctl *ctl, const char
- 		return;
- 	}
- 
-+	ctl = kzalloc(sizeof(*ctl), GFP_KERNEL);
-+	if (!ctl)
-+		return;
-+
-+	ctl->cs_ctl = cs_ctl;
-+	ctl->card = info->card;
-+
- 	kcontrol.name = name;
- 	kcontrol.info = hda_cs_dsp_coeff_info;
- 	kcontrol.iface = SNDRV_CTL_ELEM_IFACE_MIXER;
-@@ -117,20 +137,22 @@ static void hda_cs_dsp_add_kcontrol(struct hda_cs_dsp_coeff_ctl *ctl, const char
- 	kcontrol.get = hda_cs_dsp_coeff_get;
- 	kcontrol.put = hda_cs_dsp_coeff_put;
- 
--	/* Save ctl inside private_data, ctl is owned by cs_dsp,
--	 * and will be freed when cs_dsp removes the control */
- 	kctl = snd_ctl_new1(&kcontrol, (void *)ctl);
- 	if (!kctl)
- 		return;
- 
--	ret = snd_ctl_add(ctl->card, kctl);
-+	kctl->private_free = hda_cs_dsp_free_kcontrol;
-+	ctl->kctl = kctl;
-+
-+	/* snd_ctl_add() calls our private_free on error, which will kfree(ctl) */
-+	cs_ctl->priv = no_free_ptr(ctl);
-+	ret = snd_ctl_add(info->card, kctl);
- 	if (ret) {
- 		dev_err(cs_ctl->dsp->dev, "Failed to add KControl %s = %d\n", kcontrol.name, ret);
- 		return;
- 	}
- 
- 	dev_dbg(cs_ctl->dsp->dev, "Added KControl: %s\n", kcontrol.name);
--	ctl->kctl = kctl;
- }
- 
- static void hda_cs_dsp_control_add(struct cs_dsp_coeff_ctl *cs_ctl,
-@@ -138,7 +160,6 @@ static void hda_cs_dsp_control_add(struct cs_dsp_coeff_ctl *cs_ctl,
+ static int cs35l56_play_event(struct snd_soc_dapm_widget *w,
+ 			      struct snd_kcontrol *kcontrol, int event)
  {
- 	struct cs_dsp *cs_dsp = cs_ctl->dsp;
- 	char name[SNDRV_CTL_ELEM_ID_NAME_MAXLEN];
--	struct hda_cs_dsp_coeff_ctl *ctl;
- 	const char *region_name;
- 	int ret;
+@@ -313,6 +328,9 @@ static const struct snd_soc_dapm_widget cs35l56_dapm_widgets[] = {
+ 	SND_SOC_DAPM_REGULATOR_SUPPLY("VDD_B", 0, 0),
+ 	SND_SOC_DAPM_REGULATOR_SUPPLY("VDD_AMP", 0, 0),
  
-@@ -163,15 +184,7 @@ static void hda_cs_dsp_control_add(struct cs_dsp_coeff_ctl *cs_ctl,
- 			 " %.*s", cs_ctl->subname_len - skip, cs_ctl->subname + skip);
- 	}
++	SND_SOC_DAPM_SUPPLY("ASP1 CFG", SND_SOC_NOPM, 0, 0, cs35l56_asp1_cfg_event,
++			    SND_SOC_DAPM_PRE_PMU),
++
+ 	SND_SOC_DAPM_SUPPLY("PLAY", SND_SOC_NOPM, 0, 0, cs35l56_play_event,
+ 			    SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
  
--	ctl = kzalloc(sizeof(*ctl), GFP_KERNEL);
--	if (!ctl)
--		return;
--
--	ctl->cs_ctl = cs_ctl;
--	ctl->card = info->card;
--	cs_ctl->priv = ctl;
--
--	hda_cs_dsp_add_kcontrol(ctl, name);
-+	hda_cs_dsp_add_kcontrol(cs_ctl, info, name);
- }
+@@ -380,6 +398,9 @@ static const struct snd_soc_dapm_route cs35l56_audio_map[] = {
+ 	{ "AMP", NULL, "VDD_B" },
+ 	{ "AMP", NULL, "VDD_AMP" },
  
- void hda_cs_dsp_add_controls(struct cs_dsp *dsp, const struct hda_cs_dsp_ctl_info *info)
-@@ -203,7 +216,9 @@ void hda_cs_dsp_control_remove(struct cs_dsp_coeff_ctl *cs_ctl)
- {
- 	struct hda_cs_dsp_coeff_ctl *ctl = cs_ctl->priv;
- 
--	kfree(ctl);
-+	/* ctl and kctl may already have been removed by ALSA private_free */
-+	if (ctl && ctl->kctl)
-+		snd_ctl_remove(ctl->card, ctl->kctl);
- }
- EXPORT_SYMBOL_NS_GPL(hda_cs_dsp_control_remove, SND_HDA_CS_DSP_CONTROLS);
++	{ "ASP1 Playback", NULL, "ASP1 CFG" },
++	{ "ASP1 Capture", NULL, "ASP1 CFG" },
++
+ 	{ "ASP1 Playback", NULL, "PLAY" },
+ 	{ "SDW1 Playback", NULL, "PLAY" },
  
 -- 
 2.43.0
