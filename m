@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C93F1BE258;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC6D1BE258;
 	Thu,  6 Jun 2024 14:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683536; cv=none; b=ZhzG1biXDMLlh9km+HDKk6Wstdil6IRX2fvoM6xNz6bh0VWZrMf0yWDpw3NZWoS25/FxfL2BGwaynjOCZUMaLirTxpwFN4Ov27CgReOBYpcgqWzu8FDYDPrbR5dg3mOjE4xaom1ILO9cBUEfAFZwjsKUlpVq3PGx2TFu/wWgHyo=
+	t=1717683536; cv=none; b=AM+ZXO/zWYNZ7fkhe44D7fKMCQQP8hdc0FbEgn2T5HU8ZfUPtSQP1ErP7t/BFStTHoA1HIkbUJvgxO/WPSF9NJLdgFJjf6Bqud+eWdWxrPzMxKsvfgNptwN0GxW89OJ6ZNw2+VxhcyC6xMCYb+maOWdDvFQIAn43LhXqXI5/CYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683536; c=relaxed/simple;
-	bh=rpbNTNGuvbgrzpoh0DZtTXxaS66+GUqOymm8fL6vdjw=;
+	bh=HLtJ9bv2nTMEVem5gvhl1HuCasmLpbO1EPOIyZrayQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kIjx48r0biy7km7T9rLMJP+yhFYNVpT/2H2Cx4/kWVBGDgvznW747RSz9pXyftOCkFRlu82pTE2YsFJfbro2grcVJp3QL6JJ7u1A/KHGTYFSJlhITmH5GYa/Yv3PPBoBbXdLyh/HYclElrE+izrL+8wZp2VPekl5Dt4A/y9nAHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKizC1Eg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jehDd/JAjLSHyzf5fjZnmhJGez+CZgtGt8nx8rqEFpfGWYWZ6qAZqUpSjzwlGGWeqxC/YZMm0gt/9c3xszLX/HY7WZYjX8n3Co+1hq3MiaNpxKjficlMQmKsEL5KgoxTZV1lFb8fqbBInU6ft/yYhzDwuUNI+n+sgcUIpoTBj3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s26yxpD9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKizC1Eg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D362C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s26yxpD9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAB1C32781;
 	Thu,  6 Jun 2024 14:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683536;
-	bh=rpbNTNGuvbgrzpoh0DZtTXxaS66+GUqOymm8fL6vdjw=;
+	bh=HLtJ9bv2nTMEVem5gvhl1HuCasmLpbO1EPOIyZrayQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKizC1EgBIlLWShCRqgE+UtMhXV+SHnoPXsBzl4hmAtSPDNkQwZ8z7gdOClUnAyKl
-	 uKMjXkZ1El4FSY8W2Z3CqdoD3GPeXE9VQ4JDdsEA9Fa2vGu7AnNkdq41kFZRD1/ivg
-	 Usl7NNLw7+5G6dHjQ7KdZpdltOBd+6l49jvhuTR4=
+	b=s26yxpD9R0MubOmkMcny71C9nuSiMT5JxeWtJSVRIdJgZdFQnEw+SHvj4iQhPi1/V
+	 ca96fGDTMPx502cwoe3bkntAC0CMQ+OHJ/UzVpC13QDkQ2xuXhRf6204NoS7C43bol
+	 ksfyjfxRRXlKrTo11I+cwB29VYe6wpsobFpmTykM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandanbabu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 426/473] net: relax socket state check at accept time.
-Date: Thu,  6 Jun 2024 16:05:55 +0200
-Message-ID: <20240606131713.842190015@linuxfoundation.org>
+Subject: [PATCH 6.6 476/744] xfs: convert kmem_free() for kvmalloc users to kvfree()
+Date: Thu,  6 Jun 2024 16:02:28 +0200
+Message-ID: <20240606131747.723442477@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,90 +48,474 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 26afda78cda3da974fd4c287962c169e9462c495 ]
+[ Upstream commit 49292576136fd2a6b58a51677c53151cf4877fa6 ]
 
-Christoph reported the following splat:
+Start getting rid of kmem_free() by converting all the cases where
+memory can come from vmalloc interfaces to calling kvfree()
+directly.
 
-WARNING: CPU: 1 PID: 772 at net/ipv4/af_inet.c:761 __inet_accept+0x1f4/0x4a0
-Modules linked in:
-CPU: 1 PID: 772 Comm: syz-executor510 Not tainted 6.9.0-rc7-g7da7119fe22b #56
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
-RIP: 0010:__inet_accept+0x1f4/0x4a0 net/ipv4/af_inet.c:759
-Code: 04 38 84 c0 0f 85 87 00 00 00 41 c7 04 24 03 00 00 00 48 83 c4 10 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc e8 ec b7 da fd <0f> 0b e9 7f fe ff ff e8 e0 b7 da fd 0f 0b e9 fe fe ff ff 89 d9 80
-RSP: 0018:ffffc90000c2fc58 EFLAGS: 00010293
-RAX: ffffffff836bdd14 RBX: 0000000000000000 RCX: ffff888104668000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: dffffc0000000000 R08: ffffffff836bdb89 R09: fffff52000185f64
-R10: dffffc0000000000 R11: fffff52000185f64 R12: dffffc0000000000
-R13: 1ffff92000185f98 R14: ffff88810754d880 R15: ffff8881007b7800
-FS:  000000001c772880(0000) GS:ffff88811b280000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fb9fcf2e178 CR3: 00000001045d2002 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- inet_accept+0x138/0x1d0 net/ipv4/af_inet.c:786
- do_accept+0x435/0x620 net/socket.c:1929
- __sys_accept4_file net/socket.c:1969 [inline]
- __sys_accept4+0x9b/0x110 net/socket.c:1999
- __do_sys_accept net/socket.c:2016 [inline]
- __se_sys_accept net/socket.c:2013 [inline]
- __x64_sys_accept+0x7d/0x90 net/socket.c:2013
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x58/0x100 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x4315f9
-Code: fd ff 48 81 c4 80 00 00 00 e9 f1 fe ff ff 0f 1f 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 0f 83 ab b4 fd ff c3 66 2e 0f 1f 84 00 00 00 00
-RSP: 002b:00007ffdb26d9c78 EFLAGS: 00000246 ORIG_RAX: 000000000000002b
-RAX: ffffffffffffffda RBX: 0000000000400300 RCX: 00000000004315f9
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000004
-RBP: 00000000006e1018 R08: 0000000000400300 R09: 0000000000400300
-R10: 0000000000400300 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000040cdf0 R14: 000000000040ce80 R15: 0000000000000055
- </TASK>
-
-The reproducer invokes shutdown() before entering the listener status.
-After commit 94062790aedb ("tcp: defer shutdown(SEND_SHUTDOWN) for
-TCP_SYN_RECV sockets"), the above causes the child to reach the accept
-syscall in FIN_WAIT1 status.
-
-Eric noted we can relax the existing assertion in __inet_accept()
-
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/490
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Fixes: 94062790aedb ("tcp: defer shutdown(SEND_SHUTDOWN) for TCP_SYN_RECV sockets")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/23ab880a44d8cfd967e84de8b93dbf48848e3d8c.1716299669.git.pabeni@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Stable-dep-of: 45cf976008dd ("xfs: fix log recovery buffer allocation for the legacy h_size fixup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/af_inet.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_acl.c           |  4 ++--
+ fs/xfs/xfs_attr_item.c     |  4 ++--
+ fs/xfs/xfs_bmap_item.c     |  4 ++--
+ fs/xfs/xfs_buf_item.c      |  2 +-
+ fs/xfs/xfs_dquot.c         |  2 +-
+ fs/xfs/xfs_extfree_item.c  |  4 ++--
+ fs/xfs/xfs_icreate_item.c  |  2 +-
+ fs/xfs/xfs_inode_item.c    |  2 +-
+ fs/xfs/xfs_ioctl.c         |  2 +-
+ fs/xfs/xfs_log.c           |  4 ++--
+ fs/xfs/xfs_log_cil.c       |  2 +-
+ fs/xfs/xfs_log_recover.c   | 42 +++++++++++++++++++-------------------
+ fs/xfs/xfs_refcount_item.c |  4 ++--
+ fs/xfs/xfs_rmap_item.c     |  4 ++--
+ fs/xfs/xfs_rtalloc.c       |  6 +++---
+ 15 files changed, 44 insertions(+), 44 deletions(-)
 
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index 56d4ec955b851..cc013be9b02c4 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -749,7 +749,9 @@ void __inet_accept(struct socket *sock, struct socket *newsock, struct sock *new
- 	sock_rps_record_flow(newsk);
- 	WARN_ON(!((1 << newsk->sk_state) &
- 		  (TCPF_ESTABLISHED | TCPF_SYN_RECV |
--		  TCPF_CLOSE_WAIT | TCPF_CLOSE)));
-+		   TCPF_FIN_WAIT1 | TCPF_FIN_WAIT2 |
-+		   TCPF_CLOSING | TCPF_CLOSE_WAIT |
-+		   TCPF_CLOSE)));
+diff --git a/fs/xfs/xfs_acl.c b/fs/xfs/xfs_acl.c
+index 6b840301817a9..4bf69c9c088e2 100644
+--- a/fs/xfs/xfs_acl.c
++++ b/fs/xfs/xfs_acl.c
+@@ -167,7 +167,7 @@ xfs_get_acl(struct inode *inode, int type, bool rcu)
+ 		acl = ERR_PTR(error);
+ 	}
  
- 	if (test_bit(SOCK_SUPPORT_ZC, &sock->flags))
- 		set_bit(SOCK_SUPPORT_ZC, &newsock->flags);
+-	kmem_free(args.value);
++	kvfree(args.value);
+ 	return acl;
+ }
+ 
+@@ -204,7 +204,7 @@ __xfs_set_acl(struct inode *inode, struct posix_acl *acl, int type)
+ 	}
+ 
+ 	error = xfs_attr_change(&args);
+-	kmem_free(args.value);
++	kvfree(args.value);
+ 
+ 	/*
+ 	 * If the attribute didn't exist to start with that's fine.
+diff --git a/fs/xfs/xfs_attr_item.c b/fs/xfs/xfs_attr_item.c
+index ebf656aaf3012..fc164e8f7e483 100644
+--- a/fs/xfs/xfs_attr_item.c
++++ b/fs/xfs/xfs_attr_item.c
+@@ -110,7 +110,7 @@ STATIC void
+ xfs_attri_item_free(
+ 	struct xfs_attri_log_item	*attrip)
+ {
+-	kmem_free(attrip->attri_item.li_lv_shadow);
++	kvfree(attrip->attri_item.li_lv_shadow);
+ 	xfs_attri_log_nameval_put(attrip->attri_nameval);
+ 	kmem_cache_free(xfs_attri_cache, attrip);
+ }
+@@ -253,7 +253,7 @@ static inline struct xfs_attrd_log_item *ATTRD_ITEM(struct xfs_log_item *lip)
+ STATIC void
+ xfs_attrd_item_free(struct xfs_attrd_log_item *attrdp)
+ {
+-	kmem_free(attrdp->attrd_item.li_lv_shadow);
++	kvfree(attrdp->attrd_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_attrd_cache, attrdp);
+ }
+ 
+diff --git a/fs/xfs/xfs_bmap_item.c b/fs/xfs/xfs_bmap_item.c
+index b6d63b8bdad5a..dc4c199fa7af2 100644
+--- a/fs/xfs/xfs_bmap_item.c
++++ b/fs/xfs/xfs_bmap_item.c
+@@ -40,7 +40,7 @@ STATIC void
+ xfs_bui_item_free(
+ 	struct xfs_bui_log_item	*buip)
+ {
+-	kmem_free(buip->bui_item.li_lv_shadow);
++	kvfree(buip->bui_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_bui_cache, buip);
+ }
+ 
+@@ -201,7 +201,7 @@ xfs_bud_item_release(
+ 	struct xfs_bud_log_item	*budp = BUD_ITEM(lip);
+ 
+ 	xfs_bui_release(budp->bud_buip);
+-	kmem_free(budp->bud_item.li_lv_shadow);
++	kvfree(budp->bud_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_bud_cache, budp);
+ }
+ 
+diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
+index 023d4e0385dd0..7d447fbcdd983 100644
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -1044,7 +1044,7 @@ xfs_buf_item_free(
+ 	struct xfs_buf_log_item	*bip)
+ {
+ 	xfs_buf_item_free_format(bip);
+-	kmem_free(bip->bli_item.li_lv_shadow);
++	kvfree(bip->bli_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_buf_item_cache, bip);
+ }
+ 
+diff --git a/fs/xfs/xfs_dquot.c b/fs/xfs/xfs_dquot.c
+index a013b87ab8d5e..5c9fd69d75959 100644
+--- a/fs/xfs/xfs_dquot.c
++++ b/fs/xfs/xfs_dquot.c
+@@ -53,7 +53,7 @@ xfs_qm_dqdestroy(
+ {
+ 	ASSERT(list_empty(&dqp->q_lru));
+ 
+-	kmem_free(dqp->q_logitem.qli_item.li_lv_shadow);
++	kvfree(dqp->q_logitem.qli_item.li_lv_shadow);
+ 	mutex_destroy(&dqp->q_qlock);
+ 
+ 	XFS_STATS_DEC(dqp->q_mount, xs_qm_dquot);
+diff --git a/fs/xfs/xfs_extfree_item.c b/fs/xfs/xfs_extfree_item.c
+index c9908fb337657..8904242f4eb45 100644
+--- a/fs/xfs/xfs_extfree_item.c
++++ b/fs/xfs/xfs_extfree_item.c
+@@ -40,7 +40,7 @@ STATIC void
+ xfs_efi_item_free(
+ 	struct xfs_efi_log_item	*efip)
+ {
+-	kmem_free(efip->efi_item.li_lv_shadow);
++	kvfree(efip->efi_item.li_lv_shadow);
+ 	if (efip->efi_format.efi_nextents > XFS_EFI_MAX_FAST_EXTENTS)
+ 		kmem_free(efip);
+ 	else
+@@ -229,7 +229,7 @@ static inline struct xfs_efd_log_item *EFD_ITEM(struct xfs_log_item *lip)
+ STATIC void
+ xfs_efd_item_free(struct xfs_efd_log_item *efdp)
+ {
+-	kmem_free(efdp->efd_item.li_lv_shadow);
++	kvfree(efdp->efd_item.li_lv_shadow);
+ 	if (efdp->efd_format.efd_nextents > XFS_EFD_MAX_FAST_EXTENTS)
+ 		kmem_free(efdp);
+ 	else
+diff --git a/fs/xfs/xfs_icreate_item.c b/fs/xfs/xfs_icreate_item.c
+index b05314d48176f..4345db501714e 100644
+--- a/fs/xfs/xfs_icreate_item.c
++++ b/fs/xfs/xfs_icreate_item.c
+@@ -63,7 +63,7 @@ STATIC void
+ xfs_icreate_item_release(
+ 	struct xfs_log_item	*lip)
+ {
+-	kmem_free(ICR_ITEM(lip)->ic_item.li_lv_shadow);
++	kvfree(ICR_ITEM(lip)->ic_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_icreate_cache, ICR_ITEM(lip));
+ }
+ 
+diff --git a/fs/xfs/xfs_inode_item.c b/fs/xfs/xfs_inode_item.c
+index 155a8b3128755..7c3f4a3da518b 100644
+--- a/fs/xfs/xfs_inode_item.c
++++ b/fs/xfs/xfs_inode_item.c
+@@ -857,7 +857,7 @@ xfs_inode_item_destroy(
+ 	ASSERT(iip->ili_item.li_buf == NULL);
+ 
+ 	ip->i_itemp = NULL;
+-	kmem_free(iip->ili_item.li_lv_shadow);
++	kvfree(iip->ili_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_ili_cache, iip);
+ }
+ 
+diff --git a/fs/xfs/xfs_ioctl.c b/fs/xfs/xfs_ioctl.c
+index 535f6d38cdb54..8d844c7d1c798 100644
+--- a/fs/xfs/xfs_ioctl.c
++++ b/fs/xfs/xfs_ioctl.c
+@@ -492,7 +492,7 @@ xfs_attrmulti_attr_get(
+ 		error = -EFAULT;
+ 
+ out_kfree:
+-	kmem_free(args.value);
++	kvfree(args.value);
+ 	return error;
+ }
+ 
+diff --git a/fs/xfs/xfs_log.c b/fs/xfs/xfs_log.c
+index a1650fc81382f..04327aaa5bf09 100644
+--- a/fs/xfs/xfs_log.c
++++ b/fs/xfs/xfs_log.c
+@@ -1661,7 +1661,7 @@ xlog_alloc_log(
+ out_free_iclog:
+ 	for (iclog = log->l_iclog; iclog; iclog = prev_iclog) {
+ 		prev_iclog = iclog->ic_next;
+-		kmem_free(iclog->ic_data);
++		kvfree(iclog->ic_data);
+ 		kmem_free(iclog);
+ 		if (prev_iclog == log->l_iclog)
+ 			break;
+@@ -2118,7 +2118,7 @@ xlog_dealloc_log(
+ 	iclog = log->l_iclog;
+ 	for (i = 0; i < log->l_iclog_bufs; i++) {
+ 		next_iclog = iclog->ic_next;
+-		kmem_free(iclog->ic_data);
++		kvfree(iclog->ic_data);
+ 		kmem_free(iclog);
+ 		iclog = next_iclog;
+ 	}
+diff --git a/fs/xfs/xfs_log_cil.c b/fs/xfs/xfs_log_cil.c
+index 67a99d94701e5..d2ed2c38e2989 100644
+--- a/fs/xfs/xfs_log_cil.c
++++ b/fs/xfs/xfs_log_cil.c
+@@ -339,7 +339,7 @@ xlog_cil_alloc_shadow_bufs(
+ 			 * the buffer, only the log vector header and the iovec
+ 			 * storage.
+ 			 */
+-			kmem_free(lip->li_lv_shadow);
++			kvfree(lip->li_lv_shadow);
+ 			lv = xlog_kvmalloc(buf_size);
+ 
+ 			memset(lv, 0, xlog_cil_iovec_space(niovecs));
+diff --git a/fs/xfs/xfs_log_recover.c b/fs/xfs/xfs_log_recover.c
+index cc14cd1c2282f..f3fcd58349c16 100644
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -361,7 +361,7 @@ xlog_find_verify_cycle(
+ 	*new_blk = -1;
+ 
+ out:
+-	kmem_free(buffer);
++	kvfree(buffer);
+ 	return error;
+ }
+ 
+@@ -477,7 +477,7 @@ xlog_find_verify_log_record(
+ 		*last_blk = i;
+ 
+ out:
+-	kmem_free(buffer);
++	kvfree(buffer);
+ 	return error;
+ }
+ 
+@@ -731,7 +731,7 @@ xlog_find_head(
+ 			goto out_free_buffer;
+ 	}
+ 
+-	kmem_free(buffer);
++	kvfree(buffer);
+ 	if (head_blk == log_bbnum)
+ 		*return_head_blk = 0;
+ 	else
+@@ -745,7 +745,7 @@ xlog_find_head(
+ 	return 0;
+ 
+ out_free_buffer:
+-	kmem_free(buffer);
++	kvfree(buffer);
+ 	if (error)
+ 		xfs_warn(log->l_mp, "failed to find log head");
+ 	return error;
+@@ -999,7 +999,7 @@ xlog_verify_tail(
+ 		"Tail block (0x%llx) overwrite detected. Updated to 0x%llx",
+ 			 orig_tail, *tail_blk);
+ out:
+-	kmem_free(buffer);
++	kvfree(buffer);
+ 	return error;
+ }
+ 
+@@ -1046,7 +1046,7 @@ xlog_verify_head(
+ 	error = xlog_rseek_logrec_hdr(log, *head_blk, *tail_blk,
+ 				      XLOG_MAX_ICLOGS, tmp_buffer,
+ 				      &tmp_rhead_blk, &tmp_rhead, &tmp_wrapped);
+-	kmem_free(tmp_buffer);
++	kvfree(tmp_buffer);
+ 	if (error < 0)
+ 		return error;
+ 
+@@ -1365,7 +1365,7 @@ xlog_find_tail(
+ 		error = xlog_clear_stale_blocks(log, tail_lsn);
+ 
+ done:
+-	kmem_free(buffer);
++	kvfree(buffer);
+ 
+ 	if (error)
+ 		xfs_warn(log->l_mp, "failed to locate log tail");
+@@ -1399,6 +1399,7 @@ xlog_find_zeroed(
+ 	xfs_daddr_t	new_blk, last_blk, start_blk;
+ 	xfs_daddr_t     num_scan_bblks;
+ 	int	        error, log_bbnum = log->l_logBBsize;
++	int		ret = 1;
+ 
+ 	*blk_no = 0;
+ 
+@@ -1413,8 +1414,7 @@ xlog_find_zeroed(
+ 	first_cycle = xlog_get_cycle(offset);
+ 	if (first_cycle == 0) {		/* completely zeroed log */
+ 		*blk_no = 0;
+-		kmem_free(buffer);
+-		return 1;
++		goto out_free_buffer;
+ 	}
+ 
+ 	/* check partially zeroed log */
+@@ -1424,8 +1424,8 @@ xlog_find_zeroed(
+ 
+ 	last_cycle = xlog_get_cycle(offset);
+ 	if (last_cycle != 0) {		/* log completely written to */
+-		kmem_free(buffer);
+-		return 0;
++		ret = 0;
++		goto out_free_buffer;
+ 	}
+ 
+ 	/* we have a partially zeroed log */
+@@ -1471,10 +1471,10 @@ xlog_find_zeroed(
+ 
+ 	*blk_no = last_blk;
+ out_free_buffer:
+-	kmem_free(buffer);
++	kvfree(buffer);
+ 	if (error)
+ 		return error;
+-	return 1;
++	return ret;
+ }
+ 
+ /*
+@@ -1583,7 +1583,7 @@ xlog_write_log_records(
+ 	}
+ 
+ out_free_buffer:
+-	kmem_free(buffer);
++	kvfree(buffer);
+ 	return error;
+ }
+ 
+@@ -2182,7 +2182,7 @@ xlog_recover_add_to_trans(
+ 		"bad number of regions (%d) in inode log format",
+ 				  in_f->ilf_size);
+ 			ASSERT(0);
+-			kmem_free(ptr);
++			kvfree(ptr);
+ 			return -EFSCORRUPTED;
+ 		}
+ 
+@@ -2197,7 +2197,7 @@ xlog_recover_add_to_trans(
+ 	"log item region count (%d) overflowed size (%d)",
+ 				item->ri_cnt, item->ri_total);
+ 		ASSERT(0);
+-		kmem_free(ptr);
++		kvfree(ptr);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+@@ -2227,7 +2227,7 @@ xlog_recover_free_trans(
+ 		/* Free the regions in the item. */
+ 		list_del(&item->ri_list);
+ 		for (i = 0; i < item->ri_cnt; i++)
+-			kmem_free(item->ri_buf[i].i_addr);
++			kvfree(item->ri_buf[i].i_addr);
+ 		/* Free the item itself */
+ 		kmem_free(item->ri_buf);
+ 		kmem_free(item);
+@@ -3023,7 +3023,7 @@ xlog_do_recovery_pass(
+ 
+ 		hblks = xlog_logrec_hblks(log, rhead);
+ 		if (hblks != 1) {
+-			kmem_free(hbp);
++			kvfree(hbp);
+ 			hbp = xlog_alloc_buffer(log, hblks);
+ 		}
+ 	} else {
+@@ -3037,7 +3037,7 @@ xlog_do_recovery_pass(
+ 		return -ENOMEM;
+ 	dbp = xlog_alloc_buffer(log, BTOBB(h_size));
+ 	if (!dbp) {
+-		kmem_free(hbp);
++		kvfree(hbp);
+ 		return -ENOMEM;
+ 	}
+ 
+@@ -3198,9 +3198,9 @@ xlog_do_recovery_pass(
+ 	}
+ 
+  bread_err2:
+-	kmem_free(dbp);
++	kvfree(dbp);
+  bread_err1:
+-	kmem_free(hbp);
++	kvfree(hbp);
+ 
+ 	/*
+ 	 * Submit buffers that have been added from the last record processed,
+diff --git a/fs/xfs/xfs_refcount_item.c b/fs/xfs/xfs_refcount_item.c
+index f1b2592238022..ea4daf3dc8f07 100644
+--- a/fs/xfs/xfs_refcount_item.c
++++ b/fs/xfs/xfs_refcount_item.c
+@@ -36,7 +36,7 @@ STATIC void
+ xfs_cui_item_free(
+ 	struct xfs_cui_log_item	*cuip)
+ {
+-	kmem_free(cuip->cui_item.li_lv_shadow);
++	kvfree(cuip->cui_item.li_lv_shadow);
+ 	if (cuip->cui_format.cui_nextents > XFS_CUI_MAX_FAST_EXTENTS)
+ 		kmem_free(cuip);
+ 	else
+@@ -207,7 +207,7 @@ xfs_cud_item_release(
+ 	struct xfs_cud_log_item	*cudp = CUD_ITEM(lip);
+ 
+ 	xfs_cui_release(cudp->cud_cuip);
+-	kmem_free(cudp->cud_item.li_lv_shadow);
++	kvfree(cudp->cud_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_cud_cache, cudp);
+ }
+ 
+diff --git a/fs/xfs/xfs_rmap_item.c b/fs/xfs/xfs_rmap_item.c
+index 5e8a02d2b045d..dd0a562ec79cc 100644
+--- a/fs/xfs/xfs_rmap_item.c
++++ b/fs/xfs/xfs_rmap_item.c
+@@ -36,7 +36,7 @@ STATIC void
+ xfs_rui_item_free(
+ 	struct xfs_rui_log_item	*ruip)
+ {
+-	kmem_free(ruip->rui_item.li_lv_shadow);
++	kvfree(ruip->rui_item.li_lv_shadow);
+ 	if (ruip->rui_format.rui_nextents > XFS_RUI_MAX_FAST_EXTENTS)
+ 		kmem_free(ruip);
+ 	else
+@@ -205,7 +205,7 @@ xfs_rud_item_release(
+ 	struct xfs_rud_log_item	*rudp = RUD_ITEM(lip);
+ 
+ 	xfs_rui_release(rudp->rud_ruip);
+-	kmem_free(rudp->rud_item.li_lv_shadow);
++	kvfree(rudp->rud_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_rud_cache, rudp);
+ }
+ 
+diff --git a/fs/xfs/xfs_rtalloc.c b/fs/xfs/xfs_rtalloc.c
+index 4bec890d93d2c..0ccadedfdb016 100644
+--- a/fs/xfs/xfs_rtalloc.c
++++ b/fs/xfs/xfs_rtalloc.c
+@@ -1185,10 +1185,10 @@ xfs_growfs_rt(
+ 	 */
+ 	if (rsum_cache != mp->m_rsum_cache) {
+ 		if (error) {
+-			kmem_free(mp->m_rsum_cache);
++			kvfree(mp->m_rsum_cache);
+ 			mp->m_rsum_cache = rsum_cache;
+ 		} else {
+-			kmem_free(rsum_cache);
++			kvfree(rsum_cache);
+ 		}
+ 	}
+ 
+@@ -1433,7 +1433,7 @@ void
+ xfs_rtunmount_inodes(
+ 	struct xfs_mount	*mp)
+ {
+-	kmem_free(mp->m_rsum_cache);
++	kvfree(mp->m_rsum_cache);
+ 	if (mp->m_rbmip)
+ 		xfs_irele(mp->m_rbmip);
+ 	if (mp->m_rsumip)
 -- 
 2.43.0
 
