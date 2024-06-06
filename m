@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6DE1B0121;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D690419ADAC;
 	Thu,  6 Jun 2024 14:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683360; cv=none; b=tSmVYR4CohdOGEz+aen0/mk/4T+aNXf4+SDQtRULhg0AgbhNZlH7JcmWHKY2G+CtA6Ij2nxCVkHY+3i+emMBZtByaAAsBffuqGR11Zh9iwDfV1mtBZ4J9sKv+rQIQQ12jcuPKOPiCdi1X3kR9vGYW2jyB1RQyIpKPK0YK/WuQLg=
+	t=1717683360; cv=none; b=Aw79mn1M23werctu/nIqUsU9QQTuXvJg7DhnSi37V5G+H9H331CeFmkOU9hpou4JplR3SFBcTO5wJ2vcJD+x9DLqrxhktIj4OVHcootBHsjIWTsXVrDHxlTxfj+0HRjymVxx8G7fZ6q5jhkCo4r8b3cPYI7hzP2mu0GxmnebJRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683360; c=relaxed/simple;
-	bh=0Y7wPDzg5HPLr1tVQXvl+9t8qHJ/fMy90r4ywgvWKEI=;
+	bh=AbldccbUkSGv1XhBW7gRO2Z0xBnpBcKlea+7Lq5zLsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6QfQ3ALFL3BXYNpt262OkvFzZ0IqIePvO3tT3TJpVfW8mwiAWgkalMqQ4zUL7b+MGbwonJZaZ70O7sdiP+xLm7gP4/PTt+xxI0Av82KfdEgN9A+m9D0O23g9UTZ5eJVFPIXhoHYOZ+kFUYlWVhEQ4YdulG+SjsaGLyp31T+fPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/1Na3tn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eV+WpBP5YvjF9oz/DagcqonMbsv+9IZYIIDj7DFUd6ld8yz4vt86fhUWq9jjjn+97emsbiZ/2Xa8lL9weetRmDXL9Eva+WnipjJbXw64IcIlYapDevcFypxaChNuOy4DqTo6pYkJz5N7bNkfN5KfpnbnJUZaWCU6Ri3oVIa7XDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbaPh32S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/1Na3tn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE69EC2BD10;
-	Thu,  6 Jun 2024 14:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbaPh32S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CB9C2BD10;
+	Thu,  6 Jun 2024 14:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683359;
-	bh=0Y7wPDzg5HPLr1tVQXvl+9t8qHJ/fMy90r4ywgvWKEI=;
+	s=korg; t=1717683360;
+	bh=AbldccbUkSGv1XhBW7gRO2Z0xBnpBcKlea+7Lq5zLsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/1Na3tnf4Q004vIK0rKkUKQakB60sSXk3m3BziWdvPgnd0IKNTyNDQEeXOS7DTgI
-	 CmW8I2GstadyHARj5GvtOd7E2HiXU+0i6laLctcy7ALz3M9ju3n6CN1bMNh7FfDzKN
-	 sof34BRurSTP35zz6puL90RNVB+IWq5n2XHROark=
+	b=AbaPh32SVeHVDlIhETdtd7en5phRkvuWAyuCkmWKubiHpmS30A18CXSunT26qqP+H
+	 Apj9jtu8NOGdhX74gv3wxtuIri9ZzMBVzs/nwdazNBJze9wFoqr6b8Ga9bkZ9/u3lU
+	 MbP/4HSEkSIepUxyR/lVjxEflf5zM6uj8K7TpVto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Helge Deller <deller@gmx.de>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 206/473] fbdev: sisfb: hide unused variables
-Date: Thu,  6 Jun 2024 16:02:15 +0200
-Message-ID: <20240606131706.736142629@linuxfoundation.org>
+Subject: [PATCH 6.1 240/473] RDMA/hns: Fix GMV table pagesize
+Date: Thu,  6 Jun 2024 16:02:49 +0200
+Message-ID: <20240606131707.765745085@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -51,66 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 688cf598665851b9e8cb5083ff1d208ce43d10ff ]
+[ Upstream commit ee045493283403969591087bd405fa280103282a ]
 
-Building with W=1 shows that a couple of variables in this driver are only
-used in certain configurations:
+GMV's BA table only supports 4K pages. Currently, PAGESIZE is used to
+calculate gmv_bt_num, which will cause an abnormal number of gmv_bt_num
+in a 64K OS.
 
-drivers/video/fbdev/sis/init301.c:239:28: error: 'SiS_Part2CLVX_6' defined but not used [-Werror=unused-const-variable=]
-  239 | static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:230:28: error: 'SiS_Part2CLVX_5' defined but not used [-Werror=unused-const-variable=]
-  230 | static const unsigned char SiS_Part2CLVX_5[] = {   /* 750p */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:211:28: error: 'SiS_Part2CLVX_4' defined but not used [-Werror=unused-const-variable=]
-  211 | static const unsigned char SiS_Part2CLVX_4[] = {   /* PAL */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:192:28: error: 'SiS_Part2CLVX_3' defined but not used [-Werror=unused-const-variable=]
-  192 | static const unsigned char SiS_Part2CLVX_3[] = {  /* NTSC, 525i, 525p */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:184:28: error: 'SiS_Part2CLVX_2' defined but not used [-Werror=unused-const-variable=]
-  184 | static const unsigned char SiS_Part2CLVX_2[] = {
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:176:28: error: 'SiS_Part2CLVX_1' defined but not used [-Werror=unused-const-variable=]
-  176 | static const unsigned char SiS_Part2CLVX_1[] = {
-      |                            ^~~~~~~~~~~~~~~
-
-This started showing up after the definitions were moved into the
-source file from the header, which was not flagged by the compiler.
-Move the definition into the appropriate #ifdef block that already
-exists next to them.
-
-Fixes: 5908986ef348 ("video: fbdev: sis: avoid mismatched prototypes")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: d6d91e46210f ("RDMA/hns: Add support for configuring GMV table")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240412091616.370789-8-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sis/init301.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/sis/init301.c b/drivers/video/fbdev/sis/init301.c
-index a8fb41f1a2580..09329072004f4 100644
---- a/drivers/video/fbdev/sis/init301.c
-+++ b/drivers/video/fbdev/sis/init301.c
-@@ -172,7 +172,7 @@ static const unsigned char SiS_HiTVGroup3_2[] = {
- };
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index d06b19e69a151..08e2e9569a52a 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -2229,7 +2229,7 @@ static void apply_func_caps(struct hns_roce_dev *hr_dev)
+ 		caps->gid_table_len[0] = caps->gmv_bt_num *
+ 					(HNS_HW_PAGE_SIZE / caps->gmv_entry_sz);
  
- /* 301C / 302ELV extended Part2 TV registers (4 tap scaler) */
--
-+#ifdef CONFIG_FB_SIS_315
- static const unsigned char SiS_Part2CLVX_1[] = {
-     0x00,0x00,
-     0x00,0x20,0x00,0x00,0x7F,0x20,0x02,0x7F,0x7D,0x20,0x04,0x7F,0x7D,0x1F,0x06,0x7E,
-@@ -245,7 +245,6 @@ static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
-     0xFF,0xFF,
- };
- 
--#ifdef CONFIG_FB_SIS_315
- /* 661 et al LCD data structure (2.03.00) */
- static const unsigned char SiS_LCDStruct661[] = {
-     /* 1024x768 */
+-		caps->gmv_entry_num = caps->gmv_bt_num * (PAGE_SIZE /
++		caps->gmv_entry_num = caps->gmv_bt_num * (HNS_HW_PAGE_SIZE /
+ 							  caps->gmv_entry_sz);
+ 	} else {
+ 		u32 func_num = max_t(u32, 1, hr_dev->func_num);
 -- 
 2.43.0
 
