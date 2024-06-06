@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3BB198A16;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F1A198A16;
 	Thu,  6 Jun 2024 14:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683052; cv=none; b=UyE0MvmqE/DcoRq+rlDuYouSt64aq94b+OvxJT7I8g/tfRRta+mREHCwJ0j9EBWx2BaUs++IV6kaNhXOdcpWhjC/aFKQcuMbfpL0T6LyYT+QW2lBeOhP+1VPTZHdIVaokhQwrUJuKwurMVPxyFa/5rGdIB3Q/9SmOgh+UcQtjBc=
+	t=1717683052; cv=none; b=d85ylXsbtw2IDIESqJXNYELyDVKsWptT6+3Rdd0nvY+qSjHsTMfXp+7n7YF0rGuVH6dHvnyDaueN0ssmxDjIa4XRrR94awpcWxXUXYgtiIJepR2Z/lLSuOZNoQYhKmgRz8Mz3y9yVa/L4MmbBnc6pji4G+Nl40sx6+LdoRiIm6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683052; c=relaxed/simple;
-	bh=sQ3cMM86IKeaGdDnND1eHZfDUBiKsjBekt4ksrtrFPc=;
+	bh=9cQPr4ldOj7AAzTSDxDSCFrHiaDN1QznG7w83BbCaDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9Pb+IZgDfBpdZFuq2FpNuxTUdVf5jex4DfM+nbzEUJkfleBfcxxTeBSNob46SQvwS9i7SSqKiiS7Z+uUz4aT3EGMs6nIDCdw77Zu2XzmfNfxFEGd4O5T7dKtGpi6r2JVay0AqdvztWJzuk++m6BWBCJbNv0lhPNolosb9l/WEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mk7lEjij; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Jq9sZs4peWQ16Uox1myP0tqGgJ9efNHX5DMkw6Skt5FgiG7SPP8IZKBBQ1ftxgw0NcYsiZJpRQOW8GscPdl9AhmvGghIoST6lHSJ+OsEue/RHU20X1nYksEmn+UNgLCpk0HrmTbb6DPsa3xyrPgz/5/aa38Kp49zr6F2DFfvJiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSwPER52; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mk7lEjij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32F6C4AF19;
-	Thu,  6 Jun 2024 14:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSwPER52"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C49C4AF08;
+	Thu,  6 Jun 2024 14:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683052;
-	bh=sQ3cMM86IKeaGdDnND1eHZfDUBiKsjBekt4ksrtrFPc=;
+	bh=9cQPr4ldOj7AAzTSDxDSCFrHiaDN1QznG7w83BbCaDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mk7lEjij7Jy/2lw/DDg6+JccYFaiZNY6R3J8Hzepzgd9IgIyfFUGBPdavnKETl/6X
-	 FPM9w25aHjYewJaF7+FYMa8wH6zfIwrKhCu3jd5znYC8l1JPzOmuuxfp2O0z+K0v6w
-	 zOy0nUQb9Cn2A4R3KtFaO+X/pGHCpyBefjpOc9/k=
+	b=dSwPER52Ldfzj0ePl6te6AvMLJ/P1HOBRXKwd5gqnE8CqOS8QyspKWpN7NpY8phnX
+	 xXMTZt1y311Rrv25NoRTwtLvxZJe7MoDya2dozUE3LNG+TuNSYhLHK5e01YBSAKS+E
+	 pttYFuWi+8rzdj84LISdFGvyij6cFv21wLdudcQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 293/374] nvmet: fix ns enable/disable possible hang
-Date: Thu,  6 Jun 2024 16:04:32 +0200
-Message-ID: <20240606131701.693141828@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Tyler Schneider <tyler.schneider@amd.com>
+Subject: [PATCH 6.9 294/374] drm/amd/display: Enable colorspace property for MST connectors
+Date: Thu,  6 Jun 2024 16:04:33 +0200
+Message-ID: <20240606131701.725931085@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -47,63 +48,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit f97914e35fd98b2b18fb8a092e0a0799f73afdfe ]
+[ Upstream commit 8195979d2dd995d60c2663adf54c69c1bf4eadd1 ]
 
-When disabling an nvmet namespace, there is a period where the
-subsys->lock is released, as the ns disable waits for backend IO to
-complete, and the ns percpu ref to be properly killed. The original
-intent was to avoid taking the subsystem lock for a prolong period as
-other processes may need to acquire it (for example new incoming
-connections).
+MST colorspace property support was disabled due to a series of warnings
+that came up when the device was plugged in since the properties weren't
+made at device creation. Create the properties in advance instead.
 
-However, it opens up a window where another process may come in and
-enable the ns, (re)intiailizing the ns percpu_ref, causing the disable
-sequence to hang.
-
-Solve this by taking the global nvmet_config_sem over the entire configfs
-enable/disable sequence.
-
-Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Suggested-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Fixes: 69a959610229 ("drm/amd/display: Temporary Disable MST DP Colorspace Property").
+Reported-and-tested-by: Tyler Schneider <tyler.schneider@amd.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3353
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index 7fda69395c1ef..dfdff6aba6953 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -676,10 +676,18 @@ static ssize_t nvmet_ns_enable_store(struct config_item *item,
- 	if (kstrtobool(page, &enable))
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index cb31a699c6622..1a269099f19f8 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -613,6 +613,9 @@ dm_dp_add_mst_connector(struct drm_dp_mst_topology_mgr *mgr,
+ 		&connector->base,
+ 		dev->mode_config.tile_property,
+ 		0);
++	connector->colorspace_property = master->base.colorspace_property;
++	if (connector->colorspace_property)
++		drm_connector_attach_colorspace_property(connector);
  
-+	/*
-+	 * take a global nvmet_config_sem because the disable routine has a
-+	 * window where it releases the subsys-lock, giving a chance to
-+	 * a parallel enable to concurrently execute causing the disable to
-+	 * have a misaccounting of the ns percpu_ref.
-+	 */
-+	down_write(&nvmet_config_sem);
- 	if (enable)
- 		ret = nvmet_ns_enable(ns);
- 	else
- 		nvmet_ns_disable(ns);
-+	up_write(&nvmet_config_sem);
+ 	drm_connector_set_path_property(connector, pathprop);
  
- 	return ret ? ret : count;
- }
 -- 
 2.43.0
 
