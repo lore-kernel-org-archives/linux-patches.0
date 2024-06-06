@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A681BE864;
-	Thu,  6 Jun 2024 14:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4068F19EEB8;
+	Thu,  6 Jun 2024 14:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683547; cv=none; b=lTsX8dmAHGuQgCc1eXjz1OoR31hxmEgJU2OZdWuKTQclTNL1WTPIljbQcJ74MxGUI/L99krcc30IdgtbMYRreXRuhIAZgRcpnCBVbiQYYHvwWNZ5tRqGt0h0rkZJF2C5Wy5fn32uq5HqN5Dg6I3KXt1k23eBsN745sDjdSOfRqo=
+	t=1717683548; cv=none; b=XWknk/d1IYth/qMclNwllzjIy/vvXskJA5WDAGRZKA5O9dDFGijHwrImavj+aNFpvO6jUeb5Y2yTV5HIXA9ige4wM532mOOUk/qlHkDcz2eRxvrB8M4agRkgmxfu/wEW3KoVmTt7/iMqYjbFNxQgjeJmppI4KKJi7EWjcbm1d3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683547; c=relaxed/simple;
-	bh=ekvw884hrP+zOd6aUpG3CbAmWGhyt4ON4I1s1sCLOwo=;
+	s=arc-20240116; t=1717683548; c=relaxed/simple;
+	bh=I7YeMXC2IR6Li1a2/2ebjVp9rmYzNYJ22OorKvtoCYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rtzFtMRmEsrXN693DCipkd9FBMA+7k98MQrDzPdAlGoDSPD2clAzKOI3XRAyiL+dyvCgQhBTzu5kCKKK+3/GverHZjmktP9ygv0+1iibezGpQOPlRCxk+qhiSG85fGNUxg3y/3HiwkaHDZ5nYMr8CaRjdVkPcRp8c8tSgeXtRcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyswytO6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DxpMO0vkoRE8GcNFHG5wQPhgR7hT+mdXb937AMSVJ1rBC5aixSmUV5qHUQrtML6Z3RdoY9tnpmVcI2dYetZC5RVelpaoU8ATUGeXdS5YWfWDOGUM7k7oU5ocf6eG9oO2vhShkYPsONNwZCnVLIOaN02rrjN/sj2Vytj+TKhg+Sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBUWBKS3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyswytO6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9638CC32782;
-	Thu,  6 Jun 2024 14:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBUWBKS3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E03FC2BD10;
+	Thu,  6 Jun 2024 14:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683547;
-	bh=ekvw884hrP+zOd6aUpG3CbAmWGhyt4ON4I1s1sCLOwo=;
+	s=korg; t=1717683548;
+	bh=I7YeMXC2IR6Li1a2/2ebjVp9rmYzNYJ22OorKvtoCYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MyswytO6ewUEpLHWWK40AEkp2uSQLUVh3SX6nF32JaoaZj008IyyB9g2m+3VtoxMM
-	 F/sO/tCnFqLSmhgKH4esclXOxkKDej097hjLT+5Zd8awqcIs3MdCeCklAmfm3AkY4b
-	 Wx0zChFj5zrFrFcOfaNvCmH0IPRcY3mJ4eqF4O6M=
+	b=oBUWBKS3LCBJpsJaFwRL3Eqv7o251ZBK+HS4ZlOcOnDVO5EcJKipksTVWl16mOiPe
+	 ycYosLQUpl6/v9Ps2M+XNs+3fcGa/QRB6hmr3e3kQwjBOIxGtT+NZhkhkmQLPr5k+v
+	 1hiVjGm0JUI6158Tf3e2vvGZqQ9t7aVnOuUEUekg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijun Pan <lijun.pan@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Karim Ben Houcine <karim.benhoucine@landisgyr.com>,
+	Mathieu Othacehe <othacehe@gnu.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 486/744] dmaengine: idxd: Avoid unnecessary destruction of file_ida
-Date: Thu,  6 Jun 2024 16:02:38 +0200
-Message-ID: <20240606131748.044717995@linuxfoundation.org>
+Subject: [PATCH 6.1 437/473] net: phy: micrel: set soft_reset callback to genphy_soft_reset for KSZ8061
+Date: Thu,  6 Jun 2024 16:06:06 +0200
+Message-ID: <20240606131714.181226320@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +50,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fenghua Yu <fenghua.yu@intel.com>
+From: Mathieu Othacehe <othacehe@gnu.org>
 
-[ Upstream commit 76e43fa6a456787bad31b8d0daeabda27351a480 ]
+[ Upstream commit 128d54fbcb14b8717ecf596d3dbded327b9980b3 ]
 
-file_ida is allocated during cdev open and is freed accordingly
-during cdev release. This sequence is guaranteed by driver file
-operations. Therefore, there is no need to destroy an already empty
-file_ida when the WQ cdev is removed.
+Following a similar reinstate for the KSZ8081 and KSZ9031.
 
-Worse, ida_free() in cdev release may happen after destruction of
-file_ida per WQ cdev. This can lead to accessing an id in file_ida
-after it has been destroyed, resulting in a kernel panic.
+Older kernels would use the genphy_soft_reset if the PHY did not implement
+a .soft_reset.
 
-Remove ida_destroy(&file_ida) to address these issues.
+The KSZ8061 errata described here:
+https://ww1.microchip.com/downloads/en/DeviceDoc/KSZ8061-Errata-DS80000688B.pdf
+and worked around with 232ba3a51c ("net: phy: Micrel KSZ8061: link failure after cable connect")
+is back again without this soft reset.
 
-Fixes: e6fd6d7e5f0f ("dmaengine: idxd: add a device to represent the file opened")
-Signed-off-by: Lijun Pan <lijun.pan@intel.com>
-Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20240130013954.2024231-1-fenghua.yu@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 6e2d85ec0559 ("net: phy: Stop with excessive soft reset")
+Tested-by: Karim Ben Houcine <karim.benhoucine@landisgyr.com>
+Signed-off-by: Mathieu Othacehe <othacehe@gnu.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/phy/micrel.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index 26f1dedc92d38..c18633ad8455f 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -577,7 +577,6 @@ void idxd_wq_del_cdev(struct idxd_wq *wq)
- 	struct idxd_cdev *idxd_cdev;
- 
- 	idxd_cdev = wq->idxd_cdev;
--	ida_destroy(&file_ida);
- 	wq->idxd_cdev = NULL;
- 	cdev_device_del(&idxd_cdev->cdev, cdev_dev(idxd_cdev));
- 	put_device(cdev_dev(idxd_cdev));
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index 2cbb1d1830bbd..98c6d0caf8faf 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -3245,6 +3245,7 @@ static struct phy_driver ksphy_driver[] = {
+ 	/* PHY_BASIC_FEATURES */
+ 	.probe		= kszphy_probe,
+ 	.config_init	= ksz8061_config_init,
++	.soft_reset	= genphy_soft_reset,
+ 	.config_intr	= kszphy_config_intr,
+ 	.handle_interrupt = kszphy_handle_interrupt,
+ 	.suspend	= kszphy_suspend,
 -- 
 2.43.0
 
