@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F76219FA95;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B2219FA95;
 	Thu,  6 Jun 2024 14:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683138; cv=none; b=cm6Qt3zP/Pz+7WGNxE5jwnmfXFoYDQN8ZA0oqTmGmiNH+TqGepldc+2t+WptXpCw/9GvZkcGQrqtY2g7HNyxWU5k/Wc4bwXPjhgS2siioIpj3FSUHvQh5JVYZFBecRHWEJbSoiuywdXM/NVsTxKaYhJxHr71pt/LTYquzip4xmg=
+	t=1717683138; cv=none; b=mFK1bJV4ckPtpenmpNZVMDWrBP+UNa9ysPC21B7CkvH0SXFvfW78Bysbiu3FEzP57QlXcJAAFeV10brcXBXSW62lpZ1CyyNeEc5BI11SyUnBLVgeOLuIWcfABpcy6Hy/lRLS2/dyoWvIcBRWIrYKUZ2IimBui2EAcKreLECDmZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683138; c=relaxed/simple;
-	bh=GUwEQWJIf9a35Rq6zR8iZEJ+rgwnsU075P3JeJ60ol8=;
+	bh=G0xLfDaogFDAzfdyEWSxqVXDwJED8NRoU0YkbEiQ+tU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hs9hUmtV+76iLqMCpk+fQYYa02HMBShl20rIlypXGWdlmY115RTdAjRTcTM/lhS/64UqcGv6J9qVkjwRNZynWtUP8G5MPT353WOAqzFt+27SM1oJ2ALgAmw/ixUdYPqexwzZpJ2yDqpQ7vNT3nMa8xlvCam/cp5aJy2aqjILrhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpQoM+F7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jlT7opmlq40iFnsaxy8IFfIypj+HrIBH1SsEGOiB3Ium7PeF/mh1R0pjHOBEo69jTkd3X/DYagN0N66/4JpP3S497VK1zY+cWL6fApTtJ6CgjP6341mEjzCfZWxsvEAU6Ej5V00YQ5Z5TicgXcVXQiSvlcP2VovwwKY43g9ytuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toshSg9C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpQoM+F7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11129C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toshSg9C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830A2C2BD10;
 	Thu,  6 Jun 2024 14:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683138;
-	bh=GUwEQWJIf9a35Rq6zR8iZEJ+rgwnsU075P3JeJ60ol8=;
+	bh=G0xLfDaogFDAzfdyEWSxqVXDwJED8NRoU0YkbEiQ+tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IpQoM+F7yapOk4mpGayVDeNE906xf2iM6grUxMlpC4tlharzrWD+O5UGJr8gBRJNG
-	 bMduFHUJYMajhEbCrWWi+rNFbVjZNK1xbZpwiUloRD8z5Dlr9FnVN/jjZFmt3twgop
-	 W20J1tlmhHmx2Z4v8QbWMXJTw4JRcmKFKtJbiA74=
+	b=toshSg9Cq61RUkkW88S5omw+zsZn1TLSW1JJfuF7CcTuNxG1eoYU1B9MH5VSFDhVJ
+	 mdtQU1+uq8LupJbWogfQ+Z/K1piwKB0EAIF00RytdTvF89O0DL1ZWxavos1U551e6k
+	 Mof0cjK5KXC6ON91Te5M8qK4DJ510Ctg4gH0Ndes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ken Milmore <ken.milmore@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 010/473] r8169: Fix possible ring buffer corruption on fragmented Tx packets.
-Date: Thu,  6 Jun 2024 15:58:59 +0200
-Message-ID: <20240606131700.159572123@linuxfoundation.org>
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 084/744] nvme: find numa distance only if controller has valid numa id
+Date: Thu,  6 Jun 2024 15:55:56 +0200
+Message-ID: <20240606131735.090417284@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +50,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ken Milmore <ken.milmore@gmail.com>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-commit c71e3a5cffd5309d7f84444df03d5b72600cc417 upstream.
+[ Upstream commit 863fe60ed27f2c85172654a63c5b827e72c8b2e6 ]
 
-An issue was found on the RTL8125b when transmitting small fragmented
-packets, whereby invalid entries were inserted into the transmit ring
-buffer, subsequently leading to calls to dma_unmap_single() with a null
-address.
+On system where native nvme multipath is configured and iopolicy
+is set to numa but the nvme controller numa node id is undefined
+or -1 (NUMA_NO_NODE) then avoid calculating node distance for
+finding optimal io path. In such case we may access numa distance
+table with invalid index and that may potentially refer to incorrect
+memory. So this patch ensures that if the nvme controller numa node
+id is -1 then instead of calculating node distance for finding optimal
+io path, we set the numa node distance of such controller to default 10
+(LOCAL_DISTANCE).
 
-This was caused by rtl8169_start_xmit() not noticing changes to nr_frags
-which may occur when small packets are padded (to work around hardware
-quirks) in rtl8169_tso_csum_v2().
-
-To fix this, postpone inspecting nr_frags until after any padding has been
-applied.
-
-Fixes: 9020845fb5d6 ("r8169: improve rtl8169_start_xmit")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ken Milmore <ken.milmore@gmail.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/27ead18b-c23d-4f49-a020-1fc482c5ac95@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/20240413090614.678353-1-nilay@linux.ibm.com/
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |    3 ++-
+ drivers/nvme/host/multipath.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4263,11 +4263,11 @@ static void rtl8169_doorbell(struct rtl8
- static netdev_tx_t rtl8169_start_xmit(struct sk_buff *skb,
- 				      struct net_device *dev)
- {
--	unsigned int frags = skb_shinfo(skb)->nr_frags;
- 	struct rtl8169_private *tp = netdev_priv(dev);
- 	unsigned int entry = tp->cur_tx % NUM_TX_DESC;
- 	struct TxDesc *txd_first, *txd_last;
- 	bool stop_queue, door_bell;
-+	unsigned int frags;
- 	u32 opts[2];
+diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
+index 0a88d7bdc5e37..b39553b8378b5 100644
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -246,7 +246,8 @@ static struct nvme_ns *__nvme_find_path(struct nvme_ns_head *head, int node)
+ 		if (nvme_path_is_disabled(ns))
+ 			continue;
  
- 	if (unlikely(!rtl_tx_slots_avail(tp))) {
-@@ -4290,6 +4290,7 @@ static netdev_tx_t rtl8169_start_xmit(st
- 
- 	txd_first = tp->TxDescArray + entry;
- 
-+	frags = skb_shinfo(skb)->nr_frags;
- 	if (frags) {
- 		if (rtl8169_xmit_frags(tp, skb, opts, entry))
- 			goto err_dma_1;
+-		if (READ_ONCE(head->subsys->iopolicy) == NVME_IOPOLICY_NUMA)
++		if (ns->ctrl->numa_node != NUMA_NO_NODE &&
++		    READ_ONCE(head->subsys->iopolicy) == NVME_IOPOLICY_NUMA)
+ 			distance = node_distance(node, ns->ctrl->numa_node);
+ 		else
+ 			distance = LOCAL_DISTANCE;
+-- 
+2.43.0
+
 
 
