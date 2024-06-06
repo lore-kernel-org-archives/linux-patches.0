@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BA019E7CA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC1519E7D1;
 	Thu,  6 Jun 2024 14:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683104; cv=none; b=ltZ1pX6rV231vsg2KAZ6IhniY4TL6xoxwI2pr/hH/Y3WB5p3pv6FfgMFjEGh7gIAKVBgKf2f0ZBRODLzDetdtRlBEV0mGzjeCC9SArE08/b/tfYmlTCbY3ywt803XSKwcua+TC6oWr+2F98MjqNFNz95fBufRDm3AMP7imNHSWc=
+	t=1717683104; cv=none; b=LItR9GXtGhTT6/GGecKs8IUINU5CSdWRMHZToGOYVp4tYk/D2gec14X5/r4YwVSVNFdvOjhruDJPtj6bLNmtxyydYmgTggQNBozq3EyPzbln6n9OgPxYX2+1DCBDC/j65CcFtz6urQSg2sTcV47MC33lMYNHqtNcLM4P6FRAoKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683104; c=relaxed/simple;
-	bh=MM8UMOlMhWeMXhAJoMTYzGDPHRuzgI1D4a1NLMFC1o0=;
+	bh=x6i3AWPKmOmfcEqwv5iULAadGLM7SxHxnKIOUlEBFsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXiDHC5xWIQFpFoL5qejGdBvJMj0l9YVHx2WfpdL/g0HiXB1QbsUryzAlg9zyOg22mDidpuiweniAPFzg+JIRa9CnHVA76+lLBCyN2lXzAYAIzjSnhrcuMP9Zm3SB5Kyewh5iTaykw35Jtg7W1sURM04D641sjhpfGuCVgg8R2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7VONj3V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tb2hHRsbHA0An8BdXXwO63AchsU9PizBjQ7gFYQlpOMnQq3mclmEWEcNXUoRPN7NE/89k5T3VP7jhigx83aMOOV1NqeNeaZa3ccJFctuhOeHjdzW3MW1pO4+rAQh7YC7ue4JEJ+LBHzBEYq6EUxHs92BTqDiCgQx0LcaqiU5XeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4E4nCoF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7VONj3V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD57C2BD10;
-	Thu,  6 Jun 2024 14:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4E4nCoF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C685C2BD10;
+	Thu,  6 Jun 2024 14:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683104;
-	bh=MM8UMOlMhWeMXhAJoMTYzGDPHRuzgI1D4a1NLMFC1o0=;
+	bh=x6i3AWPKmOmfcEqwv5iULAadGLM7SxHxnKIOUlEBFsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h7VONj3VlE64xRuIgfk7G90QiSzkXsfNKQQOq94wKHiqpI22vLyV3HPaCL6FUIKEj
-	 YDXViZyUBhIdkxsbMoFv6+RWxcup1AuVXLCIDBTs8o4SlkedACwnCKqjuG55Zqa3EY
-	 v+uXjh54oXKPVGsI+BXZg4HqVLKlQhInu8PADfS4=
+	b=n4E4nCoFEY8F7bV91ZS5Y6+9x5WTPbP7d3r5AXuVfTAVsPBA8EHRQ/JuFllshLuwN
+	 3viLLDJb0To7x3jfjuLgcz7iLJRc2sxpGpxkZaBbAxyjH5OkMYe6ggfm620DgMMk8m
+	 Nrmr3UygB0UOZx3KHnOhse6e3fSzwewowYZTo4UI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.6 025/744] fs/ntfs3: Fix case when index is reused during tree transformation
-Date: Thu,  6 Jun 2024 15:54:57 +0200
-Message-ID: <20240606131733.245057777@linuxfoundation.org>
+Subject: [PATCH 6.6 026/744] fs/ntfs3: Break dir enumeration if directory contents error
+Date: Thu,  6 Jun 2024 15:54:58 +0200
+Message-ID: <20240606131733.276080004@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,49 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 05afeeebcac850a016ec4fb1f681ceda11963562 upstream.
+commit 302e9dca8428979c9c99f2dbb44dc1783f5011c3 upstream.
 
-In most cases when adding a cluster to the directory index,
-they are placed at the end, and in the bitmap, this cluster corresponds
-to the last bit. The new directory size is calculated as follows:
+If we somehow attempt to read beyond the directory size, an error
+is supposed to be returned.
 
-	data_size = (u64)(bit + 1) << indx->index_bits;
+However, in some cases, read requests do not stop and instead enter
+into a loop.
 
-In the case of reusing a non-final cluster from the index,
-data_size is calculated incorrectly, resulting in the directory size
-differing from the actual size.
+To avoid this, we set the position in the directory to the end.
 
-A check for cluster reuse has been added, and the size update is skipped.
-
-Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ntfs3/dir.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1533,6 +1533,11 @@ static int indx_add_allocate(struct ntfs
- 		goto out1;
- 	}
- 
-+	if (data_size <= le64_to_cpu(alloc->nres.data_size)) {
-+		/* Reuse index. */
-+		goto out;
-+	}
-+
- 	/* Increase allocation. */
- 	err = attr_set_size(ni, ATTR_ALLOC, in->name, in->name_len,
- 			    &indx->alloc_run, data_size, &data_size, true,
-@@ -1546,6 +1551,7 @@ static int indx_add_allocate(struct ntfs
- 	if (in->name == I30_NAME)
- 		i_size_write(&ni->vfs_inode, data_size);
- 
-+out:
- 	*vbn = bit << indx->idx2vbn_bits;
- 
- 	return 0;
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -475,6 +475,7 @@ static int ntfs_readdir(struct file *fil
+ 		vbo = (u64)bit << index_bits;
+ 		if (vbo >= i_size) {
+ 			ntfs_inode_err(dir, "Looks like your dir is corrupt");
++			ctx->pos = eod;
+ 			err = -EINVAL;
+ 			goto out;
+ 		}
 
 
