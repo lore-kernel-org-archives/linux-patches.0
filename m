@@ -1,51 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CC91A01DA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0653A1A01DA;
 	Thu,  6 Jun 2024 14:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683636; cv=none; b=TlFoCa0Vb4Equ+H2yfCB2+IxpOKYkdh4ppK3Ar8r54au4idl3AYgPJih+JTNGSlI1WNzj383eoRHj6oSwRQRLzWlIjo+GZB2M3nCfga7uq6etyc3/hlzTUZOvpdI9FB8JiX1jDHerrGSsFp3u0G1ksfkJADEyZ5MiVTrHZecHH8=
+	t=1717683637; cv=none; b=lESvln3GEkpn2PIf/HvQjMMiKU9bEkJHWugfCHwfOa5fG9FVqxj9ktAkIMZ7MD1C6k2ycaIwpAkMoh+ARWC+0qQb2sBWPQmKv9dzDlNEFRhE3bPY23ijsOj/iEVF6OpV4VJLFY8e9NNDPZTiA32TvnPBfuDPZI3pQQjmDYK+VBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683636; c=relaxed/simple;
-	bh=BedvyeTFZwaUcKmXmRt4iV4uGvr/r6HEtziwLdyI4aE=;
+	s=arc-20240116; t=1717683637; c=relaxed/simple;
+	bh=pqKwQf21argRRcGMUY6IOBjbzaPlpJUIRTZTB21M5CA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kn02v/8+d5LVb6mIHkeLnEUjNBCbfiWQeJf3ZNcZ7iKMMFz5R2/0X5Ye3VObHROFk0x4fP9jtKJpBtkExRP8V8ZRIl6CcypoDE+puk+TFqCm1RdaBNgoAiJwnQ9wDT8+1/S6i4OSZqWFsTc785Ty2Bb4WPSn+6ZTNZUCHA4m874=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XY/6iAZN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jq9teiGmqetDP7W7GvrwKVRX0USKcIbZHDqxn4kARniouNEPSQjhE6VQ4HqXE13IiS4M89sLpyYr2Gz6ZzYsYC+yN+tqIx0vJidV2tcaygHoDh/jokr/r74pO1S4mDByOteDM8OTDBfzXs0LUHrIX31U+kLDndcOdeKD9lahtcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xl3R0UGg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XY/6iAZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1851FC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xl3R0UGg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98515C32786;
 	Thu,  6 Jun 2024 14:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683636;
-	bh=BedvyeTFZwaUcKmXmRt4iV4uGvr/r6HEtziwLdyI4aE=;
+	bh=pqKwQf21argRRcGMUY6IOBjbzaPlpJUIRTZTB21M5CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XY/6iAZNQ5tQj/mKdo+YyUuIo6yIZRPIPm5z8V/cv+eQr6RLOHx85RiBNiDg6AVGP
-	 8DIt8R7I1Sz0YmblycX6bxw7eliYl5VOT0fYfxi5P5q5ujNY2T4OCYW/MFlr6bE+oT
-	 ygrHLrbJ6W6j9WtUG+B9seWHVQwXQSqckHLuF85A=
+	b=Xl3R0UGgzogL+1AXspwGOuhWp3xYPskD/sqhhnGziI/9XMSv9oVLPsprvTRbfgfM4
+	 nUtWA2e3lDeSuMl9eCuj+u/vZ+JuAPSYUnGwLpG6WHGWMiQfg88EHfkPwiBh6NqmRO
+	 Sb+U0mZvCHnk/D64q9Mv9ezs5KFFvYguecnqWM+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Leo Yan <leo.yan@linux.dev>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	David Ward <david.ward@ll.mit.edu>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 508/744] perf report: Avoid SEGV in report__setup_sample_type()
-Date: Thu,  6 Jun 2024 16:03:00 +0200
-Message-ID: <20240606131748.747506858@linuxfoundation.org>
+Subject: [PATCH 6.1 457/473] netfilter: nft_payload: rebuild vlan header on h_proto access
+Date: Thu,  6 Jun 2024 16:06:26 +0200
+Message-ID: <20240606131714.795694595@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,49 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 45b4f402a6b782352c4bafcff682bfb01da9ca05 ]
+[ Upstream commit af84f9e447a65b4b9f79e7e5d69e19039b431c56 ]
 
-In some cases evsel->name is lazily initialized in evsel__name(). If not
-initialized passing NULL to strstr() leads to a SEGV.
+nft can perform merging of adjacent payload requests.
+This means that:
 
-Fixes: ccb17caecfbd542f ("perf report: Set PERF_SAMPLE_DATA_SRC bit for Arm SPE event")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Leo Yan <leo.yan@linux.dev>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240508035301.1554434-4-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+ether saddr 00:11 ... ether type 8021ad ...
+
+is a single payload expression, for 8 bytes, starting at the
+ethernet source offset.
+
+Check that offset+length is fully within the source/destination mac
+addersses.
+
+This bug prevents 'ether type' from matching the correct h_proto in case
+vlan tag got stripped.
+
+Fixes: de6843be3082 ("netfilter: nft_payload: rebuild vlan header when needed")
+Reported-by: David Ward <david.ward@ll.mit.edu>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 33c563ebf8d3 ("netfilter: nft_payload: skbuff vlan metadata mangle support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-report.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_payload.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-report.c b/tools/perf/builtin-report.c
-index 169c64e9a01a8..2a8889c6d7f97 100644
---- a/tools/perf/builtin-report.c
-+++ b/tools/perf/builtin-report.c
-@@ -426,7 +426,7 @@ static int report__setup_sample_type(struct report *rep)
- 		 * compatibility, set the bit if it's an old perf data file.
- 		 */
- 		evlist__for_each_entry(session->evlist, evsel) {
--			if (strstr(evsel->name, "arm_spe") &&
-+			if (strstr(evsel__name(evsel), "arm_spe") &&
- 				!(sample_type & PERF_SAMPLE_DATA_SRC)) {
- 				evsel->core.attr.sample_type |= PERF_SAMPLE_DATA_SRC;
- 				sample_type |= PERF_SAMPLE_DATA_SRC;
+diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
+index 74777a687eb5f..eaa629c6d7da6 100644
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -109,6 +109,17 @@ static int nft_payload_inner_offset(const struct nft_pktinfo *pkt)
+ 	return pkt->inneroff;
+ }
+ 
++static bool nft_payload_need_vlan_copy(const struct nft_payload *priv)
++{
++	unsigned int len = priv->offset + priv->len;
++
++	/* data past ether src/dst requested, copy needed */
++	if (len > offsetof(struct ethhdr, h_proto))
++		return true;
++
++	return false;
++}
++
+ void nft_payload_eval(const struct nft_expr *expr,
+ 		      struct nft_regs *regs,
+ 		      const struct nft_pktinfo *pkt)
+@@ -127,7 +138,7 @@ void nft_payload_eval(const struct nft_expr *expr,
+ 			goto err;
+ 
+ 		if (skb_vlan_tag_present(skb) &&
+-		    priv->offset >= offsetof(struct ethhdr, h_proto)) {
++		    nft_payload_need_vlan_copy(priv)) {
+ 			if (!nft_payload_copy_vlan(dest, skb,
+ 						   priv->offset, priv->len))
+ 				goto err;
 -- 
 2.43.0
 
