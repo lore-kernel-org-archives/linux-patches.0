@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238211A01B2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CAE19FA9D;
 	Thu,  6 Jun 2024 14:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683633; cv=none; b=Q30mETv4yt5J3lfi41vxj7/ZpDN3qoEOdbfVHqMKK1fhl1HZFdmX1VInrWp26Fu1o7TpqCu4Hn1yP2Lwyz9UAKpzggUt7pjKmKDX5lkGx8W9ka6AeB1gU5g6TIs99ylHoIB0qalmiy95Ff1Wci/m/Do/94oNYqS7dBU+I4i9owM=
+	t=1717683634; cv=none; b=ItaYXRBy0OxdZpvXwHQFzEDustL99gcWEyudV4+qARvzasbu+WAevE1729hjjUtF/amRpD4p8IhlICxmiIKebtCDtSRah09C6FM1ALEf9G6O5PzbcismuOvCsPZHuGyDmnjL+vV9RgYIvPnJ1LbyjNqDWw835iKR8pFn35gU8AQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683633; c=relaxed/simple;
-	bh=iyO8oN8PsJPLDHvCHkpeA1C5BqjdLscjUvwzewfx0o0=;
+	s=arc-20240116; t=1717683634; c=relaxed/simple;
+	bh=bNW87ASMCZ2dlJvzeSKssS5qRsdnHGQsREU/mmrM5e8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhZImNreUXX/Wjxm+Mj6ylMDqK6w3kMd3xMTog1CSD5PLC/Z5Qnc3xCNED0tnn80bQVrppnDSySi2M87/uEMHGQOOKh6Uq5+UTgeW9Q+4bz72uJxge1+6lViQqNJStIsf7Ce8c01G07a74U/CzXjXgoBxv9DEziMw78kZEOTqjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHSvPMjL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MpzF8WLIrcn5iQOhN0aIIIJpCb1ct+6DhteYM9N/ISYpyIRNNGDWmtmvSu6pYl3BDsmy2oLDbFEgCyPjYvyqzNFvwMDh5Vd54HmLAOlZ3QskZGJfmOBYKbGnXpbzXIZpJEGxYR9NOgVHtUiUr4ne5zGaqtRGbbaAYGh3mHqJFVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yz+jeiWo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHSvPMjL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2D6C2BD10;
-	Thu,  6 Jun 2024 14:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yz+jeiWo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F8FC2BD10;
+	Thu,  6 Jun 2024 14:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683633;
-	bh=iyO8oN8PsJPLDHvCHkpeA1C5BqjdLscjUvwzewfx0o0=;
+	bh=bNW87ASMCZ2dlJvzeSKssS5qRsdnHGQsREU/mmrM5e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHSvPMjL7Hnnh6dH0FwG3HGQeuqJp5bxYb6oM1O9XqDFHE8/3AjmLzZm0d/qofXXV
-	 6OaQKHDcJMMxRJbfzN3Ta23U9csyvobGSzsfNwX+YFLD+hihu1Nz7+7lkz0qvmUNx6
-	 1memWQ3odafFaxI9FMa7H6Njv9rwsZXmkVXHLJh8=
+	b=Yz+jeiWoVl0JSphX0vfLfRRsilbv10Rx4WJgojjsi+H95qx2+rsFnnHFm5PnEg3tk
+	 gdtTXsQpdZp0RfjutfqUjfMPl6IXjYeX2Lz3hzegclNFM4JimQHL+h21v3MbTYUXRp
+	 mNMFBUg71w2/L+unGOzoDimJYGz2ePsxfLObsFjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 505/744] f2fs: support file pinning for zoned devices
-Date: Thu,  6 Jun 2024 16:02:57 +0200
-Message-ID: <20240606131748.640564975@linuxfoundation.org>
+Subject: [PATCH 6.1 454/473] ice: fix accounting if a VLAN already exists
+Date: Thu,  6 Jun 2024 16:06:23 +0200
+Message-ID: <20240606131714.705834078@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,474 +49,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 9703d69d9d153bb230711d0d577454552aeb13d4 ]
+[ Upstream commit 82617b9a04649e83ee8731918aeadbb6e6d7cbc7 ]
 
-Support file pinning with conventional storage area for zoned devices
+The ice_vsi_add_vlan() function is used to add a VLAN filter for the target
+VSI. This function prepares a filter in the switch table for the given VSI.
+If it succeeds, the vsi->num_vlan counter is incremented.
 
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: aa4074e8fec4 ("f2fs: fix block migration when section is not aligned to pow2")
+It is not considered an error to add a VLAN which already exists in the
+switch table, so the function explicitly checks and ignores -EEXIST. The
+vsi->num_vlan counter is still incremented.
+
+This seems incorrect, as it means we can double-count in the case where the
+same VLAN is added twice by the caller. The actual table will have one less
+filter than the count.
+
+The ice_vsi_del_vlan() function similarly checks and handles the -ENOENT
+condition for when deleting a filter that doesn't exist. This flow only
+decrements the vsi->num_vlan if it actually deleted a filter.
+
+The vsi->num_vlan counter is used only in a few places, primarily related
+to tracking the number of non-zero VLANs. If the vsi->num_vlans gets out of
+sync, then ice_vsi_num_non_zero_vlans() will incorrectly report more VLANs
+than are present, and ice_vsi_has_non_zero_vlans() could return true
+potentially in cases where there are only VLAN 0 filters left.
+
+Fix this by only incrementing the vsi->num_vlan in the case where we
+actually added an entry, and not in the case where the entry already
+existed.
+
+Fixes: a1ffafb0b4a4 ("ice: Support configuring the device to Double VLAN Mode")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240523-net-2024-05-23-intel-net-fixes-v1-2-17a923e0bb5f@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c    | 58 ++++++++++++++++++++++++++-------------
- fs/f2fs/f2fs.h    | 17 +++++++++++-
- fs/f2fs/file.c    | 24 ++++++++++++-----
- fs/f2fs/gc.c      | 14 +++++++---
- fs/f2fs/segment.c | 69 +++++++++++++++++++++++++++++++++++++++++------
- fs/f2fs/segment.h | 10 +++++++
- 6 files changed, 154 insertions(+), 38 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 5d6ba12e84482..3558fc3387f54 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -3905,25 +3905,34 @@ static int f2fs_migrate_blocks(struct inode *inode, block_t start_blk,
- 	unsigned int blkofs;
- 	unsigned int blk_per_sec = BLKS_PER_SEC(sbi);
- 	unsigned int secidx = start_blk / blk_per_sec;
--	unsigned int end_sec = secidx + blkcnt / blk_per_sec;
-+	unsigned int end_sec;
- 	int ret = 0;
- 
-+	if (!blkcnt)
-+		return 0;
-+	end_sec = secidx + (blkcnt - 1) / blk_per_sec;
-+
- 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	filemap_invalidate_lock(inode->i_mapping);
- 
- 	set_inode_flag(inode, FI_ALIGNED_WRITE);
- 	set_inode_flag(inode, FI_OPU_WRITE);
- 
--	for (; secidx < end_sec; secidx++) {
-+	for (; secidx <= end_sec; secidx++) {
-+		unsigned int blkofs_end = secidx == end_sec ?
-+			(blkcnt - 1) % blk_per_sec : blk_per_sec - 1;
-+
- 		f2fs_down_write(&sbi->pin_sem);
- 
--		f2fs_lock_op(sbi);
--		f2fs_allocate_new_section(sbi, CURSEG_COLD_DATA_PINNED, false);
--		f2fs_unlock_op(sbi);
-+		ret = f2fs_allocate_pinning_section(sbi);
-+		if (ret) {
-+			f2fs_up_write(&sbi->pin_sem);
-+			break;
-+		}
- 
- 		set_inode_flag(inode, FI_SKIP_WRITES);
- 
--		for (blkofs = 0; blkofs < blk_per_sec; blkofs++) {
-+		for (blkofs = 0; blkofs <= blkofs_end; blkofs++) {
- 			struct page *page;
- 			unsigned int blkidx = secidx * blk_per_sec + blkofs;
- 
-@@ -4012,27 +4021,34 @@ static int check_swap_activate(struct swap_info_struct *sis,
- 		nr_pblocks = map.m_len;
- 
- 		if ((pblock - SM_I(sbi)->main_blkaddr) & sec_blks_mask ||
--				nr_pblocks & sec_blks_mask) {
-+				nr_pblocks & sec_blks_mask ||
-+				!f2fs_valid_pinned_area(sbi, pblock)) {
-+			bool last_extent = false;
-+
- 			not_aligned++;
- 
- 			nr_pblocks = roundup(nr_pblocks, blks_per_sec);
- 			if (cur_lblock + nr_pblocks > sis->max)
- 				nr_pblocks -= blks_per_sec;
- 
-+			/* this extent is last one */
- 			if (!nr_pblocks) {
--				/* this extent is last one */
--				nr_pblocks = map.m_len;
--				f2fs_warn(sbi, "Swapfile: last extent is not aligned to section");
--				goto next;
-+				nr_pblocks = last_lblock - cur_lblock;
-+				last_extent = true;
- 			}
- 
- 			ret = f2fs_migrate_blocks(inode, cur_lblock,
- 							nr_pblocks);
--			if (ret)
-+			if (ret) {
-+				if (ret == -ENOENT)
-+					ret = -EINVAL;
- 				goto out;
--			goto retry;
-+			}
-+
-+			if (!last_extent)
-+				goto retry;
- 		}
--next:
-+
- 		if (cur_lblock + nr_pblocks >= sis->max)
- 			nr_pblocks = sis->max - cur_lblock;
- 
-@@ -4070,17 +4086,17 @@ static int f2fs_swap_activate(struct swap_info_struct *sis, struct file *file,
- 				sector_t *span)
- {
- 	struct inode *inode = file_inode(file);
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	int ret;
- 
- 	if (!S_ISREG(inode->i_mode))
+diff --git a/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c b/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
+index 239266e9d5f12..80c16e04f6702 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
+@@ -45,14 +45,15 @@ int ice_vsi_add_vlan(struct ice_vsi *vsi, struct ice_vlan *vlan)
  		return -EINVAL;
  
--	if (f2fs_readonly(F2FS_I_SB(inode)->sb))
-+	if (f2fs_readonly(sbi->sb))
- 		return -EROFS;
+ 	err = ice_fltr_add_vlan(vsi, vlan);
+-	if (err && err != -EEXIST) {
++	if (!err)
++		vsi->num_vlan++;
++	else if (err == -EEXIST)
++		err = 0;
++	else
+ 		dev_err(ice_pf_to_dev(vsi->back), "Failure Adding VLAN %d on VSI %i, status %d\n",
+ 			vlan->vid, vsi->vsi_num, err);
+-		return err;
+-	}
  
--	if (f2fs_lfs_mode(F2FS_I_SB(inode))) {
--		f2fs_err(F2FS_I_SB(inode),
--			"Swapfile not supported in LFS mode");
-+	if (f2fs_lfs_mode(sbi) && !f2fs_sb_has_blkzoned(sbi)) {
-+		f2fs_err(sbi, "Swapfile not supported in LFS mode");
- 		return -EINVAL;
- 	}
- 
-@@ -4093,13 +4109,17 @@ static int f2fs_swap_activate(struct swap_info_struct *sis, struct file *file,
- 
- 	f2fs_precache_extents(inode);
- 
-+	ret = filemap_fdatawrite(inode->i_mapping);
-+	if (ret < 0)
-+		return ret;
-+
- 	ret = check_swap_activate(sis, file, span);
- 	if (ret < 0)
- 		return ret;
- 
- 	stat_inc_swapfile_inode(inode);
- 	set_inode_flag(inode, FI_PIN_FILE);
--	f2fs_update_time(F2FS_I_SB(inode), REQ_TIME);
-+	f2fs_update_time(sbi, REQ_TIME);
- 	return ret;
- }
- 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 9b80ceaf39502..82f54ffde4cd4 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3704,7 +3704,8 @@ void f2fs_get_new_segment(struct f2fs_sb_info *sbi,
- 			unsigned int *newseg, bool new_sec, int dir);
- void f2fs_allocate_segment_for_resize(struct f2fs_sb_info *sbi, int type,
- 					unsigned int start, unsigned int end);
--void f2fs_allocate_new_section(struct f2fs_sb_info *sbi, int type, bool force);
-+int f2fs_allocate_new_section(struct f2fs_sb_info *sbi, int type, bool force);
-+int f2fs_allocate_pinning_section(struct f2fs_sb_info *sbi);
- void f2fs_allocate_new_segments(struct f2fs_sb_info *sbi);
- int f2fs_trim_fs(struct f2fs_sb_info *sbi, struct fstrim_range *range);
- bool f2fs_exist_trim_candidates(struct f2fs_sb_info *sbi,
-@@ -3880,6 +3881,9 @@ void f2fs_stop_gc_thread(struct f2fs_sb_info *sbi);
- block_t f2fs_start_bidx_of_node(unsigned int node_ofs, struct inode *inode);
- int f2fs_gc(struct f2fs_sb_info *sbi, struct f2fs_gc_control *gc_control);
- void f2fs_build_gc_manager(struct f2fs_sb_info *sbi);
-+int f2fs_gc_range(struct f2fs_sb_info *sbi,
-+		unsigned int start_seg, unsigned int end_seg,
-+		bool dry_run, unsigned int dry_run_sections);
- int f2fs_resize_fs(struct file *filp, __u64 block_count);
- int __init f2fs_create_garbage_collection_cache(void);
- void f2fs_destroy_garbage_collection_cache(void);
-@@ -4536,6 +4540,17 @@ static inline bool f2fs_lfs_mode(struct f2fs_sb_info *sbi)
- 	return F2FS_OPTION(sbi).fs_mode == FS_MODE_LFS;
- }
- 
-+static inline bool f2fs_valid_pinned_area(struct f2fs_sb_info *sbi,
-+					  block_t blkaddr)
-+{
-+	if (f2fs_sb_has_blkzoned(sbi)) {
-+		int devi = f2fs_target_device_index(sbi, blkaddr);
-+
-+		return !bdev_is_zoned(FDEV(devi).bdev);
-+	}
-+	return true;
-+}
-+
- static inline bool f2fs_low_mem_mode(struct f2fs_sb_info *sbi)
- {
- 	return F2FS_OPTION(sbi).memory_mode == MEMORY_MODE_LOW;
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 2671a61556951..20dc11b58bb69 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1729,9 +1729,11 @@ static int f2fs_expand_inode_data(struct inode *inode, loff_t offset,
- 
- 		f2fs_down_write(&sbi->pin_sem);
- 
--		f2fs_lock_op(sbi);
--		f2fs_allocate_new_section(sbi, CURSEG_COLD_DATA_PINNED, false);
--		f2fs_unlock_op(sbi);
-+		err = f2fs_allocate_pinning_section(sbi);
-+		if (err) {
-+			f2fs_up_write(&sbi->pin_sem);
-+			goto out_err;
-+		}
- 
- 		map.m_seg_type = CURSEG_COLD_DATA_PINNED;
- 		err = f2fs_map_blocks(inode, &map, F2FS_GET_BLOCK_PRE_DIO);
-@@ -3184,6 +3186,7 @@ int f2fs_pin_file_control(struct inode *inode, bool inc)
- static int f2fs_ioc_set_pin_file(struct file *filp, unsigned long arg)
- {
- 	struct inode *inode = file_inode(filp);
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	__u32 pin;
- 	int ret = 0;
- 
-@@ -3193,7 +3196,7 @@ static int f2fs_ioc_set_pin_file(struct file *filp, unsigned long arg)
- 	if (!S_ISREG(inode->i_mode))
- 		return -EINVAL;
- 
--	if (f2fs_readonly(F2FS_I_SB(inode)->sb))
-+	if (f2fs_readonly(sbi->sb))
- 		return -EROFS;
- 
- 	ret = mnt_want_write_file(filp);
-@@ -3206,9 +3209,18 @@ static int f2fs_ioc_set_pin_file(struct file *filp, unsigned long arg)
- 		clear_inode_flag(inode, FI_PIN_FILE);
- 		f2fs_i_gc_failures_write(inode, 0);
- 		goto done;
-+	} else if (f2fs_is_pinned_file(inode)) {
-+		goto done;
- 	}
- 
--	if (f2fs_should_update_outplace(inode, NULL)) {
-+	if (f2fs_sb_has_blkzoned(sbi) && F2FS_HAS_BLOCKS(inode)) {
-+		ret = -EFBIG;
-+		goto out;
-+	}
-+
-+	/* Let's allow file pinning on zoned device. */
-+	if (!f2fs_sb_has_blkzoned(sbi) &&
-+	    f2fs_should_update_outplace(inode, NULL)) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
-@@ -3230,7 +3242,7 @@ static int f2fs_ioc_set_pin_file(struct file *filp, unsigned long arg)
- 	set_inode_flag(inode, FI_PIN_FILE);
- 	ret = F2FS_I(inode)->i_gc_failures[GC_FAILURE_PIN];
- done:
--	f2fs_update_time(F2FS_I_SB(inode), REQ_TIME);
-+	f2fs_update_time(sbi, REQ_TIME);
- out:
- 	inode_unlock(inode);
- 	mnt_drop_write_file(filp);
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 2a3d64f4253ee..9a4ec639e58a7 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1979,10 +1979,12 @@ void f2fs_build_gc_manager(struct f2fs_sb_info *sbi)
- 	init_atgc_management(sbi);
- }
- 
--static int f2fs_gc_range(struct f2fs_sb_info *sbi,
--		unsigned int start_seg, unsigned int end_seg, bool dry_run)
-+int f2fs_gc_range(struct f2fs_sb_info *sbi,
-+		unsigned int start_seg, unsigned int end_seg,
-+		bool dry_run, unsigned int dry_run_sections)
- {
- 	unsigned int segno;
-+	unsigned int gc_secs = dry_run_sections;
- 
- 	for (segno = start_seg; segno <= end_seg; segno += SEGS_PER_SEC(sbi)) {
- 		struct gc_inode_list gc_list = {
-@@ -1990,11 +1992,15 @@ static int f2fs_gc_range(struct f2fs_sb_info *sbi,
- 			.iroot = RADIX_TREE_INIT(gc_list.iroot, GFP_NOFS),
- 		};
- 
--		do_garbage_collect(sbi, segno, &gc_list, FG_GC, true);
-+		do_garbage_collect(sbi, segno, &gc_list, FG_GC,
-+						dry_run_sections == 0);
- 		put_gc_inode(&gc_list);
- 
- 		if (!dry_run && get_valid_blocks(sbi, segno, true))
- 			return -EAGAIN;
-+		if (dry_run && dry_run_sections &&
-+		    !get_valid_blocks(sbi, segno, true) && --gc_secs == 0)
-+			break;
- 
- 		if (fatal_signal_pending(current))
- 			return -ERESTARTSYS;
-@@ -2032,7 +2038,7 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
- 		f2fs_allocate_segment_for_resize(sbi, type, start, end);
- 
- 	/* do GC to move out valid blocks in the range */
--	err = f2fs_gc_range(sbi, start, end, dry_run);
-+	err = f2fs_gc_range(sbi, start, end, dry_run, 0);
- 	if (err || dry_run)
- 		goto out;
- 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 523c3a91bdf21..52b281e9f472f 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2638,7 +2638,7 @@ static int is_next_segment_free(struct f2fs_sb_info *sbi,
-  * This function should be returned with success, otherwise BUG
-  */
- static void get_new_segment(struct f2fs_sb_info *sbi,
--			unsigned int *newseg, bool new_sec)
-+			unsigned int *newseg, bool new_sec, bool pinning)
- {
- 	struct free_segmap_info *free_i = FREE_I(sbi);
- 	unsigned int segno, secno, zoneno;
-@@ -2656,6 +2656,16 @@ static void get_new_segment(struct f2fs_sb_info *sbi,
- 		if (segno < GET_SEG_FROM_SEC(sbi, hint + 1))
- 			goto got_it;
- 	}
-+
-+	/*
-+	 * If we format f2fs on zoned storage, let's try to get pinned sections
-+	 * from beginning of the storage, which should be a conventional one.
-+	 */
-+	if (f2fs_sb_has_blkzoned(sbi)) {
-+		segno = pinning ? 0 : max(first_zoned_segno(sbi), *newseg);
-+		hint = GET_SEC_FROM_SEG(sbi, segno);
-+	}
-+
- find_other_zone:
- 	secno = find_next_zero_bit(free_i->free_secmap, MAIN_SECS(sbi), hint);
- 	if (secno >= MAIN_SECS(sbi)) {
-@@ -2754,21 +2764,30 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
-  * Allocate a current working segment.
-  * This function always allocates a free segment in LFS manner.
-  */
--static void new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
-+static int new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
- {
- 	struct curseg_info *curseg = CURSEG_I(sbi, type);
- 	unsigned int segno = curseg->segno;
-+	bool pinning = type == CURSEG_COLD_DATA_PINNED;
- 
- 	if (curseg->inited)
- 		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, segno));
-+
- 	segno = __get_next_segno(sbi, type);
--	get_new_segment(sbi, &segno, new_sec);
-+	get_new_segment(sbi, &segno, new_sec, pinning);
-+	if (new_sec && pinning &&
-+	    !f2fs_valid_pinned_area(sbi, START_BLOCK(sbi, segno))) {
-+		__set_free(sbi, segno);
-+		return -EAGAIN;
-+	}
-+
- 	curseg->next_segno = segno;
- 	reset_curseg(sbi, type, 1);
- 	curseg->alloc_type = LFS;
- 	if (F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_BLK)
- 		curseg->fragment_remained_chunk =
- 				get_random_u32_inclusive(1, sbi->max_fragment_chunk);
-+	return 0;
- }
- 
- static int __next_free_blkoff(struct f2fs_sb_info *sbi,
-@@ -3041,7 +3060,7 @@ void f2fs_allocate_segment_for_resize(struct f2fs_sb_info *sbi, int type,
- 	f2fs_up_read(&SM_I(sbi)->curseg_lock);
- }
- 
--static void __allocate_new_segment(struct f2fs_sb_info *sbi, int type,
-+static int __allocate_new_segment(struct f2fs_sb_info *sbi, int type,
- 						bool new_sec, bool force)
- {
- 	struct curseg_info *curseg = CURSEG_I(sbi, type);
-@@ -3051,21 +3070,49 @@ static void __allocate_new_segment(struct f2fs_sb_info *sbi, int type,
- 	    !curseg->next_blkoff &&
- 	    !get_valid_blocks(sbi, curseg->segno, new_sec) &&
- 	    !get_ckpt_valid_blocks(sbi, curseg->segno, new_sec))
--		return;
-+		return 0;
- 
- 	old_segno = curseg->segno;
--	new_curseg(sbi, type, true);
-+	if (new_curseg(sbi, type, true))
-+		return -EAGAIN;
- 	stat_inc_seg_type(sbi, curseg);
- 	locate_dirty_segment(sbi, old_segno);
-+	return 0;
- }
- 
--void f2fs_allocate_new_section(struct f2fs_sb_info *sbi, int type, bool force)
-+int f2fs_allocate_new_section(struct f2fs_sb_info *sbi, int type, bool force)
- {
-+	int ret;
-+
- 	f2fs_down_read(&SM_I(sbi)->curseg_lock);
- 	down_write(&SIT_I(sbi)->sentry_lock);
--	__allocate_new_segment(sbi, type, true, force);
-+	ret = __allocate_new_segment(sbi, type, true, force);
- 	up_write(&SIT_I(sbi)->sentry_lock);
- 	f2fs_up_read(&SM_I(sbi)->curseg_lock);
-+
-+	return ret;
-+}
-+
-+int f2fs_allocate_pinning_section(struct f2fs_sb_info *sbi)
-+{
-+	int err;
-+	bool gc_required = true;
-+
-+retry:
-+	f2fs_lock_op(sbi);
-+	err = f2fs_allocate_new_section(sbi, CURSEG_COLD_DATA_PINNED, false);
-+	f2fs_unlock_op(sbi);
-+
-+	if (f2fs_sb_has_blkzoned(sbi) && err && gc_required) {
-+		f2fs_down_write(&sbi->gc_lock);
-+		f2fs_gc_range(sbi, 0, GET_SEGNO(sbi, FDEV(0).end_blk), true, 1);
-+		f2fs_up_write(&sbi->gc_lock);
-+
-+		gc_required = false;
-+		goto retry;
-+	}
-+
+-	vsi->num_vlan++;
+-	return 0;
 +	return err;
  }
  
- void f2fs_allocate_new_segments(struct f2fs_sb_info *sbi)
-@@ -3431,6 +3478,10 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
- 	 * new segment.
- 	 */
- 	if (segment_full) {
-+		if (type == CURSEG_COLD_DATA_PINNED &&
-+		    !((curseg->segno + 1) % sbi->segs_per_sec))
-+			goto skip_new_segment;
-+
- 		if (from_gc) {
- 			get_atssr_segment(sbi, type, se->type,
- 						AT_SSR, se->mtime);
-@@ -3442,6 +3493,8 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
- 			stat_inc_seg_type(sbi, curseg);
- 		}
- 	}
-+
-+skip_new_segment:
- 	/*
- 	 * segment dirty status should be updated after segment allocation,
- 	 * so we just need to update status only one time after previous
-diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index 93ffb62e45f4d..4595f1cc03828 100644
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -956,3 +956,13 @@ static inline void wake_up_discard_thread(struct f2fs_sb_info *sbi, bool force)
- 	dcc->discard_wake = true;
- 	wake_up_interruptible_all(&dcc->discard_wait_queue);
- }
-+
-+static inline unsigned int first_zoned_segno(struct f2fs_sb_info *sbi)
-+{
-+	int devi;
-+
-+	for (devi = 0; devi < sbi->s_ndevs; devi++)
-+		if (bdev_is_zoned(FDEV(devi).bdev))
-+			return GET_SEGNO(sbi, FDEV(devi).start_blk);
-+	return 0;
-+}
+ /**
 -- 
 2.43.0
 
