@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719B5197A98;
-	Thu,  6 Jun 2024 14:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC87197A8B;
+	Thu,  6 Jun 2024 14:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682928; cv=none; b=QOT3+BRBjVWvfp3xWTx3zMQLseQLlXEuByB6cZjSHFaaHh+NHuC0vKMiomuezeaI3pMUsryzftYNdi3xU8REtKYDPg0clTJoJrm/Fx7tyQL66SY/6D9B+EU+mE+o0T+10C4xGg69shShSedAAWut+3TLyNdjWQjVl/rrNdHawcY=
+	t=1717682929; cv=none; b=CIuqiaJ/BB6zX9pkIDCvQX9XF9inJu5tviFIaprnm5IVdhOZTHJiHLyvRga0IyMdKNnFB9TwVJvcbcyCn9ALux/54SxXlBYihJp4PX/0t5qkxTwbDGwxTjuuQ42Pd+YcLVajOvjlLA79PVDePC1wKJHvliO3uu++t3ymqniZstk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682928; c=relaxed/simple;
-	bh=kdyH4egdLSDWpLbXwXCyseU76qaHFu8pNW/9xWUbusQ=;
+	s=arc-20240116; t=1717682929; c=relaxed/simple;
+	bh=f/6sbasxOjPy6L7AItsv0sZfTJsNZJO/0pg26Cm7NT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Es8OOrrNpzRV/yl4e+8eunRNjgVej//Fxw/KVyhT0EG9Iw5Edhi/Bg5NcfikOSBM6mSq34PEeN+hX8yCWQfXv524hN1ka5fqR5RA9alsuKgbRUQHf1jTS+jshwD8ExOfWNl8/O3WW5VQ0/yYbye3vzg8APVhExO+cIl9qp/miX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZADZWaq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CSgt+aOCxFnpcRWJIFgXRJLB+FjXCZvsLzjhr1VuZjaB7kMfR2jCFKOQtlchfBM8VaFhri40KrFW7FDHjkPl2NvwERjMi0eFClOaN4oni8YoqGXyrWTRmWJmC96io/B7nOUVilskt6jPgBf9Stidm3KBS9+UFUKDiA43v+AETp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okXZx+3I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZADZWaq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E02BC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okXZx+3I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8591C4AF0B;
 	Thu,  6 Jun 2024 14:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682928;
-	bh=kdyH4egdLSDWpLbXwXCyseU76qaHFu8pNW/9xWUbusQ=;
+	bh=f/6sbasxOjPy6L7AItsv0sZfTJsNZJO/0pg26Cm7NT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZADZWaqh4pdDSpSBBfw+pV0xNzRy9GReVWuXleiJ8hR+QLpPIxT1WO/fLnYUOboC
-	 XcEeNScBjSjHG8JBd/4JOaWH66v8Tl6qVvUAl3j2vf+sOJVmL91bssx0R08/eo5roj
-	 xCNOkwf5UZNDo0RYYENcLdacHB5/Wj0AjeNUwM0U=
+	b=okXZx+3IgUMOmtuzZeWFS6jcjWnOp0Vr2DLG/lx3GKEwIz2W/EqFroBz7rAMLSVci
+	 o2Z5DpKtSjGkhVi82xcgJ9Zj1+ebPzo4zm3VCckzQG0h0cYo0mTJskJ4XHwNuE5JKX
+	 Vl+2GDbwEdKKMBfHL2VkJshy+1+0OmbYPKYoX5dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 073/374] PCI: of_property: Return error for int_map allocation failure
-Date: Thu,  6 Jun 2024 16:00:52 +0200
-Message-ID: <20240606131654.308025622@linuxfoundation.org>
+Subject: [PATCH 6.9 074/374] VMCI: Fix an error handling path in vmci_guest_probe_device()
+Date: Thu,  6 Jun 2024 16:00:53 +0200
+Message-ID: <20240606131654.343837903@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,36 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit e6f7d27df5d208b50cae817a91d128fb434bb12c ]
+[ Upstream commit 73df3d6f2e9533e93a5039a33c40dd7216b81801 ]
 
-Return -ENOMEM from of_pci_prop_intr_map() if kcalloc() fails to prevent a
-NULL pointer dereference in this case.
+After a successful pci_iomap_range() call, pci_iounmap() should be called
+in the error handling path, as already done in the remove function.
 
-Fixes: 407d1a51921e ("PCI: Create device tree node for bridge")
-Link: https://lore.kernel.org/r/20240303105729.78624-1-duoming@zju.edu.cn
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Add the missing call.
+
+The corresponding call was added in the remove function in commit
+5ee109828e73 ("VMCI: dma dg: allocate send and receive buffers for DMA
+datagrams")
+
+Fixes: e283a0e8b7ea ("VMCI: dma dg: add MMIO access to registers")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Vishnu Dasa <vishnu.dasa@broadcom.com>
+Link: https://lore.kernel.org/r/a35bbc3876ae1da70e49dafde4435750e1477be3.1713961553.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/of_property.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/misc/vmw_vmci/vmci_guest.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/of_property.c b/drivers/pci/of_property.c
-index c2c7334152bc0..03539e5053720 100644
---- a/drivers/pci/of_property.c
-+++ b/drivers/pci/of_property.c
-@@ -238,6 +238,8 @@ static int of_pci_prop_intr_map(struct pci_dev *pdev, struct of_changeset *ocs,
- 		return 0;
+diff --git a/drivers/misc/vmw_vmci/vmci_guest.c b/drivers/misc/vmw_vmci/vmci_guest.c
+index 4f8d962bb5b2a..1300ccab3d21b 100644
+--- a/drivers/misc/vmw_vmci/vmci_guest.c
++++ b/drivers/misc/vmw_vmci/vmci_guest.c
+@@ -625,7 +625,8 @@ static int vmci_guest_probe_device(struct pci_dev *pdev,
+ 	if (!vmci_dev) {
+ 		dev_err(&pdev->dev,
+ 			"Can't allocate memory for VMCI device\n");
+-		return -ENOMEM;
++		error = -ENOMEM;
++		goto err_unmap_mmio_base;
+ 	}
  
- 	int_map = kcalloc(map_sz, sizeof(u32), GFP_KERNEL);
-+	if (!int_map)
-+		return -ENOMEM;
- 	mapp = int_map;
+ 	vmci_dev->dev = &pdev->dev;
+@@ -642,7 +643,8 @@ static int vmci_guest_probe_device(struct pci_dev *pdev,
+ 		if (!vmci_dev->tx_buffer) {
+ 			dev_err(&pdev->dev,
+ 				"Can't allocate memory for datagram tx buffer\n");
+-			return -ENOMEM;
++			error = -ENOMEM;
++			goto err_unmap_mmio_base;
+ 		}
  
- 	list_for_each_entry(child, &pdev->subordinate->devices, bus_list) {
+ 		vmci_dev->data_buffer = dma_alloc_coherent(&pdev->dev, VMCI_DMA_DG_BUFFER_SIZE,
+@@ -893,6 +895,10 @@ static int vmci_guest_probe_device(struct pci_dev *pdev,
+ err_free_data_buffers:
+ 	vmci_free_dg_buffers(vmci_dev);
+ 
++err_unmap_mmio_base:
++	if (mmio_base != NULL)
++		pci_iounmap(pdev, mmio_base);
++
+ 	/* The rest are managed resources and will be freed by PCI core */
+ 	return error;
+ }
 -- 
 2.43.0
 
