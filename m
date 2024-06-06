@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C4119D09C;
-	Thu,  6 Jun 2024 14:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08231974F7;
+	Thu,  6 Jun 2024 14:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683093; cv=none; b=B2BE1joHWsU7SZRQhKxGVcP9vuv6fKs+l87IAtOexRqYN5QqX+7CIoY/n1yvZmGzJCjgyH6JJ88Wp/qPExm1BuHWPzv6qJWHE3MSgxNWzKhpmTS9XmtkCgn5wNUAlZhk4ViB8azGaBr62OO1+UmFgKEZuxGp17vPjS6B6bXeXzQ=
+	t=1717683093; cv=none; b=Jk8xdD6GQxGhhQSC15M4m3ckg001eMP039YLyIrR0HkIrkp3/4otq7UZzeS9X89VPVOsdtdRF/MQycujofX6aNJHnGyOSbLSOOmGqIXb9WSZFivSZliENpVmVwgI4WCUDS9YxKxmEm/8JAximCVJ6Shm8M3IriyOdsJi1+LzZZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683093; c=relaxed/simple;
-	bh=+LR1UkCTglNs1OCpQshICQsNRuvIomsD5fcwrze1PMk=;
+	bh=DgtSQiS6Ma+mbh63/4j2ilMhsAtUP1be1MIsi8ZvF1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9vop/bHUlkjZX3kHssPXV/vJpA65+U/9Y3Mq41b1GX9kHUkU+njyuRKY6TqegL3WMcZMuR5lE1eYSEmi7UfUfrh9jggR/S6YD+eujHZCrpt4nfcLyELK1Zazvu/6wIs8wR/VllPsCTyV3a9f0jccU0xLMcPGcw66EdN5Jlt/Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMw/jqLD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sjbl/vE+RuKfnxiAVK9nQkN/n6yLgAdpcYEyJ9NljuSrfYsriBMSQQKD//+RKGVTm8nM2ZBbplB15sUpu9Yt9z7XwbO3HRhITf2aNZms1Tpu3WR3vDFEBfQ0QZK1rfLIUwuFqPvqtwsvupTjsfbqo1XihqW4RSmSI1l0OOp/I3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGt+TTT2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMw/jqLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B4FC32782;
-	Thu,  6 Jun 2024 14:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGt+TTT2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459C8C4AF0C;
+	Thu,  6 Jun 2024 14:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683092;
-	bh=+LR1UkCTglNs1OCpQshICQsNRuvIomsD5fcwrze1PMk=;
+	s=korg; t=1717683093;
+	bh=DgtSQiS6Ma+mbh63/4j2ilMhsAtUP1be1MIsi8ZvF1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMw/jqLDbq7ZXES0jPqc873MxyioYwYXJajUCLfw74Kcl2w3dziR4j9iHGcjnOkC3
-	 JIxRFJdggTF6+MEMfpBs/Bv68dHezBwzIXMSsa2xGB/Nd6XDsVVMIuY0GqUn5zAhej
-	 0JcEAq+4X0YAdsUV/mJiQhAk6qe7kyF7gxg2Rvkc=
+	b=hGt+TTT2AfZYQnyEpDp9FSMbjAHIrE+GKbzaJh1sDXUS14itl2LdkCuoas3CeMy5j
+	 S75XX/TE2hg7IXT2DHDe+rrcRDvBAWN00t1KC/0aoQW6wtH8nrXbW/ZR7OJnH4mSkw
+	 3lX1GVGGIEhhA5R3ysV/uc2RBRCvN+Q1Bw81l+vM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 363/374] riscv: prevent pt_regs corruption for secondary idle threads
-Date: Thu,  6 Jun 2024 16:05:42 +0200
-Message-ID: <20240606131704.038279881@linuxfoundation.org>
+Subject: [PATCH 6.9 364/374] ALSA: seq: ump: Fix swapped song position pointer data
+Date: Thu,  6 Jun 2024 16:05:43 +0200
+Message-ID: <20240606131704.073624028@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,59 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a638b0461b58aa3205cd9d5f14d6f703d795b4af ]
+[ Upstream commit 310fa3ec2859f1c094e6e9b5d2e1ca51738c409a ]
 
-Top of the kernel thread stack should be reserved for pt_regs. However
-this is not the case for the idle threads of the secondary boot harts.
-Their stacks overlap with their pt_regs, so both may get corrupted.
+At converting between the legacy event and UMP, the parameters for
+MIDI Song Position Pointer are incorrectly stored.  It should have
+been LSB -> MSB order while it stored in MSB -> LSB order.
+This patch corrects the ordering.
 
-Similar issue has been fixed for the primary hart, see c7cdd96eca28
-("riscv: prevent stack corruption by reserving task_pt_regs(p) early").
-However that fix was not propagated to the secondary harts. The problem
-has been noticed in some CPU hotplug tests with V enabled. The function
-smp_callin stored several registers on stack, corrupting top of pt_regs
-structure including status field. As a result, kernel attempted to save
-or restore inexistent V context.
-
-Fixes: 9a2451f18663 ("RISC-V: Avoid using per cpu array for ordered booting")
-Fixes: 2875fe056156 ("RISC-V: Add cpu_ops and modify default booting method")
-Signed-off-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240523084327.2013211-1-geomatsi@gmail.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
+Link: https://lore.kernel.org/r/20240531075110.3250-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpu_ops_sbi.c      | 2 +-
- arch/riscv/kernel/cpu_ops_spinwait.c | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ sound/core/seq/seq_ump_convert.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/cpu_ops_sbi.c b/arch/riscv/kernel/cpu_ops_sbi.c
-index 1cc7df740eddc..e6fbaaf549562 100644
---- a/arch/riscv/kernel/cpu_ops_sbi.c
-+++ b/arch/riscv/kernel/cpu_ops_sbi.c
-@@ -72,7 +72,7 @@ static int sbi_cpu_start(unsigned int cpuid, struct task_struct *tidle)
- 	/* Make sure tidle is updated */
- 	smp_mb();
- 	bdata->task_ptr = tidle;
--	bdata->stack_ptr = task_stack_page(tidle) + THREAD_SIZE;
-+	bdata->stack_ptr = task_pt_regs(tidle);
- 	/* Make sure boot data is updated */
- 	smp_mb();
- 	hsm_data = __pa(bdata);
-diff --git a/arch/riscv/kernel/cpu_ops_spinwait.c b/arch/riscv/kernel/cpu_ops_spinwait.c
-index 613872b0a21ac..24869eb889085 100644
---- a/arch/riscv/kernel/cpu_ops_spinwait.c
-+++ b/arch/riscv/kernel/cpu_ops_spinwait.c
-@@ -34,8 +34,7 @@ static void cpu_update_secondary_bootdata(unsigned int cpuid,
+diff --git a/sound/core/seq/seq_ump_convert.c b/sound/core/seq/seq_ump_convert.c
+index 903a644b80e25..9bfba69b2a709 100644
+--- a/sound/core/seq/seq_ump_convert.c
++++ b/sound/core/seq/seq_ump_convert.c
+@@ -157,7 +157,7 @@ static void ump_system_to_one_param_ev(const union snd_ump_midi1_msg *val,
+ static void ump_system_to_songpos_ev(const union snd_ump_midi1_msg *val,
+ 				     struct snd_seq_event *ev)
+ {
+-	ev->data.control.value = (val->system.parm1 << 7) | val->system.parm2;
++	ev->data.control.value = (val->system.parm2 << 7) | val->system.parm1;
+ }
  
- 	/* Make sure tidle is updated */
- 	smp_mb();
--	WRITE_ONCE(__cpu_spinwait_stack_pointer[hartid],
--		   task_stack_page(tidle) + THREAD_SIZE);
-+	WRITE_ONCE(__cpu_spinwait_stack_pointer[hartid], task_pt_regs(tidle));
- 	WRITE_ONCE(__cpu_spinwait_task_pointer[hartid], tidle);
+ /* Encoders for 0xf0 - 0xff */
+@@ -752,8 +752,8 @@ static int system_2p_ev_to_ump_midi1(const struct snd_seq_event *event,
+ 				     unsigned char status)
+ {
+ 	data->system.status = status;
+-	data->system.parm1 = (event->data.control.value >> 7) & 0x7f;
+-	data->system.parm2 = event->data.control.value & 0x7f;
++	data->system.parm1 = event->data.control.value & 0x7f;
++	data->system.parm2 = (event->data.control.value >> 7) & 0x7f;
+ 	return 1;
  }
  
 -- 
