@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0028A198A3C;
-	Thu,  6 Jun 2024 14:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B7D198E78;
+	Thu,  6 Jun 2024 14:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682938; cv=none; b=XxETyNiEnuIsZKk7RCYnANxYPNiZnQ/kx+U66gmXSdyNPvD8/eQWkxhJv3BmRPe/5Ld3ebLQpnVTjpXtB5fqM3+1JEXMNXw5lTdC4fR85m26ET8TrdxX9LzpHB9ueY47G2lcdUdp+xU+ObWyjTeMdIhn68cTBfPzjjr80aEDiCE=
+	t=1717682938; cv=none; b=bxiaVvGyEOHGEUnfOjL6m/xyImC9RNhZUE52Tn3rjdFdb2CipK5lzRAMHaPTksL3PmtTQcCWngdur4TFNVfaGAvSf86vrJBqW16S8Zt5fr2i/me45WdnHmF3GmclcWsSP7EPGYgqqfMK+E3MMp8T79ULACeGi2GMwSfb7hLVKKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682938; c=relaxed/simple;
-	bh=Z1pejx5v0xMDNtaKzkoj3ExE0OKywZE6XEaHjZQUVvw=;
+	bh=J5EW3EbUGgv/ksXsdU+VxUtaQxIQxuzJjoejSK6CBxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XslEmNUR5XfyRUekcq5Q2uca4zXs2ypZE55UeRCkQMD+dJSZu4nBNT+MN7sZ9me/zZp9DRnMm3XcJhAQeMq5W+irWd8VMlGF/oFOpbFutzXmdNtKp9rKgjWo5g2awikUROPgs+oJuxohQ83CWtVtDEYnrCR0n52UBQLBkTAlQqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxTcapJ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D8YHk7qtJ55jIGdxBw3gErIHceQHEABMg3p3f1BMtn2soKD7TEOQF0/TrNRBb91FseCR3HJiIddNQizDfVn3yIGOk/pJ4XIMgBJPXpjaWNX35PC0aI+sv0FzzY4LfzBpZnv5zOtHEKZOivfRSdzLerV0Ia0L4CTMWy58bN/ZvZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/Lp0XTT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxTcapJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4220C32781;
-	Thu,  6 Jun 2024 14:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/Lp0XTT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6596EC32781;
+	Thu,  6 Jun 2024 14:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682937;
-	bh=Z1pejx5v0xMDNtaKzkoj3ExE0OKywZE6XEaHjZQUVvw=;
+	s=korg; t=1717682938;
+	bh=J5EW3EbUGgv/ksXsdU+VxUtaQxIQxuzJjoejSK6CBxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qxTcapJ7zVoB69+sdftsR27LGp0pdkVXo12XEsN+J+7eMOzYgJZ07YGQyv3h8f6fv
-	 tJ9O7MmMmfJ0AZMrjf00uyLENO4xY2BiLG9AXPrDKU3ZKMKMfEvIDNbZ4QBUwuiAbw
-	 +5UmyuvZRZbt4/zZSEZzcYN22UHDwWqVWpay4u2w=
+	b=O/Lp0XTTI28NPK9n8VEuYbEdq/5iHb4sI6ztig0peQ3nLO4bODf3+SCusgAcaI1+h
+	 dYvSF+psSvYwFKTQPBobSKAxL+ER9pqTyqvZWMbx2MvgaPXGNzPcuGAHZJ/3qIBO6x
+	 WHWFWQI9jz808IDA9+CkXx9TfP1kxwMrG+fsIm+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 054/374] iio: adc: adi-axi-adc: only error out in major version mismatch
-Date: Thu,  6 Jun 2024 16:00:33 +0200
-Message-ID: <20240606131653.651287102@linuxfoundation.org>
+Subject: [PATCH 6.9 090/374] i2c: synquacer: Fix an error handling path in synquacer_i2c_probe()
+Date: Thu,  6 Jun 2024 16:01:09 +0200
+Message-ID: <20240606131654.894188236@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,42 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit cf1c833f89e7c8635a28c3db15c68ead150ea712 ]
+[ Upstream commit 55750148e5595bb85605e8fbb40b2759c2c4c2d7 ]
 
-The IP core only has breaking changes when there major version changes.
-Hence, only match the major number. This is also in line with the other
-core ADI has upstream. The current check for erroring out
-'expected_version > current_version"' is then wrong as we could just
-increase the core major with breaking changes and that would go
-unnoticed.
+If an error occurs after the clk_prepare_enable() call, it should be undone
+by a corresponding clk_disable_unprepare() call, as already done in the
+remove() function.
 
-Fixes: ef04070692a2 ("iio: adc: adi-axi-adc: add support for AXI ADC IP core")
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20240419-ad9467-new-features-v1-2-3e7628ff6d5e@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+As devm_clk_get() is used, we can switch to devm_clk_get_enabled() to
+handle it automatically and fix the probe.
+
+Update the remove() function accordingly and remove the now useless
+clk_disable_unprepare() call.
+
+Fixes: 0d676a6c4390 ("i2c: add support for Socionext SynQuacer I2C controller")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/adi-axi-adc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-synquacer.c | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/iio/adc/adi-axi-adc.c b/drivers/iio/adc/adi-axi-adc.c
-index 4156639b3c8bd..a543b91124b07 100644
---- a/drivers/iio/adc/adi-axi-adc.c
-+++ b/drivers/iio/adc/adi-axi-adc.c
-@@ -207,9 +207,9 @@ static int adi_axi_adc_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/i2c/busses/i2c-synquacer.c b/drivers/i2c/busses/i2c-synquacer.c
+index bbea521b05dda..a73f5bb9a1645 100644
+--- a/drivers/i2c/busses/i2c-synquacer.c
++++ b/drivers/i2c/busses/i2c-synquacer.c
+@@ -550,17 +550,13 @@ static int synquacer_i2c_probe(struct platform_device *pdev)
+ 	device_property_read_u32(&pdev->dev, "socionext,pclk-rate",
+ 				 &i2c->pclkrate);
  
--	if (*expected_ver > ver) {
-+	if (ADI_AXI_PCORE_VER_MAJOR(ver) != ADI_AXI_PCORE_VER_MAJOR(*expected_ver)) {
- 		dev_err(&pdev->dev,
--			"IP core version is too old. Expected %d.%.2d.%c, Reported %d.%.2d.%c\n",
-+			"Major version mismatch. Expected %d.%.2d.%c, Reported %d.%.2d.%c\n",
- 			ADI_AXI_PCORE_VER_MAJOR(*expected_ver),
- 			ADI_AXI_PCORE_VER_MINOR(*expected_ver),
- 			ADI_AXI_PCORE_VER_PATCH(*expected_ver),
+-	i2c->pclk = devm_clk_get(&pdev->dev, "pclk");
+-	if (PTR_ERR(i2c->pclk) == -EPROBE_DEFER)
+-		return -EPROBE_DEFER;
+-	if (!IS_ERR_OR_NULL(i2c->pclk)) {
+-		dev_dbg(&pdev->dev, "clock source %p\n", i2c->pclk);
+-
+-		ret = clk_prepare_enable(i2c->pclk);
+-		if (ret)
+-			return dev_err_probe(&pdev->dev, ret, "failed to enable clock\n");
+-		i2c->pclkrate = clk_get_rate(i2c->pclk);
+-	}
++	i2c->pclk = devm_clk_get_enabled(&pdev->dev, "pclk");
++	if (IS_ERR(i2c->pclk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(i2c->pclk),
++				     "failed to get and enable clock\n");
++
++	dev_dbg(&pdev->dev, "clock source %p\n", i2c->pclk);
++	i2c->pclkrate = clk_get_rate(i2c->pclk);
+ 
+ 	if (i2c->pclkrate < SYNQUACER_I2C_MIN_CLK_RATE ||
+ 	    i2c->pclkrate > SYNQUACER_I2C_MAX_CLK_RATE)
+@@ -615,8 +611,6 @@ static void synquacer_i2c_remove(struct platform_device *pdev)
+ 	struct synquacer_i2c *i2c = platform_get_drvdata(pdev);
+ 
+ 	i2c_del_adapter(&i2c->adapter);
+-	if (!IS_ERR(i2c->pclk))
+-		clk_disable_unprepare(i2c->pclk);
+ };
+ 
+ static const struct of_device_id synquacer_i2c_dt_ids[] __maybe_unused = {
 -- 
 2.43.0
 
