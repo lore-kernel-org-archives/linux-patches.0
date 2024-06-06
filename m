@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C298D1C53AC;
-	Thu,  6 Jun 2024 14:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB3A1A0DD5;
+	Thu,  6 Jun 2024 14:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683678; cv=none; b=SuLTjyKKuhZvpC/ElWUx71jp888wSk5PW2SnQ8SWVgdJRDlhjxtPm7+0X9gYifbJxzRaWumDoHl2+WPPN83wTDuBKsggEOA15u5ZnVnJZAGCRwod3CU1SD+oB2e/ZuV8ERQcz8UQaker1lx2mOXFet+B+jiFSb3q+6EeevmO4nQ=
+	t=1717683679; cv=none; b=fntvQiRnlLccEI3pi3tWQR8nChVFxCu5bRz9RQOofU3ke+DFjmxoROZmjBmFaWX5/JsTjYvm21qbo7qAZeSj5qpTJ2FyigTWxMrOTvFjQdVHGmE46KZdp9OaUbg03FEkvDFKyJIcHHRuwTsORLn7Lwlx7PKM+vo6MfRoqBNXUt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683678; c=relaxed/simple;
-	bh=LfnDgQd27EB2H8Zh1pxsgbfafKLc9cwQOd2EOQeQV7w=;
+	s=arc-20240116; t=1717683679; c=relaxed/simple;
+	bh=IkStDNhKf7GNSBkM8M7wcQCubzUa/bRFTJNBunYH+hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOqIk4BFmeS8UM1b0peREpESZ1+MrQvuv3+vm+IkI/5y9mIV01Ys8z+Enem/dUi1Qq62rveOBUxZlH0ihQj3EkZVbuxRewzYjo6PVJVkyc72lc/tYVPOWpPE1JROidg+B8ZrJCdTkPlYZLJnmcUGS3Q9mFxStSoOXir4lKnFpUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ooMPBAof; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQuLUUcnYY/zLEj+FlwMnOi+5wVOlM8+dnUf8A98b+CMkY6CxMfkZtE7JUmCX87Dmj8ydlvM8YxjtGlOVypdk3TH7yKX5QtNGUIVSFRroEefwxi77o7PcxulxjO6ig+L+mbEoFo1H5XYbUNN2DkQ095BN6N3F34lgH9bkE8hCJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EtWY71+5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ooMPBAof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB3BC32782;
-	Thu,  6 Jun 2024 14:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EtWY71+5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD45C32781;
+	Thu,  6 Jun 2024 14:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683678;
-	bh=LfnDgQd27EB2H8Zh1pxsgbfafKLc9cwQOd2EOQeQV7w=;
+	s=korg; t=1717683679;
+	bh=IkStDNhKf7GNSBkM8M7wcQCubzUa/bRFTJNBunYH+hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ooMPBAofP6+rOKnIDZMZwPc/i/Beb+KsOPTtnKlIQK/ndsNGTo4oy5T7zLH1/MOHP
-	 18OQbOkyGZnA9TRKP4leZHnz3/Rcbjxg/frw5haDJkQ72LKIvW3jOIeBUZcFpJEal+
-	 asNFLle4+cj0OkrODYLWzUbvXU+u8Q9owSNRVhOA=
+	b=EtWY71+5LQ9LrbtxAIRbRRG4XvypigV99f5o3ZhMoTpoSBHN/5+hcKJSXEKYhDj+X
+	 A0kWfhTvwC9BjOolslVijO042H9jHf5pjGr8RSr6vREdxwq1i3qYU9pDQnQW8ju6pJ
+	 AjyDxIweZ9dT+G0kLpcEjK0dw27c5RDYpjuKkdsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Richard Weinberger <richard@nod.at>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 578/744] um: vector: fix bpfflash parameter evaluation
-Date: Thu,  6 Jun 2024 16:04:10 +0200
-Message-ID: <20240606131750.997827280@linuxfoundation.org>
+Subject: [PATCH 6.6 579/744] fs/ntfs3: Check folio pointer for NULL
+Date: Thu,  6 Jun 2024 16:04:11 +0200
+Message-ID: <20240606131751.029092580@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,35 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 584ed2f76ff5fe360d87a04d17b6520c7999e06b ]
+[ Upstream commit 1cd6c96219c429ebcfa8e79a865277376c563803 ]
 
-With W=1 the build complains about a pointer compared to
-zero, clearly the result should've been compared.
+It can be NULL if bmap is called.
 
-Fixes: 9807019a62dc ("um: Loadable BPF "Firmware" for vector drivers")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/vector_kern.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/inode.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
-index 131b7cb295767..94a4dfac6c236 100644
---- a/arch/um/drivers/vector_kern.c
-+++ b/arch/um/drivers/vector_kern.c
-@@ -141,7 +141,7 @@ static bool get_bpf_flash(struct arglist *def)
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index be8c8e47d7e27..6af705ccba65a 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -571,13 +571,18 @@ static noinline int ntfs_get_block_vbo(struct inode *inode, u64 vbo,
+ 	clear_buffer_uptodate(bh);
  
- 	if (allow != NULL) {
- 		if (kstrtoul(allow, 10, &result) == 0)
--			return (allow > 0);
-+			return result > 0;
+ 	if (is_resident(ni)) {
+-		ni_lock(ni);
+-		err = attr_data_read_resident(ni, &folio->page);
+-		ni_unlock(ni);
+-
+-		if (!err)
+-			set_buffer_uptodate(bh);
++		bh->b_blocknr = RESIDENT_LCN;
+ 		bh->b_size = block_size;
++		if (!folio) {
++			err = 0;
++		} else {
++			ni_lock(ni);
++			err = attr_data_read_resident(ni, &folio->page);
++			ni_unlock(ni);
++
++			if (!err)
++				set_buffer_uptodate(bh);
++		}
+ 		return err;
  	}
- 	return false;
- }
+ 
 -- 
 2.43.0
 
