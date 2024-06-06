@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46FE197545;
-	Thu,  6 Jun 2024 14:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F03196D91;
+	Thu,  6 Jun 2024 14:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683177; cv=none; b=ev+lBY/dnKAywhrkqQyuEzVt/+kS26vY5UI6xf+TectoMNXRSMXuMXO0hNfDGhHgKGgAqjYT1wIs1mrLo1PUBik5e4uJRMQogCA4ZSC8pjds1qf2M8BHZ3CR5lCS45qBNvu4AWNTDWnprBlgojTuuw5dEXj2WEnIXB3YpYOWW/8=
+	t=1717683178; cv=none; b=rBO6l4p7y4YyTmbKxwLdDf3jfpXDtLig700JgP02svOSj2T3/Yr/zjq78Adgqwe/mx2flfuql1mnzKOaqEw5qVtiq1VKxGpZ+zihH/aITw2uhq+5arWmdgVF2lXvAburOtk5cLMQ7zw/IINzoI/xqC7tRB4gbMJy9J56J/vnmW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683177; c=relaxed/simple;
-	bh=/zLB5y/qMA5pnBHdyqTOFoZ2Tw+i6t0enWFvewyFgoI=;
+	s=arc-20240116; t=1717683178; c=relaxed/simple;
+	bh=Goopft2Oub5aFcJ2EGLmYPIQtcPjbzADPmRQm2CIYts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VIa4EmUtAHrN2UFNPTqT9I703Kg5HFnCmBADgecpX5GUSegIChYi/mnkliymyI1ixjuzhtxO4t9L2tJk7I3PK62dkvshLPElSKHL6JUdVBbvNm6tSV1x7szC/KUGiuywqW//kzDCcPYLGujvmc8CgLI06W9rAnrJLmlmV6IDhds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f86lWfRh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ogL7PdWAPJ3SsvKg3+UHRk4hd5/n5DIrJrBh3Un/GAvaVxiS3khU8XiHFh8/Z/HguEsuYbyZxxTMeca39+4r5sUVS8hozqr4NTwWy6SH0hQuRegq6+KDAgULVofp5ypsyDTP1ReMQuVYyiLbRdJ6RBt/FQG2jWlGTudjAd3jPHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npqkXx5d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f86lWfRh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC88C32781;
-	Thu,  6 Jun 2024 14:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npqkXx5d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A6EC32781;
+	Thu,  6 Jun 2024 14:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683177;
-	bh=/zLB5y/qMA5pnBHdyqTOFoZ2Tw+i6t0enWFvewyFgoI=;
+	s=korg; t=1717683178;
+	bh=Goopft2Oub5aFcJ2EGLmYPIQtcPjbzADPmRQm2CIYts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f86lWfRhLnbRv3lDPKTC6LndlldjgpkaXvw4txtw7kVo8Wmb+iHT7mFkWKHptIWd8
-	 LTgIHZ1DZK53TtUNwF2IJKYKg/vTgGF1RGbtfh/1v0uWDXG1KPzkNmAidoso8ZKqZW
-	 MA3KZ6O2QjCEnSKKo7aYZJZLJDIt0YyNmnNHZ8Q8=
+	b=npqkXx5dvsfUvActr77e25+6HEsrprmu1L163lda+Fu5eCY9rv4/XYxEKzcrRO7OT
+	 dkpWmgnt/5e+epSYzC35vxm8aWSIP9oeUkn82GS91Js8tVQIi2BMcThbGp1/SHB4eY
+	 u5LVpmRm/iVPEPZuzCa4AOrZ6STSHRgafp6/Fzrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Damian Muszynski <damian.muszynski@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 122/744] crypto: qat - specify firmware files for 402xx
-Date: Thu,  6 Jun 2024 15:56:34 +0200
-Message-ID: <20240606131736.325721200@linuxfoundation.org>
+Subject: [PATCH 6.1 039/473] ASoC: Intel: bytcr_rt5640: Apply Asus T100TA quirk to Asus T100TAM too
+Date: Thu,  6 Jun 2024 15:59:28 +0200
+Message-ID: <20240606131701.186364883@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit a3dc1f2b6b932a13f139d3be3c765155542c1070 ]
+[ Upstream commit e50729d742ec364895f1c389c32315984a987aa5 ]
 
-The 4xxx driver can probe 4xxx and 402xx devices. However, the driver
-only specifies the firmware images required for 4xxx.
-This might result in external tools missing these binaries, if required,
-in the initramfs.
+The Asus T100TA quirk has been using an exact match on a product-name of
+"T100TA" but there are also T100TAM variants with a slightly higher
+clocked CPU and a metal backside which need the same quirk.
 
-Specify the firmware image used by 402xx with the MODULE_FIRMWARE()
-macros in the 4xxx driver.
+Sort the existing T100TA (stereo speakers) below the more specific
+T100TAF (mono speaker) quirk and switch from exact matching to
+substring matching so that the T100TA quirk will also match on
+the T100TAM models.
 
-Fixes: a3e8c919b993 ("crypto: qat - add support for 402xx devices")
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://msgid.link/r/20240407191559.21596-1-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_4xxx/adf_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/intel/boards/bytcr_rt5640.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c b/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
-index 90f5c1ca7b8d8..f6f9e20f74b54 100644
---- a/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
-+++ b/drivers/crypto/intel/qat/qat_4xxx/adf_drv.c
-@@ -463,7 +463,9 @@ module_pci_driver(adf_driver);
- MODULE_LICENSE("Dual BSD/GPL");
- MODULE_AUTHOR("Intel");
- MODULE_FIRMWARE(ADF_4XXX_FW);
-+MODULE_FIRMWARE(ADF_402XX_FW);
- MODULE_FIRMWARE(ADF_4XXX_MMP);
-+MODULE_FIRMWARE(ADF_402XX_MMP);
- MODULE_DESCRIPTION("Intel(R) QuickAssist Technology");
- MODULE_VERSION(ADF_DRV_VERSION);
- MODULE_SOFTDEP("pre: crypto-intel_qat");
+diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
+index 094445036c20f..d6ef8e850412b 100644
+--- a/sound/soc/intel/boards/bytcr_rt5640.c
++++ b/sound/soc/intel/boards/bytcr_rt5640.c
+@@ -636,28 +636,30 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
+ 					BYT_RT5640_USE_AMCR0F28),
+ 	},
+ 	{
++		/* Asus T100TAF, unlike other T100TA* models this one has a mono speaker */
+ 		.matches = {
+ 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T100TA"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T100TAF"),
+ 		},
+ 		.driver_data = (void *)(BYT_RT5640_IN1_MAP |
+ 					BYT_RT5640_JD_SRC_JD2_IN4N |
+ 					BYT_RT5640_OVCD_TH_2000UA |
+ 					BYT_RT5640_OVCD_SF_0P75 |
++					BYT_RT5640_MONO_SPEAKER |
++					BYT_RT5640_DIFF_MIC |
++					BYT_RT5640_SSP0_AIF2 |
+ 					BYT_RT5640_MCLK_EN),
+ 	},
+ 	{
++		/* Asus T100TA and T100TAM, must come after T100TAF (mono spk) match */
+ 		.matches = {
+-			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T100TAF"),
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "T100TA"),
+ 		},
+ 		.driver_data = (void *)(BYT_RT5640_IN1_MAP |
+ 					BYT_RT5640_JD_SRC_JD2_IN4N |
+ 					BYT_RT5640_OVCD_TH_2000UA |
+ 					BYT_RT5640_OVCD_SF_0P75 |
+-					BYT_RT5640_MONO_SPEAKER |
+-					BYT_RT5640_DIFF_MIC |
+-					BYT_RT5640_SSP0_AIF2 |
+ 					BYT_RT5640_MCLK_EN),
+ 	},
+ 	{
 -- 
 2.43.0
 
