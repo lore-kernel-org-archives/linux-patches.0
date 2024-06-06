@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65E6198A1D;
-	Thu,  6 Jun 2024 14:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C0819B3C5;
+	Thu,  6 Jun 2024 14:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683367; cv=none; b=JdfB4kpkYW+ESa9GhcQV6InCjIoxp9fvgrdnhPRs8yACxVk/UBdpN0zJvbu7Z2iLBxvb4bIlknO4wi7LzqN2MRjA+dXAIiyx/JmEF2Ik8LNoSGGKAFxfhnqb+cU9k1mW1tOE4ph0VAUKlNW+e3Et3aMWj9ajSWpNgBqSakd0A34=
+	t=1717683368; cv=none; b=sbiXqbiqW27MCxK2c4nSgQTHhap+c51l7vFR19fm1mgWONCJCFq3v8jP/aavORlvagb3nPBew4QCiXnJhS+HxbD3poaweNzo1PHKRaLd1Cx6xzY+4PD32RWZPs/z3BsxbAuxZD7XSs+o7vEe5mKzpYLJDQIBiKK4w+3bcVXjzlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683367; c=relaxed/simple;
-	bh=oRlfIUmxnhQAYtv9G73q7PqoyshvmKukVqEhlS9JeNc=;
+	s=arc-20240116; t=1717683368; c=relaxed/simple;
+	bh=sLPPUQWRUr7MpKu92iJv3KBn5yFBvhSai/LDzn2GekQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkMbRY2cKVpIRPapy9WU+/xvbjI4w/gE75/A2ejP88434udQbsC5FW6XlnNl43oI9IWPFK4C2fcn04C7hEkyH6Z5Qcrvnp1kVzeUmAuEsCIOLm03jSVXCUniVKdZapgPIV4QwdRsWqi+K1ueMl70wdB7KYPOTWwdeUvlyehxHoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXl9/5pd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m8b/tZv7XkT/PLn3AovmoH36wSjee3NO4Zx2uo4Ua8Da/Yy8FbwI2D613pcwko9nHUAAGD6K2kqhP5qFRRl05g1wCfRBdqxpaYYUtNSI08pO7zhSiQbvwaUghbG6sNEIEubP3K/aQSlDSTxXU2hn7ouubUTYdxSEVT0mYQQbeDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqJvIKpO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXl9/5pd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1E1C2BD10;
-	Thu,  6 Jun 2024 14:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqJvIKpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A5AC32782;
+	Thu,  6 Jun 2024 14:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683367;
-	bh=oRlfIUmxnhQAYtv9G73q7PqoyshvmKukVqEhlS9JeNc=;
+	s=korg; t=1717683368;
+	bh=sLPPUQWRUr7MpKu92iJv3KBn5yFBvhSai/LDzn2GekQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXl9/5pdCQTKcelCWpqTKfqNpzj32AFxt8lHN5wR+wV1z8LhUBh7Y3wbAuYOLXqOc
-	 zVzj9BAdtJiCrCgRCWpKgNuP/uvy0F0LBWZsrqvPO7qZGTdaOQAIQVUJNJcgJg8wix
-	 wrl9+6QjJKjR4J1KzHGBvSFhAh5YovkEqwTfsE4A=
+	b=oqJvIKpOlfjaq5FG1lBnxsAyS/KR+Gy+8yWbQulJ2SsfrMWpykNoDY77QR35g/DIr
+	 dUlM9Wlpl0I0DyHsCmfgFWk0+v+twuxQN3G9noax8aHpi++qbuuRKNb69St3Bwi2lU
+	 s4W4PRm1VTGL9cFnUsG1OnOZBLu9QpDObh/hVTW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 309/744] drm/msm/dp: Avoid a long timeout for AUX transfer if nothing connected
-Date: Thu,  6 Jun 2024 15:59:41 +0200
-Message-ID: <20240606131742.306336686@linuxfoundation.org>
+Subject: [PATCH 6.1 252/473] clk: qcom: dispcc-sm8450: fix DisplayPort clocks
+Date: Thu,  6 Jun 2024 16:03:01 +0200
+Message-ID: <20240606131708.308717757@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,134 +49,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 5d1a7493343cc00d9019880b686e4e0a0f649531 ]
+[ Upstream commit e801038a02ce1e8c652a0b668dd233a4ee48aeb7 ]
 
-As documented in the description of the transfer() function of
-"struct drm_dp_aux", the transfer() function can be called at any time
-regardless of the state of the DP port. Specifically if the kernel has
-the DP AUX character device enabled and userspace accesses
-"/dev/drm_dp_auxN" directly then the AUX transfer function will be
-called regardless of whether a DP device is connected.
+On SM8450 DisplayPort link clocks use frequency tables inherited from
+the vendor kernel, it is not applicable in the upstream kernel. Drop
+frequency tables and use clk_byte2_ops for those clocks.
 
-For eDP panels we have a special rule where we wait (with a 5 second
-timeout) for HPD to go high. This rule was important before all panels
-drivers were converted to call wait_hpd_asserted() and actually can be
-removed in a future commit.
+This fixes frequency selection in the OPP core (which otherwise attempts
+to use invalid 810 KHz as DP link rate), also fixing the following
+message:
+msm-dp-display ae90000.displayport-controller: _opp_config_clk_single: failed to set clock rate: -22
 
-For external DP devices we never checked for HPD. That means that
-trying to access the DP AUX character device (AKA `hexdump -C
-/dev/drm_dp_auxN`) would very, very slowly timeout. Specifically on my
-system:
-  $ time hexdump -C /dev/drm_dp_aux0
-  hexdump: /dev/drm_dp_aux0: Connection timed out
-  real    0m8.200s
-We want access to the drm_dp_auxN character device to fail faster than
-8 seconds when no DP cable is plugged in.
-
-Let's add a test to make transfers fail right away if a device isn't
-plugged in. Rather than testing the HPD line directly, we have the
-dp_display module tell us when AUX transfers should be enabled so we
-can handle cases where HPD is signaled out of band like with Type C.
-
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/583127/
-Link: https://lore.kernel.org/r/20240315143621.v2.1.I16aff881c9fe82b5e0fc06ca312da017aa7b5b3e@changeid
+Fixes: 16fb89f92ec4 ("clk: qcom: Add support for Display Clock Controller on SM8450")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240424-dispcc-dp-clocks-v2-1-b44038f3fa96@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_aux.c     | 20 ++++++++++++++++++++
- drivers/gpu/drm/msm/dp/dp_aux.h     |  1 +
- drivers/gpu/drm/msm/dp/dp_display.c |  4 ++++
- 3 files changed, 25 insertions(+)
+ drivers/clk/qcom/dispcc-sm8450.c | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-index 8e3b677f35e64..559809a5cbcfb 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -35,6 +35,7 @@ struct dp_aux_private {
- 	bool no_send_stop;
- 	bool initted;
- 	bool is_edp;
-+	bool enable_xfers;
- 	u32 offset;
- 	u32 segment;
+diff --git a/drivers/clk/qcom/dispcc-sm8450.c b/drivers/clk/qcom/dispcc-sm8450.c
+index 64626f620a01b..e7dd45a2058c1 100644
+--- a/drivers/clk/qcom/dispcc-sm8450.c
++++ b/drivers/clk/qcom/dispcc-sm8450.c
+@@ -309,26 +309,17 @@ static struct clk_rcg2 disp_cc_mdss_dptx0_aux_clk_src = {
+ 	},
+ };
  
-@@ -297,6 +298,17 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
- 		goto exit;
- 	}
+-static const struct freq_tbl ftbl_disp_cc_mdss_dptx0_link_clk_src[] = {
+-	F(162000, P_DP0_PHY_PLL_LINK_CLK, 1, 0, 0),
+-	F(270000, P_DP0_PHY_PLL_LINK_CLK, 1, 0, 0),
+-	F(540000, P_DP0_PHY_PLL_LINK_CLK, 1, 0, 0),
+-	F(810000, P_DP0_PHY_PLL_LINK_CLK, 1, 0, 0),
+-	{ }
+-};
+-
+ static struct clk_rcg2 disp_cc_mdss_dptx0_link_clk_src = {
+ 	.cmd_rcgr = 0x819c,
+ 	.mnd_width = 0,
+ 	.hid_width = 5,
+ 	.parent_map = disp_cc_parent_map_3,
+-	.freq_tbl = ftbl_disp_cc_mdss_dptx0_link_clk_src,
+ 	.clkr.hw.init = &(struct clk_init_data) {
+ 		.name = "disp_cc_mdss_dptx0_link_clk_src",
+ 		.parent_data = disp_cc_parent_data_3,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_3),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_byte2_ops,
+ 	},
+ };
  
-+	/*
-+	 * If we're using DP and an external display isn't connected then the
-+	 * transfer won't succeed. Return right away. If we don't do this we
-+	 * can end up with long timeouts if someone tries to access the DP AUX
-+	 * character device when no DP device is connected.
-+	 */
-+	if (!aux->is_edp && !aux->enable_xfers) {
-+		ret = -ENXIO;
-+		goto exit;
-+	}
-+
- 	/*
- 	 * For eDP it's important to give a reasonably long wait here for HPD
- 	 * to be asserted. This is because the panel driver may have _just_
-@@ -428,6 +440,14 @@ irqreturn_t dp_aux_isr(struct drm_dp_aux *dp_aux)
- 	return IRQ_HANDLED;
- }
+@@ -382,13 +373,12 @@ static struct clk_rcg2 disp_cc_mdss_dptx1_link_clk_src = {
+ 	.mnd_width = 0,
+ 	.hid_width = 5,
+ 	.parent_map = disp_cc_parent_map_3,
+-	.freq_tbl = ftbl_disp_cc_mdss_dptx0_link_clk_src,
+ 	.clkr.hw.init = &(struct clk_init_data) {
+ 		.name = "disp_cc_mdss_dptx1_link_clk_src",
+ 		.parent_data = disp_cc_parent_data_3,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_3),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_byte2_ops,
+ 	},
+ };
  
-+void dp_aux_enable_xfers(struct drm_dp_aux *dp_aux, bool enabled)
-+{
-+	struct dp_aux_private *aux;
-+
-+	aux = container_of(dp_aux, struct dp_aux_private, dp_aux);
-+	aux->enable_xfers = enabled;
-+}
-+
- void dp_aux_reconfig(struct drm_dp_aux *dp_aux)
- {
- 	struct dp_aux_private *aux;
-diff --git a/drivers/gpu/drm/msm/dp/dp_aux.h b/drivers/gpu/drm/msm/dp/dp_aux.h
-index 511305da4f66d..f3052cb43306b 100644
---- a/drivers/gpu/drm/msm/dp/dp_aux.h
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.h
-@@ -12,6 +12,7 @@
- int dp_aux_register(struct drm_dp_aux *dp_aux);
- void dp_aux_unregister(struct drm_dp_aux *dp_aux);
- irqreturn_t dp_aux_isr(struct drm_dp_aux *dp_aux);
-+void dp_aux_enable_xfers(struct drm_dp_aux *dp_aux, bool enabled);
- void dp_aux_init(struct drm_dp_aux *dp_aux);
- void dp_aux_deinit(struct drm_dp_aux *dp_aux);
- void dp_aux_reconfig(struct drm_dp_aux *dp_aux);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index eec5768aac727..ed77c957eceba 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -586,6 +586,8 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 	u32 state;
- 	int ret;
+@@ -442,13 +432,12 @@ static struct clk_rcg2 disp_cc_mdss_dptx2_link_clk_src = {
+ 	.mnd_width = 0,
+ 	.hid_width = 5,
+ 	.parent_map = disp_cc_parent_map_3,
+-	.freq_tbl = ftbl_disp_cc_mdss_dptx0_link_clk_src,
+ 	.clkr.hw.init = &(struct clk_init_data) {
+ 		.name = "disp_cc_mdss_dptx2_link_clk_src",
+ 		.parent_data = disp_cc_parent_data_3,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_3),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_byte2_ops,
+ 	},
+ };
  
-+	dp_aux_enable_xfers(dp->aux, true);
-+
- 	mutex_lock(&dp->event_mutex);
+@@ -502,13 +491,12 @@ static struct clk_rcg2 disp_cc_mdss_dptx3_link_clk_src = {
+ 	.mnd_width = 0,
+ 	.hid_width = 5,
+ 	.parent_map = disp_cc_parent_map_3,
+-	.freq_tbl = ftbl_disp_cc_mdss_dptx0_link_clk_src,
+ 	.clkr.hw.init = &(struct clk_init_data) {
+ 		.name = "disp_cc_mdss_dptx3_link_clk_src",
+ 		.parent_data = disp_cc_parent_data_3,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_3),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_byte2_ops,
+ 	},
+ };
  
- 	state =  dp->hpd_state;
-@@ -642,6 +644,8 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- {
- 	u32 state;
- 
-+	dp_aux_enable_xfers(dp->aux, false);
-+
- 	mutex_lock(&dp->event_mutex);
- 
- 	state = dp->hpd_state;
 -- 
 2.43.0
 
