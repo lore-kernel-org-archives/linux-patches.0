@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C611C7D76;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC291C7D76;
 	Thu,  6 Jun 2024 14:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683704; cv=none; b=jnTgCSvrxqqJ0pPGJMgk6itFKe9pvwP5gBCxTGhmF+hQBwjKpQ/ritL0/uBO76zaXZFclmBj9KXpJMsrlsbaSbc0377yOQjTZs1LSiPfJZH0W5yoJt+nqx8eFG7Hc7jWia3hfeuH6S3hJokzu7ODcNMaFpAA7hl1tRZcl4m4mjY=
+	t=1717683704; cv=none; b=iMSzhFB3m8634SHhotCL/kKrTVXdA3MrTNyhup1BR4e+ZLcdQkbcycrTT0/AdzoryBPLU1KyPFexSn0s0YYClwKLIyByLiiodpcjkbMRAa0Y3eJz6at+j9/gKE5s1F5TwgTyNmzsn+tWCkpzmpMczpY8ETU7J92Xa5UcNlP+ro4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683704; c=relaxed/simple;
-	bh=9mFrghmry0Um8QT949xDe4IsFXfk1eIHNdc2/zPkQcs=;
+	bh=lAfAoNc346PXOIM4xjvKFtjHkD0EC/CE7aR0Oq02FZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PwFlyDphoMLh+Ty2QFYvTv8I6P0QLlvEo/lMtliA8n9NJBYcCOu7309bfv06lnQGI3QlJh2QMz5t67dVkRI8JVJsCJqwkWeZltSPyc/WJwrQSxniZhZmE6Bx7toIwys6nhO6teTjrk1Vj12agtnYYy8y8etoBWCu/cAjwy8dDaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziEsmN59; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O+gYyLleQpLcuanqIs2MpBI46gupbZp7Lm7/Zdzr6MRQu5CdExUld88serv0NcKCK7IkLojNLHca88fDHVJBgyJRGnoRoTS9nyxaL5BuS1ywlA579QZGybuluIIifOQI1JJ0J8z1+Ukd4EDsqqIJM8gK6l/gOATAT0ii92tOeU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXNst+Xq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziEsmN59"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC52C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXNst+Xq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905F0C2BD10;
 	Thu,  6 Jun 2024 14:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683704;
-	bh=9mFrghmry0Um8QT949xDe4IsFXfk1eIHNdc2/zPkQcs=;
+	bh=lAfAoNc346PXOIM4xjvKFtjHkD0EC/CE7aR0Oq02FZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ziEsmN59EQYHEsnIud2bwNribnJSiskz+MERD/XRiOlmijHooFJvII0xRA4HQ8KSi
-	 cDPi5/j5FjxCimwRnN69y/akP6sylNABcgJp9vT62dTEzV2fTdfkdlutKD3gb4fJmC
-	 1EZzCs7X12NdtISP0LDM1OnMa1VjwT7znr4XGo6s=
+	b=mXNst+XqbTGF2CfDh/YL72TRJl+O4z+w7CRHLCtKmUJM2ovlU3HEYjPpQo1rIgfli
+	 NSGQ8M965qI+rycIRaptS9xFkdUtBHSY27tNOQGTVw6se/m76xiF2tG1pKQJOD/kHg
+	 v6+mSYBFjmeZHzmrckt0/8T3V11BzkhIYaJikpAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Schatzberg <schatzberg.dan@gmail.com>,
-	Waiman Long <longman@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 628/744] blk-cgroup: Properly propagate the iostat update up the hierarchy
-Date: Thu,  6 Jun 2024 16:05:00 +0200
-Message-ID: <20240606131752.631787366@linuxfoundation.org>
+Subject: [PATCH 6.6 629/744] regulator: bd71828: Dont overwrite runtime voltages
+Date: Thu,  6 Jun 2024 16:05:01 +0200
+Message-ID: <20240606131752.661026059@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -54,85 +51,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 9d230c09964e6e18c8f6e4f0d41ee90eef45ec1c ]
+[ Upstream commit 0f9f7c63c415e287cd57b5c98be61eb320dedcfc ]
 
-During a cgroup_rstat_flush() call, the lowest level of nodes are flushed
-first before their parents. Since commit 3b8cc6298724 ("blk-cgroup:
-Optimize blkcg_rstat_flush()"), iostat propagation was still done to
-the parent. Grandparent, however, may not get the iostat update if the
-parent has no blkg_iostat_set queued in its lhead lockless list.
+Some of the regulators on the BD71828 have common voltage setting for
+RUN/SUSPEND/IDLE/LPSR states. The enable control can be set for each
+state though.
 
-Fix this iostat propagation problem by queuing the parent's global
-blkg->iostat into one of its percpu lockless lists to make sure that
-the delta will always be propagated up to the grandparent and so on
-toward the root blkcg.
+The driver allows setting the voltage values for these states via
+device-tree. As a side effect, setting the voltages for
+SUSPEND/IDLE/LPSR will also change the RUN level voltage which is not
+desired and can break the system.
 
-Note that successive calls to __blkcg_rstat_flush() are serialized by
-the cgroup_rstat_lock. So no special barrier is used in the reading
-and writing of blkg->iostat.lqueued.
+The comment in code reflects this behaviour, but it is likely to not
+make people any happier. The right thing to do is to allow setting the
+enable/disable state at SUSPEND/IDLE/LPSR via device-tree, but to
+disallow setting state specific voltages for those regulators.
 
-Fixes: 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()")
-Reported-by: Dan Schatzberg <schatzberg.dan@gmail.com>
-Closes: https://lore.kernel.org/lkml/ZkO6l%2FODzadSgdhC@dschatzberg-fedora-PF3DHTBV/
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20240515143059.276677-1-longman@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+BUCK1 is a bit different. It only shares the SUSPEND and LPSR state
+voltages. The former behaviour of allowing to silently overwrite the
+SUSPEND state voltage by LPSR state voltage is also changed here so that
+the SUSPEND voltage is prioritized over LPSR voltage.
+
+Prevent setting PMIC state specific voltages for regulators which do not
+support it.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 522498f8cb8c ("regulator: bd71828: Basic support for ROHM bd71828 PMIC regulators")
+Link: https://msgid.link/r/e1883ae1e3ae5668f1030455d4750923561f3d68.1715848512.git.mazziesaccount@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ drivers/regulator/bd71828-regulator.c | 58 +--------------------------
+ 1 file changed, 2 insertions(+), 56 deletions(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 8102a23b24871..4fb045d26bd5a 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -323,6 +323,7 @@ static struct blkcg_gq *blkg_alloc(struct blkcg *blkcg, struct gendisk *disk,
- 	blkg->q = disk->queue;
- 	INIT_LIST_HEAD(&blkg->q_node);
- 	blkg->blkcg = blkcg;
-+	blkg->iostat.blkg = blkg;
- #ifdef CONFIG_BLK_CGROUP_PUNT_BIO
- 	spin_lock_init(&blkg->async_bio_lock);
- 	bio_list_init(&blkg->async_bios);
-@@ -1047,6 +1048,8 @@ static void __blkcg_rstat_flush(struct blkcg *blkcg, int cpu)
- 		smp_mb();
- 
- 		WRITE_ONCE(bisc->lqueued, false);
-+		if (bisc == &blkg->iostat)
-+			goto propagate_up; /* propagate up to parent only */
- 
- 		/* fetch the current per-cpu values */
- 		do {
-@@ -1056,10 +1059,24 @@ static void __blkcg_rstat_flush(struct blkcg *blkcg, int cpu)
- 
- 		blkcg_iostat_update(blkg, &cur, &bisc->last);
- 
-+propagate_up:
- 		/* propagate global delta to parent (unless that's root) */
--		if (parent && parent->parent)
-+		if (parent && parent->parent) {
- 			blkcg_iostat_update(parent, &blkg->iostat.cur,
- 					    &blkg->iostat.last);
-+			/*
-+			 * Queue parent->iostat to its blkcg's lockless
-+			 * list to propagate up to the grandparent if the
-+			 * iostat hasn't been queued yet.
-+			 */
-+			if (!parent->iostat.lqueued) {
-+				struct llist_head *plhead;
-+
-+				plhead = per_cpu_ptr(parent->blkcg->lhead, cpu);
-+				llist_add(&parent->iostat.lnode, plhead);
-+				parent->iostat.lqueued = true;
-+			}
-+		}
- 	}
- 	raw_spin_unlock_irqrestore(&blkg_stat_lock, flags);
- out:
+diff --git a/drivers/regulator/bd71828-regulator.c b/drivers/regulator/bd71828-regulator.c
+index 08d4ee369287e..dd871ffe979c3 100644
+--- a/drivers/regulator/bd71828-regulator.c
++++ b/drivers/regulator/bd71828-regulator.c
+@@ -206,14 +206,11 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 			.suspend_reg = BD71828_REG_BUCK1_SUSP_VOLT,
+ 			.suspend_mask = BD71828_MASK_BUCK1267_VOLT,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+-			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+ 			/*
+ 			 * LPSR voltage is same as SUSPEND voltage. Allow
+-			 * setting it so that regulator can be set enabled at
+-			 * LPSR state
++			 * only enabling/disabling regulator for LPSR state
+ 			 */
+-			.lpsr_reg = BD71828_REG_BUCK1_SUSP_VOLT,
+-			.lpsr_mask = BD71828_MASK_BUCK1267_VOLT,
++			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+ 		},
+ 		.reg_inits = buck1_inits,
+ 		.reg_init_amnt = ARRAY_SIZE(buck1_inits),
+@@ -288,13 +285,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_BUCK3_VOLT,
+-			.idle_reg = BD71828_REG_BUCK3_VOLT,
+-			.suspend_reg = BD71828_REG_BUCK3_VOLT,
+-			.lpsr_reg = BD71828_REG_BUCK3_VOLT,
+ 			.run_mask = BD71828_MASK_BUCK3_VOLT,
+-			.idle_mask = BD71828_MASK_BUCK3_VOLT,
+-			.suspend_mask = BD71828_MASK_BUCK3_VOLT,
+-			.lpsr_mask = BD71828_MASK_BUCK3_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -329,13 +320,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_BUCK4_VOLT,
+-			.idle_reg = BD71828_REG_BUCK4_VOLT,
+-			.suspend_reg = BD71828_REG_BUCK4_VOLT,
+-			.lpsr_reg = BD71828_REG_BUCK4_VOLT,
+ 			.run_mask = BD71828_MASK_BUCK4_VOLT,
+-			.idle_mask = BD71828_MASK_BUCK4_VOLT,
+-			.suspend_mask = BD71828_MASK_BUCK4_VOLT,
+-			.lpsr_mask = BD71828_MASK_BUCK4_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -370,13 +355,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_BUCK5_VOLT,
+-			.idle_reg = BD71828_REG_BUCK5_VOLT,
+-			.suspend_reg = BD71828_REG_BUCK5_VOLT,
+-			.lpsr_reg = BD71828_REG_BUCK5_VOLT,
+ 			.run_mask = BD71828_MASK_BUCK5_VOLT,
+-			.idle_mask = BD71828_MASK_BUCK5_VOLT,
+-			.suspend_mask = BD71828_MASK_BUCK5_VOLT,
+-			.lpsr_mask = BD71828_MASK_BUCK5_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -493,13 +472,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_LDO1_VOLT,
+-			.idle_reg = BD71828_REG_LDO1_VOLT,
+-			.suspend_reg = BD71828_REG_LDO1_VOLT,
+-			.lpsr_reg = BD71828_REG_LDO1_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -533,13 +506,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_LDO2_VOLT,
+-			.idle_reg = BD71828_REG_LDO2_VOLT,
+-			.suspend_reg = BD71828_REG_LDO2_VOLT,
+-			.lpsr_reg = BD71828_REG_LDO2_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -573,13 +540,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_LDO3_VOLT,
+-			.idle_reg = BD71828_REG_LDO3_VOLT,
+-			.suspend_reg = BD71828_REG_LDO3_VOLT,
+-			.lpsr_reg = BD71828_REG_LDO3_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -614,13 +575,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_LDO4_VOLT,
+-			.idle_reg = BD71828_REG_LDO4_VOLT,
+-			.suspend_reg = BD71828_REG_LDO4_VOLT,
+-			.lpsr_reg = BD71828_REG_LDO4_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -655,13 +610,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 				     ROHM_DVS_LEVEL_SUSPEND |
+ 				     ROHM_DVS_LEVEL_LPSR,
+ 			.run_reg = BD71828_REG_LDO5_VOLT,
+-			.idle_reg = BD71828_REG_LDO5_VOLT,
+-			.suspend_reg = BD71828_REG_LDO5_VOLT,
+-			.lpsr_reg = BD71828_REG_LDO5_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+@@ -720,9 +669,6 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
+ 			.suspend_reg = BD71828_REG_LDO7_VOLT,
+ 			.lpsr_reg = BD71828_REG_LDO7_VOLT,
+ 			.run_mask = BD71828_MASK_LDO_VOLT,
+-			.idle_mask = BD71828_MASK_LDO_VOLT,
+-			.suspend_mask = BD71828_MASK_LDO_VOLT,
+-			.lpsr_mask = BD71828_MASK_LDO_VOLT,
+ 			.idle_on_mask = BD71828_MASK_IDLE_EN,
+ 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
+ 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
 -- 
 2.43.0
 
