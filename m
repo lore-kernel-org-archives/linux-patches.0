@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349231991B4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCA11991B4;
 	Thu,  6 Jun 2024 14:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683150; cv=none; b=GG+UlXO143I4h2X/ndqd/msVJl8agKmxq74Lsj9iIOBkBFPKvk8wvBUwmdMota4uvkaRuPLKTIpZxJIiPI/M553lHa9qEL0lzAM9FjkZuu+77sSOkEaWBqJkVW8gQeYOKsEmlszNwE80HLJaptIqo7c6/4MLlelnga7LeqkRTzY=
+	t=1717683150; cv=none; b=KEkR+lt9n6skBXjfkxFCQ8eN82/wfGpxKgcZjo4F6ysEoM78QEBlevM1TKWIxR33t83kV2aCOfyBFFkjz7OwAwb2ryOEIQnoRXWDjDeDuVN0FsT6xEb9JtLtr39GTwnFBTp67aj4Ad2OryPWD5bNJAx5nBZKny8sJJFowjIerEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683150; c=relaxed/simple;
-	bh=jH4KSjNOgevShvb5tMiG4ax5CAG6Zv8eiXkPaGxj/M4=;
+	bh=WHLCH+h06rT2mnF+HQP833QKFNE2xjXjsfM+T0A8SuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cu6AIMS7WiVZVyB/tpg/U0vwLTDTI/xigjCKicX3MtFQdwD8uZc5l/XOJfbLdB4nicdNDN6ty717acD/1PFF4UHdNqJjRuhftKNb3LPUFE76tIwKaAAEOpS/O8LASoemnz9tzOs6FnppT0k+qqWnZr/3lNIxPlOcGNXWAXQAAPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPmxNrhl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pwa8xLTtKiS4fle+yMxs3PLZzqb9flyzBmUnYkYKObuAp1ODqGTl+RekC3kHhqjm0ezPsuscauYVTzj3YgF0pqt5MWCBZ01OF7l9H3p4dd0oJwA4GktXUYqjCD1xA389k0d/WKjupMokU0bLCEGne2o37dlqiEjka+GCJNWZ+m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MmV/4D8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPmxNrhl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D163C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MmV/4D8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B352C2BD10;
 	Thu,  6 Jun 2024 14:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683150;
-	bh=jH4KSjNOgevShvb5tMiG4ax5CAG6Zv8eiXkPaGxj/M4=;
+	bh=WHLCH+h06rT2mnF+HQP833QKFNE2xjXjsfM+T0A8SuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPmxNrhlmYleP0Zn6r65a+dBXN62trwWxbmv4xmjj6KsQAUVMEBlZs/o2PF7Ykg5C
-	 xOQdCYMnnZ6y9DmwqRjv+fvjmFEOMQZ/kRxtcF8VP4pDkIVjI2ITAxZ2Q+LAlA/Nn7
-	 OddZbJR3uDw6f4fsmQladETrO38nyZoeSE7u6eBI=
+	b=1MmV/4D8P/JA9mhNqBlbYF5lVjU6jZ7g5uOb61h+X/f4Uh/+CYVpADri/K9HY5nU7
+	 y8rJZVcq3WQo9FP8v0MzPMLTeWZqH9srydUhaJ5k6AYgXwNTQbkkxL9Jo91YlCYxqo
+	 GLdbTE143aFIyUODlWHAN4B+kVX3uQQybIy5b2u4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Glitta <glittao@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Daniel Latypov <dlatypov@google.com>,
-	Marco Elver <elver@google.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/744] mm/slub, kunit: Use inverted data to corrupt kmem cache
-Date: Thu,  6 Jun 2024 15:56:07 +0200
-Message-ID: <20240606131735.444203054@linuxfoundation.org>
+	Nandor Kracser <bonifaido@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 022/473] ksmbd: ignore trailing slashes in share paths
+Date: Thu,  6 Jun 2024 15:59:11 +0200
+Message-ID: <20240606131700.592004586@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,73 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Nandor Kracser <bonifaido@gmail.com>
 
-[ Upstream commit b1080c667b3b2c8c38a7fa83ca5567124887abae ]
+commit 405ee4097c4bc3e70556520aed5ba52a511c2266 upstream.
 
-Two failure patterns are seen randomly when running slub_kunit tests with
-CONFIG_SLAB_FREELIST_RANDOM and CONFIG_SLAB_FREELIST_HARDENED enabled.
+Trailing slashes in share paths (like: /home/me/Share/) caused permission
+issues with shares for clients on iOS and on Android TV for me,
+but otherwise they work fine with plain old Samba.
 
-Pattern 1:
-     # test_clobber_zone: pass:1 fail:0 skip:0 total:1
-     ok 1 test_clobber_zone
-     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:72
-     Expected 3 == slab_errors, but
-         slab_errors == 0 (0x0)
-     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:84
-     Expected 2 == slab_errors, but
-         slab_errors == 0 (0x0)
-     # test_next_pointer: pass:0 fail:1 skip:0 total:1
-     not ok 2 test_next_pointer
-
-In this case, test_next_pointer() overwrites p[s->offset], but the data
-at p[s->offset] is already 0x12.
-
-Pattern 2:
-     ok 1 test_clobber_zone
-     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:72
-     Expected 3 == slab_errors, but
-         slab_errors == 2 (0x2)
-     # test_next_pointer: pass:0 fail:1 skip:0 total:1
-     not ok 2 test_next_pointer
-
-In this case, p[s->offset] has a value other than 0x12, but one of the
-expected failures is nevertheless missing.
-
-Invert data instead of writing a fixed value to corrupt the cache data
-structures to fix the problem.
-
-Fixes: 1f9f78b1b376 ("mm/slub, kunit: add a KUnit test for SLUB debugging functionality")
-Cc: Oliver Glitta <glittao@gmail.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-CC: Daniel Latypov <dlatypov@google.com>
-Cc: Marco Elver <elver@google.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Nandor Kracser <bonifaido@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/slub_kunit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/mgmt/share_config.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/lib/slub_kunit.c b/lib/slub_kunit.c
-index d4a3730b08fa7..4ce9604388069 100644
---- a/lib/slub_kunit.c
-+++ b/lib/slub_kunit.c
-@@ -55,7 +55,7 @@ static void test_next_pointer(struct kunit *test)
+--- a/fs/smb/server/mgmt/share_config.c
++++ b/fs/smb/server/mgmt/share_config.c
+@@ -165,8 +165,12 @@ static struct ksmbd_share_config *share_
  
- 	ptr_addr = (unsigned long *)(p + s->offset);
- 	tmp = *ptr_addr;
--	p[s->offset] = 0x12;
-+	p[s->offset] = ~p[s->offset];
- 
- 	/*
- 	 * Expecting three errors.
--- 
-2.43.0
-
+ 		share->path = kstrndup(ksmbd_share_config_path(resp), path_len,
+ 				      GFP_KERNEL);
+-		if (share->path)
++		if (share->path) {
+ 			share->path_sz = strlen(share->path);
++			while (share->path_sz > 1 &&
++			       share->path[share->path_sz - 1] == '/')
++				share->path[--share->path_sz] = '\0';
++		}
+ 		share->create_mask = resp->create_mask;
+ 		share->directory_mask = resp->directory_mask;
+ 		share->force_create_mode = resp->force_create_mode;
 
 
