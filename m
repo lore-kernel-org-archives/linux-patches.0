@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6015A1974EB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0281974EB;
 	Thu,  6 Jun 2024 14:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683459; cv=none; b=QkppPoC052vbA6faD1GIgVh6jejTCbC/mwghLhaQTiVAqmQgtbUnTj7T3BF0iCzDW7LQKebAd0rmrqJ7WyVzXdDp/ad6sWJ21jaVZJtE6meAO2GxS7PoyhuJoQrnYdDzCuDfw/NF8u3oL16ZOBGDXJBdnlB4/6/1lrB0AymDoKk=
+	t=1717683459; cv=none; b=WAxtlhXeZaTHyfUAGgtcfO+a0o3IkleggPMXNo+a0LBh9sn9V2dNS55G6E/KN9/pzR0fTV4hbgY6KrPKLFp05iDHPn0FwnRl2U5RBvqR1+UUoYEwk6mh8mHbaqMNs1iJSBxydILnTA2LhsIdihcLjL7QT6Q0xqzWy9nx0gU/OW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683459; c=relaxed/simple;
-	bh=WZEBgiQu/AbnG9LTFkVPZ6GdjftRWB6ArE7SdixOeQo=;
+	bh=ujE6YGSxhPdbtbhM+DtClxFc9v2vWWwYq+2z+nqrlP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMPr7u7U6Cyvce1A28lUzXCddoB9O0aoLowdYOLYZD8bGDL1gG04G+YNgPMTPUrxa4ltcTpD4D0VXh5LshzkDg8hEJkIkRU9DvvZ6JY0VmuNFDDLTMKSBw27MSShVbwqsxe3UJRvEzkxHlhZhnp8CJOM2THEJcF25DJr4GAy0XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VasY/2zt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hh4rr0ACo8aKcaxt67wsdABJHaZEkZk8i4UlJGcE6lyJFifJ+cbTNxBkGqwkNCYNfvkXBwmFU5/B+orYyR8rgHtQaK+6mXrDoe4/WVOI+QdiBq3kwtxBuIctGb4LFG5hYDQh7rTNqITWf+1bAEwLxnPx2g5VwiRwqm1yU8vTNzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qr4W2gU3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VasY/2zt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7E7C4AF0A;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qr4W2gU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB398C2BD10;
 	Thu,  6 Jun 2024 14:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683459;
-	bh=WZEBgiQu/AbnG9LTFkVPZ6GdjftRWB6ArE7SdixOeQo=;
+	bh=ujE6YGSxhPdbtbhM+DtClxFc9v2vWWwYq+2z+nqrlP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VasY/2ztzwxJJDgILqrvoGv33ku8pyqacTExfgIeY+G39eLSX2tBgQXmjBw6Cb7qt
-	 fLJ3m5WRvi6QU3tLbjy3IO9chdyPSvF41qU6Kbtgl2/a0pz0+0/80d3HRr1WxHR5Ww
-	 szlKVnOUCziSMWHO8xGCMXmC71eQdwdvNONWlui4=
+	b=qr4W2gU38yQV5c+Tr2TypUQYJ1cIz4F7HIAe1Lh5Zzb3KfUBo+9PmKdqyT4BN4wW2
+	 yhAiLYMdcDtur8+iLdtnwLC3yM66qztvo1nv/e93SLg7Wl4RFxwcqoL5Cja6rU7T5b
+	 2qcXSa2oFi9uGsakvAiB15fvO2DvVpGklo7HBL5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 404/744] soundwire: cadence: fix invalid PDI offset
-Date: Thu,  6 Jun 2024 16:01:16 +0200
-Message-ID: <20240606131745.415197105@linuxfoundation.org>
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com>
+Subject: [PATCH 6.1 338/473] PCI/EDR: Align EDR_PORT_LOCATE_DSM with PCI Firmware r3.3
+Date: Thu,  6 Jun 2024 16:04:27 +0200
+Message-ID: <20240606131711.087177539@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,50 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-[ Upstream commit 8ee1b439b1540ae543149b15a2a61b9dff937d91 ]
+[ Upstream commit e2e78a294a8a863898b781dbcf90e087eda3155d ]
 
-For some reason, we add an offset to the PDI, presumably to skip the
-PDI0 and PDI1 which are reserved for BPT.
+The "Downstream Port Containment related Enhancements" ECN of Jan 28, 2019
+(document 12888 below), defined the EDR_PORT_LOCATE_DSM function with
+Revision ID 5 with a return value encoding (Bits 2:0 = Function, Bits 7:3 =
+Device, Bits 15:8 = Bus).  When the ECN was integrated into PCI Firmware
+r3.3, sec 4.6.13, Bit 31 was added to indicate success or failure.
 
-This code is however completely wrong and leads to an out-of-bounds
-access. We were just lucky so far since we used only a couple of PDIs
-and remained within the PDI array bounds.
+Check Bit 31 for failure in acpi_dpc_port_get().
 
-A Fixes: tag is not provided since there are no known platforms where
-the out-of-bounds would be accessed, and the initial code had problems
-as well.
-
-A follow-up patch completely removes this useless offset.
-
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20240326090122.1051806-2-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20240501022543.1626025-1-sathyanarayanan.kuppuswamy@linux.intel.com
+Link: https://members.pcisig.com/wg/PCI-SIG/document/12888
+Fixes: ac1c8e35a326 ("PCI/DPC: Add Error Disconnect Recover (EDR) support")
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+[bhelgaas: split into two patches, update commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com> # one platform
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/cadence_master.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pcie/edr.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
-index 0efc1c3bee5f5..3e7cf04aaf2a6 100644
---- a/drivers/soundwire/cadence_master.c
-+++ b/drivers/soundwire/cadence_master.c
-@@ -1880,7 +1880,7 @@ struct sdw_cdns_pdi *sdw_cdns_alloc_pdi(struct sdw_cdns *cdns,
+diff --git a/drivers/pci/pcie/edr.c b/drivers/pci/pcie/edr.c
+index 5b5a502363c00..35210007602c5 100644
+--- a/drivers/pci/pcie/edr.c
++++ b/drivers/pci/pcie/edr.c
+@@ -80,8 +80,9 @@ static struct pci_dev *acpi_dpc_port_get(struct pci_dev *pdev)
+ 	u16 port;
  
- 	/* check if we found a PDI, else find in bi-directional */
- 	if (!pdi)
--		pdi = cdns_find_pdi(cdns, 2, stream->num_bd, stream->bd,
-+		pdi = cdns_find_pdi(cdns, 0, stream->num_bd, stream->bd,
- 				    dai_id);
+ 	/*
+-	 * Behavior when calling unsupported _DSM functions is undefined,
+-	 * so check whether EDR_PORT_DPC_ENABLE_DSM is supported.
++	 * If EDR_PORT_LOCATE_DSM is not implemented under the target of
++	 * EDR, the target is the port that experienced the containment
++	 * event (PCI Firmware r3.3, sec 4.6.13).
+ 	 */
+ 	if (!acpi_check_dsm(adev->handle, &pci_acpi_dsm_guid, 5,
+ 			    1ULL << EDR_PORT_LOCATE_DSM))
+@@ -98,6 +99,16 @@ static struct pci_dev *acpi_dpc_port_get(struct pci_dev *pdev)
+ 		return NULL;
+ 	}
  
- 	if (pdi) {
++	/*
++	 * Bit 31 represents the success/failure of the operation. If bit
++	 * 31 is set, the operation failed.
++	 */
++	if (obj->integer.value & BIT(31)) {
++		ACPI_FREE(obj);
++		pci_err(pdev, "Locate Port _DSM failed\n");
++		return NULL;
++	}
++
+ 	/*
+ 	 * Firmware returns DPC port BDF details in following format:
+ 	 *	15:8 = bus
 -- 
 2.43.0
 
