@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F9919EEC6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62F319EEC6;
 	Thu,  6 Jun 2024 14:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683556; cv=none; b=BLz7GWqb5so59bz5Z+5k3YpyYste/Ch3EVtqy9gJLrrrJLTUBesVwW9QSXxZ3a67SGsbWmqkNx88eXKZzOYphRkjEX5jyOb604IygZVGtzOdpBeN52YvTfc0LxuSb1hUD1A463LOrEWO8vdZaNSj1gDKMA1NLV46SRlF5TQO0Hs=
+	t=1717683556; cv=none; b=hSQVB1LuON5NRC+rH/8XJWFRjy7IL2L6Zc3UISKDKmgQtBA+ZbVNdHQpCXdVvcbjADCzevl3T8+bpyadiO+pif8gKHFy/+V6gppb6GjXUbVmDuHaLNy36H1q8jlZ1urdEOAyOFt56CYIsDzH19rmwyMrmPzjbDcbImdtQC7IzKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683556; c=relaxed/simple;
-	bh=TNtNhQtNQJjP/dJwf6BHV0Wy3uY7Km/UFXa4aUB2haQ=;
+	bh=e4baXh57UCybRsIfx1zKI3hmVcPWL6PGxf/odJ6s6No=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NcP82C8O1aU/X4xG4sW6c5Wh5NUIVuf2z+s9z7pfCImfzvUWXLizKxXYVl/0jVWpnwZYNBWBw3j89zMF2NJHVvtRaRXzgah289Zm8ngHZ54ARlNw4rp8lQlGY1kHOTUxQzK9R1HW4q8iD6PVEu7PSCKENnc4j1eAtqbAKWNkeV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5tYco0Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cw6XmcJqP0QJJUgQYubuDpDfil57EkTG7uERURhW8Ac+eBMnqwvasN+Ze0KilaUHdFaLfiAX9I03egjiT91aYEkh/s1avLzaWGMRDmKJTn/SahDDX7qGIZY+v8xTRMTDfcIQilnVWomaCSEuvv5t5mnz1FvvOWfFNHb6dQGTcOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=waPihUHj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5tYco0Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 057CAC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="waPihUHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85110C32781;
 	Thu,  6 Jun 2024 14:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683556;
-	bh=TNtNhQtNQJjP/dJwf6BHV0Wy3uY7Km/UFXa4aUB2haQ=;
+	bh=e4baXh57UCybRsIfx1zKI3hmVcPWL6PGxf/odJ6s6No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5tYco0Z1tt8mth5UnFt52W5JmjSlOXvpJdaZf90yo0Fwj+NEn9I1qy+vU6yjft6o
-	 JESx302/An/adYrgSncWRlovgYSGlqxMSQDTZBp2yhnQmjhrYu/qNKQqqzg3mEUBFr
-	 GAFymPWG4LpphuzWrrjHQBOl4AyU5y/hwzmJAKgs=
+	b=waPihUHjl8W6joxjXYmJByEg2H/sWIuC3oVAbTXIeIQ5pv7YN7cYha67dF6fcfCBa
+	 N6TtPvEOvCOrpZYYkz6BpWegeSsRcriAsScTZRi72WwMpXYpLFo3Y/CdAmAggZtE6b
+	 lC/hv0Y4jAawxnQ9gZ4KmrzzImB3LHhG0UdDzc/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com>
-Subject: [PATCH 6.6 498/744] PCI/EDR: Align EDR_PORT_DPC_ENABLE_DSM with PCI Firmware r3.3
-Date: Thu,  6 Jun 2024 16:02:50 +0200
-Message-ID: <20240606131748.414355337@linuxfoundation.org>
+	"Luke D. Jones" <luke@ljones.dev>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 447/473] ALSA: hda/realtek: Amend G634 quirk to enable rear speakers
+Date: Thu,  6 Jun 2024 16:06:16 +0200
+Message-ID: <20240606131714.496228667@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,73 +47,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+From: Luke D. Jones <luke@ljones.dev>
 
-[ Upstream commit f24ba846133d0edec785ac6430d4daf6e9c93a09 ]
+[ Upstream commit b759a5f097cd42c666f1ebca8da50ff507435fbe ]
 
-The "Downstream Port Containment related Enhancements" ECN of Jan 28, 2019
-(document 12888 below), defined the EDR_PORT_DPC_ENABLE_DSM function with
-Revision ID 5 with Arg3 being an integer.  But when the ECN was integrated
-into PCI Firmware r3.3, sec 4.6.12, it was defined as Revision ID 6 with
-Arg3 being a package containing an integer.
+Amends the last quirk for the G634 with 0x1caf subsys to enable the rear
+speakers via pincfg.
 
-The implementation in acpi_enable_dpc() supplies a package as Arg3 (arg4 in
-the code), but it previously specified Revision ID 5.  Align this with PCI
-Firmware r3.3 by using Revision ID 6.
-
-If firmware implemented per the ECN, its Revision 5 function would receive
-a package as Arg3 when it expects an integer, so acpi_enable_dpc() would
-likely fail.  If such firmware exists and lacks a Revision 6 function that
-expects a package, we may have to add support for Revision 5.
-
-Link: https://lore.kernel.org/r/20240501022543.1626025-1-sathyanarayanan.kuppuswamy@linux.intel.com
-Link: https://members.pcisig.com/wg/PCI-SIG/document/12888
-Fixes: ac1c8e35a326 ("PCI/DPC: Add Error Disconnect Recover (EDR) support")
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-[bhelgaas: split into two patches, update commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com> # one platform
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
+Link: https://lore.kernel.org/r/20230704044619.19343-4-luke@ljones.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 2be46155d792 ("ALSA: hda/realtek: Adjust G814JZR to use SPI init for amp")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/edr.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ sound/pci/hda/patch_realtek.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pcie/edr.c b/drivers/pci/pcie/edr.c
-index 5f4914d313a17..fa085677c91de 100644
---- a/drivers/pci/pcie/edr.c
-+++ b/drivers/pci/pcie/edr.c
-@@ -32,10 +32,10 @@ static int acpi_enable_dpc(struct pci_dev *pdev)
- 	int status = 0;
- 
- 	/*
--	 * Behavior when calling unsupported _DSM functions is undefined,
--	 * so check whether EDR_PORT_DPC_ENABLE_DSM is supported.
-+	 * Per PCI Firmware r3.3, sec 4.6.12, EDR_PORT_DPC_ENABLE_DSM is
-+	 * optional. Return success if it's not implemented.
- 	 */
--	if (!acpi_check_dsm(adev->handle, &pci_acpi_dsm_guid, 5,
-+	if (!acpi_check_dsm(adev->handle, &pci_acpi_dsm_guid, 6,
- 			    1ULL << EDR_PORT_DPC_ENABLE_DSM))
- 		return 0;
- 
-@@ -46,12 +46,7 @@ static int acpi_enable_dpc(struct pci_dev *pdev)
- 	argv4.package.count = 1;
- 	argv4.package.elements = &req;
- 
--	/*
--	 * Per Downstream Port Containment Related Enhancements ECN to PCI
--	 * Firmware Specification r3.2, sec 4.6.12, EDR_PORT_DPC_ENABLE_DSM is
--	 * optional.  Return success if it's not implemented.
--	 */
--	obj = acpi_evaluate_dsm(adev->handle, &pci_acpi_dsm_guid, 5,
-+	obj = acpi_evaluate_dsm(adev->handle, &pci_acpi_dsm_guid, 6,
- 				EDR_PORT_DPC_ENABLE_DSM, &argv4);
- 	if (!obj)
- 		return 0;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 4d7c23b20cce0..c08bf42c602dd 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7207,6 +7207,7 @@ enum {
+ 	ALC285_FIXUP_SPEAKER2_TO_DAC1,
+ 	ALC285_FIXUP_ASUS_SPEAKER2_TO_DAC1,
+ 	ALC285_FIXUP_ASUS_HEADSET_MIC,
++	ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS,
+ 	ALC285_FIXUP_ASUS_I2C_SPEAKER2_TO_DAC1,
+ 	ALC285_FIXUP_ASUS_I2C_HEADSET_MIC,
+ 	ALC280_FIXUP_HP_HEADSET_MIC,
+@@ -8214,6 +8215,15 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC285_FIXUP_ASUS_SPEAKER2_TO_DAC1
+ 	},
++	[ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x14, 0x90170120 },
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC285_FIXUP_ASUS_HEADSET_MIC
++	},
+ 	[ALC285_FIXUP_ASUS_I2C_SPEAKER2_TO_DAC1] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc285_fixup_speaker2_to_dac1,
+@@ -9860,7 +9870,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1c23, "Asus X55U", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x1043, 0x1c62, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
+ 	SND_PCI_QUIRK(0x1043, 0x1c92, "ASUS ROG Strix G15", ALC285_FIXUP_ASUS_G533Z_PINS),
+-	SND_PCI_QUIRK(0x1043, 0x1caf, "ASUS G634JYR/JZR", ALC285_FIXUP_ASUS_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1043, 0x1caf, "ASUS G634JYR/JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1043, 0x1ccd, "ASUS X555UB", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1d1f, "ASUS ROG Strix G17 2023 (G713PV)", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1d42, "ASUS Zephyrus G14 2022", ALC289_FIXUP_ASUS_GA401),
 -- 
 2.43.0
 
