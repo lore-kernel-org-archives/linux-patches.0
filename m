@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B6C1B1424;
-	Thu,  6 Jun 2024 14:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D391B1424;
+	Thu,  6 Jun 2024 14:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683375; cv=none; b=nvkXWJRWx9aTFhSCQ6EaXt9Azxp8zLwpJd+uYUWJf0B4y7QmxqdG/cLHhA1GNH3sNGnqwWyerucAO9hpUcLMYZPGTX/f3ZLYKgBQCLBcvJPTv1yxOIPOAaQaIhcqiUMKyZX8I+UdS2x81U1YtWBD5ddvsAXBM/bqDzp67pl+yq8=
+	t=1717683375; cv=none; b=OmqC51S3/OwE1VFxbIi+3/mfVOzQQZYFw/kpeigoEWlQhpdwkammOwJUqU3fJxElVv3s99ctmbzxRW1X6e4oW2f05kQ4dqy5ry3NjzkGlRerLsohrTYmRUnWnOhy/zrmCNG8HNkMtahYFChkMZekLDnjhST5s0cG7xQX3bfPCX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683375; c=relaxed/simple;
-	bh=IZmf2473CHfEAMOpj5FugVaedyt22dfRaHe6qq9r0gk=;
+	bh=dgAkcLoUdeIt93pButdZC5GXFVhIC4PnyqbOp06AQPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FgiFrMEq/qdcER2wH/I43sm134hFwDfPN+iOPFDeBPeTg0bZ2Z5qQBb0+sv3s/MpQe1LaAszEZhxsSHCeQCPeAGgDFMnqntfvDPXA9EX6O3zVjkFnG3XI6vAp7vS7k+/t4xC4wbZaQAM1nw37LptYlCk4H4dup+XFg15DNWp6lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zb3Lq8YA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A9JLSelerNSFR+eXfRtIfglrU7/h0rYq2sQcfxtoMORs8x8foldCGBfk37UXdsiP+9WqPh8eaLAlULAsrjOVvngagy/Lp9RCBm3R51cmrwz4GD9RrL4HA/fleryzgFKiKyrP5zQ2fm8bPCD2whr/boBS0XwO1hjmRGxbqIbMDdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZPUalOQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zb3Lq8YA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0AE3C32781;
-	Thu,  6 Jun 2024 14:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZPUalOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B504C32781;
+	Thu,  6 Jun 2024 14:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683374;
-	bh=IZmf2473CHfEAMOpj5FugVaedyt22dfRaHe6qq9r0gk=;
+	s=korg; t=1717683375;
+	bh=dgAkcLoUdeIt93pButdZC5GXFVhIC4PnyqbOp06AQPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zb3Lq8YA7at5OzKDQ74yBnTqiWFQEl9yuYc7OMyE9xs87UeE5QmeLNFNrnAhfGcoj
-	 WlrGzcVfZ1Lyc7rhDZES4jq0Ac0i/gsDGpw0mszR9MfyD7KB6b6IdikYt/8UEvW9dC
-	 I6ZuUKBUbkhE+zEaVHo2rNom/KQwauxLpxZya8YA=
+	b=SZPUalOQ6UIj4w4uYMXAQTFKGUwez3iuUr4qQSrcASAT89UoNmaXC/XZDe3/c+Vb2
+	 8bEeF0rc5XHvhbsVU5TdDd0d1s79/vafbkoP2R3btfvFpFxNfuSy2EgEqCMiNeRTiX
+	 S3AJoSFsSDuhUOr7TBzrfPA7oucXlZx4ZYZZYdB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huai-Yuan Liu <qq810974084@gmail.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 316/744] drm/arm/malidp: fix a possible null pointer dereference
-Date: Thu,  6 Jun 2024 15:59:48 +0200
-Message-ID: <20240606131742.561429880@linuxfoundation.org>
+Subject: [PATCH 6.6 317/744] drm: vc4: Fix possible null pointer dereference
+Date: Thu,  6 Jun 2024 15:59:49 +0200
+Message-ID: <20240606131742.594212042@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huai-Yuan Liu <qq810974084@gmail.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit a1f95aede6285dba6dd036d907196f35ae3a11ea ]
+[ Upstream commit c534b63bede6cb987c2946ed4d0b0013a52c5ba7 ]
 
-In malidp_mw_connector_reset, new memory is allocated with kzalloc, but
-no check is performed. In order to prevent null pointer dereferencing,
-ensure that mw_state is checked before calling
-__drm_atomic_helper_connector_reset.
+In vc4_hdmi_audio_init() of_get_address() may return
+NULL which is later dereferenced. Fix this bug by adding NULL check.
 
-Fixes: 8cbc5caf36ef ("drm: mali-dp: Add writeback connector")
-Signed-off-by: Huai-Yuan Liu <qq810974084@gmail.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240407063053.5481-1-qq810974084@gmail.com
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: bb7d78568814 ("drm/vc4: Add HDMI audio support")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240409075622.11783-1-amishin@t-argos.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/malidp_mw.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/arm/malidp_mw.c b/drivers/gpu/drm/arm/malidp_mw.c
-index 626709bec6f5f..2577f0cef8fcd 100644
---- a/drivers/gpu/drm/arm/malidp_mw.c
-+++ b/drivers/gpu/drm/arm/malidp_mw.c
-@@ -72,7 +72,10 @@ static void malidp_mw_connector_reset(struct drm_connector *connector)
- 		__drm_atomic_helper_connector_destroy_state(connector->state);
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 4626fe9aac563..643754fa6a8ad 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -2729,6 +2729,8 @@ static int vc4_hdmi_audio_init(struct vc4_hdmi *vc4_hdmi)
+ 		index = 1;
  
- 	kfree(connector->state);
--	__drm_atomic_helper_connector_reset(connector, &mw_state->base);
-+	connector->state = NULL;
-+
-+	if (mw_state)
-+		__drm_atomic_helper_connector_reset(connector, &mw_state->base);
- }
+ 	addr = of_get_address(dev->of_node, index, NULL, NULL);
++	if (!addr)
++		return -EINVAL;
  
- static enum drm_connector_status
+ 	vc4_hdmi->audio.dma_data.addr = be32_to_cpup(addr) + mai_data->offset;
+ 	vc4_hdmi->audio.dma_data.addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
 -- 
 2.43.0
 
