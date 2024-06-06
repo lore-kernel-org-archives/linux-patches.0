@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EC4196DB7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD69219B588;
 	Thu,  6 Jun 2024 14:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683064; cv=none; b=G8aPXnUdT30gengDI4kq0ifuhfCn1oyKAgKKTspZw5zrj3MvgcWGAuB9Xc/+sAKKZNllr/A5XG95AdEyRE3ItynNUf/awUUOimqalGCB76stLWbRRj8OzkFiQ/IfIKM3sNnVdUpqpoK1YLgOEUZiwmBjdLPGPGoysKH7lrxFG8U=
+	t=1717683064; cv=none; b=gd6Obv5QY1eyUzThCY03SCK3CfCTt2AlReFL1+KM5NzW590z+YDdVT1u9plfw6K61bKIHiOP/O3KEy7joUDo2I/Dx/fEEYIvbL31Y6MkPdMp7d7UrDR5q4YXWtfR0o1iozV2MbsAEgLncriruT2qugmsEBKKIrwYdFFFsfevY6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683064; c=relaxed/simple;
-	bh=UilmObbR7r5nLNHpqautuz291uaNurHl2F3cXtiZjOU=;
+	bh=FKSqlzkkOnrjEgBTsN3SJVqQvPRdhITh405bnTfeP3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wv7nv/+GBkwnk6wEL3neYeXoOjUF0hk9tXtTxZ6dX6Ed9ea5C7bsIU3hLZ7FCK3EZPzFyjYo5v0I6S4XKnj35sD6f8/PCKKsy5oA8qhX6Zbakqo39dwH3tMWMbGHzFB3+u2k/w6OyZldjFjX6KSowygjyPlrj9Sw0dk0MsKrOto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvNklwV1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o+J6cyW4h4uq+8KfBouNfLqkaAH2hlAYY4v1Wq3YVw0WaeiBgdXBjg/tOEXSvk4xDSDPKIc9b+WAszosb2pN3HYCD+dG5DJzHUWhPME3YimlC5P18VR7P2lG+EEH83INljyfX3uVNdj7Boa7Clafj1QoTLi6zYz7vnVT6XM1/6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzJmzpkj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvNklwV1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7F4C4AF0C;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzJmzpkj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB314C4AF1C;
 	Thu,  6 Jun 2024 14:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683064;
-	bh=UilmObbR7r5nLNHpqautuz291uaNurHl2F3cXtiZjOU=;
+	bh=FKSqlzkkOnrjEgBTsN3SJVqQvPRdhITh405bnTfeP3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GvNklwV1X9RpYp1AHPM6N2MyMxM9wIDb3hnN4gpLUpnuTVL7Iz3XhIBGD3RoTr1mc
-	 xPV8qWeWflM1yR1enSa1aHm00a0r83WNc4O6bVubjb/g0ahFxSzIdctOJjdL2pWSU5
-	 Cl2BGya7epwYpIL4jHtZRq/2lqwbEzTOVVeEEVno=
+	b=EzJmzpkj63exHpXFw77iL08BJwE1md3miXuSIGnFQYA5ikizk01t/SmjcffQ3hG4h
+	 4BlWN58Mxmy0m640tgrHuDYmO0MyW1ajyTjSsvJrdJcGZLpZwYraHA5b8PghvA1CRm
+	 caTpKlhIiDS54As9E2UhyPR54MaYZaTqRcQttuQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Jeff Layton <jlayton@kernel.org>,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Matthew Wilcox <willy@infradead.org>,
-	netfs@lists.linux.dev,
-	v9fs@lists.linux.dev,
-	linux-afs@lists.infradead.org,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Erhard Furtner <erhard_f@mailbox.org>,
+	Nico Pache <npache@redhat.com>,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Daniel Axtens <dja@axtens.net>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 276/374] netfs: Fix setting of BDP_ASYNC from iocb flags
-Date: Thu,  6 Jun 2024 16:04:15 +0200
-Message-ID: <20240606131701.151618725@linuxfoundation.org>
+Subject: [PATCH 6.9 277/374] kasan, fortify: properly rename memintrinsics
+Date: Thu,  6 Jun 2024 16:04:16 +0200
+Message-ID: <20240606131701.178752324@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -60,55 +58,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Andrey Konovalov <andreyknvl@gmail.com>
 
-[ Upstream commit c596bea1452ddf172ec9b588e4597228e9a1f4d5 ]
+[ Upstream commit 2e577732e8d28b9183df701fb90cb7943aa4ed16 ]
 
-Fix netfs_perform_write() to set BDP_ASYNC if IOCB_NOWAIT is set rather
-than if IOCB_SYNC is not set.  It reflects asynchronicity in the sense of
-not waiting rather than synchronicity in the sense of not returning until
-the op is complete.
+After commit 69d4c0d32186 ("entry, kasan, x86: Disallow overriding mem*()
+functions") and the follow-up fixes, with CONFIG_FORTIFY_SOURCE enabled,
+even though the compiler instruments meminstrinsics by generating calls to
+__asan/__hwasan_ prefixed functions, FORTIFY_SOURCE still uses
+uninstrumented memset/memmove/memcpy as the underlying functions.
 
-Without this, generic/590 fails on cifs in strict caching mode with a
-complaint that one of the writes fails with EAGAIN.  The test can be
-distilled down to:
+As a result, KASAN cannot detect bad accesses in memset/memmove/memcpy.
+This also makes KASAN tests corrupt kernel memory and cause crashes.
 
-        mount -t cifs /my/share /mnt -ostuff
-        xfs_io -i -c 'falloc 0 8191M -c fsync -f /mnt/file
-        xfs_io -i -c 'pwrite -b 1M -W 0 8191M' /mnt/file
+To fix this, use __asan_/__hwasan_memset/memmove/memcpy as the underlying
+functions whenever appropriate.  Do this only for the instrumented code
+(as indicated by __SANITIZE_ADDRESS__).
 
-Fixes: c38f4e96e605 ("netfs: Provide func to copy data to pagecache for buffered write")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/316306.1716306586@warthog.procyon.org.uk
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: Enzo Matsumiya <ematsumiya@suse.de>
-cc: Jens Axboe <axboe@kernel.dk>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: netfs@lists.linux.dev
-cc: v9fs@lists.linux.dev
-cc: linux-afs@lists.infradead.org
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Link: https://lkml.kernel.org/r/20240517130118.759301-1-andrey.konovalov@linux.dev
+Fixes: 69d4c0d32186 ("entry, kasan, x86: Disallow overriding mem*() functions")
+Fixes: 51287dcb00cc ("kasan: emit different calls for instrumentable memintrinsics")
+Fixes: 36be5cba99f6 ("kasan: treat meminstrinsic as builtins in uninstrumented files")
+Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
+Reported-by: Erhard Furtner <erhard_f@mailbox.org>
+Reported-by: Nico Pache <npache@redhat.com>
+Closes: https://lore.kernel.org/all/20240501144156.17e65021@outsider.home/
+Reviewed-by: Marco Elver <elver@google.com>
+Tested-by: Nico Pache <npache@redhat.com>
+Acked-by: Nico Pache <npache@redhat.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Daniel Axtens <dja@axtens.net>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_write.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/fortify-string.h | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/fs/netfs/buffered_write.c b/fs/netfs/buffered_write.c
-index 267b622d923b1..912ad0a1df021 100644
---- a/fs/netfs/buffered_write.c
-+++ b/fs/netfs/buffered_write.c
-@@ -163,7 +163,7 @@ ssize_t netfs_perform_write(struct kiocb *iocb, struct iov_iter *iter,
- 	struct folio *folio;
- 	enum netfs_how_to_modify howto;
- 	enum netfs_folio_trace trace;
--	unsigned int bdp_flags = (iocb->ki_flags & IOCB_SYNC) ? 0: BDP_ASYNC;
-+	unsigned int bdp_flags = (iocb->ki_flags & IOCB_NOWAIT) ? BDP_ASYNC : 0;
- 	ssize_t written = 0, ret, ret2;
- 	loff_t i_size, pos = iocb->ki_pos, from, to;
- 	size_t max_chunk = PAGE_SIZE << MAX_PAGECACHE_ORDER;
+diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.h
+index 6eaa190d0083c..9754f97e71e52 100644
+--- a/include/linux/fortify-string.h
++++ b/include/linux/fortify-string.h
+@@ -71,17 +71,30 @@ void __write_overflow_field(size_t avail, size_t wanted) __compiletime_warning("
+ 	__ret;							\
+ })
+ 
+-#if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
++#if defined(__SANITIZE_ADDRESS__)
++
++#if !defined(CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX) && !defined(CONFIG_GENERIC_ENTRY)
++extern void *__underlying_memset(void *p, int c, __kernel_size_t size) __RENAME(memset);
++extern void *__underlying_memmove(void *p, const void *q, __kernel_size_t size) __RENAME(memmove);
++extern void *__underlying_memcpy(void *p, const void *q, __kernel_size_t size) __RENAME(memcpy);
++#elif defined(CONFIG_KASAN_GENERIC)
++extern void *__underlying_memset(void *p, int c, __kernel_size_t size) __RENAME(__asan_memset);
++extern void *__underlying_memmove(void *p, const void *q, __kernel_size_t size) __RENAME(__asan_memmove);
++extern void *__underlying_memcpy(void *p, const void *q, __kernel_size_t size) __RENAME(__asan_memcpy);
++#else /* CONFIG_KASAN_SW_TAGS */
++extern void *__underlying_memset(void *p, int c, __kernel_size_t size) __RENAME(__hwasan_memset);
++extern void *__underlying_memmove(void *p, const void *q, __kernel_size_t size) __RENAME(__hwasan_memmove);
++extern void *__underlying_memcpy(void *p, const void *q, __kernel_size_t size) __RENAME(__hwasan_memcpy);
++#endif
++
+ extern void *__underlying_memchr(const void *p, int c, __kernel_size_t size) __RENAME(memchr);
+ extern int __underlying_memcmp(const void *p, const void *q, __kernel_size_t size) __RENAME(memcmp);
+-extern void *__underlying_memcpy(void *p, const void *q, __kernel_size_t size) __RENAME(memcpy);
+-extern void *__underlying_memmove(void *p, const void *q, __kernel_size_t size) __RENAME(memmove);
+-extern void *__underlying_memset(void *p, int c, __kernel_size_t size) __RENAME(memset);
+ extern char *__underlying_strcat(char *p, const char *q) __RENAME(strcat);
+ extern char *__underlying_strcpy(char *p, const char *q) __RENAME(strcpy);
+ extern __kernel_size_t __underlying_strlen(const char *p) __RENAME(strlen);
+ extern char *__underlying_strncat(char *p, const char *q, __kernel_size_t count) __RENAME(strncat);
+ extern char *__underlying_strncpy(char *p, const char *q, __kernel_size_t size) __RENAME(strncpy);
++
+ #else
+ 
+ #if defined(__SANITIZE_MEMORY__)
+@@ -106,6 +119,7 @@ extern char *__underlying_strncpy(char *p, const char *q, __kernel_size_t size)
+ #define __underlying_strlen	__builtin_strlen
+ #define __underlying_strncat	__builtin_strncat
+ #define __underlying_strncpy	__builtin_strncpy
++
+ #endif
+ 
+ /**
 -- 
 2.43.0
 
