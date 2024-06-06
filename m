@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D93A1C8A00;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F761C8A0E;
 	Thu,  6 Jun 2024 14:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683714; cv=none; b=bFN67kdzw++2XF29FOOxVAb/hUZuaagUPMu02xGxqpvpYamtkXyGjNilYzUyTVAfqL+9W5yXpbhRu8KOkVVTZDShb6mxhkpY1lGZr+txwO7nxpXZyJO4nLK3h4e5pPWJcn+TCARnsSnseMJ36edjEP9UdugcDR/wbVnzFKSFHUM=
+	t=1717683714; cv=none; b=bI+gdf4CoVbA1gOxGtVxK4u7u4YIqwzGsGBevb1vxwHNB0/TUdQCTgD8wt706xdnlaWjAn5drIWj8z9sGHJreQHKLEox54VqrmNJcQaiXnwg1mshpXFk4zQ0r8slnZSo1uQMN8WdcbWQQHMhz2u/66DQ58ciLruly0W+6/zUTXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683714; c=relaxed/simple;
-	bh=jCQgsKEd6HYv/EmLo4n+jTVBECBhEgy8i58BcgPQSxM=;
+	bh=TQ4r3xY74p4LjtFSL58yMpGVZgj17fBSb4SuL+Mk5bg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FY6V8qa/IooJhT4ziYpDm1Ke/Soj2rSIeX3cs+TtK78L2VCKm6BH70LRRD4dEddqkJq8Q0i6k50LM9+MdHlGYRJdcnckHfMpXin+aqVCV8+nAqx88pbYD3ScuLIR3YUmTHD8db32v/unwMBIXACxL+BhlFBjsth3G7BTxpdgtQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBYF2zMT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UkUIy38TETZMxsMpW2Xnml5T//wxpMlvGBiKOTq+qCSOuXrdHESEmRPSM+aJ1md8aepmYsUeG0eYKHan/dET+CYW/V6CKSp7p0EIiMGROBBJeShlzsD24/nK6GtBQYDWf777XHm8gIRNy4NrHu7V+Y0JYpZZUvOPZOi2CWHde9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZwe1zs9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBYF2zMT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1EE9C2BD10;
-	Thu,  6 Jun 2024 14:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZwe1zs9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA62C2BD10;
+	Thu,  6 Jun 2024 14:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683713;
-	bh=jCQgsKEd6HYv/EmLo4n+jTVBECBhEgy8i58BcgPQSxM=;
+	s=korg; t=1717683714;
+	bh=TQ4r3xY74p4LjtFSL58yMpGVZgj17fBSb4SuL+Mk5bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBYF2zMTWGha+PP7E5WVnHwBeuN5wsb0XP6kaEu4XFrYq9RYx7ry9n0wM4w/wEqvI
-	 H/nqszk7yKIQszoWIru78WUj10Z8UyppLQbXI7GTCqmSopjU9RSuVG0yT6KKLI5zS7
-	 W0FmFHb6SrzpS+stjeWDt7g4vI//kpItAsJ+s4LA=
+	b=iZwe1zs9VfoSNzB1Q6qxPlPlx9IphKHPn7yNs1Oz2hf+X1tWbXF0u9/lC9OEZeiKv
+	 5hjD/OTXXVe09bPb1ZYDejxe2bvxrfH3fMUnnk+AO6uqoJd+YubdY07+pZPjP2jV9K
+	 HuRkgMNc8UcumiJB03VIrSZGdqxM7YZ1x2BtM7uI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neha Malcom Francis <n-francis@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 647/744] regulator: tps6594-regulator: Correct multi-phase configuration
-Date: Thu,  6 Jun 2024 16:05:19 +0200
-Message-ID: <20240606131753.218667762@linuxfoundation.org>
+Subject: [PATCH 6.6 612/744] drm: zynqmp_dpsub: Always register bridge
+Date: Thu,  6 Jun 2024 16:04:44 +0200
+Message-ID: <20240606131752.119939731@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,70 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neha Malcom Francis <n-francis@ti.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 74b38cd77d3eb63c6d0ad9cf2ae59812ae54d3ee ]
+[ Upstream commit be3f3042391d061cfca2bd22630e0d101acea5fc ]
 
-According to the TPS6594 PMIC Manual (linked) 8.3.2.1.4 Multi-Phase BUCK
-Regulator Configurations section, the PMIC ignores all the other bucks'
-except the primary buck's regulator registers. This is BUCK1 for
-configurations BUCK12, BUCK123 and BUCK1234 while it is BUCK3 for
-BUCK34. Correct the registers mapped for these configurations
-accordingly.
+We must always register the DRM bridge, since zynqmp_dp_hpd_work_func
+calls drm_bridge_hpd_notify, which in turn expects hpd_mutex to be
+initialized. We do this before zynqmp_dpsub_drm_init since that calls
+drm_bridge_attach. This fixes the following lockdep warning:
 
-Fixes: f17ccc5deb4d ("regulator: tps6594-regulator: Add driver for TI TPS6594 regulators")
-Link: https://www.ti.com/lit/gpn/tps6594-q1
-Signed-off-by: Neha Malcom Francis <n-francis@ti.com>
-Link: https://msgid.link/r/20240521094758.2190331-1-n-francis@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[   19.217084] ------------[ cut here ]------------
+[   19.227530] DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+[   19.227768] WARNING: CPU: 0 PID: 140 at kernel/locking/mutex.c:582 __mutex_lock+0x4bc/0x550
+[   19.241696] Modules linked in:
+[   19.244937] CPU: 0 PID: 140 Comm: kworker/0:4 Not tainted 6.6.20+ #96
+[   19.252046] Hardware name: xlnx,zynqmp (DT)
+[   19.256421] Workqueue: events zynqmp_dp_hpd_work_func
+[   19.261795] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   19.269104] pc : __mutex_lock+0x4bc/0x550
+[   19.273364] lr : __mutex_lock+0x4bc/0x550
+[   19.277592] sp : ffffffc085c5bbe0
+[   19.281066] x29: ffffffc085c5bbe0 x28: 0000000000000000 x27: ffffff88009417f8
+[   19.288624] x26: ffffff8800941788 x25: ffffff8800020008 x24: ffffffc082aa3000
+[   19.296227] x23: ffffffc080d90e3c x22: 0000000000000002 x21: 0000000000000000
+[   19.303744] x20: 0000000000000000 x19: ffffff88002f5210 x18: 0000000000000000
+[   19.311295] x17: 6c707369642e3030 x16: 3030613464662072 x15: 0720072007200720
+[   19.318922] x14: 0000000000000000 x13: 284e4f5f4e524157 x12: 0000000000000001
+[   19.326442] x11: 0001ffc085c5b940 x10: 0001ff88003f388b x9 : 0001ff88003f3888
+[   19.334003] x8 : 0001ff88003f3888 x7 : 0000000000000000 x6 : 0000000000000000
+[   19.341537] x5 : 0000000000000000 x4 : 0000000000001668 x3 : 0000000000000000
+[   19.349054] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffffff88003f3880
+[   19.356581] Call trace:
+[   19.359160]  __mutex_lock+0x4bc/0x550
+[   19.363032]  mutex_lock_nested+0x24/0x30
+[   19.367187]  drm_bridge_hpd_notify+0x2c/0x6c
+[   19.371698]  zynqmp_dp_hpd_work_func+0x44/0x54
+[   19.376364]  process_one_work+0x3ac/0x988
+[   19.380660]  worker_thread+0x398/0x694
+[   19.384736]  kthread+0x1bc/0x1c0
+[   19.388241]  ret_from_fork+0x10/0x20
+[   19.392031] irq event stamp: 183
+[   19.395450] hardirqs last  enabled at (183): [<ffffffc0800b9278>] finish_task_switch.isra.0+0xa8/0x2d4
+[   19.405140] hardirqs last disabled at (182): [<ffffffc081ad3754>] __schedule+0x714/0xd04
+[   19.413612] softirqs last  enabled at (114): [<ffffffc080133de8>] srcu_invoke_callbacks+0x158/0x23c
+[   19.423128] softirqs last disabled at (110): [<ffffffc080133de8>] srcu_invoke_callbacks+0x158/0x23c
+[   19.432614] ---[ end trace 0000000000000000 ]---
+
+Fixes: eb2d64bfcc17 ("drm: xlnx: zynqmp_dpsub: Report HPD through the bridge")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240308204741.3631919-1-sean.anderson@linux.dev
+(cherry picked from commit 61ba791c4a7a09a370c45b70a81b8c7d4cf6b2ae)
+Signed-off-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/tps6594-regulator.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/regulator/tps6594-regulator.c b/drivers/regulator/tps6594-regulator.c
-index b7f0c87797577..5fad61785e72f 100644
---- a/drivers/regulator/tps6594-regulator.c
-+++ b/drivers/regulator/tps6594-regulator.c
-@@ -287,30 +287,30 @@ static struct tps6594_regulator_irq_type *tps6594_ldos_irq_types[] = {
- static const struct regulator_desc multi_regs[] = {
- 	TPS6594_REGULATOR("BUCK12", "buck12", TPS6594_BUCK_1,
- 			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS6594_MASK_BUCKS_VSET,
--			  TPS6594_REG_BUCKX_VOUT_1(1),
-+			  TPS6594_REG_BUCKX_VOUT_1(0),
- 			  TPS6594_MASK_BUCKS_VSET,
--			  TPS6594_REG_BUCKX_CTRL(1),
-+			  TPS6594_REG_BUCKX_CTRL(0),
- 			  TPS6594_BIT_BUCK_EN, 0, 0, bucks_ranges,
- 			  4, 4000, 0, NULL, 0, 0),
- 	TPS6594_REGULATOR("BUCK34", "buck34", TPS6594_BUCK_3,
- 			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS6594_MASK_BUCKS_VSET,
--			  TPS6594_REG_BUCKX_VOUT_1(3),
-+			  TPS6594_REG_BUCKX_VOUT_1(2),
- 			  TPS6594_MASK_BUCKS_VSET,
--			  TPS6594_REG_BUCKX_CTRL(3),
-+			  TPS6594_REG_BUCKX_CTRL(2),
- 			  TPS6594_BIT_BUCK_EN, 0, 0, bucks_ranges,
- 			  4, 0, 0, NULL, 0, 0),
- 	TPS6594_REGULATOR("BUCK123", "buck123", TPS6594_BUCK_1,
- 			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS6594_MASK_BUCKS_VSET,
--			  TPS6594_REG_BUCKX_VOUT_1(1),
-+			  TPS6594_REG_BUCKX_VOUT_1(0),
- 			  TPS6594_MASK_BUCKS_VSET,
--			  TPS6594_REG_BUCKX_CTRL(1),
-+			  TPS6594_REG_BUCKX_CTRL(0),
- 			  TPS6594_BIT_BUCK_EN, 0, 0, bucks_ranges,
- 			  4, 4000, 0, NULL, 0, 0),
- 	TPS6594_REGULATOR("BUCK1234", "buck1234", TPS6594_BUCK_1,
- 			  REGULATOR_VOLTAGE, tps6594_bucks_ops, TPS6594_MASK_BUCKS_VSET,
--			  TPS6594_REG_BUCKX_VOUT_1(1),
-+			  TPS6594_REG_BUCKX_VOUT_1(0),
- 			  TPS6594_MASK_BUCKS_VSET,
--			  TPS6594_REG_BUCKX_CTRL(1),
-+			  TPS6594_REG_BUCKX_CTRL(0),
- 			  TPS6594_BIT_BUCK_EN, 0, 0, bucks_ranges,
- 			  4, 4000, 0, NULL, 0, 0),
- };
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+index 88eb33acd5f0d..face8d6b2a6fb 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
+@@ -256,12 +256,12 @@ static int zynqmp_dpsub_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_dp;
+ 
++	drm_bridge_add(dpsub->bridge);
++
+ 	if (dpsub->dma_enabled) {
+ 		ret = zynqmp_dpsub_drm_init(dpsub);
+ 		if (ret)
+ 			goto err_disp;
+-	} else {
+-		drm_bridge_add(dpsub->bridge);
+ 	}
+ 
+ 	dev_info(&pdev->dev, "ZynqMP DisplayPort Subsystem driver probed");
+@@ -288,9 +288,8 @@ static void zynqmp_dpsub_remove(struct platform_device *pdev)
+ 
+ 	if (dpsub->drm)
+ 		zynqmp_dpsub_drm_cleanup(dpsub);
+-	else
+-		drm_bridge_remove(dpsub->bridge);
+ 
++	drm_bridge_remove(dpsub->bridge);
+ 	zynqmp_disp_remove(dpsub);
+ 	zynqmp_dp_remove(dpsub);
+ 
 -- 
 2.43.0
 
