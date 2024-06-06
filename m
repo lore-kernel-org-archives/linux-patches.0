@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65021AB522;
-	Thu,  6 Jun 2024 14:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A5E1AB522;
+	Thu,  6 Jun 2024 14:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683257; cv=none; b=bywrJC2lZCh4+lE/iGESukXwGBjG9wJwxIEpHbqog7yLMawMj5bn/ecYItaoBQDiKX2zvM7OeDLznASQGYDhKYVtpMWlFkSVPkyOC5O1uWdR3zuAgy0j6uTXZuWSlIKyKB8/CeMZtP6oo7aBnLWnOBgzidkxerEWOsBhVwizpmA=
+	t=1717683258; cv=none; b=TAUvVEJjTGF4nUQIamLTfaKVKePGfXoOoFimu0zow8bF3mohJu0uo3E06ajENbMGDg7qtKJAslxQ8b39oyhzHs8PP+dMaQN9QTYajCY0ES9W3iLHZTfDuHjrrEL+OzgGjQDRjtPBW4a/FJh0U4VKuOCGsH0M3gDSbemAQVrCSJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683257; c=relaxed/simple;
-	bh=C0arV5JFzFUhUqbip53m1R7lbuKMwgFDrWLLuxMZD9w=;
+	s=arc-20240116; t=1717683258; c=relaxed/simple;
+	bh=z9UOB/Az6zZJcDTlso+2NiC4xjHkjNYIPIsAxI/e2k4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fx9BCyhPuG6DAhFirJrD3l3kEfLTpKBMPr2mRzVcMTd8976wy3dFVT+z8l+vxzSYGI5SYcJT7HX3eCda/10Zq6UQSW369jIvb5ng0FZLJhBrAEqZBrYXpuIabEy24uc2kg5LVNuJ1VdOCGziouEa9KGDINNLjiPhzdC/+6gKJ+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1lLesnn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQ1Y9lteGp56DjiBGozMZCsjVNZqykzTmiDXocwc4uTfJaZPMvoqqkUEMTj5lYfraQHM6d7nbmZAKoz1hFx2O+0XusxG6VDM7Eu+UT5FGIMQlswfYQqfWeHBzSpIiZcMJ+yBqJ0Kcr6hmeHx1X1VVWXxdFznkT8y5eAzcVz8Ozc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bihljgQw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1lLesnn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A468EC32781;
-	Thu,  6 Jun 2024 14:14:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bihljgQw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A264C2BD10;
+	Thu,  6 Jun 2024 14:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683257;
-	bh=C0arV5JFzFUhUqbip53m1R7lbuKMwgFDrWLLuxMZD9w=;
+	s=korg; t=1717683258;
+	bh=z9UOB/Az6zZJcDTlso+2NiC4xjHkjNYIPIsAxI/e2k4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W1lLesnnU5mPMm4NhzVUqyXxEqsbQKNnO42VRD5nq8ENkTFSo0gA1oO8aPVvjoly2
-	 PlY+Lfn5aWO7E0AOyO5BYxBzzUht2h4Rkosz+JCbkkkh/g5yMUcdCV9Yiy3oa+w45v
-	 SY1o1+1rcB7kBbu7mvZ/7qXBb294IueOC75VsRnc=
+	b=bihljgQwG5rxKu0jpLsHDp1idcKXKuIJ5fYQDt6WdhVWotUynXQBRYdZ429oEMNBN
+	 uxeJCicx5WZFXmaE9sMuO3conavWGQnPARjTfuX61r/wyJt7Hdxa2x6Tg95IyGjlLe
+	 1s5GGl3w+gAMCBY71joCE21Y97Mtd58dZMlqHAwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 201/744] net: dsa: mv88e6xxx: Avoid EEPROM timeout without EEPROM on 88E6250-family switches
-Date: Thu,  6 Jun 2024 15:57:53 +0200
-Message-ID: <20240606131738.865456892@linuxfoundation.org>
+Subject: [PATCH 6.1 134/473] wifi: ath10k: populate board data for WCN3990
+Date: Thu,  6 Jun 2024 16:01:03 +0200
+Message-ID: <20240606131704.359345884@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,174 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit e44894e2aa4eb311ceda134de8b6f51ff979211b ]
+[ Upstream commit f1f1b5b055c9f27a2f90fd0f0521f5920e9b3c18 ]
 
-88E6250-family switches have the quirk that the EEPROM Running flag can
-get stuck at 1 when no EEPROM is connected, causing
-mv88e6xxx_g2_eeprom_wait() to time out. We still want to wait for the
-EEPROM however, to avoid interrupting a transfer and leaving the EEPROM
-in an invalid state.
+Specify board data size (and board.bin filename) for the WCN3990
+platform.
 
-The condition to wait for recommended by the hardware spec is the EEInt
-flag, however this flag is cleared on read, so before the hardware reset,
-is may have been cleared already even though the EEPROM has been read
-successfully.
-
-For this reason, we revive the mv88e6xxx_g1_wait_eeprom_done() function
-that was removed in commit 6ccf50d4d474
-("net: dsa: mv88e6xxx: Avoid EEPROM timeout when EEPROM is absent") in a
-slightly refactored form, and introduce a new
-mv88e6xxx_g1_wait_eeprom_done_prereset() that additionally handles this
-case by triggering another EEPROM reload that can be waited on.
-
-On other switch models without this quirk, mv88e6xxx_g2_eeprom_wait() is
-kept, as it avoids the additional reload.
-
-Fixes: 6ccf50d4d474 ("net: dsa: mv88e6xxx: Avoid EEPROM timeout when EEPROM is absent")
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
+Fixes: 03a72288c546 ("ath10k: wmi: add hw params entry for wcn3990")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240130-wcn3990-board-fw-v1-1-738f7c19a8c8@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c    |  4 +-
- drivers/net/dsa/mv88e6xxx/global1.c | 89 +++++++++++++++++++++++++++++
- drivers/net/dsa/mv88e6xxx/global1.h |  2 +
- 3 files changed, 93 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/core.c      | 3 +++
+ drivers/net/wireless/ath/ath10k/hw.h        | 1 +
+ drivers/net/wireless/ath/ath10k/targaddrs.h | 3 +++
+ 3 files changed, 7 insertions(+)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index a2aec16abb8fc..9571e1b1e59ef 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -4900,8 +4900,8 @@ static const struct mv88e6xxx_ops mv88e6250_ops = {
- 	.watchdog_ops = &mv88e6250_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
- 	.pot_clear = mv88e6xxx_g2_pot_clear,
--	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
--	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
-+	.hardware_reset_pre = mv88e6250_g1_wait_eeprom_done_prereset,
-+	.hardware_reset_post = mv88e6xxx_g1_wait_eeprom_done,
- 	.reset = mv88e6250_g1_reset,
- 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
-diff --git a/drivers/net/dsa/mv88e6xxx/global1.c b/drivers/net/dsa/mv88e6xxx/global1.c
-index 174c773b38c2b..7ef0f4426ad71 100644
---- a/drivers/net/dsa/mv88e6xxx/global1.c
-+++ b/drivers/net/dsa/mv88e6xxx/global1.c
-@@ -75,6 +75,95 @@ static int mv88e6xxx_g1_wait_init_ready(struct mv88e6xxx_chip *chip)
- 	return mv88e6xxx_g1_wait_bit(chip, MV88E6XXX_G1_STS, bit, 1);
- }
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index 6cdb225b7eacc..81058be3598f1 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -704,6 +704,9 @@ static const struct ath10k_hw_params ath10k_hw_params_list[] = {
+ 		.max_spatial_stream = 4,
+ 		.fw = {
+ 			.dir = WCN3990_HW_1_0_FW_DIR,
++			.board = WCN3990_HW_1_0_BOARD_DATA_FILE,
++			.board_size = WCN3990_BOARD_DATA_SZ,
++			.board_ext_size = WCN3990_BOARD_EXT_DATA_SZ,
+ 		},
+ 		.sw_decrypt_mcast_mgmt = true,
+ 		.rx_desc_ops = &wcn3990_rx_desc_ops,
+diff --git a/drivers/net/wireless/ath/ath10k/hw.h b/drivers/net/wireless/ath/ath10k/hw.h
+index 9643031a4427a..7ecdd0011cfa4 100644
+--- a/drivers/net/wireless/ath/ath10k/hw.h
++++ b/drivers/net/wireless/ath/ath10k/hw.h
+@@ -132,6 +132,7 @@ enum qca9377_chip_id_rev {
+ /* WCN3990 1.0 definitions */
+ #define WCN3990_HW_1_0_DEV_VERSION	ATH10K_HW_WCN3990
+ #define WCN3990_HW_1_0_FW_DIR		ATH10K_FW_DIR "/WCN3990/hw1.0"
++#define WCN3990_HW_1_0_BOARD_DATA_FILE "board.bin"
  
-+static int mv88e6250_g1_eeprom_reload(struct mv88e6xxx_chip *chip)
-+{
-+	/* MV88E6185_G1_CTL1_RELOAD_EEPROM is also valid for 88E6250 */
-+	int bit = __bf_shf(MV88E6185_G1_CTL1_RELOAD_EEPROM);
-+	u16 val;
-+	int err;
-+
-+	err = mv88e6xxx_g1_read(chip, MV88E6XXX_G1_CTL1, &val);
-+	if (err)
-+		return err;
-+
-+	val |= MV88E6185_G1_CTL1_RELOAD_EEPROM;
-+
-+	err = mv88e6xxx_g1_write(chip, MV88E6XXX_G1_CTL1, val);
-+	if (err)
-+		return err;
-+
-+	return mv88e6xxx_g1_wait_bit(chip, MV88E6XXX_G1_CTL1, bit, 0);
-+}
-+
-+/* Returns 0 when done, -EBUSY when waiting, other negative codes on error */
-+static int mv88e6xxx_g1_is_eeprom_done(struct mv88e6xxx_chip *chip)
-+{
-+	u16 val;
-+	int err;
-+
-+	err = mv88e6xxx_g1_read(chip, MV88E6XXX_G1_STS, &val);
-+	if (err < 0) {
-+		dev_err(chip->dev, "Error reading status");
-+		return err;
-+	}
-+
-+	/* If the switch is still resetting, it may not
-+	 * respond on the bus, and so MDIO read returns
-+	 * 0xffff. Differentiate between that, and waiting for
-+	 * the EEPROM to be done by bit 0 being set.
-+	 */
-+	if (val == 0xffff || !(val & BIT(MV88E6XXX_G1_STS_IRQ_EEPROM_DONE)))
-+		return -EBUSY;
-+
-+	return 0;
-+}
-+
-+/* As the EEInt (EEPROM done) flag clears on read if the status register, this
-+ * function must be called directly after a hard reset or EEPROM ReLoad request,
-+ * or the done condition may have been missed
-+ */
-+int mv88e6xxx_g1_wait_eeprom_done(struct mv88e6xxx_chip *chip)
-+{
-+	const unsigned long timeout = jiffies + 1 * HZ;
-+	int ret;
-+
-+	/* Wait up to 1 second for the switch to finish reading the
-+	 * EEPROM.
-+	 */
-+	while (time_before(jiffies, timeout)) {
-+		ret = mv88e6xxx_g1_is_eeprom_done(chip);
-+		if (ret != -EBUSY)
-+			return ret;
-+	}
-+
-+	dev_err(chip->dev, "Timeout waiting for EEPROM done");
-+	return -ETIMEDOUT;
-+}
-+
-+int mv88e6250_g1_wait_eeprom_done_prereset(struct mv88e6xxx_chip *chip)
-+{
-+	int ret;
-+
-+	ret = mv88e6xxx_g1_is_eeprom_done(chip);
-+	if (ret != -EBUSY)
-+		return ret;
-+
-+	/* Pre-reset, we don't know the state of the switch - when
-+	 * mv88e6xxx_g1_is_eeprom_done() returns -EBUSY, that may be because
-+	 * the switch is actually busy reading the EEPROM, or because
-+	 * MV88E6XXX_G1_STS_IRQ_EEPROM_DONE has been cleared by an unrelated
-+	 * status register read already.
-+	 *
-+	 * To account for the latter case, trigger another EEPROM reload for
-+	 * another chance at seeing the done flag.
-+	 */
-+	ret = mv88e6250_g1_eeprom_reload(chip);
-+	if (ret)
-+		return ret;
-+
-+	return mv88e6xxx_g1_wait_eeprom_done(chip);
-+}
-+
- /* Offset 0x01: Switch MAC Address Register Bytes 0 & 1
-  * Offset 0x02: Switch MAC Address Register Bytes 2 & 3
-  * Offset 0x03: Switch MAC Address Register Bytes 4 & 5
-diff --git a/drivers/net/dsa/mv88e6xxx/global1.h b/drivers/net/dsa/mv88e6xxx/global1.h
-index 1095261f5b490..3dbb7a1b8fe11 100644
---- a/drivers/net/dsa/mv88e6xxx/global1.h
-+++ b/drivers/net/dsa/mv88e6xxx/global1.h
-@@ -282,6 +282,8 @@ int mv88e6xxx_g1_set_switch_mac(struct mv88e6xxx_chip *chip, u8 *addr);
- int mv88e6185_g1_reset(struct mv88e6xxx_chip *chip);
- int mv88e6352_g1_reset(struct mv88e6xxx_chip *chip);
- int mv88e6250_g1_reset(struct mv88e6xxx_chip *chip);
-+int mv88e6xxx_g1_wait_eeprom_done(struct mv88e6xxx_chip *chip);
-+int mv88e6250_g1_wait_eeprom_done_prereset(struct mv88e6xxx_chip *chip);
+ #define ATH10K_FW_FILE_BASE		"firmware"
+ #define ATH10K_FW_API_MAX		6
+diff --git a/drivers/net/wireless/ath/ath10k/targaddrs.h b/drivers/net/wireless/ath/ath10k/targaddrs.h
+index ec556bb88d658..ba37e6c7ced08 100644
+--- a/drivers/net/wireless/ath/ath10k/targaddrs.h
++++ b/drivers/net/wireless/ath/ath10k/targaddrs.h
+@@ -491,4 +491,7 @@ struct host_interest {
+ #define QCA4019_BOARD_DATA_SZ	  12064
+ #define QCA4019_BOARD_EXT_DATA_SZ 0
  
- int mv88e6185_g1_ppu_enable(struct mv88e6xxx_chip *chip);
- int mv88e6185_g1_ppu_disable(struct mv88e6xxx_chip *chip);
++#define WCN3990_BOARD_DATA_SZ	  26328
++#define WCN3990_BOARD_EXT_DATA_SZ 0
++
+ #endif /* __TARGADDRS_H__ */
 -- 
 2.43.0
 
