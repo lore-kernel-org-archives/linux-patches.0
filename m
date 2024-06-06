@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9352C1A0AF8;
-	Thu,  6 Jun 2024 14:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFB41991BE;
+	Thu,  6 Jun 2024 14:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683156; cv=none; b=beifBJt+RT1qlDeAqsVfnM7hT8AHtBQRNSwISPpbqn/JDyJ+9KAQfN5SiKvCL3BgPlTjhXXMGCvvmwTf+ZCjn6TEPnaD9m1W2+Jgbfe/ge5V2p9OW4KkxYuP1CtNmOpIOg4NBGUl4FZ6BHUWObtHKXZC2BbxmjemQeHqeBFz058=
+	t=1717683157; cv=none; b=Lj6kylc9F+PnSQNU6GwugkQ20zW98ZhIv2pGVBkYX/RcbWBfxHepGhD/lVB+d4IHgnAUm9wdhG3MrL9WznPPhRdRutKXOys6shoDwy32B3Cgc9n1Ta8BXF+gC7k845pCTUr+8VKcgHvROMTBn3i/tm23dvIsCCus+kr19aOwMwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683156; c=relaxed/simple;
-	bh=EOsxlo3ize9FJMzMGpjbZvFrWLNEtop70SDYoU9VRtw=;
+	s=arc-20240116; t=1717683157; c=relaxed/simple;
+	bh=+XBJdTj0Q2asgJYrdzwXlwX5hYNG5MIkX0Gu5NXocW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UIsksI4symOAc1WaQfD50swcCYsXzQ4q9u5uB8eEyqG6Jcroq4qAACy1NuIShcdkR1BSZPlTgdVaGG1d4TVa5N9U4oSQlX0wPR4T1z7CGDCVCe/VHghAdJt1nsc4l/KIFo/R8VlWc/hSm7AzNPrD5PmrGXcHyQ6vUZ6U5E9N46g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1oRuH/q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=deAIt+anuepWu+/Ov63x/uzNAs9upKO6yR+KdRmYhgvHSiAK1vuEsqNJwC0+GmeTiHthZmBPTykXk6mWhjasSAc9VWCCXVbZbw5mYsw8KWqa97QlvQee9J25UeCknZDSEuDcUvvN6RuqXXFaVa2izzx+QPF8Hmdh5wWzhGdnZDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1jvnOnt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1oRuH/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73B02C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1jvnOnt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA2FC2BD10;
 	Thu,  6 Jun 2024 14:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683156;
-	bh=EOsxlo3ize9FJMzMGpjbZvFrWLNEtop70SDYoU9VRtw=;
+	s=korg; t=1717683157;
+	bh=+XBJdTj0Q2asgJYrdzwXlwX5hYNG5MIkX0Gu5NXocW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1oRuH/qAkh7XKaUjlnkVfL3UBxqDKTvr2V5XIWh0DqMKpyO1SAEw1nrIaMdm8JzV
-	 I6OeV1F1y8dPIjWGdw4m+RVPm13OsutdP2FopSazy4aJ3vPBtYWOvbSgF8RgSaDay9
-	 cTzG+JEKToFxR31dYPpgnzzU7pgkl3zvJWeTLjwA=
+	b=r1jvnOntDO6gjOBgpGvdsJsPYGTPv+Xv2mDxuYuCtSfM5jksmI+rLVH9wLa8+LVe1
+	 jEl9US/r11AuH2ujTBdiSug0Wa0B1HX6r2k2muXxSzPiMJfR6JKJ3t4qpkovgg2bGX
+	 G5yVgrw8qfACrQS7VS+zqZrGHv49Uh8uGFJSML4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/744] crypto: x86/nh-avx2 - add missing vzeroupper
-Date: Thu,  6 Jun 2024 15:56:13 +0200
-Message-ID: <20240606131735.636419878@linuxfoundation.org>
+Subject: [PATCH 6.6 079/744] drm/amd/display: Add VCO speed parameter for DCN31 FPU
+Date: Thu,  6 Jun 2024 15:55:51 +0200
+Message-ID: <20240606131734.936386584@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,34 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit 4ad096cca942959871d8ff73826d30f81f856f6e ]
+[ Upstream commit 0e62103bdcbc88281e16add299a946fb3bd02fbe ]
 
-Since nh_avx2() uses ymm registers, execute vzeroupper before returning
-from it.  This is necessary to avoid reducing the performance of SSE
-code.
+Add VCO speed parameters in the bounding box array.
 
-Fixes: 0f961f9f670e ("crypto: x86/nhpoly1305 - add AVX2 accelerated NHPoly1305")
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Acked-by: Tim Chen <tim.c.chen@linux.intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/nh-avx2-x86_64.S | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/crypto/nh-avx2-x86_64.S b/arch/x86/crypto/nh-avx2-x86_64.S
-index ef73a3ab87263..791386d9a83aa 100644
---- a/arch/x86/crypto/nh-avx2-x86_64.S
-+++ b/arch/x86/crypto/nh-avx2-x86_64.S
-@@ -154,5 +154,6 @@ SYM_TYPED_FUNC_START(nh_avx2)
- 	vpaddq		T1, T0, T0
- 	vpaddq		T4, T0, T0
- 	vmovdqu		T0, (HASH)
-+	vzeroupper
- 	RET
- SYM_FUNC_END(nh_avx2)
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
+index deb6d162a2d5c..7307b7b8d8ad7 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn31/dcn31_fpu.c
+@@ -291,6 +291,7 @@ static struct _vcs_dpi_soc_bounding_box_st dcn3_15_soc = {
+ 	.do_urgent_latency_adjustment = false,
+ 	.urgent_latency_adjustment_fabric_clock_component_us = 0,
+ 	.urgent_latency_adjustment_fabric_clock_reference_mhz = 0,
++	.dispclk_dppclk_vco_speed_mhz = 2400.0,
+ 	.num_chans = 4,
+ 	.dummy_pstate_latency_us = 10.0
+ };
+@@ -438,6 +439,7 @@ static struct _vcs_dpi_soc_bounding_box_st dcn3_16_soc = {
+ 	.do_urgent_latency_adjustment = false,
+ 	.urgent_latency_adjustment_fabric_clock_component_us = 0,
+ 	.urgent_latency_adjustment_fabric_clock_reference_mhz = 0,
++	.dispclk_dppclk_vco_speed_mhz = 2500.0,
+ };
+ 
+ void dcn31_zero_pipe_dcc_fraction(display_e2e_pipe_params_st *pipes,
 -- 
 2.43.0
 
