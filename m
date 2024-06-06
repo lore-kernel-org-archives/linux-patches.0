@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5251990D1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED74719FA6C;
 	Thu,  6 Jun 2024 14:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683130; cv=none; b=TpkoI4R/ffiZUMpY4JfEyDp5GF6OdzA2RUHztuMZQKFqJ1fmlnie8Kac8RVUlhSZgyJlFsKZnfj1qoYXcV2wG4+s+0uY+0uQDO4ERsLCpbNPOtZ96sgttGxtousr0RSAu53l/k5S8R1FBG2SnGDNkiCy8vHRfm+qpUJBV8JAoZ8=
+	t=1717683131; cv=none; b=bG8M4+ZMXFDtQq1WDV4XssGMUebpwVA87Et3aFvbM42VrF6XIViV4PwTeC6G2eP6excqaEdd4s8MlZcwTPopyIHJugOwNLy1qf06/fORyILN4Xe6fnfCjU3CfM3kFGtq8SicVCv+x9bsWtskR9h1gNUYsRpxVRdcKegAIZzJedw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683130; c=relaxed/simple;
-	bh=TPOvDKk0/isTS/59wlz6UlRFdQacZHgwALGH+fmnrLw=;
+	s=arc-20240116; t=1717683131; c=relaxed/simple;
+	bh=PsZOUIIN/jL+vvryDEiGWtzldeAVm8g9nwbGZ7O/hTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u52wJ+/8PEL1KDqS/BFbdiGZO7PPzU6Ckqg/06kJLnUSb85Y1oFWn7Wb4yOR5biT1mNJI7Fq0jY3Vkq1AjPlNryEfEgKyTGcP6N5QqmU3nwYCaYc9TP4TCTjTNIyx3CLGzZTI1o9kQspZVmv8XzpgjILODiQ1nxJkJuCHOUCIUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXOqLiOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fyBvXr+SZFS2QqozL+DHkl0B/dQH38tDiO6YbfiYLLrVSDUN/r19zDyjS6dC3xOz3Ibz+8Ogi5DVU/6frQo1STYrDs9aAvfGRSBJrEcWDJbIna2lYaM2g4bQ1e00ug+Iuwlz6NZts0Kmre5/e3LWDTgp6ir3zkHUxYZcWWqNoqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLaefbAw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXOqLiOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53060C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLaefbAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C591AC2BD10;
 	Thu,  6 Jun 2024 14:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683130;
-	bh=TPOvDKk0/isTS/59wlz6UlRFdQacZHgwALGH+fmnrLw=;
+	bh=PsZOUIIN/jL+vvryDEiGWtzldeAVm8g9nwbGZ7O/hTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OXOqLiODL77bkYxzJY1CWT6R3+XCLrqXkHsgN8NQWc2zqmVlkTAXphroKZi8nTxUa
-	 GCtWvM6/XWFbHmjTM6jW2oOXFMvAVySei3VIdNG5JRvTuXbVbnzkdQHkntpeiCnRSd
-	 FvMK7+wKufQt0elqTlCaq9aD/S4RY+wzD4Q+6X3Y=
+	b=xLaefbAw9cte3Ros2upiMdJGK+fayY6QWPP00FDXKHa7x7HedByDFMzJhGT08wKiG
+	 GOLxioAsV8ID3AM33v4jJR1qsLPaUdIX9CLReGkzNjPG7Vw7S7iKxEH1mnTVZT5hc+
+	 wqlpGqw586GDWHTmZ14c/+c76jVndfFUxXAV5wVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel J Blueman <daniel@quora.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Steffen Persvold <sp@numascale.com>,
-	James Cleverdon <james.cleverdon.external@eviden.com>,
-	Dimitri Sivanich <sivanich@hpe.com>,
-	Prarit Bhargava <prarit@redhat.com>
-Subject: [PATCH 6.1 001/473] x86/tsc: Trust initial offset in architectural TSC-adjust MSRs
-Date: Thu,  6 Jun 2024 15:58:50 +0200
-Message-ID: <20240606131659.846950535@linuxfoundation.org>
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 074/744] ASoC: da7219-aad: fix usage of device_get_named_child_node()
+Date: Thu,  6 Jun 2024 15:55:46 +0200
+Message-ID: <20240606131734.771918545@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,50 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel J Blueman <daniel@quora.org>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-commit 455f9075f14484f358b3c1d6845b4a438de198a7 upstream.
+[ Upstream commit e8a6a5ad73acbafd98e8fd3f0cbf6e379771bb76 ]
 
-When the BIOS configures the architectural TSC-adjust MSRs on secondary
-sockets to correct a constant inter-chassis offset, after Linux brings the
-cores online, the TSC sync check later resets the core-local MSR to 0,
-triggering HPET fallback and leading to performance loss.
+The documentation for device_get_named_child_node() mentions this
+important point:
 
-Fix this by unconditionally using the initial adjust values read from the
-MSRs. Trusting the initial offsets in this architectural mechanism is a
-better approach than special-casing workarounds for specific platforms.
+"
+The caller is responsible for calling fwnode_handle_put() on the
+returned fwnode pointer.
+"
 
-Signed-off-by: Daniel J Blueman <daniel@quora.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Steffen Persvold <sp@numascale.com>
-Reviewed-by: James Cleverdon <james.cleverdon.external@eviden.com>
-Reviewed-by: Dimitri Sivanich <sivanich@hpe.com>
-Reviewed-by: Prarit Bhargava <prarit@redhat.com>
-Link: https://lore.kernel.org/r/20240419085146.175665-1-daniel@quora.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add fwnode_handle_put() to avoid a leaked reference.
+
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20240426153033.38500-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/tsc_sync.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/soc/codecs/da7219-aad.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/tsc_sync.c
-+++ b/arch/x86/kernel/tsc_sync.c
-@@ -192,11 +192,9 @@ bool tsc_store_and_check_tsc_adjust(bool
- 	cur->warned = false;
+diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
+index 8537c96307a97..9b0c470181706 100644
+--- a/sound/soc/codecs/da7219-aad.c
++++ b/sound/soc/codecs/da7219-aad.c
+@@ -671,8 +671,10 @@ static struct da7219_aad_pdata *da7219_aad_fw_to_pdata(struct device *dev)
+ 		return NULL;
  
- 	/*
--	 * If a non-zero TSC value for socket 0 may be valid then the default
--	 * adjusted value cannot assumed to be zero either.
-+	 * The default adjust value cannot be assumed to be zero on any socket.
- 	 */
--	if (tsc_async_resets)
--		cur->adjusted = bootval;
-+	cur->adjusted = bootval;
+ 	aad_pdata = devm_kzalloc(dev, sizeof(*aad_pdata), GFP_KERNEL);
+-	if (!aad_pdata)
++	if (!aad_pdata) {
++		fwnode_handle_put(aad_np);
+ 		return NULL;
++	}
  
- 	/*
- 	 * Check whether this CPU is the first in a package to come up. In
+ 	aad_pdata->irq = i2c->irq;
+ 
+@@ -753,6 +755,8 @@ static struct da7219_aad_pdata *da7219_aad_fw_to_pdata(struct device *dev)
+ 	else
+ 		aad_pdata->adc_1bit_rpt = DA7219_AAD_ADC_1BIT_RPT_1;
+ 
++	fwnode_handle_put(aad_np);
++
+ 	return aad_pdata;
+ }
+ 
+-- 
+2.43.0
+
 
 
