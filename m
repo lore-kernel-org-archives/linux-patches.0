@@ -1,52 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF98F1A0B02;
-	Thu,  6 Jun 2024 14:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E1A1A0B02;
+	Thu,  6 Jun 2024 14:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683654; cv=none; b=q1w34M4OqWUKTwHOwzo/dbkM93HiF9Izl6ixxMfslF1eU3Clu8EHgx1pqYPbdy4nN/KB7BZcQkNcMOjWrs1HRIyaCMLA3FKRLD2atXpM4rF+WKWUvnKiIP/cwFD2gbsd+ZiQ34vT+69VmH9AiWji8R28emsoNJdH38vXHJbsLq0=
+	t=1717683655; cv=none; b=l5+t++K+MSx7cPTVErKA7UTr+ULx0pcIkQA/vowHYPTVFL+QoMGuHq7+l8iMzQdKIcQswvi7hRrEBMOlopS/MSWh7SzLH7mnDgF4AJd6Qf2d3kZe0IoM+uUrz9ZNq/46PIvOqiTX5pYS2UQJsZkvjP2uFYntwZ6spUk4T2+udlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683654; c=relaxed/simple;
-	bh=eJ3JSaOIIDlOScp8xO6CTzMva2JAkoV8vFcaR81Ob0Q=;
+	s=arc-20240116; t=1717683655; c=relaxed/simple;
+	bh=CjXma2o6jCp/rw5UTU6EoDgmt5gpJ/vg3bBofs61eLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ltmf8OQ9d+Zlnw+KB5f/L76lZZS+EwB38rZ8b7iFuajEnGimv5hpagYJ7pPavy811TWtyZi1kzxyX5tZc4EZ8OPvOk/LfVkIgG4q3XSsZjlzAF7qxLJSWnloZHEOS61ySHA/CmQEXhZMAYj870arW02oyX8WtmwI/Vio+3pFsRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUJBJ8to; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VUh0DikXWpDJDqhZl48+ByT6sTlInpFPSwHuZmlgi/ZDVTWS0FHIZnflYVhFHAnxvfI9KfniTnTG+0bxTdq7v7FgocKWg/NP8JV9qAOzAWGJ5A45Wro50ziQJ4RfWvnVHlqDZPQPzo+QcrUKNBPKWrOhujwt7iIVimzcAik9HfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ufta8s4m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUJBJ8to"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3412C32781;
-	Thu,  6 Jun 2024 14:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ufta8s4m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDE3C2BD10;
+	Thu,  6 Jun 2024 14:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683654;
-	bh=eJ3JSaOIIDlOScp8xO6CTzMva2JAkoV8vFcaR81Ob0Q=;
+	s=korg; t=1717683655;
+	bh=CjXma2o6jCp/rw5UTU6EoDgmt5gpJ/vg3bBofs61eLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XUJBJ8toQ6jquINUI03wyore92V4kyq9J3CUMiJXJ8B6Rxpq+5fxxveuialne+JYd
-	 DO7WbiF3GZ2LY3naMvN9ntEwFRKYa+bKowH0Wv5drqFj16yAxQsia7Y3FSN4pxryf+
-	 nAa7tFYtsK0OMncQ1eWu4MIsdrvyS7nh3aqM9ACU=
+	b=Ufta8s4mJU1e+TNuTRxciD4IpUP5gcDS0gyP1CMr7ZIMCKQZry27Wuo/lFQfwqWz/
+	 OR8XKqgXoT5rt54UZArdLWhP7Fm1sQMGCa/X/FsqKbLZhlgEBvHrGi9dxK5CL2Csoz
+	 MzfaGrIEej1J1i3j1JoBHatHsXWh3yH91Ti9qQoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Jia He <justin.he@arm.com>,
 	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	James Clark <james.clark@arm.com>,
-	Jing Zhang <renyu.zj@linux.alibaba.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	John Garry <john.g.garry@oracle.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 530/744] perf pmu: Assume sysfs events are always the same case
-Date: Thu,  6 Jun 2024 16:03:22 +0200
-Message-ID: <20240606131749.438035435@linuxfoundation.org>
+Subject: [PATCH 6.6 531/744] perf pmu: Count sys and cpuid JSON events separately
+Date: Thu,  6 Jun 2024 16:03:23 +0200
+Message-ID: <20240606131749.471612174@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -67,122 +64,198 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 7b6dd7a923281a7ccb980a0f768d6926721eb3cc ]
+[ Upstream commit d9c5f5f94c2d356fdf3503f7fcaf254512bc032d ]
 
-Perf event names aren't case sensitive. For sysfs events the entire
-directory of events is read then iterated comparing names in a case
-insensitive way, most often to see if an event is present.
+Sys events are eagerly loaded as each event has a compat option that may
+mean the event is or isn't associated with the PMU.
 
-Consider:
+These shouldn't be counted as loaded_json_events as that is used for
+JSON events matching the CPUID that may or may not have been loaded. The
+mismatch causes issues on ARM64 that uses sys events.
 
-  $ perf stat -e inst_retired.any true
-
-The event inst_retired.any may be present in any PMU, so every PMU's
-sysfs events are loaded and then searched with strcasecmp to see if
-any match. This event is only present on the cpu PMU as a JSON event
-so a lot of events were loaded from sysfs unnecessarily just to prove
-an event didn't exist there.
-
-This change avoids loading all the events by assuming sysfs event
-names are always either lower or uppercase. It uses file exists and
-only loads the events when the desired event is present.
-
-For the example above, the number of openat calls measured by 'perf
-trace' on a tigerlake laptop goes from 325 down to 255. The reduction
-will be larger for machines with many PMUs, particularly replicated
-uncore PMUs.
-
-Ensure pmu_aliases_parse() is called before all uses of the aliases
-list, but remove some "pmu->sysfs_aliases_loaded" tests as they are now
-part of the function.
-
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Fixes: e6ff1eed3584362d ("perf pmu: Lazily add JSON events")
+Closes: https://lore.kernel.org/lkml/20240510024729.1075732-1-justin.he@arm.com/
+Reported-by: Jia He <justin.he@arm.com>
 Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: James Clark <james.clark@arm.com>
-Cc: Jing Zhang <renyu.zj@linux.alibaba.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: John Garry <john.g.garry@oracle.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Thomas Richter <tmricht@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240502213507.2339733-7-irogers@google.com
+Link: https://lore.kernel.org/r/20240511003601.2666907-1-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: d9c5f5f94c2d ("perf pmu: Count sys and cpuid JSON events separately")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/pmu.c | 31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ tools/perf/util/pmu.c | 70 ++++++++++++++++++++++++++++++-------------
+ tools/perf/util/pmu.h |  6 ++--
+ 2 files changed, 53 insertions(+), 23 deletions(-)
 
 diff --git a/tools/perf/util/pmu.c b/tools/perf/util/pmu.c
-index 0b1c380fce901..f767f43fd3c79 100644
+index f767f43fd3c79..27393e4327922 100644
 --- a/tools/perf/util/pmu.c
 +++ b/tools/perf/util/pmu.c
-@@ -425,9 +425,30 @@ static struct perf_pmu_alias *perf_pmu__find_alias(struct perf_pmu *pmu,
+@@ -36,6 +36,18 @@ struct perf_pmu perf_pmu__fake = {
+ 
+ #define UNIT_MAX_LEN	31 /* max length for event unit name */
+ 
++enum event_source {
++	/* An event loaded from /sys/devices/<pmu>/events. */
++	EVENT_SRC_SYSFS,
++	/* An event loaded from a CPUID matched json file. */
++	EVENT_SRC_CPU_JSON,
++	/*
++	 * An event loaded from a /sys/devices/<pmu>/identifier matched json
++	 * file.
++	 */
++	EVENT_SRC_SYS_JSON,
++};
++
+ /**
+  * struct perf_pmu_alias - An event either read from sysfs or builtin in
+  * pmu-events.c, created by parsing the pmu-events json files.
+@@ -521,7 +533,7 @@ static int update_alias(const struct pmu_event *pe,
+ 
+ static int perf_pmu__new_alias(struct perf_pmu *pmu, const char *name,
+ 				const char *desc, const char *val, FILE *val_fd,
+-				const struct pmu_event *pe)
++			        const struct pmu_event *pe, enum event_source src)
  {
  	struct perf_pmu_alias *alias;
- 
--	if (load && !pmu->sysfs_aliases_loaded)
--		pmu_aliases_parse(pmu);
-+	if (load && !pmu->sysfs_aliases_loaded) {
-+		bool has_sysfs_event;
-+		char event_file_name[FILENAME_MAX + 8];
- 
-+		/*
-+		 * Test if alias/event 'name' exists in the PMU's sysfs/events
-+		 * directory. If not skip parsing the sysfs aliases. Sysfs event
-+		 * name must be all lower or all upper case.
-+		 */
-+		scnprintf(event_file_name, sizeof(event_file_name), "events/%s", name);
-+		for (size_t i = 7, n = 7 + strlen(name); i < n; i++)
-+			event_file_name[i] = tolower(event_file_name[i]);
-+
-+		has_sysfs_event = perf_pmu__file_exists(pmu, event_file_name);
-+		if (!has_sysfs_event) {
-+			for (size_t i = 7, n = 7 + strlen(name); i < n; i++)
-+				event_file_name[i] = toupper(event_file_name[i]);
-+
-+			has_sysfs_event = perf_pmu__file_exists(pmu, event_file_name);
-+		}
-+		if (has_sysfs_event)
-+			pmu_aliases_parse(pmu);
+ 	int ret;
+@@ -573,25 +585,30 @@ static int perf_pmu__new_alias(struct perf_pmu *pmu, const char *name,
+ 		}
+ 		snprintf(alias->unit, sizeof(alias->unit), "%s", unit);
+ 	}
+-	if (!pe) {
+-		/* Update an event from sysfs with json data. */
+-		struct update_alias_data data = {
+-			.pmu = pmu,
+-			.alias = alias,
+-		};
+-
++	switch (src) {
++	default:
++	case EVENT_SRC_SYSFS:
+ 		alias->from_sysfs = true;
+ 		if (pmu->events_table) {
++			/* Update an event from sysfs with json data. */
++			struct update_alias_data data = {
++				.pmu = pmu,
++				.alias = alias,
++			};
+ 			if (pmu_events_table__find_event(pmu->events_table, pmu, name,
+ 							 update_alias, &data) == 0)
+-				pmu->loaded_json_aliases++;
++				pmu->cpu_json_aliases++;
+ 		}
+-	}
+-
+-	if (!pe)
+ 		pmu->sysfs_aliases++;
+-	else
+-		pmu->loaded_json_aliases++;
++		break;
++	case  EVENT_SRC_CPU_JSON:
++		pmu->cpu_json_aliases++;
++		break;
++	case  EVENT_SRC_SYS_JSON:
++		pmu->sys_json_aliases++;
++		break;
 +
 +	}
- 	list_for_each_entry(alias, &pmu->aliases, list) {
- 		if (!strcasecmp(alias->name, name))
- 			return alias;
-@@ -1627,9 +1648,7 @@ size_t perf_pmu__num_events(struct perf_pmu *pmu)
+ 	list_add_tail(&alias->list, &pmu->aliases);
+ 	return 0;
+ }
+@@ -667,7 +684,8 @@ static int pmu_aliases_parse(struct perf_pmu *pmu)
+ 		}
+ 
+ 		if (perf_pmu__new_alias(pmu, name, /*desc=*/ NULL,
+-					/*val=*/ NULL, file, /*pe=*/ NULL) < 0)
++					/*val=*/ NULL, file, /*pe=*/ NULL,
++					EVENT_SRC_SYSFS) < 0)
+ 			pr_debug("Cannot set up %s\n", name);
+ 		fclose(file);
+ 	}
+@@ -924,7 +942,8 @@ static int pmu_add_cpu_aliases_map_callback(const struct pmu_event *pe,
  {
+ 	struct perf_pmu *pmu = vdata;
+ 
+-	perf_pmu__new_alias(pmu, pe->name, pe->desc, pe->event, /*val_fd=*/ NULL, pe);
++	perf_pmu__new_alias(pmu, pe->name, pe->desc, pe->event, /*val_fd=*/ NULL,
++			    pe, EVENT_SRC_CPU_JSON);
+ 	return 0;
+ }
+ 
+@@ -959,13 +978,14 @@ static int pmu_add_sys_aliases_iter_fn(const struct pmu_event *pe,
+ 		return 0;
+ 
+ 	if (pmu_uncore_alias_match(pe->pmu, pmu->name) &&
+-			pmu_uncore_identifier_match(pe->compat, pmu->id)) {
++	    pmu_uncore_identifier_match(pe->compat, pmu->id)) {
+ 		perf_pmu__new_alias(pmu,
+ 				pe->name,
+ 				pe->desc,
+ 				pe->event,
+ 				/*val_fd=*/ NULL,
+-				pe);
++				pe,
++				EVENT_SRC_SYS_JSON);
+ 	}
+ 
+ 	return 0;
+@@ -1055,6 +1075,12 @@ struct perf_pmu *perf_pmu__lookup(struct list_head *pmus, int dirfd, const char
+ 		pmu->id = pmu_id(name);
+ 	pmu->max_precise = pmu_max_precise(dirfd, pmu);
+ 	pmu->events_table = perf_pmu__find_events_table(pmu);
++	/*
++	 * Load the sys json events/aliases when loading the PMU as each event
++	 * may have a different compat regular expression. We therefore can't
++	 * know the number of sys json events/aliases without computing the
++	 * regular expressions for them all.
++	 */
+ 	pmu_add_sys_aliases(pmu);
+ 	list_add_tail(&pmu->list, pmus);
+ 
+@@ -1649,12 +1675,14 @@ size_t perf_pmu__num_events(struct perf_pmu *pmu)
  	size_t nr;
  
--	if (!pmu->sysfs_aliases_loaded)
--		pmu_aliases_parse(pmu);
--
-+	pmu_aliases_parse(pmu);
- 	nr = pmu->sysfs_aliases;
+ 	pmu_aliases_parse(pmu);
+-	nr = pmu->sysfs_aliases;
++	nr = pmu->sysfs_aliases + pmu->sys_json_aliases;;
  
  	if (pmu->cpu_aliases_added)
-@@ -1688,6 +1707,7 @@ int perf_pmu__for_each_event(struct perf_pmu *pmu, bool skip_duplicate_pmus,
- 	struct strbuf sb;
+-		 nr += pmu->loaded_json_aliases;
++		 nr += pmu->cpu_json_aliases;
+ 	else if (pmu->events_table)
+-		nr += pmu_events_table__num_events(pmu->events_table, pmu) - pmu->loaded_json_aliases;
++		nr += pmu_events_table__num_events(pmu->events_table, pmu) - pmu->cpu_json_aliases;
++	else
++		assert(pmu->cpu_json_aliases == 0);
  
- 	strbuf_init(&sb, /*hint=*/ 0);
-+	pmu_aliases_parse(pmu);
- 	pmu_add_cpu_aliases(pmu);
- 	list_for_each_entry(event, &pmu->aliases, list) {
- 		size_t buf_used;
-@@ -2089,6 +2109,7 @@ const char *perf_pmu__name_from_config(struct perf_pmu *pmu, u64 config)
- 	if (!pmu)
- 		return NULL;
- 
-+	pmu_aliases_parse(pmu);
- 	pmu_add_cpu_aliases(pmu);
- 	list_for_each_entry(event, &pmu->aliases, list) {
- 		struct perf_event_attr attr = {.config = 0,};
+ 	return pmu->selectable ? nr + 1 : nr;
+ }
+diff --git a/tools/perf/util/pmu.h b/tools/perf/util/pmu.h
+index ed6693f991867..aca4238f06a65 100644
+--- a/tools/perf/util/pmu.h
++++ b/tools/perf/util/pmu.h
+@@ -120,8 +120,10 @@ struct perf_pmu {
+ 	const struct pmu_events_table *events_table;
+ 	/** @sysfs_aliases: Number of sysfs aliases loaded. */
+ 	uint32_t sysfs_aliases;
+-	/** @sysfs_aliases: Number of json event aliases loaded. */
+-	uint32_t loaded_json_aliases;
++	/** @cpu_json_aliases: Number of json event aliases loaded specific to the CPUID. */
++	uint32_t cpu_json_aliases;
++	/** @sys_json_aliases: Number of json event aliases loaded matching the PMU's identifier. */
++	uint32_t sys_json_aliases;
+ 	/** @sysfs_aliases_loaded: Are sysfs aliases loaded from disk? */
+ 	bool sysfs_aliases_loaded;
+ 	/**
 -- 
 2.43.0
 
