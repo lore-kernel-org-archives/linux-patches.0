@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEDC1991D0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D996B1991D0;
 	Thu,  6 Jun 2024 14:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683670; cv=none; b=j3WUvNsQO4aZfpkK70jQmPXhYIZLumUQpsYVB4lqzYC/3W62z93spkRPEXbxg6meR4m2Tj/AzrXSmd+qSiyNM4lpc2Y2xxxGM1G318n8Vho63t80+nURIrgOcwCvWCeju4ygyaDgqYnGwLpy/Z15bER5kP62Uws+bnp6/Dye1gA=
+	t=1717683670; cv=none; b=njU5kfrWHI2DUA9W+xlWyKP/Eq6cpKQZGZKYj5PXHESdUNKIfIMbpXXYmOir7ugBvExmRXlsmK+PsL8+bVzzHqsCHaSUnaFnHWsiMTQklZbHX7lCk7gTI+9a5GGCPnY8Ga8PMu/1DnnZ6NRRfCCBsubp82QcbzFYHGkzbvA316s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683670; c=relaxed/simple;
-	bh=YYcXYmfz1PtXxiTYrv84rcZ6NRR0b2TZUDeG7v2i7GY=;
+	bh=2foP6/qUVGhH0xBoVPUt/w8LZNaOk2dvZP+I2QCzWwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sebYChcGCs/F1XFX4b2sS/aIKOfw1rVpOvZFwxU+7Y96r3ML5vkJD/j6Zy8Xy6ZCtgvxFk4llFxV8Y3TwQqzrBEyQYS93EPg1vqlZ2BawDiuWdpTkZA8Mllp5vq/E/bdlXoEC8/ETMP+UXxSuvTBj1MjuxzQEbfId40CYmmCk2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOp9mLaY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e9ieXSq40vhVdpmTRhPlyoenm0V+PjKr5KcYBufCH7Zwyw5Bb/yxxKq5cxftFeKhNd0Ch0ODawZ20tXrAfHgaJASn+a6nrCNR8gQuOXjBv7vyjbTBgo3lObtLmOSqYsrho2RMo8XBcYB9/jV8mkSFNeiv2zTXqHPaoaa2drSCE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUTODIUD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOp9mLaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE4EC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUTODIUD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9395C2BD10;
 	Thu,  6 Jun 2024 14:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683670;
-	bh=YYcXYmfz1PtXxiTYrv84rcZ6NRR0b2TZUDeG7v2i7GY=;
+	bh=2foP6/qUVGhH0xBoVPUt/w8LZNaOk2dvZP+I2QCzWwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XOp9mLaYQnUwqUyKqu1tcfMdE9ePJ59EpohC3qlYyd0SVoaNXvGxjBWfXCyYY5frB
-	 GQ0//e8k3y3EJFggP1wg86bS6XX/PRSiGvF8bzKxuIf/i9DjEPt0VluSGpdN/YYzdh
-	 /HjxKZ8wfgimNyFCEjUVbxaYDBu50hhmBbJSPrTo=
+	b=BUTODIUDPRQk9Tdot7ovJrEkVFRopu/uqjttwecvGFhipp7T4C4ZS5GuPSvHZESLO
+	 RojWhmykaUD/K/SAcfoBn8xBImhmRc90dFg6ghzCnxd9QzXjJoZHdqbnLyn5fRNdfg
+	 S4f6ss08iK50IwWRDhdeEdEwBOgCN71t2bdjupm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Stable@ver.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 558/744] dt-bindings: adc: axi-adc: add clocks property
-Date: Thu,  6 Jun 2024 16:03:50 +0200
-Message-ID: <20240606131750.356074577@linuxfoundation.org>
+Subject: [PATCH 6.6 559/744] Input: ims-pcu - fix printf string overflow
+Date: Thu,  6 Jun 2024 16:03:51 +0200
+Message-ID: <20240606131750.392773124@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,58 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 19fb11d7220b8abc016aa254dc7e6d9f2d49b178 ]
+[ Upstream commit bf32bceedd0453c70d9d022e2e29f98e446d7161 ]
 
-Add a required clock property as we can't access the device registers if
-the AXI bus clock is not properly enabled.
+clang warns about a string overflow in this driver
 
-Note this clock is a very fundamental one that is typically enabled
-pretty early during boot. Independently of that, we should really rely on
-it to be enabled.
+drivers/input/misc/ims-pcu.c:1802:2: error: 'snprintf' will always be truncated; specified size is 10, but format string expands to at least 12 [-Werror,-Wformat-truncation]
+drivers/input/misc/ims-pcu.c:1814:2: error: 'snprintf' will always be truncated; specified size is 10, but format string expands to at least 12 [-Werror,-Wformat-truncation]
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Fixes: 96553a44e96d ("dt-bindings: iio: adc: add bindings doc for AXI ADC driver")
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20240426-ad9467-new-features-v2-3-6361fc3ba1cc@analog.com
-Cc: <Stable@ver.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Make the buffer a little longer to ensure it always fits.
+
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240326223825.4084412-7-arnd@kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/iio/adc/adi,axi-adc.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/input/misc/ims-pcu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/iio/adc/adi,axi-adc.yaml b/Documentation/devicetree/bindings/iio/adc/adi,axi-adc.yaml
-index 3d49d21ad33df..e1f450b80db27 100644
---- a/Documentation/devicetree/bindings/iio/adc/adi,axi-adc.yaml
-+++ b/Documentation/devicetree/bindings/iio/adc/adi,axi-adc.yaml
-@@ -28,6 +28,9 @@ properties:
-   reg:
-     maxItems: 1
+diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
+index b2f1292e27ef7..180d90e46061e 100644
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -42,8 +42,8 @@ struct ims_pcu_backlight {
+ #define IMS_PCU_PART_NUMBER_LEN		15
+ #define IMS_PCU_SERIAL_NUMBER_LEN	8
+ #define IMS_PCU_DOM_LEN			8
+-#define IMS_PCU_FW_VERSION_LEN		(9 + 1)
+-#define IMS_PCU_BL_VERSION_LEN		(9 + 1)
++#define IMS_PCU_FW_VERSION_LEN		16
++#define IMS_PCU_BL_VERSION_LEN		16
+ #define IMS_PCU_BL_RESET_REASON_LEN	(2 + 1)
  
-+  clocks:
-+    maxItems: 1
-+
-   dmas:
-     maxItems: 1
- 
-@@ -48,6 +51,7 @@ required:
-   - compatible
-   - dmas
-   - reg
-+  - clocks
- 
- additionalProperties: false
- 
-@@ -58,6 +62,7 @@ examples:
-         reg = <0x44a00000 0x10000>;
-         dmas = <&rx_dma 0>;
-         dma-names = "rx";
-+        clocks = <&axi_clk>;
-         #io-backend-cells = <0>;
-     };
- ...
+ #define IMS_PCU_PCU_B_DEVICE_ID		5
 -- 
 2.43.0
 
