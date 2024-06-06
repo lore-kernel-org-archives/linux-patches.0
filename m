@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D804E1991D0;
-	Thu,  6 Jun 2024 14:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEDC1991D0;
+	Thu,  6 Jun 2024 14:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683669; cv=none; b=EllrcWEpFbx4KNUvvXCQk09h3qhFoKTxXP4mLBdHmb/hQahVw/l/j++//mVPDVUxTKNaeUK9KZ9yxyhnq0RfVUpLwT0KUd04lcI2aqx0alhw+Jq7Qsvs9pRyKfeFa8IDj6GMJeNUj+1IGePz7ohNyt2PDXCEshILFcjlTiOPZRU=
+	t=1717683670; cv=none; b=j3WUvNsQO4aZfpkK70jQmPXhYIZLumUQpsYVB4lqzYC/3W62z93spkRPEXbxg6meR4m2Tj/AzrXSmd+qSiyNM4lpc2Y2xxxGM1G318n8Vho63t80+nURIrgOcwCvWCeju4ygyaDgqYnGwLpy/Z15bER5kP62Uws+bnp6/Dye1gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683669; c=relaxed/simple;
-	bh=q+EMp0gPE4Kda/IHt8LGjuZSx7rjKp5aRFbwPIF3F08=;
+	s=arc-20240116; t=1717683670; c=relaxed/simple;
+	bh=YYcXYmfz1PtXxiTYrv84rcZ6NRR0b2TZUDeG7v2i7GY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ehoo9sBe4zVVj0JSiPO0W3Cpun/7Gd4sm1JwPEife3Pg30dh3aID62kKD4CQnO3alcfrh2FhIm6odLPjZ+ro5ZSY8GC8dfE3BezlIc26RLBnNNRuOYf9Cq2pwPhBVgPcKQhN87Ptzfd2JctEXpbBCRQ9s/DDzR3u/oiXb7+VcIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyR8NliJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sebYChcGCs/F1XFX4b2sS/aIKOfw1rVpOvZFwxU+7Y96r3ML5vkJD/j6Zy8Xy6ZCtgvxFk4llFxV8Y3TwQqzrBEyQYS93EPg1vqlZ2BawDiuWdpTkZA8Mllp5vq/E/bdlXoEC8/ETMP+UXxSuvTBj1MjuxzQEbfId40CYmmCk2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOp9mLaY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyR8NliJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B585BC2BD10;
-	Thu,  6 Jun 2024 14:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOp9mLaY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE4EC2BD10;
+	Thu,  6 Jun 2024 14:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683669;
-	bh=q+EMp0gPE4Kda/IHt8LGjuZSx7rjKp5aRFbwPIF3F08=;
+	s=korg; t=1717683670;
+	bh=YYcXYmfz1PtXxiTYrv84rcZ6NRR0b2TZUDeG7v2i7GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DyR8NliJSZ33i7ZNS34uHYgrqsloTtC675e1F7KISLklHdD1jmJCrYPJoQUKbJ7FW
-	 oq6RHYkDqnFWWMPjSxWXlDGMDPgugsETEBGCCjOwEiIv9wF73/OLE3TvzfhmQnHhVq
-	 d6aOOBgljuQDkX9NjOtzNZO+PtvuGQRsSuNCGeXA=
+	b=XOp9mLaYQnUwqUyKqu1tcfMdE9ePJ59EpohC3qlYyd0SVoaNXvGxjBWfXCyYY5frB
+	 GQ0//e8k3y3EJFggP1wg86bS6XX/PRSiGvF8bzKxuIf/i9DjEPt0VluSGpdN/YYzdh
+	 /HjxKZ8wfgimNyFCEjUVbxaYDBu50hhmBbJSPrTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stable@ver.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 522/744] f2fs: fix to add missing iput() in gc_data_segment()
-Date: Thu,  6 Jun 2024 16:03:14 +0200
-Message-ID: <20240606131749.187535838@linuxfoundation.org>
+Subject: [PATCH 6.6 558/744] dt-bindings: adc: axi-adc: add clocks property
+Date: Thu,  6 Jun 2024 16:03:50 +0200
+Message-ID: <20240606131750.356074577@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,44 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit a798ff17cd2dabe47d5d4ed3d509631793c36e19 ]
+[ Upstream commit 19fb11d7220b8abc016aa254dc7e6d9f2d49b178 ]
 
-During gc_data_segment(), if inode state is abnormal, it missed to call
-iput(), fix it.
+Add a required clock property as we can't access the device registers if
+the AXI bus clock is not properly enabled.
 
-Fixes: b73e52824c89 ("f2fs: reposition unlock_new_inode to prevent accessing invalid inode")
-Fixes: 9056d6489f5a ("f2fs: fix to do sanity check on inode type during garbage collection")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Note this clock is a very fundamental one that is typically enabled
+pretty early during boot. Independently of that, we should really rely on
+it to be enabled.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 96553a44e96d ("dt-bindings: iio: adc: add bindings doc for AXI ADC driver")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240426-ad9467-new-features-v2-3-6361fc3ba1cc@analog.com
+Cc: <Stable@ver.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/iio/adc/adi,axi-adc.yaml | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index ab8e54d8bfe04..3f0632dd9d2e6 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1551,10 +1551,15 @@ static int gc_data_segment(struct f2fs_sb_info *sbi, struct f2fs_summary *sum,
- 			int err;
+diff --git a/Documentation/devicetree/bindings/iio/adc/adi,axi-adc.yaml b/Documentation/devicetree/bindings/iio/adc/adi,axi-adc.yaml
+index 3d49d21ad33df..e1f450b80db27 100644
+--- a/Documentation/devicetree/bindings/iio/adc/adi,axi-adc.yaml
++++ b/Documentation/devicetree/bindings/iio/adc/adi,axi-adc.yaml
+@@ -28,6 +28,9 @@ properties:
+   reg:
+     maxItems: 1
  
- 			inode = f2fs_iget(sb, dni.ino);
--			if (IS_ERR(inode) || is_bad_inode(inode) ||
--					special_file(inode->i_mode))
-+			if (IS_ERR(inode))
- 				continue;
- 
-+			if (is_bad_inode(inode) ||
-+					special_file(inode->i_mode)) {
-+				iput(inode);
-+				continue;
-+			}
++  clocks:
++    maxItems: 1
 +
- 			err = f2fs_gc_pinned_control(inode, gc_type, segno);
- 			if (err == -EAGAIN) {
- 				iput(inode);
+   dmas:
+     maxItems: 1
+ 
+@@ -48,6 +51,7 @@ required:
+   - compatible
+   - dmas
+   - reg
++  - clocks
+ 
+ additionalProperties: false
+ 
+@@ -58,6 +62,7 @@ examples:
+         reg = <0x44a00000 0x10000>;
+         dmas = <&rx_dma 0>;
+         dma-names = "rx";
++        clocks = <&axi_clk>;
+         #io-backend-cells = <0>;
+     };
+ ...
 -- 
 2.43.0
 
