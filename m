@@ -1,53 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447A619DF6F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE341BBBFC;
 	Thu,  6 Jun 2024 14:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683500; cv=none; b=JRNTew2bWXEY4Ky+jcawWSAQj8tpsyrp9Jr0qSvX56u45wjEnwBn/ecUoZVpOS0rmOr/G4ymmA4ZJ0/5pqGnoSVvMSoAJ87XcqZ/tRtuVX5u/BKAynr1SrrXYwcARdFpUH/mZcqJRL8aWPiXPScm6xSdb4RFoZLtI2QmdECsPUU=
+	t=1717683500; cv=none; b=T6ANpWGHNVUIoJS1AU8J4ksLCuiXGlJoRcTU/FKxKZgbq9XtACdbrN1I7LNQUy4yYnjh0Kn5yU+CGAqCSVNkA02A27xozRXhUD31JUvTpSFQuOf7wklRbfiYwNmfyTttkXw/cgk9xThMd9ycfTtcWb2uPkQZ4brwyE/4xgOAVoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683500; c=relaxed/simple;
-	bh=M5gtKgRr3pW2i5ve7nNgNBEp5DtVGKZwRoP6Dv/xfwM=;
+	bh=b0lzL7/uh9m84eARrXgyjFjwaB0m3EAe9fFd8QC8g0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iawOW4DLzOYbkaOP1WLKlIAyjraz5p6VV28q99jI7vtSeIfPMLTDX+EE3vGT6gPbvaxc4LeCPkiGZ2lRK4B6+HiBcbS+u45jPt0k6fZIp079YN7NRUNn8eKxzm27ZQLR6Juh29mEBgxUiDNm4nOCrovU82nzUHkuxKR0KX3cph8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cB6GzN6H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SadjnFDt6Apz0Vbo2KsW9UPSYwQdg0g0p1b6SKOFBX8tIvWTv29lG3QDHHg2jC4uuSi40TuaRdiFeNosUCgnYGydWaoc9pq8Jx3ghteW8kJGc4rvjwDLUenuFLFlHg9Brc33oRX9WC3s9Qil13b286ihHSMZLYZwY2Y1Qu+dITA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BEb7sq/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cB6GzN6H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F9CC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BEb7sq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9870BC2BD10;
 	Thu,  6 Jun 2024 14:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683500;
-	bh=M5gtKgRr3pW2i5ve7nNgNBEp5DtVGKZwRoP6Dv/xfwM=;
+	bh=b0lzL7/uh9m84eARrXgyjFjwaB0m3EAe9fFd8QC8g0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cB6GzN6HOt8pZAWXHBhLb7T16BLWgYCreWDnk3vgodL9RWGg2bfp5jgtjA0Gp6viZ
-	 OxnCM1UKLR8xHsBPcnq9tg8bE/xQBezj+cLp5/LBIxbrCqiQTTLWfl1wDGciW0cg8J
-	 LvBzpbVHk8HwW3+F1yyhCxjgYtyhOIlY6VrDizps=
+	b=1BEb7sq/SuAz+Yfo5EWLSvh5jUXppBnvrqP7SlOcblSZaqpPtSKHt+BNoIkT3idUx
+	 yzA/dDkl2YpdqIkZJaB7CZctfYJXN1C0e1tx0R+6H5LR/szBwRFDS0hw7a1Ung3ptf
+	 Nek27xnZPftkFnKMhZhBAQZxINBtp3axuiS6G/c0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Len Brown <lenb@kernel.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	linux-acpi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	coresight@lists.linaro.org,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 442/744] coresight: etm4x: Fix unbalanced pm_runtime_enable()
-Date: Thu,  6 Jun 2024 16:01:54 +0200
-Message-ID: <20240606131746.671142501@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	"Yang, Chenyuan" <cy54@illinois.edu>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Yang
+Subject: [PATCH 6.1 390/473] media: cec: core: avoid recursive cec_claim_log_addrs
+Date: Thu,  6 Jun 2024 16:05:19 +0200
+Message-ID: <20240606131712.740529358@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -59,68 +49,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit caa41c47dab7e1054f587e592ab21296e3a6781c ]
+[ Upstream commit 47c82aac10a6954d68f29f10d9758d016e8e5af1 ]
 
-There is an unbalanced pm_runtime_enable() in etm4_probe_platform_dev()
-when etm4_probe() fails. This problem can be observed via the coresight
-etm4 module's (load -> unload -> load) sequence when etm4_probe() fails
-in etm4_probe_platform_dev().
+Keep track if cec_claim_log_addrs() is running, and return -EBUSY
+if it is when calling CEC_ADAP_S_LOG_ADDRS.
 
-[   63.379943] coresight-etm4x 7040000.etm: Unbalanced pm_runtime_enable!
-[   63.393630] coresight-etm4x 7140000.etm: Unbalanced pm_runtime_enable!
-[   63.407455] coresight-etm4x 7240000.etm: Unbalanced pm_runtime_enable!
-[   63.420983] coresight-etm4x 7340000.etm: Unbalanced pm_runtime_enable!
-[   63.420999] coresight-etm4x 7440000.etm: Unbalanced pm_runtime_enable!
-[   63.441209] coresight-etm4x 7540000.etm: Unbalanced pm_runtime_enable!
-[   63.454689] coresight-etm4x 7640000.etm: Unbalanced pm_runtime_enable!
-[   63.474982] coresight-etm4x 7740000.etm: Unbalanced pm_runtime_enable!
+This prevents a case where cec_claim_log_addrs() could be called
+while it was still in progress.
 
-This fixes the above problem - with an explicit pm_runtime_disable() call
-when etm4_probe() fails during etm4_probe_platform_dev().
-
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc: Hanjun Guo <guohanjun@huawei.com>
-Cc: Sudeep Holla <sudeep.holla@arm.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Len Brown <lenb@kernel.org>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: James Clark <james.clark@arm.com>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: linux-acpi@vger.kernel.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Cc: coresight@lists.linaro.org
-Fixes: 5214b563588e ("coresight: etm4x: Add support for sysreg only devices")
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20240314055843.2625883-2-anshuman.khandual@arm.com
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reported-by: Yang, Chenyuan <cy54@illinois.edu>
+Closes: https://lore.kernel.org/linux-media/PH7PR11MB57688E64ADE4FE82E658D86DA09EA@PH7PR11MB5768.namprd11.prod.outlook.com/
+Fixes: ca684386e6e2 ("[media] cec: add HDMI CEC framework (api)")
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/cec/core/cec-adap.c | 6 +++++-
+ drivers/media/cec/core/cec-api.c  | 2 +-
+ include/media/cec.h               | 1 +
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 18c4544f60454..003245a791a23 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -2175,6 +2175,9 @@ static int etm4_probe_platform_dev(struct platform_device *pdev)
- 	ret = etm4_probe(&pdev->dev);
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index 6f6c7437b61bc..28e3f0091155d 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -1544,9 +1544,12 @@ static int cec_config_thread_func(void *arg)
+  */
+ static void cec_claim_log_addrs(struct cec_adapter *adap, bool block)
+ {
+-	if (WARN_ON(adap->is_configuring || adap->is_configured))
++	if (WARN_ON(adap->is_claiming_log_addrs ||
++		    adap->is_configuring || adap->is_configured))
+ 		return;
  
- 	pm_runtime_put(&pdev->dev);
-+	if (ret)
-+		pm_runtime_disable(&pdev->dev);
++	adap->is_claiming_log_addrs = true;
 +
- 	return ret;
+ 	init_completion(&adap->config_completion);
+ 
+ 	/* Ready to kick off the thread */
+@@ -1561,6 +1564,7 @@ static void cec_claim_log_addrs(struct cec_adapter *adap, bool block)
+ 		wait_for_completion(&adap->config_completion);
+ 		mutex_lock(&adap->lock);
+ 	}
++	adap->is_claiming_log_addrs = false;
  }
  
+ /*
+diff --git a/drivers/media/cec/core/cec-api.c b/drivers/media/cec/core/cec-api.c
+index d64bb716f9c68..3ef9153443044 100644
+--- a/drivers/media/cec/core/cec-api.c
++++ b/drivers/media/cec/core/cec-api.c
+@@ -178,7 +178,7 @@ static long cec_adap_s_log_addrs(struct cec_adapter *adap, struct cec_fh *fh,
+ 			   CEC_LOG_ADDRS_FL_ALLOW_RC_PASSTHRU |
+ 			   CEC_LOG_ADDRS_FL_CDC_ONLY;
+ 	mutex_lock(&adap->lock);
+-	if (!adap->is_configuring &&
++	if (!adap->is_claiming_log_addrs && !adap->is_configuring &&
+ 	    (!log_addrs.num_log_addrs || !adap->is_configured) &&
+ 	    !cec_is_busy(adap, fh)) {
+ 		err = __cec_s_log_addrs(adap, &log_addrs, block);
+diff --git a/include/media/cec.h b/include/media/cec.h
+index 9c007f83569aa..ffd17371302ca 100644
+--- a/include/media/cec.h
++++ b/include/media/cec.h
+@@ -247,6 +247,7 @@ struct cec_adapter {
+ 	u16 phys_addr;
+ 	bool needs_hpd;
+ 	bool is_enabled;
++	bool is_claiming_log_addrs;
+ 	bool is_configuring;
+ 	bool must_reconfigure;
+ 	bool is_configured;
 -- 
 2.43.0
 
