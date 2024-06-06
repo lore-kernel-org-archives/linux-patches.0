@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388DA1BE87E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47AF19EEC0;
 	Thu,  6 Jun 2024 14:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683552; cv=none; b=kilic2545cKg7Vtl1/dI9IQyu7KATIVdYaHsSl6/6yTE0ElYsrj+TcqUzwycykQwg6ttlHqJ5VLJYMM4Ixjr8ThRGQ2KxqcqwoVi5R95nNBdiCeznLOV/ko6rT94Z3afkMCRyeK92s23KvhoxHTTVLKVsA6jaf68gY9syXydgKs=
+	t=1717683552; cv=none; b=ZVU7TqlcBDmF9+eyaTdk5ycMgBneBMsyUG88UPIg2NieoKvxkq3aIXGXsyMO2lDadNDTvP4Q5vF5wjVn3Oe7+0ttkIfA4wZnuG/vit5kwUKhYAOsJeMHGI/wp85+S0gQ9CQR9afLivjVSCOEebWgPzWMdYvQhfBqCWta8g9J99Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683552; c=relaxed/simple;
-	bh=gpqPPmPd9vD4rG4HqDS8e/q+xo1GsoIABuS6yMPtJaw=;
+	bh=wZQfoSTo92hZNzfnhaQqZ5PvZUV33KFSVdToclpM9gM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mo3eA8K+KA9bZrXiGt2jquLSj33TejmLa1HA6oRWkUFS3z0QmzsHkYiEMD47KexIWQviiOgO3GfvBTzlluehhS7uJeIn2Pm4AVRCh65wA/XLPVyR/G5ZzZlRvMGe2Wf2FpbgxVBHn9AmV58GWhlCKxU498z8FhheewYgoU+zL5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eACpN+m2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VHV38a3ImvTTShG4FM7/SRmuVE7saCCiGPQFVIazy0k3ukbcxHUJGt5Or8caAsLVLBjMCr6ApJLTsU2jD/2sZ6RIEv5ImH1uGjrG720hcK0Z25xMeJbe04OC0UDE4TddeLJncpmr3YDNTAsw+uPJnUOCncsOE+M3xMetKfs6bPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcsAn6FX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eACpN+m2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154B7C32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcsAn6FX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFF9C2BD10;
 	Thu,  6 Jun 2024 14:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683552;
-	bh=gpqPPmPd9vD4rG4HqDS8e/q+xo1GsoIABuS6yMPtJaw=;
+	bh=wZQfoSTo92hZNzfnhaQqZ5PvZUV33KFSVdToclpM9gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eACpN+m2CPvuKf4NVcDD87o5hjR0KksXyC1qZS2RAQtYZ4XeF0RKJG1mmOHoLc6j7
-	 orEQb6jpAb5mBSWlgiTfTZ5XOO+c5qubUWLmrvxyx78KPQX3hc7onGlbWVZFNU0X4f
-	 NepmKU4ow+YV5fZIowRvYrL4T+CUqxSh4B8i1s34=
+	b=IcsAn6FXyJusStU7vJ2WD3GXFMoq2oOXRGb2wT3kfRx9LqNwdp5C9sYuWD6bamBfj
+	 2tJMjohhYY1KAHH8AAM3OAvYHYcWmCJAHGY4Zg0k2DPVO/XM4pXcNt2fDqrLROo9Ho
+	 oBc+qdQWXQK09xdHLgkaK+5IPXZ2Ke1ARUB+4OIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	He Zhe <zhe.he@windriver.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 494/744] perf bench internals inject-build-id: Fix trap divide when collecting just one DSO
-Date: Thu,  6 Jun 2024 16:02:46 +0200
-Message-ID: <20240606131748.294469021@linuxfoundation.org>
+Subject: [PATCH 6.1 443/473] bpf: Fix potential integer overflow in resolve_btfids
+Date: Thu,  6 Jun 2024 16:06:12 +0200
+Message-ID: <20240606131714.367514251@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,56 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: He Zhe <zhe.he@windriver.com>
+From: Friedrich Vock <friedrich.vock@gmx.de>
 
-[ Upstream commit d9180e23fbfa3875424d3a6b28b71b072862a52a ]
+[ Upstream commit 44382b3ed6b2787710c8ade06c0e97f5970a47c8 ]
 
-'perf bench internals inject-build-id' suffers from the following error when
-only one DSO is collected.
+err is a 32-bit integer, but elf_update returns an off_t, which is 64-bit
+at least on 64-bit platforms. If symbols_patch is called on a binary between
+2-4GB in size, the result will be negative when cast to a 32-bit integer,
+which the code assumes means an error occurred. This can wrongly trigger
+build failures when building very large kernel images.
 
-  # perf bench internals inject-build-id -v
-    Collected 1 DSOs
-  traps: internals-injec[2305] trap divide error
-  ip:557566ba6394 sp:7ffd4de97fe0 error:0 in perf[557566b2a000+23d000]
-    Build-id injection benchmark
-    Iteration #1
-  Floating point exception
-
-This patch removes the unnecessary minus one from the divisor which also
-corrects the randomization range.
-
-Signed-off-by: He Zhe <zhe.he@windriver.com>
-Fixes: 0bf02a0d80427f26 ("perf bench: Add build-id injection benchmark")
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20240507065026.2652929-1-zhe.he@windriver.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: fbbb68de80a4 ("bpf: Add resolve_btfids tool to resolve BTF IDs in ELF object")
+Signed-off-by: Friedrich Vock <friedrich.vock@gmx.de>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20240514070931.199694-1-friedrich.vock@gmx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/bench/inject-buildid.c | 2 +-
+ tools/bpf/resolve_btfids/main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/bench/inject-buildid.c b/tools/perf/bench/inject-buildid.c
-index 49331743c7439..a759eb2328bea 100644
---- a/tools/perf/bench/inject-buildid.c
-+++ b/tools/perf/bench/inject-buildid.c
-@@ -362,7 +362,7 @@ static int inject_build_id(struct bench_data *data, u64 *max_rss)
- 		return -1;
+diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
+index ef0764d6891e4..82bffa7cf8659 100644
+--- a/tools/bpf/resolve_btfids/main.c
++++ b/tools/bpf/resolve_btfids/main.c
+@@ -728,7 +728,7 @@ static int sets_patch(struct object *obj)
  
- 	for (i = 0; i < nr_mmaps; i++) {
--		int idx = rand() % (nr_dsos - 1);
-+		int idx = rand() % nr_dsos;
- 		struct bench_dso *dso = &dsos[idx];
- 		u64 timestamp = rand() % 1000000;
+ static int symbols_patch(struct object *obj)
+ {
+-	int err;
++	off_t err;
  
+ 	if (__symbols_patch(obj, &obj->structs)  ||
+ 	    __symbols_patch(obj, &obj->unions)   ||
 -- 
 2.43.0
 
