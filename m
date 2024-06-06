@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A382197541;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAB41C6193;
 	Thu,  6 Jun 2024 14:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683696; cv=none; b=C+DjiJU/vhsEzcDbSJhQR+gLrQE2nArk3eG+p/5MggO000OhMeEvhv6+ZIpnffTNtzQn/hanom9nxH+lBrzypLqz21QkE1qSIurF76x0K5Rd3RqQ0uKwqHSRLZp9lKu+ryNSVz6/1qzaP7A1OGWjlcw2wN+GT2PRYrf9Sro0RKo=
+	t=1717683696; cv=none; b=lvtVIENkTqK3zSZCDsAWsh/r6DPu6fkGCVKi5aqA4N+ITYBHrDoooRfGFt/0kmC3EmLhNrTSmsKR4YB7aIpea51yREf0uGk0oz0pt0Kw5Fwqo7VfWG2J6BE8rM1uIg3+CA6HkLg5Rk2AlJJ0fYnP7gKxAOXJ8d+iPNzkX8WAFZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683696; c=relaxed/simple;
-	bh=B1lL10x7SuEnanr97G80Scr0t8PMNwFkTIFYdgWEaWs=;
+	bh=7QoBJZXHja3KzCO72Yd0u2RSSvz37Pnl7COOY338JYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnHqwDARcDUMKrKLAAgLKapQD+VqvFMMnabqWNF+z3oheSmTkda5FUryXC1oSj2hL0hw+kENd4S7iTttUS6uhDaa6OKqwDS0dSFf5jn+ynXFFtWeg+Ws48/ERtnJl4qwTCQL9+Cpbc407J9xSChttcGiGkcovHby1wTunxfykZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZy5QJIQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGPYYKFthSI0QgdOvB76tMExCvN/l7UJHwnyw9FCdo2nIktcsfhXz4b1pqTJ8dH0qYM00Cwg2q5KejgmklllYPg8NfLAzejJTVu4y3QbZ16js4+2qGE3qn+q6t50hy5PKrrHoXftQV/udeVIobfKXT491GbDUDVJIGSZwHxLv9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSVvPn2n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZy5QJIQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CBCC2BD10;
-	Thu,  6 Jun 2024 14:21:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSVvPn2n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F92C2BD10;
+	Thu,  6 Jun 2024 14:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683696;
-	bh=B1lL10x7SuEnanr97G80Scr0t8PMNwFkTIFYdgWEaWs=;
+	bh=7QoBJZXHja3KzCO72Yd0u2RSSvz37Pnl7COOY338JYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZy5QJIQWhdQbJydgUw1RbMSVGo2wl8YeerdW1Uy+JTJ1rSBdmv+FCGoSNePiipBY
-	 Td5xaGeuTZwphfau/jQDezOZnkceYyHa2Cqx+HFVmmnfRI9TI1yziHdNsydJgvD4wa
-	 47A024p7OIPLGTsjeuaWhxJB38fh8F8Iki56f2bg=
+	b=LSVvPn2np6BypZYHKFpZqYNOyO55joU7v82ep7SoBVLQepYrrJodA9q+XaA2SSDLt
+	 0O0UicWWWpH0qqFOXg7qXmccaHVJOnXz3l3+YAEcwdSfSjQNNtWNzd1QJ2ouH6uovE
+	 ZKFkZjnu9Wts1HDatxFI1sQllrzIa9K+iErg8lTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Fabio Estevam <festevam@denx.de>,
 	Hans de Goede <hdegoede@redhat.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 570/744] media: ov2680: Allow probing if link-frequencies is absent
-Date: Thu,  6 Jun 2024 16:04:02 +0200
-Message-ID: <20240606131750.738162820@linuxfoundation.org>
+Subject: [PATCH 6.6 571/744] media: ov2680: Do not fail if data-lanes property is absent
+Date: Thu,  6 Jun 2024 16:04:03 +0200
+Message-ID: <20240606131750.771746813@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -55,60 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit fd2e66abd729dae5809dbb41c6c52a6931cfa6bb ]
+[ Upstream commit 24034af644fc01126bec9850346a06ef1450181f ]
 
 Since commit 63b0cd30b78e ("media: ov2680: Add bus-cfg / endpoint
-property verification") the ov2680 no longer probes on a imx7s-warp7:
+property verification") the ov2680 driver no longer probes when the
+'data-lanes' property is absent.
 
-ov2680 1-0036: error -EINVAL: supported link freq 330000000 not found
-ov2680 1-0036: probe with driver ov2680 failed with error -22
+The OV2680 sensor has only one data lane, so there is no need for
+describing it the devicetree.
 
-As the 'link-frequencies' property is not mandatory, allow the probe
-to succeed by skipping the link-frequency verification when the
-property is absent.
+Remove the unnecessary data-lanes property check.
 
-Cc: stable@vger.kernel.org
+Suggested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Fixes: 63b0cd30b78e ("media: ov2680: Add bus-cfg / endpoint property verification")
 Signed-off-by: Fabio Estevam <festevam@denx.de>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: 24034af644fc ("media: ov2680: Do not fail if data-lanes property is absent")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov2680.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/i2c/ov2680.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
 diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
-index 7b1d9bd0b60f3..1163062c41c59 100644
+index 1163062c41c59..6436879f95c01 100644
 --- a/drivers/media/i2c/ov2680.c
 +++ b/drivers/media/i2c/ov2680.c
-@@ -1111,18 +1111,23 @@ static int ov2680_parse_dt(struct ov2680_dev *sensor)
- 		goto out_free_bus_cfg;
- 	}
+@@ -1104,13 +1104,6 @@ static int ov2680_parse_dt(struct ov2680_dev *sensor)
+ 	sensor->pixel_rate = sensor->link_freq[0] * 2;
+ 	do_div(sensor->pixel_rate, 10);
  
-+	if (!bus_cfg.nr_of_link_frequencies) {
-+		dev_warn(dev, "Consider passing 'link-frequencies' in DT\n");
-+		goto skip_link_freq_validation;
-+	}
-+
- 	for (i = 0; i < bus_cfg.nr_of_link_frequencies; i++)
- 		if (bus_cfg.link_frequencies[i] == sensor->link_freq[0])
- 			break;
- 
--	if (bus_cfg.nr_of_link_frequencies == 0 ||
--	    bus_cfg.nr_of_link_frequencies == i) {
-+	if (bus_cfg.nr_of_link_frequencies == i) {
- 		ret = dev_err_probe(dev, -EINVAL,
- 				    "supported link freq %lld not found\n",
- 				    sensor->link_freq[0]);
- 		goto out_free_bus_cfg;
- 	}
- 
-+skip_link_freq_validation:
- 	ret = 0;
- out_free_bus_cfg:
- 	v4l2_fwnode_endpoint_free(&bus_cfg);
+-	/* Verify bus cfg */
+-	if (bus_cfg.bus.mipi_csi2.num_data_lanes != 1) {
+-		ret = dev_err_probe(dev, -EINVAL,
+-				    "only a 1-lane CSI2 config is supported");
+-		goto out_free_bus_cfg;
+-	}
+-
+ 	if (!bus_cfg.nr_of_link_frequencies) {
+ 		dev_warn(dev, "Consider passing 'link-frequencies' in DT\n");
+ 		goto skip_link_freq_validation;
 -- 
 2.43.0
 
