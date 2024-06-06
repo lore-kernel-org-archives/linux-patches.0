@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DEA19B3D5;
-	Thu,  6 Jun 2024 14:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8FE198A28;
+	Thu,  6 Jun 2024 14:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683058; cv=none; b=hGOzoFqlEg90u2kc92zYCOL17u/hn89ApU1FK4yYxz1vhIky/fBArZSiRANc6masse/+mAjkpIWThQYoRl3ttxGsgMpxqAziKN1WRmQ8x5brypTXHKADnciIAIT3uaO8UIjMQXeqOOGNCZz6oWT4ffWWgq4q59bmfR7V2F7PlXU=
+	t=1717683059; cv=none; b=J8vpohs3xGMpvzWU3tnZlt8IOR4A5V05DxOfan70Hv1d3gttMYp9eHq471ctzifXeVpcIVG3Von15ixQaWwBi71Zqi/7z8JRyQZ7VfqEksdAItaS6nJ8hwrbn/9f8z0l2O/+tV1d6poqjg+VE0Q/QC1PP1gq3i5AFNZgpOGHUKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683058; c=relaxed/simple;
-	bh=uOnZD2DyxXy1N3jHMgLI6hQtz5jhSAspqqDe+KzJd/A=;
+	s=arc-20240116; t=1717683059; c=relaxed/simple;
+	bh=65OvCGAXXJjEoxCtae8OpeXvpUvLk2UdNags6zt8fII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxvlyiN2iv5+teFI4INd6kSGlWeHKQjyN0C7krTmQMf9hEuD0kjvFqC58kBK876TUyV23Dut3lO5pkIyImW0A37f1l5I+OTByJrcGsT3vBTVOwQo+/mOuqVcdBVy7M0eYFiBrbWtRc3ook9F96dA6/M7qZHHt5bBxaVfeoXyVdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8GEzp8Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FvepRWvgBIE3p3gdeIfVQSHzGO+3JYgMLY5IecUdcPitdR7gALZYGUbSx6gam3dNNeZw9hx1gA8cGtH5vEH1Zb9hqK+dN3avY3IiBNtQSjVyVHPYBgNHXMBdXRcUfes0vSK0Fu170c1IZJELggIzFzJqZp/W2jj5NI10phZHa/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYNlooDi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8GEzp8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B530CC4AF11;
-	Thu,  6 Jun 2024 14:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYNlooDi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3863DC4AF13;
+	Thu,  6 Jun 2024 14:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683058;
-	bh=uOnZD2DyxXy1N3jHMgLI6hQtz5jhSAspqqDe+KzJd/A=;
+	s=korg; t=1717683059;
+	bh=65OvCGAXXJjEoxCtae8OpeXvpUvLk2UdNags6zt8fII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8GEzp8ZdZARNUqyFMud0kIR1UfTJqTbRTfPj4A2y9EMoVo0pY2sz5abigEFbHyWG
-	 abbG8dhpjm5PKEIzEK090qn418vqHiKP8uAFITML7E9+nmVtBR/H+WUAtXmw1TSSTZ
-	 oWsWCUCfmBwZ04X3DFjXgHOA8WLnMHexRJ88YCWg=
+	b=mYNlooDiGqMEoI9NJ0eb5abkk3xgiajNm+IQb17wvTPi0Fbg9hoHTljOINO7DGTJz
+	 2TdzIrFRMTu6um0wZvgcQcmg2+S+NUtx95phtqRWK9t3tAyhDmPGgJkBonp7FwL7Wv
+	 lbd2zEOEAwMaZmempVeY9Tf3ODQHtzqMQF9UsXxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 306/374] netkit: Fix pkt_type override upon netkit pass verdict
-Date: Thu,  6 Jun 2024 16:04:45 +0200
-Message-ID: <20240606131702.096992188@linuxfoundation.org>
+Subject: [PATCH 6.9 307/374] ALSA: core: Remove debugfs at disconnection
+Date: Thu,  6 Jun 2024 16:04:46 +0200
+Message-ID: <20240606131702.135723468@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,102 +50,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 3998d184267dfcff858aaa84d3de17429253629d ]
+[ Upstream commit 495000a38634e640e2fd02f7e4f1512ccc92d770 ]
 
-When running Cilium connectivity test suite with netkit in L2 mode, we
-found that compared to tcx a few tests were failing which pushed traffic
-into an L7 proxy sitting in host namespace. The problem in particular is
-around the invocation of eth_type_trans() in netkit.
+The card-specific debugfs entries are removed at the last stage of
+card free phase, and it's performed after synchronization of the
+closes of all opened fds.  This works fine for most cases, but it can
+be potentially problematic for a hotplug device like USB-audio.  Due
+to the nature of snd_card_free_when_closed(), the card free isn't
+called immediately after the driver removal for a hotplug device, but
+it's left until the last fd is closed.  It implies that the card
+debugfs entries also remain.  Meanwhile, when a new device is inserted
+before the last close and the very same card slot is assigned, the
+driver tries to create the card debugfs root again on the very same
+path.  This conflicts with the remaining entry, and results in the
+kernel warning such as:
+  debugfs: Directory 'card0' with parent 'sound' already present!
+with the missing debugfs entry afterwards.
 
-In case of tcx, this is run before the tcx ingress is triggered inside
-host namespace and thus if the BPF program uses the bpf_skb_change_type()
-helper the newly set type is retained. However, in case of netkit, the
-late eth_type_trans() invocation overrides the earlier decision from the
-BPF program which eventually leads to the test failure.
+For avoiding such conflicts, remove debugfs entries at the device
+disconnection phase instead.  The jack kctl debugfs entries get
+removed in snd_jack_dev_disconnect() instead of each kctl
+private_free.
 
-Instead of eth_type_trans(), split out the relevant parts, meaning, reset
-of mac header and call to eth_skb_pkt_type() before the BPF program is run
-in order to have the same behavior as with tcx, and refactor a small helper
-called eth_skb_pull_mac() which is run in case it's passed up the stack
-where the mac header must be pulled. With this all connectivity tests pass.
-
-Fixes: 35dfaad7188c ("netkit, bpf: Add bpf programmable net device")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20240524163619.26001-2-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 2d670ea2bd53 ("ALSA: jack: implement software jack injection via debugfs")
+Link: https://lore.kernel.org/r/20240524151256.32521-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netkit.c        | 4 +++-
- include/linux/etherdevice.h | 8 ++++++++
- net/ethernet/eth.c          | 4 +---
- 3 files changed, 12 insertions(+), 4 deletions(-)
+ sound/core/init.c |  9 +++++----
+ sound/core/jack.c | 21 ++++++++++++++-------
+ 2 files changed, 19 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/netkit.c b/drivers/net/netkit.c
-index 272894053e2c4..16789cd446e9e 100644
---- a/drivers/net/netkit.c
-+++ b/drivers/net/netkit.c
-@@ -55,6 +55,7 @@ static void netkit_prep_forward(struct sk_buff *skb, bool xnet)
- 	skb_scrub_packet(skb, xnet);
- 	skb->priority = 0;
- 	nf_skip_egress(skb, true);
-+	skb_reset_mac_header(skb);
- }
+diff --git a/sound/core/init.c b/sound/core/init.c
+index 66d7265fea920..b8912de048662 100644
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -539,6 +539,11 @@ void snd_card_disconnect(struct snd_card *card)
+ 		synchronize_irq(card->sync_irq);
  
- static struct netkit *netkit_priv(const struct net_device *dev)
-@@ -78,6 +79,7 @@ static netdev_tx_t netkit_xmit(struct sk_buff *skb, struct net_device *dev)
- 		     skb_orphan_frags(skb, GFP_ATOMIC)))
- 		goto drop;
- 	netkit_prep_forward(skb, !net_eq(dev_net(dev), dev_net(peer)));
-+	eth_skb_pkt_type(skb, peer);
- 	skb->dev = peer;
- 	entry = rcu_dereference(nk->active);
- 	if (entry)
-@@ -85,7 +87,7 @@ static netdev_tx_t netkit_xmit(struct sk_buff *skb, struct net_device *dev)
- 	switch (ret) {
- 	case NETKIT_NEXT:
- 	case NETKIT_PASS:
--		skb->protocol = eth_type_trans(skb, skb->dev);
-+		eth_skb_pull_mac(skb);
- 		skb_postpull_rcsum(skb, eth_hdr(skb), ETH_HLEN);
- 		if (likely(__netif_rx(skb) == NET_RX_SUCCESS)) {
- 			dev_sw_netstats_tx_add(dev, 1, len);
-diff --git a/include/linux/etherdevice.h b/include/linux/etherdevice.h
-index 297231854ada5..e44913a8200fd 100644
---- a/include/linux/etherdevice.h
-+++ b/include/linux/etherdevice.h
-@@ -632,6 +632,14 @@ static inline void eth_skb_pkt_type(struct sk_buff *skb,
+ 	snd_info_card_disconnect(card);
++#ifdef CONFIG_SND_DEBUG
++	debugfs_remove(card->debugfs_root);
++	card->debugfs_root = NULL;
++#endif
++
+ 	if (card->registered) {
+ 		device_del(&card->card_dev);
+ 		card->registered = false;
+@@ -590,10 +595,6 @@ static int snd_card_do_free(struct snd_card *card)
+ 		dev_warn(card->dev, "unable to free card info\n");
+ 		/* Not fatal error */
  	}
+-#ifdef CONFIG_SND_DEBUG
+-	debugfs_remove(card->debugfs_root);
+-	card->debugfs_root = NULL;
+-#endif
+ 	if (card->release_completion)
+ 		complete(card->release_completion);
+ 	if (!card->managed)
+diff --git a/sound/core/jack.c b/sound/core/jack.c
+index e08b2c4fbd1a5..e4bcecdf89b7e 100644
+--- a/sound/core/jack.c
++++ b/sound/core/jack.c
+@@ -37,11 +37,15 @@ static const int jack_switch_types[SND_JACK_SWITCH_TYPES] = {
+ };
+ #endif /* CONFIG_SND_JACK_INPUT_DEV */
+ 
++static void snd_jack_remove_debugfs(struct snd_jack *jack);
++
+ static int snd_jack_dev_disconnect(struct snd_device *device)
+ {
+-#ifdef CONFIG_SND_JACK_INPUT_DEV
+ 	struct snd_jack *jack = device->device_data;
+ 
++	snd_jack_remove_debugfs(jack);
++
++#ifdef CONFIG_SND_JACK_INPUT_DEV
+ 	guard(mutex)(&jack->input_dev_lock);
+ 	if (!jack->input_dev)
+ 		return 0;
+@@ -381,10 +385,14 @@ static int snd_jack_debugfs_add_inject_node(struct snd_jack *jack,
+ 	return 0;
  }
  
-+static inline struct ethhdr *eth_skb_pull_mac(struct sk_buff *skb)
-+{
-+	struct ethhdr *eth = (struct ethhdr *)skb->data;
+-static void snd_jack_debugfs_clear_inject_node(struct snd_jack_kctl *jack_kctl)
++static void snd_jack_remove_debugfs(struct snd_jack *jack)
+ {
+-	debugfs_remove(jack_kctl->jack_debugfs_root);
+-	jack_kctl->jack_debugfs_root = NULL;
++	struct snd_jack_kctl *jack_kctl;
 +
-+	skb_pull_inline(skb, ETH_HLEN);
-+	return eth;
-+}
-+
- /**
-  * eth_skb_pad - Pad buffer to mininum number of octets for Ethernet frame
-  * @skb: Buffer to pad
-diff --git a/net/ethernet/eth.c b/net/ethernet/eth.c
-index 049c3adeb8504..4e3651101b866 100644
---- a/net/ethernet/eth.c
-+++ b/net/ethernet/eth.c
-@@ -161,9 +161,7 @@ __be16 eth_type_trans(struct sk_buff *skb, struct net_device *dev)
- 	skb->dev = dev;
- 	skb_reset_mac_header(skb);
++	list_for_each_entry(jack_kctl, &jack->kctl_list, list) {
++		debugfs_remove(jack_kctl->jack_debugfs_root);
++		jack_kctl->jack_debugfs_root = NULL;
++	}
+ }
+ #else /* CONFIG_SND_JACK_INJECTION_DEBUG */
+ static int snd_jack_debugfs_add_inject_node(struct snd_jack *jack,
+@@ -393,7 +401,7 @@ static int snd_jack_debugfs_add_inject_node(struct snd_jack *jack,
+ 	return 0;
+ }
  
--	eth = (struct ethhdr *)skb->data;
--	skb_pull_inline(skb, ETH_HLEN);
--
-+	eth = eth_skb_pull_mac(skb);
- 	eth_skb_pkt_type(skb, dev);
+-static void snd_jack_debugfs_clear_inject_node(struct snd_jack_kctl *jack_kctl)
++static void snd_jack_remove_debugfs(struct snd_jack *jack)
+ {
+ }
+ #endif /* CONFIG_SND_JACK_INJECTION_DEBUG */
+@@ -404,7 +412,6 @@ static void snd_jack_kctl_private_free(struct snd_kcontrol *kctl)
  
- 	/*
+ 	jack_kctl = kctl->private_data;
+ 	if (jack_kctl) {
+-		snd_jack_debugfs_clear_inject_node(jack_kctl);
+ 		list_del(&jack_kctl->list);
+ 		kfree(jack_kctl);
+ 	}
+@@ -497,8 +504,8 @@ int snd_jack_new(struct snd_card *card, const char *id, int type,
+ 		.dev_free = snd_jack_dev_free,
+ #ifdef CONFIG_SND_JACK_INPUT_DEV
+ 		.dev_register = snd_jack_dev_register,
+-		.dev_disconnect = snd_jack_dev_disconnect,
+ #endif /* CONFIG_SND_JACK_INPUT_DEV */
++		.dev_disconnect = snd_jack_dev_disconnect,
+ 	};
+ 
+ 	if (initial_kctl) {
 -- 
 2.43.0
 
