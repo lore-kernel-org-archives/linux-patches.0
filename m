@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5421993A9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0320B197A67;
 	Thu,  6 Jun 2024 14:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683230; cv=none; b=TrB4k5aRfhtx/1lecJ8q3hUwhZeel96K5WYV1XCfPN9jeM3SqJcU0uRDXOUwRoXucRQt3zzgyPji5PvfKP93BoG4Ps7ufJKGbQPOTuY9W5WNRg1a5vC++oGtddO8dugVRNON/ENQXAV06kV7Z9sLN7vkvqL02Ui+4OsVLilTByM=
+	t=1717683231; cv=none; b=HpDNPdmA3Xjxf2YuVH8gW0z4HS6VEoSi7QBIv1oPxJxRn7cnr72KiT99I3BulH/tCo53DV8bu0CPiC6/wu8b1cl6To7oecCWrS1upbL5dyxX6T05tkWX7mfumFJo/Q1zX5XgeiGuKD/vfl4DHrAL7IA7SsOGGpIhcs8GztLlM58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683230; c=relaxed/simple;
-	bh=Kc6bRUsVcgx/2A/Mvuq6KtW9aElTSebRWheINd+cPSc=;
+	s=arc-20240116; t=1717683231; c=relaxed/simple;
+	bh=kp+GbPbJ170w7E86xeThPon+Gi1QRQR8qBXC9LQdTys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=njsQuYoPls6EwNjXx6AlOGOi8BR9rqm0LRXCPwqSxyM9B5DE+RnaUlrwEe4pI/T+wSqzZwf/OA/Or6N0Q3MI+spsgEDIA63tgIbhW+iOQsm4d0fiVDxiya/vPE78MLnJGtOfzYSuFh7g6slbTQXMySgfYuVsB1HHQ1QY+7b/Qeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVrhu7PE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k2T+IwmLJZw5cF4jt9nJcWaD9HtocqQspWUM5GPTBzmlSOV2kaHCfmP1dGrfUZ919KRMi4N9+ZXRMusb68wR9/2w6pVy13GutgmasE0M5tjkQLrq0/pIjTYEFQ8O60HTotCRiOqt97P1e9PK5lmVQ75/HvZVxczGxvF3c6h1yxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgVnLCP9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVrhu7PE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3B7C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgVnLCP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7FFC2BD10;
 	Thu,  6 Jun 2024 14:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683230;
-	bh=Kc6bRUsVcgx/2A/Mvuq6KtW9aElTSebRWheINd+cPSc=;
+	bh=kp+GbPbJ170w7E86xeThPon+Gi1QRQR8qBXC9LQdTys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVrhu7PECIatwQCGqF+/klCY0r36bKijjBqIYjQ0nEXESaP+4cMGl8IZ15pPlt6bI
-	 0i9TDY8jz5lbcm07h+MsdC/LwDQxRWPv5W16L/VysroHpJdhPC0oVHAuNZP+HAyhjD
-	 fSTO3LxM64EHdRF8miP7uNXFjL/QOof6X19BwQuw=
+	b=ZgVnLCP9WPsUzkhS58m9ogfA73BpZ0+x7wdPo6Gd0ZsD2ZrLIIAll79CCIqXampU9
+	 mJmNO5F0lgseC9ZJ3ZkVK/H9izxLGurLcJrbEaTAsDUbe6xrXP7shLUJarqKOLYuSQ
+	 AWPCn7HiBBLuw1egOAiUapXPJmH9Vq2dCHtsus/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/473] scsi: ufs: ufs-qcom: Clear qunipro_g4_sel for HW version major 5
-Date: Thu,  6 Jun 2024 16:00:35 +0200
-Message-ID: <20240606131703.420499758@linuxfoundation.org>
+Subject: [PATCH 6.6 142/744] mlx5: avoid truncating error message
+Date: Thu,  6 Jun 2024 15:56:54 +0200
+Message-ID: <20240606131736.971705490@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,78 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 9c02aa24bf404a39ec509d9f50539056b9b128f7 ]
+[ Upstream commit b324a960354b872431d25959ad384ab66a7116ec ]
 
-On SM8550, depending on the Qunipro, we can run with G5 or G4.  For now,
-when the major version is 5 or above, we go with G5.  Therefore, we need to
-specifically tell UFS HC that.
+clang warns that one error message is too long for its destination buffer:
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 823150ecf04f ("scsi: ufs: qcom: Perform read back after writing unipro mode")
+drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c:1876:4: error: 'snprintf' will always be truncated; specified size is 80, but format string expands to at least 94 [-Werror,-Wformat-truncation-non-kprintf]
+
+Reword it to be a bit shorter so it always fits.
+
+Fixes: 70f0302b3f20 ("net/mlx5: Bridge, implement mdb offload")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Link: https://lore.kernel.org/r/20240326223825.4084412-5-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 8 ++++++--
- drivers/ufs/host/ufs-qcom.h | 6 +++++-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index a5d981d3dd6be..ce18c43937a22 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -226,6 +226,10 @@ static void ufs_qcom_select_unipro_mode(struct ufs_qcom_host *host)
- 	ufshcd_rmwl(host->hba, QUNIPRO_SEL,
- 		   ufs_qcom_cap_qunipro(host) ? QUNIPRO_SEL : 0,
- 		   REG_UFS_CFG1);
-+
-+	if (host->hw_ver.major == 0x05)
-+		ufshcd_rmwl(host->hba, QUNIPRO_G4_SEL, 0, REG_UFS_CFG0);
-+
- 	/* make sure above configuration is applied before we return */
- 	mb();
- }
-@@ -498,9 +502,9 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
- 		mb();
- 	}
- 
--	if (update_link_startup_timer) {
-+	if (update_link_startup_timer && host->hw_ver.major != 0x5) {
- 		ufshcd_writel(hba, ((core_clk_rate / MSEC_PER_SEC) * 100),
--			      REG_UFS_PA_LINK_STARTUP_TIMER);
-+			      REG_UFS_CFG0);
- 		/*
- 		 * make sure that this configuration is applied before
- 		 * we return
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index 112e53efafe2b..24367cee0b3ff 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -38,7 +38,8 @@ enum {
- 	REG_UFS_PA_ERR_CODE                 = 0xCC,
- 	/* On older UFS revisions, this register is called "RETRY_TIMER_REG" */
- 	REG_UFS_PARAM0                      = 0xD0,
--	REG_UFS_PA_LINK_STARTUP_TIMER       = 0xD8,
-+	/* On older UFS revisions, this register is called "REG_UFS_PA_LINK_STARTUP_TIMER" */
-+	REG_UFS_CFG0                        = 0xD8,
- 	REG_UFS_CFG1                        = 0xDC,
- 	REG_UFS_CFG2                        = 0xE0,
- 	REG_UFS_HW_VERSION                  = 0xE4,
-@@ -76,6 +77,9 @@ enum {
- #define UFS_CNTLR_2_x_x_VEN_REGS_OFFSET(x)	(0x000 + x)
- #define UFS_CNTLR_3_x_x_VEN_REGS_OFFSET(x)	(0x400 + x)
- 
-+/* bit definitions for REG_UFS_CFG0 register */
-+#define QUNIPRO_G4_SEL		BIT(5)
-+
- /* bit definitions for REG_UFS_CFG1 register */
- #define QUNIPRO_SEL		0x1
- #define UTP_DBG_RAMS_EN		0x20000
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+index 1b9bc32efd6fa..c5ea1d1d2b035 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+@@ -1874,7 +1874,7 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
+ 				 "Failed to lookup bridge port vlan metadata to create MDB (MAC=%pM,vid=%u,vport=%u)\n",
+ 				 addr, vid, vport_num);
+ 			NL_SET_ERR_MSG_FMT_MOD(extack,
+-					       "Failed to lookup bridge port vlan metadata to create MDB (MAC=%pM,vid=%u,vport=%u)\n",
++					       "Failed to lookup vlan metadata for MDB (MAC=%pM,vid=%u,vport=%u)\n",
+ 					       addr, vid, vport_num);
+ 			return -EINVAL;
+ 		}
 -- 
 2.43.0
 
