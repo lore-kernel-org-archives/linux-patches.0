@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BB41AED3E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00211AED37;
 	Thu,  6 Jun 2024 14:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683346; cv=none; b=r8ZHyxxSwO0qMFslgsNmsWoTNU1ffUKLMHWm3ZWsmaVpKXyOTECdoD8kziyXLLwVc4SBeyNTlfYa5HDlImbXMjFlcs1KEHzlle9ksXw7fgmkRulnTLIjG5fXogtsIs2hpHG5mZtv+NJevi+VDDxsGvVD+Bec6RnjKw54MT02kiI=
+	t=1717683346; cv=none; b=ApZpdQcbb3puTctrRnYT741NByU7qtpWXHyHzvTrSSEhEIr8ZdOf9EnHHhKQZEjZ/RZZrFhAjIqPRMKld9D76OolorbNciKiA2t9/6sINEaL+8I7ZJONeBPNe4QzEkgnORThA0C6iit5Sm5InqJWIM5WnjLSOfo62Mjfwt7gRxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683346; c=relaxed/simple;
-	bh=MobqiRQIdbLWudOWhp3MBy1o6LtCWqsC5QHbZyQHO8w=;
+	bh=x/1KCcu43p2cG6nRII52x1ib/WSuhc73pIwV/6E+NnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pifc/5Echy9q2BqQsSgU8atSjF5mUdQL32qWZVN9i1wwCTb5fGbWyBUrB5TLw0Px1q7+I1mDTnTrYB8jrfifJz9r8bKrwh+OiEi2p0u4hHDjMscyWMHxPWE7nzQdDJZvczeKAEH4I97cy4A/jTOjU6KyAwdqfjXIjp9+rKuWopE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKa6K5Vq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GP4ONgnUHvQzay031aTXrTJaraqpIj9JOnzQZPD0ZmxzwcELxZAeC+/jCw9nflm4rXGdTffkoqGn2Al0cce2a9RrvTxGkQj40BJbeakKxzkfHyGv4S1yOlpYeePU1T+16cj65tmPBzYYmqVDal9AMtqc5MHvcrAFuE/795ng/Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7JgIjBX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKa6K5Vq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AADC4AF08;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7JgIjBX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED0BC4AF08;
 	Thu,  6 Jun 2024 14:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683346;
-	bh=MobqiRQIdbLWudOWhp3MBy1o6LtCWqsC5QHbZyQHO8w=;
+	bh=x/1KCcu43p2cG6nRII52x1ib/WSuhc73pIwV/6E+NnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKa6K5VqGL6jgvb7nxmMwHL8IrACBMWwa/0d/lHwWKwJLlxbQe64i7lemS+kwUa7b
-	 LE5AO5lVVr7z9V7tORIULd/B/ILJzhXUqHLjj5KZZeGYdf2EitfM/NvHZCFRst0aV9
-	 DE4drD11arNZTrY30eJj2/+WRnwoY5hKSh4gh8iU=
+	b=S7JgIjBX4K1tGNTCRbkn9waqHuqiOK/Tm2W+4AL2UETIhjg4Q+IZnXVxa7bDS07RQ
+	 UFgxAU8JOHvf7I8W+spremwfXfWQ9+0E9DJwomqk0qU0EXXOYKSGgdRivIQ0Plf5dX
+	 nO62W0kVu88NLcbHg2BM1dWV9cSRd/TipkwI7V54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 227/473] drm/bridge: lt9611: Dont log an error when DSI host cant be found
-Date: Thu,  6 Jun 2024 16:02:36 +0200
-Message-ID: <20240606131707.377743082@linuxfoundation.org>
+Subject: [PATCH 6.6 287/744] drm/meson: vclk: fix calculation of 59.94 fractional rates
+Date: Thu,  6 Jun 2024 15:59:19 +0200
+Message-ID: <20240606131741.610967878@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-[ Upstream commit cd0a2c6a081ff67007323725b9ff07d9934b1ed8 ]
+[ Upstream commit bfbc68e4d8695497f858a45a142665e22a512ea3 ]
 
-Given that failing to find a DSI host causes the driver to defer probe,
-make use of dev_err_probe() to log the reason. This makes the defer
-probe reason available and avoids alerting userspace about something
-that is not necessarily an error.
+Playing 4K media with 59.94 fractional rate (typically VP9) causes the screen to lose
+sync with the following error reported in the system log:
 
-Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-4-619a28148e5c@collabora.com
+[   89.610280] Fatal Error, invalid HDMI vclk freq 593406
+
+Modetest shows the following:
+
+3840x2160 59.94 3840 4016 4104 4400 2160 2168 2178 2250 593407 flags: xxxx, xxxx,
+drm calculated value -------------------------------------^
+
+Change the fractional rate calculation to stop DIV_ROUND_CLOSEST rounding down which
+results in vclk freq failing to match correctly.
+
+Fixes: e5fab2ec9ca4 ("drm/meson: vclk: add support for YUV420 setup")
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240109230704.4120561-1-christianshewitt@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240109230704.4120561-1-christianshewitt@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/meson/meson_vclk.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index ae8c6d9d4095f..e40ceb56ff55f 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -777,10 +777,8 @@ static struct mipi_dsi_device *lt9611_attach_dsi(struct lt9611 *lt9611,
- 	int ret;
+diff --git a/drivers/gpu/drm/meson/meson_vclk.c b/drivers/gpu/drm/meson/meson_vclk.c
+index 2a82119eb58ed..2a942dc6a6dc2 100644
+--- a/drivers/gpu/drm/meson/meson_vclk.c
++++ b/drivers/gpu/drm/meson/meson_vclk.c
+@@ -790,13 +790,13 @@ meson_vclk_vic_supported_freq(struct meson_drm *priv, unsigned int phy_freq,
+ 				 FREQ_1000_1001(params[i].pixel_freq));
+ 		DRM_DEBUG_DRIVER("i = %d phy_freq = %d alt = %d\n",
+ 				 i, params[i].phy_freq,
+-				 FREQ_1000_1001(params[i].phy_freq/10)*10);
++				 FREQ_1000_1001(params[i].phy_freq/1000)*1000);
+ 		/* Match strict frequency */
+ 		if (phy_freq == params[i].phy_freq &&
+ 		    vclk_freq == params[i].vclk_freq)
+ 			return MODE_OK;
+ 		/* Match 1000/1001 variant */
+-		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/10)*10) &&
++		if (phy_freq == (FREQ_1000_1001(params[i].phy_freq/1000)*1000) &&
+ 		    vclk_freq == FREQ_1000_1001(params[i].vclk_freq))
+ 			return MODE_OK;
+ 	}
+@@ -1070,7 +1070,7 @@ void meson_vclk_setup(struct meson_drm *priv, unsigned int target,
  
- 	host = of_find_mipi_dsi_host_by_node(dsi_node);
--	if (!host) {
--		dev_err(lt9611->dev, "failed to find dsi host\n");
--		return ERR_PTR(-EPROBE_DEFER);
--	}
-+	if (!host)
-+		return ERR_PTR(dev_err_probe(lt9611->dev, -EPROBE_DEFER, "failed to find dsi host\n"));
- 
- 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
- 	if (IS_ERR(dsi)) {
+ 	for (freq = 0 ; params[freq].pixel_freq ; ++freq) {
+ 		if ((phy_freq == params[freq].phy_freq ||
+-		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/10)*10) &&
++		     phy_freq == FREQ_1000_1001(params[freq].phy_freq/1000)*1000) &&
+ 		    (vclk_freq == params[freq].vclk_freq ||
+ 		     vclk_freq == FREQ_1000_1001(params[freq].vclk_freq))) {
+ 			if (vclk_freq != params[freq].vclk_freq)
 -- 
 2.43.0
 
