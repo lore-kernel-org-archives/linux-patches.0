@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28503199EBD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902C3199EB5;
 	Thu,  6 Jun 2024 14:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683262; cv=none; b=dvJXL+47GsQLFuIg9jgk6IQ1aMDKBZf/TNbbMEwNplxBLN+LEgRfvJ/Rw0p0m8s2KcHM2ryDPDIlyVvjdragMfoSZgN6lRcuBxTQ4pF77Hj4NTglZ94PAss/q9+9+dcd0AmwDUgEDApVtb8k5t214DlVcI+tkSkGuM/EjKpFJ1o=
+	t=1717683262; cv=none; b=QxD1B9bH7VCAHaLqoSl04a7nuqXT1buks6IGX4WYd9lZwTGKVQDdMrpT08EshzLzQM62gzGI1VJbZXUZZl/FK01en9/8iK9Wbm+m1IcvT1wmoU6mCtksMJaSzhT7nzufmvcjzx14pqFDlFT2MWpTCl+IJX5fhOl3aYBL+7meLmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683262; c=relaxed/simple;
-	bh=pZ5phVodJbPATCOpDyB2XWEbxW2q9BL9hW5H0D4nP5A=;
+	bh=A3TOCVZ/I4oUQA13+fV9+dH+6l/RJ9JokZIPtL4OnV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xjzb8IF04HtBU+tdNl89ABYefDdQwRR2efhEPhR1Vi3VBwNJUwgJK1btOpt1O3Wyu+lJ3OUpmNhYQLHtL5IwiOyxmHBfJ1FIlNI71/ph2YOk6wLPhsD3akAjJxzLKjD7wJD0E/ma96egIaH/jneVnHps4dscG3UV3P4FdOOZYT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7fRoIa1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oLdrdjlgkSTAxOWch/8mYnlJtz8fRg4mzmbIcQyYCvBlV2s3MLdk7DuFVKzdOD0GjX79OoaOysNf+8yYlTT9wLkTpqlF/ZEUmAT5dB94SSeq+buFlkSXPt06o/bkNwba6Fxa/wRtGeDUNA1OFIYJcp79d3pwqkWQZsfEsfhTqxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAqrTnhZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7fRoIa1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F342DC32781;
-	Thu,  6 Jun 2024 14:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAqrTnhZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D700C32781;
+	Thu,  6 Jun 2024 14:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683262;
-	bh=pZ5phVodJbPATCOpDyB2XWEbxW2q9BL9hW5H0D4nP5A=;
+	bh=A3TOCVZ/I4oUQA13+fV9+dH+6l/RJ9JokZIPtL4OnV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7fRoIa16ztovJUOPqiknxTCMRED8FzmuAE1ssUzTk5RDurMQoWZGnsCBsEfeCtSP
-	 /kLAwreJMypqpPcWolzh0WFRoQbEO8ELu2jteJYU4SknkVpw0m7xW+I2DV90D18qcg
-	 86XgXc9mxAEaIeuNO7XjAtTmZR1N2SsnJtjVuDYk=
+	b=ZAqrTnhZpsnscvsX0nSTcFDr4KEALxaaxM5Nj498SWYJZpQlZ5GUi8WSTuGNmdEQl
+	 5kpPekXzUnhhRimxgANuKIb+aB1ZxIQOe6zG9DaS4+R5Q1YXa/G9MBjWBGTHUqiVFV
+	 Y5ndHE2qgMmip1t9azACfDrLJCw4As2NGw8jAzVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Will Deacon <will@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 205/744] drivers/perf: hisi_pcie: Fix out-of-bound access when valid event group
-Date: Thu,  6 Jun 2024 15:57:57 +0200
-Message-ID: <20240606131738.983669759@linuxfoundation.org>
+Subject: [PATCH 6.1 109/473] scsi: ufs: cdns-pltfrm: Perform read back after writing HCLKDIV
+Date: Thu,  6 Jun 2024 16:00:38 +0200
+Message-ID: <20240606131703.524679160@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,70 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junhao He <hejunhao3@huawei.com>
+From: Andrew Halaney <ahalaney@redhat.com>
 
-[ Upstream commit 77fce82678ea5fd51442e62febec2004f79e041b ]
+[ Upstream commit b715c55daf598aac8fa339048e4ca8a0916b332e ]
 
-The perf tool allows users to create event groups through following
-cmd [1], but the driver does not check whether the array index is out of
-bounds when writing data to the event_group array. If the number of events
-in an event_group is greater than HISI_PCIE_MAX_COUNTERS, the memory write
-overflow of event_group array occurs.
+Currently, HCLKDIV is written to and then completed with an mb().
 
-Add array index check to fix the possible array out of bounds violation,
-and return directly when write new events are written to array bounds.
+mb() ensures that the write completes, but completion doesn't mean that it
+isn't stored in a buffer somewhere. The recommendation for ensuring this
+bit has taken effect on the device is to perform a read back to force it to
+make it all the way to the device. This is documented in device-io.rst and
+a talk by Will Deacon on this can be seen over here:
 
-There are 9 different events in an event_group.
-[1] perf stat -e '{pmu/event1/, ... ,pmu/event9/}'
+    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
 
-Fixes: 8404b0fbc7fb ("drivers/perf: hisi: Add driver for HiSilicon PCIe PMU")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Reviewed-by: Jijie Shao <shaojijie@huawei.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20240425124627.13764-2-hejunhao3@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Let's do that to ensure the bit hits the device. Because the mb()'s purpose
+wasn't to add extra ordering (on top of the ordering guaranteed by
+writel()/readl()), it can safely be removed.
+
+Fixes: d90996dae8e4 ("scsi: ufs: Add UFS platform driver for Cadence UFS")
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-6-181252004586@redhat.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/hisilicon/hisi_pcie_pmu.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/ufs/host/cdns-pltfrm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-index 051efffc44c82..430ca15373fe2 100644
---- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
-+++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-@@ -337,15 +337,27 @@ static bool hisi_pcie_pmu_validate_event_group(struct perf_event *event)
- 			return false;
+diff --git a/drivers/ufs/host/cdns-pltfrm.c b/drivers/ufs/host/cdns-pltfrm.c
+index e05c0ae64eea4..38a238eaa2133 100644
+--- a/drivers/ufs/host/cdns-pltfrm.c
++++ b/drivers/ufs/host/cdns-pltfrm.c
+@@ -137,7 +137,7 @@ static int cdns_ufs_set_hclkdiv(struct ufs_hba *hba)
+ 	 * Make sure the register was updated,
+ 	 * UniPro layer will not work with an incorrect value.
+ 	 */
+-	mb();
++	ufshcd_readl(hba, CDNS_UFS_REG_HCLKDIV);
  
- 		for (num = 0; num < counters; num++) {
-+			/*
-+			 * If we find a related event, then it's a valid group
-+			 * since we don't need to allocate a new counter for it.
-+			 */
- 			if (hisi_pcie_pmu_cmp_event(event_group[num], sibling))
- 				break;
- 		}
- 
-+		/*
-+		 * Otherwise it's a new event but if there's no available counter,
-+		 * fail the check since we cannot schedule all the events in
-+		 * the group simultaneously.
-+		 */
-+		if (num == HISI_PCIE_MAX_COUNTERS)
-+			return false;
-+
- 		if (num == counters)
- 			event_group[counters++] = sibling;
- 	}
- 
--	return counters <= HISI_PCIE_MAX_COUNTERS;
-+	return true;
+ 	return 0;
  }
- 
- static int hisi_pcie_pmu_event_init(struct perf_event *event)
 -- 
 2.43.0
 
