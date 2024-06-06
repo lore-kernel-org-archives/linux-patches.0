@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF27E19B3E1;
-	Thu,  6 Jun 2024 14:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F13919B3D4;
+	Thu,  6 Jun 2024 14:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683060; cv=none; b=kZy5DXAE3D1txIB/qn0ht9pq3FahiA/enkp5ADgcOA6rOEmGt/KFB/7/OeJ11RujT7Rvux1gk+mO9Ik7EFfO9cPFNqD6ImZfS8xMmevhYkIpE7yUE0d6vGf6AGhsuEWbFaoeLJs97TZ4t9HibtC5VY8NRi2rt+CoIPegVb/NT98=
+	t=1717683061; cv=none; b=FDUWsxiOjFSZY7XWk6ACR3t9z04htsp9iqk0Fn0oI6dhicw0Fe2s5AiPnqXnB5DcfQSRVX2NI8GuQfEE6kSsWG3LRYanVabG9gwgPPjjDz519HJT0LO8hHmJEB7QLrIOOtrV9tnvs7SZRwOieY8Iz2HZuOfRhGMkq8EYMZHKrCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683060; c=relaxed/simple;
-	bh=Cd1NOaxCf+J7MqwsjdTcWRLVkBRxxiLu1shyTi74GGQ=;
+	s=arc-20240116; t=1717683061; c=relaxed/simple;
+	bh=sQR78fIzsJ5c17HliJ0aC0a4mo1JNwHSyoHR0dGX+WA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poScKdNUD2OaV5jK0rV3C/AwgoyZpYeIcyHX11CwsXcu/Uv/MLErDz+f10DxSIyjU6/p8OTm+Z081N1ar4mce+bwS+uRwFSanIEvQJtrI1wRrc452/XAlahhSOVKf5xsMScjJQ8h54lfUibMBQaJh2fEz6EljZ6qNGCZTgN4jYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpcyCC2T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZwHWpz+771SdK2rfpFqCE5EDnK9ktqeyGF8p5S8jODn0pIISuW8viBZ+HFNVsXLFo60qu1YkhqpskAcv6DoGjk76+LHz/DFOwndQnjjhOHjMtEjE7SFwl8aMdHsBEAzBgN9A3G05THDxU5aApZVB285/l/YzUwaNkt5rHmwlPtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5BAAY6Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpcyCC2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C07C32782;
-	Thu,  6 Jun 2024 14:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5BAAY6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C83EC4AF16;
+	Thu,  6 Jun 2024 14:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683060;
-	bh=Cd1NOaxCf+J7MqwsjdTcWRLVkBRxxiLu1shyTi74GGQ=;
+	s=korg; t=1717683061;
+	bh=sQR78fIzsJ5c17HliJ0aC0a4mo1JNwHSyoHR0dGX+WA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NpcyCC2TB1WRTPr6Q0+3hHBO/5p+ozqdOZjfqBPyxZLnXpzkbhJiTElqPjQ72LfDt
-	 rulTGuZa2+iZro+RY0PgAuXIZ4uFJ2KYoBQ/O8yMM8IGKjg5tjRMN3tFWwKv1z5xyJ
-	 LYiBVquF5QAwapBsG0xV69S0xiT3FCn0mh6ak/5M=
+	b=L5BAAY6ZkUQRwkpTtRiKOSEVXFWR9f/fvxY/We8PPAEJseUULU4WvA1OCNDk7Q4Q1
+	 bpeA7dfUUtTfbXBwkowpLEjLCTXj76gRqPrIi/7l+RJulF/vqPVjIpHiD+L+352Ay6
+	 I+ZHftAbwWPFenw74X3BHwlz2DDj0mu4IchDcfck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roded Zats <rzats@paloaltonetworks.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 309/374] enic: Validate length of nl attributes in enic_set_vf_port
-Date: Thu,  6 Jun 2024 16:04:48 +0200
-Message-ID: <20240606131702.202730135@linuxfoundation.org>
+Subject: [PATCH 6.9 310/374] af_unix: Annotate data-race around unix_sk(sk)->addr.
+Date: Thu,  6 Jun 2024 16:04:49 +0200
+Message-ID: <20240606131702.237833729@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,67 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roded Zats <rzats@paloaltonetworks.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit e8021b94b0412c37bcc79027c2e382086b6ce449 ]
+[ Upstream commit 97e1db06c7bb948da10ba85acad8030b56886593 ]
 
-enic_set_vf_port assumes that the nl attribute IFLA_PORT_PROFILE
-is of length PORT_PROFILE_MAX and that the nl attributes
-IFLA_PORT_INSTANCE_UUID, IFLA_PORT_HOST_UUID are of length PORT_UUID_MAX.
-These attributes are validated (in the function do_setlink in rtnetlink.c)
-using the nla_policy ifla_port_policy. The policy defines IFLA_PORT_PROFILE
-as NLA_STRING, IFLA_PORT_INSTANCE_UUID as NLA_BINARY and
-IFLA_PORT_HOST_UUID as NLA_STRING. That means that the length validation
-using the policy is for the max size of the attributes and not on exact
-size so the length of these attributes might be less than the sizes that
-enic_set_vf_port expects. This might cause an out of bands
-read access in the memcpys of the data of these
-attributes in enic_set_vf_port.
+Once unix_sk(sk)->addr is assigned under net->unx.table.locks and
+unix_sk(sk)->bindlock, *(unix_sk(sk)->addr) and unix_sk(sk)->path are
+fully set up, and unix_sk(sk)->addr is never changed.
 
-Fixes: f8bd909183ac ("net: Add ndo_{set|get}_vf_port support for enic dynamic vnics")
-Signed-off-by: Roded Zats <rzats@paloaltonetworks.com>
-Link: https://lore.kernel.org/r/20240522073044.33519-1-rzats@paloaltonetworks.com
+unix_getname() and unix_copy_addr() access the two fields locklessly,
+and commit ae3b564179bf ("missing barriers in some of unix_sock ->addr
+and ->path accesses") added smp_store_release() and smp_load_acquire()
+pairs.
+
+In other functions, we still read unix_sk(sk)->addr locklessly to check
+if the socket is bound, and KCSAN complains about it.  [0]
+
+Given these functions have no dependency for *(unix_sk(sk)->addr) and
+unix_sk(sk)->path, READ_ONCE() is enough to annotate the data-race.
+
+Note that it is safe to access unix_sk(sk)->addr locklessly if the socket
+is found in the hash table.  For example, the lockless read of otheru->addr
+in unix_stream_connect() is safe.
+
+Note also that newu->addr there is of the child socket that is still not
+accessible from userspace, and smp_store_release() publishes the address
+in case the socket is accept()ed and unix_getname() / unix_copy_addr()
+is called.
+
+[0]:
+BUG: KCSAN: data-race in unix_bind / unix_listen
+
+write (marked) to 0xffff88805f8d1840 of 8 bytes by task 13723 on cpu 0:
+ __unix_set_addr_hash net/unix/af_unix.c:329 [inline]
+ unix_bind_bsd net/unix/af_unix.c:1241 [inline]
+ unix_bind+0x881/0x1000 net/unix/af_unix.c:1319
+ __sys_bind+0x194/0x1e0 net/socket.c:1847
+ __do_sys_bind net/socket.c:1858 [inline]
+ __se_sys_bind net/socket.c:1856 [inline]
+ __x64_sys_bind+0x40/0x50 net/socket.c:1856
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x4f/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x46/0x4e
+
+read to 0xffff88805f8d1840 of 8 bytes by task 13724 on cpu 1:
+ unix_listen+0x72/0x180 net/unix/af_unix.c:734
+ __sys_listen+0xdc/0x160 net/socket.c:1881
+ __do_sys_listen net/socket.c:1890 [inline]
+ __se_sys_listen net/socket.c:1888 [inline]
+ __x64_sys_listen+0x2e/0x40 net/socket.c:1888
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x4f/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x46/0x4e
+
+value changed: 0x0000000000000000 -> 0xffff88807b5b1b40
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 13724 Comm: syz-executor.4 Not tainted 6.8.0-12822-gcd51db110a7e #12
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240522154002.77857-1-kuniyu@amazon.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cisco/enic/enic_main.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/unix/af_unix.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
-index d266a87297a5e..54798df8e2544 100644
---- a/drivers/net/ethernet/cisco/enic/enic_main.c
-+++ b/drivers/net/ethernet/cisco/enic/enic_main.c
-@@ -1117,18 +1117,30 @@ static int enic_set_vf_port(struct net_device *netdev, int vf,
- 	pp->request = nla_get_u8(port[IFLA_PORT_REQUEST]);
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 9bc879f3e34e6..6498e41e2ecf9 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -731,7 +731,7 @@ static int unix_listen(struct socket *sock, int backlog)
+ 	if (sock->type != SOCK_STREAM && sock->type != SOCK_SEQPACKET)
+ 		goto out;	/* Only stream/seqpacket sockets accept */
+ 	err = -EINVAL;
+-	if (!u->addr)
++	if (!READ_ONCE(u->addr))
+ 		goto out;	/* No listens on an unbound socket */
+ 	unix_state_lock(sk);
+ 	if (sk->sk_state != TCP_CLOSE && sk->sk_state != TCP_LISTEN)
+@@ -1369,7 +1369,7 @@ static int unix_dgram_connect(struct socket *sock, struct sockaddr *addr,
  
- 	if (port[IFLA_PORT_PROFILE]) {
-+		if (nla_len(port[IFLA_PORT_PROFILE]) != PORT_PROFILE_MAX) {
-+			memcpy(pp, &prev_pp, sizeof(*pp));
-+			return -EINVAL;
-+		}
- 		pp->set |= ENIC_SET_NAME;
- 		memcpy(pp->name, nla_data(port[IFLA_PORT_PROFILE]),
- 			PORT_PROFILE_MAX);
+ 		if ((test_bit(SOCK_PASSCRED, &sock->flags) ||
+ 		     test_bit(SOCK_PASSPIDFD, &sock->flags)) &&
+-		    !unix_sk(sk)->addr) {
++		    !READ_ONCE(unix_sk(sk)->addr)) {
+ 			err = unix_autobind(sk);
+ 			if (err)
+ 				goto out;
+@@ -1481,7 +1481,8 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
+ 		goto out;
+ 
+ 	if ((test_bit(SOCK_PASSCRED, &sock->flags) ||
+-	     test_bit(SOCK_PASSPIDFD, &sock->flags)) && !u->addr) {
++	     test_bit(SOCK_PASSPIDFD, &sock->flags)) &&
++	    !READ_ONCE(u->addr)) {
+ 		err = unix_autobind(sk);
+ 		if (err)
+ 			goto out;
+@@ -1997,7 +1998,8 @@ static int unix_dgram_sendmsg(struct socket *sock, struct msghdr *msg,
  	}
  
- 	if (port[IFLA_PORT_INSTANCE_UUID]) {
-+		if (nla_len(port[IFLA_PORT_INSTANCE_UUID]) != PORT_UUID_MAX) {
-+			memcpy(pp, &prev_pp, sizeof(*pp));
-+			return -EINVAL;
-+		}
- 		pp->set |= ENIC_SET_INSTANCE;
- 		memcpy(pp->instance_uuid,
- 			nla_data(port[IFLA_PORT_INSTANCE_UUID]), PORT_UUID_MAX);
- 	}
- 
- 	if (port[IFLA_PORT_HOST_UUID]) {
-+		if (nla_len(port[IFLA_PORT_HOST_UUID]) != PORT_UUID_MAX) {
-+			memcpy(pp, &prev_pp, sizeof(*pp));
-+			return -EINVAL;
-+		}
- 		pp->set |= ENIC_SET_HOST;
- 		memcpy(pp->host_uuid,
- 			nla_data(port[IFLA_PORT_HOST_UUID]), PORT_UUID_MAX);
+ 	if ((test_bit(SOCK_PASSCRED, &sock->flags) ||
+-	     test_bit(SOCK_PASSPIDFD, &sock->flags)) && !u->addr) {
++	     test_bit(SOCK_PASSPIDFD, &sock->flags)) &&
++	    !READ_ONCE(u->addr)) {
+ 		err = unix_autobind(sk);
+ 		if (err)
+ 			goto out;
 -- 
 2.43.0
 
