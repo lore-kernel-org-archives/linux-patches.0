@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12ADC19AA75;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8616119AA78;
 	Thu,  6 Jun 2024 14:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683320; cv=none; b=E1UYORNZhIG9+33bVo6mZuAIDuwhv+RjAb4GZpcSc8gsoB1Mcyu0HUQ/zMVmp7VSBaNzEy2eKStIfAhzfHGrMuE1RnKeE+r6PjaUjszjLwXzD93nuT9m4sneJP0utKUb4H5cHgbqf+6SwgHQg55K+SCQ4uN+Ahlp8p1Q9N0XsqM=
+	t=1717683320; cv=none; b=F1nozT7q2zuFf96wPRgYMZI6kqD6BHrptJQOl3ebu4y8RoM+B/IGTF0ePZKjdaeNNnl4GQUGUBZboxofidy99en5CMUf+AjH0DwAGBguVbFLkrAXJnZH17qKv7mGTdndxw+n2JRa+TW266jr4jRN4Z+S91/8ixQo9RjZ5jgwDO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683320; c=relaxed/simple;
-	bh=EgkFqVWjJ6Rsqx1b06yO4RFrHNQ3FNr5BTlbn0m8BFA=;
+	bh=s98C1BIOCyNXNIVBvWBxpXfEPZHaZlGIL0jtPM2O54c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0dEvXeUU5Fty0+AkZmqIMaUinSbzSI9Pjy+Nkzlw1V0jXy39e3v2l8Y2QAhOz1J4XX5t2adDJzeenA+wmlf9kpixEQa8MEYSe9FqkVEXLHRumOydCU2PgJb9sJBDiwlCgi6jTLuHc1jKdTwcI/OlMFpcwsRzdHybXqYvAKqGrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPCSH1Hz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jhpwFivUL3xm9t7R6B+aNsPqe0Ccd32WoAC04BBVuX8Gd3SmdrNhBwRUxaGjy2H6WcRk7I1LWhBa41uwwcv4HGDcz4Uc2D1EvUWL4vTuBFV7hlfRcULNEvTGOzXfJPdAV6HRTA2tokz6OsNfV8iufQaiudKzcdtLRdtloNU/Qzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uU8EjUcK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPCSH1Hz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E514DC32781;
-	Thu,  6 Jun 2024 14:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uU8EjUcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D65C2BD10;
+	Thu,  6 Jun 2024 14:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683320;
-	bh=EgkFqVWjJ6Rsqx1b06yO4RFrHNQ3FNr5BTlbn0m8BFA=;
+	bh=s98C1BIOCyNXNIVBvWBxpXfEPZHaZlGIL0jtPM2O54c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPCSH1HzvSbYntIr32iTWIe2Ij2pyki5rpIrISJnLl3cRH0z3WFf2bOO0Dm0Ns5aN
-	 J2XG8b8/fCnaFsd8GAMFplh4KywWlSfoT5e99dbCtYcrPdMmk6pwapR6oTKnBgAst6
-	 dt7dgn2r198vWxTskA6wpiCLD3danzJxL75BZj50=
+	b=uU8EjUcKEyPrte3SSRhGJ2ZPNP7tJtmhi6KVvGwVMQ1I4pCt2C2VK13EXuCEN04JG
+	 /gTTJoRPiZnlIjdbjrhxwDssieaAmHgArmTkORCZPJiQxrBGRNRkTLEbE1jCLZKnkD
+	 0UxJDs5LNeOghKv3AK/VxH9vvgc87VSerdKW6x0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aapo Vienamo <aapo.vienamo@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 199/473] mtd: core: Report error if first mtd_otp_size() call fails in mtd_otp_nvmem_add()
-Date: Thu,  6 Jun 2024 16:02:08 +0200
-Message-ID: <20240606131706.525615657@linuxfoundation.org>
+Subject: [PATCH 6.6 260/744] net: micrel: Fix receiving the timestamp in the frame for lan8841
+Date: Thu,  6 Jun 2024 15:58:52 +0200
+Message-ID: <20240606131740.743319111@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aapo Vienamo <aapo.vienamo@linux.intel.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit d44f0bbbd8d182debcce88bda55b05269f3d33d6 ]
+[ Upstream commit aea27a92a41dae14843f92c79e9e42d8f570105c ]
 
-Jump to the error reporting code in mtd_otp_nvmem_add() if the
-mtd_otp_size() call fails. Without this fix, the error is not logged.
+The blamed commit started to use the ptp workqueue to get the second
+part of the timestamp. And when the port was set down, then this
+workqueue is stopped. But if the config option NETWORK_PHY_TIMESTAMPING
+is not enabled, then the ptp_clock is not initialized so then it would
+crash when it would try to access the delayed work.
+So then basically by setting up and then down the port, it would crash.
+The fix consists in checking if the ptp_clock is initialized and only
+then cancel the delayed work.
 
-Signed-off-by: Aapo Vienamo <aapo.vienamo@linux.intel.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Fixes: 4b361cfa8624 ("mtd: core: add OTP nvmem provider support")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240313173425.1325790-2-aapo.vienamo@linux.intel.com
+Fixes: cc7554954848 ("net: micrel: Change to receive timestamp in the frame for lan8841")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/phy/micrel.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 24518e5e1b5e4..ad527bdbd4632 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -942,8 +942,10 @@ static int mtd_otp_nvmem_add(struct mtd_info *mtd)
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index cbd98ea4a84af..538a5f59d7a73 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -4612,7 +4612,8 @@ static int lan8841_suspend(struct phy_device *phydev)
+ 	struct kszphy_priv *priv = phydev->priv;
+ 	struct kszphy_ptp_priv *ptp_priv = &priv->ptp_priv;
  
- 	if (mtd->_get_user_prot_info && mtd->_read_user_prot_reg) {
- 		size = mtd_otp_size(mtd, true);
--		if (size < 0)
--			return size;
-+		if (size < 0) {
-+			err = size;
-+			goto err;
-+		}
+-	ptp_cancel_worker_sync(ptp_priv->ptp_clock);
++	if (ptp_priv->ptp_clock)
++		ptp_cancel_worker_sync(ptp_priv->ptp_clock);
  
- 		if (size > 0) {
- 			nvmem = mtd_otp_nvmem_register(mtd, "user-otp", size,
+ 	return genphy_suspend(phydev);
+ }
 -- 
 2.43.0
 
