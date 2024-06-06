@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352B41AB52D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19FB199EBD;
 	Thu,  6 Jun 2024 14:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683261; cv=none; b=a+0/rEw+pIsgVQlVl65K2bcY0LEtTJa7TV+WG8omJUs14F/kygCyvPe5secWmR4eHhBIXY3GophIfu7O4Je3gl0zUZ+j7FcAIIM3aU4uDIQb2A9Kynqbd/0HUUwfDfQFaQGV0gF8cGQK/RueHOc4tvkSh6zPzKRIK3xVPLY2dGs=
+	t=1717683261; cv=none; b=hVhFZLFUYgxDuWhcq4rr4Md4U718DjeNlLSQtKl75ZwSRRPx1uLRBU65kY7lYso2DPj38qC2lM+g2/G3CIGTug4vEouhXzTJ6zVlIYh+IYP0TNYckHnacz1E5sY+X2qwrghgyruvcmAEU/fVOHz9gvYJXfYh8z9H+EZLqqr2RVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683261; c=relaxed/simple;
-	bh=qx3rKtdswD5bpRQjmcehlf8keAqSsOPmhe0+VeuxIhE=;
+	bh=yaeSxjjoN6CVE3uFIEG2/n7wIpSVPX56J8+e9cxEjRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lp7VrrY/UAJkTqFrBvHOh14aApxDRJNRV1B2Bz10V3S+4q/ReT7fCUB9xArggOL1NClX+o60uyaJ4w8r/6D0rWqBDdGIcThg63CF1xre7pcdZjUBl6beYTMV5wxbpbm6f6SF77quJHnP4QEQfYjZEgWyrBhLcZBBT5ps2KYnTjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdOFFJez; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A4CxJ0Pa0FiHvB/b/h16gEl8W4vIbaKeVZ6ZIN8tRerjSQjjqUjyBUdsCGj6GwdY5XpeNo8H4VBvJZz4jl/NGr5K7nFAm9OvkVnH/CzjJNOdBepkpozTmO4XgA7bVaL/U0XFCQdbFCNy3xRxAxt6PHL/SUCZwq3a9zneNBOPyag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHIH+hci; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdOFFJez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CFFC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHIH+hci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9A4C32781;
 	Thu,  6 Jun 2024 14:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683261;
-	bh=qx3rKtdswD5bpRQjmcehlf8keAqSsOPmhe0+VeuxIhE=;
+	bh=yaeSxjjoN6CVE3uFIEG2/n7wIpSVPX56J8+e9cxEjRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QdOFFJezNg9eWBBJ3xIfUElGEWX5HoH3YflZlu0PqMG0x75WDco1p/gD0vYGRLMS9
-	 xTVlqXtrKcnbsZDxKX5/PBwFpzvRHiQmGogzhXSEyoIxwTSiPl/TJINtEEPx3fkSjp
-	 98YEtYWiwV/od58dHTz6jHHHyAgEA4wZiulXaeWs=
+	b=mHIH+hcisOO63TLeSsotDkA6xar302AhtZfVvC5P0t6Qp1Hs/GcckE/d6pz3MtuyO
+	 ubYOUBjbX9UMs9KmMrfhilxYQm6+VYZk84T0PxgCFd1bRQWvAZLBPIt9M+alGsC1sP
+	 qec4BABPl5nEfk2AhrkMxARpV04g2bMqJ5ryvRLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 204/744] pwm: sti: Simplify probe function using devm functions
-Date: Thu,  6 Jun 2024 15:57:56 +0200
-Message-ID: <20240606131738.953733360@linuxfoundation.org>
+Subject: [PATCH 6.1 137/473] tcp: avoid premature drops in tcp_add_backlog()
+Date: Thu,  6 Jun 2024 16:01:06 +0200
+Message-ID: <20240606131704.458524233@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,117 +45,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5bb0b194aeee5d5da6881232f4e9989b35957c25 ]
+[ Upstream commit ec00ed472bdb7d0af840da68c8c11bff9f4d9caa ]
 
-Instead of of_clk_get_by_name() use devm_clk_get_prepared() which has
-several advantages:
+While testing TCP performance with latest trees,
+I saw suspect SOCKET_BACKLOG drops.
 
- - Combines getting the clock and a call to clk_prepare(). The latter
-   can be dropped from sti_pwm_probe() accordingly.
- - Cares for calling clk_put() which is missing in both probe's error
-   path and the remove function.
- - Cares for calling clk_unprepare() which can be dropped from the error
-   paths and the remove function. (Note that not all error path got this
-   right.)
+tcp_add_backlog() computes its limit with :
 
-With additionally using devm_pwmchip_add() instead of pwmchip_add() the
-remove callback can be dropped completely. With it the last user of
-platform_get_drvdata() goes away and so platform_set_drvdata() can be
-dropped from the probe function, too.
+    limit = (u32)READ_ONCE(sk->sk_rcvbuf) +
+            (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
+    limit += 64 * 1024;
 
-Fixes: 378fe115d19d ("pwm: sti: Add new driver for ST's PWM IP")
-Link: https://lore.kernel.org/r/81f0e1d173652f435afda6719adaed1922fe059a.1710068192.git.u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+This does not take into account that sk->sk_backlog.len
+is reset only at the very end of __release_sock().
+
+Both sk->sk_backlog.len and sk->sk_rmem_alloc could reach
+sk_rcvbuf in normal conditions.
+
+We should double sk->sk_rcvbuf contribution in the formula
+to absorb bubbles in the backlog, which happen more often
+for very fast flows.
+
+This change maintains decent protection against abuses.
+
+Fixes: c377411f2494 ("net: sk_add_backlog() take rmem_alloc into account")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240423125620.3309458-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-sti.c | 39 +++------------------------------------
- 1 file changed, 3 insertions(+), 36 deletions(-)
+ net/ipv4/tcp_ipv4.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
-index 8f7aff51787be..a0467f0b549c2 100644
---- a/drivers/pwm/pwm-sti.c
-+++ b/drivers/pwm/pwm-sti.c
-@@ -625,32 +625,20 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 5dcb969cb5e9c..befa848fb820c 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -1771,7 +1771,7 @@ int tcp_v4_early_demux(struct sk_buff *skb)
+ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb,
+ 		     enum skb_drop_reason *reason)
+ {
+-	u32 limit, tail_gso_size, tail_gso_segs;
++	u32 tail_gso_size, tail_gso_segs;
+ 	struct skb_shared_info *shinfo;
+ 	const struct tcphdr *th;
+ 	struct tcphdr *thtail;
+@@ -1780,6 +1780,7 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb,
+ 	bool fragstolen;
+ 	u32 gso_segs;
+ 	u32 gso_size;
++	u64 limit;
+ 	int delta;
  
- 	if (cdata->pwm_num_devs) {
--		pc->pwm_clk = of_clk_get_by_name(dev->of_node, "pwm");
-+		pc->pwm_clk = devm_clk_get_prepared(dev, "pwm");
- 		if (IS_ERR(pc->pwm_clk)) {
- 			dev_err(dev, "failed to get PWM clock\n");
- 			return PTR_ERR(pc->pwm_clk);
- 		}
--
--		ret = clk_prepare(pc->pwm_clk);
--		if (ret) {
--			dev_err(dev, "failed to prepare clock\n");
--			return ret;
--		}
- 	}
+ 	/* In case all data was pulled from skb frags (in __pskb_pull_tail()),
+@@ -1877,7 +1878,13 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb,
+ 	__skb_push(skb, hdrlen);
  
- 	if (cdata->cpt_num_devs) {
--		pc->cpt_clk = of_clk_get_by_name(dev->of_node, "capture");
-+		pc->cpt_clk = devm_clk_get_prepared(dev, "capture");
- 		if (IS_ERR(pc->cpt_clk)) {
- 			dev_err(dev, "failed to get PWM capture clock\n");
- 			return PTR_ERR(pc->cpt_clk);
- 		}
+ no_coalesce:
+-	limit = (u32)READ_ONCE(sk->sk_rcvbuf) + (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
++	/* sk->sk_backlog.len is reset only at the end of __release_sock().
++	 * Both sk->sk_backlog.len and sk->sk_rmem_alloc could reach
++	 * sk_rcvbuf in normal conditions.
++	 */
++	limit = ((u64)READ_ONCE(sk->sk_rcvbuf)) << 1;
++
++	limit += ((u32)READ_ONCE(sk->sk_sndbuf)) >> 1;
  
--		ret = clk_prepare(pc->cpt_clk);
--		if (ret) {
--			dev_err(dev, "failed to prepare clock\n");
--			return ret;
--		}
--
- 		cdata->ddata = devm_kzalloc(dev, cdata->cpt_num_devs * sizeof(*cdata->ddata), GFP_KERNEL);
- 		if (!cdata->ddata)
- 			return -ENOMEM;
-@@ -667,27 +655,7 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 		mutex_init(&ddata->lock);
- 	}
+ 	/* Only socket owner can try to collapse/prune rx queues
+ 	 * to reduce memory overhead, so add a little headroom here.
+@@ -1885,6 +1892,8 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb,
+ 	 */
+ 	limit += 64 * 1024;
  
--	ret = pwmchip_add(chip);
--	if (ret < 0) {
--		clk_unprepare(pc->pwm_clk);
--		clk_unprepare(pc->cpt_clk);
--		return ret;
--	}
--
--	platform_set_drvdata(pdev, chip);
--
--	return 0;
--}
--
--static void sti_pwm_remove(struct platform_device *pdev)
--{
--	struct pwm_chip *chip = platform_get_drvdata(pdev);
--	struct sti_pwm_chip *pc = to_sti_pwmchip(chip);
--
--	pwmchip_remove(chip);
--
--	clk_unprepare(pc->pwm_clk);
--	clk_unprepare(pc->cpt_clk);
-+	return devm_pwmchip_add(dev, chip);
- }
- 
- static const struct of_device_id sti_pwm_of_match[] = {
-@@ -702,7 +670,6 @@ static struct platform_driver sti_pwm_driver = {
- 		.of_match_table = sti_pwm_of_match,
- 	},
- 	.probe = sti_pwm_probe,
--	.remove_new = sti_pwm_remove,
- };
- module_platform_driver(sti_pwm_driver);
- 
++	limit = min_t(u64, limit, UINT_MAX);
++
+ 	if (unlikely(sk_add_backlog(sk, skb, limit))) {
+ 		bh_unlock_sock(sk);
+ 		*reason = SKB_DROP_REASON_SOCKET_BACKLOG;
 -- 
 2.43.0
 
