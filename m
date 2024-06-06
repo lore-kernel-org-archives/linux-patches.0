@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9ECF19D09B;
-	Thu,  6 Jun 2024 14:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61470196C7D;
+	Thu,  6 Jun 2024 14:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683094; cv=none; b=ln3HQKY89jwqpUodLYYn2glo1vRKjGz973/dg0UKJJB9pfs5tX2jDBtpRWuh3NMzje4L3BXqz5Mw8YvjH8jvuCB82vWfh8QLslxYesqgsSZ31c/EZA4p0MrBL7wbH4FFay4X4LsRgTIA7sxevpXa+dA7zfVHzVvBMcJWriWA3uo=
+	t=1717683095; cv=none; b=neXI2cP5vuQMoJDBiBPV0/IfXHiCJ7g3VM6iaYcZMVyDs/YMDiDAVx30EfcIlwUJKb4qrfXkW/FswOi/gXyUKiY3F5iHNrvKBKudoh5Ev/tD4TuPUgVbQVX7OxbXuA4msBmn7i0Xo+ocvFEY+p0bLQUn+rjYjafGncMa9hYS1Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683094; c=relaxed/simple;
-	bh=jct6SWgEW2ocNHceU2bEe+inWKy1BWRMNJ/3RbNHWoY=;
+	s=arc-20240116; t=1717683095; c=relaxed/simple;
+	bh=OMwFaEtLGWZYZdwTgbMWem2Bt1v7xR/xwhI2J8MjIw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Szb1dzhI/JrckM6A0NEH/xFyjhbUrjoJ5iQWyn4ReqL1Evv2fGE8agxpfWeOr2aCRiwB9k/tBZhMMcWmgLHuCgE3JUaGP403JfUtCqKTibnidW8lMu2b9Yf1hYCHFHE60Pim3yxqC3H3mJZFwWRg760abnTjyXP0CnllsWpxEQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvwdxvNm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ECaF9Gib1MW/c0DCUfDPRxZNIIViDVQA9MrvQiEBKlurd1shvsULuiRlAC+c+e1OoklYqe0kd7Ltj4SyW/8fDQ2hqHst4l4lzFkbAqrb+hob4GJbpfhfSx3JLIdMp1LKtldj8n0Az9+Isu6wzk2fpObGaleOIO16KEjcM4bRO6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+EgWYeP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvwdxvNm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B557CC2BD10;
-	Thu,  6 Jun 2024 14:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+EgWYeP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0ABC2BD10;
+	Thu,  6 Jun 2024 14:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683094;
-	bh=jct6SWgEW2ocNHceU2bEe+inWKy1BWRMNJ/3RbNHWoY=;
+	s=korg; t=1717683095;
+	bh=OMwFaEtLGWZYZdwTgbMWem2Bt1v7xR/xwhI2J8MjIw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MvwdxvNmRv/1Er+bpM3tRlAGsUlP2F2d7CdML9CCji4GYCAOJ+mF6tNHuHkt6QKl7
-	 h+Q9508u0lxEbDJhTCYbU+LD7iZhBN4sGwDfgVaym4KTiixMPjKgnKm8qV4rkS3WHl
-	 HQkhKToH2GWS3k/mCVDpHSELhx5uTiDLvNB7c29w=
+	b=0+EgWYePLLOLDfPDEtE4w4tux6ChUoWO6+0T6HinJjVE2wj806e2MmFPmOPwEogv0
+	 Nhi6jbtt9TB14W7qK3yaoL5kAkIgAFJRRZxuWL4SfocuIm+Mv8aX8/xCKCsmdZgD9j
+	 bPeFsiuZw0l+X/BSJVCfJsk32czXk28mPoWSJ7XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hagar Hemdan <hagarhem@amazon.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.9 367/374] efi: libstub: only free priv.runtime_map when allocated
-Date: Thu,  6 Jun 2024 16:05:46 +0200
-Message-ID: <20240606131704.174267952@linuxfoundation.org>
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Gerald Loacker <gerald.loacker@wolfvision.net>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 358/374] drm/panel: sitronix-st7789v: fix timing for jt240mhqs_hwt_ek_e3 panel
+Date: Thu,  6 Jun 2024 16:05:37 +0200
+Message-ID: <20240606131703.875372850@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -50,39 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hagar Hemdan <hagarhem@amazon.com>
+From: Gerald Loacker <gerald.loacker@wolfvision.net>
 
-commit 4b2543f7e1e6b91cfc8dd1696e3cdf01c3ac8974 upstream.
+[ Upstream commit 0e5895ff7fab0fc05ec17daf9a568368828fa6ea ]
 
-priv.runtime_map is only allocated when efi_novamap is not set.
-Otherwise, it is an uninitialized value.  In the error path, it is freed
-unconditionally.  Avoid passing an uninitialized value to free_pool.
-Free priv.runtime_map only when it was allocated.
+Flickering was observed when using partial mode. Moving the vsync to the
+same position as used by the default sitronix-st7789v timing resolves this
+issue.
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
-
-Fixes: f80d26043af9 ("efi: libstub: avoid efi_get_memory_map() for allocating the virt map")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0fbbe96bfa08 ("drm/panel: sitronix-st7789v: add jasonic jt240mhqs-hwt-ek-e3 support")
+Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Signed-off-by: Gerald Loacker <gerald.loacker@wolfvision.net>
+Link: https://lore.kernel.org/r/20240409-bugfix-jt240mhqs_hwt_ek_e3-timing-v2-1-e4821802443d@wolfvision.net
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240409-bugfix-jt240mhqs_hwt_ek_e3-timing-v2-1-e4821802443d@wolfvision.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/fdt.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-sitronix-st7789v.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/firmware/efi/libstub/fdt.c
-+++ b/drivers/firmware/efi/libstub/fdt.c
-@@ -335,8 +335,8 @@ fail_free_new_fdt:
- 
- fail:
- 	efi_free(fdt_size, fdt_addr);
--
--	efi_bs_call(free_pool, priv.runtime_map);
-+	if (!efi_novamap)
-+		efi_bs_call(free_pool, priv.runtime_map);
- 
- 	return EFI_LOAD_ERROR;
- }
+diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7789v.c b/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
+index 88e80fe98112d..32e5c03480381 100644
+--- a/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
++++ b/drivers/gpu/drm/panel/panel-sitronix-st7789v.c
+@@ -286,9 +286,9 @@ static const struct drm_display_mode jt240mhqs_hwt_ek_e3_mode = {
+ 	.hsync_end = 240 + 28 + 10,
+ 	.htotal = 240 + 28 + 10 + 10,
+ 	.vdisplay = 280,
+-	.vsync_start = 280 + 8,
+-	.vsync_end = 280 + 8 + 4,
+-	.vtotal = 280 + 8 + 4 + 4,
++	.vsync_start = 280 + 48,
++	.vsync_end = 280 + 48 + 4,
++	.vtotal = 280 + 48 + 4 + 4,
+ 	.width_mm = 43,
+ 	.height_mm = 37,
+ 	.flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC,
+-- 
+2.43.0
+
 
 
