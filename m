@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA1119924F;
-	Thu,  6 Jun 2024 14:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC211A2C35;
+	Thu,  6 Jun 2024 14:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683207; cv=none; b=XaCujQ55qDvKzgiDsbOyoMIEXjaTIcQp48gCDAbKIIPXSKRboR11BxUyWx35wAB5Yn8jLRwkH6g1P5Yy+W9ScCCXpjlE5ixaIgNnZW9P+kg3J/g5+ZIGLKfn1Pcu4BNcY1Y2v0gOxhiN964g5fxu06GyVNN7TgCMURaBHt9bNcQ=
+	t=1717683208; cv=none; b=lL3NSCSGB0mnOOfdhHWCx9NeoODgmWAUKTFUwk10EuGhEl4yYINKpgtH7WECzqux4mptq+0766cslwkXo1oHfLIhPWA69iSDDnUhasjjynK555TBCb3miAMLsHUujd/thvaR0zlE/O5aEQsFq5uwVwFoZSDuasY6kr1+V2TEcck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683207; c=relaxed/simple;
-	bh=ptJgIJiTSdwXcVvVQcRArzc04QZXFsrqnQdH5spL9NQ=;
+	s=arc-20240116; t=1717683208; c=relaxed/simple;
+	bh=K2ViiHRyRSMtqIL9KH8+zgs3iF4haKfxaDnnoqNyZag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TChvTHezKFCBmyxUUjnz3qvldan8qcsFQBxckuviGQTDEze8IbnD3q9Ls1a6lNAcbeB+EBDbINIU42ssOZ/YsUMnJP42rmrJGiXUjtGBVSsWB7wNFs4ZCHo3jtFT44Adj5s3fpZSp9wXpYPkJEdUIhINwW7uLolar16PRnOns28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itfynmR+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dsSdQDodpSTQfd5dNRkpjDHDVQJMeKHvIEiYLEHxsDJEFQQkuabrYdX/lXlmhgEpnSJsuw/57q2o8XP/bTwWZnQq0mk/RnnAaPh2h+QJpSbk5Vx3EvXxXBjqiRQ1ZlC+4ELYq2X4sJWAD1mb8pfGpzH8dFlDZ8jlHlBxOKyuYMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bZBpmmf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itfynmR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5DEC2BD10;
-	Thu,  6 Jun 2024 14:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bZBpmmf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1186EC2BD10;
+	Thu,  6 Jun 2024 14:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683207;
-	bh=ptJgIJiTSdwXcVvVQcRArzc04QZXFsrqnQdH5spL9NQ=;
+	s=korg; t=1717683208;
+	bh=K2ViiHRyRSMtqIL9KH8+zgs3iF4haKfxaDnnoqNyZag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=itfynmR+pDdHqnvgkQkr/VEAXMYK9jBPDsLp2tNSOEf3eJqh+7XTmaCm3PkpclsnL
-	 qWd9FVSlbpqgYm4koJTo+JQL7W4srcSbsViNFK5C6FUHtK4AbAMnUUaUnhhq2gHaiW
-	 YhnnsKZUtbSnmN+ReooIcTsXAKHFnepN3arqqtiI=
+	b=1bZBpmmf+UgBVcr7WMDrNukZRi4R81vA3nVU89AUcp7q9a6Y/SMkhHh+oNrSnPw+F
+	 FTZCDJ38ycoXlM74sS53F2HqzPuH+Yp2/9JyhvdlIlFy1u+W08hu33bmqvcsJisTRO
+	 xD7nZkodLlIcUiuHoEK4GE2hHrW/bdC3dtn83g3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jens Axboe <axboe@kernel.dk>,
+	Can Guo <quic_cang@quicinc.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/473] null_blk: Fix missing mutex_destroy() at module removal
-Date: Thu,  6 Jun 2024 16:00:14 +0200
-Message-ID: <20240606131702.715595282@linuxfoundation.org>
+Subject: [PATCH 6.6 151/744] scsi: ufs: qcom: Perform read back after writing REG_UFS_SYS1CLK_1US
+Date: Thu,  6 Jun 2024 15:57:03 +0200
+Message-ID: <20240606131737.262005910@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Andrew Halaney <ahalaney@redhat.com>
 
-[ Upstream commit 07d1b99825f40f9c0d93e6b99d79a08d0717bac1 ]
+[ Upstream commit a862fafa263aea0f427d51aca6ff7fd9eeaaa8bd ]
 
-When a mutex lock is not used any more, the function mutex_destroy
-should be called to mark the mutex lock uninitialized.
+Currently after writing to REG_UFS_SYS1CLK_1US a mb() is used to ensure
+that write has gone through to the device.
 
-Fixes: f2298c0403b0 ("null_blk: multi queue aware block test driver")
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://lore.kernel.org/r/20240425171635.4227-1-yanjun.zhu@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+mb() ensures that the write completes, but completion doesn't mean that it
+isn't stored in a buffer somewhere. The recommendation for ensuring this
+bit has taken effect on the device is to perform a read back to force it to
+make it all the way to the device. This is documented in device-io.rst and
+a talk by Will Deacon on this can be seen over here:
+
+    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
+
+Let's do that to ensure the bit hits the device. Because the mb()'s purpose
+wasn't to add extra ordering (on top of the ordering guaranteed by
+writel()/readl()), it can safely be removed.
+
+Fixes: f06fcc7155dc ("scsi: ufs-qcom: add QUniPro hardware support and power optimizations")
+Reviewed-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-2-181252004586@redhat.com
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ufs/host/ufs-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 959952e8ede38..b7a26a12dc656 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -2298,6 +2298,8 @@ static void __exit null_exit(void)
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 797219db026bc..559b4cab16a3e 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -597,7 +597,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
+ 		 * make sure above write gets applied before we return from
+ 		 * this function.
+ 		 */
+-		mb();
++		ufshcd_readl(hba, REG_UFS_SYS1CLK_1US);
+ 	}
  
- 	if (g_queue_mode == NULL_Q_MQ && shared_tags)
- 		blk_mq_free_tag_set(&tag_set);
-+
-+	mutex_destroy(&lock);
- }
- 
- module_init(null_init);
+ 	if (ufs_qcom_cap_qunipro(host))
 -- 
 2.43.0
 
