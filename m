@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87EE1A01A6;
-	Thu,  6 Jun 2024 14:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238211A01B2;
+	Thu,  6 Jun 2024 14:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683632; cv=none; b=egSpyI9zAHf5zj9NiZAi39HrF+IKIZXeXhyZk6CcsX9LQyDIm0wl3YtvsmBCVoodkymUbEYhQwwx8PvQu18jB4wD1y7ypEjv4W1C9oO1kScK6FxpYFxf5fCuYATTIegXZmUG78dYOdDhahHIjH1Kw7NZ2k6gs/RmoFhOSX+tFp8=
+	t=1717683633; cv=none; b=Q30mETv4yt5J3lfi41vxj7/ZpDN3qoEOdbfVHqMKK1fhl1HZFdmX1VInrWp26Fu1o7TpqCu4Hn1yP2Lwyz9UAKpzggUt7pjKmKDX5lkGx8W9ka6AeB1gU5g6TIs99ylHoIB0qalmiy95Ff1Wci/m/Do/94oNYqS7dBU+I4i9owM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683632; c=relaxed/simple;
-	bh=y+BQYyJnBUhxwL0NaOPAVvFR6kGjSSwWrWZ9lXrCtlo=;
+	s=arc-20240116; t=1717683633; c=relaxed/simple;
+	bh=iyO8oN8PsJPLDHvCHkpeA1C5BqjdLscjUvwzewfx0o0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMzKfzokIpHLe4cfUBAo2WuqAGsqYXg27m9iW9MzPbi/DjyIBsv+xHkoiUOOsaQVNM22M5fCb8tyTK/UeGa7A9fZaipDXrZpLDfVdVq14WSGInyRYBo3qIMvJk4Eg2LOMCbNSLIdcc4rPRb0fCwAHkAaCyPtKWiviNYrw8e+qiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j61Oxy8T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jhZImNreUXX/Wjxm+Mj6ylMDqK6w3kMd3xMTog1CSD5PLC/Z5Qnc3xCNED0tnn80bQVrppnDSySi2M87/uEMHGQOOKh6Uq5+UTgeW9Q+4bz72uJxge1+6lViQqNJStIsf7Ce8c01G07a74U/CzXjXgoBxv9DEziMw78kZEOTqjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHSvPMjL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j61Oxy8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E34C4AF0B;
-	Thu,  6 Jun 2024 14:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHSvPMjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2D6C2BD10;
+	Thu,  6 Jun 2024 14:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683631;
-	bh=y+BQYyJnBUhxwL0NaOPAVvFR6kGjSSwWrWZ9lXrCtlo=;
+	s=korg; t=1717683633;
+	bh=iyO8oN8PsJPLDHvCHkpeA1C5BqjdLscjUvwzewfx0o0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j61Oxy8TlPBfk33NZbmRB59a7oqE326/SnXuTdifTybcrzydNLA0fYtvnzX9JEapF
-	 8NnRnEUO97Sh7m80U8NvmEUhgdP/HsDjFzYg5RVC9VCN2tGRE0yHiZcy4fSlDN9UOb
-	 bP7zjf2CdLppxzJnCI7pD4tWoqqC5vp1mjgogkIo=
+	b=xHSvPMjL7Hnnh6dH0FwG3HGQeuqJp5bxYb6oM1O9XqDFHE8/3AjmLzZm0d/qofXXV
+	 6OaQKHDcJMMxRJbfzN3Ta23U9csyvobGSzsfNwX+YFLD+hihu1Nz7+7lkz0qvmUNx6
+	 1memWQ3odafFaxI9FMa7H6Njv9rwsZXmkVXHLJh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 504/744] f2fs: kill heap-based allocation
-Date: Thu,  6 Jun 2024 16:02:56 +0200
-Message-ID: <20240606131748.610672783@linuxfoundation.org>
+Subject: [PATCH 6.6 505/744] f2fs: support file pinning for zoned devices
+Date: Thu,  6 Jun 2024 16:02:57 +0200
+Message-ID: <20240606131748.640564975@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -52,227 +51,470 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit 4e0197f9932f70cc7be8744aa0ed4dd9b5d97d85 ]
+[ Upstream commit 9703d69d9d153bb230711d0d577454552aeb13d4 ]
 
-No one uses this feature. Let's kill it.
+Support file pinning with conventional storage area for zoned devices
 
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Stable-dep-of: aa4074e8fec4 ("f2fs: fix block migration when section is not aligned to pow2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/f2fs.rst |  4 +--
- fs/f2fs/gc.c                       |  5 ++-
- fs/f2fs/segment.c                  | 54 ++++--------------------------
- fs/f2fs/segment.h                  | 10 ------
- fs/f2fs/super.c                    |  9 +----
- 5 files changed, 11 insertions(+), 71 deletions(-)
+ fs/f2fs/data.c    | 58 ++++++++++++++++++++++++++-------------
+ fs/f2fs/f2fs.h    | 17 +++++++++++-
+ fs/f2fs/file.c    | 24 ++++++++++++-----
+ fs/f2fs/gc.c      | 14 +++++++---
+ fs/f2fs/segment.c | 69 +++++++++++++++++++++++++++++++++++++++++------
+ fs/f2fs/segment.h | 10 +++++++
+ 6 files changed, 154 insertions(+), 38 deletions(-)
 
-diff --git a/Documentation/filesystems/f2fs.rst b/Documentation/filesystems/f2fs.rst
-index d32c6209685d6..798ca4132928c 100644
---- a/Documentation/filesystems/f2fs.rst
-+++ b/Documentation/filesystems/f2fs.rst
-@@ -126,9 +126,7 @@ norecovery		 Disable the roll-forward recovery routine, mounted read-
- discard/nodiscard	 Enable/disable real-time discard in f2fs, if discard is
- 			 enabled, f2fs will issue discard/TRIM commands when a
- 			 segment is cleaned.
--no_heap			 Disable heap-style segment allocation which finds free
--			 segments for data from the beginning of main area, while
--			 for node from the end of main area.
-+heap/no_heap		 Deprecated.
- nouser_xattr		 Disable Extended User Attributes. Note: xattr is enabled
- 			 by default if CONFIG_F2FS_FS_XATTR is selected.
- noacl			 Disable POSIX Access Control List. Note: acl is enabled
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 5d6ba12e84482..3558fc3387f54 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -3905,25 +3905,34 @@ static int f2fs_migrate_blocks(struct inode *inode, block_t start_blk,
+ 	unsigned int blkofs;
+ 	unsigned int blk_per_sec = BLKS_PER_SEC(sbi);
+ 	unsigned int secidx = start_blk / blk_per_sec;
+-	unsigned int end_sec = secidx + blkcnt / blk_per_sec;
++	unsigned int end_sec;
+ 	int ret = 0;
+ 
++	if (!blkcnt)
++		return 0;
++	end_sec = secidx + (blkcnt - 1) / blk_per_sec;
++
+ 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 
+ 	set_inode_flag(inode, FI_ALIGNED_WRITE);
+ 	set_inode_flag(inode, FI_OPU_WRITE);
+ 
+-	for (; secidx < end_sec; secidx++) {
++	for (; secidx <= end_sec; secidx++) {
++		unsigned int blkofs_end = secidx == end_sec ?
++			(blkcnt - 1) % blk_per_sec : blk_per_sec - 1;
++
+ 		f2fs_down_write(&sbi->pin_sem);
+ 
+-		f2fs_lock_op(sbi);
+-		f2fs_allocate_new_section(sbi, CURSEG_COLD_DATA_PINNED, false);
+-		f2fs_unlock_op(sbi);
++		ret = f2fs_allocate_pinning_section(sbi);
++		if (ret) {
++			f2fs_up_write(&sbi->pin_sem);
++			break;
++		}
+ 
+ 		set_inode_flag(inode, FI_SKIP_WRITES);
+ 
+-		for (blkofs = 0; blkofs < blk_per_sec; blkofs++) {
++		for (blkofs = 0; blkofs <= blkofs_end; blkofs++) {
+ 			struct page *page;
+ 			unsigned int blkidx = secidx * blk_per_sec + blkofs;
+ 
+@@ -4012,27 +4021,34 @@ static int check_swap_activate(struct swap_info_struct *sis,
+ 		nr_pblocks = map.m_len;
+ 
+ 		if ((pblock - SM_I(sbi)->main_blkaddr) & sec_blks_mask ||
+-				nr_pblocks & sec_blks_mask) {
++				nr_pblocks & sec_blks_mask ||
++				!f2fs_valid_pinned_area(sbi, pblock)) {
++			bool last_extent = false;
++
+ 			not_aligned++;
+ 
+ 			nr_pblocks = roundup(nr_pblocks, blks_per_sec);
+ 			if (cur_lblock + nr_pblocks > sis->max)
+ 				nr_pblocks -= blks_per_sec;
+ 
++			/* this extent is last one */
+ 			if (!nr_pblocks) {
+-				/* this extent is last one */
+-				nr_pblocks = map.m_len;
+-				f2fs_warn(sbi, "Swapfile: last extent is not aligned to section");
+-				goto next;
++				nr_pblocks = last_lblock - cur_lblock;
++				last_extent = true;
+ 			}
+ 
+ 			ret = f2fs_migrate_blocks(inode, cur_lblock,
+ 							nr_pblocks);
+-			if (ret)
++			if (ret) {
++				if (ret == -ENOENT)
++					ret = -EINVAL;
+ 				goto out;
+-			goto retry;
++			}
++
++			if (!last_extent)
++				goto retry;
+ 		}
+-next:
++
+ 		if (cur_lblock + nr_pblocks >= sis->max)
+ 			nr_pblocks = sis->max - cur_lblock;
+ 
+@@ -4070,17 +4086,17 @@ static int f2fs_swap_activate(struct swap_info_struct *sis, struct file *file,
+ 				sector_t *span)
+ {
+ 	struct inode *inode = file_inode(file);
++	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	int ret;
+ 
+ 	if (!S_ISREG(inode->i_mode))
+ 		return -EINVAL;
+ 
+-	if (f2fs_readonly(F2FS_I_SB(inode)->sb))
++	if (f2fs_readonly(sbi->sb))
+ 		return -EROFS;
+ 
+-	if (f2fs_lfs_mode(F2FS_I_SB(inode))) {
+-		f2fs_err(F2FS_I_SB(inode),
+-			"Swapfile not supported in LFS mode");
++	if (f2fs_lfs_mode(sbi) && !f2fs_sb_has_blkzoned(sbi)) {
++		f2fs_err(sbi, "Swapfile not supported in LFS mode");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -4093,13 +4109,17 @@ static int f2fs_swap_activate(struct swap_info_struct *sis, struct file *file,
+ 
+ 	f2fs_precache_extents(inode);
+ 
++	ret = filemap_fdatawrite(inode->i_mapping);
++	if (ret < 0)
++		return ret;
++
+ 	ret = check_swap_activate(sis, file, span);
+ 	if (ret < 0)
+ 		return ret;
+ 
+ 	stat_inc_swapfile_inode(inode);
+ 	set_inode_flag(inode, FI_PIN_FILE);
+-	f2fs_update_time(F2FS_I_SB(inode), REQ_TIME);
++	f2fs_update_time(sbi, REQ_TIME);
+ 	return ret;
+ }
+ 
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 9b80ceaf39502..82f54ffde4cd4 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3704,7 +3704,8 @@ void f2fs_get_new_segment(struct f2fs_sb_info *sbi,
+ 			unsigned int *newseg, bool new_sec, int dir);
+ void f2fs_allocate_segment_for_resize(struct f2fs_sb_info *sbi, int type,
+ 					unsigned int start, unsigned int end);
+-void f2fs_allocate_new_section(struct f2fs_sb_info *sbi, int type, bool force);
++int f2fs_allocate_new_section(struct f2fs_sb_info *sbi, int type, bool force);
++int f2fs_allocate_pinning_section(struct f2fs_sb_info *sbi);
+ void f2fs_allocate_new_segments(struct f2fs_sb_info *sbi);
+ int f2fs_trim_fs(struct f2fs_sb_info *sbi, struct fstrim_range *range);
+ bool f2fs_exist_trim_candidates(struct f2fs_sb_info *sbi,
+@@ -3880,6 +3881,9 @@ void f2fs_stop_gc_thread(struct f2fs_sb_info *sbi);
+ block_t f2fs_start_bidx_of_node(unsigned int node_ofs, struct inode *inode);
+ int f2fs_gc(struct f2fs_sb_info *sbi, struct f2fs_gc_control *gc_control);
+ void f2fs_build_gc_manager(struct f2fs_sb_info *sbi);
++int f2fs_gc_range(struct f2fs_sb_info *sbi,
++		unsigned int start_seg, unsigned int end_seg,
++		bool dry_run, unsigned int dry_run_sections);
+ int f2fs_resize_fs(struct file *filp, __u64 block_count);
+ int __init f2fs_create_garbage_collection_cache(void);
+ void f2fs_destroy_garbage_collection_cache(void);
+@@ -4536,6 +4540,17 @@ static inline bool f2fs_lfs_mode(struct f2fs_sb_info *sbi)
+ 	return F2FS_OPTION(sbi).fs_mode == FS_MODE_LFS;
+ }
+ 
++static inline bool f2fs_valid_pinned_area(struct f2fs_sb_info *sbi,
++					  block_t blkaddr)
++{
++	if (f2fs_sb_has_blkzoned(sbi)) {
++		int devi = f2fs_target_device_index(sbi, blkaddr);
++
++		return !bdev_is_zoned(FDEV(devi).bdev);
++	}
++	return true;
++}
++
+ static inline bool f2fs_low_mem_mode(struct f2fs_sb_info *sbi)
+ {
+ 	return F2FS_OPTION(sbi).memory_mode == MEMORY_MODE_LOW;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 2671a61556951..20dc11b58bb69 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1729,9 +1729,11 @@ static int f2fs_expand_inode_data(struct inode *inode, loff_t offset,
+ 
+ 		f2fs_down_write(&sbi->pin_sem);
+ 
+-		f2fs_lock_op(sbi);
+-		f2fs_allocate_new_section(sbi, CURSEG_COLD_DATA_PINNED, false);
+-		f2fs_unlock_op(sbi);
++		err = f2fs_allocate_pinning_section(sbi);
++		if (err) {
++			f2fs_up_write(&sbi->pin_sem);
++			goto out_err;
++		}
+ 
+ 		map.m_seg_type = CURSEG_COLD_DATA_PINNED;
+ 		err = f2fs_map_blocks(inode, &map, F2FS_GET_BLOCK_PRE_DIO);
+@@ -3184,6 +3186,7 @@ int f2fs_pin_file_control(struct inode *inode, bool inc)
+ static int f2fs_ioc_set_pin_file(struct file *filp, unsigned long arg)
+ {
+ 	struct inode *inode = file_inode(filp);
++	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	__u32 pin;
+ 	int ret = 0;
+ 
+@@ -3193,7 +3196,7 @@ static int f2fs_ioc_set_pin_file(struct file *filp, unsigned long arg)
+ 	if (!S_ISREG(inode->i_mode))
+ 		return -EINVAL;
+ 
+-	if (f2fs_readonly(F2FS_I_SB(inode)->sb))
++	if (f2fs_readonly(sbi->sb))
+ 		return -EROFS;
+ 
+ 	ret = mnt_want_write_file(filp);
+@@ -3206,9 +3209,18 @@ static int f2fs_ioc_set_pin_file(struct file *filp, unsigned long arg)
+ 		clear_inode_flag(inode, FI_PIN_FILE);
+ 		f2fs_i_gc_failures_write(inode, 0);
+ 		goto done;
++	} else if (f2fs_is_pinned_file(inode)) {
++		goto done;
+ 	}
+ 
+-	if (f2fs_should_update_outplace(inode, NULL)) {
++	if (f2fs_sb_has_blkzoned(sbi) && F2FS_HAS_BLOCKS(inode)) {
++		ret = -EFBIG;
++		goto out;
++	}
++
++	/* Let's allow file pinning on zoned device. */
++	if (!f2fs_sb_has_blkzoned(sbi) &&
++	    f2fs_should_update_outplace(inode, NULL)) {
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
+@@ -3230,7 +3242,7 @@ static int f2fs_ioc_set_pin_file(struct file *filp, unsigned long arg)
+ 	set_inode_flag(inode, FI_PIN_FILE);
+ 	ret = F2FS_I(inode)->i_gc_failures[GC_FAILURE_PIN];
+ done:
+-	f2fs_update_time(F2FS_I_SB(inode), REQ_TIME);
++	f2fs_update_time(sbi, REQ_TIME);
+ out:
+ 	inode_unlock(inode);
+ 	mnt_drop_write_file(filp);
 diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 4cf37f51339c3..2a3d64f4253ee 100644
+index 2a3d64f4253ee..9a4ec639e58a7 100644
 --- a/fs/f2fs/gc.c
 +++ b/fs/f2fs/gc.c
-@@ -280,12 +280,11 @@ static void select_policy(struct f2fs_sb_info *sbi, int gc_type,
- 			p->max_search > sbi->max_victim_search)
- 		p->max_search = sbi->max_victim_search;
+@@ -1979,10 +1979,12 @@ void f2fs_build_gc_manager(struct f2fs_sb_info *sbi)
+ 	init_atgc_management(sbi);
+ }
  
--	/* let's select beginning hot/small space first in no_heap mode*/
-+	/* let's select beginning hot/small space first. */
- 	if (f2fs_need_rand_seg(sbi))
- 		p->offset = get_random_u32_below(MAIN_SECS(sbi) *
- 						SEGS_PER_SEC(sbi));
--	else if (test_opt(sbi, NOHEAP) &&
--		(type == CURSEG_HOT_DATA || IS_NODESEG(type)))
-+	else if (type == CURSEG_HOT_DATA || IS_NODESEG(type))
- 		p->offset = 0;
- 	else
- 		p->offset = SIT_I(sbi)->last_victim[p->gc_mode];
+-static int f2fs_gc_range(struct f2fs_sb_info *sbi,
+-		unsigned int start_seg, unsigned int end_seg, bool dry_run)
++int f2fs_gc_range(struct f2fs_sb_info *sbi,
++		unsigned int start_seg, unsigned int end_seg,
++		bool dry_run, unsigned int dry_run_sections)
+ {
+ 	unsigned int segno;
++	unsigned int gc_secs = dry_run_sections;
+ 
+ 	for (segno = start_seg; segno <= end_seg; segno += SEGS_PER_SEC(sbi)) {
+ 		struct gc_inode_list gc_list = {
+@@ -1990,11 +1992,15 @@ static int f2fs_gc_range(struct f2fs_sb_info *sbi,
+ 			.iroot = RADIX_TREE_INIT(gc_list.iroot, GFP_NOFS),
+ 		};
+ 
+-		do_garbage_collect(sbi, segno, &gc_list, FG_GC, true);
++		do_garbage_collect(sbi, segno, &gc_list, FG_GC,
++						dry_run_sections == 0);
+ 		put_gc_inode(&gc_list);
+ 
+ 		if (!dry_run && get_valid_blocks(sbi, segno, true))
+ 			return -EAGAIN;
++		if (dry_run && dry_run_sections &&
++		    !get_valid_blocks(sbi, segno, true) && --gc_secs == 0)
++			break;
+ 
+ 		if (fatal_signal_pending(current))
+ 			return -ERESTARTSYS;
+@@ -2032,7 +2038,7 @@ static int free_segment_range(struct f2fs_sb_info *sbi,
+ 		f2fs_allocate_segment_for_resize(sbi, type, start, end);
+ 
+ 	/* do GC to move out valid blocks in the range */
+-	err = f2fs_gc_range(sbi, start, end, dry_run);
++	err = f2fs_gc_range(sbi, start, end, dry_run, 0);
+ 	if (err || dry_run)
+ 		goto out;
+ 
 diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 01e9366705b25..523c3a91bdf21 100644
+index 523c3a91bdf21..52b281e9f472f 100644
 --- a/fs/f2fs/segment.c
 +++ b/fs/f2fs/segment.c
-@@ -2638,16 +2638,14 @@ static int is_next_segment_free(struct f2fs_sb_info *sbi,
+@@ -2638,7 +2638,7 @@ static int is_next_segment_free(struct f2fs_sb_info *sbi,
   * This function should be returned with success, otherwise BUG
   */
  static void get_new_segment(struct f2fs_sb_info *sbi,
--			unsigned int *newseg, bool new_sec, int dir)
-+			unsigned int *newseg, bool new_sec)
+-			unsigned int *newseg, bool new_sec)
++			unsigned int *newseg, bool new_sec, bool pinning)
  {
  	struct free_segmap_info *free_i = FREE_I(sbi);
  	unsigned int segno, secno, zoneno;
- 	unsigned int total_zones = MAIN_SECS(sbi) / sbi->secs_per_zone;
- 	unsigned int hint = GET_SEC_FROM_SEG(sbi, *newseg);
- 	unsigned int old_zoneno = GET_ZONE_FROM_SEG(sbi, *newseg);
--	unsigned int left_start = hint;
- 	bool init = true;
--	int go_left = 0;
- 	int i;
- 
- 	spin_lock(&free_i->segmap_lock);
-@@ -2661,30 +2659,10 @@ static void get_new_segment(struct f2fs_sb_info *sbi,
+@@ -2656,6 +2656,16 @@ static void get_new_segment(struct f2fs_sb_info *sbi,
+ 		if (segno < GET_SEG_FROM_SEC(sbi, hint + 1))
+ 			goto got_it;
+ 	}
++
++	/*
++	 * If we format f2fs on zoned storage, let's try to get pinned sections
++	 * from beginning of the storage, which should be a conventional one.
++	 */
++	if (f2fs_sb_has_blkzoned(sbi)) {
++		segno = pinning ? 0 : max(first_zoned_segno(sbi), *newseg);
++		hint = GET_SEC_FROM_SEG(sbi, segno);
++	}
++
  find_other_zone:
  	secno = find_next_zero_bit(free_i->free_secmap, MAIN_SECS(sbi), hint);
  	if (secno >= MAIN_SECS(sbi)) {
--		if (dir == ALLOC_RIGHT) {
--			secno = find_first_zero_bit(free_i->free_secmap,
-+		secno = find_first_zero_bit(free_i->free_secmap,
- 							MAIN_SECS(sbi));
--			f2fs_bug_on(sbi, secno >= MAIN_SECS(sbi));
--		} else {
--			go_left = 1;
--			left_start = hint - 1;
--		}
--	}
--	if (go_left == 0)
--		goto skip_left;
--
--	while (test_bit(left_start, free_i->free_secmap)) {
--		if (left_start > 0) {
--			left_start--;
--			continue;
--		}
--		left_start = find_first_zero_bit(free_i->free_secmap,
--							MAIN_SECS(sbi));
--		f2fs_bug_on(sbi, left_start >= MAIN_SECS(sbi));
--		break;
-+		f2fs_bug_on(sbi, secno >= MAIN_SECS(sbi));
- 	}
--	secno = left_start;
--skip_left:
- 	segno = GET_SEG_FROM_SEC(sbi, secno);
- 	zoneno = GET_ZONE_FROM_SEC(sbi, secno);
- 
-@@ -2695,21 +2673,13 @@ static void get_new_segment(struct f2fs_sb_info *sbi,
- 		goto got_it;
- 	if (zoneno == old_zoneno)
- 		goto got_it;
--	if (dir == ALLOC_LEFT) {
--		if (!go_left && zoneno + 1 >= total_zones)
--			goto got_it;
--		if (go_left && zoneno == 0)
--			goto got_it;
--	}
- 	for (i = 0; i < NR_CURSEG_TYPE; i++)
- 		if (CURSEG_I(sbi, i)->zone == zoneno)
- 			break;
- 
- 	if (i < NR_CURSEG_TYPE) {
- 		/* zone is in user, try another */
--		if (go_left)
--			hint = zoneno * sbi->secs_per_zone - 1;
--		else if (zoneno + 1 >= total_zones)
-+		if (zoneno + 1 >= total_zones)
- 			hint = 0;
- 		else
- 			hint = (zoneno + 1) * sbi->secs_per_zone;
-@@ -2767,8 +2737,7 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
- 	if (unlikely(is_sbi_flag_set(sbi, SBI_CP_DISABLED)))
- 		return 0;
- 
--	if (test_opt(sbi, NOHEAP) &&
--		(seg_type == CURSEG_HOT_DATA || IS_NODESEG(seg_type)))
-+	if (seg_type == CURSEG_HOT_DATA || IS_NODESEG(seg_type))
- 		return 0;
- 
- 	if (SIT_I(sbi)->last_victim[ALLOC_NEXT])
-@@ -2788,21 +2757,12 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
- static void new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
+@@ -2754,21 +2764,30 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
+  * Allocate a current working segment.
+  * This function always allocates a free segment in LFS manner.
+  */
+-static void new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
++static int new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
  {
  	struct curseg_info *curseg = CURSEG_I(sbi, type);
--	unsigned short seg_type = curseg->seg_type;
  	unsigned int segno = curseg->segno;
--	int dir = ALLOC_LEFT;
++	bool pinning = type == CURSEG_COLD_DATA_PINNED;
  
  	if (curseg->inited)
--		write_sum_page(sbi, curseg->sum_blk,
--				GET_SUM_BLOCK(sbi, segno));
--	if (seg_type == CURSEG_WARM_DATA || seg_type == CURSEG_COLD_DATA)
--		dir = ALLOC_RIGHT;
--
--	if (test_opt(sbi, NOHEAP))
--		dir = ALLOC_RIGHT;
--
-+		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, segno));
+ 		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, segno));
++
  	segno = __get_next_segno(sbi, type);
--	get_new_segment(sbi, &segno, new_sec, dir);
-+	get_new_segment(sbi, &segno, new_sec);
+-	get_new_segment(sbi, &segno, new_sec);
++	get_new_segment(sbi, &segno, new_sec, pinning);
++	if (new_sec && pinning &&
++	    !f2fs_valid_pinned_area(sbi, START_BLOCK(sbi, segno))) {
++		__set_free(sbi, segno);
++		return -EAGAIN;
++	}
++
  	curseg->next_segno = segno;
  	reset_curseg(sbi, type, 1);
  	curseg->alloc_type = LFS;
+ 	if (F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_BLK)
+ 		curseg->fragment_remained_chunk =
+ 				get_random_u32_inclusive(1, sbi->max_fragment_chunk);
++	return 0;
+ }
+ 
+ static int __next_free_blkoff(struct f2fs_sb_info *sbi,
+@@ -3041,7 +3060,7 @@ void f2fs_allocate_segment_for_resize(struct f2fs_sb_info *sbi, int type,
+ 	f2fs_up_read(&SM_I(sbi)->curseg_lock);
+ }
+ 
+-static void __allocate_new_segment(struct f2fs_sb_info *sbi, int type,
++static int __allocate_new_segment(struct f2fs_sb_info *sbi, int type,
+ 						bool new_sec, bool force)
+ {
+ 	struct curseg_info *curseg = CURSEG_I(sbi, type);
+@@ -3051,21 +3070,49 @@ static void __allocate_new_segment(struct f2fs_sb_info *sbi, int type,
+ 	    !curseg->next_blkoff &&
+ 	    !get_valid_blocks(sbi, curseg->segno, new_sec) &&
+ 	    !get_ckpt_valid_blocks(sbi, curseg->segno, new_sec))
+-		return;
++		return 0;
+ 
+ 	old_segno = curseg->segno;
+-	new_curseg(sbi, type, true);
++	if (new_curseg(sbi, type, true))
++		return -EAGAIN;
+ 	stat_inc_seg_type(sbi, curseg);
+ 	locate_dirty_segment(sbi, old_segno);
++	return 0;
+ }
+ 
+-void f2fs_allocate_new_section(struct f2fs_sb_info *sbi, int type, bool force)
++int f2fs_allocate_new_section(struct f2fs_sb_info *sbi, int type, bool force)
+ {
++	int ret;
++
+ 	f2fs_down_read(&SM_I(sbi)->curseg_lock);
+ 	down_write(&SIT_I(sbi)->sentry_lock);
+-	__allocate_new_segment(sbi, type, true, force);
++	ret = __allocate_new_segment(sbi, type, true, force);
+ 	up_write(&SIT_I(sbi)->sentry_lock);
+ 	f2fs_up_read(&SM_I(sbi)->curseg_lock);
++
++	return ret;
++}
++
++int f2fs_allocate_pinning_section(struct f2fs_sb_info *sbi)
++{
++	int err;
++	bool gc_required = true;
++
++retry:
++	f2fs_lock_op(sbi);
++	err = f2fs_allocate_new_section(sbi, CURSEG_COLD_DATA_PINNED, false);
++	f2fs_unlock_op(sbi);
++
++	if (f2fs_sb_has_blkzoned(sbi) && err && gc_required) {
++		f2fs_down_write(&sbi->gc_lock);
++		f2fs_gc_range(sbi, 0, GET_SEGNO(sbi, FDEV(0).end_blk), true, 1);
++		f2fs_up_write(&sbi->gc_lock);
++
++		gc_required = false;
++		goto retry;
++	}
++
++	return err;
+ }
+ 
+ void f2fs_allocate_new_segments(struct f2fs_sb_info *sbi)
+@@ -3431,6 +3478,10 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
+ 	 * new segment.
+ 	 */
+ 	if (segment_full) {
++		if (type == CURSEG_COLD_DATA_PINNED &&
++		    !((curseg->segno + 1) % sbi->segs_per_sec))
++			goto skip_new_segment;
++
+ 		if (from_gc) {
+ 			get_atssr_segment(sbi, type, se->type,
+ 						AT_SSR, se->mtime);
+@@ -3442,6 +3493,8 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
+ 			stat_inc_seg_type(sbi, curseg);
+ 		}
+ 	}
++
++skip_new_segment:
+ 	/*
+ 	 * segment dirty status should be updated after segment allocation,
+ 	 * so we just need to update status only one time after previous
 diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index 61fa12f12ffdc..93ffb62e45f4d 100644
+index 93ffb62e45f4d..4595f1cc03828 100644
 --- a/fs/f2fs/segment.h
 +++ b/fs/f2fs/segment.h
-@@ -136,16 +136,6 @@ static inline void sanity_check_seg_type(struct f2fs_sb_info *sbi,
- #define SECTOR_TO_BLOCK(sectors)					\
- 	((sectors) >> F2FS_LOG_SECTORS_PER_BLOCK)
- 
--/*
-- * indicate a block allocation direction: RIGHT and LEFT.
-- * RIGHT means allocating new sections towards the end of volume.
-- * LEFT means the opposite direction.
-- */
--enum {
--	ALLOC_RIGHT = 0,
--	ALLOC_LEFT
--};
--
- /*
-  * In the victim_sel_policy->alloc_mode, there are three block allocation modes.
-  * LFS writes data sequentially with cleaning operations.
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index a0e6f804a1d0e..a20014fb5fc51 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -759,10 +759,8 @@ static int parse_options(struct super_block *sb, char *options, bool is_remount)
- 			clear_opt(sbi, DISCARD);
- 			break;
- 		case Opt_noheap:
--			set_opt(sbi, NOHEAP);
--			break;
- 		case Opt_heap:
--			clear_opt(sbi, NOHEAP);
-+			f2fs_warn(sbi, "heap/no_heap options were deprecated");
- 			break;
- #ifdef CONFIG_F2FS_FS_XATTR
- 		case Opt_user_xattr:
-@@ -2013,10 +2011,6 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
- 	} else {
- 		seq_puts(seq, ",nodiscard");
- 	}
--	if (test_opt(sbi, NOHEAP))
--		seq_puts(seq, ",no_heap");
--	else
--		seq_puts(seq, ",heap");
- #ifdef CONFIG_F2FS_FS_XATTR
- 	if (test_opt(sbi, XATTR_USER))
- 		seq_puts(seq, ",user_xattr");
-@@ -2196,7 +2190,6 @@ static void default_options(struct f2fs_sb_info *sbi, bool remount)
- 	set_opt(sbi, INLINE_XATTR);
- 	set_opt(sbi, INLINE_DATA);
- 	set_opt(sbi, INLINE_DENTRY);
--	set_opt(sbi, NOHEAP);
- 	set_opt(sbi, MERGE_CHECKPOINT);
- 	F2FS_OPTION(sbi).unusable_cap = 0;
- 	sbi->sb->s_flags |= SB_LAZYTIME;
+@@ -956,3 +956,13 @@ static inline void wake_up_discard_thread(struct f2fs_sb_info *sbi, bool force)
+ 	dcc->discard_wake = true;
+ 	wake_up_interruptible_all(&dcc->discard_wait_queue);
+ }
++
++static inline unsigned int first_zoned_segno(struct f2fs_sb_info *sbi)
++{
++	int devi;
++
++	for (devi = 0; devi < sbi->s_ndevs; devi++)
++		if (bdev_is_zoned(FDEV(devi).bdev))
++			return GET_SEGNO(sbi, FDEV(devi).start_blk);
++	return 0;
++}
 -- 
 2.43.0
 
