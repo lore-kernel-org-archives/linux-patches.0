@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A0E1ABE30;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18883196DA8;
 	Thu,  6 Jun 2024 14:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683299; cv=none; b=UjwlADQBoQQFJZh54s03S9YCZXgdq7u2PMkCXJJwIlFPTQxN4ZiBm3Icz3Z6EWMyMR5FxbV4kJ1ACia5uyWBm1GFxvBk0M8j6/TcHdoqop5AH3E7Lv8obp1Efcfqo6t+0l8jfMDMUV42hT2J8RLYH55vZWnZGc45SqpQUU2nmxA=
+	t=1717683300; cv=none; b=nVBr9xv6UmcxjSphtYkcabSE3cQ7WJg6Genr7Q4w6XigdDwRuBZkNZkugdj18FuY2Jms1uyqvVVIZA+eQN3M2zdHhhoBi6MIfA2rniwn+wrgbPmEbH6vldKErQLPbeQXZ17lrVos83ujeTRJ1cclmzBR0fitPAB2ifsmGQkiUvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683299; c=relaxed/simple;
-	bh=//dlDnO1rh7opNB+D/IYLBBQEztYkWDZr4hKqo4HROg=;
+	s=arc-20240116; t=1717683300; c=relaxed/simple;
+	bh=9MPj+djPZQSxKl+rnvbYERtbhDjagy4Z41Kj9QLliCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlY3DZ7MsyGEIJ842/XB5vM/byIRk6wU6tNVCXJ37XxDHaLq+2opTTJFZTvjoxPss+TmU2a6DqiAnZkCrNqNpARvoChunsqYhjm0CRzJb2geg/1iBOTF43+o8cZjVrrZOy0N3bVh3hrxWtCFWnZkt5w8TEbOu7Jm7j9j1nKRe/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1I+sYMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nMI/PflooX6m4ecoaSMCJ0YX7bIu+R7DGuQOtQn1eLvoL+oyi79I0nJsc79fglH/FdgzKCFvAxLANnHi9+TTuz62U2NnYoFbybDyIsB6FqSt8WKyXgs/mxdc6CJEtTfk0Bj5/R/eJyFriEek3hKJwcR7Q6PIob6Uf7ZYWcv0+ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oobLVul9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1I+sYMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E1CC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oobLVul9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A054CC32781;
 	Thu,  6 Jun 2024 14:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683299;
-	bh=//dlDnO1rh7opNB+D/IYLBBQEztYkWDZr4hKqo4HROg=;
+	bh=9MPj+djPZQSxKl+rnvbYERtbhDjagy4Z41Kj9QLliCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1I+sYMZNrVxEDhfKNxiey73vtDk5yMA41F/5dk9iLG1gwYfFvDEAcEf1G1LbIzPi
-	 l4nlJLnyPACXWa1TgBxdsil1Dn63usLueyn1IBSS+GRnqkMEi+yyqi8hv34Tzs5AkR
-	 UE6P/214eydX7+rBPsOuHvOjiCkl4Om12VHzr/sc=
+	b=oobLVul9cnUPoOHSWvqVh4AqvM3t1hc6YHlCJCcyWXrFYnC/BmYJovmktGtYYw6iA
+	 AVrznVCZk1db/t1kFhCERX7D07O64Q6Q2WilpnlIj99pUkCMmddYvXTTO/eetJVj07
+	 Eqs+PBCabs03a3TM1vz0kLwYxV5RTRNkMCn0qkc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Puranjay Mohan <puranjay12@gmail.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 240/744] selftests: net: add missing config for amt.sh
-Date: Thu,  6 Jun 2024 15:58:32 +0200
-Message-ID: <20240606131740.099891523@linuxfoundation.org>
+Subject: [PATCH 6.1 180/473] s390/bpf: Emit a barrier for BPF_FETCH instructions
+Date: Thu,  6 Jun 2024 16:01:49 +0200
+Message-ID: <20240606131705.881350928@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,37 +49,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit c499fe96d3f75a5cf50de6089dd8f1cddd1301a9 ]
+[ Upstream commit 68378982f0b21de02ac3c6a11e2420badefcb4bc ]
 
-Test needs IPv6 multicast. smcroute currently crashes when trying
-to install a route in a kernel without IPv6 multicast.
+BPF_ATOMIC_OP() macro documentation states that "BPF_ADD | BPF_FETCH"
+should be the same as atomic_fetch_add(), which is currently not the
+case on s390x: the serialization instruction "bcr 14,0" is missing.
+This applies to "and", "or" and "xor" variants too.
 
-Fixes: c08e8baea78e ("selftests: add amt interface selftest script")
-Link: https://lore.kernel.org/r/20240509161919.3939966-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+s390x is allowed to reorder stores with subsequent fetches from
+different addresses, so code relying on BPF_FETCH acting as a barrier,
+for example:
+
+  stw [%r0], 1
+  afadd [%r1], %r2
+  ldxw %r3, [%r4]
+
+may be broken. Fix it by emitting "bcr 14,0".
+
+Note that a separate serialization instruction is not needed for
+BPF_XCHG and BPF_CMPXCHG, because COMPARE AND SWAP performs
+serialization itself.
+
+Fixes: ba3b86b9cef0 ("s390/bpf: Implement new atomic ops")
+Reported-by: Puranjay Mohan <puranjay12@gmail.com>
+Closes: https://lore.kernel.org/bpf/mb61p34qvq3wf.fsf@kernel.org/
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
+Link: https://lore.kernel.org/r/20240507000557.12048-1-iii@linux.ibm.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/config | 1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/net/bpf_jit_comp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/config b/tools/testing/selftests/net/config
-index 5e4390cac17ed..04de7a6ba6f31 100644
---- a/tools/testing/selftests/net/config
-+++ b/tools/testing/selftests/net/config
-@@ -30,6 +30,7 @@ CONFIG_IP_GRE=m
- CONFIG_NETFILTER=y
- CONFIG_NETFILTER_ADVANCED=y
- CONFIG_NF_CONNTRACK=m
-+CONFIG_IPV6_MROUTE=y
- CONFIG_IPV6_SIT=y
- CONFIG_IP_DCCP=m
- CONFIG_NF_NAT=m
+diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
+index fbdba4c306bea..8623863935576 100644
+--- a/arch/s390/net/bpf_jit_comp.c
++++ b/arch/s390/net/bpf_jit_comp.c
+@@ -1207,8 +1207,12 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
+ 	EMIT6_DISP_LH(0xeb000000, is32 ? (op32) : (op64),		\
+ 		      (insn->imm & BPF_FETCH) ? src_reg : REG_W0,	\
+ 		      src_reg, dst_reg, off);				\
+-	if (is32 && (insn->imm & BPF_FETCH))				\
+-		EMIT_ZERO(src_reg);					\
++	if (insn->imm & BPF_FETCH) {					\
++		/* bcr 14,0 - see atomic_fetch_{add,and,or,xor}() */	\
++		_EMIT2(0x07e0);						\
++		if (is32)                                               \
++			EMIT_ZERO(src_reg);				\
++	}								\
+ } while (0)
+ 		case BPF_ADD:
+ 		case BPF_ADD | BPF_FETCH:
 -- 
 2.43.0
 
