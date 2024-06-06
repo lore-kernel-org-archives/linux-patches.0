@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD8C19CCE3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA22A19CCF2;
 	Thu,  6 Jun 2024 14:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683423; cv=none; b=iV0TItWdQy2lEzRtV3E40gISmEswF+iuANAmR5YV77tIFofWUF2O6omdgnbpawpLKRhZF+VUm+URHhDXFiLgkQszW3CfzC5eF978ygF9nS8fDllaAwrTo3GvqXr/NvEPnCC67QHkPWbdGtWELmdPngerpyWHMHGgdmmYKwWxPRA=
+	t=1717683423; cv=none; b=R83/GPryIJkkOgjOh3y2zBx7wSvHodfxbSP9vxje79h6CwubBeltbU8sKn6+5DDQMrJAsMZeMIk41uG53LekpnuMyp5FLcwJCzSem80678zrqSaVOd4ArhUJh8CVaTL+ADqvUng2t3nFsJbi/fkume+sGMEad07iDRTJVEAgR+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683423; c=relaxed/simple;
-	bh=+tfOSVGQikop5rK1F4l3C+Du3Yj2MxdZVY8YJJdf7wY=;
+	bh=VqCwrDlwpPzmrS3keS3fkFEzPgAYH5RGb2Mq8JjZMLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3jHN2wGjBjl9aY+dtf26RKvH/hLXczmmasVtIyMnRQifsNE8igA7MO0ps0lG83y3MtAqFvUzjpvHcogDnioDonNcX4UCttA9JbPi2AmoK0DEMbFTsitj8YOPQqe/9w/87VVb9crXbc9QSNmtGawUNG9KRlNdjejd54rNCsJHrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ecyn/kL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LejGloKi4DYu9IUm6O+Ukah0v44/UAB1MzkAT/IFr+jxecRo45ATKBPnYhLVv6UmjxEN1O0vmIv+Z92EbtJt7V3Mt/ehENoqNHycgnBvQQHHn7KF27cQfkGO0Lriwmq0IGXidQN4pAPUF5Qh5k04vm+ZzbbepaaM30cF/Pfn+B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrXjpkU+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ecyn/kL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F345C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrXjpkU+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFD4C32781;
 	Thu,  6 Jun 2024 14:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683423;
-	bh=+tfOSVGQikop5rK1F4l3C+Du3Yj2MxdZVY8YJJdf7wY=;
+	bh=VqCwrDlwpPzmrS3keS3fkFEzPgAYH5RGb2Mq8JjZMLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Ecyn/kLbx4ZkH5x8vKb+XPATZ50AdhA11kL7LLvaUz29vDWRm3BVw3AyN1bVvMbC
-	 F5Np22bheWk6dLU/DbpzpK6/eJtkOm0xjL3v3/iYNs1st/dvv2Vt3pr4tstCmmwjg6
-	 oLzXCYTQ2xyq4L6J6E3h4PO3/iTri6Tsfq7GEevY=
+	b=nrXjpkU+2UmjTfSqVwI3yaBbq6pjDJlxcYw5bfcTdRI9AVgcpLPV6RNEPD3O9bB6/
+	 EFnUb4+N6+WEOiT+cBBivu57IRONTr1NU5cC20ZztT5ARWxDl60WQwnBG80yLlm5Kf
+	 xjRl4Y3nWyxMVOErb9o3bnDEcuUvNmW8OThuf15w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandramohan Akula <chandramohan.akula@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jinyoung Choi <j-young.choi@samsung.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 368/744] RDMA/bnxt_re: Refactor the queue index update
-Date: Thu,  6 Jun 2024 16:00:40 +0200
-Message-ID: <20240606131744.287555547@linuxfoundation.org>
+Subject: [PATCH 6.1 309/473] f2fs: fix typos in comments
+Date: Thu,  6 Jun 2024 16:03:58 +0200
+Message-ID: <20240606131710.158376607@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,669 +48,185 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chandramohan Akula <chandramohan.akula@broadcom.com>
+From: Jinyoung CHOI <j-young.choi@samsung.com>
 
-[ Upstream commit 3a4304d82695015d0703ee0c3331458d22e3ba7c ]
+[ Upstream commit 146949defda868378992171b9e42318b06fcd482 ]
 
-The queue index wrap around logic is based on power of 2 size depth.
-All queues are created with power of 2 depth. This increases the
-memory usage by the driver. This change is required for the next
-patches that avoids the power of 2 depth requirement for each of
-the queues.
+This patch is to fix typos in f2fs files.
 
-Update the function that increments producer index and consumer
-index during wrap around. Also, changes the index handling across
-multiple functions.
-
-Signed-off-by: Chandramohan Akula <chandramohan.akula@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://lore.kernel.org/r/1698069803-1787-2-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 78cfd17142ef ("bnxt_re: avoid shift undefined behavior in bnxt_qplib_alloc_init_hwq")
+Signed-off-by: Jinyoung Choi <j-young.choi@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 278a6253a673 ("f2fs: fix to relocate check condition in f2fs_fallocate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c   | 138 ++++++++++-----------
- drivers/infiniband/hw/bnxt_re/qplib_fp.h   |  20 ++-
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c |  17 ++-
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.h |   4 +-
- drivers/infiniband/hw/bnxt_re/qplib_res.c  |   2 +-
- drivers/infiniband/hw/bnxt_re/qplib_res.h  |  37 ++++--
- 6 files changed, 123 insertions(+), 95 deletions(-)
+ fs/f2fs/checkpoint.c   | 4 ++--
+ fs/f2fs/compress.c     | 2 +-
+ fs/f2fs/data.c         | 8 ++++----
+ fs/f2fs/extent_cache.c | 4 ++--
+ fs/f2fs/file.c         | 6 +++---
+ fs/f2fs/namei.c        | 2 +-
+ fs/f2fs/segment.c      | 2 +-
+ 7 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index 2a62239187622..48dcb14004594 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -237,18 +237,15 @@ static void clean_nq(struct bnxt_qplib_nq *nq, struct bnxt_qplib_cq *cq)
- 	struct bnxt_qplib_hwq *hwq = &nq->hwq;
- 	struct nq_base *nqe, **nq_ptr;
- 	int budget = nq->budget;
--	u32 sw_cons, raw_cons;
- 	uintptr_t q_handle;
- 	u16 type;
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index 3ec203bbd5593..13d8774706758 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -797,7 +797,7 @@ static void write_orphan_inodes(struct f2fs_sb_info *sbi, block_t start_blk)
+ 	 */
+ 	head = &im->ino_list;
  
- 	spin_lock_bh(&hwq->lock);
- 	/* Service the NQ until empty */
--	raw_cons = hwq->cons;
- 	while (budget--) {
--		sw_cons = HWQ_CMP(raw_cons, hwq);
- 		nq_ptr = (struct nq_base **)hwq->pbl_ptr;
--		nqe = &nq_ptr[NQE_PG(sw_cons)][NQE_IDX(sw_cons)];
--		if (!NQE_CMP_VALID(nqe, raw_cons, hwq->max_elements))
-+		nqe = &nq_ptr[NQE_PG(hwq->cons)][NQE_IDX(hwq->cons)];
-+		if (!NQE_CMP_VALID(nqe, nq->nq_db.dbinfo.flags))
- 			break;
- 
+-	/* loop for each orphan inode entry and write them in Jornal block */
++	/* loop for each orphan inode entry and write them in journal block */
+ 	list_for_each_entry(orphan, head, list) {
+ 		if (!page) {
+ 			page = f2fs_grab_meta_page(sbi, start_blk++);
+@@ -1127,7 +1127,7 @@ int f2fs_sync_dirty_inodes(struct f2fs_sb_info *sbi, enum inode_type type,
+ 	} else {
  		/*
-@@ -276,7 +273,8 @@ static void clean_nq(struct bnxt_qplib_nq *nq, struct bnxt_qplib_cq *cq)
- 		default:
- 			break;
- 		}
--		raw_cons++;
-+		bnxt_qplib_hwq_incr_cons(hwq->max_elements, &hwq->cons,
-+					 1, &nq->nq_db.dbinfo.flags);
- 	}
- 	spin_unlock_bh(&hwq->lock);
- }
-@@ -302,18 +300,16 @@ static void bnxt_qplib_service_nq(struct tasklet_struct *t)
- 	struct bnxt_qplib_hwq *hwq = &nq->hwq;
- 	struct bnxt_qplib_cq *cq;
- 	int budget = nq->budget;
--	u32 sw_cons, raw_cons;
- 	struct nq_base *nqe;
- 	uintptr_t q_handle;
-+	u32 hw_polled = 0;
- 	u16 type;
+ 		 * We should submit bio, since it exists several
+-		 * wribacking dentry pages in the freeing inode.
++		 * writebacking dentry pages in the freeing inode.
+ 		 */
+ 		f2fs_submit_merged_write(sbi, DATA);
+ 		cond_resched();
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index df6dfd7de6d0d..84585dba86a57 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -1264,7 +1264,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
+ 	int i, err;
+ 	bool quota_inode = IS_NOQUOTA(inode);
  
- 	spin_lock_bh(&hwq->lock);
- 	/* Service the NQ until empty */
--	raw_cons = hwq->cons;
- 	while (budget--) {
--		sw_cons = HWQ_CMP(raw_cons, hwq);
--		nqe = bnxt_qplib_get_qe(hwq, sw_cons, NULL);
--		if (!NQE_CMP_VALID(nqe, raw_cons, hwq->max_elements))
-+		nqe = bnxt_qplib_get_qe(hwq, hwq->cons, NULL);
-+		if (!NQE_CMP_VALID(nqe, nq->nq_db.dbinfo.flags))
- 			break;
+-	/* we should bypass data pages to proceed the kworkder jobs */
++	/* we should bypass data pages to proceed the kworker jobs */
+ 	if (unlikely(f2fs_cp_error(sbi))) {
+ 		mapping_set_error(cc->rpages[0]->mapping, -EIO);
+ 		goto out_free;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index ea9b78b5a1ebe..0b0e3d44e158e 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2363,7 +2363,7 @@ static int f2fs_mpage_readpages(struct inode *inode,
  
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+ 		if (f2fs_compressed_file(inode)) {
+-			/* there are remained comressed pages, submit them */
++			/* there are remained compressed pages, submit them */
+ 			if (!f2fs_cluster_can_merge_page(&cc, page->index)) {
+ 				ret = f2fs_read_multi_pages(&cc, &bio,
+ 							max_nr_pages,
+@@ -2779,7 +2779,7 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
+ 
+ 	trace_f2fs_writepage(page, DATA);
+ 
+-	/* we should bypass data pages to proceed the kworkder jobs */
++	/* we should bypass data pages to proceed the kworker jobs */
+ 	if (unlikely(f2fs_cp_error(sbi))) {
+ 		mapping_set_error(page->mapping, -EIO);
  		/*
-@@ -372,12 +368,12 @@ static void bnxt_qplib_service_nq(struct tasklet_struct *t)
- 				 "nqe with type = 0x%x not handled\n", type);
- 			break;
- 		}
--		raw_cons++;
-+		hw_polled++;
-+		bnxt_qplib_hwq_incr_cons(hwq->max_elements, &hwq->cons,
-+					 1, &nq->nq_db.dbinfo.flags);
- 	}
--	if (hwq->cons != raw_cons) {
--		hwq->cons = raw_cons;
-+	if (hw_polled)
- 		bnxt_qplib_ring_nq_db(&nq->nq_db.dbinfo, nq->res->cctx, true);
--	}
- 	spin_unlock_bh(&hwq->lock);
+@@ -2898,7 +2898,7 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
+ redirty_out:
+ 	redirty_page_for_writepage(wbc, page);
+ 	/*
+-	 * pageout() in MM traslates EAGAIN, so calls handle_write_error()
++	 * pageout() in MM translates EAGAIN, so calls handle_write_error()
+ 	 * -> mapping_set_error() -> set_bit(AS_EIO, ...).
+ 	 * file_write_and_wait_range() will see EIO error, which is critical
+ 	 * to return value of fsync() followed by atomic_write failure to user.
+@@ -2932,7 +2932,7 @@ static int f2fs_write_data_page(struct page *page,
  }
  
-@@ -505,6 +501,7 @@ static int bnxt_qplib_map_nq_db(struct bnxt_qplib_nq *nq,  u32 reg_offt)
- 	pdev = nq->pdev;
- 	nq_db = &nq->nq_db;
+ /*
+- * This function was copied from write_cche_pages from mm/page-writeback.c.
++ * This function was copied from write_cache_pages from mm/page-writeback.c.
+  * The major change is making write step of cold data page separately from
+  * warm/hot data page.
+  */
+diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
+index 16692c96e7650..c55359267d438 100644
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -205,7 +205,7 @@ struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
+  * @prev_ex: extent before ofs
+  * @next_ex: extent after ofs
+  * @insert_p: insert point for new extent at ofs
+- * in order to simpfy the insertion after.
++ * in order to simplify the insertion after.
+  * tree must stay unchanged between lookup and insertion.
+  */
+ struct rb_entry *f2fs_lookup_rb_tree_ret(struct rb_root_cached *root,
+@@ -662,7 +662,7 @@ static void __update_extent_tree_range(struct inode *inode,
+ 	if (!en)
+ 		en = next_en;
  
-+	nq_db->dbinfo.flags = 0;
- 	nq_db->reg.bar_id = NQ_CONS_PCI_BAR_REGION;
- 	nq_db->reg.bar_base = pci_resource_start(pdev, nq_db->reg.bar_id);
- 	if (!nq_db->reg.bar_base) {
-@@ -649,7 +646,7 @@ int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
- 		rc = -ENOMEM;
- 		goto fail;
- 	}
--
-+	srq->dbinfo.flags = 0;
- 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
- 				 CMDQ_BASE_OPCODE_CREATE_SRQ,
- 				 sizeof(req));
-@@ -703,13 +700,9 @@ int bnxt_qplib_modify_srq(struct bnxt_qplib_res *res,
- 			  struct bnxt_qplib_srq *srq)
+-	/* 2. invlidate all extent nodes in range [fofs, fofs + len - 1] */
++	/* 2. invalidate all extent nodes in range [fofs, fofs + len - 1] */
+ 	while (en && en->ei.fofs < end) {
+ 		unsigned int org_end;
+ 		int parts = 0;	/* # of parts current extent split into */
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 46b6f06a4a76a..423b9150dc0a8 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -305,7 +305,7 @@ static int f2fs_do_sync_file(struct file *file, loff_t start, loff_t end,
+ 		 * for OPU case, during fsync(), node can be persisted before
+ 		 * data when lower device doesn't support write barrier, result
+ 		 * in data corruption after SPO.
+-		 * So for strict fsync mode, force to use atomic write sematics
++		 * So for strict fsync mode, force to use atomic write semantics
+ 		 * to keep write order in between data/node and last node to
+ 		 * avoid potential data corruption.
+ 		 */
+@@ -1805,7 +1805,7 @@ static long f2fs_fallocate(struct file *file, int mode,
+ 		return -EOPNOTSUPP;
+ 
+ 	/*
+-	 * Pinned file should not support partial trucation since the block
++	 * Pinned file should not support partial truncation since the block
+ 	 * can be used by applications.
+ 	 */
+ 	if ((f2fs_compressed_file(inode) || f2fs_is_pinned_file(inode)) &&
+@@ -1855,7 +1855,7 @@ static long f2fs_fallocate(struct file *file, int mode,
+ static int f2fs_release_file(struct inode *inode, struct file *filp)
  {
- 	struct bnxt_qplib_hwq *srq_hwq = &srq->hwq;
--	u32 sw_prod, sw_cons, count = 0;
--
--	sw_prod = HWQ_CMP(srq_hwq->prod, srq_hwq);
--	sw_cons = HWQ_CMP(srq_hwq->cons, srq_hwq);
-+	u32 count;
+ 	/*
+-	 * f2fs_relase_file is called at every close calls. So we should
++	 * f2fs_release_file is called at every close calls. So we should
+ 	 * not drop any inmemory pages by close called by other process.
+ 	 */
+ 	if (!(filp->f_mode & FMODE_WRITE) ||
+diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
+index 328cd20b16a54..6dcc73ca32172 100644
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -970,7 +970,7 @@ static int f2fs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
  
--	count = sw_prod > sw_cons ? sw_prod - sw_cons :
--				    srq_hwq->max_elements - sw_cons + sw_prod;
-+	count = __bnxt_qplib_get_avail(srq_hwq);
- 	if (count > srq->threshold) {
- 		srq->arm_req = false;
- 		bnxt_qplib_srq_arm_db(&srq->dbinfo, srq->threshold);
-@@ -762,7 +755,7 @@ int bnxt_qplib_post_srq_recv(struct bnxt_qplib_srq *srq,
- 	struct bnxt_qplib_hwq *srq_hwq = &srq->hwq;
- 	struct rq_wqe *srqe;
- 	struct sq_sge *hw_sge;
--	u32 sw_prod, sw_cons, count = 0;
-+	u32 count = 0;
- 	int i, next;
+ 	/*
+ 	 * If new_inode is null, the below renaming flow will
+-	 * add a link in old_dir which can conver inline_dir.
++	 * add a link in old_dir which can convert inline_dir.
+ 	 * After then, if we failed to get the entry due to other
+ 	 * reasons like ENOMEM, we had to remove the new entry.
+ 	 * Instead of adding such the error handling routine, let's
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 205216c1db91f..e19b569d938d8 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3615,7 +3615,7 @@ void f2fs_wait_on_page_writeback(struct page *page,
  
- 	spin_lock(&srq_hwq->lock);
-@@ -776,8 +769,7 @@ int bnxt_qplib_post_srq_recv(struct bnxt_qplib_srq *srq,
- 	srq->start_idx = srq->swq[next].next_idx;
- 	spin_unlock(&srq_hwq->lock);
- 
--	sw_prod = HWQ_CMP(srq_hwq->prod, srq_hwq);
--	srqe = bnxt_qplib_get_qe(srq_hwq, sw_prod, NULL);
-+	srqe = bnxt_qplib_get_qe(srq_hwq, srq_hwq->prod, NULL);
- 	memset(srqe, 0, srq->wqe_size);
- 	/* Calculate wqe_size16 and data_len */
- 	for (i = 0, hw_sge = (struct sq_sge *)srqe->data;
-@@ -793,17 +785,10 @@ int bnxt_qplib_post_srq_recv(struct bnxt_qplib_srq *srq,
- 	srqe->wr_id[0] = cpu_to_le32((u32)next);
- 	srq->swq[next].wr_id = wqe->wr_id;
- 
--	srq_hwq->prod++;
-+	bnxt_qplib_hwq_incr_prod(&srq->dbinfo, srq_hwq, srq->dbinfo.max_slot);
- 
- 	spin_lock(&srq_hwq->lock);
--	sw_prod = HWQ_CMP(srq_hwq->prod, srq_hwq);
--	/* retaining srq_hwq->cons for this logic
--	 * actually the lock is only required to
--	 * read srq_hwq->cons.
--	 */
--	sw_cons = HWQ_CMP(srq_hwq->cons, srq_hwq);
--	count = sw_prod > sw_cons ? sw_prod - sw_cons :
--				    srq_hwq->max_elements - sw_cons + sw_prod;
-+	count = __bnxt_qplib_get_avail(srq_hwq);
- 	spin_unlock(&srq_hwq->lock);
- 	/* Ring DB */
- 	bnxt_qplib_ring_prod_db(&srq->dbinfo, DBC_DBC_TYPE_SRQ);
-@@ -850,6 +835,7 @@ int bnxt_qplib_create_qp1(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
- 	u32 tbl_indx;
- 	int rc;
- 
-+	sq->dbinfo.flags = 0;
- 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
- 				 CMDQ_BASE_OPCODE_CREATE_QP1,
- 				 sizeof(req));
-@@ -886,6 +872,7 @@ int bnxt_qplib_create_qp1(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
- 
- 	/* RQ */
- 	if (rq->max_wqe) {
-+		rq->dbinfo.flags = 0;
- 		hwq_attr.res = res;
- 		hwq_attr.sginfo = &rq->sg_info;
- 		hwq_attr.stride = sizeof(struct sq_sge);
-@@ -993,6 +980,7 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
- 	u32 tbl_indx;
- 	u16 nsge;
- 
-+	sq->dbinfo.flags = 0;
- 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
- 				 CMDQ_BASE_OPCODE_CREATE_QP,
- 				 sizeof(req));
-@@ -1041,6 +1029,7 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
- 
- 	/* RQ */
- 	if (!qp->srq) {
-+		rq->dbinfo.flags = 0;
- 		hwq_attr.res = res;
- 		hwq_attr.sginfo = &rq->sg_info;
- 		hwq_attr.stride = sizeof(struct sq_sge);
-@@ -1455,12 +1444,15 @@ int bnxt_qplib_query_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
- static void __clean_cq(struct bnxt_qplib_cq *cq, u64 qp)
- {
- 	struct bnxt_qplib_hwq *cq_hwq = &cq->hwq;
-+	u32 peek_flags, peek_cons;
- 	struct cq_base *hw_cqe;
- 	int i;
- 
-+	peek_flags = cq->dbinfo.flags;
-+	peek_cons = cq_hwq->cons;
- 	for (i = 0; i < cq_hwq->max_elements; i++) {
--		hw_cqe = bnxt_qplib_get_qe(cq_hwq, i, NULL);
--		if (!CQE_CMP_VALID(hw_cqe, i, cq_hwq->max_elements))
-+		hw_cqe = bnxt_qplib_get_qe(cq_hwq, peek_cons, NULL);
-+		if (!CQE_CMP_VALID(hw_cqe, peek_flags))
- 			continue;
- 		/*
- 		 * The valid test of the entry must be done first before
-@@ -1490,6 +1482,8 @@ static void __clean_cq(struct bnxt_qplib_cq *cq, u64 qp)
- 		default:
- 			break;
- 		}
-+		bnxt_qplib_hwq_incr_cons(cq_hwq->max_elements, &peek_cons,
-+					 1, &peek_flags);
- 	}
- }
- 
-@@ -1962,7 +1956,7 @@ int bnxt_qplib_post_send(struct bnxt_qplib_qp *qp,
- 	bnxt_qplib_fill_psn_search(qp, wqe, swq);
- queue_err:
- 	bnxt_qplib_swq_mod_start(sq, wqe_idx);
--	bnxt_qplib_hwq_incr_prod(hwq, swq->slots);
-+	bnxt_qplib_hwq_incr_prod(&sq->dbinfo, hwq, swq->slots);
- 	qp->wqe_cnt++;
- done:
- 	if (sch_handler) {
-@@ -2050,7 +2044,7 @@ int bnxt_qplib_post_recv(struct bnxt_qplib_qp *qp,
- 	base_hdr->wr_id[0] = cpu_to_le32(wqe_idx);
- queue_err:
- 	bnxt_qplib_swq_mod_start(rq, wqe_idx);
--	bnxt_qplib_hwq_incr_prod(hwq, swq->slots);
-+	bnxt_qplib_hwq_incr_prod(&rq->dbinfo, hwq, swq->slots);
- done:
- 	if (sch_handler) {
- 		nq_work = kzalloc(sizeof(*nq_work), GFP_ATOMIC);
-@@ -2087,6 +2081,7 @@ int bnxt_qplib_create_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq)
- 		return -EINVAL;
- 	}
- 
-+	cq->dbinfo.flags = 0;
- 	hwq_attr.res = res;
- 	hwq_attr.depth = cq->max_wqe;
- 	hwq_attr.stride = sizeof(struct cq_base);
-@@ -2102,7 +2097,7 @@ int bnxt_qplib_create_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq)
- 
- 	req.dpi = cpu_to_le32(cq->dpi->dpi);
- 	req.cq_handle = cpu_to_le64(cq->cq_handle);
--	req.cq_size = cpu_to_le32(cq->hwq.max_elements);
-+	req.cq_size = cpu_to_le32(cq->max_wqe);
- 	pbl = &cq->hwq.pbl[PBL_LVL_0];
- 	pg_sz_lvl = (bnxt_qplib_base_pg_size(&cq->hwq) <<
- 		     CMDQ_CREATE_CQ_PG_SIZE_SFT);
-@@ -2145,6 +2140,8 @@ void bnxt_qplib_resize_cq_complete(struct bnxt_qplib_res *res,
- {
- 	bnxt_qplib_free_hwq(res, &cq->hwq);
- 	memcpy(&cq->hwq, &cq->resize_hwq, sizeof(cq->hwq));
-+       /* Reset only the cons bit in the flags */
-+	cq->dbinfo.flags &= ~(1UL << BNXT_QPLIB_FLAG_EPOCH_CONS_SHIFT);
- }
- 
- int bnxt_qplib_resize_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq,
-@@ -2241,7 +2238,8 @@ static int __flush_sq(struct bnxt_qplib_q *sq, struct bnxt_qplib_qp *qp,
- 		cqe++;
- 		(*budget)--;
- skip_compl:
--		bnxt_qplib_hwq_incr_cons(&sq->hwq, sq->swq[last].slots);
-+		bnxt_qplib_hwq_incr_cons(sq->hwq.max_elements, &sq->hwq.cons,
-+					 sq->swq[last].slots, &sq->dbinfo.flags);
- 		sq->swq_last = sq->swq[last].next_idx;
- 	}
- 	*pcqe = cqe;
-@@ -2288,7 +2286,8 @@ static int __flush_rq(struct bnxt_qplib_q *rq, struct bnxt_qplib_qp *qp,
- 		cqe->wr_id = rq->swq[last].wr_id;
- 		cqe++;
- 		(*budget)--;
--		bnxt_qplib_hwq_incr_cons(&rq->hwq, rq->swq[last].slots);
-+		bnxt_qplib_hwq_incr_cons(rq->hwq.max_elements, &rq->hwq.cons,
-+					 rq->swq[last].slots, &rq->dbinfo.flags);
- 		rq->swq_last = rq->swq[last].next_idx;
- 	}
- 	*pcqe = cqe;
-@@ -2317,7 +2316,7 @@ void bnxt_qplib_mark_qp_error(void *qp_handle)
- static int do_wa9060(struct bnxt_qplib_qp *qp, struct bnxt_qplib_cq *cq,
- 		     u32 cq_cons, u32 swq_last, u32 cqe_sq_cons)
- {
--	u32 peek_sw_cq_cons, peek_raw_cq_cons, peek_sq_cons_idx;
-+	u32 peek_sw_cq_cons, peek_sq_cons_idx, peek_flags;
- 	struct bnxt_qplib_q *sq = &qp->sq;
- 	struct cq_req *peek_req_hwcqe;
- 	struct bnxt_qplib_qp *peek_qp;
-@@ -2348,16 +2347,14 @@ static int do_wa9060(struct bnxt_qplib_qp *qp, struct bnxt_qplib_cq *cq,
- 	}
- 	if (sq->condition) {
- 		/* Peek at the completions */
--		peek_raw_cq_cons = cq->hwq.cons;
-+		peek_flags = cq->dbinfo.flags;
- 		peek_sw_cq_cons = cq_cons;
- 		i = cq->hwq.max_elements;
- 		while (i--) {
--			peek_sw_cq_cons = HWQ_CMP((peek_sw_cq_cons), &cq->hwq);
- 			peek_hwcqe = bnxt_qplib_get_qe(&cq->hwq,
- 						       peek_sw_cq_cons, NULL);
- 			/* If the next hwcqe is VALID */
--			if (CQE_CMP_VALID(peek_hwcqe, peek_raw_cq_cons,
--					  cq->hwq.max_elements)) {
-+			if (CQE_CMP_VALID(peek_hwcqe, peek_flags)) {
- 			/*
- 			 * The valid test of the entry must be done first before
- 			 * reading any further.
-@@ -2400,8 +2397,9 @@ static int do_wa9060(struct bnxt_qplib_qp *qp, struct bnxt_qplib_cq *cq,
- 				rc = -EINVAL;
- 				goto out;
- 			}
--			peek_sw_cq_cons++;
--			peek_raw_cq_cons++;
-+			bnxt_qplib_hwq_incr_cons(cq->hwq.max_elements,
-+						 &peek_sw_cq_cons,
-+						 1, &peek_flags);
- 		}
- 		dev_err(&cq->hwq.pdev->dev,
- 			"Should not have come here! cq_cons=0x%x qp=0x%x sq cons sw=0x%x hw=0x%x\n",
-@@ -2488,7 +2486,8 @@ static int bnxt_qplib_cq_process_req(struct bnxt_qplib_cq *cq,
- 			}
- 		}
- skip:
--		bnxt_qplib_hwq_incr_cons(&sq->hwq, swq->slots);
-+		bnxt_qplib_hwq_incr_cons(sq->hwq.max_elements, &sq->hwq.cons,
-+					 swq->slots, &sq->dbinfo.flags);
- 		sq->swq_last = swq->next_idx;
- 		if (sq->single)
- 			break;
-@@ -2515,7 +2514,8 @@ static void bnxt_qplib_release_srqe(struct bnxt_qplib_srq *srq, u32 tag)
- 	srq->swq[srq->last_idx].next_idx = (int)tag;
- 	srq->last_idx = (int)tag;
- 	srq->swq[srq->last_idx].next_idx = -1;
--	srq->hwq.cons++; /* Support for SRQE counter */
-+	bnxt_qplib_hwq_incr_cons(srq->hwq.max_elements, &srq->hwq.cons,
-+				 srq->dbinfo.max_slot, &srq->dbinfo.flags);
- 	spin_unlock(&srq->hwq.lock);
- }
- 
-@@ -2584,7 +2584,8 @@ static int bnxt_qplib_cq_process_res_rc(struct bnxt_qplib_cq *cq,
- 		cqe->wr_id = swq->wr_id;
- 		cqe++;
- 		(*budget)--;
--		bnxt_qplib_hwq_incr_cons(&rq->hwq, swq->slots);
-+		bnxt_qplib_hwq_incr_cons(rq->hwq.max_elements, &rq->hwq.cons,
-+					 swq->slots, &rq->dbinfo.flags);
- 		rq->swq_last = swq->next_idx;
- 		*pcqe = cqe;
- 
-@@ -2670,7 +2671,8 @@ static int bnxt_qplib_cq_process_res_ud(struct bnxt_qplib_cq *cq,
- 		cqe->wr_id = swq->wr_id;
- 		cqe++;
- 		(*budget)--;
--		bnxt_qplib_hwq_incr_cons(&rq->hwq, swq->slots);
-+		bnxt_qplib_hwq_incr_cons(rq->hwq.max_elements, &rq->hwq.cons,
-+					 swq->slots, &rq->dbinfo.flags);
- 		rq->swq_last = swq->next_idx;
- 		*pcqe = cqe;
- 
-@@ -2687,14 +2689,11 @@ static int bnxt_qplib_cq_process_res_ud(struct bnxt_qplib_cq *cq,
- bool bnxt_qplib_is_cq_empty(struct bnxt_qplib_cq *cq)
- {
- 	struct cq_base *hw_cqe;
--	u32 sw_cons, raw_cons;
- 	bool rc = true;
- 
--	raw_cons = cq->hwq.cons;
--	sw_cons = HWQ_CMP(raw_cons, &cq->hwq);
--	hw_cqe = bnxt_qplib_get_qe(&cq->hwq, sw_cons, NULL);
-+	hw_cqe = bnxt_qplib_get_qe(&cq->hwq, cq->hwq.cons, NULL);
- 	 /* Check for Valid bit. If the CQE is valid, return false */
--	rc = !CQE_CMP_VALID(hw_cqe, raw_cons, cq->hwq.max_elements);
-+	rc = !CQE_CMP_VALID(hw_cqe, cq->dbinfo.flags);
- 	return rc;
- }
- 
-@@ -2776,7 +2775,8 @@ static int bnxt_qplib_cq_process_res_raweth_qp1(struct bnxt_qplib_cq *cq,
- 		cqe->wr_id = swq->wr_id;
- 		cqe++;
- 		(*budget)--;
--		bnxt_qplib_hwq_incr_cons(&rq->hwq, swq->slots);
-+		bnxt_qplib_hwq_incr_cons(rq->hwq.max_elements, &rq->hwq.cons,
-+					 swq->slots, &rq->dbinfo.flags);
- 		rq->swq_last = swq->next_idx;
- 		*pcqe = cqe;
- 
-@@ -2849,7 +2849,8 @@ static int bnxt_qplib_cq_process_terminal(struct bnxt_qplib_cq *cq,
- 			cqe++;
- 			(*budget)--;
- 		}
--		bnxt_qplib_hwq_incr_cons(&sq->hwq, sq->swq[swq_last].slots);
-+		bnxt_qplib_hwq_incr_cons(sq->hwq.max_elements, &sq->hwq.cons,
-+					 sq->swq[swq_last].slots, &sq->dbinfo.flags);
- 		sq->swq_last = sq->swq[swq_last].next_idx;
- 	}
- 	*pcqe = cqe;
-@@ -2934,19 +2935,17 @@ int bnxt_qplib_poll_cq(struct bnxt_qplib_cq *cq, struct bnxt_qplib_cqe *cqe,
- 		       int num_cqes, struct bnxt_qplib_qp **lib_qp)
- {
- 	struct cq_base *hw_cqe;
--	u32 sw_cons, raw_cons;
- 	int budget, rc = 0;
-+	u32 hw_polled = 0;
- 	u8 type;
- 
--	raw_cons = cq->hwq.cons;
- 	budget = num_cqes;
- 
- 	while (budget) {
--		sw_cons = HWQ_CMP(raw_cons, &cq->hwq);
--		hw_cqe = bnxt_qplib_get_qe(&cq->hwq, sw_cons, NULL);
-+		hw_cqe = bnxt_qplib_get_qe(&cq->hwq, cq->hwq.cons, NULL);
- 
- 		/* Check for Valid bit */
--		if (!CQE_CMP_VALID(hw_cqe, raw_cons, cq->hwq.max_elements))
-+		if (!CQE_CMP_VALID(hw_cqe, cq->dbinfo.flags))
- 			break;
- 
- 		/*
-@@ -2961,7 +2960,7 @@ int bnxt_qplib_poll_cq(struct bnxt_qplib_cq *cq, struct bnxt_qplib_cqe *cqe,
- 			rc = bnxt_qplib_cq_process_req(cq,
- 						       (struct cq_req *)hw_cqe,
- 						       &cqe, &budget,
--						       sw_cons, lib_qp);
-+						       cq->hwq.cons, lib_qp);
- 			break;
- 		case CQ_BASE_CQE_TYPE_RES_RC:
- 			rc = bnxt_qplib_cq_process_res_rc(cq,
-@@ -3007,12 +3006,13 @@ int bnxt_qplib_poll_cq(struct bnxt_qplib_cq *cq, struct bnxt_qplib_cqe *cqe,
- 				dev_err(&cq->hwq.pdev->dev,
- 					"process_cqe error rc = 0x%x\n", rc);
- 		}
--		raw_cons++;
-+		hw_polled++;
-+		bnxt_qplib_hwq_incr_cons(cq->hwq.max_elements, &cq->hwq.cons,
-+					 1, &cq->dbinfo.flags);
-+
- 	}
--	if (cq->hwq.cons != raw_cons) {
--		cq->hwq.cons = raw_cons;
-+	if (hw_polled)
- 		bnxt_qplib_ring_db(&cq->dbinfo, DBC_DBC_TYPE_CQ);
--	}
- exit:
- 	return num_cqes - budget;
- }
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-index 404b851091ca2..23c27cb429786 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-@@ -348,9 +348,21 @@ struct bnxt_qplib_qp {
- #define CQE_IDX(x)		((x) & CQE_MAX_IDX_PER_PG)
- 
- #define ROCE_CQE_CMP_V			0
--#define CQE_CMP_VALID(hdr, raw_cons, cp_bit)			\
-+#define CQE_CMP_VALID(hdr, pass)			\
- 	(!!((hdr)->cqe_type_toggle & CQ_BASE_TOGGLE) ==		\
--	   !((raw_cons) & (cp_bit)))
-+	   !((pass) & BNXT_QPLIB_FLAG_EPOCH_CONS_MASK))
-+
-+static inline u32 __bnxt_qplib_get_avail(struct bnxt_qplib_hwq *hwq)
-+{
-+	int cons, prod, avail;
-+
-+	cons = hwq->cons;
-+	prod = hwq->prod;
-+	avail = cons - prod;
-+	if (cons <= prod)
-+		avail += hwq->depth;
-+	return avail;
-+}
- 
- static inline bool bnxt_qplib_queue_full(struct bnxt_qplib_q *que,
- 					 u8 slots)
-@@ -443,9 +455,9 @@ struct bnxt_qplib_cq {
- #define NQE_PG(x)		(((x) & ~NQE_MAX_IDX_PER_PG) / NQE_CNT_PER_PG)
- #define NQE_IDX(x)		((x) & NQE_MAX_IDX_PER_PG)
- 
--#define NQE_CMP_VALID(hdr, raw_cons, cp_bit)			\
-+#define NQE_CMP_VALID(hdr, pass)			\
- 	(!!(le32_to_cpu((hdr)->info63_v[0]) & NQ_BASE_V) ==	\
--	   !((raw_cons) & (cp_bit)))
-+	   !((pass) & BNXT_QPLIB_FLAG_EPOCH_CONS_MASK))
- 
- #define BNXT_QPLIB_NQE_MAX_CNT		(128 * 1024)
- 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index e47b4ca64d33e..15e6d2b80c700 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -734,17 +734,15 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
- 	u32 type, budget = CREQ_ENTRY_POLL_BUDGET;
- 	struct bnxt_qplib_hwq *hwq = &creq->hwq;
- 	struct creq_base *creqe;
--	u32 sw_cons, raw_cons;
- 	unsigned long flags;
- 	u32 num_wakeup = 0;
-+	u32 hw_polled = 0;
- 
- 	/* Service the CREQ until budget is over */
- 	spin_lock_irqsave(&hwq->lock, flags);
--	raw_cons = hwq->cons;
- 	while (budget > 0) {
--		sw_cons = HWQ_CMP(raw_cons, hwq);
--		creqe = bnxt_qplib_get_qe(hwq, sw_cons, NULL);
--		if (!CREQ_CMP_VALID(creqe, raw_cons, hwq->max_elements))
-+		creqe = bnxt_qplib_get_qe(hwq, hwq->cons, NULL);
-+		if (!CREQ_CMP_VALID(creqe, creq->creq_db.dbinfo.flags))
- 			break;
- 		/* The valid test of the entry must be done first before
- 		 * reading any further.
-@@ -775,15 +773,15 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
- 					 type);
- 			break;
- 		}
--		raw_cons++;
- 		budget--;
-+		hw_polled++;
-+		bnxt_qplib_hwq_incr_cons(hwq->max_elements, &hwq->cons,
-+					 1, &creq->creq_db.dbinfo.flags);
- 	}
- 
--	if (hwq->cons != raw_cons) {
--		hwq->cons = raw_cons;
-+	if (hw_polled)
- 		bnxt_qplib_ring_nq_db(&creq->creq_db.dbinfo,
- 				      rcfw->res->cctx, true);
--	}
- 	spin_unlock_irqrestore(&hwq->lock, flags);
- 	if (num_wakeup)
- 		wake_up_nr(&rcfw->cmdq.waitq, num_wakeup);
-@@ -1113,6 +1111,7 @@ static int bnxt_qplib_map_creq_db(struct bnxt_qplib_rcfw *rcfw, u32 reg_offt)
- 	pdev = rcfw->pdev;
- 	creq_db = &rcfw->creq.creq_db;
- 
-+	creq_db->dbinfo.flags = 0;
- 	creq_db->reg.bar_id = RCFW_COMM_CONS_PCI_BAR_REGION;
- 	creq_db->reg.bar_base = pci_resource_start(pdev, creq_db->reg.bar_id);
- 	if (!creq_db->reg.bar_id)
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-index 7b31bee3e0005..45996e60a0d03 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-@@ -141,9 +141,9 @@ struct bnxt_qplib_crsbe {
- /* Allocate 1 per QP for async error notification for now */
- #define BNXT_QPLIB_CREQE_MAX_CNT	(64 * 1024)
- #define BNXT_QPLIB_CREQE_UNITS		16	/* 16-Bytes per prod unit */
--#define CREQ_CMP_VALID(hdr, raw_cons, cp_bit)			\
-+#define CREQ_CMP_VALID(hdr, pass)			\
- 	(!!((hdr)->v & CREQ_BASE_V) ==				\
--	   !((raw_cons) & (cp_bit)))
-+	   !((pass) & BNXT_QPLIB_FLAG_EPOCH_CONS_MASK))
- #define CREQ_ENTRY_POLL_BUDGET		0x100
- 
- /* HWQ */
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index 157db6b7e1193..ae2bde34e785b 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -343,7 +343,7 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
- 	hwq->cons = 0;
- 	hwq->pdev = pdev;
- 	hwq->depth = hwq_attr->depth;
--	hwq->max_elements = depth;
-+	hwq->max_elements = hwq->depth;
- 	hwq->element_size = stride;
- 	hwq->qe_ppg = pg_size / stride;
- 	/* For direct access to the elements */
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.h b/drivers/infiniband/hw/bnxt_re/qplib_res.h
-index 5949f004f7856..3e3383b8a9135 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.h
-@@ -186,6 +186,14 @@ struct bnxt_qplib_db_info {
- 	struct bnxt_qplib_hwq	*hwq;
- 	u32			xid;
- 	u32			max_slot;
-+	u32                     flags;
-+};
-+
-+enum bnxt_qplib_db_info_flags_mask {
-+	BNXT_QPLIB_FLAG_EPOCH_CONS_SHIFT        = 0x0UL,
-+	BNXT_QPLIB_FLAG_EPOCH_PROD_SHIFT        = 0x1UL,
-+	BNXT_QPLIB_FLAG_EPOCH_CONS_MASK         = 0x1UL,
-+	BNXT_QPLIB_FLAG_EPOCH_PROD_MASK         = 0x2UL,
- };
- 
- /* Tables */
-@@ -396,24 +404,34 @@ void bnxt_qplib_unmap_db_bar(struct bnxt_qplib_res *res);
- 
- int bnxt_qplib_determine_atomics(struct pci_dev *dev);
- 
--static inline void bnxt_qplib_hwq_incr_prod(struct bnxt_qplib_hwq *hwq, u32 cnt)
-+static inline void bnxt_qplib_hwq_incr_prod(struct bnxt_qplib_db_info *dbinfo,
-+					    struct bnxt_qplib_hwq *hwq, u32 cnt)
- {
--	hwq->prod = (hwq->prod + cnt) % hwq->depth;
-+	/* move prod and update toggle/epoch if wrap around */
-+	hwq->prod += cnt;
-+	if (hwq->prod >= hwq->depth) {
-+		hwq->prod %= hwq->depth;
-+		dbinfo->flags ^= 1UL << BNXT_QPLIB_FLAG_EPOCH_PROD_SHIFT;
-+	}
- }
- 
--static inline void bnxt_qplib_hwq_incr_cons(struct bnxt_qplib_hwq *hwq,
--					    u32 cnt)
-+static inline void bnxt_qplib_hwq_incr_cons(u32 max_elements, u32 *cons, u32 cnt,
-+					    u32 *dbinfo_flags)
- {
--	hwq->cons = (hwq->cons + cnt) % hwq->depth;
-+	/* move cons and update toggle/epoch if wrap around */
-+	*cons += cnt;
-+	if (*cons >= max_elements) {
-+		*cons %= max_elements;
-+		*dbinfo_flags ^= 1UL << BNXT_QPLIB_FLAG_EPOCH_CONS_SHIFT;
-+	}
- }
- 
- static inline void bnxt_qplib_ring_db32(struct bnxt_qplib_db_info *info,
- 					bool arm)
- {
--	u32 key;
-+	u32 key = 0;
- 
--	key = info->hwq->cons & (info->hwq->max_elements - 1);
--	key |= (CMPL_DOORBELL_IDX_VALID |
-+	key |= info->hwq->cons | (CMPL_DOORBELL_IDX_VALID |
- 		(CMPL_DOORBELL_KEY_CMPL & CMPL_DOORBELL_KEY_MASK));
- 	if (!arm)
- 		key |= CMPL_DOORBELL_MASK;
-@@ -427,8 +445,7 @@ static inline void bnxt_qplib_ring_db(struct bnxt_qplib_db_info *info,
- 
- 	key = (info->xid & DBC_DBC_XID_MASK) | DBC_DBC_PATH_ROCE | type;
- 	key <<= 32;
--	key |= (info->hwq->cons & (info->hwq->max_elements - 1)) &
--		DBC_DBC_INDEX_MASK;
-+	key |= (info->hwq->cons & DBC_DBC_INDEX_MASK);
- 	writeq(key, info->db);
- }
- 
+ 		/* submit cached LFS IO */
+ 		f2fs_submit_merged_write_cond(sbi, NULL, page, 0, type);
+-		/* sbumit cached IPU IO */
++		/* submit cached IPU IO */
+ 		f2fs_submit_merged_ipu_write(sbi, NULL, page);
+ 		if (ordered) {
+ 			wait_on_page_writeback(page);
 -- 
 2.43.0
 
