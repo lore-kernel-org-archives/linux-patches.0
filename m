@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061A619D069;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DE81B4C4D;
 	Thu,  6 Jun 2024 14:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683450; cv=none; b=TSFw3HE2Eoj/3KaUH0BQxUi1gPT0zEkURalCvDsH9AI/+0nFBfh/w5DPRGFx++vRBRFcxY/2kjuJQBNBjbZ0sByoSv4kD1ToXmnTbI6ECdcmSl+Y2fUSt2CKwP3ZtCHPiITsCrNjfwKGgu6y5fqTbLnUdGaM0joRrlttwbGAV9s=
+	t=1717683450; cv=none; b=sKepcpMjeMotATzUekh+dgHmYMdDR1HZG/s7jMmD6ojECpBHOh2uqmU4+IL02g+3BgK4VtiZD8vErI9rt28aVsmsMCjgrG5HcFVNszhS85MbaE4dK0lpyiNKPVMxuiziRIxvh0ZfYtJobx5dvjzsOgLG/Cbdb6z1j4R5T7lYttk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683450; c=relaxed/simple;
-	bh=htlYTaaDum0TLXLQxbqgARYDTnxuqjdmkHgW3DYZBsw=;
+	bh=iIdxwHVxTvDOSzQ4Ug2cpFlm3CZqOST5sLA6ywPdcIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ij+tGPjeDnk6nvAMjg+buwrjYSsw2+1w2JBc03tbQbAMXU7fkcyuZPh+Oltcl1+/mUTuaIwOYhoRuJ+unDVw624XSG0uoh1b+pNsOGUga4DP9XhWmVHP8QnIWvWGwceSzLqjj1YDVO165f/XrtNU6oXjWhDfTlJhX4LVfUcZoyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s64NPFEs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rA5cu6RavvJIsa3di1MKilcxR7ojTH+k3MFtA6x5b+u+Tu0tgjpI8EoU5SVAA/8POjxlfZXeSpczaTPdUPvVf0MpbEeIuOSJNuJN7FsOcaaURkmVUsUdC+9ZlPPRSiOMT/4Ju9EtuySjuiop8/73YyxcTqkKuY2EIN6qGl2iCeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zacf3qws; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s64NPFEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7EFCC2BD10;
-	Thu,  6 Jun 2024 14:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zacf3qws"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63843C2BD10;
+	Thu,  6 Jun 2024 14:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683449;
-	bh=htlYTaaDum0TLXLQxbqgARYDTnxuqjdmkHgW3DYZBsw=;
+	s=korg; t=1717683450;
+	bh=iIdxwHVxTvDOSzQ4Ug2cpFlm3CZqOST5sLA6ywPdcIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s64NPFEs7ti6nw0yeuZYPoCddi1dm9w/r7KdUEU+FPb7KUr0DvBo/nA2syQ+C20G8
-	 WdfTgEac8Xx8Vt0dyl/G+DcB3XuLtC5its1Pw5NsmMS7AcPZCLrS9JfnGzN02F4Go0
-	 KUTgE+qqApUgzYVBZeqZomMP5OJ2rSbG7liKUong=
+	b=Zacf3qwsBuBRiLqfE/PNvRT4n3yANUe/HH4cSOxew8RVJLZN7kVy/BtJx5rw2jEcv
+	 Vk5OpzVF6sHFIMu9YUwvveJ2JGdA9OFBUMa78aIfbiBWCjxPa71Ybt8YixEeA9mabl
+	 McdIYqhHsWsqSUU1xTJD+Y92C5eZFhBLrDYQWljo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
-	Alex Elder <elder@ieee.org>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
+	He Zhe <zhe.he@windriver.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 393/744] greybus: lights: check return of get_channel_from_mode
-Date: Thu,  6 Jun 2024 16:01:05 +0200
-Message-ID: <20240606131745.065880547@linuxfoundation.org>
+Subject: [PATCH 6.1 334/473] perf bench internals inject-build-id: Fix trap divide when collecting just one DSO
+Date: Thu,  6 Jun 2024 16:04:23 +0200
+Message-ID: <20240606131710.966475318@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +53,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rui Miguel Silva <rmfrfs@gmail.com>
+From: He Zhe <zhe.he@windriver.com>
 
-[ Upstream commit a1ba19a1ae7cd1e324685ded4ab563e78fe68648 ]
+[ Upstream commit d9180e23fbfa3875424d3a6b28b71b072862a52a ]
 
-If channel for the given node is not found we return null from
-get_channel_from_mode. Make sure we validate the return pointer
-before using it in two of the missing places.
+'perf bench internals inject-build-id' suffers from the following error when
+only one DSO is collected.
 
-This was originally reported in [0]:
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+  # perf bench internals inject-build-id -v
+    Collected 1 DSOs
+  traps: internals-injec[2305] trap divide error
+  ip:557566ba6394 sp:7ffd4de97fe0 error:0 in perf[557566b2a000+23d000]
+    Build-id injection benchmark
+    Iteration #1
+  Floating point exception
 
-[0] https://lore.kernel.org/all/20240301190425.120605-1-m.lobanov@rosalinux.ru
+This patch removes the unnecessary minus one from the divisor which also
+corrects the randomization range.
 
-Fixes: 2870b52bae4c ("greybus: lights: add lights implementation")
-Reported-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
-Suggested-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
-Suggested-by: Alex Elder <elder@ieee.org>
-Signed-off-by: Rui Miguel Silva <rmfrfs@gmail.com>
-Link: https://lore.kernel.org/r/20240325221549.2185265-1-rmfrfs@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
+Fixes: 0bf02a0d80427f26 ("perf bench: Add build-id injection benchmark")
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240507065026.2652929-1-zhe.he@windriver.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/greybus/light.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/bench/inject-buildid.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/greybus/light.c b/drivers/staging/greybus/light.c
-index c6bd86a5335ab..9999f84016992 100644
---- a/drivers/staging/greybus/light.c
-+++ b/drivers/staging/greybus/light.c
-@@ -147,6 +147,9 @@ static int __gb_lights_flash_brightness_set(struct gb_channel *channel)
- 		channel = get_channel_from_mode(channel->light,
- 						GB_CHANNEL_MODE_TORCH);
+diff --git a/tools/perf/bench/inject-buildid.c b/tools/perf/bench/inject-buildid.c
+index 17672790f1231..d1672be702f3b 100644
+--- a/tools/perf/bench/inject-buildid.c
++++ b/tools/perf/bench/inject-buildid.c
+@@ -361,7 +361,7 @@ static int inject_build_id(struct bench_data *data, u64 *max_rss)
+ 		return -1;
  
-+	if (!channel)
-+		return -EINVAL;
-+
- 	/* For not flash we need to convert brightness to intensity */
- 	intensity = channel->intensity_uA.min +
- 			(channel->intensity_uA.step * channel->led->brightness);
-@@ -549,7 +552,10 @@ static int gb_lights_light_v4l2_register(struct gb_light *light)
- 	}
- 
- 	channel_flash = get_channel_from_mode(light, GB_CHANNEL_MODE_FLASH);
--	WARN_ON(!channel_flash);
-+	if (!channel_flash) {
-+		dev_err(dev, "failed to get flash channel from mode\n");
-+		return -EINVAL;
-+	}
- 
- 	fled = &channel_flash->fled;
+ 	for (i = 0; i < nr_mmaps; i++) {
+-		int idx = rand() % (nr_dsos - 1);
++		int idx = rand() % nr_dsos;
+ 		struct bench_dso *dso = &dsos[idx];
+ 		u64 timestamp = rand() % 1000000;
  
 -- 
 2.43.0
