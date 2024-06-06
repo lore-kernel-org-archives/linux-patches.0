@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282FF197A75;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B82197A75;
 	Thu,  6 Jun 2024 14:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683237; cv=none; b=bx4OWDUB5VAN6bRnXW2dxNhkEnTPxTZ2thDUGKXRd9tr0eHcBIzp6TB+w3LWbEfRKQpwLEn1y47ZteNW3yDfIe9BVu8C4+0wrsA5unuOe23Uz9I1jzQFA+uEBTgXb3vKOV0DhIhFcFF3EUtsMoqoQVtgoGueOufuDj47HFNJYR0=
+	t=1717683237; cv=none; b=s2Jgch0n24v/bUJteIxudIYtdPtWM9WotXfy7NX2Cfs7EmvOQ/ChK/aH1yQYRSBNzyT2O1x6X18SEUMY11lnNN7Qqrrvjkye22F3xKGnxxciICqinICaqb2y3JTv6xrVUvwSxnQQW90A/S7jmBYhmdGd25g0OZT8tcC34RxB26Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683237; c=relaxed/simple;
-	bh=1XSlR8qSHvwVbpEHzsVDkcpsYlupBYFAuO8Nrt0691k=;
+	bh=PG9VtGQ0o+hg/x1npRmmPwH/awCQ2ek5wARnTSB8m3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCsP0HSo7j7dDbeHj5znWUBpRvTH6cmLBK5aPQNQrwAKAbOhHm8hfPsu+xJx5y1+lrt6nvDTvKWU4amEXekN7SN/YYorzDpc1blaVoRO6Ys7EcJiEnWDDNrOI6LcUgz3L4c79vUE4c4eJQRHvark6gO0VWFTYIxTV8cnCLFc0E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kkZv/Fy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CFp18OzGDM5zuhVNVU6DFOjaDN+Z9zwMtn4TZe1Kj/O/Q/XIG3G5iDVhjNkc70M5PO0oLsKMK7mZnEJq9bHg8B9fXroechKYLcFI8w4m0I6CtBDUnigKDkKkK5rn/jn3Yix8QD2apgooQSddK62xlNv0otHoY1GK+lLvtIEcZwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxp+GhTH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kkZv/Fy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AE3C32781;
-	Thu,  6 Jun 2024 14:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxp+GhTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D09EC2BD10;
+	Thu,  6 Jun 2024 14:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683237;
-	bh=1XSlR8qSHvwVbpEHzsVDkcpsYlupBYFAuO8Nrt0691k=;
+	bh=PG9VtGQ0o+hg/x1npRmmPwH/awCQ2ek5wARnTSB8m3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0kkZv/Fy8iwcgjyXVWx7DoBwA4r9RwR7VIbG7vhOuQG8wQDyNTp6MiJJDPq7Tgs2T
-	 vBuZewPCkDi+e0RnRcIRbGRM5N/RTGZsEtrKNFCVU0aYYDWnStkd2Y3kOmLS6ZYucb
-	 zLXH+L4FFuhOTYHSI668nrAguZ3Vb8ANjDMjEpaA=
+	b=dxp+GhTHmMUTLyAfdytkScBcyDeBZuNP/YsqGls0IJqVkuJWdZ76lG55sKUChzcue
+	 CBSwfzcZnIKnNfKI6lvOrerAy7ncxilHvjttRp36qs0USFmYj8UIQLKZ0mL/pha+Kr
+	 plIm6gHR5RpSvWOGOqlFJNTHlqXLBBO3P6xVAoIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinbo Zhu <zhuyinbo@loongson.cn>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 182/744] dt-bindings: thermal: loongson,ls2k-thermal: Fix binding check issues
-Date: Thu,  6 Jun 2024 15:57:34 +0200
-Message-ID: <20240606131738.269042332@linuxfoundation.org>
+Subject: [PATCH 6.1 115/473] ACPI: disable -Wstringop-truncation
+Date: Thu,  6 Jun 2024 16:00:44 +0200
+Message-ID: <20240606131703.741701523@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,72 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Binbin Zhou <zhoubinbin@loongson.cn>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 88071e31e994ee23356674e0c5461b25e2a95cdc ]
+[ Upstream commit a3403d304708f60565582d60af4316289d0316a0 ]
 
-Add the missing 'thermal-sensor-cells' property which is required for
-every thermal sensor as it's used when using phandles.
-And add the thermal-sensor.yaml reference.
+gcc -Wstringop-truncation warns about copying a string that results in a
+missing nul termination:
 
-In fact, it was a careless mistake when submitting the driver that
-caused it to not work properly. So the fix is necessary, although it
-will result in the ABI break.
+drivers/acpi/acpica/tbfind.c: In function 'acpi_tb_find_table':
+drivers/acpi/acpica/tbfind.c:60:9: error: 'strncpy' specified bound 6 equals destination size [-Werror=stringop-truncation]
+   60 |         strncpy(header.oem_id, oem_id, ACPI_OEM_ID_SIZE);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/acpi/acpica/tbfind.c:61:9: error: 'strncpy' specified bound 8 equals destination size [-Werror=stringop-truncation]
+   61 |         strncpy(header.oem_table_id, oem_table_id, ACPI_OEM_TABLE_ID_SIZE);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 72684d99a854 ("thermal: dt-bindings: add loongson-2 thermal")
-Cc: Yinbo Zhu <zhuyinbo@loongson.cn>
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/6d69362632271ab0af9a5fbfa3bc46a0894f1d54.1700817227.git.zhoubinbin@loongson.cn
-Stable-dep-of: c8c435368577 ("dt-bindings: thermal: loongson,ls2k-thermal: Fix incorrect compatible definition")
+The code works as intended, and the warning could be addressed by using
+a memcpy(), but turning the warning off for this file works equally well
+and may be easier to merge.
+
+Fixes: 47c08729bf1c ("ACPICA: Fix for LoadTable operator, input strings")
+Link: https://lore.kernel.org/lkml/CAJZ5v0hoUfv54KW7y4223Mn9E7D4xvR7whRFNLTBqCZMUxT50Q@mail.gmail.com/#t
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/thermal/loongson,ls2k-thermal.yaml        | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml b/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
-index 7538469997f9e..b634f57cd011d 100644
---- a/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
-+++ b/Documentation/devicetree/bindings/thermal/loongson,ls2k-thermal.yaml
-@@ -10,6 +10,9 @@ maintainers:
-   - zhanghongchen <zhanghongchen@loongson.cn>
-   - Yinbo Zhu <zhuyinbo@loongson.cn>
+diff --git a/drivers/acpi/acpica/Makefile b/drivers/acpi/acpica/Makefile
+index f919811156b1f..b6cf9c9bd6396 100644
+--- a/drivers/acpi/acpica/Makefile
++++ b/drivers/acpi/acpica/Makefile
+@@ -5,6 +5,7 @@
  
-+allOf:
-+  - $ref: /schemas/thermal/thermal-sensor.yaml#
-+
- properties:
-   compatible:
-     oneOf:
-@@ -26,12 +29,16 @@ properties:
-   interrupts:
-     maxItems: 1
+ ccflags-y			:= -D_LINUX -DBUILDING_ACPICA
+ ccflags-$(CONFIG_ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
++CFLAGS_tbfind.o 		+= $(call cc-disable-warning, stringop-truncation)
  
-+  '#thermal-sensor-cells':
-+    const: 1
-+
- required:
-   - compatible
-   - reg
-   - interrupts
-+  - '#thermal-sensor-cells'
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-@@ -41,4 +48,5 @@ examples:
-         reg = <0x1fe01500 0x30>;
-         interrupt-parent = <&liointc0>;
-         interrupts = <7 IRQ_TYPE_LEVEL_LOW>;
-+        #thermal-sensor-cells = <1>;
-     };
+ # use acpi.o to put all files here into acpi.o modparam namespace
+ obj-y	+= acpi.o
 -- 
 2.43.0
 
