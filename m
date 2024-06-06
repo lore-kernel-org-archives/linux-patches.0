@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0461196D98;
-	Thu,  6 Jun 2024 14:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C31F19924A;
+	Thu,  6 Jun 2024 14:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683195; cv=none; b=kBq9dJ5cqbasQmSe1WSNYCoRm2Zl8O1MBKsrGawg1jpXdqRI7VN2ZzN2+qo+nfYSljif6vPxecf8ijCexHbCCLZU70q1A4M2gjNDb5hC+V7eI4drbYxcKHIqW4pLNUqCaLYcVKRFLMHKnk0pBM1D4tEiChaUZStDhcrg7Qf+NnA=
+	t=1717683195; cv=none; b=OEpu9NRLJOS2k//05UXuXvIdhZtCIqM8gM8DeVGVQmRZxx+mXe+dr4L5o29mq+agVYfnUEPfWZpnG22gDHo9OKclw+1SluYl18sJdEcIMgZpgDCV3C7bMZc3V1+tbHOK7dm3BNurwrF0jvwMztL/cb33q1alaCOS770Wj80Gm7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683195; c=relaxed/simple;
-	bh=j7sucH7T0cWFkLXmBcpzi1ChCBKiNaklZYd2zaqeFJ0=;
+	bh=XG4eh4djFQv3MXovM/UlavOABCqKl7WvVn/+dJjP1Cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XUIx+KB7JV69nOSVUkH1uh2Sr6xs3blIsKtd3D2mOeAUtyURCrbLC4WV58UIkcCmxSB5c9Z+bCW/mgyke7tcmrDDOSYtXLZ+wkwzCvdpOLjvd4ft8Ljgc8Zxf0fCI3s9jYJf42IJg5ld3wP/6KJKP8U39K5hgtZjr1ndcGVd0oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7hSZ2i0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Agqshpy98pZEDNNwqMAGBBNE0vVBqPltN6BY4vyn4nWZD53ARS3xd1xn5ErRqfI9ZT7StsxnkoDVaPSxWAgIDUo2OpwC2kYMbIvTN93jIPMM4pdGRc3imPB+ZfPNezjieSkXU6P+TH3odh7YkKDeOXEn18QddVEgIoBvIvU16hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjP0yHF1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7hSZ2i0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00E3C2BD10;
-	Thu,  6 Jun 2024 14:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjP0yHF1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3898FC32782;
+	Thu,  6 Jun 2024 14:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683194;
-	bh=j7sucH7T0cWFkLXmBcpzi1ChCBKiNaklZYd2zaqeFJ0=;
+	s=korg; t=1717683195;
+	bh=XG4eh4djFQv3MXovM/UlavOABCqKl7WvVn/+dJjP1Cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7hSZ2i0sOg6OZmW5Ingh61VUfjUcTZXNNNFzOA9RqVdsrvlP8Yp8aEkyKgUfT4B9
-	 0Wz5j0lXRxjGMlppRR8OoFPII+lct2xpz5oLJj9N5fVPVxQqOPiKNjxz+5DcXI08lM
-	 MBT9EHguZ5ZwNa+XvjJRDyG9+wVmLBQr9ob7S2/I=
+	b=cjP0yHF1uTAyjBFMOE33wRIjAv9A1h/qA9ELozqD49Yk+e6fTJ1Ku4BGYvO8zHq8l
+	 hATqivDPY9BMizFW6TxGvT28Yu33iX8Av/3PCG5ePl4bNEI9Y9QcVwDx5kgq/ZgStV
+	 0tFVogpaqFBmaKN39KjIeGHUqUdRMYU4XI6XUjN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Glitta <glittao@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Daniel Latypov <dlatypov@google.com>,
-	Marco Elver <elver@google.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Qais Yousef <qyousef@layalina.io>,
+	Srikar Dronamraju <srikar@linux.ibm.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/473] mm/slub, kunit: Use inverted data to corrupt kmem cache
-Date: Thu,  6 Jun 2024 15:59:57 +0200
-Message-ID: <20240606131702.128529466@linuxfoundation.org>
+Subject: [PATCH 6.6 138/744] sched/fair: Add EAS checks before updating root_domain::overutilized
+Date: Thu,  6 Jun 2024 15:56:50 +0200
+Message-ID: <20240606131736.842012730@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,71 +50,150 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Shrikanth Hegde <sshegde@linux.ibm.com>
 
-[ Upstream commit b1080c667b3b2c8c38a7fa83ca5567124887abae ]
+[ Upstream commit be3a51e68f2f1b17250ce40d8872c7645b7a2991 ]
 
-Two failure patterns are seen randomly when running slub_kunit tests with
-CONFIG_SLAB_FREELIST_RANDOM and CONFIG_SLAB_FREELIST_HARDENED enabled.
+root_domain::overutilized is only used for EAS(energy aware scheduler)
+to decide whether to do load balance or not. It is not used if EAS
+not possible.
 
-Pattern 1:
-     # test_clobber_zone: pass:1 fail:0 skip:0 total:1
-     ok 1 test_clobber_zone
-     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:72
-     Expected 3 == slab_errors, but
-         slab_errors == 0 (0x0)
-     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:84
-     Expected 2 == slab_errors, but
-         slab_errors == 0 (0x0)
-     # test_next_pointer: pass:0 fail:1 skip:0 total:1
-     not ok 2 test_next_pointer
+Currently enqueue_task_fair and task_tick_fair accesses, sometime updates
+this field. In update_sd_lb_stats it is updated often. This causes cache
+contention due to true sharing and burns a lot of cycles. ::overload and
+::overutilized are part of the same cacheline. Updating it often invalidates
+the cacheline. That causes access to ::overload to slow down due to
+false sharing. Hence add EAS check before accessing/updating this field.
+EAS check is optimized at compile time or it is a static branch.
+Hence it shouldn't cost much.
 
-In this case, test_next_pointer() overwrites p[s->offset], but the data
-at p[s->offset] is already 0x12.
+With the patch, both enqueue_task_fair and newidle_balance don't show
+up as hot routines in perf profile.
 
-Pattern 2:
-     ok 1 test_clobber_zone
-     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:72
-     Expected 3 == slab_errors, but
-         slab_errors == 2 (0x2)
-     # test_next_pointer: pass:0 fail:1 skip:0 total:1
-     not ok 2 test_next_pointer
+  6.8-rc4:
+  7.18%  swapper          [kernel.vmlinux]              [k] enqueue_task_fair
+  6.78%  s                [kernel.vmlinux]              [k] newidle_balance
 
-In this case, p[s->offset] has a value other than 0x12, but one of the
-expected failures is nevertheless missing.
+  +patch:
+  0.14%  swapper          [kernel.vmlinux]              [k] enqueue_task_fair
+  0.00%  swapper          [kernel.vmlinux]              [k] newidle_balance
 
-Invert data instead of writing a fixed value to corrupt the cache data
-structures to fix the problem.
+While at it: trace_sched_overutilized_tp expect that second argument to
+be bool. So do a int to bool conversion for that.
 
-Fixes: 1f9f78b1b376 ("mm/slub, kunit: add a KUnit test for SLUB debugging functionality")
-Cc: Oliver Glitta <glittao@gmail.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-CC: Daniel Latypov <dlatypov@google.com>
-Cc: Marco Elver <elver@google.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Fixes: 2802bf3cd936 ("sched/fair: Add over-utilization/tipping point indicator")
+Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Qais Yousef <qyousef@layalina.io>
+Reviewed-by: Srikar Dronamraju <srikar@linux.ibm.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20240307085725.444486-2-sshegde@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/slub_kunit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/fair.c | 53 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 34 insertions(+), 19 deletions(-)
 
-diff --git a/lib/slub_kunit.c b/lib/slub_kunit.c
-index 7a0564d7cb7ae..9384747d90e5f 100644
---- a/lib/slub_kunit.c
-+++ b/lib/slub_kunit.c
-@@ -39,7 +39,7 @@ static void test_next_pointer(struct kunit *test)
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 397ef27c9bdb1..01b3fc97ddc27 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -6564,22 +6564,42 @@ static inline void hrtick_update(struct rq *rq)
+ #ifdef CONFIG_SMP
+ static inline bool cpu_overutilized(int cpu)
+ {
+-	unsigned long rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
+-	unsigned long rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
++	unsigned long  rq_util_min, rq_util_max;
++
++	if (!sched_energy_enabled())
++		return false;
++
++	rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
++	rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
  
- 	ptr_addr = (unsigned long *)(p + s->offset);
- 	tmp = *ptr_addr;
--	p[s->offset] = 0x12;
-+	p[s->offset] = ~p[s->offset];
+ 	/* Return true only if the utilization doesn't fit CPU's capacity */
+ 	return !util_fits_cpu(cpu_util_cfs(cpu), rq_util_min, rq_util_max, cpu);
+ }
  
- 	/*
- 	 * Expecting three errors.
+-static inline void update_overutilized_status(struct rq *rq)
++static inline void set_rd_overutilized_status(struct root_domain *rd,
++					      unsigned int status)
+ {
+-	if (!READ_ONCE(rq->rd->overutilized) && cpu_overutilized(rq->cpu)) {
+-		WRITE_ONCE(rq->rd->overutilized, SG_OVERUTILIZED);
+-		trace_sched_overutilized_tp(rq->rd, SG_OVERUTILIZED);
+-	}
++	if (!sched_energy_enabled())
++		return;
++
++	WRITE_ONCE(rd->overutilized, status);
++	trace_sched_overutilized_tp(rd, !!status);
++}
++
++static inline void check_update_overutilized_status(struct rq *rq)
++{
++	/*
++	 * overutilized field is used for load balancing decisions only
++	 * if energy aware scheduler is being used
++	 */
++	if (!sched_energy_enabled())
++		return;
++
++	if (!READ_ONCE(rq->rd->overutilized) && cpu_overutilized(rq->cpu))
++		set_rd_overutilized_status(rq->rd, SG_OVERUTILIZED);
+ }
+ #else
+-static inline void update_overutilized_status(struct rq *rq) { }
++static inline void check_update_overutilized_status(struct rq *rq) { }
+ #endif
+ 
+ /* Runqueue only has SCHED_IDLE tasks enqueued */
+@@ -6680,7 +6700,7 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
+ 	 * and the following generally works well enough in practice.
+ 	 */
+ 	if (!task_new)
+-		update_overutilized_status(rq);
++		check_update_overutilized_status(rq);
+ 
+ enqueue_throttle:
+ 	assert_list_leaf_cfs_rq(rq);
+@@ -10500,19 +10520,14 @@ static inline void update_sd_lb_stats(struct lb_env *env, struct sd_lb_stats *sd
+ 		env->fbq_type = fbq_classify_group(&sds->busiest_stat);
+ 
+ 	if (!env->sd->parent) {
+-		struct root_domain *rd = env->dst_rq->rd;
+-
+ 		/* update overload indicator if we are at root domain */
+-		WRITE_ONCE(rd->overload, sg_status & SG_OVERLOAD);
++		WRITE_ONCE(env->dst_rq->rd->overload, sg_status & SG_OVERLOAD);
+ 
+ 		/* Update over-utilization (tipping point, U >= 0) indicator */
+-		WRITE_ONCE(rd->overutilized, sg_status & SG_OVERUTILIZED);
+-		trace_sched_overutilized_tp(rd, sg_status & SG_OVERUTILIZED);
++		set_rd_overutilized_status(env->dst_rq->rd,
++					   sg_status & SG_OVERUTILIZED);
+ 	} else if (sg_status & SG_OVERUTILIZED) {
+-		struct root_domain *rd = env->dst_rq->rd;
+-
+-		WRITE_ONCE(rd->overutilized, SG_OVERUTILIZED);
+-		trace_sched_overutilized_tp(rd, SG_OVERUTILIZED);
++		set_rd_overutilized_status(env->dst_rq->rd, SG_OVERUTILIZED);
+ 	}
+ 
+ 	update_idle_cpu_scan(env, sum_util);
+@@ -12503,7 +12518,7 @@ static void task_tick_fair(struct rq *rq, struct task_struct *curr, int queued)
+ 		task_tick_numa(rq, curr);
+ 
+ 	update_misfit_status(curr, rq);
+-	update_overutilized_status(task_rq(curr));
++	check_update_overutilized_status(task_rq(curr));
+ 
+ 	task_tick_core(rq, curr);
+ }
 -- 
 2.43.0
 
