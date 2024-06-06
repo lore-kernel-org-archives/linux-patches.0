@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1047C1A01B5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8027B1A01B9;
 	Thu,  6 Jun 2024 14:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683143; cv=none; b=R8fxbFlKLj2VA7o3S+SIUo7pNKe3umMuWIXGd469Pc2Xt+cGaUDa0cNvi3FAc5iM0yKCQs7EVwd/1ZyJnyvsj2SfJAsem0QTfeKZBD8GAt1gwpm0R2hAMPshWQMgB0PM/msgRcX1WiSJ1YFC5HpiGvK/oCAP2bTZzznT+ciLgIo=
+	t=1717683143; cv=none; b=qabx9BMrJTKhQ332DZGjnVLPEOFWFKfa7xNVgCvE5Vpj76ZXTrpWsS1BsUpOcdbG3Gs7624ba7PRRW9ns+SmbCn3beKO3C+ahPm9hCMdttrMqKidF6kjeI1VildUPD53EGL8E+uNXd9rL8eS3Jc+zrA7Z4UOvFgDwj9r+uBlYug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683143; c=relaxed/simple;
-	bh=sMSp+OPDKGgm/kKotz9d8wsISs2S+NpsaETJ774bZuM=;
+	bh=cmCCzkvi8cw/jDggDZTOvfylLyMNQTB46osTBiaXVp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cC1H7wfeWem8lbDipGXo+jBJpJsL4hfUoQShsVqLTOAveqvs2ie7kj4N4L03beZbGdnwBKSxJGoUhbgsqkcfZ57FCW85abxSb/MP+ori/Bko7FclFi10QQz+s0T9d2n7kYya3Nef6giqT6zlW/Y4n8wNRgOoKiUtJEtAdZhb7lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJF1far5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bwQ32cXr1HszGhEANiLwJ18kzYrShujnCQudVDsdOR79WvtqoxDadO9AlzKJXLKBbbKLEKEJPLxJiJXBUqzL11GA2HeFIc5htzB6qIk5GATsGZInpPhch8E8QltI3cctegeXNbd/cwoJ2TekTOkMKuw0ZwX6LsQEtb2TgpZSoRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SbA0TFnJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJF1far5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB270C2BD10;
-	Thu,  6 Jun 2024 14:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbA0TFnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC1EC2BD10;
+	Thu,  6 Jun 2024 14:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683142;
-	bh=sMSp+OPDKGgm/kKotz9d8wsISs2S+NpsaETJ774bZuM=;
+	s=korg; t=1717683143;
+	bh=cmCCzkvi8cw/jDggDZTOvfylLyMNQTB46osTBiaXVp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VJF1far5viuOFRc8IbHoqJiktpVr+6x2aJSsuBKb5m3Wz3y/7ZT8Kjz85OJ/INP4a
-	 st/G8OOPxTgMGfu3XiaFGbs19RXDMjXEKGHcO8KUq5W5KYDsQpPvt1TdS5dEdiNhPR
-	 w2ZkOA8gt2L9oBI+oUIRvAb50JQDn5/pATXgJIjY=
+	b=SbA0TFnJ/azAdNnZFFcr8ne39zJDFyrMpgsy5va8BzQkWe+SbUWM95GHQWGfSrWmb
+	 IYQ6jaz7hjDEdSBH22gAc25zbp/HZQP90vpCjDS0prnYCh/9HH0zQjkYgWLX/JksQe
+	 uthcdIpAzeZlfcu3mHbzYhCwT1JG3Egax3fGW0hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/744] nvmet-tcp: fix possible memory leak when tearing down a controller
-Date: Thu,  6 Jun 2024 15:56:00 +0200
-Message-ID: <20240606131735.223356075@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	"Bai, Shuangpeng" <sjb7183@psu.edu>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 015/473] nilfs2: fix unexpected freezing of nilfs_segctor_sync()
+Date: Thu,  6 Jun 2024 15:59:04 +0200
+Message-ID: <20240606131700.342188008@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,69 +47,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 6825bdde44340c5a9121f6d6fa25cc885bd9e821 ]
+commit 936184eadd82906992ff1f5ab3aada70cce44cee upstream.
 
-When we teardown the controller, we wait for pending I/Os to complete
-(sq->ref on all queues to drop to zero) and then we go over the commands,
-and free their command buffers in case they are still fetching data from
-the host (e.g. processing nvme writes) and have yet to take a reference
-on the sq.
+A potential and reproducible race issue has been identified where
+nilfs_segctor_sync() would block even after the log writer thread writes a
+checkpoint, unless there is an interrupt or other trigger to resume log
+writing.
 
-However, we may miss the case where commands have failed before executing
-and are queued for sending a response, but will never occur because the
-queue socket is already down. In this case we may miss deallocating command
-buffers.
+This turned out to be because, depending on the execution timing of the
+log writer thread running in parallel, the log writer thread may skip
+responding to nilfs_segctor_sync(), which causes a call to schedule()
+waiting for completion within nilfs_segctor_sync() to lose the opportunity
+to wake up.
 
-Solve this by freeing all commands buffers as nvmet_tcp_free_cmd_buffers is
-idempotent anyways.
+The reason why waking up the task waiting in nilfs_segctor_sync() may be
+skipped is that updating the request generation issued using a shared
+sequence counter and adding an wait queue entry to the request wait queue
+to the log writer, are not done atomically.  There is a possibility that
+log writing and request completion notification by nilfs_segctor_wakeup()
+may occur between the two operations, and in that case, the wait queue
+entry is not yet visible to nilfs_segctor_wakeup() and the wake-up of
+nilfs_segctor_sync() will be carried over until the next request occurs.
 
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Tested-by: Yi Zhang <yi.zhang@redhat.com>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this issue by performing these two operations simultaneously within
+the lock section of sc_state_lock.  Also, following the memory barrier
+guidelines for event waiting loops, move the call to set_current_state()
+in the same location into the event waiting loop to ensure that a memory
+barrier is inserted just before the event condition determination.
+
+Link: https://lkml.kernel.org/r/20240520132621.4054-3-konishi.ryusuke@gmail.com
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Cc: "Bai, Shuangpeng" <sjb7183@psu.edu>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ fs/nilfs2/segment.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 8e5d547aa16cb..3d302815c6f36 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -324,6 +324,7 @@ static int nvmet_tcp_check_ddgst(struct nvmet_tcp_queue *queue, void *pdu)
- 	return 0;
- }
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2207,19 +2207,28 @@ static int nilfs_segctor_sync(struct nil
+ 	struct nilfs_segctor_wait_request wait_req;
+ 	int err = 0;
  
-+/* If cmd buffers are NULL, no operation is performed */
- static void nvmet_tcp_free_cmd_buffers(struct nvmet_tcp_cmd *cmd)
- {
- 	kfree(cmd->iov);
-@@ -1476,13 +1477,9 @@ static void nvmet_tcp_free_cmd_data_in_buffers(struct nvmet_tcp_queue *queue)
- 	struct nvmet_tcp_cmd *cmd = queue->cmds;
- 	int i;
+-	spin_lock(&sci->sc_state_lock);
+ 	init_wait(&wait_req.wq);
+ 	wait_req.err = 0;
+ 	atomic_set(&wait_req.done, 0);
++	init_waitqueue_entry(&wait_req.wq, current);
++
++	/*
++	 * To prevent a race issue where completion notifications from the
++	 * log writer thread are missed, increment the request sequence count
++	 * "sc_seq_request" and insert a wait queue entry using the current
++	 * sequence number into the "sc_wait_request" queue at the same time
++	 * within the lock section of "sc_state_lock".
++	 */
++	spin_lock(&sci->sc_state_lock);
+ 	wait_req.seq = ++sci->sc_seq_request;
++	add_wait_queue(&sci->sc_wait_request, &wait_req.wq);
+ 	spin_unlock(&sci->sc_state_lock);
  
--	for (i = 0; i < queue->nr_cmds; i++, cmd++) {
--		if (nvmet_tcp_need_data_in(cmd))
--			nvmet_tcp_free_cmd_buffers(cmd);
--	}
--
--	if (!queue->nr_cmds && nvmet_tcp_need_data_in(&queue->connect))
--		nvmet_tcp_free_cmd_buffers(&queue->connect);
-+	for (i = 0; i < queue->nr_cmds; i++, cmd++)
-+		nvmet_tcp_free_cmd_buffers(cmd);
-+	nvmet_tcp_free_cmd_buffers(&queue->connect);
- }
+-	init_waitqueue_entry(&wait_req.wq, current);
+-	add_wait_queue(&sci->sc_wait_request, &wait_req.wq);
+-	set_current_state(TASK_INTERRUPTIBLE);
+ 	wake_up(&sci->sc_wait_daemon);
  
- static void nvmet_tcp_release_queue_work(struct work_struct *w)
--- 
-2.43.0
-
+ 	for (;;) {
++		set_current_state(TASK_INTERRUPTIBLE);
++
+ 		if (atomic_read(&wait_req.done)) {
+ 			err = wait_req.err;
+ 			break;
 
 
