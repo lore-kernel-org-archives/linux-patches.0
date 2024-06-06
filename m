@@ -1,100 +1,122 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CB1198E90;
-	Thu,  6 Jun 2024 17:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19ED199239;
+	Thu,  6 Jun 2024 17:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717696042; cv=none; b=KrnCktDFa7dJOFQ5UB22IU7JsD1K7NCnZex6M83CZFsx264vkiM3lpF55OuJcMLTanEJaRocUPa2dTw74uqmDsTuOsZMQgLB9f6SfDW8SIf7FC+psp3cqccltIkRlFMGuoH3ZMASN1bVt3gskvDTnCV6PP9U1E3iONpU/WhqcB0=
+	t=1717696315; cv=none; b=hy14E8oExDQUD22eRlHh8H9KU6EqIPZ+qmWDEMlIIlF1zmRHQE81hbkBEggJmg13YZ3uCU9IzMGkC6peOkN0QUMq8x8jYN1bYfD18r4o0DQpA5BHUfc0BNxOY8unexubGihNcW5ioMLopRLukxMTuMIppmm09RNo41wwtfeIiXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717696042; c=relaxed/simple;
-	bh=hfRZV1GKUUFYuwYuST74M+6PHE6LaJ1YGYc1o0TEW2E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jGKpgcNU+YoVHNU0CAZJUHTfDenPD5Y33EOFV7irE1c2u/Nq88HWb9Dh1zyaLX0gh40vP9Vm4RrVawstARUs2VbxI96sMv7fBDwkQJ4VXEfMna8DNCLZBzKXz2xGpWnQeqTeJsOdZsuC5ibian1W42gmKv1ZA/1O9PUdR6V4pm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H5LQ5cX0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717696315; c=relaxed/simple;
+	bh=QtCyvcgciIZk5s3k7PJBwdIzJjsR6DM+WS9zSM/VA/4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Spafhly3jAigSfN06dImi889dFbYDllyUsl343kgb7pcOL9T0307BbNeg49fdS0GCv8EVg9qTcQxG65Wmdv5Op02PL93ZUyJrwjiyS+FfCWFMk8ou1U3lcw4gOQS0hmKpvpri9OaZfXrGq8XLzGtQiJ55HVa5GQ5ql5CXwNpOX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cxUmsLGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H5LQ5cX0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555D9C32782;
-	Thu,  6 Jun 2024 17:47:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cxUmsLGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2FDC2BD10;
+	Thu,  6 Jun 2024 17:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717696042;
-	bh=hfRZV1GKUUFYuwYuST74M+6PHE6LaJ1YGYc1o0TEW2E=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=H5LQ5cX0c64o31YkJ2tv9Dul2Yas8mv36ohOJOtlST1cjpDHmRlSpy1ws53TZ4M9p
-	 MnBwq2XIItr/IyVskD3g1zxhWPcgayepAAzicBBunKon/urIU586WlqSahOAOLjauQ
-	 gamzxRWUhLpWF4pjLc9E56azauVoSG82DAV+BPqOf5ag29srAastGf4+5Z0NcnNCYC
-	 dU7oIZkGqfLFlTzlxHm9UyZ6BCkuVl4q+oEKfvE4kWHuRGM0cazUClzSK76GO17+Xa
-	 +XcMmrCMPrx4wG0v/iVtD2YFTqqAIzXKEv75MNnmc2QG9+ynCUng/D/H3j/1iuW4yM
-	 vaUZLrMqNmHGg==
-Message-ID: <4724e6a1-2da1-4275-8807-b7fe6cd9b6c1@kernel.org>
-Date: Thu, 6 Jun 2024 11:47:20 -0600
+	s=k20201202; t=1717696315;
+	bh=QtCyvcgciIZk5s3k7PJBwdIzJjsR6DM+WS9zSM/VA/4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cxUmsLGhUOhG9vKX4ggX1t/qB8YABjH0QE5zVYdnNlCat1yERxDaK8rOFC+wdB61z
+	 8Dcb4kbZxpUzSONrar3tJOWYm8jYWGMCl8gYnUOijcxjRFNWHC3UITPlFgTx1epRU0
+	 gd6kiUIcWZI+Y2ZYluN7rqXNVW4kQhSOOn3bVWR4M4PzwoXiRxEAljiVrrj45d75D3
+	 4KiHliwbY5g607UGW4PXKWLGBQSuFS1jy/AFeGbdLTDv1RdqDmt2PSNAwVrNrBFYXa
+	 Bja6Ds/Y+WTTLlrEToUzBXsR0SbgrxmooytTNiQsUVJz3vQkLy6Lqrq4XsqsuoZwwe
+	 JvsOy8UEDdNtQ==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.1 000/473] 6.1.93-rc1 review
+Date: Thu,  6 Jun 2024 10:51:50 -0700
+Message-Id: <20240606175150.20439-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] Introduce fwctl subystem
-Content-Language: en-US
-To: Jakub Kicinski <kuba@kernel.org>, Jason Gunthorpe <jgg@nvidia.com>
-Cc: Dan Williams <dan.j.williams@intel.com>, Jonathan Corbet
- <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
- Leon Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
- linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
- Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
- Tariq Toukan <tariqt@nvidia.com>,
- Andy Gospodarek <andrew.gospodarek@broadcom.com>,
- Aron Silverton <aron.silverton@oracle.com>,
- Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
- Leonid Bloch <lbloch@nvidia.com>, Leon Romanovsky <leonro@nvidia.com>,
- linux-cxl@vger.kernel.org, patches@lists.linux.dev
-References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
- <20240603114250.5325279c@kernel.org>
- <214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
- <20240604070451.79cfb280@kernel.org>
- <665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
- <20240605135911.GT19897@nvidia.com>
- <d97144db-424f-4efd-bf10-513a0b895eca@kernel.org>
- <20240606071811.34767cce@kernel.org> <20240606144818.GC19897@nvidia.com>
- <20240606080557.00f3163e@kernel.org>
-From: David Ahern <dsahern@kernel.org>
-In-Reply-To: <20240606080557.00f3163e@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 6/6/24 9:05 AM, Jakub Kicinski wrote:
-> On Thu, 6 Jun 2024 11:48:18 -0300 Jason Gunthorpe wrote:
->>> An argument can be made that given somewhat mixed switchdev experience
->>> we should just stay out of the way and let that happen. But just make
->>> that argument then, instead of pretending the use of this API will be
->>> limited to custom very vendor specific things.  
->>
->> Huh?
+Hello,
+
+On Thu,  6 Jun 2024 15:58:49 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.1.93 release.
+> There are 473 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> I'm sorry, David as been working in netdev for a long time.
-
-And I will continue working on Linux networking stack (netdev) while I
-also work with the IB S/W stack, fwctl, and any other part of Linux
-relevant to my job. I am not going to pick a silo (and should not be
-required to).
-
-> I have a tendency to address the person I'm replying to,
-> assuming their level of understanding of the problem space.
-> Which makes it harder to understand for bystanders.
+> Responses should be made by Sat, 08 Jun 2024 13:15:55 +0000.
+> Anything received after that time might be too late.
 > 
->> At least mlx5 already has a very robust userspace competition to
->> switchdev using RDMA APIs, available in DPDK. This is long since been
->> done and is widely deployed.
-> 
-> Yeah, we had this discussion multiple times
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.93-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 
-The switchdev / sonic comparison came to mind as well during this
-thread. The existence of a kernel way (switchdev) has not stopped sonic
-(userspace SDK) from gaining traction. In some cases the SDK is required
-for device features that do not have a kernel uapi or vendors refuse to
-offer a kernel way, so it is the only option.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-The bottom line to me is that these hardline, dogmatic approaches -
-resisting the recognition of reality - is only harming users. There is a
-middle ground, open source drivers and tools that offer more flexibility.
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] d2106b62e226 ("Linux 6.1.93-rc1")
+
+Thanks,
+SJ
+
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
