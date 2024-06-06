@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07CC198E65;
-	Thu,  6 Jun 2024 14:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F99D198A3B;
+	Thu,  6 Jun 2024 14:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683412; cv=none; b=XfU3M6r7mX6OQYY6gE+QEmFWtRrJl59ddLI7Cp26pYQiTLlZoB6HKVvbSkQlxczb480HsPz6bUuD7RKwGocQAbXrcbCT2NGFBvq94VZtRhBCx518LOnJH7UoS4bFXC583ZqcVgnqh8TXiQLRgNqhzbP6dQ42cuioTwV/6EgWhcE=
+	t=1717683413; cv=none; b=g/Oepx9Aq/KE8vxC/D5frRBCRzIElzz952ukZJ898YgcytdSbukUybmKDinj4BKWKOt8csUnWac6J91aV3AmoCT8iTz/I2b1v+DzeFKMPXUyucXMW5fc1UDHuLfClQFN5Ap5OzSSobOGPUPmcpNRob+MYm7CaSxTEnww6VL+28Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683412; c=relaxed/simple;
-	bh=O3Ix9t3vmVSX4d8r+uxEeWGD61u4vZwPwIeKHyGy5p0=;
+	s=arc-20240116; t=1717683413; c=relaxed/simple;
+	bh=NHbqShrA9YmZOhrnCjL0eDaqxCfjo6gi0s8Qcu1ygSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dq9wVMbYtSdh8He4iPtVbu6IEk8xImQfrelD0G9MPIbmbRuM4Fl0Ul03c7MOwhVJTgpMheT4ee0H4woOsoNGTP2c/994meo8fYFM4Vdo8J/ORhlbjEyoAHJV8c8J1jCjGgA58vDhQY+/yIq9zb27SmVZTrNKjQP1Ldhn1e8IqQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kh0v4IS/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A1nNzq5Aq3ARJk4iThH8aeZEeqNh4saCD9jLdAxvMmdNlLH4kU4zeUN3v4mH+uUudRZY1ZrpoGDyAJH1xQ0ZwjW7d1yDzq1vfXbZTKoVzejlbGRluJqLOImgPhMswd1p1KAFSwU49VsyVBrQQ15kFtkxsSVqPp5jP7gtgo7gF88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KF3cxZq8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kh0v4IS/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E91EC2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KF3cxZq8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDBBC2BD10;
 	Thu,  6 Jun 2024 14:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683412;
-	bh=O3Ix9t3vmVSX4d8r+uxEeWGD61u4vZwPwIeKHyGy5p0=;
+	s=korg; t=1717683413;
+	bh=NHbqShrA9YmZOhrnCjL0eDaqxCfjo6gi0s8Qcu1ygSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kh0v4IS/pEYp6HLNhEt9RsZpGnBizDl4II2+bIuSGB8/iUDwdfljmET+yhj6QvvVv
-	 TaMVtvoYBwyixPwgJsHkdBTQHyjAtbek4uH0mSa790tD8hPytMNInIeJ6D+IeSSaLg
-	 1+vYrtuBbxOv1Ktu14VaswKMLVwPoqd7xBHEewgA=
+	b=KF3cxZq83a/3n90rbFmCUmq11kzM2pQSQxyTtSn4NVQvNfNauGUWgMuDkscCZm9YG
+	 GZZl31hFyjk9E+O2f45J24Pty9ywA+I9TNEcmMmcYMQsmcr3WXNe5uN4XL2ow86u6e
+	 BA9lU4cQcpYj+rBSPNHY75fJHX0AddRns0J0Vrv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Chris Lew <quic_clew@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 273/473] net: qrtr: ns: Fix module refcnt
-Date: Thu,  6 Jun 2024 16:03:22 +0200
-Message-ID: <20240606131708.948029859@linuxfoundation.org>
+Subject: [PATCH 6.6 356/744] clk: qcom: dispcc-sm6350: fix DisplayPort clocks
+Date: Thu,  6 Jun 2024 16:00:28 +0200
+Message-ID: <20240606131743.899681053@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,85 +50,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Lew <quic_clew@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit fd76e5ccc48f9f54eb44909dd7c0b924005f1582 ]
+[ Upstream commit 1113501cfb46d5c0eb960f0a8a9f6c0f91dc6fb6 ]
 
-The qrtr protocol core logic and the qrtr nameservice are combined into
-a single module. Neither the core logic or nameservice provide much
-functionality by themselves; combining the two into a single module also
-prevents any possible issues that may stem from client modules loading
-inbetween qrtr and the ns.
+On SM6350 DisplayPort link clocks use frequency tables inherited from
+the vendor kernel, it is not applicable in the upstream kernel. Drop
+frequency tables and use clk_byte2_ops for those clocks.
 
-Creating a socket takes two references to the module that owns the
-socket protocol. Since the ns needs to create the control socket, this
-creates a scenario where there are always two references to the qrtr
-module. This prevents the execution of 'rmmod' for qrtr.
+This fixes frequency selection in the OPP core (which otherwise attempts
+to use invalid 810 KHz as DP link rate), also fixing the following
+message:
+msm-dp-display ae90000.displayport-controller: _opp_config_clk_single: failed to set clock rate: -22
 
-To resolve this, forcefully put the module refcount for the socket
-opened by the nameservice.
-
-Fixes: a365023a76f2 ("net: qrtr: combine nameservice into main module")
-Reported-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 837519775f1d ("clk: qcom: Add display clock controller driver for SM6350")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240424-dispcc-dp-clocks-v2-2-b44038f3fa96@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/ns.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/clk/qcom/dispcc-sm6350.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-index 4a13b9f7abb44..3c513e7ca2d5c 100644
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -807,6 +807,24 @@ int qrtr_ns_init(void)
- 	if (ret < 0)
- 		goto err_wq;
+diff --git a/drivers/clk/qcom/dispcc-sm6350.c b/drivers/clk/qcom/dispcc-sm6350.c
+index ea6f54ed846ec..441f042f5ea45 100644
+--- a/drivers/clk/qcom/dispcc-sm6350.c
++++ b/drivers/clk/qcom/dispcc-sm6350.c
+@@ -221,26 +221,17 @@ static struct clk_rcg2 disp_cc_mdss_dp_crypto_clk_src = {
+ 	},
+ };
  
-+	/* As the qrtr ns socket owner and creator is the same module, we have
-+	 * to decrease the qrtr module reference count to guarantee that it
-+	 * remains zero after the ns socket is created, otherwise, executing
-+	 * "rmmod" command is unable to make the qrtr module deleted after the
-+	 *  qrtr module is inserted successfully.
-+	 *
-+	 * However, the reference count is increased twice in
-+	 * sock_create_kern(): one is to increase the reference count of owner
-+	 * of qrtr socket's proto_ops struct; another is to increment the
-+	 * reference count of owner of qrtr proto struct. Therefore, we must
-+	 * decrement the module reference count twice to ensure that it keeps
-+	 * zero after server's listening socket is created. Of course, we
-+	 * must bump the module reference count twice as well before the socket
-+	 * is closed.
-+	 */
-+	module_put(qrtr_ns.sock->ops->owner);
-+	module_put(qrtr_ns.sock->sk->sk_prot_creator->owner);
-+
- 	return 0;
+-static const struct freq_tbl ftbl_disp_cc_mdss_dp_link_clk_src[] = {
+-	F(162000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+-	F(270000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+-	F(540000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+-	F(810000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+-	{ }
+-};
+-
+ static struct clk_rcg2 disp_cc_mdss_dp_link_clk_src = {
+ 	.cmd_rcgr = 0x10f8,
+ 	.mnd_width = 0,
+ 	.hid_width = 5,
+ 	.parent_map = disp_cc_parent_map_0,
+-	.freq_tbl = ftbl_disp_cc_mdss_dp_link_clk_src,
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "disp_cc_mdss_dp_link_clk_src",
+ 		.parent_data = disp_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_byte2_ops,
+ 	},
+ };
  
- err_wq:
-@@ -821,6 +839,15 @@ void qrtr_ns_remove(void)
- {
- 	cancel_work_sync(&qrtr_ns.work);
- 	destroy_workqueue(qrtr_ns.workqueue);
-+
-+	/* sock_release() expects the two references that were put during
-+	 * qrtr_ns_init(). This function is only called during module remove,
-+	 * so try_stop_module() has already set the refcnt to 0. Use
-+	 * __module_get() instead of try_module_get() to successfully take two
-+	 * references.
-+	 */
-+	__module_get(qrtr_ns.sock->ops->owner);
-+	__module_get(qrtr_ns.sock->sk->sk_prot_creator->owner);
- 	sock_release(qrtr_ns.sock);
- }
- EXPORT_SYMBOL_GPL(qrtr_ns_remove);
 -- 
 2.43.0
 
