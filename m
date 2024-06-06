@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29593197544;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F20197537;
 	Thu,  6 Jun 2024 14:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682918; cv=none; b=DOVVAUc8hjgEVKMVwC+Rc1cQDI1l1d3Of7I+FWn0kAIM4lfl16o+yNgRqEriAPf1OuimZ28Wm8I0LzWF6yU72sDxDDcaWHoOTYrN2vzp8emNl2Ge+Dv0KnYZMxQkMCERjCmL4cjyk2rKziyVtrbF2wr7owITZiOgDHkPQZrfJV8=
+	t=1717682918; cv=none; b=PZF5eCk1A980Zg05vScjwX6MTPdpJJomkqPevwjPe+uVsVWLoKljeDGYALStOjINLsuU4sZ4DXPRUrCis9ObGaeGoTLpA15M4fazV8xxBKJvMxJDEhqX+0Z9MoSz1wCyBnIEhNU6EMyXDudCh4r6KkB+bMasys+J8DyNxk0mBMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717682918; c=relaxed/simple;
-	bh=X/uEqX8d5ctnkJv/FABNLg5apQ6oMu+U9mqb8NW6oaE=;
+	bh=hPXss89NplCrkd5XxUcTYpyjJAddbH4zXqCRYk3lJM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4bJx9giC6w4yhzSE6+uSe20kcxG4hFgVfyYIV2Ip9fy0SQMwqMg1CfZQWrlNifw4NrOuqMKjxKPI+QfSThSmJge+/YYxBNB2n8sYQWwH2OTDT0lQ7OssZv3hym8WB6WsDvj+4zoLGMD/a2cxCDafbljGjq4pPc/T99tohKnHzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOD3ruB8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r0K1PheeMK16PuH706EVkHIgA+a22WS9cwkFYbvzE2Dlnju6jI2l8fF8X9FdgC4eoBlZoBvrUfKmz/niaRJD3XoZyjmMEBR0esd9sgD2Jvq7F7+UOfJffn1ySTtbiD0P1Et9v4U7VUefzkxhGM/gyRKqUc9QEdJJkiGDZZ/WCws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hn44DH/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOD3ruB8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F7AC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hn44DH/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F09C32781;
 	Thu,  6 Jun 2024 14:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682918;
-	bh=X/uEqX8d5ctnkJv/FABNLg5apQ6oMu+U9mqb8NW6oaE=;
+	bh=hPXss89NplCrkd5XxUcTYpyjJAddbH4zXqCRYk3lJM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gOD3ruB8vjJV8kGkm7eS2GVBlzbmyQytgfuFGUnFxBFHQIlVJUa2AixsO6lnYpZls
-	 MLfd6JUETlyNstfq53bPKkRpRozeJcbwyjjHDLljzkc6b0lE9WzQF2DkxLtlhYAO/y
-	 v6YRPnxDyhbeHblCFAdsO/OxITsAxbryo4JAv6s0=
+	b=hn44DH/AXpIe7LtjJpdtzQdMbDLK88aSSdv/3EtE0liGJW0Rni9optVmwoODZSQ0q
+	 mt3glAqJ47T12BoAUKayGEnncrldDEW3116Byd/zvW3miJstsH3kz5VvNPO6ImBLcJ
+	 rD2l6Aj4E1H6bPpkZ6BTTusHZ8c4Gajrwgdqcad8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	William Breathitt Gray <william.gray@linaro.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jin Yao <yao.jin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 012/374] counter: linux/counter.h: fix Excess kernel-doc description warning
-Date: Thu,  6 Jun 2024 15:59:51 +0200
-Message-ID: <20240606131652.174698138@linuxfoundation.org>
+Subject: [PATCH 6.9 013/374] perf annotate: Get rid of duplicate --group option item
+Date: Thu,  6 Jun 2024 15:59:52 +0200
+Message-ID: <20240606131652.207979047@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,35 +58,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 416bdb89605d960405178b9bf04df512d1ace1a3 ]
+[ Upstream commit 374af9f1f06b5e991c810d2e4983d6f58df32136 ]
 
-Remove the @priv: line to prevent the kernel-doc warning:
+The options array in cmd_annotate() has duplicate --group options.  It
+only needs one and let's get rid of the other.
 
-include/linux/counter.h:400: warning: Excess struct member 'priv' description in 'counter_device'
+  $ perf annotate -h 2>&1 | grep group
+        --group           Show event group information together
+        --group           Show event group information together
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Fixes: f2ee4759fb70 ("counter: remove old and now unused registration API")
-Link: https://lore.kernel.org/r/20231223050511.13849-1-rdunlap@infradead.org
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Fixes: 7ebaf4890f63eb90 ("perf annotate: Support '--group' option")
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jin Yao <yao.jin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240322224313.423181-1-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/counter.h | 1 -
- 1 file changed, 1 deletion(-)
+ tools/perf/builtin-annotate.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/include/linux/counter.h b/include/linux/counter.h
-index 702e9108bbb44..b767b5c821f58 100644
---- a/include/linux/counter.h
-+++ b/include/linux/counter.h
-@@ -359,7 +359,6 @@ struct counter_ops {
-  * @num_counts:		number of Counts specified in @counts
-  * @ext:		optional array of Counter device extensions
-  * @num_ext:		number of Counter device extensions specified in @ext
-- * @priv:		optional private data supplied by driver
-  * @dev:		internal device structure
-  * @chrdev:		internal character device structure
-  * @events_list:	list of current watching Counter events
+diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
+index 6c1cc797692d9..9cd97fd76bb5e 100644
+--- a/tools/perf/builtin-annotate.c
++++ b/tools/perf/builtin-annotate.c
+@@ -809,8 +809,6 @@ int cmd_annotate(int argc, const char **argv)
+ 		    "Enable symbol demangling"),
+ 	OPT_BOOLEAN(0, "demangle-kernel", &symbol_conf.demangle_kernel,
+ 		    "Enable kernel symbol demangling"),
+-	OPT_BOOLEAN(0, "group", &symbol_conf.event_group,
+-		    "Show event group information together"),
+ 	OPT_BOOLEAN(0, "show-total-period", &symbol_conf.show_total_period,
+ 		    "Show a column with the sum of periods"),
+ 	OPT_BOOLEAN('n', "show-nr-samples", &symbol_conf.show_nr_samples,
 -- 
 2.43.0
 
