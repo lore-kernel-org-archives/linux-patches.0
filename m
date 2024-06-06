@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE12196DA5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8041196DA5;
 	Thu,  6 Jun 2024 14:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683270; cv=none; b=I4/M8Ab9+dhJ/Y/o6fI8/P9QymmPohoyLCiMTZnxDq0cRWklsxCGTzjPJTlTCyGoCU3KR5xkM6nVvnMDPAllWfyeoz2r6UfuA3L8wJ1IjPxTpuI710TfoH/fAtYePQGnGdyQiQ5P2dqtZhGiJEFeLhnbUJstcSPCakS56Aj2qyU=
+	t=1717683270; cv=none; b=AMsodX5tdVYETidZiAG7QwPJC4LhozLFMVJZsSjc/Jpp8JoSrDIII0xgFFFEFU5HfTbXB4FdvVUGdNQe0oblLus7bZeHsdrUzY9z9dthzbYYLzvWxfP2qUS2zZvKfdwF1+r0lbRP2oCc7UssTAAeED3cqfJRyBEDFkxGmDoheIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683270; c=relaxed/simple;
-	bh=G+iBCIFgqihh6qxDCjUDlpdfilzoPgn7ARVTsFMOoCM=;
+	bh=lYQkzTRVHIrVuEA9MMc0YTzr9eO+4wtojcgXfLJWN0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sGa/Kh74k4OdP8yN4VbcNZPyOD/ef0dDHmeuAmUspgvtBi0TXDXM+RvZfXOlAftkdarEQ67Qq3kk5R0Dh2yE/vnylV5Ocvx26rELYAf5XcjavzeGLoZmdNcVP/UVkyfnRsSg74FZonvznoZ3rihB5SEncGyQ8e1LAoNXoELw74I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdZCAYFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iu8xq3SxYU19r3k/fMGgDJ/51E78L9WlWMslnc5+VWEKY8hwnmfZOcsZxQn3ZkzzUmrpjzrOIbipZhefgy9vWPfpEJRRa6ibXj9OvakHG75Flq7nQaX5mZ8sYS+Ph3rT1keHSgUwmRd+MYUQORheqzrZDcj7PEggvpiYcn7Lgio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jK/4dJRI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdZCAYFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B86C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jK/4dJRI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67DBC2BD10;
 	Thu,  6 Jun 2024 14:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683270;
-	bh=G+iBCIFgqihh6qxDCjUDlpdfilzoPgn7ARVTsFMOoCM=;
+	bh=lYQkzTRVHIrVuEA9MMc0YTzr9eO+4wtojcgXfLJWN0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdZCAYFzrW7BrNW0MKxRWViSUujU2aOmNwAYON2XVVioZei4daeV9825tBuSsf7aS
-	 /5+GYbUgaoZI5Yip71DW9kTJcfLkRT7E6VPFOrVrnCfED9upG/RGkMuEcTkar06m12
-	 7W8rWHfNCrILf0WbemrrnJ0WgbW9Mk5FcErovNUA=
+	b=jK/4dJRIXVlssMizN0eth+uwFcstSqNS8YXWVEvOgehgD9bU5V73ow1lCS32p/TwZ
+	 xKNUkyCS8v8tAqlOhQ9EkQQis63xBFyNxhlqcb0JtT9qoDSyrGIJsKQE3gFUB5RzOk
+	 vhDYrr252pvz+jM3jmN62Lw9vyIcwZMzKlC/QNwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+838346b979830606c854@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 213/744] bpf: Add BPF_PROG_TYPE_CGROUP_SKB attach type enforcement in BPF_LINK_CREATE
-Date: Thu,  6 Jun 2024 15:58:05 +0200
-Message-ID: <20240606131739.227636477@linuxfoundation.org>
+Subject: [PATCH 6.1 149/473] Revert "sh: Handle calling csum_partial with misaligned data"
+Date: Thu,  6 Jun 2024 16:01:18 +0200
+Message-ID: <20240606131704.881248488@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,51 +48,189 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 543576ec15b17c0c93301ac8297333c7b6e84ac7 ]
+[ Upstream commit b5319c96292ff877f6b58d349acf0a9dc8d3b454 ]
 
-bpf_prog_attach uses attach_type_to_prog_type to enforce proper
-attach type for BPF_PROG_TYPE_CGROUP_SKB. link_create uses
-bpf_prog_get and relies on bpf_prog_attach_check_attach_type
-to properly verify prog_type <> attach_type association.
+This reverts commit cadc4e1a2b4d20d0cc0e81f2c6ba0588775e54e5.
 
-Add missing attach_type enforcement for the link_create case.
-Otherwise, it's currently possible to attach cgroup_skb prog
-types to other cgroup hooks.
+Commit cadc4e1a2b4d ("sh: Handle calling csum_partial with misaligned
+data") causes bad checksum calculations on unaligned data. Reverting
+it fixes the problem.
 
-Fixes: af6eea57437a ("bpf: Implement bpf_link-based cgroup BPF program attachment")
-Link: https://lore.kernel.org/bpf/0000000000004792a90615a1dde0@google.com/
-Reported-by: syzbot+838346b979830606c854@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20240426231621.2716876-2-sdf@google.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+    # Subtest: checksum
+    # module: checksum_kunit
+    1..5
+    # test_csum_fixed_random_inputs: ASSERTION FAILED at lib/checksum_kunit.c:500
+    Expected ( u64)result == ( u64)expec, but
+        ( u64)result == 53378 (0xd082)
+        ( u64)expec == 33488 (0x82d0)
+    # test_csum_fixed_random_inputs: pass:0 fail:1 skip:0 total:1
+    not ok 1 test_csum_fixed_random_inputs
+    # test_csum_all_carry_inputs: ASSERTION FAILED at lib/checksum_kunit.c:525
+    Expected ( u64)result == ( u64)expec, but
+        ( u64)result == 65281 (0xff01)
+        ( u64)expec == 65280 (0xff00)
+    # test_csum_all_carry_inputs: pass:0 fail:1 skip:0 total:1
+    not ok 2 test_csum_all_carry_inputs
+    # test_csum_no_carry_inputs: ASSERTION FAILED at lib/checksum_kunit.c:573
+    Expected ( u64)result == ( u64)expec, but
+        ( u64)result == 65535 (0xffff)
+        ( u64)expec == 65534 (0xfffe)
+    # test_csum_no_carry_inputs: pass:0 fail:1 skip:0 total:1
+    not ok 3 test_csum_no_carry_inputs
+    # test_ip_fast_csum: pass:1 fail:0 skip:0 total:1
+    ok 4 test_ip_fast_csum
+    # test_csum_ipv6_magic: pass:1 fail:0 skip:0 total:1
+    ok 5 test_csum_ipv6_magic
+ # checksum: pass:2 fail:3 skip:0 total:5
+ # Totals: pass:2 fail:3 skip:0 total:5
+not ok 22 checksum
+
+Fixes: cadc4e1a2b4d ("sh: Handle calling csum_partial with misaligned data")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20240324231804.841099-1-linux@roeck-us.net
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/sh/lib/checksum.S | 67 ++++++++++++------------------------------
+ 1 file changed, 18 insertions(+), 49 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 4902a7487f076..e886157a9efbb 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -3809,6 +3809,11 @@ static int bpf_prog_attach_check_attach_type(const struct bpf_prog *prog,
- 			 * check permissions at attach time.
- 			 */
- 			return -EPERM;
-+
-+		ptype = attach_type_to_prog_type(attach_type);
-+		if (prog->type != ptype)
-+			return -EINVAL;
-+
- 		return prog->enforce_expected_attach_type &&
- 			prog->expected_attach_type != attach_type ?
- 			-EINVAL : 0;
+diff --git a/arch/sh/lib/checksum.S b/arch/sh/lib/checksum.S
+index 3e07074e00981..06fed5a21e8ba 100644
+--- a/arch/sh/lib/checksum.S
++++ b/arch/sh/lib/checksum.S
+@@ -33,7 +33,8 @@
+  */
+ 
+ /*	
+- * asmlinkage __wsum csum_partial(const void *buf, int len, __wsum sum);
++ * unsigned int csum_partial(const unsigned char *buf, int len,
++ *                           unsigned int sum);
+  */
+ 
+ .text
+@@ -45,31 +46,11 @@ ENTRY(csum_partial)
+ 	   * Fortunately, it is easy to convert 2-byte alignment to 4-byte
+ 	   * alignment for the unrolled loop.
+ 	   */
++	mov	r5, r1
+ 	mov	r4, r0
+-	tst	#3, r0		! Check alignment.
+-	bt/s	2f		! Jump if alignment is ok.
+-	 mov	r4, r7		! Keep a copy to check for alignment
++	tst	#2, r0		! Check alignment.
++	bt	2f		! Jump if alignment is ok.
+ 	!
+-	tst	#1, r0		! Check alignment.
+-	bt	21f		! Jump if alignment is boundary of 2bytes.
+-
+-	! buf is odd
+-	tst	r5, r5
+-	add	#-1, r5
+-	bt	9f
+-	mov.b	@r4+, r0
+-	extu.b	r0, r0
+-	addc	r0, r6		! t=0 from previous tst
+-	mov	r6, r0
+-	shll8	r6
+-	shlr16	r0
+-	shlr8	r0
+-	or	r0, r6
+-	mov	r4, r0
+-	tst	#2, r0
+-	bt	2f
+-21:
+-	! buf is 2 byte aligned (len could be 0)
+ 	add	#-2, r5		! Alignment uses up two bytes.
+ 	cmp/pz	r5		!
+ 	bt/s	1f		! Jump if we had at least two bytes.
+@@ -77,17 +58,16 @@ ENTRY(csum_partial)
+ 	bra	6f
+ 	 add	#2, r5		! r5 was < 2.  Deal with it.
+ 1:
++	mov	r5, r1		! Save new len for later use.
+ 	mov.w	@r4+, r0
+ 	extu.w	r0, r0
+ 	addc	r0, r6
+ 	bf	2f
+ 	add	#1, r6
+ 2:
+-	! buf is 4 byte aligned (len could be 0)
+-	mov	r5, r1
+ 	mov	#-5, r0
+-	shld	r0, r1
+-	tst	r1, r1
++	shld	r0, r5
++	tst	r5, r5
+ 	bt/s	4f		! if it's =0, go to 4f
+ 	 clrt
+ 	.align	2
+@@ -109,31 +89,30 @@ ENTRY(csum_partial)
+ 	addc	r0, r6
+ 	addc	r2, r6
+ 	movt	r0
+-	dt	r1
++	dt	r5
+ 	bf/s	3b
+ 	 cmp/eq	#1, r0
+-	! here, we know r1==0
+-	addc	r1, r6			! add carry to r6
++	! here, we know r5==0
++	addc	r5, r6			! add carry to r6
+ 4:
+-	mov	r5, r0
++	mov	r1, r0
+ 	and	#0x1c, r0
+ 	tst	r0, r0
+-	bt	6f
+-	! 4 bytes or more remaining
+-	mov	r0, r1
+-	shlr2	r1
++	bt/s	6f
++	 mov	r0, r5
++	shlr2	r5
+ 	mov	#0, r2
+ 5:
+ 	addc	r2, r6
+ 	mov.l	@r4+, r2
+ 	movt	r0
+-	dt	r1
++	dt	r5
+ 	bf/s	5b
+ 	 cmp/eq	#1, r0
+ 	addc	r2, r6
+-	addc	r1, r6		! r1==0 here, so it means add carry-bit
++	addc	r5, r6		! r5==0 here, so it means add carry-bit
+ 6:
+-	! 3 bytes or less remaining
++	mov	r1, r5
+ 	mov	#3, r0
+ 	and	r0, r5
+ 	tst	r5, r5
+@@ -159,16 +138,6 @@ ENTRY(csum_partial)
+ 	mov	#0, r0
+ 	addc	r0, r6
+ 9:
+-	! Check if the buffer was misaligned, if so realign sum
+-	mov	r7, r0
+-	tst	#1, r0
+-	bt	10f
+-	mov	r6, r0
+-	shll8	r6
+-	shlr16	r0
+-	shlr8	r0
+-	or	r0, r6
+-10:
+ 	rts
+ 	 mov	r6, r0
+ 
 -- 
 2.43.0
 
