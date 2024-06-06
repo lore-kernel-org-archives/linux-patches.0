@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A7B1C68BF;
-	Thu,  6 Jun 2024 14:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E261C68BF;
+	Thu,  6 Jun 2024 14:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683699; cv=none; b=LY3/PBZ6oQIHGYWqOe3cLsJwjbtjm6C2Rw1vrJz8ThW3UxC8givQA4zYEy6NKOmQBpbhxI6LNAsHjp16Hv8ESickuYwianMdlSJuCUIP+9rJjEhtJWGnZu9NrgawbITzigdIt9VU9KkEnWS3Ml5iIawcxRatvmQK9nuP3fDOI2E=
+	t=1717683700; cv=none; b=EHYrJwHW33YMFwFBa4try6CWtZjftNLA5aagT0VqfT4Ln3pc6IV0Oxny+8jE/Ip2iAb3KHqHzdx2bxwYOT55GxMyDxSc8esSV8VMNZoUROmzBxVqMFZ0vQM9OHeFbKaLyAjvQhQWifnu+3bNyHCzyR9J7mCwT8LmafYEkb/tkYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683699; c=relaxed/simple;
-	bh=BdzbaNDxUCxl8bWzJJ3dMJoRx9rMBcxeQ2JigSJIaYc=;
+	s=arc-20240116; t=1717683700; c=relaxed/simple;
+	bh=x+rrnpRa1hMj4sucEFwz2ZUbmRPPjL2s/gLymw/+JvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n+PUdqvn/xLQganvAAX3zE5+5EKius/da+JpVWmimK664vcMIts48dUrCmgdfI3QLotbyEURpULPSA9CNnTg+GKNhQ6rs3qAYm5esNMfOipL/cUkt2c7+ccM0P0IiwQfxPoI7r8ywwkKkcODm6wCbkM05600uadey6SuLD8AD/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHYj8vC9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cf5+q1mlh0iXQzXIjvT5dYpKxwsc2F0NjZtLEKu2JHxaBzm3UIASRR1mwoZU5HZfKv29jR4QssFGMcRedjCUS/WLy8x+BolqFNOGK5XyB+3XaMPudjmFgzcodbNrf9hmb9KqKq1vm6ICkNrmyjKlW79mJ7s2RvG+G8VoBzzbrUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DhdXX/3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHYj8vC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F0EC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DhdXX/3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00208C32781;
 	Thu,  6 Jun 2024 14:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683699;
-	bh=BdzbaNDxUCxl8bWzJJ3dMJoRx9rMBcxeQ2JigSJIaYc=;
+	s=korg; t=1717683700;
+	bh=x+rrnpRa1hMj4sucEFwz2ZUbmRPPjL2s/gLymw/+JvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gHYj8vC9uvDiC5+lvtT/W4SZs5yQwxJwZcnmxYcemm9hc9R4pvHJWn0hoxZ8P5dg8
-	 I3F35qUWGo2z2259yv5TcIOQMFcNRnLuq1DYyN6lZSOqu4r12iq8NVLwZ81c6ES3gc
-	 LDjo6yiSzYdFOO7Lh2JrFjY95v77X/NFCuF4arh8=
+	b=1DhdXX/3wLhP69IokSRinWTSFZrWOhjCGI4HKWLe2MAyGV5KUWsfUf1gZcd2t1dL2
+	 ZCqVZrwl7m1711yYkZmr/HDhi6NB8auZ95AWtf+abSyxgpnUinLy8A7HFFvhAnYlj9
+	 LomcyyynqKUw6M+pckP7NZGuB46RibgkRjmuWFek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 620/744] ALSA: hda: cs35l56: Initialize all ASP1 registers
-Date: Thu,  6 Jun 2024 16:04:52 +0200
-Message-ID: <20240606131752.388654311@linuxfoundation.org>
+Subject: [PATCH 6.6 621/744] ALSA: hda: cs35l56: Fix lifetime of cs_dsp instance
+Date: Thu,  6 Jun 2024 16:04:53 +0200
+Message-ID: <20240606131752.417738960@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,80 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 856ce8982169acb31a25c5f2ecd2570ab8a6af46 ]
+[ Upstream commit d344873c4cbde249b7152d36a273bcc45864001e ]
 
-Add ASP1_FRAME_CONTROL1, ASP1_FRAME_CONTROL5 and the ASP1_TX?_INPUT
-registers to the sequence used to initialize the ASP configuration.
-Write this sequence to the cache and directly to the registers to
-ensure that they match.
+The cs_dsp instance is initialized in the driver probe() so it
+should be freed in the driver remove(). Also fix a missing call
+to cs_dsp_remove() in the error path of cs35l56_hda_common_probe().
 
-A system-specific firmware can patch these registers to values that are
-not the silicon default, so that the CS35L56 boots already in the
-configuration used by Windows or by "driverless" Windows setups such
-as factory tuning.
+The call to cs_dsp_remove() was being done in the component unbind
+callback cs35l56_hda_unbind(). This meant that if the driver was
+unbound and then re-bound it would be using an uninitialized cs_dsp
+instance.
 
-These may not match how Linux is configuring the HDA codec. And anyway
-on Linux the ALSA controls are used to configure routing options.
+It is best to initialize the cs_dsp instance in probe() so that it
+can return an error if it fails. The component binding API doesn't
+have any error handling so there's no way to handle a failure if
+cs_dsp was initialized in the bind.
 
 Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
 Fixes: 73cfbfa9caea ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
-Link: https://msgid.link/r/20240129162737.497-10-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: d344873c4cbd ("ALSA: hda: cs35l56: Fix lifetime of cs_dsp instance")
+Link: https://lore.kernel.org/r/20240508100811.49514-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l56_hda.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/pci/hda/cs35l56_hda.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index 05b1412868fc0..e599b287f0961 100644
+index e599b287f0961..15e20d9261393 100644
 --- a/sound/pci/hda/cs35l56_hda.c
 +++ b/sound/pci/hda/cs35l56_hda.c
-@@ -29,14 +29,23 @@
-   *  ASP1_RX_WL = 24 bits per sample
-   *  ASP1_TX_WL = 24 bits per sample
-   *  ASP1_RXn_EN 1..3 and ASP1_TXn_EN 1..4 disabled
-+  *
-+  * Override any Windows-specific mixer settings applied by the firmware.
-   */
- static const struct reg_sequence cs35l56_hda_dai_config[] = {
- 	{ CS35L56_ASP1_CONTROL1,	0x00000021 },
- 	{ CS35L56_ASP1_CONTROL2,	0x20200200 },
- 	{ CS35L56_ASP1_CONTROL3,	0x00000003 },
-+	{ CS35L56_ASP1_FRAME_CONTROL1,	0x03020100 },
-+	{ CS35L56_ASP1_FRAME_CONTROL5,	0x00020100 },
- 	{ CS35L56_ASP1_DATA_CONTROL5,	0x00000018 },
- 	{ CS35L56_ASP1_DATA_CONTROL1,	0x00000018 },
- 	{ CS35L56_ASP1_ENABLES1,	0x00000000 },
-+	{ CS35L56_ASP1TX1_INPUT,	0x00000018 },
-+	{ CS35L56_ASP1TX2_INPUT,	0x00000019 },
-+	{ CS35L56_ASP1TX3_INPUT,	0x00000020 },
-+	{ CS35L56_ASP1TX4_INPUT,	0x00000028 },
-+
- };
+@@ -699,8 +699,6 @@ static void cs35l56_hda_unbind(struct device *dev, struct device *master, void *
+ 	if (cs35l56->base.fw_patched)
+ 		cs_dsp_power_down(&cs35l56->cs_dsp);
  
- static void cs35l56_hda_play(struct cs35l56_hda *cs35l56)
-@@ -132,6 +141,10 @@ static int cs35l56_hda_runtime_resume(struct device *dev)
- 		}
- 	}
+-	cs_dsp_remove(&cs35l56->cs_dsp);
+-
+ 	if (comps[cs35l56->index].dev == dev)
+ 		memset(&comps[cs35l56->index], 0, sizeof(*comps));
  
-+	ret = cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
-+	if (ret)
-+		goto err;
-+
- 	return 0;
- 
- err:
-@@ -969,6 +982,9 @@ int cs35l56_hda_common_probe(struct cs35l56_hda *cs35l56, int id)
- 
- 	regmap_multi_reg_write(cs35l56->base.regmap, cs35l56_hda_dai_config,
+@@ -984,7 +982,7 @@ int cs35l56_hda_common_probe(struct cs35l56_hda *cs35l56, int id)
  			       ARRAY_SIZE(cs35l56_hda_dai_config));
-+	ret = cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
-+	if (ret)
-+		goto err;
+ 	ret = cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
+ 	if (ret)
+-		goto err;
++		goto dsp_err;
  
  	/*
  	 * By default only enable one ASP1TXn, where n=amplifier index,
+@@ -1010,6 +1008,8 @@ int cs35l56_hda_common_probe(struct cs35l56_hda *cs35l56, int id)
+ 
+ pm_err:
+ 	pm_runtime_disable(cs35l56->base.dev);
++dsp_err:
++	cs_dsp_remove(&cs35l56->cs_dsp);
+ err:
+ 	gpiod_set_value_cansleep(cs35l56->base.reset_gpio, 0);
+ 
+@@ -1027,6 +1027,8 @@ void cs35l56_hda_remove(struct device *dev)
+ 
+ 	component_del(cs35l56->base.dev, &cs35l56_hda_comp_ops);
+ 
++	cs_dsp_remove(&cs35l56->cs_dsp);
++
+ 	kfree(cs35l56->system_name);
+ 	pm_runtime_put_noidle(cs35l56->base.dev);
+ 
 -- 
 2.43.0
 
