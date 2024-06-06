@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9EE19CD14;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE421B4C48;
 	Thu,  6 Jun 2024 14:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683448; cv=none; b=HEQgZlCVSzBS1vcF/p2HBSy8XKCMy5/12xL5hH7bOzzF8XRRhis72jcQ+BIH4kA3zYgxG5KeCcvwZ6H56xeYkBslTQ7kVc48NYc091gbMlZmeeDTH35Zyxj1agKaGStwHm16B3vzZUeI3eq++eeFcatpTWRlaY9fW3wZGHWk+U4=
+	t=1717683449; cv=none; b=KM8kpR4elV1zi/QRZ7pSWwsS2QhawEvBm/4VOQ8gx4ScbccOfMTytUGiNPUYGPG1hv0xaTMusS8U1EOw6ux+ByRTESVSggdBC/Zby+Z30AeMe5/W3JF8inwD5GQZO12/VJIjjq+BB2ab6OBDzJjpAFJk6Py6OmfYhKKaGoSpyOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683448; c=relaxed/simple;
-	bh=/kDsV/9tVNwkguakiQyY2b62zKkv1l3sH9p12uma1lY=;
+	s=arc-20240116; t=1717683449; c=relaxed/simple;
+	bh=T3rNCRRL1kohM4+BXx1KCIxwpEZELSxuzzzlplkOhZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rh5E/Emb9AckNNmH4WWSx4NjjuwcayQJir1VeHiIvUVQIx0YN/F488GnKmgaspWHkKmaVCRFoiAtRXRTV+fiH8aC5mJ8HpRL/fOynKco4G/h0tTqyCe6HhB4flI6MC13slJEI/fAXfARGmYJfICLJpS6OWBkua0iHc9YE7kDCUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GAHqhz6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B99npdxHZ8/i8uqzxUqQZncGzlaFN8wVCZyRUEGMMOcrjZmoeow1MZAU6AMMHYlKXDxMvSTKdPPqGxI5CaZHT6+73X0hke74G1PbXEm8mECXoeuP6+wxqjxT3BSqQQCMRFZwkA1RyxzjXMOJPSTG7qZYmY/lXCsp+8G1FXM5Zxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8LbSzj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GAHqhz6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD21C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8LbSzj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE034C32781;
 	Thu,  6 Jun 2024 14:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683448;
-	bh=/kDsV/9tVNwkguakiQyY2b62zKkv1l3sH9p12uma1lY=;
+	bh=T3rNCRRL1kohM4+BXx1KCIxwpEZELSxuzzzlplkOhZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2GAHqhz6Hj77+HsHH9lga7/tWedprGl1J91FZL9+m3hxSFMH5mQm3w2EL0wYb+xDA
-	 xtm0mRXqDMghBMNHBR0j/tc6GPvjxJTYI8GwFA6KUc7bgAO7GBxomRBndOmRU48/D2
-	 qNypVmE07g2akonOC794Not7ITIRmduej+uQcVfU=
+	b=H8LbSzj4XVUf9eQVWA/OdNpO91cROMK6Y8gsLEthOytLoe+m7rL2NOHroSK6poI7Z
+	 FX2PX0WBFzhU77c/tbbBqy3qHjyQ1aLhS7R4HEN36rXGnqoX1z8kJ1xYNcx+xDn0Ly
+	 KgGJUjL8pQ8zIgzVWmE5pVPmjzNI4VGN1DlmFVRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Huai-Yuan Liu <qq810974084@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 392/744] iio: core: Leave private pointer NULL when no private data supplied
-Date: Thu,  6 Jun 2024 16:01:04 +0200
-Message-ID: <20240606131745.034879247@linuxfoundation.org>
+Subject: [PATCH 6.1 333/473] ppdev: Add an error check in register_device
+Date: Thu,  6 Jun 2024 16:04:22 +0200
+Message-ID: <20240606131710.932925947@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +46,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Huai-Yuan Liu <qq810974084@gmail.com>
 
-[ Upstream commit f0245ab389330cbc1d187e358a5b890d9f5383db ]
+[ Upstream commit fbf740aeb86a4fe82ad158d26d711f2f3be79b3e ]
 
-In iio_device_alloc() when size of the private data is 0,
-the private pointer is calculated to point behind the valid data.
-Leave it NULL when no private data supplied.
+In register_device, the return value of ida_simple_get is unchecked,
+in witch ida_simple_get will use an invalid index value.
 
-Fixes: 6d4ebd565d15 ("iio: core: wrap IIO device into an iio_dev_opaque object")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://lore.kernel.org/r/20240304140650.977784-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To address this issue, index should be checked after ida_simple_get. When
+the index value is abnormal, a warning message should be printed, the port
+should be dropped, and the value should be recorded.
+
+Fixes: 9a69645dde11 ("ppdev: fix registering same device name")
+Signed-off-by: Huai-Yuan Liu <qq810974084@gmail.com>
+Link: https://lore.kernel.org/r/20240412083840.234085-1-qq810974084@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/char/ppdev.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/industrialio-core.c b/drivers/iio/industrialio-core.c
-index feec93adb0651..5e1a85ca12119 100644
---- a/drivers/iio/industrialio-core.c
-+++ b/drivers/iio/industrialio-core.c
-@@ -1649,8 +1649,10 @@ struct iio_dev *iio_device_alloc(struct device *parent, int sizeof_priv)
- 		return NULL;
+diff --git a/drivers/char/ppdev.c b/drivers/char/ppdev.c
+index f6024d97fe70b..a97edbf7455a6 100644
+--- a/drivers/char/ppdev.c
++++ b/drivers/char/ppdev.c
+@@ -296,28 +296,35 @@ static int register_device(int minor, struct pp_struct *pp)
+ 	if (!port) {
+ 		pr_warn("%s: no associated port!\n", name);
+ 		rc = -ENXIO;
+-		goto err;
++		goto err_free_name;
+ 	}
  
- 	indio_dev = &iio_dev_opaque->indio_dev;
--	indio_dev->priv = (char *)iio_dev_opaque +
--		ALIGN(sizeof(struct iio_dev_opaque), IIO_DMA_MINALIGN);
+ 	index = ida_alloc(&ida_index, GFP_KERNEL);
++	if (index < 0) {
++		pr_warn("%s: failed to get index!\n", name);
++		rc = index;
++		goto err_put_port;
++	}
 +
-+	if (sizeof_priv)
-+		indio_dev->priv = (char *)iio_dev_opaque +
-+			ALIGN(sizeof(*iio_dev_opaque), IIO_DMA_MINALIGN);
+ 	memset(&ppdev_cb, 0, sizeof(ppdev_cb));
+ 	ppdev_cb.irq_func = pp_irq;
+ 	ppdev_cb.flags = (pp->flags & PP_EXCL) ? PARPORT_FLAG_EXCL : 0;
+ 	ppdev_cb.private = pp;
+ 	pdev = parport_register_dev_model(port, name, &ppdev_cb, index);
+-	parport_put_port(port);
  
- 	indio_dev->dev.parent = parent;
- 	indio_dev->dev.type = &iio_device_type;
+ 	if (!pdev) {
+ 		pr_warn("%s: failed to register device!\n", name);
+ 		rc = -ENXIO;
+ 		ida_free(&ida_index, index);
+-		goto err;
++		goto err_put_port;
+ 	}
+ 
+ 	pp->pdev = pdev;
+ 	pp->index = index;
+ 	dev_dbg(&pdev->dev, "registered pardevice\n");
+-err:
++err_put_port:
++	parport_put_port(port);
++err_free_name:
+ 	kfree(name);
+ 	return rc;
+ }
 -- 
 2.43.0
 
