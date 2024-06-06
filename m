@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FA01974E3;
-	Thu,  6 Jun 2024 14:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B181974E3;
+	Thu,  6 Jun 2024 14:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683524; cv=none; b=dkOFYHCKXaMXCxoJnEXlc7qRpdlQaPeZIYP2CI27iKwYpCETWecNGlltnC9iy5tBFlgzLK73r4tY4wLIc5aaejeomG6XR8rRBjeN3DZM4AQxkPR4QnarHKeP927iN9eivpOABcRlUv8c7D3xhPDimGmYWTm2/o9/4VqddjJhXsA=
+	t=1717683525; cv=none; b=etasq6rusHsx6dHOnlS8BcrXWKnt0dJTDS2SqgwpP/KCDx7jLveZ+feTkEIKkGZaEzIJ9yK/Cwo6jLql/gIDhDS9ujC3h+wfBuk3FFqlj9ZcfTN0y3AiGVSxe9mrd9DhTVE8jF/ijzH6Q4raqzjGsJEqBGG7+d5Pju62MYer5rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683524; c=relaxed/simple;
-	bh=vQQHGPS7vGPlaXlCPuBEr6Glazd2ctBGsf0KkUOQa5A=;
+	s=arc-20240116; t=1717683525; c=relaxed/simple;
+	bh=anObfnnmKqFRrKorBhyNWCYA5e8KmcckfxbN5T189tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=El2JunuKT87/6qJH34gEYEVpQCXocZwf+qsvaeCu6QMz6yy0jEfVPtnOQ6OMTck/XNfNcR6n9crpwqcfW+ewIPVzHXTYKoR6yc2qrxsZZ90DInytlbRz2B0ovCXFsUErr9w3nMuFTJ6JL8zHHoxMOhxHtxaIKvByp5HrkhfjAbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTTdIUFr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CW/8CjRUldH5ugkmGdstpw/aK0sOj/KmZZXYrNd39rtaNnSvYSH7mJ5zUjXcvVUcY3YvjyFxl5ov36TbV5Uv5EOzY2mwnuhm8xWFIcxij1qWidrIMTatmMwYJyKc14+ce8NOmHPE5vyOp3YRkzYNXNeZeU1ZnL1OAkO/OHsLoHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qm6Wyq0J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTTdIUFr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83558C2BD10;
-	Thu,  6 Jun 2024 14:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qm6Wyq0J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A891C32782;
+	Thu,  6 Jun 2024 14:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683524;
-	bh=vQQHGPS7vGPlaXlCPuBEr6Glazd2ctBGsf0KkUOQa5A=;
+	s=korg; t=1717683525;
+	bh=anObfnnmKqFRrKorBhyNWCYA5e8KmcckfxbN5T189tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qTTdIUFr4iyPZsZJdCm2cGpgpx8oNRCs0+Vt0XTm2C8iSC4MrxtVKNyB4udA5/8iq
-	 K3/67ifzhF3lbWvFGmEkXRFEwRjQ1pjX9hsGFLGZIxR2m97aLHXBc3eNwTyG4zdqbI
-	 9Rff0zXbxbRCYCG90x+f0+YH9EAw+YntiZ+hQLLs=
+	b=qm6Wyq0JsBRUdy3vx2xPLQUC0JYpNUSBbBkDM1ZolakbdVM5hsxbt+e1QSI9XYzW1
+	 3KnbZ9TRIrV+yxKnHQdMQnUPT+DQef4dMqHj6cydwK+MFXBvBgisGS2KBjCyaJhW/H
+	 0LTgwnSnrFLB3VPonofUFdYLhCVnw8k6pD+LhhrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
+	Yuanbin Xie <xieyuanbin1@huawei.com>,
+	Jiangfeng Xiao <xiaojiangfeng@huawei.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 465/744] microblaze: Remove early printk call from cpuinfo-static.c
-Date: Thu,  6 Jun 2024 16:02:17 +0200
-Message-ID: <20240606131747.383021753@linuxfoundation.org>
+Subject: [PATCH 6.1 416/473] arm64: asm-bug: Add .align 2 to the end of __BUG_ENTRY
+Date: Thu,  6 Jun 2024 16:05:45 +0200
+Message-ID: <20240606131713.538062836@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,39 +49,162 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: Jiangfeng Xiao <xiaojiangfeng@huawei.com>
 
-[ Upstream commit 58d647506c92ccd3cfa0c453c68ddd14f40bf06f ]
+[ Upstream commit ffbf4fb9b5c12ff878a10ea17997147ea4ebea6f ]
 
-Early printk has been removed already that's why also remove calling it.
-Similar change has been done in cpuinfo-pvr-full.c by commit cfbd8d1979af
-("microblaze: Remove early printk setup").
+When CONFIG_DEBUG_BUGVERBOSE=n, we fail to add necessary padding bytes
+to bug_table entries, and as a result the last entry in a bug table will
+be ignored, potentially leading to an unexpected panic(). All prior
+entries in the table will be handled correctly.
 
-Fixes: 96f0e6fcc9ad ("microblaze: remove redundant early_printk support")
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/2f10db506be8188fa07b6ec331caca01af1b10f8.1712824039.git.michal.simek@amd.com
+The arm64 ABI requires that struct fields of up to 8 bytes are
+naturally-aligned, with padding added within a struct such that struct
+are suitably aligned within arrays.
+
+When CONFIG_DEBUG_BUGVERPOSE=y, the layout of a bug_entry is:
+
+	struct bug_entry {
+		signed int      bug_addr_disp;	// 4 bytes
+		signed int      file_disp;	// 4 bytes
+		unsigned short  line;		// 2 bytes
+		unsigned short  flags;		// 2 bytes
+	}
+
+... with 12 bytes total, requiring 4-byte alignment.
+
+When CONFIG_DEBUG_BUGVERBOSE=n, the layout of a bug_entry is:
+
+	struct bug_entry {
+		signed int      bug_addr_disp;	// 4 bytes
+		unsigned short  flags;		// 2 bytes
+		< implicit padding >		// 2 bytes
+	}
+
+... with 8 bytes total, with 6 bytes of data and 2 bytes of trailing
+padding, requiring 4-byte alginment.
+
+When we create a bug_entry in assembly, we align the start of the entry
+to 4 bytes, which implicitly handles padding for any prior entries.
+However, we do not align the end of the entry, and so when
+CONFIG_DEBUG_BUGVERBOSE=n, the final entry lacks the trailing padding
+bytes.
+
+For the main kernel image this is not a problem as find_bug() doesn't
+depend on the trailing padding bytes when searching for entries:
+
+	for (bug = __start___bug_table; bug < __stop___bug_table; ++bug)
+		if (bugaddr == bug_addr(bug))
+			return bug;
+
+However for modules, module_bug_finalize() depends on the trailing
+bytes when calculating the number of entries:
+
+	mod->num_bugs = sechdrs[i].sh_size / sizeof(struct bug_entry);
+
+... and as the last bug_entry lacks the necessary padding bytes, this entry
+will not be counted, e.g. in the case of a single entry:
+
+	sechdrs[i].sh_size == 6
+	sizeof(struct bug_entry) == 8;
+
+	sechdrs[i].sh_size / sizeof(struct bug_entry) == 0;
+
+Consequently module_find_bug() will miss the last bug_entry when it does:
+
+	for (i = 0; i < mod->num_bugs; ++i, ++bug)
+		if (bugaddr == bug_addr(bug))
+			goto out;
+
+... which can lead to a kenrel panic due to an unhandled bug.
+
+This can be demonstrated with the following module:
+
+	static int __init buginit(void)
+	{
+		WARN(1, "hello\n");
+		return 0;
+	}
+
+	static void __exit bugexit(void)
+	{
+	}
+
+	module_init(buginit);
+	module_exit(bugexit);
+	MODULE_LICENSE("GPL");
+
+... which will trigger a kernel panic when loaded:
+
+	------------[ cut here ]------------
+	hello
+	Unexpected kernel BRK exception at EL1
+	Internal error: BRK handler: 00000000f2000800 [#1] PREEMPT SMP
+	Modules linked in: hello(O+)
+	CPU: 0 PID: 50 Comm: insmod Tainted: G           O       6.9.1 #8
+	Hardware name: linux,dummy-virt (DT)
+	pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+	pc : buginit+0x18/0x1000 [hello]
+	lr : buginit+0x18/0x1000 [hello]
+	sp : ffff800080533ae0
+	x29: ffff800080533ae0 x28: 0000000000000000 x27: 0000000000000000
+	x26: ffffaba8c4e70510 x25: ffff800080533c30 x24: ffffaba8c4a28a58
+	x23: 0000000000000000 x22: 0000000000000000 x21: ffff3947c0eab3c0
+	x20: ffffaba8c4e3f000 x19: ffffaba846464000 x18: 0000000000000006
+	x17: 0000000000000000 x16: ffffaba8c2492834 x15: 0720072007200720
+	x14: 0720072007200720 x13: ffffaba8c49b27c8 x12: 0000000000000312
+	x11: 0000000000000106 x10: ffffaba8c4a0a7c8 x9 : ffffaba8c49b27c8
+	x8 : 00000000ffffefff x7 : ffffaba8c4a0a7c8 x6 : 80000000fffff000
+	x5 : 0000000000000107 x4 : 0000000000000000 x3 : 0000000000000000
+	x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff3947c0eab3c0
+	Call trace:
+	 buginit+0x18/0x1000 [hello]
+	 do_one_initcall+0x80/0x1c8
+	 do_init_module+0x60/0x218
+	 load_module+0x1ba4/0x1d70
+	 __do_sys_init_module+0x198/0x1d0
+	 __arm64_sys_init_module+0x1c/0x28
+	 invoke_syscall+0x48/0x114
+	 el0_svc_common.constprop.0+0x40/0xe0
+	 do_el0_svc+0x1c/0x28
+	 el0_svc+0x34/0xd8
+	 el0t_64_sync_handler+0x120/0x12c
+	 el0t_64_sync+0x190/0x194
+	Code: d0ffffe0 910003fd 91000000 9400000b (d4210000)
+	---[ end trace 0000000000000000 ]---
+	Kernel panic - not syncing: BRK handler: Fatal exception
+
+Fix this by always aligning the end of a bug_entry to 4 bytes, which is
+correct regardless of CONFIG_DEBUG_BUGVERBOSE.
+
+Fixes: 9fb7410f955f ("arm64/BUG: Use BRK instruction for generic BUG traps")
+
+Signed-off-by: Yuanbin Xie <xieyuanbin1@huawei.com>
+Signed-off-by: Jiangfeng Xiao <xiaojiangfeng@huawei.com>
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/1716212077-43826-1-git-send-email-xiaojiangfeng@huawei.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/cpu/cpuinfo-static.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/asm-bug.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/microblaze/kernel/cpu/cpuinfo-static.c b/arch/microblaze/kernel/cpu/cpuinfo-static.c
-index 85dbda4a08a81..03da36dc6d9c9 100644
---- a/arch/microblaze/kernel/cpu/cpuinfo-static.c
-+++ b/arch/microblaze/kernel/cpu/cpuinfo-static.c
-@@ -18,7 +18,7 @@ static const char family_string[] = CONFIG_XILINX_MICROBLAZE0_FAMILY;
- static const char cpu_ver_string[] = CONFIG_XILINX_MICROBLAZE0_HW_VER;
- 
- #define err_printk(x) \
--	early_printk("ERROR: Microblaze " x "-different for kernel and DTS\n");
-+	pr_err("ERROR: Microblaze " x "-different for kernel and DTS\n");
- 
- void __init set_cpuinfo_static(struct cpuinfo *ci, struct device_node *cpu)
- {
+diff --git a/arch/arm64/include/asm/asm-bug.h b/arch/arm64/include/asm/asm-bug.h
+index c762038ba4009..6e73809f6492a 100644
+--- a/arch/arm64/include/asm/asm-bug.h
++++ b/arch/arm64/include/asm/asm-bug.h
+@@ -28,6 +28,7 @@
+ 	14470:	.long 14471f - .;			\
+ _BUGVERBOSE_LOCATION(__FILE__, __LINE__)		\
+ 		.short flags; 				\
++		.align 2;				\
+ 		.popsection;				\
+ 	14471:
+ #else
 -- 
 2.43.0
 
