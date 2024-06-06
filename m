@@ -1,43 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B383819DF6F;
-	Thu,  6 Jun 2024 14:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447A619DF6F;
+	Thu,  6 Jun 2024 14:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683499; cv=none; b=FVTMUgmFm30t2gas1RHyTAJRmrWXQM22ibIS1zUW/I1am5WToPJJiCBdYXkN5VnFanjJcsJS/copNbmmxRIRfFwq+mUJFN/dZFx+LTamR89yp5Ce2673EWqorOhOfLEX67f7mifrs4kW35knpujq98ODtNzIvFdH5M1S2vMNaHY=
+	t=1717683500; cv=none; b=JRNTew2bWXEY4Ky+jcawWSAQj8tpsyrp9Jr0qSvX56u45wjEnwBn/ecUoZVpOS0rmOr/G4ymmA4ZJ0/5pqGnoSVvMSoAJ87XcqZ/tRtuVX5u/BKAynr1SrrXYwcARdFpUH/mZcqJRL8aWPiXPScm6xSdb4RFoZLtI2QmdECsPUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683499; c=relaxed/simple;
-	bh=6x6qRTRKh4X6Skt1X/a3lih8WN28pkhHPAMsCKO6Wv4=;
+	s=arc-20240116; t=1717683500; c=relaxed/simple;
+	bh=M5gtKgRr3pW2i5ve7nNgNBEp5DtVGKZwRoP6Dv/xfwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxQAHqBi5RDYv5vqPSlHhYDzOSJSkaLfWuTVLlCIl4ulEtnPcLxfdpwT/hDM+Na0G2UVaTnBw7Lb/Ndsyyg+HHpC+vHZQtLyPEuYvHz4rPEGOrCDInY8uaEUDw9Us/qXMBv/hMbIHUp9jRTaWVUaPK2j3/HIocTHVaOdG6+B2cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEY8175D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iawOW4DLzOYbkaOP1WLKlIAyjraz5p6VV28q99jI7vtSeIfPMLTDX+EE3vGT6gPbvaxc4LeCPkiGZ2lRK4B6+HiBcbS+u45jPt0k6fZIp079YN7NRUNn8eKxzm27ZQLR6Juh29mEBgxUiDNm4nOCrovU82nzUHkuxKR0KX3cph8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cB6GzN6H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEY8175D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92488C2BD10;
-	Thu,  6 Jun 2024 14:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cB6GzN6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F9CC2BD10;
+	Thu,  6 Jun 2024 14:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683499;
-	bh=6x6qRTRKh4X6Skt1X/a3lih8WN28pkhHPAMsCKO6Wv4=;
+	s=korg; t=1717683500;
+	bh=M5gtKgRr3pW2i5ve7nNgNBEp5DtVGKZwRoP6Dv/xfwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JEY8175Dz8Vpd7IBd3jJTBihjNtDVmKUFbHgbZgSflZgZysubMijTzF1jPl5nOd9L
-	 sP03wBtTRlAVEqxXF2OWPNKFoNRAXuweiIA3PZi7iddqVL9qEgGY9XTJFUmFgvSSV5
-	 0I+8faLmE1GMPGTxIumldsKVOFnE6irHd23Er4xc=
+	b=cB6GzN6HOt8pZAWXHBhLb7T16BLWgYCreWDnk3vgodL9RWGg2bfp5jgtjA0Gp6viZ
+	 OxnCM1UKLR8xHsBPcnq9tg8bE/xQBezj+cLp5/LBIxbrCqiQTTLWfl1wDGciW0cg8J
+	 LvBzpbVHk8HwW3+F1yyhCxjgYtyhOIlY6VrDizps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	"Yang, Chenyuan" <cy54@illinois.edu>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Yang
-Subject: [PATCH 6.1 389/473] media: cec: cec-api: add locking in cec_release()
-Date: Thu,  6 Jun 2024 16:05:18 +0200
-Message-ID: <20240606131712.708986451@linuxfoundation.org>
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Len Brown <lenb@kernel.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@arm.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	linux-acpi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	coresight@lists.linaro.org,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 442/744] coresight: etm4x: Fix unbalanced pm_runtime_enable()
+Date: Thu,  6 Jun 2024 16:01:54 +0200
+Message-ID: <20240606131746.671142501@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +59,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit 42bcaacae924bf18ae387c3f78c202df0b739292 ]
+[ Upstream commit caa41c47dab7e1054f587e592ab21296e3a6781c ]
 
-When cec_release() uses fh->msgs it has to take fh->lock,
-otherwise the list can get corrupted.
+There is an unbalanced pm_runtime_enable() in etm4_probe_platform_dev()
+when etm4_probe() fails. This problem can be observed via the coresight
+etm4 module's (load -> unload -> load) sequence when etm4_probe() fails
+in etm4_probe_platform_dev().
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reported-by: Yang, Chenyuan <cy54@illinois.edu>
-Closes: https://lore.kernel.org/linux-media/PH7PR11MB57688E64ADE4FE82E658D86DA09EA@PH7PR11MB5768.namprd11.prod.outlook.com/
-Fixes: ca684386e6e2 ("[media] cec: add HDMI CEC framework (api)")
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+[   63.379943] coresight-etm4x 7040000.etm: Unbalanced pm_runtime_enable!
+[   63.393630] coresight-etm4x 7140000.etm: Unbalanced pm_runtime_enable!
+[   63.407455] coresight-etm4x 7240000.etm: Unbalanced pm_runtime_enable!
+[   63.420983] coresight-etm4x 7340000.etm: Unbalanced pm_runtime_enable!
+[   63.420999] coresight-etm4x 7440000.etm: Unbalanced pm_runtime_enable!
+[   63.441209] coresight-etm4x 7540000.etm: Unbalanced pm_runtime_enable!
+[   63.454689] coresight-etm4x 7640000.etm: Unbalanced pm_runtime_enable!
+[   63.474982] coresight-etm4x 7740000.etm: Unbalanced pm_runtime_enable!
+
+This fixes the above problem - with an explicit pm_runtime_disable() call
+when etm4_probe() fails during etm4_probe_platform_dev().
+
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc: Hanjun Guo <guohanjun@huawei.com>
+Cc: Sudeep Holla <sudeep.holla@arm.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Len Brown <lenb@kernel.org>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: James Clark <james.clark@arm.com>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: linux-acpi@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Cc: coresight@lists.linaro.org
+Fixes: 5214b563588e ("coresight: etm4x: Add support for sysreg only devices")
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20240314055843.2625883-2-anshuman.khandual@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/core/cec-api.c | 3 +++
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/cec/core/cec-api.c b/drivers/media/cec/core/cec-api.c
-index 67dc79ef17050..d64bb716f9c68 100644
---- a/drivers/media/cec/core/cec-api.c
-+++ b/drivers/media/cec/core/cec-api.c
-@@ -664,6 +664,8 @@ static int cec_release(struct inode *inode, struct file *filp)
- 		list_del_init(&data->xfer_list);
- 	}
- 	mutex_unlock(&adap->lock);
-+
-+	mutex_lock(&fh->lock);
- 	while (!list_empty(&fh->msgs)) {
- 		struct cec_msg_entry *entry =
- 			list_first_entry(&fh->msgs, struct cec_msg_entry, list);
-@@ -681,6 +683,7 @@ static int cec_release(struct inode *inode, struct file *filp)
- 			kfree(entry);
- 		}
- 	}
-+	mutex_unlock(&fh->lock);
- 	kfree(fh);
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 18c4544f60454..003245a791a23 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -2175,6 +2175,9 @@ static int etm4_probe_platform_dev(struct platform_device *pdev)
+ 	ret = etm4_probe(&pdev->dev);
  
- 	cec_put_device(devnode);
+ 	pm_runtime_put(&pdev->dev);
++	if (ret)
++		pm_runtime_disable(&pdev->dev);
++
+ 	return ret;
+ }
+ 
 -- 
 2.43.0
 
