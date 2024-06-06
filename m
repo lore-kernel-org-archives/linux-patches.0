@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2537919FA7F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A354F19FA7F;
 	Thu,  6 Jun 2024 14:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683140; cv=none; b=PU+AIzAvsMEXGnWboJnuaB58mRFrEToE/F0r1V7lkNNRsRKyAqatNFtpUBOUcftuR5aJo5QkFZjhERsfA+n/tPq1IZt3YMIzLXNmvNeesvMaGU07O68kAkFMBUnGotKvoMJLk1eYDV39B1oPpCrwIf4Nbc6DRAbHNFWdx+yihb8=
+	t=1717683140; cv=none; b=iJw/nxphv0KQjADroYUBskvFaAF1zvmoBqinzz+TluKebpqWdO+p+/aCQfdmYH9Z9zUOvyA1ZDfVu/ph4CG5hQedFDwDRBv8CVGsiw2S7d6ugTHbG1Ilnz95mkDfmjnx+c6viPc9VEiRibIzw31pqSTVjAA1VN2mCvhcIAftfwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683140; c=relaxed/simple;
-	bh=icB+IGJwBXwGSMBu3CENpIYTcNWTU9a2b+Uc/CfzZ3Q=;
+	bh=ykGS/1Y4i5JXeuV/HKQu50IsP8/RyVt6QUotbVmAP1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YCePW7W4T6RlC5WNn7lGEQcjB1HhSLImVekOMTVmI7mBeLJ6UmbeGjNGTiletrmc4BYo9x6C8UBd4r3ZHznxtwjww8VsdyBWE6MbeCInBF2Uv+rViMLW3kle/PBtWYRscDyCZtiC+qLpR+rUVU/JSJcIy1xir5oAirXZURMoMAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbdmM1hU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mD94efZSvvWPFytmUpFlaL54UQ2XJq/gjpNPYSr/CC/SiG4atENnXQGYRdG8WYVGtLWWpwtL9gjJ/rbb+FLsV1nIVxw0N0TC+q45yFOwPrcrr4bb2lCQxBZi18sM87BUploBwgjWq4IlljFwCEOpmPzisgvePv9FtPr4U+LMP5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zNzFdrHt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbdmM1hU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E32C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zNzFdrHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79226C2BD10;
 	Thu,  6 Jun 2024 14:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683140;
-	bh=icB+IGJwBXwGSMBu3CENpIYTcNWTU9a2b+Uc/CfzZ3Q=;
+	bh=ykGS/1Y4i5JXeuV/HKQu50IsP8/RyVt6QUotbVmAP1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lbdmM1hU6DhV4sdN9gLyk9FV08OvBcUhkuXG1BrgJEeFX7w790/p25oUbCdEM0I2n
-	 xkuMPQTpPVGxLQzIN91zlmla1P+TSz/VqDLVaVD1e0jGqyLLrFOa8NM4V61Phkzi7S
-	 IPGwnGmTRsZZC/7F+KGOisVGwa1Ac26fYDSDvpIQ=
+	b=zNzFdrHtNOYJbLF7Mj7XrapiGdYMpYKBnu3ZaRCMmFY5kukMEeEpVf+TulNJ5qz1C
+	 iRHmJNjNxTXFtBCEr13WNuetvj++A0j0sLZRLo1XnN6EJu54gW4lF2/2n0Tpu7uzfB
+	 yV1p67E1+47JZ07xHi0IG2m9jh67KptH/B0X+wq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 012/473] tools/latency-collector: Fix -Wformat-security compile warns
-Date: Thu,  6 Jun 2024 15:59:01 +0200
-Message-ID: <20240606131700.232487271@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 086/744] nvmet-auth: replace pr_debug() with pr_err() to report an error.
+Date: Thu,  6 Jun 2024 15:55:58 +0200
+Message-ID: <20240606131735.163746379@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,88 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuah Khan <skhan@linuxfoundation.org>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit df73757cf8f66fa54c4721c53b0916af3c4d9818 upstream.
+[ Upstream commit 445f9119e70368ccc964575c2a6d3176966a9d65 ]
 
-Fix the following -Wformat-security compile warnings adding missing
-format arguments:
+In nvmet_auth_host_hash(), if a mismatch is detected in the hash length
+the kernel should print an error.
 
-latency-collector.c: In function ‘show_available’:
-latency-collector.c:938:17: warning: format not a string literal and
-no format arguments [-Wformat-security]
-  938 |                 warnx(no_tracer_msg);
-      |                 ^~~~~
-
-latency-collector.c:943:17: warning: format not a string literal and
-no format arguments [-Wformat-security]
-  943 |                 warnx(no_latency_tr_msg);
-      |                 ^~~~~
-
-latency-collector.c: In function ‘find_default_tracer’:
-latency-collector.c:986:25: warning: format not a string literal and
-no format arguments [-Wformat-security]
-  986 |                         errx(EXIT_FAILURE, no_tracer_msg);
-      |
-                         ^~~~
-latency-collector.c: In function ‘scan_arguments’:
-latency-collector.c:1881:33: warning: format not a string literal and
-no format arguments [-Wformat-security]
- 1881 |                                 errx(EXIT_FAILURE, no_tracer_msg);
-      |                                 ^~~~
-
-Link: https://lore.kernel.org/linux-trace-kernel/20240404011009.32945-1-skhan@linuxfoundation.org
-
-Cc: stable@vger.kernel.org
-Fixes: e23db805da2df ("tracing/tools: Add the latency-collector to tools directory")
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/latency/latency-collector.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvme/target/auth.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/tools/tracing/latency/latency-collector.c
-+++ b/tools/tracing/latency/latency-collector.c
-@@ -935,12 +935,12 @@ static void show_available(void)
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index 1f7d492c4dc26..e900525b78665 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -284,9 +284,9 @@ int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
  	}
  
- 	if (!tracers) {
--		warnx(no_tracer_msg);
-+		warnx("%s", no_tracer_msg);
- 		return;
+ 	if (shash_len != crypto_shash_digestsize(shash_tfm)) {
+-		pr_debug("%s: hash len mismatch (len %d digest %d)\n",
+-			 __func__, shash_len,
+-			 crypto_shash_digestsize(shash_tfm));
++		pr_err("%s: hash len mismatch (len %d digest %d)\n",
++			__func__, shash_len,
++			crypto_shash_digestsize(shash_tfm));
+ 		ret = -EINVAL;
+ 		goto out_free_tfm;
  	}
- 
- 	if (!found) {
--		warnx(no_latency_tr_msg);
-+		warnx("%s", no_latency_tr_msg);
- 		tracefs_list_free(tracers);
- 		return;
- 	}
-@@ -983,7 +983,7 @@ static const char *find_default_tracer(v
- 	for (i = 0; relevant_tracers[i]; i++) {
- 		valid = tracer_valid(relevant_tracers[i], &notracer);
- 		if (notracer)
--			errx(EXIT_FAILURE, no_tracer_msg);
-+			errx(EXIT_FAILURE, "%s", no_tracer_msg);
- 		if (valid)
- 			return relevant_tracers[i];
- 	}
-@@ -1878,7 +1878,7 @@ static void scan_arguments(int argc, cha
- 			}
- 			valid = tracer_valid(current_tracer, &notracer);
- 			if (notracer)
--				errx(EXIT_FAILURE, no_tracer_msg);
-+				errx(EXIT_FAILURE, "%s", no_tracer_msg);
- 			if (!valid)
- 				errx(EXIT_FAILURE,
- "The tracer %s is not supported by your kernel!\n", current_tracer);
+-- 
+2.43.0
+
 
 
