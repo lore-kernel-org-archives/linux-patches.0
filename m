@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59DB198853;
-	Thu,  6 Jun 2024 14:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA9519885D;
+	Thu,  6 Jun 2024 14:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683041; cv=none; b=uDISP8+lxZYaJHsNGg2KmhjqXCskacw08CA7u91g9qAgVx/ljSB3KyWDo67adXO2vw4sjhsf1FM9125yoeATR9huuQQGkKTFDE4HZ4D68VLfK966BMT8PK7D6+YY+ZKl3VNNvm3ItzEVWVIKOkx70E2Yzp7i0sS2zWPM42+uX5w=
+	t=1717683041; cv=none; b=BAHzRVISXS2QU1XUSi/zPj4cSEOcGXfxfevdfiZNzeMxuXYiShycGB7NVTzo0QK7dezdQ/ChFr4X89rlLpyZxvMQYyOylPwHfX/oOA5WjSvUXIaHo/47YMUQkoJ81ViVkro/vxIa/OrVL1178pV6zQk5HPtkvon+87SwuKlzl78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683041; c=relaxed/simple;
-	bh=UBWvpjzpNhhUBxwZJpwa5FQpmATKS5PxxvYXuFUzvGc=;
+	bh=pxu20ylrbxEJixeGMaFyP/lFuwdlQhOLRbiKvoxMihw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZK6bY7ySlgDk7bUP9nMlAvRKbalD1BCwiDZIms2N54uQ3rZ4uJl0oy9/yQwDN/XUq6Fn25Mt3P+zXWapok0zNR0XCekNENmo4Tt7nTKPYn9qXcE6iG9TrNicXvAykkNILNy2EBMC6WH3YdhNe6nf9wzMFalB8Uursm8PE7Ej04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5IhAJY7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dr3G4UPU0LItvAC7fi48baN3rfX5UuoM60tDRelv7OEARJsOsn7HyD0D951RznneIKGf+8KlynqcxqvxSJc0wPUv8fhiXrQTiPQy/79c46S5DtLXyuq6g/zUBRKv2N7Fd2kL4AsEIp9RpDJF0WkiM0WnIuY2lIbUNfpFDBD/cYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nd0EdY6E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5IhAJY7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8B5C4AF07;
-	Thu,  6 Jun 2024 14:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nd0EdY6E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC88CC32782;
+	Thu,  6 Jun 2024 14:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683040;
-	bh=UBWvpjzpNhhUBxwZJpwa5FQpmATKS5PxxvYXuFUzvGc=;
+	s=korg; t=1717683041;
+	bh=pxu20ylrbxEJixeGMaFyP/lFuwdlQhOLRbiKvoxMihw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5IhAJY7guDLkKHUgo/XlibW44OJAYsnvHgE3xin4Vg4Inzdw8hD4rwP6E7VixkQ8
-	 8sFTomjqJHLctOIAAAQatEy8ki4fLX8zXJtguqxUXjRmXO/PFXXkAWKjNTMJZYpXRm
-	 ykgKfDcbPH3cIPUoFpUMmwieciNjMsLIoLbGyAF4=
+	b=Nd0EdY6E27fc7BJdPlndPQbOM0esQFUclCY7yDCLpIcC4sKVAAAEqxlmxTRiXWQiJ
+	 AsQMy8e96bQ+XUQAYCCMBDu0ddQTQGZURavYfOc60lc3TgsNavNCtrPYqOU2RGhcj0
+	 ulhM68/Dp8NdX2VUKxRDccnLieScPTIa7HKQmWEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Langstaff <stephenlangstaff1@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tejun Heo <tj@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Jay Shin <jaeshin@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 233/374] net: Always descend into dsa/ folder with CONFIG_NET_DSA enabled
-Date: Thu,  6 Jun 2024 16:03:32 +0200
-Message-ID: <20240606131659.622418548@linuxfoundation.org>
+Subject: [PATCH 6.9 225/374] blk-cgroup: fix list corruption from resetting io stat
+Date: Thu,  6 Jun 2024 16:03:24 +0200
+Message-ID: <20240606131659.338750270@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -54,56 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit b1fa60ec252fba39130107074becd12d0b3f83ec ]
+[ Upstream commit 6da6680632792709cecf2b006f2fe3ca7857e791 ]
 
-Stephen reported that he was unable to get the dsa_loop driver to get
-probed, and the reason ended up being because he had CONFIG_FIXED_PHY=y
-in his kernel configuration. As Masahiro explained it:
+Since commit 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()"),
+each iostat instance is added to blkcg percpu list, so blkcg_reset_stats()
+can't reset the stat instance by memset(), otherwise the llist may be
+corrupted.
 
-  "obj-m += dsa/" means everything under dsa/ must be modular.
+Fix the issue by only resetting the counter part.
 
-  If there is a built-in object under dsa/ with CONFIG_NET_DSA=m,
-  you cannot do  "obj-$(CONFIG_NET_DSA) += dsa/".
-
-  You need to change it back to "obj-y += dsa/".
-
-This was the case here whereby CONFIG_NET_DSA=m, and so the
-obj-$(CONFIG_FIXED_PHY) += dsa_loop_bdinfo.o rule is not executed and
-the DSA loop mdio_board info structure is not registered with the
-kernel, and eventually the device is simply not found.
-
-To preserve the intention of the original commit of limiting the amount
-of folder descending, conditionally descend into drivers/net/dsa when
-CONFIG_NET_DSA is enabled.
-
-Fixes: 227d72063fcc ("dsa: simplify Kconfig symbols and dependencies")
-Reported-by: Stephen Langstaff <stephenlangstaff1@gmail.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Waiman Long <longman@redhat.com>
+Cc: Jay Shin <jaeshin@redhat.com>
+Fixes: 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Link: https://lore.kernel.org/r/20240515013157.443672-2-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/Makefile | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ block/blk-cgroup.c | 58 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/Makefile b/drivers/net/Makefile
-index 7cab36f94782e..db55ffdb5792d 100644
---- a/drivers/net/Makefile
-+++ b/drivers/net/Makefile
-@@ -48,7 +48,9 @@ obj-$(CONFIG_MHI_NET) += mhi_net.o
- obj-$(CONFIG_ARCNET) += arcnet/
- obj-$(CONFIG_CAIF) += caif/
- obj-$(CONFIG_CAN) += can/
--obj-$(CONFIG_NET_DSA) += dsa/
-+ifdef CONFIG_NET_DSA
-+obj-y += dsa/
-+endif
- obj-$(CONFIG_ETHERNET) += ethernet/
- obj-$(CONFIG_FDDI) += fddi/
- obj-$(CONFIG_HIPPI) += hippi/
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 059467086b131..86752b1652b5b 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -619,12 +619,45 @@ static void blkg_destroy_all(struct gendisk *disk)
+ 	spin_unlock_irq(&q->queue_lock);
+ }
+ 
++static void blkg_iostat_set(struct blkg_iostat *dst, struct blkg_iostat *src)
++{
++	int i;
++
++	for (i = 0; i < BLKG_IOSTAT_NR; i++) {
++		dst->bytes[i] = src->bytes[i];
++		dst->ios[i] = src->ios[i];
++	}
++}
++
++static void __blkg_clear_stat(struct blkg_iostat_set *bis)
++{
++	struct blkg_iostat cur = {0};
++	unsigned long flags;
++
++	flags = u64_stats_update_begin_irqsave(&bis->sync);
++	blkg_iostat_set(&bis->cur, &cur);
++	blkg_iostat_set(&bis->last, &cur);
++	u64_stats_update_end_irqrestore(&bis->sync, flags);
++}
++
++static void blkg_clear_stat(struct blkcg_gq *blkg)
++{
++	int cpu;
++
++	for_each_possible_cpu(cpu) {
++		struct blkg_iostat_set *s = per_cpu_ptr(blkg->iostat_cpu, cpu);
++
++		__blkg_clear_stat(s);
++	}
++	__blkg_clear_stat(&blkg->iostat);
++}
++
+ static int blkcg_reset_stats(struct cgroup_subsys_state *css,
+ 			     struct cftype *cftype, u64 val)
+ {
+ 	struct blkcg *blkcg = css_to_blkcg(css);
+ 	struct blkcg_gq *blkg;
+-	int i, cpu;
++	int i;
+ 
+ 	mutex_lock(&blkcg_pol_mutex);
+ 	spin_lock_irq(&blkcg->lock);
+@@ -635,18 +668,7 @@ static int blkcg_reset_stats(struct cgroup_subsys_state *css,
+ 	 * anyway.  If you get hit by a race, retry.
+ 	 */
+ 	hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node) {
+-		for_each_possible_cpu(cpu) {
+-			struct blkg_iostat_set *bis =
+-				per_cpu_ptr(blkg->iostat_cpu, cpu);
+-			memset(bis, 0, sizeof(*bis));
+-
+-			/* Re-initialize the cleared blkg_iostat_set */
+-			u64_stats_init(&bis->sync);
+-			bis->blkg = blkg;
+-		}
+-		memset(&blkg->iostat, 0, sizeof(blkg->iostat));
+-		u64_stats_init(&blkg->iostat.sync);
+-
++		blkg_clear_stat(blkg);
+ 		for (i = 0; i < BLKCG_MAX_POLS; i++) {
+ 			struct blkcg_policy *pol = blkcg_policy[i];
+ 
+@@ -949,16 +971,6 @@ void blkg_conf_exit(struct blkg_conf_ctx *ctx)
+ }
+ EXPORT_SYMBOL_GPL(blkg_conf_exit);
+ 
+-static void blkg_iostat_set(struct blkg_iostat *dst, struct blkg_iostat *src)
+-{
+-	int i;
+-
+-	for (i = 0; i < BLKG_IOSTAT_NR; i++) {
+-		dst->bytes[i] = src->bytes[i];
+-		dst->ios[i] = src->ios[i];
+-	}
+-}
+-
+ static void blkg_iostat_add(struct blkg_iostat *dst, struct blkg_iostat *src)
+ {
+ 	int i;
 -- 
 2.43.0
 
