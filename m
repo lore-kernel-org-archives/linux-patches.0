@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F370B198843;
-	Thu,  6 Jun 2024 14:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741A219D06F;
+	Thu,  6 Jun 2024 14:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683081; cv=none; b=E6PwZqxwA/1D+kymqJ4Ls5C0So2rsuqInLtLo3QgsE3Dn7o2QYDzkeDhSycEancXQqnR3wS9Z6ztSMlF4nkoLNi2u8x0mLxgcd1vP6rg69yTE7vA5sO2ApOwYPcrJ9WiC97j6ATG4z5lOTKXkw1cJntSgMfXWMlonn69Uu1SgrQ=
+	t=1717683081; cv=none; b=D9wUq9c+fxNNE/s1S6tNp8HRMkMcSTyegj217OJJlan8QwvE2785HvD8Y5DbVEVaDveX3TXInKU1PCmq25+PcSzmouL4cn7R+lvB/4TYlSGMMqdx0Et462CvhecLK/+WRQ3J4P9u65KSpghn3X61+vBhZ5OYyYgbwY5/a1zPlO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683081; c=relaxed/simple;
-	bh=fp8XLkMMpUr4UZi86N1YnGrTmUCB++tpuXxRXO+knlk=;
+	bh=A7ownMMznEdeaj3THVeBzeKCOsx4z5eViHz11XsrvzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dpBWZtC8EUXAVNydhD/4sBN0+uIJE0XO0kYfdKmYxsLIif7gQUiIba0zuIosc40RrlYWJIswr6dQ6cuHX+uEcWzzFCigWUHMMRee7mQQ8zsqxUu1uMg3x1ZedMnt2xKOyaZBsphjn6IFZzu6AUe+Rj2C0AtmcZxCiYI1uWKPnpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuD7zEBH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sf9RHbajtjhsbbAxBNhrpkfQCGFDZ7l06bfs4mjk38QqHPpmGFvYY1ihpxcPMS3s3wd6mBXIUKV/Z/HXFpzwhaXUdUtbxilz8bxBRbZAi3gn0UiEXa4eZoUwncrLTKKXYw5Wp1fwTvfC5Aq/L6MmZNKKxc7JVWk6NwO/3mV+qMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqEnzuVM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuD7zEBH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0B2C4AF0C;
-	Thu,  6 Jun 2024 14:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqEnzuVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F4FC4AF13;
+	Thu,  6 Jun 2024 14:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683080;
-	bh=fp8XLkMMpUr4UZi86N1YnGrTmUCB++tpuXxRXO+knlk=;
+	s=korg; t=1717683081;
+	bh=A7ownMMznEdeaj3THVeBzeKCOsx4z5eViHz11XsrvzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZuD7zEBH7A3pmnkjM9hT4rSEYfN9yHz4yyU5fEVEb1r+rsLcEzh71b3YfVuXuC6cO
-	 3Pup12A9tI9AfcwgpqSab7KkiJWutzoef2Pza1Yx6FmJJ073Ho/lVAKqtrWaZghk0X
-	 4XA8ZyzdDjAay7k7qWKFbcruebvUC9B4GM2ImKBU=
+	b=uqEnzuVMb6TRtz0FeXAT7uet6vFDEfT12I+vKloVjuPtq2UPntKFr8vniz2ArbW2A
+	 ipwHtP3bWQx6T9stV+JEqw3kGF6Lpwe/c3UIkT7kaIBTa3vOfHVogMfjW1E1oOgDI3
+	 fCOxFkLEQ6i1rvysuLqXohH8f6Aw6NGs7x6svr/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Paul Greenwalt <paul.greenwalt@intel.com>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 351/374] e1000e: move force SMBUS near the end of enable_ulp function
-Date: Thu,  6 Jun 2024 16:05:30 +0200
-Message-ID: <20240606131703.621035365@linuxfoundation.org>
+Subject: [PATCH 6.9 352/374] ice: fix 200G PHY types to link speed mapping
+Date: Thu,  6 Jun 2024 16:05:31 +0200
+Message-ID: <20240606131703.654984858@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -58,124 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Paul Greenwalt <paul.greenwalt@intel.com>
 
-[ Upstream commit bfd546a552e140b0a4c8a21527c39d6d21addb28 ]
+[ Upstream commit 2a6d8f2de2224ac46df94dc40f43f8b9701f6703 ]
 
-The commit 861e8086029e ("e1000e: move force SMBUS from enable ulp
-function to avoid PHY loss issue") introduces a regression on
-PCH_MTP_I219_LM18 (PCIID: 0x8086550A). Without the referred commit, the
-ethernet works well after suspend and resume, but after applying the
-commit, the ethernet couldn't work anymore after the resume and the
-dmesg shows that the NIC link changes to 10Mbps (1000Mbps originally):
+Commit 24407a01e57c ("ice: Add 200G speed/phy type use") added support
+for 200G PHY speeds, but did not include the mapping of 200G PHY types
+to link speed. As a result the driver is returning UNKNOWN link speed
+when setting 200G ethtool advertised link modes.
 
-    [   43.305084] e1000e 0000:00:1f.6 enp0s31f6: NIC Link is Up 10 Mbps Full Duplex, Flow Control: Rx/Tx
+To fix this add 200G PHY types to link speed mapping to
+ice_get_link_speed_based_on_phy_type().
 
-Without the commit, the force SMBUS code will not be executed if
-"return 0" or "goto out" is executed in the enable_ulp(), and in my
-case, the "goto out" is executed since FWSM_FW_VALID is set. But after
-applying the commit, the force SMBUS code will be ran unconditionally.
-
-Here move the force SMBUS code back to enable_ulp() and put it
-immediately ahead of hw->phy.ops.release(hw), this could allow the
-longest settling time as possible for interface in this function and
-doesn't change the original code logic.
-
-The issue was found on a Lenovo laptop with the ethernet hw as below:
-00:1f.6 Ethernet controller [0200]: Intel Corporation Device [8086:550a]
-(rev 20).
-
-And this patch is verified (cable plug and unplug, system suspend
-and resume) on Lenovo laptops with ethernet hw: [8086:550a],
-[8086:550b], [8086:15bb], [8086:15be], [8086:1a1f], [8086:1a1c] and
-[8086:0dc7].
-
-Fixes: 861e8086029e ("e1000e: move force SMBUS from enable ulp function to avoid PHY loss issue")
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Acked-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
+Fixes: 24407a01e57c ("ice: Add 200G speed/phy type use")
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20240528-net-2024-05-28-intel-net-fixes-v1-1-dc8593d2bbc6@intel.com
+Link: https://lore.kernel.org/r/20240528-net-2024-05-28-intel-net-fixes-v1-5-dc8593d2bbc6@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/ich8lan.c | 22 +++++++++++++++++++++
- drivers/net/ethernet/intel/e1000e/netdev.c  | 18 -----------------
- 2 files changed, 22 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_common.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-index f9e94be36e97f..2e98a2a0bead9 100644
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -1225,6 +1225,28 @@ s32 e1000_enable_ulp_lpt_lp(struct e1000_hw *hw, bool to_sx)
- 	}
- 
- release:
-+	/* Switching PHY interface always returns MDI error
-+	 * so disable retry mechanism to avoid wasting time
-+	 */
-+	e1000e_disable_phy_retry(hw);
-+
-+	/* Force SMBus mode in PHY */
-+	ret_val = e1000_read_phy_reg_hv_locked(hw, CV_SMB_CTRL, &phy_reg);
-+	if (ret_val) {
-+		e1000e_enable_phy_retry(hw);
-+		hw->phy.ops.release(hw);
-+		goto out;
-+	}
-+	phy_reg |= CV_SMB_CTRL_FORCE_SMBUS;
-+	e1000_write_phy_reg_hv_locked(hw, CV_SMB_CTRL, phy_reg);
-+
-+	e1000e_enable_phy_retry(hw);
-+
-+	/* Force SMBus mode in MAC */
-+	mac_reg = er32(CTRL_EXT);
-+	mac_reg |= E1000_CTRL_EXT_FORCE_SMBUS;
-+	ew32(CTRL_EXT, mac_reg);
-+
- 	hw->phy.ops.release(hw);
- out:
- 	if (ret_val)
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 3692fce201959..cc8c531ec3dff 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -6623,7 +6623,6 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 	struct e1000_hw *hw = &adapter->hw;
- 	u32 ctrl, ctrl_ext, rctl, status, wufc;
- 	int retval = 0;
--	u16 smb_ctrl;
- 
- 	/* Runtime suspend should only enable wakeup for link changes */
- 	if (runtime)
-@@ -6697,23 +6696,6 @@ static int __e1000_shutdown(struct pci_dev *pdev, bool runtime)
- 			if (retval)
- 				return retval;
- 		}
--
--		/* Force SMBUS to allow WOL */
--		/* Switching PHY interface always returns MDI error
--		 * so disable retry mechanism to avoid wasting time
--		 */
--		e1000e_disable_phy_retry(hw);
--
--		e1e_rphy(hw, CV_SMB_CTRL, &smb_ctrl);
--		smb_ctrl |= CV_SMB_CTRL_FORCE_SMBUS;
--		e1e_wphy(hw, CV_SMB_CTRL, smb_ctrl);
--
--		e1000e_enable_phy_retry(hw);
--
--		/* Force SMBus mode in MAC */
--		ctrl_ext = er32(CTRL_EXT);
--		ctrl_ext |= E1000_CTRL_EXT_FORCE_SMBUS;
--		ew32(CTRL_EXT, ctrl_ext);
- 	}
- 
- 	/* Ensure that the appropriate bits are set in LPI_CTRL
+diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
+index d9f6cc71d900a..e7d28432ba038 100644
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -3135,6 +3135,16 @@ ice_get_link_speed_based_on_phy_type(u64 phy_type_low, u64 phy_type_high)
+ 	case ICE_PHY_TYPE_HIGH_100G_AUI2:
+ 		speed_phy_type_high = ICE_AQ_LINK_SPEED_100GB;
+ 		break;
++	case ICE_PHY_TYPE_HIGH_200G_CR4_PAM4:
++	case ICE_PHY_TYPE_HIGH_200G_SR4:
++	case ICE_PHY_TYPE_HIGH_200G_FR4:
++	case ICE_PHY_TYPE_HIGH_200G_LR4:
++	case ICE_PHY_TYPE_HIGH_200G_DR4:
++	case ICE_PHY_TYPE_HIGH_200G_KR4_PAM4:
++	case ICE_PHY_TYPE_HIGH_200G_AUI4_AOC_ACC:
++	case ICE_PHY_TYPE_HIGH_200G_AUI4:
++		speed_phy_type_high = ICE_AQ_LINK_SPEED_200GB;
++		break;
+ 	default:
+ 		speed_phy_type_high = ICE_AQ_LINK_SPEED_UNKNOWN;
+ 		break;
 -- 
 2.43.0
 
