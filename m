@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E441C619B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2B81A0DFB;
 	Thu,  6 Jun 2024 14:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683698; cv=none; b=bV1G3FqznklZS3zGJAv0mNdrXCxXLraQJb0Noz2nbjv4sOYSXyhsOh6JK+CdTP3s9VAe+JjOHyV+LjokG56noxl3KGct9s9unyy4rnIhW9X1tyA3+fSZgfiiGaJPy4+uWOmNNCDiDdDSIRBFJEWsZ4wMmwXoD1HB5Xtb3ietgq0=
+	t=1717683698; cv=none; b=Yh/VPqti/X4XmjVCTdmZnEoVaGIbykC4+LGfi2ojR4knF/2Y6AD6hU0wgWsP0uGSLg5Rq6L9ag+WGn4rbU52wi3kRji17N2EFdvEag1bdsPZ4hQlf3yjaKVUlx1yZ2bXvUqaC+LBWjCohO3R2pnGS8coskb+cIKo349rgJlIIUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683698; c=relaxed/simple;
-	bh=pDNy0F4+3XWYsiB3JlS2zGxRy6KqLKuHgJQdhT9oFLI=;
+	bh=jOKTcvo5nN1m8KDpnqxiz/Jzw6woKLVqz13y1OviAJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwf34/PQVPRU+10H71M4sUvuUyrBS4UkIIMtfxUjbY1rocZ2CYQNI6PwxbHJW6Z+YLcZ63GGlbeq3sHwx41BaUG8QlXxpkiMxRNSFnoX3NtPyzGhqRlXx6mD6gnZpfzLaA0IkR7mz5S7EECIgj9w+H5fTP0nZSr1vypkC5rxHME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIf92Kbk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AqE3+Mo7DWIYzYiKKg0h76tVfHJhbCS0aqvPrXbj/qxO/haUiSbYlcZ2S/KfQtzaA5OBajHQJqfgSX1cA24uln1BaknwrMXvp8JviZBekVUKwG4OfxmBmt+V5wOkAgoB3VyxP4uetIVuLglL5ub3BoOvRZjwS6QQssMQ7yfMiMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BlrJhc27; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIf92Kbk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96D6C2BD10;
-	Thu,  6 Jun 2024 14:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlrJhc27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC87C2BD10;
+	Thu,  6 Jun 2024 14:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683698;
-	bh=pDNy0F4+3XWYsiB3JlS2zGxRy6KqLKuHgJQdhT9oFLI=;
+	bh=jOKTcvo5nN1m8KDpnqxiz/Jzw6woKLVqz13y1OviAJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RIf92KbkRLG7F9J/dIRhfr3OEIW+fe0luQNUxl1i3mbWXlfTRiL9Xqg9Zy6Ta7Ftt
-	 r/PIblXMKJttKk1sdaLC9QYapca7ehppSk+2PeieE8pJI6tYkXIqlGSm7KHQd2POti
-	 hC8Xkj8vCwI8zska2SS4QhJ9ctlbvdNybvKdGtf0=
+	b=BlrJhc27HTY5KKLyTtUE5b3NNhiwU5bGO1RyOjbBSuqhJ8FSKp2m3DZL2KfssUBif
+	 0Nnh3oLresRR0L1Xtx9ebHsBBd8xo782vgxlKzdYKLx0Ttv8KUyux2IXBPMGWvvSrE
+	 J4iZSNABuXW8Oy880TuvJ21O+uYSJikFateQ3HBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	"Yang, Chenyuan" <cy54@illinois.edu>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Yang
-Subject: [PATCH 6.6 609/744] media: cec: core: avoid recursive cec_claim_log_addrs
-Date: Thu,  6 Jun 2024 16:04:41 +0200
-Message-ID: <20240606131752.019524687@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 618/744] ALSA: hda/cs_dsp_ctl: Use private_free for control cleanup
+Date: Thu,  6 Jun 2024 16:04:50 +0200
+Message-ID: <20240606131752.326242125@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,79 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 47c82aac10a6954d68f29f10d9758d016e8e5af1 ]
+[ Upstream commit 172811e3a557d8681a5e2d0f871dc04a2d17eb13 ]
 
-Keep track if cec_claim_log_addrs() is running, and return -EBUSY
-if it is when calling CEC_ADAP_S_LOG_ADDRS.
+Use the control private_free callback to free the associated data
+block. This ensures that the memory won't leak, whatever way the
+control gets destroyed.
 
-This prevents a case where cec_claim_log_addrs() could be called
-while it was still in progress.
+The original implementation didn't actually remove the ALSA
+controls in hda_cs_dsp_control_remove(). It only freed the internal
+tracking structure. This meant it was possible to remove/unload the
+amp driver while leaving its ALSA controls still present in the
+soundcard. Obviously attempting to access them could cause segfaults
+or at least dereferencing stale pointers.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reported-by: Yang, Chenyuan <cy54@illinois.edu>
-Closes: https://lore.kernel.org/linux-media/PH7PR11MB57688E64ADE4FE82E658D86DA09EA@PH7PR11MB5768.namprd11.prod.outlook.com/
-Fixes: ca684386e6e2 ("[media] cec: add HDMI CEC framework (api)")
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 3233b978af23 ("ALSA: hda: hda_cs_dsp_ctl: Add Library to support CS_DSP ALSA controls")
+Link: https://lore.kernel.org/r/20240508095627.44476-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/core/cec-adap.c | 6 +++++-
- drivers/media/cec/core/cec-api.c  | 2 +-
- include/media/cec.h               | 1 +
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ sound/pci/hda/hda_cs_dsp_ctl.c | 47 ++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
-index 99c14942f2813..c15abee3e9bc4 100644
---- a/drivers/media/cec/core/cec-adap.c
-+++ b/drivers/media/cec/core/cec-adap.c
-@@ -1547,9 +1547,12 @@ static int cec_config_thread_func(void *arg)
-  */
- static void cec_claim_log_addrs(struct cec_adapter *adap, bool block)
- {
--	if (WARN_ON(adap->is_configuring || adap->is_configured))
-+	if (WARN_ON(adap->is_claiming_log_addrs ||
-+		    adap->is_configuring || adap->is_configured))
- 		return;
+diff --git a/sound/pci/hda/hda_cs_dsp_ctl.c b/sound/pci/hda/hda_cs_dsp_ctl.c
+index 463ca06036bfe..9db45d7c17e5f 100644
+--- a/sound/pci/hda/hda_cs_dsp_ctl.c
++++ b/sound/pci/hda/hda_cs_dsp_ctl.c
+@@ -8,6 +8,7 @@
  
-+	adap->is_claiming_log_addrs = true;
-+
- 	init_completion(&adap->config_completion);
- 
- 	/* Ready to kick off the thread */
-@@ -1564,6 +1567,7 @@ static void cec_claim_log_addrs(struct cec_adapter *adap, bool block)
- 		wait_for_completion(&adap->config_completion);
- 		mutex_lock(&adap->lock);
- 	}
-+	adap->is_claiming_log_addrs = false;
+ #include <linux/module.h>
+ #include <sound/soc.h>
++#include <linux/cleanup.h>
+ #include <linux/firmware/cirrus/cs_dsp.h>
+ #include <linux/firmware/cirrus/wmfw.h>
+ #include "hda_cs_dsp_ctl.h"
+@@ -97,11 +98,23 @@ static unsigned int wmfw_convert_flags(unsigned int in)
+ 	return out;
  }
  
- /*
-diff --git a/drivers/media/cec/core/cec-api.c b/drivers/media/cec/core/cec-api.c
-index d64bb716f9c68..3ef9153443044 100644
---- a/drivers/media/cec/core/cec-api.c
-+++ b/drivers/media/cec/core/cec-api.c
-@@ -178,7 +178,7 @@ static long cec_adap_s_log_addrs(struct cec_adapter *adap, struct cec_fh *fh,
- 			   CEC_LOG_ADDRS_FL_ALLOW_RC_PASSTHRU |
- 			   CEC_LOG_ADDRS_FL_CDC_ONLY;
- 	mutex_lock(&adap->lock);
--	if (!adap->is_configuring &&
-+	if (!adap->is_claiming_log_addrs && !adap->is_configuring &&
- 	    (!log_addrs.num_log_addrs || !adap->is_configured) &&
- 	    !cec_is_busy(adap, fh)) {
- 		err = __cec_s_log_addrs(adap, &log_addrs, block);
-diff --git a/include/media/cec.h b/include/media/cec.h
-index 9c007f83569aa..ffd17371302ca 100644
---- a/include/media/cec.h
-+++ b/include/media/cec.h
-@@ -247,6 +247,7 @@ struct cec_adapter {
- 	u16 phys_addr;
- 	bool needs_hpd;
- 	bool is_enabled;
-+	bool is_claiming_log_addrs;
- 	bool is_configuring;
- 	bool must_reconfigure;
- 	bool is_configured;
+-static void hda_cs_dsp_add_kcontrol(struct hda_cs_dsp_coeff_ctl *ctl, const char *name)
++static void hda_cs_dsp_free_kcontrol(struct snd_kcontrol *kctl)
+ {
++	struct hda_cs_dsp_coeff_ctl *ctl = (struct hda_cs_dsp_coeff_ctl *)snd_kcontrol_chip(kctl);
+ 	struct cs_dsp_coeff_ctl *cs_ctl = ctl->cs_ctl;
++
++	/* NULL priv to prevent a double-free in hda_cs_dsp_control_remove() */
++	cs_ctl->priv = NULL;
++	kfree(ctl);
++}
++
++static void hda_cs_dsp_add_kcontrol(struct cs_dsp_coeff_ctl *cs_ctl,
++				    const struct hda_cs_dsp_ctl_info *info,
++				    const char *name)
++{
+ 	struct snd_kcontrol_new kcontrol = {0};
+ 	struct snd_kcontrol *kctl;
++	struct hda_cs_dsp_coeff_ctl *ctl __free(kfree) = NULL;
+ 	int ret = 0;
+ 
+ 	if (cs_ctl->len > ADSP_MAX_STD_CTRL_SIZE) {
+@@ -110,6 +123,13 @@ static void hda_cs_dsp_add_kcontrol(struct hda_cs_dsp_coeff_ctl *ctl, const char
+ 		return;
+ 	}
+ 
++	ctl = kzalloc(sizeof(*ctl), GFP_KERNEL);
++	if (!ctl)
++		return;
++
++	ctl->cs_ctl = cs_ctl;
++	ctl->card = info->card;
++
+ 	kcontrol.name = name;
+ 	kcontrol.info = hda_cs_dsp_coeff_info;
+ 	kcontrol.iface = SNDRV_CTL_ELEM_IFACE_MIXER;
+@@ -117,20 +137,22 @@ static void hda_cs_dsp_add_kcontrol(struct hda_cs_dsp_coeff_ctl *ctl, const char
+ 	kcontrol.get = hda_cs_dsp_coeff_get;
+ 	kcontrol.put = hda_cs_dsp_coeff_put;
+ 
+-	/* Save ctl inside private_data, ctl is owned by cs_dsp,
+-	 * and will be freed when cs_dsp removes the control */
+ 	kctl = snd_ctl_new1(&kcontrol, (void *)ctl);
+ 	if (!kctl)
+ 		return;
+ 
+-	ret = snd_ctl_add(ctl->card, kctl);
++	kctl->private_free = hda_cs_dsp_free_kcontrol;
++	ctl->kctl = kctl;
++
++	/* snd_ctl_add() calls our private_free on error, which will kfree(ctl) */
++	cs_ctl->priv = no_free_ptr(ctl);
++	ret = snd_ctl_add(info->card, kctl);
+ 	if (ret) {
+ 		dev_err(cs_ctl->dsp->dev, "Failed to add KControl %s = %d\n", kcontrol.name, ret);
+ 		return;
+ 	}
+ 
+ 	dev_dbg(cs_ctl->dsp->dev, "Added KControl: %s\n", kcontrol.name);
+-	ctl->kctl = kctl;
+ }
+ 
+ static void hda_cs_dsp_control_add(struct cs_dsp_coeff_ctl *cs_ctl,
+@@ -138,7 +160,6 @@ static void hda_cs_dsp_control_add(struct cs_dsp_coeff_ctl *cs_ctl,
+ {
+ 	struct cs_dsp *cs_dsp = cs_ctl->dsp;
+ 	char name[SNDRV_CTL_ELEM_ID_NAME_MAXLEN];
+-	struct hda_cs_dsp_coeff_ctl *ctl;
+ 	const char *region_name;
+ 	int ret;
+ 
+@@ -163,15 +184,7 @@ static void hda_cs_dsp_control_add(struct cs_dsp_coeff_ctl *cs_ctl,
+ 			 " %.*s", cs_ctl->subname_len - skip, cs_ctl->subname + skip);
+ 	}
+ 
+-	ctl = kzalloc(sizeof(*ctl), GFP_KERNEL);
+-	if (!ctl)
+-		return;
+-
+-	ctl->cs_ctl = cs_ctl;
+-	ctl->card = info->card;
+-	cs_ctl->priv = ctl;
+-
+-	hda_cs_dsp_add_kcontrol(ctl, name);
++	hda_cs_dsp_add_kcontrol(cs_ctl, info, name);
+ }
+ 
+ void hda_cs_dsp_add_controls(struct cs_dsp *dsp, const struct hda_cs_dsp_ctl_info *info)
+@@ -203,7 +216,9 @@ void hda_cs_dsp_control_remove(struct cs_dsp_coeff_ctl *cs_ctl)
+ {
+ 	struct hda_cs_dsp_coeff_ctl *ctl = cs_ctl->priv;
+ 
+-	kfree(ctl);
++	/* ctl and kctl may already have been removed by ALSA private_free */
++	if (ctl && ctl->kctl)
++		snd_ctl_remove(ctl->card, ctl->kctl);
+ }
+ EXPORT_SYMBOL_NS_GPL(hda_cs_dsp_control_remove, SND_HDA_CS_DSP_CONTROLS);
+ 
 -- 
 2.43.0
 
