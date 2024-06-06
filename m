@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A6D19EEC6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B9519EEAD;
 	Thu,  6 Jun 2024 14:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683557; cv=none; b=XR21FbBjcCeTP3AQkN1zjpR4UJzQNkcz7HmvzYrU+m8kQVQUiVo+avjSwtdqpZqajFMjP+nrzClyPFpCLO88oMboXdHsvE8ABGKZxrvEGlxh2DnTUR+hs8ZxSyqvleY4yMgXuOCklKbjvDlHUyh7HFqGZ0e6iiK7Hz5WZ7hVol8=
+	t=1717683557; cv=none; b=owbE2jO455LDxgMiVU3nO0VAykIBmz1aaqBq/MWOPMl6rmkiTXX9PFGI2P4dmstYTlUG90nZcVbXjRAnPRFpvsHPXfEdEn5GeTFml2m1AJ8H1ypx66uaabOXE/8Zyyd3deECc2JFy/ley4L97cadELqGxsfrvYChOi9K/azD+Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683557; c=relaxed/simple;
-	bh=BGoTOA299Jjgum1dJlZI/XY8SlImY/QblUXHARRunuo=;
+	bh=DPX9PwIiWYoazgt0VP9EOHRYTxAbT9h2D/C3Jhn0wyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sKG9NlhOAZAhYtW15v2xtJVjNFwNIXo1TTALVUtu/RM+NVrEjZzsE3yoqkPDr1bp7oqOb5hO9UsW0WI+09pXQ2NPKjhogIJutqpL6C67KGVrf6J+azT4tPKYXrP8JXQg8D7waKz3qRiUtarps+OS1oFWngOZMjkEE2xAY2DeZfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gzl4wAi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0Fn03b1whj/6uf5IURJaoURueP/0nSfc/kpU3TukclXwF/ECwOTkRmpEOIdKx6n3zE9/3h0HY+0tMN6jAHncHwBT54BVBf4QT7bnt0IEEd2Fr3MR68vsN32x4irz9w7F2lrSYBl9h8RFnrNKVR9xPd/iRyFh6DE0zYGHfAvDJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obPdz9Oc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gzl4wAi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACACC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obPdz9Oc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873C6C2BD10;
 	Thu,  6 Jun 2024 14:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683557;
-	bh=BGoTOA299Jjgum1dJlZI/XY8SlImY/QblUXHARRunuo=;
+	bh=DPX9PwIiWYoazgt0VP9EOHRYTxAbT9h2D/C3Jhn0wyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0gzl4wAitXkm0EPZK7dsDYpGxx/iaWZyQN1VQVxPTae6GcNP+NVPJf9wg40cAy0vp
-	 VQLRJToC2mcq7EPGzyLAZ/uWBEfXGBE6HodQ5Mm5exE1t6p0Yn7+KrO1dIJIgffr+2
-	 v0yrHYsB0NNWExg6OGZ4MTXhsiZL6uuojY+NqplU=
+	b=obPdz9OcsHxX6el3C7+55WXezRwMFwRXJPGjI0O2JiIRTbPWIywGU5a3wXHp9GBFv
+	 itR3KJHxZG4gU9+tt1mTb89KjILvL4CpcJxXKf3XjLGiTVrT37jy5tm4U1Znfnr+n2
+	 VKwXUQi3kBJFcJJfS1VxR9I6QlIXsbV0s/NEKjAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 490/744] ppdev: Remove usage of the deprecated ida_simple_xx() API
-Date: Thu,  6 Jun 2024 16:02:42 +0200
-Message-ID: <20240606131748.159390643@linuxfoundation.org>
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com>
+Subject: [PATCH 6.6 499/744] PCI/EDR: Align EDR_PORT_LOCATE_DSM with PCI Firmware r3.3
+Date: Thu,  6 Jun 2024 16:02:51 +0200
+Message-ID: <20240606131748.445695821@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -50,55 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-[ Upstream commit d8407f71ebeaeb6f50bd89791837873e44609708 ]
+[ Upstream commit e2e78a294a8a863898b781dbcf90e087eda3155d ]
 
-ida_alloc() and ida_free() should be preferred to the deprecated
-ida_simple_get() and ida_simple_remove().
+The "Downstream Port Containment related Enhancements" ECN of Jan 28, 2019
+(document 12888 below), defined the EDR_PORT_LOCATE_DSM function with
+Revision ID 5 with a return value encoding (Bits 2:0 = Function, Bits 7:3 =
+Device, Bits 15:8 = Bus).  When the ECN was integrated into PCI Firmware
+r3.3, sec 4.6.13, Bit 31 was added to indicate success or failure.
 
-This is less verbose.
+Check Bit 31 for failure in acpi_dpc_port_get().
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/ba9da12fdd5cdb2c28180b7160af5042447d803f.1702962092.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: fbf740aeb86a ("ppdev: Add an error check in register_device")
+Link: https://lore.kernel.org/r/20240501022543.1626025-1-sathyanarayanan.kuppuswamy@linux.intel.com
+Link: https://members.pcisig.com/wg/PCI-SIG/document/12888
+Fixes: ac1c8e35a326 ("PCI/DPC: Add Error Disconnect Recover (EDR) support")
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+[bhelgaas: split into two patches, update commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com> # one platform
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ppdev.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pci/pcie/edr.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/ppdev.c b/drivers/char/ppdev.c
-index 4c188e9e477cd..ee951b265213f 100644
---- a/drivers/char/ppdev.c
-+++ b/drivers/char/ppdev.c
-@@ -299,7 +299,7 @@ static int register_device(int minor, struct pp_struct *pp)
- 		goto err;
+diff --git a/drivers/pci/pcie/edr.c b/drivers/pci/pcie/edr.c
+index fa085677c91de..e86298dbbcff6 100644
+--- a/drivers/pci/pcie/edr.c
++++ b/drivers/pci/pcie/edr.c
+@@ -80,8 +80,9 @@ static struct pci_dev *acpi_dpc_port_get(struct pci_dev *pdev)
+ 	u16 port;
+ 
+ 	/*
+-	 * Behavior when calling unsupported _DSM functions is undefined,
+-	 * so check whether EDR_PORT_DPC_ENABLE_DSM is supported.
++	 * If EDR_PORT_LOCATE_DSM is not implemented under the target of
++	 * EDR, the target is the port that experienced the containment
++	 * event (PCI Firmware r3.3, sec 4.6.13).
+ 	 */
+ 	if (!acpi_check_dsm(adev->handle, &pci_acpi_dsm_guid, 5,
+ 			    1ULL << EDR_PORT_LOCATE_DSM))
+@@ -98,6 +99,16 @@ static struct pci_dev *acpi_dpc_port_get(struct pci_dev *pdev)
+ 		return NULL;
  	}
  
--	index = ida_simple_get(&ida_index, 0, 0, GFP_KERNEL);
-+	index = ida_alloc(&ida_index, GFP_KERNEL);
- 	memset(&ppdev_cb, 0, sizeof(ppdev_cb));
- 	ppdev_cb.irq_func = pp_irq;
- 	ppdev_cb.flags = (pp->flags & PP_EXCL) ? PARPORT_FLAG_EXCL : 0;
-@@ -310,7 +310,7 @@ static int register_device(int minor, struct pp_struct *pp)
- 	if (!pdev) {
- 		pr_warn("%s: failed to register device!\n", name);
- 		rc = -ENXIO;
--		ida_simple_remove(&ida_index, index);
-+		ida_free(&ida_index, index);
- 		goto err;
- 	}
- 
-@@ -750,7 +750,7 @@ static int pp_release(struct inode *inode, struct file *file)
- 
- 	if (pp->pdev) {
- 		parport_unregister_device(pp->pdev);
--		ida_simple_remove(&ida_index, pp->index);
-+		ida_free(&ida_index, pp->index);
- 		pp->pdev = NULL;
- 		pr_debug(CHRDEV "%x: unregistered pardevice\n", minor);
- 	}
++	/*
++	 * Bit 31 represents the success/failure of the operation. If bit
++	 * 31 is set, the operation failed.
++	 */
++	if (obj->integer.value & BIT(31)) {
++		ACPI_FREE(obj);
++		pci_err(pdev, "Locate Port _DSM failed\n");
++		return NULL;
++	}
++
+ 	/*
+ 	 * Firmware returns DPC port BDF details in following format:
+ 	 *	15:8 = bus
 -- 
 2.43.0
 
