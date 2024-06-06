@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9561991D3;
-	Thu,  6 Jun 2024 14:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EC71991D3;
+	Thu,  6 Jun 2024 14:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683676; cv=none; b=KWNgu2TvLNW+cX2gqjsGzXUdYaFYvSwn5s7L9tkt/A8s+c0OL7xsHbBDM9P2ym3BwXnt4aTwQSSwPRActrmYhaeoGi6w7kOAabWlzOYPHFKBKyOYO3lp1fBFjVkniBohv4dcKRNPznV2Ghh3/46Cu/Rr4kGZ4o2DJcWmndOUzGA=
+	t=1717683677; cv=none; b=WdnQoU1cwh5ldrRJDy6rSlW/KnMvKj1Cmrp4Xty8b3nc1IGDkE9bHsa2fFyjsAWfPX7SOs2Dbyg0moSRIrDwMGDEEbDY/wGMsAjtW+N/QqKKlMgsDqx/3OlB8F8ObgfMSaisrD5GFGllT7QoIbPmKoWSRH8fnh86hQmcDHMaw20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683676; c=relaxed/simple;
-	bh=KaFDxI31qN4V1KkVl2mjeuitre4M4Wq6CX0qds9yqps=;
+	s=arc-20240116; t=1717683677; c=relaxed/simple;
+	bh=un5pqYhvZ7UDRIydyq57Yh68vrxnrZie5J/DAN5k0i8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQevqYtTdNKsx+S3GvKKHdH+ruY3MAJ/qRN66ra2cYyOn82se6nGMZLghqr9IDK0ILvy+UMDvLtZVaVfD1NsM16cOUO8IOvC9BRiNQB/pkzdkv8YZJf+dPc5QB1Phxv0j2mWgbd0dDo2DKRtTTvGLLvbQLAJlis+J2TkxluJDiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LW5/Lnqu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tHt0AlkpKuLcrQTlR7Tdso6mbGf8iTUi4akhsLHsylJmNPBQgYUQsHYBWSk03Z64sL/b4mE5gevlwgTnfBlVjZNiMX9pZY3saqDHU9eOEEuZrjGGXH7j2JGG1C/EqepWJIg3PoPRiEDGlMlCK1dmg0hc4yFxfmW4E0/aiVZc+xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZg5gghp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LW5/Lnqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4AFC2BD10;
-	Thu,  6 Jun 2024 14:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZg5gghp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281EFC2BD10;
+	Thu,  6 Jun 2024 14:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683676;
-	bh=KaFDxI31qN4V1KkVl2mjeuitre4M4Wq6CX0qds9yqps=;
+	s=korg; t=1717683677;
+	bh=un5pqYhvZ7UDRIydyq57Yh68vrxnrZie5J/DAN5k0i8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LW5/LnquxscQ5Ey3fcTBOtwEgGQ/GZSGN2RuJUABFaji8ckf+PWHuqP7BBJeQOKpe
-	 7Lbnovqiuyl2mOG5djXJDqWRPT8IhbJFrKQ++97/ERnFamfLVjfr92JWrFUUU7tWH5
-	 1kv73hm0hQyEAVPviX5wH3gRSzLveKbaVGmUIIGg=
+	b=HZg5gghpbc7INmpu05dPk810+hO5o+tB5MCV8wRxfza4Nh4eWvcVq5hbvMllj9pHH
+	 qVf3ytShsgVvr0Cuh5ZLGHDpN6JWjMbYiGEk522YeyT69bB1kbTlsE+HGOZ3/cWYvK
+	 ZPZR1g+k9kApoDBy04w/n2Sdq4fQ8B7ORw7Gf074=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Macek <wmacek@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Nicolas Belin <nbelin@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 574/744] drm/mediatek: dp: Fix mtk_dp_aux_transfer return value
-Date: Thu,  6 Jun 2024 16:04:06 +0200
-Message-ID: <20240606131750.874154042@linuxfoundation.org>
+Subject: [PATCH 6.6 575/744] drm/meson: gate px_clk when setting rate
+Date: Thu,  6 Jun 2024 16:04:07 +0200
+Message-ID: <20240606131750.903596699@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,41 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wojciech Macek <wmacek@chromium.org>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 8431fff9e0f3fc1c5844cf99a73b49b63ceed481 ]
+[ Upstream commit 5c9837374ecf55a1fa3b7622d365a0456960270f ]
 
-In case there is no DP device attached to the port the
-transfer function should return IO error, similar to what
-other drivers do.
-In case EAGAIN is returned then any read from /dev/drm_dp_aux
-device ends up in an infinite loop as the upper layers
-constantly repeats the transfer request.
+Disable the px_clk when setting the rate to recover a fully
+configured and correctly reset VCLK clock tree after the rate
+is set.
 
-Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
-Signed-off-by: Wojciech Macek <wmacek@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240417103819.990512-1-wmacek@chromium.org/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 77d9e1e6b846 ("drm/meson: add support for MIPI-DSI transceiver")
+Reviewed-by: Nicolas Belin <nbelin@baylibre.com>
+Link: https://lore.kernel.org/r/20240403-amlogic-v6-4-upstream-dsi-ccf-vim3-v12-4-99ecdfdc87fc@linaro.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240403-amlogic-v6-4-upstream-dsi-ccf-vim3-v12-4-99ecdfdc87fc@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/meson/meson_dw_mipi_dsi.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
-index 4052a3133b576..af03a22772fed 100644
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -2080,7 +2080,7 @@ static ssize_t mtk_dp_aux_transfer(struct drm_dp_aux *mtk_aux,
- 
- 	if (mtk_dp->bridge.type != DRM_MODE_CONNECTOR_eDP &&
- 	    !mtk_dp->train_info.cable_plugged_in) {
--		ret = -EAGAIN;
-+		ret = -EIO;
- 		goto err;
+diff --git a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c
+index e5fe4e994f43b..72abe2057ec31 100644
+--- a/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c
++++ b/drivers/gpu/drm/meson/meson_dw_mipi_dsi.c
+@@ -95,6 +95,7 @@ static int dw_mipi_dsi_phy_init(void *priv_data)
+ 		return ret;
  	}
  
++	clk_disable_unprepare(mipi_dsi->px_clk);
+ 	ret = clk_set_rate(mipi_dsi->px_clk, mipi_dsi->mode->clock * 1000);
+ 
+ 	if (ret) {
+@@ -103,6 +104,12 @@ static int dw_mipi_dsi_phy_init(void *priv_data)
+ 		return ret;
+ 	}
+ 
++	ret = clk_prepare_enable(mipi_dsi->px_clk);
++	if (ret) {
++		dev_err(mipi_dsi->dev, "Failed to enable DSI Pixel clock (ret %d)\n", ret);
++		return ret;
++	}
++
+ 	switch (mipi_dsi->dsi_device->format) {
+ 	case MIPI_DSI_FMT_RGB888:
+ 		dpi_data_format = DPI_COLOR_24BIT;
 -- 
 2.43.0
 
