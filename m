@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0211419ADA4;
-	Thu,  6 Jun 2024 14:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C541B0120;
+	Thu,  6 Jun 2024 14:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683358; cv=none; b=O8Lz35wh4Ke1ngNpAWny+Wdo1E/cbrXH32f4cTcCHopB4ORu6FpGQl8/mtsFWM4oUPgXPC+0XvQkz0inaBW/IWvmuvyy8eN9SJNW37C+SNHy9nzAcQaprpotyStm3N7eUSNQUGyBCN6LzbDIArK6BSoWPLjtMTuYdnHscvnpydg=
+	t=1717683358; cv=none; b=sXySzp/DDDxQmEWBlI4c5oh5vy5lG3yedUTgHMfTmuo0TIsVhfiLDJ+E4uqQ+q+n60T8VXTluvkbtvGVx05At85wABzsMJS7g05cyuBxN2XJUfDI4Pu8+4MYR2TtK3uqtjWJBuypwE7SULt9Lt9UYoIeLR2j1HvdvRsA2H2nJo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683358; c=relaxed/simple;
-	bh=9M8UKkBCpo9mp8mraY64yW2TqjJDRLcmHYfmmrjKgeg=;
+	bh=kVOsGCElX+uUXun82tajCgTkw27Tyua5R+P96M8wY7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6Emv39D+ZfKmpVJsNVIcvIA97+zSAUxGCAsQgb9iDMCKLT81Azfk94qyR5p3FdjyD3hbAo8zXmtx4FP2mPLgU65G+5Za8rz9PWW218dEyMHPv/feEEgA/fQ8XlzUDByjMcuUoybduR35G4wk6pemdl376yzoizTo+tIwk5PYt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N635mIQx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pdgQAgV1GjUcsXGSQQU63bF0jnXUYpD43SabiKtSsolP4o/Lu4HG7bPO6kmpqFJUEHL1U++1M8pYk3mkcG8dwOglhIFHtGIfSf4LrX4hCmxFs2VmM+PgoZjiudtWF8/Ch1exEVtPih12HAs/Vu0z6t68z/t0qstx6u5NfWV3xDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OekjxAkj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N635mIQx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927AAC32782;
-	Thu,  6 Jun 2024 14:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OekjxAkj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C0FC2BD10;
+	Thu,  6 Jun 2024 14:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683357;
-	bh=9M8UKkBCpo9mp8mraY64yW2TqjJDRLcmHYfmmrjKgeg=;
+	s=korg; t=1717683358;
+	bh=kVOsGCElX+uUXun82tajCgTkw27Tyua5R+P96M8wY7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N635mIQx2DeyPJkHihg6x8G2q3el0B3Dckl8GjgIvS55Wdxv7YZKOk+lrHtdCXmrc
-	 r57Y7kWPbOnqHzNSQY2gGGrJwtIRUKPzMZKdhRh+YzQQVmXDTT+uDtbla4UVJRBJlW
-	 VVS3KuWQme94DpGETtWYSGG44n/TXJknjBCLdJhI=
+	b=OekjxAkjERCdOF9kW/zc1f43U+mHD1ZXaxo1lHjG+11yOxgAxCyAHNvohxKAfD73U
+	 zLGeSIV9CM1dlHbW+ph+AOu3ONr7QZBRp9ejZso2leVdPQ9lrePZ5hrGl6HamVg4Fe
+	 Qv5SMxvWtwTXboG0jkmVBMscdUfls591xNnYdX6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 238/473] RDMA/hns: Fix deadlock on SRQ async events.
-Date: Thu,  6 Jun 2024 16:02:47 +0200
-Message-ID: <20240606131707.700047637@linuxfoundation.org>
+Subject: [PATCH 6.6 298/744] fbdev: sisfb: hide unused variables
+Date: Thu,  6 Jun 2024 15:59:30 +0200
+Message-ID: <20240606131741.949332468@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,71 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit b46494b6f9c19f141114a57729e198698f40af37 ]
+[ Upstream commit 688cf598665851b9e8cb5083ff1d208ce43d10ff ]
 
-xa_lock for SRQ table may be required in AEQ. Use xa_store_irq()/
-xa_erase_irq() to avoid deadlock.
+Building with W=1 shows that a couple of variables in this driver are only
+used in certain configurations:
 
-Fixes: 81fce6291d99 ("RDMA/hns: Add SRQ asynchronous event support")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240412091616.370789-5-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+drivers/video/fbdev/sis/init301.c:239:28: error: 'SiS_Part2CLVX_6' defined but not used [-Werror=unused-const-variable=]
+  239 | static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:230:28: error: 'SiS_Part2CLVX_5' defined but not used [-Werror=unused-const-variable=]
+  230 | static const unsigned char SiS_Part2CLVX_5[] = {   /* 750p */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:211:28: error: 'SiS_Part2CLVX_4' defined but not used [-Werror=unused-const-variable=]
+  211 | static const unsigned char SiS_Part2CLVX_4[] = {   /* PAL */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:192:28: error: 'SiS_Part2CLVX_3' defined but not used [-Werror=unused-const-variable=]
+  192 | static const unsigned char SiS_Part2CLVX_3[] = {  /* NTSC, 525i, 525p */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:184:28: error: 'SiS_Part2CLVX_2' defined but not used [-Werror=unused-const-variable=]
+  184 | static const unsigned char SiS_Part2CLVX_2[] = {
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:176:28: error: 'SiS_Part2CLVX_1' defined but not used [-Werror=unused-const-variable=]
+  176 | static const unsigned char SiS_Part2CLVX_1[] = {
+      |                            ^~~~~~~~~~~~~~~
+
+This started showing up after the definitions were moved into the
+source file from the header, which was not flagged by the compiler.
+Move the definition into the appropriate #ifdef block that already
+exists next to them.
+
+Fixes: 5908986ef348 ("video: fbdev: sis: avoid mismatched prototypes")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_main.c | 1 +
- drivers/infiniband/hw/hns/hns_roce_srq.c  | 6 +++---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/sis/init301.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_main.c b/drivers/infiniband/hw/hns/hns_roce_main.c
-index da1b33d818d82..afe7523eca909 100644
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -37,6 +37,7 @@
- #include <rdma/ib_smi.h>
- #include <rdma/ib_user_verbs.h>
- #include <rdma/ib_cache.h>
-+#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include "hns_roce_hem.h"
-diff --git a/drivers/infiniband/hw/hns/hns_roce_srq.c b/drivers/infiniband/hw/hns/hns_roce_srq.c
-index 8dae98f827eb2..6a4923c21cbc6 100644
---- a/drivers/infiniband/hw/hns/hns_roce_srq.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_srq.c
-@@ -122,7 +122,7 @@ static int alloc_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
- 		return ret;
- 	}
+diff --git a/drivers/video/fbdev/sis/init301.c b/drivers/video/fbdev/sis/init301.c
+index a8fb41f1a2580..09329072004f4 100644
+--- a/drivers/video/fbdev/sis/init301.c
++++ b/drivers/video/fbdev/sis/init301.c
+@@ -172,7 +172,7 @@ static const unsigned char SiS_HiTVGroup3_2[] = {
+ };
  
--	ret = xa_err(xa_store(&srq_table->xa, srq->srqn, srq, GFP_KERNEL));
-+	ret = xa_err(xa_store_irq(&srq_table->xa, srq->srqn, srq, GFP_KERNEL));
- 	if (ret) {
- 		ibdev_err(ibdev, "failed to store SRQC, ret = %d.\n", ret);
- 		goto err_put;
-@@ -135,7 +135,7 @@ static int alloc_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
- 	return 0;
+ /* 301C / 302ELV extended Part2 TV registers (4 tap scaler) */
+-
++#ifdef CONFIG_FB_SIS_315
+ static const unsigned char SiS_Part2CLVX_1[] = {
+     0x00,0x00,
+     0x00,0x20,0x00,0x00,0x7F,0x20,0x02,0x7F,0x7D,0x20,0x04,0x7F,0x7D,0x1F,0x06,0x7E,
+@@ -245,7 +245,6 @@ static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
+     0xFF,0xFF,
+ };
  
- err_xa:
--	xa_erase(&srq_table->xa, srq->srqn);
-+	xa_erase_irq(&srq_table->xa, srq->srqn);
- err_put:
- 	hns_roce_table_put(hr_dev, &srq_table->table, srq->srqn);
- 
-@@ -153,7 +153,7 @@ static void free_srqc(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
- 		dev_err(hr_dev->dev, "DESTROY_SRQ failed (%d) for SRQN %06lx\n",
- 			ret, srq->srqn);
- 
--	xa_erase(&srq_table->xa, srq->srqn);
-+	xa_erase_irq(&srq_table->xa, srq->srqn);
- 
- 	if (refcount_dec_and_test(&srq->refcount))
- 		complete(&srq->free);
+-#ifdef CONFIG_FB_SIS_315
+ /* 661 et al LCD data structure (2.03.00) */
+ static const unsigned char SiS_LCDStruct661[] = {
+     /* 1024x768 */
 -- 
 2.43.0
 
