@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15071BA874;
-	Thu,  6 Jun 2024 14:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C37F1BA882;
+	Thu,  6 Jun 2024 14:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683481; cv=none; b=bIiqdad7Ua0m7XfdLXL5947FknBuC8zK0AgsjOVWFeNZUf+o/NgUpgWntU9FZVv9vo/JwGnt3KkjF/jO9b+8UpgAEXE4VlbTBpOqnCimy7YmfQj9+2cOZCo//TGP3sCrKiYrQqwDwKM+qfM7i6RkYE9qfP7kHZwyfst9TYxSTGQ=
+	t=1717683481; cv=none; b=juE3UiovJmPK1fxIgPQrakVTNgYxT00wypmEJJbpa29jcp/Wex17/zhShgdfTKw39YJObw93nz/a7Fd8O9xIhwoNn2KO5aMGamkM5Zio0yzgjCgu98N57EHddd72oXysTp54rONL7dS1HBNmR2E+f7e9FwmQym0rbvvfOiLGfe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683481; c=relaxed/simple;
-	bh=76JM6Uzf8BjV17p8saz58Lryn17HXoihSFihPt0Zk6s=;
+	bh=paHM8VZjIdQbKQ7rZsnT8bjZs8PjVFHM936qz0N1CTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eF4CPuTInQF/ituMhEKZrRyB1eCwzNhl4RKnnapvRtZkMXhnEvGe9d7gHkRhTYx8CF//lCuvoIr1dDSy7cAj9Fp9ltkGmyyKC71CzrEnsdAcktLcAJOW64vU4A0BSXGS4xcNrne13+CAVjSo3yPdDqnghC18RBN6wUOozCkcpeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NA6FA03F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KK7KtHTNd2/JBtSVV9C0Jpk2AeKDsMAYIj3+2/VLtU5FIOAh52/qUbAhnTwf0RYVtVVVbEhEB/pEjsfFLlE+u6EvBCf9Ny2fpmSPAJsLKfpME8I5ZYplYwpP8m66hj2j1QAB0Ildlkx3Zz5awX8D3+LYH9gbgOK65Xh2gEd9lyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RClzUEvQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NA6FA03F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D133AC2BD10;
-	Thu,  6 Jun 2024 14:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RClzUEvQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5775CC32786;
+	Thu,  6 Jun 2024 14:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683480;
-	bh=76JM6Uzf8BjV17p8saz58Lryn17HXoihSFihPt0Zk6s=;
+	s=korg; t=1717683481;
+	bh=paHM8VZjIdQbKQ7rZsnT8bjZs8PjVFHM936qz0N1CTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NA6FA03Fw1Uj7f7CrEwvj+tjojetgz8GVxDDCilR10+5tl64f5BSWvbGJ0r4gLCPo
-	 vRQZk0Lw9xVRuAqgMrH9mT00pUesrtsZiD1ofQkvJ29PSD6JLBhSbySGOatFOFBEFZ
-	 mHMY7X6jS5Ea369iW38klTdKTYL8ay+C21WIU9Rc=
+	b=RClzUEvQaxIKL04hob3xoTMZM57scs+Oj7EttCvWjz7yItTvyvriGzOKhmK0frNnA
+	 v10YAa90LG2IcBPr1k60mLJqzcQva9Hr5I6a0/KueF1/WEOYgb1aihZ5kjVaRrfirF
+	 EWkE1pW04mvASkerwuMhahOxFFmJfXcdQmoiPQe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fenglin Wu <quic_fenglinw@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Leo Yan <leo.yan@linux.dev>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 367/473] Input: pm8xxx-vibrator - correct VIB_MAX_LEVELS calculation
-Date: Thu,  6 Jun 2024 16:04:56 +0200
-Message-ID: <20240606131712.036860265@linuxfoundation.org>
+Subject: [PATCH 6.1 340/473] perf report: Avoid SEGV in report__setup_sample_type()
+Date: Thu,  6 Jun 2024 16:04:29 +0200
+Message-ID: <20240606131711.144256706@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -52,53 +61,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 48c0687a322d54ac7e7a685c0b6db78d78f593af ]
+[ Upstream commit 45b4f402a6b782352c4bafcff682bfb01da9ca05 ]
 
-The output voltage is inclusive hence the max level calculation is
-off-by-one-step. Correct it.
+In some cases evsel->name is lazily initialized in evsel__name(). If not
+initialized passing NULL to strstr() leads to a SEGV.
 
-iWhile we are at it also add a define for the step size instead of
-using the magic value.
-
-Fixes: 11205bb63e5c ("Input: add support for pm8xxx based vibrator driver")
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240412-pm8xxx-vibrator-new-design-v10-1-0ec0ad133866@quicinc.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: ccb17caecfbd542f ("perf report: Set PERF_SAMPLE_DATA_SRC bit for Arm SPE event")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Leo Yan <leo.yan@linux.dev>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240508035301.1554434-4-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/pm8xxx-vibrator.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/perf/builtin-report.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/misc/pm8xxx-vibrator.c b/drivers/input/misc/pm8xxx-vibrator.c
-index 53ad25eaf1a28..8bfe5c7b1244c 100644
---- a/drivers/input/misc/pm8xxx-vibrator.c
-+++ b/drivers/input/misc/pm8xxx-vibrator.c
-@@ -14,7 +14,8 @@
- 
- #define VIB_MAX_LEVEL_mV	(3100)
- #define VIB_MIN_LEVEL_mV	(1200)
--#define VIB_MAX_LEVELS		(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV)
-+#define VIB_PER_STEP_mV		(100)
-+#define VIB_MAX_LEVELS		(VIB_MAX_LEVEL_mV - VIB_MIN_LEVEL_mV + VIB_PER_STEP_mV)
- 
- #define MAX_FF_SPEED		0xff
- 
-@@ -118,10 +119,10 @@ static void pm8xxx_work_handler(struct work_struct *work)
- 		vib->active = true;
- 		vib->level = ((VIB_MAX_LEVELS * vib->speed) / MAX_FF_SPEED) +
- 						VIB_MIN_LEVEL_mV;
--		vib->level /= 100;
-+		vib->level /= VIB_PER_STEP_mV;
- 	} else {
- 		vib->active = false;
--		vib->level = VIB_MIN_LEVEL_mV / 100;
-+		vib->level = VIB_MIN_LEVEL_mV / VIB_PER_STEP_mV;
- 	}
- 
- 	pm8xxx_vib_set(vib, vib->active);
+diff --git a/tools/perf/builtin-report.c b/tools/perf/builtin-report.c
+index b6d77d3da64f6..155f119b3db5c 100644
+--- a/tools/perf/builtin-report.c
++++ b/tools/perf/builtin-report.c
+@@ -416,7 +416,7 @@ static int report__setup_sample_type(struct report *rep)
+ 		 * compatibility, set the bit if it's an old perf data file.
+ 		 */
+ 		evlist__for_each_entry(session->evlist, evsel) {
+-			if (strstr(evsel->name, "arm_spe") &&
++			if (strstr(evsel__name(evsel), "arm_spe") &&
+ 				!(sample_type & PERF_SAMPLE_DATA_SRC)) {
+ 				evsel->core.attr.sample_type |= PERF_SAMPLE_DATA_SRC;
+ 				sample_type |= PERF_SAMPLE_DATA_SRC;
 -- 
 2.43.0
 
