@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF17197A69;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4874196D99;
 	Thu,  6 Jun 2024 14:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683002; cv=none; b=D7N8fh5dFjQf084ebRu+VuKVt5/KgOEsYn//On+8bujnLNCtD9FmNGFNiAmh+vFS6x9yIKCl2YHJd8wBTbp/ILpsqpcTcHT1G9Fd3rKOcr4sZ2NLI+Vt8HZR/VjuFCZ17uRh2RPow8kCQ1kcPbsP2Yv9ZPgtAmrdsU8BvapLiIY=
+	t=1717683002; cv=none; b=EoiG0dCmsYTZXPrJMSJnQH0b/cB57NMfJpCYV/tVvYIncuTo5CN374egwgCmBf+LYmuDBNlDHNNN8q3W6NQSt2rgvySGuWiyLqynJ3urX59W+5qgC9NrUnXsEK/r2P0aU/QisVd/5ZHhYZ9yRW9phN54CzyuTVGAyvN8GBXmdps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683002; c=relaxed/simple;
-	bh=GgYvffRzY1j9NQ1BAEmH1F9tGV1hceW6drMMzcvG15g=;
+	bh=/ZYii4fqfJ5xz/vdGJDC/Y+QnKQZoutPbu7ReeGS6fA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJYxR6eGUFG1y5gEHcSx6SKqGcK7YpU0TjkgqNdHifzEqHQiiAY7bSw/CpSA88PKfhf/LJr4UsyKnuR5Zp0+86/nm1sj+coRrWQKH+orI6c5196oUIaOFGPfauPCHs2BYYtk/5WKDQgfRlsa3Cdja7uXQ58phh3quKZGlXFPAwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJ8uf2j8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/eVlPpP65lOZ+Hoyu/vFR+XJO2yKLbjmlag32r8loa5C4vU0kQR2AAlj/KkQaAImXjjr1nRqEIXQ1ofad1L5cVOr1xAQfPHGCWLGAA/za70TExrTe4ty01XF/OHQOZ5yqv3IPSRChoRhSCXfSbWmsYoOu2Jl1RUCuiBsID+Szw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RC2a2abp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJ8uf2j8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C3D1C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RC2a2abp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF31C2BD10;
 	Thu,  6 Jun 2024 14:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683002;
-	bh=GgYvffRzY1j9NQ1BAEmH1F9tGV1hceW6drMMzcvG15g=;
+	bh=/ZYii4fqfJ5xz/vdGJDC/Y+QnKQZoutPbu7ReeGS6fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJ8uf2j8qw2sijXwrhREp5t7Q7cmM57ZStM/l0pduvW7+wXyYoRlFMhxom94qSueo
-	 NyeV+eiIgTDqt+H3t+fne0ldzgPwjic8R6jjSlTNiYDqQrU0bAJzk/rc9lDe77d6ke
-	 qboBqkM8OR0dytpOne2DXM1ytWQgcyiuPLgnoIHU=
+	b=RC2a2abpyCN81xbsulFzRE6ghzfVG3AMCAefpSJIPuzPe3H9o5FUbdKQ/7lLDc25q
+	 99iUnauqUDQRzWJlnC9kdcLlog/bVBkW6G5mOPqYLEitJ1Cg/SmL9VxYlVgscJ3Wxt
+	 BAzBPhmpkzKHimoYIbgbI3whpqB+tFRJjQKDnSN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zan Dobersek <zdobersek@igalia.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 206/374] drm/msm/adreno: fix CP cycles stat retrieval on a7xx
-Date: Thu,  6 Jun 2024 16:03:05 +0200
-Message-ID: <20240606131658.723635193@linuxfoundation.org>
+Subject: [PATCH 6.9 207/374] drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails
+Date: Thu,  6 Jun 2024 16:03:06 +0200
+Message-ID: <20240606131658.757941194@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -51,45 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zan Dobersek <zdobersek@igalia.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 328660262df89ab64031059909d763f7a8af9570 ]
+[ Upstream commit 46d4efcccc688cbacdd70a238bedca510acaa8e4 ]
 
-a7xx_submit() should use the a7xx variant of the RBBM_PERFCTR_CP register
-for retrieving the CP cycles value before and after the submitted command
-stream execution.
+Calling a6xx_destroy() before adreno_gpu_init() leads to a null pointer
+dereference on:
 
-Signed-off-by: Zan Dobersek <zdobersek@igalia.com>
-Fixes: af66706accdf ("drm/msm/a6xx: Add skeleton A7xx support")
-Patchwork: https://patchwork.freedesktop.org/patch/588445/
+msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
+
+as gpu->pdev is only assigned in:
+
+a6xx_gpu_init()
+|_ adreno_gpu_init
+    |_ msm_gpu_init()
+
+Instead of relying on handwavy null checks down the cleanup chain,
+explicitly de-allocate the LLC data and free a6xx_gpu instead.
+
+Fixes: 76efc2453d0e ("drm/msm/gpu: Fix crash during system suspend after unbind")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/588919/
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index cf0b1de1c0712..441dfebb36386 100644
+index 441dfebb36386..7b72327df7f3f 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -284,7 +284,7 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+@@ -3062,7 +3062,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
  
- 	a6xx_set_pagetable(a6xx_gpu, ring, submit->queue->ctx);
+ 	ret = a6xx_set_supported_hw(&pdev->dev, config->info);
+ 	if (ret) {
+-		a6xx_destroy(&(a6xx_gpu->base.base));
++		a6xx_llc_slices_destroy(a6xx_gpu);
++		kfree(a6xx_gpu);
+ 		return ERR_PTR(ret);
+ 	}
  
--	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP(0),
-+	get_stats_counter(ring, REG_A7XX_RBBM_PERFCTR_CP(0),
- 		rbmemptr_stats(ring, index, cpcycles_start));
- 	get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_COUNTER,
- 		rbmemptr_stats(ring, index, alwayson_start));
-@@ -330,7 +330,7 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	OUT_PKT7(ring, CP_SET_MARKER, 1);
- 	OUT_RING(ring, 0x00e); /* IB1LIST end */
- 
--	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP(0),
-+	get_stats_counter(ring, REG_A7XX_RBBM_PERFCTR_CP(0),
- 		rbmemptr_stats(ring, index, cpcycles_end));
- 	get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_COUNTER,
- 		rbmemptr_stats(ring, index, alwayson_end));
 -- 
 2.43.0
 
