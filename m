@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08F4197A9B;
-	Thu,  6 Jun 2024 14:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418631AC254;
+	Thu,  6 Jun 2024 14:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683312; cv=none; b=XoONCLIEAUgwsxgznaOiyUEV9oYuzaBaoB7jLfG1Am8fMhUrZ1UuXB50bjTa+V4hH7020TzvB7317ENtpc/BV7ITUYSv3T0EQ7FmxBBbnm5572pGzRvhUzAvoPO2ODBW2Uue+Oe9BTK9vKShsfCuc2j2TMX7ZLqRDQ3JxqYsWdA=
+	t=1717683313; cv=none; b=k9GoHWtgzzYboY4kR9TptOg1hcWaFvltuGiOvbZi7wWuD3+AsSk6rrkVLzgHkI8LPz7SQSdY4+ytAunyh7efnPaOQQCyTn923q2guYzEGfL4Z7Vxrn6YWpPXsGEIrHVkXZzTz6pyw6Ls9lRkBKWxLiZyPqdigQVAfb7TRw71cCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683312; c=relaxed/simple;
-	bh=Fcrfj04fdDfBBop19GGHik+CYd41Qng49mlqs4tMT9Y=;
+	s=arc-20240116; t=1717683313; c=relaxed/simple;
+	bh=bQyye2PWkhatAonfwMVBjGdoB10MTR2gTsvIqUvonDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nokm4N83n5AIL78nx4I9DJnJTO7wHSUtvYV+UDEKj73ZolE79TjdC7Mq5554yX2kYv1K8u/pDoQBSBgXU1dm2ReIoFzAykPAR8MFJZMtCncnp9bCwQQQNtf8SrezP12uibtwqNV1VgDWIQZ8QCxPnn67ll64SDSIgRIJfVYCJEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGY9QIIp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g6oUwzsResuAq8dxxZ6XojpZ2O9NmGN0SU4EwXip3+5+qV4XgajrhV5ib9mfQtSTQ73YN0UXzdFPxFUEBr6bMLSjYZtyC3y6IcrOnyaGxDWAqrp6IXda36ySW5Ikx7RKXvxJuyou4dLTP1cdyDDKoTFMqtz0GnMQsAULZpCBnXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcEm5Vz4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGY9QIIp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90591C2BD10;
-	Thu,  6 Jun 2024 14:15:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcEm5Vz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4EBC32781;
+	Thu,  6 Jun 2024 14:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683312;
-	bh=Fcrfj04fdDfBBop19GGHik+CYd41Qng49mlqs4tMT9Y=;
+	s=korg; t=1717683313;
+	bh=bQyye2PWkhatAonfwMVBjGdoB10MTR2gTsvIqUvonDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGY9QIIpsPjrWf+MfksHOTxCNF1tGEi5Zydc5wpyiKEdO11FTq7G6L4CQzI8khF5f
-	 7aiZEPhqgRFzCiepzr37en9z9kFNffttHIfd+DOmyCR951dinArXvtkzocR7Ohuc0d
-	 a1d+Bo3IDVVRG9JUB0nB6OrUG/LeY0LgAh2F8IIs=
+	b=jcEm5Vz4WOLuPN2sp7NQb5WrqUV/HI7B2hypWVcZp6xgSuiBsFZwWfYa5a+jX86Zj
+	 9u7AXig2R/R5QXzZGF2rTRwcB7i/d9fVJ9KFshMhc8usJgmyj8imHCrguuRnRucl4d
+	 5VuhSx4aYp7icQLBn20aJmu1hgj88UPQ73NUjUbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay12@gmail.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Drew Davenport <ddavenport@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 253/744] s390/bpf: Emit a barrier for BPF_FETCH instructions
-Date: Thu,  6 Jun 2024 15:58:45 +0200
-Message-ID: <20240606131740.516534782@linuxfoundation.org>
+Subject: [PATCH 6.1 193/473] drm/panel-samsung-atna33xc20: Use ktime_get_boottime for delays
+Date: Thu,  6 Jun 2024 16:02:02 +0200
+Message-ID: <20240606131706.329753821@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,64 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Drew Davenport <ddavenport@chromium.org>
 
-[ Upstream commit 68378982f0b21de02ac3c6a11e2420badefcb4bc ]
+[ Upstream commit 62e43673ca84a68cc06dcaa9337a06df7f79fef9 ]
 
-BPF_ATOMIC_OP() macro documentation states that "BPF_ADD | BPF_FETCH"
-should be the same as atomic_fetch_add(), which is currently not the
-case on s390x: the serialization instruction "bcr 14,0" is missing.
-This applies to "and", "or" and "xor" variants too.
+ktime_get_boottime continues while the device is suspended. This change
+ensures that the resume path will not be delayed if the power off delay
+has already been met while the device is suspended
 
-s390x is allowed to reorder stores with subsequent fetches from
-different addresses, so code relying on BPF_FETCH acting as a barrier,
-for example:
-
-  stw [%r0], 1
-  afadd [%r1], %r2
-  ldxw %r3, [%r4]
-
-may be broken. Fix it by emitting "bcr 14,0".
-
-Note that a separate serialization instruction is not needed for
-BPF_XCHG and BPF_CMPXCHG, because COMPARE AND SWAP performs
-serialization itself.
-
-Fixes: ba3b86b9cef0 ("s390/bpf: Implement new atomic ops")
-Reported-by: Puranjay Mohan <puranjay12@gmail.com>
-Closes: https://lore.kernel.org/bpf/mb61p34qvq3wf.fsf@kernel.org/
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
-Link: https://lore.kernel.org/r/20240507000557.12048-1-iii@linux.ibm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Drew Davenport <ddavenport@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221117133655.2.Iebd9f79aba0a62015fd2383fe6986c2d6fe12cfd@changeid
+Stable-dep-of: 5e842d55bad7 ("drm/panel: atna33xc20: Fix unbalanced regulator in the case HPD doesn't assert")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/net/bpf_jit_comp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-samsung-atna33xc20.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
-index 8af02176f68bf..62ee557d4b499 100644
---- a/arch/s390/net/bpf_jit_comp.c
-+++ b/arch/s390/net/bpf_jit_comp.c
-@@ -1311,8 +1311,12 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
- 	EMIT6_DISP_LH(0xeb000000, is32 ? (op32) : (op64),		\
- 		      (insn->imm & BPF_FETCH) ? src_reg : REG_W0,	\
- 		      src_reg, dst_reg, off);				\
--	if (is32 && (insn->imm & BPF_FETCH))				\
--		EMIT_ZERO(src_reg);					\
-+	if (insn->imm & BPF_FETCH) {					\
-+		/* bcr 14,0 - see atomic_fetch_{add,and,or,xor}() */	\
-+		_EMIT2(0x07e0);						\
-+		if (is32)                                               \
-+			EMIT_ZERO(src_reg);				\
-+	}								\
- } while (0)
- 		case BPF_ADD:
- 		case BPF_ADD | BPF_FETCH:
+diff --git a/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c b/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
+index 5a8b978c64158..f4616f0367846 100644
+--- a/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
++++ b/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
+@@ -53,7 +53,7 @@ static void atana33xc20_wait(ktime_t start_ktime, unsigned int min_ms)
+ 	ktime_t now_ktime, min_ktime;
+ 
+ 	min_ktime = ktime_add(start_ktime, ms_to_ktime(min_ms));
+-	now_ktime = ktime_get();
++	now_ktime = ktime_get_boottime();
+ 
+ 	if (ktime_before(now_ktime, min_ktime))
+ 		msleep(ktime_to_ms(ktime_sub(min_ktime, now_ktime)) + 1);
+@@ -75,7 +75,7 @@ static int atana33xc20_suspend(struct device *dev)
+ 	ret = regulator_disable(p->supply);
+ 	if (ret)
+ 		return ret;
+-	p->powered_off_time = ktime_get();
++	p->powered_off_time = ktime_get_boottime();
+ 	p->el3_was_on = false;
+ 
+ 	return 0;
+@@ -93,7 +93,7 @@ static int atana33xc20_resume(struct device *dev)
+ 	ret = regulator_enable(p->supply);
+ 	if (ret)
+ 		return ret;
+-	p->powered_on_time = ktime_get();
++	p->powered_on_time = ktime_get_boottime();
+ 
+ 	if (p->no_hpd) {
+ 		msleep(HPD_MAX_MS);
+@@ -142,7 +142,7 @@ static int atana33xc20_disable(struct drm_panel *panel)
+ 		return 0;
+ 
+ 	gpiod_set_value_cansleep(p->el_on3_gpio, 0);
+-	p->el_on3_off_time = ktime_get();
++	p->el_on3_off_time = ktime_get_boottime();
+ 	p->enabled = false;
+ 
+ 	/*
 -- 
 2.43.0
 
