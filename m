@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD7519752E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA88A196C68;
 	Thu,  6 Jun 2024 14:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683146; cv=none; b=nDiloobu24C+w7/iEwUE4Y+Vegknhx4HdXXSsPvq6+3Oo+DAPhHouqWwCjDFnS9ObO7L7YxrhJiu9uhMPUvxWwjtsage2DLfUJcyO95huUpQmE59Gn+TfW2ukQAccX0LLIdGdYjD/UwE6BJH4SRcEfNeNbvVnWKaQzHd2HdOnRY=
+	t=1717683146; cv=none; b=IIsxw0hXioE5ReFiuKF+nQANeTBe4nvBVRLt6JZmHJr33kPRN/r8mc9/NmwIhLQlp7OWdSuHP8KvkXSA1Nt0jDU9EtlFVNgHo5byUGH/nsrZS79xB/CPYuS3xA9W37N0gTTdJWlLjkO8CAJAzU9+cfL/LvnaqaOfye7xMlpsqKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683146; c=relaxed/simple;
-	bh=YhvRRrc+uXgnPyzVzPL4B+w/FS68uDAd5aOEdkaEoBY=;
+	bh=rRCGLEomZDDrkuMmgTwiXAaqj4zPx3uY783UxhMl/Ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=stT7IVsz3boTCwjLSoaluok0UUStntZ7iLA5iFy25+TvvNoq0b0UrVEcodsadcB1iyBbV63hPnyTrcqGwHg9LqtcnWdDhmGXqBUGcMds+Euchk8L1sPqKYrL+pWHNLfjmb8yAxl3VVN1j2IdkElHOUvWM2ZDDUaO8Oe8pk/PZWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdkRUweF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHpf1R7brg7eINDFpZGrDFZ3EOX2X/VV0cYLXCFM1KwyXpFMbbqFckALFKRpznabS/K3yfZZeHXgBxq00tvIurkrdS4EapztFwljw5n9Ctk8o48JnIBmDGh6iUlZFPeWCPn65n/nG9M4lZYcRwTN8nfjFwwQ1cxWH2WIeN0K3Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fi6blKCT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdkRUweF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C926C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fi6blKCT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2937C2BD10;
 	Thu,  6 Jun 2024 14:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683146;
-	bh=YhvRRrc+uXgnPyzVzPL4B+w/FS68uDAd5aOEdkaEoBY=;
+	bh=rRCGLEomZDDrkuMmgTwiXAaqj4zPx3uY783UxhMl/Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdkRUweFUMt6LA51AfvBlNA0O46Q3SOu6tZfc6sc4LXxw/CRrufgQlcctDqUj0mmA
-	 nWW/GZHlKwveYs99R3fyoL4qPv7E9iLzO8z7i84JB5ET7DD5DCjLSzwl7eDJqk7I4C
-	 foYV1V4IbCnRgLUvHvw6KJp+QXesSwFUdXbJIznE=
+	b=fi6blKCTSLSL3JNwVZokW90ele/hEU+vkec/hEna7gSkQjVtdsW+RtObCTay1Ddix
+	 AKeolW8dd26PeMvLheH4Hl3tQ1pKdG3Dcg2E6aR57sMf7wR9/jzn49zeE1JYtGgrPa
+	 BQHQ33UWn27ueLcQhZjczN6KB2zIWwppTohfBL58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	PeiChen Huang <peichen.huang@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 078/744] drm/amd/display: Allocate zero bw after bw alloc enable
-Date: Thu,  6 Jun 2024 15:55:50 +0200
-Message-ID: <20240606131734.904848619@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.1 018/473] fs/ntfs3: Taking DOS names into account during link counting
+Date: Thu,  6 Jun 2024 15:59:07 +0200
+Message-ID: <20240606131700.445828652@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,66 +45,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 46fe9cb1a9e62f4e6229f48ae303ef8e6c1fdc64 ]
+commit 110b24eb1a749bea3440f3ca2ff890a26179050a upstream.
 
-[Why]
-During DP tunnel creation, CM preallocates BW and reduces
-estimated BW of other DPIA. CM release preallocation only
-when allocation is complete. Display mode validation logic
-validates timings based on bw available per host router.
-In multi display setup, this causes bw allocation failure
-when allocation greater than estimated bw.
+When counting and checking hard links in an ntfs file record,
 
-[How]
-Do zero alloc to make the CM to release preallocation and
-update estimated BW correctly for all DPIAs per host router.
+  struct MFT_REC {
+    struct NTFS_RECORD_HEADER rhdr; // 'FILE'
+    __le16 seq;		    // 0x10: Sequence number for this record.
+>>  __le16 hard_links;	// 0x12: The number of hard links to record.
+    __le16 attr_off;	// 0x14: Offset to attributes.
+  ...
 
-Reviewed-by: PeiChen Huang <peichen.huang@amd.com>
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+the ntfs3 driver ignored short names (DOS names), causing the link count
+to be reduced by 1 and messages to be output to dmesg.
+
+For Windows, such a situation is a minor error, meaning chkdsk does not report
+errors on such a volume, and in the case of using the /f switch, it silently
+corrects them, reporting that no errors were found. This does not affect
+the consistency of the file system.
+
+Nevertheless, the behavior in the ntfs3 driver is incorrect and
+changes the content of the file system. This patch should fix that.
+
+PS: most likely, there has been a confusion of concepts
+MFT_REC::hard_links and inode::__i_nlink.
+
+Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../amd/display/dc/link/protocols/link_dp_dpia_bw.c    | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/ntfs3/inode.c  |    7 ++++---
+ fs/ntfs3/record.c |   11 ++---------
+ 2 files changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-index 5491b707cec88..5a965c26bf209 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-@@ -270,7 +270,7 @@ static void set_usb4_req_bw_req(struct dc_link *link, int req_bw)
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -37,7 +37,7 @@ static struct inode *ntfs_read_mft(struc
+ 	bool is_dir;
+ 	unsigned long ino = inode->i_ino;
+ 	u32 rp_fa = 0, asize, t32;
+-	u16 roff, rsize, names = 0;
++	u16 roff, rsize, names = 0, links = 0;
+ 	const struct ATTR_FILE_NAME *fname = NULL;
+ 	const struct INDEX_ROOT *root;
+ 	struct REPARSE_DATA_BUFFER rp; // 0x18 bytes
+@@ -190,11 +190,12 @@ next_attr:
+ 		    rsize < SIZEOF_ATTRIBUTE_FILENAME)
+ 			goto out;
  
- 	/* Error check whether requested and allocated are equal */
- 	req_bw = requested_bw * (Kbps_TO_Gbps / link->dpia_bw_alloc_config.bw_granularity);
--	if (req_bw == link->dpia_bw_alloc_config.allocated_bw) {
-+	if (req_bw && (req_bw == link->dpia_bw_alloc_config.allocated_bw)) {
- 		DC_LOG_ERROR("%s: Request bw equals to allocated bw for link(%d)\n",
- 			__func__, link->link_index);
- 	}
-@@ -341,6 +341,14 @@ bool link_dp_dpia_set_dptx_usb4_bw_alloc_support(struct dc_link *link)
- 			ret = true;
- 			init_usb4_bw_struct(link);
- 			link->dpia_bw_alloc_config.bw_alloc_enabled = true;
-+
-+			/*
-+			 * During DP tunnel creation, CM preallocates BW and reduces estimated BW of other
-+			 * DPIA. CM release preallocation only when allocation is complete. Do zero alloc
-+			 * to make the CM to release preallocation and update estimated BW correctly for
-+			 * all DPIAs per host router
-+			 */
-+			link_dp_dpia_allocate_usb4_bandwidth_for_stream(link, 0);
- 		}
++		names += 1;
+ 		fname = Add2Ptr(attr, roff);
+ 		if (fname->type == FILE_NAME_DOS)
+ 			goto next_attr;
+ 
+-		names += 1;
++		links += 1;
+ 		if (name && name->len == fname->name_len &&
+ 		    !ntfs_cmp_names_cpu(name, (struct le_str *)&fname->name_len,
+ 					NULL, false))
+@@ -421,7 +422,7 @@ end_enum:
+ 		ni->mi.dirty = true;
  	}
  
--- 
-2.43.0
-
+-	set_nlink(inode, names);
++	set_nlink(inode, links);
+ 
+ 	if (S_ISDIR(mode)) {
+ 		ni->std_fa |= FILE_ATTRIBUTE_DIRECTORY;
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -485,16 +485,9 @@ bool mi_remove_attr(struct ntfs_inode *n
+ 	if (aoff + asize > used)
+ 		return false;
+ 
+-	if (ni && is_attr_indexed(attr)) {
++	if (ni && is_attr_indexed(attr) && attr->type == ATTR_NAME) {
+ 		u16 links = le16_to_cpu(ni->mi.mrec->hard_links);
+-		struct ATTR_FILE_NAME *fname =
+-			attr->type != ATTR_NAME ?
+-				NULL :
+-				resident_data_ex(attr,
+-						 SIZEOF_ATTRIBUTE_FILENAME);
+-		if (fname && fname->type == FILE_NAME_DOS) {
+-			/* Do not decrease links count deleting DOS name. */
+-		} else if (!links) {
++		if (!links) {
+ 			/* minor error. Not critical. */
+ 		} else {
+ 			ni->mi.mrec->hard_links = cpu_to_le16(links - 1);
 
 
