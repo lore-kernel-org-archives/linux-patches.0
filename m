@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAF31C95F4;
-	Thu,  6 Jun 2024 14:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627F219922B;
+	Thu,  6 Jun 2024 14:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683736; cv=none; b=GWkMnb0OF4D9RLvgT9jH3LS1D8vGh1YJ8L7p11UpLJB6wzZVYpC9OfAyixF4d3PUruodG6HF0eLxsOJNhxP0BQ94p3HXWQQUwJsqJYp2tT39kwHqzfAGIoB6XA8/63/mhGxImRLxojB3X+A4cxtOb9hhHHKTkJfbHnRvb6kUyGg=
+	t=1717683736; cv=none; b=J6ZKFGWEJ6gkfeisTVcYEWgz5ztJzNR5HmK1KsiO8CXKJD1zIa2pnROi3bctL58Qs0p937H9Ids3H1VKqU6jHJWgw703OZdlrMsN98qzD7a6dzG2OZn4Tp7I5eRPoIHeDfvvxPq0gVdUs3NnxrMpGO/YGMIEgWf63IuPu026DLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683736; c=relaxed/simple;
-	bh=kpxP5lbT5Y0jtJr1WEpCL2vmsQle7FbjVNGviuMqerM=;
+	bh=Nc7nvephQpWhW2EqwKOqD8ua3y1x1qm3kNjLBqCwZ5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GiUbFzcmwPQKMQrq5962bdmEFXthKy40x49ZzqQxdvKLNIhabTDZtT4PpIJ8i63oTzyMjfFNGrnOW7i9T2b/vwlwRxLiA7pmXSR1EgL6kOr2DC97g4hXQ7fT781D32Xs+AORS8N5nFuOBsvh3SGcKksrZvs50jsr1NlnU2SIHCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfIeat6Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RQGakBDaJlhwn3Xx+j4jw3G5F2297vu3z/ZPe+yk+AHScTTVYEAws91qc6Rw7EURgExW9xG0xzKLyau6kDODiC8Y4etGo/ERLNvKW79SAPMCLB1dGYyLG9zfgeobuHVL6bNAdHvyRwhk86xk67YsuHubMsghP44T1j+/GZYpLIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MomJ6V1y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfIeat6Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B517CC32782;
-	Thu,  6 Jun 2024 14:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MomJ6V1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46742C2BD10;
+	Thu,  6 Jun 2024 14:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683735;
-	bh=kpxP5lbT5Y0jtJr1WEpCL2vmsQle7FbjVNGviuMqerM=;
+	s=korg; t=1717683736;
+	bh=Nc7nvephQpWhW2EqwKOqD8ua3y1x1qm3kNjLBqCwZ5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfIeat6ZJioPmfr+GwsPjySmw0gX0vCiwyZu0Va/1OEsSggLjdiJYvi+mcoo/IfUj
-	 3RlPiFrMhJgJJOkhTOiugEPxSa+ArC8ITG/CrWmLE37zIrqK5YySTgHOYiEBL83XzP
-	 GGSAouN9zDwlEdZXHF871Wl5Jc3wRPKtlsp63DD0=
+	b=MomJ6V1yBrHp8JP+WfZOcYE6AxwAqcpxnLVRNWLkKxhNGvoRmhP5ZcvwfHVd2p4a7
+	 c0qvdI127PZ+lr47mXLGvC3AG4B5q7mqYJC8tYsrXOS7yxgUETLWFQ8QhMg4mXxG3z
+	 stc9TljfKv1A8S0FIvuVnrSbYZJ8ZJ9ctJfvLD0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 691/744] dma-buf/sw-sync: dont enable IRQ from sync_print_obj()
-Date: Thu,  6 Jun 2024 16:06:03 +0200
-Message-ID: <20240606131754.647302068@linuxfoundation.org>
+Subject: [PATCH 6.6 656/744] i3c: add actual_len in i3c_priv_xfer
+Date: Thu,  6 Jun 2024 16:05:28 +0200
+Message-ID: <20240606131753.502316648@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,50 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit b794918961516f667b0c745aebdfebbb8a98df39 ]
+[ Upstream commit e5e3df06ac98d15cfb10bb5c12356709365e91b2 ]
 
-Since commit a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from
-known context") by error replaced spin_unlock_irqrestore() with
-spin_unlock_irq() for both sync_debugfs_show() and sync_print_obj() despite
-sync_print_obj() is called from sync_debugfs_show(), lockdep complains
-inconsistent lock state warning.
+In MIPI I3C Specification:
 
-Use plain spin_{lock,unlock}() for sync_print_obj(), for
-sync_debugfs_show() is already using spin_{lock,unlock}_irq().
+"Ninth Bit of SDR Target Returned (Read) Data as End-of-Data: In I2C, the
+ninth Data bit from Target to Controller is an ACK by the Controller. By
+contrast, in I3C this bit allows the Target to end a Read, and allows the
+Controller to Abort a Read. In SDR terms, the ninth bit of Read data is
+referred to as the T-Bit (for ‘Transition’)"
 
-Reported-by: syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=a225ee3df7e7f9372dbe
-Fixes: a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from known context")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/c2e46020-aaa6-4e06-bf73-f05823f913f0@I-love.SAKURA.ne.jp
-Signed-off-by: Christian König <christian.koenig@amd.com>
+I3C allow devices early terminate data transfer. So need "actual_len" field
+to indicate how much get by i3c_priv_xfer.
+
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20231201222532.2431484-4-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 7f3d633b460b ("i3c: master: svc: change ENXIO to EAGAIN when IBI occurs during start frame")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/sync_debug.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/i3c/device.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma-buf/sync_debug.c b/drivers/dma-buf/sync_debug.c
-index 101394f16930f..237bce21d1e72 100644
---- a/drivers/dma-buf/sync_debug.c
-+++ b/drivers/dma-buf/sync_debug.c
-@@ -110,12 +110,12 @@ static void sync_print_obj(struct seq_file *s, struct sync_timeline *obj)
- 
- 	seq_printf(s, "%s: %d\n", obj->name, obj->value);
- 
--	spin_lock_irq(&obj->lock);
-+	spin_lock(&obj->lock); /* Caller already disabled IRQ. */
- 	list_for_each(pos, &obj->pt_list) {
- 		struct sync_pt *pt = container_of(pos, struct sync_pt, link);
- 		sync_print_fence(s, &pt->base, false);
- 	}
--	spin_unlock_irq(&obj->lock);
-+	spin_unlock(&obj->lock);
- }
- 
- static void sync_print_sync_file(struct seq_file *s,
+diff --git a/include/linux/i3c/device.h b/include/linux/i3c/device.h
+index 90fa83464f003..ef6217da8253b 100644
+--- a/include/linux/i3c/device.h
++++ b/include/linux/i3c/device.h
+@@ -54,6 +54,7 @@ enum i3c_hdr_mode {
+  * struct i3c_priv_xfer - I3C SDR private transfer
+  * @rnw: encodes the transfer direction. true for a read, false for a write
+  * @len: transfer length in bytes of the transfer
++ * @actual_len: actual length in bytes are transferred by the controller
+  * @data: input/output buffer
+  * @data.in: input buffer. Must point to a DMA-able buffer
+  * @data.out: output buffer. Must point to a DMA-able buffer
+@@ -62,6 +63,7 @@ enum i3c_hdr_mode {
+ struct i3c_priv_xfer {
+ 	u8 rnw;
+ 	u16 len;
++	u16 actual_len;
+ 	union {
+ 		void *in;
+ 		const void *out;
 -- 
 2.43.0
 
