@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3143F1AD9C0;
-	Thu,  6 Jun 2024 14:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531E619AD60;
+	Thu,  6 Jun 2024 14:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683335; cv=none; b=g15sOZbsWrTX5nSQ5IiLxeX7UF9dZiWM2l8vD/plyeKlOeIkJOGtCh3rE+u3WEtJ9cjMNg6OKsBzgRYV8f+srLeVtotBsW5Eij5iWF3AKNOEBlnT0i1dSVjTlVCtZ4Y0FPu1kQtLpeTPWP1v0OytqBAwvknXuiDIIV9yhDgO9mk=
+	t=1717683335; cv=none; b=Jlvk2Z47oiYPoJM6hFJNxmDCQ9Y8QwHVnaue8fqVBiVVCBKmaK8k+kMHy3RqmIJ/rTBetsi2vLCgeNzkrpkSUDW8m1x8X5qst3eYPtz+mBQEi+gNOv6AEOEaezDHPpRsnuMSJrk12QFS8Pf/sIF4WOVEu0D/fvRfBEUleILqWBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683335; c=relaxed/simple;
-	bh=+LGDIKNryHyJa/TXv4Uk1ARU4MbNhf4EsS+r/QpBz3I=;
+	bh=NJaix6YN262hgv0BiiflH3jLsqVGxxfCWyCu99OAOQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNyRoQxQK5tGYp8hs2NhXnGfgJplJiniwTAyf/FgxEu0/Ve093Yq6Fv9yZ88Juql9ZXyhuiSAipOeQVtM2VsP71ySj6FITLtpqfzVyIanYwwHRTFZNkc73KsRhBFJBbbbD51p1x6vRDpgat2Aw7djCffAxnb+WBFqfOQCbIPVr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9ifAvGd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rYyV9V6hLa25g18ecIkI9M0kFpnH6klhJ4OuFalO3pyYIUCv1uJHgnO7Ia2VXJu4DO47yLCsAka7tNfa5JluTcPu90qQFuquhKwX8WLp0UuMD+Cy/Vvn6Z+ttgzXeOiAuN3PC4/UGe5wKOWYimGfUBwL3iolZrMyv/NKbl+vazk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLWNth1o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9ifAvGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5985C2BD10;
-	Thu,  6 Jun 2024 14:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLWNth1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BD6C32781;
+	Thu,  6 Jun 2024 14:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683334;
-	bh=+LGDIKNryHyJa/TXv4Uk1ARU4MbNhf4EsS+r/QpBz3I=;
+	s=korg; t=1717683335;
+	bh=NJaix6YN262hgv0BiiflH3jLsqVGxxfCWyCu99OAOQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9ifAvGd6eUC4iyDuE61okRG7U2NLUob5/+8rbIasXHqXu567DMoNOHmplT92OR3d
-	 CFk1aRb8UbLy5RTGrTy6T93sh4IwxlLNim0oiMaZM/MkxFFSdfhupgvJTw0LT0u59Q
-	 NUZaWjLKHzSRXrNn23unJnmsj9Hrhy3fiFr28yxk=
+	b=kLWNth1ovSbbKtlExeplQRYVON4T39yJy+/hbe2Ez+k7GvyMXoI+2BI/I9l9lgVI2
+	 fOeTozg3kgyhmM5GF+6HqIbqFfOCHg1t+5FJ0eFwUS8UHV68k6bGn00ZG/9wMU514e
+	 /VVzMulq02i1KnwNaTY7sQOCP0vkcWCDhH7gmbIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jagan Teki <jagan@amarulasolutions.com>,
-	Michael Trimarchi <michael@amarulasolutions.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Liu Ying <victor.liu@nxp.com>,
+	Marek Vasut <marex@denx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 267/744] drm/bridge: Fix improper bridge init order with pre_enable_prev_first
-Date: Thu,  6 Jun 2024 15:58:59 +0200
-Message-ID: <20240606131740.945509935@linuxfoundation.org>
+Subject: [PATCH 6.6 276/744] drm/lcdif: Do not disable clocks on already suspended hardware
+Date: Thu,  6 Jun 2024 15:59:08 +0200
+Message-ID: <20240606131741.241250047@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,152 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jagan Teki <jagan@amarulasolutions.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit e18aeeda0b6905c333df5a0566b99f5c84426098 ]
+[ Upstream commit 172695f145fb4798ab605e8a73f6e87711930124 ]
 
-For a given bridge pipeline if any bridge sets pre_enable_prev_first
-flag then the pre_enable for the previous bridge will be called before
-pre_enable of this bridge and opposite is done for post_disable.
+In case the LCDIF is enabled in DT but unused, the clocks used by the
+LCDIF are not enabled. Those clocks may even have a use count of 0 in
+case there are no other users of those clocks. This can happen e.g. in
+case the LCDIF drives HDMI bridge which has no panel plugged into the
+HDMI connector.
 
-These are the potential bridge flags to alter bridge init order in order
-to satisfy the MIPI DSI host and downstream panel or bridge to function.
-However the existing pre_enable_prev_first logic with associated bridge
-ordering has broken for both pre_enable and post_disable calls.
+Do not attempt to disable clocks in the suspend callback and re-enable
+clocks in the resume callback unless the LCDIF is enabled and was in
+use before the system entered suspend, otherwise the driver might end
+up trying to disable clocks which are already disabled with use count
+0, and would trigger a warning from clock core about this condition.
 
-[pre_enable]
+Note that the lcdif_rpm_suspend() and lcdif_rpm_resume() functions
+internally perform the clocks disable and enable operations and act
+as runtime PM hooks too.
 
-The altered bridge ordering has failed if two consecutive bridges on a
-given pipeline enables the pre_enable_prev_first flag.
-
-Example:
-- Panel
-- Bridge 1
-- Bridge 2 pre_enable_prev_first
-- Bridge 3
-- Bridge 4 pre_enable_prev_first
-- Bridge 5 pre_enable_prev_first
-- Bridge 6
-- Encoder
-
-In this example, Bridge 4 and Bridge 5 have pre_enable_prev_first.
-
-The logic looks for a bridge which enabled pre_enable_prev_first flag
-on each iteration and assigned the previou bridge to limit pointer
-if the bridge doesn't enable pre_enable_prev_first flags.
-
-If control found Bridge 2 is pre_enable_prev_first then the iteration
-looks for Bridge 3 and found it is not pre_enable_prev_first and assigns
-it's previous Bridge 4 to limit pointer and calls pre_enable of Bridge 3
-and Bridge 2 and assign iter pointer with limit which is Bridge 4.
-
-Here is the actual problem, for the next iteration control look for
-Bridge 5 instead of Bridge 4 has iter pointer in previous iteration
-moved to Bridge 4 so this iteration skips the Bridge 4. The iteration
-found Bridge 6 doesn't pre_enable_prev_first flags so the limit assigned
-to Encoder. From next iteration Encoder skips as it is the last bridge
-for reverse order pipeline.
-
-So, the resulting pre_enable bridge order would be,
-- Panel, Bridge 1, Bridge 3, Bridge 2, Bridge 6, Bridge 5.
-
-This patch fixes this by assigning limit to next pointer instead of
-previous bridge since the iteration always looks for bridge that does
-NOT request prev so assigning next makes sure the last bridge on a
-given iteration what exactly the limit bridge is.
-
-So, the resulting pre_enable bridge order with fix would be,
-- Panel, Bridge 1, Bridge 3, Bridge 2, Bridge 6, Bridge 5, Bridge 4,
-  Encoder.
-
-[post_disable]
-
-The altered bridge ordering has failed if two consecutive bridges on a
-given pipeline enables the pre_enable_prev_first flag.
-
-Example:
-- Panel
-- Bridge 1
-- Bridge 2 pre_enable_prev_first
-- Bridge 3
-- Bridge 4 pre_enable_prev_first
-- Bridge 5 pre_enable_prev_first
-- Bridge 6
-- Encoder
-
-In this example Bridge 5 and Bridge 4 have pre_enable_prev_first.
-
-The logic looks for a bridge which enabled pre_enable_prev_first flags
-on each iteration and assigned the previou bridge to next and next to
-limit pointer if the bridge does enable pre_enable_prev_first flag.
-
-If control starts from Bridge 6 then it found next Bridge 5 is
-pre_enable_prev_first and immediately the next assigned to previous
-Bridge 6 and limit assignments to next Bridge 6 and call post_enable
-of Bridge 6 even though the next consecutive Bridge 5 is enabled with
-pre_enable_prev_first. This clearly misses the logic to find the state
-of next conducive bridge as everytime the next and limit assigns
-previous bridge if given bridge enabled pre_enable_prev_first.
-
-So, the resulting post_disable bridge order would be,
-- Encoder, Bridge 6, Bridge 5, Bridge 4, Bridge 3, Bridge 2, Bridge 1,
-  Panel.
-
-This patch fixes this by assigning next with previou bridge only if the
-bridge doesn't enable pre_enable_prev_first flag and the next further
-assign it to limit. This way we can find the bridge that NOT requested
-prev to disable last.
-
-So, the resulting pre_enable bridge order with fix would be,
-- Encoder, Bridge 4, Bridge 5, Bridge 6, Bridge 2, Bridge 3, Bridge 1,
-  Panel.
-
-Validated the bridge init ordering by incorporating dummy bridges in
-the sun6i-mipi-dsi pipeline
-
-Fixes: 4fb912e5e190 ("drm/bridge: Introduce pre_enable_prev_first to alter bridge init order")
-Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
-Tested-by: Michael Trimarchi <michael@amarulasolutions.com>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230328170752.1102347-1-jagan@amarulasolutions.com
+Reviewed-by: Liu Ying <victor.liu@nxp.com>
+Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240226082644.32603-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_bridge.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/mxsfb/lcdif_drv.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index 67354afbd7168..62d8a291c49c7 100644
---- a/drivers/gpu/drm/drm_bridge.c
-+++ b/drivers/gpu/drm/drm_bridge.c
-@@ -687,11 +687,17 @@ void drm_atomic_bridge_chain_post_disable(struct drm_bridge *bridge,
- 				 */
- 				list_for_each_entry_from(next, &encoder->bridge_chain,
- 							 chain_node) {
--					if (next->pre_enable_prev_first) {
-+					if (!next->pre_enable_prev_first) {
- 						next = list_prev_entry(next, chain_node);
- 						limit = next;
- 						break;
- 					}
-+
-+					if (list_is_last(&next->chain_node,
-+							 &encoder->bridge_chain)) {
-+						limit = next;
-+						break;
-+					}
- 				}
+diff --git a/drivers/gpu/drm/mxsfb/lcdif_drv.c b/drivers/gpu/drm/mxsfb/lcdif_drv.c
+index 18de2f17e2491..6494e82707569 100644
+--- a/drivers/gpu/drm/mxsfb/lcdif_drv.c
++++ b/drivers/gpu/drm/mxsfb/lcdif_drv.c
+@@ -340,6 +340,9 @@ static int __maybe_unused lcdif_suspend(struct device *dev)
+ 	if (ret)
+ 		return ret;
  
- 				/* Call these bridges in reverse order */
-@@ -774,7 +780,7 @@ void drm_atomic_bridge_chain_pre_enable(struct drm_bridge *bridge,
- 					/* Found first bridge that does NOT
- 					 * request prev to be enabled first
- 					 */
--					limit = list_prev_entry(next, chain_node);
-+					limit = next;
- 					break;
- 				}
- 			}
++	if (pm_runtime_suspended(dev))
++		return 0;
++
+ 	return lcdif_rpm_suspend(dev);
+ }
+ 
+@@ -347,7 +350,8 @@ static int __maybe_unused lcdif_resume(struct device *dev)
+ {
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 
+-	lcdif_rpm_resume(dev);
++	if (!pm_runtime_suspended(dev))
++		lcdif_rpm_resume(dev);
+ 
+ 	return drm_mode_config_helper_resume(drm);
+ }
 -- 
 2.43.0
 
