@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4437D19B3C5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FAE19AD8E;
 	Thu,  6 Jun 2024 14:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683369; cv=none; b=VUSoDb3mO6j1JzTOK7y9iVzF6vNO7EUu2rfDfsyzVdvufr50xiq0zgwj+4lc4x6QWWeKaTPV7rMUQ4OE8NKQplHnKpSNx91SIG3t04INcLJB+eFzIQwVHTyMUvfN5Hxqi4epuBSsrlinG4EbWyNpPkGYaV1qJVl8tlJTFmHANmA=
+	t=1717683369; cv=none; b=gg2PhRQvmmiafxXlszuzYAkcSCX/jCYDwIiJE+9GxGQxf0SIqw0ps64htLKajwLaTcB9rlnNGof8aMAPL1WK/dPyTr8BqNHFa/8gPRk+DDEe/4QwCSxUQsDwxGmPFuQqwdh//A7/8ruDCLjnjzzaP22VcYsYXG2ibG4Hmd452Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683369; c=relaxed/simple;
-	bh=MXbCoK8ZlwVach2oXoGFGa7naCGHYCaPxgE4j/vfS9U=;
+	bh=3lIISSN9yCdnwJjCxlWhpB45nf1wX0X8sSpH8ZZYuSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJg5Y27U5/kp/w60nkJZ/yOzWz/gwYq6v6qoHdrGvZnmqXd7TH+jeqV7d/g+Vu0mZpe+Tqon2pLpLdy5S3CQfhpcUa7kkkT6gRjPN+ybyXcLuHYWk56h7xO26V8kE3TLqUHOP/pYz3A36jdvDjzKCBcKIKvqFuqMy9a1rd41/Ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmjqx+4V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=acXIcnYefLEdJ3Z2UiYrsBDyufvSyvpH+H/C8r7CrUAq1PC87kUR1l5I0LXXhIio9YFR2Qw7oU6ntl2cvn81KKmCc/yOGH0jGUodvApXVCWhHZvrdtto+ABb6mhSQHbRnNM6Eio3I1atfcls3bcjYLid+/43ndZT55/N0TsUrGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Syr/a7dH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmjqx+4V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C84C32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Syr/a7dH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963AAC32782;
 	Thu,  6 Jun 2024 14:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683369;
-	bh=MXbCoK8ZlwVach2oXoGFGa7naCGHYCaPxgE4j/vfS9U=;
+	bh=3lIISSN9yCdnwJjCxlWhpB45nf1wX0X8sSpH8ZZYuSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmjqx+4VBqdS0by8ZCy91zLgrN4AJ3AKxVrrcIJPZJyBaLf/Gnean3ABpRZwtUZtY
-	 4kqUQISiVVk+mKKhABfFGe3SBBG2AF4kE0JGFGYawOBcDWUOuFb1ZhSTWC76OV9Gis
-	 +IBmqTMjy6RRtnw1bhWgo4uDOGMPjfANX1XsP6NY=
+	b=Syr/a7dHOtSzCnIg58c+EVKKtUlP3ncRxrMX+jewpPkq5+bguLWwsplur7bH87dN0
+	 UZutRs2AZe1L4ciNzdija4/VAlZ2Uu41tiCOLwaynV+fRgunanFqCZal6X+753p+IZ
+	 zm4q7sjB5b/BZ84XWVcAvX3vNRVIgEFKS3vNWWnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Fabio Estevam <festevam@denx.de>,
+	Rob Herring <robh@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 253/473] clk: qcom: dispcc-sm6350: fix DisplayPort clocks
-Date: Thu,  6 Jun 2024 16:03:02 +0200
-Message-ID: <20240606131708.340908237@linuxfoundation.org>
+Subject: [PATCH 6.6 311/744] media: dt-bindings: ovti,ov2680: Fix the power supply names
+Date: Thu,  6 Jun 2024 15:59:43 +0200
+Message-ID: <20240606131742.376230605@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,67 +49,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 1113501cfb46d5c0eb960f0a8a9f6c0f91dc6fb6 ]
+[ Upstream commit e2f6ea61b6f3e4ebbb7dff857eea6220c18cd17b ]
 
-On SM6350 DisplayPort link clocks use frequency tables inherited from
-the vendor kernel, it is not applicable in the upstream kernel. Drop
-frequency tables and use clk_byte2_ops for those clocks.
+The original .txt bindings had the OV2680 power supply names correct,
+but the transition from .txt to yaml spelled them incorrectly.
 
-This fixes frequency selection in the OPP core (which otherwise attempts
-to use invalid 810 KHz as DP link rate), also fixing the following
-message:
-msm-dp-display ae90000.displayport-controller: _opp_config_clk_single: failed to set clock rate: -22
+Fix the OV2680 power supply names as the original .txt bindings
+as these are the names used by the OV2680 driver and in devicetree.
 
-Fixes: 837519775f1d ("clk: qcom: Add display clock controller driver for SM6350")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240424-dispcc-dp-clocks-v2-2-b44038f3fa96@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 57226cd8c8bf ("media: dt-bindings: ov2680: convert bindings to yaml")
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm6350.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ .../bindings/media/i2c/ovti,ov2680.yaml        | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm6350.c b/drivers/clk/qcom/dispcc-sm6350.c
-index ea6f54ed846ec..441f042f5ea45 100644
---- a/drivers/clk/qcom/dispcc-sm6350.c
-+++ b/drivers/clk/qcom/dispcc-sm6350.c
-@@ -221,26 +221,17 @@ static struct clk_rcg2 disp_cc_mdss_dp_crypto_clk_src = {
- 	},
- };
+diff --git a/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml b/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
+index cf456f8d9ddcb..c87677f5e2a25 100644
+--- a/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
++++ b/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
+@@ -37,15 +37,15 @@ properties:
+       active low.
+     maxItems: 1
  
--static const struct freq_tbl ftbl_disp_cc_mdss_dp_link_clk_src[] = {
--	F(162000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
--	F(270000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
--	F(540000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
--	F(810000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
--	{ }
--};
--
- static struct clk_rcg2 disp_cc_mdss_dp_link_clk_src = {
- 	.cmd_rcgr = 0x10f8,
- 	.mnd_width = 0,
- 	.hid_width = 5,
- 	.parent_map = disp_cc_parent_map_0,
--	.freq_tbl = ftbl_disp_cc_mdss_dp_link_clk_src,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "disp_cc_mdss_dp_link_clk_src",
- 		.parent_data = disp_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT | CLK_GET_RATE_NOCACHE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_byte2_ops,
- 	},
- };
+-  dovdd-supply:
++  DOVDD-supply:
+     description:
+       Definition of the regulator used as interface power supply.
  
+-  avdd-supply:
++  AVDD-supply:
+     description:
+       Definition of the regulator used as analog power supply.
+ 
+-  dvdd-supply:
++  DVDD-supply:
+     description:
+       Definition of the regulator used as digital power supply.
+ 
+@@ -59,9 +59,9 @@ required:
+   - reg
+   - clocks
+   - clock-names
+-  - dovdd-supply
+-  - avdd-supply
+-  - dvdd-supply
++  - DOVDD-supply
++  - AVDD-supply
++  - DVDD-supply
+   - reset-gpios
+   - port
+ 
+@@ -82,9 +82,9 @@ examples:
+                 clock-names = "xvclk";
+                 reset-gpios = <&gpio1 3 GPIO_ACTIVE_LOW>;
+ 
+-                dovdd-supply = <&sw2_reg>;
+-                dvdd-supply = <&sw2_reg>;
+-                avdd-supply = <&reg_peri_3p15v>;
++                DOVDD-supply = <&sw2_reg>;
++                DVDD-supply = <&sw2_reg>;
++                AVDD-supply = <&reg_peri_3p15v>;
+ 
+                 port {
+                         ov2680_to_mipi: endpoint {
 -- 
 2.43.0
 
