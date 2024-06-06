@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D2E1A186B;
-	Thu,  6 Jun 2024 14:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6671B1A2557;
+	Thu,  6 Jun 2024 14:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683192; cv=none; b=myt8ReNd2x3fz+Skuhv7KXvFSThUjlT3ob5iRsuWqHJQw9ZCqFZQpvVdhKh4Pcg06oo8eoFxzis3L+g5mQzLwlAKhGYXJYmKhTIdcUHRYw4ljQmdMnYBKy3qzq4dmXi7W2/gOLvEr7m7Q0+GiIXA/DeEIpRkU1oxA5Ly3kFPKF4=
+	t=1717683192; cv=none; b=QMzewphVt0eJUZeodWdnKDmlHDAUvm8shdE6Dp3nLd7Wm6S00G6AFLtdRPLQhlc1AcWv/ur5njYzsCoYRukNxs45Je753echC6+5+EFOkegizpyfVdE1QmjOwziaVfgW/grVgjJhhwnaKkSLu8CcZiomOaY9NqCs9j8RtYSjcBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683192; c=relaxed/simple;
-	bh=vakNZApLelEuaF9AHqRTF4/oFqUGizJ8PSqGhIIvHG8=;
+	bh=sA2ms4ofFO/VR+sAUm9bqtmxCc26j3ZnkykdEuMyy9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krsk1Ped7s6UaDeI96lLMlkw/ESm8tgS3IyBd6YXdgXJLmS+5pFgR+Hp+PD+35YtFzLe4ZxZM0/tA/UsGmq2JiJMdzsemHYtVgZ3ZO02vYSBy+TPKIDshQ6vXHVJX88BKRFPXn0Wem7rfRBZq/dIkId7+Fs6b/KuzXKd0O8n+Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8Q3OxfI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WBs4GchrmmOb0qUPNOMS8r9oJ+iCNQG5L6i6o+GzrZyUGQQbl7Rf/Kw7Z/iwxbv0k2HGbFu/HvLavtKRHZ9ay2Mh8BmWgP7dA6JMlJNhDM9ehs2585HIdb0XEJD+o0DZFMLXQvHx6pjpXqgQcEDEIvuvnQ0RHs/QHIWiKTN+9vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/cZojS7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8Q3OxfI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9495C2BD10;
-	Thu,  6 Jun 2024 14:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/cZojS7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48294C2BD10;
+	Thu,  6 Jun 2024 14:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683191;
-	bh=vakNZApLelEuaF9AHqRTF4/oFqUGizJ8PSqGhIIvHG8=;
+	s=korg; t=1717683192;
+	bh=sA2ms4ofFO/VR+sAUm9bqtmxCc26j3ZnkykdEuMyy9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C8Q3OxfI/162Wk3uhHUURtZ8b/pgX4ASpnIy43SxfNp6CVU21LAIhMKhdBaC8EP9L
-	 xsKPbtpjciHnNm3nHU8XqhC/RVgHH5ihw64005joSLi8InioD2+i0P4Uw2u2NZaJ4R
-	 w4kDo5Zup1rVSEmXbJ/uC1Khd0tx5OlVzDp2ClgQ=
+	b=k/cZojS7c7qroYxAtMxrlmVzQZZSPKVrx/mJS9FF1e8M+PDVa5PaTYKfWpFAOHyB0
+	 xwi5gRWWcAr/ZNpz/Nob0J2YhkBD2SLGm+i9nO4yLk0wqWM+LNJlsQiCmX+lgBEIlw
+	 SOoiGuEZnwKROaZPS+Zoz+0rlC/0Ux2zZOo73Q9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Eric Sandeen <sandeen@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 135/744] wifi: iwlwifi: mvm: select STA mask only for active links
-Date: Thu,  6 Jun 2024 15:56:47 +0200
-Message-ID: <20240606131736.748671587@linuxfoundation.org>
+Subject: [PATCH 6.1 066/473] openpromfs: finish conversion to the new mount API
+Date: Thu,  6 Jun 2024 15:59:55 +0200
+Message-ID: <20240606131702.063865362@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +47,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Eric Sandeen <sandeen@redhat.com>
 
-[ Upstream commit 2783ab506eaa36dbef40bda0f96eb49fe149790e ]
+[ Upstream commit 8f27829974b025d4df2e78894105d75e3bf349f0 ]
 
-During reconfig, we might send keys, but those should be only
-sent to already active link stations. Iterate only active ones
-to fix that issue.
+The original mount API conversion inexplicably left out the change
+from ->remount_fs to ->reconfigure; do that now.
 
-Fixes: aea99650f731 ("wifi: iwlwifi: mvm: set STA mask for keys in MLO")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240320232419.c6818d1c6033.I6357f05c55ef111002ddc169287eb356ca0c1b21@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 7ab2fa7693c3 ("vfs: Convert openpromfs to use the new mount API")
+Signed-off-by: Eric Sandeen <sandeen@redhat.com>
+Link: https://lore.kernel.org/r/90b968aa-c979-420f-ba37-5acc3391b28f@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/openpromfs/inode.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-index 3907707e87716..8f5b8b26909da 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-@@ -9,7 +9,9 @@
- u32 iwl_mvm_sta_fw_id_mask(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
- 			   int filter_link_id)
+diff --git a/fs/openpromfs/inode.c b/fs/openpromfs/inode.c
+index f0b7f4d51a175..0a2b0b4a8361e 100644
+--- a/fs/openpromfs/inode.c
++++ b/fs/openpromfs/inode.c
+@@ -355,10 +355,10 @@ static struct inode *openprom_iget(struct super_block *sb, ino_t ino)
+ 	return inode;
+ }
+ 
+-static int openprom_remount(struct super_block *sb, int *flags, char *data)
++static int openpromfs_reconfigure(struct fs_context *fc)
  {
-+	struct ieee80211_link_sta *link_sta;
- 	struct iwl_mvm_sta *mvmsta;
-+	struct ieee80211_vif *vif;
- 	unsigned int link_id;
- 	u32 result = 0;
+-	sync_filesystem(sb);
+-	*flags |= SB_NOATIME;
++	sync_filesystem(fc->root->d_sb);
++	fc->sb_flags |= SB_NOATIME;
+ 	return 0;
+ }
  
-@@ -17,26 +19,27 @@ u32 iwl_mvm_sta_fw_id_mask(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
- 		return 0;
+@@ -366,7 +366,6 @@ static const struct super_operations openprom_sops = {
+ 	.alloc_inode	= openprom_alloc_inode,
+ 	.free_inode	= openprom_free_inode,
+ 	.statfs		= simple_statfs,
+-	.remount_fs	= openprom_remount,
+ };
  
- 	mvmsta = iwl_mvm_sta_from_mac80211(sta);
-+	vif = mvmsta->vif;
+ static int openprom_fill_super(struct super_block *s, struct fs_context *fc)
+@@ -416,6 +415,7 @@ static int openpromfs_get_tree(struct fs_context *fc)
  
- 	/* it's easy when the STA is not an MLD */
- 	if (!sta->valid_links)
- 		return BIT(mvmsta->deflink.sta_id);
+ static const struct fs_context_operations openpromfs_context_ops = {
+ 	.get_tree	= openpromfs_get_tree,
++	.reconfigure	= openpromfs_reconfigure,
+ };
  
- 	/* but if it is an MLD, get the mask of all the FW STAs it has ... */
--	for (link_id = 0; link_id < ARRAY_SIZE(mvmsta->link); link_id++) {
--		struct iwl_mvm_link_sta *link_sta;
-+	for_each_sta_active_link(vif, sta, link_sta, link_id) {
-+		struct iwl_mvm_link_sta *mvm_link_sta;
- 
- 		/* unless we have a specific link in mind */
- 		if (filter_link_id >= 0 && link_id != filter_link_id)
- 			continue;
- 
--		link_sta =
-+		mvm_link_sta =
- 			rcu_dereference_check(mvmsta->link[link_id],
- 					      lockdep_is_held(&mvm->mutex));
- 		if (!link_sta)
- 			continue;
- 
--		result |= BIT(link_sta->sta_id);
-+		result |= BIT(mvm_link_sta->sta_id);
- 	}
- 
- 	return result;
+ static int openpromfs_init_fs_context(struct fs_context *fc)
 -- 
 2.43.0
 
