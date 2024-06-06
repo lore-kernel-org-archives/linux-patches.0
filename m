@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAAB1991B4;
-	Thu,  6 Jun 2024 14:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349231991B4;
+	Thu,  6 Jun 2024 14:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683149; cv=none; b=OmnufMOcrvKsrpLfqAquW3ubY1cHbW5vcx5ZwszcpSGL00ectOWIxm9i9uO4hDV8P83wgj5GgvJnTi6UPOGDBfMoYolMbIsV4TKazwSvwDWdXJn38CWRgrmvQVzH9uruBUDYEqQpVdtD4P4eJmdYAtuqrTzus4UwkV9sQi7CiAk=
+	t=1717683150; cv=none; b=GG+UlXO143I4h2X/ndqd/msVJl8agKmxq74Lsj9iIOBkBFPKvk8wvBUwmdMota4uvkaRuPLKTIpZxJIiPI/M553lHa9qEL0lzAM9FjkZuu+77sSOkEaWBqJkVW8gQeYOKsEmlszNwE80HLJaptIqo7c6/4MLlelnga7LeqkRTzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683149; c=relaxed/simple;
-	bh=hXD5Mkbbrj5kTvAmHZ8adhkmk/+onaoDAED1WlTUZUc=;
+	s=arc-20240116; t=1717683150; c=relaxed/simple;
+	bh=jH4KSjNOgevShvb5tMiG4ax5CAG6Zv8eiXkPaGxj/M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhJ+ddl0Jpojh4gBrj48xG5Dd6zH6NHA2hGe8VyrH0ch6CQupS+2Vd8+OFcCf6yZzLTd1ASsfTRE+uOmF0Um4faYX++EfU+4xm9dqXHvubDpjguS+60C1s0WGeN4XWtJTWgfW9AM2YjyaMDxPevnJTjdPe8fvJchq010lhgTh2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fswa8IwJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cu6AIMS7WiVZVyB/tpg/U0vwLTDTI/xigjCKicX3MtFQdwD8uZc5l/XOJfbLdB4nicdNDN6ty717acD/1PFF4UHdNqJjRuhftKNb3LPUFE76tIwKaAAEOpS/O8LASoemnz9tzOs6FnppT0k+qqWnZr/3lNIxPlOcGNXWAXQAAPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPmxNrhl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fswa8IwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CC6C2BD10;
-	Thu,  6 Jun 2024 14:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPmxNrhl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D163C2BD10;
+	Thu,  6 Jun 2024 14:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683149;
-	bh=hXD5Mkbbrj5kTvAmHZ8adhkmk/+onaoDAED1WlTUZUc=;
+	s=korg; t=1717683150;
+	bh=jH4KSjNOgevShvb5tMiG4ax5CAG6Zv8eiXkPaGxj/M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fswa8IwJDwjkYPW4dWuelmKHRVjPhjNR8OJsUWO7Z1Olp36vxTdOM0+f3Xjn3WB4w
-	 8NwEUmSJbvldBoou/Y5IY6lmdycf+2eYmjEks11ITGmFptzkRfWauxTbMzjQ24QXmQ
-	 xR4WThIssa7EFqcTgvyqicT5QX0Cvk+tJJJLoL0Y=
+	b=wPmxNrhlmYleP0Zn6r65a+dBXN62trwWxbmv4xmjj6KsQAUVMEBlZs/o2PF7Ykg5C
+	 xOQdCYMnnZ6y9DmwqRjv+fvjmFEOMQZ/kRxtcF8VP4pDkIVjI2ITAxZ2Q+LAlA/Nn7
+	 OddZbJR3uDw6f4fsmQladETrO38nyZoeSE7u6eBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 021/473] ksmbd: avoid to send duplicate oplock break notifications
-Date: Thu,  6 Jun 2024 15:59:10 +0200
-Message-ID: <20240606131700.561821469@linuxfoundation.org>
+	Oliver Glitta <glittao@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Daniel Latypov <dlatypov@google.com>,
+	Marco Elver <elver@google.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 095/744] mm/slub, kunit: Use inverted data to corrupt kmem cache
+Date: Thu,  6 Jun 2024 15:56:07 +0200
+Message-ID: <20240606131735.444203054@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,62 +50,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-commit c91ecba9e421e4f2c9219cf5042fa63a12025310 upstream.
+[ Upstream commit b1080c667b3b2c8c38a7fa83ca5567124887abae ]
 
-This patch fixes generic/011 when oplocks is enable.
+Two failure patterns are seen randomly when running slub_kunit tests with
+CONFIG_SLAB_FREELIST_RANDOM and CONFIG_SLAB_FREELIST_HARDENED enabled.
 
-Avoid to send duplicate oplock break notifications like smb2 leases
-case.
+Pattern 1:
+     # test_clobber_zone: pass:1 fail:0 skip:0 total:1
+     ok 1 test_clobber_zone
+     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:72
+     Expected 3 == slab_errors, but
+         slab_errors == 0 (0x0)
+     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:84
+     Expected 2 == slab_errors, but
+         slab_errors == 0 (0x0)
+     # test_next_pointer: pass:0 fail:1 skip:0 total:1
+     not ok 2 test_next_pointer
 
-Fixes: 97c2ec64667b ("ksmbd: avoid to send duplicate lease break notifications")
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In this case, test_next_pointer() overwrites p[s->offset], but the data
+at p[s->offset] is already 0x12.
+
+Pattern 2:
+     ok 1 test_clobber_zone
+     # test_next_pointer: EXPECTATION FAILED at lib/slub_kunit.c:72
+     Expected 3 == slab_errors, but
+         slab_errors == 2 (0x2)
+     # test_next_pointer: pass:0 fail:1 skip:0 total:1
+     not ok 2 test_next_pointer
+
+In this case, p[s->offset] has a value other than 0x12, but one of the
+expected failures is nevertheless missing.
+
+Invert data instead of writing a fixed value to corrupt the cache data
+structures to fix the problem.
+
+Fixes: 1f9f78b1b376 ("mm/slub, kunit: add a KUnit test for SLUB debugging functionality")
+Cc: Oliver Glitta <glittao@gmail.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+CC: Daniel Latypov <dlatypov@google.com>
+Cc: Marco Elver <elver@google.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ lib/slub_kunit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -613,19 +613,24 @@ static int oplock_break_pending(struct o
- 		if (opinfo->op_state == OPLOCK_CLOSING)
- 			return -ENOENT;
- 		else if (opinfo->level <= req_op_level) {
--			if (opinfo->is_lease &&
--			    opinfo->o_lease->state !=
--			     (SMB2_LEASE_HANDLE_CACHING_LE |
--			      SMB2_LEASE_READ_CACHING_LE))
-+			if (opinfo->is_lease == false)
-+				return 1;
-+
-+			if (opinfo->o_lease->state !=
-+			    (SMB2_LEASE_HANDLE_CACHING_LE |
-+			     SMB2_LEASE_READ_CACHING_LE))
- 				return 1;
- 		}
- 	}
+diff --git a/lib/slub_kunit.c b/lib/slub_kunit.c
+index d4a3730b08fa7..4ce9604388069 100644
+--- a/lib/slub_kunit.c
++++ b/lib/slub_kunit.c
+@@ -55,7 +55,7 @@ static void test_next_pointer(struct kunit *test)
  
- 	if (opinfo->level <= req_op_level) {
--		if (opinfo->is_lease &&
--		    opinfo->o_lease->state !=
--		     (SMB2_LEASE_HANDLE_CACHING_LE |
--		      SMB2_LEASE_READ_CACHING_LE)) {
-+		if (opinfo->is_lease == false) {
-+			wake_up_oplock_break(opinfo);
-+			return 1;
-+		}
-+		if (opinfo->o_lease->state !=
-+		    (SMB2_LEASE_HANDLE_CACHING_LE |
-+		     SMB2_LEASE_READ_CACHING_LE)) {
- 			wake_up_oplock_break(opinfo);
- 			return 1;
- 		}
+ 	ptr_addr = (unsigned long *)(p + s->offset);
+ 	tmp = *ptr_addr;
+-	p[s->offset] = 0x12;
++	p[s->offset] = ~p[s->offset];
+ 
+ 	/*
+ 	 * Expecting three errors.
+-- 
+2.43.0
+
 
 
