@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D564196C8E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0177B196C8E;
 	Thu,  6 Jun 2024 14:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682911; cv=none; b=H0nIUliOf0l+cra+Fu12/d7MuAtj3hWHzN5DFIDC4QgpHrkiI6SxO7pSfqNN+aMzzlhd7ox1uSekA996gKgyPjogwdjJifQmksh185knTZwYaSITFABO3TLDf8msSjdydCnssJQer2pfHj68vUW+74/0SggiGZgz0kaDAYecxl4=
+	t=1717682912; cv=none; b=SQ8e/ukvkefdPIEGWeLjtr665qEv93fUi4tYRr6V81nP4foecVZQcOk9WCfK6gicCN81TZklZnP7FVgQfV9ymBU8c+fuX2NZ7f/L5qu3zBia4xh8VTNWCvP6ydqoSZ22K/o5waeQx7X27pxKDiD0zPURf6jPNGV1R//1FMYGIZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682911; c=relaxed/simple;
-	bh=riZKrwtWSBYsfcXp+F+AlCHPquwZO6WXpAuPxn2W9/c=;
+	s=arc-20240116; t=1717682912; c=relaxed/simple;
+	bh=vRSIQlaSpWhIqbxsFO5ZtElEnBmHB7CpRZ0GP6FkuDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPL3r2OkCg5J4IKaCRyA6Xi2jznbE6hkfmDhK8C1D9iSXtr/9f9HxGfyOYwAFUNLS9+GjCk8sPReosxsEJ5pLiZNnp1y/DRPP9KdndGOvKopc2RmtgRKZu9vUj0u/eNpPvHG8s7TjSBrahV+1ugWDjx4xq+2h60CpIRz1OSuXfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wvz50Ufk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FIcE9MN3BRx5qV99MUS6mM3Xxmn+RO+D3mjvLkDIc/7OejyM2Tzz6mUTOuxdW+CCdISxSlg0UEd+33IgD1/F7zR9GtmFgRe+mz/K5ekdJslFd8Dl70Z36tzw3GxrbNU6Hkww52SR7Hf2vy9xHrpoP+hbpfYXX/gkAVDDNQ1brFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMxGcTU4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wvz50Ufk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393D3C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMxGcTU4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BA2C4AF08;
 	Thu,  6 Jun 2024 14:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682911;
-	bh=riZKrwtWSBYsfcXp+F+AlCHPquwZO6WXpAuPxn2W9/c=;
+	bh=vRSIQlaSpWhIqbxsFO5ZtElEnBmHB7CpRZ0GP6FkuDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wvz50UfkCFk2yLdmxUsWLWEHdfeWIZIsdn+2F6J8RaL3UGeT+efJtaKmkzOpiapP3
-	 Bkmd9uOQOaHFY3ftjOJ7Ce/JTLDdg9Uk9PlBu+70SOGG9oZeOe8njEakpBdeR+4jJo
-	 qymvdZRfiUKfcpX2h8O+f2mgyssVEja9WVnTmndM=
+	b=WMxGcTU4bOlRVK//Ktl2hgibBald7mAQxfpNVVXFwRDj+HDNJSH/yiPzZCfBiCIPY
+	 6saj5z16pKLYhX+VGrHHr1mNDeiqnSfQ0KhgecSDNlGaLr+8zXEDPfOhOra4jQ1Yaa
+	 vhIqUdRjw2xiBA+fNIAjJL08+yaFj+X8x3yQIydw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andrei Vagin <avagin@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Kees Kook <keescook@chromium.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 039/374] perf bench uprobe: Remove lib64 from libc.so.6 binary path
-Date: Thu,  6 Jun 2024 16:00:18 +0200
-Message-ID: <20240606131653.131857387@linuxfoundation.org>
+Subject: [PATCH 6.9 040/374] f2fs: compress: fix to relocate check condition in f2fs_{release,reserve}_compress_blocks()
+Date: Thu,  6 Jun 2024 16:00:19 +0200
+Message-ID: <20240606131653.164934291@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -61,46 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 459fee7b508231cd4622b3bd94aaa85e8e16b888 ]
+[ Upstream commit 7c5dffb3d90c5921b91981cc663e02757d90526e ]
 
-bpf_program__attach_uprobe_opts will search LD_LIBRARY_PATH and so
-specifying `/lib64` is unnecessary and causes failures for libc.so.6
-paths like `/lib/x86_64-linux-gnu/libc.so.6`.
+Compress flag should be checked after inode lock held to avoid
+racing w/ f2fs_setflags_common(), fix it.
 
-Fixes: 7b47623b8cae8149 ("perf bench uprobe trace_printk: Add entry attaching an BPF program that does a trace_printk")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andrei Vagin <avagin@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Kees Kook <keescook@chromium.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240406040911.1603801-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Reported-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Closes: https://lore.kernel.org/linux-f2fs-devel/CAHJ8P3LdZXLc2rqeYjvymgYHr2+YLuJ0sLG9DdsJZmwO7deuhw@mail.gmail.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/bench/uprobe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/file.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/bench/uprobe.c b/tools/perf/bench/uprobe.c
-index 5c71fdc419dd7..b722ff88fe7de 100644
---- a/tools/perf/bench/uprobe.c
-+++ b/tools/perf/bench/uprobe.c
-@@ -47,7 +47,7 @@ static const char * const bench_uprobe_usage[] = {
- #define bench_uprobe__attach_uprobe(prog) \
- 	skel->links.prog = bpf_program__attach_uprobe_opts(/*prog=*/skel->progs.prog, \
- 							   /*pid=*/-1, \
--							   /*binary_path=*/"/lib64/libc.so.6", \
-+							   /*binary_path=*/"libc.so.6", \
- 							   /*func_offset=*/0, \
- 							   /*opts=*/&uprobe_opts); \
- 	if (!skel->links.prog) { \
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 06e3a69b45dc7..e96d05f13a336 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3525,9 +3525,6 @@ static int f2fs_release_compress_blocks(struct file *filp, unsigned long arg)
+ 	if (!f2fs_sb_has_compression(sbi))
+ 		return -EOPNOTSUPP;
+ 
+-	if (!f2fs_compressed_file(inode))
+-		return -EINVAL;
+-
+ 	if (f2fs_readonly(sbi->sb))
+ 		return -EROFS;
+ 
+@@ -3546,7 +3543,8 @@ static int f2fs_release_compress_blocks(struct file *filp, unsigned long arg)
+ 		goto out;
+ 	}
+ 
+-	if (is_inode_flag_set(inode, FI_COMPRESS_RELEASED)) {
++	if (!f2fs_compressed_file(inode) ||
++		is_inode_flag_set(inode, FI_COMPRESS_RELEASED)) {
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
+@@ -3707,9 +3705,6 @@ static int f2fs_reserve_compress_blocks(struct file *filp, unsigned long arg)
+ 	if (!f2fs_sb_has_compression(sbi))
+ 		return -EOPNOTSUPP;
+ 
+-	if (!f2fs_compressed_file(inode))
+-		return -EINVAL;
+-
+ 	if (f2fs_readonly(sbi->sb))
+ 		return -EROFS;
+ 
+@@ -3721,7 +3716,8 @@ static int f2fs_reserve_compress_blocks(struct file *filp, unsigned long arg)
+ 
+ 	inode_lock(inode);
+ 
+-	if (!is_inode_flag_set(inode, FI_COMPRESS_RELEASED)) {
++	if (!f2fs_compressed_file(inode) ||
++		!is_inode_flag_set(inode, FI_COMPRESS_RELEASED)) {
+ 		ret = -EINVAL;
+ 		goto unlock_inode;
+ 	}
 -- 
 2.43.0
 
