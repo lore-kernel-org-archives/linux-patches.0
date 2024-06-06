@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4E019753E;
-	Thu,  6 Jun 2024 14:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D4519753E;
+	Thu,  6 Jun 2024 14:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682978; cv=none; b=JzqmUfURU5jYZLidZMOqRp58lI4oXoSxHxFtXTIcdosKgDm0pwJEBKcQ+LO2Z6BkFZcJow0WzKaVzwxvBqSWna2sw6AuztCy4IA047DDn3LFIFulSCs4PPmxnGWR4lbOO4nTj1N1JRnP++1tq1iXR+KtRvtw0pfN9d6CkTixnLo=
+	t=1717682979; cv=none; b=TlmHIP7KQG2ncAr3RAWGDPU3a7DRhsGZsX9ItwqMYTwrkgON/TsBl43lSCMiu1WiTZ0luMYXxMFGhcKXfEoPZbCk9fHCa7vQfrEstZz016yX08qiofYTnsswhalxYZEXIhc7ad2huBjHM8qTUGEyXp+ecjpCsRPkNfAM5xnTHSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682978; c=relaxed/simple;
-	bh=Jk/pjefwXmnQ/sdbHcEbcpSPoJqY1ME1oUr0psUc7xM=;
+	s=arc-20240116; t=1717682979; c=relaxed/simple;
+	bh=UFPRmLlERDgYnTq3bUF63aMFC1canFkgKvqf0997Qus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+OPuNMzud6MIu5HBQcOH0V1M5zvXGZnZh2xvUEuQzL3X9SkWZuC3SFR6Sg4AyBiJks5wVuj0mSZ/nvd00XF88lzd9l0dsW6eb/cBS+7x853Z3S/rXHYUkaEhXTrI5yKMY03QOZqfTdDQT0aMi+3G1HpCaN+32fKlpMsXcncB18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnIiHlYg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DVFDa6eNrN+nBhD2xW6RvdLEiKTBQaDNPTPIivB8HkK2+CsG5qLK6sE2OYgMXEMWKhsrVWx5RB08levNz3w4bPG+ihILY4688mgmlFNa4Pd/UzYUqPmk+SqyiKDmTtM5GyORyllxCRn/lmsQvXCaDZMf0Q4sXVejDAwwm0zIXyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHjHTdtM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnIiHlYg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DEC4C2BD10;
-	Thu,  6 Jun 2024 14:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHjHTdtM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BECC2BD10;
+	Thu,  6 Jun 2024 14:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682978;
-	bh=Jk/pjefwXmnQ/sdbHcEbcpSPoJqY1ME1oUr0psUc7xM=;
+	s=korg; t=1717682979;
+	bh=UFPRmLlERDgYnTq3bUF63aMFC1canFkgKvqf0997Qus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lnIiHlYgHGRkoT/pifxPHWPa3nhQid+B9dJuwoRI/Bp3lbHLV7Smkx6l1d6BY6Z7G
-	 KdXS9O10y2PEneaB1R/Mo+9FAte0BZW4j7p3veAp/RsNS0e0aW1YK5XHGzJ36lk2EH
-	 OBhbGhpUV3iPcUq8VOdk/Ey+1ledt6ig1Jc6hqEI=
+	b=mHjHTdtM6ILpXphGC+dNRbO6ojl/wFnC11W9HvSMSq9kZ4f3Kn3ITgtdxaxEuclDu
+	 4OvW2Xtw38/Fvz1pXSQ23kH2hkESi0Om/24eS42cMu4uOTjO2JO4vusnPBR5oPvshB
+	 /BggLCeR6YLhO98AEXMvUtCuCzpGQJ08XgR9gAVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Umang Jain <umang.jain@ideasonboard.com>,
+	Fabio Estevam <festevam@denx.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 158/374] media: v4l: Dont turn on privacy LED if streamon fails
-Date: Thu,  6 Jun 2024 16:02:17 +0200
-Message-ID: <20240606131657.206455254@linuxfoundation.org>
+Subject: [PATCH 6.9 159/374] media: ov2680: Clear the ret variable on success
+Date: Thu,  6 Jun 2024 16:02:18 +0200
+Message-ID: <20240606131657.233538624@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -54,66 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit f2bf6cd8f44781349620e30a0af8987fe9af008f ]
+[ Upstream commit 49a9bad83b4ab5dac1d7aba2615c77978bcf3984 ]
 
-Turn on the privacy LED only if streamon succeeds. This can be done after
-enabling streaming on the sensor.
+Since commit 63b0cd30b78e ("media: ov2680: Add bus-cfg / endpoint
+property verification") even when the correct 'link-frequencies'
+property is passed in the devicetree, the driver fails to probe:
 
-Fixes: b6e10ff6c23d ("media: v4l2-core: Make the v4l2-core code enable/disable the privacy LED if present")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+ov2680 1-0036: probe with driver ov2680 failed with error -22
+
+The reason is that the variable 'ret' may contain the -EINVAL value
+from a previous assignment:
+
+ret = fwnode_property_read_u32(dev_fwnode(dev), "clock-frequency",
+			       &rate);
+
+Fix the problem by clearing 'ret' on the successful path.
+
+Tested on imx7s-warp board with the following devicetree:
+
+port {
+	ov2680_to_mipi: endpoint {
+		remote-endpoint = <&mipi_from_sensor>;
+		clock-lanes = <0>;
+		data-lanes = <1>;
+		link-frequencies = /bits/ 64 <330000000>;
+	};
+};
+
+Cc: stable@vger.kernel.org
+Fixes: 63b0cd30b78e ("media: ov2680: Add bus-cfg / endpoint property verification")
+Suggested-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Reviewed-by: Umang Jain <umang.jain@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 24034af644fc ("media: ov2680: Do not fail if data-lanes property is absent")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-subdev.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/media/i2c/ov2680.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/v4l2-core/v4l2-subdev.c b/drivers/media/v4l2-core/v4l2-subdev.c
-index 45836f0a2b0a7..19d20871afefa 100644
---- a/drivers/media/v4l2-core/v4l2-subdev.c
-+++ b/drivers/media/v4l2-core/v4l2-subdev.c
-@@ -412,15 +412,6 @@ static int call_s_stream(struct v4l2_subdev *sd, int enable)
- 	if (WARN_ON(!!sd->enabled_streams == !!enable))
- 		return 0;
- 
--#if IS_REACHABLE(CONFIG_LEDS_CLASS)
--	if (!IS_ERR_OR_NULL(sd->privacy_led)) {
--		if (enable)
--			led_set_brightness(sd->privacy_led,
--					   sd->privacy_led->max_brightness);
--		else
--			led_set_brightness(sd->privacy_led, 0);
--	}
--#endif
- 	ret = sd->ops->video->s_stream(sd, enable);
- 
- 	if (!enable && ret < 0) {
-@@ -428,9 +419,20 @@ static int call_s_stream(struct v4l2_subdev *sd, int enable)
- 		ret = 0;
+diff --git a/drivers/media/i2c/ov2680.c b/drivers/media/i2c/ov2680.c
+index 39d321e2b7f98..3e3b7c2b492cf 100644
+--- a/drivers/media/i2c/ov2680.c
++++ b/drivers/media/i2c/ov2680.c
+@@ -1135,6 +1135,7 @@ static int ov2680_parse_dt(struct ov2680_dev *sensor)
+ 		goto out_free_bus_cfg;
  	}
  
--	if (!ret)
-+	if (!ret) {
- 		sd->enabled_streams = enable ? BIT(0) : 0;
- 
-+#if IS_REACHABLE(CONFIG_LEDS_CLASS)
-+		if (!IS_ERR_OR_NULL(sd->privacy_led)) {
-+			if (enable)
-+				led_set_brightness(sd->privacy_led,
-+						   sd->privacy_led->max_brightness);
-+			else
-+				led_set_brightness(sd->privacy_led, 0);
-+		}
-+#endif
-+	}
-+
++	ret = 0;
+ out_free_bus_cfg:
+ 	v4l2_fwnode_endpoint_free(&bus_cfg);
  	return ret;
- }
- 
 -- 
 2.43.0
 
