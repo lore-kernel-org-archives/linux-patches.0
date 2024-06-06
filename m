@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4D319EEDB;
-	Thu,  6 Jun 2024 14:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E3819EEDF;
+	Thu,  6 Jun 2024 14:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683128; cv=none; b=sQNGkhYCTtVE7Kr7qqB6L0aHOAaQqwaRcOG2MsBHAMOxLbGbzsbLIF8t4kRVmdOBmt6wzVcI6ktqsvcg00IenSNYbjzDRw9agGMwDi/Cvi7E0whRIShi79hiypmYBoVHxu9M7c9EUrDn/PolL5priJkQK/i2rig+d4WcwbUo4wg=
+	t=1717683128; cv=none; b=QpbqwmaENR8PWJm4Jo1Ut8dUvr9tibTkWER8DjTC7WImx8gZb/qs6+urCYp2h4fgW2TB2cWJhvNDXWiQrGZntlTaKb+5WkrAezBgRxcdSiv9ybQEC8vRZOTfCjpNMwqM91CrVWa5hUOKcPM+TbfV81fq5wQQYB+TPd2vxzHLytU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683128; c=relaxed/simple;
-	bh=8SGQUxbGgNQndRI1hXDd8ivMnS7EzPsSfRwBAFG3ZSQ=;
+	bh=wL64Z/0NKq36LzyXXggqRbe8913k2v8+lGVS3AtzvMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kQPa853gVRAAwLDG2KRZnvyYYEpAaif1yrc7qiAUZm6E2iKpuesajYmsF4w5Mwb8YN82ocNXnzsAcFhSJiyKDqP0gpzRUxs3GG1VogO+n5vn7zTmlAYCxzFqMgNbepz34SaOTKH2OoAtkr+kNd8xqx9kwbP8nmpQAJtgckKq3W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xev1T3EW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n6aYPD5DxG4ZY36Lalvr81AXF1ZD4i7UPfyLTShfF/REfwkp+mVPKA/kZi2fE3ZfxBMIcJF2WVNIeFBUvThL1Xo3jLPul9vzDZ6cKzstvx3Sw7hgBd5auRSONq6zA8QliLcFsjVOuD+81ybLyVszB5RHP8W14mzCKCvYDhYz1Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUrBZvGa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xev1T3EW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C749FC32782;
-	Thu,  6 Jun 2024 14:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUrBZvGa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C48C2BD10;
+	Thu,  6 Jun 2024 14:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683127;
-	bh=8SGQUxbGgNQndRI1hXDd8ivMnS7EzPsSfRwBAFG3ZSQ=;
+	s=korg; t=1717683128;
+	bh=wL64Z/0NKq36LzyXXggqRbe8913k2v8+lGVS3AtzvMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xev1T3EWltjj+Tzl1QLbN9u0zveCRlEFmbqCN9H1kd8BCd1FgxTWKppuzhEZ+n+zC
-	 LGl9AvkJOAL/BXaZPO8caTpJfUxBUnRoNA0joUHiKcioMKaOH8YJ+CiDaf0f6SX79i
-	 ytpiQWTLayLt8dJMkRDWH834eTKijIFg4ZVG0/Xw=
+	b=xUrBZvGaEs5buQwFOmvAj2pDkKF6MEe+mAPVj2l4A6ipQAROPqy+WChas1EdssMaQ
+	 x1LbdLuTOjnRgXRhfwws1lQHiUSZRdaOQlgKIrgy12fz7vwSLh1VkkSqVu8cT26bgA
+	 v39rIbO/i1VZ9FXxwwt9tUsVkS5a5goe2h+rBz9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+dce04ed6d1438ad69656@syzkaller.appspotmail.com,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Zqiang <qiang.zhang1211@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/744] ALSA: emu10k1: make E-MU FPGA writes potentially more reliable
-Date: Thu,  6 Jun 2024 15:55:43 +0200
-Message-ID: <20240606131734.687316281@linuxfoundation.org>
+Subject: [PATCH 6.6 072/744] softirq: Fix suspicious RCU usage in __do_softirq()
+Date: Thu,  6 Jun 2024 15:55:44 +0200
+Message-ID: <20240606131734.712860151@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -51,38 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Zqiang <qiang.zhang1211@gmail.com>
 
-[ Upstream commit 15c7e87aa88f0ab2d51c2e2123b127a6d693ca21 ]
+[ Upstream commit 1dd1eff161bd55968d3d46bc36def62d71fb4785 ]
 
-We did not delay after the second strobe signal, so another immediately
-following access could potentially corrupt the written value.
+Currently, the condition "__this_cpu_read(ksoftirqd) == current" is used to
+invoke rcu_softirq_qs() in ksoftirqd tasks context for non-RT kernels.
 
-This is a purely speculative fix with no supporting evidence, but after
-taking out the spinlocks around the writes, it seems plausible that a
-modern processor could be actually too fast. Also, it's just cleaner to
-be consistent.
+This works correctly as long as the context is actually task context but
+this condition is wrong when:
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Message-ID: <20240428093716.3198666-7-oswald.buddenhagen@gmx.de>
+     - the current task is ksoftirqd
+     - the task is interrupted in a RCU read side critical section
+     - __do_softirq() is invoked on return from interrupt
+
+Syzkaller triggered the following scenario:
+
+  -> finish_task_switch()
+    -> put_task_struct_rcu_user()
+      -> call_rcu(&task->rcu, delayed_put_task_struct)
+        -> __kasan_record_aux_stack()
+          -> pfn_valid()
+            -> rcu_read_lock_sched()
+              <interrupt>
+                __irq_exit_rcu()
+                -> __do_softirq)()
+                   -> if (!IS_ENABLED(CONFIG_PREEMPT_RT) &&
+                     __this_cpu_read(ksoftirqd) == current)
+                     -> rcu_softirq_qs()
+                       -> RCU_LOCKDEP_WARN(lock_is_held(&rcu_sched_lock_map))
+
+The rcu quiescent state is reported in the rcu-read critical section, so
+the lockdep warning is triggered.
+
+Fix this by splitting out the inner working of __do_softirq() into a helper
+function which takes an argument to distinguish between ksoftirqd task
+context and interrupted context and invoke it from the relevant call sites
+with the proper context information and use that for the conditional
+invocation of rcu_softirq_qs().
+
+Reported-by: syzbot+dce04ed6d1438ad69656@syzkaller.appspotmail.com
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20240427102808.29356-1-qiang.zhang1211@gmail.com
+Link: https://lore.kernel.org/lkml/8f281a10-b85a-4586-9586-5bbc12dc784f@paulmck-laptop/T/#mea8aba4abfcb97bbf499d169ce7f30c4cff1b0e3
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/emu10k1/io.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/softirq.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/emu10k1/io.c b/sound/pci/emu10k1/io.c
-index 74df2330015f6..5cb8acf5b158c 100644
---- a/sound/pci/emu10k1/io.c
-+++ b/sound/pci/emu10k1/io.c
-@@ -285,6 +285,7 @@ static void snd_emu1010_fpga_write_locked(struct snd_emu10k1 *emu, u32 reg, u32
- 	outw(value, emu->port + A_GPIO);
- 	udelay(10);
- 	outw(value | 0x80 , emu->port + A_GPIO);  /* High bit clocks the value into the fpga. */
-+	udelay(10);
+diff --git a/kernel/softirq.c b/kernel/softirq.c
+index 210cf5f8d92c2..bd9716d7bb638 100644
+--- a/kernel/softirq.c
++++ b/kernel/softirq.c
+@@ -507,7 +507,7 @@ static inline bool lockdep_softirq_start(void) { return false; }
+ static inline void lockdep_softirq_end(bool in_hardirq) { }
+ #endif
+ 
+-asmlinkage __visible void __softirq_entry __do_softirq(void)
++static void handle_softirqs(bool ksirqd)
+ {
+ 	unsigned long end = jiffies + MAX_SOFTIRQ_TIME;
+ 	unsigned long old_flags = current->flags;
+@@ -562,8 +562,7 @@ asmlinkage __visible void __softirq_entry __do_softirq(void)
+ 		pending >>= softirq_bit;
+ 	}
+ 
+-	if (!IS_ENABLED(CONFIG_PREEMPT_RT) &&
+-	    __this_cpu_read(ksoftirqd) == current)
++	if (!IS_ENABLED(CONFIG_PREEMPT_RT) && ksirqd)
+ 		rcu_softirq_qs();
+ 
+ 	local_irq_disable();
+@@ -583,6 +582,11 @@ asmlinkage __visible void __softirq_entry __do_softirq(void)
+ 	current_restore_flags(old_flags, PF_MEMALLOC);
  }
  
- void snd_emu1010_fpga_write(struct snd_emu10k1 *emu, u32 reg, u32 value)
++asmlinkage __visible void __softirq_entry __do_softirq(void)
++{
++	handle_softirqs(false);
++}
++
+ /**
+  * irq_enter_rcu - Enter an interrupt context with RCU watching
+  */
+@@ -918,7 +922,7 @@ static void run_ksoftirqd(unsigned int cpu)
+ 		 * We can safely run softirq on inline stack, as we are not deep
+ 		 * in the task stack here.
+ 		 */
+-		__do_softirq();
++		handle_softirqs(true);
+ 		ksoftirqd_run_end();
+ 		cond_resched();
+ 		return;
 -- 
 2.43.0
 
