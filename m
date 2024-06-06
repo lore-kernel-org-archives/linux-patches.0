@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AB81AC44F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92FC19AA7F;
 	Thu,  6 Jun 2024 14:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683327; cv=none; b=Rh60XMv4/Uuf5y+08LVuupO9vNxEdgVtiltMA48geH82j2XTjgBaL4n8CRaAG4MxmJ62J2lnYBTZi2AgY/HTJ6hnn0VbKeWAmEMHgr1n3BElsx66I3ber1toB6otDkPkFieU/xD1XfEUCbVXoSU0NMzU81nuTZW01wJWGJ5Cwug=
+	t=1717683327; cv=none; b=f07fKMfgu5ICXCOIkOHs43FgWE6o402e2b2gX+dQa/MlrCc4bSQREpACH1xW1RSbmYQw6mgHVv9OJF+4Xn/sQfUC2n2wTitQWOzyU0V5CuUkhQK1vU8PS4U0qipIL51G7zCeWiw3Z0d6pN5sPGVy0XbSp49vHVHTfZDbN9W8+IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683327; c=relaxed/simple;
-	bh=AGSJeRARp39mKLL1CnSQvrElsyInvdntORaIMrRR7qI=;
+	bh=YVYjwotcqwOpho/CBIsGaH7Ce2d181dhwH79IagmA4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPDe4PDC7yQfTnhb9UhiGvhRKCy4c+1R1vamn9paxdy/nQupMu+hD8FXcYSifYPERPjwlTMhBdzWnPXqT13MTO4mk6KSSegQAu2ohOMu5TkdxOFoRi/HZAtVbseFzz5COx4gKobD2yyRGdoc6/7oOXSKKUOgDAaED9IPRIWVwXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gK8lsGDS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LvaaD531kAgRv49UniLeyNbtKH+vmRTSSiN5nG16ckE/OE5C/iomYmRSlk34zDhxmxivESwA+ynTpwMPP3zeCU7ZiGUCCgpplFt974posd8eGbf5+f95ljSrHFLP75+wFBY/jmp/JHqOIHqseJ6uRuj9GknxOshAlPUmhQT0XWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hb2QqNkA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gK8lsGDS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429DCC32782;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hb2QqNkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8875C32782;
 	Thu,  6 Jun 2024 14:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683327;
-	bh=AGSJeRARp39mKLL1CnSQvrElsyInvdntORaIMrRR7qI=;
+	bh=YVYjwotcqwOpho/CBIsGaH7Ce2d181dhwH79IagmA4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gK8lsGDS2aZQjERQh2jriW/xQJaDKd6pE4dX4bD/FfHmJQ80FrhC3L7Ljmn+0GEA8
-	 n3B0tPlKxzOeQOr4LLV7dos3TOzB/70+Lr+ZVW1/kjaw7rOYOg7pI8jl7Mm0l0NOhO
-	 brhinurKqmnQ+CZnRnExat7WVgmPGEmV2gSe1WCM=
+	b=hb2QqNkAV/lFxE4eWYTknBPTThsuzuyYGDVgjZON1Gh0KebCxgLL8SY4LFAD/Hq8F
+	 KsxqFf+MH54jAa3JMW2HvR9b33nlIzqTopSP0Wcr5P8jp/tWZiV4AbAEc6aMiSXPl6
+	 IttnO1cUv02AnITbmQVF1F0Y1Pe/MSKNiYVjkIXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Akiva Goldberger <agoldberger@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Erhard Furtner <erhard_f@mailbox.org>
-Subject: [PATCH 6.6 238/744] eth: sungem: remove .ndo_poll_controller to avoid deadlocks
-Date: Thu,  6 Jun 2024 15:58:30 +0200
-Message-ID: <20240606131740.035117561@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 178/473] net/mlx5: Add a timeout to acquire the command queue semaphore
+Date: Thu,  6 Jun 2024 16:01:47 +0200
+Message-ID: <20240606131705.811503024@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +49,158 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Akiva Goldberger <agoldberger@nvidia.com>
 
-[ Upstream commit ac0a230f719b02432d8c7eba7615ebd691da86f4 ]
+[ Upstream commit 485d65e1357123a697c591a5aeb773994b247ad7 ]
 
-Erhard reports netpoll warnings from sungem:
+Prevent forced completion handling on an entry that has not yet been
+assigned an index, causing an out of bounds access on idx = -22.
+Instead of waiting indefinitely for the sem, blocking flow now waits for
+index to be allocated or a sem acquisition timeout before beginning the
+timer for FW completion.
 
-  netpoll_send_skb_on_dev(): eth0 enabled interrupts in poll (gem_start_xmit+0x0/0x398)
-  WARNING: CPU: 1 PID: 1 at net/core/netpoll.c:370 netpoll_send_skb+0x1fc/0x20c
+Kernel log example:
+mlx5_core 0000:06:00.0: wait_func_handle_exec_timeout:1128:(pid 185911): cmd[-22]: CREATE_UCTX(0xa04) No done completion
 
-gem_poll_controller() disables interrupts, which may sleep.
-We can't sleep in netpoll, it has interrupts disabled completely.
-Strangely, gem_poll_controller() doesn't even poll the completions,
-and instead acts as if an interrupt has fired so it just schedules
-NAPI and exits. None of this has been necessary for years, since
-netpoll invokes NAPI directly.
-
-Fixes: fe09bb619096 ("sungem: Spring cleaning and GRO support")
-Reported-and-tested-by: Erhard Furtner <erhard_f@mailbox.org>
-Link: https://lore.kernel.org/all/20240428125306.2c3080ef@legion
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240508134504.3560956-1-kuba@kernel.org
+Fixes: 8e715cd613a1 ("net/mlx5: Set command entry semaphore up once got index free")
+Signed-off-by: Akiva Goldberger <agoldberger@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/r/20240509112951.590184-5-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/sungem.c | 14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 41 +++++++++++++++----
+ include/linux/mlx5/driver.h                   |  1 +
+ 2 files changed, 33 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/sun/sungem.c b/drivers/net/ethernet/sun/sungem.c
-index 9bd1df8308d24..d3a2fbb14140e 100644
---- a/drivers/net/ethernet/sun/sungem.c
-+++ b/drivers/net/ethernet/sun/sungem.c
-@@ -949,17 +949,6 @@ static irqreturn_t gem_interrupt(int irq, void *dev_id)
- 	return IRQ_HANDLED;
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index ac6a0785b10d8..946923b9404fc 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -964,19 +964,32 @@ static void cmd_work_handler(struct work_struct *work)
+ 	bool poll_cmd = ent->polling;
+ 	struct mlx5_cmd_layout *lay;
+ 	struct mlx5_core_dev *dev;
+-	unsigned long cb_timeout;
+-	struct semaphore *sem;
++	unsigned long timeout;
+ 	unsigned long flags;
+ 	int alloc_ret;
+ 	int cmd_mode;
  
--#ifdef CONFIG_NET_POLL_CONTROLLER
--static void gem_poll_controller(struct net_device *dev)
--{
--	struct gem *gp = netdev_priv(dev);
--
--	disable_irq(gp->pdev->irq);
--	gem_interrupt(gp->pdev->irq, dev);
--	enable_irq(gp->pdev->irq);
--}
--#endif
--
- static void gem_tx_timeout(struct net_device *dev, unsigned int txqueue)
- {
- 	struct gem *gp = netdev_priv(dev);
-@@ -2839,9 +2828,6 @@ static const struct net_device_ops gem_netdev_ops = {
- 	.ndo_change_mtu		= gem_change_mtu,
- 	.ndo_validate_addr	= eth_validate_addr,
- 	.ndo_set_mac_address    = gem_set_mac_address,
--#ifdef CONFIG_NET_POLL_CONTROLLER
--	.ndo_poll_controller    = gem_poll_controller,
--#endif
- };
++	complete(&ent->handling);
++
+ 	dev = container_of(cmd, struct mlx5_core_dev, cmd);
+-	cb_timeout = msecs_to_jiffies(mlx5_tout_ms(dev, CMD));
++	timeout = msecs_to_jiffies(mlx5_tout_ms(dev, CMD));
  
- static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+-	complete(&ent->handling);
+-	sem = ent->page_queue ? &cmd->vars.pages_sem : &cmd->vars.sem;
+-	down(sem);
+ 	if (!ent->page_queue) {
++		if (down_timeout(&cmd->vars.sem, timeout)) {
++			mlx5_core_warn(dev, "%s(0x%x) timed out while waiting for a slot.\n",
++				       mlx5_command_str(ent->op), ent->op);
++			if (ent->callback) {
++				ent->callback(-EBUSY, ent->context);
++				mlx5_free_cmd_msg(dev, ent->out);
++				free_msg(dev, ent->in);
++				cmd_ent_put(ent);
++			} else {
++				ent->ret = -EBUSY;
++				complete(&ent->done);
++			}
++			complete(&ent->slotted);
++			return;
++		}
+ 		alloc_ret = cmd_alloc_index(cmd, ent);
+ 		if (alloc_ret < 0) {
+ 			mlx5_core_err_rl(dev, "failed to allocate command entry\n");
+@@ -989,10 +1002,11 @@ static void cmd_work_handler(struct work_struct *work)
+ 				ent->ret = -EAGAIN;
+ 				complete(&ent->done);
+ 			}
+-			up(sem);
++			up(&cmd->vars.sem);
+ 			return;
+ 		}
+ 	} else {
++		down(&cmd->vars.pages_sem);
+ 		ent->idx = cmd->vars.max_reg_cmds;
+ 		spin_lock_irqsave(&cmd->alloc_lock, flags);
+ 		clear_bit(ent->idx, &cmd->vars.bitmask);
+@@ -1000,6 +1014,8 @@ static void cmd_work_handler(struct work_struct *work)
+ 		spin_unlock_irqrestore(&cmd->alloc_lock, flags);
+ 	}
+ 
++	complete(&ent->slotted);
++
+ 	lay = get_inst(cmd, ent->idx);
+ 	ent->lay = lay;
+ 	memset(lay, 0, sizeof(*lay));
+@@ -1018,7 +1034,7 @@ static void cmd_work_handler(struct work_struct *work)
+ 	ent->ts1 = ktime_get_ns();
+ 	cmd_mode = cmd->mode;
+ 
+-	if (ent->callback && schedule_delayed_work(&ent->cb_timeout_work, cb_timeout))
++	if (ent->callback && schedule_delayed_work(&ent->cb_timeout_work, timeout))
+ 		cmd_ent_get(ent);
+ 	set_bit(MLX5_CMD_ENT_STATE_PENDING_COMP, &ent->state);
+ 
+@@ -1138,6 +1154,9 @@ static int wait_func(struct mlx5_core_dev *dev, struct mlx5_cmd_work_ent *ent)
+ 		ent->ret = -ECANCELED;
+ 		goto out_err;
+ 	}
++
++	wait_for_completion(&ent->slotted);
++
+ 	if (cmd->mode == CMD_MODE_POLLING || ent->polling)
+ 		wait_for_completion(&ent->done);
+ 	else if (!wait_for_completion_timeout(&ent->done, timeout))
+@@ -1152,6 +1171,9 @@ static int wait_func(struct mlx5_core_dev *dev, struct mlx5_cmd_work_ent *ent)
+ 	} else if (err == -ECANCELED) {
+ 		mlx5_core_warn(dev, "%s(0x%x) canceled on out of queue timeout.\n",
+ 			       mlx5_command_str(ent->op), ent->op);
++	} else if (err == -EBUSY) {
++		mlx5_core_warn(dev, "%s(0x%x) timeout while waiting for command semaphore.\n",
++			       mlx5_command_str(ent->op), ent->op);
+ 	}
+ 	mlx5_core_dbg(dev, "err %d, delivery status %s(%d)\n",
+ 		      err, deliv_status_to_str(ent->status), ent->status);
+@@ -1203,6 +1225,7 @@ static int mlx5_cmd_invoke(struct mlx5_core_dev *dev, struct mlx5_cmd_msg *in,
+ 	ent->polling = force_polling;
+ 
+ 	init_completion(&ent->handling);
++	init_completion(&ent->slotted);
+ 	if (!callback)
+ 		init_completion(&ent->done);
+ 
+@@ -1220,7 +1243,7 @@ static int mlx5_cmd_invoke(struct mlx5_core_dev *dev, struct mlx5_cmd_msg *in,
+ 		return 0; /* mlx5_cmd_comp_handler() will put(ent) */
+ 
+ 	err = wait_func(dev, ent);
+-	if (err == -ETIMEDOUT || err == -ECANCELED)
++	if (err == -ETIMEDOUT || err == -ECANCELED || err == -EBUSY)
+ 		goto out_free;
+ 
+ 	ds = ent->ts2 - ent->ts1;
+diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
+index 93ec34a94b724..1cae12185cf04 100644
+--- a/include/linux/mlx5/driver.h
++++ b/include/linux/mlx5/driver.h
+@@ -850,6 +850,7 @@ struct mlx5_cmd_work_ent {
+ 	void		       *context;
+ 	int			idx;
+ 	struct completion	handling;
++	struct completion	slotted;
+ 	struct completion	done;
+ 	struct mlx5_cmd        *cmd;
+ 	struct work_struct	work;
 -- 
 2.43.0
 
