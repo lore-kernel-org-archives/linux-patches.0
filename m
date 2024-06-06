@@ -1,45 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586ED19884A
-	for <patches@lists.linux.dev>; Thu,  6 Jun 2024 16:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD27B198A17
+	for <patches@lists.linux.dev>; Thu,  6 Jun 2024 16:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717692056; cv=none; b=iZSHIiIbgbv/NGKaC741fW8nWaTBknMYteNhx+hEEqQFQvlRG95q64axskT4r3DibAl08ZmhJHnyo5v0hQhSZRXgmbRH9jAV0OXK8bdXcEsYwjI/WMxRVzIJcuwbkCE9W8rP7jqf8ERau/33Lvc6udiK/biiYLWkjrysj7vtmmY=
+	t=1717692058; cv=none; b=D6BKkZQncwxHjnJw5h0s/d4RuTAOk2DVsCLN4It1gJNzSjDYlF7P4tkVNss0WjsVKSWOWfoQ1TWLRga6FUnJW7BFNncrD6OVwCmDB/s6Z9KcCQ1MSLXHGsdj20BOhsklnBlwvj00EtHKtdWLJwA9h4wg4aIGI1mYXtZGJK8U4TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717692056; c=relaxed/simple;
-	bh=Tmd4QY5T/e3nEEkLhLHnslTNEt9LzYjz5iyl8yEdajM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EDE8MJZW8cUehG3cT3d/xH5VkuLq0XXoBU6fUQt6tyJRPm02JZD2SWKDge5SZi/OAnj3hodBAVYYc1R6CwB7Qk7LEmbZkHOnbrow3pBoRp4YK1INWSFsCVMG0uOV7wSkb4h9BCiFusmmxgaSTDB5Ej7wrraUczIjpOm+a/hGXf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Nfclylo3; arc=none smtp.client-ip=198.175.65.19
+	s=arc-20240116; t=1717692058; c=relaxed/simple;
+	bh=6rrX6toUJNh2iWuLJcY/kYBZd3jveCiUOS6TDW2IT/U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=miITMioZQ3iS45YwNSyU+zjqPX8SQDn5amPnsI9nv1H3uVMrGBKPK+XIsZdPmzuVlwPRzh7PG0gmlebJyJUBuGdkG9ytw+LJmFVNcQzOza+yX2BmBohrcNrsPf8NjCrA6lXswLxT0iwijUnDBk15TAVROHEQrAhANqUvBLLC01g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EhdGlMBt; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Nfclylo3"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EhdGlMBt"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717692055; x=1749228055;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=Tmd4QY5T/e3nEEkLhLHnslTNEt9LzYjz5iyl8yEdajM=;
-  b=Nfclylo3rYRvAP6s+BhKrJi4/o+A7p02ayOeIsMuQU0zYJm9+asX6702
-   vjJAsz5UsggZy0QVy201mZM+nlB77AZMGI0SXrM914gMDLuExX5VitR02
-   tp/sZgrpOwRY+l4XhdamURF+Ou24C9+bzW7srSXRqPDXI0CMUQv29Upjg
-   78aETfcsg9WdzMNzTS8yojoEXLSmnGJNDz6+7HAJF2fnw6xgGt3lIxi5F
-   xbClkuRoGsZLqQQr9ebnsm+EgU/SRdf+v1boKqTAMowDx+PX09Z3xjp7u
-   Caqg2FkMNkO1fAyeOeYBK/8ieThT6dIYDc10GfaEYwBGYNwuuHxrORB2C
-   g==;
-X-CSE-ConnectionGUID: XmSbTJ7gTWSVgzBe/9pynA==
-X-CSE-MsgGUID: G8S1elUeSSq9jZoTgkNZFw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11095"; a="14214911"
+  t=1717692057; x=1749228057;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=6rrX6toUJNh2iWuLJcY/kYBZd3jveCiUOS6TDW2IT/U=;
+  b=EhdGlMBtF6RqPs8HvE8wxrEqL7bSfOrTfqh/ayJVEnhkqzXihEXPw0/g
+   OKlOR7801a0l00S1Ql3cMWJ6NS50XShVJHQ6XbvnAJm3eSzo3OEiIqARr
+   5PTlhNGqzW4lhqF40EOlLa4R2tE2P6WXa1DZLeKOZ7v31hGdRM6LJheS0
+   b0DE3w8fEAN6nHC+rH1TWky9ehbbqHjVU6LrzBrAz54OfpEVsVTJXQFw/
+   g5biS4uuC45I8DTWHxxaIJfZ+ynTPDQh9LC68qBiZRmyhgvgAT/j0C7/D
+   7ltjmFfadBmV5ywFfIT6DK0QgNEYYxbSfD0bPKGXK1+DP0T2WBy9o8ZN8
+   A==;
+X-CSE-ConnectionGUID: sezoXqxdTQe0eVpGoJPxTg==
+X-CSE-MsgGUID: 8tIJFxv8RoSej+hOcU9uAQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11095"; a="14214919"
 X-IronPort-AV: E=Sophos;i="6.08,219,1712646000"; 
-   d="scan'208";a="14214911"
+   d="scan'208";a="14214919"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
   by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jun 2024 09:40:55 -0700
-X-CSE-ConnectionGUID: h3W48DblTlWbxb0o5m/wfA==
-X-CSE-MsgGUID: 5QazQ67pT4eIApzhqXCodg==
+X-CSE-ConnectionGUID: NM4/4XLLQZGPgwO9mU2GDA==
+X-CSE-MsgGUID: XLhw5Y4XRjK/DziMCoFu9w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,219,1712646000"; 
-   d="scan'208";a="38033088"
+   d="scan'208";a="38033091"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
   by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jun 2024 09:40:54 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -56,10 +57,12 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v3 0/2] Add and use get_cpu_cacheinfo_level()
-Date: Thu,  6 Jun 2024 09:40:45 -0700
-Message-ID: <20240606164047.318378-1-tony.luck@intel.com>
+Subject: [PATCH v3 1/2] cacheinfo: Add function to get cacheinfo for a given (cpu, cachelevel)
+Date: Thu,  6 Jun 2024 09:40:46 -0700
+Message-ID: <20240606164047.318378-2-tony.luck@intel.com>
 X-Mailer: git-send-email 2.45.0
+In-Reply-To: <20240606164047.318378-1-tony.luck@intel.com>
+References: <20240606164047.318378-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,38 +71,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This helper function came up in discussion of the resctrl patches
-for Sub-NUMA Cluster (SNC) support. Reinette pointed out[1] that there
-are already two places where it would clean things up by avoiding
-open coding. The SNC patches will add two additional call sites.
+Resctrl code open codes a search for information about a given cache
+level in a couple of places (and more are on the way).
 
-So rather than have this jammed up as part of the SNC series, I'm
-posting it as a simple standalone cleanup.
+Provide a new inline function get_cpu_cacheinfo_level() in
+<linux/cacheinfo.h> to do the search and return a pointer to
+the cacheinfo structure.
+
+Add lockdep_assert_cpus_held() to enforce the comment that cpuhp
+lock must be held.
+
+Simplify the existing get_cpu_cacheinfo_id() by using this new
+function to do the search.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-
-[1] https://lore.kernel.org/all/050c64b3-20b3-4db6-b782-f5124ebaab31@intel.com/
-
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
-Changes since v2:
+ include/linux/cacheinfo.h | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
-Add lockdep_assert_cpus_held() to enforce what was simply a comment.
-
-Combine patches 2 & 3. Both functions using get_cpu_cacheinfo_level()
-are called inside rdtgroup_kn_lock_live()/rdtgroup_kn_unlock() code
-blocks. So cpuhp lock is held.
-
-Tony Luck (2):
-  cacheinfo: Add function to get cacheinfo for a given (cpu, cachelevel)
-  x86/resctrl: Replace open code cacheinfo searches
-
- include/linux/cacheinfo.h                 | 25 ++++++++++++++++++-----
- arch/x86/kernel/cpu/resctrl/pseudo_lock.c | 17 ++++++---------
- arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 14 +++++--------
- 3 files changed, 31 insertions(+), 25 deletions(-)
-
-
-base-commit: c3f38fa61af77b49866b006939479069cd451173
+diff --git a/include/linux/cacheinfo.h b/include/linux/cacheinfo.h
+index 2cb15fe4fe12..530a16980aea 100644
+--- a/include/linux/cacheinfo.h
++++ b/include/linux/cacheinfo.h
+@@ -3,6 +3,7 @@
+ #define _LINUX_CACHEINFO_H
+ 
+ #include <linux/bitops.h>
++#include <linux/cpu.h>
+ #include <linux/cpumask.h>
+ #include <linux/smp.h>
+ 
+@@ -113,23 +114,37 @@ int acpi_get_cache_info(unsigned int cpu,
+ const struct attribute_group *cache_get_priv_group(struct cacheinfo *this_leaf);
+ 
+ /*
+- * Get the id of the cache associated with @cpu at level @level.
++ * Get the cacheinfo structure for the cache associated with @cpu at
++ * level @level.
+  * cpuhp lock must be held.
+  */
+-static inline int get_cpu_cacheinfo_id(int cpu, int level)
++static inline struct cacheinfo *get_cpu_cacheinfo_level(int cpu, int level)
+ {
+ 	struct cpu_cacheinfo *ci = get_cpu_cacheinfo(cpu);
+ 	int i;
+ 
++	lockdep_assert_cpus_held();
++
+ 	for (i = 0; i < ci->num_leaves; i++) {
+ 		if (ci->info_list[i].level == level) {
+ 			if (ci->info_list[i].attributes & CACHE_ID)
+-				return ci->info_list[i].id;
+-			return -1;
++				return &ci->info_list[i];
++			return NULL;
+ 		}
+ 	}
+ 
+-	return -1;
++	return NULL;
++}
++
++/*
++ * Get the id of the cache associated with @cpu at level @level.
++ * cpuhp lock must be held.
++ */
++static inline int get_cpu_cacheinfo_id(int cpu, int level)
++{
++	struct cacheinfo *ci = get_cpu_cacheinfo_level(cpu, level);
++
++	return ci ? ci->id : -1;
+ }
+ 
+ #ifdef CONFIG_ARM64
 -- 
 2.45.0
 
