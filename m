@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF631ABCBC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9385A1ABCBC;
 	Thu,  6 Jun 2024 14:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683287; cv=none; b=lWlgWNkHYtGRcl7dcc9pt3dM5QZVfjE3vx+7I7EL5NvvXVpS7p23c+WtXNEZC8wB7Yd8+gmeQoU9SbK151gJFmkdfiKpCn9I5WuHDIqF+cLZFVJXURBbLKN/TQfLQMAJG+9MsLsIHpWiEHkc6svgH/cQNYERLQ23w6THOPsCBVc=
+	t=1717683287; cv=none; b=UxtpJ9bsdQT7scHwLC6RXPQ5TlLJmmHVZ/SSjnsdoNDtKqPlNfmOD7HGxPeW39aEmgCP6zqFUgXl9wcHu+mj/TWDnHpAYF24mQP62iP+Jaxmjb0ygttQHqdH6mzS5AX2x0FmWRz+ARrAX8zxAbkre+q+9NzlhvqM3IYxQZ4/hcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683287; c=relaxed/simple;
-	bh=IhI0492vj2kQM+gvlkfwkIbIsCpxnYiqQaDDaow1cOE=;
+	bh=unrDyLCX+0aJ9eDAA3owN2JFn9qgKlg0aJYDX63Q1L8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JxHqOwOK3udrDbPbtG4CSDyJLQ2jX4Pl3jPbLia/LmvbPlOk71pjTeXNfH/MJ68u4t0j7X5Klc4nyHXqUb8ePmgEgOStnkF9Lup87lTcJtB4eMlZ7NBdHv2tDzcWxq5qAJkyZXWDVfvhrHbjcO/g1fTLkqsqpISmLsazZLjXNys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxL3Diqg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MULoqL+RWiprp3POVIZ7+m4ZH1sE4xD5+Sir+UL9NTuvgsWirj7ATZ3L0J/AjZvS83mIsr3ruahYBA+3vSz1o2hSVPjkIP+hCCkYcgRlsLmFC+Q84ASnSIJBDTPiZzID3NdBUShnYhubNCjm0CFBhjBBapI/zEAEivN7/v6Y1NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWznkeuR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxL3Diqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA533C2BD10;
-	Thu,  6 Jun 2024 14:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWznkeuR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734A5C2BD10;
+	Thu,  6 Jun 2024 14:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683287;
-	bh=IhI0492vj2kQM+gvlkfwkIbIsCpxnYiqQaDDaow1cOE=;
+	bh=unrDyLCX+0aJ9eDAA3owN2JFn9qgKlg0aJYDX63Q1L8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nxL3DiqgIQ9RNMHuGHIhpNnDcfiAFWNSCRCZCSACNvtnrbIf/IXtyajnj0syM3/V6
-	 YWAfTXB9JDzepLF0uaqjgYFkiZ0vt4doEKYO/zGy5xz0xNL3seLRJJtR3Zi87Vi5S4
-	 OXa3X3mrG5SDjjYXt9tW5TCgcim9wATrRB4Ohbjk=
+	b=MWznkeuResC/PyU6ESfjcmhwtStbI29WqJpuN9HGjUVkHFFcg9t5cXELUxwPlO7zO
+	 ablRYXRLFH8F05INRgeSeHeBR4Dlo301H3hc5/mb2/kukPXYbXYpDDA+aHrqklaatp
+	 4aBXUgaZPZAhv3M6N3a2I4q/xbmVZ75eiKi7fQ1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 228/744] scsi: qla2xxx: Fix debugfs output for fw_resource_count
-Date: Thu,  6 Jun 2024 15:58:20 +0200
-Message-ID: <20240606131739.710759721@linuxfoundation.org>
+Subject: [PATCH 6.1 164/473] usb: aqc111: stop lying about skb->truesize
+Date: Thu,  6 Jun 2024 16:01:33 +0200
+Message-ID: <20240606131705.373445740@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Himanshu Madhani <himanshu.madhani@oracle.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 998d09c5ef6183bd8137d1a892ba255b15978bb4 ]
+[ Upstream commit 9aad6e45c4e7d16b2bb7c3794154b828fb4384b4 ]
 
-DebugFS output for fw_resource_count shows:
+Some usb drivers try to set small skb->truesize and break
+core networking stacks.
 
-estimate exchange used[0] high water limit [1945] n        estimate iocb2 used [0] high water limit [5141]
-        estimate exchange2 used[0] high water limit [1945]
+I replace one skb_clone() by an allocation of a fresh
+and small skb, to get minimally sized skbs, like we did
+in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
+in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
+stop lying about skb->truesize")
 
-Which shows incorrect display due to missing newline in seq_print().
-
-[mkp: fix checkpatch warning about space before newline]
-
-Fixes: 5f63a163ed2f ("scsi: qla2xxx: Fix exchange oversubscription for management commands")
-Signed-off-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Link: https://lore.kernel.org/r/20240426020056.3639406-1-himanshu.madhani@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 361459cd9642 ("net: usb: aqc111: Implement RX data path")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240506135546.3641185-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_dfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/aqc111.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_dfs.c b/drivers/scsi/qla2xxx/qla_dfs.c
-index a7a364760b800..081af4d420a05 100644
---- a/drivers/scsi/qla2xxx/qla_dfs.c
-+++ b/drivers/scsi/qla2xxx/qla_dfs.c
-@@ -274,7 +274,7 @@ qla_dfs_fw_resource_cnt_show(struct seq_file *s, void *unused)
- 		seq_printf(s, "Driver: estimate iocb used [%d] high water limit [%d]\n",
- 			   iocbs_used, ha->base_qpair->fwres.iocbs_limit);
+diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+index 7b8afa589a53c..284375f662f1e 100644
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -1141,17 +1141,15 @@ static int aqc111_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			continue;
+ 		}
  
--		seq_printf(s, "estimate exchange used[%d] high water limit [%d] n",
-+		seq_printf(s, "estimate exchange used[%d] high water limit [%d]\n",
- 			   exch_used, ha->base_qpair->fwres.exch_limit);
+-		/* Clone SKB */
+-		new_skb = skb_clone(skb, GFP_ATOMIC);
++		new_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
  
- 		if (ql2xenforce_iocb_limit == 2) {
+ 		if (!new_skb)
+ 			goto err;
+ 
+-		new_skb->len = pkt_len;
++		skb_put(new_skb, pkt_len);
++		memcpy(new_skb->data, skb->data, pkt_len);
+ 		skb_pull(new_skb, AQ_RX_HW_PAD);
+-		skb_set_tail_pointer(new_skb, new_skb->len);
+ 
+-		new_skb->truesize = SKB_TRUESIZE(new_skb->len);
+ 		if (aqc111_data->rx_checksum)
+ 			aqc111_rx_checksum(new_skb, pkt_desc);
+ 
 -- 
 2.43.0
 
