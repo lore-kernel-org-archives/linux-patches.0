@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C475E19EEB8;
-	Thu,  6 Jun 2024 14:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E9E1BE87D;
+	Thu,  6 Jun 2024 14:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683548; cv=none; b=MnDGbHGhsORIUYmnkEkDtRLWVK4FSYStEjlwrPSUQnymBXLwg0MqPuvSAHxc84d0NZUSo4DbJtbNidk1GHSFXcTq1n4/OWe/nVyypSP5RXIX+R0RnJISea318SCRTBYLQMsGNsNRVvCe52uSvOPMokHJ9X6yoK13Esa3ZCoNmhM=
+	t=1717683549; cv=none; b=r4b6tewmvdwcgp7bjfFfQAgzx+Co2SN3LdKxX6sRjyvvAc1BznH2MnlFNWixrsbOgxxMy1VCGuMkrULAKGfvlQD8iw9HaHuhDXOQ27mN4SRr52TAhYheta1WBecQ95WS53mElHueuPmNJUn+SkTN2GszTPCMYSduV7FvwA1+qZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683548; c=relaxed/simple;
-	bh=Jk48KKuMKu0bHOcEuNoT82tBTZozN/g6+w0xK1G6K9Y=;
+	s=arc-20240116; t=1717683549; c=relaxed/simple;
+	bh=JMyNnHXN1YDejErouLNJ72cGJuKxbPx4c1m3/iz2uVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lf2/S47GxPKit7yy371T4GH0WWb+X9OwUNdLHNV9zzBl8tC8cn8zJSCsOKdVceeX4tqutjrDx5CKaFkwT4UT0NwaPT2RWrFdDdx9aWi1heyEddYpNfLVkfbE9JnLQe+dMgjAiqFWQKFM5okDI6UKIvkP9MeajL+iG8PfQtB6jEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L69Cio37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iZ5AXaY/aWRsJdpUE6/7Fmcy1md83N8AMiYME+1D06siYmdOcqMX+5Ug7tVuQQEq2rNctIw/5kf06oAWcJSXVYYPnGs1YYTK+Dox4MyDaA4VDPWe3Tl5qJPsy5UslL0k4ONWL3GUL8L0tIo8UMwy/I9AVqE3ahiOPy4Rjc01TLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlR3se2u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L69Cio37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE70C2BD10;
-	Thu,  6 Jun 2024 14:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlR3se2u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A7CC32782;
+	Thu,  6 Jun 2024 14:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683548;
-	bh=Jk48KKuMKu0bHOcEuNoT82tBTZozN/g6+w0xK1G6K9Y=;
+	s=korg; t=1717683549;
+	bh=JMyNnHXN1YDejErouLNJ72cGJuKxbPx4c1m3/iz2uVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L69Cio37XYpp3YSXbcl2c7Hq5zxeRMQe2+WTTCJFv+Pxf7R1YmSkiu+zotpKZc/pE
-	 ZQdE2ePvckpjH+s9PigzwGAxIJEIyGiknBosu3tp+ezsf/V1iB2zgphmHh6JI28BHe
-	 GZ4Zd05HrwQncM6PcLQ2RU/L1zqIi8sg6nq2JKhY=
+	b=mlR3se2ufoU75il1PmFKyYOM4equ2URMIzMdXvO0AJ3Z2K+GjVS7O6kDYI83eTtgP
+	 LiLbK6sbebfvGjvkFekD282ADNb42ltUK0GoLrWGh9vz11xprPCc0pOfEFuayBPkou
+	 q1z+tLufs0iTvtyabs2Q9fBWmuYKVfw1XHB104rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wulff <chris.wulff@biamp.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 487/744] usb: gadget: u_audio: Fix race condition use of controls after free during gadget unbind.
-Date: Thu,  6 Jun 2024 16:02:39 +0200
-Message-ID: <20240606131748.075824389@linuxfoundation.org>
+Subject: [PATCH 6.1 438/473] net/mlx5: Lag, do bond only if slaves agree on roce state
+Date: Thu,  6 Jun 2024 16:06:07 +0200
+Message-ID: <20240606131714.211163271@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,113 +47,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Wulff <Chris.Wulff@biamp.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 1b739388aa3f8dfb63a9fca777e6dfa6912d0464 ]
+[ Upstream commit 51ef9305b8f40946d65c40368ffb4c14636d369a ]
 
-Hang on to the control IDs instead of pointers since those are correctly
-handled with locks.
+Currently, the driver does not enforce that lag bond slaves must have
+matching roce capabilities. Yet, in mlx5_do_bond(), the driver attempts
+to enable roce on all vports of the bond slaves, causing the following
+syndrome when one slave has no roce fw support:
 
-Fixes: 8fe9a03f4331 ("usb: gadget: u_audio: Rate ctl notifies about current srate (0=stopped)")
-Fixes: c565ad07ef35 ("usb: gadget: u_audio: Support multiple sampling rates")
-Fixes: 02de698ca812 ("usb: gadget: u_audio: add bi-directional volume and mute support")
-Signed-off-by: Chris Wulff <chris.wulff@biamp.com>
-Link: https://lore.kernel.org/stable/CO1PR17MB5419C2BF44D400E4E620C1ADE1172%40CO1PR17MB5419.namprd17.prod.outlook.com
-Link: https://lore.kernel.org/r/CO1PR17MB5419C2BF44D400E4E620C1ADE1172@CO1PR17MB5419.namprd17.prod.outlook.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+mlx5_cmd_out_err:809:(pid 25427): MODIFY_NIC_VPORT_CONTEXT(0×755) op_mod(0×0)
+failed, status bad parameter(0×3), syndrome (0xc1f678), err(-22)
+
+Thus, create HW lag only if bond's slaves agree on roce state,
+either all slaves have roce support resulting in a roce lag bond,
+or none do, resulting in a raw eth bond.
+
+Fixes: 7907f23adc18 ("net/mlx5: Implement RoCE LAG feature")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/u_audio.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/u_audio.c b/drivers/usb/gadget/function/u_audio.c
-index 4a42574b4a7fe..c8e8154c59f50 100644
---- a/drivers/usb/gadget/function/u_audio.c
-+++ b/drivers/usb/gadget/function/u_audio.c
-@@ -57,13 +57,13 @@ struct uac_rtd_params {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index 01c0e1ee918d8..a283d8ae466b6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -696,6 +696,7 @@ static bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
+ 	struct mlx5_core_dev *dev;
+ 	u8 mode;
+ #endif
++	bool roce_support;
+ 	int i;
  
-   /* Volume/Mute controls and their state */
-   int fu_id; /* Feature Unit ID */
--  struct snd_kcontrol *snd_kctl_volume;
--  struct snd_kcontrol *snd_kctl_mute;
-+  struct snd_ctl_elem_id snd_kctl_volume_id;
-+  struct snd_ctl_elem_id snd_kctl_mute_id;
-   s16 volume_min, volume_max, volume_res;
-   s16 volume;
-   int mute;
- 
--	struct snd_kcontrol *snd_kctl_rate; /* read-only current rate */
-+	struct snd_ctl_elem_id snd_kctl_rate_id; /* read-only current rate */
- 	int srate; /* selected samplerate */
- 	int active; /* playback/capture running */
- 
-@@ -494,14 +494,13 @@ static inline void free_ep_fback(struct uac_rtd_params *prm, struct usb_ep *ep)
- static void set_active(struct uac_rtd_params *prm, bool active)
- {
- 	// notifying through the Rate ctrl
--	struct snd_kcontrol *kctl = prm->snd_kctl_rate;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&prm->lock, flags);
- 	if (prm->active != active) {
- 		prm->active = active;
- 		snd_ctl_notify(prm->uac->card, SNDRV_CTL_EVENT_MASK_VALUE,
--				&kctl->id);
-+				&prm->snd_kctl_rate_id);
- 	}
- 	spin_unlock_irqrestore(&prm->lock, flags);
+ 	for (i = 0; i < ldev->ports; i++)
+@@ -722,6 +723,11 @@ static bool mlx5_lag_check_prereq(struct mlx5_lag *ldev)
+ 		if (mlx5_sriov_is_enabled(ldev->pf[i].dev))
+ 			return false;
+ #endif
++	roce_support = mlx5_get_roce_state(ldev->pf[MLX5_LAG_P1].dev);
++	for (i = 1; i < ldev->ports; i++)
++		if (mlx5_get_roce_state(ldev->pf[i].dev) != roce_support)
++			return false;
++
+ 	return true;
  }
-@@ -807,7 +806,7 @@ int u_audio_set_volume(struct g_audio *audio_dev, int playback, s16 val)
  
- 	if (change)
- 		snd_ctl_notify(uac->card, SNDRV_CTL_EVENT_MASK_VALUE,
--				&prm->snd_kctl_volume->id);
-+				&prm->snd_kctl_volume_id);
- 
- 	return 0;
- }
-@@ -856,7 +855,7 @@ int u_audio_set_mute(struct g_audio *audio_dev, int playback, int val)
- 
- 	if (change)
- 		snd_ctl_notify(uac->card, SNDRV_CTL_EVENT_MASK_VALUE,
--			       &prm->snd_kctl_mute->id);
-+			       &prm->snd_kctl_mute_id);
- 
- 	return 0;
- }
-@@ -1331,7 +1330,7 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
- 			err = snd_ctl_add(card, kctl);
- 			if (err < 0)
- 				goto snd_fail;
--			prm->snd_kctl_mute = kctl;
-+			prm->snd_kctl_mute_id = kctl->id;
- 			prm->mute = 0;
- 		}
- 
-@@ -1359,7 +1358,7 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
- 			err = snd_ctl_add(card, kctl);
- 			if (err < 0)
- 				goto snd_fail;
--			prm->snd_kctl_volume = kctl;
-+			prm->snd_kctl_volume_id = kctl->id;
- 			prm->volume = fu->volume_max;
- 			prm->volume_max = fu->volume_max;
- 			prm->volume_min = fu->volume_min;
-@@ -1383,7 +1382,7 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
- 		err = snd_ctl_add(card, kctl);
- 		if (err < 0)
- 			goto snd_fail;
--		prm->snd_kctl_rate = kctl;
-+		prm->snd_kctl_rate_id = kctl->id;
- 	}
- 
- 	strscpy(card->driver, card_name, sizeof(card->driver));
+@@ -884,8 +890,10 @@ static void mlx5_do_bond(struct mlx5_lag *ldev)
+ 		} else if (roce_lag) {
+ 			dev0->priv.flags &= ~MLX5_PRIV_FLAGS_DISABLE_IB_ADEV;
+ 			mlx5_rescan_drivers_locked(dev0);
+-			for (i = 1; i < ldev->ports; i++)
+-				mlx5_nic_vport_enable_roce(ldev->pf[i].dev);
++			for (i = 1; i < ldev->ports; i++) {
++				if (mlx5_get_roce_state(ldev->pf[i].dev))
++					mlx5_nic_vport_enable_roce(ldev->pf[i].dev);
++			}
+ 		} else if (shared_fdb) {
+ 			dev0->priv.flags &= ~MLX5_PRIV_FLAGS_DISABLE_IB_ADEV;
+ 			mlx5_rescan_drivers_locked(dev0);
 -- 
 2.43.0
 
