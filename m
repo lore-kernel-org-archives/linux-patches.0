@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDC419B591;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D83C1B29A2;
 	Thu,  6 Jun 2024 14:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683399; cv=none; b=rqUXvP9Ikqiznizg5zNptnAb2NSA364co4wX3djdzZ4QPyLieDMNPqzfl1FbK8S0oFSc5mB8tJuD0zjjKWyCVYOHTN7ZENMFaPb9C+39zHe09EIa8O5AMIULzqgCF89uoMaaYVA8F/b6YFYnW+TrxW0DJ7JzfHxvwuJwkhFNVJw=
+	t=1717683399; cv=none; b=NhColpIJ37a1oKvMKT5WCFy8ur1ohN1ZawESSW+y+PMI7CDUyrO/o3trDK6YP0EAhnnROCm17Hba0JTEyhU4ov2sqXL/Z+4Y9Rh69dRtDwSN4kwZ58EbzahQQYU72B8hC1UHDOatxV4xgx2EZnC9l+gQ/ZahxaGpqj9hgu1yoAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683399; c=relaxed/simple;
-	bh=bQyCn3cHwWpiruJRJr2j20SAQkiYIV7ebpeh0C0yt2c=;
+	bh=lLIRAd0r/T68IkT+JaiwKjtWi2dgZDoVKAhMbnaf/3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k5Z3ogXjYJonF5YirJwyL4TYmIK7KXdKEhAiOprjemOoXxLXkoZNK6gHUOY5wjaEw2aWYd2j9Sb6RoQOTeCn6NonIxn+kPuj5uL1UIPwLsmkGoQo8ljMUrt5GEmVkxyN6qxrVcfJLdeTlNJRiQiJOANQOREbgc5NSQNmyWVmmeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfLbCzFj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EjoEEN9qQzCNPpb0yWER1DR+3UrVqdVdkwZgT7eqAcql0wiYKmtMqt5ZMMAJgejmjUWtYQfvVGO/8YzIb7s1W3D6PEyXR7xac1qpM49AcfslStC//SRruWMovKoho9RZMEiC+s7M/uYplBVA96L0EN2qCQlbw/5VjQZtc32Ge60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csoDku1i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfLbCzFj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3D3C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csoDku1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79656C2BD10;
 	Thu,  6 Jun 2024 14:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683399;
-	bh=bQyCn3cHwWpiruJRJr2j20SAQkiYIV7ebpeh0C0yt2c=;
+	bh=lLIRAd0r/T68IkT+JaiwKjtWi2dgZDoVKAhMbnaf/3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfLbCzFjYd1Pib7T3Xl7SQ13i4m3G8zxOK2ltokC7jjyyNoV66oqGwWFT/wmnwMqq
-	 yVFOvYyG4PIuwGn2J+kfYtPfW5nk0Uz8PAybbXvraGfcea6K2DQcV2Buqgd+9XBATs
-	 r1EjxVm0nMf5NfseLwLlWYYqJF0XO0FihvenK7BY=
+	b=csoDku1iyZ66kov3bIP0NAOxN/6BTIKpzsrKbSkZZbejwmTHmmqrEvUnlSz3b4AVR
+	 6NJzrLpKNRxQpqsK00t3Qr/tPzMWzEV1nqO8rrDyu77rS4SI7grt2TOk6BZZClxGAx
+	 hdf4CpuGOF7R2dHRVUa8bvrLtW5H0temliLogSOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 343/744] RDMA/hns: Use complete parentheses in macros
-Date: Thu,  6 Jun 2024 16:00:15 +0200
-Message-ID: <20240606131743.476564925@linuxfoundation.org>
+Subject: [PATCH 6.1 283/473] f2fs: multidev: fix to recognize valid zero block address
+Date: Thu,  6 Jun 2024 16:03:32 +0200
+Message-ID: <20240606131709.251296465@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +49,121 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 4125269bb9b22e1d8cdf4412c81be8074dbc61ca ]
+[ Upstream commit 33e62cd7b4c281cd737c62e5d8c4f0e602a8c5c5 ]
 
-Use complete parentheses to ensure that macro expansion does
-not produce unexpected results.
+As reported by Yi Zhang in mailing list [1], kernel warning was catched
+during zbd/010 test as below:
 
-Fixes: a25d13cbe816 ("RDMA/hns: Add the interfaces to support multi hop addressing for the contexts in hip08")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240412091616.370789-10-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+./check zbd/010
+zbd/010 (test gap zone support with F2FS)                    [failed]
+    runtime    ...  3.752s
+    something found in dmesg:
+    [ 4378.146781] run blktests zbd/010 at 2024-02-18 11:31:13
+    [ 4378.192349] null_blk: module loaded
+    [ 4378.209860] null_blk: disk nullb0 created
+    [ 4378.413285] scsi_debug:sdebug_driver_probe: scsi_debug: trim
+poll_queues to 0. poll_q/nr_hw = (0/1)
+    [ 4378.422334] scsi host15: scsi_debug: version 0191 [20210520]
+                     dev_size_mb=1024, opts=0x0, submit_queues=1, statistics=0
+    [ 4378.434922] scsi 15:0:0:0: Direct-Access-ZBC Linux
+scsi_debug       0191 PQ: 0 ANSI: 7
+    [ 4378.443343] scsi 15:0:0:0: Power-on or device reset occurred
+    [ 4378.449371] sd 15:0:0:0: Attached scsi generic sg5 type 20
+    [ 4378.449418] sd 15:0:0:0: [sdf] Host-managed zoned block device
+    ...
+    (See '/mnt/tests/gitlab.com/api/v4/projects/19168116/repository/archive.zip/storage/blktests/blk/blktests/results/nodev/zbd/010.dmesg'
+
+WARNING: CPU: 22 PID: 44011 at fs/iomap/iter.c:51
+CPU: 22 PID: 44011 Comm: fio Not tainted 6.8.0-rc3+ #1
+RIP: 0010:iomap_iter+0x32b/0x350
+Call Trace:
+ <TASK>
+ __iomap_dio_rw+0x1df/0x830
+ f2fs_file_read_iter+0x156/0x3d0 [f2fs]
+ aio_read+0x138/0x210
+ io_submit_one+0x188/0x8c0
+ __x64_sys_io_submit+0x8c/0x1a0
+ do_syscall_64+0x86/0x170
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
+
+Shinichiro Kawasaki helps to analyse this issue and proposes a potential
+fixing patch in [2].
+
+Quoted from reply of Shinichiro Kawasaki:
+
+"I confirmed that the trigger commit is dbf8e63f48af as Yi reported. I took a
+look in the commit, but it looks fine to me. So I thought the cause is not
+in the commit diff.
+
+I found the WARN is printed when the f2fs is set up with multiple devices,
+and read requests are mapped to the very first block of the second device in the
+direct read path. In this case, f2fs_map_blocks() and f2fs_map_blocks_cached()
+modify map->m_pblk as the physical block address from each block device. It
+becomes zero when it is mapped to the first block of the device. However,
+f2fs_iomap_begin() assumes that map->m_pblk is the physical block address of the
+whole f2fs, across the all block devices. It compares map->m_pblk against
+NULL_ADDR == 0, then go into the unexpected branch and sets the invalid
+iomap->length. The WARN catches the invalid iomap->length.
+
+This WARN is printed even for non-zoned block devices, by following steps.
+
+ - Create two (non-zoned) null_blk devices memory backed with 128MB size each:
+   nullb0 and nullb1.
+ # mkfs.f2fs /dev/nullb0 -c /dev/nullb1
+ # mount -t f2fs /dev/nullb0 "${mount_dir}"
+ # dd if=/dev/zero of="${mount_dir}/test.dat" bs=1M count=192
+ # dd if="${mount_dir}/test.dat" of=/dev/null bs=1M count=192 iflag=direct
+
+..."
+
+So, the root cause of this issue is: when multi-devices feature is on,
+f2fs_map_blocks() may return zero blkaddr in non-primary device, which is
+a verified valid block address, however, f2fs_iomap_begin() treats it as
+an invalid block address, and then it triggers the warning in iomap
+framework code.
+
+Finally, as discussed, we decide to use a more simple and direct way that
+checking (map.m_flags & F2FS_MAP_MAPPED) condition instead of
+(map.m_pblk != NULL_ADDR) to fix this issue.
+
+Thanks a lot for the effort of Yi Zhang and Shinichiro Kawasaki on this
+issue.
+
+[1] https://lore.kernel.org/linux-f2fs-devel/CAHj4cs-kfojYC9i0G73PRkYzcxCTex=-vugRFeP40g_URGvnfQ@mail.gmail.com/
+[2] https://lore.kernel.org/linux-f2fs-devel/gngdj77k4picagsfdtiaa7gpgnup6fsgwzsltx6milmhegmjff@iax2n4wvrqye/
+
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Closes: https://lore.kernel.org/linux-f2fs-devel/CAHj4cs-kfojYC9i0G73PRkYzcxCTex=-vugRFeP40g_URGvnfQ@mail.gmail.com/
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
+Fixes: 1517c1a7a445 ("f2fs: implement iomap operations")
+Fixes: 8d3c1fa3fa5e ("f2fs: don't rely on F2FS_MAP_* in f2fs_iomap_begin")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/f2fs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.h b/drivers/infiniband/hw/hns/hns_roce_hem.h
-index 7d23d3c51da46..fea6d7d508b60 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.h
-@@ -61,16 +61,16 @@ enum {
- 	 (sizeof(struct scatterlist) + sizeof(void *)))
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index b83b8ac29f430..ea9b78b5a1ebe 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -4195,7 +4195,7 @@ static int f2fs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+ 	if (WARN_ON_ONCE(map.m_pblk == COMPRESS_ADDR))
+ 		return -EINVAL;
  
- #define check_whether_bt_num_3(type, hop_num) \
--	(type < HEM_TYPE_MTT && hop_num == 2)
-+	((type) < HEM_TYPE_MTT && (hop_num) == 2)
- 
- #define check_whether_bt_num_2(type, hop_num) \
--	((type < HEM_TYPE_MTT && hop_num == 1) || \
--	(type >= HEM_TYPE_MTT && hop_num == 2))
-+	(((type) < HEM_TYPE_MTT && (hop_num) == 1) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == 2))
- 
- #define check_whether_bt_num_1(type, hop_num) \
--	((type < HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0) || \
--	(type >= HEM_TYPE_MTT && hop_num == 1) || \
--	(type >= HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0))
-+	(((type) < HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == 1) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0))
- 
- struct hns_roce_hem_chunk {
- 	struct list_head	 list;
+-	if (map.m_pblk != NULL_ADDR) {
++	if (map.m_flags & F2FS_MAP_MAPPED) {
+ 		iomap->length = blks_to_bytes(inode, map.m_len);
+ 		iomap->type = IOMAP_MAPPED;
+ 		iomap->flags |= IOMAP_F_MERGED;
 -- 
 2.43.0
 
