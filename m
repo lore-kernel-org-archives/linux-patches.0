@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1141A2FDD;
-	Thu,  6 Jun 2024 14:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8CE1A38E0;
+	Thu,  6 Jun 2024 14:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683226; cv=none; b=EswLgdOFJdPh8IcQHlFEEq9FuP17cGz7p3a1XUUJGAHxUCjU3Y3IXGUZCXdloAfwQ8kOP9rbqlJrr2slIxkladJ0kNr1DD2ybdSKLsMGbkEixKKuvuGj/zwed4G+WbLgN0bVrSMNG1WYldb7SHVpaVH7FBj+VX8VIe/RxPBR3k8=
+	t=1717683226; cv=none; b=KlTo+PBoKbUFLm5UvX7S3dc4ZUTd4k4CCzyq0KQ6YtuV9YkG7mOiC6B9c2YgCeU9YZu5vhBkp88beuRELsbbnplW7jx4LXZByWmTNJKkEV0LIjgFfzfAEgT0hVEVuZIiW9BPZUKugIqAlmx+gNYPcwcIh0o1gQvySb9anStKxx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683226; c=relaxed/simple;
-	bh=cQvc9C2dRiidzSUpwsJNOXL0Qv6A05TnjUdOJZVEc0c=;
+	bh=Aiv+/Pp48ZPrb7Fe3U/lMpI6AFIgTz6f4g+wXzQfYQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YoJS18gCtGILbgYe3RwTt8Qc1WAgZYYe688/Uk2hR+m+1CzJEKKsk0WbQBs/VJK9MRCUjq2AJN55PgRt17Z9iA41SlKw5Pescikl6UyTkyaEn7ieu0ujzvBww2DRmfMjvflcC8cjfaoqOmLTgmC84eMXLEFarlo1Ke7aRzS801c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmTDcQXE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U1CVngkvj0SSoFg0IYP6EhELbMkhIEsvXr8HffXJfNq7bbVNWhR1pbGJBFywcmmCpeQt8NXpWpNuIsHTMTi5GwJChRoE4XZJREIpKCKeXhVFyhQk/dG+SR92+Qxvg89gyQW5EHbgK1PpX/FbPkHIvUdS88YXMXwuoenqc+5hIds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKhUn/1W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmTDcQXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8C6C2BD10;
-	Thu,  6 Jun 2024 14:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKhUn/1W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 582CDC32781;
+	Thu,  6 Jun 2024 14:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683225;
-	bh=cQvc9C2dRiidzSUpwsJNOXL0Qv6A05TnjUdOJZVEc0c=;
+	s=korg; t=1717683226;
+	bh=Aiv+/Pp48ZPrb7Fe3U/lMpI6AFIgTz6f4g+wXzQfYQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WmTDcQXExInNgxXJPdTC7d9Rpk2AcyFhD1zFN81JxZcT+YsdmW9kxZkgKIsWTX+Y/
-	 UvcNn1sdCeX0yHlHr9Un1IFoT7QO3QeynKWC94umePo9z2luHP4yaCReP232j/2iWS
-	 21yruXaf4ecnaWi5yljbQ1WkujXNLMpzzTL5QYIM=
+	b=SKhUn/1WiVYPeTnw9PJ9FZSe+uEB5SS6fFXTF/If5R0TXbEhtuZQ6VDfYfhVLS6z0
+	 RfuCM2oGP19BW6v5OThoxpNzLeUbYNZDo9qOojkGxbX4joVfSXZgJ/y3KXfjOOy68c
+	 dadujIxnMhgtexg479Rj/PZJaU11/waPexVu993c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Anton Protopopov <aspsk@isovalent.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Hechao Li <hli@netflix.com>,
+	Tycho Andersen <tycho@tycho.pizza>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/473] bpf: Pack struct bpf_fib_lookup
-Date: Thu,  6 Jun 2024 16:00:31 +0200
-Message-ID: <20240606131703.275665221@linuxfoundation.org>
+Subject: [PATCH 6.6 168/744] tcp: increase the default TCP scaling ratio
+Date: Thu,  6 Jun 2024 15:57:20 +0200
+Message-ID: <20240606131737.815944056@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,76 +49,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anton Protopopov <aspsk@isovalent.com>
+From: Hechao Li <hli@netflix.com>
 
-[ Upstream commit f91717007217d975aa975ddabd91ae1a107b9bff ]
+[ Upstream commit 697a6c8cec03c2299f850fa50322641a8bf6b915 ]
 
-The struct bpf_fib_lookup is supposed to be of size 64. A recent commit
-59b418c7063d ("bpf: Add a check for struct bpf_fib_lookup size") added
-a static assertion to check this property so that future changes to the
-structure will not accidentally break this assumption.
+After commit dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale"),
+we noticed an application-level timeout due to reduced throughput.
 
-As it immediately turned out, on some 32-bit arm systems, when AEABI=n,
-the total size of the structure was equal to 68, see [1]. This happened
-because the bpf_fib_lookup structure contains a union of two 16-bit
-fields:
+Before the commit, for a client that sets SO_RCVBUF to 65k, it takes
+around 22 seconds to transfer 10M data. After the commit, it takes 40
+seconds. Because our application has a 30-second timeout, this
+regression broke the application.
 
-    union {
-            __u16 tot_len;
-            __u16 mtu_result;
-    };
+The reason that it takes longer to transfer data is that
+tp->scaling_ratio is initialized to a value that results in ~0.25 of
+rcvbuf. In our case, SO_RCVBUF is set to 65536 by the application, which
+translates to 2 * 65536 = 131,072 bytes in rcvbuf and hence a ~28k
+initial receive window.
 
-which was supposed to compile to a 16-bit-aligned 16-bit field. On the
-aforementioned setups it was instead both aligned and padded to 32-bits.
+Later, even though the scaling_ratio is updated to a more accurate
+skb->len/skb->truesize, which is ~0.66 in our environment, the window
+stays at ~0.25 * rcvbuf. This is because tp->window_clamp does not
+change together with the tp->scaling_ratio update when autotuning is
+disabled due to SO_RCVBUF. As a result, the window size is capped at the
+initial window_clamp, which is also ~0.25 * rcvbuf, and never grows
+bigger.
 
-Declare this inner union as __attribute__((packed, aligned(2))) such
-that it always is of size 2 and is aligned to 16 bits.
+Most modern applications let the kernel do autotuning, and benefit from
+the increased scaling_ratio. But there are applications such as kafka
+that has a default setting of SO_RCVBUF=64k.
 
-  [1] https://lore.kernel.org/all/CA+G9fYtsoP51f-oP_Sp5MOq-Ffv8La2RztNpwvE6+R1VtFiLrw@mail.gmail.com/#t
+This patch increases the initial scaling_ratio from ~25% to 50% in order
+to make it backward compatible with the original default
+sysctl_tcp_adv_win_scale for applications setting SO_RCVBUF.
 
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Fixes: e1850ea9bd9e ("bpf: bpf_fib_lookup return MTU value as output when looked up")
-Signed-off-by: Anton Protopopov <aspsk@isovalent.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240403123303.1452184-1-aspsk@isovalent.com
+Fixes: dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale")
+Signed-off-by: Hechao Li <hli@netflix.com>
+Reviewed-by: Tycho Andersen <tycho@tycho.pizza>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/netdev/20240402215405.432863-1-hli@netflix.com/
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/bpf.h       | 2 +-
- tools/include/uapi/linux/bpf.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ include/net/tcp.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
-index d5d2183730b9f..a17688011440e 100644
---- a/include/uapi/linux/bpf.h
-+++ b/include/uapi/linux/bpf.h
-@@ -6730,7 +6730,7 @@ struct bpf_fib_lookup {
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 343cd0a5e8e17..690770321a6e3 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -1460,11 +1460,10 @@ static inline int tcp_space_from_win(const struct sock *sk, int win)
+ 	return __tcp_space_from_win(tcp_sk(sk)->scaling_ratio, win);
+ }
  
- 		/* output: MTU value */
- 		__u16	mtu_result;
--	};
-+	} __attribute__((packed, aligned(2)));
- 	/* input: L3 device index for lookup
- 	 * output: device index from FIB lookup
- 	 */
-diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
-index d5d2183730b9f..a17688011440e 100644
---- a/tools/include/uapi/linux/bpf.h
-+++ b/tools/include/uapi/linux/bpf.h
-@@ -6730,7 +6730,7 @@ struct bpf_fib_lookup {
+-/* Assume a conservative default of 1200 bytes of payload per 4K page.
++/* Assume a 50% default for skb->len/skb->truesize ratio.
+  * This may be adjusted later in tcp_measure_rcv_mss().
+  */
+-#define TCP_DEFAULT_SCALING_RATIO ((1200 << TCP_RMEM_TO_WIN_SCALE) / \
+-				   SKB_TRUESIZE(4096))
++#define TCP_DEFAULT_SCALING_RATIO (1 << (TCP_RMEM_TO_WIN_SCALE - 1))
  
- 		/* output: MTU value */
- 		__u16	mtu_result;
--	};
-+	} __attribute__((packed, aligned(2)));
- 	/* input: L3 device index for lookup
- 	 * output: device index from FIB lookup
- 	 */
+ static inline void tcp_scaling_ratio_init(struct sock *sk)
+ {
 -- 
 2.43.0
 
