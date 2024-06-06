@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77677196C92;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFD4196C92;
 	Thu,  6 Jun 2024 14:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682898; cv=none; b=pBqu4NyHWlFnKpQOyfT8FskllOeG0ciyDvMXF+CTfE7NJ2q/bEfty6jUzT0sSYR7FMXOSQHeuU9DAwjB/5a0B+poIkZ1NVLOPade1OeHYF076A2KCV1lABuzEoGZ4RCrcd+PjbeX6vlOC4NsOQjYzihXHLgjgUlPdm14FPhP0WA=
+	t=1717682899; cv=none; b=Jc/+ygcIw2cqexhcAVdl4jAPw3MgSVTJFRe24HyhdQvWg6Jm8ntHcwM55mDjuGSUhqp8KF5fIrHiaiv4iH3ava7Tci1Zo7M4EDZMJBDeydLYpnO0+ZNSDY8KA0H/7GOLvVDS6wiO1ky4Dsqm6n/b6GhKureMoItDaeuE5qu1//8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682898; c=relaxed/simple;
-	bh=d6oUuIiSH5RIYtrIX59soETYUps3fsid7bteCaPRqKM=;
+	s=arc-20240116; t=1717682899; c=relaxed/simple;
+	bh=3nMNGOmEx5/30+KUQV/53ZpBC1xp3NI0SI9A6my+qyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhmH1FxY0SDqVFaYV0j4Bz7JR4ZdgZ1i/QEW5V05kWtHHxougTxrol48qR3ALFehRhyNApS6azHvcZi/Ay6VZz7+FL7BcHNT8xuQcrNgSEAPN9a9xyurlN5O9Wq3W+/DbC5MFLkDzKTqHyJVNgWkiEp4km8kKraaljwb1B8n9oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tUZPKKAo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=elDUfgjIrLKpqnVZUXyUmCQ+KpIzdBDyutdcujELhaOZNx2M6Uclqff1fOV7CRbW8uCWj14rFa423ikqQAAT7DGTFMeHUZa4zWN21fL9VBB/1vIkuhDS88K5F86ZrMbbbCk+Cy0J2uxcSpKf7oCPMb33b954d/fmlE8DUoy5ohY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iG95mB69; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tUZPKKAo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8F9C32781;
-	Thu,  6 Jun 2024 14:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iG95mB69"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791CFC4AF0B;
+	Thu,  6 Jun 2024 14:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682898;
-	bh=d6oUuIiSH5RIYtrIX59soETYUps3fsid7bteCaPRqKM=;
+	bh=3nMNGOmEx5/30+KUQV/53ZpBC1xp3NI0SI9A6my+qyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tUZPKKAoP+fA2kZYX0VJuvA0uiyu8kAOr3ptAxhijbU62KC1Vwic40ShNZqRPZ7ql
-	 oqJwLfBrdZuwx/F8ZVWc6VcIhWI9w12W27ScN/mEoekZ4nhvv0WsRej6TGUZozhuEf
-	 G/NlQTBEB/t0Xe1UncpRGRu+7g7l88hj/whIGNX8=
+	b=iG95mB692WVySTWoIN9RJBEQZWbqtYNfO0YwQXyXvI3vXvwvEqAasPqlbRykZv5I6
+	 DjFPt5Uo+OpLhMYNenQo/C2hsC/PdMTCPDg2wyMgVChz+/NCwM0uq5aXX31EJmQllL
+	 TryBvWYvJbwVNNaxg3UEuVpY0uotvplMB84xYRiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengfei Fan <quic_tengfan@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 007/374] dt-bindings: pinctrl: qcom: update functions to match with driver
-Date: Thu,  6 Jun 2024 15:59:46 +0200
-Message-ID: <20240606131651.967564842@linuxfoundation.org>
+Subject: [PATCH 6.9 016/374] usb: typec: ucsi: always register a link to USB PD device
+Date: Thu,  6 Jun 2024 15:59:55 +0200
+Message-ID: <20240606131652.318418865@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,162 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengfei Fan <quic_tengfan@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 842ecb5fcf8de17dfde11d4ec5f41930f0076887 ]
+[ Upstream commit c0f66d78f42353d38b9608c05f211cf0773d93ac ]
 
-Some functions were consolidated in the SM4450 pinctrl driver, but they
-had not been updated in the binding file before the previous SM4450
-pinctrl patch series was merged.
-Update functions in this binding file to match with SM4450 pinctrl
-driver. Some functions need to be consolidated and some functions need
-to be removed.
-The following functions are removed:
-  - atest_char0, atest_char1, atest_char2, atest_char3
-  - atest_usb00, atest_usb01, atest_usb02, atest_usb03
-  - audio_ref
-  - cci_async
-  - cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4
-  - cmu_rng0, cmu_rng1, cmu_rng2, cmu_rng3
-  - coex_uart1
-  - cri_trng0, cri_trng1
-  - dbg_out
-  - ddr_pxi0, ddr_pxi1
-  - dp0_hot
-  - gcc_gp1, gcc_gp2, gcc_gp3
-  - ibi_i3c
-  - jitter_bist
-  - mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3
-  - mi2s0_data0, mi2s0_data1, mi2s0_sck, mi2s0_ws, mi2s2_data0,
-    mi2s2_data1, mi2s2_sck, mi2s2_ws, mi2s_mclk0, mi2s_mclk1
-  - nav_gpio0, nav_gpio1, nav_gpio2
-  - phase_flag0, phase_flag1, phase_flag10, phase_flag11, phase_flag12,
-    phase_flag13, phase_flag14, phase_flag15, phase_flag16,
-    phase_flag17, phase_flag18, phase_flag19, phase_flag2, phase_flag20,
-    phase_flag21, phase_flag22, phase_flag23, phase_flag24,
-    phase_flag25, phase_flag26, phase_flag27, phase_flag28,
-    phase_flag29, phase_flag3, phase_flag30, phase_flag31, phase_flag4,
-    phase_flag5, phase_flag6, phase_flag7, phase_flag8, phase_flag9
-  - pll_bist, pll_clk
-  - prng_rosc0, prng_rosc1, prng_rosc2, prng_rosc3
-  - qdss_gpio0, qdss_gpio1, qdss_gpio10, qdss_gpio11, qdss_gpio12,
-    qdss_gpio13, qdss_gpio14, qdss_gpio15, qdss_gpio2, qdss_gpio3,
-    qdss_gpio4, qdss_gpio5, qdss_gpio6, qdss_gpio7, qdss_gpio8,
-    qdss_gpio9
-  - qlink0_wmss
-  - qup0_se5, qup0_se6, qup0_se7, qup1_se5, qup1_se6
-  - sd_write
-  - tb_trig
-  - tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3
-  - tmess_prng0, tmess_prng1, tmess_prng2, tmess_prng3
-  - tsense_pwm1, tsense_pwm2
-  - uim0_clk, uim0_data, uim0_present, uim0_reset, uim1_clk, uim1_data,
-    uim1_present, uim1_reset
-  - usb0_hs, usb0_phy
-  - vsense_trigger
+UCSI driver will attempt to set a USB PD device only if it was able to
+read PDOs from the firmware. This results in suboptimal behaviour, since
+the PD device will be created anyway. Move calls to
+typec_port_set_usb_power_delivery() out of conditional code and call it
+after reading capabilities.
 
-The following functions are added:
-  - atest_char
-  - atest_usb0
-  - audio_ref_clk
-  - cci
-  - cci_async_in0
-  - cmu_rng
-  - coex_uart1_rx, coex_uart1_tx
-  - dbg_out_clk
-  - ddr_pxi0_test, ddr_pxi1_test
-  - gcc_gp1_clk, gcc_gp2_clk, gcc_gp3_clk
-  - ibi_i3c_qup0, ibi_i3c_qup1
-  - jitter_bist_ref
-  - mdp_vsync
-  - nav
-  - phase_flag
-  - pll_bist_sync, pll_clk_aux
-  - prng_rosc
-  - qlink0_wmss_reset
-  - sd_write_protect
-  - tb_trig_sdc1, tb_trig_sdc2
-  - tgu_ch0_trigout, tgu_ch1_trigout, tgu_ch2_trigout, tgu_ch3_trigout
-  - tmess_prng
-  - tsense_pwm1_out, tsense_pwm2_out
-  - uim0, uim1
-  - usb0_hs_ac, usb0_phy_ps
-  - vsense_trigger_mirnat
-  - wlan1_adc_dtest0, wlan1_adc_dtest1
-
-Fixes: 7bf8b78f86db ("dt-bindings: pinctrl: qcom: Add SM4450 pinctrl")
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Message-ID: <20240312025807.26075-3-quic_tengfan@quicinc.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: b04e1747fbcc ("usb: typec: ucsi: Register USB Power Delivery Capabilities")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240329-qcom-ucsi-fixes-v2-4-0f5d37ed04db@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/pinctrl/qcom,sm4450-tlmm.yaml    | 52 +++++++------------
- 1 file changed, 18 insertions(+), 34 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
-index bb675c8ec220f..1b941b276b3f8 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
-@@ -72,40 +72,24 @@ $defs:
-         description:
-           Specify the alternative function to be configured for the specified
-           pins.
--        enum: [ gpio, atest_char, atest_char0, atest_char1, atest_char2,
--                atest_char3, atest_usb0, atest_usb00, atest_usb01, atest_usb02,
--                atest_usb03, audio_ref, cam_mclk, cci_async, cci_i2c,
--                cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
--                cmu_rng0, cmu_rng1, cmu_rng2, cmu_rng3, coex_uart1, cri_trng,
--                cri_trng0, cri_trng1, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1,
--                dp0_hot, gcc_gp1, gcc_gp2, gcc_gp3, host2wlan_sol, ibi_i3c,
--                jitter_bist, mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2,
--                mdp_vsync3, mi2s0_data0, mi2s0_data1, mi2s0_sck, mi2s0_ws,
--                mi2s2_data0, mi2s2_data1, mi2s2_sck, mi2s2_ws, mi2s_mclk0,
--                mi2s_mclk1, nav_gpio0, nav_gpio1, nav_gpio2, pcie0_clk,
--                phase_flag0, phase_flag1, phase_flag10, phase_flag11,
--                phase_flag12, phase_flag13, phase_flag14, phase_flag15,
--                phase_flag16, phase_flag17, phase_flag18, phase_flag19,
--                phase_flag2, phase_flag20, phase_flag21, phase_flag22,
--                phase_flag23, phase_flag24, phase_flag25, phase_flag26,
--                phase_flag27, phase_flag28, phase_flag29, phase_flag3,
--                phase_flag30, phase_flag31, phase_flag4, phase_flag5,
--                phase_flag6, phase_flag7, phase_flag8, phase_flag9,
--                pll_bist, pll_clk, prng_rosc0, prng_rosc1, prng_rosc2,
--                prng_rosc3, qdss_cti, qdss_gpio, qdss_gpio0, qdss_gpio1,
--                qdss_gpio10, qdss_gpio11, qdss_gpio12, qdss_gpio13, qdss_gpio14,
--                qdss_gpio15, qdss_gpio2, qdss_gpio3, qdss_gpio4, qdss_gpio5,
--                qdss_gpio6, qdss_gpio7, qdss_gpio8, qdss_gpio9, qlink0_enable,
--                qlink0_request, qlink0_wmss, qlink1_enable, qlink1_request,
--                qlink1_wmss, qlink2_enable, qlink2_request, qlink2_wmss,
--                qup0_se0, qup0_se1, qup0_se2, qup0_se3, qup0_se4, qup0_se5,
--                qup0_se6, qup0_se7, qup1_se0, qup1_se1, qup1_se2, qup1_se3,
--                qup1_se4, qup1_se5, qup1_se6, sd_write, tb_trig, tgu_ch0,
--                tgu_ch1, tgu_ch2, tgu_ch3, tmess_prng0, tmess_prng1,
--                tmess_prng2, tmess_prng3, tsense_pwm1, tsense_pwm2, uim0_clk,
--                uim0_data, uim0_present, uim0_reset, uim1_clk, uim1_data,
--                uim1_present, uim1_reset, usb0_hs, usb0_phy, vfr_0, vfr_1,
--                vsense_trigger ]
-+        enum: [ gpio, atest_char, atest_usb0, audio_ref_clk, cam_mclk,
-+                cci_async_in0, cci_i2c, cci, cmu_rng, coex_uart1_rx,
-+                coex_uart1_tx, cri_trng, dbg_out_clk, ddr_bist,
-+                ddr_pxi0_test, ddr_pxi1_test, gcc_gp1_clk, gcc_gp2_clk,
-+                gcc_gp3_clk, host2wlan_sol, ibi_i3c_qup0, ibi_i3c_qup1,
-+                jitter_bist_ref, mdp_vsync0_out, mdp_vsync1_out,
-+                mdp_vsync2_out, mdp_vsync3_out, mdp_vsync, nav,
-+                pcie0_clk_req, phase_flag, pll_bist_sync, pll_clk_aux,
-+                prng_rosc, qdss_cti_trig0, qdss_cti_trig1, qdss_gpio,
-+                qlink0_enable, qlink0_request, qlink0_wmss_reset,
-+                qup0_se0, qup0_se1, qup0_se2, qup0_se3, qup0_se4,
-+                qup1_se0, qup1_se1, qup1_se2, qup1_se2_l2, qup1_se3,
-+                qup1_se4, sd_write_protect, tb_trig_sdc1, tb_trig_sdc2,
-+                tgu_ch0_trigout, tgu_ch1_trigout, tgu_ch2_trigout,
-+                tgu_ch3_trigout, tmess_prng, tsense_pwm1_out,
-+                tsense_pwm2_out, uim0, uim1, usb0_hs_ac, usb0_phy_ps,
-+                vfr_0_mira, vfr_0_mirb, vfr_1, vsense_trigger_mirnat,
-+                wlan1_adc_dtest0, wlan1_adc_dtest1 ]
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index 7ec4fa4ff478f..7a427c8e92e29 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1573,7 +1573,6 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
+ 		}
  
-         required:
-           - pins
+ 		con->port_source_caps = pd_cap;
+-		typec_port_set_usb_power_delivery(con->port, con->pd);
+ 	}
+ 
+ 	memset(&pd_caps, 0, sizeof(pd_caps));
+@@ -1590,9 +1589,10 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
+ 		}
+ 
+ 		con->port_sink_caps = pd_cap;
+-		typec_port_set_usb_power_delivery(con->port, con->pd);
+ 	}
+ 
++	typec_port_set_usb_power_delivery(con->port, con->pd);
++
+ 	/* Alternate modes */
+ 	ret = ucsi_register_altmodes(con, UCSI_RECIPIENT_CON);
+ 	if (ret) {
 -- 
 2.43.0
 
