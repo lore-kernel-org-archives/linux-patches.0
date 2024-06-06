@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E78019753A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BED319753A;
 	Thu,  6 Jun 2024 14:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682987; cv=none; b=LWFgNXZMOny6UNAgCoo7MQy7SASLYLtzroiO2C/MrzQaHpTDz18IFrqOGt2GqR0vor3YMbVHtDpl3y/04sRBm83H2UtrBNXDI8lvIuCFnla0a21fPqT4O60C/FdXq1koU3iBHTzeEveN7Ya+pjRydrA6uDfPtUkaplUPBziOd1o=
+	t=1717682988; cv=none; b=S3QP48ZEEB+Ej61svmcsF3kVVL6y6Bx9xYd3Nv/O36NRb2Dp/+92q7OFacMwOEjNO8BcZVykixGfu7IXl/Osz9oy86SSNPhShqe4r8AteY7OML2K7UdiB3GCxNSHKvWPT6n76MXG0FsFafs0j9NBWf2H1KXU3cr98GEesfCPSdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682987; c=relaxed/simple;
-	bh=UBv0ei0u+GS+vy/9GboiPJ4ZlP5g+O7SX89gjDBzZeQ=;
+	s=arc-20240116; t=1717682988; c=relaxed/simple;
+	bh=AGPdF9t7Pl4k1yFdXu9zzWCYFsgc8VsVhiMWzNamwV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WP0FxuiE2RHv2IK0P+zrPVbLKqvI0ev2yQ3MOZy61MRavoHoMrOMn+IxONv0/EFRZO7KvPie3k/dLYdAY1bvHE6KFX+MJdnwEGFCFKxlk6N/vcmk+lx4vw0qzpY4PgnYuotOeqoyUt/Dt95s7SA8EgAeipYwoyV+FKzNNCHACTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6Ai941/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ncp4FDw9fZVOqtHkoSp/oMQxKL2AaRhJrSr9X5PwOL+yLtL9Qz645aW4wgGpa4mLsHCq9hC4YGp9SPpIlFtBOTd7zg5ig4wC/5hWUxEsgsrqOWY6GB/QVGWJ/3xaJMp2T5BGNXl8qXvmtoGRcx01houWu51EgfTqZi1q2j5afSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Z37eZB8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6Ai941/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A389C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Z37eZB8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3463C2BD10;
 	Thu,  6 Jun 2024 14:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682987;
-	bh=UBv0ei0u+GS+vy/9GboiPJ4ZlP5g+O7SX89gjDBzZeQ=;
+	bh=AGPdF9t7Pl4k1yFdXu9zzWCYFsgc8VsVhiMWzNamwV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6Ai941/DzAUKnSHKf+WZhw+jpzqGEYGiy35aQFQG49FNZLoyw4od9iXYJI9+pxDT
-	 HvNmGddn/r1GssZechv7dBWQUVwBGPj0VemnWXDFBHCETV4rh87iB3E7eIqtJo209n
-	 LWFN1AeGuLRHXl+CTWmCPDTL6Q/2atX0/H+rDkuM=
+	b=2Z37eZB81NYT7bZf6U6uCDLkKk9YDYFtbkwI3AzKY/5ANcIGFnd2P+3osLcBt+iRR
+	 hYVz/7Eo0D5gBhhG7+SjEFr708CvOO7FYy7G/ksJ60uRPsbx7O8hXDCsN93Nc8pGVr
+	 fgHOx8efJkKwwhtz2hFZUo0nrv789cz/1VoZthuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 175/374] media: stk1160: fix bounds checking in stk1160_copy_video()
-Date: Thu,  6 Jun 2024 16:02:34 +0200
-Message-ID: <20240606131657.755201510@linuxfoundation.org>
+Subject: [PATCH 6.9 140/374] dt-bindings: PCI: rockchip,rk3399-pcie: Add missing maxItems to ep-gpios
+Date: Thu,  6 Jun 2024 16:01:59 +0200
+Message-ID: <20240606131656.599880848@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -46,88 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit faa4364bef2ec0060de381ff028d1d836600a381 ]
+[ Upstream commit 52d06636a4ae4db24ebfe23fae7a525f7e983604 ]
 
-The subtract in this condition is reversed.  The ->length is the length
-of the buffer.  The ->bytesused is how many bytes we have copied thus
-far.  When the condition is reversed that means the result of the
-subtraction is always negative but since it's unsigned then the result
-is a very high positive value.  That means the overflow check is never
-true.
+Properties with GPIOs should define number of actual GPIOs, so add
+missing maxItems to ep-gpios.  Otherwise multiple GPIOs could be
+provided which is not a true hardware description.
 
-Additionally, the ->bytesused doesn't actually work for this purpose
-because we're not writing to "buf->mem + buf->bytesused".  Instead, the
-math to calculate the destination where we are writing is a bit
-involved.  You calculate the number of full lines already written,
-multiply by two, skip a line if necessary so that we start on an odd
-numbered line, and add the offset into the line.
-
-To fix this buffer overflow, just take the actual destination where we
-are writing, if the offset is already out of bounds print an error and
-return.  Otherwise, write up to buf->length bytes.
-
-Fixes: 9cb2173e6ea8 ("[media] media: Add stk1160 new driver (easycap replacement)")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: aa222f9311e1 ("dt-bindings: PCI: Convert Rockchip RK3399 PCIe to DT schema")
+Link: https://lore.kernel.org/linux-pci/20240401100058.15749-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/stk1160/stk1160-video.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ Documentation/devicetree/bindings/pci/rockchip,rk3399-pcie.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/usb/stk1160/stk1160-video.c b/drivers/media/usb/stk1160/stk1160-video.c
-index 366f0e4a5dc0d..e79c45db60ab5 100644
---- a/drivers/media/usb/stk1160/stk1160-video.c
-+++ b/drivers/media/usb/stk1160/stk1160-video.c
-@@ -99,7 +99,7 @@ void stk1160_buffer_done(struct stk1160 *dev)
- static inline
- void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- {
--	int linesdone, lineoff, lencopy;
-+	int linesdone, lineoff, lencopy, offset;
- 	int bytesperline = dev->width * 2;
- 	struct stk1160_buffer *buf = dev->isoc_ctl.buf;
- 	u8 *dst = buf->mem;
-@@ -139,8 +139,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- 	 * Check if we have enough space left in the buffer.
- 	 * In that case, we force loop exit after copy.
- 	 */
--	if (lencopy > buf->bytesused - buf->length) {
--		lencopy = buf->bytesused - buf->length;
-+	offset = dst - (u8 *)buf->mem;
-+	if (offset > buf->length) {
-+		dev_warn_ratelimited(dev->dev, "out of bounds offset\n");
-+		return;
-+	}
-+	if (lencopy > buf->length - offset) {
-+		lencopy = buf->length - offset;
- 		remain = lencopy;
- 	}
+diff --git a/Documentation/devicetree/bindings/pci/rockchip,rk3399-pcie.yaml b/Documentation/devicetree/bindings/pci/rockchip,rk3399-pcie.yaml
+index 531008f0b6ac3..002b728cbc718 100644
+--- a/Documentation/devicetree/bindings/pci/rockchip,rk3399-pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/rockchip,rk3399-pcie.yaml
+@@ -37,6 +37,7 @@ properties:
+     description: This property is needed if using 24MHz OSC for RC's PHY.
  
-@@ -182,8 +187,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- 		 * Check if we have enough space left in the buffer.
- 		 * In that case, we force loop exit after copy.
- 		 */
--		if (lencopy > buf->bytesused - buf->length) {
--			lencopy = buf->bytesused - buf->length;
-+		offset = dst - (u8 *)buf->mem;
-+		if (offset > buf->length) {
-+			dev_warn_ratelimited(dev->dev, "offset out of bounds\n");
-+			return;
-+		}
-+		if (lencopy > buf->length - offset) {
-+			lencopy = buf->length - offset;
- 			remain = lencopy;
- 		}
+   ep-gpios:
++    maxItems: 1
+     description: pre-reset GPIO
  
+   vpcie12v-supply:
 -- 
 2.43.0
 
