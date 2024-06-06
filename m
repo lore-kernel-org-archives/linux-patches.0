@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8862E19A282;
-	Thu,  6 Jun 2024 14:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135A919938F;
+	Thu,  6 Jun 2024 14:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683011; cv=none; b=rWVCSh6sFm+J9JJ8gt55al3SjJMkrICdDPAfKuD7gKsXzcgnIZ7zCSoERv3k1qxhlLaqsfYHfBoIqkv1TxNCum63gMJRzxExIpQ7JBl7ovO9TWl8x8Xhu6oiwIiwfqP+kseXKSj6FTMxW0y5tUsbbyj5kYf7BHbfGvL33Ba7z0M=
+	t=1717683012; cv=none; b=VWRfcfn/c+pnDWwjP8MZiIuMp1YAh8BbVLaqf/WsNGBkuc+GWIwYNGp81y9AJ14wo/Lu3A6K/2L3lKiy3uMefgjmT1v8EwPt5LHdne0UHEtAUCGX046TtLeDR0A42GNfEeYnSc5XTQbVmccPM1f1jKYw49k+akE6OiaG9nunT7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683011; c=relaxed/simple;
-	bh=4/SYIpBnSRw7Fmpz+0VYPBFAQ2hSGwAX0lYmiTbM2vw=;
+	s=arc-20240116; t=1717683012; c=relaxed/simple;
+	bh=BjHTP4YK/N+87R4CdTSKVhcDnOut1zGE8cPnfWGKmao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fW9CmBWxBx3xhVXS4ROy8TabDwAstQMlT53i7c9PmdX/D3meQvT0+49/RndZg8ebAlhGst/P/vg5Y7qbUEWGmFoJ6WD3y+8NHN4sFrWMTFZnt4HMWGXSk3kY8+2hIbAn1SGUNnXS/Rl38fGiZkdetLgg21i52GkHVjH6LjF5zWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=and1n/fK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=njTWECpP2f+GF12evE3wz7afq4jv3MLwO+43n9dNOW9fe8l1f1LiZFNaQsujwNbdck2eGUJUkpf+i8CR4WjMh9XSnvX9FmMgQQniyjnCa9oKQWkJN461KPztr5DWQnI/x0vVc7ihRRT2pTO8cGqc21wYSZbXf7Q8j9m5Cxmq0Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJ7/zZ65; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="and1n/fK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66573C4AF0C;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJ7/zZ65"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19D5C32786;
 	Thu,  6 Jun 2024 14:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683011;
-	bh=4/SYIpBnSRw7Fmpz+0VYPBFAQ2hSGwAX0lYmiTbM2vw=;
+	s=korg; t=1717683012;
+	bh=BjHTP4YK/N+87R4CdTSKVhcDnOut1zGE8cPnfWGKmao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=and1n/fKEIlkFyxhTrCuUPl+c27DlbFQQj0N6DSyaC/KGUe62t9GjTBuQPz6Pxpy2
-	 XKxAAqhuhRwFRTKm6wqZn8zFhvmw3dALHXz9VEZVg8eY43VU0qGSX1Zvjo6ivCURpm
-	 JWhFvFL30SFS7otXDSdvE+kZvYAoUu2WbWqkC17o=
+	b=iJ7/zZ65X/4aLiThYYtBma5XXr2LcXH/6OFds9XO9zMnIZP03AObIaY9dSc5qFxTm
+	 X7OPtJrzeOYoO0q3hL+D8Wm8rdtIPX8D2VMbqoU2BEr24IvVp07Z0RayfeE2Tu9A+M
+	 u7HK2dsnEU0IKXQbrem49lhYbMj0PKQ/ILBaSOhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 222/374] drm/nouveau: use tile_mode and pte_kind for VM_BIND bo allocations
-Date: Thu,  6 Jun 2024 16:03:21 +0200
-Message-ID: <20240606131659.235706921@linuxfoundation.org>
+Subject: [PATCH 6.9 223/374] Bluetooth: ISO: Handle PA sync when no BIGInfo reports are generated
+Date: Thu,  6 Jun 2024 16:03:22 +0200
+Message-ID: <20240606131659.272790105@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,126 +51,370 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
+From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 
-[ Upstream commit 959314c438caf1b62d787f02d54a193efda38880 ]
+[ Upstream commit d356c924e7a3adbea1e3e4ff4e098bcd9b99a82d ]
 
-Allow PTE kind and tile mode on BO create with VM_BIND, and add a
-GETPARAM to indicate this change. This is needed to support modifiers in
-NVK and ensure correctness when dealing with the nouveau GL driver.
+In case of a Broadcast Source that has PA enabled but no active BIG,
+a Broadcast Sink needs to establish PA sync and parse BASE from PA
+reports.
 
-The userspace modifiers implementation this is for can be found here:
-https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/24795
+This commit moves the allocation of a PA sync hcon from the BIGInfo
+advertising report event to the PA sync established event. After the
+first complete PA report, the hcon is notified to the ISO layer. A
+child socket is allocated and enqueued in the parent's accept queue.
 
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Signed-off-by: Mohamed Ahmed <mohamedahmedegypt2001@gmail.com>
-Reviewed-by: Faith Ekstrand <faith.ekstrand@collabora.com>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240509204352.7597-1-mohamedahmedegypt2001@gmail.com
+BIGInfo reports also need to be processed, to extract the encryption
+field and inform userspace. After the first BIGInfo report is received,
+the PA sync hcon is notified again to the ISO layer. Since a socket will
+be found this time, the socket state will transition to BT_CONNECTED and
+the userspace will be woken up using sk_state_change.
+
+Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: a5b862c6a221 ("Bluetooth: L2CAP: Fix div-by-zero in l2cap_le_flowctl_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_abi16.c |  3 ++
- drivers/gpu/drm/nouveau/nouveau_bo.c    | 44 +++++++++++--------------
- include/uapi/drm/nouveau_drm.h          |  7 ++++
- 3 files changed, 29 insertions(+), 25 deletions(-)
+ include/net/bluetooth/hci_core.h |  3 +-
+ net/bluetooth/hci_event.c        | 58 +++++++++++---------
+ net/bluetooth/iso.c              | 94 ++++++++++++++------------------
+ 3 files changed, 74 insertions(+), 81 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_abi16.c b/drivers/gpu/drm/nouveau/nouveau_abi16.c
-index 80f74ee0fc786..47e53e17b4e58 100644
---- a/drivers/gpu/drm/nouveau/nouveau_abi16.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_abi16.c
-@@ -272,6 +272,9 @@ nouveau_abi16_ioctl_getparam(ABI16_IOCTL_ARGS)
- 		getparam->value = (u64)ttm_resource_manager_usage(vram_mgr);
- 		break;
- 	}
-+	case NOUVEAU_GETPARAM_HAS_VMA_TILEMODE:
-+		getparam->value = 1;
-+		break;
- 	default:
- 		NV_PRINTK(dbg, cli, "unknown parameter %lld\n", getparam->param);
- 		return -EINVAL;
-diff --git a/drivers/gpu/drm/nouveau/nouveau_bo.c b/drivers/gpu/drm/nouveau/nouveau_bo.c
-index db8cbf6151129..186add400ea5f 100644
---- a/drivers/gpu/drm/nouveau/nouveau_bo.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_bo.c
-@@ -241,28 +241,28 @@ nouveau_bo_alloc(struct nouveau_cli *cli, u64 *size, int *align, u32 domain,
- 	}
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 5277c6d5134ca..970101184cf10 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1335,8 +1335,7 @@ hci_conn_hash_lookup_pa_sync_handle(struct hci_dev *hdev, __u16 sync_handle)
+ 	rcu_read_lock();
  
- 	nvbo->contig = !(tile_flags & NOUVEAU_GEM_TILE_NONCONTIG);
--	if (!nouveau_cli_uvmm(cli) || internal) {
--		/* for BO noVM allocs, don't assign kinds */
--		if (cli->device.info.family >= NV_DEVICE_INFO_V0_FERMI) {
--			nvbo->kind = (tile_flags & 0x0000ff00) >> 8;
--			if (!nvif_mmu_kind_valid(mmu, nvbo->kind)) {
--				kfree(nvbo);
--				return ERR_PTR(-EINVAL);
--			}
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+-		if (c->type != ISO_LINK ||
+-			!test_bit(HCI_CONN_PA_SYNC, &c->flags))
++		if (c->type != ISO_LINK)
+ 			continue;
  
--			nvbo->comp = mmu->kind[nvbo->kind] != nvbo->kind;
--		} else if (cli->device.info.family >= NV_DEVICE_INFO_V0_TESLA) {
--			nvbo->kind = (tile_flags & 0x00007f00) >> 8;
--			nvbo->comp = (tile_flags & 0x00030000) >> 16;
--			if (!nvif_mmu_kind_valid(mmu, nvbo->kind)) {
--				kfree(nvbo);
--				return ERR_PTR(-EINVAL);
--			}
--		} else {
--			nvbo->zeta = (tile_flags & 0x00000007);
-+	if (cli->device.info.family >= NV_DEVICE_INFO_V0_FERMI) {
-+		nvbo->kind = (tile_flags & 0x0000ff00) >> 8;
-+		if (!nvif_mmu_kind_valid(mmu, nvbo->kind)) {
-+			kfree(nvbo);
-+			return ERR_PTR(-EINVAL);
-+		}
+ 		if (c->sync_handle == sync_handle) {
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index cce73749f2dce..5449c6c086aa4 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -1,7 +1,7 @@
+ /*
+    BlueZ - Bluetooth protocol stack for Linux
+    Copyright (c) 2000-2001, 2010, Code Aurora Forum. All rights reserved.
+-   Copyright 2023 NXP
++   Copyright 2023-2024 NXP
+ 
+    Written 2000,2001 by Maxim Krasnyansky <maxk@qualcomm.com>
+ 
+@@ -6359,14 +6359,16 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
+ 	if (!(flags & HCI_PROTO_DEFER))
+ 		goto unlock;
+ 
+-	if (ev->status) {
+-		/* Add connection to indicate the failed PA sync event */
+-		pa_sync = hci_conn_add_unset(hdev, ISO_LINK, BDADDR_ANY,
+-					     HCI_ROLE_SLAVE);
++	/* Add connection to indicate PA sync event */
++	pa_sync = hci_conn_add_unset(hdev, ISO_LINK, BDADDR_ANY,
++				     HCI_ROLE_SLAVE);
+ 
+-		if (!pa_sync)
+-			goto unlock;
++	if (!pa_sync)
++		goto unlock;
+ 
++	pa_sync->sync_handle = le16_to_cpu(ev->handle);
 +
-+		nvbo->comp = mmu->kind[nvbo->kind] != nvbo->kind;
-+	} else if (cli->device.info.family >= NV_DEVICE_INFO_V0_TESLA) {
-+		nvbo->kind = (tile_flags & 0x00007f00) >> 8;
-+		nvbo->comp = (tile_flags & 0x00030000) >> 16;
-+		if (!nvif_mmu_kind_valid(mmu, nvbo->kind)) {
-+			kfree(nvbo);
-+			return ERR_PTR(-EINVAL);
- 		}
--		nvbo->mode = tile_mode;
-+	} else {
-+		nvbo->zeta = (tile_flags & 0x00000007);
++	if (ev->status) {
+ 		set_bit(HCI_CONN_PA_SYNC_FAILED, &pa_sync->flags);
+ 
+ 		/* Notify iso layer */
+@@ -6383,6 +6385,7 @@ static void hci_le_per_adv_report_evt(struct hci_dev *hdev, void *data,
+ 	struct hci_ev_le_per_adv_report *ev = data;
+ 	int mask = hdev->link_mode;
+ 	__u8 flags = 0;
++	struct hci_conn *pa_sync;
+ 
+ 	bt_dev_dbg(hdev, "sync_handle 0x%4.4x", le16_to_cpu(ev->sync_handle));
+ 
+@@ -6390,8 +6393,28 @@ static void hci_le_per_adv_report_evt(struct hci_dev *hdev, void *data,
+ 
+ 	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, ISO_LINK, &flags);
+ 	if (!(mask & HCI_LM_ACCEPT))
+-		hci_le_pa_term_sync(hdev, ev->sync_handle);
++		goto unlock;
+ 
++	if (!(flags & HCI_PROTO_DEFER))
++		goto unlock;
++
++	pa_sync = hci_conn_hash_lookup_pa_sync_handle
++			(hdev,
++			le16_to_cpu(ev->sync_handle));
++
++	if (!pa_sync)
++		goto unlock;
++
++	if (ev->data_status == LE_PA_DATA_COMPLETE &&
++	    !test_and_set_bit(HCI_CONN_PA_SYNC, &pa_sync->flags)) {
++		/* Notify iso layer */
++		hci_connect_cfm(pa_sync, 0);
++
++		/* Notify MGMT layer */
++		mgmt_device_connected(hdev, pa_sync, NULL, 0);
 +	}
-+	nvbo->mode = tile_mode;
- 
-+	if (!nouveau_cli_uvmm(cli) || internal) {
- 		/* Determine the desirable target GPU page size for the buffer. */
- 		for (i = 0; i < vmm->page_nr; i++) {
- 			/* Because we cannot currently allow VMM maps to fail
-@@ -304,12 +304,6 @@ nouveau_bo_alloc(struct nouveau_cli *cli, u64 *size, int *align, u32 domain,
- 		}
- 		nvbo->page = vmm->page[pi].shift;
- 	} else {
--		/* reject other tile flags when in VM mode. */
--		if (tile_mode)
--			return ERR_PTR(-EINVAL);
--		if (tile_flags & ~NOUVEAU_GEM_TILE_NONCONTIG)
--			return ERR_PTR(-EINVAL);
--
- 		/* Determine the desirable target GPU page size for the buffer. */
- 		for (i = 0; i < vmm->page_nr; i++) {
- 			/* Because we cannot currently allow VMM maps to fail
-diff --git a/include/uapi/drm/nouveau_drm.h b/include/uapi/drm/nouveau_drm.h
-index cd84227f1b42f..5402f77ee8594 100644
---- a/include/uapi/drm/nouveau_drm.h
-+++ b/include/uapi/drm/nouveau_drm.h
-@@ -68,6 +68,13 @@ extern "C" {
-  */
- #define NOUVEAU_GETPARAM_VRAM_USED 19
- 
-+/*
-+ * NOUVEAU_GETPARAM_HAS_VMA_TILEMODE
-+ *
-+ * Query whether tile mode and PTE kind are accepted with VM allocs or not.
-+ */
-+#define NOUVEAU_GETPARAM_HAS_VMA_TILEMODE 20
 +
- struct drm_nouveau_getparam {
- 	__u64 param;
- 	__u64 value;
++unlock:
+ 	hci_dev_unlock(hdev);
+ }
+ 
+@@ -6926,10 +6949,8 @@ static void hci_le_big_info_adv_report_evt(struct hci_dev *hdev, void *data,
+ 	hci_dev_lock(hdev);
+ 
+ 	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, ISO_LINK, &flags);
+-	if (!(mask & HCI_LM_ACCEPT)) {
+-		hci_le_pa_term_sync(hdev, ev->sync_handle);
++	if (!(mask & HCI_LM_ACCEPT))
+ 		goto unlock;
+-	}
+ 
+ 	if (!(flags & HCI_PROTO_DEFER))
+ 		goto unlock;
+@@ -6938,24 +6959,11 @@ static void hci_le_big_info_adv_report_evt(struct hci_dev *hdev, void *data,
+ 			(hdev,
+ 			le16_to_cpu(ev->sync_handle));
+ 
+-	if (pa_sync)
+-		goto unlock;
+-
+-	/* Add connection to indicate the PA sync event */
+-	pa_sync = hci_conn_add_unset(hdev, ISO_LINK, BDADDR_ANY,
+-				     HCI_ROLE_SLAVE);
+-
+ 	if (IS_ERR(pa_sync))
+ 		goto unlock;
+ 
+-	pa_sync->sync_handle = le16_to_cpu(ev->sync_handle);
+-	set_bit(HCI_CONN_PA_SYNC, &pa_sync->flags);
+-
+ 	/* Notify iso layer */
+-	hci_connect_cfm(pa_sync, 0x00);
+-
+-	/* Notify MGMT layer */
+-	mgmt_device_connected(hdev, pa_sync, NULL, 0);
++	hci_connect_cfm(pa_sync, 0);
+ 
+ unlock:
+ 	hci_dev_unlock(hdev);
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 6cb41f9d174e2..00c0d8413c638 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -54,7 +54,6 @@ static void iso_sock_kill(struct sock *sk);
+ enum {
+ 	BT_SK_BIG_SYNC,
+ 	BT_SK_PA_SYNC,
+-	BT_SK_PA_SYNC_TERM,
+ };
+ 
+ struct iso_pinfo {
+@@ -81,6 +80,7 @@ static bool check_ucast_qos(struct bt_iso_qos *qos);
+ static bool check_bcast_qos(struct bt_iso_qos *qos);
+ static bool iso_match_sid(struct sock *sk, void *data);
+ static bool iso_match_sync_handle(struct sock *sk, void *data);
++static bool iso_match_sync_handle_pa_report(struct sock *sk, void *data);
+ static void iso_sock_disconn(struct sock *sk);
+ 
+ typedef bool (*iso_sock_match_t)(struct sock *sk, void *data);
+@@ -197,21 +197,10 @@ static void iso_chan_del(struct sock *sk, int err)
+ 	sock_set_flag(sk, SOCK_ZAPPED);
+ }
+ 
+-static bool iso_match_conn_sync_handle(struct sock *sk, void *data)
+-{
+-	struct hci_conn *hcon = data;
+-
+-	if (test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags))
+-		return false;
+-
+-	return hcon->sync_handle == iso_pi(sk)->sync_handle;
+-}
+-
+ static void iso_conn_del(struct hci_conn *hcon, int err)
+ {
+ 	struct iso_conn *conn = hcon->iso_data;
+ 	struct sock *sk;
+-	struct sock *parent;
+ 
+ 	if (!conn)
+ 		return;
+@@ -227,26 +216,6 @@ static void iso_conn_del(struct hci_conn *hcon, int err)
+ 
+ 	if (sk) {
+ 		lock_sock(sk);
+-
+-		/* While a PA sync hcon is in the process of closing,
+-		 * mark parent socket with a flag, so that any residual
+-		 * BIGInfo adv reports that arrive before PA sync is
+-		 * terminated are not processed anymore.
+-		 */
+-		if (test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags)) {
+-			parent = iso_get_sock(&hcon->src,
+-					      &hcon->dst,
+-					      BT_LISTEN,
+-					      iso_match_conn_sync_handle,
+-					      hcon);
+-
+-			if (parent) {
+-				set_bit(BT_SK_PA_SYNC_TERM,
+-					&iso_pi(parent)->flags);
+-				sock_put(parent);
+-			}
+-		}
+-
+ 		iso_sock_clear_timer(sk);
+ 		iso_chan_del(sk, err);
+ 		release_sock(sk);
+@@ -860,6 +829,7 @@ static struct sock *iso_sock_alloc(struct net *net, struct socket *sock,
+ 	iso_pi(sk)->src_type = BDADDR_LE_PUBLIC;
+ 
+ 	iso_pi(sk)->qos = default_qos;
++	iso_pi(sk)->sync_handle = -1;
+ 
+ 	bt_sock_link(&iso_sk_list, sk);
+ 	return sk;
+@@ -907,7 +877,6 @@ static int iso_sock_bind_bc(struct socket *sock, struct sockaddr *addr,
+ 		return -EINVAL;
+ 
+ 	iso_pi(sk)->dst_type = sa->iso_bc->bc_bdaddr_type;
+-	iso_pi(sk)->sync_handle = -1;
+ 
+ 	if (sa->iso_bc->bc_sid > 0x0f)
+ 		return -EINVAL;
+@@ -984,7 +953,8 @@ static int iso_sock_bind(struct socket *sock, struct sockaddr *addr,
+ 	/* Allow the user to bind a PA sync socket to a number
+ 	 * of BISes to sync to.
+ 	 */
+-	if (sk->sk_state == BT_CONNECT2 &&
++	if ((sk->sk_state == BT_CONNECT2 ||
++	     sk->sk_state == BT_CONNECTED) &&
+ 	    test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags)) {
+ 		err = iso_sock_bind_pa_sk(sk, sa, addr_len);
+ 		goto done;
+@@ -1396,6 +1366,16 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+ 			}
+ 			release_sock(sk);
+ 			return 0;
++		case BT_CONNECTED:
++			if (test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags)) {
++				iso_conn_big_sync(sk);
++				sk->sk_state = BT_LISTEN;
++				release_sock(sk);
++				return 0;
++			}
++
++			release_sock(sk);
++			break;
+ 		case BT_CONNECT:
+ 			release_sock(sk);
+ 			return iso_connect_cis(sk);
+@@ -1541,7 +1521,9 @@ static int iso_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 	case BT_ISO_QOS:
+ 		if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND &&
+-		    sk->sk_state != BT_CONNECT2) {
++		    sk->sk_state != BT_CONNECT2 &&
++		    (!test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags) ||
++		    sk->sk_state != BT_CONNECTED)) {
+ 			err = -EINVAL;
+ 			break;
+ 		}
+@@ -1762,7 +1744,7 @@ static void iso_conn_ready(struct iso_conn *conn)
+ 	struct sock *sk = conn->sk;
+ 	struct hci_ev_le_big_sync_estabilished *ev = NULL;
+ 	struct hci_ev_le_pa_sync_established *ev2 = NULL;
+-	struct hci_evt_le_big_info_adv_report *ev3 = NULL;
++	struct hci_ev_le_per_adv_report *ev3 = NULL;
+ 	struct hci_conn *hcon;
+ 
+ 	BT_DBG("conn %p", conn);
+@@ -1799,12 +1781,12 @@ static void iso_conn_ready(struct iso_conn *conn)
+ 						      iso_match_sid, ev2);
+ 		} else if (test_bit(HCI_CONN_PA_SYNC, &hcon->flags)) {
+ 			ev3 = hci_recv_event_data(hcon->hdev,
+-						  HCI_EVT_LE_BIG_INFO_ADV_REPORT);
++						  HCI_EV_LE_PER_ADV_REPORT);
+ 			if (ev3)
+ 				parent = iso_get_sock(&hcon->src,
+ 						      &hcon->dst,
+ 						      BT_LISTEN,
+-						      iso_match_sync_handle,
++						      iso_match_sync_handle_pa_report,
+ 						      ev3);
+ 		}
+ 
+@@ -1847,7 +1829,6 @@ static void iso_conn_ready(struct iso_conn *conn)
+ 
+ 		if (ev3) {
+ 			iso_pi(sk)->qos = iso_pi(parent)->qos;
+-			iso_pi(sk)->qos.bcast.encryption = ev3->encryption;
+ 			hcon->iso_qos = iso_pi(sk)->qos;
+ 			iso_pi(sk)->bc_num_bis = iso_pi(parent)->bc_num_bis;
+ 			memcpy(iso_pi(sk)->bc_bis, iso_pi(parent)->bc_bis, ISO_MAX_NUM_BIS);
+@@ -1941,26 +1922,29 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ 
+ 	ev2 = hci_recv_event_data(hdev, HCI_EVT_LE_BIG_INFO_ADV_REPORT);
+ 	if (ev2) {
+-		/* Try to get PA sync listening socket, if it exists */
+-		sk = iso_get_sock(&hdev->bdaddr, bdaddr, BT_LISTEN,
+-				  iso_match_pa_sync_flag, NULL);
+-
+-		if (!sk) {
+-			sk = iso_get_sock(&hdev->bdaddr, bdaddr, BT_LISTEN,
+-					  iso_match_sync_handle, ev2);
+-
+-			/* If PA Sync is in process of terminating,
+-			 * do not handle any more BIGInfo adv reports.
+-			 */
+-
+-			if (sk && test_bit(BT_SK_PA_SYNC_TERM,
+-					   &iso_pi(sk)->flags))
+-				return 0;
++		/* Check if BIGInfo report has already been handled */
++		sk = iso_get_sock(&hdev->bdaddr, bdaddr, BT_CONNECTED,
++				  iso_match_sync_handle, ev2);
++		if (sk) {
++			sock_put(sk);
++			sk = NULL;
++			goto done;
+ 		}
+ 
++		/* Try to get PA sync socket, if it exists */
++		sk = iso_get_sock(&hdev->bdaddr, bdaddr, BT_CONNECT2,
++				  iso_match_sync_handle, ev2);
++		if (!sk)
++			sk = iso_get_sock(&hdev->bdaddr, bdaddr,
++					  BT_LISTEN,
++					  iso_match_sync_handle,
++					  ev2);
++
+ 		if (sk) {
+ 			int err;
+ 
++			iso_pi(sk)->qos.bcast.encryption = ev2->encryption;
++
+ 			if (ev2->num_bis < iso_pi(sk)->bc_num_bis)
+ 				iso_pi(sk)->bc_num_bis = ev2->num_bis;
+ 
+@@ -1979,6 +1963,8 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ 				}
+ 			}
+ 		}
++
++		goto done;
+ 	}
+ 
+ 	ev3 = hci_recv_event_data(hdev, HCI_EV_LE_PER_ADV_REPORT);
 -- 
 2.43.0
 
