@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB401AB53B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917461AB53B;
 	Thu,  6 Jun 2024 14:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683264; cv=none; b=YsHi+9dmso48gzxcEhASJD8K4gGeJZEvgdwutRktsNUuDMoWm+U+2cS/k49C+CA1WsUDvFhoBIiFHKx+8topgY8NF9M3BVayTO4JNd9HCuahEHM7nDvQkEu2tOoRq9CjBFihZ7EhK5lIF++NJXH9xI30t3FXOKBfvKV71m+Hqno=
+	t=1717683264; cv=none; b=AhglPopsxoORrAqJzWPTVWsu/hSJnoS+FILi4fjCxI8Pr57t9YlI2vpR1RS+U5BORZc1SEsfLaYlcI9QwOchVj5MkNtVAWI5Lh/fkwP3aklrUdlF4/whjVU6MkaDzP1vyLVexnGYr9rR37xLzegCgqiHHHxMLfuhiQv5RGTU6ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683264; c=relaxed/simple;
-	bh=XcFevsoNWzl6cDkT6VMhYGPgIKO6/KI0Ougchp05QnI=;
+	bh=4BhVvEcKo7JB3v3j+lgcTW9WjSmAJg9wNwuKqQ/FlQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1ikm0u5Q/Rokc0iTUeGB1T3v/T4QPT5EcJszsriy95aPfuEHAz0FZOOKoyNzr/hJ/G7mjof9Cs5yykM1WX3mIc+xElJFjV9pX6PTJB1OOWUW30LRa6cWXbl9+lRiDWsM5akhryCnCQUjyIejTn4dyouafYlvZR9fq8Brx4FQm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBzV0u2f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b0IhEdqmrMJkctxk07TDTvalt/BLbXhNiLUC3HtQFPUsKXhu2rR+euETpWt/SiDPFA9I9WZQzzjE1VFXEwogOpR31R8JVdh+tX6FQOrie6y7x4z89/n+eGCGCaPs/YuipNJipfxGVRzn0/KhZ5V5P3BL+ql/hZ7JNUFlJAi8VRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lcSFkkC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBzV0u2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE96BC32782;
-	Thu,  6 Jun 2024 14:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lcSFkkC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDC8C32786;
+	Thu,  6 Jun 2024 14:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683264;
-	bh=XcFevsoNWzl6cDkT6VMhYGPgIKO6/KI0Ougchp05QnI=;
+	bh=4BhVvEcKo7JB3v3j+lgcTW9WjSmAJg9wNwuKqQ/FlQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBzV0u2fjVH9kVVJwXZ8reWNUCHC/otlyk6Cvn9QuSdkhkMCx6RtWyAI2la5exeue
-	 WMv3qtwcpdOlcCgFHD9W2izrS43JZOE/hdfP3x+iIMeyfbbNRPsWMnQ4NCAjXI+8gn
-	 rcabGjEufTgxpinSJ9quuIfJWdmmz4DgTAlrkaJQ=
+	b=1lcSFkkCFXOJMs5GxpSIvQlYGS1WWF/u9zIKWk9hFZaAZWUfVz6dgaiGxTm0wZjb4
+	 HOWefmeCSDf30gfy2Y83rGlOeWIHGJsk+XGONjqzs5pwN6k4y5SAiWEgiUK6CGV8aL
+	 w152PlJDoxl/3KPpuqkOztqAXZG99wQTg1bI9OGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Andryuk <jandryuk@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 172/744] x86/pat: Fix W^X violation false-positives when running as Xen PV guest
-Date: Thu,  6 Jun 2024 15:57:24 +0200
-Message-ID: <20240606131737.940985820@linuxfoundation.org>
+Subject: [PATCH 6.1 139/473] pwm: sti: Prepare removing pwm_chip from driver data
+Date: Thu,  6 Jun 2024 16:01:08 +0200
+Message-ID: <20240606131704.530659393@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,147 +44,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 5bc8b0f5dac04cd4ebe47f8090a5942f2f2647ef ]
+[ Upstream commit 54272761ce7c475fa30a31b59b0cb89f7652b39e ]
 
-When running as Xen PV guest in some cases W^X violation WARN()s have
-been observed. Those WARN()s are produced by verify_rwx(), which looks
-into the PTE to verify that writable kernel pages have the NX bit set
-in order to avoid code modifications of the kernel by rogue code.
+This prepares the driver for further changes that will drop struct
+pwm_chip chip from struct sti_pwm_chip. Use the pwm_chip as driver data
+instead of the sti_pwm_chip to get access to the pwm_chip in
+sti_pwm_remove() without using pc->chip.
 
-As the NX bits of all levels of translation entries are or-ed and the
-RW bits of all levels are and-ed, looking just into the PTE isn't enough
-for the decision that a writable page is executable, too.
-
-When running as a Xen PV guest, the direct map PMDs and kernel high
-map PMDs share the same set of PTEs. Xen kernel initialization will set
-the NX bit in the direct map PMD entries, and not the shared PTEs.
-
-Fixes: 652c5bf380ad ("x86/mm: Refuse W^X violations")
-Reported-by: Jason Andryuk <jandryuk@gmail.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20240412151258.9171-5-jgross@suse.com
+Link: https://lore.kernel.org/r/56d53372aacff6871df4d6c6779c9dac94592696.1707900770.git.u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Stable-dep-of: 5bb0b194aeee ("pwm: sti: Simplify probe function using devm functions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/pat/set_memory.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ drivers/pwm/pwm-sti.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
-index a2dd773b1cd29..2d850f6bae701 100644
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -619,7 +619,8 @@ static inline pgprot_t static_protections(pgprot_t prot, unsigned long start,
-  * Validate strict W^X semantics.
-  */
- static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long start,
--				  unsigned long pfn, unsigned long npg)
-+				  unsigned long pfn, unsigned long npg,
-+				  bool nx, bool rw)
+diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
+index c782378dff5e5..8f7aff51787be 100644
+--- a/drivers/pwm/pwm-sti.c
++++ b/drivers/pwm/pwm-sti.c
+@@ -571,6 +571,7 @@ static int sti_pwm_probe(struct platform_device *pdev)
  {
- 	unsigned long end;
+ 	struct device *dev = &pdev->dev;
+ 	struct sti_pwm_compat_data *cdata;
++	struct pwm_chip *chip;
+ 	struct sti_pwm_chip *pc;
+ 	unsigned int i;
+ 	int irq, ret;
+@@ -578,6 +579,7 @@ static int sti_pwm_probe(struct platform_device *pdev)
+ 	pc = devm_kzalloc(dev, sizeof(*pc), GFP_KERNEL);
+ 	if (!pc)
+ 		return -ENOMEM;
++	chip = &pc->chip;
  
-@@ -641,6 +642,10 @@ static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long star
- 	if ((pgprot_val(new) & (_PAGE_RW | _PAGE_NX)) != _PAGE_RW)
- 		return new;
+ 	cdata = devm_kzalloc(dev, sizeof(*cdata), GFP_KERNEL);
+ 	if (!cdata)
+@@ -654,9 +656,9 @@ static int sti_pwm_probe(struct platform_device *pdev)
+ 			return -ENOMEM;
+ 	}
  
-+	/* Non-leaf translation entries can disable writing or execution. */
-+	if (!rw || nx)
-+		return new;
-+
- 	end = start + npg * PAGE_SIZE - 1;
- 	WARN_ONCE(1, "CPA detected W^X violation: %016llx -> %016llx range: 0x%016lx - 0x%016lx PFN %lx\n",
- 		  (unsigned long long)pgprot_val(old),
-@@ -742,7 +747,7 @@ pte_t *lookup_address(unsigned long address, unsigned int *level)
- EXPORT_SYMBOL_GPL(lookup_address);
+-	pc->chip.dev = dev;
+-	pc->chip.ops = &sti_pwm_ops;
+-	pc->chip.npwm = max(cdata->pwm_num_devs, cdata->cpt_num_devs);
++	chip->dev = dev;
++	chip->ops = &sti_pwm_ops;
++	chip->npwm = max(cdata->pwm_num_devs, cdata->cpt_num_devs);
  
- static pte_t *_lookup_address_cpa(struct cpa_data *cpa, unsigned long address,
--				  unsigned int *level)
-+				  unsigned int *level, bool *nx, bool *rw)
- {
- 	pgd_t *pgd;
+ 	for (i = 0; i < cdata->cpt_num_devs; i++) {
+ 		struct sti_cpt_ddata *ddata = &cdata->ddata[i];
+@@ -665,23 +667,24 @@ static int sti_pwm_probe(struct platform_device *pdev)
+ 		mutex_init(&ddata->lock);
+ 	}
  
-@@ -751,7 +756,7 @@ static pte_t *_lookup_address_cpa(struct cpa_data *cpa, unsigned long address,
- 	else
- 		pgd = cpa->pgd + pgd_index(address);
+-	ret = pwmchip_add(&pc->chip);
++	ret = pwmchip_add(chip);
+ 	if (ret < 0) {
+ 		clk_unprepare(pc->pwm_clk);
+ 		clk_unprepare(pc->cpt_clk);
+ 		return ret;
+ 	}
  
--	return lookup_address_in_pgd(pgd, address, level);
-+	return lookup_address_in_pgd_attr(pgd, address, level, nx, rw);
+-	platform_set_drvdata(pdev, pc);
++	platform_set_drvdata(pdev, chip);
+ 
+ 	return 0;
  }
  
- /*
-@@ -875,12 +880,13 @@ static int __should_split_large_page(pte_t *kpte, unsigned long address,
- 	pgprot_t old_prot, new_prot, req_prot, chk_prot;
- 	pte_t new_pte, *tmp;
- 	enum pg_level level;
-+	bool nx, rw;
+ static void sti_pwm_remove(struct platform_device *pdev)
+ {
+-	struct sti_pwm_chip *pc = platform_get_drvdata(pdev);
++	struct pwm_chip *chip = platform_get_drvdata(pdev);
++	struct sti_pwm_chip *pc = to_sti_pwmchip(chip);
  
- 	/*
- 	 * Check for races, another CPU might have split this page
- 	 * up already:
- 	 */
--	tmp = _lookup_address_cpa(cpa, address, &level);
-+	tmp = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
- 	if (tmp != kpte)
- 		return 1;
+-	pwmchip_remove(&pc->chip);
++	pwmchip_remove(chip);
  
-@@ -991,7 +997,8 @@ static int __should_split_large_page(pte_t *kpte, unsigned long address,
- 	new_prot = static_protections(req_prot, lpaddr, old_pfn, numpages,
- 				      psize, CPA_DETECT);
- 
--	new_prot = verify_rwx(old_prot, new_prot, lpaddr, old_pfn, numpages);
-+	new_prot = verify_rwx(old_prot, new_prot, lpaddr, old_pfn, numpages,
-+			      nx, rw);
- 
- 	/*
- 	 * If there is a conflict, split the large page.
-@@ -1072,6 +1079,7 @@ __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
- 	pte_t *pbase = (pte_t *)page_address(base);
- 	unsigned int i, level;
- 	pgprot_t ref_prot;
-+	bool nx, rw;
- 	pte_t *tmp;
- 
- 	spin_lock(&pgd_lock);
-@@ -1079,7 +1087,7 @@ __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
- 	 * Check for races, another CPU might have split this page
- 	 * up for us already:
- 	 */
--	tmp = _lookup_address_cpa(cpa, address, &level);
-+	tmp = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
- 	if (tmp != kpte) {
- 		spin_unlock(&pgd_lock);
- 		return 1;
-@@ -1620,10 +1628,11 @@ static int __change_page_attr(struct cpa_data *cpa, int primary)
- 	int do_split, err;
- 	unsigned int level;
- 	pte_t *kpte, old_pte;
-+	bool nx, rw;
- 
- 	address = __cpa_addr(cpa, cpa->curpage);
- repeat:
--	kpte = _lookup_address_cpa(cpa, address, &level);
-+	kpte = _lookup_address_cpa(cpa, address, &level, &nx, &rw);
- 	if (!kpte)
- 		return __cpa_process_fault(cpa, address, primary);
- 
-@@ -1645,7 +1654,8 @@ static int __change_page_attr(struct cpa_data *cpa, int primary)
- 		new_prot = static_protections(new_prot, address, pfn, 1, 0,
- 					      CPA_PROTECT);
- 
--		new_prot = verify_rwx(old_prot, new_prot, address, pfn, 1);
-+		new_prot = verify_rwx(old_prot, new_prot, address, pfn, 1,
-+				      nx, rw);
- 
- 		new_prot = pgprot_clear_protnone_bits(new_prot);
- 
+ 	clk_unprepare(pc->pwm_clk);
+ 	clk_unprepare(pc->cpt_clk);
 -- 
 2.43.0
 
