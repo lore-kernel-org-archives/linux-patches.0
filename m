@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A62219DF67;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD34619DF69;
 	Thu,  6 Jun 2024 14:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683496; cv=none; b=UQ0hChXLv5L2l7B+fGgm91BzcDHHSllyRuR+YkpsZm4RR5BcUD+1httW1DkdQFqJQaKmbzJ0MwmBGuFRnogY0NSz6C18UuDkWaz/i2C4SWOCcon3uMOH63PxSDZYYRMfzxUAUE93txkdVf3XobsY11O23C/6eHsloHUV3ulAdNg=
+	t=1717683496; cv=none; b=dSVSwqkmUzlCS3zuCZfPgsc/KLdBMB0KjzfK52y0p5QyKYsPK0VV9VrtIvS7cBZ+a5ZKRmUU2s8WkmCikdOunXd/lbhVOFFA0pg73DQAsiFVRfRB3N7v4dO0UKm0MudFe79JMSSAg3QQ/bQvuSDiZx6wAJ0JeR8CUMeZealvU0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683496; c=relaxed/simple;
-	bh=Snr7mB1LymYMymSvudC1cg40CH1oHrHO7mvsoIE2cHA=;
+	bh=E0MQZEi3m0BrJlAkg8PpK0p2VdjUmd8CqBccF1GYeGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kx4+Fg/u7UfeL96qiFV7OypQTQsSqe5xE4WZznYhTiZJ1zsATZdgf3JWpm4nswdqYaJhZ5kJIz3znXaHv0yxABn20JgXOQYBKy7lEBxVznvm2XL3tFvO3RE00+1UaQ4wyTD2LOI5cMdhwK8AqBKcthWKoDQ9mFyny9t7DgFOimg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sfR8GPy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y0yi30qFgE1vs0Xa1aF13opqm62dyVIX78xogCHrxg76wrPMNchCqe9hF9nJZQlOHDrNHMTu3v2W8q6P+6gWo82V97Wr9OJXDiYELGCEgXgcBByeRP9p9O7Dws1Qxq+fcAzqWFiDSDVnUsiK+46o88bJQPjIAb/r5McvZVq7d40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azz6Z3BM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sfR8GPy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059E3C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azz6Z3BM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D90EC2BD10;
 	Thu,  6 Jun 2024 14:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683496;
-	bh=Snr7mB1LymYMymSvudC1cg40CH1oHrHO7mvsoIE2cHA=;
+	bh=E0MQZEi3m0BrJlAkg8PpK0p2VdjUmd8CqBccF1GYeGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0sfR8GPy+9aG5lapNUvAqviCjqSKBNpNL1YAVc5Zxr7FHY5iu1870IQJ3zANvZG8y
-	 O8wWDg+ZJ6B85dM3MDGLoLc6aopWOyX+28/N6WV1+5ukvQB0vS5qWmZwUjXJgBAiuo
-	 hsBUyji/uJ9vA1PKTQOIqASAi+p0TivFuehQ9ACY=
+	b=azz6Z3BMmrdvuOeqKu04Gs0/CPCW6a5VkdAP34M7GD/fVPgXclPVYyQKEU9u1L4XX
+	 IbvQJjQBBC44BUuXUTgZvf85cDwymLNOiKIT3dVe2W6yKKxSsWt40bISkMMdal0O4C
+	 GaLU8zNc5oVkzf1FpkCCGBVTjukiW/aQWTLThj7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Richard Weinberger <richard@nod.at>,
+	Jan Kara <jack@suse.cz>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 386/473] um: Fix the declaration of kasan_map_memory
-Date: Thu,  6 Jun 2024 16:05:15 +0200
-Message-ID: <20240606131712.613993056@linuxfoundation.org>
+Subject: [PATCH 6.6 439/744] splice: remove permission hook from iter_file_splice_write()
+Date: Thu,  6 Jun 2024 16:01:51 +0200
+Message-ID: <20240606131746.563882173@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,63 +49,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 6a85e34c4d07d2ec0c153067baff338ac0db55ca ]
+[ Upstream commit d53471ba6f7ae97a4e223539029528108b705af1 ]
 
-Make it match its definition (size_t vs unsigned long). And declare
-it in a shared header to fix the -Wmissing-prototypes warning, as it
-is defined in the user code and called in the kernel code.
+All the callers of ->splice_write(), (e.g. do_splice_direct() and
+do_splice()) already check rw_verify_area() for the entire range
+and perform all the other checks that are in vfs_write_iter().
 
-Fixes: 5b301409e8bc ("UML: add support for KASAN under x86_64")
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Instead of creating another tiny helper for special caller, just
+open-code it.
+
+This is needed for fanotify "pre content" events.
+
+Suggested-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://lore.kernel.org/r/20231122122715.2561213-6-amir73il@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 7c98f7cb8fda ("remove call_{read,write}_iter() functions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/asm/kasan.h        | 1 -
- arch/um/include/shared/kern_util.h | 2 ++
- arch/um/os-Linux/mem.c             | 1 +
- 3 files changed, 3 insertions(+), 1 deletion(-)
+ fs/splice.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/arch/um/include/asm/kasan.h b/arch/um/include/asm/kasan.h
-index 0d6547f4ec85c..f97bb1f7b8514 100644
---- a/arch/um/include/asm/kasan.h
-+++ b/arch/um/include/asm/kasan.h
-@@ -24,7 +24,6 @@
+diff --git a/fs/splice.c b/fs/splice.c
+index d983d375ff113..a8f97c5e8cf0e 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -673,10 +673,13 @@ iter_file_splice_write(struct pipe_inode_info *pipe, struct file *out,
+ 		.u.file = out,
+ 	};
+ 	int nbufs = pipe->max_usage;
+-	struct bio_vec *array = kcalloc(nbufs, sizeof(struct bio_vec),
+-					GFP_KERNEL);
++	struct bio_vec *array;
+ 	ssize_t ret;
  
- #ifdef CONFIG_KASAN
- void kasan_init(void);
--void kasan_map_memory(void *start, unsigned long len);
- extern int kasan_um_is_ready;
- 
- #ifdef CONFIG_STATIC_LINK
-diff --git a/arch/um/include/shared/kern_util.h b/arch/um/include/shared/kern_util.h
-index 444bae755b16a..7372746c16875 100644
---- a/arch/um/include/shared/kern_util.h
-+++ b/arch/um/include/shared/kern_util.h
-@@ -67,4 +67,6 @@ extern void fatal_sigsegv(void) __attribute__ ((noreturn));
- 
- void um_idle_sleep(void);
- 
-+void kasan_map_memory(void *start, size_t len);
++	if (!out->f_op->write_iter)
++		return -EINVAL;
 +
- #endif
-diff --git a/arch/um/os-Linux/mem.c b/arch/um/os-Linux/mem.c
-index 8530b2e086049..c6c9495b14321 100644
---- a/arch/um/os-Linux/mem.c
-+++ b/arch/um/os-Linux/mem.c
-@@ -15,6 +15,7 @@
- #include <sys/vfs.h>
- #include <linux/magic.h>
- #include <init.h>
-+#include <kern_util.h>
- #include <os.h>
++	array = kcalloc(nbufs, sizeof(struct bio_vec), GFP_KERNEL);
+ 	if (unlikely(!array))
+ 		return -ENOMEM;
  
- /*
+@@ -684,6 +687,7 @@ iter_file_splice_write(struct pipe_inode_info *pipe, struct file *out,
+ 
+ 	splice_from_pipe_begin(&sd);
+ 	while (sd.total_len) {
++		struct kiocb kiocb;
+ 		struct iov_iter from;
+ 		unsigned int head, tail, mask;
+ 		size_t left;
+@@ -733,7 +737,10 @@ iter_file_splice_write(struct pipe_inode_info *pipe, struct file *out,
+ 		}
+ 
+ 		iov_iter_bvec(&from, ITER_SOURCE, array, n, sd.total_len - left);
+-		ret = vfs_iter_write(out, &from, &sd.pos, 0);
++		init_sync_kiocb(&kiocb, out);
++		kiocb.ki_pos = sd.pos;
++		ret = call_write_iter(out, &kiocb, &from);
++		sd.pos = kiocb.ki_pos;
+ 		if (ret <= 0)
+ 			break;
+ 
 -- 
 2.43.0
 
