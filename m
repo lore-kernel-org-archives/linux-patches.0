@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0F719DF7D;
-	Thu,  6 Jun 2024 14:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C41019DF7D;
+	Thu,  6 Jun 2024 14:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683504; cv=none; b=hygeRFMyLOlpEPFWKroWnWIemzGJaY5bANaPcDBzmpp1qnQVaxkKcw3aUTIhAsDEZiwqNsyeBNCeWFqLC5GJKmANG+hdS3j6DVP2yTENbhO9T3Na+/uFLqhB1OYY5PEKpGqIOz5S65BszwnbPnnEVXTrXsjoZIdxvL6wCw/Yg3o=
+	t=1717683505; cv=none; b=Ko0ACXjY98Z5XLFIC9qXfbqHgkxGMpxpYEVM0qTw+DEivaXQpkSGyxvHyCP9he/v8ckeUcrxUvh6Ey72H+o3uzFlw/YXHU/G6V3tYrF9HDprhDT0oHPnKfqqe79H0zuSaqiWNZQbvGNLQ0MAAW4vBNwoOb9bQbRt8vhF8TKu0Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683504; c=relaxed/simple;
-	bh=F6sNsDb1JwHIJKbLCL3H1fpZsNNQzZJdSTPxKz3hQic=;
+	s=arc-20240116; t=1717683505; c=relaxed/simple;
+	bh=VHc6BMR0DtyrZPlx8uMmYmd5gw0dBlnsp9RoROYbiLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bV6ixq2MBcLuH3FCjT2N2Ssw8eI9N2yOwPygWwJoCoCq+P6ekCEpFdEEaj3kZJNIJcypsFAvT7io9cbNvAeZayfvGs8uGhD8gcr62H+VEAUPqgqee5HPfL1KLgIDHuJsGYjpeTINK2fZ+WkAdw8kFHK5EPvCE3LSmSgA5wkH94A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c6QQg2S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KfWx9HbabRovCoVKSPpzK30i4uZWxJpzFp0OT9d3BMf4B82TbPTVVRDTAqTegnYI0RTjkSRv/fUeE/0IFJEge6OWBeph1AyanASRuVXc8C0cH1gESwCobpAtzVYP+a84bYrN1R5B506e3j+4VKtW3rgY0jobJo+nNSluMkaZ9T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOsDM+lc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c6QQg2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7FBAC2BD10;
-	Thu,  6 Jun 2024 14:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOsDM+lc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FDCC32782;
+	Thu,  6 Jun 2024 14:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683504;
-	bh=F6sNsDb1JwHIJKbLCL3H1fpZsNNQzZJdSTPxKz3hQic=;
+	s=korg; t=1717683505;
+	bh=VHc6BMR0DtyrZPlx8uMmYmd5gw0dBlnsp9RoROYbiLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2c6QQg2SH6YLJEmwcUFY1mHppvQj3ebfoD5AbqXCrWSRbXP2PrI9+VcSkpsoWYYQu
-	 9AkhX8fDgYgqTXXHGZM1avBbzBNn8w72CTRepVRz/Kb3CT0nF8Y36HQ8q82q5I1fmo
-	 n6wDcGj86yktvye494bN2VUDtFVwvcqoEeGD85u0=
+	b=EOsDM+lcL1/1B/49rCqNmgegue+GDTu58k4OqLdsk5lgvlFV1UtMrqKpXbVFTlglY
+	 jeNQ0EY6DyKbm5poeb7z/L1fsRLNJmPhdz8cOL+haZXL8j9MagFH4IU626PFbF2N9J
+	 3RtPcofhjWu9kIxPerFNuxXE+EJj+zZgjszo0Ojg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 446/744] iio: adc: ad9467: use spi_get_device_match_data()
-Date: Thu,  6 Jun 2024 16:01:58 +0200
-Message-ID: <20240606131746.805672006@linuxfoundation.org>
+Subject: [PATCH 6.1 394/473] drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails
+Date: Thu,  6 Jun 2024 16:05:23 +0200
+Message-ID: <20240606131712.856745452@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit b67cc85d45d5d2894d0e2812bba27d7b23befbe6 ]
+[ Upstream commit 46d4efcccc688cbacdd70a238bedca510acaa8e4 ]
 
-Make use of spi_get_device_match_data() to simplify things.
+Calling a6xx_destroy() before adreno_gpu_init() leads to a null pointer
+dereference on:
 
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20231207-iio-backend-prep-v2-5-a4a33bc4d70e@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: cf1c833f89e7 ("iio: adc: adi-axi-adc: only error out in major version mismatch")
+msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
+
+as gpu->pdev is only assigned in:
+
+a6xx_gpu_init()
+|_ adreno_gpu_init
+    |_ msm_gpu_init()
+
+Instead of relying on handwavy null checks down the cleanup chain,
+explicitly de-allocate the LLC data and free a6xx_gpu instead.
+
+Fixes: 76efc2453d0e ("drm/msm/gpu: Fix crash during system suspend after unbind")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/588919/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad9467.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/ad9467.c b/drivers/iio/adc/ad9467.c
-index f668313730cb6..b16d28c1adcb0 100644
---- a/drivers/iio/adc/ad9467.c
-+++ b/drivers/iio/adc/ad9467.c
-@@ -454,9 +454,7 @@ static int ad9467_probe(struct spi_device *spi)
- 	unsigned int id;
- 	int ret;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index cdce27adbd03b..d6a810b7cfa2c 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2040,7 +2040,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
  
--	info = of_device_get_match_data(&spi->dev);
--	if (!info)
--		info = (void *)spi_get_device_id(spi)->driver_data;
-+	info = spi_get_device_match_data(spi);
- 	if (!info)
- 		return -ENODEV;
+ 	ret = a6xx_set_supported_hw(&pdev->dev, config->rev);
+ 	if (ret) {
+-		a6xx_destroy(&(a6xx_gpu->base.base));
++		a6xx_llc_slices_destroy(a6xx_gpu);
++		kfree(a6xx_gpu);
+ 		return ERR_PTR(ret);
+ 	}
  
 -- 
 2.43.0
