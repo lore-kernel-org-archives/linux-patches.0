@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF68196DA8;
-	Thu,  6 Jun 2024 14:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDBB196DA2;
+	Thu,  6 Jun 2024 14:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683022; cv=none; b=imzivfKk+fTKOOuFeOr6z2q0v7z3FpHkMuMezVHRrBh5hhzej/a/35b+nCxSQnzYedi+uuwu7x4DjY6H32ClB9lRF6EV3n8jzNozSNmScUkbw4xQ5dgXWqtPYTuYxEk5OE4csNKDHEG4B/mJl9UdxzDqxq1u3SuCpCTv8JUq4b0=
+	t=1717683023; cv=none; b=XQyUkPiEtwzTTARhQV/lv2zf+Nwa7aZdtfe82jZ2ZX6jY+CB4Fz/WQzLK2LZZePW4ujRnPyzVMgk5sRMeKr/miQYs9aPFL/1jaUcWBba6d8W1JiT4f8nuh+fq6uI6eDeh1VY81ZrvY28g+d9vcDOYbtKznla5e7gfOQPHEdnw5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683022; c=relaxed/simple;
-	bh=kYd6Hle+YGzyPUVWdr1Lp2YJEebm2FNuNw093jScmiU=;
+	s=arc-20240116; t=1717683023; c=relaxed/simple;
+	bh=w86GACuHByk3Q34jgY+XnXeNSZmINPklASYgFalcb+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YWXLXeuMbwGTUknxMFaR8LaY4HWA7yD1FhaMZmvO08xjN1XNelBqDjekTTBWTiP2OIRNnEITy4t16kR6SmhFVc34cQXulKOVKeCidq4ujA8a3NbvWFTvnPippQZL+RI0+rT7lbQfpEXW+kNIP4SaRmrwjDMPdHSwu6PuyvpgM4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knwbhKJ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IgGi2RHml8WzbuzM2Uf2/Y1RSGqV8cU5D1aLT+iTik00ut5Ly557Elnk/TYvxgaH4AnmQ1+5V2DFPJsZ8BPvWYSYYXoUV4xDHkSbjWtaqd4Pawhshrem0jcHHIHg/4i/8qJR+C+E1UQIrYXn7SWG6bSAzyGuD612cbmOc29EEx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8HmPW8D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knwbhKJ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C250BC2BD10;
-	Thu,  6 Jun 2024 14:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8HmPW8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B852EC2BD10;
+	Thu,  6 Jun 2024 14:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683021;
-	bh=kYd6Hle+YGzyPUVWdr1Lp2YJEebm2FNuNw093jScmiU=;
+	s=korg; t=1717683022;
+	bh=w86GACuHByk3Q34jgY+XnXeNSZmINPklASYgFalcb+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knwbhKJ1dOC/jtjklu+cA9hsSHWyTtDc7V0Hu9ifr+eINhN+ps2jX3zegNaJaqG9y
-	 Gfzp3Cdz0aLSP3Lcd90vH1NpaLMstUlWEMKNeKpav3s80LeBDhazs/FNjH1UvNgwDm
-	 1GRyp9GxgELUJR/hftvKg5Hk0RlMNCNoVGr2ewUM=
+	b=e8HmPW8D51/1st6IAhdipLxZObt9e9hb9WcfWbp/0xbJr4my8e4z7X/MCf/5BHFSl
+	 /RrjhDWeNJelhPIjqklcOhqib9O2o8uS+vZBOSWiNkbw0H3IO5tus+yZapOK71Z/Vz
+	 tR5Im9efrYP0tA0yARIZzB/byBYOqDwxpTSYXQxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matti Vaittinen <mazziesaccount@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 243/374] regulator: pickable ranges: dont always cache vsel
-Date: Thu,  6 Jun 2024 16:03:42 +0200
-Message-ID: <20240606131659.958527754@linuxfoundation.org>
+Subject: [PATCH 6.9 244/374] regulator: tps6287x: Force writing VSEL bit
+Date: Thu,  6 Jun 2024 16:03:43 +0200
+Message-ID: <20240606131659.991269820@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,110 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit f4f4276f985a5aac7b310a4ed040b47e275e7591 ]
+[ Upstream commit 1ace99d7c7c4c801c0660246f741ff846a9b8e3c ]
 
-Some PMICs treat the vsel_reg same as apply-bit. Eg, when voltage range
-is changed, the new voltage setting is not taking effect until the vsel
-register is written.
+The data-sheet for TPS6287x-Q1
+https://www.ti.com/lit/ds/symlink/tps62873-q1.pdf
+states at chapter 9.3.6.1 Output Voltage Range:
 
-Add a flag 'range_applied_by_vsel' to the regulator desc to indicate this
-behaviour and to force the vsel value to be written to hardware if range
-was changed, even if the old selector was same as the new one.
+"Note that every change to the VRANGE[1:0] bits must be followed by a
+write to the VSET register, even if the value of the VSET[7:0] bits does
+not change."
+
+The current implementation of the driver uses the
+regulator_set_voltage_sel_pickable_regmap() helper which further uses
+regmap_update_bits() to write the VSET-register. The
+regmap_update_bits() will not access the hardware if the new register
+value is same as old. It is worth noting that this is true also when the
+register is marked volatile, which I can't say is wrong because
+'read-mnodify-write'-cycle with a volatile register is in any case
+something user should carefully consider.
+
+The 'range_applied_by_vsel'-flag in regulator desc was added to force
+the vsel register upodates by using regmap_write_bits(). This variant
+will always unconditionally write the bits to the hardware.
+
+It is worth noting that the vsel is now forced to be written to the
+hardware, whether the range was changed or not. This may cause a
+performance drop if users are wrtiting same voltage value repeteadly.
+
+It would be possible to read the range register to determine if it was
+changed, but this would be a performance issue for users who don't use
+reg cache for vsel.
+
+Always write the VSET register to the hardware regardless the cache.
 
 Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://msgid.link/r/ZktCpcGZdgHWuN_L@fedora
+Fixes: 7b0518fbf2be ("regulator: Add support for TI TPS6287x regulators")
+Link: https://msgid.link/r/ZktD50C5twF1EuKu@fedora
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 1ace99d7c7c4 ("regulator: tps6287x: Force writing VSEL bit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/helpers.c      | 43 ++++++++++++++++++++++----------
- include/linux/regulator/driver.h |  3 +++
- 2 files changed, 33 insertions(+), 13 deletions(-)
+ drivers/regulator/tps6287x-regulator.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/regulator/helpers.c b/drivers/regulator/helpers.c
-index d492683365532..6e1ace660b8cf 100644
---- a/drivers/regulator/helpers.c
-+++ b/drivers/regulator/helpers.c
-@@ -161,6 +161,32 @@ int regulator_get_voltage_sel_pickable_regmap(struct regulator_dev *rdev)
- }
- EXPORT_SYMBOL_GPL(regulator_get_voltage_sel_pickable_regmap);
- 
-+static int write_separate_vsel_and_range(struct regulator_dev *rdev,
-+					 unsigned int sel, unsigned int range)
-+{
-+	bool range_updated;
-+	int ret;
-+
-+	ret = regmap_update_bits_base(rdev->regmap, rdev->desc->vsel_range_reg,
-+				      rdev->desc->vsel_range_mask,
-+				      range, &range_updated, false, false);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Some PMICs treat the vsel_reg same as apply-bit. Force it to be
-+	 * written if the range changed, even if the old selector was same as
-+	 * the new one
-+	 */
-+	if (rdev->desc->range_applied_by_vsel && range_updated)
-+		return regmap_write_bits(rdev->regmap,
-+					rdev->desc->vsel_reg,
-+					rdev->desc->vsel_mask, sel);
-+
-+	return regmap_update_bits(rdev->regmap, rdev->desc->vsel_reg,
-+				  rdev->desc->vsel_mask, sel);
-+}
-+
- /**
-  * regulator_set_voltage_sel_pickable_regmap - pickable range set_voltage_sel
-  *
-@@ -199,21 +225,12 @@ int regulator_set_voltage_sel_pickable_regmap(struct regulator_dev *rdev,
- 	range = rdev->desc->linear_range_selectors_bitfield[i];
- 	range <<= ffs(rdev->desc->vsel_range_mask) - 1;
- 
--	if (rdev->desc->vsel_reg == rdev->desc->vsel_range_reg) {
--		ret = regmap_update_bits(rdev->regmap,
--					 rdev->desc->vsel_reg,
-+	if (rdev->desc->vsel_reg == rdev->desc->vsel_range_reg)
-+		ret = regmap_update_bits(rdev->regmap, rdev->desc->vsel_reg,
- 					 rdev->desc->vsel_range_mask |
- 					 rdev->desc->vsel_mask, sel | range);
--	} else {
--		ret = regmap_update_bits(rdev->regmap,
--					 rdev->desc->vsel_range_reg,
--					 rdev->desc->vsel_range_mask, range);
--		if (ret)
--			return ret;
--
--		ret = regmap_update_bits(rdev->regmap, rdev->desc->vsel_reg,
--				  rdev->desc->vsel_mask, sel);
--	}
-+	else
-+		ret = write_separate_vsel_and_range(rdev, sel, range);
- 
- 	if (ret)
- 		return ret;
-diff --git a/include/linux/regulator/driver.h b/include/linux/regulator/driver.h
-index 22a07c0900a41..f230a472ccd35 100644
---- a/include/linux/regulator/driver.h
-+++ b/include/linux/regulator/driver.h
-@@ -299,6 +299,8 @@ enum regulator_type {
-  * @vsel_range_reg: Register for range selector when using pickable ranges
-  *		    and ``regulator_map_*_voltage_*_pickable`` functions.
-  * @vsel_range_mask: Mask for register bitfield used for range selector
-+ * @range_applied_by_vsel: A flag to indicate that changes to vsel_range_reg
-+ *			   are only effective after vsel_reg is written
-  * @vsel_reg: Register for selector when using ``regulator_map_*_voltage_*``
-  * @vsel_mask: Mask for register bitfield used for selector
-  * @vsel_step: Specify the resolution of selector stepping when setting
-@@ -389,6 +391,7 @@ struct regulator_desc {
- 
- 	unsigned int vsel_range_reg;
- 	unsigned int vsel_range_mask;
-+	bool range_applied_by_vsel;
- 	unsigned int vsel_reg;
- 	unsigned int vsel_mask;
- 	unsigned int vsel_step;
+diff --git a/drivers/regulator/tps6287x-regulator.c b/drivers/regulator/tps6287x-regulator.c
+index 9b7c3d77789e3..3c9d79e003e4b 100644
+--- a/drivers/regulator/tps6287x-regulator.c
++++ b/drivers/regulator/tps6287x-regulator.c
+@@ -115,6 +115,7 @@ static struct regulator_desc tps6287x_reg = {
+ 	.vsel_mask = 0xFF,
+ 	.vsel_range_reg = TPS6287X_CTRL2,
+ 	.vsel_range_mask = TPS6287X_CTRL2_VRANGE,
++	.range_applied_by_vsel = true,
+ 	.ramp_reg = TPS6287X_CTRL1,
+ 	.ramp_mask = TPS6287X_CTRL1_VRAMP,
+ 	.ramp_delay_table = tps6287x_ramp_table,
 -- 
 2.43.0
 
