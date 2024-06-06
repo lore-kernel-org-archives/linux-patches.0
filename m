@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EBD219750E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C2819750E;
 	Thu,  6 Jun 2024 14:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682960; cv=none; b=tYy80ajrPgDfbYczfV93cCbbG2pe0cwtcoiesgk/vm7l+fMb9DDiUngvtEmZuATiV3zvPJE6kmZfNut8NEf3tzIf0JxWG5F3MdIDclsjaWjd7hcVcdxmMf5kCMT71A5VPj7ZpknZnTgTgxsfy+VEa1X2+AxXTwExO8CWhyNJ08w=
+	t=1717682961; cv=none; b=f21m6WjXtJmU2ZIXMIztclIPzI4lfgLvwyp7Jkb2PPDp8jIoytoW6pvZlv/8wCGzyG+tLI/duGNDbIU6wDFZDi+YhvgdqiSeqdMrkss5QyZa6Yrg3QeB90h97LcrlS2MjdFgfoKP23fyzV+gpFjtVJPmmSDrRnerftRdDaN1Fvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682960; c=relaxed/simple;
-	bh=tDckdRrXmHaRgFB+7G330QpnBOaxNx1Y/2lCZDXq9mU=;
+	s=arc-20240116; t=1717682961; c=relaxed/simple;
+	bh=vXD4GgbOIo10lSpjmIptZ+b/CvKKYqKFO2YvDYCCNLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+mt2Ek2xbLJV8+gs+nqzXJKh+PT7P2JmUFY1NyHv5eNpz+47rLCkmN7DEMkdqntAamPiik4u7ouUsVxLnKwV2bNmO0ihMShY1b/f6n5U5aqv2w7NStBWhEWB5GtKewFD3K3biB10PZSbSRwxtrxWpeFVZEyl9y7ql2QR7yp7W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cn1zmwSL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aHQvXWcb0v6zroS6q3almH090y0LuhPaZvPZ0F5J2a22LYdoJZHq8gEEZiP1EQmXxR5rvDuxSlsVrdImf9o4LMm8lu9s1lLT1H68B4JM9vgPJ9hlAhsFX4j+mTdX4U4gtICBv3NiOjEE4ATz/Rar3t9p1e8uNMeVYSGBm3LiPV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WW5GDrFq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cn1zmwSL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384B2C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WW5GDrFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BB5C32781;
 	Thu,  6 Jun 2024 14:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682960;
-	bh=tDckdRrXmHaRgFB+7G330QpnBOaxNx1Y/2lCZDXq9mU=;
+	bh=vXD4GgbOIo10lSpjmIptZ+b/CvKKYqKFO2YvDYCCNLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cn1zmwSLgFj3p5POEyvesS8BYgJiOSO2U44+sImsHHQZ7+4ewrUM7cWtiBkX/UynT
-	 NRIKywfvNKtQ1M/Q5uM+dysnMGWSCbW9ju0pL6AHEHmDtvrec3o8rsxXo1G/ArGzxs
-	 Ydku2ZEoLgs4XKFguVMqBK0I9Gvw4IP5tqDsbIl8=
+	b=WW5GDrFqIZOifhMTo1U7Bi44bn8JdRQ5mxeTj3gfqEcBTW6WfkknOwp3Ff3PeEwqv
+	 bqL5H3l2mGBNOAR/zyh9XmprdejJpm14pSbuJTNMNVVyshUPVa9XD4th0IXHtnasTk
+	 X17f7oOdJvG5GLdR5W4Tvy7QRQxoZcw9gV1U7mC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Jens Remus <jremus@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 126/374] LoongArch: Fix callchain parse error with kernel tracepoint events again
-Date: Thu,  6 Jun 2024 16:01:45 +0200
-Message-ID: <20240606131656.118093489@linuxfoundation.org>
+Subject: [PATCH 6.9 127/374] s390/vdso: Generate unwind information for C modules
+Date: Thu,  6 Jun 2024 16:01:46 +0200
+Message-ID: <20240606131656.153113519@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -50,68 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Jens Remus <jremus@linux.ibm.com>
 
-[ Upstream commit d6af2c76399f98444a5b4de96baf4b362d9f102b ]
+[ Upstream commit 10f70525365146046dddcc3d36bfaea2aee0376a ]
 
-With commit d3119bc985fb645 ("LoongArch: Fix callchain parse error with
-kernel tracepoint events"), perf can parse kernel callchain, but not
-complete and sometimes maybe error. The reason is LoongArch's unwinders
-(guess, prologue and orc) don't really need fp (i.e., regs[22]), and
-they use sp (i.e., regs[3]) as the frame address rather than the current
-stack pointer.
+GDB fails to unwind vDSO functions with error message "PC not saved",
+for instance when stepping through gettimeofday().
 
-Fix that by removing the assignment of regs[22], and instead assign the
-__builtin_frame_address(0) to regs[3].
+Add -fasynchronous-unwind-tables to CFLAGS to generate .eh_frame
+DWARF unwind information for the vDSO C modules.
 
-Without fix:
-
-  Children      Self  Command        Shared Object      Symbol
-  ........  ........  .............  .................  ................
-  33.91%    33.91%    swapper        [kernel.vmlinux]   [k] __schedule
-            |
-            |--33.04%--__schedule
-            |
-             --0.87%--__arch_cpu_idle
-                       __schedule
-
-With this fix:
-
-  Children      Self  Command        Shared Object      Symbol
-  ........  ........  .............  .................  ................
-  31.16%    31.16%    swapper        [kernel.vmlinux]   [k] __schedule
-            |
-            |--20.63%--smpboot_entry
-            |          cpu_startup_entry
-            |          schedule_idle
-            |          __schedule
-            |
-             --10.53%--start_kernel
-                       cpu_startup_entry
-                       schedule_idle
-                       __schedule
-
-Fixes: d3119bc985fb645 ("LoongArch: Fix callchain parse error with kernel tracepoint events")
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 4bff8cb54502 ("s390: convert to GENERIC_VDSO")
+Signed-off-by: Jens Remus <jremus@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/perf_event.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/s390/kernel/vdso32/Makefile | 3 ++-
+ arch/s390/kernel/vdso64/Makefile | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/perf_event.h b/arch/loongarch/include/asm/perf_event.h
-index 52b638059e40b..f948a0676daf8 100644
---- a/arch/loongarch/include/asm/perf_event.h
-+++ b/arch/loongarch/include/asm/perf_event.h
-@@ -13,8 +13,7 @@
+diff --git a/arch/s390/kernel/vdso32/Makefile b/arch/s390/kernel/vdso32/Makefile
+index b12a274cbb473..9090c0e5de254 100644
+--- a/arch/s390/kernel/vdso32/Makefile
++++ b/arch/s390/kernel/vdso32/Makefile
+@@ -20,7 +20,8 @@ KBUILD_AFLAGS_32 += -m31 -s
  
- #define perf_arch_fetch_caller_regs(regs, __ip) { \
- 	(regs)->csr_era = (__ip); \
--	(regs)->regs[3] = current_stack_pointer; \
--	(regs)->regs[22] = (unsigned long) __builtin_frame_address(0); \
-+	(regs)->regs[3] = (unsigned long) __builtin_frame_address(0); \
- }
+ KBUILD_CFLAGS_32 := $(filter-out -m64,$(KBUILD_CFLAGS))
+ KBUILD_CFLAGS_32 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_32))
+-KBUILD_CFLAGS_32 += -m31 -fPIC -shared -fno-common -fno-builtin
++KBUILD_CFLAGS_32 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_32))
++KBUILD_CFLAGS_32 += -m31 -fPIC -shared -fno-common -fno-builtin -fasynchronous-unwind-tables
  
- #endif /* __LOONGARCH_PERF_EVENT_H__ */
+ LDFLAGS_vdso32.so.dbg += -shared -soname=linux-vdso32.so.1 \
+ 	--hash-style=both --build-id=sha1 -melf_s390 -T
+diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
+index ef98327260972..a44f51de1f1ea 100644
+--- a/arch/s390/kernel/vdso64/Makefile
++++ b/arch/s390/kernel/vdso64/Makefile
+@@ -26,7 +26,8 @@ KBUILD_AFLAGS_64 += -m64
+ KBUILD_CFLAGS_64 := $(filter-out -m64,$(KBUILD_CFLAGS))
+ KBUILD_CFLAGS_64 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_64))
+ KBUILD_CFLAGS_64 := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_64))
+-KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin
++KBUILD_CFLAGS_64 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_64))
++KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin -fasynchronous-unwind-tables
+ ldflags-y := -shared -soname=linux-vdso64.so.1 \
+ 	     --hash-style=both --build-id=sha1 -T
+ 
 -- 
 2.43.0
 
