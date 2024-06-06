@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA0819754D;
-	Thu,  6 Jun 2024 14:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E98197551;
+	Thu,  6 Jun 2024 14:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682985; cv=none; b=ADKODHcozysZ2TiPkYHXjn/xY59QDl9QAmxrrA8KWKJu/5SoP15h+hORpx943ixC/WQDhTX6cK7WZ8VpYjzQY/HvcuDM++tItLLTDY2HtVHB2V+6bACkajrQy1ztNhyMBJWCrXntp4cH8AVVz0sshCee8E49/2fvl9MC/Oc1K4k=
+	t=1717682986; cv=none; b=c629oWan6Q2EWciSpgzxHNNnJdJ3YbGqv2WtdDI2fCXXOrgjkqzzEBDNsUFHpi3eNODpmLFKZS4kLh4Sux6rAS/NSE3zmA24evZRGTsMLP9z7X8l/w0w5wxxForCtbvz2pi5uROI/tSpI696bIZBy02eIqQTNxiNVlQVWTzGUFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682985; c=relaxed/simple;
-	bh=AHDTXa7FmOCs9kOuyysHEoWHPUI60v0dRgnURjjfkdc=;
+	s=arc-20240116; t=1717682986; c=relaxed/simple;
+	bh=yiwomz5EhsMbqUps8CWITtFtkDBabRaeoKZ5XExezMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4HqMX65I34P9cJMxnYpP18zUU2bYe5QSwWF7J/XV/62NUFHLsmO06MEEvePHq651DMnamMHj3e6eRJREfDdw5glUWLMpnyI/2v/7PIjJUXG93q4UbsUxwwN2lpRI4M4FZdoD5I8p3acrxj8WyHAEsutVZABB/nUN1DnVtdnXhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKyktE8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UAhipltcOuZ/cDbRl0LsOXEbnDq+8ROY9iyc93yIaxXxbBgU53pILe4HWXT/IipdLismII3rKw27gFQ+1i5CTioSkSi4waTG26gY8x5mkIKTBGN3bGYHBjrlG6sv7RVYKvXZXsExEWdSQtkMjhzsnWWblaJyQwI2OiRVihQcq/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znPxQ0eo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKyktE8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6245FC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znPxQ0eo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC66C32782;
 	Thu,  6 Jun 2024 14:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717682985;
-	bh=AHDTXa7FmOCs9kOuyysHEoWHPUI60v0dRgnURjjfkdc=;
+	bh=yiwomz5EhsMbqUps8CWITtFtkDBabRaeoKZ5XExezMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eKyktE8dJ5bBZLSFkLuXyo25cmEnuLaovv5gZNVBQVbl4h+BDRRQt1jXj6zr+4GVy
-	 F3b0890JwLr5gB4DnA02i4dB1dyXHJceyMWbQqtySmNbvs0SXVE3/4mT6M5Mz6M/3L
-	 eBquIsT7yVeXxnqi1912G0xCwNEOOlSigvFF467I=
+	b=znPxQ0eoxZQhUD6mlFCjSPns/wXQeQaMhQZeWEBo0E/o6MLhslJSeqO3UhbMVPjH3
+	 5L53MKJDLfKGao/VR9H2qd3E4lcfFkinliT0cAkz5T9AkiGxdw65q28LL8MZS+1J/y
+	 GGUhSiu8LoxsTR52+oO2QsT+nfjjniMcoL/iX1Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 171/374] fs/ntfs3: Use 64 bit variable to avoid 32 bit overflow
-Date: Thu,  6 Jun 2024 16:02:30 +0200
-Message-ID: <20240606131657.626863283@linuxfoundation.org>
+Subject: [PATCH 6.9 172/374] fs/ntfs3: Use variable length array instead of fixed size
+Date: Thu,  6 Jun 2024 16:02:31 +0200
+Message-ID: <20240606131657.659030272@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,32 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit e931f6b630ffb22d66caab202a52aa8cbb10c649 ]
+[ Upstream commit 1997cdc3e727526aa5d84b32f7cbb3f56459b7ef ]
 
-For example, in the expression:
-	vbo = 2 * vbo + skip
+Should fix smatch warning:
+	ntfs_set_label() error: __builtin_memcpy() 'uni->name' too small (20 vs 256)
 
-Fixes: b46acd6a6a627 ("fs/ntfs3: Add NTFS journal")
+Fixes: 4534a70b7056f ("fs/ntfs3: Add headers and misc files")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202401091421.3RJ24Mn3-lkp@intel.com/
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ntfs3/ntfs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 855519713bf79..4085fe30bf481 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -1184,7 +1184,8 @@ static int read_log_page(struct ntfs_log *log, u32 vbo,
- static int log_read_rst(struct ntfs_log *log, bool first,
- 			struct restart_info *info)
- {
--	u32 skip, vbo;
-+	u32 skip;
-+	u64 vbo;
- 	struct RESTART_HDR *r_page = NULL;
+diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
+index 9c7478150a035..3d6143c7abc03 100644
+--- a/fs/ntfs3/ntfs.h
++++ b/fs/ntfs3/ntfs.h
+@@ -59,7 +59,7 @@ struct GUID {
+ struct cpu_str {
+ 	u8 len;
+ 	u8 unused;
+-	u16 name[10];
++	u16 name[];
+ };
  
- 	/* Determine which restart area we are looking for. */
+ struct le_str {
 -- 
 2.43.0
 
