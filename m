@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D83C1B29A2;
-	Thu,  6 Jun 2024 14:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307471B1519;
+	Thu,  6 Jun 2024 14:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683399; cv=none; b=NhColpIJ37a1oKvMKT5WCFy8ur1ohN1ZawESSW+y+PMI7CDUyrO/o3trDK6YP0EAhnnROCm17Hba0JTEyhU4ov2sqXL/Z+4Y9Rh69dRtDwSN4kwZ58EbzahQQYU72B8hC1UHDOatxV4xgx2EZnC9l+gQ/ZahxaGpqj9hgu1yoAU=
+	t=1717683400; cv=none; b=XXr9gFoSFKN69bF59oy0J2iw/w2/c6gXVSkNbCs/DbGbEKrRbxcKiwWUtD/ZgGiD0b/CjfKUe5VRnrJgkp8J2Yrgmg05DxBPsAOj/EmfIN/OJAdPsPdOfQujhqNCsZ4UThy6ja25jFsKfUMM3Q0Ad3KOfSr8TK8vzhKnqZgZ4rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683399; c=relaxed/simple;
-	bh=lLIRAd0r/T68IkT+JaiwKjtWi2dgZDoVKAhMbnaf/3w=;
+	s=arc-20240116; t=1717683400; c=relaxed/simple;
+	bh=VwZVw69QCD2Yg1v2B9z+Lz+eu2vJYWtoksY5ag4LzWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjoEEN9qQzCNPpb0yWER1DR+3UrVqdVdkwZgT7eqAcql0wiYKmtMqt5ZMMAJgejmjUWtYQfvVGO/8YzIb7s1W3D6PEyXR7xac1qpM49AcfslStC//SRruWMovKoho9RZMEiC+s7M/uYplBVA96L0EN2qCQlbw/5VjQZtc32Ge60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csoDku1i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IBO8tf21bTDvgqZMw5005uF9P4Gapgv4raf+rFKCsZwK+InxM5ngXgmaOmUpsNwkCBMK7fKbZqT9CZ1ShdM9zBX5iv471LfVgcRBgqSfSjybJshg3wKDO4uhlBhlGfa2asXGcdrbeTTDJrLgNqyTeHI+oDBqP3+rE851QpfyWSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN9rUWhx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csoDku1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79656C2BD10;
-	Thu,  6 Jun 2024 14:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN9rUWhx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BADC2BD10;
+	Thu,  6 Jun 2024 14:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683399;
-	bh=lLIRAd0r/T68IkT+JaiwKjtWi2dgZDoVKAhMbnaf/3w=;
+	s=korg; t=1717683400;
+	bh=VwZVw69QCD2Yg1v2B9z+Lz+eu2vJYWtoksY5ag4LzWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=csoDku1iyZ66kov3bIP0NAOxN/6BTIKpzsrKbSkZZbejwmTHmmqrEvUnlSz3b4AVR
-	 6NJzrLpKNRxQpqsK00t3Qr/tPzMWzEV1nqO8rrDyu77rS4SI7grt2TOk6BZZClxGAx
-	 hdf4CpuGOF7R2dHRVUa8bvrLtW5H0temliLogSOk=
+	b=EN9rUWhxJOn5W7VgfinUdV0MOKs69NgIJjGqrCIkNnYRexmXLrhqzcFzUdga1tlqv
+	 vcq5Hu+oOyid/jrFX9GvQkTurGO97NqKnaLC4K62eOY+wN8yLmpP2nF6SX0E/WjLUW
+	 /BtReK/Z6qT+vYaVt/MJoHF/Dl/zBeO+TCvG7o5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 283/473] f2fs: multidev: fix to recognize valid zero block address
-Date: Thu,  6 Jun 2024 16:03:32 +0200
-Message-ID: <20240606131709.251296465@linuxfoundation.org>
+Subject: [PATCH 6.6 344/744] RDMA/hns: Modify the print level of CQE error
+Date: Thu,  6 Jun 2024 16:00:16 +0200
+Message-ID: <20240606131743.509556850@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,121 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 33e62cd7b4c281cd737c62e5d8c4f0e602a8c5c5 ]
+[ Upstream commit 349e859952285ab9689779fb46de163f13f18f43 ]
 
-As reported by Yi Zhang in mailing list [1], kernel warning was catched
-during zbd/010 test as below:
+Too much print may lead to a panic in kernel. Change ibdev_err() to
+ibdev_err_ratelimited(), and change the printing level of cqe dump
+to debug level.
 
-./check zbd/010
-zbd/010 (test gap zone support with F2FS)                    [failed]
-    runtime    ...  3.752s
-    something found in dmesg:
-    [ 4378.146781] run blktests zbd/010 at 2024-02-18 11:31:13
-    [ 4378.192349] null_blk: module loaded
-    [ 4378.209860] null_blk: disk nullb0 created
-    [ 4378.413285] scsi_debug:sdebug_driver_probe: scsi_debug: trim
-poll_queues to 0. poll_q/nr_hw = (0/1)
-    [ 4378.422334] scsi host15: scsi_debug: version 0191 [20210520]
-                     dev_size_mb=1024, opts=0x0, submit_queues=1, statistics=0
-    [ 4378.434922] scsi 15:0:0:0: Direct-Access-ZBC Linux
-scsi_debug       0191 PQ: 0 ANSI: 7
-    [ 4378.443343] scsi 15:0:0:0: Power-on or device reset occurred
-    [ 4378.449371] sd 15:0:0:0: Attached scsi generic sg5 type 20
-    [ 4378.449418] sd 15:0:0:0: [sdf] Host-managed zoned block device
-    ...
-    (See '/mnt/tests/gitlab.com/api/v4/projects/19168116/repository/archive.zip/storage/blktests/blk/blktests/results/nodev/zbd/010.dmesg'
-
-WARNING: CPU: 22 PID: 44011 at fs/iomap/iter.c:51
-CPU: 22 PID: 44011 Comm: fio Not tainted 6.8.0-rc3+ #1
-RIP: 0010:iomap_iter+0x32b/0x350
-Call Trace:
- <TASK>
- __iomap_dio_rw+0x1df/0x830
- f2fs_file_read_iter+0x156/0x3d0 [f2fs]
- aio_read+0x138/0x210
- io_submit_one+0x188/0x8c0
- __x64_sys_io_submit+0x8c/0x1a0
- do_syscall_64+0x86/0x170
- entry_SYSCALL_64_after_hwframe+0x6e/0x76
-
-Shinichiro Kawasaki helps to analyse this issue and proposes a potential
-fixing patch in [2].
-
-Quoted from reply of Shinichiro Kawasaki:
-
-"I confirmed that the trigger commit is dbf8e63f48af as Yi reported. I took a
-look in the commit, but it looks fine to me. So I thought the cause is not
-in the commit diff.
-
-I found the WARN is printed when the f2fs is set up with multiple devices,
-and read requests are mapped to the very first block of the second device in the
-direct read path. In this case, f2fs_map_blocks() and f2fs_map_blocks_cached()
-modify map->m_pblk as the physical block address from each block device. It
-becomes zero when it is mapped to the first block of the device. However,
-f2fs_iomap_begin() assumes that map->m_pblk is the physical block address of the
-whole f2fs, across the all block devices. It compares map->m_pblk against
-NULL_ADDR == 0, then go into the unexpected branch and sets the invalid
-iomap->length. The WARN catches the invalid iomap->length.
-
-This WARN is printed even for non-zoned block devices, by following steps.
-
- - Create two (non-zoned) null_blk devices memory backed with 128MB size each:
-   nullb0 and nullb1.
- # mkfs.f2fs /dev/nullb0 -c /dev/nullb1
- # mount -t f2fs /dev/nullb0 "${mount_dir}"
- # dd if=/dev/zero of="${mount_dir}/test.dat" bs=1M count=192
- # dd if="${mount_dir}/test.dat" of=/dev/null bs=1M count=192 iflag=direct
-
-..."
-
-So, the root cause of this issue is: when multi-devices feature is on,
-f2fs_map_blocks() may return zero blkaddr in non-primary device, which is
-a verified valid block address, however, f2fs_iomap_begin() treats it as
-an invalid block address, and then it triggers the warning in iomap
-framework code.
-
-Finally, as discussed, we decide to use a more simple and direct way that
-checking (map.m_flags & F2FS_MAP_MAPPED) condition instead of
-(map.m_pblk != NULL_ADDR) to fix this issue.
-
-Thanks a lot for the effort of Yi Zhang and Shinichiro Kawasaki on this
-issue.
-
-[1] https://lore.kernel.org/linux-f2fs-devel/CAHj4cs-kfojYC9i0G73PRkYzcxCTex=-vugRFeP40g_URGvnfQ@mail.gmail.com/
-[2] https://lore.kernel.org/linux-f2fs-devel/gngdj77k4picagsfdtiaa7gpgnup6fsgwzsltx6milmhegmjff@iax2n4wvrqye/
-
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Closes: https://lore.kernel.org/linux-f2fs-devel/CAHj4cs-kfojYC9i0G73PRkYzcxCTex=-vugRFeP40g_URGvnfQ@mail.gmail.com/
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Tested-by: Yi Zhang <yi.zhang@redhat.com>
-Fixes: 1517c1a7a445 ("f2fs: implement iomap operations")
-Fixes: 8d3c1fa3fa5e ("f2fs: don't rely on F2FS_MAP_* in f2fs_iomap_begin")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 7c044adca272 ("RDMA/hns: Simplify the cqe code of poll cq")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240412091616.370789-11-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index b83b8ac29f430..ea9b78b5a1ebe 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -4195,7 +4195,7 @@ static int f2fs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
- 	if (WARN_ON_ONCE(map.m_pblk == COMPRESS_ADDR))
- 		return -EINVAL;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 2f88e7853abff..32fb2c00a8f26 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -3698,8 +3698,9 @@ static void get_cqe_status(struct hns_roce_dev *hr_dev, struct hns_roce_qp *qp,
+ 		   wc->status == IB_WC_WR_FLUSH_ERR))
+ 		return;
  
--	if (map.m_pblk != NULL_ADDR) {
-+	if (map.m_flags & F2FS_MAP_MAPPED) {
- 		iomap->length = blks_to_bytes(inode, map.m_len);
- 		iomap->type = IOMAP_MAPPED;
- 		iomap->flags |= IOMAP_F_MERGED;
+-	ibdev_err(&hr_dev->ib_dev, "error cqe status 0x%x:\n", cqe_status);
+-	print_hex_dump(KERN_ERR, "", DUMP_PREFIX_NONE, 16, 4, cqe,
++	ibdev_err_ratelimited(&hr_dev->ib_dev, "error cqe status 0x%x:\n",
++			      cqe_status);
++	print_hex_dump(KERN_DEBUG, "", DUMP_PREFIX_NONE, 16, 4, cqe,
+ 		       cq->cqe_size, false);
+ 	wc->vendor_err = hr_reg_read(cqe, CQE_SUB_STATUS);
+ 
 -- 
 2.43.0
 
