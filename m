@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF1B1BF8FF;
-	Thu,  6 Jun 2024 14:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312411BF8FF;
+	Thu,  6 Jun 2024 14:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683553; cv=none; b=m/zpSIOKV8RhW1BR06/2rIpRqUtEr2/0sozhWbpFtYjcL6jo3CdqzH6RdHiDO4xgBRiFKJkWKUEVoJYM4DdrYqcfQ9HVF1wpBI9/xF5Cj0jegk8NziAzF5zVP7IlN1nmKRzY02uGGbemmd14++HCjAkiKWp+O3IKRut4DyEHs6Y=
+	t=1717683554; cv=none; b=lZuJVb1X1RQK94JWAX9M7/iRfGzLgGsMyX9m4Rm+qKFPkqMVQRKXXJ3VeZZUChvNMzKwNY6Lcv19LvK8Ccq6hmnS3op/L415IysX+5MTHMp/qSm/+F5ehKHpMbQyPVzK0Wm0IQBJMDjgb5FJBoATL+m1R66MZDTak8+ImcSRlT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683553; c=relaxed/simple;
-	bh=7pWnyTko/WelJv33sKtARfjszVuTbx/UelbRBvEImY8=;
+	s=arc-20240116; t=1717683554; c=relaxed/simple;
+	bh=Naofmm5cfyJ7UBJObjjWEucTmTmkSL03gl3ZXJhpeFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ofj7rsm8VJ5H5iwTvKNgZ5FQazw5dRMnCF8XcpuS0SnHAZbFWyDiel2dFtU0OWdLU9eBU5pk/VYNM2Jp9IUZoodAutAPWv8F+ybx+fw3nMN1iwSIDc1M+vPLJI20+fvUuBz8LANZdWKbqwRcopiR0GgcF8X/UqfeFOUsUAwLvFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8zIl8m/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d0RaAPx0PFgMFnQiDi5SfPwtuE8o74B1V+v4iVuQvg/n9P0j43hx/J/e9KPfn458lVDFZiSVRHCRVxFmpOQKeDIhc3XSqTR5K5+wzVxy4gsA531MhSrsK9IWupYYCtmmmhIPQW7zxyU7Vm3BAXs/fd9TesnuQGd2+5VLFpZM+nQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fya6Z8cy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8zIl8m/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803F0C2BD10;
-	Thu,  6 Jun 2024 14:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fya6Z8cy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F51EC32781;
+	Thu,  6 Jun 2024 14:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683553;
-	bh=7pWnyTko/WelJv33sKtARfjszVuTbx/UelbRBvEImY8=;
+	s=korg; t=1717683554;
+	bh=Naofmm5cfyJ7UBJObjjWEucTmTmkSL03gl3ZXJhpeFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b8zIl8m/U8yeQEYRG9rD3snf/Wlc71fbRx72SHgWhq3aNUk5UEdX6wkcZOPdZzmZb
-	 iAQcPNw3e/ZUPBV9UxGqlREO3j97jzlyQ6CwBaoBN5XKU4WxdEIAZ9xbLYJqaLJcxy
-	 +oub5C5lC71IUhZ+cc9bWcmwLkzphrHgViQO76sU=
+	b=fya6Z8cyN8gbCf4f4OeZthe98jWhgPtSlv7ioD4TMtzBydaA/Y1V3GN28HKCDU1L3
+	 m78MthBL5WxA/qE5BY3Yl4L+U18yMr4qadMzs40Wc0K804Qqrk9uaxZxaIe1INvnvd
+	 JR+tRnPxRzvFVBxQ7fcNlFMoUPvWb5TZ9EYJkFUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 444/473] ALSA: jack: Use guard() for locking
-Date: Thu,  6 Jun 2024 16:06:13 +0200
-Message-ID: <20240606131714.399753558@linuxfoundation.org>
+Subject: [PATCH 6.6 496/744] extcon: max8997: select IRQ_DOMAIN instead of depending on it
+Date: Thu,  6 Jun 2024 16:02:48 +0200
+Message-ID: <20240606131748.349965959@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,93 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 7234795b59f7b0b14569ec46dce56300a4988067 ]
+[ Upstream commit b1781d0a1458070d40134e4f3412ec9d70099bec ]
 
-We can simplify the code gracefully with new guard() macro and co for
-automatic cleanup of locks.
+IRQ_DOMAIN is a hidden (not user visible) symbol. Users cannot set
+it directly thru "make *config", so drivers should select it instead
+of depending on it if they need it.
+Relying on it being set for a dependency is risky.
 
-Only the code refactoring, and no functional changes.
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240227085306.9764-11-tiwai@suse.de
-Stable-dep-of: 495000a38634 ("ALSA: core: Remove debugfs at disconnection")
+Therefore, change EXTCON_MAX8997's use of "depends on" for
+IRQ_DOMAIN to "select".
+
+Link: https://lore.kernel.org/lkml/20240213060028.9744-1-rdunlap@infradead.org/
+Fixes: dca1a71e4108 ("extcon: Add support irq domain for MAX8997 muic")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/jack.c | 25 +++++++------------------
- 1 file changed, 7 insertions(+), 18 deletions(-)
+ drivers/extcon/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/jack.c b/sound/core/jack.c
-index 03d155ed362b4..191357d619131 100644
---- a/sound/core/jack.c
-+++ b/sound/core/jack.c
-@@ -42,11 +42,9 @@ static int snd_jack_dev_disconnect(struct snd_device *device)
- #ifdef CONFIG_SND_JACK_INPUT_DEV
- 	struct snd_jack *jack = device->device_data;
+diff --git a/drivers/extcon/Kconfig b/drivers/extcon/Kconfig
+index 8de9023c2a387..cf472e44c5ff9 100644
+--- a/drivers/extcon/Kconfig
++++ b/drivers/extcon/Kconfig
+@@ -116,7 +116,8 @@ config EXTCON_MAX77843
  
--	mutex_lock(&jack->input_dev_lock);
--	if (!jack->input_dev) {
--		mutex_unlock(&jack->input_dev_lock);
-+	guard(mutex)(&jack->input_dev_lock);
-+	if (!jack->input_dev)
- 		return 0;
--	}
- 
- 	/* If the input device is registered with the input subsystem
- 	 * then we need to use a different deallocator. */
-@@ -55,7 +53,6 @@ static int snd_jack_dev_disconnect(struct snd_device *device)
- 	else
- 		input_free_device(jack->input_dev);
- 	jack->input_dev = NULL;
--	mutex_unlock(&jack->input_dev_lock);
- #endif /* CONFIG_SND_JACK_INPUT_DEV */
- 	return 0;
- }
-@@ -94,11 +91,9 @@ static int snd_jack_dev_register(struct snd_device *device)
- 	snprintf(jack->name, sizeof(jack->name), "%s %s",
- 		 card->shortname, jack->id);
- 
--	mutex_lock(&jack->input_dev_lock);
--	if (!jack->input_dev) {
--		mutex_unlock(&jack->input_dev_lock);
-+	guard(mutex)(&jack->input_dev_lock);
-+	if (!jack->input_dev)
- 		return 0;
--	}
- 
- 	jack->input_dev->name = jack->name;
- 
-@@ -123,7 +118,6 @@ static int snd_jack_dev_register(struct snd_device *device)
- 	if (err == 0)
- 		jack->registered = 1;
- 
--	mutex_unlock(&jack->input_dev_lock);
- 	return err;
- }
- #endif /* CONFIG_SND_JACK_INPUT_DEV */
-@@ -588,14 +582,9 @@ EXPORT_SYMBOL(snd_jack_new);
- void snd_jack_set_parent(struct snd_jack *jack, struct device *parent)
- {
- 	WARN_ON(jack->registered);
--	mutex_lock(&jack->input_dev_lock);
--	if (!jack->input_dev) {
--		mutex_unlock(&jack->input_dev_lock);
--		return;
--	}
--
--	jack->input_dev->dev.parent = parent;
--	mutex_unlock(&jack->input_dev_lock);
-+	guard(mutex)(&jack->input_dev_lock);
-+	if (jack->input_dev)
-+		jack->input_dev->dev.parent = parent;
- }
- EXPORT_SYMBOL(snd_jack_set_parent);
- 
+ config EXTCON_MAX8997
+ 	tristate "Maxim MAX8997 EXTCON Support"
+-	depends on MFD_MAX8997 && IRQ_DOMAIN
++	depends on MFD_MAX8997
++	select IRQ_DOMAIN
+ 	help
+ 	  If you say yes here you get support for the MUIC device of
+ 	  Maxim MAX8997 PMIC. The MAX8997 MUIC is a USB port accessory
 -- 
 2.43.0
 
