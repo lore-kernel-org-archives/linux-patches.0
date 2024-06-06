@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECA919A2A2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB201AB8FD;
 	Thu,  6 Jun 2024 14:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683277; cv=none; b=RJRMCQ35yXJ6tTaFpwzInHyXlcsnRdE9boAlG0Magj2dQZ0wBJwE3B3xSZrD8pzfeXcSsElZPWvbBisxWoKh4J2BJc71JDIWveaoa7XmmMGuBMmxWo+BhAVNbjYDnrDhE9kEwuUHAQzZ4Tui7ER1JTc1rvRbeRA16n7JU35RYMM=
+	t=1717683277; cv=none; b=lSGsq6OorrRMnS/X94lKUFEXsww0kKB93Tw2sUJWxP7wF3fFwemwXQ4WZ+4w90D3sCAKW5k+77NQkXcbdEFbED+TgTcy2PmWaJwsao4MAoiD7ivJL9Qyt3H43CYBYZR2+ER2qKJuURzZIttOnTT37rvDqE9c3NRsnoFyRxp+0Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683277; c=relaxed/simple;
-	bh=P+tUMIex25pmTvaY+udiIYQ++yG+po/q/crqYlQVBpM=;
+	bh=+Y4WQcELjVylExv9/QTCFkpuybgJp5HLcjvwLYLPQUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6p0QgMaQUJgd6YZGI6uaT0mtWEZbu4T73J9MgT8sq0A9aBwRLSz8ENhHJpSBxDnqdhwIS0JGM1ry9y3oXaAYgYc9d9v5oXPymWRmF0r3JCnA+R7RMOcqbB6WwDR9PsxC06gb3RZnnHVDKniptRmf4O0GeACvCS0AHNJUGBWUaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UbgdtjI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BOIa1iENIU3PogZGaPolvi8IdMXGK8/yZWNdUbdhrgtTYPduFR3U+SxCvkebAz8GaNfYGLiMZxQYG1H3CIffscKgRMjF/QZQffw3juuLpgs3Iro2AiiRQxqo+Hjfu99YeCCKZdDiGBvFCksUZ5kTQ/kCsASePiT+uDlFYihP5zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXGt2YCj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UbgdtjI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF09C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXGt2YCj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C892FC32781;
 	Thu,  6 Jun 2024 14:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683276;
-	bh=P+tUMIex25pmTvaY+udiIYQ++yG+po/q/crqYlQVBpM=;
+	bh=+Y4WQcELjVylExv9/QTCFkpuybgJp5HLcjvwLYLPQUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UbgdtjIgbNoZ3XcXy8yLXwOo6/MosIF145LKsPfyQ2qweHP/t95EeB+NvV8g8O7m
-	 dMQEKPsO3ywK9x07x6a9ynaoQuqlQK+hrUwz6DvuJfEeUfEuhKuePo7Awq1b1Eq4Hi
-	 HZU6GbQEtmv0RDNDkU/TehaIqfq1LrxyyxRCOPiw=
+	b=RXGt2YCjiG5wr1eOMdnU2tO8E8+txTuSO7eZNg329jHEOuNfJKFiYoKxJ2FzntHot
+	 M85yTwLpbEwvhQkmkmDQF55sH+lPsbyt+G3j7rRHq8m96OFwyc46xOFeoeJDh+bsBI
+	 lnlYl2b2ttwV445hrFXTHVAGs/sEU+AofHgsx5kU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Valentin Obst <kernel@valentinobst.de>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Junhao He <hejunhao3@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/473] selftests: default to host arch for LLVM builds
-Date: Thu,  6 Jun 2024 16:01:23 +0200
-Message-ID: <20240606131705.052262073@linuxfoundation.org>
+Subject: [PATCH 6.1 141/473] drivers/perf: hisi_pcie: Fix out-of-bound access when valid event group
+Date: Thu,  6 Jun 2024 16:01:10 +0200
+Message-ID: <20240606131704.602733269@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
 References: <20240606131659.786180261@linuxfoundation.org>
@@ -53,83 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Obst <kernel@valentinobst.de>
+From: Junhao He <hejunhao3@huawei.com>
 
-[ Upstream commit d4e6fbd245c48b272cc591d1c5e7c07aedd7f071 ]
+[ Upstream commit 77fce82678ea5fd51442e62febec2004f79e041b ]
 
-Align the behavior for gcc and clang builds by interpreting unset
-`ARCH` and `CROSS_COMPILE` variables in `LLVM` builds as a sign that the
-user wants to build for the host architecture.
+The perf tool allows users to create event groups through following
+cmd [1], but the driver does not check whether the array index is out of
+bounds when writing data to the event_group array. If the number of events
+in an event_group is greater than HISI_PCIE_MAX_COUNTERS, the memory write
+overflow of event_group array occurs.
 
-This patch preserves the properties that setting the `ARCH` variable to an
-unknown value will trigger an error that complains about insufficient
-information, and that a set `CROSS_COMPILE` variable will override the
-target triple that is determined based on presence/absence of `ARCH`.
+Add array index check to fix the possible array out of bounds violation,
+and return directly when write new events are written to array bounds.
 
-When compiling with clang, i.e., `LLVM` is set, an unset `ARCH` variable in
-combination with an unset `CROSS_COMPILE` variable, i.e., compiling for
-the host architecture, leads to compilation failures since `lib.mk` can
-not determine the clang target triple. In this case, the following error
-message is displayed for each subsystem that does not set `ARCH` in its
-own Makefile before including `lib.mk` (lines wrapped at 75 chrs):
+There are 9 different events in an event_group.
+[1] perf stat -e '{pmu/event1/, ... ,pmu/event9/}'
 
-  make[1]: Entering directory '/mnt/build/linux/tools/testing/selftests/
-   sysctl'
-  ../lib.mk:33: *** Specify CROSS_COMPILE or add '--target=' option to
-   lib.mk.  Stop.
-  make[1]: Leaving directory '/mnt/build/linux/tools/testing/selftests/
-   sysctl'
-
-In the same scenario a gcc build would default to the host architecture,
-i.e., it would use plain `gcc`.
-
-Fixes: 795285ef2425 ("selftests: Fix clang cross compilation")
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Valentin Obst <kernel@valentinobst.de>
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 8404b0fbc7fb ("drivers/perf: hisi: Add driver for HiSilicon PCIe PMU")
+Signed-off-by: Junhao He <hejunhao3@huawei.com>
+Reviewed-by: Jijie Shao <shaojijie@huawei.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20240425124627.13764-2-hejunhao3@huawei.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/lib.mk | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/perf/hisilicon/hisi_pcie_pmu.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/lib.mk b/tools/testing/selftests/lib.mk
-index aa646e0661f36..a8f0442a36bca 100644
---- a/tools/testing/selftests/lib.mk
-+++ b/tools/testing/selftests/lib.mk
-@@ -7,6 +7,8 @@ else ifneq ($(filter -%,$(LLVM)),)
- LLVM_SUFFIX := $(LLVM)
- endif
+diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+index c4c1cd269c577..49f2d69c119df 100644
+--- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
++++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+@@ -326,15 +326,27 @@ static bool hisi_pcie_pmu_validate_event_group(struct perf_event *event)
+ 			return false;
  
-+CLANG := $(LLVM_PREFIX)clang$(LLVM_SUFFIX)
+ 		for (num = 0; num < counters; num++) {
++			/*
++			 * If we find a related event, then it's a valid group
++			 * since we don't need to allocate a new counter for it.
++			 */
+ 			if (hisi_pcie_pmu_cmp_event(event_group[num], sibling))
+ 				break;
+ 		}
+ 
++		/*
++		 * Otherwise it's a new event but if there's no available counter,
++		 * fail the check since we cannot schedule all the events in
++		 * the group simultaneously.
++		 */
++		if (num == HISI_PCIE_MAX_COUNTERS)
++			return false;
 +
- CLANG_TARGET_FLAGS_arm          := arm-linux-gnueabi
- CLANG_TARGET_FLAGS_arm64        := aarch64-linux-gnu
- CLANG_TARGET_FLAGS_hexagon      := hexagon-linux-musl
-@@ -18,7 +20,13 @@ CLANG_TARGET_FLAGS_riscv        := riscv64-linux-gnu
- CLANG_TARGET_FLAGS_s390         := s390x-linux-gnu
- CLANG_TARGET_FLAGS_x86          := x86_64-linux-gnu
- CLANG_TARGET_FLAGS_x86_64       := x86_64-linux-gnu
--CLANG_TARGET_FLAGS              := $(CLANG_TARGET_FLAGS_$(ARCH))
-+
-+# Default to host architecture if ARCH is not explicitly given.
-+ifeq ($(ARCH),)
-+CLANG_TARGET_FLAGS := $(shell $(CLANG) -print-target-triple)
-+else
-+CLANG_TARGET_FLAGS := $(CLANG_TARGET_FLAGS_$(ARCH))
-+endif
+ 		if (num == counters)
+ 			event_group[counters++] = sibling;
+ 	}
  
- ifeq ($(CROSS_COMPILE),)
- ifeq ($(CLANG_TARGET_FLAGS),)
-@@ -30,7 +38,7 @@ else
- CLANG_FLAGS     += --target=$(notdir $(CROSS_COMPILE:%-=%))
- endif # CROSS_COMPILE
+-	return counters <= HISI_PCIE_MAX_COUNTERS;
++	return true;
+ }
  
--CC := $(LLVM_PREFIX)clang$(LLVM_SUFFIX) $(CLANG_FLAGS) -fintegrated-as
-+CC := $(CLANG) $(CLANG_FLAGS) -fintegrated-as
- else
- CC := $(CROSS_COMPILE)gcc
- endif # LLVM
+ static int hisi_pcie_pmu_event_init(struct perf_event *event)
 -- 
 2.43.0
 
