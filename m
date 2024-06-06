@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F56196C82;
-	Thu,  6 Jun 2024 14:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3CF19643E;
+	Thu,  6 Jun 2024 14:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682914; cv=none; b=Zdskf8tbWq8qvhN8NHCMweRZ2nXxTMLNfV06CW1dS1vlrd6hbkKanfhzWdDqr8nao0yDs49HdxRNQOPODFVZVwpUWNBXdh5ZetQftzdMPJ5Y8PCJUDnyutN+g5lrKHedgwdcpJGskychJchLf7QDV/CHoordwGu+N59SgE3erFQ=
+	t=1717682915; cv=none; b=BBDgR3SJKoOnZGyyoHGFVKwOECfmEE4VzjxQQFMUlfeE6IJZXWENaLHN1qBf26L4F5YD77Gtjj6KbxabX3r/8ry1UBD2+jzw9isc0idW80cKiQXpvlpa+OxCzbu7JbeXbm1Dy8FOxpqZ1CeD0YMDbW28FZTJjGEyKvKZ2YXncvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682914; c=relaxed/simple;
-	bh=YtQOr2nupnuhUP9xqQKBxyc/TaNZt49Q8vDbSSgBMyY=;
+	s=arc-20240116; t=1717682915; c=relaxed/simple;
+	bh=DeNlKbRclqPH5wueofeG3Tsz8E+MHlKAVwg6rG2Werg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7Qgvf7YKMq4T1etwMr5fi7+8QD/Z+I1iMU2GCVDAdFoSSRS2rOzLED/w5aopkfOcMw/mandr54K6P+mpGmFmCpMQ7eeRNN5Zx4YSSJgmVrBVWtoLhpB2RINr8mdDAe2Y6nlca1Xhl3lUYxT3eq4urYcdsnRHDpuV15JI66FxVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkHy23EI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fn12FsCMJurJot6mTMMC5tGo65V1bqFC3Mu8B1gH573Z2VoxvvAMQHh4XYBD9fBtDRy1uNpNvJpIhVCyfOooj+/wuor+OgPyIEMhnJ9jL5GBaWn01Vu3jQeJwKXa9U975EJgFFOURLm+clQzPfP1FEpYRUGGPYbmYFfOS2e5A7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gE+rQwT3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkHy23EI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705A2C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gE+rQwT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016C4C2BD10;
 	Thu,  6 Jun 2024 14:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682914;
-	bh=YtQOr2nupnuhUP9xqQKBxyc/TaNZt49Q8vDbSSgBMyY=;
+	s=korg; t=1717682915;
+	bh=DeNlKbRclqPH5wueofeG3Tsz8E+MHlKAVwg6rG2Werg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkHy23EIwW9gldy0rnXJ+AC+atrRjPCtUKe5qK8PbSgnx2mo0JNfKYe1HZ3vG0gz0
-	 dypSF5h1zGyubQYbjim64+FylTtK/YJaXrpS2U1EsdEC/zwpiV0YPiaKUp73HQS26D
-	 8yCHpX8ATmhAqxUiO+n+xiQWRh0Enmo3pJ4joQQA=
+	b=gE+rQwT39mBZLzfa/gJdgKPiuXOhcXRETHzFqdW9mlJDYFplkkplkJTbOgetW6Zpx
+	 kjATtlwS2xPOCM6d93A64NrvQ1Qxf5NAGEEdfVOROTpIZN3XFXrfD7uzbl+sFRzq1X
+	 xYqyBEsaDZvxYh+poTkOjwoT2qO+D1yZBIqEkA7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Marco Pagani <marpagan@redhat.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 045/374] iio: adc: stm32: Fixing err code to not indicate success
-Date: Thu,  6 Jun 2024 16:00:24 +0200
-Message-ID: <20240606131653.318027961@linuxfoundation.org>
+Subject: [PATCH 6.9 010/374] fpga: manager: add owner module and take its refcount
+Date: Thu,  6 Jun 2024 15:59:49 +0200
+Message-ID: <20240606131652.084814265@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,34 +52,406 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Marco Pagani <marpagan@redhat.com>
 
-[ Upstream commit 3735ca0b072656c3aa2cedc617a5e639b583a472 ]
+[ Upstream commit 4d4d2d4346857bf778fafaa97d6f76bb1663e3c9 ]
 
-This path would result in returning 0 / success on an error path.
+The current implementation of the fpga manager assumes that the low-level
+module registers a driver for the parent device and uses its owner pointer
+to take the module's refcount. This approach is problematic since it can
+lead to a null pointer dereference while attempting to get the manager if
+the parent device does not have a driver.
 
-Cc: Olivier Moysan <olivier.moysan@foss.st.com>
-Fixes: 95bc818404b2 ("iio: adc: stm32-adc: add support of generic channels binding")
-Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/r/20240330185305.1319844-4-jic23@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To address this problem, add a module owner pointer to the fpga_manager
+struct and use it to take the module's refcount. Modify the functions for
+registering the manager to take an additional owner module parameter and
+rename them to avoid conflicts. Use the old function names for helper
+macros that automatically set the module that registers the manager as the
+owner. This ensures compatibility with existing low-level control modules
+and reduces the chances of registering a manager without setting the owner.
+
+Also, update the documentation to keep it consistent with the new interface
+for registering an fpga manager.
+
+Other changes: opportunistically move put_device() from __fpga_mgr_get() to
+fpga_mgr_get() and of_fpga_mgr_get() to improve code clarity since the
+manager device is taken in these functions.
+
+Fixes: 654ba4cc0f3e ("fpga manager: ensure lifetime with of_fpga_mgr_get")
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Xu Yilun <yilun.xu@intel.com>
+Signed-off-by: Marco Pagani <marpagan@redhat.com>
+Acked-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20240305192926.84886-1-marpagan@redhat.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stm32-adc.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/driver-api/fpga/fpga-mgr.rst | 34 +++++----
+ drivers/fpga/fpga-mgr.c                    | 82 +++++++++++++---------
+ include/linux/fpga/fpga-mgr.h              | 26 +++++--
+ 3 files changed, 89 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/iio/adc/stm32-adc.c b/drivers/iio/adc/stm32-adc.c
-index b5d3c9cea5c4e..283c207571064 100644
---- a/drivers/iio/adc/stm32-adc.c
-+++ b/drivers/iio/adc/stm32-adc.c
-@@ -2234,6 +2234,7 @@ static int stm32_adc_generic_chan_init(struct iio_dev *indio_dev,
- 			if (vin[0] != val || vin[1] >= adc_info->max_channels) {
- 				dev_err(&indio_dev->dev, "Invalid channel in%d-in%d\n",
- 					vin[0], vin[1]);
-+				ret = -EINVAL;
- 				goto err;
- 			}
- 		} else if (ret != -EINVAL) {
+diff --git a/Documentation/driver-api/fpga/fpga-mgr.rst b/Documentation/driver-api/fpga/fpga-mgr.rst
+index 49c0a95126532..8d2b79f696c1f 100644
+--- a/Documentation/driver-api/fpga/fpga-mgr.rst
++++ b/Documentation/driver-api/fpga/fpga-mgr.rst
+@@ -24,7 +24,8 @@ How to support a new FPGA device
+ --------------------------------
+ 
+ To add another FPGA manager, write a driver that implements a set of ops.  The
+-probe function calls fpga_mgr_register() or fpga_mgr_register_full(), such as::
++probe function calls ``fpga_mgr_register()`` or ``fpga_mgr_register_full()``,
++such as::
+ 
+ 	static const struct fpga_manager_ops socfpga_fpga_ops = {
+ 		.write_init = socfpga_fpga_ops_configure_init,
+@@ -69,10 +70,11 @@ probe function calls fpga_mgr_register() or fpga_mgr_register_full(), such as::
+ 	}
+ 
+ Alternatively, the probe function could call one of the resource managed
+-register functions, devm_fpga_mgr_register() or devm_fpga_mgr_register_full().
+-When these functions are used, the parameter syntax is the same, but the call
+-to fpga_mgr_unregister() should be removed. In the above example, the
+-socfpga_fpga_remove() function would not be required.
++register functions, ``devm_fpga_mgr_register()`` or
++``devm_fpga_mgr_register_full()``.  When these functions are used, the
++parameter syntax is the same, but the call to ``fpga_mgr_unregister()`` should be
++removed. In the above example, the ``socfpga_fpga_remove()`` function would not be
++required.
+ 
+ The ops will implement whatever device specific register writes are needed to
+ do the programming sequence for this particular FPGA.  These ops return 0 for
+@@ -125,15 +127,19 @@ API for implementing a new FPGA Manager driver
+ * struct fpga_manager -  the FPGA manager struct
+ * struct fpga_manager_ops -  Low level FPGA manager driver ops
+ * struct fpga_manager_info -  Parameter structure for fpga_mgr_register_full()
+-* fpga_mgr_register_full() -  Create and register an FPGA manager using the
++* __fpga_mgr_register_full() -  Create and register an FPGA manager using the
+   fpga_mgr_info structure to provide the full flexibility of options
+-* fpga_mgr_register() -  Create and register an FPGA manager using standard
++* __fpga_mgr_register() -  Create and register an FPGA manager using standard
+   arguments
+-* devm_fpga_mgr_register_full() -  Resource managed version of
+-  fpga_mgr_register_full()
+-* devm_fpga_mgr_register() -  Resource managed version of fpga_mgr_register()
++* __devm_fpga_mgr_register_full() -  Resource managed version of
++  __fpga_mgr_register_full()
++* __devm_fpga_mgr_register() -  Resource managed version of __fpga_mgr_register()
+ * fpga_mgr_unregister() -  Unregister an FPGA manager
+ 
++Helper macros ``fpga_mgr_register_full()``, ``fpga_mgr_register()``,
++``devm_fpga_mgr_register_full()``, and ``devm_fpga_mgr_register()`` are available
++to ease the registration.
++
+ .. kernel-doc:: include/linux/fpga/fpga-mgr.h
+    :functions: fpga_mgr_states
+ 
+@@ -147,16 +153,16 @@ API for implementing a new FPGA Manager driver
+    :functions: fpga_manager_info
+ 
+ .. kernel-doc:: drivers/fpga/fpga-mgr.c
+-   :functions: fpga_mgr_register_full
++   :functions: __fpga_mgr_register_full
+ 
+ .. kernel-doc:: drivers/fpga/fpga-mgr.c
+-   :functions: fpga_mgr_register
++   :functions: __fpga_mgr_register
+ 
+ .. kernel-doc:: drivers/fpga/fpga-mgr.c
+-   :functions: devm_fpga_mgr_register_full
++   :functions: __devm_fpga_mgr_register_full
+ 
+ .. kernel-doc:: drivers/fpga/fpga-mgr.c
+-   :functions: devm_fpga_mgr_register
++   :functions: __devm_fpga_mgr_register
+ 
+ .. kernel-doc:: drivers/fpga/fpga-mgr.c
+    :functions: fpga_mgr_unregister
+diff --git a/drivers/fpga/fpga-mgr.c b/drivers/fpga/fpga-mgr.c
+index 06651389c5926..0f4035b089a2e 100644
+--- a/drivers/fpga/fpga-mgr.c
++++ b/drivers/fpga/fpga-mgr.c
+@@ -664,20 +664,16 @@ static struct attribute *fpga_mgr_attrs[] = {
+ };
+ ATTRIBUTE_GROUPS(fpga_mgr);
+ 
+-static struct fpga_manager *__fpga_mgr_get(struct device *dev)
++static struct fpga_manager *__fpga_mgr_get(struct device *mgr_dev)
+ {
+ 	struct fpga_manager *mgr;
+ 
+-	mgr = to_fpga_manager(dev);
++	mgr = to_fpga_manager(mgr_dev);
+ 
+-	if (!try_module_get(dev->parent->driver->owner))
+-		goto err_dev;
++	if (!try_module_get(mgr->mops_owner))
++		mgr = ERR_PTR(-ENODEV);
+ 
+ 	return mgr;
+-
+-err_dev:
+-	put_device(dev);
+-	return ERR_PTR(-ENODEV);
+ }
+ 
+ static int fpga_mgr_dev_match(struct device *dev, const void *data)
+@@ -693,12 +689,18 @@ static int fpga_mgr_dev_match(struct device *dev, const void *data)
+  */
+ struct fpga_manager *fpga_mgr_get(struct device *dev)
+ {
+-	struct device *mgr_dev = class_find_device(&fpga_mgr_class, NULL, dev,
+-						   fpga_mgr_dev_match);
++	struct fpga_manager *mgr;
++	struct device *mgr_dev;
++
++	mgr_dev = class_find_device(&fpga_mgr_class, NULL, dev, fpga_mgr_dev_match);
+ 	if (!mgr_dev)
+ 		return ERR_PTR(-ENODEV);
+ 
+-	return __fpga_mgr_get(mgr_dev);
++	mgr = __fpga_mgr_get(mgr_dev);
++	if (IS_ERR(mgr))
++		put_device(mgr_dev);
++
++	return mgr;
+ }
+ EXPORT_SYMBOL_GPL(fpga_mgr_get);
+ 
+@@ -711,13 +713,18 @@ EXPORT_SYMBOL_GPL(fpga_mgr_get);
+  */
+ struct fpga_manager *of_fpga_mgr_get(struct device_node *node)
+ {
+-	struct device *dev;
++	struct fpga_manager *mgr;
++	struct device *mgr_dev;
+ 
+-	dev = class_find_device_by_of_node(&fpga_mgr_class, node);
+-	if (!dev)
++	mgr_dev = class_find_device_by_of_node(&fpga_mgr_class, node);
++	if (!mgr_dev)
+ 		return ERR_PTR(-ENODEV);
+ 
+-	return __fpga_mgr_get(dev);
++	mgr = __fpga_mgr_get(mgr_dev);
++	if (IS_ERR(mgr))
++		put_device(mgr_dev);
++
++	return mgr;
+ }
+ EXPORT_SYMBOL_GPL(of_fpga_mgr_get);
+ 
+@@ -727,7 +734,7 @@ EXPORT_SYMBOL_GPL(of_fpga_mgr_get);
+  */
+ void fpga_mgr_put(struct fpga_manager *mgr)
+ {
+-	module_put(mgr->dev.parent->driver->owner);
++	module_put(mgr->mops_owner);
+ 	put_device(&mgr->dev);
+ }
+ EXPORT_SYMBOL_GPL(fpga_mgr_put);
+@@ -766,9 +773,10 @@ void fpga_mgr_unlock(struct fpga_manager *mgr)
+ EXPORT_SYMBOL_GPL(fpga_mgr_unlock);
+ 
+ /**
+- * fpga_mgr_register_full - create and register an FPGA Manager device
++ * __fpga_mgr_register_full - create and register an FPGA Manager device
+  * @parent:	fpga manager device from pdev
+  * @info:	parameters for fpga manager
++ * @owner:	owner module containing the ops
+  *
+  * The caller of this function is responsible for calling fpga_mgr_unregister().
+  * Using devm_fpga_mgr_register_full() instead is recommended.
+@@ -776,7 +784,8 @@ EXPORT_SYMBOL_GPL(fpga_mgr_unlock);
+  * Return: pointer to struct fpga_manager pointer or ERR_PTR()
+  */
+ struct fpga_manager *
+-fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info)
++__fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info,
++			 struct module *owner)
+ {
+ 	const struct fpga_manager_ops *mops = info->mops;
+ 	struct fpga_manager *mgr;
+@@ -804,6 +813,8 @@ fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *in
+ 
+ 	mutex_init(&mgr->ref_mutex);
+ 
++	mgr->mops_owner = owner;
++
+ 	mgr->name = info->name;
+ 	mgr->mops = info->mops;
+ 	mgr->priv = info->priv;
+@@ -841,14 +852,15 @@ fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *in
+ 
+ 	return ERR_PTR(ret);
+ }
+-EXPORT_SYMBOL_GPL(fpga_mgr_register_full);
++EXPORT_SYMBOL_GPL(__fpga_mgr_register_full);
+ 
+ /**
+- * fpga_mgr_register - create and register an FPGA Manager device
++ * __fpga_mgr_register - create and register an FPGA Manager device
+  * @parent:	fpga manager device from pdev
+  * @name:	fpga manager name
+  * @mops:	pointer to structure of fpga manager ops
+  * @priv:	fpga manager private data
++ * @owner:	owner module containing the ops
+  *
+  * The caller of this function is responsible for calling fpga_mgr_unregister().
+  * Using devm_fpga_mgr_register() instead is recommended. This simple
+@@ -859,8 +871,8 @@ EXPORT_SYMBOL_GPL(fpga_mgr_register_full);
+  * Return: pointer to struct fpga_manager pointer or ERR_PTR()
+  */
+ struct fpga_manager *
+-fpga_mgr_register(struct device *parent, const char *name,
+-		  const struct fpga_manager_ops *mops, void *priv)
++__fpga_mgr_register(struct device *parent, const char *name,
++		    const struct fpga_manager_ops *mops, void *priv, struct module *owner)
+ {
+ 	struct fpga_manager_info info = { 0 };
+ 
+@@ -868,9 +880,9 @@ fpga_mgr_register(struct device *parent, const char *name,
+ 	info.mops = mops;
+ 	info.priv = priv;
+ 
+-	return fpga_mgr_register_full(parent, &info);
++	return __fpga_mgr_register_full(parent, &info, owner);
+ }
+-EXPORT_SYMBOL_GPL(fpga_mgr_register);
++EXPORT_SYMBOL_GPL(__fpga_mgr_register);
+ 
+ /**
+  * fpga_mgr_unregister - unregister an FPGA manager
+@@ -900,9 +912,10 @@ static void devm_fpga_mgr_unregister(struct device *dev, void *res)
+ }
+ 
+ /**
+- * devm_fpga_mgr_register_full - resource managed variant of fpga_mgr_register()
++ * __devm_fpga_mgr_register_full - resource managed variant of fpga_mgr_register()
+  * @parent:	fpga manager device from pdev
+  * @info:	parameters for fpga manager
++ * @owner:	owner module containing the ops
+  *
+  * Return:  fpga manager pointer on success, negative error code otherwise.
+  *
+@@ -910,7 +923,8 @@ static void devm_fpga_mgr_unregister(struct device *dev, void *res)
+  * function will be called automatically when the managing device is detached.
+  */
+ struct fpga_manager *
+-devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info)
++__devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info,
++			      struct module *owner)
+ {
+ 	struct fpga_mgr_devres *dr;
+ 	struct fpga_manager *mgr;
+@@ -919,7 +933,7 @@ devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_inf
+ 	if (!dr)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	mgr = fpga_mgr_register_full(parent, info);
++	mgr = __fpga_mgr_register_full(parent, info, owner);
+ 	if (IS_ERR(mgr)) {
+ 		devres_free(dr);
+ 		return mgr;
+@@ -930,14 +944,15 @@ devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_inf
+ 
+ 	return mgr;
+ }
+-EXPORT_SYMBOL_GPL(devm_fpga_mgr_register_full);
++EXPORT_SYMBOL_GPL(__devm_fpga_mgr_register_full);
+ 
+ /**
+- * devm_fpga_mgr_register - resource managed variant of fpga_mgr_register()
++ * __devm_fpga_mgr_register - resource managed variant of fpga_mgr_register()
+  * @parent:	fpga manager device from pdev
+  * @name:	fpga manager name
+  * @mops:	pointer to structure of fpga manager ops
+  * @priv:	fpga manager private data
++ * @owner:	owner module containing the ops
+  *
+  * Return:  fpga manager pointer on success, negative error code otherwise.
+  *
+@@ -946,8 +961,9 @@ EXPORT_SYMBOL_GPL(devm_fpga_mgr_register_full);
+  * device is detached.
+  */
+ struct fpga_manager *
+-devm_fpga_mgr_register(struct device *parent, const char *name,
+-		       const struct fpga_manager_ops *mops, void *priv)
++__devm_fpga_mgr_register(struct device *parent, const char *name,
++			 const struct fpga_manager_ops *mops, void *priv,
++			 struct module *owner)
+ {
+ 	struct fpga_manager_info info = { 0 };
+ 
+@@ -955,9 +971,9 @@ devm_fpga_mgr_register(struct device *parent, const char *name,
+ 	info.mops = mops;
+ 	info.priv = priv;
+ 
+-	return devm_fpga_mgr_register_full(parent, &info);
++	return __devm_fpga_mgr_register_full(parent, &info, owner);
+ }
+-EXPORT_SYMBOL_GPL(devm_fpga_mgr_register);
++EXPORT_SYMBOL_GPL(__devm_fpga_mgr_register);
+ 
+ static void fpga_mgr_dev_release(struct device *dev)
+ {
+diff --git a/include/linux/fpga/fpga-mgr.h b/include/linux/fpga/fpga-mgr.h
+index 54f63459efd6e..0d4fe068f3d8a 100644
+--- a/include/linux/fpga/fpga-mgr.h
++++ b/include/linux/fpga/fpga-mgr.h
+@@ -201,6 +201,7 @@ struct fpga_manager_ops {
+  * @state: state of fpga manager
+  * @compat_id: FPGA manager id for compatibility check.
+  * @mops: pointer to struct of fpga manager ops
++ * @mops_owner: module containing the mops
+  * @priv: low level driver private date
+  */
+ struct fpga_manager {
+@@ -210,6 +211,7 @@ struct fpga_manager {
+ 	enum fpga_mgr_states state;
+ 	struct fpga_compat_id *compat_id;
+ 	const struct fpga_manager_ops *mops;
++	struct module *mops_owner;
+ 	void *priv;
+ };
+ 
+@@ -230,18 +232,30 @@ struct fpga_manager *fpga_mgr_get(struct device *dev);
+ 
+ void fpga_mgr_put(struct fpga_manager *mgr);
+ 
++#define fpga_mgr_register_full(parent, info) \
++	__fpga_mgr_register_full(parent, info, THIS_MODULE)
+ struct fpga_manager *
+-fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info);
++__fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info,
++			 struct module *owner);
+ 
++#define fpga_mgr_register(parent, name, mops, priv) \
++	__fpga_mgr_register(parent, name, mops, priv, THIS_MODULE)
+ struct fpga_manager *
+-fpga_mgr_register(struct device *parent, const char *name,
+-		  const struct fpga_manager_ops *mops, void *priv);
++__fpga_mgr_register(struct device *parent, const char *name,
++		    const struct fpga_manager_ops *mops, void *priv, struct module *owner);
++
+ void fpga_mgr_unregister(struct fpga_manager *mgr);
+ 
++#define devm_fpga_mgr_register_full(parent, info) \
++	__devm_fpga_mgr_register_full(parent, info, THIS_MODULE)
+ struct fpga_manager *
+-devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info);
++__devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info,
++			      struct module *owner);
++#define devm_fpga_mgr_register(parent, name, mops, priv) \
++	__devm_fpga_mgr_register(parent, name, mops, priv, THIS_MODULE)
+ struct fpga_manager *
+-devm_fpga_mgr_register(struct device *parent, const char *name,
+-		       const struct fpga_manager_ops *mops, void *priv);
++__devm_fpga_mgr_register(struct device *parent, const char *name,
++			 const struct fpga_manager_ops *mops, void *priv,
++			 struct module *owner);
+ 
+ #endif /*_LINUX_FPGA_MGR_H */
 -- 
 2.43.0
 
