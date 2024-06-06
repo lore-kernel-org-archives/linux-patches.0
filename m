@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61CB197A69;
-	Thu,  6 Jun 2024 14:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEC5197A7B;
+	Thu,  6 Jun 2024 14:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683233; cv=none; b=eGiAOhoXKiukOuq1tBOJFnbGgjJsEYDIX7+0flhd8T04HPwh3+hyBm5qyq23gmIxKRP4BkA/RCCj3pQLdGm3hjjf4Bn+dKUblhbduLD5Vw+DevsV733CePHe9cKQ8ACO6lhFE7ppRrws7C+Wrd0sXU0uk6xWLgUw4jUGRykA9/8=
+	t=1717683234; cv=none; b=Dv4eNwSQ1Te1pnOJOoW/rI2WxVgwGZecjH4iiI2JujJNPWcfxaQyOR1EVOZis1B3mj3p0M+tLUbsU+wubuVxL4+HIGQP2LVRPrbXAHutoD5kceYvjlNeP3EzDD5T7BYW5h1798Oo+3RWx33Qej7Nm0pXbhe5ScAu9eK+Vk63g9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683233; c=relaxed/simple;
-	bh=IXgZ40WAUGEKk6OvmfJdtEPNIL7xLx56gi+w/ynhgFE=;
+	s=arc-20240116; t=1717683234; c=relaxed/simple;
+	bh=XdNw/OqZuUONajpf601cwdDW0BdBD+K3uQZ7+QoD6Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egbm8KYgi2SACY4m6m/zboWdHUxx+nQ3d/4SBjj/24H0Tp+CjpKs/msIiuzvnoLliOwu0Ybd0eQIXZzry8JL5lNF7ZA6vrgukGKMnvsJ/O1HtSNKtr8zVBcZi5O9u1hCROSiRiZ9yZrv+KwXZAfs4YAxUrtGTHGzS1v1DrfFboo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcABmpmN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sJYqJKwO+0MYvh9zYYl50DLvn/ymESWFDPJz4d5WEwR1vO/nvS4evPGLj2nqOyALLDE4NX130Ab6HA55vxEvLq0+og9Y32Oj+imznkot8y8ga+TgdxGnsQfB1XVjqENbhzuk8N9A6aSIcNkfL3bU5YDDqZRd+KDfWVffhoTgGoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIj7ADQk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcABmpmN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A261FC2BD10;
-	Thu,  6 Jun 2024 14:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIj7ADQk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE48C2BD10;
+	Thu,  6 Jun 2024 14:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683233;
-	bh=IXgZ40WAUGEKk6OvmfJdtEPNIL7xLx56gi+w/ynhgFE=;
+	s=korg; t=1717683234;
+	bh=XdNw/OqZuUONajpf601cwdDW0BdBD+K3uQZ7+QoD6Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NcABmpmNttSnTfOzhjqtvE/BSCNaiQseXAgf26O+xky4O66XSzLXHcJfhnY2PU3Mg
-	 OcQUTlv4eGVjb/sZX73vIuepvrXe3iTsIjYPRrT3/s8bUcsWeCqT2q+8KcSi20qZz9
-	 hp3wFqTGLj9sdIEyXvT88CmlLHa12qS4PmZWG2N8=
+	b=oIj7ADQkEH72S6pbMPwaaCmLiNPwyZvrJzoLioJoQ+WamEesS1EstCFv1EaDBSB6M
+	 gKCfwK7qiNVzj1m78yN55USX4xY/gZi/sCfghU+rBaeWaN6YswCnOreyQewgF8jn7g
+	 93jkSNbUbfiKRtsI8v2tVeNeKOyPet5ZtezaO2OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Can Guo <quic_cang@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Fangrui Song <maskray@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/473] scsi: ufs: core: Perform read back after disabling UIC_COMMAND_COMPL
-Date: Thu,  6 Jun 2024 16:00:40 +0200
-Message-ID: <20240606131703.590754878@linuxfoundation.org>
+Subject: [PATCH 6.6 179/744] x86/purgatory: Switch to the position-independent small code model
+Date: Thu,  6 Jun 2024 15:57:31 +0200
+Message-ID: <20240606131738.175875310@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,54 +50,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 4bf3855497b60765ca03b983d064b25e99b97657 ]
+[ Upstream commit cba786af84a0f9716204e09f518ce3b7ada8555e ]
 
-Currently, the UIC_COMMAND_COMPL interrupt is disabled and a wmb() is used
-to complete the register write before any following writes.
+On x86, the ordinary, position dependent small and kernel code models
+only support placement of the executable in 32-bit addressable memory,
+due to the use of 32-bit signed immediates to generate references to
+global variables. For the kernel, this implies that all global variables
+must reside in the top 2 GiB of the kernel virtual address space, where
+the implicit address bits 63:32 are equal to sign bit 31.
 
-wmb() ensures the writes complete in that order, but completion doesn't
-mean that it isn't stored in a buffer somewhere. The recommendation for
-ensuring this bit has taken effect on the device is to perform a read back
-to force it to make it all the way to the device. This is documented in
-device-io.rst and a talk by Will Deacon on this can be seen over here:
+This means the kernel code model is not suitable for other bare metal
+executables such as the kexec purgatory, which can be placed arbitrarily
+in the physical address space, where its address may no longer be
+representable as a sign extended 32-bit quantity. For this reason,
+commit
 
-    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
+  e16c2983fba0 ("x86/purgatory: Change compiler flags from -mcmodel=kernel to -mcmodel=large to fix kexec relocation errors")
 
-Let's do that to ensure the bit hits the device. Because the wmb()'s
-purpose wasn't to add extra ordering (on top of the ordering guaranteed by
-writel()/readl()), it can safely be removed.
+switched to the large code model, which uses 64-bit immediates for all
+symbol references, including function calls, in order to avoid relying
+on any assumptions regarding proximity of symbols in the final
+executable.
 
-Fixes: d75f7fe495cf ("scsi: ufs: reduce the interrupts for power mode change requests")
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Can Guo <quic_cang@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-9-181252004586@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The large code model is rarely used, clunky and the least likely to
+operate in a similar fashion when comparing GCC and Clang, so it is best
+avoided. This is especially true now that Clang 18 has started to emit
+executable code in two separate sections (.text and .ltext), which
+triggers an issue in the kexec loading code at runtime.
+
+The SUSE bugzilla fixes tag points to gcc 13 having issues with the
+large model too and that perhaps the large model should simply not be
+used at all.
+
+Instead, use the position independent small code model, which makes no
+assumptions about placement but only about proximity, where all
+referenced symbols must be within -/+ 2 GiB, i.e., in range for a
+RIP-relative reference. Use hidden visibility to suppress the use of a
+GOT, which carries absolute addresses that are not covered by static ELF
+relocations, and is therefore incompatible with the kexec loader's
+relocation logic.
+
+  [ bp: Massage commit message. ]
+
+Fixes: e16c2983fba0 ("x86/purgatory: Change compiler flags from -mcmodel=kernel to -mcmodel=large to fix kexec relocation errors")
+Fixes: https://bugzilla.suse.com/show_bug.cgi?id=1211853
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2016
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Fangrui Song <maskray@google.com>
+Acked-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/all/20240417-x86-fix-kexec-with-llvm-18-v1-0-5383121e8fb7@kernel.org/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/purgatory/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index f54260d7873f1..5922cb5a1de0d 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -4074,7 +4074,7 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
- 		 * Make sure UIC command completion interrupt is disabled before
- 		 * issuing UIC command.
- 		 */
--		wmb();
-+		ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
- 		reenable_intr = true;
- 	}
- 	spin_unlock_irqrestore(hba->host->host_lock, flags);
+diff --git a/arch/x86/purgatory/Makefile b/arch/x86/purgatory/Makefile
+index 08aa0f25f12a0..8d1c82795ea1d 100644
+--- a/arch/x86/purgatory/Makefile
++++ b/arch/x86/purgatory/Makefile
+@@ -42,7 +42,8 @@ KCOV_INSTRUMENT := n
+ # make up the standalone purgatory.ro
+ 
+ PURGATORY_CFLAGS_REMOVE := -mcmodel=kernel
+-PURGATORY_CFLAGS := -mcmodel=large -ffreestanding -fno-zero-initialized-in-bss -g0
++PURGATORY_CFLAGS := -mcmodel=small -ffreestanding -fno-zero-initialized-in-bss -g0
++PURGATORY_CFLAGS += -fpic -fvisibility=hidden
+ PURGATORY_CFLAGS += $(DISABLE_STACKLEAK_PLUGIN) -DDISABLE_BRANCH_PROFILING
+ PURGATORY_CFLAGS += -fno-stack-protector
+ 
 -- 
 2.43.0
 
