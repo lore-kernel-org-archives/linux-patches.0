@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D247E197559;
-	Thu,  6 Jun 2024 14:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696B6196D9C;
+	Thu,  6 Jun 2024 14:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682923; cv=none; b=caVKkxzP85ALYRQ4DRBAWvYYaRuFJZMjKM2CaQJwGK2VLmwkbUdo/l5wClZHRxkItMevGAJPplgPyPLYwsKB71yu1YEdA2BHuYE746TtfI3TIXEoAg+/ySFduqPu2/0v3pAdMeAMV60HQhk7lI5EWRPj1bouh34ZssWwaHCEhq4=
+	t=1717682924; cv=none; b=Z5KV0fm+H04Tl5u5FAmBG46+QiOOFFtOVRlodx+ieMqYq6x/FwVsqhV1SvXiFXLV5R6PpyMGA9BX3wH33QOisf39vnXF9hQn7x/hVk/AmVp7DFgTatkS0ARcTPgVp3iY8WQvzEtTv3WrkrWUC27A5mzO9FALRQlvSM0p0mUP0xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682923; c=relaxed/simple;
-	bh=DCyFddNiHZvuiZYa+g12ADaP3/Q1bwhcuxw4Y/HbnEc=;
+	s=arc-20240116; t=1717682924; c=relaxed/simple;
+	bh=gKHrmOY6iwxjMkXV9vSgOb+FD0C/HX4jud+me9CdNNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jyLH1vn01dXm/RPHo/mYluCAjDQjCRhGFegiPyE7Rzrx8fVwF4l42YdoHSHmFrUp7oZI/Dln3Ot5JlX3HpM7Q3F4IgRLpDqklQflrodYAUHs/wdOMqhqzWC/4OopGkJHaSiYM4wQB7rkA+5SWFJ2iADiT35HqSOrwUcZxxCCd7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3DBfcaW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GoniyqJDi7YfMJwSudczN6TOe4dljoHMSka9zRk55uIgq8zbWUfTMd8hup1d9/E3TR9qijWwpbO+4rpq9IXFsdmYU1ljTmoELUgApUZmuLDsm/sy/3CVQQfdK89bYS2/vQKOR2iN1DnP7k+wjoLQISLgFp8s6kXC8Zcqx/svsOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlr/M8H6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3DBfcaW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B010AC2BD10;
-	Thu,  6 Jun 2024 14:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlr/M8H6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442E3C4AF08;
+	Thu,  6 Jun 2024 14:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682923;
-	bh=DCyFddNiHZvuiZYa+g12ADaP3/Q1bwhcuxw4Y/HbnEc=;
+	s=korg; t=1717682924;
+	bh=gKHrmOY6iwxjMkXV9vSgOb+FD0C/HX4jud+me9CdNNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3DBfcaWQHlSRpmmvq4daNJSyjQ5rGmIBLSjvxKmnbZ59p5UlCupZj+m0s6aybIaC
-	 GH7MgRYxhsHNWYktd/VuEBIZBo/Yx2o5FqrEtdGAY1r2Y9OkKZz36yCx2kSL6or3Et
-	 lqsrw8B6cf8VxjOrU6kKThtAcUvQXx43BP6Ov9Eo=
+	b=dlr/M8H6rKzzuIgPcIK815qA5SNQ9HUypdxedhfUy6PKZkxoqJBXY3psm0IwPBGfZ
+	 xOUSNd3i6Nia3gp87zIFZn2a7mhj5skOO9DJqhxbpw/W+TTT1gxSvRlOSU55IhSAPW
+	 yOzksj7c3yI8wRkMs4pNgATcQOD4Ru/xTI+ut7Wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Barker <paul.barker.ct@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 065/374] pinctrl: renesas: rzg2l: Limit 2.5V power supply to Ethernet interfaces
-Date: Thu,  6 Jun 2024 16:00:44 +0200
-Message-ID: <20240606131654.019412037@linuxfoundation.org>
+Subject: [PATCH 6.9 066/374] PCI: Wait for Link Training==0 before starting Link retrain
+Date: Thu,  6 Jun 2024 16:00:45 +0200
+Message-ID: <20240606131654.048664683@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -45,49 +45,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul Barker <paul.barker.ct@bp.renesas.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit cd27553b0dee6fdc4a2535ab9fc3c8fbdd811d13 ]
+[ Upstream commit 73cb3a35f94db723c0211ad099bce55b2155e3f0 ]
 
-The RZ/G3S SoC supports configurable supply voltages for several of its
-I/O interfaces. All of these interfaces support both 1.8V and 3.3V
-supplies, but only the Ethernet and XSPI interfaces support a 2.5V
-supply.
+Two changes were made in link retraining logic independent of each other.
 
-Voltage selection for the XSPI interface is not yet supported, so this
-leaves only the Ethernet interfaces currently supporting selection of a
-2.5V supply. So we need to return an error if there is an attempt to
-select a 2.5V supply for any non-Ethernet interface.
+The commit e7e39756363a ("PCI/ASPM: Avoid link retraining race") added a
+check to pcie_retrain_link() to ensure no Link Training is currently active
+to address the Implementation Note in PCIe r6.1 sec 7.5.3.7. At that time
+pcie_wait_for_retrain() only checked for the Link Training (LT) bit being
+cleared.
 
-Fixes: 51996952b8b5 ("pinctrl: renesas: rzg2l: Add support to select power source for Ethernet pins")
-Signed-off-by: Paul Barker <paul.barker.ct@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20240417114132.6605-1-paul.barker.ct@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+The commit 680e9c47a229 ("PCI: Add support for polling DLLLA to
+pcie_retrain_link()") generalized pcie_wait_for_retrain() into
+pcie_wait_for_link_status() which can wait either for LT or the Data Link
+Layer Link Active (DLLLA) bit with 'use_lt' argument and supporting waiting
+for either cleared or set using 'active' argument.
+
+In the merge commit 1abb47390350 ("Merge branch 'pci/enumeration'"), those
+two divergent branches converged. The merge changed LT bit checking added
+in the commit e7e39756363a ("PCI/ASPM: Avoid link retraining race") to now
+wait for completion of any ongoing Link Training using DLLLA bit being set
+if 'use_lt' is false.
+
+When 'use_lt' is false, the pseudo-code steps of what occurs in
+pcie_retrain_link():
+
+	1. Wait for DLLLA==1
+	2. Trigger link to retrain
+	3. Wait for DLLLA==1
+
+Step 3 waits for the link to come up from the retraining triggered by Step
+2. As Step 1 is supposed to wait for any ongoing retraining to end, using
+DLLLA also for it does not make sense because link training being active is
+still indicated using LT bit, not with DLLLA.
+
+Correct the pcie_wait_for_link_status() parameters in Step 1 to only wait
+for LT==0 to ensure there is no ongoing Link Training.
+
+This only impacts the Target Speed quirk, which is the only case where
+waiting for DLLLA bit is used. It currently works in the problematic case
+by means of link training getting initiated by hardware repeatedly and
+respecting the new link parameters set by the caller, which then make
+training succeed and bring the link up, setting DLLLA and causing
+pcie_wait_for_link_status() to return success. We are not supposed to rely
+on luck and need to make sure that LT transitioned through the inactive
+state though before we initiate link training by hand via RL (Retrain Link)
+bit.
+
+Fixes: 1abb47390350 ("Merge branch 'pci/enumeration'")
+Link: https://lore.kernel.org/r/20240423130820.43824-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index 20425afc6b331..248ab71b9f9da 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -892,6 +892,8 @@ static int rzg2l_set_power_source(struct rzg2l_pinctrl *pctrl, u32 pin, u32 caps
- 		val = PVDD_1800;
- 		break;
- 	case 2500:
-+		if (!(caps & (PIN_CFG_IO_VMC_ETH0 | PIN_CFG_IO_VMC_ETH1)))
-+			return -EINVAL;
- 		val = PVDD_2500;
- 		break;
- 	case 3300:
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index e5f243dd42884..70b8c87055cb6 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -4629,7 +4629,7 @@ int pcie_retrain_link(struct pci_dev *pdev, bool use_lt)
+ 	 * avoid LTSSM race as recommended in Implementation Note at the
+ 	 * end of PCIe r6.0.1 sec 7.5.3.7.
+ 	 */
+-	rc = pcie_wait_for_link_status(pdev, use_lt, !use_lt);
++	rc = pcie_wait_for_link_status(pdev, true, false);
+ 	if (rc)
+ 		return rc;
+ 
 -- 
 2.43.0
 
