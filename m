@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699331990BA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434D51990BA;
 	Thu,  6 Jun 2024 14:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683116; cv=none; b=F8hgOdLIaUoaMiXE6Hq5DUtJIEYlrSONcPn1ylCXyo3ylKOseaQdi8RmeqcXBzTGQ3xAKUaUayd70Rp4dLN72gEEUqnTTIpXotDuZnhK7vA6vlMvUVwAWzHcEprHAwuOBKMMkBFUk2PxEZ39c4Owv4VKU2gporpCv8SrXUO1Jjc=
+	t=1717683117; cv=none; b=EqJ2fWjMi68GXtvJEw5WyWiVrer2iRBx4HrkuQpv9zy9lznT+TD41cVs63k2sArqUhwVAXVD5l1IwoyMMORy01ntD2aihwt7eXzWz3ElhJX5tIm3OwKZyHorM4CAgTKjSYNXhR4+LDHEtPwNI/C2jlzDdvyjzpKs3pjEyIA/QKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683116; c=relaxed/simple;
-	bh=+Lr6WZGxgAeu7/I9mjb6xDj7uopFzCfEkytKcfugN6o=;
+	s=arc-20240116; t=1717683117; c=relaxed/simple;
+	bh=vPtXuVMP6FTHqJzKdPfiP3vdW5sgM80xY1SGK9O89Dw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W26r1B0iIJixJM6nJx28M5XTKyREVwe1rg0zpkgdlreSX/+sILmUR404WEQYw+ywjzRTID638pcjjWtkOpoVYPiHMFuTJuyTvus3jBZyaSyHjwvqABRN0m5DgwduZNWt5ZQ3jKHbkeKHqIIgntBGViZWOhDp3P3j3f6XIoZACPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6wMTV5+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRrgfIqati8GYKt30YuAi1UoFcH5A/1vsAPZFvr2KKOwDOkEo++OiHZ6nXafRaJYO576ok+LQZIN9qATxB9CE7TXCkQDfK2ApwJPq8x7N8G/qZ4okPlhSyqFSt4lyUmP/DwVgsddpe79U1xe1hZEywnNudIEFX1saJ4lMnTqo7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2kNpUiW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6wMTV5+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B14C2BD10;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2kNpUiW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48BFC2BD10;
 	Thu,  6 Jun 2024 14:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683116;
-	bh=+Lr6WZGxgAeu7/I9mjb6xDj7uopFzCfEkytKcfugN6o=;
+	bh=vPtXuVMP6FTHqJzKdPfiP3vdW5sgM80xY1SGK9O89Dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6wMTV5+ZBEcFckUdonfcQFQ8HRcW40AW9I1ZYIaH5PbYEzMZp/jOpmlRThTEcQ5O
-	 gPYzwJts4r5milSPFSaA0Lkh9aTg6Sb0bPr2f21Dmy0DuZMlEjgXkdbxPc3Iz69G1U
-	 Wy0fbcLZ1AXmkt8vz5J9e2/LR4On4EHyEDPxkSCE=
+	b=y2kNpUiWxDGbv+T2uBAe8OXp8H2K08QRdny+Pt7svI8OV8hxeRTRtf4veWm6IFftW
+	 VprP/FymPE3MOCXts+6Tdz6CtGAFJOUdwa/mA8ukc2QFRjYhZENgzKHzDAj7D3S5Zr
+	 5O0hXnkK6zBIft0GeI4naCUqcQ306q513wuJHQ54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Phil Auld <pauld@redhat.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/744] selftests: sud_test: return correct emulated syscall value on RISC-V
-Date: Thu,  6 Jun 2024 15:55:23 +0200
-Message-ID: <20240606131734.077732206@linuxfoundation.org>
+Subject: [PATCH 6.6 052/744] sched/isolation: Fix boot crash when maxcpus < first housekeeping CPU
+Date: Thu,  6 Jun 2024 15:55:24 +0200
+Message-ID: <20240606131734.110596007@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -45,58 +48,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 17c67ed752d6a456602b3dbb25c5ae4d3de5deab ]
+[ Upstream commit 257bf89d84121280904800acd25cc2c444c717ae ]
 
-Currently, the sud_test expects the emulated syscall to return the
-emulated syscall number. This assumption only works on architectures
-were the syscall calling convention use the same register for syscall
-number/syscall return value. This is not the case for RISC-V and thus
-the return value must be also emulated using the provided ucontext.
+housekeeping_setup() checks cpumask_intersects(present, online) to ensure
+that the kernel will have at least one housekeeping CPU after smp_init(),
+but this doesn't work if the maxcpus= kernel parameter limits the number of
+processors available after bootup.
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/r/20231206134438.473166-1-cleger@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+For example, a kernel with "maxcpus=2 nohz_full=0-2" parameters crashes at
+boot time on a virtual machine with 4 CPUs.
+
+Change housekeeping_setup() to use cpumask_first_and() and check that the
+returned CPU number is valid and less than setup_max_cpus.
+
+Another corner case is "nohz_full=0" on a machine with a single CPU or with
+the maxcpus=1 kernel argument. In this case non_housekeeping_mask is empty
+and tick_nohz_full_setup() makes no sense. And indeed, the kernel hits the
+WARN_ON(tick_nohz_full_running) in tick_sched_do_timer().
+
+And how should the kernel interpret the "nohz_full=" parameter? It should
+be silently ignored, but currently cpulist_parse() happily returns the
+empty cpumask and this leads to the same problem.
+
+Change housekeeping_setup() to check cpumask_empty(non_housekeeping_mask)
+and do nothing in this case.
+
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Phil Auld <pauld@redhat.com>
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/20240413141746.GA10008@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/syscall_user_dispatch/sud_test.c     | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ kernel/sched/isolation.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/syscall_user_dispatch/sud_test.c b/tools/testing/selftests/syscall_user_dispatch/sud_test.c
-index b5d592d4099e8..d975a67673299 100644
---- a/tools/testing/selftests/syscall_user_dispatch/sud_test.c
-+++ b/tools/testing/selftests/syscall_user_dispatch/sud_test.c
-@@ -158,6 +158,20 @@ static void handle_sigsys(int sig, siginfo_t *info, void *ucontext)
+diff --git a/kernel/sched/isolation.c b/kernel/sched/isolation.c
+index 373d42c707bc5..82e2f7fc7c267 100644
+--- a/kernel/sched/isolation.c
++++ b/kernel/sched/isolation.c
+@@ -109,6 +109,7 @@ static void __init housekeeping_setup_type(enum hk_type type,
+ static int __init housekeeping_setup(char *str, unsigned long flags)
+ {
+ 	cpumask_var_t non_housekeeping_mask, housekeeping_staging;
++	unsigned int first_cpu;
+ 	int err = 0;
  
- 	/* In preparation for sigreturn. */
- 	SYSCALL_DISPATCH_OFF(glob_sel);
-+
-+	/*
-+	 * The tests for argument handling assume that `syscall(x) == x`. This
-+	 * is a NOP on x86 because the syscall number is passed in %rax, which
-+	 * happens to also be the function ABI return register.  Other
-+	 * architectures may need to swizzle the arguments around.
-+	 */
-+#if defined(__riscv)
-+/* REG_A7 is not defined in libc headers */
-+# define REG_A7 (REG_A0 + 7)
-+
-+	((ucontext_t *)ucontext)->uc_mcontext.__gregs[REG_A0] =
-+			((ucontext_t *)ucontext)->uc_mcontext.__gregs[REG_A7];
-+#endif
- }
+ 	if ((flags & HK_FLAG_TICK) && !(housekeeping.flags & HK_FLAG_TICK)) {
+@@ -129,7 +130,8 @@ static int __init housekeeping_setup(char *str, unsigned long flags)
+ 	cpumask_andnot(housekeeping_staging,
+ 		       cpu_possible_mask, non_housekeeping_mask);
  
- TEST(dispatch_and_return)
+-	if (!cpumask_intersects(cpu_present_mask, housekeeping_staging)) {
++	first_cpu = cpumask_first_and(cpu_present_mask, housekeeping_staging);
++	if (first_cpu >= nr_cpu_ids || first_cpu >= setup_max_cpus) {
+ 		__cpumask_set_cpu(smp_processor_id(), housekeeping_staging);
+ 		__cpumask_clear_cpu(smp_processor_id(), non_housekeeping_mask);
+ 		if (!housekeeping.flags) {
+@@ -138,6 +140,9 @@ static int __init housekeeping_setup(char *str, unsigned long flags)
+ 		}
+ 	}
+ 
++	if (cpumask_empty(non_housekeeping_mask))
++		goto free_housekeeping_staging;
++
+ 	if (!housekeeping.flags) {
+ 		/* First setup call ("nohz_full=" or "isolcpus=") */
+ 		enum hk_type type;
 -- 
 2.43.0
 
