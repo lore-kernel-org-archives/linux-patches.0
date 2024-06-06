@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6BF19D066;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69AF198E7B;
 	Thu,  6 Jun 2024 14:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683082; cv=none; b=ZUaSCBip2dSpL4ZoFRgPDB0gdfvHvqiPH2dh/phZAhBRgYey2LoVl74Rw50T0d4nPfJ3L1I/YthSbrd/X9q3OvNlX+QGApKOvPW6O8aGdqM9uVhCzbx7FZ4QA0KRDWlU91q92ivjKTkxd7n6rR8aHTOZYDlnXYh4vG9I7YlQBFQ=
+	t=1717683083; cv=none; b=C1rzwxOr+J996mFZDHRrkIS5urT4SIddpZkAfcqljFh3xV3UsNSqONFrKsYnwA8t4tzNA8y1XnugF2lOV9ew4vFo32Dy4//dReCmlKCnXEqHXBIb6pgY+BjQUPsyoUEkYZxjPmkd+285ZzTyE91I/Yl31TvxSpLbINEx302bz1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683082; c=relaxed/simple;
-	bh=uTzbGQHnCQUzMgw5iq/w5X1+FvVd1iXc10Y10vtXRN0=;
+	s=arc-20240116; t=1717683083; c=relaxed/simple;
+	bh=Pn+z/H0ZZciFZxxt2zmiIRwtooYBcljS/s4UxTNitFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e80dF0+aXMejZYquBhNNft0ikmDkn/IvB2omW0yyIzazYmhCqWqfh5CjoSY3N/ZwAhp7qM28Nlb3VZy1uaxT3BOahCVRNhV5qf9pyi1crWeM3CQFtEwcJSPChFzZU9f4kb4YXooPlzCo3DF7ePYkDFzc5Zdfc8vVUvMMLV4SMwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfe0sHbv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BypQ9vcf78uB/qJO+YAhUhrC9qePih0QmaFBW2qpfopq52ORgS/9tT6gA9AlLaT+M0m9X0Fb6EIykmF6qXwqpv+1LuuHLVjTAO475mHQCvpXRBuqbUiRiZMLjBG+yoli+cj0ZQ8dehrcguiZLqe4W6RoXp5kn7w9Pgvud4ymw2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFoifzKP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfe0sHbv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D241C4AF14;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFoifzKP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C607EC4AF0B;
 	Thu,  6 Jun 2024 14:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683082;
-	bh=uTzbGQHnCQUzMgw5iq/w5X1+FvVd1iXc10Y10vtXRN0=;
+	bh=Pn+z/H0ZZciFZxxt2zmiIRwtooYBcljS/s4UxTNitFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfe0sHbv3DBZaK361QxSivVuaW0e/2o0i0ncBmWA+TxOOepCSE2Td61ITurgoqdRm
-	 zzTEoGc2xWJ7ywR8vmJoxYlPtcg4xb+56qExPvWRXLES01j5DHZm5HxZ4s8yyQDgk1
-	 wQpcKzLYSZCvBaezxSX+gIKIVhsRM99ene8eoxSY=
+	b=rFoifzKPgi1KUCVhKZvZ6lT1xPyF8gOZAMgUtLWw14eFzVE2MZWHVtOFCKS80dnXw
+	 41UE/FR9idOiNJynBRULcTsWwA1BV9kgD5m+m2SjEWkPfySvezU7t4zbd949e/PQJd
+	 lQo92jfPE3+Zl/vKfDbmRMxRMjL3+Z3IzC+0FKZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 318/374] net:fec: Add fec_enet_deinit()
-Date: Thu,  6 Jun 2024 16:04:57 +0200
-Message-ID: <20240606131702.527405551@linuxfoundation.org>
+Subject: [PATCH 6.9 354/374] ipvlan: Dont Use skb->sk in ipvlan_process_v{4,6}_outbound
+Date: Thu,  6 Jun 2024 16:05:33 +0200
+Message-ID: <20240606131703.731404009@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,61 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit bf0497f53c8535f99b72041529d3f7708a6e2c0d ]
+[ Upstream commit b3dc6e8003b500861fa307e9a3400c52e78e4d3a ]
 
-When fec_probe() fails or fec_drv_remove() needs to release the
-fec queue and remove a NAPI context, therefore add a function
-corresponding to fec_enet_init() and call fec_enet_deinit() which
-does the opposite to release memory and remove a NAPI context.
+Raw packet from PF_PACKET socket ontop of an IPv6-backed ipvlan device will
+hit WARN_ON_ONCE() in sk_mc_loop() through sch_direct_xmit() path.
 
-Fixes: 59d0f7465644 ("net: fec: init multi queue date structure")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240524050528.4115581-1-xiaolei.wang@windriver.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+WARNING: CPU: 2 PID: 0 at net/core/sock.c:775 sk_mc_loop+0x2d/0x70
+Modules linked in: sch_netem ipvlan rfkill cirrus drm_shmem_helper sg drm_kms_helper
+CPU: 2 PID: 0 Comm: swapper/2 Kdump: loaded Not tainted 6.9.0+ #279
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:sk_mc_loop+0x2d/0x70
+Code: fa 0f 1f 44 00 00 65 0f b7 15 f7 96 a3 4f 31 c0 66 85 d2 75 26 48 85 ff 74 1c
+RSP: 0018:ffffa9584015cd78 EFLAGS: 00010212
+RAX: 0000000000000011 RBX: ffff91e585793e00 RCX: 0000000002c6a001
+RDX: 0000000000000000 RSI: 0000000000000040 RDI: ffff91e589c0f000
+RBP: ffff91e5855bd100 R08: 0000000000000000 R09: 3d00545216f43d00
+R10: ffff91e584fdcc50 R11: 00000060dd8616f4 R12: ffff91e58132d000
+R13: ffff91e584fdcc68 R14: ffff91e5869ce800 R15: ffff91e589c0f000
+FS:  0000000000000000(0000) GS:ffff91e898100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f788f7c44c0 CR3: 0000000008e1a000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<IRQ>
+ ? __warn (kernel/panic.c:693)
+ ? sk_mc_loop (net/core/sock.c:760)
+ ? report_bug (lib/bug.c:201 lib/bug.c:219)
+ ? handle_bug (arch/x86/kernel/traps.c:239)
+ ? exc_invalid_op (arch/x86/kernel/traps.c:260 (discriminator 1))
+ ? asm_exc_invalid_op (./arch/x86/include/asm/idtentry.h:621)
+ ? sk_mc_loop (net/core/sock.c:760)
+ ip6_finish_output2 (net/ipv6/ip6_output.c:83 (discriminator 1))
+ ? nf_hook_slow (net/netfilter/core.c:626)
+ ip6_finish_output (net/ipv6/ip6_output.c:222)
+ ? __pfx_ip6_finish_output (net/ipv6/ip6_output.c:215)
+ ipvlan_xmit_mode_l3 (drivers/net/ipvlan/ipvlan_core.c:602) ipvlan
+ ipvlan_start_xmit (drivers/net/ipvlan/ipvlan_main.c:226) ipvlan
+ dev_hard_start_xmit (net/core/dev.c:3594)
+ sch_direct_xmit (net/sched/sch_generic.c:343)
+ __qdisc_run (net/sched/sch_generic.c:416)
+ net_tx_action (net/core/dev.c:5286)
+ handle_softirqs (kernel/softirq.c:555)
+ __irq_exit_rcu (kernel/softirq.c:589)
+ sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1043)
+
+The warning triggers as this:
+packet_sendmsg
+   packet_snd //skb->sk is packet sk
+      __dev_queue_xmit
+         __dev_xmit_skb //q->enqueue is not NULL
+             __qdisc_run
+               sch_direct_xmit
+                 dev_hard_start_xmit
+                   ipvlan_start_xmit
+                      ipvlan_xmit_mode_l3 //l3 mode
+                        ipvlan_process_outbound //vepa flag
+                          ipvlan_process_v6_outbound
+                            ip6_local_out
+                                __ip6_finish_output
+                                  ip6_finish_output2 //multicast packet
+                                    sk_mc_loop //sk->sk_family is AF_PACKET
+
+Call ip{6}_local_out() with NULL sk in ipvlan as other tunnels to fix this.
+
+Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240529095633.613103-1-yuehaibing@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ipvlan/ipvlan_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index a72d8a2eb0b31..881ece735dcf1 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -4130,6 +4130,14 @@ static int fec_enet_init(struct net_device *ndev)
- 	return ret;
- }
+diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
+index 2d5b021b4ea60..fef4eff7753a7 100644
+--- a/drivers/net/ipvlan/ipvlan_core.c
++++ b/drivers/net/ipvlan/ipvlan_core.c
+@@ -439,7 +439,7 @@ static noinline_for_stack int ipvlan_process_v4_outbound(struct sk_buff *skb)
  
-+static void fec_enet_deinit(struct net_device *ndev)
-+{
-+	struct fec_enet_private *fep = netdev_priv(ndev);
-+
-+	netif_napi_del(&fep->napi);
-+	fec_enet_free_queue(ndev);
-+}
-+
- #ifdef CONFIG_OF
- static int fec_reset_phy(struct platform_device *pdev)
- {
-@@ -4524,6 +4532,7 @@ fec_probe(struct platform_device *pdev)
- 	fec_enet_mii_remove(fep);
- failed_mii_init:
- failed_irq:
-+	fec_enet_deinit(ndev);
- failed_init:
- 	fec_ptp_stop(pdev);
- failed_reset:
-@@ -4587,6 +4596,7 @@ fec_drv_remove(struct platform_device *pdev)
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+ 	memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
  
-+	fec_enet_deinit(ndev);
- 	free_netdev(ndev);
- }
+-	err = ip_local_out(net, skb->sk, skb);
++	err = ip_local_out(net, NULL, skb);
+ 	if (unlikely(net_xmit_eval(err)))
+ 		DEV_STATS_INC(dev, tx_errors);
+ 	else
+@@ -494,7 +494,7 @@ static int ipvlan_process_v6_outbound(struct sk_buff *skb)
  
+ 	memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
+ 
+-	err = ip6_local_out(dev_net(dev), skb->sk, skb);
++	err = ip6_local_out(dev_net(dev), NULL, skb);
+ 	if (unlikely(net_xmit_eval(err)))
+ 		DEV_STATS_INC(dev, tx_errors);
+ 	else
 -- 
 2.43.0
 
