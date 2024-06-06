@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A4119ADA2;
-	Thu,  6 Jun 2024 14:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBCE19AD9B;
+	Thu,  6 Jun 2024 14:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683048; cv=none; b=S4Ki9Dh5RNsH3EilfFNYbv7MiU6GH3XGiDaXdTDPxc8LyeW9vAMBFeD89ZR6dP5bsEAl/hOmkidzTrLq//K3/HdLQlStL00BzL+KRbJw0y+30dnRsahFPIdQOn2omWW7DBBR/JPfwe3+qDLwJwyKEuswQoDSybwHJ2nFhpI8fC8=
+	t=1717683049; cv=none; b=Us2m2C8EMw+aaH+72UJ4oLkYvPlQOa9lfGhX36TXPe66fzrVg5FrHPfq17dJLzpZR2SHyd2GOdHNjSJFoCzRseE6u/+nquGHKs5d9zQD0EAwWKe/BTK5bLEvanseBWxBjrOXIwVSrqPYH4GmfRViUshW8c7u8ZO/E4wpfb1Gf1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683048; c=relaxed/simple;
-	bh=ThaqRi+cN+Ptt8YfUNn6bb8SvXgkU88NOL9NTpRJhFk=;
+	s=arc-20240116; t=1717683049; c=relaxed/simple;
+	bh=NbjjPLa6mGeDoRMOLAcSYiYlek2dLbyYjs+lJ9Sk5ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pzWlWuyo+CW5OwfL6O0DrG+TB86EHv4/PJ1U5h7RtC7HaV27DW9FrWUf6qRT6BgTUwNL0RtHdxSEBTlnwOQMpNPwnlbiiOBZDyj+0L8hirvQ4TGdGyGOeFV2H4e+WuEVFTGqselXvQrlDcfO0xbUUSp3pG7iQcEj5ZwzS5I8jfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxPS8wVH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=loMHA6WgRnr/pvSya+PPN1DWn3M530Fq82qXFyQ6HUXc9BBO8oDfsUeZk3gotlJo2gzOWX5HRpZ474gThwRpD+3aucCR9yxZ+rkEA5Vrb1R71DlXiTgXBRfncoErJYtN6Scozdkx6B67mqz40tCNxcWfkoQyBK05G5KhZAxPOYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPSCCwc+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxPS8wVH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997DEC4AF0A;
-	Thu,  6 Jun 2024 14:10:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPSCCwc+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9D0C32782;
+	Thu,  6 Jun 2024 14:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683048;
-	bh=ThaqRi+cN+Ptt8YfUNn6bb8SvXgkU88NOL9NTpRJhFk=;
+	s=korg; t=1717683049;
+	bh=NbjjPLa6mGeDoRMOLAcSYiYlek2dLbyYjs+lJ9Sk5ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KxPS8wVH1rfEOfI0iTr7XdpKsEV4R7mYOHgoi3l324Kjmz9ProyPl5zXj7uDzhZCh
-	 5rYZe/ItA4ISn3ApXnyysOIwyz+sUI2zNzFvXdTZjenax9Ol1X+Lwx67YKghjYhOWT
-	 CE34XBHAF+PDku742CPGXbcGmq8QrtiwlHDIXI3I=
+	b=EPSCCwc+Al2CBXp9vj14T1zpT/ZcpwK5Kn0ifO4xli3eLVxiWwi7fZlWgviIZeMfw
+	 fNrri/pQAczz/SVQoqf4E8n6DYR5tUUTIi9kSYhGuzfYNk2HWREaeaUnPashr9YnQd
+	 Viyn/qbxU7loOcZlfx9bZ5nTrFy1D2cmnx9OFYkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Leonard=20G=C3=B6hrs?= <l.goehrs@pengutronix.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 287/374] spi: stm32: Revert change that enabled controller before asserting CS
-Date: Thu,  6 Jun 2024 16:04:26 +0200
-Message-ID: <20240606131701.507920283@linuxfoundation.org>
+Subject: [PATCH 6.9 288/374] dma-mapping: benchmark: fix up kthread-related error handling
+Date: Thu,  6 Jun 2024 16:04:27 +0200
+Message-ID: <20240606131701.543239557@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -46,110 +46,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit a827ad9b3c2fc243e058595533f91ce41a312527 ]
+[ Upstream commit bb9025f4432f8c158322cf2c04c2b492f23eb511 ]
 
-On stm32mp157 enabling the controller before asserting CS makes the
-hardware trigger spurious interrupts in a tight loop and the transfers
-fail. Revert the commit that swapped the order of enable and CS. This
-reintroduces the problem that swapping was supposed to fix, which
-however is less grave.
+kthread creation failure is invalidly handled inside do_map_benchmark().
+The put_task_struct() calls on the error path are supposed to balance the
+get_task_struct() calls which only happen after all the kthreads are
+successfully created. Rollback using kthread_stop() for already created
+kthreads in case of such failure.
 
-Reported-by: Leonard Göhrs <l.goehrs@pengutronix.de>
-Link: https://lore.kernel.org/all/39033ed7-3e57-4339-80b4-fc8919e26aa7@pengutronix.de/
-Fixes: 52b62e7a5d4f ("spi: stm32: enable controller before asserting CS")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://msgid.link/r/20240523103326.792907-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+In normal situation call kthread_stop_put() to gracefully stop kthreads
+and put their task refcounts. This should be done for all started
+kthreads.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 65789daa8087 ("dma-mapping: add benchmark support for streaming DMA APIs")
+Suggested-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-stm32.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ kernel/dma/map_benchmark.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
-index 4a68abcdcc353..e4e7ddb7524a9 100644
---- a/drivers/spi/spi-stm32.c
-+++ b/drivers/spi/spi-stm32.c
-@@ -1016,8 +1016,10 @@ static irqreturn_t stm32fx_spi_irq_event(int irq, void *dev_id)
- static irqreturn_t stm32fx_spi_irq_thread(int irq, void *dev_id)
- {
- 	struct spi_controller *ctrl = dev_id;
-+	struct stm32_spi *spi = spi_controller_get_devdata(ctrl);
+diff --git a/kernel/dma/map_benchmark.c b/kernel/dma/map_benchmark.c
+index 02205ab53b7e9..2478957cf9f83 100644
+--- a/kernel/dma/map_benchmark.c
++++ b/kernel/dma/map_benchmark.c
+@@ -118,6 +118,8 @@ static int do_map_benchmark(struct map_benchmark_data *map)
+ 		if (IS_ERR(tsk[i])) {
+ 			pr_err("create dma_map thread failed\n");
+ 			ret = PTR_ERR(tsk[i]);
++			while (--i >= 0)
++				kthread_stop(tsk[i]);
+ 			goto out;
+ 		}
  
- 	spi_finalize_current_transfer(ctrl);
-+	stm32fx_spi_disable(spi);
+@@ -139,13 +141,17 @@ static int do_map_benchmark(struct map_benchmark_data *map)
  
- 	return IRQ_HANDLED;
- }
-@@ -1185,8 +1187,6 @@ static int stm32_spi_prepare_msg(struct spi_controller *ctrl,
- 			 ~clrb) | setb,
- 			spi->base + spi->cfg->regs->cpol.reg);
+ 	msleep_interruptible(map->bparam.seconds * 1000);
  
--	stm32_spi_enable(spi);
--
- 	spin_unlock_irqrestore(&spi->lock, flags);
- 
- 	return 0;
-@@ -1204,6 +1204,7 @@ static void stm32fx_spi_dma_tx_cb(void *data)
- 
- 	if (spi->cur_comm == SPI_SIMPLEX_TX || spi->cur_comm == SPI_3WIRE_TX) {
- 		spi_finalize_current_transfer(spi->ctrl);
-+		stm32fx_spi_disable(spi);
+-	/* wait for the completion of benchmark threads */
++	/* wait for the completion of all started benchmark threads */
+ 	for (i = 0; i < threads; i++) {
+-		ret = kthread_stop(tsk[i]);
+-		if (ret)
+-			goto out;
++		int kthread_ret = kthread_stop_put(tsk[i]);
++
++		if (kthread_ret)
++			ret = kthread_ret;
  	}
- }
  
-@@ -1218,6 +1219,7 @@ static void stm32_spi_dma_rx_cb(void *data)
- 	struct stm32_spi *spi = data;
- 
- 	spi_finalize_current_transfer(spi->ctrl);
-+	spi->cfg->disable(spi);
- }
- 
- /**
-@@ -1305,6 +1307,8 @@ static int stm32fx_spi_transfer_one_irq(struct stm32_spi *spi)
- 
- 	stm32_spi_set_bits(spi, STM32FX_SPI_CR2, cr2);
- 
-+	stm32_spi_enable(spi);
++	if (ret)
++		goto out;
 +
- 	/* starting data transfer when buffer is loaded */
- 	if (spi->tx_buf)
- 		spi->cfg->write_tx(spi);
-@@ -1341,6 +1345,8 @@ static int stm32h7_spi_transfer_one_irq(struct stm32_spi *spi)
- 
- 	spin_lock_irqsave(&spi->lock, flags);
- 
-+	stm32_spi_enable(spi);
-+
- 	/* Be sure to have data in fifo before starting data transfer */
- 	if (spi->tx_buf)
- 		stm32h7_spi_write_txfifo(spi);
-@@ -1372,6 +1378,8 @@ static void stm32fx_spi_transfer_one_dma_start(struct stm32_spi *spi)
- 		 */
- 		stm32_spi_set_bits(spi, STM32FX_SPI_CR2, STM32FX_SPI_CR2_ERRIE);
+ 	loops = atomic64_read(&map->loops);
+ 	if (likely(loops > 0)) {
+ 		u64 map_variance, unmap_variance;
+@@ -170,8 +176,6 @@ static int do_map_benchmark(struct map_benchmark_data *map)
  	}
-+
-+	stm32_spi_enable(spi);
- }
  
- /**
-@@ -1405,6 +1413,8 @@ static void stm32h7_spi_transfer_one_dma_start(struct stm32_spi *spi)
- 
- 	stm32_spi_set_bits(spi, STM32H7_SPI_IER, ier);
- 
-+	stm32_spi_enable(spi);
-+
- 	if (STM32_SPI_HOST_MODE(spi))
- 		stm32_spi_set_bits(spi, STM32H7_SPI_CR1, STM32H7_SPI_CR1_CSTART);
- }
+ out:
+-	for (i = 0; i < threads; i++)
+-		put_task_struct(tsk[i]);
+ 	put_device(map->dev);
+ 	kfree(tsk);
+ 	return ret;
 -- 
 2.43.0
 
