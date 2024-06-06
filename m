@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D011B1436;
-	Thu,  6 Jun 2024 14:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1911B1432;
+	Thu,  6 Jun 2024 14:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683380; cv=none; b=dvgw9+S/xRt63gtnZQhq/5KT4ZNICa2Ljetdha5oKZLXnYUZF8ykC4QS/3zo79vjF5vtI0hxsSp3pAFtIWNea5Mr6C1p/QeL4M1G9skw4o05blTQoHeX3xsNjU7/bTr9R8SV8IUD808GZeetOkvYQhhaAjo8fCJ1rUl9ooUZE+8=
+	t=1717683381; cv=none; b=M/S0IHNZk0Zr4FHq4pfsGcFUdutSUarxns3aAhbrbQgUaCZGIVDeCix+e9gG+BkT9+4UDfmVeB4bPLrsWUwRnPtm3OZ72Z1i3qTG6DQcbmcM/hgi/OVzY+6pFsdNQRMmP0+1UdVKDyKwC8QXFfv6JOGATASPFHRRTKhK73D7NuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683380; c=relaxed/simple;
-	bh=Y9+9hqjKZtMDdb20D8ZezZ1PCVkg+wYI0nmOV3PN3EI=;
+	s=arc-20240116; t=1717683381; c=relaxed/simple;
+	bh=1GrK1BZSm6tgj8cxlbRwa/0XajewwtEVV/kQNw0TdVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XLOGOJkRfY92Xlf9mYIjhmMH2Z9DJSzOPcq8Zj4SxUFVHlu0GSarp4RdKHMsYaTP3bcKUMHGsxOhRNmWH2Q/2wFNQc/PWa0k3qRnDn2fAp+AUFYbYaLMBeBhw/vJvhi14OGbPM5UTS+qm7ZpEHsQONJZpfjzkjQJYI8o0XqajPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzFvFuVC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b3GZcM3A58mkSeFG58nOU8IGFpr1yODuuSGX64ZtVaPqudweRYMvUnLgMUI0yVYWB+52wPscl2/KXzI77Psz77W+h+iZGaHrOAhOd92Y9GpW4mkW3prLG2+dQGZY5EXUxumnvWglbWq4S+R1EAAPxWs0ueHU1/t/OwSpOSzF9MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSCSZ+PZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzFvFuVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F06C32781;
-	Thu,  6 Jun 2024 14:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSCSZ+PZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210FCC32781;
+	Thu,  6 Jun 2024 14:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683380;
-	bh=Y9+9hqjKZtMDdb20D8ZezZ1PCVkg+wYI0nmOV3PN3EI=;
+	s=korg; t=1717683381;
+	bh=1GrK1BZSm6tgj8cxlbRwa/0XajewwtEVV/kQNw0TdVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FzFvFuVC0K3b1g40MmLxSFhxPnSlODi1LZ3xh4lZ59VITT+2mDxop4afxV3W2IPT2
-	 v9UC4BA2O7RFwr8hTBEPC4xcmDXOoN+nRMkGG/gaQwPVt7moWnuMrxe7pjY4FdLHlF
-	 Fug/2cfdDWGmZ3ahgOZZPaIhsbbq1g0FCkCWb1dM=
+	b=oSCSZ+PZDxM9i3m8GE8xcN155YRL99kMzDTH2yakw4DOk4RAYzizlbxTeWNXv2f3S
+	 1AFruuzMvyW/SXdPQmKR5WGiY8+Lyay0UYC5s1KFh4pmiwGqO2deix6lVhfMXTOJaI
+	 IaXB+DhOK6y81dKM17qqo++V1lCh9xhZFbQ7c5jA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 322/744] drm/bridge: lt9611: Dont log an error when DSI host cant be found
-Date: Thu,  6 Jun 2024 15:59:54 +0200
-Message-ID: <20240606131742.769202232@linuxfoundation.org>
+Subject: [PATCH 6.1 264/473] ext4: remove unused parameter from ext4_mb_new_blocks_simple()
+Date: Thu,  6 Jun 2024 16:03:13 +0200
+Message-ID: <20240606131708.670674267@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +46,193 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit cd0a2c6a081ff67007323725b9ff07d9934b1ed8 ]
+[ Upstream commit ad78b5efe4246e5deba8d44a6ed172b8a00d3113 ]
 
-Given that failing to find a DSI host causes the driver to defer probe,
-make use of dev_err_probe() to log the reason. This makes the defer
-probe reason available and avoids alerting userspace about something
-that is not necessarily an error.
+Two cleanups for ext4_mb_new_blocks_simple:
+Remove unused parameter handle of ext4_mb_new_blocks_simple.
+Move ext4_mb_new_blocks_simple definition before ext4_mb_new_blocks to
+remove unnecessary forward declaration of ext4_mb_new_blocks_simple.
 
-Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-4-619a28148e5c@collabora.com
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230603150327.3596033-10-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 3f4830abd236 ("ext4: fix potential unnitialized variable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ext4/mballoc.c | 137 +++++++++++++++++++++++-----------------------
+ 1 file changed, 67 insertions(+), 70 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index 9663601ce0981..89bdd938757e1 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -760,10 +760,8 @@ static struct mipi_dsi_device *lt9611_attach_dsi(struct lt9611 *lt9611,
- 	int ret;
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index a7801d2a7d1b4..97f4563a97c8e 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5608,8 +5608,72 @@ static bool ext4_mb_discard_preallocations_should_retry(struct super_block *sb,
+ 	return ret;
+ }
  
- 	host = of_find_mipi_dsi_host_by_node(dsi_node);
--	if (!host) {
--		dev_err(lt9611->dev, "failed to find dsi host\n");
--		return ERR_PTR(-EPROBE_DEFER);
+-static ext4_fsblk_t ext4_mb_new_blocks_simple(handle_t *handle,
+-				struct ext4_allocation_request *ar, int *errp);
++/*
++ * Simple allocator for Ext4 fast commit replay path. It searches for blocks
++ * linearly starting at the goal block and also excludes the blocks which
++ * are going to be in use after fast commit replay.
++ */
++static ext4_fsblk_t
++ext4_mb_new_blocks_simple(struct ext4_allocation_request *ar, int *errp)
++{
++	struct buffer_head *bitmap_bh;
++	struct super_block *sb = ar->inode->i_sb;
++	struct ext4_sb_info *sbi = EXT4_SB(sb);
++	ext4_group_t group, nr;
++	ext4_grpblk_t blkoff;
++	ext4_grpblk_t max = EXT4_CLUSTERS_PER_GROUP(sb);
++	ext4_grpblk_t i = 0;
++	ext4_fsblk_t goal, block;
++	struct ext4_super_block *es = EXT4_SB(sb)->s_es;
++
++	goal = ar->goal;
++	if (goal < le32_to_cpu(es->s_first_data_block) ||
++			goal >= ext4_blocks_count(es))
++		goal = le32_to_cpu(es->s_first_data_block);
++
++	ar->len = 0;
++	ext4_get_group_no_and_offset(sb, goal, &group, &blkoff);
++	for (nr = ext4_get_groups_count(sb); nr > 0; nr--) {
++		bitmap_bh = ext4_read_block_bitmap(sb, group);
++		if (IS_ERR(bitmap_bh)) {
++			*errp = PTR_ERR(bitmap_bh);
++			pr_warn("Failed to read block bitmap\n");
++			return 0;
++		}
++
++		while (1) {
++			i = mb_find_next_zero_bit(bitmap_bh->b_data, max,
++						blkoff);
++			if (i >= max)
++				break;
++			if (ext4_fc_replay_check_excluded(sb,
++				ext4_group_first_block_no(sb, group) +
++				EXT4_C2B(sbi, i))) {
++				blkoff = i + 1;
++			} else
++				break;
++		}
++		brelse(bitmap_bh);
++		if (i < max)
++			break;
++
++		if (++group >= ext4_get_groups_count(sb))
++			group = 0;
++
++		blkoff = 0;
++	}
++
++	if (i >= max) {
++		*errp = -ENOSPC;
++		return 0;
++	}
++
++	block = ext4_group_first_block_no(sb, group) + EXT4_C2B(sbi, i);
++	ext4_mb_mark_bb(sb, block, 1, 1);
++	ar->len = 1;
++
++	return block;
++}
+ 
+ /*
+  * Main entry point into mballoc to allocate blocks
+@@ -5634,7 +5698,7 @@ ext4_fsblk_t ext4_mb_new_blocks(handle_t *handle,
+ 
+ 	trace_ext4_request_blocks(ar);
+ 	if (sbi->s_mount_state & EXT4_FC_REPLAY)
+-		return ext4_mb_new_blocks_simple(handle, ar, errp);
++		return ext4_mb_new_blocks_simple(ar, errp);
+ 
+ 	/* Allow to use superuser reservation for quota file */
+ 	if (ext4_is_quota_file(ar->inode))
+@@ -5864,73 +5928,6 @@ ext4_mb_free_metadata(handle_t *handle, struct ext4_buddy *e4b,
+ 	return 0;
+ }
+ 
+-/*
+- * Simple allocator for Ext4 fast commit replay path. It searches for blocks
+- * linearly starting at the goal block and also excludes the blocks which
+- * are going to be in use after fast commit replay.
+- */
+-static ext4_fsblk_t ext4_mb_new_blocks_simple(handle_t *handle,
+-				struct ext4_allocation_request *ar, int *errp)
+-{
+-	struct buffer_head *bitmap_bh;
+-	struct super_block *sb = ar->inode->i_sb;
+-	struct ext4_sb_info *sbi = EXT4_SB(sb);
+-	ext4_group_t group, nr;
+-	ext4_grpblk_t blkoff;
+-	ext4_grpblk_t max = EXT4_CLUSTERS_PER_GROUP(sb);
+-	ext4_grpblk_t i = 0;
+-	ext4_fsblk_t goal, block;
+-	struct ext4_super_block *es = EXT4_SB(sb)->s_es;
+-
+-	goal = ar->goal;
+-	if (goal < le32_to_cpu(es->s_first_data_block) ||
+-			goal >= ext4_blocks_count(es))
+-		goal = le32_to_cpu(es->s_first_data_block);
+-
+-	ar->len = 0;
+-	ext4_get_group_no_and_offset(sb, goal, &group, &blkoff);
+-	for (nr = ext4_get_groups_count(sb); nr > 0; nr--) {
+-		bitmap_bh = ext4_read_block_bitmap(sb, group);
+-		if (IS_ERR(bitmap_bh)) {
+-			*errp = PTR_ERR(bitmap_bh);
+-			pr_warn("Failed to read block bitmap\n");
+-			return 0;
+-		}
+-
+-		while (1) {
+-			i = mb_find_next_zero_bit(bitmap_bh->b_data, max,
+-						blkoff);
+-			if (i >= max)
+-				break;
+-			if (ext4_fc_replay_check_excluded(sb,
+-				ext4_group_first_block_no(sb, group) +
+-				EXT4_C2B(sbi, i))) {
+-				blkoff = i + 1;
+-			} else
+-				break;
+-		}
+-		brelse(bitmap_bh);
+-		if (i < max)
+-			break;
+-
+-		if (++group >= ext4_get_groups_count(sb))
+-			group = 0;
+-
+-		blkoff = 0;
 -	}
-+	if (!host)
-+		return ERR_PTR(dev_err_probe(lt9611->dev, -EPROBE_DEFER, "failed to find dsi host\n"));
- 
- 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
- 	if (IS_ERR(dsi)) {
+-
+-	if (i >= max) {
+-		*errp = -ENOSPC;
+-		return 0;
+-	}
+-
+-	block = ext4_group_first_block_no(sb, group) + EXT4_C2B(sbi, i);
+-	ext4_mb_mark_bb(sb, block, 1, 1);
+-	ar->len = 1;
+-
+-	return block;
+-}
+-
+ static void ext4_free_blocks_simple(struct inode *inode, ext4_fsblk_t block,
+ 					unsigned long count)
+ {
 -- 
 2.43.0
 
