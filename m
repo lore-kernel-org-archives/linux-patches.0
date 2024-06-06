@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F8019DF41;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F90119DF41;
 	Thu,  6 Jun 2024 14:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683480; cv=none; b=JstJlWbQkqa7KDWiDfym6dE4XvRx1p72Iy7zGyC8ZdRJLlQIVW88mwvnrZuyZyWCu1luQMZuYtVvMMwb9PaGNLGin2ljYtF7hS2FmriseXGmQcAWTzs0eUVJo9PStnF5Q/8WW+a3vlUcmq4+GnyG7LcyQwtqcTpgM5BByXt1yKU=
+	t=1717683480; cv=none; b=oXf24DrZxEN33G9o76V/NeYm60xwcC9p2wR3x4TGmZ6Y/lzzHdp4Sj7GVUdAmk/CShoz+Y8jLe43AVeah0MDe6c4S66/jVfu8gq0q239FQ0rQu1xSbphLUAu/8EIGGV9adRF0gyA2h4VVhg64dMo0PZyrGC5xvjdL1717yGffzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683480; c=relaxed/simple;
-	bh=p1WvVu5hleUW/lAu3IZCDiWqCRNQvpb5MSBJTWUNe28=;
+	bh=4E3Dds+7XeMrIgQQ0ZqDZGv1vqtTp9W0r+gpcRlGF3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlLH/gbpHMZaUji1iTuZ2aLX68xb6d9WyWAnnh18/JPhIFytIp44r/ZMbzde2rQ9lbv0ueJKro1OMJqZ9EOACgSqN56XoA4g6cMPlcl9Nj/e1w4TKdSVMYtrwvQb6pKz6VAnwNcQq90nX1EinRhx2skow2GBFsqLakVxin3qFsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEtw7zDr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fd7hs0pPHSamdsT5oe6FY4VCUKPDdjUgXVQECI57Z/GsocJsn3kbqvBheaDHdkwIOAJ8jfiHPJ50kwx0OadxDXK/b0Sud8C1/MFH4uIzuQmf8pBvE8CgkbKDCJYq7Lra9fPPmNg+4TGgG4TVYtBVTyw/CvTSQa4ycN1S4v1wv30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvmFQ0VJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEtw7zDr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D658BC2BD10;
-	Thu,  6 Jun 2024 14:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvmFQ0VJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C916C2BD10;
+	Thu,  6 Jun 2024 14:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683479;
-	bh=p1WvVu5hleUW/lAu3IZCDiWqCRNQvpb5MSBJTWUNe28=;
+	s=korg; t=1717683480;
+	bh=4E3Dds+7XeMrIgQQ0ZqDZGv1vqtTp9W0r+gpcRlGF3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEtw7zDr3BejZ9KbLaozU0ySfvjgYexii2PLRmYELVpfcu7EdcevencSsfYINZ3pC
-	 rFlfKD+N6qtlqmiVGiictSVg3ZbHImBOCuCMPkQV1C3oOccBmxVxQxTdJaImtFtfAY
-	 18iJCrl+mqYqFxKWyhFqlZ8/clAzVlLvG+4baZQc=
+	b=RvmFQ0VJzhsQ6LikSm5bQAUxVhDI2nxy5P1JIJPPPdcjhVVORAueSvP7Euzz2qQuU
+	 d9gpIYRS8H78n1mvCXhv8jn9fJKWthEZdvKJgZX3m+8U5rWyHBnH97uFAix8eQfvds
+	 npiy/YYWQ89Lc3HFX8eeO5OuhjuP0MKrqlJocUuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 366/473] mmc: sdhci_am654: Fix ITAPDLY for HS400 timing
-Date: Thu,  6 Jun 2024 16:04:55 +0200
-Message-ID: <20240606131712.010038510@linuxfoundation.org>
+Subject: [PATCH 6.6 423/744] arm64: dts: meson: fix S4 power-controller node
+Date: Thu,  6 Jun 2024 16:01:35 +0200
+Message-ID: <20240606131746.038694452@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Xianwei Zhao <xianwei.zhao@amlogic.com>
 
-[ Upstream commit d3182932bb070e7518411fd165e023f82afd7d25 ]
+[ Upstream commit 72907de9051dc2aa7b55c2a020e2872184ac17cd ]
 
-While STRB is currently used for DATA and CRC responses, the CMD
-responses from the device to the host still require ITAPDLY for
-HS400 timing.
+The power-controller module works well by adding its parent
+node secure-monitor.
 
-Currently what is stored for HS400 is the ITAPDLY from High Speed
-mode which is incorrect. The ITAPDLY for HS400 speed mode should
-be the same as ITAPDLY as HS200 timing after tuning is executed.
-Add the functionality to save ITAPDLY from HS200 tuning and save
-as HS400 ITAPDLY.
-
-Fixes: a161c45f2979 ("mmc: sdhci_am654: Enable DLL only for some speed modes")
-Signed-off-by: Judith Mendez <jm@ti.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240320223837.959900-8-jm@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 085f7a298a14 ("arm64: dts: add support for S4 power domain controller")
+Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240412-fix-secpwr-s4-v2-1-3802fd936d77@amlogic.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci_am654.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/amlogic/meson-s4.dtsi | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
-index c20ec525c9bf8..52d6cc07e38cc 100644
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -300,6 +300,12 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
- 	if (timing > MMC_TIMING_UHS_SDR25 && clock >= CLOCK_TOO_SLOW_HZ) {
- 		sdhci_am654_setup_dll(host, clock);
- 		sdhci_am654->dll_enable = true;
-+
-+		if (timing == MMC_TIMING_MMC_HS400) {
-+			sdhci_am654->itap_del_ena[timing] = 0x1;
-+			sdhci_am654->itap_del_sel[timing] = sdhci_am654->itap_del_sel[timing - 1];
-+		}
-+
- 		sdhci_am654_write_itapdly(sdhci_am654, sdhci_am654->itap_del_sel[timing],
- 					  sdhci_am654->itap_del_ena[timing]);
- 	} else {
-@@ -530,6 +536,9 @@ static int sdhci_am654_platform_execute_tuning(struct sdhci_host *host,
+diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
+index 55ddea6dc9f8e..a781eabe21f04 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
+@@ -61,10 +61,15 @@ xtal: xtal-clk {
+ 		#clock-cells = <0>;
+ 	};
  
- 	sdhci_am654_write_itapdly(sdhci_am654, itap, sdhci_am654->itap_del_ena[timing]);
- 
-+	/* Save ITAPDLY */
-+	sdhci_am654->itap_del_sel[timing] = itap;
+-	pwrc: power-controller {
+-		compatible = "amlogic,meson-s4-pwrc";
+-		#power-domain-cells = <1>;
+-		status = "okay";
++	firmware {
++		sm: secure-monitor {
++			compatible = "amlogic,meson-gxbb-sm";
 +
- 	return 0;
- }
++			pwrc: power-controller {
++				compatible = "amlogic,meson-s4-pwrc";
++				#power-domain-cells = <1>;
++			};
++		};
+ 	};
  
+ 	soc {
 -- 
 2.43.0
 
