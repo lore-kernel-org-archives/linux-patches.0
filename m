@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF351A2FDD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1141A2FDD;
 	Thu,  6 Jun 2024 14:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683225; cv=none; b=AcsiUNnvJd5HHguNUAjmpa20UU7Ek616wnsG5H3d/T0NelbGn621Rt5Td4t4b19xvvl8AFaQbgRjhx3vb1uojKO2eKUl9droOP0vCawxt0Rkqqh5ODPYuRLbtiQhqcWxdTgrIIhKRSiF6ucArIO5qVXuZ8/kF0SuRsiHtTMMXMo=
+	t=1717683226; cv=none; b=EswLgdOFJdPh8IcQHlFEEq9FuP17cGz7p3a1XUUJGAHxUCjU3Y3IXGUZCXdloAfwQ8kOP9rbqlJrr2slIxkladJ0kNr1DD2ybdSKLsMGbkEixKKuvuGj/zwed4G+WbLgN0bVrSMNG1WYldb7SHVpaVH7FBj+VX8VIe/RxPBR3k8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683225; c=relaxed/simple;
-	bh=zYMc2Hm/8uMjWYlhAWp+1nf7aZP/kJQ13p1byyM41vg=;
+	s=arc-20240116; t=1717683226; c=relaxed/simple;
+	bh=cQvc9C2dRiidzSUpwsJNOXL0Qv6A05TnjUdOJZVEc0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlxGCGTuSoSsTQQFeHfwbZyvciDZ3b2aJEex7rYx5HQE40GRDensv1s574FpwpGwkIEPtU3sAYZHKZl3NFaIh8tfQT8Pv+heTVDU7yXSAcaed7KVJf+Yecq7qQi1y9NLgHMpZwlGMUdhJXMVMRRXd9IzCTcREcsE3q/QPqPYEyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lI3Gzc2Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YoJS18gCtGILbgYe3RwTt8Qc1WAgZYYe688/Uk2hR+m+1CzJEKKsk0WbQBs/VJK9MRCUjq2AJN55PgRt17Z9iA41SlKw5Pescikl6UyTkyaEn7ieu0ujzvBww2DRmfMjvflcC8cjfaoqOmLTgmC84eMXLEFarlo1Ke7aRzS801c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmTDcQXE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lI3Gzc2Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4C5C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmTDcQXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8C6C2BD10;
 	Thu,  6 Jun 2024 14:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683225;
-	bh=zYMc2Hm/8uMjWYlhAWp+1nf7aZP/kJQ13p1byyM41vg=;
+	bh=cQvc9C2dRiidzSUpwsJNOXL0Qv6A05TnjUdOJZVEc0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lI3Gzc2QHRJP/jn6dc3DTZBPclTrlq9s2ZZbiYb2OrRE710IKPf5G9K8y2Fkh7pt4
-	 QYfptawoqPU7bMEkNZSz/dpgi11nWB8kF0x6L0hlI3iPN+bJaIT0z6M+b74j9IGOsu
-	 OvdSda/4/mf4oYCu/5ScvG/9AS8knRsGGiPliBcI=
+	b=WmTDcQXExInNgxXJPdTC7d9Rpk2AcyFhD1zFN81JxZcT+YsdmW9kxZkgKIsWTX+Y/
+	 UvcNn1sdCeX0yHlHr9Un1IFoT7QO3QeynKWC94umePo9z2luHP4yaCReP232j/2iWS
+	 21yruXaf4ecnaWi5yljbQ1WkujXNLMpzzTL5QYIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Anton Protopopov <aspsk@isovalent.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/744] tcp: define initial scaling factor value as a macro
-Date: Thu,  6 Jun 2024 15:57:19 +0200
-Message-ID: <20240606131737.783576116@linuxfoundation.org>
+Subject: [PATCH 6.1 102/473] bpf: Pack struct bpf_fib_lookup
+Date: Thu,  6 Jun 2024 16:00:31 +0200
+Message-ID: <20240606131703.275665221@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-References: <20240606131732.440653204@linuxfoundation.org>
+In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
+References: <20240606131659.786180261@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,55 +50,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Anton Protopopov <aspsk@isovalent.com>
 
-[ Upstream commit 849ee75a38b297187c760bb1d23d8f2a7b1fc73e ]
+[ Upstream commit f91717007217d975aa975ddabd91ae1a107b9bff ]
 
-So that other users could access it. Notably MPTCP will use
-it in the next patch.
+The struct bpf_fib_lookup is supposed to be of size 64. A recent commit
+59b418c7063d ("bpf: Add a check for struct bpf_fib_lookup size") added
+a static assertion to check this property so that future changes to the
+structure will not accidentally break this assumption.
 
-No functional change intended.
+As it immediately turned out, on some 32-bit arm systems, when AEABI=n,
+the total size of the structure was equal to 68, see [1]. This happened
+because the bpf_fib_lookup structure contains a union of two 16-bit
+fields:
 
-Acked-by: Matthieu Baerts <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231023-send-net-next-20231023-2-v1-4-9dc60939d371@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 697a6c8cec03 ("tcp: increase the default TCP scaling ratio")
+    union {
+            __u16 tot_len;
+            __u16 mtu_result;
+    };
+
+which was supposed to compile to a 16-bit-aligned 16-bit field. On the
+aforementioned setups it was instead both aligned and padded to 32-bits.
+
+Declare this inner union as __attribute__((packed, aligned(2))) such
+that it always is of size 2 and is aligned to 16 bits.
+
+  [1] https://lore.kernel.org/all/CA+G9fYtsoP51f-oP_Sp5MOq-Ffv8La2RztNpwvE6+R1VtFiLrw@mail.gmail.com/#t
+
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Fixes: e1850ea9bd9e ("bpf: bpf_fib_lookup return MTU value as output when looked up")
+Signed-off-by: Anton Protopopov <aspsk@isovalent.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20240403123303.1452184-1-aspsk@isovalent.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ include/uapi/linux/bpf.h       | 2 +-
+ tools/include/uapi/linux/bpf.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index a3840a2749c19..343cd0a5e8e17 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1460,13 +1460,15 @@ static inline int tcp_space_from_win(const struct sock *sk, int win)
- 	return __tcp_space_from_win(tcp_sk(sk)->scaling_ratio, win);
- }
+diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
+index d5d2183730b9f..a17688011440e 100644
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -6730,7 +6730,7 @@ struct bpf_fib_lookup {
  
-+/* Assume a conservative default of 1200 bytes of payload per 4K page.
-+ * This may be adjusted later in tcp_measure_rcv_mss().
-+ */
-+#define TCP_DEFAULT_SCALING_RATIO ((1200 << TCP_RMEM_TO_WIN_SCALE) / \
-+				   SKB_TRUESIZE(4096))
-+
- static inline void tcp_scaling_ratio_init(struct sock *sk)
- {
--	/* Assume a conservative default of 1200 bytes of payload per 4K page.
--	 * This may be adjusted later in tcp_measure_rcv_mss().
--	 */
--	tcp_sk(sk)->scaling_ratio = (1200 << TCP_RMEM_TO_WIN_SCALE) /
--				    SKB_TRUESIZE(4096);
-+	tcp_sk(sk)->scaling_ratio = TCP_DEFAULT_SCALING_RATIO;
- }
+ 		/* output: MTU value */
+ 		__u16	mtu_result;
+-	};
++	} __attribute__((packed, aligned(2)));
+ 	/* input: L3 device index for lookup
+ 	 * output: device index from FIB lookup
+ 	 */
+diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
+index d5d2183730b9f..a17688011440e 100644
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -6730,7 +6730,7 @@ struct bpf_fib_lookup {
  
- /* Note: caller must be prepared to deal with negative returns */
+ 		/* output: MTU value */
+ 		__u16	mtu_result;
+-	};
++	} __attribute__((packed, aligned(2)));
+ 	/* input: L3 device index for lookup
+ 	 * output: device index from FIB lookup
+ 	 */
 -- 
 2.43.0
 
