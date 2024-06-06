@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C00F19A2A7;
-	Thu,  6 Jun 2024 14:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E82A19A2A7;
+	Thu,  6 Jun 2024 14:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683017; cv=none; b=l+Mi59nKZtPVyFrrQP5qgKej2yK5BtMCg2r1YlYcBBfXtEsnU/2iZbqSXbKHFXQzRe/fTXqxOPAPB3mZSHNVZjgJLAl1hAOV/rD5DWKW918u11o74DD7VjipveGs40B3JDBaUSGEdxLxrNYTnCDcdXFT5tPqFBKmPlBeMQWi37U=
+	t=1717683018; cv=none; b=c2wBsfiXCCQoq9FdojJFiTblSeXzLC2YrMCnkzJyJCsygRqdOFliaBQ1f7wYFRJ7+keQeBZ/jrxHEp8eVOrz2LWoa/wEkSKfYuXTree7yrpIRBybbstbF+h48OykmEU+u2RZ6bwTLcXHpvL8t+to+Jc2kxD60V2ks/cP3H5txO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683017; c=relaxed/simple;
-	bh=pJ68U0QzA32dquSG5yjgN3CDmdYLwLv+HVW8g74ESFg=;
+	s=arc-20240116; t=1717683018; c=relaxed/simple;
+	bh=7AhlLpr/kef3I6L4YGWPDCBUFancnb1YAFpgB9mlZo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MsBm1s185PGeNaUA3vF4rMRzof+6cs/dJ8gzgJu7ckRdUl2LQzYbZXoTYy9UTHCWhczZ7wL1lUOdV8C8U5aSRk09JLmvQMgQIAD9RgW0o2i6g1jCWF3BtQXbrqTWgKBeaWVME/N2v9xqtNjFLIbtvGddfcfQr+1+s/6YJhxRkJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/xmSJ2/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nb348gM4He80QjuGsy1+GwE2j6wKgVkWhrcrM9ltix9IXgdoYMR9+fEcRRdUQVT5efLBG4k/VkzF/x2Fhvlzo+GTmb/nmxCTfTMfNknfss7nubmdmXQjAH1ddCQ0Hhx+4W15WNoP84TyHBb1A7oGARZaV6CM95nLxBOr0MJ4t4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5Hvvp7A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/xmSJ2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543EEC32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5Hvvp7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFC9C32781;
 	Thu,  6 Jun 2024 14:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683017;
-	bh=pJ68U0QzA32dquSG5yjgN3CDmdYLwLv+HVW8g74ESFg=;
+	bh=7AhlLpr/kef3I6L4YGWPDCBUFancnb1YAFpgB9mlZo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/xmSJ2/FMtjRtsCKYQrQw0XEuHoICyzo+fEkuXCCuAD5tgk8bzldPQR6sm2Ss6ft
-	 n6RjNjztH3pJTOUEeXLoIQDhx3eSZnnUm7m7NG59Q96hq+j/dqILUMsOKzz9pPTXdF
-	 +mzCrg8anbBndWPzEhL0jmrH9qwz6sjWIQPxXj7E=
+	b=M5Hvvp7APh1OfIzgZeq+7v5LUv1d0D47GyJ3cGOqZCSg1Cd0CbZYcgAMyeqMay/4n
+	 C+sV+OEQfaJReZ9fsDFKcRON8NRoI4NWxqcTtS82A5MfJmKqxnxTDUbq4n7P3+hSjw
+	 lLoJ+0lSEFYJ7QmHngmfd6kWwX3GGheysQ7l5mto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryosuke Yasuoka <ryasuoka@redhat.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+d7b4dc6cd50410152534@syzkaller.appspotmail.com
-Subject: [PATCH 6.9 236/374] nfc: nci: Fix uninit-value in nci_rx_work
-Date: Thu,  6 Jun 2024 16:03:35 +0200
-Message-ID: <20240606131659.724051466@linuxfoundation.org>
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 237/374] ASoC: tas2552: Add TX path for capturing AUDIO-OUT data
+Date: Thu,  6 Jun 2024 16:03:36 +0200
+Message-ID: <20240606131659.761046522@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -53,61 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryosuke Yasuoka <ryasuoka@redhat.com>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-[ Upstream commit e4a87abf588536d1cdfb128595e6e680af5cf3ed ]
+[ Upstream commit 7078ac4fd179a68d0bab448004fcd357e7a45f8d ]
 
-syzbot reported the following uninit-value access issue [1]
+TAS2552 is a Smartamp with I/V sense data, add TX path
+to support capturing I/V data.
 
-nci_rx_work() parses received packet from ndev->rx_q. It should be
-validated header size, payload size and total packet size before
-processing the packet. If an invalid packet is detected, it should be
-silently discarded.
-
-Fixes: d24b03535e5e ("nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet")
-Reported-and-tested-by: syzbot+d7b4dc6cd50410152534@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d7b4dc6cd50410152534 [1]
-Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 38803ce7b53b ("ASoC: codecs: tas*: merge .digital_mute() into .mute_stream()")
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://msgid.link/r/20240518033515.866-1-shenghao-ding@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ sound/soc/codecs/tas2552.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index b133dc55304ce..7a9897fbf4f41 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -1463,6 +1463,19 @@ int nci_core_ntf_packet(struct nci_dev *ndev, __u16 opcode,
- 				 ndev->ops->n_core_ops);
- }
+diff --git a/sound/soc/codecs/tas2552.c b/sound/soc/codecs/tas2552.c
+index 8c9dc318b0e82..c65a4219ecd6c 100644
+--- a/sound/soc/codecs/tas2552.c
++++ b/sound/soc/codecs/tas2552.c
+@@ -2,7 +2,8 @@
+ /*
+  * tas2552.c - ALSA SoC Texas Instruments TAS2552 Mono Audio Amplifier
+  *
+- * Copyright (C) 2014 Texas Instruments Incorporated -  https://www.ti.com
++ * Copyright (C) 2014 - 2024 Texas Instruments Incorporated -
++ *	https://www.ti.com
+  *
+  * Author: Dan Murphy <dmurphy@ti.com>
+  */
+@@ -119,12 +120,14 @@ static const struct snd_soc_dapm_widget tas2552_dapm_widgets[] =
+ 			 &tas2552_input_mux_control),
  
-+static bool nci_valid_size(struct sk_buff *skb)
-+{
-+	BUILD_BUG_ON(NCI_CTRL_HDR_SIZE != NCI_DATA_HDR_SIZE);
-+	unsigned int hdr_size = NCI_CTRL_HDR_SIZE;
-+
-+	if (skb->len < hdr_size ||
-+	    !nci_plen(skb->data) ||
-+	    skb->len < hdr_size + nci_plen(skb->data)) {
-+		return false;
-+	}
-+	return true;
-+}
-+
- /* ---- NCI TX Data worker thread ---- */
+ 	SND_SOC_DAPM_AIF_IN("DAC IN", "DAC Playback", 0, SND_SOC_NOPM, 0, 0),
++	SND_SOC_DAPM_AIF_OUT("ASI OUT", "DAC Capture", 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_DAC("DAC", NULL, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_OUT_DRV("ClassD", TAS2552_CFG_2, 7, 0, NULL, 0),
+ 	SND_SOC_DAPM_SUPPLY("PLL", TAS2552_CFG_2, 3, 0, NULL, 0),
+ 	SND_SOC_DAPM_POST("Post Event", tas2552_post_event),
  
- static void nci_tx_work(struct work_struct *work)
-@@ -1516,7 +1529,7 @@ static void nci_rx_work(struct work_struct *work)
- 		nfc_send_to_raw_sock(ndev->nfc_dev, skb,
- 				     RAW_PAYLOAD_NCI, NFC_DIRECTION_RX);
+-	SND_SOC_DAPM_OUTPUT("OUT")
++	SND_SOC_DAPM_OUTPUT("OUT"),
++	SND_SOC_DAPM_INPUT("DMIC")
+ };
  
--		if (!nci_plen(skb->data)) {
-+		if (!nci_valid_size(skb)) {
- 			kfree_skb(skb);
- 			kcov_remote_stop();
- 			break;
+ static const struct snd_soc_dapm_route tas2552_audio_map[] = {
+@@ -134,6 +137,7 @@ static const struct snd_soc_dapm_route tas2552_audio_map[] = {
+ 	{"ClassD", NULL, "Input selection"},
+ 	{"OUT", NULL, "ClassD"},
+ 	{"ClassD", NULL, "PLL"},
++	{"ASI OUT", NULL, "DMIC"}
+ };
+ 
+ #ifdef CONFIG_PM
+@@ -538,6 +542,13 @@ static struct snd_soc_dai_driver tas2552_dai[] = {
+ 			.rates = SNDRV_PCM_RATE_8000_192000,
+ 			.formats = TAS2552_FORMATS,
+ 		},
++		.capture = {
++			.stream_name = "Capture",
++			.channels_min = 2,
++			.channels_max = 2,
++			.rates = SNDRV_PCM_RATE_8000_192000,
++			.formats = TAS2552_FORMATS,
++		},
+ 		.ops = &tas2552_speaker_dai_ops,
+ 	},
+ };
 -- 
 2.43.0
 
