@@ -1,94 +1,150 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899F9196C72
-	for <patches@lists.linux.dev>; Thu,  6 Jun 2024 13:34:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953D738D;
+	Thu,  6 Jun 2024 14:08:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717680871; cv=none; b=Kjh1Za6WjM0XLHSXuV6JtowAz8Xg/wKId++yive1lmWIv23C12mbT/9ESrpywWW4VaZHoLi6PMuaawXET9eK7dIHpS2Gh5v3cpu6hhH49J1h/EDe71VE8lxLr4mz5Quq4yA8OGx7VDfi2jdJmWuOKDnl+QubEAAe8fw+U+lvqbQ=
+	t=1717682895; cv=none; b=faBtdJZhTlVGVzK2nlCce4zLCYAp6To0GS4/5+pkR6jclN0rStQ96araFuFlnDD+mk0xKUktOBN+VigAY3k+DFEUELxOeKxvON3WE0n5mJCLgoQD1mFBd40HQfoTdPBmJwLMG2aWWFNqdc+NNk2IH2Bw6AkaG0Up+7792kAJOfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717680871; c=relaxed/simple;
-	bh=wVX5LN5wezgSA3E348Yymtojtevb4mWjLp7y2qc+kQw=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gYVBPoV+tcg0p7IEcEIh39hlx62Du1CSjJZwUDW0fuTBjsf/9HkaJWCXMM07FIblJOxTcREGKdyPYFEs8lRm7EEC2nqugdh2DgvrXT/YdfQ0q1tKrfVgefWKUH21dtwGb0LrdG7dzTP8UoyJlsQdNs7X/hWZlAIpXg52hnF3ODc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.231])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vw4tz4dFjz6K6Lf;
-	Thu,  6 Jun 2024 21:29:47 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
-	by mail.maildlp.com (Postfix) with ESMTPS id EECED1400D4;
-	Thu,  6 Jun 2024 21:34:26 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 6 Jun
- 2024 14:34:26 +0100
-Date: Thu, 6 Jun 2024 14:34:24 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: Leon Romanovsky <leon@kernel.org>, Zhu Yanjun <zyjzyj2000@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>, "Jakub
- Kicinski" <kuba@kernel.org>, <linux-doc@vger.kernel.org>,
-	<linux-rdma@vger.kernel.org>, <netdev@vger.kernel.org>, Paolo Abeni
-	<pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>, Tariq Toukan
-	<tariqt@nvidia.com>, Andy Gospodarek <andrew.gospodarek@broadcom.com>, Aron
- Silverton <aron.silverton@oracle.com>, Dan Williams
-	<dan.j.williams@intel.com>, David Ahern <dsahern@kernel.org>, "Christoph
- Hellwig" <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>, Leonid Bloch
-	<lbloch@nvidia.com>, <linux-cxl@vger.kernel.org>, <patches@lists.linux.dev>,
-	Peter Zijlstra <peterz@infradead.org>, "Julia Lawall" <julia.lawall@inria.fr>
-Subject: Re: [PATCH 2/8] fwctl: Basic ioctl dispatch for the character
- device
-Message-ID: <20240606143424.00001fbd@Huawei.com>
-In-Reply-To: <20240605182726.GX19897@nvidia.com>
-References: <2-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
-	<6cfe00ce-1860-4aba-bcb8-54f8d365d2dc@linux.dev>
-	<20240604122221.GR3884@unreal>
-	<20240604175023.000004e2@Huawei.com>
-	<20240604165844.GM19897@nvidia.com>
-	<20240605120737.00007472@Huawei.com>
-	<20240605182726.GX19897@nvidia.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+	s=arc-20240116; t=1717682895; c=relaxed/simple;
+	bh=D0QAg9gR5OEjHbcOSXhNX9jyHg+B/uEYRSAb/xaQ6BQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=B1KDWAhyCwumEubV8bBAKV0hcBdHl4hrRteo9fSrOHloAwAHL2Mpu9AseDzovsES2w6Kz9vhj/M6nqSbO5poYfLlTBXzeTs25NCu2osRnbDCUcpwd/IgJgJGc4jZ9pWQ2cWMuyt+dj4MKdbPAEyevMYEfoEPxKYcfcYa7lHy9as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+gkxYQ6; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+gkxYQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1978FC32781;
+	Thu,  6 Jun 2024 14:08:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1717682895;
+	bh=D0QAg9gR5OEjHbcOSXhNX9jyHg+B/uEYRSAb/xaQ6BQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=k+gkxYQ6CcIEy8ePtuc6GhPSbj0A0u573zMa9pjUqcpnmVHE85fmrvIQLIyuPTCBB
+	 EgosJxNUAKQQiqjbnWYwcx68g6LYTSzFAVQo7OkjcRPFzggzRl5poZwimdUhvfWKmA
+	 CBsSD+cxYUhVANelXfkyav/v6D0VZ7D0YMQKxUpY=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Song Liu <songliubraving@fb.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 002/374] perf record: Delete session after stopping sideband thread
+Date: Thu,  6 Jun 2024 15:59:41 +0200
+Message-ID: <20240606131651.778887231@linuxfoundation.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
+References: <20240606131651.683718371@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
+Content-Transfer-Encoding: 8bit
 
-On Wed, 5 Jun 2024 15:27:26 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
+6.9-stable review patch.  If anyone has any objections, please let me know.
 
-> On Wed, Jun 05, 2024 at 12:07:37PM +0100, Jonathan Cameron wrote:
-> 
-> > > I don't recall that dramatic conclusion in the discussion, but it does
-> > > make alot of sense to me.  
-> > 
-> > I'll be less lazy (and today found the search foo to track it down).
-> > 
-> > https://lore.kernel.org/all/CAHk-=wicfvWPuRVDG5R1mZSxD8Xg=-0nLOiHay2T_UJ0yDX42g@mail.gmail.com/  
-> 
-> Oh that is a bit different discussion than I was thinking of.. I fixed
-> all the cases to follow this advise and checked that all the free
-> functions are proper pairs of whatever is being allocated.
+------------------
 
-Yes. I think we are approaching the point where maybe we need
-a 'best practice guide' somewhere. It is sort of coding style, but
-it is perhaps rather complex perhaps to put in that doc.
+From: Ian Rogers <irogers@google.com>
 
-I'm happy to help review such changes, but it would be too far down
-my todo list if I took on writing one.
+[ Upstream commit 88ce0106a1f603bf360cb397e8fe293f8298fabb ]
 
-Maybe there is one I've missed?
+The session has a header in it which contains a perf env with
+bpf_progs. The bpf_progs are accessed by the sideband thread and so
+the sideband thread must be stopped before the session is deleted, to
+avoid a use after free.  This error was detected by AddressSanitizer
+in the following:
 
-Jonathan
-> 
-> Thanks,
-> Jason
+  ==2054673==ERROR: AddressSanitizer: heap-use-after-free on address 0x61d000161e00 at pc 0x55769289de54 bp 0x7f9df36d4ab0 sp 0x7f9df36d4aa8
+  READ of size 8 at 0x61d000161e00 thread T1
+      #0 0x55769289de53 in __perf_env__insert_bpf_prog_info util/env.c:42
+      #1 0x55769289dbb1 in perf_env__insert_bpf_prog_info util/env.c:29
+      #2 0x557692bbae29 in perf_env__add_bpf_info util/bpf-event.c:483
+      #3 0x557692bbb01a in bpf_event__sb_cb util/bpf-event.c:512
+      #4 0x5576928b75f4 in perf_evlist__poll_thread util/sideband_evlist.c:68
+      #5 0x7f9df96a63eb in start_thread nptl/pthread_create.c:444
+      #6 0x7f9df9726a4b in clone3 ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+
+  0x61d000161e00 is located 384 bytes inside of 2136-byte region [0x61d000161c80,0x61d0001624d8)
+  freed by thread T0 here:
+      #0 0x7f9dfa6d7288 in __interceptor_free libsanitizer/asan/asan_malloc_linux.cpp:52
+      #1 0x557692978d50 in perf_session__delete util/session.c:319
+      #2 0x557692673959 in __cmd_record tools/perf/builtin-record.c:2884
+      #3 0x55769267a9f0 in cmd_record tools/perf/builtin-record.c:4259
+      #4 0x55769286710c in run_builtin tools/perf/perf.c:349
+      #5 0x557692867678 in handle_internal_command tools/perf/perf.c:402
+      #6 0x557692867a40 in run_argv tools/perf/perf.c:446
+      #7 0x557692867fae in main tools/perf/perf.c:562
+      #8 0x7f9df96456c9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+Fixes: 657ee5531903339b ("perf evlist: Introduce side band thread")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Disha Goel <disgoel@linux.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Song Liu <songliubraving@fb.com>
+Cc: Tim Chen <tim.c.chen@linux.intel.com>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Link: https://lore.kernel.org/r/20240301074639.2260708-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ tools/perf/builtin-record.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
+index ff7e1d6cfcd2e..40d2c1c486665 100644
+--- a/tools/perf/builtin-record.c
++++ b/tools/perf/builtin-record.c
+@@ -2881,10 +2881,10 @@ static int __cmd_record(struct record *rec, int argc, const char **argv)
+ 	}
+ #endif
+ 	zstd_fini(&session->zstd_data);
+-	perf_session__delete(session);
+-
+ 	if (!opts->no_bpf_event)
+ 		evlist__stop_sb_thread(rec->sb_evlist);
++
++	perf_session__delete(session);
+ 	return status;
+ }
+ 
+-- 
+2.43.0
+
+
 
