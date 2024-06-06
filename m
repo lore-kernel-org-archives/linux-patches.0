@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69F619AA76;
-	Thu,  6 Jun 2024 14:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736B719AA75;
+	Thu,  6 Jun 2024 14:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683319; cv=none; b=k2tA4NwpD9N5sRxztItw+B81rVjcca2mKEIg5KC4M7PrkjBZ2h97QrTEULJnJNBb0mU9Ad394jJWEhWRiRSnX3+NjHsn+zEDaVA/3MiMAtiMzGxAUXchIH5Boq/tjvfpmdHieq1np8VgNf+0gtloklCbvGVxqH3j4NN5Dp+POGM=
+	t=1717683319; cv=none; b=mqe1HnPcK2wLrrxBALWZ9zeOMQA8n2kbYcQpQpNuSwIQvFu2ps0mDQU35rmBPNv8UioGAaTljDRS5SDKtAubOWGpCy8gdnScruISdWmCRBVAZpAFOz7lF5SYTAhYlmqbgMzGapNmlOzfAa4jJCsjni8p3BLN0afOurYErQwPelI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683319; c=relaxed/simple;
-	bh=IxB738m6TL0/IK2hj0ou2GYz5dUCgUnfMpG7uvoBwrM=;
+	bh=irxqmSiqAcLTtXw8BYUM+d/EEZLdUAT1LkCo9O2q5+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLzTliZ8MTjq/WA0MEUA9TNdStla61V3CERGu+c5HRHS9+GVNC7CV3BSOK9rEf91j542QNAI56bXhqRAATbm+6X3qTRo+EeBSamcRlb3nk9NLTO/nc9n6geNdFfmyv/FlrPR7nskhj2ra/H2S4qvWKzfKRivOhFwdu2x/ODuQnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaWwl6+6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bJMdEUeOU/5C5XC9dg6BAsWz2r7vowXtPmelOhOLJqSvKzz+Lm7IE2HWsHCsdFkqVoPaSUUEBnjcIf45UIMZnzfOu4c2pNSvwfIywwiEEZH57rYEynwqPXtrzOOE2WG+SbzQU2dXv/UbzLCHABua8FhsgKliU6d0vD9jVY30yTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acgV3/Li; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaWwl6+6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5EBDC2BD10;
-	Thu,  6 Jun 2024 14:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acgV3/Li"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD83C2BD10;
+	Thu,  6 Jun 2024 14:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683318;
-	bh=IxB738m6TL0/IK2hj0ou2GYz5dUCgUnfMpG7uvoBwrM=;
+	s=korg; t=1717683319;
+	bh=irxqmSiqAcLTtXw8BYUM+d/EEZLdUAT1LkCo9O2q5+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gaWwl6+61QJzHc9Z9EysoDpA8bkHRy9KPwTA822ZzsLHSp/ca27+9Kr1NUJSU41j6
-	 L/Sq5lp5LaNb6MrTFtBumEflvvSCr1Dj9Rd1b35IHoSc2OnhOBPSeiLon1ux3HtNmn
-	 o/E+RHNNmwLQ0n3tBDslT/leqBFxjO9fz507so0o=
+	b=acgV3/Lib2lgIYHeWckCEN/ZrLiGjLIIdI0yg+bGM8gdGZtkIxwHI7fnI0fx2ExEi
+	 x2GbG5n1AWw4LpbBF1s894vlHYnrgkzZuakyXpZ4z1LXXNFdt2on+uqVTYmRcKSetM
+	 p1wQMYQePHShrE96a5qNPFR9+acAEvl1D2a8h4Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gao Xingwang <gaoxingwang1@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 259/744] mptcp: SO_KEEPALIVE: fix getsockopt support
-Date: Thu,  6 Jun 2024 15:58:51 +0200
-Message-ID: <20240606131740.706842106@linuxfoundation.org>
+Subject: [PATCH 6.6 237/744] net: ipv6: fix wrong start position when receive hop-by-hop fragment
+Date: Thu,  6 Jun 2024 15:58:29 +0200
+Message-ID: <20240606131740.002630273@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -53,51 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: gaoxingwang <gaoxingwang1@huawei.com>
 
-[ Upstream commit a65198136eaa15b74ee0abf73f12ef83d469a334 ]
+[ Upstream commit 1cd354fe1e4864eeaff62f66ee513080ec946f20 ]
 
-SO_KEEPALIVE support has to be set on each subflow: on each TCP socket,
-where sk_prot->keepalive is defined. Technically, nothing has to be done
-on the MPTCP socket. That's why mptcp_sol_socket_sync_intval() was
-called instead of mptcp_sol_socket_intval().
+In IPv6, ipv6_rcv_core will parse the hop-by-hop type extension header and increase skb->transport_header by one extension header length.
+But if there are more other extension headers like fragment header at this time, the skb->transport_header points to the second extension header,
+not the transport layer header or the first extension header.
 
-Except that when nothing is done on the MPTCP socket, the
-getsockopt(SO_KEEPALIVE), handled in net/core/sock.c:sk_getsockopt(),
-will not know if SO_KEEPALIVE has been set on the different subflows or
-not.
+This will result in the start and nexthdrp variable not pointing to the same position in ipv6frag_thdr_trunced,
+and ipv6_skip_exthdr returning incorrect offset and frag_off.Sometimes,the length of the last sharded packet is smaller than the calculated incorrect offset, resulting in packet loss.
+We can use network header to offset and calculate the correct position to solve this problem.
 
-The fix is simple: simply call mptcp_sol_socket_intval() which will end
-up calling net/core/sock.c:sk_setsockopt() where the SOCK_KEEPOPEN flag
-will be set, the one used in sk_getsockopt().
-
-So now, getsockopt(SO_KEEPALIVE) on an MPTCP socket will return the same
-value as the one previously set with setsockopt(SO_KEEPALIVE).
-
-Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20240514011335.176158-2-martineau@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9d9e937b1c8b (ipv6/netfilter: Discard first fragment not including all headers)
+Signed-off-by: Gao Xingwang <gaoxingwang1@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/sockopt.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/ipv6/reassembly.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
-index 116e3008231bd..1afa8245f27c0 100644
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -181,8 +181,6 @@ static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
- 
- 	switch (optname) {
- 	case SO_KEEPALIVE:
--		mptcp_sol_socket_sync_intval(msk, optname, val);
--		return 0;
- 	case SO_DEBUG:
- 	case SO_MARK:
- 	case SO_PRIORITY:
+diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
+index 5ebc47da1000c..2af98edef87ee 100644
+--- a/net/ipv6/reassembly.c
++++ b/net/ipv6/reassembly.c
+@@ -369,7 +369,7 @@ static int ipv6_frag_rcv(struct sk_buff *skb)
+ 	 * the source of the fragment, with the Pointer field set to zero.
+ 	 */
+ 	nexthdr = hdr->nexthdr;
+-	if (ipv6frag_thdr_truncated(skb, skb_transport_offset(skb), &nexthdr)) {
++	if (ipv6frag_thdr_truncated(skb, skb_network_offset(skb) + sizeof(struct ipv6hdr), &nexthdr)) {
+ 		__IP6_INC_STATS(net, __in6_dev_get_safely(skb->dev),
+ 				IPSTATS_MIB_INHDRERRORS);
+ 		icmpv6_param_prob(skb, ICMPV6_HDR_INCOMP, 0);
 -- 
 2.43.0
 
