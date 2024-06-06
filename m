@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B601C3726;
-	Thu,  6 Jun 2024 14:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AAA1C3720;
+	Thu,  6 Jun 2024 14:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683659; cv=none; b=uULEZlADfnD1l3PnqytvIS5NdTNNfyCFd1iXFXHBge3A+cfUywZkmzfbIZU9+5IRGo85gaBScUL/nUj7A4GhrvJuBj7EHJtCYpETTYdwZMiTV4d4K1Rps9+ls9ARKNjQuPOo+xwDTRwRXyE8ttI68czPnTU7H1dyUAX+vF1YNa0=
+	t=1717683660; cv=none; b=ai9LQEEOtZUGh6FTl7c/gHicnmz0dvSb21YQgDebGShnivvtp5G9fD+P+ZPIKlASehSeqvtmzRbQoLPnnmjnP+DKv50rqoqXCGTgkEm1kKxjVLXY5ROr91H0swdhubcR8fVYgxwIJsAr16m3nuBrnBU+QXqE9aFa6kzc+uz5AZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717683659; c=relaxed/simple;
-	bh=rp5ygKmXG9B9k21MsdYi9amelNlr9gKuR4kZin/taQM=;
+	s=arc-20240116; t=1717683660; c=relaxed/simple;
+	bh=C4g69rAi3xEbxaaC8j54M6d2nacCW7H/8n1dxbZxF0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fv9UiSOjs+TeABgxP4P8wyY7v6N7YyJ5R7crVdMhD3SyBLl6cRdTOWKCGFwGbsz7aCekIhfwlxHBUy9OIRBUodt0iuFnfana5I6Rf5PG+blVf5fFxXpB9jGEwczqvOZsLBrobxMaABbsKqZi6OQcvrOOK6UZImoYBqNMUb8jmHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZC1czSZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1NJ3iiLHaioVshqnx/gAVsYFLK31t35DxFM9h0EetVK7iTfqs0q+5LGQEK9w/2bIyykLoaqMb1C05EaXiipQbKzewEu6e+8GbLEtSvYMKqh3phmDeSM8cXWJfh2uo1dPyyws9z6SUkasUOHfv34cuSrsAdymMMziTri0Ek9G8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHRSI+lh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZC1czSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C78C32781;
-	Thu,  6 Jun 2024 14:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHRSI+lh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41735C4AF07;
+	Thu,  6 Jun 2024 14:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683659;
-	bh=rp5ygKmXG9B9k21MsdYi9amelNlr9gKuR4kZin/taQM=;
+	s=korg; t=1717683660;
+	bh=C4g69rAi3xEbxaaC8j54M6d2nacCW7H/8n1dxbZxF0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZC1czSZel7DoRCQklTlzxLMpdt8+A9Fn+RD4GOxpUy9do6OxvXCiPH3tSK0fY6SL
-	 aG+XmSmyojHw4nm/obfQBNVONiQKY66hi8HRpKZmxS2GEnIt/wmE0K4zpFG9jtASIU
-	 CEq3C70uP28up8EC9u7AAXAQIXNZdWchESOAlfXU=
+	b=lHRSI+lhEHLALn2/NHv+eP76LWGomzpRuE56czreeGg0BvD8Kh2SaygtrRqv7hr6t
+	 s+nHYNeZYYMBNb6pWCeHOX7C6eKjUmDKMNPeZou7CIcu2gdfXJrtnyL/9smNUwJjvm
+	 8+KJpdpnW1b9RZFsrdtjpJaqPW2yXdwSyjCZDgFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Egorenkov <egorenar@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 539/744] s390/ipl: Fix incorrect initialization of len fields in nvme reipl block
-Date: Thu,  6 Jun 2024 16:03:31 +0200
-Message-ID: <20240606131749.743931228@linuxfoundation.org>
+Subject: [PATCH 6.6 540/744] s390/ipl: Fix incorrect initialization of nvme dump block
+Date: Thu,  6 Jun 2024 16:03:32 +0200
+Message-ID: <20240606131749.773469716@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
 References: <20240606131732.440653204@linuxfoundation.org>
@@ -54,37 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Egorenkov <egorenar@linux.ibm.com>
 
-[ Upstream commit 9c922b73acaf39f867668d9cbe5dc69c23511f84 ]
+[ Upstream commit 7faacaeaf6ce12fae78751de5ad869d8f1e1cd7a ]
 
-Use correct symbolic constants IPL_BP_NVME_LEN and IPL_BP0_NVME_LEN
-to initialize nvme reipl block when 'scp_data' sysfs attribute is
-being updated. This bug had not been detected before because
-the corresponding fcp and nvme symbolic constants are equal.
+Initialize the correct fields of the nvme dump block.
+This bug had not been detected before because first, the fcp and nvme fields
+of struct ipl_parameter_block are part of the same union and, therefore,
+overlap in memory and second, they are identical in structure and size.
 
-Fixes: 23a457b8d57d ("s390: nvme reipl")
+Fixes: d70e38cb1dee ("s390: nvme dump support")
 Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Alexander Egorenkov <egorenar@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/ipl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/kernel/ipl.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/arch/s390/kernel/ipl.c b/arch/s390/kernel/ipl.c
-index 8d0b95c173129..14365773aac79 100644
+index 14365773aac79..a3d3cb39b021a 100644
 --- a/arch/s390/kernel/ipl.c
 +++ b/arch/s390/kernel/ipl.c
-@@ -962,8 +962,8 @@ static ssize_t reipl_nvme_scpdata_write(struct file *filp, struct kobject *kobj,
- 		scpdata_len += padding;
+@@ -1858,9 +1858,9 @@ static int __init dump_nvme_init(void)
  	}
- 
--	reipl_block_nvme->hdr.len = IPL_BP_FCP_LEN + scpdata_len;
--	reipl_block_nvme->nvme.len = IPL_BP0_FCP_LEN + scpdata_len;
-+	reipl_block_nvme->hdr.len = IPL_BP_NVME_LEN + scpdata_len;
-+	reipl_block_nvme->nvme.len = IPL_BP0_NVME_LEN + scpdata_len;
- 	reipl_block_nvme->nvme.scp_data_len = scpdata_len;
- 
- 	return count;
+ 	dump_block_nvme->hdr.len = IPL_BP_NVME_LEN;
+ 	dump_block_nvme->hdr.version = IPL_PARM_BLOCK_VERSION;
+-	dump_block_nvme->fcp.len = IPL_BP0_NVME_LEN;
+-	dump_block_nvme->fcp.pbt = IPL_PBT_NVME;
+-	dump_block_nvme->fcp.opt = IPL_PB0_NVME_OPT_DUMP;
++	dump_block_nvme->nvme.len = IPL_BP0_NVME_LEN;
++	dump_block_nvme->nvme.pbt = IPL_PBT_NVME;
++	dump_block_nvme->nvme.opt = IPL_PB0_NVME_OPT_DUMP;
+ 	dump_capabilities |= DUMP_TYPE_NVME;
+ 	return 0;
+ }
 -- 
 2.43.0
 
