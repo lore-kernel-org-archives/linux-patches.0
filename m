@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3DE196DB1;
-	Thu,  6 Jun 2024 14:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61277198A01;
+	Thu,  6 Jun 2024 14:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682932; cv=none; b=mGWkokK6ect2OYHVbCKot7n3fbHTZToc6Y+W/6Ppy2q4p7upD3/Nw6oNQepEHaPuOhmy8ZSn5rZtu7MnmIVWm92JS9PyXwWb7/98abnikFcpH2yVdBGKEt7EueFAfTjNgjFN4pKpO6CoYJmyYLIv8RMAAFMaJo9VEcfEUSlBoWQ=
+	t=1717682933; cv=none; b=sNv1MowRyV9Bm8lO0X0DkGBbCKMyXJ8zNrosj2MhPFakCom9zWPEwmhqlyUx8BBu3a7UUQHemHGBrWlW6k2zac4krjZPAGpkgIidRCPjGJHn/FzQ9qPaRybZ8qyAC2g27NRxng2ydCmMm7SVY+9GbyAQMXreHiApP+FuNMrS3N8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682932; c=relaxed/simple;
-	bh=zndD0tINat8XcwFvE0qvdWon7OiJwV2kTuuGaXlOG+4=;
+	s=arc-20240116; t=1717682933; c=relaxed/simple;
+	bh=o15B2N6u5yBTlDlAc6SXGvRMIl3l2NOElP9MM32nutM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUQoL/iNfs61MiDRQfKAZMdmYZZz6q3079wV0S6TjeNpFmQ4swjf/B5Y3VkgPJd2cyTE6RLkG1UVzgbZJVCz3iVYpEdxNzO1l6E+LClx4caJCSEhB2pU2m4nKNNmCvDdib029UpP2vWsr0zr1c36uzIrA5lYoogAyz3GT8W7b2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efql1g4K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UMmpN7F6ZXD9BiSOlvFKdWCyazKG1xHDuCj2W8gKYcteD+ID8VzSeXOvtmFyNFeuVF/SHJ0FnqHdPpls2iayEzxR0CtkRT4TQT5SUQOlBeLFI4wXYkAviDb5foyAmP2b6UtVv+gYaMAzVo5672DoddcR2O79SxUtZWfnFcRn5GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3x2K8Ea; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efql1g4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3CFC2BD10;
-	Thu,  6 Jun 2024 14:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3x2K8Ea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3025CC32781;
+	Thu,  6 Jun 2024 14:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717682932;
-	bh=zndD0tINat8XcwFvE0qvdWon7OiJwV2kTuuGaXlOG+4=;
+	s=korg; t=1717682933;
+	bh=o15B2N6u5yBTlDlAc6SXGvRMIl3l2NOElP9MM32nutM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=efql1g4KQMZRFqY/cu1IY4IaODw/K+ouWt9WWQeIfh3r81hf9RH6vYyH3zMdFajUo
-	 k6OvruCXvXfSq3+DPv4lrWn8k1clVlg/M9RQ1Xh2mTqL1vYwBo5P65+FCqOURkOwO9
-	 DRShTyh6bhvF48HkloS2erdlF2W44H3c59+HUChY=
+	b=Z3x2K8Eat7gg4rxSYnXO8X6wBce6RHMmWQx8HOHxyNVr9MY1QFrosa4uKcHWf7e8K
+	 bk0oi7zB9VlCjQMicQnVXsou5Xmc9n9qnMc11a0u/F2A9l9z8PVNEzU3aiL+w5oavB
+	 ui0qqIqvfT69tIMi7rt5XQCPzMOB41GAoBNq0IV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 080/374] watchdog: sa1100: Fix PTR_ERR_OR_ZERO() vs NULL check in sa1100dog_probe()
-Date: Thu,  6 Jun 2024 16:00:59 +0200
-Message-ID: <20240606131654.535155018@linuxfoundation.org>
+Subject: [PATCH 6.9 081/374] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: fix x1e80100-gen3x2 schema
+Date: Thu,  6 Jun 2024 16:01:00 +0200
+Message-ID: <20240606131654.564991710@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
 References: <20240606131651.683718371@linuxfoundation.org>
@@ -52,40 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 413bf4e857fd79617524d5dcd35f463e9aa2dd41 ]
+[ Upstream commit 484b139a4cd7e629f8fcb43d71997f400c5b8537 ]
 
-devm_ioremap() doesn't return error pointers, it returns NULL on error.
-Update the check accordingly.
+The qcom,x1e80100-qmp-gen3x2-pcie-phy device doesn't have second reset,
+drop it from the clause enforcing second reset to be used.
 
-Fixes: e86bd43bcfc5 ("watchdog: sa1100: use platform device registration")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240426075808.1582678-1-nichen@iscas.ac.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: e94b29f2bd73 ("dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100 QMP PCIe PHYs")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240501-qcom-phy-fixes-v1-1-f1fd15c33fb3@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/sa1100_wdt.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml      | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/watchdog/sa1100_wdt.c b/drivers/watchdog/sa1100_wdt.c
-index 5d2df008b92a5..34a917221e316 100644
---- a/drivers/watchdog/sa1100_wdt.c
-+++ b/drivers/watchdog/sa1100_wdt.c
-@@ -191,9 +191,8 @@ static int sa1100dog_probe(struct platform_device *pdev)
- 	if (!res)
- 		return -ENXIO;
- 	reg_base = devm_ioremap(&pdev->dev, res->start, resource_size(res));
--	ret = PTR_ERR_OR_ZERO(reg_base);
--	if (ret)
--		return ret;
-+	if (!reg_base)
-+		return -ENOMEM;
- 
- 	clk = clk_get(NULL, "OSTIMER0");
- 	if (IS_ERR(clk)) {
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+index ba966a78a1283..7543456862b80 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+@@ -198,7 +198,6 @@ allOf:
+             enum:
+               - qcom,sm8550-qmp-gen4x2-pcie-phy
+               - qcom,sm8650-qmp-gen4x2-pcie-phy
+-              - qcom,x1e80100-qmp-gen3x2-pcie-phy
+               - qcom,x1e80100-qmp-gen4x2-pcie-phy
+     then:
+       properties:
 -- 
 2.43.0
 
