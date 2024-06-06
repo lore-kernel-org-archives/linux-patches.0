@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F0F1993B9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2601993B6;
 	Thu,  6 Jun 2024 14:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683240; cv=none; b=e/0hMLAyKqQkS5kYN/zqCaYYhkBomWXEf4dhFJrZeLCmXCEjMFJikZWd/QO6F6RdY4P56ZzM92wmY5RXOaqLHkpxqjNPBA6ftQjyb1VXhWa8CWXrsj8Fod8IZwGcNB8m0VEz3pLy2OabQ9Tft2gZlYSqxksPkpPfyAx71lKeY3g=
+	t=1717683240; cv=none; b=j9lJF9eHq28+MuUABsoySGD+CDW8jQJavQlV/LBss1wyODjFn0nfRx2KyjfDyl3yZylzz3dta26tabDlAE0cqNcWrnnlzL9BIuDGaBBQnzGGFfaZw53kNyQyBOFcvKZDQsEBVScKI4pcMEzPJttlEpD7XBFQ22pIK/f9BJ1BwwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683240; c=relaxed/simple;
-	bh=L0q7LFrDeyfO4qh6RdV8IeX+BrmWIxU/5EQaUTO8fHI=;
+	bh=BySjaTD8leZuhZLxYUCrEf61wrvnssc46I8NP3bK7z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGrXtBPVzzwu9eRpPaQ93OKQrj+/erf98npbpXFPTOLjZ/U5LGtkCMmbEc8tjeB+4mKF1KXRN/Wg07t7tsMK9JDjfJsgYnjhvXK6QK0T85BhiKVroZvc0W0I6p3WCjreBOOEoLoF9oetDtGqnalSQxPEQsj64Ii/+XUHPZfmYPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1d5GNB8P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pxzpdN0ZIasG+LF1vGCuaq7eWqcIjf9+ZquchkqdKGGI2j0Kgyd19UP6OezhlvyhDpPYdwAQ0KTf1Di+5OMpfy80xQ6SGlOv3EmCjdZvcAxt4ommbY9cadhQrhDxrKBVsi8Is0HLu8q2NHwZHN/tOaJIr0wdfv/JAvawHXth3V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCm3yKbI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1d5GNB8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053A6C32781;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCm3yKbI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE78C2BD10;
 	Thu,  6 Jun 2024 14:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1717683240;
-	bh=L0q7LFrDeyfO4qh6RdV8IeX+BrmWIxU/5EQaUTO8fHI=;
+	bh=BySjaTD8leZuhZLxYUCrEf61wrvnssc46I8NP3bK7z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1d5GNB8PkkKU5e9NdDSYvGs6Naq/fk0a/cYg+nofsEM5NicUvUOM46D5Kkc0ajcfL
-	 7RPQHzyIfXMKaD5/1YGu9IaoHTw/vutuGthPwLESMsN00Sr1DDZGCOpBHeeY3p6qf8
-	 5Qx6+CVjhqeE24VFQmXGKicRNJ3erceqC3g6iGtY=
+	b=pCm3yKbIrFKroT7HulKfoT8XZ7fJ5trfHo8/QIvk08T1niMi2byZwz2rUKS3myMFj
+	 znxa5L8Djvs5f/dKEuQ4YYG2HPZL33VJGzWjhF0B903O3jm+lMZHOQOSe35rIBkptR
+	 XlDpP3kmdLKpUjfv07yVDOYYGuBDu0LukUCvxXGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Su Hui <suhui@nfschina.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 117/473] gfs2: Fix "ignore unlock failures after withdraw"
-Date: Thu,  6 Jun 2024 16:00:46 +0200
-Message-ID: <20240606131703.814306886@linuxfoundation.org>
+Subject: [PATCH 6.6 185/744] wifi: ath10k: Fix an error code problem in ath10k_dbg_sta_write_peer_debug_trigger()
+Date: Thu,  6 Jun 2024 15:57:37 +0200
+Message-ID: <20240606131738.362107512@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,65 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 5d9231111966b6c5a65016d58dcbeab91055bc91 ]
+[ Upstream commit c511a9c12674d246916bb16c479d496b76983193 ]
 
-Commit 3e11e53041502 tries to suppress dlm_lock() lock conversion errors
-that occur when the lockspace has already been released.
+Clang Static Checker (scan-build) warns:
 
-It does that by setting and checking the SDF_SKIP_DLM_UNLOCK flag.  This
-conflicts with the intended meaning of the SDF_SKIP_DLM_UNLOCK flag, so
-check whether the lockspace is still allocated instead.
+drivers/net/wireless/ath/ath10k/debugfs_sta.c:line 429, column 3
+Value stored to 'ret' is never read.
 
-(Given the current DLM API, checking for this kind of error after the
-fact seems easier that than to make sure that the lockspace is still
-allocated before calling dlm_lock().  Changing the DLM API so that users
-maintain the lockspace references themselves would be an option.)
+Return 'ret' rather than 'count' when 'ret' stores an error code.
 
-Fixes: 3e11e53041502 ("GFS2: ignore unlock failures after withdraw")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: ee8b08a1be82 ("ath10k: add debugfs support to get per peer tids log via tracing")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240422034243.938962-1-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 4 +++-
- fs/gfs2/util.c  | 1 -
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/debugfs_sta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index 235a0948f6cc6..95353982e643a 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -855,11 +855,13 @@ __acquires(&gl->gl_lockref.lock)
+diff --git a/drivers/net/wireless/ath/ath10k/debugfs_sta.c b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
+index 87a3365330ff8..5598cf706daab 100644
+--- a/drivers/net/wireless/ath/ath10k/debugfs_sta.c
++++ b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
+@@ -438,7 +438,7 @@ ath10k_dbg_sta_write_peer_debug_trigger(struct file *file,
  	}
+ out:
+ 	mutex_unlock(&ar->conf_mutex);
+-	return count;
++	return ret ?: count;
+ }
  
- 	if (sdp->sd_lockstruct.ls_ops->lm_lock)	{
-+		struct lm_lockstruct *ls = &sdp->sd_lockstruct;
-+
- 		/* lock_dlm */
- 		ret = sdp->sd_lockstruct.ls_ops->lm_lock(gl, target, lck_flags);
- 		if (ret == -EINVAL && gl->gl_target == LM_ST_UNLOCKED &&
- 		    target == LM_ST_UNLOCKED &&
--		    test_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags)) {
-+		    test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
- 			finish_xmote(gl, target);
- 			gfs2_glock_queue_work(gl, 0);
- 		} else if (ret) {
-diff --git a/fs/gfs2/util.c b/fs/gfs2/util.c
-index 7a6aeffcdf5ca..48c69aa60cd17 100644
---- a/fs/gfs2/util.c
-+++ b/fs/gfs2/util.c
-@@ -359,7 +359,6 @@ int gfs2_withdraw(struct gfs2_sbd *sdp)
- 			fs_err(sdp, "telling LM to unmount\n");
- 			lm->lm_unmount(sdp);
- 		}
--		set_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags);
- 		fs_err(sdp, "File system withdrawn\n");
- 		dump_stack();
- 		clear_bit(SDF_WITHDRAW_IN_PROG, &sdp->sd_flags);
+ static const struct file_operations fops_peer_debug_trigger = {
 -- 
 2.43.0
 
