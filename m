@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D1C198E92;
-	Thu,  6 Jun 2024 14:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7538E198E92;
+	Thu,  6 Jun 2024 14:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717683487; cv=none; b=CCBZhuy929gZ5YcKt/nNFtNvOc9wu8kLT+LpQBU27Qtmi3qSAi9GPlhU7jJTpUTlT4q8XrVkP7hx2KaHrEG0aFey/9Gv5aYDw8I/z9ZRW9cvdTZkrBgBpBtQvVJDSugdZbdHQPA2PZIlYuw41irmmUQIuHm09CciPCe4+pUU7eU=
+	t=1717683487; cv=none; b=D+oppB0kzgrQbvLHPkY3RropEp9mJObsS7M150qcmUj0FEj0FeWX4nYMSvWTNoByaYBOOjihYXcbij2veBVzOcJvOPAZ3XlOTkqD17fC/CCRFivvrjNJWnVeDuZDzYDVAyc8WCd/hty6Owo35VQ5tqfNjA7nVu/7KLGs+IeH++U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717683487; c=relaxed/simple;
-	bh=FrNdciAJOpTcTXQzfRWqY9E/Z7NCNkKQsLQTIaIbSFY=;
+	bh=Sq94q6P8gBvvcoB97pK1zx6kjRzHarVVECgfGUemAAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EwX/QmHWrYKRIR/s2z6SWT5Z0E8KMkSAwizQVD7lHtWqeMFYA0VV6HnZUfP5o+9dq3BYBP0sHauSlM00XYrUAughl6bXlJNo9t8X6IznmchFudhF52YK91GmYdKGn7KPUqa9VOVSb61IYYIWOi3hCingRtIyi4/n4FFEFpezxLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lALYT9C0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gLtnyoN9NswUwvYhRpbXMb0vETMdvTvsj1UIm5WChyGxuyQ8cxIfU/NU2nD4k9jbmi8cYQ/g0CpomT16koCtEzioc/Ty0tPKLX98c/FM48ULlD1gXc77cOHMt3V5BvJXTkco96PysLCfSevEmTdOVhNp0Xr5BKoMx6yuxTrLS5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvDx7JKS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lALYT9C0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2602C2BD10;
-	Thu,  6 Jun 2024 14:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvDx7JKS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B31C2BD10;
+	Thu,  6 Jun 2024 14:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1717683486;
-	bh=FrNdciAJOpTcTXQzfRWqY9E/Z7NCNkKQsLQTIaIbSFY=;
+	s=korg; t=1717683487;
+	bh=Sq94q6P8gBvvcoB97pK1zx6kjRzHarVVECgfGUemAAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lALYT9C0ck5B5sW1cRMyFtQ/yhOHEzhRCk+YMBKwjgKZNPGl0OIRzTLTK8xkGYpx+
-	 mY05edoLD7ARkYmlGItZzeRm6owtqQaaafN4KO8k8JhddRAQym7Gx9myFTvCSGWVHa
-	 m7X3y1vE+l2qTFFWBL/WGe9KT5ZxKxrW2w5DGLio=
+	b=jvDx7JKSoFy2w5/5ZOGO3IE09yslum8b3f4tetJKhY8GbW2CebG+aQkVR9C2vKfzj
+	 xo/L3kox+f7S+S+cfPMYboU+QcXjkKBn1rmM9ZRsl/8JMILh1Yx9Yykx5toWnIa6uM
+	 jkMdvikjh92tnQksWgs4bRYfYQ11u2s0+8pk0YjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 377/473] fs/ntfs3: Use variable length array instead of fixed size
-Date: Thu,  6 Jun 2024 16:05:06 +0200
-Message-ID: <20240606131712.337451808@linuxfoundation.org>
+Subject: [PATCH 6.6 430/744] dt-bindings: PCI: rcar-pci-host: Add missing IOMMU properties
+Date: Thu,  6 Jun 2024 16:01:42 +0200
+Message-ID: <20240606131746.261067221@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240606131659.786180261@linuxfoundation.org>
-References: <20240606131659.786180261@linuxfoundation.org>
+In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
+References: <20240606131732.440653204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 1997cdc3e727526aa5d84b32f7cbb3f56459b7ef ]
+[ Upstream commit 78d212851f0e56b7d7083c4d5014aa7fa8b77e20 ]
 
-Should fix smatch warning:
-	ntfs_set_label() error: __builtin_memcpy() 'uni->name' too small (20 vs 256)
+make dtbs_check:
 
-Fixes: 4534a70b7056f ("fs/ntfs3: Add headers and misc files")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202401091421.3RJ24Mn3-lkp@intel.com/
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+    arch/arm64/boot/dts/renesas/r8a77951-salvator-xs.dtb: pcie@fe000000: Unevaluated properties are not allowed ('iommu-map', 'iommu-map-mask' were unexpected)
+	    from schema $id: http://devicetree.org/schemas/pci/rcar-pci-host.yaml#
+
+Fix this by adding the missing IOMMU-related properties.
+
+[kwilczynski: added missing Fixes: tag]
+Fixes: 0d69ce3c2c63 ("dt-bindings: PCI: rcar-pci-host: Convert bindings to json-schema")
+Link: https://lore.kernel.org/linux-pci/babc878a93cb6461a5d39331f8ecfa654dfda921.1706802597.git.geert+renesas@glider.be
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/ntfs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/pci/rcar-pci-host.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
-index ba26a465b3091..324c0b036fdc1 100644
---- a/fs/ntfs3/ntfs.h
-+++ b/fs/ntfs3/ntfs.h
-@@ -59,7 +59,7 @@ struct GUID {
- struct cpu_str {
- 	u8 len;
- 	u8 unused;
--	u16 name[10];
-+	u16 name[];
- };
+diff --git a/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml b/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
+index b6a7cb32f61e5..835b6db00c279 100644
+--- a/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
++++ b/Documentation/devicetree/bindings/pci/rcar-pci-host.yaml
+@@ -77,6 +77,9 @@ properties:
+   vpcie12v-supply:
+     description: The 12v regulator to use for PCIe.
  
- struct le_str {
++  iommu-map: true
++  iommu-map-mask: true
++
+ required:
+   - compatible
+   - reg
 -- 
 2.43.0
 
