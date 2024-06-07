@@ -1,127 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816975465B;
-	Fri,  7 Jun 2024 14:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6316199E89;
+	Fri,  7 Jun 2024 14:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717771513; cv=none; b=thNvx5wTg+EOYMkI9a2ukxOhEiFBhxiYpogRvt6BewIGLOwP4YWEGlOEid2mFw/qFJiCvfdu1B+qPpxeKSKP1Oi753K36zeoxkplvGMzROCPEKs9DJthHJxjwXCOG6BQE7l+PEB53zstJvTSxuXvtICnsymJW0UWnoFDYZ54Lo0=
+	t=1717771819; cv=none; b=Bf6s0jNcA66YO9LqhkAwRjSNfHdG1j8+wS9v7VOW+8ebHVJfue8bDj9oPUYj6PDYNEc2LUyShEz8GoXHR8NLFnARQYmYFKU5l42R0KJOcHnDE5cksbPoXEq2pcxif/9Cn5Jh2tVCAG5s6PkKCmYz2/7QtP35Ke+MlHztTYQif+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717771513; c=relaxed/simple;
-	bh=MDofwAXepnX5w1Xp3fTdja2xd1Wu/zbRCc01yrBXc3E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q1ruo/xf8MQCmnbNF0pkj/LRQqg0dqah0txaUZ/laSMi10NLeLZIItw7deXchgY4QviNrZkdWYYaatzvkoeZXhz6TgaV//P1LtRjoLTslobaqUrddGlDpLjC4BnXsAgNg4xQarhIfTpucf9DulEnqEXizMH+J2kNPJJG2PdFfYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b=Hwxz4S60; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717771819; c=relaxed/simple;
+	bh=4/ubmwuYyQOolVzF2x9lQP58QrY0ho1bemzDRvePUdA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ur29Ihy1OCLf3k92NmYMh82CKVJ+HXsRINV5XzdEnZ44Wgr4ncITkkzIEGghlDolmH5eQU1kset8/V7JG5GV7YGYFH55hSw/Oks0g/H/ZNWC4veUKpP5CU5D9XSubCZ2XQGy93V1zwl1ohNOyFD0GECT1u3SuQGbp93+alQeRg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mrExoQ6b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Hwxz4S60"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6668EC2BBFC;
-	Fri,  7 Jun 2024 14:45:11 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Hwxz4S60"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1717771510;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bDacixIrBWfVmsMZ4G2zcBRlCAJOLZ4a0Zmmv7o0EkY=;
-	b=Hwxz4S60Bgb7ppeABfv4VUsOxv4HsmRAsAL9M4ub8QoNfb+yQ7H6ImBo99a6vFI0zfVaOb
-	qxZI1BFQBNJlJ8mB4lL5vZE0hoxlUaAF207N2gZvS+/aJ/Iy0DLgpZCLz93DbIJg2zwo8k
-	6taQnNCVQ6nc+LOkdEkc6P2zk/SWVVw=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 428e2fd8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Jun 2024 14:45:09 +0000 (UTC)
-Date: Fri, 7 Jun 2024 16:45:03 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	David Hildenbrand <dhildenb@redhat.com>
-Subject: Re: [PATCH v16 2/5] random: add vgetrandom_alloc() syscall
-Message-ID: <ZmMc7wfe3ItVVlRn@zx2c4.com>
-References: <20240528122352.2485958-1-Jason@zx2c4.com>
- <20240528122352.2485958-3-Jason@zx2c4.com>
- <20240531035917.GD6505@sol.localdomain>
- <Zlr-aMJdAEgHOj9-@zx2c4.com>
- <20240604172249.GA1566@sol.localdomain>
- <ZmMcFonXPVtU0moO@zx2c4.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mrExoQ6b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72853C2BBFC;
+	Fri,  7 Jun 2024 14:50:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717771819;
+	bh=4/ubmwuYyQOolVzF2x9lQP58QrY0ho1bemzDRvePUdA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mrExoQ6bzrW6/fHCA5xUQn8HxQae7gqiUR2glC3uYsd4TWkp7JLlxMFOOl7woEWCu
+	 pPygVKgTNl7duJ9xd5UbQUIFp2tIZBmy6zInusou3ik83FZrs75G6pujR5TJ029e7W
+	 /d1NIWzrwIad6X2pm2CA0lbz9d0EDpW/zMGmLjjeXhPV9OVD7yToIcTKttNU/suUnL
+	 8QWMK60xCDcsRKkgNahu+6B+AjsrNd5EPEzWOfziquVWK/2+0XfkCxs7i/IjXsqrtu
+	 f+GvwGKIiwpUCMKqSktVPxbOIQdebTvqAyYRaKh/fZDaIpaPR7snCMFj67W88qdZHa
+	 f3dzbH3Bl5siA==
+Message-ID: <887d1cb7-e9e9-4b12-aebb-651addc6b01c@kernel.org>
+Date: Fri, 7 Jun 2024 08:50:17 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZmMcFonXPVtU0moO@zx2c4.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/8] Introduce fwctl subystem
+Content-Language: en-US
+To: Jiri Pirko <jiri@resnulli.us>
+Cc: Jakub Kicinski <kuba@kernel.org>, Jason Gunthorpe <jgg@nvidia.com>,
+ Dan Williams <dan.j.williams@intel.com>, Jonathan Corbet <corbet@lwn.net>,
+ Itay Avraham <itayavr@nvidia.com>, Leon Romanovsky <leon@kernel.org>,
+ linux-doc@vger.kernel.org, linux-rdma@vger.kernel.org,
+ netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>,
+ Saeed Mahameed <saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>,
+ Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+ Aron Silverton <aron.silverton@oracle.com>,
+ Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
+ Leonid Bloch <lbloch@nvidia.com>, Leon Romanovsky <leonro@nvidia.com>,
+ linux-cxl@vger.kernel.org, patches@lists.linux.dev
+References: <20240603114250.5325279c@kernel.org>
+ <214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
+ <20240604070451.79cfb280@kernel.org>
+ <665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
+ <20240605135911.GT19897@nvidia.com>
+ <d97144db-424f-4efd-bf10-513a0b895eca@kernel.org>
+ <20240606071811.34767cce@kernel.org> <20240606144818.GC19897@nvidia.com>
+ <20240606080557.00f3163e@kernel.org>
+ <4724e6a1-2da1-4275-8807-b7fe6cd9b6c1@kernel.org>
+ <ZmKtUkeKiQMUvWhi@nanopsycho.orion>
+From: David Ahern <dsahern@kernel.org>
+In-Reply-To: <ZmKtUkeKiQMUvWhi@nanopsycho.orion>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 07, 2024 at 04:41:26PM +0200, Jason A. Donenfeld wrote:
-> On Tue, Jun 04, 2024 at 10:22:49AM -0700, Eric Biggers wrote:
-> > On Sat, Jun 01, 2024 at 12:56:40PM +0200, Jason A. Donenfeld wrote:
-> > > On Thu, May 30, 2024 at 08:59:17PM -0700, Eric Biggers wrote:
-> > > > On Tue, May 28, 2024 at 02:19:51PM +0200, Jason A. Donenfeld wrote:
-> > > > > +/**
-> > > > > + * sys_vgetrandom_alloc - Allocate opaque states for use with vDSO getrandom().
-> > > > > + *
-> > > > > + * @num:	   On input, a pointer to a suggested hint of how many states to
-> > > > > + * 		   allocate, and on return the number of states actually allocated.
-> > > > > + *
-> > > > > + * @size_per_each: On input, must be zero. On return, the size of each state allocated,
-> > > > > + * 		   so that the caller can split up the returned allocation into
-> > > > > + * 		   individual states.
-> > > > > + *
-> > > > > + * @addr:	   Reserved, must be zero.
-> > > > > + *
-> > > > > + * @flags:	   Reserved, must be zero.
-> > > > > + *
-> > > > > + * The getrandom() vDSO function in userspace requires an opaque state, which
-> > > > > + * this function allocates by mapping a certain number of special pages into
-> > > > > + * the calling process. It takes a hint as to the number of opaque states
-> > > > > + * desired, and provides the caller with the number of opaque states actually
-> > > > > + * allocated, the size of each one in bytes, and the address of the first
-> > > > > + * state, which may be split up into @num states of @size_per_each bytes each,
-> > > > > + * by adding @size_per_each to the returned first state @num times, while
-> > > > > + * ensuring that no single state straddles a page boundary.
-> > > > > + *
-> > > > > + * Returns the address of the first state in the allocation on success, or a
-> > > > > + * negative error value on failure.
-> > > > > + *
-> > > > > + * The returned address of the first state may be passed to munmap(2) with a
-> > > > > + * length of `(size_t)num * (size_t)size_per_each`, in order to deallocate the
-> > > > > + * memory, after which it is invalid to pass it to vDSO getrandom().
-> > > > 
-> > > > Wouldn't a munmap with '(size_t)num * (size_t)size_per_each' be potentially too
-> > > > short, due to how the allocation is sized such that states don't cross page
-> > > > boundaries?
-> > > 
-> > > You're right, I think. The calculation should instead be something like:
-> > > 
-> > >     DIV_ROUND_UP(num, PAGE_SIZE / size_per_each) * PAGE_SIZE
-> > > 
-> > > Does that seem correct to you?
-> > > 
-> > 
-> > Yes, though I wonder if it would be better to give userspace the number of pages
-> > instead of the number of states.
+On 6/7/24 12:48 AM, Jiri Pirko wrote:
+>> The switchdev / sonic comparison came to mind as well during this
+>> thread. The existence of a kernel way (switchdev) has not stopped sonic
+>> (userspace SDK) from gaining traction. In some cases the SDK is required
 > 
-> Or maybe just the number of total bytes allocated? That would match
-> what's expected to be passed to munmap() and is maybe the easiest to
-> deal with. I'll give that a shot for v+1.
+> Is this discussion technical or policital? I'm asking because it makes
+> huge difference. There is no technical reason why sonic does not use
+> proper in-kernel solution from what I see
+> Yes, they chose technically the wrong way, a shortcut, requiring kernel
+> bypass. Honestly for reasons that are beyond my understanding :/
+> 
+> 
+>> for device features that do not have a kernel uapi or vendors refuse to
+>> offer a kernel way, so it is the only option.
+> 
+> Policical reasons.
+> 
 
-Hmm, though, on second thought,
+You meant financial reasons, not political. The dominant player in
+switches has zero interest in switchdev, zero interest in open sourcing
+their SDK. Nothing has changed on that front in the 9 years of
+switchdev's existence and no amount of 'NO' by maintainers is ever going
+to pressure said vendor to do that.
 
- * @num:           On input, a pointer to a suggested hint of how many states to
- *                 allocate, and on return the number of states actually allocated.
+Mellanox offers both with the Spectrum line and should have a pretty
+good understanding of how many customers deploy with the SDK vs
+switchdev. Why is that? There are those who think in logical, simple
+designs (switchdev), and those who prefer complex, all userspace designs
+with ping-ponging messages across processes (sonic). The latter uses all
+kinds of what I call silly rationalizations from userspace allows more
+flexibility, to dealing with the the kernel is too rigid, or getting
+changes in is too hard, or my favorite - Linux does not scale.
 
-This is kind of elegant -- it's an in/out param. Changing the semantics
-of the out param isn't super obvious. And bytes means it should probably
-be a long too. So maybe I'll keep it as is, and fix the documentation to
-have the right calculation.
+The bottom line is that the SDK model is not going away. Period.
 
-Jason
+The networking stack has accepted kernel bypass compromises (xdp, xdp
+sockets, OVS, a lot of the ebpf hooks, ... just examples) with the
+rationale that more is brought into the Linux way. fwctl is a similar
+effort - an attempt at bringing more into an open source driver and tooling.
+
