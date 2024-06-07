@@ -1,89 +1,94 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F3213E40C
-	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 18:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC67149C77
+	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 18:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717785650; cv=none; b=qnPV2oHJTxdakfxbbqB3zPIAYxn/vgfyYUySL/YUaoIfMjdr/9wp634iFI0D2GQle6DSw8qDrP6cK+yB93UndfOLR2o0+5+TNaQw64/FFfoZMD0hvDUkl61HkAmrQ3Ap0l2WRm+yFNh3uo6MwbTrO/79yXqTHPE2DcurSYhXTxg=
+	t=1717786098; cv=none; b=ADcDX6v1mTXuumC4cqGAKkZyUuURI1nd6n3REnnKalfVK3TfIv+L58Qg+qiZCOWD19oXp+vsMiwZAJ1oMJ0ttz6kgxXiEZ1bSCLA3tO2HkOhYlWEcZcfoCYKLG9fLHxjCGUYID4VJasZl0OR//AYJPw81ZBaibi5glO3jEe91LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717785650; c=relaxed/simple;
-	bh=nLT1CS3bAADtDvYR/iyCMdc1XfAIDAMUu13CcxexJ8U=;
+	s=arc-20240116; t=1717786098; c=relaxed/simple;
+	bh=292CfxvmPGuyb+tMs5SvZaHZBZTxfqcwlEPRda2+kI0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=I5FduQwtYBOc7VzMMA9J1scM+lyL6A179AgVtV7Ofm3JMGL0CmYREpdwXLoNZY/loyN4WF8F0OxnnNtFy2TIXCm6QucbbWyWEbDeL9zDiqJQ9vxb+H53R24ax0ySCvVlTTbF7VIrB4B8D5APmdBAB7Fx6EFlYRiC+FOHgHnmDM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net; spf=pass smtp.mailfrom=amacapital.net; dkim=pass (2048-bit key) header.d=amacapital-net.20230601.gappssmtp.com header.i=@amacapital-net.20230601.gappssmtp.com header.b=CNmOWtBU; arc=none smtp.client-ip=209.85.160.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amacapital.net
+	 To:Cc:Content-Type; b=n0z7OM4m8A6zWKVRz9l1T5gTM5frz9iLt01eiB9JIiK1SsTwwTG9Col2d+w0U4kqJ7dG+1JON0GouWwCkbHF4Z+dJk86dhuUPqbROfDEczrL2ZoF5z9Jkm4Ztz/8AYuDhFu3m6Iyyq8XOlJ+0Z6PYj5erIcnS8gG03sp+a35dCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gL3d+/bs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amacapital-net.20230601.gappssmtp.com header.i=@amacapital-net.20230601.gappssmtp.com header.b="CNmOWtBU"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-25111b428adso1361745fac.3
-        for <patches@lists.linux.dev>; Fri, 07 Jun 2024 11:40:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=amacapital-net.20230601.gappssmtp.com; s=20230601; t=1717785648; x=1718390448; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VWP3oVZEyR0+a+YIhKNFwQ+oDZLDTYUDKfQwa7N72nY=;
-        b=CNmOWtBUTZFqjcsKvlpOAT1iAVDtgFF3baK+zGnB3zkUpb0IdkEdEjJQ6O2ouBp1lk
-         DLj90c/cKTAR/IASXRSSnit3uVi6leDb9qfSGEbY1tjRuqtysw+w4f++MkNqMUIg1xOr
-         fjpvgUSQp0oiham8jnAk8y96v0um+bmIWs/WWFEt4MpM24mzkrQWJ0PFtIUz6+ftKhhk
-         PSaDBTtWQl8k1XzcOzLlfGWFKCUVPbknDI09uAyJPLinvmacvLicRzj5Xtf8hqbNPgj9
-         70+8W2ael8EZHaDDMJnt1Mh72qS2tukgBQSUDpM9A8DxA2kOFJMn/UQfSJ/uBV4D52QM
-         y0wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717785648; x=1718390448;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VWP3oVZEyR0+a+YIhKNFwQ+oDZLDTYUDKfQwa7N72nY=;
-        b=lMSZiDMqAd2l1AlZ5tRM6h2tooGG4h3aVthyv+/nLUAFVaB/teNJo3nPZmjB8RFv6L
-         zCE8/prIfe7QhFkOs+ZBOtKLhubfK5iQeT/hGr7GnoY7Y9L6UqrXTLfEh4ZsSuJWrnEC
-         37ExXDGpI5d+1XSLaCCEtH96tKKRMzMkSCAa5sAyITGcbIsfzuYSrygPlXg16cL5iBfe
-         Oi23OEXq/44uDI10xFRhChyFK0Er0kASA/fteJjyXROtxp7THfL5TOGvq4dhWb+8/ybx
-         P8329MQPAUf1fYJv0tXpcdjxZkJBYSG441oCZ8ijmlInVhWhWojjpMEZZMhRr3VGPRq1
-         6lAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXLvw3ryT+U/DaCDn5Zif0wUot+uxDDI5cxkOvkdCEkI9Y+sky+tDfMO2ap+b3PA0qqIz5FizIDVHUOF6IuWZ7xNVNjd5aLOQ==
-X-Gm-Message-State: AOJu0YzcQKn1YuFX5zRJQ/F6lBVEaWiZ6Jepkre7F74er6XEHlkAeaDl
-	R+PC1vxGvtA5s0DLZSUTdvyrBsOh2otzjxbbSp5+B/tH90Q8B6km3tJgMPafuglkxv6y1YAGTbY
-	j96rkf0yYTaxcLsCkn2cC0UsAs3pkONnIKjzY
-X-Google-Smtp-Source: AGHT+IGM13uj3U+ARgcKJSVs/VmcSppJ4o+ZTjupN8yH80mNMzyyWgUWj/akZRB539Rs2Rn6cvM6cRncobvhndjrU8I=
-X-Received: by 2002:a05:6871:e015:b0:250:7353:c8f2 with SMTP id
- 586e51a60fabf-254647efd11mr3404898fac.43.1717785646594; Fri, 07 Jun 2024
- 11:40:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gL3d+/bs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5191BC32786
+	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 18:48:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717786098;
+	bh=292CfxvmPGuyb+tMs5SvZaHZBZTxfqcwlEPRda2+kI0=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=gL3d+/bssv5SVqtIe7zAY01xkeufkfsUsT7s+tyL4VySxqs3JDgtYadsa2q6vFM33
+	 ydeheJ/+zAtkHRcD4f+xS829j0OkTY/t1cJO2OhZtB8cPNX9B7Dx8ENUDD48yPDwY9
+	 7G9yQrko/ohpZBIuQ5/Xe0NAu9lwhyPwRpCSUZBU+GcFVWSrdnrjK6TnEDJNFNl467
+	 z1KsWtCQe7XhOhtWbJzIfKiyvq7TcwTFCyOH7zY4LY5JtLFU+YJboTuYbhCH9kmCxx
+	 VIy3Yt2um05QnvftF3Epkxu1EBjgG4m87ILlRKDrO0YznTghbwDpxDESvoEmQ65IM0
+	 E2VeNnnhgMTkQ==
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5ba7ae85264so306198eaf.3
+        for <patches@lists.linux.dev>; Fri, 07 Jun 2024 11:48:18 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVNWGWxUcMAzZW4FAxpgOVLiDWmjJE4x4cmkXjYvSg2FvNpK2OSbFqeykOEKjdsDVHRwnOileiJFJz7M8PACQQOW34UEn/sdQ==
+X-Gm-Message-State: AOJu0Yyd8P7OwdVJeh3YAEqgYFyUdPkKZjtyJCsI+IqLyP+1ZHx3kPEl
+	ZVypJgQfXVM9i3JkpggRahOn4akFrgRjtTsrzOEzCbwl6ohU28UYZUThz93zCMKqNLz7Qi+oXQL
+	CPMSKS50QEXlByCURnZGer7GggI0=
+X-Google-Smtp-Source: AGHT+IEL7OH/WeqRUrMAZsTNoGZw/iPaAVSU96WBVKUOiGZkyn9pov/OMQgKKn5VJw+LmjSdxULhpkvBM3GAi0dDhys=
+X-Received: by 2002:a4a:a283:0:b0:5ba:c4ed:ee98 with SMTP id
+ 006d021491bc7-5bac4edef89mr1797321eaf.0.1717786097416; Fri, 07 Jun 2024
+ 11:48:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240528122352.2485958-1-Jason@zx2c4.com> <20240528122352.2485958-2-Jason@zx2c4.com>
-In-Reply-To: <20240528122352.2485958-2-Jason@zx2c4.com>
-From: Andy Lutomirski <luto@amacapital.net>
-Date: Fri, 7 Jun 2024 11:40:33 -0700
-Message-ID: <CALCETrVJFefyDT6U3QoHdZvNh=3nqk=3AK88eRuqdn4W4t8vsA@mail.gmail.com>
-Subject: Re: [PATCH v16 1/5] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, tglx@linutronix.de, 
-	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>, 
-	Christian Brauner <brauner@kernel.org>, David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
+References: <20240528184720.56259-1-tony.luck@intel.com>
+In-Reply-To: <20240528184720.56259-1-tony.luck@intel.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Fri, 7 Jun 2024 20:48:06 +0200
+X-Gmail-Original-Message-ID: <CAJZ5v0joU5dzkdB6m_StXneVA9oNCpmBk8qrLvR2pGJYBBZqMw@mail.gmail.com>
+Message-ID: <CAJZ5v0joU5dzkdB6m_StXneVA9oNCpmBk8qrLvR2pGJYBBZqMw@mail.gmail.com>
+Subject: Re: [PATCH 0/8] PM/ACPI - New Intel CPU #defines
+To: Tony Luck <tony.luck@intel.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 28, 2024 at 5:24=E2=80=AFAM Jason A. Donenfeld <Jason@zx2c4.com=
-> wrote:
+On Tue, May 28, 2024 at 8:47=E2=80=AFPM Tony Luck <tony.luck@intel.com> wro=
+te:
 >
-> The vDSO getrandom() implementation works with a buffer allocated with a
-> new system call that has certain requirements:
+> These patches were previously posted in a patch bomb[1] across
+> all subsystems. The core pieces of that patch bomb are now
+> upstream, so here are just the PM/ACPI bits (previously
+> Acked by Rafael).
 >
-> - It shouldn't be written to core dumps.
->   * Easy: VM_DONTDUMP.
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+>
+> [1] https://lore.kernel.org/all/ZlYVqSlx8GLwTJEr@agluck-desk3.sc.intel.co=
+m/
+>
+> Tony Luck (8):
+>   cpufreq: Switch to new Intel CPU model defines
+>   intel_idle: Switch to new Intel CPU model defines
+>   powercap: intel_rapl: Switch to new Intel CPU model defines
+>   ASoC: Intel: Switch to new Intel CPU model defines
+>   thermal: intel: intel_tcc_cooling: Switch to new Intel CPU model
+>     defines
+>   ACPI: LPSS: Switch to new Intel CPU model defines
+>   cpufreq: intel_pstate: Switch to new Intel CPU model defines
+>   powercap: intel_rapl: Switch to new Intel CPU model defines
+>
+>  include/linux/platform_data/x86/soc.h         |  12 +-
+>  drivers/acpi/x86/lpss.c                       |   4 +-
+>  drivers/cpufreq/intel_pstate.c                |  90 +++++++------
+>  drivers/cpufreq/speedstep-centrino.c          |   8 +-
+>  drivers/idle/intel_idle.c                     | 116 ++++++++---------
+>  drivers/powercap/intel_rapl_common.c          | 120 +++++++++---------
+>  drivers/powercap/intel_rapl_msr.c             |  16 +--
+>  drivers/thermal/intel/intel_soc_dts_thermal.c |   2 +-
+>  drivers/thermal/intel/intel_tcc_cooling.c     |  30 ++---
+>  9 files changed, 198 insertions(+), 200 deletions(-)
 
-I'll bite: why shouldn't it be written to core dumps?
-
-The implementation is supposed to be forward-secret: an attacker who
-gets the state can't predict prior outputs.  And a core-dumped process
-is dead: there won't be future outputs.
+All patches in the series have been applied as 6.11 material, thank you!
