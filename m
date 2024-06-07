@@ -1,240 +1,227 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2089.outbound.protection.outlook.com [40.107.243.89])
+Received: from smtp-relay-canonical-1.canonical.com (smtp-relay-canonical-1.canonical.com [185.125.188.121])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926A62F26
-	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 00:41:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.89
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717720882; cv=fail; b=Kn1t3sxvOKsaK7OefDl1WBpaa4yTIiLa3n0TcHQ9D0aThBcJoWuFfpXnm+AGCIbvpaUPrkYgerp79b13XdkMo8wUmJU9fvumkTnyuPyAUZJpMLymhnR2IekgQHzl3BPYzzbtOrk/8rUpUn6K09UHZd1uo4XWCc57w2OST4qv/tQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717720882; c=relaxed/simple;
-	bh=9ynxF6BRluCsl2lFYvykTEHbrwP6CFRJWxjUPWkOMow=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=iT6/mrlHvr1K2vxYazpltClpGLtNQQ4lESdtGHJR/BlJ29CLCMhgBM78RAmRRgsNy72tuXG+MQg90enjt5XUXBqJ2ClFtgQ5ASfD9dnskuzfmMX9Pe1kNu3Fyy6302+Cu8TXMjSF+pps8cMMR7dqxHczjD87Bly8wq+2vOrPYG0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=QsKleEFJ; arc=fail smtp.client-ip=40.107.243.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9527F746E
+	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 01:04:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.121
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717722286; cv=none; b=CIic9nRea761/qDad6QxoARTVbkKe+2qY1iHGjKsZUyWpyFrsON9vrnK3ucd1kW2SRjXvFCc2RvmcgA3RuC9MMmvYk5cKXGh1w69Honz7KynGfblKxk2wsvBH/lOmUCqZTImDXlL8qr7/GYjJnDTywRTpOcszPn5lE1qODG5TQw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717722286; c=relaxed/simple;
+	bh=T9vY3K0R2B9Unns/VSBomR/uyY0tXDUhf+n/JqDa3DM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LBCQ1mLRnd3J0e/Vsaw80odoYkvJZzHt3fCbju0ZtXQlMAS2dgk6uuKThHmanVNkFShYX9qWwDxoBBecghAkSOjE/HHrmWtaQ52XGKKRNEcjcMbh6Hi8CU5SNh1loTP9az461Q6U/4+b30DzZ/b6PdCm+9GOGfZTY0teAxYwTjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=ouyXKClM; arc=none smtp.client-ip=185.125.188.121
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="QsKleEFJ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TEvfnPCz6YI3TvwUy793RK7vrHb96tf1uu8coO9fTTztDyHfs96n2zPU7Js8iJPoAghWA1foA+ZYQDN0xBoXjJBApidcYPr2m7S8cOE5lrtCtCxAll6CIqn5BdZ9kJxCfdQCtjqCkH9Z74o7C4SI5YfaQvN2CpSHACTBT42SJ6pVvjNLGBUllVRIvG5eCD4w9RfQ5BL4biWBe0BW0toL2UZoThc9UB22ielOYO3CTFiakctL3WikWcuMCoSvp94mMccNk3BoVnT4YCgP6kvWT5qt/OeA/y0kLxqx4Cu+RUvty++pdgjXzl6WE/D5Qmh+rPm7AfaGkeewGlVYKwW0eg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AiiD9fsEIHYvREju3gNguDrkPsWHYSkQXegy5Zsh8QA=;
- b=gDhZkiP9xOLUyFZvxBnzDzVcPwrDkHZMlQ1xrLx3A/qiqFxDlRSD1LpyxG3pjtT0e3vIP2WqiqOHc3yfvnth0KhlZ7x5styMOWoNJsWWFMOTZoxxR7SMcvuTYyYRGmoqW62MdhtZV+F96xeFu0n4UvBNecm+Ph//5ARY8VdoL+/hLZMOCJkV2/an+DAPyW95DFaHzF0evXipL7/mvbpWbU2Kl1WwsAuE9+SVC4PnhpVuk4PrX+f1eZCvSXLy17Bl14xt+lXX6rqOgigLeA9Ruce+vJSCO9D+gGCIDWInQ0qZbrx1QFFzWYJA3KdtjzI09ZlJndJQZ0D3lvHrLU16JQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AiiD9fsEIHYvREju3gNguDrkPsWHYSkQXegy5Zsh8QA=;
- b=QsKleEFJzl5vzu/auOUnGDhKtsshwO46zbogRszQAkN8QxGuXbXTMQMZTsc/8j+7Oadxd1VChImrmvUL3Qy1pAcPJjohXR7C829GvysKcSXmfAUdcDDroB1MHtxBy7Cndo5ZIpRpK3CGgxF20Dbn89oG9P6l/Ziq7P0LQiuNSgqBIsktFSG9lXCOwNvxjSjlsijAVSszTjMAWx/9cXaaFmaahpcq91UXJ8ckqylSUdRz+oeAlG8I/zUwclYKZBBVOe77vEotm1Jv4DRhj7nIspjzSwx9qmxaJI/dav7akJS9a/O1r+Fl2sUpyJVbAvVL1Y7B2Vd4whUCziYAwijtcg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
- by SN7PR12MB7912.namprd12.prod.outlook.com (2603:10b6:806:341::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.22; Fri, 7 Jun
- 2024 00:41:14 +0000
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7633.033; Fri, 7 Jun 2024
- 00:41:11 +0000
-Date: Thu, 6 Jun 2024 21:25:36 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Dan Williams <dan.j.williams@intel.com>
-Cc: Jakub Kicinski <kuba@kernel.org>, David Ahern <dsahern@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
-	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Aron Silverton <aron.silverton@oracle.com>,
-	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
-	Leonid Bloch <lbloch@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 0/8] Introduce fwctl subystem
-Message-ID: <20240607002536.GI19897@nvidia.com>
-References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
- <20240603114250.5325279c@kernel.org>
- <214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
- <20240604070451.79cfb280@kernel.org>
- <665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
- <20240605135911.GT19897@nvidia.com>
- <6661416ed4334_2d412294a1@dwillia2-mobl3.amr.corp.intel.com.notmuch>
- <20240606144102.GB19897@nvidia.com>
- <6661f0dead72_2d412294ec@dwillia2-mobl3.amr.corp.intel.com.notmuch>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6661f0dead72_2d412294ec@dwillia2-mobl3.amr.corp.intel.com.notmuch>
-X-ClientProxiedBy: MN2PR18CA0030.namprd18.prod.outlook.com
- (2603:10b6:208:23c::35) To DM6PR12MB3849.namprd12.prod.outlook.com
- (2603:10b6:5:1c7::26)
+	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="ouyXKClM"
+Received: from [192.168.0.106] (unknown [123.112.65.116])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-canonical-1.canonical.com (Postfix) with ESMTPSA id B49AE3F756;
+	Fri,  7 Jun 2024 01:04:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1717722276;
+	bh=HGrLvbDkzrQv2MWxC/wYrnAWrcD9HMzV/8K0CiaPiWk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type;
+	b=ouyXKClMqGxkkb/DqsYoioaTYwkRb0V8fMpb17lzopDOm4h4r6AR5dBQ9nECyaJGt
+	 89Bj248fehcvMJl/UFY2UlfgGtm37178lNRaWMjl/gB4wHSwuUS4l5u5IAO4h9V18W
+	 Zqimt0Sv9/J4ClohvhECzmkwgdPBp2Bfp5H5XolyjTj48zSfSbyKljsNtvyW0DUsku
+	 uQLDqEqJMoOTy282eyR4ADhXrf3i+B7+Re1qjjlqejMblvfUw5dIGFCQFs7BuOlOY0
+	 vQ6yj3zJHkT3v03P+sE6TlBZ8X89bor8OJIhZ8MH/J7Khp1jGnzRIedQeNb3uq+Nhv
+	 kDZxZ39KalexQ==
+Message-ID: <60a65889-130f-479d-b7de-04236316adc3@canonical.com>
+Date: Fri, 7 Jun 2024 09:04:26 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|SN7PR12MB7912:EE_
-X-MS-Office365-Filtering-Correlation-Id: c0d93906-78fb-4939-969b-08dc868a8748
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|1800799015|376005|7416005;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?xtmFRvXg/HbK0UHjYGXrKmSZPSv12FaM8bc2znEUqtVvn6Q4uvXsqMge1V14?=
- =?us-ascii?Q?gl5v0BLpU5KoapBFarD3uu/fGAN+SpmWura78P5eAjDrS7t5NeYzBx5AVnqF?=
- =?us-ascii?Q?2Hme30jw/cLc7BK3BfLPpljUCGUX+BWoykw1VVXyUhvsB7vStsQZnngNrycj?=
- =?us-ascii?Q?pGVJa7QnYpx6cP5///bzUXfopBW2Xbs2CUSaOMiZv0E3ve6DhN4qREqvcEwu?=
- =?us-ascii?Q?x89B/k16CYEbwQO7hHOavXQH/BaStGxiN6Kmi0OsEaN28nerXqOEdMe4/Ot6?=
- =?us-ascii?Q?Xvemh98J88UbyTnaeYW84jUSCbumkPctMYzYwz5/u++rvT1miYGksjfjt7xs?=
- =?us-ascii?Q?CEEux1O3bWr0g6CloDo+8QsIUU+yU2PKWBl7wT7os5nWW3uVKRwcw7BwCUs0?=
- =?us-ascii?Q?MKFjK3sPOaX0UAY9g+CBm0ZXafuladvNF1dbKNVEDuHnVECtRJroDPoWImf0?=
- =?us-ascii?Q?jdvHID0O21TnNRURJlFvOc9l1NIceECL39s1xSM4FyBjutHEf+2MkayvtkXX?=
- =?us-ascii?Q?97X8qHpfBO6ce7uRGLEYlQHQRxTr8XJY2/NaX1P6It4lO5wC8oUrHZEZA0fl?=
- =?us-ascii?Q?DJFY5e2bL3sbEgZiagy7S0ihPtdnQOnO+egKuO/2akgE+mj16U3FS9ku2KYy?=
- =?us-ascii?Q?XWlDA4WUblCvnf6TMJ7ivQUgi3z6JVmBtO/V7PRtk/yca+fpBIqnJVUJQ3Rr?=
- =?us-ascii?Q?R4zY5ZNRgM28Jmo2VxH4XNWyG9MhS67iuashPuhm/z/QN58W4dbRZKDVcuXg?=
- =?us-ascii?Q?Kj4viswIz2WqYF4rDUV//OX1uQ4n1RSLYQwWxavmDnpm+uIcQzLkx7k9vuZr?=
- =?us-ascii?Q?FY5r07G61JMb/qxcjTrJQP2rXohlPoOKMIZYf5rxHb4D5SUJMbka8wBcJsVp?=
- =?us-ascii?Q?PDVias5pCrNbKx+fvnEZTA0mE0mg8i9mLFw8AUdeQl00HrxBb1c5W0fw5BaH?=
- =?us-ascii?Q?Sj7Ten0v6UheRqSjLHV7MgQh9fQrEUD5/EYejNLBJADXHf4Ub5vjpxxDiyCx?=
- =?us-ascii?Q?N5ePbSoGd0Exk4hoccbDtf+FQTjhOc/C+SHsRJKJckmIQlfJ/sq6VIH5aaV0?=
- =?us-ascii?Q?TmitfPTcEYjoOyYvLpO9VjJnCitCNAitZ27z5kmZquj4pj/H1IdbInfUsjjp?=
- =?us-ascii?Q?ga39NJQF6Cl4K4RiKu334AMb4IwogK80hcrNPazDGSMbiS14f/gH1zJCoYbb?=
- =?us-ascii?Q?pB2z17iUc8DfAfNls7NJe4+p+FEr5bIiYSmQjoP3IzJC0SkpAleYQ689/PBT?=
- =?us-ascii?Q?wjefualEti5nFOCWB8eRPxpqD9smg+kfPBp0npi9h3Y0PnYDKlEqXOaxB17+?=
- =?us-ascii?Q?bEr+rPk8nl6Potjblyi6eMmr?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(1800799015)(376005)(7416005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?xA5Ss3Hi6fDuUUi3eDOKAuVtKcvPXDKfadbZflj2cGBfQy6KLlvUHDw5vXA0?=
- =?us-ascii?Q?HSdGLvc9yzfjZz5JWq6TUnIZQZL/x7NRf2q7DumYFi4NizROLov2DLRUJXFi?=
- =?us-ascii?Q?GzSDGQlpK0MWZm07ryvux6JSdePO+WmdVvUEBSSsdTpAFSefneZOGdP7ZzAJ?=
- =?us-ascii?Q?vXJa5tjeUKlRaGeLF49Y8uZ0PHcb+dipr/23UYUCegdnkFtifm9N7HU9EJZS?=
- =?us-ascii?Q?9fW4KrDWPHykCtTS2BcusZ1mC88qGiJEyKd8YGVtskNZ5AzDm5n/++HNu8w6?=
- =?us-ascii?Q?j5qzUesKeW9xxxbI6jtpnQvGy1iXl5l2lh9dghd9O5DERlDHMwsydaacAoBS?=
- =?us-ascii?Q?L+J+O//NLFxYOTGysg/1PLbNlV9e0wBrIbk09Wqa20QMeCz41FuXehI/Em6G?=
- =?us-ascii?Q?Cnj0/2UNSNzXnct9BuBZ8qb9gCFGQD6/Hls1p5OM/EDedFkZiL1NrfWsWhlE?=
- =?us-ascii?Q?blBbR4eCi1Sk2mzcnkUMD4kaAQkeAYs3qDTEaNzLZPmza8WXD4XtqVEJKxnh?=
- =?us-ascii?Q?ek+pFjQZMkCMQji8p2ddAfDBeWjLCDdJeYjfzYesQ3Cq6tVVYoCZ03YKLtok?=
- =?us-ascii?Q?QXWTRVd3w9Kq5XLWnEwk1ZpU54TaIEf6+YQtwxcfpOVdg8T2T97eWgMVYvHS?=
- =?us-ascii?Q?YjkOK6k8yjvl0i+U3QJSqDpCSvCD0ZrBa8OV3A2FdGU8l0CzpkytGDakLoID?=
- =?us-ascii?Q?9qD4r2ot40rACHw20CudsriNzNfGK1hNgxfzItChg69YGZ5FUnCdHwLKU6VR?=
- =?us-ascii?Q?qB9aIoop/rWKb+fkZXDJzqkLnWy1iJWdKrjtG9GfIf3adxMbH+dgpbeeAgcG?=
- =?us-ascii?Q?gHBuukjLSyrZguUcz45yKbbJZivhaz5Pak9eQI9kmUPCN5nW4iDJ8TS1z2Na?=
- =?us-ascii?Q?LhJbGc55jS9n37ATievejwLG6iFKD29Ng5uXR7HyB3AG1QV8UvEWBTaXFZrV?=
- =?us-ascii?Q?7+QMe1EtNxUSkLVZiTPG892tRDAarCLYm3kZWD9ZFp3HtsfRLMoR0vzLb+9V?=
- =?us-ascii?Q?uBZQcn2+73PrMyXwdrTwZc+7baDm2ttNuN7Sc9ujsqAwQ3fCzZq9/pmXhuzR?=
- =?us-ascii?Q?NLysH++4vWX6L1w/8VmN6QOmoHZiTISfdh+o5hc7w6jKdNwG7H/3E69IVBcx?=
- =?us-ascii?Q?17k8LIfOKI9vUhyv87jDzinq+LBtRCJZ2sANH2AMhEiYhcXa0fTqChDWzxqo?=
- =?us-ascii?Q?swKaKn2bwbAMMPo1mmsN+nqCt55G2GBuf6acoHnu8iqu2Tx280PRt10EbqCH?=
- =?us-ascii?Q?nGV7avKRH4QtBeyy288ea5Giqu/cTajjBwEefcr39FNjS4ymAyuDkN56r1w3?=
- =?us-ascii?Q?N947vS1eL0duhlMxEm0rt31HTXdGpv/jgeqIsBqfTKeqRgugorCnY0/zKA30?=
- =?us-ascii?Q?3sjG7tolLy8lKIvmZRRanlmyslBuvIbPzNQJKRVjgwxG2EZ5Z7WC+zlRW14p?=
- =?us-ascii?Q?BAXxHPwwq8bYDE92iDWO96bI6EP/6uy2SYG4YeBNPQsuzHY6nWY/A0h3IiAx?=
- =?us-ascii?Q?38y0cgvU6grjLeZ6oo7XY2Sjzv9UQXCZsUKCegKKBaY8F1qXH8tovI9mz7ZE?=
- =?us-ascii?Q?EkWlV+OVGnYjrblFoi2mcpIFshmENxPaNUjEz959?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c0d93906-78fb-4939-969b-08dc868a8748
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2024 00:41:11.4232
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Xm5LnAJxYL8izVm9I286cL1FLlLzwR1BfSc4mQAZ8Vt/3iDkD0Ygr99ZyF3/59M7
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7912
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 723/744] e1000e: move force SMBUS near the end of
+ enable_ulp function
+To: "Zhang, Rui" <rui.zhang@intel.com>,
+ "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+ "stable@vger.kernel.org" <stable@vger.kernel.org>
+Cc: "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ "pmenzel@molgen.mpg.de" <pmenzel@molgen.mpg.de>,
+ "Brandt, Todd E" <todd.e.brandt@intel.com>,
+ "Lifshits, Vitaly" <vitaly.lifshits@intel.com>,
+ "Keller, Jacob E" <jacob.e.keller@intel.com>,
+ "horms@kernel.org" <horms@kernel.org>,
+ "naamax.meir@linux.intel.com" <naamax.meir@linux.intel.com>,
+ "Nguyen, Anthony L" <anthony.l.nguyen@intel.com>,
+ "sashal@kernel.org" <sashal@kernel.org>, "kuba@kernel.org" <kuba@kernel.org>
+References: <20240606131732.440653204@linuxfoundation.org>
+ <20240606131755.652268611@linuxfoundation.org>
+ <3eb7ce5780ccbd08f1d1d50df333d6fc7364b2e9.camel@intel.com>
+Content-Language: en-US
+From: Hui Wang <hui.wang@canonical.com>
+In-Reply-To: <3eb7ce5780ccbd08f1d1d50df333d6fc7364b2e9.camel@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 06, 2024 at 10:24:46AM -0700, Dan Williams wrote:
-> Jason Gunthorpe wrote:
-> [..]
-> > > I am warming to your assertion that there is a wide array of
-> > > vendor-specific configuration and debug that are not an efficient use of
-> > > upstream's time to wrap in a shared Linux ABI. I want to explore fwctl
-> > > for CXL for that use case, I personally don't want to marshal a Linux
-> > > command to each vendor's slightly different backend CXL toggles.
-> > 
-> > Personally I think this idea to marshal/unmarshal everything in the
-> > kernel is often misguided. If it is truely obvious and actually shared
-> > multi-vendor capability then by all means go and do it.
-> > 
-> > But if you are spending weeks/months fighting about uAPI because all
-> > the vendors are so different, it isn't obvious what is "generic" then
-> > you've probably already lost. The very worst outcome is a per-device
-> > uAPI masquerading as an obfuscated "generic" uAPI that wasted ages of
-> > peoples time to argue out.
-> 
-> Certainly once you have gotten to the "months of arguing" point it begs the
-> question "was there really any generic benefit to reap in the first
-> place?"
+Hi Greg,
 
-Indeed, but I've seen, and participated, in these things many times :)
+Please do not apply the commit to the stable kernels, there is a 
+regression report on this commit.
 
-> That said, *some* grappling, especially when muliple vendors hit the
-> list with the similar feature at the same time, has yielded
-> collaboration in the past. 
+Thanks,
 
-Absolutely! But we have also frequently done that retroactively, like
-see three examples and then consolidate the common APIs. The challenge
-is uAPI. Since we can't change uAPI people like to rush to make it
-future proof without examples. Broadly I lean towards waiting until we
-have several examples to build a standard uAPI and let the examples
-evolve on their own.
+Hui.
 
-If there is value in the commonality then people will change over.
-
-> This gets back to the unspoken conceit of the kernel restriction that I
-> mentioned earlier. At some point the kernel restriction begets a cynical
-> in-tree workaround or an out-of-tree workaround which either way means
-> upstream Linux loses.
-
-Right.. The kernel just don't have the power to say no to the
-industry. Things will just go OOT and it is really our community that
-suffers in the long run. As I said, you can't lead with NO.
-
-IHMO there has to be a really high quality reason to keep support for
-HW that people have built out of the kernel. Especially start ups and
-other more vulnerable companies. I don't think Linux maintainers
-should be choosing industry winners and losers. I sometimes feel I
-have a minority opinion here though :(
-
-> > > So, document what each subsystem's stance towards fwctl is,
-> > > like maybe a distro only wants fwctl to front publicly documented vendor
-> > > commands, or maybe private vendor commands ok, but only with a
-> > > constrained set of Command Effects (I potentially see CXL here). 
-> > 
-> > I wouldn't say subsystem here, but techonology. I think it is
-> > reasonable that a CXL fwctl driver have some kconfig tunables like you
-> > already have. This idea works alot better if the underlying thing is
-> > already standards based.
-> 
-> True, I worry about these technologies that cross upstream maintainer
-> boundaries. When you have a composable switch that enables net, block,
-> and/or mem use cases, which upstream maintainer policy applies to the
-> fwctl posture of that thing?
-
-fwctl is intended to sit on its own. I think it is even a bad
-architecture direction that Linux has N different ways to flash FW on
-devices, N different ways to read diagnostics, etc all because each
-subsystem went on its own. With fwctl I'd like to see a greater
-consolidation of not re-inventing the low level of fw interaction
-differently in each and every subsystem.
-
-Like you mentioned CXL has its own way to program flash. How many ways
-does Linux have to update device flash now? :(
-
-So, if you have a real multi-function device fwctl should be the
-central place to operate the shared PCI function and the FW
-interface. There may be some duplication in subsystems, but that is a
-side effect of our sub-system siloed development model (software
-architecture tends to follow org chart, after all)
-
-Jason
+On 6/7/24 08:32, Zhang, Rui wrote:
+> Add Todd.
+>
+> Todd found a regression caused by this commit.
+> https://bugzilla.kernel.org/show_bug.cgi?id=218940
+>
+> I think we should make that clear first.
+>
+> thanks,
+> rui
+>
+> On Thu, 2024-06-06 at 16:06 +0200, Greg Kroah-Hartman wrote:
+>> 6.6-stable review patch.  If anyone has any objections, please let me
+>> know.
+>>
+>> ------------------
+>>
+>> From: Hui Wang <hui.wang@canonical.com>
+>>
+>> [ Upstream commit bfd546a552e140b0a4c8a21527c39d6d21addb28 ]
+>>
+>> The commit 861e8086029e ("e1000e: move force SMBUS from enable ulp
+>> function to avoid PHY loss issue") introduces a regression on
+>> PCH_MTP_I219_LM18 (PCIID: 0x8086550A). Without the referred commit,
+>> the
+>> ethernet works well after suspend and resume, but after applying the
+>> commit, the ethernet couldn't work anymore after the resume and the
+>> dmesg shows that the NIC link changes to 10Mbps (1000Mbps
+>> originally):
+>>
+>>      [   43.305084] e1000e 0000:00:1f.6 enp0s31f6: NIC Link is Up 10
+>> Mbps Full Duplex, Flow Control: Rx/Tx
+>>
+>> Without the commit, the force SMBUS code will not be executed if
+>> "return 0" or "goto out" is executed in the enable_ulp(), and in my
+>> case, the "goto out" is executed since FWSM_FW_VALID is set. But
+>> after
+>> applying the commit, the force SMBUS code will be ran
+>> unconditionally.
+>>
+>> Here move the force SMBUS code back to enable_ulp() and put it
+>> immediately ahead of hw->phy.ops.release(hw), this could allow the
+>> longest settling time as possible for interface in this function and
+>> doesn't change the original code logic.
+>>
+>> The issue was found on a Lenovo laptop with the ethernet hw as below:
+>> 00:1f.6 Ethernet controller [0200]: Intel Corporation Device
+>> [8086:550a]
+>> (rev 20).
+>>
+>> And this patch is verified (cable plug and unplug, system suspend
+>> and resume) on Lenovo laptops with ethernet hw: [8086:550a],
+>> [8086:550b], [8086:15bb], [8086:15be], [8086:1a1f], [8086:1a1c] and
+>> [8086:0dc7].
+>>
+>> Fixes: 861e8086029e ("e1000e: move force SMBUS from enable ulp
+>> function to avoid PHY loss issue")
+>> Signed-off-by: Hui Wang <hui.wang@canonical.com>
+>> Acked-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+>> Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+>> Reviewed-by: Simon Horman <horms@kernel.org>
+>> Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+>> Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+>> Tested-by: Zhang Rui <rui.zhang@intel.com>
+>> Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+>> Link:
+>> https://lore.kernel.org/r/20240528-net-2024-05-28-intel-net-fixes-v1-1-dc8593d2bbc6@intel.com
+>> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>>   drivers/net/ethernet/intel/e1000e/ich8lan.c | 22
+>> +++++++++++++++++++++
+>>   drivers/net/ethernet/intel/e1000e/netdev.c  | 18 -----------------
+>>   2 files changed, 22 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c
+>> b/drivers/net/ethernet/intel/e1000e/ich8lan.c
+>> index 4d83c9a0c023a..d678ca0254651 100644
+>> --- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
+>> +++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
+>> @@ -1225,6 +1225,28 @@ s32 e1000_enable_ulp_lpt_lp(struct e1000_hw
+>> *hw, bool to_sx)
+>>          }
+>>   
+>>   release:
+>> +       /* Switching PHY interface always returns MDI error
+>> +        * so disable retry mechanism to avoid wasting time
+>> +        */
+>> +       e1000e_disable_phy_retry(hw);
+>> +
+>> +       /* Force SMBus mode in PHY */
+>> +       ret_val = e1000_read_phy_reg_hv_locked(hw, CV_SMB_CTRL,
+>> &phy_reg);
+>> +       if (ret_val) {
+>> +               e1000e_enable_phy_retry(hw);
+>> +               hw->phy.ops.release(hw);
+>> +               goto out;
+>> +       }
+>> +       phy_reg |= CV_SMB_CTRL_FORCE_SMBUS;
+>> +       e1000_write_phy_reg_hv_locked(hw, CV_SMB_CTRL, phy_reg);
+>> +
+>> +       e1000e_enable_phy_retry(hw);
+>> +
+>> +       /* Force SMBus mode in MAC */
+>> +       mac_reg = er32(CTRL_EXT);
+>> +       mac_reg |= E1000_CTRL_EXT_FORCE_SMBUS;
+>> +       ew32(CTRL_EXT, mac_reg);
+>> +
+>>          hw->phy.ops.release(hw);
+>>   out:
+>>          if (ret_val)
+>> diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c
+>> b/drivers/net/ethernet/intel/e1000e/netdev.c
+>> index 3692fce201959..cc8c531ec3dff 100644
+>> --- a/drivers/net/ethernet/intel/e1000e/netdev.c
+>> +++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+>> @@ -6623,7 +6623,6 @@ static int __e1000_shutdown(struct pci_dev
+>> *pdev, bool runtime)
+>>          struct e1000_hw *hw = &adapter->hw;
+>>          u32 ctrl, ctrl_ext, rctl, status, wufc;
+>>          int retval = 0;
+>> -       u16 smb_ctrl;
+>>   
+>>          /* Runtime suspend should only enable wakeup for link changes
+>> */
+>>          if (runtime)
+>> @@ -6697,23 +6696,6 @@ static int __e1000_shutdown(struct pci_dev
+>> *pdev, bool runtime)
+>>                          if (retval)
+>>                                  return retval;
+>>                  }
+>> -
+>> -               /* Force SMBUS to allow WOL */
+>> -               /* Switching PHY interface always returns MDI error
+>> -                * so disable retry mechanism to avoid wasting time
+>> -                */
+>> -               e1000e_disable_phy_retry(hw);
+>> -
+>> -               e1e_rphy(hw, CV_SMB_CTRL, &smb_ctrl);
+>> -               smb_ctrl |= CV_SMB_CTRL_FORCE_SMBUS;
+>> -               e1e_wphy(hw, CV_SMB_CTRL, smb_ctrl);
+>> -
+>> -               e1000e_enable_phy_retry(hw);
+>> -
+>> -               /* Force SMBus mode in MAC */
+>> -               ctrl_ext = er32(CTRL_EXT);
+>> -               ctrl_ext |= E1000_CTRL_EXT_FORCE_SMBUS;
+>> -               ew32(CTRL_EXT, ctrl_ext);
+>>          }
+>>   
+>>          /* Ensure that the appropriate bits are set in LPI_CTRL
