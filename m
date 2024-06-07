@@ -1,80 +1,189 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0188B1BF3B;
-	Fri,  7 Jun 2024 02:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCF3225AE;
+	Fri,  7 Jun 2024 05:29:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717727646; cv=none; b=Q6FSCORU/N/jGlkj2InqxwY5XaqPkxXtPeXOrqNhMDKIr3wojeX+PswpyFvjaqyMf7ppEfj1PTJ/NfF85+PF/2WImhT/9ZFxE39idPdlx3FJP/eHU4G4UjlzH/ubQi2xqaci8Ps4CWypj4XI2PNkEz88A/7mAZg7/LPuBqEO+RA=
+	t=1717738199; cv=none; b=dscnfQ4ujye4mkEbbXcg4MeTbQk7wTaOddB+89V6OiLxQI2pKn2k+JDlDVR2o+bUQmHC28ndVE11LUQcZmxhyUq9JI4Flf3qb9GMEFbbD+B7dBreMMg9N1+yc7aRdcZGBVR9C2Az1+dq9NgxCw5I5gZkweC2u0SQ3g+Nxiypb8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717727646; c=relaxed/simple;
-	bh=ET3BRs4nWWGzBVLodLJZyXl/ZkgOXc6QzAUfUZK42L4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T2gt33i4yFh7Kjw5t6ER3okdtlcB3GM0xZ9tE+5I7tdrMSZjAG0rjhJ86D7RpVuh2BedgSIl22qLSRhtd3+lZy4LWxUiD9s0bQel2TfcIHj71voT84QIeeRZVvy1/hyQ7BlMJxHq6+QAGRhjvB4sXSx25gBTd0NUECJXlTvkAIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FPDCDfuA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717738199; c=relaxed/simple;
+	bh=9rz8+VMgAcb32PW6KclGIGwgYHTKbeIqic3AZoRiX8M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q+JmoEqDnqDcpVUmFdJu0hBobNpIgDFWJ8BYRvIh6Q7uB0bBnaqY05LO16U5+7XSjn36fvznPptNcnz+v+Kr7WbXdTOvwwQ75Jq0jhtJvCqBxRZxmnJO6TW36SBhWY9iwzy6FAdEWmpPZJIfi9cctu3NKBMPRFRhb8O1sxAjKsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b=RY2x4zSk; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FPDCDfuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97088C32786;
-	Fri,  7 Jun 2024 02:34:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717727645;
-	bh=ET3BRs4nWWGzBVLodLJZyXl/ZkgOXc6QzAUfUZK42L4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FPDCDfuAVV+IozIEHf1gX3i5u33zqOOm7qP1Whf1CzNoBWj3itmIwh2JshyFUzx9r
-	 W9bh3DL3kYrMgyB1Yj+748Epgc/8xkY8tQlwhe+3jcWBRWdkxBEHE1jrjj+dO56dIF
-	 OGs6ZUnilzkSxsTQFsNby2IM0VgGRsGd7qPYO2B0oKu3dFxw9dZWpEtZVxcEmS4kXA
-	 Yityo4ls/cD/8CGzZ+0IY/KX2Wp4LCnkZQhuY2NJ8wkUzkG8TSl4OGkqGmwBKfgXTA
-	 QCIrhpyNCbd91x4bel4wVVbMa1zvPH5iKcPM/NiKVeLbbblfq/xxE8A3sRgonfAJ1d
-	 tYXYlTk2NWgpg==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	patches@lists.linux.dev,
-	cros-qcom-dts-watchers@chromium.org,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	devicetree@vger.kernel.org,
-	Pin-yen Lin <treapking@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: Re: [PATCH 0/3] arm64: dts: qcom: sc7180-trogdor: clamshell/detachable fragments
-Date: Thu,  6 Jun 2024 21:33:59 -0500
-Message-ID: <171772763760.789432.7815963903812964889.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240604214233.3551692-1-swboyd@chromium.org>
-References: <20240604214233.3551692-1-swboyd@chromium.org>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b="RY2x4zSk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1717738183; x=1718342983; i=w_armin@gmx.de;
+	bh=LSAsYouB9E+Wh4jg7ST3qpfGr5N0dg61aPoOi3EDWvM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=RY2x4zSkxVKiDqKfkPy2xXVmL47NfwHU55vUC4cWsn9gxS2hselv8cKma1zYt27O
+	 8F/HTYUcOW+S1YrvnxHUHqLss4iXZSsWO5+mxucI4Nw6J1UhMosSXjFqo7jf5iJ7K
+	 5cHhDftTi2It1YipZXvsVSxVfV/7yx+Jy0rNroQvnwtTFZVGTfQVf43iICSI/g69h
+	 wkYKb8aPjGh2tXNdEXSm0B+c4uDq12SLbXGTNGHUxM+mJ5UVlpgbjM2Ek/LRivzF5
+	 pgGuA/g3gJDdKrST18ICHVPvzLJl8muLhIpTQjpvQzCMDpEtV2f//T3NL2Y+3R0PJ
+	 RiYDmiVLi6vP14vGfQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.2.35] ([91.137.126.34]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MhlGk-1sstap0Xnk-00fK5J; Fri, 07
+ Jun 2024 07:29:43 +0200
+Message-ID: <f48f7d3b-fd25-4d34-9689-dab225d29aff@gmx.de>
+Date: Fri, 7 Jun 2024 07:29:40 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 307/744] platform/x86: xiaomi-wmi: Fix race condition
+ when reporting key events
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev,
+ Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+ Hans de Goede <hdegoede@redhat.com>, Sasha Levin <sashal@kernel.org>
+References: <20240606131732.440653204@linuxfoundation.org>
+ <20240606131742.234515336@linuxfoundation.org>
+Content-Language: en-US
+From: Armin Wolf <W_Armin@gmx.de>
+In-Reply-To: <20240606131742.234515336@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:v/A/pnmeR6s5nJ0LILeR0Nn0SbfIiBklaRgwjzaxVBdtBHM0sHF
+ tVjIRvnHxX+oBw0upxXwwKy4+qwog5oWsnsdxn4F6AFwnsO1HF+onGizdcVinPXAMDxk1Xi
+ X7t/qthsrSUvmFeZa78HU+h3miB0v4gkFhC5bS5bOcPZsZDky71NnhpWb6S7wbAlytnhwhg
+ I2XY6YnKYnFYXMpgqvTqQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Jrv3MkR3T6o=;aIU3uxJhA78B9N+aTDGOPs/ckUU
+ h0UexnmuYPOKcKzzCF7aVnd9pTs9ZZBM+IFSGN9c6kWRhR2r6pScZUeP+t5l5CZkn/EWwLY+1
+ kx/LW45ZjDh4+LtP44Qc4SGlH2Pju2ieewn4JuDvUdLHju9CHso/Qfa8678rsOEiYZJESoqWG
+ V0RWGD20pewSAUjI0SvGUY93g6N3bU0NCCKdxQ7NwbHeJA3vWU36oKR9kFvL8x13+m8R8BCOo
+ gHxrDpaRpWQt1s0lGVmg3TJUW/cz/RZCJYItdmLpUV+EKJ0GUtm9/A/ZAxG5DyPo5cqLzkStF
+ waiUOBoIdIv2jOrODc1lyUdmaGeBrGJrEDpPuf+ZQ/jG9KVw0UGJ4HJs2wPFLCECS6clQOjov
+ a24PgzVVcl3JNCFEy4YmoiAn5CM8jzA9w6Iam4WJOv+H9BvPZdzguP4c7dHpQu1T0haCxhSx2
+ hsxx2bCz1BFscyD1UDEOZMDGyu0rWsRy4PCCvwCUrELPVClLYmeycskdE6wNp4DK4shw4Pnlz
+ S7+Gje4/Obti/+JBJTp9TIdjRLT7lOBob4Mt8Cowgmcy+c1jd4b7FHYGJcCUHIc+Gvq7zE3bU
+ dPFho7vsVpimQ3c6QM3e03+z+ZU2JYVDdu3a+w9L7h3/zxnQPAlICpkgZ4XSXosfeSHh5Yl0B
+ yHGzpnQlgFvH0QlhzjqMNdxACljpSZEN2j2xY8zFW93zJTtzpf+D7gxudxCtPOfGauGy09fJW
+ T0JwSNlb5N1bCQfJ57IVhJdGDt/iGcJzWwQRrQHU6zfArvMpLpOq5bkAo9ZWx3z0Yl9a+fdP8
+ n/JUYC2Vr7VqaUN6Im4RasAJ8IeBadF4nQQX3NxikQU8A=
 
+Am 06.06.24 um 15:59 schrieb Greg Kroah-Hartman:
 
-On Tue, 04 Jun 2024 14:42:29 -0700, Stephen Boyd wrote:
-> This is a followup to a series I sent a few months ago[1]. I've split out
-> the dts patches and dropped the one that ties everything together for
-> DP/USB as that whole solution is still working it's way through and I
-> doubt I'll be able to get that done in the next couple weeks. Instead,
-> I'm sending these patches to reduce the patch stack and make that DP
-> series more manageable.
-> 
-> [...]
+> 6.6-stable review patch.  If anyone has any objections, please let me kn=
+ow.
 
-Applied, thanks!
+Hi,
 
-[1/3] arm64: dts: qcom: sc7180: quackingstick: Disable instead of delete usb_c1
-      commit: 13f1e1245bb51633d6d1a398fedab7c281beafc3
-[2/3] arm64: dts: qcom: sc7180: pazquel: Add missing comment header
-      commit: 5abfd513988248b5d27f3a72d71a33129dfb1054
-[3/3] arm64: dts: qcom: sc7180-trogdor: Make clamshell/detachable fragments
-      commit: 38b68e62c0d662d8a23aa47799b4ac83c54a8de8
+i already said that the underlying race condition can only be triggered si=
+nce
+commit e2ffcda16290 ("ACPI: OSL: Allow Notify () handlers to run on all CP=
+Us"),
+which afaik was introduced with kernel 6.8.
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Because of this, i do not think that we have to backport this commit to ke=
+rnels
+before 6.8.
+
+>
+> ------------------
+>
+> From: Armin Wolf <W_Armin@gmx.de>
+>
+> [ Upstream commit 290680c2da8061e410bcaec4b21584ed951479af ]
+>
+> Multiple WMI events can be received concurrently, so multiple instances
+> of xiaomi_wmi_notify() can be active at the same time. Since the input
+> device is shared between those handlers, the key input sequence can be
+> disturbed.
+>
+> Fix this by protecting the key input sequence with a mutex.
+>
+> Compile-tested only.
+>
+> Fixes: edb73f4f0247 ("platform/x86: wmi: add Xiaomi WMI key driver")
+> Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+> Link: https://lore.kernel.org/r/20240402143059.8456-2-W_Armin@gmx.de
+> Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linu=
+x.intel.com>
+> Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+> Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>   drivers/platform/x86/xiaomi-wmi.c | 18 ++++++++++++++++++
+>   1 file changed, 18 insertions(+)
+>
+> diff --git a/drivers/platform/x86/xiaomi-wmi.c b/drivers/platform/x86/xi=
+aomi-wmi.c
+> index 54a2546bb93bf..be80f0bda9484 100644
+> --- a/drivers/platform/x86/xiaomi-wmi.c
+> +++ b/drivers/platform/x86/xiaomi-wmi.c
+> @@ -2,8 +2,10 @@
+>   /* WMI driver for Xiaomi Laptops */
+>
+>   #include <linux/acpi.h>
+> +#include <linux/device.h>
+>   #include <linux/input.h>
+>   #include <linux/module.h>
+> +#include <linux/mutex.h>
+>   #include <linux/wmi.h>
+>
+>   #include <uapi/linux/input-event-codes.h>
+> @@ -20,12 +22,21 @@
+>
+>   struct xiaomi_wmi {
+>   	struct input_dev *input_dev;
+> +	struct mutex key_lock;	/* Protects the key event sequence */
+>   	unsigned int key_code;
+>   };
+>
+> +static void xiaomi_mutex_destroy(void *data)
+> +{
+> +	struct mutex *lock =3D data;
+> +
+> +	mutex_destroy(lock);
+> +}
+> +
+>   static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *conte=
+xt)
+>   {
+>   	struct xiaomi_wmi *data;
+> +	int ret;
+>
+>   	if (wdev =3D=3D NULL || context =3D=3D NULL)
+>   		return -EINVAL;
+> @@ -35,6 +46,11 @@ static int xiaomi_wmi_probe(struct wmi_device *wdev, =
+const void *context)
+>   		return -ENOMEM;
+>   	dev_set_drvdata(&wdev->dev, data);
+>
+> +	mutex_init(&data->key_lock);
+> +	ret =3D devm_add_action_or_reset(&wdev->dev, xiaomi_mutex_destroy, &da=
+ta->key_lock);
+> +	if (ret < 0)
+> +		return ret;
+> +
+>   	data->input_dev =3D devm_input_allocate_device(&wdev->dev);
+>   	if (data->input_dev =3D=3D NULL)
+>   		return -ENOMEM;
+> @@ -59,10 +75,12 @@ static void xiaomi_wmi_notify(struct wmi_device *wde=
+v, union acpi_object *dummy)
+>   	if (data =3D=3D NULL)
+>   		return;
+>
+> +	mutex_lock(&data->key_lock);
+>   	input_report_key(data->input_dev, data->key_code, 1);
+>   	input_sync(data->input_dev);
+>   	input_report_key(data->input_dev, data->key_code, 0);
+>   	input_sync(data->input_dev);
+> +	mutex_unlock(&data->key_lock);
+>   }
+>
+>   static const struct wmi_device_id xiaomi_wmi_id_table[] =3D {
