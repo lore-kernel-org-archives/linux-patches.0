@@ -1,192 +1,140 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3395623DE;
-	Fri,  7 Jun 2024 05:31:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC86A14F129
+	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 06:48:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717738266; cv=none; b=JTrHNsMo19j8kwSOQhdJ4I3KHxrbBdihlSGQ/Y5Fzh16TovwnaO8wFVhmdWgiNNDqJcsDuYHfH1rM+/mKW7VG/xJEqlOUizgF6CQ4y9AyAyQICDiL1ROevUeldSXjhvy0PerECSu6oXjAS4aAV4c5BE7b3ITIFZspbUqiDyU5TI=
+	t=1717742937; cv=none; b=rS3zX5fYFoWPsDzhKL+JsgLpdft/1ofAidK2gGXwTotGg6wyyWcOyWRoo+l289oIBaKUTiyOHzUkIIqSicakTxvQ3wYuC9J+LnxKUUYHHVnac4L7Zf1sdiZiS+c/t7CB7P3km9th9yVzR1qXya2rphwt3Bts8NoUaY1fEM6H0Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717738266; c=relaxed/simple;
-	bh=d7Pfspoh2Qi+kTsdaKamKu7pYvRWH5YrdcyTJO+Qweg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M5jcDwuB3O2V3hoeLCjfODffKnibVph8fXoCGfjO8TV+oaUJG27FTJyfVKTQ7oNg6u/7PH7opt52liUJD8QLpQNaRrHd2Ij8GXSif/ZAaR5h1MC/Cf2iv6zIhZ/HBz6GiH9ZkEjj9z/vazPW15pBcmQobnAjmEUutzp0uO3se+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b=gZAZhJr+; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1717742937; c=relaxed/simple;
+	bh=pgHe5e3ALK+cypFku6S3ieR5sW7SNUe2jaqsfcPIj20=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YLhRLlxqoZIsNLiWnaxKOtXzc19ml9rYMsu/IdeAUrDbNUzeUtU/P7N8zrq41vMJvVl0lFUFJZvTt8Q8DNqDiO1J56qZvI5v8DdfMkCUF7UzUlD42I2Z5lZmGDmgQeD91esolEVGfj5YQs4JQfQnpm4ccZjDgocjLrfbE/6rx08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us; spf=none smtp.mailfrom=resnulli.us; dkim=pass (2048-bit key) header.d=resnulli-us.20230601.gappssmtp.com header.i=@resnulli-us.20230601.gappssmtp.com header.b=hjQf7V9m; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=resnulli.us
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=resnulli.us
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b="gZAZhJr+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1717738252; x=1718343052; i=w_armin@gmx.de;
-	bh=6O9P6JXvaaHNit8nIQ9Ie1N76L02iOTre1AEWeqJmgA=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=gZAZhJr+rExZmH4kRJczS6l5l1dUpeMFa/Gkluc7cgP02y2crIvZ1m12miAqKHSN
-	 xoFXJMFgGkSvAguO9LG9gL6jIJQvwJIhP5dbrE+LM5QBiZnKRYys0KRK3GG4m0t9t
-	 aIQHMD8O+FWgTzToPfm1HB4ZSq6B05Fr0ogqNJDn6VuhZSlfR7LUlURDJ3ISy8cmS
-	 uJrX8glArMdQZmQ4NMeqd8wCftaFxuYXebbnYg4z4yEXGxpC3tFH58DoS0OnymhGD
-	 K9JiI/4gtD3CvU2YFkkDVGBm0SUOV0EKfVtT/tqIndHIdyBw9BCUB4y29+ORpcyn7
-	 iHpW0qnQs7l/mokXdg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.2.35] ([91.137.126.34]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MA7GS-1s8KO60w9K-00CMYD; Fri, 07
- Jun 2024 07:30:52 +0200
-Message-ID: <7a4636f4-9b38-468c-9300-e05f60220df9@gmx.de>
-Date: Fri, 7 Jun 2024 07:30:50 +0200
+	dkim=pass (2048-bit key) header.d=resnulli-us.20230601.gappssmtp.com header.i=@resnulli-us.20230601.gappssmtp.com header.b="hjQf7V9m"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4216badde75so2379815e9.1
+        for <patches@lists.linux.dev>; Thu, 06 Jun 2024 23:48:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=resnulli-us.20230601.gappssmtp.com; s=20230601; t=1717742934; x=1718347734; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=43B/d4gP0SHROpUeDJVVbV3eXPrnkyyO5sotvbejxE8=;
+        b=hjQf7V9m8lngsTZ8sQMAm2vZOKGeL6esc0OP5UcYE2qpvVMMySseSE8PRnOteRc1db
+         Y/1LBNXioWyqdkHy1bnFgCMb/uo2clMdlgIP+habFxbHtAImxXmmIdVub73QdBXDunri
+         UpIfaUfWFDE6ag27Yh6QvP2R/jxgW8uQQ0nY7pZ0brqK7cqmvB8PrMshM4lKFvwZmJG5
+         Sc4B/4Z5s+h0nCbcbfPbWv9hohAB/IMMLzxjU0HUmOXG/2nDnV8sovn31rppMDiJf2ir
+         lJYIZa68Af8vxjSyOZtxG6G8wRnPz+HN8GoH49qRqqa7GRsxXhgqLbkzV8ZyJXCiY1mM
+         slLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717742934; x=1718347734;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=43B/d4gP0SHROpUeDJVVbV3eXPrnkyyO5sotvbejxE8=;
+        b=UjRtxPFz3+68pJiN2I5mYAJEngNZr8+W2r7Vst0gSFt60mFPl4kKvM1mZ8WLD8NPaI
+         psnZnpBhm46nLale6wAho7E6DMUL+YdivNPY67GvS7t5Q6OjJ79XW3EW9PpfhajSW03g
+         UgdilhtQDgs57MK9kJIdFanyY86yhelpl87Sf9OjnaJNSEDwOVRnBU27wc5Fjx3mxwkj
+         XpDCF3J0cRc9j6EzglNthLohIwivHXvR69PCjFY3Jtd8oB8/yxcwV38Sk5QY60flnsqW
+         +MWGQxfJ0l5/6UZNE/1yZ/PsC99FsG9Ueo8HKzRYKhC8dk4svgJKRAzny4EEva7x4+/W
+         5p0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUYw6xmFjOmZKlom9yVQDDnuAA0L3Kr8n8fpdYQxYyEXdrDcOgu98L+X+rm9b+QyfESzCyeaNxxHIRr6ATh/1RGmWhXMW4J6w==
+X-Gm-Message-State: AOJu0Yw88ZiRZgJOgL/rP+K4RXSnlVUBEv8dOwknEl65JjZo8SJz/OXo
+	95zTdTTFM2rE8Hh8yBZ70PCXCZj2pYO0Cdohdb25kZFCKeJwwA0HxX/fFKErY+Y=
+X-Google-Smtp-Source: AGHT+IExgKcCS2E1XRnUmlAj3a3DUBu1u3NAJFz7KJXg88qiQxXnJkpQj85jyxqJhtNeIB0VGBuEdw==
+X-Received: by 2002:a05:600c:46cf:b0:418:969a:b316 with SMTP id 5b1f17b1804b1-421649ecb5amr16247315e9.1.1717742933988;
+        Thu, 06 Jun 2024 23:48:53 -0700 (PDT)
+Received: from localhost ([193.47.165.251])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4215c1aa954sm43832665e9.17.2024.06.06.23.48.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jun 2024 23:48:53 -0700 (PDT)
+Date: Fri, 7 Jun 2024 08:48:50 +0200
+From: Jiri Pirko <jiri@resnulli.us>
+To: David Ahern <dsahern@kernel.org>
+Cc: Jakub Kicinski <kuba@kernel.org>, Jason Gunthorpe <jgg@nvidia.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
+	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Aron Silverton <aron.silverton@oracle.com>,
+	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
+	Leonid Bloch <lbloch@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 0/8] Introduce fwctl subystem
+Message-ID: <ZmKtUkeKiQMUvWhi@nanopsycho.orion>
+References: <20240603114250.5325279c@kernel.org>
+ <214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
+ <20240604070451.79cfb280@kernel.org>
+ <665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
+ <20240605135911.GT19897@nvidia.com>
+ <d97144db-424f-4efd-bf10-513a0b895eca@kernel.org>
+ <20240606071811.34767cce@kernel.org>
+ <20240606144818.GC19897@nvidia.com>
+ <20240606080557.00f3163e@kernel.org>
+ <4724e6a1-2da1-4275-8807-b7fe6cd9b6c1@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 213/473] platform/x86: xiaomi-wmi: Fix race condition
- when reporting key events
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev,
- Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
- Hans de Goede <hdegoede@redhat.com>, Sasha Levin <sashal@kernel.org>
-References: <20240606131659.786180261@linuxfoundation.org>
- <20240606131706.958934841@linuxfoundation.org>
-Content-Language: en-US
-From: Armin Wolf <W_Armin@gmx.de>
-In-Reply-To: <20240606131706.958934841@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:2OMsbjubz3TbUl5AF4DMf+gVjJsKLgqvQShzJaNFkKs1bvGpK5w
- 5wWDhPNEUsInWF4FtcPbcjsjTq+2wHxmoCFU5MMcMo8DTdaJmL5J75xeyy7m1AtwE60AUXm
- fpZAXQTiTDlvw4tGNyZaB4sohiAvCrjyrn+cv6e7EXvKPJcfCqKDqAZMTIu9CDEXhdSjQ/i
- hsHFA+z7Q4APCrpAMGMvw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:UfuAZy/JUto=;LVdsZouP5BheXr77tmJPQLvzCVi
- dnF1seCt4idZiUumTSRWPZdmpCrrJwcM7FdN9IUi63sM0qcPVQP07WiFOWLG2ZjmjmH0zcAoK
- EvFVHd+dRdwyAeFLy9CNRZ2PGTjv+e5BXUDjhwBnFTJlGMxe1vZ+wzRHNVYAI5+QmFTgptEh+
- 0lQo+5xQRt8s+vj9ItyNDn+kY4DFSCYCtk0BhgbuUxq7b3M4gqe9TKmIE8M4puhqiXrwnnPIS
- OY2r0tspPFPwHFD6sJFLJdhcnJ4aUQACsoBBU+zGDXZmQ+Stt8+q/lih1Q4aP6dckutOwgfFL
- puFHXFM/STX1bk8EJCxHu2II3vESusSJO3IDaE+IbVCvy8C1MMgykzSt6VHEWJfQEJ+jJbnoK
- 0WFWAXCEup00z77HlAxSJ4wjAmXuLbm+FpE+7rrwphiyLHx86+I5QlxM6Jtop/MWLQ9eKvdYa
- 0p3u2rwB62fOHDTw3IrKlS3IPXZ+AlqVP/8W89wzT9e2IXoQQKOC1r8BImiIaJ4zcaBGekgyV
- ktjjosbcVPIe2XlmmSd3FTP6SNut3VMOU0rTirLJ8i1cnvXBWjQNXXoI3jmcKpnuxrRrmHdPc
- T+3Fr2eSa0FYfrbWZIs4F6htlK6Kar/X1YJOZiJoC+6MutMxzjDCCcRuNIdBX3ZEkE6VGlzwh
- ztVzExN/WL5L1p1sPkGH3vhefDYYd01S/IMJuxm00M+MNg0i0K+QotyOGjDq1m/qO0TkMrJdn
- ffeYFoIT1OMzsnL6FUpqoPEc6V+pgRFm/UjxuXgKMlqzBhih2e+Z1D/H/qvkaz1zz1EPlCOgK
- MFEKnYTDBpKoKRGicZwDH/pZynD1KssLRJvpcskYOZIfI=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4724e6a1-2da1-4275-8807-b7fe6cd9b6c1@kernel.org>
 
-Am 06.06.24 um 16:02 schrieb Greg Kroah-Hartman:
-
-> 6.1-stable review patch.  If anyone has any objections, please let me kn=
-ow.
+Thu, Jun 06, 2024 at 07:47:20PM CEST, dsahern@kernel.org wrote:
+>On 6/6/24 9:05 AM, Jakub Kicinski wrote:
+>> On Thu, 6 Jun 2024 11:48:18 -0300 Jason Gunthorpe wrote:
+>>>> An argument can be made that given somewhat mixed switchdev experience
+>>>> we should just stay out of the way and let that happen. But just make
+>>>> that argument then, instead of pretending the use of this API will be
+>>>> limited to custom very vendor specific things.  
+>>>
+>>> Huh?
+>> 
+>> I'm sorry, David as been working in netdev for a long time.
 >
-> ------------------
+>And I will continue working on Linux networking stack (netdev) while I
+>also work with the IB S/W stack, fwctl, and any other part of Linux
+>relevant to my job. I am not going to pick a silo (and should not be
+>required to).
+>
+>> I have a tendency to address the person I'm replying to,
+>> assuming their level of understanding of the problem space.
+>> Which makes it harder to understand for bystanders.
+>> 
+>>> At least mlx5 already has a very robust userspace competition to
+>>> switchdev using RDMA APIs, available in DPDK. This is long since been
+>>> done and is widely deployed.
+>> 
+>> Yeah, we had this discussion multiple times
+>
+>The switchdev / sonic comparison came to mind as well during this
+>thread. The existence of a kernel way (switchdev) has not stopped sonic
+>(userspace SDK) from gaining traction. In some cases the SDK is required
 
-Hi,
+Is this discussion technical or policital? I'm asking because it makes
+huge difference. There is no technical reason why sonic does not use
+proper in-kernel solution from what I see
+Yes, they chose technically the wrong way, a shortcut, requiring kernel
+bypass. Honestly for reasons that are beyond my understanding :/
 
-i already said that the underlying race condition can only be triggered si=
-nce
-commit e2ffcda16290 ("ACPI: OSL: Allow Notify () handlers to run on all CP=
-Us"),
-which afaik was introduced with kernel 6.8.
 
-Because of this, i do not think that we have to backport this commit to ke=
-rnels
-before 6.8.
+>for device features that do not have a kernel uapi or vendors refuse to
+>offer a kernel way, so it is the only option.
 
-Thanks,
-Armin Wolf
+Policical reasons.
+
 
 >
-> From: Armin Wolf <W_Armin@gmx.de>
+>The bottom line to me is that these hardline, dogmatic approaches -
+>resisting the recognition of reality - is only harming users. There is a
+>middle ground, open source drivers and tools that offer more flexibility.
 >
-> [ Upstream commit 290680c2da8061e410bcaec4b21584ed951479af ]
->
-> Multiple WMI events can be received concurrently, so multiple instances
-> of xiaomi_wmi_notify() can be active at the same time. Since the input
-> device is shared between those handlers, the key input sequence can be
-> disturbed.
->
-> Fix this by protecting the key input sequence with a mutex.
->
-> Compile-tested only.
->
-> Fixes: edb73f4f0247 ("platform/x86: wmi: add Xiaomi WMI key driver")
-> Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-> Link: https://lore.kernel.org/r/20240402143059.8456-2-W_Armin@gmx.de
-> Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linu=
-x.intel.com>
-> Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-> Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->   drivers/platform/x86/xiaomi-wmi.c | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
->
-> diff --git a/drivers/platform/x86/xiaomi-wmi.c b/drivers/platform/x86/xi=
-aomi-wmi.c
-> index 54a2546bb93bf..be80f0bda9484 100644
-> --- a/drivers/platform/x86/xiaomi-wmi.c
-> +++ b/drivers/platform/x86/xiaomi-wmi.c
-> @@ -2,8 +2,10 @@
->   /* WMI driver for Xiaomi Laptops */
->
->   #include <linux/acpi.h>
-> +#include <linux/device.h>
->   #include <linux/input.h>
->   #include <linux/module.h>
-> +#include <linux/mutex.h>
->   #include <linux/wmi.h>
->
->   #include <uapi/linux/input-event-codes.h>
-> @@ -20,12 +22,21 @@
->
->   struct xiaomi_wmi {
->   	struct input_dev *input_dev;
-> +	struct mutex key_lock;	/* Protects the key event sequence */
->   	unsigned int key_code;
->   };
->
-> +static void xiaomi_mutex_destroy(void *data)
-> +{
-> +	struct mutex *lock =3D data;
-> +
-> +	mutex_destroy(lock);
-> +}
-> +
->   static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *conte=
-xt)
->   {
->   	struct xiaomi_wmi *data;
-> +	int ret;
->
->   	if (wdev =3D=3D NULL || context =3D=3D NULL)
->   		return -EINVAL;
-> @@ -35,6 +46,11 @@ static int xiaomi_wmi_probe(struct wmi_device *wdev, =
-const void *context)
->   		return -ENOMEM;
->   	dev_set_drvdata(&wdev->dev, data);
->
-> +	mutex_init(&data->key_lock);
-> +	ret =3D devm_add_action_or_reset(&wdev->dev, xiaomi_mutex_destroy, &da=
-ta->key_lock);
-> +	if (ret < 0)
-> +		return ret;
-> +
->   	data->input_dev =3D devm_input_allocate_device(&wdev->dev);
->   	if (data->input_dev =3D=3D NULL)
->   		return -ENOMEM;
-> @@ -59,10 +75,12 @@ static void xiaomi_wmi_notify(struct wmi_device *wde=
-v, union acpi_object *dummy)
->   	if (data =3D=3D NULL)
->   		return;
->
-> +	mutex_lock(&data->key_lock);
->   	input_report_key(data->input_dev, data->key_code, 1);
->   	input_sync(data->input_dev);
->   	input_report_key(data->input_dev, data->key_code, 0);
->   	input_sync(data->input_dev);
-> +	mutex_unlock(&data->key_lock);
->   }
->
->   static const struct wmi_device_id xiaomi_wmi_id_table[] =3D {
