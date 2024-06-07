@@ -1,94 +1,77 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from 0.smtp.remotehost.it (0.smtp.remotehost.it [213.190.28.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC67149C77
-	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 18:48:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5E214036D
+	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 19:28:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.190.28.75
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717786098; cv=none; b=ADcDX6v1mTXuumC4cqGAKkZyUuURI1nd6n3REnnKalfVK3TfIv+L58Qg+qiZCOWD19oXp+vsMiwZAJ1oMJ0ttz6kgxXiEZ1bSCLA3tO2HkOhYlWEcZcfoCYKLG9fLHxjCGUYID4VJasZl0OR//AYJPw81ZBaibi5glO3jEe91LI=
+	t=1717788504; cv=none; b=YIDtCbin2PAfRoTuLKJ0DLS8EBiyx3k6ES7+arEQjlU3zjFEHgjc5HCpn/ydP3g2SU8bWvaicCUJFNxLzi+4iTDUSFzFAD2Gumi5ujgBTYpW1jv7QF4aE7V2aOVwECAs/JbhJ6ATypEUW6Fr72zFUTgFXD4CbuunY14IqGUHfHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717786098; c=relaxed/simple;
-	bh=292CfxvmPGuyb+tMs5SvZaHZBZTxfqcwlEPRda2+kI0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n0z7OM4m8A6zWKVRz9l1T5gTM5frz9iLt01eiB9JIiK1SsTwwTG9Col2d+w0U4kqJ7dG+1JON0GouWwCkbHF4Z+dJk86dhuUPqbROfDEczrL2ZoF5z9Jkm4Ztz/8AYuDhFu3m6Iyyq8XOlJ+0Z6PYj5erIcnS8gG03sp+a35dCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gL3d+/bs; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717788504; c=relaxed/simple;
+	bh=8tFFewtxiNJl4QWYW9HaQx4nW9OdtE14CT7u3e+Uc7c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RtJloO2r/hwT/N9RG+eO2vccxZzRxywU89+bZ65D1CV0vNUXo1aeqE5IOcbqUZUqJOKSoKgszZzAL2GERXNcurv7wl7Q2kyEE/EQN+eroGoPpyC9RgXTXCJbFrQ0dT7aFGi/17cI9whlS8VSoXICQqBokmFi/H8ZsAliUO2w2ZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net; spf=pass smtp.mailfrom=hardfalcon.net; dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b=+/VDFziM; arc=none smtp.client-ip=213.190.28.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hardfalcon.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gL3d+/bs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5191BC32786
-	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 18:48:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717786098;
-	bh=292CfxvmPGuyb+tMs5SvZaHZBZTxfqcwlEPRda2+kI0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=gL3d+/bssv5SVqtIe7zAY01xkeufkfsUsT7s+tyL4VySxqs3JDgtYadsa2q6vFM33
-	 ydeheJ/+zAtkHRcD4f+xS829j0OkTY/t1cJO2OhZtB8cPNX9B7Dx8ENUDD48yPDwY9
-	 7G9yQrko/ohpZBIuQ5/Xe0NAu9lwhyPwRpCSUZBU+GcFVWSrdnrjK6TnEDJNFNl467
-	 z1KsWtCQe7XhOhtWbJzIfKiyvq7TcwTFCyOH7zY4LY5JtLFU+YJboTuYbhCH9kmCxx
-	 VIy3Yt2um05QnvftF3Epkxu1EBjgG4m87ILlRKDrO0YznTghbwDpxDESvoEmQ65IM0
-	 E2VeNnnhgMTkQ==
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5ba7ae85264so306198eaf.3
-        for <patches@lists.linux.dev>; Fri, 07 Jun 2024 11:48:18 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVNWGWxUcMAzZW4FAxpgOVLiDWmjJE4x4cmkXjYvSg2FvNpK2OSbFqeykOEKjdsDVHRwnOileiJFJz7M8PACQQOW34UEn/sdQ==
-X-Gm-Message-State: AOJu0Yyd8P7OwdVJeh3YAEqgYFyUdPkKZjtyJCsI+IqLyP+1ZHx3kPEl
-	ZVypJgQfXVM9i3JkpggRahOn4akFrgRjtTsrzOEzCbwl6ohU28UYZUThz93zCMKqNLz7Qi+oXQL
-	CPMSKS50QEXlByCURnZGer7GggI0=
-X-Google-Smtp-Source: AGHT+IEL7OH/WeqRUrMAZsTNoGZw/iPaAVSU96WBVKUOiGZkyn9pov/OMQgKKn5VJw+LmjSdxULhpkvBM3GAi0dDhys=
-X-Received: by 2002:a4a:a283:0:b0:5ba:c4ed:ee98 with SMTP id
- 006d021491bc7-5bac4edef89mr1797321eaf.0.1717786097416; Fri, 07 Jun 2024
- 11:48:17 -0700 (PDT)
+	dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b="+/VDFziM"
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=hardfalcon.net;
+	s=dkim_2024-02-03; t=1717787980;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dDMS8z/DLgBUGwZOqSNT0EYKzfW8+6Nh0L0qT3Gf348=;
+	b=+/VDFziMv/YtrNTbgDNNiPHpSwl38qJAiMyVHYfAvys1JzuDRgge0X67dluiiZ/zPvPx2I
+	DMQ3LkTFL5ijRKDQ==
+Message-ID: <a2e931e3-fe92-4419-bcaf-ec61d3a5a68d@hardfalcon.net>
+Date: Fri, 7 Jun 2024 21:19:37 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240528184720.56259-1-tony.luck@intel.com>
-In-Reply-To: <20240528184720.56259-1-tony.luck@intel.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Fri, 7 Jun 2024 20:48:06 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0joU5dzkdB6m_StXneVA9oNCpmBk8qrLvR2pGJYBBZqMw@mail.gmail.com>
-Message-ID: <CAJZ5v0joU5dzkdB6m_StXneVA9oNCpmBk8qrLvR2pGJYBBZqMw@mail.gmail.com>
-Subject: Re: [PATCH 0/8] PM/ACPI - New Intel CPU #defines
-To: Tony Luck <tony.luck@intel.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 6.9 000/374] 6.9.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240606131651.683718371@linuxfoundation.org>
+Content-Language: en-US
+From: Pascal Ernster <git@hardfalcon.net>
+In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 28, 2024 at 8:47=E2=80=AFPM Tony Luck <tony.luck@intel.com> wro=
-te:
->
-> These patches were previously posted in a patch bomb[1] across
-> all subsystems. The core pieces of that patch bomb are now
-> upstream, so here are just the PM/ACPI bits (previously
-> Acked by Rafael).
->
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
->
-> [1] https://lore.kernel.org/all/ZlYVqSlx8GLwTJEr@agluck-desk3.sc.intel.co=
-m/
->
-> Tony Luck (8):
->   cpufreq: Switch to new Intel CPU model defines
->   intel_idle: Switch to new Intel CPU model defines
->   powercap: intel_rapl: Switch to new Intel CPU model defines
->   ASoC: Intel: Switch to new Intel CPU model defines
->   thermal: intel: intel_tcc_cooling: Switch to new Intel CPU model
->     defines
->   ACPI: LPSS: Switch to new Intel CPU model defines
->   cpufreq: intel_pstate: Switch to new Intel CPU model defines
->   powercap: intel_rapl: Switch to new Intel CPU model defines
->
->  include/linux/platform_data/x86/soc.h         |  12 +-
->  drivers/acpi/x86/lpss.c                       |   4 +-
->  drivers/cpufreq/intel_pstate.c                |  90 +++++++------
->  drivers/cpufreq/speedstep-centrino.c          |   8 +-
->  drivers/idle/intel_idle.c                     | 116 ++++++++---------
->  drivers/powercap/intel_rapl_common.c          | 120 +++++++++---------
->  drivers/powercap/intel_rapl_msr.c             |  16 +--
->  drivers/thermal/intel/intel_soc_dts_thermal.c |   2 +-
->  drivers/thermal/intel/intel_tcc_cooling.c     |  30 ++---
->  9 files changed, 198 insertions(+), 200 deletions(-)
+[2024-06-06 15:59] Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.9.4 release.
+> There are 374 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 08 Jun 2024 13:15:55 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-All patches in the series have been applied as 6.11 material, thank you!
+Hi, 6.9.4-rc1 is running fine on various x86_64 bare metal and virtual 
+machines of mine (Haswell, Skylake, Kaby Lake, Coffee Lake).
+
+Tested-by: Pascal Ernster <git@hardfalcon.net>
+
+
+Regard
+Pascal
