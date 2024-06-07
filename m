@@ -1,149 +1,193 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2073.outbound.protection.outlook.com [40.107.94.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9718D195808
-	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 15:13:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717773198; cv=none; b=PXopLu2gD1h2J3ZQO5ot9AtbQENcqcMP55XBVDKTwjvUO9XcCRPQ7S/fi0wDMNYDjGkqoOBZCY1LZFxy8MaCHS6NSUX9GGAdX4ElTnuu7xRYpv88cvpA45fb5Brc5rj+KgKle82g73zMJkJeF8CnEzm4ymqQrAljCZBpVJag8ek=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717773198; c=relaxed/simple;
-	bh=7n0apmTpqZ+tog798fnZb4ZTZm7Gl3vutnIWL1LYnuA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YJ2d/9jMT8DbQD0drAOBMOQKa96ry7japQmSU+cLBwReEaEoW1uuwJZFKzx0pqnjFEJf7dLiMWOWasRenkGI6I4uVr4yYalv0T/VJySey5NGDAJE39kd0aIkZ8ozvEVmxVdGDrdF+arXes8GcRooTESyGQW67Ptwg6h7U7IJUoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=P7bSSSxU; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5219E199222
+	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 15:14:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.73
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717773297; cv=fail; b=pVSweY2s8Zr4h9FVL9F5Tm74R1h81peo7zkAgcu7GIULv8lBDyvaU4oxUHKPZLFwXAsje5gMshYg9VjL4TsGE8sKr7cf7YtsGjSXXukaWBf4iVMbvQ3V4MiF1gNv7XiDSbn29zKLwxjwz24WG03S0UdFKavrD4yCciNMpxsqhqs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717773297; c=relaxed/simple;
+	bh=hj6Fyypx/uVZNu3NHd3nU5qkqAI/V9mLrtGdaOaptEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=cB0K5BWzgEW+4QmKqJ/zwAItv+rBnVRsCtn3ImMQTUzcPqs6Jg5ImNCa/B4piVgKmZlUxxzznhfuNEQ9V2WaNxMvB6lQPqWoft+PE1QNjlz3LbuKuiOqujrVC9fLYp9kPHDDz/X9BGoRqffPzRk+I1v2ywYLznKjYZ4Al83YAWk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=R0MjQyeA; arc=fail smtp.client-ip=40.107.94.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="P7bSSSxU"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5750a8737e5so18230a12.0
-        for <patches@lists.linux.dev>; Fri, 07 Jun 2024 08:13:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1717773195; x=1718377995; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F9DLoOIliT2vV+jCDlYYVBA1v56GjGd/sBFCy6REvhs=;
-        b=P7bSSSxUwv4K0xyuIjki0R3OYxzHlWe6FawyLyRb+42yDChA3P23aS2zq1oV5sbWO6
-         mHQdejVPuptLyDxB8VY8EoedQLptoOnX50Rd0FSzRwWCblN/yZU1hsGPvwPBstz9uM3y
-         4+toZhcnZARlA0+78pitiM1iCp0MQjlboBzzgNuJFbvr7PWZ2NmWNi7dYesr6gIo4ME7
-         EhZj0CyE3RIQdAH7nkCEXvKwJDUihGMfUicwpBnD70huBnewlSmyv/5cP2HGw119zo+t
-         sp2i/1jo+VaDWIK6A9O6jJ4UplWjqef3k3T3w4YwyHDpf69K33CbfVQUzuIywflMvl9M
-         zMnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717773195; x=1718377995;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=F9DLoOIliT2vV+jCDlYYVBA1v56GjGd/sBFCy6REvhs=;
-        b=PjRktvazQWf6zQMDv8+6fKo7IykCnqtZu7U24gtJSQas2OZXcblEkF6uU4QXJBXB6h
-         m6YI6ERHF3zjmfXGDeieiIAzzLANuvUnmv4qMMcEAcPkVHGbmTTLSUETLsN5UG9swX68
-         PFHybK3Vhw6XhfTKjpDfSPbPhhRK6vSvF7lg+3NVItaKoMF++l544GA6JLeo5pRvEn+e
-         xa79uJ830agxiuV/LJcbzuWptyqfWDp0zUDtjEpY7mx4wh+M7+HLuM2oCHc7qb1TVWNO
-         6q4vZil/4Hm9mNcBtmRM6Jnr7RFpzxvLrNqkFZ6yvBvQsh02xE66GC4SwzSg5zejPlPX
-         kKZg==
-X-Forwarded-Encrypted: i=1; AJvYcCUgQ0gpb9Ca3FBXLUEzEtkJLOOiFpJpbO/LzDmlR2Wn+uCK/de0/HUJArLDv8wfHDVvmBQOEnSNplVRM86NY29+dcpai3L3cQ==
-X-Gm-Message-State: AOJu0YxnZENvwf3d0tbfmW9N7esxPUMvi3DDzTplucL+/SbJ28ynnl93
-	PfNp3nlay2ryf9BDbWD0LT6A40cG5EfwtJ/1qxfsLfZ0LXSqtYWgm0OG8UBwI04WXjRGOu0vPrI
-	Do9Tq0KgzZP7h8COZc94XXhfrSZZ3sMyCIWoY
-X-Google-Smtp-Source: AGHT+IGgwajHKpYdDWMQLIOmMJsfkmT9wQMD93gE5Vvy1QzU36KDO2gHuZ/Tqx8lOxhLvhtrGDMlAetFVDjv7C4htvM=
-X-Received: by 2002:a50:fb96:0:b0:572:988f:2f38 with SMTP id
- 4fb4d7f45d1cf-57aa6e8e2e9mr588051a12.6.1717773194672; Fri, 07 Jun 2024
- 08:13:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="R0MjQyeA"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UiGWeH5GlOs+IPqBHPypP3I8F+6OCHawppxYC9N+A59SaA1V68/S/Rt10NBw9n4x4LaIHRBKEQslzGUuuR+P4j6Pm1I5poBNC2eLx6pCSeBQBZK+0Q+oq38ibfTFKBkokc7Fhp3ah0vjNh3CjLegKbDBYm29N4qQ+hdJymJD9rw3bXgGLRIxYkMqX0Z/aKgSOigmIMhNHA90KQiHHAgDy/tlNp2Ob1wL0S9ZnePaj7MZ4JJZdpxatUJ97uY4u5xVoOByqA4Ni7tIxQ2l8rGGReuR250n+KkEmSgtuCxbawKWkrOP6ikGpnn4DKDlFZXAnSrEI/OHFKERtQnfesjdOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dsTy4KBOo4iQAUBWaR33r0vB+6gAYP/QKA6ERlfo8Vo=;
+ b=k/YXSlKf2PXUeTvqWuYMQO1xWGx3Dn0yOq8Mb0hP8dmcc75Z9262Y/r1rizPPJD5ikB5hZwMlMRrZynSOgLehUY14mag3nZ/t0QrB0MDgYqayfMsF78gaqEj7l1g9bIe337MTHYQ1bhTuTkm4z8xRApFrYkbFTzqZ9LnXFjO3aG84CXNRFkzRhwMAKGSgShQJz76pY27xK8yWDnVyaXG+gZCz9RFKjIs4Z8Ss7OVwQ9jJFjak3e/4q4yetzBZiktCX1JcCuo6idSHQ8eunPdCkq1+30gBwr1rARNDPiEo69ibULMym5CJFI/bJP6IlCSgoe76gbB1pJ7EA2L1I1lqw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dsTy4KBOo4iQAUBWaR33r0vB+6gAYP/QKA6ERlfo8Vo=;
+ b=R0MjQyeAEequIziUPZ/f13KpM98FwKhL7jyEEeCPa+SnHR3GX5FBFUsV+ZaidCEPTBlBBP4++UCdSxciIlSSRWE14fhJXrmblOi+3lGKp4X3qfXEADe2Ov6qFLLWXW57TlOrV18S5C/KdoXatBI4q9jRcygAK4w0GSQR2lhbZh5MZ5OI2HBKkUtRmXs2dPU53nlX8MZQVK3I24VP4i5eLqbE2AvG79JIjBzeSlQ+GpN97f7HJhCqzPcQ17xugJ/Os6LhtXIPAtUau7aQTyu867N4hksrMSNdmVg+ueoOfLr2LFT+lzt+mvh/bF7vq8Fw7YRjcme1OV8tVNYOdvFboQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+ by IA1PR12MB7566.namprd12.prod.outlook.com (2603:10b6:208:42e::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.34; Fri, 7 Jun
+ 2024 15:14:52 +0000
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7633.033; Fri, 7 Jun 2024
+ 15:14:52 +0000
+Date: Fri, 7 Jun 2024 12:14:51 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: David Ahern <dsahern@kernel.org>
+Cc: Jiri Pirko <jiri@resnulli.us>, Jakub Kicinski <kuba@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
+	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Aron Silverton <aron.silverton@oracle.com>,
+	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
+	Leonid Bloch <lbloch@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 0/8] Introduce fwctl subystem
+Message-ID: <20240607151451.GL19897@nvidia.com>
+References: <20240604070451.79cfb280@kernel.org>
+ <665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
+ <20240605135911.GT19897@nvidia.com>
+ <d97144db-424f-4efd-bf10-513a0b895eca@kernel.org>
+ <20240606071811.34767cce@kernel.org>
+ <20240606144818.GC19897@nvidia.com>
+ <20240606080557.00f3163e@kernel.org>
+ <4724e6a1-2da1-4275-8807-b7fe6cd9b6c1@kernel.org>
+ <ZmKtUkeKiQMUvWhi@nanopsycho.orion>
+ <887d1cb7-e9e9-4b12-aebb-651addc6b01c@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <887d1cb7-e9e9-4b12-aebb-651addc6b01c@kernel.org>
+X-ClientProxiedBy: MN2PR19CA0042.namprd19.prod.outlook.com
+ (2603:10b6:208:19b::19) To DM6PR12MB3849.namprd12.prod.outlook.com
+ (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240528122352.2485958-1-Jason@zx2c4.com> <20240528122352.2485958-2-Jason@zx2c4.com>
- <CAG48ez0P3EDXC0uLLPjSjx3i6qB3fcdZbL2kYyuK6fZ_nJeN5w@mail.gmail.com>
- <Zlm-26QuqOSpXQg7@zx2c4.com> <CAG48ez3VhWpJnzHHn4NAJdrsd1Ts9hs0zvHa6Pqwatu4wV63Kw@mail.gmail.com>
- <ZmMamtll1Yq1yfxc@zx2c4.com>
-In-Reply-To: <ZmMamtll1Yq1yfxc@zx2c4.com>
-From: Jann Horn <jannh@google.com>
-Date: Fri, 7 Jun 2024 17:12:38 +0200
-Message-ID: <CAG48ez0pan8aLGjHtoDdrpiP+e5YrGeuD_RzDXgzUwkUvWYLjA@mail.gmail.com>
-Subject: Re: [PATCH v16 1/5] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, tglx@linutronix.de, 
-	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, 
-	Christian Brauner <brauner@kernel.org>, David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|IA1PR12MB7566:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3207f7a9-f489-4f22-e483-08dc870494ad
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|7416005|1800799015|366007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?iPFyBIOKrt3RUMQqlb1MihMSGD4D84VLgg8mlys2h6/jAsid3jtvdFdjdmw1?=
+ =?us-ascii?Q?2a/mEeDxBdaqw1CW1ZoZSxpeXmsxPm1zn7B5rdFOLgH5zh+e21Y9BnSd3Qku?=
+ =?us-ascii?Q?PO4yZ8MgCdZoB1vxGcXH39JAqG5I+v+2KzybDlU/gRazdAAcacsZUrVc/JdJ?=
+ =?us-ascii?Q?+K3X5JOmql2vXGTAEY5gnoA0QOPRRV5r/j8z7AITf593RC+fG0KAt4/7+QVf?=
+ =?us-ascii?Q?MygI6e/yjh3irpf91LaxlNntdR6xYo5slgXKTwT0RUM71adAYLifrjbdPfkX?=
+ =?us-ascii?Q?WoZjqnIVyHYc831khCnMcLCmj+gB33Zi6/iW4s7/UwitcNK96LC6t1zqeHaG?=
+ =?us-ascii?Q?PDJze8aUlLX6J/hpZQHM4KUhoXFAPqqInAGmyAzIS+8HiwgRrxLY+ci0vEfs?=
+ =?us-ascii?Q?5kIvwTyqw17QvnW+N7ZmfmIcxyWgJ3zf+SeO8zqZvw9dPaRra0OSbR9mdzWX?=
+ =?us-ascii?Q?jFJWoZQ0++kzD3pKYwNncAq0iEzvDDQ6SPFtpUnphMXeSzA37aA+30e67qRR?=
+ =?us-ascii?Q?eu6PqMYZnCb0HtWJ1AjOGytCXlDfGGubdQK5RIU/3N8HXD89If8+VeWRaMwF?=
+ =?us-ascii?Q?wzCNXSlz2dv4BzM8cVJYD2sRFkH7cJxxWUucRB4BSjfLQ4N7ygo4KN2WgHoh?=
+ =?us-ascii?Q?F0TUIdd7a9Y3BqEwA3+g3aA751JnWHYyMKIUn2042j8rtUsuzBytjd0HhIM8?=
+ =?us-ascii?Q?PqMjI2aL1tYW8fBWCqUxh5f+L3Ex8xYMIIhCaToee4rQ9NT9a3pVZL/NjvUR?=
+ =?us-ascii?Q?hK2pab9YxI3C2Zb7C4mk08ficH2Fvh0Ss6RXcDzmYUoBgFFunbTt3MazAnQZ?=
+ =?us-ascii?Q?uotMRH7V/q7fyrJ3+fJlKmNfr5z6ALzAnWDspeW4m7IQj2+hDixNkZ87d+5d?=
+ =?us-ascii?Q?+nUvqUMRPd6gjw/xI0t6FLaXERT+W/ZGMJftspDpE74UyFSIEzmnsNszz/Wn?=
+ =?us-ascii?Q?IDLHsj1+qEu0R0oK+ZNls9tuwmR2BJJda3b5xDaBiETO7KVX1dL5GJ8HWydT?=
+ =?us-ascii?Q?zE+cNslm90dBiYHxCcFe+kIBQkRy4/WrLGxPV5rP7MKz0bOFn8MbOMlDQpx8?=
+ =?us-ascii?Q?h7TXxz6RtAlX1yXcX0cv4CVHRpzaOSX862z0it/sSHVq6urrOB6FhSmtS2q3?=
+ =?us-ascii?Q?IfZHfbLiepxCpnL4wEu0xcHmeVdDyf1btOEb7oJI1BDTkBJpFXX3SAdIDJYQ?=
+ =?us-ascii?Q?656zKhQSieD0amOOyaXaseRF3uLYDDfRqa6Hu1UZYeJC/eEsQ4wOOn6GaEjl?=
+ =?us-ascii?Q?KFjLhtUhNJVfiHDmZ0lr0+UmzrlqKjseEl3UYhZf54+yLqkOV6HESRgSJm02?=
+ =?us-ascii?Q?W7cGvwx48j1Etwpf/CDRw4aj?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(7416005)(1800799015)(366007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?Uoy56lueV8Fs8683rLAmYmD2zZGV9Ljd3cmKRJZRIihsRD16F9s3OS5kUG/I?=
+ =?us-ascii?Q?yvO1hChAnZFLuwyCmsT9Saue6geES9VhspZBwJfV/qm6yglispS7U+OXLQDM?=
+ =?us-ascii?Q?pZ4ajHVuy1lmmH456zv7h9w+LzooBoWExVUR8QgKjm0hTZiMWD2++ntEmNJz?=
+ =?us-ascii?Q?NhdR5D7YL+bwVopkABi8WiDnRqh+YxLzNLRgG34DEmU9lQJgMVK5kr86rx1M?=
+ =?us-ascii?Q?CkmBN0OPIe3xSW6V9H6G9gtIH9xVteSWh4KdmqgyxIO/ERq2GdPOehLNeVXT?=
+ =?us-ascii?Q?5RqRtuciPot7ZINtNNj5xiCqlC05jpNorjmcbbx2InXjzBc3MebkJEoNCyng?=
+ =?us-ascii?Q?aO+jdUTWOx83PkWQmpI/WF6GN7V4GWTxf+cbvV6NVhgld8cRzl3D5IeLF8Z8?=
+ =?us-ascii?Q?vUPTPTMu1tbCHsek6zbeAewzN8x37Py8C9mfYaJtDWy+HvoNETSXyw7/zByd?=
+ =?us-ascii?Q?168u31BQ13yS3md4/nP5QDK7Y6mneLA1MLpIg1AL+rqIzBv7AbHdPG5HtJFW?=
+ =?us-ascii?Q?uvNZkXqFlZ/ky8er5CTW9M41Jo5FOZ4Sk5FA+s38Sge/gr5uVdgUVDtBXe63?=
+ =?us-ascii?Q?Vy8UXuWFMKs+yHVoNCCR82onzFFJE1K/JiJevgWxhFHuEzvWTYXi27tRXXfH?=
+ =?us-ascii?Q?d446KH2wwBFkpQtRLIuTHC6CljGO07Z1kdG7m2zdzQ3cYe+wTsPXgMxQ29BY?=
+ =?us-ascii?Q?SlZ11emlVjnbdUwIUOAEhni45+1m1JHTEVw6wIQ1JWga5b7VgRYqybLIikmE?=
+ =?us-ascii?Q?dG775oLN4Q/JDYIRItMTUV00e+eun8hj3k6PHeLXGTO97zRhzf2UJKY7Z71X?=
+ =?us-ascii?Q?rDVkLRFodac6LTW5h1OtIQehSJtEMEW/+nWlYn6O06FI1jIQDrIGiiNZrXV1?=
+ =?us-ascii?Q?oCCDFAmPr1vAUgGyk+0yJPeUwAGPFHOyGhvvY/UKe4uDV7WbiaGGUekhduQf?=
+ =?us-ascii?Q?nd4bPZs9VVaq1yiwMNOB1a5mvExDPJrlavJLor7YpQWRljsJiodKfyA2F27y?=
+ =?us-ascii?Q?OK2Cy3yiwHCZ+wSgHPz3EuF7mFW/DAKALPB8jpa9CQy7k1Vvav6Yjvyi4Bol?=
+ =?us-ascii?Q?DsHo7E73fIzLlqLDIUkf+OdQTTzqeeMJBSILdR4ELa3+ClVrgfzf/NCZbmOW?=
+ =?us-ascii?Q?O80x59SG+R+kCLLAMjcowStG4VmtnnuVRYdX05DrMibdHjPT8GDYX9jAiElr?=
+ =?us-ascii?Q?1RXT7SU7lGESC8EhDy54PI3gISDYDb7XDuelF8MrRXDdW0BlLqrMgDI4V1d5?=
+ =?us-ascii?Q?prxQDCndLE4eKk9WW6bqgzuwuVtWrJQAvqXGJfoJyVyDtAKYWiEsZYClWkIz?=
+ =?us-ascii?Q?0vRFkf5ErMrLI7gCxyKSOgwTpDltkRY2Cv50Aa2HHpXVW1bc1RfXSFe0M3et?=
+ =?us-ascii?Q?S5NJj9pxEGtkXahOlWPwHgVcmr+Y4Ap8oxLLZmzp/loCFU5ajBKcd2F3TQAB?=
+ =?us-ascii?Q?IaPuFTf/PC0hjY6Uzs3LItucdoUgembRlXjA2PxOukKHvwy/B9PkS5B6dqVa?=
+ =?us-ascii?Q?2cPqtLxvr2+hiynZx38VSDKMlSlNa4gJOHn3c+hhlyo6F+4FFSCKTLm96V4+?=
+ =?us-ascii?Q?5BpIK521+0lkdUF+x7thsl0C2GWBk/pADOiT14DZ?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3207f7a9-f489-4f22-e483-08dc870494ad
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2024 15:14:52.5136
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IIS+4eFPwZFWrJ3NSfyqwOyeYlWuiAFYXG3B3z7jstGPk0XsAsxn6srVQ1YpOKRZ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7566
 
-On Fri, Jun 7, 2024 at 4:35=E2=80=AFPM Jason A. Donenfeld <Jason@zx2c4.com>=
- wrote:
-> On Fri, May 31, 2024 at 03:00:26PM +0200, Jann Horn wrote:
-> > On Fri, May 31, 2024 at 2:13=E2=80=AFPM Jason A. Donenfeld <Jason@zx2c4=
-.com> wrote:
-> > > On Fri, May 31, 2024 at 12:48:58PM +0200, Jann Horn wrote:
-> > > > On Tue, May 28, 2024 at 2:24=E2=80=AFPM Jason A. Donenfeld <Jason@z=
-x2c4.com> wrote:
-> > > > > c) If there's not enough memory to service a page fault, it's not=
- fatal.
-> > > > [...]
-> > > > > @@ -5689,6 +5689,10 @@ vm_fault_t handle_mm_fault(struct vm_area_=
-struct *vma, unsigned long address,
-> > > > >
-> > > > >         lru_gen_exit_fault();
-> > > > >
-> > > > > +       /* If the mapping is droppable, then errors due to OOM ar=
-en't fatal. */
-> > > > > +       if (vma->vm_flags & VM_DROPPABLE)
-> > > > > +               ret &=3D ~VM_FAULT_OOM;
-> > > >
-> > > > Can you remind me how this is supposed to work? If we get an OOM
-> > > > error, and the error is not fatal, does that mean we'll just keep
-> > > > hitting the same fault handler over and over again (until we happen=
- to
-> > > > have memory available again I guess)?
-> > >
-> > > Right, it'll just keep retrying. I agree this isn't great, which is w=
-hy
-> > > in the 2023 patchset, I had additional code to simply skip the faulti=
-ng
-> > > instruction, and then the userspace code would notice the inconsisten=
-cy
-> > > and fallback to the syscall. This worked pretty well. But it meant
-> > > decoding the instruction and in general skipping instructions is weir=
-d,
-> > > and that made this patchset very very contentious. Since the skipping
-> > > behavior isn't actually required by the /security goals/ of this, I
-> > > figured I'd just drop that. And maybe we can all revisit it together
-> > > sometime down the line. But for now I'm hoping for something a little
-> > > easier to swallow.
-> >
-> > In that case, since we need to be able to populate this memory to make
-> > forward progress, would it make sense to remove the parts of the patch
-> > that treat the allocation as if it was allowed to silently fail (the
-> > "__GFP_NOWARN | __GFP_NORETRY" and the "ret &=3D ~VM_FAULT_OOM")? I
-> > think that would also simplify this a bit by making this type of
-> > memory a little less special.
->
-> The whole point, though, is that it needs to not fail or warn. It's
-> memory that can be dropped/zeroed at any moment, and the code is
-> deliberately robust to that.
+On Fri, Jun 07, 2024 at 08:50:17AM -0600, David Ahern wrote:
 
-Sure - but does it have to be more robust than accessing a newly
-allocated piece of memory [which hasn't been populated with anonymous
-pages yet] or bringing a swapped-out page back from swap?
+> Mellanox offers both with the Spectrum line and should have a pretty
+> good understanding of how many customers deploy with the SDK vs
+> switchdev. Why is that? 
 
-I'm not an expert on OOM handling, but my understanding is that the
-kernel tries _really_ hard to avoid failing low-order GFP_KERNEL
-allocations, with the help of the OOM killer. My understanding is that
-those allocations basically can't fail with a NULL return unless the
-process has already been killed or it is in a memcg_kmem cgroup that
-contains only processes that have been marked as exempt from OOM
-killing. (Or if you're using error injection to explicitly tell the
-kernel to fail the allocation.)
-My understanding is that normal outcomes of an out-of-memory situation
-are things like the OOM killer killing processes (including
-potentially the calling one) to free up memory, or the OOM killer
-panic()ing the whole system as a last resort; but getting a NULL
-return from page_alloc(GFP_KERNEL) without getting killed is not one
-of those outcomes.
+We offer lots of options with mlx5 switching too, and switchdev is not
+being selected by customers principally for performance reasons, in my
+view.
+
+The OVS space wants to operate the switch much like a firewall and
+this creates a high rate of database updates and exception
+packets. DPDK can operate all the same offload HW from userspace and
+avoid all the system call and other kernel overhead. It is much more
+purpose built to what OVS wants to do. In the >50Gbps space this
+matters a lot and overall DPDK performance notably wins over switchdev
+for many OVS workloads - even though the high speed path is
+near-identical.
+
+In this role DPDK is effectively a switch SDK, an open source one at
+least.
+
+Sadly I'm seeing signs that proprietary OVS focused SDKs (think
+various P4 offerings and others) are out competing open DPDK on
+merit :(
+
+For whatever reason the market for switching is not strongly motivated
+toward open SDKs, and the available open solutions are struggling a
+bit to compete.
+
+But to repeat again, fwctl is not for dataplane, it is not for
+implementing a switch SDK (go use RDMA if you want to do that). I will
+write here a commitment to accept patches blocking such usages if
+drivers try to abuse the purpose of the subsystem.
+
+Jason
