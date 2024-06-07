@@ -1,97 +1,150 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AE01805A
-	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 18:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59E713FD84
+	for <patches@lists.linux.dev>; Fri,  7 Jun 2024 18:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717783385; cv=none; b=NU1zpcN5Hi2upuKLNYdIKeWctWa5EmEeQ3ZvjfoUVRATorCyeirx1YMmsF3P/i8fxCb7UDE7+7IQjGasEiKzzPGYygtcXWyekyZgCT6UQc1jpOzr6Yr8+NzG9oTkY8JSv7RKYC6eB2Boi7VR6M6j+fsmo2dBcSE7sOs6ZnSlSqE=
+	t=1717785566; cv=none; b=sDk6mhDAxjLeWQIEiKZ5VwEg8xZgQPM3PJHuubJ0N1GtUGB32zXgj0N9VnGFgWTRxZpLWQrm44WG5VXwsinOf8G1wZN31g5rZiA5Ir+F+6AvkTJ5wr179qq9fmCETxBkRauNzR+Q940hRmWhWylLMQ0dlr7FdwQTSYU9aQssm4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717783385; c=relaxed/simple;
-	bh=S9vlXymCuw8y2soXFtQEl6vKMBGohi8Chq1vzxf6eaU=;
+	s=arc-20240116; t=1717785566; c=relaxed/simple;
+	bh=9NPTMvfJ2xTxqNKl+Rg7n1Jvn4W/OrCHXBqrahwbaiw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Gk96M0CtrpqlT1HvlJS3k/LrLwg6XfQ0vjjBbZoPGV4UVJSIwdtxGhQlszQEUsg1CcrqqxqWCzOWXIBJ1yLSYN5S9st6Q5Aneyg5SddKqMY2qZ3pUn3T7QmYqTu/xU58KjBAmxymnxHu3e+t2qWGe40MClbsm6iLCCCqsOcbFnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R1KADPA4; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=pwHzpDqg98B1sAMPu4PPfPmxBcp/AwjzM+CdVLj5JA85kT26EGq05mEPAdcqKJLOyvEv0IgdfbqbW1egHCEgAPyllNXe/wiPMf+89rovXB39wZapSWO6aaV8pcrcRyjuhSXOKL5w8EhyXyJ+aMg2YN0mAqPVNUNgoQ86Dp8e4cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net; spf=pass smtp.mailfrom=amacapital.net; dkim=pass (2048-bit key) header.d=amacapital-net.20230601.gappssmtp.com header.i=@amacapital-net.20230601.gappssmtp.com header.b=zgdt3mQC; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amacapital.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R1KADPA4"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a626919d19dso642852366b.0
-        for <patches@lists.linux.dev>; Fri, 07 Jun 2024 11:03:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=amacapital-net.20230601.gappssmtp.com header.i=@amacapital-net.20230601.gappssmtp.com header.b="zgdt3mQC"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-35dc9cef36dso2161666f8f.3
+        for <patches@lists.linux.dev>; Fri, 07 Jun 2024 11:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717783382; x=1718388182; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=M4JhFWYIaba6S7NZfwQpR1LZP1nrX/OWl8a4IvQCyvQ=;
-        b=R1KADPA4pu3OSYRcO9BZh2xPIZsUTO+pQNKdB7NXFPM1xrWv/a94vumQVCFexaX1+H
-         Xf5JcB2caBuHVjB02deq0+cSkJpk3BgB7S3vEK7r7FD3z7FaFjwVrI0vAdMBsIGwgXaf
-         HIDSBhJ60Whn346nXBcrVG9fXBJLE4PobBiUkWCzsA6tZrk+zuKlxDSyLXK6Mb0gB7pC
-         kdx6UWyyg3kM9K+QpgKT1vfx7olDsXLIKqWp86/I+IMDR114VcO2NMt8HotymlfugHmG
-         DIuVEDGovGoVhZibpVGs0PLCTjAcFiro5G5sSpX/IDsKK9W24sm54WVJw3sCTubakbPA
-         MBNQ==
+        d=amacapital-net.20230601.gappssmtp.com; s=20230601; t=1717785563; x=1718390363; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=80khoRU9VqZN6aPpM37FfANzK9Z/6h4/Oarr/uMp8CI=;
+        b=zgdt3mQCW83ul4ueUmuBuwfz6rj9nD521lvEo4rA6hBCDefmnj78QIlRbiilpUpZOo
+         lE3L1/9f0yHShG8LXc7QfA/ebNMEUPYPJDp/fq6q/pHfy0I4ojV644hDjyGSiv9EZyfs
+         kVsr4JRYGjx7enEh9YHz+Oo/4BS07H7FwH3H7TaUMcesG6E3h/bMSkfHxtQkkKmnP/5N
+         CfVmEzUrauI9L3Fznty+4HixxoEmHQrSVxLP4DAn8b/9EBrYrJ0vWCrx3GLW4Lr0evAF
+         D9LN4ChZjwAuz9AfUc1lQkIBSSYDFwYJTyrzKSjf7pbsJRjHH6Oezsp/OaJ3E1WQXGb9
+         fktg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717783382; x=1718388182;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=M4JhFWYIaba6S7NZfwQpR1LZP1nrX/OWl8a4IvQCyvQ=;
-        b=ryO3jAFcC61/Oy5O7osz5z+8ai+SA9aIJKIryLhOHGvwpu8Lfxti6v2VKgMdYthiou
-         cBhdtXs1oIWDMZ/a9jPAx3d2nNvszvBB9jmLEPLWu8yhct+1KWl0CjdlW6RxM9q0QoSd
-         5vcsQ4Jig4T5uqsEkBwNKFntJ9aHnldAby4HNDd/s2TYTdtyFrRvFQAJVuf5Q5J3aIF6
-         5A/p/xKJsqoKdm2Z6z72t7znXEZ7ucK3j5Wjr+NEU7nFHcgpkemYsVxcssLIN5bw5Wj+
-         Dm4EGt2r70EAzDvRrBa4ceNzaKY3696s6GjoCxy+Arr3osQwxYoNuFNpWakBTuqtvCYu
-         ZrpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVALva8FdgsaOuKKazJegd3d0eoK5GgPcz21eeVFRY4eUyvrY8lyyohXkdc0FAV2g4BCOI8JtAHtDKfKMBJS7Soicti/KVLwg==
-X-Gm-Message-State: AOJu0Yxk0Gft5cLyzNthLnG9CYwiIDQ1I2vQrhXbLDuktfjguD/VSaiC
-	4ev1HaRPprc4pYAa+WlZ/lFwlWc1tJ2sZKzrdepHfDBxt4q/uz2RLEH9q80TFs/G9jkYEqayJkP
-	HNgJbtTYLlDO0n7rQTbgpgjRBWhQ=
-X-Google-Smtp-Source: AGHT+IGnj2ysUfh7SOHLkJc3CGDkP6SwlsXhwVpEmOYlNR31bDcHXd9kiuPue/wzF/0qSpCM7o3lXDUckdPju300slU=
-X-Received: by 2002:a17:906:4154:b0:a68:e268:fa30 with SMTP id
- a640c23a62f3a-a6c7651ad4emr448512966b.38.1717783382081; Fri, 07 Jun 2024
- 11:03:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1717785563; x=1718390363;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=80khoRU9VqZN6aPpM37FfANzK9Z/6h4/Oarr/uMp8CI=;
+        b=ZjDcIJj5LR3PiKlBML7rc7u//169PzHCWemRAn+BgXnWr9BSXz15jsWkkQSas0uGJv
+         N5NgYguc/u+uTwRceQX+Q/uqcWhdHSl89ZYlht1pay7l1uXZJPy9kZnNv2xlq8kV0uR3
+         +Q7tL9ukVlf7IpaR4+EhNDG3VefKOuSZqXXD+DGWzGPLelMOjHjvJvlG13FdkutKjZGj
+         C2TWeiLmeS7TbYmz+Hsv94n4p5uPgomB6J7JRoSr6tcqSSO54OmB1QruTs81YJJtGhOz
+         15l3LhAqXYhP3Osn+yMWkyfn1vAxTtz/KVFvqM4V/zrhFWbnqslBMpTLvwn/PUNyAU7Y
+         /eug==
+X-Forwarded-Encrypted: i=1; AJvYcCX1W6GrYgJ/p6W/j+4UwEXB6XxqteCP5ghuEZsDv6WfFORj/Miuv1xYb4wsDarNqawFkncvQZ5tgCjxaKyA9h1zjdttV15o7Q==
+X-Gm-Message-State: AOJu0YyUDsFeH9UX8ZcXAbFbLxyFVt5PInAQYH8WJRo3nX+kCcpSuiqE
+	933x7vUjjWO4+4CgJN6/bfvPghGVVijuq/L/6TP5EdCx1nqDTngoIUIOiPNzfC8WLx1GD6x5650
+	5rlivZUXapSFaTgZVOPkw97MoWOlSiIKtcbqc
+X-Google-Smtp-Source: AGHT+IGwctdoLBTARLYq3NMn93r70A5BCSf8URz3K1Dy/cmfTRtIo6qWt6xdrYfzPiAHvg3JZQpLYNEXBVn3QXYRpSU=
+X-Received: by 2002:a5d:6902:0:b0:354:fb6c:2198 with SMTP id
+ ffacd0b85a97d-35efed0a1aamr2243893f8f.8.1717785563004; Fri, 07 Jun 2024
+ 11:39:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240606131732.440653204@linuxfoundation.org>
-In-Reply-To: <20240606131732.440653204@linuxfoundation.org>
-From: Allen <allen.lkml@gmail.com>
-Date: Fri, 7 Jun 2024 11:02:49 -0700
-Message-ID: <CAOMdWSJr-KSGgWrv0zG+nBu=NzQVpw-z7ef5+ykoKXO1uczLzw@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/744] 6.6.33-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, broonie@kernel.org
+References: <20240528122352.2485958-1-Jason@zx2c4.com> <20240528122352.2485958-5-Jason@zx2c4.com>
+In-Reply-To: <20240528122352.2485958-5-Jason@zx2c4.com>
+From: Andy Lutomirski <luto@amacapital.net>
+Date: Fri, 7 Jun 2024 11:39:10 -0700
+Message-ID: <CALCETrUjcmBBE+jtek9RumHkKe0VGNUJg6qXe=VY9ve1E6j4Tg@mail.gmail.com>
+Subject: Re: [PATCH v16 4/5] random: introduce generic vDSO getrandom() implementation
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, tglx@linutronix.de, 
+	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>, 
+	Christian Brauner <brauner@kernel.org>, David Hildenbrand <dhildenb@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> This is the start of the stable review cycle for the 6.6.33 release.
-> There are 744 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 08 Jun 2024 13:15:55 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.33-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+More comments...
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+On Tue, May 28, 2024 at 5:25=E2=80=AFAM Jason A. Donenfeld <Jason@zx2c4.com=
+> wrote:
+>
+> Provide a generic C vDSO getrandom() implementation, which operates on
+> an opaque state returned by vgetrandom_alloc() and produces random bytes
+> the same way as getrandom(). This has a the API signature:
+>
+>   ssize_t vgetrandom(void *buffer, size_t len, unsigned int flags, void *=
+opaque_state);
+>
+> The return value and the first 3 arguments are the same as ordinary
+> getrandom(), while the last argument is a pointer to the opaque
+> allocated state. Were all four arguments passed to the getrandom()
+> syscall, nothing different would happen, and the functions would have
+> the exact same behavior.
+>
+> The actual vDSO RNG algorithm implemented is the same one implemented by
+> drivers/char/random.c, using the same fast-erasure techniques as that.
+> Should the in-kernel implementation change, so too will the vDSO one.
+>
+> It requires an implementation of ChaCha20 that does not use any stack,
+> in order to maintain forward secrecy if a multi-threaded program forks
+> (though this does not account for a similar issue with SA_SIGINFO
+> copying registers to the stack), so this is left as an
+> architecture-specific fill-in. Stack-less ChaCha20 is an easy algorithm
+> to implement on a variety of architectures, so this shouldn't be too
+> onerous.
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+Can you clarify this, because I'm a bit confused.  First, if a
+multi-threaded program forks, bascially all bets are off -- fork() is
+extremely poorly behaved in multithreaded programs, and the child
+should take care to execve() or exit() in short order.  But more to
+the point: If I do:
 
-Thanks.
+some_bytes =3D get_awesome_random_bytes();
+<-- other thread forks here!
+
+The bytes get copied.  Is the concern that the fork might happen *in
+the middle* of the vDSO code, causing the child to end up
+inadvertently possessing a copy of the parent's random state and thus
+being able to predict future outputs?  If so, I think this could be
+much more cleanly fixed by making sure that the vDSO state gets wiped
+*for the parent and the child* on a fork.
+
+
+> +       /*
+> +        * If @state->generation doesn't match the kernel RNG's generatio=
+n, then it means the
+> +        * kernel's RNG has reseeded, and so @state->key is reseeded as w=
+ell.
+> +        */
+> +       if (unlikely(state->generation !=3D current_generation)) {
+> +               /*
+> +                * Write the generation before filling the key, in case o=
+f fork. If there is a fork
+> +                * just after this line, the two forks will get different=
+ random bytes from the
+> +                * syscall, which is good. However, were this line to occ=
+ur after the getrandom
+> +                * syscall, then both child and parent could have the sam=
+e bytes and the same
+> +                * generation counter, so the fork would not be detected.=
+ Therefore, write
+> +                * @state->generation before the call to the getrandom sy=
+scall.
+> +                */
+> +               WRITE_ONCE(state->generation, current_generation);
+
+Farther down the thread I think you were saying this had something to
+do with signals, not fork.  As for fork, if you make sure that
+rng_info->generation can never be 0, then, after a fork, the vDSO will
+always retry or fall back, and I think there will be no complexity in
+the middle related to forking, which could end up simplifying a few
+things.
