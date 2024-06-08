@@ -1,78 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F6CA31;
-	Sat,  8 Jun 2024 01:43:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5E879FD
+	for <patches@lists.linux.dev>; Sat,  8 Jun 2024 01:45:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717810999; cv=none; b=sRlEIqpytEnTBOdcMjFy4epowIYZwogt1Y61G7FFZFdPzIUHOUZZ9YRby84iC1BX3K93WQCPYsJ57USzm/P3Mt6q8JJpCRi2lHRFpqY2UeAWHgs92de/zfuBKUPUkDDY0w/3WszBK8p32Poy2n5RWRAVY4f8fmZpJFRWxsdBNs4=
+	t=1717811127; cv=none; b=FscVfMIjEwURwtndyYagho9PDxKmup66LzwMOflmc8cuyHuX1Yy/fjTX5ksehht/jPvVuRCJS5kqt6E5wxq4OKrOAWxWa7psUlvvSNVRqy5AQdqao/VUBCWdOatr+znZ+pZX8jB3VF4bdrrjaR3QpNd6lI4PepydjK7e4gobRmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717810999; c=relaxed/simple;
-	bh=kxTnolzJBJlaeajOHehBVJOrauutsVcuiot/859aDlo=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ggni0GVopScEOQPXt1dRsaVGgFf98Yqj8dx/OLcvXibotW3feSR1FNiPemtTPOybbFnQLw/RzGQJp4S7TuP75nqAU4g7kiiLlACCPl+dhHrot48tXbkwKD0F9rliDjZZ7sHmlcIeoRyIbAjVUl4KbLwbRuHREHHoyDA/mntouxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sXshVeAc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1717811127; c=relaxed/simple;
+	bh=UN6q3g+9Dz4/hjzQmqjAEEyYcqjaGtBx/GKcyf0LG30=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=njEXFljG3Jg/fi2k6em3K0ikUNq5snbTAs41UlUJR5IbZXq+LFqE/eaDslg95G3ybcuN6RhFHlLxaBJUswA//loOj5kwCnALsolKxVLT+GBmofPBsnlI0ZPVN6hpEC17sXri6/hnN8WLrgQnGdHCmNY1LqGteyUWuJY3Zy27BQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=bJ23jZWw; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sXshVeAc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43AAC2BBFC;
-	Sat,  8 Jun 2024 01:43:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717810998;
-	bh=kxTnolzJBJlaeajOHehBVJOrauutsVcuiot/859aDlo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=sXshVeAcocmJVA6la5KLNNu3RVHp9NQk0VDB+UPV198dDOeKoyGogj3JkWLiHz+kW
-	 IDSzh/fPTNSZEwpM+2UEsXu8Dwz/Y/J2enN27cwtxp1g1wD/FVR89tknEqrCmhwYSP
-	 D3Clc+Aro713f6aFdSB2WK0sS8SiYZvIVhPm54qAFDBlsfYEkKCDK2x34v2eahxFwm
-	 +1zFb/nvkDx8mOeb7pMp3lKYSsNhmwPktnpwp/TbLWpMancKW8wW6e81pio66Y7Lub
-	 YagCtiG/jQYlFWOA+Q5lqWWL/WfXL/Tbfy8IeLD3qUsxfSoM1Jh2EWjzI4H6JRmyyJ
-	 iUBuAcuo7Z2Ow==
-Date: Fri, 7 Jun 2024 18:43:16 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Jiri Pirko <jiri@resnulli.us>
-Cc: Andrew Lunn <andrew@lunn.ch>, David Ahern <dsahern@kernel.org>, Jason
- Gunthorpe <jgg@nvidia.com>, Dan Williams <dan.j.williams@intel.com>,
- Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>, Leon
- Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
- linux-rdma@vger.kernel.org, netdev@vger.kernel.org, Paolo Abeni
- <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>, Tariq Toukan
- <tariqt@nvidia.com>, Andy Gospodarek <andrew.gospodarek@broadcom.com>, Aron
- Silverton <aron.silverton@oracle.com>, Christoph Hellwig
- <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>, Leonid Bloch
- <lbloch@nvidia.com>, Leon Romanovsky <leonro@nvidia.com>,
- linux-cxl@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 0/8] Introduce fwctl subystem
-Message-ID: <20240607184316.1acdb3fd@kernel.org>
-In-Reply-To: <ZmMMeIuplzZl2Iyh@nanopsycho.orion>
-References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
-	<20240603114250.5325279c@kernel.org>
-	<214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
-	<20240604070451.79cfb280@kernel.org>
-	<665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
-	<20240605135911.GT19897@nvidia.com>
-	<d97144db-424f-4efd-bf10-513a0b895eca@kernel.org>
-	<20240606071811.34767cce@kernel.org>
-	<ZmK3-rkibH8j4ZwM@nanopsycho.orion>
-	<b023413e-d6e1-4a47-bdf2-98cc57a2e0ae@lunn.ch>
-	<ZmMMeIuplzZl2Iyh@nanopsycho.orion>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="bJ23jZWw"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-57864327f6eso3535728a12.1
+        for <patches@lists.linux.dev>; Fri, 07 Jun 2024 18:45:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1717811124; x=1718415924; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7Hx0XsA+WMrNCJ2gQvfTLdJ/oldDhKZcwHjNsGDQ/qE=;
+        b=bJ23jZWwP2Avc1mq0IhXFxsgG62wUdDwSq8Sq3Akl+Vx7/4l+y1cXKWpDA6NOihTAB
+         IAsesU4xzjnteN4FxfH/ng9LqzvepcKuZnRIbBgRkQfRMZOhuh4MBFAIqEgqOzzZhrgP
+         MKSsv0Aoigqr5AoNywnX57PaQljcKf/ykjO5/p8+cWObqVIb1CV4JJkous3FjssmepS1
+         qRmdVX5RmDEaDFto6f6SopMGBWG6wjJsrYeAzj5CmbJOBkh4Fpfx9UwGKmUmo5KbfQHu
+         0rFz16mYSj4tT+8K11tVdPRJmoj++IxBdR0LatZnOUi3Or+/+9Yb8qjel/WV1oMK6lPb
+         Khrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717811124; x=1718415924;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7Hx0XsA+WMrNCJ2gQvfTLdJ/oldDhKZcwHjNsGDQ/qE=;
+        b=WJ5002ZsIjV3lj+aOqAMMILPr7+HTKLcbTL+ZWgxMf1/brpD83SRTb1masVAAcqQoJ
+         2LCtzgKzTeotrVskXjYVHZ0HpSxDYtB3TKzceNyEbDFmA9OgwZGYQTGO2wl6Tl8G69ij
+         5jqrD4O/OxWMKTLCzPvwOeVnBGqxyktP//Et007IhL39EKLKH7ZQoa08ITqBcZnYg9WJ
+         W4UOR/Ht89Sz6anDhxFWs8Y+cSlvjUNxurDLGwzf9BkfRsRTavCYQFj6ebVp6TLGW2RR
+         uLbFR3GYAZHgSRtplVTwpv3EiMkpk/Kf/K6sZ3K1a5d1zjYIj8WibvniF1RQYlTz9Qf2
+         9NAg==
+X-Gm-Message-State: AOJu0YxjxuiqQQ1T3FDWvJSmBsE2q99j5gZ6t1Piy0tPsUcOnZljyXer
+	9p5U+XqoSGy/r/seiNC3ASWZfL2mcsB7gLJPNRhIi72+1tYb1ct7DGgK0v0=
+X-Google-Smtp-Source: AGHT+IEn+M+mmJhzhk83b+UnFQZL1b9885lzfYJfv3PYzK1Ds7Gda+BjdcA/yOXBMm2vMdDqX2t/YQ==
+X-Received: by 2002:a50:d5c1:0:b0:579:fd26:2ece with SMTP id 4fb4d7f45d1cf-57aa55aee6fmr6610174a12.13.1717811124013;
+        Fri, 07 Jun 2024 18:45:24 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2b4840.dip0.t-ipconnect.de. [91.43.72.64])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57aae2366a4sm3544140a12.92.2024.06.07.18.45.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Jun 2024 18:45:23 -0700 (PDT)
+Message-ID: <de7db93e-1042-4417-a8a2-346c836ba1d2@googlemail.com>
+Date: Sat, 8 Jun 2024 03:45:21 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.9 000/374] 6.9.4-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240606131651.683718371@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20240606131651.683718371@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, 7 Jun 2024 15:34:48 +0200 Jiri Pirko wrote:
-> >For bigger, single purpose devices, it is just a switch, there is less
-> >inconvenience of using just one vendor SDK, on top of the vendor
-> >proscribed kernel.  
+Am 06.06.2024 um 15:59 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.9.4 release.
+> There are 374 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> I'm aware of what you wrote and undertand it. I just thought Jakub's
-> mixed experience is about the APIs more than the politics behind vedors
-> adoptation process..
+> Responses should be made by Sat, 08 Jun 2024 13:15:55 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-Not the API / implementation, just that the adoption is limited.
-The benefits of using a standard Linux approach is outweighed by
-the large pool of talent with experience programming using the SDK
-of *the* vendor.
+Builds, boots and works w/o regressions on my good old 2-socket Ivy Bridge Xeon E5-2697 v2 
+server machine and runs 15 QEMU/KVM virtual machines for some hours now, no hiccups.
+
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
