@@ -1,118 +1,122 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441E31D69E
-	for <patches@lists.linux.dev>; Sun,  9 Jun 2024 13:25:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0100D14265;
+	Sun,  9 Jun 2024 16:10:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717939560; cv=none; b=bxrAdqVO8BZxXgyZmg+IXw0sHxc6dOk5lmxMBJZ4uV+llvJE3sKEUEkNMIxJd00Ike+/30JVnm4DudjNFPkrJdCWeOwzOhHpAGvaMlnZWXNEfJVngBS0AZfK0jRSpkEbvsn92m6NEVDq9GIONl7Ke7v8Z0wh1ZrwQKLOPQAkItE=
+	t=1717949437; cv=none; b=Qnmjl6oWac3mCyBgGnqKkmsBv+K+iTEexhKpUCZgo8ltaVNDd681wIzp1j8Yll4KQymkFPMW9eYUacwGAJz55MSfvHqIdoEd7bmaaGc3uuAYtDqSD7MMTceNrvrtcRhn4Xm0yocxuuGaTQzrPq/PZvbR7GHexfILpzwzoGqbD8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717939560; c=relaxed/simple;
-	bh=u+u9QLYNu4HrAWgyPgFZCbJEI/NnuOHhXl5OP6+ZmdI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TL5D6EVYhL60o322u1n8CmNoLpZ/Z92t84H6c7d4rCB/Z1rbR/nwz7UlUjQBNxOPHZt9ifOeNcnA1Kw6js/u0NJHh0zBvb1Pa+6vUF6u70ooCezZuTHY1B6UZLn/6kmghALSjGxXq1r5xq/WCxfabcUT3anDFqYminKmoImyOtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=hKzch16u; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	s=arc-20240116; t=1717949437; c=relaxed/simple;
+	bh=oeXu4rLXkrMEaolsQz5Aqf61Yi+TBt3Qo8sec7rPtis=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=tPip8gnNA4kvoY09DwIATCZYcYVS63qbDPOnWdKpYvJlgbmbKcCoT3OVFrUqjemzDwGTeKiSCAyT/EptO9tLfP8LO4k6vH+pZvO344sj5zYQQBgjuyFSz2pQgjeVLWANrcUVdj67x2pO1XtO3zIqRAQSg05CNEik/evRXlY0Qyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F8BedKyx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="hKzch16u"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2c2ccff8f0aso1390399a91.0
-        for <patches@lists.linux.dev>; Sun, 09 Jun 2024 06:25:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1717939557; x=1718544357; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8fXq7SaL6D194sQwZh+H3HooqCMUEWewEfZ6pmv61pw=;
-        b=hKzch16uJxVdILqZmwbSPJKMxApBEjGYYfszh315U7YzZcA4ocj15Iohy2xqOru6dk
-         ANpaYbFOXs8FskzxvEY1q4DV/JjgpwqVXL2gqK0Pi9SdLvS4ecoAauaAhljZwKFnXIVp
-         WhzjVxFknjDaBxEZXSO5ud/7wfg/4FVMZ4YglMEHhBr7n7eqkhiin1pP+1pmxtKia8LM
-         IkpN4PslgoUQyQjZpdnt5FUkPurYUk+6l9T1qNCILwG3/3asU7/+bEWuMkeCrGYN10D2
-         bibSXxikGRDK6HJd2eDjQvS/9yZUSwUtZotqf9su4DTwD5Hss7B0HzwcHq8YiwS/8u7+
-         mRZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717939557; x=1718544357;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8fXq7SaL6D194sQwZh+H3HooqCMUEWewEfZ6pmv61pw=;
-        b=gUa0UhNc372oOuHUKse3heLvtRczsOtM+LmfK0YjhpGeKO4WJ/i59uUAlE5dw7T/Gp
-         hmHARjeQUtbfz/f/XZNF6TKg+8XijqD8ByMLrHYYnBV8ZsCE3mbHFf9YRittdQpdsjd1
-         kHt1sR0Ums2e0r/CVFhCvGoIZPFKDmbLS9lvK2aQ92Rd3x1byKXpboXxOhrdhs3BQZZZ
-         nMrSm/Tfbw84QAy1ub/8l9HuQRSc6G7WYW54TNs+dKoqCVhPh8fyjUeMW/QqF0UWgwhL
-         IISldYpQ+gsmT6RaEA/QrjmU6jI7FGbMv06LT68DNa4BfGCUt1XTZoDsZ6cWFkHdraO4
-         0c/g==
-X-Forwarded-Encrypted: i=1; AJvYcCXLJMrLwFm0dYqEOvr+2uRWknm+/ueLRUtt+27Eu/MDE0gnTLHu59criN2jqf2H4TgVUG37b0h9ts+FWtkKs3mYDBPbhfC1vw==
-X-Gm-Message-State: AOJu0Yzv4eE6CuWUhsESYWEcArPgD+7+uYKQrynvYwGUu13wnePzaOhl
-	SV7C0OGAQrsE38wd3qq8awBoldaSBwbmwFMYUCl6Ofz4iU+8oLgO3836WxKt+9C4jSf4/waeATc
-	R+aPT4u+uKIPHvn/UIg6SFmG6f7aV7xBKnlwzbA==
-X-Google-Smtp-Source: AGHT+IE1odL3BBZ9hhvpRx8NNX+yPBmqQqY4qii/zdBs8e8gtpn0Fcfehkq7fp6P+LBk9yP6x1KrUy0lPGjR7Qg/WhM=
-X-Received: by 2002:a17:90b:19d1:b0:2c2:dfc3:eb7c with SMTP id
- 98e67ed59e1d1-2c2dfc3ed08mr2450309a91.18.1717939557527; Sun, 09 Jun 2024
- 06:25:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F8BedKyx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70A2C2BD10;
+	Sun,  9 Jun 2024 16:10:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717949435;
+	bh=oeXu4rLXkrMEaolsQz5Aqf61Yi+TBt3Qo8sec7rPtis=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=F8BedKyxzZ7BfckNJ9wRqnbNA6noRXzFK/IUYcfaC/I/hCFC/qPPp00NM/xdSTsrc
+	 ST3B5k4CfFK78FhOVqBVU1mEbcbt1VE9s+ZbvWexG2/QqmHiT4lvgVPCxA5+g5tXmp
+	 w5qoyKP+o11xLBAJuRmgOPqkF8J5FS4ehdKJFlUqVxTfp/wTseAByU3Qh1ajQkzBAN
+	 Oh7Xa3FNiXQEZ95ft9TvKw/OEAQ85vaivD+K2HomdST6BCtzojuNZGv9j6oghwCHzL
+	 0SOxOjNUDwW8XnrAjwQTOX8OcRerJ4n/ImT0/lXLbsqgZ5smWCylNhSN/4+aSctm1g
+	 c5/m6xGvo+slg==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SeongJae Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.1 000/470] 6.1.93-rc2 review
+Date: Sun,  9 Jun 2024 09:10:31 -0700
+Message-Id: <20240609161031.63516-1-sj@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240609113816.092461948@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240609113903.732882729@linuxfoundation.org>
-In-Reply-To: <20240609113903.732882729@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Sun, 9 Jun 2024 22:25:46 +0900
-Message-ID: <CAKL4bV5zSAu0iEvfHuiJjUZqi=zgr2e7xiEOaiYsWN70Ur9j8Q@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/741] 6.6.33-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Greg
+Hello,
 
-On Sun, Jun 9, 2024 at 8:41=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.33 release.
-> There are 741 patches in this series, all will be posted as a response
+On Sun,  9 Jun 2024 13:41:02 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.1.93 release.
+> There are 470 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Tue, 11 Jun 2024 11:36:08 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.33-rc2.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.93-rc2.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
 
-6.6.33-rc2 tested.
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] bd8637d23a9e ("Linux 6.1.93-rc2")
 
-[    0.000000] Linux version 6.6.33-rc2rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.1.1 20240522, GNU ld (GNU
-Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Sun Jun  9 22:02:19 JST 2024
+Thanks,
+SJ
 
-Thanks
+[...]
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: sysfs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_m68k.sh
+ok 13 selftests: damon-tests: build_i386_idle_flag.sh
+ok 14 selftests: damon-tests: build_i386_highpte.sh
+ok 15 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
