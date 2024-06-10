@@ -1,138 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3867CF3A
-	for <patches@lists.linux.dev>; Mon, 10 Jun 2024 11:44:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9EA4AEC8
+	for <patches@lists.linux.dev>; Mon, 10 Jun 2024 12:00:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718019851; cv=none; b=kwdaIWpG87Vx4De1YSNMVX1XEcpI/VLHBiizX9fagU7Irn7yiSmTLg1jpi372xjlKdYKnk3xPwx7kSaDCdPIvy//mLZ9q5yxYL+mrfwGfcqFLjIXn40p+IaubzgQKwhRpp6xFOjV5yA4JBKUvEgPva9+0EPo5zRSxbF0MSXGfAk=
+	t=1718020829; cv=none; b=lf72g5Azr7ED5tKEYfRuK3/6jj6DTuLuMQIW+BL76CFnTtx7a6uZTrr2SisYCYjEy++vjRmbrW+DM6Zeqnxa90l2s6Lz5aPAVn6lQe74Xu8uYoe8IrC0+g6EwWb5sjFpJW0eT52WrbnzTMCw6t8YGMIH0FvUuBCFTgyPHxIGdto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718019851; c=relaxed/simple;
-	bh=iasMPsjTIIl0wiJ+B4NZRS3IvetptYUFOt5XGcQ3kxA=;
-	h=From:To:Cc:Date:Message-ID:MIME-Version:Subject; b=jllaNbGVChXuKBReH3BHitl5d4S74sQgw14F2hWekaW28jAuBBgRA+2PKCAc2lzkNhcJwCqis2chpeBBN0pZYKjSfgXAeXk8pWJg7lUiIZ/aXGUHUIkUO0SgdEZ8b9sl5azRSFmvGO8nNmECUndShd4XyiCZnXxCJ8WkwFtsDO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PhmI2Pxd; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718020829; c=relaxed/simple;
+	bh=acUR3zUJwolkHUEToKVKtJFNeC9oRwyTpo2IsGwK7Hw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KYlUgTSfGLRIzqG8vZGBGAQ2FYKuVmG2XEY046+MvIKke505FxO0Np/WuqTGGIN4DZ8wAVdH/qt5bu97dcHw6WfwnELb9+uuH4t+sWcqeoe+Uk2k7ogHzQ+7nQdjqR3XzmNMyQ1ADuHDgK9HbHphz2Kh1rqKVb3VMuFOouFZSCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=Wnz26ipn; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=Wnz26ipn; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PhmI2Pxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D012C2BBFC
-	for <patches@lists.linux.dev>; Mon, 10 Jun 2024 11:44:10 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PhmI2Pxd"
-Resent-From: Mark Brown <broonie@finisterre.sirena.org.uk>
-Resent-Date: Mon, 10 Jun 2024 12:44:06 +0100
-Resent-Message-ID: <ZmbnBnIJw7qRE6vh@finisterre.sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Sat, 08 Jun 2024 18:04:13 +0100
-Received: from dfw.source.kernel.org ([139.178.84.217])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=9IoG=NK=gmail.com=tomlohave@kernel.org>)
-	id 1sFzUB-004zlo-Dj
-	for broonie@sirena.co.uk; Sat, 08 Jun 2024 18:04:13 +0100
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 1273D60AD1
-	for <broonie@sirena.co.uk>; Sat,  8 Jun 2024 17:04:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id CEB1EC32781; Sat,  8 Jun 2024 17:04:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 03BD9C2BD11
-	for <broonie@kernel.org>; Sat,  8 Jun 2024 17:04:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 03BD9C2BD11
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-354f3f6c3b1so2500693f8f.2
-        for <broonie@kernel.org>; Sat, 08 Jun 2024 10:04:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717866247; x=1718471047; darn=kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gmv50GhHZu58VKL76+T2pNmo6gyWm+ZTMKg/2mOfzBg=;
-        b=PhmI2PxdgL/uqHtOd+Pks9key8gzCBCRX79x/7ND1CoFiCKrYDDY+SoTl3e2isfw4z
-         s9sZNdECFg5y9vF+jpY5TfMm536qMbP7nCZTl3iUw96YUYbIx1tRg1a/BggmvvkDcZpP
-         zy1tobAWHkC79oAWg/7PBHCADPdTz2htTNPRFGBXlFLwxTxykmbL8MFpq9ZbaZCUKSzU
-         EOy4/of+8LB0gSAHSDpGbQnxUeVdk4Z12RjNuCrn9e5mMAgcQJRZ3fnWH79WLK6hJgCk
-         fkLmZZzjIGNuX9cWyyoDYFgBQ4LZx6Xl2OxoXlYs3mBft55vBEqufR+8+ITTFNNjYSKu
-         MyoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717866247; x=1718471047;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gmv50GhHZu58VKL76+T2pNmo6gyWm+ZTMKg/2mOfzBg=;
-        b=An0rioQoHy+cEOPs38/D331/TnysaDaUp8+QsDplRYS7Vv2I8tnFiZF2odrWe1Kgdv
-         onatghtK/sSCv/5Ltm6yQxQ09yx7jxHfOz0dtM+0WPCUYUFs4/bWSTzgd9P9u9aIVx1v
-         J15sqIncjT3+5vnDbjFUwr6cog8j+QBN1uOoxEBv1g0bpAos7mQwsZTL5tWxmaC20bZG
-         p6GIukaTvdfR++LEw2o9vEcjHhDChVi+6HOYE+BVbi97xU/gBG5di5dXSCIdHiaqLgL6
-         dprGFh9kbMdt7/sZMAnX0pOzoLUgqHzMqoPahWyu4CWzw+HUbTVx0p2Ye4kC9I0q030I
-         zrPA==
-X-Forwarded-Encrypted: i=1; AJvYcCVeE3Wd/ijMd/HVIHxu78dRkISmzm0GK6iUKsCHi1NaqWn6M3dnUIgkCSucHIK78gz8gOntqxaI0q4+A+ReB7q5C5U=
-X-Gm-Message-State: AOJu0Yxe0MXB0/YBZINcBdubwz+Z0W/9zHcyJXjcHiiNSZL4mLCeHOiK
-	RtMUALROxGQahO6Fx3RFCmU/rQaHzx6BRQBZMrFGkLsjUJ0JM3wS
-X-Google-Smtp-Source: AGHT+IE3hio7ZuF9rGmHS5+CsVeV64HoO1ZxJglfoxi+Kqtz9ITnnSTQ7rSr108dQpfOOQHcjnlviA==
-X-Received: by 2002:adf:f2c4:0:b0:35f:15fc:6025 with SMTP id ffacd0b85a97d-35f15fc60cemr1268148f8f.24.1717866247072;
-        Sat, 08 Jun 2024 10:04:07 -0700 (PDT)
-Received: from fedora.. ([2a01:e0a:a9f:60f0:5d0b:d730:cb58:674c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35ef5e9b022sm6789446f8f.79.2024.06.08.10.04.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Jun 2024 10:04:06 -0700 (PDT)
-From: Thomas GENTY <tomlohave@gmail.com>
-To: pierre-louis.bossart@linux.intel.com,
-	broonie@kernel.org
-Cc: cezary.rojewski@intel.com,
-	liam.r.girdwood@linux.intel.com,
-	peter.ujfalusi@linux.intel.com,
-	yung-chuan.liao@linux.intel.com,
-	alsa-devel@alsa-project.org,
-	Thomas GENTY <tomlohave@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Date: Sat,  8 Jun 2024 19:02:51 +0200
-Message-ID: <20240608170251.99936-1-tomlohave@gmail.com>
-X-Mailer: git-send-email 2.45.2
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="Wnz26ipn";
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="Wnz26ipn"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 51A411F7F0;
+	Mon, 10 Jun 2024 12:00:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1718020826; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8a0YO74G5ZN6eUsTagdB66KLLDnxZNwj4Mba32IuxoE=;
+	b=Wnz26ipn69xTzQFmPeEPoPPT/LMjAAyDQB0T1j6WPf4TE5WsHZmWjg13mUi4LMriSZGOWF
+	ej+OP9Van/MA3afU3UV0ZL+32iv+dE6eV9FAl/zouKoafQNMM3Y28gyC3feWC5wiGh9wQX
+	8DvTmh5Wbo/GaJ0/Tl/D3qzljrlX0bQ=
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.com header.s=susede1 header.b=Wnz26ipn
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1718020826; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8a0YO74G5ZN6eUsTagdB66KLLDnxZNwj4Mba32IuxoE=;
+	b=Wnz26ipn69xTzQFmPeEPoPPT/LMjAAyDQB0T1j6WPf4TE5WsHZmWjg13mUi4LMriSZGOWF
+	ej+OP9Van/MA3afU3UV0ZL+32iv+dE6eV9FAl/zouKoafQNMM3Y28gyC3feWC5wiGh9wQX
+	8DvTmh5Wbo/GaJ0/Tl/D3qzljrlX0bQ=
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 325AB13A7F;
+	Mon, 10 Jun 2024 12:00:26 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 3cJMCdrqZmYEGgAAD6G6ig
+	(envelope-from <mhocko@suse.com>); Mon, 10 Jun 2024 12:00:26 +0000
+Date: Mon, 10 Jun 2024 14:00:21 +0200
+From: Michal Hocko <mhocko@suse.com>
+To: Jann Horn <jannh@google.com>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, tglx@linutronix.de,
+	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
+	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>,
+	David Hildenbrand <dhildenb@redhat.com>, linux-mm@kvack.org
+Subject: Re: [PATCH v16 1/5] mm: add VM_DROPPABLE for designating always
+ lazily freeable mappings
+Message-ID: <Zmbq1dGPIYdRLw5_@tiehlicka>
+References: <20240528122352.2485958-1-Jason@zx2c4.com>
+ <20240528122352.2485958-2-Jason@zx2c4.com>
+ <CAG48ez0P3EDXC0uLLPjSjx3i6qB3fcdZbL2kYyuK6fZ_nJeN5w@mail.gmail.com>
+ <Zlm-26QuqOSpXQg7@zx2c4.com>
+ <CAG48ez3VhWpJnzHHn4NAJdrsd1Ts9hs0zvHa6Pqwatu4wV63Kw@mail.gmail.com>
+ <ZmMamtll1Yq1yfxc@zx2c4.com>
+ <CAG48ez0pan8aLGjHtoDdrpiP+e5YrGeuD_RzDXgzUwkUvWYLjA@mail.gmail.com>
+ <CAG48ez1k0J013tYLfmnT8NXRpG_5BR10xnH8r-yRvTLpJe-nLA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 139.178.84.217
-X-SA-Exim-Mail-From: SRS0=9IoG=NK=gmail.com=tomlohave@kernel.org
-Subject: [PATCH] bytcr_rt5640 : inverse jack detect for Archos 101 cesium
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: KuzKiFAHeq9h
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAG48ez1k0J013tYLfmnT8NXRpG_5BR10xnH8r-yRvTLpJe-nLA@mail.gmail.com>
+X-Spam-Flag: NO
+X-Spam-Score: -4.01
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 51A411F7F0
+X-Spam-Level: 
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.01 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	MISSING_XM_UA(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	DWL_DNSWL_BLOCKED(0.00)[suse.com:dkim];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:dkim];
+	DKIM_SIGNED(0.00)[suse.com:s=susede1];
+	DKIM_TRACE(0.00)[suse.com:+]
 
-When headphones are plugged in, they appear absent; when they are removed,
-they appear present.
-Add a specific entry in bytcr_rt5640 for this device
+On Fri 07-06-24 17:50:34, Jann Horn wrote:
+[...]
+> Or, from a different angle: You're trying to allocate memory, and you
+> can't make forward progress until that memory has been allocated
+> (unless the process is killed). That's what GFP_KERNEL is for. Stuff
+> like "__GFP_NOWARN | __GFP_NORETRY" is for when you have a backup plan
+> that lets you make progress (perhaps in a slightly less efficient way,
+> or by dropping some incoming data, or something like that), and it
+> hints to the page allocator that it doesn't have to try hard to
+> reclaim memory if it can't find free memory quickly.
 
-Signed-off-by: Thomas GENTY <tomlohave@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
----
- sound/soc/intel/boards/bytcr_rt5640.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Correct. A psedu-busy wait for allocation to succeed sounds like a very
+bad idea to imprint into ABI. Is there really any design requirement to
+make these mappings to never cause the OOM killer?
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index b41a1147f1c3..a64d1989e28a 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -610,6 +610,17 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
- 					BYT_RT5640_SSP0_AIF1 |
- 					BYT_RT5640_MCLK_EN),
- 	},
-+	{
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ARCHOS"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "ARCHOS 101 CESIUM"),
-+		},
-+		.driver_data = (void *)(BYTCR_INPUT_DEFAULTS |
-+					BYT_RT5640_JD_NOT_INV |
-+					BYT_RT5640_DIFF_MIC |
-+					BYT_RT5640_SSP0_AIF1 |
-+					BYT_RT5640_MCLK_EN),
-+	},
- 	{
- 		.matches = {
- 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ARCHOS"),
+Making the content dropable under memory pressure because it is
+inherently recoverable is something else (this is essentially an
+implicit MADV_FREE semantic) but putting a requirement on the memory
+allocation on the fault sounds just wrong to me.
+
 -- 
-2.45.2
-
+Michal Hocko
+SUSE Labs
