@@ -1,152 +1,111 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF1C1852
-	for <patches@lists.linux.dev>; Mon, 10 Jun 2024 00:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE95A38
+	for <patches@lists.linux.dev>; Mon, 10 Jun 2024 01:28:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717979980; cv=none; b=SPRmahg3COdPxqGwYUAKz9sXgSTc9I7zCBn0x30gRkJAGOytd9Cx6D2ZZ2ppHuQzghZYJVEQak+HwdMcnCjKCvnNbUYt7vO02DEKTXplxl4vOf7kRw31ZnwEJa33KCOUuX4TEgYDV7VQ7RC5/JEFCdOkVZ189Xg3WdsvpUruWI0=
+	t=1717982894; cv=none; b=Xttcl94bDLIx5U5BkR987XkJPHBTrAJaTAT/u2kL02vz3Tzlbq0bF2FwDU5d5yiCaFhQPvxPvVPDAQOb7ASwrq2m2po3x7mRtRx2otUz8qW96wljjf6H6ywi3CdJaA4csRKviooRohm9io9L7/yEsz5UX/tklIwQPB/WSZg2ZSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717979980; c=relaxed/simple;
-	bh=RmlyFZFXIPl3nE3NosJA82cQlJCREl1lNzarMkr1BuQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDcuUL/JVP33fQlcB+uIx1qNW/3nPYAG8miiFl8qeCA7+7IVrI7Tx9us6ORqjlsRVsJUE2rZGHbf0CBvDY3ab0Ew8o6fR2QJNnaKmiDenscXaZa9BNGn7gET/7/Mio1COneK6RgUT83Yu+efXBzpOux4BiEe1Ho+OoRRWcgnRQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nlHU+imG; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1717982894; c=relaxed/simple;
+	bh=jDFwegCSWuUb75W10N3HVQWRCXQBrTGSItHT892scmw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lgjnw3HNjO8hhNBJmxNF6b9MrypUC0DTjQQwM7E+PKx8n5lYU8Gmz0ZQpsAWVWQnvP02ZESt41h9n8ieFy76mhYz90eIb0jBY/wkjvlSMJyUSYqKL1KUs//i97sLq7YOkKxx+k6G+Y/FOOGttNpqL3+2h8s6JeJABimhM+CReG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fM+iC8uv; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nlHU+imG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717979978; x=1749515978;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=RmlyFZFXIPl3nE3NosJA82cQlJCREl1lNzarMkr1BuQ=;
-  b=nlHU+imGRdR2MZ15/V1Pc1HwzmcDDJCHikw1y9gWXfZq0qzp85o+e1lW
-   c4/xHzMUEA4MWiVn6ztTlwr/Yt52RHl99FqX8lx9fhEG7D5jaIjRaFZ/l
-   JztjkzvzeKGvsPEKB0fgLQdUFAzdwtFUfhcXZawqAyQ+lMuS0wftQUolS
-   ZbFRZQE2pCTjcYXJG4Q+rifQhSTRLE1+EIiZBaeac3WTiamgMQ6huS/CH
-   PH2eytDC5nBJlhUIekMv624kvmIEygGJR/i0d9buazzZaUXg/RVUXQ6CL
-   GVoqySE+Fr3H1ew9YikWmunvpHVjvew/TvDa3mfjdwZ4NFqf3KePdr+I0
-   A==;
-X-CSE-ConnectionGUID: xpQoCznqT+mSZcjDLYszEQ==
-X-CSE-MsgGUID: BtKQcIyxRaeVyOkgPiO0vQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11098"; a="37154987"
-X-IronPort-AV: E=Sophos;i="6.08,226,1712646000"; 
-   d="scan'208";a="37154987"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2024 17:39:36 -0700
-X-CSE-ConnectionGUID: 7h+fxINfQfe2DNAQAI8j7Q==
-X-CSE-MsgGUID: XBNWwJQeQFCgJi5+7zGlvA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,226,1712646000"; 
-   d="scan'208";a="38829888"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2024 17:39:36 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: x86@kernel.org,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v4 4/4] x86/resctrl: Replace open code cacheinfo searches
-Date: Sun,  9 Jun 2024 17:39:27 -0700
-Message-ID: <20240610003927.341707-5-tony.luck@intel.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240610003927.341707-1-tony.luck@intel.com>
-References: <20240610003927.341707-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fM+iC8uv"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1f717b3f2d8so1597235ad.1
+        for <patches@lists.linux.dev>; Sun, 09 Jun 2024 18:28:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717982893; x=1718587693; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ogGDeikgVtP2/JojZOHyH+g7X1ICvG0a8hd8lBtiypU=;
+        b=fM+iC8uvmgrgUOfhyOFQAOv0aAim55drqBQiEH2ZFcThN6OYdLZLWsxXt6H9pSaZqr
+         RYJg8cYxgawM6hbhIyPNghunuC9N5DcG7XKlzTbxRNpHTwVX3bzbbTxbLd4m0sMFSeYA
+         ypv/Qeio5n/ig3khNR7oXBsPW2km+r0aqe5wD42Z5l0+RBUM/qieFczRNheyp+mDzoRy
+         OpVaiWsSkhxo9w5kt+YEBLZDr7q0qvy06KINDUObAW4NWZDWlcOvxNBHkoqOX6UrrYir
+         rn/RPqeWXkPqJWhRcxylkFr6qUUN2AWSH1xGD42OnjHzKbGhSq8or721NQuwWhiOKg4Y
+         sCBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717982893; x=1718587693;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ogGDeikgVtP2/JojZOHyH+g7X1ICvG0a8hd8lBtiypU=;
+        b=fzN81emzW4FK3yB8stbAf8nfsE2X0rRtZ2ZLkq+HimuN9E1q3JYfoPcecu894HBfF1
+         R5fl2dGjtlEQApUF3uXCps9uqeZoyHxkHYY+4QQeaT5b5GDJc4+CBtg+JOpUGbJ1VwkY
+         OXFvAh762mDBwtF+A+ZO5C+AuwT2nlqzJBuEpgVUQ4qecxDyMgWEvXVuaGD7jrk6T7SB
+         raGUAIpR0YN+ycBWQmB/+aB0FmeDK4f4YfXHgReWmCYCCBiLrOh8QGrypCHrO5O9PfTy
+         NDP+PdYTze1VH6FGVjndeQPhiqLsGQDSJXb8D8qooTBRukddQwE064wakCgF1EJCJl1G
+         BwjA==
+X-Gm-Message-State: AOJu0YwLqmOd4vm17/XRJZIUCNz9gRIO56TUU6hEH2HxxgRcb+RLZuL4
+	xhBjYamSZgDpQ/FBWyCFaTtxYRoMEDrxGclDIEsN6QbWUe++CCMN
+X-Google-Smtp-Source: AGHT+IFJo7eHVjaNg2drL50B9+RvvT9/t/rU7YReGKAasPj++KS22No3SWU21pQ0mLV8XqqTCBaCqw==
+X-Received: by 2002:a17:902:ccc9:b0:1f4:8a31:5a4c with SMTP id d9443c01a7336-1f6d019ef8amr117255655ad.24.1717982892523;
+        Sun, 09 Jun 2024 18:28:12 -0700 (PDT)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6bd81c9c2sm71291645ad.308.2024.06.09.18.28.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 09 Jun 2024 18:28:11 -0700 (PDT)
+Received: by archie.me (Postfix, from userid 1000)
+	id 30EC41846908D; Mon, 10 Jun 2024 08:28:08 +0700 (WIB)
+Date: Mon, 10 Jun 2024 08:28:07 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.9 000/368] 6.9.4-rc2 review
+Message-ID: <ZmZWp2YnzYmjkAsi@archie.me>
+References: <20240609113803.338372290@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="W41JxYyyql6NqAfX"
+Content-Disposition: inline
+In-Reply-To: <20240609113803.338372290@linuxfoundation.org>
 
-pseudo_lock_region_init() and rdtgroup_cbm_to_size() open code
-a search for details of a particular cache level.
 
-Replace with get_cpu_cacheinfo_level()
+--W41JxYyyql6NqAfX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
----
- arch/x86/kernel/cpu/resctrl/pseudo_lock.c | 17 ++++++-----------
- arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 14 +++++---------
- 2 files changed, 11 insertions(+), 20 deletions(-)
+On Sun, Jun 09, 2024 at 01:41:29PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.9.4 release.
+> There are 368 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
-diff --git a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-index aacf236dfe3b..1bbfd3c1e300 100644
---- a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-+++ b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-@@ -292,9 +292,8 @@ static void pseudo_lock_region_clear(struct pseudo_lock_region *plr)
-  */
- static int pseudo_lock_region_init(struct pseudo_lock_region *plr)
- {
--	struct cpu_cacheinfo *ci;
-+	struct cacheinfo *ci;
- 	int ret;
--	int i;
- 
- 	/* Pick the first cpu we find that is associated with the cache. */
- 	plr->cpu = cpumask_first(&plr->d->cpu_mask);
-@@ -306,15 +305,11 @@ static int pseudo_lock_region_init(struct pseudo_lock_region *plr)
- 		goto out_region;
- 	}
- 
--	ci = get_cpu_cacheinfo(plr->cpu);
--
--	plr->size = rdtgroup_cbm_to_size(plr->s->res, plr->d, plr->cbm);
--
--	for (i = 0; i < ci->num_leaves; i++) {
--		if (ci->info_list[i].level == plr->s->res->cache_level) {
--			plr->line_size = ci->info_list[i].coherency_line_size;
--			return 0;
--		}
-+	ci = get_cpu_cacheinfo_level(plr->cpu, plr->s->res->cache_level);
-+	if (ci) {
-+		plr->line_size = ci->coherency_line_size;
-+		plr->size = rdtgroup_cbm_to_size(plr->s->res, plr->d, plr->cbm);
-+		return 0;
- 	}
- 
- 	ret = -1;
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 02f213f1c51c..cb68a121dabb 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -1450,18 +1450,14 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
- unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
- 				  struct rdt_domain *d, unsigned long cbm)
- {
--	struct cpu_cacheinfo *ci;
- 	unsigned int size = 0;
--	int num_b, i;
-+	struct cacheinfo *ci;
-+	int num_b;
- 
- 	num_b = bitmap_weight(&cbm, r->cache.cbm_len);
--	ci = get_cpu_cacheinfo(cpumask_any(&d->cpu_mask));
--	for (i = 0; i < ci->num_leaves; i++) {
--		if (ci->info_list[i].level == r->cache_level) {
--			size = ci->info_list[i].size / r->cache.cbm_len * num_b;
--			break;
--		}
--	}
-+	ci = get_cpu_cacheinfo_level(cpumask_any(&d->cpu_mask), r->cache_level);
-+	if (ci)
-+		size = ci->size / r->cache.cbm_len * num_b;
- 
- 	return size;
- }
--- 
-2.45.0
+Successfully compiled and installed the kernel on my computer (Acer
+Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
 
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--W41JxYyyql6NqAfX
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZmZWowAKCRD2uYlJVVFO
+o2lGAP0dGu+7nBNV09SeIbB9xdX9a/utxgv5ORMtcJHB0JXHZQD+KI/VDJTKPMbg
+1slqhmM7JjCzxCKLUSgL/r7C3WSmNwk=
+=D0Gy
+-----END PGP SIGNATURE-----
+
+--W41JxYyyql6NqAfX--
