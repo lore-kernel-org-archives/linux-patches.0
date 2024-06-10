@@ -1,82 +1,81 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40729824BC;
-	Mon, 10 Jun 2024 14:24:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7A713F43B
+	for <patches@lists.linux.dev>; Mon, 10 Jun 2024 15:18:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718029449; cv=none; b=ImMt2y9rshNqhS0Kv3JO84h/9WaTr93F1Dnlip/Dl3Yt+gGrL+2HNMvpOoYefe/tX1KuX7tlEt2lxfPnbMx592UF75swJn597hyx0IkToD8RArkrCL6gle3p8KHcPP1JGrVpCpc8QXR5ESa17hGwlOdsJSkAcEcJ8vc2AVDgKsQ=
+	t=1718032738; cv=none; b=na7PZB7jBz6UJ9blNUBSH4SrgP9fxMnZRx14WcfI/xgQt3FhmT0nOYNimF37+3bGSth62aCSO4knQZ3QD6HZV3uvZKcPAfKouY9uStnjucf8EpVv3zmIAZ2RfiXjofcO8cL4LhxH9xw4A2oH1Wew5URU3/agucd1RXZJWesfBYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718029449; c=relaxed/simple;
-	bh=CkUwTt47GLouCYj8pWf5kGXAZnUE1T961KN130nzjtQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N86Cf6/8sRPMzvfK4FXCEs0npMYDZKw8eQN0MPlm8HRIQwev6KnldQFzgNBcsTahyX6P+G1WHLFyngVXvhgi3R5Yfc9B2OZ80j9DTQJi9uii9vVjWXF7b7panasS8I7OThE/Y0wDNB0F2gBllkqeXeqJWM7i761RHCoOkT7H6uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=upG/xgHV; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="upG/xgHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C9DC2BBFC;
-	Mon, 10 Jun 2024 14:24:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718029449;
-	bh=CkUwTt47GLouCYj8pWf5kGXAZnUE1T961KN130nzjtQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=upG/xgHVs7cGo2/wqxqdkh8fOUPpWKl5fy933KQpxUsEdCudYWfjzv97/ge4Ej0uK
-	 2WWm5ASWIg8YbR58ejP7syzfoMRgNzsRRYxM0SzN4sRmDvYFOM+CYgjQW8oSd0EUBz
-	 ABAYwXEfq/jZGJzuq2uyZmvbuwnBm4JasuvVhqnXTDwOxoBZH4nKx/AuT1ratMQX0L
-	 6CPO2Cz4lgo8HgKyRX307Kf+mGn8k1s9k/F3tS6OuebqX+EWKHDzJxZQVcTGDAE3X7
-	 IukgRZ7KU8zOZ0XvcJ/17Xo2LsNawbBIXcn5xRwTlTnFvh3YtHwPuXNJqKL5m2kVut
-	 h8osqvEqtaf1w==
-Date: Mon, 10 Jun 2024 15:24:05 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.1 000/470] 6.1.93-rc2 review
-Message-ID: <ZmcMhUoDivrsanoC@finisterre.sirena.org.uk>
+	s=arc-20240116; t=1718032738; c=relaxed/simple;
+	bh=Yepi9g7z6FW8Wo6xsDy2oOgVp2JCXLuU+hy3N3XteVc=;
+	h=From:In-Reply-To:Content-Type:References:Date:Cc:To:MIME-Version:
+	 Message-ID:Subject; b=tm9HX9eXJDDWJsWDJ/00vVF9rTRI+39kCgN83UU1+4FLdngOAvmqFFhCqN5cIFEVzjV1jcCu+ZwaeiG9YTYu0DWKj7J3iHEHULEYtm78hww2vOvTfY44+Sc7t0fWmRL9WEI8GwjzPUOPrKZrBdZU5FeOmkA+Ft/QBX+6ui1WceY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Received: from harlem.collaboradmins.com (harlem.collaboradmins.com [IPv6:2a01:4f8:1c0c:5936::1])
+	by madrid.collaboradmins.com (Postfix) with ESMTP id 7D91B3781107;
+	Mon, 10 Jun 2024 15:18:53 +0000 (UTC)
+From: "Shreeya Patel" <shreeya.patel@collabora.com>
+In-Reply-To: <20240609113816.092461948@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+X-Forward: 127.0.0.1
 References: <20240609113816.092461948@linuxfoundation.org>
+Date: Mon, 10 Jun 2024 16:18:53 +0100
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org, "kernelci-regressions mailing list" <kernelci-regressions@lists.collabora.co.uk>, "Gustavo Padovan" <gustavo.padovan@collabora.com>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KaQkTlKc3VFPOLdb"
-Content-Disposition: inline
-In-Reply-To: <20240609113816.092461948@linuxfoundation.org>
-X-Cookie: Your love life will be... interesting.
+Message-ID: <2ac5b7-66671980-3-77847d00@52485481>
+Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?6=2E1?= 000/470] 
+ =?utf-8?q?6=2E1=2E93-rc2?= review
+User-Agent: SOGoMail 5.10.0
+Content-Transfer-Encoding: quoted-printable
 
+On Sunday, June 09, 2024 17:11 IST, Greg Kroah-Hartman <gregkh@linuxfou=
+ndation.org> wrote:
 
---KaQkTlKc3VFPOLdb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Sun, Jun 09, 2024 at 01:41:02PM +0200, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.93 release.
-> There are 470 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
+> There are 470 patches in this series, all will be posted as a respons=
+e
+> to this one.  If anyone has any issues with these being applied, plea=
+se
 > let me know.
+>=20
+> Responses should be made by Tue, 11 Jun 2024 11:36:08 +0000.
+> Anything received after that time might be too late.
+>=20
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1=
+.93-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
+.git linux-6.1.y
+> and the diffstat can be found below.
+>=20
 
-Tested-by: Mark Brown <broonie@kernel.org>
+KernelCI report for stable-rc/linux-6.1.y for this week :-
 
---KaQkTlKc3VFPOLdb
-Content-Type: application/pgp-signature; name="signature.asc"
+## stable-rc HEAD for linux-6.1.y:
+Date: 2024-06-09
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.=
+git/log/?h=3Dbd8637d23a9e34e5be865c6bd30f591bb7200e73
 
------BEGIN PGP SIGNATURE-----
+## Build failures:
+No **new** build failures seen for the stable-rc/linux-6.1.y commit hea=
+d \o/
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZnDIUACgkQJNaLcl1U
-h9CJWQf/YVAg+ZkqDoMO9WeeIgDSLYQx2CDQAlfCGZ2zUtluVpPdYPwaahgalIaJ
-YFqJPpHaKz61eOjWzNZibL5z6sTDHvYRC/PbJTt6snXTiP1pfNwhtcVxOsVnxDyF
-fmstcavklHxWr4+1ILAxbFTu6OwTHjbOzEzmzuB5TudLBHmfM4Pq5IoOnl/C53gX
-2HwVr1I8We4dNqm6dvHYe/1ripyjghAwaKgzdnGTzb6TGNS84rlaHClVQjjvqmrA
-bK/AF7cBgY9G3q3agsiKyPcrgEDrSFNn5WylZg/DqSxEYy1mSWuDaw174UxYPPTI
-bU2vGHqlkfi9jx+m/M3A15kQEudbaQ==
-=4lJO
------END PGP SIGNATURE-----
+## Boot failures:
+No **new** boot failures seen for the stable-rc/linux-6.1.y commit head=
+ \o/
 
---KaQkTlKc3VFPOLdb--
+Tested-by: kernelci.org bot <bot@kernelci.org>
+
+Thanks,
+Shreeya Patel
+
