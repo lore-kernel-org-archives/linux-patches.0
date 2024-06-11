@@ -1,46 +1,77 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8368111A1;
-	Tue, 11 Jun 2024 14:48:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A6237160
+	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 15:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718117296; cv=none; b=ZvWDig5og29S+htKNuoDob257SE3MsFI7TxNcpVSHx4tkXUj1SrGexrhL9xUSQb2mwWUcDqetPxfDTjayO7fo1/r6ecr1AxiTeCYqUSYZbhtD/wNivMJygJJiilsYE4f5XGxe9Xnlea3Gjbhkex43qbWdHhRGHeIW81Hte09xyY=
+	t=1718120184; cv=none; b=n7e4IMjT08BU4ln2igXVk580sVWyOJ3mGk9e9fXOjXAm3PJdNsoMpZkOjAuvdFmLOhoYjA98kfy3cBSumbAUccL3IhQvB0C6FvpMDOHe4xjz/Fl0RQ8rShn/XnqjGCyGMv4nmzycyvqCqshtKU67k4tLbhZJcUrsrQQlDqiSU1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718117296; c=relaxed/simple;
-	bh=tSXLhE5A82AHcFb1qYX6yXouGrFwwmpKyD2aNdbGHFs=;
+	s=arc-20240116; t=1718120184; c=relaxed/simple;
+	bh=sEvDMhi2LuNyC8HUxfzbzLy5zJ19f9pPX5EayeZseQI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AjJrnO/2Ym1mkco5wU/inkB/hKsrUJtUOsoo2TXsp5x0INzk13BX9q2TIdZCRabe9QiuL+WGV+EfqZGayPA/nuJztBXm2y0kfAJUH3ac+ecu/NqhbJEGYjyl8QsGbLza0IMntlVxqnUjeX6OIa/Ax7saCioSUO9zPK1Fek125WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YbegQu1I; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=TouTivutC0v6d6/rX9++e2gB60KEX/KXrCedsmBmA5HXmMP1MPRqZISgPjt0uwNZAK9zXMwUG4REVPFsHzu4Qn7WT4WOevq9xFIH6WFs5jlhS+j0ZfgXaz5hzOhh2sCGtmf/dudmx5w3WtXkz+6AuHORW9ndFLb83fLE8bZL8uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=NXS15g1+; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YbegQu1I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3840CC2BD10;
-	Tue, 11 Jun 2024 14:48:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718117296;
-	bh=tSXLhE5A82AHcFb1qYX6yXouGrFwwmpKyD2aNdbGHFs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YbegQu1IyCSdxxTgJxE8Tvgx00EkdJzoV2KkT7n7a+ibty13ulDI+4grnMt5b5Nyh
-	 ujcQL3T9REjvw4gMDqSRSfl1DkDw2ZyVTglUrJPQTnEhpCufdgggwbdUe+h4K447L9
-	 z9kCAJT9/ogX4VwumaT2wdYNrWjkpzLlFF81AWdDuM6JyeHF42S9BBh6b1UgQY487V
-	 ykT+q4mGatOfl3FmUCY2nlPHxKqOQFe+o26/E1JnT7x0yHPDM67v0SlPfEwWrwFKIF
-	 YgBVVsPOUWRCrvYrL7ZThJjmpb9p7vTjUQ2bIglNhPysjc5ooOWPHj/2ZtC6rpCRxd
-	 v9ZC4t0Qf6FpA==
-Date: Tue, 11 Jun 2024 07:48:15 -0700
-From: "Darrick J. Wong" <djwong@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: patches@lists.linux.dev, fstests@vger.kernel.org,
-	linux-xfs@vger.kernel.org, linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org, akpm@linux-foundation.org,
-	ziy@nvidia.com, vbabka@suse.cz, seanjc@google.com,
-	willy@infradead.org, david@redhat.com, hughd@google.com,
-	linmiaohe@huawei.com, muchun.song@linux.dev, osalvador@suse.de,
-	p.raghav@samsung.com, da.gomez@samsung.com, hare@suse.de,
-	john.g.garry@oracle.com
-Subject: Re: [PATCH 3/5] fstests: add fsstress + compaction test
-Message-ID: <20240611144815.GJ52977@frogsfrogsfrogs>
-References: <20240611030203.1719072-1-mcgrof@kernel.org>
- <20240611030203.1719072-4-mcgrof@kernel.org>
+	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="NXS15g1+"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52c8432e241so402654e87.1
+        for <patches@lists.linux.dev>; Tue, 11 Jun 2024 08:36:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1718120181; x=1718724981; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zYiOKqOztGolPpdiFV4XN2+aPrwTQCSjwVf5L3ie3JA=;
+        b=NXS15g1+tOQp3TjXfN+EAI97lVbWcP5HqKueGj5xyDQWIb7Md2VbOwgJOTyhWjvsGi
+         EdKpKJUftF1KkIh8cRQZLseyYWzF2X4EAnEi6ZSD1dgow2zjcE0Bis4GoxdYAFARq7sp
+         JuvpUAQg2LSprEwwnSHTmHcwmVqro0OgFNGwc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718120181; x=1718724981;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zYiOKqOztGolPpdiFV4XN2+aPrwTQCSjwVf5L3ie3JA=;
+        b=j6rIhVNRNyRhe8qoHktjZ/IDWHUYbzFu71OgS/ZfROvK8s0999l0U6652I0i5rHYaK
+         vrkbi8+O5WicoDoSkN7ZmDSudvuV6zKQAyB5cLlRJrCRgICMC9lgIAyFEd2uOAdlujJk
+         daQU2i6UmcA4Pja9L8KOMs/wGpYk36YIQ/G3h/MbeOXsjEq5UHaqXnHIRoZcSGhCpljt
+         mdPrj7QLZxmLH4XO1oX5P04TrMA12IA+OtMrqnxt+Q9d1SJ86Wk3rOj4QHG03QwcUjIe
+         fJaIz616p4D3r2nyN/tSgk5Q4U1XOAA1ZDT23vK7Q+5iwa4GbiAlOLxiFtXmIemieEbY
+         Cv0A==
+X-Forwarded-Encrypted: i=1; AJvYcCX9k+ZiU0ZdfBiz5tiiLvUoJoxhhQoGrCF6DubhpaN+A/aZ02mJPTu2DFVIc552YY+c0ET3h0iwV1CY4ucRqH2CGC1ALpRssg==
+X-Gm-Message-State: AOJu0Ywu9sr2HAC9+ZPMc0wfdE4St4pOrNjpmWgo/pZlvqtFQZfv/Ss5
+	jirVSXQYGX1LuWfoB1kkUDg6J3zAdjhhbCCyRRKDbBUHa7qAyQ1oiJXkXR6MNTs=
+X-Google-Smtp-Source: AGHT+IEqvd8t7yV4Y08H9toKdWjldXNuJHx8xMhVZIiBly5rz0ehyy1t+vkdmGULc+LniJtZqK7xKQ==
+X-Received: by 2002:a19:9107:0:b0:52b:c06d:70cf with SMTP id 2adb3069b0e04-52bc06d7164mr5715253e87.4.1718120180437;
+        Tue, 11 Jun 2024 08:36:20 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42274379b83sm10409345e9.28.2024.06.11.08.36.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jun 2024 08:36:19 -0700 (PDT)
+Date: Tue, 11 Jun 2024 17:36:17 +0200
+From: Daniel Vetter <daniel@ffwll.ch>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Dan Williams <dan.j.williams@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>, David Ahern <dsahern@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
+	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Aron Silverton <aron.silverton@oracle.com>,
+	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
+	Leonid Bloch <lbloch@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 0/8] Introduce fwctl subystem
+Message-ID: <Zmhu8egti-URPFoB@phenom.ffwll.local>
+References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
+ <20240603114250.5325279c@kernel.org>
+ <214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
+ <20240604070451.79cfb280@kernel.org>
+ <665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
+ <20240605135911.GT19897@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,144 +80,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240611030203.1719072-4-mcgrof@kernel.org>
+In-Reply-To: <20240605135911.GT19897@nvidia.com>
+X-Operating-System: Linux phenom 6.8.9-amd64 
 
-On Mon, Jun 10, 2024 at 08:02:00PM -0700, Luis Chamberlain wrote:
-> Running compaction while we run fsstress can crash older kernels as per
-> korg#218227 [0], the fix for that [0] has been posted [1] that patch
-> was merged on v6.9-rc6 fixed by commit d99e3140a4d3 ("mm: turn
-> folio_test_hugetlb into a PageType"). However even on v6.10-rc2 where
-> this kernel commit is already merged we can still deadlock when running
-> fsstress and at the same time triggering compaction, this is a new
-> issue being reported now this through patch, but this patch also
-> serves as a reproducer with a high confidence. It always deadlocks.
-> If you enable CONFIG_PROVE_LOCKING with the defaults you will end up
-> with a complaint about increasing MAX_LOCKDEP_CHAIN_HLOCKS [1], if
-> you adjust that you then end up with a few soft lockup complaints and
-> some possible deadlock candidates to evaluate [2].
+On Wed, Jun 05, 2024 at 10:59:11AM -0300, Jason Gunthorpe wrote:
+> On Tue, Jun 04, 2024 at 04:56:57PM -0700, Dan Williams wrote:
+> > * Introspection / validation: Subsystem community needs to be able to
+> >   audit behavior after the fact.
+> > 
+> >   To me this means even if the kernel is letting a command through based
+> >   on the stated Command Effect of "Configuration Change after Cold Reset"
+> >   upstream community has a need to be able to read the vendor
+> >   specification for that command. I.e. commands might be vendor-specific,
+> >   but never vendor-private. I see this as similar to the requirement for
+> >   open source userspace for sophisticated accelerators.
 > 
-> Provide a simple reproducer and pave the way so we keep on testing this.
+> I'm less hard on this. As long as reasonable open userspace exists I
+> think it is fine to let other stuff through too. I can appreciate the
+> DRM stance on this, but IMHO, there is meaningfully more value for open
+> source in trying get an open Vulkan implementation vs blocking users
+> from reading their vendor'd diagnostic SI values.
 > 
-> Without lockdep enabled we silently deadlock on the first run of the
-> test without the fix applied. With lockdep enabled you get a splat about
-> the possible deadlock on the first run of the test.
-> 
-> [0] https://bugzilla.kernel.org/show_bug.cgi?id=218227
-> [1] https://gist.github.com/mcgrof/824913b645892214effeb1631df75072
-> [2] https://gist.github.com/mcgrof/926e183d21c5c4c55d74ec90197bd77a
-> 
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> ---
->  common/rc             |  7 +++++
->  tests/generic/750     | 62 +++++++++++++++++++++++++++++++++++++++++++
->  tests/generic/750.out |  2 ++
->  3 files changed, 71 insertions(+)
->  create mode 100755 tests/generic/750
->  create mode 100644 tests/generic/750.out
-> 
-> diff --git a/common/rc b/common/rc
-> index e812a2f7cc67..18ad25662d5c 100644
-> --- a/common/rc
-> +++ b/common/rc
-> @@ -151,6 +151,13 @@ _require_hugepages()
->  		_notrun "Kernel does not report huge page size"
->  }
->  
-> +# Requires CONFIG_COMPACTION
-> +_require_vm_compaction()
-> +{
-> +	if [ ! -f /proc/sys/vm/compact_memory ]; then
-> +	    _notrun "Need compaction enabled CONFIG_COMPACTION=y"
-> +	fi
-> +}
->  # Get hugepagesize in bytes
->  _get_hugepagesize()
->  {
-> diff --git a/tests/generic/750 b/tests/generic/750
-> new file mode 100755
-> index 000000000000..334ab011dfa0
-> --- /dev/null
-> +++ b/tests/generic/750
-> @@ -0,0 +1,62 @@
-> +#! /bin/bash
-> +# SPDX-License-Identifier: GPL-2.0
-> +# Copyright (c) 2024 Luis Chamberlain.  All Rights Reserved.
-> +#
-> +# FS QA Test 750
-> +#
-> +# fsstress + memory compaction test
-> +#
-> +. ./common/preamble
-> +_begin_fstest auto rw long_rw stress soak smoketest
-> +
-> +_cleanup()
-> +{
-> +	cd /
-> +	rm -f $runfile
-> +	rm -f $tmp.*
-> +	kill -9 $trigger_compaction_pid > /dev/null 2>&1
-> +	$KILLALL_PROG -9 fsstress > /dev/null 2>&1
-> +
-> +	wait > /dev/null 2>&1
-> +}
-> +
-> +# Import common functions.
-> +
-> +# real QA test starts here
-> +
-> +_supported_fs generic
-> +
-> +_require_scratch
-> +_require_vm_compaction
-> +_require_command "$KILLALL_PROG" "killall"
-> +
-> +# We still deadlock with this test on v6.10-rc2, we need more work.
-> +# but the below makes things better.
-> +_fixed_by_git_commit kernel d99e3140a4d3 \
-> +	"mm: turn folio_test_hugetlb into a PageType"
-> +
-> +echo "Silence is golden"
-> +
-> +_scratch_mkfs > $seqres.full 2>&1
-> +_scratch_mount >> $seqres.full 2>&1
-> +
-> +nr_cpus=$((LOAD_FACTOR * 4))
-> +nr_ops=$((25000 * nr_cpus * TIME_FACTOR))
-> +fsstress_args=(-w -d $SCRATCH_MNT -n $nr_ops -p $nr_cpus)
-> +
-> +# start a background trigger for memory compaction
-> +runfile="$tmp.compaction"
-> +touch $runfile
-> +while [ -e $runfile ]; do
-> +	echo 1 > /proc/sys/vm/compact_memory
-> +	sleep 5
-> +done &
-> +trigger_compaction_pid=$!
-> +
-> +test -n "$SOAK_DURATION" && fsstress_args+=(--duration="$SOAK_DURATION")
+> I don't think we should get into some kind of extremism and insist
+> that every single bit must be documented/standardized or Linux won't
+> support it.
 
-Maybe put this with the other fsstress_args definition above, but
-otherwise this looks reasonable.
+I figured it might be useful to paint what we do in DRM with a bit more
+nuance. In the principles, we're indeed fairly radical in what we require,
+but in practice we aim for a much more pragmatic approach in what we
+merge. There's two major axis here:
 
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+1. One is ecosystem maturity. One end is 3d, with vulkan as the clear
+industry standard, and an upstream full-featured userspace driver in
+mesa3d is the only technically reasonable choice. And all gpu vendors
+agree and by this year even nvidia started hiring an upstream team. But
+this didn't happen magically overnight, it took 1-2 decades of background
+discussions and tactical push&pulling to get there.
 
---D
+The other end is currently AI accelerators. It's a complete mess, where
+across the platform (client, edge, cloud), customer and vendor dimension
+every point has a different stack. And the problem is so obvious that
+everyone is working to fix this, which means currently
+https://xkcd.com/927/ is happening in parallel. Just to get things going
+we're accepting pretty much anything that's a notch above total garbage
+for userspace and for merging into the kernel.
 
-> +
-> +$FSSTRESS_PROG $FSSTRESS_AVOID "${fsstress_args[@]}" >> $seqres.full
-> +wait > /dev/null 2>&1
-> +
-> +status=0
-> +exit
-> diff --git a/tests/generic/750.out b/tests/generic/750.out
-> new file mode 100644
-> index 000000000000..bd79507b632e
-> --- /dev/null
-> +++ b/tests/generic/750.out
-> @@ -0,0 +1,2 @@
-> +QA output created by 750
-> +Silence is golden
-> -- 
-> 2.43.0
-> 
-> 
+2. The other part is how much it impacts applications. If you can't run
+the same application across different vendors, the case for an upstream
+stack becomes a lot weaker. At the other end is infrastructure enabling
+like device configuration, error handling and recovery, hw debugging and
+reliablity/health reporting. That's a lot more vendor specific in nature
+and needs to be customized anyway per deployement. And only much higher in
+the stack, maybe in k8s, can a technically reasonable unification even
+happen.  So again we're much more lenient about infrastructure enabling
+and uapi than stuff applications will use directly.
+
+Currently that's enough of a mess in drm that I feel like enforcing
+something like fwctl is still too much. But maybe once fwctl is
+established with other subsystems/devices we can start the conversations
+with vendors to get this going a few years down the road.
+
+Both together mean we land a lot of code that's questionable at best,
+clear garbage at worst. But since we've been in the merging garbage
+business just to get things going for decades, we've become pretty good at
+dealing with the kernel internal and uapi fallout, some say too good. But
+personally I don't think there's a path to where we are with 3d/vulkan
+that doesn't go through years of this kind of suck, and very much merged
+into upstream kind of suck.
+
+For all the concerns about trusting vendors/devices to not abuse very broad
+uapi interfaces: Modern accelerator command submission boils down to "run
+this context at this $addr", and the kernel never ever directly sees
+anything more fly by. That's the same interface you need for a no-op job
+as a full blown AI workload, so in theory maximal abuse potential.
+
+In practice, it doesn't seem to be an issue, at least not beyond the
+intentionally pragmatic choices where we merge kernel code with known
+sub-par/incomplete userspace. I'm not sure why, but to my knowledge all
+attempts to break the spirit of our userspace rules while following the
+letter die in vendor-internal discussions, at least for all the
+established upstream driver teams.
+
+And for new ones it takes years of private chats to get them going and
+fully established in upstream anyway.
+
+Maybe one reason we have a bit an extremist reputation is that all the
+public takes are the radical principled requirements, while the actual
+pragmatic discussions mostly happen in private.
+
+tldr; fwctl as I understand it feels like a bridge to far for drm today,
+but I'd very much like someone else to make this happen so we could
+eventually push towards adoption too.
+
+Cheers, Sima
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
