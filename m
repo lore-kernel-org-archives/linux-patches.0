@@ -1,97 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA06238F82;
-	Tue, 11 Jun 2024 18:13:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14F0249E5;
+	Tue, 11 Jun 2024 18:15:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718129615; cv=none; b=If7bZZ49o3q/kpYKTK0jjdNmagb8zWF7ATtxU7rY1DlNsC1LyI4d4w8KgDwgfsaGQIa1nB9GB9ZqLrzDtxE9YVmRTcD4P9/RYto6hbvAsxWaytlbC10URlTXfVYVAzqaynp8w7S0z8x2TjO1TnBdksjMsWgDLJ5K/jxFOa1+x6Q=
+	t=1718129756; cv=none; b=KAZZItJLRVUzFysXFpumllZ+GIaiH+LSYDBb9K6OiQSEogZSfghK1Y4bGUZHYHwzXPFNHjWJbwik9FVBK4uxlHKpfSgjR3raJePX5nIJiMwfgpi4qP/YzV0DoZ5/NODfQZd5am3mjB27+WCrAnCK1MnmvaLOaQW7hwgEPJ2iMd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718129615; c=relaxed/simple;
-	bh=uivTqbZoY1v55pF3TqH87ho4GbXW/I0PrebU1TrJ1FY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=bKSw+HpcJpDQfjqKeHJWKIpgqukBP46Bm9G30zJdgMxD30UdZjbG6gpYBDKMT0yNXKljiP1tN4VwLujWR/3fDlD3fUCLvKT4P/yQNYqMhc5/rd7s8cRC2GkPfclpVIbp1PaLa/TLxnWiOikSyLG8/ZIRqHbavkWkE1jAK2fJ4SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JqGNzTG0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718129756; c=relaxed/simple;
+	bh=v46CDCGwGUeW+lfXszQlWf78g2fNI8PxH/dA9IlvNhM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VtMx1N2Ux8hfdmz4nag8F0wECz8mb66YJGrZCbcLRZ5JzTdbBAGQTBZcxh/CMmrkS5YPsYV9KE3Ym8hU4GfaOut8VubCgZZniRT9vzN4DW0OR/4loKWqJVur9PTJLl8EkrH9f3PSHktB0dgZTZiIW1s4hB+ZusO9Q3qnohYPpZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=k86RAQaJ; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JqGNzTG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E40FC2BD10;
-	Tue, 11 Jun 2024 18:13:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718129614;
-	bh=uivTqbZoY1v55pF3TqH87ho4GbXW/I0PrebU1TrJ1FY=;
-	h=From:Date:Subject:To:Cc:From;
-	b=JqGNzTG0s2Ec/LNdhv0lx4CB6za6ouDuHfBjWBgjqDPsvI2R0nvog8IXEhZfo6Rdf
-	 zkgR1OCItcoHVisxojlxr7/5CuNjvAcFHPsEVVhRBxqTXiYdfZ8g2RIMdE4khIzQVh
-	 Jgqf6PA5y465o1294Etli6sJzvlVODREmLFNUEUoQp8NTobft1IsYjav+NG9DOwj9a
-	 IxNkLEpF1kvC9J7NZiDSi1uEnWvIGp/vKB2Ik4kIpjdX0F/F6ZsJHsKpPkVnEW9+XI
-	 mMrRmHaWOxeg1IMu3lOPJZg5dYLAzGKuWB44PDfZI1LQ/9LAf5or6vKVffckLiegZP
-	 q2rPW8OzIxgNg==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 11 Jun 2024 11:13:32 -0700
-Subject: [PATCH] pinctrl: keembay: Fix func conversion in
- keembay_build_functions()
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="k86RAQaJ"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=we709GSrSi71LXBSzqvO1IMG9MEKMIAa8MQWGK8e8Rg=; b=k86RAQaJB2pO/3bH4b5xgLqG3O
+	m9XVNqyJEnWSDrNZxjEkMeafgLdxxuFtWk2l6aRqhG89GNqV9y50TJehG3bSG2REq/s01oLbqT41D
+	emhDRSIQQF7Vqys1AEgOzlWFYUvJQo+wbPVE5A9XGenYTz+fe1j7AweyTnE5x6iBNsQdrdVXEi2dn
+	rE3DEjsuD3/to1vdDILnLurdUn5ljJBUn8L+0KiswP5vNrPYb5ZKxgRYQ/KYYrtxjOKLmDpMUYpXL
+	fWomhalzcwK7yw1Va5svurPLM5IewVNdpx/n00AvCvy3tovDi8atK6smav4j7rCqLI/x10zdIWJ6t
+	PmdZrMUw==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1sH62C-00000009oHv-2dF3;
+	Tue, 11 Jun 2024 18:15:52 +0000
+Date: Tue, 11 Jun 2024 11:15:52 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: "Darrick J. Wong" <djwong@kernel.org>
+Cc: patches@lists.linux.dev, fstests@vger.kernel.org,
+	linux-xfs@vger.kernel.org, linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org, akpm@linux-foundation.org,
+	ziy@nvidia.com, vbabka@suse.cz, seanjc@google.com,
+	willy@infradead.org, david@redhat.com, hughd@google.com,
+	linmiaohe@huawei.com, muchun.song@linux.dev, osalvador@suse.de,
+	p.raghav@samsung.com, da.gomez@samsung.com, hare@suse.de,
+	john.g.garry@oracle.com
+Subject: Re: [PATCH 5/5] fstests: add stress truncation + writeback test
+Message-ID: <ZmiUWCPcmtFSdrBG@bombadil.infradead.org>
+References: <20240611030203.1719072-1-mcgrof@kernel.org>
+ <20240611030203.1719072-6-mcgrof@kernel.org>
+ <20240611144503.GI52977@frogsfrogsfrogs>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240611-pinctrl-keembay-fix-func-conversion-v1-1-3197f2ded3f7@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAMuTaGYC/x2N0Q6CMAxFf4X02SbbQhT9FePDVgo0aCEdEgnh3
- 50+nuSee3bIbMIZbtUOxqtkmbSAP1VAQ9SeUdrCEFyo3dl7nEVpsSeOzK8UN+zkg91bCWnSle3
- n48Wla8MhxVgTlKfZuMz+lfvjOL6x9eQvdQAAAA==
-To: Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>, 
- Linus Walleij <linus.walleij@linaro.org>, 
- Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc: linux-gpio@vger.kernel.org, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1449; i=nathan@kernel.org;
- h=from:subject:message-id; bh=uivTqbZoY1v55pF3TqH87ho4GbXW/I0PrebU1TrJ1FY=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDGkZk8/ujBPlMkw0Yb9RmWa9frlvXYdWde8UoQxu0z6n+
- f85i3d3lLIwiHExyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgIm0H2Rk6BL63s2V8DZY2qW0
- 4sOBGfWJbX7fV8tf+rs9Mtr0VN8zAYZ/Srrr653W3pUyaPfPYnJXff4u7z4T34L5t2MEV+sduKX
- HDAA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240611144503.GI52977@frogsfrogsfrogs>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-A recent refactoring to use the func member in struct function_desc
-missed converting one uses of name in keembay_build_functions(),
-resulting in a build failure:
+On Tue, Jun 11, 2024 at 07:45:03AM -0700, Darrick J. Wong wrote:
+> On Mon, Jun 10, 2024 at 08:02:02PM -0700, Luis Chamberlain wrote:
+> > +# Requires CONFIG_DEBUGFS and truncation knobs
+> > +_require_split_debugfs()
+> 
+> Er... I thought "split" referred to debugfs itself.
+> 
+> _require_split_huge_pages_knob?
 
-  drivers/pinctrl/pinctrl-keembay.c: In function 'keembay_build_functions':
-  drivers/pinctrl/pinctrl-keembay.c:1630:35: error: 'struct function_desc' has no member named 'name'
-   1630 |                         if (!fdesc->name) {
-        |                                   ^~
+Much better, thanks.
 
-Perform the same conversion to resolve the build error.
+> > +# This aims at trying to reproduce a difficult to reproduce bug found with
+> > +# min order. The issue was root caused to an xarray bug when we split folios
+> > +# to another order other than 0. This functionality is used to support min
+> > +# order. The crash:
+> > +#
+> > +# https://gist.github.com/mcgrof/d12f586ec6ebe32b2472b5d634c397df
+> 
+> You might want to paste the stacktrace in here directly, in case the
+> gist ever goes away.
 
-Fixes: 73ee52205e5a ("pinctrl: keembay: Convert to use func member")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/pinctrl/pinctrl-keembay.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Its not a simple crash trace, it is pretty enourmous considering I
+decoded it, and it has all locking candidates. Even including it after
+the "---" lines of the patch might make someone go: TLDR. Thoughts?
 
-diff --git a/drivers/pinctrl/pinctrl-keembay.c b/drivers/pinctrl/pinctrl-keembay.c
-index 245a74ed97ee..b693f4787044 100644
---- a/drivers/pinctrl/pinctrl-keembay.c
-+++ b/drivers/pinctrl/pinctrl-keembay.c
-@@ -1627,7 +1627,7 @@ static int keembay_build_functions(struct keembay_pinctrl *kpc)
- 			}
- 
- 			/* Setup new function for this mux we didn't see before */
--			if (!fdesc->name) {
-+			if (!fdesc->func.name) {
- 				fdesc->func.name = mux->name;
- 				fdesc->func.ngroups = 1;
- 				fdesc->data = &mux->mode;
+> > +if grep -q thp_split_page /proc/vmstat; then
+> > +	split_count_after=$(grep ^thp_split_page /proc/vmstat | head -1 | awk '{print $2}')
+> > +	split_count_failed_after=$(grep ^thp_split_page_failed /proc/vmstat | head -1 | awk '{print $2}')
+> 
+> I think this ought to be a separate function for cleanliness?
+> 
+> _proc_vmstat()
+> {
+> 	awk -v name="$1" '{if ($1 ~ name) {print($2)}}' /proc/vmstat
+> }
 
----
-base-commit: e53de87ac331eb2186477f69bf90e95d1ba39d55
-change-id: 20240611-pinctrl-keembay-fix-func-conversion-70b98e2baa4c
+> Otherwise this test looks fine to me.
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+Thanks!
 
+  Luis
