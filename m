@@ -1,36 +1,36 @@
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2041.outbound.protection.outlook.com [40.107.244.41])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2054.outbound.protection.outlook.com [40.107.94.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01D7442F;
-	Tue, 11 Jun 2024 00:31:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC6236D;
+	Tue, 11 Jun 2024 00:31:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718065893; cv=fail; b=P9UXCvOHSWaRcDite+9m6CWkHLjx4Fn7FaZLR72wuCygshOgNz3NrzQTVHLQ+8uAoUBOPkgwQUfDAgWqF/5kbRghsEWsrtLJIwqw9d/Q9wGYiCXhZaoWSQITGbveUwMKKu6MCQ2/hEnvtByUPmhAa6VBMnuedXcGgNLdQHkJaXg=
+	t=1718065894; cv=fail; b=twA+uz7Rk5t47QeOAflcTH+TK1PMCQ1WMEeYsnHIFMs0wT0KeSTnPgALAm5ZoRdVU9RrQ6YuFuGDoWbZMZ89LsGoLZOFusdm3PhPfd2fv7lHUSd1R4JKACFqOY0ZNOvwHhohE7mjr8Y3/bpDwvfkRjdi/FCSgVbmfj2R9QLtBnI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718065893; c=relaxed/simple;
-	bh=CuwYQeN/dOaQ8zWy2GC4CxXlY1TrZ3a0g7mY1Qo+arU=;
+	s=arc-20240116; t=1718065894; c=relaxed/simple;
+	bh=fkzKJns/4GCrl4nQAWUJVIUK0KT6l2HeDaDUd9z/8Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=l4PYR11zPE6yIP6qKFJLB/NznJUsDSpnTWe8BV+sBO9WZZmV/Im5FEvpKaG49zVyCxp0PlCENHwXKb/xk7Z313SqSH+l0SmJeaQJ8UMStIaIC1/yxhAFHk3cT9CA2MOJu741lBWvIzKcLLcrdsTs1EhFFaG9FEut2QcGkLgdXFU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Nc7UQQ4F; arc=fail smtp.client-ip=40.107.244.41
+	 Content-Type:MIME-Version; b=uLKgqxOMGkPhmI3lLPu6yglLgHAl/u6iYRPaTSvnlyCjytoGt8oX3EHBCaWlSqxjs2eoZ4wllgx5H9wGaTZy2JQXG4KPzKjfY5k4Zd+yESbFe72qCuJqJeAMnVxaTGriOhMT/oLOmTXJ7ZrdZpAkFVT4kHPa0tn1Fi6WWIbwUTY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=GgvJN/AQ; arc=fail smtp.client-ip=40.107.94.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Nc7UQQ4F"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="GgvJN/AQ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bswq4Gf7lvVrW35i5obRzmIrj1nhAcdZbgF9Dk1xSpG4HEt6e5+vBJcFKQpJkXbWXxScJxd8gf22BfCD/FCW6BNp8r1wDUwDY2dxXA7V8/Zj6V3q6yiaLOA8r4XvCqEqBxCqZa6+pKbI5MTOrRxpFYKFq7RlGxri0mYajskxXfGa/U2BHz9V1jlE1jcrG48hePAvDKNGS0rL9JD0gzLTKH9vZFKYBdRcM4dFerCJb5ismtD5JRqAPxaD2+Fd+0pd6q3s6ePSBE/XMGSIGonShs7ttIa2Zk29PU9bMwjyBGOa6a477Df9Pf088qtOKHCwaMpRoXCdevI9vola6BgHBg==
+ b=B3wa5WRz/Am+oCObsEbARwUOnS8upmmnY6O8I3lfX0U/CMmxfKynk2UV6+i/SU1MUEe1xeOWh+6IGEMvSMuEFC7m3k4RNYtBpG5TTh/IX2rpWkrMOwvGysEsVtMLuCqjxpJhKD0ojmL1uw/MLRxUxOuI3H5m+iIoNrON+jqNF+2wySEwRRRGMpJKJBo/I8HosqTHbj/JM6B6x2DkWnSoOBePrHEnJSo3Ww99qUBTqQ3ojlLmS1vdvufC3yCakHZsZQKP3CHJJGVCL/3kZCM48CU6XlMD9iyNAtqsKMLM4jed1UFrqZYnJOOybvI2skhERfXD9b86ApUMlXX2EjYSig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oYTgEj35A0f91/EyyxlcXOxicqIPPwHiJLPWeuNG3E4=;
- b=aZOVKturi54bWsfOOJw6LaQbYgPkFcYFMVM6cSl4x7ZEt8YNkbkYPZ9fW/XlGIzRneBJ3qTRNwWhlq4ZW+nYBUxGUegxxMRAx2x9tZuNSQ1yBktguN0lkqw5LZWJnbTWaMPrIzIR1YdpDg3DqiK/iYich9aM9fAOPalz2hdOkzab6yHRDvSrjI+LR9/oZPDJGCXORLxhjzlfWrg7E0IXP9aID7tnpDjKyVvh3unFO/a1x/ZT4cX4pOQd6YQ4QS0PkwrkLbj6kYnVoIOCmX7YU+/xZQ/7jPz6D+8v4XWUfa7rSj4gOA3bGAhoAZLNygV7ld4obqC9GM7TF9M8XdTxpQ==
+ bh=zGBoX46GEwVxp49l1OKu7+S0xbj6faopuERfQ6HizIk=;
+ b=idDx8jy0TevZ7kGWN5mAYsVsCNFv9wS5jThwRSfpGqvHaYBjK8QQKppPPLrfwTtjX3oc/hfQbjd+Izyu7r9W3R0VnWWpfTDAJyNTNsTAel6Z8z38/aSZZCrbIOd/2IqL0jrrfe9ChiMOKPnm8lEtO5kcshBpigubTHOAINue5oCmc/3PcxgieOTFfCuOmg+RH0MuxhcJUsVm/ampoRbxEFq7tWKg7qGYIVhIfT1Jb+FivLbKlmioN/H4kNFehBVCKNS9LKjzLWNBvUMSmWSDbSbksXgftX4tNUesOyQTjVzUdm793RlzSxG3sQ4MfcnExJslkcYWGV5xXhSMNOJGJQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oYTgEj35A0f91/EyyxlcXOxicqIPPwHiJLPWeuNG3E4=;
- b=Nc7UQQ4FgrFKuEWOee4SZnLc6+nResOLPjGeNQVlWUbhCIll4m98CTSDZlk303NukUPgEmbXNlp96vIRBV9RrNenzNJkgkhP2Me3I0qbO0xlSboZrmWcm+P4coS90ILjchM3n3yp1Om4CSQhy4GSjV9NTuMxjCqYQx9FZxmL6cDyMT7Io26PNK7WWzTjV+FT9I9VDycITi2b4k4XVQo/egDWhUToq1zOQ0/eFs33RLQxbjOgtwdFgPXh5EfbAWdSElYvOM17PqxQjnIVoWiMk6WLaLXbwIw5J5B4TqSDd8TAoZRu7YBJPdlQ0nPPw3Jvsxj+KAngfoNjvnnM+mOWzg==
+ bh=zGBoX46GEwVxp49l1OKu7+S0xbj6faopuERfQ6HizIk=;
+ b=GgvJN/AQB/XJ/ziYABbaJpX1rKhpKpcpppBAhKwarKdAhbcJPVu/oYIatGqJ59tfM1Sxw/qX1jSV7sq8RXsHgBtdCF1z6DLgQIifwsS3GEBsuDZIesnHRLkkxXE4ksqmrmvu+0u4Ez8mkwrYGIWWOJnwurB1GjQBCY+3pVkoE0lYJ9QILSzof/v560DvRKf0WLJvhHiF1HqrTU2MEUNGsoBak00s0oLhrsDi1GA8PxgmpsMUdiYWpWXTgkOGzT7pBGxosYgWtmUYNxas0g2VK/7h0Ec7DZnUiARN77Uv6SOObio05QWLXR6BJTwN916XDWzhu2Qcw503bYpiC9rnkA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
@@ -53,15 +53,15 @@ Cc: Michael Shavit <mshavit@google.com>,
 	patches@lists.linux.dev,
 	Ryan Roberts <ryan.roberts@arm.com>,
 	Mostafa Saleh <smostafa@google.com>
-Subject: [PATCH v2 01/10] iommu/arm-smmu-v3: Do not zero the strtab twice
-Date: Mon, 10 Jun 2024 21:31:10 -0300
-Message-ID: <1-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com>
+Subject: [PATCH v2 04/10] iommu/arm-smmu-v3: Add types for each level of the 2 level stream table
+Date: Mon, 10 Jun 2024 21:31:13 -0300
+Message-ID: <4-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com>
 In-Reply-To: <0-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BL1PR13CA0449.namprd13.prod.outlook.com
- (2603:10b6:208:2c3::34) To DM6PR12MB3849.namprd12.prod.outlook.com
+X-ClientProxiedBy: MN2PR18CA0015.namprd18.prod.outlook.com
+ (2603:10b6:208:23c::20) To DM6PR12MB3849.namprd12.prod.outlook.com
  (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -71,142 +71,196 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|MN6PR12MB8565:EE_
-X-MS-Office365-Filtering-Correlation-Id: bb2680e8-9555-4fe0-c8e8-08dc89add16c
+X-MS-Office365-Filtering-Correlation-Id: e27f5516-5a93-4a06-a931-08dc89add18c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|1800799015|366007;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?kpsLZ37GTlYpD1JQPy6osr7BCwcq4wGQUiFoO4btRzzh4ANUe6xME+mle8BP?=
- =?us-ascii?Q?cw2oA+b+SdV+X/T5Djy9AURYolWazT7UVwUXYl+cKMEmc1N46F4eWUB5APPR?=
- =?us-ascii?Q?+sr8FFAx/nb+ucxTXgWxtmp3tk6AmD6rW71tNaDjNiYBUv7LaGaOJoDrTil3?=
- =?us-ascii?Q?p04GdjqzlzWVVLHTed6QflUDJZ/7xi+xL5/yzI3AXs+qCuLUUpWzkp4QRBKt?=
- =?us-ascii?Q?NV0U7uYDg7WY5A3L5mdCS9emmnBtM2BU9AZy5v4kiriGwBMFv2d6dyHzCvWD?=
- =?us-ascii?Q?AG+eQdnAtot8AULrbXogsRhhfMvoAZi5mdSGYPco+E2Tcb8jqrqf8mQwLlUN?=
- =?us-ascii?Q?RTVYGkVMAXz69oLmnp9Z2UQhkFKLPZibliyiom7somUyfZBK+V3tbuYPvfuJ?=
- =?us-ascii?Q?JQNS6WfzleW+ArgIc7nrW/eAOjgfdZRFjxqPwff1HkVmkjh0cu6ryUlP8A6l?=
- =?us-ascii?Q?LTbSS5Apo4fBRRX6bg8mf6iMsQgHCBU5Rhi6QFnkS1rGIDs852atZkbrRi90?=
- =?us-ascii?Q?xw9Q+It9iKdKuy2EDfGhTTJRJYezavKyCX4D7WPtbrY8EH1xcleoDKx4wE4l?=
- =?us-ascii?Q?/z0Vn1qZdDYD/vEkREwiKw6RMQaE7ASiTUEKO4Hkg6FcNoJ3PhFWFmnoEVc1?=
- =?us-ascii?Q?CTRYymGUcvQlIERPwoQqdt6RGzpQ64KiQCKujFXQa/uFMEIercsGBU6BpC3I?=
- =?us-ascii?Q?0JIWizJyGc26h1alVHlyZSbBVoVhBwwiiRr4CsdCKjO+njPGNMyz63Cd9G0T?=
- =?us-ascii?Q?84e1GlDrrhbeDXQM+KRsRIWYQuq/RMgnyc7sYxC/wvRMcXeKS6UpimBAo7V+?=
- =?us-ascii?Q?OXVsTDJq5LGCQy0sy87Z96oQTPyKPwWM+no/pLyFlRlR2XArr3Wqyla9ffcr?=
- =?us-ascii?Q?kJNPdP86RZ2L2wQH6iYlXUphFZvW39Ix8I6bvQybpsD9/jCLR54xW8q2pOYl?=
- =?us-ascii?Q?naA+s2plqSJ+FWD4ReVHpKJDwUsxTumeWGwFpL0CzfqbECW87IrAiKfYc58q?=
- =?us-ascii?Q?4DBXHygNBhCh2M0gq7Ml3MA8/sqbq9sbsQ4WO7MmdgLvvNvh4YV4ZXAAuFyh?=
- =?us-ascii?Q?e7HFJ3ky1rPPWFoN6glUPgXTiPFDYpzoTXkcQ3r1tSSQG6Hw8Z7L/Clu+EWW?=
- =?us-ascii?Q?bd/C3ZYcW2Bq1WvESXbNTG/vuBIsrqLSP0F0hhB6H9gv3a9CdZpUnuYJ5p7A?=
- =?us-ascii?Q?WSMtJbhQagRwDnH3Dnw98vHwsTjsNkWkuWp91D99pE0EGhWrnh20OIUr3LYH?=
- =?us-ascii?Q?jhpXhQvm2utOmP/oMYTlS0h3MvH85OJIqEL1LrH9W1pYAh0Q4a4kQfLFou4c?=
- =?us-ascii?Q?S3m7vzRgGW27uUxsTmv8vI68?=
+	=?us-ascii?Q?/8bVC7BgDfG7PBkdqKuxKftyEOY/D0yjpUx6ZD/o62/mP8feo1usddaiXJmr?=
+ =?us-ascii?Q?AjrYN4yAoGsVsQF3sq9Yc57QLCwntEgPPCxpmxp6aB1cRPaVCSXENmkousoZ?=
+ =?us-ascii?Q?BzV/34ciTRK0+yx3jcg4J11j6yEiWLBWWxVHu8eOb5C2JzRIv9332mVHsRPk?=
+ =?us-ascii?Q?3O+ooMskGr0uRtcHEgstMaBPM8jCIRo21/SXeNMrbvFb6yxtTp4LNjFoTDGT?=
+ =?us-ascii?Q?yquUaJassjniNNUhVZLe6CvAOKSs98zF1mJdFCySOqo0lfAtC4X/xga30dLA?=
+ =?us-ascii?Q?2Q3Ybr/hFooAVDR3hFnSCRT2g63vQf+8QoQerSICgq6n7/Z1+omv0Xah6ddd?=
+ =?us-ascii?Q?Z+sRyO9cgUWNeMX5w2Jn3FlQGTJRHMM4RFxhcAsNgF5hSlbPBJ7JrzVoI6FI?=
+ =?us-ascii?Q?r47dKLqAf3kJo8fysVBAOB4hfgGG4+XpDbgtzRxg+3A1Tm/GCqkBNtA1B3lI?=
+ =?us-ascii?Q?PzUbMsVNaiNqe5rRrqC5NWSEZYEh9/iMTuiwic1I0G2TDcxWGR2CfW/vfvcl?=
+ =?us-ascii?Q?5bU9BgSZcUrlWxg9vV0b76xNWeQLZw4MqpkSTuH/gpY6Z3VHlLQfn3hHB/au?=
+ =?us-ascii?Q?0Ffj/eBmhpWzN5Bte8L3bL7j9B1YGwCWUDSp9M+7IWPT+GmW0TEQBYVU4D82?=
+ =?us-ascii?Q?/kX8H/EJ6vbuQbP2qDLsDR5oMb63sJ+yruRjGmUiBjJ0jcHjBMMINw4H6K/I?=
+ =?us-ascii?Q?QQMPHMyDZ5MG/NK3m5HcjdGWlogkOe5Qy1lCgboxmnl9vwchSp2QUTDuccld?=
+ =?us-ascii?Q?p+zzXeN9n+35+n6ikOEhVXDRudsKGPc6rd5nrsJmdQo+SxuMFdRqelD6C9Us?=
+ =?us-ascii?Q?qDSkbvFbglnJ9IpcCL0DERMeAQV+ysNylvUUD3A/8h9gt32xpsSbVZvrV9AX?=
+ =?us-ascii?Q?utgHh01vH0PgoSwttx+t1P63ADiZqkEkRSWME+m0j4qdZACEnNktwkDtYwcB?=
+ =?us-ascii?Q?nxIZPCmTbaTvaJtB7sxmrHQ8YEeY9gpKu5UaBp4nxjZD77g18v0tp8O2KrUc?=
+ =?us-ascii?Q?J4LCnOLWyKJf+rCHYdEdVmw5v/mLNdruJ5/JTZKHR0Vb5dGm/pQZmSczdupo?=
+ =?us-ascii?Q?VF1uIpmkyC7p683TN0btHrtmD/f52lRsmnwHWu2xaQ3qbEW0znbzwewziCr1?=
+ =?us-ascii?Q?aReL224XRrBnB82EHg5MoNwEzMj5yvNhS25PZg2ehvmfIPXQ2FFzqTrvX6Pw?=
+ =?us-ascii?Q?k6HznKJgd6FuulJqSwY6T7CqESvbRh6tymewHgDAcMl+NUN8j6005uh9sivs?=
+ =?us-ascii?Q?2A8FI6M7c9cRTXFwAfYa5hsiWoL8N8j2oUqzyZWrXhz/9OItq8n2IKSdCiVq?=
+ =?us-ascii?Q?fL/0xDEethYhavR1lV5xXUY4?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(366007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?t4bwxtTfByju3yksWZS0cmnaiCZPW9ulK3wFtVKMeMJMIEpQ+IBZShfImAp7?=
- =?us-ascii?Q?gpAnOI/yibJ/BuunAh4MuAknwx2qDGFRbuxttKS2m4BfASDuR8EG2KwvlYBl?=
- =?us-ascii?Q?drqaxy+7h5a9FvqL8yArfUvzLkMMJ4S765x8pI7M31o2upudopmzYYIuoL64?=
- =?us-ascii?Q?Gvf6Y2VMLe+CzNzhG0FByjTcUyxkcca5v4ULB3ARygWVqLM14TKTEHTvSLPr?=
- =?us-ascii?Q?3kXCnTJl/kXZ+zs34uX2ToFVl9au083L++DYHErZ/1bDh3azkbzWepGn+5am?=
- =?us-ascii?Q?1M8T0D4AQjI3cW2cAAAFmB87wYgjWBFNAv66CfsgKtcTFyjt4sQjLs8ozCha?=
- =?us-ascii?Q?ItzzonVSpHp99CU5RMUesHe6045ggdVmP3DqGQdhEr+GeggCYVn2AFBJUkuQ?=
- =?us-ascii?Q?F93wjuM8nt2+NpreRNTpsxxq82dKmgI+nnBjQLqbfbeUhNo8jaGcJ4FyTfkX?=
- =?us-ascii?Q?2eTaFXz2chcti45G8TXYlMI9/IM/ri0rJIukj/oikI7VraYSF3VxNvm5x6W2?=
- =?us-ascii?Q?c+g+InIM8bRnEyiv44X9VftrI0Haq5t2ySWkEmFmqCgFKhXq+ZV1PP6W2rRi?=
- =?us-ascii?Q?ujZdhfeNWGYcooj6/88TYIhqLN7HiHCDnjHWcWWh5Okd5aMIj3gO66kxWkwG?=
- =?us-ascii?Q?NwsDmFn9giwLxiC7PCgS6SR24olFq3zI0PXfXD1nk8Tf7PlBI0LSoGDDQNbE?=
- =?us-ascii?Q?dXGDz54Sq8LJZyF4Jq/C3yE4xzmvHq+CsRKox5hVOimP9Cmt7uEqP0XKl1Kr?=
- =?us-ascii?Q?O5at8YA58K2IB0pXqhzuH/x00OM1ZZocvtHFX6ntgsoauvg9+f8E/3iJryFw?=
- =?us-ascii?Q?BCUNBK2+ysxVdLPqg4PownJsO+EWmi/k+kwfOVw+gT1VG/zMz0jsaHO6rebu?=
- =?us-ascii?Q?phroDWFv9vZPQELy/Lx6pG2DXiiZ7jQF2X+O9xMg24hjAACIhaaSPoXuHLaa?=
- =?us-ascii?Q?sIwfEkideUdmNCn5fqdQgXCRabx/mxuOlcbjVvlPOWclH1QgftLKKDRRwbHO?=
- =?us-ascii?Q?gKkmVDqqqBJE017uCxdE20w2THEEN1Ci21C1o3nGkbhPHqNHV+PNaVmktoyW?=
- =?us-ascii?Q?2k9FZLJo99J5mXNZidsvSw3oG9O5qEsFROdnvyv/blLYW3sciZ8RzEqc4R0g?=
- =?us-ascii?Q?PdBcAOxMA4vTM+Ls1Zp2x2DvplseMAZQjGNmsJ48yn+yqCY86D+n6nStyeM2?=
- =?us-ascii?Q?FM7QeCJs/jJuXokjKwFuoL3KR6G1WY9v0LAEn61jP7wMRxAyknOD/mKNlHQa?=
- =?us-ascii?Q?1AOqZCaO2UrjjHl1Un0aH+bVAr2eFG3XydLFtaFUW2tDK/WJuu/TF1nfCCiO?=
- =?us-ascii?Q?dUYaSSWLcGnNU2zoXiplz0hAwsrL6X933HJ1CqF3mkpqGP4V0OfoitcQrher?=
- =?us-ascii?Q?S3XKc5vZde8EejJ/ml6hVyFiOmoPujejAyy+ZN7H6tiwBZEEpbc4qYlbUHaN?=
- =?us-ascii?Q?58fPwDN7sb3lj6j2PLsfi0UCpzyRRdML4gBFq6Db8brcX4Fs1qbkdAe4s/4X?=
- =?us-ascii?Q?+Hme/2Lz1LmuEJ0Vo00TXpCPTQRLz3N8Lr6+ZAJlGwi+eUsNdbr8JsYbx4ft?=
- =?us-ascii?Q?/dD489DsFOM3E9TbRH4=3D?=
+	=?us-ascii?Q?fjnHJmLq7fZNAJZLkWYJktP5SjXXTK84t2N4Xlp/VHTfmbQZlfjn3qE0ffwx?=
+ =?us-ascii?Q?x0e3PqzbQv69RnHCEtygujtuplReJw6jZaPvQr0Gg6VCITgJFUi8LbE7aMTD?=
+ =?us-ascii?Q?1Iex+NFVMBF9IArv81WmaER1KLlDQge2lDKsQ2jqYSehX8Wn+Y3l8exkh8P+?=
+ =?us-ascii?Q?hYNmojmmKBdaReNC/8klxwRTl9njJlSrNSn20foQgjKXzTU9bwKZt0AkPesf?=
+ =?us-ascii?Q?ASs0q8VHEs//CWzq4YLguxSPSQURbGYWGp967S8oofRKdXnjU6OT+X6t/L4o?=
+ =?us-ascii?Q?pvDuk8zUbne27CtkwJE7OZrLG8ZRriFP6ZMU4dWfwTkPMnDUKZiv70vLDSEv?=
+ =?us-ascii?Q?Ax/t+3ws3+yslk0dOuzXY/RwxuVfkxK9uTwnkoHKA+B9EHQLj+oazwpfXjZm?=
+ =?us-ascii?Q?P6II9KJ64/wKvFlxjp/4wc/ak50/BamMjZL7+in1HqD4actj0mBACsu9kyHu?=
+ =?us-ascii?Q?phqsctpj4r27vLbRJFu/aTF4SoaGmya1BeRtAJT1VmpXW+XhHaZ9SL9inxM0?=
+ =?us-ascii?Q?nk8LEDOJz8snqziBlxggYwmn4toJzMffJxMCF4DFNcyUxtv9ndQDkxZptV5G?=
+ =?us-ascii?Q?hzI2aY9+IOujJk2RdAvyCNb1F/W8ziF7NmXJtjZiauZxVboNPu1s87jQKqM6?=
+ =?us-ascii?Q?+IIsNI+WVE/a8XEh1upsajvHbCFio5QNCgtSuWdVdLvOf0ZaeLmmYhEvGMdm?=
+ =?us-ascii?Q?iIbV36U6p/wdP4rfu2EqZDlCHKyZWZ8F4/lqispO4nLsFvs00lvh7bDtQu0I?=
+ =?us-ascii?Q?+Dc1IY2Lc0aKSVskZpuao0w8dMXTlbDlpkd4SYik20Bua2JEYkWE8/wgfKLT?=
+ =?us-ascii?Q?iLuLQ54p3X5govuK8I2IMcUPXjGf+xlUDregABHcwozCbSqodf29ahxMHz+i?=
+ =?us-ascii?Q?mLzs1EvMW0wOwi9XFbltCBLKAb6nMlb2MONaPW89ermROkaSb4ROFdLrXYpv?=
+ =?us-ascii?Q?NKoC0NcEO7ERmgKWyrVDjOI1f+OzvbALeEsNrulYN5Rfhpstyl3QSePRehvj?=
+ =?us-ascii?Q?mtHISeEOxpIIHMbNo3WQa60mz+TYevuh5jt46jr9jbPiGONLXobH4Zpw5HWN?=
+ =?us-ascii?Q?hvFAumPe78fR/XErYVPaxq+G7/VOOj/vcjC7hOh+8lhcVjaz7QoBap7GqXcG?=
+ =?us-ascii?Q?Dx9Lyr5JN5L7V/9yDYWblPlDS2g49wXWNuq4/ojGomMQ7R6Wr36Qmf6+95lT?=
+ =?us-ascii?Q?JjD0h9Px05aqiUhqgwqruNANgHGvbuWIoPLHsPq6Cxq8NcFMrDcGwwYFdpL2?=
+ =?us-ascii?Q?RWv6R6lRSSIEc7Vxpyu8cc0YRtGyJXq4C58o+5Oq2rUGxilhJDlt+UBXUb7A?=
+ =?us-ascii?Q?dV1GIEfI8lBgVIoyNi+mbYlbiCW9m8eQFJmXVw5RvTpZxbOQzQqbDAAEx0Af?=
+ =?us-ascii?Q?hIs3CZvkOvNhbKDstmrh1j+GWW+P4038LCaMXSe/tjdhflXmMtTZ8Ub16IDG?=
+ =?us-ascii?Q?pMgo6o7r2auxqEjg75kiARv0GLN0s3OBcDFxE7wH6+TRpOuhwSTKPabwnnfh?=
+ =?us-ascii?Q?V8iftvJpJETqdXCGBVx7jYtYZ/Mb6bhYr1CChk39L81eitcxE6kB67wuY/Wv?=
+ =?us-ascii?Q?9FtM32LJKtv7miQZ8w4=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bb2680e8-9555-4fe0-c8e8-08dc89add16c
+X-MS-Exchange-CrossTenant-Network-Message-Id: e27f5516-5a93-4a06-a931-08dc89add18c
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2024 00:31:21.6679
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2024 00:31:21.8763
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JycvZKpOqNm9Upm5JVKUVHoSnHbu6y4EaV14Ouis4kMIvkEEPOwg3pT254Yua3mB
+X-MS-Exchange-CrossTenant-UserPrincipalName: IeDmoA27rwN2kfFm1xxAy9+U6rUW73ud4Ek2Sa8FmylKg8X97CzEuRKj+xP02yio
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8565
 
-dmam_alloc_coherent() already returns zero'd memory so cfg->strtab.l1_desc
-(the list of DMA addresses for the L2 entries) is already zero'd.
+Add types struct arm_smmu_strtab_l1 and l2 to represent the HW layout of
+the descriptors, and use them in most places, following patches will get
+the remaing places. The size of the l1 and l2 HW allocations are
+sizeof(struct arm_smmu_strtab_l1/2).
 
-arm_smmu_init_l1_strtab() goes through and calls
-arm_smmu_write_strtab_l1_desc() on the newly allocated (and zero'd) struct
-arm_smmu_strtab_l1_desc, which ends up computing 'val = 0' and zeroing it
-again.
+This provides some more clarity than having raw __le64 *'s and sizes
+computed via macros.
 
-Remove arm_smmu_init_l1_strtab() and just call devm_kcalloc() from
-arm_smmu_init_strtab_2lvl to allocate the companion struct.
+Remove STRTAB_L1_DESC_DWORDS.
 
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 29 +++++++--------------
- 1 file changed, 9 insertions(+), 20 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 22 +++++++++++----------
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h | 10 ++++++++--
+ 2 files changed, 20 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index ec8c7b7f4cb9c1..d56e19ca6ef6c5 100644
+index 07b797ad832801..6643594121a2b2 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3215,25 +3215,6 @@ static int arm_smmu_init_queues(struct arm_smmu_device *smmu)
- 				       PRIQ_ENT_DWORDS, "priq");
+@@ -1447,7 +1447,8 @@ bool arm_smmu_free_asid(struct arm_smmu_ctx_desc *cd)
  }
  
--static int arm_smmu_init_l1_strtab(struct arm_smmu_device *smmu)
--{
--	unsigned int i;
--	struct arm_smmu_strtab_cfg *cfg = &smmu->strtab_cfg;
--	void *strtab = smmu->strtab_cfg.strtab;
--
--	cfg->l1_desc = devm_kcalloc(smmu->dev, cfg->num_l1_ents,
--				    sizeof(*cfg->l1_desc), GFP_KERNEL);
--	if (!cfg->l1_desc)
--		return -ENOMEM;
--
--	for (i = 0; i < cfg->num_l1_ents; ++i) {
--		arm_smmu_write_strtab_l1_desc(strtab, &cfg->l1_desc[i]);
--		strtab += STRTAB_L1_DESC_DWORDS << 3;
--	}
--
--	return 0;
--}
--
- static int arm_smmu_init_strtab_2lvl(struct arm_smmu_device *smmu)
+ /* Stream table manipulation functions */
+-static void arm_smmu_write_strtab_l1_desc(__le64 *dst, dma_addr_t l2ptr_dma)
++static void arm_smmu_write_strtab_l1_desc(struct arm_smmu_strtab_l1 *dst,
++					  dma_addr_t l2ptr_dma)
  {
- 	void *strtab;
-@@ -3269,7 +3250,15 @@ static int arm_smmu_init_strtab_2lvl(struct arm_smmu_device *smmu)
- 	reg |= FIELD_PREP(STRTAB_BASE_CFG_SPLIT, STRTAB_SPLIT);
- 	cfg->strtab_base_cfg = reg;
+ 	u64 val = 0;
  
--	return arm_smmu_init_l1_strtab(smmu);
-+	cfg->l1_desc = devm_kcalloc(smmu->dev, cfg->num_l1_ents,
-+				    sizeof(*cfg->l1_desc), GFP_KERNEL);
-+	if (!cfg->l1_desc) {
-+		dev_err(smmu->dev,
-+			"failed to allocate l1 stream table (%zu bytes)\n",
-+			cfg->num_l1_ents * sizeof(*cfg->l1_desc));
-+		return -ENOMEM;
-+	}
-+	return 0;
+@@ -1455,7 +1456,7 @@ static void arm_smmu_write_strtab_l1_desc(__le64 *dst, dma_addr_t l2ptr_dma)
+ 	val |= l2ptr_dma & STRTAB_L1_DESC_L2PTR_MASK;
+ 
+ 	/* The HW has 64 bit atomicity with stores to the L2 STE table */
+-	WRITE_ONCE(*dst, cpu_to_le64(val));
++	WRITE_ONCE(dst->l2ptr, cpu_to_le64(val));
  }
  
- static int arm_smmu_init_strtab_linear(struct arm_smmu_device *smmu)
+ struct arm_smmu_ste_writer {
+@@ -1660,9 +1661,8 @@ static int arm_smmu_init_l2_strtab(struct arm_smmu_device *smmu, u32 sid)
+ 	if (desc->l2ptr)
+ 		return 0;
+ 
+-	desc->l2ptr = dmam_alloc_coherent(
+-		smmu->dev, STRTAB_NUM_L2_STES * sizeof(struct arm_smmu_ste),
+-		&l2ptr_dma, GFP_KERNEL);
++	desc->l2ptr = dmam_alloc_coherent(smmu->dev, sizeof(*desc->l2ptr),
++					  &l2ptr_dma, GFP_KERNEL);
+ 	if (!desc->l2ptr) {
+ 		dev_err(smmu->dev,
+ 			"failed to allocate l2 stream table for SID %u\n",
+@@ -1670,9 +1670,11 @@ static int arm_smmu_init_l2_strtab(struct arm_smmu_device *smmu, u32 sid)
+ 		return -ENOMEM;
+ 	}
+ 
+-	arm_smmu_init_initial_stes(desc->l2ptr, STRTAB_NUM_L2_STES);
+-	arm_smmu_write_strtab_l1_desc(&cfg->strtab[arm_smmu_strtab_l1_idx(sid)],
+-				      l2ptr_dma);
++	arm_smmu_init_initial_stes(desc->l2ptr->stes, STRTAB_NUM_L2_STES);
++	arm_smmu_write_strtab_l1_desc(
++		(struct arm_smmu_strtab_l1 *)&cfg
++			->strtab[arm_smmu_strtab_l1_idx(sid)],
++		l2ptr_dma);
+ 	return 0;
+ }
+ 
+@@ -2411,7 +2413,7 @@ arm_smmu_get_step_for_sid(struct arm_smmu_device *smmu, u32 sid)
+ 	if (smmu->features & ARM_SMMU_FEAT_2_LVL_STRTAB) {
+ 		/* Two-level walk */
+ 		return &cfg->l1_desc[arm_smmu_strtab_l1_idx(sid)]
+-				.l2ptr[arm_smmu_strtab_l2_idx(sid)];
++				.l2ptr->stes[arm_smmu_strtab_l2_idx(sid)];
+ 	} else {
+ 		/* Simple linear lookup */
+ 		return (struct arm_smmu_ste *)&cfg
+@@ -3224,7 +3226,7 @@ static int arm_smmu_init_strtab_2lvl(struct arm_smmu_device *smmu)
+ 			 cfg->num_l1_ents * STRTAB_NUM_L2_STES,
+ 			 1 << smmu->sid_bits);
+ 
+-	l1size = cfg->num_l1_ents * (STRTAB_L1_DESC_DWORDS << 3);
++	l1size = cfg->num_l1_ents * sizeof(struct arm_smmu_strtab_l1);
+ 	strtab = dmam_alloc_coherent(smmu->dev, l1size, &cfg->strtab_dma,
+ 				     GFP_KERNEL);
+ 	if (!strtab) {
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+index 95c3ac8613da79..1418f21f5db6a0 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -201,7 +201,6 @@
+  */
+ #define STRTAB_SPLIT			8
+ 
+-#define STRTAB_L1_DESC_DWORDS		1
+ #define STRTAB_L1_DESC_SPAN		GENMASK_ULL(4, 0)
+ #define STRTAB_L1_DESC_L2PTR_MASK	GENMASK_ULL(51, 6)
+ 
+@@ -212,6 +211,13 @@ struct arm_smmu_ste {
+ };
+ 
+ #define STRTAB_NUM_L2_STES (1 << STRTAB_SPLIT)
++struct arm_smmu_strtab_l2 {
++	struct arm_smmu_ste stes[STRTAB_NUM_L2_STES];
++};
++
++struct arm_smmu_strtab_l1 {
++	__le64 l2ptr;
++};
+ #define STRTAB_MAX_L1_ENTRIES (1 << 17)
+ 
+ static inline unsigned int arm_smmu_strtab_l1_idx(unsigned int sid)
+@@ -591,7 +597,7 @@ struct arm_smmu_priq {
+ 
+ /* High-level stream table and context descriptor structures */
+ struct arm_smmu_strtab_l1_desc {
+-	struct arm_smmu_ste		*l2ptr;
++	struct arm_smmu_strtab_l2	*l2ptr;
+ };
+ 
+ struct arm_smmu_ctx_desc {
 -- 
 2.45.2
 
