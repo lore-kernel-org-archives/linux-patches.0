@@ -1,45 +1,45 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649D916F8F0
-	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 05:45:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E268488
+	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 05:48:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718084720; cv=none; b=GFkksi8u8ZA46w/52UkwbnEyXBFGK9YMDaTGuQ1ROaHEcN/3hAvJWiik3AvumctlEBSUL7BQm/VrhJzUD5E+vk9kFEeHNslo2zBc2arC7WFLGWRGlshnamn+Iqhl3/yON6wrpzDAQtrvzP3mmlkd/IP3yBKP9vXPhBAGz+sGzAQ=
+	t=1718084925; cv=none; b=dR1Doe4QmeKARamLTVfvmhWV7cU5Btpwe5cJsGgYcnLnLomkk/4vWRRcQa4CXQXYTR0XT8gzCYNarSdC/jokQpXyk8WH8w5lNK9zJbDSkjMgVSn+AtcpdWsaOCfIh1dbyggMNrLp92m4p4It7DYAMr3yd3Q5gmWXzbP0vdAMw4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718084720; c=relaxed/simple;
-	bh=akPNg+JADea4LZN1ckxyf3pURemGm4dEJQQO4tkmijs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H2VH8LKO5unOXmBCE4k65LmMRLnuwmZQ0/Sn6qXbnnetPnztNuHJ9uo+hnUIdlgAh5fVWipkMtxgr7oixjmRQ6h6acjZuBdfsGVwj7CeAz9pLLrVDZhB8zvtgfZYEIGMDTrU6XElr2tYpjn0QXvZ7LwtAoCBAjJ65gyCW4DHhx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.46
+	s=arc-20240116; t=1718084925; c=relaxed/simple;
+	bh=JpNubKBRF+DUftEW6yWro3X8H5Kg5BgGGhj0fDOwIrc=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=TsRmlo2pnWCXQEzQKQJF8VgxoNvj1GMYcVlWTbYiZSRmqpIo6v4+mBsHrLcuH0dYkkZm1V3ZAf8t+3M6+v9hV/Ojp33uyW6ZmI81VYnyfzANe9ZoQyyJlNH26rFoBOGE38mQNNXxxVzJYucqvWdD0YmrekRh+be2Qc/hZuiSvho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a68b41ef3f6so571457966b.1
-        for <patches@lists.linux.dev>; Mon, 10 Jun 2024 22:45:19 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5295e488248so5815663e87.2
+        for <patches@lists.linux.dev>; Mon, 10 Jun 2024 22:48:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718084717; x=1718689517;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6VNGfeQaOvXCrNXuk+kpcYFZc/2T9K47bNz1FcqArY0=;
-        b=wXY9IrUTWKOZRrfz6vczOdRAK4HZnx4CnWoW5N4iJ7q5i1k+PN67YeQbbNt6siZqSJ
-         +xbkeqk1qsfanB93sesexMq+y9jDTk5VfVoTVRdKd91TFBKNxSEW3xDyqalyriSjisWE
-         UC5vWPYfsonEc4OdybpWan8kwj2U55j6fGHvSLIeOdS5nOKHu59TBpWO8UlNMp0u603p
-         A9VDffd2SGGQawysYCN7mcx6glzSFpWhHd2Jbw/nzcUWkIBr/X9kxWe1b55pcexvLBy4
-         6pK6Mlbd/wGilxjPlQHsmaMnCuzUC9x7TMLkqInC7rm4UYdnEi9jgTJlEucdP2VuJ8ri
-         tEIw==
-X-Gm-Message-State: AOJu0Yx0pQyokG6FMxuFUhm0ep1u2/bUMq1H/1T0CQILNaKwzeL+hjhm
-	ydU1Oh5/wGPCRYMlt6+p5CbNHJHkW+AQE7r1uLzyNF7N06jx3Yny
-X-Google-Smtp-Source: AGHT+IGmduyf0zC6RvofXFU+3y3vRjT760PlpKvSOEeK3ZxheDfIaRGLyN/uVV6+cH9gHx7ocd3J1g==
-X-Received: by 2002:a17:906:f896:b0:a6f:15a3:b085 with SMTP id a640c23a62f3a-a6f15a3b1d6mr329763766b.51.1718084717390;
-        Mon, 10 Jun 2024 22:45:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718084922; x=1718689722;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eZ5YAhaVL8dy/5Tujffq8DsgCarQ5lnHgEqVrwEx2BE=;
+        b=iqCUV0vv3vABzdr8FdqPaoMGFVIvU/oogNCbCHud55ZRtD36I7qrefZRDT6h9kPKMK
+         /4JUS0pRH/ZMVQ3PDFbyBsKlMwElUu8Ji9IPtetz497U1n6jYHyzsJkVoYvWyIb5UIUf
+         u4L8CpIi7vx5U32Soq1IcsK6DsDScF0Vb+M/Yj24RtcRJxusptWRz+wbDuTTCUVGRrAf
+         SnokZas5WFHnrte8G5Q8sLLq/3+mhDea6miE+mrSS4VYXGaIsXKRQt4qXauDA8lhFwtX
+         qWtVbIHKGAihvhmGgKOgjpLeIyaAPFry+DO3rd6prKBM4B3fVaWreOvwjpOUTL/yzJLI
+         lKmg==
+X-Gm-Message-State: AOJu0YyB/qijU56BsDPwyz80fxMO+9j8wjn+MDKQNZHXiiGPP+WRKRfj
+	6HZ40Sz4MblB60wxSKmLxydSGAg8cn5ZtR3X6Hx+i4yOf/R0tWri
+X-Google-Smtp-Source: AGHT+IGdF0zFoRq+k9X9lu61BlcUTiXBojtl84j+QV58nB+Vu7+7o8hy5mYpglcXvdb4GbPjCV95hQ==
+X-Received: by 2002:a05:6512:10cd:b0:52c:7f7f:dc1f with SMTP id 2adb3069b0e04-52c7f7fdd4bmr5566719e87.61.1718084921447;
+        Mon, 10 Jun 2024 22:48:41 -0700 (PDT)
 Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:69? ([2a0b:e7c0:0:107::aaaa:69])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57c8c60ce9bsm1887409a12.20.2024.06.10.22.45.15
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57c8e5a77d6sm1572106a12.0.2024.06.10.22.48.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jun 2024 22:45:16 -0700 (PDT)
-Message-ID: <95bb260e-bf31-46dc-b720-88ca6aa7e29c@kernel.org>
-Date: Tue, 11 Jun 2024 07:45:15 +0200
+        Mon, 10 Jun 2024 22:48:41 -0700 (PDT)
+Message-ID: <aee27b1f-5c8e-4060-a19e-42e198c1493f@kernel.org>
+Date: Tue, 11 Jun 2024 07:48:39 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,6 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 6.9 000/368] 6.9.4-rc2 review
+From: Jiri Slaby <jirislaby@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -58,8 +59,8 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
  kerneljasonxing@gmail.com
 References: <20240609113803.338372290@linuxfoundation.org>
+ <95bb260e-bf31-46dc-b720-88ca6aa7e29c@kernel.org>
 Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
  xsFNBE6S54YBEACzzjLwDUbU5elY4GTg/NdotjA0jyyJtYI86wdKraekbNE0bC4zV+ryvH4j
  rrcDwGs6tFVrAHvdHeIdI07s1iIx5R/ndcHwt4fvI8CL5PzPmn5J+h0WERR5rFprRh6axhOk
@@ -102,39 +103,50 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20240609113803.338372290@linuxfoundation.org>
+In-Reply-To: <95bb260e-bf31-46dc-b720-88ca6aa7e29c@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 09. 06. 24, 13:41, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.9.4 release.
-> There are 368 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 11. 06. 24, 7:45, Jiri Slaby wrote:
+> On 09. 06. 24, 13:41, Greg Kroah-Hartman wrote:
+>> This is the start of the stable review cycle for the 6.9.4 release.
+>> There are 368 patches in this series, all will be posted as a response
+>> to this one.  If anyone has any issues with these being applied, please
+>> let me know.
+>>
+>> Responses should be made by Tue, 11 Jun 2024 11:36:08 +0000.
+>> Anything received after that time might be too late.
+>>
+>> The whole patch series can be found in one patch at:
+>>     https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.4-rc2.gz
+>> or in the git tree and branch at:
+>>     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
+>> and the diffstat can be found below.
 > 
-> Responses should be made by Tue, 11 Jun 2024 11:36:08 +0000.
-> Anything received after that time might be too late.
+> Maybe it was noted somewhere already, but I was forced by our machinery 
+> to include this too:
+> +Subject: tcp: reduce accepted window in NEW_SYN_RECV state
+> +Git-commit: f4dca95fc0f6350918f2e6727e35b41f7f86fcce
+> +Patch-mainline: 6.10-rc2
+> +
+> +Jason commit made checks against ACK sequence less strict
+> +and can be exploited by attackers to establish spoofed flows
+> +with less probes.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.4-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
-> and the diffstat can be found below.
+> which makes sense to me.
 
-Maybe it was noted somewhere already, but I was forced by our machinery 
-to include this too:
-+Subject: tcp: reduce accepted window in NEW_SYN_RECV state
-+Git-commit: f4dca95fc0f6350918f2e6727e35b41f7f86fcce
-+Patch-mainline: 6.10-rc2
-+
-+Jason commit made checks against ACK sequence less strict
-+and can be exploited by attackers to establish spoofed flows
-+with less probes.
+Forget about this, you dropped 378979e94e953c207 in -rc2 in:
+commit f11c1a69cc6b202f454d5e585b6917ce2873bcc9
+Author: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Date:   Sun Jun 9 13:26:26 2024 +0200
 
-which makes sense to me.
+     drop more patches
 
-thanks,
--- 
+
+
+All is good then.
+
+> thanks,-- 
 js
 suse labs
 
