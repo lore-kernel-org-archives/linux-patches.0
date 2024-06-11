@@ -1,56 +1,50 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2059.outbound.protection.outlook.com [40.107.220.59])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A6237160
-	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 15:36:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718120184; cv=none; b=n7e4IMjT08BU4ln2igXVk580sVWyOJ3mGk9e9fXOjXAm3PJdNsoMpZkOjAuvdFmLOhoYjA98kfy3cBSumbAUccL3IhQvB0C6FvpMDOHe4xjz/Fl0RQ8rShn/XnqjGCyGMv4nmzycyvqCqshtKU67k4tLbhZJcUrsrQQlDqiSU1k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718120184; c=relaxed/simple;
-	bh=sEvDMhi2LuNyC8HUxfzbzLy5zJ19f9pPX5EayeZseQI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TouTivutC0v6d6/rX9++e2gB60KEX/KXrCedsmBmA5HXmMP1MPRqZISgPjt0uwNZAK9zXMwUG4REVPFsHzu4Qn7WT4WOevq9xFIH6WFs5jlhS+j0ZfgXaz5hzOhh2sCGtmf/dudmx5w3WtXkz+6AuHORW9ndFLb83fLE8bZL8uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=NXS15g1+; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5059E381BB
+	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 16:17:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.59
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1718122633; cv=fail; b=NVC3V0O8v8Evm8uu/sgUWMD5oWADcrhIGAOBP35NRPKHWcROvPfWspkVd3c4gscz0vLMPlyrjzeVPnIDnQ1BpK2hrCQEbFABzICJ8S0QlIzsIQSEkWQvSeJ1MIGwN0Barjax5mJmN7JVkozIvl3He6/PF7dcFwtN5cB6E+cLVVw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1718122633; c=relaxed/simple;
+	bh=enhuOglE2tyKLmfSUAyqiYFpLJhy74JPQYm3iR397N8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=qoDUwsGgXhXI5L9jTyNPv2z+/ELgDTy363tBm5VfFUrMSMZX+1mPXhuX84hbY12A+4EMledrP6w9PEuGQGGXeyiJsejU9K5DmqWsKiqcXAZ81MEtW+A3q7DH/lJc0P7qO5f2Y1gSRG5hk2lZJ7TyuugidYif5OB6HyVM6M0xGho=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nr07CdoN; arc=fail smtp.client-ip=40.107.220.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="NXS15g1+"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52c8432e241so402654e87.1
-        for <patches@lists.linux.dev>; Tue, 11 Jun 2024 08:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1718120181; x=1718724981; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zYiOKqOztGolPpdiFV4XN2+aPrwTQCSjwVf5L3ie3JA=;
-        b=NXS15g1+tOQp3TjXfN+EAI97lVbWcP5HqKueGj5xyDQWIb7Md2VbOwgJOTyhWjvsGi
-         EdKpKJUftF1KkIh8cRQZLseyYWzF2X4EAnEi6ZSD1dgow2zjcE0Bis4GoxdYAFARq7sp
-         JuvpUAQg2LSprEwwnSHTmHcwmVqro0OgFNGwc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718120181; x=1718724981;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zYiOKqOztGolPpdiFV4XN2+aPrwTQCSjwVf5L3ie3JA=;
-        b=j6rIhVNRNyRhe8qoHktjZ/IDWHUYbzFu71OgS/ZfROvK8s0999l0U6652I0i5rHYaK
-         vrkbi8+O5WicoDoSkN7ZmDSudvuV6zKQAyB5cLlRJrCRgICMC9lgIAyFEd2uOAdlujJk
-         daQU2i6UmcA4Pja9L8KOMs/wGpYk36YIQ/G3h/MbeOXsjEq5UHaqXnHIRoZcSGhCpljt
-         mdPrj7QLZxmLH4XO1oX5P04TrMA12IA+OtMrqnxt+Q9d1SJ86Wk3rOj4QHG03QwcUjIe
-         fJaIz616p4D3r2nyN/tSgk5Q4U1XOAA1ZDT23vK7Q+5iwa4GbiAlOLxiFtXmIemieEbY
-         Cv0A==
-X-Forwarded-Encrypted: i=1; AJvYcCX9k+ZiU0ZdfBiz5tiiLvUoJoxhhQoGrCF6DubhpaN+A/aZ02mJPTu2DFVIc552YY+c0ET3h0iwV1CY4ucRqH2CGC1ALpRssg==
-X-Gm-Message-State: AOJu0Ywu9sr2HAC9+ZPMc0wfdE4St4pOrNjpmWgo/pZlvqtFQZfv/Ss5
-	jirVSXQYGX1LuWfoB1kkUDg6J3zAdjhhbCCyRRKDbBUHa7qAyQ1oiJXkXR6MNTs=
-X-Google-Smtp-Source: AGHT+IEqvd8t7yV4Y08H9toKdWjldXNuJHx8xMhVZIiBly5rz0ehyy1t+vkdmGULc+LniJtZqK7xKQ==
-X-Received: by 2002:a19:9107:0:b0:52b:c06d:70cf with SMTP id 2adb3069b0e04-52bc06d7164mr5715253e87.4.1718120180437;
-        Tue, 11 Jun 2024 08:36:20 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42274379b83sm10409345e9.28.2024.06.11.08.36.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jun 2024 08:36:19 -0700 (PDT)
-Date: Tue, 11 Jun 2024 17:36:17 +0200
-From: Daniel Vetter <daniel@ffwll.ch>
-To: Jason Gunthorpe <jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nr07CdoN"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=MAAdkSSYc9LsGoyGCd9zZPr3Kdy2A299ZHMkMMoEEOZQHRvH7MHgDKlix5P0vloXd6yt5LT8Vgwiuts8JIh/Kty5tzSw85c8Vx3VfY8fLDscGd8PeUTqMOg8k11l1WiYahThGIsj8fUOkH/Fb5bRrmw2JF4ftD2e4i2Ag/uT66KrQjbGQo8GGQwoTrPLL0QUkYJWLZehFqDlCczJnBmH8PL9ML5krlkk54FukcOopip3dDMCrM6hXrgu+Q6AMBQmpJEgjQA0S/nHQelv9lGRW0evStJraX51qKHwZIY0wA0JHuG/diTKysy+HIH+i5B4tIEKawItIh26L0A8NMSwkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kebmkSlsZn+wkmkTNXoFTetBimNzi3+RMirkWddgCOw=;
+ b=BJR/bTz1SRItNMTPRPlVORYV7n8BDwHAtihDMoeZ0pjMMI4VTmYfY/6bzXRRXISmwJHhAC5YZy+f4jFQiGVeA1zAXA7RtJikj7HVTDhjbL86dA3LAB2C+1h/8+zCBk+ISx8gFegxUYCNOjtLlNRgWg7oe0KiRlzOx7QwHh3QAWH9P+2DiFIQukEIxCJ0y7Gk1dx4rMOyGaMJexmoF55ArlYEw7vOKqSCeKlOWiRU3CQlUNGClunZs/0v5F71HJgXgfm68DnAikYT/b+K9v+pEDIS7ZBZv83g5e78ZxY1Uk6ZWIgJ/pNgM6MQeJ31AEfxH7vm5+wx4EEVBFzA9hJ4kA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kebmkSlsZn+wkmkTNXoFTetBimNzi3+RMirkWddgCOw=;
+ b=nr07CdoN8Xi5vQvFkMZLYLn2NS+Ax+SIP/S0ijh8JxnBzl24aTL31nvMl9h+xUFlEYjQDrHg6b9ZQwoekU4R7rIqzb0l6pAfpyuS7btL3t8rPRX3JWzLT2RIxF+A9OEP7tg+qa+mRKiyVEWNyTpvbBqejMajK6Qg6os6/KcBDp11AtbHpHgzIdxM2Sp4B8CGZ9LK+aoJiIVMWy2dei4n6zKNdBaajTeI0hHzzcxV8Eb1eKdXbnUqG8IU1Zl1qUFPwHbNFym/Li+9HNc7+ilUPa/591wBn7KuZwfMG6yM7V9vGO+EqeYAgXN7E8ZwNhpJ3dWyAyaiLXQBGMKNxRaqZA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+ by DM6PR12MB4435.namprd12.prod.outlook.com (2603:10b6:5:2a6::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.37; Tue, 11 Jun
+ 2024 16:17:06 +0000
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7633.036; Tue, 11 Jun 2024
+ 16:17:05 +0000
+Date: Tue, 11 Jun 2024 13:17:02 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Daniel Vetter <daniel@ffwll.ch>
 Cc: Dan Williams <dan.j.williams@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>, David Ahern <dsahern@kernel.org>,
 	Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
@@ -65,115 +59,138 @@ Cc: Dan Williams <dan.j.williams@intel.com>,
 	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
 	patches@lists.linux.dev
 Subject: Re: [PATCH 0/8] Introduce fwctl subystem
-Message-ID: <Zmhu8egti-URPFoB@phenom.ffwll.local>
+Message-ID: <20240611161702.GU19897@nvidia.com>
 References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
  <20240603114250.5325279c@kernel.org>
  <214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
  <20240604070451.79cfb280@kernel.org>
  <665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
  <20240605135911.GT19897@nvidia.com>
+ <Zmhu8egti-URPFoB@phenom.ffwll.local>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zmhu8egti-URPFoB@phenom.ffwll.local>
+X-ClientProxiedBy: BLAPR05CA0048.namprd05.prod.outlook.com
+ (2603:10b6:208:335::29) To DM6PR12MB3849.namprd12.prod.outlook.com
+ (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240605135911.GT19897@nvidia.com>
-X-Operating-System: Linux phenom 6.8.9-amd64 
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|DM6PR12MB4435:EE_
+X-MS-Office365-Filtering-Correlation-Id: a367c31b-fcfb-488a-c9dc-08dc8a31ef57
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230032|376006|7416006|366008|1800799016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?iGe8LLyY9jrSTGfPM2TmoT9KNJ1fy2BHTLdGcVCxFvP3MO4AVf3kWodq7gm/?=
+ =?us-ascii?Q?84hwIwuc+D7TtOLVUe1TPVv1l6/rNxGdt0p4Ei3QCAdtkKsFbZGgLjFnX7Xm?=
+ =?us-ascii?Q?h+2AGpbOyxJJE8+t/NhD2ZS1nNceaxP7+MLgTyZLfahlpMtNOMtD4Z1qVJ1+?=
+ =?us-ascii?Q?T9u955ULj7+VLz82s/bf8iM0Y1n/tMxxLlOCcOrIB6dL3zDqpMmD65OuXxG4?=
+ =?us-ascii?Q?+X1wvv1lI0/KbUm4savkddSh2dqBcf9bwiSijVut7BEJoc4HR1cnlGmUoqyk?=
+ =?us-ascii?Q?uygF5z5PCaebxy9F31zAE3P4XAr9p7t512YWzRA9cKiDymHyVkqj/w/09FcR?=
+ =?us-ascii?Q?ntacZ2g7bUs/SwjkcEf6rdJfXTruYt7XPkzuVmilv97MwTV4QtzbL2eArekn?=
+ =?us-ascii?Q?SFupmpIBcvfWmSrxIOFBpwofn6k9XpVSfjO6pPDK4RQNvHp2N8RlxdTn33e4?=
+ =?us-ascii?Q?DSay9VuGT03E0gexcgrrC/IjkvitfPSnlJSuzKZi081RCM6ZDPAhpOC4gk8L?=
+ =?us-ascii?Q?hepOqAHg2ssgmPYUxR2gSM9aRTi81VpHP6H9ECsLVLpgPaJDphCA1mfi/60G?=
+ =?us-ascii?Q?cV6Z+GdrnWN/KJYyuWhEgYECWmEP/IUlMKamlgzsDXXweyRqclE7eQOkEUkF?=
+ =?us-ascii?Q?+wqGWy32bfQh/F8d3BFNB6yUEjf+iYoZcln44PgfnJcxYBGs5RNvxMZENjTB?=
+ =?us-ascii?Q?v1AkH9+cYxKNG13XE65alM+kGBZ/P4uVeqvNoXo36QP3nDg9Q5m2mMqn6tqM?=
+ =?us-ascii?Q?6XWZdGbJ1zj5ucwv91/uWoFDQNqujUqEuhgcos6cnCPYg/JeIpSjb9m9/bWp?=
+ =?us-ascii?Q?+oZcpwZGY+Ywj8D2pnuJ5yDc4EF9UiC69QfovYVuJQ+DzqDcIekRr0uEgFTY?=
+ =?us-ascii?Q?HKVWWfxfttZxr+vjPeu0PN/9/4vdauiM3IQPyRKcnjip4BHCiK0PhOHRx4XA?=
+ =?us-ascii?Q?myJzA9xe5/W1XL0wAyqAgbQyrIUkKdr45fpDHID8xUIOJuf5bIJwkpZcioYc?=
+ =?us-ascii?Q?QMXU2N0oBAnAuehq4khvBSbxuQ3ca4gV+VzWSU+TDjOG/Ey8f/AZnGGAMHiB?=
+ =?us-ascii?Q?WCEKg5DCy//8E+mdsrVNHKAHL1/1DRZGfHvbmU/da4njUw7pFKEbJpir6BUK?=
+ =?us-ascii?Q?cDS+IbIVu6TwgNOLFYRaIsrep9GMCwj8H8Hwtjaek5IfaDCqOPYM/YpThP9F?=
+ =?us-ascii?Q?xRUuz++0U0rGNG3MVMBkJBBSr9rfDxRqQYKpgwhGbdPJC02s9uuNzrUAACKe?=
+ =?us-ascii?Q?JMqEWb3S0dpgN55lhRE6pynVI1wqYIBx/oa1+8UKAzj1IlPlw7M8dHCjMdai?=
+ =?us-ascii?Q?OVhry0FFac4mGLUwZMcmbmZO?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230032)(376006)(7416006)(366008)(1800799016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?RerBgzjzwX0aF7dr19HKq1bmCgaF4wo6yvH0hTGRY1yRfgwwihBHqXWtK9m7?=
+ =?us-ascii?Q?4Lgf05yrYiIhyYFPAAwDDa3buZwhblWS3ImS3q80vC4J2YWwlfDb/aLwOW+s?=
+ =?us-ascii?Q?TaERLcik0TkKXPqDPI0tWObtVrxMBiZ6BN33E/K5lMADduxP+DIub7wfaTdI?=
+ =?us-ascii?Q?yM6A8GGbIpuZpETfsgVeu7aGKqpoIUwRLvNOu0tSppnahh9a8vqeebVS4HOK?=
+ =?us-ascii?Q?y0DoCiQYVhr5PMZ5JZ8cZntmcWSLycGg0SJtapr12EXcxiEgpDsXca8iUZ9K?=
+ =?us-ascii?Q?P5PU8f53TVkhN7EFkFwazoQP+0PkuAhJVKvRIAgPW76qBJJlam18qLE/SSES?=
+ =?us-ascii?Q?1hXWmn+16kqaXMmLJ7Ac/fxFQ0l6Ta02u7gbl9diWvJlY5daROJyN2sW1GS5?=
+ =?us-ascii?Q?n4A3irosX+fIzUiCQDRpYX3VrSLwq8ul+vZ05aOn0ai7KkG+83LdGvOJ2JBc?=
+ =?us-ascii?Q?chbyKTAWKv4HTG0O8GfvNFmSPASpibHSNzBS4wnUac/ukQgL//j1IL4fbQfK?=
+ =?us-ascii?Q?z6AL+TQwpdRha9lb1qdRmcXN71+bEHcY+7zq70GUcq0w2Cvh5kMQov2hwC2I?=
+ =?us-ascii?Q?O9YBa+oqDx/kxA3gkc40Xs15c61BX+0wnreP8ZdBNuLYjOPbP9CMWs6n/tyP?=
+ =?us-ascii?Q?dUw5mvR0+LroJ+5K7BYBbEzkb+s9v8xLzAJwpBVCyLLxCCzb4uHvwt0PD3BT?=
+ =?us-ascii?Q?oqK4jmw0iT7Pp+hs7IlxN6vCVyI71KhG+5jd7RwOBHb4W6A5gmuyhFPTT1i6?=
+ =?us-ascii?Q?ZMI/VrrM72UvK9tvTE7u3STkVQr/3Jh6KDx76j9CRU5XV/6Kg4SWPy7iLcyd?=
+ =?us-ascii?Q?zdNpHAZyTTHfLAMXUxII2RAYfG9c6mZ5iuML8lEXb8bLANf1Es0r4XsZzygs?=
+ =?us-ascii?Q?0G993gNfQhoi8EPt0HY262jNgJm49yCc2uamXxy8DwiN94IOJsV5kO5AFWWN?=
+ =?us-ascii?Q?6H9jZ2Je/+lwWu6gjFW2OXaYOgVeADgvYN8DbVC+2MsLJoGPsSC7qTF8SbNN?=
+ =?us-ascii?Q?J23VLN2YwF5Gixb1pHoV2lOzIhrJzoiDsD4/JzdNAUGyOE976ZKdNA0Wifyw?=
+ =?us-ascii?Q?NiNLk6yhQtAdCn3Sx2kqQQMeotlGvdkP3wSJASd41BzIXkPJ18Rt6P+cRgr3?=
+ =?us-ascii?Q?+sj/fMKZKslzrqlziUJC2l++wHfT7XJeetTM8SAtSuwZ5VSWwTda3V8wfwzp?=
+ =?us-ascii?Q?qFGy/dZq/fb9Iusqe1Y2kLbS7DDsB9su9N8bO54GyXibHYx62EfH+g1fVk1E?=
+ =?us-ascii?Q?e46qSFux6n4yPkifpCwbP26grxgSGC8OGi/kUntdtzWqif6zL8iuwe2CxOUF?=
+ =?us-ascii?Q?0yBNUGATZ3oWwt/gajkFPhit/1CrSfyJuNv0+a2RJfyQhu3AaKTqOsMogxJM?=
+ =?us-ascii?Q?FBEODUOZDL7PNwo3Zs8mbCmGX28DtUEL2vjLkzdVytmcyXqHnednLOZC6gys?=
+ =?us-ascii?Q?aFNz3oESinbO2F9PEy2+Dc96aLWMPZUFo4/ccKDUEk0LEeoT4Zsv2ZwsvrPf?=
+ =?us-ascii?Q?icOlvcWJUE3AxuKy9CCB76GuifBSnwv42glHpjSX71nnWFfF4xjRlMwSFSA+?=
+ =?us-ascii?Q?BF2Iu6gWfyQEBUiq12ALf+NzeYxuLSvk0wttHwkk?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a367c31b-fcfb-488a-c9dc-08dc8a31ef57
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2024 16:17:05.4730
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qVnjJ+XlIhkUXlev/lI6nFrTFHJjh0QkwpAL5nERKY+15Iyv8wUNM1vO3LrLjpaR
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4435
 
-On Wed, Jun 05, 2024 at 10:59:11AM -0300, Jason Gunthorpe wrote:
-> On Tue, Jun 04, 2024 at 04:56:57PM -0700, Dan Williams wrote:
-> > * Introspection / validation: Subsystem community needs to be able to
-> >   audit behavior after the fact.
-> > 
-> >   To me this means even if the kernel is letting a command through based
-> >   on the stated Command Effect of "Configuration Change after Cold Reset"
-> >   upstream community has a need to be able to read the vendor
-> >   specification for that command. I.e. commands might be vendor-specific,
-> >   but never vendor-private. I see this as similar to the requirement for
-> >   open source userspace for sophisticated accelerators.
-> 
-> I'm less hard on this. As long as reasonable open userspace exists I
-> think it is fine to let other stuff through too. I can appreciate the
-> DRM stance on this, but IMHO, there is meaningfully more value for open
-> source in trying get an open Vulkan implementation vs blocking users
-> from reading their vendor'd diagnostic SI values.
-> 
-> I don't think we should get into some kind of extremism and insist
-> that every single bit must be documented/standardized or Linux won't
-> support it.
+On Tue, Jun 11, 2024 at 05:36:17PM +0200, Daniel Vetter wrote:
+> reliablity/health reporting. That's a lot more vendor specific in nature
+> and needs to be customized anyway per deployement. And only much higher in
+> the stack, maybe in k8s, can a technically reasonable unification even
+> happen.  So again we're much more lenient about infrastructure enabling
+> and uapi than stuff applications will use directly.
 
-I figured it might be useful to paint what we do in DRM with a bit more
-nuance. In the principles, we're indeed fairly radical in what we require,
-but in practice we aim for a much more pragmatic approach in what we
-merge. There's two major axis here:
+To be clear, this is the specific niche fwctl is for. It is not for
+GPU command submission or something like that, and as I said to Jiri I
+would agree to agressively block such abuses.
+ 
+> Currently that's enough of a mess in drm that I feel like enforcing
+> something like fwctl is still too much. But maybe once fwctl is
+> established with other subsystems/devices we can start the conversations
+> with vendors to get this going a few years down the road.
 
-1. One is ecosystem maturity. One end is 3d, with vulkan as the clear
-industry standard, and an upstream full-featured userspace driver in
-mesa3d is the only technically reasonable choice. And all gpu vendors
-agree and by this year even nvidia started hiring an upstream team. But
-this didn't happen magically overnight, it took 1-2 decades of background
-discussions and tactical push&pulling to get there.
+I wouldn't say enforcing, but instead of having every GPU driver build
+their own weird vendor'd way to access their debug/diagnostic stuff
+steer them into fwctl. These data center GPUs with FW at least have
+lots of appropriate stuff and all the vendor OOT stuff has tooling to
+inspect the GPUs far more than DRM has code for (ie
+rocm-smi/nvidia-smi are have some features that are potentially good
+candidates for fwctl)
 
-The other end is currently AI accelerators. It's a complete mess, where
-across the platform (client, edge, cloud), customer and vendor dimension
-every point has a different stack. And the problem is so obvious that
-everyone is working to fix this, which means currently
-https://xkcd.com/927/ is happening in parallel. Just to get things going
-we're accepting pretty much anything that's a notch above total garbage
-for userspace and for merging into the kernel.
+> In practice, it doesn't seem to be an issue, at least not beyond the
+> intentionally pragmatic choices where we merge kernel code with known
+> sub-par/incomplete userspace. I'm not sure why, but to my knowledge all
+> attempts to break the spirit of our userspace rules while following the
+> letter die in vendor-internal discussions, at least for all the
+> established upstream driver teams.
 
-2. The other part is how much it impacts applications. If you can't run
-the same application across different vendors, the case for an upstream
-stack becomes a lot weaker. At the other end is infrastructure enabling
-like device configuration, error handling and recovery, hw debugging and
-reliablity/health reporting. That's a lot more vendor specific in nature
-and needs to be customized anyway per deployement. And only much higher in
-the stack, maybe in k8s, can a technically reasonable unification even
-happen.  So again we're much more lenient about infrastructure enabling
-and uapi than stuff applications will use directly.
+I think the same is broadly true of RDMA as well, except we don't
+bother with the kernel trying to police the command stream - direct
+submission from userspace. I can't say it has been much of an issue.
 
-Currently that's enough of a mess in drm that I feel like enforcing
-something like fwctl is still too much. But maybe once fwctl is
-established with other subsystems/devices we can start the conversations
-with vendors to get this going a few years down the road.
+> tldr; fwctl as I understand it feels like a bridge to far for drm today,
+> but I'd very much like someone else to make this happen so we could
+> eventually push towards adoption too.
 
-Both together mean we land a lot of code that's questionable at best,
-clear garbage at worst. But since we've been in the merging garbage
-business just to get things going for decades, we've become pretty good at
-dealing with the kernel internal and uapi fallout, some say too good. But
-personally I don't think there's a path to where we are with 3d/vulkan
-that doesn't go through years of this kind of suck, and very much merged
-into upstream kind of suck.
+Hahah, okay, well, I'm pushing :)
 
-For all the concerns about trusting vendors/devices to not abuse very broad
-uapi interfaces: Modern accelerator command submission boils down to "run
-this context at this $addr", and the kernel never ever directly sees
-anything more fly by. That's the same interface you need for a no-op job
-as a full blown AI workload, so in theory maximal abuse potential.
-
-In practice, it doesn't seem to be an issue, at least not beyond the
-intentionally pragmatic choices where we merge kernel code with known
-sub-par/incomplete userspace. I'm not sure why, but to my knowledge all
-attempts to break the spirit of our userspace rules while following the
-letter die in vendor-internal discussions, at least for all the
-established upstream driver teams.
-
-And for new ones it takes years of private chats to get them going and
-fully established in upstream anyway.
-
-Maybe one reason we have a bit an extremist reputation is that all the
-public takes are the radical principled requirements, while the actual
-pragmatic discussions mostly happen in private.
-
-tldr; fwctl as I understand it feels like a bridge to far for drm today,
-but I'd very much like someone else to make this happen so we could
-eventually push towards adoption too.
-
-Cheers, Sima
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Jason
