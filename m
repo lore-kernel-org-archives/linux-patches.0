@@ -1,87 +1,100 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856F28488
-	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 20:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E148155723
+	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 22:13:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718138903; cv=none; b=K88sIv7CHjY9YWQbE8JudXUL+UlyvQbKpQU8/971Dq8mgIAVFLJcaQzgsz5CCPZSq/rHPRHXh8w+3o5msD9zdMCWxmwRbbaRt5bF4dNIEDhbW46mbxF+jSSddTk1OLbCnjMQnxaBiVgZoMmMoY82s+0nrfWqz2eda1akA73a+8Y=
+	t=1718144011; cv=none; b=Bxc4I6WkFMKoem/sElTA8mmQeeZMxoR/r1My9w6eV6iP59RmDxn02KJqVl/kkrSCtjGPbfU1TY7FhgkKTPAjTratQKTw0XBcHEVLylzV5Rn7mCg1KOuWF1Gh0qOWyc4qdqGOtTwrYvX4jKsGaEYKDUJTqQR95xlY7vbxcLNqynA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718138903; c=relaxed/simple;
-	bh=1/tqaIGvH2aIdc6qjr6EFO6xMzJH8Sqyn0+Hr1zgwww=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=joCjhdTWeijlRzEQQXWWISUkxGvTUbL1vc3fFCsBhUOScXa1RmFN8ClQf1qKS8gUP5RS3ztbi7vqr6O1UeUbKvyIR5rOIN7A7EeX09JlDGsUtRxaxlG5JShVh6mJb71heEmNQZg1WtI783pve5Vs1kHET6CJWzj24PJ1rP5DW1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OLKY/h2K; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1718144011; c=relaxed/simple;
+	bh=jJPNqfRI/Cz7z2/d2q/YscZrx1nNwYFta+zUuMDS5wU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YnVRFUX+7x38Gt+W66PtICFlsmvzb4pssDhOBzPHLOfF0JfuVQqfcsG8PYl4AxRuZSiVoHcjsZxADq/Cj4A+BnsR9Pgr0BbIYABQrOKFwETQESPkgHiYUb6NwR4FkR6R+dychP8pWG9uiuf50NOjbv6stDmsfl+BIw1vctH2fkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MGk6pCHe; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OLKY/h2K"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1718138902; x=1749674902;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=1/tqaIGvH2aIdc6qjr6EFO6xMzJH8Sqyn0+Hr1zgwww=;
-  b=OLKY/h2K4+LunhzvahYq0xDmifdZ7PZ1f7wCMV8H98Sw8DwkUREK1stY
-   gWpLScVoerzmR1vOWDMoyFEYVzA4Why3309qqM1vxzexHUM13xZuEyVIB
-   aYLgNgh8lP/FmP9cmT4bXfRQrBOTuBy1Ao01JXS40X8L6/VGLaJrofaH4
-   Y+0FViWf82zkU5Y+Y3fWZrWW4asG05qRy8+voA8Y8ZAUDSUnKo32jrPs+
-   eFlzs9UUvpKnoY91QA8tCkBxaIpFQoN5bBGkMyXTxZ6qQM17NnW5QRmSe
-   KtA2ymsj4pLx1q6RbtDXMD1Wh8zxwRK/4Qmvcy0/D4zYwjYUVNeVfCZmw
-   g==;
-X-CSE-ConnectionGUID: BwEllGUxQXGhIC4rgLbHug==
-X-CSE-MsgGUID: Do61WwZmR/mPb/RvufFtMw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11100"; a="25452976"
-X-IronPort-AV: E=Sophos;i="6.08,231,1712646000"; 
-   d="scan'208";a="25452976"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2024 13:48:21 -0700
-X-CSE-ConnectionGUID: ScX/nCj5SmCchozr0VqgOQ==
-X-CSE-MsgGUID: FBKMqUEGQ86Ox5eLHbEp+w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,231,1712646000"; 
-   d="scan'208";a="77020659"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2024 13:48:21 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Jonathan Corbet <corbet@lwn.net>
-Cc: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH] Documentation/x86: Switch to new Intel CPU model defines
-Date: Tue, 11 Jun 2024 13:48:14 -0700
-Message-ID: <20240611204814.353821-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.45.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MGk6pCHe"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2c2e72128b4so267735a91.0
+        for <patches@lists.linux.dev>; Tue, 11 Jun 2024 15:13:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718144010; x=1718748810; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=afhBt1R47m/ezKSoV/9ouvvCFpR5TvvNgsKkb4qH0kc=;
+        b=MGk6pCHeddjl6uYQP7Q1km3d8oHE7PWHyQGFLLUIEjRikJn4+dmWzIVwvBLrJI+UUx
+         U62Xr+E60jBiCwAQIh+uJO7ihNW26EZYm21Kr/sI4pasmAT5ezCNhto3DvMmnTkRlDL5
+         /ul44BBpM7bmyRFzOSw4UnNvz8GJJBzqJnt6imb33m2IJsjGU6BGDcFZ6L/yUh4I1fb8
+         c6uswjhl196wNDA6YBiFbP2dQ4xHrXYHbuM429L10qDIy0Cb59ggd7TlznMuzYNiket9
+         sre0/gOzJbZF1IpCPA/j09QXSX1EtF88e6r+7JLkRbRy4tfoVlDktN92qhnFAGNadd5t
+         qexg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718144010; x=1718748810;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=afhBt1R47m/ezKSoV/9ouvvCFpR5TvvNgsKkb4qH0kc=;
+        b=H5XOl+zyXXDrpv1PIbTJnl8wWnq+7BUDWUwv/DZgCxPfSP8dczq6EtLI8SR0N32mWa
+         6n3MjaLA8dxSEmwz+QARPgHiJNhSR639I0SQ+WVaAcQ3OSf4ZoICV5IEYo/icZO68sCE
+         C0q9ofFGf+IkjCN9Fj6HXVzYTcpnjq4SqGEIfXaZad7o6SjB2O5fzOihitXif5ubkaag
+         H0DaAtBwZ0mpevuTNOf1DW5n9r7aVb2qOy9K3WEaT3hFFtbPZL0DpsbOrz4hWs8MHvLQ
+         GEl/lmnk2XoYTBkgCSZ4RjAVxx+Nz9JTV/dq+4b2f/yf1ZJM+Pi6i2e72+EpzLUp+/Gg
+         7zxA==
+X-Forwarded-Encrypted: i=1; AJvYcCWiTCHQ9eepnX4KvXhVJZoEqNx8vRkW6st3WjfJaX9R6emsubpO75gtdQgyutAf+TAENcuQ5VxyPvvHfOdzuDY951YaO2fRVg==
+X-Gm-Message-State: AOJu0YwVZq0hxtKrw8FMkhL5xzmaweIYNEcsaQ+BmcR0WRs38VbwdkXv
+	LLlXHC5KKve0j9CSZqim3ZXc/QF1TEA0hpcyU5D97/9PHUJ4Ro89dKRWwLDynA+6luPiGh45urw
+	WF01d8wEWh/2Tyq/Pjit49/BYspI=
+X-Google-Smtp-Source: AGHT+IE9qlCqOLeQ05QKNJPKnN7tKouREQ3dXdvn72wh7ojH+wuSAOzWfyGt9Erib8sm0i0A/GgDresrtb8V839STDE=
+X-Received: by 2002:a17:90a:6fa3:b0:2bd:801f:dabd with SMTP id
+ 98e67ed59e1d1-2c4a73a5950mr378332a91.3.1718144009637; Tue, 11 Jun 2024
+ 15:13:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240519210735.587323-1-ojeda@kernel.org>
+In-Reply-To: <20240519210735.587323-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 12 Jun 2024 00:13:17 +0200
+Message-ID: <CANiq72nXkNY2EUd_6noS-ZZ9xKa0sBYcby1QCovA8V9VxwTNXw@mail.gmail.com>
+Subject: Re: [PATCH] rust: avoid unused import warning in `rusttest`
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Danilo Krummrich <dakr@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-New CPU #defines encode vendor and family as well as model
-so "_FAM6" is no longer used in the #define names.
+On Sun, May 19, 2024 at 11:07=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
+ote:
+>
+> When compiling for the `rusttest` target, the `core::ptr` import is
+> unused since its only use happens in the `reserve()` method which is
+> not compiled in that target:
+>
+>     warning: unused import: `core::ptr`
+>     --> rust/kernel/alloc/vec_ext.rs:7:5
+>       |
+>     7 | use core::ptr;
+>       |     ^^^^^^^^^
+>       |
+>       =3D note: `#[warn(unused_imports)]` on by default
+>
+> Thus clean it.
+>
+> Fixes: 97ab3e8eec0c ("rust: alloc: fix dangling pointer in VecExt<T>::res=
+erve()")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- Documentation/arch/x86/cpuinfo.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Applied to `rust-fixes` -- thanks everyone!
 
-diff --git a/Documentation/arch/x86/cpuinfo.rst b/Documentation/arch/x86/cpuinfo.rst
-index 8895784d4784..6ef426a52cdc 100644
---- a/Documentation/arch/x86/cpuinfo.rst
-+++ b/Documentation/arch/x86/cpuinfo.rst
-@@ -112,7 +112,7 @@ conditions are met, the features are enabled by the set_cpu_cap or
- setup_force_cpu_cap macros. For example, if bit 5 is set in MSR_IA32_CORE_CAPS,
- the feature X86_FEATURE_SPLIT_LOCK_DETECT will be enabled and
- "split_lock_detect" will be displayed. The flag "ring3mwait" will be
--displayed only when running on INTEL_FAM6_XEON_PHI_[KNL|KNM] processors.
-+displayed only when running on INTEL_XEON_PHI_[KNL|KNM] processors.
- 
- d: Flags can represent purely software features.
- ------------------------------------------------
--- 
-2.45.0
-
+Cheers,
+Miguel
