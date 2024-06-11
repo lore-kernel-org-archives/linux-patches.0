@@ -1,115 +1,184 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E781E49E;
-	Tue, 11 Jun 2024 13:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B3D17B42B;
+	Tue, 11 Jun 2024 14:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718111165; cv=none; b=mhlM21LUXNi4pHN48I4CYxOXOnEEioxZyjLJ2NxyZFdkc/CI4AygPm9SAjjYT1DbVqp8BhwF61TWdOC9lzXtp0nyHsXUfkU2BaEMnrwmXLkK5RD96rFiwsENidbnsDEudcxj7557tkA3YLm5u4UBUn8f2usqvQGFmDlEVjC1Pzc=
+	t=1718116110; cv=none; b=QszkVnnFTnqQbxwnuTiTCjI3lA3Ho/+ZxUgIedAb6p5c/gf80w+cfXGbfSRc05BSzBJeIQeexhKBI0Tsm0xo17A148R0t843cNXN2zw7Zgq4IcHWZEqBVo2MbEE66mf5rRPSVa3h73qOljgDCfzzGcGrLA/AwxpelzXwJm8tS+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718111165; c=relaxed/simple;
-	bh=jA/69QdB2gFBUSOgBGKkvHcX9B1bO63Yfu8u1le2liY=;
+	s=arc-20240116; t=1718116110; c=relaxed/simple;
+	bh=u6IPxDchDXd4e1F8IfxVMsgtYMnGEwTTN8nDGvge/mM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MBJVTXtpb0wOnwm9AM4IlRuTVrVng/hAW4W9BWGfasGMMW2ztcicf94d2wBYvbyMNdWnd7L+xcvjE4MQCDregEWu6Cx/7eiS6KdeHqT/BpNAZg4+ga75bzRZ29lvhagbQWvbI+MX5GlbnXmGQyBzrdMVWCLKrmLQ9+7rlPRtEeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKDcaw09; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=FzoFRhNsqZGx9rOIutoIkJuXpO9wCTX4DBIntCfzKpGLjarFryZqt3i+I+KTcn7MosaqmXi7WRNqTsiDi24WE5Wg5q1v2u8BcrK7Rv9u08bSbaQbDMTs4A8WlDbiR9q8xRaFvZg4c6zVW1OYHY6XHopTRVvh6HJvfZK7sFuVSl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGrjD9ej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKDcaw09"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513B2C2BD10;
-	Tue, 11 Jun 2024 13:06:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718111164;
-	bh=jA/69QdB2gFBUSOgBGKkvHcX9B1bO63Yfu8u1le2liY=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RGrjD9ej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36295C2BD10;
+	Tue, 11 Jun 2024 14:28:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718116110;
+	bh=u6IPxDchDXd4e1F8IfxVMsgtYMnGEwTTN8nDGvge/mM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JKDcaw09xPpEoPaDbp+eXsX69dQ+dbufTli7zV3Gym515i4EyQaI8sFEKiZrCqTzh
-	 UgDGhvgOkPP14hfYrGox4cavj3nnKGubR541y1tJB/J/qszTjborznH2oJGGXFd4kp
-	 5XEgXKdOdjlBJfz7KxPOYj3WiRV7HyvuJPEOtnXc=
-Date: Tue, 11 Jun 2024 15:06:01 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Conor Dooley <conor.dooley@microchip.com>
-Cc: Ron Economos <re@w6rz.net>, Pavel Machek <pavel@denx.de>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.6 000/741] 6.6.33-rc2 review
-Message-ID: <2024061140-sandworm-irk-b7c9@gregkh>
-References: <20240609113903.732882729@linuxfoundation.org>
- <ZmYDquU9rsJ2HG9g@duo.ucw.cz>
- <ad13afda-6d20-fa88-ae7f-c1a69b1f5a40@w6rz.net>
- <2024061006-overdress-outburst-36ae@gregkh>
- <20240610-scabby-bruising-110970760c41@wendy>
+	b=RGrjD9ejdq2ZY0D6fhhoXuAdwQkd6ho9NU+Mq6pzK3fQjKvs4gy6LS5N/Xs0xS2wX
+	 z9uVJMQUU+iHSKPrLjYlvsDEdhmH3EgwwW43kbJN0y9cIZN7kl+GTLyJzqKKAHGDIQ
+	 kbCdaprZKgpEe5pL7hKigA95eyi2Y5m5Ud+tnBpAJh8W7FAKCO0UIfpTwPptUJZVzm
+	 SDGE1iIz59SJoDHeZLn/MOkvJi1syGluHg1+zZczR0CTpHyNjPb0/mDo96PZb9YyGG
+	 XXXcugQH0wm0qAASFDhB8qb6ALKfhttxqJMyJM7CcSs3gNjd3raVREDqRv4NMhhkdX
+	 txfcsE5RVFT3A==
+Date: Tue, 11 Jun 2024 07:28:29 -0700
+From: "Darrick J. Wong" <djwong@kernel.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: patches@lists.linux.dev, fstests@vger.kernel.org,
+	linux-xfs@vger.kernel.org, linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org, akpm@linux-foundation.org,
+	ziy@nvidia.com, vbabka@suse.cz, seanjc@google.com,
+	willy@infradead.org, david@redhat.com, hughd@google.com,
+	linmiaohe@huawei.com, muchun.song@linux.dev, osalvador@suse.de,
+	p.raghav@samsung.com, da.gomez@samsung.com, hare@suse.de,
+	john.g.garry@oracle.com
+Subject: Re: [PATCH 1/5] common: move mread() to generic helper _mread()
+Message-ID: <20240611142829.GG52977@frogsfrogsfrogs>
+References: <20240611030203.1719072-1-mcgrof@kernel.org>
+ <20240611030203.1719072-2-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240610-scabby-bruising-110970760c41@wendy>
+In-Reply-To: <20240611030203.1719072-2-mcgrof@kernel.org>
 
-On Mon, Jun 10, 2024 at 08:26:10AM +0100, Conor Dooley wrote:
-> On Mon, Jun 10, 2024 at 08:28:29AM +0200, Greg Kroah-Hartman wrote:
-> > On Sun, Jun 09, 2024 at 11:21:55PM -0700, Ron Economos wrote:
-> > > On 6/9/24 12:34 PM, Pavel Machek wrote:
-> > > > Hi!
-> > > > 
-> > > > > This is the start of the stable review cycle for the 6.6.33 release.
-> > > > > There are 741 patches in this series, all will be posted as a response
-> > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > let me know.
-> > > > 6.6 seems to have build problem on risc-v:
+On Mon, Jun 10, 2024 at 08:01:58PM -0700, Luis Chamberlain wrote:
+> We want a shared way to use mmap in a way that we can test
+> for the SIGBUS, provide a shared routine which other tests can
+> leverage.
 > 
-> > > > arch/riscv/kernel/suspend.c:14:66: error: 'RISCV_ISA_EXT_XLINUXENVCFG' undeclared (first use in this function); did you mean 'RISCV_ISA_EXT_ZIFENCEI'?
-> > > > 694
-> > > >     14 |         if (riscv_cpu_has_extension_unlikely(smp_processor_id(), RISCV_ISA_EXT_XLINUXENVCFG))
-> > > > 695
-> > > >        |                                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
-> > > > 696
-> > > >        |                                                                  RISCV_ISA_EXT_ZIFENCEI
+> Suggested-by: "Darrick J. Wong" <djwong@kernel.org>
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+
+Looks ok,
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+
+--D
+
+> ---
+>  common/rc         | 28 ++++++++++++++++++++++++++++
+>  tests/generic/574 | 36 ++++--------------------------------
+>  2 files changed, 32 insertions(+), 32 deletions(-)
 > 
-> > > > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/7053222239
-> > > > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/1324369118
-> > > > 
-> > > > No problems detected on 6.8-stable and 6.1-stable.
-> > > > 
-> > > > Best regards,
-> > > > 								Pavel
-> > > 
-> > > I'm seeing the same thing here. Somehow some extra patches got slipped in
-> > > between rc1 and rc2. The new patches for RISC-V are:
-> > > 
-> > > Samuel Holland <samuel.holland@sifive.com>
-> > >     riscv: Save/restore envcfg CSR during CPU suspend
-> > > 
-> > > commit 88b55a586b87994a33e0285c9e8881485e9b77ea
-> > > 
-> > > Samuel Holland <samuel.holland@sifive.com>
-> > >     riscv: Fix enabling cbo.zero when running in M-mode
-> > > 
-> > > commit 8c6e096cf527d65e693bfbf00aa6791149c58552
-> > > 
-> > > The first patch "riscv: Save/restore envcfg CSR during CPU suspend" causes
-> > > the build failure.
-> > > 
-> > > 
-> > 
-> > Yes, these were added because they were marked as fixes for other
-> > commits in the series.  I'll unwind them all now as something is going
-> > wrong...
+> diff --git a/common/rc b/common/rc
+> index 163041fea5b9..fa7942809d6c 100644
+> --- a/common/rc
+> +++ b/common/rc
+> @@ -52,6 +52,34 @@ _pwrite_byte() {
+>  	$XFS_IO_PROG $xfs_io_args -f -c "pwrite -S $pattern $offset $len" "$file"
+>  }
+>  
+> +_round_up_to_page_boundary()
+> +{
+> +	local n=$1
+> +	local page_size=$(_get_page_size)
+> +
+> +	echo $(( (n + page_size - 1) & ~(page_size - 1) ))
+> +}
+> +
+> +_mread()
+> +{
+> +	local file=$1
+> +	local offset=$2
+> +	local length=$3
+> +	local map_len=$(_round_up_to_page_boundary $(_get_filesize $file))
+> +
+> +	# Some callers expect xfs_io to crash with SIGBUS due to the mread,
+> +	# causing the shell to print "Bus error" to stderr.  To allow this
+> +	# message to be redirected, execute xfs_io in a new shell instance.
+> +	# However, for this to work reliably, we also need to prevent the new
+> +	# shell instance from optimizing out the fork and directly exec'ing
+> +	# xfs_io.  The easiest way to do that is to append 'true' to the
+> +	# commands, so that xfs_io is no longer the last command the shell sees.
+> +	# Don't let it write core files to the filesystem.
+> +	bash -c "trap '' SIGBUS; ulimit -c 0; $XFS_IO_PROG -r $file \
+> +		-c 'mmap -r 0 $map_len' \
+> +		-c 'mread -v $offset $length'; true"
+> +}
+> +
+>  # mmap-write a byte into a range of a file
+>  _mwrite_byte() {
+>  	local pattern="$1"
+> diff --git a/tests/generic/574 b/tests/generic/574
+> index cb42baaa67aa..d44c23e5abc2 100755
+> --- a/tests/generic/574
+> +++ b/tests/generic/574
+> @@ -52,34 +52,6 @@ setup_zeroed_file()
+>  	cmp $fsv_orig_file $fsv_file
+>  }
+>  
+> -round_up_to_page_boundary()
+> -{
+> -	local n=$1
+> -	local page_size=$(_get_page_size)
+> -
+> -	echo $(( (n + page_size - 1) & ~(page_size - 1) ))
+> -}
+> -
+> -mread()
+> -{
+> -	local file=$1
+> -	local offset=$2
+> -	local length=$3
+> -	local map_len=$(round_up_to_page_boundary $(_get_filesize $file))
+> -
+> -	# Some callers expect xfs_io to crash with SIGBUS due to the mread,
+> -	# causing the shell to print "Bus error" to stderr.  To allow this
+> -	# message to be redirected, execute xfs_io in a new shell instance.
+> -	# However, for this to work reliably, we also need to prevent the new
+> -	# shell instance from optimizing out the fork and directly exec'ing
+> -	# xfs_io.  The easiest way to do that is to append 'true' to the
+> -	# commands, so that xfs_io is no longer the last command the shell sees.
+> -	# Don't let it write core files to the filesystem.
+> -	bash -c "trap '' SIGBUS; ulimit -c 0; $XFS_IO_PROG -r $file \
+> -		-c 'mmap -r 0 $map_len' \
+> -		-c 'mread -v $offset $length'; true"
+> -}
+> -
+>  corruption_test()
+>  {
+>  	local block_size=$1
+> @@ -142,7 +114,7 @@ corruption_test()
+>  	fi
+>  
+>  	# Reading the full file via mmap should fail.
+> -	mread $fsv_file 0 $file_len >/dev/null 2>$tmp.err
+> +	_mread $fsv_file 0 $file_len >/dev/null 2>$tmp.err
+>  	if ! grep -q 'Bus error' $tmp.err; then
+>  		echo "Didn't see SIGBUS when reading file via mmap"
+>  		cat $tmp.err
+> @@ -150,7 +122,7 @@ corruption_test()
+>  
+>  	# Reading just the corrupted part via mmap should fail.
+>  	if ! $is_merkle_tree; then
+> -		mread $fsv_file $zap_offset $zap_len >/dev/null 2>$tmp.err
+> +		_mread $fsv_file $zap_offset $zap_len >/dev/null 2>$tmp.err
+>  		if ! grep -q 'Bus error' $tmp.err; then
+>  			echo "Didn't see SIGBUS when reading corrupted part via mmap"
+>  			cat $tmp.err
+> @@ -174,10 +146,10 @@ corrupt_eof_block_test()
+>  	head -c $zap_len /dev/zero | tr '\0' X \
+>  		| _fsv_scratch_corrupt_bytes $fsv_file $file_len
+>  
+> -	mread $fsv_file $file_len $zap_len >$tmp.out 2>$tmp.err
+> +	_mread $fsv_file $file_len $zap_len >$tmp.out 2>$tmp.err
+>  
+>  	head -c $file_len /dev/zero >$tmp.zeroes
+> -	mread $tmp.zeroes $file_len $zap_len >$tmp.zeroes_out
+> +	_mread $tmp.zeroes $file_len $zap_len >$tmp.zeroes_out
+>  
+>  	grep -q 'Bus error' $tmp.err || diff $tmp.out $tmp.zeroes_out
+>  }
+> -- 
+> 2.43.0
 > 
-> Really we should just backport this envcfg handling to stable, this
-> isn't the first (and won't be the last) issue it'll cause. I'll put a
-> backport of it on my todo list cos I think last time around it couldn't
-> be cherrypicked.
-
-Thanks, I've dropped almost all riscv patches from this queue now.  If
-they want to be added back, please send working backports :)
-
-thanks,
-
-greg k-h
+> 
