@@ -1,100 +1,97 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E148155723
-	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 22:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D24156251
+	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 23:53:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718144011; cv=none; b=Bxc4I6WkFMKoem/sElTA8mmQeeZMxoR/r1My9w6eV6iP59RmDxn02KJqVl/kkrSCtjGPbfU1TY7FhgkKTPAjTratQKTw0XBcHEVLylzV5Rn7mCg1KOuWF1Gh0qOWyc4qdqGOtTwrYvX4jKsGaEYKDUJTqQR95xlY7vbxcLNqynA=
+	t=1718149994; cv=none; b=GiPtxOcvTFetT2xflv6IC3g5yJlilQRZ0UnNQQ2aTrEelQif2ab1irl3OKflv7BunPi9T5BiFHPruMRRB9O3qHezxMTX8+hJFSu7hzumYATvwm6BIOZFzf8XBTbkMH3qDRGflIC1GjbEYIB9tu9SL0Sbk3jDOn1TgQqX3BQnNxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718144011; c=relaxed/simple;
-	bh=jJPNqfRI/Cz7z2/d2q/YscZrx1nNwYFta+zUuMDS5wU=;
+	s=arc-20240116; t=1718149994; c=relaxed/simple;
+	bh=pemv/5FNKSumJ1rxPujIu+it0aZrw4DbBltq4WoBshg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YnVRFUX+7x38Gt+W66PtICFlsmvzb4pssDhOBzPHLOfF0JfuVQqfcsG8PYl4AxRuZSiVoHcjsZxADq/Cj4A+BnsR9Pgr0BbIYABQrOKFwETQESPkgHiYUb6NwR4FkR6R+dychP8pWG9uiuf50NOjbv6stDmsfl+BIw1vctH2fkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MGk6pCHe; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=L0DfmE6ocfA/085RR9YktPGbYsV4Z1SawDrmxHszGcWh5v1zHA/jkUDSIq7XJTgH+jJmk8bF6EyEe0KTxkH29KTAZoarv6ktF2BxRO2O5zgkKal5SqD3FsakPAGaSSdZOxlzyy1OQHpv8RIV5lsT+zylvrpSLEneYLbda1zOpMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eaeEiFQi; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MGk6pCHe"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2c2e72128b4so267735a91.0
-        for <patches@lists.linux.dev>; Tue, 11 Jun 2024 15:13:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eaeEiFQi"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-57c8bd6b655so7242a12.0
+        for <patches@lists.linux.dev>; Tue, 11 Jun 2024 16:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718144010; x=1718748810; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1718149991; x=1718754791; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=afhBt1R47m/ezKSoV/9ouvvCFpR5TvvNgsKkb4qH0kc=;
-        b=MGk6pCHeddjl6uYQP7Q1km3d8oHE7PWHyQGFLLUIEjRikJn4+dmWzIVwvBLrJI+UUx
-         U62Xr+E60jBiCwAQIh+uJO7ihNW26EZYm21Kr/sI4pasmAT5ezCNhto3DvMmnTkRlDL5
-         /ul44BBpM7bmyRFzOSw4UnNvz8GJJBzqJnt6imb33m2IJsjGU6BGDcFZ6L/yUh4I1fb8
-         c6uswjhl196wNDA6YBiFbP2dQ4xHrXYHbuM429L10qDIy0Cb59ggd7TlznMuzYNiket9
-         sre0/gOzJbZF1IpCPA/j09QXSX1EtF88e6r+7JLkRbRy4tfoVlDktN92qhnFAGNadd5t
-         qexg==
+        bh=58zmXA/KdzT+Cx9urdttdUUCUSFh5Abqv4bxEUOPq4Y=;
+        b=eaeEiFQikJCPqbxv0XdyAjMZC1d3Js8czdeu0ElkWoHxyz/N/6ZO1DDmiprwcGNiEB
+         /VVxvZRPmZtddzSbXTCNz/NGkDNN3QF4nLv6CjKFTOv5yK4YV8syU9MGMchHVhv/WNzt
+         p73VdDX0DJkcudQNvWkJU2NHcs0c48XSty9B7hJveMgKWR0iq0K4Cf/Afw6ndC9o51zH
+         Qo/peKv7krbJS78cmgejyGaDATP4MWnDPoF4S6O7Gt04xfFZjMuAK7OP7gmyBo6wTGtK
+         /arIv++SHnknBQ8DD0pL0aifQR+pWRXOaY7w7U7tRiARZWOKeaLPWFk/0RZnKp4a39w6
+         ytYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718144010; x=1718748810;
+        d=1e100.net; s=20230601; t=1718149991; x=1718754791;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=afhBt1R47m/ezKSoV/9ouvvCFpR5TvvNgsKkb4qH0kc=;
-        b=H5XOl+zyXXDrpv1PIbTJnl8wWnq+7BUDWUwv/DZgCxPfSP8dczq6EtLI8SR0N32mWa
-         6n3MjaLA8dxSEmwz+QARPgHiJNhSR639I0SQ+WVaAcQ3OSf4ZoICV5IEYo/icZO68sCE
-         C0q9ofFGf+IkjCN9Fj6HXVzYTcpnjq4SqGEIfXaZad7o6SjB2O5fzOihitXif5ubkaag
-         H0DaAtBwZ0mpevuTNOf1DW5n9r7aVb2qOy9K3WEaT3hFFtbPZL0DpsbOrz4hWs8MHvLQ
-         GEl/lmnk2XoYTBkgCSZ4RjAVxx+Nz9JTV/dq+4b2f/yf1ZJM+Pi6i2e72+EpzLUp+/Gg
-         7zxA==
-X-Forwarded-Encrypted: i=1; AJvYcCWiTCHQ9eepnX4KvXhVJZoEqNx8vRkW6st3WjfJaX9R6emsubpO75gtdQgyutAf+TAENcuQ5VxyPvvHfOdzuDY951YaO2fRVg==
-X-Gm-Message-State: AOJu0YwVZq0hxtKrw8FMkhL5xzmaweIYNEcsaQ+BmcR0WRs38VbwdkXv
-	LLlXHC5KKve0j9CSZqim3ZXc/QF1TEA0hpcyU5D97/9PHUJ4Ro89dKRWwLDynA+6luPiGh45urw
-	WF01d8wEWh/2Tyq/Pjit49/BYspI=
-X-Google-Smtp-Source: AGHT+IE9qlCqOLeQ05QKNJPKnN7tKouREQ3dXdvn72wh7ojH+wuSAOzWfyGt9Erib8sm0i0A/GgDresrtb8V839STDE=
-X-Received: by 2002:a17:90a:6fa3:b0:2bd:801f:dabd with SMTP id
- 98e67ed59e1d1-2c4a73a5950mr378332a91.3.1718144009637; Tue, 11 Jun 2024
- 15:13:29 -0700 (PDT)
+        bh=58zmXA/KdzT+Cx9urdttdUUCUSFh5Abqv4bxEUOPq4Y=;
+        b=foabFxFcQ3c/4DNa7WlfDpWKIfGSk5P8feApTs+1jLRAwnrhnes9XzSsBGyVjj6jOo
+         KvKzwBvPjFYXm2X6/cuGTCyUTnzGAX0xF4EoCozCt/6MQ8w7VFPTrf+jaAawpNfRrynd
+         aQB156jlZ3vcM2TFtvQSrXoqQmNluJpSJ7e0vxDKScbG6RcLrG9uz16sRD0JfYfKlcJQ
+         D7rH1unmNXa8JGjL48iTkQUsQ5Pcq8dU1cCD2X3OVNmr90/B8WucRAgxtF0GkLg4F1ab
+         xulb+JI8QFSPp7x7jfM4KO5FwbhZGZL5gUFTExDlW67hiExurrwgUS9y7tO642fDzrEy
+         4e6w==
+X-Forwarded-Encrypted: i=1; AJvYcCWBqxz8KEtY/itPS/j5kUWqvacNqiRJupXzpX84TD40c5tX2AHPGeH5U3IW94gzdJ6AnutAaKQYOqvG0XtWw3gtLA1/LyBquw==
+X-Gm-Message-State: AOJu0YzH7kJDn4qUhZiCd1pxMcxmbun1l1fMm06sipIvs69cpluTX2yD
+	4EBpi8qtFa6fEMbIsfApuEAqQat61Lc9M3yhEnMdfZXsoQpeIqjSiTl0M6LRhDSaWu5EWvcFRF+
+	iq55n0Y271klSVhvReTTT46/EQ0xfUM1cvTXX
+X-Google-Smtp-Source: AGHT+IG8iqGhBXuOWXWp1HYbMjzEKwJQSI7M7nzTL7KWVKYCUP0yfo0w/O49ZrqCtC0EsaBUVauags/8KIrU4h5BWzM=
+X-Received: by 2002:a05:6402:4310:b0:57c:ab3f:d203 with SMTP id
+ 4fb4d7f45d1cf-57cab3fd21cmr36682a12.0.1718149990562; Tue, 11 Jun 2024
+ 16:53:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240519210735.587323-1-ojeda@kernel.org>
-In-Reply-To: <20240519210735.587323-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 12 Jun 2024 00:13:17 +0200
-Message-ID: <CANiq72nXkNY2EUd_6noS-ZZ9xKa0sBYcby1QCovA8V9VxwTNXw@mail.gmail.com>
-Subject: Re: [PATCH] rust: avoid unused import warning in `rusttest`
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Danilo Krummrich <dakr@redhat.com>
+References: <0-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com> <1-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com>
+In-Reply-To: <1-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com>
+From: Daniel Mentz <danielmentz@google.com>
+Date: Tue, 11 Jun 2024 16:52:57 -0700
+Message-ID: <CAE2F3rBeE8gpjF-oU=g9i81bhrpeBiSNmVQ0tk+5BFk-LDMFow@mail.gmail.com>
+Subject: Re: [PATCH v2 01/10] iommu/arm-smmu-v3: Do not zero the strtab twice
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
+	linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>, 
+	Will Deacon <will@kernel.org>, Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>, 
+	patches@lists.linux.dev, Ryan Roberts <ryan.roberts@arm.com>, 
+	Mostafa Saleh <smostafa@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 19, 2024 at 11:07=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
+On Mon, Jun 10, 2024 at 5:31=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> wr=
 ote:
->
-> When compiling for the `rusttest` target, the `core::ptr` import is
-> unused since its only use happens in the `reserve()` method which is
-> not compiled in that target:
->
->     warning: unused import: `core::ptr`
->     --> rust/kernel/alloc/vec_ext.rs:7:5
->       |
->     7 | use core::ptr;
->       |     ^^^^^^^^^
->       |
->       =3D note: `#[warn(unused_imports)]` on by default
->
-> Thus clean it.
->
-> Fixes: 97ab3e8eec0c ("rust: alloc: fix dangling pointer in VecExt<T>::res=
-erve()")
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> +       cfg->l1_desc =3D devm_kcalloc(smmu->dev, cfg->num_l1_ents,
+> +                                   sizeof(*cfg->l1_desc), GFP_KERNEL);
+> +       if (!cfg->l1_desc) {
+> +               dev_err(smmu->dev,
+> +                       "failed to allocate l1 stream table (%zu bytes)\n=
+",
+> +                       cfg->num_l1_ents * sizeof(*cfg->l1_desc));
 
-Applied to `rust-fixes` -- thanks everyone!
+The error message "failed to allocate l1 stream table (%zu bytes)\n"
+is identical to the one a few lines above that's printed if
+dmam_alloc_coherent fails. This might make it difficult to determine
+the origin of this message if someone sees it in a log file. Also,
+it's not technically an SMMUv3 l1 stream table but rather some
+internal data structure.
 
-Cheers,
-Miguel
+I thought there was a guideline around not printing error messages on
+certain allocation failures because there'll be a generic OOM message
+that'll get printed. Also, this driver never prints an error message
+when devm_kcalloc or devm_kzalloc fails, only on dmam_alloc_coherent
+failures.
+
+Just nitpicking here. Looks good to me, otherwise.
