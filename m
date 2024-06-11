@@ -1,93 +1,133 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A747F49B
-	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 18:27:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E198474BE2;
+	Tue, 11 Jun 2024 18:30:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718130476; cv=none; b=PPvAo0exlISJqOUzNtV47kG/is6TQxwExXX7jHmMlbYURO9kW7wI7+2zr/2E5FOH4e8b+EyfvMASJLyRtagPYu97y3/XHAKIT9728uN4xSAOS+qBBGk6C7bdgZy6KBnxBO649F1nvt6O7weDbhenCArEq7WS1ZqbTfCR5WgyY8k=
+	t=1718130601; cv=none; b=PyITepaDUWUYDPo2qAs+S9ShJMMlec2HfoVrVGfDvucsxT4wU5irnhkHADKsV6EiNPQhmjtLxT7TDzIzBO7AJ9AVlD/TWbw2Qozwg6AzYeOe8vEiCS7qpdXPUEGCafT9pAD7W5Gq4jrjgHaaGzJ+sjZmQ7V7bXiO1Pk5imivlQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718130476; c=relaxed/simple;
-	bh=xNv2gtlBfEvUS6Ujo5AA9Bt69CcEG9Nao++wV38Ni2k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=V+yTYxzbhF+9aWxQcyeUZ3VQg2A1tSA6aEKXCoU+rtiGOWOzT3krCsZKq4EBw2fAijhyu6bt4uFfpRsvzVtY0Ny56eSxraGB9FIhb9pPxW4EmcBoYK5COHFyofjk+LJBY3vn/6vHi9ZeqpEjftVH7q3Ys4WUmIE8FRGAZNH083I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ExzL5zW3; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718130601; c=relaxed/simple;
+	bh=5EOvWQp68RIcBOSg4YFAnSWecjOyMMJj7nDme+d1s/4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=auuj4b2Z5UwEYT2LZ59dX3VKiPg6YcM5PhsbcViPKv+V/e7mDkxF5p0uMSpvMSgQrSV8Sr0erf8oFAe7RBjmkStEXU6XUODTFy0Roij9s0DtmekOTf7mAbnw20+V7KOtIQv5+/v2GflV5Pzzxi9KhIpyH5GFpp3vaww3qTci2D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u4wHn2wb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ExzL5zW3"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a6e43dad8ecso20601766b.1
-        for <patches@lists.linux.dev>; Tue, 11 Jun 2024 11:27:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718130473; x=1718735273; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kAzQpAsku5HY8+Qmj0ySk3Jtzr0pPw6rPKwko9mzqm8=;
-        b=ExzL5zW3/GdYnPiKJFesqPDKTJ8Yxc6kKEnbMMFo2iXHyIZVetOOi+CXelYn7/d6lo
-         F8YVOL3xy0PyPZUfTD9bx6CE5BtEwYdOB74has5OKKeXGDfG6AlFlt7cUytzHRmLfabV
-         Tp6qIYH7m1OCVnmx8tBqWPGVKnAh7pFIHjnj7Bs/GDOfMicODRlE2VkHFEZoqHdXrmjP
-         gjXLqj5kMPcjVh9HiVPg71pYgZhw3AMIUOMG7xX96L1+dwFgOLLFVaS7APExknDAiUUh
-         22V1JUF/ST5rd2V6yQCVrUEFPGU8Fi5LGsBEUuduqCCFumyJQNNb7JJyNPfYPmFu2Nk4
-         uVFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718130473; x=1718735273;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kAzQpAsku5HY8+Qmj0ySk3Jtzr0pPw6rPKwko9mzqm8=;
-        b=WcIChjiNLNHhKch5lRJvX1OcQ3pFsSkyXgzYO0+uBzB1ewJQFOPWIDhTrvZ6/M90uj
-         bzb7wlpYvk0/soHC3+NG2Bk0psiIoz/68OLr3reKq96wc5S48EBEL3x0yTw4Lxs4318+
-         FQD+KizU47KaBUrD9rER379fzmAW2XA1CwYPBaOCdz6adQI0ZJK/DAV4a6CTs5XELA4L
-         FXfHBDXEJfyW0NmomHqBbR/P5Ikd49vr5k6vfSM4z3WM8NFoDwKotQiiMETJGJsthLWJ
-         LSScxateaKPbc0FEEBTG0dKatzN9vOALcAy1oWoMFcqUdR+A4CwyFK32o6BSdYO+wQGH
-         LzoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXqAzPJrlsrweup4k9Qkk+Le45zRMnXdiUKMvFCAO3bnBYLZYoLyzoZv41EdKQuYdT++bGdRgw2MPuuN+5HBOOLlitXE7aHyA==
-X-Gm-Message-State: AOJu0YzhPS/0dD+mSLqnmHmXsVpH3u91+VHt4PkNSRAHOoqWvBxfueLn
-	8fEhhJXQYDTgeKYL7HPuMnpyxMfF2t6+yyEJr6x2bP3KmSrsS9PMx2ZalU6IjU8eq4vlg/1bj/o
-	Tvl6PpVSeoz43xta1FNEUqKUXHwI=
-X-Google-Smtp-Source: AGHT+IF1N64L1BDSLsRfKUWvL7ixtVlnG3jH3MB2N4pKTF0BtAIrRHO8wv2HJFgF1ngUY9+5x7xZaRMS1bHgKA+TTC8=
-X-Received: by 2002:a17:906:c210:b0:a68:e681:be2c with SMTP id
- a640c23a62f3a-a6f34cd6b4fmr252203866b.20.1718130472659; Tue, 11 Jun 2024
- 11:27:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u4wHn2wb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621C7C4AF67;
+	Tue, 11 Jun 2024 18:30:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718130600;
+	bh=5EOvWQp68RIcBOSg4YFAnSWecjOyMMJj7nDme+d1s/4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=u4wHn2wbBtiahaV8uAu5b30r04/E1lT2osRrSUQBMYaGr0T87eN7bAdoA3h2cA8yH
+	 EpzxeJ+aRGrEzrH9vvXzpTsTEdaOFQk7lwUG9n/jmjSm+WHXy0mV1LaPNhnjslIcsi
+	 dJOftjE0a3kmEAanBAk53b3DVsMnc4axdHAFl6CkAzoJ60coBQ75YkAXQEESseXAIU
+	 E61FXNtkztNh/m97ZI43UX9iIiAMpngeZe7gXFXrZiWdEbkq6P+wqCRcEDVwRaAUvw
+	 vRlLJQMqG9e4HWPtNF4/7SidJm7zmZGC79zFpMniPHMKO5R/9Epgx/SvIo0lqmSgbS
+	 6Om99EnfMpTRg==
+Date: Tue, 11 Jun 2024 11:29:59 -0700
+From: "Darrick J. Wong" <djwong@kernel.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: patches@lists.linux.dev, fstests@vger.kernel.org,
+	linux-xfs@vger.kernel.org, linux-mm@kvack.org,
+	linux-fsdevel@vger.kernel.org, akpm@linux-foundation.org,
+	ziy@nvidia.com, vbabka@suse.cz, seanjc@google.com,
+	willy@infradead.org, david@redhat.com, hughd@google.com,
+	linmiaohe@huawei.com, muchun.song@linux.dev, osalvador@suse.de,
+	p.raghav@samsung.com, da.gomez@samsung.com, hare@suse.de,
+	john.g.garry@oracle.com
+Subject: Re: [PATCH 5/5] fstests: add stress truncation + writeback test
+Message-ID: <20240611182959.GZ52987@frogsfrogsfrogs>
+References: <20240611030203.1719072-1-mcgrof@kernel.org>
+ <20240611030203.1719072-6-mcgrof@kernel.org>
+ <20240611144503.GI52977@frogsfrogsfrogs>
+ <ZmiUWCPcmtFSdrBG@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240611-pinctrl-keembay-fix-func-conversion-v1-1-3197f2ded3f7@kernel.org>
-In-Reply-To: <20240611-pinctrl-keembay-fix-func-conversion-v1-1-3197f2ded3f7@kernel.org>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Tue, 11 Jun 2024 21:27:16 +0300
-Message-ID: <CAHp75VdUR7jYtTCu1jaz4v-XExboyCeWPj+g6U-YU-SD9q44xw@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: keembay: Fix func conversion in keembay_build_functions()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>, Linus Walleij <linus.walleij@linaro.org>, 
-	linux-gpio@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZmiUWCPcmtFSdrBG@bombadil.infradead.org>
 
-On Tue, Jun 11, 2024 at 9:13=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> A recent refactoring to use the func member in struct function_desc
-> missed converting one uses of name in keembay_build_functions(),
-> resulting in a build failure:
->
->   drivers/pinctrl/pinctrl-keembay.c: In function 'keembay_build_functions=
-':
->   drivers/pinctrl/pinctrl-keembay.c:1630:35: error: 'struct function_desc=
-' has no member named 'name'
->    1630 |                         if (!fdesc->name) {
->         |                                   ^~
->
-> Perform the same conversion to resolve the build error.
+On Tue, Jun 11, 2024 at 11:15:52AM -0700, Luis Chamberlain wrote:
+> On Tue, Jun 11, 2024 at 07:45:03AM -0700, Darrick J. Wong wrote:
+> > On Mon, Jun 10, 2024 at 08:02:02PM -0700, Luis Chamberlain wrote:
+> > > +# Requires CONFIG_DEBUGFS and truncation knobs
+> > > +_require_split_debugfs()
+> > 
+> > Er... I thought "split" referred to debugfs itself.
+> > 
+> > _require_split_huge_pages_knob?
+> 
+> Much better, thanks.
+> 
+> > > +# This aims at trying to reproduce a difficult to reproduce bug found with
+> > > +# min order. The issue was root caused to an xarray bug when we split folios
+> > > +# to another order other than 0. This functionality is used to support min
+> > > +# order. The crash:
+> > > +#
+> > > +# https://gist.github.com/mcgrof/d12f586ec6ebe32b2472b5d634c397df
+> > 
+> > You might want to paste the stacktrace in here directly, in case the
+> > gist ever goes away.
+> 
+> Its not a simple crash trace, it is pretty enourmous considering I
+> decoded it, and it has all locking candidates. Even including it after
+> the "---" lines of the patch might make someone go: TLDR. Thoughts?
 
-Oh, Keem Bay is ARM-based :-)
-Thanks for finding and fixing this issue.
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
+I'd paste it in, even if it's quite lengthy.  I don't even think it's all that
+much if you remove some of the less useful bits of the unwind:
 
---=20
-With Best Regards,
-Andy Shevchenko
+"Crash excerpt is as follows:
+
+"BUG: kernel NULL pointer dereference, address: 0000000000000036
+#PF: supervisor read access in kernel mode
+#PF: error_code(0x0000) - not-present page
+PGD 0 P4D 0
+Oops: 0000 [#1] PREEMPT SMP NOPTI
+CPU: 7 PID: 2190 Comm: kworker/u38:5 Not tainted 6.9.0-rc5+ #14
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Workqueue: writeback wb_workfn (flush-7:5)
+RIP: 0010:filemap_get_folios_tag+0xa9/0x200
+Call Trace:
+ <TASK>
+ writeback_iter+0x17d/0x310
+ write_cache_pages+0x42/0xa0
+ iomap_writepages+0x33/0x50
+ xfs_vm_writepages+0x63/0x90 [xfs]
+ do_writepages+0xcc/0x260
+ __writeback_single_inode+0x3d/0x340
+ writeback_sb_inodes+0x1ed/0x4b0
+ __writeback_inodes_wb+0x4c/0xe0
+ wb_writeback+0x267/0x2d0
+ wb_workfn+0x2a4/0x440
+ process_one_work+0x189/0x3b0
+ worker_thread+0x273/0x390
+ kthread+0xda/0x110
+ ret_from_fork+0x2d/0x50
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>"
+
+--D
+
+> > > +if grep -q thp_split_page /proc/vmstat; then
+> > > +	split_count_after=$(grep ^thp_split_page /proc/vmstat | head -1 | awk '{print $2}')
+> > > +	split_count_failed_after=$(grep ^thp_split_page_failed /proc/vmstat | head -1 | awk '{print $2}')
+> > 
+> > I think this ought to be a separate function for cleanliness?
+> > 
+> > _proc_vmstat()
+> > {
+> > 	awk -v name="$1" '{if ($1 ~ name) {print($2)}}' /proc/vmstat
+> > }
+> 
+> > Otherwise this test looks fine to me.
+> 
+> Thanks!
+> 
+>   Luis
+> 
