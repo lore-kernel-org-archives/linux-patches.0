@@ -1,146 +1,97 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A021538FA1;
-	Tue, 11 Jun 2024 18:10:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA06238F82;
+	Tue, 11 Jun 2024 18:13:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718129417; cv=none; b=JI9RR6xK2RFR6/cANK3g55fzY45NjxJkgAtQ27opJckosghCy9VbWApGQjvQ5CuJrSu2PpgUY/4ChBsSsVyMP54odBkDzeuO9zb3sW0RUqK+nsWp8Us9lXm9qoqumrhH8KxKoFu9cigtj8KktUxP2PM8F89jP15edLbbQC36IHM=
+	t=1718129615; cv=none; b=If7bZZ49o3q/kpYKTK0jjdNmagb8zWF7ATtxU7rY1DlNsC1LyI4d4w8KgDwgfsaGQIa1nB9GB9ZqLrzDtxE9YVmRTcD4P9/RYto6hbvAsxWaytlbC10URlTXfVYVAzqaynp8w7S0z8x2TjO1TnBdksjMsWgDLJ5K/jxFOa1+x6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718129417; c=relaxed/simple;
-	bh=QNopZ6hfyaYylm8fIelAG/aufVDbS1qrfhks5K/FTfU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B+EbfpVmces7OiyweyTfZp6dDWl3SBTUx9rpg+HLSGAZ9KxX4NMFb4hhY3zWVighDY79HyFarBQW6+DRoOaWE1EuCG8IBqNVhRgH/dLxahsSU8w/J20UZAgnzRquJJrKQ7wbC3lLH68UJEr1g50dT1He/RRa/+KYeH9ABl4xc1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=IV9DMC+d; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1718129615; c=relaxed/simple;
+	bh=uivTqbZoY1v55pF3TqH87ho4GbXW/I0PrebU1TrJ1FY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=bKSw+HpcJpDQfjqKeHJWKIpgqukBP46Bm9G30zJdgMxD30UdZjbG6gpYBDKMT0yNXKljiP1tN4VwLujWR/3fDlD3fUCLvKT4P/yQNYqMhc5/rd7s8cRC2GkPfclpVIbp1PaLa/TLxnWiOikSyLG8/ZIRqHbavkWkE1jAK2fJ4SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JqGNzTG0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="IV9DMC+d"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=+8C4K0O1VTsIQOpcPvEVKsLduwUIDh16culMImH4PiU=; b=IV9DMC+d4/XGWyQOMmgwz5lThB
-	k1bwJPc+XqT4q8ySl+fZcn+YjxvudTtEObDHCBK4qVjHbeCNxVOMDdg80DTYncSwKYjvdC68zQL0r
-	a8/S9sdw22sXmZARPejwc9N4BGj8W0bYrRcexqbbZ9YrSsFZIuoHBjw+yb5EFOxG7Zlpv/xBluUk8
-	nPGFDNYFBsVVCM/rumJgnKCQJEO2XAMZRe1i1B0d1omSBOIxgENDPzBncsB/7lNKeQPkckT29D1fd
-	chyJWQMtMdbYVzF/ULMKPxPo96e4vwXwOaNO26fL7uhoZ7LHpu6M8oAStZ2mdT4/kzuM7Es86AeR1
-	CnRLlHRA==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1sH5wj-00000009nRZ-3nNX;
-	Tue, 11 Jun 2024 18:10:13 +0000
-Date: Tue, 11 Jun 2024 11:10:13 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: "Darrick J. Wong" <djwong@kernel.org>
-Cc: patches@lists.linux.dev, fstests@vger.kernel.org,
-	linux-xfs@vger.kernel.org, linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org, akpm@linux-foundation.org,
-	ziy@nvidia.com, vbabka@suse.cz, seanjc@google.com,
-	willy@infradead.org, david@redhat.com, hughd@google.com,
-	linmiaohe@huawei.com, muchun.song@linux.dev, osalvador@suse.de,
-	p.raghav@samsung.com, da.gomez@samsung.com, hare@suse.de,
-	john.g.garry@oracle.com
-Subject: Re: [PATCH 2/5] fstests: add mmap page boundary tests
-Message-ID: <ZmiTBZLQ8uOGS5i8@bombadil.infradead.org>
-References: <20240611030203.1719072-1-mcgrof@kernel.org>
- <20240611030203.1719072-3-mcgrof@kernel.org>
- <20240611164811.GL52977@frogsfrogsfrogs>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JqGNzTG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E40FC2BD10;
+	Tue, 11 Jun 2024 18:13:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718129614;
+	bh=uivTqbZoY1v55pF3TqH87ho4GbXW/I0PrebU1TrJ1FY=;
+	h=From:Date:Subject:To:Cc:From;
+	b=JqGNzTG0s2Ec/LNdhv0lx4CB6za6ouDuHfBjWBgjqDPsvI2R0nvog8IXEhZfo6Rdf
+	 zkgR1OCItcoHVisxojlxr7/5CuNjvAcFHPsEVVhRBxqTXiYdfZ8g2RIMdE4khIzQVh
+	 Jgqf6PA5y465o1294Etli6sJzvlVODREmLFNUEUoQp8NTobft1IsYjav+NG9DOwj9a
+	 IxNkLEpF1kvC9J7NZiDSi1uEnWvIGp/vKB2Ik4kIpjdX0F/F6ZsJHsKpPkVnEW9+XI
+	 mMrRmHaWOxeg1IMu3lOPJZg5dYLAzGKuWB44PDfZI1LQ/9LAf5or6vKVffckLiegZP
+	 q2rPW8OzIxgNg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 11 Jun 2024 11:13:32 -0700
+Subject: [PATCH] pinctrl: keembay: Fix func conversion in
+ keembay_build_functions()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240611164811.GL52977@frogsfrogsfrogs>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240611-pinctrl-keembay-fix-func-conversion-v1-1-3197f2ded3f7@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAMuTaGYC/x2N0Q6CMAxFf4X02SbbQhT9FePDVgo0aCEdEgnh3
+ 50+nuSee3bIbMIZbtUOxqtkmbSAP1VAQ9SeUdrCEFyo3dl7nEVpsSeOzK8UN+zkg91bCWnSle3
+ n48Wla8MhxVgTlKfZuMz+lfvjOL6x9eQvdQAAAA==
+To: Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: linux-gpio@vger.kernel.org, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1449; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=uivTqbZoY1v55pF3TqH87ho4GbXW/I0PrebU1TrJ1FY=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGkZk8/ujBPlMkw0Yb9RmWa9frlvXYdWde8UoQxu0z6n+
+ f85i3d3lLIwiHExyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgIm0H2Rk6BL63s2V8DZY2qW0
+ 4sOBGfWJbX7fV8tf+rs9Mtr0VN8zAYZ/Srrr653W3pUyaPfPYnJXff4u7z4T34L5t2MEV+sduKX
+ HDAA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Tue, Jun 11, 2024 at 09:48:11AM -0700, Darrick J. Wong wrote:
-> On Mon, Jun 10, 2024 at 08:01:59PM -0700, Luis Chamberlain wrote:
-> > +# As per POSIX NOTES mmap(2) maps multiples of the system page size, but if the
-> > +# data mapped is not multiples of the page size the remaining bytes are zeroed
-> > +# out when mapped and modifications to that region are not written to the file.
-> > +# On Linux when you write data to such partial page after the end of the
-> > +# object, the data stays in the page cache even after the file is closed and
-> > +# unmapped and  even  though  the data  is never written to the file itself,
-> > +# subsequent mappings may see the modified content. If you go *beyond* this
-> 
-> Does this happen (mwrite data beyond eof sticks around) with large
-> folios as well?
+A recent refactoring to use the func member in struct function_desc
+missed converting one uses of name in keembay_build_functions(),
+resulting in a build failure:
 
-That corner case of checking to see if it stays is not tested by this
-test, but we could / should extend this test later for that. But then
-the question becomes, what is right, given we are in grey area, if we
-don't have any defined standard for it, it seems odd to test for it.
+  drivers/pinctrl/pinctrl-keembay.c: In function 'keembay_build_functions':
+  drivers/pinctrl/pinctrl-keembay.c:1630:35: error: 'struct function_desc' has no member named 'name'
+   1630 |                         if (!fdesc->name) {
+        |                                   ^~
 
-So the test currently only tests for correctness of what we expect for
-POSIX and what we all have agreed for Linux.
+Perform the same conversion to resolve the build error.
 
-Hurding everyone to follow suit for the other corner cases is something
-perhaps we should do. Do we have a "strict fail" ? So that perhaps we can
-later add a test case for it and so that onnce and if we get consensus
-on what we do we can enable say a "strict-Linux" mode where we are
-pedantic about a new world order?
+Fixes: 73ee52205e5a ("pinctrl: keembay: Convert to use func member")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/pinctrl/pinctrl-keembay.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> > +	rm -rf "${SCRATCH_MNT:?}"/*
-> 
-> rm -f $SCRATCH_MNT/file ?
+diff --git a/drivers/pinctrl/pinctrl-keembay.c b/drivers/pinctrl/pinctrl-keembay.c
+index 245a74ed97ee..b693f4787044 100644
+--- a/drivers/pinctrl/pinctrl-keembay.c
++++ b/drivers/pinctrl/pinctrl-keembay.c
+@@ -1627,7 +1627,7 @@ static int keembay_build_functions(struct keembay_pinctrl *kpc)
+ 			}
+ 
+ 			/* Setup new function for this mux we didn't see before */
+-			if (!fdesc->name) {
++			if (!fdesc->func.name) {
+ 				fdesc->func.name = mux->name;
+ 				fdesc->func.ngroups = 1;
+ 				fdesc->data = &mux->mode;
 
-Sure.
+---
+base-commit: e53de87ac331eb2186477f69bf90e95d1ba39d55
+change-id: 20240611-pinctrl-keembay-fix-func-conversion-70b98e2baa4c
 
-> > +	# A couple of mmap() tests:
-> > +	#
-> > +	# We are allowed to mmap() up to the boundary of the page size of a
-> > +	# data object, but there a few rules to follow we must check for:
-> > +	#
-> > +	# a) zero-fill test for the data: POSIX says we should zero fill any
-> > +	#    partial page after the end of the object. Verify zero-fill.
-> > +	# b) do not write this bogus data to disk: on Linux, if we write data
-> > +	#    to a partially filled page, it will stay in the page cache even
-> > +	#    after the file is closed and unmapped even if it never reaches the
-> > +	#    file. Subsequent mappings *may* see the modified content, but it
-> > +	#    also can get other data. Since the data read after the actual
-> 
-> What other data?
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-Beats me, got that from the man page bible on mmap. I think its homework
-for us to find out who is spewing that out, which gives a bit more value
-to the idea of that strict-linux thing. How else will we find out?
-
-> > +	#    object data can vary we just verify the filesize does not change.
-> > +	if [[ $map_len -gt $new_filelen ]]; then
-> > +		zero_filled_data_len=$((map_len - new_filelen))
-> > +		_scratch_cycle_mount
-> > +		expected_zero_data="00"
-> > +		zero_filled_data=$($XFS_IO_PROG -r $test_file \
-> > +			-c "mmap -r 0 $map_len" \
-> > +			-c "mread -v $new_filelen $zero_filled_data_len" \
-> > +			-c "munmap" | \
-> > +			filter_xfs_io_data_unique)
-> > +		if [[ "$zero_filled_data" != "$expected_zero_data" ]]; then
-> > +			echo "Expected data: $expected_zero_data"
-> > +			echo "  Actual data: $zero_filled_data"
-> > +			_fail "Zero-fill expectations with mmap() not respected"
-> > +		fi
-> > +
-> > +		_scratch_cycle_mount
-> > +		$XFS_IO_PROG $test_file \
-> > +			-c "mmap -w 0 $map_len" \
-> > +			-c "mwrite $new_filelen $zero_filled_data_len" \
-> > +			-c "munmap"
-> > +		sync
-> > +		csum_post="$(_md5_checksum $test_file)"
-> > +		if [[ "$csum_orig" != "$csum_post" ]]; then
-> > +			echo "Expected csum: $csum_orig"
-> > +			echo " Actual  csum: $csum_post"
-> > +			_fail "mmap() write up to page boundary should not change actual file contents"
-> 
-> Do you really want to stop the test immediately?  Or keep going and see
-> what other errors fall out?  (i.e. s/_fail/echo/ here)
-
-Good point. We could go on, I'll change on the next v2.
-
-Thanks!
-
-  Luis
