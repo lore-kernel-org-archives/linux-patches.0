@@ -1,57 +1,57 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2C747F5D
-	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 17:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E749B50279
+	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 17:25:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718126400; cv=none; b=YaEgwCd2qpLkvFp9Lx/et4sUC47Tv2oKLOFCCJEgp88a7nOXPzftkVxo8a8iuG/Q3j/BYEND4s7ICJ40nATpTtjyALK49fP0nR04AsB2iEFY0THU2d0uidph3Er+Sd18NR+6LgAKU9GA0XN9PtQOHY9vFN4OFSDJlnUydb0oBBE=
+	t=1718126737; cv=none; b=rNCF59uIcM+UoliusPdXsjkkyStswdeIOKXRTFbJeVuju7CKOkFleWKzCnOFvZ9jKDsMN9HYDvlub2W3otkh35EQIhnI5QZKJk4fSJ3Lk5B+AcsDS87B8Pl22+CJ9QHyLeTlaGVNoQtjRuguzJ9I7RtZWjh2b+96fjupEHxiufM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718126400; c=relaxed/simple;
-	bh=mr4DUoryOhy5AVm2yD3jJivEjugkvGGXGcpQByQBYjs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LzTmopQHQaUDHiHVz1kz6J9cOcH6RBf24ssYLy9G2fjNAVh8hdxEzAbNyzQSZpBuQUUqynpU792IwoxZDS3rXtaFO5Kl0EbpJg6Nq9qfHC7xTOHa+l2+nxe8hPHAASWuhEBBFvKU7wzvIujb9BQ7jDN/dRLZisSRixWB0lnPGXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZZcowuKq; arc=none smtp.client-ip=192.198.163.16
+	s=arc-20240116; t=1718126737; c=relaxed/simple;
+	bh=Ax+Gp/MznoP8ncT7MOItWpqVDlmCy0Tg6yCTbxEjpJw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ca1tjlnrXv8+LryA9adBq0SWF/Ar0PiAloTuxMavKJ5VpA41E08DBhowa3pZldiREkRXvlw2DkonVeK4T1fiMBT/UyG5GxWhI/e23XlZF4ZQMuT29T9HYp2yztIYdonedu1bWrKkDwfneI0zWusx5s7EpbbRSgbXzseQaf6FrqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cNvweMGG; arc=none smtp.client-ip=192.198.163.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZZcowuKq"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cNvweMGG"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1718126397; x=1749662397;
+  t=1718126736; x=1749662736;
   h=from:to:cc:subject:date:message-id:mime-version:
    content-transfer-encoding;
-  bh=mr4DUoryOhy5AVm2yD3jJivEjugkvGGXGcpQByQBYjs=;
-  b=ZZcowuKqZ8iAMgeaFXZCR40Wk7kH0NbYJvonDFFNG/83y04WKTD/1bqd
-   622NmSlbxknbcoKmaPRAVXRRoLeCq6bzCJo8owaYYUEuOcAOGaGqW/92D
-   jhV+f1BRM7W4rm924spadVidfWwzBMDxem2KM5/W5OjoEEfZKW8T0m7qx
-   cTJsQD0i2bU71IwikCpGpVbC1LIhmc/gsMBB84Gjp/1o8RoQiG0bwVMzk
-   D8ywWc4l80lCpBWsd8EcS6DS8am9LU5lbpFRdT2PzwhNk0LpiU1anKE8I
-   mC0K3PESozP5J+7WFODsM5dAWDihSpttyP+mJilcMEbF0m2XlwTrudBBl
-   w==;
-X-CSE-ConnectionGUID: 0nBDzKoeRuWDKmn+UVKVZg==
-X-CSE-MsgGUID: qslS/1KpTSik0WFa/9KgQg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11100"; a="12022766"
+  bh=Ax+Gp/MznoP8ncT7MOItWpqVDlmCy0Tg6yCTbxEjpJw=;
+  b=cNvweMGGX4xsYWMqc27oap8dl0bR4Cyc5cJSUD1h1D7yeDkIhTI0QQmT
+   hWnxA06dL44w1fRv0XWk+eFQVZHV9Wy5XRkWxC7HRpyW2nVkZW/aTTI6j
+   VotTMlqa/jukphQ+wPIWKIjpCUBhzXI0pMqxGHIPiaiKoZKBcRYu+Gh6L
+   lIxwKHhMRt/AyduDmL6wEF4xK5XkhymvO8rie251B0yhbngWYdZpmNxUZ
+   q4tc5XJmN39E5VFQt87ghpFzc/ZAVbdImZMCdEPqPMBiNOIhBnajKDLTI
+   LVLC2UcH0gf0MbqP7/cb+3bJw8RD/ktJD75pJRKXM23srkm15zMITKgQy
+   A==;
+X-CSE-ConnectionGUID: WoTv7L5LRKaHtu3bJp+gzw==
+X-CSE-MsgGUID: MH73ritjSNWNBKmL5riLrQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11100"; a="26255082"
 X-IronPort-AV: E=Sophos;i="6.08,230,1712646000"; 
-   d="scan'208";a="12022766"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2024 10:19:57 -0700
-X-CSE-ConnectionGUID: fvdEuV2MSOaHnfWxet01bw==
-X-CSE-MsgGUID: D057BBzVTOeHW5eDZIp+iQ==
+   d="scan'208";a="26255082"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2024 10:25:35 -0700
+X-CSE-ConnectionGUID: pz7D09vgT96Knz/m7OZ71w==
+X-CSE-MsgGUID: RiEpF7grThmC/ONuyoCzZQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,230,1712646000"; 
-   d="scan'208";a="39428674"
+   d="scan'208";a="39360864"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2024 10:19:56 -0700
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jun 2024 10:25:35 -0700
 From: Tony Luck <tony.luck@intel.com>
-To: Len Brown <lenb@kernel.org>
-Cc: linux-pm@vger.kernel.org,
+To: "Rafael J. Wysocki" <rafael@kernel.org>,
+	Len Brown <lenb@kernel.org>
+Cc: linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH v6 46/49 RESEND] tools/power/turbostat: Switch to new Intel CPU model defines
-Date: Tue, 11 Jun 2024 10:19:50 -0700
-Message-ID: <20240611171950.352734-1-tony.luck@intel.com>
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v6 41/49 RESEND] ACPI: x86: Switch to new Intel CPU model defines
+Date: Tue, 11 Jun 2024 10:25:28 -0700
+Message-ID: <20240611172528.352782-1-tony.luck@intel.com>
 X-Mailer: git-send-email 2.45.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -63,223 +63,144 @@ Content-Transfer-Encoding: 8bit
 
 New CPU #defines encode vendor and family as well as model.
 
-N.B. Copied VFM_*() defines here from <asm/cpu_device_id.h> to avoid
-an application picking a second internal kernel header file.
-
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 ---
 
-Len: This was snet earlier as part of a patch bomb. But I think I failed
-to send a copy directly "To:" you so you'd see it.
+Rafael: I missed this one when picking out ACPI/pm patches to send
+to you from the patch bomb. Can you check it over and apply please?
 
-Please check it over. Let me know if you need any changes to apply it.
+-Tony
 
- tools/power/x86/turbostat/turbostat.c | 165 +++++++++++++++-----------
- 1 file changed, 95 insertions(+), 70 deletions(-)
+ drivers/acpi/x86/utils.c | 44 ++++++++++++++++++++--------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 8cdf41906e98..2df6c118b6c0 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -9,6 +9,30 @@
- 
- #define _GNU_SOURCE
- #include MSRHEADER
-+
-+// copied from arch/x86/include/asm/cpu_device_id.h
-+#define VFM_MODEL_BIT	0
-+#define VFM_FAMILY_BIT	8
-+#define VFM_VENDOR_BIT	16
-+#define VFM_RSVD_BIT	24
-+
-+#define	VFM_MODEL_MASK	GENMASK(VFM_FAMILY_BIT - 1, VFM_MODEL_BIT)
-+#define	VFM_FAMILY_MASK	GENMASK(VFM_VENDOR_BIT - 1, VFM_FAMILY_BIT)
-+#define	VFM_VENDOR_MASK	GENMASK(VFM_RSVD_BIT - 1, VFM_VENDOR_BIT)
-+
-+#define VFM_MODEL(vfm)	(((vfm) & VFM_MODEL_MASK) >> VFM_MODEL_BIT)
-+#define VFM_FAMILY(vfm)	(((vfm) & VFM_FAMILY_MASK) >> VFM_FAMILY_BIT)
-+#define VFM_VENDOR(vfm)	(((vfm) & VFM_VENDOR_MASK) >> VFM_VENDOR_BIT)
-+
-+#define	VFM_MAKE(_vendor, _family, _model) (	\
-+	((_model) << VFM_MODEL_BIT) |		\
-+	((_family) << VFM_FAMILY_BIT) |		\
-+	((_vendor) << VFM_VENDOR_BIT)		\
-+)
-+// end copied section
-+
-+#define X86_VENDOR_INTEL	0
-+
- #include INTEL_FAMILY_HEADER
- #include <stdarg.h>
- #include <stdio.h>
-@@ -367,7 +391,7 @@ struct platform_features {
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index 7dca73417e2b..e628d969d613 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -45,37 +45,37 @@ struct override_status_id {
+ 	unsigned long long status;
  };
  
- struct platform_data {
--	unsigned int model;
-+	unsigned int vfm;
- 	const struct platform_features *features;
- };
+-#define ENTRY(status, hid, uid, path, cpu_model, dmi...) {		\
++#define ENTRY(status, hid, uid, path, cpu_vfm, dmi...) {		\
+ 	{ { hid, }, {} },						\
+-	{ X86_MATCH_INTEL_FAM6_MODEL(cpu_model, NULL), {} },		\
++	{ X86_MATCH_VFM(cpu_vfm, NULL), {} },				\
+ 	{ { .matches = dmi }, {} },					\
+ 	uid,								\
+ 	path,								\
+ 	status,								\
+ }
  
-@@ -910,75 +934,75 @@ static const struct platform_features amd_features_with_rapl = {
- };
+-#define PRESENT_ENTRY_HID(hid, uid, cpu_model, dmi...) \
+-	ENTRY(ACPI_STA_DEFAULT, hid, uid, NULL, cpu_model, dmi)
++#define PRESENT_ENTRY_HID(hid, uid, cpu_vfm, dmi...) \
++	ENTRY(ACPI_STA_DEFAULT, hid, uid, NULL, cpu_vfm, dmi)
  
- static const struct platform_data turbostat_pdata[] = {
--	{ INTEL_FAM6_NEHALEM, &nhm_features },
--	{ INTEL_FAM6_NEHALEM_G, &nhm_features },
--	{ INTEL_FAM6_NEHALEM_EP, &nhm_features },
--	{ INTEL_FAM6_NEHALEM_EX, &nhx_features },
--	{ INTEL_FAM6_WESTMERE, &nhm_features },
--	{ INTEL_FAM6_WESTMERE_EP, &nhm_features },
--	{ INTEL_FAM6_WESTMERE_EX, &nhx_features },
--	{ INTEL_FAM6_SANDYBRIDGE, &snb_features },
--	{ INTEL_FAM6_SANDYBRIDGE_X, &snx_features },
--	{ INTEL_FAM6_IVYBRIDGE, &ivb_features },
--	{ INTEL_FAM6_IVYBRIDGE_X, &ivx_features },
--	{ INTEL_FAM6_HASWELL, &hsw_features },
--	{ INTEL_FAM6_HASWELL_X, &hsx_features },
--	{ INTEL_FAM6_HASWELL_L, &hswl_features },
--	{ INTEL_FAM6_HASWELL_G, &hswg_features },
--	{ INTEL_FAM6_BROADWELL, &bdw_features },
--	{ INTEL_FAM6_BROADWELL_G, &bdwg_features },
--	{ INTEL_FAM6_BROADWELL_X, &bdx_features },
--	{ INTEL_FAM6_BROADWELL_D, &bdx_features },
--	{ INTEL_FAM6_SKYLAKE_L, &skl_features },
--	{ INTEL_FAM6_SKYLAKE, &skl_features },
--	{ INTEL_FAM6_SKYLAKE_X, &skx_features },
--	{ INTEL_FAM6_KABYLAKE_L, &skl_features },
--	{ INTEL_FAM6_KABYLAKE, &skl_features },
--	{ INTEL_FAM6_COMETLAKE, &skl_features },
--	{ INTEL_FAM6_COMETLAKE_L, &skl_features },
--	{ INTEL_FAM6_CANNONLAKE_L, &cnl_features },
--	{ INTEL_FAM6_ICELAKE_X, &icx_features },
--	{ INTEL_FAM6_ICELAKE_D, &icx_features },
--	{ INTEL_FAM6_ICELAKE_L, &cnl_features },
--	{ INTEL_FAM6_ICELAKE_NNPI, &cnl_features },
--	{ INTEL_FAM6_ROCKETLAKE, &cnl_features },
--	{ INTEL_FAM6_TIGERLAKE_L, &cnl_features },
--	{ INTEL_FAM6_TIGERLAKE, &cnl_features },
--	{ INTEL_FAM6_SAPPHIRERAPIDS_X, &spr_features },
--	{ INTEL_FAM6_EMERALDRAPIDS_X, &spr_features },
--	{ INTEL_FAM6_GRANITERAPIDS_X, &spr_features },
--	{ INTEL_FAM6_LAKEFIELD, &cnl_features },
--	{ INTEL_FAM6_ALDERLAKE, &adl_features },
--	{ INTEL_FAM6_ALDERLAKE_L, &adl_features },
--	{ INTEL_FAM6_RAPTORLAKE, &adl_features },
--	{ INTEL_FAM6_RAPTORLAKE_P, &adl_features },
--	{ INTEL_FAM6_RAPTORLAKE_S, &adl_features },
--	{ INTEL_FAM6_METEORLAKE, &cnl_features },
--	{ INTEL_FAM6_METEORLAKE_L, &cnl_features },
--	{ INTEL_FAM6_ARROWLAKE_H, &arl_features },
--	{ INTEL_FAM6_ARROWLAKE_U, &arl_features },
--	{ INTEL_FAM6_ARROWLAKE, &arl_features },
--	{ INTEL_FAM6_LUNARLAKE_M, &arl_features },
--	{ INTEL_FAM6_ATOM_SILVERMONT, &slv_features },
--	{ INTEL_FAM6_ATOM_SILVERMONT_D, &slvd_features },
--	{ INTEL_FAM6_ATOM_AIRMONT, &amt_features },
--	{ INTEL_FAM6_ATOM_GOLDMONT, &gmt_features },
--	{ INTEL_FAM6_ATOM_GOLDMONT_D, &gmtd_features },
--	{ INTEL_FAM6_ATOM_GOLDMONT_PLUS, &gmtp_features },
--	{ INTEL_FAM6_ATOM_TREMONT_D, &tmtd_features },
--	{ INTEL_FAM6_ATOM_TREMONT, &tmt_features },
--	{ INTEL_FAM6_ATOM_TREMONT_L, &tmt_features },
--	{ INTEL_FAM6_ATOM_GRACEMONT, &adl_features },
--	{ INTEL_FAM6_ATOM_CRESTMONT_X, &srf_features },
--	{ INTEL_FAM6_ATOM_CRESTMONT, &grr_features },
--	{ INTEL_FAM6_XEON_PHI_KNL, &knl_features },
--	{ INTEL_FAM6_XEON_PHI_KNM, &knl_features },
-+	{ INTEL_NEHALEM, &nhm_features },
-+	{ INTEL_NEHALEM_G, &nhm_features },
-+	{ INTEL_NEHALEM_EP, &nhm_features },
-+	{ INTEL_NEHALEM_EX, &nhx_features },
-+	{ INTEL_WESTMERE, &nhm_features },
-+	{ INTEL_WESTMERE_EP, &nhm_features },
-+	{ INTEL_WESTMERE_EX, &nhx_features },
-+	{ INTEL_SANDYBRIDGE, &snb_features },
-+	{ INTEL_SANDYBRIDGE_X, &snx_features },
-+	{ INTEL_IVYBRIDGE, &ivb_features },
-+	{ INTEL_IVYBRIDGE_X, &ivx_features },
-+	{ INTEL_HASWELL, &hsw_features },
-+	{ INTEL_HASWELL_X, &hsx_features },
-+	{ INTEL_HASWELL_L, &hswl_features },
-+	{ INTEL_HASWELL_G, &hswg_features },
-+	{ INTEL_BROADWELL, &bdw_features },
-+	{ INTEL_BROADWELL_G, &bdwg_features },
-+	{ INTEL_BROADWELL_X, &bdx_features },
-+	{ INTEL_BROADWELL_D, &bdx_features },
-+	{ INTEL_SKYLAKE_L, &skl_features },
-+	{ INTEL_SKYLAKE, &skl_features },
-+	{ INTEL_SKYLAKE_X, &skx_features },
-+	{ INTEL_KABYLAKE_L, &skl_features },
-+	{ INTEL_KABYLAKE, &skl_features },
-+	{ INTEL_COMETLAKE, &skl_features },
-+	{ INTEL_COMETLAKE_L, &skl_features },
-+	{ INTEL_CANNONLAKE_L, &cnl_features },
-+	{ INTEL_ICELAKE_X, &icx_features },
-+	{ INTEL_ICELAKE_D, &icx_features },
-+	{ INTEL_ICELAKE_L, &cnl_features },
-+	{ INTEL_ICELAKE_NNPI, &cnl_features },
-+	{ INTEL_ROCKETLAKE, &cnl_features },
-+	{ INTEL_TIGERLAKE_L, &cnl_features },
-+	{ INTEL_TIGERLAKE, &cnl_features },
-+	{ INTEL_SAPPHIRERAPIDS_X, &spr_features },
-+	{ INTEL_EMERALDRAPIDS_X, &spr_features },
-+	{ INTEL_GRANITERAPIDS_X, &spr_features },
-+	{ INTEL_LAKEFIELD, &cnl_features },
-+	{ INTEL_ALDERLAKE, &adl_features },
-+	{ INTEL_ALDERLAKE_L, &adl_features },
-+	{ INTEL_RAPTORLAKE, &adl_features },
-+	{ INTEL_RAPTORLAKE_P, &adl_features },
-+	{ INTEL_RAPTORLAKE_S, &adl_features },
-+	{ INTEL_METEORLAKE, &cnl_features },
-+	{ INTEL_METEORLAKE_L, &cnl_features },
-+	{ INTEL_ARROWLAKE_H, &arl_features },
-+	{ INTEL_ARROWLAKE_U, &arl_features },
-+	{ INTEL_ARROWLAKE, &arl_features },
-+	{ INTEL_LUNARLAKE_M, &arl_features },
-+	{ INTEL_ATOM_SILVERMONT, &slv_features },
-+	{ INTEL_ATOM_SILVERMONT_D, &slvd_features },
-+	{ INTEL_ATOM_AIRMONT, &amt_features },
-+	{ INTEL_ATOM_GOLDMONT, &gmt_features },
-+	{ INTEL_ATOM_GOLDMONT_D, &gmtd_features },
-+	{ INTEL_ATOM_GOLDMONT_PLUS, &gmtp_features },
-+	{ INTEL_ATOM_TREMONT_D, &tmtd_features },
-+	{ INTEL_ATOM_TREMONT, &tmt_features },
-+	{ INTEL_ATOM_TREMONT_L, &tmt_features },
-+	{ INTEL_ATOM_GRACEMONT, &adl_features },
-+	{ INTEL_ATOM_CRESTMONT_X, &srf_features },
-+	{ INTEL_ATOM_CRESTMONT, &grr_features },
-+	{ INTEL_XEON_PHI_KNL, &knl_features },
-+	{ INTEL_XEON_PHI_KNM, &knl_features },
+-#define NOT_PRESENT_ENTRY_HID(hid, uid, cpu_model, dmi...) \
+-	ENTRY(0, hid, uid, NULL, cpu_model, dmi)
++#define NOT_PRESENT_ENTRY_HID(hid, uid, cpu_vfm, dmi...) \
++	ENTRY(0, hid, uid, NULL, cpu_vfm, dmi)
+ 
+-#define PRESENT_ENTRY_PATH(path, cpu_model, dmi...) \
+-	ENTRY(ACPI_STA_DEFAULT, "", NULL, path, cpu_model, dmi)
++#define PRESENT_ENTRY_PATH(path, cpu_vfm, dmi...) \
++	ENTRY(ACPI_STA_DEFAULT, "", NULL, path, cpu_vfm, dmi)
+ 
+-#define NOT_PRESENT_ENTRY_PATH(path, cpu_model, dmi...) \
+-	ENTRY(0, "", NULL, path, cpu_model, dmi)
++#define NOT_PRESENT_ENTRY_PATH(path, cpu_vfm, dmi...) \
++	ENTRY(0, "", NULL, path, cpu_vfm, dmi)
+ 
+ static const struct override_status_id override_status_ids[] = {
  	/*
- 	 * Missing support for
--	 * INTEL_FAM6_ICELAKE
--	 * INTEL_FAM6_ATOM_SILVERMONT_MID
--	 * INTEL_FAM6_ATOM_AIRMONT_MID
--	 * INTEL_FAM6_ATOM_AIRMONT_NP
-+	 * INTEL_ICELAKE
-+	 * INTEL_ATOM_SILVERMONT_MID
-+	 * INTEL_ATOM_AIRMONT_MID
-+	 * INTEL_ATOM_AIRMONT_NP
+ 	 * Bay / Cherry Trail PWM directly poked by GPU driver in win10,
+ 	 * but Linux uses a separate PWM driver, harmless if not used.
  	 */
- 	{ 0, NULL },
- };
-@@ -1003,11 +1027,12 @@ void probe_platform_features(unsigned int family, unsigned int model)
- 		return;
- 	}
+-	PRESENT_ENTRY_HID("80860F09", "1", ATOM_SILVERMONT, {}),
+-	PRESENT_ENTRY_HID("80862288", "1", ATOM_AIRMONT, {}),
++	PRESENT_ENTRY_HID("80860F09", "1", INTEL_ATOM_SILVERMONT, {}),
++	PRESENT_ENTRY_HID("80862288", "1", INTEL_ATOM_AIRMONT, {}),
  
--	if (!genuine_intel || family != 6)
-+	if (!genuine_intel)
- 		return;
- 
- 	for (i = 0; turbostat_pdata[i].features; i++) {
--		if (turbostat_pdata[i].model == model) {
-+		if (VFM_FAMILY(turbostat_pdata[i].vfm) == family &&
-+		    VFM_MODEL(turbostat_pdata[i].vfm) == model) {
- 			platform = turbostat_pdata[i].features;
- 			return;
- 		}
+ 	/* The Xiaomi Mi Pad 2 uses PWM2 for touchkeys backlight control */
+-	PRESENT_ENTRY_HID("80862289", "2", ATOM_AIRMONT, {
++	PRESENT_ENTRY_HID("80862289", "2", INTEL_ATOM_AIRMONT, {
+ 		DMI_MATCH(DMI_SYS_VENDOR, "Xiaomi Inc"),
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Mipad2"),
+ 	      }),
+@@ -84,18 +84,18 @@ static const struct override_status_id override_status_ids[] = {
+ 	 * The INT0002 device is necessary to clear wakeup interrupt sources
+ 	 * on Cherry Trail devices, without it we get nobody cared IRQ msgs.
+ 	 */
+-	PRESENT_ENTRY_HID("INT0002", "1", ATOM_AIRMONT, {}),
++	PRESENT_ENTRY_HID("INT0002", "1", INTEL_ATOM_AIRMONT, {}),
+ 	/*
+ 	 * On the Dell Venue 11 Pro 7130 and 7139, the DSDT hides
+ 	 * the touchscreen ACPI device until a certain time
+ 	 * after _SB.PCI0.GFX0.LCD.LCD1._ON gets called has passed
+ 	 * *and* _STA has been called at least 3 times since.
+ 	 */
+-	PRESENT_ENTRY_HID("SYNA7500", "1", HASWELL_L, {
++	PRESENT_ENTRY_HID("SYNA7500", "1", INTEL_HASWELL_L, {
+ 		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Venue 11 Pro 7130"),
+ 	      }),
+-	PRESENT_ENTRY_HID("SYNA7500", "1", HASWELL_L, {
++	PRESENT_ENTRY_HID("SYNA7500", "1", INTEL_HASWELL_L, {
+ 		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Venue 11 Pro 7139"),
+ 	      }),
+@@ -104,7 +104,7 @@ static const struct override_status_id override_status_ids[] = {
+ 	 * The Dell XPS 15 9550 has a SMO8110 accelerometer /
+ 	 * HDD freefall sensor which is wrongly marked as not present.
+ 	 */
+-	PRESENT_ENTRY_HID("SMO8810", "1", SKYLAKE, {
++	PRESENT_ENTRY_HID("SMO8810", "1", INTEL_SKYLAKE, {
+ 		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "XPS 15 9550"),
+ 	      }),
+@@ -121,19 +121,19 @@ static const struct override_status_id override_status_ids[] = {
+ 	 * was copy-pasted from the GPD win, so it has a disabled KIOX000A
+ 	 * node which we should not enable, thus we also check the BIOS date.
+ 	 */
+-	PRESENT_ENTRY_HID("KIOX000A", "1", ATOM_AIRMONT, {
++	PRESENT_ENTRY_HID("KIOX000A", "1", INTEL_ATOM_AIRMONT, {
+ 		DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
+ 		DMI_MATCH(DMI_BOARD_NAME, "Default string"),
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
+ 		DMI_MATCH(DMI_BIOS_DATE, "02/21/2017")
+ 	      }),
+-	PRESENT_ENTRY_HID("KIOX000A", "1", ATOM_AIRMONT, {
++	PRESENT_ENTRY_HID("KIOX000A", "1", INTEL_ATOM_AIRMONT, {
+ 		DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
+ 		DMI_MATCH(DMI_BOARD_NAME, "Default string"),
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
+ 		DMI_MATCH(DMI_BIOS_DATE, "03/20/2017")
+ 	      }),
+-	PRESENT_ENTRY_HID("KIOX000A", "1", ATOM_AIRMONT, {
++	PRESENT_ENTRY_HID("KIOX000A", "1", INTEL_ATOM_AIRMONT, {
+ 		DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
+ 		DMI_MATCH(DMI_BOARD_NAME, "Default string"),
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
+@@ -146,7 +146,7 @@ static const struct override_status_id override_status_ids[] = {
+ 	 * method sets a GPIO causing the PCI wifi card to turn off.
+ 	 * See above remark about uniqueness of the DMI match.
+ 	 */
+-	NOT_PRESENT_ENTRY_PATH("\\_SB_.PCI0.SDHB.BRC1", ATOM_AIRMONT, {
++	NOT_PRESENT_ENTRY_PATH("\\_SB_.PCI0.SDHB.BRC1", INTEL_ATOM_AIRMONT, {
+ 		DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
+ 		DMI_EXACT_MATCH(DMI_BOARD_NAME, "Default string"),
+ 		DMI_EXACT_MATCH(DMI_BOARD_SERIAL, "Default string"),
+@@ -158,7 +158,7 @@ static const struct override_status_id override_status_ids[] = {
+ 	 * as both ACCL0001 and MAGN0001. As we can only ever register an
+ 	 * i2c client for one of them, ignore MAGN0001.
+ 	 */
+-	NOT_PRESENT_ENTRY_HID("MAGN0001", "1", ATOM_SILVERMONT, {
++	NOT_PRESENT_ENTRY_HID("MAGN0001", "1", INTEL_ATOM_SILVERMONT, {
+ 		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+ 		DMI_MATCH(DMI_PRODUCT_FAMILY, "YOGATablet2"),
+ 	      }),
 -- 
 2.45.0
 
