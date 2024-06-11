@@ -1,46 +1,80 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C32B17578;
-	Tue, 11 Jun 2024 16:48:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1221762C9
+	for <patches@lists.linux.dev>; Tue, 11 Jun 2024 16:54:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718124492; cv=none; b=WyjkOAWYQyEb0kzKBUbWQr1j6amLHilMQ2xaZpl3uxVPhf17KME3GiTs3x9KoKrl9t4o/KCICwAeUjmdu7i8LOGI3KQ/FIjwir0r7bDrH7iizvSMZ1RFsmim1+ccxML+KRI9lilOd0Kz3hOZEJxyNnbpiwCAA0fUQIv/VdpFc5s=
+	t=1718124855; cv=none; b=ums0USPGKaWOkXAICg9s1ikdkaSaju5R/pCw5RHuCzUZhswvTfZJM+pQSTg/xJIgr6F5Of9H2Bk7T26jbl0LBQpj2dd6HB/aIef3cEIhHIfNtgTymhAj4nPJ6gWUzd6vwFCiA92Ake9piYDyaZKf5jl5omKth4sTZEkYWUcPhxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718124492; c=relaxed/simple;
-	bh=7Onb2qsoHrhCWi4NtMi6hD59IzkOpf+5lEUjfakFX1c=;
+	s=arc-20240116; t=1718124855; c=relaxed/simple;
+	bh=OrAb1OwSBRL1RD+bjKynk7YcqN0JqRD4WxAvQ9xdhGM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OYhZJToFIrMxQeiYU7lu5SRYgbXWlNh1WO1dLyOWiPUQDj4AjXZNlrdpLuQf68CVPxkBJNZZl3XRliWhCr6ygYcwjsA0t3cBSt6TGoJgBc6+MBtyozwn3JGl67+ZixsFBUdC5OUvMXJh59bO8ieTbhQnp7WKlRU5cKdP5u0CTuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VlLsfu7y; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=BKNTP2b3cS8wLg5OXTewLutfTes8/0LjLP/2vqBmH+W4s3J0CbezUK34esvD2A86V9mKFHZnDCqImTYvPURDctay8n8cfc707Bb6YtZFxJm+FDwmst2t5v4hrjk78/hjFqe4frEEPYC2yodKfHWUM03Z0XskCawLqnMHSIk4nJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=XjgK3yBt; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VlLsfu7y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A0DC2BD10;
-	Tue, 11 Jun 2024 16:48:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718124492;
-	bh=7Onb2qsoHrhCWi4NtMi6hD59IzkOpf+5lEUjfakFX1c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VlLsfu7ycvLjnlw2jagkN7lbtj+2AVtmGKzXzkAqKMhVI642uKrKN5HUDBspc/8tr
-	 Kv2PY1X/0HVrEqp7gujCfrQ91WMbWRFTvtohXKxpX/c8k+U0xjiTpevofwBUngb3Xi
-	 DFgrEIpnrAj+n4q6qtT7ac5fjYxkekWCkowYsHlJsDWtoluIg4blVf2dU7mQAbbKkM
-	 y8T+Pei0o/mCtKldnYszvtmITF34MHtOVJgPmcZGVcgiC3IzTtoSVl5ZeapeVMVOGL
-	 itJJ/niTHKPXNIvl02JaRj+nK8uh5Z+/99EaV1Rdw86i48iZPQ6Qm0KsJGOusCmqZE
-	 m4r5yeiLwsXoQ==
-Date: Tue, 11 Jun 2024 09:48:11 -0700
-From: "Darrick J. Wong" <djwong@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: patches@lists.linux.dev, fstests@vger.kernel.org,
-	linux-xfs@vger.kernel.org, linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org, akpm@linux-foundation.org,
-	ziy@nvidia.com, vbabka@suse.cz, seanjc@google.com,
-	willy@infradead.org, david@redhat.com, hughd@google.com,
-	linmiaohe@huawei.com, muchun.song@linux.dev, osalvador@suse.de,
-	p.raghav@samsung.com, da.gomez@samsung.com, hare@suse.de,
-	john.g.garry@oracle.com
-Subject: Re: [PATCH 2/5] fstests: add mmap page boundary tests
-Message-ID: <20240611164811.GL52977@frogsfrogsfrogs>
-References: <20240611030203.1719072-1-mcgrof@kernel.org>
- <20240611030203.1719072-3-mcgrof@kernel.org>
+	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="XjgK3yBt"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-35f1edc71e6so273542f8f.0
+        for <patches@lists.linux.dev>; Tue, 11 Jun 2024 09:54:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1718124852; x=1718729652; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hw7drFVos6OlmlZtZxQCwliUjnhCqtU/xBm51s1JLQM=;
+        b=XjgK3yBthC/pu23ZqjhZ1dGHErVohPR14RoVj0DDXLKzmr5GCIiEBKwgBPgPTk/p5w
+         eWPwHEHJdM+5xYjip1aUdvvoB6z6L6lc8bo7om2O7B5XOagvIroeew7dwsfzN3Fkqpra
+         IWkLzYWJ4z0MSMeIqFYztHPK8uqF2lBchuEMA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718124852; x=1718729652;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Hw7drFVos6OlmlZtZxQCwliUjnhCqtU/xBm51s1JLQM=;
+        b=OeUVFcNn69xG+Ta1zbnt5Tfkok5V8aXBdYH/I55gR6LRj/2/8x6/6XEXsx4fJTFGlO
+         wYwmy5KEZv/GJxX6FK7OatGA0Y33TG2c88k5paIC3nII1S+/EEtwYARluYaXqc4nPAD4
+         NEdE4BPZa6MEvoFZsqLH1KGGYQVy8+3qUwMMtM6qy/fG2Obt/p9ayF6AfcUtRAcNghHQ
+         Pd60XQ8Fx+8OH+1+9GMT6WHo+UAM1m4h5miJqv2RpDimJG8rwZmwrngmszIasxagzaGi
+         01iaMINYxQPp56JY/w3qngkfEgn/Tk/hUFBudhNprJjvhBp/0Zb5hKjpsGf8/atBXHs9
+         h4FQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUAJBh06HASMOyfm9K82sUM7eJ4TuVTI9J+alp6tD2i19iBfXw1xSabaB/Z435jyvOJrUB93UsQfqliSgbi0J2qs9pSeS0rGg==
+X-Gm-Message-State: AOJu0YwgBUQn9riB0W5Ehl80s8jyW7SDPyQ0y+6uAWxfilgZ5OjGOnQC
+	rXAxfMjUsaI2Qus+p9fk+B1fKqvc3wFtVxhMiSWAqMEfE0XbYn+/jan64jleunU=
+X-Google-Smtp-Source: AGHT+IFqYYsM2rMGUiy4YX7UaTF7NtCBy9ybwdgfBPKd11ZbCqkMYHqVBlUahONglj3MfDEkw3vRUg==
+X-Received: by 2002:a5d:464b:0:b0:35f:247e:fbcb with SMTP id ffacd0b85a97d-35f247efda6mr4003276f8f.2.1718124852018;
+        Tue, 11 Jun 2024 09:54:12 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4217f633f2asm111068895e9.28.2024.06.11.09.54.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jun 2024 09:54:11 -0700 (PDT)
+Date: Tue, 11 Jun 2024 18:54:09 +0200
+From: Daniel Vetter <daniel@ffwll.ch>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>, David Ahern <dsahern@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
+	linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Aron Silverton <aron.silverton@oracle.com>,
+	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
+	Leonid Bloch <lbloch@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 0/8] Introduce fwctl subystem
+Message-ID: <ZmiBMYlJ4q2xPOEY@phenom.ffwll.local>
+References: <0-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
+ <20240603114250.5325279c@kernel.org>
+ <214d7d82-0916-4c29-9012-04590e77df73@kernel.org>
+ <20240604070451.79cfb280@kernel.org>
+ <665fa9c9e69de_4a4e62941e@dwillia2-xfh.jf.intel.com.notmuch>
+ <20240605135911.GT19897@nvidia.com>
+ <Zmhu8egti-URPFoB@phenom.ffwll.local>
+ <20240611161702.GU19897@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,320 +83,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240611030203.1719072-3-mcgrof@kernel.org>
+In-Reply-To: <20240611161702.GU19897@nvidia.com>
+X-Operating-System: Linux phenom 6.8.9-amd64 
 
-On Mon, Jun 10, 2024 at 08:01:59PM -0700, Luis Chamberlain wrote:
-> mmap() POSIX compliance says we should zero fill data beyond a file
-> size up to page boundary, and issue a SIGBUS if we go beyond. While fsx
-> helps us test zero-fill sometimes, fsstress also let's us sometimes test
-> for SIGBUS however that is based on a random value and its not likely we
-> always test it. Dedicate a specic test for this to make testing for
-> this specific situation and to easily expand on other corner cases.
+On Tue, Jun 11, 2024 at 01:17:02PM -0300, Jason Gunthorpe wrote:
+> On Tue, Jun 11, 2024 at 05:36:17PM +0200, Daniel Vetter wrote:
+> > reliablity/health reporting. That's a lot more vendor specific in nature
+> > and needs to be customized anyway per deployement. And only much higher in
+> > the stack, maybe in k8s, can a technically reasonable unification even
+> > happen.  So again we're much more lenient about infrastructure enabling
+> > and uapi than stuff applications will use directly.
 > 
-> The only filesystem currently known to fail is tmpfs with huge pages,
-> but the pending upstream patch "filemap: cap PTE range to be created to
-> allowed zero fill in folio_map_range()" fixes this issue for tmpfs and
-> also for LBS support.
-> 
-> Suggested-by: Matthew Wilcox <willy@infradead.org>
-> Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> ---
->  common/rc             |   5 +-
->  tests/generic/749     | 238 ++++++++++++++++++++++++++++++++++++++++++
->  tests/generic/749.out |   2 +
->  3 files changed, 244 insertions(+), 1 deletion(-)
->  create mode 100755 tests/generic/749
->  create mode 100644 tests/generic/749.out
-> 
-> diff --git a/common/rc b/common/rc
-> index fa7942809d6c..e812a2f7cc67 100644
-> --- a/common/rc
-> +++ b/common/rc
-> @@ -60,12 +60,15 @@ _round_up_to_page_boundary()
->  	echo $(( (n + page_size - 1) & ~(page_size - 1) ))
->  }
+> To be clear, this is the specific niche fwctl is for. It is not for
+> GPU command submission or something like that, and as I said to Jiri I
+> would agree to agressively block such abuses.
 >  
-> +# You can override the $map_len but its optional, by default we use the
-> +# max allowed size. If you use a length greater than the default you can
-> +# expect a SIBGUS and test for it.
->  _mread()
->  {
->  	local file=$1
->  	local offset=$2
->  	local length=$3
-> -	local map_len=$(_round_up_to_page_boundary $(_get_filesize $file))
-> +	local map_len=${4:-$(_round_up_to_page_boundary $(_get_filesize $file)) }
->  
->  	# Some callers expect xfs_io to crash with SIGBUS due to the mread,
->  	# causing the shell to print "Bus error" to stderr.  To allow this
-> diff --git a/tests/generic/749 b/tests/generic/749
-> new file mode 100755
-> index 000000000000..c1d3a2028549
-> --- /dev/null
-> +++ b/tests/generic/749
-> @@ -0,0 +1,238 @@
-> +#! /bin/bash
-> +# SPDX-License-Identifier: GPL-2.0
-> +# Copyright (c) Luis Chamberlain. All Rights Reserved.
-> +#
-> +# FS QA Test 749
-> +#
-> +# As per POSIX NOTES mmap(2) maps multiples of the system page size, but if the
-> +# data mapped is not multiples of the page size the remaining bytes are zeroed
-> +# out when mapped and modifications to that region are not written to the file.
-> +# On Linux when you write data to such partial page after the end of the
-> +# object, the data stays in the page cache even after the file is closed and
-> +# unmapped and  even  though  the data  is never written to the file itself,
-> +# subsequent mappings may see the modified content. If you go *beyond* this
-
-Does this happen (mwrite data beyond eof sticks around) with large
-folios as well?
-
-> +# page, you should get a SIGBUS. This test verifies we zero-fill to page
-> +# boundary and ensures we get a SIGBUS if we write to data beyond the system
-> +# page size even if the block size is greater than the system page size.
-> +. ./common/preamble
-> +. ./common/rc
-> +_begin_fstest auto quick prealloc
-> +
-> +# Import common functions.
-> +. ./common/filter
-> +
-> +# real QA test starts here
-> +_supported_fs generic
-> +_require_scratch_nocheck
-> +_require_test
-> +_require_xfs_io_command "truncate"
-> +_require_xfs_io_command "falloc"
-> +
-> +# _fixed_by_git_commit kernel <pending-upstream> \
-> +#        "filemap: cap PTE range to be created to allowed zero fill in folio_map_range()"
-> +
-> +filter_xfs_io_data_unique()
-> +{
-> +    _filter_xfs_io_offset | sed -e 's| |\n|g' | grep -E -v "\.|XX|\*" | \
-> +	sort -u | tr -d '\n'
-> +}
-> +
-> +
-> +setup_zeroed_file()
-> +{
-> +	local file_len=$1
-> +	local sparse=$2
-> +
-> +	if $sparse; then
-> +		$XFS_IO_PROG -f -c "truncate $file_len" $test_file
-> +	else
-> +		$XFS_IO_PROG -f -c "falloc 0 $file_len" $test_file
-> +	fi
-> +}
-> +
-> +mwrite()
-> +{
-> +       local file=$1
-> +       local offset=$2
-> +       local length=$3
-> +       local map_len=${4:-$(_round_up_to_page_boundary $(_get_filesize $file)) }
-> +
-> +       # Some callers expect xfs_io to crash with SIGBUS due to the mread,
-> +       # causing the shell to print "Bus error" to stderr.  To allow this
-> +       # message to be redirected, execute xfs_io in a new shell instance.
-> +       # However, for this to work reliably, we also need to prevent the new
-> +       # shell instance from optimizing out the fork and directly exec'ing
-> +       # xfs_io.  The easiest way to do that is to append 'true' to the
-> +       # commands, so that xfs_io is no longer the last command the shell sees.
-> +       bash -c "trap '' SIGBUS; ulimit -c 0; \
-> +		$XFS_IO_PROG $file \
-> +               -c 'mmap -w 0 $map_len' \
-> +               -c 'mwrite $offset $length'; \
-> +	       true"
-> +}
-> +
-> +do_mmap_tests()
-> +{
-> +	local block_size=$1
-> +	local file_len=$2
-> +	local offset=$3
-> +	local len=$4
-> +	local use_sparse_file=${5:-false}
-> +	local new_filelen=0
-> +	local map_len=0
-> +	local csum=0
-> +	local fs_block_size=$(_get_file_block_size $SCRATCH_MNT)
-> +
-> +	echo -en "\n\n==> Testing blocksize $block_size " >> $seqres.full
-> +	echo -en "file_len: $file_len offset: $offset " >> $seqres.full
-> +	echo -e "len: $len sparse: $use_sparse_file" >> $seqres.full
-> +
-> +	if ((fs_block_size != block_size)); then
-> +		_fail "Block size created ($block_size) doesn't match _get_file_block_size on mount ($fs_block_size)"
-> +	fi
-> +
-> +	rm -rf "${SCRATCH_MNT:?}"/*
-
-rm -f $SCRATCH_MNT/file ?
-
-> +
-> +	# This let's us also test against sparse files
-> +	setup_zeroed_file $file_len $use_sparse_file
-> +
-> +	# This will overwrite the old data, the file size is the
-> +	# delta between offset and len now.
-> +	$XFS_IO_PROG -f -c "pwrite -S 0xaa -b 512 $offset $len" \
-> +		$test_file >> $seqres.full
-> +
-> +	sync
-> +	new_filelen=$(_get_filesize $test_file)
-> +	map_len=$(_round_up_to_page_boundary $new_filelen)
-> +	csum_orig="$(_md5_checksum $test_file)"
-> +
-> +	# A couple of mmap() tests:
-> +	#
-> +	# We are allowed to mmap() up to the boundary of the page size of a
-> +	# data object, but there a few rules to follow we must check for:
-> +	#
-> +	# a) zero-fill test for the data: POSIX says we should zero fill any
-> +	#    partial page after the end of the object. Verify zero-fill.
-> +	# b) do not write this bogus data to disk: on Linux, if we write data
-> +	#    to a partially filled page, it will stay in the page cache even
-> +	#    after the file is closed and unmapped even if it never reaches the
-> +	#    file. Subsequent mappings *may* see the modified content, but it
-> +	#    also can get other data. Since the data read after the actual
-
-What other data?
-
-> +	#    object data can vary we just verify the filesize does not change.
-> +	if [[ $map_len -gt $new_filelen ]]; then
-> +		zero_filled_data_len=$((map_len - new_filelen))
-> +		_scratch_cycle_mount
-> +		expected_zero_data="00"
-> +		zero_filled_data=$($XFS_IO_PROG -r $test_file \
-> +			-c "mmap -r 0 $map_len" \
-> +			-c "mread -v $new_filelen $zero_filled_data_len" \
-> +			-c "munmap" | \
-> +			filter_xfs_io_data_unique)
-> +		if [[ "$zero_filled_data" != "$expected_zero_data" ]]; then
-> +			echo "Expected data: $expected_zero_data"
-> +			echo "  Actual data: $zero_filled_data"
-> +			_fail "Zero-fill expectations with mmap() not respected"
-> +		fi
-> +
-> +		_scratch_cycle_mount
-> +		$XFS_IO_PROG $test_file \
-> +			-c "mmap -w 0 $map_len" \
-> +			-c "mwrite $new_filelen $zero_filled_data_len" \
-> +			-c "munmap"
-> +		sync
-> +		csum_post="$(_md5_checksum $test_file)"
-> +		if [[ "$csum_orig" != "$csum_post" ]]; then
-> +			echo "Expected csum: $csum_orig"
-> +			echo " Actual  csum: $csum_post"
-> +			_fail "mmap() write up to page boundary should not change actual file contents"
-
-Do you really want to stop the test immediately?  Or keep going and see
-what other errors fall out?  (i.e. s/_fail/echo/ here)
-
-> +		fi
-> +
-> +		local filelen_test=$(_get_filesize $test_file)
-> +		if [[ "$filelen_test" != "$new_filelen" ]]; then
-> +			echo "Expected file length: $new_filelen"
-> +			echo " Actual  file length: $filelen_test"
-> +			_fail "mmap() write up to page boundary should not change actual file size"
-> +		fi
-> +	fi
-> +
-> +	# Now lets ensure we get SIGBUS when we go beyond the page boundary
-> +	_scratch_cycle_mount
-> +	new_filelen=$(_get_filesize $test_file)
-> +	map_len=$(_round_up_to_page_boundary $new_filelen)
-> +	csum_orig="$(_md5_checksum $test_file)"
-> +	_mread $test_file 0 $map_len >> $seqres.full  2>$tmp.err
-> +	if grep -q 'Bus error' $tmp.err; then
-> +		cat $tmp.err
-> +		_fail "Not expecting SIGBUS when reading up to page boundary"
-> +	fi
-> +
-> +	# This should just work
-> +	_mread $test_file 0 $map_len >> $seqres.full  2>$tmp.err
-> +	if [[ $? -ne 0 ]]; then
-> +		_fail "mmap() read up to page boundary should work"
-> +	fi
-> +
-> +	# This should just work
-> +	mwrite $map_len 0 $map_len >> $seqres.full  2>$tmp.err
-> +	if [[ $? -ne 0 ]]; then
-> +		_fail "mmap() write up to page boundary should work"
-> +	fi
-> +
-> +	# If we mmap() on the boundary but try to read beyond it just
-> +	# fails, we don't get a SIGBUS
-> +	$XFS_IO_PROG -r $test_file \
-> +		-c "mmap -r 0 $map_len" \
-> +		-c "mread 0 $((map_len + 10))" >> $seqres.full  2>$tmp.err
-> +	local mread_err=$?
-> +	if [[ $mread_err -eq 0 ]]; then
-> +		_fail "mmap() to page boundary works as expected but reading beyond should fail: $mread_err"
-> +	fi
-> +
-> +	$XFS_IO_PROG -w $test_file \
-> +		-c "mmap -w 0 $map_len" \
-> +		-c "mwrite 0 $((map_len + 10))" >> $seqres.full  2>$tmp.err
-> +	local mwrite_err=$?
-> +	if [[ $mwrite_err -eq 0 ]]; then
-> +		_fail "mmap() to page boundary works as expected but writing beyond should fail: $mwrite_err"
-> +	fi
-> +
-> +	# Now let's go beyond the allowed mmap() page boundary
-> +	_mread $test_file 0 $((map_len + 10)) $((map_len + 10)) >> $seqres.full  2>$tmp.err
-> +	if ! grep -q 'Bus error' $tmp.err; then
-> +		_fail "Expected SIGBUS when mmap() reading beyond page boundary"
-> +	fi
-> +
-> +	mwrite $test_file 0 $((map_len + 10)) $((map_len + 10))  >> $seqres.full  2>$tmp.err
-> +	if ! grep -q 'Bus error' $tmp.err; then
-> +		_fail "Expected SIGBUS when mmap() writing beyond page boundary"
-> +	fi
-> +
-> +	local filelen_test=$(_get_filesize $test_file)
-> +	if [[ "$filelen_test" != "$new_filelen" ]]; then
-> +		echo "Expected file length: $new_filelen"
-> +		echo " Actual  file length: $filelen_test"
-> +		_fail "reading or writing beyond file size up to mmap() page boundary should not change file size"
-> +	fi
-> +}
-> +
-> +test_block_size()
-> +{
-> +	local block_size=$1
-> +
-> +	do_mmap_tests $block_size 512 3 5
-> +	do_mmap_tests $block_size 11k 0 $((4096 * 3 + 3))
-> +	do_mmap_tests $block_size 16k 0 $((16384+3))
-> +	do_mmap_tests $block_size 16k $((16384-10)) $((16384+20))
-> +	do_mmap_tests $block_size 64k 0 $((65536+3))
-> +	do_mmap_tests $block_size 4k 4090 30 true
-> +}
-> +
-> +_scratch_mkfs >> $seqres.full 2>&1 || _fail "mkfs failed"
-> +_scratch_mount
-> +test_file=$SCRATCH_MNT/file
-> +block_size=$(_get_file_block_size "$SCRATCH_MNT")
-> +test_block_size $block_size
-> +
-> +echo "Silence is golden"
-> +status=0
-> +exit
-> diff --git a/tests/generic/749.out b/tests/generic/749.out
-> new file mode 100644
-> index 000000000000..24658deddb99
-> --- /dev/null
-> +++ b/tests/generic/749.out
-> @@ -0,0 +1,2 @@
-> +QA output created by 749
-> +Silence is golden
-> -- 
-> 2.43.0
+> > Currently that's enough of a mess in drm that I feel like enforcing
+> > something like fwctl is still too much. But maybe once fwctl is
+> > established with other subsystems/devices we can start the conversations
+> > with vendors to get this going a few years down the road.
 > 
+> I wouldn't say enforcing, but instead of having every GPU driver build
+> their own weird vendor'd way to access their debug/diagnostic stuff
+> steer them into fwctl. These data center GPUs with FW at least have
+> lots of appropriate stuff and all the vendor OOT stuff has tooling to
+> inspect the GPUs far more than DRM has code for (ie
+> rocm-smi/nvidia-smi are have some features that are potentially good
+> candidates for fwctl)
+
+Yeah "enforcing" to the level we do with 3d/vulkan would be years down the
+road, if ever. Very unlikely imo for debug/diagnostics/tuning stuff.
+
+> > In practice, it doesn't seem to be an issue, at least not beyond the
+> > intentionally pragmatic choices where we merge kernel code with known
+> > sub-par/incomplete userspace. I'm not sure why, but to my knowledge all
+> > attempts to break the spirit of our userspace rules while following the
+> > letter die in vendor-internal discussions, at least for all the
+> > established upstream driver teams.
 > 
+> I think the same is broadly true of RDMA as well, except we don't
+> bother with the kernel trying to police the command stream - direct
+> submission from userspace. I can't say it has been much of an issue.
+
+Maybe just a bit confusion, but all modern-ish drm drivers stopped parsing
+the command stream a while ago. We only ever did that to fill security
+gaps, never to enforce any rules about what userspace is allowed to do
+beyond that.
+
+The rule that the open userspace needs to be complete, for some reasonably
+pragmatic definition of "complete", is entirely a social contract. And I'm
+not aware of any real issues with enforcing that beyond just trusting the
+established vendor teams. So yeah no real issues with uabi that allows
+maximal abuse because it's entirely unchecked by the kernel code.
+
+Or put differently, I think we're trying to make the same point.
+
+> > tldr; fwctl as I understand it feels like a bridge to far for drm today,
+> > but I'd very much like someone else to make this happen so we could
+> > eventually push towards adoption too.
+> 
+> Hahah, okay, well, I'm pushing :)
+
+Thanks :-)
+-Sima
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
