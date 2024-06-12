@@ -1,55 +1,55 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD14CEA4
-	for <patches@lists.linux.dev>; Wed, 12 Jun 2024 00:31:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F2B64F
+	for <patches@lists.linux.dev>; Wed, 12 Jun 2024 00:37:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718152270; cv=none; b=PT3cKUbj91UonWa+B6BWNAiNPNAvYFrtXOEK4t4DE0Qjpz+iPPqfYtzottc07vZYgAw6oibFHsUkjY8AHzaRHOLdxpd/hBwQRR/9tuUifGDpKJV3dhHCaMTrXBuJxXLjN6mnIJbW6Mw2hO1sU3oUdZpZersC6Q5fN2OmJSqjXp4=
+	t=1718152661; cv=none; b=nlrFCUuxanIue3/Uxe7Sqw7hG7xrwZ1UGHq25ExwN6Q6QXXyQGGSENB6qSm1RbDLJlZ1IK/gxpFmGWJISDsayqvR8hln91VLziV8cYhXQRtkZjyMe0QqmQBnWDYUmxT5+HYbKJgX4gQVHh/2l3JQyCEFjpJfNyfVys4QJMgeeLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718152270; c=relaxed/simple;
-	bh=eDEh/Oen7DAJWK7uRkISNRf9YcAHO+uOwB2Trnusrys=;
+	s=arc-20240116; t=1718152661; c=relaxed/simple;
+	bh=CbxB4gsF19wnuHRkxYjRBOGmzgRMjYMbezsZVPYzI/0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fw4IRMyV5pHsBHPIBEOsoQ/onCYXR62MO8lQoD74AEjWnHSztQxr7r7ucuKFOmW5lhW+AR9kSbgqGWH0tZXL6oy8CDdarK6/ojetDXdbZ/yfemJZiFqFQEX0I+zuKTq73FYnDX4wpS3U+vC0f3qyoqc/iOJOH5aKO8vzqn3nXe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NsPxSc4W; arc=none smtp.client-ip=209.85.208.41
+	 To:Cc:Content-Type; b=UJaNbdS2y4wSEKB6H4jNViWnN7VPqTbgMHNlZYbp6CXhWSYneOEkesK8V2XeuxRxB5jqAxLmYoc3V48eICEwsu78CugZGcYx0nEnsFkGPLhoUpXBnQMiMmZKekevYZicIzgV8beQw+g/CcvGCKguU9V5VFJ1J3SuTJpZ6qK1eN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IzDSRtA+; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NsPxSc4W"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-57a16f4b8bfso7937a12.0
-        for <patches@lists.linux.dev>; Tue, 11 Jun 2024 17:31:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IzDSRtA+"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-57c5ec83886so4126a12.1
+        for <patches@lists.linux.dev>; Tue, 11 Jun 2024 17:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1718152267; x=1718757067; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1718152658; x=1718757458; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oP9KKIbLoya/+52h4fep3MAtzpYBaRZzspTiBl2594Y=;
-        b=NsPxSc4WMR9YNLBT7yq0TKVwHRp6GRafeQkZJZtrzp4fcYrMlg3rJ/Y8gE1kln1Zu2
-         3/sijW8H1T0IPyrpCfqgVg1i5XrR7el9w/LtjKU/P1rBSLWCKns60pywch9bea9y54Jf
-         h747rDQjymhUEda8F3vM8RSYxxv803POaAHIeyCIbXL90QTGCsRrW6KZ9JFSICFmTSF7
-         WAq1UCQ6IaSuwfPO9Zq6wTFInEpm+9tiZ1QShi1o+n4GvlUELZTJnBPoh0wf3zHhlOzs
-         6dqGYw2G9uRl4mwyvhJaiT04BjydllbHSTMiBTK6V6DUmeMMziWlfDilO2vEay8+xdY2
-         xEEw==
+        bh=CbxB4gsF19wnuHRkxYjRBOGmzgRMjYMbezsZVPYzI/0=;
+        b=IzDSRtA+QR1AmYrbaFJ7rGwacFQmR7wj6OkmVh9ICEvHAxEgXFZu5zcZp9RHdin4+G
+         pMEBCR9CNkMGLUVTqdMZ48+mQhBKE0dtO6vRTAaL9Lk+gRjn1xiaHKVcexRP/pUamGbf
+         Moo8JeGWjqmVnqLYLg+w9+S3OeC9INgvwIDTgTHaW2lIGCTzM1CS5F1q2ioxaOrEaCux
+         seo53250gukx9tDG2eLldcSCa57oATHQD1/aO7wGqk+kXzGEiic2XloWAvZn4tsyU7aR
+         76YZ5BaAAN8g/9eaQjakyTlcAbKoj3BrxUPBY+CLSoDfLcc8XVZCuIxhshpKZ0ax4AnA
+         jRZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718152267; x=1718757067;
+        d=1e100.net; s=20230601; t=1718152658; x=1718757458;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oP9KKIbLoya/+52h4fep3MAtzpYBaRZzspTiBl2594Y=;
-        b=aCGyXATwF7fFVvlbPvSarctv6WKhal/8seHvE2Cl5eNYSqPKU8j2JPMAln0grkuDOf
-         3hbRQFqQ7QQYy+0mmCzj4Z0iUyNz5tpsMP82XtZp/xI/sXMQwx+X35/2YKuYNbmgcoiy
-         KederIWYFQzUwObFM8ZvtEsZ4TH3Wh2z1enkUfr1G/B6vjNd7rGJmd2BeLA4XhZX8y+p
-         Dg3XsGe7RZQOBAfeDs8uICLOYbwj56Nq9w7lk1xZF2xbJohSHIlJzjEmsF3xH3/p/k9I
-         yXXilT8g/pM4TPaL+7DShv6flkgtwDMnMX5tKYQl8ijOyMEWS6oLLxRJ2sO2fZ0/U3Ub
-         B1pg==
-X-Forwarded-Encrypted: i=1; AJvYcCVcKDSFW7kFU09TqYNzt4aNxFh92JKNp/RI3pONz9KOwC+lMD7AsMzH5S+TFP2GnhOUmKkIfKWlFpC0RuxBwRd7FT8VAGCbMA==
-X-Gm-Message-State: AOJu0Yy9gVjfj0qBJwR6BBfIZzlHeVBcYTY6bWdmu2zqn+j/X5fDkqq8
-	W2f+/xyUZCi0rxhmbUqb9e4FQKH0mpOaxRSpe4Dn4rsYv8mwreWJJ0UURCOCLWBDYgAuSUrNQ27
-	UHdR+6MRJO7ypTm6goUtBGf51E7r5gwpn3ItG
-X-Google-Smtp-Source: AGHT+IFhK3nW1s3vFpcSBj0EEbCcEV49HXRnLV+cBns1nx9+LAzI5Pcqddd/N6HdlI63NBcazatyNT9RnekZ/uQQocc=
-X-Received: by 2002:a05:6402:1d17:b0:57c:57b3:6bb3 with SMTP id
- 4fb4d7f45d1cf-57ca84b8036mr93464a12.6.1718152266688; Tue, 11 Jun 2024
- 17:31:06 -0700 (PDT)
+        bh=CbxB4gsF19wnuHRkxYjRBOGmzgRMjYMbezsZVPYzI/0=;
+        b=m1nMt/eRXzfDgURyCx4oOWE2pti8Dahg+C2Rx6Ehhg6z1pgY9fs/dmUQHoQCzJVB76
+         DMiAccklUEBQ4ZaJArB+7NvfO3ISJjG85aweptcyAMeiodVNQ6oGm7UgcM5aB/DJX0FV
+         UtuYrIcAZuNy8tvfkiPLWL0sQrAlfmTjHRJGLGpVFHddLSA/tzWZCO3dxaqawQN8112p
+         TJkb4QXFIvSEpGpd/Gd2K24JdWMgUfvNFrubBvEfgK5Syqr59g9bGdBIuR8qOpiIIqby
+         I38Oc77EprF8v39S7xoWgvlSXZFlHM72ACdgUl5zUVJ8l/g84O7rhxdFaeCJFBcTCwfq
+         Hq7g==
+X-Forwarded-Encrypted: i=1; AJvYcCV0/gPVvB9R2GpIlnFu522G6IZZY9a9W+BjYVwRPLcFyprngPU1ghencdBaw09tCVZ10PtWLOcZ1WObcHp9d1as8+QOJoiMPg==
+X-Gm-Message-State: AOJu0YyBWuIHno91zaUXxbPnXVOZd/qxRABB5r09TR469+Cjh/cxn/nI
+	QtW6c6nt469SZg6ATOv83zDMEhVKNY7rqdlnobh98cqCXITFNPWKGdg0bNQhqPfP0fVE9hIdX9l
+	HNV46HrUpR7mIAjwEXk+WaatKx5ea48cNoLPU
+X-Google-Smtp-Source: AGHT+IGPogOtYqDEs+7RxuVSqbTRCrwDGOHdpFBNLv9I3kbjcl6SRTnxLsX2Kfx19alhBDTwgj55N42gOEfTZvGQj0A=
+X-Received: by 2002:aa7:cd17:0:b0:572:988f:2f38 with SMTP id
+ 4fb4d7f45d1cf-57ca7fd71e8mr98062a12.6.1718152657843; Tue, 11 Jun 2024
+ 17:37:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,8 +59,8 @@ MIME-Version: 1.0
 References: <0-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com> <3-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com>
 In-Reply-To: <3-v2-318ed5f6983b+198f-smmuv3_tidy_jgg@nvidia.com>
 From: Daniel Mentz <danielmentz@google.com>
-Date: Tue, 11 Jun 2024 17:30:53 -0700
-Message-ID: <CAE2F3rBJxj=zFmtdGddMdPy9HXVP-cu+MtjaJhrJpjux_GZ6KQ@mail.gmail.com>
+Date: Tue, 11 Jun 2024 17:37:26 -0700
+Message-ID: <CAE2F3rBA-QHBROY9T0eo6HzYkMOs51+xMXHZLSjnz4=D6XEszQ@mail.gmail.com>
 Subject: Re: [PATCH v2 03/10] iommu/arm-smmu-v3: Add arm_smmu_strtab_l1/2_idx()
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
@@ -73,26 +73,7 @@ Content-Transfer-Encoding: quoted-printable
 
 On Mon, Jun 10, 2024 at 5:31=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> wr=
 ote:
->                 dev_warn(smmu->dev,
-> -                        "2-level strtab only covers %u/%u bits of SID\n"=
-,
-> -                        size, smmu->sid_bits);
-> +                        "2-level strtab only covers %u/%u of SIDs\n",
-> +                        cfg->num_l1_ents * STRTAB_NUM_L2_STES,
-> +                        1 << smmu->sid_bits);
+> +static inline unsigned int arm_smmu_strtab_l1_idx(unsigned int sid)
 
-Does this mean it'll change from printing
-
-"2-level strtab only covers 25/32 bits of SID"
-
-to
-
-"2-level strtab only covers 33554432/4294967296 of SIDs"?
-
-I think that's less helpful. I would prefer printing the values in bits.
-
-> +#define STRTAB_NUM_L2_STES (1 << STRTAB_SPLIT)
-> +#define STRTAB_MAX_L1_ENTRIES (1 << 17)
-
-Consider adding some extra white space to nicely align these #defines
-with the rest of this .h file.
+Existing code appears to be exclusively using the data type u32 to
+store StreamIDs.
