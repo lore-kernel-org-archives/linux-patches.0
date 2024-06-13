@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF34917FD;
-	Thu, 13 Jun 2024 12:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C249717FD;
+	Thu, 13 Jun 2024 12:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282855; cv=none; b=YPbEDqMMbrWwc4yte/Xzdqnduasm4g+35EUgiC5H+wu2B/GPgTOJfF/HRy6bBHQuAPFlA1jthiYV3ug8GwuSj9xxCDlabh8UHuJY0SBV1S7svVBTp9JBNL4Psqs4H1qfVTBv+yo4PTjR4Z21DFC5OxsPEQWENFi/IVna1Ej2P2k=
+	t=1718282857; cv=none; b=duES6cDwfgFNJ5crqZt2+/rAXNLskeEmH1fAHrAM1/VfwfMb2Dx+iDAfBjEnyUE0L+xDrS5eBC4Lc5rEC+ZUV53LnKy/k87JJ59Sl4xM05X4Rjsr6Dj0pzRg4f7bQSWA8fUtcp/x9nnIgdIpJ9PWuuYK7NDfOZZiSrkxiRUy6lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282855; c=relaxed/simple;
-	bh=LHr1oZp9kStpWuLqntG0SbTpByR1oLGy4kv7rTIMo+Q=;
+	s=arc-20240116; t=1718282857; c=relaxed/simple;
+	bh=DrCFEHObwvPFSxXdAXNLVlIPdqQabLOlQIc+LybVTfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXChL67PftYUKIIKOQkoE7gh2EqQUfopd3uLcyEsHRkUQKZKxB7HR4rYxJ+CgfJap3VZKKIrxtPIdCzDr3PYSFPcToASn9LuPgIHEEn1sVEKkn8Xd0wxFY1W1qoSeenoHqDSUpdHiFvqEQjScFaE5u4uWc7f1lgIslNICpucsII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJ9A3+Tz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=elC55T4mToE0zyxKcHcvBKkmNVdC/BJHEmd/Lb3NiOMqzGb4F99WEgzxHoCqjGILeYdPrPRtqaJMDB6/pyWOpgPW+a0Lp4VYrmGQS7GiHYtcvEi86d/GweHxNi+XcMdFDRe+SWr3jH6h/PeCi4ZImEdSlgXvAIH/P2LIXuxQIus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCj1U4AE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJ9A3+Tz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E548C32786;
-	Thu, 13 Jun 2024 12:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCj1U4AE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E47C2BBFC;
+	Thu, 13 Jun 2024 12:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282854;
-	bh=LHr1oZp9kStpWuLqntG0SbTpByR1oLGy4kv7rTIMo+Q=;
+	s=korg; t=1718282857;
+	bh=DrCFEHObwvPFSxXdAXNLVlIPdqQabLOlQIc+LybVTfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJ9A3+TzLHXWa3KVWc3puHtN1zY6qRRlfNAzYqcOz2Uf98NVxE0ZvXJE8rlRmPvY5
-	 d44NGY0INpzaHPtKo0zRzvwLSlhrNZEQEsscnnfwpRMKM4eZmWz3hUlZXjHuZSH/96
-	 lUkIrMsd4On6CaOIT0u+kGKBMGER3rB40fLbkFvA=
+	b=cCj1U4AEUrfX/k+0ZvFOlcyR4XJlJfD3vSKR72fus1h4fGLVHlL7h+MBkuuVkhfM4
+	 s7Fp+AZHza8Anazm6+f9l6jDcByUheYspm9McXlSEAC0wBqhAZ4MdEn+rkJn4ZFl9q
+	 QDE+O4mCB4tWMYjyPRuOyr81+r+BquRS03OmaPw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	syzbot+3694e283cf5c40df6d14@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 16/85] f2fs: fix to do sanity check on i_xattr_nid in sanity_check_inode()
-Date: Thu, 13 Jun 2024 13:35:14 +0200
-Message-ID: <20240613113214.770712732@linuxfoundation.org>
+	Zheyu Ma <zheyuma97@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.1 17/85] media: lgdt3306a: Add a check against null-pointer-def
+Date: Thu, 13 Jun 2024 13:35:15 +0200
+Message-ID: <20240613113214.808533465@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -51,69 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Zheyu Ma <zheyuma97@gmail.com>
 
-commit 20faaf30e55522bba2b56d9c46689233205d7717 upstream.
+commit c1115ddbda9c930fba0fdd062e7a8873ebaf898d upstream.
 
-syzbot reports a kernel bug as below:
+The driver should check whether the client provides the platform_data.
 
-F2FS-fs (loop0): Mounted with checkpoint version = 48b305e4
-==================================================================
-BUG: KASAN: slab-out-of-bounds in f2fs_test_bit fs/f2fs/f2fs.h:2933 [inline]
-BUG: KASAN: slab-out-of-bounds in current_nat_addr fs/f2fs/node.h:213 [inline]
-BUG: KASAN: slab-out-of-bounds in f2fs_get_node_info+0xece/0x1200 fs/f2fs/node.c:600
-Read of size 1 at addr ffff88807a58c76c by task syz-executor280/5076
+The following log reveals it:
 
-CPU: 1 PID: 5076 Comm: syz-executor280 Not tainted 6.9.0-rc5-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- f2fs_test_bit fs/f2fs/f2fs.h:2933 [inline]
- current_nat_addr fs/f2fs/node.h:213 [inline]
- f2fs_get_node_info+0xece/0x1200 fs/f2fs/node.c:600
- f2fs_xattr_fiemap fs/f2fs/data.c:1848 [inline]
- f2fs_fiemap+0x55d/0x1ee0 fs/f2fs/data.c:1925
- ioctl_fiemap fs/ioctl.c:220 [inline]
- do_vfs_ioctl+0x1c07/0x2e50 fs/ioctl.c:838
- __do_sys_ioctl fs/ioctl.c:902 [inline]
- __se_sys_ioctl+0x81/0x170 fs/ioctl.c:890
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+[   29.610324] BUG: KASAN: null-ptr-deref in kmemdup+0x30/0x40
+[   29.610730] Read of size 40 at addr 0000000000000000 by task bash/414
+[   29.612820] Call Trace:
+[   29.613030]  <TASK>
+[   29.613201]  dump_stack_lvl+0x56/0x6f
+[   29.613496]  ? kmemdup+0x30/0x40
+[   29.613754]  print_report.cold+0x494/0x6b7
+[   29.614082]  ? kmemdup+0x30/0x40
+[   29.614340]  kasan_report+0x8a/0x190
+[   29.614628]  ? kmemdup+0x30/0x40
+[   29.614888]  kasan_check_range+0x14d/0x1d0
+[   29.615213]  memcpy+0x20/0x60
+[   29.615454]  kmemdup+0x30/0x40
+[   29.615700]  lgdt3306a_probe+0x52/0x310
+[   29.616339]  i2c_device_probe+0x951/0xa90
 
-The root cause is we missed to do sanity check on i_xattr_nid during
-f2fs_iget(), so that in fiemap() path, current_nat_addr() will access
-nat_bitmap w/ offset from invalid i_xattr_nid, result in triggering
-kasan bug report, fix it.
-
-Reported-and-tested-by: syzbot+3694e283cf5c40df6d14@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/00000000000094036c0616e72a1d@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Link: https://lore.kernel.org/linux-media/20220405095018.3993578-1-zheyuma97@gmail.com
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/inode.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/dvb-frontends/lgdt3306a.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -298,6 +298,12 @@ static bool sanity_check_inode(struct in
- 		}
- 	}
+--- a/drivers/media/dvb-frontends/lgdt3306a.c
++++ b/drivers/media/dvb-frontends/lgdt3306a.c
+@@ -2177,6 +2177,11 @@ static int lgdt3306a_probe(struct i2c_cl
+ 	struct dvb_frontend *fe;
+ 	int ret;
  
-+	if (fi->i_xattr_nid && f2fs_check_nid_range(sbi, fi->i_xattr_nid)) {
-+		f2fs_warn(sbi, "%s: inode (ino=%lx) has corrupted i_xattr_nid: %u, run fsck to fix.",
-+			  __func__, inode->i_ino, fi->i_xattr_nid);
-+		return false;
++	if (!client->dev.platform_data) {
++		dev_err(&client->dev, "platform data is mandatory\n");
++		return -EINVAL;
 +	}
 +
- 	return true;
- }
- 
+ 	config = kmemdup(client->dev.platform_data,
+ 			 sizeof(struct lgdt3306a_config), GFP_KERNEL);
+ 	if (config == NULL) {
 
 
