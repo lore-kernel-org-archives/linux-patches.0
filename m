@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E183520ED;
-	Thu, 13 Jun 2024 12:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829592F55;
+	Thu, 13 Jun 2024 12:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283070; cv=none; b=Y8Of750kDZXzq88sLwclSfyU7nIXPqNBkvIvqDjA73ckGWk0VGV9YxfIpKWgtHWbHJE1jJAZw9lJ1vkB8/DgdrBrfSh3hHdDvG9QkKgbB7sC+MN6oy22GbmNIoy2RJr3m+1z5qyPfCVjNddGtNzpgLfCWlREfENUSIG27Eu2JkY=
+	t=1718283072; cv=none; b=MM9jm32xVrrSk31/RXASXPPVPWQ+I/prpTJxRkuCHtsxgouGimmTwbmZXbgIMtPey6Bf6lzGiXrWF+bPgb/+4UjcA7xzNdMfRV6PaTrxLQ9YKiFg8DFAaB7SK2J3JSL/dlGlitgykQJejvEqRL8x+P96hIMRn/JO5upBxGtdV+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283070; c=relaxed/simple;
-	bh=4Qgo1WefyfOYsir7tSRNbFjydve8Y5fQZ3CywWNHuX0=;
+	s=arc-20240116; t=1718283072; c=relaxed/simple;
+	bh=rMD+CARkSdMQGPxZ/pm58JcGO4jnI5LiQRC2wcqBfCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdotEmUvmU81R+Qiziw8lUuGDilwb23gTDxMfaXC5Ax/ooAn17S5ADGXt/mY29LKIW0gY8Lzu3sttoEO4f4pirG2GfORdypfS1T0JIzwmWYkkCWVIgqIEuFo7g6eN/oRBkZXufKqYkXVN8IkXkw8Bxal9+U35fzSstpZzZMzjf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQS0LOPp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fLwty4Dx8F0He1TPkeiO3zd2QVKRsQvzds8httVJTklouCij4UPM2OXAZ//e5Mc9ybKsIpcPdIC5jYbM8CxxirLI0KD1Xa2qaYSsaTcrBIh4RiWkLBYEmyN5OJRl7cIZgetIDU/R1Qn+LwTX3bvhU6N3zgPKIOntwiqLOIkcTkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmE5mtb2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQS0LOPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6B0C2BBFC;
-	Thu, 13 Jun 2024 12:51:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmE5mtb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0746FC2BBFC;
+	Thu, 13 Jun 2024 12:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283069;
-	bh=4Qgo1WefyfOYsir7tSRNbFjydve8Y5fQZ3CywWNHuX0=;
+	s=korg; t=1718283072;
+	bh=rMD+CARkSdMQGPxZ/pm58JcGO4jnI5LiQRC2wcqBfCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bQS0LOPpvkoatswAT9c25x/cEp/sHhuI6PY/LPKC3RiAEIQGEvqjpiMyA4SUOWwHw
-	 ueB39UYo6kbwdndXozNjQk+AIkYeO6EhIPFU3YHfGxyYYdeJCZeTrIOC7l0qn0aIQZ
-	 0NcmGxTvQPKtD2rZcKTixF8zCkF9iYrUjd1EM/4w=
+	b=LmE5mtb2boWGghFrgqceFA3OJDUxycWdOzjymMZYjLdBNIj15gKgDF21nSFoa6iDk
+	 3yqxYsjaxpAlVLbnDkiJvbFupOsgCO/AXVys3R7sTL78EI7KVFSDeUTfU5VBzi+cRQ
+	 VXMy4EyZdvpnz8/0G/w3sVn9jIejwqRxE7H4hexg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Brian Johannesmeyer <bjohannesmeyer@gmail.com>,
-	Marco Elver <elver@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 58/85] kmsan: do not wipe out origin when doing partial unpoisoning
-Date: Thu, 13 Jun 2024 13:35:56 +0200
-Message-ID: <20240613113216.377891197@linuxfoundation.org>
+	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Peter Jung <ptr1337@cachyos.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 59/85] cpufreq: amd-pstate: Fix the inconsistency in max frequency units
+Date: Thu, 13 Jun 2024 13:35:57 +0200
+Message-ID: <20240613113216.415839529@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -54,68 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Potapenko <glider@google.com>
+From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 
-commit 2ef3cec44c60ae171b287db7fc2aa341586d65ba upstream.
+commit e4731baaf29438508197d3a8a6d4f5a8c51663f8 upstream.
 
-As noticed by Brian, KMSAN should not be zeroing the origin when
-unpoisoning parts of a four-byte uninitialized value, e.g.:
+The nominal frequency in cpudata is maintained in MHz whereas all other
+frequencies are in KHz. This means we have to convert nominal frequency
+value to KHz before we do any interaction with other frequency values.
 
-    char a[4];
-    kmsan_unpoison_memory(a, 1);
+In amd_pstate_set_boost(), this conversion from MHz to KHz is missed,
+fix that.
 
-This led to false negatives, as certain poisoned values could receive zero
-origins, preventing those values from being reported.
+Tested on a AMD Zen4 EPYC server
 
-To fix the problem, check that kmsan_internal_set_shadow_origin() writes
-zero origins only to slots which have zero shadow.
+Before:
+$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_max_freq | uniq
+2151
+$ cat /sys/devices/system/cpu/cpufreq/policy*/cpuinfo_min_freq | uniq
+400000
+$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_cur_freq | uniq
+2151
+409422
 
-Link: https://lkml.kernel.org/r/20240528104807.738758-1-glider@google.com
-Fixes: f80be4571b19 ("kmsan: add KMSAN runtime core")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reported-by: Brian Johannesmeyer <bjohannesmeyer@gmail.com>
-  Link: https://lore.kernel.org/lkml/20240524232804.1984355-1-bjohannesmeyer@gmail.com/T/
-Reviewed-by: Marco Elver <elver@google.com>
-Tested-by: Brian Johannesmeyer <bjohannesmeyer@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+After:
+$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_max_freq | uniq
+2151000
+$ cat /sys/devices/system/cpu/cpufreq/policy*/cpuinfo_min_freq | uniq
+400000
+$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_cur_freq | uniq
+2151000
+1799527
+
+Fixes: ec437d71db77 ("cpufreq: amd-pstate: Introduce a new AMD P-State driver to support future processors")
+Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+Acked-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Tested-by: Peter Jung <ptr1337@cachyos.org>
+Cc: 5.17+ <stable@vger.kernel.org> # 5.17+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmsan/core.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/cpufreq/amd-pstate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/kmsan/core.c
-+++ b/mm/kmsan/core.c
-@@ -258,8 +258,7 @@ void kmsan_internal_set_shadow_origin(vo
- 				      u32 origin, bool checked)
- {
- 	u64 address = (u64)addr;
--	void *shadow_start;
--	u32 *origin_start;
-+	u32 *shadow_start, *origin_start;
- 	size_t pad = 0;
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -424,7 +424,7 @@ static int amd_pstate_set_boost(struct c
+ 	if (state)
+ 		policy->cpuinfo.max_freq = cpudata->max_freq;
+ 	else
+-		policy->cpuinfo.max_freq = cpudata->nominal_freq;
++		policy->cpuinfo.max_freq = cpudata->nominal_freq * 1000;
  
- 	KMSAN_WARN_ON(!kmsan_metadata_is_contiguous(addr, size));
-@@ -287,8 +286,16 @@ void kmsan_internal_set_shadow_origin(vo
- 	origin_start =
- 		(u32 *)kmsan_get_metadata((void *)address, KMSAN_META_ORIGIN);
+ 	policy->max = policy->cpuinfo.max_freq;
  
--	for (int i = 0; i < size / KMSAN_ORIGIN_SIZE; i++)
--		origin_start[i] = origin;
-+	/*
-+	 * If the new origin is non-zero, assume that the shadow byte is also non-zero,
-+	 * and unconditionally overwrite the old origin slot.
-+	 * If the new origin is zero, overwrite the old origin slot iff the
-+	 * corresponding shadow slot is zero.
-+	 */
-+	for (int i = 0; i < size / KMSAN_ORIGIN_SIZE; i++) {
-+		if (origin || !shadow_start[i])
-+			origin_start[i] = origin;
-+	}
- }
- 
- struct page *kmsan_vmalloc_to_page_or_null(void *vaddr)
 
 
