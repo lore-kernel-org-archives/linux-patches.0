@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D56384;
-	Thu, 13 Jun 2024 12:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B726D384;
+	Thu, 13 Jun 2024 12:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282542; cv=none; b=GkI+Ox1gYD9ZfWvR/6IfzTYyOxPup3AffE9bAiYaYwwNfILzboP5yY3svzG/gACssS4LLYD5WivbPhS6iswUzWT/osZ9UPrNbNKKZhReGLoLfjnwP+NpzDh+x9NLoI8uetPm9xuooMjfPAF0580CsJqiMI5ulcGKFvVPvk/tO9s=
+	t=1718282545; cv=none; b=u3/SJH9dGjUPd2zW7sCjVFMz+RlUdFDZhnOGYIsVgAJ7dH6hmb+dFloBE7OF6XVuOd1e7DEndR0/4QFgF0SWNhHeK5JwMAv0JRqo43rL+Lii04Tr71RDqfsD09Bh9dYR3GwY2FuEEt7gxjZwAXbjsMeEAn99tAPI9Ub+1cDdOQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282542; c=relaxed/simple;
-	bh=EopPKw5Y+sHmq9S7IdIdGwFHLaldZEoMIrp7ENFrPBw=;
+	s=arc-20240116; t=1718282545; c=relaxed/simple;
+	bh=0SMy/mWNEkNCAIZZ691x+uHGi4S9XCyFgb/x0N/WfDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=osY7QP5HyN9At6KaSPopFnoIjaGqWO6D1tfJbPMoAw73vi644Gxo7hY4jVAjZMmR3+O3AfUVeBIsJBMPnqM6+h7VOxpLRpgVOR1yBNxI09NAXtgaOiK/iUTviv5UvjG9MogPhd1tj1Fm90/XozzSyGG2SMXTG33aLWhFCx7CaJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=da17+e0G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mbPRWr35blhKycC/YrA/hDJDZqsUTndJHQXNdpZWvhR1m8rnMPYtCtYWlQgGsRRn2g9+68bmDRcnAt5/9C2300ItF7K85fZ6YUAoecWMGMdvD41vwHaI/xv4c+hsjjJwYuO+YiG+yyNZgdqdCsshfJ+yq45S24hC7vkVExDmPXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dK46Khdi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="da17+e0G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D10C4AF1A;
-	Thu, 13 Jun 2024 12:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dK46Khdi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDF7C2BBFC;
+	Thu, 13 Jun 2024 12:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282542;
-	bh=EopPKw5Y+sHmq9S7IdIdGwFHLaldZEoMIrp7ENFrPBw=;
+	s=korg; t=1718282545;
+	bh=0SMy/mWNEkNCAIZZ691x+uHGi4S9XCyFgb/x0N/WfDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=da17+e0GU6F+lFrS+AP/qZh6YyuBjUcaaz2wDNonUbdSvvEROzBEQagX23wtrwhzi
-	 RtzOWQ1Y6d64Fhq0ij6i3tyhDpBYQKlW4fsB8XbKn4VZXgk7skRJQWU1KU2/+N5paw
-	 s2z8y4+g6/rwh2Qscnq0h5g/7a3sNqE2ByLrZvhg=
+	b=dK46KhdiFav37uE5qiUfYiOSv2CMppAIz6KL2KzLXVwXYFqGhCeMJ9CPToqnVeOf1
+	 BVTuZwO3CwoaJC9JT8nPelkqOl3yI2uVgHpmg/EmNjyWuSe4LfOMI+HF0yNxjaDbfo
+	 3TXo91Mdp/uO/hTLwz/PFKv2ULjUGamrefdSLKbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 311/402] net/mlx5e: Fix IPsec tunnel mode offload feature check
-Date: Thu, 13 Jun 2024 13:34:28 +0200
-Message-ID: <20240613113314.274504428@linuxfoundation.org>
+Subject: [PATCH 5.15 312/402] net/mlx5e: Use rx_missed_errors instead of rx_dropped for reporting buffer exhaustion
+Date: Thu, 13 Jun 2024 13:34:29 +0200
+Message-ID: <20240613113314.312711499@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,53 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 9a52f6d44f4521773b4699b4ed34b8e21d5a175c ]
+[ Upstream commit 5c74195d5dd977e97556e6fa76909b831c241230 ]
 
-Remove faulty check disabling checksum offload and GSO for offload of
-simple IPsec tunnel L4 traffic. Comment previously describing the deleted
-code incorrectly claimed the check prevented double tunnel (or three layers
-of ip headers).
+Previously, the driver incorrectly used rx_dropped to report device
+buffer exhaustion.
 
-Fixes: f1267798c980 ("net/mlx5: Fix checksum issue of VXLAN and IPsec crypto offload")
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+According to the documentation, rx_dropped should not be used to count
+packets dropped due to buffer exhaustion, which is the purpose of
+rx_missed_errors.
+
+Use rx_missed_errors as intended for counting packets dropped due to
+buffer exhaustion.
+
+Fixes: 269e6b3af3bf ("net/mlx5e: Report additional error statistics in get stats ndo")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en_accel/ipsec_rxtx.h    | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.h b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.h
-index 428881e0adcbe..6621f6cd43151 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_rxtx.h
-@@ -105,18 +105,11 @@ mlx5e_ipsec_feature_check(struct sk_buff *skb, netdev_features_t features)
- 		if (!x || !x->xso.offload_handle)
- 			goto out_disable;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 923be5fb7d216..79d687c663d54 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3185,7 +3185,7 @@ mlx5e_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats)
+ 		mlx5e_fold_sw_stats64(priv, stats);
+ 	}
  
--		if (xo->inner_ipproto) {
--			/* Cannot support tunnel packet over IPsec tunnel mode
--			 * because we cannot offload three IP header csum
--			 */
--			if (x->props.mode == XFRM_MODE_TUNNEL)
--				goto out_disable;
--
--			/* Only support UDP or TCP L4 checksum */
--			if (xo->inner_ipproto != IPPROTO_UDP &&
--			    xo->inner_ipproto != IPPROTO_TCP)
--				goto out_disable;
--		}
-+		/* Only support UDP or TCP L4 checksum */
-+		if (xo->inner_ipproto &&
-+		    xo->inner_ipproto != IPPROTO_UDP &&
-+		    xo->inner_ipproto != IPPROTO_TCP)
-+			goto out_disable;
+-	stats->rx_dropped = priv->stats.qcnt.rx_out_of_buffer;
++	stats->rx_missed_errors = priv->stats.qcnt.rx_out_of_buffer;
  
- 		return features;
- 
+ 	stats->rx_length_errors =
+ 		PPORT_802_3_GET(pstats, a_in_range_length_errors) +
 -- 
 2.43.0
 
