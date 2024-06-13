@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3D11474C6;
-	Thu, 13 Jun 2024 12:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0DB1474B8;
+	Thu, 13 Jun 2024 12:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280059; cv=none; b=cSAQU/gZS4EEYLLEA/Milv1YJRGxawAYWuR0xBSki55/VJucxL13I62Ik6rDLu+HJQSkSpUltBcDQ6ImylPR+RFUEyP9TBiQ2MdpW+NeZ42gX30IzCE492uonMLeA5RYKnp5/mc/PemOqR6s7StyD9Xo1T6/OLF4fuLKgQTb0W8=
+	t=1718280063; cv=none; b=UzRRblPNONOwS4AC0H9cSwtgPrNDt1I7yhwLc9Hyex0CugHLfvm5XPWZsk2W1MkiwJI6QnJTan5SG2qc6Tv7ZDfqcCP+UrrOSEXLhufK2Y9WjVu+Zxp0t6+BGjX39frN0DtUz+U9Gi0PuKA6MXzTuGchzmPhsoZLCXpMQ0dc+N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280059; c=relaxed/simple;
-	bh=YKBDbKJcJf2x6anUcQOguvGNsO9FMfspih+IOAkILOs=;
+	s=arc-20240116; t=1718280063; c=relaxed/simple;
+	bh=VPPYYbSxHf0JEf2gi0wXvhCCmxMLued8/yvk7cgJ/gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r5QWsWNxukhFXHFfJCIu0yE/sIB3ZSCr1X4CQymj19q39swecSsw/RifB9SJRvRc6SwnxKIDw7W/Mn2l5TWAgd39nrmM7m2CRDl7lTdhJkRlFvK35NBd1BGQDSNk4RkxUitpDsseKUbrnZZ9mhofM66CUqyaStnleotFidXqWmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zH+y0b7q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rhHg5XK5MmkZ8+Fc8svNaCMiS22/F9zClXo6Tf73QKAafTt/p7b+vGe+F5QzTjPcdMPPbCM+a0M/OoagFdjIDZZmcLaqrkWC/HfHz25bCig631uOJGPa8vp0QzjTLIbU+9EzxRfMOQrWPpx9MELfUIaT378UFT8LCoTJJp/xvCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtUIEPZn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zH+y0b7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A1BC32786;
-	Thu, 13 Jun 2024 12:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtUIEPZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE9BC2BBFC;
+	Thu, 13 Jun 2024 12:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280059;
-	bh=YKBDbKJcJf2x6anUcQOguvGNsO9FMfspih+IOAkILOs=;
+	s=korg; t=1718280062;
+	bh=VPPYYbSxHf0JEf2gi0wXvhCCmxMLued8/yvk7cgJ/gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zH+y0b7qn6jqSQWhaIMzzmdDeZJdn68ErCb2RYNf++hJJpEy9LrZUUdvpClcqZrKn
-	 0a8T0f+yjnuYo/ejLxY6UxgW/Fkan0YJqdEwlZAXo4RU4F86MMtLChB/Eh77TbUAZi
-	 Y7udNlcdDtnQ3bEsV+thGenLVnvhAkishT+2QQMc=
+	b=jtUIEPZngnwaje6dMPWyNUogKXm73lzvFgkZcUyfwQV0LqfOIefSLXqkE6FQe8uAd
+	 LzzOK0bgjgAc5Zn0oTjNnj2yhXbi1EjukymW++jZh3XjTDU3D9TiMF/k9yWMrUgsXU
+	 GtgCJXpbwHmn72eu1a0GtWgnyfSzv08KPgYNvR+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Azeem Shaikh <azeemshaikh38@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 129/202] media: stk1160: fix bounds checking in stk1160_copy_video()
-Date: Thu, 13 Jun 2024 13:33:47 +0200
-Message-ID: <20240613113232.741546905@linuxfoundation.org>
+Subject: [PATCH 5.4 130/202] scsi: qla2xxx: Replace all non-returning strlcpy() with strscpy()
+Date: Thu, 13 Jun 2024 13:33:48 +0200
+Message-ID: <20240613113232.779348908@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -52,82 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Azeem Shaikh <azeemshaikh38@gmail.com>
 
-[ Upstream commit faa4364bef2ec0060de381ff028d1d836600a381 ]
+[ Upstream commit 37f1663c91934f664fb850306708094a324c227c ]
 
-The subtract in this condition is reversed.  The ->length is the length
-of the buffer.  The ->bytesused is how many bytes we have copied thus
-far.  When the condition is reversed that means the result of the
-subtraction is always negative but since it's unsigned then the result
-is a very high positive value.  That means the overflow check is never
-true.
+strlcpy() reads the entire source buffer first.  This read may exceed the
+destination size limit.  This is both inefficient and can lead to linear
+read overflows if a source string is not NUL-terminated [1].  In an effort
+to remove strlcpy() completely [2], replace strlcpy() here with strscpy().
+No return values were used, so direct replacement is safe.
 
-Additionally, the ->bytesused doesn't actually work for this purpose
-because we're not writing to "buf->mem + buf->bytesused".  Instead, the
-math to calculate the destination where we are writing is a bit
-involved.  You calculate the number of full lines already written,
-multiply by two, skip a line if necessary so that we start on an odd
-numbered line, and add the offset into the line.
+[1] https://www.kernel.org/doc/html/latest/process/deprecated.html#strlcpy
+[2] https://github.com/KSPP/linux/issues/89
 
-To fix this buffer overflow, just take the actual destination where we
-are writing, if the offset is already out of bounds print an error and
-return.  Otherwise, write up to buf->length bytes.
-
-Fixes: 9cb2173e6ea8 ("[media] media: Add stk1160 new driver (easycap replacement)")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Azeem Shaikh <azeemshaikh38@gmail.com>
+Link: https://lore.kernel.org/r/20230516025404.2843867-1-azeemshaikh38@gmail.com
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: c3408c4ae041 ("scsi: qla2xxx: Avoid possible run-time warning with long model_num")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/stk1160/stk1160-video.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_init.c |  8 ++++----
+ drivers/scsi/qla2xxx/qla_mr.c   | 20 ++++++++++----------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/media/usb/stk1160/stk1160-video.c b/drivers/media/usb/stk1160/stk1160-video.c
-index 4cf540d1b2501..2a5a90311e0cc 100644
---- a/drivers/media/usb/stk1160/stk1160-video.c
-+++ b/drivers/media/usb/stk1160/stk1160-video.c
-@@ -99,7 +99,7 @@ void stk1160_buffer_done(struct stk1160 *dev)
- static inline
- void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- {
--	int linesdone, lineoff, lencopy;
-+	int linesdone, lineoff, lencopy, offset;
- 	int bytesperline = dev->width * 2;
- 	struct stk1160_buffer *buf = dev->isoc_ctl.buf;
- 	u8 *dst = buf->mem;
-@@ -139,8 +139,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- 	 * Check if we have enough space left in the buffer.
- 	 * In that case, we force loop exit after copy.
- 	 */
--	if (lencopy > buf->bytesused - buf->length) {
--		lencopy = buf->bytesused - buf->length;
-+	offset = dst - (u8 *)buf->mem;
-+	if (offset > buf->length) {
-+		dev_warn_ratelimited(dev->dev, "out of bounds offset\n");
-+		return;
-+	}
-+	if (lencopy > buf->length - offset) {
-+		lencopy = buf->length - offset;
- 		remain = lencopy;
- 	}
- 
-@@ -182,8 +187,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- 		 * Check if we have enough space left in the buffer.
- 		 * In that case, we force loop exit after copy.
- 		 */
--		if (lencopy > buf->bytesused - buf->length) {
--			lencopy = buf->bytesused - buf->length;
-+		offset = dst - (u8 *)buf->mem;
-+		if (offset > buf->length) {
-+			dev_warn_ratelimited(dev->dev, "offset out of bounds\n");
-+			return;
-+		}
-+		if (lencopy > buf->length - offset) {
-+			lencopy = buf->length - offset;
- 			remain = lencopy;
+diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
+index 8a0ac87f70a9d..11ee2c7487b2a 100644
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -4479,7 +4479,7 @@ qla2x00_set_model_info(scsi_qla_host_t *vha, uint8_t *model, size_t len,
+ 		if (use_tbl &&
+ 		    ha->pdev->subsystem_vendor == PCI_VENDOR_ID_QLOGIC &&
+ 		    index < QLA_MODEL_NAMES)
+-			strlcpy(ha->model_desc,
++			strscpy(ha->model_desc,
+ 			    qla2x00_model_name[index * 2 + 1],
+ 			    sizeof(ha->model_desc));
+ 	} else {
+@@ -4487,14 +4487,14 @@ qla2x00_set_model_info(scsi_qla_host_t *vha, uint8_t *model, size_t len,
+ 		if (use_tbl &&
+ 		    ha->pdev->subsystem_vendor == PCI_VENDOR_ID_QLOGIC &&
+ 		    index < QLA_MODEL_NAMES) {
+-			strlcpy(ha->model_number,
++			strscpy(ha->model_number,
+ 				qla2x00_model_name[index * 2],
+ 				sizeof(ha->model_number));
+-			strlcpy(ha->model_desc,
++			strscpy(ha->model_desc,
+ 			    qla2x00_model_name[index * 2 + 1],
+ 			    sizeof(ha->model_desc));
+ 		} else {
+-			strlcpy(ha->model_number, def,
++			strscpy(ha->model_number, def,
+ 				sizeof(ha->model_number));
  		}
+ 	}
+diff --git a/drivers/scsi/qla2xxx/qla_mr.c b/drivers/scsi/qla2xxx/qla_mr.c
+index badd09c5dd429..6b44be4ce5bd4 100644
+--- a/drivers/scsi/qla2xxx/qla_mr.c
++++ b/drivers/scsi/qla2xxx/qla_mr.c
+@@ -693,7 +693,7 @@ qlafx00_pci_info_str(struct scsi_qla_host *vha, char *str, size_t str_len)
+ 	struct qla_hw_data *ha = vha->hw;
  
+ 	if (pci_is_pcie(ha->pdev))
+-		strlcpy(str, "PCIe iSA", str_len);
++		strscpy(str, "PCIe iSA", str_len);
+ 	return str;
+ }
+ 
+@@ -1854,21 +1854,21 @@ qlafx00_fx_disc(scsi_qla_host_t *vha, fc_port_t *fcport, uint16_t fx_type)
+ 			phost_info = &preg_hsi->hsi;
+ 			memset(preg_hsi, 0, sizeof(struct register_host_info));
+ 			phost_info->os_type = OS_TYPE_LINUX;
+-			strlcpy(phost_info->sysname, p_sysid->sysname,
++			strscpy(phost_info->sysname, p_sysid->sysname,
+ 				sizeof(phost_info->sysname));
+-			strlcpy(phost_info->nodename, p_sysid->nodename,
++			strscpy(phost_info->nodename, p_sysid->nodename,
+ 				sizeof(phost_info->nodename));
+ 			if (!strcmp(phost_info->nodename, "(none)"))
+ 				ha->mr.host_info_resend = true;
+-			strlcpy(phost_info->release, p_sysid->release,
++			strscpy(phost_info->release, p_sysid->release,
+ 				sizeof(phost_info->release));
+-			strlcpy(phost_info->version, p_sysid->version,
++			strscpy(phost_info->version, p_sysid->version,
+ 				sizeof(phost_info->version));
+-			strlcpy(phost_info->machine, p_sysid->machine,
++			strscpy(phost_info->machine, p_sysid->machine,
+ 				sizeof(phost_info->machine));
+-			strlcpy(phost_info->domainname, p_sysid->domainname,
++			strscpy(phost_info->domainname, p_sysid->domainname,
+ 				sizeof(phost_info->domainname));
+-			strlcpy(phost_info->hostdriver, QLA2XXX_VERSION,
++			strscpy(phost_info->hostdriver, QLA2XXX_VERSION,
+ 				sizeof(phost_info->hostdriver));
+ 			preg_hsi->utc = (uint64_t)ktime_get_real_seconds();
+ 			ql_dbg(ql_dbg_init, vha, 0x0149,
+@@ -1914,9 +1914,9 @@ qlafx00_fx_disc(scsi_qla_host_t *vha, fc_port_t *fcport, uint16_t fx_type)
+ 	if (fx_type == FXDISC_GET_CONFIG_INFO) {
+ 		struct config_info_data *pinfo =
+ 		    (struct config_info_data *) fdisc->u.fxiocb.rsp_addr;
+-		strlcpy(vha->hw->model_number, pinfo->model_num,
++		strscpy(vha->hw->model_number, pinfo->model_num,
+ 			ARRAY_SIZE(vha->hw->model_number));
+-		strlcpy(vha->hw->model_desc, pinfo->model_description,
++		strscpy(vha->hw->model_desc, pinfo->model_description,
+ 			ARRAY_SIZE(vha->hw->model_desc));
+ 		memcpy(&vha->hw->mr.symbolic_name, pinfo->symbolic_name,
+ 		    sizeof(vha->hw->mr.symbolic_name));
 -- 
 2.43.0
 
