@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B096117FD;
-	Thu, 13 Jun 2024 12:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9551717FD;
+	Thu, 13 Jun 2024 12:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282345; cv=none; b=VrSySI2kxFYD8YmU+ZbDCDjBsj1zqi33+qm9pi5FxIXE3w0n7a4zgvGJ/htz/kZgkVYZrDLzzb9CECg+/uQm+yEeYL/3LGxwM7NUR+cpP2emcZyMtcjrnLbzxpye+GhDWhvrzxpLc7G2Fq0OHDmoYIvNLooXaonSl/KC6KNmt6s=
+	t=1718282348; cv=none; b=JHwkQE/0yIyHoJF+NRKn6x32txJDIDBsvJlj4zILNWCdcuipiV84SUy36pGNXcWozi3kBhq0PM7OiKVJZy+to7/9moWTgGrYVtzG0mPm/VQNWAUhpyD8k34Taf1apXwCvmHhXSXGbqNlc+RAYZ2VW8fkIF6UI3WWXY1DOWFFExU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282345; c=relaxed/simple;
-	bh=V+rbqRksnz99eaWz8Ce42Dr1oxc/nOg4MTBDs03vnWY=;
+	s=arc-20240116; t=1718282348; c=relaxed/simple;
+	bh=9hkmk500X620F1tZ+svAxHvDLFzPsHXB9hKNebVvoOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXzUg75Oq5qnFwIiKPcRlYsF/d7Yml4ZuH0TWmW6/1u8XfhCR4ODASOpFEkz65U06oiKXAxBGGH7RTxH8SnVNMK7YZ/Hq2bS0W75K1kIh30L8Ot3XT8z7zva6LqCXer+o3zYIQutOhNkSK5GJvZpHtYPxFEsBe8IffNGQX7gw8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pi/hWMsh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l92Cw9XXvNwqrlfB6E8DHjRNGP2RKK5GEKFsFN0IkbWWHcZxeew4PmX1PfaB8O20xTeB/nDS5QIO/HTN/lgVfiQJQVPC12Prvf7QY9sy2lUApuqZcUu+7Rx3Je/imgrfvRfTU3YuPX1lDQVwO58uXHMxpndpyrVM7BWSyu44Gn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4SVuTdV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pi/hWMsh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF700C2BBFC;
-	Thu, 13 Jun 2024 12:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4SVuTdV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF788C2BBFC;
+	Thu, 13 Jun 2024 12:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282345;
-	bh=V+rbqRksnz99eaWz8Ce42Dr1oxc/nOg4MTBDs03vnWY=;
+	s=korg; t=1718282348;
+	bh=9hkmk500X620F1tZ+svAxHvDLFzPsHXB9hKNebVvoOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pi/hWMshpo2cK1XyObgDIBKGVDeFRX106MG/YTH0FnvI5EjPwFocFupuRjO3x7uVu
-	 UTmdcVq9r6W52wV3627ouTcbP6kpRPMEPhuCx87NZWK5+qVEDyfiP8PwyXqA1JhNqW
-	 gY8tHb8XCSgYN4rLEDe2/VT4LtLfk2XHK336ptUU=
+	b=r4SVuTdVVQNGdE2JkUZpWk1t1VbfJBkyaC+ir3vPpNFSNKkSpnkDgxmsCr0B9ZFdr
+	 J4hMpw8uZoReY0qts2ggRHhDFBoTHDOBCJPm0xp0QHuQ2A2hMUWHjvwhVBqLgCo9KW
+	 5Qdyn+ZO/sBeOJeEZvUIcg4m0UnyFkEIrvZaiLiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 218/402] watchdog: bd9576: Drop "always-running" property
-Date: Thu, 13 Jun 2024 13:32:55 +0200
-Message-ID: <20240613113310.651718586@linuxfoundation.org>
+Subject: [PATCH 5.15 245/402] s390/boot: Remove alt_stfle_fac_list from decompressor
+Date: Thu, 13 Jun 2024 13:33:22 +0200
+Message-ID: <20240613113311.706132375@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,82 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit e3b3afd34d84efcbe4543deb966b1990f43584b8 ]
+[ Upstream commit e7dec0b7926f3cd493c697c4c389df77e8e8a34c ]
 
-The always-running (from linux,wdt-gpio.yaml) is abused by the BD9576
-watchdog driver. It's defined meaning is "the watchdog is always running
-and can not be stopped". The BD9576 watchdog driver has implemented it
-as "start watchdog when loading the module and prevent it from being
-stopped".
+It is nowhere used in the decompressor, therefore remove it.
 
-Furthermore, the implementation does not set the WDOG_HW_RUNNING when
-enabling the watchdog due to the "always-running" at module loading.
-This will end up resulting a watchdog timeout if the device is not
-opened.
-
-The culprit was pointed out by Guenter, discussion can be found from
-https://lore.kernel.org/lkml/4fa3a64b-60fb-4e5e-8785-0f14da37eea2@roeck-us.net/
-
-Drop the invalid "always-running" handling.
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: b237bcac557a ("wdt: Support wdt on ROHM BD9576MUF and BD9573MUF")
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/ZhPAt76yaJMersXf@fedora
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 17e89e1340a3 ("s390/facilities: move stfl information from lowcore to global data")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/bd9576_wdt.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ arch/s390/boot/startup.c | 1 -
+ arch/s390/kernel/setup.c | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/watchdog/bd9576_wdt.c b/drivers/watchdog/bd9576_wdt.c
-index 4a20e07fbb699..f00ea1b4e40b6 100644
---- a/drivers/watchdog/bd9576_wdt.c
-+++ b/drivers/watchdog/bd9576_wdt.c
-@@ -29,7 +29,6 @@ struct bd9576_wdt_priv {
- 	struct gpio_desc	*gpiod_en;
- 	struct device		*dev;
- 	struct regmap		*regmap;
--	bool			always_running;
- 	struct watchdog_device	wdd;
- };
+diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
+index 1aa11a8f57dd8..05fed61c5e3b7 100644
+--- a/arch/s390/boot/startup.c
++++ b/arch/s390/boot/startup.c
+@@ -27,7 +27,6 @@ int __bootdata(is_full_image) = 1;
+ struct initrd_data __bootdata(initrd_data);
  
-@@ -62,10 +61,7 @@ static int bd9576_wdt_stop(struct watchdog_device *wdd)
- {
- 	struct bd9576_wdt_priv *priv = watchdog_get_drvdata(wdd);
+ u64 __bootdata_preserved(stfle_fac_list[16]);
+-u64 __bootdata_preserved(alt_stfle_fac_list[16]);
+ struct oldmem_data __bootdata_preserved(oldmem_data);
  
--	if (!priv->always_running)
--		bd9576_wdt_disable(priv);
--	else
--		set_bit(WDOG_HW_RUNNING, &wdd->status);
-+	bd9576_wdt_disable(priv);
+ void error(char *x)
+diff --git a/arch/s390/kernel/setup.c b/arch/s390/kernel/setup.c
+index b7ce6c7c84c6f..50cb4c3d3682a 100644
+--- a/arch/s390/kernel/setup.c
++++ b/arch/s390/kernel/setup.c
+@@ -154,7 +154,7 @@ unsigned int __bootdata_preserved(zlib_dfltcc_support);
+ EXPORT_SYMBOL(zlib_dfltcc_support);
+ u64 __bootdata_preserved(stfle_fac_list[16]);
+ EXPORT_SYMBOL(stfle_fac_list);
+-u64 __bootdata_preserved(alt_stfle_fac_list[16]);
++u64 alt_stfle_fac_list[16];
+ struct oldmem_data __bootdata_preserved(oldmem_data);
  
- 	return 0;
- }
-@@ -264,9 +260,6 @@ static int bd9576_wdt_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	priv->always_running = device_property_read_bool(dev->parent,
--							 "always-running");
--
- 	watchdog_set_drvdata(&priv->wdd, priv);
- 
- 	priv->wdd.info			= &bd957x_wdt_ident;
-@@ -281,9 +274,6 @@ static int bd9576_wdt_probe(struct platform_device *pdev)
- 
- 	watchdog_stop_on_reboot(&priv->wdd);
- 
--	if (priv->always_running)
--		bd9576_wdt_start(&priv->wdd);
--
- 	return devm_watchdog_register_device(dev, &priv->wdd);
- }
- 
+ unsigned long VMALLOC_START;
 -- 
 2.43.0
 
