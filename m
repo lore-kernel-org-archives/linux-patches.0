@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38EA13CFA3;
-	Thu, 13 Jun 2024 12:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3826EB56;
+	Thu, 13 Jun 2024 12:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281780; cv=none; b=pRadcXj2sZHe8bTiaYWz69i1gx1kjU/mr3SXOoI2rlq0MFg7aTiQqI3md1I1LrrZNW0kwZzbHjPxnDcmZK8R6/uS3kgmtLa4iwsXK4UbnmQG+yK4TyK0n74O1YBbJ8ioGX7p1ZZ5jb/4z9EisCwxRdQZzOHqDoNJjKNXl7grKRI=
+	t=1718281784; cv=none; b=nZWscdHAF7XJQIORb2C9kDIVPEFSytzOmBQE9QVjlhjHCo8q7jbpQXluzSx3Rhdb0aHBN8xPMja4ZSW2SaDJWCP+blTGCosw4PFyzfWhWNCiwmEf4Ht2AYMta64Jsy732tnzp9NjCW6gW2so3+T2F6KrOZNc2AxpTYm0nq6Xvrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281780; c=relaxed/simple;
-	bh=zMtbZTbOYVvfqJ0ZkEZeWcST3U5iMnvIogsCviIcjM0=;
+	s=arc-20240116; t=1718281784; c=relaxed/simple;
+	bh=qev2aEd5sfKvuCoTa2I+xdkSfVyHsF0H8nGJUpw/QUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sXjd4t5XJghWDnXgpS/Q1uqzMEECJAduAZruQkzKt5oPmyLy9ChtDjC7uTCOcje2mRnAb8TmCfo2oaX1wn/39ifUsARIvPgkfzx6lEeF1d8m2HK9INKzNoiqyOook8iPidKiWLhCEDW/24X3OhswfiiMTA9yuhY43wVX5C5fuek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTaactUQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQxStCdng4dYpQ/yZKF/SQ5NyNt8QcsMq+LdyXpcfZ6AqLhfbAovqWPzjp959wbUcTQVsL/eB3BzF4Enj+U5CN0JgaWWYAMDUhqjeEoA31r4QvfO13OKBoMt+xp/bhiQk0WvCi1to3kiyh2YNY5fjjPACmWaJfF+xdZtTppbNgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FM3XX20n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTaactUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39572C32786;
-	Thu, 13 Jun 2024 12:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FM3XX20n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B85EC32786;
+	Thu, 13 Jun 2024 12:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281780;
-	bh=zMtbZTbOYVvfqJ0ZkEZeWcST3U5iMnvIogsCviIcjM0=;
+	s=korg; t=1718281783;
+	bh=qev2aEd5sfKvuCoTa2I+xdkSfVyHsF0H8nGJUpw/QUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GTaactUQHH1II6zZsczrvN2jhllL8xY2TVejf3pDqgWwoEgzVDqW/dD+Bp4+FEDNr
-	 zQVI0NAiERg/XAsfXVTu/Os+K4LVqa0YYS84IwvAXKogRt2u7QWAXdpv5uWMCkBna8
-	 U8aUSr3KKXZL9d4fTRACxJFNqcqtvJ2AG38ghsj0=
+	b=FM3XX20nL4wgqs5+UCsdmXdKZWFDNPpNByIHCmpdSDSMXchmwoSryksEsN59E9Z57
+	 4mNJ5bX4xxTu03eHFiKthJF62VuOR6EDM4Clyx+xpfVN0FiKCzSa2L05r+GpukbLj9
+	 o3rPN8VuctAmZ0cHV0fpmNMevjnJksNMQc/eqZpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Ashton <joshua@froggi.es>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/402] drm/amd/display: Set color_mgmt_changed to true on unsuspend
-Date: Thu, 13 Jun 2024 13:29:39 +0200
-Message-ID: <20240613113303.004529638@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 5.15 013/402] fs/ntfs3: Remove max link count info display during driver init
+Date: Thu, 13 Jun 2024 13:29:30 +0200
+Message-ID: <20240613113302.655167464@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,37 +49,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Ashton <joshua@froggi.es>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 2eb9dd497a698dc384c0dd3e0311d541eb2e13dd ]
+commit a8948b5450e7c65a3a34ebf4ccfcebc19335d4fb upstream.
 
-Otherwise we can end up with a frame on unsuspend where color management
-is not applied when userspace has not committed themselves.
+Removes the output of this purely informational message from the
+kernel buffer:
 
-Fixes re-applying color management on Steam Deck/Gamescope on S3 resume.
+	"ntfs3: Max link count 4000"
 
-Signed-off-by: Joshua Ashton <joshua@froggi.es>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/super.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index b7b8a2d77da67..b821abb56ac3b 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2772,6 +2772,7 @@ static int dm_resume(void *handle)
- 			dc_stream_release(dm_new_crtc_state->stream);
- 			dm_new_crtc_state->stream = NULL;
- 		}
-+		dm_new_crtc_state->base.color_mgmt_changed = true;
- 	}
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -1448,8 +1448,6 @@ static int __init init_ntfs_fs(void)
+ {
+ 	int err;
  
- 	for_each_new_plane_in_state(dm->cached_state, plane, new_plane_state, i) {
--- 
-2.43.0
-
+-	pr_info("ntfs3: Max link count %u\n", NTFS_LINK_MAX);
+-
+ 	if (IS_ENABLED(CONFIG_NTFS3_FS_POSIX_ACL))
+ 		pr_info("ntfs3: Enabled Linux POSIX ACLs support\n");
+ 	if (IS_ENABLED(CONFIG_NTFS3_64BIT_CLUSTER))
 
 
