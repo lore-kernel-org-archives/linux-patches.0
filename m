@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E191448E9;
-	Thu, 13 Jun 2024 12:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090FB143747;
+	Thu, 13 Jun 2024 12:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281530; cv=none; b=eM5PBH9F1+s1G4oWEYIv4R95fGtNyJOsQBtQbN5DFogak/5vYNQWZec7MRx+GHFVLlTJbGgdJZhV/uO2CyPa1Wr19jESawOa2/B6DNphPYpnWULOpA4rGKJQp+sIHJtoWDrulSsXto8dyIoNmzeWQVmYhFF5dSgVrlxxGcslznE=
+	t=1718281534; cv=none; b=BC3dJiSovww8ZXIX1jW1YBaoIt1iyXek6i9iMOZj24yxTZaP9ZNlU0rkSJ3wx1JkApCG5IpJNY6kA5gWL9Jb/WqrRKeYSueuj0BI1gpoMlyg6cRQ98zP+Wuv1BboNn9cMUQFbzQLQvkDe6Tt2/5+8KYxXP4xtQSxgEZ6vonW+u4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281530; c=relaxed/simple;
-	bh=6Va0s5mc2Lpxn9ThO9Jx+JIg3SVDP7IZLMmq/SDcAKw=;
+	s=arc-20240116; t=1718281534; c=relaxed/simple;
+	bh=kPuCVOBN1lPQIcK487T6vrxKB3EUw2K8Nrl4ZlBjEmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRP0nIniOvFlo0mQeskc4ZZlchet6wfg3pbntU0Cekd+jENZsEr47PPbOsUP/R/svatKm3t7ITPfQTvKaIBxoIsL7kiRIq1zRjJt04dCAI0XqWuZf+GR35nk2yYLPRiCSbGP49dZQvOLhwKo1StWsvzDGgPHRFH8v68LnB70v4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnh2/c31; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DrTDrMLEun6Tx6HhJxAgcUaqCrYzycbXNL2gR6f2A9q5ytin/dXGzYaSVz/mHIvP/8uZHUCBHS0p83bBk1Dr7NsmV+7z7frAF9xbmbHHgU6DEyPs3MkXCXFtDcGm1ZizX9lrTWqKk9Zdq6ET97W5x6ajZ2UY2E++pt9Cp68I+Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urIcriiL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnh2/c31"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CE6C2BBFC;
-	Thu, 13 Jun 2024 12:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urIcriiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA3EC2BBFC;
+	Thu, 13 Jun 2024 12:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281530;
-	bh=6Va0s5mc2Lpxn9ThO9Jx+JIg3SVDP7IZLMmq/SDcAKw=;
+	s=korg; t=1718281533;
+	bh=kPuCVOBN1lPQIcK487T6vrxKB3EUw2K8Nrl4ZlBjEmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wnh2/c31XkBVKcfvb3L1X0yUYO6XYie8+UCuYyqh77kO1TB0vAh8tLnW0ZHC/P0yp
-	 9jTg7prNAn/87HfPx34UG6R3Dw0YyknRTobv4NtHTGgrRFjWPJ0LIu761aGY4i6lB3
-	 XwtNAhttaZNthz0xV5z95SsiZo4j1gVgHvIlWZBA=
+	b=urIcriiLMUCRUjOQpD/Z8VhbEgOrWDg8VQIGz9ptTRbpycT9STSnACRjCClrcLJV/
+	 RLiGcGVO1ulzKjegOGLbhq9S6lNsEjT030pUIkRDroi52lDuixOJWdTTO61tWmlL2Q
+	 PCnmni97hX6IbWxrSPYKx+tiY+hzXIfuopKXu/uU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Xiwen <forbidden405@outlook.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.10 286/317] arm64: dts: hi3798cv200: fix the size of GICR
-Date: Thu, 13 Jun 2024 13:35:04 +0200
-Message-ID: <20240613113258.616056389@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: [PATCH 5.10 287/317] media: mc: mark the media devnode as registered from the, start
+Date: Thu, 13 Jun 2024 13:35:05 +0200
+Message-ID: <20240613113258.654438868@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -50,43 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Xiwen <forbidden405@outlook.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit 428a575dc9038846ad259466d5ba109858c0a023 upstream.
+commit 4bc60736154bc9e0e39d3b88918f5d3762ebe5e0 upstream.
 
-During boot, Linux kernel complains:
+First the media device node was created, and if successful it was
+marked as 'registered'. This leaves a small race condition where
+an application can open the device node and get an error back
+because the 'registered' flag was not yet set.
 
-[    0.000000] GIC: GICv2 detected, but range too small and irqchip.gicv2_force_probe not set
+Change the order: first set the 'registered' flag, then actually
+register the media device node. If that fails, then clear the flag.
 
-This SoC is using a regular GIC-400 and the GICR space size should be
-8KB rather than 256B.
-
-With this patch:
-
-[    0.000000] GIC: Using split EOI/Deactivate mode
-
-So this should be the correct fix.
-
-Fixes: 2f20182ed670 ("arm64: dts: hisilicon: add dts files for hi3798cv200-poplar board")
-Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: cf4b9211b568 ("[media] media: Media device node support")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240219-cache-v3-1-a33c57534ae9@outlook.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/mc/mc-devnode.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
-+++ b/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
-@@ -58,7 +58,7 @@
- 	gic: interrupt-controller@f1001000 {
- 		compatible = "arm,gic-400";
- 		reg = <0x0 0xf1001000 0x0 0x1000>,  /* GICD */
--		      <0x0 0xf1002000 0x0 0x100>;   /* GICC */
-+		      <0x0 0xf1002000 0x0 0x2000>;  /* GICC */
- 		#address-cells = <0>;
- 		#interrupt-cells = <3>;
- 		interrupt-controller;
+--- a/drivers/media/mc/mc-devnode.c
++++ b/drivers/media/mc/mc-devnode.c
+@@ -246,15 +246,14 @@ int __must_check media_devnode_register(
+ 	kobject_set_name(&devnode->cdev.kobj, "media%d", devnode->minor);
+ 
+ 	/* Part 3: Add the media and char device */
++	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
+ 	ret = cdev_device_add(&devnode->cdev, &devnode->dev);
+ 	if (ret < 0) {
++		clear_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
+ 		pr_err("%s: cdev_device_add failed\n", __func__);
+ 		goto cdev_add_error;
+ 	}
+ 
+-	/* Part 4: Activate this minor. The char device can now be used. */
+-	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
+-
+ 	return 0;
+ 
+ cdev_add_error:
 
 
