@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3DC1420C6;
-	Thu, 13 Jun 2024 12:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CBA384;
+	Thu, 13 Jun 2024 12:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281918; cv=none; b=TQda/NRmyMf8z1fn3Xk5nF27+JbFTFfmGM2DlTZVRMVf2wXwHaeBjAMyd+WloVJsC/f67HHGuXMS1UfMe/Tab0BtpYgy4lrlp57itYEijXW0xTqk/RJy7Vo668/VH+HEmg3kIn1xUw62gpXcaXJzPdkvz5VqXIb0tJ55XSxj3TU=
+	t=1718281921; cv=none; b=qPy20YCqxTOoXKCrn88OLlwsvrKw1pF1cWy7VptMbcSDIQc2lSh84ePIz49CGctECEsOn5uakp8WjP+uqrF4F3C+ue2E/1DunqJJv4fjeQt863ApuColXaeNheeRQPJfaB0nRACtynMKe7UG9joqT84Yt0BJHuKqTXn+qRSEzCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281918; c=relaxed/simple;
-	bh=Jd4GKJ6riX+nVRgCyLLeuOgcqJsIyhS0VKcEhxDGCB0=;
+	s=arc-20240116; t=1718281921; c=relaxed/simple;
+	bh=1VKfiI4Fbjj1jTSA48Kyi+NsU1cmR74giIUU61wTs+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atZ43RuNFxDxOBI7Te8DCTQsqIN5GEkjo7ETt9sqBrjjB1+aW84chQd2h/AJe75TWsYj2ozAezH2NbfgG4/IOQMb5n1SCr953Cm46W4IShfI5DH6ZpEd40nnJNGxXFjNKnUcKfu2Y6yJZR7v/Plk9l/aVrIu3OKM7FAj3gHrjps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFrclsqj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FSV/Ei/LG4coiF14DEGiDoGYTVyuOGqWTYeI7IM6UpqWZBQJka9RwJnwj413Bb1d8ITWzyJcuym263skjpD6SWp73/OJqGgA0/0HQtQeOz7Cx4BleL428IoiPA13nfcc4xOV/RaqgwAeGMMBm2JWX6AEnHqzwGAfy6qAJUJMypM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvzwQFb4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFrclsqj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1399EC4AF1C;
-	Thu, 13 Jun 2024 12:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvzwQFb4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBFFC4AF1A;
+	Thu, 13 Jun 2024 12:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281918;
-	bh=Jd4GKJ6riX+nVRgCyLLeuOgcqJsIyhS0VKcEhxDGCB0=;
+	s=korg; t=1718281921;
+	bh=1VKfiI4Fbjj1jTSA48Kyi+NsU1cmR74giIUU61wTs+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFrclsqjLhf9oN+vStFH2lfk5RKJOADjB7BLfnjpvKY+8eRh2L1oMDdwtRzrxV0x/
-	 aRZVpKUkBW5P/FRTReEeifGDjlVkB8L7m/ZXssqjP8xr8xHmP3myDprumHBw6dbSmY
-	 Yeyhx9jdscmoJFSSzH0QOu6HrDcsYblRvfNxqs3E=
+	b=RvzwQFb4/pBy++uYdYXwn9fwQItqwiNyTFGLTIISDXDRANtK540mTcai/n+wBa8CC
+	 Ji3OSdYNdJMs3aTRc+gagmViDgEFGErMeeEHDOwR4w8BYj+i7XAKr+C/knm7xMT8j/
+	 kN6z0bxFtvu6oZj4JSIehk1BIx4Qe82iWxWwXMzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/402] thermal/drivers/tsens: Fix null pointer dereference
-Date: Thu, 13 Jun 2024 13:30:40 +0200
-Message-ID: <20240613113305.374649231@linuxfoundation.org>
+Subject: [PATCH 5.15 101/402] scsi: bfa: Ensure the copied buf is NUL terminated
+Date: Thu, 13 Jun 2024 13:30:58 +0200
+Message-ID: <20240613113306.075597814@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,40 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-[ Upstream commit d998ddc86a27c92140b9f7984ff41e3d1d07a48f ]
+[ Upstream commit 13d0cecb4626fae67c00c84d3c7851f6b62f7df3 ]
 
-compute_intercept_slope() is called from calibrate_8960() (in tsens-8960.c)
-as compute_intercept_slope(priv, p1, NULL, ONE_PT_CALIB) which lead to null
-pointer dereference (if DEBUG or DYNAMIC_DEBUG set).
-Fix this bug by adding null pointer check.
+Currently, we allocate a nbytes-sized kernel buffer and copy nbytes from
+userspace to that buffer. Later, we use sscanf on this buffer but we don't
+ensure that the string is terminated inside the buffer, this can lead to
+OOB read when using sscanf. Fix this issue by using memdup_user_nul instead
+of memdup_user.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: dfc1193d4dbd ("thermal/drivers/tsens: Replace custom 8960 apis with generic apis")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20240411114021.12203-1-amishin@t-argos.ru
+Fixes: 9f30b674759b ("bfa: replace 2 kzalloc/copy_from_user by memdup_user")
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Link: https://lore.kernel.org/r/20240424-fix-oob-read-v2-3-f1f1b53a10f4@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/tsens.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/bfa/bfad_debugfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 926cd8b41132c..2f31129cd5471 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -84,7 +84,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
- 	for (i = 0; i < priv->num_sensors; i++) {
- 		dev_dbg(priv->dev,
- 			"%s: sensor%d - data_point1:%#x data_point2:%#x\n",
--			__func__, i, p1[i], p2[i]);
-+			__func__, i, p1[i], p2 ? p2[i] : 0);
+diff --git a/drivers/scsi/bfa/bfad_debugfs.c b/drivers/scsi/bfa/bfad_debugfs.c
+index fd1b378a263a0..d3c7d4423c514 100644
+--- a/drivers/scsi/bfa/bfad_debugfs.c
++++ b/drivers/scsi/bfa/bfad_debugfs.c
+@@ -250,7 +250,7 @@ bfad_debugfs_write_regrd(struct file *file, const char __user *buf,
+ 	unsigned long flags;
+ 	void *kern_buf;
  
- 		if (!priv->sensor[i].slope)
- 			priv->sensor[i].slope = SLOPE_DEFAULT;
+-	kern_buf = memdup_user(buf, nbytes);
++	kern_buf = memdup_user_nul(buf, nbytes);
+ 	if (IS_ERR(kern_buf))
+ 		return PTR_ERR(kern_buf);
+ 
+@@ -317,7 +317,7 @@ bfad_debugfs_write_regwr(struct file *file, const char __user *buf,
+ 	unsigned long flags;
+ 	void *kern_buf;
+ 
+-	kern_buf = memdup_user(buf, nbytes);
++	kern_buf = memdup_user_nul(buf, nbytes);
+ 	if (IS_ERR(kern_buf))
+ 		return PTR_ERR(kern_buf);
+ 
 -- 
 2.43.0
 
