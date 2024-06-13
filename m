@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29082142E73;
-	Thu, 13 Jun 2024 12:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4701C2913;
+	Thu, 13 Jun 2024 12:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282702; cv=none; b=AKe0t2F15H40xMnw0RU7lkMV8g4aTsyYiJXYzH4xi/oOX5g5C17aebfrOg/RVYCU99MgqBheDGUlHS292YcBHkNocok5KCksKI6aWS5p+PYheSuDMJoLyUCaoIwRudUcz7hTofEpx2mY8kSDPypA75D5Nix9T2+j6qyG/ytB2jA=
+	t=1718282705; cv=none; b=Gu+bMG7C9CFVVPgZhnthYKdsswYmFN++m5aBwyBg8MBCY3DFQu6b1u+iaZ2Dq19K46v12CvZKPfPL8dRzQgKNk6imOPprc7eLAurGQZ6pWa3magxMYIA4JPxCgi49rJBmvjdEIzO29gKLaNg6ws2ZtzkLZISqSzbh5h5znyiOWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282702; c=relaxed/simple;
-	bh=iezzJr9772thFPJOpNusdKpRpV+KgKGvylTtA428G2s=;
+	s=arc-20240116; t=1718282705; c=relaxed/simple;
+	bh=EBq/oktIFYdkztackG4aX44k0w4YEEmPxqYDOPabLjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ps3oxBDsnZW5AD9q7MJbPoBGtPrs7tvwO8e+p3igPy4IiSrNfL3yMLSt6uPq5w5X4v38Kbv8dhpEWsA2rB0kHfXzEXOzj6HOXwzI/nxfxMsc6dXcq05GMaUuyicHPFO/kl+G+UoFc6MVHRZWkDXJbq2QzP4VKSv9l8WA8wfawTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVKY9vpS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQAJhsCvESo9AKUUjkengwVsdNtFsoIShBysRW0HetM/v95gGhHzc7tdJzCNZXQbpu3DBiHhmLy5D1KB5MVpBIw8QiZp8Au8UMr14p8TJIj/0JyqLap5gUA7pVZyuh2QeZyW43+jHDNSdjf8mOQzh3lmAr4dadcFRe1G8XpyCJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P72fRtWB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVKY9vpS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96328C2BBFC;
-	Thu, 13 Jun 2024 12:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P72fRtWB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FE0C2BBFC;
+	Thu, 13 Jun 2024 12:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282702;
-	bh=iezzJr9772thFPJOpNusdKpRpV+KgKGvylTtA428G2s=;
+	s=korg; t=1718282705;
+	bh=EBq/oktIFYdkztackG4aX44k0w4YEEmPxqYDOPabLjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eVKY9vpSsm2AMWv1ocKr9h+M84XVXzoZSE2D6trsOtSCOVJHvaKnVnQyTLhH3On/R
-	 zZzhnURqKtovMb37uuK4ekJoiF75C6t4l0mDLre8gztRJdS+GnijtToMPrma+sBVc4
-	 Htn1jrqpw4/ltDc0eVaNloMVsvHMQT4tdg8m9RHk=
+	b=P72fRtWB+v+bTxZEmCmqHIaklBNyPLKucgWfrLahyEcRAULFyjhUiQRhApleEY+dm
+	 ed+Zygi38VZYh0vNWBLXdPHwPDuzwlY+Lk3WVsOCUYcgaB1ym8DBmm2sjdY4qCTuMv
+	 wo2BmMATNWD3b8nX1tatbM+IHSb4Pi5kHVLhn+ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: [PATCH 5.15 367/402] media: mc: mark the media devnode as registered from the, start
-Date: Thu, 13 Jun 2024 13:35:24 +0200
-Message-ID: <20240613113316.450917228@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 350/402] net: dsa: tag_sja1105: always prefer source port information from INCL_SRCPT
+Date: Thu, 13 Jun 2024 13:35:07 +0200
+Message-ID: <20240613113315.789863693@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,48 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit 4bc60736154bc9e0e39d3b88918f5d3762ebe5e0 upstream.
+commit c1ae02d876898b1b8ca1e12c6f84d7b406263800 upstream.
 
-First the media device node was created, and if successful it was
-marked as 'registered'. This leaves a small race condition where
-an application can open the device node and get an error back
-because the 'registered' flag was not yet set.
+Currently the sja1105 tagging protocol prefers using the source port
+information from the VLAN header if that is available, falling back to
+the INCL_SRCPT option if it isn't. The VLAN header is available for all
+frames except for META frames initiated by the switch (containing RX
+timestamps), and thus, the "if (is_link_local)" branch is practically
+dead.
 
-Change the order: first set the 'registered' flag, then actually
-register the media device node. If that fails, then clear the flag.
+The tag_8021q source port identification has become more loose
+("imprecise") and will report a plausible rather than exact bridge port,
+when under a bridge (be it VLAN-aware or VLAN-unaware). But link-local
+traffic always needs to know the precise source port. With incorrect
+source port reporting, for example PTP traffic over 2 bridged ports will
+all be seen on sockets opened on the first such port, which is incorrect.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Fixes: cf4b9211b568 ("[media] media: Media device node support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Now that the tagging protocol has been changed to make link-local frames
+always contain source port information, we can reverse the order of the
+checks so that we always give precedence to that information (which is
+always precise) in lieu of the tag_8021q VID which is only precise for a
+standalone port.
+
+Fixes: d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based on the VBID")
+Fixes: 91495f21fcec ("net: dsa: tag_8021q: replace the SVL bridging with VLAN-unaware IVL bridging")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Replaced the 2 original Fixes: tags with the correct one.
+  Respun the change around the lack of a "vbid", corresponding to DSA
+  FDB isolation, which appeared only in v5.18. ]
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/mc/mc-devnode.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/dsa/tag_sja1105.c |   34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
---- a/drivers/media/mc/mc-devnode.c
-+++ b/drivers/media/mc/mc-devnode.c
-@@ -246,15 +246,14 @@ int __must_check media_devnode_register(
- 	kobject_set_name(&devnode->cdev.kobj, "media%d", devnode->minor);
+--- a/net/dsa/tag_sja1105.c
++++ b/net/dsa/tag_sja1105.c
+@@ -489,10 +489,7 @@ static struct sk_buff *sja1105_rcv(struc
+ 	is_link_local = sja1105_is_link_local(skb);
+ 	is_meta = sja1105_is_meta_frame(skb);
  
- 	/* Part 3: Add the media and char device */
-+	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
- 	ret = cdev_device_add(&devnode->cdev, &devnode->dev);
- 	if (ret < 0) {
-+		clear_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
- 		pr_err("%s: cdev_device_add failed\n", __func__);
- 		goto cdev_add_error;
+-	if (sja1105_skb_has_tag_8021q(skb)) {
+-		/* Normal traffic path. */
+-		sja1105_vlan_rcv(skb, &source_port, &switch_id, &vid);
+-	} else if (is_link_local) {
++	if (is_link_local) {
+ 		/* Management traffic path. Switch embeds the switch ID and
+ 		 * port ID into bytes of the destination MAC, courtesy of
+ 		 * the incl_srcpt options.
+@@ -506,14 +503,35 @@ static struct sk_buff *sja1105_rcv(struc
+ 		sja1105_meta_unpack(skb, &meta);
+ 		source_port = meta.source_port;
+ 		switch_id = meta.switch_id;
+-	} else {
++	}
++
++	/* Normal data plane traffic and link-local frames are tagged with
++	 * a tag_8021q VLAN which we have to strip
++	 */
++	if (sja1105_skb_has_tag_8021q(skb)) {
++		int tmp_source_port = -1, tmp_switch_id = -1;
++
++		sja1105_vlan_rcv(skb, &tmp_source_port, &tmp_switch_id, &vid);
++		/* Preserve the source information from the INCL_SRCPT option,
++		 * if available. This allows us to not overwrite a valid source
++		 * port and switch ID with zeroes when receiving link-local
++		 * frames from a VLAN-aware bridged port (non-zero vid).
++		 */
++		if (source_port == -1)
++			source_port = tmp_source_port;
++		if (switch_id == -1)
++			switch_id = tmp_switch_id;
++	} else if (source_port == -1 && switch_id == -1) {
++		/* Packets with no source information have no chance of
++		 * getting accepted, drop them straight away.
++		 */
+ 		return NULL;
  	}
  
--	/* Part 4: Activate this minor. The char device can now be used. */
--	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
--
- 	return 0;
- 
- cdev_add_error:
+-	if (source_port == -1 || switch_id == -1)
+-		skb->dev = dsa_find_designated_bridge_port_by_vid(netdev, vid);
+-	else
++	if (source_port != -1 && switch_id != -1)
+ 		skb->dev = dsa_master_find_slave(netdev, switch_id, source_port);
++	else
++		skb->dev = dsa_find_designated_bridge_port_by_vid(netdev, vid);
+ 	if (!skb->dev) {
+ 		netdev_warn(netdev, "Couldn't decode source port\n");
+ 		return NULL;
 
 
