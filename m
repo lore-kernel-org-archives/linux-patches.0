@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171E7145A09;
-	Thu, 13 Jun 2024 11:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1027A1459EA;
+	Thu, 13 Jun 2024 11:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279738; cv=none; b=VFuuM92WnaECWuyu4uef1Av8EFmeauwImP5hQiIzzG0uAaeIyIadEV6eirkaisTfo09bCE65E1bt+FTNfzUvd9sX5hl3o0H16IsdaDIDSZHRLrvoZL8XVy7bH2bCiXzQqYSy8vHnXzPNuLCW8kBdwJq7Y7RuCLNw3hLUXDIzpfI=
+	t=1718279741; cv=none; b=oYxlcVxzF2MIUsJ/LT9pNVedihJnZUYb3Y0KSHLYPl6eBMTMuumeiiDsFz7GBohwykLEogYphu2cUv7S+j9fVNdhohbJARdyuiFdhaN8OB3Apc35LiroW9RLWvM7hnom6Fo+NZd/N2pSRhW++fGrD1QGHwff2Ytmffo1EutSvJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279738; c=relaxed/simple;
-	bh=MPKOr4jg8xH1VSIMDhui4E8CNUlj26VmS15jTaKJNlQ=;
+	s=arc-20240116; t=1718279741; c=relaxed/simple;
+	bh=g22i44lzXKRTFF28rgMDhLbSnhoTD2ITIKjmHuevzKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IkbP0zlV7NCpPGeiisb4DU4HgAS1JT/Bhf8yU0AmviaBohcqtBykLRP5jSKsRCu7y8bMZsFZUy+aAxsL4mC33XSL6xAXTYN/kQLFS1fTp7GIXPYf9hs1T7wupJv9ypbembr1AnjWZVUTVzAaH0MV6Jq5mQ0Ig7ImIeiwbDU9s5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5otryHI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=teZK2ki/C/HO3uYANHYpVIO20F4aR8iP2yxJ43mLUFz3rpsKlvOcTer/xIlBEYcYhU0JNbAbw/4tKZch5FcuhaX71EJV3dA2Ipw+6EYuaU3qjzEzsk/RT6/MXJc3lWbEtdJjFlpFS1LBzzN3fNl8ioMfKARthENshOvEa9xswBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eA7xQe3+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5otryHI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C59C2BBFC;
-	Thu, 13 Jun 2024 11:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eA7xQe3+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D16C2BBFC;
+	Thu, 13 Jun 2024 11:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279738;
-	bh=MPKOr4jg8xH1VSIMDhui4E8CNUlj26VmS15jTaKJNlQ=;
+	s=korg; t=1718279740;
+	bh=g22i44lzXKRTFF28rgMDhLbSnhoTD2ITIKjmHuevzKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5otryHIyhtwYnvte380SHRpQixbPTh+e7lbE0Gvb656yva4q0ND1XwAl2Ejl4ior
-	 srpv3zVr+C0wZwKEu98HVt+DMYDUtlEMh7LqykTU1IseIKyy2ipYgp8Vs+I5hN0AMo
-	 GwwXib9xdyqAUNtY8qTH9SLThvV9gI1GMctSWbyE=
+	b=eA7xQe3+rDAjZqC70HlOhuMmuw6clEyZWyoTfM+fCiXTw2aqakvj/ItjwVLpbOI7t
+	 WiuyEouTWGH92YG/ur4qzSsQShzDPvDTPQ2/rI1Ivp565AE6a+seIinvJbEAZzbXnt
+	 5Oi7QPt22Ywzrdj9zPaYLjU4nWmUjrG2gOKeh9LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 004/202] ring-buffer: Fix a race between readers and resize checks
-Date: Thu, 13 Jun 2024 13:31:42 +0200
-Message-ID: <20240613113227.931587985@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@toblux.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 005/202] net: smc91x: Fix m68k kernel compilation for ColdFire CPU
+Date: Thu, 13 Jun 2024 13:31:43 +0200
+Message-ID: <20240613113227.969632546@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -46,140 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Thorsten Blum <thorsten.blum@toblux.com>
 
-commit c2274b908db05529980ec056359fae916939fdaa upstream.
+commit 5eefb477d21a26183bc3499aeefa991198315a2d upstream.
 
-The reader code in rb_get_reader_page() swaps a new reader page into the
-ring buffer by doing cmpxchg on old->list.prev->next to point it to the
-new page. Following that, if the operation is successful,
-old->list.next->prev gets updated too. This means the underlying
-doubly-linked list is temporarily inconsistent, page->prev->next or
-page->next->prev might not be equal back to page for some page in the
-ring buffer.
+Compiling the m68k kernel with support for the ColdFire CPU family fails
+with the following error:
 
-The resize operation in ring_buffer_resize() can be invoked in parallel.
-It calls rb_check_pages() which can detect the described inconsistency
-and stop further tracing:
+In file included from drivers/net/ethernet/smsc/smc91x.c:80:
+drivers/net/ethernet/smsc/smc91x.c: In function ‘smc_reset’:
+drivers/net/ethernet/smsc/smc91x.h:160:40: error: implicit declaration of function ‘_swapw’; did you mean ‘swap’? [-Werror=implicit-function-declaration]
+  160 | #define SMC_outw(lp, v, a, r)   writew(_swapw(v), (a) + (r))
+      |                                        ^~~~~~
+drivers/net/ethernet/smsc/smc91x.h:904:25: note: in expansion of macro ‘SMC_outw’
+  904 |                         SMC_outw(lp, x, ioaddr, BANK_SELECT);           \
+      |                         ^~~~~~~~
+drivers/net/ethernet/smsc/smc91x.c:250:9: note: in expansion of macro ‘SMC_SELECT_BANK’
+  250 |         SMC_SELECT_BANK(lp, 2);
+      |         ^~~~~~~~~~~~~~~
+cc1: some warnings being treated as errors
 
-[  190.271762] ------------[ cut here ]------------
-[  190.271771] WARNING: CPU: 1 PID: 6186 at kernel/trace/ring_buffer.c:1467 rb_check_pages.isra.0+0x6a/0xa0
-[  190.271789] Modules linked in: [...]
-[  190.271991] Unloaded tainted modules: intel_uncore_frequency(E):1 skx_edac(E):1
-[  190.272002] CPU: 1 PID: 6186 Comm: cmd.sh Kdump: loaded Tainted: G            E      6.9.0-rc6-default #5 158d3e1e6d0b091c34c3b96bfd99a1c58306d79f
-[  190.272011] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552c-rebuilt.opensuse.org 04/01/2014
-[  190.272015] RIP: 0010:rb_check_pages.isra.0+0x6a/0xa0
-[  190.272023] Code: [...]
-[  190.272028] RSP: 0018:ffff9c37463abb70 EFLAGS: 00010206
-[  190.272034] RAX: ffff8eba04b6cb80 RBX: 0000000000000007 RCX: ffff8eba01f13d80
-[  190.272038] RDX: ffff8eba01f130c0 RSI: ffff8eba04b6cd00 RDI: ffff8eba0004c700
-[  190.272042] RBP: ffff8eba0004c700 R08: 0000000000010002 R09: 0000000000000000
-[  190.272045] R10: 00000000ffff7f52 R11: ffff8eba7f600000 R12: ffff8eba0004c720
-[  190.272049] R13: ffff8eba00223a00 R14: 0000000000000008 R15: ffff8eba067a8000
-[  190.272053] FS:  00007f1bd64752c0(0000) GS:ffff8eba7f680000(0000) knlGS:0000000000000000
-[  190.272057] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  190.272061] CR2: 00007f1bd6662590 CR3: 000000010291e001 CR4: 0000000000370ef0
-[  190.272070] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[  190.272073] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[  190.272077] Call Trace:
-[  190.272098]  <TASK>
-[  190.272189]  ring_buffer_resize+0x2ab/0x460
-[  190.272199]  __tracing_resize_ring_buffer.part.0+0x23/0xa0
-[  190.272206]  tracing_resize_ring_buffer+0x65/0x90
-[  190.272216]  tracing_entries_write+0x74/0xc0
-[  190.272225]  vfs_write+0xf5/0x420
-[  190.272248]  ksys_write+0x67/0xe0
-[  190.272256]  do_syscall_64+0x82/0x170
-[  190.272363]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  190.272373] RIP: 0033:0x7f1bd657d263
-[  190.272381] Code: [...]
-[  190.272385] RSP: 002b:00007ffe72b643f8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-[  190.272391] RAX: ffffffffffffffda RBX: 0000000000000002 RCX: 00007f1bd657d263
-[  190.272395] RDX: 0000000000000002 RSI: 0000555a6eb538e0 RDI: 0000000000000001
-[  190.272398] RBP: 0000555a6eb538e0 R08: 000000000000000a R09: 0000000000000000
-[  190.272401] R10: 0000555a6eb55190 R11: 0000000000000246 R12: 00007f1bd6662500
-[  190.272404] R13: 0000000000000002 R14: 00007f1bd6667c00 R15: 0000000000000002
-[  190.272412]  </TASK>
-[  190.272414] ---[ end trace 0000000000000000 ]---
+The function _swapw() was removed in commit d97cf70af097 ("m68k: use
+asm-generic/io.h for non-MMU io access functions"), but is still used in
+drivers/net/ethernet/smsc/smc91x.h.
 
-Note that ring_buffer_resize() calls rb_check_pages() only if the parent
-trace_buffer has recording disabled. Recent commit d78ab792705c
-("tracing: Stop current tracer when resizing buffer") causes that it is
-now always the case which makes it more likely to experience this issue.
-
-The window to hit this race is nonetheless very small. To help
-reproducing it, one can add a delay loop in rb_get_reader_page():
-
- ret = rb_head_page_replace(reader, cpu_buffer->reader_page);
- if (!ret)
- 	goto spin;
- for (unsigned i = 0; i < 1U << 26; i++)  /* inserted delay loop */
- 	__asm__ __volatile__ ("" : : : "memory");
- rb_list_head(reader->list.next)->prev = &cpu_buffer->reader_page->list;
-
-.. and then run the following commands on the target system:
-
- echo 1 > /sys/kernel/tracing/events/sched/sched_switch/enable
- while true; do
- 	echo 16 > /sys/kernel/tracing/buffer_size_kb; sleep 0.1
- 	echo 8 > /sys/kernel/tracing/buffer_size_kb; sleep 0.1
- done &
- while true; do
- 	for i in /sys/kernel/tracing/per_cpu/*; do
- 		timeout 0.1 cat $i/trace_pipe; sleep 0.2
- 	done
- done
-
-To fix the problem, make sure ring_buffer_resize() doesn't invoke
-rb_check_pages() concurrently with a reader operating on the same
-ring_buffer_per_cpu by taking its cpu_buffer->reader_lock.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20240517134008.24529-3-petr.pavlu@suse.com
+Use ioread16be() and iowrite16be() to resolve the error.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 659f451ff213 ("ring-buffer: Add integrity check at end of iter read")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-[ Fixed whitespace ]
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: d97cf70af097 ("m68k: use asm-generic/io.h for non-MMU io access functions")
+Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240510113054.186648-2-thorsten.blum@toblux.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/smsc/smc91x.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1235,6 +1235,11 @@ static int rb_check_list(struct ring_buf
-  *
-  * As a safety measure we check to make sure the data pages have not
-  * been corrupted.
-+ *
-+ * Callers of this function need to guarantee that the list of pages doesn't get
-+ * modified during the check. In particular, if it's possible that the function
-+ * is invoked with concurrent readers which can swap in a new reader page then
-+ * the caller should take cpu_buffer->reader_lock.
-  */
- static int rb_check_pages(struct ring_buffer_per_cpu *cpu_buffer)
- {
-@@ -1951,8 +1956,12 @@ int ring_buffer_resize(struct ring_buffe
- 		 */
- 		synchronize_rcu();
- 		for_each_buffer_cpu(buffer, cpu) {
-+			unsigned long flags;
-+
- 			cpu_buffer = buffer->buffers[cpu];
-+			raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
- 			rb_check_pages(cpu_buffer);
-+			raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
- 		}
- 		atomic_dec(&buffer->record_disabled);
- 	}
+--- a/drivers/net/ethernet/smsc/smc91x.h
++++ b/drivers/net/ethernet/smsc/smc91x.h
+@@ -175,8 +175,8 @@ static inline void mcf_outsw(void *a, un
+ 		writew(*wp++, a);
+ }
+ 
+-#define SMC_inw(a, r)		_swapw(readw((a) + (r)))
+-#define SMC_outw(lp, v, a, r)	writew(_swapw(v), (a) + (r))
++#define SMC_inw(a, r)		ioread16be((a) + (r))
++#define SMC_outw(lp, v, a, r)	iowrite16be(v, (a) + (r))
+ #define SMC_insw(a, r, p, l)	mcf_insw(a + r, p, l)
+ #define SMC_outsw(a, r, p, l)	mcf_outsw(a + r, p, l)
+ 
 
 
