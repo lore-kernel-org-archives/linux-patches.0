@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C70C17FD;
-	Thu, 13 Jun 2024 12:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4510C2CA6;
+	Thu, 13 Jun 2024 12:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283034; cv=none; b=AqT5iRsEwlcGPA++9dfT/auiOAtZlWoGm5u+FtKPDnGwTAseRE0OzmDvtYMaQ01wZvr/7OUQ9uxlKULz9hriOFn0K9AVlm2d1iLjkSau7B+1i6z9iKVsUObx/QbmAyHFQUFIdnkloodXKePeN1x4SsAuNgINRMkycyqZwtSkE6Y=
+	t=1718283037; cv=none; b=bxerkxm9+EJxaQnp2kUQKbZGINrPI7NbgF/PUGO19JDMIOtkvPhIYZrQmsK8EU7Ou66dUJXFZ+fZVvnNSYxxzEQjd1uBT+fLIuPHkyhBpu0OX1qwUd/4nsTUPUesEoGIOfKtfZE5O2osXLBUJnf6fXqVz4YqxO6byKOjV4kBbew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283034; c=relaxed/simple;
-	bh=ermjFIC6s23SxbLmOgCB8BMzrWu4Mn+4wiVyU5eZrTQ=;
+	s=arc-20240116; t=1718283037; c=relaxed/simple;
+	bh=PkEdsGhOzCjuMjQU9+Uawo2uCQiTnpr3vLZ5ChGkHqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIXe+NTBS8bQ+QW4KnOaNQP4tih4eSimLnMTGo/FW4rkneBTKpgyXrpq/+0oKFfEI9rrDptRZJ6rjQxuhwJAjQNEtOqrbdlhSajQOmW7vIW3T9Ddz/UoWM5zLtPF5kaCklDJ4FXp/JnNZY5wAdqYBH1pvd4yphaPal25wcrMpDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOzklw+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PHpnpKddWx4l97YAjVj5uk/rxRTMtNJ6/WEYabo580JJTUFGpyWt3ZMUDf3GtF1ld6OXdCq5qolMzmtgW3fFVpFpVCWEwX9RqmoBL5t6YjFulujvFN65D4yNvROy0hRivFCaRxmE1iyBp7DRvforYld2JtN8IaDAIov8d6seSb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZjZsow8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOzklw+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2FCC2BBFC;
-	Thu, 13 Jun 2024 12:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZjZsow8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D57C2BBFC;
+	Thu, 13 Jun 2024 12:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283034;
-	bh=ermjFIC6s23SxbLmOgCB8BMzrWu4Mn+4wiVyU5eZrTQ=;
+	s=korg; t=1718283037;
+	bh=PkEdsGhOzCjuMjQU9+Uawo2uCQiTnpr3vLZ5ChGkHqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOzklw+YabHdIMtzfPgbNfx6tfYzVAJNx1D7rX5kZ7zY6ZcqlzboMeNxMMjnsdtcr
-	 lBuS21L2gvKOdCZK7xzjFlOYzN8QzYDXBqnDKeTxRHEXx8b50oZZ46/Nvvj/JbvtYu
-	 pojY2JFlk93E2ShzpuzwHeOCJiP6v2mLo1sIPvkk=
+	b=GZjZsow8Lo000irA9ETjrPNy+uD8YQu/AK/6xbwaEWh7si77cQdmpCqLDnbEsJhGq
+	 K4FAucb/e3r5EIAmfOm5McGhfKqq6LI2gNSGbzsg859wgFG711wsim1Xc0xZFWk3t9
+	 Y7hAIvepJqoXP67vHYPSc9XeXyCX3vsqm7uRZA1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Hartmayer <mhartmay@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
+	Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Juergen Christ <jchrist@linux.ibm.com>,
 	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.1 76/85] s390/ap: Fix crash in AP internal function modify_bitmap()
-Date: Thu, 13 Jun 2024 13:36:14 +0200
-Message-ID: <20240613113217.069129327@linuxfoundation.org>
+	Harald Freudenberger <freude@linux.ibm.com>
+Subject: [PATCH 6.1 77/85] s390/cpacf: Split and rework cpacf query functions
+Date: Thu, 13 Jun 2024 13:36:15 +0200
+Message-ID: <20240613113217.107127459@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -54,73 +55,145 @@ Content-Transfer-Encoding: 8bit
 
 From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit d4f9d5a99a3fd1b1c691b7a1a6f8f3f25f4116c9 upstream.
+commit 830999bd7e72f4128b9dfa37090d9fa8120ce323 upstream.
 
-A system crash like this
+Rework the cpacf query functions to use the correct RRE
+or RRF instruction formats and set register fields within
+instructions correctly.
 
-  Failing address: 200000cb7df6f000 TEID: 200000cb7df6f403
-  Fault in home space mode while using kernel ASCE.
-  AS:00000002d71bc007 R3:00000003fe5b8007 S:000000011a446000 P:000000015660c13d
-  Oops: 0038 ilc:3 [#1] PREEMPT SMP
-  Modules linked in: mlx5_ib ...
-  CPU: 8 PID: 7556 Comm: bash Not tainted 6.9.0-rc7 #8
-  Hardware name: IBM 3931 A01 704 (LPAR)
-  Krnl PSW : 0704e00180000000 0000014b75e7b606 (ap_parse_bitmap_str+0x10e/0x1f8)
-  R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:2 PM:0 RI:0 EA:3
-  Krnl GPRS: 0000000000000001 ffffffffffffffc0 0000000000000001 00000048f96b75d3
-  000000cb00000100 ffffffffffffffff ffffffffffffffff 000000cb7df6fce0
-  000000cb7df6fce0 00000000ffffffff 000000000000002b 00000048ffffffff
-  000003ff9b2dbc80 200000cb7df6fcd8 0000014bffffffc0 000000cb7df6fbc8
-  Krnl Code: 0000014b75e7b5fc: a7840047            brc     8,0000014b75e7b68a
-  0000014b75e7b600: 18b2                lr      %r11,%r2
-  #0000014b75e7b602: a7f4000a            brc     15,0000014b75e7b616
-  >0000014b75e7b606: eb22d00000e6        laog    %r2,%r2,0(%r13)
-  0000014b75e7b60c: a7680001            lhi     %r6,1
-  0000014b75e7b610: 187b                lr      %r7,%r11
-  0000014b75e7b612: 84960021            brxh    %r9,%r6,0000014b75e7b654
-  0000014b75e7b616: 18e9                lr      %r14,%r9
-  Call Trace:
-  [<0000014b75e7b606>] ap_parse_bitmap_str+0x10e/0x1f8
-  ([<0000014b75e7b5dc>] ap_parse_bitmap_str+0xe4/0x1f8)
-  [<0000014b75e7b758>] apmask_store+0x68/0x140
-  [<0000014b75679196>] kernfs_fop_write_iter+0x14e/0x1e8
-  [<0000014b75598524>] vfs_write+0x1b4/0x448
-  [<0000014b7559894c>] ksys_write+0x74/0x100
-  [<0000014b7618a440>] __do_syscall+0x268/0x328
-  [<0000014b761a3558>] system_call+0x70/0x98
-  INFO: lockdep is turned off.
-  Last Breaking-Event-Address:
-  [<0000014b75e7b636>] ap_parse_bitmap_str+0x13e/0x1f8
-  Kernel panic - not syncing: Fatal exception: panic_on_oops
-
-occured when /sys/bus/ap/a[pq]mask was updated with a relative mask value
-(like +0x10-0x12,+60,-90) with one of the numeric values exceeding INT_MAX.
-
-The fix is simple: use unsigned long values for the internal variables. The
-correct checks are already in place in the function but a simple int for
-the internal variables was used with the possibility to overflow.
-
-Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Fixes: 1afd43e0fbba ("s390/crypto: allow to query all known cpacf functions")
+Reported-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Suggested-by: Heiko Carstens <hca@linux.ibm.com>
+Suggested-by: Juergen Christ <jchrist@linux.ibm.com>
+Suggested-by: Holger Dengler <dengler@linux.ibm.com>
 Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Tested-by: Marc Hartmayer <mhartmay@linux.ibm.com>
 Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Juergen Christ <jchrist@linux.ibm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/ap_bus.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/include/asm/cpacf.h |  101 +++++++++++++++++++++++++++++++++---------
+ 1 file changed, 81 insertions(+), 20 deletions(-)
 
---- a/drivers/s390/crypto/ap_bus.c
-+++ b/drivers/s390/crypto/ap_bus.c
-@@ -1088,7 +1088,7 @@ static int hex2bitmap(const char *str, u
-  */
- static int modify_bitmap(const char *str, unsigned long *bitmap, int bits)
- {
--	int a, i, z;
-+	unsigned long a, i, z;
- 	char *np, sign;
+--- a/arch/s390/include/asm/cpacf.h
++++ b/arch/s390/include/asm/cpacf.h
+@@ -161,28 +161,79 @@
  
- 	/* bits needs to be a multiple of 8 */
+ typedef struct { unsigned char bytes[16]; } cpacf_mask_t;
+ 
+-/**
+- * cpacf_query() - check if a specific CPACF function is available
+- * @opcode: the opcode of the crypto instruction
+- * @func: the function code to test for
+- *
+- * Executes the query function for the given crypto instruction @opcode
+- * and checks if @func is available
+- *
+- * Returns 1 if @func is available for @opcode, 0 otherwise
+- */
+-static __always_inline void __cpacf_query(unsigned int opcode, cpacf_mask_t *mask)
++static __always_inline void __cpacf_query_rre(u32 opc, u8 r1, u8 r2,
++					      cpacf_mask_t *mask)
++{
++	asm volatile(
++		"	la	%%r1,%[mask]\n"
++		"	xgr	%%r0,%%r0\n"
++		"	.insn	rre,%[opc] << 16,%[r1],%[r2]\n"
++		: [mask] "=R" (*mask)
++		: [opc] "i" (opc),
++		  [r1] "i" (r1), [r2] "i" (r2)
++		: "cc", "r0", "r1");
++}
++
++static __always_inline void __cpacf_query_rrf(u32 opc,
++					      u8 r1, u8 r2, u8 r3, u8 m4,
++					      cpacf_mask_t *mask)
+ {
+ 	asm volatile(
+-		"	lghi	0,0\n" /* query function */
+-		"	lgr	1,%[mask]\n"
+-		"	spm	0\n" /* pckmo doesn't change the cc */
+-		/* Parameter regs are ignored, but must be nonzero and unique */
+-		"0:	.insn	rrf,%[opc] << 16,2,4,6,0\n"
+-		"	brc	1,0b\n"	/* handle partial completion */
+-		: "=m" (*mask)
+-		: [mask] "d" ((unsigned long)mask), [opc] "i" (opcode)
+-		: "cc", "0", "1");
++		"	la	%%r1,%[mask]\n"
++		"	xgr	%%r0,%%r0\n"
++		"	.insn	rrf,%[opc] << 16,%[r1],%[r2],%[r3],%[m4]\n"
++		: [mask] "=R" (*mask)
++		: [opc] "i" (opc), [r1] "i" (r1), [r2] "i" (r2),
++		  [r3] "i" (r3), [m4] "i" (m4)
++		: "cc", "r0", "r1");
++}
++
++static __always_inline void __cpacf_query(unsigned int opcode,
++					  cpacf_mask_t *mask)
++{
++	switch (opcode) {
++	case CPACF_KDSA:
++		__cpacf_query_rre(CPACF_KDSA, 0, 2, mask);
++		break;
++	case CPACF_KIMD:
++		__cpacf_query_rre(CPACF_KIMD, 0, 2, mask);
++		break;
++	case CPACF_KLMD:
++		__cpacf_query_rre(CPACF_KLMD, 0, 2, mask);
++		break;
++	case CPACF_KM:
++		__cpacf_query_rre(CPACF_KM, 2, 4, mask);
++		break;
++	case CPACF_KMA:
++		__cpacf_query_rrf(CPACF_KMA, 2, 4, 6, 0, mask);
++		break;
++	case CPACF_KMAC:
++		__cpacf_query_rre(CPACF_KMAC, 0, 2, mask);
++		break;
++	case CPACF_KMC:
++		__cpacf_query_rre(CPACF_KMC, 2, 4, mask);
++		break;
++	case CPACF_KMCTR:
++		__cpacf_query_rrf(CPACF_KMCTR, 2, 4, 6, 0, mask);
++		break;
++	case CPACF_KMF:
++		__cpacf_query_rre(CPACF_KMF, 2, 4, mask);
++		break;
++	case CPACF_KMO:
++		__cpacf_query_rre(CPACF_KMO, 2, 4, mask);
++		break;
++	case CPACF_PCC:
++		__cpacf_query_rre(CPACF_PCC, 0, 0, mask);
++		break;
++	case CPACF_PCKMO:
++		__cpacf_query_rre(CPACF_PCKMO, 0, 0, mask);
++		break;
++	case CPACF_PRNO:
++		__cpacf_query_rre(CPACF_PRNO, 2, 4, mask);
++		break;
++	default:
++		BUG();
++	}
+ }
+ 
+ static __always_inline int __cpacf_check_opcode(unsigned int opcode)
+@@ -210,6 +261,16 @@ static __always_inline int __cpacf_check
+ 	}
+ }
+ 
++/**
++ * cpacf_query() - check if a specific CPACF function is available
++ * @opcode: the opcode of the crypto instruction
++ * @func: the function code to test for
++ *
++ * Executes the query function for the given crypto instruction @opcode
++ * and checks if @func is available
++ *
++ * Returns 1 if @func is available for @opcode, 0 otherwise
++ */
+ static __always_inline int cpacf_query(unsigned int opcode, cpacf_mask_t *mask)
+ {
+ 	if (__cpacf_check_opcode(opcode)) {
 
 
