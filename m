@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105A2145A02;
-	Thu, 13 Jun 2024 12:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA78E145A02;
+	Thu, 13 Jun 2024 12:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280662; cv=none; b=YEhhfyRMQNy7G5CMZl2iyTRfnd1DzP/UL9q7futcb96mv/D3xjOqaaSJxlkCcMXso00SxUKvjOc6fC1Nf7XDwG0NKsKbzN2C1OpyYxhoCXWbcbVgGsPrKsaGN58NUwYRYtmnYwqq33LAjwEcLo13kltEjJaFMC3yY/wDL7zBOUY=
+	t=1718280665; cv=none; b=N1k8B0dzMboH5UXHVMWMmzbTLtUyYFXwb1RGRwIUqN3ZkV/EnScb8si8OX+7KfVZYsD3bdzqizjhXdAY1n/xPvcOmJCKXW2cIfbmrgCr8cNYEQbNvKIQhd+WccZKjq2WWcaZM8QVRbQYJYB34xCedjj9SFDH+XM9p2CwTaOBwdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280662; c=relaxed/simple;
-	bh=zm5n1jLxSEqflkepeZouz7EV6lre6TESAkf6Lt+uGyA=;
+	s=arc-20240116; t=1718280665; c=relaxed/simple;
+	bh=A1KHrnIrxxXmqlbNmtfihwimbFayT9pKwRTunOC4v2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=clhPlYYJdHxfJuKpxm2kY9gzDigvHUZXc18sOgiAFQnnphc5KVUZUFDPCOFXERPLLBkCuy6z7+wTDCoumaIoHzF2NZmjEziZWjez5Wu86syDfOeU/DybzS+iQWiLy6B8N1y3wz/G43IB+Hldit9Xy362ilj0OUy2Uhe0zCbas0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yENkU5Zb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IgcWjcIqSj9vidrpufGzNs/njnpemXDHPlNy15p3vJvN5AYwuV5UQtUuhNDh/e+5u9cf0SwJBRrFQI6W8AUtpA7gnad0E7OL0KzJyperLbG4MjKt1f4KvHA3kRaeDOqX7eNadmSQbuSWBhjgK0p3cY1r9Mnn64g0p/TDihFwFKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtY/LOz0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yENkU5Zb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD75C2BBFC;
-	Thu, 13 Jun 2024 12:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtY/LOz0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7636AC2BBFC;
+	Thu, 13 Jun 2024 12:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280661;
-	bh=zm5n1jLxSEqflkepeZouz7EV6lre6TESAkf6Lt+uGyA=;
+	s=korg; t=1718280664;
+	bh=A1KHrnIrxxXmqlbNmtfihwimbFayT9pKwRTunOC4v2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yENkU5ZbO6tFmlrQWC2UrW3Eqda9AnHIQzW0keJDdbabw0byqy3Pz+kNiaW1voz2x
-	 2D/TY848qlKFr/BEokRGoJ4O+y6vkitMmC4W0ikzYFmY5KErnzAr6LA16rTRMrS9uI
-	 GV/Bl0afi1kATVQRrnaWXpVLHloTqRcjucJHq2wM=
+	b=mtY/LOz0LFYBz+JKb3+GVVPWPhfCnCINl95uuHMY5OpU8b66TZ3dRUyrYnvdHmNW6
+	 z1CB2+55S7SEGggLNqa313NRgQAsbpsPFtYYKr/Xsj75ybWnYXOuLk2xOec8UPIOjg
+	 JSnNe2+spsA1DF8tX8X1l0397acXWztRdu8n/qe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 129/137] eventfs: Keep the directories from having the same inode number as files
-Date: Thu, 13 Jun 2024 13:35:09 +0200
-Message-ID: <20240613113228.304192422@linuxfoundation.org>
+Subject: [PATCH 6.6 130/137] tracefs: Clear EVENT_INODE flag in tracefs_drop_inode()
+Date: Thu, 13 Jun 2024 13:35:10 +0200
+Message-ID: <20240613113228.342390472@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -56,13 +56,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 8898e7f288c47d450a3cf1511c791a03550c0789 upstream.
+commit 0bcfd9aa4dafa03b88d68bf66b694df2a3e76cf3 upstream.
 
-The directories require unique inode numbers but all the eventfs files
-have the same inode number. Prevent the directories from having the same
-inode numbers as the files as that can confuse some tooling.
+When the inode is being dropped from the dentry, the TRACEFS_EVENT_INODE
+flag needs to be cleared to prevent a remount from calling
+eventfs_remount() on the tracefs_inode private data. There's a race
+between the inode is dropped (and the dentry freed) to where the inode is
+actually freed. If a remount happens between the two, the eventfs_inode
+could be accessed after it is freed (only the dentry keeps a ref count on
+it).
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240523051539.428826685@goodmis.org
+Currently the TRACEFS_EVENT_INODE flag is cleared from the dentry iput()
+function. But this is incorrect, as it is possible that the inode has
+another reference to it. The flag should only be cleared when the inode is
+really being dropped and has no more references. That happens in the
+drop_inode callback of the inode, as that gets called when the last
+reference of the inode is released.
+
+Remove the tracefs_d_iput() function and move its logic to the more
+appropriate tracefs_drop_inode() callback function.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240523051539.908205106@goodmis.org
 
 Cc: stable@vger.kernel.org
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
@@ -70,28 +84,65 @@ Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Andrew Morton <akpm@linux-foundation.org>
 Cc: Masahiro Yamada <masahiroy@kernel.org>
-Fixes: 834bf76add3e6 ("eventfs: Save directory inodes in the eventfs_inode structure")
+Fixes: baa23a8d4360d ("tracefs: Reset permissions on remount if permissions are options")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/tracefs/inode.c |   33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -50,8 +50,12 @@ static struct eventfs_root_inode *get_ro
- /* Just try to make something consistent and unique */
- static int eventfs_dir_ino(struct eventfs_inode *ei)
- {
--	if (!ei->ino)
-+	if (!ei->ino) {
- 		ei->ino = get_next_ino();
-+		/* Must not have the file inode number */
-+		if (ei->ino == EVENTFS_FILE_INODE_INO)
-+			ei->ino = get_next_ino();
-+	}
- 
- 	return ei->ino;
+--- a/fs/tracefs/inode.c
++++ b/fs/tracefs/inode.c
+@@ -439,10 +439,26 @@ static int tracefs_show_options(struct s
+ 	return 0;
  }
+ 
++static int tracefs_drop_inode(struct inode *inode)
++{
++	struct tracefs_inode *ti = get_tracefs(inode);
++
++	/*
++	 * This inode is being freed and cannot be used for
++	 * eventfs. Clear the flag so that it doesn't call into
++	 * eventfs during the remount flag updates. The eventfs_inode
++	 * gets freed after an RCU cycle, so the content will still
++	 * be safe if the iteration is going on now.
++	 */
++	ti->flags &= ~TRACEFS_EVENT_INODE;
++
++	return 1;
++}
++
+ static const struct super_operations tracefs_super_operations = {
+ 	.alloc_inode    = tracefs_alloc_inode,
+ 	.free_inode     = tracefs_free_inode,
+-	.drop_inode     = generic_delete_inode,
++	.drop_inode     = tracefs_drop_inode,
+ 	.statfs		= simple_statfs,
+ 	.remount_fs	= tracefs_remount,
+ 	.show_options	= tracefs_show_options,
+@@ -469,22 +485,7 @@ static int tracefs_d_revalidate(struct d
+ 	return !(ei && ei->is_freed);
+ }
+ 
+-static void tracefs_d_iput(struct dentry *dentry, struct inode *inode)
+-{
+-	struct tracefs_inode *ti = get_tracefs(inode);
+-
+-	/*
+-	 * This inode is being freed and cannot be used for
+-	 * eventfs. Clear the flag so that it doesn't call into
+-	 * eventfs during the remount flag updates. The eventfs_inode
+-	 * gets freed after an RCU cycle, so the content will still
+-	 * be safe if the iteration is going on now.
+-	 */
+-	ti->flags &= ~TRACEFS_EVENT_INODE;
+-}
+-
+ static const struct dentry_operations tracefs_dentry_operations = {
+-	.d_iput = tracefs_d_iput,
+ 	.d_revalidate = tracefs_d_revalidate,
+ 	.d_release = tracefs_d_release,
+ };
 
 
