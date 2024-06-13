@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309A117FD;
-	Thu, 13 Jun 2024 12:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3F817FD;
+	Thu, 13 Jun 2024 12:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283040; cv=none; b=ORxNuj3Q/R1kntJJUdIIb5XlHWG+JgGYb+390wkDRfvEoTuOnY/iMRfaex81ejT9/s14tix40TeNhR6quaPdEjhdmk/oa/p7qwGK7mjpzF5vfCkkBeg6dLwUSruuClew4TgtH99c4PrE4wUQnP4exBBm0X6QM0MiwrF2pPZx6hE=
+	t=1718283043; cv=none; b=DPgRSg/E0fHG2ImHHgHPmOQlascs1o1BhmaM0ZkVK8dg5DBBPeDBEQzSbd5rZdd/ckMuPJDdxh1JkIQpttVE+0xW8QfIll7TPg+rxJZknHUERhZos9o/cFwSYxnNG8dyA/3kWymmv1OypwUeJoRTj+qKp3Wb40XpFIYoSu4hono=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283040; c=relaxed/simple;
-	bh=FmGvu89IfLX7eckNISorigGxMaGKJT1ujiuMnNwfwbs=;
+	s=arc-20240116; t=1718283043; c=relaxed/simple;
+	bh=1m7IVIPGiEeKv9WhIAkaDZsj58I8pZChOJz+DZkMEwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APmpdJo0QanMVWcbqfbxwZPv2iQLNax9Po4YhyaYIVv6I8jQagUFD05WPR3wY9zMADcTFXCyGDfeiAsqr7L10Q9yysVG2LFdGdGuVKnvIocoYt9sLOwkpEmRJhCk4/iCNnn4dgfflDdyj97C8akda6fjQ33yeC4iJQgXFtzG784=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2sJWK6SY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FxihbNLl1pb3ljxHQlUpJAV6kol92f64pbNtSh7V6YT+zYT56lhGdt9RKZgH2LlFjcb96+kmZz1Cz6l5SBZpgtWBE5B3bccZZIBkXgdgvh81O+Ampn6Q/ID8KviY3hZOsWUNQtxbS5f+CatBWFBM4CXWekx6F9FMQtg+EujyeKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBU9bU6k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2sJWK6SY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA68FC2BBFC;
-	Thu, 13 Jun 2024 12:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBU9bU6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9901FC2BBFC;
+	Thu, 13 Jun 2024 12:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283040;
-	bh=FmGvu89IfLX7eckNISorigGxMaGKJT1ujiuMnNwfwbs=;
+	s=korg; t=1718283043;
+	bh=1m7IVIPGiEeKv9WhIAkaDZsj58I8pZChOJz+DZkMEwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2sJWK6SY+2QeRaeZNC+aCh/LEUxtHMUM2ja3hIAxoMd4bjvsCTB/wrrxGMJ1a/yDD
-	 gkJ2XIlgd1QqrDtPifJnDcg2UvzhvhgKgLjLd5ncrBDAivWZy81XNJ825f85wQ/1M/
-	 LlzPTOTW7/Kde1f7kudF/X0XFSCf+wQQfwDam5i8=
+	b=rBU9bU6kLz6kEEQqYJuxd1iBuJeM+ArVw9jLnQO+HtwABfpoGek8Th5Iy7GoM8tS+
+	 EUV3YbqkpnEl0C3lThWlcCo6XcLfmIbnYLrqzL53mSF1EOZm48QobVskAIIKBBHXTG
+	 pJh4/VwYjrvl2P4XUcgp3Gn+rLeMqudZtilAhOQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Juergen Christ <jchrist@linux.ibm.com>
-Subject: [PATCH 6.1 78/85] s390/cpacf: Make use of invalid opcode produce a link error
-Date: Thu, 13 Jun 2024 13:36:16 +0200
-Message-ID: <20240613113217.145941276@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.1 79/85] i3c: master: svc: fix invalidate IBI type and miss call client IBI handler
+Date: Thu, 13 Jun 2024 13:36:17 +0200
+Message-ID: <20240613113217.183988167@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -52,60 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 32e8bd6423fc127d2b37bdcf804fd76af3bbec79 upstream.
+commit 38baed9b8600008e5d7bc8cb9ceccc1af3dd54b7 upstream.
 
-Instead of calling BUG() at runtime introduce and use a prototype for a
-non-existing function to produce a link error during compile when a not
-supported opcode is used with the __cpacf_query() or __cpacf_check_opcode()
-inline functions.
+In an In-Band Interrupt (IBI) handle, the code logic is as follows:
 
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Juergen Christ <jchrist@linux.ibm.com>
+1: writel(SVC_I3C_MCTRL_REQUEST_AUTO_IBI | SVC_I3C_MCTRL_IBIRESP_AUTO,
+	  master->regs + SVC_I3C_MCTRL);
+
+2: ret = readl_relaxed_poll_timeout(master->regs + SVC_I3C_MSTATUS, val,
+                                    SVC_I3C_MSTATUS_IBIWON(val), 0, 1000);
+	...
+3: ibitype = SVC_I3C_MSTATUS_IBITYPE(status);
+   ibiaddr = SVC_I3C_MSTATUS_IBIADDR(status);
+
+SVC_I3C_MSTATUS_IBIWON may be set before step 1. Thus, step 2 will return
+immediately, and the I3C controller has not sent out the 9th SCL yet.
+Consequently, ibitype and ibiaddr are 0, resulting in an unknown IBI type
+occurrence and missing call I3C client driver's IBI handler.
+
+A typical case is that SVC_I3C_MSTATUS_IBIWON is set when an IBI occurs
+during the controller send start frame in svc_i3c_master_xfer().
+
+Clear SVC_I3C_MSTATUS_IBIWON before issue SVC_I3C_MCTRL_REQUEST_AUTO_IBI
+to fix this issue.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 5e5e3c92e748 ("i3c: master: svc: fix wrong data return when IBI happen during start frame")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20240506164009.21375-3-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/cpacf.h |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/i3c/master/svc-i3c-master.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/arch/s390/include/asm/cpacf.h
-+++ b/arch/s390/include/asm/cpacf.h
-@@ -161,6 +161,13 @@
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -397,6 +397,19 @@ static void svc_i3c_master_ibi_work(stru
+ 	int ret;
  
- typedef struct { unsigned char bytes[16]; } cpacf_mask_t;
- 
-+/*
-+ * Prototype for a not existing function to produce a link
-+ * error if __cpacf_query() or __cpacf_check_opcode() is used
-+ * with an invalid compile time const opcode.
-+ */
-+void __cpacf_bad_opcode(void);
+ 	mutex_lock(&master->lock);
++	/*
++	 * IBIWON may be set before SVC_I3C_MCTRL_REQUEST_AUTO_IBI, causing
++	 * readl_relaxed_poll_timeout() to return immediately. Consequently,
++	 * ibitype will be 0 since it was last updated only after the 8th SCL
++	 * cycle, leading to missed client IBI handlers.
++	 *
++	 * A typical scenario is when IBIWON occurs and bus arbitration is lost
++	 * at svc_i3c_master_priv_xfers().
++	 *
++	 * Clear SVC_I3C_MINT_IBIWON before sending SVC_I3C_MCTRL_REQUEST_AUTO_IBI.
++	 */
++	writel(SVC_I3C_MINT_IBIWON, master->regs + SVC_I3C_MSTATUS);
 +
- static __always_inline void __cpacf_query_rre(u32 opc, u8 r1, u8 r2,
- 					      cpacf_mask_t *mask)
- {
-@@ -232,7 +239,7 @@ static __always_inline void __cpacf_quer
- 		__cpacf_query_rre(CPACF_PRNO, 2, 4, mask);
- 		break;
- 	default:
--		BUG();
-+		__cpacf_bad_opcode();
+ 	/* Acknowledge the incoming interrupt with the AUTOIBI mechanism */
+ 	writel(SVC_I3C_MCTRL_REQUEST_AUTO_IBI |
+ 	       SVC_I3C_MCTRL_IBIRESP_AUTO,
+@@ -411,9 +424,6 @@ static void svc_i3c_master_ibi_work(stru
+ 		goto reenable_ibis;
  	}
- }
  
-@@ -257,7 +264,8 @@ static __always_inline int __cpacf_check
- 	case CPACF_KMA:
- 		return test_facility(146);	/* check for MSA8 */
- 	default:
--		BUG();
-+		__cpacf_bad_opcode();
-+		return 0;
- 	}
- }
- 
+-	/* Clear the interrupt status */
+-	writel(SVC_I3C_MINT_IBIWON, master->regs + SVC_I3C_MSTATUS);
+-
+ 	status = readl(master->regs + SVC_I3C_MSTATUS);
+ 	ibitype = SVC_I3C_MSTATUS_IBITYPE(status);
+ 	ibiaddr = SVC_I3C_MSTATUS_IBIADDR(status);
 
 
