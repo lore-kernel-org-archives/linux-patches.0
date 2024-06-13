@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4A356458;
-	Thu, 13 Jun 2024 12:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0363013A406;
+	Thu, 13 Jun 2024 12:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282575; cv=none; b=G3S8pouxKVtHUJjI9ex0LLzZy5knjDCISJEOPigjCnB+MG9uD+kgWypDc6ZhjCw4y7l5DAEw/ug5ZvQQwCcquko2GW8tSkw2o8sdMvlm+LMi3NIwOauojAl7y/1gv/awYQthVjIhU3iJpgpFrSCp+gQFxWQWSONmHHziBe4UxA0=
+	t=1718282578; cv=none; b=h6as9wHY7D9KOqFHIGCwCXAlHMh6AOBozUmVGETZTI+mrxvCFNCffodikixqv+q2oKnCKq55XSmJZh1FENRT//oIoxhT9hqPf14rIOxeLvcQogIHH//nRgSUWDE08pskBANeAT2Xo6UMpy3A+SReUErBccOVVX567Flq9xId1Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282575; c=relaxed/simple;
-	bh=jaz7ZNxztLYHw9oKOn5vBW3wHe5GZuxE0wB4W3u8DvY=;
+	s=arc-20240116; t=1718282578; c=relaxed/simple;
+	bh=hmpShjNjwRdVEhfa4H4CxCl+JpD1PQ0KWGTIC6BDmgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dtzqN+stHWbemfqahJP8KpDaDRfWmFEwKCdRZN29UZAIwIonEhtRuY9TQsAOanjqTMjJeAzeu6g4zXJ79k1B1QbZQvXjDTvDrMcv178a7PM5Xu2+4g03rVTZnq+eLXDHAIM/uM6s7dfcnFvlS/HM9tjDBqYmF3KuT8vZGfPgcsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boQszd73; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Rv7YEvKhcxklgLX07NwX5SLgNuWv5EtIzNBVbmtKnf5ojH41gpPopC+l0MrdLo5ubIAu3r8K75eeb+w+OsgE8GlRR2KX1aTa8Z2/n7lQc8HdYKTdfVSSzqQ3p1+aTeBgXE+mTlgl0WxhhbnNANvdqy1FZdhq4yIBhYPrbk+wjOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrO2Ksxl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boQszd73"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62753C2BBFC;
-	Thu, 13 Jun 2024 12:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrO2Ksxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54017C2BBFC;
+	Thu, 13 Jun 2024 12:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282574;
-	bh=jaz7ZNxztLYHw9oKOn5vBW3wHe5GZuxE0wB4W3u8DvY=;
+	s=korg; t=1718282577;
+	bh=hmpShjNjwRdVEhfa4H4CxCl+JpD1PQ0KWGTIC6BDmgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=boQszd73QIP89LSYt/y09T/t+M5kuG4MPjGv3SnISiAb6kxKyaJLQH0fAas6myTUa
-	 j8rZvmUtQ4tV/sKE8Iv5tqDkFyEM7N9YEFZAin6Q56miGNWS2yIBfyi9jXIzVq5J6f
-	 7r6AubMdCmGwYmL366Q7sYMYyyUyLvuNiHA/T+Xs=
+	b=CrO2Ksxl8zsP8+kUZrNAx7wT+UFDc7spg2ztenS1fW43uWDoLyDET9bf8rteIK6JO
+	 wLVHeM3Azu4DUVxf70vAoo8sBlYkUh8LB4T0b+YOBRT/EOx0w1lZORqQLvbDnjcz8G
+	 f3dWkcBDxDpN58Sb2aJbi+PAF8RB+9HWkf4dwmb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>,
-	Simon Horman <horms@kernel.org>,
-	Woojung Huh <woojung.huh@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 316/402] net: usb: smsc95xx: fix changing LED_SEL bit value updated from EEPROM
-Date: Thu, 13 Jun 2024 13:34:33 +0200
-Message-ID: <20240613113314.466803320@linuxfoundation.org>
+Subject: [PATCH 5.15 325/402] spi: stm32: Dont warn about spurious interrupts
+Date: Thu, 13 Jun 2024 13:34:42 +0200
+Message-ID: <20240613113314.813454843@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -47,71 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 52a2f0608366a629d43dacd3191039c95fef74ba ]
+[ Upstream commit 95d7c452a26564ef0c427f2806761b857106d8c4 ]
 
-LED Select (LED_SEL) bit in the LED General Purpose IO Configuration
-register is used to determine the functionality of external LED pins
-(Speed Indicator, Link and Activity Indicator, Full Duplex Link
-Indicator). The default value for this bit is 0 when no EEPROM is
-present. If a EEPROM is present, the default value is the value of the
-LED Select bit in the Configuration Flags of the EEPROM. A USB Reset or
-Lite Reset (LRST) will cause this bit to be restored to the image value
-last loaded from EEPROM, or to be set to 0 if no EEPROM is present.
+The dev_warn to notify about a spurious interrupt was introduced with
+the reasoning that these are unexpected. However spurious interrupts
+tend to trigger continously and the error message on the serial console
+prevents that the core's detection of spurious interrupts kicks in
+(which disables the irq) and just floods the console.
 
-While configuring the dual purpose GPIO/LED pins to LED outputs in the
-LED General Purpose IO Configuration register, the LED_SEL bit is changed
-as 0 and resulting the configured value from the EEPROM is cleared. The
-issue is fixed by using read-modify-write approach.
-
-Fixes: f293501c61c5 ("smsc95xx: configure LED outputs")
-Signed-off-by: Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Woojung Huh <woojung.huh@microchip.com>
-Link: https://lore.kernel.org/r/20240523085314.167650-1-Parthiban.Veerasooran@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c64e7efe46b7 ("spi: stm32: make spurious and overrun interrupts visible")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://msgid.link/r/20240521105241.62400-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc95xx.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/spi/spi-stm32.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
-index 10fae3989fbdb..8a38939dd57e4 100644
---- a/drivers/net/usb/smsc95xx.c
-+++ b/drivers/net/usb/smsc95xx.c
-@@ -842,7 +842,7 @@ static int smsc95xx_start_rx_path(struct usbnet *dev, int in_pm)
- static int smsc95xx_reset(struct usbnet *dev)
- {
- 	struct smsc95xx_priv *pdata = dev->driver_priv;
--	u32 read_buf, write_buf, burst_cap;
-+	u32 read_buf, burst_cap;
- 	int ret = 0, timeout;
+diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
+index 191baa6e45c08..e8d21c93ed7ef 100644
+--- a/drivers/spi/spi-stm32.c
++++ b/drivers/spi/spi-stm32.c
+@@ -884,7 +884,7 @@ static irqreturn_t stm32h7_spi_irq_thread(int irq, void *dev_id)
+ 		mask |= STM32H7_SPI_SR_TXP | STM32H7_SPI_SR_RXP;
  
- 	netif_dbg(dev, ifup, dev->net, "entering smsc95xx_reset\n");
-@@ -984,10 +984,13 @@ static int smsc95xx_reset(struct usbnet *dev)
- 		return ret;
- 	netif_dbg(dev, ifup, dev->net, "ID_REV = 0x%08x\n", read_buf);
- 
-+	ret = smsc95xx_read_reg(dev, LED_GPIO_CFG, &read_buf);
-+	if (ret < 0)
-+		return ret;
- 	/* Configure GPIO pins as LED outputs */
--	write_buf = LED_GPIO_CFG_SPD_LED | LED_GPIO_CFG_LNK_LED |
--		LED_GPIO_CFG_FDX_LED;
--	ret = smsc95xx_write_reg(dev, LED_GPIO_CFG, write_buf);
-+	read_buf |= LED_GPIO_CFG_SPD_LED | LED_GPIO_CFG_LNK_LED |
-+		    LED_GPIO_CFG_FDX_LED;
-+	ret = smsc95xx_write_reg(dev, LED_GPIO_CFG, read_buf);
- 	if (ret < 0)
- 		return ret;
- 
+ 	if (!(sr & mask)) {
+-		dev_warn(spi->dev, "spurious IT (sr=0x%08x, ier=0x%08x)\n",
++		dev_vdbg(spi->dev, "spurious IT (sr=0x%08x, ier=0x%08x)\n",
+ 			 sr, ier);
+ 		spin_unlock_irqrestore(&spi->lock, flags);
+ 		return IRQ_NONE;
 -- 
 2.43.0
 
