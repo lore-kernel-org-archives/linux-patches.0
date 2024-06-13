@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954F5143C5B;
-	Thu, 13 Jun 2024 11:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B326143C79;
+	Thu, 13 Jun 2024 11:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279098; cv=none; b=HDgOuqmN78wPc+gsAgzxKT1jHeSFVIZbdSj80+9fypPMj3AeQlvr7RkjR6bH2TAyvgwQB91lxr/JP+sFLp44OuxaKMfswGHTA83IvNdw0K3b8clxcF9+4ZxVYRJLbSTj6mCRPCc1tj+3rRq6KdkmOI907Sec8YpIdt+03ZGkPOo=
+	t=1718279101; cv=none; b=NWaFX9MrqAsoF3Kmsc4aOvQDpET0aZLBY/qoRZ8UYVMEDQuf4pv4qMULypbYl2jiWdisV8i0RX0acwux/KbfRKaXNm6uVwBHqT+D1Ma4tTfDugCqtjzAIWmolLMHM3LSPDbZzpwfVq+HpgMIOwayQEGl7AgRxmCeCxVV53n3jWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279098; c=relaxed/simple;
-	bh=vuUGKXyo3cBW47MCyZgNii3Dq2fDB+TLJdslECmExfI=;
+	s=arc-20240116; t=1718279101; c=relaxed/simple;
+	bh=4aKqaClkkEa4QmW2W2z/6p9lL/rL6d5BRm98dGBaGgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qwh6zTSc9aD5kJ/6SOExn+qCuqJl5U0Kz8yBg1cIpI7UF5LHxjSa6ULO2MUv/KFAkLvFOevXAWbc9tHJQB95GA9PbKN554Ug6+ZLRatH6zkMvIO2z3PBbaIyAt9Uge/IjDfUKqZXMlbzn+RiS/+Si5rlzYMWyhR+9p+7qDb8Qqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDJCKGVZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YTwJb+96CLRZV6Tqm99imbtEVJURe83tuTBD7egjFd8dVhejqDoz330G4SevQ6Us7FL53Pgam0K9lb701kawegUSeVMMjFn/HFrOLHs4/OIhHUghmbacPOoNC2lbZNkvr+OlEvzNF1eekm4QeS8cUAHzSwxpsdxUrf2RaUcvjZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/VSpE1e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDJCKGVZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC10C2BBFC;
-	Thu, 13 Jun 2024 11:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/VSpE1e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1009CC2BBFC;
+	Thu, 13 Jun 2024 11:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279098;
-	bh=vuUGKXyo3cBW47MCyZgNii3Dq2fDB+TLJdslECmExfI=;
+	s=korg; t=1718279101;
+	bh=4aKqaClkkEa4QmW2W2z/6p9lL/rL6d5BRm98dGBaGgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDJCKGVZ0ElpXZ6cLsxFYJsDG1KnI6rM0NUYxo4nghDeS+BUt3hvG5h/vRs1ssvJ7
-	 yeLu1HEDqCO3UOfTpZYzm9rIJZ/t5WyD1iG7+UHOFpUGG5sfxR5++BGF+/Y+9RQP5A
-	 r0OgG0E5sq/gcQZ1/Fcx9qCG6hgzOiFpeWhP4DEQ=
+	b=M/VSpE1e/iMOaCEq/vC0MppsRB3FgiSg/Q6eFZdBdSoKFBuvp9WtaJf6YX5faEZ/+
+	 umORsnaMsgKJ6zT+8v2BXw1B+QAjCqi7HoqDT/c70MnuXfnVSPtuUj6sUIm7hAdX36
+	 CejnpT0jFYLMs80rLe+3CqlE1Lj0PVq5pEzMkuM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 4.19 174/213] netfilter: nf_tables: defer gc run if previous batch is still pending
-Date: Thu, 13 Jun 2024 13:33:42 +0200
-Message-ID: <20240613113234.694621487@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	"Bai, Shuangpeng" <sjb7183@psu.edu>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 148/213] nilfs2: fix use-after-free of timer for log writer thread
+Date: Thu, 13 Jun 2024 13:33:16 +0200
+Message-ID: <20240613113233.699161885@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -50,71 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 8e51830e29e12670b4c10df070a4ea4c9593e961 upstream.
+commit f5d4e04634c9cf68bdf23de08ada0bb92e8befe7 upstream.
 
-Don't queue more gc work, else we may queue the same elements multiple
-times.
+Patch series "nilfs2: fix log writer related issues".
 
-If an element is flagged as dead, this can mean that either the previous
-gc request was invalidated/discarded by a transaction or that the previous
-request is still pending in the system work queue.
+This bug fix series covers three nilfs2 log writer-related issues,
+including a timer use-after-free issue and potential deadlock issue on
+unmount, and a potential freeze issue in event synchronization found
+during their analysis.  Details are described in each commit log.
 
-The latter will happen if the gc interval is set to a very low value,
-e.g. 1ms, and system work queue is backlogged.
 
-The sets refcount is 1 if no previous gc requeusts are queued, so add
-a helper for this and skip gc run if old requests are pending.
+This patch (of 3):
 
-Add a helper for this and skip the gc run in this case.
+A use-after-free issue has been reported regarding the timer sc_timer on
+the nilfs_sc_info structure.
 
-Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+The problem is that even though it is used to wake up a sleeping log
+writer thread, sc_timer is not shut down until the nilfs_sc_info structure
+is about to be freed, and is used regardless of the thread's lifetime.
+
+Fix this issue by limiting the use of sc_timer only while the log writer
+thread is alive.
+
+Link: https://lkml.kernel.org/r/20240520132621.4054-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20240520132621.4054-2-konishi.ryusuke@gmail.com
+Fixes: fdce895ea5dd ("nilfs2: change sc_timer from a pointer to an embedded one in struct nilfs_sc_info")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: "Bai, Shuangpeng" <sjb7183@psu.edu>
+Closes: https://groups.google.com/g/syzkaller/c/MK_LYqtt8ko/m/8rgdWeseAwAJ
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    5 +++++
- net/netfilter/nft_set_hash.c      |    3 +++
- net/netfilter/nft_set_rbtree.c    |    3 +++
- 3 files changed, 11 insertions(+)
+ fs/nilfs2/segment.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -445,6 +445,11 @@ static inline void *nft_set_priv(const s
- 	return (void *)set->data;
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2159,8 +2159,10 @@ static void nilfs_segctor_start_timer(st
+ {
+ 	spin_lock(&sci->sc_state_lock);
+ 	if (!(sci->sc_state & NILFS_SEGCTOR_COMMIT)) {
+-		sci->sc_timer.expires = jiffies + sci->sc_interval;
+-		add_timer(&sci->sc_timer);
++		if (sci->sc_task) {
++			sci->sc_timer.expires = jiffies + sci->sc_interval;
++			add_timer(&sci->sc_timer);
++		}
+ 		sci->sc_state |= NILFS_SEGCTOR_COMMIT;
+ 	}
+ 	spin_unlock(&sci->sc_state_lock);
+@@ -2380,10 +2382,21 @@ int nilfs_construct_dsync_segment(struct
+  */
+ static void nilfs_segctor_accept(struct nilfs_sc_info *sci)
+ {
++	bool thread_is_alive;
++
+ 	spin_lock(&sci->sc_state_lock);
+ 	sci->sc_seq_accepted = sci->sc_seq_request;
++	thread_is_alive = (bool)sci->sc_task;
+ 	spin_unlock(&sci->sc_state_lock);
+-	del_timer_sync(&sci->sc_timer);
++
++	/*
++	 * This function does not race with the log writer thread's
++	 * termination.  Therefore, deleting sc_timer, which should not be
++	 * done after the log writer thread exits, can be done safely outside
++	 * the area protected by sc_state_lock.
++	 */
++	if (thread_is_alive)
++		del_timer_sync(&sci->sc_timer);
  }
  
-+static inline bool nft_set_gc_is_pending(const struct nft_set *s)
-+{
-+	return refcount_read(&s->refs) != 1;
-+}
-+
- static inline struct nft_set *nft_set_container_of(const void *priv)
- {
- 	return (void *)priv - offsetof(struct nft_set, data);
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -304,6 +304,9 @@ static void nft_rhash_gc(struct work_str
- 	nft_net = net_generic(net, nf_tables_net_id);
- 	gc_seq = READ_ONCE(nft_net->gc_seq);
+ /**
+@@ -2409,7 +2422,7 @@ static void nilfs_segctor_notify(struct
+ 			sci->sc_flush_request &= ~FLUSH_DAT_BIT;
  
-+	if (nft_set_gc_is_pending(set))
-+		goto done;
-+
- 	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
- 	if (!gc)
- 		goto done;
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -618,6 +618,9 @@ static void nft_rbtree_gc(struct work_st
- 	nft_net = net_generic(net, nf_tables_net_id);
- 	gc_seq  = READ_ONCE(nft_net->gc_seq);
+ 		/* re-enable timer if checkpoint creation was not done */
+-		if ((sci->sc_state & NILFS_SEGCTOR_COMMIT) &&
++		if ((sci->sc_state & NILFS_SEGCTOR_COMMIT) && sci->sc_task &&
+ 		    time_before(jiffies, sci->sc_timer.expires))
+ 			add_timer(&sci->sc_timer);
+ 	}
+@@ -2599,6 +2612,7 @@ static int nilfs_segctor_thread(void *ar
+ 	int timeout = 0;
  
-+	if (nft_set_gc_is_pending(set))
-+		goto done;
-+
- 	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
- 	if (!gc)
- 		goto done;
+ 	sci->sc_timer_task = current;
++	timer_setup(&sci->sc_timer, nilfs_construction_timeout, 0);
+ 
+ 	/* start sync. */
+ 	sci->sc_task = current;
+@@ -2665,6 +2679,7 @@ static int nilfs_segctor_thread(void *ar
+  end_thread:
+ 	/* end sync. */
+ 	sci->sc_task = NULL;
++	del_timer_sync(&sci->sc_timer);
+ 	wake_up(&sci->sc_wait_task); /* for nilfs_segctor_kill_thread() */
+ 	spin_unlock(&sci->sc_state_lock);
+ 	return 0;
+@@ -2728,7 +2743,6 @@ static struct nilfs_sc_info *nilfs_segct
+ 	INIT_LIST_HEAD(&sci->sc_gc_inodes);
+ 	INIT_LIST_HEAD(&sci->sc_iput_queue);
+ 	INIT_WORK(&sci->sc_iput_work, nilfs_iput_work_func);
+-	timer_setup(&sci->sc_timer, nilfs_construction_timeout, 0);
+ 
+ 	sci->sc_interval = HZ * NILFS_SC_DEFAULT_TIMEOUT;
+ 	sci->sc_mjcp_freq = HZ * NILFS_SC_DEFAULT_SR_FREQ;
+@@ -2814,7 +2828,6 @@ static void nilfs_segctor_destroy(struct
+ 
+ 	down_write(&nilfs->ns_segctor_sem);
+ 
+-	del_timer_sync(&sci->sc_timer);
+ 	kfree(sci);
+ }
+ 
 
 
