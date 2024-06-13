@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD9F1428EF;
-	Thu, 13 Jun 2024 12:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF962161;
+	Thu, 13 Jun 2024 12:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281947; cv=none; b=U50OYm/xpaCOUtbd6mbVURprSQVLdKhEBUdRqkJ+0A8HNUn1NlTk76dwBuMrALBG3ZoQ1O7D2ZQXUEBdP8Dp6Tmkhw4YhgWG6b+CpH12e+jVJhZarRGzr25xVfr1pjXnGRuS8tmE+6Bv/SxrsFK1YYt1SLXhjtJr+jDrX/5V8hc=
+	t=1718281950; cv=none; b=jAnSSEFVB+4C78QHcJi751bDPvtRRNupk1EYN+JBAthNwDBgnaPFqMJ3mOpnYc5oh5dTQvWXYjRkN4VogSmhY0ropVBfLoK3oERlTs+F5EfIILeIYdxypho4hFxArgotEhwusqsTCv2j3muVxdMd8D5dyJFqgnlH+Qh6GmqDlyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281947; c=relaxed/simple;
-	bh=3VGf+8LQLFuHaqfdqEACU7LqtVoa05isFx/Phxx5P7o=;
+	s=arc-20240116; t=1718281950; c=relaxed/simple;
+	bh=h1Jy4myOTfm7Ry86Ustq9fth3e1GzJ1U/g+FD7oY0QM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q2KmSE8YbBiJW2kOwL194FcBAMhS4VVqiOru6Fi3b2i6I4eUEbNh+NJA5lgDAlEUo1o3UsNAaOmQ14ybfiziHGsS03cvipD6ncnf/q4lwo7wVUcVINsQXP1hoW4eQlvfnBQR4wapUAweMULpsIcrLKTAJ2K6F9dM+RUS7ApDZkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUi6sWiU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V2NeJGzqgMw7aGLGmYplD7pZE4uJ8A1Z1J7diGOGqgGfJDFoFCW4u3BxcYpWrvsAzjmasb780zFajq+UEYGW0MlnpFJnAOoC/XJb/3treyunsUIgkErFtg8/ppYD5y3bYn5iBGhiaymK6i05+8ZXrhDK5gNOZOFOex96kMXuWPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NH+9ktFO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUi6sWiU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3DCC2BBFC;
-	Thu, 13 Jun 2024 12:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NH+9ktFO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D47C2BBFC;
+	Thu, 13 Jun 2024 12:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281947;
-	bh=3VGf+8LQLFuHaqfdqEACU7LqtVoa05isFx/Phxx5P7o=;
+	s=korg; t=1718281950;
+	bh=h1Jy4myOTfm7Ry86Ustq9fth3e1GzJ1U/g+FD7oY0QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUi6sWiUwD7F8bdnzMv6PjlqWRbXECRikjRO7fPc1LJFh7w6EiOE+/+ccbSBuJrLT
-	 wiIGjbBiln7xZUR1GQ7+JISEfPy2ixOT24ZWxdh5VCBPI9nr5gj/FQyrjzUXToRAZw
-	 yX/M4OWyMuSuFCCM2DecuD6gq2Gr0a88buWfvemc=
+	b=NH+9ktFOycsZRWmbbIUyJCOJtWgA7OkeVqA1G6qRqkMM8OFcRJVnGICwZNPpeiFXs
+	 3xOtZ4b63ra11JimHJy+PkWM+Wt27PsjfMlfHOrQu0K+ThgNTXkXkAK09WiOcdIAWv
+	 9PQmOZVJ2mZT74SXaIp2I1e15w8UTk+ZcisEy/Yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Erhard Furtner <erhard_f@mailbox.org>
-Subject: [PATCH 5.15 110/402] eth: sungem: remove .ndo_poll_controller to avoid deadlocks
-Date: Thu, 13 Jun 2024 13:31:07 +0200
-Message-ID: <20240613113306.420707088@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 084/402] wifi: ath10k: Fix an error code problem in ath10k_dbg_sta_write_peer_debug_trigger()
+Date: Thu, 13 Jun 2024 13:30:41 +0200
+Message-ID: <20240613113305.412593003@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,65 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit ac0a230f719b02432d8c7eba7615ebd691da86f4 ]
+[ Upstream commit c511a9c12674d246916bb16c479d496b76983193 ]
 
-Erhard reports netpoll warnings from sungem:
+Clang Static Checker (scan-build) warns:
 
-  netpoll_send_skb_on_dev(): eth0 enabled interrupts in poll (gem_start_xmit+0x0/0x398)
-  WARNING: CPU: 1 PID: 1 at net/core/netpoll.c:370 netpoll_send_skb+0x1fc/0x20c
+drivers/net/wireless/ath/ath10k/debugfs_sta.c:line 429, column 3
+Value stored to 'ret' is never read.
 
-gem_poll_controller() disables interrupts, which may sleep.
-We can't sleep in netpoll, it has interrupts disabled completely.
-Strangely, gem_poll_controller() doesn't even poll the completions,
-and instead acts as if an interrupt has fired so it just schedules
-NAPI and exits. None of this has been necessary for years, since
-netpoll invokes NAPI directly.
+Return 'ret' rather than 'count' when 'ret' stores an error code.
 
-Fixes: fe09bb619096 ("sungem: Spring cleaning and GRO support")
-Reported-and-tested-by: Erhard Furtner <erhard_f@mailbox.org>
-Link: https://lore.kernel.org/all/20240428125306.2c3080ef@legion
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240508134504.3560956-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ee8b08a1be82 ("ath10k: add debugfs support to get per peer tids log via tracing")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240422034243.938962-1-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/sungem.c | 14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/net/wireless/ath/ath10k/debugfs_sta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/sun/sungem.c b/drivers/net/ethernet/sun/sungem.c
-index d72018a60c0f7..e14c1ac767baa 100644
---- a/drivers/net/ethernet/sun/sungem.c
-+++ b/drivers/net/ethernet/sun/sungem.c
-@@ -949,17 +949,6 @@ static irqreturn_t gem_interrupt(int irq, void *dev_id)
- 	return IRQ_HANDLED;
+diff --git a/drivers/net/wireless/ath/ath10k/debugfs_sta.c b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
+index 367539f2c3700..f7912c72cba34 100644
+--- a/drivers/net/wireless/ath/ath10k/debugfs_sta.c
++++ b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
+@@ -438,7 +438,7 @@ ath10k_dbg_sta_write_peer_debug_trigger(struct file *file,
+ 	}
+ out:
+ 	mutex_unlock(&ar->conf_mutex);
+-	return count;
++	return ret ?: count;
  }
  
--#ifdef CONFIG_NET_POLL_CONTROLLER
--static void gem_poll_controller(struct net_device *dev)
--{
--	struct gem *gp = netdev_priv(dev);
--
--	disable_irq(gp->pdev->irq);
--	gem_interrupt(gp->pdev->irq, dev);
--	enable_irq(gp->pdev->irq);
--}
--#endif
--
- static void gem_tx_timeout(struct net_device *dev, unsigned int txqueue)
- {
- 	struct gem *gp = netdev_priv(dev);
-@@ -2836,9 +2825,6 @@ static const struct net_device_ops gem_netdev_ops = {
- 	.ndo_change_mtu		= gem_change_mtu,
- 	.ndo_validate_addr	= eth_validate_addr,
- 	.ndo_set_mac_address    = gem_set_mac_address,
--#ifdef CONFIG_NET_POLL_CONTROLLER
--	.ndo_poll_controller    = gem_poll_controller,
--#endif
- };
- 
- static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ static const struct file_operations fops_peer_debug_trigger = {
 -- 
 2.43.0
 
