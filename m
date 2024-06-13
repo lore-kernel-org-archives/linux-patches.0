@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A61214535F;
-	Thu, 13 Jun 2024 12:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30D1147C7F;
+	Thu, 13 Jun 2024 12:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280074; cv=none; b=BVMIBQ3zoVrIxYf7/Ye1EtIg1WvBnL5QNmWq619DPNgKClYIqJ3jbh9YoPsDwlgmrwGTsNlJcboxuRKlg29gvP11uyPnoKtnpGbdC22FDYRXNXHKXmPMGDFKTS5m91cZk5vJ/LrD4Mq6Jx/6xEESrJkNzraVV2vSVErHEaHLeZ4=
+	t=1718280077; cv=none; b=DcElhyTVZ+ALYSCwTXyNhk+9eaCm8X9dwd6fXgb6s9A7aglQeUHulHWrNcPIrXXZnslV1MUZBQ9tB2nXjbKCWz/bW9yDC3pbiPSQ2Aw4Q5AX67ArP89xs1b+hsBVSknaKAycdqcAXsiWLCDcXXZXh5zl2JLDR573wqxRflaCw88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280074; c=relaxed/simple;
-	bh=kwRO0IxtUvrncdKET2YciifBWel07thNq8dROQtoaos=;
+	s=arc-20240116; t=1718280077; c=relaxed/simple;
+	bh=IhRd8QwoJksrXTTkBWbYkfiq5jLVazvxTzvFjttg028=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ov8acMlHlTD5xD7b6WFYIRaqjC2RWXhPlGrznhDnMqnbb31NNexESvk3dFPjGO8iq3DAa7E8NBvbPQXD0H3+awRVy9lnD79/+bnI5Vmm57/pQQUMn0rtzXmmK7QqmKD0NTmdFpbp9FrWiSAnrmosngPKpX3Yv6oeKvnaDLVm+t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/pwilTb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fqckg4XmR2eOGNlFzbkETjRoAVzi3icBuYgI0T0K4ZNmXFmOXB+4US84+kTldJcnMECt1bOrSDsnRkrJNlCtA+ec+xQ3uDg0Cp9daQaXUvVaQI0Zd107muxS20eSB7HKj89quaYWns+L9CGUHojfIxRjmJvg9m/GHAAcWV5uO4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfIrHd5y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/pwilTb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5685C4AF1A;
-	Thu, 13 Jun 2024 12:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfIrHd5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9EE3C2BBFC;
+	Thu, 13 Jun 2024 12:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280074;
-	bh=kwRO0IxtUvrncdKET2YciifBWel07thNq8dROQtoaos=;
+	s=korg; t=1718280077;
+	bh=IhRd8QwoJksrXTTkBWbYkfiq5jLVazvxTzvFjttg028=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/pwilTbzlU9ZPTtcBpODsGywAyT5YqAz+C9B+jYGJSY/7ESDuWLX9vAGaS423YeM
-	 sBrD7lrVM33k9i+v1hwR73+cpAe3JtQuhe+O5Iody9hKDd0ZhTO7TLH0a4tLMmpB7H
-	 Qtbm86SuwkoAaSGp0PLY/JPderv03Qjx5Vs8ik58=
+	b=DfIrHd5ys/ZUKJI/HkaIHzp7x57VL10mXOEEVfzpvlq7KDKnc8n1v9m4/SsawJhqR
+	 UZJO0Bf7nfBurKjwI/iUYO1pY4K7BW4q6NXurRULOk/iRS4cEnOn0gYiF98yV3b+A3
+	 kBINMK//sl+ZT09wrX1gH+JRGKupSHYCFwFFdWyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	"Yang, Chenyuan" <cy54@illinois.edu>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Yang
-Subject: [PATCH 5.4 134/202] media: cec: cec-api: add locking in cec_release()
-Date: Thu, 13 Jun 2024 13:33:52 +0200
-Message-ID: <20240613113232.933259601@linuxfoundation.org>
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 135/202] null_blk: Fix the WARNING: modpost: missing MODULE_DESCRIPTION()
+Date: Thu, 13 Jun 2024 13:33:53 +0200
+Message-ID: <20240613113232.971587490@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -53,44 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit 42bcaacae924bf18ae387c3f78c202df0b739292 ]
+[ Upstream commit 9e6727f824edcdb8fdd3e6e8a0862eb49546e1cd ]
 
-When cec_release() uses fh->msgs it has to take fh->lock,
-otherwise the list can get corrupted.
+No functional changes intended.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reported-by: Yang, Chenyuan <cy54@illinois.edu>
-Closes: https://lore.kernel.org/linux-media/PH7PR11MB57688E64ADE4FE82E658D86DA09EA@PH7PR11MB5768.namprd11.prod.outlook.com/
-Fixes: ca684386e6e2 ("[media] cec: add HDMI CEC framework (api)")
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: f2298c0403b0 ("null_blk: multi queue aware block test driver")
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20240506075538.6064-1-yanjun.zhu@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/cec-api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/block/null_blk_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/cec/cec-api.c b/drivers/media/cec/cec-api.c
-index ed75636a6fb34..90e90234f5bd8 100644
---- a/drivers/media/cec/cec-api.c
-+++ b/drivers/media/cec/cec-api.c
-@@ -652,6 +652,8 @@ static int cec_release(struct inode *inode, struct file *filp)
- 		list_del(&data->xfer_list);
- 	}
- 	mutex_unlock(&adap->lock);
-+
-+	mutex_lock(&fh->lock);
- 	while (!list_empty(&fh->msgs)) {
- 		struct cec_msg_entry *entry =
- 			list_first_entry(&fh->msgs, struct cec_msg_entry, list);
-@@ -669,6 +671,7 @@ static int cec_release(struct inode *inode, struct file *filp)
- 			kfree(entry);
- 		}
- 	}
-+	mutex_unlock(&fh->lock);
- 	kfree(fh);
+diff --git a/drivers/block/null_blk_main.c b/drivers/block/null_blk_main.c
+index b6210bf0724d5..218658df77ae5 100644
+--- a/drivers/block/null_blk_main.c
++++ b/drivers/block/null_blk_main.c
+@@ -1876,4 +1876,5 @@ module_init(null_init);
+ module_exit(null_exit);
  
- 	cec_put_device(devnode);
+ MODULE_AUTHOR("Jens Axboe <axboe@kernel.dk>");
++MODULE_DESCRIPTION("multi queue aware block test driver");
+ MODULE_LICENSE("GPL");
 -- 
 2.43.0
 
