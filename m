@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66051144D16;
-	Thu, 13 Jun 2024 11:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BFB146D5A;
+	Thu, 13 Jun 2024 11:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279691; cv=none; b=gm6J6wIjffDulPKtdF0xQ8Y3kx/XXqKqZbdDskZz8rgbhqtN6CtUtKpxnWuLD6iMN4UmdDAI1bXvWG5I5GPlRshCT9d7LsmIStraL1RbgNA1POEYSpjowlQoWeghF6vfwgrgDj6fBs1JSCp3CuPzZtCbGlIRVYC3SilHkyJQ7I0=
+	t=1718279694; cv=none; b=dRIIjcUh893pz2PKh+WNflW0571v49rVPHl6shQB3RArhvrXOEDKqhXA2JC1hbegfcBl4Q7WWHuMK4kKIKp6UyHhaFm+WUFrHTBw9yqyItnNYkfLlWChXOYjb+z4uA9OaQrkhv50caCOfpELH+7F6hECcyfasrQDWRtNGQ4ykyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279691; c=relaxed/simple;
-	bh=ni5dGz3Kcd5bfiBFbWdKsCG69Aodr6IpZ8fYUNuePwo=;
+	s=arc-20240116; t=1718279694; c=relaxed/simple;
+	bh=0BukphA5o61Mmu72XXaVi8qPhAqgrSJklIjFIuAapVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWvxzY3Qhv3SU6RgocNhZga7xlSOuUV3ny7Wr9qC0GohghyARuMO6kEou4R2nPNc6w29CR/xP5YGWu9SoCLLfko2r+1X7s0thhCM4xJAadv24jBpdJXtStT/5uccX0S7Z4PA9aiWWxmyoI0Ly2fyDRSl6Zv6JpYA9KhCQjC86S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAQEkmOp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwhvCB4ZebdDDtedWXHw5xVa9GZoX6Z49NAXuEzxODPRbnpqqesUR+gxlKxGQZN5pL376d+tZGZPjI7X/t7rHiPPberkiIgq0cc6w9O92vNfkH2fcGS1lzg/NqEUjtriU+Q1LLQGXkTEmZrqgrlrtB7slIp3p6BBsqxt3qeJMgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5OOaPTC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAQEkmOp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F341C2BBFC;
-	Thu, 13 Jun 2024 11:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5OOaPTC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824DFC2BBFC;
+	Thu, 13 Jun 2024 11:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279691;
-	bh=ni5dGz3Kcd5bfiBFbWdKsCG69Aodr6IpZ8fYUNuePwo=;
+	s=korg; t=1718279693;
+	bh=0BukphA5o61Mmu72XXaVi8qPhAqgrSJklIjFIuAapVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yAQEkmOpk/7T1CrPm/Fk6rMniseVA/QrOWvzF3QkdMTVep0PTbqtNLGu6rvwX5CcN
-	 uPlHQO+wSn1JYQYj7EdayjNsy+PcSrGDbbXG8hl0+ijJ2D7dMX6winU0ZtmMn+rlF3
-	 VAOgBOypoWkoXidEz2gvT6xjINN4vzYX3WUjMjV8=
+	b=R5OOaPTCwjm9dV4ujWiVMR+FnC1jOFuWxI19j41x0gPU6DVzteH3pkMMRYyUS+E67
+	 xHcao0d8Dh2CtwDL9PfKmJLGJbs+5tiI7UOe1tw7EbwxUi77DGL7Th329AiIlqM2C3
+	 A9VClyq8Wuc69IJEvdJS9KIdtz2mE85V9G649tQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.9 130/157] i3c: master: svc: fix invalidate IBI type and miss call client IBI handler
-Date: Thu, 13 Jun 2024 13:34:15 +0200
-Message-ID: <20240613113232.438296046@linuxfoundation.org>
+	"dicken.ding" <dicken.ding@mediatek.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.9 131/157] genirq/irqdesc: Prevent use-after-free in irq_find_at_or_after()
+Date: Thu, 13 Jun 2024 13:34:16 +0200
+Message-ID: <20240613113232.476598856@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -51,74 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: dicken.ding <dicken.ding@mediatek.com>
 
-commit 38baed9b8600008e5d7bc8cb9ceccc1af3dd54b7 upstream.
+commit b84a8aba806261d2f759ccedf4a2a6a80a5e55ba upstream.
 
-In an In-Band Interrupt (IBI) handle, the code logic is as follows:
+irq_find_at_or_after() dereferences the interrupt descriptor which is
+returned by mt_find() while neither holding sparse_irq_lock nor RCU read
+lock, which means the descriptor can be freed between mt_find() and the
+dereference:
 
-1: writel(SVC_I3C_MCTRL_REQUEST_AUTO_IBI | SVC_I3C_MCTRL_IBIRESP_AUTO,
-	  master->regs + SVC_I3C_MCTRL);
+    CPU0                            CPU1
+    desc = mt_find()
+                                    delayed_free_desc(desc)
+    irq_desc_get_irq(desc)
 
-2: ret = readl_relaxed_poll_timeout(master->regs + SVC_I3C_MSTATUS, val,
-                                    SVC_I3C_MSTATUS_IBIWON(val), 0, 1000);
-	...
-3: ibitype = SVC_I3C_MSTATUS_IBITYPE(status);
-   ibiaddr = SVC_I3C_MSTATUS_IBIADDR(status);
+The use-after-free is reported by KASAN:
 
-SVC_I3C_MSTATUS_IBIWON may be set before step 1. Thus, step 2 will return
-immediately, and the I3C controller has not sent out the 9th SCL yet.
-Consequently, ibitype and ibiaddr are 0, resulting in an unknown IBI type
-occurrence and missing call I3C client driver's IBI handler.
+    Call trace:
+     irq_get_next_irq+0x58/0x84
+     show_stat+0x638/0x824
+     seq_read_iter+0x158/0x4ec
+     proc_reg_read_iter+0x94/0x12c
+     vfs_read+0x1e0/0x2c8
 
-A typical case is that SVC_I3C_MSTATUS_IBIWON is set when an IBI occurs
-during the controller send start frame in svc_i3c_master_xfer().
+    Freed by task 4471:
+     slab_free_freelist_hook+0x174/0x1e0
+     __kmem_cache_free+0xa4/0x1dc
+     kfree+0x64/0x128
+     irq_kobj_release+0x28/0x3c
+     kobject_put+0xcc/0x1e0
+     delayed_free_desc+0x14/0x2c
+     rcu_do_batch+0x214/0x720
 
-Clear SVC_I3C_MSTATUS_IBIWON before issue SVC_I3C_MCTRL_REQUEST_AUTO_IBI
-to fix this issue.
+Guard the access with a RCU read lock section.
 
+Fixes: 721255b9826b ("genirq: Use a maple tree for interrupt descriptor management")
+Signed-off-by: dicken.ding <dicken.ding@mediatek.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Fixes: 5e5e3c92e748 ("i3c: master: svc: fix wrong data return when IBI happen during start frame")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20240506164009.21375-3-Frank.Li@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20240524091739.31611-1-dicken.ding@mediatek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ kernel/irq/irqdesc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -415,6 +415,19 @@ static void svc_i3c_master_ibi_work(stru
- 	int ret;
- 
- 	mutex_lock(&master->lock);
-+	/*
-+	 * IBIWON may be set before SVC_I3C_MCTRL_REQUEST_AUTO_IBI, causing
-+	 * readl_relaxed_poll_timeout() to return immediately. Consequently,
-+	 * ibitype will be 0 since it was last updated only after the 8th SCL
-+	 * cycle, leading to missed client IBI handlers.
-+	 *
-+	 * A typical scenario is when IBIWON occurs and bus arbitration is lost
-+	 * at svc_i3c_master_priv_xfers().
-+	 *
-+	 * Clear SVC_I3C_MINT_IBIWON before sending SVC_I3C_MCTRL_REQUEST_AUTO_IBI.
-+	 */
-+	writel(SVC_I3C_MINT_IBIWON, master->regs + SVC_I3C_MSTATUS);
+--- a/kernel/irq/irqdesc.c
++++ b/kernel/irq/irqdesc.c
+@@ -160,7 +160,10 @@ static int irq_find_free_area(unsigned i
+ static unsigned int irq_find_at_or_after(unsigned int offset)
+ {
+ 	unsigned long index = offset;
+-	struct irq_desc *desc = mt_find(&sparse_irqs, &index, nr_irqs);
++	struct irq_desc *desc;
 +
- 	/* Acknowledge the incoming interrupt with the AUTOIBI mechanism */
- 	writel(SVC_I3C_MCTRL_REQUEST_AUTO_IBI |
- 	       SVC_I3C_MCTRL_IBIRESP_AUTO,
-@@ -429,9 +442,6 @@ static void svc_i3c_master_ibi_work(stru
- 		goto reenable_ibis;
- 	}
++	guard(rcu)();
++	desc = mt_find(&sparse_irqs, &index, nr_irqs);
  
--	/* Clear the interrupt status */
--	writel(SVC_I3C_MINT_IBIWON, master->regs + SVC_I3C_MSTATUS);
--
- 	status = readl(master->regs + SVC_I3C_MSTATUS);
- 	ibitype = SVC_I3C_MSTATUS_IBITYPE(status);
- 	ibiaddr = SVC_I3C_MSTATUS_IBIADDR(status);
+ 	return desc ? irq_desc_get_irq(desc) : nr_irqs;
+ }
 
 
