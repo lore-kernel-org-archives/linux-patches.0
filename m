@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125B514265A;
-	Thu, 13 Jun 2024 11:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C017143733;
+	Thu, 13 Jun 2024 11:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279284; cv=none; b=UbKm3EGJhJ7hIOASIQuW+c4iQkt+jRtqTxI2B5HhNVTHS2VD/+h6N8I53ok0tu4AZ4KZdvA7hchla2ShVe0k+IlHGsxM6A9Axy1lOHDnFi7TICv1RjLRzyEnCXnqrJ5fWFvYsuODvvHjVM+w16BATGZuvPLmFmmLBKGonkfgLRs=
+	t=1718279287; cv=none; b=hFWsIYeI8IlFLELogKPjM4I/oDwB/qloYJhRJAmZv3yDl0lSEiWTaU9yIK7bYZkYVwO8HTK2qsSlDfshOtcWIsNIW3KmLI3/tau9qALDL5oONhHV2ISNnG0vO5pn8bTf5IaKqVFLcFvWUKpULEqmbMcmWJ64gkKtHajgt+Mukak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279284; c=relaxed/simple;
-	bh=Y0EJ5vzBuqJJUfp27xvnSopu+Ti0jktsB0Sgnx6xaiw=;
+	s=arc-20240116; t=1718279287; c=relaxed/simple;
+	bh=9PgRjtLYcDcPGqFeEo3VH0stqOCWYA3XNhfoo/uzG8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJTLY0FZJ/noLjl0Cs72arP8D/ytixfAayNoOLH0/Lla42o0xLR0gx0VEt0FHscop2kc/oF7gX6UNbP6zTDvyta8gDKc7sASwT4MaNr/31uBDvtkOoTvogJceTC8+KO/y0pE1xga+N65TZlO5cEcbJdhhfZ68KSrnuWsTrix4L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9TJVU1A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QdYApIbU9YwWm/lIKjQhgduixhn/UlTC8kgkzkssB06V3PXz5ZzX4lTGmjsp1Os2id5EHoCaqSh30ewACfzPWDhBYulImY7R0hZsMB5QJ+Vfk0xlfJghz78o1dZ3f/Xon6nWBoB/JSasQ+fUYqAmW00MzpDN0gfcsXLceE0KCfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wnn/VtpL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9TJVU1A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D95CC2BBFC;
-	Thu, 13 Jun 2024 11:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wnn/VtpL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83EE0C2BBFC;
+	Thu, 13 Jun 2024 11:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279284;
-	bh=Y0EJ5vzBuqJJUfp27xvnSopu+Ti0jktsB0Sgnx6xaiw=;
+	s=korg; t=1718279286;
+	bh=9PgRjtLYcDcPGqFeEo3VH0stqOCWYA3XNhfoo/uzG8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9TJVU1AMhMCd8AcoCzU+IK+dpNjWZ2BTL1purJhiWUiYrmd7qaLdl45CwxNlfaOe
-	 avLeZm1PKJADYEYlTB4D+2Y47EF3N9R1SwhV0y0pj//nswqZRdyFiqsSLjH84/PoHK
-	 Ig+NJu7nLwu4E5w2O+LTfO9ATyM4ecDpbr1EtAc8=
+	b=Wnn/VtpLGgif9dmKDmiHLe+4BWoVEVw3KhnQd0DWuWjbAIdePUb5WVG87c5HwXIPk
+	 Nyk9cFL0HPFfWMvGbbPMdBwrgYLNdajgJ6am0Epmkr2RrMmdR4XDpjl8y1xJzUtO54
+	 X5RXmyZ2BkE+kvAtVvHpvVJmBoygYv5bvJoydZY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandeep Dhavale <dhavale@google.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.9 004/157] erofs: avoid allocating DEFLATE streams before mounting
-Date: Thu, 13 Jun 2024 13:32:09 +0200
-Message-ID: <20240613113227.569434006@linuxfoundation.org>
+	Tim Teichmann <teichmanntim@outlook.de>,
+	Christian Heusel <christian@heusel.eu>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.9 005/157] x86/topology/amd: Evaluate SMT in CPUID leaf 0x8000001e only on family 0x17 and greater
+Date: Thu, 13 Jun 2024 13:32:10 +0200
+Message-ID: <20240613113227.609089248@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -50,108 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 80eb4f62056d6ae709bdd0636ab96ce660f494b2 upstream.
+commit 34bf6bae3286a58762711cfbce2cf74ecd42e1b5 upstream.
 
-Currently, each DEFLATE stream takes one 32 KiB permanent internal
-window buffer even if there is no running instance which uses DEFLATE
-algorithm.
+The new AMD/HYGON topology parser evaluates the SMT information in CPUID leaf
+0x8000001e unconditionally while the original code restricted it to CPUs with
+family 0x17 and greater.
 
-It's unexpected and wasteful on embedded devices with limited resources
-and servers with hundreds of CPU cores if DEFLATE is enabled but unused.
+This breaks family 0x15 CPUs which advertise that leaf and have a non-zero
+value in the SMT section. The machine boots, but the scheduler complains loudly
+about the mismatch of the core IDs:
 
-Fixes: ffa09b3bd024 ("erofs: DEFLATE compression support")
-Cc: <stable@vger.kernel.org> # 6.6+
-Reviewed-by: Sandeep Dhavale <dhavale@google.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20240520090106.2898681-1-hsiangkao@linux.alibaba.com
+  WARNING: CPU: 1 PID: 0 at kernel/sched/core.c:6482 sched_cpu_starting+0x183/0x250
+  WARNING: CPU: 0 PID: 1 at kernel/sched/topology.c:2408 build_sched_domains+0x76b/0x12b0
+
+Add the condition back to cure it.
+
+  [ bp: Make it actually build because grandpa is not concerned with
+    trivial stuff. :-P ]
+
+Fixes: f7fb3b2dd92c ("x86/cpu: Provide an AMD/HYGON specific topology parser")
+Closes: https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/issues/56
+Reported-by: Tim Teichmann <teichmanntim@outlook.de>
+Reported-by: Christian Heusel <christian@heusel.eu>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Tim Teichmann <teichmanntim@outlook.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/7skhx6mwe4hxiul64v6azhlxnokheorksqsdbp7qw6g2jduf6c@7b5pvomauugk
+Signed-off-by: Christian Heusel <christian@heusel.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/decompressor_deflate.c |   57 +++++++++++++++++++++-------------------
- 1 file changed, 30 insertions(+), 27 deletions(-)
+ arch/x86/kernel/cpu/topology_amd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/erofs/decompressor_deflate.c
-+++ b/fs/erofs/decompressor_deflate.c
-@@ -46,39 +46,15 @@ int __init z_erofs_deflate_init(void)
- 	/* by default, use # of possible CPUs instead */
- 	if (!z_erofs_deflate_nstrms)
- 		z_erofs_deflate_nstrms = num_possible_cpus();
--
--	for (; z_erofs_deflate_avail_strms < z_erofs_deflate_nstrms;
--	     ++z_erofs_deflate_avail_strms) {
--		struct z_erofs_deflate *strm;
--
--		strm = kzalloc(sizeof(*strm), GFP_KERNEL);
--		if (!strm)
--			goto out_failed;
--
--		/* XXX: in-kernel zlib cannot shrink windowbits currently */
--		strm->z.workspace = vmalloc(zlib_inflate_workspacesize());
--		if (!strm->z.workspace) {
--			kfree(strm);
--			goto out_failed;
--		}
--
--		spin_lock(&z_erofs_deflate_lock);
--		strm->next = z_erofs_deflate_head;
--		z_erofs_deflate_head = strm;
--		spin_unlock(&z_erofs_deflate_lock);
--	}
- 	return 0;
--
--out_failed:
--	erofs_err(NULL, "failed to allocate zlib workspace");
--	z_erofs_deflate_exit();
--	return -ENOMEM;
- }
+--- a/arch/x86/kernel/cpu/topology_amd.c
++++ b/arch/x86/kernel/cpu/topology_amd.c
+@@ -84,9 +84,9 @@ static bool parse_8000_001e(struct topo_
  
- int z_erofs_load_deflate_config(struct super_block *sb,
- 			struct erofs_super_block *dsb, void *data, int size)
- {
- 	struct z_erofs_deflate_cfgs *dfl = data;
-+	static DEFINE_MUTEX(deflate_resize_mutex);
-+	static bool inited;
- 
- 	if (!dfl || size < sizeof(struct z_erofs_deflate_cfgs)) {
- 		erofs_err(sb, "invalid deflate cfgs, size=%u", size);
-@@ -89,9 +65,36 @@ int z_erofs_load_deflate_config(struct s
- 		erofs_err(sb, "unsupported windowbits %u", dfl->windowbits);
- 		return -EOPNOTSUPP;
- 	}
--
-+	mutex_lock(&deflate_resize_mutex);
-+	if (!inited) {
-+		for (; z_erofs_deflate_avail_strms < z_erofs_deflate_nstrms;
-+		     ++z_erofs_deflate_avail_strms) {
-+			struct z_erofs_deflate *strm;
-+
-+			strm = kzalloc(sizeof(*strm), GFP_KERNEL);
-+			if (!strm)
-+				goto failed;
-+			/* XXX: in-kernel zlib cannot customize windowbits */
-+			strm->z.workspace = vmalloc(zlib_inflate_workspacesize());
-+			if (!strm->z.workspace) {
-+				kfree(strm);
-+				goto failed;
-+			}
-+
-+			spin_lock(&z_erofs_deflate_lock);
-+			strm->next = z_erofs_deflate_head;
-+			z_erofs_deflate_head = strm;
-+			spin_unlock(&z_erofs_deflate_lock);
-+		}
-+		inited = true;
-+	}
-+	mutex_unlock(&deflate_resize_mutex);
- 	erofs_info(sb, "EXPERIMENTAL DEFLATE feature in use. Use at your own risk!");
- 	return 0;
-+failed:
-+	mutex_unlock(&deflate_resize_mutex);
-+	z_erofs_deflate_exit();
-+	return -ENOMEM;
- }
- 
- int z_erofs_deflate_decompress(struct z_erofs_decompress_req *rq,
+ 	/*
+ 	 * If leaf 0xb is available, then the domain shifts are set
+-	 * already and nothing to do here.
++	 * already and nothing to do here. Only valid for family >= 0x17.
+ 	 */
+-	if (!has_0xb) {
++	if (!has_0xb && tscan->c->x86 >= 0x17) {
+ 		/*
+ 		 * Leaf 0x80000008 set the CORE domain shift already.
+ 		 * Update the SMT domain, but do not propagate it.
 
 
