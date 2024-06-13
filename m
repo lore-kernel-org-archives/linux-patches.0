@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CB61422B4;
-	Thu, 13 Jun 2024 12:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CD11420C6;
+	Thu, 13 Jun 2024 12:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281619; cv=none; b=bDT6M7gBOVLQwHQ/O51P6Go4SjDxK+kWMW1wky4D6pHmzxuV4/9Db0A6+TW4V8gZ8ZVInE1lSHJuaorVYC00uhlMI8hU/TneYbmLZCbWNhHmwmf3lTuz1vuXeC6G8qEjWbkIU3gPbVJBjwGhMuf3bJ/mV0Kb5AcKE7XPh4t3r70=
+	t=1718281622; cv=none; b=aVPwukG1dXGzXl7pigV5EOB1cHwm5nuOxqAMNE4EdGAhVgHhQwXCeZOQeSj+TqAYnl2F2KB485D57v3PVlJ5+a5AfIYXn4k8CFQDEcKFPq7Ncch8+SPbDSf4d5vg23HrGTs2qa0buJzDujhZrEs0w2e1wTL2/mDLC/qceSJREK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281619; c=relaxed/simple;
-	bh=f00dbt03Hp7s6VQYfZVxjHfTvH1puHAIt5Qj0fAlzcc=;
+	s=arc-20240116; t=1718281622; c=relaxed/simple;
+	bh=jbPBdkPwVttwEXmtELnvsxONNLRvSPmImpooOE+EQFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gDG7BpJQuwjEEXF2trSXN8nprzFvnY1K3K7GO1mAtVH8mKd6RQyR6nlLqATBQCXY9YM4zO6+Ab/MYWmqD36eR+Um2GTr8OpJ0cPegqgfE5d2cxVG9w+GXGlUJXPREeRbegFAnoaOkzjFNyZ7TNoe5loWXURvobx4ixe8dqOTp1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYOglz6Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ast1UYY8gkhUKdIBOo2CoBW17dajsxYrhUFn1rMFeNPNo5Y/Tss+5F2pDZEQmSHK4jpT3RZW1toviumTcKy4F/nq0uQPX45KkW49Zp4KaY7OB8zPlVpVtifMpdAAAqj2MsTlWydYGqMN6snkMJd3+5Q61LX55vcCz1awOD/2AO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUgY+pz8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYOglz6Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321FDC2BBFC;
-	Thu, 13 Jun 2024 12:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUgY+pz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BEE3C2BBFC;
+	Thu, 13 Jun 2024 12:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281618;
-	bh=f00dbt03Hp7s6VQYfZVxjHfTvH1puHAIt5Qj0fAlzcc=;
+	s=korg; t=1718281621;
+	bh=jbPBdkPwVttwEXmtELnvsxONNLRvSPmImpooOE+EQFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYOglz6Zp5v2a0OlY5VVQQep/k+F6NMc4sgnOlcctO4X5Y2a2Mnma83u9cObTTzpm
-	 bEUnJCqLkgFkXrKwg6+3nXY0S1bvQNSawYIScCMA6RGy15pUW8Qhc1wuHgbrgDFrFA
-	 yTHqIeSSGq4pPVABHsMKlzO1LvvV3+RwmzJAYwJI=
+	b=cUgY+pz8ULPIBB2vr2OcJ/j8o8iqo8/YmvCDoNJ/rzUNloU9lL5tMTmOkxzUrWe16
+	 MbYUvT4lwm0KIGo8yznH1P8oGLYig7G+hhdg6VmwrCP4LF2aSutkaEI62SjBtD6U/z
+	 hWZkp5nqPdSU64AUyGNDVnK0BWC/skVjWNokMf4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangyang Li <liyangyang20@huawei.com>,
-	Weihang Li <liweihang@huawei.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.10 316/317] RDMA/hns: Use mutex instead of spinlock for ida allocation
-Date: Thu, 13 Jun 2024 13:35:34 +0200
-Message-ID: <20240613113259.777391482@linuxfoundation.org>
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 5.10 317/317] RDMA/hns: Fix CQ and QP cache affinity
+Date: Thu, 13 Jun 2024 13:35:35 +0200
+Message-ID: <20240613113259.815606243@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,84 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yangyang Li <liyangyang20@huawei.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-commit 9293d3fcb70583f2c786f04ca788af026b7c4c5c upstream.
+commit 9e03dbea2b0634b21a45946b4f8097e0dc86ebe1 upstream.
 
-GFP_KERNEL may cause ida_alloc_range() to sleep, but the spinlock covering
-this function is not allowed to sleep, so the spinlock needs to be changed
-to mutex.
+Currently, the affinity between QP cache and CQ cache is not
+considered when assigning QPN, it will affect the message rate of HW.
 
-As there is a certain chance of memory allocation failure, GFP_ATOMIC is
-not suitable for QP allocation scenarios.
+Allocate QPN from QP cache with better CQ affinity to get better
+performance.
 
 Fixes: 71586dd20010 ("RDMA/hns: Create QP with selected QPN for bank load balance")
-Link: https://lore.kernel.org/r/1611048513-28663-1-git-send-email-liweihang@huawei.com
-Signed-off-by: Yangyang Li <liyangyang20@huawei.com>
-Signed-off-by: Weihang Li <liweihang@huawei.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20230804012711.808069-5-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_device.h |    2 +-
- drivers/infiniband/hw/hns/hns_roce_qp.c     |   11 ++++++-----
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_device.h |    2 ++
+ drivers/infiniband/hw/hns/hns_roce_qp.c     |   28 ++++++++++++++++++++++------
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
 --- a/drivers/infiniband/hw/hns/hns_roce_device.h
 +++ b/drivers/infiniband/hw/hns/hns_roce_device.h
-@@ -537,7 +537,7 @@ struct hns_roce_qp_table {
- 	struct hns_roce_hem_table	sccc_table;
- 	struct mutex			scc_mutex;
- 	struct hns_roce_bank bank[HNS_ROCE_QP_BANK_NUM];
--	spinlock_t bank_lock;
-+	struct mutex bank_mutex;
- };
+@@ -122,6 +122,8 @@
+  */
+ #define EQ_DEPTH_COEFF				2
  
- struct hns_roce_cq_table {
++#define CQ_BANKID_MASK GENMASK(1, 0)
++
+ enum {
+ 	SERV_TYPE_RC,
+ 	SERV_TYPE_UC,
 --- a/drivers/infiniband/hw/hns/hns_roce_qp.c
 +++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
-@@ -210,7 +210,7 @@ static int alloc_qpn(struct hns_roce_dev
- 
- 		hr_qp->doorbell_qpn = 1;
- 	} else {
--		spin_lock(&qp_table->bank_lock);
-+		mutex_lock(&qp_table->bank_mutex);
- 		bankid = get_least_load_bankid_for_qp(qp_table->bank);
- 
- 		ret = alloc_qpn_with_bankid(&qp_table->bank[bankid], bankid,
-@@ -218,12 +218,12 @@ static int alloc_qpn(struct hns_roce_dev
- 		if (ret) {
- 			ibdev_err(&hr_dev->ib_dev,
- 				  "failed to alloc QPN, ret = %d\n", ret);
--			spin_unlock(&qp_table->bank_lock);
-+			mutex_unlock(&qp_table->bank_mutex);
- 			return ret;
- 		}
- 
- 		qp_table->bank[bankid].inuse++;
--		spin_unlock(&qp_table->bank_lock);
-+		mutex_unlock(&qp_table->bank_mutex);
- 
- 		hr_qp->doorbell_qpn = (u32)num;
+@@ -154,14 +154,29 @@ static void hns_roce_ib_qp_event(struct
  	}
-@@ -409,9 +409,9 @@ static void free_qpn(struct hns_roce_dev
- 
- 	ida_free(&hr_dev->qp_table.bank[bankid].ida, hr_qp->qpn >> 3);
- 
--	spin_lock(&hr_dev->qp_table.bank_lock);
-+	mutex_lock(&hr_dev->qp_table.bank_mutex);
- 	hr_dev->qp_table.bank[bankid].inuse--;
--	spin_unlock(&hr_dev->qp_table.bank_lock);
-+	mutex_unlock(&hr_dev->qp_table.bank_mutex);
  }
  
- static int set_rq_size(struct hns_roce_dev *hr_dev, struct ib_qp_cap *cap,
-@@ -1358,6 +1358,7 @@ int hns_roce_init_qp_table(struct hns_ro
- 	unsigned int i;
+-static u8 get_least_load_bankid_for_qp(struct hns_roce_bank *bank)
++static u8 get_affinity_cq_bank(u8 qp_bank)
+ {
+-	u32 least_load = bank[0].inuse;
++	return (qp_bank >> 1) & CQ_BANKID_MASK;
++}
++
++static u8 get_least_load_bankid_for_qp(struct ib_qp_init_attr *init_attr,
++					struct hns_roce_bank *bank)
++{
++#define INVALID_LOAD_QPNUM 0xFFFFFFFF
++	struct ib_cq *scq = init_attr->send_cq;
++	u32 least_load = INVALID_LOAD_QPNUM;
++	unsigned long cqn = 0;
+ 	u8 bankid = 0;
+ 	u32 bankcnt;
+ 	u8 i;
  
- 	mutex_init(&qp_table->scc_mutex);
-+	mutex_init(&qp_table->bank_mutex);
- 	xa_init(&hr_dev->qp_table_xa);
+-	for (i = 1; i < HNS_ROCE_QP_BANK_NUM; i++) {
++	if (scq)
++		cqn = to_hr_cq(scq)->cqn;
++
++	for (i = 0; i < HNS_ROCE_QP_BANK_NUM; i++) {
++		if (scq && (get_affinity_cq_bank(i) != (cqn & CQ_BANKID_MASK)))
++			continue;
++
+ 		bankcnt = bank[i].inuse;
+ 		if (bankcnt < least_load) {
+ 			least_load = bankcnt;
+@@ -193,7 +208,8 @@ static int alloc_qpn_with_bankid(struct
  
- 	reserved_from_bot = hr_dev->caps.reserved_qps;
+ 	return 0;
+ }
+-static int alloc_qpn(struct hns_roce_dev *hr_dev, struct hns_roce_qp *hr_qp)
++static int alloc_qpn(struct hns_roce_dev *hr_dev, struct hns_roce_qp *hr_qp,
++		     struct ib_qp_init_attr *init_attr)
+ {
+ 	struct hns_roce_qp_table *qp_table = &hr_dev->qp_table;
+ 	unsigned long num = 0;
+@@ -211,7 +227,7 @@ static int alloc_qpn(struct hns_roce_dev
+ 		hr_qp->doorbell_qpn = 1;
+ 	} else {
+ 		mutex_lock(&qp_table->bank_mutex);
+-		bankid = get_least_load_bankid_for_qp(qp_table->bank);
++		bankid = get_least_load_bankid_for_qp(init_attr, qp_table->bank);
+ 
+ 		ret = alloc_qpn_with_bankid(&qp_table->bank[bankid], bankid,
+ 					    &num);
+@@ -1005,7 +1021,7 @@ static int hns_roce_create_qp_common(str
+ 		goto err_db;
+ 	}
+ 
+-	ret = alloc_qpn(hr_dev, hr_qp);
++	ret = alloc_qpn(hr_dev, hr_qp, init_attr);
+ 	if (ret) {
+ 		ibdev_err(ibdev, "failed to alloc QPN, ret = %d.\n", ret);
+ 		goto err_buf;
 
 
