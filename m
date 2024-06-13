@@ -1,41 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF84B3209;
-	Thu, 13 Jun 2024 12:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C24143747;
+	Thu, 13 Jun 2024 12:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281175; cv=none; b=ZotGnddr2dQfc8P9pwLL+hFwLxs0Q6qnN5B9xyH+2BrLQU5KyqKemLL4NSOzJn+qCxiTGCBGXz2a5+s3/sJK1EDM4B+SAaop2M5UeI63bd/sbdpZ7NI6inuTMC8+lza8x1L+CGKi3haOO1s5aHkP6YOMR1OjZOjwWPz319A1aOs=
+	t=1718281177; cv=none; b=tOsCNcOfFl5j80lgVteJklkroULJtPoBwpr1bfIopAfxA8qz+yXRKpfch43JMaBY7tDVI19y1VJck6nC+wBs9PVlyrAKj9+kH61ssNeGLu5PGuX21PZ41JXv3eMuuZeHlbpe2VT2jhIyHKu7Eg49WzXzUJomnpgm737Od0ulqhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281175; c=relaxed/simple;
-	bh=44B+8EKN0l6mVrigcEK2fZrCyK+gNXS2/I6zH/K9HLs=;
+	s=arc-20240116; t=1718281177; c=relaxed/simple;
+	bh=gPSb3zpkOMC12uPi6gAPjJRBPOZcmWBWpuUVV2XOLSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETsTE7o485Qghv82lBEZBocD/F5N8YUzqgkajdvJ/epkC5GkxgIUvud+NnIPZMY2MY5lDY76z5FXH3yEUR1R6TFWN5qQctEs/Z/MYzhHkJHMshL4ZmdxbXsDCvOGqv+kOfaAwiovIsvzsw16ErRBYOK2IgiwOC1+KDy5hRWvC0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nq2j4P4/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PTEL5CNRpSEmZAvmYq7aATrihwrfSMtNvKiddTFgYW0/IphdaIq+0TsnoKkabwKCYSclkqnp7BjZv1B9xH/i7oYvHfu6PKVrRiqMZYJk0M1TsFs6jikrIrbPvkmCTZcjoYxrWgFn/Lf/Bc1byWus7yTmKHhQKqQvo2uy50ND2f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NR4N2cqA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nq2j4P4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617AAC2BBFC;
-	Thu, 13 Jun 2024 12:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NR4N2cqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8EDC2BBFC;
+	Thu, 13 Jun 2024 12:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281174;
-	bh=44B+8EKN0l6mVrigcEK2fZrCyK+gNXS2/I6zH/K9HLs=;
+	s=korg; t=1718281177;
+	bh=gPSb3zpkOMC12uPi6gAPjJRBPOZcmWBWpuUVV2XOLSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nq2j4P4/pYJTWMMLQ+EJ2Nu9SQyQP6TN34AY011b6GnTP/4Wl5a1o3SAlpweMbDkE
-	 JMQ1N3h5Onkl2VLsS0RtEnET16sYo5JDzCYCJ13HzxrPYjitfo++oNkAYGPwAxJkwr
-	 SdbIBqaVR1I7BFox+Dc9IKVbfowPYJrvxiQRGAVw=
+	b=NR4N2cqA6fkAzI5N0wXzxgqkMHmWTE1vVouYckjE6oes+Egs9GFyx2i27qmp2gT4F
+	 Fz0PTzF/Mdl1Pk8fy8Nvng03D1//+LBzPhLGJjPaUbcakAUg+cGfs3MdOQ1DpOrMLS
+	 owDOBMPSdsnPbquz08jUbk+rQfN7mGLyaxP7gk8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
 	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
 	Jiri Olsa <jolsa@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Song Liu <songliubraving@fb.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 135/317] perf evlist: Use the right prefix for struct evlist sideband thread methods
-Date: Thu, 13 Jun 2024 13:32:33 +0200
-Message-ID: <20240613113252.780904236@linuxfoundation.org>
+Subject: [PATCH 5.10 136/317] perf record: Delete session after stopping sideband thread
+Date: Thu, 13 Jun 2024 13:32:34 +0200
+Message-ID: <20240613113252.822022527@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -54,141 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 08c83997ca87f9e162563a59ea43eabadc9e4231 ]
+[ Upstream commit 88ce0106a1f603bf360cb397e8fe293f8298fabb ]
 
-perf_evlist__ is for 'struct perf_evlist' methods, in tools/lib/perf/,
-go on completing this split.
+The session has a header in it which contains a perf env with
+bpf_progs. The bpf_progs are accessed by the sideband thread and so
+the sideband thread must be stopped before the session is deleted, to
+avoid a use after free.  This error was detected by AddressSanitizer
+in the following:
 
+  ==2054673==ERROR: AddressSanitizer: heap-use-after-free on address 0x61d000161e00 at pc 0x55769289de54 bp 0x7f9df36d4ab0 sp 0x7f9df36d4aa8
+  READ of size 8 at 0x61d000161e00 thread T1
+      #0 0x55769289de53 in __perf_env__insert_bpf_prog_info util/env.c:42
+      #1 0x55769289dbb1 in perf_env__insert_bpf_prog_info util/env.c:29
+      #2 0x557692bbae29 in perf_env__add_bpf_info util/bpf-event.c:483
+      #3 0x557692bbb01a in bpf_event__sb_cb util/bpf-event.c:512
+      #4 0x5576928b75f4 in perf_evlist__poll_thread util/sideband_evlist.c:68
+      #5 0x7f9df96a63eb in start_thread nptl/pthread_create.c:444
+      #6 0x7f9df9726a4b in clone3 ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
+
+  0x61d000161e00 is located 384 bytes inside of 2136-byte region [0x61d000161c80,0x61d0001624d8)
+  freed by thread T0 here:
+      #0 0x7f9dfa6d7288 in __interceptor_free libsanitizer/asan/asan_malloc_linux.cpp:52
+      #1 0x557692978d50 in perf_session__delete util/session.c:319
+      #2 0x557692673959 in __cmd_record tools/perf/builtin-record.c:2884
+      #3 0x55769267a9f0 in cmd_record tools/perf/builtin-record.c:4259
+      #4 0x55769286710c in run_builtin tools/perf/perf.c:349
+      #5 0x557692867678 in handle_internal_command tools/perf/perf.c:402
+      #6 0x557692867a40 in run_argv tools/perf/perf.c:446
+      #7 0x557692867fae in main tools/perf/perf.c:562
+      #8 0x7f9df96456c9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+Fixes: 657ee5531903339b ("perf evlist: Introduce side band thread")
+Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Disha Goel <disgoel@linux.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Song Liu <songliubraving@fb.com>
+Cc: Tim Chen <tim.c.chen@linux.intel.com>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Link: https://lore.kernel.org/r/20240301074639.2260708-1-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 88ce0106a1f6 ("perf record: Delete session after stopping sideband thread")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-record.c       |  4 ++--
- tools/perf/builtin-top.c          |  4 ++--
- tools/perf/util/bpf-event.c       |  2 +-
- tools/perf/util/evlist.h          | 11 ++++-------
- tools/perf/util/sideband_evlist.c |  8 ++++----
- 5 files changed, 13 insertions(+), 16 deletions(-)
+ tools/perf/builtin-record.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
-index 167cd8d3b7a21..a7d9f00382d9f 100644
+index a7d9f00382d9f..44bd12aa0e062 100644
 --- a/tools/perf/builtin-record.c
 +++ b/tools/perf/builtin-record.c
-@@ -1548,7 +1548,7 @@ static int record__setup_sb_evlist(struct record *rec)
- 		}
- 	}
+@@ -2063,10 +2063,10 @@ static int __cmd_record(struct record *rec, int argc, const char **argv)
+ 		close(done_fd);
  #endif
--	if (perf_evlist__start_sb_thread(rec->sb_evlist, &rec->opts.target)) {
-+	if (evlist__start_sb_thread(rec->sb_evlist, &rec->opts.target)) {
- 		pr_debug("Couldn't start the BPF side band thread:\nBPF programs starting from now on won't be annotatable\n");
- 		opts->no_bpf_event = true;
- 	}
-@@ -2066,7 +2066,7 @@ static int __cmd_record(struct record *rec, int argc, const char **argv)
- 	perf_session__delete(session);
- 
+ 	zstd_fini(&session->zstd_data);
+-	perf_session__delete(session);
+-
  	if (!opts->no_bpf_event)
--		perf_evlist__stop_sb_thread(rec->sb_evlist);
-+		evlist__stop_sb_thread(rec->sb_evlist);
+ 		evlist__stop_sb_thread(rec->sb_evlist);
++
++	perf_session__delete(session);
  	return status;
  }
  
-diff --git a/tools/perf/builtin-top.c b/tools/perf/builtin-top.c
-index ee30372f77133..2cf4791290263 100644
---- a/tools/perf/builtin-top.c
-+++ b/tools/perf/builtin-top.c
-@@ -1763,7 +1763,7 @@ int cmd_top(int argc, const char **argv)
- 	}
- #endif
- 
--	if (perf_evlist__start_sb_thread(top.sb_evlist, target)) {
-+	if (evlist__start_sb_thread(top.sb_evlist, target)) {
- 		pr_debug("Couldn't start the BPF side band thread:\nBPF programs starting from now on won't be annotatable\n");
- 		opts->no_bpf_event = true;
- 	}
-@@ -1771,7 +1771,7 @@ int cmd_top(int argc, const char **argv)
- 	status = __cmd_top(&top);
- 
- 	if (!opts->no_bpf_event)
--		perf_evlist__stop_sb_thread(top.sb_evlist);
-+		evlist__stop_sb_thread(top.sb_evlist);
- 
- out_delete_evlist:
- 	evlist__delete(top.evlist);
-diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
-index c50d2c7a264fe..fccc4bf20c74f 100644
---- a/tools/perf/util/bpf-event.c
-+++ b/tools/perf/util/bpf-event.c
-@@ -530,7 +530,7 @@ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
- 	 */
- 	attr.wakeup_watermark = 1;
- 
--	return perf_evlist__add_sb_event(evlist, &attr, bpf_event__sb_cb, env);
-+	return evlist__add_sb_event(evlist, &attr, bpf_event__sb_cb, env);
- }
- 
- void __bpf_event__print_bpf_prog_info(struct bpf_prog_info *info,
-diff --git a/tools/perf/util/evlist.h b/tools/perf/util/evlist.h
-index 9298fce53ea31..8b00e9a7c0fe2 100644
---- a/tools/perf/util/evlist.h
-+++ b/tools/perf/util/evlist.h
-@@ -112,14 +112,11 @@ int __evlist__add_default_attrs(struct evlist *evlist,
- 
- int evlist__add_dummy(struct evlist *evlist);
- 
--int perf_evlist__add_sb_event(struct evlist *evlist,
--			      struct perf_event_attr *attr,
--			      evsel__sb_cb_t cb,
--			      void *data);
-+int evlist__add_sb_event(struct evlist *evlist, struct perf_event_attr *attr,
-+			 evsel__sb_cb_t cb, void *data);
- void evlist__set_cb(struct evlist *evlist, evsel__sb_cb_t cb, void *data);
--int perf_evlist__start_sb_thread(struct evlist *evlist,
--				 struct target *target);
--void perf_evlist__stop_sb_thread(struct evlist *evlist);
-+int evlist__start_sb_thread(struct evlist *evlist, struct target *target);
-+void evlist__stop_sb_thread(struct evlist *evlist);
- 
- int evlist__add_newtp(struct evlist *evlist, const char *sys, const char *name, void *handler);
- 
-diff --git a/tools/perf/util/sideband_evlist.c b/tools/perf/util/sideband_evlist.c
-index ded9ced027973..90ed016bb3489 100644
---- a/tools/perf/util/sideband_evlist.c
-+++ b/tools/perf/util/sideband_evlist.c
-@@ -12,8 +12,8 @@
- #include <sched.h>
- #include <stdbool.h>
- 
--int perf_evlist__add_sb_event(struct evlist *evlist, struct perf_event_attr *attr,
--			      evsel__sb_cb_t cb, void *data)
-+int evlist__add_sb_event(struct evlist *evlist, struct perf_event_attr *attr,
-+			 evsel__sb_cb_t cb, void *data)
- {
- 	struct evsel *evsel;
- 
-@@ -94,7 +94,7 @@ void evlist__set_cb(struct evlist *evlist, evsel__sb_cb_t cb, void *data)
-       }
- }
- 
--int perf_evlist__start_sb_thread(struct evlist *evlist, struct target *target)
-+int evlist__start_sb_thread(struct evlist *evlist, struct target *target)
- {
- 	struct evsel *counter;
- 
-@@ -138,7 +138,7 @@ int perf_evlist__start_sb_thread(struct evlist *evlist, struct target *target)
- 	return -1;
- }
- 
--void perf_evlist__stop_sb_thread(struct evlist *evlist)
-+void evlist__stop_sb_thread(struct evlist *evlist)
- {
- 	if (!evlist)
- 		return;
 -- 
 2.43.0
 
