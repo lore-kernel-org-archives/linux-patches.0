@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC60384;
-	Thu, 13 Jun 2024 12:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DD0384;
+	Thu, 13 Jun 2024 12:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282548; cv=none; b=aiBTXCDQYmuQTEOLS+YNboHuoIkpfS658wmvxhALLbMCMdJihj+T+bclM/gtNMbMbDj+RSVvfEKJavcaNLL7Hzq/RpnPQEqrasmHbh7LxTpu72d/jcK7EKyH/iKDO9bfeRPJ8Gub2brFNM7KjjflHTePUsHeBpnTEyObfW/nLrA=
+	t=1718282551; cv=none; b=fw+iLmL+BSvUmojfFHN/dQ6sLlwfR8ydyrKA7I0Xy3fUOXJ+Y9P5jORvm/e5R54M7/URUPtVCEENzaJ8JXKO7fljCxdWC7HBblD6TN+cU4XQelT9iXe2eh+pODAykDZH1yu89wzMYYilTqj5zVQl0bPE7yhQYnuEMdbpDBvd3lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282548; c=relaxed/simple;
-	bh=BoqyVun0o6Z06ylw6GWFWEh8pnVGXRswUT9ONoVzb2c=;
+	s=arc-20240116; t=1718282551; c=relaxed/simple;
+	bh=HEVS1QhSLQGOyuVF3W/qTl6oxbajXBtXOE+NNrZLHUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z8j0Cx5paT5+AxsF08xQImcQS3MNpCU6xPmjZ2LZspeow5KblhASNU4i4iXH4n8lKYaJ5t70lAp7ejez5y9L9Huxp43vhrASVR366RSahOTr8lk2PBVXeRdt9E+g76k5Dq2IpM61xI3AO9TgDT5YJvJmVgRuHFacxh4a6oOcK+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOI35RTd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SrENL+IhoP6/vZm1oF7F8a+nM+23zLtQ2NkDLsV44iNinaTQORBq4ZsIajSvxerhUhAjfF49TRVd2dS0s21Lwi85o0WZjiQSjsVpBOqvBg6oVEyijyW8k+IVxUvIXxBUW6R3hf+sw0j2tZdy9BjteQ5yi9KA7IgNsoMclhlGMms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjoXTl3P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOI35RTd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CBFC2BBFC;
-	Thu, 13 Jun 2024 12:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjoXTl3P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D317FC2BBFC;
+	Thu, 13 Jun 2024 12:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282548;
-	bh=BoqyVun0o6Z06ylw6GWFWEh8pnVGXRswUT9ONoVzb2c=;
+	s=korg; t=1718282551;
+	bh=HEVS1QhSLQGOyuVF3W/qTl6oxbajXBtXOE+NNrZLHUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jOI35RTdIzeFIH8cACVPxnvrzytoQBgGsjzYC8Yh2cPw+dyXdk8oT5KwqS2Kk57o9
-	 Vxowpa3vFBaBYCx3Y6wEvOv1TxGgQChF7UmnaYsEUYOn6Sz6nK8HBh69qqOXrtp2KQ
-	 Qn6Hu15Yk3TM8IGOrNIJy+E16MKMOB6hE/SOzcK4=
+	b=zjoXTl3Pn2JxCT1/dhdRWupbbBfPvyxT8CHQKmQCz+5CFFXs1Kh3cmKhLRRHtWzXr
+	 vSzesxYVE/0lL0bPj0/nZ3gvzSHIudYZTUP+s661qddS25M5GzvYTuMg3OXMSLkHGT
+	 msqUZmkuVP6J6R0dBc/vEZsHuXmYFSm6HIoSYezA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 313/402] dma-buf/sw-sync: dont enable IRQ from sync_print_obj()
-Date: Thu, 13 Jun 2024 13:34:30 +0200
-Message-ID: <20240613113314.350980309@linuxfoundation.org>
+Subject: [PATCH 5.15 314/402] bpf: Fix potential integer overflow in resolve_btfids
+Date: Thu, 13 Jun 2024 13:34:31 +0200
+Message-ID: <20240613113314.389398317@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -46,57 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Friedrich Vock <friedrich.vock@gmx.de>
 
-[ Upstream commit b794918961516f667b0c745aebdfebbb8a98df39 ]
+[ Upstream commit 44382b3ed6b2787710c8ade06c0e97f5970a47c8 ]
 
-Since commit a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from
-known context") by error replaced spin_unlock_irqrestore() with
-spin_unlock_irq() for both sync_debugfs_show() and sync_print_obj() despite
-sync_print_obj() is called from sync_debugfs_show(), lockdep complains
-inconsistent lock state warning.
+err is a 32-bit integer, but elf_update returns an off_t, which is 64-bit
+at least on 64-bit platforms. If symbols_patch is called on a binary between
+2-4GB in size, the result will be negative when cast to a 32-bit integer,
+which the code assumes means an error occurred. This can wrongly trigger
+build failures when building very large kernel images.
 
-Use plain spin_{lock,unlock}() for sync_print_obj(), for
-sync_debugfs_show() is already using spin_{lock,unlock}_irq().
-
-Reported-by: syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=a225ee3df7e7f9372dbe
-Fixes: a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from known context")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/c2e46020-aaa6-4e06-bf73-f05823f913f0@I-love.SAKURA.ne.jp
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: fbbb68de80a4 ("bpf: Add resolve_btfids tool to resolve BTF IDs in ELF object")
+Signed-off-by: Friedrich Vock <friedrich.vock@gmx.de>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20240514070931.199694-1-friedrich.vock@gmx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/sync_debug.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/bpf/resolve_btfids/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma-buf/sync_debug.c b/drivers/dma-buf/sync_debug.c
-index 101394f16930f..237bce21d1e72 100644
---- a/drivers/dma-buf/sync_debug.c
-+++ b/drivers/dma-buf/sync_debug.c
-@@ -110,12 +110,12 @@ static void sync_print_obj(struct seq_file *s, struct sync_timeline *obj)
+diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
+index 45e0d640618ac..55ca620b56918 100644
+--- a/tools/bpf/resolve_btfids/main.c
++++ b/tools/bpf/resolve_btfids/main.c
+@@ -643,7 +643,7 @@ static int sets_patch(struct object *obj)
  
- 	seq_printf(s, "%s: %d\n", obj->name, obj->value);
+ static int symbols_patch(struct object *obj)
+ {
+-	int err;
++	off_t err;
  
--	spin_lock_irq(&obj->lock);
-+	spin_lock(&obj->lock); /* Caller already disabled IRQ. */
- 	list_for_each(pos, &obj->pt_list) {
- 		struct sync_pt *pt = container_of(pos, struct sync_pt, link);
- 		sync_print_fence(s, &pt->base, false);
- 	}
--	spin_unlock_irq(&obj->lock);
-+	spin_unlock(&obj->lock);
- }
- 
- static void sync_print_sync_file(struct seq_file *s,
+ 	if (__symbols_patch(obj, &obj->structs)  ||
+ 	    __symbols_patch(obj, &obj->unions)   ||
 -- 
 2.43.0
 
