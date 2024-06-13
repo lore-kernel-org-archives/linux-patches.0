@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572E6384;
-	Thu, 13 Jun 2024 12:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9681A1C32;
+	Thu, 13 Jun 2024 12:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282690; cv=none; b=IlBpWHjgH/+QbEBwccf77zdWJ7E15KafcrQIgsQeXJbLLfcWKE1Ap8UGH7Z4TrAnWrEBYS1dFU/sOxDqC0NAeWvkktEEi6IE16VUM4oRuLSH1LNtgniQmGol7cNhQpdo0ZzV+9NiL3DsYJz6wNwun+TeqjqPqowV1CC+neyQToU=
+	t=1718282693; cv=none; b=hRU6m4IwM2L9VYuwQ68yrsxxJOs2/aSnC2sjWr4p/1r4yfOjXsU7BzeGXx6OKx0HOkGYvd03a5uwO8J+jVneTa1nr7aPM8AQilDjyCTN0Smth3Da614i4Z3Xb74H4LYqZ7b/k+84FF+iHESPb3MGQbOqloocUbMUaxoLjzM5Ngo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282690; c=relaxed/simple;
-	bh=Z9W6UCNJpEyuuN23MPrE5ykWXM8hy2WfYIiLqNE/2GM=;
+	s=arc-20240116; t=1718282693; c=relaxed/simple;
+	bh=2Bfe2X06KL/Rjr5tQh7WOez8JXfcKuSy/sjTG6r5rXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4Stz+/bvS45L058P5qpXY63bReAZrgUcI/wzYpeVAPOy0OM+GS5wyV6eG8IDTVQ81o09U0SfztaiKjhjUXxxkJ/CXXklQCjtVPaE5oqKQGXxbNPr1n1yq3wX0RMZnxHx2vUz21JkNBCcZSecGzzbymYgbPmsfPMT2+TX5fSlcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0tCjVuo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AV9jUq52xYurgvA6/sumfxcQsyQu6oSDrT9dz+HLlBqfMFPHCwTf1Mintk6QCDcTwsvIWooxNTQJ3ccJxu2SIAcC2dyO7FukfRnNMM/ey3aV166m5L9xZA9/gtY8RahPYSz5MIyuMsvnjdqcQRWSAGBXZsKJWIqO40AB8DjFm/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRTtC8jD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0tCjVuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D155CC2BBFC;
-	Thu, 13 Jun 2024 12:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRTtC8jD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04A7C4AF1A;
+	Thu, 13 Jun 2024 12:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282690;
-	bh=Z9W6UCNJpEyuuN23MPrE5ykWXM8hy2WfYIiLqNE/2GM=;
+	s=korg; t=1718282693;
+	bh=2Bfe2X06KL/Rjr5tQh7WOez8JXfcKuSy/sjTG6r5rXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0tCjVuonFnyq4Z/Y6sG7k9PPuqxACDDwlrVAmOM+JygNYzXTLv9m8fsI2QuGhZwe
-	 R9kJS9PzuzIa++pNdWnft/80KawZRAMKI8vHFrnIgLyooyArWzFrE+sBTn0391NG9D
-	 USuhsetYrbfcqK7o0jAqpUlzMvgEKfSYAZHSvW/4=
+	b=jRTtC8jDpN8NR7IkU1Ck3jE0tdNKF5ufaXLZSCFFyP6eA9Z+Jk31EjCrKi+rnZR0n
+	 WfDkilZl74NMH2kL2MHrAXX63a0raNB529+YObNBfbbdnzR73TTPP6tTKhMPYTCXjR
+	 kSI5hOrfbn3COJgvcF1Quv8Z/Vp1zuOabNXcSaks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 5.15 363/402] wifi: rtl8xxxu: Fix the TX power of RTL8192CU, RTL8723AU
-Date: Thu, 13 Jun 2024 13:35:20 +0200
-Message-ID: <20240613113316.298377675@linuxfoundation.org>
+Subject: [PATCH 5.15 364/402] wifi: rtlwifi: rtl8192de: Fix low speed with WPA3-SAE
+Date: Thu, 13 Jun 2024 13:35:21 +0200
+Message-ID: <20240613113316.336606045@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,96 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 08b5d052d17a89bb8706b2888277d0b682dc1610 upstream.
+commit a7c0f48410f546772ac94a0f7b7291a15c4fc173 upstream.
 
-Don't subtract 1 from the power index. This was added in commit
-2fc0b8e5a17d ("rtl8xxxu: Add TX power base values for gen1 parts")
-for unknown reasons. The vendor drivers don't do this.
+Some (all?) management frames are incorrectly reported to mac80211 as
+decrypted when actually the hardware did not decrypt them. This results
+in speeds 3-5 times lower than expected, 20-30 Mbps instead of 100
+Mbps.
 
-Also correct the calculations of values written to
-REG_OFDM0_X{C,D}_TX_IQ_IMBALANCE. According to the vendor driver,
-these are used for TX power training.
+Fix this by checking the encryption type field of the RX descriptor.
+rtw88 does the same thing.
 
-With these changes rtl8xxxu sets the TX power of RTL8192CU the same
-as the vendor driver.
-
-None of this appears to have any effect on my RTL8192CU device.
+This fix was tested only with rtl8192du, which will use the same code.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://msgid.link/6ae5945b-644e-45e4-a78f-4c7d9c987910@gmail.com
+Link: https://msgid.link/4d600435-f0ea-46b0-bdb4-e60f173da8dd@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c |   26 +++++++-----------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8192de/trx.c |    5 ++---
+ drivers/net/wireless/realtek/rtlwifi/rtl8192de/trx.h |   14 ++++++++++++++
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -28,6 +28,7 @@
- #include <linux/wireless.h>
- #include <linux/firmware.h>
- #include <linux/moduleparam.h>
-+#include <linux/bitfield.h>
- #include <net/mac80211.h>
- #include "rtl8xxxu.h"
- #include "rtl8xxxu_regs.h"
-@@ -1389,13 +1390,13 @@ rtl8xxxu_gen1_set_tx_power(struct rtl8xx
- 	u8 cck[RTL8723A_MAX_RF_PATHS], ofdm[RTL8723A_MAX_RF_PATHS];
- 	u8 ofdmbase[RTL8723A_MAX_RF_PATHS], mcsbase[RTL8723A_MAX_RF_PATHS];
- 	u32 val32, ofdm_a, ofdm_b, mcs_a, mcs_b;
--	u8 val8;
-+	u8 val8, base;
- 	int group, i;
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/trx.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/trx.c
+@@ -414,7 +414,8 @@ bool rtl92de_rx_query_desc(struct ieee80
+ 	stats->icv = (u16)get_rx_desc_icv(pdesc);
+ 	stats->crc = (u16)get_rx_desc_crc32(pdesc);
+ 	stats->hwerror = (stats->crc | stats->icv);
+-	stats->decrypted = !get_rx_desc_swdec(pdesc);
++	stats->decrypted = !get_rx_desc_swdec(pdesc) &&
++			   get_rx_desc_enc_type(pdesc) != RX_DESC_ENC_NONE;
+ 	stats->rate = (u8)get_rx_desc_rxmcs(pdesc);
+ 	stats->shortpreamble = (u16)get_rx_desc_splcp(pdesc);
+ 	stats->isampdu = (bool)(get_rx_desc_paggr(pdesc) == 1);
+@@ -427,8 +428,6 @@ bool rtl92de_rx_query_desc(struct ieee80
+ 	rx_status->band = hw->conf.chandef.chan->band;
+ 	if (get_rx_desc_crc32(pdesc))
+ 		rx_status->flag |= RX_FLAG_FAILED_FCS_CRC;
+-	if (!get_rx_desc_swdec(pdesc))
+-		rx_status->flag |= RX_FLAG_DECRYPTED;
+ 	if (get_rx_desc_bw(pdesc))
+ 		rx_status->bw = RATE_INFO_BW_40;
+ 	if (get_rx_desc_rxht(pdesc))
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/trx.h
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/trx.h
+@@ -14,6 +14,15 @@
+ #define USB_HWDESC_HEADER_LEN			32
+ #define CRCLENGTH				4
  
- 	group = rtl8xxxu_gen1_channel_to_group(channel);
- 
--	cck[0] = priv->cck_tx_power_index_A[group] - 1;
--	cck[1] = priv->cck_tx_power_index_B[group] - 1;
-+	cck[0] = priv->cck_tx_power_index_A[group];
-+	cck[1] = priv->cck_tx_power_index_B[group];
- 
- 	if (priv->hi_pa) {
- 		if (cck[0] > 0x20)
-@@ -1406,10 +1407,6 @@ rtl8xxxu_gen1_set_tx_power(struct rtl8xx
- 
- 	ofdm[0] = priv->ht40_1s_tx_power_index_A[group];
- 	ofdm[1] = priv->ht40_1s_tx_power_index_B[group];
--	if (ofdm[0])
--		ofdm[0] -= 1;
--	if (ofdm[1])
--		ofdm[1] -= 1;
- 
- 	ofdmbase[0] = ofdm[0] +	priv->ofdm_tx_power_index_diff[group].a;
- 	ofdmbase[1] = ofdm[1] +	priv->ofdm_tx_power_index_diff[group].b;
-@@ -1498,20 +1495,19 @@ rtl8xxxu_gen1_set_tx_power(struct rtl8xx
- 
- 	rtl8xxxu_write32(priv, REG_TX_AGC_A_MCS15_MCS12,
- 			 mcs_a + power_base->reg_0e1c);
-+	val8 = u32_get_bits(mcs_a + power_base->reg_0e1c, 0xff000000);
- 	for (i = 0; i < 3; i++) {
--		if (i != 2)
--			val8 = (mcsbase[0] > 8) ? (mcsbase[0] - 8) : 0;
--		else
--			val8 = (mcsbase[0] > 6) ? (mcsbase[0] - 6) : 0;
-+		base = i != 2 ? 8 : 6;
-+		val8 = max_t(int, val8 - base, 0);
- 		rtl8xxxu_write8(priv, REG_OFDM0_XC_TX_IQ_IMBALANCE + i, val8);
- 	}
++enum rtl92d_rx_desc_enc {
++	RX_DESC_ENC_NONE	= 0,
++	RX_DESC_ENC_WEP40	= 1,
++	RX_DESC_ENC_TKIP_WO_MIC	= 2,
++	RX_DESC_ENC_TKIP_MIC	= 3,
++	RX_DESC_ENC_AES		= 4,
++	RX_DESC_ENC_WEP104	= 5,
++};
 +
- 	rtl8xxxu_write32(priv, REG_TX_AGC_B_MCS15_MCS12,
- 			 mcs_b + power_base->reg_0868);
-+	val8 = u32_get_bits(mcs_b + power_base->reg_0868, 0xff000000);
- 	for (i = 0; i < 3; i++) {
--		if (i != 2)
--			val8 = (mcsbase[1] > 8) ? (mcsbase[1] - 8) : 0;
--		else
--			val8 = (mcsbase[1] > 6) ? (mcsbase[1] - 6) : 0;
-+		base = i != 2 ? 8 : 6;
-+		val8 = max_t(int, val8 - base, 0);
- 		rtl8xxxu_write8(priv, REG_OFDM0_XD_TX_IQ_IMBALANCE + i, val8);
- 	}
+ /* macros to read/write various fields in RX or TX descriptors */
+ 
+ static inline void set_tx_desc_pkt_size(__le32 *__pdesc, u32 __val)
+@@ -246,6 +255,11 @@ static inline u32 get_rx_desc_drv_info_s
+ 	return le32_get_bits(*__pdesc, GENMASK(19, 16));
  }
+ 
++static inline u32 get_rx_desc_enc_type(__le32 *__pdesc)
++{
++	return le32_get_bits(*__pdesc, GENMASK(22, 20));
++}
++
+ static inline u32 get_rx_desc_shift(__le32 *__pdesc)
+ {
+ 	return le32_get_bits(*__pdesc, GENMASK(25, 24));
 
 
