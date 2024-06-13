@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1008B146597;
-	Thu, 13 Jun 2024 11:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6D9143C52;
+	Thu, 13 Jun 2024 11:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279564; cv=none; b=Jz54W/hBmi2de8W0wV6TfUi+xgq0Q/MIhWgZK2hZgen6zndkUjEhsozfF+O0SevoFpx6HCBUkvnM0XTQ1PLATjilWAxwRz0ht2qk3MBuA/DRjpKdlG9/XDxF4v+Yew4JFKnJvyZ6SuHuK4c9XdK2gvdVSQskIvXdfcZRMOv4d8M=
+	t=1718279566; cv=none; b=CBOIYT6Jpu5rmzNfI/kZWsnsY7z5inWdO/QwkokZYbB+VKmZx6wkupJfUV+3us8E9OF7lPjU7tLb2gHF9e/OEZ7lgIxZKartqsE7hah2UkE3jtgqWJHCZtqbM1DPvNeXsqLoa7g8XvxjgB5WjSD3Drdu3vdmqV5IjGFHaYJwhW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279564; c=relaxed/simple;
-	bh=9vkcsIaETyIiZaIXF/8zWZ5aUIpAfY7Xs2p1SSQNDGM=;
+	s=arc-20240116; t=1718279566; c=relaxed/simple;
+	bh=Tl++MwmET4vReSQkKJh68lLuE+9xQ4axe+2Vxr2IgPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ihIdW6AyMT/2nBgtrpFJoAiezUgon+WeagwuTwy36vHUnLImn/OmWtUnrg4QieyxUS0I4hUPTY17ZDezjmicAjM/CW9MyDBktMkp1DxoA93S8kTNBOElY1l4kGb+EERdlc2TyDcUmphhIXeVE9qXipl+NYXmUZDPSL/CPp/IZmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBhWPt13; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aCdmIuvni0v8tDKMRfleRFn3x4c5xXX2bZd/+FcaXIu7AUnRuQgKMvpvtycl3hazyfXT5sH6yOS5TLp3Y1uclUiDo/22h3BvAAi9J9teDl4u7ScHVoPJnYWb3zQrEr8CCh015mNrzfb0zqkdvBsfuktet/CCG4Gb27oqPeETT5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkOe8vsM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBhWPt13"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3980BC2BBFC;
-	Thu, 13 Jun 2024 11:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkOe8vsM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265F7C2BBFC;
+	Thu, 13 Jun 2024 11:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279563;
-	bh=9vkcsIaETyIiZaIXF/8zWZ5aUIpAfY7Xs2p1SSQNDGM=;
+	s=korg; t=1718279566;
+	bh=Tl++MwmET4vReSQkKJh68lLuE+9xQ4axe+2Vxr2IgPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBhWPt13Sq6dArAdhN+jjG8mpPswYNXPm39+lo8ujR2Pos0KaRfHdlqPwsqrIY9Q6
-	 wTjRW+sTTfsXDpGgVSpiO6fsdJ3nJRg8siahcfjI7oexXhxlh5H95lHbl61gVFnHyM
-	 zPaj/yFL0ERF7GseIC2jb6i7zTBmrqHdGvZqRQ/0=
+	b=nkOe8vsMqFluffWg4db8YTxCo181uTf0syskj+6E4zcrtUjNDa4NJWLjno0MMMXYr
+	 UJVvk+m0N9Sq18oRYWjW+Vx1xYs1DT81Te8sXU+G8rBrGoENG3rWWow+MBJBPETjY+
+	 BUmPFF5hA3nJVrN39ffF7BL6iFNJ9e5Ni49E1cGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	stable@kernel.org
-Subject: [PATCH 6.9 118/157] ext4: Fixes len calculation in mpage_journal_page_buffers
-Date: Thu, 13 Jun 2024 13:34:03 +0200
-Message-ID: <20240613113231.980946856@linuxfoundation.org>
+Subject: [PATCH 6.9 092/157] intel_th: pci: Add Meteor Lake-S CPU support
+Date: Thu, 13 Jun 2024 13:33:37 +0200
+Message-ID: <20240613113230.985168515@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -52,36 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 
-commit c2a09f3d782de952f09a3962d03b939e7fa7ffa4 upstream.
+commit a4f813c3ec9d1c32bc402becd1f011b3904dd699 upstream.
 
-Truncate operation can race with writeback, in which inode->i_size can get
-truncated and therefore size - folio_pos() can be negative. This fixes the
-len calculation. However this path doesn't get easily triggered even
-with data journaling.
+Add support for the Trace Hub in Meteor Lake-S CPU.
 
-Cc: stable@kernel.org # v6.5
-Fixes: 80be8c5cc925 ("Fixes: ext4: Make mpage_journal_page_buffers use folio")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/cff4953b5c9306aba71e944ab176a5d396b9a1b7.1709182250.git.ritesh.list@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20240429130119.1518073-15-alexander.shishkin@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/intel_th/pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -2334,7 +2334,7 @@ static int mpage_journal_page_buffers(ha
- 
- 	if (folio_pos(folio) + len > size &&
- 	    !ext4_verity_in_progress(inode))
--		len = size - folio_pos(folio);
-+		len = size & (len - 1);
- 
- 	return ext4_journal_folio_buffers(handle, folio, len);
- }
+--- a/drivers/hwtracing/intel_th/pci.c
++++ b/drivers/hwtracing/intel_th/pci.c
+@@ -290,6 +290,11 @@ static const struct pci_device_id intel_
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+ 	},
+ 	{
++		/* Meteor Lake-S CPU */
++		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0xae24),
++		.driver_data = (kernel_ulong_t)&intel_th_2x,
++	},
++	{
+ 		/* Raptor Lake-S */
+ 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x7a26),
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
 
 
