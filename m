@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3004A143C7B;
-	Thu, 13 Jun 2024 12:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE2F82C76;
+	Thu, 13 Jun 2024 12:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280450; cv=none; b=lAGoN5TlGQcgBx4pqyBHpTx3W2UhdPEq1JKpJv01M7cpFAe61CJHL8WMwRtxFlypJNtIrNeTc/h+VUp0MvK+/jCdltaZ1y5/yWlWh6jni6sjycX09j+7xJ5VTMpAjCOQvrskny2M1zW9TvNLoVmA+jWtfkvcGaZ3o8CtxSgYIuU=
+	t=1718280453; cv=none; b=EsAcwsRQDuzhr2F3z3P6UdJssPkpNUe/dy2YTdZ/WSxdeyQxenmCdYqzfSDDPuQUbHG3gpObrJK4ME/s8AQRhmanzF0yNMjnjh2wCzHvuvYY+tJ7jbe7mywMCHq+AehYNA2uw0vTLDfw1inzatB0VPP/gKS84BQGD/CiFph7Cr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280450; c=relaxed/simple;
-	bh=16RQvKe0T4Tn5NYOsEpKvxp3azjf6QQnhmjnnpDREME=;
+	s=arc-20240116; t=1718280453; c=relaxed/simple;
+	bh=6h/tc7E6i0eAc5nbY9SbdaG9TV75+P88v3bU5K774jA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AiDGpMngTyqCiwmXP4AHLT4XGiPmaFLZ6S34iySgh7MsCmNk/1LqlRguKeQe2bd5Osv3LOhyNzhmq7+EKYruY+r1Au+3cOR7GZ8zhPaOyL6lfXBAYnP3PAmXJtfOjwuzgUU/bqMVLRzqen44ZOXlRpeePIF4ruNbD21Yn2EXI20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnQI+rlh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ENX1Mub8hHn1q+mV8U7htnCXIuOMvicypb5vAnmnCFu5qaILZVeBwFcBuKcMsjff3uTB76nUS0ycpXhTcbFGhychtdAQKmlZRKxqDBP51kKQ+c43jh+2ubjvblE/S2TyBt3B56/xm9P04WOBHygLZD0zy0Me85Bg60oKO8FNy08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avAXp8HE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnQI+rlh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BA4C2BBFC;
-	Thu, 13 Jun 2024 12:07:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avAXp8HE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF03C2BBFC;
+	Thu, 13 Jun 2024 12:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280450;
-	bh=16RQvKe0T4Tn5NYOsEpKvxp3azjf6QQnhmjnnpDREME=;
+	s=korg; t=1718280453;
+	bh=6h/tc7E6i0eAc5nbY9SbdaG9TV75+P88v3bU5K774jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnQI+rlh1uTNV+JKdtYY3gJqwHgO3ULEOEL9ybPekazXsS+TSh6hf3qOzpNW3PskI
-	 shoJ9OHLI30XyrpFBAgda4KV9rtOoEjZB6A+Wq5E/mG+A9zZ2IOe47eX16G3qwMLZ+
-	 PbwnTxDkufARyHVyTKYwhvN1CdQCzGc9MQ5OA/iA=
+	b=avAXp8HELi9nCSwiaz+efb9wvWRtrGeQ9HJmK0+3ck0PgwIW4gIQt+oEIQj4y7LsF
+	 d3WSRS5rAWCzDpHME4sK6VWcC8NpEw2yl8jUGh6bvQ76TU7ub/Y8Es1aV8gWjeeLB2
+	 CiI0g1mxSJh6LGKsqyRpR1dB2qEIRBNYlUZ5iCPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 040/137] media: mc: Fix graph walk in media_pipeline_start
-Date: Thu, 13 Jun 2024 13:33:40 +0200
-Message-ID: <20240613113224.845457245@linuxfoundation.org>
+	Tim Huang <Tim.Huang@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	lectrode <electrodexsnet@gmail.com>
+Subject: [PATCH 6.6 058/137] drm/amd: Fix shutdown (again) on some SMU v13.0.4/11 platforms
+Date: Thu, 13 Jun 2024 13:33:58 +0200
+Message-ID: <20240613113225.554681924@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -51,40 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 8a9d420149c477e7c97fbd6453704e4612bdd3fa upstream.
+commit 267cace556e8a53d703119f7435ab556209e5b6a upstream.
 
-The graph walk tries to follow all links, even if they are not between
-pads. This causes a crash with, e.g. a MEDIA_LNK_FL_ANCILLARY_LINK link.
+commit cd94d1b182d2 ("dm/amd/pm: Fix problems with reboot/shutdown for
+some SMU 13.0.4/13.0.11 users") attempted to fix shutdown issues
+that were reported since commit 31729e8c21ec ("drm/amd/pm: fixes a
+random hang in S4 for SMU v13.0.4/11") but caused issues for some
+people.
 
-Fix this by allowing the walk to proceed only for MEDIA_LNK_FL_DATA_LINK
-links.
+Adjust the workaround flow to properly only apply in the S4 case:
+-> For shutdown go through SMU_MSG_PrepareMp1ForUnload
+-> For S4 go through SMU_MSG_GfxDeviceDriverReset and
+   SMU_MSG_PrepareMp1ForUnload
 
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Cc: stable@vger.kernel.org # for 6.1 and later
-Fixes: ae219872834a ("media: mc: entity: Rewrite media_pipeline_start()")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reported-and-tested-by: lectrode <electrodexsnet@gmail.com>
+Closes: https://github.com/void-linux/void-packages/issues/50417
+Cc: stable@vger.kernel.org
+Fixes: cd94d1b182d2 ("dm/amd/pm: Fix problems with reboot/shutdown for some SMU 13.0.4/13.0.11 users")
+Reviewed-by: Tim Huang <Tim.Huang@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/mc/mc-entity.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c |   20 ++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/drivers/media/mc/mc-entity.c
-+++ b/drivers/media/mc/mc-entity.c
-@@ -606,6 +606,12 @@ static int media_pipeline_explore_next_l
- 	link = list_entry(entry->links, typeof(*link), list);
- 	last_link = media_pipeline_walk_pop(walk);
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
+@@ -226,15 +226,17 @@ static int smu_v13_0_4_system_features_c
+ 	struct amdgpu_device *adev = smu->adev;
+ 	int ret = 0;
  
-+	if ((link->flags & MEDIA_LNK_FL_LINK_TYPE) != MEDIA_LNK_FL_DATA_LINK) {
-+		dev_dbg(walk->mdev->dev,
-+			"media pipeline: skipping link (not data-link)\n");
-+		return 0;
-+	}
-+
- 	dev_dbg(walk->mdev->dev,
- 		"media pipeline: exploring link '%s':%u -> '%s':%u\n",
- 		link->source->entity->name, link->source->index,
+-	if (!en && adev->in_s4) {
+-		/* Adds a GFX reset as workaround just before sending the
+-		 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
+-		 * an invalid state.
+-		 */
+-		ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_GfxDeviceDriverReset,
+-						      SMU_RESET_MODE_2, NULL);
+-		if (ret)
+-			return ret;
++	if (!en && !adev->in_s0ix) {
++		if (adev->in_s4) {
++			/* Adds a GFX reset as workaround just before sending the
++			 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
++			 * an invalid state.
++			 */
++			ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_GfxDeviceDriverReset,
++							      SMU_RESET_MODE_2, NULL);
++			if (ret)
++				return ret;
++		}
+ 
+ 		ret = smu_cmn_send_smc_msg(smu, SMU_MSG_PrepareMp1ForUnload, NULL);
+ 	}
 
 
