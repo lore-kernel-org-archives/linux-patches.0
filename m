@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEEC145B10;
-	Thu, 13 Jun 2024 12:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAD81448F2;
+	Thu, 13 Jun 2024 12:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280774; cv=none; b=b5Qi9VcGRTnqfOU0ahKhkplf+wZLjmvSwp20JOy/h6bd/JQ9rkAbIAVqRE8OZSbGedzSG9TmpfGiSOT9y9CEzQeMZncVKqw91xYaWrStQCj7bKRS0J2dsPTfV4F2HBa9NqzTK6uGg+zF3XXG4kY025x4FU51QYt/9+CUgyG2sOA=
+	t=1718280777; cv=none; b=r+kb9QbTAy6R04xSx8HyQ8BqHHrt7ho5kdeZhNXj6gekOidLkoiqTDbjmNK4JQqK+jbC6mTte8rKd9Gj33geQ7Y01f+VlGB+BKaYta5AYZdzNjbS+SAZzpkCfZC9rTA+1/jZTksQym0zU2jZiUxSZI0dsqL8MuGOpeCiFGam5OY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280774; c=relaxed/simple;
-	bh=Jjl0KzdrnKIRoI7e9+4KNNwjnW5v86RH6UKr9V9TSBA=;
+	s=arc-20240116; t=1718280777; c=relaxed/simple;
+	bh=pf1StAYmHByNs1wKmWL1xso8VXRz37i1O+CK6YsCskk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjnhYOcbsGYknRgbd/sp4Pb4bbTLIeoUsPmbBqVWdtlc5BsQywn4Gr3LQnYQXfqndgzzpBKyknkKjj+4cqgrO11+fwOnJy93gSKkezd4HWcj8KRO43TOaOZIWHRjQwn27rKT89cpiAT3vFoqsivOFvgvBl6WzVkz0qVmLrikwWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnHw4zye; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BnCCgcELOzOFndeDnbJLQ2tdTe9tt5XHU4iMToWVExRcU7Nfi/zD8WDAl3fahAeskr/fu0grMxYgch//nzNlsJiKPgQUliIvHQ9fV8JWd9/stS8418jrpZ27SQJcQhtnhuw9IWpXTHFcgBc+qO0W7Ixk3QvydtiTmUSny/fiENk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgB+Q1Lk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnHw4zye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791A8C2BBFC;
-	Thu, 13 Jun 2024 12:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgB+Q1Lk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771E2C2BBFC;
+	Thu, 13 Jun 2024 12:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280773;
-	bh=Jjl0KzdrnKIRoI7e9+4KNNwjnW5v86RH6UKr9V9TSBA=;
+	s=korg; t=1718280776;
+	bh=pf1StAYmHByNs1wKmWL1xso8VXRz37i1O+CK6YsCskk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SnHw4zyeg1FsSbYocJ3C6iQFeydQW/VkY3DFPR5RuQv+cH+oauzjdsfmG2OltME+B
-	 Ks4vRAq7qPEdP3YDpIOvrIPVPaqc07zmk4zCXqEN+HSM6oNvm+2qs6B757+/+TDJ81
-	 UROvehy72rquz7bkq3BjX8oJI9cKe51dlBxxhej8=
+	b=IgB+Q1LkE2XqUO96YX580Ey4IbyOFVInUeqCwVyLGd0NjaShPCIQEFhXCUcwUFCFd
+	 3Ax/HCykBWjtHX+wxr+znr35so7z/0JKz6qxbgVHyqHe0sMRpIyM9TUY0jvriPJc/U
+	 ld7jYZQyR0zRrsuyJa9Hq+HoP2RlvSCDHi/B+wHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/317] s390/cio: fix tracepoint subchannel type field
-Date: Thu, 13 Jun 2024 13:30:47 +0200
-Message-ID: <20240613113248.668327809@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>
+Subject: [PATCH 5.10 003/317] speakup: Fix sizeof() vs ARRAY_SIZE() bug
+Date: Thu, 13 Jun 2024 13:30:21 +0200
+Message-ID: <20240613113247.662755557@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,38 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 8692a24d0fae19f674d51726d179ad04ba95d958 ]
+commit 008ab3c53bc4f0b2f20013c8f6c204a3203d0b8b upstream.
 
-The subchannel-type field "st" of s390_cio_stsch and s390_cio_msch
-tracepoints is incorrectly filled with the subchannel-enabled SCHIB
-value "ena". Fix this by assigning the correct value.
+The "buf" pointer is an array of u16 values.  This code should be
+using ARRAY_SIZE() (which is 256) instead of sizeof() (which is 512),
+otherwise it can the still got out of bounds.
 
-Fixes: d1de8633d96a ("s390 cio: Rewrite trace point class s390_class_schib")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c8d2f34ea96e ("speakup: Avoid crash on very long word")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Link: https://lore.kernel.org/r/d16f67d2-fd0a-4d45-adac-75ddd11001aa@moroto.mountain
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/trace.h | 2 +-
+ drivers/accessibility/speakup/main.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/cio/trace.h b/drivers/s390/cio/trace.h
-index 4803139bce149..4716798b1368a 100644
---- a/drivers/s390/cio/trace.h
-+++ b/drivers/s390/cio/trace.h
-@@ -50,7 +50,7 @@ DECLARE_EVENT_CLASS(s390_class_schib,
- 		__entry->devno = schib->pmcw.dev;
- 		__entry->schib = *schib;
- 		__entry->pmcw_ena = schib->pmcw.ena;
--		__entry->pmcw_st = schib->pmcw.ena;
-+		__entry->pmcw_st = schib->pmcw.st;
- 		__entry->pmcw_dnv = schib->pmcw.dnv;
- 		__entry->pmcw_dev = schib->pmcw.dev;
- 		__entry->pmcw_lpm = schib->pmcw.lpm;
--- 
-2.43.0
-
+--- a/drivers/accessibility/speakup/main.c
++++ b/drivers/accessibility/speakup/main.c
+@@ -576,7 +576,7 @@ static u_long get_word(struct vc_data *v
+ 	}
+ 	attr_ch = get_char(vc, (u_short *)tmp_pos, &spk_attr);
+ 	buf[cnt++] = attr_ch;
+-	while (tmpx < vc->vc_cols - 1 && cnt < sizeof(buf) - 1) {
++	while (tmpx < vc->vc_cols - 1 && cnt < ARRAY_SIZE(buf) - 1) {
+ 		tmp_pos += 2;
+ 		tmpx++;
+ 		ch = get_char(vc, (u_short *)tmp_pos, &temp);
 
 
