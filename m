@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEB7145FE3;
-	Thu, 13 Jun 2024 11:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637B61422AB;
+	Thu, 13 Jun 2024 11:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279534; cv=none; b=TsVtanlownSlGtqU8+ow7wiWPtADfrUqAb6UpztXYeeAheOGzu4doYwjU+NJlVmSVrYJ6R7WihPufoREIJ7bLywSOA/ss4XW6CORuHAA3V39IrHFDTqmPox5RVRKSnZm1KEro0PP/0aKuvzLL3YIxr4cl5kosU26nL3+wvFOXNQ=
+	t=1718279537; cv=none; b=rGOmYBIMqt0NTr2bz4WNqp9GGAaDCRvJYVhyfZUmdslxHHBKBeVAlwRmxaHcIDG3QO8NBiqw2ZvRGu/DZsJWpOvdWzzfWeGycDfX5LX5ny/CZN4XpgZJBMx3FXnD5JSSf3WlSY2mWTHVOMbZdR/hFdV9w48Ppmbe7UQd04X5Ozw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279534; c=relaxed/simple;
-	bh=X8Ftv2j1sP0BjHuRj1gLAYQe8PzhdNC6s7b1Fz8VNqM=;
+	s=arc-20240116; t=1718279537; c=relaxed/simple;
+	bh=yj3gZRKYDHZvanm0uc1a59qZwyX4f/ZWauocnXP1yQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jbl50QSIwJ+++qt2pTntR9seCKV2xYQme8L0OWbSYuyezEl9xsOBx6CnmzRCOgHoNhewL9pJgb8oqvSlJ2i+ROjzvcvcQAzgR2MEPSaQZuJyI0NfgnzcNIFMY2xjRioatYkLxVwPYQAWH28ad38uh3OSMR99faQr9VYD9PMBPbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xG2ir5DE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G0t0QRH70xcnm96MlRYmfpV1lqQXmZqdlovXFdYjNTme77Sxn0kriXtQRp2z9JpVYXFvuUU3x8Pa2SM+xmkTnkfDz8wQTNwp86KtWl4Unw8gR0BeqWcC+hNR2y45VuL50O0gAVVz7PpYpXrVZZvvWI6en8inhOQaf6nLl66nx2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POTlPZ2G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xG2ir5DE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E535BC2BBFC;
-	Thu, 13 Jun 2024 11:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POTlPZ2G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D642AC32786;
+	Thu, 13 Jun 2024 11:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279534;
-	bh=X8Ftv2j1sP0BjHuRj1gLAYQe8PzhdNC6s7b1Fz8VNqM=;
+	s=korg; t=1718279537;
+	bh=yj3gZRKYDHZvanm0uc1a59qZwyX4f/ZWauocnXP1yQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xG2ir5DEGxyaEe5tsvk1LVvzc7o0InnZOSDvXuHDSnYU2QwhovBVm1NdSw6iuw8LV
-	 evNRRzEwsxFmbZ68OOosZudbTyu6xH2SAzmWE9JA37wJaN+QCYsj8EqJ7c6H8NcUYz
-	 X1Ia7qKyFzBiRvRfRZ5rKcEgQDmKsqDb4mB4mMug=
+	b=POTlPZ2GXlRlXPiCFowGEgsskPN4G0mApDVusxuW2uc64RUIjKeHdjBimxmLzIQF0
+	 OIhgYy2lWNroEes9v0QEBBMHjpkLLSLFyEufV9WTEmFm51n8Sg++I3795NQNOoTNJw
+	 L/24IwtCXXJAJUSpxnd512F5bSVOuZDcXAevVa/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Peter Jung <ptr1337@cachyos.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.9 091/157] cpufreq: amd-pstate: Fix the inconsistency in max frequency units
-Date: Thu, 13 Jun 2024 13:33:36 +0200
-Message-ID: <20240613113230.946701747@linuxfoundation.org>
+	Justin Stitt <justinstitt@google.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>
+Subject: [PATCH 6.9 109/157] kdb: Use format-strings rather than \0 injection in kdb_read()
+Date: Thu, 13 Jun 2024 13:33:54 +0200
+Message-ID: <20240613113231.633283349@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -53,59 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+From: Daniel Thompson <daniel.thompson@linaro.org>
 
-commit e4731baaf29438508197d3a8a6d4f5a8c51663f8 upstream.
+commit 09b35989421dfd5573f0b4683c7700a7483c71f9 upstream.
 
-The nominal frequency in cpudata is maintained in MHz whereas all other
-frequencies are in KHz. This means we have to convert nominal frequency
-value to KHz before we do any interaction with other frequency values.
+Currently when kdb_read() needs to reposition the cursor it uses copy and
+paste code that works by injecting an '\0' at the cursor position before
+delivering a carriage-return and reprinting the line (which stops at the
+'\0').
 
-In amd_pstate_set_boost(), this conversion from MHz to KHz is missed,
-fix that.
+Tidy up the code by hoisting the copy and paste code into an appropriately
+named function. Additionally let's replace the '\0' injection with a
+proper field width parameter so that the string will be abridged during
+formatting instead.
 
-Tested on a AMD Zen4 EPYC server
-
-Before:
-$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_max_freq | uniq
-2151
-$ cat /sys/devices/system/cpu/cpufreq/policy*/cpuinfo_min_freq | uniq
-400000
-$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_cur_freq | uniq
-2151
-409422
-
-After:
-$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_max_freq | uniq
-2151000
-$ cat /sys/devices/system/cpu/cpufreq/policy*/cpuinfo_min_freq | uniq
-400000
-$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_cur_freq | uniq
-2151000
-1799527
-
-Fixes: ec437d71db77 ("cpufreq: amd-pstate: Introduce a new AMD P-State driver to support future processors")
-Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Acked-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Tested-by: Peter Jung <ptr1337@cachyos.org>
-Cc: 5.17+ <stable@vger.kernel.org> # 5.17+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org # Not a bug fix but it is needed for later bug fixes
+Tested-by: Justin Stitt <justinstitt@google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240424-kgdb_read_refactor-v3-2-f236dbe9828d@linaro.org
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/amd-pstate.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/debug/kdb/kdb_io.c |   55 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 34 insertions(+), 21 deletions(-)
 
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -705,7 +705,7 @@ static int amd_pstate_set_boost(struct c
- 	if (state)
- 		policy->cpuinfo.max_freq = cpudata->max_freq;
- 	else
--		policy->cpuinfo.max_freq = cpudata->nominal_freq;
-+		policy->cpuinfo.max_freq = cpudata->nominal_freq * 1000;
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -184,6 +184,33 @@ char kdb_getchar(void)
+ 	unreachable();
+ }
  
- 	policy->max = policy->cpuinfo.max_freq;
- 
++/**
++ * kdb_position_cursor() - Place cursor in the correct horizontal position
++ * @prompt: Nil-terminated string containing the prompt string
++ * @buffer: Nil-terminated string containing the entire command line
++ * @cp: Cursor position, pointer the character in buffer where the cursor
++ *      should be positioned.
++ *
++ * The cursor is positioned by sending a carriage-return and then printing
++ * the content of the line until we reach the correct cursor position.
++ *
++ * There is some additional fine detail here.
++ *
++ * Firstly, even though kdb_printf() will correctly format zero-width fields
++ * we want the second call to kdb_printf() to be conditional. That keeps things
++ * a little cleaner when LOGGING=1.
++ *
++ * Secondly, we can't combine everything into one call to kdb_printf() since
++ * that renders into a fixed length buffer and the combined print could result
++ * in unwanted truncation.
++ */
++static void kdb_position_cursor(char *prompt, char *buffer, char *cp)
++{
++	kdb_printf("\r%s", kdb_prompt_str);
++	if (cp > buffer)
++		kdb_printf("%.*s", (int)(cp - buffer), buffer);
++}
++
+ /*
+  * kdb_read
+  *
+@@ -212,7 +239,6 @@ static char *kdb_read(char *buffer, size
+ 						 * and null byte */
+ 	char *lastchar;
+ 	char *p_tmp;
+-	char tmp;
+ 	static char tmpbuffer[CMD_BUFLEN];
+ 	int len = strlen(buffer);
+ 	int len_tmp;
+@@ -249,12 +275,8 @@ poll_again:
+ 			}
+ 			*(--lastchar) = '\0';
+ 			--cp;
+-			kdb_printf("\b%s \r", cp);
+-			tmp = *cp;
+-			*cp = '\0';
+-			kdb_printf(kdb_prompt_str);
+-			kdb_printf("%s", buffer);
+-			*cp = tmp;
++			kdb_printf("\b%s ", cp);
++			kdb_position_cursor(kdb_prompt_str, buffer, cp);
+ 		}
+ 		break;
+ 	case 10: /* linefeed */
+@@ -272,19 +294,14 @@ poll_again:
+ 			memcpy(tmpbuffer, cp+1, lastchar - cp - 1);
+ 			memcpy(cp, tmpbuffer, lastchar - cp - 1);
+ 			*(--lastchar) = '\0';
+-			kdb_printf("%s \r", cp);
+-			tmp = *cp;
+-			*cp = '\0';
+-			kdb_printf(kdb_prompt_str);
+-			kdb_printf("%s", buffer);
+-			*cp = tmp;
++			kdb_printf("%s ", cp);
++			kdb_position_cursor(kdb_prompt_str, buffer, cp);
+ 		}
+ 		break;
+ 	case 1: /* Home */
+ 		if (cp > buffer) {
+-			kdb_printf("\r");
+-			kdb_printf(kdb_prompt_str);
+ 			cp = buffer;
++			kdb_position_cursor(kdb_prompt_str, buffer, cp);
+ 		}
+ 		break;
+ 	case 5: /* End */
+@@ -390,13 +407,9 @@ poll_again:
+ 				memcpy(cp+1, tmpbuffer, lastchar - cp);
+ 				*++lastchar = '\0';
+ 				*cp = key;
+-				kdb_printf("%s\r", cp);
++				kdb_printf("%s", cp);
+ 				++cp;
+-				tmp = *cp;
+-				*cp = '\0';
+-				kdb_printf(kdb_prompt_str);
+-				kdb_printf("%s", buffer);
+-				*cp = tmp;
++				kdb_position_cursor(kdb_prompt_str, buffer, cp);
+ 			} else {
+ 				*++lastchar = '\0';
+ 				*cp++ = key;
 
 
