@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F9E143C5D;
-	Thu, 13 Jun 2024 11:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F82143733;
+	Thu, 13 Jun 2024 11:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279119; cv=none; b=jwEpY+9sKVCQd+QQeBMU6A+bbi6XW3l8nqp70mG55nUuhtYpGlPVyyB5QhBs8NDt/dWncI8NZJDdxingJwZkFrjetJsLo81X6K2W+3bPIUK0f2x9JaYeKlJPwxovl9oKetfrQTtGsal1IJ/EpkZ/gWHyXMtqCp/LlZtA2kJbBlA=
+	t=1718279122; cv=none; b=n7uBVSCCBJ9vwX+erqx4sU69dRbUGoR+vvHxLHCMuAAdYUMxkyI6oIgbwiBoi9+4j+f3Fx/Bfy+p5v1u6hbWo/R65A887NFywQTlYtMMcAi5823iJI/oXdLguk7RlpRHxwNVgwMvM4yvpiMwK6enrL7R9JC2DqunzAhAcvW51b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279119; c=relaxed/simple;
-	bh=YUNwVrwJ0H7mqUol6heXPf3ThZGQ0XfIeywqm1Bvp44=;
+	s=arc-20240116; t=1718279122; c=relaxed/simple;
+	bh=Il65WoHwN3bEyCGYGM/TnvELmNAhsLBg+MIg8K3xFGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4/2onBVvMaiVMBkTjv8HJVSO6AED/bYnhTByZtQOaALG/JMvmEHnTS0w9CcY2JxAmZgl0xNyGbzOmcY7RD695rl92+UK5j2axn2on2LAYeRKFrvqN2Y3dw2CXFvqTLKc44e7hUui6/EebZcNPu2dLUMgmVTfQqKoUtO5/EGgt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z42/m0ZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CyOP661KzRbBRkx/kZka6t7FpnLNLpSQeoDZwpRexnS2RcCIfIQ3QVYAvv2KXTtMZjNSTYyUKfJDwOvkKAkstq5uNLJGt5rkwhWY4V86gRaevqnDL8jTD1syAFbaknVe9WBaU2NtJlDOrrHs8zXhNJhN8IB9n5sN0FBtRllKZPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfdwQ9ud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z42/m0ZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72F2C2BBFC;
-	Thu, 13 Jun 2024 11:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfdwQ9ud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94021C2BBFC;
+	Thu, 13 Jun 2024 11:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279119;
-	bh=YUNwVrwJ0H7mqUol6heXPf3ThZGQ0XfIeywqm1Bvp44=;
+	s=korg; t=1718279122;
+	bh=Il65WoHwN3bEyCGYGM/TnvELmNAhsLBg+MIg8K3xFGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z42/m0ZRV82pOwSn3M1VDtrnzDCUqGiWvZI2FfXap/AhmiPWX1SwsSjRuJI7JPPOh
-	 dAoNiSmDVqG8s7WGB4t0m2wKwQh2dOfPanQ2Wqm4a/kVLKsCrBiEOAH0/klfl4mB1/
-	 ssXrra9pRnfpnZMfaZni7VuUqvUsM8kNcQKAdL3w=
+	b=WfdwQ9udIJPp1u/mOOPGFxXKKSIpINafQmD+GccBiXkjmC8y4JSLQUMuXMfsnWuG0
+	 Jx5TExz7cgIwfe/wSTuWIPirvObOhL3xLd2v9knkFsGFoeK+Evs/KTvjdIqqrbai9o
+	 l8hN545COTQJd3m1+VLTE14bj8p/lXKA9JVPzzJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang DENG <qingfang.deng@siflower.com.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 150/213] neighbour: fix unaligned access to pneigh_entry
-Date: Thu, 13 Jun 2024 13:33:18 +0200
-Message-ID: <20240613113233.774872229@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 4.19 151/213] ata: pata_legacy: make legacy_exit() work again
+Date: Thu, 13 Jun 2024 13:33:19 +0200
+Message-ID: <20240613113233.812253916@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -50,36 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang DENG <qingfang.deng@siflower.com.cn>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit ed779fe4c9b5a20b4ab4fd6f3e19807445bb78c7 upstream.
+commit d4a89339f17c87c4990070e9116462d16e75894f upstream.
 
-After the blamed commit, the member key is longer 4-byte aligned. On
-platforms that do not support unaligned access, e.g., MIPS32R2 with
-unaligned_action set to 1, this will trigger a crash when accessing
-an IPv6 pneigh_entry, as the key is cast to an in6_addr pointer.
+Commit defc9cd826e4 ("pata_legacy: resychronize with upstream changes and
+resubmit") missed to update legacy_exit(), so that it now fails to do any
+cleanup -- the loop body there can never be entered.  Fix that and finally
+remove now useless nr_legacy_host variable...
 
-Change the type of the key to u32 to make it aligned.
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-Fixes: 62dd93181aaa ("[IPV6] NDISC: Set per-entry is_router flag in Proxy NA.")
-Signed-off-by: Qingfang DENG <qingfang.deng@siflower.com.cn>
-Link: https://lore.kernel.org/r/20230601015432.159066-1-dqfext@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: defc9cd826e4 ("pata_legacy: resychronize with upstream changes and resubmit")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/neighbour.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/pata_legacy.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/include/net/neighbour.h
-+++ b/include/net/neighbour.h
-@@ -172,7 +172,7 @@ struct pneigh_entry {
- 	possible_net_t		net;
- 	struct net_device	*dev;
- 	u8			flags;
--	u8			key[0];
-+	u32			key[0];
- };
+--- a/drivers/ata/pata_legacy.c
++++ b/drivers/ata/pata_legacy.c
+@@ -128,8 +128,6 @@ static int legacy_port[NR_HOST] = { 0x1f
+ static struct legacy_probe probe_list[NR_HOST];
+ static struct legacy_data legacy_data[NR_HOST];
+ static struct ata_host *legacy_host[NR_HOST];
+-static int nr_legacy_host;
+-
  
- /*
+ static int probe_all;		/* Set to check all ISA port ranges */
+ static int ht6560a;		/* HT 6560A on primary 1, second 2, both 3 */
+@@ -1253,9 +1251,11 @@ static __exit void legacy_exit(void)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < nr_legacy_host; i++) {
++	for (i = 0; i < NR_HOST; i++) {
+ 		struct legacy_data *ld = &legacy_data[i];
+-		ata_host_detach(legacy_host[i]);
++
++		if (legacy_host[i])
++			ata_host_detach(legacy_host[i]);
+ 		platform_device_unregister(ld->platform_dev);
+ 	}
+ }
 
 
