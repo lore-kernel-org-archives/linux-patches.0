@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E8514600D;
-	Thu, 13 Jun 2024 12:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2797114600D;
+	Thu, 13 Jun 2024 12:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280512; cv=none; b=h5Guk2ZmbFyVfCdtm/CQ74KcDY6lANuKHL0yAaMQkwNM0JHAIbXr09xmg8Ctp7Kj+AAB//oifs/jL8y0goRtde3PNJahCwM9L252Oae7BqzyYHo8jdebPTqxkRRz2CncqtLC2g3Vqrr0m28mhK7VL3h3xcZoj1ZjyzSM5g5v6qE=
+	t=1718280515; cv=none; b=F7TUBSKLfsG0bw6h7ZNuRxlmarTPiNuLiTfLAzXd/KbmTWQBp+n95qK4sFv99p8M7yx2MGw46M5BMvLNB5sYbVXCdiKrVAmwN0JM/EJ1eHKS8nYSXnNn/dQVkuhbWcDMB1/5vrWKuFiaY+FrENZT8O84whPTnfIlC0wP32Z2a80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280512; c=relaxed/simple;
-	bh=z54+IXJd2D7Q5EgB9hmlEweBGB3omQmg2+7PXSVCo0M=;
+	s=arc-20240116; t=1718280515; c=relaxed/simple;
+	bh=LM/UywQQty3CBWf+rXwDuYuc5nt56kWYAYlAMtDJJFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UG1FJhm7u5FDV+nvTa3Dsg00WQK0e88hH6jzOQYVJ3unjNO92uFnNVMd7EeZoVaorR1gX6dQ1EikniuyVzMQMeNO3bMrG+0RJuj79/gy4hMakPMbLx4HLtOUTiRVVarQw6Fmg9ctaWZX2v+OWy/Mnb3vPHF/BbLjdlEr6tMERbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTnvEsTV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xeg4pEGSe/r4WNaJcxRexfDmv5XIJCEHdZ2YlJNt54J0/IQaZZ4dgn+mGk/8dGfeXgOgQEt356nhi+O9rQZMccUozJ6TjydFsezLgyaZudlTaziDOo2O+AYxOE2lzxe3JpNFJ3RuAgm+vFyeDjWqf9xYqcHLZSK3B9S8uxRjyko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snTBxytA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTnvEsTV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C14C32786;
-	Thu, 13 Jun 2024 12:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snTBxytA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F78FC2BBFC;
+	Thu, 13 Jun 2024 12:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280512;
-	bh=z54+IXJd2D7Q5EgB9hmlEweBGB3omQmg2+7PXSVCo0M=;
+	s=korg; t=1718280515;
+	bh=LM/UywQQty3CBWf+rXwDuYuc5nt56kWYAYlAMtDJJFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cTnvEsTVAggwWqhoXNlbIT+iNxd0DN+P2Lg5R19HvwtTxp/rDwTPUjl+2q7PKK5N1
-	 DREwOJT+3mtdbAgCv5Rlro6NdO4LD1vgBn1gvRgv5Dc54+2tQNnQkvYXhFKfmzRW2Q
-	 S8plxoj5Bafpts6A4c29sZjCx3JuVB107Zb5QCnQ=
+	b=snTBxytAAh22SsTHlr6QvkSE68BEbjJ4oWD8aM15NHyNsfjw251mEfD3LulSEP8I3
+	 2ySlctJ80WnOufAAQLu+lE+zk8BqF1iVLKI6VgDCEsjGu0SSAFtBrZp4j6nm8nVH+e
+	 p7gvLfeUM+uRY3fD2eAlBgulQT8WsZ0FUALCY8rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 047/137] mmc: davinci: Dont strip remove function when driver is builtin
-Date: Thu, 13 Jun 2024 13:33:47 +0200
-Message-ID: <20240613113225.120222516@linuxfoundation.org>
+	Yang Xiwen <forbidden405@outlook.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.6 038/137] arm64: dts: hi3798cv200: fix the size of GICR
+Date: Thu, 13 Jun 2024 13:33:38 +0200
+Message-ID: <20240613113224.769275363@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -44,58 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Yang Xiwen <forbidden405@outlook.com>
 
-commit 55c421b364482b61c4c45313a535e61ed5ae4ea3 upstream.
+commit 428a575dc9038846ad259466d5ba109858c0a023 upstream.
 
-Using __exit for the remove function results in the remove callback being
-discarded with CONFIG_MMC_DAVINCI=y. When such a device gets unbound (e.g.
-using sysfs or hotplug), the driver is just removed without the cleanup
-being performed. This results in resource leaks. Fix it by compiling in the
-remove callback unconditionally.
+During boot, Linux kernel complains:
 
-This also fixes a W=1 modpost warning:
+[    0.000000] GIC: GICv2 detected, but range too small and irqchip.gicv2_force_probe not set
 
-WARNING: modpost: drivers/mmc/host/davinci_mmc: section mismatch in
-reference: davinci_mmcsd_driver+0x10 (section: .data) ->
-davinci_mmcsd_remove (section: .exit.text)
+This SoC is using a regular GIC-400 and the GICR space size should be
+8KB rather than 256B.
 
-Fixes: b4cff4549b7a ("DaVinci: MMC: MMC/SD controller driver for DaVinci family")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+With this patch:
+
+[    0.000000] GIC: Using split EOI/Deactivate mode
+
+So this should be the correct fix.
+
+Fixes: 2f20182ed670 ("arm64: dts: hisilicon: add dts files for hi3798cv200-poplar board")
+Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240324114017.231936-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20240219-cache-v3-1-a33c57534ae9@outlook.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/davinci_mmc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -1344,7 +1344,7 @@ ioremap_fail:
- 	return ret;
- }
- 
--static void __exit davinci_mmcsd_remove(struct platform_device *pdev)
-+static void davinci_mmcsd_remove(struct platform_device *pdev)
- {
- 	struct mmc_davinci_host *host = platform_get_drvdata(pdev);
- 
-@@ -1399,7 +1399,7 @@ static struct platform_driver davinci_mm
- 		.of_match_table = davinci_mmc_dt_ids,
- 	},
- 	.probe		= davinci_mmcsd_probe,
--	.remove_new	= __exit_p(davinci_mmcsd_remove),
-+	.remove_new	= davinci_mmcsd_remove,
- 	.id_table	= davinci_mmc_devtype,
- };
- 
+--- a/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
++++ b/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
+@@ -58,7 +58,7 @@
+ 	gic: interrupt-controller@f1001000 {
+ 		compatible = "arm,gic-400";
+ 		reg = <0x0 0xf1001000 0x0 0x1000>,  /* GICD */
+-		      <0x0 0xf1002000 0x0 0x100>;   /* GICC */
++		      <0x0 0xf1002000 0x0 0x2000>;  /* GICC */
+ 		#address-cells = <0>;
+ 		#interrupt-cells = <3>;
+ 		interrupt-controller;
 
 
