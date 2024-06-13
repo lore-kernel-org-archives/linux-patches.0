@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5E31DFE1;
-	Thu, 13 Jun 2024 12:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3BD1E519;
+	Thu, 13 Jun 2024 12:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282259; cv=none; b=MbpPn6XVgauj+06+MScYc+COOGZmkmrx7hO6erYhRmfXMuoxjKO053wq18mfP3DzRXNLmo+qbEsAwjMABgUZXDQVO9agvFv5zEhHhJ7ttLxCsbvDRJ8A4hYDqnHLn+WMrAvWT6A5A6sRscAjC5r7144+ArC2XBgXPABdsxndJVo=
+	t=1718282261; cv=none; b=QGW2gH/O2N2rR2KwrNoiZOYFn3GQ5JH8WWuw1KcbdUSdue5JKaAlVG1+hlYH8wgE7iAolhAkwglxrKcSoLexJGyndMGpDrDOyrly/NDkWMzICf7wrXpflf2octfnUJtg17I6FAoi+ySPjqSjgsW0EgX7KVdShaUHqVhvTYY8Tbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282259; c=relaxed/simple;
-	bh=aPAo7/7+Xf5W6dNWoaifJXihNksllSK/REEJXvC7s2Y=;
+	s=arc-20240116; t=1718282261; c=relaxed/simple;
+	bh=NABbrh2H2g9enxUDEdq9BtYxkgl/C4XJwOs88GIVKqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lyyX+K0hl/h0gNZwauZIiwTfu6npdEJxlZKHCeHyu9ybpjqmjIfZX6qfGW0h2pFdEnTtm06H/hGYYxl0bcCXl6msJC8LJYl/+iKscCue2vIKR1GKRCLUWRpoRC38h50FhoVLhfkAQ411MXQAeXHTSDTAWlIEISUo2OGurs1d+ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6ZY8/It; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AfcrIUqzrMfjvc10q7IfNxefhLRtXKuQCICXS/USYPg7ooJCMIMh+2cuwdxmJ/8at0Zz2LY/4AlhzEsZG9SB3w3rpQPyHSwSVvPdXbAmoVb706pNRfLm/85I6rAuZYa0tXtePu+E01m2Lm1/o7WTPDTcNG6Eipyo3SrYK+asJ+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Qsas425; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6ZY8/It"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9EBC2BBFC;
-	Thu, 13 Jun 2024 12:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Qsas425"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A2AC2BBFC;
+	Thu, 13 Jun 2024 12:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282258;
-	bh=aPAo7/7+Xf5W6dNWoaifJXihNksllSK/REEJXvC7s2Y=;
+	s=korg; t=1718282261;
+	bh=NABbrh2H2g9enxUDEdq9BtYxkgl/C4XJwOs88GIVKqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6ZY8/It2YYGarx8/ABrNdJusQKoBQY/BSFwmg0JVqqlJkhD68r5Ml89ThMBLlTQg
-	 bGdGbhTLGqKM+M/zn3j8M2oHBZKOtNyBNY9x/J3W6LHrRtVt3FIrYjpnhxjfGKfVkB
-	 o8SkkFEPdSUWpdTZT0t72JMEgNSSTZj4d0bw8TuQ=
+	b=1Qsas425RVox5wqALlxdGtNIOUXwsMbnPYI9I9yqu3nAgbSPByi3BmU5qscQ/vubz
+	 BuwsgZd3765OoP17TOoepxopbEQFDyzDlTq0RLrx2eBzQlH2RG4TAk+QdgHWr6DtgF
+	 qLbWraqyqNlqJQZw8BlvPvLwj9g4gqW/YCtVX3Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jean Delvare <jdelvare@suse.de>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 185/402] firmware: dmi-id: add a release callback function
-Date: Thu, 13 Jun 2024 13:32:22 +0200
-Message-ID: <20240613113309.364530618@linuxfoundation.org>
+Subject: [PATCH 5.15 186/402] serial: max3100: Lock port->lock when calling uart_handle_cts_change()
+Date: Thu, 13 Jun 2024 13:32:23 +0200
+Message-ID: <20240613113309.403571463@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,48 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit cf770af5645a41a753c55a053fa1237105b0964a ]
+[ Upstream commit 77ab53371a2066fdf9b895246505f5ef5a4b5d47 ]
 
-dmi_class uses kfree() as the .release function, but that now causes
-a warning with clang-16 as it violates control flow integrity (KCFI)
-rules:
+uart_handle_cts_change() has to be called with port lock taken,
+Since we run it in a separate work, the lock may not be taken at
+the time of running. Make sure that it's taken by explicitly doing
+that. Without it we got a splat:
 
-drivers/firmware/dmi-id.c:174:17: error: cast from 'void (*)(const void *)' to 'void (*)(struct device *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
-  174 |         .dev_release = (void(*)(struct device *)) kfree,
+  WARNING: CPU: 0 PID: 10 at drivers/tty/serial/serial_core.c:3491 uart_handle_cts_change+0xa6/0xb0
+  ...
+  Workqueue: max3100-0 max3100_work [max3100]
+  RIP: 0010:uart_handle_cts_change+0xa6/0xb0
+  ...
+   max3100_handlerx+0xc5/0x110 [max3100]
+   max3100_work+0x12a/0x340 [max3100]
 
-Add an explicit function to call kfree() instead.
-
-Fixes: 4f5c791a850e ("DMI-based module autoloading")
-Link: https://lore.kernel.org/lkml/20240213100238.456912-1-arnd@kernel.org/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Jean Delvare <jdelvare@suse.de>
+Fixes: 7831d56b0a35 ("tty: MAX3100")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240402195306.269276-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/dmi-id.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/tty/serial/max3100.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/dmi-id.c b/drivers/firmware/dmi-id.c
-index 940ddf916202a..77a8d43e65d3c 100644
---- a/drivers/firmware/dmi-id.c
-+++ b/drivers/firmware/dmi-id.c
-@@ -169,9 +169,14 @@ static int dmi_dev_uevent(struct device *dev, struct kobj_uevent_env *env)
+diff --git a/drivers/tty/serial/max3100.c b/drivers/tty/serial/max3100.c
+index 3c92d4e014887..b3b77ffd5b423 100644
+--- a/drivers/tty/serial/max3100.c
++++ b/drivers/tty/serial/max3100.c
+@@ -213,7 +213,7 @@ static int max3100_sr(struct max3100_port *s, u16 tx, u16 *rx)
  	return 0;
  }
  
-+static void dmi_dev_release(struct device *dev)
+-static int max3100_handlerx(struct max3100_port *s, u16 rx)
++static int max3100_handlerx_unlocked(struct max3100_port *s, u16 rx)
+ {
+ 	unsigned int ch, flg, status = 0;
+ 	int ret = 0, cts;
+@@ -253,6 +253,17 @@ static int max3100_handlerx(struct max3100_port *s, u16 rx)
+ 	return ret;
+ }
+ 
++static int max3100_handlerx(struct max3100_port *s, u16 rx)
 +{
-+	kfree(dev);
++	unsigned long flags;
++	int ret;
++
++	uart_port_lock_irqsave(&s->port, &flags);
++	ret = max3100_handlerx_unlocked(s, rx);
++	uart_port_unlock_irqrestore(&s->port, flags);
++	return ret;
 +}
 +
- static struct class dmi_class = {
- 	.name = "dmi",
--	.dev_release = (void(*)(struct device *)) kfree,
-+	.dev_release = dmi_dev_release,
- 	.dev_uevent = dmi_dev_uevent,
- };
- 
+ static void max3100_work(struct work_struct *w)
+ {
+ 	struct max3100_port *s = container_of(w, struct max3100_port, work);
 -- 
 2.43.0
 
