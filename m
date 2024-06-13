@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F15142E86;
-	Thu, 13 Jun 2024 12:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0911849;
+	Thu, 13 Jun 2024 12:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282492; cv=none; b=g9x4aO97fMB+ZC4d4CGdODzS2baUW++940c4YKwCgoxpASalULw9D6TEOUhNDLqjve7bPPd8hxCbqBGgwSPbrzAD3jIFhXfNWE+BIu60aTS5Qu4Qcvr9pnasY8EaRG56n50rcOYA4HSiyqubDLrDf/xhrgeaaE8Uueac7ygVSLs=
+	t=1718282495; cv=none; b=PIcEe8tgw1DdzXcjz//DqJb2moisOfv9LHlUrQDbvQQmLoIdTikAOWslpl5eGGmvO1Mj2DzV8C9PiJd88WNxZ0z0AgozKhshHdwZ/2pR8xqo9wrxJgsFonB7S7QeLnL2GdGdc3Z01zUqab68sjuz40rD14NlQ4kaHVz9lITJmAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282492; c=relaxed/simple;
-	bh=pNgc1c5+bmtbIGbFllM8YLjIVTdroIKIrfxLaFsRXaI=;
+	s=arc-20240116; t=1718282495; c=relaxed/simple;
+	bh=lwFEgXCHdI0X13JQIfzedF6Hj2UEWuFppZPUsiDtatA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HmN81i7El2/JL2aRoRejnB3Ma3L9jojCjkuAgnkrGFe2GU1CJ9GsSpBL7lyZabmTkzkZUS5LI7NMBIIfdfzzoKNCHJom4G+Xfusg0urVZCv9NPoePlQcmzw9f6sP7tEuawqsMYBoSNBRrT2EjYpUCe43VwO2OTepWJ0iszgHYFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOnlHtak; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sUW1z6lFGSnZX6ZVhvZcp8crRRhDIjQO6f1Ob1C0Mp9sMrX1lWxvbhTMjRlTn6xrNZuCkKvjooyfEv8fVcAmR9sH2u2dU/QJxpBlo8PABDBYoYTGDCgpRLsktyAicIXfHJclv5bfAC904HH0xvv5cikQ/gOTF8onZLKJOHcML8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdZpkscH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOnlHtak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FB3C2BBFC;
-	Thu, 13 Jun 2024 12:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdZpkscH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06537C2BBFC;
+	Thu, 13 Jun 2024 12:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282492;
-	bh=pNgc1c5+bmtbIGbFllM8YLjIVTdroIKIrfxLaFsRXaI=;
+	s=korg; t=1718282495;
+	bh=lwFEgXCHdI0X13JQIfzedF6Hj2UEWuFppZPUsiDtatA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOnlHtakgeZlJB/c17ihV2wP220Xy/NNjGjb4yy8UiB2dXFCs7G0rUMoljO+ypH+i
-	 6jBzaT2SQ65UWEo6iO9vRiYEkwwbUobxh/63ReYK1gk0jfjY610G2XjuJgDodcPWPp
-	 cCEQUnZdochJCqgvAMnd+mR71dDK7KUqM64xvRB4=
+	b=IdZpkscHQSbc/t4Po1G76RUcy47y7vEfrEvwGw/82DFafJtS0lZhxISK+Ke368fs2
+	 hvdzM50Tis1o7ecEUOzVqXYdbdFUa021vj8wOhkehejJ9a6hwx9YUlGWV+pxWYnf53
+	 P4XwdpCvvSzQeAZLIbQRlfW8QpCNPqdjWU2boob8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Guo Ren <guoren@linux.alibaba.com>,
+	Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 296/402] virtio: delete vq in vp_find_vqs_msix() when request_irq() fails
-Date: Thu, 13 Jun 2024 13:34:13 +0200
-Message-ID: <20240613113313.693120722@linuxfoundation.org>
+Subject: [PATCH 5.15 297/402] riscv: stacktrace: Make walk_stackframe cross pt_regs frame
+Date: Thu, 13 Jun 2024 13:34:14 +0200
+Message-ID: <20240613113313.730874215@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,92 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: Guo Ren <guoren@linux.alibaba.com>
 
-[ Upstream commit 89875151fccdd024d571aa884ea97a0128b968b6 ]
+[ Upstream commit 7ecdadf7f8c659524f6b2aebf6be7bf619764d90 ]
 
-When request_irq() fails, error path calls vp_del_vqs(). There, as vq is
-present in the list, free_irq() is called for the same vector. That
-causes following splat:
+The current walk_stackframe with FRAME_POINTER would stop unwinding at
+ret_from_exception:
+  BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1518
+  in_atomic(): 0, irqs_disabled(): 1, non_block: 0, pid: 1, name: init
+  CPU: 0 PID: 1 Comm: init Not tainted 5.10.113-00021-g15c15974895c-dirty #192
+  Call Trace:
+  [<ffffffe0002038c8>] walk_stackframe+0x0/0xee
+  [<ffffffe000aecf48>] show_stack+0x32/0x4a
+  [<ffffffe000af1618>] dump_stack_lvl+0x72/0x8e
+  [<ffffffe000af1648>] dump_stack+0x14/0x1c
+  [<ffffffe000239ad2>] ___might_sleep+0x12e/0x138
+  [<ffffffe000239aec>] __might_sleep+0x10/0x18
+  [<ffffffe000afe3fe>] down_read+0x22/0xa4
+  [<ffffffe000207588>] do_page_fault+0xb0/0x2fe
+  [<ffffffe000201b80>] ret_from_exception+0x0/0xc
 
-[    0.414355] Trying to free already-free IRQ 27
-[    0.414403] WARNING: CPU: 1 PID: 1 at kernel/irq/manage.c:1899 free_irq+0x1a1/0x2d0
-[    0.414510] Modules linked in:
-[    0.414540] CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.9.0-rc4+ #27
-[    0.414540] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-1.fc39 04/01/2014
-[    0.414540] RIP: 0010:free_irq+0x1a1/0x2d0
-[    0.414540] Code: 1e 00 48 83 c4 08 48 89 e8 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc 90 8b 74 24 04 48 c7 c7 98 80 6c b1 e8 00 c9 f7 ff 90 <0f> 0b 90 90 48 89 ee 4c 89 ef e8 e0 20 b8 00 49 8b 47 40 48 8b 40
-[    0.414540] RSP: 0000:ffffb71480013ae0 EFLAGS: 00010086
-[    0.414540] RAX: 0000000000000000 RBX: ffffa099c2722000 RCX: 0000000000000000
-[    0.414540] RDX: 0000000000000000 RSI: ffffb71480013998 RDI: 0000000000000001
-[    0.414540] RBP: 0000000000000246 R08: 00000000ffffdfff R09: 0000000000000001
-[    0.414540] R10: 00000000ffffdfff R11: ffffffffb18729c0 R12: ffffa099c1c91760
-[    0.414540] R13: ffffa099c1c916a4 R14: ffffa099c1d2f200 R15: ffffa099c1c91600
-[    0.414540] FS:  0000000000000000(0000) GS:ffffa099fec40000(0000) knlGS:0000000000000000
-[    0.414540] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    0.414540] CR2: 0000000000000000 CR3: 0000000008e3e001 CR4: 0000000000370ef0
-[    0.414540] Call Trace:
-[    0.414540]  <TASK>
-[    0.414540]  ? __warn+0x80/0x120
-[    0.414540]  ? free_irq+0x1a1/0x2d0
-[    0.414540]  ? report_bug+0x164/0x190
-[    0.414540]  ? handle_bug+0x3b/0x70
-[    0.414540]  ? exc_invalid_op+0x17/0x70
-[    0.414540]  ? asm_exc_invalid_op+0x1a/0x20
-[    0.414540]  ? free_irq+0x1a1/0x2d0
-[    0.414540]  vp_del_vqs+0xc1/0x220
-[    0.414540]  vp_find_vqs_msix+0x305/0x470
-[    0.414540]  vp_find_vqs+0x3e/0x1a0
-[    0.414540]  vp_modern_find_vqs+0x1b/0x70
-[    0.414540]  init_vqs+0x387/0x600
-[    0.414540]  virtnet_probe+0x50a/0xc80
-[    0.414540]  virtio_dev_probe+0x1e0/0x2b0
-[    0.414540]  really_probe+0xc0/0x2c0
-[    0.414540]  ? __pfx___driver_attach+0x10/0x10
-[    0.414540]  __driver_probe_device+0x73/0x120
-[    0.414540]  driver_probe_device+0x1f/0xe0
-[    0.414540]  __driver_attach+0x88/0x180
-[    0.414540]  bus_for_each_dev+0x85/0xd0
-[    0.414540]  bus_add_driver+0xec/0x1f0
-[    0.414540]  driver_register+0x59/0x100
-[    0.414540]  ? __pfx_virtio_net_driver_init+0x10/0x10
-[    0.414540]  virtio_net_driver_init+0x90/0xb0
-[    0.414540]  do_one_initcall+0x58/0x230
-[    0.414540]  kernel_init_freeable+0x1a3/0x2d0
-[    0.414540]  ? __pfx_kernel_init+0x10/0x10
-[    0.414540]  kernel_init+0x1a/0x1c0
-[    0.414540]  ret_from_fork+0x31/0x50
-[    0.414540]  ? __pfx_kernel_init+0x10/0x10
-[    0.414540]  ret_from_fork_asm+0x1a/0x30
-[    0.414540]  </TASK>
+The optimization would help walk_stackframe cross the pt_regs frame and
+get more backtrace of debug info:
+  BUG: sleeping function called from invalid context at kernel/locking/rwsem.c:1518
+  in_atomic(): 0, irqs_disabled(): 1, non_block: 0, pid: 1, name: init
+  CPU: 0 PID: 1 Comm: init Not tainted 5.10.113-00021-g15c15974895c-dirty #192
+  Call Trace:
+  [<ffffffe0002038c8>] walk_stackframe+0x0/0xee
+  [<ffffffe000aecf48>] show_stack+0x32/0x4a
+  [<ffffffe000af1618>] dump_stack_lvl+0x72/0x8e
+  [<ffffffe000af1648>] dump_stack+0x14/0x1c
+  [<ffffffe000239ad2>] ___might_sleep+0x12e/0x138
+  [<ffffffe000239aec>] __might_sleep+0x10/0x18
+  [<ffffffe000afe3fe>] down_read+0x22/0xa4
+  [<ffffffe000207588>] do_page_fault+0xb0/0x2fe
+  [<ffffffe000201b80>] ret_from_exception+0x0/0xc
+  [<ffffffe000613c06>] riscv_intc_irq+0x1a/0x72
+  [<ffffffe000201b80>] ret_from_exception+0x0/0xc
+  [<ffffffe00033f44a>] vma_link+0x54/0x160
+  [<ffffffe000341d7a>] mmap_region+0x2cc/0x4d0
+  [<ffffffe000342256>] do_mmap+0x2d8/0x3ac
+  [<ffffffe000326318>] vm_mmap_pgoff+0x70/0xb8
+  [<ffffffe00032638a>] vm_mmap+0x2a/0x36
+  [<ffffffe0003cfdde>] elf_map+0x72/0x84
+  [<ffffffe0003d05f8>] load_elf_binary+0x69a/0xec8
+  [<ffffffe000376240>] bprm_execve+0x246/0x53a
+  [<ffffffe00037786c>] kernel_execve+0xe8/0x124
+  [<ffffffe000aecdf2>] run_init_process+0xfa/0x10c
+  [<ffffffe000aece16>] try_to_run_init_process+0x12/0x3c
+  [<ffffffe000afa920>] kernel_init+0xb4/0xf8
+  [<ffffffe000201b80>] ret_from_exception+0x0/0xc
 
-Fix this by calling deleting the current vq when request_irq() fails.
+Here is the error injection test code for the above output:
+ drivers/irqchip/irq-riscv-intc.c:
+ static asmlinkage void riscv_intc_irq(struct pt_regs *regs)
+ {
+        unsigned long cause = regs->cause & ~CAUSE_IRQ_FLAG;
++       u32 tmp; __get_user(tmp, (u32 *)0);
 
-Fixes: 0b0f9dc52ed0 ("Revert "virtio_pci: use shared interrupts for virtqueues"")
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Message-Id: <20240426150845.3999481-1-jiri@resnulli.us>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Link: https://lore.kernel.org/r/20221109064937.3643993-3-guoren@kernel.org
+[Palmer: use SYM_CODE_*]
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Stable-dep-of: a2a4d4a6a0bf ("riscv: stacktrace: fixed walk_stackframe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_pci_common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/entry.S      | 3 ++-
+ arch/riscv/kernel/stacktrace.c | 9 +++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
-index 1e890ef176873..a6f375417fd54 100644
---- a/drivers/virtio/virtio_pci_common.c
-+++ b/drivers/virtio/virtio_pci_common.c
-@@ -339,8 +339,10 @@ static int vp_find_vqs_msix(struct virtio_device *vdev, unsigned nvqs,
- 				  vring_interrupt, 0,
- 				  vp_dev->msix_names[msix_vec],
- 				  vqs[i]);
--		if (err)
-+		if (err) {
-+			vp_del_vq(vqs[i]);
- 			goto error_find;
-+		}
- 	}
- 	return 0;
+diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
+index 5ca2860cc06cd..851c967c49ccd 100644
+--- a/arch/riscv/kernel/entry.S
++++ b/arch/riscv/kernel/entry.S
+@@ -231,7 +231,7 @@ ret_from_syscall_rejected:
+ 	andi t0, t0, _TIF_SYSCALL_WORK
+ 	bnez t0, handle_syscall_trace_exit
  
+-ret_from_exception:
++SYM_CODE_START_NOALIGN(ret_from_exception)
+ 	REG_L s0, PT_STATUS(sp)
+ 	csrc CSR_STATUS, SR_IE
+ #ifdef CONFIG_TRACE_IRQFLAGS
+@@ -245,6 +245,7 @@ ret_from_exception:
+ 	andi s0, s0, SR_SPP
+ #endif
+ 	bnez s0, resume_kernel
++SYM_CODE_END(ret_from_exception)
+ 
+ resume_userspace:
+ 	/* Interrupts must be disabled here so flags are checked atomically */
+diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+index 894ae66421a76..26f3916eea47c 100644
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -18,6 +18,8 @@ register unsigned long sp_in_global __asm__("sp");
+ 
+ #ifdef CONFIG_FRAME_POINTER
+ 
++extern asmlinkage void ret_from_exception(void);
++
+ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+ 			     bool (*fn)(void *, unsigned long), void *arg)
+ {
+@@ -62,6 +64,13 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+ 			fp = frame->fp;
+ 			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
+ 						   &frame->ra);
++			if (pc == (unsigned long)ret_from_exception) {
++				if (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
++					break;
++
++				pc = ((struct pt_regs *)sp)->epc;
++				fp = ((struct pt_regs *)sp)->s0;
++			}
+ 		}
+ 
+ 	}
 -- 
 2.43.0
 
