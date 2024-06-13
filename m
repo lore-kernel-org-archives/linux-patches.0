@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D389384;
-	Thu, 13 Jun 2024 12:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9BEEC4;
+	Thu, 13 Jun 2024 12:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282179; cv=none; b=XT99Nig7Uz3ZdzGklASJo+LL9qSJt8+QIVQ0fVp2c/tVEO0CLtViIyBGbmxJsLSu5euDmNEtXJOzfurb3Vscgfx+OCyhfmwj6pC0Iqs4PHYpgdt/WrxD/1IDHrxo32UkF/qTPXw5jmV4RWF1uE7ewnNciqq3nf4SUg41cKQm+Rw=
+	t=1718282182; cv=none; b=Ai6ADgDRqD6xnF33goPVS//TlR1Sxn0SoXHYAZwYMIUA3/RC2FmqGwguBLeguwqJ87ZwS/nhM7QdKTTS0infzag5gO+6v3pK8YhHzwYSpA6He1BShVfZsEx7edmPnC3SvfTVyVapY3oyQUiczEfI0VSDXj69gYUis68AK64o73U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282179; c=relaxed/simple;
-	bh=r/jbONSJlvHoA1qM80YVVKuY/jEL5/6oAHivBnKpYEk=;
+	s=arc-20240116; t=1718282182; c=relaxed/simple;
+	bh=KBb9RyTiMVF9UTa4rowfn7TyQd/UaunCsuv++l7uKTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IntCwFoRd2ruNpXKgPn0NL5VFQDjnjgukIvcZxzpyjcFnxdvj73GNm2qFMNAMaY2R7LRSvlVI8SiENwp6GPlLL+/fHeUY7J8VLi3x9c2qYkYBAOqJL/xQxdwrnqIo3gUnJBTf6wDgkqFz32TX+aqHAHRIC5c3SaRanI8SOKJ++4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4MkDEl7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h6LJW9o63TuceG0jZaySt/W07QaWvARx8HoPqOXpJL1aJZMU54/0NlajtovLZFJG3EuhYOITL+rNgY16kBW3ZvVvEWVfPXlBXyY0okHtFC/dm8divSnqXUuL2AIskr5ScRy/2Z08cgsVIyo8cbyMGXAOphNT7+pToY8+MAREQPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPLo1KUj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4MkDEl7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02ECFC2BBFC;
-	Thu, 13 Jun 2024 12:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPLo1KUj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26E2C2BBFC;
+	Thu, 13 Jun 2024 12:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282179;
-	bh=r/jbONSJlvHoA1qM80YVVKuY/jEL5/6oAHivBnKpYEk=;
+	s=korg; t=1718282182;
+	bh=KBb9RyTiMVF9UTa4rowfn7TyQd/UaunCsuv++l7uKTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4MkDEl72SY7ASQlcg8FXa1hkrDguN9ePtgMZmyw4CtSaemRp+3YrR8v11D24sZEO
-	 TA5kXFaJrkjwYIFLoTWG4rmkhQCi1wpta85LoRGmzUoOURvMgJvmR+LY2PWpHdYTa8
-	 LqnhtIHe4LbvZxQaQQCk2QXsFjXKpE4at7peJ1u0=
+	b=XPLo1KUjdFA8dWZS8ecgKvDTg5R1n0kKawNCNdCC/UWsG85E5zmaRHr1pCI3GlQTr
+	 wEJUGm5MqFudkUCdldULaKAp3Qq9yafB+0vGJyrMfM35akUOFQJMtlMfNBOYDIIhjG
+	 ag47iH/LRVXbzZXxdh5gMcviJvZxhEOtlOTouoYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jin Yao <yao.jin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 182/402] perf annotate: Get rid of duplicate --group option item
-Date: Thu, 13 Jun 2024 13:32:19 +0200
-Message-ID: <20240613113309.249462661@linuxfoundation.org>
+Subject: [PATCH 5.15 191/402] serial: sc16is7xx: add proper sched.h include for sched_set_fifo()
+Date: Thu, 13 Jun 2024 13:32:28 +0200
+Message-ID: <20240613113309.594590355@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -58,46 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 374af9f1f06b5e991c810d2e4983d6f58df32136 ]
+[ Upstream commit 2a8e4ab0c93fad30769479f86849e22d63cd0e12 ]
 
-The options array in cmd_annotate() has duplicate --group options.  It
-only needs one and let's get rid of the other.
+Replace incorrect include with the proper one for sched_set_fifo()
+declaration.
 
-  $ perf annotate -h 2>&1 | grep group
-        --group           Show event group information together
-        --group           Show event group information together
-
-Fixes: 7ebaf4890f63eb90 ("perf annotate: Support '--group' option")
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jin Yao <yao.jin@linux.intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240322224313.423181-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 28d2f209cd16 ("sched,serial: Convert to sched_set_fifo()")
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240409154253.3043822-2-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-annotate.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/tty/serial/sc16is7xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-annotate.c b/tools/perf/builtin-annotate.c
-index 05eb098cb0e3b..592d92092614e 100644
---- a/tools/perf/builtin-annotate.c
-+++ b/tools/perf/builtin-annotate.c
-@@ -541,8 +541,6 @@ int cmd_annotate(int argc, const char **argv)
- 		    "Enable symbol demangling"),
- 	OPT_BOOLEAN(0, "demangle-kernel", &symbol_conf.demangle_kernel,
- 		    "Enable kernel symbol demangling"),
--	OPT_BOOLEAN(0, "group", &symbol_conf.event_group,
--		    "Show event group information together"),
- 	OPT_BOOLEAN(0, "show-total-period", &symbol_conf.show_total_period,
- 		    "Show a column with the sum of periods"),
- 	OPT_BOOLEAN('n', "show-nr-samples", &symbol_conf.show_nr_samples,
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index 0066a0e235164..35f8675db1d89 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -18,6 +18,7 @@
+ #include <linux/module.h>
+ #include <linux/property.h>
+ #include <linux/regmap.h>
++#include <linux/sched.h>
+ #include <linux/serial_core.h>
+ #include <linux/serial.h>
+ #include <linux/tty.h>
+@@ -25,7 +26,6 @@
+ #include <linux/spi/spi.h>
+ #include <linux/uaccess.h>
+ #include <linux/units.h>
+-#include <uapi/linux/sched/types.h>
+ 
+ #define SC16IS7XX_NAME			"sc16is7xx"
+ #define SC16IS7XX_MAX_DEVS		8
 -- 
 2.43.0
 
