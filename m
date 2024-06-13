@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1611448FA;
-	Thu, 13 Jun 2024 11:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DA1145A12;
+	Thu, 13 Jun 2024 11:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279894; cv=none; b=Y8a0/uy9ISntGeubhjI/fyHCk5Jb5L54APuc0SdxtCAEnMuMMX+sDXTs4p7TF2IaT9ZfeNBURWOYtnbJO5Vh40yNQ/rArkuKPL65XirBU+0Ih7S1tmvFSsUvzjPPukOPUJP4wQfb7deyBX9jdBwtlL9BLB2ndHqvneHd7V42yHA=
+	t=1718279897; cv=none; b=DTFS0W4tXHK6PYUq69UykmyiOyLpb3CwopZoay1SEQTtUIP43/F38+2iydzeEbpltamZ8BeEbqUFZRiO18IqJtlSFx84131Uelq/T89dkVjsE9sHqye7poPnvujBs1iIiD93QoD06LhQ+/pB5tutEGkLkHdjhj81BZVMkgx2UqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279894; c=relaxed/simple;
-	bh=WgLDTaQZr/+9RixtYgnCxDGOAz/zEl+cl92hm/ds3b4=;
+	s=arc-20240116; t=1718279897; c=relaxed/simple;
+	bh=YAqVD3nE9dJXv/tex+zCxkKHnmCbc17VTErG8TNapQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4BqK0avEeoglWR/sLq181O9TnRuyvFRAZn0FaEFwu2TkNGkS6Yq1wuoUAVbrgrxcCjHYnH7WsJB5XbTlMvNRbqHjezyiBn+QDgt6ohRztZiKpoqiaxslcX3jrOc28oUQoIy1JSfIAYdP2mECn82ol3dYkVDlxcP4JnI3lILIDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXitEos/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gRUNMNHUm0cVzBbetPEvbZl4xmtmIO9+Ti3rNnbR4VuMNzaRMtoNeAop4acDcsilQdwK0pXD9QkfNFw7dywjwsVvT9051tFpN8FZigr2U5RPOFBstZbxZSJvKWgx1fBUAJUI6Eu9oUdQu6u5zP4ERBw5VoXRMVyqzsLopdWQKW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0n870mXe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXitEos/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8ECC2BBFC;
-	Thu, 13 Jun 2024 11:58:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0n870mXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2EBDC2BBFC;
+	Thu, 13 Jun 2024 11:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279894;
-	bh=WgLDTaQZr/+9RixtYgnCxDGOAz/zEl+cl92hm/ds3b4=;
+	s=korg; t=1718279897;
+	bh=YAqVD3nE9dJXv/tex+zCxkKHnmCbc17VTErG8TNapQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXitEos/rNGyfjTxkEbkFEimMEHWlkGSF/agufM4nhMahNQAP3lAF9JbEhYo6svPz
-	 uLLijIPV46plR786ELVAA9HyzepBJlNssKFlO7ETPETm0JLjc0SZ8fbEF3kP0xDKy/
-	 mgFcaS2trnD2yuKZwadnYnEHdjZKh+MHgaqT6VVQ=
+	b=0n870mXe+LdNDY1FAqsZYd/O+IE33oA58MhqU6yEx2fHOfaC8MwjrSWx01uTEji8O
+	 TOU7Fo6IKBndkPvP6U2xiejJ4Nna4UWwT9RXijLrKWI1AhptEWrdNz70mCAzz0HwGz
+	 UBvnExRP6RHJCQlHz9K3xZsXOguutYQBzJAeOSAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Arnd Bergmann <arnd@arndb.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 072/202] powerpc/fsl-soc: hide unused const variable
-Date: Thu, 13 Jun 2024 13:32:50 +0200
-Message-ID: <20240613113230.555836564@linuxfoundation.org>
+Subject: [PATCH 5.4 073/202] fbdev: sisfb: hide unused variables
+Date: Thu, 13 Jun 2024 13:32:51 +0200
+Message-ID: <20240613113230.592399876@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -54,44 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 01acaf3aa75e1641442cc23d8fe0a7bb4226efb1 ]
+[ Upstream commit 688cf598665851b9e8cb5083ff1d208ce43d10ff ]
 
-vmpic_msi_feature is only used conditionally, which triggers a rare
--Werror=unused-const-variable= warning with gcc:
+Building with W=1 shows that a couple of variables in this driver are only
+used in certain configurations:
 
-arch/powerpc/sysdev/fsl_msi.c:567:37: error: 'vmpic_msi_feature' defined but not used [-Werror=unused-const-variable=]
-  567 | static const struct fsl_msi_feature vmpic_msi_feature =
+drivers/video/fbdev/sis/init301.c:239:28: error: 'SiS_Part2CLVX_6' defined but not used [-Werror=unused-const-variable=]
+  239 | static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:230:28: error: 'SiS_Part2CLVX_5' defined but not used [-Werror=unused-const-variable=]
+  230 | static const unsigned char SiS_Part2CLVX_5[] = {   /* 750p */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:211:28: error: 'SiS_Part2CLVX_4' defined but not used [-Werror=unused-const-variable=]
+  211 | static const unsigned char SiS_Part2CLVX_4[] = {   /* PAL */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:192:28: error: 'SiS_Part2CLVX_3' defined but not used [-Werror=unused-const-variable=]
+  192 | static const unsigned char SiS_Part2CLVX_3[] = {  /* NTSC, 525i, 525p */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:184:28: error: 'SiS_Part2CLVX_2' defined but not used [-Werror=unused-const-variable=]
+  184 | static const unsigned char SiS_Part2CLVX_2[] = {
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:176:28: error: 'SiS_Part2CLVX_1' defined but not used [-Werror=unused-const-variable=]
+  176 | static const unsigned char SiS_Part2CLVX_1[] = {
+      |                            ^~~~~~~~~~~~~~~
 
-Hide this one in the same #ifdef as the reference so we can turn on
-the warning by default.
+This started showing up after the definitions were moved into the
+source file from the header, which was not flagged by the compiler.
+Move the definition into the appropriate #ifdef block that already
+exists next to them.
 
-Fixes: 305bcf26128e ("powerpc/fsl-soc: use CONFIG_EPAPR_PARAVIRT for hcalls")
+Fixes: 5908986ef348 ("video: fbdev: sis: avoid mismatched prototypes")
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240403080702.3509288-2-arnd@kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/fsl_msi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/video/fbdev/sis/init301.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/sysdev/fsl_msi.c b/arch/powerpc/sysdev/fsl_msi.c
-index d276c5e964458..77aa7a13ab1db 100644
---- a/arch/powerpc/sysdev/fsl_msi.c
-+++ b/arch/powerpc/sysdev/fsl_msi.c
-@@ -573,10 +573,12 @@ static const struct fsl_msi_feature ipic_msi_feature = {
- 	.msiir_offset = 0x38,
+diff --git a/drivers/video/fbdev/sis/init301.c b/drivers/video/fbdev/sis/init301.c
+index a8fb41f1a2580..09329072004f4 100644
+--- a/drivers/video/fbdev/sis/init301.c
++++ b/drivers/video/fbdev/sis/init301.c
+@@ -172,7 +172,7 @@ static const unsigned char SiS_HiTVGroup3_2[] = {
  };
  
-+#ifdef CONFIG_EPAPR_PARAVIRT
- static const struct fsl_msi_feature vmpic_msi_feature = {
- 	.fsl_pic_ip = FSL_PIC_IP_VMPIC,
- 	.msiir_offset = 0,
+ /* 301C / 302ELV extended Part2 TV registers (4 tap scaler) */
+-
++#ifdef CONFIG_FB_SIS_315
+ static const unsigned char SiS_Part2CLVX_1[] = {
+     0x00,0x00,
+     0x00,0x20,0x00,0x00,0x7F,0x20,0x02,0x7F,0x7D,0x20,0x04,0x7F,0x7D,0x1F,0x06,0x7E,
+@@ -245,7 +245,6 @@ static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
+     0xFF,0xFF,
  };
-+#endif
  
- static const struct of_device_id fsl_of_msi_ids[] = {
- 	{
+-#ifdef CONFIG_FB_SIS_315
+ /* 661 et al LCD data structure (2.03.00) */
+ static const unsigned char SiS_LCDStruct661[] = {
+     /* 1024x768 */
 -- 
 2.43.0
 
