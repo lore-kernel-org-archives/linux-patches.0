@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78111384;
-	Thu, 13 Jun 2024 12:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63858384;
+	Thu, 13 Jun 2024 12:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282451; cv=none; b=MoSkImgYyKX/JFHGnbACenWLoPsKa4i2+Hk0C8k9nxxjWslxwb+T4BiANKmvLHD53Ejt40iogmoyIPqJxTHVhRjDXI4Iwo+R5ugspaXFvDk4nPMeaIQYa6Q4rdeHH9VMLyzH/NCtnA3+QtAsFLqpRGwgxkmZt0vHoJEGCtgsa7c=
+	t=1718282454; cv=none; b=dw8UxvGWU4NIwIVWW35tAAB66+9lGKjzGs+Ejjc+K6whQjc+3+Aun2yoD8RuvcmdPxlB80Fbu+DR5lHnashDSyPjE0cCs4mEkpVkrrCyHLz7FOY3Y8yJD+XDuKjtj23cM1pRfHA8acQAxR6oNHCjt6jbq0JM4an9uYLkIOEBQLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282451; c=relaxed/simple;
-	bh=KM8DyskE1/pHSx1GiwG/Zs/EsbMy9lVgQiBkYwIzAtk=;
+	s=arc-20240116; t=1718282454; c=relaxed/simple;
+	bh=BFaIoEYYZN63eXnjoOsZnmxGXWQ0W6yARaDSE8xYSgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c5Ybyz+aDOXjz9SabFJ/J6CRtuMdTfH/vIzGuisaZzJFo996X98X8C8J7AKs/6o50qvHzA4RpEkfP2rUGbwMgKWWuCbd4NRddVR7ZLHdn9nwi5VmN0F8vS3OYQ82zPPUkakaklHFNT/g7R0H1x3szFVe1InNAi/6Af/499DpxHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QY0JA2eP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fcG287P3UYRVX6U/rnnl6QhI8vDVSU/MGkj+5PCvPVSreyRhQ3OWESFYrO97drkeiyV2C9IR1ZwahbHy/hppggB3w+CVBxfs3T76qxmeEqlW7KEkA115oosNYeaNBnULNp4Zmpum5gxgbYpAaqts35GTM4K3VOQHoNyWZG8eq2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jw8dYoOC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QY0JA2eP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AFAC2BBFC;
-	Thu, 13 Jun 2024 12:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jw8dYoOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF2DC2BBFC;
+	Thu, 13 Jun 2024 12:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282451;
-	bh=KM8DyskE1/pHSx1GiwG/Zs/EsbMy9lVgQiBkYwIzAtk=;
+	s=korg; t=1718282454;
+	bh=BFaIoEYYZN63eXnjoOsZnmxGXWQ0W6yARaDSE8xYSgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QY0JA2eP4Z3gW1YY36BRwG1NvZAtPzNfa7V/HM01v+haDJOPBdUtXa1bBBQ5+1T+e
-	 4D9LD4OyAVld4YrCwI4ueARA7Uqh27Kq7E7vgPnRf3CpClRw4XqPKegiqbEclsezdO
-	 N74yLOJ4OjuAaorntmDIXr9aU+tnSxr1UXj/QDt4=
+	b=Jw8dYoOCTjb6BAzc3u8L9xpYrtOcKt7j7+bZC5K/mVe4Hh0r5iH6LOrYtxj1o55xm
+	 xOxxWf9iF6UbO5c9wrblF1XcbuP+jbe5Mk1YtM3E4nYmTHiKF4mw6Yl3TKR5yHItYk
+	 M4AeA7Z83XZewpzqwezEeiCgcrkTLDWgLNKlAucY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Judith Mendez <jm@ti.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 280/402] null_blk: Fix the WARNING: modpost: missing MODULE_DESCRIPTION()
-Date: Thu, 13 Jun 2024 13:33:57 +0200
-Message-ID: <20240613113313.070843804@linuxfoundation.org>
+Subject: [PATCH 5.15 252/402] mmc: sdhci_am654: Add OTAP/ITAP delay enable
+Date: Thu, 13 Jun 2024 13:33:29 +0200
+Message-ID: <20240613113311.977436960@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,32 +52,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit 9e6727f824edcdb8fdd3e6e8a0862eb49546e1cd ]
+[ Upstream commit 387c1bf7dce0dfea02080c8bdb066b5209e92155 ]
 
-No functional changes intended.
+Currently the OTAP/ITAP delay enable functionality is incorrect in
+the am654_set_clock function. The OTAP delay is not enabled when
+timing < SDR25 bus speed mode. The ITAP delay is not enabled for
+timings that do not carry out tuning.
 
-Fixes: f2298c0403b0 ("null_blk: multi queue aware block test driver")
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20240506075538.6064-1-yanjun.zhu@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Add this OTAP/ITAP delay functionality according to the datasheet
+[1] OTAPDLYENA and ITAPDLYENA for MMC0.
+
+[1] https://www.ti.com/lit/ds/symlink/am62p.pdf
+
+Fixes: 8ee5fc0e0b3b ("mmc: sdhci_am654: Update OTAPDLY writes")
+Signed-off-by: Judith Mendez <jm@ti.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240320223837.959900-4-jm@ti.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/sdhci_am654.c | 40 ++++++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 1fe5d33a5798d..ec78d9ad3e9bc 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -2053,4 +2053,5 @@ module_init(null_init);
- module_exit(null_exit);
+diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
+index 8203fc15c507a..2c73396383733 100644
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -142,6 +142,7 @@ struct sdhci_am654_data {
+ 	struct regmap *base;
+ 	int otap_del_sel[ARRAY_SIZE(td)];
+ 	int itap_del_sel[ARRAY_SIZE(td)];
++	u32 itap_del_ena[ARRAY_SIZE(td)];
+ 	int clkbuf_sel;
+ 	int trm_icp;
+ 	int drv_strength;
+@@ -238,11 +239,13 @@ static void sdhci_am654_setup_dll(struct sdhci_host *host, unsigned int clock)
+ }
  
- MODULE_AUTHOR("Jens Axboe <axboe@kernel.dk>");
-+MODULE_DESCRIPTION("multi queue aware block test driver");
- MODULE_LICENSE("GPL");
+ static void sdhci_am654_write_itapdly(struct sdhci_am654_data *sdhci_am654,
+-				      u32 itapdly)
++				      u32 itapdly, u32 enable)
+ {
+ 	/* Set ITAPCHGWIN before writing to ITAPDLY */
+ 	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, ITAPCHGWIN_MASK,
+ 			   1 << ITAPCHGWIN_SHIFT);
++	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, ITAPDLYENA_MASK,
++			   enable << ITAPDLYENA_SHIFT);
+ 	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, ITAPDLYSEL_MASK,
+ 			   itapdly << ITAPDLYSEL_SHIFT);
+ 	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, ITAPCHGWIN_MASK, 0);
+@@ -259,8 +262,8 @@ static void sdhci_am654_setup_delay_chain(struct sdhci_am654_data *sdhci_am654,
+ 	mask = SELDLYTXCLK_MASK | SELDLYRXCLK_MASK;
+ 	regmap_update_bits(sdhci_am654->base, PHY_CTRL5, mask, val);
+ 
+-	sdhci_am654_write_itapdly(sdhci_am654,
+-				  sdhci_am654->itap_del_sel[timing]);
++	sdhci_am654_write_itapdly(sdhci_am654, sdhci_am654->itap_del_sel[timing],
++				  sdhci_am654->itap_del_ena[timing]);
+ }
+ 
+ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
+@@ -269,7 +272,6 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
+ 	struct sdhci_am654_data *sdhci_am654 = sdhci_pltfm_priv(pltfm_host);
+ 	unsigned char timing = host->mmc->ios.timing;
+ 	u32 otap_del_sel;
+-	u32 otap_del_ena;
+ 	u32 mask, val;
+ 
+ 	regmap_update_bits(sdhci_am654->base, PHY_CTRL1, ENDLL_MASK, 0);
+@@ -278,10 +280,9 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
+ 
+ 	/* Setup DLL Output TAP delay */
+ 	otap_del_sel = sdhci_am654->otap_del_sel[timing];
+-	otap_del_ena = (timing > MMC_TIMING_UHS_SDR25) ? 1 : 0;
+ 
+ 	mask = OTAPDLYENA_MASK | OTAPDLYSEL_MASK;
+-	val = (otap_del_ena << OTAPDLYENA_SHIFT) |
++	val = (0x1 << OTAPDLYENA_SHIFT) |
+ 	      (otap_del_sel << OTAPDLYSEL_SHIFT);
+ 
+ 	/* Write to STRBSEL for HS400 speed mode */
+@@ -299,7 +300,8 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
+ 	if (timing > MMC_TIMING_UHS_SDR25 && clock >= CLOCK_TOO_SLOW_HZ) {
+ 		sdhci_am654_setup_dll(host, clock);
+ 		sdhci_am654->dll_enable = true;
+-		sdhci_am654_write_itapdly(sdhci_am654, sdhci_am654->itap_del_sel[timing]);
++		sdhci_am654_write_itapdly(sdhci_am654, sdhci_am654->itap_del_sel[timing],
++					  sdhci_am654->itap_del_ena[timing]);
+ 	} else {
+ 		sdhci_am654_setup_delay_chain(sdhci_am654, timing);
+ 		sdhci_am654->dll_enable = false;
+@@ -316,6 +318,7 @@ static void sdhci_j721e_4bit_set_clock(struct sdhci_host *host,
+ 	struct sdhci_am654_data *sdhci_am654 = sdhci_pltfm_priv(pltfm_host);
+ 	unsigned char timing = host->mmc->ios.timing;
+ 	u32 otap_del_sel;
++	u32 itap_del_ena;
+ 	u32 mask, val;
+ 
+ 	/* Setup DLL Output TAP delay */
+@@ -324,6 +327,12 @@ static void sdhci_j721e_4bit_set_clock(struct sdhci_host *host,
+ 	mask = OTAPDLYENA_MASK | OTAPDLYSEL_MASK;
+ 	val = (0x1 << OTAPDLYENA_SHIFT) |
+ 	      (otap_del_sel << OTAPDLYSEL_SHIFT);
++
++	itap_del_ena = sdhci_am654->itap_del_ena[timing];
++
++	mask |= ITAPDLYENA_MASK;
++	val |= (itap_del_ena << ITAPDLYENA_SHIFT);
++
+ 	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, mask, val);
+ 
+ 	regmap_update_bits(sdhci_am654->base, PHY_CTRL5, CLKBUFSEL_MASK,
+@@ -477,6 +486,7 @@ static int sdhci_am654_platform_execute_tuning(struct sdhci_host *host,
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_am654_data *sdhci_am654 = sdhci_pltfm_priv(pltfm_host);
++	unsigned char timing = host->mmc->ios.timing;
+ 	struct window fail_window[ITAPDLY_LENGTH];
+ 	u8 curr_pass, itap;
+ 	u8 fail_index = 0;
+@@ -485,11 +495,10 @@ static int sdhci_am654_platform_execute_tuning(struct sdhci_host *host,
+ 	memset(fail_window, 0, sizeof(fail_window));
+ 
+ 	/* Enable ITAPDLY */
+-	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, ITAPDLYENA_MASK,
+-			   1 << ITAPDLYENA_SHIFT);
++	sdhci_am654->itap_del_ena[timing] = 0x1;
+ 
+ 	for (itap = 0; itap < ITAPDLY_LENGTH; itap++) {
+-		sdhci_am654_write_itapdly(sdhci_am654, itap);
++		sdhci_am654_write_itapdly(sdhci_am654, itap, sdhci_am654->itap_del_ena[timing]);
+ 
+ 		curr_pass = !mmc_send_tuning(host->mmc, opcode, NULL);
+ 
+@@ -513,7 +522,7 @@ static int sdhci_am654_platform_execute_tuning(struct sdhci_host *host,
+ 	itap = sdhci_am654_calculate_itap(host, fail_window, fail_index,
+ 					  sdhci_am654->dll_enable);
+ 
+-	sdhci_am654_write_itapdly(sdhci_am654, itap);
++	sdhci_am654_write_itapdly(sdhci_am654, itap, sdhci_am654->itap_del_ena[timing]);
+ 
+ 	return 0;
+ }
+@@ -665,9 +674,12 @@ static int sdhci_am654_get_otap_delay(struct sdhci_host *host,
+ 				host->mmc->caps2 &= ~td[i].capability;
+ 		}
+ 
+-		if (td[i].itap_binding)
+-			device_property_read_u32(dev, td[i].itap_binding,
+-						 &sdhci_am654->itap_del_sel[i]);
++		if (td[i].itap_binding) {
++			ret = device_property_read_u32(dev, td[i].itap_binding,
++						       &sdhci_am654->itap_del_sel[i]);
++			if (!ret)
++				sdhci_am654->itap_del_ena[i] = 0x1;
++		}
+ 	}
+ 
+ 	return 0;
 -- 
 2.43.0
 
