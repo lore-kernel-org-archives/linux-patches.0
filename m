@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D6814601F;
-	Thu, 13 Jun 2024 12:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32981465B1;
+	Thu, 13 Jun 2024 12:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280251; cv=none; b=c3cj8yaNmspC5lu9CxLMrrnUK7gxjvYFiGTa1l3n0sLQ9QqP9QuUeaCtTobd4Wg+XvuzJMZ4CYV9FSp4G20tPaFuIgurGyzorCbd5QyMHfjdbm+/+8miShyZspWo0CIB5nDULl4FuwuENtOfLtCdr+pTPWS22FeNNGUnC3dVYhE=
+	t=1718280254; cv=none; b=J5/SY3B0xDjMFeyW4xJvPu/mkGrdyOUbmV+wITJpCZpiea5UqSJv7NCrTOWlIDicJCRYwk0gXAm2CdGjRgUsoctbmoXN+eV122a/5qJcAFvJ6aIsljABCpioSZuwgsccvHbcnLWHzgDvkp/+7d/qXX8Adqqp3fGwZqfzMchTWF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280251; c=relaxed/simple;
-	bh=VUx8GuVdZZIXgQSXWd6Ol4cuqgi0ww7vgh/M3/G8K3w=;
+	s=arc-20240116; t=1718280254; c=relaxed/simple;
+	bh=+xl+z762ZG8yw2HWXnVMBVdS1/iCtm6UAtdPQZraYeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVPSR/CIaYJpLK/1t9Ly4YOujl+Xqzw8Skxp3NmtgutsJUtiIROZXaEpLvS1eyVIGQGUPsbYJehZ08Pd5mWbyNTEOZPOktkGnyQR3X37x5y53fiC5d1rDYp12iF40pRRpfoz+IuCIRH0CFC3xJDvKqJ48y6XhyaEvyyKRJgSoLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deIRMTKL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=af+/+ajf5cm2iR+Z+uFiL/ZW3f5ue/CWQBj2S/oE5f4jIXVxwjq3vtkQvLhxO50jCAYfgJjrADlvZJ//ifngKiteauFAJZObPMVa+owlEG1zXtiFGnbqkRz5D6KLF8K/UozLSq0oQvtkjdMo76zohEsiJyzK1+7EW+3vthkkYLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eo+1pFWv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deIRMTKL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3423AC2BBFC;
-	Thu, 13 Jun 2024 12:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eo+1pFWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7EEC32786;
+	Thu, 13 Jun 2024 12:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280251;
-	bh=VUx8GuVdZZIXgQSXWd6Ol4cuqgi0ww7vgh/M3/G8K3w=;
+	s=korg; t=1718280254;
+	bh=+xl+z762ZG8yw2HWXnVMBVdS1/iCtm6UAtdPQZraYeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=deIRMTKLZBwFBrTQ7uA9fyD/n/5BSa7Twr8xSHKoY9TrnvMssar5q8cRtFMs/qbWC
-	 bBrygcyAbrjbu3Uj5nf9fi/Ys+WuYlCW3WLjpPxxbY7ZgV5afohAc9cUPcoChsZnRY
-	 MnJGSbvAOTtdDRd5xMcBTBIijyJcjHvji+rhMCVI=
+	b=Eo+1pFWvOpUNLuRzEmWbH4Fc3Y/wjRiSTkfbyRl5yakOrv5EnpjnPKs6SM+PnYOwp
+	 UOysVRVkAtaHZ6m2f7+2znopilOIL3m+nrF3kb37Mu9jACwcZ9Deln+bEzvvWgfo3J
+	 rNwCkb4bkM6qryVzrOtLlwVDqYL22BpxGIMVQLc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Chikunov <vt@altlinux.org>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Paul Wolneykien <manowar@altlinux.org>
-Subject: [PATCH 5.4 186/202] crypto: ecrdsa - Fix module auto-load on add_key
-Date: Thu, 13 Jun 2024 13:34:44 +0200
-Message-ID: <20240613113234.915920502@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Justin Stitt <justinstitt@google.com>,
+	Daniel Thompson <daniel.thompson@linaro.org>
+Subject: [PATCH 5.4 195/202] kdb: Merge identical case statements in kdb_read()
+Date: Thu, 13 Jun 2024 13:34:53 +0200
+Message-ID: <20240613113235.265726813@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -52,64 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Chikunov <vt@altlinux.org>
+From: Daniel Thompson <daniel.thompson@linaro.org>
 
-commit eb5739a1efbc9ff216271aeea0ebe1c92e5383e5 upstream.
+commit 6244917f377bf64719551b58592a02a0336a7439 upstream.
 
-Add module alias with the algorithm cra_name similar to what we have for
-RSA-related and other algorithms.
+The code that handles case 14 (down) and case 16 (up) has been copy and
+pasted despite being byte-for-byte identical. Combine them.
 
-The kernel attempts to modprobe asymmetric algorithms using the names
-"crypto-$cra_name" and "crypto-$cra_name-all." However, since these
-aliases are currently missing, the modules are not loaded. For instance,
-when using the `add_key` function, the hash algorithm is typically
-loaded automatically, but the asymmetric algorithm is not.
-
-Steps to test:
-
-1. Cert is generated usings ima-evm-utils test suite with
-   `gen-keys.sh`, example cert is provided below:
-
-  $ base64 -d >test-gost2012_512-A.cer <<EOF
-  MIIB/DCCAWagAwIBAgIUK8+whWevr3FFkSdU9GLDAM7ure8wDAYIKoUDBwEBAwMFADARMQ8wDQYD
-  VQQDDAZDQSBLZXkwIBcNMjIwMjAxMjIwOTQxWhgPMjA4MjEyMDUyMjA5NDFaMBExDzANBgNVBAMM
-  BkNBIEtleTCBoDAXBggqhQMHAQEBAjALBgkqhQMHAQIBAgEDgYQABIGALXNrTJGgeErBUOov3Cfo
-  IrHF9fcj8UjzwGeKCkbCcINzVUbdPmCopeJRHDJEvQBX1CQUPtlwDv6ANjTTRoq5nCk9L5PPFP1H
-  z73JIXHT0eRBDVoWy0cWDRz1mmQlCnN2HThMtEloaQI81nTlKZOcEYDtDpi5WODmjEeRNQJMdqCj
-  UDBOMAwGA1UdEwQFMAMBAf8wHQYDVR0OBBYEFCwfOITMbE9VisW1i2TYeu1tAo5QMB8GA1UdIwQY
-  MBaAFCwfOITMbE9VisW1i2TYeu1tAo5QMAwGCCqFAwcBAQMDBQADgYEAmBfJCMTdC0/NSjz4BBiQ
-  qDIEjomO7FEHYlkX5NGulcF8FaJW2jeyyXXtbpnub1IQ8af1KFIpwoS2e93LaaofxpWlpQLlju6m
-  KYLOcO4xK3Whwa2hBAz9YbpUSFjvxnkS2/jpH2MsOSXuUEeCruG/RkHHB3ACef9umG6HCNQuAPY=
-  EOF
-
-2. Optionally, trace module requests with: trace-cmd stream -e module &
-
-3. Trigger add_key call for the cert:
-
-  # keyctl padd asymmetric "" @u <test-gost2012_512-A.cer
-  939910969
-  # lsmod | head -3
-  Module                  Size  Used by
-  ecrdsa_generic         16384  0
-  streebog_generic       28672  0
-
-Repored-by: Paul Wolneykien <manowar@altlinux.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Vitaly Chikunov <vt@altlinux.org>
-Tested-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: stable@vger.kernel.org # Not a bug fix but it is needed for later bug fixes
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Justin Stitt <justinstitt@google.com>
+Link: https://lore.kernel.org/r/20240424-kgdb_read_refactor-v3-4-f236dbe9828d@linaro.org
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/ecrdsa.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/debug/kdb/kdb_io.c |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
---- a/crypto/ecrdsa.c
-+++ b/crypto/ecrdsa.c
-@@ -293,4 +293,5 @@ module_exit(ecrdsa_mod_fini);
- MODULE_LICENSE("GPL");
- MODULE_AUTHOR("Vitaly Chikunov <vt@altlinux.org>");
- MODULE_DESCRIPTION("EC-RDSA generic algorithm");
-+MODULE_ALIAS_CRYPTO("ecrdsa");
- MODULE_ALIAS_CRYPTO("ecrdsa-generic");
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -314,6 +314,7 @@ poll_again:
+ 		}
+ 		break;
+ 	case 14: /* Down */
++	case 16: /* Up */
+ 		memset(tmpbuffer, ' ',
+ 		       strlen(kdb_prompt_str) + (lastchar-buffer));
+ 		*(tmpbuffer+strlen(kdb_prompt_str) +
+@@ -328,15 +329,6 @@ poll_again:
+ 			++cp;
+ 		}
+ 		break;
+-	case 16: /* Up */
+-		memset(tmpbuffer, ' ',
+-		       strlen(kdb_prompt_str) + (lastchar-buffer));
+-		*(tmpbuffer+strlen(kdb_prompt_str) +
+-		  (lastchar-buffer)) = '\0';
+-		kdb_printf("\r%s\r", tmpbuffer);
+-		*lastchar = (char)key;
+-		*(lastchar+1) = '\0';
+-		return lastchar;
+ 	case 9: /* Tab */
+ 		if (tab < 2)
+ 			++tab;
 
 
