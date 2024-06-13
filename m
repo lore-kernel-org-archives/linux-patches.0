@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847481448F1;
-	Thu, 13 Jun 2024 12:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E93144317;
+	Thu, 13 Jun 2024 12:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282887; cv=none; b=k49DW7gMzi9Y1J+pMXhZlOCizF5B39T41IgAZThr/LP/xuF/0c7nHlVJwCj4JI7xr2yD30kfBwUITb3zarWITaipWJ1AuAQRrXEeouZX6Gx7xczlRd+ZPHZX5dIN6ap7s41OnTC372XibHItpOxHw5NGYW1tZTu1SmkL7eC/nYI=
+	t=1718282890; cv=none; b=l1ZlSZxXD+3PRxghaTRt2eQ1DAVcPU74aH5id74NqD7CBbMPv0797bc6/rc1A1sTNgoAzD0SFGx7HWUHAbiw9JB2tvXwL3NJSj2rgEqYPQcN0Ayb0GrmQ604ZiS6Pl3vP/IxzQJXVGZLWPug0Pm/OlLoT5KayJkKY6ca0h3bUak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282887; c=relaxed/simple;
-	bh=rRs+h1wUUV7LV6LMGKd2Fe+Fr5uc6htyplNc3ujZ7pw=;
+	s=arc-20240116; t=1718282890; c=relaxed/simple;
+	bh=pPUWSj+jRIxy9bM+6P2grkTOAghUiLbWBHlsyotA3hI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUOFVtP/PuIwsQ7BTsHzYVJ+djQs/w6I1tRZdZ8LImmHhl2QurnqbVzDl2Iv1WurliCPLYHNCh7ZbEgPxNzdnINZOzxcyLgN/vERtixZlN+BVpBYnQ0lXnuYGhuSMvBjcnYKxdZ3qIQJgt+qdF4YjnPNL6upipn7nvCrH0AL+U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVh53QTk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R90m1MMB58J72f4t/qLnGxIuCGVeuKJSkukbdTyVklHdqHUFPugS9PUF59HBuRHuiS6rkQSLWmeOtu+gmXB3CIRDnzbSzlj1wCilxWVJAbA7zlRMwW682QGRzkfWgg+fnsuBS+xEgNJZLpiLpEJjOgQr7Lc5LnSQMPyh14SLVEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvmGY1Vv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVh53QTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CA4C32786;
-	Thu, 13 Jun 2024 12:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvmGY1Vv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFC2C32786;
+	Thu, 13 Jun 2024 12:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282887;
-	bh=rRs+h1wUUV7LV6LMGKd2Fe+Fr5uc6htyplNc3ujZ7pw=;
+	s=korg; t=1718282890;
+	bh=pPUWSj+jRIxy9bM+6P2grkTOAghUiLbWBHlsyotA3hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eVh53QTkV4k+ojvcu3/nHe/uHO4tCr8JJephAtFWmsW2RS+RXksg+Dw6Uo6H6Vg8k
-	 zPBz5LX8UuNEo4lK/JwyPxOsIZcHpAkq+2vn4+B2ULOA9jQ4qhVDTnz+UmqiCck2bT
-	 MuDJ8Bc94dWjR/T+1/L3S6KxD51j4R9JiUFUxn9k=
+	b=SvmGY1Vv306EkBeLeIv9atzQJ1Xx4lNojzP4Tx/4mqrXvexPo1LHY5syEwPEGjQI4
+	 pXupYgtCeqoYhUiwLc5eKioIKsVpp29xGebAYqAoOvscI0PERDoBGYLR5KD3O4d7bp
+	 QWlRnUXoSe4WrJLDY6UKrX3PAF3fc3uPtq/SV4dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Mirvish <matthew@mm12.xyz>,
-	Coly Li <colyli@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 19/85] bcache: fix variable length array abuse in btree_iter
-Date: Thu, 13 Jun 2024 13:35:17 +0200
-Message-ID: <20240613113214.885551430@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.1 28/85] wifi: rtw89: pci: correct TX resource checking for PCI DMA channel of firmware command
+Date: Thu, 13 Jun 2024 13:35:26 +0200
+Message-ID: <20240613113215.229217874@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -51,409 +49,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Mirvish <matthew@mm12.xyz>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit 3a861560ccb35f2a4f0a4b8207fa7c2a35fc7f31 upstream.
+commit c6330b129786e267b14129335a08fa7c331c308d upstream.
 
-btree_iter is used in two ways: either allocated on the stack with a
-fixed size MAX_BSETS, or from a mempool with a dynamic size based on the
-specific cache set. Previously, the struct had a fixed-length array of
-size MAX_BSETS which was indexed out-of-bounds for the dynamically-sized
-iterators, which causes UBSAN to complain.
+The DMA channel of firmware command doesn't use TX WD (WiFi descriptor), so
+don't need to consider number of TX WD as factor of TX resource. Otherwise,
+during pause state (a transient state to switch to/from low power mode)
+firmware commands could be dropped and driver throws warnings suddenly:
 
-This patch uses the same approach as in bcachefs's sort_iter and splits
-the iterator into a btree_iter with a flexible array member and a
-btree_iter_stack which embeds a btree_iter as well as a fixed-length
-data array.
+   rtw89_8852ce 0000:04:00.0: no tx fwcmd resource
+   rtw89_8852ce 0000:04:00.0: failed to send h2c
 
+The case we met is that driver sends RSSI strength of firmware command at
+RX path that could be running concurrently with switching low power mode.
+The missing of this firmware command doesn't affect user experiences,
+because the RSSI strength will be updated again after a while.
+
+The DMA descriptors of normal packets has three layers like:
+
+  +-------+
+  | TX BD | (*n elements)
+  +-------+
+      |
+      |   +-------+
+      +-> | TX WD | (*m elements)
+          +-------+
+              |
+              |   +--------+
+              +-> |   SKB  |
+                  +--------+
+
+And, firmware command queue (TXCH 12) is a special queue that has only
+two layers:
+
+  +-------+
+  | TX BD | (*n elements)
+  +-------+
+      |
+      |   +------------------+
+      +-> | firmware command |
+          +------------------+
+
+Fixes: 4a29213cd775 ("wifi: rtw89: pci: correct TX resource checking in low power mode")
 Cc: stable@vger.kernel.org
-Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2039368
-Signed-off-by: Matthew Mirvish <matthew@mm12.xyz>
-Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20240509011117.2697-3-colyli@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://msgid.link/20240410011316.9906-1-pkshih@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/bset.c      |   44 +++++++++++++++++++++---------------------
- drivers/md/bcache/bset.h      |   30 ++++++++++++++++++----------
- drivers/md/bcache/btree.c     |   40 ++++++++++++++++++++------------------
- drivers/md/bcache/super.c     |    5 ++--
- drivers/md/bcache/sysfs.c     |    2 -
- drivers/md/bcache/writeback.c |   10 ++++-----
- 6 files changed, 71 insertions(+), 60 deletions(-)
+ drivers/net/wireless/realtek/rtw89/pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/md/bcache/bset.c
-+++ b/drivers/md/bcache/bset.c
-@@ -54,7 +54,7 @@ void bch_dump_bucket(struct btree_keys *
- int __bch_count_data(struct btree_keys *b)
- {
- 	unsigned int ret = 0;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	struct bkey *k;
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -948,7 +948,8 @@ u32 __rtw89_pci_check_and_reclaim_tx_res
  
- 	if (b->ops->is_extents)
-@@ -67,7 +67,7 @@ void __bch_check_keys(struct btree_keys
- {
- 	va_list args;
- 	struct bkey *k, *p = NULL;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	const char *err;
+ 	spin_lock_bh(&rtwpci->trx_lock);
+ 	cnt = rtw89_pci_get_avail_txbd_num(tx_ring);
+-	cnt = min(cnt, wd_ring->curr_num);
++	if (txch != RTW89_TXCH_CH12)
++		cnt = min(cnt, wd_ring->curr_num);
+ 	spin_unlock_bh(&rtwpci->trx_lock);
  
- 	for_each_key(b, k, &iter) {
-@@ -879,7 +879,7 @@ unsigned int bch_btree_insert_key(struct
- 	unsigned int status = BTREE_INSERT_STATUS_NO_INSERT;
- 	struct bset *i = bset_tree_last(b)->data;
- 	struct bkey *m, *prev = NULL;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	struct bkey preceding_key_on_stack = ZERO_KEY;
- 	struct bkey *preceding_key_p = &preceding_key_on_stack;
- 
-@@ -895,9 +895,9 @@ unsigned int bch_btree_insert_key(struct
- 	else
- 		preceding_key(k, &preceding_key_p);
- 
--	m = bch_btree_iter_init(b, &iter, preceding_key_p);
-+	m = bch_btree_iter_stack_init(b, &iter, preceding_key_p);
- 
--	if (b->ops->insert_fixup(b, k, &iter, replace_key))
-+	if (b->ops->insert_fixup(b, k, &iter.iter, replace_key))
- 		return status;
- 
- 	status = BTREE_INSERT_STATUS_INSERT;
-@@ -1100,33 +1100,33 @@ void bch_btree_iter_push(struct btree_it
- 				 btree_iter_cmp));
- }
- 
--static struct bkey *__bch_btree_iter_init(struct btree_keys *b,
--					  struct btree_iter *iter,
--					  struct bkey *search,
--					  struct bset_tree *start)
-+static struct bkey *__bch_btree_iter_stack_init(struct btree_keys *b,
-+						struct btree_iter_stack *iter,
-+						struct bkey *search,
-+						struct bset_tree *start)
- {
- 	struct bkey *ret = NULL;
- 
--	iter->size = ARRAY_SIZE(iter->data);
--	iter->used = 0;
-+	iter->iter.size = ARRAY_SIZE(iter->stack_data);
-+	iter->iter.used = 0;
- 
- #ifdef CONFIG_BCACHE_DEBUG
--	iter->b = b;
-+	iter->iter.b = b;
- #endif
- 
- 	for (; start <= bset_tree_last(b); start++) {
- 		ret = bch_bset_search(b, start, search);
--		bch_btree_iter_push(iter, ret, bset_bkey_last(start->data));
-+		bch_btree_iter_push(&iter->iter, ret, bset_bkey_last(start->data));
- 	}
- 
- 	return ret;
- }
- 
--struct bkey *bch_btree_iter_init(struct btree_keys *b,
--				 struct btree_iter *iter,
-+struct bkey *bch_btree_iter_stack_init(struct btree_keys *b,
-+				 struct btree_iter_stack *iter,
- 				 struct bkey *search)
- {
--	return __bch_btree_iter_init(b, iter, search, b->set);
-+	return __bch_btree_iter_stack_init(b, iter, search, b->set);
- }
- 
- static inline struct bkey *__bch_btree_iter_next(struct btree_iter *iter,
-@@ -1293,10 +1293,10 @@ void bch_btree_sort_partial(struct btree
- 			    struct bset_sort_state *state)
- {
- 	size_t order = b->page_order, keys = 0;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	int oldsize = bch_count_data(b);
- 
--	__bch_btree_iter_init(b, &iter, NULL, &b->set[start]);
-+	__bch_btree_iter_stack_init(b, &iter, NULL, &b->set[start]);
- 
- 	if (start) {
- 		unsigned int i;
-@@ -1307,7 +1307,7 @@ void bch_btree_sort_partial(struct btree
- 		order = get_order(__set_bytes(b->set->data, keys));
- 	}
- 
--	__btree_sort(b, &iter, start, order, false, state);
-+	__btree_sort(b, &iter.iter, start, order, false, state);
- 
- 	EBUG_ON(oldsize >= 0 && bch_count_data(b) != oldsize);
- }
-@@ -1323,11 +1323,11 @@ void bch_btree_sort_into(struct btree_ke
- 			 struct bset_sort_state *state)
- {
- 	uint64_t start_time = local_clock();
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 
--	bch_btree_iter_init(b, &iter, NULL);
-+	bch_btree_iter_stack_init(b, &iter, NULL);
- 
--	btree_mergesort(b, new->set->data, &iter, false, true);
-+	btree_mergesort(b, new->set->data, &iter.iter, false, true);
- 
- 	bch_time_stats_update(&state->time, start_time);
- 
---- a/drivers/md/bcache/bset.h
-+++ b/drivers/md/bcache/bset.h
-@@ -321,7 +321,14 @@ struct btree_iter {
- #endif
- 	struct btree_iter_set {
- 		struct bkey *k, *end;
--	} data[MAX_BSETS];
-+	} data[];
-+};
-+
-+/* Fixed-size btree_iter that can be allocated on the stack */
-+
-+struct btree_iter_stack {
-+	struct btree_iter iter;
-+	struct btree_iter_set stack_data[MAX_BSETS];
- };
- 
- typedef bool (*ptr_filter_fn)(struct btree_keys *b, const struct bkey *k);
-@@ -333,9 +340,9 @@ struct bkey *bch_btree_iter_next_filter(
- 
- void bch_btree_iter_push(struct btree_iter *iter, struct bkey *k,
- 			 struct bkey *end);
--struct bkey *bch_btree_iter_init(struct btree_keys *b,
--				 struct btree_iter *iter,
--				 struct bkey *search);
-+struct bkey *bch_btree_iter_stack_init(struct btree_keys *b,
-+				       struct btree_iter_stack *iter,
-+				       struct bkey *search);
- 
- struct bkey *__bch_bset_search(struct btree_keys *b, struct bset_tree *t,
- 			       const struct bkey *search);
-@@ -350,13 +357,14 @@ static inline struct bkey *bch_bset_sear
- 	return search ? __bch_bset_search(b, t, search) : t->data->start;
- }
- 
--#define for_each_key_filter(b, k, iter, filter)				\
--	for (bch_btree_iter_init((b), (iter), NULL);			\
--	     ((k) = bch_btree_iter_next_filter((iter), (b), filter));)
--
--#define for_each_key(b, k, iter)					\
--	for (bch_btree_iter_init((b), (iter), NULL);			\
--	     ((k) = bch_btree_iter_next(iter));)
-+#define for_each_key_filter(b, k, stack_iter, filter)                      \
-+	for (bch_btree_iter_stack_init((b), (stack_iter), NULL);           \
-+	     ((k) = bch_btree_iter_next_filter(&((stack_iter)->iter), (b), \
-+					       filter));)
-+
-+#define for_each_key(b, k, stack_iter)                           \
-+	for (bch_btree_iter_stack_init((b), (stack_iter), NULL); \
-+	     ((k) = bch_btree_iter_next(&((stack_iter)->iter)));)
- 
- /* Sorting */
- 
---- a/drivers/md/bcache/btree.c
-+++ b/drivers/md/bcache/btree.c
-@@ -1283,7 +1283,7 @@ static bool btree_gc_mark_node(struct bt
- 	uint8_t stale = 0;
- 	unsigned int keys = 0, good_keys = 0;
- 	struct bkey *k;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	struct bset_tree *t;
- 
- 	gc->nodes++;
-@@ -1544,7 +1544,7 @@ static int btree_gc_rewrite_node(struct
- static unsigned int btree_gc_count_keys(struct btree *b)
- {
- 	struct bkey *k;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	unsigned int ret = 0;
- 
- 	for_each_key_filter(&b->keys, k, &iter, bch_ptr_bad)
-@@ -1585,17 +1585,18 @@ static int btree_gc_recurse(struct btree
- 	int ret = 0;
- 	bool should_rewrite;
- 	struct bkey *k;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	struct gc_merge_info r[GC_MERGE_NODES];
- 	struct gc_merge_info *i, *last = r + ARRAY_SIZE(r) - 1;
- 
--	bch_btree_iter_init(&b->keys, &iter, &b->c->gc_done);
-+	bch_btree_iter_stack_init(&b->keys, &iter, &b->c->gc_done);
- 
- 	for (i = r; i < r + ARRAY_SIZE(r); i++)
- 		i->b = ERR_PTR(-EINTR);
- 
- 	while (1) {
--		k = bch_btree_iter_next_filter(&iter, &b->keys, bch_ptr_bad);
-+		k = bch_btree_iter_next_filter(&iter.iter, &b->keys,
-+					       bch_ptr_bad);
- 		if (k) {
- 			r->b = bch_btree_node_get(b->c, op, k, b->level - 1,
- 						  true, b);
-@@ -1885,7 +1886,7 @@ static int bch_btree_check_recurse(struc
- {
- 	int ret = 0;
- 	struct bkey *k, *p = NULL;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 
- 	for_each_key_filter(&b->keys, k, &iter, bch_ptr_invalid)
- 		bch_initial_mark_key(b->c, b->level, k);
-@@ -1893,10 +1894,10 @@ static int bch_btree_check_recurse(struc
- 	bch_initial_mark_key(b->c, b->level + 1, &b->key);
- 
- 	if (b->level) {
--		bch_btree_iter_init(&b->keys, &iter, NULL);
-+		bch_btree_iter_stack_init(&b->keys, &iter, NULL);
- 
- 		do {
--			k = bch_btree_iter_next_filter(&iter, &b->keys,
-+			k = bch_btree_iter_next_filter(&iter.iter, &b->keys,
- 						       bch_ptr_bad);
- 			if (k) {
- 				btree_node_prefetch(b, k);
-@@ -1924,7 +1925,7 @@ static int bch_btree_check_thread(void *
- 	struct btree_check_info *info = arg;
- 	struct btree_check_state *check_state = info->state;
- 	struct cache_set *c = check_state->c;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	struct bkey *k, *p;
- 	int cur_idx, prev_idx, skip_nr;
- 
-@@ -1933,8 +1934,8 @@ static int bch_btree_check_thread(void *
- 	ret = 0;
- 
- 	/* root node keys are checked before thread created */
--	bch_btree_iter_init(&c->root->keys, &iter, NULL);
--	k = bch_btree_iter_next_filter(&iter, &c->root->keys, bch_ptr_bad);
-+	bch_btree_iter_stack_init(&c->root->keys, &iter, NULL);
-+	k = bch_btree_iter_next_filter(&iter.iter, &c->root->keys, bch_ptr_bad);
- 	BUG_ON(!k);
- 
- 	p = k;
-@@ -1952,7 +1953,7 @@ static int bch_btree_check_thread(void *
- 		skip_nr = cur_idx - prev_idx;
- 
- 		while (skip_nr) {
--			k = bch_btree_iter_next_filter(&iter,
-+			k = bch_btree_iter_next_filter(&iter.iter,
- 						       &c->root->keys,
- 						       bch_ptr_bad);
- 			if (k)
-@@ -2025,7 +2026,7 @@ int bch_btree_check(struct cache_set *c)
- 	int ret = 0;
- 	int i;
- 	struct bkey *k = NULL;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	struct btree_check_state check_state;
- 
- 	/* check and mark root node keys */
-@@ -2521,11 +2522,11 @@ static int bch_btree_map_nodes_recurse(s
- 
- 	if (b->level) {
- 		struct bkey *k;
--		struct btree_iter iter;
-+		struct btree_iter_stack iter;
- 
--		bch_btree_iter_init(&b->keys, &iter, from);
-+		bch_btree_iter_stack_init(&b->keys, &iter, from);
- 
--		while ((k = bch_btree_iter_next_filter(&iter, &b->keys,
-+		while ((k = bch_btree_iter_next_filter(&iter.iter, &b->keys,
- 						       bch_ptr_bad))) {
- 			ret = bcache_btree(map_nodes_recurse, k, b,
- 				    op, from, fn, flags);
-@@ -2554,11 +2555,12 @@ int bch_btree_map_keys_recurse(struct bt
- {
- 	int ret = MAP_CONTINUE;
- 	struct bkey *k;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 
--	bch_btree_iter_init(&b->keys, &iter, from);
-+	bch_btree_iter_stack_init(&b->keys, &iter, from);
- 
--	while ((k = bch_btree_iter_next_filter(&iter, &b->keys, bch_ptr_bad))) {
-+	while ((k = bch_btree_iter_next_filter(&iter.iter, &b->keys,
-+					       bch_ptr_bad))) {
- 		ret = !b->level
- 			? fn(op, b, k)
- 			: bcache_btree(map_keys_recurse, k,
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -1915,8 +1915,9 @@ struct cache_set *bch_cache_set_alloc(st
- 	INIT_LIST_HEAD(&c->btree_cache_freed);
- 	INIT_LIST_HEAD(&c->data_buckets);
- 
--	iter_size = ((meta_bucket_pages(sb) * PAGE_SECTORS) / sb->block_size + 1) *
--		sizeof(struct btree_iter_set);
-+	iter_size = sizeof(struct btree_iter) +
-+		    ((meta_bucket_pages(sb) * PAGE_SECTORS) / sb->block_size) *
-+			    sizeof(struct btree_iter_set);
- 
- 	c->devices = kcalloc(c->nr_uuids, sizeof(void *), GFP_KERNEL);
- 	if (!c->devices)
---- a/drivers/md/bcache/sysfs.c
-+++ b/drivers/md/bcache/sysfs.c
-@@ -660,7 +660,7 @@ static unsigned int bch_root_usage(struc
- 	unsigned int bytes = 0;
- 	struct bkey *k;
- 	struct btree *b;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 
- 	goto lock_root;
- 
---- a/drivers/md/bcache/writeback.c
-+++ b/drivers/md/bcache/writeback.c
-@@ -908,15 +908,15 @@ static int bch_dirty_init_thread(void *a
- 	struct dirty_init_thrd_info *info = arg;
- 	struct bch_dirty_init_state *state = info->state;
- 	struct cache_set *c = state->c;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	struct bkey *k, *p;
- 	int cur_idx, prev_idx, skip_nr;
- 
- 	k = p = NULL;
- 	prev_idx = 0;
- 
--	bch_btree_iter_init(&c->root->keys, &iter, NULL);
--	k = bch_btree_iter_next_filter(&iter, &c->root->keys, bch_ptr_bad);
-+	bch_btree_iter_stack_init(&c->root->keys, &iter, NULL);
-+	k = bch_btree_iter_next_filter(&iter.iter, &c->root->keys, bch_ptr_bad);
- 	BUG_ON(!k);
- 
- 	p = k;
-@@ -930,7 +930,7 @@ static int bch_dirty_init_thread(void *a
- 		skip_nr = cur_idx - prev_idx;
- 
- 		while (skip_nr) {
--			k = bch_btree_iter_next_filter(&iter,
-+			k = bch_btree_iter_next_filter(&iter.iter,
- 						       &c->root->keys,
- 						       bch_ptr_bad);
- 			if (k)
-@@ -979,7 +979,7 @@ void bch_sectors_dirty_init(struct bcach
- 	int i;
- 	struct btree *b = NULL;
- 	struct bkey *k = NULL;
--	struct btree_iter iter;
-+	struct btree_iter_stack iter;
- 	struct sectors_dirty_init op;
- 	struct cache_set *c = d->c;
- 	struct bch_dirty_init_state state;
+ 	return cnt;
 
 
