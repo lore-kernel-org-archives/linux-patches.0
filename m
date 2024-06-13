@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C29E13D635;
-	Thu, 13 Jun 2024 12:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A93143870;
+	Thu, 13 Jun 2024 12:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280471; cv=none; b=SuuRqtSNOhQ3A29bDwMk9RX/aypqEa5+14SdNZUgHQ6UwgQUdcGAiMC4yFHO4s0bHS9opuZYg48K54A0Y8yIemJ26rI0PXiFU13NxxhOZGCEmidEqBUnCZr/KsO5pIM5VLIPbL4xbCP9qEJgtCy+9dkCx81y5lfjlQfKl8idxiQ=
+	t=1718280474; cv=none; b=f6iuQ1IOdQVVol2pY7vh7cehNV2zL0AETSmzQ/L5cRTtYGLSJ7+QGyr3YfzuPTlS/yBwt9nD8jXHwrycC0xsLpI/B+dp5/lWNPeB6aqnCRlcNNBKVv7cDr8SqpcFhO5ADnfHP8WQTX4I1rZSOIw7V2fG1RTML3DntwuTvFuhzyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280471; c=relaxed/simple;
-	bh=Cn/4wXCuUj6OXb/FxZcuM+tJfzWV7Pm+H4EjvneQ/OU=;
+	s=arc-20240116; t=1718280474; c=relaxed/simple;
+	bh=ymy54LsWkjwfPng+0cVLbB3A3L9sM+s1bqpE9THBfi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VdUCngWfJK53XDXS6Af0hJ7SqSNjjqP6LHqWI4T+Wu3o1l/fSMg+IqzRwpCO5xvXqyk5pqOxmGDTIK9rsaFBSQ2xpjks++aYZXRYX8KeIlKEKzpuwsmoU62E9OAV2B8+U0vOz+xpoG7RB+3GedsQ4eUUUCqOwypZZy1bnMcGA5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVz/CMHt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzAbxTlPHc7uJUtql8Crh6S/yZdkMxfppjMM8xPzOWHLd2YFmzUROkp8CT1xgPoh8kz5MMOR32s8jy+bnD0U28lfdejD1b4CsIN3wdo3d850Vi8iwj/pNMFx63cVzoAkEhpqXdcaNC4e4/nkGcfcE79M+HfHD+8V741Dxot/k4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8lfkTum; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVz/CMHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C659C2BBFC;
-	Thu, 13 Jun 2024 12:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8lfkTum"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A36C2BBFC;
+	Thu, 13 Jun 2024 12:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280470;
-	bh=Cn/4wXCuUj6OXb/FxZcuM+tJfzWV7Pm+H4EjvneQ/OU=;
+	s=korg; t=1718280473;
+	bh=ymy54LsWkjwfPng+0cVLbB3A3L9sM+s1bqpE9THBfi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVz/CMHtEjr5Ikzf9iwZ0S+PFTyHmadslA7z4MZJW9NFZutyw15JoieR+dBtLMas7
-	 /7PYoKBINAFJcPBI9uhRHKo5LyCeoK8DhhEP7f1i8RTEgz28LWWzUV0sMLoDGHwSZp
-	 JdF4InxLSisMpSxfPD42AyrTvTmCzPnlkxjSQQbs=
+	b=j8lfkTumU5+efmwK/+7ammjs9j7aF5r2fmsDR20T0kok4B+WjCwiyvaylSdMhOA3+
+	 dsxtwEnudn86kqqjXnGcZmx1+HKozFJk2/bp07QkBlIcDDBdb9MusGhg8xfR/lnTKu
+	 TzbaQT4ckFT1teMUaXNqOpJfnWLffTgxdIC7fDwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 064/137] LoongArch: Add all CPUs enabled by fdt to NUMA node 0
-Date: Thu, 13 Jun 2024 13:34:04 +0200
-Message-ID: <20240613113225.785305265@linuxfoundation.org>
+Subject: [PATCH 6.6 065/137] LoongArch: Override higher address bits in JUMP_VIRT_ADDR
+Date: Thu, 13 Jun 2024 13:34:05 +0200
+Message-ID: <20240613113225.822536103@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -52,61 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 3de9c42d02a79a5e09bbee7a4421ddc00cfd5c6d upstream.
+commit 1098efd299ffe9c8af818425338c7f6c4f930a98 upstream.
 
-NUMA enabled kernel on FDT based machine fails to boot because CPUs
-are all in NUMA_NO_NODE and mm subsystem won't accept that.
+In JUMP_VIRT_ADDR we are performing an or calculation on address value
+directly from pcaddi.
 
-Fix by adding them to default NUMA node at FDT parsing phase and move
-numa_add_cpu(0) to a later point.
+This will only work if we are currently running from direct 1:1 mapping
+addresses or firmware's DMW is configured exactly same as kernel. Still,
+we should not rely on such assumption.
+
+Fix by overriding higher bits in address comes from pcaddi, so we can
+get rid of or operator.
 
 Cc: stable@vger.kernel.org
-Fixes: 88d4d957edc7 ("LoongArch: Add FDT booting support from efi system table")
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/numa.h |    1 +
- arch/loongarch/kernel/smp.c       |    5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ arch/loongarch/include/asm/stackframe.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/include/asm/numa.h
-+++ b/arch/loongarch/include/asm/numa.h
-@@ -56,6 +56,7 @@ extern int early_cpu_to_node(int cpu);
- static inline void early_numa_add_cpu(int cpuid, s16 node)	{ }
- static inline void numa_add_cpu(unsigned int cpu)		{ }
- static inline void numa_remove_cpu(unsigned int cpu)		{ }
-+static inline void set_cpuid_to_node(int cpuid, s16 node)	{ }
+--- a/arch/loongarch/include/asm/stackframe.h
++++ b/arch/loongarch/include/asm/stackframe.h
+@@ -41,7 +41,7 @@
+ 	.macro JUMP_VIRT_ADDR temp1 temp2
+ 	li.d	\temp1, CACHE_BASE
+ 	pcaddi	\temp2, 0
+-	or	\temp1, \temp1, \temp2
++	bstrins.d  \temp1, \temp2, (DMW_PABITS - 1), 0
+ 	jirl	zero, \temp1, 0xc
+ 	.endm
  
- static inline int early_cpu_to_node(int cpu)
- {
---- a/arch/loongarch/kernel/smp.c
-+++ b/arch/loongarch/kernel/smp.c
-@@ -262,7 +262,6 @@ static void __init fdt_smp_setup(void)
- 
- 		if (cpuid == loongson_sysconf.boot_cpu_id) {
- 			cpu = 0;
--			numa_add_cpu(cpu);
- 		} else {
- 			cpu = cpumask_next_zero(-1, cpu_present_mask);
- 		}
-@@ -272,6 +271,9 @@ static void __init fdt_smp_setup(void)
- 		set_cpu_present(cpu, true);
- 		__cpu_number_map[cpuid] = cpu;
- 		__cpu_logical_map[cpu] = cpuid;
-+
-+		early_numa_add_cpu(cpu, 0);
-+		set_cpuid_to_node(cpuid, 0);
- 	}
- 
- 	loongson_sysconf.nr_cpus = num_processors;
-@@ -453,6 +455,7 @@ void smp_prepare_boot_cpu(void)
- 	set_cpu_possible(0, true);
- 	set_cpu_online(0, true);
- 	set_my_cpu_offset(per_cpu_offset(0));
-+	numa_add_cpu(0);
- 
- 	rr_node = first_node(node_online_map);
- 	for_each_possible_cpu(cpu) {
 
 
