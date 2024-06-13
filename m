@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E4A144D16;
-	Thu, 13 Jun 2024 12:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8586212C530;
+	Thu, 13 Jun 2024 12:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280020; cv=none; b=gCtvL1dPp671mpRKSzZIw/OkcSWfWQPtJl07tWwAE8GTsUtbKEAcMoYccasWamwxZpc2pkcvBNISpXfYowg+R4cUiLbvQ6pvjqcnD0sIJRZZrmMKSmXjRF2UnUdlfBvLltl3LUz0UuxAd9LEas6op1EWL14uxBKA9wqFcY/LEvU=
+	t=1718280023; cv=none; b=Jj1+EFpeo1SYwXrATplLNdqrg/+eDMajHv7zd2fkfyeMngkzrgKlGAQGWVZNkJULC1glwQbBOvpH8e9JYo9orEMC4gj+FRvO1WA88tda8blsIYAInvCThhnB0Osk3OEheh782SnVhazCM9/kglhEdKVq2LB9sMlXt+xH0HfFJ4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280020; c=relaxed/simple;
-	bh=TAKpKGjeyVfnFrTpmPNsokaKQRADjdaLUUrJnk+/e9E=;
+	s=arc-20240116; t=1718280023; c=relaxed/simple;
+	bh=nQeOyCNa1bcSbrEZM6eWf5j5nclTr9/A219eTct2SJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fCYb0TNzg46mIdd19r0W/n3h58AVoh96fHR4NX35i4D5LVBAAMSHukfRHVo/p/PmEByZNFBL/AaPykX8sgWEaS2ZcZsn859deNKhSOakyKZwxdmFGBn8MQIfuFYQzLgWLw0qOXpXwVpuJlR2i+uoyp8lX9GQnMnVm9WYVV4fmKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ma3a6nwO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kvPBEXbhBmyuhsbxULrCM5N5O3KvCW5dCCV5xUPORFbQyYZiIQszvOcjHu7/5Q+uXqrn2wLSKdNYZjfWHG2WgnvCz6f5sBmqPwPXVclZ2iY/l71S6HBPtLf4iOHglB9jKW9YrURrjRQ28jRYIOFWzuyDGvd03/kkHo/VC/XtI4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=os0R/EIJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ma3a6nwO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F00C2BBFC;
-	Thu, 13 Jun 2024 12:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="os0R/EIJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D624BC2BBFC;
+	Thu, 13 Jun 2024 12:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280020;
-	bh=TAKpKGjeyVfnFrTpmPNsokaKQRADjdaLUUrJnk+/e9E=;
+	s=korg; t=1718280023;
+	bh=nQeOyCNa1bcSbrEZM6eWf5j5nclTr9/A219eTct2SJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ma3a6nwOF02NUFq246IgbjeprVTcmDdiaXJRYGJ0sAAwTPpuSZvjySvvblPbvrBFv
-	 z9UJ0BJbfrRbpxk2rOthdBAGSDm/H/W+KVgKjsxYNfdnNC7Fwp5IRqVsNBEdnUir3W
-	 FeffOS+6xLCMXoV7XJa1OOLM0TIaQ9bkF5dfo4Tg=
+	b=os0R/EIJAj/dA7FxnQLTZFXf/JBU5cP0F74DSesSJU+f++1uxScgA8r74Yl01QIhO
+	 lY6CQfIF6JmWypYkAkMTe6ZnoytLj3glTGX9xTJcvdIcKpGI5tsL1atS80nC+lmQta
+	 YEhey3Iw8j+6Phn8xALATbVd1BFk0spdnlUi5pvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Wenyu Liu <liuwenyu7@huawei.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	wuxu.wu@huawei.com,
+	Hewenliang <hewenliang4@huawei.com>,
+	yaowenbin <yaowenbin1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 088/202] RDMA/IPoIB: Fix format truncation compilation errors
-Date: Thu, 13 Jun 2024 13:33:06 +0200
-Message-ID: <20240613113231.166142945@linuxfoundation.org>
+Subject: [PATCH 5.4 115/202] perf top: Fix TUI exit screen refresh race condition
+Date: Thu, 13 Jun 2024 13:33:33 +0200
+Message-ID: <20240613113232.199322102@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -44,68 +53,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: yaowenbin <yaowenbin1@huawei.com>
 
-[ Upstream commit 49ca2b2ef3d003402584c68ae7b3055ba72e750a ]
+[ Upstream commit 64f18d2d043015b3f835ce4c9f3beb97cfd19b6e ]
 
-Truncate the device name to store IPoIB VLAN name.
+When the following command is executed several times, a coredump file is
+generated.
 
-[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 allmodconfig
-[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 W=1 drivers/infiniband/ulp/ipoib/
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c: In function ‘ipoib_vlan_add’:
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:52: error: ‘%04x’
-directive output may be truncated writing 4 bytes into a region of size
-between 0 and 15 [-Werror=format-truncation=]
-  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
-      |                                                    ^~~~
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:48: note: directive
-argument in the range [0, 65535]
-  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
-      |                                                ^~~~~~~~~
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:9: note: ‘snprintf’ output
-between 6 and 21 bytes into a destination of size 16
-  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  188 |                  ppriv->dev->name, pkey);
-      |                  ~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
-make[6]: *** [scripts/Makefile.build:244: drivers/infiniband/ulp/ipoib/ipoib_vlan.o] Error 1
-make[6]: *** Waiting for unfinished jobs....
+	$ timeout -k 9 5 perf top -e task-clock
+	*******
+	*******
+	*******
+	0.01%  [kernel]                  [k] __do_softirq
+	0.01%  libpthread-2.28.so        [.] __pthread_mutex_lock
+	0.01%  [kernel]                  [k] __ll_sc_atomic64_sub_return
+	double free or corruption (!prev) perf top --sort comm,dso
+	timeout: the monitored command dumped core
 
-Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
-Link: https://lore.kernel.org/r/e9d3e1fef69df4c9beaf402cc3ac342bad680791.1715240029.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+When we terminate "perf top" using sending signal method,
+SLsmg_reset_smg() called. SLsmg_reset_smg() resets the SLsmg screen
+management routines by freeing all memory allocated while it was active.
+
+However SLsmg_reinit_smg() maybe be called by another thread.
+
+SLsmg_reinit_smg() will free the same memory accessed by
+SLsmg_reset_smg(), thus it results in a double free.
+
+SLsmg_reinit_smg() is called already protected by ui__lock, so we fix
+the problem by adding pthread_mutex_trylock of ui__lock when calling
+SLsmg_reset_smg().
+
+Signed-off-by: Wenyu Liu <liuwenyu7@huawei.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@redhat.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: wuxu.wu@huawei.com
+Link: http://lore.kernel.org/lkml/a91e3943-7ddc-f5c0-a7f5-360f073c20e6@huawei.com
+Signed-off-by: Hewenliang <hewenliang4@huawei.com>
+Signed-off-by: yaowenbin <yaowenbin1@huawei.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 769e6a1e15bd ("perf ui browser: Don't save pointer to stack memory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_vlan.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/perf/ui/tui/setup.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
-index 58ca5e9c6079c..1c1cd10283acf 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
-@@ -182,8 +182,12 @@ int ipoib_vlan_add(struct net_device *pdev, unsigned short pkey)
+diff --git a/tools/perf/ui/tui/setup.c b/tools/perf/ui/tui/setup.c
+index e9bfe856a5dee..b1be59b4e2a4f 100644
+--- a/tools/perf/ui/tui/setup.c
++++ b/tools/perf/ui/tui/setup.c
+@@ -170,9 +170,11 @@ void ui__exit(bool wait_for_ok)
+ 				    "Press any key...", 0);
  
- 	ppriv = ipoib_priv(pdev);
- 
--	snprintf(intf_name, sizeof(intf_name), "%s.%04x",
--		 ppriv->dev->name, pkey);
-+	/* If you increase IFNAMSIZ, update snprintf below
-+	 * to allow longer names.
-+	 */
-+	BUILD_BUG_ON(IFNAMSIZ != 16);
-+	snprintf(intf_name, sizeof(intf_name), "%.10s.%04x", ppriv->dev->name,
-+		 pkey);
- 
- 	ndev = ipoib_intf_alloc(ppriv->ca, ppriv->port, intf_name);
- 	if (IS_ERR(ndev)) {
+ 	SLtt_set_cursor_visibility(1);
+-	SLsmg_refresh();
+-	SLsmg_reset_smg();
++	if (!pthread_mutex_trylock(&ui__lock)) {
++		SLsmg_refresh();
++		SLsmg_reset_smg();
++		pthread_mutex_unlock(&ui__lock);
++	}
+ 	SLang_reset_tty();
+-
+ 	perf_error__unregister(&perf_tui_eops);
+ }
 -- 
 2.43.0
 
