@@ -1,39 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B275143867;
-	Thu, 13 Jun 2024 11:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8461428FC;
+	Thu, 13 Jun 2024 11:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279425; cv=none; b=bhLkyX5UTueDHhw16zKcjz0f+5wVYUpDj0aD7xQXTEQ3xRAvuXXPHOqw5LHPgLc5ptMjrUgK1Z2jNrNeyQjZ8YPpPJYmZrF0S+Uq11cjZpQJETyVth7Kjv3oGl0sxj8liJl0gJEwvXuxO16TWJlKgwBom8QlDzTg46p7ZRJgy/Q=
+	t=1718279428; cv=none; b=BjgcZOdNoT1vZ1zvHeBTOiOI+1PopQbX5J9pI5FjORYdHyF+FvlDGwelMv7P5IREfbwdKzG6yTmrZXxaKq2ZC5O/IBa+0Z5bUJY7/9PbJH14WNXgjeb3CZ7x4hrWJ5EVuyujJru5k2akj9ZqD0qeWV98CR/6hs9jde0gkVnAE5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279425; c=relaxed/simple;
-	bh=eo1VNv6v9sVsMOgaa0rzl7hVgUEj4XnSQal6cRJJzg8=;
+	s=arc-20240116; t=1718279428; c=relaxed/simple;
+	bh=yomlOiQRTSNRTAXZnLTt8gJZY7LHCQnqrci3RkzYyKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JLuRCNEf1JdeXgjqaZLg+M9zNn4eYBmyZ8mcTaDZ8dE669+f2LLTIsZJAfCaLmzmyHHYAXJNdJYXO/zX0ayx6RmkV1gU3iQtizSQEHsx0xkxERf9ckfpaKsswyGnDFlJjNndUoDN4FP3YLBphh19R99K7MegtY6a3tniNpMeyws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AG3Dzw/O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ovlZsfXOGjLySogmLPEvIn/PiwpcyOGvFit9oFFV5kXlADAqkQXB3o6iXuWPuK6qhy9VNcTcOsC2+UFbsyesuhyBmA5xUcez4jtI2IPsp3igrKejcsCzjVYa45LP9+lsH5ZLVNfSGDphrp+CdrwGElFZUTip5DZb2PubEB5PyFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/baS8pg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AG3Dzw/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B70C2BBFC;
-	Thu, 13 Jun 2024 11:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/baS8pg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8895C2BBFC;
+	Thu, 13 Jun 2024 11:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279425;
-	bh=eo1VNv6v9sVsMOgaa0rzl7hVgUEj4XnSQal6cRJJzg8=;
+	s=korg; t=1718279428;
+	bh=yomlOiQRTSNRTAXZnLTt8gJZY7LHCQnqrci3RkzYyKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AG3Dzw/O8ZEQrzY3gsHaIcmt+dYsIJC1URujI0kq0kZ34/T8DVoxNaFDjtF+Ryqwm
-	 1jzne7ODgBLVTUOIdXKN1a3CBLrO2VwKkg2pdfkifn1mX9imb5Ek9gmDUURR6Casy1
-	 c6e++0X4F33Kj1ZujRngs19kF/MeUXlh/twsgfEs=
+	b=I/baS8pgLMQoHgtdM3GdkzOWg6OMPNTp2+01rG/Zuhv0t4F7ySmQ/R4yZ5I8r7+dQ
+	 43LnfmIFF2pLhEIOqe2SG9V8b2IKZVjjWbmo6kazinN6YK7+miopzIUPv5F5TnDSdN
+	 QcopaH2fpbtySdj45y8RkxH8cBal+rd0Eom2Lgs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Hong <elsk@google.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.9 072/157] kbuild: Remove support for Clangs ThinLTO caching
-Date: Thu, 13 Jun 2024 13:33:17 +0200
-Message-ID: <20240613113230.209811567@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.9 073/157] mm: fix race between __split_huge_pmd_locked() and GUP-fast
+Date: Thu, 13 Jun 2024 13:33:18 +0200
+Message-ID: <20240613113230.247915208@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -46,138 +65,231 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit aba091547ef6159d52471f42a3ef531b7b660ed8 upstream.
+commit 3a5a8d343e1cf96eb9971b17cbd4b832ab19b8e7 upstream.
 
-There is an issue in clang's ThinLTO caching (enabled for the kernel via
-'--thinlto-cache-dir') with .incbin, which the kernel occasionally uses
-to include data within the kernel, such as the .config file for
-/proc/config.gz. For example, when changing the .config and rebuilding
-vmlinux, the copy of .config in vmlinux does not match the copy of
-.config in the build folder:
+__split_huge_pmd_locked() can be called for a present THP, devmap or
+(non-present) migration entry.  It calls pmdp_invalidate() unconditionally
+on the pmdp and only determines if it is present or not based on the
+returned old pmd.  This is a problem for the migration entry case because
+pmd_mkinvalid(), called by pmdp_invalidate() must only be called for a
+present pmd.
 
-  $ echo 'CONFIG_LTO_NONE=n
-  CONFIG_LTO_CLANG_THIN=y
-  CONFIG_IKCONFIG=y
-  CONFIG_HEADERS_INSTALL=y' >kernel/configs/repro.config
+On arm64 at least, pmd_mkinvalid() will mark the pmd such that any future
+call to pmd_present() will return true.  And therefore any lockless
+pgtable walker could see the migration entry pmd in this state and start
+interpretting the fields as if it were present, leading to BadThings (TM).
+GUP-fast appears to be one such lockless pgtable walker.
 
-  $ make -skj"$(nproc)" ARCH=x86_64 LLVM=1 clean defconfig repro.config vmlinux
-  ...
+x86 does not suffer the above problem, but instead pmd_mkinvalid() will
+corrupt the offset field of the swap entry within the swap pte.  See link
+below for discussion of that problem.
 
-  $ grep CONFIG_HEADERS_INSTALL .config
-  CONFIG_HEADERS_INSTALL=y
+Fix all of this by only calling pmdp_invalidate() for a present pmd.  And
+for good measure let's add a warning to all implementations of
+pmdp_invalidate[_ad]().  I've manually reviewed all other
+pmdp_invalidate[_ad]() call sites and believe all others to be conformant.
 
-  $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
-  CONFIG_HEADERS_INSTALL=y
+This is a theoretical bug found during code review.  I don't have any test
+case to trigger it in practice.
 
-  $ scripts/config -d HEADERS_INSTALL
-
-  $ make -kj"$(nproc)" ARCH=x86_64 LLVM=1 vmlinux
-  ...
-    UPD     kernel/config_data
-    GZIP    kernel/config_data.gz
-    CC      kernel/configs.o
-  ...
-    LD      vmlinux
-  ...
-
-  $ grep CONFIG_HEADERS_INSTALL .config
-  # CONFIG_HEADERS_INSTALL is not set
-
-  $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
-  CONFIG_HEADERS_INSTALL=y
-
-Without '--thinlto-cache-dir' or when using full LTO, this issue does
-not occur.
-
-Benchmarking incremental builds on a few different machines with and
-without the cache shows a 20% increase in incremental build time without
-the cache when measured by touching init/main.c and running 'make all'.
-
-ARCH=arm64 defconfig + CONFIG_LTO_CLANG_THIN=y on an arm64 host:
-
-  Benchmark 1: With ThinLTO cache
-    Time (mean ± σ):     56.347 s ±  0.163 s    [User: 83.768 s, System: 24.661 s]
-    Range (min … max):   56.109 s … 56.594 s    10 runs
-
-  Benchmark 2: Without ThinLTO cache
-    Time (mean ± σ):     67.740 s ±  0.479 s    [User: 718.458 s, System: 31.797 s]
-    Range (min … max):   67.059 s … 68.556 s    10 runs
-
-  Summary
-    With ThinLTO cache ran
-      1.20 ± 0.01 times faster than Without ThinLTO cache
-
-ARCH=x86_64 defconfig + CONFIG_LTO_CLANG_THIN=y on an x86_64 host:
-
-  Benchmark 1: With ThinLTO cache
-    Time (mean ± σ):     85.772 s ±  0.252 s    [User: 91.505 s, System: 8.408 s]
-    Range (min … max):   85.447 s … 86.244 s    10 runs
-
-  Benchmark 2: Without ThinLTO cache
-    Time (mean ± σ):     103.833 s ±  0.288 s    [User: 232.058 s, System: 8.569 s]
-    Range (min … max):   103.286 s … 104.124 s    10 runs
-
-  Summary
-    With ThinLTO cache ran
-      1.21 ± 0.00 times faster than Without ThinLTO cache
-
-While it is unfortunate to take this performance improvement off the
-table, correctness is more important. If/when this is fixed in LLVM, it
-can potentially be brought back in a conditional manner. Alternatively,
-a developer can just disable LTO if doing incremental compiles quickly
-is important, as a full compile cycle can still take over a minute even
-with the cache and it is unlikely that LTO will result in functional
-differences for a kernel change.
-
-Cc: stable@vger.kernel.org
-Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
-Reported-by: Yifan Hong <elsk@google.com>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2021
-Reported-by: Masami Hiramatsu <mhiramat@kernel.org>
-Closes: https://lore.kernel.org/r/20220327115526.cc4b0ff55fc53c97683c3e4d@kernel.org/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lkml.kernel.org/r/20240501143310.1381675-1-ryan.roberts@arm.com
+Link: https://lore.kernel.org/all/0dd7827a-6334-439a-8fd0-43c98e6af22b@arm.com/
+Fixes: 84c3fc4e9c56 ("mm: thp: check pmd migration entry in common path")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+Cc: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Naveen N. Rao <naveen.n.rao@linux.ibm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ Documentation/mm/arch_pgtable_helpers.rst |    6 ++-
+ arch/powerpc/mm/book3s64/pgtable.c        |    1 
+ arch/s390/include/asm/pgtable.h           |    4 +-
+ arch/sparc/mm/tlb.c                       |    1 
+ arch/x86/mm/pgtable.c                     |    2 +
+ mm/huge_memory.c                          |   49 +++++++++++++++---------------
+ mm/pgtable-generic.c                      |    2 +
+ 7 files changed, 39 insertions(+), 26 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -942,7 +942,6 @@ endif
- ifdef CONFIG_LTO_CLANG
- ifdef CONFIG_LTO_CLANG_THIN
- CC_FLAGS_LTO	:= -flto=thin -fsplit-lto-unit
--KBUILD_LDFLAGS	+= --thinlto-cache-dir=$(extmod_prefix).thinlto-cache
- else
- CC_FLAGS_LTO	:= -flto
- endif
-@@ -1477,7 +1476,7 @@ endif # CONFIG_MODULES
- # Directories & files removed with 'make clean'
- CLEAN_FILES += vmlinux.symvers modules-only.symvers \
- 	       modules.builtin modules.builtin.modinfo modules.nsdeps \
--	       compile_commands.json .thinlto-cache rust/test \
-+	       compile_commands.json rust/test \
- 	       rust-project.json .vmlinux.objs .vmlinux.export.c
+--- a/Documentation/mm/arch_pgtable_helpers.rst
++++ b/Documentation/mm/arch_pgtable_helpers.rst
+@@ -140,7 +140,8 @@ PMD Page Table Helpers
+ +---------------------------+--------------------------------------------------+
+ | pmd_swp_clear_soft_dirty  | Clears a soft dirty swapped PMD                  |
+ +---------------------------+--------------------------------------------------+
+-| pmd_mkinvalid             | Invalidates a mapped PMD [1]                     |
++| pmd_mkinvalid             | Invalidates a present PMD; do not call for       |
++|                           | non-present PMD [1]                              |
+ +---------------------------+--------------------------------------------------+
+ | pmd_set_huge              | Creates a PMD huge mapping                       |
+ +---------------------------+--------------------------------------------------+
+@@ -196,7 +197,8 @@ PUD Page Table Helpers
+ +---------------------------+--------------------------------------------------+
+ | pud_mkdevmap              | Creates a ZONE_DEVICE mapped PUD                 |
+ +---------------------------+--------------------------------------------------+
+-| pud_mkinvalid             | Invalidates a mapped PUD [1]                     |
++| pud_mkinvalid             | Invalidates a present PUD; do not call for       |
++|                           | non-present PUD [1]                              |
+ +---------------------------+--------------------------------------------------+
+ | pud_set_huge              | Creates a PUD huge mapping                       |
+ +---------------------------+--------------------------------------------------+
+--- a/arch/powerpc/mm/book3s64/pgtable.c
++++ b/arch/powerpc/mm/book3s64/pgtable.c
+@@ -170,6 +170,7 @@ pmd_t pmdp_invalidate(struct vm_area_str
+ {
+ 	unsigned long old_pmd;
  
- # Directories & files removed with 'make mrproper'
-@@ -1783,7 +1782,7 @@ PHONY += compile_commands.json
++	VM_WARN_ON_ONCE(!pmd_present(*pmdp));
+ 	old_pmd = pmd_hugepage_update(vma->vm_mm, address, pmdp, _PAGE_PRESENT, _PAGE_INVALID);
+ 	flush_pmd_tlb_range(vma, address, address + HPAGE_PMD_SIZE);
+ 	return __pmd(old_pmd);
+--- a/arch/s390/include/asm/pgtable.h
++++ b/arch/s390/include/asm/pgtable.h
+@@ -1778,8 +1778,10 @@ static inline pmd_t pmdp_huge_clear_flus
+ static inline pmd_t pmdp_invalidate(struct vm_area_struct *vma,
+ 				   unsigned long addr, pmd_t *pmdp)
+ {
+-	pmd_t pmd = __pmd(pmd_val(*pmdp) | _SEGMENT_ENTRY_INVALID);
++	pmd_t pmd;
  
- clean-dirs := $(KBUILD_EXTMOD)
- clean: rm-files := $(KBUILD_EXTMOD)/Module.symvers $(KBUILD_EXTMOD)/modules.nsdeps \
--	$(KBUILD_EXTMOD)/compile_commands.json $(KBUILD_EXTMOD)/.thinlto-cache
-+	$(KBUILD_EXTMOD)/compile_commands.json
++	VM_WARN_ON_ONCE(!pmd_present(*pmdp));
++	pmd = __pmd(pmd_val(*pmdp) | _SEGMENT_ENTRY_INVALID);
+ 	return pmdp_xchg_direct(vma->vm_mm, addr, pmdp, pmd);
+ }
  
- PHONY += prepare
- # now expand this into a simple variable to reduce the cost of shell evaluations
+--- a/arch/sparc/mm/tlb.c
++++ b/arch/sparc/mm/tlb.c
+@@ -249,6 +249,7 @@ pmd_t pmdp_invalidate(struct vm_area_str
+ {
+ 	pmd_t old, entry;
+ 
++	VM_WARN_ON_ONCE(!pmd_present(*pmdp));
+ 	entry = __pmd(pmd_val(*pmdp) & ~_PAGE_VALID);
+ 	old = pmdp_establish(vma, address, pmdp, entry);
+ 	flush_tlb_range(vma, address, address + HPAGE_PMD_SIZE);
+--- a/arch/x86/mm/pgtable.c
++++ b/arch/x86/mm/pgtable.c
+@@ -631,6 +631,8 @@ int pmdp_clear_flush_young(struct vm_are
+ pmd_t pmdp_invalidate_ad(struct vm_area_struct *vma, unsigned long address,
+ 			 pmd_t *pmdp)
+ {
++	VM_WARN_ON_ONCE(!pmd_present(*pmdp));
++
+ 	/*
+ 	 * No flush is necessary. Once an invalid PTE is established, the PTE's
+ 	 * access and dirty bits cannot be updated.
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2493,32 +2493,11 @@ static void __split_huge_pmd_locked(stru
+ 		return __split_huge_zero_page_pmd(vma, haddr, pmd);
+ 	}
+ 
+-	/*
+-	 * Up to this point the pmd is present and huge and userland has the
+-	 * whole access to the hugepage during the split (which happens in
+-	 * place). If we overwrite the pmd with the not-huge version pointing
+-	 * to the pte here (which of course we could if all CPUs were bug
+-	 * free), userland could trigger a small page size TLB miss on the
+-	 * small sized TLB while the hugepage TLB entry is still established in
+-	 * the huge TLB. Some CPU doesn't like that.
+-	 * See http://support.amd.com/TechDocs/41322_10h_Rev_Gd.pdf, Erratum
+-	 * 383 on page 105. Intel should be safe but is also warns that it's
+-	 * only safe if the permission and cache attributes of the two entries
+-	 * loaded in the two TLB is identical (which should be the case here).
+-	 * But it is generally safer to never allow small and huge TLB entries
+-	 * for the same virtual address to be loaded simultaneously. So instead
+-	 * of doing "pmd_populate(); flush_pmd_tlb_range();" we first mark the
+-	 * current pmd notpresent (atomically because here the pmd_trans_huge
+-	 * must remain set at all times on the pmd until the split is complete
+-	 * for this pmd), then we flush the SMP TLB and finally we write the
+-	 * non-huge version of the pmd entry with pmd_populate.
+-	 */
+-	old_pmd = pmdp_invalidate(vma, haddr, pmd);
+-
+-	pmd_migration = is_pmd_migration_entry(old_pmd);
++	pmd_migration = is_pmd_migration_entry(*pmd);
+ 	if (unlikely(pmd_migration)) {
+ 		swp_entry_t entry;
+ 
++		old_pmd = *pmd;
+ 		entry = pmd_to_swp_entry(old_pmd);
+ 		page = pfn_swap_entry_to_page(entry);
+ 		write = is_writable_migration_entry(entry);
+@@ -2529,6 +2508,30 @@ static void __split_huge_pmd_locked(stru
+ 		soft_dirty = pmd_swp_soft_dirty(old_pmd);
+ 		uffd_wp = pmd_swp_uffd_wp(old_pmd);
+ 	} else {
++		/*
++		 * Up to this point the pmd is present and huge and userland has
++		 * the whole access to the hugepage during the split (which
++		 * happens in place). If we overwrite the pmd with the not-huge
++		 * version pointing to the pte here (which of course we could if
++		 * all CPUs were bug free), userland could trigger a small page
++		 * size TLB miss on the small sized TLB while the hugepage TLB
++		 * entry is still established in the huge TLB. Some CPU doesn't
++		 * like that. See
++		 * http://support.amd.com/TechDocs/41322_10h_Rev_Gd.pdf, Erratum
++		 * 383 on page 105. Intel should be safe but is also warns that
++		 * it's only safe if the permission and cache attributes of the
++		 * two entries loaded in the two TLB is identical (which should
++		 * be the case here). But it is generally safer to never allow
++		 * small and huge TLB entries for the same virtual address to be
++		 * loaded simultaneously. So instead of doing "pmd_populate();
++		 * flush_pmd_tlb_range();" we first mark the current pmd
++		 * notpresent (atomically because here the pmd_trans_huge must
++		 * remain set at all times on the pmd until the split is
++		 * complete for this pmd), then we flush the SMP TLB and finally
++		 * we write the non-huge version of the pmd entry with
++		 * pmd_populate.
++		 */
++		old_pmd = pmdp_invalidate(vma, haddr, pmd);
+ 		page = pmd_page(old_pmd);
+ 		folio = page_folio(page);
+ 		if (pmd_dirty(old_pmd)) {
+--- a/mm/pgtable-generic.c
++++ b/mm/pgtable-generic.c
+@@ -198,6 +198,7 @@ pgtable_t pgtable_trans_huge_withdraw(st
+ pmd_t pmdp_invalidate(struct vm_area_struct *vma, unsigned long address,
+ 		     pmd_t *pmdp)
+ {
++	VM_WARN_ON_ONCE(!pmd_present(*pmdp));
+ 	pmd_t old = pmdp_establish(vma, address, pmdp, pmd_mkinvalid(*pmdp));
+ 	flush_pmd_tlb_range(vma, address, address + HPAGE_PMD_SIZE);
+ 	return old;
+@@ -208,6 +209,7 @@ pmd_t pmdp_invalidate(struct vm_area_str
+ pmd_t pmdp_invalidate_ad(struct vm_area_struct *vma, unsigned long address,
+ 			 pmd_t *pmdp)
+ {
++	VM_WARN_ON_ONCE(!pmd_present(*pmdp));
+ 	return pmdp_invalidate(vma, address, pmdp);
+ }
+ #endif
 
 
