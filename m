@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D37E13DDB5;
-	Thu, 13 Jun 2024 12:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8EA14374F;
+	Thu, 13 Jun 2024 12:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282112; cv=none; b=vC3iSypsL9023xhMml0Mm0TLclB2GFjOOW7Qh1dftMD+1Mopq6S85+FAvWA2ZDfhrRnqy8aUadVAj4jMKnTfmaK56+2HVkHSFd4/MQOf+ya4dgisfvursqRd0bfvAGms18cnuOXBwAoI9LZ26rGUKTjwIzeCyEweuPlcv2Ug4+s=
+	t=1718282115; cv=none; b=cxI+db8N9QBKuuIsBmPKU1TOiZDIIZOg5Xs1y72jYUwxJoP872Jt/1WpIPxmQEaBCs4WiBl3EUIy+pbr/z0cSTWLRatuJfmJ8Py68iWIW7+BQ8n3N1oWhP3kJcFAqPqbdTr2OVrLppv5B6AfWf7A+zzHt4OC2XDBwF4npMa5+24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282112; c=relaxed/simple;
-	bh=jXQf566/3Z89zLHWM/1JHccMRh41XKpKQdUnBvUlLwI=;
+	s=arc-20240116; t=1718282115; c=relaxed/simple;
+	bh=cru/ZOCuNRNj/tnQn/u9r38188JQaZEwH8G7+xJY21c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WUt/FsfoK7lyC4HVPVhoYXiBscirmp+exjTzEO1Jeu27rvScfwyUQM5D712uFpoopf3Wwro2l44Jb0YNaZuOzEwtmfsdb7K5CxduGD/BzbK8GwWhv1UfH88seX3hUCQklsKiegZShT4aEd4LHJHV98aCIvmuP9fFiy4NrKjJabE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nz5/7QTu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sPB5EelLF8yu6k2JZ82SeasyjBOprkh8mpNKJ0bwKd1eOjcGsM3xR59pRMIWuJMuS0UUZKFIbql6xmZc0b9Xw1vkImV/VOMwKwm4kGGe/XqHQy5dsKLxkJ/5vGbz+3lON0i9s1wbkANX6BwuQsCEhYcGjMHYlqk65jgteNeFo9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA0eLkM0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nz5/7QTu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8EAC4AF1A;
-	Thu, 13 Jun 2024 12:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA0eLkM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD1FC4AF4D;
+	Thu, 13 Jun 2024 12:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282112;
-	bh=jXQf566/3Z89zLHWM/1JHccMRh41XKpKQdUnBvUlLwI=;
+	s=korg; t=1718282114;
+	bh=cru/ZOCuNRNj/tnQn/u9r38188JQaZEwH8G7+xJY21c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nz5/7QTuO/eBCGJdp9gRqt66g2F9ZBKRMXkbk88KyVsdwrGs0fH5L2KHiTs3uLKLM
-	 pgMTxZncAU2yd+QSL741PNqp29azL5ugq4kOv9mBknAWEjXKSO3FbSEuwPNWwFgrMi
-	 RjKRQg0Bm+7iA8SQsyLgaR+bYDNx9KlmrHHeVQCI=
+	b=BA0eLkM0+PO9V+aWRJX4nOQti5UuC5Zysj0/7jOB9QxeMxrDy+niV4uSDIHMJ2giM
+	 LdmVr6zurzpa3dwOM8pUBbUnROea1f9tqDzbwgOOW6UggICxxI+u6UBUUvIGBfEqLm
+	 9Ak8WrbqDSmJ+1hBbus9UPflYqYz3Yjs1KTPwy6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Trond Myklebust <trondmy@hammerspace.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/402] SUNRPC: Fix gss_free_in_token_pages()
-Date: Thu, 13 Jun 2024 13:32:04 +0200
-Message-ID: <20240613113308.651626196@linuxfoundation.org>
+Subject: [PATCH 5.15 150/402] RDMA/hns: Fix return value in hns_roce_map_mr_sg
+Date: Thu, 13 Jun 2024 13:31:47 +0200
+Message-ID: <20240613113307.987016297@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,76 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit bafa6b4d95d97877baa61883ff90f7e374427fae ]
+[ Upstream commit 203b70fda63425a4eb29f03f9074859afe821a39 ]
 
-Dan Carpenter says:
-> Commit 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()") from Oct
-> 24, 2019 (linux-next), leads to the following Smatch static checker
-> warning:
->
-> 	net/sunrpc/auth_gss/svcauth_gss.c:1039 gss_free_in_token_pages()
-> 	warn: iterator 'i' not incremented
->
-> net/sunrpc/auth_gss/svcauth_gss.c
->     1034 static void gss_free_in_token_pages(struct gssp_in_token *in_token)
->     1035 {
->     1036         u32 inlen;
->     1037         int i;
->     1038
-> --> 1039         i = 0;
->     1040         inlen = in_token->page_len;
->     1041         while (inlen) {
->     1042                 if (in_token->pages[i])
->     1043                         put_page(in_token->pages[i]);
->                                                          ^
-> This puts page zero over and over.
->
->     1044                 inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
->     1045         }
->     1046
->     1047         kfree(in_token->pages);
->     1048         in_token->pages = NULL;
->     1049 }
+As described in the ib_map_mr_sg function comment, it returns the number
+of sg elements that were mapped to the memory region. However,
+hns_roce_map_mr_sg returns the number of pages required for mapping the
+DMA area. Fix it.
 
-Based on the way that the ->pages[] array is constructed in
-gss_read_proxy_verf(), we know that once the loop encounters a NULL
-page pointer, the remaining array elements must also be NULL.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
-Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 9b2cf76c9f05 ("RDMA/hns: Optimize PBL buffer allocation process")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20240411033851.2884771-1-shaozhengchao@huawei.com
+Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_mr.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
-index 48b608cb5f5ec..6ad1757718505 100644
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1132,17 +1132,11 @@ gss_read_verf(struct rpc_gss_wire_cred *gc,
+diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
+index 12c482f4a1c48..7106e51d5fad1 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -444,18 +444,18 @@ int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 	struct hns_roce_mr *mr = to_hr_mr(ibmr);
+ 	struct hns_roce_mtr *mtr = &mr->pbl_mtr;
+-	int ret = 0;
++	int ret, sg_num = 0;
  
- static void gss_free_in_token_pages(struct gssp_in_token *in_token)
- {
--	u32 inlen;
- 	int i;
+ 	mr->npages = 0;
+ 	mr->page_list = kvcalloc(mr->pbl_mtr.hem_cfg.buf_pg_count,
+ 				 sizeof(dma_addr_t), GFP_KERNEL);
+ 	if (!mr->page_list)
+-		return ret;
++		return sg_num;
  
- 	i = 0;
--	inlen = in_token->page_len;
--	while (inlen) {
--		if (in_token->pages[i])
--			put_page(in_token->pages[i]);
--		inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
--	}
--
-+	while (in_token->pages[i])
-+		put_page(in_token->pages[i++]);
- 	kfree(in_token->pages);
- 	in_token->pages = NULL;
+-	ret = ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset, hns_roce_set_page);
+-	if (ret < 1) {
++	sg_num = ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset, hns_roce_set_page);
++	if (sg_num < 1) {
+ 		ibdev_err(ibdev, "failed to store sg pages %u %u, cnt = %d.\n",
+-			  mr->npages, mr->pbl_mtr.hem_cfg.buf_pg_count, ret);
++			  mr->npages, mr->pbl_mtr.hem_cfg.buf_pg_count, sg_num);
+ 		goto err_page_list;
+ 	}
+ 
+@@ -466,17 +466,16 @@ int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
+ 	ret = hns_roce_mtr_map(hr_dev, mtr, mr->page_list, mr->npages);
+ 	if (ret) {
+ 		ibdev_err(ibdev, "failed to map sg mtr, ret = %d.\n", ret);
+-		ret = 0;
++		sg_num = 0;
+ 	} else {
+ 		mr->pbl_mtr.hem_cfg.buf_pg_shift = (u32)ilog2(ibmr->page_size);
+-		ret = mr->npages;
+ 	}
+ 
+ err_page_list:
+ 	kvfree(mr->page_list);
+ 	mr->page_list = NULL;
+ 
+-	return ret;
++	return sg_num;
  }
+ 
+ static void hns_roce_mw_free(struct hns_roce_dev *hr_dev,
 -- 
 2.43.0
 
