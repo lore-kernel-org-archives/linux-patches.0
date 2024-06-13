@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F256E1448F2;
-	Thu, 13 Jun 2024 12:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E753E1448DD;
+	Thu, 13 Jun 2024 12:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280527; cv=none; b=JNyazrrNuUJyBbKVDu5Y4+Fri06LwUIkB/pbxl3CtT893xx4+EUis2/A9s4k6NNdPMDX46j6KPcD8lMJ/6FnnZ/mN0c/57GgpaaD/Afe7YE6pkvqxwWLmcKDYMk2CLXvBGlwBfTq+1iCm15jFh+V3mb3NuslaOssEYE8jrh9fuI=
+	t=1718280530; cv=none; b=Ek8ajzsgZcWjv9N4IJo4xWazCvBvIZhGU8Xwo0J2YYzy69ixt552EJbPkbzMKHiuyXg9K7nvmRukJHfj+vd0NtvPnRX6B+QYX2WBUhBdbbXeCce1E4AXk5wTJnAsyRhPncOZYOpoprAgwIYeX8ZOEFokLFONcFi75o8iKHsSwh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280527; c=relaxed/simple;
-	bh=LAOvfE1yr09/pUeE/mueuh/clxWJBZ9KQkqhgNsHbFc=;
+	s=arc-20240116; t=1718280530; c=relaxed/simple;
+	bh=oXNaYm+rgi4z5oqDIHWVxdx5sKD9fQ+n+lKyouJJudc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDUuFB6ZSE+WrcKjEM8z9ZOwIQHOSH6b27AINu9h3MSfq7hOu2wEMFic1HWOPL7tO7Tb1OR13t82DJkBO9QrFP7naYgXAxjEDCTp1kirlirCXnqdo1KOwBqPbgN9VBaBd6YljS74agm1lvyub2UMYamB4PRkSQxGyiXA9ihobWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrqenJbl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FKPSrdaPoRJP2T+QGr1kits1til30a05c21yIxYA86wpTt4eXsXe9wRo+1j2p32WKlG1LGn0YmlRvtVcAMfvrYCMOoQQmDcsU3AsQ79DNN8rcABjXpL+DcXtJ5YYD9HJ5KCEZtno8KXffQCSIFSZn4ojqaU4lmoF/oxv+JgoYH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDUzQK71; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrqenJbl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74294C2BBFC;
-	Thu, 13 Jun 2024 12:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDUzQK71"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB0AC2BBFC;
+	Thu, 13 Jun 2024 12:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280526;
-	bh=LAOvfE1yr09/pUeE/mueuh/clxWJBZ9KQkqhgNsHbFc=;
+	s=korg; t=1718280529;
+	bh=oXNaYm+rgi4z5oqDIHWVxdx5sKD9fQ+n+lKyouJJudc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DrqenJbl1RIrcV8FtX+WyV5nSR06+wholD7G8sf0+65pn8ZeI/xKAAAMn5uDrSD/9
-	 VgSX6oTKoFJETU/BmRZcjWove01NqOeyL5YOqtaj0A8w86ImaKUWCYQraXIUfMnb4A
-	 JUVAYW2QlkBrY1gFMSNOD1rCvck/5q91OHilNm/g=
+	b=xDUzQK71Yc8R/78vhAiVmhKh4Fce+rstxp/LjCe3DOlMmc8qtXTNZCOZBWDOY6UsR
+	 uvtfNNEozIGGDRrSh8L5VkmvXP+MzpY+c39EdvF/WS81wUvmQUbIKsWS4Yrt1uC/bj
+	 +ALfSsiAypEPQYkDVLo5OwPihmC/bX5BxZpRhhaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.6 084/137] tpm_tis: Do *not* flush uninitialized work
-Date: Thu, 13 Jun 2024 13:34:24 +0200
-Message-ID: <20240613113226.555386140@linuxfoundation.org>
+	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Peter Jung <ptr1337@cachyos.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 085/137] cpufreq: amd-pstate: Fix the inconsistency in max frequency units
+Date: Thu, 13 Jun 2024 13:34:25 +0200
+Message-ID: <20240613113226.594434195@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -50,40 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 
-commit 0ea00e249ca992adee54dc71a526ee70ef109e40 upstream.
+commit e4731baaf29438508197d3a8a6d4f5a8c51663f8 upstream.
 
-tpm_tis_core_init() may fail before tpm_tis_probe_irq_single() is
-called, in which case tpm_tis_remove() unconditionally calling
-flush_work() is triggering a warning for .func still being NULL.
+The nominal frequency in cpudata is maintained in MHz whereas all other
+frequencies are in KHz. This means we have to convert nominal frequency
+value to KHz before we do any interaction with other frequency values.
 
-Cc: stable@vger.kernel.org # v6.5+
-Fixes: 481c2d14627d ("tpm,tpm_tis: Disable interrupts after 1000 unhandled IRQs")
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+In amd_pstate_set_boost(), this conversion from MHz to KHz is missed,
+fix that.
+
+Tested on a AMD Zen4 EPYC server
+
+Before:
+$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_max_freq | uniq
+2151
+$ cat /sys/devices/system/cpu/cpufreq/policy*/cpuinfo_min_freq | uniq
+400000
+$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_cur_freq | uniq
+2151
+409422
+
+After:
+$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_max_freq | uniq
+2151000
+$ cat /sys/devices/system/cpu/cpufreq/policy*/cpuinfo_min_freq | uniq
+400000
+$ cat /sys/devices/system/cpu/cpufreq/policy*/scaling_cur_freq | uniq
+2151000
+1799527
+
+Fixes: ec437d71db77 ("cpufreq: amd-pstate: Introduce a new AMD P-State driver to support future processors")
+Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+Acked-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Tested-by: Peter Jung <ptr1337@cachyos.org>
+Cc: 5.17+ <stable@vger.kernel.org> # 5.17+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpufreq/amd-pstate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 176cd8dbf1db..fdef214b9f6b 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -1020,7 +1020,8 @@ void tpm_tis_remove(struct tpm_chip *chip)
- 		interrupt = 0;
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -675,7 +675,7 @@ static int amd_pstate_set_boost(struct c
+ 	if (state)
+ 		policy->cpuinfo.max_freq = cpudata->max_freq;
+ 	else
+-		policy->cpuinfo.max_freq = cpudata->nominal_freq;
++		policy->cpuinfo.max_freq = cpudata->nominal_freq * 1000;
  
- 	tpm_tis_write32(priv, reg, ~TPM_GLOBAL_INT_ENABLE & interrupt);
--	flush_work(&priv->free_irq_work);
-+	if (priv->free_irq_work.func)
-+		flush_work(&priv->free_irq_work);
+ 	policy->max = policy->cpuinfo.max_freq;
  
- 	tpm_tis_clkrun_enable(chip, false);
- 
--- 
-2.45.2
-
 
 
