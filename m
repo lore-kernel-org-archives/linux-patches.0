@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA76136E00;
-	Thu, 13 Jun 2024 12:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D851448EE;
+	Thu, 13 Jun 2024 12:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280898; cv=none; b=q/RAz1XyMDLBhXljkLSChEZveYWYo+cK/IFq4Vna6D53KuirUwOKRUYM/453L4QZmRD4VlllwBtihjBJmYPYjOVfRAsmVoPxLE5S+H7kAsLhUFxlHjC1KKe0DSGC3wC5eRHdsQ9L5wzmidJRgyuPC5WuEnMuKQj5hnAmADiYcv8=
+	t=1718280901; cv=none; b=FVMxsarbyaVk2WRp7OinKGceh8bqVdQOrUBCc2shK3G2Iak2aDYuakiHc3HHySr3WpRD74Y0HMljkzx5bepj8hwJVuMvD1ho8GRyy4NSi9bIgIDJ+J606ErueFRrCbYr0tlYf7+SKi8N6Ie3xaO1t3oj2exGf1HEzN2BTupaObk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280898; c=relaxed/simple;
-	bh=JQ+XLqb9x4T/9I0hL+b+bioASgUNro21YHZ88Zzvcm0=;
+	s=arc-20240116; t=1718280901; c=relaxed/simple;
+	bh=EdeDl8dfCtxfJRdhA2mNpIQdSceR6SE/Gd6XjE9HCzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W7PUGhP+eM67oYDuRo2hxL7I28Jrp4q2v/WJs5RpJXCXg8L10gjWWJF4R3Dch9Xb2GedE/6E0ji/9a3mj+tDAXoARwJf26WDpqjVPi5koEaZl0hn8mPIF3m52Pf7iav7uRFwoMG891hC1eHyYCtFOI2qgAwjEFEQqkkP/89z2BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWhKMIX6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F8q26f7y6Cwwy2KscljVGMHbmambDY/C1Eoux/dMD8BEMPCV7vmOxxLsn69aZcylf12hkL5WL6+C0ENmlbOPw4j8Ke1hQ63Ju5HaDwcvfei3dVch8WH8UDl91IIbebb+Tj+FKdN/U5MQvUGop3ah+CN4G77+WxvVKmbTm+4l5pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMx0cSRd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWhKMIX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BDFC2BBFC;
-	Thu, 13 Jun 2024 12:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMx0cSRd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777FEC32786;
+	Thu, 13 Jun 2024 12:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280897;
-	bh=JQ+XLqb9x4T/9I0hL+b+bioASgUNro21YHZ88Zzvcm0=;
+	s=korg; t=1718280900;
+	bh=EdeDl8dfCtxfJRdhA2mNpIQdSceR6SE/Gd6XjE9HCzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWhKMIX6+Y0zg0aMEImEviCNIEQHZeVK0miqbpWhDKin6ehrDUntmgWN3zVZkEWvR
-	 W926nQKFJfGvnPjQA3SmHfdCiXuHjw292j7Ql0hN1Vpuyjq2dLeWpw0e0TubXgQWYy
-	 bvHRpXgXV7hfJCoudViOkYfHblhUZA5/2+Qb5Sew=
+	b=WMx0cSRdlZ73ZsYQ37/sf/Hx2NAJRXEzOEHlXC9/Mu8ovRTj+hXED2g5+ZFDoVPZl
+	 FtigjitrzkIDoIK0TPPposK04dctUwiTIw0rZmle6R5ROgV3NlZbpaDVQcXOnQs+yU
+	 l0PIDimqDd5HcXfIw6N/ba96N4OE4rq14j68tVCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 064/317] tcp: avoid premature drops in tcp_add_backlog()
-Date: Thu, 13 Jun 2024 13:31:22 +0200
-Message-ID: <20240613113250.025751260@linuxfoundation.org>
+Subject: [PATCH 5.10 073/317] scsi: bfa: Ensure the copied buf is NUL terminated
+Date: Thu, 13 Jun 2024 13:31:31 +0200
+Message-ID: <20240613113250.371647849@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,85 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-[ Upstream commit ec00ed472bdb7d0af840da68c8c11bff9f4d9caa ]
+[ Upstream commit 13d0cecb4626fae67c00c84d3c7851f6b62f7df3 ]
 
-While testing TCP performance with latest trees,
-I saw suspect SOCKET_BACKLOG drops.
+Currently, we allocate a nbytes-sized kernel buffer and copy nbytes from
+userspace to that buffer. Later, we use sscanf on this buffer but we don't
+ensure that the string is terminated inside the buffer, this can lead to
+OOB read when using sscanf. Fix this issue by using memdup_user_nul instead
+of memdup_user.
 
-tcp_add_backlog() computes its limit with :
-
-    limit = (u32)READ_ONCE(sk->sk_rcvbuf) +
-            (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
-    limit += 64 * 1024;
-
-This does not take into account that sk->sk_backlog.len
-is reset only at the very end of __release_sock().
-
-Both sk->sk_backlog.len and sk->sk_rmem_alloc could reach
-sk_rcvbuf in normal conditions.
-
-We should double sk->sk_rcvbuf contribution in the formula
-to absorb bubbles in the backlog, which happen more often
-for very fast flows.
-
-This change maintains decent protection against abuses.
-
-Fixes: c377411f2494 ("net: sk_add_backlog() take rmem_alloc into account")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240423125620.3309458-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9f30b674759b ("bfa: replace 2 kzalloc/copy_from_user by memdup_user")
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Link: https://lore.kernel.org/r/20240424-fix-oob-read-v2-3-f1f1b53a10f4@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/scsi/bfa/bfad_debugfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 85d8688933f3c..0e7179a19e224 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1787,7 +1787,7 @@ int tcp_v4_early_demux(struct sk_buff *skb)
+diff --git a/drivers/scsi/bfa/bfad_debugfs.c b/drivers/scsi/bfa/bfad_debugfs.c
+index fd1b378a263a0..d3c7d4423c514 100644
+--- a/drivers/scsi/bfa/bfad_debugfs.c
++++ b/drivers/scsi/bfa/bfad_debugfs.c
+@@ -250,7 +250,7 @@ bfad_debugfs_write_regrd(struct file *file, const char __user *buf,
+ 	unsigned long flags;
+ 	void *kern_buf;
  
- bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- {
--	u32 limit, tail_gso_size, tail_gso_segs;
-+	u32 tail_gso_size, tail_gso_segs;
- 	struct skb_shared_info *shinfo;
- 	const struct tcphdr *th;
- 	struct tcphdr *thtail;
-@@ -1796,6 +1796,7 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- 	bool fragstolen;
- 	u32 gso_segs;
- 	u32 gso_size;
-+	u64 limit;
- 	int delta;
+-	kern_buf = memdup_user(buf, nbytes);
++	kern_buf = memdup_user_nul(buf, nbytes);
+ 	if (IS_ERR(kern_buf))
+ 		return PTR_ERR(kern_buf);
  
- 	/* In case all data was pulled from skb frags (in __pskb_pull_tail()),
-@@ -1891,7 +1892,13 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- 	__skb_push(skb, hdrlen);
+@@ -317,7 +317,7 @@ bfad_debugfs_write_regwr(struct file *file, const char __user *buf,
+ 	unsigned long flags;
+ 	void *kern_buf;
  
- no_coalesce:
--	limit = (u32)READ_ONCE(sk->sk_rcvbuf) + (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
-+	/* sk->sk_backlog.len is reset only at the end of __release_sock().
-+	 * Both sk->sk_backlog.len and sk->sk_rmem_alloc could reach
-+	 * sk_rcvbuf in normal conditions.
-+	 */
-+	limit = ((u64)READ_ONCE(sk->sk_rcvbuf)) << 1;
-+
-+	limit += ((u32)READ_ONCE(sk->sk_sndbuf)) >> 1;
+-	kern_buf = memdup_user(buf, nbytes);
++	kern_buf = memdup_user_nul(buf, nbytes);
+ 	if (IS_ERR(kern_buf))
+ 		return PTR_ERR(kern_buf);
  
- 	/* Only socket owner can try to collapse/prune rx queues
- 	 * to reduce memory overhead, so add a little headroom here.
-@@ -1899,6 +1906,8 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- 	 */
- 	limit += 64 * 1024;
- 
-+	limit = min_t(u64, limit, UINT_MAX);
-+
- 	if (unlikely(sk_add_backlog(sk, skb, limit))) {
- 		bh_unlock_sock(sk);
- 		__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPBACKLOGDROP);
 -- 
 2.43.0
 
