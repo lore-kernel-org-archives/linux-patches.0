@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4902F384;
-	Thu, 13 Jun 2024 12:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A551384;
+	Thu, 13 Jun 2024 12:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282457; cv=none; b=DKufXGK3dBm3j4NUv3Xar+WF+siXIr9KlX9LjhXD+650j4HsqlbQYH3d/zrz9Yqmtjt4MHeZz8EL4Dm5AzcBpJ9SDO/Fv8BbLojeFO+BU4uhsnuEdZ4GWFWkTN3AIJ6FK1jyPtvDxNbk7EyZP9EviZP3i5QDC/asFo3wy96F6dw=
+	t=1718282460; cv=none; b=COmyc7xtEGzkY7M5qeWtUNO26qqYmb32J0F16SHC6V5TGIw8YMIHdhg087khYAnt7LeizxvXf1oG5PuZMMhZ6uOH8OsJhMFdwDmL/Pv6AIKKjecpMdLNErQg+VD5/2dl0WETHBn1e3g+2gwcIwHYJ9AV6g8DpYZLYGm6yHImWHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282457; c=relaxed/simple;
-	bh=kNJaLP7LgbFXj6IGEo34x+t34oAImnSPGTh+T5EfAII=;
+	s=arc-20240116; t=1718282460; c=relaxed/simple;
+	bh=oVL+8O6vtsnn3x8Szj1HaP1r9LJtjTA7fc5JK6K7K5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLGQa8zWuQzUBLa/yizOrryv1NKGNDfiHJUyiNEhCxH6eHy1jJGY4fp5QxnFNW5ddEHvnSuWosd8eEEl2Byu1ax0hf5RSFD9qrWFRlv8U1qhz1mPCFfNK2Ux9qjG2ZMcrFPEDDRff6QRnWjBhECo0dzQyfXSpViFCI21XDA6pmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBpPX5GU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tqfa/gxdubzj7PgKRf4ruLlnY0WH48ni0Jv52pjVzCGpKmy9zl1uGsaXa395yuCrtMlx2WFLQ+XAzKeW2HKJbNVyOmb6KiyUAnetjGGCQi0a7CjXpEQj1eC67mTcbN5C/xZGbWrTOPFg7gUWoL1FZpgbhMDPSM6MuaFp2u9BpKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r39uQgs1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBpPX5GU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85F0C2BBFC;
-	Thu, 13 Jun 2024 12:40:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r39uQgs1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E98C4AF1A;
+	Thu, 13 Jun 2024 12:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282457;
-	bh=kNJaLP7LgbFXj6IGEo34x+t34oAImnSPGTh+T5EfAII=;
+	s=korg; t=1718282460;
+	bh=oVL+8O6vtsnn3x8Szj1HaP1r9LJtjTA7fc5JK6K7K5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBpPX5GU+o1K+OU+ixOSSbWNriQS0qtdNZHpufw6x2PqWZFiPOn6rlHiSSOaUr5s3
-	 ItY76EsvegT3PUfAlJPOey+GZmAyiPKDE+ZU2SAlFPsHvynKSkrWKYAyIOfFSQm+/C
-	 w72yJCv7ofqCpk1X5h7DWFMRDqQ7qVmdBca6uCJY=
+	b=r39uQgs1CdaeECuYomeZTyU3zoGe0D8C/R44a4fs1T2b6XhMHpwSp9SRjDADO3tu1
+	 FUVP6YPnLK0UcUBP26R3HOWt/5GiLF/o8j+Xn5tWWYlnVFgFJ/MgFwI1gWbajhbGsQ
+	 GuYr6d/E95sSPAfYHzb36teaUw5VY8AzMhvAUs2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 253/402] mmc: sdhci_am654: Add ITAPDLYSEL in sdhci_j721e_4bit_set_clock
-Date: Thu, 13 Jun 2024 13:33:30 +0200
-Message-ID: <20240613113312.015808998@linuxfoundation.org>
+Subject: [PATCH 5.15 254/402] mmc: sdhci_am654: Fix ITAPDLY for HS400 timing
+Date: Thu, 13 Jun 2024 13:33:31 +0200
+Message-ID: <20240613113312.054644085@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,55 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit 9dff65bb5e09903c27d9cff947dff4d22b6ea6a1 ]
+[ Upstream commit d3182932bb070e7518411fd165e023f82afd7d25 ]
 
-Add ITAPDLYSEL to sdhci_j721e_4bit_set_clock function.
-This allows to set the correct ITAPDLY for timings that
-do not carry out tuning.
+While STRB is currently used for DATA and CRC responses, the CMD
+responses from the device to the host still require ITAPDLY for
+HS400 timing.
 
-Fixes: 1accbced1c32 ("mmc: sdhci_am654: Add Support for 4 bit IP on J721E")
+Currently what is stored for HS400 is the ITAPDLY from High Speed
+mode which is incorrect. The ITAPDLY for HS400 speed mode should
+be the same as ITAPDLY as HS200 timing after tuning is executed.
+Add the functionality to save ITAPDLY from HS200 tuning and save
+as HS400 ITAPDLY.
+
+Fixes: a161c45f2979 ("mmc: sdhci_am654: Enable DLL only for some speed modes")
 Signed-off-by: Judith Mendez <jm@ti.com>
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240320223837.959900-7-jm@ti.com
+Link: https://lore.kernel.org/r/20240320223837.959900-8-jm@ti.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci_am654.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/mmc/host/sdhci_am654.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
-index 2c73396383733..9cdc5e7889b45 100644
+index 9cdc5e7889b45..230b61902e39d 100644
 --- a/drivers/mmc/host/sdhci_am654.c
 +++ b/drivers/mmc/host/sdhci_am654.c
-@@ -319,6 +319,7 @@ static void sdhci_j721e_4bit_set_clock(struct sdhci_host *host,
- 	unsigned char timing = host->mmc->ios.timing;
- 	u32 otap_del_sel;
- 	u32 itap_del_ena;
-+	u32 itap_del_sel;
- 	u32 mask, val;
+@@ -300,6 +300,12 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
+ 	if (timing > MMC_TIMING_UHS_SDR25 && clock >= CLOCK_TOO_SLOW_HZ) {
+ 		sdhci_am654_setup_dll(host, clock);
+ 		sdhci_am654->dll_enable = true;
++
++		if (timing == MMC_TIMING_MMC_HS400) {
++			sdhci_am654->itap_del_ena[timing] = 0x1;
++			sdhci_am654->itap_del_sel[timing] = sdhci_am654->itap_del_sel[timing - 1];
++		}
++
+ 		sdhci_am654_write_itapdly(sdhci_am654, sdhci_am654->itap_del_sel[timing],
+ 					  sdhci_am654->itap_del_ena[timing]);
+ 	} else {
+@@ -530,6 +536,9 @@ static int sdhci_am654_platform_execute_tuning(struct sdhci_host *host,
  
- 	/* Setup DLL Output TAP delay */
-@@ -328,13 +329,18 @@ static void sdhci_j721e_4bit_set_clock(struct sdhci_host *host,
- 	val = (0x1 << OTAPDLYENA_SHIFT) |
- 	      (otap_del_sel << OTAPDLYSEL_SHIFT);
+ 	sdhci_am654_write_itapdly(sdhci_am654, itap, sdhci_am654->itap_del_ena[timing]);
  
-+	/* Setup Input TAP delay */
- 	itap_del_ena = sdhci_am654->itap_del_ena[timing];
-+	itap_del_sel = sdhci_am654->itap_del_sel[timing];
- 
--	mask |= ITAPDLYENA_MASK;
--	val |= (itap_del_ena << ITAPDLYENA_SHIFT);
-+	mask |= ITAPDLYENA_MASK | ITAPDLYSEL_MASK;
-+	val |= (itap_del_ena << ITAPDLYENA_SHIFT) |
-+	       (itap_del_sel << ITAPDLYSEL_SHIFT);
- 
-+	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, ITAPCHGWIN_MASK,
-+			   1 << ITAPCHGWIN_SHIFT);
- 	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, mask, val);
--
-+	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, ITAPCHGWIN_MASK, 0);
- 	regmap_update_bits(sdhci_am654->base, PHY_CTRL5, CLKBUFSEL_MASK,
- 			   sdhci_am654->clkbuf_sel);
++	/* Save ITAPDLY */
++	sdhci_am654->itap_del_sel[timing] = itap;
++
+ 	return 0;
+ }
  
 -- 
 2.43.0
