@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180A3143C7B;
-	Thu, 13 Jun 2024 11:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05145143861;
+	Thu, 13 Jun 2024 11:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279337; cv=none; b=bxQTR49aRQTIMqB983zB1YwGXi9aX1CFvcMOa7D33o4cmO8swAH8vdUmxGhbVk7wEBL7wul+TxLYU2tYNhkI1hbfHcsSiwHG7pxG+G5b7mHV0JfTqqLbpS6yVVXqDbmXYLtbZ8m3OCereC0CSYYfMEVOkgQwnZEEU7+mXubO3uM=
+	t=1718279340; cv=none; b=DZf3TDG1xdw+mfcEnxJwLRuFZrTNyq6ntl8nftJ+TR7ZsW8uu1N0oodB6bTFnmxsHO6oxP12GPJydhoLd10wLclgj3H7a/DFKyzLsyduVcvY1s707o3/GiZzJYtDA8QlFqMJ/ePS/jSJjfA/zAygJ1iufYcc0IUIXdtcRZRX0+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279337; c=relaxed/simple;
-	bh=fWgCIR+LTjRP0+tYfxbj9AT2IVrqAX/QNJKASifnECU=;
+	s=arc-20240116; t=1718279340; c=relaxed/simple;
+	bh=j1yjCuzjsZEDJa4452ZfCZr9f7hKeiDzOxr/rd9w79w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSh+Pb0cthuaJBPTUHAE+cxbPOSjaY5e0uaXIV1t8HDkSoihWBOIe/8IOSPEhncJf+IqmRdCBKjUzJKrN7G2GbocxyFLKIS1npLKYprHHhh6/dRqE9+86njByAh3Wr0GGgqJtjPbCH3fxxqoJFcvokcTAhHctOBU7dhGrEHI36w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6sXmjaV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ASdG967DPg9jORKV8g7JPJYZGs3YsBrGf9vGrBOw4OgYw4yQ2JWdZysSwdVX0sgXm2gxFZTFQEaoD216e5jrLNXDQsQDdZIRVrpntbRsf3GY8A7XYqvxWGkbU6VUipTLmt9hoOQ9zzzwxzi+r/ccQ4ZQXIr32JVgHUGUMaURBwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ME4WIS/n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6sXmjaV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B83C2BBFC;
-	Thu, 13 Jun 2024 11:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ME4WIS/n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846ADC2BBFC;
+	Thu, 13 Jun 2024 11:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279337;
-	bh=fWgCIR+LTjRP0+tYfxbj9AT2IVrqAX/QNJKASifnECU=;
+	s=korg; t=1718279339;
+	bh=j1yjCuzjsZEDJa4452ZfCZr9f7hKeiDzOxr/rd9w79w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6sXmjaVW1tS5burOLY7WiSCNzIV4k6kq10JXpxGjD2pJXDcHJVvnE8o12gbdh7Jm
-	 6dkfEi3XX2PjwO5DjwaQUMMXVXHXwSdOD3MZxkC9XZieS0guYwdGf1PHdKhDaLDdSa
-	 OE0FuQ00lH0Gi7WnLF8vFmmTSMpoO1DCJJNWlkyE=
+	b=ME4WIS/nSd+bG86EjBhN4RlF34qpCy00/zwIHTurRb01GI/vQbnXEJkGVQXh90kzZ
+	 DcQt8sSVgQ4K5ssUJsXj1u6tiJRw689KbS6SyUZc3WOfkZYam4xyRnGyaQWOybq0sW
+	 xAGkUrAV+SFdiaaGWgNfk0jr/OVT7vNdO6YOSYyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
-	Dan Moulding <dan@danm.net>,
-	Junxiao Bi <junxiao.bi@oracle.com>
-Subject: [PATCH 6.9 024/157] md/raid5: fix deadlock that raid5d() wait for itself to clear MD_SB_CHANGE_PENDING
-Date: Thu, 13 Jun 2024 13:32:29 +0200
-Message-ID: <20240613113228.346028857@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.9 042/157] media: v4l: async: Fix notifier list entry init
+Date: Thu, 13 Jun 2024 13:32:47 +0200
+Message-ID: <20240613113229.052781373@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -52,86 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit 151f66bb618d1fd0eeb84acb61b4a9fa5d8bb0fa upstream.
+commit 6d8acd02c4c6a8f917eefac1de2e035521ca119d upstream.
 
-Xiao reported that lvm2 test lvconvert-raid-takeover.sh can hang with
-small possibility, the root cause is exactly the same as commit
-bed9e27baf52 ("Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"")
+struct v4l2_async_notifier has several list_head members, but only
+waiting_list and done_list are initialized. notifier_entry was kept
+'zeroed' leading to an uninitialized list_head.
+This results in a NULL-pointer dereference if csi2_async_register() fails,
+e.g. node for remote endpoint is disabled, and returns -ENOTCONN.
+The following calls to v4l2_async_nf_unregister() results in a NULL
+pointer dereference.
+Add the missing list head initializer.
 
-However, Dan reported another hang after that, and junxiao investigated
-the problem and found out that this is caused by plugged bio can't issue
-from raid5d().
-
-Current implementation in raid5d() has a weird dependence:
-
-1) md_check_recovery() from raid5d() must hold 'reconfig_mutex' to clear
-   MD_SB_CHANGE_PENDING;
-2) raid5d() handles IO in a deadloop, until all IO are issued;
-3) IO from raid5d() must wait for MD_SB_CHANGE_PENDING to be cleared;
-
-This behaviour is introduce before v2.6, and for consequence, if other
-context hold 'reconfig_mutex', and md_check_recovery() can't update
-super_block, then raid5d() will waste one cpu 100% by the deadloop, until
-'reconfig_mutex' is released.
-
-Refer to the implementation from raid1 and raid10, fix this problem by
-skipping issue IO if MD_SB_CHANGE_PENDING is still set after
-md_check_recovery(), daemon thread will be woken up when 'reconfig_mutex'
-is released. Meanwhile, the hang problem will be fixed as well.
-
-Fixes: 5e2cf333b7bd ("md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d")
-Cc: stable@vger.kernel.org # v5.19+
-Reported-and-tested-by: Dan Moulding <dan@danm.net>
-Closes: https://lore.kernel.org/all/20240123005700.9302-1-dan@danm.net/
-Investigated-by: Junxiao Bi <junxiao.bi@oracle.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240322081005.1112401-1-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: b8ec754ae4c5 ("media: v4l: async: Set v4l2_device and subdev in async notifier init")
+Cc: <stable@vger.kernel.org> # for 6.6 and later
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5.c |   15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ drivers/media/v4l2-core/v4l2-async.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -36,7 +36,6 @@
-  */
- 
- #include <linux/blkdev.h>
--#include <linux/delay.h>
- #include <linux/kthread.h>
- #include <linux/raid/pq.h>
- #include <linux/async_tx.h>
-@@ -6734,6 +6733,9 @@ static void raid5d(struct md_thread *thr
- 		int batch_size, released;
- 		unsigned int offset;
- 
-+		if (test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags))
-+			break;
-+
- 		released = release_stripe_list(conf, conf->temp_inactive_list);
- 		if (released)
- 			clear_bit(R5_DID_ALLOC, &conf->cache_state);
-@@ -6770,18 +6772,7 @@ static void raid5d(struct md_thread *thr
- 			spin_unlock_irq(&conf->device_lock);
- 			md_check_recovery(mddev);
- 			spin_lock_irq(&conf->device_lock);
--
--			/*
--			 * Waiting on MD_SB_CHANGE_PENDING below may deadlock
--			 * seeing md_check_recovery() is needed to clear
--			 * the flag when using mdmon.
--			 */
--			continue;
- 		}
--
--		wait_event_lock_irq(mddev->sb_wait,
--			!test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags),
--			conf->device_lock);
- 	}
- 	pr_debug("%d stripes handled\n", handled);
- 
+--- a/drivers/media/v4l2-core/v4l2-async.c
++++ b/drivers/media/v4l2-core/v4l2-async.c
+@@ -563,6 +563,7 @@ void v4l2_async_nf_init(struct v4l2_asyn
+ {
+ 	INIT_LIST_HEAD(&notifier->waiting_list);
+ 	INIT_LIST_HEAD(&notifier->done_list);
++	INIT_LIST_HEAD(&notifier->notifier_entry);
+ 	notifier->v4l2_dev = v4l2_dev;
+ }
+ EXPORT_SYMBOL(v4l2_async_nf_init);
+@@ -572,6 +573,7 @@ void v4l2_async_subdev_nf_init(struct v4
+ {
+ 	INIT_LIST_HEAD(&notifier->waiting_list);
+ 	INIT_LIST_HEAD(&notifier->done_list);
++	INIT_LIST_HEAD(&notifier->notifier_entry);
+ 	notifier->sd = sd;
+ }
+ EXPORT_SYMBOL_GPL(v4l2_async_subdev_nf_init);
 
 
