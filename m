@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5FA14374B;
-	Thu, 13 Jun 2024 12:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3F2142903;
+	Thu, 13 Jun 2024 12:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281483; cv=none; b=J5TmYnMKuShQRzK6QwOvU52DpibjpD1NN8JYTjOkZd8FPhlUabVR5i1OleH8nM2MkhXDbAjL60adfDL66rmtVbuYk7d2WJQdwl271ErbeL62Hc0bOFXO/hXkg6hqF2LK9HWpyn+eHrzAdSqV0UF6RLFxiTFXZOZIyqSPvDbky2E=
+	t=1718281486; cv=none; b=kk8Afjs0AyblJ8ZgxDj0jIRIppXqBZA4rOHHcUQaHQH0XA4E6l5/fQuBnI6Ben763ZNC551dNeOi8N17M0FYS6ipBujxwjOfvp4OjM60+oTzDlig23vxFCY+irbk+BrVlfwICoWc/y8ndfqxmFvhYWzxJVLB9pm0Dyrpny7I+/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281483; c=relaxed/simple;
-	bh=Hd65J88OIcOA7Sm0FO342vXBXPzv2aNU6hJ9fViRwCk=;
+	s=arc-20240116; t=1718281486; c=relaxed/simple;
+	bh=QsOWPoFs8N695zx7qZ2nXFdM2sdlFRw6UxinaI8DovI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwEfTsU3cchOKqZmQHSYhr5KFYP+pkfR0d5YGnyyE0jRpP2od9//zuPCkhscMTdoSj4jm2u4bPR+7771goGUZhTQL4cpSPP3jHl8Go1sAm9W8ZRuscpdAFiI/pT/xg9f31bq9o1E4Cy31WRDQh6VgMQlSw90UG/iDcMpfBLloAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADyRS4Xa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H2IWc0AuRtbRGAEoPl3N6omHY9eOBLLxzP/KkRzlnJMAhwK9eN9YBSQR4Hx5jLmWbWcyktdo9EozMtkNbwH9pMznKB0U49V+1A3wzA/mHboxR1mlYiHot55Orxa9M1OSOXUtzf1kr9r0G1fGxBqo7hle/TJw7+RHT+AjhnegEpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbMVrvF7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADyRS4Xa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227FFC2BBFC;
-	Thu, 13 Jun 2024 12:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbMVrvF7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15196C2BBFC;
+	Thu, 13 Jun 2024 12:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281483;
-	bh=Hd65J88OIcOA7Sm0FO342vXBXPzv2aNU6hJ9fViRwCk=;
+	s=korg; t=1718281486;
+	bh=QsOWPoFs8N695zx7qZ2nXFdM2sdlFRw6UxinaI8DovI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ADyRS4XapyDDIoEN7k0hYQX45TxI2x5/UpvQkG2JhIJn5T1I6FW66D38njoCG06Vx
-	 H7lw2I5ZfIfhvlUqCRTVWxIT9A4qfuFU32GxpnXhqB2tzJGnABkfJZXxASwlPY5v/A
-	 2uyXP0Sa+Dj1VFE1AwuAHUzUvcs49a/1HZvZj0bI=
+	b=HbMVrvF7vMOJBhjKhF3Fre1/ZpTYhC0GZl9kN2q/GO7dnRhm0f8LTiJ+9yvkE2KPM
+	 bd2a1wRIwLzQoKAasGxBiQQ5SM9TafByUJDHBL7LRF3lUjiamZBy6raC/aTM4ym13L
+	 NMMkIPbH1BrkfJEq2KJfS4z/zmpcsDa5h7Cj4sio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	David Bauer <mail@david-bauer.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 271/317] vxlan: Fix regression when dropping packets due to invalid src addresses
-Date: Thu, 13 Jun 2024 13:34:49 +0200
-Message-ID: <20240613113258.036742798@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	syzbot+83e7f982ca045ab4405c@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 272/317] x86/mm: Remove broken vsyscall emulation code from the page fault code
+Date: Thu, 13 Jun 2024 13:34:50 +0200
+Message-ID: <20240613113258.075011239@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -54,62 +55,225 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 1cd4bc987abb2823836cbb8f887026011ccddc8a upstream.
+commit 02b670c1f88e78f42a6c5aee155c7b26960ca054 upstream.
 
-Commit f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
-has recently been added to vxlan mainly in the context of source
-address snooping/learning so that when it is enabled, an entry in the
-FDB is not being created for an invalid address for the corresponding
-tunnel endpoint.
+The syzbot-reported stack trace from hell in this discussion thread
+actually has three nested page faults:
 
-Before commit f58f45c1e5b9 vxlan was similarly behaving as geneve in
-that it passed through whichever macs were set in the L2 header. It
-turns out that this change in behavior breaks setups, for example,
-Cilium with netkit in L3 mode for Pods as well as tunnel mode has been
-passing before the change in f58f45c1e5b9 for both vxlan and geneve.
-After mentioned change it is only passing for geneve as in case of
-vxlan packets are dropped due to vxlan_set_mac() returning false as
-source and destination macs are zero which for E/W traffic via tunnel
-is totally fine.
+  https://lore.kernel.org/r/000000000000d5f4fc0616e816d4@google.com
 
-Fix it by only opting into the is_valid_ether_addr() check in
-vxlan_set_mac() when in fact source address snooping/learning is
-actually enabled in vxlan. This is done by moving the check into
-vxlan_snoop(). With this change, the Cilium connectivity test suite
-passes again for both tunnel flavors.
+... and I think that's actually the important thing here:
 
-Fixes: f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: David Bauer <mail@david-bauer.net>
-Cc: Ido Schimmel <idosch@nvidia.com>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: David Bauer <mail@david-bauer.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[ Backport note: vxlan snooping/learning not supported in 6.8 or older,
-  so commit is simply a revert. ]
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+ - the first page fault is from user space, and triggers the vsyscall
+   emulation.
+
+ - the second page fault is from __do_sys_gettimeofday(), and that should
+   just have caused the exception that then sets the return value to
+   -EFAULT
+
+ - the third nested page fault is due to _raw_spin_unlock_irqrestore() ->
+   preempt_schedule() -> trace_sched_switch(), which then causes a BPF
+   trace program to run, which does that bpf_probe_read_compat(), which
+   causes that page fault under pagefault_disable().
+
+It's quite the nasty backtrace, and there's a lot going on.
+
+The problem is literally the vsyscall emulation, which sets
+
+        current->thread.sig_on_uaccess_err = 1;
+
+and that causes the fixup_exception() code to send the signal *despite* the
+exception being caught.
+
+And I think that is in fact completely bogus.  It's completely bogus
+exactly because it sends that signal even when it *shouldn't* be sent -
+like for the BPF user mode trace gathering.
+
+In other words, I think the whole "sig_on_uaccess_err" thing is entirely
+broken, because it makes any nested page-faults do all the wrong things.
+
+Now, arguably, I don't think anybody should enable vsyscall emulation any
+more, but this test case clearly does.
+
+I think we should just make the "send SIGSEGV" be something that the
+vsyscall emulation does on its own, not this broken per-thread state for
+something that isn't actually per thread.
+
+The x86 page fault code actually tried to deal with the "incorrect nesting"
+by having that:
+
+                if (in_interrupt())
+                        return;
+
+which ignores the sig_on_uaccess_err case when it happens in interrupts,
+but as shown by this example, these nested page faults do not need to be
+about interrupts at all.
+
+IOW, I think the only right thing is to remove that horrendously broken
+code.
+
+The attached patch looks like the ObviouslyCorrect(tm) thing to do.
+
+NOTE! This broken code goes back to this commit in 2011:
+
+  4fc3490114bb ("x86-64: Set siginfo and context on vsyscall emulation faults")
+
+... and back then the reason was to get all the siginfo details right.
+Honestly, I do not for a moment believe that it's worth getting the siginfo
+details right here, but part of the commit says:
+
+    This fixes issues with UML when vsyscall=emulate.
+
+... and so my patch to remove this garbage will probably break UML in this
+situation.
+
+I do not believe that anybody should be running with vsyscall=emulate in
+2024 in the first place, much less if you are doing things like UML. But
+let's see if somebody screams.
+
+Reported-and-tested-by: syzbot+83e7f982ca045ab4405c@syzkaller.appspotmail.com
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Andy Lutomirski <luto@kernel.org>
+Link: https://lore.kernel.org/r/CAHk-=wh9D6f7HUkDgZHKmDCHUQmp+Co89GP+b8+z+G56BKeyNg@mail.gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[gpiccoli: Backport the patch due to differences in the trees. The main change
+ between 5.10.y and 5.15.y is due to renaming the fixup function, by
+ commit 6456a2a69ee1 ("x86/fault: Rename no_context() to kernelmode_fixup_or_oops()").
+ Following 2 commits cause divergence in the diffs too (in the removed lines):
+ cd072dab453a ("x86/fault: Add a helper function to sanitize error code")
+ d4ffd5df9d18 ("x86/fault: Fix wrong signal when vsyscall fails with pkey")
+ Finally, there is context adjustment in the processor.h file.]
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c |    4 ----
- 1 file changed, 4 deletions(-)
+ arch/x86/entry/vsyscall/vsyscall_64.c |   28 ++--------------------------
+ arch/x86/include/asm/processor.h      |    1 -
+ arch/x86/mm/fault.c                   |   27 +--------------------------
+ 3 files changed, 3 insertions(+), 53 deletions(-)
 
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1778,10 +1778,6 @@ static bool vxlan_set_mac(struct vxlan_d
- 	if (ether_addr_equal(eth_hdr(skb)->h_source, vxlan->dev->dev_addr))
- 		return false;
+--- a/arch/x86/entry/vsyscall/vsyscall_64.c
++++ b/arch/x86/entry/vsyscall/vsyscall_64.c
+@@ -98,11 +98,6 @@ static int addr_to_vsyscall_nr(unsigned
  
--	/* Ignore packets from invalid src-address */
--	if (!is_valid_ether_addr(eth_hdr(skb)->h_source))
--		return false;
+ static bool write_ok_or_segv(unsigned long ptr, size_t size)
+ {
+-	/*
+-	 * XXX: if access_ok, get_user, and put_user handled
+-	 * sig_on_uaccess_err, this could go away.
+-	 */
 -
- 	/* Get address from the outer IP header */
- 	if (vxlan_get_sk_family(vs) == AF_INET) {
- 		saddr.sin.sin_addr.s_addr = ip_hdr(skb)->saddr;
+ 	if (!access_ok((void __user *)ptr, size)) {
+ 		struct thread_struct *thread = &current->thread;
+ 
+@@ -120,10 +115,8 @@ static bool write_ok_or_segv(unsigned lo
+ bool emulate_vsyscall(unsigned long error_code,
+ 		      struct pt_regs *regs, unsigned long address)
+ {
+-	struct task_struct *tsk;
+ 	unsigned long caller;
+ 	int vsyscall_nr, syscall_nr, tmp;
+-	int prev_sig_on_uaccess_err;
+ 	long ret;
+ 	unsigned long orig_dx;
+ 
+@@ -172,8 +165,6 @@ bool emulate_vsyscall(unsigned long erro
+ 		goto sigsegv;
+ 	}
+ 
+-	tsk = current;
+-
+ 	/*
+ 	 * Check for access_ok violations and find the syscall nr.
+ 	 *
+@@ -233,12 +224,8 @@ bool emulate_vsyscall(unsigned long erro
+ 		goto do_ret;  /* skip requested */
+ 
+ 	/*
+-	 * With a real vsyscall, page faults cause SIGSEGV.  We want to
+-	 * preserve that behavior to make writing exploits harder.
++	 * With a real vsyscall, page faults cause SIGSEGV.
+ 	 */
+-	prev_sig_on_uaccess_err = current->thread.sig_on_uaccess_err;
+-	current->thread.sig_on_uaccess_err = 1;
+-
+ 	ret = -EFAULT;
+ 	switch (vsyscall_nr) {
+ 	case 0:
+@@ -261,23 +248,12 @@ bool emulate_vsyscall(unsigned long erro
+ 		break;
+ 	}
+ 
+-	current->thread.sig_on_uaccess_err = prev_sig_on_uaccess_err;
+-
+ check_fault:
+ 	if (ret == -EFAULT) {
+ 		/* Bad news -- userspace fed a bad pointer to a vsyscall. */
+ 		warn_bad_vsyscall(KERN_INFO, regs,
+ 				  "vsyscall fault (exploit attempt?)");
+-
+-		/*
+-		 * If we failed to generate a signal for any reason,
+-		 * generate one here.  (This should be impossible.)
+-		 */
+-		if (WARN_ON_ONCE(!sigismember(&tsk->pending.signal, SIGBUS) &&
+-				 !sigismember(&tsk->pending.signal, SIGSEGV)))
+-			goto sigsegv;
+-
+-		return true;  /* Don't emulate the ret. */
++		goto sigsegv;
+ 	}
+ 
+ 	regs->ax = ret;
+--- a/arch/x86/include/asm/processor.h
++++ b/arch/x86/include/asm/processor.h
+@@ -528,7 +528,6 @@ struct thread_struct {
+ 	unsigned long		iopl_emul;
+ 
+ 	unsigned int		iopl_warn:1;
+-	unsigned int		sig_on_uaccess_err:1;
+ 
+ 	/* Floating point and extended processor state */
+ 	struct fpu		fpu;
+--- a/arch/x86/mm/fault.c
++++ b/arch/x86/mm/fault.c
+@@ -649,33 +649,8 @@ no_context(struct pt_regs *regs, unsigne
+ 	}
+ 
+ 	/* Are we prepared to handle this kernel fault? */
+-	if (fixup_exception(regs, X86_TRAP_PF, error_code, address)) {
+-		/*
+-		 * Any interrupt that takes a fault gets the fixup. This makes
+-		 * the below recursive fault logic only apply to a faults from
+-		 * task context.
+-		 */
+-		if (in_interrupt())
+-			return;
+-
+-		/*
+-		 * Per the above we're !in_interrupt(), aka. task context.
+-		 *
+-		 * In this case we need to make sure we're not recursively
+-		 * faulting through the emulate_vsyscall() logic.
+-		 */
+-		if (current->thread.sig_on_uaccess_err && signal) {
+-			set_signal_archinfo(address, error_code);
+-
+-			/* XXX: hwpoison faults will set the wrong code. */
+-			force_sig_fault(signal, si_code, (void __user *)address);
+-		}
+-
+-		/*
+-		 * Barring that, we can do the fixup and be happy.
+-		 */
++	if (fixup_exception(regs, X86_TRAP_PF, error_code, address))
+ 		return;
+-	}
+ 
+ #ifdef CONFIG_VMAP_STACK
+ 	/*
 
 
