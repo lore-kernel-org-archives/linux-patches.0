@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC97A142911;
-	Thu, 13 Jun 2024 11:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9491142E8E;
+	Thu, 13 Jun 2024 11:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278944; cv=none; b=JGF0BgQYfxzZIQdesGVcfwdDAXfZ8P11F9Fd55i1ugW5dj1Qt90nQYlD0rNtkl2YQy4Ic2Qy9R6VnRXNPEybV01cc5hspI2p4l3qbIyAMpqrMbAHWRP/EbPfK+MR2r7Gu+kkua0ElD5mnf3EFnbwAPugdwn8ezsDyUMCKm94HKU=
+	t=1718278946; cv=none; b=Ln3RLWiar+7UXjsMTw9Zv/zSFEMDkFbGdPzU2tt7UtdncWutRr4/c3LRyQysV64U7/pl6quNi1C7Yiuy6qTbiQx4PUKAOCcsqJi5y8y3TuqWTgpWeztErdoAVL3QfJQXSRADPc/7QF5III5K3eaFguFjxoRVe3oACzJVQ5edm78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278944; c=relaxed/simple;
-	bh=rw/0ubg8VrJy+87zwIN3GiNcgoQSSZywSw3yNF+2Lyk=;
+	s=arc-20240116; t=1718278946; c=relaxed/simple;
+	bh=7AwNBofxuxeDfCxGNLFvc7ohgb/DZD2bUP+unX77//o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7WZ04fXsGAFLncIPWmDE8VAnVsQxCtL/p9wToE9Ch0z/DYkRjpqm+x4z5slp8MBdSEDlWMYIG3l6TgnczL35I7hk2SpnAwYutAMIK6/gN3DY9AUq1eTyravK6xVTDlst+pwiSZyepMW7uWvHthfcGUcclY4zQoxAesjzIri50M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+kQnLQS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GuH69ghYmB35Ft5Vmmyfz0+RMUf/jLHnqMs2XwSjme9Xnp8cSqth2MBc16FtDvhtcBXxXnE//1ElMQOYcwXt8CqYgxWBQfBxaDcZCBLq1FvqdN+F4phqR3bMTIXvLl9cRVe3B1To/2zkG1tscVy48mxgkxNHh97Z1LapHgEd0DY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ec+oLYEU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+kQnLQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EC8C2BBFC;
-	Thu, 13 Jun 2024 11:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ec+oLYEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AE1C2BBFC;
+	Thu, 13 Jun 2024 11:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278943;
-	bh=rw/0ubg8VrJy+87zwIN3GiNcgoQSSZywSw3yNF+2Lyk=;
+	s=korg; t=1718278946;
+	bh=7AwNBofxuxeDfCxGNLFvc7ohgb/DZD2bUP+unX77//o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+kQnLQSQzx79iwKpPtlzIRv5fYev5qnXGhgi6d9aBJ93Q6Vq80p7pMMmq1/7TmXo
-	 Mv7PIC86cT1gfN6ETigJFMftr8fzgv022OnHO0jPRMV8r6yChkQ9NY9hPkPwiLI4Bz
-	 vuid13xfLKTz2MNFV42MK7NRTJiUTtxwiP23ee28=
+	b=ec+oLYEUSrShYb7SpqIcgbanXlJ3VXk2lE5VkQPsPoP5cyxM7flnxKWu2kXUn8Qa7
+	 uV2QCjKmXkhGWrym/WwUrW7SLLxT0C/Lr78AW91Xwt/s5Ca8rbWiM8cOGEbFcbPNSi
+	 iN4ufJoA+tT4vlMHjhlYHgmOe1qz3ib69RSs+iXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>,
-	Hannes Reinecke <hare@suse.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Yue Sun <samsun1006219@gmail.com>,
+	xingwei lee <xrivendell7@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 123/213] params: lift param_set_uint_minmax to common code
-Date: Thu, 13 Jun 2024 13:32:51 +0200
-Message-ID: <20240613113232.741933063@linuxfoundation.org>
+Subject: [PATCH 4.19 124/213] tcp: Fix shift-out-of-bounds in dctcp_update_alpha().
+Date: Thu, 13 Jun 2024 13:32:52 +0200
+Message-ID: <20240613113232.781109396@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -53,97 +55,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 2a14c9ae15a38148484a128b84bff7e9ffd90d68 ]
+[ Upstream commit 3ebc46ca8675de6378e3f8f40768e180bb8afa66 ]
 
-It is a useful helper hence move it to common code so others can enjoy
-it.
+In dctcp_update_alpha(), we use a module parameter dctcp_shift_g
+as follows:
 
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>
-Reviewed-by: Hannes Reinecke <hare@suse.com>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: 3ebc46ca8675 ("tcp: Fix shift-out-of-bounds in dctcp_update_alpha().")
+  alpha -= min_not_zero(alpha, alpha >> dctcp_shift_g);
+  ...
+  delivered_ce <<= (10 - dctcp_shift_g);
+
+It seems syzkaller started fuzzing module parameters and triggered
+shift-out-of-bounds [0] by setting 100 to dctcp_shift_g:
+
+  memcpy((void*)0x20000080,
+         "/sys/module/tcp_dctcp/parameters/dctcp_shift_g\000", 47);
+  res = syscall(__NR_openat, /*fd=*/0xffffffffffffff9cul, /*file=*/0x20000080ul,
+                /*flags=*/2ul, /*mode=*/0ul);
+  memcpy((void*)0x20000000, "100\000", 4);
+  syscall(__NR_write, /*fd=*/r[0], /*val=*/0x20000000ul, /*len=*/4ul);
+
+Let's limit the max value of dctcp_shift_g by param_set_uint_minmax().
+
+With this patch:
+
+  # echo 10 > /sys/module/tcp_dctcp/parameters/dctcp_shift_g
+  # cat /sys/module/tcp_dctcp/parameters/dctcp_shift_g
+  10
+  # echo 11 > /sys/module/tcp_dctcp/parameters/dctcp_shift_g
+  -bash: echo: write error: Invalid argument
+
+[0]:
+UBSAN: shift-out-of-bounds in net/ipv4/tcp_dctcp.c:143:12
+shift exponent 100 is too large for 32-bit type 'u32' (aka 'unsigned int')
+CPU: 0 PID: 8083 Comm: syz-executor345 Not tainted 6.9.0-05151-g1b294a1f3561 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.13.0-1ubuntu1.1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x201/0x300 lib/dump_stack.c:114
+ ubsan_epilogue lib/ubsan.c:231 [inline]
+ __ubsan_handle_shift_out_of_bounds+0x346/0x3a0 lib/ubsan.c:468
+ dctcp_update_alpha+0x540/0x570 net/ipv4/tcp_dctcp.c:143
+ tcp_in_ack_event net/ipv4/tcp_input.c:3802 [inline]
+ tcp_ack+0x17b1/0x3bc0 net/ipv4/tcp_input.c:3948
+ tcp_rcv_state_process+0x57a/0x2290 net/ipv4/tcp_input.c:6711
+ tcp_v4_do_rcv+0x764/0xc40 net/ipv4/tcp_ipv4.c:1937
+ sk_backlog_rcv include/net/sock.h:1106 [inline]
+ __release_sock+0x20f/0x350 net/core/sock.c:2983
+ release_sock+0x61/0x1f0 net/core/sock.c:3549
+ mptcp_subflow_shutdown+0x3d0/0x620 net/mptcp/protocol.c:2907
+ mptcp_check_send_data_fin+0x225/0x410 net/mptcp/protocol.c:2976
+ __mptcp_close+0x238/0xad0 net/mptcp/protocol.c:3072
+ mptcp_close+0x2a/0x1a0 net/mptcp/protocol.c:3127
+ inet_release+0x190/0x1f0 net/ipv4/af_inet.c:437
+ __sock_release net/socket.c:659 [inline]
+ sock_close+0xc0/0x240 net/socket.c:1421
+ __fput+0x41b/0x890 fs/file_table.c:422
+ task_work_run+0x23b/0x300 kernel/task_work.c:180
+ exit_task_work include/linux/task_work.h:38 [inline]
+ do_exit+0x9c8/0x2540 kernel/exit.c:878
+ do_group_exit+0x201/0x2b0 kernel/exit.c:1027
+ __do_sys_exit_group kernel/exit.c:1038 [inline]
+ __se_sys_exit_group kernel/exit.c:1036 [inline]
+ __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1036
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xe4/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x67/0x6f
+RIP: 0033:0x7f6c2b5005b6
+Code: Unable to access opcode bytes at 0x7f6c2b50058c.
+RSP: 002b:00007ffe883eb948 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00007f6c2b5862f0 RCX: 00007f6c2b5005b6
+RDX: 0000000000000001 RSI: 000000000000003c RDI: 0000000000000001
+RBP: 0000000000000001 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 0000000000000006 R11: 0000000000000246 R12: 00007f6c2b5862f0
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+ </TASK>
+
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Reported-by: Yue Sun <samsun1006219@gmail.com>
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAEkJfYNJM=cw-8x7_Vmj1J6uYVCWMbbvD=EFmDPVBGpTsqOxEA@mail.gmail.com/
+Fixes: e3118e8359bb ("net: tcp: add DCTCP congestion control algorithm")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240517091626.32772-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/moduleparam.h |  2 ++
- kernel/params.c             | 18 ++++++++++++++++++
- net/sunrpc/xprtsock.c       | 18 ------------------
- 3 files changed, 20 insertions(+), 18 deletions(-)
+ net/ipv4/tcp_dctcp.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
-index ba36506db4fb7..dee4c402c040e 100644
---- a/include/linux/moduleparam.h
-+++ b/include/linux/moduleparam.h
-@@ -361,6 +361,8 @@ extern int param_get_int(char *buffer, const struct kernel_param *kp);
- extern const struct kernel_param_ops param_ops_uint;
- extern int param_set_uint(const char *val, const struct kernel_param *kp);
- extern int param_get_uint(char *buffer, const struct kernel_param *kp);
-+int param_set_uint_minmax(const char *val, const struct kernel_param *kp,
-+		unsigned int min, unsigned int max);
- #define param_check_uint(name, p) __param_check(name, p, unsigned int)
+diff --git a/net/ipv4/tcp_dctcp.c b/net/ipv4/tcp_dctcp.c
+index 5205c5a5d8d55..0cf7bfda2d6d2 100644
+--- a/net/ipv4/tcp_dctcp.c
++++ b/net/ipv4/tcp_dctcp.c
+@@ -59,7 +59,18 @@ struct dctcp {
+ };
  
- extern const struct kernel_param_ops param_ops_long;
-diff --git a/kernel/params.c b/kernel/params.c
-index ce89f757e6da0..8339cf40cdc72 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -245,6 +245,24 @@ STANDARD_PARAM_DEF(long,	long,			"%li",  kstrtol);
- STANDARD_PARAM_DEF(ulong,	unsigned long,		"%lu",  kstrtoul);
- STANDARD_PARAM_DEF(ullong,	unsigned long long,	"%llu", kstrtoull);
- 
-+int param_set_uint_minmax(const char *val, const struct kernel_param *kp,
-+		unsigned int min, unsigned int max)
+ static unsigned int dctcp_shift_g __read_mostly = 4; /* g = 1/2^4 */
+-module_param(dctcp_shift_g, uint, 0644);
++
++static int dctcp_shift_g_set(const char *val, const struct kernel_param *kp)
 +{
-+	unsigned int num;
-+	int ret;
-+
-+	if (!val)
-+		return -EINVAL;
-+	ret = kstrtouint(val, 0, &num);
-+	if (ret)
-+		return ret;
-+	if (num < min || num > max)
-+		return -EINVAL;
-+	*((unsigned int *)kp->arg) = num;
-+	return 0;
++	return param_set_uint_minmax(val, kp, 0, 10);
 +}
-+EXPORT_SYMBOL_GPL(param_set_uint_minmax);
 +
- int param_set_charp(const char *val, const struct kernel_param *kp)
- {
- 	if (strlen(val) > 1024) {
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index a0a82d9a59008..938c649c5c9fa 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -3306,24 +3306,6 @@ void cleanup_socket_xprt(void)
- 	xprt_unregister_transport(&xs_bc_tcp_transport);
- }
++static const struct kernel_param_ops dctcp_shift_g_ops = {
++	.set = dctcp_shift_g_set,
++	.get = param_get_uint,
++};
++
++module_param_cb(dctcp_shift_g, &dctcp_shift_g_ops, &dctcp_shift_g, 0644);
+ MODULE_PARM_DESC(dctcp_shift_g, "parameter g for updating dctcp_alpha");
  
--static int param_set_uint_minmax(const char *val,
--		const struct kernel_param *kp,
--		unsigned int min, unsigned int max)
--{
--	unsigned int num;
--	int ret;
--
--	if (!val)
--		return -EINVAL;
--	ret = kstrtouint(val, 0, &num);
--	if (ret)
--		return ret;
--	if (num < min || num > max)
--		return -EINVAL;
--	*((unsigned int *)kp->arg) = num;
--	return 0;
--}
--
- static int param_set_portnr(const char *val, const struct kernel_param *kp)
- {
- 	return param_set_uint_minmax(val, kp,
+ static unsigned int dctcp_alpha_on_init __read_mostly = DCTCP_MAX_ALPHA;
 -- 
 2.43.0
 
