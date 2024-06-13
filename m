@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD5C143895;
-	Thu, 13 Jun 2024 12:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A31144D10;
+	Thu, 13 Jun 2024 12:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280124; cv=none; b=lrIJroc5G8AUDjxgo6c1eduUQUY8dxLghxi0k5oeCwXocVRQSgc+Xegf19vpbnOcEizVxVRVuIH4gR1kjTQ4L5g1cyp89iNTU393ywCc+qVSfBtPNgRH4UcdipRRnPOzZffNtK8sI7i0EPUvE5cHK3U9QF7vkXCLjvFU0WXRGpc=
+	t=1718280127; cv=none; b=LNTeCAnBczoLc+8rjLddwDLMybLPrrhaXAvT1G24oxWDslbipCZlIwC8nLHZvSskPatx6utNTDTMCWzmBGJDhot5w8t4kjzlXtiQ8XxLgnQnCL4FfZaJZFvl+mt5+sI/SAwhcVawM/VvIYh7+qJf3A0WUu4BIFizsNe/WQLavbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280124; c=relaxed/simple;
-	bh=iqez1KOF8wrCSpJmPmIYOCwF5V0Jfr76IANTi42csxY=;
+	s=arc-20240116; t=1718280127; c=relaxed/simple;
+	bh=43GLf7JN4BLVMFP07wx968SswOBqZHdnbhi5h6CF4DE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNoUEy7IoPGxnQOFkmOJgxrrtNwnw8TS6U1/2tKPS1iimc4E5yuS/zn1ZlOPz2imDP1cJOgHOIZ01l0qY6Ufk03V63yXPwtQRSLwgZTTXKWy8olenZLey+/znXC5eLyB3auWWjWwpGAY+mHjDnLmMT44mW7ycReE8F5k05/l2d4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLbAdBFb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D+cKYIt02p4MqCk5GWfSUPfhkJWyGPci04nSeBgeo5lFpi8nBwZWu5AWKSKVYnvXF43l10HC6AkDpe9Hr0UKaL/HGSyZ7/wY0r6hFlrkd6HyJkKsqfgBCbFlrmAb5jWh4DhesM0qHkBcq4BW5NYgAejNh9i6vzHi7rm3dStc3PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zntvFgp/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLbAdBFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3B5C2BBFC;
-	Thu, 13 Jun 2024 12:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zntvFgp/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2ED0C32786;
+	Thu, 13 Jun 2024 12:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280124;
-	bh=iqez1KOF8wrCSpJmPmIYOCwF5V0Jfr76IANTi42csxY=;
+	s=korg; t=1718280127;
+	bh=43GLf7JN4BLVMFP07wx968SswOBqZHdnbhi5h6CF4DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fLbAdBFbYrSWMWCbyHUyME1eU47BSAl1EbMGKtBbOe4R3+XhenWhlqab22yjPQmlt
-	 FaCQ+z7knxpKTo2QfhyByyOThXDkgQP+UDRx2vPTVRJc4lCDrTt1/bgIT1laM0LOZf
-	 ky2q13S0bNH9cLNNc+drhaFzSo5Imaz/YQIK9dA0=
+	b=zntvFgp/t+qDvH5Z2zctZkGt7AhAAd1wi5bJHP4sdwGtOBsexelOcKrWPu7Uxp/1t
+	 wLHz1259Gq1S9ucY5AynO3ap85VIV22rSOCnHxRP7FQ4+ngA3EE8uJFMzwu2XRihGH
+	 9IWvBXk38WDPaIHa4bl5+QqEDo8n8D5vFgC9r2gM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 149/202] spi: Dont mark message DMA mapped when no transfer in it is
-Date: Thu, 13 Jun 2024 13:34:07 +0200
-Message-ID: <20240613113233.504462028@linuxfoundation.org>
+Subject: [PATCH 5.4 150/202] nvmet: fix ns enable/disable possible hang
+Date: Thu, 13 Jun 2024 13:34:08 +0200
+Message-ID: <20240613113233.542030723@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -51,46 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit 9f788ba457b45b0ce422943fcec9fa35c4587764 ]
+[ Upstream commit f97914e35fd98b2b18fb8a092e0a0799f73afdfe ]
 
-There is no need to set the DMA mapped flag of the message if it has
-no mapped transfers. Moreover, it may give the code a chance to take
-the wrong paths, i.e. to exercise DMA related APIs on unmapped data.
-Make __spi_map_msg() to bail earlier on the above mentioned cases.
+When disabling an nvmet namespace, there is a period where the
+subsys->lock is released, as the ns disable waits for backend IO to
+complete, and the ns percpu ref to be properly killed. The original
+intent was to avoid taking the subsystem lock for a prolong period as
+other processes may need to acquire it (for example new incoming
+connections).
 
-Fixes: 99adef310f68 ("spi: Provide core support for DMA mapping transfers")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://msgid.link/r/20240522171018.3362521-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+However, it opens up a window where another process may come in and
+enable the ns, (re)intiailizing the ns percpu_ref, causing the disable
+sequence to hang.
+
+Solve this by taking the global nvmet_config_sem over the entire configfs
+enable/disable sequence.
+
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvme/target/configfs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index b18ae50db1f52..0f9410ed48290 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -931,6 +931,7 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index baf8a3e4ed12a..9add3516ae2e2 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -507,10 +507,18 @@ static ssize_t nvmet_ns_enable_store(struct config_item *item,
+ 	if (strtobool(page, &enable))
+ 		return -EINVAL;
+ 
++	/*
++	 * take a global nvmet_config_sem because the disable routine has a
++	 * window where it releases the subsys-lock, giving a chance to
++	 * a parallel enable to concurrently execute causing the disable to
++	 * have a misaccounting of the ns percpu_ref.
++	 */
++	down_write(&nvmet_config_sem);
+ 	if (enable)
+ 		ret = nvmet_ns_enable(ns);
  	else
- 		rx_dev = ctlr->dev.parent;
+ 		nvmet_ns_disable(ns);
++	up_write(&nvmet_config_sem);
  
-+	ret = -ENOMSG;
- 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
- 		if (!ctlr->can_dma(ctlr, msg->spi, xfer))
- 			continue;
-@@ -954,6 +955,9 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
- 			}
- 		}
- 	}
-+	/* No transfer has been mapped, bail out with success */
-+	if (ret)
-+		return 0;
- 
- 	ctlr->cur_msg_mapped = true;
- 
+ 	return ret ? ret : count;
+ }
 -- 
 2.43.0
 
