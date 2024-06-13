@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370EF384;
-	Thu, 13 Jun 2024 12:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B59384;
+	Thu, 13 Jun 2024 12:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282949; cv=none; b=sqj+TsTV66lZohxZqpY0zF3w94Z/cjSNPDuaacoDhmkX2Oou8NZZjo225u4ZJNs9MACoo2HWzaUfMVVe4YSLZA/MDu2X202KwUBEeNbMp7TJMj+29CYnzU2Hg7lW6bIDcoia7cdjOTqN0/FmSIEFPD4kzbcIURC7XHE/Ytmfp8U=
+	t=1718282952; cv=none; b=iW7siIs3CuJAOMe5RVpjDOVU2Q0E2G+hjg497d/fHF6VgbJLPGasJGlaL2+G4hJqF3d075+XyNerkPF9fQCcog8vT8Ro3gt/pms9bIf2Vj8+b7g19vjyq2cxB0FkTMEHesQN9iaGLD0uoYEw15fJbq63lVUrM4NximZPNbT9ED4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282949; c=relaxed/simple;
-	bh=GLlwhFQoflEAwqxUE3LhlsBj+lmhyuCl7DAXl2YAxs8=;
+	s=arc-20240116; t=1718282952; c=relaxed/simple;
+	bh=M3jpvNVFQ8tO9wCo0KbHjYq37hH+CkOGhOtnqVnaRAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l9M6lUvhzPrkbMJOaEy8cnq2bxy/1GyCPFagfkYCX7nLJjVoWi5VQLOTX874c70lTEM6yBMiLsRw2LsruUw+MqlrvNRAWnBlgfPxVw23AR3Rzl5ZadKtoU1F7Pfqumj5bKSNY6NKNE1M6JMl2y31Nfel7CAn102CI6e4gun4WBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xM4IMq7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zwn/qS4BjLqi7pN324W7uxhb3PCnhN63c/Wj1kPDAjZgydkRQxF6N5EYwgKzHMXDu2GvaPADNqyb4zChtcDnJttL2kNQl7VCD7lnyUFF3pHnCht07RpLzxf+tgNvOs8ElvzcjtY7bDTxYeGTOYpDGcqzi74m2PcsO0+qrlpBxhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4Krc3Uh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xM4IMq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4C0C2BBFC;
-	Thu, 13 Jun 2024 12:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4Krc3Uh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5D2C2BBFC;
+	Thu, 13 Jun 2024 12:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282949;
-	bh=GLlwhFQoflEAwqxUE3LhlsBj+lmhyuCl7DAXl2YAxs8=;
+	s=korg; t=1718282952;
+	bh=M3jpvNVFQ8tO9wCo0KbHjYq37hH+CkOGhOtnqVnaRAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0xM4IMq7/QYWW085xKgy8qU6J8Grsl79bs8myQWeZqcdqhY4ixsy/299HvHRY79cJ
-	 7phHctwUbY+03ZkPxh5Yc1d/6uAvPXfxUlA7YT3f53GOyzOzqCqAP9E2aILOCLfsVa
-	 NNUHJgsemXXm04Xz8ki0Ln0WZCTNnmMEtdA6P+ew=
+	b=b4Krc3UhDnA0Qt3Themiv9OUCYxyeeCx3JziiDZTN4LeX31YvXj5V7Hlvw0g70AWQ
+	 C9vKrmHG3//x5pjbZCjVGFp9tXJrKqMAf3vUUOlY8IE2pq96zWOZaYu/GEmzD/gX5L
+	 fxwn0ky3a20tmb8cMj1HO9auyEd0beqSWyslcQwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	lectrode <electrodexsnet@gmail.com>
-Subject: [PATCH 6.1 47/85] drm/amd: Fix shutdown (again) on some SMU v13.0.4/11 platforms
-Date: Thu, 13 Jun 2024 13:35:45 +0200
-Message-ID: <20240613113215.957977931@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.1 21/85] ata: pata_legacy: make legacy_exit() work again
+Date: Thu, 13 Jun 2024 13:35:19 +0200
+Message-ID: <20240613113214.960362792@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -52,61 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit 267cace556e8a53d703119f7435ab556209e5b6a upstream.
+commit d4a89339f17c87c4990070e9116462d16e75894f upstream.
 
-commit cd94d1b182d2 ("dm/amd/pm: Fix problems with reboot/shutdown for
-some SMU 13.0.4/13.0.11 users") attempted to fix shutdown issues
-that were reported since commit 31729e8c21ec ("drm/amd/pm: fixes a
-random hang in S4 for SMU v13.0.4/11") but caused issues for some
-people.
+Commit defc9cd826e4 ("pata_legacy: resychronize with upstream changes and
+resubmit") missed to update legacy_exit(), so that it now fails to do any
+cleanup -- the loop body there can never be entered.  Fix that and finally
+remove now useless nr_legacy_host variable...
 
-Adjust the workaround flow to properly only apply in the S4 case:
--> For shutdown go through SMU_MSG_PrepareMp1ForUnload
--> For S4 go through SMU_MSG_GfxDeviceDriverReset and
-   SMU_MSG_PrepareMp1ForUnload
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-Reported-and-tested-by: lectrode <electrodexsnet@gmail.com>
-Closes: https://github.com/void-linux/void-packages/issues/50417
+Fixes: defc9cd826e4 ("pata_legacy: resychronize with upstream changes and resubmit")
 Cc: stable@vger.kernel.org
-Fixes: cd94d1b182d2 ("dm/amd/pm: Fix problems with reboot/shutdown for some SMU 13.0.4/13.0.11 users")
-Reviewed-by: Tim Huang <Tim.Huang@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c |   20 ++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/ata/pata_legacy.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-@@ -222,15 +222,17 @@ static int smu_v13_0_4_system_features_c
- 	struct amdgpu_device *adev = smu->adev;
- 	int ret = 0;
+--- a/drivers/ata/pata_legacy.c
++++ b/drivers/ata/pata_legacy.c
+@@ -173,8 +173,6 @@ static int legacy_port[NR_HOST] = { 0x1f
+ static struct legacy_probe probe_list[NR_HOST];
+ static struct legacy_data legacy_data[NR_HOST];
+ static struct ata_host *legacy_host[NR_HOST];
+-static int nr_legacy_host;
+-
  
--	if (!en && adev->in_s4) {
--		/* Adds a GFX reset as workaround just before sending the
--		 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
--		 * an invalid state.
--		 */
--		ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_GfxDeviceDriverReset,
--						      SMU_RESET_MODE_2, NULL);
--		if (ret)
--			return ret;
-+	if (!en && !adev->in_s0ix) {
-+		if (adev->in_s4) {
-+			/* Adds a GFX reset as workaround just before sending the
-+			 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
-+			 * an invalid state.
-+			 */
-+			ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_GfxDeviceDriverReset,
-+							      SMU_RESET_MODE_2, NULL);
-+			if (ret)
-+				return ret;
-+		}
+ /**
+  *	legacy_probe_add	-	Add interface to probe list
+@@ -1276,9 +1274,11 @@ static __exit void legacy_exit(void)
+ {
+ 	int i;
  
- 		ret = smu_cmn_send_smc_msg(smu, SMU_MSG_PrepareMp1ForUnload, NULL);
+-	for (i = 0; i < nr_legacy_host; i++) {
++	for (i = 0; i < NR_HOST; i++) {
+ 		struct legacy_data *ld = &legacy_data[i];
+-		ata_host_detach(legacy_host[i]);
++
++		if (legacy_host[i])
++			ata_host_detach(legacy_host[i]);
+ 		platform_device_unregister(ld->platform_dev);
  	}
+ }
 
 
