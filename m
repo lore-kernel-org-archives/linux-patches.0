@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8002E1422DD;
-	Thu, 13 Jun 2024 12:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7277B8614D;
+	Thu, 13 Jun 2024 12:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280741; cv=none; b=lBnc30T8CXNv5iJ6VvpkdGNCM1pjT1CUfS6OT7zE4Vyt2/5RLAFBkpSrvRBProf7sXAjsltiIp/6JfGsRACXX4XN60/bSOiN6QHVSKQMKAeOXfU1xRNrjwmjBwQc2pcaKLbdcG5SphpU5POu37vCMpCmyVgbhCSvwWwmYLmTyxs=
+	t=1718280744; cv=none; b=Z3SIHi2SPXKRn++DBt4ZKtTjI/z6GejtB2EJDNNq1fHXOPOxYafpWM9ZOEr5STTa/gK0sBqBG6MPYR8yfqB6e/YJGdTbd5O5rkjXo82GGMpULwzNccxbY0Sj9UuuenZCQOl6fXnt7MLs5z52UfKGG0dpqgDaGuCgksB5f4r3YHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280741; c=relaxed/simple;
-	bh=Z2uh7O2Y9lm9Qc3ulRDNPYVlVtLGiZ+eho7cJBAwqx8=;
+	s=arc-20240116; t=1718280744; c=relaxed/simple;
+	bh=EvNhlQdlWuLsswg9nVgfVtrFcBW339jsqyf0mnswt94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mErq14h2KBcsZF1n3ejh3eW7UQa7/la2knbUD31Ud0ZWVw+6pC8cXzIDYS0vvtLwsSxNpAPq8Xq7oSRpeJ2MDoxWkvLyLIHwEe91Op9T+2gC0QhtWbghguYzJb3k4mCFhyTffGQDVo6Qu+7SLPBNwfPgkvgjOp+IEXGxZAihL/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/YeFz1F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aA1WBWzy757CYwtMRBWugW8q0sSFVLKOn+W/d7eAQASbPN8UzhSKZmx+RVC3Hr14VCPzSjlJ1JLWzCq+OoG7FW8HZJdg1k4FWLhUZEltHT1W2Z2RwWldQZS8saQ4435bTklo1xrpKLPZ/POpiuncuYJIU9K3BsMzuak42Xvh4C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WnPTVMtH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/YeFz1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053BDC2BBFC;
-	Thu, 13 Jun 2024 12:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WnPTVMtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDEDC2BBFC;
+	Thu, 13 Jun 2024 12:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280741;
-	bh=Z2uh7O2Y9lm9Qc3ulRDNPYVlVtLGiZ+eho7cJBAwqx8=;
+	s=korg; t=1718280744;
+	bh=EvNhlQdlWuLsswg9nVgfVtrFcBW339jsqyf0mnswt94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/YeFz1FBcGBqRXidiRMdAiNsACizK4dKdoOBeEWtZ5fsgaYB4yoFtBmLHVhLGELO
-	 8QIJ/li3B9kYN3f3u8OMMb9XtOkk1zDAd/lvCFp/ud98RotN4hMtIjgA2rNzGbzbSV
-	 pu0c95jpEHs4Bzq418OUNaB2Rr0ZiekBbt8J8Yzo=
+	b=WnPTVMtHFWxcSihBwpvhBiy/OeDE8ch4TCdSvNJFjIWo3yyrHG5Jy5lppzj6tAiQI
+	 vt8gU8Oharg3hRgwGu4ouuEUE5dN/agIvzk8Cjn45rBviR5H/e09HSrawWhOoE+thh
+	 iZ/LLJKf0B20on0JwKtF7XVIKYWXUjCD7IvIw3RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/317] nvme: find numa distance only if controller has valid numa id
-Date: Thu, 13 Jun 2024 13:30:37 +0200
-Message-ID: <20240613113248.285099106@linuxfoundation.org>
+	j51569436@gmail.com,
+	Daniel Starke <daniel.starke@siemens.com>
+Subject: [PATCH 5.10 002/317] tty: n_gsm: fix possible out-of-bounds in gsm0_receive()
+Date: Thu, 13 Jun 2024 13:30:20 +0200
+Message-ID: <20240613113247.624299168@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -54,47 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Daniel Starke <daniel.starke@siemens.com>
 
-[ Upstream commit 863fe60ed27f2c85172654a63c5b827e72c8b2e6 ]
+commit 47388e807f85948eefc403a8a5fdc5b406a65d5a upstream.
 
-On system where native nvme multipath is configured and iopolicy
-is set to numa but the nvme controller numa node id is undefined
-or -1 (NUMA_NO_NODE) then avoid calculating node distance for
-finding optimal io path. In such case we may access numa distance
-table with invalid index and that may potentially refer to incorrect
-memory. So this patch ensures that if the nvme controller numa node
-id is -1 then instead of calculating node distance for finding optimal
-io path, we set the numa node distance of such controller to default 10
-(LOCAL_DISTANCE).
+Assuming the following:
+- side A configures the n_gsm in basic option mode
+- side B sends the header of a basic option mode frame with data length 1
+- side A switches to advanced option mode
+- side B sends 2 data bytes which exceeds gsm->len
+  Reason: gsm->len is not used in advanced option mode.
+- side A switches to basic option mode
+- side B keeps sending until gsm0_receive() writes past gsm->buf
+  Reason: Neither gsm->state nor gsm->len have been reset after
+  reconfiguration.
 
-Link: https://lore.kernel.org/all/20240413090614.678353-1-nilay@linux.ibm.com/
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by changing gsm->count to gsm->len comparison from equal to less
+than. Also add upper limit checks against the constant MAX_MRU in
+gsm0_receive() and gsm1_receive() to harden against memory corruption of
+gsm->len and gsm->mru.
+
+All other checks remain as we still need to limit the data according to the
+user configuration and actual payload size.
+
+Reported-by: j51569436@gmail.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218708
+Tested-by: j51569436@gmail.com
+Fixes: e1eaea46bb40 ("tty: n_gsm line discipline")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
+Link: https://lore.kernel.org/r/20240424054842.7741-1-daniel.starke@siemens.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/multipath.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/n_gsm.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 379d6818a0635..9f59f93b70e26 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -168,7 +168,8 @@ static struct nvme_ns *__nvme_find_path(struct nvme_ns_head *head, int node)
- 		if (nvme_path_is_disabled(ns))
- 			continue;
- 
--		if (READ_ONCE(head->subsys->iopolicy) == NVME_IOPOLICY_NUMA)
-+		if (ns->ctrl->numa_node != NUMA_NO_NODE &&
-+		    READ_ONCE(head->subsys->iopolicy) == NVME_IOPOLICY_NUMA)
- 			distance = node_distance(node, ns->ctrl->numa_node);
- 		else
- 			distance = LOCAL_DISTANCE;
--- 
-2.43.0
-
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -2082,8 +2082,12 @@ static void gsm0_receive(struct gsm_mux
+ 		break;
+ 	case GSM_DATA:		/* Data */
+ 		gsm->buf[gsm->count++] = c;
+-		if (gsm->count == gsm->len)
++		if (gsm->count >= MAX_MRU) {
++			gsm->bad_size++;
++			gsm->state = GSM_SEARCH;
++		} else if (gsm->count >= gsm->len) {
+ 			gsm->state = GSM_FCS;
++		}
+ 		break;
+ 	case GSM_FCS:		/* FCS follows the packet */
+ 		gsm->received_fcs = c;
+@@ -2176,7 +2180,7 @@ static void gsm1_receive(struct gsm_mux
+ 		gsm->state = GSM_DATA;
+ 		break;
+ 	case GSM_DATA:		/* Data */
+-		if (gsm->count > gsm->mru) {	/* Allow one for the FCS */
++		if (gsm->count > gsm->mru || gsm->count > MAX_MRU) {	/* Allow one for the FCS */
+ 			gsm->state = GSM_OVERRUN;
+ 			gsm->bad_size++;
+ 		} else
 
 
