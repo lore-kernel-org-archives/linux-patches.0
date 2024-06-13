@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89019144D00;
-	Thu, 13 Jun 2024 12:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847B5144D10;
+	Thu, 13 Jun 2024 12:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280435; cv=none; b=ScwBSNidvUDGW6thUsOim34LiJGRVvJF5pQLeNRv8QH6TLUHAmKSPq+IkqO4lP8A2j8kkNPeNReCADVwU7uJbwyIjWuN+WoQKo8wLqW0EtIuduGHlExGrBOphi5FKUorzqn2R2nK+crQC0Osi4dQZv4Njiu9qIr/6R3W1jTfL28=
+	t=1718280438; cv=none; b=H5IQRWkhls6X7yUy2ZJWWtpc38wOh04oWgbxSRUjOZZR7hdFNSZ+aCnY0swwVYn43IaopWbWaKGoLpS8yUydXsCfADpSA8QiYD9fXsJq4MycZP0EKt4qjRqi/YKn3lT3F4XJ4ezK9l3U//a02nIEpEh+U+DYaaRyMxD4EegT7Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280435; c=relaxed/simple;
-	bh=t6IggHhrPe/3Fqz+LWHTK4wA9UErx5bNgRUTKoV+FWY=;
+	s=arc-20240116; t=1718280438; c=relaxed/simple;
+	bh=c5xF1COYGRrqK3GIu6s6GqLb6nx+IfuMVtQwqUr8W28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAxnUgPUVcvJafv5GYS2J4/pbIBh6HgZTXKU2cTOlcNBtQgehURsQISCoac5cj+LKYC3wSN+umrt3C9i73zZ9W2joO98QoNK8ZOsI7wRoaTUiK2gnF93KLyZTCcF9m55d516cq8AMEY4AEeshysmOCGDE/aFXTiRXq4u5AozgbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlOyREu+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l7kxgknlmQinvULDSJWyb8VK0TqPcrWynIaf8d8FoulavAwzqP0M0NeDR8HogKW6HdWlMMJNvyenYcBqF5j3scLA04CURiUNzGbONA1stcUGagq3bn+basHEg8Fy15QJ/Yr5bs1bX2ouqAMTqP24O5FRJ831eunY3rA9xsp57Ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eR73AFrg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlOyREu+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1ACC4AF1A;
-	Thu, 13 Jun 2024 12:07:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eR73AFrg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02744C2BBFC;
+	Thu, 13 Jun 2024 12:07:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280435;
-	bh=t6IggHhrPe/3Fqz+LWHTK4wA9UErx5bNgRUTKoV+FWY=;
+	s=korg; t=1718280438;
+	bh=c5xF1COYGRrqK3GIu6s6GqLb6nx+IfuMVtQwqUr8W28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlOyREu+ZPpPWAe9FCa4VscYffjkU2uDprmzk6lDgAT96gYAUQc+V403xbyn9G5li
-	 u/a8oNnzD7NgkZhSQXFN+k9+HbX1MFPejnU3d0NOtMI7ArMqHYinaItJ7Le2gbkDkg
-	 XvkskK/FsSG0RESWZb5wYTpcRdOV7R8IBTWTz1w0=
+	b=eR73AFrgoMnCRpNO2mxpyjmCGrtTmX/HkwNtjVbUYrwFJnoh6FufWqxomp4bWgxKv
+	 gaZxBMK4+YopDLhD/sUitImWEQwlNT/zMSnfxcusLgeBusTFZ8xBZ+0dVGj6JvYQAn
+	 exv+wXB8ZkioQxjWbfIBqNJIcCYQQZL/AJhDFxNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 053/137] mmc: sdhci-acpi: Add quirk to enable pull-up on the card-detect GPIO on Asus T100TA
-Date: Thu, 13 Jun 2024 13:33:53 +0200
-Message-ID: <20240613113225.349823116@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Zack Rusin <zackr@vmware.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Sui Jingfeng <sui.jingfeng@linux.dev>
+Subject: [PATCH 6.6 054/137] drm/fbdev-generic: Do not set physical framebuffer address
+Date: Thu, 13 Jun 2024 13:33:54 +0200
+Message-ID: <20240613113225.388160796@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -52,89 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 431946c0f640c93421439a6c928efb3152c035a4 upstream.
+commit 87cb4a612a89690b123e68f6602d9f6581b03597 upstream.
 
-The card-detect GPIO for the microSD slot on Asus T100TA / T100TAM models
-stopped working under Linux after commit 6fd03f024828 ("gpiolib: acpi:
-support bias pull disable").
+Framebuffer memory is allocated via vzalloc() from non-contiguous
+physical pages. The physical framebuffer start address is therefore
+meaningless. Do not set it.
 
-The GPIO in question is connected to a mechanical switch in the slot
-which shorts the pin to GND when a card is inserted.
+The value is not used within the kernel and only exported to userspace
+on dedicated ARM configs. No functional change is expected.
 
-The GPIO pin correctly gets configured with a 20K pull-up by the BIOS,
-but there is a bug in the DSDT where the GpioInt for the card-detect is
-configured with a PullNone setting:
+v2:
+- refer to vzalloc() in commit message (Javier)
 
-    GpioInt (Edge, ActiveBoth, SharedAndWake, PullNone, 0x2710,
-        "\\_SB.GPO0", 0x00, ResourceConsumer, ,
-        )
-        {   // Pin list
-        0x0026
-        }
-
-Linux now actually honors the PullNone setting and disables the 20K pull-up
-configured by the BIOS.
-
-Add a new DMI_QUIRK_SD_CD_ENABLE_PULL_UP quirk which when set calls
-mmc_gpiod_set_cd_config() to re-enable the pull-up and set this for
-the Asus T100TA models to fix this.
-
-Fixes: 6fd03f024828 ("gpiolib: acpi: support bias pull disable")
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240410191639.526324-7-hdegoede@redhat.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: a5b44c4adb16 ("drm/fbdev-generic: Always use shadow buffering")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Zack Rusin <zackr@vmware.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: <stable@vger.kernel.org> # v6.4+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Tested-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240419083331.7761-2-tzimmermann@suse.de
+(cherry picked from commit 73ef0aecba78aa9ebd309b10b6cd17d94e632892)
+Signed-off-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-acpi.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/drm_fbdev_generic.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-acpi.c
-+++ b/drivers/mmc/host/sdhci-acpi.c
-@@ -10,6 +10,7 @@
- #include <linux/export.h>
- #include <linux/module.h>
- #include <linux/device.h>
-+#include <linux/pinctrl/pinconf-generic.h>
- #include <linux/platform_device.h>
- #include <linux/ioport.h>
- #include <linux/io.h>
-@@ -81,6 +82,7 @@ enum {
- 	DMI_QUIRK_RESET_SD_SIGNAL_VOLT_ON_SUSP			= BIT(0),
- 	DMI_QUIRK_SD_NO_WRITE_PROTECT				= BIT(1),
- 	DMI_QUIRK_SD_CD_ACTIVE_HIGH				= BIT(2),
-+	DMI_QUIRK_SD_CD_ENABLE_PULL_UP				= BIT(3),
- };
+diff --git a/drivers/gpu/drm/drm_fbdev_generic.c b/drivers/gpu/drm/drm_fbdev_generic.c
+index be357f926fae..97e579c33d84 100644
+--- a/drivers/gpu/drm/drm_fbdev_generic.c
++++ b/drivers/gpu/drm/drm_fbdev_generic.c
+@@ -113,7 +113,6 @@ static int drm_fbdev_generic_helper_fb_probe(struct drm_fb_helper *fb_helper,
+ 	/* screen */
+ 	info->flags |= FBINFO_VIRTFB | FBINFO_READS_FAST;
+ 	info->screen_buffer = screen_buffer;
+-	info->fix.smem_start = page_to_phys(vmalloc_to_page(info->screen_buffer));
+ 	info->fix.smem_len = screen_size;
  
- static inline void *sdhci_acpi_priv(struct sdhci_acpi_host *c)
-@@ -735,6 +737,14 @@ static const struct dmi_system_id sdhci_
- 		.driver_data = (void *)DMI_QUIRK_SD_NO_WRITE_PROTECT,
- 	},
- 	{
-+		/* Asus T100TA, needs pull-up for cd but DSDT GpioInt has NoPull set */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "T100TA"),
-+		},
-+		.driver_data = (void *)DMI_QUIRK_SD_CD_ENABLE_PULL_UP,
-+	},
-+	{
- 		/*
- 		 * The Lenovo Miix 320-10ICR has a bug in the _PS0 method of
- 		 * the SHC1 ACPI device, this bug causes it to reprogram the
-@@ -908,6 +918,9 @@ static int sdhci_acpi_probe(struct platf
- 				goto err_free;
- 			dev_warn(dev, "failed to setup card detect gpio\n");
- 			c->use_runtime_pm = false;
-+		} else if (quirks & DMI_QUIRK_SD_CD_ENABLE_PULL_UP) {
-+			mmc_gpiod_set_cd_config(host->mmc,
-+						PIN_CONF_PACKED(PIN_CONFIG_BIAS_PULL_UP, 20000));
- 		}
- 
- 		if (quirks & DMI_QUIRK_RESET_SD_SIGNAL_VOLT_ON_SUSP)
+ 	/* deferred I/O */
+-- 
+2.45.2
+
 
 
