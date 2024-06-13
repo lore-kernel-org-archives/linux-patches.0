@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4D5149006;
-	Thu, 13 Jun 2024 11:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFC7145A0E;
+	Thu, 13 Jun 2024 11:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279460; cv=none; b=G/SS2QQS/t9C8i/ZuLGxYz8f8f5UFTN8iGumvauR4w02wySkE27tXu8hncF1CtTlf1N/A49c+Eb+6kSYVs7lxugYVO/cWG3Ys+DbFKVtiXVKxAUb8hD803My7M5xqP9D6GOcWgW9CiFEXu7EFcQZrKv/jfD78jXE0PgYyGzilOY=
+	t=1718279463; cv=none; b=Z30AnVJE2ZSe0+t6tRVba2s3EOnVdgZ9XtiAHfT/my+Ehfwu0SlPP6ANR9HtES+K2wH8rZWF4Vaq4GYmVOy+fuIWEMUHbVKaGvkfjg0iEZDjjFW73i4cZXvGk4gGD/n74vphIyJtMUSHtv70JJDu2kVyWBxVkMlJ9J4okxnrgW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279460; c=relaxed/simple;
-	bh=6ZmXHqjAragdgYxy11F2WZ1Zf5djUWVWCcIJEK9RdGc=;
+	s=arc-20240116; t=1718279463; c=relaxed/simple;
+	bh=idu300iTYzkbbA93/ACjpt+mW1HKmahsbaUbK4jsQnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M6jil7cWpM2w4kDXKfjTfchbtYGnyqkbuGXYfrjZi9stVz/BUrnjjbL1b2scjLflyAtkkmA+5BB6Bo8E8l1YCMAUcErDEZ25Ag6o4nUdWWE4HLANFfERGxZ1GNnzI5he3Kb3XUotgDTKyM5MKe8A8Ve0m407ZOiivINoPulcv1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcpmii9X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j1nPTSDRi1fjqgRZB8n1wsmln5ntIZwPGzmrKdr1X89NH4rkflq7dtf0kVmL7akjb6PdzemukUT/ytKzmPcYUICMN3w6obXnemenJRdyHChNxDUmgrzpoHisANN2UIrbGTCEJgvoOQ9jKTdg7i3/03p/pxgZhqjyntT98jN+YIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kV5xb5yt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcpmii9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179ACC32786;
-	Thu, 13 Jun 2024 11:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kV5xb5yt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A5BC4AF1C;
+	Thu, 13 Jun 2024 11:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279460;
-	bh=6ZmXHqjAragdgYxy11F2WZ1Zf5djUWVWCcIJEK9RdGc=;
+	s=korg; t=1718279463;
+	bh=idu300iTYzkbbA93/ACjpt+mW1HKmahsbaUbK4jsQnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcpmii9XBXCpFw8SML79ZbVWkDQft7bPPYHWUh/c8/gL2mPfDULESTZJ07kkpOVth
-	 gp5XmUhcvn4lEfN3hWleZruKql0i3eaVOrMl2oVmZWAKzRDRx1MI6IDtbgch1H0qm3
-	 kRGm/fD6FgWYRgxEN2B6V3+u56aCPPe3V8r16GqE=
+	b=kV5xb5yt8RPIGRzbjJx/Z5WmsKC0H7/KeFUUdqyyFQ3gcgua369UZTxDwPTT3kLge
+	 EMkEEK5Y5eirYf/87nawyzvLW1b/rSmEu2cJTVl9Jad05Ya/8U7M7JWh2I027ZieAX
+	 1pkmcw7j1Qk+Sn0R/WkLFL94QhNcVI3elQtST9iU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	syzbot+ff14db38f56329ef68df@syzkaller.appspotmail.com
-Subject: [PATCH 6.9 083/157] net/9p: fix uninit-value in p9_client_rpc()
-Date: Thu, 13 Jun 2024 13:33:28 +0200
-Message-ID: <20240613113230.636015710@linuxfoundation.org>
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.9 084/157] net/tcp: Dont consider TCP_CLOSE in TCP_AO_ESTABLISHED
+Date: Thu, 13 Jun 2024 13:33:29 +0200
+Message-ID: <20240613113230.674419188@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -52,90 +50,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Dmitry Safonov <0x7f454c46@gmail.com>
 
-commit 25460d6f39024cc3b8241b14c7ccf0d6f11a736a upstream.
+commit 33700a0c9b562700c28d31360a5f04508f459a45 upstream.
 
-Syzbot with the help of KMSAN reported the following error:
+TCP_CLOSE may or may not have current/rnext keys and should not be
+considered "established". The fast-path for TCP_CLOSE is
+SKB_DROP_REASON_TCP_CLOSE. This is what tcp_rcv_state_process() does
+anyways. Add an early drop path to not spend any time verifying
+segment signatures for sockets in TCP_CLOSE state.
 
-BUG: KMSAN: uninit-value in trace_9p_client_res include/trace/events/9p.h:146 [inline]
-BUG: KMSAN: uninit-value in p9_client_rpc+0x1314/0x1340 net/9p/client.c:754
- trace_9p_client_res include/trace/events/9p.h:146 [inline]
- p9_client_rpc+0x1314/0x1340 net/9p/client.c:754
- p9_client_create+0x1551/0x1ff0 net/9p/client.c:1031
- v9fs_session_init+0x1b9/0x28e0 fs/9p/v9fs.c:410
- v9fs_mount+0xe2/0x12b0 fs/9p/vfs_super.c:122
- legacy_get_tree+0x114/0x290 fs/fs_context.c:662
- vfs_get_tree+0xa7/0x570 fs/super.c:1797
- do_new_mount+0x71f/0x15e0 fs/namespace.c:3352
- path_mount+0x742/0x1f20 fs/namespace.c:3679
- do_mount fs/namespace.c:3692 [inline]
- __do_sys_mount fs/namespace.c:3898 [inline]
- __se_sys_mount+0x725/0x810 fs/namespace.c:3875
- __x64_sys_mount+0xe4/0x150 fs/namespace.c:3875
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was created at:
- __alloc_pages+0x9d6/0xe70 mm/page_alloc.c:4598
- __alloc_pages_node include/linux/gfp.h:238 [inline]
- alloc_pages_node include/linux/gfp.h:261 [inline]
- alloc_slab_page mm/slub.c:2175 [inline]
- allocate_slab mm/slub.c:2338 [inline]
- new_slab+0x2de/0x1400 mm/slub.c:2391
- ___slab_alloc+0x1184/0x33d0 mm/slub.c:3525
- __slab_alloc mm/slub.c:3610 [inline]
- __slab_alloc_node mm/slub.c:3663 [inline]
- slab_alloc_node mm/slub.c:3835 [inline]
- kmem_cache_alloc+0x6d3/0xbe0 mm/slub.c:3852
- p9_tag_alloc net/9p/client.c:278 [inline]
- p9_client_prepare_req+0x20a/0x1770 net/9p/client.c:641
- p9_client_rpc+0x27e/0x1340 net/9p/client.c:688
- p9_client_create+0x1551/0x1ff0 net/9p/client.c:1031
- v9fs_session_init+0x1b9/0x28e0 fs/9p/v9fs.c:410
- v9fs_mount+0xe2/0x12b0 fs/9p/vfs_super.c:122
- legacy_get_tree+0x114/0x290 fs/fs_context.c:662
- vfs_get_tree+0xa7/0x570 fs/super.c:1797
- do_new_mount+0x71f/0x15e0 fs/namespace.c:3352
- path_mount+0x742/0x1f20 fs/namespace.c:3679
- do_mount fs/namespace.c:3692 [inline]
- __do_sys_mount fs/namespace.c:3898 [inline]
- __se_sys_mount+0x725/0x810 fs/namespace.c:3875
- __x64_sys_mount+0xe4/0x150 fs/namespace.c:3875
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-If p9_check_errors() fails early in p9_client_rpc(), req->rc.tag
-will not be properly initialized. However, trace_9p_client_res()
-ends up trying to print it out anyway before p9_client_rpc()
-finishes.
-
-Fix this issue by assigning default values to p9_fcall fields
-such as 'tag' and (just in case KMSAN unearths something new) 'id'
-during the tag allocation stage.
-
-Reported-and-tested-by: syzbot+ff14db38f56329ef68df@syzkaller.appspotmail.com
-Fixes: 348b59012e5c ("net/9p: Convert net/9p protocol dumps to tracepoints")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Cc: stable@vger.kernel.org
-Message-ID: <20240408141039.30428-1-n.zhandarovich@fintech.ru>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Cc: stable@vger.kernel.org # v6.7
+Fixes: 0a3a809089eb ("net/tcp: Verify inbound TCP-AO signed segments")
+Signed-off-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Link: https://lore.kernel.org/r/20240529-tcp_ao-sk_state-v1-1-d69b5d323c52@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/client.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/net/tcp_ao.h |    7 ++++---
+ net/ipv4/tcp_ao.c    |   13 +++++++++----
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -235,6 +235,8 @@ static int p9_fcall_init(struct p9_clien
- 	if (!fc->sdata)
- 		return -ENOMEM;
- 	fc->capacity = alloc_msize;
-+	fc->id = 0;
-+	fc->tag = P9_NOTAG;
- 	return 0;
- }
+--- a/include/net/tcp_ao.h
++++ b/include/net/tcp_ao.h
+@@ -86,7 +86,8 @@ static inline int tcp_ao_sizeof_key(cons
+ struct tcp_ao_info {
+ 	/* List of tcp_ao_key's */
+ 	struct hlist_head	head;
+-	/* current_key and rnext_key aren't maintained on listen sockets.
++	/* current_key and rnext_key are maintained on sockets
++	 * in TCP_AO_ESTABLISHED states.
+ 	 * Their purpose is to cache keys on established connections,
+ 	 * saving needless lookups. Never dereference any of them from
+ 	 * listen sockets.
+@@ -201,9 +202,9 @@ struct tcp6_ao_context {
+ };
  
+ struct tcp_sigpool;
++/* Established states are fast-path and there always is current_key/rnext_key */
+ #define TCP_AO_ESTABLISHED (TCPF_ESTABLISHED | TCPF_FIN_WAIT1 | TCPF_FIN_WAIT2 | \
+-			    TCPF_CLOSE | TCPF_CLOSE_WAIT | \
+-			    TCPF_LAST_ACK | TCPF_CLOSING)
++			    TCPF_CLOSE_WAIT | TCPF_LAST_ACK | TCPF_CLOSING)
+ 
+ int tcp_ao_transmit_skb(struct sock *sk, struct sk_buff *skb,
+ 			struct tcp_ao_key *key, struct tcphdr *th,
+--- a/net/ipv4/tcp_ao.c
++++ b/net/ipv4/tcp_ao.c
+@@ -933,6 +933,7 @@ tcp_inbound_ao_hash(struct sock *sk, con
+ 	struct tcp_ao_key *key;
+ 	__be32 sisn, disn;
+ 	u8 *traffic_key;
++	int state;
+ 	u32 sne = 0;
+ 
+ 	info = rcu_dereference(tcp_sk(sk)->ao_info);
+@@ -948,8 +949,9 @@ tcp_inbound_ao_hash(struct sock *sk, con
+ 		disn = 0;
+ 	}
+ 
++	state = READ_ONCE(sk->sk_state);
+ 	/* Fast-path */
+-	if (likely((1 << sk->sk_state) & TCP_AO_ESTABLISHED)) {
++	if (likely((1 << state) & TCP_AO_ESTABLISHED)) {
+ 		enum skb_drop_reason err;
+ 		struct tcp_ao_key *current_key;
+ 
+@@ -988,6 +990,9 @@ tcp_inbound_ao_hash(struct sock *sk, con
+ 		return SKB_NOT_DROPPED_YET;
+ 	}
+ 
++	if (unlikely(state == TCP_CLOSE))
++		return SKB_DROP_REASON_TCP_CLOSE;
++
+ 	/* Lookup key based on peer address and keyid.
+ 	 * current_key and rnext_key must not be used on tcp listen
+ 	 * sockets as otherwise:
+@@ -1001,7 +1006,7 @@ tcp_inbound_ao_hash(struct sock *sk, con
+ 	if (th->syn && !th->ack)
+ 		goto verify_hash;
+ 
+-	if ((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_NEW_SYN_RECV)) {
++	if ((1 << state) & (TCPF_LISTEN | TCPF_NEW_SYN_RECV)) {
+ 		/* Make the initial syn the likely case here */
+ 		if (unlikely(req)) {
+ 			sne = tcp_ao_compute_sne(0, tcp_rsk(req)->rcv_isn,
+@@ -1018,14 +1023,14 @@ tcp_inbound_ao_hash(struct sock *sk, con
+ 			/* no way to figure out initial sisn/disn - drop */
+ 			return SKB_DROP_REASON_TCP_FLAGS;
+ 		}
+-	} else if ((1 << sk->sk_state) & (TCPF_SYN_SENT | TCPF_SYN_RECV)) {
++	} else if ((1 << state) & (TCPF_SYN_SENT | TCPF_SYN_RECV)) {
+ 		disn = info->lisn;
+ 		if (th->syn || th->rst)
+ 			sisn = th->seq;
+ 		else
+ 			sisn = info->risn;
+ 	} else {
+-		WARN_ONCE(1, "TCP-AO: Unexpected sk_state %d", sk->sk_state);
++		WARN_ONCE(1, "TCP-AO: Unexpected sk_state %d", state);
+ 		return SKB_DROP_REASON_TCP_AOFAILURE;
+ 	}
+ verify_hash:
 
 
