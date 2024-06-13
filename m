@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC096A59;
-	Thu, 13 Jun 2024 12:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD98A59;
+	Thu, 13 Jun 2024 12:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283052; cv=none; b=px1odFaALmhKRXOCh6RAIam63TfEdZVRH+TsRtITxI/lMV18ie6siQyT0fME1l7+kaHG4cT/fLatd66padYXl4eGe9EQ9y5FbRXE0XoXmM+kG+udzxjI95YN0nUbD0fQl0gcC/kp9VqbfOqdQIUBfmlEjvTgxwyipTM1RqQBHKI=
+	t=1718283055; cv=none; b=g3MBgVvAGgWKVu4UGNPu5w5BfqIAbWhufMj3KIRF77e3Pv0YD89sA/w7LIafJXHGpTMkiJl94MEYXI01GJP7QlsIJqYF0FhlzZqbbubRpXEyMYb1n44IitvJl/RZqcwT9Bg9fYWwAJ6ypTz3YEN2kNky/nBAfBNz4kTCarF5yRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283052; c=relaxed/simple;
-	bh=TMCTxcLRmb9vhKT8KP57swlb6wHpSwQaKrKbaiTv2xU=;
+	s=arc-20240116; t=1718283055; c=relaxed/simple;
+	bh=jVGn9Gq3yeZBFnu4a0xxXtpf+veArzdzo5unu9otXUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LtTI2WZ5m2qurTd172ay5uiuzlYlexMQa+fJJ7xV/W2a6FWtZ4QBkMuIk97LmlRclhp/oMHVZFCKOXwuZ0Hhe+pbEnlp/jz6jKPqhc2TS5icxZdZUaf9o2RbGpyry8hFfGxBz3BAxKdfD0KZ9c3rk068+5Yx1xoeSHJV50xuh8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVkZlsfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eb1gptrN2wz24lB+40CBp9EAeL3FIiJmJof9NlmXeBXqM3/KO/QJjPG3XQfS62A16M0ty9TaDr/Ih8UfLPnNNYy1NfWNngJyIY1CZtKSlyMI2gkc0D11jrvvMvaEa1yXUsshZhNx1tMgSR56HnZnMzIvPQWyHPBJc/53G1gohgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfCmQxxy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVkZlsfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73381C2BBFC;
-	Thu, 13 Jun 2024 12:50:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfCmQxxy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6461EC2BBFC;
+	Thu, 13 Jun 2024 12:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283051;
-	bh=TMCTxcLRmb9vhKT8KP57swlb6wHpSwQaKrKbaiTv2xU=;
+	s=korg; t=1718283054;
+	bh=jVGn9Gq3yeZBFnu4a0xxXtpf+veArzdzo5unu9otXUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RVkZlsfmN/40VAYywjN3xz6XRJumFmzQi6wwKPuiJ0/QgdTCYtDd/MBwoZ3brY71n
-	 Q9wOF6PLooYMDt/u4Y5R5Ie3MUes+Df8kimWHafe00bfls/eLXn4k1esjEH/hcz1Zg
-	 mc9jFunkOpILPTlW78B69resstc/86QgqkwAHlzw=
+	b=rfCmQxxy5i0wzP4lH8GP4fUMWZts4tR0eLB++kPNlMHpBsOA2sKZaF5nIWKbgA6ri
+	 QRUh+GTWBZKSQdflU+930gFKEV4aIIT+5BT+n0Y/45Sj+hpFNXOJFHDyhxGFuPmvmM
+	 Z220V3pT/st6qX4rBOFeY2kNw0nc5uFtGfV3lIKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Schneider <pschneider1968@googlemail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 55/85] scsi: core: Handle devices which return an unusually large VPD page count
-Date: Thu, 13 Jun 2024 13:35:53 +0200
-Message-ID: <20240613113216.262781939@linuxfoundation.org>
+	Olga Kornievskaia <kolga@netapp.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.1 82/85] NFS: Fix READ_PLUS when server doesnt support OP_READ_PLUS
+Date: Thu, 13 Jun 2024 13:36:20 +0200
+Message-ID: <20240613113217.298290240@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -51,56 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin K. Petersen <martin.petersen@oracle.com>
+From: Anna Schumaker <Anna.Schumaker@Netapp.com>
 
-commit d09c05aa35909adb7d29f92f0cd79fdcd1338ef0 upstream.
+commit f06d1b10cb016d5aaecdb1804fefca025387bd10 upstream.
 
-Peter Schneider reported that a system would no longer boot after
-updating to 6.8.4.  Peter bisected the issue and identified commit
-b5fc07a5fb56 ("scsi: core: Consult supported VPD page list prior to
-fetching page") as being the culprit.
+Olga showed me a case where the client was sending multiple READ_PLUS
+calls to the server in parallel, and the server replied
+NFS4ERR_OPNOTSUPP to each. The client would fall back to READ for the
+first reply, but fail to retry the other calls.
 
-Turns out the enclosure device in Peter's system reports a byteswapped
-page length for VPD page 0. It reports "02 00" as page length instead
-of "00 02". This causes us to attempt to access 516 bytes (page length
-+ header) of information despite only 2 pages being present.
+I fix this by removing the test for NFS_CAP_READ_PLUS in
+nfs4_read_plus_not_supported(). This allows us to reschedule any
+READ_PLUS call that has a NFS4ERR_OPNOTSUPP return value, even after the
+capability has been cleared.
 
-Limit the page search scope to the size of our VPD buffer to guard
-against devices returning a larger page count than requested.
-
-Link: https://lore.kernel.org/r/20240521023040.2703884-1-martin.petersen@oracle.com
-Fixes: b5fc07a5fb56 ("scsi: core: Consult supported VPD page list prior to fetching page")
-Cc: stable@vger.kernel.org
-Reported-by: Peter Schneider <pschneider1968@googlemail.com>
-Closes: https://lore.kernel.org/all/eec6ebbf-061b-4a7b-96dc-ea748aa4d035@googlemail.com/
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Olga Kornievskaia <kolga@netapp.com>
+Fixes: c567552612ec ("NFS: Add READ_PLUS data segment support")
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/nfs/nfs4proc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi.c b/drivers/scsi/scsi.c
-index 3e0c0381277a..f0464db3f9de 100644
---- a/drivers/scsi/scsi.c
-+++ b/drivers/scsi/scsi.c
-@@ -350,6 +350,13 @@ static int scsi_get_vpd_size(struct scsi_device *sdev, u8 page)
- 		if (result < SCSI_VPD_HEADER_SIZE)
- 			return 0;
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -5441,7 +5441,7 @@ static bool nfs4_read_plus_not_supported
+ 	struct rpc_message *msg = &task->tk_msg;
  
-+		if (result > sizeof(vpd)) {
-+			dev_warn_once(&sdev->sdev_gendev,
-+				      "%s: long VPD page 0 length: %d bytes\n",
-+				      __func__, result);
-+			result = sizeof(vpd);
-+		}
-+
- 		result -= SCSI_VPD_HEADER_SIZE;
- 		if (!memchr(&vpd[SCSI_VPD_HEADER_SIZE], page, result))
- 			return 0;
--- 
-2.45.2
-
+ 	if (msg->rpc_proc == &nfs4_procedures[NFSPROC4_CLNT_READ_PLUS] &&
+-	    server->caps & NFS_CAP_READ_PLUS && task->tk_status == -ENOTSUPP) {
++	    task->tk_status == -ENOTSUPP) {
+ 		server->caps &= ~NFS_CAP_READ_PLUS;
+ 		msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_READ];
+ 		rpc_restart_call_prepare(task);
 
 
