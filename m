@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168F33209;
-	Thu, 13 Jun 2024 12:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FC6143861;
+	Thu, 13 Jun 2024 12:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281645; cv=none; b=OER7Fu+32vQ28RZbjUpGHb1nzb4oLzNFOvUf28CniVBJuedhj4ZEh6SUd1EzjOoNouPgikng/1rQQdq0qEm88MAUPulsvtyTMlc5ANZ19InoS8NegQMZLkehexBoPcAAynk7FzyXyihhbXDYk68R4jBEGmuJxEFlLpeh7sw1FVc=
+	t=1718281648; cv=none; b=eeUwLZOOdDuv0/0uP9TUX3py1B9lm+xfso1p5mh8aPjcMoOrVapiOgHuoe+19dYqM9nz9/FjuvDCxxk3UXl+cXuuD9eRwCQlndUks3DIYJhFrJk/4G9QvukeeN7p9Ie6lI+estcs2xto7qhfosRMkV0T5zpoc63js00zKGlL20o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281645; c=relaxed/simple;
-	bh=0AGlWFyGXxx2lJqEYhYziZM3GssaRQ2XT6Lt96GQrgs=;
+	s=arc-20240116; t=1718281648; c=relaxed/simple;
+	bh=Niqbzv5yVesmO2TbR2DNAMaf4+r5jdyWsOGSJgmWmrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cya/47QkdX92pukFPv8oA874xG0hI+VBsu/z0MVpQY59bgsi58E+019nkKeF9Y3/hoQ1ujghUEq4Jaw4f94KaeMv9AqcbceMV07za4fES6ztTNGBAep/P7cAz23j3jLsc5fxP9Y74L/CkvR92Z0uUkBVB6I6ML+goBMh1g6YUrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jO5Fcyfz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NVOJU7q+efztX4D/0WUQtEfkt/kcn7454wAKdJmxHi+r2n8VIsB9hLN1sSqZpJf8bmDITOuSGqdABR/pxHdiIGgtAzo7En/SLKoGq9vqvowL+NzqNK2vUKhABL60VH6f0dh+OiY3wr33DtL+wJYkdCdaWUwxtTrAbeqt6Tk6Qis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BaZUxV4v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jO5Fcyfz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A48C2BBFC;
-	Thu, 13 Jun 2024 12:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaZUxV4v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BB2C2BBFC;
+	Thu, 13 Jun 2024 12:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281645;
-	bh=0AGlWFyGXxx2lJqEYhYziZM3GssaRQ2XT6Lt96GQrgs=;
+	s=korg; t=1718281647;
+	bh=Niqbzv5yVesmO2TbR2DNAMaf4+r5jdyWsOGSJgmWmrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jO5FcyfzTBQ4mUMCAVvcqXtcN7E/KCTj0NW/9K8OaO269Fh0FYwYh4qHHrjcuDsL5
-	 nthpWLh9SrLUCN3CUGC76BjyGVnCE0IPOkMPGJ/R1AMWT6bg7lyGYlGi2XdqZ44lcU
-	 PvUz4+eeF7czV+dGPvseEy1fCfHD5xa2c18BsuKQ=
+	b=BaZUxV4v1id+0v96HwIeEOqbIiHv+IRjpE8hjpL4liteySidj9EZsxv7a658eZH7X
+	 Jhxov/bzZddS0qlzg43tztjgRBa3nT2KRhGVwgqTIHaRhyf+8kgbsaMhrNXyp0byOb
+	 Hvvkt+Csa/v9nUAKgSB8TLckzFNh2stcjmH3qFvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cai Xinchen <caixinchen1@huawei.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 294/317] fbdev: savage: Handle err return when savagefb_check_var failed
-Date: Thu, 13 Jun 2024 13:35:12 +0200
-Message-ID: <20240613113258.923752717@linuxfoundation.org>
+	Daniel J Blueman <daniel@quora.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Steffen Persvold <sp@numascale.com>,
+	James Cleverdon <james.cleverdon.external@eviden.com>,
+	Dimitri Sivanich <sivanich@hpe.com>,
+	Prarit Bhargava <prarit@redhat.com>
+Subject: [PATCH 5.15 001/402] x86/tsc: Trust initial offset in architectural TSC-adjust MSRs
+Date: Thu, 13 Jun 2024 13:29:18 +0200
+Message-ID: <20240613113302.178183547@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
-References: <20240613113247.525431100@linuxfoundation.org>
+In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
+References: <20240613113302.116811394@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,41 +50,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cai Xinchen <caixinchen1@huawei.com>
+From: Daniel J Blueman <daniel@quora.org>
 
-commit 6ad959b6703e2c4c5d7af03b4cfd5ff608036339 upstream.
+commit 455f9075f14484f358b3c1d6845b4a438de198a7 upstream.
 
-The commit 04e5eac8f3ab("fbdev: savage: Error out if pixclock equals zero")
-checks the value of pixclock to avoid divide-by-zero error. However
-the function savagefb_probe doesn't handle the error return of
-savagefb_check_var. When pixclock is 0, it will cause divide-by-zero error.
+When the BIOS configures the architectural TSC-adjust MSRs on secondary
+sockets to correct a constant inter-chassis offset, after Linux brings the
+cores online, the TSC sync check later resets the core-local MSR to 0,
+triggering HPET fallback and leading to performance loss.
 
-Fixes: 04e5eac8f3ab ("fbdev: savage: Error out if pixclock equals zero")
-Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fix this by unconditionally using the initial adjust values read from the
+MSRs. Trusting the initial offsets in this architectural mechanism is a
+better approach than special-casing workarounds for specific platforms.
+
+Signed-off-by: Daniel J Blueman <daniel@quora.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Steffen Persvold <sp@numascale.com>
+Reviewed-by: James Cleverdon <james.cleverdon.external@eviden.com>
+Reviewed-by: Dimitri Sivanich <sivanich@hpe.com>
+Reviewed-by: Prarit Bhargava <prarit@redhat.com>
+Link: https://lore.kernel.org/r/20240419085146.175665-1-daniel@quora.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/savage/savagefb_driver.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/kernel/tsc_sync.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/video/fbdev/savage/savagefb_driver.c
-+++ b/drivers/video/fbdev/savage/savagefb_driver.c
-@@ -2271,7 +2271,10 @@ static int savagefb_probe(struct pci_dev
- 	if (info->var.xres_virtual > 0x1000)
- 		info->var.xres_virtual = 0x1000;
- #endif
--	savagefb_check_var(&info->var, info);
-+	err = savagefb_check_var(&info->var, info);
-+	if (err)
-+		goto failed;
-+
- 	savagefb_set_fix(info);
+--- a/arch/x86/kernel/tsc_sync.c
++++ b/arch/x86/kernel/tsc_sync.c
+@@ -192,11 +192,9 @@ bool tsc_store_and_check_tsc_adjust(bool
+ 	cur->warned = false;
  
  	/*
+-	 * If a non-zero TSC value for socket 0 may be valid then the default
+-	 * adjusted value cannot assumed to be zero either.
++	 * The default adjust value cannot be assumed to be zero on any socket.
+ 	 */
+-	if (tsc_async_resets)
+-		cur->adjusted = bootval;
++	cur->adjusted = bootval;
+ 
+ 	/*
+ 	 * Check whether this CPU is the first in a package to come up. In
 
 
