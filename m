@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43EC1448F3;
-	Thu, 13 Jun 2024 11:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80AC144D36;
+	Thu, 13 Jun 2024 11:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278835; cv=none; b=i+6Hk5UCBTxorAifzIsmEuiXphS6lGBlPonP42k1HFeGi+TDeDFHB4sy9kB62osCB+0UMPZx05ca4g2C2dnU1hALdRj7vFrPWhiZDTWIX+VgHne+R4H+tJyBZxO3QPuy58xtAw6lmm5580Xze25B75nXC+iLnwgkhmTEExx9VTs=
+	t=1718278838; cv=none; b=aEICi/y4iOkZ2C4q+NSvCfFUXn5XUYi47pGKgwxZ8dDCntvIrqTdlyUvlZ0uvrLEdFmRrYhCmQXaXCjR04ETtSVD7XP6ex2l5hK6iAGcsUM/7BjMiLt71sUeblXPeC4pASXovO/dGQulwBroC2H3O9yKXAScdf28R3Ot7Zm3MRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278835; c=relaxed/simple;
-	bh=eOIRI4lFQjp+oAfKWe5GiYh+FgZP1/SIMKi3HpAjd34=;
+	s=arc-20240116; t=1718278838; c=relaxed/simple;
+	bh=UKAX7tUSFadzbyjVWwIIx2vPgG7YAU9YXVdI5s5YOtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iIiziW+poUbgkntwygfavSOHNycIMKEqEMNEcWnnobML1j+uo5bU7E15bh/nbevhLaS0s5Xh6H+5p7eOtCkKxnCFukq9RQhyp+OO5rVoh4/jbgFRWAHfe2Dv5dgXyifydOsQKr70xAwHXf47vI3o9R1vkkFmMe1R3XBK7aXwAl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1lxFhzS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jtHBSRa8CpA1LB9ftI+ywmAFzHJT8+J0FbE+SdlDMEbwi8DEmDnB3yDjL0caMqGlPuSIfNB/+KINZ0znMjj4wRa1g4xnocWYqThjMOeLFg+7+nQoL4Tthd2ZSzibK06ei2+G5EAsTKKA+XFECcGR+D+f41AVWRZCTzytWkNYdLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izDw8Gcq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1lxFhzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F2DC4AF1A;
-	Thu, 13 Jun 2024 11:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izDw8Gcq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D873AC32786;
+	Thu, 13 Jun 2024 11:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278835;
-	bh=eOIRI4lFQjp+oAfKWe5GiYh+FgZP1/SIMKi3HpAjd34=;
+	s=korg; t=1718278838;
+	bh=UKAX7tUSFadzbyjVWwIIx2vPgG7YAU9YXVdI5s5YOtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X1lxFhzSBX2AU4PO3T72v6TTrGAqoVYcuZ22Q+m/pw4uyzKFc5ED81QLUY++q+XU9
-	 GI5xecghIaypKw90ayaWt3isH2dSD0wj3RoOPSd4ZlE4BTCwRvgkKo7z3Co1xqwjFS
-	 qOm1MQSbBfKe57cja+dzMchJ2pQjf4JsHLz299ck=
+	b=izDw8GcqhYZB812Z/fuwKEyLsfV7uY77u+mlfBXqxW4aafIYVGQ2fv3oVRsAEvr+x
+	 la/IGoSC0y8bH8opT7k1gS4c7FcDbHdE9RlBblRkIPEvdkN2Up7V88AmP0oQJOzxa4
+	 AtRGalF6d2+6RlJb+yQs4TgnNoFiFA0q6SWNGVfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Finn Thain <fthain@telegraphics.com.au>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 054/213] net: usb: sr9700: stop lying about skb->truesize
-Date: Thu, 13 Jun 2024 13:31:42 +0200
-Message-ID: <20240613113230.094782669@linuxfoundation.org>
+Subject: [PATCH 4.19 045/213] macintosh/via-macii, macintosh/adb-iop: Clean up whitespace
+Date: Thu, 13 Jun 2024 13:31:33 +0200
+Message-ID: <20240613113229.742711292@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -51,57 +51,585 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Finn Thain <fthain@telegraphics.com.au>
 
-[ Upstream commit 05417aa9c0c038da2464a0c504b9d4f99814a23b ]
+[ Upstream commit 47fd2060660e62b169990a6fcd9eb61bc1a85c5c ]
 
-Some usb drivers set small skb->truesize and break
-core networking stacks.
-
-In this patch, I removed one of the skb->truesize override.
-
-I also replaced one skb_clone() by an allocation of a fresh
-and small skb, to get minimally sized skbs, like we did
-in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
-in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
-stop lying about skb->truesize")
-
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240506143939.3673865-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Finn Thain <fthain@telegraphics.com.au>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Stable-dep-of: d301a71c76ee ("macintosh/via-macii: Fix "BUG: sleeping function called from invalid context"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sr9700.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/macintosh/adb-iop.c   |  48 +++---
+ drivers/macintosh/via-macii.c | 288 +++++++++++++++++-----------------
+ 2 files changed, 175 insertions(+), 161 deletions(-)
 
-diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
-index 8bee8286e41a1..a0e5d066ac455 100644
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -418,19 +418,15 @@ static int sr9700_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 			skb_pull(skb, 3);
- 			skb->len = len;
- 			skb_set_tail_pointer(skb, len);
--			skb->truesize = len + sizeof(struct sk_buff);
- 			return 2;
- 		}
+diff --git a/drivers/macintosh/adb-iop.c b/drivers/macintosh/adb-iop.c
+index ca623e6446e4c..17280410e930a 100644
+--- a/drivers/macintosh/adb-iop.c
++++ b/drivers/macintosh/adb-iop.c
+@@ -20,13 +20,13 @@
+ #include <linux/init.h>
+ #include <linux/proc_fs.h>
  
--		/* skb_clone is used for address align */
--		sr_skb = skb_clone(skb, GFP_ATOMIC);
-+		sr_skb = netdev_alloc_skb_ip_align(dev->net, len);
- 		if (!sr_skb)
- 			return 0;
+-#include <asm/macintosh.h> 
+-#include <asm/macints.h> 
++#include <asm/macintosh.h>
++#include <asm/macints.h>
+ #include <asm/mac_iop.h>
+ #include <asm/mac_oss.h>
+ #include <asm/adb_iop.h>
  
--		sr_skb->len = len;
--		sr_skb->data = skb->data + 3;
--		skb_set_tail_pointer(sr_skb, len);
--		sr_skb->truesize = len + sizeof(struct sk_buff);
-+		skb_put(sr_skb, len);
-+		memcpy(sr_skb->data, skb->data + 3, len);
- 		usbnet_skb_return(dev, sr_skb);
+-#include <linux/adb.h> 
++#include <linux/adb.h>
  
- 		skb_pull(skb, len + SR_RX_OVERHEAD);
+ /*#define DEBUG_ADB_IOP*/
+ 
+@@ -38,9 +38,9 @@ static unsigned char *reply_ptr;
+ #endif
+ 
+ static enum adb_iop_state {
+-    idle,
+-    sending,
+-    awaiting_reply
++	idle,
++	sending,
++	awaiting_reply
+ } adb_iop_state;
+ 
+ static void adb_iop_start(void);
+@@ -66,7 +66,8 @@ static void adb_iop_end_req(struct adb_request *req, int state)
+ {
+ 	req->complete = 1;
+ 	current_req = req->next;
+-	if (req->done) (*req->done)(req);
++	if (req->done)
++		(*req->done)(req);
+ 	adb_iop_state = state;
+ }
+ 
+@@ -100,7 +101,7 @@ static void adb_iop_complete(struct iop_msg *msg)
+ 
+ static void adb_iop_listen(struct iop_msg *msg)
+ {
+-	struct adb_iopmsg *amsg = (struct adb_iopmsg *) msg->message;
++	struct adb_iopmsg *amsg = (struct adb_iopmsg *)msg->message;
+ 	struct adb_request *req;
+ 	unsigned long flags;
+ #ifdef DEBUG_ADB_IOP
+@@ -113,9 +114,9 @@ static void adb_iop_listen(struct iop_msg *msg)
+ 
+ #ifdef DEBUG_ADB_IOP
+ 	printk("adb_iop_listen %p: rcvd packet, %d bytes: %02X %02X", req,
+-		(uint) amsg->count + 2, (uint) amsg->flags, (uint) amsg->cmd);
++	       (uint)amsg->count + 2, (uint)amsg->flags, (uint)amsg->cmd);
+ 	for (i = 0; i < amsg->count; i++)
+-		printk(" %02X", (uint) amsg->data[i]);
++		printk(" %02X", (uint)amsg->data[i]);
+ 	printk("\n");
+ #endif
+ 
+@@ -168,14 +169,15 @@ static void adb_iop_start(void)
+ 
+ 	/* get the packet to send */
+ 	req = current_req;
+-	if (!req) return;
++	if (!req)
++		return;
+ 
+ 	local_irq_save(flags);
+ 
+ #ifdef DEBUG_ADB_IOP
+ 	printk("adb_iop_start %p: sending packet, %d bytes:", req, req->nbytes);
+-	for (i = 0 ; i < req->nbytes ; i++)
+-		printk(" %02X", (uint) req->data[i]);
++	for (i = 0; i < req->nbytes; i++)
++		printk(" %02X", (uint)req->data[i]);
+ 	printk("\n");
+ #endif
+ 
+@@ -196,13 +198,14 @@ static void adb_iop_start(void)
+ 	/* Now send it. The IOP manager will call adb_iop_complete */
+ 	/* when the packet has been sent.                          */
+ 
+-	iop_send_message(ADB_IOP, ADB_CHAN, req,
+-			 sizeof(amsg), (__u8 *) &amsg, adb_iop_complete);
++	iop_send_message(ADB_IOP, ADB_CHAN, req, sizeof(amsg), (__u8 *)&amsg,
++			 adb_iop_complete);
+ }
+ 
+ int adb_iop_probe(void)
+ {
+-	if (!iop_ism_present) return -ENODEV;
++	if (!iop_ism_present)
++		return -ENODEV;
+ 	return 0;
+ }
+ 
+@@ -218,10 +221,12 @@ int adb_iop_send_request(struct adb_request *req, int sync)
+ 	int err;
+ 
+ 	err = adb_iop_write(req);
+-	if (err) return err;
++	if (err)
++		return err;
+ 
+ 	if (sync) {
+-		while (!req->complete) adb_iop_poll();
++		while (!req->complete)
++			adb_iop_poll();
+ 	}
+ 	return 0;
+ }
+@@ -251,7 +256,9 @@ static int adb_iop_write(struct adb_request *req)
+ 	}
+ 
+ 	local_irq_restore(flags);
+-	if (adb_iop_state == idle) adb_iop_start();
++
++	if (adb_iop_state == idle)
++		adb_iop_start();
+ 	return 0;
+ }
+ 
+@@ -263,7 +270,8 @@ int adb_iop_autopoll(int devs)
+ 
+ void adb_iop_poll(void)
+ {
+-	if (adb_iop_state == idle) adb_iop_start();
++	if (adb_iop_state == idle)
++		adb_iop_start();
+ 	iop_ism_irq_poll(ADB_IOP);
+ }
+ 
+diff --git a/drivers/macintosh/via-macii.c b/drivers/macintosh/via-macii.c
+index fc6ad5bf1875a..177c3ef59c875 100644
+--- a/drivers/macintosh/via-macii.c
++++ b/drivers/macintosh/via-macii.c
+@@ -12,7 +12,7 @@
+  *
+  * 1999-08-02 (jmt) - Initial rewrite for Unified ADB.
+  * 2000-03-29 Tony Mantler <tonym@mac.linux-m68k.org>
+- * 				- Big overhaul, should actually work now.
++ *            - Big overhaul, should actually work now.
+  * 2006-12-31 Finn Thain - Another overhaul.
+  *
+  * Suggested reading:
+@@ -23,7 +23,7 @@
+  * Apple's "ADB Analyzer" bus sniffer is invaluable:
+  *   ftp://ftp.apple.com/developer/Tool_Chest/Devices_-_Hardware/Apple_Desktop_Bus/
+  */
+- 
++
+ #include <stdarg.h>
+ #include <linux/types.h>
+ #include <linux/errno.h>
+@@ -77,7 +77,7 @@ static volatile unsigned char *via;
+ #define ST_ODD		0x20		/* ADB state: odd data byte */
+ #define ST_IDLE		0x30		/* ADB state: idle, nothing to send */
+ 
+-static int  macii_init_via(void);
++static int macii_init_via(void);
+ static void macii_start(void);
+ static irqreturn_t macii_interrupt(int irq, void *arg);
+ static void macii_queue_poll(void);
+@@ -123,7 +123,8 @@ static int autopoll_devs;      /* bits set are device addresses to be polled */
+ /* Check for MacII style ADB */
+ static int macii_probe(void)
+ {
+-	if (macintosh_config->adb_type != MAC_ADB_II) return -ENODEV;
++	if (macintosh_config->adb_type != MAC_ADB_II)
++		return -ENODEV;
+ 
+ 	via = via1;
+ 
+@@ -136,15 +137,17 @@ int macii_init(void)
+ {
+ 	unsigned long flags;
+ 	int err;
+-	
++
+ 	local_irq_save(flags);
+-	
++
+ 	err = macii_init_via();
+-	if (err) goto out;
++	if (err)
++		goto out;
+ 
+ 	err = request_irq(IRQ_MAC_ADB, macii_interrupt, 0, "ADB",
+ 			  macii_interrupt);
+-	if (err) goto out;
++	if (err)
++		goto out;
+ 
+ 	macii_state = idle;
+ out:
+@@ -152,7 +155,7 @@ int macii_init(void)
+ 	return err;
+ }
+ 
+-/* initialize the hardware */	
++/* initialize the hardware */
+ static int macii_init_via(void)
+ {
+ 	unsigned char x;
+@@ -162,7 +165,7 @@ static int macii_init_via(void)
+ 
+ 	/* Set up state: idle */
+ 	via[B] |= ST_IDLE;
+-	last_status = via[B] & (ST_MASK|CTLR_IRQ);
++	last_status = via[B] & (ST_MASK | CTLR_IRQ);
+ 
+ 	/* Shift register on input */
+ 	via[ACR] = (via[ACR] & ~SR_CTRL) | SR_EXT;
+@@ -188,7 +191,8 @@ static void macii_queue_poll(void)
+ 	int next_device;
+ 	static struct adb_request req;
+ 
+-	if (!autopoll_devs) return;
++	if (!autopoll_devs)
++		return;
+ 
+ 	device_mask = (1 << (((command_byte & 0xF0) >> 4) + 1)) - 1;
+ 	if (autopoll_devs & ~device_mask)
+@@ -196,8 +200,7 @@ static void macii_queue_poll(void)
+ 	else
+ 		next_device = ffs(autopoll_devs) - 1;
+ 
+-	adb_request(&req, NULL, ADBREQ_NOSEND, 1,
+-	            ADB_READREG(next_device, 0));
++	adb_request(&req, NULL, ADBREQ_NOSEND, 1, ADB_READREG(next_device, 0));
+ 
+ 	req.sent = 0;
+ 	req.complete = 0;
+@@ -236,7 +239,7 @@ static int macii_write(struct adb_request *req)
+ 		req->complete = 1;
+ 		return -EINVAL;
+ 	}
+-	
++
+ 	req->next = NULL;
+ 	req->sent = 0;
+ 	req->complete = 0;
+@@ -248,7 +251,8 @@ static int macii_write(struct adb_request *req)
+ 	} else {
+ 		current_req = req;
+ 		last_req = req;
+-		if (macii_state == idle) macii_start();
++		if (macii_state == idle)
++			macii_start();
+ 	}
+ 	return 0;
+ }
+@@ -263,7 +267,8 @@ static int macii_autopoll(int devs)
+ 	/* bit 1 == device 1, and so on. */
+ 	autopoll_devs = devs & 0xFFFE;
+ 
+-	if (!autopoll_devs) return 0;
++	if (!autopoll_devs)
++		return 0;
+ 
+ 	local_irq_save(flags);
+ 
+@@ -280,7 +285,8 @@ static int macii_autopoll(int devs)
+ 	return err;
+ }
+ 
+-static inline int need_autopoll(void) {
++static inline int need_autopoll(void)
++{
+ 	/* Was the last command Talk Reg 0
+ 	 * and is the target on the autopoll list?
+ 	 */
+@@ -302,7 +308,7 @@ static void macii_poll(void)
+ static int macii_reset_bus(void)
+ {
+ 	static struct adb_request req;
+-	
++
+ 	/* Command = 0, Address = ignored */
+ 	adb_request(&req, NULL, 0, 1, ADB_BUSRESET);
+ 
+@@ -344,7 +350,7 @@ static void macii_start(void)
+  * to be activity on the ADB bus. The chip will poll to achieve this.
+  *
+  * The basic ADB state machine was left unchanged from the original MacII code
+- * by Alan Cox, which was based on the CUDA driver for PowerMac. 
++ * by Alan Cox, which was based on the CUDA driver for PowerMac.
+  * The syntax of the ADB status lines is totally different on MacII,
+  * though. MacII uses the states Command -> Even -> Odd -> Even ->...-> Idle
+  * for sending and Idle -> Even -> Odd -> Even ->...-> Idle for receiving.
+@@ -367,147 +373,147 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
+ 	}
+ 
+ 	last_status = status;
+-	status = via[B] & (ST_MASK|CTLR_IRQ);
++	status = via[B] & (ST_MASK | CTLR_IRQ);
+ 
+ 	switch (macii_state) {
+-		case idle:
+-			if (reading_reply) {
+-				reply_ptr = current_req->reply;
+-			} else {
+-				WARN_ON(current_req);
+-				reply_ptr = reply_buf;
+-			}
++	case idle:
++		if (reading_reply) {
++			reply_ptr = current_req->reply;
++		} else {
++			WARN_ON(current_req);
++			reply_ptr = reply_buf;
++		}
++
++		x = via[SR];
++
++		if ((status & CTLR_IRQ) && (x == 0xFF)) {
++			/* Bus timeout without SRQ sequence:
++			 *     data is "FF" while CTLR_IRQ is "H"
++			 */
++			reply_len = 0;
++			srq_asserted = 0;
++			macii_state = read_done;
++		} else {
++			macii_state = reading;
++			*reply_ptr = x;
++			reply_len = 1;
++		}
++
++		/* set ADB state = even for first data byte */
++		via[B] = (via[B] & ~ST_MASK) | ST_EVEN;
++		break;
+ 
+-			x = via[SR];
++	case sending:
++		req = current_req;
++		if (data_index >= req->nbytes) {
++			req->sent = 1;
++			macii_state = idle;
+ 
+-			if ((status & CTLR_IRQ) && (x == 0xFF)) {
+-				/* Bus timeout without SRQ sequence:
+-				 *     data is "FF" while CTLR_IRQ is "H"
+-				 */
+-				reply_len = 0;
+-				srq_asserted = 0;
+-				macii_state = read_done;
++			if (req->reply_expected) {
++				reading_reply = 1;
+ 			} else {
+-				macii_state = reading;
+-				*reply_ptr = x;
+-				reply_len = 1;
+-			}
++				req->complete = 1;
++				current_req = req->next;
++				if (req->done)
++					(*req->done)(req);
+ 
+-			/* set ADB state = even for first data byte */
+-			via[B] = (via[B] & ~ST_MASK) | ST_EVEN;
+-			break;
++				if (current_req)
++					macii_start();
++				else if (need_autopoll())
++					macii_autopoll(autopoll_devs);
++			}
+ 
+-		case sending:
+-			req = current_req;
+-			if (data_index >= req->nbytes) {
+-				req->sent = 1;
+-				macii_state = idle;
+-
+-				if (req->reply_expected) {
+-					reading_reply = 1;
+-				} else {
+-					req->complete = 1;
+-					current_req = req->next;
+-					if (req->done) (*req->done)(req);
+-
+-					if (current_req)
+-						macii_start();
+-					else
+-						if (need_autopoll())
+-							macii_autopoll(autopoll_devs);
+-				}
++			if (macii_state == idle) {
++				/* reset to shift in */
++				via[ACR] &= ~SR_OUT;
++				x = via[SR];
++				/* set ADB state idle - might get SRQ */
++				via[B] = (via[B] & ~ST_MASK) | ST_IDLE;
++			}
++		} else {
++			via[SR] = req->data[data_index++];
+ 
+-				if (macii_state == idle) {
+-					/* reset to shift in */
+-					via[ACR] &= ~SR_OUT;
+-					x = via[SR];
+-					/* set ADB state idle - might get SRQ */
+-					via[B] = (via[B] & ~ST_MASK) | ST_IDLE;
+-				}
++			if ((via[B] & ST_MASK) == ST_CMD) {
++				/* just sent the command byte, set to EVEN */
++				via[B] = (via[B] & ~ST_MASK) | ST_EVEN;
+ 			} else {
+-				via[SR] = req->data[data_index++];
+-
+-				if ( (via[B] & ST_MASK) == ST_CMD ) {
+-					/* just sent the command byte, set to EVEN */
+-					via[B] = (via[B] & ~ST_MASK) | ST_EVEN;
+-				} else {
+-					/* invert state bits, toggle ODD/EVEN */
+-					via[B] ^= ST_MASK;
+-				}
++				/* invert state bits, toggle ODD/EVEN */
++				via[B] ^= ST_MASK;
+ 			}
+-			break;
+-
+-		case reading:
+-			x = via[SR];
+-			WARN_ON((status & ST_MASK) == ST_CMD ||
+-				(status & ST_MASK) == ST_IDLE);
+-
+-			/* Bus timeout with SRQ sequence:
+-			 *     data is "XX FF"      while CTLR_IRQ is "L L"
+-			 * End of packet without SRQ sequence:
+-			 *     data is "XX...YY 00" while CTLR_IRQ is "L...H L"
+-			 * End of packet SRQ sequence:
+-			 *     data is "XX...YY 00" while CTLR_IRQ is "L...L L"
+-			 * (where XX is the first response byte and
+-			 * YY is the last byte of valid response data.)
+-			 */
++		}
++		break;
+ 
+-			srq_asserted = 0;
+-			if (!(status & CTLR_IRQ)) {
+-				if (x == 0xFF) {
+-					if (!(last_status & CTLR_IRQ)) {
+-						macii_state = read_done;
+-						reply_len = 0;
+-						srq_asserted = 1;
+-					}
+-				} else if (x == 0x00) {
++	case reading:
++		x = via[SR];
++		WARN_ON((status & ST_MASK) == ST_CMD ||
++			(status & ST_MASK) == ST_IDLE);
++
++		/* Bus timeout with SRQ sequence:
++		 *     data is "XX FF"      while CTLR_IRQ is "L L"
++		 * End of packet without SRQ sequence:
++		 *     data is "XX...YY 00" while CTLR_IRQ is "L...H L"
++		 * End of packet SRQ sequence:
++		 *     data is "XX...YY 00" while CTLR_IRQ is "L...L L"
++		 * (where XX is the first response byte and
++		 * YY is the last byte of valid response data.)
++		 */
++
++		srq_asserted = 0;
++		if (!(status & CTLR_IRQ)) {
++			if (x == 0xFF) {
++				if (!(last_status & CTLR_IRQ)) {
+ 					macii_state = read_done;
+-					if (!(last_status & CTLR_IRQ))
+-						srq_asserted = 1;
++					reply_len = 0;
++					srq_asserted = 1;
+ 				}
++			} else if (x == 0x00) {
++				macii_state = read_done;
++				if (!(last_status & CTLR_IRQ))
++					srq_asserted = 1;
+ 			}
++		}
+ 
+-			if (macii_state == reading &&
+-			    reply_len < ARRAY_SIZE(reply_buf)) {
+-				reply_ptr++;
+-				*reply_ptr = x;
+-				reply_len++;
+-			}
+-
+-			/* invert state bits, toggle ODD/EVEN */
+-			via[B] ^= ST_MASK;
+-			break;
++		if (macii_state == reading &&
++		    reply_len < ARRAY_SIZE(reply_buf)) {
++			reply_ptr++;
++			*reply_ptr = x;
++			reply_len++;
++		}
+ 
+-		case read_done:
+-			x = via[SR];
+-
+-			if (reading_reply) {
+-				reading_reply = 0;
+-				req = current_req;
+-				req->reply_len = reply_len;
+-				req->complete = 1;
+-				current_req = req->next;
+-				if (req->done) (*req->done)(req);
+-			} else if (reply_len && autopoll_devs)
+-				adb_input(reply_buf, reply_len, 0);
+-
+-			macii_state = idle;
+-
+-			/* SRQ seen before, initiate poll now */
+-			if (srq_asserted)
+-				macii_queue_poll();
++		/* invert state bits, toggle ODD/EVEN */
++		via[B] ^= ST_MASK;
++		break;
+ 
+-			if (current_req)
+-				macii_start();
+-			else
+-				if (need_autopoll())
+-					macii_autopoll(autopoll_devs);
++	case read_done:
++		x = via[SR];
+ 
+-			if (macii_state == idle)
+-				via[B] = (via[B] & ~ST_MASK) | ST_IDLE;
+-			break;
++		if (reading_reply) {
++			reading_reply = 0;
++			req = current_req;
++			req->reply_len = reply_len;
++			req->complete = 1;
++			current_req = req->next;
++			if (req->done)
++				(*req->done)(req);
++		} else if (reply_len && autopoll_devs)
++			adb_input(reply_buf, reply_len, 0);
++
++		macii_state = idle;
++
++		/* SRQ seen before, initiate poll now */
++		if (srq_asserted)
++			macii_queue_poll();
++
++		if (current_req)
++			macii_start();
++		else if (need_autopoll())
++			macii_autopoll(autopoll_devs);
++
++		if (macii_state == idle)
++			via[B] = (via[B] & ~ST_MASK) | ST_IDLE;
++		break;
+ 
+-		default:
++	default:
+ 		break;
+ 	}
+ 
 -- 
 2.43.0
 
