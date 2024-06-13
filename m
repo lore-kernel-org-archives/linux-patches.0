@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C39143870;
-	Thu, 13 Jun 2024 12:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A13145B15;
+	Thu, 13 Jun 2024 12:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280400; cv=none; b=G6OCnau5FN26J1AdxEkjc20AhL/uTMCPZtsgtO+6YcnNl031CekVS3ankRsR6pKVD4PCK1F4AlY5ehWimPP4nF8F1AHs6NLZnv5Ke1L9Zpou2hwm42h2QDfkijNBEo9DD9KAuiY4iBB5YvU/bRODaW7WxjaIballFxAhdtGyA5o=
+	t=1718280403; cv=none; b=tmHkNUtQDbAqHY0zm294WHeiv1Q+NSuZaUeUkHz7Iy4AM2o43UlsNPeDm6iQNxpmtBCF1R19n3lpwcmbKwa0cu8IwnYA2PlP30zcr8meS5eMoqQYMtTKkJwlZ7KULYHWtwzf9v6cXRppFD6fChow8KbTwSk+zkP2kDF7bxpGuO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280400; c=relaxed/simple;
-	bh=1yN2LBIEfMM7qKBIaMjL0T/XI+dICbYRGXQlP2JWkQ4=;
+	s=arc-20240116; t=1718280403; c=relaxed/simple;
+	bh=uyZDSItCCRwkhCcAgQuVxVRTvOjfbljLcomv1+mtxAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNY1eHrZIfToR7WnjjFC/h6UToyjvbVwS42Rhqps6elNgyURKlrQ0/praX7oQXgFq7/KTY0rLNsdwJ87VwnrpBuzhInEIVrq1qSqMKdYx000BqhtxYORjQHMSXV/IQ+7CDxuC/B/Pwfe8f3D+0liM3aB/6AF/ClY4+EgRJIIh68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tNVmkj+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sh7H19+L2XRNsQazBW0SFXmV7YiNm7ErLll5/oq7wKCJzzcHP5PR7EWAu2LRxAItdU3Sn/r8czaPTXwFDHg2FUkWRxIQIsnRu7ZPBFbbSOAwAJC0Wbj9ubupfnE9yztdRRkIM80zSi+58iIYPz/cX/12Xjw72Osn8oiANgesPWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyWeygpo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tNVmkj+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5357C2BBFC;
-	Thu, 13 Jun 2024 12:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyWeygpo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2E2C2BBFC;
+	Thu, 13 Jun 2024 12:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280400;
-	bh=1yN2LBIEfMM7qKBIaMjL0T/XI+dICbYRGXQlP2JWkQ4=;
+	s=korg; t=1718280403;
+	bh=uyZDSItCCRwkhCcAgQuVxVRTvOjfbljLcomv1+mtxAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0tNVmkj+/dvdiwhjyjQqDy55AHPxMiFvsFw2GQaHZbKxdPrb/+k2rG/QeSQO5dXb9
-	 6uIbzLzUFp9qI4rHx6JvNB093e9Ij6n/2QHDBJcNBn8+Mb7vp1emKGfYV+qI5Zf+yv
-	 z/Sc1X+nsPBf6ndOHbSc9ptW599G2FlKOOep+Lns=
+	b=zyWeygpo51rczfiS7ggkGguKMOu9xwnvapC/UAoCmNBtu0gcdU5mZQT1LQTE7ESzl
+	 cuAzBsykp71HL7kc77MMq2oRqiLwf8+WUVJWc4Y601CYpfveTccfJt4tRLlAihPE20
+	 rv5r4+HzB/2NYevPy8wYrZ2PUHy5Cl7zwNZ7ID9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeelb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jesper Dangaard Brouer <hawk@kernel.org>
-Subject: [PATCH 6.6 010/137] mm: ratelimit stat flush from workingset shrinker
-Date: Thu, 13 Jun 2024 13:33:10 +0200
-Message-ID: <20240613113223.689615373@linuxfoundation.org>
+	Daniel Borkmann <daniel@iogearbox.net>,
+	David Bauer <mail@david-bauer.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 011/137] vxlan: Fix regression when dropping packets due to invalid src addresses
+Date: Thu, 13 Jun 2024 13:33:11 +0200
+Message-ID: <20240613113223.728927835@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -57,46 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeelb@google.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit d4a5b369ad6d8aae552752ff438dddde653a72ec upstream.
+commit 1cd4bc987abb2823836cbb8f887026011ccddc8a upstream.
 
-One of our workloads (Postgres 14 + sysbench OLTP) regressed on newer
-upstream kernel and on further investigation, it seems like the cause is
-the always synchronous rstat flush in the count_shadow_nodes() added by
-the commit f82e6bf9bb9b ("mm: memcg: use rstat for non-hierarchical
-stats").  On further inspection it seems like we don't really need
-accurate stats in this function as it was already approximating the amount
-of appropriate shadow entries to keep for maintaining the refault
-information.  Since there is already 2 sec periodic rstat flush, we don't
-need exact stats here.  Let's ratelimit the rstat flush in this code path.
+Commit f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
+has recently been added to vxlan mainly in the context of source
+address snooping/learning so that when it is enabled, an entry in the
+FDB is not being created for an invalid address for the corresponding
+tunnel endpoint.
 
-Link: https://lkml.kernel.org/r/20231228073055.4046430-1-shakeelb@google.com
-Fixes: f82e6bf9bb9b ("mm: memcg: use rstat for non-hierarchical stats")
-Signed-off-by: Shakeel Butt <shakeelb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Yosry Ahmed <yosryahmed@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Before commit f58f45c1e5b9 vxlan was similarly behaving as geneve in
+that it passed through whichever macs were set in the L2 header. It
+turns out that this change in behavior breaks setups, for example,
+Cilium with netkit in L3 mode for Pods as well as tunnel mode has been
+passing before the change in f58f45c1e5b9 for both vxlan and geneve.
+After mentioned change it is only passing for geneve as in case of
+vxlan packets are dropped due to vxlan_set_mac() returning false as
+source and destination macs are zero which for E/W traffic via tunnel
+is totally fine.
+
+Fix it by only opting into the is_valid_ether_addr() check in
+vxlan_set_mac() when in fact source address snooping/learning is
+actually enabled in vxlan. This is done by moving the check into
+vxlan_snoop(). With this change, the Cilium connectivity test suite
+passes again for both tunnel flavors.
+
+Fixes: f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: David Bauer <mail@david-bauer.net>
+Cc: Ido Schimmel <idosch@nvidia.com>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: David Bauer <mail@david-bauer.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[ Backport note: vxlan snooping/learning not supported in 6.8 or older,
+  so commit is simply a revert. ]
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/workingset.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/vxlan/vxlan_core.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/mm/workingset.c
-+++ b/mm/workingset.c
-@@ -664,7 +664,7 @@ static unsigned long count_shadow_nodes(
- 		struct lruvec *lruvec;
- 		int i;
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1615,10 +1615,6 @@ static bool vxlan_set_mac(struct vxlan_d
+ 	if (ether_addr_equal(eth_hdr(skb)->h_source, vxlan->dev->dev_addr))
+ 		return false;
  
--		mem_cgroup_flush_stats();
-+		mem_cgroup_flush_stats_ratelimited();
- 		lruvec = mem_cgroup_lruvec(sc->memcg, NODE_DATA(sc->nid));
- 		for (pages = 0, i = 0; i < NR_LRU_LISTS; i++)
- 			pages += lruvec_page_state_local(lruvec,
+-	/* Ignore packets from invalid src-address */
+-	if (!is_valid_ether_addr(eth_hdr(skb)->h_source))
+-		return false;
+-
+ 	/* Get address from the outer IP header */
+ 	if (vxlan_get_sk_family(vs) == AF_INET) {
+ 		saddr.sin.sin_addr.s_addr = ip_hdr(skb)->saddr;
 
 
