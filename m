@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B364B3209;
-	Thu, 13 Jun 2024 12:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DB06EB56;
+	Thu, 13 Jun 2024 12:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281659; cv=none; b=jXfJc9rCIh8ngehCM7Sh0t43k6Ibv4rwgX5E96UoXdXAeHcNUuP8hZJwqR3H4GCPJUgS+Z04qe4tkg1m4vKCBl+d5xNLMR2TadhKeTwHmu8JzEV9vqbM+B2ltJLNYDijyVHbCxzTfGT+kynu+Lkw9mvNy5yKvdxCMOlnbmUYW4k=
+	t=1718281662; cv=none; b=fq6iSWa/rhkwgzPUMcW+xrRUwElBu2uAAkPxkXleScgSToPKSYf+AIlgv0Lnaj2X0aXAGOCeHqRH7904dpOG9GYCdgAyE7ItoyPlQpgRPdLuibtaRbVbvwUO+/Ieno3Ta+zW+XTUETnbPkXn5NBZ1InNEA3WdJ9jYoGPJHXWWcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281659; c=relaxed/simple;
-	bh=KpFA9/1QxwI2qVzr/AwYff2Y1rXapmFH/VlFbVWoa5A=;
+	s=arc-20240116; t=1718281662; c=relaxed/simple;
+	bh=6kHWOyuH7Cwmsww+RCr10an5XPDE4WrpT1LUHc7QXWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7HIFk7C7x+hXeFl5Lppyt8RFxux/qxcz8EU05faj1WUZz2gzKznSQqGi9d9F7dsRDbpkeVCQbyJnzoPaRiDblLBYAd2O9CUoHEUmz1+Wi1ID+gnu37YchnZmVepCxYh/vaDzJ9pZxTgsVn/emk8vZRsFsjkRQ/0qyKsqW1U19c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VaR2sKA5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EO/5oQBfpfzjnamWt3gkIkKNeiewobuexJkmfHWJvN3o1agkXbtzt3elaapwwykYQyYJgNRI/PF1OvIoeeHD26rN9GyJnm/C2SpOkxmZ7O5HIjinizmDgfcm7ULjuYgvMzM3iEeGJe66Bzbutu2n7lSTz9vOFL3DTN/CYu5E7oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwVTQZQK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VaR2sKA5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C35CC2BBFC;
-	Thu, 13 Jun 2024 12:27:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwVTQZQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2FCC2BBFC;
+	Thu, 13 Jun 2024 12:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281659;
-	bh=KpFA9/1QxwI2qVzr/AwYff2Y1rXapmFH/VlFbVWoa5A=;
+	s=korg; t=1718281662;
+	bh=6kHWOyuH7Cwmsww+RCr10an5XPDE4WrpT1LUHc7QXWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VaR2sKA5K778+KKpHC3St4Xk8qor6f5MGG42Ha56/zzA40wZKCgxYizI2i2bRwFbK
-	 PShbAuhwNjv5pqinDjkNSKIkYe5XFzVR4U44naZQSU8jCi8/feJ/FCTfYDGRhfAlr2
-	 FQsMUWR7ucvMtoms155fh6l5ZMlWLOS8siXK+Yt0=
+	b=KwVTQZQKliXdNHQFtcuN/v2kgq7ggAvxhMATEEeMMT66jQSNyhJKC71IunSyKI/Ea
+	 h45w1evr11Z7MUOmlnQd9cKMIS5ogxPhSTrRhjdq1SaHBWAoUedbpF9P+UYaZ0dSq8
+	 aPkkuSYzenzJWDFMsEXtTHrDOfzRQqDXiMSTULw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	j51569436@gmail.com,
 	Daniel Starke <daniel.starke@siemens.com>
-Subject: [PATCH 5.15 002/402] tty: n_gsm: fix possible out-of-bounds in gsm0_receive()
-Date: Thu, 13 Jun 2024 13:29:19 +0200
-Message-ID: <20240613113302.218306394@linuxfoundation.org>
+Subject: [PATCH 5.15 003/402] tty: n_gsm: fix missing receive state reset after mode switch
+Date: Thu, 13 Jun 2024 13:29:20 +0200
+Message-ID: <20240613113302.257573918@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,61 +51,292 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Starke <daniel.starke@siemens.com>
 
-commit 47388e807f85948eefc403a8a5fdc5b406a65d5a upstream.
+commit 70d7f1427afcf7fa2d21cb5a04c6f3555d5b9357 upstream.
 
-Assuming the following:
-- side A configures the n_gsm in basic option mode
-- side B sends the header of a basic option mode frame with data length 1
-- side A switches to advanced option mode
-- side B sends 2 data bytes which exceeds gsm->len
-  Reason: gsm->len is not used in advanced option mode.
-- side A switches to basic option mode
-- side B keeps sending until gsm0_receive() writes past gsm->buf
-  Reason: Neither gsm->state nor gsm->len have been reset after
-  reconfiguration.
+The current implementation uses either gsm0_receive() or gsm1_receive()
+depending on whether the user configured the mux in basic or advanced
+option mode. Both functions share some state values over the same logical
+elements of the frame. However, both frame types differ in their nature.
+gsm0_receive() uses non-transparency framing, whereas gsm1_receive() uses
+transparency mechanism. Switching between both modes leaves the receive
+function in an undefined state when done during frame reception.
 
-Fix this by changing gsm->count to gsm->len comparison from equal to less
-than. Also add upper limit checks against the constant MAX_MRU in
-gsm0_receive() and gsm1_receive() to harden against memory corruption of
-gsm->len and gsm->mru.
+Fix this by splitting both states. Add gsm0_receive_state_check_and_fix()
+and gsm1_receive_state_check_and_fix() to ensure that gsm->state is reset
+after a change of gsm->receive.
 
-All other checks remain as we still need to limit the data according to the
-user configuration and actual payload size.
+Note that gsm->state is only accessed in:
+- gsm0_receive()
+- gsm1_receive()
+- gsm_error()
 
-Reported-by: j51569436@gmail.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218708
-Tested-by: j51569436@gmail.com
 Fixes: e1eaea46bb40 ("tty: n_gsm line discipline")
 Cc: stable@vger.kernel.org
 Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://lore.kernel.org/r/20240424054842.7741-1-daniel.starke@siemens.com
+Link: https://lore.kernel.org/r/20240424054842.7741-2-daniel.starke@siemens.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/n_gsm.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/tty/n_gsm.c |  133 +++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 92 insertions(+), 41 deletions(-)
 
 --- a/drivers/tty/n_gsm.c
 +++ b/drivers/tty/n_gsm.c
-@@ -2228,7 +2228,10 @@ static void gsm0_receive(struct gsm_mux
+@@ -178,16 +178,18 @@ struct gsm_control {
+ 
+ enum gsm_mux_state {
+ 	GSM_SEARCH,
+-	GSM_START,
+-	GSM_ADDRESS,
+-	GSM_CONTROL,
+-	GSM_LEN,
+-	GSM_DATA,
+-	GSM_FCS,
+-	GSM_OVERRUN,
+-	GSM_LEN0,
+-	GSM_LEN1,
+-	GSM_SSOF,
++	GSM0_ADDRESS,
++	GSM0_CONTROL,
++	GSM0_LEN0,
++	GSM0_LEN1,
++	GSM0_DATA,
++	GSM0_FCS,
++	GSM0_SSOF,
++	GSM1_START,
++	GSM1_ADDRESS,
++	GSM1_CONTROL,
++	GSM1_DATA,
++	GSM1_OVERRUN,
+ };
+ 
+ /*
+@@ -2162,6 +2164,30 @@ invalid:
+ 	return;
+ }
+ 
++/**
++ * gsm0_receive_state_check_and_fix	-	check and correct receive state
++ * @gsm: gsm data for this ldisc instance
++ *
++ * Ensures that the current receive state is valid for basic option mode.
++ */
++
++static void gsm0_receive_state_check_and_fix(struct gsm_mux *gsm)
++{
++	switch (gsm->state) {
++	case GSM_SEARCH:
++	case GSM0_ADDRESS:
++	case GSM0_CONTROL:
++	case GSM0_LEN0:
++	case GSM0_LEN1:
++	case GSM0_DATA:
++	case GSM0_FCS:
++	case GSM0_SSOF:
++		break;
++	default:
++		gsm->state = GSM_SEARCH;
++		break;
++	}
++}
+ 
+ /**
+  *	gsm0_receive	-	perform processing for non-transparency
+@@ -2175,26 +2201,27 @@ static void gsm0_receive(struct gsm_mux
+ {
+ 	unsigned int len;
+ 
++	gsm0_receive_state_check_and_fix(gsm);
+ 	switch (gsm->state) {
+ 	case GSM_SEARCH:	/* SOF marker */
+ 		if (c == GSM0_SOF) {
+-			gsm->state = GSM_ADDRESS;
++			gsm->state = GSM0_ADDRESS;
+ 			gsm->address = 0;
+ 			gsm->len = 0;
+ 			gsm->fcs = INIT_FCS;
+ 		}
  		break;
- 	case GSM_DATA:		/* Data */
+-	case GSM_ADDRESS:	/* Address EA */
++	case GSM0_ADDRESS:	/* Address EA */
+ 		gsm->fcs = gsm_fcs_add(gsm->fcs, c);
+ 		if (gsm_read_ea(&gsm->address, c))
+-			gsm->state = GSM_CONTROL;
++			gsm->state = GSM0_CONTROL;
+ 		break;
+-	case GSM_CONTROL:	/* Control Byte */
++	case GSM0_CONTROL:	/* Control Byte */
+ 		gsm->fcs = gsm_fcs_add(gsm->fcs, c);
+ 		gsm->control = c;
+-		gsm->state = GSM_LEN0;
++		gsm->state = GSM0_LEN0;
+ 		break;
+-	case GSM_LEN0:		/* Length EA */
++	case GSM0_LEN0:		/* Length EA */
+ 		gsm->fcs = gsm_fcs_add(gsm->fcs, c);
+ 		if (gsm_read_ea(&gsm->len, c)) {
+ 			if (gsm->len > gsm->mru) {
+@@ -2204,14 +2231,14 @@ static void gsm0_receive(struct gsm_mux
+ 			}
+ 			gsm->count = 0;
+ 			if (!gsm->len)
+-				gsm->state = GSM_FCS;
++				gsm->state = GSM0_FCS;
+ 			else
+-				gsm->state = GSM_DATA;
++				gsm->state = GSM0_DATA;
+ 			break;
+ 		}
+-		gsm->state = GSM_LEN1;
++		gsm->state = GSM0_LEN1;
+ 		break;
+-	case GSM_LEN1:
++	case GSM0_LEN1:
+ 		gsm->fcs = gsm_fcs_add(gsm->fcs, c);
+ 		len = c;
+ 		gsm->len |= len << 7;
+@@ -2222,11 +2249,11 @@ static void gsm0_receive(struct gsm_mux
+ 		}
+ 		gsm->count = 0;
+ 		if (!gsm->len)
+-			gsm->state = GSM_FCS;
++			gsm->state = GSM0_FCS;
+ 		else
+-			gsm->state = GSM_DATA;
++			gsm->state = GSM0_DATA;
+ 		break;
+-	case GSM_DATA:		/* Data */
++	case GSM0_DATA:		/* Data */
  		gsm->buf[gsm->count++] = c;
--		if (gsm->count == gsm->len) {
-+		if (gsm->count >= MAX_MRU) {
-+			gsm->bad_size++;
-+			gsm->state = GSM_SEARCH;
-+		} else if (gsm->count >= gsm->len) {
- 			/* Calculate final FCS for UI frames over all data */
- 			if ((gsm->control & ~PF) != UIH) {
+ 		if (gsm->count >= MAX_MRU) {
+ 			gsm->bad_size++;
+@@ -2237,14 +2264,14 @@ static void gsm0_receive(struct gsm_mux
  				gsm->fcs = gsm_fcs_add_block(gsm->fcs, gsm->buf,
-@@ -2341,7 +2344,7 @@ static void gsm1_receive(struct gsm_mux
- 		gsm->state = GSM_DATA;
+ 							     gsm->count);
+ 			}
+-			gsm->state = GSM_FCS;
++			gsm->state = GSM0_FCS;
+ 		}
  		break;
- 	case GSM_DATA:		/* Data */
--		if (gsm->count > gsm->mru) {	/* Allow one for the FCS */
-+		if (gsm->count > gsm->mru || gsm->count > MAX_MRU) {	/* Allow one for the FCS */
- 			gsm->state = GSM_OVERRUN;
+-	case GSM_FCS:		/* FCS follows the packet */
++	case GSM0_FCS:		/* FCS follows the packet */
+ 		gsm->fcs = gsm_fcs_add(gsm->fcs, c);
+-		gsm->state = GSM_SSOF;
++		gsm->state = GSM0_SSOF;
+ 		break;
+-	case GSM_SSOF:
++	case GSM0_SSOF:
+ 		gsm->state = GSM_SEARCH;
+ 		if (c == GSM0_SOF)
+ 			gsm_queue(gsm);
+@@ -2258,6 +2285,29 @@ static void gsm0_receive(struct gsm_mux
+ }
+ 
+ /**
++ * gsm1_receive_state_check_and_fix	-	check and correct receive state
++ * @gsm: gsm data for this ldisc instance
++ *
++ * Ensures that the current receive state is valid for advanced option mode.
++ */
++
++static void gsm1_receive_state_check_and_fix(struct gsm_mux *gsm)
++{
++	switch (gsm->state) {
++	case GSM_SEARCH:
++	case GSM1_START:
++	case GSM1_ADDRESS:
++	case GSM1_CONTROL:
++	case GSM1_DATA:
++	case GSM1_OVERRUN:
++		break;
++	default:
++		gsm->state = GSM_SEARCH;
++		break;
++	}
++}
++
++/**
+  *	gsm1_receive	-	perform processing for non-transparency
+  *	@gsm: gsm data for this ldisc instance
+  *	@c: character
+@@ -2267,6 +2317,7 @@ static void gsm0_receive(struct gsm_mux
+ 
+ static void gsm1_receive(struct gsm_mux *gsm, unsigned char c)
+ {
++	gsm1_receive_state_check_and_fix(gsm);
+ 	/* handle XON/XOFF */
+ 	if ((c & ISO_IEC_646_MASK) == XON) {
+ 		gsm->constipated = true;
+@@ -2279,11 +2330,11 @@ static void gsm1_receive(struct gsm_mux
+ 	}
+ 	if (c == GSM1_SOF) {
+ 		/* EOF is only valid in frame if we have got to the data state */
+-		if (gsm->state == GSM_DATA) {
++		if (gsm->state == GSM1_DATA) {
+ 			if (gsm->count < 1) {
+ 				/* Missing FSC */
+ 				gsm->malformed++;
+-				gsm->state = GSM_START;
++				gsm->state = GSM1_START;
+ 				return;
+ 			}
+ 			/* Remove the FCS from data */
+@@ -2299,14 +2350,14 @@ static void gsm1_receive(struct gsm_mux
+ 			gsm->fcs = gsm_fcs_add(gsm->fcs, gsm->buf[gsm->count]);
+ 			gsm->len = gsm->count;
+ 			gsm_queue(gsm);
+-			gsm->state  = GSM_START;
++			gsm->state  = GSM1_START;
+ 			return;
+ 		}
+ 		/* Any partial frame was a runt so go back to start */
+-		if (gsm->state != GSM_START) {
++		if (gsm->state != GSM1_START) {
+ 			if (gsm->state != GSM_SEARCH)
+ 				gsm->malformed++;
+-			gsm->state = GSM_START;
++			gsm->state = GSM1_START;
+ 		}
+ 		/* A SOF in GSM_START means we are still reading idling or
+ 		   framing bytes */
+@@ -2327,30 +2378,30 @@ static void gsm1_receive(struct gsm_mux
+ 		gsm->escape = false;
+ 	}
+ 	switch (gsm->state) {
+-	case GSM_START:		/* First byte after SOF */
++	case GSM1_START:		/* First byte after SOF */
+ 		gsm->address = 0;
+-		gsm->state = GSM_ADDRESS;
++		gsm->state = GSM1_ADDRESS;
+ 		gsm->fcs = INIT_FCS;
+ 		fallthrough;
+-	case GSM_ADDRESS:	/* Address continuation */
++	case GSM1_ADDRESS:	/* Address continuation */
+ 		gsm->fcs = gsm_fcs_add(gsm->fcs, c);
+ 		if (gsm_read_ea(&gsm->address, c))
+-			gsm->state = GSM_CONTROL;
++			gsm->state = GSM1_CONTROL;
+ 		break;
+-	case GSM_CONTROL:	/* Control Byte */
++	case GSM1_CONTROL:	/* Control Byte */
+ 		gsm->fcs = gsm_fcs_add(gsm->fcs, c);
+ 		gsm->control = c;
+ 		gsm->count = 0;
+-		gsm->state = GSM_DATA;
++		gsm->state = GSM1_DATA;
+ 		break;
+-	case GSM_DATA:		/* Data */
++	case GSM1_DATA:		/* Data */
+ 		if (gsm->count > gsm->mru || gsm->count > MAX_MRU) {	/* Allow one for the FCS */
+-			gsm->state = GSM_OVERRUN;
++			gsm->state = GSM1_OVERRUN;
  			gsm->bad_size++;
  		} else
+ 			gsm->buf[gsm->count++] = c;
+ 		break;
+-	case GSM_OVERRUN:	/* Over-long - eg a dropped SOF */
++	case GSM1_OVERRUN:	/* Over-long - eg a dropped SOF */
+ 		break;
+ 	default:
+ 		pr_debug("%s: unhandled state: %d\n", __func__, gsm->state);
 
 
