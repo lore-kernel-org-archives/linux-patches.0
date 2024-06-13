@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8F34A07;
-	Thu, 13 Jun 2024 12:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D37E13DDB5;
+	Thu, 13 Jun 2024 12:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282109; cv=none; b=brWMA42Gtob26A1u9I/0fIzDAcJvJRCMJBLPeGmVjoI7ZTzZ6XewRRPfpB49K62v18gucxBXmtHtTuAX4mwHe2Zeon/u4Sqbj6Dq5z5M4h7cuIAGqRXGNg60dpzD3PWMiJnHaOYwIxFhbEaWv6KqD362oFksmIhsuKcACbGnscU=
+	t=1718282112; cv=none; b=vC3iSypsL9023xhMml0Mm0TLclB2GFjOOW7Qh1dftMD+1Mopq6S85+FAvWA2ZDfhrRnqy8aUadVAj4jMKnTfmaK56+2HVkHSFd4/MQOf+ya4dgisfvursqRd0bfvAGms18cnuOXBwAoI9LZ26rGUKTjwIzeCyEweuPlcv2Ug4+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282109; c=relaxed/simple;
-	bh=RAwtk1ElnbwwHnlfZQkawa7k+I65ejba353nxaHeLS0=;
+	s=arc-20240116; t=1718282112; c=relaxed/simple;
+	bh=jXQf566/3Z89zLHWM/1JHccMRh41XKpKQdUnBvUlLwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WNnzN9UMMJdtwrTp7DCToLnEyyWup4+qcbKxGpj6ReRU6JzHxZRStNmGgK5ygrIFmxoUS8l1eOyBoA2ChTaXDrMeSku6fOGi0pll7Ytj5IQQcbRlk///wO3WzPNTKuvXqMNbHJ1eSUPUWwVN8e6aCCk0ha5bzwZlVjFGkO17K2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPW/QQzt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WUt/FsfoK7lyC4HVPVhoYXiBscirmp+exjTzEO1Jeu27rvScfwyUQM5D712uFpoopf3Wwro2l44Jb0YNaZuOzEwtmfsdb7K5CxduGD/BzbK8GwWhv1UfH88seX3hUCQklsKiegZShT4aEd4LHJHV98aCIvmuP9fFiy4NrKjJabE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nz5/7QTu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPW/QQzt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96433C2BBFC;
-	Thu, 13 Jun 2024 12:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nz5/7QTu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8EAC4AF1A;
+	Thu, 13 Jun 2024 12:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282109;
-	bh=RAwtk1ElnbwwHnlfZQkawa7k+I65ejba353nxaHeLS0=;
+	s=korg; t=1718282112;
+	bh=jXQf566/3Z89zLHWM/1JHccMRh41XKpKQdUnBvUlLwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DPW/QQztdJ8+ep3A8nAxPmSXjCSPKZ5aSDLN2sj8cQuJFutb0HnDLn90AEdaAMxc8
-	 hNR9Y/eY0lMtf3tmuE4A1zoDXeFFtH0Iv7kr9FRP3rXZ6C9UW3zAstGHUu+5H2iVVi
-	 hA1roITloPyxbUh6anYb38pYbZti05s2GS7bWMgk=
+	b=nz5/7QTuO/eBCGJdp9gRqt66g2F9ZBKRMXkbk88KyVsdwrGs0fH5L2KHiTs3uLKLM
+	 pgMTxZncAU2yd+QSL741PNqp29azL5ugq4kOv9mBknAWEjXKSO3FbSEuwPNWwFgrMi
+	 RjKRQg0Bm+7iA8SQsyLgaR+bYDNx9KlmrHHeVQCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dan Carpenter <dan.carpenter@linaro.org>,
-	Theodore Tso <tytso@mit.edu>,
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 166/402] ext4: fix potential unnitialized variable
-Date: Thu, 13 Jun 2024 13:32:03 +0200
-Message-ID: <20240613113308.613001139@linuxfoundation.org>
+Subject: [PATCH 5.15 167/402] SUNRPC: Fix gss_free_in_token_pages()
+Date: Thu, 13 Jun 2024 13:32:04 +0200
+Message-ID: <20240613113308.651626196@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,38 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 3f4830abd236d0428e50451e1ecb62e14c365e9b ]
+[ Upstream commit bafa6b4d95d97877baa61883ff90f7e374427fae ]
 
-Smatch complains "err" can be uninitialized in the caller.
+Dan Carpenter says:
+> Commit 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()") from Oct
+> 24, 2019 (linux-next), leads to the following Smatch static checker
+> warning:
+>
+> 	net/sunrpc/auth_gss/svcauth_gss.c:1039 gss_free_in_token_pages()
+> 	warn: iterator 'i' not incremented
+>
+> net/sunrpc/auth_gss/svcauth_gss.c
+>     1034 static void gss_free_in_token_pages(struct gssp_in_token *in_token)
+>     1035 {
+>     1036         u32 inlen;
+>     1037         int i;
+>     1038
+> --> 1039         i = 0;
+>     1040         inlen = in_token->page_len;
+>     1041         while (inlen) {
+>     1042                 if (in_token->pages[i])
+>     1043                         put_page(in_token->pages[i]);
+>                                                          ^
+> This puts page zero over and over.
+>
+>     1044                 inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
+>     1045         }
+>     1046
+>     1047         kfree(in_token->pages);
+>     1048         in_token->pages = NULL;
+>     1049 }
 
-    fs/ext4/indirect.c:349 ext4_alloc_branch()
-    error: uninitialized symbol 'err'.
+Based on the way that the ->pages[] array is constructed in
+gss_read_proxy_verf(), we know that once the loop encounters a NULL
+page pointer, the remaining array elements must also be NULL.
 
-Set the error to zero on the success path.
-
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/363a4673-0fb8-4adf-b4fb-90a499077276@moroto.mountain
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Suggested-by: Trond Myklebust <trondmy@hammerspace.com>
+Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/auth_gss/svcauth_gss.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index e85123e447f14..1145664a0bb71 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -5684,6 +5684,7 @@ ext4_mb_new_blocks_simple(struct ext4_allocation_request *ar, int *errp)
- 	ext4_mb_mark_bb(sb, block, 1, 1);
- 	ar->len = 1;
+diff --git a/net/sunrpc/auth_gss/svcauth_gss.c b/net/sunrpc/auth_gss/svcauth_gss.c
+index 48b608cb5f5ec..6ad1757718505 100644
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1132,17 +1132,11 @@ gss_read_verf(struct rpc_gss_wire_cred *gc,
  
-+	*errp = 0;
- 	return block;
+ static void gss_free_in_token_pages(struct gssp_in_token *in_token)
+ {
+-	u32 inlen;
+ 	int i;
+ 
+ 	i = 0;
+-	inlen = in_token->page_len;
+-	while (inlen) {
+-		if (in_token->pages[i])
+-			put_page(in_token->pages[i]);
+-		inlen -= inlen > PAGE_SIZE ? PAGE_SIZE : inlen;
+-	}
+-
++	while (in_token->pages[i])
++		put_page(in_token->pages[i++]);
+ 	kfree(in_token->pages);
+ 	in_token->pages = NULL;
  }
- 
 -- 
 2.43.0
 
