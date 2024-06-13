@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C329144313;
-	Thu, 13 Jun 2024 12:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658581EEE0;
+	Thu, 13 Jun 2024 12:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282298; cv=none; b=gRepDT67nrKMznKqx5nSdxu9mkyxPvp3nrmVfaTfJJN2VkuucUqoEN3EROP/fSI4EK6f+J90rl1gJJvS3Zt+MMjjOcZxxpmXstu8WhQ3IiyodsTgGOzi3u3u7See+599fDAUTJArXdKKWMDNAO7sV9vWj50LsYmVWICBhCzyE/4=
+	t=1718282301; cv=none; b=Gy3xo0ihLo8ozHSnie5EbYmLTYZnHGSJzv3reeCLrsGhLC+QkqivPKEbPObbMKGD08birXqALl28iyoomzD8skDV4Kn5oQ5ZxDh9nU9kHexV/H3kvQVnmQlVRhLOzJO8vybMQsmmUEK956AzEqzDPG73tl3Lj5oqtKfAr5wCF7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282298; c=relaxed/simple;
-	bh=6nZ2p4sNZT/s0w+jy7lGeEAxZRrmPMxb2d6L/48Hkf4=;
+	s=arc-20240116; t=1718282301; c=relaxed/simple;
+	bh=w8tu01ZpV+TY586ErRHk1IJ/gSDOqeuFJqcZla5KIxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPNcT4CmgkGpCrvunUTACMbaJZrNf/bgjwFl4WNq2qClo+nUqdFqYdpWfdjqOgB88ZoSxiH1v89wOwmHwOf4oFiNRIO+/mH+r209Ail2+1Wk8swoOwAqZHlwepTfsI1aBWG6DJ9x69pkFzAmxEDrlUdXkOIdEl5I9MsxuDq+qfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKVZANzv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JMviVqeYhMa58h4+3HNfeeI94Kqt3ci8+urY4PNwC48hQF01yLSPLC3t/zz7OzqxsaGpMpDZpHIWGDQgoqwlGRd7AaKHGEG+YJLTVOK1EfuxZ2QFuZOt7ECLaDnaxw/Ndldqt/s6OhVeh409gqlUzFlt6zvI+/G2L4osljGan2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaNhEmzy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKVZANzv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEA4C4AF4D;
-	Thu, 13 Jun 2024 12:38:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaNhEmzy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B337BC2BBFC;
+	Thu, 13 Jun 2024 12:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282298;
-	bh=6nZ2p4sNZT/s0w+jy7lGeEAxZRrmPMxb2d6L/48Hkf4=;
+	s=korg; t=1718282301;
+	bh=w8tu01ZpV+TY586ErRHk1IJ/gSDOqeuFJqcZla5KIxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKVZANzvnFtfBKA1T5Mp4HfHOp2A7wev5bh4UT59/8nsbTX0Z8eQ9yGcDqkhqY6VO
-	 3ZZECTaEpkCwNuS3b54jrGs/VH5l+01V3egArc0SkTkiEYpR8cJX+YmN2xnFkqNJn0
-	 S0B+NeVBI/4q0ywzbkM1Bp3sTDQp4LzTVN2PB7X0=
+	b=LaNhEmzyWSMZRFeRE1sVkzU/k07uKNKojyPvpITtBSsnJ9TYKYNuZCfz2NyucyB2m
+	 SIVZYHM0zH88a0vFbt8O6zI43xg9xpTK0lnopfik/6ehkyjzP4cPXviobo4XyVPrVz
+	 XaQHQUGGji+aqPV+zSXNc56EhGawKqSy1khQZvrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -40,9 +40,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Zijlstra <peterz@infradead.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 230/402] perf ui browser: Avoid SEGV on title
-Date: Thu, 13 Jun 2024 13:33:07 +0200
-Message-ID: <20240613113311.117324009@linuxfoundation.org>
+Subject: [PATCH 5.15 231/402] perf report: Avoid SEGV in report__setup_sample_type()
+Date: Thu, 13 Jun 2024 13:33:08 +0200
+Message-ID: <20240613113311.155836768@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -63,11 +63,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 90f01afb0dfafbc9b094bb61e61a4ac297d9d0d2 ]
+[ Upstream commit 45b4f402a6b782352c4bafcff682bfb01da9ca05 ]
 
-If the title is NULL then it can lead to a SEGV.
+In some cases evsel->name is lazily initialized in evsel__name(). If not
+initialized passing NULL to strstr() leads to a SEGV.
 
-Fixes: 769e6a1e15bdbbaf ("perf ui browser: Don't save pointer to stack memory")
+Fixes: ccb17caecfbd542f ("perf report: Set PERF_SAMPLE_DATA_SRC bit for Arm SPE event")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
@@ -79,26 +80,26 @@ Cc: Leo Yan <leo.yan@linux.dev>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240508035301.1554434-2-irogers@google.com
+Link: https://lore.kernel.org/r/20240508035301.1554434-4-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browser.c | 2 +-
+ tools/perf/builtin-report.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/ui/browser.c b/tools/perf/ui/browser.c
-index d09b4cbec6e06..5d6f4f25c33d0 100644
---- a/tools/perf/ui/browser.c
-+++ b/tools/perf/ui/browser.c
-@@ -203,7 +203,7 @@ void ui_browser__refresh_dimensions(struct ui_browser *browser)
- void ui_browser__handle_resize(struct ui_browser *browser)
- {
- 	ui__refresh_dimensions(false);
--	ui_browser__show(browser, browser->title, ui_helpline__current);
-+	ui_browser__show(browser, browser->title ?: "", ui_helpline__current);
- 	ui_browser__refresh(browser);
- }
- 
+diff --git a/tools/perf/builtin-report.c b/tools/perf/builtin-report.c
+index 6583ad9cc7deb..35bf3b01d9cc7 100644
+--- a/tools/perf/builtin-report.c
++++ b/tools/perf/builtin-report.c
+@@ -410,7 +410,7 @@ static int report__setup_sample_type(struct report *rep)
+ 		 * compatibility, set the bit if it's an old perf data file.
+ 		 */
+ 		evlist__for_each_entry(session->evlist, evsel) {
+-			if (strstr(evsel->name, "arm_spe") &&
++			if (strstr(evsel__name(evsel), "arm_spe") &&
+ 				!(sample_type & PERF_SAMPLE_DATA_SRC)) {
+ 				evsel->core.attr.sample_type |= PERF_SAMPLE_DATA_SRC;
+ 				sample_type |= PERF_SAMPLE_DATA_SRC;
 -- 
 2.43.0
 
