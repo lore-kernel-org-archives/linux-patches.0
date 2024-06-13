@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE2F82C76;
-	Thu, 13 Jun 2024 12:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1458982C76;
+	Thu, 13 Jun 2024 12:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280453; cv=none; b=EsAcwsRQDuzhr2F3z3P6UdJssPkpNUe/dy2YTdZ/WSxdeyQxenmCdYqzfSDDPuQUbHG3gpObrJK4ME/s8AQRhmanzF0yNMjnjh2wCzHvuvYY+tJ7jbe7mywMCHq+AehYNA2uw0vTLDfw1inzatB0VPP/gKS84BQGD/CiFph7Cr4=
+	t=1718280456; cv=none; b=fXDhk1uI0MNI1nStK0j4RZljz4jUZXglXoIOzRUacrJNWLs7Gs0jYZGvPGq8JtVN1e7pO9a4K7gUVxtbm/rmywO6Crvho+/MikuBgaIv04OY5uwUhuFB3bBSDUaTrF/b0AH3GlPuwZ/+KAm98fcCs7EMoeMPTcH2eSo06kFC+Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280453; c=relaxed/simple;
-	bh=6h/tc7E6i0eAc5nbY9SbdaG9TV75+P88v3bU5K774jA=;
+	s=arc-20240116; t=1718280456; c=relaxed/simple;
+	bh=gD2qWKbsBbgg7pRl3FVE2LJQsxEdMvSdTbdcsKFD+CU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENX1Mub8hHn1q+mV8U7htnCXIuOMvicypb5vAnmnCFu5qaILZVeBwFcBuKcMsjff3uTB76nUS0ycpXhTcbFGhychtdAQKmlZRKxqDBP51kKQ+c43jh+2ubjvblE/S2TyBt3B56/xm9P04WOBHygLZD0zy0Me85Bg60oKO8FNy08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avAXp8HE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DOa5D9QBNd8Qu651G9mfBFv+w8oyKvv2ePcwPBCiOp7SSF9S9//0c3T7OJFobAUMjVJzuPfJOjIQ/jMoTMvDdP+cdZ2unYejVy3n2nTHp2p2F8FKhaR4ljVJcZKYsdXN5gGVIciHVISWVyoUHkgSNKEToPa//XfMkp3AZxBo9XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVmQ2A/q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avAXp8HE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF03C2BBFC;
-	Thu, 13 Jun 2024 12:07:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVmQ2A/q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0F3C2BBFC;
+	Thu, 13 Jun 2024 12:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280453;
-	bh=6h/tc7E6i0eAc5nbY9SbdaG9TV75+P88v3bU5K774jA=;
+	s=korg; t=1718280455;
+	bh=gD2qWKbsBbgg7pRl3FVE2LJQsxEdMvSdTbdcsKFD+CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avAXp8HELi9nCSwiaz+efb9wvWRtrGeQ9HJmK0+3ck0PgwIW4gIQt+oEIQj4y7LsF
-	 d3WSRS5rAWCzDpHME4sK6VWcC8NpEw2yl8jUGh6bvQ76TU7ub/Y8Es1aV8gWjeeLB2
-	 CiI0g1mxSJh6LGKsqyRpR1dB2qEIRBNYlUZ5iCPM=
+	b=hVmQ2A/qtKfnPiX30B0QTn1CIgS3Y+2cgpra7j8hPciLtC4djMvnGJLgxq9hMEhXG
+	 hjMHZ//7tr31ozUmRBqmpnDyI++n8BPikg3G02znk33J8lH77YItIXE+TnUQ4UW5V0
+	 gjMg14vHSmetY/8OSqKP1wKLK1U58rVESSnhWSVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Feifei Xu <Feifei.Xu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	lectrode <electrodexsnet@gmail.com>
-Subject: [PATCH 6.6 058/137] drm/amd: Fix shutdown (again) on some SMU v13.0.4/11 platforms
-Date: Thu, 13 Jun 2024 13:33:58 +0200
-Message-ID: <20240613113225.554681924@linuxfoundation.org>
+	Feifei Xu <feifei.xu@amd.com>
+Subject: [PATCH 6.6 059/137] Revert "drm/amdkfd: fix gfx_target_version for certain 11.0.3 devices"
+Date: Thu, 13 Jun 2024 13:33:59 +0200
+Message-ID: <20240613113225.592459227@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -52,61 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 267cace556e8a53d703119f7435ab556209e5b6a upstream.
+commit dd2b75fd9a79bf418e088656822af06fc253dbe3 upstream.
 
-commit cd94d1b182d2 ("dm/amd/pm: Fix problems with reboot/shutdown for
-some SMU 13.0.4/13.0.11 users") attempted to fix shutdown issues
-that were reported since commit 31729e8c21ec ("drm/amd/pm: fixes a
-random hang in S4 for SMU v13.0.4/11") but caused issues for some
-people.
+This reverts commit 28ebbb4981cb1fad12e0b1227dbecc88810b1ee8.
 
-Adjust the workaround flow to properly only apply in the S4 case:
--> For shutdown go through SMU_MSG_PrepareMp1ForUnload
--> For S4 go through SMU_MSG_GfxDeviceDriverReset and
-   SMU_MSG_PrepareMp1ForUnload
+Revert this commit as apparently the LLVM code to take advantage of
+this never landed.
 
-Reported-and-tested-by: lectrode <electrodexsnet@gmail.com>
-Closes: https://github.com/void-linux/void-packages/issues/50417
-Cc: stable@vger.kernel.org
-Fixes: cd94d1b182d2 ("dm/amd/pm: Fix problems with reboot/shutdown for some SMU 13.0.4/13.0.11 users")
-Reviewed-by: Tim Huang <Tim.Huang@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Feifei Xu <feifei.xu@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c |   20 ++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-@@ -226,15 +226,17 @@ static int smu_v13_0_4_system_features_c
- 	struct amdgpu_device *adev = smu->adev;
- 	int ret = 0;
- 
--	if (!en && adev->in_s4) {
--		/* Adds a GFX reset as workaround just before sending the
--		 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
--		 * an invalid state.
--		 */
--		ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_GfxDeviceDriverReset,
--						      SMU_RESET_MODE_2, NULL);
--		if (ret)
--			return ret;
-+	if (!en && !adev->in_s0ix) {
-+		if (adev->in_s4) {
-+			/* Adds a GFX reset as workaround just before sending the
-+			 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
-+			 * an invalid state.
-+			 */
-+			ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_GfxDeviceDriverReset,
-+							      SMU_RESET_MODE_2, NULL);
-+			if (ret)
-+				return ret;
-+		}
- 
- 		ret = smu_cmn_send_smc_msg(smu, SMU_MSG_PrepareMp1ForUnload, NULL);
- 	}
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -402,15 +402,8 @@ struct kfd_dev *kgd2kfd_probe(struct amd
+ 			f2g = &gfx_v11_kfd2kgd;
+ 			break;
+ 		case IP_VERSION(11, 0, 3):
+-			if ((adev->pdev->device == 0x7460 &&
+-			     adev->pdev->revision == 0x00) ||
+-			    (adev->pdev->device == 0x7461 &&
+-			     adev->pdev->revision == 0x00))
+-				/* Note: Compiler version is 11.0.5 while HW version is 11.0.3 */
+-				gfx_target_version = 110005;
+-			else
+-				/* Note: Compiler version is 11.0.1 while HW version is 11.0.3 */
+-				gfx_target_version = 110001;
++			/* Note: Compiler version is 11.0.1 while HW version is 11.0.3 */
++			gfx_target_version = 110001;
+ 			f2g = &gfx_v11_kfd2kgd;
+ 			break;
+ 		default:
 
 
