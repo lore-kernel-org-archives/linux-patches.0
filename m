@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40581143C55;
-	Thu, 13 Jun 2024 11:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3039F1487E7;
+	Thu, 13 Jun 2024 11:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279806; cv=none; b=iMkUQr84G9F6gqcizLNFgs5ZRu3EhZ1FYMm4rEXO6Pm8CggvED9IHf//5YCtOyj03FgLyK0zhq2DecptPozztxW5ViwA0WZIDfQ6jtbv7o89JMmzIdiqTBfyiPOuH+w+9DkkR6j9mS84iUWc3N3vYrfg/MYDq+txEmllTdyPbNk=
+	t=1718279809; cv=none; b=PyEELhHGpiweSt54ZKjwffYXPYCOMGP/F6SNqSMdEXCQvcfzaBZFKRPIqupMWd5YPyQ4flFbp30JUQu+bxqSGA8MKqSV5qDtuk1NwfWWi3uPEK7f8XP4fqPFOmvNvn0usxXisd0PtuOUDbMVoHjkvPJYlTT0H9R5yzmYBf9mljQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279806; c=relaxed/simple;
-	bh=2W1g3A2rsyed8S6HEiqzcyStDQXw4UQ9zGlXkUqkdhs=;
+	s=arc-20240116; t=1718279809; c=relaxed/simple;
+	bh=mO2TmSEhyAbspXCjPLwOsYNNHsamnSCUkVzTEh6v63Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rX8U/50Y38G7DpNfYQCFGkQ/8LSnWvVi3Og87FQlcX5AD3OdLcnDz0on8QJ08keW48b9juvoPdQ3eC8zXDAmkjIWg+qu7XIuz2HPKwXTALdaY4dvtxx53WRTPGfwgde7sE+yKuSQbvUJ8RtXcEHVTgT/CHIrggOXmGvXkaTAmnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPsoyY2w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRvnOsYx8GSKvbOqlWJkZ9iAtZqNuciKMvxpuTtVPQoZ75qgkAySVwEWXw/zSSzFuRF61az3O+0ctuly5LJvQBKnoM1GkBqKR1wlE7VeUiVtdVxedeSgUpdUnJdZBOfhj51nWfwLM9hDcXsnB61i8qhSb7DUL+kp0P8zNrrZ868=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVfbvIAS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPsoyY2w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B17C2BBFC;
-	Thu, 13 Jun 2024 11:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVfbvIAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B95C2BBFC;
+	Thu, 13 Jun 2024 11:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279805;
-	bh=2W1g3A2rsyed8S6HEiqzcyStDQXw4UQ9zGlXkUqkdhs=;
+	s=korg; t=1718279808;
+	bh=mO2TmSEhyAbspXCjPLwOsYNNHsamnSCUkVzTEh6v63Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPsoyY2w5cY4F9QMPREJfudmYdZw/L2Oi/zmfRFozM217sAxef9N/EQbT6mYzC4RR
-	 JUGODGSTcB0fM1boboj+pXBse01hjhJHa4SmtnGBy9oPnhK5lYh3YgXA7iaDSJxVq3
-	 tcYhHXPCB8HfAEbGLnoSyOrQXDRDrezvXq4vnv1E=
+	b=oVfbvIASegngtMnONS9z2sDq0gh6legyYKCoZDVDoxlkl8zDqXjMzSej04HXr8+Zw
+	 weZ54xIGNaznb+nm4w2BVXpw6f1z/J0c+PbMRBroHhxrWC0BL5r+WTbrsOvdGWRssZ
+	 c3rpHooG9biD5FH80oUTVVxVAP+ZUAnbKuEtBJwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Fangrui Song <maskray@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
+	Su Hui <suhui@nfschina.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 042/202] x86/purgatory: Switch to the position-independent small code model
-Date: Thu, 13 Jun 2024 13:32:20 +0200
-Message-ID: <20240613113229.394769118@linuxfoundation.org>
+Subject: [PATCH 5.4 043/202] wifi: ath10k: Fix an error code problem in ath10k_dbg_sta_write_peer_debug_trigger()
+Date: Thu, 13 Jun 2024 13:32:21 +0200
+Message-ID: <20240613113229.433564424@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -54,79 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit cba786af84a0f9716204e09f518ce3b7ada8555e ]
+[ Upstream commit c511a9c12674d246916bb16c479d496b76983193 ]
 
-On x86, the ordinary, position dependent small and kernel code models
-only support placement of the executable in 32-bit addressable memory,
-due to the use of 32-bit signed immediates to generate references to
-global variables. For the kernel, this implies that all global variables
-must reside in the top 2 GiB of the kernel virtual address space, where
-the implicit address bits 63:32 are equal to sign bit 31.
+Clang Static Checker (scan-build) warns:
 
-This means the kernel code model is not suitable for other bare metal
-executables such as the kexec purgatory, which can be placed arbitrarily
-in the physical address space, where its address may no longer be
-representable as a sign extended 32-bit quantity. For this reason,
-commit
+drivers/net/wireless/ath/ath10k/debugfs_sta.c:line 429, column 3
+Value stored to 'ret' is never read.
 
-  e16c2983fba0 ("x86/purgatory: Change compiler flags from -mcmodel=kernel to -mcmodel=large to fix kexec relocation errors")
+Return 'ret' rather than 'count' when 'ret' stores an error code.
 
-switched to the large code model, which uses 64-bit immediates for all
-symbol references, including function calls, in order to avoid relying
-on any assumptions regarding proximity of symbols in the final
-executable.
-
-The large code model is rarely used, clunky and the least likely to
-operate in a similar fashion when comparing GCC and Clang, so it is best
-avoided. This is especially true now that Clang 18 has started to emit
-executable code in two separate sections (.text and .ltext), which
-triggers an issue in the kexec loading code at runtime.
-
-The SUSE bugzilla fixes tag points to gcc 13 having issues with the
-large model too and that perhaps the large model should simply not be
-used at all.
-
-Instead, use the position independent small code model, which makes no
-assumptions about placement but only about proximity, where all
-referenced symbols must be within -/+ 2 GiB, i.e., in range for a
-RIP-relative reference. Use hidden visibility to suppress the use of a
-GOT, which carries absolute addresses that are not covered by static ELF
-relocations, and is therefore incompatible with the kexec loader's
-relocation logic.
-
-  [ bp: Massage commit message. ]
-
-Fixes: e16c2983fba0 ("x86/purgatory: Change compiler flags from -mcmodel=kernel to -mcmodel=large to fix kexec relocation errors")
-Fixes: https://bugzilla.suse.com/show_bug.cgi?id=1211853
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2016
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Fangrui Song <maskray@google.com>
-Acked-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/all/20240417-x86-fix-kexec-with-llvm-18-v1-0-5383121e8fb7@kernel.org/
+Fixes: ee8b08a1be82 ("ath10k: add debugfs support to get per peer tids log via tracing")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240422034243.938962-1-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/purgatory/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/debugfs_sta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/purgatory/Makefile b/arch/x86/purgatory/Makefile
-index 8309e230aeed1..662b23648a282 100644
---- a/arch/x86/purgatory/Makefile
-+++ b/arch/x86/purgatory/Makefile
-@@ -32,7 +32,8 @@ KCOV_INSTRUMENT := n
- # make up the standalone purgatory.ro
+diff --git a/drivers/net/wireless/ath/ath10k/debugfs_sta.c b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
+index 42931a669b02f..17bc4255e2eac 100644
+--- a/drivers/net/wireless/ath/ath10k/debugfs_sta.c
++++ b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
+@@ -438,7 +438,7 @@ ath10k_dbg_sta_write_peer_debug_trigger(struct file *file,
+ 	}
+ out:
+ 	mutex_unlock(&ar->conf_mutex);
+-	return count;
++	return ret ?: count;
+ }
  
- PURGATORY_CFLAGS_REMOVE := -mcmodel=kernel
--PURGATORY_CFLAGS := -mcmodel=large -ffreestanding -fno-zero-initialized-in-bss -g0
-+PURGATORY_CFLAGS := -mcmodel=small -ffreestanding -fno-zero-initialized-in-bss -g0
-+PURGATORY_CFLAGS += -fpic -fvisibility=hidden
- PURGATORY_CFLAGS += $(DISABLE_STACKLEAK_PLUGIN) -DDISABLE_BRANCH_PROFILING
- 
- # Default KBUILD_CFLAGS can have -pg option set when FTRACE is enabled. That
+ static const struct file_operations fops_peer_debug_trigger = {
 -- 
 2.43.0
 
