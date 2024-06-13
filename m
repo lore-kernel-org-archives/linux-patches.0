@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8B4143C52;
-	Thu, 13 Jun 2024 12:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203B7143C52;
+	Thu, 13 Jun 2024 12:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280210; cv=none; b=C7gV35h5l2zRmaTSDtCHaB9rBGj/eAkklraH1Be4x2ggM6o+bFwbgkoc9WSfjEXQR9De23Ejanba14MURer4sLex5/scP9HYKfab7GpiLG2fkL3I/LW4pr3o6wMy+1PD5nhq7HvmXy6xa2/4yr/oVVmf6a5rx8Q9YG3IGKjG3Wc=
+	t=1718280213; cv=none; b=jwvjm+ptpbSQ76NKuL8Kbrq4GvDQo2AAvSRQy77A/gWdmnjCxMDnRAHLcwWEuI3Ht9PzcP9aXLBbtHdvbCxeZV3DUk/TUCLJy3RdnceabhULPBOSCv8GccnfxzBZ0v6QR85L2vpeBg0MQ59q1kwrjkgwP0CEBQTCqEl/8jebDZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280210; c=relaxed/simple;
-	bh=jxHM+gWZqiztpSW2eL02WvVeIcHLXTJJ+cT4CUSGPuc=;
+	s=arc-20240116; t=1718280213; c=relaxed/simple;
+	bh=aGGWRGbTvfUbCqeWZi99hPPtXY0r1D4edy8YMU39yAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eB3qxO5/daDPFLkvcPYZxaZt4eId/+Falz3r/kONBtqYx97C44y8UtC7JsUx0eiAh25FziLKzRLeln6ZQrFHKtsrQW6prZ9A+aLR9y2lhI8hP2fzg9H3b7xT+wsZQApJIq69qN1d/YxJ7QCvhl6K/weamZQLqmOMJQifVwzILHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5c2TdFv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OMeGiysHe/hTkVUJtD+buSPQYyCUk/+rZlzDpz/znSGfuzrSS82xyAINtRUv1NxB4E+ln4IMQGi4dwIgqMM7X5zKxa4KDwoUDYjHcksSI6bcDQephJxjCg4WzLoRZNfeRoeFuRJBfi5WE5E4pfMlOiTSL7nztZykhNBd2iQJ8TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1VSl6Qd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5c2TdFv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AABA3C4AF1A;
-	Thu, 13 Jun 2024 12:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1VSl6Qd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CAB5C32786;
+	Thu, 13 Jun 2024 12:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280210;
-	bh=jxHM+gWZqiztpSW2eL02WvVeIcHLXTJJ+cT4CUSGPuc=;
+	s=korg; t=1718280213;
+	bh=aGGWRGbTvfUbCqeWZi99hPPtXY0r1D4edy8YMU39yAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n5c2TdFvepwhai/a+YpIlIWcwLO3KVlMaMz86APzvizJ16C/bynKHpnNkcXPyKDmJ
-	 eo8gzx33TBE1VPRAy8OV+a6qD+DKX+/ukyKdbAnWSotWn/djx1CytvxiDmjeeBM5xw
-	 ZzuALPcemvb/BFbTI4yWSRVb3NhuIelu/m0SUMJs=
+	b=L1VSl6Qdae3TPkvtKb8MAJiTCo1xdOL9+yzCGTlgAyavnQMOzYOD5xie3fJzFP3tL
+	 vWxlLNOZIzr6D1ts+CccKlXwJrg8GPR+RDTgdicBFKCJrzDUwP8y/h+gupcp4BMhNO
+	 XhORe8zXgN+nSAMb1/w7cjHt+kJzdzVFFt/XXR6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 5.4 179/202] wifi: rtl8xxxu: Fix the TX power of RTL8192CU, RTL8723AU
-Date: Thu, 13 Jun 2024 13:34:37 +0200
-Message-ID: <20240613113234.647308098@linuxfoundation.org>
+	Yang Xiwen <forbidden405@outlook.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 5.4 180/202] arm64: dts: hi3798cv200: fix the size of GICR
+Date: Thu, 13 Jun 2024 13:34:38 +0200
+Message-ID: <20240613113234.685290570@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -50,98 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Yang Xiwen <forbidden405@outlook.com>
 
-commit 08b5d052d17a89bb8706b2888277d0b682dc1610 upstream.
+commit 428a575dc9038846ad259466d5ba109858c0a023 upstream.
 
-Don't subtract 1 from the power index. This was added in commit
-2fc0b8e5a17d ("rtl8xxxu: Add TX power base values for gen1 parts")
-for unknown reasons. The vendor drivers don't do this.
+During boot, Linux kernel complains:
 
-Also correct the calculations of values written to
-REG_OFDM0_X{C,D}_TX_IQ_IMBALANCE. According to the vendor driver,
-these are used for TX power training.
+[    0.000000] GIC: GICv2 detected, but range too small and irqchip.gicv2_force_probe not set
 
-With these changes rtl8xxxu sets the TX power of RTL8192CU the same
-as the vendor driver.
+This SoC is using a regular GIC-400 and the GICR space size should be
+8KB rather than 256B.
 
-None of this appears to have any effect on my RTL8192CU device.
+With this patch:
 
+[    0.000000] GIC: Using split EOI/Deactivate mode
+
+So this should be the correct fix.
+
+Fixes: 2f20182ed670 ("arm64: dts: hisilicon: add dts files for hi3798cv200-poplar board")
+Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://msgid.link/6ae5945b-644e-45e4-a78f-4c7d9c987910@gmail.com
+Link: https://lore.kernel.org/r/20240219-cache-v3-1-a33c57534ae9@outlook.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c |   26 +++++++-----------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -28,6 +28,7 @@
- #include <linux/wireless.h>
- #include <linux/firmware.h>
- #include <linux/moduleparam.h>
-+#include <linux/bitfield.h>
- #include <net/mac80211.h>
- #include "rtl8xxxu.h"
- #include "rtl8xxxu_regs.h"
-@@ -1390,13 +1391,13 @@ rtl8xxxu_gen1_set_tx_power(struct rtl8xx
- 	u8 cck[RTL8723A_MAX_RF_PATHS], ofdm[RTL8723A_MAX_RF_PATHS];
- 	u8 ofdmbase[RTL8723A_MAX_RF_PATHS], mcsbase[RTL8723A_MAX_RF_PATHS];
- 	u32 val32, ofdm_a, ofdm_b, mcs_a, mcs_b;
--	u8 val8;
-+	u8 val8, base;
- 	int group, i;
- 
- 	group = rtl8xxxu_gen1_channel_to_group(channel);
- 
--	cck[0] = priv->cck_tx_power_index_A[group] - 1;
--	cck[1] = priv->cck_tx_power_index_B[group] - 1;
-+	cck[0] = priv->cck_tx_power_index_A[group];
-+	cck[1] = priv->cck_tx_power_index_B[group];
- 
- 	if (priv->hi_pa) {
- 		if (cck[0] > 0x20)
-@@ -1407,10 +1408,6 @@ rtl8xxxu_gen1_set_tx_power(struct rtl8xx
- 
- 	ofdm[0] = priv->ht40_1s_tx_power_index_A[group];
- 	ofdm[1] = priv->ht40_1s_tx_power_index_B[group];
--	if (ofdm[0])
--		ofdm[0] -= 1;
--	if (ofdm[1])
--		ofdm[1] -= 1;
- 
- 	ofdmbase[0] = ofdm[0] +	priv->ofdm_tx_power_index_diff[group].a;
- 	ofdmbase[1] = ofdm[1] +	priv->ofdm_tx_power_index_diff[group].b;
-@@ -1499,20 +1496,19 @@ rtl8xxxu_gen1_set_tx_power(struct rtl8xx
- 
- 	rtl8xxxu_write32(priv, REG_TX_AGC_A_MCS15_MCS12,
- 			 mcs_a + power_base->reg_0e1c);
-+	val8 = u32_get_bits(mcs_a + power_base->reg_0e1c, 0xff000000);
- 	for (i = 0; i < 3; i++) {
--		if (i != 2)
--			val8 = (mcsbase[0] > 8) ? (mcsbase[0] - 8) : 0;
--		else
--			val8 = (mcsbase[0] > 6) ? (mcsbase[0] - 6) : 0;
-+		base = i != 2 ? 8 : 6;
-+		val8 = max_t(int, val8 - base, 0);
- 		rtl8xxxu_write8(priv, REG_OFDM0_XC_TX_IQ_IMBALANCE + i, val8);
- 	}
-+
- 	rtl8xxxu_write32(priv, REG_TX_AGC_B_MCS15_MCS12,
- 			 mcs_b + power_base->reg_0868);
-+	val8 = u32_get_bits(mcs_b + power_base->reg_0868, 0xff000000);
- 	for (i = 0; i < 3; i++) {
--		if (i != 2)
--			val8 = (mcsbase[1] > 8) ? (mcsbase[1] - 8) : 0;
--		else
--			val8 = (mcsbase[1] > 6) ? (mcsbase[1] - 6) : 0;
-+		base = i != 2 ? 8 : 6;
-+		val8 = max_t(int, val8 - base, 0);
- 		rtl8xxxu_write8(priv, REG_OFDM0_XD_TX_IQ_IMBALANCE + i, val8);
- 	}
- }
+--- a/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
++++ b/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
+@@ -58,7 +58,7 @@
+ 	gic: interrupt-controller@f1001000 {
+ 		compatible = "arm,gic-400";
+ 		reg = <0x0 0xf1001000 0x0 0x1000>,  /* GICD */
+-		      <0x0 0xf1002000 0x0 0x100>;   /* GICC */
++		      <0x0 0xf1002000 0x0 0x2000>;  /* GICC */
+ 		#address-cells = <0>;
+ 		#interrupt-cells = <3>;
+ 		interrupt-controller;
 
 
