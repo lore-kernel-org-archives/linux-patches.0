@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA8912C81F;
-	Thu, 13 Jun 2024 12:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C329144313;
+	Thu, 13 Jun 2024 12:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282295; cv=none; b=k1CCMXYwjvwY8JmXdajjIXoUHJ3JGu0HSA3CO4gRm+x/w+evBhhRyjAQwjBhUEXW9mh3sDzuykHMb5mwE9CJVBgQAAx9kcFsoAFJzhpctyrLBsyZToqauffImls7L9En/CGHZkWLnsV3Owvth83APmkIEK4yB2bkyXDrBIC4xjY=
+	t=1718282298; cv=none; b=gRepDT67nrKMznKqx5nSdxu9mkyxPvp3nrmVfaTfJJN2VkuucUqoEN3EROP/fSI4EK6f+J90rl1gJJvS3Zt+MMjjOcZxxpmXstu8WhQ3IiyodsTgGOzi3u3u7See+599fDAUTJArXdKKWMDNAO7sV9vWj50LsYmVWICBhCzyE/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282295; c=relaxed/simple;
-	bh=Qf4BbfDtLG2Cbnw+ILZ5UEeyOAdkaBcmxMFgAxOTpmI=;
+	s=arc-20240116; t=1718282298; c=relaxed/simple;
+	bh=6nZ2p4sNZT/s0w+jy7lGeEAxZRrmPMxb2d6L/48Hkf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UqCkW058FMZUZxt2AVIsey35HTgi4ZldshFjf8rjn05w4ysCqdmjoue1Yry+rtu1Q8IDMXyS/YN0KIREIOIIOlAOZ2M4ZUEw1x1weVVr8stRW08M7pLe4vkq7QBHl/bXO1uYl4wS+MYYIsc/NxUQdIquIci8bqKYx+8UwjxyS0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNbCmqwi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hPNcT4CmgkGpCrvunUTACMbaJZrNf/bgjwFl4WNq2qClo+nUqdFqYdpWfdjqOgB88ZoSxiH1v89wOwmHwOf4oFiNRIO+/mH+r209Ail2+1Wk8swoOwAqZHlwepTfsI1aBWG6DJ9x69pkFzAmxEDrlUdXkOIdEl5I9MsxuDq+qfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKVZANzv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNbCmqwi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E3FC2BBFC;
-	Thu, 13 Jun 2024 12:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKVZANzv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEA4C4AF4D;
+	Thu, 13 Jun 2024 12:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282295;
-	bh=Qf4BbfDtLG2Cbnw+ILZ5UEeyOAdkaBcmxMFgAxOTpmI=;
+	s=korg; t=1718282298;
+	bh=6nZ2p4sNZT/s0w+jy7lGeEAxZRrmPMxb2d6L/48Hkf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNbCmqwiqRd8xFWY+FqX6Zpt9/atLxW30pqIHT4hluobYMuMZ/fKuIJ62u0CnmrSt
-	 tLnT2Ull3k9Z5nTXcMZKiTOoxXqVyMAy/eh/5NzkM/hrJPNjo3hYLt6TQvnHL2h4pQ
-	 sdFT87C8WaQuXh//XLLIPmfJ0Q1lbhljlXSxToYQ=
+	b=wKVZANzvnFtfBKA1T5Mp4HfHOp2A7wev5bh4UT59/8nsbTX0Z8eQ9yGcDqkhqY6VO
+	 3ZZECTaEpkCwNuS3b54jrGs/VH5l+01V3egArc0SkTkiEYpR8cJX+YmN2xnFkqNJn0
+	 S0B+NeVBI/4q0ywzbkM1Bp3sTDQp4LzTVN2PB7X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com>
-Subject: [PATCH 5.15 229/402] PCI/EDR: Align EDR_PORT_LOCATE_DSM with PCI Firmware r3.3
-Date: Thu, 13 Jun 2024 13:33:06 +0200
-Message-ID: <20240613113311.076950323@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Leo Yan <leo.yan@linux.dev>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 230/402] perf ui browser: Avoid SEGV on title
+Date: Thu, 13 Jun 2024 13:33:07 +0200
+Message-ID: <20240613113311.117324009@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,63 +61,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit e2e78a294a8a863898b781dbcf90e087eda3155d ]
+[ Upstream commit 90f01afb0dfafbc9b094bb61e61a4ac297d9d0d2 ]
 
-The "Downstream Port Containment related Enhancements" ECN of Jan 28, 2019
-(document 12888 below), defined the EDR_PORT_LOCATE_DSM function with
-Revision ID 5 with a return value encoding (Bits 2:0 = Function, Bits 7:3 =
-Device, Bits 15:8 = Bus).  When the ECN was integrated into PCI Firmware
-r3.3, sec 4.6.13, Bit 31 was added to indicate success or failure.
+If the title is NULL then it can lead to a SEGV.
 
-Check Bit 31 for failure in acpi_dpc_port_get().
-
-Link: https://lore.kernel.org/r/20240501022543.1626025-1-sathyanarayanan.kuppuswamy@linux.intel.com
-Link: https://members.pcisig.com/wg/PCI-SIG/document/12888
-Fixes: ac1c8e35a326 ("PCI/DPC: Add Error Disconnect Recover (EDR) support")
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-[bhelgaas: split into two patches, update commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com> # one platform
+Fixes: 769e6a1e15bdbbaf ("perf ui browser: Don't save pointer to stack memory")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Leo Yan <leo.yan@linux.dev>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240508035301.1554434-2-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/edr.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ tools/perf/ui/browser.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pcie/edr.c b/drivers/pci/pcie/edr.c
-index 5b5a502363c00..35210007602c5 100644
---- a/drivers/pci/pcie/edr.c
-+++ b/drivers/pci/pcie/edr.c
-@@ -80,8 +80,9 @@ static struct pci_dev *acpi_dpc_port_get(struct pci_dev *pdev)
- 	u16 port;
+diff --git a/tools/perf/ui/browser.c b/tools/perf/ui/browser.c
+index d09b4cbec6e06..5d6f4f25c33d0 100644
+--- a/tools/perf/ui/browser.c
++++ b/tools/perf/ui/browser.c
+@@ -203,7 +203,7 @@ void ui_browser__refresh_dimensions(struct ui_browser *browser)
+ void ui_browser__handle_resize(struct ui_browser *browser)
+ {
+ 	ui__refresh_dimensions(false);
+-	ui_browser__show(browser, browser->title, ui_helpline__current);
++	ui_browser__show(browser, browser->title ?: "", ui_helpline__current);
+ 	ui_browser__refresh(browser);
+ }
  
- 	/*
--	 * Behavior when calling unsupported _DSM functions is undefined,
--	 * so check whether EDR_PORT_DPC_ENABLE_DSM is supported.
-+	 * If EDR_PORT_LOCATE_DSM is not implemented under the target of
-+	 * EDR, the target is the port that experienced the containment
-+	 * event (PCI Firmware r3.3, sec 4.6.13).
- 	 */
- 	if (!acpi_check_dsm(adev->handle, &pci_acpi_dsm_guid, 5,
- 			    1ULL << EDR_PORT_LOCATE_DSM))
-@@ -98,6 +99,16 @@ static struct pci_dev *acpi_dpc_port_get(struct pci_dev *pdev)
- 		return NULL;
- 	}
- 
-+	/*
-+	 * Bit 31 represents the success/failure of the operation. If bit
-+	 * 31 is set, the operation failed.
-+	 */
-+	if (obj->integer.value & BIT(31)) {
-+		ACPI_FREE(obj);
-+		pci_err(pdev, "Locate Port _DSM failed\n");
-+		return NULL;
-+	}
-+
- 	/*
- 	 * Firmware returns DPC port BDF details in following format:
- 	 *	15:8 = bus
 -- 
 2.43.0
 
