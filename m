@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD0B1428FC;
-	Thu, 13 Jun 2024 11:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6139F1428FC;
+	Thu, 13 Jun 2024 11:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279655; cv=none; b=Uuy1nMOFWAcj92zKaZqPstRy4wnJvOi8d1kUddUKBnbnlpxLYvPq4YPGAHKuQU0cubHEKsz1fFM3PPf6gVWBb5qiU301ntMtwBjgivUm2FiZ2jlO+cLeFFfkyPhiTT/nfoGSxMZcqSM0F78rFIuK0Enm5UW7cR+SEnm90NvxrhU=
+	t=1718279658; cv=none; b=oIe6raTGIq6iON4yTkqftLX6o/M3GfFJA2ALZzfwtgY78G5PJLetDVEEMKDkkVSDXIs2KvTuwlRfJhl1Ch/SHjLumRXUwIwTY2T5VBnwMQ0JVkCsDQqu1WBEes4wBfeaA1iP2TS2q3jxqLXBzZE6jGvqU04xciDY6snULneVc0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279655; c=relaxed/simple;
-	bh=nqjrYG6ZEsgvbfC3TL+dcAYfum4DFsaM2q9msx3EbhY=;
+	s=arc-20240116; t=1718279658; c=relaxed/simple;
+	bh=Wzk2trO3NnMS4Dtgw/nA+m984WVNRD9TK1pClT86n6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c0NfAtmYfHvq0x0XIGgmZmts63fW42ybRHrP3NOt+x2NrwfqJY75sA6OsTP/HJ2oDj4zgPvMdsjKt4CE8/bJYMjpKF880O2X138MAHsaTxoAXmA1qKAUq22+pQa7QldW+vcxWPyUIw6OxG1AB1lL4v5DepRYuJEPhUxdwz2rlZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3AWoryx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tEo34k3h+5D0ECd81nHuGypa+zjUoMb6kPzGxeJudE1k8ewwWUiIIGPhCdQwneOtPmUjbDfNg7YgiPlg0SkQ194a+7Vdgwk8ooXdbA+juZCjGbIcCcrB6F28rD3g0j0tfH7286ahWvEIc38s+IjsMvGjn1SxGA3e4T/yNvGKiYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlbDPPSj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3AWoryx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87EB0C2BBFC;
-	Thu, 13 Jun 2024 11:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlbDPPSj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7EEC2BBFC;
+	Thu, 13 Jun 2024 11:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279654;
-	bh=nqjrYG6ZEsgvbfC3TL+dcAYfum4DFsaM2q9msx3EbhY=;
+	s=korg; t=1718279657;
+	bh=Wzk2trO3NnMS4Dtgw/nA+m984WVNRD9TK1pClT86n6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3AWoryx9sgPHyL3gS16hSIOi/3p0LRr0p3cw32HSbRvORebhjSuqOw2VxkyRpzY0
-	 8l8Qds3Y5kgGwCXWC3MWlzmGMxXow1u+ddQf5dhO7olBDb6KCuXR3KBnoV1s5QXIv2
-	 LesUcs/WDWeZmZbqYWv6YqOrAyzfBTyUhLojTWJw=
+	b=RlbDPPSjofhczJ3OzryA8N8RHF7Lbt4KTrJCAU1Kv4wt0qSk6al4mxHgeWTP9/qRF
+	 E6QD8ecyBYYPXqhmcQkUdISjGjxaMZ8zsXBJd8v4DmTLVJCKCxK0SFU6WlQR7JB4pO
+	 4ElaGOZ8pHx9bsHHvValnQZ/zwMZD1xGavzFWv5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0fecc032fa134afd49df@syzkaller.appspotmail.com,
-	Josef Bacik <josef@toxicpanda.com>,
+	Lennart Poettering <lennart@poettering.net>,
+	Jiri Slaby <jslaby@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.9 149/157] btrfs: fix leak of qgroup extent records after transaction abort
-Date: Thu, 13 Jun 2024 13:34:34 +0200
-Message-ID: <20240613113233.170854727@linuxfoundation.org>
+Subject: [PATCH 6.9 150/157] btrfs: re-introduce norecovery mount option
+Date: Thu, 13 Jun 2024 13:34:35 +0200
+Message-ID: <20240613113233.210863264@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -53,60 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit fb33eb2ef0d88e75564983ef057b44c5b7e4fded upstream.
+commit 440861b1a03c72cc7be4a307e178dcaa6894479b upstream.
 
-Qgroup extent records are created when delayed ref heads are created and
-then released after accounting extents at btrfs_qgroup_account_extents(),
-called during the transaction commit path.
+Although 'norecovery' mount option was marked as deprecated for a long
+time and a warning message was printed during the deprecation window,
+it's still actively utilized by several projects that need a safer way
+to mount a btrfs without any writes.
 
-If a transaction is aborted we free the qgroup records by calling
-btrfs_qgroup_destroy_extent_records() at btrfs_destroy_delayed_refs(),
-unless we don't have delayed references. We are incorrectly assuming
-that no delayed references means we don't have qgroup extents records.
+Furthermore this 'norecovery' mount option is supported by other major
+filesystems, which makes it less clear what's our motivation to remove
+it.
 
-We can currently have no delayed references because we ran them all
-during a transaction commit and the transaction was aborted after that
-due to some error in the commit path.
+Re-introduce the 'norecovery' mount option, and output a message to recommend
+'rescue=nologreplay' option.
 
-So fix this by ensuring we btrfs_qgroup_destroy_extent_records() at
-btrfs_destroy_delayed_refs() even if we don't have any delayed references.
-
-Reported-by: syzbot+0fecc032fa134afd49df@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/0000000000004e7f980619f91835@google.com/
-Fixes: 81f7eb00ff5b ("btrfs: destroy qgroup extent records on transaction abort")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Link: https://lore.kernel.org/linux-btrfs/ZkxZT0J-z0GYvfy8@gardel-login/#t
+Link: https://github.com/systemd/systemd/pull/32892
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1222429
+Reported-by: Lennart Poettering <lennart@poettering.net>
+Reported-by: Jiri Slaby <jslaby@suse.com>
+Fixes: a1912f712188 ("btrfs: remove code for inode_cache and recovery mount options")
+CC: stable@vger.kernel.org # 6.8+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |   10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ fs/btrfs/super.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -4544,18 +4544,10 @@ static void btrfs_destroy_delayed_refs(s
- 				       struct btrfs_fs_info *fs_info)
- {
- 	struct rb_node *node;
--	struct btrfs_delayed_ref_root *delayed_refs;
-+	struct btrfs_delayed_ref_root *delayed_refs = &trans->delayed_refs;
- 	struct btrfs_delayed_ref_node *ref;
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -119,6 +119,7 @@ enum {
+ 	Opt_thread_pool,
+ 	Opt_treelog,
+ 	Opt_user_subvol_rm_allowed,
++	Opt_norecovery,
  
--	delayed_refs = &trans->delayed_refs;
--
- 	spin_lock(&delayed_refs->lock);
--	if (atomic_read(&delayed_refs->num_entries) == 0) {
--		spin_unlock(&delayed_refs->lock);
--		btrfs_debug(fs_info, "delayed_refs has NO entry");
--		return;
--	}
--
- 	while ((node = rb_first_cached(&delayed_refs->href_root)) != NULL) {
- 		struct btrfs_delayed_ref_head *head;
- 		struct rb_node *n;
+ 	/* Rescue options */
+ 	Opt_rescue,
+@@ -245,6 +246,8 @@ static const struct fs_parameter_spec bt
+ 	__fsparam(NULL, "nologreplay", Opt_nologreplay, fs_param_deprecated, NULL),
+ 	/* Deprecated, with alias rescue=usebackuproot */
+ 	__fsparam(NULL, "usebackuproot", Opt_usebackuproot, fs_param_deprecated, NULL),
++	/* For compatibility only, alias for "rescue=nologreplay". */
++	fsparam_flag("norecovery", Opt_norecovery),
+ 
+ 	/* Debugging options. */
+ 	fsparam_flag_no("enospc_debug", Opt_enospc_debug),
+@@ -438,6 +441,11 @@ static int btrfs_parse_param(struct fs_c
+ 		"'nologreplay' is deprecated, use 'rescue=nologreplay' instead");
+ 		btrfs_set_opt(ctx->mount_opt, NOLOGREPLAY);
+ 		break;
++	case Opt_norecovery:
++		btrfs_info(NULL,
++"'norecovery' is for compatibility only, recommended to use 'rescue=nologreplay'");
++		btrfs_set_opt(ctx->mount_opt, NOLOGREPLAY);
++		break;
+ 	case Opt_flushoncommit:
+ 		if (result.negated)
+ 			btrfs_clear_opt(ctx->mount_opt, FLUSHONCOMMIT);
 
 
