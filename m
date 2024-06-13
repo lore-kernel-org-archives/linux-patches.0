@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BEA1E519;
-	Thu, 13 Jun 2024 12:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7A91E519;
+	Thu, 13 Jun 2024 12:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282569; cv=none; b=ltS8ibQQeesb1doit+yCYGMNVkq7fn3/E7yzn2y8bL3er32b1xVsSz0uB3ynZz4qpu9DF6t9wVVu+6quAlJPzjmeGyOkel8dRvA2M2LEVbMKIukyNH/82tcQX8co3q0EoTBbNSdT9fsRaY+ijF97qyDV3UUZqBuoG2Ew0jDfQ34=
+	t=1718282572; cv=none; b=BfHop7+QM8zEJ08fsGtd6a7yOa3o8td4qAMBAnoZds1zIifT8WDRNxM492Ehc+FnR0Te4+oMBMy+N8nannIUpnZR2pIOGMJZGYXaGJVWcVaA6XnaNVDUcdMfqodIXcFrUAOlIcMUtYTSfQ1/ocAXEMWHyCKcIEnAwO2+lJO4A34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282569; c=relaxed/simple;
-	bh=P2qcha44o+iyv+kaBynde0LW7gEV0Sbs5sEVxoXQTXM=;
+	s=arc-20240116; t=1718282572; c=relaxed/simple;
+	bh=W5ecsnAzMvWt3Bb2+F+C0g2A/WVlf2lLPWDSEGlYeJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/ng52B+SD0Jh5Xa2L5eCU3gQzG4mqZ8bS29XYnogDooSZelRbsvGuzjjqOlfDoRQR3EhLCf9O7CitnDQJx/dg/GanuA/rRKxl8ZqG9BXGVibyhBG5JXXGbDDdNdurWt3amWvO57NyZOwPtF8n+rC0oJ8R0yeDyddh3jLBH39XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cse8p3ji; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/BYTKGM5IQmht7a3G34DUvAWCbcX37Y0RABV6blcDw1SBYYJvcDgMGKIPloghu6+IPcvtVzrbBin74DVCkaBnV53SSpXMWMkL20v/PvplssA4UlZuosBUNu88VyELEABaLD67Fm4NYiUP2r49meqDO2vuSCj2o0KqUffkoa2hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT/AnfV1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cse8p3ji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABAFC2BBFC;
-	Thu, 13 Jun 2024 12:42:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT/AnfV1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772B6C2BBFC;
+	Thu, 13 Jun 2024 12:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282568;
-	bh=P2qcha44o+iyv+kaBynde0LW7gEV0Sbs5sEVxoXQTXM=;
+	s=korg; t=1718282571;
+	bh=W5ecsnAzMvWt3Bb2+F+C0g2A/WVlf2lLPWDSEGlYeJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cse8p3jiKTSPxjIRuTs5xGAQxbt07fUdnemWqpgZrS/mMskcQv15Hn2HcNaeZ144/
-	 wXZkORCiCp35fQ9iCbs+Moxz6lrIfjRDIrj1cFRT5Py8UNfNVaoeykd493bC4y6DMq
-	 aU/faVw+JEHSLZb6qf9URySaaYH5v9xrwpm3rdP4=
+	b=OT/AnfV1/T0/U0gblGtoLKBQKZyvs62JP8kfQbg4gVeQc7lTurxPSXlThssIlZlAE
+	 c7jiA1uatW63PvRDMGehbXNR9ZA6EniEBKptG1TYwnXrLAfuiSQOSvZNTXsyCf7PSu
+	 4ZmR8E2Fg/o/ZrMOQp3ZVeIKMpCgQODSU/ouyHuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi.grimberg@vastdata.com>,
-	Dan Aloni <dan.aloni@vastdata.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 290/402] rpcrdma: fix handling for RDMA_CM_EVENT_DEVICE_REMOVAL
-Date: Thu, 13 Jun 2024 13:34:07 +0200
-Message-ID: <20240613113313.463445024@linuxfoundation.org>
+Subject: [PATCH 5.15 281/402] ASoC: mediatek: mt8192: fix register configuration for tdm
+Date: Thu, 13 Jun 2024 13:33:58 +0200
+Message-ID: <20240613113313.109102965@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,49 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Aloni <dan.aloni@vastdata.com>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit 4836da219781ec510c4c0303df901aa643507a7a ]
+[ Upstream commit a85ed162f0efcfdd664954414a05d1d560cc95dc ]
 
-Under the scenario of IB device bonding, when bringing down one of the
-ports, or all ports, we saw xprtrdma entering a non-recoverable state
-where it is not even possible to complete the disconnect and shut it
-down the mount, requiring a reboot. Following debug, we saw that
-transport connect never ended after receiving the
-RDMA_CM_EVENT_DEVICE_REMOVAL callback.
+For DSP_A, data is a BCK cycle behind LRCK trigger edge. For DSP_B, this
+delay doesn't exist. Fix the delay configuration to match the standard.
 
-The DEVICE_REMOVAL callback is irrespective of whether the CM_ID is
-connected, and ESTABLISHED may not have happened. So need to work with
-each of these states accordingly.
-
-Fixes: 2acc5cae2923 ('xprtrdma: Prevent dereferencing r_xprt->rx_ep after it is freed')
-Cc: Sagi Grimberg <sagi.grimberg@vastdata.com>
-Signed-off-by: Dan Aloni <dan.aloni@vastdata.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 52fcd65414abfc ("ASoC: mediatek: mt8192: support tdm in platform driver")
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20240509-8192-tdm-v1-1-530b54645763@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/mediatek/mt8192/mt8192-dai-tdm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 41095a278f798..34413d4ab0e52 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -258,7 +258,11 @@ rpcrdma_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
- 	case RDMA_CM_EVENT_DEVICE_REMOVAL:
- 		pr_info("rpcrdma: removing device %s for %pISpc\n",
- 			ep->re_id->device->name, sap);
--		fallthrough;
-+		switch (xchg(&ep->re_connect_status, -ENODEV)) {
-+		case 0: goto wake_connect_worker;
-+		case 1: goto disconnected;
-+		}
-+		return 0;
- 	case RDMA_CM_EVENT_ADDR_CHANGE:
- 		ep->re_connect_status = -ENODEV;
- 		goto disconnected;
+diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
+index f3bebed2428a7..360259e60de84 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
++++ b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
+@@ -566,10 +566,10 @@ static int mtk_dai_tdm_hw_params(struct snd_pcm_substream *substream,
+ 		tdm_con |= 1 << DELAY_DATA_SFT;
+ 		tdm_con |= get_tdm_lrck_width(format) << LRCK_TDM_WIDTH_SFT;
+ 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_A) {
+-		tdm_con |= 0 << DELAY_DATA_SFT;
++		tdm_con |= 1 << DELAY_DATA_SFT;
+ 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
+ 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_B) {
+-		tdm_con |= 1 << DELAY_DATA_SFT;
++		tdm_con |= 0 << DELAY_DATA_SFT;
+ 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
+ 	}
+ 
 -- 
 2.43.0
 
