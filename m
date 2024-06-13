@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58ADC148820;
-	Thu, 13 Jun 2024 11:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7DC148830;
+	Thu, 13 Jun 2024 11:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279791; cv=none; b=hOsAb7mtK0VPYHNuPfRXmQlx1To8K94zzCZpPX962VKtqPYD1ypWBDGWiWo8m76dpYtl4pc0ZYDQ2qAS+s4ibner68rgEuH2zXlqcUFESK/CTNRI+Tvbw6onIBQnOJh0pgFFggvSmwhSw/wPQrDj96W4kTKN7Vup0dDMDy+wRmM=
+	t=1718279794; cv=none; b=M2A8qTTIQzbt1l5r5tVt887ZnqAY5lJSFPf4rn7HY0UdC6otfQcI6sqpmmHSDHlcn7kQIWZ4D0IXRCuzPUTtjqsX/NjJYddQmNmhEgB0FxhjYNumCUf5WGVHZJ2Ih4/2SOgr5LKf41wr33V/FQJA+ixnUnS8o9jD8Cg0GYb/d2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279791; c=relaxed/simple;
-	bh=HtOIAMBA/LKwohZQ5FQtbfYoWZhj2w8dfe9O/lxhsVM=;
+	s=arc-20240116; t=1718279794; c=relaxed/simple;
+	bh=i2MsitVf0OrENLgA5u2AFiDGPgs6WQCN/5LuckzvjaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GfrWEzwPF4+NOIgjVYmnwRoLiN7Ovu9fhoWeR/8UeGJfEkiibnkckr2VmaaLCir/BzpY0LTDwrswgb3bsw+n5TlAhrxLk5k4xpHpPP2My5oujCds+NnJXQdGJb6BO0qGmOoOmXugL/aAhSSm5jLRjieiJRaspnzP1HmySs7IwmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FyBqlpb+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rGXehs+M7aUCUYpr3na2/TCYWJ3vhEcaHT4Iv45AXDLcj2ComYZscw2l1d3fWVwPGBkUeOAqIj5NGnPhH4Jf4caVlx4yczCBEGgTITK2WX29Y+R8/79tQsj0Z+QdfgNLbfe2uMKdMA/+GsL0SZt04yOGLsB/TeZLwMdKSVOSfBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMJwOKh7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FyBqlpb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C1AC2BBFC;
-	Thu, 13 Jun 2024 11:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMJwOKh7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72C3C4AF1D;
+	Thu, 13 Jun 2024 11:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279791;
-	bh=HtOIAMBA/LKwohZQ5FQtbfYoWZhj2w8dfe9O/lxhsVM=;
+	s=korg; t=1718279794;
+	bh=i2MsitVf0OrENLgA5u2AFiDGPgs6WQCN/5LuckzvjaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FyBqlpb+aZD6g/pgoYdCPUqdScVIm8nEQp2V+y7JsqIwMbi/+YLVoxVVDX1LaXE2y
-	 LmgIpJ3Cat9EzDKWQ+JhykLRk2oh8qMk8A1PptPybXNrC1iJVQ1/seaJlTwJd8QMPu
-	 AfWOvD8WaB07xq/j7A0RqGnKTHjbyvCp/7OP9AGQ=
+	b=pMJwOKh7Pjk+3llVyA4VQyLnl+RNTI5ELOhjBODK3psRgdTdYps9pmIZRaeIt7MA+
+	 wFI9N+xdlcv84tElCdTaq5j35GVsT6tDlwiJeck7AewczhWaFIazSTKvJZoIqsgfG0
+	 KaVnWDXBSY3xM1juaafQyeNYb89c1ERTSq5BTuqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Christian Brauner <brauner@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 020/202] nilfs2: fix out-of-range warning
-Date: Thu, 13 Jun 2024 13:31:58 +0200
-Message-ID: <20240613113228.546732792@linuxfoundation.org>
+Subject: [PATCH 5.4 038/202] cpufreq: Rearrange locking in cpufreq_remove_dev()
+Date: Thu, 13 Jun 2024 13:32:16 +0200
+Message-ID: <20240613113229.242675911@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -53,43 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit c473bcdd80d4ab2ae79a7a509a6712818366e32a ]
+[ Upstream commit f339f3541701d824a0256ad4bf14c26ceb6d79c3 ]
 
-clang-14 points out that v_size is always smaller than a 64KB
-page size if that is configured by the CPU architecture:
+Currently, cpufreq_remove_dev() invokes the ->exit() driver callback
+without holding the policy rwsem which is inconsistent with what
+happens if ->exit() is invoked directly from cpufreq_offline().
 
-fs/nilfs2/ioctl.c:63:19: error: result of comparison of constant 65536 with expression of type '__u16' (aka 'unsigned short') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
-        if (argv->v_size > PAGE_SIZE)
-            ~~~~~~~~~~~~ ^ ~~~~~~~~~
+It also manipulates the real_cpus mask and removes the CPU device
+symlink without holding the policy rwsem, but cpufreq_offline() holds
+the rwsem around the modifications thereof.
 
-This is ok, so just shut up that warning with a cast.
+For consistency, modify cpufreq_remove_dev() to hold the policy rwsem
+until the ->exit() callback has been called (or it has been determined
+that it is not necessary to call it).
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240328143051.1069575-7-arnd@kernel.org
-Fixes: 3358b4aaa84f ("nilfs2: fix problems of memory allocation in ioctl")
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reviewed-by: Justin Stitt <justinstitt@google.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Stable-dep-of: b8f85833c057 ("cpufreq: exit() callback is optional")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nilfs2/ioctl.c b/fs/nilfs2/ioctl.c
-index 1a266a10d4cf3..424436cb501ea 100644
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -59,7 +59,7 @@ static int nilfs_ioctl_wrap_copy(struct the_nilfs *nilfs,
- 	if (argv->v_nmembs == 0)
- 		return 0;
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 549788a2a9676..e727282f56963 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1639,19 +1639,26 @@ static void cpufreq_remove_dev(struct device *dev, struct subsys_interface *sif)
+ 	if (!policy)
+ 		return;
  
--	if (argv->v_size > PAGE_SIZE)
-+	if ((size_t)argv->v_size > PAGE_SIZE)
- 		return -EINVAL;
++	down_write(&policy->rwsem);
++
+ 	if (cpu_online(cpu))
+-		cpufreq_offline(cpu);
++		__cpufreq_offline(cpu, policy);
  
- 	/*
+ 	cpumask_clear_cpu(cpu, policy->real_cpus);
+ 	remove_cpu_dev_symlink(policy, dev);
+ 
+-	if (cpumask_empty(policy->real_cpus)) {
+-		/* We did light-weight exit earlier, do full tear down now */
+-		if (cpufreq_driver->offline)
+-			cpufreq_driver->exit(policy);
+-
+-		cpufreq_policy_free(policy);
++	if (!cpumask_empty(policy->real_cpus)) {
++		up_write(&policy->rwsem);
++		return;
+ 	}
++
++	/* We did light-weight exit earlier, do full tear down now */
++	if (cpufreq_driver->offline)
++		cpufreq_driver->exit(policy);
++
++	up_write(&policy->rwsem);
++
++	cpufreq_policy_free(policy);
+ }
+ 
+ /**
 -- 
 2.43.0
 
