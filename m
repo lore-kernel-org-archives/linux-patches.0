@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1255143892;
-	Thu, 13 Jun 2024 12:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D507E136E00;
+	Thu, 13 Jun 2024 12:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281087; cv=none; b=Q0QQqdr1S8sdsKgaZc1pRqfgaF7d1GABnmFr/ZpZMQWBxZDpbH0f/hZwBSkaoVgwaLzo7qUrY7szsANk0J7bOqvZQOQiLtPl4dFfBTNjv9b5rPlPHdvnesCWQij/xdJEdJ51UewWJjZ0gYfVjY9oZJn4gyuBjFBe8fw+CNpEikQ=
+	t=1718281089; cv=none; b=p5M6DviFwLZI5hN4YTklENy5Nojt7lFdAmkimdCp6ADwHrMqmPlbgLo0dmpsoB/yPouqmqOmLk8HXBoisorXbn37LNdf096gawdcTdu/qW31FrA47N9uGKJVUsjRmqLBVGvv4d8l6/8pFrx5AMMqnhDzqobIyx9dDatV8H9DwrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281087; c=relaxed/simple;
-	bh=GsNLnoOa+OkZmrFCj9/Feh/VfZP/ie8lmroC9kmIg3E=;
+	s=arc-20240116; t=1718281089; c=relaxed/simple;
+	bh=Anh1kAiTiiNqfL4xcXM3eayzFnLOY3LBqnLz3vLOHqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lzx39nK1wPT2wMURrho8TSyyPtoiOKrEsmvc9sQgnOnzT7qnMVCCgD+F088vyj05UwFHgk6FVFs5k7KFz6ap0d2pZEfRZdGFwrV4rgNtKy/JxpbEKxnOA0C2zSi0QdpSMkbOId7Pl6TUlZgOa3b8uiiM9HpYYsdzPTFSePNGwVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcQUmssk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r/WgpohshVjMYAJ49PXb5h8juGM/aEkgSz/5sG4QbVSaJg1Sf5o85NaXBOS91paCjY7B0miOMmeajEAJpdzrmD12WzBDNjpZS22TLk19lrtkTT4Kkh/4M7ZDQZTiN6GVmTTLrjy/C4i1xj/bBMazIUOJe2bwdKAY7XSl09iA3TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrG6ZnbU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcQUmssk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6482AC2BBFC;
-	Thu, 13 Jun 2024 12:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrG6ZnbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BECBC2BBFC;
+	Thu, 13 Jun 2024 12:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281086;
-	bh=GsNLnoOa+OkZmrFCj9/Feh/VfZP/ie8lmroC9kmIg3E=;
+	s=korg; t=1718281089;
+	bh=Anh1kAiTiiNqfL4xcXM3eayzFnLOY3LBqnLz3vLOHqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcQUmsskFjIHR9bKOXYJ8nBEZd8z8qiCQO2H9USM80/AkSb9gQUJT1RpKGTtEuhaA
-	 rxo8y4hQREt3KHg5ih7dqmnb88ud3poI3u+qxm5KhCWVjyXvhO+gRYBkICxnMMNG/M
-	 a2ScG9cAN6PwtQWMqSMTvAkedcGmXgId7W0CGTs0=
+	b=WrG6ZnbUdcrSefhCSfpq/0UUxyb6EpVDxVLD2Q3cC9zkRPdCP0GAUgy7xQ3i/xZ0f
+	 7d4Vko77a2Klu2CIvuNEKdEGwd3qeuRrveSBgRPRTlY4TiyTvko44D4CWFoZY2Zc6B
+	 rQ73r80XR7Ji+0jxL0AlNw/ZZZCge1wEqlJLfeS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Mark Brown <broonie@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 106/317] ASoC: tracing: Export SND_SOC_DAPM_DIR_OUT to its value
-Date: Thu, 13 Jun 2024 13:32:04 +0200
-Message-ID: <20240613113251.651292697@linuxfoundation.org>
+Subject: [PATCH 5.10 097/317] powerpc/fsl-soc: hide unused const variable
+Date: Thu, 13 Jun 2024 13:31:55 +0200
+Message-ID: <20240613113251.302679348@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,46 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 58300f8d6a48e58d1843199be743f819e2791ea3 ]
+[ Upstream commit 01acaf3aa75e1641442cc23d8fe0a7bb4226efb1 ]
 
-The string SND_SOC_DAPM_DIR_OUT is printed in the snd_soc_dapm_path trace
-event instead of its value:
+vmpic_msi_feature is only used conditionally, which triggers a rare
+-Werror=unused-const-variable= warning with gcc:
 
-   (((REC->path_dir) == SND_SOC_DAPM_DIR_OUT) ? "->" : "<-")
+arch/powerpc/sysdev/fsl_msi.c:567:37: error: 'vmpic_msi_feature' defined but not used [-Werror=unused-const-variable=]
+  567 | static const struct fsl_msi_feature vmpic_msi_feature =
 
-User space cannot parse this, as it has no idea what SND_SOC_DAPM_DIR_OUT
-is. Use TRACE_DEFINE_ENUM() to convert it to its value:
+Hide this one in the same #ifdef as the reference so we can turn on
+the warning by default.
 
-   (((REC->path_dir) == 1) ? "->" : "<-")
-
-So that user space tools, such as perf and trace-cmd, can parse it
-correctly.
-
-Reported-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Fixes: 6e588a0d839b5 ("ASoC: dapm: Consolidate path trace events")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/20240416000303.04670cdf@rorschach.local.home
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 305bcf26128e ("powerpc/fsl-soc: use CONFIG_EPAPR_PARAVIRT for hcalls")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240403080702.3509288-2-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/asoc.h | 2 ++
+ arch/powerpc/sysdev/fsl_msi.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/include/trace/events/asoc.h b/include/trace/events/asoc.h
-index 40c300fe704da..f62d5b7024261 100644
---- a/include/trace/events/asoc.h
-+++ b/include/trace/events/asoc.h
-@@ -11,6 +11,8 @@
- #define DAPM_DIRECT "(direct)"
- #define DAPM_ARROW(dir) (((dir) == SND_SOC_DAPM_DIR_OUT) ? "->" : "<-")
+diff --git a/arch/powerpc/sysdev/fsl_msi.c b/arch/powerpc/sysdev/fsl_msi.c
+index d276c5e964458..77aa7a13ab1db 100644
+--- a/arch/powerpc/sysdev/fsl_msi.c
++++ b/arch/powerpc/sysdev/fsl_msi.c
+@@ -573,10 +573,12 @@ static const struct fsl_msi_feature ipic_msi_feature = {
+ 	.msiir_offset = 0x38,
+ };
  
-+TRACE_DEFINE_ENUM(SND_SOC_DAPM_DIR_OUT);
-+
- struct snd_soc_jack;
- struct snd_soc_card;
- struct snd_soc_dapm_widget;
++#ifdef CONFIG_EPAPR_PARAVIRT
+ static const struct fsl_msi_feature vmpic_msi_feature = {
+ 	.fsl_pic_ip = FSL_PIC_IP_VMPIC,
+ 	.msiir_offset = 0,
+ };
++#endif
+ 
+ static const struct of_device_id fsl_of_msi_ids[] = {
+ 	{
 -- 
 2.43.0
 
