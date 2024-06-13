@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA4E1422B5;
-	Thu, 13 Jun 2024 11:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCD71428FC;
+	Thu, 13 Jun 2024 11:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278693; cv=none; b=qK685u5FRU+K016V7qYPKxUs5QDkDCe+PuWZzPMkBb9YePPekenKkAPDJ4W2u3ty4ANkoEOC6FhG/Ub0Kc/w3Wa7Q4BKsLUy9ydBinTH4KrHY5umLSa+FycGBAwmhMUokBo6A9IA83Ta9qjkNFPO+ve6HPL33Ant/xVCTx0+5I8=
+	t=1718278695; cv=none; b=rXQ/xUWkK9LVO9AB0AG7Tdww6DJxB55Tnew/YC+r/wJ7TumSXS5MdOOuCRzzmolwLCGdcZ6hFgbRfFN/FUURvTtvVC9ug5Ad6jfe22zWWzvSkz89W2y519ZuXl+Xg4kRiiP4ANS4R6WSiJXoNhZphZmq89RXyQDVbeUILRJmhPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278693; c=relaxed/simple;
-	bh=XjysYyWwOIGK/613pxRt1Ia5wkpFdpbE+kBVXWHBGLo=;
+	s=arc-20240116; t=1718278695; c=relaxed/simple;
+	bh=mMvlOT/SmG/jZkc6OgjK5vx02IELpKsZap9lBtMW9cM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oODyFWbSMNg9vFWMHhBymgq8FT7FFyBYKCL6b+PLcpo/3veEWa0UZvItjxxOpWXyt+11IASauH50vMJ0Fn/PjYsbwidYYD6brA2AEMDyH6Pn8okca6LbU+yXdlEoAfu4cCpuUa5AWN6oX/s3qxGrjuAIqc91AE6oZHaqGfJiLJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBQeDPI0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P0tNs0d+Ww+Ep4DdXwupSugqBInRHJVC76zIYNOvmxfxwSW6jFQAnBDbV6V6vx7cNYZV2y7VV+5FEbiSW6SyzI7IhN09nBA20nLQBhmr2amuJf43Y7dlhCJR9vWb2bvuDSLvHO/TIr6Lp+5IaQkG8AetXlkwLkMm9evS28FIPxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmwPT8/u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBQeDPI0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD0EC2BBFC;
-	Thu, 13 Jun 2024 11:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmwPT8/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23DEDC2BBFC;
+	Thu, 13 Jun 2024 11:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278692;
-	bh=XjysYyWwOIGK/613pxRt1Ia5wkpFdpbE+kBVXWHBGLo=;
+	s=korg; t=1718278695;
+	bh=mMvlOT/SmG/jZkc6OgjK5vx02IELpKsZap9lBtMW9cM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OBQeDPI0q78GAc5iRfEqr0/e35OI+Blui3UdzQYmwde/LrXv7c4M5Q1K0R9pvjWtu
-	 rAtJnmXVKU2KYlW4+Fg6Ey9BCDMTE5tFx6uUk/MhiGv+teB1jtMrF+NqQZ1jzyErTA
-	 0MYPjh+sXLVCKtCxl8HnYkDoGqaFRjDsLGwJM1GE=
+	b=JmwPT8/uh8HnPWArtC8T6BO+Sp1/pnT/5c31gXWAYmw6/YkhC9yhzLt/BCC9oPGan
+	 onMykfCmiXspQRSTwPFLLBVr5/XuqpBaahEFFOiqH1Pl2NNYgE67D18sLSSWr7iVnR
+	 cRuoPdTsb3bQsvf/pdfO/W/BI2wqfSJmfXJZ/E6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 037/213] irqchip/alpine-msi: Fix off-by-one in allocation error path
-Date: Thu, 13 Jun 2024 13:31:25 +0200
-Message-ID: <20240613113229.431315309@linuxfoundation.org>
+Subject: [PATCH 4.19 038/213] ACPI: disable -Wstringop-truncation
+Date: Thu, 13 Jun 2024 13:31:26 +0200
+Message-ID: <20240613113229.470452713@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -51,38 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenghui Yu <yuzenghui@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit ff3669a71afa06208de58d6bea1cc49d5e3fcbd1 ]
+[ Upstream commit a3403d304708f60565582d60af4316289d0316a0 ]
 
-When alpine_msix_gic_domain_alloc() fails, there is an off-by-one in the
-number of interrupts to be freed.
+gcc -Wstringop-truncation warns about copying a string that results in a
+missing nul termination:
 
-Fix it by passing the number of successfully allocated interrupts, instead
-of the relative index of the last allocated one.
+drivers/acpi/acpica/tbfind.c: In function 'acpi_tb_find_table':
+drivers/acpi/acpica/tbfind.c:60:9: error: 'strncpy' specified bound 6 equals destination size [-Werror=stringop-truncation]
+   60 |         strncpy(header.oem_id, oem_id, ACPI_OEM_ID_SIZE);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/acpi/acpica/tbfind.c:61:9: error: 'strncpy' specified bound 8 equals destination size [-Werror=stringop-truncation]
+   61 |         strncpy(header.oem_table_id, oem_table_id, ACPI_OEM_TABLE_ID_SIZE);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 3841245e8498 ("irqchip/alpine-msi: Fix freeing of interrupts on allocation error path")
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240327142305.1048-1-yuzenghui@huawei.com
+The code works as intended, and the warning could be addressed by using
+a memcpy(), but turning the warning off for this file works equally well
+and may be easier to merge.
+
+Fixes: 47c08729bf1c ("ACPICA: Fix for LoadTable operator, input strings")
+Link: https://lore.kernel.org/lkml/CAJZ5v0hoUfv54KW7y4223Mn9E7D4xvR7whRFNLTBqCZMUxT50Q@mail.gmail.com/#t
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-alpine-msi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpica/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/irqchip/irq-alpine-msi.c b/drivers/irqchip/irq-alpine-msi.c
-index 1819bb1d27230..aedbc4befcdf0 100644
---- a/drivers/irqchip/irq-alpine-msi.c
-+++ b/drivers/irqchip/irq-alpine-msi.c
-@@ -165,7 +165,7 @@ static int alpine_msix_middle_domain_alloc(struct irq_domain *domain,
- 	return 0;
+diff --git a/drivers/acpi/acpica/Makefile b/drivers/acpi/acpica/Makefile
+index 8ce51f0f40ce5..dec40cb81cc42 100644
+--- a/drivers/acpi/acpica/Makefile
++++ b/drivers/acpi/acpica/Makefile
+@@ -5,6 +5,7 @@
  
- err_sgi:
--	irq_domain_free_irqs_parent(domain, virq, i - 1);
-+	irq_domain_free_irqs_parent(domain, virq, i);
- 	alpine_msix_free_sgi(priv, sgi, nr_irqs);
- 	return err;
- }
+ ccflags-y			:= -D_LINUX -DBUILDING_ACPICA
+ ccflags-$(CONFIG_ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
++CFLAGS_tbfind.o 		+= $(call cc-disable-warning, stringop-truncation)
+ 
+ # use acpi.o to put all files here into acpi.o modparam namespace
+ obj-y	+= acpi.o
 -- 
 2.43.0
 
