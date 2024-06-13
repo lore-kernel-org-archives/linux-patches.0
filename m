@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D6C56458;
-	Thu, 13 Jun 2024 12:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7843B126F32;
+	Thu, 13 Jun 2024 12:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280635; cv=none; b=JKvUqtGdGziFSta72gKwS8cXykp4mnriu/nbldyRepbMa85+1zVzUPKDyQVx4UedkVhP3S4eETrtneHmnoXpyOPYMS0wKR/+lpF2ktRZMeBGd4J3a5Nsp8A94MeAxDltPmRbR4NHvqOhC5YzekBVZaRltfNA6qMsQDg9f4Khk1I=
+	t=1718280638; cv=none; b=NCekSxnCUdPpcSjUbHb0lGDB06uu3NYlEIYZBjz/brR04hUl0BszWi+bL43XuD1WP7fPLIkezmAytLW7sCcLk1VsJ5j80VH1UcGR1maIOlded1oVWi7XrdN/M8Ao6Bxcfw6tXwCDG4BDI+jBoiFjnr7HyjqBk9avZHTnbgm9NYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280635; c=relaxed/simple;
-	bh=w48OD1Lb4vgIiD9PdS/ZiVW8jdq1fq1Nz/TE1ARxX+M=;
+	s=arc-20240116; t=1718280638; c=relaxed/simple;
+	bh=hhEwjoRtOPjh47sipeLEeAhoE2oaf3YXNYZT+RUBz+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noTKJJkHMZWKFXqprz7Nu65GZBMFqqeG8w7s5N5rYPazI/lXFXRDz/rA+jSD8y+9ukNd1z7yrM3YgHvuGqlPCNMnm+Z7Vun9q1Hfs6LrD+INcAzAY7t83vbnkheOj+50APd0H391otN/FHLh+mqUJUnpGR5Bv8W0wUNjQa6HtKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlPHrohh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b+ECbQEffMUf3wJiBLxLGhS6iEJfVfEtlHm92jZVWefNzuOmS7Juh84XeiruHTKB9M435SihJPa+P264CeW7oya0C0I/xL/Gs9smhKq0Gdw/G7ZdjwvERIPJ0p9MUGhhwQmztmAflr4XNLN++R12Q21V5bvMXI6FZJ+gjb7iNMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qw8+MyoS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlPHrohh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C597C2BBFC;
-	Thu, 13 Jun 2024 12:10:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qw8+MyoS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30CDC2BBFC;
+	Thu, 13 Jun 2024 12:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280635;
-	bh=w48OD1Lb4vgIiD9PdS/ZiVW8jdq1fq1Nz/TE1ARxX+M=;
+	s=korg; t=1718280638;
+	bh=hhEwjoRtOPjh47sipeLEeAhoE2oaf3YXNYZT+RUBz+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlPHrohh5tMwFtwO3K2jN1lpx+nDftQmveNWZdDp9q8F2xZMiYwGwmQqj9brlcZzB
-	 aTUp2gYceSIaIljZ9YVlTerQY/vrhT2ZQAbXHPYsRAYXfiHRrxMzuG8ApghIw6I21P
-	 0nbnhPv5weCcHVgnl9kq8CDki992/9fEItNORMUk=
+	b=qw8+MyoSMKWHdoGeb+2lfiy6juRrKaxEvRo/uOmCbLLyRgjvd494gCL1k5l88lNrL
+	 ImoD9xMhk+BJxDpFcSCx6n/x+hvRUPvyGZtfwkdehGdC6JrxlvoLDuFFVgU29qOCAv
+	 Q/zVMgt6gPMHinObFGjxaKzSQAOMgKNgNBe0MKa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 121/137] ASoC: SOF: ipc4-topology: Fix input format query of process modules without base extension
-Date: Thu, 13 Jun 2024 13:35:01 +0200
-Message-ID: <20240613113227.993708793@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 122/137] ALSA: ump: Dont clear bank selection after sending a program change
+Date: Thu, 13 Jun 2024 13:35:02 +0200
+Message-ID: <20240613113228.032657278@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -53,44 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit ffa077b2f6ad124ec3d23fbddc5e4b0ff2647af8 upstream.
+commit fe85f6e607d75b856e7229924c71f55e005f8284 upstream.
 
-If a process module does not have base config extension then the same
-format applies to all of it's inputs and the process->base_config_ext is
-NULL, causing NULL dereference when specifically crafted topology and
-sequences used.
+The current code clears the bank selection MSB/LSB after sending a
+program change, but this can be wrong, as many apps may not send the
+full bank selection with both MSB and LSB but sending only one.
+Better to keep the previous bank set.
 
-Fixes: 648fea128476 ("ASoC: SOF: ipc4-topology: set copier output format for process module")
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://msgid.link/r/20240529121201.14687-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0b5288f5fe63 ("ALSA: ump: Add legacy raw MIDI support")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240529083823.5778-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-topology.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/core/ump_convert.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -195,6 +195,14 @@ sof_ipc4_get_input_pin_audio_fmt(struct
- 	}
- 
- 	process = swidget->private;
-+
-+	/*
-+	 * For process modules without base config extension, base module config
-+	 * format is used for all input pins
-+	 */
-+	if (process->init_config != SOF_IPC4_MODULE_INIT_CONFIG_TYPE_BASE_CFG_WITH_EXT)
-+		return &process->base_config.audio_fmt;
-+
- 	base_cfg_ext = process->base_config_ext;
- 
- 	/*
+diff --git a/sound/core/ump_convert.c b/sound/core/ump_convert.c
+index de04799fdb69..f67c44c83fde 100644
+--- a/sound/core/ump_convert.c
++++ b/sound/core/ump_convert.c
+@@ -404,7 +404,6 @@ static int cvt_legacy_cmd_to_ump(struct ump_cvt_to_ump *cvt,
+ 			midi2->pg.bank_msb = cc->cc_bank_msb;
+ 			midi2->pg.bank_lsb = cc->cc_bank_lsb;
+ 			cc->bank_set = 0;
+-			cc->cc_bank_msb = cc->cc_bank_lsb = 0;
+ 		}
+ 		break;
+ 	case UMP_MSG_STATUS_CHANNEL_PRESSURE:
+-- 
+2.45.2
+
 
 
