@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D5320ED;
-	Thu, 13 Jun 2024 12:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9040B1DDDB;
+	Thu, 13 Jun 2024 12:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282734; cv=none; b=XyzcMj+aCU8Bt1T0q74jn7Cj56fuLwTcy4An/uqUWW+wUq7sw8hu667LWnKQl5lVuS4HzoCTLRMKn11qPdF+0iHHDxb5Gln14fTLLQz5BSFcomiGtlcfapKoueEuOegGNJy8f3Vv81kTqPk34YDSSR1ZCOidY2oL5C9IotYWjyo=
+	t=1718282737; cv=none; b=oOprLC2qhL3GntLZHes0vH+AYrzM6JGTqtrksnpXmgI0XWQNQvn4bsSJrmPmKdWYThkkKjAJFwhuD874ct5grgHHmSyuwefbbic9l3lNTDmtFqBxWYrsASTP/nbYCmXp4gT64NSlT3Spy/CtZF3OKid305QzfJPWgdA9iUZ08Lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282734; c=relaxed/simple;
-	bh=VORSan15wy2jj3jvFw3hs5685dtaO1bvD1SAIazcAdk=;
+	s=arc-20240116; t=1718282737; c=relaxed/simple;
+	bh=iTDIb1eJlfYJDKlk890dWtVfM+07ugmxKpEuMhy/xaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYw/MUiCHYMGIpC1YHsrjJ7mEFRPZihyNaafUaq+sMsp2+DnlEzMGEkEZOkxdpC+/nX4qGJOVTPOAOOtHQDUn/fE/V95u/R5d7iyVljBua5rhy3wIaFPbMHk4i5CtcYe1axI+fhgEcET5/6Mxlbqi08RLl8liTyonh7SazTdPrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeKOUHYS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lVdig8ecFvQGh6rP0jAac6ceRUb5fVGRrN3/K4vAo0ZCCoUFN4HZ/PXpykdjubQ40C0jotJRp8kyMLwvjqJolQUWdGNAmoq/vDVkmRV1kXxHvS38A+EhtXXs8Vd2Kz+4kTfpfmGU86sdPeV/yYc6il30JFvInsThu9ruSkrsCnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wr3u5Ips; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeKOUHYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309C7C4AF1A;
-	Thu, 13 Jun 2024 12:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wr3u5Ips"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16EC8C2BBFC;
+	Thu, 13 Jun 2024 12:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282734;
-	bh=VORSan15wy2jj3jvFw3hs5685dtaO1bvD1SAIazcAdk=;
+	s=korg; t=1718282737;
+	bh=iTDIb1eJlfYJDKlk890dWtVfM+07ugmxKpEuMhy/xaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BeKOUHYSgT2XO0bBfWq9puULTf1Q9EM+pYFh0Yy5M0rgeRzjHduiZlCtBzPuMGp3r
-	 B3b9iebljpvX5tpc3mNFdHWH/qC/FHxnkhVyEjs/4pxdwpHTjHWtBp6WEi1p8edsSz
-	 r8UIVNBC4zOwL/DHR88Yfh79U7GNjHvS4Vm0/8yM=
+	b=Wr3u5IpsnHpWMPcheyQ7Jx16Y5NQeNw97g7XVjPhwp77gpyqXUZYmIP1rSdfJmJxZ
+	 8y50skwKFxLzSrKErsdW6I93byFUriUkkeka7sSw9zGlAmKZW4rnNp055FLpIIeEbD
+	 GcNII6UrxRynhZIXV2npzHAY6/YxPAxScU0yqeVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 5.15 377/402] KVM: arm64: Allow AArch32 PSTATE.M to be restored as System mode
-Date: Thu, 13 Jun 2024 13:35:34 +0200
-Message-ID: <20240613113316.850404241@linuxfoundation.org>
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Hao Ge <gehao@kylinos.cn>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 351/402] scripts/gdb: fix SB_* constants parsing
+Date: Thu, 13 Jun 2024 13:35:08 +0200
+Message-ID: <20240613113315.827782825@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -50,34 +56,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-commit dfe6d190f38fc5df5ff2614b463a5195a399c885 upstream.
+commit 6a59cb5158bff13b80f116305155fbe4967a5010 upstream.
 
-It appears that we don't allow a vcpu to be restored in AArch32
-System mode, as we *never* included it in the list of valid modes.
+--0000000000009a0c9905fd9173ad
+Content-Transfer-Encoding: 8bit
 
-Just add it to the list of allowed modes.
+After f15afbd34d8f ("fs: fix undefined behavior in bit shift for
+SB_NOUSER") the constants were changed from plain integers which
+LX_VALUE() can parse to constants using the BIT() macro which causes the
+following:
 
-Fixes: 0d854a60b1d7 ("arm64: KVM: enable initialization of a 32bit vcpu")
-Cc: stable@vger.kernel.org
-Acked-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20240524141956.1450304-3-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reading symbols from build/linux-custom/vmlinux...done.
+Traceback (most recent call last):
+  File "/home/fainelli/work/buildroot/output/arm64/build/linux-custom/vmlinux-gdb.py", line 25, in <module>
+    import linux.constants
+  File "/home/fainelli/work/buildroot/output/arm64/build/linux-custom/scripts/gdb/linux/constants.py", line 5
+    LX_SB_RDONLY = ((((1UL))) << (0))
+
+Use LX_GDBPARSED() which does not suffer from that issue.
+
+f15afbd34d8f ("fs: fix undefined behavior in bit shift for SB_NOUSER")
+Link: https://lkml.kernel.org/r/20230607221337.2781730-1-florian.fainelli@broadcom.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Acked-by: Christian Brauner <brauner@kernel.org>
+Cc: Hao Ge <gehao@kylinos.cn>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Pankaj Raghav <p.raghav@samsung.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/guest.c |    1 +
- 1 file changed, 1 insertion(+)
+ scripts/gdb/linux/constants.py.in |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/kvm/guest.c
-+++ b/arch/arm64/kvm/guest.c
-@@ -250,6 +250,7 @@ static int set_core_reg(struct kvm_vcpu
- 		case PSR_AA32_MODE_SVC:
- 		case PSR_AA32_MODE_ABT:
- 		case PSR_AA32_MODE_UND:
-+		case PSR_AA32_MODE_SYS:
- 			if (!vcpu_el1_is_32bit(vcpu))
- 				return -EINVAL;
- 			break;
+--- a/scripts/gdb/linux/constants.py.in
++++ b/scripts/gdb/linux/constants.py.in
+@@ -46,12 +46,12 @@ if IS_BUILTIN(CONFIG_COMMON_CLK):
+     LX_GDBPARSED(CLK_GET_RATE_NOCACHE)
+ 
+ /* linux/fs.h */
+-LX_VALUE(SB_RDONLY)
+-LX_VALUE(SB_SYNCHRONOUS)
+-LX_VALUE(SB_MANDLOCK)
+-LX_VALUE(SB_DIRSYNC)
+-LX_VALUE(SB_NOATIME)
+-LX_VALUE(SB_NODIRATIME)
++LX_GDBPARSED(SB_RDONLY)
++LX_GDBPARSED(SB_SYNCHRONOUS)
++LX_GDBPARSED(SB_MANDLOCK)
++LX_GDBPARSED(SB_DIRSYNC)
++LX_GDBPARSED(SB_NOATIME)
++LX_GDBPARSED(SB_NODIRATIME)
+ 
+ /* linux/htimer.h */
+ LX_GDBPARSED(hrtimer_resolution)
 
 
