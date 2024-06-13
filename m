@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB44713D607;
-	Thu, 13 Jun 2024 12:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C409D13D607;
+	Thu, 13 Jun 2024 12:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281431; cv=none; b=aKWiXrb95L7WagRHgOinm/U2vXd6/7I5frKdJBlv5Z2aT4UQpVXM87/p+rMWY/LlCwUzs85dXINovI6KX0tUXvN2t4i4jDq8zYheXKnLzu2MMiYgDYn/Fcqt1my1JOLx4X2yrcpbYPaOoK0ToMtjCn8xJlTSh2zH7Oyk9pJaUR0=
+	t=1718281433; cv=none; b=XSLlp0TTJZPAegqnO8LjGI5VINa24rE3ggzrh2TeQjemOuE7TiwzMLe3hqHuW6VRLy4dejy+UJI9z2sJcU0LQ1nThCzHfsKfh5usu6nixYb5AKa/JZFqd8fb/d3u6a//zf3JsMMIzQxWUJr0jTdG7d+SVFKDqAnyukv3gsDaGEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281431; c=relaxed/simple;
-	bh=YWrxBMrUmjS54niEPzawAXDVsYz7YUbZhkwcoexfnGk=;
+	s=arc-20240116; t=1718281433; c=relaxed/simple;
+	bh=cJDI3yQGflhXjtp4lXvr/K3iKWEh2x81IGXCbIPaO5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7RuRJX5y0GbBbRcgd5g9X5M4UeLp74nvtlQuWgLlIxo4sOxNQV3iw7RbwV/DhRKvS7uyZKPEOoKIXfyWpXT7z8nm+d2aBNCSQsmNXLHdba3mCxUPjdhIDYLKOJCdP1zq/tMTrXtaoQDsi4M+eIaZcAL+m49c9OL1VVh3P3aQlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c18Vyrxa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lIHI/BzSFGdfg7GdigWO7SYO89S9NLBPP1YTGEpG/G0WfSIdRfhDILL9pMKO1BlNw/QoIxToyh03Zh10Fa7f6ckMWU+0PB+TkbXv5W+9BN13cT/xRFbSajK/eerfeJkUlETw9RdPQGbM0DRqbT0MlXddG7g0q2YxEIWCR+FDa/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdAkLXI/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c18Vyrxa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFDAC32786;
-	Thu, 13 Jun 2024 12:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdAkLXI/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E47FC2BBFC;
+	Thu, 13 Jun 2024 12:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281430;
-	bh=YWrxBMrUmjS54niEPzawAXDVsYz7YUbZhkwcoexfnGk=;
+	s=korg; t=1718281433;
+	bh=cJDI3yQGflhXjtp4lXvr/K3iKWEh2x81IGXCbIPaO5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c18VyrxaM5XoybqwMJPW6LQazQ1lM0or1pA7f0/YFhVYoF8LgOlbF8Y+cnQWXff0V
-	 3kGV9R25wJRDlGb1Q8iJxcoslVCHVWxl1aVHoMxAfP/QPAQrajf/cE1CLqcfVPefE2
-	 d9Q7kxH2zU6KeafjM/27D7ni7Ir4c0Hsm7W9DmqU=
+	b=AdAkLXI/cQ8v94mNLpkpOh+yeTw8hVxn452jsD9sZQfVuG19BNlyGrcHUMbRMmx2r
+	 iJrUc7pl4H5OIUkvfcGXfxncLBGMU2s4iNyqPiN64YWmJwWQV6KSw146neoMOUBKM1
+	 30TLWl0j+qh21ZOJ0/r1c8YPXD0y9YxdkN06nULk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roded Zats <rzats@paloaltonetworks.com>,
+	Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>,
+	Simon Horman <horms@kernel.org>,
+	Woojung Huh <woojung.huh@microchip.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 252/317] enic: Validate length of nl attributes in enic_set_vf_port
-Date: Thu, 13 Jun 2024 13:34:30 +0200
-Message-ID: <20240613113257.298252841@linuxfoundation.org>
+Subject: [PATCH 5.10 253/317] net: usb: smsc95xx: fix changing LED_SEL bit value updated from EEPROM
+Date: Thu, 13 Jun 2024 13:34:31 +0200
+Message-ID: <20240613113257.336386551@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,67 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roded Zats <rzats@paloaltonetworks.com>
+From: Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>
 
-[ Upstream commit e8021b94b0412c37bcc79027c2e382086b6ce449 ]
+[ Upstream commit 52a2f0608366a629d43dacd3191039c95fef74ba ]
 
-enic_set_vf_port assumes that the nl attribute IFLA_PORT_PROFILE
-is of length PORT_PROFILE_MAX and that the nl attributes
-IFLA_PORT_INSTANCE_UUID, IFLA_PORT_HOST_UUID are of length PORT_UUID_MAX.
-These attributes are validated (in the function do_setlink in rtnetlink.c)
-using the nla_policy ifla_port_policy. The policy defines IFLA_PORT_PROFILE
-as NLA_STRING, IFLA_PORT_INSTANCE_UUID as NLA_BINARY and
-IFLA_PORT_HOST_UUID as NLA_STRING. That means that the length validation
-using the policy is for the max size of the attributes and not on exact
-size so the length of these attributes might be less than the sizes that
-enic_set_vf_port expects. This might cause an out of bands
-read access in the memcpys of the data of these
-attributes in enic_set_vf_port.
+LED Select (LED_SEL) bit in the LED General Purpose IO Configuration
+register is used to determine the functionality of external LED pins
+(Speed Indicator, Link and Activity Indicator, Full Duplex Link
+Indicator). The default value for this bit is 0 when no EEPROM is
+present. If a EEPROM is present, the default value is the value of the
+LED Select bit in the Configuration Flags of the EEPROM. A USB Reset or
+Lite Reset (LRST) will cause this bit to be restored to the image value
+last loaded from EEPROM, or to be set to 0 if no EEPROM is present.
 
-Fixes: f8bd909183ac ("net: Add ndo_{set|get}_vf_port support for enic dynamic vnics")
-Signed-off-by: Roded Zats <rzats@paloaltonetworks.com>
-Link: https://lore.kernel.org/r/20240522073044.33519-1-rzats@paloaltonetworks.com
+While configuring the dual purpose GPIO/LED pins to LED outputs in the
+LED General Purpose IO Configuration register, the LED_SEL bit is changed
+as 0 and resulting the configured value from the EEPROM is cleared. The
+issue is fixed by using read-modify-write approach.
+
+Fixes: f293501c61c5 ("smsc95xx: configure LED outputs")
+Signed-off-by: Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Woojung Huh <woojung.huh@microchip.com>
+Link: https://lore.kernel.org/r/20240523085314.167650-1-Parthiban.Veerasooran@microchip.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cisco/enic/enic_main.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/usb/smsc95xx.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
-index 548d8095c0a79..b695f3f233286 100644
---- a/drivers/net/ethernet/cisco/enic/enic_main.c
-+++ b/drivers/net/ethernet/cisco/enic/enic_main.c
-@@ -1117,18 +1117,30 @@ static int enic_set_vf_port(struct net_device *netdev, int vf,
- 	pp->request = nla_get_u8(port[IFLA_PORT_REQUEST]);
+diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
+index 2778ad6726f03..30e5f6910e6fd 100644
+--- a/drivers/net/usb/smsc95xx.c
++++ b/drivers/net/usb/smsc95xx.c
+@@ -845,7 +845,7 @@ static int smsc95xx_start_rx_path(struct usbnet *dev, int in_pm)
+ static int smsc95xx_reset(struct usbnet *dev)
+ {
+ 	struct smsc95xx_priv *pdata = dev->driver_priv;
+-	u32 read_buf, write_buf, burst_cap;
++	u32 read_buf, burst_cap;
+ 	int ret = 0, timeout;
  
- 	if (port[IFLA_PORT_PROFILE]) {
-+		if (nla_len(port[IFLA_PORT_PROFILE]) != PORT_PROFILE_MAX) {
-+			memcpy(pp, &prev_pp, sizeof(*pp));
-+			return -EINVAL;
-+		}
- 		pp->set |= ENIC_SET_NAME;
- 		memcpy(pp->name, nla_data(port[IFLA_PORT_PROFILE]),
- 			PORT_PROFILE_MAX);
- 	}
+ 	netif_dbg(dev, ifup, dev->net, "entering smsc95xx_reset\n");
+@@ -987,10 +987,13 @@ static int smsc95xx_reset(struct usbnet *dev)
+ 		return ret;
+ 	netif_dbg(dev, ifup, dev->net, "ID_REV = 0x%08x\n", read_buf);
  
- 	if (port[IFLA_PORT_INSTANCE_UUID]) {
-+		if (nla_len(port[IFLA_PORT_INSTANCE_UUID]) != PORT_UUID_MAX) {
-+			memcpy(pp, &prev_pp, sizeof(*pp));
-+			return -EINVAL;
-+		}
- 		pp->set |= ENIC_SET_INSTANCE;
- 		memcpy(pp->instance_uuid,
- 			nla_data(port[IFLA_PORT_INSTANCE_UUID]), PORT_UUID_MAX);
- 	}
++	ret = smsc95xx_read_reg(dev, LED_GPIO_CFG, &read_buf);
++	if (ret < 0)
++		return ret;
+ 	/* Configure GPIO pins as LED outputs */
+-	write_buf = LED_GPIO_CFG_SPD_LED | LED_GPIO_CFG_LNK_LED |
+-		LED_GPIO_CFG_FDX_LED;
+-	ret = smsc95xx_write_reg(dev, LED_GPIO_CFG, write_buf);
++	read_buf |= LED_GPIO_CFG_SPD_LED | LED_GPIO_CFG_LNK_LED |
++		    LED_GPIO_CFG_FDX_LED;
++	ret = smsc95xx_write_reg(dev, LED_GPIO_CFG, read_buf);
+ 	if (ret < 0)
+ 		return ret;
  
- 	if (port[IFLA_PORT_HOST_UUID]) {
-+		if (nla_len(port[IFLA_PORT_HOST_UUID]) != PORT_UUID_MAX) {
-+			memcpy(pp, &prev_pp, sizeof(*pp));
-+			return -EINVAL;
-+		}
- 		pp->set |= ENIC_SET_HOST;
- 		memcpy(pp->host_uuid,
- 			nla_data(port[IFLA_PORT_HOST_UUID]), PORT_UUID_MAX);
 -- 
 2.43.0
 
