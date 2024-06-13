@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5DE1448DC;
-	Thu, 13 Jun 2024 11:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE921442EF;
+	Thu, 13 Jun 2024 11:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279310; cv=none; b=HJCaMi9FnRD6dWqvv4vxRM3CtoA/HDjtc1vUrhWniqH+3ekt6f4E6AedxDgJdT8RC/clb9sBOb6DbKkMfpj4bneypCdJnB5noGVaMNSpr7E/cpypfSrw88zr8x7RBMYuB2z8vDL1sAtrDPqLgTiLcwxsHOW+zbz0Rijd0d5OLEk=
+	t=1718279313; cv=none; b=tfH2TJg49qOL1w0ELaZT0NN4AdNDCSC4dEuVdWbWDBBPrd7AfD7A3NrgrRel49BP9js+KBtyXE+ceCG/n7jVzcYc82jISrLUKGECtfW1fP9sXELzKmZJHZx7IsJbdMNdbe1OSYy9g+FgIh1/NEHSTCREgFHJQtp4+Yxqo9JRkPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279310; c=relaxed/simple;
-	bh=CkUH9wZW0gK7yexNJKA44NHguSee+evmv2QmaztJs78=;
+	s=arc-20240116; t=1718279313; c=relaxed/simple;
+	bh=cKOpXRewWpQRAU4shTGZBZZ/CCeACaYJzvAXlRe54uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxQgwsoBIcRJi72rkO4HfLKA1Zxry3FTJ3cymfqBpXQNrHB+EF9DKy1y3ZbcshoJF1T6TTei4VTI088cdPBhN+Kr4QbnAogALEATLAG9SzaEzEB4HoywzIKqmKh6ZPUd0PVscXjCswKk7PKbtFnWMTTWTZN9bEHQhYigRQD4syY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=goJpBW1U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TlQcfy26lzBa906XHbegLsyiPZyeilO2PZAdvZT5EE1AhNnJdn1vDOVpYzETJEZgs21dI6FZtNkJyFnPVYJkN7uJ7Q8M7Sun/Kq6Wif4Ohu0UvG4968EVA1X332KBVscUBV58jUxP8v8z0uvP0vBrjXPSSbOtBnzmdTfGZAMuMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9On4FU2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="goJpBW1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285A4C2BBFC;
-	Thu, 13 Jun 2024 11:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9On4FU2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B225C32786;
+	Thu, 13 Jun 2024 11:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279310;
-	bh=CkUH9wZW0gK7yexNJKA44NHguSee+evmv2QmaztJs78=;
+	s=korg; t=1718279313;
+	bh=cKOpXRewWpQRAU4shTGZBZZ/CCeACaYJzvAXlRe54uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=goJpBW1UwNa+71AP90fsFF+9Go+iTGiRtaquMqwR/HLqVD2zGsR97zb2XbInSCVmU
-	 9HhFta170SvtCn5XWkZ7gk39MUqUQYBtgn4XNoc63hccwgBMj0jAff6YaGooiMfO1E
-	 WNt07h/Fu6d37s0Hs/LSoNKXGlnewBvOsP/WHlYs=
+	b=Y9On4FU2evwETyKejXeetgH/K55IhdNI5kV56LU3xZuwyc5PoPSJdhjgmqEasNQT1
+	 EGrNbY5rPX56BjUnRfVUpXhXhwaiDNwdsbcwz8jKKpaRIvbvKJ+ITosCj4zNnn26nP
+	 LRlPhKOo4qz/MNPAgyvW0wuJaONIMkO87x08Xh+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Krummenacher <max.krummenacher@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Nishanth Menon <nm@ti.com>
-Subject: [PATCH 6.9 033/157] arm64: dts: ti: verdin-am62: Set memory size to 2gb
-Date: Thu, 13 Jun 2024 13:32:38 +0200
-Message-ID: <20240613113228.699005458@linuxfoundation.org>
+	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.9 034/157] media: mgb4: Fix double debugfs remove
+Date: Thu, 13 Jun 2024 13:32:39 +0200
+Message-ID: <20240613113228.736588882@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -45,40 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Krummenacher <max.krummenacher@toradex.com>
+From: Martin Tůma <martin.tuma@digiteqautomotive.com>
 
-commit f70a88829723c1b462ea0fec15fa75809a0d670b upstream.
+commit 825fc49497957310e421454fe3fb8b8d8d8e2dd2 upstream.
 
-The maximum DDR RAM size stuffed on the Verdin AM62 is 2GB,
-correct the memory node accordingly.
+Fixes an error where debugfs_remove_recursive() is called first on a parent
+directory and then again on a child which causes a kernel panic.
 
-Fixes: 316b80246b16 ("arm64: dts: ti: add verdin am62")
+Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 0ab13674a9bd ("media: pci: mgb4: Added Digiteq Automotive MGB4 driver")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Max Krummenacher <max.krummenacher@toradex.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://lore.kernel.org/r/20240320142937.2028707-1-max.oss.09@gmail.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+[hverkuil: added Fixes/Cc tags]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/mgb4/mgb4_core.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-@@ -76,7 +76,7 @@
+--- a/drivers/media/pci/mgb4/mgb4_core.c
++++ b/drivers/media/pci/mgb4/mgb4_core.c
+@@ -642,9 +642,6 @@ static void mgb4_remove(struct pci_dev *
+ 	struct mgb4_dev *mgbdev = pci_get_drvdata(pdev);
+ 	int i;
  
- 	memory@80000000 {
- 		device_type = "memory";
--		reg = <0x00000000 0x80000000 0x00000000 0x40000000>; /* 1G RAM */
-+		reg = <0x00000000 0x80000000 0x00000000 0x80000000>; /* 2G RAM */
- 	};
+-#ifdef CONFIG_DEBUG_FS
+-	debugfs_remove_recursive(mgbdev->debugfs);
+-#endif
+ #if IS_REACHABLE(CONFIG_HWMON)
+ 	hwmon_device_unregister(mgbdev->hwmon_dev);
+ #endif
+@@ -659,6 +656,10 @@ static void mgb4_remove(struct pci_dev *
+ 		if (mgbdev->vin[i])
+ 			mgb4_vin_free(mgbdev->vin[i]);
  
- 	opp-table {
++#ifdef CONFIG_DEBUG_FS
++	debugfs_remove_recursive(mgbdev->debugfs);
++#endif
++
+ 	device_remove_groups(&mgbdev->pdev->dev, mgb4_pci_groups);
+ 	free_spi(mgbdev);
+ 	free_i2c(mgbdev);
 
 
