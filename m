@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4587413D512;
-	Thu, 13 Jun 2024 11:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363656AFAE;
+	Thu, 13 Jun 2024 11:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279113; cv=none; b=RWKKp68Hlpd4/e80mMwdV7OYqn6ZUbaWG++lhCEQR58BpJCtEWboI0WUz5EtPfx64mva+aKgi8c5NJbVhE4tj2hHzi52az2PF/ZP4KHJauJl4EoMml2pxX7CIlEArFk9kXF+uCN/OHjxQxH78ZJ43hbfpibKlhSb5Sy7pZ4OTy0=
+	t=1718279116; cv=none; b=p1np2LfKykOpYWxHHfZkow3FMK9ElayDzurYorv2nVONMlFdqpr6C68ulqIklCyDRToyIjfRKJQ5fJss2Scvkjhc8nEbTdCSFbP9a1oxfUDtEHkOI9VlH9imGNf7lSwagzwQv2xtsvflgmV6wiQ+Fsf6BZaKqoyBKgvXBAMmNww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279113; c=relaxed/simple;
-	bh=av1XUW+BTT85GCu/Sqb3B3x4M3F5gJ2N4cFTosDrZdA=;
+	s=arc-20240116; t=1718279116; c=relaxed/simple;
+	bh=06ycz0gGcVUk47zDwzXarJnAqj5gzlv7S1qn+owZ82c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0MR8zPVNTe2PIamyxuhpdq5LM8Jz1/F6pGIpoOh8mmCGrBYXD/V7khCqD7ZyrWQRKly2n3P5mOiey+sgFkXCEcuTr9iIE6TPBcAWHqdWB2vaKM0chyvwHtd6L2d2MxK8tAZhags6URtOBNSSeRBszVwMchX7OJNsotYtUsgRb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfeOsY8l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sI+50bR8dQUBJruG8R7BuvDbEj99X6CSE1j3Ed6l+YOMUweofEp3Nf7K5uJ/6sdtGaY1Eeto5zlTMtYkF4HZLOYnPWqQeYLVZK97RxpubR4ZQ4wPXDfdVFc4FkU+VAbwRFvFxef3H+GCzsOM07CwmreXWM+MPH530peoVCK4vFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxRetaS5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfeOsY8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3599C2BBFC;
-	Thu, 13 Jun 2024 11:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxRetaS5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08CCC2BBFC;
+	Thu, 13 Jun 2024 11:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279113;
-	bh=av1XUW+BTT85GCu/Sqb3B3x4M3F5gJ2N4cFTosDrZdA=;
+	s=korg; t=1718279116;
+	bh=06ycz0gGcVUk47zDwzXarJnAqj5gzlv7S1qn+owZ82c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfeOsY8ltmoBcE05rV2gFCiFGlVF96iysjYRzpT21jPxAPkwW1qwBaghzBtER4K6A
-	 S/bAHjURHaSpdQ2W5CqAT9SND8AC2qU2DqTYd44CFEeMMiBL3bh2rmRD27c0OXN/NZ
-	 yWdsZGcypNB4fqTXb9E4pXDhmEaSWndsNRs3wEgE=
+	b=yxRetaS5eY3bY5GWLT8L0RHqxmaIRLkHLA5kHpgwAE32guXw23HpPZF47PfZc77jI
+	 OtiZFQawsYUUic4hDI67nFjYggZexVMIlDexC2FWlF2qc2X5QJOAqkBOhpUwKzR9YO
+	 1FBDtTrKn5xaPCtMnCARO/aXObpzx1pl/pJzAH4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 4.19 178/213] netfilter: nf_tables: fix memleak when more than 255 elements expired
-Date: Thu, 13 Jun 2024 13:33:46 +0200
-Message-ID: <20240613113234.848034243@linuxfoundation.org>
+	Daniel Borkmann <daniel@iogearbox.net>,
+	David Bauer <mail@david-bauer.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.19 149/213] vxlan: Fix regression when dropping packets due to invalid src addresses
+Date: Thu, 13 Jun 2024 13:33:17 +0200
+Message-ID: <20240613113233.736940148@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -51,80 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit cf5000a7787cbc10341091d37245a42c119d26c5 upstream.
+commit 1cd4bc987abb2823836cbb8f887026011ccddc8a upstream.
 
-When more than 255 elements expired we're supposed to switch to a new gc
-container structure.
+Commit f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
+has recently been added to vxlan mainly in the context of source
+address snooping/learning so that when it is enabled, an entry in the
+FDB is not being created for an invalid address for the corresponding
+tunnel endpoint.
 
-This never happens: u8 type will wrap before reaching the boundary
-and nft_trans_gc_space() always returns true.
+Before commit f58f45c1e5b9 vxlan was similarly behaving as geneve in
+that it passed through whichever macs were set in the L2 header. It
+turns out that this change in behavior breaks setups, for example,
+Cilium with netkit in L3 mode for Pods as well as tunnel mode has been
+passing before the change in f58f45c1e5b9 for both vxlan and geneve.
+After mentioned change it is only passing for geneve as in case of
+vxlan packets are dropped due to vxlan_set_mac() returning false as
+source and destination macs are zero which for E/W traffic via tunnel
+is totally fine.
 
-This means we recycle the initial gc container structure and
-lose track of the elements that came before.
+Fix it by only opting into the is_valid_ether_addr() check in
+vxlan_set_mac() when in fact source address snooping/learning is
+actually enabled in vxlan. This is done by moving the check into
+vxlan_snoop(). With this change, the Cilium connectivity test suite
+passes again for both tunnel flavors.
 
-While at it, don't deref 'gc' after we've passed it to call_rcu.
-
-Fixes: 5f68718b34a5 ("netfilter: nf_tables: GC transaction API to avoid race with control plane")
-Reported-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: David Bauer <mail@david-bauer.net>
+Cc: Ido Schimmel <idosch@nvidia.com>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: David Bauer <mail@david-bauer.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[ Backport note: vxlan snooping/learning not supported in 6.8 or older,
+  so commit is simply a revert. ]
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    2 +-
- net/netfilter/nf_tables_api.c     |   10 ++++++++--
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/vxlan.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1389,7 +1389,7 @@ struct nft_trans_gc {
- 	struct net		*net;
- 	struct nft_set		*set;
- 	u32			seq;
--	u8			count;
-+	u16			count;
- 	void			*priv[NFT_TRANS_GC_BATCHCOUNT];
- 	struct rcu_head		rcu;
- };
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6857,12 +6857,15 @@ static int nft_trans_gc_space(struct nft
- struct nft_trans_gc *nft_trans_gc_queue_async(struct nft_trans_gc *gc,
- 					      unsigned int gc_seq, gfp_t gfp)
- {
-+	struct nft_set *set;
-+
- 	if (nft_trans_gc_space(gc))
- 		return gc;
+--- a/drivers/net/vxlan.c
++++ b/drivers/net/vxlan.c
+@@ -1320,10 +1320,6 @@ static bool vxlan_set_mac(struct vxlan_d
+ 	if (ether_addr_equal(eth_hdr(skb)->h_source, vxlan->dev->dev_addr))
+ 		return false;
  
-+	set = gc->set;
- 	nft_trans_gc_queue_work(gc);
- 
--	return nft_trans_gc_alloc(gc->set, gc_seq, gfp);
-+	return nft_trans_gc_alloc(set, gc_seq, gfp);
- }
- EXPORT_SYMBOL_GPL(nft_trans_gc_queue_async);
- 
-@@ -6879,15 +6882,18 @@ EXPORT_SYMBOL_GPL(nft_trans_gc_queue_asy
- 
- struct nft_trans_gc *nft_trans_gc_queue_sync(struct nft_trans_gc *gc, gfp_t gfp)
- {
-+	struct nft_set *set;
-+
- 	if (WARN_ON_ONCE(!lockdep_commit_lock_is_held(gc->net)))
- 		return NULL;
- 
- 	if (nft_trans_gc_space(gc))
- 		return gc;
- 
-+	set = gc->set;
- 	call_rcu(&gc->rcu, nft_trans_gc_trans_free);
- 
--	return nft_trans_gc_alloc(gc->set, 0, gfp);
-+	return nft_trans_gc_alloc(set, 0, gfp);
- }
- EXPORT_SYMBOL_GPL(nft_trans_gc_queue_sync);
- 
+-	/* Ignore packets from invalid src-address */
+-	if (!is_valid_ether_addr(eth_hdr(skb)->h_source))
+-		return false;
+-
+ 	/* Get address from the outer IP header */
+ 	if (vxlan_get_sk_family(vs) == AF_INET) {
+ 		saddr.sin.sin_addr.s_addr = ip_hdr(skb)->saddr;
 
 
