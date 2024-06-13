@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE921442EF;
-	Thu, 13 Jun 2024 11:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E1113C805;
+	Thu, 13 Jun 2024 11:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279313; cv=none; b=tfH2TJg49qOL1w0ELaZT0NN4AdNDCSC4dEuVdWbWDBBPrd7AfD7A3NrgrRel49BP9js+KBtyXE+ceCG/n7jVzcYc82jISrLUKGECtfW1fP9sXELzKmZJHZx7IsJbdMNdbe1OSYy9g+FgIh1/NEHSTCREgFHJQtp4+Yxqo9JRkPM=
+	t=1718279316; cv=none; b=NVQUxZJxhe1/iI/VaLnCtkie6w5ldXep1hN6e8gvbCSIJ8aZEIi7G576stV0rLqP7JsEuJVlqbdMDXoHRFSYPy/dodRQ8wlctjLXNVoAxbUlqr4Qdswk1cJ9/3hUCotSCxCLhS8v2V2DDbdZIh/QvgNyCBUYaEfEazUGGlJ/7lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279313; c=relaxed/simple;
-	bh=cKOpXRewWpQRAU4shTGZBZZ/CCeACaYJzvAXlRe54uo=;
+	s=arc-20240116; t=1718279316; c=relaxed/simple;
+	bh=a6VXqwB4ucFf30GQQzd9lom+CQ8mHCMamdiZy9lGOdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TlQcfy26lzBa906XHbegLsyiPZyeilO2PZAdvZT5EE1AhNnJdn1vDOVpYzETJEZgs21dI6FZtNkJyFnPVYJkN7uJ7Q8M7Sun/Kq6Wif4Ohu0UvG4968EVA1X332KBVscUBV58jUxP8v8z0uvP0vBrjXPSSbOtBnzmdTfGZAMuMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9On4FU2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LrC/RfL1SP01yNVJuGtkPkjf6/5U2WSA6E5f8utQoRuUaZW6OARUfjoLUqbg5MPd9ZAVvRgHXb5AoZ8mEMu3Ycm9jlW1Cu1unLqaMOiwV/H0CU/pXcKNka39lc1eU9d/i5i9eftHcxDhJ0Mm6ARFmo9n59KS6sOsqrh26Cz97hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtMeIsoP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9On4FU2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B225C32786;
-	Thu, 13 Jun 2024 11:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtMeIsoP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BCA2C2BBFC;
+	Thu, 13 Jun 2024 11:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279313;
-	bh=cKOpXRewWpQRAU4shTGZBZZ/CCeACaYJzvAXlRe54uo=;
+	s=korg; t=1718279316;
+	bh=a6VXqwB4ucFf30GQQzd9lom+CQ8mHCMamdiZy9lGOdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9On4FU2evwETyKejXeetgH/K55IhdNI5kV56LU3xZuwyc5PoPSJdhjgmqEasNQT1
-	 EGrNbY5rPX56BjUnRfVUpXhXhwaiDNwdsbcwz8jKKpaRIvbvKJ+ITosCj4zNnn26nP
-	 LRlPhKOo4qz/MNPAgyvW0wuJaONIMkO87x08Xh+w=
+	b=mtMeIsoPKupbRlu2RLwNISR+0NXUJFg3BjYZw5wE3AKnmghmrpLSEJ1tPZAWajto4
+	 qOQiC86l4lujzhK6KtFwLGoWi9+0UWngZnU9++nuv8gIid95IywuyhxRK+9mugnTkP
+	 oNCuxSjYx0Iqw1OZICIr2xKEwG4lBD/hmM9d90mU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.9 034/157] media: mgb4: Fix double debugfs remove
-Date: Thu, 13 Jun 2024 13:32:39 +0200
-Message-ID: <20240613113228.736588882@linuxfoundation.org>
+Subject: [PATCH 6.9 035/157] media: mc: Fix graph walk in media_pipeline_start
+Date: Thu, 13 Jun 2024 13:32:40 +0200
+Message-ID: <20240613113228.776079704@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -44,52 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Tůma <martin.tuma@digiteqautomotive.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit 825fc49497957310e421454fe3fb8b8d8d8e2dd2 upstream.
+commit 8a9d420149c477e7c97fbd6453704e4612bdd3fa upstream.
 
-Fixes an error where debugfs_remove_recursive() is called first on a parent
-directory and then again on a child which causes a kernel panic.
+The graph walk tries to follow all links, even if they are not between
+pads. This causes a crash with, e.g. a MEDIA_LNK_FL_ANCILLARY_LINK link.
 
-Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
+Fix this by allowing the walk to proceed only for MEDIA_LNK_FL_DATA_LINK
+links.
+
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Cc: stable@vger.kernel.org # for 6.1 and later
+Fixes: ae219872834a ("media: mc: entity: Rewrite media_pipeline_start()")
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: 0ab13674a9bd ("media: pci: mgb4: Added Digiteq Automotive MGB4 driver")
-Cc: <stable@vger.kernel.org>
-[hverkuil: added Fixes/Cc tags]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/mgb4/mgb4_core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/mc/mc-entity.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/media/pci/mgb4/mgb4_core.c
-+++ b/drivers/media/pci/mgb4/mgb4_core.c
-@@ -642,9 +642,6 @@ static void mgb4_remove(struct pci_dev *
- 	struct mgb4_dev *mgbdev = pci_get_drvdata(pdev);
- 	int i;
+--- a/drivers/media/mc/mc-entity.c
++++ b/drivers/media/mc/mc-entity.c
+@@ -619,6 +619,12 @@ static int media_pipeline_explore_next_l
+ 	link = list_entry(entry->links, typeof(*link), list);
+ 	last_link = media_pipeline_walk_pop(walk);
  
--#ifdef CONFIG_DEBUG_FS
--	debugfs_remove_recursive(mgbdev->debugfs);
--#endif
- #if IS_REACHABLE(CONFIG_HWMON)
- 	hwmon_device_unregister(mgbdev->hwmon_dev);
- #endif
-@@ -659,6 +656,10 @@ static void mgb4_remove(struct pci_dev *
- 		if (mgbdev->vin[i])
- 			mgb4_vin_free(mgbdev->vin[i]);
- 
-+#ifdef CONFIG_DEBUG_FS
-+	debugfs_remove_recursive(mgbdev->debugfs);
-+#endif
++	if ((link->flags & MEDIA_LNK_FL_LINK_TYPE) != MEDIA_LNK_FL_DATA_LINK) {
++		dev_dbg(walk->mdev->dev,
++			"media pipeline: skipping link (not data-link)\n");
++		return 0;
++	}
 +
- 	device_remove_groups(&mgbdev->pdev->dev, mgb4_pci_groups);
- 	free_spi(mgbdev);
- 	free_i2c(mgbdev);
+ 	dev_dbg(walk->mdev->dev,
+ 		"media pipeline: exploring link '%s':%u -> '%s':%u\n",
+ 		link->source->entity->name, link->source->index,
 
 
