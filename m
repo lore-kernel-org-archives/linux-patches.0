@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7A91E519;
-	Thu, 13 Jun 2024 12:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4A356458;
+	Thu, 13 Jun 2024 12:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282572; cv=none; b=BfHop7+QM8zEJ08fsGtd6a7yOa3o8td4qAMBAnoZds1zIifT8WDRNxM492Ehc+FnR0Te4+oMBMy+N8nannIUpnZR2pIOGMJZGYXaGJVWcVaA6XnaNVDUcdMfqodIXcFrUAOlIcMUtYTSfQ1/ocAXEMWHyCKcIEnAwO2+lJO4A34=
+	t=1718282575; cv=none; b=G3S8pouxKVtHUJjI9ex0LLzZy5knjDCISJEOPigjCnB+MG9uD+kgWypDc6ZhjCw4y7l5DAEw/ug5ZvQQwCcquko2GW8tSkw2o8sdMvlm+LMi3NIwOauojAl7y/1gv/awYQthVjIhU3iJpgpFrSCp+gQFxWQWSONmHHziBe4UxA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282572; c=relaxed/simple;
-	bh=W5ecsnAzMvWt3Bb2+F+C0g2A/WVlf2lLPWDSEGlYeJE=;
+	s=arc-20240116; t=1718282575; c=relaxed/simple;
+	bh=jaz7ZNxztLYHw9oKOn5vBW3wHe5GZuxE0wB4W3u8DvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M/BYTKGM5IQmht7a3G34DUvAWCbcX37Y0RABV6blcDw1SBYYJvcDgMGKIPloghu6+IPcvtVzrbBin74DVCkaBnV53SSpXMWMkL20v/PvplssA4UlZuosBUNu88VyELEABaLD67Fm4NYiUP2r49meqDO2vuSCj2o0KqUffkoa2hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT/AnfV1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dtzqN+stHWbemfqahJP8KpDaDRfWmFEwKCdRZN29UZAIwIonEhtRuY9TQsAOanjqTMjJeAzeu6g4zXJ79k1B1QbZQvXjDTvDrMcv178a7PM5Xu2+4g03rVTZnq+eLXDHAIM/uM6s7dfcnFvlS/HM9tjDBqYmF3KuT8vZGfPgcsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boQszd73; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT/AnfV1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772B6C2BBFC;
-	Thu, 13 Jun 2024 12:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boQszd73"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62753C2BBFC;
+	Thu, 13 Jun 2024 12:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282571;
-	bh=W5ecsnAzMvWt3Bb2+F+C0g2A/WVlf2lLPWDSEGlYeJE=;
+	s=korg; t=1718282574;
+	bh=jaz7ZNxztLYHw9oKOn5vBW3wHe5GZuxE0wB4W3u8DvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OT/AnfV1/T0/U0gblGtoLKBQKZyvs62JP8kfQbg4gVeQc7lTurxPSXlThssIlZlAE
-	 c7jiA1uatW63PvRDMGehbXNR9ZA6EniEBKptG1TYwnXrLAfuiSQOSvZNTXsyCf7PSu
-	 4ZmR8E2Fg/o/ZrMOQp3ZVeIKMpCgQODSU/ouyHuo=
+	b=boQszd73QIP89LSYt/y09T/t+M5kuG4MPjGv3SnISiAb6kxKyaJLQH0fAas6myTUa
+	 j8rZvmUtQ4tV/sKE8Iv5tqDkFyEM7N9YEFZAin6Q56miGNWS2yIBfyi9jXIzVq5J6f
+	 7r6AubMdCmGwYmL366Q7sYMYyyUyLvuNiHA/T+Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>,
+	Simon Horman <horms@kernel.org>,
+	Woojung Huh <woojung.huh@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 281/402] ASoC: mediatek: mt8192: fix register configuration for tdm
-Date: Thu, 13 Jun 2024 13:33:58 +0200
-Message-ID: <20240613113313.109102965@linuxfoundation.org>
+Subject: [PATCH 5.15 316/402] net: usb: smsc95xx: fix changing LED_SEL bit value updated from EEPROM
+Date: Thu, 13 Jun 2024 13:34:33 +0200
+Message-ID: <20240613113314.466803320@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,40 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Te Yuan <yuanhsinte@chromium.org>
+From: Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>
 
-[ Upstream commit a85ed162f0efcfdd664954414a05d1d560cc95dc ]
+[ Upstream commit 52a2f0608366a629d43dacd3191039c95fef74ba ]
 
-For DSP_A, data is a BCK cycle behind LRCK trigger edge. For DSP_B, this
-delay doesn't exist. Fix the delay configuration to match the standard.
+LED Select (LED_SEL) bit in the LED General Purpose IO Configuration
+register is used to determine the functionality of external LED pins
+(Speed Indicator, Link and Activity Indicator, Full Duplex Link
+Indicator). The default value for this bit is 0 when no EEPROM is
+present. If a EEPROM is present, the default value is the value of the
+LED Select bit in the Configuration Flags of the EEPROM. A USB Reset or
+Lite Reset (LRST) will cause this bit to be restored to the image value
+last loaded from EEPROM, or to be set to 0 if no EEPROM is present.
 
-Fixes: 52fcd65414abfc ("ASoC: mediatek: mt8192: support tdm in platform driver")
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20240509-8192-tdm-v1-1-530b54645763@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+While configuring the dual purpose GPIO/LED pins to LED outputs in the
+LED General Purpose IO Configuration register, the LED_SEL bit is changed
+as 0 and resulting the configured value from the EEPROM is cleared. The
+issue is fixed by using read-modify-write approach.
+
+Fixes: f293501c61c5 ("smsc95xx: configure LED outputs")
+Signed-off-by: Parthiban Veerasooran <Parthiban.Veerasooran@microchip.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Woojung Huh <woojung.huh@microchip.com>
+Link: https://lore.kernel.org/r/20240523085314.167650-1-Parthiban.Veerasooran@microchip.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-dai-tdm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/smsc95xx.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-index f3bebed2428a7..360259e60de84 100644
---- a/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-dai-tdm.c
-@@ -566,10 +566,10 @@ static int mtk_dai_tdm_hw_params(struct snd_pcm_substream *substream,
- 		tdm_con |= 1 << DELAY_DATA_SFT;
- 		tdm_con |= get_tdm_lrck_width(format) << LRCK_TDM_WIDTH_SFT;
- 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_A) {
--		tdm_con |= 0 << DELAY_DATA_SFT;
-+		tdm_con |= 1 << DELAY_DATA_SFT;
- 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
- 	} else if (tdm_priv->tdm_out_mode == TDM_OUT_DSP_B) {
--		tdm_con |= 1 << DELAY_DATA_SFT;
-+		tdm_con |= 0 << DELAY_DATA_SFT;
- 		tdm_con |= 0 << LRCK_TDM_WIDTH_SFT;
- 	}
+diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
+index 10fae3989fbdb..8a38939dd57e4 100644
+--- a/drivers/net/usb/smsc95xx.c
++++ b/drivers/net/usb/smsc95xx.c
+@@ -842,7 +842,7 @@ static int smsc95xx_start_rx_path(struct usbnet *dev, int in_pm)
+ static int smsc95xx_reset(struct usbnet *dev)
+ {
+ 	struct smsc95xx_priv *pdata = dev->driver_priv;
+-	u32 read_buf, write_buf, burst_cap;
++	u32 read_buf, burst_cap;
+ 	int ret = 0, timeout;
+ 
+ 	netif_dbg(dev, ifup, dev->net, "entering smsc95xx_reset\n");
+@@ -984,10 +984,13 @@ static int smsc95xx_reset(struct usbnet *dev)
+ 		return ret;
+ 	netif_dbg(dev, ifup, dev->net, "ID_REV = 0x%08x\n", read_buf);
+ 
++	ret = smsc95xx_read_reg(dev, LED_GPIO_CFG, &read_buf);
++	if (ret < 0)
++		return ret;
+ 	/* Configure GPIO pins as LED outputs */
+-	write_buf = LED_GPIO_CFG_SPD_LED | LED_GPIO_CFG_LNK_LED |
+-		LED_GPIO_CFG_FDX_LED;
+-	ret = smsc95xx_write_reg(dev, LED_GPIO_CFG, write_buf);
++	read_buf |= LED_GPIO_CFG_SPD_LED | LED_GPIO_CFG_LNK_LED |
++		    LED_GPIO_CFG_FDX_LED;
++	ret = smsc95xx_write_reg(dev, LED_GPIO_CFG, read_buf);
+ 	if (ret < 0)
+ 		return ret;
  
 -- 
 2.43.0
