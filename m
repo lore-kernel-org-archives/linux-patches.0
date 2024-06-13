@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F6A399;
-	Thu, 13 Jun 2024 12:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC50F4A0F;
+	Thu, 13 Jun 2024 12:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282123; cv=none; b=I6DX0ET4+v6nDTTIbCbPFmJBpIybr40pHqmmmAa3T5FgC1rtD+eadSShjMppl5UbD4dMiapnKADlrqR21zcdHJEvij2IfZWsf2TS8pgOEr7QdXY9IySRnlxJDFmQpATOvv10EKNbESNXMQbMTjne3vPXZxD4K6fla3C3gAgba3M=
+	t=1718282126; cv=none; b=Lof1F0+n5xu3/4WF3zD0l6LwN2BCG5M5lpW19ocv18IttWM05Jc++GIvqwMxjzZqehN5XPOxLInii2y7eCRbOmqotuVQBV0TtTEMbNY8+LHZmrymunnjME7ee0RRVS7EGZVxcXxb8Al55UWw9UN0Syj1R2PmfqS7ywWpvjlaoXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282123; c=relaxed/simple;
-	bh=9ZWYIh1nPY/n2Dqjvr4HbVsBVnfUBJ2OSjbDFQHouy4=;
+	s=arc-20240116; t=1718282126; c=relaxed/simple;
+	bh=feHdxEYKAAP4PDoH2RBiE/fXOQgHgAUKPkThAj5EVsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fybE/VPKeYCvFFdd+dxv2e7Fn8dv94lmJ5tE/h0XcAVXs3jKI/e8dTsCt33irEltxTMZ9OZ+Cdt1uYlr2RmgooA0InMfOws0P5FzawkpkvZqCpSWEvXDu/olwN140GzvlDRekhQKL71spldPaf6JYfVNzrWlxtnwnDqn56ZSzjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9CTws30; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tpUw1IkboM6iektUrhS2uRSPCIaBIvv7Ao0iChjDAA0vrKEaG1P9OVcKjRAm+4f6wtFAJiOtOKtJSc/5lMJvvlEkzsxzNfdBlFQawg5Yk3TROo+typ8OM4uq4hPCBW4OHHYL9sDOLlTi1xWsXu3+91l2hNw75jaRanEoqsXCnGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jv2oCOd2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9CTws30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D695C2BBFC;
-	Thu, 13 Jun 2024 12:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jv2oCOd2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F68BC32786;
+	Thu, 13 Jun 2024 12:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282123;
-	bh=9ZWYIh1nPY/n2Dqjvr4HbVsBVnfUBJ2OSjbDFQHouy4=;
+	s=korg; t=1718282126;
+	bh=feHdxEYKAAP4PDoH2RBiE/fXOQgHgAUKPkThAj5EVsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9CTws300fetaAtUfv4j8lDYodAmLdKtB99wObNZSNYIcDZuZjuYrHwadPJb49lJD
-	 nkN/v9N71uN2p7++fR14Oifyw8/w1N5e72hd/P2SEiRps4Y0rmGoynz1ID82lBSsZh
-	 0kLQ/2KA6h0i0OQHpzKRoIee3NtKbt1UfksZD3V4=
+	b=jv2oCOd2TwQVwDdBr1ZVGmwkLqUtrmYqrchktE9z4DZEj2W4DkQkCXD2Y2NQ1e9ps
+	 YbEbKQrY0fO/at3MW+pJ7/3cGHZnpkXcLx8oz1sqgVMaI9L+ajNFJXKRE1CSyBK8OG
+	 OGV1u/gMO74MpPfzRYTqFtOsk4xdsleUcOxBbYqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 170/402] RDMA/IPoIB: Fix format truncation compilation errors
-Date: Thu, 13 Jun 2024 13:32:07 +0200
-Message-ID: <20240613113308.776875455@linuxfoundation.org>
+Subject: [PATCH 5.15 171/402] selftests: net: bridge: increase IGMP/MLD exclude timeout membership interval
+Date: Thu, 13 Jun 2024 13:32:08 +0200
+Message-ID: <20240613113308.815258334@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -44,68 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 49ca2b2ef3d003402584c68ae7b3055ba72e750a ]
+[ Upstream commit 06080ea23095afe04a2cb7a8d05fab4311782623 ]
 
-Truncate the device name to store IPoIB VLAN name.
+When running the bridge IGMP/MLD selftests on debug kernels we can get
+spurious errors when setting up the IGMP/MLD exclude timeout tests
+because the membership interval is just 3 seconds and the setup has 2
+seconds of sleep plus various validations, the one second that is left
+is not enough. Increase the membership interval from 3 to 5 seconds to
+make room for the setup validation and 2 seconds of sleep.
 
-[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 allmodconfig
-[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 W=1 drivers/infiniband/ulp/ipoib/
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c: In function ‘ipoib_vlan_add’:
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:52: error: ‘%04x’
-directive output may be truncated writing 4 bytes into a region of size
-between 0 and 15 [-Werror=format-truncation=]
-  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
-      |                                                    ^~~~
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:48: note: directive
-argument in the range [0, 65535]
-  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
-      |                                                ^~~~~~~~~
-drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:9: note: ‘snprintf’ output
-between 6 and 21 bytes into a destination of size 16
-  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  188 |                  ppriv->dev->name, pkey);
-      |                  ~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
-make[6]: *** [scripts/Makefile.build:244: drivers/infiniband/ulp/ipoib/ipoib_vlan.o] Error 1
-make[6]: *** Waiting for unfinished jobs....
-
-Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
-Link: https://lore.kernel.org/r/e9d3e1fef69df4c9beaf402cc3ac342bad680791.1715240029.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 34d7ecb3d4f7 ("selftests: net: bridge: update IGMP/MLD membership interval value")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_vlan.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/forwarding/bridge_igmp.sh | 6 +++---
+ tools/testing/selftests/net/forwarding/bridge_mld.sh  | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
-index 0322dc75396f1..323d5d5db2473 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
-@@ -185,8 +185,12 @@ int ipoib_vlan_add(struct net_device *pdev, unsigned short pkey)
+diff --git a/tools/testing/selftests/net/forwarding/bridge_igmp.sh b/tools/testing/selftests/net/forwarding/bridge_igmp.sh
+index 1162836f8f329..6dc3cb4ac6081 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_igmp.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_igmp.sh
+@@ -481,10 +481,10 @@ v3exc_timeout_test()
+ 	RET=0
+ 	local X=("192.0.2.20" "192.0.2.30")
  
- 	ppriv = ipoib_priv(pdev);
+-	# GMI should be 3 seconds
++	# GMI should be 5 seconds
+ 	ip link set dev br0 type bridge mcast_query_interval 100 \
+ 					mcast_query_response_interval 100 \
+-					mcast_membership_interval 300
++					mcast_membership_interval 500
  
--	snprintf(intf_name, sizeof(intf_name), "%s.%04x",
--		 ppriv->dev->name, pkey);
-+	/* If you increase IFNAMSIZ, update snprintf below
-+	 * to allow longer names.
-+	 */
-+	BUILD_BUG_ON(IFNAMSIZ != 16);
-+	snprintf(intf_name, sizeof(intf_name), "%.10s.%04x", ppriv->dev->name,
-+		 pkey);
+ 	v3exclude_prepare $h1 $ALL_MAC $ALL_GROUP
+ 	ip link set dev br0 type bridge mcast_query_interval 500 \
+@@ -492,7 +492,7 @@ v3exc_timeout_test()
+ 					mcast_membership_interval 1500
  
- 	ndev = ipoib_intf_alloc(ppriv->ca, ppriv->port, intf_name);
- 	if (IS_ERR(ndev)) {
+ 	$MZ $h1 -c 1 -b $ALL_MAC -B $ALL_GROUP -t ip "proto=2,p=$MZPKT_ALLOW2" -q
+-	sleep 3
++	sleep 5
+ 	bridge -j -d -s mdb show dev br0 \
+ 		| jq -e ".[].mdb[] | \
+ 			 select(.grp == \"$TEST_GROUP\" and \
+diff --git a/tools/testing/selftests/net/forwarding/bridge_mld.sh b/tools/testing/selftests/net/forwarding/bridge_mld.sh
+index e2b9ff773c6b6..f84ab2e657547 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_mld.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_mld.sh
+@@ -478,10 +478,10 @@ mldv2exc_timeout_test()
+ 	RET=0
+ 	local X=("2001:db8:1::20" "2001:db8:1::30")
+ 
+-	# GMI should be 3 seconds
++	# GMI should be 5 seconds
+ 	ip link set dev br0 type bridge mcast_query_interval 100 \
+ 					mcast_query_response_interval 100 \
+-					mcast_membership_interval 300
++					mcast_membership_interval 500
+ 
+ 	mldv2exclude_prepare $h1
+ 	ip link set dev br0 type bridge mcast_query_interval 500 \
+@@ -489,7 +489,7 @@ mldv2exc_timeout_test()
+ 					mcast_membership_interval 1500
+ 
+ 	$MZ $h1 -c 1 $MZPKT_ALLOW2 -q
+-	sleep 3
++	sleep 5
+ 	bridge -j -d -s mdb show dev br0 \
+ 		| jq -e ".[].mdb[] | \
+ 			 select(.grp == \"$TEST_GROUP\" and \
 -- 
 2.43.0
 
