@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203CE6EB56;
-	Thu, 13 Jun 2024 12:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E41A56458;
+	Thu, 13 Jun 2024 12:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281325; cv=none; b=bJHZCznvK8gkWemmbUITlkV3yKFIPmV0sErVF4sfjk7hmx5FjxpmsJlJITZzhP9zoOB93npzNXDtCbwJ1hZJ88oqCQg2Ne816MVpjx/fuFY7b+4VLF3/9qBqHIewpPyxi7/Q8q8qa5/P5g5WVTnuKl28Tu6soHRgZikFq32v0Pk=
+	t=1718281328; cv=none; b=h+AnLwi/SGmfWlDHiocQRmJcTPh+yUTYbK7A5/mcVzOQ1Q8WQTi22PuqN1ceMw2AXAVgnFinQLH+z904Ace4HvzW7MMVTS3HdDe21beCLxyOcXmB5he7plbAOQsG11P4gW82gLbVerbQSeJu4/D03qsjEI1ECrqtRdBlwyNm5xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281325; c=relaxed/simple;
-	bh=dDEczvzQbZ7oJETiN3mzw/u1Net4+B8bmSS6bo66+/M=;
+	s=arc-20240116; t=1718281328; c=relaxed/simple;
+	bh=jYfhYQahXpUa5kT4p2nDL92MpOEFS2Lj5iZJWulfRyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8k3bZd/oYD05nHawLsqQwZ7HQiXC2YuDn1TUI3QFaMkV6oARgri9nac17N7f6oro+NFvNjjvhVdoarHonj9zUG6QQX+1U7tEDmIZ5vBUZ2xj2NR2VNrYKUvxbe5Thz+HozTviXxqLGdvqZL5UcYa/nsk6ScM74GTr1ad/8+itE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5bJawhH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b4OiRJwOOyE1gSK7pppsUmMHdMkICP/mQzA13QL9rEI0Gxj1qhuD8ydUohRRhhtIlExJhXaKdJhe31+F4PKAa4ym4c/oRv35X4edf9YkE7BR7/woDUDR6zclTFqBkQ2mUMEwze4VqMjGJKWytSk6xX9BA3jhKaQt1ZhCE7l6hAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QB2LheOL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5bJawhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC27C2BBFC;
-	Thu, 13 Jun 2024 12:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QB2LheOL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A89DC32786;
+	Thu, 13 Jun 2024 12:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281325;
-	bh=dDEczvzQbZ7oJETiN3mzw/u1Net4+B8bmSS6bo66+/M=;
+	s=korg; t=1718281327;
+	bh=jYfhYQahXpUa5kT4p2nDL92MpOEFS2Lj5iZJWulfRyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5bJawhHGcSq4j9vdfzqbs5FP+RfRWdcKY1CuGjVoKKyLOurqet01TN92nJhmqkTE
-	 MTUUFFhJKK400h77bRasyLW5VKyNdPKTDSwBLl+vqpA+DNAQeH/z3XoliyeXs7ZHQi
-	 TKtx9/K44LoIuSkkaGuATL9WFJHZ5RdgOvjWcmmU=
+	b=QB2LheOLdMZrstZRj2KMzFFx70MYEN8lOsWwCpMUm1QVUlKbpR/+il4FuM46SHz7h
+	 Zv4AUbYyzsjlijT0kb04qy62HLwyfo0rJstTIJeHCXZy4rO1BZfPjpzUuKzkz0JSsu
+	 Q+2lqHnAO0XgKZbUieGmnfG/uc17spWb6qFdp2LA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 216/317] media: core headers: fix kernel-doc warnings
-Date: Thu, 13 Jun 2024 13:33:54 +0200
-Message-ID: <20240613113255.909949991@linuxfoundation.org>
+Subject: [PATCH 5.10 217/317] media: cec: fix a deadlock situation
+Date: Thu, 13 Jun 2024 13:33:55 +0200
+Message-ID: <20240613113255.948765646@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -53,272 +53,267 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit f12b81e47f48940a6ec82ff308a7d97cd2307442 ]
+[ Upstream commit a9e6107616bb8108aa4fc22584a05e69761a91f7 ]
 
-This patch fixes the following kernel-doc warnings:
+The cec_devnode struct has a lock meant to serialize access
+to the fields of this struct. This lock is taken during
+device node (un)registration and when opening or releasing a
+filehandle to the device node. When the last open filehandle
+is closed the cec adapter might be disabled by calling the
+adap_enable driver callback with the devnode.lock held.
 
-include/uapi/linux/videodev2.h:996: warning: Function parameter or member 'm' not described in 'v4l2_plane'
-include/uapi/linux/videodev2.h:996: warning: Function parameter or member 'reserved' not described in 'v4l2_plane'
-include/uapi/linux/videodev2.h:1057: warning: Function parameter or member 'm' not described in 'v4l2_buffer'
-include/uapi/linux/videodev2.h:1057: warning: Function parameter or member 'reserved2' not described in 'v4l2_buffer'
-include/uapi/linux/videodev2.h:1057: warning: Function parameter or member 'reserved' not described in 'v4l2_buffer'
-include/uapi/linux/videodev2.h:1068: warning: Function parameter or member 'tv' not described in 'v4l2_timeval_to_ns'
-include/uapi/linux/videodev2.h:1068: warning: Excess function parameter 'ts' description in 'v4l2_timeval_to_ns'
-include/uapi/linux/videodev2.h:1138: warning: Function parameter or member 'reserved' not described in 'v4l2_exportbuffer'
-include/uapi/linux/videodev2.h:2237: warning: Function parameter or member 'reserved' not described in 'v4l2_plane_pix_format'
-include/uapi/linux/videodev2.h:2270: warning: Function parameter or member 'hsv_enc' not described in 'v4l2_pix_format_mplane'
-include/uapi/linux/videodev2.h:2270: warning: Function parameter or member 'reserved' not described in 'v4l2_pix_format_mplane'
-include/uapi/linux/videodev2.h:2281: warning: Function parameter or member 'reserved' not described in 'v4l2_sdr_format'
-include/uapi/linux/videodev2.h:2315: warning: Function parameter or member 'fmt' not described in 'v4l2_format'
+However, if during that callback a message or event arrives
+then the driver will call one of the cec_queue_event()
+variants in cec-adap.c, and those will take the same devnode.lock
+to walk the open filehandle list.
 
-include/uapi/linux/v4l2-subdev.h:53: warning: Function parameter or member 'reserved' not described in 'v4l2_subdev_format'
-include/uapi/linux/v4l2-subdev.h:66: warning: Function parameter or member 'reserved' not described in 'v4l2_subdev_crop'
-include/uapi/linux/v4l2-subdev.h:89: warning: Function parameter or member 'reserved' not described in 'v4l2_subdev_mbus_code_enum'
-include/uapi/linux/v4l2-subdev.h:108: warning: Function parameter or member 'min_width' not described in 'v4l2_subdev_frame_size_enum'
-include/uapi/linux/v4l2-subdev.h:108: warning: Function parameter or member 'max_width' not described in 'v4l2_subdev_frame_size_enum'
-include/uapi/linux/v4l2-subdev.h:108: warning: Function parameter or member 'min_height' not described in 'v4l2_subdev_frame_size_enum'
-include/uapi/linux/v4l2-subdev.h:108: warning: Function parameter or member 'max_height' not described in 'v4l2_subdev_frame_size_enum'
-include/uapi/linux/v4l2-subdev.h:108: warning: Function parameter or member 'reserved' not described in 'v4l2_subdev_frame_size_enum'
-include/uapi/linux/v4l2-subdev.h:119: warning: Function parameter or member 'reserved' not described in 'v4l2_subdev_frame_interval'
-include/uapi/linux/v4l2-subdev.h:140: warning: Function parameter or member 'reserved' not described in 'v4l2_subdev_frame_interval_enum'
+This obviously causes a deadlock.
 
-include/uapi/linux/cec.h:406: warning: Function parameter or member 'raw' not described in 'cec_connector_info'
-include/uapi/linux/cec.h:470: warning: Function parameter or member 'flags' not described in 'cec_event'
+This is quite easy to reproduce with the cec-gpio driver since that
+uses the cec-pin framework which generated lots of events and uses
+a kernel thread for the processing, so when adap_enable is called
+the thread is still running and can generate events.
 
-include/media/v4l2-h264.h:82: warning: Function parameter or member 'reflist' not described in 'v4l2_h264_build_p_ref_list'
-include/media/v4l2-h264.h:82: warning: expecting prototype for v4l2_h264_build_b_ref_lists(). Prototype was for v4l2_h264_build_p_ref_list()
-instead
+But I suspect that it might also happen with other drivers if an
+interrupt arrives signaling e.g. a received message before adap_enable
+had a chance to disable the interrupts.
 
-include/media/cec.h:50: warning: Function parameter or member 'lock' not described in 'cec_devnode'
+This patch adds a new mutex to serialize access to the fhs list.
+When adap_enable() is called the devnode.lock mutex is held, but
+not devnode.lock_fhs. The event functions in cec-adap.c will now
+use devnode.lock_fhs instead of devnode.lock, ensuring that it is
+safe to call those functions from the adap_enable callback.
 
-include/media/v4l2-jpeg.h:122: warning: Function parameter or member 'num_dht' not described in 'v4l2_jpeg_header'
-include/media/v4l2-jpeg.h:122: warning: Function parameter or member 'num_dqt' not described in 'v4l2_jpeg_header'
+This specific issue only happens if the last open filehandle is closed
+and the physical address is invalid. This is not something that
+happens during normal operation, but it does happen when monitoring
+CEC traffic (e.g. cec-ctl --monitor) with an unconfigured CEC adapter.
 
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: <stable@vger.kernel.org>  # for v5.13 and up
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Stable-dep-of: 47c82aac10a6 ("media: cec: core: avoid recursive cec_claim_log_addrs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/media/cec.h              |  2 +-
- include/media/v4l2-h264.h        |  6 +++---
- include/media/v4l2-jpeg.h        |  2 ++
- include/uapi/linux/cec.h         |  3 ++-
- include/uapi/linux/v4l2-subdev.h | 12 +++++++++++-
- include/uapi/linux/videodev2.h   | 15 ++++++++++++++-
- 6 files changed, 33 insertions(+), 7 deletions(-)
+ drivers/media/cec/core/cec-adap.c | 38 +++++++++++++++++--------------
+ drivers/media/cec/core/cec-api.c  |  6 +++++
+ drivers/media/cec/core/cec-core.c |  3 +++
+ include/media/cec.h               | 11 +++++++--
+ 4 files changed, 39 insertions(+), 19 deletions(-)
 
+diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
+index 78027f0310acd..d2a6fd8b65014 100644
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -161,10 +161,10 @@ static void cec_queue_event(struct cec_adapter *adap,
+ 	u64 ts = ktime_get_ns();
+ 	struct cec_fh *fh;
+ 
+-	mutex_lock(&adap->devnode.lock);
++	mutex_lock(&adap->devnode.lock_fhs);
+ 	list_for_each_entry(fh, &adap->devnode.fhs, list)
+ 		cec_queue_event_fh(fh, ev, ts);
+-	mutex_unlock(&adap->devnode.lock);
++	mutex_unlock(&adap->devnode.lock_fhs);
+ }
+ 
+ /* Notify userspace that the CEC pin changed state at the given time. */
+@@ -178,11 +178,12 @@ void cec_queue_pin_cec_event(struct cec_adapter *adap, bool is_high,
+ 	};
+ 	struct cec_fh *fh;
+ 
+-	mutex_lock(&adap->devnode.lock);
+-	list_for_each_entry(fh, &adap->devnode.fhs, list)
++	mutex_lock(&adap->devnode.lock_fhs);
++	list_for_each_entry(fh, &adap->devnode.fhs, list) {
+ 		if (fh->mode_follower == CEC_MODE_MONITOR_PIN)
+ 			cec_queue_event_fh(fh, &ev, ktime_to_ns(ts));
+-	mutex_unlock(&adap->devnode.lock);
++	}
++	mutex_unlock(&adap->devnode.lock_fhs);
+ }
+ EXPORT_SYMBOL_GPL(cec_queue_pin_cec_event);
+ 
+@@ -195,10 +196,10 @@ void cec_queue_pin_hpd_event(struct cec_adapter *adap, bool is_high, ktime_t ts)
+ 	};
+ 	struct cec_fh *fh;
+ 
+-	mutex_lock(&adap->devnode.lock);
++	mutex_lock(&adap->devnode.lock_fhs);
+ 	list_for_each_entry(fh, &adap->devnode.fhs, list)
+ 		cec_queue_event_fh(fh, &ev, ktime_to_ns(ts));
+-	mutex_unlock(&adap->devnode.lock);
++	mutex_unlock(&adap->devnode.lock_fhs);
+ }
+ EXPORT_SYMBOL_GPL(cec_queue_pin_hpd_event);
+ 
+@@ -211,10 +212,10 @@ void cec_queue_pin_5v_event(struct cec_adapter *adap, bool is_high, ktime_t ts)
+ 	};
+ 	struct cec_fh *fh;
+ 
+-	mutex_lock(&adap->devnode.lock);
++	mutex_lock(&adap->devnode.lock_fhs);
+ 	list_for_each_entry(fh, &adap->devnode.fhs, list)
+ 		cec_queue_event_fh(fh, &ev, ktime_to_ns(ts));
+-	mutex_unlock(&adap->devnode.lock);
++	mutex_unlock(&adap->devnode.lock_fhs);
+ }
+ EXPORT_SYMBOL_GPL(cec_queue_pin_5v_event);
+ 
+@@ -286,12 +287,12 @@ static void cec_queue_msg_monitor(struct cec_adapter *adap,
+ 	u32 monitor_mode = valid_la ? CEC_MODE_MONITOR :
+ 				      CEC_MODE_MONITOR_ALL;
+ 
+-	mutex_lock(&adap->devnode.lock);
++	mutex_lock(&adap->devnode.lock_fhs);
+ 	list_for_each_entry(fh, &adap->devnode.fhs, list) {
+ 		if (fh->mode_follower >= monitor_mode)
+ 			cec_queue_msg_fh(fh, msg);
+ 	}
+-	mutex_unlock(&adap->devnode.lock);
++	mutex_unlock(&adap->devnode.lock_fhs);
+ }
+ 
+ /*
+@@ -302,12 +303,12 @@ static void cec_queue_msg_followers(struct cec_adapter *adap,
+ {
+ 	struct cec_fh *fh;
+ 
+-	mutex_lock(&adap->devnode.lock);
++	mutex_lock(&adap->devnode.lock_fhs);
+ 	list_for_each_entry(fh, &adap->devnode.fhs, list) {
+ 		if (fh->mode_follower == CEC_MODE_FOLLOWER)
+ 			cec_queue_msg_fh(fh, msg);
+ 	}
+-	mutex_unlock(&adap->devnode.lock);
++	mutex_unlock(&adap->devnode.lock_fhs);
+ }
+ 
+ /* Notify userspace of an adapter state change. */
+@@ -1559,6 +1560,7 @@ void __cec_s_phys_addr(struct cec_adapter *adap, u16 phys_addr, bool block)
+ 		/* Disabling monitor all mode should always succeed */
+ 		if (adap->monitor_all_cnt)
+ 			WARN_ON(call_op(adap, adap_monitor_all_enable, false));
++		/* serialize adap_enable */
+ 		mutex_lock(&adap->devnode.lock);
+ 		if (adap->needs_hpd || list_empty(&adap->devnode.fhs)) {
+ 			WARN_ON(adap->ops->adap_enable(adap, false));
+@@ -1570,14 +1572,16 @@ void __cec_s_phys_addr(struct cec_adapter *adap, u16 phys_addr, bool block)
+ 			return;
+ 	}
+ 
++	/* serialize adap_enable */
+ 	mutex_lock(&adap->devnode.lock);
+ 	adap->last_initiator = 0xff;
+ 	adap->transmit_in_progress = false;
+ 
+-	if ((adap->needs_hpd || list_empty(&adap->devnode.fhs)) &&
+-	    adap->ops->adap_enable(adap, true)) {
+-		mutex_unlock(&adap->devnode.lock);
+-		return;
++	if (adap->needs_hpd || list_empty(&adap->devnode.fhs)) {
++		if (adap->ops->adap_enable(adap, true)) {
++			mutex_unlock(&adap->devnode.lock);
++			return;
++		}
+ 	}
+ 
+ 	if (adap->monitor_all_cnt &&
+diff --git a/drivers/media/cec/core/cec-api.c b/drivers/media/cec/core/cec-api.c
+index 893641ebc644b..899017a0e514e 100644
+--- a/drivers/media/cec/core/cec-api.c
++++ b/drivers/media/cec/core/cec-api.c
+@@ -586,6 +586,7 @@ static int cec_open(struct inode *inode, struct file *filp)
+ 		return err;
+ 	}
+ 
++	/* serialize adap_enable */
+ 	mutex_lock(&devnode->lock);
+ 	if (list_empty(&devnode->fhs) &&
+ 	    !adap->needs_hpd &&
+@@ -624,7 +625,9 @@ static int cec_open(struct inode *inode, struct file *filp)
+ 	}
+ #endif
+ 
++	mutex_lock(&devnode->lock_fhs);
+ 	list_add(&fh->list, &devnode->fhs);
++	mutex_unlock(&devnode->lock_fhs);
+ 	mutex_unlock(&devnode->lock);
+ 
+ 	return 0;
+@@ -653,8 +656,11 @@ static int cec_release(struct inode *inode, struct file *filp)
+ 		cec_monitor_all_cnt_dec(adap);
+ 	mutex_unlock(&adap->lock);
+ 
++	/* serialize adap_enable */
+ 	mutex_lock(&devnode->lock);
++	mutex_lock(&devnode->lock_fhs);
+ 	list_del(&fh->list);
++	mutex_unlock(&devnode->lock_fhs);
+ 	if (cec_is_registered(adap) && list_empty(&devnode->fhs) &&
+ 	    !adap->needs_hpd && adap->phys_addr == CEC_PHYS_ADDR_INVALID) {
+ 		WARN_ON(adap->ops->adap_enable(adap, false));
+diff --git a/drivers/media/cec/core/cec-core.c b/drivers/media/cec/core/cec-core.c
+index ece236291f358..61139b0a08699 100644
+--- a/drivers/media/cec/core/cec-core.c
++++ b/drivers/media/cec/core/cec-core.c
+@@ -167,8 +167,10 @@ static void cec_devnode_unregister(struct cec_adapter *adap)
+ 		return;
+ 	}
+ 
++	mutex_lock(&devnode->lock_fhs);
+ 	list_for_each_entry(fh, &devnode->fhs, list)
+ 		wake_up_interruptible(&fh->wait);
++	mutex_unlock(&devnode->lock_fhs);
+ 
+ 	devnode->registered = false;
+ 	devnode->unregistered = true;
+@@ -272,6 +274,7 @@ struct cec_adapter *cec_allocate_adapter(const struct cec_adap_ops *ops,
+ 
+ 	/* adap->devnode initialization */
+ 	INIT_LIST_HEAD(&adap->devnode.fhs);
++	mutex_init(&adap->devnode.lock_fhs);
+ 	mutex_init(&adap->devnode.lock);
+ 
+ 	adap->kthread = kthread_run(cec_thread_func, adap, "cec-%s", name);
 diff --git a/include/media/cec.h b/include/media/cec.h
-index cd35ae6b7560f..208c9613c07eb 100644
+index 208c9613c07eb..77346f757036d 100644
 --- a/include/media/cec.h
 +++ b/include/media/cec.h
-@@ -28,8 +28,8 @@
+@@ -26,13 +26,17 @@
+  * @dev:	cec device
+  * @cdev:	cec character device
   * @minor:	device node minor number
++ * @lock:	lock to serialize open/release and registration
   * @registered:	the device was correctly registered
   * @unregistered: the device was unregistered
-- * @fhs_lock:	lock to control access to the filehandle list
++ * @lock_fhs:	lock to control access to @fhs
   * @fhs:	the list of open filehandles (cec_fh)
-+ * @lock:	lock to control access to this structure
+- * @lock:	lock to control access to this structure
   *
   * This structure represents a cec-related device node.
   *
-diff --git a/include/media/v4l2-h264.h b/include/media/v4l2-h264.h
-index f08ba181263d1..1cc89d2e693a3 100644
---- a/include/media/v4l2-h264.h
-+++ b/include/media/v4l2-h264.h
-@@ -66,11 +66,11 @@ v4l2_h264_build_b_ref_lists(const struct v4l2_h264_reflist_builder *builder,
- 			    u8 *b0_reflist, u8 *b1_reflist);
++ * To add or remove filehandles from @fhs the @lock must be taken first,
++ * followed by @lock_fhs. It is safe to access @fhs if either lock is held.
++ *
+  * The @parent is a physical device. It must be set by core or device drivers
+  * before registering the node.
+  */
+@@ -43,10 +47,13 @@ struct cec_devnode {
  
- /**
-- * v4l2_h264_build_b_ref_lists() - Build the P reference list
-+ * v4l2_h264_build_p_ref_list() - Build the P reference list
-  *
-  * @builder: reference list builder context
-- * @p_reflist: 16-bytes array used to store the P reference list. Each entry
-- *	       is an index in the DPB
-+ * @reflist: 16-bytes array used to store the P reference list. Each entry
-+ *	     is an index in the DPB
-  *
-  * This functions builds the P reference lists. This procedure is describe in
-  * section '8.2.4 Decoding process for reference picture lists construction'
-diff --git a/include/media/v4l2-jpeg.h b/include/media/v4l2-jpeg.h
-index ddba2a56c3214..3a3344a976782 100644
---- a/include/media/v4l2-jpeg.h
-+++ b/include/media/v4l2-jpeg.h
-@@ -91,7 +91,9 @@ struct v4l2_jpeg_scan_header {
-  * struct v4l2_jpeg_header - parsed JPEG header
-  * @sof: pointer to frame header and size
-  * @sos: pointer to scan header and size
-+ * @num_dht: number of entries in @dht
-  * @dht: pointers to huffman tables and sizes
-+ * @num_dqt: number of entries in @dqt
-  * @dqt: pointers to quantization tables and sizes
-  * @frame: parsed frame header
-  * @scan: pointer to parsed scan header, optional
-diff --git a/include/uapi/linux/cec.h b/include/uapi/linux/cec.h
-index 7d1a06c524696..dc8879d179fdf 100644
---- a/include/uapi/linux/cec.h
-+++ b/include/uapi/linux/cec.h
-@@ -396,6 +396,7 @@ struct cec_drm_connector_info {
-  * associated with the CEC adapter.
-  * @type: connector type (if any)
-  * @drm: drm connector info
-+ * @raw: array to pad the union
-  */
- struct cec_connector_info {
- 	__u32 type;
-@@ -453,7 +454,7 @@ struct cec_event_lost_msgs {
-  * struct cec_event - CEC event structure
-  * @ts: the timestamp of when the event was sent.
-  * @event: the event.
-- * array.
-+ * @flags: event flags.
-  * @state_change: the event payload for CEC_EVENT_STATE_CHANGE.
-  * @lost_msgs: the event payload for CEC_EVENT_LOST_MSGS.
-  * @raw: array to pad the union.
-diff --git a/include/uapi/linux/v4l2-subdev.h b/include/uapi/linux/v4l2-subdev.h
-index a38454d9e0f54..658106f5b5dc9 100644
---- a/include/uapi/linux/v4l2-subdev.h
-+++ b/include/uapi/linux/v4l2-subdev.h
-@@ -44,6 +44,7 @@ enum v4l2_subdev_format_whence {
-  * @which: format type (from enum v4l2_subdev_format_whence)
-  * @pad: pad number, as reported by the media API
-  * @format: media bus format (format code and frame size)
-+ * @reserved: drivers and applications must zero this array
-  */
- struct v4l2_subdev_format {
- 	__u32 which;
-@@ -57,6 +58,7 @@ struct v4l2_subdev_format {
-  * @which: format type (from enum v4l2_subdev_format_whence)
-  * @pad: pad number, as reported by the media API
-  * @rect: pad crop rectangle boundaries
-+ * @reserved: drivers and applications must zero this array
-  */
- struct v4l2_subdev_crop {
- 	__u32 which;
-@@ -78,6 +80,7 @@ struct v4l2_subdev_crop {
-  * @code: format code (MEDIA_BUS_FMT_ definitions)
-  * @which: format type (from enum v4l2_subdev_format_whence)
-  * @flags: flags set by the driver, (V4L2_SUBDEV_MBUS_CODE_*)
-+ * @reserved: drivers and applications must zero this array
-  */
- struct v4l2_subdev_mbus_code_enum {
- 	__u32 pad;
-@@ -90,10 +93,15 @@ struct v4l2_subdev_mbus_code_enum {
+ 	/* device info */
+ 	int minor;
++	/* serialize open/release and registration */
++	struct mutex lock;
+ 	bool registered;
+ 	bool unregistered;
++	/* protect access to fhs */
++	struct mutex lock_fhs;
+ 	struct list_head fhs;
+-	struct mutex lock;
+ };
  
- /**
-  * struct v4l2_subdev_frame_size_enum - Media bus format enumeration
-- * @pad: pad number, as reported by the media API
-  * @index: format index during enumeration
-+ * @pad: pad number, as reported by the media API
-  * @code: format code (MEDIA_BUS_FMT_ definitions)
-+ * @min_width: minimum frame width, in pixels
-+ * @max_width: maximum frame width, in pixels
-+ * @min_height: minimum frame height, in pixels
-+ * @max_height: maximum frame height, in pixels
-  * @which: format type (from enum v4l2_subdev_format_whence)
-+ * @reserved: drivers and applications must zero this array
-  */
- struct v4l2_subdev_frame_size_enum {
- 	__u32 index;
-@@ -111,6 +119,7 @@ struct v4l2_subdev_frame_size_enum {
-  * struct v4l2_subdev_frame_interval - Pad-level frame rate
-  * @pad: pad number, as reported by the media API
-  * @interval: frame interval in seconds
-+ * @reserved: drivers and applications must zero this array
-  */
- struct v4l2_subdev_frame_interval {
- 	__u32 pad;
-@@ -127,6 +136,7 @@ struct v4l2_subdev_frame_interval {
-  * @height: frame height in pixels
-  * @interval: frame interval in seconds
-  * @which: format type (from enum v4l2_subdev_format_whence)
-+ * @reserved: drivers and applications must zero this array
-  */
- struct v4l2_subdev_frame_interval_enum {
- 	__u32 index;
-diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-index 55b8c4b824797..1bbd81f031fe0 100644
---- a/include/uapi/linux/videodev2.h
-+++ b/include/uapi/linux/videodev2.h
-@@ -976,8 +976,10 @@ struct v4l2_requestbuffers {
-  *			pointing to this plane
-  * @fd:			when memory is V4L2_MEMORY_DMABUF, a userspace file
-  *			descriptor associated with this plane
-+ * @m:			union of @mem_offset, @userptr and @fd
-  * @data_offset:	offset in the plane to the start of data; usually 0,
-  *			unless there is a header in front of the data
-+ * @reserved:		drivers and applications must zero this array
-  *
-  * Multi-planar buffers consist of one or more planes, e.g. an YCbCr buffer
-  * with two planes can have one plane for Y, and another for interleaved CbCr
-@@ -1019,10 +1021,14 @@ struct v4l2_plane {
-  *		a userspace file descriptor associated with this buffer
-  * @planes:	for multiplanar buffers; userspace pointer to the array of plane
-  *		info structs for this buffer
-+ * @m:		union of @offset, @userptr, @planes and @fd
-  * @length:	size in bytes of the buffer (NOT its payload) for single-plane
-  *		buffers (when type != *_MPLANE); number of elements in the
-  *		planes array for multi-plane buffers
-+ * @reserved2:	drivers and applications must zero this field
-  * @request_fd: fd of the request that this buffer should use
-+ * @reserved:	for backwards compatibility with applications that do not know
-+ *		about @request_fd
-  *
-  * Contains data exchanged by application and driver using one of the Streaming
-  * I/O methods.
-@@ -1060,7 +1066,7 @@ struct v4l2_buffer {
- #ifndef __KERNEL__
- /**
-  * v4l2_timeval_to_ns - Convert timeval to nanoseconds
-- * @ts:		pointer to the timeval variable to be converted
-+ * @tv:		pointer to the timeval variable to be converted
-  *
-  * Returns the scalar nanosecond representation of the timeval
-  * parameter.
-@@ -1121,6 +1127,7 @@ static inline __u64 v4l2_timeval_to_ns(const struct timeval *tv)
-  * @flags:	flags for newly created file, currently only O_CLOEXEC is
-  *		supported, refer to manual of open syscall for more details
-  * @fd:		file descriptor associated with DMABUF (set by driver)
-+ * @reserved:	drivers and applications must zero this array
-  *
-  * Contains data used for exporting a video buffer as DMABUF file descriptor.
-  * The buffer is identified by a 'cookie' returned by VIDIOC_QUERYBUF
-@@ -2215,6 +2222,7 @@ struct v4l2_mpeg_vbi_fmt_ivtv {
-  *			this plane will be used
-  * @bytesperline:	distance in bytes between the leftmost pixels in two
-  *			adjacent lines
-+ * @reserved:		drivers and applications must zero this array
-  */
- struct v4l2_plane_pix_format {
- 	__u32		sizeimage;
-@@ -2233,8 +2241,10 @@ struct v4l2_plane_pix_format {
-  * @num_planes:		number of planes for this format
-  * @flags:		format flags (V4L2_PIX_FMT_FLAG_*)
-  * @ycbcr_enc:		enum v4l2_ycbcr_encoding, Y'CbCr encoding
-+ * @hsv_enc:		enum v4l2_hsv_encoding, HSV encoding
-  * @quantization:	enum v4l2_quantization, colorspace quantization
-  * @xfer_func:		enum v4l2_xfer_func, colorspace transfer function
-+ * @reserved:		drivers and applications must zero this array
-  */
- struct v4l2_pix_format_mplane {
- 	__u32				width;
-@@ -2259,6 +2269,7 @@ struct v4l2_pix_format_mplane {
-  * struct v4l2_sdr_format - SDR format definition
-  * @pixelformat:	little endian four character code (fourcc)
-  * @buffersize:		maximum size in bytes required for data
-+ * @reserved:		drivers and applications must zero this array
-  */
- struct v4l2_sdr_format {
- 	__u32				pixelformat;
-@@ -2285,6 +2296,8 @@ struct v4l2_meta_format {
-  * @vbi:	raw VBI capture or output parameters
-  * @sliced:	sliced VBI capture or output parameters
-  * @raw_data:	placeholder for future extensions and custom formats
-+ * @fmt:	union of @pix, @pix_mp, @win, @vbi, @sliced, @sdr, @meta
-+ *		and @raw_data
-  */
- struct v4l2_format {
- 	__u32	 type;
+ struct cec_adapter;
 -- 
 2.43.0
 
