@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769F7DDB1;
-	Thu, 13 Jun 2024 11:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3449DDDB1;
+	Thu, 13 Jun 2024 11:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278713; cv=none; b=XVjrHTQW31Gq9D9gYgNciZoWmtxwxX8iacyC+PUSlZ0+IlYfzJ8CyqRp75bxzBqm+nPqkaK+RY1V7P8g3gZ/IwDk8vzMCyWYbOMfI3TqbOxBYDuAMY50VkOGBSaxYR7NQcfu3hfZfT0Ar90anzLdIPfSGKTOMs84CB6Mmkj5hQk=
+	t=1718278716; cv=none; b=XekqdSbOtSLon3r3NsP76WaTJWrNd+85nOEORcrcDaHlmd9BvmyzogHmWqGi1EwowvlOhi384HmFr0QYeFgMwBRO1BVSdgjoNhCMAqaRwhttRxZ/0zsf5i+O5dbOErRIGVKbflzyZz07Ek03kzIGPvK1pIbt0Dz4CbWKSPVrxOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278713; c=relaxed/simple;
-	bh=OChe6Sf2gRg4eCN6maa6WHcg7Gb9USnlxhwffjusBG0=;
+	s=arc-20240116; t=1718278716; c=relaxed/simple;
+	bh=UfHQxxWC41xQgm/emXt8N+c97wq7XZ4+rvfnwLqJGP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CP10xQpK+gRfnr0aRtJzo64lQB74RDw654rotSjGrtxicx2lsGyi/uIXjnLechn8IbYQAHYevucT/S7nAuwpijtNQFRfSaMqmjKI48Z1+tIIbLfTIvwrA69DEtnLDif5GEN1Fy0MazHQmH4RNE+nKSSfpihOaT0rzqacKXRWqF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qX4DqEys; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d4QTzaZnqKEnay2KIn9/i3yhL4DVVqvwH5IBaLJRJtOSFWZdHn6jzzC/B6ZcotoeQtpU6xC3KGxA6wycTXr/4yUcer8VO5agpOMQQoTl5jugJFG9FgM28e5aUKFwQ2/+IRajxJT+Oie48x0/e0VnLOoGVG3MSLRQ6zJFReUdXTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSmI0h6F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qX4DqEys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD162C4AF50;
-	Thu, 13 Jun 2024 11:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSmI0h6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6044C2BBFC;
+	Thu, 13 Jun 2024 11:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278713;
-	bh=OChe6Sf2gRg4eCN6maa6WHcg7Gb9USnlxhwffjusBG0=;
+	s=korg; t=1718278716;
+	bh=UfHQxxWC41xQgm/emXt8N+c97wq7XZ4+rvfnwLqJGP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qX4DqEysiAU8KB7mxqUfI84pnrKI649lOeCqUzrjIbmhvjViyhLlRs9YzhfD4DxS2
-	 O8GaSH6X5Yw36pYnbN8O1Q9mlNltNjq9mw9D9gmA0RD9MTqxzm9B2EF9c2uu4UTs8Q
-	 7n3lGLu0KG8HpqBD5eeCScfaCJr0+TdG7kgASwnI=
+	b=eSmI0h6FPEkpp/sO34tbe9Hi0Dho9GtKkFAs3k6z2x5bYNQLHXLI8gnuioQeK2MK7
+	 rzQVgA1xbu/2Hv7f9HTC2Bsm3ZgpDpAQaCw/Q/01jIq301JYKnlkHL1jiy5RXbIUxs
+	 VNnp8WvYMwfEVkpi8zvOI6+nh8lfZTnPy9VSHjSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqin Liu <yongqin.liu@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Stan Johnson <userm57@yahoo.com>,
+	Finn Thain <fthain@telegraphics.com.au>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 043/213] wifi: ath10k: populate board data for WCN3990
-Date: Thu, 13 Jun 2024 13:31:31 +0200
-Message-ID: <20240613113229.665860125@linuxfoundation.org>
+Subject: [PATCH 4.19 044/213] macintosh/via-macii: Remove BUG_ON assertions
+Date: Thu, 13 Jun 2024 13:31:32 +0200
+Message-ID: <20240613113229.704602501@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,63 +52,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Finn Thain <fthain@telegraphics.com.au>
 
-[ Upstream commit f1f1b5b055c9f27a2f90fd0f0521f5920e9b3c18 ]
+[ Upstream commit 5f93d7081a47e1972031ccf57c4b2779eee162fb ]
 
-Specify board data size (and board.bin filename) for the WCN3990
-platform.
+The BUG_ON assertions I added to the via-macii driver over a decade ago
+haven't fired AFAIK. Some can never fire (by inspection). One assertion
+checks for a NULL pointer, but that would merely substitute a BUG crash
+for an Oops crash. Remove the pointless BUG_ON assertions and replace
+the others with a WARN_ON and an array bounds check.
 
-Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
-Fixes: 03a72288c546 ("ath10k: wmi: add hw params entry for wcn3990")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240130-wcn3990-board-fw-v1-1-738f7c19a8c8@linaro.org
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Signed-off-by: Finn Thain <fthain@telegraphics.com.au>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Stable-dep-of: d301a71c76ee ("macintosh/via-macii: Fix "BUG: sleeping function called from invalid context"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c      | 3 +++
- drivers/net/wireless/ath/ath10k/hw.h        | 1 +
- drivers/net/wireless/ath/ath10k/targaddrs.h | 3 +++
- 3 files changed, 7 insertions(+)
+ drivers/macintosh/via-macii.c | 49 +++++------------------------------
+ 1 file changed, 7 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index 7e43d449131dd..5683e0466a657 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -540,6 +540,9 @@ static const struct ath10k_hw_params ath10k_hw_params_list[] = {
- 		.max_spatial_stream = 4,
- 		.fw = {
- 			.dir = WCN3990_HW_1_0_FW_DIR,
-+			.board = WCN3990_HW_1_0_BOARD_DATA_FILE,
-+			.board_size = WCN3990_BOARD_DATA_SZ,
-+			.board_ext_size = WCN3990_BOARD_EXT_DATA_SZ,
- 		},
- 		.sw_decrypt_mcast_mgmt = true,
- 		.hw_ops = &wcn3990_ops,
-diff --git a/drivers/net/wireless/ath/ath10k/hw.h b/drivers/net/wireless/ath/ath10k/hw.h
-index 3ff65a0a834a2..afc274a078da0 100644
---- a/drivers/net/wireless/ath/ath10k/hw.h
-+++ b/drivers/net/wireless/ath/ath10k/hw.h
-@@ -133,6 +133,7 @@ enum qca9377_chip_id_rev {
- /* WCN3990 1.0 definitions */
- #define WCN3990_HW_1_0_DEV_VERSION	ATH10K_HW_WCN3990
- #define WCN3990_HW_1_0_FW_DIR		ATH10K_FW_DIR "/WCN3990/hw1.0"
-+#define WCN3990_HW_1_0_BOARD_DATA_FILE "board.bin"
+diff --git a/drivers/macintosh/via-macii.c b/drivers/macintosh/via-macii.c
+index cf6f7d52d6bee..fc6ad5bf1875a 100644
+--- a/drivers/macintosh/via-macii.c
++++ b/drivers/macintosh/via-macii.c
+@@ -120,23 +120,6 @@ static int srq_asserted;     /* have to poll for the device that asserted it */
+ static int command_byte;         /* the most recent command byte transmitted */
+ static int autopoll_devs;      /* bits set are device addresses to be polled */
  
- #define ATH10K_FW_FILE_BASE		"firmware"
- #define ATH10K_FW_API_MAX		6
-diff --git a/drivers/net/wireless/ath/ath10k/targaddrs.h b/drivers/net/wireless/ath/ath10k/targaddrs.h
-index c2b5bad0459ba..dddf4853df589 100644
---- a/drivers/net/wireless/ath/ath10k/targaddrs.h
-+++ b/drivers/net/wireless/ath/ath10k/targaddrs.h
-@@ -487,4 +487,7 @@ struct host_interest {
- #define QCA4019_BOARD_DATA_SZ	  12064
- #define QCA4019_BOARD_EXT_DATA_SZ 0
+-/* Sanity check for request queue. Doesn't check for cycles. */
+-static int request_is_queued(struct adb_request *req) {
+-	struct adb_request *cur;
+-	unsigned long flags;
+-	local_irq_save(flags);
+-	cur = current_req;
+-	while (cur) {
+-		if (cur == req) {
+-			local_irq_restore(flags);
+-			return 1;
+-		}
+-		cur = cur->next;
+-	}
+-	local_irq_restore(flags);
+-	return 0;
+-}
+-
+ /* Check for MacII style ADB */
+ static int macii_probe(void)
+ {
+@@ -213,8 +196,6 @@ static void macii_queue_poll(void)
+ 	else
+ 		next_device = ffs(autopoll_devs) - 1;
  
-+#define WCN3990_BOARD_DATA_SZ	  26328
-+#define WCN3990_BOARD_EXT_DATA_SZ 0
-+
- #endif /* __TARGADDRS_H__ */
+-	BUG_ON(request_is_queued(&req));
+-
+ 	adb_request(&req, NULL, ADBREQ_NOSEND, 1,
+ 	            ADB_READREG(next_device, 0));
+ 
+@@ -237,18 +218,13 @@ static int macii_send_request(struct adb_request *req, int sync)
+ 	int err;
+ 	unsigned long flags;
+ 
+-	BUG_ON(request_is_queued(req));
+-
+ 	local_irq_save(flags);
+ 	err = macii_write(req);
+ 	local_irq_restore(flags);
+ 
+-	if (!err && sync) {
+-		while (!req->complete) {
++	if (!err && sync)
++		while (!req->complete)
+ 			macii_poll();
+-		}
+-		BUG_ON(request_is_queued(req));
+-	}
+ 
+ 	return err;
+ }
+@@ -327,9 +303,6 @@ static int macii_reset_bus(void)
+ {
+ 	static struct adb_request req;
+ 	
+-	if (request_is_queued(&req))
+-		return 0;
+-
+ 	/* Command = 0, Address = ignored */
+ 	adb_request(&req, NULL, 0, 1, ADB_BUSRESET);
+ 
+@@ -346,10 +319,6 @@ static void macii_start(void)
+ 
+ 	req = current_req;
+ 
+-	BUG_ON(req == NULL);
+-
+-	BUG_ON(macii_state != idle);
+-
+ 	/* Now send it. Be careful though, that first byte of the request
+ 	 * is actually ADB_PACKET; the real data begins at index 1!
+ 	 * And req->nbytes is the number of bytes of real data plus one.
+@@ -387,7 +356,6 @@ static void macii_start(void)
+ static irqreturn_t macii_interrupt(int irq, void *arg)
+ {
+ 	int x;
+-	static int entered;
+ 	struct adb_request *req;
+ 
+ 	if (!arg) {
+@@ -398,8 +366,6 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
+ 			return IRQ_NONE;
+ 	}
+ 
+-	BUG_ON(entered++);
+-
+ 	last_status = status;
+ 	status = via[B] & (ST_MASK|CTLR_IRQ);
+ 
+@@ -408,7 +374,7 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
+ 			if (reading_reply) {
+ 				reply_ptr = current_req->reply;
+ 			} else {
+-				BUG_ON(current_req != NULL);
++				WARN_ON(current_req);
+ 				reply_ptr = reply_buf;
+ 			}
+ 
+@@ -473,8 +439,8 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
+ 
+ 		case reading:
+ 			x = via[SR];
+-			BUG_ON((status & ST_MASK) == ST_CMD ||
+-			       (status & ST_MASK) == ST_IDLE);
++			WARN_ON((status & ST_MASK) == ST_CMD ||
++				(status & ST_MASK) == ST_IDLE);
+ 
+ 			/* Bus timeout with SRQ sequence:
+ 			 *     data is "XX FF"      while CTLR_IRQ is "L L"
+@@ -501,8 +467,8 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
+ 				}
+ 			}
+ 
+-			if (macii_state == reading) {
+-				BUG_ON(reply_len > 15);
++			if (macii_state == reading &&
++			    reply_len < ARRAY_SIZE(reply_buf)) {
+ 				reply_ptr++;
+ 				*reply_ptr = x;
+ 				reply_len++;
+@@ -545,6 +511,5 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
+ 		break;
+ 	}
+ 
+-	entered--;
+ 	return IRQ_HANDLED;
+ }
 -- 
 2.43.0
 
