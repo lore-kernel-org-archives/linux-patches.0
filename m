@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898CF1448C9;
-	Thu, 13 Jun 2024 12:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7749144D2C;
+	Thu, 13 Jun 2024 12:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280865; cv=none; b=Q3E23uCnxfG+oYdHmgbzAzpnb9nywO3AN57uqt90Qiinj/v0GRM8IpBpLNWzseq926nOjw8QdrKZ6kWEPdW7CO4WMkI9DsGV+fh0+MxQR7I1ubffXfp3SVsgiYpd46dh04HJmXt19yBwyyklTpT9KD7lxKnlB6s2f7+4Cq5qOSA=
+	t=1718280868; cv=none; b=VNlRdLWTeU+nXexTzISd2asvbtueQn4lutqys0UzHMc6L07Lrn1iNXH5lbZwM6niOn/ywU+6Pj+trcQXGustKcSiATZ2qq9+B7X/4zKvRcbFa3nSzNWt9IV71ofTJiKIBh4IjichM1o8iqIJpegQ1SkdNtk4wWOKrxaB0AydvL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280865; c=relaxed/simple;
-	bh=kmFtlFkOy+HIp89Z1rLtUu4Yhoj9LRepE6yAIwmImaI=;
+	s=arc-20240116; t=1718280868; c=relaxed/simple;
+	bh=2hcx5jvBXamuVyRDPPGaxdLBrGzyhlc7z3a+fsSPxI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKtpfGcynv08HQHa1G6lDyAh6XbkvbmAD6r8DhbHqRvKapMC/aJ+HBb5oTZMPReRk/DNfJxvWiG6RRbtTSbRv1jUy493XIoNaKX+9OoDWHmMlpVJ+Hl/Ig1xMtfuyKnZMM149EgTR61pROTnNjodRZ0beKTZeQkkkegbh4aHqWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddWhUrJr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FLld9jDyjIzJypVaGEjYuWwdJDkvuBgvp1SZFPK4EivweiiQqqJ4HKxNABHTBCLcs0K+TgMYHYK0Wus7d0vR07Y5D1f3OS28Yi32ZYxDfH6Rsqb7lVV24KYCpmKfCrkdxEFti9aoixzrBWtiUMZSrO0Sw5hzSqk5cktzKAmQUTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORSqE5jZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddWhUrJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C6CC2BBFC;
-	Thu, 13 Jun 2024 12:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORSqE5jZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74BFC2BBFC;
+	Thu, 13 Jun 2024 12:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280865;
-	bh=kmFtlFkOy+HIp89Z1rLtUu4Yhoj9LRepE6yAIwmImaI=;
+	s=korg; t=1718280868;
+	bh=2hcx5jvBXamuVyRDPPGaxdLBrGzyhlc7z3a+fsSPxI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ddWhUrJrCIGXod/ujAGvVQI59ZTVmvCxnbre/bBsBiMtXgbcwXSCBVRh0mQxeWhq5
-	 rxa8Fxw/aEBW8FgKCn0+gEDe9ueI4c1fnkPHmvz+qCPAX0MOAnBvjppw33SecDdsuE
-	 FrIN0ax2YbIBtkjbDF9k9olZSnN4kK1yNUaKgCQ4=
+	b=ORSqE5jZkvgbAvv82IMKaU2EfiTTqrMJlNDpRQ/BkbXSnYwq7xv0OTTwN4W9s3WHr
+	 MRyboNMNpAZt340r4pWSpqP1YPkD4wD08ivxY2LUpF6x490BZlOnjFDATA3gaElHKy
+	 dEdiv3k+D9uoameM+AtbxxeO+PZvgED7Lqd4yhzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Nigel Croxon <ncroxon@redhat.com>
-Subject: [PATCH 5.10 033/317] md: fix resync softlockup when bitmap size is less than array size
-Date: Thu, 13 Jun 2024 13:30:51 +0200
-Message-ID: <20240613113248.823521324@linuxfoundation.org>
+	Yuri Karpov <YKarpov@ispras.ru>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 060/317] scsi: hpsa: Fix allocation size for Scsi_Host private data
+Date: Thu, 13 Jun 2024 13:31:18 +0200
+Message-ID: <20240613113249.872473042@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,91 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Yuri Karpov <YKarpov@ispras.ru>
 
-[ Upstream commit f0e729af2eb6bee9eb58c4df1087f14ebaefe26b ]
+[ Upstream commit 504e2bed5d50610c1836046c0c195b0a6dba9c72 ]
 
-Is is reported that for dm-raid10, lvextend + lvchange --syncaction will
-trigger following softlockup:
+struct Scsi_Host private data contains pointer to struct ctlr_info.
 
-kernel:watchdog: BUG: soft lockup - CPU#3 stuck for 26s! [mdX_resync:6976]
-CPU: 7 PID: 3588 Comm: mdX_resync Kdump: loaded Not tainted 6.9.0-rc4-next-20240419 #1
-RIP: 0010:_raw_spin_unlock_irq+0x13/0x30
-Call Trace:
- <TASK>
- md_bitmap_start_sync+0x6b/0xf0
- raid10_sync_request+0x25c/0x1b40 [raid10]
- md_do_sync+0x64b/0x1020
- md_thread+0xa7/0x170
- kthread+0xcf/0x100
- ret_from_fork+0x30/0x50
- ret_from_fork_asm+0x1a/0x30
+Restore allocation of only 8 bytes to store pointer in struct Scsi_Host
+private data area.
 
-And the detailed process is as follows:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-md_do_sync
- j = mddev->resync_min
- while (j < max_sectors)
-  sectors = raid10_sync_request(mddev, j, &skipped)
-   if (!md_bitmap_start_sync(..., &sync_blocks))
-    // md_bitmap_start_sync set sync_blocks to 0
-    return sync_blocks + sectors_skippe;
-  // sectors = 0;
-  j += sectors;
-  // j never change
-
-Root cause is that commit 301867b1c168 ("md/raid10: check
-slab-out-of-bounds in md_bitmap_get_counter") return early from
-md_bitmap_get_counter(), without setting returned blocks.
-
-Fix this problem by always set returned blocks from
-md_bitmap_get_counter"(), as it used to be.
-
-Noted that this patch just fix the softlockup problem in kernel, the
-case that bitmap size doesn't match array size still need to be fixed.
-
-Fixes: 301867b1c168 ("md/raid10: check slab-out-of-bounds in md_bitmap_get_counter")
-Reported-and-tested-by: Nigel Croxon <ncroxon@redhat.com>
-Closes: https://lore.kernel.org/all/71ba5272-ab07-43ba-8232-d2da642acb4e@redhat.com/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240422065824.2516-1-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: bbbd25499100 ("scsi: hpsa: Fix allocation size for scsi_host_alloc()")
+Signed-off-by: Yuri Karpov <YKarpov@ispras.ru>
+Link: https://lore.kernel.org/r/20240312170447.743709-1-YKarpov@ispras.ru
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/hpsa.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index b28302836b2e9..91bc764a854c6 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -1355,7 +1355,7 @@ __acquires(bitmap->lock)
- 	sector_t chunk = offset >> bitmap->chunkshift;
- 	unsigned long page = chunk >> PAGE_COUNTER_SHIFT;
- 	unsigned long pageoff = (chunk & PAGE_COUNTER_MASK) << COUNTER_BYTE_SHIFT;
--	sector_t csize;
-+	sector_t csize = ((sector_t)1) << bitmap->chunkshift;
- 	int err;
+diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
+index a44a098dbb9c7..4e7ec83c07cf6 100644
+--- a/drivers/scsi/hpsa.c
++++ b/drivers/scsi/hpsa.c
+@@ -5834,7 +5834,7 @@ static int hpsa_scsi_host_alloc(struct ctlr_info *h)
+ {
+ 	struct Scsi_Host *sh;
  
- 	if (page >= bitmap->pages) {
-@@ -1364,6 +1364,7 @@ __acquires(bitmap->lock)
- 		 * End-of-device while looking for a whole page or
- 		 * user set a huge number to sysfs bitmap_set_bits.
- 		 */
-+		*blocks = csize - (offset & (csize - 1));
- 		return NULL;
- 	}
- 	err = md_bitmap_checkpage(bitmap, page, create, 0);
-@@ -1372,8 +1373,7 @@ __acquires(bitmap->lock)
- 	    bitmap->bp[page].map == NULL)
- 		csize = ((sector_t)1) << (bitmap->chunkshift +
- 					  PAGE_COUNTER_SHIFT);
--	else
--		csize = ((sector_t)1) << bitmap->chunkshift;
-+
- 	*blocks = csize - (offset & (csize - 1));
- 
- 	if (err < 0)
+-	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(struct ctlr_info));
++	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(struct ctlr_info *));
+ 	if (sh == NULL) {
+ 		dev_err(&h->pdev->dev, "scsi_host_alloc failed\n");
+ 		return -ENOMEM;
 -- 
 2.43.0
 
