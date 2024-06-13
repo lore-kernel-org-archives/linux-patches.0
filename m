@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F6844C6F;
-	Thu, 13 Jun 2024 12:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8C544C6F;
+	Thu, 13 Jun 2024 12:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280694; cv=none; b=mZsPTIhee9H0T5e+5K9xxOvHFRkA6FO7vtGrqvktqmWBoLfQufUh58rU3R0FOycplQA583Itp2FzEMCRlcZUWM336V7kHdIl0WXxNTRGPJ+DJX74BpEaAF8FhdyN25tBzvq7ClmFPTyNAuqxdGOohqwD6+Tgr0ZdFbDWsYy7K8M=
+	t=1718280697; cv=none; b=n3Q6UzzZIAICoKmKPw9zQej0Uedl4743FpnmsfkEWRCORX+OtCZtgV3TMtpQQR4iKvvJ10fVbZVriHDdi8l9MM09cpg0IGvc0QU0VooxaqvGYjJM40flwhse9dBTE9cJlii0ATAA4stI1pDbu3CFyRNiiyv3nWjJe4rFYFZLNBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280694; c=relaxed/simple;
-	bh=zPyGEDxv42pQFAoY2PE1ysCAyRLE6+O9qg0airHqWI8=;
+	s=arc-20240116; t=1718280697; c=relaxed/simple;
+	bh=8ybEX3IrBsefmquAzQdP9e5nRLp99qyMq7BbLJbGacc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXxCS41nP0VsuGSL7LnQtRLEwrZkXZeMNvw9SaAndiKgsCKkVNP+sEETBjGMqsbhq4PfG67RSSjwPANy0lBtrfGuUJArqtK1KktRI5iWUFRbKa9RXLNJyAXlST7jz1fi6msDDe3KKGxQd9M/iXBkRCiFxLauGddB3G3PaRndMog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU5g3PAK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=emhoBc64x0ggm8q3CNTUs4QIibDD5M280o8yDpxDIXld9r6wa1P2iD6V/dqm2kakXoIoaAs2bZjmjqR9li3f2vDdolrcHUwClxPIUF3zuApuAfMB7XxC4Bd6GPt2KD6SJjrrozRdkQtiEezWp3W+vpU8uo/KQJsxmHScbEG77ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTnqgIn9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU5g3PAK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F33C4AF1C;
-	Thu, 13 Jun 2024 12:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTnqgIn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74CDC2BBFC;
+	Thu, 13 Jun 2024 12:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280694;
-	bh=zPyGEDxv42pQFAoY2PE1ysCAyRLE6+O9qg0airHqWI8=;
+	s=korg; t=1718280697;
+	bh=8ybEX3IrBsefmquAzQdP9e5nRLp99qyMq7BbLJbGacc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tU5g3PAKkgkcDrds0s6/7NdksHg76/WBUOOapX4lrOacXW05FPPnhO/6JWxM6gv2h
-	 LM7A2A3dbxRtiJG3ES/MOBV6sqA25ji+Ovqzv+F2LALTrgy8PERk2pko3/tUDn+goj
-	 Uogq99fiwHdzdThbx8GNZpxLVKtFvyIjPTSK6K/Q=
+	b=pTnqgIn9Zvx4lgn5onRET6x79s8RCU9Bx7nZMdPcrX5WSQx1ENPuMF8BVAjLv8rtm
+	 40oDIzc6SThVQ6a3xGWRk9cEInu2PohK4pI/Q6Qto/Iq7QZNztWNd1NAysiSk+7gUX
+	 3kgXS6c7MLBQ9yegkNBQ1zJeGvdrP1Dim3q94wCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bo Gan <ganboing@gmail.com>,
-	Shengyu Qu <wiagn233@outlook.com>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH 6.6 110/137] riscv: dts: starfive: Remove PMIC interrupt info for Visionfive 2 board
-Date: Thu, 13 Jun 2024 13:34:50 +0200
-Message-ID: <20240613113227.565110486@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.6 111/137] ARM: dts: samsung: smdkv310: fix keypad no-autorepeat
+Date: Thu, 13 Jun 2024 13:34:51 +0200
+Message-ID: <20240613113227.603958522@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -51,43 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengyu Qu <wiagn233@outlook.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 0f74c64f0a9f6e1e7cf17bea3d4350fa6581e0d7 upstream.
+commit 87d8e522d6f5a004f0aa06c0def302df65aff296 upstream.
 
-Interrupt line number of the AXP15060 PMIC is not a necessary part of
-its device tree. Originally the binding required one, so the dts patch
-added an invalid interrupt that the driver ignored (0) as the interrupt
-line of the PMIC is not actually connected on this platform. This went
-unnoticed during review as it would have been a valid interrupt for a
-GPIO controller, but it is not for the PLIC. The PLIC, on this platform
-at least, silently ignores the enablement of interrupt 0. Bo Gan is
-running a modified version of OpenSBI that faults if writes are done to
-reserved fields, so their kernel runs into problems.
+Although the Samsung SoC keypad binding defined
+linux,keypad-no-autorepeat property, Linux driver never implemented it
+and always used linux,input-no-autorepeat.  Correct the DTS to use
+property actually implemented.
 
-Delete the invalid interrupt from the device tree.
+This also fixes dtbs_check errors like:
 
-Cc: stable@vger.kernel.org
-Reported-by: Bo Gan <ganboing@gmail.com>
-Link: https://lore.kernel.org/all/c8b6e960-2459-130f-e4e4-7c9c2ebaa6d3@gmail.com/
-Signed-off-by: Shengyu Qu <wiagn233@outlook.com>
-Fixes: 2378341504de ("riscv: dts: starfive: Enable axp15060 pmic for cpufreq")
-[conor: rewrite the commit message to add more detail]
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+  exynos4210-smdkv310.dtb: keypad@100a0000: 'linux,keypad-no-autorepeat' does not match any of the regexes: '^key-[0-9a-z]+$', 'pinctrl-[0-9]+'
+
+Cc: <stable@vger.kernel.org>
+Fixes: 0561ceabd0f1 ("ARM: dts: Add intial dts file for EXYNOS4210 SoC, SMDKV310 and ORIGEN")
+Link: https://lore.kernel.org/r/20240312183105.715735-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi |    1 -
- 1 file changed, 1 deletion(-)
+ arch/arm/boot/dts/samsung/exynos4210-smdkv310.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
-+++ b/arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
-@@ -162,7 +162,6 @@
- 	axp15060: pmic@36 {
- 		compatible = "x-powers,axp15060";
- 		reg = <0x36>;
--		interrupts = <0>;
- 		interrupt-controller;
- 		#interrupt-cells = <1>;
- 
+--- a/arch/arm/boot/dts/samsung/exynos4210-smdkv310.dts
++++ b/arch/arm/boot/dts/samsung/exynos4210-smdkv310.dts
+@@ -88,7 +88,7 @@
+ &keypad {
+ 	samsung,keypad-num-rows = <2>;
+ 	samsung,keypad-num-columns = <8>;
+-	linux,keypad-no-autorepeat;
++	linux,input-no-autorepeat;
+ 	wakeup-source;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&keypad_rows &keypad_cols>;
 
 
