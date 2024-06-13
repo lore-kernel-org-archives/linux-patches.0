@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BFB146D5A;
-	Thu, 13 Jun 2024 11:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56F91386DF;
+	Thu, 13 Jun 2024 11:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279694; cv=none; b=dRIIjcUh893pz2PKh+WNflW0571v49rVPHl6shQB3RArhvrXOEDKqhXA2JC1hbegfcBl4Q7WWHuMK4kKIKp6UyHhaFm+WUFrHTBw9yqyItnNYkfLlWChXOYjb+z4uA9OaQrkhv50caCOfpELH+7F6hECcyfasrQDWRtNGQ4ykyY=
+	t=1718279697; cv=none; b=jKeCTFNk0e+xUFwXudBNJoAOCd3t6qt8+kigwX7BGo2b3Gg9S2Odog+OfB8YHZDknhBzy/schix7S0RmPVb2OU7IO7yFRsfbtXpSGX3GlxlvIgXs+hFex6Hma0PiiGkoulCF0LZWw8w5zJYIXqeJz+0UaUGYZ9xQBpM8NtTrrkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279694; c=relaxed/simple;
-	bh=0BukphA5o61Mmu72XXaVi8qPhAqgrSJklIjFIuAapVA=;
+	s=arc-20240116; t=1718279697; c=relaxed/simple;
+	bh=Sbj3MdrXO6SN6TYcm9pjoB5i/yR03U+3H1xjZRz8ZLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iwhvCB4ZebdDDtedWXHw5xVa9GZoX6Z49NAXuEzxODPRbnpqqesUR+gxlKxGQZN5pL376d+tZGZPjI7X/t7rHiPPberkiIgq0cc6w9O92vNfkH2fcGS1lzg/NqEUjtriU+Q1LLQGXkTEmZrqgrlrtB7slIp3p6BBsqxt3qeJMgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5OOaPTC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bauGaBfzMTliAaQVnS8z68Z4GdsLwlwXGedeLujynRttwslINg/dHmMrnKDm+klPXb/wdKzMVDZmU1xpP3txtED5NeZ1DV9DJtCMsbak3pL1FJ81QvRPnSheO7ZzKQcLZzv+Vw7qtcJxWYhnl/JbGxNTylSY7GfG8ZQfw3dSVZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbevANBP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5OOaPTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824DFC2BBFC;
-	Thu, 13 Jun 2024 11:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbevANBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CABFC2BBFC;
+	Thu, 13 Jun 2024 11:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279693;
-	bh=0BukphA5o61Mmu72XXaVi8qPhAqgrSJklIjFIuAapVA=;
+	s=korg; t=1718279696;
+	bh=Sbj3MdrXO6SN6TYcm9pjoB5i/yR03U+3H1xjZRz8ZLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R5OOaPTCwjm9dV4ujWiVMR+FnC1jOFuWxI19j41x0gPU6DVzteH3pkMMRYyUS+E67
-	 xHcao0d8Dh2CtwDL9PfKmJLGJbs+5tiI7UOe1tw7EbwxUi77DGL7Th329AiIlqM2C3
-	 A9VClyq8Wuc69IJEvdJS9KIdtz2mE85V9G649tQQ=
+	b=YbevANBPKRyyY3v8LpEBCu0RKFt9fG/F3TDO8+kPxvNS/ybR4YGlo14cpecxJcMoB
+	 36c0KuOWA1wtU9IERu3o2mvm3NOlqAXeNdLEoQmG6Xs/Pjkt9xJgC61ypPDFenat3M
+	 9rcvDrWLvbYKQDYLiPT8fXR/BPzUafT9kxfSp2Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"dicken.ding" <dicken.ding@mediatek.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.9 131/157] genirq/irqdesc: Prevent use-after-free in irq_find_at_or_after()
-Date: Thu, 13 Jun 2024 13:34:16 +0200
-Message-ID: <20240613113232.476598856@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.9 122/157] ARM: dts: samsung: smdkv310: fix keypad no-autorepeat
+Date: Thu, 13 Jun 2024 13:34:07 +0200
+Message-ID: <20240613113232.131884210@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -50,63 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: dicken.ding <dicken.ding@mediatek.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit b84a8aba806261d2f759ccedf4a2a6a80a5e55ba upstream.
+commit 87d8e522d6f5a004f0aa06c0def302df65aff296 upstream.
 
-irq_find_at_or_after() dereferences the interrupt descriptor which is
-returned by mt_find() while neither holding sparse_irq_lock nor RCU read
-lock, which means the descriptor can be freed between mt_find() and the
-dereference:
+Although the Samsung SoC keypad binding defined
+linux,keypad-no-autorepeat property, Linux driver never implemented it
+and always used linux,input-no-autorepeat.  Correct the DTS to use
+property actually implemented.
 
-    CPU0                            CPU1
-    desc = mt_find()
-                                    delayed_free_desc(desc)
-    irq_desc_get_irq(desc)
+This also fixes dtbs_check errors like:
 
-The use-after-free is reported by KASAN:
+  exynos4210-smdkv310.dtb: keypad@100a0000: 'linux,keypad-no-autorepeat' does not match any of the regexes: '^key-[0-9a-z]+$', 'pinctrl-[0-9]+'
 
-    Call trace:
-     irq_get_next_irq+0x58/0x84
-     show_stat+0x638/0x824
-     seq_read_iter+0x158/0x4ec
-     proc_reg_read_iter+0x94/0x12c
-     vfs_read+0x1e0/0x2c8
-
-    Freed by task 4471:
-     slab_free_freelist_hook+0x174/0x1e0
-     __kmem_cache_free+0xa4/0x1dc
-     kfree+0x64/0x128
-     irq_kobj_release+0x28/0x3c
-     kobject_put+0xcc/0x1e0
-     delayed_free_desc+0x14/0x2c
-     rcu_do_batch+0x214/0x720
-
-Guard the access with a RCU read lock section.
-
-Fixes: 721255b9826b ("genirq: Use a maple tree for interrupt descriptor management")
-Signed-off-by: dicken.ding <dicken.ding@mediatek.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240524091739.31611-1-dicken.ding@mediatek.com
+Cc: <stable@vger.kernel.org>
+Fixes: 0561ceabd0f1 ("ARM: dts: Add intial dts file for EXYNOS4210 SoC, SMDKV310 and ORIGEN")
+Link: https://lore.kernel.org/r/20240312183105.715735-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/irqdesc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/samsung/exynos4210-smdkv310.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/irq/irqdesc.c
-+++ b/kernel/irq/irqdesc.c
-@@ -160,7 +160,10 @@ static int irq_find_free_area(unsigned i
- static unsigned int irq_find_at_or_after(unsigned int offset)
- {
- 	unsigned long index = offset;
--	struct irq_desc *desc = mt_find(&sparse_irqs, &index, nr_irqs);
-+	struct irq_desc *desc;
-+
-+	guard(rcu)();
-+	desc = mt_find(&sparse_irqs, &index, nr_irqs);
- 
- 	return desc ? irq_desc_get_irq(desc) : nr_irqs;
- }
+--- a/arch/arm/boot/dts/samsung/exynos4210-smdkv310.dts
++++ b/arch/arm/boot/dts/samsung/exynos4210-smdkv310.dts
+@@ -88,7 +88,7 @@
+ &keypad {
+ 	samsung,keypad-num-rows = <2>;
+ 	samsung,keypad-num-columns = <8>;
+-	linux,keypad-no-autorepeat;
++	linux,input-no-autorepeat;
+ 	wakeup-source;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&keypad_rows &keypad_cols>;
 
 
