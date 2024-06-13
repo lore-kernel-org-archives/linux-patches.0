@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA91514375C;
-	Thu, 13 Jun 2024 12:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF021143868;
+	Thu, 13 Jun 2024 12:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282475; cv=none; b=IaYwLeWpjHobbEGCWcrCOfOROgOYZQFRjTSJachReJHviOQI0CEM+nQ8thzS1XF/XAc1GnO8fEnZ++CCdZr8wWL+DkhXmVVZdd38X2yIB5Jp3kdKfrj97FIhT46aLqb6yiF4bVcVfDmZ8MC7ivWPK4nxR0oU3eMJPdchQhCGZ9E=
+	t=1718282478; cv=none; b=tJJx0KqiiokFtSFgs1K/5yu40iLaAb9bcGvB8kPdfWASteYZMCoNchRYU9NeMaNLlddkmICY2bVT2YdwUklSlyAKbDivGXHalyAWSns5kNzki961FzT69bUDRHpBR0lcbntJwn7n3D8mPYVBcaXxy5PnpbQ5x3E7MzssZ0+FR6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282475; c=relaxed/simple;
-	bh=nsxT4sB6mvbAIAvEMEhXDDk+fp2rLFq24PiBy9joIkc=;
+	s=arc-20240116; t=1718282478; c=relaxed/simple;
+	bh=r7XqkLx2tKURDwmW+Mby8e5y1nP0Gjb1gRVwv1AwAak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i+0MVYzHfUIMYfvQJzSlMwEwdQWexIghEPr2On+g1VQLPrhKBxLZW9ViJApgyGowDjKShTBG10nN65ii0BitmXHvcCc9bQnikzclB1q2cGSNohb0VTsZlcB+ERxfwrC+l5vDHNYeA1D15xEt4n3B4SwJ/8H9j7/LC3TCmFm6kTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByE6RXkc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XSq8GokqzRP5twjimTpzOjk1BsG611UBXwshUvVfNtSoCrieTn4DblwtQCi92nlgb5pAyQWvdkp8dsAy0AdXIcgIVEQxOG9lIK3LjT96mHUTeCMK6ZmFC1RsuRuXxmOUHHzBpNJJgPKTCQkGGEUFYA3MsH9DspoSWzZmYwCUj6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJfuwGSy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByE6RXkc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A40C4AF1D;
-	Thu, 13 Jun 2024 12:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJfuwGSy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FFCC2BBFC;
+	Thu, 13 Jun 2024 12:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282474;
-	bh=nsxT4sB6mvbAIAvEMEhXDDk+fp2rLFq24PiBy9joIkc=;
+	s=korg; t=1718282477;
+	bh=r7XqkLx2tKURDwmW+Mby8e5y1nP0Gjb1gRVwv1AwAak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ByE6RXkckYA6a5YICoWScT/hBw/v9gyKd3n8e1kaQBKl4zxOwTppsCWMG1rQy3cj3
-	 ty5A9MBaAMddjVFfhVAo2iMmyQBFvQfG5/M1DZTDsdztE6QQM5WcdVDNMxBTJ3V+OI
-	 njff8wFtYNuTT5Mkmh3swJfDzkK91Y+taeQiwsUc=
+	b=cJfuwGSy/UUh1wy0sMFj9VcyKdL/sLFXKP3AbvcfTfQQrhlMCEJA/nCIfwlJVe00K
+	 jnKPoAgP8oyfh64ID6FiuhW9V+fefN5mwBfvSv1Zgiy0TsJefXKScICD8aUlD8RNgo
+	 fMSXEmESAN9ETFE9XTJjrgPhfs9La9x2NILGxaXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Billy Jheng Bing-Jhong <billy@starlabs.sg>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 282/402] regulator: bd71828: Dont overwrite runtime voltages
-Date: Thu, 13 Jun 2024 13:33:59 +0200
-Message-ID: <20240613113313.148102289@linuxfoundation.org>
+Subject: [PATCH 5.15 291/402] af_unix: Update unix_sk(sk)->oob_skb under sk_receive_queue lock.
+Date: Thu, 13 Jun 2024 13:34:08 +0200
+Message-ID: <20240613113313.501833434@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,184 +52,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 0f9f7c63c415e287cd57b5c98be61eb320dedcfc ]
+[ Upstream commit 9841991a446c87f90f66f4b9fee6fe934c1336a2 ]
 
-Some of the regulators on the BD71828 have common voltage setting for
-RUN/SUSPEND/IDLE/LPSR states. The enable control can be set for each
-state though.
+Billy Jheng Bing-Jhong reported a race between __unix_gc() and
+queue_oob().
 
-The driver allows setting the voltage values for these states via
-device-tree. As a side effect, setting the voltages for
-SUSPEND/IDLE/LPSR will also change the RUN level voltage which is not
-desired and can break the system.
+__unix_gc() tries to garbage-collect close()d inflight sockets,
+and then if the socket has MSG_OOB in unix_sk(sk)->oob_skb, GC
+will drop the reference and set NULL to it locklessly.
 
-The comment in code reflects this behaviour, but it is likely to not
-make people any happier. The right thing to do is to allow setting the
-enable/disable state at SUSPEND/IDLE/LPSR via device-tree, but to
-disallow setting state specific voltages for those regulators.
+However, the peer socket still can send MSG_OOB message and
+queue_oob() can update unix_sk(sk)->oob_skb concurrently, leading
+NULL pointer dereference. [0]
 
-BUCK1 is a bit different. It only shares the SUSPEND and LPSR state
-voltages. The former behaviour of allowing to silently overwrite the
-SUSPEND state voltage by LPSR state voltage is also changed here so that
-the SUSPEND voltage is prioritized over LPSR voltage.
+To fix the issue, let's update unix_sk(sk)->oob_skb under the
+sk_receive_queue's lock and take it everywhere we touch oob_skb.
 
-Prevent setting PMIC state specific voltages for regulators which do not
-support it.
+Note that we defer kfree_skb() in manage_oob() to silence lockdep
+false-positive (See [1]).
 
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 522498f8cb8c ("regulator: bd71828: Basic support for ROHM bd71828 PMIC regulators")
-Link: https://msgid.link/r/e1883ae1e3ae5668f1030455d4750923561f3d68.1715848512.git.mazziesaccount@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[0]:
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+ PF: supervisor write access in kernel mode
+ PF: error_code(0x0002) - not-present page
+PGD 8000000009f5e067 P4D 8000000009f5e067 PUD 9f5d067 PMD 0
+Oops: 0002 [#1] PREEMPT SMP PTI
+CPU: 3 PID: 50 Comm: kworker/3:1 Not tainted 6.9.0-rc5-00191-gd091e579b864 #110
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+Workqueue: events delayed_fput
+RIP: 0010:skb_dequeue (./include/linux/skbuff.h:2386 ./include/linux/skbuff.h:2402 net/core/skbuff.c:3847)
+Code: 39 e3 74 3e 8b 43 10 48 89 ef 83 e8 01 89 43 10 49 8b 44 24 08 49 c7 44 24 08 00 00 00 00 49 8b 14 24 49 c7 04 24 00 00 00 00 <48> 89 42 08 48 89 10 e8 e7 c5 42 00 4c 89 e0 5b 5d 41 5c c3 cc cc
+RSP: 0018:ffffc900001bfd48 EFLAGS: 00000002
+RAX: 0000000000000000 RBX: ffff8880088f5ae8 RCX: 00000000361289f9
+RDX: 0000000000000000 RSI: 0000000000000206 RDI: ffff8880088f5b00
+RBP: ffff8880088f5b00 R08: 0000000000080000 R09: 0000000000000001
+R10: 0000000000000003 R11: 0000000000000001 R12: ffff8880056b6a00
+R13: ffff8880088f5280 R14: 0000000000000001 R15: ffff8880088f5a80
+FS:  0000000000000000(0000) GS:ffff88807dd80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000008 CR3: 0000000006314000 CR4: 00000000007506f0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ unix_release_sock (net/unix/af_unix.c:654)
+ unix_release (net/unix/af_unix.c:1050)
+ __sock_release (net/socket.c:660)
+ sock_close (net/socket.c:1423)
+ __fput (fs/file_table.c:423)
+ delayed_fput (fs/file_table.c:444 (discriminator 3))
+ process_one_work (kernel/workqueue.c:3259)
+ worker_thread (kernel/workqueue.c:3329 kernel/workqueue.c:3416)
+ kthread (kernel/kthread.c:388)
+ ret_from_fork (arch/x86/kernel/process.c:153)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:257)
+ </TASK>
+Modules linked in:
+CR2: 0000000000000008
+
+Link: https://lore.kernel.org/netdev/a00d3993-c461-43f2-be6d-07259c98509a@rbox.co/ [1]
+Fixes: 1279f9d9dec2 ("af_unix: Call kfree_skb() for dead unix_(sk)->oob_skb in GC.")
+Reported-by: Billy Jheng Bing-Jhong <billy@starlabs.sg>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20240516134835.8332-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/bd71828-regulator.c | 58 +--------------------------
- 1 file changed, 2 insertions(+), 56 deletions(-)
+ net/unix/af_unix.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/regulator/bd71828-regulator.c b/drivers/regulator/bd71828-regulator.c
-index a4f09a5a30cab..d07f0d120ca71 100644
---- a/drivers/regulator/bd71828-regulator.c
-+++ b/drivers/regulator/bd71828-regulator.c
-@@ -207,14 +207,11 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 			.suspend_reg = BD71828_REG_BUCK1_SUSP_VOLT,
- 			.suspend_mask = BD71828_MASK_BUCK1267_VOLT,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
--			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
- 			/*
- 			 * LPSR voltage is same as SUSPEND voltage. Allow
--			 * setting it so that regulator can be set enabled at
--			 * LPSR state
-+			 * only enabling/disabling regulator for LPSR state
- 			 */
--			.lpsr_reg = BD71828_REG_BUCK1_SUSP_VOLT,
--			.lpsr_mask = BD71828_MASK_BUCK1267_VOLT,
-+			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
- 		},
- 		.reg_inits = buck1_inits,
- 		.reg_init_amnt = ARRAY_SIZE(buck1_inits),
-@@ -289,13 +286,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_BUCK3_VOLT,
--			.idle_reg = BD71828_REG_BUCK3_VOLT,
--			.suspend_reg = BD71828_REG_BUCK3_VOLT,
--			.lpsr_reg = BD71828_REG_BUCK3_VOLT,
- 			.run_mask = BD71828_MASK_BUCK3_VOLT,
--			.idle_mask = BD71828_MASK_BUCK3_VOLT,
--			.suspend_mask = BD71828_MASK_BUCK3_VOLT,
--			.lpsr_mask = BD71828_MASK_BUCK3_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -330,13 +321,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_BUCK4_VOLT,
--			.idle_reg = BD71828_REG_BUCK4_VOLT,
--			.suspend_reg = BD71828_REG_BUCK4_VOLT,
--			.lpsr_reg = BD71828_REG_BUCK4_VOLT,
- 			.run_mask = BD71828_MASK_BUCK4_VOLT,
--			.idle_mask = BD71828_MASK_BUCK4_VOLT,
--			.suspend_mask = BD71828_MASK_BUCK4_VOLT,
--			.lpsr_mask = BD71828_MASK_BUCK4_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -371,13 +356,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_BUCK5_VOLT,
--			.idle_reg = BD71828_REG_BUCK5_VOLT,
--			.suspend_reg = BD71828_REG_BUCK5_VOLT,
--			.lpsr_reg = BD71828_REG_BUCK5_VOLT,
- 			.run_mask = BD71828_MASK_BUCK5_VOLT,
--			.idle_mask = BD71828_MASK_BUCK5_VOLT,
--			.suspend_mask = BD71828_MASK_BUCK5_VOLT,
--			.lpsr_mask = BD71828_MASK_BUCK5_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -494,13 +473,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_LDO1_VOLT,
--			.idle_reg = BD71828_REG_LDO1_VOLT,
--			.suspend_reg = BD71828_REG_LDO1_VOLT,
--			.lpsr_reg = BD71828_REG_LDO1_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -534,13 +507,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_LDO2_VOLT,
--			.idle_reg = BD71828_REG_LDO2_VOLT,
--			.suspend_reg = BD71828_REG_LDO2_VOLT,
--			.lpsr_reg = BD71828_REG_LDO2_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -574,13 +541,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_LDO3_VOLT,
--			.idle_reg = BD71828_REG_LDO3_VOLT,
--			.suspend_reg = BD71828_REG_LDO3_VOLT,
--			.lpsr_reg = BD71828_REG_LDO3_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -615,13 +576,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_LDO4_VOLT,
--			.idle_reg = BD71828_REG_LDO4_VOLT,
--			.suspend_reg = BD71828_REG_LDO4_VOLT,
--			.lpsr_reg = BD71828_REG_LDO4_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -656,13 +611,7 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 				     ROHM_DVS_LEVEL_SUSPEND |
- 				     ROHM_DVS_LEVEL_LPSR,
- 			.run_reg = BD71828_REG_LDO5_VOLT,
--			.idle_reg = BD71828_REG_LDO5_VOLT,
--			.suspend_reg = BD71828_REG_LDO5_VOLT,
--			.lpsr_reg = BD71828_REG_LDO5_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
-@@ -721,9 +670,6 @@ static const struct bd71828_regulator_data bd71828_rdata[] = {
- 			.suspend_reg = BD71828_REG_LDO7_VOLT,
- 			.lpsr_reg = BD71828_REG_LDO7_VOLT,
- 			.run_mask = BD71828_MASK_LDO_VOLT,
--			.idle_mask = BD71828_MASK_LDO_VOLT,
--			.suspend_mask = BD71828_MASK_LDO_VOLT,
--			.lpsr_mask = BD71828_MASK_LDO_VOLT,
- 			.idle_on_mask = BD71828_MASK_IDLE_EN,
- 			.suspend_on_mask = BD71828_MASK_SUSP_EN,
- 			.lpsr_on_mask = BD71828_MASK_LPSR_EN,
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 995a2a0b208a1..80f91b5ab4012 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2005,13 +2005,15 @@ static int queue_oob(struct socket *sock, struct msghdr *msg, struct sock *other
+ 	maybe_add_creds(skb, sock, other);
+ 	skb_get(skb);
+ 
++	scm_stat_add(other, skb);
++
++	spin_lock(&other->sk_receive_queue.lock);
+ 	if (ousk->oob_skb)
+ 		consume_skb(ousk->oob_skb);
+-
+ 	WRITE_ONCE(ousk->oob_skb, skb);
++	__skb_queue_tail(&other->sk_receive_queue, skb);
++	spin_unlock(&other->sk_receive_queue.lock);
+ 
+-	scm_stat_add(other, skb);
+-	skb_queue_tail(&other->sk_receive_queue, skb);
+ 	sk_send_sigurg(other);
+ 	unix_state_unlock(other);
+ 	other->sk_data_ready(other);
+@@ -2516,8 +2518,10 @@ static int unix_stream_recv_urg(struct unix_stream_read_state *state)
+ 
+ 	mutex_lock(&u->iolock);
+ 	unix_state_lock(sk);
++	spin_lock(&sk->sk_receive_queue.lock);
+ 
+ 	if (sock_flag(sk, SOCK_URGINLINE) || !u->oob_skb) {
++		spin_unlock(&sk->sk_receive_queue.lock);
+ 		unix_state_unlock(sk);
+ 		mutex_unlock(&u->iolock);
+ 		return -EINVAL;
+@@ -2529,6 +2533,8 @@ static int unix_stream_recv_urg(struct unix_stream_read_state *state)
+ 		WRITE_ONCE(u->oob_skb, NULL);
+ 	else
+ 		skb_get(oob_skb);
++
++	spin_unlock(&sk->sk_receive_queue.lock);
+ 	unix_state_unlock(sk);
+ 
+ 	chunk = state->recv_actor(oob_skb, 0, chunk, state);
+@@ -2557,6 +2563,10 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
+ 		consume_skb(skb);
+ 		skb = NULL;
+ 	} else {
++		struct sk_buff *unlinked_skb = NULL;
++
++		spin_lock(&sk->sk_receive_queue.lock);
++
+ 		if (skb == u->oob_skb) {
+ 			if (copied) {
+ 				skb = NULL;
+@@ -2568,13 +2578,19 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
+ 			} else if (flags & MSG_PEEK) {
+ 				skb = NULL;
+ 			} else {
+-				skb_unlink(skb, &sk->sk_receive_queue);
++				__skb_unlink(skb, &sk->sk_receive_queue);
+ 				WRITE_ONCE(u->oob_skb, NULL);
+-				if (!WARN_ON_ONCE(skb_unref(skb)))
+-					kfree_skb(skb);
++				unlinked_skb = skb;
+ 				skb = skb_peek(&sk->sk_receive_queue);
+ 			}
+ 		}
++
++		spin_unlock(&sk->sk_receive_queue.lock);
++
++		if (unlinked_skb) {
++			WARN_ON_ONCE(skb_unref(unlinked_skb));
++			kfree_skb(unlinked_skb);
++		}
+ 	}
+ 	return skb;
+ }
 -- 
 2.43.0
 
