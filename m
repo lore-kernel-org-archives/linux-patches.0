@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E549714265E;
-	Thu, 13 Jun 2024 11:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C4EDDB1;
+	Thu, 13 Jun 2024 11:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278749; cv=none; b=SsS6aEiPQx7BShRrklYKz4Es7+F/q6Tpl5fgN5Qxtz5UPDHesY+HnKPXMkBa+E2Ug5AgZIHxEzwTraB51Vijp1GJ3SFdCj8zmfrVzdgWaRV+gBOC8MwWQAuY3mXv6QSxCzGcV263xSDPLxYjMx9DcoTh0QvLh34TLe1xD4RRwF0=
+	t=1718278751; cv=none; b=XHrcpafCblJpqjSvXT/zOktfuy7tXC1IkmKiKUP8ms7Jo+p0K82pNJM1Qce0hBdkNz1Q17ixh0CSsOOn71RxVEaXRerUPR8FAzLv6/npndoCpmfs3hkTfbfwpdJPlRNABp+GIsLASb9DsFiC3j4tl+/JOeb+jQ/9kk0GKf0OPGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278749; c=relaxed/simple;
-	bh=6lTXxPUFYp+dUBjETWq8auHgMH0IaCfMiA8OX4f0m2A=;
+	s=arc-20240116; t=1718278751; c=relaxed/simple;
+	bh=Mtf03na9Ax2N5S29JPmKPjRxA2eTkGJmrOfm5qHvE0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pg63NCZhNiS4VJo7i2z60I+DH3PypDXLfSmExQPAonpRkoAJrCiTBa0Ws8VtSqUXZQFVnugSNZQkL7c6k//Gbsg25RjZJqaEYl87p+ur2TnCfHV3rnENlqwPiHMbHCs+LDbzRsbyNJYb2qTN/6XkeXO3Tj2gjgvmJI/XcOylvbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/p8gbqw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sGmrmOU8NH93IT00bRr6T9afuKudJD/hKsyhrKhREziuqh9B8FtW2tLFehg/PAxxutzQ0vw6gJzkAa/c0A7QP9CwJfV5NuH79nf0bbsiReqC13YHD4a5oOJt8KgJiNAfO7ICJL98iy9/R62fgeWhA9pzU/KKcsDJ1EM+VKAI2Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6ZuFAte; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/p8gbqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B13EC32786;
-	Thu, 13 Jun 2024 11:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6ZuFAte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1C0C2BBFC;
+	Thu, 13 Jun 2024 11:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278748;
-	bh=6lTXxPUFYp+dUBjETWq8auHgMH0IaCfMiA8OX4f0m2A=;
+	s=korg; t=1718278751;
+	bh=Mtf03na9Ax2N5S29JPmKPjRxA2eTkGJmrOfm5qHvE0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w/p8gbqwxejBWm5b7gjVcdIUTTtGC3Mvg3MCeG8Caj0K/9/1N+UwJkXFIGaYlYW69
-	 gcMd8dJ9V/Bu2nAWbwBmMcnH4HCFei6QTXkzCcmaZv0ne5pxrXhCvRfrxjA7drkn40
-	 txnw/JTszkzutuX6cJwJNS4WRcq/1FrDZrnZ1dYE=
+	b=d6ZuFAteasf4K22ZtFuAFlxNY7pOlt8aU0YaD1m1odwvC/6dDlleY7nTfQOitGhoH
+	 t//eKERUhJC/BESHM/qnJCEXYk7v1k7t1MBINM00FPdqE4hmmxc00HPtT1AiE9dXSG
+	 dwv33YJ9ahDmH1vA/GBoRqMkTPdZdCVneKe8wGZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Stan Johnson <userm57@yahoo.com>
-Subject: [PATCH 4.19 057/213] m68k: mac: Fix reboot hang on Mac IIci
-Date: Thu, 13 Jun 2024 13:31:45 +0200
-Message-ID: <20240613113230.209462060@linuxfoundation.org>
+	Linus Walleij <linus.walleij@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 058/213] net: ethernet: cortina: Locking fixes
+Date: Thu, 13 Jun 2024 13:31:46 +0200
+Message-ID: <20240613113230.247847898@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,97 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 265a3b322df9a973ff1fc63da70af456ab6ae1d6 ]
+[ Upstream commit 812552808f7ff71133fc59768cdc253c5b8ca1bf ]
 
-Calling mac_reset() on a Mac IIci does reset the system, but what
-follows is a POST failure that requires a manual reset to resolve.
-Avoid that by using the 68030 asm implementation instead of the C
-implementation.
+This fixes a probably long standing problem in the Cortina
+Gemini ethernet driver: there are some paths in the code
+where the IRQ registers are written without taking the proper
+locks.
 
-Apparently the SE/30 has a similar problem as it has used the asm
-implementation since before git. This patch extends that solution to
-other systems with a similar ROM.
-
-After this patch, the only systems still using the C implementation are
-68040 systems where adb_type is either MAC_ADB_IOP or MAC_ADB_II. This
-implies a 1 MiB Quadra ROM.
-
-This now includes the Quadra 900/950, which previously fell through to
-the "should never get here" catch-all.
-
-Reported-and-tested-by: Stan Johnson <userm57@yahoo.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/480ebd1249d229c6dc1f3f1c6d599b8505483fd8.1714797072.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240509-gemini-ethernet-locking-v1-1-afd00a528b95@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/mac/misc.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/m68k/mac/misc.c b/arch/m68k/mac/misc.c
-index 3848ff15c59f7..3d7b34504ab9c 100644
---- a/arch/m68k/mac/misc.c
-+++ b/arch/m68k/mac/misc.c
-@@ -462,30 +462,18 @@ void mac_poweroff(void)
- 
- void mac_reset(void)
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index b7ebe5eb46f5a..d464dec9825ad 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1116,10 +1116,13 @@ static void gmac_tx_irq_enable(struct net_device *netdev,
  {
--	if (macintosh_config->adb_type == MAC_ADB_II &&
--	    macintosh_config->ident != MAC_MODEL_SE30) {
--		/* need ROMBASE in booter */
--		/* indeed, plus need to MAP THE ROM !! */
--
--		if (mac_bi_data.rombase == 0)
--			mac_bi_data.rombase = 0x40800000;
--
--		/* works on some */
--		rom_reset = (void *) (mac_bi_data.rombase + 0xa);
--
--		local_irq_disable();
--		rom_reset();
- #ifdef CONFIG_ADB_CUDA
--	} else if (macintosh_config->adb_type == MAC_ADB_EGRET ||
--	           macintosh_config->adb_type == MAC_ADB_CUDA) {
-+	if (macintosh_config->adb_type == MAC_ADB_EGRET ||
-+	    macintosh_config->adb_type == MAC_ADB_CUDA) {
- 		cuda_restart();
-+	} else
- #endif
- #ifdef CONFIG_ADB_PMU
--	} else if (macintosh_config->adb_type == MAC_ADB_PB2) {
-+	if (macintosh_config->adb_type == MAC_ADB_PB2) {
- 		pmu_restart();
-+	} else
- #endif
--	} else if (CPU_IS_030) {
--
-+	if (CPU_IS_030) {
- 		/* 030-specific reset routine.  The idea is general, but the
- 		 * specific registers to reset are '030-specific.  Until I
- 		 * have a non-030 machine, I can't test anything else.
-@@ -533,6 +521,18 @@ void mac_reset(void)
- 		    "jmp %/a0@\n\t" /* jump to the reset vector */
- 		    ".chip 68k"
- 		    : : "r" (offset), "a" (rombase) : "a0");
-+	} else {
-+		/* need ROMBASE in booter */
-+		/* indeed, plus need to MAP THE ROM !! */
-+
-+		if (mac_bi_data.rombase == 0)
-+			mac_bi_data.rombase = 0x40800000;
-+
-+		/* works on some */
-+		rom_reset = (void *)(mac_bi_data.rombase + 0xa);
-+
-+		local_irq_disable();
-+		rom_reset();
- 	}
+ 	struct gemini_ethernet_port *port = netdev_priv(netdev);
+ 	struct gemini_ethernet *geth = port->geth;
++	unsigned long flags;
+ 	u32 val, mask;
  
- 	/* should never get here */
+ 	netdev_dbg(netdev, "%s device %d\n", __func__, netdev->dev_id);
+ 
++	spin_lock_irqsave(&geth->irq_lock, flags);
++
+ 	mask = GMAC0_IRQ0_TXQ0_INTS << (6 * netdev->dev_id + txq);
+ 
+ 	if (en)
+@@ -1128,6 +1131,8 @@ static void gmac_tx_irq_enable(struct net_device *netdev,
+ 	val = readl(geth->base + GLOBAL_INTERRUPT_ENABLE_0_REG);
+ 	val = en ? val | mask : val & ~mask;
+ 	writel(val, geth->base + GLOBAL_INTERRUPT_ENABLE_0_REG);
++
++	spin_unlock_irqrestore(&geth->irq_lock, flags);
+ }
+ 
+ static void gmac_tx_irq(struct net_device *netdev, unsigned int txq_num)
+@@ -1436,15 +1441,19 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	union gmac_rxdesc_3 word3;
+ 	struct page *page = NULL;
+ 	unsigned int page_offs;
++	unsigned long flags;
+ 	unsigned short r, w;
+ 	union dma_rwptr rw;
+ 	dma_addr_t mapping;
+ 	int frag_nr = 0;
+ 
++	spin_lock_irqsave(&geth->irq_lock, flags);
+ 	rw.bits32 = readl(ptr_reg);
+ 	/* Reset interrupt as all packages until here are taken into account */
+ 	writel(DEFAULT_Q0_INT_BIT << netdev->dev_id,
+ 	       geth->base + GLOBAL_INTERRUPT_STATUS_1_REG);
++	spin_unlock_irqrestore(&geth->irq_lock, flags);
++
+ 	r = rw.bits.rptr;
+ 	w = rw.bits.wptr;
+ 
+@@ -1747,10 +1756,9 @@ static irqreturn_t gmac_irq(int irq, void *data)
+ 		gmac_update_hw_stats(netdev);
+ 
+ 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
++		spin_lock(&geth->irq_lock);
+ 		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
+ 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
+-
+-		spin_lock(&geth->irq_lock);
+ 		u64_stats_update_begin(&port->ir_stats_syncp);
+ 		++port->stats.rx_fifo_errors;
+ 		u64_stats_update_end(&port->ir_stats_syncp);
 -- 
 2.43.0
 
