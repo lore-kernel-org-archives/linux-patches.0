@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9491142E8E;
-	Thu, 13 Jun 2024 11:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F9E143890;
+	Thu, 13 Jun 2024 11:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278946; cv=none; b=Ln3RLWiar+7UXjsMTw9Zv/zSFEMDkFbGdPzU2tt7UtdncWutRr4/c3LRyQysV64U7/pl6quNi1C7Yiuy6qTbiQx4PUKAOCcsqJi5y8y3TuqWTgpWeztErdoAVL3QfJQXSRADPc/7QF5III5K3eaFguFjxoRVe3oACzJVQ5edm78=
+	t=1718278950; cv=none; b=hPQrKkrV4CIU5tEY3oF3hz2knuSxbJqUIUWIOMfKl9XjOnWakSsdwmYpMJtzS05jSYsI29Yx6F5DODXrioseCGPQ2AWNbrqspZFL+8KOXVItioW7HlxN64pq137moO3eAe4oSANclP06PBPedW4i/vFKIgPqtFulNu24dvReE/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278946; c=relaxed/simple;
-	bh=7AwNBofxuxeDfCxGNLFvc7ohgb/DZD2bUP+unX77//o=;
+	s=arc-20240116; t=1718278950; c=relaxed/simple;
+	bh=NWYHypt6Mf3eB/OglGlN7bMj2UnFoentLCTmVVSSXaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GuH69ghYmB35Ft5Vmmyfz0+RMUf/jLHnqMs2XwSjme9Xnp8cSqth2MBc16FtDvhtcBXxXnE//1ElMQOYcwXt8CqYgxWBQfBxaDcZCBLq1FvqdN+F4phqR3bMTIXvLl9cRVe3B1To/2zkG1tscVy48mxgkxNHh97Z1LapHgEd0DY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ec+oLYEU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dl1xRT/MS0vg9IV0xIRJX4i8y8WGsitXPB5WXSMSXNiuRruB0l1GCgQiTnr/uhyWfJSiQ3Any8Z/CjcLi53Ah+jp9XTa6DvzkEGn8oQuP+y4DnPWIaHnTyHFen6r2Z0TTxQfnTiCLSn5VLk5T1k6uoRqiDYL9kuYSjiH7kF/3Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxxWZVQl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ec+oLYEU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AE1C2BBFC;
-	Thu, 13 Jun 2024 11:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxxWZVQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484ABC32786;
+	Thu, 13 Jun 2024 11:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278946;
-	bh=7AwNBofxuxeDfCxGNLFvc7ohgb/DZD2bUP+unX77//o=;
+	s=korg; t=1718278949;
+	bh=NWYHypt6Mf3eB/OglGlN7bMj2UnFoentLCTmVVSSXaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ec+oLYEUSrShYb7SpqIcgbanXlJ3VXk2lE5VkQPsPoP5cyxM7flnxKWu2kXUn8Qa7
-	 uV2QCjKmXkhGWrym/WwUrW7SLLxT0C/Lr78AW91Xwt/s5Ca8rbWiM8cOGEbFcbPNSi
-	 iN4ufJoA+tT4vlMHjhlYHgmOe1qz3ib69RSs+iXw=
+	b=vxxWZVQlfRSPA0IE+Zyw6/fYPO/Ln4OKfEWZj1j7UtRkETL+91TLnS5UHNgrYBrXm
+	 SZOpShM7s1voLyRj791btagrV1T+sId4VmPw91q/7qdqIoIi+TJ8cuKm980hRBUg0z
+	 ewl7ZkUphgwjAB3e2rtlJ5w4hYbHl4hECsgPhKLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Yue Sun <samsun1006219@gmail.com>,
-	xingwei lee <xrivendell7@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Simon Horman <horms@kernel.org>,
+	Jaime Caamano <jcaamano@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 124/213] tcp: Fix shift-out-of-bounds in dctcp_update_alpha().
-Date: Thu, 13 Jun 2024 13:32:52 +0200
-Message-ID: <20240613113232.781109396@linuxfoundation.org>
+Subject: [PATCH 4.19 125/213] openvswitch: Set the skbuff pkt_type for proper pmtud support.
+Date: Thu, 13 Jun 2024 13:32:53 +0200
+Message-ID: <20240613113232.820372159@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -55,123 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Aaron Conole <aconole@redhat.com>
 
-[ Upstream commit 3ebc46ca8675de6378e3f8f40768e180bb8afa66 ]
+[ Upstream commit 30a92c9e3d6b073932762bef2ac66f4ee784c657 ]
 
-In dctcp_update_alpha(), we use a module parameter dctcp_shift_g
-as follows:
+Open vSwitch is originally intended to switch at layer 2, only dealing with
+Ethernet frames.  With the introduction of l3 tunnels support, it crossed
+into the realm of needing to care a bit about some routing details when
+making forwarding decisions.  If an oversized packet would need to be
+fragmented during this forwarding decision, there is a chance for pmtu
+to get involved and generate a routing exception.  This is gated by the
+skbuff->pkt_type field.
 
-  alpha -= min_not_zero(alpha, alpha >> dctcp_shift_g);
+When a flow is already loaded into the openvswitch module this field is
+set up and transitioned properly as a packet moves from one port to
+another.  In the case that a packet execute is invoked after a flow is
+newly installed this field is not properly initialized.  This causes the
+pmtud mechanism to omit sending the required exception messages across
+the tunnel boundary and a second attempt needs to be made to make sure
+that the routing exception is properly setup.  To fix this, we set the
+outgoing packet's pkt_type to PACKET_OUTGOING, since it can only get
+to the openvswitch module via a port device or packet command.
+
+Even for bridge ports as users, the pkt_type needs to be reset when
+doing the transmit as the packet is truly outgoing and routing needs
+to get involved post packet transformations, in the case of
+VXLAN/GENEVE/udp-tunnel packets.  In general, the pkt_type on output
+gets ignored, since we go straight to the driver, but in the case of
+tunnel ports they go through IP routing layer.
+
+This issue is periodically encountered in complex setups, such as large
+openshift deployments, where multiple sets of tunnel traversal occurs.
+A way to recreate this is with the ovn-heater project that can setup
+a networking environment which mimics such large deployments.  We need
+larger environments for this because we need to ensure that flow
+misses occur.  In these environment, without this patch, we can see:
+
+  ./ovn_cluster.sh start
+  podman exec ovn-chassis-1 ip r a 170.168.0.5/32 dev eth1 mtu 1200
+  podman exec ovn-chassis-1 ip netns exec sw01p1 ip r flush cache
+  podman exec ovn-chassis-1 ip netns exec sw01p1 \
+         ping 21.0.0.3 -M do -s 1300 -c2
+  PING 21.0.0.3 (21.0.0.3) 1300(1328) bytes of data.
+  From 21.0.0.3 icmp_seq=2 Frag needed and DF set (mtu = 1142)
+
+  --- 21.0.0.3 ping statistics ---
   ...
-  delivered_ce <<= (10 - dctcp_shift_g);
 
-It seems syzkaller started fuzzing module parameters and triggered
-shift-out-of-bounds [0] by setting 100 to dctcp_shift_g:
+Using tcpdump, we can also see the expected ICMP FRAG_NEEDED message is not
+sent into the server.
 
-  memcpy((void*)0x20000080,
-         "/sys/module/tcp_dctcp/parameters/dctcp_shift_g\000", 47);
-  res = syscall(__NR_openat, /*fd=*/0xffffffffffffff9cul, /*file=*/0x20000080ul,
-                /*flags=*/2ul, /*mode=*/0ul);
-  memcpy((void*)0x20000000, "100\000", 4);
-  syscall(__NR_write, /*fd=*/r[0], /*val=*/0x20000000ul, /*len=*/4ul);
+With this patch, setting the pkt_type, we see the following:
 
-Let's limit the max value of dctcp_shift_g by param_set_uint_minmax().
+  podman exec ovn-chassis-1 ip netns exec sw01p1 \
+         ping 21.0.0.3 -M do -s 1300 -c2
+  PING 21.0.0.3 (21.0.0.3) 1300(1328) bytes of data.
+  From 21.0.0.3 icmp_seq=1 Frag needed and DF set (mtu = 1222)
+  ping: local error: message too long, mtu=1222
 
-With this patch:
+  --- 21.0.0.3 ping statistics ---
+  ...
 
-  # echo 10 > /sys/module/tcp_dctcp/parameters/dctcp_shift_g
-  # cat /sys/module/tcp_dctcp/parameters/dctcp_shift_g
-  10
-  # echo 11 > /sys/module/tcp_dctcp/parameters/dctcp_shift_g
-  -bash: echo: write error: Invalid argument
+In this case, the first ping request receives the FRAG_NEEDED message and
+a local routing exception is created.
 
-[0]:
-UBSAN: shift-out-of-bounds in net/ipv4/tcp_dctcp.c:143:12
-shift exponent 100 is too large for 32-bit type 'u32' (aka 'unsigned int')
-CPU: 0 PID: 8083 Comm: syz-executor345 Not tainted 6.9.0-05151-g1b294a1f3561 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.13.0-1ubuntu1.1 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x201/0x300 lib/dump_stack.c:114
- ubsan_epilogue lib/ubsan.c:231 [inline]
- __ubsan_handle_shift_out_of_bounds+0x346/0x3a0 lib/ubsan.c:468
- dctcp_update_alpha+0x540/0x570 net/ipv4/tcp_dctcp.c:143
- tcp_in_ack_event net/ipv4/tcp_input.c:3802 [inline]
- tcp_ack+0x17b1/0x3bc0 net/ipv4/tcp_input.c:3948
- tcp_rcv_state_process+0x57a/0x2290 net/ipv4/tcp_input.c:6711
- tcp_v4_do_rcv+0x764/0xc40 net/ipv4/tcp_ipv4.c:1937
- sk_backlog_rcv include/net/sock.h:1106 [inline]
- __release_sock+0x20f/0x350 net/core/sock.c:2983
- release_sock+0x61/0x1f0 net/core/sock.c:3549
- mptcp_subflow_shutdown+0x3d0/0x620 net/mptcp/protocol.c:2907
- mptcp_check_send_data_fin+0x225/0x410 net/mptcp/protocol.c:2976
- __mptcp_close+0x238/0xad0 net/mptcp/protocol.c:3072
- mptcp_close+0x2a/0x1a0 net/mptcp/protocol.c:3127
- inet_release+0x190/0x1f0 net/ipv4/af_inet.c:437
- __sock_release net/socket.c:659 [inline]
- sock_close+0xc0/0x240 net/socket.c:1421
- __fput+0x41b/0x890 fs/file_table.c:422
- task_work_run+0x23b/0x300 kernel/task_work.c:180
- exit_task_work include/linux/task_work.h:38 [inline]
- do_exit+0x9c8/0x2540 kernel/exit.c:878
- do_group_exit+0x201/0x2b0 kernel/exit.c:1027
- __do_sys_exit_group kernel/exit.c:1038 [inline]
- __se_sys_exit_group kernel/exit.c:1036 [inline]
- __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1036
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xe4/0x240 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x67/0x6f
-RIP: 0033:0x7f6c2b5005b6
-Code: Unable to access opcode bytes at 0x7f6c2b50058c.
-RSP: 002b:00007ffe883eb948 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-RAX: ffffffffffffffda RBX: 00007f6c2b5862f0 RCX: 00007f6c2b5005b6
-RDX: 0000000000000001 RSI: 000000000000003c RDI: 0000000000000001
-RBP: 0000000000000001 R08: 00000000000000e7 R09: ffffffffffffffc0
-R10: 0000000000000006 R11: 0000000000000246 R12: 00007f6c2b5862f0
-R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
- </TASK>
-
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: Yue Sun <samsun1006219@gmail.com>
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAEkJfYNJM=cw-8x7_Vmj1J6uYVCWMbbvD=EFmDPVBGpTsqOxEA@mail.gmail.com/
-Fixes: e3118e8359bb ("net: tcp: add DCTCP congestion control algorithm")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240517091626.32772-1-kuniyu@amazon.com
+Tested-by: Jaime Caamano <jcaamano@redhat.com>
+Reported-at: https://issues.redhat.com/browse/FDP-164
+Fixes: 58264848a5a7 ("openvswitch: Add vxlan tunneling support.")
+Signed-off-by: Aaron Conole <aconole@redhat.com>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://lore.kernel.org/r/20240516200941.16152-1-aconole@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_dctcp.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ net/openvswitch/actions.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ipv4/tcp_dctcp.c b/net/ipv4/tcp_dctcp.c
-index 5205c5a5d8d55..0cf7bfda2d6d2 100644
---- a/net/ipv4/tcp_dctcp.c
-+++ b/net/ipv4/tcp_dctcp.c
-@@ -59,7 +59,18 @@ struct dctcp {
- };
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index 091202b84b6e6..63b7586c31a2c 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -992,6 +992,12 @@ static void do_output(struct datapath *dp, struct sk_buff *skb, int out_port,
+ 				pskb_trim(skb, ovs_mac_header_len(key));
+ 		}
  
- static unsigned int dctcp_shift_g __read_mostly = 4; /* g = 1/2^4 */
--module_param(dctcp_shift_g, uint, 0644);
++		/* Need to set the pkt_type to involve the routing layer.  The
++		 * packet movement through the OVS datapath doesn't generally
++		 * use routing, but this is needed for tunnel cases.
++		 */
++		skb->pkt_type = PACKET_OUTGOING;
 +
-+static int dctcp_shift_g_set(const char *val, const struct kernel_param *kp)
-+{
-+	return param_set_uint_minmax(val, kp, 0, 10);
-+}
-+
-+static const struct kernel_param_ops dctcp_shift_g_ops = {
-+	.set = dctcp_shift_g_set,
-+	.get = param_get_uint,
-+};
-+
-+module_param_cb(dctcp_shift_g, &dctcp_shift_g_ops, &dctcp_shift_g, 0644);
- MODULE_PARM_DESC(dctcp_shift_g, "parameter g for updating dctcp_alpha");
- 
- static unsigned int dctcp_alpha_on_init __read_mostly = DCTCP_MAX_ALPHA;
+ 		if (likely(!mru ||
+ 		           (skb->len <= mru + vport->dev->hard_header_len))) {
+ 			ovs_vport_send(vport, skb, ovs_key_mac_proto(key));
 -- 
 2.43.0
 
