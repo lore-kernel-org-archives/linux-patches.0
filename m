@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFD6142633;
-	Thu, 13 Jun 2024 12:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA7B1C32;
+	Thu, 13 Jun 2024 12:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282439; cv=none; b=pnv8qhI4D6QE1CEePTlAsUtYiobMCtXqdXgLZBdk1wuXy7HsXEFRSl0HPnKeJl82MUG2vP8UD+pHTQmWZInxNVydLgJdkq5kpJRkTTO6wiwOCBRGfFjunYtdg3fW4BURhUXSdF6nIj0SbvE5Uc5yo8jz2E6CW5Xhn/zhe1TAGMk=
+	t=1718282443; cv=none; b=olV9sRDsrsFel4CxYUv9TjWjmVGF0UtBjXsdnqRhnyg9vcTW8bivfOl+jatKx0U9Y/ACiqcqhnrqmKgPRdMByCnO+gLo3kTo0JiCvm/XGWi2886Nmwcj5/Vhd7/SFGYmrALD+5ev5/ph3K+xdn9dP8kzoXwLWtzJ7fKQgo00NZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282439; c=relaxed/simple;
-	bh=efoU9UN0sos+o6Gvoy5yk+Gswk1Ul2MNkb+20IQEVSk=;
+	s=arc-20240116; t=1718282443; c=relaxed/simple;
+	bh=ScdZ633rWNIGcpyubDibAOnuWzqTrmzTXmy33g7Z/Fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jc/JpraHpxTfhtgSjXcSnklcXiauPFGA6cpo66Wt30MTcLOraccgTv5gxLgCd2OxGNqYX7QAFJlZrgkpHY80cTP2Bxqb9Mnc8x6cQCkyQ24hh6gUKhoSUHtW5qDHcCBOaGr88q7oL1D5lPRLE5LHvXq2b9gIn4do5lQwogHqPCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNCSBsuc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgt1ObTK5Dx/g5MAc/cYbXwtJFIgQSk2Gx1WDbEqgm5r3TbRORYxn4aFR2u5By1Ir3wEPASZZ8eQgQ4ImNuonoQ3g/eT4peKN9F9bm7bWyxSYtqsSEsADn7Kv4yiXPyvGfyXHPKANGUKH1OGyE2xAUyGu86Jsq+ZMLQL6trWlgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnhIE9sf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNCSBsuc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27464C2BBFC;
-	Thu, 13 Jun 2024 12:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnhIE9sf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A822C2BBFC;
+	Thu, 13 Jun 2024 12:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282439;
-	bh=efoU9UN0sos+o6Gvoy5yk+Gswk1Ul2MNkb+20IQEVSk=;
+	s=korg; t=1718282442;
+	bh=ScdZ633rWNIGcpyubDibAOnuWzqTrmzTXmy33g7Z/Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TNCSBsuc5rU14OvZZRmEpwAu89HCsmr7KUoAjqGEmC3s6zlQfSBHqqz1njRv/zyo/
-	 kzVz5ZKgpQ5KtAA3hDlAHQxkCoKCnQ0aE6JnUpQiFou7IflKzhENiO5t7ajjYCmTU/
-	 mkUKypfQ+5Vucje7SQxiAmhv6ghFCBQt4dlpEAxM=
+	b=ZnhIE9sffrqF29SsFNw0ydNW9n76TJGzKTSBdmZs5bm1qDcn1wvpd8vqTHWIZpkfe
+	 rs9So8Zs3r8xi0SVSiJybApVA6DqsP1893usbj3+Ao2fBQsZfWBn2TP1/+H+3XcFRp
+	 7A4GyITWJTIq8iF11ZUbFZUjuDFgHlzg6HbOAS7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 277/402] media: cec-adap.c: drop activate_cnt, use state info instead
-Date: Thu, 13 Jun 2024 13:33:54 +0200
-Message-ID: <20240613113312.955484159@linuxfoundation.org>
+Subject: [PATCH 5.15 251/402] mmc: sdhci_am654: Drop lookup for deprecated ti,otap-del-sel
+Date: Thu, 13 Jun 2024 13:33:28 +0200
+Message-ID: <20240613113311.939159870@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,312 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-[ Upstream commit f9222f8ca18bcb1d55dd749b493b29fd8092fb82 ]
+[ Upstream commit 5cb2f9286a31f33dc732c57540838ad9339393ab ]
 
-Using an activation counter to decide when the enable or disable the
-cec adapter is not the best approach and can lead to race conditions.
+ti,otap-del-sel has been deprecated since v5.7 and there are no users of
+this property and no documentation in the DT bindings either.
+Drop the fallback code looking for this property, this makes
+sdhci_am654_get_otap_delay() much easier to read as all the TAP values
+can be handled via a single iterator loop.
 
-Change this to determining the current status of the adapter, and
-enable or disable the adapter accordingly.
-
-It now only needs to be called whenever there is a chance that the
-state changes, and it can handle enabling/disabling monitoring as
-well if needed.
-
-This simplifies the code and it should be a more robust approach as well.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Stable-dep-of: 47c82aac10a6 ("media: cec: core: avoid recursive cec_claim_log_addrs")
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20231122060215.2074799-1-vigneshr@ti.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 387c1bf7dce0 ("mmc: sdhci_am654: Add OTAP/ITAP delay enable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/core/cec-adap.c | 152 ++++++++++++------------------
- include/media/cec.h               |   4 +-
- 2 files changed, 61 insertions(+), 95 deletions(-)
+ drivers/mmc/host/sdhci_am654.c | 37 ++++++----------------------------
+ 1 file changed, 6 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
-index f53d0de176d85..11e091255795e 100644
---- a/drivers/media/cec/core/cec-adap.c
-+++ b/drivers/media/cec/core/cec-adap.c
-@@ -1548,47 +1548,59 @@ static void cec_claim_log_addrs(struct cec_adapter *adap, bool block)
- }
+diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
+index e68fce4413c8a..8203fc15c507a 100644
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -140,7 +140,6 @@ static const struct timing_data td[] = {
  
- /*
-- * Helper functions to enable/disable the CEC adapter.
-+ * Helper function to enable/disable the CEC adapter.
-  *
-- * These functions are called with adap->lock held.
-+ * This function is called with adap->lock held.
-  */
--static int cec_activate_cnt_inc(struct cec_adapter *adap)
-+static int cec_adap_enable(struct cec_adapter *adap)
- {
--	int ret;
-+	bool enable;
-+	int ret = 0;
-+
-+	enable = adap->monitor_all_cnt || adap->monitor_pin_cnt ||
-+		 adap->log_addrs.num_log_addrs;
-+	if (adap->needs_hpd)
-+		enable = enable && adap->phys_addr != CEC_PHYS_ADDR_INVALID;
+ struct sdhci_am654_data {
+ 	struct regmap *base;
+-	bool legacy_otapdly;
+ 	int otap_del_sel[ARRAY_SIZE(td)];
+ 	int itap_del_sel[ARRAY_SIZE(td)];
+ 	int clkbuf_sel;
+@@ -278,11 +277,7 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
+ 	sdhci_set_clock(host, clock);
  
--	if (adap->activate_cnt++)
-+	if (enable == adap->is_enabled)
- 		return 0;
- 
- 	/* serialize adap_enable */
- 	mutex_lock(&adap->devnode.lock);
--	adap->last_initiator = 0xff;
--	adap->transmit_in_progress = false;
--	ret = call_op(adap, adap_enable, true);
--	if (ret)
--		adap->activate_cnt--;
-+	if (enable) {
-+		adap->last_initiator = 0xff;
-+		adap->transmit_in_progress = false;
-+		ret = adap->ops->adap_enable(adap, true);
-+		if (!ret) {
-+			/*
-+			 * Enable monitor-all/pin modes if needed. We warn, but
-+			 * continue if this fails as this is not a critical error.
-+			 */
-+			if (adap->monitor_all_cnt)
-+				WARN_ON(call_op(adap, adap_monitor_all_enable, true));
-+			if (adap->monitor_pin_cnt)
-+				WARN_ON(call_op(adap, adap_monitor_pin_enable, true));
-+		}
-+	} else {
-+		/* Disable monitor-all/pin modes if needed (needs_hpd == 1) */
-+		if (adap->monitor_all_cnt)
-+			WARN_ON(call_op(adap, adap_monitor_all_enable, false));
-+		if (adap->monitor_pin_cnt)
-+			WARN_ON(call_op(adap, adap_monitor_pin_enable, false));
-+		WARN_ON(adap->ops->adap_enable(adap, false));
-+		adap->last_initiator = 0xff;
-+		adap->transmit_in_progress = false;
-+		adap->transmit_in_progress_aborted = false;
-+		if (adap->transmitting)
-+			cec_data_cancel(adap->transmitting, CEC_TX_STATUS_ABORTED, 0);
-+	}
-+	if (!ret)
-+		adap->is_enabled = enable;
-+	wake_up_interruptible(&adap->kthread_waitq);
- 	mutex_unlock(&adap->devnode.lock);
- 	return ret;
- }
- 
--static void cec_activate_cnt_dec(struct cec_adapter *adap)
--{
--	if (WARN_ON(!adap->activate_cnt))
--		return;
+ 	/* Setup DLL Output TAP delay */
+-	if (sdhci_am654->legacy_otapdly)
+-		otap_del_sel = sdhci_am654->otap_del_sel[0];
+-	else
+-		otap_del_sel = sdhci_am654->otap_del_sel[timing];
 -
--	if (--adap->activate_cnt)
--		return;
--
--	/* serialize adap_enable */
--	mutex_lock(&adap->devnode.lock);
--	WARN_ON(call_op(adap, adap_enable, false));
--	adap->last_initiator = 0xff;
--	adap->transmit_in_progress = false;
--	adap->transmit_in_progress_aborted = false;
--	if (adap->transmitting)
--		cec_data_cancel(adap->transmitting, CEC_TX_STATUS_ABORTED, 0);
--	mutex_unlock(&adap->devnode.lock);
--}
--
- /* Set a new physical address and send an event notifying userspace of this.
-  *
-  * This function is called with adap->lock held.
-@@ -1609,33 +1621,16 @@ void __cec_s_phys_addr(struct cec_adapter *adap, u16 phys_addr, bool block)
- 		adap->phys_addr = CEC_PHYS_ADDR_INVALID;
- 		cec_post_state_event(adap);
- 		cec_adap_unconfigure(adap);
--		if (becomes_invalid && adap->needs_hpd) {
--			/* Disable monitor-all/pin modes if needed */
--			if (adap->monitor_all_cnt)
--				WARN_ON(call_op(adap, adap_monitor_all_enable, false));
--			if (adap->monitor_pin_cnt)
--				WARN_ON(call_op(adap, adap_monitor_pin_enable, false));
--			cec_activate_cnt_dec(adap);
--			wake_up_interruptible(&adap->kthread_waitq);
--		}
--		if (becomes_invalid)
-+		if (becomes_invalid) {
-+			cec_adap_enable(adap);
- 			return;
--	}
--
--	if (is_invalid && adap->needs_hpd) {
--		if (cec_activate_cnt_inc(adap))
--			return;
--		/*
--		 * Re-enable monitor-all/pin modes if needed. We warn, but
--		 * continue if this fails as this is not a critical error.
--		 */
--		if (adap->monitor_all_cnt)
--			WARN_ON(call_op(adap, adap_monitor_all_enable, true));
--		if (adap->monitor_pin_cnt)
--			WARN_ON(call_op(adap, adap_monitor_pin_enable, true));
-+		}
- 	}
++	otap_del_sel = sdhci_am654->otap_del_sel[timing];
+ 	otap_del_ena = (timing > MMC_TIMING_UHS_SDR25) ? 1 : 0;
  
- 	adap->phys_addr = phys_addr;
-+	if (is_invalid)
-+		cec_adap_enable(adap);
-+
- 	cec_post_state_event(adap);
- 	if (adap->log_addrs.num_log_addrs)
- 		cec_claim_log_addrs(adap, block);
-@@ -1692,6 +1687,7 @@ int __cec_s_log_addrs(struct cec_adapter *adap,
- 		      struct cec_log_addrs *log_addrs, bool block)
- {
- 	u16 type_mask = 0;
-+	int err;
+ 	mask = OTAPDLYENA_MASK | OTAPDLYSEL_MASK;
+@@ -324,10 +319,7 @@ static void sdhci_j721e_4bit_set_clock(struct sdhci_host *host,
+ 	u32 mask, val;
+ 
+ 	/* Setup DLL Output TAP delay */
+-	if (sdhci_am654->legacy_otapdly)
+-		otap_del_sel = sdhci_am654->otap_del_sel[0];
+-	else
+-		otap_del_sel = sdhci_am654->otap_del_sel[timing];
++	otap_del_sel = sdhci_am654->otap_del_sel[timing];
+ 
+ 	mask = OTAPDLYENA_MASK | OTAPDLYSEL_MASK;
+ 	val = (0x1 << OTAPDLYENA_SHIFT) |
+@@ -652,32 +644,15 @@ static int sdhci_am654_get_otap_delay(struct sdhci_host *host,
  	int i;
+ 	int ret;
  
- 	if (adap->devnode.unregistered)
-@@ -1707,8 +1703,7 @@ int __cec_s_log_addrs(struct cec_adapter *adap,
- 		adap->log_addrs.osd_name[0] = '\0';
- 		adap->log_addrs.vendor_id = CEC_VENDOR_ID_NONE;
- 		adap->log_addrs.cec_version = CEC_OP_CEC_VERSION_2_0;
--		if (!adap->needs_hpd)
--			cec_activate_cnt_dec(adap);
-+		cec_adap_enable(adap);
- 		return 0;
- 	}
- 
-@@ -1842,17 +1837,12 @@ int __cec_s_log_addrs(struct cec_adapter *adap,
- 		       sizeof(log_addrs->features[i]));
- 	}
- 
--	if (!adap->needs_hpd && !adap->is_configuring && !adap->is_configured) {
--		int ret = cec_activate_cnt_inc(adap);
--
--		if (ret)
--			return ret;
--	}
- 	log_addrs->log_addr_mask = adap->log_addrs.log_addr_mask;
- 	adap->log_addrs = *log_addrs;
--	if (adap->phys_addr != CEC_PHYS_ADDR_INVALID)
-+	err = cec_adap_enable(adap);
-+	if (!err && adap->phys_addr != CEC_PHYS_ADDR_INVALID)
- 		cec_claim_log_addrs(adap, block);
--	return 0;
-+	return err;
- }
- 
- int cec_s_log_addrs(struct cec_adapter *adap,
-@@ -2155,20 +2145,9 @@ int cec_monitor_all_cnt_inc(struct cec_adapter *adap)
- 	if (adap->monitor_all_cnt++)
- 		return 0;
- 
--	if (!adap->needs_hpd) {
--		ret = cec_activate_cnt_inc(adap);
+-	ret = device_property_read_u32(dev, td[MMC_TIMING_LEGACY].otap_binding,
+-				 &sdhci_am654->otap_del_sel[MMC_TIMING_LEGACY]);
+-	if (ret) {
+-		/*
+-		 * ti,otap-del-sel-legacy is mandatory, look for old binding
+-		 * if not found.
+-		 */
+-		ret = device_property_read_u32(dev, "ti,otap-del-sel",
+-					       &sdhci_am654->otap_del_sel[0]);
 -		if (ret) {
--			adap->monitor_all_cnt--;
+-			dev_err(dev, "Couldn't find otap-del-sel\n");
+-
 -			return ret;
 -		}
+-
+-		dev_info(dev, "Using legacy binding ti,otap-del-sel\n");
+-		sdhci_am654->legacy_otapdly = true;
+-
+-		return 0;
 -	}
 -
--	ret = call_op(adap, adap_monitor_all_enable, true);
--	if (ret) {
-+	ret = cec_adap_enable(adap);
-+	if (ret)
- 		adap->monitor_all_cnt--;
--		if (!adap->needs_hpd)
--			cec_activate_cnt_dec(adap);
--	}
- 	return ret;
- }
+ 	for (i = MMC_TIMING_LEGACY; i <= MMC_TIMING_MMC_HS400; i++) {
  
-@@ -2179,8 +2158,7 @@ void cec_monitor_all_cnt_dec(struct cec_adapter *adap)
- 	if (--adap->monitor_all_cnt)
- 		return;
- 	WARN_ON(call_op(adap, adap_monitor_all_enable, false));
--	if (!adap->needs_hpd)
--		cec_activate_cnt_dec(adap);
-+	cec_adap_enable(adap);
- }
- 
- /*
-@@ -2195,20 +2173,9 @@ int cec_monitor_pin_cnt_inc(struct cec_adapter *adap)
- 	if (adap->monitor_pin_cnt++)
- 		return 0;
- 
--	if (!adap->needs_hpd) {
--		ret = cec_activate_cnt_inc(adap);
--		if (ret) {
--			adap->monitor_pin_cnt--;
--			return ret;
--		}
--	}
--
--	ret = call_op(adap, adap_monitor_pin_enable, true);
--	if (ret) {
-+	ret = cec_adap_enable(adap);
-+	if (ret)
- 		adap->monitor_pin_cnt--;
--		if (!adap->needs_hpd)
--			cec_activate_cnt_dec(adap);
--	}
- 	return ret;
- }
- 
-@@ -2219,8 +2186,7 @@ void cec_monitor_pin_cnt_dec(struct cec_adapter *adap)
- 	if (--adap->monitor_pin_cnt)
- 		return;
- 	WARN_ON(call_op(adap, adap_monitor_pin_enable, false));
--	if (!adap->needs_hpd)
--		cec_activate_cnt_dec(adap);
-+	cec_adap_enable(adap);
- }
- 
- #ifdef CONFIG_DEBUG_FS
-@@ -2234,7 +2200,7 @@ int cec_adap_status(struct seq_file *file, void *priv)
- 	struct cec_data *data;
- 
- 	mutex_lock(&adap->lock);
--	seq_printf(file, "activation count: %u\n", adap->activate_cnt);
-+	seq_printf(file, "enabled: %d\n", adap->is_enabled);
- 	seq_printf(file, "configured: %d\n", adap->is_configured);
- 	seq_printf(file, "configuring: %d\n", adap->is_configuring);
- 	seq_printf(file, "phys_addr: %x.%x.%x.%x\n",
-diff --git a/include/media/cec.h b/include/media/cec.h
-index 31d704f367074..df3e8738d512b 100644
---- a/include/media/cec.h
-+++ b/include/media/cec.h
-@@ -180,6 +180,7 @@ struct cec_adap_ops {
-  * @needs_hpd:		if true, then the HDMI HotPlug Detect pin must be high
-  *	in order to transmit or receive CEC messages. This is usually a HW
-  *	limitation.
-+ * @is_enabled:		the CEC adapter is enabled
-  * @is_configuring:	the CEC adapter is configuring (i.e. claiming LAs)
-  * @is_configured:	the CEC adapter is configured (i.e. has claimed LAs)
-  * @cec_pin_is_high:	if true then the CEC pin is high. Only used with the
-@@ -190,7 +191,6 @@ struct cec_adap_ops {
-  *	Drivers that need this can set this field to true after the
-  *	cec_allocate_adapter() call.
-  * @last_initiator:	the initiator of the last transmitted message.
-- * @activate_cnt:	number of times that CEC is activated
-  * @monitor_all_cnt:	number of filehandles monitoring all msgs
-  * @monitor_pin_cnt:	number of filehandles monitoring pin changes
-  * @follower_cnt:	number of filehandles in follower mode
-@@ -238,12 +238,12 @@ struct cec_adapter {
- 
- 	u16 phys_addr;
- 	bool needs_hpd;
-+	bool is_enabled;
- 	bool is_configuring;
- 	bool is_configured;
- 	bool cec_pin_is_high;
- 	bool adap_controls_phys_addr;
- 	u8 last_initiator;
--	u32 activate_cnt;
- 	u32 monitor_all_cnt;
- 	u32 monitor_pin_cnt;
- 	u32 follower_cnt;
+ 		ret = device_property_read_u32(dev, td[i].otap_binding,
+ 					       &sdhci_am654->otap_del_sel[i]);
+ 		if (ret) {
++			if (i == MMC_TIMING_LEGACY) {
++				dev_err(dev, "Couldn't find mandatory ti,otap-del-sel-legacy\n");
++				return ret;
++			}
+ 			dev_dbg(dev, "Couldn't find %s\n",
+ 				td[i].otap_binding);
+ 			/*
 -- 
 2.43.0
 
