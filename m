@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A80142903;
-	Thu, 13 Jun 2024 12:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51C982C76;
+	Thu, 13 Jun 2024 12:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280906; cv=none; b=igxpMZ7tckg6DDvadRz9u6IqAJYVGzbAhyGoTEp5MdHOEn36sOQvXeP6EDOL4dMPpj3gCYd3WCK94J5UOqyZtuzRPR6pIt1sCSyqHF7ZpS16Jb+66iqy2BNyFVeh3/zZhwlLzkWeGgpzJ8U3jNFHTXG+XYTplyL8XDdGcMj6h/w=
+	t=1718280909; cv=none; b=DodSXZj+wBKuLbHIekpv3vcMAIH+OOMdOPf5GA3oHudPvMyPL/MfuwEvnxZAn99HPIELHgQHQKUIq5I5JwcbNF/7B25SXnTeYOVNk3iSbZQy+IStuWHOrlaPbLoKftmMDoK43yzGuqN7mmtNl2gN2mzG3BomQAx/mXYNmRT+/3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280906; c=relaxed/simple;
-	bh=4BcUyJcXxljmL5GQDf4hTxz8N7478euSbZibA/xHP8c=;
+	s=arc-20240116; t=1718280909; c=relaxed/simple;
+	bh=fIhR0j0rc9JWZdfeo4gkgko0XsG/QUzp4AkF10HiigQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQJrFH64yWHCTScCXw3i1mi6IXMLiNOceoddvVzq30cK/C4/3MrBqG6IXcwSaXtyVvY8oLtjEAkIKR3ypaNZ4WXiNNeARQbrRQqNukTcGJbuZ4rlQjJN7W3i1fG+PwwUVWO+9ThmEdCZyNDDw2hhPHYD0SlprjPpaIW5GZ+Q9AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkiFKOWi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lt6LfUhd5SaYrc/Z14qQA6JnZYABRZsdvHYk+tY/gn+9ngtvmPvWz/fyN4zaZvtj19HnSVz7n2CyNyjgm8BdHFWMLM6uyfHIlfJRtvXQH+yXmO0rGJzAzF7q5XmYpgN4XMXHlQKE1ZLANH47NNotIDYW2dtjyQRUO0YKIQqnYaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XexvQNd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkiFKOWi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA19C2BBFC;
-	Thu, 13 Jun 2024 12:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XexvQNd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E99EC2BBFC;
+	Thu, 13 Jun 2024 12:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280906;
-	bh=4BcUyJcXxljmL5GQDf4hTxz8N7478euSbZibA/xHP8c=;
+	s=korg; t=1718280909;
+	bh=fIhR0j0rc9JWZdfeo4gkgko0XsG/QUzp4AkF10HiigQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UkiFKOWiyYt+HqLJ34yBPQUxDUapEwYcSGnY8BsY8k2LGR1F9Z8lQ7V6tOUDv5+MY
-	 rMMOl+N2WeAMZnzvvn7d3JGXTzvgTO61kffD4Q4socrTiBakIXh8RNCUcVKoZ3d2J9
-	 +UEMWkeYeTyuHiRH7WE/CvR9MgYAj60/YhWhgnwE=
+	b=2XexvQNdvZ6MZ2M5dEtLxjcJub9GkPjlAznNFF2CPlP1iBO0EDSqOxBKS3+bvpstL
+	 nncAF6JzQcrX/2g52wWptQ+t8XgaGi9YMkZoKUdSMZNxPbl8dWUnJm1qMEx/Gz5EK4
+	 y9BJwOfIOdT+p5PSSewYAtn1Gi2GV5sL5yAP5i08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/317] wifi: mwl8k: initialize cmd->addr[] properly
-Date: Thu, 13 Jun 2024 13:31:33 +0200
-Message-ID: <20240613113250.449353840@linuxfoundation.org>
+Subject: [PATCH 5.10 076/317] usb: aqc111: stop lying about skb->truesize
+Date: Thu, 13 Jun 2024 13:31:34 +0200
+Message-ID: <20240613113250.489190049@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,35 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1d60eabb82694e58543e2b6366dae3e7465892a5 ]
+[ Upstream commit 9aad6e45c4e7d16b2bb7c3794154b828fb4384b4 ]
 
-This loop is supposed to copy the mac address to cmd->addr but the
-i++ increment is missing so it copies everything to cmd->addr[0] and
-only the last address is recorded.
+Some usb drivers try to set small skb->truesize and break
+core networking stacks.
 
-Fixes: 22bedad3ce11 ("net: convert multicast list to list_head")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/b788be9a-15f5-4cca-a3fe-79df4c8ce7b2@moroto.mountain
+I replace one skb_clone() by an allocation of a fresh
+and small skb, to get minimally sized skbs, like we did
+in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
+in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
+stop lying about skb->truesize")
+
+Fixes: 361459cd9642 ("net: usb: aqc111: Implement RX data path")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240506135546.3641185-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwl8k.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/aqc111.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwl8k.c b/drivers/net/wireless/marvell/mwl8k.c
-index dc91ac8cbd48b..dd72e9f8b4079 100644
---- a/drivers/net/wireless/marvell/mwl8k.c
-+++ b/drivers/net/wireless/marvell/mwl8k.c
-@@ -2714,7 +2714,7 @@ __mwl8k_cmd_mac_multicast_adr(struct ieee80211_hw *hw, int allmulti,
- 		cmd->action |= cpu_to_le16(MWL8K_ENABLE_RX_MULTICAST);
- 		cmd->numaddr = cpu_to_le16(mc_count);
- 		netdev_hw_addr_list_for_each(ha, mc_list) {
--			memcpy(cmd->addr[i], ha->addr, ETH_ALEN);
-+			memcpy(cmd->addr[i++], ha->addr, ETH_ALEN);
+diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+index 4ea02116be182..895d4f5166f99 100644
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -1141,17 +1141,15 @@ static int aqc111_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			continue;
  		}
- 	}
+ 
+-		/* Clone SKB */
+-		new_skb = skb_clone(skb, GFP_ATOMIC);
++		new_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
+ 
+ 		if (!new_skb)
+ 			goto err;
+ 
+-		new_skb->len = pkt_len;
++		skb_put(new_skb, pkt_len);
++		memcpy(new_skb->data, skb->data, pkt_len);
+ 		skb_pull(new_skb, AQ_RX_HW_PAD);
+-		skb_set_tail_pointer(new_skb, new_skb->len);
+ 
+-		new_skb->truesize = SKB_TRUESIZE(new_skb->len);
+ 		if (aqc111_data->rx_checksum)
+ 			aqc111_rx_checksum(new_skb, pkt_desc);
  
 -- 
 2.43.0
