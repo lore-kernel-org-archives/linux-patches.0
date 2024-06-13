@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDC7143C48;
-	Thu, 13 Jun 2024 11:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A3413CA99;
+	Thu, 13 Jun 2024 11:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279169; cv=none; b=p/MKc3+Gogh1QGl4sqh7/vpiM5njQ4Y1IGcW0zBsxGhrDp45dV6WhKZgsp166ZV1fXFvvuQjO5+fEaoL5Gi4X0XDcF0qSRo5EsJuJh5pDigXOD5n/UA86HePn1fTozjzco8F2DnUIN7CG29+DEYsso7EnA65Xha1U1lRzcPsQxE=
+	t=1718279172; cv=none; b=qxGNWoYFx7G8j1FU0AtpVzRPKJtPM239QB8LPN3OqZoQRfW36xXQxHkTSJqvVEKPI4XuLjolc5Fb/bYjSqVNxAAWmIw71FIlnsBQ+iMg3xND8s+gw+avb4/FO56uU/cOeAyakiHTZjsxeFNp4+shmghk8ncLG/I4qOoESVxirps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279169; c=relaxed/simple;
-	bh=Hp5NoI2makNpJzklLylBPXf3W1gSfyR1zrEurhgofnQ=;
+	s=arc-20240116; t=1718279172; c=relaxed/simple;
+	bh=5SMrO+DqoQ8OSg5f/8SJ0lQ2/eG+6ifVSWAuC4lduh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rHOLcQ4o98bphQcvbZ5EmqlIRzoOmYixkQEmygNuf6Px5WK8NK5rPffM2y9zUDEzEEyXLPLp6AqELn2d9oGsfiUg4Aw9+bHooPR5buPKbQ/S7+VIxgHobr9sbAFbe5EBLJDFA42ytliUcEEt7Y1BM4NJJZvVazlA2giD7ig4szs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G82UGffj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JLvPrBzS/gEm95vysbkDfOLU90BqMXw3CUrSKhOfHp4bWawCzyQPOOvD0qXAf623Xm1VhoGPuy7elZmE0MLkkSXq9Mb2W7qXmLzhSoeNJiWepNP5FXHTek1tMTGkcC9CIMUreWCMul5EesfdyNyLrgXcbo6XpU3TeIZMzo4uxgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e34opGk4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G82UGffj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AECBC2BBFC;
-	Thu, 13 Jun 2024 11:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e34opGk4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90330C32786;
+	Thu, 13 Jun 2024 11:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279169;
-	bh=Hp5NoI2makNpJzklLylBPXf3W1gSfyR1zrEurhgofnQ=;
+	s=korg; t=1718279171;
+	bh=5SMrO+DqoQ8OSg5f/8SJ0lQ2/eG+6ifVSWAuC4lduh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G82UGffjFJ3rOh+Ui0RYj7iqbQ0jzIORedQZ7pIshC7H62E/f3gKvWcVmchFdVm33
-	 tCuVF7Jagyeld5BMfuVHp/diyHvabkMoJt0whzx630103xTwSzazKc7+SbzKUVprsL
-	 fDwgrLNu4lMaepzrQrhN9i8iHo8L0q0ZQPyI5Rho=
+	b=e34opGk4+JPcBaNzF07ggDuHx/R8cCPQyzQCzn5rCvot+mUfEQcZqrx2I6KNEO55F
+	 soS/DDo0n9TfhVNu1TJM+9yXQcaotu/4QmsC0ttCvE95CJ0pN4+B4x/l9b/9z0LLMy
+	 n2WfrO3egyWzxVbX6aJCcbwcXqedvV5vnTft1JVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.19 181/213] netfilter: nftables: update table flags from the commit phase
-Date: Thu, 13 Jun 2024 13:33:49 +0200
-Message-ID: <20240613113234.964140434@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 4.19 199/213] KVM: arm64: Allow AArch32 PSTATE.M to be restored as System mode
+Date: Thu, 13 Jun 2024 13:34:07 +0200
+Message-ID: <20240613113235.654786459@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -50,111 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 0ce7cf4127f14078ca598ba9700d813178a59409 upstream.
+commit dfe6d190f38fc5df5ff2614b463a5195a399c885 upstream.
 
-Do not update table flags from the preparation phase. Store the flags
-update into the transaction, then update the flags from the commit
-phase.
+It appears that we don't allow a vcpu to be restored in AArch32
+System mode, as we *never* included it in the list of valid modes.
 
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Just add it to the list of allowed modes.
+
+Fixes: 0d854a60b1d7 ("arm64: KVM: enable initialization of a 32bit vcpu")
+Cc: stable@vger.kernel.org
+Acked-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20240524141956.1450304-3-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    9 ++++++---
- net/netfilter/nf_tables_api.c     |   31 ++++++++++++++++---------------
- 2 files changed, 22 insertions(+), 18 deletions(-)
+ arch/arm64/kvm/guest.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1347,13 +1347,16 @@ struct nft_trans_chain {
- 
- struct nft_trans_table {
- 	bool				update;
--	bool				enable;
-+	u8				state;
-+	u32				flags;
- };
- 
- #define nft_trans_table_update(trans)	\
- 	(((struct nft_trans_table *)trans->data)->update)
--#define nft_trans_table_enable(trans)	\
--	(((struct nft_trans_table *)trans->data)->enable)
-+#define nft_trans_table_state(trans)	\
-+	(((struct nft_trans_table *)trans->data)->state)
-+#define nft_trans_table_flags(trans)	\
-+	(((struct nft_trans_table *)trans->data)->flags)
- 
- struct nft_trans_elem {
- 	struct nft_set			*set;
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -868,6 +868,12 @@ static void nf_tables_table_disable(stru
- 	nft_table_disable(net, table, 0);
- }
- 
-+enum {
-+	NFT_TABLE_STATE_UNCHANGED	= 0,
-+	NFT_TABLE_STATE_DORMANT,
-+	NFT_TABLE_STATE_WAKEUP
-+};
-+
- static int nf_tables_updtable(struct nft_ctx *ctx)
- {
- 	struct nft_trans *trans;
-@@ -891,19 +897,17 @@ static int nf_tables_updtable(struct nft
- 
- 	if ((flags & NFT_TABLE_F_DORMANT) &&
- 	    !(ctx->table->flags & NFT_TABLE_F_DORMANT)) {
--		nft_trans_table_enable(trans) = false;
-+		nft_trans_table_state(trans) = NFT_TABLE_STATE_DORMANT;
- 	} else if (!(flags & NFT_TABLE_F_DORMANT) &&
- 		   ctx->table->flags & NFT_TABLE_F_DORMANT) {
--		ctx->table->flags &= ~NFT_TABLE_F_DORMANT;
- 		ret = nf_tables_table_enable(ctx->net, ctx->table);
- 		if (ret >= 0)
--			nft_trans_table_enable(trans) = true;
--		else
--			ctx->table->flags |= NFT_TABLE_F_DORMANT;
-+			nft_trans_table_state(trans) = NFT_TABLE_STATE_WAKEUP;
- 	}
- 	if (ret < 0)
- 		goto err;
- 
-+	nft_trans_table_flags(trans) = flags;
- 	nft_trans_table_update(trans) = true;
- 	nft_trans_commit_list_add_tail(ctx->net, trans);
- 	return 0;
-@@ -7009,11 +7013,10 @@ static int nf_tables_commit(struct net *
- 		switch (trans->msg_type) {
- 		case NFT_MSG_NEWTABLE:
- 			if (nft_trans_table_update(trans)) {
--				if (!nft_trans_table_enable(trans)) {
--					nf_tables_table_disable(net,
--								trans->ctx.table);
--					trans->ctx.table->flags |= NFT_TABLE_F_DORMANT;
--				}
-+				if (nft_trans_table_state(trans) == NFT_TABLE_STATE_DORMANT)
-+					nf_tables_table_disable(net, trans->ctx.table);
-+
-+				trans->ctx.table->flags = nft_trans_table_flags(trans);
- 			} else {
- 				nft_clear(net, trans->ctx.table);
- 			}
-@@ -7174,11 +7177,9 @@ static int __nf_tables_abort(struct net
- 		switch (trans->msg_type) {
- 		case NFT_MSG_NEWTABLE:
- 			if (nft_trans_table_update(trans)) {
--				if (nft_trans_table_enable(trans)) {
--					nf_tables_table_disable(net,
--								trans->ctx.table);
--					trans->ctx.table->flags |= NFT_TABLE_F_DORMANT;
--				}
-+				if (nft_trans_table_state(trans) == NFT_TABLE_STATE_WAKEUP)
-+					nf_tables_table_disable(net, trans->ctx.table);
-+
- 				nft_trans_destroy(trans);
- 			} else {
- 				list_del_rcu(&trans->ctx.table->list);
+--- a/arch/arm64/kvm/guest.c
++++ b/arch/arm64/kvm/guest.c
+@@ -175,6 +175,7 @@ static int set_core_reg(struct kvm_vcpu
+ 		case PSR_AA32_MODE_SVC:
+ 		case PSR_AA32_MODE_ABT:
+ 		case PSR_AA32_MODE_UND:
++		case PSR_AA32_MODE_SYS:
+ 			if (!vcpu_el1_is_32bit(vcpu))
+ 				return -EINVAL;
+ 			break;
 
 
