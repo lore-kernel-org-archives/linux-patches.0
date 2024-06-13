@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A23C144D0B;
-	Thu, 13 Jun 2024 12:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5E31DFE1;
+	Thu, 13 Jun 2024 12:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282256; cv=none; b=H/WroBlkdXR9d5Keekuqu9Db27FHzfjS/xVn02EnwYimXniF5IACt6XusWIidR/FAjQc2vOQB0vOiaGO8PwyykTL/DkF8+dTHSzzIjjM2cAXhVxfEr5zimrEbaJvBagcmVwHxkHn9WAZTaVgWDmBCb7YdaWa8wMSej8/dBCkpnA=
+	t=1718282259; cv=none; b=MbpPn6XVgauj+06+MScYc+COOGZmkmrx7hO6erYhRmfXMuoxjKO053wq18mfP3DzRXNLmo+qbEsAwjMABgUZXDQVO9agvFv5zEhHhJ7ttLxCsbvDRJ8A4hYDqnHLn+WMrAvWT6A5A6sRscAjC5r7144+ArC2XBgXPABdsxndJVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282256; c=relaxed/simple;
-	bh=2YGhwGGMmnkD/ru9J4BKN6ORPeC7sWZi6yQteSjboak=;
+	s=arc-20240116; t=1718282259; c=relaxed/simple;
+	bh=aPAo7/7+Xf5W6dNWoaifJXihNksllSK/REEJXvC7s2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hwlU1DN1lI5c5x8I87HeDwUDuDRA2fljPAXhx2+XO7HMurnLProIidykdo8vX+o2kuqFrOOUqKULsOxljeHxCv8Lf59UHWtG7HR2pSvsW7g9GLB+IVqy25B/PGtk/0Ku+YAQ7u5wQYL6pBFyPrtXvfxy2n6t5qY43BDiF6OQRyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7gn1iYC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lyyX+K0hl/h0gNZwauZIiwTfu6npdEJxlZKHCeHyu9ybpjqmjIfZX6qfGW0h2pFdEnTtm06H/hGYYxl0bcCXl6msJC8LJYl/+iKscCue2vIKR1GKRCLUWRpoRC38h50FhoVLhfkAQ411MXQAeXHTSDTAWlIEISUo2OGurs1d+ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6ZY8/It; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7gn1iYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719FAC4AF51;
-	Thu, 13 Jun 2024 12:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6ZY8/It"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9EBC2BBFC;
+	Thu, 13 Jun 2024 12:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282255;
-	bh=2YGhwGGMmnkD/ru9J4BKN6ORPeC7sWZi6yQteSjboak=;
+	s=korg; t=1718282258;
+	bh=aPAo7/7+Xf5W6dNWoaifJXihNksllSK/REEJXvC7s2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U7gn1iYCgX+QeV2qCe6uEk7rd5ZZZjMUFBCZBDr166j2Llduh+8/8rsV4PTw4l0b4
-	 iaTv+JKIFw8jTB1lF1RArnjeLMu+iJfcwaIX+jVCHrqA0xtTylNzTLiJsLjl1QelnH
-	 voTuWkmqqHqt5A7VVS0yZxFRMOCeXbNsGmj0VZIU=
+	b=g6ZY8/It2YYGarx8/ABrNdJusQKoBQY/BSFwmg0JVqqlJkhD68r5Ml89ThMBLlTQg
+	 bGdGbhTLGqKM+M/zn3j8M2oHBZKOtNyBNY9x/J3W6LHrRtVt3FIrYjpnhxjfGKfVkB
+	 o8SkkFEPdSUWpdTZT0t72JMEgNSSTZj4d0bw8TuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jean Delvare <jdelvare@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 214/402] perf intel-pt: Fix unassigned instruction op (discovered by MemorySanitizer)
-Date: Thu, 13 Jun 2024 13:32:51 +0200
-Message-ID: <20240613113310.497334696@linuxfoundation.org>
+Subject: [PATCH 5.15 185/402] firmware: dmi-id: add a release callback function
+Date: Thu, 13 Jun 2024 13:32:22 +0200
+Message-ID: <20240613113309.364530618@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,69 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit e101a05f79fd4ee3e89d2f3fb716493c33a33708 ]
+[ Upstream commit cf770af5645a41a753c55a053fa1237105b0964a ]
 
-MemorySanitizer discovered instances where the instruction op value was
-not assigned.:
+dmi_class uses kfree() as the .release function, but that now causes
+a warning with clang-16 as it violates control flow integrity (KCFI)
+rules:
 
-  WARNING: MemorySanitizer: use-of-uninitialized-value
-    #0 0x5581c00a76b3 in intel_pt_sample_flags tools/perf/util/intel-pt.c:1527:17
-  Uninitialized value was stored to memory at
-    #0 0x5581c005ddf8 in intel_pt_walk_insn tools/perf/util/intel-pt-decoder/intel-pt-decoder.c:1256:25
+drivers/firmware/dmi-id.c:174:17: error: cast from 'void (*)(const void *)' to 'void (*)(struct device *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+  174 |         .dev_release = (void(*)(struct device *)) kfree,
 
-The op value is used to set branch flags for branch instructions
-encountered when walking the code, so fix by setting op to
-INTEL_PT_OP_OTHER in other cases.
+Add an explicit function to call kfree() instead.
 
-Fixes: 4c761d805bb2d2ea ("perf intel-pt: Fix intel_pt_fup_event() assumptions about setting state type")
-Reported-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Closes: https://lore.kernel.org/linux-perf-users/20240320162619.1272015-1-irogers@google.com/
-Link: https://lore.kernel.org/r/20240326083223.10883-1-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 4f5c791a850e ("DMI-based module autoloading")
+Link: https://lore.kernel.org/lkml/20240213100238.456912-1-arnd@kernel.org/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/intel-pt-decoder/intel-pt-decoder.c | 2 ++
- tools/perf/util/intel-pt.c                          | 2 ++
- 2 files changed, 4 insertions(+)
+ drivers/firmware/dmi-id.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/intel-pt-decoder/intel-pt-decoder.c b/tools/perf/util/intel-pt-decoder/intel-pt-decoder.c
-index b9f94f198a3eb..3530551b82819 100644
---- a/tools/perf/util/intel-pt-decoder/intel-pt-decoder.c
-+++ b/tools/perf/util/intel-pt-decoder/intel-pt-decoder.c
-@@ -1215,6 +1215,8 @@ static bool intel_pt_fup_event(struct intel_pt_decoder *decoder)
- 	bool ret = false;
+diff --git a/drivers/firmware/dmi-id.c b/drivers/firmware/dmi-id.c
+index 940ddf916202a..77a8d43e65d3c 100644
+--- a/drivers/firmware/dmi-id.c
++++ b/drivers/firmware/dmi-id.c
+@@ -169,9 +169,14 @@ static int dmi_dev_uevent(struct device *dev, struct kobj_uevent_env *env)
+ 	return 0;
+ }
  
- 	decoder->state.type &= ~INTEL_PT_BRANCH;
-+	decoder->state.insn_op = INTEL_PT_OP_OTHER;
-+	decoder->state.insn_len = 0;
- 
- 	if (decoder->set_fup_tx_flags) {
- 		decoder->set_fup_tx_flags = false;
-diff --git a/tools/perf/util/intel-pt.c b/tools/perf/util/intel-pt.c
-index 805bad9364e94..b00776c65c186 100644
---- a/tools/perf/util/intel-pt.c
-+++ b/tools/perf/util/intel-pt.c
-@@ -721,6 +721,7 @@ static int intel_pt_walk_next_insn(struct intel_pt_insn *intel_pt_insn,
- 	bool nr;
- 
- 	intel_pt_insn->length = 0;
-+	intel_pt_insn->op = INTEL_PT_OP_OTHER;
- 
- 	if (to_ip && *ip == to_ip)
- 		goto out_no_cache;
-@@ -816,6 +817,7 @@ static int intel_pt_walk_next_insn(struct intel_pt_insn *intel_pt_insn,
- 
- 			if (to_ip && *ip == to_ip) {
- 				intel_pt_insn->length = 0;
-+				intel_pt_insn->op = INTEL_PT_OP_OTHER;
- 				goto out_no_cache;
- 			}
++static void dmi_dev_release(struct device *dev)
++{
++	kfree(dev);
++}
++
+ static struct class dmi_class = {
+ 	.name = "dmi",
+-	.dev_release = (void(*)(struct device *)) kfree,
++	.dev_release = dmi_dev_release,
+ 	.dev_uevent = dmi_dev_uevent,
+ };
  
 -- 
 2.43.0
