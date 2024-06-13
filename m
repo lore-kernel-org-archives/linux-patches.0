@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C249717FD;
-	Thu, 13 Jun 2024 12:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE0A1E49B;
+	Thu, 13 Jun 2024 12:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282857; cv=none; b=duES6cDwfgFNJ5crqZt2+/rAXNLskeEmH1fAHrAM1/VfwfMb2Dx+iDAfBjEnyUE0L+xDrS5eBC4Lc5rEC+ZUV53LnKy/k87JJ59Sl4xM05X4Rjsr6Dj0pzRg4f7bQSWA8fUtcp/x9nnIgdIpJ9PWuuYK7NDfOZZiSrkxiRUy6lg=
+	t=1718282862; cv=none; b=mCPtlesnJdxBXWiu6a4bWVcwRSVbLWdhDcBnNsXILXIGi8c+vnRvooM6/oL2fMfX1pRzfnwHSsxlG8ghgxAobjeVS6zhkWQMi+ofiEeSPBk2yR3YpMIjsOZUzn4yzZ3AT1cSfKo1g6MtWaCOGM7v3V8IGhQq+nwRiSMvMVhgQzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282857; c=relaxed/simple;
-	bh=DrCFEHObwvPFSxXdAXNLVlIPdqQabLOlQIc+LybVTfI=;
+	s=arc-20240116; t=1718282862; c=relaxed/simple;
+	bh=9uLpRcn94snOYOzVqGdbk8lGft9ucpdtRjFVHYC0vss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elC55T4mToE0zyxKcHcvBKkmNVdC/BJHEmd/Lb3NiOMqzGb4F99WEgzxHoCqjGILeYdPrPRtqaJMDB6/pyWOpgPW+a0Lp4VYrmGQS7GiHYtcvEi86d/GweHxNi+XcMdFDRe+SWr3jH6h/PeCi4ZImEdSlgXvAIH/P2LIXuxQIus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCj1U4AE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C+Df9nRty/Z0M6MO3g4/X2bUMfgQiueREDInxGtMTu2vIaqfaJLTHgwQdsJ8NZC7F7dLg+YdGDoWS8PbVXAXWM6aeeDFOHB+gWtnaV1pcpJ103mOijMtpI0mfgC4+gxBFVQbwDYHuBPrtX1G0dMpeubylMBeiQ2SNoBxs49nwWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzkV/gJd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCj1U4AE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E47C2BBFC;
-	Thu, 13 Jun 2024 12:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzkV/gJd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8DDC32786;
+	Thu, 13 Jun 2024 12:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282857;
-	bh=DrCFEHObwvPFSxXdAXNLVlIPdqQabLOlQIc+LybVTfI=;
+	s=korg; t=1718282860;
+	bh=9uLpRcn94snOYOzVqGdbk8lGft9ucpdtRjFVHYC0vss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCj1U4AEUrfX/k+0ZvFOlcyR4XJlJfD3vSKR72fus1h4fGLVHlL7h+MBkuuVkhfM4
-	 s7Fp+AZHza8Anazm6+f9l6jDcByUheYspm9McXlSEAC0wBqhAZ4MdEn+rkJn4ZFl9q
-	 QDE+O4mCB4tWMYjyPRuOyr81+r+BquRS03OmaPw4=
+	b=qzkV/gJdoeQTzOAlq1vOI8wbp4RxmNkxRNyLkzkhFIcNi4HpzCmWC+qUAjeJisJWy
+	 A2bB5atotVpRbL7/YO4Y8D4yxiRX5UpBpPi5yjqZecLuDPW+ubxb/v7bc33vIN5Pj7
+	 n0e7QEPutCrTUEZj6CbYm0Rvrx1W1F8JHKN//0Y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheyu Ma <zheyuma97@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 6.1 17/85] media: lgdt3306a: Add a check against null-pointer-def
-Date: Thu, 13 Jun 2024 13:35:15 +0200
-Message-ID: <20240613113214.808533465@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>
+Subject: [PATCH 6.1 02/85] drm: Check polling initialized before enabling in drm_helper_probe_single_connector_modes
+Date: Thu, 13 Jun 2024 13:35:00 +0200
+Message-ID: <20240613113214.232579459@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -50,51 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheyu Ma <zheyuma97@gmail.com>
+From: Shradha Gupta <shradhagupta@linux.microsoft.com>
 
-commit c1115ddbda9c930fba0fdd062e7a8873ebaf898d upstream.
+commit 048a36d8a6085bbd8ab9e5794b713b92ac986450 upstream.
 
-The driver should check whether the client provides the platform_data.
+In function drm_helper_probe_single_connector_modes() when we enable
+polling again, if it is already uninitialized, a warning is reported.
+This patch fixes the warning message by checking if poll is initialized
+before enabling it.
 
-The following log reveals it:
-
-[   29.610324] BUG: KASAN: null-ptr-deref in kmemdup+0x30/0x40
-[   29.610730] Read of size 40 at addr 0000000000000000 by task bash/414
-[   29.612820] Call Trace:
-[   29.613030]  <TASK>
-[   29.613201]  dump_stack_lvl+0x56/0x6f
-[   29.613496]  ? kmemdup+0x30/0x40
-[   29.613754]  print_report.cold+0x494/0x6b7
-[   29.614082]  ? kmemdup+0x30/0x40
-[   29.614340]  kasan_report+0x8a/0x190
-[   29.614628]  ? kmemdup+0x30/0x40
-[   29.614888]  kasan_check_range+0x14d/0x1d0
-[   29.615213]  memcpy+0x20/0x60
-[   29.615454]  kmemdup+0x30/0x40
-[   29.615700]  lgdt3306a_probe+0x52/0x310
-[   29.616339]  i2c_device_probe+0x951/0xa90
-
-Link: https://lore.kernel.org/linux-media/20220405095018.3993578-1-zheyuma97@gmail.com
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202401191128.db8423f1-oliver.sang@intel.com
+Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/1706856224-9725-1-git-send-email-shradhagupta@linux.microsoft.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/lgdt3306a.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/drm_probe_helper.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/dvb-frontends/lgdt3306a.c
-+++ b/drivers/media/dvb-frontends/lgdt3306a.c
-@@ -2177,6 +2177,11 @@ static int lgdt3306a_probe(struct i2c_cl
- 	struct dvb_frontend *fe;
- 	int ret;
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -574,7 +574,8 @@ retry:
+ 	}
  
-+	if (!client->dev.platform_data) {
-+		dev_err(&client->dev, "platform data is mandatory\n");
-+		return -EINVAL;
-+	}
-+
- 	config = kmemdup(client->dev.platform_data,
- 			 sizeof(struct lgdt3306a_config), GFP_KERNEL);
- 	if (config == NULL) {
+ 	/* Re-enable polling in case the global poll config changed. */
+-	if (drm_kms_helper_poll != dev->mode_config.poll_running)
++	if (dev->mode_config.poll_enabled &&
++	    (drm_kms_helper_poll != dev->mode_config.poll_running))
+ 		drm_kms_helper_poll_enable(dev);
+ 
+ 	dev->mode_config.poll_running = drm_kms_helper_poll;
 
 
