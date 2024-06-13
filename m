@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE29A1428EA;
-	Thu, 13 Jun 2024 12:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26A7143892;
+	Thu, 13 Jun 2024 12:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282613; cv=none; b=Xy5cpJ8FD/PPNsO8+jNFsUgNu/0EjSOcN9Q63FM3bdRx41TUXRwdD62UNcPk/RAixj/+NCoh7ox9xfqtuaUOi94VT3lXVuD0sazZhjwPcgwdFQs1PxgWgSOgiOfsWtRtokYIwSgmk5i9Qrzd333GRlP3oQIVDf3UTqMpqD4ZYf8=
+	t=1718282616; cv=none; b=OIBfhTCdmk0+k7+4SD6xLKJMrLJg+TpM+dJjTzBA3J4KiXuiwdAWzZtqgOWkQ5De7BKopUmfyWAmsHWepEFMBcepRUgmAhnwi2Dsio6Qrrl6BkkdDCr0QY8L5m0XJI5owy73WLjl8py21eRU8i6UjyWU9nXT1+l2TBwmVDcFbsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282613; c=relaxed/simple;
-	bh=QIsA47UqU6KSrw0Wb9LtU5NdCIXRK/vZ3SqcdVKLw7I=;
+	s=arc-20240116; t=1718282616; c=relaxed/simple;
+	bh=4+5jPSfSO7claWTvAypu6qirncl7qW8fSNRLL+ERpII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVAn08Egho18Kp0dLpCVzGqD+HA4pENhtku5pheKwBRkvOFhkRiPISTtqQONKXwlTLhBDr9eJJzUy/Ad37jFXnghYYhYBHpdwCGy2z4S/EowVvC6TBLCftjTJfQxKWaLqL6/BGMfKJYi2T+WkFZf/n0FvYMACVv2WoyoZbqjcMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ol4gx0IO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RqOXlPS6+UxQ0w3SUxOUv+BZZvVYPnKag3B5tycNLYO55XEHkNuOI6u2+mbvnmt7U0kWPg7LGCndCAOeyotDRho0UvHSVbkjRebRZO1YYLYimFrZApkwWW83Bx9AG9MQn9XQv2ywAgxEHLxSAp0nRdowDVoSDNjIq5jsNg/AWfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOP0uwaa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ol4gx0IO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CF6C2BBFC;
-	Thu, 13 Jun 2024 12:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOP0uwaa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36537C4AF1C;
+	Thu, 13 Jun 2024 12:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282613;
-	bh=QIsA47UqU6KSrw0Wb9LtU5NdCIXRK/vZ3SqcdVKLw7I=;
+	s=korg; t=1718282616;
+	bh=4+5jPSfSO7claWTvAypu6qirncl7qW8fSNRLL+ERpII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ol4gx0IOe2dP0sGTZiw6PybwD4+zaHrGfH30+RqJ+2U7RfRRdDOfqcSDRG7fj1Yoa
-	 vo5zFy5zl/QVQo7DXUrb+KOtM7fRPIPfYOUykIioXGhuc5gWtRLTMalgPtGnc+bInl
-	 1rWlHEorKT5BxPBnA840R4n3EjUzuo3T+WPQkICc=
+	b=rOP0uwaaYWkuQM3CSPEf+mS1JTltOMwgYhg8cZzll3UFzg9/EsA+zqAwiOv8HYsza
+	 SbrXSQZRPN5eQc72NJBj6Ou8wJGCSgm8GVeNSCGXfU5TLXZxb2uslTL1zRcxFv0sxE
+	 DnOCmwaxNDi7JUFlddsYdWFYSCWyQv3z/X29vZLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.15 336/402] genirq/cpuhotplug, x86/vector: Prevent vector leak during CPU offline
-Date: Thu, 13 Jun 2024 13:34:53 +0200
-Message-ID: <20240613113315.243301890@linuxfoundation.org>
+	Arthur Kiyanovski <akiyano@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 337/402] net: ena: Fix DMA syncing in XDP path when SWIOTLB is on
+Date: Thu, 13 Jun 2024 13:34:54 +0200
+Message-ID: <20240613113315.280983904@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -50,123 +51,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
+From: David Arinzon <darinzon@amazon.com>
 
-commit a6c11c0a5235fb144a65e0cb2ffd360ddc1f6c32 upstream.
+commit d760117060cf2e90b5c59c5492cab179a4dbce01 upstream.
 
-The absence of IRQD_MOVE_PCNTXT prevents immediate effectiveness of
-interrupt affinity reconfiguration via procfs. Instead, the change is
-deferred until the next instance of the interrupt being triggered on the
-original CPU.
+This patch fixes two issues:
 
-When the interrupt next triggers on the original CPU, the new affinity is
-enforced within __irq_move_irq(). A vector is allocated from the new CPU,
-but the old vector on the original CPU remains and is not immediately
-reclaimed. Instead, apicd->move_in_progress is flagged, and the reclaiming
-process is delayed until the next trigger of the interrupt on the new CPU.
+Issue 1
+-------
+Description
+```````````
+Current code does not call dma_sync_single_for_cpu() to sync data from
+the device side memory to the CPU side memory before the XDP code path
+uses the CPU side data.
+This causes the XDP code path to read the unset garbage data in the CPU
+side memory, resulting in incorrect handling of the packet by XDP.
 
-Upon the subsequent triggering of the interrupt on the new CPU,
-irq_complete_move() adds a task to the old CPU's vector_cleanup list if it
-remains online. Subsequently, the timer on the old CPU iterates over its
-vector_cleanup list, reclaiming old vectors.
+Solution
+````````
+1. Add a call to dma_sync_single_for_cpu() before the XDP code starts to
+   use the data in the CPU side memory.
+2. The XDP code verdict can be XDP_PASS, in which case there is a
+   fallback to the non-XDP code, which also calls
+   dma_sync_single_for_cpu().
+   To avoid calling dma_sync_single_for_cpu() twice:
+2.1. Put the dma_sync_single_for_cpu() in the code in such a place where
+     it happens before XDP and non-XDP code.
+2.2. Remove the calls to dma_sync_single_for_cpu() in the non-XDP code
+     for the first buffer only (rx_copybreak and non-rx_copybreak
+     cases), since the new call that was added covers these cases.
+     The call to dma_sync_single_for_cpu() for the second buffer and on
+     stays because only the first buffer is handled by the newly added
+     dma_sync_single_for_cpu(). And there is no need for special
+     handling of the second buffer and on for the XDP path since
+     currently the driver supports only single buffer packets.
 
-However, a rare scenario arises if the old CPU is outgoing before the
-interrupt triggers again on the new CPU.
+Issue 2
+-------
+Description
+```````````
+In case the XDP code forwarded the packet (ENA_XDP_FORWARDED),
+ena_unmap_rx_buff_attrs() is called with attrs set to 0.
+This means that before unmapping the buffer, the internal function
+dma_unmap_page_attrs() will also call dma_sync_single_for_cpu() on
+the whole buffer (not only on the data part of it).
+This sync is both wasteful (since a sync was already explicitly
+called before) and also causes a bug, which will be explained
+using the below diagram.
 
-In that case irq_force_complete_move() is not invoked on the outgoing CPU
-to reclaim the old apicd->prev_vector because the interrupt isn't currently
-affine to the outgoing CPU, and irq_needs_fixup() returns false. Even
-though __vector_schedule_cleanup() is later called on the new CPU, it
-doesn't reclaim apicd->prev_vector; instead, it simply resets both
-apicd->move_in_progress and apicd->prev_vector to 0.
+The following diagram shows the flow of events causing the bug.
+The order of events is (1)-(4) as shown in the diagram.
 
-As a result, the vector remains unreclaimed in vector_matrix, leading to a
-CPU vector leak.
+CPU side memory area
 
-To address this issue, move the invocation of irq_force_complete_move()
-before the irq_needs_fixup() call to reclaim apicd->prev_vector, if the
-interrupt is currently or used to be affine to the outgoing CPU.
+     (3)convert_to_xdp_frame() initializes the
+        headroom with xdpf metadata
+                      ||
+                      \/
+          ___________________________________
+         |                                   |
+ 0       |                                   V                       4K
+ ---------------------------------------------------------------------
+ | xdpf->data      | other xdpf       |   < data >   | tailroom ||...|
+ |                 | fields           |              | GARBAGE  ||   |
+ ---------------------------------------------------------------------
 
-Additionally, reclaim the vector in __vector_schedule_cleanup() as well,
-following a warning message, although theoretically it should never see
-apicd->move_in_progress with apicd->prev_cpu pointing to an offline CPU.
+                   /\                        /\
+                   ||                        ||
+   (4)ena_unmap_rx_buff_attrs() calls     (2)dma_sync_single_for_cpu()
+      dma_sync_single_for_cpu() on the       copies data from device
+      whole buffer page, overwriting         side to CPU side memory
+      the xdpf->data with GARBAGE.           ||
+ 0                                                                   4K
+ ---------------------------------------------------------------------
+ | headroom                           |   < data >   | tailroom ||...|
+ | GARBAGE                            |              | GARBAGE  ||   |
+ ---------------------------------------------------------------------
 
-Fixes: f0383c24b485 ("genirq/cpuhotplug: Add support for cleaning up move in progress")
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240522220218.162423-1-dongli.zhang@oracle.com
+Device side memory area                      /\
+                                             ||
+                               (1) device writes RX packet data
+
+After the call to ena_unmap_rx_buff_attrs() in (4), the xdpf->data
+becomes corrupted, and so when it is later accessed in
+ena_clean_xdp_irq()->xdp_return_frame(), it causes a page fault,
+crashing the kernel.
+
+Solution
+````````
+Explicitly tell ena_unmap_rx_buff_attrs() not to call
+dma_sync_single_for_cpu() by passing it the ENA_DMA_ATTR_SKIP_CPU_SYNC
+flag.
+
+Fixes: f7d625adeb7b ("net: ena: Add dynamic recycling mechanism for rx buffers")
+Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Link: https://lore.kernel.org/r/20231211062801.27891-4-darinzon@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/vector.c |    9 ++++++---
- kernel/irq/cpuhotplug.c       |   16 ++++++++--------
- 2 files changed, 14 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c |   23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
---- a/arch/x86/kernel/apic/vector.c
-+++ b/arch/x86/kernel/apic/vector.c
-@@ -982,7 +982,8 @@ static void __send_cleanup_vector(struct
- 		hlist_add_head(&apicd->clist, per_cpu_ptr(&cleanup_list, cpu));
- 		apic->send_IPI(cpu, IRQ_MOVE_CLEANUP_VECTOR);
- 	} else {
--		apicd->prev_vector = 0;
-+		pr_warn("IRQ %u schedule cleanup for offline CPU %u\n", apicd->irq, cpu);
-+		free_moved_vector(apicd);
- 	}
- 	raw_spin_unlock(&vector_lock);
- }
-@@ -1019,6 +1020,7 @@ void irq_complete_move(struct irq_cfg *c
-  */
- void irq_force_complete_move(struct irq_desc *desc)
- {
-+	unsigned int cpu = smp_processor_id();
- 	struct apic_chip_data *apicd;
- 	struct irq_data *irqd;
- 	unsigned int vector;
-@@ -1043,10 +1045,11 @@ void irq_force_complete_move(struct irq_
- 		goto unlock;
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -1495,11 +1495,6 @@ static struct sk_buff *ena_rx_skb(struct
+ 		if (unlikely(!skb))
+ 			return NULL;
  
- 	/*
--	 * If prev_vector is empty, no action required.
-+	 * If prev_vector is empty or the descriptor is neither currently
-+	 * nor previously on the outgoing CPU no action required.
- 	 */
- 	vector = apicd->prev_vector;
--	if (!vector)
-+	if (!vector || (apicd->cpu != cpu && apicd->prev_cpu != cpu))
- 		goto unlock;
+-		/* sync this buffer for CPU use */
+-		dma_sync_single_for_cpu(rx_ring->dev,
+-					dma_unmap_addr(&rx_info->ena_buf, paddr) + pkt_offset,
+-					len,
+-					DMA_FROM_DEVICE);
+ 		skb_copy_to_linear_data(skb, buf_addr + buf_offset, len);
+ 		dma_sync_single_for_device(rx_ring->dev,
+ 					   dma_unmap_addr(&rx_info->ena_buf, paddr) + pkt_offset,
+@@ -1518,17 +1513,10 @@ static struct sk_buff *ena_rx_skb(struct
  
- 	/*
---- a/kernel/irq/cpuhotplug.c
-+++ b/kernel/irq/cpuhotplug.c
-@@ -70,6 +70,14 @@ static bool migrate_one_irq(struct irq_d
- 	}
+ 	buf_len = SKB_DATA_ALIGN(len + buf_offset + tailroom);
  
- 	/*
-+	 * Complete an eventually pending irq move cleanup. If this
-+	 * interrupt was moved in hard irq context, then the vectors need
-+	 * to be cleaned up. It can't wait until this interrupt actually
-+	 * happens and this CPU was involved.
-+	 */
-+	irq_force_complete_move(desc);
-+
-+	/*
- 	 * No move required, if:
- 	 * - Interrupt is per cpu
- 	 * - Interrupt is not started
-@@ -88,14 +96,6 @@ static bool migrate_one_irq(struct irq_d
- 	}
- 
- 	/*
--	 * Complete an eventually pending irq move cleanup. If this
--	 * interrupt was moved in hard irq context, then the vectors need
--	 * to be cleaned up. It can't wait until this interrupt actually
--	 * happens and this CPU was involved.
--	 */
--	irq_force_complete_move(desc);
+-	pre_reuse_paddr = dma_unmap_addr(&rx_info->ena_buf, paddr);
 -
--	/*
- 	 * If there is a setaffinity pending, then try to reuse the pending
- 	 * mask, so the last change of the affinity does not get lost. If
- 	 * there is no move pending or the pending mask does not contain
+ 	/* If XDP isn't loaded try to reuse part of the RX buffer */
+ 	reuse_rx_buf_page = !is_xdp_loaded &&
+ 			    ena_try_rx_buf_page_reuse(rx_info, buf_len, len, pkt_offset);
+ 
+-	dma_sync_single_for_cpu(rx_ring->dev,
+-				pre_reuse_paddr + pkt_offset,
+-				len,
+-				DMA_FROM_DEVICE);
+-
+ 	if (!reuse_rx_buf_page)
+ 		ena_unmap_rx_buff_attrs(rx_ring, rx_info, DMA_ATTR_SKIP_CPU_SYNC);
+ 
+@@ -1724,6 +1712,7 @@ static int ena_clean_rx_irq(struct ena_r
+ 	int xdp_flags = 0;
+ 	int total_len = 0;
+ 	int xdp_verdict;
++	u8 pkt_offset;
+ 	int rc = 0;
+ 	int i;
+ 
+@@ -1750,13 +1739,19 @@ static int ena_clean_rx_irq(struct ena_r
+ 
+ 		/* First descriptor might have an offset set by the device */
+ 		rx_info = &rx_ring->rx_buffer_info[rx_ring->ena_bufs[0].req_id];
+-		rx_info->buf_offset += ena_rx_ctx.pkt_offset;
++		pkt_offset = ena_rx_ctx.pkt_offset;
++		rx_info->buf_offset += pkt_offset;
+ 
+ 		netif_dbg(rx_ring->adapter, rx_status, rx_ring->netdev,
+ 			  "rx_poll: q %d got packet from ena. descs #: %d l3 proto %d l4 proto %d hash: %x\n",
+ 			  rx_ring->qid, ena_rx_ctx.descs, ena_rx_ctx.l3_proto,
+ 			  ena_rx_ctx.l4_proto, ena_rx_ctx.hash);
+ 
++		dma_sync_single_for_cpu(rx_ring->dev,
++					dma_unmap_addr(&rx_info->ena_buf, paddr) + pkt_offset,
++					rx_ring->ena_bufs[0].len,
++					DMA_FROM_DEVICE);
++
+ 		if (ena_xdp_present_ring(rx_ring))
+ 			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp, ena_rx_ctx.descs);
+ 
+@@ -1782,7 +1777,7 @@ static int ena_clean_rx_irq(struct ena_r
+ 				if (xdp_verdict & ENA_XDP_FORWARDED) {
+ 					ena_unmap_rx_buff_attrs(rx_ring,
+ 								&rx_ring->rx_buffer_info[req_id],
+-								0);
++								DMA_ATTR_SKIP_CPU_SYNC);
+ 					rx_ring->rx_buffer_info[req_id].page = NULL;
+ 				}
+ 			}
 
 
