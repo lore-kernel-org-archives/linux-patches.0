@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983B5DDB1;
-	Thu, 13 Jun 2024 11:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA2F1428FC;
+	Thu, 13 Jun 2024 11:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278766; cv=none; b=gkJDmTymjo7z6Y1wghFwg/wLW9CSvsxPrIrolBm5YtDKZ1rkeZFjEC+MlMKQiCSxvJiturKUZBB7N2P+h23I/5I0WQ2eHuM7/w40APgBo1vej7KjTOaw77PL6bX9X2TFGXDao2j3cdIyIgt19hg1dh+2jfDcVYBJx6pzBkzWKGA=
+	t=1718278769; cv=none; b=Yg2v339P30vGDnW1mLz70vbkZ3yap4ygXxwxSWeJXCS1Es/sCbYKm80ElGNWmh0jVnfuhsG1LqSDLeB1kYKp0SaIw1vaOQDEGHXSi4LqugNN4HCVwGFdxYYe3uJBikV+f0+LIYNWw3duh6O07ksjGLSCwrLG2S4h41pyZNnug+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278766; c=relaxed/simple;
-	bh=7tYBgBWvmrIqyRZ457aUCme0zDPp+GyjWQ1e/Bf4ScI=;
+	s=arc-20240116; t=1718278769; c=relaxed/simple;
+	bh=5gyRr9PIz23thwBVXpZdMYNOoHBehwpRNTHl/CC4LTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdgpWf1sbUYGbkz66nrOh7OSMi+E/57k1r1TkYRlFYxshoNeOdg3dWkcovLLXbv8VuZjUgz4BcD/h+fymw1nafGkcMH9Dxx8l443gOB5Dx8aRDfmQ2GPZKFZ4q+WGpGcSTFSq92WY8YWKA14x8c/meFcqWzMEZg5MAOGR5hZpNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSeKLVFh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JepM9JpV58mAEmdbIL556c0aTzHyN3P5PAuZhLjOpzwC2CL9W3wg13YtGyZju5Kuvt5/MOsfITk644VGsHXIO9bkBdnQN+kXCDHy1iinQfgXZvBqRlZ152buggBQ15+sLUU6tG3sWBhr9hBRjUi97zxRjAI2Sn56fVWib4hd2S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uy/Adc65; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSeKLVFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1656CC2BBFC;
-	Thu, 13 Jun 2024 11:39:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uy/Adc65"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008A0C2BBFC;
+	Thu, 13 Jun 2024 11:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278766;
-	bh=7tYBgBWvmrIqyRZ457aUCme0zDPp+GyjWQ1e/Bf4ScI=;
+	s=korg; t=1718278769;
+	bh=5gyRr9PIz23thwBVXpZdMYNOoHBehwpRNTHl/CC4LTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LSeKLVFh5Q0oYxZLn8RNmLBECGIFP3P+jjbzbWzar0UrgXqdqWaUNkw94KYD7DCNV
-	 D/Q7cObL88UyZ/DdX5n3HKAaKXOaE/NLPstk2AQQmuJCn7sXpnnUmnVZ6slMErLWUH
-	 wSneSc+hkBwniT61E76J2F4TDxV2bhtEjSkqtvzg=
+	b=uy/Adc65qQxJxw6Qa5udwcT7LKJnQ5Xwq9YCzqY6zG3D6scSulfTfB13a8PPYAGhv
+	 QE8sE1ojC4b79TeVcMKuqKCAUh3PyU4/OiV0wbYcxOJm26yrbvzZJhSu8fZcDGZd+k
+	 vuQPyb2sYLftf+bdbnBfSZS/zkSVI3LyOEY1oaNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Guillaume Nault <gnault@redhat.com>,
 	Hangbin Liu <liuhangbin@gmail.com>,
 	Sabrina Dubroca <sd@queasysnail.net>,
 	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 063/213] ipv6: sr: fix incorrect unregister order
-Date: Thu, 13 Jun 2024 13:31:51 +0200
-Message-ID: <20240613113230.441158003@linuxfoundation.org>
+Subject: [PATCH 4.19 064/213] ipv6: sr: fix invalid unregister error path
+Date: Thu, 13 Jun 2024 13:31:52 +0200
+Message-ID: <20240613113230.479831652@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -55,35 +56,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 6e370a771d2985107e82d0f6174381c1acb49c20 ]
+[ Upstream commit 160e9d2752181fcf18c662e74022d77d3164cd45 ]
 
-Commit 5559cea2d5aa ("ipv6: sr: fix possible use-after-free and
-null-ptr-deref") changed the register order in seg6_init(). But the
-unregister order in seg6_exit() is not updated.
+The error path of seg6_init() is wrong in case CONFIG_IPV6_SEG6_LWTUNNEL
+is not defined. In that case if seg6_hmac_init() fails, the
+genl_unregister_family() isn't called.
 
-Fixes: 5559cea2d5aa ("ipv6: sr: fix possible use-after-free and null-ptr-deref")
+This issue exist since commit 46738b1317e1 ("ipv6: sr: add option to control
+lwtunnel support"), and commit 5559cea2d5aa ("ipv6: sr: fix possible
+use-after-free and null-ptr-deref") replaced unregister_pernet_subsys()
+with genl_unregister_family() in this error path.
+
+Fixes: 46738b1317e1 ("ipv6: sr: add option to control lwtunnel support")
+Reported-by: Guillaume Nault <gnault@redhat.com>
 Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
 Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240509131812.1662197-3-liuhangbin@gmail.com
+Link: https://lore.kernel.org/r/20240509131812.1662197-4-liuhangbin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/seg6.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
-index 42ff4f421d42a..9810ce81dee81 100644
+index 9810ce81dee81..605d270d8c109 100644
 --- a/net/ipv6/seg6.c
 +++ b/net/ipv6/seg6.c
-@@ -500,6 +500,6 @@ void seg6_exit(void)
- 	seg6_local_exit();
- 	seg6_iptunnel_exit();
+@@ -484,6 +484,8 @@ int __init seg6_init(void)
  #endif
--	unregister_pernet_subsys(&ip6_segments_ops);
+ #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
+ out_unregister_genl:
++#endif
++#if IS_ENABLED(CONFIG_IPV6_SEG6_LWTUNNEL) || IS_ENABLED(CONFIG_IPV6_SEG6_HMAC)
  	genl_unregister_family(&seg6_genl_family);
-+	unregister_pernet_subsys(&ip6_segments_ops);
- }
+ #endif
+ out_unregister_pernet:
 -- 
 2.43.0
 
