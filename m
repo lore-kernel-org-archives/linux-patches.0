@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4160813C805;
-	Thu, 13 Jun 2024 12:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6DF13C805;
+	Thu, 13 Jun 2024 12:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280374; cv=none; b=GBMX1RZzaWR7g5RUfDr6dqx+niDbegDWUrqRU+hntuU2sdFG0n840AU9Ctl6zaO0NovIouEd8oraHooqMrKH2dQco8DCqevDZBUyP29a9PmNxMM5lBy3jvW3oGjS+ISdr294Xo38Cw094sKDHNVlxt6k1UkZWD+Z7Y/IBPCAilc=
+	t=1718280377; cv=none; b=Iu0HdzM/Btb6bk9buL4nxDeF/5KzL4gDOLnLRrHnQzqfIGYgJM/QRISvXp1K3fBvq6j2DQ+91Al1EcpPpmnhWRZ8MaBs0UTBKH5uauFn2mRdFQM/YP47SYCbsiB4DxfDIccYwJoAYjR5nRjzRHLBNAXjohvGWAi5hpTnxjt0m4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280374; c=relaxed/simple;
-	bh=4giHzOmgP+9pzwmC5Sn+jb/5ezhJzD/pmFaDCc2CCrc=;
+	s=arc-20240116; t=1718280377; c=relaxed/simple;
+	bh=BrsRyavnK0XSgNUnJVBRxmyPJlfPuKWxaLdu/UfBF5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IEIrpeG9Xj82RaYVZTNvSSXvcgrkm6pP2kbQ/GTLtB9YWAHh9zRZLnZzgdVvQ85jE9aY0kiaz2DtOgwO0edUdse7jQU1NlKXFWctDchsJo1ZBJHeqqic7jwSimKiKV9mmxzRAdqOtRz7dcmmVOrLSZtHWPS0HHe94iTcNNmVU4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rG7qsx1U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uUHyluP6rtsrTXPDQRMhfJESH5YB/ahySca1MLeC778H9vL6qpwAXmS3KuxI/Z1nKIEX/FJBKz6k2DeraVBR+GVdAaXKvyvR0PXoYHO5RKhXnPFyn90ukvs/E+w5oSP06l8lJpLx9QU+jPAeosDTGqiFGNXaR7FApTuVy6k4ioE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PuCnnhs5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rG7qsx1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652BEC2BBFC;
-	Thu, 13 Jun 2024 12:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PuCnnhs5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544ABC2BBFC;
+	Thu, 13 Jun 2024 12:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280373;
-	bh=4giHzOmgP+9pzwmC5Sn+jb/5ezhJzD/pmFaDCc2CCrc=;
+	s=korg; t=1718280376;
+	bh=BrsRyavnK0XSgNUnJVBRxmyPJlfPuKWxaLdu/UfBF5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rG7qsx1UGKtgTNmncvbienqNU+nNJ9s9413Y5zhIB+3wl/if+cn/C0z5cE2AKqUJe
-	 iYOmvVbdVhqZuf6JUFNhjULyZiTheVPkmnFiEb8vffifU+z1/aupb6SGXvbJEWc3c8
-	 3qQ1MG8pqk/xtEKjgJOPGXKqJyMBjFZvVJrHyFy8=
+	b=PuCnnhs5h/S5QzIwboFHSx0uLKmgIscYJI9dj5+Zv3tBnbDUY3276OZatCpKE055+
+	 ek8Fj/ssawIQAbFTfoaf+YVeEsT2T6HRlYEd8ha4+IX+eYbi97Xvvxf/2nikA5o1TS
+	 wsmge5yMw578YVavQ4Uj3UbtT0O2cWHuextC+02o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
-	Dan Moulding <dan@danm.net>,
-	Junxiao Bi <junxiao.bi@oracle.com>
-Subject: [PATCH 6.6 031/137] md/raid5: fix deadlock that raid5d() wait for itself to clear MD_SB_CHANGE_PENDING
-Date: Thu, 13 Jun 2024 13:33:31 +0200
-Message-ID: <20240613113224.496839675@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.6 032/137] wifi: rtw89: pci: correct TX resource checking for PCI DMA channel of firmware command
+Date: Thu, 13 Jun 2024 13:33:32 +0200
+Message-ID: <20240613113224.537016601@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -52,86 +49,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit 151f66bb618d1fd0eeb84acb61b4a9fa5d8bb0fa upstream.
+commit c6330b129786e267b14129335a08fa7c331c308d upstream.
 
-Xiao reported that lvm2 test lvconvert-raid-takeover.sh can hang with
-small possibility, the root cause is exactly the same as commit
-bed9e27baf52 ("Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"")
+The DMA channel of firmware command doesn't use TX WD (WiFi descriptor), so
+don't need to consider number of TX WD as factor of TX resource. Otherwise,
+during pause state (a transient state to switch to/from low power mode)
+firmware commands could be dropped and driver throws warnings suddenly:
 
-However, Dan reported another hang after that, and junxiao investigated
-the problem and found out that this is caused by plugged bio can't issue
-from raid5d().
+   rtw89_8852ce 0000:04:00.0: no tx fwcmd resource
+   rtw89_8852ce 0000:04:00.0: failed to send h2c
 
-Current implementation in raid5d() has a weird dependence:
+The case we met is that driver sends RSSI strength of firmware command at
+RX path that could be running concurrently with switching low power mode.
+The missing of this firmware command doesn't affect user experiences,
+because the RSSI strength will be updated again after a while.
 
-1) md_check_recovery() from raid5d() must hold 'reconfig_mutex' to clear
-   MD_SB_CHANGE_PENDING;
-2) raid5d() handles IO in a deadloop, until all IO are issued;
-3) IO from raid5d() must wait for MD_SB_CHANGE_PENDING to be cleared;
+The DMA descriptors of normal packets has three layers like:
 
-This behaviour is introduce before v2.6, and for consequence, if other
-context hold 'reconfig_mutex', and md_check_recovery() can't update
-super_block, then raid5d() will waste one cpu 100% by the deadloop, until
-'reconfig_mutex' is released.
+  +-------+
+  | TX BD | (*n elements)
+  +-------+
+      |
+      |   +-------+
+      +-> | TX WD | (*m elements)
+          +-------+
+              |
+              |   +--------+
+              +-> |   SKB  |
+                  +--------+
 
-Refer to the implementation from raid1 and raid10, fix this problem by
-skipping issue IO if MD_SB_CHANGE_PENDING is still set after
-md_check_recovery(), daemon thread will be woken up when 'reconfig_mutex'
-is released. Meanwhile, the hang problem will be fixed as well.
+And, firmware command queue (TXCH 12) is a special queue that has only
+two layers:
 
-Fixes: 5e2cf333b7bd ("md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d")
-Cc: stable@vger.kernel.org # v5.19+
-Reported-and-tested-by: Dan Moulding <dan@danm.net>
-Closes: https://lore.kernel.org/all/20240123005700.9302-1-dan@danm.net/
-Investigated-by: Junxiao Bi <junxiao.bi@oracle.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240322081005.1112401-1-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+  +-------+
+  | TX BD | (*n elements)
+  +-------+
+      |
+      |   +------------------+
+      +-> | firmware command |
+          +------------------+
+
+Fixes: 4a29213cd775 ("wifi: rtw89: pci: correct TX resource checking in low power mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://msgid.link/20240410011316.9906-1-pkshih@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5.c |   15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ drivers/net/wireless/realtek/rtw89/pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -36,7 +36,6 @@
-  */
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -958,7 +958,8 @@ u32 __rtw89_pci_check_and_reclaim_tx_res
  
- #include <linux/blkdev.h>
--#include <linux/delay.h>
- #include <linux/kthread.h>
- #include <linux/raid/pq.h>
- #include <linux/async_tx.h>
-@@ -6807,6 +6806,9 @@ static void raid5d(struct md_thread *thr
- 		int batch_size, released;
- 		unsigned int offset;
+ 	spin_lock_bh(&rtwpci->trx_lock);
+ 	cnt = rtw89_pci_get_avail_txbd_num(tx_ring);
+-	cnt = min(cnt, wd_ring->curr_num);
++	if (txch != RTW89_TXCH_CH12)
++		cnt = min(cnt, wd_ring->curr_num);
+ 	spin_unlock_bh(&rtwpci->trx_lock);
  
-+		if (test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags))
-+			break;
-+
- 		released = release_stripe_list(conf, conf->temp_inactive_list);
- 		if (released)
- 			clear_bit(R5_DID_ALLOC, &conf->cache_state);
-@@ -6843,18 +6845,7 @@ static void raid5d(struct md_thread *thr
- 			spin_unlock_irq(&conf->device_lock);
- 			md_check_recovery(mddev);
- 			spin_lock_irq(&conf->device_lock);
--
--			/*
--			 * Waiting on MD_SB_CHANGE_PENDING below may deadlock
--			 * seeing md_check_recovery() is needed to clear
--			 * the flag when using mdmon.
--			 */
--			continue;
- 		}
--
--		wait_event_lock_irq(mddev->sb_wait,
--			!test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags),
--			conf->device_lock);
- 	}
- 	pr_debug("%d stripes handled\n", handled);
- 
+ 	return cnt;
 
 
