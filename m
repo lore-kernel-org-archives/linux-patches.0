@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9EF2CA6;
-	Thu, 13 Jun 2024 12:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C431817FD;
+	Thu, 13 Jun 2024 12:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282628; cv=none; b=vA0/zo3cfTSEwst75jiFvrih5kIVTbe2z+hs3vfgvhZ77NtbhRU7bhCUKcLJ2X53avHn2ifPEZWcanKcsHOfXKUEQo6Nzs/ExHrfvth/7K798S9jek4rFvRebLxCE5bX3nVQWABWpjAfnw1s7p9CpFZDryn9bkaPz32P+EdtA78=
+	t=1718282631; cv=none; b=UM/h8jeh5GBvoEjnrsJF95vwUAX+/5KuHnm1/IKVc4XszQVKni6Fy6Rzg8/+Xxo/ro9mPPtnCCISowUmPt428Ld9DsixxkL0E5TPcMuhX9qqlFRGDQ/1YjkUt8CiplJ43ILyQT5FZzA/ZedFQCN9N5Qsj/HO6EL+ECghs2Y+IsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282628; c=relaxed/simple;
-	bh=Lj6aXx1pGJufDYqfiqJoKGeOlgudeGjjQfFZjSxssw4=;
+	s=arc-20240116; t=1718282631; c=relaxed/simple;
+	bh=n8i3hfMjPBHvfV19RMk4aS7eYxYNqtupCvZiUAOstA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VFzo0GdcCL9uQxkI8yAbHLqlqClX7lI4iM9XDzbF1a0Siy/TeSMFLdoPkQEeJUxIhtdAh13VSRP3IXZeKYNnUwgRi2Yt3/tHjwqenG3hk9u4002/By1f9olxAVq0ggGRU3e5ZSkRmynI17l66fZl5TrLw3bJ2rvBsplFlei713M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUH/nyHK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A7rv27/qi/tVsGyKIacVAt0iUIVII/TVSCXgJu9B25C4Vb+3b/sc5AZUNjVmh1zEJ4rstSpaQqoYVIDgd7LxWwYEZjheUirMCDprK4Jw040cK7TzOTtTDpLePrmeiYLQoM4ZxlH8xOmNnuAZJM938JnkCJc331GRhDUuHlte3pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQPPpxZB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUH/nyHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F7BC4AF1C;
-	Thu, 13 Jun 2024 12:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQPPpxZB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04450C2BBFC;
+	Thu, 13 Jun 2024 12:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282628;
-	bh=Lj6aXx1pGJufDYqfiqJoKGeOlgudeGjjQfFZjSxssw4=;
+	s=korg; t=1718282631;
+	bh=n8i3hfMjPBHvfV19RMk4aS7eYxYNqtupCvZiUAOstA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUH/nyHKQ6XILB3/Z3qD8CDCZzFoYzM2OVYfJPJRf41RlKVbnvy/BO7OxeV1M9tPm
-	 mhi4GHtt08ZCySC3RR5yUu97q4xmjukx0TQ8EWGW3icBUtjoROX5Or1NcD3abpc0Pm
-	 pwVKiEY+tHxjouWVuUlttA9yX5fo64okuPQRZb8M=
+	b=dQPPpxZBOfTKVqgppsqhxOabjob/+BSAittmqj0TSvikuKcmVxpWLX4s0DEPZfsFO
+	 ITS1DDIBYgjcaFE4jzaxoHtxpSQOXKESgCpoI3gmoRiBfG7aKdsx7261N+dDoOOXQ5
+	 aGBv1nasfEZ1dnKWM2GG6qUUugt5ft1v86ljzG7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>
-Subject: [PATCH 5.15 341/402] drm: Check polling initialized before enabling in drm_helper_probe_single_connector_modes
-Date: Thu, 13 Jun 2024 13:34:58 +0200
-Message-ID: <20240613113315.434170602@linuxfoundation.org>
+	Jorge Ramirez-Ortiz <jorge@foundries.io>,
+	Avri Altman <avri.altman@wdc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 5.15 342/402] mmc: core: Do not force a retune before RPMB switch
+Date: Thu, 13 Jun 2024 13:34:59 +0200
+Message-ID: <20240613113315.472560441@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,36 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shradha Gupta <shradhagupta@linux.microsoft.com>
+From: Jorge Ramirez-Ortiz <jorge@foundries.io>
 
-commit 048a36d8a6085bbd8ab9e5794b713b92ac986450 upstream.
+commit 67380251e8bbd3302c64fea07f95c31971b91c22 upstream.
 
-In function drm_helper_probe_single_connector_modes() when we enable
-polling again, if it is already uninitialized, a warning is reported.
-This patch fixes the warning message by checking if poll is initialized
-before enabling it.
+Requesting a retune before switching to the RPMB partition has been
+observed to cause CRC errors on the RPMB reads (-EILSEQ).
 
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202401191128.db8423f1-oliver.sang@intel.com
-Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/1706856224-9725-1-git-send-email-shradhagupta@linux.microsoft.com
+Since RPMB reads can not be retried, the clients would be directly
+affected by the errors.
+
+This commit disables the retune request prior to switching to the RPMB
+partition: mmc_retune_pause() no longer triggers a retune before the
+pause period begins.
+
+This was verified with the sdhci-of-arasan driver (ZynqMP) configured
+for HS200 using two separate eMMC cards (DG4064 and 064GB2). In both
+cases, the error was easy to reproduce triggering every few tenths of
+reads.
+
+With this commit, systems that were utilizing OP-TEE to access RPMB
+variables will experience an enhanced performance. Specifically, when
+OP-TEE is configured to employ RPMB as a secure storage solution, it not
+only writes the data but also the secure filesystem within the
+partition. As a result, retrieving any variable involves multiple RPMB
+reads, typically around five.
+
+For context, on ZynqMP, each retune request consumed approximately
+8ms. Consequently, reading any RPMB variable used to take at the very
+minimum 40ms.
+
+After droping the need to retune before switching to the RPMB partition,
+this is no longer the case.
+
+Signed-off-by: Jorge Ramirez-Ortiz <jorge@foundries.io>
+Acked-by: Avri Altman <avri.altman@wdc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240103112911.2954632-1-jorge@foundries.io
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_probe_helper.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/core/host.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/drm_probe_helper.c
-+++ b/drivers/gpu/drm/drm_probe_helper.c
-@@ -498,7 +498,8 @@ retry:
+--- a/drivers/mmc/core/host.c
++++ b/drivers/mmc/core/host.c
+@@ -119,13 +119,12 @@ void mmc_retune_enable(struct mmc_host *
+ 
+ /*
+  * Pause re-tuning for a small set of operations.  The pause begins after the
+- * next command and after first doing re-tuning.
++ * next command.
+  */
+ void mmc_retune_pause(struct mmc_host *host)
+ {
+ 	if (!host->retune_paused) {
+ 		host->retune_paused = 1;
+-		mmc_retune_needed(host);
+ 		mmc_retune_hold(host);
  	}
- 
- 	/* Re-enable polling in case the global poll config changed. */
--	if (drm_kms_helper_poll != dev->mode_config.poll_running)
-+	if (dev->mode_config.poll_enabled &&
-+	    (drm_kms_helper_poll != dev->mode_config.poll_running))
- 		drm_kms_helper_poll_enable(dev);
- 
- 	dev->mode_config.poll_running = drm_kms_helper_poll;
+ }
 
 
