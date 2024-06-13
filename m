@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAADE144312;
-	Thu, 13 Jun 2024 12:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A08556458;
+	Thu, 13 Jun 2024 12:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280305; cv=none; b=Q2slAa6dBkdSu+1zPoB69WrUypovEldabkOXt+CzvwwwMHpX01II0LTv67AkwbAPFCGvH+P3ANPqS2/bcDGsmtDFaEr4IbxHUf45GK9t8CvCLun6R6pRliqkYZmj/AuSNkto18BEzBaTRu2fhE/dctlk6sAQ1V9QiOcQxOmy1F0=
+	t=1718280309; cv=none; b=nBuM5U8SL8SpbwCP3cgffwNYrDG5Af2nIfSjN/MB5/a5sW82Fl0XdQTiHiPmbG4RwFT5DImzrFp2V+NHzt3NZMWfMFcSOHjYBjJec5SrW0BNuxZqT1gLruLby4Pf3FoLfVBCB1NHf5K9kzfYBNpyXuhlNRGXODLynPT9XERb2OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280305; c=relaxed/simple;
-	bh=39Ua1y/Ket/7QjlJD27FzBtV7zQCealDoXkfHoTjw+Q=;
+	s=arc-20240116; t=1718280309; c=relaxed/simple;
+	bh=IZArwTlJVcFwsCCl8xrG5rtLOAwKP8dQfZeM2HC1K9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WjK2oCaxXn1qPXDY6lBZyNodTD7lUYOzB3vJo51VMasn9VI8stABcHVklf1UBk/NCR+eyuQpiejn6h3hT5gEfPJGgYOQPJK7PLvUge/4aXplNUbyodtg8paBcyNcYmqez+taD7w9GuCIB+reC0WStdFU31bLnkGIK9fa4fKpduM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbWUweln; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g5ud2xmbhMiL7VeGJmyOwZMABejYT1AUx8NfC2V6Y0fkjISwtnwKhZXYKd/Y3AsVqyptcaVpr5XwAUScK/M2B1H0nNBIEyRzA7NXhEHxj78DBcNAYOruZew2vR8ZLXomRlbEzuxu2KfiLW/DD4HQHTucU9yzfeYBacvO4Z9nUr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPIaFCq7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbWUweln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42027C2BBFC;
-	Thu, 13 Jun 2024 12:05:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPIaFCq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36315C2BBFC;
+	Thu, 13 Jun 2024 12:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280305;
-	bh=39Ua1y/Ket/7QjlJD27FzBtV7zQCealDoXkfHoTjw+Q=;
+	s=korg; t=1718280308;
+	bh=IZArwTlJVcFwsCCl8xrG5rtLOAwKP8dQfZeM2HC1K9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pbWUweln6NCYeDJj6FO8fBOoevPNKiMs2hB5aB/Dy4+itoefyKCCztwSBh2j7Sj5u
-	 +dvJMM0Qx14j13s4jQZ3lmpP490/1nLe2thtyC4CnL+lkC0Z0+qA6BvX8VbLzVPEHr
-	 TepsIhs2Z1PTEWal3exy+7k3TvgqjFhJ+mMnyyjg=
+	b=DPIaFCq77QfupMmIpHB2vXqD8MtWc+C3CSyVBhZpw+kcmF6nRFSmiSKx1PMMnPpFz
+	 x1LVWD0EcSZLQsjiC+fC2mexjbqcHygVPZ5wC9F1B94607ULDWXDK/RXNHbl2pNfXX
+	 7Hf3gTq/1YlSTyHRX4k2PtruL6XAZCIS+4S7SbyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>
-Subject: [PATCH 6.6 001/137] drm/i915/hwmon: Get rid of devm
-Date: Thu, 13 Jun 2024 13:33:01 +0200
-Message-ID: <20240613113223.340841303@linuxfoundation.org>
+	Jorge Ramirez-Ortiz <jorge@foundries.io>,
+	Avri Altman <avri.altman@wdc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 6.6 002/137] mmc: core: Do not force a retune before RPMB switch
+Date: Thu, 13 Jun 2024 13:33:02 +0200
+Message-ID: <20240613113223.379067773@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -51,135 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Jorge Ramirez-Ortiz <jorge@foundries.io>
 
-commit 5bc9de065b8bb9b8dd8799ecb4592d0403b54281 upstream.
+commit 67380251e8bbd3302c64fea07f95c31971b91c22 upstream.
 
-When both hwmon and hwmon drvdata (on which hwmon depends) are device
-managed resources, the expectation, on device unbind, is that hwmon will be
-released before drvdata. However, in i915 there are two separate code
-paths, which both release either drvdata or hwmon and either can be
-released before the other. These code paths (for device unbind) are as
-follows (see also the bug referenced below):
+Requesting a retune before switching to the RPMB partition has been
+observed to cause CRC errors on the RPMB reads (-EILSEQ).
 
-Call Trace:
-release_nodes+0x11/0x70
-devres_release_group+0xb2/0x110
-component_unbind_all+0x8d/0xa0
-component_del+0xa5/0x140
-intel_pxp_tee_component_fini+0x29/0x40 [i915]
-intel_pxp_fini+0x33/0x80 [i915]
-i915_driver_remove+0x4c/0x120 [i915]
-i915_pci_remove+0x19/0x30 [i915]
-pci_device_remove+0x32/0xa0
-device_release_driver_internal+0x19c/0x200
-unbind_store+0x9c/0xb0
+Since RPMB reads can not be retried, the clients would be directly
+affected by the errors.
 
-and
+This commit disables the retune request prior to switching to the RPMB
+partition: mmc_retune_pause() no longer triggers a retune before the
+pause period begins.
 
-Call Trace:
-release_nodes+0x11/0x70
-devres_release_all+0x8a/0xc0
-device_unbind_cleanup+0x9/0x70
-device_release_driver_internal+0x1c1/0x200
-unbind_store+0x9c/0xb0
+This was verified with the sdhci-of-arasan driver (ZynqMP) configured
+for HS200 using two separate eMMC cards (DG4064 and 064GB2). In both
+cases, the error was easy to reproduce triggering every few tenths of
+reads.
 
-This means that in i915, if use devm, we cannot gurantee that hwmon will
-always be released before drvdata. Which means that we have a uaf if hwmon
-sysfs is accessed when drvdata has been released but hwmon hasn't.
+With this commit, systems that were utilizing OP-TEE to access RPMB
+variables will experience an enhanced performance. Specifically, when
+OP-TEE is configured to employ RPMB as a secure storage solution, it not
+only writes the data but also the secure filesystem within the
+partition. As a result, retrieving any variable involves multiple RPMB
+reads, typically around five.
 
-The only way out of this seems to be do get rid of devm_ and release/free
-everything explicitly during device unbind.
+For context, on ZynqMP, each retune request consumed approximately
+8ms. Consequently, reading any RPMB variable used to take at the very
+minimum 40ms.
 
-v2: Change commit message and other minor code changes
-v3: Cleanup from i915_hwmon_register on error (Armin Wolf)
-v4: Eliminate potential static analyzer warning (Rodrigo)
-    Eliminate fetch_and_zero (Jani)
-v5: Restore previous logic for ddat_gt->hwmon_dev error return (Andi)
+After droping the need to retune before switching to the RPMB partition,
+this is no longer the case.
 
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10366
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240417145646.793223-1-ashutosh.dixit@intel.com
+Signed-off-by: Jorge Ramirez-Ortiz <jorge@foundries.io>
+Acked-by: Avri Altman <avri.altman@wdc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240103112911.2954632-1-jorge@foundries.io
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_hwmon.c |   46 ++++++++++++++++++++++++++------------
- 1 file changed, 32 insertions(+), 14 deletions(-)
+ drivers/mmc/core/host.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/i915_hwmon.c
-+++ b/drivers/gpu/drm/i915/i915_hwmon.c
-@@ -793,7 +793,7 @@ void i915_hwmon_register(struct drm_i915
- 	if (!IS_DGFX(i915))
- 		return;
+--- a/drivers/mmc/core/host.c
++++ b/drivers/mmc/core/host.c
+@@ -119,13 +119,12 @@ void mmc_retune_enable(struct mmc_host *
  
--	hwmon = devm_kzalloc(dev, sizeof(*hwmon), GFP_KERNEL);
-+	hwmon = kzalloc(sizeof(*hwmon), GFP_KERNEL);
- 	if (!hwmon)
- 		return;
- 
-@@ -819,14 +819,12 @@ void i915_hwmon_register(struct drm_i915
- 	hwm_get_preregistration_info(i915);
- 
- 	/*  hwmon_dev points to device hwmon<i> */
--	hwmon_dev = devm_hwmon_device_register_with_info(dev, ddat->name,
--							 ddat,
--							 &hwm_chip_info,
--							 hwm_groups);
--	if (IS_ERR(hwmon_dev)) {
--		i915->hwmon = NULL;
--		return;
--	}
-+	hwmon_dev = hwmon_device_register_with_info(dev, ddat->name,
-+						    ddat,
-+						    &hwm_chip_info,
-+						    hwm_groups);
-+	if (IS_ERR(hwmon_dev))
-+		goto err;
- 
- 	ddat->hwmon_dev = hwmon_dev;
- 
-@@ -839,16 +837,36 @@ void i915_hwmon_register(struct drm_i915
- 		if (!hwm_gt_is_visible(ddat_gt, hwmon_energy, hwmon_energy_input, 0))
- 			continue;
- 
--		hwmon_dev = devm_hwmon_device_register_with_info(dev, ddat_gt->name,
--								 ddat_gt,
--								 &hwm_gt_chip_info,
--								 NULL);
-+		hwmon_dev = hwmon_device_register_with_info(dev, ddat_gt->name,
-+							    ddat_gt,
-+							    &hwm_gt_chip_info,
-+							    NULL);
- 		if (!IS_ERR(hwmon_dev))
- 			ddat_gt->hwmon_dev = hwmon_dev;
- 	}
-+	return;
-+err:
-+	i915_hwmon_unregister(i915);
- }
- 
- void i915_hwmon_unregister(struct drm_i915_private *i915)
+ /*
+  * Pause re-tuning for a small set of operations.  The pause begins after the
+- * next command and after first doing re-tuning.
++ * next command.
+  */
+ void mmc_retune_pause(struct mmc_host *host)
  {
--	fetch_and_zero(&i915->hwmon);
-+	struct i915_hwmon *hwmon = i915->hwmon;
-+	struct intel_gt *gt;
-+	int i;
-+
-+	if (!hwmon)
-+		return;
-+
-+	for_each_gt(gt, i915, i)
-+		if (hwmon->ddat_gt[i].hwmon_dev)
-+			hwmon_device_unregister(hwmon->ddat_gt[i].hwmon_dev);
-+
-+	if (hwmon->ddat.hwmon_dev)
-+		hwmon_device_unregister(hwmon->ddat.hwmon_dev);
-+
-+	mutex_destroy(&hwmon->hwmon_lock);
-+
-+	kfree(i915->hwmon);
-+	i915->hwmon = NULL;
+ 	if (!host->retune_paused) {
+ 		host->retune_paused = 1;
+-		mmc_retune_needed(host);
+ 		mmc_retune_hold(host);
+ 	}
  }
 
 
