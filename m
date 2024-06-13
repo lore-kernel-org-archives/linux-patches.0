@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51C982C76;
-	Thu, 13 Jun 2024 12:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51D81420C6;
+	Thu, 13 Jun 2024 12:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280909; cv=none; b=DodSXZj+wBKuLbHIekpv3vcMAIH+OOMdOPf5GA3oHudPvMyPL/MfuwEvnxZAn99HPIELHgQHQKUIq5I5JwcbNF/7B25SXnTeYOVNk3iSbZQy+IStuWHOrlaPbLoKftmMDoK43yzGuqN7mmtNl2gN2mzG3BomQAx/mXYNmRT+/3E=
+	t=1718280912; cv=none; b=tbgclepyQkosZpw4EKrZzpEdrrKqfIOaJr9BQWKPqjBUmM6oqGMeu+p+p77CeknCkpecWR7bqSeDI9Pxsu4mcZNQHsTp3gk3Yt2NZ/BOO+EmVYu1VpSKQcXFO/wBP8/4HRuLePlPa8vUtwYQqYSyd/jfe2rOFrfmJXdAL0QcrVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280909; c=relaxed/simple;
-	bh=fIhR0j0rc9JWZdfeo4gkgko0XsG/QUzp4AkF10HiigQ=;
+	s=arc-20240116; t=1718280912; c=relaxed/simple;
+	bh=UjjKx8PftQwDD+vaN8jKq/5vidBOjMYWwXhlL0ayTsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lt6LfUhd5SaYrc/Z14qQA6JnZYABRZsdvHYk+tY/gn+9ngtvmPvWz/fyN4zaZvtj19HnSVz7n2CyNyjgm8BdHFWMLM6uyfHIlfJRtvXQH+yXmO0rGJzAzF7q5XmYpgN4XMXHlQKE1ZLANH47NNotIDYW2dtjyQRUO0YKIQqnYaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XexvQNd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOtForAWtVNCYqAqx6Ldr3QRCm5nl07sj7PTr3T0PeZRVQ/hpLhrXREdVhFkL/gWPuL/tbx+ohncXOEBWoKYDcu7BupU10eFriU6GujfIV/wlTeHxSMgKzZY2uPtRDo2kYknEu4gq5DVeNdGAc4sO68IoQ5eIqLLaHprGHLnxUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DETFQekl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XexvQNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E99EC2BBFC;
-	Thu, 13 Jun 2024 12:15:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DETFQekl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC5BC4AF1A;
+	Thu, 13 Jun 2024 12:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280909;
-	bh=fIhR0j0rc9JWZdfeo4gkgko0XsG/QUzp4AkF10HiigQ=;
+	s=korg; t=1718280912;
+	bh=UjjKx8PftQwDD+vaN8jKq/5vidBOjMYWwXhlL0ayTsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2XexvQNdvZ6MZ2M5dEtLxjcJub9GkPjlAznNFF2CPlP1iBO0EDSqOxBKS3+bvpstL
-	 nncAF6JzQcrX/2g52wWptQ+t8XgaGi9YMkZoKUdSMZNxPbl8dWUnJm1qMEx/Gz5EK4
-	 y9BJwOfIOdT+p5PSSewYAtn1Gi2GV5sL5yAP5i08=
+	b=DETFQeklYCUYwTK3v8qOHXdwdDu9HsqbkFycTJBr75DDGVt49CaMTbFBnAufdjTcD
+	 42RfHY7p+LZS8VASwICKG3cXOvbvT2AYTrvNFL9NQhOhVm0dH8SBoxFCq2qgGI7CCs
+	 l1ctQmg/+FUhDxAdrLTbnOyVWVceJi0IPIIhLdyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 076/317] usb: aqc111: stop lying about skb->truesize
-Date: Thu, 13 Jun 2024 13:31:34 +0200
-Message-ID: <20240613113250.489190049@linuxfoundation.org>
+Subject: [PATCH 5.10 077/317] net: usb: sr9700: stop lying about skb->truesize
+Date: Thu, 13 Jun 2024 13:31:35 +0200
+Message-ID: <20240613113250.528001736@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -53,51 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9aad6e45c4e7d16b2bb7c3794154b828fb4384b4 ]
+[ Upstream commit 05417aa9c0c038da2464a0c504b9d4f99814a23b ]
 
-Some usb drivers try to set small skb->truesize and break
+Some usb drivers set small skb->truesize and break
 core networking stacks.
 
-I replace one skb_clone() by an allocation of a fresh
+In this patch, I removed one of the skb->truesize override.
+
+I also replaced one skb_clone() by an allocation of a fresh
 and small skb, to get minimally sized skbs, like we did
 in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
 in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
 stop lying about skb->truesize")
 
-Fixes: 361459cd9642 ("net: usb: aqc111: Implement RX data path")
+Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240506135546.3641185-1-edumazet@google.com
+Link: https://lore.kernel.org/r/20240506143939.3673865-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/aqc111.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/usb/sr9700.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
-index 4ea02116be182..895d4f5166f99 100644
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -1141,17 +1141,15 @@ static int aqc111_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 			continue;
+diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
+index 811c8751308c6..3fac642bec772 100644
+--- a/drivers/net/usb/sr9700.c
++++ b/drivers/net/usb/sr9700.c
+@@ -418,19 +418,15 @@ static int sr9700_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			skb_pull(skb, 3);
+ 			skb->len = len;
+ 			skb_set_tail_pointer(skb, len);
+-			skb->truesize = len + sizeof(struct sk_buff);
+ 			return 2;
  		}
  
--		/* Clone SKB */
--		new_skb = skb_clone(skb, GFP_ATOMIC);
-+		new_skb = netdev_alloc_skb_ip_align(dev->net, pkt_len);
+-		/* skb_clone is used for address align */
+-		sr_skb = skb_clone(skb, GFP_ATOMIC);
++		sr_skb = netdev_alloc_skb_ip_align(dev->net, len);
+ 		if (!sr_skb)
+ 			return 0;
  
- 		if (!new_skb)
- 			goto err;
+-		sr_skb->len = len;
+-		sr_skb->data = skb->data + 3;
+-		skb_set_tail_pointer(sr_skb, len);
+-		sr_skb->truesize = len + sizeof(struct sk_buff);
++		skb_put(sr_skb, len);
++		memcpy(sr_skb->data, skb->data + 3, len);
+ 		usbnet_skb_return(dev, sr_skb);
  
--		new_skb->len = pkt_len;
-+		skb_put(new_skb, pkt_len);
-+		memcpy(new_skb->data, skb->data, pkt_len);
- 		skb_pull(new_skb, AQ_RX_HW_PAD);
--		skb_set_tail_pointer(new_skb, new_skb->len);
- 
--		new_skb->truesize = SKB_TRUESIZE(new_skb->len);
- 		if (aqc111_data->rx_checksum)
- 			aqc111_rx_checksum(new_skb, pkt_desc);
- 
+ 		skb_pull(skb, len + SR_RX_OVERHEAD);
 -- 
 2.43.0
 
