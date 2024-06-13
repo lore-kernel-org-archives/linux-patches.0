@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089A93209;
-	Thu, 13 Jun 2024 12:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4947143747;
+	Thu, 13 Jun 2024 12:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281169; cv=none; b=pNmX7CngMiJdXyMOZPTgkyrq3hjrDb1PNDZpmcFNsgGqoIM+i+utimGHZqBui4DVh56QgJnxUwP7whYOef4yopXiv54tcCgsjKfMFehkcMx15rtuflPSO/6P9nBnjvhvp9DPvzTxOOsxRHHT185usvh9WUZDFUoJeosS4eesxVM=
+	t=1718281172; cv=none; b=bA0fPxjXZi5jAl9L/s1Sl59tZSKngo7cE4nBOTX0TobSUjMlp99B2Scv8MA8T3mVXOjrogzgf5wPmmow4sBL2PC9TBb2q9dqhbiudglBDm8yqU0Ty0NVt3l14v/3t+RI3J1iAK5LjBqIPaztfhk+T1T31eJG5D1Hu2+xuFyNKz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281169; c=relaxed/simple;
-	bh=fve0pm7Zu/A/LNfC2hWg0YnfRO7guhi08M3t2TFVwXg=;
+	s=arc-20240116; t=1718281172; c=relaxed/simple;
+	bh=al0RZAlTLueBxvOtEhNcR6iZc40WT5F7ssN44/kE7TI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hxz1mmnKI/dIChnrcOvv7mcW+bxFv6UYrHQPB9UeTK2qNjf6J/Pq/ebKLwXIdS0Wa//hDATcSrD3KktN82tRuxNxSaW4ecqvHkpr8s/RTg5Y3MN8EX95pdYgNoyLnWkzKOMIgSzGCFgnjDIKU+G/kymtdQKQp6BxiYsm/dvdJz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3h/aMzr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zl7B1jjCeh+oCfN3xB0ktyihgwSClk194iRW/ZckP9cfFiHEkATaSJhwRbzADUGXYBzSV9fJwcCwNin60IjGO/aSgeDAoYCxdgV6j0Pa1l3dEmjEC6MmwTKEAkx1pLass6ZzAJzpSvVz92Uw3FnqEMxB7SjSSlNIl1hbsDxF1Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYlCOsNS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3h/aMzr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81474C2BBFC;
-	Thu, 13 Jun 2024 12:19:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYlCOsNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC2DC2BBFC;
+	Thu, 13 Jun 2024 12:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281168;
-	bh=fve0pm7Zu/A/LNfC2hWg0YnfRO7guhi08M3t2TFVwXg=;
+	s=korg; t=1718281171;
+	bh=al0RZAlTLueBxvOtEhNcR6iZc40WT5F7ssN44/kE7TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3h/aMzrsPM4nrGF0R7sRu70G7/wIVr/4MHQ+uxJd/mKn8atfxIenpPErBQhiicPH
-	 jrwn8jmSxdm3eLctVKB6JB9/BiWG7abv7HLHLrSkThDZg6oW9+o6I9TD2fKsziVayg
-	 bgt6mZJPpno681zJ25q6OlnDEYoCa+3tkON/e3js=
+	b=EYlCOsNSKmHHGmHhgQOS7snqGJoq0zww12XS+63OBjKlzvnFKmn5QJlIPLcduTm6d
+	 W9K2lHdgMYaeSqyJDoL2yp7SeqteE+Ue097BFcVqbXdZP0GwzPoI6RMk9IyF/FYOWQ
+	 Koa3lOhKdjoPk1CcfQB2IXy4WFYWIhR++S/dd3Hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Neil Horman <nhorman@tuxdriver.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vitalii Bursov <vitaly@bursov.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Valentin Schneider <vschneid@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 133/317] af_packet: do not call packet_read_pending() from tpacket_destruct_skb()
-Date: Thu, 13 Jun 2024 13:32:31 +0200
-Message-ID: <20240613113252.701877614@linuxfoundation.org>
+Subject: [PATCH 5.10 134/317] sched/fair: Allow disabling sched_balance_newidle with sched_relax_domain_level
+Date: Thu, 13 Jun 2024 13:32:32 +0200
+Message-ID: <20240613113252.740645960@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -54,46 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Vitalii Bursov <vitaly@bursov.com>
 
-[ Upstream commit 581073f626e387d3e7eed55c48c8495584ead7ba ]
+[ Upstream commit a1fd0b9d751f840df23ef0e75b691fc00cfd4743 ]
 
-trafgen performance considerably sank on hosts with many cores
-after the blamed commit.
+Change relax_domain_level checks so that it would be possible
+to include or exclude all domains from newidle balancing.
 
-packet_read_pending() is very expensive, and calling it
-in af_packet fast path defeats Daniel intent in commit
-b013840810c2 ("packet: use percpu mmap tx frame pending refcount")
+This matches the behavior described in the documentation:
 
-tpacket_destruct_skb() makes room for one packet, we can immediately
-wakeup a producer, no need to completely drain the tx ring.
+  -1   no request. use system default or follow request of others.
+   0   no search.
+   1   search siblings (hyperthreads in a core).
 
-Fixes: 89ed5b519004 ("af_packet: Block execution of tasks waiting for transmit to complete in AF_PACKET")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Neil Horman <nhorman@tuxdriver.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20240515163358.4105915-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+"2" enables levels 0 and 1, level_max excludes the last (level_max)
+level, and level_max+1 includes all levels.
+
+Fixes: 1d3504fcf560 ("sched, cpuset: customize sched domains, core")
+Signed-off-by: Vitalii Bursov <vitaly@bursov.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Link: https://lore.kernel.org/r/bd6de28e80073c79466ec6401cdeae78f0d4423d.1714488502.git.vitaly@bursov.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/cgroup/cpuset.c  | 2 +-
+ kernel/sched/topology.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index db5d16c5d5b11..8e52f09493053 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2487,8 +2487,7 @@ static void tpacket_destruct_skb(struct sk_buff *skb)
- 		ts = __packet_set_timestamp(po, ph, skb);
- 		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 195f9cccab20b..9f2a93c829a91 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1901,7 +1901,7 @@ bool current_cpuset_is_being_rebound(void)
+ static int update_relax_domain_level(struct cpuset *cs, s64 val)
+ {
+ #ifdef CONFIG_SMP
+-	if (val < -1 || val >= sched_domain_level_max)
++	if (val < -1 || val > sched_domain_level_max + 1)
+ 		return -EINVAL;
+ #endif
  
--		if (!packet_read_pending(&po->tx_ring))
--			complete(&po->skb_completion);
-+		complete(&po->skb_completion);
+diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
+index ff2c6d3ba6c79..6eb0996ef859f 100644
+--- a/kernel/sched/topology.c
++++ b/kernel/sched/topology.c
+@@ -1217,7 +1217,7 @@ static void set_domain_attribute(struct sched_domain *sd,
+ 	} else
+ 		request = attr->relax_domain_level;
+ 
+-	if (sd->level > request) {
++	if (sd->level >= request) {
+ 		/* Turn off idle balance on this domain: */
+ 		sd->flags &= ~(SD_BALANCE_WAKE|SD_BALANCE_NEWIDLE);
  	}
- 
- 	sock_wfree(skb);
 -- 
 2.43.0
 
