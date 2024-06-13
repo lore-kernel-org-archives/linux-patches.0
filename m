@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABE5A59;
-	Thu, 13 Jun 2024 12:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370EF384;
+	Thu, 13 Jun 2024 12:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282946; cv=none; b=ZMgEv6Ov1/cln/z3R4Ivp3BsTlMXyLhztE0rAlQ8GtGcf7XGgPam+IhshH19c41LxfFu42np7FQq0VdtFfVfZ8j7LtZRAWbsIysXIlcDm1V4y3ju9xlSm17J4z7u+hzJt0gnOY05HsLDfiZP30H+N6lmxVpumoW/eQGIB9jPsSA=
+	t=1718282949; cv=none; b=sqj+TsTV66lZohxZqpY0zF3w94Z/cjSNPDuaacoDhmkX2Oou8NZZjo225u4ZJNs9MACoo2HWzaUfMVVe4YSLZA/MDu2X202KwUBEeNbMp7TJMj+29CYnzU2Hg7lW6bIDcoia7cdjOTqN0/FmSIEFPD4kzbcIURC7XHE/Ytmfp8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282946; c=relaxed/simple;
-	bh=fOFXYu2G1+AH77BwNUxaafM3I/Wo45xM8DHn0zxEteg=;
+	s=arc-20240116; t=1718282949; c=relaxed/simple;
+	bh=GLlwhFQoflEAwqxUE3LhlsBj+lmhyuCl7DAXl2YAxs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+Xl+Y5q5SdipkBp/DNkCHJwOyIfQpbofq6j2BsZKUPyIz3O6VtNsh9lpODg0z5BRIncKJST7XU+f88uq0ob4Rpc3IvSWD5nqInEtvrMRJ8zkKQYK6ThHh37ryxD+/B4vCeG1vG702acmoQB3G8X8MRRknnjd6dRv3YdOc5CuKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0sm1egb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l9M6lUvhzPrkbMJOaEy8cnq2bxy/1GyCPFagfkYCX7nLJjVoWi5VQLOTX874c70lTEM6yBMiLsRw2LsruUw+MqlrvNRAWnBlgfPxVw23AR3Rzl5ZadKtoU1F7Pfqumj5bKSNY6NKNE1M6JMl2y31Nfel7CAn102CI6e4gun4WBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xM4IMq7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0sm1egb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEE2C2BBFC;
-	Thu, 13 Jun 2024 12:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xM4IMq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4C0C2BBFC;
+	Thu, 13 Jun 2024 12:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282946;
-	bh=fOFXYu2G1+AH77BwNUxaafM3I/Wo45xM8DHn0zxEteg=;
+	s=korg; t=1718282949;
+	bh=GLlwhFQoflEAwqxUE3LhlsBj+lmhyuCl7DAXl2YAxs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b0sm1egbjrQeJKWb81d1fZxHW7Ev9xK9FE35y2mKpDwk8u8EBsEBT0m0J7Mb2M4Ye
-	 wWCa/D3gCfoq8hFsuDC1qeGhMLpBFrR1aWb9JTiSNOLKhKlvbtuXRcBjSwGMD6+H+N
-	 4zQevWa+JydtBMuHqYSOGCbaZBUTslRgFxaLQJlI=
+	b=0xM4IMq7/QYWW085xKgy8qU6J8Grsl79bs8myQWeZqcdqhY4ixsy/299HvHRY79cJ
+	 7phHctwUbY+03ZkPxh5Yc1d/6uAvPXfxUlA7YT3f53GOyzOzqCqAP9E2aILOCLfsVa
+	 NNUHJgsemXXm04Xz8ki0Ln0WZCTNnmMEtdA6P+ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 6.1 46/85] 9p: add missing locking around taking dentry fid list
-Date: Thu, 13 Jun 2024 13:35:44 +0200
-Message-ID: <20240613113215.920179558@linuxfoundation.org>
+	Tim Huang <Tim.Huang@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	lectrode <electrodexsnet@gmail.com>
+Subject: [PATCH 6.1 47/85] drm/amd: Fix shutdown (again) on some SMU v13.0.4/11 platforms
+Date: Thu, 13 Jun 2024 13:35:45 +0200
+Message-ID: <20240613113215.957977931@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -50,70 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit c898afdc15645efb555acb6d85b484eb40a45409 upstream.
+commit 267cace556e8a53d703119f7435ab556209e5b6a upstream.
 
-Fix a use-after-free on dentry's d_fsdata fid list when a thread
-looks up a fid through dentry while another thread unlinks it:
+commit cd94d1b182d2 ("dm/amd/pm: Fix problems with reboot/shutdown for
+some SMU 13.0.4/13.0.11 users") attempted to fix shutdown issues
+that were reported since commit 31729e8c21ec ("drm/amd/pm: fixes a
+random hang in S4 for SMU v13.0.4/11") but caused issues for some
+people.
 
-UAF thread:
-refcount_t: addition on 0; use-after-free.
- p9_fid_get linux/./include/net/9p/client.h:262
- v9fs_fid_find+0x236/0x280 linux/fs/9p/fid.c:129
- v9fs_fid_lookup_with_uid linux/fs/9p/fid.c:181
- v9fs_fid_lookup+0xbf/0xc20 linux/fs/9p/fid.c:314
- v9fs_vfs_getattr_dotl+0xf9/0x360 linux/fs/9p/vfs_inode_dotl.c:400
- vfs_statx+0xdd/0x4d0 linux/fs/stat.c:248
+Adjust the workaround flow to properly only apply in the S4 case:
+-> For shutdown go through SMU_MSG_PrepareMp1ForUnload
+-> For S4 go through SMU_MSG_GfxDeviceDriverReset and
+   SMU_MSG_PrepareMp1ForUnload
 
-Freed by:
- p9_fid_destroy (inlined)
- p9_client_clunk+0xb0/0xe0 linux/net/9p/client.c:1456
- p9_fid_put linux/./include/net/9p/client.h:278
- v9fs_dentry_release+0xb5/0x140 linux/fs/9p/vfs_dentry.c:55
- v9fs_remove+0x38f/0x620 linux/fs/9p/vfs_inode.c:518
- vfs_unlink+0x29a/0x810 linux/fs/namei.c:4335
-
-The problem is that d_fsdata was not accessed under d_lock, because
-d_release() normally is only called once the dentry is otherwise no
-longer accessible but since we also call it explicitly in v9fs_remove
-that lock is required:
-move the hlist out of the dentry under lock then unref its fids once
-they are no longer accessible.
-
-Fixes: 154372e67d40 ("fs/9p: fix create-unlink-getattr idiom")
+Reported-and-tested-by: lectrode <electrodexsnet@gmail.com>
+Closes: https://github.com/void-linux/void-packages/issues/50417
 Cc: stable@vger.kernel.org
-Reported-by: Meysam Firouzi
-Reported-by: Amirmohammad Eftekhar
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Message-ID: <20240521122947.1080227-1-asmadeus@codewreck.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: cd94d1b182d2 ("dm/amd/pm: Fix problems with reboot/shutdown for some SMU 13.0.4/13.0.11 users")
+Reviewed-by: Tim Huang <Tim.Huang@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/9p/vfs_dentry.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c |   20 ++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/fs/9p/vfs_dentry.c
-+++ b/fs/9p/vfs_dentry.c
-@@ -50,12 +50,17 @@ static int v9fs_cached_dentry_delete(con
- static void v9fs_dentry_release(struct dentry *dentry)
- {
- 	struct hlist_node *p, *n;
-+	struct hlist_head head;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
+@@ -222,15 +222,17 @@ static int smu_v13_0_4_system_features_c
+ 	struct amdgpu_device *adev = smu->adev;
+ 	int ret = 0;
  
- 	p9_debug(P9_DEBUG_VFS, " dentry: %pd (%p)\n",
- 		 dentry, dentry);
--	hlist_for_each_safe(p, n, (struct hlist_head *)&dentry->d_fsdata)
-+
-+	spin_lock(&dentry->d_lock);
-+	hlist_move_list((struct hlist_head *)&dentry->d_fsdata, &head);
-+	spin_unlock(&dentry->d_lock);
-+
-+	hlist_for_each_safe(p, n, &head)
- 		p9_fid_put(hlist_entry(p, struct p9_fid, dlist));
--	dentry->d_fsdata = NULL;
- }
+-	if (!en && adev->in_s4) {
+-		/* Adds a GFX reset as workaround just before sending the
+-		 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
+-		 * an invalid state.
+-		 */
+-		ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_GfxDeviceDriverReset,
+-						      SMU_RESET_MODE_2, NULL);
+-		if (ret)
+-			return ret;
++	if (!en && !adev->in_s0ix) {
++		if (adev->in_s4) {
++			/* Adds a GFX reset as workaround just before sending the
++			 * MP1_UNLOAD message to prevent GC/RLC/PMFW from entering
++			 * an invalid state.
++			 */
++			ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_GfxDeviceDriverReset,
++							      SMU_RESET_MODE_2, NULL);
++			if (ret)
++				return ret;
++		}
  
- static int v9fs_lookup_revalidate(struct dentry *dentry, unsigned int flags)
+ 		ret = smu_cmn_send_smc_msg(smu, SMU_MSG_PrepareMp1ForUnload, NULL);
+ 	}
 
 
