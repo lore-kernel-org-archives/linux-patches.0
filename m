@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4C51849;
-	Thu, 13 Jun 2024 12:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AA020ED;
+	Thu, 13 Jun 2024 12:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282669; cv=none; b=oeMgUTe2vFtNnuGQEFYiZQAxYWI1xDeAB9RycMkl38tXz7e9IlKQxrVuGSdsk7D+n36msIC+uEtKSijKYxgUiYG8oAuzEql3RbZHc4JIiP8CjkCJiOt/qzQ3UglPqdbXk73g7bWoOa5D1qaSCPyywt9nVqnqx176VGzjoGVO2oA=
+	t=1718282672; cv=none; b=qfuvIBYG5dzMB2WOwvBksybyD3Gx3k5OF3i9gynJMKnbgvkEyLxKb0xiD1+WAWFAOUoeU/vpcOhbc/KB6k8/NrEZs05Vvlx6ZOigTs0ApInZri1+FLEJd3hRLM3fNXUkcbk/RmYoBCZIglBp3qhY9jJPupEAzSkT03GzogjuHnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282669; c=relaxed/simple;
-	bh=0YYXtbeAH9DvfZ1lmqac57okO1i0u1L/J1X69gDChuk=;
+	s=arc-20240116; t=1718282672; c=relaxed/simple;
+	bh=BPVJrwyw/yHIVGL76E4HqJHi63pZYrILmjPrjPfiMu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlmYlnypFhhzBCmBAyYqkXKCQOOfEQKCJJlwl0l41EoN5pnIPKxzbyc5ClQlLRQdrmb+ArQy2NT+FYTNRNQ9Ce37HV3o4b+pvjrqWfHYxZltpq+iopq2EkMZ3PjO+mPR8Bpx1MxgorpR/RCeYUa+J1aMY0v7XImHPT3TBbv9yoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ndlo806e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xi2LAloBkKXZfR+I7mxFMtVG00P6pOdVZ8TgWmiWFUxo99sxmbA8kYUw5W+uBR1PD8YiPmSxbENazy6NFW7qMTcYAuHGbeXNeb5WqVizpJlRMmqINFjMF63NX6Hjb2RXtd7WrqjcSrDMS2Cmu5JHhNq1lGPsDo1IsQLvxMvt6Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHvMoKkr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ndlo806e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD43C2BBFC;
-	Thu, 13 Jun 2024 12:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHvMoKkr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BC4C2BBFC;
+	Thu, 13 Jun 2024 12:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282669;
-	bh=0YYXtbeAH9DvfZ1lmqac57okO1i0u1L/J1X69gDChuk=;
+	s=korg; t=1718282672;
+	bh=BPVJrwyw/yHIVGL76E4HqJHi63pZYrILmjPrjPfiMu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ndlo806eHiKZpxC/a9cdeUQFrHCX/7VRL6SAup6Y0XJjeTq1gWTXRgjgwwWpkJ7Qo
-	 QELHQ5SIMMg4F7aCcMCPYU/5WFRuGiZZe+8ySzcRrAkrkb8ERPv1Teu9Be38UPdn9X
-	 +feF7EOv6NPj7o6QGzSZ9raE6Ck5SGnlsofuFANk=
+	b=RHvMoKkrWZREKj/wpTSHYZV7QYMGWBfcwsmB5AM4s5F5QhWaLJ9/0b8k6zi29lw5b
+	 vxAxL6JSir9hkCORKkCxPNXIFxtMXkNu8zdqWfeo3ZszXtTNHgBM0lZWsA3744BNMy
+	 rEajLnOldp1wHovrvs+qRGcrzIl1hue+0w6pQ+T4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roded Zats <rzats@paloaltonetworks.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 315/402] enic: Validate length of nl attributes in enic_set_vf_port
-Date: Thu, 13 Jun 2024 13:34:32 +0200
-Message-ID: <20240613113314.427543568@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 349/402] net: dsa: sja1105: always enable the INCL_SRCPT option
+Date: Thu, 13 Jun 2024 13:35:06 +0200
+Message-ID: <20240613113315.748575534@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,69 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roded Zats <rzats@paloaltonetworks.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit e8021b94b0412c37bcc79027c2e382086b6ce449 ]
+commit b4638af8885af93cd70351081da1909c59342440 upstream.
 
-enic_set_vf_port assumes that the nl attribute IFLA_PORT_PROFILE
-is of length PORT_PROFILE_MAX and that the nl attributes
-IFLA_PORT_INSTANCE_UUID, IFLA_PORT_HOST_UUID are of length PORT_UUID_MAX.
-These attributes are validated (in the function do_setlink in rtnetlink.c)
-using the nla_policy ifla_port_policy. The policy defines IFLA_PORT_PROFILE
-as NLA_STRING, IFLA_PORT_INSTANCE_UUID as NLA_BINARY and
-IFLA_PORT_HOST_UUID as NLA_STRING. That means that the length validation
-using the policy is for the max size of the attributes and not on exact
-size so the length of these attributes might be less than the sizes that
-enic_set_vf_port expects. This might cause an out of bands
-read access in the memcpys of the data of these
-attributes in enic_set_vf_port.
+Link-local traffic on bridged SJA1105 ports is sometimes tagged by the
+hardware with source port information (when the port is under a VLAN
+aware bridge).
 
-Fixes: f8bd909183ac ("net: Add ndo_{set|get}_vf_port support for enic dynamic vnics")
-Signed-off-by: Roded Zats <rzats@paloaltonetworks.com>
-Link: https://lore.kernel.org/r/20240522073044.33519-1-rzats@paloaltonetworks.com
+The tag_8021q source port identification has become more loose
+("imprecise") and will report a plausible rather than exact bridge port,
+when under a bridge (be it VLAN-aware or VLAN-unaware). But link-local
+traffic always needs to know the precise source port.
+
+Modify the driver logic (and therefore: the tagging protocol itself) to
+always include the source port information with link-local packets,
+regardless of whether the port is standalone, under a VLAN-aware or
+VLAN-unaware bridge. This makes it possible for the tagging driver to
+give priority to that information over the tag_8021q VLAN header.
+
+The big drawback with INCL_SRCPT is that it makes it impossible to
+distinguish between an original MAC DA of 01:80:C2:XX:YY:ZZ and
+01:80:C2:AA:BB:ZZ, because the tagger just patches MAC DA bytes 3 and 4
+with zeroes. Only if PTP RX timestamping is enabled, the switch will
+generate a META follow-up frame containing the RX timestamp and the
+original bytes 3 and 4 of the MAC DA. Those will be used to patch up the
+original packet. Nonetheless, in the absence of PTP RX timestamping, we
+have to live with this limitation, since it is more important to have
+the more precise source port information for link-local traffic.
+
+Fixes: d7f9787a763f ("net: dsa: tag_8021q: add support for imprecise RX based on the VBID")
+Fixes: 91495f21fcec ("net: dsa: tag_8021q: replace the SVL bridging with VLAN-unaware IVL bridging")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Stable-dep-of: c1ae02d87689 ("net: dsa: tag_sja1105: always prefer source port information from INCL_SRCPT")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cisco/enic/enic_main.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/dsa/sja1105/sja1105_main.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
-index d0a8f7106958b..52bc164a1cfbc 100644
---- a/drivers/net/ethernet/cisco/enic/enic_main.c
-+++ b/drivers/net/ethernet/cisco/enic/enic_main.c
-@@ -1117,18 +1117,30 @@ static int enic_set_vf_port(struct net_device *netdev, int vf,
- 	pp->request = nla_get_u8(port[IFLA_PORT_REQUEST]);
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -853,11 +853,11 @@ static int sja1105_init_general_params(s
+ 		.hostprio = 7,
+ 		.mac_fltres1 = SJA1105_LINKLOCAL_FILTER_A,
+ 		.mac_flt1    = SJA1105_LINKLOCAL_FILTER_A_MASK,
+-		.incl_srcpt1 = false,
++		.incl_srcpt1 = true,
+ 		.send_meta1  = false,
+ 		.mac_fltres0 = SJA1105_LINKLOCAL_FILTER_B,
+ 		.mac_flt0    = SJA1105_LINKLOCAL_FILTER_B_MASK,
+-		.incl_srcpt0 = false,
++		.incl_srcpt0 = true,
+ 		.send_meta0  = false,
+ 		/* Default to an invalid value */
+ 		.mirr_port = priv->ds->num_ports,
+@@ -2346,11 +2346,6 @@ int sja1105_vlan_filtering(struct dsa_sw
+ 	general_params->tpid = tpid;
+ 	/* EtherType used to identify outer tagged (S-tag) VLAN traffic */
+ 	general_params->tpid2 = tpid2;
+-	/* When VLAN filtering is on, we need to at least be able to
+-	 * decode management traffic through the "backup plan".
+-	 */
+-	general_params->incl_srcpt1 = enabled;
+-	general_params->incl_srcpt0 = enabled;
  
- 	if (port[IFLA_PORT_PROFILE]) {
-+		if (nla_len(port[IFLA_PORT_PROFILE]) != PORT_PROFILE_MAX) {
-+			memcpy(pp, &prev_pp, sizeof(*pp));
-+			return -EINVAL;
-+		}
- 		pp->set |= ENIC_SET_NAME;
- 		memcpy(pp->name, nla_data(port[IFLA_PORT_PROFILE]),
- 			PORT_PROFILE_MAX);
- 	}
- 
- 	if (port[IFLA_PORT_INSTANCE_UUID]) {
-+		if (nla_len(port[IFLA_PORT_INSTANCE_UUID]) != PORT_UUID_MAX) {
-+			memcpy(pp, &prev_pp, sizeof(*pp));
-+			return -EINVAL;
-+		}
- 		pp->set |= ENIC_SET_INSTANCE;
- 		memcpy(pp->instance_uuid,
- 			nla_data(port[IFLA_PORT_INSTANCE_UUID]), PORT_UUID_MAX);
- 	}
- 
- 	if (port[IFLA_PORT_HOST_UUID]) {
-+		if (nla_len(port[IFLA_PORT_HOST_UUID]) != PORT_UUID_MAX) {
-+			memcpy(pp, &prev_pp, sizeof(*pp));
-+			return -EINVAL;
-+		}
- 		pp->set |= ENIC_SET_HOST;
- 		memcpy(pp->host_uuid,
- 			nla_data(port[IFLA_PORT_HOST_UUID]), PORT_UUID_MAX);
--- 
-2.43.0
-
+ 	/* VLAN filtering => independent VLAN learning.
+ 	 * No VLAN filtering (or best effort) => shared VLAN learning.
 
 
