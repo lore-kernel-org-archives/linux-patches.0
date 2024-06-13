@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB86146012;
-	Thu, 13 Jun 2024 12:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696E413C691;
+	Thu, 13 Jun 2024 12:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281301; cv=none; b=qGUk6LSmNb2tzm4pOvcmpBK4aiHFp0kt0uqV1bY4sgYH8IsjzeQp/hx+6YW+Uo1nDf6pG7xmMyNCF06rpSqmR02CJXlXrRqp6J3vYUYj+EYcvo2sBdcPodaEsxspXdBnvxCgnnkMVhEtE2AaOxjuv/CphjChEweFIdmlLA9UjPs=
+	t=1718281304; cv=none; b=tCSP4dag1+uUcH1+W4oZ3i7YULn0+Yqn98/PhtObihZBtW7qbEKbmklms8/0y0B6F0a1F1ZqReI3hPhumj4AM7REmSIT4YkLgWlet9HStnpznqU/CBxFaWGwp44KAbuDgNTF90YF87ztWMKbGDGzTN6Zn7kJ23zG6jOitafNqFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281301; c=relaxed/simple;
-	bh=S52ENjneYIZNPLCbP3Aga3E1bRYXhNWURgbI8Up9uEQ=;
+	s=arc-20240116; t=1718281304; c=relaxed/simple;
+	bh=kkMyl2dDmqxv40AHFyMZjyo36XtzoVdHwhTzCOatQ0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEy4ABatkWfWHxx56w1o2dB+sBwgSyADBu1nzxbIC8mOgtb9OXROKcK7mL7V8H9EFzNGODOiBKLskvPQC/P0LKt9jAHVqay5/tL+UrkXlQlYcYCjyjOgPfsg7UjGlFuedjPe8MoBuSS5z6MLyS0qhke6sck0XmLO615ZUMMpl5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GuMMywxT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M12NRFoUWvnaqYdta7KnXnbS4fyuHXfRGXsh//vWG/x4GJWhjh2ksGcKrhHwxLOujgB3+/sKNdL+3rzRWrnf5a4ULXfw2ykCg8Kx8lZax0N/PkSqMiPdTe0J0tuYmxrWdY0Ve4Z6tXxgpw5PCbRDAHc4NqvjiWh/jxBz5mv4PBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GlHIAZFs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GuMMywxT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0670EC32786;
-	Thu, 13 Jun 2024 12:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlHIAZFs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44AEC32786;
+	Thu, 13 Jun 2024 12:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281301;
-	bh=S52ENjneYIZNPLCbP3Aga3E1bRYXhNWURgbI8Up9uEQ=;
+	s=korg; t=1718281304;
+	bh=kkMyl2dDmqxv40AHFyMZjyo36XtzoVdHwhTzCOatQ0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GuMMywxTUBpcppxIfRHoNrq+7aPnzMajN0BCPlUSYjKOg1bntUQxXsW+3X752Ea1/
-	 UCzQX1kBt9tGqK4PMtrVKE33CppFEJgegCB4r5NP0r0/g4gpVayf+Y/l8XVqIalxMg
-	 fWQ0U6I/F2xLT/YUgopeSFOer7eEC1r8FpY6LDHg=
+	b=GlHIAZFs30+ImmhR8myoH+tGvr0VRqZYUjnKki6V36YzKYFhGJv1vB65udmfrwPus
+	 aZtU0JbyKMrB5qr1EWP4Hz3eDj+TEVRXTzwpbpqTG/giz6DTEWxO2Xn3siha+b5Fbs
+	 eknpmg+sLmrew2nErXuWf2RG2Dj6OJp+YDEGgkWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Azeem Shaikh <azeemshaikh38@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 209/317] scsi: qla2xxx: Replace all non-returning strlcpy() with strscpy()
-Date: Thu, 13 Jun 2024 13:33:47 +0200
-Message-ID: <20240613113255.643235104@linuxfoundation.org>
+Subject: [PATCH 5.10 210/317] media: flexcop-usb: clean up endpoint sanity checks
+Date: Thu, 13 Jun 2024 13:33:48 +0200
+Message-ID: <20240613113255.680981717@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,115 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Azeem Shaikh <azeemshaikh38@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 37f1663c91934f664fb850306708094a324c227c ]
+[ Upstream commit 3de50478b5cc2e0c2479a5f2b967f331f7597d23 ]
 
-strlcpy() reads the entire source buffer first.  This read may exceed the
-destination size limit.  This is both inefficient and can lead to linear
-read overflows if a source string is not NUL-terminated [1].  In an effort
-to remove strlcpy() completely [2], replace strlcpy() here with strscpy().
-No return values were used, so direct replacement is safe.
+Add a temporary variable to make the endpoint sanity checks a bit more
+readable.
 
-[1] https://www.kernel.org/doc/html/latest/process/deprecated.html#strlcpy
-[2] https://github.com/KSPP/linux/issues/89
+While at it, fix a typo in the usb_set_interface() comment.
 
-Signed-off-by: Azeem Shaikh <azeemshaikh38@gmail.com>
-Link: https://lore.kernel.org/r/20230516025404.2843867-1-azeemshaikh38@gmail.com
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: c3408c4ae041 ("scsi: qla2xxx: Avoid possible run-time warning with long model_num")
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20220822151456.27178-2-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f62dc8f6bf82 ("media: flexcop-usb: fix sanity check of bNumEndpoints")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |  8 ++++----
- drivers/scsi/qla2xxx/qla_mr.c   | 20 ++++++++++----------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ drivers/media/usb/b2c2/flexcop-usb.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
-index 3d56f971cdc4d..8d54f60998029 100644
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -4644,7 +4644,7 @@ qla2x00_set_model_info(scsi_qla_host_t *vha, uint8_t *model, size_t len,
- 		if (use_tbl &&
- 		    ha->pdev->subsystem_vendor == PCI_VENDOR_ID_QLOGIC &&
- 		    index < QLA_MODEL_NAMES)
--			strlcpy(ha->model_desc,
-+			strscpy(ha->model_desc,
- 			    qla2x00_model_name[index * 2 + 1],
- 			    sizeof(ha->model_desc));
- 	} else {
-@@ -4652,14 +4652,14 @@ qla2x00_set_model_info(scsi_qla_host_t *vha, uint8_t *model, size_t len,
- 		if (use_tbl &&
- 		    ha->pdev->subsystem_vendor == PCI_VENDOR_ID_QLOGIC &&
- 		    index < QLA_MODEL_NAMES) {
--			strlcpy(ha->model_number,
-+			strscpy(ha->model_number,
- 				qla2x00_model_name[index * 2],
- 				sizeof(ha->model_number));
--			strlcpy(ha->model_desc,
-+			strscpy(ha->model_desc,
- 			    qla2x00_model_name[index * 2 + 1],
- 			    sizeof(ha->model_desc));
- 		} else {
--			strlcpy(ha->model_number, def,
-+			strscpy(ha->model_number, def,
- 				sizeof(ha->model_number));
- 		}
+diff --git a/drivers/media/usb/b2c2/flexcop-usb.c b/drivers/media/usb/b2c2/flexcop-usb.c
+index 2299d5cca8ffb..6d199b32e3170 100644
+--- a/drivers/media/usb/b2c2/flexcop-usb.c
++++ b/drivers/media/usb/b2c2/flexcop-usb.c
+@@ -502,17 +502,21 @@ static int flexcop_usb_transfer_init(struct flexcop_usb *fc_usb)
+ 
+ static int flexcop_usb_init(struct flexcop_usb *fc_usb)
+ {
+-	/* use the alternate setting with the larges buffer */
+-	int ret = usb_set_interface(fc_usb->udev, 0, 1);
++	struct usb_host_interface *alt;
++	int ret;
+ 
++	/* use the alternate setting with the largest buffer */
++	ret = usb_set_interface(fc_usb->udev, 0, 1);
+ 	if (ret) {
+ 		err("set interface failed.");
+ 		return ret;
  	}
-diff --git a/drivers/scsi/qla2xxx/qla_mr.c b/drivers/scsi/qla2xxx/qla_mr.c
-index 7178646ee0f06..cc8994a7c9942 100644
---- a/drivers/scsi/qla2xxx/qla_mr.c
-+++ b/drivers/scsi/qla2xxx/qla_mr.c
-@@ -691,7 +691,7 @@ qlafx00_pci_info_str(struct scsi_qla_host *vha, char *str, size_t str_len)
- 	struct qla_hw_data *ha = vha->hw;
  
- 	if (pci_is_pcie(ha->pdev))
--		strlcpy(str, "PCIe iSA", str_len);
-+		strscpy(str, "PCIe iSA", str_len);
- 	return str;
- }
+-	if (fc_usb->uintf->cur_altsetting->desc.bNumEndpoints < 1)
++	alt = fc_usb->uintf->cur_altsetting;
++
++	if (alt->desc.bNumEndpoints < 1)
+ 		return -ENODEV;
+-	if (!usb_endpoint_is_isoc_in(&fc_usb->uintf->cur_altsetting->endpoint[0].desc))
++	if (!usb_endpoint_is_isoc_in(&alt->endpoint[0].desc))
+ 		return -ENODEV;
  
-@@ -1849,21 +1849,21 @@ qlafx00_fx_disc(scsi_qla_host_t *vha, fc_port_t *fcport, uint16_t fx_type)
- 			phost_info = &preg_hsi->hsi;
- 			memset(preg_hsi, 0, sizeof(struct register_host_info));
- 			phost_info->os_type = OS_TYPE_LINUX;
--			strlcpy(phost_info->sysname, p_sysid->sysname,
-+			strscpy(phost_info->sysname, p_sysid->sysname,
- 				sizeof(phost_info->sysname));
--			strlcpy(phost_info->nodename, p_sysid->nodename,
-+			strscpy(phost_info->nodename, p_sysid->nodename,
- 				sizeof(phost_info->nodename));
- 			if (!strcmp(phost_info->nodename, "(none)"))
- 				ha->mr.host_info_resend = true;
--			strlcpy(phost_info->release, p_sysid->release,
-+			strscpy(phost_info->release, p_sysid->release,
- 				sizeof(phost_info->release));
--			strlcpy(phost_info->version, p_sysid->version,
-+			strscpy(phost_info->version, p_sysid->version,
- 				sizeof(phost_info->version));
--			strlcpy(phost_info->machine, p_sysid->machine,
-+			strscpy(phost_info->machine, p_sysid->machine,
- 				sizeof(phost_info->machine));
--			strlcpy(phost_info->domainname, p_sysid->domainname,
-+			strscpy(phost_info->domainname, p_sysid->domainname,
- 				sizeof(phost_info->domainname));
--			strlcpy(phost_info->hostdriver, QLA2XXX_VERSION,
-+			strscpy(phost_info->hostdriver, QLA2XXX_VERSION,
- 				sizeof(phost_info->hostdriver));
- 			preg_hsi->utc = (uint64_t)ktime_get_real_seconds();
- 			ql_dbg(ql_dbg_init, vha, 0x0149,
-@@ -1909,9 +1909,9 @@ qlafx00_fx_disc(scsi_qla_host_t *vha, fc_port_t *fcport, uint16_t fx_type)
- 	if (fx_type == FXDISC_GET_CONFIG_INFO) {
- 		struct config_info_data *pinfo =
- 		    (struct config_info_data *) fdisc->u.fxiocb.rsp_addr;
--		strlcpy(vha->hw->model_number, pinfo->model_num,
-+		strscpy(vha->hw->model_number, pinfo->model_num,
- 			ARRAY_SIZE(vha->hw->model_number));
--		strlcpy(vha->hw->model_desc, pinfo->model_description,
-+		strscpy(vha->hw->model_desc, pinfo->model_description,
- 			ARRAY_SIZE(vha->hw->model_desc));
- 		memcpy(&vha->hw->mr.symbolic_name, pinfo->symbolic_name,
- 		    sizeof(vha->hw->mr.symbolic_name));
+ 	switch (fc_usb->udev->speed) {
 -- 
 2.43.0
 
