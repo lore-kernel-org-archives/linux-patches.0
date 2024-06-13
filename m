@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE05144317;
-	Thu, 13 Jun 2024 12:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8321144317;
+	Thu, 13 Jun 2024 12:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282878; cv=none; b=Dkqzzk+WavESVHHPoocR7rbMBwlGOOngOnXTN05RgFrxmyd9bIK7FAagWKlEHZKMuvuEsNJEETyWBTeYqih0xeH6tSMX4677Zix7kVAIxpWJgz2X2T4JEGwkqXiVJNbEFRWRB0QAooCuqvMbTlZYFSTISvQ1LDbgkFt4IKMJNb4=
+	t=1718282881; cv=none; b=Fn8dXOzEb8Mm3Kuesm6Uw5qajzirJTn/kc4kLGBcNKORNH5lOrM8LKOVkZx3M3AhZ2OZy3llYpxVRYt209OE3vd9nJfnE1vwREsJlFsK+eblAiQi8pSZMmpg20V6GsNA9zvGTB8fCkVEXWIZuoEgprFcYJ0Fic6kiB0s/PhapL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282878; c=relaxed/simple;
-	bh=Gvq2R7aifBJsV9mZhzM8tSmja08iRFxYE7IAFb8lEF0=;
+	s=arc-20240116; t=1718282881; c=relaxed/simple;
+	bh=B3URhvfW87udiox9dffpcd8N9GmvBYAyHEfrtj67Ymw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aw9s2sF8qLiGWtM/k4iy4ipmnAugwQnOIqhMNjnI8SbEKE/VxVBK5bHtJjB481gVg9XkSo+s5xx7ZO3e4Y227X3oQlrCTMsCOgQn7yDbk1kE6x0emCybo0cZLz6Inxy81GkEye990M0TBzmJ411KDaYH5sq3/Nh8AK2Bu5oC+R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aWA4YD7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p40dLBGR4fGnxYSDqiy2J0en0lBW0+M0ShgS0qdZ8wmTzSdlgws9It83+f3r63bv88witxjUSmL6X9MhwNJi21P2jCpabSRUUpAsHgpjto/ubJoVeOHscM1wZT9LnU5D/c1mUkqgfQI9hn41DIFjNKwL48BBJ8G3jn3Ol1SX1Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1W0mYm5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aWA4YD7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED943C4AF1A;
-	Thu, 13 Jun 2024 12:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1W0mYm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282F7C2BBFC;
+	Thu, 13 Jun 2024 12:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282878;
-	bh=Gvq2R7aifBJsV9mZhzM8tSmja08iRFxYE7IAFb8lEF0=;
+	s=korg; t=1718282881;
+	bh=B3URhvfW87udiox9dffpcd8N9GmvBYAyHEfrtj67Ymw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0aWA4YD79AYyuoUGZ4/2bnvCIp/7AMj60r0s6L3icH5geQkpoGd/yHasF8S2ivDHr
-	 mAszelHf2Ow38dGuPO6Q8Knh2E+slloeWh3gDXjjH2XhtDDYx8LgR1vBAlzdmzUMjf
-	 9+IkY+x+DMeMflDIpd6t0P0O3oCfrLjLwOWCEXfk=
+	b=I1W0mYm5jIxPE+4wVIQE+u8u+gE8Il0O7+KwPVf85KkaCFqaWichE1PMw74H6gWhN
+	 4p6PnsMqj8fVeI+u0D6ryVBFIuGbZAL92D6YWvPN6EEyLsJ5xeYJCSXodm+3/rldxC
+	 inSxkDMqt3lOJsnd7XO7XOhBLP4jOrJsJQP57eVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haorong Lu <ancientmodern4@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Conor Dooley <conor@kernel.org>
-Subject: [PATCH 6.1 08/85] riscv: signal: handle syscall restart before get_signal
-Date: Thu, 13 Jun 2024 13:35:06 +0200
-Message-ID: <20240613113214.460101693@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	"Bai, Shuangpeng" <sjb7183@psu.edu>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 09/85] nilfs2: fix use-after-free of timer for log writer thread
+Date: Thu, 13 Jun 2024 13:35:07 +0200
+Message-ID: <20240613113214.498182663@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -51,171 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haorong Lu <ancientmodern4@gmail.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit ce4f78f1b53d3327fbd32764aa333bf05fb68818 upstream.
+commit f5d4e04634c9cf68bdf23de08ada0bb92e8befe7 upstream.
 
-In the current riscv implementation, blocking syscalls like read() may
-not correctly restart after being interrupted by ptrace. This problem
-arises when the syscall restart process in arch_do_signal_or_restart()
-is bypassed due to changes to the regs->cause register, such as an
-ebreak instruction.
+Patch series "nilfs2: fix log writer related issues".
 
-Steps to reproduce:
-1. Interrupt the tracee process with PTRACE_SEIZE & PTRACE_INTERRUPT.
-2. Backup original registers and instruction at new_pc.
-3. Change pc to new_pc, and inject an instruction (like ebreak) to this
-   address.
-4. Resume with PTRACE_CONT and wait for the process to stop again after
-   executing ebreak.
-5. Restore original registers and instructions, and detach from the
-   tracee process.
-6. Now the read() syscall in tracee will return -1 with errno set to
-   ERESTARTSYS.
+This bug fix series covers three nilfs2 log writer-related issues,
+including a timer use-after-free issue and potential deadlock issue on
+unmount, and a potential freeze issue in event synchronization found
+during their analysis.  Details are described in each commit log.
 
-Specifically, during an interrupt, the regs->cause changes from
-EXC_SYSCALL to EXC_BREAKPOINT due to the injected ebreak, which is
-inaccessible via ptrace so we cannot restore it. This alteration breaks
-the syscall restart condition and ends the read() syscall with an
-ERESTARTSYS error. According to include/linux/errno.h, it should never
-be seen by user programs. X86 can avoid this issue as it checks the
-syscall condition using a register (orig_ax) exposed to user space.
-Arm64 handles syscall restart before calling get_signal, where it could
-be paused and inspected by ptrace/debugger.
 
-This patch adjusts the riscv implementation to arm64 style, which also
-checks syscall using a kernel register (syscallno). It ensures the
-syscall restart process is not bypassed when changes to the cause
-register occur, providing more consistent behavior across various
-architectures.
+This patch (of 3):
 
-For a simplified reproduction program, feel free to visit:
-https://github.com/ancientmodern/riscv-ptrace-bug-demo.
+A use-after-free issue has been reported regarding the timer sc_timer on
+the nilfs_sc_info structure.
 
-Signed-off-by: Haorong Lu <ancientmodern4@gmail.com>
-Link: https://lore.kernel.org/r/20230803224458.4156006-1-ancientmodern4@gmail.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Cc: Conor Dooley <conor@kernel.org>
+The problem is that even though it is used to wake up a sleeping log
+writer thread, sc_timer is not shut down until the nilfs_sc_info structure
+is about to be freed, and is used regardless of the thread's lifetime.
+
+Fix this issue by limiting the use of sc_timer only while the log writer
+thread is alive.
+
+Link: https://lkml.kernel.org/r/20240520132621.4054-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20240520132621.4054-2-konishi.ryusuke@gmail.com
+Fixes: fdce895ea5dd ("nilfs2: change sc_timer from a pointer to an embedded one in struct nilfs_sc_info")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: "Bai, Shuangpeng" <sjb7183@psu.edu>
+Closes: https://groups.google.com/g/syzkaller/c/MK_LYqtt8ko/m/8rgdWeseAwAJ
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/signal.c |   85 ++++++++++++++++++++++++---------------------
- 1 file changed, 46 insertions(+), 39 deletions(-)
+ fs/nilfs2/segment.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
---- a/arch/riscv/kernel/signal.c
-+++ b/arch/riscv/kernel/signal.c
-@@ -246,30 +246,6 @@ static void handle_signal(struct ksignal
- 	sigset_t *oldset = sigmask_to_save();
- 	int ret;
- 
--	/* Are we from a system call? */
--	if (regs->cause == EXC_SYSCALL) {
--		/* Avoid additional syscall restarting via ret_from_exception */
--		regs->cause = -1UL;
--		/* If so, check system call restarting.. */
--		switch (regs->a0) {
--		case -ERESTART_RESTARTBLOCK:
--		case -ERESTARTNOHAND:
--			regs->a0 = -EINTR;
--			break;
--
--		case -ERESTARTSYS:
--			if (!(ksig->ka.sa.sa_flags & SA_RESTART)) {
--				regs->a0 = -EINTR;
--				break;
--			}
--			fallthrough;
--		case -ERESTARTNOINTR:
--                        regs->a0 = regs->orig_a0;
--			regs->epc -= 0x4;
--			break;
--		}
--	}
--
- 	rseq_signal_deliver(ksig, regs);
- 
- 	/* Set up the stack frame */
-@@ -283,36 +259,67 @@ static void handle_signal(struct ksignal
- 
- static void do_signal(struct pt_regs *regs)
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2159,8 +2159,10 @@ static void nilfs_segctor_start_timer(st
  {
-+	unsigned long continue_addr = 0, restart_addr = 0;
-+	int retval = 0;
- 	struct ksignal ksig;
-+	bool syscall = (regs->cause == EXC_SYSCALL);
- 
--	if (get_signal(&ksig)) {
--		/* Actually deliver the signal */
--		handle_signal(&ksig, regs);
--		return;
--	}
-+	/* If we were from a system call, check for system call restarting */
-+	if (syscall) {
-+		continue_addr = regs->epc;
-+		restart_addr = continue_addr - 4;
-+		retval = regs->a0;
- 
--	/* Did we come from a system call? */
--	if (regs->cause == EXC_SYSCALL) {
- 		/* Avoid additional syscall restarting via ret_from_exception */
- 		regs->cause = -1UL;
- 
--		/* Restart the system call - no handlers present */
--		switch (regs->a0) {
-+		/*
-+		 * Prepare for system call restart. We do this here so that a
-+		 * debugger will see the already changed PC.
-+		 */
-+		switch (retval) {
- 		case -ERESTARTNOHAND:
- 		case -ERESTARTSYS:
- 		case -ERESTARTNOINTR:
--                        regs->a0 = regs->orig_a0;
--			regs->epc -= 0x4;
--			break;
- 		case -ERESTART_RESTARTBLOCK:
--                        regs->a0 = regs->orig_a0;
--			regs->a7 = __NR_restart_syscall;
--			regs->epc -= 0x4;
-+			regs->a0 = regs->orig_a0;
-+			regs->epc = restart_addr;
- 			break;
- 		}
- 	}
- 
- 	/*
-+	 * Get the signal to deliver. When running under ptrace, at this point
-+	 * the debugger may change all of our registers.
-+	 */
-+	if (get_signal(&ksig)) {
-+		/*
-+		 * Depending on the signal settings, we may need to revert the
-+		 * decision to restart the system call, but skip this if a
-+		 * debugger has chosen to restart at a different PC.
-+		 */
-+		if (regs->epc == restart_addr &&
-+		    (retval == -ERESTARTNOHAND ||
-+		     retval == -ERESTART_RESTARTBLOCK ||
-+		     (retval == -ERESTARTSYS &&
-+		      !(ksig.ka.sa.sa_flags & SA_RESTART)))) {
-+			regs->a0 = -EINTR;
-+			regs->epc = continue_addr;
+ 	spin_lock(&sci->sc_state_lock);
+ 	if (!(sci->sc_state & NILFS_SEGCTOR_COMMIT)) {
+-		sci->sc_timer.expires = jiffies + sci->sc_interval;
+-		add_timer(&sci->sc_timer);
++		if (sci->sc_task) {
++			sci->sc_timer.expires = jiffies + sci->sc_interval;
++			add_timer(&sci->sc_timer);
 +		}
+ 		sci->sc_state |= NILFS_SEGCTOR_COMMIT;
+ 	}
+ 	spin_unlock(&sci->sc_state_lock);
+@@ -2378,10 +2380,21 @@ int nilfs_construct_dsync_segment(struct
+  */
+ static void nilfs_segctor_accept(struct nilfs_sc_info *sci)
+ {
++	bool thread_is_alive;
 +
-+		/* Actually deliver the signal */
-+		handle_signal(&ksig, regs);
-+		return;
-+	}
+ 	spin_lock(&sci->sc_state_lock);
+ 	sci->sc_seq_accepted = sci->sc_seq_request;
++	thread_is_alive = (bool)sci->sc_task;
+ 	spin_unlock(&sci->sc_state_lock);
+-	del_timer_sync(&sci->sc_timer);
 +
 +	/*
-+	 * Handle restarting a different system call. As above, if a debugger
-+	 * has chosen to restart at a different PC, ignore the restart.
++	 * This function does not race with the log writer thread's
++	 * termination.  Therefore, deleting sc_timer, which should not be
++	 * done after the log writer thread exits, can be done safely outside
++	 * the area protected by sc_state_lock.
 +	 */
-+	if (syscall && regs->epc == restart_addr && retval == -ERESTART_RESTARTBLOCK)
-+		regs->a7 = __NR_restart_syscall;
-+
-+	/*
- 	 * If there is no signal to deliver, we just put the saved
- 	 * sigmask back.
- 	 */
++	if (thread_is_alive)
++		del_timer_sync(&sci->sc_timer);
+ }
+ 
+ /**
+@@ -2407,7 +2420,7 @@ static void nilfs_segctor_notify(struct
+ 			sci->sc_flush_request &= ~FLUSH_DAT_BIT;
+ 
+ 		/* re-enable timer if checkpoint creation was not done */
+-		if ((sci->sc_state & NILFS_SEGCTOR_COMMIT) &&
++		if ((sci->sc_state & NILFS_SEGCTOR_COMMIT) && sci->sc_task &&
+ 		    time_before(jiffies, sci->sc_timer.expires))
+ 			add_timer(&sci->sc_timer);
+ 	}
+@@ -2597,6 +2610,7 @@ static int nilfs_segctor_thread(void *ar
+ 	int timeout = 0;
+ 
+ 	sci->sc_timer_task = current;
++	timer_setup(&sci->sc_timer, nilfs_construction_timeout, 0);
+ 
+ 	/* start sync. */
+ 	sci->sc_task = current;
+@@ -2663,6 +2677,7 @@ static int nilfs_segctor_thread(void *ar
+  end_thread:
+ 	/* end sync. */
+ 	sci->sc_task = NULL;
++	del_timer_sync(&sci->sc_timer);
+ 	wake_up(&sci->sc_wait_task); /* for nilfs_segctor_kill_thread() */
+ 	spin_unlock(&sci->sc_state_lock);
+ 	return 0;
+@@ -2726,7 +2741,6 @@ static struct nilfs_sc_info *nilfs_segct
+ 	INIT_LIST_HEAD(&sci->sc_gc_inodes);
+ 	INIT_LIST_HEAD(&sci->sc_iput_queue);
+ 	INIT_WORK(&sci->sc_iput_work, nilfs_iput_work_func);
+-	timer_setup(&sci->sc_timer, nilfs_construction_timeout, 0);
+ 
+ 	sci->sc_interval = HZ * NILFS_SC_DEFAULT_TIMEOUT;
+ 	sci->sc_mjcp_freq = HZ * NILFS_SC_DEFAULT_SR_FREQ;
+@@ -2812,7 +2826,6 @@ static void nilfs_segctor_destroy(struct
+ 
+ 	down_write(&nilfs->ns_segctor_sem);
+ 
+-	del_timer_sync(&sci->sc_timer);
+ 	kfree(sci);
+ }
+ 
 
 
