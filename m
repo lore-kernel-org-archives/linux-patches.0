@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD9B1448FA;
-	Thu, 13 Jun 2024 11:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9986144D3C;
+	Thu, 13 Jun 2024 11:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279880; cv=none; b=UoRUCj1ZV0ZNRdXSXDbf0GSoEkYb8vLiWb1gDI29xDV/qSgEVBxD5RUYBQ/7pgX4n9DD2wg6I9RGeMfgIaep5kc56yZZ7JVb/vw+AXsOQST+Uo1mEaYGSPlqz5mGoECw5O+gMAyCdYEKJn0qG46R06xZO16tGBBEfj9glZVdW7A=
+	t=1718279882; cv=none; b=RL8xi01/TLereLRTbjSxv1nlZa7EJWPpCpPvAWkZytsh96VbXGJqATMMycnn/m6ml9OLyGwLRt5G9Ris/IgyDnjkh9wnutHGm1G1HCiOvcOIJHRFSfMFjcpZoTUPvV3ymjEl59vq+l8Nm9gWb+HiQyljktns5o39jeapTYfn5qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279880; c=relaxed/simple;
-	bh=a3bbkyBVVuO1CMvQD+dk/rKM5ZuoeiM7NEvE1ZC8WOA=;
+	s=arc-20240116; t=1718279882; c=relaxed/simple;
+	bh=Xyq13UPwCvcsIf35pKAcRm4rWP5NeXwkwYf4d7G7VJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqxdDZ7baqWHzg5Y7Li49QSIMaBR5nxDc7rq/DU7ZZj+4qzjkJxv5EGWkRrJbAnRHpgMmPN5rwe35JIzC3SMEsWcEmUxDf0/j31TG6HVtJUXTlR9AZ6j0OEUGrCNwljN2uwCAbqGRr/NBhHGTGgLF6rd5KDX723R2HcjQq5qNFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYmIkF9D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pXt5hpkAyTMwvr2DNQL5DU2uIlmvNLce/Hb+pnNaw09ergccdQGiQCOCo/aoRa2LH718EvQyhSsTnCYP3P6YZpMJNmCEwWtJvasBxnSy1zV4l/pmGFd3KD8skVd54xX3fMhU9OCx7fdKb+VKY+5JFAVwMpcK2zS446HryHnsCr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3pGCr6w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYmIkF9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2611CC2BBFC;
-	Thu, 13 Jun 2024 11:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3pGCr6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52179C2BBFC;
+	Thu, 13 Jun 2024 11:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279879;
-	bh=a3bbkyBVVuO1CMvQD+dk/rKM5ZuoeiM7NEvE1ZC8WOA=;
+	s=korg; t=1718279882;
+	bh=Xyq13UPwCvcsIf35pKAcRm4rWP5NeXwkwYf4d7G7VJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lYmIkF9DeQ7hzihLt/6yGf9vFAyDDgqy3G9sYZi+bZEqSODjMMkurt6iqw3Qd2xcO
-	 w6Bjz3AaU/9xy/Z3e5T7VlajuOLW1oQ/xWxAHQSVgHnNL4KmnOYKF5JVfSGHox7Eq5
-	 38My1WvNWGyL3UVoo8Ht6n10BkGM8TLv+nAGWFjc=
+	b=q3pGCr6wKGbLIxTy+FlG6WVUQSnMV9onDCuaGLOREwsFtoF+SQQr6vEzO2f+OE7u/
+	 TQTjWVbSohAKDXDUyJzVv5SrIplc+hRf/M6nYaIhOImBEL5KpuPCTS12R3vDXiBEM8
+	 rNjp1Bmh0BT5IZen7fmSYcsPEdkcdYmOx0PRg2jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 068/202] drm/amd/display: Fix potential index out of bounds in color transformation function
-Date: Thu, 13 Jun 2024 13:32:46 +0200
-Message-ID: <20240613113230.402643516@linuxfoundation.org>
+Subject: [PATCH 5.4 069/202] mtd: rawnand: hynix: fixed typo
+Date: Thu, 13 Jun 2024 13:32:47 +0200
+Message-ID: <20240613113230.440874425@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -58,55 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-[ Upstream commit 63ae548f1054a0b71678d0349c7dc9628ddd42ca ]
+[ Upstream commit 6819db94e1cd3ce24a432f3616cd563ed0c4eaba ]
 
-Fixes index out of bounds issue in the color transformation function.
-The issue could occur when the index 'i' exceeds the number of transfer
-function points (TRANSFER_FUNC_POINTS).
+The function hynix_nand_rr_init() should probably return an error code.
+Judging by the usage, it seems that the return code is passed up
+the call stack.
+Right now, it always returns 0 and the function hynix_nand_cleanup()
+in hynix_nand_init() has never been called.
 
-The fix adds a check to ensure 'i' is within bounds before accessing the
-transfer function points. If 'i' is out of bounds, an error message is
-logged and the function returns false to indicate an error.
+Found by RASU JSC and Linux Verification Center (linuxtesting.org)
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:405 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:406 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:407 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
+Fixes: 626994e07480 ("mtd: nand: hynix: Add read-retry support for 1x nm MLC NANDs")
 
-Fixes: b629596072e5 ("drm/amd/display: Build unity lut for shaper")
-Cc: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Cc: Charlene Liu <Charlene.Liu@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240313102721.1991299-1-korotkov.maxim.s@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/mtd/nand/raw/nand_hynix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-index bbd6e01b3eca4..f1b1bc8da175b 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-@@ -380,6 +380,11 @@ bool cm_helper_translate_curve_to_hw_format(
- 				i += increment) {
- 			if (j == hw_points - 1)
- 				break;
-+			if (i >= TRANSFER_FUNC_POINTS) {
-+				DC_LOG_ERROR("Index out of bounds: i=%d, TRANSFER_FUNC_POINTS=%d\n",
-+					     i, TRANSFER_FUNC_POINTS);
-+				return false;
-+			}
- 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
- 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
- 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
+diff --git a/drivers/mtd/nand/raw/nand_hynix.c b/drivers/mtd/nand/raw/nand_hynix.c
+index 194e4227aefe9..15131e5953127 100644
+--- a/drivers/mtd/nand/raw/nand_hynix.c
++++ b/drivers/mtd/nand/raw/nand_hynix.c
+@@ -402,7 +402,7 @@ static int hynix_nand_rr_init(struct nand_chip *chip)
+ 	if (ret)
+ 		pr_warn("failed to initialize read-retry infrastructure");
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static void hynix_nand_extract_oobsize(struct nand_chip *chip,
 -- 
 2.43.0
 
