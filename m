@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A4517FD;
-	Thu, 13 Jun 2024 12:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F45E143C51;
+	Thu, 13 Jun 2024 12:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282360; cv=none; b=eSfN6hvljhTdcLCTq17D8X78ShPx6HtMbEfipVwEhNOQ0PUPrVqgJtPoMYCc2j2Wd/8IaBN7FzxiROAdnwK31bF4s5gXCgQEndc0OVFcINTcXJkdqncH0ktS7W0VCpFF+2wB6YHvrNcAlrMQ3LFqBzn6Xo0//std0XLR3Bc5cEs=
+	t=1718282363; cv=none; b=WNXfz81jpELRcZAQ6oeiKJNGw7He0FOA9Dt6dpOR+T61DEoB/6gFFL/FgO5xGt00O1BgDj1MPpl3lW1/nDJRjp6c76medxUn45ecIit4qwtmLxaQT0J96jIEPyj/HiRxP3RvVQQ4vEq2tjRRassY0e2+B4isGpk6KiGDkz7x0u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282360; c=relaxed/simple;
-	bh=Z3e1xRIb4Jg8IoaavG3g2K6XK9H0mU9dCdsTmn8mtwc=;
+	s=arc-20240116; t=1718282363; c=relaxed/simple;
+	bh=hRW0z+sdiW3mvE8n9E3lHPvhaw4Q0Zs4/EBG8RapiMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmPGSEPUG3tvI84ivptOwuxgtNbAjSzp2V+N+D6qmdT2gK0QaQNWs7S8GoJAT7ezsru9mG+KckY9TAhChQRuu700IXNKOdmwAISUADoLJ0Oacfj3vmHg753ILeOvFEjve0KbfkD141GMRQXOa3dn+rdYz/6CEVidAXhhfWZ5SB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0o1CJ7VO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B/r6uFBdnT+fZcQFBCHGkJM0nW60Z6i50qcnUTtVfq/w/06Z2OZbjjCB5SXk8b8nj/MBmG/gnDVZyUu9XKjYe2vw11hEdHEfKxL4JeWp1Bo33sudUPrmRwU3z4KOUCxiMfKmFEOXvomBPjQVsNdY10grhA1EWPE9Y79CsDqshss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uy4+/+ZZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0o1CJ7VO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8265C2BBFC;
-	Thu, 13 Jun 2024 12:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uy4+/+ZZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75A6C2BBFC;
+	Thu, 13 Jun 2024 12:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282360;
-	bh=Z3e1xRIb4Jg8IoaavG3g2K6XK9H0mU9dCdsTmn8mtwc=;
+	s=korg; t=1718282363;
+	bh=hRW0z+sdiW3mvE8n9E3lHPvhaw4Q0Zs4/EBG8RapiMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0o1CJ7VO2ypWnFvQNN2FspP9CKe903hcOZYr0zPgYzJEy1lgAYuVee4ea0+AAqyXq
-	 mIdOsOYtYZJWntrmzJ4+R0234BMesyTbnlQPULDYYGXY+6MFBkSJFh7GHzZuSnf2yQ
-	 mkcT5k5cmSP7Sy6fPphczTLIgSsMRZYZrypirGCo=
+	b=Uy4+/+ZZKgEi8YA9jQuU/pwHxQljepTkPT+Z/s1FmQAXbkyNAnknP5cTOc4I7E9YQ
+	 XQsbBs9oiOrHjIk46soleHzY1Y/PhxrB6fr2kf9LruB2wH+VWy4EOR72RvVUOaKtdB
+	 ysM9MmJYyqp2ViXVcSwEAARYmkdxhf9WDJPnPAug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 220/402] stm class: Fix a double free in stm_register_device()
-Date: Thu, 13 Jun 2024 13:32:57 +0200
-Message-ID: <20240613113310.727896887@linuxfoundation.org>
+Subject: [PATCH 5.15 221/402] ppdev: Remove usage of the deprecated ida_simple_xx() API
+Date: Thu, 13 Jun 2024 13:32:58 +0200
+Message-ID: <20240613113310.765548381@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,55 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 3df463865ba42b8f88a590326f4c9ea17a1ce459 ]
+[ Upstream commit d8407f71ebeaeb6f50bd89791837873e44609708 ]
 
-The put_device(&stm->dev) call will trigger stm_device_release() which
-frees "stm" so the vfree(stm) on the next line is a double free.
+ida_alloc() and ida_free() should be preferred to the deprecated
+ida_simple_get() and ida_simple_remove().
 
-Fixes: 389b6699a2aa ("stm class: Fix stm device initialization order")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Link: https://lore.kernel.org/r/20240429130119.1518073-2-alexander.shishkin@linux.intel.com
+This is less verbose.
+
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/ba9da12fdd5cdb2c28180b7160af5042447d803f.1702962092.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: fbf740aeb86a ("ppdev: Add an error check in register_device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/stm/core.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/char/ppdev.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwtracing/stm/core.c b/drivers/hwtracing/stm/core.c
-index 2712e699ba08c..ae9ea3a1fa2aa 100644
---- a/drivers/hwtracing/stm/core.c
-+++ b/drivers/hwtracing/stm/core.c
-@@ -868,8 +868,11 @@ int stm_register_device(struct device *parent, struct stm_data *stm_data,
- 		return -ENOMEM;
+diff --git a/drivers/char/ppdev.c b/drivers/char/ppdev.c
+index 38b46c7d17371..f6024d97fe70b 100644
+--- a/drivers/char/ppdev.c
++++ b/drivers/char/ppdev.c
+@@ -299,7 +299,7 @@ static int register_device(int minor, struct pp_struct *pp)
+ 		goto err;
+ 	}
  
- 	stm->major = register_chrdev(0, stm_data->name, &stm_fops);
--	if (stm->major < 0)
--		goto err_free;
-+	if (stm->major < 0) {
-+		err = stm->major;
-+		vfree(stm);
-+		return err;
-+	}
+-	index = ida_simple_get(&ida_index, 0, 0, GFP_KERNEL);
++	index = ida_alloc(&ida_index, GFP_KERNEL);
+ 	memset(&ppdev_cb, 0, sizeof(ppdev_cb));
+ 	ppdev_cb.irq_func = pp_irq;
+ 	ppdev_cb.flags = (pp->flags & PP_EXCL) ? PARPORT_FLAG_EXCL : 0;
+@@ -310,7 +310,7 @@ static int register_device(int minor, struct pp_struct *pp)
+ 	if (!pdev) {
+ 		pr_warn("%s: failed to register device!\n", name);
+ 		rc = -ENXIO;
+-		ida_simple_remove(&ida_index, index);
++		ida_free(&ida_index, index);
+ 		goto err;
+ 	}
  
- 	device_initialize(&stm->dev);
- 	stm->dev.devt = MKDEV(stm->major, 0);
-@@ -913,10 +916,8 @@ int stm_register_device(struct device *parent, struct stm_data *stm_data,
- err_device:
- 	unregister_chrdev(stm->major, stm_data->name);
+@@ -750,7 +750,7 @@ static int pp_release(struct inode *inode, struct file *file)
  
--	/* matches device_initialize() above */
-+	/* calls stm_device_release() */
- 	put_device(&stm->dev);
--err_free:
--	vfree(stm);
- 
- 	return err;
- }
+ 	if (pp->pdev) {
+ 		parport_unregister_device(pp->pdev);
+-		ida_simple_remove(&ida_index, pp->index);
++		ida_free(&ida_index, pp->index);
+ 		pp->pdev = NULL;
+ 		pr_debug(CHRDEV "%x: unregistered pardevice\n", minor);
+ 	}
 -- 
 2.43.0
 
