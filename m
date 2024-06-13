@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15131146D43;
-	Thu, 13 Jun 2024 12:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1D61459EC;
+	Thu, 13 Jun 2024 12:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281378; cv=none; b=tpwcRHuYayswbd8ng38VQ3/H/d4H25JzmLYaUArS8nj32Cj7hwFFlsfUUj/G99+uMp16Y/43bn2nX6dvr4WBkeAPS4WSqumy/IWZR1UM9qbjXJn9NBm5Y/0e+mwzrDiJKvKtxDIcDb0OuFGgJDZirWNAX0nOZsB0h5Hj4ZedNUQ=
+	t=1718281381; cv=none; b=ZC2bsY6nJPbsxGln/FXwl6HZtmIAEFsr3FRJ1jfnHMw6HVh1GoeqfRG/PubPrF4VG4wCT8Lh+sOy+oyDj3ztu4TTrdtvpoXVKGJN8JcO3ryix4vRyFdBdlyqZJt58qznnGVU2m3E9d7WsgWe9CCLHLKI0/xGSvs/svrPTEbWzF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281378; c=relaxed/simple;
-	bh=Y6OXytQb2Lo2wF+htNE15z8JKblRJYSKjQ35HagkBdw=;
+	s=arc-20240116; t=1718281381; c=relaxed/simple;
+	bh=wt+/bdMRJybTvPfQdzntDt2VcaVs+6KTsVrBm+ocSdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=absqozh7ZAVa5YbvdzlaoejKQK0rfChRsBFwT91ypJe8vPUG9X9ysKZJKAnYALKicJV7op7Cp/gVa7IVu2FODRScXv3I2iGd9rG0as//FvBElOBfjNxq3tyBj0purqLqMN65FdyiVvXKD/lbSYdHVhPSS0AVQkodHpxW4QH8uRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kgZ9Vc2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pHuRjhS2BdAcBmEQL55L/oeBFUlpg2zWzpIgIwbatFK4sQULofCYlMbdKYREUcmv7IvBUdIdeC0TY3XSgC1Lbb8sHW6sHloDPOIK6/TzpEpP/BKCWXKFN0mDhjkwyL+/8t9J9lgVNn5sNmEVc928kOIu+7rjP9YohWqJEGs7y+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxK7MLvU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kgZ9Vc2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B447C4AF49;
-	Thu, 13 Jun 2024 12:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxK7MLvU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FC0C2BBFC;
+	Thu, 13 Jun 2024 12:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281378;
-	bh=Y6OXytQb2Lo2wF+htNE15z8JKblRJYSKjQ35HagkBdw=;
+	s=korg; t=1718281380;
+	bh=wt+/bdMRJybTvPfQdzntDt2VcaVs+6KTsVrBm+ocSdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0kgZ9Vc2Q2nINnoW2zuqQnqfIe77FQAMz2zqDUSxo5d0j6NIm8lD0jl7NYK5o9gdC
-	 IHLGoDVjc5CvKVMWb99sRxGm+Ne8gT+bmv4EcHWQmJRjzon3tXvgMkCw6ejRqPl7Og
-	 MabnOG+P3WalvDOvThBUU0TOGdlyG36xx91TIo/U=
+	b=TxK7MLvUYK+Gd2Tptov5AoC22vb+1fD4z0OJkyXQcqBMQPOBusHmitYGB3HDDQymo
+	 KOHu5u0QSNIdf74EzD6c2d8FpmHowSSjGUnaJ2BYVjPULle+KXpaUPau3/TAT6imWH
+	 6EUSFWihU7Mu40h8Tjnn6aCKKloppjy95RgKox+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 194/317] Input: ioc3kbd - convert to platform remove callback returning void
-Date: Thu, 13 Jun 2024 13:33:32 +0200
-Message-ID: <20240613113255.060736154@linuxfoundation.org>
+	Ryosuke Yasuoka <ryasuoka@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+d7b4dc6cd50410152534@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 228/317] nfc: nci: Fix uninit-value in nci_rx_work
+Date: Thu, 13 Jun 2024 13:34:06 +0200
+Message-ID: <20240613113256.371860220@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -45,66 +47,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Ryosuke Yasuoka <ryasuoka@redhat.com>
 
-[ Upstream commit 150e792dee9ca8416f3d375e48f2f4d7f701fc6b ]
+[ Upstream commit e4a87abf588536d1cdfb128595e6e680af5cf3ed ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+syzbot reported the following uninit-value access issue [1]
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+nci_rx_work() parses received packet from ndev->rx_q. It should be
+validated header size, payload size and total packet size before
+processing the packet. If an invalid packet is detected, it should be
+silently discarded.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230920125829.1478827-37-u.kleine-koenig@pengutronix.de
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Stable-dep-of: d40e9edcf3eb ("Input: ioc3kbd - add device table")
+Fixes: d24b03535e5e ("nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet")
+Reported-and-tested-by: syzbot+d7b4dc6cd50410152534@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d7b4dc6cd50410152534 [1]
+Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/ioc3kbd.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/nfc/nci/core.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/serio/ioc3kbd.c b/drivers/input/serio/ioc3kbd.c
-index d51bfe912db5b..50552dc7b4f5e 100644
---- a/drivers/input/serio/ioc3kbd.c
-+++ b/drivers/input/serio/ioc3kbd.c
-@@ -190,7 +190,7 @@ static int ioc3kbd_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index d8002065baaef..7b3f3d6285004 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1452,6 +1452,19 @@ int nci_core_ntf_packet(struct nci_dev *ndev, __u16 opcode,
+ 				 ndev->ops->n_core_ops);
  }
  
--static int ioc3kbd_remove(struct platform_device *pdev)
-+static void ioc3kbd_remove(struct platform_device *pdev)
- {
- 	struct ioc3kbd_data *d = platform_get_drvdata(pdev);
++static bool nci_valid_size(struct sk_buff *skb)
++{
++	BUILD_BUG_ON(NCI_CTRL_HDR_SIZE != NCI_DATA_HDR_SIZE);
++	unsigned int hdr_size = NCI_CTRL_HDR_SIZE;
++
++	if (skb->len < hdr_size ||
++	    !nci_plen(skb->data) ||
++	    skb->len < hdr_size + nci_plen(skb->data)) {
++		return false;
++	}
++	return true;
++}
++
+ /* ---- NCI TX Data worker thread ---- */
  
-@@ -198,13 +198,11 @@ static int ioc3kbd_remove(struct platform_device *pdev)
+ static void nci_tx_work(struct work_struct *work)
+@@ -1502,7 +1515,7 @@ static void nci_rx_work(struct work_struct *work)
+ 		nfc_send_to_raw_sock(ndev->nfc_dev, skb,
+ 				     RAW_PAYLOAD_NCI, NFC_DIRECTION_RX);
  
- 	serio_unregister_port(d->kbd);
- 	serio_unregister_port(d->aux);
--
--	return 0;
- }
- 
- static struct platform_driver ioc3kbd_driver = {
- 	.probe          = ioc3kbd_probe,
--	.remove         = ioc3kbd_remove,
-+	.remove_new     = ioc3kbd_remove,
- 	.driver = {
- 		.name = "ioc3-kbd",
- 	},
+-		if (!nci_plen(skb->data)) {
++		if (!nci_valid_size(skb)) {
+ 			kfree_skb(skb);
+ 			break;
+ 		}
 -- 
 2.43.0
 
