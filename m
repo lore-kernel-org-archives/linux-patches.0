@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1FC1877;
-	Thu, 13 Jun 2024 12:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0660D161;
+	Thu, 13 Jun 2024 12:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282410; cv=none; b=OyPc4AlWFC+vu0he6kBj0cvpPlmNgpW/WDPy1seQJpy2yf/8WcjHkpshrLQYBEzmroSFYF6k91y7z25V3aZLh1hVkpzx6BOvrGo6cJJAbry94UThitTkIsDgv94cRO1HqvjAiSrFOq1Prp6qw5dOFFYjlh0SFwh4/rbKm0YUOO0=
+	t=1718282413; cv=none; b=FdmDTEKGx8YwxSJIrFWBrTyrilDiZFMufp+TxOUOUxgE4u0Y247WcA2kuT3U6qzBS4vwiVZaV03zVtOJa4HcSERSoZzwzO+HANDpWSg4zeWLCIkGOtpK3toFEnoec8pc3aVwnjy5j4rvJFyJsrI3b3Oy75ltPmy5TWhcK1tQjT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282410; c=relaxed/simple;
-	bh=7H8NmuZq7eHl5WBdeEWk91vSu0MDz7+YNSuhziRiAZk=;
+	s=arc-20240116; t=1718282413; c=relaxed/simple;
+	bh=YEqFQhjwMCmbqhpiVVPsKnW1RQaL9RF/MQaKTa17Yfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZE269yap2AhYqSySXsUgu+xEYZJyxIinJMylgJh7akvkZuvT10PXUftZDG5DQXDoyOED807u6U5FtdPoIrCRH3BQbKDPUpmixcx56omQd7ZW1LoqTQlGxOB44jRG80tBdJJ+xlXzvcicxaW8s+GVc1ZJqiF5jzvcM3RcOmEsZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rw/YZfs6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uKcMFl7Kz/QUjxnwkDKnU6v4uwVlKY6eruLZQldRe4uKrMbljkAJ6Hoxn/eeZVNarTjJgcpXO5jEuX3tDJLxi5k66kIOs0fI6C2CB8oq1jtIsu7nu8ykFI0MNSH/AxH1VJGLNfhbfJqnNpeDq2ODRq1+2rjRzHCG3GEDd01B/g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yL2FUwAu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rw/YZfs6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F91C2BBFC;
-	Thu, 13 Jun 2024 12:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yL2FUwAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8241EC2BBFC;
+	Thu, 13 Jun 2024 12:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282410;
-	bh=7H8NmuZq7eHl5WBdeEWk91vSu0MDz7+YNSuhziRiAZk=;
+	s=korg; t=1718282412;
+	bh=YEqFQhjwMCmbqhpiVVPsKnW1RQaL9RF/MQaKTa17Yfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rw/YZfs6ZjlpEROK4WOy+PYW/QvLSCqZeb1MoRitn8K+irZ+Rard4dI1pDZKe/Ai4
-	 qHKlTIklQdY4xb6qWCGk5f6Vny1YCo+ck+YE4nI3ZkExbbB45ZnAkt25B1FgRgvIpn
-	 RBEmBvwOLTmd2gPRBpiB9UaxOFnxorpPQcaSrE7k=
+	b=yL2FUwAumHeftNfksQoCzBCB2ljh0Ky9Ysdl0gdbZImGtZcp9MYwnLzge3mwGuUXl
+	 6U2WdiKPpNZs4DfvPEm2xzsb7EOkohGPWeyOOB9QgPfHHOVv9TYxTFV+sB94kxyrwg
+	 /Uo2EepQOC8rJT432s4cuUQZ2cX0xCHBCjESI/qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Andrew Davis <afd@ti.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Dongliang Mu <mudongliangabcd@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 250/402] mmc: sdhci_am654: Write ITAPDLY for DDR52 timing
-Date: Thu, 13 Jun 2024 13:33:27 +0200
-Message-ID: <20240613113311.899044203@linuxfoundation.org>
+Subject: [PATCH 5.15 268/402] media: flexcop-usb: fix sanity check of bNumEndpoints
+Date: Thu, 13 Jun 2024 13:33:45 +0200
+Message-ID: <20240613113312.608592828@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,37 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Dongliang Mu <mudongliangabcd@gmail.com>
 
-[ Upstream commit d465234493bb6ad1b9c10a0c9ef9881b8d85081a ]
+[ Upstream commit f62dc8f6bf82d1b307fc37d8d22cc79f67856c2f ]
 
-For DDR52 timing, DLL is enabled but tuning is not carried
-out, therefore the ITAPDLY value in PHY CTRL 4 register is
-not correct. Fix this by writing ITAPDLY after enabling DLL.
+Commit d725d20e81c2 ("media: flexcop-usb: sanity checking of endpoint type
+") adds a sanity check for endpoint[1], but fails to modify the sanity
+check of bNumEndpoints.
 
-Fixes: a161c45f2979 ("mmc: sdhci_am654: Enable DLL only for some speed modes")
-Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Andrew Davis <afd@ti.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240320223837.959900-3-jm@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fix this by modifying the sanity check of bNumEndpoints to 2.
+
+Link: https://lore.kernel.org/linux-media/20220602055027.849014-1-dzm91@hust.edu.cn
+Fixes: d725d20e81c2 ("media: flexcop-usb: sanity checking of endpoint type")
+Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci_am654.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/b2c2/flexcop-usb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
-index ec77cf4d5dcdc..e68fce4413c8a 100644
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -304,6 +304,7 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
- 	if (timing > MMC_TIMING_UHS_SDR25 && clock >= CLOCK_TOO_SLOW_HZ) {
- 		sdhci_am654_setup_dll(host, clock);
- 		sdhci_am654->dll_enable = true;
-+		sdhci_am654_write_itapdly(sdhci_am654, sdhci_am654->itap_del_sel[timing]);
- 	} else {
- 		sdhci_am654_setup_delay_chain(sdhci_am654, timing);
- 		sdhci_am654->dll_enable = false;
+diff --git a/drivers/media/usb/b2c2/flexcop-usb.c b/drivers/media/usb/b2c2/flexcop-usb.c
+index 0b5c2f3a54ab4..0354614351cbf 100644
+--- a/drivers/media/usb/b2c2/flexcop-usb.c
++++ b/drivers/media/usb/b2c2/flexcop-usb.c
+@@ -513,7 +513,7 @@ static int flexcop_usb_init(struct flexcop_usb *fc_usb)
+ 
+ 	alt = fc_usb->uintf->cur_altsetting;
+ 
+-	if (alt->desc.bNumEndpoints < 1)
++	if (alt->desc.bNumEndpoints < 2)
+ 		return -ENODEV;
+ 	if (!usb_endpoint_is_isoc_in(&alt->endpoint[0].desc))
+ 		return -ENODEV;
 -- 
 2.43.0
 
