@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590DA384;
-	Thu, 13 Jun 2024 12:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABE5A59;
+	Thu, 13 Jun 2024 12:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282943; cv=none; b=M8Leul+CXoUL90lpxMD4MIuvyE+oBwJEmuLd5HXaosZ71Dgp4xb/fXDCQOOOkxdLm0GCgiLXMBgIfhLvnATCZI20/OcJNopVNpkBjvgZkiPAbxOBjD7wkd0RjDm242blpHVXsw0yaEpv6VBSw8MmEwlZaB5xPrHw1HpTQfQtAow=
+	t=1718282946; cv=none; b=ZMgEv6Ov1/cln/z3R4Ivp3BsTlMXyLhztE0rAlQ8GtGcf7XGgPam+IhshH19c41LxfFu42np7FQq0VdtFfVfZ8j7LtZRAWbsIysXIlcDm1V4y3ju9xlSm17J4z7u+hzJt0gnOY05HsLDfiZP30H+N6lmxVpumoW/eQGIB9jPsSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282943; c=relaxed/simple;
-	bh=bdVmSXhUC3h3e9Dek3AsWUqZwZaE3rk5Jtl1X6RqXvs=;
+	s=arc-20240116; t=1718282946; c=relaxed/simple;
+	bh=fOFXYu2G1+AH77BwNUxaafM3I/Wo45xM8DHn0zxEteg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HdhFsMRtNt9JP27DYyM1X7a5cBnpSAm0GmYObAC+cCopbsyDhA1pVVFaE+XUs5lxLPl7BxL1TB2KN1yFf69HJaQuCY5C2U4JV0ftmfgkJNZxD9ON4raVygx7t9LVKeR1eQEyrnH9qzQME/b3skLl/XMpjA+XSH5IQLkgm5BjFuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWvxAc3R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q+Xl+Y5q5SdipkBp/DNkCHJwOyIfQpbofq6j2BsZKUPyIz3O6VtNsh9lpODg0z5BRIncKJST7XU+f88uq0ob4Rpc3IvSWD5nqInEtvrMRJ8zkKQYK6ThHh37ryxD+/B4vCeG1vG702acmoQB3G8X8MRRknnjd6dRv3YdOc5CuKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0sm1egb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWvxAc3R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA221C2BBFC;
-	Thu, 13 Jun 2024 12:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0sm1egb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEE2C2BBFC;
+	Thu, 13 Jun 2024 12:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282943;
-	bh=bdVmSXhUC3h3e9Dek3AsWUqZwZaE3rk5Jtl1X6RqXvs=;
+	s=korg; t=1718282946;
+	bh=fOFXYu2G1+AH77BwNUxaafM3I/Wo45xM8DHn0zxEteg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XWvxAc3RBiNHbPcXUJWDFGBHwuwH3/rzTMtkqIiYJ4SzfqF1+wjTJ4sYFeepdZZK3
-	 mOMyXlpCBumKsiDW0XqCwLm8YQpIg/FVcbXLrJtR4Dd0LptLA+TAxZzRYqb1lPvt/X
-	 2AVd/++ZS+9XnuiRE1dLjuXCq2jOx3Ecwq8zBtPw=
+	b=b0sm1egbjrQeJKWb81d1fZxHW7Ev9xK9FE35y2mKpDwk8u8EBsEBT0m0J7Mb2M4Ye
+	 wWCa/D3gCfoq8hFsuDC1qeGhMLpBFrR1aWb9JTiSNOLKhKlvbtuXRcBjSwGMD6+H+N
+	 4zQevWa+JydtBMuHqYSOGCbaZBUTslRgFxaLQJlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ma <li.ma@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 45/85] drm/amdgpu/atomfirmware: add intergrated info v2.3 table
-Date: Thu, 13 Jun 2024 13:35:43 +0200
-Message-ID: <20240613113215.882023347@linuxfoundation.org>
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 6.1 46/85] 9p: add missing locking around taking dentry fid list
+Date: Thu, 13 Jun 2024 13:35:44 +0200
+Message-ID: <20240613113215.920179558@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -51,111 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Ma <li.ma@amd.com>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-commit e64e8f7c178e5228e0b2dbb504b9dc75953a319f upstream.
+commit c898afdc15645efb555acb6d85b484eb40a45409 upstream.
 
-[Why]
-The vram width value is 0.
-Because the integratedsysteminfo table in VBIOS has updated to 2.3.
+Fix a use-after-free on dentry's d_fsdata fid list when a thread
+looks up a fid through dentry while another thread unlinks it:
 
-[How]
-Driver needs a new intergrated info v2.3 table too.
-Then the vram width value will be correct.
+UAF thread:
+refcount_t: addition on 0; use-after-free.
+ p9_fid_get linux/./include/net/9p/client.h:262
+ v9fs_fid_find+0x236/0x280 linux/fs/9p/fid.c:129
+ v9fs_fid_lookup_with_uid linux/fs/9p/fid.c:181
+ v9fs_fid_lookup+0xbf/0xc20 linux/fs/9p/fid.c:314
+ v9fs_vfs_getattr_dotl+0xf9/0x360 linux/fs/9p/vfs_inode_dotl.c:400
+ vfs_statx+0xdd/0x4d0 linux/fs/stat.c:248
 
-Signed-off-by: Li Ma <li.ma@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Freed by:
+ p9_fid_destroy (inlined)
+ p9_client_clunk+0xb0/0xe0 linux/net/9p/client.c:1456
+ p9_fid_put linux/./include/net/9p/client.h:278
+ v9fs_dentry_release+0xb5/0x140 linux/fs/9p/vfs_dentry.c:55
+ v9fs_remove+0x38f/0x620 linux/fs/9p/vfs_inode.c:518
+ vfs_unlink+0x29a/0x810 linux/fs/namei.c:4335
+
+The problem is that d_fsdata was not accessed under d_lock, because
+d_release() normally is only called once the dentry is otherwise no
+longer accessible but since we also call it explicitly in v9fs_remove
+that lock is required:
+move the hlist out of the dentry under lock then unref its fids once
+they are no longer accessible.
+
+Fixes: 154372e67d40 ("fs/9p: fix create-unlink-getattr idiom")
 Cc: stable@vger.kernel.org
+Reported-by: Meysam Firouzi
+Reported-by: Amirmohammad Eftekhar
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Message-ID: <20240521122947.1080227-1-asmadeus@codewreck.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c |   15 ++++++++
- drivers/gpu/drm/amd/include/atomfirmware.h       |   43 +++++++++++++++++++++++
- 2 files changed, 58 insertions(+)
+ fs/9p/vfs_dentry.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c
-@@ -207,6 +207,7 @@ union igp_info {
- 	struct atom_integrated_system_info_v1_11 v11;
- 	struct atom_integrated_system_info_v1_12 v12;
- 	struct atom_integrated_system_info_v2_1 v21;
-+	struct atom_integrated_system_info_v2_3 v23;
- };
+--- a/fs/9p/vfs_dentry.c
++++ b/fs/9p/vfs_dentry.c
+@@ -50,12 +50,17 @@ static int v9fs_cached_dentry_delete(con
+ static void v9fs_dentry_release(struct dentry *dentry)
+ {
+ 	struct hlist_node *p, *n;
++	struct hlist_head head;
  
- union umc_info {
-@@ -347,6 +348,20 @@ amdgpu_atomfirmware_get_vram_info(struct
- 					if (vram_type)
- 						*vram_type = convert_atom_mem_type_to_vram_type(adev, mem_type);
- 					break;
-+				case 3:
-+					mem_channel_number = igp_info->v23.umachannelnumber;
-+					if (!mem_channel_number)
-+						mem_channel_number = 1;
-+					mem_type = igp_info->v23.memorytype;
-+					if (mem_type == LpDdr5MemType)
-+						mem_channel_width = 32;
-+					else
-+						mem_channel_width = 64;
-+					if (vram_width)
-+						*vram_width = mem_channel_number * mem_channel_width;
-+					if (vram_type)
-+						*vram_type = convert_atom_mem_type_to_vram_type(adev, mem_type);
-+					break;
- 				default:
- 					return -EINVAL;
- 				}
---- a/drivers/gpu/drm/amd/include/atomfirmware.h
-+++ b/drivers/gpu/drm/amd/include/atomfirmware.h
-@@ -1624,6 +1624,49 @@ struct atom_integrated_system_info_v2_2
- 	uint32_t  reserved4[189];
- };
+ 	p9_debug(P9_DEBUG_VFS, " dentry: %pd (%p)\n",
+ 		 dentry, dentry);
+-	hlist_for_each_safe(p, n, (struct hlist_head *)&dentry->d_fsdata)
++
++	spin_lock(&dentry->d_lock);
++	hlist_move_list((struct hlist_head *)&dentry->d_fsdata, &head);
++	spin_unlock(&dentry->d_lock);
++
++	hlist_for_each_safe(p, n, &head)
+ 		p9_fid_put(hlist_entry(p, struct p9_fid, dlist));
+-	dentry->d_fsdata = NULL;
+ }
  
-+struct uma_carveout_option {
-+  char       optionName[29];        //max length of string is 28chars + '\0'. Current design is for "minimum", "Medium", "High". This makes entire struct size 64bits
-+  uint8_t    memoryCarvedGb;        //memory carved out with setting
-+  uint8_t    memoryRemainingGb;     //memory remaining on system
-+  union {
-+    struct _flags {
-+      uint8_t Auto     : 1;
-+      uint8_t Custom   : 1;
-+      uint8_t Reserved : 6;
-+    } flags;
-+    uint8_t all8;
-+  } uma_carveout_option_flags;
-+};
-+
-+struct atom_integrated_system_info_v2_3 {
-+  struct  atom_common_table_header table_header;
-+  uint32_t  vbios_misc; // enum of atom_system_vbiosmisc_def
-+  uint32_t  gpucapinfo; // enum of atom_system_gpucapinf_def
-+  uint32_t  system_config;
-+  uint32_t  cpucapinfo;
-+  uint16_t  gpuclk_ss_percentage; // unit of 0.001%,   1000 mean 1%
-+  uint16_t  gpuclk_ss_type;
-+  uint16_t  dpphy_override;  // bit vector, enum of atom_sysinfo_dpphy_override_def
-+  uint8_t memorytype;       // enum of atom_dmi_t17_mem_type_def, APU memory type indication.
-+  uint8_t umachannelnumber; // number of memory channels
-+  uint8_t htc_hyst_limit;
-+  uint8_t htc_tmp_limit;
-+  uint8_t reserved1; // dp_ss_control
-+  uint8_t gpu_package_id;
-+  struct  edp_info_table  edp1_info;
-+  struct  edp_info_table  edp2_info;
-+  uint32_t  reserved2[8];
-+  struct  atom_external_display_connection_info extdispconninfo;
-+  uint8_t UMACarveoutVersion;
-+  uint8_t UMACarveoutIndexMax;
-+  uint8_t UMACarveoutTypeDefault;
-+  uint8_t UMACarveoutIndexDefault;
-+  uint8_t UMACarveoutType;           //Auto or Custom
-+  uint8_t UMACarveoutIndex;
-+  struct  uma_carveout_option UMASizeControlOption[20];
-+  uint8_t reserved3[110];
-+};
-+
- // system_config
- enum atom_system_vbiosmisc_def{
-   INTEGRATED_SYSTEM_INFO__GET_EDID_CALLBACK_FUNC_SUPPORT = 0x01,
+ static int v9fs_lookup_revalidate(struct dentry *dentry, unsigned int flags)
 
 
