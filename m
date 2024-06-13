@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB91F145B25;
-	Thu, 13 Jun 2024 12:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA301448F2;
+	Thu, 13 Jun 2024 12:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280482; cv=none; b=NR8YZcSzg6/WmROa72msCzdbB24SBu66wPzOpL+AA0ZMrFTf8nvbMZJirLefciyGxgKDgtxKkclO4Jgm9L+CTvuJZquic8M4EhjL7+Iq8Ohwy3jJBHgp67HGTsTrYAfo0SNjgVrNvjU6A1eqDwgehLl39zDhFjDr0smlc3vug+4=
+	t=1718280485; cv=none; b=j+cZJK9TTAMwCgur9/OFlgNt+lL+Dl7qYq6nRNimw7oELkryFf0bH32lc40T2JJ+x7dz5yi6TjDs4gtPNwd+QeFGLGyqXopBDiZZLWd110Knpb2eSsXNff1YBKCa3pNrk26TnFaT1HX3dz0zPF4RrscFXOY1/HtPmiS4m93PHos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280482; c=relaxed/simple;
-	bh=WRWJQRLOPWQGN7r9B87a4pHmGiNF3CFay/4zJUq+9bc=;
+	s=arc-20240116; t=1718280485; c=relaxed/simple;
+	bh=cy8tHtazjNtqC7bgbsr8zwtWZmigX+c7pcTpf20XTeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXhEjOKWWw+PTt2KmjJmwnIybS7x2F0O/8kmgNO/6Wu6vGRKxT8NwTT3HuF0fQ+Mwu5rRF/epXpfQCklgw2nlZ1dvrSKn/RKaDWWCH0ZDCTJ0uP4bsIkgfJA0vU8mdrb3MihN23FqxfNMu12BCk+90tDY5+59/rO7WwwJW+CX9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iffUO46O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9XUe/UcZMiRzd03G4pOHMkudJVI4nnwM0MiRHDpKfke44tUbZAhGe7M9jzlLRYFvG4MW+w3+tAzGaKtj0kAyYhkUNop4ZRXi/3PgpEl8Hs3+3IDyoPG/s+yr/y4GXAdL+QjKhX0O6OmK7bBzLmeR4wQ/g6A0uu4fNdsAPZqyAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCntVYuI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iffUO46O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522BEC4AF1C;
-	Thu, 13 Jun 2024 12:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCntVYuI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45295C4AF1D;
+	Thu, 13 Jun 2024 12:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280482;
-	bh=WRWJQRLOPWQGN7r9B87a4pHmGiNF3CFay/4zJUq+9bc=;
+	s=korg; t=1718280485;
+	bh=cy8tHtazjNtqC7bgbsr8zwtWZmigX+c7pcTpf20XTeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iffUO46O4JvqoJsLQtBlXBrYjf+Bd3M56QtmWgk5TrLTxLk3nKHmpEKqMGOK4lwiU
-	 T58GAVLJGSZKlYjTYusHpLB43C1xtvLzdi2zgvXKFgRi8oxHMwExHLxalNfGXM65NA
-	 x4/3h7tNYq0i9fku0YR757mOGrs3kToNOd0ShPhc=
+	b=DCntVYuIDCXJxRvnkJ+uMU4XOWDwDqvB+Ajud/ivONquQdovC61FhAc0eCSqzzWhe
+	 uTDoAvqFHZ4EipBLKdhi4zHZ3EFSU+GhaFUER6orWdHw72//AKB9ixMGOROSs232Bw
+	 k5RsEDa2nUJd9K5mVQvDikPf3oULV614+3aVHz/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: [PATCH 6.6 041/137] media: mc: mark the media devnode as registered from the, start
-Date: Thu, 13 Jun 2024 13:33:41 +0200
-Message-ID: <20240613113224.885130886@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 068/137] clk: qcom: clk-alpha-pll: fix rate setting for Stromer PLLs
+Date: Thu, 13 Jun 2024 13:34:08 +0200
+Message-ID: <20240613113225.935946081@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -51,48 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 4bc60736154bc9e0e39d3b88918f5d3762ebe5e0 upstream.
+commit 3c5b3e17b8fd1f1add5a9477306c355fab126977 upstream.
 
-First the media device node was created, and if successful it was
-marked as 'registered'. This leaves a small race condition where
-an application can open the device node and get an error back
-because the 'registered' flag was not yet set.
+The clk_alpha_pll_stromer_set_rate() function writes inproper
+values into the ALPHA_VAL{,_U} registers which results in wrong
+clock rates when the alpha value is used.
 
-Change the order: first set the 'registered' flag, then actually
-register the media device node. If that fails, then clear the flag.
+The broken behaviour can be seen on IPQ5018 for example, when
+dynamic scaling sets the CPU frequency to 800000 KHz. In this
+case the CPU cores are running only at 792031 KHz:
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Fixes: cf4b9211b568 ("[media] media: Media device node support")
+  # cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
+  800000
+  # cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
+  792031
+
+This happens because the function ignores the fact that the alpha
+value calculated by the alpha_pll_round_rate() function is only
+32 bits wide which must be extended to 40 bits if it is used on
+a hardware which supports 40 bits wide values.
+
+Extend the clk_alpha_pll_stromer_set_rate() function to convert
+the alpha value to 40 bits before wrinting that into the registers
+in order to ensure that the hardware really uses the requested rate.
+
+After the change the CPU frequency is correct:
+
+  # cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
+  800000
+  # cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
+  800000
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: e47a4f55f240 ("clk: qcom: clk-alpha-pll: Add support for Stromer PLLs")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://lore.kernel.org/r/20240328-alpha-pll-fix-stromer-set-rate-v3-1-1b79714c78bc@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/mc/mc-devnode.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/clk-alpha-pll.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/mc/mc-devnode.c
-+++ b/drivers/media/mc/mc-devnode.c
-@@ -246,15 +246,14 @@ int __must_check media_devnode_register(
- 	kobject_set_name(&devnode->cdev.kobj, "media%d", devnode->minor);
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -2444,6 +2444,8 @@ static int clk_alpha_pll_stromer_set_rat
+ 	rate = alpha_pll_round_rate(rate, prate, &l, &a, ALPHA_REG_BITWIDTH);
  
- 	/* Part 3: Add the media and char device */
-+	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
- 	ret = cdev_device_add(&devnode->cdev, &devnode->dev);
- 	if (ret < 0) {
-+		clear_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
- 		pr_err("%s: cdev_device_add failed\n", __func__);
- 		goto cdev_add_error;
- 	}
- 
--	/* Part 4: Activate this minor. The char device can now be used. */
--	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
--
- 	return 0;
- 
- cdev_add_error:
+ 	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
++
++	a <<= ALPHA_REG_BITWIDTH - ALPHA_BITWIDTH;
+ 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
+ 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
+ 		     a >> ALPHA_BITWIDTH);
 
 
