@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BF7145B2C;
-	Thu, 13 Jun 2024 12:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F0114533A;
+	Thu, 13 Jun 2024 12:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281004; cv=none; b=aMqOWHB5Z8yB9bqZwQwWPn3HUV2EF1obSF3Qy+cc6CiYiS+syWE1MGnvhrE1qoAv9bszzWjFBMa+P6yLr2Se84IOd0n5/xupWg6bocWvBdtYR+8TyrjSfYhK4jibhtNxQ1ob0LbAYe/93/qFHej7o6Bh5ECjb/xMsgi4oT4GdmM=
+	t=1718281007; cv=none; b=qrqKh7Ru+Xi/0uvR7CO0L8vt9qymDsAMIy+MRmyikNwhNzpGbPgauGDt6cUC43rmgewOxY/Un5BxvBha+7K0dKATGXvPAMpWQU98/3Un3PqC5KttQ+BqvUPOCAAoT+kDDAw2SJVkhhjBAb1FEwToWVFq6/CSlT7r7A0v4Pp+26c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281004; c=relaxed/simple;
-	bh=pnOdQHvodkrlH+1fyouVYemxIMuNt4yfhj1BLrAdgds=;
+	s=arc-20240116; t=1718281007; c=relaxed/simple;
+	bh=C+4CAtPcMUEQhudMFq3PkGiYNdE7v6Ot39v1jNhu6bE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qB4yJI7w4E1ZR1nidWdWcC+yGAj04GvjRsjfFlxAJVvc7hpInpyDRSPQYrxEPjIlblVo2PzsAjqD0St8Oy+fiTpbQjWi60NxO4WssIxjH7mWm19kCz9uzVqiEEVOHmQtLffBgPxwvpH8XHBZP/FWnunmYtAKrd+0IbDWuQ4vRv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9ZNx+gx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzsiYhqwM2njsqm7npdbM7zozzE7HPFsOr1PEGdjeBZnUdBXGKRHqtHnK4qigL53idmHU0Thb06ClHZm2OXbFbBYEgrgWR5c+InxpWxTTExR9gpddgOm4dEIl2Gb2gNlsw6teiVdQ02FIffMQ8ucOdpvJcy/w+e8nHFeCsp3k8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LocBVme2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9ZNx+gx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E24C2BBFC;
-	Thu, 13 Jun 2024 12:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LocBVme2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DB4C2BBFC;
+	Thu, 13 Jun 2024 12:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281003;
-	bh=pnOdQHvodkrlH+1fyouVYemxIMuNt4yfhj1BLrAdgds=;
+	s=korg; t=1718281006;
+	bh=C+4CAtPcMUEQhudMFq3PkGiYNdE7v6Ot39v1jNhu6bE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9ZNx+gxa9wCxfTHW6PMx6rU0aR4p5cqwSM4Q6PvkXglCz488N7N1mMIBpDsRmwy7
-	 slT4aMp6GyWYkNrooj5dwXMFzpAygEAY/8csdOezGnyzR+8nbpyTTNiskkcct/VLtz
-	 IGP8eDwyQGzQORsKUG2x+c7nOzhcljIXCNL0RwPY=
+	b=LocBVme2BWGHEWNvS1f4kgYdlNtffnJfKDLtg57A81toFW+aZVkfeD+xad4sh6bzh
+	 0DCX7RQijt0kKugmSxpErovn9Xvj3fTE6nsnZPrsGUtsczgI8r5yr7ff3KLhHy/ETH
+	 0xnK/uwTVZTUr/xET6+voAGIoPtcPPqcnGDpwdro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 108/317] drm/bridge: tc358775: Dont log an error when DSI host cant be found
-Date: Thu, 13 Jun 2024 13:32:06 +0200
-Message-ID: <20240613113251.728476123@linuxfoundation.org>
+Subject: [PATCH 5.10 109/317] drm/panel: simple: Add missing Innolux G121X1-L03 format, flags, connector
+Date: Thu, 13 Jun 2024 13:32:07 +0200
+Message-ID: <20240613113251.767744396@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -47,51 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 272377aa0e3dddeec3f568c8bb9d12c7a79d8ef5 ]
+[ Upstream commit 11ac72d033b9f577e8ba0c7a41d1c312bb232593 ]
 
-Given that failing to find a DSI host causes the driver to defer probe,
-make use of dev_err_probe() to log the reason. This makes the defer
-probe reason available and avoids alerting userspace about something
-that is not necessarily an error.
+The .bpc = 6 implies .bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG ,
+add the missing bus_format. Add missing connector type and bus_flags
+as well.
 
-Fixes: b26975593b17 ("display/drm/bridge: TC358775 DSI/LVDS driver")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-6-619a28148e5c@collabora.com
+Documentation [1] 1.4 GENERAL SPECIFICATI0NS indicates this panel is
+capable of both RGB 18bit/24bit panel, the current configuration uses
+18bit mode, .bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG , .bpc = 6.
+
+Support for the 24bit mode would require another entry in panel-simple
+with .bus_format = MEDIA_BUS_FMT_RGB666_1X7X4_SPWG and .bpc = 8, which
+is out of scope of this fix.
+
+[1] https://www.distec.de/fileadmin/pdf/produkte/TFT-Displays/Innolux/G121X1-L03_Datasheet.pdf
+
+Fixes: f8fa17ba812b ("drm/panel: simple: Add support for Innolux G121X1-L03")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240328102746.17868-2-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358775.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/tc358775.c b/drivers/gpu/drm/bridge/tc358775.c
-index 2272adcc5b4ad..55697fa4d7c8b 100644
---- a/drivers/gpu/drm/bridge/tc358775.c
-+++ b/drivers/gpu/drm/bridge/tc358775.c
-@@ -605,10 +605,8 @@ static int tc_bridge_attach(struct drm_bridge *bridge,
- 						};
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 51470020ba61d..7797aad592a19 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -2235,6 +2235,9 @@ static const struct panel_desc innolux_g121x1_l03 = {
+ 		.unprepare = 200,
+ 		.disable = 400,
+ 	},
++	.bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
++	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+ };
  
- 	host = of_find_mipi_dsi_host_by_node(tc->host_node);
--	if (!host) {
--		dev_err(dev, "failed to find dsi host\n");
--		return -EPROBE_DEFER;
--	}
-+	if (!host)
-+		return dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n");
- 
- 	dsi = mipi_dsi_device_register_full(host, &info);
- 	if (IS_ERR(dsi)) {
+ /*
 -- 
 2.43.0
 
