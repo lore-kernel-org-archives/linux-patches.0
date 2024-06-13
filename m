@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960C813C660;
-	Thu, 13 Jun 2024 12:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4763B81AA7;
+	Thu, 13 Jun 2024 12:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281313; cv=none; b=ElPWqYd0xtJck6OLbQcZ7PRQabjdXs9jTQVZ0F9tNKbweW1cfd+nfe+85L9nZYcpY0FCcsgk6hdi2VYsjcU79XwG/d8L54fkwnolXAWmCekpV6V0dxGIL/KCbnMZaUFYoNR6KwXO5SaskvaQqnvzbeHStUNZpZGAKvENWq2IW3U=
+	t=1718281316; cv=none; b=tHjlH9K2+iOH9ITA0bDIhgRqZdjfp4oSSuWjsXv5BnLFPUkWsM3SDimEmp7F7QU0dTECQCiAOyP0JigXacE29GnlhP5XXHqQxqaci3Xtmu1z9MsWrcbYTgXf3dFoimqFBXcmQfm3P+RzNo2HcC7dYBrfc9UhhV6cWAF7kZpJ+P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281313; c=relaxed/simple;
-	bh=0dg3FNVyKuI/50lvtbqxvt1qbqqEzkwo9a8RSUrL4Sc=;
+	s=arc-20240116; t=1718281316; c=relaxed/simple;
+	bh=AaJAHuXSRDi1UktClu/LYIomG74B79Go7E0n28ubPeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lxIqeMiUdYkz3KGV8oNoNU1990F0E2sDJw/WW49FDvIGj/K0+hTALcfICgaarhEkHo45IIYvIacVvhVwmGbIc+u8KWOlYdK1bCoWuzLExL+jM8BKrXmvxutKIBw9LGr4jFXk0shi1j9LPhtfMPEQSTPdLy257Nyb+PsBu0PjQOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFkUMH2r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k85hpioyCdlGjVxay/Ht2sJrutp2ZqngyE/aMwyvwIv2tA9jApsXuZ2mSrZWqDEhbRwjlpbKPBGu12MufsyKEHShq0AxahVY4jSKi7Duu8j0U0llJJ/mJbouDB8WqzOcCMTON2Gytw1nI3q30PNBhfAjVuFDmdhuB+b8iT2xRuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miYN+mo8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFkUMH2r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD69FC2BBFC;
-	Thu, 13 Jun 2024 12:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miYN+mo8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C568CC2BBFC;
+	Thu, 13 Jun 2024 12:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281313;
-	bh=0dg3FNVyKuI/50lvtbqxvt1qbqqEzkwo9a8RSUrL4Sc=;
+	s=korg; t=1718281316;
+	bh=AaJAHuXSRDi1UktClu/LYIomG74B79Go7E0n28ubPeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFkUMH2r0PiGW8ls0jcSltz7ECyq5NAnkXC2yD+omN0OQelYjCzVxr5JHpN2pKR2x
-	 YZ+4m0bHPYOKultv0UP5RSgYYYRsWOEGzFVcH8h0IJDfOM8AqXZtzMMolQP0dqMpKp
-	 ee6XmazaC6Qfwit+HuRTDNLe+8IgTXPbFoJEoajw=
+	b=miYN+mo8lCLWGWqVcRbpRgPo7/zpUSWX/WDb6DnfLY83S9ZuTg7H6mJsg+DfXwby2
+	 9jqBEusKZYIX1idQ80WQlkSBXqGRx/xNaBnyY5+oYvuzar9KqeSjQyjmiCqLOttjCT
+	 29WzlIH7+pV42ZtEjayexkLEbBrxQrbv0hss7MGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Richard Weinberger <richard@nod.at>,
+	Judith Mendez <jm@ti.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 213/317] um: Fix the -Wmissing-prototypes warning for __switch_mm
-Date: Thu, 13 Jun 2024 13:33:51 +0200
-Message-ID: <20240613113255.795041662@linuxfoundation.org>
+Subject: [PATCH 5.10 196/317] mmc: sdhci_am654: Add tuning algorithm for delay chain
+Date: Thu, 13 Jun 2024 13:33:34 +0200
+Message-ID: <20240613113255.138067099@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,46 +52,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit 2cbade17b18c0f0fd9963f26c9fc9b057eb1cb3a ]
+[ Upstream commit 6231d99dd4119312ad41abf9383e18fec66cbe4b ]
 
-The __switch_mm function is defined in the user code, and is called
-by the kernel code. It should be declared in a shared header.
+Currently the sdhci_am654 driver only supports one tuning
+algorithm which should be used only when DLL is enabled. The
+ITAPDLY is selected from the largest passing window and the
+buffer is viewed as a circular buffer.
 
-Fixes: 4dc706c2f292 ("um: take um_mmu.h to asm/mmu.h, clean asm/mmu_context.h a bit")
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+The new algorithm should be used when the delay chain
+is enabled. The ITAPDLY is selected from the largest passing
+window and the buffer is not viewed as a circular buffer.
+
+This implementation is based off of the following paper: [1].
+
+Also add support for multiple failing windows.
+
+[1] https://www.ti.com/lit/an/spract9/spract9.pdf
+
+Fixes: 13ebeae68ac9 ("mmc: sdhci_am654: Add support for software tuning")
+Signed-off-by: Judith Mendez <jm@ti.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240320223837.959900-2-jm@ti.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/asm/mmu.h           | 2 --
- arch/um/include/shared/skas/mm_id.h | 2 ++
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci_am654.c | 112 +++++++++++++++++++++++++++------
+ 1 file changed, 92 insertions(+), 20 deletions(-)
 
-diff --git a/arch/um/include/asm/mmu.h b/arch/um/include/asm/mmu.h
-index 5b072aba5b658..a7cb380c0b5c0 100644
---- a/arch/um/include/asm/mmu.h
-+++ b/arch/um/include/asm/mmu.h
-@@ -15,8 +15,6 @@ typedef struct mm_context {
- 	struct page *stub_pages[2];
- } mm_context_t;
+diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
+index eb52e0c5a0202..2e302c2b0ac12 100644
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -149,10 +149,17 @@ struct sdhci_am654_data {
+ 	int strb_sel;
+ 	u32 flags;
+ 	u32 quirks;
++	bool dll_enable;
  
--extern void __switch_mm(struct mm_id * mm_idp);
--
- /* Avoid tangled inclusion with asm/ldt.h */
- extern long init_new_ldt(struct mm_context *to_mm, struct mm_context *from_mm);
- extern void free_ldt(struct mm_context *mm);
-diff --git a/arch/um/include/shared/skas/mm_id.h b/arch/um/include/shared/skas/mm_id.h
-index e82e203f5f419..92dbf727e3842 100644
---- a/arch/um/include/shared/skas/mm_id.h
-+++ b/arch/um/include/shared/skas/mm_id.h
-@@ -15,4 +15,6 @@ struct mm_id {
- 	int kill;
+ #define SDHCI_AM654_QUIRK_FORCE_CDTEST BIT(0)
  };
  
-+void __switch_mm(struct mm_id *mm_idp);
++struct window {
++	u8 start;
++	u8 end;
++	u8 length;
++};
 +
- #endif
+ struct sdhci_am654_driver_data {
+ 	const struct sdhci_pltfm_data *pdata;
+ 	u32 flags;
+@@ -294,10 +301,13 @@ static void sdhci_am654_set_clock(struct sdhci_host *host, unsigned int clock)
+ 
+ 	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, mask, val);
+ 
+-	if (timing > MMC_TIMING_UHS_SDR25 && clock >= CLOCK_TOO_SLOW_HZ)
++	if (timing > MMC_TIMING_UHS_SDR25 && clock >= CLOCK_TOO_SLOW_HZ) {
+ 		sdhci_am654_setup_dll(host, clock);
+-	else
++		sdhci_am654->dll_enable = true;
++	} else {
+ 		sdhci_am654_setup_delay_chain(sdhci_am654, timing);
++		sdhci_am654->dll_enable = false;
++	}
+ 
+ 	regmap_update_bits(sdhci_am654->base, PHY_CTRL5, CLKBUFSEL_MASK,
+ 			   sdhci_am654->clkbuf_sel);
+@@ -415,39 +425,101 @@ static u32 sdhci_am654_cqhci_irq(struct sdhci_host *host, u32 intmask)
+ 	return 0;
+ }
+ 
+-#define ITAP_MAX	32
++#define ITAPDLY_LENGTH 32
++#define ITAPDLY_LAST_INDEX (ITAPDLY_LENGTH - 1)
++
++static u32 sdhci_am654_calculate_itap(struct sdhci_host *host, struct window
++			  *fail_window, u8 num_fails, bool circular_buffer)
++{
++	u8 itap = 0, start_fail = 0, end_fail = 0, pass_length = 0;
++	u8 first_fail_start = 0, last_fail_end = 0;
++	struct device *dev = mmc_dev(host->mmc);
++	struct window pass_window = {0, 0, 0};
++	int prev_fail_end = -1;
++	u8 i;
++
++	if (!num_fails)
++		return ITAPDLY_LAST_INDEX >> 1;
++
++	if (fail_window->length == ITAPDLY_LENGTH) {
++		dev_err(dev, "No passing ITAPDLY, return 0\n");
++		return 0;
++	}
++
++	first_fail_start = fail_window->start;
++	last_fail_end = fail_window[num_fails - 1].end;
++
++	for (i = 0; i < num_fails; i++) {
++		start_fail = fail_window[i].start;
++		end_fail = fail_window[i].end;
++		pass_length = start_fail - (prev_fail_end + 1);
++
++		if (pass_length > pass_window.length) {
++			pass_window.start = prev_fail_end + 1;
++			pass_window.length = pass_length;
++		}
++		prev_fail_end = end_fail;
++	}
++
++	if (!circular_buffer)
++		pass_length = ITAPDLY_LAST_INDEX - last_fail_end;
++	else
++		pass_length = ITAPDLY_LAST_INDEX - last_fail_end + first_fail_start;
++
++	if (pass_length > pass_window.length) {
++		pass_window.start = last_fail_end + 1;
++		pass_window.length = pass_length;
++	}
++
++	if (!circular_buffer)
++		itap = pass_window.start + (pass_window.length >> 1);
++	else
++		itap = (pass_window.start + (pass_window.length >> 1)) % ITAPDLY_LENGTH;
++
++	return (itap > ITAPDLY_LAST_INDEX) ? ITAPDLY_LAST_INDEX >> 1 : itap;
++}
++
+ static int sdhci_am654_platform_execute_tuning(struct sdhci_host *host,
+ 					       u32 opcode)
+ {
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_am654_data *sdhci_am654 = sdhci_pltfm_priv(pltfm_host);
+-	int cur_val, prev_val = 1, fail_len = 0, pass_window = 0, pass_len;
+-	u32 itap;
++	struct window fail_window[ITAPDLY_LENGTH];
++	u8 curr_pass, itap;
++	u8 fail_index = 0;
++	u8 prev_pass = 1;
++
++	memset(fail_window, 0, sizeof(fail_window));
+ 
+ 	/* Enable ITAPDLY */
+ 	regmap_update_bits(sdhci_am654->base, PHY_CTRL4, ITAPDLYENA_MASK,
+ 			   1 << ITAPDLYENA_SHIFT);
+ 
+-	for (itap = 0; itap < ITAP_MAX; itap++) {
++	for (itap = 0; itap < ITAPDLY_LENGTH; itap++) {
+ 		sdhci_am654_write_itapdly(sdhci_am654, itap);
+ 
+-		cur_val = !mmc_send_tuning(host->mmc, opcode, NULL);
+-		if (cur_val && !prev_val)
+-			pass_window = itap;
++		curr_pass = !mmc_send_tuning(host->mmc, opcode, NULL);
+ 
+-		if (!cur_val)
+-			fail_len++;
++		if (!curr_pass && prev_pass)
++			fail_window[fail_index].start = itap;
+ 
+-		prev_val = cur_val;
++		if (!curr_pass) {
++			fail_window[fail_index].end = itap;
++			fail_window[fail_index].length++;
++		}
++
++		if (curr_pass && !prev_pass)
++			fail_index++;
++
++		prev_pass = curr_pass;
+ 	}
+-	/*
+-	 * Having determined the length of the failing window and start of
+-	 * the passing window calculate the length of the passing window and
+-	 * set the final value halfway through it considering the range as a
+-	 * circular buffer
+-	 */
+-	pass_len = ITAP_MAX - fail_len;
+-	itap = (pass_window + (pass_len >> 1)) % ITAP_MAX;
++
++	if (fail_window[fail_index].length != 0)
++		fail_index++;
++
++	itap = sdhci_am654_calculate_itap(host, fail_window, fail_index,
++					  sdhci_am654->dll_enable);
++
+ 	sdhci_am654_write_itapdly(sdhci_am654, itap);
+ 
+ 	return 0;
 -- 
 2.43.0
 
