@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9040B1DDDB;
-	Thu, 13 Jun 2024 12:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8403620ED;
+	Thu, 13 Jun 2024 12:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282737; cv=none; b=oOprLC2qhL3GntLZHes0vH+AYrzM6JGTqtrksnpXmgI0XWQNQvn4bsSJrmPmKdWYThkkKjAJFwhuD874ct5grgHHmSyuwefbbic9l3lNTDmtFqBxWYrsASTP/nbYCmXp4gT64NSlT3Spy/CtZF3OKid305QzfJPWgdA9iUZ08Lw=
+	t=1718282740; cv=none; b=It19c1kS2Rn8CoGoDBos5DSj+JL9OphNhUl0tap9/7Awt2Lw/q29OVrLoIaTTWP9JeosnI191o1SVxv650YCpLMib/609SYm4r0Ez52/QBTijjJ/eHnWdHaqEMxSItiZ43GWl93BgDtiv5m+KHfMvlhBuo7a/C/A2e89SADUIik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282737; c=relaxed/simple;
-	bh=iTDIb1eJlfYJDKlk890dWtVfM+07ugmxKpEuMhy/xaI=;
+	s=arc-20240116; t=1718282740; c=relaxed/simple;
+	bh=MyaCdDpDDfsEw+AM6ktWCRww5s+EjmqK951C0cE4mok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVdig8ecFvQGh6rP0jAac6ceRUb5fVGRrN3/K4vAo0ZCCoUFN4HZ/PXpykdjubQ40C0jotJRp8kyMLwvjqJolQUWdGNAmoq/vDVkmRV1kXxHvS38A+EhtXXs8Vd2Kz+4kTfpfmGU86sdPeV/yYc6il30JFvInsThu9ruSkrsCnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wr3u5Ips; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qEWe+Uexv3VOgZAfh7oOCkA531F4MqZ/S9eNdcF7OKGVqhZtyiEpbQGJ57IoH3i+V7Rie7HRwvbZ2vMlECXGDyNDIcSl31rD9TDo3zdobL/72fbr7+j94C4D/XjUo0dIliAhU5Zl7bq4utzkzD3VZj4cFG5i+svWEkt9JOn/HO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGS1WS+H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wr3u5Ips"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16EC8C2BBFC;
-	Thu, 13 Jun 2024 12:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGS1WS+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0884BC2BBFC;
+	Thu, 13 Jun 2024 12:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282737;
-	bh=iTDIb1eJlfYJDKlk890dWtVfM+07ugmxKpEuMhy/xaI=;
+	s=korg; t=1718282740;
+	bh=MyaCdDpDDfsEw+AM6ktWCRww5s+EjmqK951C0cE4mok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wr3u5IpsnHpWMPcheyQ7Jx16Y5NQeNw97g7XVjPhwp77gpyqXUZYmIP1rSdfJmJxZ
-	 8y50skwKFxLzSrKErsdW6I93byFUriUkkeka7sSw9zGlAmKZW4rnNp055FLpIIeEbD
-	 GcNII6UrxRynhZIXV2npzHAY6/YxPAxScU0yqeVo=
+	b=DGS1WS+HzvCiE9B84yub3ukoCV971YXQLkx1J7pTUE9T9NPshxHADEfGqeZ83N7CZ
+	 KOjcMcAU2meAEbaECQVF0qgSYWZolyp1DvkPwDGSisASGVEmCizHcZ4rgM6hEQGR3A
+	 +Q6vcZZjX+7h3Ccgm5nTbiKYrDrv+SDiGIsPQxGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Hao Ge <gehao@kylinos.cn>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 351/402] scripts/gdb: fix SB_* constants parsing
-Date: Thu, 13 Jun 2024 13:35:08 +0200
-Message-ID: <20240613113315.827782825@linuxfoundation.org>
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Vitaly Chikunov <vt@altlinux.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.15 378/402] crypto: ecdsa - Fix module auto-load on add-key
+Date: Thu, 13 Jun 2024 13:35:35 +0200
+Message-ID: <20240613113316.889054388@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -56,63 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-commit 6a59cb5158bff13b80f116305155fbe4967a5010 upstream.
+commit 48e4fd6d54f54d0ceab5a952d73e47a9454a6ccb upstream.
 
---0000000000009a0c9905fd9173ad
-Content-Transfer-Encoding: 8bit
+Add module alias with the algorithm cra_name similar to what we have for
+RSA-related and other algorithms.
 
-After f15afbd34d8f ("fs: fix undefined behavior in bit shift for
-SB_NOUSER") the constants were changed from plain integers which
-LX_VALUE() can parse to constants using the BIT() macro which causes the
-following:
+The kernel attempts to modprobe asymmetric algorithms using the names
+"crypto-$cra_name" and "crypto-$cra_name-all." However, since these
+aliases are currently missing, the modules are not loaded. For instance,
+when using the `add_key` function, the hash algorithm is typically
+loaded automatically, but the asymmetric algorithm is not.
 
-Reading symbols from build/linux-custom/vmlinux...done.
-Traceback (most recent call last):
-  File "/home/fainelli/work/buildroot/output/arm64/build/linux-custom/vmlinux-gdb.py", line 25, in <module>
-    import linux.constants
-  File "/home/fainelli/work/buildroot/output/arm64/build/linux-custom/scripts/gdb/linux/constants.py", line 5
-    LX_SB_RDONLY = ((((1UL))) << (0))
+Steps to test:
 
-Use LX_GDBPARSED() which does not suffer from that issue.
+1. Create certificate
 
-f15afbd34d8f ("fs: fix undefined behavior in bit shift for SB_NOUSER")
-Link: https://lkml.kernel.org/r/20230607221337.2781730-1-florian.fainelli@broadcom.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Acked-by: Christian Brauner <brauner@kernel.org>
-Cc: Hao Ge <gehao@kylinos.cn>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+  openssl req -x509 -sha256 -newkey ec \
+  -pkeyopt "ec_paramgen_curve:secp384r1" -keyout key.pem -days 365 \
+  -subj '/CN=test' -nodes -outform der -out nist-p384.der
+
+2. Optionally, trace module requests with: trace-cmd stream -e module &
+
+3. Trigger add_key call for the cert:
+
+   # keyctl padd asymmetric "" @u < nist-p384.der
+   641069229
+   # lsmod | head -2
+   Module                  Size  Used by
+   ecdsa_generic          16384  0
+
+Fixes: c12d448ba939 ("crypto: ecdsa - Register NIST P384 and extend test suite")
+Cc: stable@vger.kernel.org
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Vitaly Chikunov <vt@altlinux.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gdb/linux/constants.py.in |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ crypto/ecdsa.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/scripts/gdb/linux/constants.py.in
-+++ b/scripts/gdb/linux/constants.py.in
-@@ -46,12 +46,12 @@ if IS_BUILTIN(CONFIG_COMMON_CLK):
-     LX_GDBPARSED(CLK_GET_RATE_NOCACHE)
- 
- /* linux/fs.h */
--LX_VALUE(SB_RDONLY)
--LX_VALUE(SB_SYNCHRONOUS)
--LX_VALUE(SB_MANDLOCK)
--LX_VALUE(SB_DIRSYNC)
--LX_VALUE(SB_NOATIME)
--LX_VALUE(SB_NODIRATIME)
-+LX_GDBPARSED(SB_RDONLY)
-+LX_GDBPARSED(SB_SYNCHRONOUS)
-+LX_GDBPARSED(SB_MANDLOCK)
-+LX_GDBPARSED(SB_DIRSYNC)
-+LX_GDBPARSED(SB_NOATIME)
-+LX_GDBPARSED(SB_NODIRATIME)
- 
- /* linux/htimer.h */
- LX_GDBPARSED(hrtimer_resolution)
+--- a/crypto/ecdsa.c
++++ b/crypto/ecdsa.c
+@@ -373,4 +373,7 @@ module_exit(ecdsa_exit);
+ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Stefan Berger <stefanb@linux.ibm.com>");
+ MODULE_DESCRIPTION("ECDSA generic algorithm");
++MODULE_ALIAS_CRYPTO("ecdsa-nist-p192");
++MODULE_ALIAS_CRYPTO("ecdsa-nist-p256");
++MODULE_ALIAS_CRYPTO("ecdsa-nist-p384");
+ MODULE_ALIAS_CRYPTO("ecdsa-generic");
 
 
