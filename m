@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A545144D36;
-	Thu, 13 Jun 2024 12:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0325C144D28;
+	Thu, 13 Jun 2024 12:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281563; cv=none; b=dkFUiTJfdsrBYR+HXGLg18ILAjgu8q7amEzChvJYYj8mrZXD7jlBz/qtFjwajxZzjTKR9K8M48KLDnb5S+HSnS4WCktJRzUkMtCX/iXUAmpmogGC741XoQfS53k/oX8WqODiY0qu24jN+dRg3nna6S64K1wxy1CrXcsikkY5IeA=
+	t=1718281566; cv=none; b=ZaWdM0rafKJQzu624/IhdpQd5JYjrj6ARwd3VNgfdgapJZ/msEz+lBWyurW7vKIE91oXJ4b4EtBA1TDpxz2BDppMwd6gSSaO+Q1QqqFiOaHKxRYlNdAM7uV5QOJJd/cmj5GmxtEZPdqWZa04aisVgTzfnRCRgPbt79aNwfnukMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281563; c=relaxed/simple;
-	bh=nPN7dIJWV0ip6yJ23wcFoja8Ee+Aaf34wBbOcD08KnQ=;
+	s=arc-20240116; t=1718281566; c=relaxed/simple;
+	bh=dEgkLC9R/zecjOYUtFzehZ5SNLCmlLR1LZYXt/7KITQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGYLqyJdZzVZjN9QYdzs8CgJmVUD13x0yungr2O0/QNHrYLhb6SPAdw16OX7hCIuVDEMsf8CmXpFkNCi8ZlU73lDbKNJtNJDYDrvLYFZksN3YE/PkF6eAwsjOQXP5sUwO3oZjr86FN+tUYQA502cO8VQWtZ2Yid9pF/FUz4B+Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nig+fPIX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TJXLDwlZnwIltTTFwzARZg7M8g/E+8lz89MV0tcnEQ06o03vIsvXWCGK9653m6O5952V+xFeKdm5g4jyQxUzI7c4SvqQbE/PnYxHvXhgRkey0cWgTseFOp9zxqyclHEBoFz/45ScvUn8TLv/n9X+6uWqVHr6y+cjoMsRy1nqPVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajj5TKFL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nig+fPIX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F843C2BBFC;
-	Thu, 13 Jun 2024 12:26:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajj5TKFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D29DC2BBFC;
+	Thu, 13 Jun 2024 12:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281563;
-	bh=nPN7dIJWV0ip6yJ23wcFoja8Ee+Aaf34wBbOcD08KnQ=;
+	s=korg; t=1718281565;
+	bh=dEgkLC9R/zecjOYUtFzehZ5SNLCmlLR1LZYXt/7KITQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nig+fPIX5yXc4dCilKB86QzCUQy6R2ZpikLgTKvc20fmUY1cka6TB0ZP9hDMEIxZP
-	 c5DAtwQ5TpPgFKscTeF4ZbS3euEZ5J0wp1Bkctf4YjS3tzd8hr0PG4I5UEDC67wQ1H
-	 X/MvjaRcYnzjB6uz78BVgth0c5vkYlwIPFHVEfNs=
+	b=ajj5TKFLr0TMyGtEujLq4dJLa3VnrWN5Ar3SYC+P2QRBFTJZsbk6vvbIGteNDYM87
+	 n3NY+aiOFbPe5ZAwqFy5RBNwEACX4Ee6YMnaeJbH2j6rBxUlz4+ROR5gojGhqqqKnt
+	 L9iXDWE3OcPeCA1RDbzzv3PGDz2xAG5xM2j1oaOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Ramirez-Ortiz <jorge@foundries.io>,
-	Avri Altman <avri.altman@wdc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 5.10 267/317] mmc: core: Do not force a retune before RPMB switch
-Date: Thu, 13 Jun 2024 13:34:45 +0200
-Message-ID: <20240613113257.873881905@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Ming Lei <ming.lei@redhat.com>
+Subject: [PATCH 5.10 268/317] io_uring: fail NOP if non-zero op flags is passed in
+Date: Thu, 13 Jun 2024 13:34:46 +0200
+Message-ID: <20240613113257.919652625@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -53,66 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Ramirez-Ortiz <jorge@foundries.io>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 67380251e8bbd3302c64fea07f95c31971b91c22 upstream.
+commit 3d8f874bd620ce03f75a5512847586828ab86544 upstream.
 
-Requesting a retune before switching to the RPMB partition has been
-observed to cause CRC errors on the RPMB reads (-EILSEQ).
+The NOP op flags should have been checked from beginning like any other
+opcode, otherwise NOP may not be extended with the op flags.
 
-Since RPMB reads can not be retried, the clients would be directly
-affected by the errors.
+Given both liburing and Rust io-uring crate always zeros SQE op flags, just
+ignore users which play raw NOP uring interface without zeroing SQE, because
+NOP is just for test purpose. Then we can save one NOP2 opcode.
 
-This commit disables the retune request prior to switching to the RPMB
-partition: mmc_retune_pause() no longer triggers a retune before the
-pause period begins.
-
-This was verified with the sdhci-of-arasan driver (ZynqMP) configured
-for HS200 using two separate eMMC cards (DG4064 and 064GB2). In both
-cases, the error was easy to reproduce triggering every few tenths of
-reads.
-
-With this commit, systems that were utilizing OP-TEE to access RPMB
-variables will experience an enhanced performance. Specifically, when
-OP-TEE is configured to employ RPMB as a secure storage solution, it not
-only writes the data but also the secure filesystem within the
-partition. As a result, retrieving any variable involves multiple RPMB
-reads, typically around five.
-
-For context, on ZynqMP, each retune request consumed approximately
-8ms. Consequently, reading any RPMB variable used to take at the very
-minimum 40ms.
-
-After droping the need to retune before switching to the RPMB partition,
-this is no longer the case.
-
-Signed-off-by: Jorge Ramirez-Ortiz <jorge@foundries.io>
-Acked-by: Avri Altman <avri.altman@wdc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240103112911.2954632-1-jorge@foundries.io
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Suggested-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 2b188cc1bb85 ("Add io_uring IO interface")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20240510035031.78874-2-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/host.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ io_uring/io_uring.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/core/host.c
-+++ b/drivers/mmc/core/host.c
-@@ -114,13 +114,12 @@ void mmc_retune_enable(struct mmc_host *
- 
- /*
-  * Pause re-tuning for a small set of operations.  The pause begins after the
-- * next command and after first doing re-tuning.
-+ * next command.
-  */
- void mmc_retune_pause(struct mmc_host *host)
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -6474,6 +6474,8 @@ static int io_req_prep(struct io_kiocb *
  {
- 	if (!host->retune_paused) {
- 		host->retune_paused = 1;
--		mmc_retune_needed(host);
- 		mmc_retune_hold(host);
- 	}
- }
+ 	switch (req->opcode) {
+ 	case IORING_OP_NOP:
++		if (READ_ONCE(sqe->rw_flags))
++			return -EINVAL;
+ 		return 0;
+ 	case IORING_OP_READV:
+ 	case IORING_OP_READ_FIXED:
 
 
