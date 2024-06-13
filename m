@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D1B81AA7;
-	Thu, 13 Jun 2024 12:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0826D7F47B;
+	Thu, 13 Jun 2024 12:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281460; cv=none; b=DVpDSQ7l4GyJW4DX2uFfUZVuQldHB6cQjYySqDmt9IHxnsUidgmeNWOjiZCYDVY0H6KmSCgaq/+SH+LAMSLMQVLa0iDbAuT0fB1SFp7FIfvatkCf6GZ1eHXEjvlczlzAXQmqhCwzGa+adxU+w5TqhCQr7RWXXrofi9lIy23oI0o=
+	t=1718281463; cv=none; b=aTmpVfJy+LOxlq/THbAEHR5pLGK9V8zreuBiN5DzFr7kY9JwpxPl6KnNq5TIHYpIrqt8ZWQsLwAtKLIaNQaWAhkW6mEyjr8sEbXlZucSWBRfu8NAmkwirF+hLvvBepSsyQWFwByUcD/C4GLbR/Wkl+hzQYT9p+SkoVpclP2dg4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281460; c=relaxed/simple;
-	bh=HWUaNmE1L3yrqAKgUVfAIhBRSme8W6TBUuU8QfcjqW0=;
+	s=arc-20240116; t=1718281463; c=relaxed/simple;
+	bh=xWw8Ep1doQY4qcWTwYTTy1J0uLR2mZ2uuM4fSwFCGXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lZzNEC1nVWUlyjm4RCWzqup94rCRhoPDoHmj+xIzHPeJp27zkuORPTXo9dfurj7rVfRlU+B8mlNfPHmWJ6HSlNvYV0UiMEDnTtqRT7GE0mRltggq83rb3Kz6yr6vbVvN9s0D/qINoOfs8CflxXDqylYxYzrkIcbSx7v+0Cod1Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+OF5IHW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XsA4EjwUzwRvzuAbUO/+bu5QYUGEDpIdfXJqmaf1bS4b4BbxcseuIw4trAwisTUKkD1awxCTOquIc3HqTLb5AmhhJy2MKlCwshxu41bhRMNsiKhJsrI12FJFc7MT4IGjqCDFUy/6m3QfYm0KeuAkahnFCVUKWckJe/wR8BJXH2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLy4DsVM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+OF5IHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C2CC2BBFC;
-	Thu, 13 Jun 2024 12:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLy4DsVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD29C2BBFC;
+	Thu, 13 Jun 2024 12:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281460;
-	bh=HWUaNmE1L3yrqAKgUVfAIhBRSme8W6TBUuU8QfcjqW0=;
+	s=korg; t=1718281462;
+	bh=xWw8Ep1doQY4qcWTwYTTy1J0uLR2mZ2uuM4fSwFCGXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+OF5IHWFjBFYe1TaOMnSJF7+0UtaY9WTVIJCGlZN3ygt+LrZlIDxLkPybuPJi03X
-	 WOQvb9QqiwB/6qmEiblX2+Ni/tTaIxKUlXm3BennUn1wpf9x5ak5aA8EJ6Np/+0W1q
-	 ygGe3k0sISstYHib8/IZPXHRB/XsIwgyb9et8HuA=
+	b=JLy4DsVMFo5p67/KBzvzEr4CeIEjMzV7hmTALGl8SVJ4cSgDelIoM7yfomhhuRB+0
+	 pRlTRIQr2Z8tQPr/qkNZvfiVm7HtW1P4YC3kne/COiSxNo93ICtyJAyvxN5WoX7OXQ
+	 fyRxA6Xcg3moIp/tzD8qkHVDZzn6fuyhzaF21tS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi.grimberg@vastdata.com>,
-	Dan Aloni <dan.aloni@vastdata.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 231/317] rpcrdma: fix handling for RDMA_CM_EVENT_DEVICE_REMOVAL
-Date: Thu, 13 Jun 2024 13:34:09 +0200
-Message-ID: <20240613113256.486300871@linuxfoundation.org>
+Subject: [PATCH 5.10 232/317] ipv6: sr: fix memleak in seg6_hmac_init_algo
+Date: Thu, 13 Jun 2024 13:34:10 +0200
+Message-ID: <20240613113256.525120988@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -54,49 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Aloni <dan.aloni@vastdata.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 4836da219781ec510c4c0303df901aa643507a7a ]
+[ Upstream commit efb9f4f19f8e37fde43dfecebc80292d179f56c6 ]
 
-Under the scenario of IB device bonding, when bringing down one of the
-ports, or all ports, we saw xprtrdma entering a non-recoverable state
-where it is not even possible to complete the disconnect and shut it
-down the mount, requiring a reboot. Following debug, we saw that
-transport connect never ended after receiving the
-RDMA_CM_EVENT_DEVICE_REMOVAL callback.
+seg6_hmac_init_algo returns without cleaning up the previous allocations
+if one fails, so it's going to leak all that memory and the crypto tfms.
 
-The DEVICE_REMOVAL callback is irrespective of whether the CM_ID is
-connected, and ESTABLISHED may not have happened. So need to work with
-each of these states accordingly.
+Update seg6_hmac_exit to only free the memory when allocated, so we can
+reuse the code directly.
 
-Fixes: 2acc5cae2923 ('xprtrdma: Prevent dereferencing r_xprt->rx_ep after it is freed')
-Cc: Sagi Grimberg <sagi.grimberg@vastdata.com>
-Signed-off-by: Dan Aloni <dan.aloni@vastdata.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
+Reported-by: Sabrina Dubroca <sd@queasysnail.net>
+Closes: https://lore.kernel.org/netdev/Zj3bh-gE7eT6V6aH@hog/
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/20240517005435.2600277-1-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ipv6/seg6_hmac.c | 42 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 14 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index d015576f3081a..9e9df38b29f74 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -268,7 +268,11 @@ rpcrdma_cm_event_handler(struct rdma_cm_id *id, struct rdma_cm_event *event)
- 	case RDMA_CM_EVENT_DEVICE_REMOVAL:
- 		pr_info("rpcrdma: removing device %s for %pISpc\n",
- 			ep->re_id->device->name, sap);
--		fallthrough;
-+		switch (xchg(&ep->re_connect_status, -ENODEV)) {
-+		case 0: goto wake_connect_worker;
-+		case 1: goto disconnected;
+diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
+index 552bce1fdfb94..2e2b94ae63552 100644
+--- a/net/ipv6/seg6_hmac.c
++++ b/net/ipv6/seg6_hmac.c
+@@ -355,6 +355,7 @@ static int seg6_hmac_init_algo(void)
+ 	struct crypto_shash *tfm;
+ 	struct shash_desc *shash;
+ 	int i, alg_count, cpu;
++	int ret = -ENOMEM;
+ 
+ 	alg_count = ARRAY_SIZE(hmac_algos);
+ 
+@@ -365,12 +366,14 @@ static int seg6_hmac_init_algo(void)
+ 		algo = &hmac_algos[i];
+ 		algo->tfms = alloc_percpu(struct crypto_shash *);
+ 		if (!algo->tfms)
+-			return -ENOMEM;
++			goto error_out;
+ 
+ 		for_each_possible_cpu(cpu) {
+ 			tfm = crypto_alloc_shash(algo->name, 0, 0);
+-			if (IS_ERR(tfm))
+-				return PTR_ERR(tfm);
++			if (IS_ERR(tfm)) {
++				ret = PTR_ERR(tfm);
++				goto error_out;
++			}
+ 			p_tfm = per_cpu_ptr(algo->tfms, cpu);
+ 			*p_tfm = tfm;
+ 		}
+@@ -382,18 +385,22 @@ static int seg6_hmac_init_algo(void)
+ 
+ 		algo->shashs = alloc_percpu(struct shash_desc *);
+ 		if (!algo->shashs)
+-			return -ENOMEM;
++			goto error_out;
+ 
+ 		for_each_possible_cpu(cpu) {
+ 			shash = kzalloc_node(shsize, GFP_KERNEL,
+ 					     cpu_to_node(cpu));
+ 			if (!shash)
+-				return -ENOMEM;
++				goto error_out;
+ 			*per_cpu_ptr(algo->shashs, cpu) = shash;
+ 		}
+ 	}
+ 
+ 	return 0;
++
++error_out:
++	seg6_hmac_exit();
++	return ret;
+ }
+ 
+ int __init seg6_hmac_init(void)
+@@ -413,22 +420,29 @@ int __net_init seg6_hmac_net_init(struct net *net)
+ void seg6_hmac_exit(void)
+ {
+ 	struct seg6_hmac_algo *algo = NULL;
++	struct crypto_shash *tfm;
++	struct shash_desc *shash;
+ 	int i, alg_count, cpu;
+ 
+ 	alg_count = ARRAY_SIZE(hmac_algos);
+ 	for (i = 0; i < alg_count; i++) {
+ 		algo = &hmac_algos[i];
+-		for_each_possible_cpu(cpu) {
+-			struct crypto_shash *tfm;
+-			struct shash_desc *shash;
+ 
+-			shash = *per_cpu_ptr(algo->shashs, cpu);
+-			kfree(shash);
+-			tfm = *per_cpu_ptr(algo->tfms, cpu);
+-			crypto_free_shash(tfm);
++		if (algo->shashs) {
++			for_each_possible_cpu(cpu) {
++				shash = *per_cpu_ptr(algo->shashs, cpu);
++				kfree(shash);
++			}
++			free_percpu(algo->shashs);
 +		}
-+		return 0;
- 	case RDMA_CM_EVENT_ADDR_CHANGE:
- 		ep->re_connect_status = -ENODEV;
- 		goto disconnected;
++
++		if (algo->tfms) {
++			for_each_possible_cpu(cpu) {
++				tfm = *per_cpu_ptr(algo->tfms, cpu);
++				crypto_free_shash(tfm);
++			}
++			free_percpu(algo->tfms);
+ 		}
+-		free_percpu(algo->tfms);
+-		free_percpu(algo->shashs);
+ 	}
+ }
+ EXPORT_SYMBOL(seg6_hmac_exit);
 -- 
 2.43.0
 
