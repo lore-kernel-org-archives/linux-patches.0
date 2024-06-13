@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801DA6EB56;
-	Thu, 13 Jun 2024 12:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A44A6EB56;
+	Thu, 13 Jun 2024 12:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280588; cv=none; b=YK4yiWXoVUz4EHcG8VvyPVKgus38jA0K5Avo6+S+tvwF+yhmyzcxB88XieoRTUWFmddlXnmxie7SSqExPLhbQHN5wZeL2oRW/VueB75hIzJwyED9uM7citKBw2GvbnWQzqm9lxuwvCVQowYJgCyZqLvR8u3uasB2UO/6C9OFzJA=
+	t=1718280591; cv=none; b=tEP8+ABPqbtIVCdiLP0SCLJe8Xe8STLEJAkeI4lPx9lJhiK3xmy+YZAtOFiiKBjIazf2h1Ajsq2XW8qiBmO1IqBjn3n+pTDUeEz28j3BIkZLjKWVvoObUmWQuIM8rvsKB359oOm2TGO1jSu8yWjI8uC2Nzq/s3cVbWaGCpUlaB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280588; c=relaxed/simple;
-	bh=4wQxpJG3jWMRwvDGMRa4sm8m6auo/pjFDn7ENqEDJQ4=;
+	s=arc-20240116; t=1718280591; c=relaxed/simple;
+	bh=z2gCG/SnmmjvQE+ac5TEaL6fc7RUzsv0gcUrxxqt4lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dMOxttVoxUbhRLKaJu9WGi9+DzI5KbndCsBZyWGmr+Gv1bYo+HNwiMUf5WXhlrVmTbXyBHqyreTUyqNVPz/JsDr1FGT9MlQVdTahgZhDx8QqiIH4OBDYffMxRYgxJeiIJFvolStOuQujmKoilaA+ZY6LMPI3LzjPEEGFYJiVxcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6AqDUz3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LWA5VLGQ+cYejlVjlKojY7cBAdkeuPB+C/IIc5n8R/Dy+CZw+ugOOJMWar4wE0VZ1e4VmchcAQAl3uTzTU3eYplr3jcNc9TfdG3fbCg77qrjvyGmuyGwKI4/Oop9PcX43ouEgDD0OJqLl3lmPJ4JpAVq+Z/beVxkMiIwNEf8zmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsmvTsAA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6AqDUz3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07946C2BBFC;
-	Thu, 13 Jun 2024 12:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsmvTsAA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74ACC2BBFC;
+	Thu, 13 Jun 2024 12:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280588;
-	bh=4wQxpJG3jWMRwvDGMRa4sm8m6auo/pjFDn7ENqEDJQ4=;
+	s=korg; t=1718280591;
+	bh=z2gCG/SnmmjvQE+ac5TEaL6fc7RUzsv0gcUrxxqt4lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n6AqDUz3a+Q3c/Lgzd7hh5oonVTyoqK3yiaQTEY2QfWbMXFtvZHt1oQTiy6o7EkJW
-	 ET+9gMfQT5nQR+MN9JplisDUgof/1VJBJEMEJAXXqEsJK6g4hdiHF9CYiV6n0i0Gns
-	 70nMBilC4iV0wDgAKGhL5kYg2+tWismDQSGTewfY=
+	b=CsmvTsAAIOv9n85FJDilHQZL8KNanWzNppWGISpXCSmLV8LNGHZhP2zmOmDQvVlSB
+	 CEVRXotDwtDPCXKHSoJu+PaJ5VwluGatkMTPVdS/e+Q4nFCow/duCtXLyKByJxpQ5p
+	 IlNXntcPANSauRgprxfei8BwbwSBwZDcsi2CRPJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clement Lecigne <clecigne@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Tom Herbert <tom@herbertland.com>,
-	David Ahern <dsahern@kernel.org>,
+	Hui Wang <hui.wang@canonical.com>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 103/137] net: fix __dst_negative_advice() race
-Date: Thu, 13 Jun 2024 13:34:43 +0200
-Message-ID: <20240613113227.292871178@linuxfoundation.org>
+	Ismael Luceno <ismael@iodev.co.uk>
+Subject: [PATCH 6.6 104/137] e1000e: move force SMBUS near the end of enable_ulp function
+Date: Thu, 13 Jun 2024 13:34:44 +0200
+Message-ID: <20240613113227.331992891@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -54,195 +58,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-commit 92f1655aa2b2294d0b49925f3b875a634bd3b59e upstream.
+commit bfd546a552e140b0a4c8a21527c39d6d21addb28 upstream.
 
-__dst_negative_advice() does not enforce proper RCU rules when
-sk->dst_cache must be cleared, leading to possible UAF.
+The commit 861e8086029e ("e1000e: move force SMBUS from enable ulp
+function to avoid PHY loss issue") introduces a regression on
+PCH_MTP_I219_LM18 (PCIID: 0x8086550A). Without the referred commit, the
+ethernet works well after suspend and resume, but after applying the
+commit, the ethernet couldn't work anymore after the resume and the
+dmesg shows that the NIC link changes to 10Mbps (1000Mbps originally):
 
-RCU rules are that we must first clear sk->sk_dst_cache,
-then call dst_release(old_dst).
+    [   43.305084] e1000e 0000:00:1f.6 enp0s31f6: NIC Link is Up 10 Mbps Full Duplex, Flow Control: Rx/Tx
 
-Note that sk_dst_reset(sk) is implementing this protocol correctly,
-while __dst_negative_advice() uses the wrong order.
+Without the commit, the force SMBUS code will not be executed if
+"return 0" or "goto out" is executed in the enable_ulp(), and in my
+case, the "goto out" is executed since FWSM_FW_VALID is set. But after
+applying the commit, the force SMBUS code will be ran unconditionally.
 
-Given that ip6_negative_advice() has special logic
-against RTF_CACHE, this means each of the three ->negative_advice()
-existing methods must perform the sk_dst_reset() themselves.
+Here move the force SMBUS code back to enable_ulp() and put it
+immediately ahead of hw->phy.ops.release(hw), this could allow the
+longest settling time as possible for interface in this function and
+doesn't change the original code logic.
 
-Note the check against NULL dst is centralized in
-__dst_negative_advice(), there is no need to duplicate
-it in various callbacks.
+The issue was found on a Lenovo laptop with the ethernet hw as below:
+00:1f.6 Ethernet controller [0200]: Intel Corporation Device [8086:550a]
+(rev 20).
 
-Many thanks to Clement Lecigne for tracking this issue.
+And this patch is verified (cable plug and unplug, system suspend
+and resume) on Lenovo laptops with ethernet hw: [8086:550a],
+[8086:550b], [8086:15bb], [8086:15be], [8086:1a1f], [8086:1a1c] and
+[8086:0dc7].
 
-This old bug became visible after the blamed commit, using UDP sockets.
-
-Fixes: a87cb3e48ee8 ("net: Facility to report route quality of connected sockets")
-Reported-by: Clement Lecigne <clecigne@google.com>
-Diagnosed-by: Clement Lecigne <clecigne@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Tom Herbert <tom@herbertland.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240528114353.1794151-1-edumazet@google.com
+Fixes: 861e8086029e ("e1000e: move force SMBUS from enable ulp function to avoid PHY loss issue")
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Acked-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20240528-net-2024-05-28-intel-net-fixes-v1-1-dc8593d2bbc6@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Lee: Stable backport]
-Signed-off-by: Lee Jones <lee@kernel.org>
+Cc: Ismael Luceno <ismael@iodev.co.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/dst_ops.h  |    2 +-
- include/net/sock.h     |   13 +++----------
- net/ipv4/route.c       |   22 ++++++++--------------
- net/ipv6/route.c       |   29 +++++++++++++++--------------
- net/xfrm/xfrm_policy.c |   11 +++--------
- 5 files changed, 30 insertions(+), 47 deletions(-)
+ drivers/net/ethernet/intel/e1000e/ich8lan.c |   22 ++++++++++++++++++++++
+ drivers/net/ethernet/intel/e1000e/netdev.c  |   18 ------------------
+ 2 files changed, 22 insertions(+), 18 deletions(-)
 
---- a/include/net/dst_ops.h
-+++ b/include/net/dst_ops.h
-@@ -24,7 +24,7 @@ struct dst_ops {
- 	void			(*destroy)(struct dst_entry *);
- 	void			(*ifdown)(struct dst_entry *,
- 					  struct net_device *dev);
--	struct dst_entry *	(*negative_advice)(struct dst_entry *);
-+	void			(*negative_advice)(struct sock *sk, struct dst_entry *);
- 	void			(*link_failure)(struct sk_buff *);
- 	void			(*update_pmtu)(struct dst_entry *dst, struct sock *sk,
- 					       struct sk_buff *skb, u32 mtu,
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2183,17 +2183,10 @@ sk_dst_get(const struct sock *sk)
- 
- static inline void __dst_negative_advice(struct sock *sk)
- {
--	struct dst_entry *ndst, *dst = __sk_dst_get(sk);
-+	struct dst_entry *dst = __sk_dst_get(sk);
- 
--	if (dst && dst->ops->negative_advice) {
--		ndst = dst->ops->negative_advice(dst);
--
--		if (ndst != dst) {
--			rcu_assign_pointer(sk->sk_dst_cache, ndst);
--			sk_tx_queue_clear(sk);
--			WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
--		}
--	}
-+	if (dst && dst->ops->negative_advice)
-+		dst->ops->negative_advice(sk, dst);
- }
- 
- static inline void dst_negative_advice(struct sock *sk)
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -132,7 +132,8 @@ struct dst_entry	*ipv4_dst_check(struct
- static unsigned int	 ipv4_default_advmss(const struct dst_entry *dst);
- INDIRECT_CALLABLE_SCOPE
- unsigned int		ipv4_mtu(const struct dst_entry *dst);
--static struct dst_entry *ipv4_negative_advice(struct dst_entry *dst);
-+static void		ipv4_negative_advice(struct sock *sk,
-+					     struct dst_entry *dst);
- static void		 ipv4_link_failure(struct sk_buff *skb);
- static void		 ip_rt_update_pmtu(struct dst_entry *dst, struct sock *sk,
- 					   struct sk_buff *skb, u32 mtu,
-@@ -837,22 +838,15 @@ static void ip_do_redirect(struct dst_en
- 	__ip_do_redirect(rt, skb, &fl4, true);
- }
- 
--static struct dst_entry *ipv4_negative_advice(struct dst_entry *dst)
-+static void ipv4_negative_advice(struct sock *sk,
-+				 struct dst_entry *dst)
- {
- 	struct rtable *rt = (struct rtable *)dst;
--	struct dst_entry *ret = dst;
- 
--	if (rt) {
--		if (dst->obsolete > 0) {
--			ip_rt_put(rt);
--			ret = NULL;
--		} else if ((rt->rt_flags & RTCF_REDIRECTED) ||
--			   rt->dst.expires) {
--			ip_rt_put(rt);
--			ret = NULL;
--		}
--	}
--	return ret;
-+	if ((dst->obsolete > 0) ||
-+	    (rt->rt_flags & RTCF_REDIRECTED) ||
-+	    rt->dst.expires)
-+		sk_dst_reset(sk);
- }
- 
- /*
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -87,7 +87,8 @@ struct dst_entry	*ip6_dst_check(struct d
- static unsigned int	 ip6_default_advmss(const struct dst_entry *dst);
- INDIRECT_CALLABLE_SCOPE
- unsigned int		ip6_mtu(const struct dst_entry *dst);
--static struct dst_entry *ip6_negative_advice(struct dst_entry *);
-+static void		ip6_negative_advice(struct sock *sk,
-+					    struct dst_entry *dst);
- static void		ip6_dst_destroy(struct dst_entry *);
- static void		ip6_dst_ifdown(struct dst_entry *,
- 				       struct net_device *dev);
-@@ -2760,24 +2761,24 @@ INDIRECT_CALLABLE_SCOPE struct dst_entry
- }
- EXPORT_INDIRECT_CALLABLE(ip6_dst_check);
- 
--static struct dst_entry *ip6_negative_advice(struct dst_entry *dst)
-+static void ip6_negative_advice(struct sock *sk,
-+				struct dst_entry *dst)
- {
- 	struct rt6_info *rt = (struct rt6_info *) dst;
- 
--	if (rt) {
--		if (rt->rt6i_flags & RTF_CACHE) {
--			rcu_read_lock();
--			if (rt6_check_expired(rt)) {
--				rt6_remove_exception_rt(rt);
--				dst = NULL;
--			}
--			rcu_read_unlock();
--		} else {
--			dst_release(dst);
--			dst = NULL;
-+	if (rt->rt6i_flags & RTF_CACHE) {
-+		rcu_read_lock();
-+		if (rt6_check_expired(rt)) {
-+			/* counteract the dst_release() in sk_dst_reset() */
-+			dst_hold(dst);
-+			sk_dst_reset(sk);
-+
-+			rt6_remove_exception_rt(rt);
- 		}
-+		rcu_read_unlock();
-+		return;
+--- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
++++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
+@@ -1225,6 +1225,28 @@ s32 e1000_enable_ulp_lpt_lp(struct e1000
  	}
--	return dst;
-+	sk_dst_reset(sk);
- }
  
- static void ip6_link_failure(struct sk_buff *skb)
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -3853,15 +3853,10 @@ static void xfrm_link_failure(struct sk_
- 	/* Impossible. Such dst must be popped before reaches point of failure. */
- }
+ release:
++	/* Switching PHY interface always returns MDI error
++	 * so disable retry mechanism to avoid wasting time
++	 */
++	e1000e_disable_phy_retry(hw);
++
++	/* Force SMBus mode in PHY */
++	ret_val = e1000_read_phy_reg_hv_locked(hw, CV_SMB_CTRL, &phy_reg);
++	if (ret_val) {
++		e1000e_enable_phy_retry(hw);
++		hw->phy.ops.release(hw);
++		goto out;
++	}
++	phy_reg |= CV_SMB_CTRL_FORCE_SMBUS;
++	e1000_write_phy_reg_hv_locked(hw, CV_SMB_CTRL, phy_reg);
++
++	e1000e_enable_phy_retry(hw);
++
++	/* Force SMBus mode in MAC */
++	mac_reg = er32(CTRL_EXT);
++	mac_reg |= E1000_CTRL_EXT_FORCE_SMBUS;
++	ew32(CTRL_EXT, mac_reg);
++
+ 	hw->phy.ops.release(hw);
+ out:
+ 	if (ret_val)
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -6623,7 +6623,6 @@ static int __e1000_shutdown(struct pci_d
+ 	struct e1000_hw *hw = &adapter->hw;
+ 	u32 ctrl, ctrl_ext, rctl, status, wufc;
+ 	int retval = 0;
+-	u16 smb_ctrl;
  
--static struct dst_entry *xfrm_negative_advice(struct dst_entry *dst)
-+static void xfrm_negative_advice(struct sock *sk, struct dst_entry *dst)
- {
--	if (dst) {
--		if (dst->obsolete) {
--			dst_release(dst);
--			dst = NULL;
--		}
--	}
--	return dst;
-+	if (dst->obsolete)
-+		sk_dst_reset(sk);
- }
+ 	/* Runtime suspend should only enable wakeup for link changes */
+ 	if (runtime)
+@@ -6697,23 +6696,6 @@ static int __e1000_shutdown(struct pci_d
+ 			if (retval)
+ 				return retval;
+ 		}
+-
+-		/* Force SMBUS to allow WOL */
+-		/* Switching PHY interface always returns MDI error
+-		 * so disable retry mechanism to avoid wasting time
+-		 */
+-		e1000e_disable_phy_retry(hw);
+-
+-		e1e_rphy(hw, CV_SMB_CTRL, &smb_ctrl);
+-		smb_ctrl |= CV_SMB_CTRL_FORCE_SMBUS;
+-		e1e_wphy(hw, CV_SMB_CTRL, smb_ctrl);
+-
+-		e1000e_enable_phy_retry(hw);
+-
+-		/* Force SMBus mode in MAC */
+-		ctrl_ext = er32(CTRL_EXT);
+-		ctrl_ext |= E1000_CTRL_EXT_FORCE_SMBUS;
+-		ew32(CTRL_EXT, ctrl_ext);
+ 	}
  
- static void xfrm_init_pmtu(struct xfrm_dst **bundle, int nr)
+ 	/* Ensure that the appropriate bits are set in LPI_CTRL
 
 
