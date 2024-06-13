@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022786AFAE;
-	Thu, 13 Jun 2024 12:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC266AFAE;
+	Thu, 13 Jun 2024 12:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281607; cv=none; b=IJDlR13QCMADmT84AUgHCXxqM7Xze6PZrKyyG9aWC0ZCdJ+Fc0OtlaXPakzFIbAlbyJ4fX0cxNIzzmCpkO64J7fdVTT8y1rxGd5sKzqrEbZalOokT5GMYvTumiygFgbu3z4l0xhe+Re9hIbiyTxLZn5mRS23k+E+7TDZSnckajQ=
+	t=1718281610; cv=none; b=X1lSSvsBaqlH2LnKEYZTJoF3AcetqJ31r+GOs6Hf3h2uN036dzgIGD8IDNzXxi6uHojwIkyHWrHkagrNt/MFWc9kSkKlMozQLUEMKG2gMulvUIyJiPfCzm1UHhzjgVNYAXSUgLLYs/EfA0BXZbp/7J1y3Vm2S1LqFhmwKZNpLKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281607; c=relaxed/simple;
-	bh=ILGnX9vduPip0RFNgUNeXdlRv3TpS5z4QZaowiMml3I=;
+	s=arc-20240116; t=1718281610; c=relaxed/simple;
+	bh=UUMkKFnwSsft/xP0Lud4OJGiitDjbcA8gXsUgt4Vz5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXLkKvTdbhbamQRMCXx7J5VFyRyJoDkakT8S5CizCyfbCQAw3GAR/XI3F/BrGkMR6aoUJxoI2Yvz4wmY/smlnYCbyb9GgXeKpTCIIsS1yYg74PI3md+b8zk/hlFv0gEnmhy3TTmrctzOmI+//BP9zXQF/4oo+aA+i7GA+Un580c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIRj83zZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ML9a5eAn+MP3QlO6EhCxQW+GCh4IBbXe5pfEDzcg/kN0fkqlH19c6scmIyGfuyx9WCoJTrvOUICBRtTazS7m73IlgtBuPptb0NSNtxWgM9gmluigKX8EVigmHr6+aEk2PBepYwgkrr1yYdOKV3RCWiLzZz/R1fvWcInJxgmhudw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EnSic/c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIRj83zZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76933C2BBFC;
-	Thu, 13 Jun 2024 12:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EnSic/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67622C2BBFC;
+	Thu, 13 Jun 2024 12:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281606;
-	bh=ILGnX9vduPip0RFNgUNeXdlRv3TpS5z4QZaowiMml3I=;
+	s=korg; t=1718281609;
+	bh=UUMkKFnwSsft/xP0Lud4OJGiitDjbcA8gXsUgt4Vz5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iIRj83zZ28lIMzy+7TWRT6IXaKCgcPhNogcdnozmfut+Ut/EFVN6GPReh1dIyxNnt
-	 q72hRQW8PJElJ4/Yt5GqkAvoJf9jzur0OOX+O9Gf6lGxzi4uoCjFzQJ9yMPwa9fZ2u
-	 vwmXrZgNBTdRoL6dpYJYAMr8dzuZS++Be5TYmA14=
+	b=1EnSic/cF4a20wjaGuWZ46Sa1DpOPETSfIiLfHC84w997jb99mmUoa70Yo1YHJGJT
+	 RPP+FQPwrlU6aY/xA33qv3e4nO+k20sVaF5wehAvEZOz496Wyr1G7TCXzLFW7gMrAU
+	 K2b6dxndVI89993JRFccJ7fJMTE5kgPmikZmF2Yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 5.10 313/317] NFS: Fix READ_PLUS when server doesnt support OP_READ_PLUS
-Date: Thu, 13 Jun 2024 13:35:31 +0200
-Message-ID: <20240613113259.661332882@linuxfoundation.org>
+	Vitaly Chikunov <vt@altlinux.org>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Paul Wolneykien <manowar@altlinux.org>
+Subject: [PATCH 5.10 296/317] crypto: ecrdsa - Fix module auto-load on add_key
+Date: Thu, 13 Jun 2024 13:35:14 +0200
+Message-ID: <20240613113258.999942749@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,41 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anna Schumaker <Anna.Schumaker@Netapp.com>
+From: Vitaly Chikunov <vt@altlinux.org>
 
-commit f06d1b10cb016d5aaecdb1804fefca025387bd10 upstream.
+commit eb5739a1efbc9ff216271aeea0ebe1c92e5383e5 upstream.
 
-Olga showed me a case where the client was sending multiple READ_PLUS
-calls to the server in parallel, and the server replied
-NFS4ERR_OPNOTSUPP to each. The client would fall back to READ for the
-first reply, but fail to retry the other calls.
+Add module alias with the algorithm cra_name similar to what we have for
+RSA-related and other algorithms.
 
-I fix this by removing the test for NFS_CAP_READ_PLUS in
-nfs4_read_plus_not_supported(). This allows us to reschedule any
-READ_PLUS call that has a NFS4ERR_OPNOTSUPP return value, even after the
-capability has been cleared.
+The kernel attempts to modprobe asymmetric algorithms using the names
+"crypto-$cra_name" and "crypto-$cra_name-all." However, since these
+aliases are currently missing, the modules are not loaded. For instance,
+when using the `add_key` function, the hash algorithm is typically
+loaded automatically, but the asymmetric algorithm is not.
 
-Reported-by: Olga Kornievskaia <kolga@netapp.com>
-Fixes: c567552612ec ("NFS: Add READ_PLUS data segment support")
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Steps to test:
+
+1. Cert is generated usings ima-evm-utils test suite with
+   `gen-keys.sh`, example cert is provided below:
+
+  $ base64 -d >test-gost2012_512-A.cer <<EOF
+  MIIB/DCCAWagAwIBAgIUK8+whWevr3FFkSdU9GLDAM7ure8wDAYIKoUDBwEBAwMFADARMQ8wDQYD
+  VQQDDAZDQSBLZXkwIBcNMjIwMjAxMjIwOTQxWhgPMjA4MjEyMDUyMjA5NDFaMBExDzANBgNVBAMM
+  BkNBIEtleTCBoDAXBggqhQMHAQEBAjALBgkqhQMHAQIBAgEDgYQABIGALXNrTJGgeErBUOov3Cfo
+  IrHF9fcj8UjzwGeKCkbCcINzVUbdPmCopeJRHDJEvQBX1CQUPtlwDv6ANjTTRoq5nCk9L5PPFP1H
+  z73JIXHT0eRBDVoWy0cWDRz1mmQlCnN2HThMtEloaQI81nTlKZOcEYDtDpi5WODmjEeRNQJMdqCj
+  UDBOMAwGA1UdEwQFMAMBAf8wHQYDVR0OBBYEFCwfOITMbE9VisW1i2TYeu1tAo5QMB8GA1UdIwQY
+  MBaAFCwfOITMbE9VisW1i2TYeu1tAo5QMAwGCCqFAwcBAQMDBQADgYEAmBfJCMTdC0/NSjz4BBiQ
+  qDIEjomO7FEHYlkX5NGulcF8FaJW2jeyyXXtbpnub1IQ8af1KFIpwoS2e93LaaofxpWlpQLlju6m
+  KYLOcO4xK3Whwa2hBAz9YbpUSFjvxnkS2/jpH2MsOSXuUEeCruG/RkHHB3ACef9umG6HCNQuAPY=
+  EOF
+
+2. Optionally, trace module requests with: trace-cmd stream -e module &
+
+3. Trigger add_key call for the cert:
+
+  # keyctl padd asymmetric "" @u <test-gost2012_512-A.cer
+  939910969
+  # lsmod | head -3
+  Module                  Size  Used by
+  ecrdsa_generic         16384  0
+  streebog_generic       28672  0
+
+Repored-by: Paul Wolneykien <manowar@altlinux.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Vitaly Chikunov <vt@altlinux.org>
+Tested-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4proc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/ecrdsa.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -5320,7 +5320,7 @@ static bool nfs4_read_plus_not_supported
- 	struct rpc_message *msg = &task->tk_msg;
- 
- 	if (msg->rpc_proc == &nfs4_procedures[NFSPROC4_CLNT_READ_PLUS] &&
--	    server->caps & NFS_CAP_READ_PLUS && task->tk_status == -ENOTSUPP) {
-+	    task->tk_status == -ENOTSUPP) {
- 		server->caps &= ~NFS_CAP_READ_PLUS;
- 		msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_READ];
- 		rpc_restart_call_prepare(task);
+--- a/crypto/ecrdsa.c
++++ b/crypto/ecrdsa.c
+@@ -294,4 +294,5 @@ module_exit(ecrdsa_mod_fini);
+ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Vitaly Chikunov <vt@altlinux.org>");
+ MODULE_DESCRIPTION("EC-RDSA generic algorithm");
++MODULE_ALIAS_CRYPTO("ecrdsa");
+ MODULE_ALIAS_CRYPTO("ecrdsa-generic");
 
 
