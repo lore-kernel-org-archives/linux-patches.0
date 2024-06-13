@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C2D144D28;
-	Thu, 13 Jun 2024 12:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E281B145346;
+	Thu, 13 Jun 2024 12:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281570; cv=none; b=amXRU/WNQhGiMYcYqWeQCKbCCn1hvg6eHbiKm873/R0awoxLvsWJsNwj5l5NinFP6YDeW5UpYnUvTdYB63f3rXHCIP40wNLwjV694izxB99S/qSy8hmsJmcfXJbCwRpiQlq/6aPF5H0Caestu/WUSBzVrzQSewiy+XCLZqhPFng=
+	t=1718281572; cv=none; b=KSs+l72S2smgLN8F7mZbJMBpv1GRpUteyQnIzRheSAtV+105ZmNeUSOcF4OKcqNc3KorrmkbkTRVlldGmRGMmf6DYe21JvZTl9xyEMl+A/KW3B49r+s0wU6MEPr+1iU0DWiJdtAXPWCpITvKm0WgmUDzbcevhxki3lPsg/taDlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281570; c=relaxed/simple;
-	bh=uO+l80iUXPtnxYw0zZqrBACoy3fPVH1d7g15KHM7eX4=;
+	s=arc-20240116; t=1718281572; c=relaxed/simple;
+	bh=dCqor+CLr4sQ+njNvU7mEhSQKXz29bqfnVCWlU5bJQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUXUvM7qWGj4IAKyY8ItZNeiBsqf5+sn+G22MD5/pDgEr1eGHSOfHrhBHGQqKLKSsJ7EI8JowWsV3VdjVR6tluJvknCBq7QiB9NczS3c0HWfibmp3YvZPjedNnqmwSVbc7qvbTPoasdnjIgvkp2qyjAenTJwdrPUKwzd8ph8D4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhFKfP7r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DmMztsdjR1EALwMZVwMvqW72dUZmVmV6Pxu77gWf8yYMbYiL1vnp8uKN9bvj8OrCETi/9Cqp6xpfnpxecu95vbryDtYFUHVip9cfxpUNeETfX5q7wm45YsMSHtBTxzSIrPjBtzDj1hNp5vLN9SyDO+A8dquD01ccOXaDud3ZB2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpV6F5jG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhFKfP7r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718DCC2BBFC;
-	Thu, 13 Jun 2024 12:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpV6F5jG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614DDC2BBFC;
+	Thu, 13 Jun 2024 12:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281568;
-	bh=uO+l80iUXPtnxYw0zZqrBACoy3fPVH1d7g15KHM7eX4=;
+	s=korg; t=1718281571;
+	bh=dCqor+CLr4sQ+njNvU7mEhSQKXz29bqfnVCWlU5bJQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bhFKfP7rUrV55hH0rmN0JamFH7YAirm/ZpqWzwt+fG9LpI0/8tcsYp2cXPRAqQhQT
-	 dt/i6VwGhE0M0iwCOTYwOUvJU2j3LIRNpejeHVBN7Pim20j6S9pleGZRD4CWnvA2OP
-	 7NIlE2jp9b+ucEuVdWmq5GuMmcEDzOFEJA+xnGZI=
+	b=zpV6F5jGB61QwdH/pqnXR7WCYlOxVMDCj+K7IxNSIhNYJLhZzUDNvdKEeur0kHV5e
+	 +0LHiZ/69aG6sVQyDRq353RQ3txXlr/3FCmZn6HvHCuZ0Ztqt7WgpoV7GQqprZIz/K
+	 F4uM0oyhC8xCrTz9I3Q4zm5TO3FzmMW7J5jWiWgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>,
-	Markus Suvanto <markus.suvanto@gmail.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.10 269/317] afs: Dont cross .backup mountpoint from backup volume
-Date: Thu, 13 Jun 2024 13:34:47 +0200
-Message-ID: <20240613113257.959161866@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	"Bai, Shuangpeng" <sjb7183@psu.edu>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 270/317] nilfs2: fix use-after-free of timer for log writer thread
+Date: Thu, 13 Jun 2024 13:34:48 +0200
+Message-ID: <20240613113257.998024112@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -55,50 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Dionne <marc.dionne@auristor.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 29be9100aca2915fab54b5693309bc42956542e5 upstream.
+commit f5d4e04634c9cf68bdf23de08ada0bb92e8befe7 upstream.
 
-Don't cross a mountpoint that explicitly specifies a backup volume
-(target is <vol>.backup) when starting from a backup volume.
+Patch series "nilfs2: fix log writer related issues".
 
-It it not uncommon to mount a volume's backup directly in the volume
-itself.  This can cause tools that are not paying attention to get
-into a loop mounting the volume onto itself as they attempt to
-traverse the tree, leading to a variety of problems.
+This bug fix series covers three nilfs2 log writer-related issues,
+including a timer use-after-free issue and potential deadlock issue on
+unmount, and a potential freeze issue in event synchronization found
+during their analysis.  Details are described in each commit log.
 
-This doesn't prevent the general case of loops in a sequence of
-mountpoints, but addresses a common special case in the same way
-as other afs clients.
 
-Reported-by: Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>
-Link: http://lists.infradead.org/pipermail/linux-afs/2024-May/008454.html
-Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
-Link: http://lists.infradead.org/pipermail/linux-afs/2024-February/008074.html
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/768760.1716567475@warthog.procyon.org.uk
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+This patch (of 3):
+
+A use-after-free issue has been reported regarding the timer sc_timer on
+the nilfs_sc_info structure.
+
+The problem is that even though it is used to wake up a sleeping log
+writer thread, sc_timer is not shut down until the nilfs_sc_info structure
+is about to be freed, and is used regardless of the thread's lifetime.
+
+Fix this issue by limiting the use of sc_timer only while the log writer
+thread is alive.
+
+Link: https://lkml.kernel.org/r/20240520132621.4054-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20240520132621.4054-2-konishi.ryusuke@gmail.com
+Fixes: fdce895ea5dd ("nilfs2: change sc_timer from a pointer to an embedded one in struct nilfs_sc_info")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: "Bai, Shuangpeng" <sjb7183@psu.edu>
+Closes: https://groups.google.com/g/syzkaller/c/MK_LYqtt8ko/m/8rgdWeseAwAJ
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/mntpt.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nilfs2/segment.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
---- a/fs/afs/mntpt.c
-+++ b/fs/afs/mntpt.c
-@@ -146,6 +146,11 @@ static int afs_mntpt_set_params(struct f
- 		put_page(page);
- 		if (ret < 0)
- 			return ret;
-+
-+		/* Don't cross a backup volume mountpoint from a backup volume */
-+		if (src_as->volume && src_as->volume->type == AFSVL_BACKVOL &&
-+		    ctx->type == AFSVL_BACKVOL)
-+			return -ENODEV;
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2164,8 +2164,10 @@ static void nilfs_segctor_start_timer(st
+ {
+ 	spin_lock(&sci->sc_state_lock);
+ 	if (!(sci->sc_state & NILFS_SEGCTOR_COMMIT)) {
+-		sci->sc_timer.expires = jiffies + sci->sc_interval;
+-		add_timer(&sci->sc_timer);
++		if (sci->sc_task) {
++			sci->sc_timer.expires = jiffies + sci->sc_interval;
++			add_timer(&sci->sc_timer);
++		}
+ 		sci->sc_state |= NILFS_SEGCTOR_COMMIT;
  	}
+ 	spin_unlock(&sci->sc_state_lock);
+@@ -2385,10 +2387,21 @@ int nilfs_construct_dsync_segment(struct
+  */
+ static void nilfs_segctor_accept(struct nilfs_sc_info *sci)
+ {
++	bool thread_is_alive;
++
+ 	spin_lock(&sci->sc_state_lock);
+ 	sci->sc_seq_accepted = sci->sc_seq_request;
++	thread_is_alive = (bool)sci->sc_task;
+ 	spin_unlock(&sci->sc_state_lock);
+-	del_timer_sync(&sci->sc_timer);
++
++	/*
++	 * This function does not race with the log writer thread's
++	 * termination.  Therefore, deleting sc_timer, which should not be
++	 * done after the log writer thread exits, can be done safely outside
++	 * the area protected by sc_state_lock.
++	 */
++	if (thread_is_alive)
++		del_timer_sync(&sci->sc_timer);
+ }
  
+ /**
+@@ -2414,7 +2427,7 @@ static void nilfs_segctor_notify(struct
+ 			sci->sc_flush_request &= ~FLUSH_DAT_BIT;
+ 
+ 		/* re-enable timer if checkpoint creation was not done */
+-		if ((sci->sc_state & NILFS_SEGCTOR_COMMIT) &&
++		if ((sci->sc_state & NILFS_SEGCTOR_COMMIT) && sci->sc_task &&
+ 		    time_before(jiffies, sci->sc_timer.expires))
+ 			add_timer(&sci->sc_timer);
+ 	}
+@@ -2604,6 +2617,7 @@ static int nilfs_segctor_thread(void *ar
+ 	int timeout = 0;
+ 
+ 	sci->sc_timer_task = current;
++	timer_setup(&sci->sc_timer, nilfs_construction_timeout, 0);
+ 
+ 	/* start sync. */
+ 	sci->sc_task = current;
+@@ -2670,6 +2684,7 @@ static int nilfs_segctor_thread(void *ar
+  end_thread:
+ 	/* end sync. */
+ 	sci->sc_task = NULL;
++	del_timer_sync(&sci->sc_timer);
+ 	wake_up(&sci->sc_wait_task); /* for nilfs_segctor_kill_thread() */
+ 	spin_unlock(&sci->sc_state_lock);
  	return 0;
+@@ -2733,7 +2748,6 @@ static struct nilfs_sc_info *nilfs_segct
+ 	INIT_LIST_HEAD(&sci->sc_gc_inodes);
+ 	INIT_LIST_HEAD(&sci->sc_iput_queue);
+ 	INIT_WORK(&sci->sc_iput_work, nilfs_iput_work_func);
+-	timer_setup(&sci->sc_timer, nilfs_construction_timeout, 0);
+ 
+ 	sci->sc_interval = HZ * NILFS_SC_DEFAULT_TIMEOUT;
+ 	sci->sc_mjcp_freq = HZ * NILFS_SC_DEFAULT_SR_FREQ;
+@@ -2819,7 +2833,6 @@ static void nilfs_segctor_destroy(struct
+ 
+ 	down_write(&nilfs->ns_segctor_sem);
+ 
+-	del_timer_sync(&sci->sc_timer);
+ 	kfree(sci);
+ }
+ 
 
 
