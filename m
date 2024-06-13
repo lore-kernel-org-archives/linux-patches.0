@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A3A143C55;
-	Thu, 13 Jun 2024 11:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC51148853;
+	Thu, 13 Jun 2024 11:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279820; cv=none; b=PrXg2BsjKRqg5BAepX9Xu3hZ9dzPmeyxVXf7sK4AdQ5Q/EyeZX6hFBCz66p2yWwI8Zw8G0clrmqJgp03/YWKwU/zhY9QtI242gbeu66q5Cr+xfsRVhg0v25ywOinf56wUX4YO9nreCRSi/u6dpMp4d1Snag7nWNbywKjgPBXfD8=
+	t=1718279823; cv=none; b=aglMINAvSvE/UCdolOlEJ8aT6anH/PtLNf/fxbnO2/o0wJdsoRr9FWKzBj8sxtujqsfYMC0zWCZ4BxruUt1DSSxgkr5cfyyZDa6PNHSXpYjFUfplUWDVLCnmF0cqsf/4rCWKhvv3GUMseHbUxMPvwv2PBBrI+66KYa4N4G8lleo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279820; c=relaxed/simple;
-	bh=LYlypHw2R2Pi7R6OM1DocPfoB697URyLlbxnAuAOlvg=;
+	s=arc-20240116; t=1718279823; c=relaxed/simple;
+	bh=vbte0pYZxiXmsxuKsABioAV/ZIw0sbNz3H4C5+Aq+8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SnG/4TCmO2ZeIZxmy9Erg5fVfsqms9uIeNLiAvNJVDDe1gAK4ddNcMKN993C8tgnkHftGdHtf11YzOk+cwoF1bNknED1HSXsm2oJDsYpNBwa7Z48gXOkYyZt0r8HcWekf5SQnfS5D5MHyeHWnqMEBRxXfgNG+2fuUhp7zB0FPqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeBvHRNt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hKKVDTOMzD1WoG5FBu+ekbV7Ra1VNOxdUC7MivoHEeoT4mVICIny2uV51IHlSqtlw7CZ1084zgchu705TSw7bZG1ggPQEU/y3UUgoAv7BvTBvFGBW/H+iTRsuZiHx53OwgbZt/m47VP4xW3y3pmvjATp1AzfC9R00APecQ5aWXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzFS5DcG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeBvHRNt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48647C2BBFC;
-	Thu, 13 Jun 2024 11:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzFS5DcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FACC2BBFC;
+	Thu, 13 Jun 2024 11:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279820;
-	bh=LYlypHw2R2Pi7R6OM1DocPfoB697URyLlbxnAuAOlvg=;
+	s=korg; t=1718279823;
+	bh=vbte0pYZxiXmsxuKsABioAV/ZIw0sbNz3H4C5+Aq+8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zeBvHRNtSzwGdENIYauZxf8ZUdkBk7JM+dIU9zvg6dCZvbqv875O5EmpKYJ1cDgbz
-	 JqPVsR5FBo+PScHBwc4TykL+GUjSBrj+DinaVo0lAc10HfurujuhrAGpHkbx01AFPU
-	 wyYOsSPlxoOhz69Dh537qXj/Rvnn/wVQ1CvlC9VM=
+	b=hzFS5DcGx+w4RU1s8T8HPjl2eSmXHjX6MfIgaMpheg5BS4MKylXOhA/e6Ydo4TMAf
+	 BbIgH7vPG8CaejD+mrY71BwSvN3ORHRkeriqjxgUrL4EXMA1awsVp5LBaJojgdMzLY
+	 gK/+c3KS99JHPgQQ9L1pY8Ff8s68WlNd6UyyfbEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 047/202] tcp: avoid premature drops in tcp_add_backlog()
-Date: Thu, 13 Jun 2024 13:32:25 +0200
-Message-ID: <20240613113229.588647299@linuxfoundation.org>
+Subject: [PATCH 5.4 021/202] parisc: add missing export of __cmpxchg_u8()
+Date: Thu, 13 Jun 2024 13:31:59 +0200
+Message-ID: <20240613113228.586445863@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -51,85 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit ec00ed472bdb7d0af840da68c8c11bff9f4d9caa ]
+[ Upstream commit c57e5dccb06decf3cb6c272ab138c033727149b5 ]
 
-While testing TCP performance with latest trees,
-I saw suspect SOCKET_BACKLOG drops.
+__cmpxchg_u8() had been added (initially) for the sake of
+drivers/phy/ti/phy-tusb1210.c; the thing is, that drivers is
+modular, so we need an export
 
-tcp_add_backlog() computes its limit with :
-
-    limit = (u32)READ_ONCE(sk->sk_rcvbuf) +
-            (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
-    limit += 64 * 1024;
-
-This does not take into account that sk->sk_backlog.len
-is reset only at the very end of __release_sock().
-
-Both sk->sk_backlog.len and sk->sk_rmem_alloc could reach
-sk_rcvbuf in normal conditions.
-
-We should double sk->sk_rcvbuf contribution in the formula
-to absorb bubbles in the backlog, which happen more often
-for very fast flows.
-
-This change maintains decent protection against abuses.
-
-Fixes: c377411f2494 ("net: sk_add_backlog() take rmem_alloc into account")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240423125620.3309458-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b344d6a83d01 "parisc: add support for cmpxchg on u8 pointers"
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ arch/parisc/kernel/parisc_ksyms.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index d29d4b8192643..c18ad443ca7db 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1678,7 +1678,7 @@ int tcp_v4_early_demux(struct sk_buff *skb)
- 
- bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- {
--	u32 limit, tail_gso_size, tail_gso_segs;
-+	u32 tail_gso_size, tail_gso_segs;
- 	struct skb_shared_info *shinfo;
- 	const struct tcphdr *th;
- 	struct tcphdr *thtail;
-@@ -1687,6 +1687,7 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- 	bool fragstolen;
- 	u32 gso_segs;
- 	u32 gso_size;
-+	u64 limit;
- 	int delta;
- 
- 	/* In case all data was pulled from skb frags (in __pskb_pull_tail()),
-@@ -1781,7 +1782,13 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- 	__skb_push(skb, hdrlen);
- 
- no_coalesce:
--	limit = (u32)READ_ONCE(sk->sk_rcvbuf) + (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
-+	/* sk->sk_backlog.len is reset only at the end of __release_sock().
-+	 * Both sk->sk_backlog.len and sk->sk_rmem_alloc could reach
-+	 * sk_rcvbuf in normal conditions.
-+	 */
-+	limit = ((u64)READ_ONCE(sk->sk_rcvbuf)) << 1;
-+
-+	limit += ((u32)READ_ONCE(sk->sk_sndbuf)) >> 1;
- 
- 	/* Only socket owner can try to collapse/prune rx queues
- 	 * to reduce memory overhead, so add a little headroom here.
-@@ -1789,6 +1796,8 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- 	 */
- 	limit += 64 * 1024;
- 
-+	limit = min_t(u64, limit, UINT_MAX);
-+
- 	if (unlikely(sk_add_backlog(sk, skb, limit))) {
- 		bh_unlock_sock(sk);
- 		__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPBACKLOGDROP);
+diff --git a/arch/parisc/kernel/parisc_ksyms.c b/arch/parisc/kernel/parisc_ksyms.c
+index e8a6a751dfd8e..07418f11a964f 100644
+--- a/arch/parisc/kernel/parisc_ksyms.c
++++ b/arch/parisc/kernel/parisc_ksyms.c
+@@ -21,6 +21,7 @@ EXPORT_SYMBOL(memset);
+ #include <linux/atomic.h>
+ EXPORT_SYMBOL(__xchg8);
+ EXPORT_SYMBOL(__xchg32);
++EXPORT_SYMBOL(__cmpxchg_u8);
+ EXPORT_SYMBOL(__cmpxchg_u32);
+ EXPORT_SYMBOL(__cmpxchg_u64);
+ #ifdef CONFIG_SMP
 -- 
 2.43.0
 
