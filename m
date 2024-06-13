@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3198614431F;
-	Thu, 13 Jun 2024 12:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2678F1411C5;
+	Thu, 13 Jun 2024 12:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281504; cv=none; b=sCeMoBycdBWrQRJfdwpXiUu2vHnAO5ztXGQ9Ogt4t0mMls362BVNcUUG8+FIyvsZHtnyC1FRFzSnpYMURWIX68dnBXyI4WEOmTYTdbsHqJUdOflxtBvJYR7hY+OYY8kNCaLu2Xj0LFUoh0qqz9bDP8CkiYgcYHp7FyXPrYDECsM=
+	t=1718281507; cv=none; b=iNzD60iz5Q1cA8zAe/DfTIt7QMnfDK2OReeBr5GPqmUjt862J3j2Ix/mqGXWbBSPrDgQd95n0usTr39EtkhIVD2pfnyn1AL8lWqtM5nkRwG+on478ozm35towvpjq6AkI7FD2rzV5IbFz8F+3Y9Mr63USoyGEXx0zzGgNAxa924=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281504; c=relaxed/simple;
-	bh=UY5C6jRjJ0ZhmPcM+4WyDnrsc4eOqBu7eu4LPd18jdQ=;
+	s=arc-20240116; t=1718281507; c=relaxed/simple;
+	bh=R/EZ5ooGe19W0KUcyapyiHlWZAVz+G6momCxeduBsMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhSh941K28N/L7D1ThDn+Jb6jbbvkw3xXJaQwAl3dsCVGF5P8x6P5Pyyx/SN6Q4YghpCFr2kiNIrb7ckgJoC+rWkuQTfhvlerD4j2PHZmHP4UTd0Mfy/qyw4rOHvYXWbbmxQzoaozJBeQnqWnkdDCrt+77hKurxK/OC5Eergiak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dj4cKnp7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oj8x+bC7CLo1XnM/zyvo4eNuk+/mWFgrIq+P7GQvL4sP6/aBMn8BfHq6VLM9NL2eMzmEFVK9+/p5SU+jtHNHmmYnuj7SUgCNp80Hn1NBuMFWqLcIucq0TRGyytwnIOPa+caO3Ijs0I9zy1M/PJHjh0cSfomLpQz7XH2yWkTRBZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWo4BahK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dj4cKnp7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15DAC2BBFC;
-	Thu, 13 Jun 2024 12:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWo4BahK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34BAC2BBFC;
+	Thu, 13 Jun 2024 12:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281504;
-	bh=UY5C6jRjJ0ZhmPcM+4WyDnrsc4eOqBu7eu4LPd18jdQ=;
+	s=korg; t=1718281507;
+	bh=R/EZ5ooGe19W0KUcyapyiHlWZAVz+G6momCxeduBsMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dj4cKnp78ALm3rKystUhiRnrtzA1BBLkIN0AxbZ8MIEB6MpjmmQY+x1ORGycGgu5T
-	 TpOFbTeBHVlMCzJYdT69vY5JlxhtFIgXIN0cmsMsxWTR32pssxGBQvRHZfuhAYP8y3
-	 F6a2s3gLom1v48huXwAsZ5V1IThKcN+qNpz3xE6E=
+	b=iWo4BahKZ3MTQkiy4XNpb2XCEV449ppG7flaQ1uQMKDFFX1+CTn1EWtvKTJ/O033V
+	 F9z9RRza9tEseHK4USAf72vgXR+QbrDb6a7c3JajAG7XGV48t/sjIWWXXYfXlgoAU4
+	 gqsx1NmtEm3c5Qb+IAS5F22RpX7c54IgStyGH8DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 5.10 278/317] ata: pata_legacy: make legacy_exit() work again
-Date: Thu, 13 Jun 2024 13:34:56 +0200
-Message-ID: <20240613113258.305387232@linuxfoundation.org>
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 279/317] ACPI: resource: Do IRQ override on TongFang GXxHRXx and GMxHGxx
+Date: Thu, 13 Jun 2024 13:34:57 +0200
+Message-ID: <20240613113258.343438253@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,52 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-commit d4a89339f17c87c4990070e9116462d16e75894f upstream.
+commit c81bf14f9db68311c2e75428eea070d97d603975 upstream.
 
-Commit defc9cd826e4 ("pata_legacy: resychronize with upstream changes and
-resubmit") missed to update legacy_exit(), so that it now fails to do any
-cleanup -- the loop body there can never be entered.  Fix that and finally
-remove now useless nr_legacy_host variable...
+Listed devices need the override for the keyboard to work.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
-
-Fixes: defc9cd826e4 ("pata_legacy: resychronize with upstream changes and resubmit")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/pata_legacy.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/acpi/resource.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/ata/pata_legacy.c
-+++ b/drivers/ata/pata_legacy.c
-@@ -114,8 +114,6 @@ static int legacy_port[NR_HOST] = { 0x1f
- static struct legacy_probe probe_list[NR_HOST];
- static struct legacy_data legacy_data[NR_HOST];
- static struct ata_host *legacy_host[NR_HOST];
--static int nr_legacy_host;
--
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -475,6 +475,18 @@ static const struct dmi_system_id asus_l
+ 			DMI_MATCH(DMI_BOARD_NAME, "B2502CBA"),
+ 		},
+ 	},
++	{
++		/* TongFang GXxHRXx/TUXEDO InfinityBook Pro Gen9 AMD */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "GXxHRXx"),
++		},
++	},
++	{
++		/* TongFang GMxHGxx/TUXEDO Stellaris Slim Gen1 AMD */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "GMxHGxx"),
++		},
++	},
+ 	{ }
+ };
  
- static int probe_all;		/* Set to check all ISA port ranges */
- static int ht6560a;		/* HT 6560A on primary 1, second 2, both 3 */
-@@ -1239,9 +1237,11 @@ static __exit void legacy_exit(void)
- {
- 	int i;
- 
--	for (i = 0; i < nr_legacy_host; i++) {
-+	for (i = 0; i < NR_HOST; i++) {
- 		struct legacy_data *ld = &legacy_data[i];
--		ata_host_detach(legacy_host[i]);
-+
-+		if (legacy_host[i])
-+			ata_host_detach(legacy_host[i]);
- 		platform_device_unregister(ld->platform_dev);
- 	}
- }
 
 
