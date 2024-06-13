@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A0B17FD;
-	Thu, 13 Jun 2024 12:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC096A59;
+	Thu, 13 Jun 2024 12:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283049; cv=none; b=MJNRimqfc1QCS9gvTUigBuZm7eLJKz52qeuvftOiRVvJrzhkDi+wKgOpU+dNnK0kJFaz1UIhaPzKyjtc+mMQeGccz8J+MYWCHt4A+hkhM1UeGQtpHLL6Pn1oMbMW2QXA2THoxMI9jmZV5dE4UpDac/dYVKJBxZ0fyKU8VsWAT68=
+	t=1718283052; cv=none; b=px1odFaALmhKRXOCh6RAIam63TfEdZVRH+TsRtITxI/lMV18ie6siQyT0fME1l7+kaHG4cT/fLatd66padYXl4eGe9EQ9y5FbRXE0XoXmM+kG+udzxjI95YN0nUbD0fQl0gcC/kp9VqbfOqdQIUBfmlEjvTgxwyipTM1RqQBHKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283049; c=relaxed/simple;
-	bh=UQiLNQUYeS2ITX7dpPqlC8Er1w90p5E4qgEPBBPsr90=;
+	s=arc-20240116; t=1718283052; c=relaxed/simple;
+	bh=TMCTxcLRmb9vhKT8KP57swlb6wHpSwQaKrKbaiTv2xU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mwal/u90joJqNrUUYV2YhKupc+B1DQdajdTm3F3rhykmclOzeR1neGS9Y6glzumIxiFqtN4BIRTc5FG8Vhu/gh8qwX1qvXiaepg+9IYtMERZ2/Vn6ago2oKlygRr9f++hk3sl4bk3VpTMXaVBiz6JMgWEyo/c0Bn5lCkvAOanq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfDBlQjK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LtTI2WZ5m2qurTd172ay5uiuzlYlexMQa+fJJ7xV/W2a6FWtZ4QBkMuIk97LmlRclhp/oMHVZFCKOXwuZ0Hhe+pbEnlp/jz6jKPqhc2TS5icxZdZUaf9o2RbGpyry8hFfGxBz3BAxKdfD0KZ9c3rk068+5Yx1xoeSHJV50xuh8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVkZlsfm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfDBlQjK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85716C2BBFC;
-	Thu, 13 Jun 2024 12:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVkZlsfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73381C2BBFC;
+	Thu, 13 Jun 2024 12:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283048;
-	bh=UQiLNQUYeS2ITX7dpPqlC8Er1w90p5E4qgEPBBPsr90=;
+	s=korg; t=1718283051;
+	bh=TMCTxcLRmb9vhKT8KP57swlb6wHpSwQaKrKbaiTv2xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qfDBlQjKxNRgq0g4n7Y/wOb7le+IKrLjZbMgenC0g1GaIZOvDaFqMmFgyNMJlVkv2
-	 KHpmDAP1SAte36HvDtcqpHuM0SaQ6xLDqLbdgVFycSVqqGgZTanILWrO1zrVABpY5J
-	 OqVt9C0ojTM0aQ4hdYt5IFj4clI/0A8V9x6f97ss=
+	b=RVkZlsfmN/40VAYywjN3xz6XRJumFmzQi6wwKPuiJ0/QgdTCYtDd/MBwoZ3brY71n
+	 Q9wOF6PLooYMDt/u4Y5R5Ie3MUes+Df8kimWHafe00bfls/eLXn4k1esjEH/hcz1Zg
+	 mc9jFunkOpILPTlW78B69resstc/86QgqkwAHlzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 6.1 81/85] nfs: fix undefined behavior in nfs_block_bits()
-Date: Thu, 13 Jun 2024 13:36:19 +0200
-Message-ID: <20240613113217.261320722@linuxfoundation.org>
+	Peter Schneider <pschneider1968@googlemail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 55/85] scsi: core: Handle devices which return an unusually large VPD page count
+Date: Thu, 13 Jun 2024 13:35:53 +0200
+Message-ID: <20240613113216.262781939@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -51,38 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Martin K. Petersen <martin.petersen@oracle.com>
 
-commit 3c0a2e0b0ae661457c8505fecc7be5501aa7a715 upstream.
+commit d09c05aa35909adb7d29f92f0cd79fdcd1338ef0 upstream.
 
-Shifting *signed int* typed constant 1 left by 31 bits causes undefined
-behavior. Specify the correct *unsigned long* type by using 1UL instead.
+Peter Schneider reported that a system would no longer boot after
+updating to 6.8.4.  Peter bisected the issue and identified commit
+b5fc07a5fb56 ("scsi: core: Consult supported VPD page list prior to
+fetching page") as being the culprit.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+Turns out the enclosure device in Peter's system reports a byteswapped
+page length for VPD page 0. It reports "02 00" as page length instead
+of "00 02". This causes us to attempt to access 516 bytes (page length
++ header) of information despite only 2 pages being present.
 
+Limit the page search scope to the size of our VPD buffer to guard
+against devices returning a larger page count than requested.
+
+Link: https://lore.kernel.org/r/20240521023040.2703884-1-martin.petersen@oracle.com
+Fixes: b5fc07a5fb56 ("scsi: core: Consult supported VPD page list prior to fetching page")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reported-by: Peter Schneider <pschneider1968@googlemail.com>
+Closes: https://lore.kernel.org/all/eec6ebbf-061b-4a7b-96dc-ea748aa4d035@googlemail.com/
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/internal.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -695,9 +695,9 @@ unsigned long nfs_block_bits(unsigned lo
- 	if ((bsize & (bsize - 1)) || nrbitsp) {
- 		unsigned char	nrbits;
+diff --git a/drivers/scsi/scsi.c b/drivers/scsi/scsi.c
+index 3e0c0381277a..f0464db3f9de 100644
+--- a/drivers/scsi/scsi.c
++++ b/drivers/scsi/scsi.c
+@@ -350,6 +350,13 @@ static int scsi_get_vpd_size(struct scsi_device *sdev, u8 page)
+ 		if (result < SCSI_VPD_HEADER_SIZE)
+ 			return 0;
  
--		for (nrbits = 31; nrbits && !(bsize & (1 << nrbits)); nrbits--)
-+		for (nrbits = 31; nrbits && !(bsize & (1UL << nrbits)); nrbits--)
- 			;
--		bsize = 1 << nrbits;
-+		bsize = 1UL << nrbits;
- 		if (nrbitsp)
- 			*nrbitsp = nrbits;
- 	}
++		if (result > sizeof(vpd)) {
++			dev_warn_once(&sdev->sdev_gendev,
++				      "%s: long VPD page 0 length: %d bytes\n",
++				      __func__, result);
++			result = sizeof(vpd);
++		}
++
+ 		result -= SCSI_VPD_HEADER_SIZE;
+ 		if (!memchr(&vpd[SCSI_VPD_HEADER_SIZE], page, result))
+ 			return 0;
+-- 
+2.45.2
+
 
 
