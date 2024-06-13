@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C736A145FEE;
-	Thu, 13 Jun 2024 12:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42231465A7;
+	Thu, 13 Jun 2024 12:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281289; cv=none; b=P72t/gldbaDuHtdFw2Gx1NdnEzxtmNu7DPvp5LD5a4Kdb3sIE6aj4trm4opmsQiWpm2S0mUyj1YNQnjFTdRHITVe6xxV4CXd1MDgrb6OdUV1bwHA40QM7ycIV98MnHPDqQzVf9jVGr/UekeK50w9ehj4Cnisli5vxBP1qahzjOg=
+	t=1718281292; cv=none; b=IhUWljc42ua0/xVrRMW1zmT34nQvpk9yhhdiaj/wMO9q3lBU/bu13aRfSdWT1A4V8yxU7fkK6npji8ZGGq7oEnIPZC2uVBH3SFWznNwAz0sBai+bG2GZj/Bh9J29EPVBCngzRae45SN02/vM0KNwOmoAfdqeX9/JQcs6d4cWwWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281289; c=relaxed/simple;
-	bh=hid7PkOsxemXRjRs15ifH97B86hGp7rxuKdJNh9uzGA=;
+	s=arc-20240116; t=1718281292; c=relaxed/simple;
+	bh=8CCw4wuwBPORvh9ZLQbmuKtceb8lIV4ZsXX/oc5KOOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWaTfN4GHq4f5fTm46kJMUSP5eXTzzDS1qupHMNPBWPUuFqBMcZ5u6Fv4T7Dgd0ucROLv/NdwCBzF3zHBW6Eon84v0GvW5Fd1pEKCMqB8FhOZKHdcYt/Fm+snUYD9duKuYnZq5jsz2v8bpaFRgNZkOrvjv0MmNcuUaVa1zSQrs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9mli5VH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EdxJBziY1PFQg2chFFSsMh/GmKWtv2TO2GC2UhGj2sd+cuoVxemG2hXfreqUr99Iz4TpkDQ0lR1PYFjBb61IIEeOMlijatnulOiuhLOih2ofixWJ95KJdOSOhrnCnA6V4vnYD3yHKeM7b16KNE1ttdtX8q/PPMeL9PTvuE7fHqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWTlg1tN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9mli5VH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2BBC32786;
-	Thu, 13 Jun 2024 12:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWTlg1tN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A5EC2BBFC;
+	Thu, 13 Jun 2024 12:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281289;
-	bh=hid7PkOsxemXRjRs15ifH97B86hGp7rxuKdJNh9uzGA=;
+	s=korg; t=1718281292;
+	bh=8CCw4wuwBPORvh9ZLQbmuKtceb8lIV4ZsXX/oc5KOOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9mli5VHXyewOgPEWwgoLpq35vhguG8cgevZFb7dEihF9z4gNj3Nkh30YVJUmOy3Z
-	 YL//Qi0zEDBZLbRNat9xcCHELj98NmfyW5342a+4IZi5gpToQYiIqSQZM0G1FYYsAM
-	 P/VmsAXJtnF35oz+HxpQNBs5Yt51Koa50Qob9SvA=
+	b=KWTlg1tNxRuNdsZICV8DyUaUPr2V7YkFIICMPE8TfkRbD9wzHErYpNSiGMEbpZyd7
+	 Qjq4sbdBNrXO8CiasojzYKneTxhd5TxriQwfk9oXDQEEj34OkQh7d2DYjnejB6J3WX
+	 aEf/cNqFVaxNDcWEKQUXv4kn7Pzf+SbOt/an79rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 205/317] um: Add winch to winch_handlers before registering winch IRQ
-Date: Thu, 13 Jun 2024 13:33:43 +0200
-Message-ID: <20240613113255.485125849@linuxfoundation.org>
+Subject: [PATCH 5.10 206/317] um: vector: fix bpfflash parameter evaluation
+Date: Thu, 13 Jun 2024 13:33:44 +0200
+Message-ID: <20240613113255.523213500@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,66 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit a0fbbd36c156b9f7b2276871d499c9943dfe5101 ]
+[ Upstream commit 584ed2f76ff5fe360d87a04d17b6520c7999e06b ]
 
-Registering a winch IRQ is racy, an interrupt may occur before the winch is
-added to the winch_handlers list.
+With W=1 the build complains about a pointer compared to
+zero, clearly the result should've been compared.
 
-If that happens, register_winch_irq() adds to that list a winch that is
-scheduled to be (or has already been) freed, causing a panic later in
-winch_cleanup().
-
-Avoid the race by adding the winch to the winch_handlers list before
-registering the IRQ, and rolling back if um_request_irq() fails.
-
-Fixes: 42a359e31a0e ("uml: SIGIO support cleanup")
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Johannes Berg <johannes@sipsolutions.net>
+Fixes: 9807019a62dc ("um: Loadable BPF "Firmware" for vector drivers")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Tiwei Bie <tiwei.btw@antgroup.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/line.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ arch/um/drivers/vector_kern.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/um/drivers/line.c b/arch/um/drivers/line.c
-index 14ad9f495fe69..37e96ba0f5fb1 100644
---- a/arch/um/drivers/line.c
-+++ b/arch/um/drivers/line.c
-@@ -668,24 +668,26 @@ void register_winch_irq(int fd, int tty_fd, int pid, struct tty_port *port,
- 		goto cleanup;
+diff --git a/arch/um/drivers/vector_kern.c b/arch/um/drivers/vector_kern.c
+index fc662f7cc2afb..c10432ef2d410 100644
+--- a/arch/um/drivers/vector_kern.c
++++ b/arch/um/drivers/vector_kern.c
+@@ -142,7 +142,7 @@ static bool get_bpf_flash(struct arglist *def)
+ 
+ 	if (allow != NULL) {
+ 		if (kstrtoul(allow, 10, &result) == 0)
+-			return (allow > 0);
++			return result > 0;
  	}
- 
--	*winch = ((struct winch) { .list  	= LIST_HEAD_INIT(winch->list),
--				   .fd  	= fd,
-+	*winch = ((struct winch) { .fd  	= fd,
- 				   .tty_fd 	= tty_fd,
- 				   .pid  	= pid,
- 				   .port 	= port,
- 				   .stack	= stack });
- 
-+	spin_lock(&winch_handler_lock);
-+	list_add(&winch->list, &winch_handlers);
-+	spin_unlock(&winch_handler_lock);
-+
- 	if (um_request_irq(WINCH_IRQ, fd, IRQ_READ, winch_interrupt,
- 			   IRQF_SHARED, "winch", winch) < 0) {
- 		printk(KERN_ERR "register_winch_irq - failed to register "
- 		       "IRQ\n");
-+		spin_lock(&winch_handler_lock);
-+		list_del(&winch->list);
-+		spin_unlock(&winch_handler_lock);
- 		goto out_free;
- 	}
- 
--	spin_lock(&winch_handler_lock);
--	list_add(&winch->list, &winch_handlers);
--	spin_unlock(&winch_handler_lock);
--
- 	return;
- 
-  out_free:
+ 	return false;
+ }
 -- 
 2.43.0
 
