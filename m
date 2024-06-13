@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EB6DDB1;
-	Thu, 13 Jun 2024 11:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23151428FC;
+	Thu, 13 Jun 2024 11:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278736; cv=none; b=MMbggRoVwukqHEM+zIzuiNw8B+EuszkFrGdVMlu4AzZI40ZdGphkQlkXRyeOZo0Pvz7vttHA44DagyQsEDwKj53nvnSMztEiyaCFVPCdAuAqghVK9Ku1j+MgVy3h+KpxY0tpipmLwApW6J7yDBi6emdcwssLyn60UdM7cThDM08=
+	t=1718278739; cv=none; b=nDoALqQ0V0Rgxkksu0GKhtBvByo1zc01NIiOsEQO3JRlxX6b8VyfEPRW9mOVxT2+8dg6jaxjn4IL6FN4eKRfhpq97+6HuECyCUqNJL9ufxwVrPaTy4HF4/r/nsdSzGUpItvXuEzeg6EeoxfLtAD5mQlVlOPQRcm0m75v6KfQ2nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278736; c=relaxed/simple;
-	bh=8T35qAmhyxcvTEqVwU7eOi64rynfbpEElJw/1ffbjzQ=;
+	s=arc-20240116; t=1718278739; c=relaxed/simple;
+	bh=VBo6xwlPwOc9TaNPXwCzCJetqt8GgQrwhha0pqniKbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWgAyQz+HH9f7ToYVWgQGCNH20MSlAK0klIjporNsZYNrVcGzI1w9NE9zIylL3hU+7pzAWdFEy6MzBQjn/UVzReAn2w1Yf41bl6AZl12578EzcLniEDFMBK836W2VvB2P3NJkh92+CfTsIOHq8GiHpKxTvA49EAZKLvOxs7aSuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nffZW9qe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l8eF+XmSJtY55tR9mvuhyjJwftKtwMt9/85YD8RPSqlH7T2pPCeO7g9ZP5ZFRRMFaz6aWND+8UG4pkVajyYH3aHXosBjLcX/pGhx+4Zz5/eEVUtfuZSHj82wzG854TrSK+OFFExrcbUbuVLvsqoCUDHBn7pFyyQWDlWFnbw4bAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ULwFtFq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nffZW9qe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A80EC2BBFC;
-	Thu, 13 Jun 2024 11:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ULwFtFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B477C2BBFC;
+	Thu, 13 Jun 2024 11:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278736;
-	bh=8T35qAmhyxcvTEqVwU7eOi64rynfbpEElJw/1ffbjzQ=;
+	s=korg; t=1718278739;
+	bh=VBo6xwlPwOc9TaNPXwCzCJetqt8GgQrwhha0pqniKbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nffZW9qeH6nsT3wrk5c1g1GUL59xKj0h1xZr/9iR/ENTOPX7jf98NxsyGQee0dLxm
-	 8tfche7ITbH0Eet5gx4tsyqJMHA5jYPYVDoTR/PExTfobQfFAW8S4LCarbiEqYl7QP
-	 0cVg4a+gvKc+dfWGlRygd5ZY05GmxfFAOdrb95F0=
+	b=2ULwFtFqCcd2P7xW699JwsLTgzwJNQLBxPCqJCAHsfFfw146rUdGBr3M9eDagjNlo
+	 FlxTVvGCA6l1tnrC2SpkM/AuqVdoAMIpmooC/1sJW5XXTGhumhj1ekTfKxaK+r6aC4
+	 U7aw2gTzzj4izqsgFzKQTXZIS6PJ2QIzTraU+oC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Fang <derek.fang@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 012/213] ASoC: dt-bindings: rt5645: add cbj sleeve gpio property
-Date: Thu, 13 Jun 2024 13:31:00 +0200
-Message-ID: <20240613113228.457773638@linuxfoundation.org>
+Subject: [PATCH 4.19 046/213] macintosh/via-macii: Fix "BUG: sleeping function called from invalid context"
+Date: Thu, 13 Jun 2024 13:31:34 +0200
+Message-ID: <20240613113229.782880669@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -51,46 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Derek Fang <derek.fang@realtek.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 306b38e3fa727d22454a148a364123709e356600 ]
+[ Upstream commit d301a71c76ee4c384b4e03cdc320a55f5cf1df05 ]
 
-Add an optional gpio property to control external CBJ circuits
-to avoid some electric noise caused by sleeve/ring2 contacts floating.
+The via-macii ADB driver calls request_irq() after disabling hard
+interrupts. But disabling interrupts isn't necessary here because the
+VIA shift register interrupt was masked during VIA1 initialization.
 
-Signed-off-by: Derek Fang <derek.fang@realtek.com>
-
-Link: https://msgid.link/r/20240408091057.14165-2-derek.fang@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/419fcc09d0e563b425c419053d02236b044d86b0.1710298421.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/sound/rt5645.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/macintosh/via-macii.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/rt5645.txt b/Documentation/devicetree/bindings/sound/rt5645.txt
-index a03f9a872a716..bfb2217a9a658 100644
---- a/Documentation/devicetree/bindings/sound/rt5645.txt
-+++ b/Documentation/devicetree/bindings/sound/rt5645.txt
-@@ -16,6 +16,11 @@ Optional properties:
-   a GPIO spec for the external headphone detect pin. If jd-mode = 0,
-   we will get the JD status by getting the value of hp-detect-gpios.
+diff --git a/drivers/macintosh/via-macii.c b/drivers/macintosh/via-macii.c
+index 177c3ef59c875..107f529a8e466 100644
+--- a/drivers/macintosh/via-macii.c
++++ b/drivers/macintosh/via-macii.c
+@@ -135,24 +135,19 @@ static int macii_probe(void)
+ /* Initialize the driver */
+ int macii_init(void)
+ {
+-	unsigned long flags;
+ 	int err;
  
-+- cbj-sleeve-gpios:
-+  a GPIO spec to control the external combo jack circuit to tie the sleeve/ring2
-+  contacts to the ground or floating. It could avoid some electric noise from the
-+  active speaker jacks.
-+
- - realtek,in2-differential
-   Boolean. Indicate MIC2 input are differential, rather than single-ended.
+-	local_irq_save(flags);
+-
+ 	err = macii_init_via();
+ 	if (err)
+-		goto out;
++		return err;
  
-@@ -64,6 +69,7 @@ codec: rt5650@1a {
- 	compatible = "realtek,rt5650";
- 	reg = <0x1a>;
- 	hp-detect-gpios = <&gpio 19 0>;
-+	cbj-sleeve-gpios = <&gpio 20 0>;
- 	interrupt-parent = <&gpio>;
- 	interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
- 	realtek,dmic-en = "true";
+ 	err = request_irq(IRQ_MAC_ADB, macii_interrupt, 0, "ADB",
+ 			  macii_interrupt);
+ 	if (err)
+-		goto out;
++		return err;
+ 
+ 	macii_state = idle;
+-out:
+-	local_irq_restore(flags);
+-	return err;
++	return 0;
+ }
+ 
+ /* initialize the hardware */
 -- 
 2.43.0
 
