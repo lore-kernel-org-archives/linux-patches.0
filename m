@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68216143870;
-	Thu, 13 Jun 2024 11:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65756142E99;
+	Thu, 13 Jun 2024 11:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279026; cv=none; b=J4Mc/rro/gW4a77CKaduo8NYDgtefwDZoJC8NyMAjK+J9r1VuW0AzNKBu+XKwaR4v3xyrLs3AoExnI7QQwz21ODBcBISgtYV6klYmqspC4dNM2qYYGTHP832aPhqAlCL71upOYZYS8WWzX1i9NK8VVDY4xnogRoPzEUWxQVUpqg=
+	t=1718279029; cv=none; b=Aur4VEUbt6Ljxi4KeiQTJOyupoZ9KJpTlGLrJHCt3u2XX7DInCFBVnR600XAu2nWD7WT2dVFP6LjHHS3rj1KVHMB9Tr8+8l4mgofmjoH3ylYIL37c+FoLqp/sy9wSjjLOLS7RnYIRFOuXbyzzsGJvGw8a3mhR1soh++ot/xkoBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279026; c=relaxed/simple;
-	bh=B0XxeoU2YrDrUVIh63hK7FuPSunOVqIcM9l5E0MbyRQ=;
+	s=arc-20240116; t=1718279029; c=relaxed/simple;
+	bh=iAXwICK9iD1QrbP3DBPpdYC5CI+wdih9d1nam0sw5kI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ltt3XyIIBLdw4L4/9K4pge4a1ltesbsBgi+x8J1muhNV8nlq4q5dSr0MuEkxJsQsUQ6AUjrPA1niac4YLcOUleTFM1jd0xpOHgzZ37xFeR1N9ZsTvKROvk23jwKjTPWoTgZ1ENEcaKcYTzX67Wz7cLZdVVgNB1OJAW90423qWXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTou2NNU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTMQYV4lO5SqHhaxkrZTKxrs0cypmy+ifFbE+UC4oXT2BNNoIys52GBuhYviCzSsaQiYNJZoGmevwNCABeBrjrVb5y7ftzM7ag9GyA6S2vwEEYG5ouoMZYCYbJhV5v0jUCdGuFs4k3R7JMTgtKnhivhZHGhjr3hnbjBWkPjevgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsGORmcs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTou2NNU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A31C2BBFC;
-	Thu, 13 Jun 2024 11:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsGORmcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE735C2BBFC;
+	Thu, 13 Jun 2024 11:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279026;
-	bh=B0XxeoU2YrDrUVIh63hK7FuPSunOVqIcM9l5E0MbyRQ=;
+	s=korg; t=1718279029;
+	bh=iAXwICK9iD1QrbP3DBPpdYC5CI+wdih9d1nam0sw5kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yTou2NNUJ6mvKjT2njkWNHRew5BVSqWwlWhkxsintqbOHm1lonS3aXN99VbAxAv7k
-	 GmRyKoBVZnHKvqB6af0wfzY7onauvXYv8M/nTemqqHjvX55UM8EwNaeS10aaqfmOYS
-	 /8ImG+zuqw71dvdDYaI5Uup2p9i8aSTxhXONhoOU=
+	b=RsGORmcs5LSc005MJEtWbG0Ij4AkvQPrksZJNYeznqxgiFzvnejlFOcf1ZpaplKh8
+	 i66P5D49CvfuK89mhL5C4Vn3DX6a+ak6flxJZvPA7jl/+dWlMcYWG31Oj96RMAdCmU
+	 b0LfqpUdjAt4rGaKmtAdVWeCa2/5MU/dsL2hzacg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 120/213] x86/kconfig: Select ARCH_WANT_FRAME_POINTERS again when UNWINDER_FRAME_POINTER=y
-Date: Thu, 13 Jun 2024 13:32:48 +0200
-Message-ID: <20240613113232.627142143@linuxfoundation.org>
+	Ryosuke Yasuoka <ryasuoka@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+d7b4dc6cd50410152534@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 121/213] nfc: nci: Fix uninit-value in nci_rx_work
+Date: Thu, 13 Jun 2024 13:32:49 +0200
+Message-ID: <20240613113232.665172084@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,60 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Ryosuke Yasuoka <ryasuoka@redhat.com>
 
-[ Upstream commit 66ee3636eddcc82ab82b539d08b85fb5ac1dff9b ]
+[ Upstream commit e4a87abf588536d1cdfb128595e6e680af5cf3ed ]
 
-It took me some time to understand the purpose of the tricky code at
-the end of arch/x86/Kconfig.debug.
+syzbot reported the following uninit-value access issue [1]
 
-Without it, the following would be shown:
+nci_rx_work() parses received packet from ndev->rx_q. It should be
+validated header size, payload size and total packet size before
+processing the packet. If an invalid packet is detected, it should be
+silently discarded.
 
-  WARNING: unmet direct dependencies detected for FRAME_POINTER
-
-because
-
-  81d387190039 ("x86/kconfig: Consolidate unwinders into multiple choice selection")
-
-removed 'select ARCH_WANT_FRAME_POINTERS'.
-
-The correct and more straightforward approach should have been to move
-it where 'select FRAME_POINTER' is located.
-
-Several architectures properly handle the conditional selection of
-ARCH_WANT_FRAME_POINTERS. For example, 'config UNWINDER_FRAME_POINTER'
-in arch/arm/Kconfig.debug.
-
-Fixes: 81d387190039 ("x86/kconfig: Consolidate unwinders into multiple choice selection")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lore.kernel.org/r/20240204122003.53795-1-masahiroy@kernel.org
+Fixes: d24b03535e5e ("nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet")
+Reported-and-tested-by: syzbot+d7b4dc6cd50410152534@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d7b4dc6cd50410152534 [1]
+Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Kconfig.debug | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/nfc/nci/core.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/Kconfig.debug b/arch/x86/Kconfig.debug
-index 687cd1a213d50..82170d6257b1c 100644
---- a/arch/x86/Kconfig.debug
-+++ b/arch/x86/Kconfig.debug
-@@ -376,6 +376,7 @@ config UNWINDER_ORC
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 1f863ccf21211..6e83159b7b436 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1461,6 +1461,19 @@ int nci_core_ntf_packet(struct nci_dev *ndev, __u16 opcode,
+ 				 ndev->ops->n_core_ops);
+ }
  
- config UNWINDER_FRAME_POINTER
- 	bool "Frame pointer unwinder"
-+	select ARCH_WANT_FRAME_POINTERS
- 	select FRAME_POINTER
- 	---help---
- 	  This option enables the frame pointer unwinder for unwinding kernel
-@@ -403,7 +404,3 @@ config UNWINDER_GUESS
- 	  overhead.
++static bool nci_valid_size(struct sk_buff *skb)
++{
++	BUILD_BUG_ON(NCI_CTRL_HDR_SIZE != NCI_DATA_HDR_SIZE);
++	unsigned int hdr_size = NCI_CTRL_HDR_SIZE;
++
++	if (skb->len < hdr_size ||
++	    !nci_plen(skb->data) ||
++	    skb->len < hdr_size + nci_plen(skb->data)) {
++		return false;
++	}
++	return true;
++}
++
+ /* ---- NCI TX Data worker thread ---- */
  
- endchoice
--
--config FRAME_POINTER
--	depends on !UNWINDER_ORC && !UNWINDER_GUESS
--	bool
+ static void nci_tx_work(struct work_struct *work)
+@@ -1511,7 +1524,7 @@ static void nci_rx_work(struct work_struct *work)
+ 		nfc_send_to_raw_sock(ndev->nfc_dev, skb,
+ 				     RAW_PAYLOAD_NCI, NFC_DIRECTION_RX);
+ 
+-		if (!nci_plen(skb->data)) {
++		if (!nci_valid_size(skb)) {
+ 			kfree_skb(skb);
+ 			break;
+ 		}
 -- 
 2.43.0
 
