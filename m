@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A021A1EEF8;
-	Thu, 13 Jun 2024 12:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D420213D244;
+	Thu, 13 Jun 2024 12:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282047; cv=none; b=KDstuGyVx5Ho1xYNKHPx4Ix0trAyd8nvAchf83h2bIete530sdNkQls0t/DHnI7t1LBU/QpiCO5e3OPZ5u3ruZlkQXSBxdoW8zfY24/Kt0XjhyR4WSeeffO7L6gU4DAYodcVZqgMREMSt2UUQIgwXk3a7YKhFssd7BxTOX1mTp8=
+	t=1718282050; cv=none; b=aR32TKNsXAFZOaXWpVQYAet3Faf7HGwdhyiLv8ZbFnuYgGiiNQnYUNvv+YstQcA4QthP5JyVI9krmzYSzB8aRPxGWQ9y/UMeeNGfG54P84BMZDQe46qgTy3ohU+lItUFQ2QouupTHgdNIlfyhaq4e1bUDPIXq4PrxXwqtd7PPpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282047; c=relaxed/simple;
-	bh=OuJVc0d9pVKTLqeshr33tFSTAkEYf850wRWl38XCmn8=;
+	s=arc-20240116; t=1718282050; c=relaxed/simple;
+	bh=areXCXlRWenAHaLn0eMjHqZD7S0nI/hhvIcrLFOmnME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s59/bWPMXg+6K8n+t4k4V5azCsFz867hN749JpZwQq8cUGjcQfa3xICBAX2Po6h66ndqqIr3wp9+GvHMV//puNtXkf/CHTrWklY8yxqBDFBfv+DK0oYsN+2atencBaF9qnT/kUygemy5mDWpV21HHulfZc+hyLZcizM+T6JJL3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ytpdqvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FGfy49xHxzAXxiGCoCjg2sWaBoy/39uI3+jZGQrdpvGqXygnPRtI7nFZjdRFnhW1xURc75PwJzggXLqDvLQWctvf5AGfiV3MbcHaK0bzEa7nQfSuhdz5gtmZgcM/p0UEf1AAuqP4cO/2B9wW1sHEm6lBuNai5k/AE/Fr8EAqZYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iH/Skk4t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ytpdqvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275C7C2BBFC;
-	Thu, 13 Jun 2024 12:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iH/Skk4t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129A7C2BBFC;
+	Thu, 13 Jun 2024 12:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282047;
-	bh=OuJVc0d9pVKTLqeshr33tFSTAkEYf850wRWl38XCmn8=;
+	s=korg; t=1718282050;
+	bh=areXCXlRWenAHaLn0eMjHqZD7S0nI/hhvIcrLFOmnME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ytpdqvD7GgzCJFPoM8ygNY4qUckCGcGKZvZHfy1dNbC+b2TJLOe8LKkD3tCn3ks2
-	 KmYHVBsJ8w03SGwFEp7wvR5XV1W+8/RKE8RCkijHRfY0yLJ8GU14kiKHBhiVcr3ZhN
-	 QyC7k3ilXJOb3TCLuO0OjhCrdn+2o+ysUmDCpAM4=
+	b=iH/Skk4tzTv6uTrt2rTWoUC1GYH8EpuPkVMv/nZBtg9pNB22OpdcieAVz/psrluNc
+	 JkbWED/TUvo1N4wp2ln5vJzhYtyuwmGzAD7mY7t4zVeKXFcW8AoKIw3rQiUWNvppqr
+	 ZHu0TBOswe+KhS4VKYKMXmTZwpvjZ8SungtV6uKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 117/402] ipv6: sr: fix invalid unregister error path
-Date: Thu, 13 Jun 2024 13:31:14 +0200
-Message-ID: <20240613113306.695648478@linuxfoundation.org>
+Subject: [PATCH 5.15 144/402] drm/bridge: lt8912b: Dont log an error when DSI host cant be found
+Date: Thu, 13 Jun 2024 13:31:41 +0200
+Message-ID: <20240613113307.752459481@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -48,50 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 160e9d2752181fcf18c662e74022d77d3164cd45 ]
+[ Upstream commit b3b4695ff47c4964d4ccb930890c9ffd8e455e20 ]
 
-The error path of seg6_init() is wrong in case CONFIG_IPV6_SEG6_LWTUNNEL
-is not defined. In that case if seg6_hmac_init() fails, the
-genl_unregister_family() isn't called.
+Given that failing to find a DSI host causes the driver to defer probe,
+make use of dev_err_probe() to log the reason. This makes the defer
+probe reason available and avoids alerting userspace about something
+that is not necessarily an error.
 
-This issue exist since commit 46738b1317e1 ("ipv6: sr: add option to control
-lwtunnel support"), and commit 5559cea2d5aa ("ipv6: sr: fix possible
-use-after-free and null-ptr-deref") replaced unregister_pernet_subsys()
-with genl_unregister_family() in this error path.
-
-Fixes: 46738b1317e1 ("ipv6: sr: add option to control lwtunnel support")
-Reported-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240509131812.1662197-4-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240415-anx7625-defer-log-no-dsi-host-v3-3-619a28148e5c@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
-index 846c3abbcfb41..03090d1419d09 100644
---- a/net/ipv6/seg6.c
-+++ b/net/ipv6/seg6.c
-@@ -546,6 +546,8 @@ int __init seg6_init(void)
- #endif
- #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
- out_unregister_genl:
-+#endif
-+#if IS_ENABLED(CONFIG_IPV6_SEG6_LWTUNNEL) || IS_ENABLED(CONFIG_IPV6_SEG6_HMAC)
- 	genl_unregister_family(&seg6_genl_family);
- #endif
- out_unregister_pernet:
+diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+index e16b0fc0cda0f..6379d5c8edff1 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
++++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+@@ -475,10 +475,8 @@ static int lt8912_attach_dsi(struct lt8912 *lt)
+ 						 };
+ 
+ 	host = of_find_mipi_dsi_host_by_node(lt->host_node);
+-	if (!host) {
+-		dev_err(dev, "failed to find dsi host\n");
+-		return -EPROBE_DEFER;
+-	}
++	if (!host)
++		return dev_err_probe(dev, -EPROBE_DEFER, "failed to find dsi host\n");
+ 
+ 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
+ 	if (IS_ERR(dsi)) {
 -- 
 2.43.0
 
