@@ -1,454 +1,459 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4BF144317;
-	Thu, 13 Jun 2024 12:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847481448F1;
+	Thu, 13 Jun 2024 12:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282884; cv=none; b=csap6SsCW2KB3hGPFO2jxybLRg+sjLnR3l3gvewN5FbQJwS0w9B53TeM9wZzlUBstzndPiC6zyg5M5+7gyi7lN56n+nAQeTrHd6a0AvX/5R6mrvlmtxeYho6cW/tkzC3tYHVAhpRVwMl/ar+qQOINYV3ARoCNmetIxeOkM2M9UY=
+	t=1718282887; cv=none; b=k49DW7gMzi9Y1J+pMXhZlOCizF5B39T41IgAZThr/LP/xuF/0c7nHlVJwCj4JI7xr2yD30kfBwUITb3zarWITaipWJ1AuAQRrXEeouZX6Gx7xczlRd+ZPHZX5dIN6ap7s41OnTC372XibHItpOxHw5NGYW1tZTu1SmkL7eC/nYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282884; c=relaxed/simple;
-	bh=Mm9Cqd976+Fc+yB2QKh/47/E/7DI3LXSARw6HJWIqQE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rrl06n4GsZVYqvOE8Fqim4Gpc9HovYt9HcbuJBZlndKIaiQDENn9LmdmG/pXeiwZK5hUk7mRtFAhUjqmLlt6em/KVzLQRYAX1SJFUD6tezRZBDyAcl8Pv+LwEFqa+ufmZo/0M5PUx+m3odpyXrnlOHwfeYovybDRhgrVl37B/c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfFFB0y/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718282887; c=relaxed/simple;
+	bh=rRs+h1wUUV7LV6LMGKd2Fe+Fr5uc6htyplNc3ujZ7pw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TUOFVtP/PuIwsQ7BTsHzYVJ+djQs/w6I1tRZdZ8LImmHhl2QurnqbVzDl2Iv1WurliCPLYHNCh7ZbEgPxNzdnINZOzxcyLgN/vERtixZlN+BVpBYnQ0lXnuYGhuSMvBjcnYKxdZ3qIQJgt+qdF4YjnPNL6upipn7nvCrH0AL+U8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVh53QTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfFFB0y/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91D0C2BBFC;
-	Thu, 13 Jun 2024 12:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVh53QTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CA4C32786;
+	Thu, 13 Jun 2024 12:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282884;
-	bh=Mm9Cqd976+Fc+yB2QKh/47/E/7DI3LXSARw6HJWIqQE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=EfFFB0y/y2PdP9ldjdhVUTTha6jlAWwKfNkFnOKFzrZrHQd7KvFdsrW0/v15nHKtn
-	 +Q97DKELE1a8NfGjWbBfaeUuOGH8ny3JIMfX75xwoIgq3pN3ioDyDNcWWrGH2FMrUr
-	 ThEKRNqFH/NezhGJ1J1xwKSnDM7lRxeLLHbJO4L4=
+	s=korg; t=1718282887;
+	bh=rRs+h1wUUV7LV6LMGKd2Fe+Fr5uc6htyplNc3ujZ7pw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=eVh53QTkV4k+ojvcu3/nHe/uHO4tCr8JJephAtFWmsW2RS+RXksg+Dw6Uo6H6Vg8k
+	 zPBz5LX8UuNEo4lK/JwyPxOsIZcHpAkq+2vn4+B2ULOA9jQ4qhVDTnz+UmqiCck2bT
+	 MuDJ8Bc94dWjR/T+1/L3S6KxD51j4R9JiUFUxn9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org
-Subject: [PATCH 6.1 00/85] 6.1.94-rc1 review
-Date: Thu, 13 Jun 2024 13:34:58 +0200
-Message-ID: <20240613113214.134806994@linuxfoundation.org>
+	Matthew Mirvish <matthew@mm12.xyz>,
+	Coly Li <colyli@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 19/85] bcache: fix variable length array abuse in btree_iter
+Date: Thu, 13 Jun 2024 13:35:17 +0200
+Message-ID: <20240613113214.885551430@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
+References: <20240613113214.134806994@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.94-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.1.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.94-rc1
-X-KernelTest-Deadline: 2024-06-15T11:32+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.1.94 release.
-There are 85 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Sat, 15 Jun 2024 11:31:50 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.94-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.94-rc1
-
-Enzo Matsumiya <ematsumiya@suse.de>
-    smb: client: fix deadlock in smb2_find_smb_tcon()
-
-Puranjay Mohan <puranjay@kernel.org>
-    powerpc/bpf: enforce full ordering for ATOMIC operations with BPF_FETCH
-
-Omar Sandoval <osandov@fb.com>
-    btrfs: fix crash on racing fsync and size-extending write into prealloc
-
-Anna Schumaker <Anna.Schumaker@Netapp.com>
-    NFS: Fix READ_PLUS when server doesn't support OP_READ_PLUS
-
-Sergey Shtylyov <s.shtylyov@omp.ru>
-    nfs: fix undefined behavior in nfs_block_bits()
-
-Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-    EDAC/igen6: Convert PCIBIOS_* return codes to errnos
-
-Frank Li <Frank.Li@nxp.com>
-    i3c: master: svc: fix invalidate IBI type and miss call client IBI handler
-
-Harald Freudenberger <freude@linux.ibm.com>
-    s390/cpacf: Make use of invalid opcode produce a link error
-
-Harald Freudenberger <freude@linux.ibm.com>
-    s390/cpacf: Split and rework cpacf query functions
-
-Harald Freudenberger <freude@linux.ibm.com>
-    s390/ap: Fix crash in AP internal function modify_bitmap()
-
-Helge Deller <deller@kernel.org>
-    parisc: Define sigset_t in parisc uapi header
-
-Helge Deller <deller@gmx.de>
-    parisc: Define HAVE_ARCH_HUGETLB_UNMAPPED_AREA
-
-Baokun Li <libaokun1@huawei.com>
-    ext4: fix mb_cache_entry's e_refcnt leak in ext4_xattr_block_cache_find()
-
-Baokun Li <libaokun1@huawei.com>
-    ext4: set type of ac_groups_linear_remaining to __u32 to avoid overflow
-
-Mike Gilbert <floppym@gentoo.org>
-    sparc: move struct termio to asm/termios.h
-
-Eric Dumazet <edumazet@google.com>
-    net: fix __dst_negative_advice() race
-
-Daniel Thompson <daniel.thompson@linaro.org>
-    kdb: Use format-specifiers rather than memset() for padding in kdb_read()
-
-Daniel Thompson <daniel.thompson@linaro.org>
-    kdb: Merge identical case statements in kdb_read()
-
-Daniel Thompson <daniel.thompson@linaro.org>
-    kdb: Fix console handling when editing and tab-completing commands
-
-Daniel Thompson <daniel.thompson@linaro.org>
-    kdb: Use format-strings rather than '\0' injection in kdb_read()
-
-Daniel Thompson <daniel.thompson@linaro.org>
-    kdb: Fix buffer overflow during tab-complete
-
-Judith Mendez <jm@ti.com>
-    watchdog: rti_wdt: Set min_hw_heartbeat_ms to accommodate a safety margin
-
-Frank van der Linden <fvdl@google.com>
-    mm/hugetlb: pass correct order_per_bit to cma_declare_contiguous_nid
-
-Frank van der Linden <fvdl@google.com>
-    mm/cma: drop incorrect alignment check in cma_init_reserved_mem
-
-Sam Ravnborg <sam@ravnborg.org>
-    sparc64: Fix number of online CPUs
-
-Alexander Shishkin <alexander.shishkin@linux.intel.com>
-    intel_th: pci: Add Meteor Lake-S CPU support
-
-Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-    cpufreq: amd-pstate: Fix the inconsistency in max frequency units
-
-Alexander Potapenko <glider@google.com>
-    kmsan: do not wipe out origin when doing partial unpoisoning
-
-Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-    net/9p: fix uninit-value in p9_client_rpc()
-
-xu xin <xu.xin16@zte.com.cn>
-    net/ipv6: Fix route deleting failure when metric equals 0
-
-Martin K. Petersen <martin.petersen@oracle.com>
-    scsi: core: Handle devices which return an unusually large VPD page count
-
-Ryan Roberts <ryan.roberts@arm.com>
-    mm: fix race between __split_huge_pmd_locked() and GUP-fast
-
-Herbert Xu <herbert@gondor.apana.org.au>
-    crypto: qat - Fix ADF_DEV_RESET_SYNC memory leak
-
-Vitaly Chikunov <vt@altlinux.org>
-    crypto: ecrdsa - Fix module auto-load on add_key
-
-Stefan Berger <stefanb@linux.ibm.com>
-    crypto: ecdsa - Fix module auto-load on add-key
-
-Marc Zyngier <maz@kernel.org>
-    KVM: arm64: AArch32: Fix spurious trapping of conditional instructions
-
-Marc Zyngier <maz@kernel.org>
-    KVM: arm64: Allow AArch32 PSTATE.M to be restored as System mode
-
-Marc Zyngier <maz@kernel.org>
-    KVM: arm64: Fix AArch32 register narrowing on userspace write
-
-Mario Limonciello <mario.limonciello@amd.com>
-    drm/amd: Fix shutdown (again) on some SMU v13.0.4/11 platforms
-
-Dominique Martinet <asmadeus@codewreck.org>
-    9p: add missing locking around taking dentry fid list
-
-Li Ma <li.ma@amd.com>
-    drm/amdgpu/atomfirmware: add intergrated info v2.3 table
-
-Cai Xinchen <caixinchen1@huawei.com>
-    fbdev: savage: Handle err return when savagefb_check_var failed
-
-Hans de Goede <hdegoede@redhat.com>
-    mmc: sdhci-acpi: Add quirk to enable pull-up on the card-detect GPIO on Asus T100TA
-
-Hans de Goede <hdegoede@redhat.com>
-    mmc: sdhci-acpi: Disable write protect detection on Toshiba WT10-A
-
-Hans de Goede <hdegoede@redhat.com>
-    mmc: sdhci-acpi: Fix Lenovo Yoga Tablet 2 Pro 1380 sdcard slot not working
-
-Hans de Goede <hdegoede@redhat.com>
-    mmc: sdhci-acpi: Sort DMI quirks alphabetically
-
-Adrian Hunter <adrian.hunter@intel.com>
-    mmc: sdhci: Add support for "Tuning Error" interrupts
-
-Hans de Goede <hdegoede@redhat.com>
-    mmc: core: Add mmc_gpiod_set_cd_config() function
-
-Hans Verkuil <hverkuil-cisco@xs4all.nl>
-    media: v4l2-core: hold videodev_lock until dev reg, finishes
-
-Nathan Chancellor <nathan@kernel.org>
-    media: mxl5xx: Move xpt structures off stack
-
-Hans Verkuil <hverkuil-cisco@xs4all.nl>
-    media: mc: mark the media devnode as registered from the, start
-
-Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-    media: mc: Fix graph walk in media_pipeline_start
-
-Yang Xiwen <forbidden405@outlook.com>
-    arm64: dts: hi3798cv200: fix the size of GICR
-
-Bitterblue Smith <rtl8821cerfe2@gmail.com>
-    wifi: rtlwifi: rtl8192de: Fix endianness issue in RX path
-
-Bitterblue Smith <rtl8821cerfe2@gmail.com>
-    wifi: rtlwifi: rtl8192de: Fix low speed with WPA3-SAE
-
-Bitterblue Smith <rtl8821cerfe2@gmail.com>
-    wifi: rtlwifi: rtl8192de: Fix 5 GHz TX power
-
-Bitterblue Smith <rtl8821cerfe2@gmail.com>
-    wifi: rtl8xxxu: Fix the TX power of RTL8192CU, RTL8723AU
-
-Ping-Ke Shih <pkshih@realtek.com>
-    wifi: rtw89: pci: correct TX resource checking for PCI DMA channel of firmware command
-
-Yu Kuai <yukuai3@huawei.com>
-    md/raid5: fix deadlock that raid5d() wait for itself to clear MD_SB_CHANGE_PENDING
-
-Johan Hovold <johan+linaro@kernel.org>
-    arm64: dts: qcom: qcs404: fix bluetooth device address
-
-Krzysztof Kozlowski <krzk@kernel.org>
-    arm64: tegra: Correct Tegra132 I2C alias
-
-Christoffer Sandberg <cs@tuxedo.de>
-    ACPI: resource: Do IRQ override on TongFang GXxHRXx and GMxHGxx
-
-Maulik Shah <quic_mkshah@quicinc.com>
-    soc: qcom: rpmh-rsc: Enhance check for VRM in-flight request
-
-Konrad Dybcio <konrad.dybcio@linaro.org>
-    thermal/drivers/qcom/lmh: Check for SCM availability at probe
-
-Sergey Shtylyov <s.shtylyov@omp.ru>
-    ata: pata_legacy: make legacy_exit() work again
-
-Ping-Ke Shih <pkshih@realtek.com>
-    wifi: rtw89: correct aSIFSTime for 6GHz band
-
-Matthew Mirvish <matthew@mm12.xyz>
-    bcache: fix variable length array abuse in btree_iter
-
-Bob Zhou <bob.zhou@amd.com>
-    drm/amdgpu: add error handle to avoid out-of-bounds
-
-Zheyu Ma <zheyuma97@gmail.com>
-    media: lgdt3306a: Add a check against null-pointer-def
-
-Chao Yu <chao@kernel.org>
-    f2fs: fix to do sanity check on i_xattr_nid in sanity_check_inode()
-
-Florian Fainelli <florian.fainelli@broadcom.com>
-    scripts/gdb: fix SB_* constants parsing
-
-Daniel Borkmann <daniel@iogearbox.net>
-    vxlan: Fix regression when dropping packets due to invalid src addresses
-
-Matthieu Baerts (NGI0) <matttbe@kernel.org>
-    mptcp: fix full TCP keep-alive support
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: cleanup SOL_TCP handling
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: avoid some duplicate code in socket option handling
-
-Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-    drm/i915/audio: Fix audio time stamp programming for DP
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: fix use-after-free of timer for log writer thread
-
-Haorong Lu <ancientmodern4@gmail.com>
-    riscv: signal: handle syscall restart before get_signal
-
-Marc Dionne <marc.dionne@auristor.com>
-    afs: Don't cross .backup mountpoint from backup volume
-
-Jorge Ramirez-Ortiz <jorge@foundries.io>
-    mmc: core: Do not force a retune before RPMB switch
-
-Liam R. Howlett <Liam.Howlett@oracle.com>
-    maple_tree: fix mas_empty_area_rev() null pointer dereference
-
-Peng Zhang <zhangpeng.00@bytedance.com>
-    maple_tree: fix allocation in mas_sparse_area()
-
-Dan Gora <dan.gora@gmail.com>
-    Bluetooth: btrtl: Add missing MODULE_FIRMWARE declarations
-
-Shradha Gupta <shradhagupta@linux.microsoft.com>
-    drm: Check polling initialized before enabling in drm_helper_probe_single_connector_modes
-
-Shradha Gupta <shradhagupta@linux.microsoft.com>
-    drm: Check output polling initialized before disabling
-
-
--------------
-
-Diffstat:
-
- Documentation/mm/arch_pgtable_helpers.rst          |   6 +-
- Makefile                                           |   4 +-
- arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi     |   2 +-
- arch/arm64/boot/dts/nvidia/tegra132-norrin.dts     |   4 +-
- arch/arm64/boot/dts/nvidia/tegra132.dtsi           |   2 +-
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi           |   2 +-
- arch/arm64/kvm/guest.c                             |   3 +-
- arch/arm64/kvm/hyp/aarch32.c                       |  18 ++-
- arch/parisc/include/asm/page.h                     |   1 +
- arch/parisc/include/asm/signal.h                   |  12 --
- arch/parisc/include/uapi/asm/signal.h              |  10 ++
- arch/powerpc/mm/book3s64/pgtable.c                 |   1 +
- arch/powerpc/net/bpf_jit_comp32.c                  |  12 ++
- arch/powerpc/net/bpf_jit_comp64.c                  |  12 ++
- arch/riscv/kernel/signal.c                         |  95 +++++++-------
- arch/s390/include/asm/cpacf.h                      | 109 +++++++++++++---
- arch/s390/include/asm/pgtable.h                    |   4 +-
- arch/sparc/include/asm/smp_64.h                    |   2 -
- arch/sparc/include/uapi/asm/termbits.h             |  10 --
- arch/sparc/include/uapi/asm/termios.h              |   9 ++
- arch/sparc/kernel/prom_64.c                        |   4 +-
- arch/sparc/kernel/setup_64.c                       |   1 -
- arch/sparc/kernel/smp_64.c                         |  14 --
- arch/sparc/mm/tlb.c                                |   1 +
- arch/x86/mm/pgtable.c                              |   2 +
- crypto/ecdsa.c                                     |   3 +
- crypto/ecrdsa.c                                    |   1 +
- drivers/acpi/resource.c                            |  12 ++
- drivers/ata/pata_legacy.c                          |   8 +-
- drivers/bluetooth/btrtl.c                          |  18 ++-
- drivers/cpufreq/amd-pstate.c                       |   2 +-
- drivers/crypto/qat/qat_common/adf_aer.c            |  19 +--
- drivers/edac/igen6_edac.c                          |   4 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_atomfirmware.c   |  15 +++
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c             |   3 +
- drivers/gpu/drm/amd/include/atomfirmware.h         |  43 ++++++
- .../gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c   |  20 +--
- drivers/gpu/drm/drm_modeset_helper.c               |  19 ++-
- drivers/gpu/drm/drm_probe_helper.c                 |  15 ++-
- drivers/gpu/drm/i915/display/intel_audio.c         | 116 ++---------------
- drivers/hwtracing/intel_th/pci.c                   |   5 +
- drivers/i3c/master/svc-i3c-master.c                |  16 ++-
- drivers/md/bcache/bset.c                           |  44 +++----
- drivers/md/bcache/bset.h                           |  28 ++--
- drivers/md/bcache/btree.c                          |  40 +++---
- drivers/md/bcache/super.c                          |   5 +-
- drivers/md/bcache/sysfs.c                          |   2 +-
- drivers/md/bcache/writeback.c                      |  10 +-
- drivers/md/raid5.c                                 |  15 +--
- drivers/media/dvb-frontends/lgdt3306a.c            |   5 +
- drivers/media/dvb-frontends/mxl5xx.c               |  22 ++--
- drivers/media/mc/mc-devnode.c                      |   5 +-
- drivers/media/mc/mc-entity.c                       |   6 +
- drivers/media/v4l2-core/v4l2-dev.c                 |   3 +
- drivers/mmc/core/host.c                            |   3 +-
- drivers/mmc/core/slot-gpio.c                       |  20 +++
- drivers/mmc/host/sdhci-acpi.c                      |  61 ++++++++-
- drivers/mmc/host/sdhci.c                           |  10 +-
- drivers/mmc/host/sdhci.h                           |   3 +-
- drivers/net/vxlan/vxlan_core.c                     |   4 -
- .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c  |  25 ++--
- .../net/wireless/realtek/rtlwifi/rtl8192de/phy.c   |   4 +-
- .../net/wireless/realtek/rtlwifi/rtl8192de/trx.c   |  21 ++-
- .../net/wireless/realtek/rtlwifi/rtl8192de/trx.h   |  79 +++--------
- drivers/net/wireless/realtek/rtw89/mac80211.c      |   2 +-
- drivers/net/wireless/realtek/rtw89/pci.c           |   3 +-
- drivers/s390/crypto/ap_bus.c                       |   2 +-
- drivers/scsi/scsi.c                                |   7 +
- drivers/soc/qcom/cmd-db.c                          |  32 ++++-
- drivers/soc/qcom/rpmh-rsc.c                        |   3 +-
- drivers/thermal/qcom/lmh.c                         |   3 +
- drivers/video/fbdev/savage/savagefb_driver.c       |   5 +-
- drivers/watchdog/rti_wdt.c                         |  34 +++--
- fs/9p/vfs_dentry.c                                 |   9 +-
- fs/afs/mntpt.c                                     |   5 +
- fs/btrfs/tree-log.c                                |  17 ++-
- fs/ext4/mballoc.h                                  |   2 +-
- fs/ext4/xattr.c                                    |   4 +-
- fs/f2fs/inode.c                                    |   6 +
- fs/nfs/internal.h                                  |   4 +-
- fs/nfs/nfs4proc.c                                  |   2 +-
- fs/nilfs2/segment.c                                |  25 +++-
- fs/smb/client/smb2transport.c                      |   2 +-
- include/linux/mmc/slot-gpio.h                      |   1 +
- include/net/dst_ops.h                              |   2 +-
- include/net/sock.h                                 |  13 +-
- include/soc/qcom/cmd-db.h                          |  10 +-
- kernel/debug/kdb/kdb_io.c                          |  99 ++++++++------
- lib/maple_tree.c                                   |  55 ++++----
- mm/cma.c                                           |   4 -
- mm/huge_memory.c                                   |  49 +++----
- mm/hugetlb.c                                       |   6 +-
- mm/kmsan/core.c                                    |  15 ++-
- mm/pgtable-generic.c                               |   2 +
- net/9p/client.c                                    |   2 +
- net/ipv4/route.c                                   |  22 ++--
- net/ipv6/route.c                                   |  34 ++---
- net/mptcp/protocol.h                               |   3 +
- net/mptcp/sockopt.c                                | 144 +++++++++++++++------
- net/xfrm/xfrm_policy.c                             |  11 +-
- scripts/gdb/linux/constants.py.in                  |  12 +-
- 101 files changed, 1030 insertions(+), 695 deletions(-)
+6.1-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Matthew Mirvish <matthew@mm12.xyz>
+
+commit 3a861560ccb35f2a4f0a4b8207fa7c2a35fc7f31 upstream.
+
+btree_iter is used in two ways: either allocated on the stack with a
+fixed size MAX_BSETS, or from a mempool with a dynamic size based on the
+specific cache set. Previously, the struct had a fixed-length array of
+size MAX_BSETS which was indexed out-of-bounds for the dynamically-sized
+iterators, which causes UBSAN to complain.
+
+This patch uses the same approach as in bcachefs's sort_iter and splits
+the iterator into a btree_iter with a flexible array member and a
+btree_iter_stack which embeds a btree_iter as well as a fixed-length
+data array.
+
+Cc: stable@vger.kernel.org
+Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2039368
+Signed-off-by: Matthew Mirvish <matthew@mm12.xyz>
+Signed-off-by: Coly Li <colyli@suse.de>
+Link: https://lore.kernel.org/r/20240509011117.2697-3-colyli@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/md/bcache/bset.c      |   44 +++++++++++++++++++++---------------------
+ drivers/md/bcache/bset.h      |   30 ++++++++++++++++++----------
+ drivers/md/bcache/btree.c     |   40 ++++++++++++++++++++------------------
+ drivers/md/bcache/super.c     |    5 ++--
+ drivers/md/bcache/sysfs.c     |    2 -
+ drivers/md/bcache/writeback.c |   10 ++++-----
+ 6 files changed, 71 insertions(+), 60 deletions(-)
+
+--- a/drivers/md/bcache/bset.c
++++ b/drivers/md/bcache/bset.c
+@@ -54,7 +54,7 @@ void bch_dump_bucket(struct btree_keys *
+ int __bch_count_data(struct btree_keys *b)
+ {
+ 	unsigned int ret = 0;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	struct bkey *k;
+ 
+ 	if (b->ops->is_extents)
+@@ -67,7 +67,7 @@ void __bch_check_keys(struct btree_keys
+ {
+ 	va_list args;
+ 	struct bkey *k, *p = NULL;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	const char *err;
+ 
+ 	for_each_key(b, k, &iter) {
+@@ -879,7 +879,7 @@ unsigned int bch_btree_insert_key(struct
+ 	unsigned int status = BTREE_INSERT_STATUS_NO_INSERT;
+ 	struct bset *i = bset_tree_last(b)->data;
+ 	struct bkey *m, *prev = NULL;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	struct bkey preceding_key_on_stack = ZERO_KEY;
+ 	struct bkey *preceding_key_p = &preceding_key_on_stack;
+ 
+@@ -895,9 +895,9 @@ unsigned int bch_btree_insert_key(struct
+ 	else
+ 		preceding_key(k, &preceding_key_p);
+ 
+-	m = bch_btree_iter_init(b, &iter, preceding_key_p);
++	m = bch_btree_iter_stack_init(b, &iter, preceding_key_p);
+ 
+-	if (b->ops->insert_fixup(b, k, &iter, replace_key))
++	if (b->ops->insert_fixup(b, k, &iter.iter, replace_key))
+ 		return status;
+ 
+ 	status = BTREE_INSERT_STATUS_INSERT;
+@@ -1100,33 +1100,33 @@ void bch_btree_iter_push(struct btree_it
+ 				 btree_iter_cmp));
+ }
+ 
+-static struct bkey *__bch_btree_iter_init(struct btree_keys *b,
+-					  struct btree_iter *iter,
+-					  struct bkey *search,
+-					  struct bset_tree *start)
++static struct bkey *__bch_btree_iter_stack_init(struct btree_keys *b,
++						struct btree_iter_stack *iter,
++						struct bkey *search,
++						struct bset_tree *start)
+ {
+ 	struct bkey *ret = NULL;
+ 
+-	iter->size = ARRAY_SIZE(iter->data);
+-	iter->used = 0;
++	iter->iter.size = ARRAY_SIZE(iter->stack_data);
++	iter->iter.used = 0;
+ 
+ #ifdef CONFIG_BCACHE_DEBUG
+-	iter->b = b;
++	iter->iter.b = b;
+ #endif
+ 
+ 	for (; start <= bset_tree_last(b); start++) {
+ 		ret = bch_bset_search(b, start, search);
+-		bch_btree_iter_push(iter, ret, bset_bkey_last(start->data));
++		bch_btree_iter_push(&iter->iter, ret, bset_bkey_last(start->data));
+ 	}
+ 
+ 	return ret;
+ }
+ 
+-struct bkey *bch_btree_iter_init(struct btree_keys *b,
+-				 struct btree_iter *iter,
++struct bkey *bch_btree_iter_stack_init(struct btree_keys *b,
++				 struct btree_iter_stack *iter,
+ 				 struct bkey *search)
+ {
+-	return __bch_btree_iter_init(b, iter, search, b->set);
++	return __bch_btree_iter_stack_init(b, iter, search, b->set);
+ }
+ 
+ static inline struct bkey *__bch_btree_iter_next(struct btree_iter *iter,
+@@ -1293,10 +1293,10 @@ void bch_btree_sort_partial(struct btree
+ 			    struct bset_sort_state *state)
+ {
+ 	size_t order = b->page_order, keys = 0;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	int oldsize = bch_count_data(b);
+ 
+-	__bch_btree_iter_init(b, &iter, NULL, &b->set[start]);
++	__bch_btree_iter_stack_init(b, &iter, NULL, &b->set[start]);
+ 
+ 	if (start) {
+ 		unsigned int i;
+@@ -1307,7 +1307,7 @@ void bch_btree_sort_partial(struct btree
+ 		order = get_order(__set_bytes(b->set->data, keys));
+ 	}
+ 
+-	__btree_sort(b, &iter, start, order, false, state);
++	__btree_sort(b, &iter.iter, start, order, false, state);
+ 
+ 	EBUG_ON(oldsize >= 0 && bch_count_data(b) != oldsize);
+ }
+@@ -1323,11 +1323,11 @@ void bch_btree_sort_into(struct btree_ke
+ 			 struct bset_sort_state *state)
+ {
+ 	uint64_t start_time = local_clock();
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 
+-	bch_btree_iter_init(b, &iter, NULL);
++	bch_btree_iter_stack_init(b, &iter, NULL);
+ 
+-	btree_mergesort(b, new->set->data, &iter, false, true);
++	btree_mergesort(b, new->set->data, &iter.iter, false, true);
+ 
+ 	bch_time_stats_update(&state->time, start_time);
+ 
+--- a/drivers/md/bcache/bset.h
++++ b/drivers/md/bcache/bset.h
+@@ -321,7 +321,14 @@ struct btree_iter {
+ #endif
+ 	struct btree_iter_set {
+ 		struct bkey *k, *end;
+-	} data[MAX_BSETS];
++	} data[];
++};
++
++/* Fixed-size btree_iter that can be allocated on the stack */
++
++struct btree_iter_stack {
++	struct btree_iter iter;
++	struct btree_iter_set stack_data[MAX_BSETS];
+ };
+ 
+ typedef bool (*ptr_filter_fn)(struct btree_keys *b, const struct bkey *k);
+@@ -333,9 +340,9 @@ struct bkey *bch_btree_iter_next_filter(
+ 
+ void bch_btree_iter_push(struct btree_iter *iter, struct bkey *k,
+ 			 struct bkey *end);
+-struct bkey *bch_btree_iter_init(struct btree_keys *b,
+-				 struct btree_iter *iter,
+-				 struct bkey *search);
++struct bkey *bch_btree_iter_stack_init(struct btree_keys *b,
++				       struct btree_iter_stack *iter,
++				       struct bkey *search);
+ 
+ struct bkey *__bch_bset_search(struct btree_keys *b, struct bset_tree *t,
+ 			       const struct bkey *search);
+@@ -350,13 +357,14 @@ static inline struct bkey *bch_bset_sear
+ 	return search ? __bch_bset_search(b, t, search) : t->data->start;
+ }
+ 
+-#define for_each_key_filter(b, k, iter, filter)				\
+-	for (bch_btree_iter_init((b), (iter), NULL);			\
+-	     ((k) = bch_btree_iter_next_filter((iter), (b), filter));)
+-
+-#define for_each_key(b, k, iter)					\
+-	for (bch_btree_iter_init((b), (iter), NULL);			\
+-	     ((k) = bch_btree_iter_next(iter));)
++#define for_each_key_filter(b, k, stack_iter, filter)                      \
++	for (bch_btree_iter_stack_init((b), (stack_iter), NULL);           \
++	     ((k) = bch_btree_iter_next_filter(&((stack_iter)->iter), (b), \
++					       filter));)
++
++#define for_each_key(b, k, stack_iter)                           \
++	for (bch_btree_iter_stack_init((b), (stack_iter), NULL); \
++	     ((k) = bch_btree_iter_next(&((stack_iter)->iter)));)
+ 
+ /* Sorting */
+ 
+--- a/drivers/md/bcache/btree.c
++++ b/drivers/md/bcache/btree.c
+@@ -1283,7 +1283,7 @@ static bool btree_gc_mark_node(struct bt
+ 	uint8_t stale = 0;
+ 	unsigned int keys = 0, good_keys = 0;
+ 	struct bkey *k;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	struct bset_tree *t;
+ 
+ 	gc->nodes++;
+@@ -1544,7 +1544,7 @@ static int btree_gc_rewrite_node(struct
+ static unsigned int btree_gc_count_keys(struct btree *b)
+ {
+ 	struct bkey *k;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	unsigned int ret = 0;
+ 
+ 	for_each_key_filter(&b->keys, k, &iter, bch_ptr_bad)
+@@ -1585,17 +1585,18 @@ static int btree_gc_recurse(struct btree
+ 	int ret = 0;
+ 	bool should_rewrite;
+ 	struct bkey *k;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	struct gc_merge_info r[GC_MERGE_NODES];
+ 	struct gc_merge_info *i, *last = r + ARRAY_SIZE(r) - 1;
+ 
+-	bch_btree_iter_init(&b->keys, &iter, &b->c->gc_done);
++	bch_btree_iter_stack_init(&b->keys, &iter, &b->c->gc_done);
+ 
+ 	for (i = r; i < r + ARRAY_SIZE(r); i++)
+ 		i->b = ERR_PTR(-EINTR);
+ 
+ 	while (1) {
+-		k = bch_btree_iter_next_filter(&iter, &b->keys, bch_ptr_bad);
++		k = bch_btree_iter_next_filter(&iter.iter, &b->keys,
++					       bch_ptr_bad);
+ 		if (k) {
+ 			r->b = bch_btree_node_get(b->c, op, k, b->level - 1,
+ 						  true, b);
+@@ -1885,7 +1886,7 @@ static int bch_btree_check_recurse(struc
+ {
+ 	int ret = 0;
+ 	struct bkey *k, *p = NULL;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 
+ 	for_each_key_filter(&b->keys, k, &iter, bch_ptr_invalid)
+ 		bch_initial_mark_key(b->c, b->level, k);
+@@ -1893,10 +1894,10 @@ static int bch_btree_check_recurse(struc
+ 	bch_initial_mark_key(b->c, b->level + 1, &b->key);
+ 
+ 	if (b->level) {
+-		bch_btree_iter_init(&b->keys, &iter, NULL);
++		bch_btree_iter_stack_init(&b->keys, &iter, NULL);
+ 
+ 		do {
+-			k = bch_btree_iter_next_filter(&iter, &b->keys,
++			k = bch_btree_iter_next_filter(&iter.iter, &b->keys,
+ 						       bch_ptr_bad);
+ 			if (k) {
+ 				btree_node_prefetch(b, k);
+@@ -1924,7 +1925,7 @@ static int bch_btree_check_thread(void *
+ 	struct btree_check_info *info = arg;
+ 	struct btree_check_state *check_state = info->state;
+ 	struct cache_set *c = check_state->c;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	struct bkey *k, *p;
+ 	int cur_idx, prev_idx, skip_nr;
+ 
+@@ -1933,8 +1934,8 @@ static int bch_btree_check_thread(void *
+ 	ret = 0;
+ 
+ 	/* root node keys are checked before thread created */
+-	bch_btree_iter_init(&c->root->keys, &iter, NULL);
+-	k = bch_btree_iter_next_filter(&iter, &c->root->keys, bch_ptr_bad);
++	bch_btree_iter_stack_init(&c->root->keys, &iter, NULL);
++	k = bch_btree_iter_next_filter(&iter.iter, &c->root->keys, bch_ptr_bad);
+ 	BUG_ON(!k);
+ 
+ 	p = k;
+@@ -1952,7 +1953,7 @@ static int bch_btree_check_thread(void *
+ 		skip_nr = cur_idx - prev_idx;
+ 
+ 		while (skip_nr) {
+-			k = bch_btree_iter_next_filter(&iter,
++			k = bch_btree_iter_next_filter(&iter.iter,
+ 						       &c->root->keys,
+ 						       bch_ptr_bad);
+ 			if (k)
+@@ -2025,7 +2026,7 @@ int bch_btree_check(struct cache_set *c)
+ 	int ret = 0;
+ 	int i;
+ 	struct bkey *k = NULL;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	struct btree_check_state check_state;
+ 
+ 	/* check and mark root node keys */
+@@ -2521,11 +2522,11 @@ static int bch_btree_map_nodes_recurse(s
+ 
+ 	if (b->level) {
+ 		struct bkey *k;
+-		struct btree_iter iter;
++		struct btree_iter_stack iter;
+ 
+-		bch_btree_iter_init(&b->keys, &iter, from);
++		bch_btree_iter_stack_init(&b->keys, &iter, from);
+ 
+-		while ((k = bch_btree_iter_next_filter(&iter, &b->keys,
++		while ((k = bch_btree_iter_next_filter(&iter.iter, &b->keys,
+ 						       bch_ptr_bad))) {
+ 			ret = bcache_btree(map_nodes_recurse, k, b,
+ 				    op, from, fn, flags);
+@@ -2554,11 +2555,12 @@ int bch_btree_map_keys_recurse(struct bt
+ {
+ 	int ret = MAP_CONTINUE;
+ 	struct bkey *k;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 
+-	bch_btree_iter_init(&b->keys, &iter, from);
++	bch_btree_iter_stack_init(&b->keys, &iter, from);
+ 
+-	while ((k = bch_btree_iter_next_filter(&iter, &b->keys, bch_ptr_bad))) {
++	while ((k = bch_btree_iter_next_filter(&iter.iter, &b->keys,
++					       bch_ptr_bad))) {
+ 		ret = !b->level
+ 			? fn(op, b, k)
+ 			: bcache_btree(map_keys_recurse, k,
+--- a/drivers/md/bcache/super.c
++++ b/drivers/md/bcache/super.c
+@@ -1915,8 +1915,9 @@ struct cache_set *bch_cache_set_alloc(st
+ 	INIT_LIST_HEAD(&c->btree_cache_freed);
+ 	INIT_LIST_HEAD(&c->data_buckets);
+ 
+-	iter_size = ((meta_bucket_pages(sb) * PAGE_SECTORS) / sb->block_size + 1) *
+-		sizeof(struct btree_iter_set);
++	iter_size = sizeof(struct btree_iter) +
++		    ((meta_bucket_pages(sb) * PAGE_SECTORS) / sb->block_size) *
++			    sizeof(struct btree_iter_set);
+ 
+ 	c->devices = kcalloc(c->nr_uuids, sizeof(void *), GFP_KERNEL);
+ 	if (!c->devices)
+--- a/drivers/md/bcache/sysfs.c
++++ b/drivers/md/bcache/sysfs.c
+@@ -660,7 +660,7 @@ static unsigned int bch_root_usage(struc
+ 	unsigned int bytes = 0;
+ 	struct bkey *k;
+ 	struct btree *b;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 
+ 	goto lock_root;
+ 
+--- a/drivers/md/bcache/writeback.c
++++ b/drivers/md/bcache/writeback.c
+@@ -908,15 +908,15 @@ static int bch_dirty_init_thread(void *a
+ 	struct dirty_init_thrd_info *info = arg;
+ 	struct bch_dirty_init_state *state = info->state;
+ 	struct cache_set *c = state->c;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	struct bkey *k, *p;
+ 	int cur_idx, prev_idx, skip_nr;
+ 
+ 	k = p = NULL;
+ 	prev_idx = 0;
+ 
+-	bch_btree_iter_init(&c->root->keys, &iter, NULL);
+-	k = bch_btree_iter_next_filter(&iter, &c->root->keys, bch_ptr_bad);
++	bch_btree_iter_stack_init(&c->root->keys, &iter, NULL);
++	k = bch_btree_iter_next_filter(&iter.iter, &c->root->keys, bch_ptr_bad);
+ 	BUG_ON(!k);
+ 
+ 	p = k;
+@@ -930,7 +930,7 @@ static int bch_dirty_init_thread(void *a
+ 		skip_nr = cur_idx - prev_idx;
+ 
+ 		while (skip_nr) {
+-			k = bch_btree_iter_next_filter(&iter,
++			k = bch_btree_iter_next_filter(&iter.iter,
+ 						       &c->root->keys,
+ 						       bch_ptr_bad);
+ 			if (k)
+@@ -979,7 +979,7 @@ void bch_sectors_dirty_init(struct bcach
+ 	int i;
+ 	struct btree *b = NULL;
+ 	struct bkey *k = NULL;
+-	struct btree_iter iter;
++	struct btree_iter_stack iter;
+ 	struct sectors_dirty_init op;
+ 	struct cache_set *c = d->c;
+ 	struct bch_dirty_init_state state;
 
 
