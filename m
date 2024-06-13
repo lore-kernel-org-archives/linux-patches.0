@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4448144D3B;
-	Thu, 13 Jun 2024 12:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BC2140391;
+	Thu, 13 Jun 2024 12:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281436; cv=none; b=dUFPtiQ6U4onFyvNqvcAuUImTxBZepPK5hLhEjdEey572B48XKCGUgrSrPhEv2ol+YSUBRRza07EHdAAXaOxtwagRxzjeYnmSPFCTVf2AkATuasWbcAnOpEd/9C0O6+oclXbcATc2lyshdLGjn/ITz5CDZuUSQSna8zoYP7VmJI=
+	t=1718281439; cv=none; b=m0QvcX2tzevVR14Q36nHrKcQ10HELuasGucSgTSzjladvQzz8c2g5uT5Rff7J1U21OQtrLrMM/9eOeVlSzLzaf3QP3y5yS96GVu3tbWfbUZRwiVzDB4XywUQWWtLDZCVMiHi1HgGTGpcZwo5fc5ObXrmhm7uzliAGJuMlsBocZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281436; c=relaxed/simple;
-	bh=7VxZvNjduGE3KosaTA7Mf9GyMeLB8mnY4Qf1TcbpjAs=;
+	s=arc-20240116; t=1718281439; c=relaxed/simple;
+	bh=HoTuVgK3RwPH/AiDsChYmjRQLEy6V9zhp9GsiOSE43Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mYShO4KnTOGCsf2nDHMvlcoR/0pQQpbTGMm+rbk+es2FuFnuc0cELv2tN9gisoii7Y9oYfJPyAyoE7QQp86fmwDS6ysnT++Ou4D6vhHY2wNmWwSazsmsLYYkB0ba+Mfz51eRDbXI3atswP4u4PwaaRGk+eeMYB7npNTR833E9Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0P6TdD6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kz45oumgEr5o+yBXMnFfxpWuEydxLNSECo5t7l5jjI7ahQUplTc/mxGun7nRkEF0IOWrCrhlj7r3PkuP3ZWEn6doA4hHAxtEjGzW0DNB6cq3N8Uw2YzFiHhweW595pajCCuynsGBYE3TCzuYJ3O1HRCpnPxsXIyW9mSSLn8tDh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpBm5RfF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0P6TdD6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB51C2BBFC;
-	Thu, 13 Jun 2024 12:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpBm5RfF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325A5C2BBFC;
+	Thu, 13 Jun 2024 12:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281436;
-	bh=7VxZvNjduGE3KosaTA7Mf9GyMeLB8mnY4Qf1TcbpjAs=;
+	s=korg; t=1718281439;
+	bh=HoTuVgK3RwPH/AiDsChYmjRQLEy6V9zhp9GsiOSE43Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0P6TdD6gDmZyEfp/w7aOSxCfVU05/d2CoG5wwfUOu3QW0GwVm5YiN3ThsYlsLr4q
-	 p9TAgEfWMkScoe9/p5kWc20hu1jFoVQo9UdJr57QpQsjwBaAypMUm5bBL/VpphiKBd
-	 0vKWCWcB0SQ0HBW8tcpHeKH26UAi7FXnzMmpJni8=
+	b=FpBm5RfFcOagpFW1+UGrUzYGN9+47lSZsLEAcwDZUuUL/BmqgJsNc0ZGaDclbm+8Y
+	 xm7chIb96qpsLABEKBEj2og7mSFjeJzGl0dOhVq1Y7UYWNQGuSTL1nQV1MBh0GsS9n
+	 ltoqqr3xmfpOQ8vXkZFzxXfW/1VNRMWS0BXqXhwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
-	syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 254/317] bpf: Allow delete from sockmap/sockhash only if update is allowed
-Date: Thu, 13 Jun 2024 13:34:32 +0200
-Message-ID: <20240613113257.374688840@linuxfoundation.org>
+Subject: [PATCH 5.10 255/317] net:fec: Add fec_enet_deinit()
+Date: Thu, 13 Jun 2024 13:34:33 +0200
+Message-ID: <20240613113257.413749274@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -54,77 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Sitnicki <jakub@cloudflare.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit 98e948fb60d41447fd8d2d0c3b8637fc6b6dc26d ]
+[ Upstream commit bf0497f53c8535f99b72041529d3f7708a6e2c0d ]
 
-We have seen an influx of syzkaller reports where a BPF program attached to
-a tracepoint triggers a locking rule violation by performing a map_delete
-on a sockmap/sockhash.
+When fec_probe() fails or fec_drv_remove() needs to release the
+fec queue and remove a NAPI context, therefore add a function
+corresponding to fec_enet_init() and call fec_enet_deinit() which
+does the opposite to release memory and remove a NAPI context.
 
-We don't intend to support this artificial use scenario. Extend the
-existing verifier allowed-program-type check for updating sockmap/sockhash
-to also cover deleting from a map.
-
->From now on only BPF programs which were previously allowed to update
-sockmap/sockhash can delete from these map types.
-
-Fixes: ff9105993240 ("bpf, sockmap: Prevent lock inversion deadlock in map delete elem")
-Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
-Reported-by: syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com
-Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: syzbot+ec941d6e24f633a59172@syzkaller.appspotmail.com
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=ec941d6e24f633a59172
-Link: https://lore.kernel.org/bpf/20240527-sockmap-verify-deletes-v1-1-944b372f2101@cloudflare.com
+Fixes: 59d0f7465644 ("net: fec: init multi queue date structure")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240524050528.4115581-1-xiaolei.wang@windriver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 25f8a8716e88d..ad115ccc2fe0e 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4890,7 +4890,8 @@ static bool may_update_sockmap(struct bpf_verifier_env *env, int func_id)
- 	enum bpf_attach_type eatype = env->prog->expected_attach_type;
- 	enum bpf_prog_type type = resolve_prog_type(env->prog);
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index fe29769cb1589..adb76db66031f 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3443,6 +3443,14 @@ static int fec_enet_init(struct net_device *ndev)
+ 	return ret;
+ }
  
--	if (func_id != BPF_FUNC_map_update_elem)
-+	if (func_id != BPF_FUNC_map_update_elem &&
-+	    func_id != BPF_FUNC_map_delete_elem)
- 		return false;
++static void fec_enet_deinit(struct net_device *ndev)
++{
++	struct fec_enet_private *fep = netdev_priv(ndev);
++
++	netif_napi_del(&fep->napi);
++	fec_enet_free_queue(ndev);
++}
++
+ #ifdef CONFIG_OF
+ static int fec_reset_phy(struct platform_device *pdev)
+ {
+@@ -3813,6 +3821,7 @@ fec_probe(struct platform_device *pdev)
+ 	fec_enet_mii_remove(fep);
+ failed_mii_init:
+ failed_irq:
++	fec_enet_deinit(ndev);
+ failed_init:
+ 	fec_ptp_stop(pdev);
+ failed_reset:
+@@ -3874,6 +3883,7 @@ fec_drv_remove(struct platform_device *pdev)
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
  
- 	/* It's not possible to get access to a locked struct sock in these
-@@ -4901,6 +4902,11 @@ static bool may_update_sockmap(struct bpf_verifier_env *env, int func_id)
- 		if (eatype == BPF_TRACE_ITER)
- 			return true;
- 		break;
-+	case BPF_PROG_TYPE_SOCK_OPS:
-+		/* map_update allowed only via dedicated helpers with event type checks */
-+		if (func_id == BPF_FUNC_map_delete_elem)
-+			return true;
-+		break;
- 	case BPF_PROG_TYPE_SOCKET_FILTER:
- 	case BPF_PROG_TYPE_SCHED_CLS:
- 	case BPF_PROG_TYPE_SCHED_ACT:
-@@ -4988,7 +4994,6 @@ static int check_map_func_compatibility(struct bpf_verifier_env *env,
- 	case BPF_MAP_TYPE_SOCKMAP:
- 		if (func_id != BPF_FUNC_sk_redirect_map &&
- 		    func_id != BPF_FUNC_sock_map_update &&
--		    func_id != BPF_FUNC_map_delete_elem &&
- 		    func_id != BPF_FUNC_msg_redirect_map &&
- 		    func_id != BPF_FUNC_sk_select_reuseport &&
- 		    func_id != BPF_FUNC_map_lookup_elem &&
-@@ -4998,7 +5003,6 @@ static int check_map_func_compatibility(struct bpf_verifier_env *env,
- 	case BPF_MAP_TYPE_SOCKHASH:
- 		if (func_id != BPF_FUNC_sk_redirect_hash &&
- 		    func_id != BPF_FUNC_sock_hash_update &&
--		    func_id != BPF_FUNC_map_delete_elem &&
- 		    func_id != BPF_FUNC_msg_redirect_hash &&
- 		    func_id != BPF_FUNC_sk_select_reuseport &&
- 		    func_id != BPF_FUNC_map_lookup_elem &&
++	fec_enet_deinit(ndev);
+ 	free_netdev(ndev);
+ 	return 0;
+ }
 -- 
 2.43.0
 
