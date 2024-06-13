@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE580DDB1;
-	Thu, 13 Jun 2024 11:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0683DDB1;
+	Thu, 13 Jun 2024 11:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278804; cv=none; b=DjSJJwKVmIOZx0ygvPeXHTMyvxfFpVmw4DkhuwvuREv6CvtempI37x2fXJXtYZiWxunUh34mqys7HAj28Mg+KgnmaMWwWUZD2gdnBsfJekSEnOpvoS6atXa7z5TBRh1ctXd3DoQGcqMt0fxwroX9K39HK19RJ9eZumXPjze22RI=
+	t=1718278807; cv=none; b=WARjXVe15D/VL0/njwpqpqpACJHE+2dEhMZMgwUGOOLHtGpX7BSSk41AMKBs65H/5zZDsU3fKF0FEKXFxvmCBduNJXNT5nDpkYNjZ1u2yQOv+VUvqoUMcJeLEyiZxSdjvuV0HPVT0aBuzWrE8iizSnaM3ChV1w40hYoGPFuDHqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278804; c=relaxed/simple;
-	bh=GBl/JiuPimno2qN58GsiAjzelsvs3qnX9idnx9WAONQ=;
+	s=arc-20240116; t=1718278807; c=relaxed/simple;
+	bh=KnwASqUhzH81PnG/meUE6Zm66rWZp3IbGx6p5r8OtEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKhj9GPHuv1uvLm7XtVQUjXRIulUkS8WsatBQ4mfrSko8dTvcfDfohpHJWmW64gjFUxZtqgVM3zsvcjWyh5tcKcxsG6jlvBikb5s8VRR/BFnB4VsdK25alZpP4x4qC/qv+xAw1R5w1Y2wDIADaPjlW2XRTA7L0WtR9+wBeg4nvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7SVE0Nw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o+qMZ+lDPc5+CEpEHjbpI7nmMonDX9fXPnVw5t7C45zhab4wnRDYop01fkI+1VYTeSdZVMUApSY2gIZ0RB6+xjxV7c9ufKZVy5GhCNhqXt9+KQhqmQynOgr+mAdcu6ITsawDwGszQDzprfmMXH0XbXNKoeFSvtGAYwu6kdBXPLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8juyOyH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7SVE0Nw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56723C2BBFC;
-	Thu, 13 Jun 2024 11:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8juyOyH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46744C2BBFC;
+	Thu, 13 Jun 2024 11:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278804;
-	bh=GBl/JiuPimno2qN58GsiAjzelsvs3qnX9idnx9WAONQ=;
+	s=korg; t=1718278807;
+	bh=KnwASqUhzH81PnG/meUE6Zm66rWZp3IbGx6p5r8OtEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7SVE0Nw5QB+cJnZFmFTBN7IdxLpaII83mNfCtGqXXT53PvPucGF/mEMiF98FaYIz
-	 kk1eN6MR+SnUUjaHlmzR8VFtgbV4hJTXuVF1X6MDFcNukwU0EMwBIHXHjy54w85THh
-	 na5TiYcf2ZKfFHPtMtUxc4QMho4u9E1zK93Y5RY8=
+	b=G8juyOyH7ixnfK6X9eIhvmN+V7waOyhKakcIdHBnB/41a7NsdNpaqGIrzXL2Z5ZFi
+	 aFCVGaPpH4gtybGdmOJvYLNJHmIVikzKmH2KYiww+AVbBgOVeAoLlQ6gTVr3d2SvwZ
+	 mzw1wvexsGoQ+5VncnEbMEBsZCCg8WV7CWRWnjgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+1bc2c2afd44f820a669f@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 048/213] wifi: ar5523: enable proper endpoint verification
-Date: Thu, 13 Jun 2024 13:31:36 +0200
-Message-ID: <20240613113229.860968388@linuxfoundation.org>
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 075/213] ASoC: tracing: Export SND_SOC_DAPM_DIR_OUT to its value
+Date: Thu, 13 Jun 2024 13:32:03 +0200
+Message-ID: <20240613113230.901782223@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,97 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit e120b6388d7d88635d67dcae6483f39c37111850 ]
+[ Upstream commit 58300f8d6a48e58d1843199be743f819e2791ea3 ]
 
-Syzkaller reports [1] hitting a warning about an endpoint in use
-not having an expected type to it.
+The string SND_SOC_DAPM_DIR_OUT is printed in the snd_soc_dapm_path trace
+event instead of its value:
 
-Fix the issue by checking for the existence of all proper
-endpoints with their according types intact.
+   (((REC->path_dir) == SND_SOC_DAPM_DIR_OUT) ? "->" : "<-")
 
-Sadly, this patch has not been tested on real hardware.
+User space cannot parse this, as it has no idea what SND_SOC_DAPM_DIR_OUT
+is. Use TRACE_DEFINE_ENUM() to convert it to its value:
 
-[1] Syzkaller report:
-------------[ cut here ]------------
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 0 PID: 3643 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
-...
-Call Trace:
- <TASK>
- ar5523_cmd+0x41b/0x780 drivers/net/wireless/ath/ar5523/ar5523.c:275
- ar5523_cmd_read drivers/net/wireless/ath/ar5523/ar5523.c:302 [inline]
- ar5523_host_available drivers/net/wireless/ath/ar5523/ar5523.c:1376 [inline]
- ar5523_probe+0x14b0/0x1d10 drivers/net/wireless/ath/ar5523/ar5523.c:1655
- usb_probe_interface+0x30f/0x7f0 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:560 [inline]
- really_probe+0x249/0xb90 drivers/base/dd.c:639
- __driver_probe_device+0x1df/0x4d0 drivers/base/dd.c:778
- driver_probe_device+0x4c/0x1a0 drivers/base/dd.c:808
- __device_attach_driver+0x1d4/0x2e0 drivers/base/dd.c:936
- bus_for_each_drv+0x163/0x1e0 drivers/base/bus.c:427
- __device_attach+0x1e4/0x530 drivers/base/dd.c:1008
- bus_probe_device+0x1e8/0x2a0 drivers/base/bus.c:487
- device_add+0xbd9/0x1e90 drivers/base/core.c:3517
- usb_set_configuration+0x101d/0x1900 drivers/usb/core/message.c:2170
- usb_generic_driver_probe+0xbe/0x100 drivers/usb/core/generic.c:238
- usb_probe_device+0xd8/0x2c0 drivers/usb/core/driver.c:293
- call_driver_probe drivers/base/dd.c:560 [inline]
- really_probe+0x249/0xb90 drivers/base/dd.c:639
- __driver_probe_device+0x1df/0x4d0 drivers/base/dd.c:778
- driver_probe_device+0x4c/0x1a0 drivers/base/dd.c:808
- __device_attach_driver+0x1d4/0x2e0 drivers/base/dd.c:936
- bus_for_each_drv+0x163/0x1e0 drivers/base/bus.c:427
- __device_attach+0x1e4/0x530 drivers/base/dd.c:1008
- bus_probe_device+0x1e8/0x2a0 drivers/base/bus.c:487
- device_add+0xbd9/0x1e90 drivers/base/core.c:3517
- usb_new_device.cold+0x685/0x10ad drivers/usb/core/hub.c:2573
- hub_port_connect drivers/usb/core/hub.c:5353 [inline]
- hub_port_connect_change drivers/usb/core/hub.c:5497 [inline]
- port_event drivers/usb/core/hub.c:5653 [inline]
- hub_event+0x26cb/0x45d0 drivers/usb/core/hub.c:5735
- process_one_work+0x9bf/0x1710 kernel/workqueue.c:2289
- worker_thread+0x669/0x1090 kernel/workqueue.c:2436
- kthread+0x2e8/0x3a0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
- </TASK>
+   (((REC->path_dir) == 1) ? "->" : "<-")
 
-Reported-and-tested-by: syzbot+1bc2c2afd44f820a669f@syzkaller.appspotmail.com
-Fixes: b7d572e1871d ("ar5523: Add new driver")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240408121425.29392-1-n.zhandarovich@fintech.ru
+So that user space tools, such as perf and trace-cmd, can parse it
+correctly.
+
+Reported-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 6e588a0d839b5 ("ASoC: dapm: Consolidate path trace events")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20240416000303.04670cdf@rorschach.local.home
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ar5523/ar5523.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ include/trace/events/asoc.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ar5523/ar5523.c b/drivers/net/wireless/ath/ar5523/ar5523.c
-index 5d3cf354f6cb5..5ffd6f2152920 100644
---- a/drivers/net/wireless/ath/ar5523/ar5523.c
-+++ b/drivers/net/wireless/ath/ar5523/ar5523.c
-@@ -1590,6 +1590,20 @@ static int ar5523_probe(struct usb_interface *intf,
- 	struct ar5523 *ar;
- 	int error = -ENOMEM;
+diff --git a/include/trace/events/asoc.h b/include/trace/events/asoc.h
+index 40c300fe704da..f62d5b7024261 100644
+--- a/include/trace/events/asoc.h
++++ b/include/trace/events/asoc.h
+@@ -11,6 +11,8 @@
+ #define DAPM_DIRECT "(direct)"
+ #define DAPM_ARROW(dir) (((dir) == SND_SOC_DAPM_DIR_OUT) ? "->" : "<-")
  
-+	static const u8 bulk_ep_addr[] = {
-+		AR5523_CMD_TX_PIPE | USB_DIR_OUT,
-+		AR5523_DATA_TX_PIPE | USB_DIR_OUT,
-+		AR5523_CMD_RX_PIPE | USB_DIR_IN,
-+		AR5523_DATA_RX_PIPE | USB_DIR_IN,
-+		0};
++TRACE_DEFINE_ENUM(SND_SOC_DAPM_DIR_OUT);
 +
-+	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr)) {
-+		dev_err(&dev->dev,
-+			"Could not find all expected endpoints\n");
-+		error = -ENODEV;
-+		goto out;
-+	}
-+
- 	/*
- 	 * Load firmware if the device requires it.  This will return
- 	 * -ENXIO on success and we'll get called back afer the usb
+ struct snd_soc_jack;
+ struct snd_soc_card;
+ struct snd_soc_dapm_widget;
 -- 
 2.43.0
 
