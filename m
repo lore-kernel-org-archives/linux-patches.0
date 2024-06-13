@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EEC143899;
-	Thu, 13 Jun 2024 11:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443E51448D8;
+	Thu, 13 Jun 2024 11:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279991; cv=none; b=WeABU4kvXryP6f5mqVeNJi8B6tzEa3CcfDXWxLa9l3JUBqYrFRWza2KSxLOWwRZz8Hz4XsMIhv2in45AkXxoPj403BGzuRTSk9WmPdGJniGSR4ZWF/1c3DkN8dTnapdj0ERLaT/sWSjr5ZKpH1ZPhkFV/tkOw2rVXornN9TKo+A=
+	t=1718279994; cv=none; b=s7oEj60chqUIISTIrGaSO1p/RYbEuZDCQOGD5hi/6oApkcATBrnT0DetuURih7SU9Af1eboxzbC33jskttL2QqZ6oJe75LoJOxwPgWJ5STQfqmEe7ubZoT9boxq24Mo3d05zu07uWGo1ZNfudlPF44FxW7YUrMuPbwsJmzIznYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279991; c=relaxed/simple;
-	bh=Xvh+jwq9/ZRKhUYek0UaS9X19zj1ngPxHNtp5R7ewyY=;
+	s=arc-20240116; t=1718279994; c=relaxed/simple;
+	bh=7nn2UgdngROb43X/U0kGZxigYYSaSFe78bs5FUBmTBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kC+jLCrs7+YrVGsfAlrYFvQodpCPWhTk12jBBDbgJeqQ+DZQ4pyw2mHxRHBkXEv5KjfAHEKaMRzPTyTU5KWkuCSihO4YVqf6Ydi8DF0XKFElAE9a/mQX/Yq1fZTE/6T+NdgGl/rqgTZZs9oo056MQwKcfQnJAEaGmPIml/dIALQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zw3loYN0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EqNdhy7DrNADXKtxxicfi5UhCFE5XWxWExsPCwDwBK9/zhQ0pWbmw5uHBb7eEbL5Ejw+JL6vvdiPW2zVo8mNrQ2ZLNGNw6qyl7ViE+NHdQIqNu5WS2iKRo8nhQpEdkhwxi31UJHdjIZAMKumJbJnjN/q5iHc5xVoVZ9ShxWu3nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+MndHCR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zw3loYN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2946C2BBFC;
-	Thu, 13 Jun 2024 11:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+MndHCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF5B4C2BBFC;
+	Thu, 13 Jun 2024 11:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279991;
-	bh=Xvh+jwq9/ZRKhUYek0UaS9X19zj1ngPxHNtp5R7ewyY=;
+	s=korg; t=1718279994;
+	bh=7nn2UgdngROb43X/U0kGZxigYYSaSFe78bs5FUBmTBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zw3loYN0JQvR2aslvnayowEAl9Gd0Hq3o1iamsRTWCbpqQf5zTBy5LD6KwssCw9oJ
-	 3BLQjeVBEaCLbstI8WeRUDEq4vTNxe67PvXzvIs0gtnUmSF+ocYaAHPy/1k0VTMGoh
-	 9qKwVJIYI6Lh9XE7SGldSQIrJcIkj+1GxFgo0aWw=
+	b=k+MndHCRcEqjsLq5VqeOHWM0YmgQTY6Z4mblF83Q3voyw1C6drlDA5R2z7cqpNOwr
+	 k3qnsJZodAAA8gf6NcFEChWcu9JdkfwgpuZr97Mnxbb9obduRs4HxSKtSDyXzLYmV0
+	 QLCXugmNQIoS54EiGrsC0Xldarj402j6oWuJsgpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 105/202] serial: max3100: Fix bitwise types
-Date: Thu, 13 Jun 2024 13:33:23 +0200
-Message-ID: <20240613113231.815708949@linuxfoundation.org>
+Subject: [PATCH 5.4 106/202] greybus: arche-ctrl: move device table to its right location
+Date: Thu, 13 Jun 2024 13:33:24 +0200
+Message-ID: <20240613113231.854827173@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -50,51 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit e60955dbecb97f080848a57524827e2db29c70fd ]
+[ Upstream commit 6a0b8c0da8d8d418cde6894a104cf74e6098ddfa ]
 
-Sparse is not happy about misuse of bitwise types:
+The arche-ctrl has two platform drivers and three of_device_id tables,
+but one table is only used for the the module loader, while the other
+two seem to be associated with their drivers.
 
-  .../max3100.c:194:13: warning: incorrect type in assignment (different base types)
-  .../max3100.c:194:13:    expected unsigned short [addressable] [usertype] etx
-  .../max3100.c:194:13:    got restricted __be16 [usertype]
-  .../max3100.c:202:15: warning: cast to restricted __be16
+This leads to a W=1 warning when the driver is built-in:
 
-Fix this by choosing proper types for the respective variables.
+drivers/staging/greybus/arche-platform.c:623:34: error: 'arche_combined_id' defined but not used [-Werror=unused-const-variable=]
+  623 | static const struct of_device_id arche_combined_id[] = {
 
-Fixes: 7831d56b0a35 ("tty: MAX3100")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240402195306.269276-4-andriy.shevchenko@linux.intel.com
+Drop the extra table and register both tables that are actually
+used as the ones for the module loader instead.
+
+Fixes: 7b62b61c752a ("greybus: arche-ctrl: Don't expose driver internals to arche-platform driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240403080702.3509288-18-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max3100.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/staging/greybus/arche-apb-ctrl.c | 1 +
+ drivers/staging/greybus/arche-platform.c | 9 +--------
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/tty/serial/max3100.c b/drivers/tty/serial/max3100.c
-index c1ee88f530334..17b6f4a872d6a 100644
---- a/drivers/tty/serial/max3100.c
-+++ b/drivers/tty/serial/max3100.c
-@@ -45,6 +45,9 @@
- #include <linux/freezer.h>
- #include <linux/tty.h>
- #include <linux/tty_flip.h>
-+#include <linux/types.h>
-+
-+#include <asm/unaligned.h>
+diff --git a/drivers/staging/greybus/arche-apb-ctrl.c b/drivers/staging/greybus/arche-apb-ctrl.c
+index bbf3ba744fc44..c7383c6c6094d 100644
+--- a/drivers/staging/greybus/arche-apb-ctrl.c
++++ b/drivers/staging/greybus/arche-apb-ctrl.c
+@@ -468,6 +468,7 @@ static const struct of_device_id arche_apb_ctrl_of_match[] = {
+ 	{ .compatible = "usbffff,2", },
+ 	{ },
+ };
++MODULE_DEVICE_TABLE(of, arche_apb_ctrl_of_match);
  
- #include <linux/serial_max3100.h>
+ static struct platform_driver arche_apb_ctrl_device_driver = {
+ 	.probe		= arche_apb_ctrl_probe,
+diff --git a/drivers/staging/greybus/arche-platform.c b/drivers/staging/greybus/arche-platform.c
+index eebf0deb39f50..02a700f720e6d 100644
+--- a/drivers/staging/greybus/arche-platform.c
++++ b/drivers/staging/greybus/arche-platform.c
+@@ -622,14 +622,7 @@ static const struct of_device_id arche_platform_of_match[] = {
+ 	{ .compatible = "google,arche-platform", },
+ 	{ },
+ };
+-
+-static const struct of_device_id arche_combined_id[] = {
+-	/* Use PID/VID of SVC device */
+-	{ .compatible = "google,arche-platform", },
+-	{ .compatible = "usbffff,2", },
+-	{ },
+-};
+-MODULE_DEVICE_TABLE(of, arche_combined_id);
++MODULE_DEVICE_TABLE(of, arche_platform_of_match);
  
-@@ -191,7 +194,7 @@ static void max3100_timeout(struct timer_list *t)
- static int max3100_sr(struct max3100_port *s, u16 tx, u16 *rx)
- {
- 	struct spi_message message;
--	u16 etx, erx;
-+	__be16 etx, erx;
- 	int status;
- 	struct spi_transfer tran = {
- 		.tx_buf = &etx,
+ static struct platform_driver arche_platform_device_driver = {
+ 	.probe		= arche_platform_probe,
 -- 
 2.43.0
 
