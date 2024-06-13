@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808FFDDB1;
-	Thu, 13 Jun 2024 11:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB8FDDB1;
+	Thu, 13 Jun 2024 11:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278612; cv=none; b=aW7t7m12xfQZNuMaJp5eMqrMAPti2KaAa9KZ3gMnI5ZjYBn68PnF7S1EHEQ+6yqNJwk5OhGWQq0xE/nNISLq1mtjqOzViwFDMDnAqBBoqSDyIt0sTq1kFjn1c8N4vVVdeobdi9MU9CegElJ9lGSsEbmFBAA4GjEptu2N4b2oKak=
+	t=1718278615; cv=none; b=ClCbiZMHPWUQHXztXOO0MOlaX/dCPH40NbTghmzGdKYnE2Iw2+Hlzkt4Fq2efcwdCHqLzl39sggXFb6x2jc5U4zk4kipMoMmTPNjDAjlKaPsQM5K1/ayJOIAZsXXRvsJ6jA97/m1DLu99ohBACrFZBMVHUmIrI0v/hhjZGBpoTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278612; c=relaxed/simple;
-	bh=RN+DgRPYZilDScXF2WCxgtO1l0ruz9eoxTg9diaNh7Q=;
+	s=arc-20240116; t=1718278615; c=relaxed/simple;
+	bh=I4SQRDGVqZCVAf1cwVEVTPZhJ4g2NpVHEBCiccAQQf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpjOGMyCL9SGs84GZZ8W7+bxml3yfZWwMXYn9QM9ymcyXGuzszBDuKcLw0F9/t8nUb5+OTkzcDQ61+njcrjUVCD9UWEXKDbczT9ktXvIMXWR9zfs3VwLwMI5kkUneW7DQg9Xi8GtjHQ5Rbo/tcczDIXUoUwDAGq9R4IG89SSj/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1yrzcra; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O8jmsjK5DoKc/W4h6iEkzvhzoYvkLrVjkNX8CuGsFNg6AncMjSAejBL26DtDDz4TXOxy2KNlY2e8mpaBRzJxSMK1do2ZyI/1UVTd/YgUzz09K146lXqCJ867ozvzzuHW8ZIMMAPpZZZ/gf5f/2jXGlNv2PoOIgOazv5NEqPhgp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqQo6juH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1yrzcra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDECC2BBFC;
-	Thu, 13 Jun 2024 11:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqQo6juH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2789C2BBFC;
+	Thu, 13 Jun 2024 11:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278612;
-	bh=RN+DgRPYZilDScXF2WCxgtO1l0ruz9eoxTg9diaNh7Q=;
+	s=korg; t=1718278615;
+	bh=I4SQRDGVqZCVAf1cwVEVTPZhJ4g2NpVHEBCiccAQQf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p1yrzcraHjpkH+yRW6SRlg8st546dS4khWVW6DEyFmsS8C9SMXQj0iVtw1ZiO2XGN
-	 ZczsLimmMXdNQrDOevYHD5Vi6ymDFOxLHYAhg+b+QOEEpj+4xVCc9nVdozTFJnwX/G
-	 hbUnjXWns2byRF53PPpluJsD3Wcc7LO8qtbtikXQ=
+	b=iqQo6juHuNF1+jAUHUUVjMrv7r+sI9jqx3aBy/rrHFUpUV6m8emvear4/nE5Dc0iY
+	 yyRxLm+a3puwUQQXOxPIgaeRlBnPimdCkExc2BjPDXBRzvhJbTZz/Kd3+sVenS4sEq
+	 rtep5MS1n654AxkRmtdRKyu+1lgJWhBONHU64cps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Fang <derek.fang@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 011/213] ASoC: rt5645: Fix the electric noise due to the CBJ contacts floating
-Date: Thu, 13 Jun 2024 13:30:59 +0200
-Message-ID: <20240613113228.418956142@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>
+Subject: [PATCH 4.19 002/213] speakup: Fix sizeof() vs ARRAY_SIZE() bug
+Date: Thu, 13 Jun 2024 13:30:50 +0200
+Message-ID: <20240613113228.067029714@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -51,105 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Derek Fang <derek.fang@realtek.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 103abab975087e1f01b76fcb54c91dbb65dbc249 ]
+commit 008ab3c53bc4f0b2f20013c8f6c204a3203d0b8b upstream.
 
-The codec leaves tie combo jack's sleeve/ring2 to floating status
-default. It would cause electric noise while connecting the active
-speaker jack during boot or shutdown.
-This patch requests a gpio to control the additional jack circuit
-to tie the contacts to the ground or floating.
+The "buf" pointer is an array of u16 values.  This code should be
+using ARRAY_SIZE() (which is 256) instead of sizeof() (which is 512),
+otherwise it can the still got out of bounds.
 
-Signed-off-by: Derek Fang <derek.fang@realtek.com>
-
-Link: https://msgid.link/r/20240408091057.14165-1-derek.fang@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c8d2f34ea96e ("speakup: Avoid crash on very long word")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Link: https://lore.kernel.org/r/d16f67d2-fd0a-4d45-adac-75ddd11001aa@moroto.mountain
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt5645.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/staging/speakup/main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
-index 5f23369d7ccad..fbb3fca59c8cb 100644
---- a/sound/soc/codecs/rt5645.c
-+++ b/sound/soc/codecs/rt5645.c
-@@ -412,6 +412,7 @@ struct rt5645_priv {
- 	struct regmap *regmap;
- 	struct i2c_client *i2c;
- 	struct gpio_desc *gpiod_hp_det;
-+	struct gpio_desc *gpiod_cbj_sleeve;
- 	struct snd_soc_jack *hp_jack;
- 	struct snd_soc_jack *mic_jack;
- 	struct snd_soc_jack *btn_jack;
-@@ -3206,6 +3207,9 @@ static int rt5645_jack_detect(struct snd_soc_component *component, int jack_inse
- 		regmap_update_bits(rt5645->regmap, RT5645_IN1_CTRL2,
- 			RT5645_CBJ_MN_JD, 0);
- 
-+		if (rt5645->gpiod_cbj_sleeve)
-+			gpiod_set_value(rt5645->gpiod_cbj_sleeve, 1);
-+
- 		msleep(600);
- 		regmap_read(rt5645->regmap, RT5645_IN1_CTRL3, &val);
- 		val &= 0x7;
-@@ -3222,6 +3226,8 @@ static int rt5645_jack_detect(struct snd_soc_component *component, int jack_inse
- 			snd_soc_dapm_disable_pin(dapm, "Mic Det Power");
- 			snd_soc_dapm_sync(dapm);
- 			rt5645->jack_type = SND_JACK_HEADPHONE;
-+			if (rt5645->gpiod_cbj_sleeve)
-+				gpiod_set_value(rt5645->gpiod_cbj_sleeve, 0);
- 		}
- 		if (rt5645->pdata.level_trigger_irq)
- 			regmap_update_bits(rt5645->regmap, RT5645_IRQ_CTRL2,
-@@ -3247,6 +3253,9 @@ static int rt5645_jack_detect(struct snd_soc_component *component, int jack_inse
- 		if (rt5645->pdata.level_trigger_irq)
- 			regmap_update_bits(rt5645->regmap, RT5645_IRQ_CTRL2,
- 				RT5645_JD_1_1_MASK, RT5645_JD_1_1_INV);
-+
-+		if (rt5645->gpiod_cbj_sleeve)
-+			gpiod_set_value(rt5645->gpiod_cbj_sleeve, 0);
+--- a/drivers/staging/speakup/main.c
++++ b/drivers/staging/speakup/main.c
+@@ -577,7 +577,7 @@ static u_long get_word(struct vc_data *v
  	}
- 
- 	return rt5645->jack_type;
-@@ -3892,6 +3901,16 @@ static int rt5645_i2c_probe(struct i2c_client *i2c,
- 			return ret;
- 	}
- 
-+	rt5645->gpiod_cbj_sleeve = devm_gpiod_get_optional(&i2c->dev, "cbj-sleeve",
-+							   GPIOD_OUT_LOW);
-+
-+	if (IS_ERR(rt5645->gpiod_cbj_sleeve)) {
-+		ret = PTR_ERR(rt5645->gpiod_cbj_sleeve);
-+		dev_info(&i2c->dev, "failed to initialize gpiod, ret=%d\n", ret);
-+		if (ret != -ENOENT)
-+			return ret;
-+	}
-+
- 	for (i = 0; i < ARRAY_SIZE(rt5645->supplies); i++)
- 		rt5645->supplies[i].supply = rt5645_supply_names[i];
- 
-@@ -4135,6 +4154,9 @@ static int rt5645_i2c_remove(struct i2c_client *i2c)
- 	cancel_delayed_work_sync(&rt5645->jack_detect_work);
- 	cancel_delayed_work_sync(&rt5645->rcclock_work);
- 
-+	if (rt5645->gpiod_cbj_sleeve)
-+		gpiod_set_value(rt5645->gpiod_cbj_sleeve, 0);
-+
- 	regulator_bulk_disable(ARRAY_SIZE(rt5645->supplies), rt5645->supplies);
- 
- 	return 0;
-@@ -4152,6 +4174,9 @@ static void rt5645_i2c_shutdown(struct i2c_client *i2c)
- 		0);
- 	msleep(20);
- 	regmap_write(rt5645->regmap, RT5645_RESET, 0);
-+
-+	if (rt5645->gpiod_cbj_sleeve)
-+		gpiod_set_value(rt5645->gpiod_cbj_sleeve, 0);
- }
- 
- static struct i2c_driver rt5645_i2c_driver = {
--- 
-2.43.0
-
+ 	attr_ch = get_char(vc, (u_short *)tmp_pos, &spk_attr);
+ 	buf[cnt++] = attr_ch;
+-	while (tmpx < vc->vc_cols - 1 && cnt < sizeof(buf) - 1) {
++	while (tmpx < vc->vc_cols - 1 && cnt < ARRAY_SIZE(buf) - 1) {
+ 		tmp_pos += 2;
+ 		tmpx++;
+ 		ch = get_char(vc, (u_short *)tmp_pos, &temp);
 
 
