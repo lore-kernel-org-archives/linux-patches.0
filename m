@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DA61420C6;
-	Thu, 13 Jun 2024 12:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9281428F0;
+	Thu, 13 Jun 2024 12:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281727; cv=none; b=q3z7+UU1nBDVAiWYd39X3WW4nc4hbOXNENOoP6dMKIBQLpIWZOXyvcGPpeAe4XQ7O+kmoO2EyMsaGw5aa1M8jSQAva9YnwlA/GqRbkQCrZozXbJlaytsMw5YUoUwffp6TZfBG1Tzp8B1jcvAWGpaO3enBYqAtRY2tltV/UHu994=
+	t=1718281730; cv=none; b=CkifwSMEcgdcTQ9zcxGAU+bpqE45rf7YgSsP/NyU6ytf3KTIj4SksfqveJGg0ElkGYTbYufnGZWzZ73FgBNtF6Zdq3iwdgtsIqaE5hN2NVeqFcnOxR/VZJRJkcA+aAL11VnYXEIWgzjOCnivIAjoBs9SN7q11A2mt+xMGHp5lDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281727; c=relaxed/simple;
-	bh=27pPK8dWCloz60SpKflWZ3ciRfufKKRAuQy+iUM1mz4=;
+	s=arc-20240116; t=1718281730; c=relaxed/simple;
+	bh=LDaJUQE/EphZHEIGqGiYJSvzOEketeFIE/J+FkXEn7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dKgIZityjY7UZsx1Pv9DqK2ZF/rEZPxD0X+smYtISrrBfbEAwLu+Z141mRd8DYgMvfT8TK/nKQyz8CqWtmPcITnTcU+cYq5JEbhokzw1w8rsZl2WAbyZ672Vn4bey5oP30LaJ5LDTp3OSe5fJiLTTuB23x2dCzcgPtgAvOv3ISQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwgLr2MV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CiNLKHJjQbXImSVDk/my/wiVl3QWR4U1nzQmhBD0JGK8fvD8RPhqdFxGlWJWECLzTJV5oFaGU+IR62jWh6eVYGseDQPdizdCyPyBKObJW1ty2FGyalV54VYK6gAyq324tRA6oy174xoqZitGFX4LgUzDZ0WfWBDqQQi8m5+itRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zr7kvWXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwgLr2MV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168AEC2BBFC;
-	Thu, 13 Jun 2024 12:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zr7kvWXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0229DC32786;
+	Thu, 13 Jun 2024 12:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281727;
-	bh=27pPK8dWCloz60SpKflWZ3ciRfufKKRAuQy+iUM1mz4=;
+	s=korg; t=1718281730;
+	bh=LDaJUQE/EphZHEIGqGiYJSvzOEketeFIE/J+FkXEn7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwgLr2MVdN41PdtFxzon+q0VEW98jerOzp5fy9ucuNk2CKnw6BgdjS4sFzVVLD0dZ
-	 0MhDfIHinmiNdS0fvGl0XX7G3msvFFvd4tbyGPm9Zma7HzV/8c4mZGB5XQGoHTcmzA
-	 Us0bVtnc0uz92ntW2NJP4HcfxienfindzxDXT2ig=
+	b=zr7kvWXqiAPYeieZEJuGGQw60SZogzEs1LLymIoqg8Lrfc5DwgZdoCKdHgK8k+krz
+	 8ruOks40g+dzznX5FiAVeQr2S/ehHNvDj43088nxz7ZM1dHaR2hrqPSdnmzYUSOyZc
+	 ta66EIOR0PHHn9Q3a7nENMc6wiuRjZX11yCZefoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+045b454ab35fd82a35fb@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Eric Sandeen <sandeen@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/402] epoll: be better about file lifetimes
-Date: Thu, 13 Jun 2024 13:29:52 +0200
-Message-ID: <20240613113303.506526954@linuxfoundation.org>
+Subject: [PATCH 5.15 036/402] openpromfs: finish conversion to the new mount API
+Date: Thu, 13 Jun 2024 13:29:53 +0200
+Message-ID: <20240613113303.545675918@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,92 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Eric Sandeen <sandeen@redhat.com>
 
-[ Upstream commit 4efaa5acf0a1d2b5947f98abb3acf8bfd966422b ]
+[ Upstream commit 8f27829974b025d4df2e78894105d75e3bf349f0 ]
 
-epoll can call out to vfs_poll() with a file pointer that may race with
-the last 'fput()'. That would make f_count go down to zero, and while
-the ep->mtx locking means that the resulting file pointer tear-down will
-be blocked until the poll returns, it means that f_count is already
-dead, and any use of it won't actually get a reference to the file any
-more: it's dead regardless.
+The original mount API conversion inexplicably left out the change
+from ->remount_fs to ->reconfigure; do that now.
 
-Make sure we have a valid ref on the file pointer before we call down to
-vfs_poll() from the epoll routines.
-
-Link: https://lore.kernel.org/lkml/0000000000002d631f0615918f1e@google.com/
-Reported-by: syzbot+045b454ab35fd82a35fb@syzkaller.appspotmail.com
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 7ab2fa7693c3 ("vfs: Convert openpromfs to use the new mount API")
+Signed-off-by: Eric Sandeen <sandeen@redhat.com>
+Link: https://lore.kernel.org/r/90b968aa-c979-420f-ba37-5acc3391b28f@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 38 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
+ fs/openpromfs/inode.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 1c254094c4c36..b60edddf17870 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -832,6 +832,34 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
- 	return res;
+diff --git a/fs/openpromfs/inode.c b/fs/openpromfs/inode.c
+index f825176ff4ed7..07a312bf9be71 100644
+--- a/fs/openpromfs/inode.c
++++ b/fs/openpromfs/inode.c
+@@ -355,10 +355,10 @@ static struct inode *openprom_iget(struct super_block *sb, ino_t ino)
+ 	return inode;
  }
  
-+/*
-+ * The ffd.file pointer may be in the process of being torn down due to
-+ * being closed, but we may not have finished eventpoll_release() yet.
-+ *
-+ * Normally, even with the atomic_long_inc_not_zero, the file may have
-+ * been free'd and then gotten re-allocated to something else (since
-+ * files are not RCU-delayed, they are SLAB_TYPESAFE_BY_RCU).
-+ *
-+ * But for epoll, users hold the ep->mtx mutex, and as such any file in
-+ * the process of being free'd will block in eventpoll_release_file()
-+ * and thus the underlying file allocation will not be free'd, and the
-+ * file re-use cannot happen.
-+ *
-+ * For the same reason we can avoid a rcu_read_lock() around the
-+ * operation - 'ffd.file' cannot go away even if the refcount has
-+ * reached zero (but we must still not call out to ->poll() functions
-+ * etc).
-+ */
-+static struct file *epi_fget(const struct epitem *epi)
-+{
-+	struct file *file;
-+
-+	file = epi->ffd.file;
-+	if (!atomic_long_inc_not_zero(&file->f_count))
-+		file = NULL;
-+	return file;
-+}
-+
- /*
-  * Differs from ep_eventpoll_poll() in that internal callers already have
-  * the ep->mtx so we need to start from depth=1, such that mutex_lock_nested()
-@@ -840,14 +868,22 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
- static __poll_t ep_item_poll(const struct epitem *epi, poll_table *pt,
- 				 int depth)
+-static int openprom_remount(struct super_block *sb, int *flags, char *data)
++static int openpromfs_reconfigure(struct fs_context *fc)
  {
--	struct file *file = epi->ffd.file;
-+	struct file *file = epi_fget(epi);
- 	__poll_t res;
- 
-+	/*
-+	 * We could return EPOLLERR | EPOLLHUP or something, but let's
-+	 * treat this more as "file doesn't exist, poll didn't happen".
-+	 */
-+	if (!file)
-+		return 0;
-+
- 	pt->_key = epi->event.events;
- 	if (!is_file_epoll(file))
- 		res = vfs_poll(file, pt);
- 	else
- 		res = __ep_eventpoll_poll(file, pt, depth);
-+	fput(file);
- 	return res & epi->event.events;
+-	sync_filesystem(sb);
+-	*flags |= SB_NOATIME;
++	sync_filesystem(fc->root->d_sb);
++	fc->sb_flags |= SB_NOATIME;
+ 	return 0;
  }
  
+@@ -366,7 +366,6 @@ static const struct super_operations openprom_sops = {
+ 	.alloc_inode	= openprom_alloc_inode,
+ 	.free_inode	= openprom_free_inode,
+ 	.statfs		= simple_statfs,
+-	.remount_fs	= openprom_remount,
+ };
+ 
+ static int openprom_fill_super(struct super_block *s, struct fs_context *fc)
+@@ -416,6 +415,7 @@ static int openpromfs_get_tree(struct fs_context *fc)
+ 
+ static const struct fs_context_operations openpromfs_context_ops = {
+ 	.get_tree	= openpromfs_get_tree,
++	.reconfigure	= openpromfs_reconfigure,
+ };
+ 
+ static int openpromfs_init_fs_context(struct fs_context *fc)
 -- 
 2.43.0
 
