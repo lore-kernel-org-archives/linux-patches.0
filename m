@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE80143747;
-	Thu, 13 Jun 2024 12:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B1D143861;
+	Thu, 13 Jun 2024 12:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281539; cv=none; b=aX/8ADV4j8MV8Jlox3eEpewl30OuP/TPg6Nkn5M5B4HMmC95shuGUoRIUxDkf2hXQY4d90q2U2mevqxWIZcn7rgZan15ij6/5AZ2SrJWPxHgbLFAduNqU4QsRLbKnFF8ZrI3m5gKaqlkPlt3x7dMs2IA3asq+3gkGI3rdd993Z0=
+	t=1718281542; cv=none; b=hVSfLgQbMh7G+3AluID9mWBDDNjdE88RSIMSuysEnCYX5lwEn3PGY70JXLmOdK9QdDk7a5mDGBUaNZOQqisJE+Gchm498ee6FYO+npn9Kd7t347GuzGXizP5jJhOqeyudiubQoo/FwyspkwTHcI4Dj/j+KfRG6C4lssfHOCYXYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281539; c=relaxed/simple;
-	bh=LYz3j0DmuSNqL+Tdz++MDyGo3ajZnd77zkOpnRyYYvg=;
+	s=arc-20240116; t=1718281542; c=relaxed/simple;
+	bh=AvFSAjZSR7dd4D6hUenbO74YAS7y/Ri43ZjW9hdRiCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8uwQ1DuI7JE6w4Wfi9ANGi+CWOhTHKbq48EuEZ28oxhJA3WbFp3FUxJAHuivj8lDFKMGKgkPrGook3XJLwy5vo+UcQREtqxOi7PKEi8TkeSkXVgDkfdnWFPhra9Vey0id15umghyIM9JdAg8JEuDMNbH2LBAkV+HAgFePo932w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYtIl0qL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXPq5mZNUceaXRLXfZBeaRg3Q76U/diUSQxi5XNUK2a32/pPO/919Mxod/ikPnwYCtvPmhOk6zU5kIvEliYL65+wo9eYzpxUpplOCpmnM/B6hMbUK9FUmFk8yj2U76lfmML+L8FaQgLAlUA/M0gb6afg2yqumu62hxtN/Y2vvk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntzqEnjZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYtIl0qL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06288C2BBFC;
-	Thu, 13 Jun 2024 12:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntzqEnjZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F289BC2BBFC;
+	Thu, 13 Jun 2024 12:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281539;
-	bh=LYz3j0DmuSNqL+Tdz++MDyGo3ajZnd77zkOpnRyYYvg=;
+	s=korg; t=1718281542;
+	bh=AvFSAjZSR7dd4D6hUenbO74YAS7y/Ri43ZjW9hdRiCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LYtIl0qLIiO+P/KSLwRkwGVpiiq/o+GGKCrtajNJdAoaeL+4pJtXT19fNCO4aSy6o
-	 gG3VzKZWTJRTWltaOQ4VPh08NuNa/LwwvFRH766Q0GMYhtXinQgPcX30Zjt0JXWO7t
-	 t1ZXUUJTJRPZGSJuK2uleeTNy56kDbOb29wB4M8s=
+	b=ntzqEnjZt7qVtuIFK/P5Lph79Q3wohAusKp0VUTNDGFG8lXz74kkhCxe5jhU1XfQk
+	 dE4a2zkaxWYfTkzgTN4Df29GJsVMUhv+4X4hwnmumc/XBP4Y8Q5o0Vdk7L4RrXiAnT
+	 QIIttjURSorQWbVW4hx5eKhPlA43QHNT1Ta3ZPsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 5.10 289/317] media: v4l2-core: hold videodev_lock until dev reg, finishes
-Date: Thu, 13 Jun 2024 13:35:07 +0200
-Message-ID: <20240613113258.731879582@linuxfoundation.org>
+	Andy Shevchenko <andy@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 290/317] mmc: core: Add mmc_gpiod_set_cd_config() function
+Date: Thu, 13 Jun 2024 13:35:08 +0200
+Message-ID: <20240613113258.771121725@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -50,50 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 1ed4477f2ea4743e7c5e1f9f3722152d14e6eeb1 upstream.
+commit 63a7cd660246aa36af263b85c33ecc6601bf04be upstream.
 
-After the new V4L2 device node was registered, some additional
-initialization was done before the device node was marked as
-'registered'. During the time between creating the device node
-and marking it as 'registered' it was possible to open the
-device node, which would return -ENODEV since the 'registered'
-flag was not yet set.
+Some mmc host drivers may need to fixup a card-detection GPIO's config
+to e.g. enable the GPIO controllers builtin pull-up resistor on devices
+where the firmware description of the GPIO is broken (e.g. GpioInt with
+PullNone instead of PullUp in ACPI DSDT).
 
-Hold the videodev_lock mutex from just before the device node
-is registered until the 'registered' flag is set. Since v4l2_open
-will take the same lock, it will wait until this registration
-process is finished. This resolves this race condition.
+Since this is the exception rather then the rule adding a config
+parameter to mmc_gpiod_request_cd() seems undesirable, so instead
+add a new mmc_gpiod_set_cd_config() function. This is simply a wrapper
+to call gpiod_set_config() on the card-detect GPIO acquired through
+mmc_gpiod_request_cd().
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Cc: <stable@vger.kernel.org>      # for vi4.18 and up
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240410191639.526324-2-hdegoede@redhat.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-dev.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/core/slot-gpio.c  |   20 ++++++++++++++++++++
+ include/linux/mmc/slot-gpio.h |    1 +
+ 2 files changed, 21 insertions(+)
 
---- a/drivers/media/v4l2-core/v4l2-dev.c
-+++ b/drivers/media/v4l2-core/v4l2-dev.c
-@@ -1030,8 +1030,10 @@ int __video_register_device(struct video
- 	vdev->dev.devt = MKDEV(VIDEO_MAJOR, vdev->minor);
- 	vdev->dev.parent = vdev->dev_parent;
- 	dev_set_name(&vdev->dev, "%s%d", name_base, vdev->num);
-+	mutex_lock(&videodev_lock);
- 	ret = device_register(&vdev->dev);
- 	if (ret < 0) {
-+		mutex_unlock(&videodev_lock);
- 		pr_err("%s: device_register failed\n", __func__);
- 		goto cleanup;
- 	}
-@@ -1051,6 +1053,7 @@ int __video_register_device(struct video
+--- a/drivers/mmc/core/slot-gpio.c
++++ b/drivers/mmc/core/slot-gpio.c
+@@ -202,6 +202,26 @@ int mmc_gpiod_request_cd(struct mmc_host
+ }
+ EXPORT_SYMBOL(mmc_gpiod_request_cd);
  
- 	/* Part 6: Activate this minor. The char device can now be used. */
- 	set_bit(V4L2_FL_REGISTERED, &vdev->flags);
-+	mutex_unlock(&videodev_lock);
- 
- 	return 0;
- 
++/**
++ * mmc_gpiod_set_cd_config - set config for card-detection GPIO
++ * @host: mmc host
++ * @config: Generic pinconf config (from pinconf_to_config_packed())
++ *
++ * This can be used by mmc host drivers to fixup a card-detection GPIO's config
++ * (e.g. set PIN_CONFIG_BIAS_PULL_UP) after acquiring the GPIO descriptor
++ * through mmc_gpiod_request_cd().
++ *
++ * Returns:
++ * 0 on success, or a negative errno value on error.
++ */
++int mmc_gpiod_set_cd_config(struct mmc_host *host, unsigned long config)
++{
++	struct mmc_gpio *ctx = host->slot.handler_priv;
++
++	return gpiod_set_config(ctx->cd_gpio, config);
++}
++EXPORT_SYMBOL(mmc_gpiod_set_cd_config);
++
+ bool mmc_can_gpio_cd(struct mmc_host *host)
+ {
+ 	struct mmc_gpio *ctx = host->slot.handler_priv;
+--- a/include/linux/mmc/slot-gpio.h
++++ b/include/linux/mmc/slot-gpio.h
+@@ -20,6 +20,7 @@ int mmc_gpiod_request_cd(struct mmc_host
+ 			 unsigned int debounce);
+ int mmc_gpiod_request_ro(struct mmc_host *host, const char *con_id,
+ 			 unsigned int idx, unsigned int debounce);
++int mmc_gpiod_set_cd_config(struct mmc_host *host, unsigned long config);
+ void mmc_gpio_set_cd_isr(struct mmc_host *host,
+ 			 irqreturn_t (*isr)(int irq, void *dev_id));
+ int mmc_gpio_set_cd_wake(struct mmc_host *host, bool on);
 
 
