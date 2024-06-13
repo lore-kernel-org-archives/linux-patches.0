@@ -1,49 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4167844C6F;
-	Thu, 13 Jun 2024 12:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8A944C6F;
+	Thu, 13 Jun 2024 12:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280133; cv=none; b=H7xW1e3dPjUze6Y/jPQo9It/9WeVdtS1VYbf4m1jrs408n12ikdXzIptFthr3xBKUQviGBhu0P99WQWUBmahu1KCBZNA0ZMZ7zFLHcyivLTJjbz5YR75QXymL+HWjaQwlCompn/wteIzCSRQ6M1Cu8z693ebSX0L6VPTgMQyRyM=
+	t=1718280136; cv=none; b=U2/edjFmirG5ayJXoDkLR377bDcSV7r2rUQ7kcwWKWDTr24UaXoFqlcSQg0ND2nbQ4rV20hWiNqmFPAAdGVf/v2ngiik8VDLzVzv82awCeK1iPcebYUzYUhtcoQFPSrS57o38aIi9UUh1JjJyclsjcs3j6JlmN02hN0HtznV2Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280133; c=relaxed/simple;
-	bh=wlpgOKYKi8UGEI3c61OQMr+d4t9PFj7cJnoKfCOlwIc=;
+	s=arc-20240116; t=1718280136; c=relaxed/simple;
+	bh=jEwlagI5KE8tT1BM6moWcVAOWZvZxFT33B6Y7/zXZ0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Er5cNbvBZ4GAIK0DWlcJMCUx+y/d+ny/OW3wqIZtS7SkWmgjgiwVdcD3WMqpIJpVg2On3DGeOCsLh0a/ed8QbZauMF0S926lhh/JS0DpterPfEdKt8yM0EKi6lkQnf8fmxjJ/ax2XTT4zCeJrNRw7RMihUpWbYHdZGwarkRneII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCeJc4sN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hx4VTVNXzCjB11JY4ZndEDhFcF0pk09ueiIfEOi1+aGtHbTu6xzGx87THQO/qfwv4pGrsrE3FT32FLMYgAyc22ECpGpigGSDbNS35UZMs3TX3mOO8ZLnKSdoYDZru0rk1jAiiN0VgRNk2RqwdWk9fyBjnkm0Q4O4iRAnrFlumqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4m24B9I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCeJc4sN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E541C2BBFC;
-	Thu, 13 Jun 2024 12:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4m24B9I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4B9C2BBFC;
+	Thu, 13 Jun 2024 12:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280133;
-	bh=wlpgOKYKi8UGEI3c61OQMr+d4t9PFj7cJnoKfCOlwIc=;
+	s=korg; t=1718280136;
+	bh=jEwlagI5KE8tT1BM6moWcVAOWZvZxFT33B6Y7/zXZ0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yCeJc4sNy0VDv0ZNRRV0leMUccDeVuNfRKG7dXd7EGMD/uo+YdnHBPD/l437pb4Zt
-	 GOUhfDOG5s9iEO1jxpfqYwn5qvmLvPaJFRS73bfVsH2G8csxGUl3uoLBS2gRh9FJLM
-	 S+JC1N9Y8Z04BpOOcqYjKamxkNaGsJr21EeBe6fo=
+	b=w4m24B9IckkOFEixPS3wdsU5D6JIjGI2Mv1gmApbKH5OE0Baes156PKw9iPEoeD7b
+	 5g0F8PqgR59SFMMvupyu4bt1vAD0ROiDEfMSLvmBluJnxqrBMK7wEirqBlaQen+iC0
+	 aeRKBDRRdQ8NW91rW38YZ/cFDUf14j515jR7IOQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kaige Ye <ye@kaige.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 123/202] perf stat: Dont display metric header for non-leader uncore events
-Date: Thu, 13 Jun 2024 13:33:41 +0200
-Message-ID: <20240613113232.509114665@linuxfoundation.org>
+Subject: [PATCH 5.4 124/202] Input: ims-pcu - fix printf string overflow
+Date: Thu, 13 Jun 2024 13:33:42 +0200
+Message-ID: <20240613113232.548148919@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -62,88 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 193a9e30207f54777ff42d0d8be8389edc522277 ]
+[ Upstream commit bf32bceedd0453c70d9d022e2e29f98e446d7161 ]
 
-On an Intel tigerlake laptop a metric like:
+clang warns about a string overflow in this driver
 
-    {
-        "BriefDescription": "Test",
-        "MetricExpr": "imc_free_running@data_read@ + imc_free_running@data_write@",
-        "MetricGroup": "Test",
-        "MetricName": "Test",
-        "ScaleUnit": "6.103515625e-5MiB"
-    },
+drivers/input/misc/ims-pcu.c:1802:2: error: 'snprintf' will always be truncated; specified size is 10, but format string expands to at least 12 [-Werror,-Wformat-truncation]
+drivers/input/misc/ims-pcu.c:1814:2: error: 'snprintf' will always be truncated; specified size is 10, but format string expands to at least 12 [-Werror,-Wformat-truncation]
 
-Will have 4 events:
+Make the buffer a little longer to ensure it always fits.
 
-  uncore_imc_free_running_0/data_read/
-  uncore_imc_free_running_0/data_write/
-  uncore_imc_free_running_1/data_read/
-  uncore_imc_free_running_1/data_write/
-
-If aggregration is disabled with metric-only 2 column headers are
-needed:
-
-  $ perf stat -M test --metric-only -A -a sleep 1
-
-   Performance counter stats for 'system wide':
-
-                    MiB  Test            MiB  Test
-  CPU0                 1821.0               1820.5
-
-But when not, the counts aggregated in the metric leader and only 1
-column should be shown:
-
-  $ perf stat -M test --metric-only -a sleep 1
-   Performance counter stats for 'system wide':
-
-              MiB  Test
-                5909.4
-
-         1.001258915 seconds time elapsed
-
-Achieve this by skipping events that aren't metric leaders when
-printing column headers and aggregation isn't disabled.
-
-The bug is long standing, the fixes tag is set to a refactor as that
-is as far back as is reasonable to backport.
-
-Fixes: 088519f318be3a41 ("perf stat: Move the display functions to stat-display.c")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kaige Ye <ye@kaige.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20240510051309.2452468-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240326223825.4084412-7-arnd@kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/stat-display.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/input/misc/ims-pcu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-display.c
-index 70612ec583f35..7ea2bddd75d51 100644
---- a/tools/perf/util/stat-display.c
-+++ b/tools/perf/util/stat-display.c
-@@ -931,6 +931,9 @@ static void print_metric_headers(struct perf_stat_config *config,
+diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
+index d8dbfc030d0fa..4dfed127952d3 100644
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -42,8 +42,8 @@ struct ims_pcu_backlight {
+ #define IMS_PCU_PART_NUMBER_LEN		15
+ #define IMS_PCU_SERIAL_NUMBER_LEN	8
+ #define IMS_PCU_DOM_LEN			8
+-#define IMS_PCU_FW_VERSION_LEN		(9 + 1)
+-#define IMS_PCU_BL_VERSION_LEN		(9 + 1)
++#define IMS_PCU_FW_VERSION_LEN		16
++#define IMS_PCU_BL_VERSION_LEN		16
+ #define IMS_PCU_BL_RESET_REASON_LEN	(2 + 1)
  
- 	/* Print metrics headers only */
- 	evlist__for_each_entry(evlist, counter) {
-+		if (config->aggr_mode != AGGR_NONE && counter->metric_leader != counter)
-+			continue;
-+
- 		os.evsel = counter;
- 		out.ctx = &os;
- 		out.print_metric = print_metric_header;
+ #define IMS_PCU_PCU_B_DEVICE_ID		5
 -- 
 2.43.0
 
