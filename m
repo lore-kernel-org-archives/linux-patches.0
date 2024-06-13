@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217321849;
-	Thu, 13 Jun 2024 12:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEC01448C4;
+	Thu, 13 Jun 2024 12:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282563; cv=none; b=JeqBGCVxZxr9XTAAsimDscZGcODVESOhEezZNRTTTQAId1bvl/3uSY4ksuEBXRGOIGDqRNf3yuHplHJZmpxmSvdydEkR8IQFSQh2pwihe+/962gaefyYnaFTc2J5UAmvHB7cOfudB9iPbhlFvxM9gwVCnQqJaRw4dSRiMh5fEEw=
+	t=1718282566; cv=none; b=uSNkr3SrFXDgszj2LFIlECUtqfhtPKIwUDveU4eqE7VVpX9fuJaTVKx/sHfr6RvmBJuPv27GRvrXDMmYqrRMuTerG7hYtTVnEeC8FYNbGolQnLowJQ4FZkvwS1h8IlGrVEeW8fVUdjNcc8w6XOcKM9nb7buEXFKI7SMLQjktpQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282563; c=relaxed/simple;
-	bh=r92TeYbC+S01cO2bnWjlNp62ptjoQObsgWoaua8uqjc=;
+	s=arc-20240116; t=1718282566; c=relaxed/simple;
+	bh=aotqF+maEpaCJHy7WSS2KISD65ubiMRO7Z6DFvMLNuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bw7TsiykocbOpoKwjQ/0ZJDYLfew2fFK2mY2bMX5AfNloa9Ib6byc/0KaTFD1KRowWq0/JgaaiGcJP+IYkRhDljbptBEfUQ3DTaUigqjENvw1tOPxMC53QsKoXuAUkafEMjMbOWtCotVuAQidvp/yeqE3DRGwiRFKZMbOB85UKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ri05o54M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=si//pSovfwXRskFVzQZBeogcnqzWSjN35RWtYEMcpQXNOt4LfPpP8oex4QqFjmiQhiSQf7syQCYcqqOy3ydDgEBX9h2XcP9clgh9AFQUKQjWG6CBqwrWIWzVYvzOPGr1FhVNXPTfg8nVlXUzXkK7RjStRMIMyO3lR0MVcRVYhlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jc0QdZm0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ri05o54M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA99C32786;
-	Thu, 13 Jun 2024 12:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jc0QdZm0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8462DC4AF1A;
+	Thu, 13 Jun 2024 12:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282563;
-	bh=r92TeYbC+S01cO2bnWjlNp62ptjoQObsgWoaua8uqjc=;
+	s=korg; t=1718282565;
+	bh=aotqF+maEpaCJHy7WSS2KISD65ubiMRO7Z6DFvMLNuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ri05o54MVeuFqL6ImOFRG2ypZHBSqyoHpwD6Msoy6fIBhLe3nedet12J/aQLOpYBp
-	 DrAtbV56DGlJGE/QkmQC2Oz32J032YCOGvBxHKnZu2rHg6zU8KyjmM7E6hgzEwi3sK
-	 vVMnIvXuid8KeW+ctNsSnDRwCHkD87jM9fgMEiAg=
+	b=Jc0QdZm0boygo5ldfLnTOnl5hpUdTVJxhvOZTT2MD/7X5JhYBrv4p+OY7FmYRE/w3
+	 TdlwY5ZrPbhstKQxARvQ6+nb5EtU0KyrsxRGRnTcSF4wJX35iTVdCj92kJPG/laMby
+	 kgokMer5Dn/4S+C1izaCSXtHiM+8kCD1nUOA/3Ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Benjamin Coddington <bcodding@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Dan Aloni <dan.aloni@vastdata.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 288/402] NFSv4: Fixup smatch warning for ambiguous return
-Date: Thu, 13 Jun 2024 13:34:05 +0200
-Message-ID: <20240613113313.386279069@linuxfoundation.org>
+Subject: [PATCH 5.15 289/402] sunrpc: fix NFSACL RPC retry on soft mount
+Date: Thu, 13 Jun 2024 13:34:06 +0200
+Message-ID: <20240613113313.424196941@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,65 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Dan Aloni <dan.aloni@vastdata.com>
 
-[ Upstream commit 37ffe06537af3e3ec212e7cbe941046fce0a822f ]
+[ Upstream commit 0dc9f430027b8bd9073fdafdfcdeb1a073ab5594 ]
 
-Dan Carpenter reports smatch warning for nfs4_try_migration() when a memory
-allocation failure results in a zero return value.  In this case, a
-transient allocation failure error will likely be retried the next time the
-server responds with NFS4ERR_MOVED.
+It used to be quite awhile ago since 1b63a75180c6 ('SUNRPC: Refactor
+rpc_clone_client()'), in 2012, that `cl_timeout` was copied in so that
+all mount parameters propagate to NFSACL clients. However since that
+change, if mount options as follows are given:
 
-We can fixup the smatch warning with a small refactor: attempt all three
-allocations before testing and returning on a failure.
+    soft,timeo=50,retrans=16,vers=3
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: c3ed222745d9 ("NFSv4: Fix free of uninitialized nfs4_label on referral lookup.")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+The resultant NFSACL client receives:
+
+    cl_softrtry: 1
+    cl_timeout: to_initval=60000, to_maxval=60000, to_increment=0, to_retries=2, to_exponential=0
+
+These values lead to NFSACL operations not being retried under the
+condition of transient network outages with soft mount. Instead, getacl
+call fails after 60 seconds with EIO.
+
+The simple fix is to pass the existing client's `cl_timeout` as the new
+client timeout.
+
+Cc: Chuck Lever <chuck.lever@oracle.com>
+Cc: Benjamin Coddington <bcodding@redhat.com>
+Link: https://lore.kernel.org/all/20231105154857.ryakhmgaptq3hb6b@gmail.com/T/
+Fixes: 1b63a75180c6 ('SUNRPC: Refactor rpc_clone_client()')
+Signed-off-by: Dan Aloni <dan.aloni@vastdata.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4state.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ net/sunrpc/clnt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index d7868cc527805..d452fa85a567c 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -2102,6 +2102,7 @@ static int nfs4_try_migration(struct nfs_server *server, const struct cred *cred
- {
- 	struct nfs_client *clp = server->nfs_client;
- 	struct nfs4_fs_locations *locations = NULL;
-+	struct nfs_fattr *fattr;
- 	struct inode *inode;
- 	struct page *page;
- 	int status, result;
-@@ -2111,19 +2112,16 @@ static int nfs4_try_migration(struct nfs_server *server, const struct cred *cred
- 			(unsigned long long)server->fsid.minor,
- 			clp->cl_hostname);
- 
--	result = 0;
- 	page = alloc_page(GFP_KERNEL);
- 	locations = kmalloc(sizeof(struct nfs4_fs_locations), GFP_KERNEL);
--	if (page == NULL || locations == NULL) {
--		dprintk("<-- %s: no memory\n", __func__);
--		goto out;
--	}
--	locations->fattr = nfs_alloc_fattr();
--	if (locations->fattr == NULL) {
-+	fattr = nfs_alloc_fattr();
-+	if (page == NULL || locations == NULL || fattr == NULL) {
- 		dprintk("<-- %s: no memory\n", __func__);
-+		result = 0;
- 		goto out;
- 	}
- 
-+	locations->fattr = fattr;
- 	inode = d_inode(server->super->s_root);
- 	result = nfs4_proc_get_locations(server, NFS_FH(inode), locations,
- 					 page, cred);
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index 59fd6dedbbed2..f73d4593625cd 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -982,6 +982,7 @@ struct rpc_clnt *rpc_bind_new_program(struct rpc_clnt *old,
+ 		.authflavor	= old->cl_auth->au_flavor,
+ 		.cred		= old->cl_cred,
+ 		.stats		= old->cl_stats,
++		.timeout	= old->cl_timeout,
+ 	};
+ 	struct rpc_clnt *clnt;
+ 	int err;
 -- 
 2.43.0
 
