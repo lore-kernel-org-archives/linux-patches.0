@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEA4145359;
-	Thu, 13 Jun 2024 12:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB70145359;
+	Thu, 13 Jun 2024 12:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280333; cv=none; b=gqlO8+Q3uPZngXWb9ObuBPk8M7OcXowBy/VtgKzq83dQK5IowqZan1PxNbA8uY5oB4c8cl5Hc97f1RMMX8co3kbcwKTUnKw/+51GrISSoTmhoE00lysUFu6Zy6IbQufXbF91WGZV5z+K2FMUxr3DlsaxzS7g7ohhL80SLd7c6Qs=
+	t=1718280335; cv=none; b=GcK0YauX4H8dZE446r/Siz/Tn53kgloelxUIiUoRd6TnnCb93oGkd0YM+U6lVquVetOK7LZYcK3UshKOYEk7dv9YJyvtZz5eDD7scHy5WUwivqO8Nt9T+vNSGizXPUQFE4mQBqY3gsH9YXXVb/wuFxh4Xs4wCPpK+yz0195wTGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280333; c=relaxed/simple;
-	bh=5NFFBSQNtCzslocE2/8CsAt30RQRYshd+1uFV9Z7Eyc=;
+	s=arc-20240116; t=1718280335; c=relaxed/simple;
+	bh=dW1q/yuhHWOymMZkqqG431RPpeD1vNIcUMKGs8hLYN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TbYSCk26TQwn/plF7u6JL38SLS6tNDPSbYFf8ZLYRdmNjGF5+f50msdKr18r6hSku1+PqX8xn0Vo3VNAsMzx4Y8XYAr6psghf0k8NWN8ZeYDROWCCwiH2SgVX8JqrIuyst7o3xLs7Wti1x4oyDAbHkrh+8ynlB6vTFgwgBfb85g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6MraaKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U+F+EPdAVZCmfHmivKW3XKrywWuZQ57EkwAtMF1BOrk2b7Po7cfld1MRyFf4oDZljgrnnY2UilYZdBHz/Jc/JoJ3dF7J3C/x0Ig7REH/sfAT3nWAvNgnlVI0tRp1uCMIEuhfCaTqiwz4CNg8gYJo5FzHlKByIzVgr9gprRqvOv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaXrYrWI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6MraaKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A3BC2BBFC;
-	Thu, 13 Jun 2024 12:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaXrYrWI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F07C32786;
+	Thu, 13 Jun 2024 12:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280332;
-	bh=5NFFBSQNtCzslocE2/8CsAt30RQRYshd+1uFV9Z7Eyc=;
+	s=korg; t=1718280335;
+	bh=dW1q/yuhHWOymMZkqqG431RPpeD1vNIcUMKGs8hLYN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6MraaKia3Yd9bJd/zKl3OAAlc2SrdQZ//N8v6hSLTLAG31UjVhRzDodl+73a0aQ8
-	 3dlph2kE4HisTbstbZ1tZkA3rvzolVdtWjB/wunGOw+Iob43i11gwTEjNuBiIoD3Vt
-	 YM1PC7zcRq9nl9T9+VXGsnkzNLZaoNNTzNRq1vYA=
+	b=QaXrYrWIGeuHOB6ZZG4WlZ3EtrTV5oXGA+mo64wH6HKljMadZb0SpxndyqHaEsm42
+	 eDDgAx7Xx6wA4Zd9zfNTOwJUDspo9gjF359uEUWdiGnJn+lTak5K2N4BB824STVyDq
+	 gjD8QWoNql0j6NhDasisA4eAfIegeWJWb6cBbevA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheyu Ma <zheyuma97@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 6.6 018/137] media: lgdt3306a: Add a check against null-pointer-def
-Date: Thu, 13 Jun 2024 13:33:18 +0200
-Message-ID: <20240613113223.997615869@linuxfoundation.org>
+	Bob Zhou <bob.zhou@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Le Ma <le.ma@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 019/137] drm/amdgpu: add error handle to avoid out-of-bounds
+Date: Thu, 13 Jun 2024 13:33:19 +0200
+Message-ID: <20240613113224.036090607@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -44,57 +46,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zheyu Ma <zheyuma97@gmail.com>
+From: Bob Zhou <bob.zhou@amd.com>
 
-commit c1115ddbda9c930fba0fdd062e7a8873ebaf898d upstream.
+commit 8b2faf1a4f3b6c748c0da36cda865a226534d520 upstream.
 
-The driver should check whether the client provides the platform_data.
+if the sdma_v4_0_irq_id_to_seq return -EINVAL, the process should
+be stop to avoid out-of-bounds read, so directly return -EINVAL.
 
-The following log reveals it:
-
-[   29.610324] BUG: KASAN: null-ptr-deref in kmemdup+0x30/0x40
-[   29.610730] Read of size 40 at addr 0000000000000000 by task bash/414
-[   29.612820] Call Trace:
-[   29.613030]  <TASK>
-[   29.613201]  dump_stack_lvl+0x56/0x6f
-[   29.613496]  ? kmemdup+0x30/0x40
-[   29.613754]  print_report.cold+0x494/0x6b7
-[   29.614082]  ? kmemdup+0x30/0x40
-[   29.614340]  kasan_report+0x8a/0x190
-[   29.614628]  ? kmemdup+0x30/0x40
-[   29.614888]  kasan_check_range+0x14d/0x1d0
-[   29.615213]  memcpy+0x20/0x60
-[   29.615454]  kmemdup+0x30/0x40
-[   29.615700]  lgdt3306a_probe+0x52/0x310
-[   29.616339]  i2c_device_probe+0x951/0xa90
-
-Link: https://lore.kernel.org/linux-media/20220405095018.3993578-1-zheyuma97@gmail.com
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Bob Zhou <bob.zhou@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Le Ma <le.ma@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/lgdt3306a.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/dvb-frontends/lgdt3306a.c
-+++ b/drivers/media/dvb-frontends/lgdt3306a.c
-@@ -2176,6 +2176,11 @@ static int lgdt3306a_probe(struct i2c_cl
- 	struct dvb_frontend *fe;
- 	int ret;
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
+@@ -2031,6 +2031,9 @@ static int sdma_v4_0_process_trap_irq(st
  
-+	if (!client->dev.platform_data) {
-+		dev_err(&client->dev, "platform data is mandatory\n");
-+		return -EINVAL;
-+	}
+ 	DRM_DEBUG("IH: SDMA trap\n");
+ 	instance = sdma_v4_0_irq_id_to_seq(entry->client_id);
++	if (instance < 0)
++		return instance;
 +
- 	config = kmemdup(client->dev.platform_data,
- 			 sizeof(struct lgdt3306a_config), GFP_KERNEL);
- 	if (config == NULL) {
+ 	switch (entry->ring_id) {
+ 	case 0:
+ 		amdgpu_fence_process(&adev->sdma.instance[instance].ring);
 
 
