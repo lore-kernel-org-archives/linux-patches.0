@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23151428FC;
-	Thu, 13 Jun 2024 11:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0724313DDD8;
+	Thu, 13 Jun 2024 11:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278739; cv=none; b=nDoALqQ0V0Rgxkksu0GKhtBvByo1zc01NIiOsEQO3JRlxX6b8VyfEPRW9mOVxT2+8dg6jaxjn4IL6FN4eKRfhpq97+6HuECyCUqNJL9ufxwVrPaTy4HF4/r/nsdSzGUpItvXuEzeg6EeoxfLtAD5mQlVlOPQRcm0m75v6KfQ2nA=
+	t=1718278743; cv=none; b=fzr6WTVZjChiuvUh2Flw6Kf2rBOB9/Wawx8E2ADmRmi0t9POYwlWHwmEk0vQRvlQwbbnXSEHn8rujoLhlLW6lhia6XzmXnhxWnJna1XTR2zZnA3+zDu0DhiHcZrSIuusdnqxtWdvBl/X6dfaFxIDfI1IHACqvDJOG9JF6CWbPJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278739; c=relaxed/simple;
-	bh=VBo6xwlPwOc9TaNPXwCzCJetqt8GgQrwhha0pqniKbM=;
+	s=arc-20240116; t=1718278743; c=relaxed/simple;
+	bh=3bjfkGT0GrLgB7Ed43V9GCfKK3bJe8ezRp0cl5gX3RA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8eF+XmSJtY55tR9mvuhyjJwftKtwMt9/85YD8RPSqlH7T2pPCeO7g9ZP5ZFRRMFaz6aWND+8UG4pkVajyYH3aHXosBjLcX/pGhx+4Zz5/eEVUtfuZSHj82wzG854TrSK+OFFExrcbUbuVLvsqoCUDHBn7pFyyQWDlWFnbw4bAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ULwFtFq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N2ukHb18X46fGUWyPjda1YCe+TN02/6RAscKShihuroSkJXgdmDP6VHo0GM4cLnIDRBO8t/dWzuEPLYgxvzGosC+vSXsLfB5pYPRnEQK+/6Do7E1x2N+xDMiTTDWwDNQhtHtVXyQthlQta5nZ78tMNamaleZLcHysP8ep+Vp3PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjMgHwDh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ULwFtFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B477C2BBFC;
-	Thu, 13 Jun 2024 11:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjMgHwDh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE07C2BBFC;
+	Thu, 13 Jun 2024 11:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278739;
-	bh=VBo6xwlPwOc9TaNPXwCzCJetqt8GgQrwhha0pqniKbM=;
+	s=korg; t=1718278742;
+	bh=3bjfkGT0GrLgB7Ed43V9GCfKK3bJe8ezRp0cl5gX3RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ULwFtFqCcd2P7xW699JwsLTgzwJNQLBxPCqJCAHsfFfw146rUdGBr3M9eDagjNlo
-	 FlxTVvGCA6l1tnrC2SpkM/AuqVdoAMIpmooC/1sJW5XXTGhumhj1ekTfKxaK+r6aC4
-	 U7aw2gTzzj4izqsgFzKQTXZIS6PJ2QIzTraU+oC8=
+	b=pjMgHwDhl4K5hovZ80ASS5GdnKSPuZLjVt5zxn3+99UW8m6CNeAIoX1dkufZNLJCn
+	 9M2AXgjd5AxkXEAlFuapXXx9APoq5xAx1HUGejlM+gJKlHz2V+aSZQDmZUt43m6BZx
+	 Mh7OgLO5iuWxkwyfZpW5uMwtQWXPEtkBPxPvQ+JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Michael Schmitz <schmitzmic@gmail.com>,
 	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 046/213] macintosh/via-macii: Fix "BUG: sleeping function called from invalid context"
-Date: Thu, 13 Jun 2024 13:31:34 +0200
-Message-ID: <20240613113229.782880669@linuxfoundation.org>
+Subject: [PATCH 4.19 055/213] m68k: Fix spinlock race in kernel thread creation
+Date: Thu, 13 Jun 2024 13:31:43 +0200
+Message-ID: <20240613113230.132784100@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -51,56 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Michael Schmitz <schmitzmic@gmail.com>
 
-[ Upstream commit d301a71c76ee4c384b4e03cdc320a55f5cf1df05 ]
+[ Upstream commit da89ce46f02470ef08f0f580755d14d547da59ed ]
 
-The via-macii ADB driver calls request_irq() after disabling hard
-interrupts. But disabling interrupts isn't necessary here because the
-VIA shift register interrupt was masked during VIA1 initialization.
+Context switching does take care to retain the correct lock owner across
+the switch from 'prev' to 'next' tasks.  This does rely on interrupts
+remaining disabled for the entire duration of the switch.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+This condition is guaranteed for normal process creation and context
+switching between already running processes, because both 'prev' and
+'next' already have interrupts disabled in their saved copies of the
+status register.
+
+The situation is different for newly created kernel threads.  The status
+register is set to PS_S in copy_thread(), which does leave the IPL at 0.
+Upon restoring the 'next' thread's status register in switch_to() aka
+resume(), interrupts then become enabled prematurely.  resume() then
+returns via ret_from_kernel_thread() and schedule_tail() where run queue
+lock is released (see finish_task_switch() and finish_lock_switch()).
+
+A timer interrupt calling scheduler_tick() before the lock is released
+in finish_task_switch() will find the lock already taken, with the
+current task as lock owner.  This causes a spinlock recursion warning as
+reported by Guenter Roeck.
+
+As far as I can ascertain, this race has been opened in commit
+533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
+but I haven't done a detailed study of kernel history so it may well
+predate that commit.
+
+Interrupts cannot be disabled in the saved status register copy for
+kernel threads (init will complain about interrupts disabled when
+finally starting user space).  Disable interrupts temporarily when
+switching the tasks' register sets in resume().
+
+Note that a simple oriw 0x700,%sr after restoring sr is not enough here
+- this leaves enough of a race for the 'spinlock recursion' warning to
+still be observed.
+
+Tested on ARAnyM and qemu (Quadra 800 emulation).
+
+Fixes: 533e6903bea0 ("m68k: split ret_from_fork(), simplify kernel_thread()")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/07811b26-677c-4d05-aeb4-996cd880b789@roeck-us.net
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/419fcc09d0e563b425c419053d02236b044d86b0.1710298421.git.fthain@linux-m68k.org
+Link: https://lore.kernel.org/r/20240411033631.16335-1-schmitzmic@gmail.com
 Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/macintosh/via-macii.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ arch/m68k/kernel/entry.S | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/macintosh/via-macii.c b/drivers/macintosh/via-macii.c
-index 177c3ef59c875..107f529a8e466 100644
---- a/drivers/macintosh/via-macii.c
-+++ b/drivers/macintosh/via-macii.c
-@@ -135,24 +135,19 @@ static int macii_probe(void)
- /* Initialize the driver */
- int macii_init(void)
- {
--	unsigned long flags;
- 	int err;
+diff --git a/arch/m68k/kernel/entry.S b/arch/m68k/kernel/entry.S
+index 9a66657773beb..417d8f0e89627 100644
+--- a/arch/m68k/kernel/entry.S
++++ b/arch/m68k/kernel/entry.S
+@@ -425,7 +425,9 @@ resume:
+ 	movec	%a0,%dfc
  
--	local_irq_save(flags);
--
- 	err = macii_init_via();
- 	if (err)
--		goto out;
-+		return err;
+ 	/* restore status register */
+-	movew	%a1@(TASK_THREAD+THREAD_SR),%sr
++	movew	%a1@(TASK_THREAD+THREAD_SR),%d0
++	oriw	#0x0700,%d0
++	movew	%d0,%sr
  
- 	err = request_irq(IRQ_MAC_ADB, macii_interrupt, 0, "ADB",
- 			  macii_interrupt);
- 	if (err)
--		goto out;
-+		return err;
+ 	rts
  
- 	macii_state = idle;
--out:
--	local_irq_restore(flags);
--	return err;
-+	return 0;
- }
- 
- /* initialize the hardware */
 -- 
 2.43.0
 
