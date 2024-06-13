@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE09DDB1;
-	Thu, 13 Jun 2024 11:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7001BDDB1;
+	Thu, 13 Jun 2024 11:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278651; cv=none; b=Qb8jHesFPomm6nsediLXv4gaFP+ft7W1FiKJaVOtjPxDEfuULDbq3AMOqoz7e24p2hpqxfiWDZ+qHfiDcforHqJdgiCAMsUpIOdbYAlt/zwsyOiKELGkf+87W2XjacUHkdJ5RGNh2Rm/BlvLt1yIp/ryJlArAfGJYaLTe8lb3r4=
+	t=1718278654; cv=none; b=n4wuQo/wJn9+X4rDz9GNwLbMNOdOo5z3AXh8ez1+KoTIUZT1jBlZ+fqiIoktIMaPPi0Vq+B5LOmhgK9rfPrlLoZnjw7vOGZwePaWWYaSVWT/h4CgGxI7V7H5lF1uddztUxYKOFRicMlchFcdSJpnw7qdT8xe2lsGYovkwZGCvgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278651; c=relaxed/simple;
-	bh=7WACd20wx8wlZ1WQFyZlvKvLztj/0BfbLLyFonmI8As=;
+	s=arc-20240116; t=1718278654; c=relaxed/simple;
+	bh=V3LDj/5aJYUc/pVPcoX+GKjSLU3yMQ8SkgsMLXSZJFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sXkCcMnlQtdex/IKg1ubpWDnfYwnXIHhG7uz8EdPIEXYwXReyVv7xWGbaq0wQcSVguOC198MoEpTuzgZPKSXBTAGfXjtq0JJqG3DwsYt0WO4l/I9RCkv0Ki3xb0ctzkMwpJMZrBFJLmmdD3HylOV9/3rxyQJI7C5dr9J76uHHgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqTXvVPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qCMJkweEvAIvVhFy9Go6e12qwWBx2bOI5cZOR9bZHobE/GISz1pdF1VvwGzjPHEpz6rkIwU4zc4vwK6YFwlRtdln6z0GgK2HLHqTR0/ADSmtRZJKqh84pLQz4DG0MEei+DhA12ALhwB4NMk3soNKHbvbCZfV2Izs09GxdOF6ssU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mS/YoD12; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqTXvVPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A814EC2BBFC;
-	Thu, 13 Jun 2024 11:37:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mS/YoD12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980DFC32786;
+	Thu, 13 Jun 2024 11:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278651;
-	bh=7WACd20wx8wlZ1WQFyZlvKvLztj/0BfbLLyFonmI8As=;
+	s=korg; t=1718278654;
+	bh=V3LDj/5aJYUc/pVPcoX+GKjSLU3yMQ8SkgsMLXSZJFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xqTXvVPEtm017QKFc7Mu+1eIxG8nU49O8lTxpyIGIUIFlujEUrkZwE+5Y67IVIPi2
-	 LRahwalACXG3Zk4IHxmjlonBC/Xl3oFyBBdNNyf8cIOGDNwNaEAvROMxU61hMXfgOz
-	 wA6A9xIiokXYLu7XYqficFzE/sRbwXVQd8hRTsfc=
+	b=mS/YoD12iS8SB2Mj0vENZJXgTGSWV9H3Xl8yy4r9iENMjHnhhheMXtwGtr6AUHtq8
+	 gEhoGDjgkKzUWWTx+Qpg10p9hqO419wEd5Xj0Pml1pYoqGY6kucx3ezvLkffouaK+Q
+	 x/CGpxdqP2Kgw0pC3y3Lwh3gO7Xs7xHevHVyiGtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Nigel Croxon <ncroxon@redhat.com>
-Subject: [PATCH 4.19 024/213] md: fix resync softlockup when bitmap size is less than array size
-Date: Thu, 13 Jun 2024 13:31:12 +0200
-Message-ID: <20240613113228.927326775@linuxfoundation.org>
+	Benson Leung <bleung@chromium.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 025/213] power: supply: cros_usbpd: provide ID table for avoiding fallback match
+Date: Thu, 13 Jun 2024 13:31:13 +0200
+Message-ID: <20240613113228.966061503@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,91 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit f0e729af2eb6bee9eb58c4df1087f14ebaefe26b ]
+[ Upstream commit 0f8678c34cbfdc63569a9b0ede1fe235ec6ec693 ]
 
-Is is reported that for dm-raid10, lvextend + lvchange --syncaction will
-trigger following softlockup:
+Instead of using fallback driver name match, provide ID table[1] for the
+primary match.
 
-kernel:watchdog: BUG: soft lockup - CPU#3 stuck for 26s! [mdX_resync:6976]
-CPU: 7 PID: 3588 Comm: mdX_resync Kdump: loaded Not tainted 6.9.0-rc4-next-20240419 #1
-RIP: 0010:_raw_spin_unlock_irq+0x13/0x30
-Call Trace:
- <TASK>
- md_bitmap_start_sync+0x6b/0xf0
- raid10_sync_request+0x25c/0x1b40 [raid10]
- md_do_sync+0x64b/0x1020
- md_thread+0xa7/0x170
- kthread+0xcf/0x100
- ret_from_fork+0x30/0x50
- ret_from_fork_asm+0x1a/0x30
+[1]: https://elixir.bootlin.com/linux/v6.8/source/drivers/base/platform.c#L1353
 
-And the detailed process is as follows:
-
-md_do_sync
- j = mddev->resync_min
- while (j < max_sectors)
-  sectors = raid10_sync_request(mddev, j, &skipped)
-   if (!md_bitmap_start_sync(..., &sync_blocks))
-    // md_bitmap_start_sync set sync_blocks to 0
-    return sync_blocks + sectors_skippe;
-  // sectors = 0;
-  j += sectors;
-  // j never change
-
-Root cause is that commit 301867b1c168 ("md/raid10: check
-slab-out-of-bounds in md_bitmap_get_counter") return early from
-md_bitmap_get_counter(), without setting returned blocks.
-
-Fix this problem by always set returned blocks from
-md_bitmap_get_counter"(), as it used to be.
-
-Noted that this patch just fix the softlockup problem in kernel, the
-case that bitmap size doesn't match array size still need to be fixed.
-
-Fixes: 301867b1c168 ("md/raid10: check slab-out-of-bounds in md_bitmap_get_counter")
-Reported-and-tested-by: Nigel Croxon <ncroxon@redhat.com>
-Closes: https://lore.kernel.org/all/71ba5272-ab07-43ba-8232-d2da642acb4e@redhat.com/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240422065824.2516-1-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Reviewed-by: Prashant Malani <pmalani@chromium.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://lore.kernel.org/r/20240401030052.2887845-4-tzungbi@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/power/supply/cros_usbpd-charger.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 7ca81e917aef4..6cbf4a069652c 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -1358,7 +1358,7 @@ __acquires(bitmap->lock)
- 	sector_t chunk = offset >> bitmap->chunkshift;
- 	unsigned long page = chunk >> PAGE_COUNTER_SHIFT;
- 	unsigned long pageoff = (chunk & PAGE_COUNTER_MASK) << COUNTER_BYTE_SHIFT;
--	sector_t csize;
-+	sector_t csize = ((sector_t)1) << bitmap->chunkshift;
- 	int err;
+diff --git a/drivers/power/supply/cros_usbpd-charger.c b/drivers/power/supply/cros_usbpd-charger.c
+index 74b5914abbf7e..123a5572fe5b1 100644
+--- a/drivers/power/supply/cros_usbpd-charger.c
++++ b/drivers/power/supply/cros_usbpd-charger.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2014 - 2018 Google, Inc
+  */
  
- 	if (page >= bitmap->pages) {
-@@ -1367,6 +1367,7 @@ __acquires(bitmap->lock)
- 		 * End-of-device while looking for a whole page or
- 		 * user set a huge number to sysfs bitmap_set_bits.
- 		 */
-+		*blocks = csize - (offset & (csize - 1));
- 		return NULL;
- 	}
- 	err = md_bitmap_checkpage(bitmap, page, create, 0);
-@@ -1375,8 +1376,7 @@ __acquires(bitmap->lock)
- 	    bitmap->bp[page].map == NULL)
- 		csize = ((sector_t)1) << (bitmap->chunkshift +
- 					  PAGE_COUNTER_SHIFT);
--	else
--		csize = ((sector_t)1) << bitmap->chunkshift;
++#include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/mfd/cros_ec.h>
+ #include <linux/mfd/cros_ec_commands.h>
+@@ -530,16 +531,22 @@ static int cros_usbpd_charger_resume(struct device *dev)
+ static SIMPLE_DEV_PM_OPS(cros_usbpd_charger_pm_ops, NULL,
+ 			 cros_usbpd_charger_resume);
+ 
++static const struct platform_device_id cros_usbpd_charger_id[] = {
++	{ DRV_NAME, 0 },
++	{}
++};
++MODULE_DEVICE_TABLE(platform, cros_usbpd_charger_id);
 +
- 	*blocks = csize - (offset & (csize - 1));
+ static struct platform_driver cros_usbpd_charger_driver = {
+ 	.driver = {
+ 		.name = DRV_NAME,
+ 		.pm = &cros_usbpd_charger_pm_ops,
+ 	},
+-	.probe = cros_usbpd_charger_probe
++	.probe = cros_usbpd_charger_probe,
++	.id_table = cros_usbpd_charger_id,
+ };
  
- 	if (err < 0)
+ module_platform_driver(cros_usbpd_charger_driver);
+ 
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("ChromeOS EC USBPD charger");
+-MODULE_ALIAS("platform:" DRV_NAME);
 -- 
 2.43.0
 
