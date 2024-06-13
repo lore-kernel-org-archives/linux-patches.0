@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05124A07;
-	Thu, 13 Jun 2024 12:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3974A0F;
+	Thu, 13 Jun 2024 12:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282077; cv=none; b=SlLG20eQBtvh9rESfqjq/Btia9BPjdkpU+0nHySCdqh/Di7pD+/zEpb6tOJ7ifp9UcKNYIoTg6Uf69Zd3vPCJqrwdVpYC27svgngJr9Fkfrf5JIzFa5YRRgDC+HL3nWeCl7ny9cvyyvCgRFb0REbIgUCZYHebvXRVBZiA9rrTjU=
+	t=1718282079; cv=none; b=UykwodqWNWFr7i4DW6iLDaiwChg4WiQSYce9u2gZO5HPjvQ3tx6p0/rtgWbge3kYzjStY396wjhoozKs4rQ9sFWmtWMZpUf1xOVw5G+MPWrIWr1y6XB4OnAuKOT3hcdXS5j2gi6wBThka0n2y3ZSBSWbJNq6eWnW1BV34QWq2sU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282077; c=relaxed/simple;
-	bh=82aztCju/V0q34RtN8rt4GVGsFnOpMnmxRZlAdr4Lfg=;
+	s=arc-20240116; t=1718282079; c=relaxed/simple;
+	bh=Lq0LyCKpO2p4HWgLOf7fTaO1Dzcphg9bsiFsB13mync=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVNZd0xkAnd81yGF4VwIbemrdHz4kHdft0TEG5X+MvcT+Z9DV8XOeIl1cYDGFJptvt9bB4b0OfHrUjGtLBbaBCdldctmWPZbFlzF/2MdEDE8NTI8r+U94a/GNhJetfK95rL9V8ReLHOF0PiAABP+7yVMVMfqEEJ0HO6rf5dhBA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tL/Krl7W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0xT3S0pNaoeDigbcSM+mF597oo52Zf85Soa4ZNykv0J+2W//rN56GdYEtLbwoVrBf6ZeJpB4bC7s8TY4OS6XNmfXXE73tyYpeMNsRAJNaqv1OxMUu799R4cq+M774chbmsZXAIfrkjtzxi6AbHGCic8qdkYEKUERA0w+QAsqks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X22ALma0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tL/Krl7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39DF7C2BBFC;
-	Thu, 13 Jun 2024 12:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X22ALma0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B809C2BBFC;
+	Thu, 13 Jun 2024 12:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282076;
-	bh=82aztCju/V0q34RtN8rt4GVGsFnOpMnmxRZlAdr4Lfg=;
+	s=korg; t=1718282079;
+	bh=Lq0LyCKpO2p4HWgLOf7fTaO1Dzcphg9bsiFsB13mync=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tL/Krl7WmL9La1we1ZdcOmZElITkEvfyB60L3/4tVXWdeUniXz69YRsUV6U+e3Tm8
-	 a6ktTfdVlNWDMQ1VsCoyw9f8WOuFQzR77S9MrG9Ev5evz547FRm2tKtQ7Cl5RTmUQF
-	 pfiuIAYhPDbW69OMVZjYi6MiB4ua+4PsKqeHDBUE=
+	b=X22ALma0KMdKfUH32iLHixXO4XTksC7vlP98SvDLzIhqYb1JQ7rXTG4NN9PEuqjlF
+	 X9c4LkTXjGoXuuwIj4uRmx1K91EnmC4au5PrD9ny0cB39qojBysouGlkq2nFpTuaUW
+	 LoBk46x1KZd/v1H+hvlMi/HfqZVPMN4egvIVhnyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Antonin Bas <antonin.bas@broadcom.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 123/402] drm/amd/display: Fix potential index out of bounds in color transformation function
-Date: Thu, 13 Jun 2024 13:31:20 +0200
-Message-ID: <20240613113306.938531756@linuxfoundation.org>
+Subject: [PATCH 5.15 114/402] net: openvswitch: fix overwriting ct original tuple for ICMPv6
+Date: Thu, 13 Jun 2024 13:31:11 +0200
+Message-ID: <20240613113306.580365261@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -58,55 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 63ae548f1054a0b71678d0349c7dc9628ddd42ca ]
+[ Upstream commit 7c988176b6c16c516474f6fceebe0f055af5eb56 ]
 
-Fixes index out of bounds issue in the color transformation function.
-The issue could occur when the index 'i' exceeds the number of transfer
-function points (TRANSFER_FUNC_POINTS).
+OVS_PACKET_CMD_EXECUTE has 3 main attributes:
+ - OVS_PACKET_ATTR_KEY - Packet metadata in a netlink format.
+ - OVS_PACKET_ATTR_PACKET - Binary packet content.
+ - OVS_PACKET_ATTR_ACTIONS - Actions to execute on the packet.
 
-The fix adds a check to ensure 'i' is within bounds before accessing the
-transfer function points. If 'i' is out of bounds, an error message is
-logged and the function returns false to indicate an error.
+OVS_PACKET_ATTR_KEY is parsed first to populate sw_flow_key structure
+with the metadata like conntrack state, input port, recirculation id,
+etc.  Then the packet itself gets parsed to populate the rest of the
+keys from the packet headers.
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:405 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:406 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:407 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
+Whenever the packet parsing code starts parsing the ICMPv6 header, it
+first zeroes out fields in the key corresponding to Neighbor Discovery
+information even if it is not an ND packet.
 
-Fixes: b629596072e5 ("drm/amd/display: Build unity lut for shaper")
-Cc: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Cc: Charlene Liu <Charlene.Liu@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+It is an 'ipv6.nd' field.  However, the 'ipv6' is a union that shares
+the space between 'nd' and 'ct_orig' that holds the original tuple
+conntrack metadata parsed from the OVS_PACKET_ATTR_KEY.
+
+ND packets should not normally have conntrack state, so it's fine to
+share the space, but normal ICMPv6 Echo packets or maybe other types of
+ICMPv6 can have the state attached and it should not be overwritten.
+
+The issue results in all but the last 4 bytes of the destination
+address being wiped from the original conntrack tuple leading to
+incorrect packet matching and potentially executing wrong actions
+in case this packet recirculates within the datapath or goes back
+to userspace.
+
+ND fields should not be accessed in non-ND packets, so not clearing
+them should be fine.  Executing memset() only for actual ND packets to
+avoid the issue.
+
+Initializing the whole thing before parsing is needed because ND packet
+may not contain all the options.
+
+The issue only affects the OVS_PACKET_CMD_EXECUTE path and doesn't
+affect packets entering OVS datapath from network interfaces, because
+in this case CT metadata is populated from skb after the packet is
+already parsed.
+
+Fixes: 9dd7f8907c37 ("openvswitch: Add original direction conntrack tuple to sw_flow_key.")
+Reported-by: Antonin Bas <antonin.bas@broadcom.com>
+Closes: https://github.com/openvswitch/ovs-issues/issues/327
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Aaron Conole <aconole@redhat.com>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://lore.kernel.org/r/20240509094228.1035477-1-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/openvswitch/flow.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-index 7a00fe525dfba..bd9bc51983fec 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-@@ -379,6 +379,11 @@ bool cm_helper_translate_curve_to_hw_format(
- 				i += increment) {
- 			if (j == hw_points - 1)
- 				break;
-+			if (i >= TRANSFER_FUNC_POINTS) {
-+				DC_LOG_ERROR("Index out of bounds: i=%d, TRANSFER_FUNC_POINTS=%d\n",
-+					     i, TRANSFER_FUNC_POINTS);
-+				return false;
-+			}
- 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
- 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
- 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
+diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
+index 1b81d71bac3cf..209b42cf5aeaf 100644
+--- a/net/openvswitch/flow.c
++++ b/net/openvswitch/flow.c
+@@ -417,7 +417,6 @@ static int parse_icmpv6(struct sk_buff *skb, struct sw_flow_key *key,
+ 	 */
+ 	key->tp.src = htons(icmp->icmp6_type);
+ 	key->tp.dst = htons(icmp->icmp6_code);
+-	memset(&key->ipv6.nd, 0, sizeof(key->ipv6.nd));
+ 
+ 	if (icmp->icmp6_code == 0 &&
+ 	    (icmp->icmp6_type == NDISC_NEIGHBOUR_SOLICITATION ||
+@@ -426,6 +425,8 @@ static int parse_icmpv6(struct sk_buff *skb, struct sw_flow_key *key,
+ 		struct nd_msg *nd;
+ 		int offset;
+ 
++		memset(&key->ipv6.nd, 0, sizeof(key->ipv6.nd));
++
+ 		/* In order to process neighbor discovery options, we need the
+ 		 * entire packet.
+ 		 */
 -- 
 2.43.0
 
