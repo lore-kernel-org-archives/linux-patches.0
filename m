@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F34244C6F;
-	Thu, 13 Jun 2024 12:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FCF44C6F;
+	Thu, 13 Jun 2024 12:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280109; cv=none; b=OuqykK89FK/afGlgkgleWfujKOKq8EDYqfuKjmTMz+YVtKSkr+8+SihYsqG4lAisjQkJsbfCcllh/blnQobIbdd5eMHAg13y1Rk6LhAkSM8vEhma3AakFjoaQzbP9iTuhsSK4komIUzGcy6aSoBfICpNHOwLLVFHoyET2W6QIkI=
+	t=1718280112; cv=none; b=ezdaLKnJ6Utj9cg9OsVe8t9a6vKSWqLbDEyV0YZ8DJbijhQM4dztEBVZP88AAJ9HdGWp3H7Pu6/d88Av/IF3hZSmNnltzPoF9clFUbsjJNsQ48Cg8YCSWqJ+7aokJrtGWBXvas7IR9U8JjLz+36ACRBKogPWPMz537u5uIno9lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280109; c=relaxed/simple;
-	bh=u7mDzN7AAFOslTgIkdzTBms5JeV/uKrPEXk2vNEHnDQ=;
+	s=arc-20240116; t=1718280112; c=relaxed/simple;
+	bh=cw+ZSv+71iQYLZS3XgSfh11+bWAQEF6PishnUAX6zLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VIWtAwCqlXLSm8ygorn6fcqx2b3OEWrvDRYjNgHjyIxjwfN9UJFysKmJWi+dcJqqBxIue8ljxE4rd0CHLUh0GHohuDBTzGeIijaCczd8VszXjwYbD50YbBh2ipBExX30+H+ID9gjA50n6qF+caP+Prtv6FITJu3p1IcBEcl5TM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vusNAljT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uZki1ZLWE23akdl8fq4wyhD9eca5BFP8s07Z/dEhvY4iJeXLrwhVB8XxGNs14fHOgnkmWISjPt1dIWSnZ9I9Dvw9bH6pOdIcq81RFGerNTXAwsZsyYBak9QnVdtChPfKrx/f5g9VDcvxEelCr2ueOIR5GgvzdPa6UzYxCgF8+XE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mL2EKktF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vusNAljT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C63C2BBFC;
-	Thu, 13 Jun 2024 12:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mL2EKktF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B16C2BBFC;
+	Thu, 13 Jun 2024 12:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280109;
-	bh=u7mDzN7AAFOslTgIkdzTBms5JeV/uKrPEXk2vNEHnDQ=;
+	s=korg; t=1718280112;
+	bh=cw+ZSv+71iQYLZS3XgSfh11+bWAQEF6PishnUAX6zLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vusNAljTlzc2+0t9V01SIkiWM/QA7+9yPkUaCEDfA412mwiwtPi3/FgEe63dggGWQ
-	 MhojpU8DeRi+1TPCjOn1R55OAB3sAHNcnYuYJ2sLOjElNf4VxQV5d3ffocoHFAmrlN
-	 sY1vFj1m5Ke4JClIRZWDVF72DE613STOQUNpPbUM=
+	b=mL2EKktFAKQ8Ks1yjirbwdcjlGqUTGQGzqt5S7S3IV+1C/ORsMf9D87k9y3nPnyx5
+	 /Dsdy5xKXEUlvJC66K6NgvaU7/DQJTge4FRTwAgtJOkEKYEBT1DMPugd/saa9wYgnL
+	 As6ZGNHb3xIsBaf4RlC2xfT0GRdAnxhsknGwo5vU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot <syzbot+0438378d6f157baae1a2@syzkaller.appspotmail.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 145/202] net: fec: avoid lock evasion when reading pps_enable
-Date: Thu, 13 Jun 2024 13:34:03 +0200
-Message-ID: <20240613113233.355041494@linuxfoundation.org>
+Subject: [PATCH 5.4 146/202] nfc: nci: Fix kcov check in nci_rx_work()
+Date: Thu, 13 Jun 2024 13:34:04 +0200
+Message-ID: <20240613113233.393092995@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -51,60 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 3b1c92f8e5371700fada307cc8fd2c51fa7bc8c1 ]
+[ Upstream commit 19e35f24750ddf860c51e51c68cf07ea181b4881 ]
 
-The assignment of pps_enable is protected by tmreg_lock, but the read
-operation of pps_enable is not. So the Coverity tool reports a lock
-evasion warning which may cause data race to occur when running in a
-multithread environment. Although this issue is almost impossible to
-occur, we'd better fix it, at least it seems more logically reasonable,
-and it also prevents Coverity from continuing to issue warnings.
+Commit 7e8cdc97148c ("nfc: Add KCOV annotations") added
+kcov_remote_start_common()/kcov_remote_stop() pair into nci_rx_work(),
+with an assumption that kcov_remote_stop() is called upon continue of
+the for loop. But commit d24b03535e5e ("nfc: nci: Fix uninit-value in
+nci_dev_up and nci_ntf_packet") forgot to call kcov_remote_stop() before
+break of the for loop.
 
-Fixes: 278d24047891 ("net: fec: ptp: Enable PPS output based on ptp clock")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://lore.kernel.org/r/20240521023800.17102-1-wei.fang@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: syzbot <syzbot+0438378d6f157baae1a2@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=0438378d6f157baae1a2
+Fixes: d24b03535e5e ("nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet")
+Suggested-by: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/6d10f829-5a0c-405a-b39a-d7266f3a1a0b@I-love.SAKURA.ne.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 6671e352497c ("nfc: nci: Fix handling of zero-length payload packets in nci_rx_work()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_ptp.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ net/nfc/nci/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
-index 6fd0c73b327e2..37b8ad29b5b30 100644
---- a/drivers/net/ethernet/freescale/fec_ptp.c
-+++ b/drivers/net/ethernet/freescale/fec_ptp.c
-@@ -108,14 +108,13 @@ static int fec_ptp_enable_pps(struct fec_enet_private *fep, uint enable)
- 		return -EINVAL;
- 	}
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 61b12281ec47c..ebf1b511d8e3b 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1514,6 +1514,7 @@ static void nci_rx_work(struct work_struct *work)
  
--	if (fep->pps_enable == enable)
--		return 0;
--
--	fep->pps_channel = DEFAULT_PPS_CHANNEL;
--	fep->reload_period = PPS_OUPUT_RELOAD_PERIOD;
--
- 	spin_lock_irqsave(&fep->tmreg_lock, flags);
+ 		if (!nci_valid_size(skb)) {
+ 			kfree_skb(skb);
++			kcov_remote_stop();
+ 			break;
+ 		}
  
-+	if (fep->pps_enable == enable) {
-+		spin_unlock_irqrestore(&fep->tmreg_lock, flags);
-+		return 0;
-+	}
-+
- 	if (enable) {
- 		/* clear capture or output compare interrupt status if have.
- 		 */
-@@ -446,6 +445,9 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
- 	int ret = 0;
- 
- 	if (rq->type == PTP_CLK_REQ_PPS) {
-+		fep->pps_channel = DEFAULT_PPS_CHANNEL;
-+		fep->reload_period = PPS_OUPUT_RELOAD_PERIOD;
-+
- 		ret = fec_ptp_enable_pps(fep, on);
- 
- 		return ret;
 -- 
 2.43.0
 
