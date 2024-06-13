@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE35ADDB1;
-	Thu, 13 Jun 2024 11:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC286DDB1;
+	Thu, 13 Jun 2024 11:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278810; cv=none; b=D31VUMupvdxvEitQe/I5qB7fvN2s+TbAFfH+HEmX7b/V6INJoGzq/Z17DOcCeIFAwjQVAJKCI8pqD4p2Rtn8Umc8ahT2Xi4ZulJbnqnOIdOxMAS/MHTTpINpZ9d8lrdvVWQlcNezwAmirPHzF0qB+LVcGnXOB8A/d/gskNJcQWg=
+	t=1718278813; cv=none; b=tCIO7MyHlnyCJ70hrG6fqSCtphS64Yu+/9wkrYmJLuQ3rqFyGb4lUzkUwKpaP/8wMkAFFkQi3VTKFy8CQNUMJF72J22JCpWYPTNO7risWo0PsZLROvD+gxHiccs3kaxC7TdS4B5JrNxWstGdtwEbFHWniXRFhdmMLne1SGi1kYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278810; c=relaxed/simple;
-	bh=FW8uVkitN5bIt145iAS2v3rneuY80S/QPPs7Dklh9Ws=;
+	s=arc-20240116; t=1718278813; c=relaxed/simple;
+	bh=vjwMRWR7goDS3XupLlVAWOFfg0hgycQcCCTxriIvcMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+dwxZxLSJJyFieCQwCEsDqaayuyvqdhz8sKZl9bUG/ZsEtYH3aBX9HqaOsT6SK4xrn/zLDHNmD0pFDa3LUAVo3pDXPKEDPQWr62OSyPptXxT4vSOSim0VgYdGFChRlKXS08Vqc1u/+twRy2X1Mxk4oXYJp7T7I0I5jM6pXGJRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2Ch0C07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I61cwI8PCjtISxP9c/OFnGiHJmGcfnwTvhtdJfek1jGKL76nbecC4qq8EKXTS/8oyLugTEuv2FTf8F5xbhqmhl4XGMtoiEKtrFy27GFcPWxIVN1PfMnPzBIyJIcj34ksGWYnHABMYxBGKmVBss7JbhBOOXz+hzMQa5+JSGlpDZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQVubxyY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2Ch0C07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0BEC2BBFC;
-	Thu, 13 Jun 2024 11:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQVubxyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3151EC2BBFC;
+	Thu, 13 Jun 2024 11:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278810;
-	bh=FW8uVkitN5bIt145iAS2v3rneuY80S/QPPs7Dklh9Ws=;
+	s=korg; t=1718278813;
+	bh=vjwMRWR7goDS3XupLlVAWOFfg0hgycQcCCTxriIvcMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2Ch0C07NIIkL61m8xU9II0nVRtPk95j/XScoNfSP7eSTXG9Qjpp403LwE5N/je+0
-	 2gxFO3kJyYE4mQGKFzOMcqalefSDlLeJTmI+I8smeYwckxJFbmUlKsrNF9x6UMYczc
-	 FIxHzynEjKbwmaWFgHDI9TdKDjH6bQY5QytcGPAw=
+	b=zQVubxyYSgRPUuYNxk5nLxePULg7D8DYNr/8/cT3sN+0ow/OTkyTreUTY0wl2hiNs
+	 IB9NnlrSfpwCaFVbftOCf2Fq/J1oLVG+WFRFHXiWVN9nD4+B0em7v20tYzTDrKVLbV
+	 +u66wTfzw6MN1DKIxDV9vDnla7hihMwD7655ovmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 076/213] RDMA/hns: Use complete parentheses in macros
-Date: Thu, 13 Jun 2024 13:32:04 +0200
-Message-ID: <20240613113230.941839330@linuxfoundation.org>
+Subject: [PATCH 4.19 077/213] x86/insn: Fix PUSH instruction in x86 instruction decoder opcode map
+Date: Thu, 13 Jun 2024 13:32:05 +0200
+Message-ID: <20240613113230.980266868@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,50 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 4125269bb9b22e1d8cdf4412c81be8074dbc61ca ]
+[ Upstream commit 59162e0c11d7257cde15f907d19fefe26da66692 ]
 
-Use complete parentheses to ensure that macro expansion does
-not produce unexpected results.
+The x86 instruction decoder is used not only for decoding kernel
+instructions. It is also used by perf uprobes (user space probes) and by
+perf tools Intel Processor Trace decoding. Consequently, it needs to
+support instructions executed by user space also.
 
-Fixes: a25d13cbe816 ("RDMA/hns: Add the interfaces to support multi hop addressing for the contexts in hip08")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240412091616.370789-10-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Opcode 0x68 PUSH instruction is currently defined as 64-bit operand size
+only i.e. (d64). That was based on Intel SDM Opcode Map. However that is
+contradicted by the Instruction Set Reference section for PUSH in the
+same manual.
+
+Remove 64-bit operand size only annotation from opcode 0x68 PUSH
+instruction.
+
+Example:
+
+  $ cat pushw.s
+  .global  _start
+  .text
+  _start:
+          pushw   $0x1234
+          mov     $0x1,%eax   # system call number (sys_exit)
+          int     $0x80
+  $ as -o pushw.o pushw.s
+  $ ld -s -o pushw pushw.o
+  $ objdump -d pushw | tail -4
+  0000000000401000 <.text>:
+    401000:       66 68 34 12             pushw  $0x1234
+    401004:       b8 01 00 00 00          mov    $0x1,%eax
+    401009:       cd 80                   int    $0x80
+  $ perf record -e intel_pt//u ./pushw
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.014 MB perf.data ]
+
+ Before:
+
+  $ perf script --insn-trace=disasm
+  Warning:
+  1 instruction trace errors
+           pushw   10349 [000] 10586.869237014:            401000 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           pushw $0x1234
+           pushw   10349 [000] 10586.869237014:            401006 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb %al, (%rax)
+           pushw   10349 [000] 10586.869237014:            401008 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb %cl, %ch
+           pushw   10349 [000] 10586.869237014:            40100a [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb $0x2e, (%rax)
+   instruction trace error type 1 time 10586.869237224 cpu 0 pid 10349 tid 10349 ip 0x40100d code 6: Trace doesn't match instruction
+
+ After:
+
+  $ perf script --insn-trace=disasm
+             pushw   10349 [000] 10586.869237014:            401000 [unknown] (./pushw)           pushw $0x1234
+             pushw   10349 [000] 10586.869237014:            401004 [unknown] (./pushw)           movl $1, %eax
+
+Fixes: eb13296cfaf6 ("x86: Instruction decoder API")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20240502105853.5338-3-adrian.hunter@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/x86/lib/x86-opcode-map.txt               | 2 +-
+ tools/objtool/arch/x86/lib/x86-opcode-map.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.h b/drivers/infiniband/hw/hns/hns_roce_hem.h
-index a94444db3045a..265706811f23a 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.h
-@@ -57,16 +57,16 @@ enum {
- 	 (sizeof(struct scatterlist) + sizeof(void *)))
- 
- #define check_whether_bt_num_3(type, hop_num) \
--	(type < HEM_TYPE_MTT && hop_num == 2)
-+	((type) < HEM_TYPE_MTT && (hop_num) == 2)
- 
- #define check_whether_bt_num_2(type, hop_num) \
--	((type < HEM_TYPE_MTT && hop_num == 1) || \
--	(type >= HEM_TYPE_MTT && hop_num == 2))
-+	(((type) < HEM_TYPE_MTT && (hop_num) == 1) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == 2))
- 
- #define check_whether_bt_num_1(type, hop_num) \
--	((type < HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0) || \
--	(type >= HEM_TYPE_MTT && hop_num == 1) || \
--	(type >= HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0))
-+	(((type) < HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == 1) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0))
- 
- enum {
- 	 HNS_ROCE_HEM_PAGE_SHIFT = 12,
+diff --git a/arch/x86/lib/x86-opcode-map.txt b/arch/x86/lib/x86-opcode-map.txt
+index 5cb9f009f2be3..996a3a250026b 100644
+--- a/arch/x86/lib/x86-opcode-map.txt
++++ b/arch/x86/lib/x86-opcode-map.txt
+@@ -148,7 +148,7 @@ AVXcode:
+ 65: SEG=GS (Prefix)
+ 66: Operand-Size (Prefix)
+ 67: Address-Size (Prefix)
+-68: PUSH Iz (d64)
++68: PUSH Iz
+ 69: IMUL Gv,Ev,Iz
+ 6a: PUSH Ib (d64)
+ 6b: IMUL Gv,Ev,Ib
+diff --git a/tools/objtool/arch/x86/lib/x86-opcode-map.txt b/tools/objtool/arch/x86/lib/x86-opcode-map.txt
+index 5cb9f009f2be3..996a3a250026b 100644
+--- a/tools/objtool/arch/x86/lib/x86-opcode-map.txt
++++ b/tools/objtool/arch/x86/lib/x86-opcode-map.txt
+@@ -148,7 +148,7 @@ AVXcode:
+ 65: SEG=GS (Prefix)
+ 66: Operand-Size (Prefix)
+ 67: Address-Size (Prefix)
+-68: PUSH Iz (d64)
++68: PUSH Iz
+ 69: IMUL Gv,Ev,Iz
+ 6a: PUSH Ib (d64)
+ 6b: IMUL Gv,Ev,Ib
 -- 
 2.43.0
 
