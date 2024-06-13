@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88AD2913;
-	Thu, 13 Jun 2024 12:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9472F55;
+	Thu, 13 Jun 2024 12:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283060; cv=none; b=Rsd9IWWmbkwjn4vegYZZxS8ph9goDhKpb0/XyeGp9wytsBGcC0Ex8jikCyOOyvu/95BTHUGz9JMN01ACg76g1Lgx5yuIV5Nm/385Rl6D2lj2cy2Rod2eYJ+9OmQXEkSA5vcJVfANQWXv4r8c/P2bR/E2LSoNYw7LA3Nnq/ToO50=
+	t=1718283063; cv=none; b=fGJFK0SXc7tn9LQy/TGAb2wMuaJgHS30LC2V08nr+DY79hS8Rx0oh64vn3I1OShKIZukeTmoRX5epqU3nMGgunRQNblGfcfFxs6sztNOHM3Y8f25XFzVyUf75k5wlQehYBD+DHcJXxchTa9mZ4f9KdbubV4crkT1GTnTUH089Fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283060; c=relaxed/simple;
-	bh=pP8VeNxEIhmn3rxNgID/fohB7QhHRomC0DgFjm2c4eo=;
+	s=arc-20240116; t=1718283063; c=relaxed/simple;
+	bh=N21xf0syEnIPT3IpCUwiUpjGtqn45xN5O+ueHhoVWD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AiRdqgXEkm6x6NlUUes8SOEXexTU2Z45M56bHvaJD1ljfjr6BSE5FSHufSQepW2DY3+9SNSdYO3zqVuI2n/9LZSflg/0hVoE2jsQVJ9AKRU5MTcSnMJXBNM2z029Deg/yCSK3xZkM6ScJ7ySc3Ux2lWQMcSj56jue/wD0ZNca58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btnNe2tY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TZuX+ssJSWYiU3Jy4+g9aM9XYsXJyls49Q0FzHHU6XsxCjckzlY1HnRn4X4m9WkwcbfuAw7OWNZjlK2gmuUImDVWKG1yoqWnRGSrzf0TW2ipx8yGQw8SjOsbnlrSKfBROvBLL4RlUD5j+hRvCY6G6QYP31pIqRnTrV+jRXmGbcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hl+S3g2u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btnNe2tY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5753EC2BBFC;
-	Thu, 13 Jun 2024 12:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hl+S3g2u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBA3C2BBFC;
+	Thu, 13 Jun 2024 12:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283060;
-	bh=pP8VeNxEIhmn3rxNgID/fohB7QhHRomC0DgFjm2c4eo=;
+	s=korg; t=1718283063;
+	bh=N21xf0syEnIPT3IpCUwiUpjGtqn45xN5O+ueHhoVWD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btnNe2tYfZGYNOdbUkWXNroQI8pAuqCxsvTk+woc5ZmQhCUrQMDLEe/pHwztYUEzP
-	 RZcknjtBI45YhsIuI0UoW3ag0y4s4pdDMGjBx8jlyqnHpxmES8kX9dKX9e438DorjO
-	 Y9Iqt9BlzO/o/GKQjShqMhO1yaG9OMj9zoNDhsuI=
+	b=Hl+S3g2ucenJTklzDDeWGBq4k2/SaUWURI5GtrQsXaUI7l+c2s8Wu++FQEYBUpgyy
+	 W5FvSCPvn9EyZ1wmzDL2Kl0UTsNQei1cntrPjSOss2gSDeUlUPNeVkZu+nydqINwcm
+	 9s/g94ydo7slgbYPUNhpJ8xYhFztIp3Dt7FqfVzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Naveen N Rao <naveen@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 84/85] powerpc/bpf: enforce full ordering for ATOMIC operations with BPF_FETCH
-Date: Thu, 13 Jun 2024 13:36:22 +0200
-Message-ID: <20240613113217.377594421@linuxfoundation.org>
+	Fan Yu <fan.yu9@zte.com.cn>,
+	xu xin <xu.xin16@zte.com.cn>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 56/85] net/ipv6: Fix route deleting failure when metric equals 0
+Date: Thu, 13 Jun 2024 13:35:54 +0200
+Message-ID: <20240613113216.301222478@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -53,138 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: xu xin <xu.xin16@zte.com.cn>
 
-commit b1e7cee96127468c2483cf10c2899c9b5cf79bf8 upstream.
+commit bb487272380d120295e955ad8acfcbb281b57642 upstream.
 
-The Linux Kernel Memory Model [1][2] requires RMW operations that have a
-return value to be fully ordered.
+Problem
+=========
+After commit 67f695134703 ("ipv6: Move setting default metric for routes"),
+we noticed that the logic of assigning the default value of fc_metirc
+changed in the ioctl process. That is, when users use ioctl(fd, SIOCADDRT,
+rt) with a non-zero metric to add a route,  then they may fail to delete a
+route with passing in a metric value of 0 to the kernel by ioctl(fd,
+SIOCDELRT, rt). But iproute can succeed in deleting it.
 
-BPF atomic operations with BPF_FETCH (including BPF_XCHG and
-BPF_CMPXCHG) return a value back so they need to be JITed to fully
-ordered operations. POWERPC currently emits relaxed operations for
-these.
+As a reference, when using iproute tools by netlink to delete routes with
+a metric parameter equals 0, like the command as follows:
 
-We can show this by running the following litmus-test:
+	ip -6 route del fe80::/64 via fe81::5054:ff:fe11:3451 dev eth0 metric 0
 
-  PPC SB+atomic_add+fetch
+the user can still succeed in deleting the route entry with the smallest
+metric.
 
-  {
-      0:r0=x;  (* dst reg assuming offset is 0 *)
-      0:r1=2;  (* src reg *)
-      0:r2=1;
-      0:r4=y;  (* P0 writes to this, P1 reads this *)
-      0:r5=z;  (* P1 writes to this, P0 reads this *)
-      0:r6=0;
+Root Reason
+===========
+After commit 67f695134703 ("ipv6: Move setting default metric for routes"),
+When ioctl() pass in SIOCDELRT with a zero metric, rtmsg_to_fib6_config()
+will set a defalut value (1024) to cfg->fc_metric in kernel, and in
+ip6_route_del() and the line 4074 at net/ipv3/route.c, it will check by
 
-      1:r2=1;
-      1:r4=y;
-      1:r5=z;
-  }
+	if (cfg->fc_metric && cfg->fc_metric != rt->fib6_metric)
+		continue;
 
-  P0                      | P1            ;
-  stw         r2, 0(r4)   | stw  r2,0(r5) ;
-                          |               ;
-  loop:lwarx  r3, r6, r0  |               ;
-  mr          r8, r3      |               ;
-  add         r3, r3, r1  | sync          ;
-  stwcx.      r3, r6, r0  |               ;
-  bne         loop        |               ;
-  mr          r1, r8      |               ;
-                          |               ;
-  lwa         r7, 0(r5)   | lwa  r7,0(r4) ;
+and the condition is true and skip the later procedure (deleting route)
+because cfg->fc_metric != rt->fib6_metric. But before that commit,
+cfg->fc_metric is still zero there, so the condition is false and it
+will do the following procedure (deleting).
 
-  ~exists(0:r7=0 /\ 1:r7=0)
+Solution
+========
+In order to keep a consistent behaviour across netlink() and ioctl(), we
+should allow to delete a route with a metric value of 0. So we only do
+the default setting of fc_metric in route adding.
 
-  Witnesses
-  Positive: 9 Negative: 3
-  Condition ~exists (0:r7=0 /\ 1:r7=0)
-  Observation SB+atomic_add+fetch Sometimes 3 9
-
-This test shows that the older store in P0 is reordered with a newer
-load to a different address. Although there is a RMW operation with
-fetch between them. Adding a sync before and after RMW fixes the issue:
-
-  Witnesses
-  Positive: 9 Negative: 0
-  Condition ~exists (0:r7=0 /\ 1:r7=0)
-  Observation SB+atomic_add+fetch Never 0 9
-
-[1] https://www.kernel.org/doc/Documentation/memory-barriers.txt
-[2] https://www.kernel.org/doc/Documentation/atomic_t.txt
-
-Fixes: aea7ef8a82c0 ("powerpc/bpf/32: add support for BPF_ATOMIC bitwise operations")
-Fixes: 2d9206b22743 ("powerpc/bpf/32: Add instructions for atomic_[cmp]xchg")
-Fixes: dbe6e2456fb0 ("powerpc/bpf/64: add support for atomic fetch operations")
-Fixes: 1e82dfaa7819 ("powerpc/bpf/64: Add instructions for atomic_[cmp]xchg")
-Cc: stable@vger.kernel.org # v6.0+
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Naveen N Rao <naveen@kernel.org>
-Acked-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240513100248.110535-1-puranjay@kernel.org
+CC: stable@vger.kernel.org # 5.4+
+Fixes: 67f695134703 ("ipv6: Move setting default metric for routes")
+Co-developed-by: Fan Yu <fan.yu9@zte.com.cn>
+Signed-off-by: Fan Yu <fan.yu9@zte.com.cn>
+Signed-off-by: xu xin <xu.xin16@zte.com.cn>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240514201102055dD2Ba45qKbLlUMxu_DTHP@zte.com.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/net/bpf_jit_comp32.c |   12 ++++++++++++
- arch/powerpc/net/bpf_jit_comp64.c |   12 ++++++++++++
- 2 files changed, 24 insertions(+)
+ net/ipv6/route.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/net/bpf_jit_comp32.c
-+++ b/arch/powerpc/net/bpf_jit_comp32.c
-@@ -814,6 +814,15 @@ int bpf_jit_build_body(struct bpf_prog *
- 
- 			/* Get offset into TMP_REG */
- 			EMIT(PPC_RAW_LI(tmp_reg, off));
-+			/*
-+			 * Enforce full ordering for operations with BPF_FETCH by emitting a 'sync'
-+			 * before and after the operation.
-+			 *
-+			 * This is a requirement in the Linux Kernel Memory Model.
-+			 * See __cmpxchg_u32() in asm/cmpxchg.h as an example.
-+			 */
-+			if ((imm & BPF_FETCH) && IS_ENABLED(CONFIG_SMP))
-+				EMIT(PPC_RAW_SYNC());
- 			tmp_idx = ctx->idx * 4;
- 			/* load value from memory into r0 */
- 			EMIT(PPC_RAW_LWARX(_R0, tmp_reg, dst_reg, 0));
-@@ -867,6 +876,9 @@ int bpf_jit_build_body(struct bpf_prog *
- 
- 			/* For the BPF_FETCH variant, get old data into src_reg */
- 			if (imm & BPF_FETCH) {
-+				/* Emit 'sync' to enforce full ordering */
-+				if (IS_ENABLED(CONFIG_SMP))
-+					EMIT(PPC_RAW_SYNC());
- 				EMIT(PPC_RAW_MR(ret_reg, ax_reg));
- 				if (!fp->aux->verifier_zext)
- 					EMIT(PPC_RAW_LI(ret_reg - 1, 0)); /* higher 32-bit */
---- a/arch/powerpc/net/bpf_jit_comp64.c
-+++ b/arch/powerpc/net/bpf_jit_comp64.c
-@@ -784,6 +784,15 @@ emit_clear:
- 
- 			/* Get offset into TMP_REG_1 */
- 			EMIT(PPC_RAW_LI(tmp1_reg, off));
-+			/*
-+			 * Enforce full ordering for operations with BPF_FETCH by emitting a 'sync'
-+			 * before and after the operation.
-+			 *
-+			 * This is a requirement in the Linux Kernel Memory Model.
-+			 * See __cmpxchg_u64() in asm/cmpxchg.h as an example.
-+			 */
-+			if ((imm & BPF_FETCH) && IS_ENABLED(CONFIG_SMP))
-+				EMIT(PPC_RAW_SYNC());
- 			tmp_idx = ctx->idx * 4;
- 			/* load value from memory into TMP_REG_2 */
- 			if (size == BPF_DW)
-@@ -846,6 +855,9 @@ emit_clear:
- 			PPC_BCC_SHORT(COND_NE, tmp_idx);
- 
- 			if (imm & BPF_FETCH) {
-+				/* Emit 'sync' to enforce full ordering */
-+				if (IS_ENABLED(CONFIG_SMP))
-+					EMIT(PPC_RAW_SYNC());
- 				EMIT(PPC_RAW_MR(ret_reg, _R0));
- 				/*
- 				 * Skip unnecessary zero-extension for 32-bit cmpxchg.
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -4435,7 +4435,7 @@ static void rtmsg_to_fib6_config(struct
+ 		.fc_table = l3mdev_fib_table_by_index(net, rtmsg->rtmsg_ifindex) ?
+ 			 : RT6_TABLE_MAIN,
+ 		.fc_ifindex = rtmsg->rtmsg_ifindex,
+-		.fc_metric = rtmsg->rtmsg_metric ? : IP6_RT_PRIO_USER,
++		.fc_metric = rtmsg->rtmsg_metric,
+ 		.fc_expires = rtmsg->rtmsg_info,
+ 		.fc_dst_len = rtmsg->rtmsg_dst_len,
+ 		.fc_src_len = rtmsg->rtmsg_src_len,
+@@ -4465,6 +4465,9 @@ int ipv6_route_ioctl(struct net *net, un
+ 	rtnl_lock();
+ 	switch (cmd) {
+ 	case SIOCADDRT:
++		/* Only do the default setting of fc_metric in route adding */
++		if (cfg.fc_metric == 0)
++			cfg.fc_metric = IP6_RT_PRIO_USER;
+ 		err = ip6_route_add(&cfg, GFP_KERNEL, NULL);
+ 		break;
+ 	case SIOCDELRT:
 
 
