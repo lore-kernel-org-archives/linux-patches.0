@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF37913D635;
-	Thu, 13 Jun 2024 12:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCA613D635;
+	Thu, 13 Jun 2024 12:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280465; cv=none; b=S3RfAIPJwhYrF2I9B3rVb3Lu9U9Z59kjbMFH9Fbj5bmSZrnftAc22yT6NtycK6xdPX2XXKaZAmw5ATS+b6/XY6WbT09Dj61j7sXAlFn+FWKfXAtdf+FXC1N5VgwEO5fluPV38Ol9uAyerLi1TxWoR2iHDmPjWdoTIYIdXz+MuBA=
+	t=1718280468; cv=none; b=gSmHRqyPsyrJftHDjdmUbNqEAbcQ1Tb4+QgCrnrpQRnmdTAeOpwR0eZYgJCEHDUevAlNH7sTmt9msOv4Pf52hAy0LUWzpbb9DPx+FyPDWbcKY76jaqJKqcrCYDd77Kehf3+NSboZOwFigi+saQpqprpEiF+uGVTpE7uFCIgazNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280465; c=relaxed/simple;
-	bh=YKpGH1V9ANrdti50wc73LhwYNQQW81N4qqBOkvwdnmA=;
+	s=arc-20240116; t=1718280468; c=relaxed/simple;
+	bh=mFau7EG/3sz3VKvDbAwNGA0vpGcbwNR0P9/jPYyiVF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hj0R+k47nqFcXvMU7AVk+chKHRM2vgooLRAtQ/9ZAlX0jss9Of2rX1GVODoQBevnXP2OPRSwKhNSADseTO4zguyO+YePJGS2ihocJJAl49rkB4VnoeS1CqxkkNXp1MBbwSZrVVBMHExznqkyOxDZumK4uSWaYCTC2CwpzE3450U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IM5ZZm71; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cwsbQsrAN1frIEH8w3mGZSCyIXRceiRLtmu6FmWhl5rw8VG2LfQK6Itc/pjQp3+Yv0AYZMHbKoFpmNgKVJEeI5uT2+B26oxTtLULE6mKJQlZRavTietw36pneWEPjym1AUnd6bkgbHbRxZWwozLtEmpG/ReVjMcy5NRYQyX05sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnuoHBKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IM5ZZm71"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B3EC2BBFC;
-	Thu, 13 Jun 2024 12:07:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnuoHBKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B57C2BBFC;
+	Thu, 13 Jun 2024 12:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280464;
-	bh=YKpGH1V9ANrdti50wc73LhwYNQQW81N4qqBOkvwdnmA=;
+	s=korg; t=1718280468;
+	bh=mFau7EG/3sz3VKvDbAwNGA0vpGcbwNR0P9/jPYyiVF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IM5ZZm71HscGVTf9MrbwraVB3gTxQsOr1HLallKqtJ/B2t3IKS3t/wQyBv9E7nXw/
-	 nOIcBOk9q/slfP++RpaJiDISaeZ0jZ6lqR0fvyRYe38VYTIOgqf5e6ng8BTVHmosnM
-	 iCBWeKz1vBfYNgLEtGZAST8qKbbT3zeDGyyHAovQ=
+	b=AnuoHBKQ4TT8OJwQAQT1iYWrhePejriihTxQHiM05qm4frcUiIdvwaxflRUFT/LW2
+	 XhG759wBs3Znv5gZhIUZK14NRPFgGDqq1xt+LrUX5tbC+3WtdzUwd+a1WHX6Yh+WQJ
+	 qkW2DEq/Xck6+zOieFeRmBC9EtShY9RhSWFLMlTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oliver Upton <oliver.upton@linux.dev>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.6 062/137] KVM: arm64: Allow AArch32 PSTATE.M to be restored as System mode
-Date: Thu, 13 Jun 2024 13:34:02 +0200
-Message-ID: <20240613113225.707915132@linuxfoundation.org>
+Subject: [PATCH 6.6 063/137] KVM: arm64: AArch32: Fix spurious trapping of conditional instructions
+Date: Thu, 13 Jun 2024 13:34:03 +0200
+Message-ID: <20240613113225.746596749@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -52,32 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Zyngier <maz@kernel.org>
 
-commit dfe6d190f38fc5df5ff2614b463a5195a399c885 upstream.
+commit c92e8b9eacebb4060634ebd9395bba1b29aadc68 upstream.
 
-It appears that we don't allow a vcpu to be restored in AArch32
-System mode, as we *never* included it in the list of valid modes.
+We recently upgraded the view of ESR_EL2 to 64bit, in keeping with
+the requirements of the architecture.
 
-Just add it to the list of allowed modes.
+However, the AArch32 emulation code was left unaudited, and the
+(already dodgy) code that triages whether a trap is spurious or not
+(because the condition code failed) broke in a subtle way:
 
-Fixes: 0d854a60b1d7 ("arm64: KVM: enable initialization of a 32bit vcpu")
+If ESR_EL2.ISS2 is ever non-zero (unlikely, but hey, this is the ARM
+architecture we're talking about), the hack that tests the top bits
+of ESR_EL2.EC will break in an interesting way.
+
+Instead, use kvm_vcpu_trap_get_class() to obtain the EC, and list
+all the possible ECs that can fail a condition code check.
+
+While we're at it, add SMC32 to the list, as it is explicitly listed
+as being allowed to trap despite failing a condition code check (as
+described in the HCR_EL2.TSC documentation).
+
+Fixes: 0b12620fddb8 ("KVM: arm64: Treat ESR_EL2 as a 64-bit register")
 Cc: stable@vger.kernel.org
 Acked-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20240524141956.1450304-3-maz@kernel.org
+Link: https://lore.kernel.org/r/20240524141956.1450304-4-maz@kernel.org
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/guest.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kvm/hyp/aarch32.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kvm/guest.c
-+++ b/arch/arm64/kvm/guest.c
-@@ -251,6 +251,7 @@ static int set_core_reg(struct kvm_vcpu
- 		case PSR_AA32_MODE_SVC:
- 		case PSR_AA32_MODE_ABT:
- 		case PSR_AA32_MODE_UND:
-+		case PSR_AA32_MODE_SYS:
- 			if (!vcpu_el1_is_32bit(vcpu))
- 				return -EINVAL;
- 			break;
+--- a/arch/arm64/kvm/hyp/aarch32.c
++++ b/arch/arm64/kvm/hyp/aarch32.c
+@@ -50,9 +50,23 @@ bool kvm_condition_valid32(const struct
+ 	u32 cpsr_cond;
+ 	int cond;
+ 
+-	/* Top two bits non-zero?  Unconditional. */
+-	if (kvm_vcpu_get_esr(vcpu) >> 30)
++	/*
++	 * These are the exception classes that could fire with a
++	 * conditional instruction.
++	 */
++	switch (kvm_vcpu_trap_get_class(vcpu)) {
++	case ESR_ELx_EC_CP15_32:
++	case ESR_ELx_EC_CP15_64:
++	case ESR_ELx_EC_CP14_MR:
++	case ESR_ELx_EC_CP14_LS:
++	case ESR_ELx_EC_FP_ASIMD:
++	case ESR_ELx_EC_CP10_ID:
++	case ESR_ELx_EC_CP14_64:
++	case ESR_ELx_EC_SVC32:
++		break;
++	default:
+ 		return true;
++	}
+ 
+ 	/* Is condition field valid? */
+ 	cond = kvm_vcpu_get_condition(vcpu);
 
 
