@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A1F143861;
-	Thu, 13 Jun 2024 12:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611C5143861;
+	Thu, 13 Jun 2024 12:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281545; cv=none; b=Z+texx1eLw7efhTg3ltSVV55knT5YfzSDyeyWbd+ZHKvZ5Oz/0kCoLRECAoJPgx4xNn0csIQdFvJNYh532clfjd2a0k8dwgyoKvryNY6bXJt+d1vxnDI4Y/QG4TdcmkPwPDn5dAGsy3nj1tHOY4Wx1is6U6sqOX75HU+Ovm7cYU=
+	t=1718281548; cv=none; b=lAwx27XQhOyhHWWbHJyfWtgwMFlxr0wxH/I7Rt8cMWguRPN4OcSWBPwEMBML8qVcZslFRqup9alZicEFmyt1QLwHKhgP5Ni90rKckF86pt/OCYFVJ6SSowhnSBnMN3VBJ76emGbt2U5a64/68QH1kx/4OMUsmqunuj46XChAv4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281545; c=relaxed/simple;
-	bh=x876JyfMDwrcxP87hIjUVbHZItOEGXn7JsX2PIcZVuY=;
+	s=arc-20240116; t=1718281548; c=relaxed/simple;
+	bh=yj2R76RxeUNM3r4jGNr7BGUrcBSM5d2RETgLcpSMDVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p2Oa/ds/FsCP8+laGajGQh+8a+SaMy0SXDp8HJmOkBdSXbYzSKxP7V6qeEAwBrKMGnRVeFnRoBSdmlB3MP+Xos0J1YCWbE9TzDZv0i1ooUUwFWZoXJ7SoVbEIpAcyjQxeR6a4goFfvUjiwOuIz7MKnimcKXJp3u9mVFsgQxk1zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XF36S+7O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LH/ZNH5oZCQfZOdaMIRcZZw0qEWPriXddwEbkr8qoz5Ez2zGBRe2/5hGUwoVhvmlr+I08rdR2BxK4Z+dy90Ay7BQUuNjywA5uRp07ITmQ7W53/N2DLL5Q0udhxFzuT2vOY/glIcCQNPBHvCE9HukSNIwTVnIe7azOhU20VaPuaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncfLtyht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XF36S+7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FEEC2BBFC;
-	Thu, 13 Jun 2024 12:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncfLtyht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AFEC2BBFC;
+	Thu, 13 Jun 2024 12:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281545;
-	bh=x876JyfMDwrcxP87hIjUVbHZItOEGXn7JsX2PIcZVuY=;
+	s=korg; t=1718281548;
+	bh=yj2R76RxeUNM3r4jGNr7BGUrcBSM5d2RETgLcpSMDVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XF36S+7OrMOmm2s6ccKYHRvUnrVcDhyRZzP3m6dx90vIU2MkmrGM77vKff2h5anyu
-	 9bofWoP5ZxN2WXTT8+Horm19d/Sh8UGIf/KVTgtXhmhNLUvXLMdGBb/FwmnXX4jOBv
-	 +mSfFxXBbF01B86clQvYBGEfba7okotOdIz5cGeA=
+	b=ncfLtyht3ki2bfLhfQai4Tvv3jMUvlDP7ZAUn3Ads+lRT47/RU4hs0NjWDkl8FNJZ
+	 cNjgLZYBWGcHxvqcBZIxLz8J00BSVd8Mhnizp105sqU8m5Rgu5GsFQ1YqbmOBc1Eb6
+	 6lP4MOhVK1bTjNVlI1+ImAgtPvTXkV7SZLmlV7pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Zhang <zheng.zhang@email.ucr.edu>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 5.10 264/317] media: cec: core: add adap_nb_transmit_canceled() callback
-Date: Thu, 13 Jun 2024 13:34:42 +0200
-Message-ID: <20240613113257.758975088@linuxfoundation.org>
+	Andy Shevchenko <andy@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 291/317] mmc: sdhci-acpi: Sort DMI quirks alphabetically
+Date: Thu, 13 Jun 2024 13:35:09 +0200
+Message-ID: <20240613113258.809260975@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,74 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit da53c36ddd3f118a525a04faa8c47ca471e6c467 upstream.
+commit a92a73b1d9249d155412d8ac237142fa716803ea upstream.
 
-A potential deadlock was found by Zheng Zhang with a local syzkaller
-instance.
+Sort the DMI quirks alphabetically.
 
-The problem is that when a non-blocking CEC transmit is canceled by calling
-cec_data_cancel, that in turn can call the high-level received() driver
-callback, which can call cec_transmit_msg() to transmit a new message.
-
-The cec_data_cancel() function is called with the adap->lock mutex held,
-and cec_transmit_msg() tries to take that same lock.
-
-The root cause is that the received() callback can either be used to pass
-on a received message (and then adap->lock is not held), or to report a
-canceled transmit (and then adap->lock is held).
-
-This is confusing, so create a new low-level adap_nb_transmit_canceled
-callback that reports back that a non-blocking transmit was canceled.
-
-And the received() callback is only called when a message is received,
-as was the case before commit f9d0ecbf56f4 ("media: cec: correctly pass
-on reply results") complicated matters.
-
-Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: f9d0ecbf56f4 ("media: cec: correctly pass on reply results")
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240410191639.526324-4-hdegoede@redhat.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/core/cec-adap.c |    4 ++--
- include/media/cec.h               |    6 ++++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/mmc/host/sdhci-acpi.c |   25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
---- a/drivers/media/cec/core/cec-adap.c
-+++ b/drivers/media/cec/core/cec-adap.c
-@@ -397,8 +397,8 @@ static void cec_data_cancel(struct cec_d
- 	cec_queue_msg_monitor(adap, &data->msg, 1);
- 
- 	if (!data->blocking && data->msg.sequence)
--		/* Allow drivers to process the message first */
--		call_op(adap, received, &data->msg);
-+		/* Allow drivers to react to a canceled transmit */
-+		call_void_op(adap, adap_nb_transmit_canceled, &data->msg);
- 
- 	cec_data_completed(data);
- }
---- a/include/media/cec.h
-+++ b/include/media/cec.h
-@@ -120,14 +120,16 @@ struct cec_adap_ops {
- 	int (*adap_log_addr)(struct cec_adapter *adap, u8 logical_addr);
- 	int (*adap_transmit)(struct cec_adapter *adap, u8 attempts,
- 			     u32 signal_free_time, struct cec_msg *msg);
-+	void (*adap_nb_transmit_canceled)(struct cec_adapter *adap,
-+					  const struct cec_msg *msg);
- 	void (*adap_status)(struct cec_adapter *adap, struct seq_file *file);
- 	void (*adap_free)(struct cec_adapter *adap);
- 
--	/* Error injection callbacks */
-+	/* Error injection callbacks, called without adap->lock held */
- 	int (*error_inj_show)(struct cec_adapter *adap, struct seq_file *sf);
- 	bool (*error_inj_parse_line)(struct cec_adapter *adap, char *line);
- 
--	/* High-level CEC message callback */
-+	/* High-level CEC message callback, called without adap->lock held */
- 	int (*received)(struct cec_adapter *adap, struct cec_msg *msg);
+--- a/drivers/mmc/host/sdhci-acpi.c
++++ b/drivers/mmc/host/sdhci-acpi.c
+@@ -761,9 +761,22 @@ static const struct acpi_device_id sdhci
  };
+ MODULE_DEVICE_TABLE(acpi, sdhci_acpi_ids);
  
++/* Please keep this list sorted alphabetically */
+ static const struct dmi_system_id sdhci_acpi_quirks[] = {
+ 	{
+ 		/*
++		 * The Acer Aspire Switch 10 (SW5-012) microSD slot always
++		 * reports the card being write-protected even though microSD
++		 * cards do not have a write-protect switch at all.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire SW5-012"),
++		},
++		.driver_data = (void *)DMI_QUIRK_SD_NO_WRITE_PROTECT,
++	},
++	{
++		/*
+ 		 * The Lenovo Miix 320-10ICR has a bug in the _PS0 method of
+ 		 * the SHC1 ACPI device, this bug causes it to reprogram the
+ 		 * wrong LDO (DLDO3) to 1.8V if 1.8V modes are used and the
+@@ -778,18 +791,6 @@ static const struct dmi_system_id sdhci_
+ 	},
+ 	{
+ 		/*
+-		 * The Acer Aspire Switch 10 (SW5-012) microSD slot always
+-		 * reports the card being write-protected even though microSD
+-		 * cards do not have a write-protect switch at all.
+-		 */
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire SW5-012"),
+-		},
+-		.driver_data = (void *)DMI_QUIRK_SD_NO_WRITE_PROTECT,
+-	},
+-	{
+-		/*
+ 		 * The Toshiba WT8-B's microSD slot always reports the card being
+ 		 * write-protected.
+ 		 */
 
 
