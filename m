@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A550B14265E;
-	Thu, 13 Jun 2024 11:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A19A143C6B;
+	Thu, 13 Jun 2024 11:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278970; cv=none; b=LR3CL2+599MY1IjyuWh3DAsFjtJUuxp2TQLmPXAFTffGQnpr2RsYVVplZn2bkLizMWbi1flEGasV1y9eK3TA2/JWAY35O+9fy+/FUt5nApPcplMmlQgSB04/tH8UpVJnFrOsiwRppVqBm9346Q0egP/Xh94Lubh2LBj5UC/A170=
+	t=1718278973; cv=none; b=dLJRoFMUzwlTKoHTLSPOYSTzKvgMssS68LSZOb/vMdK6gBuI5FbFQ0azH5uUTtJqZkAqXbI52EOeTatwuiaEzifJGiMAdj+n2eaWDH4ICcGuf9u0wJO6IRdVqdXEOPIAPl5wiDwzWB6Yo4xFHf9Gp/js98iRqV/R+WTJBBRZsrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278970; c=relaxed/simple;
-	bh=dm/AiXYmNcZHTJEkx5e5Zu9ZBPF0+mffnP2aquopTVA=;
+	s=arc-20240116; t=1718278973; c=relaxed/simple;
+	bh=XvKIgsAYK9E3m/qb5Idyf1NqIvZz++t5kQSaos1t4FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LsywPf9XhtlLtXLp/u3Fk1Qkd7yh4cIx2WMP7Byicb3FOmH40pESXEvOxzJCc/upzQ3oIdzhWxYyNZByyitb0+nZ3FxjfFoK+NSe+0Jf9DLXUUiSOmEt/HOkIhzPEEGVgCVAFZz6sye7ruMH/izyilwgsR/h94R/VebgGRCOJHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+dP2fCQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=po0xq6+1vHBN2wk1c9donMtK7oC7RwAxIqIA9s+zxGVzOipFp+XTfg+rx0He0f1uZsPV4lv1DNWQxTxGl3ROwFT0sdeMr0W+hRbO3Am4/l6tcHS/yuJd0f89bIJTZYAckh06ZZsWxbeabhv8RxtSGl67tLwGz15d8tUjWAwEU6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HW0Nxrd+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+dP2fCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB49C2BBFC;
-	Thu, 13 Jun 2024 11:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HW0Nxrd+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA22C4AF1C;
+	Thu, 13 Jun 2024 11:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278970;
-	bh=dm/AiXYmNcZHTJEkx5e5Zu9ZBPF0+mffnP2aquopTVA=;
+	s=korg; t=1718278973;
+	bh=XvKIgsAYK9E3m/qb5Idyf1NqIvZz++t5kQSaos1t4FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c+dP2fCQt14DFYKGlHm8KL8tYw83MQ3jZguH/KxqRtHsVXXbRcp8OSUPqih8MzdUa
-	 p8mpqYgaKm/yVkU9v8uycIoUvQFTG8ps85FhJp/MIn5Jr3+gmQH4FNvxfESIFvbAXn
-	 mvT6OyQwgv4fgncAb+kDxCatFjtFZTUcZK5ffhCs=
+	b=HW0Nxrd+XzZ4DLVdBvUe7M5R96DEU+AI05is/W4K+MPkg1DK4SVBdIAc0C93TKszk
+	 KzKT3zb1nkgJGy+l98oocVYgNTh6Kdml2sJU8ccU4EggT379gzgzrzvXMMknjOvEVu
+	 0rg259RkddzfBdeRd7G6e31omF7oXgQzJ0BtctUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 114/213] media: stk1160: fix bounds checking in stk1160_copy_video()
-Date: Thu, 13 Jun 2024 13:32:42 +0200
-Message-ID: <20240613113232.398202069@linuxfoundation.org>
+Subject: [PATCH 4.19 132/213] spi: Dont mark message DMA mapped when no transfer in it is
+Date: Thu, 13 Jun 2024 13:33:00 +0200
+Message-ID: <20240613113233.089340000@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,81 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit faa4364bef2ec0060de381ff028d1d836600a381 ]
+[ Upstream commit 9f788ba457b45b0ce422943fcec9fa35c4587764 ]
 
-The subtract in this condition is reversed.  The ->length is the length
-of the buffer.  The ->bytesused is how many bytes we have copied thus
-far.  When the condition is reversed that means the result of the
-subtraction is always negative but since it's unsigned then the result
-is a very high positive value.  That means the overflow check is never
-true.
+There is no need to set the DMA mapped flag of the message if it has
+no mapped transfers. Moreover, it may give the code a chance to take
+the wrong paths, i.e. to exercise DMA related APIs on unmapped data.
+Make __spi_map_msg() to bail earlier on the above mentioned cases.
 
-Additionally, the ->bytesused doesn't actually work for this purpose
-because we're not writing to "buf->mem + buf->bytesused".  Instead, the
-math to calculate the destination where we are writing is a bit
-involved.  You calculate the number of full lines already written,
-multiply by two, skip a line if necessary so that we start on an odd
-numbered line, and add the offset into the line.
-
-To fix this buffer overflow, just take the actual destination where we
-are writing, if the offset is already out of bounds print an error and
-return.  Otherwise, write up to buf->length bytes.
-
-Fixes: 9cb2173e6ea8 ("[media] media: Add stk1160 new driver (easycap replacement)")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 99adef310f68 ("spi: Provide core support for DMA mapping transfers")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://msgid.link/r/20240522171018.3362521-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/stk1160/stk1160-video.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/spi/spi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/usb/stk1160/stk1160-video.c b/drivers/media/usb/stk1160/stk1160-video.c
-index 0e98b450ae01b..687c7b6a0c303 100644
---- a/drivers/media/usb/stk1160/stk1160-video.c
-+++ b/drivers/media/usb/stk1160/stk1160-video.c
-@@ -109,7 +109,7 @@ void stk1160_buffer_done(struct stk1160 *dev)
- static inline
- void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- {
--	int linesdone, lineoff, lencopy;
-+	int linesdone, lineoff, lencopy, offset;
- 	int bytesperline = dev->width * 2;
- 	struct stk1160_buffer *buf = dev->isoc_ctl.buf;
- 	u8 *dst = buf->mem;
-@@ -149,8 +149,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- 	 * Check if we have enough space left in the buffer.
- 	 * In that case, we force loop exit after copy.
- 	 */
--	if (lencopy > buf->bytesused - buf->length) {
--		lencopy = buf->bytesused - buf->length;
-+	offset = dst - (u8 *)buf->mem;
-+	if (offset > buf->length) {
-+		dev_warn_ratelimited(dev->dev, "out of bounds offset\n");
-+		return;
-+	}
-+	if (lencopy > buf->length - offset) {
-+		lencopy = buf->length - offset;
- 		remain = lencopy;
- 	}
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 3bcd6f178f73b..a15545cee4d2e 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -866,6 +866,7 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
+ 	else
+ 		rx_dev = ctlr->dev.parent;
  
-@@ -192,8 +197,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
- 		 * Check if we have enough space left in the buffer.
- 		 * In that case, we force loop exit after copy.
- 		 */
--		if (lencopy > buf->bytesused - buf->length) {
--			lencopy = buf->bytesused - buf->length;
-+		offset = dst - (u8 *)buf->mem;
-+		if (offset > buf->length) {
-+			dev_warn_ratelimited(dev->dev, "offset out of bounds\n");
-+			return;
-+		}
-+		if (lencopy > buf->length - offset) {
-+			lencopy = buf->length - offset;
- 			remain = lencopy;
++	ret = -ENOMSG;
+ 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
+ 		if (!ctlr->can_dma(ctlr, msg->spi, xfer))
+ 			continue;
+@@ -889,6 +890,9 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
+ 			}
  		}
+ 	}
++	/* No transfer has been mapped, bail out with success */
++	if (ret)
++		return 0;
+ 
+ 	ctlr->cur_msg_mapped = true;
  
 -- 
 2.43.0
