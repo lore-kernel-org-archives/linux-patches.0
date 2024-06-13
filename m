@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A71DDDB1;
-	Thu, 13 Jun 2024 11:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2023DDDB1;
+	Thu, 13 Jun 2024 11:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278784; cv=none; b=cgTOPHs5HHbTVYfhu9SfY6ceVyNsaa/rml+rvvhjkD/lr1fHtHQ4PBsk/27dMPnWaOw6yVyAhTN79CSjp2zcHPDxp904nAfNCBVyD1FPlCFv0uJsk0Ah/BhT6QHRkM/7kisEqMN0G/nMXH343ltm2Ql+VkvptZfNWB3odpkS6hM=
+	t=1718278787; cv=none; b=Wz66vjB/Yr8ghRuI2Zqlvn9+IhmOm9CxsjghPD02judBBGvVCYWLJ94UVOiIsYPIDD8HZfchFtdmXRU4yRIkC/y1bePOqzrE0v7G9Clx7LY/GM5LGlhkfwUtvBpEZc5UPpXavDk7PfORRAwiSzXoFLOKM7smFVsuF3QdCAJfVU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278784; c=relaxed/simple;
-	bh=G4SS4Oga/bJUe6cYpG/YodASrvXM2dqk00TJs3/hmEs=;
+	s=arc-20240116; t=1718278787; c=relaxed/simple;
+	bh=s96z+16uZU3m6oyRitQGYzhF+VuQffsbP1k2wO5x+Qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NT6rKqrNguWfi/qNnYTbyGua511XvxP8iBD/iqGj5Liny38aFtcjFhN/c2xIuc1vhQrCJEi2BdgLySDtV6JyeLlC449Ae4goOMsKiyMt0Rpm7ZisDl706wKE+Z+BMPhpd9hNKoeY4Xs3hwxMy6a8zil7eGX41Yk7HjiUZWTGhYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKAP3bru; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RF/oolTcszgG+t+tiis2V34VTBWAue2BHb0XxoQegh1VgZ2jiK3VlNPocvsJLPhpHx/UUURKDLVSuujPPIT7Riz9Zk2DGp0uIBhXSHl1WdOb5iFU+OK/JGTeehSmMrOeT7o2oPoofqQCNKozYel0ZmMN0WqIBiZ6S1pDFbYZIiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgXZ06/M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKAP3bru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8486C2BBFC;
-	Thu, 13 Jun 2024 11:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgXZ06/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C651C2BBFC;
+	Thu, 13 Jun 2024 11:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278784;
-	bh=G4SS4Oga/bJUe6cYpG/YodASrvXM2dqk00TJs3/hmEs=;
+	s=korg; t=1718278787;
+	bh=s96z+16uZU3m6oyRitQGYzhF+VuQffsbP1k2wO5x+Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oKAP3bruP/GENW0kkIbbZv6nS2F5GM3ZLW2tb+YmNaLOfgFexat0y3girO3edjBOi
-	 bsloxQca/OOKzqtFYKSGs4qMnEHVgcGBn9PoMY4S90DRVLphQgBIECYTvBQkACI4ha
-	 xJRvHDn+ot45Fs/mOOEykUvn6vyTVw8TWVLGhPsQ=
+	b=xgXZ06/MaNFJHSLH1rBmLu9P0G9MO8jdbYnjJ+f2uP0E11ATBg2A0/mtCNNogLZNe
+	 /cJZeU6/Ta8ZeITZzLqthmFEyzLrsDsRdeDWdXqOZIb/+YWqPQ/30zcQrtfGJqvm+r
+	 HOSua1fwpYBoPgsxvzI6H4HlwwZur8cA/gnJm8c0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Green <greenjustin@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 068/213] drm/mediatek: Add 0 size check to mtk_drm_gem_obj
-Date: Thu, 13 Jun 2024 13:31:56 +0200
-Message-ID: <20240613113230.630996204@linuxfoundation.org>
+Subject: [PATCH 4.19 069/213] powerpc/fsl-soc: hide unused const variable
+Date: Thu, 13 Jun 2024 13:31:57 +0200
+Message-ID: <20240613113230.669604851@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -53,42 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Green <greenjustin@chromium.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 1e4350095e8ab2577ee05f8c3b044e661b5af9a0 ]
+[ Upstream commit 01acaf3aa75e1641442cc23d8fe0a7bb4226efb1 ]
 
-Add a check to mtk_drm_gem_init if we attempt to allocate a GEM object
-of 0 bytes. Currently, no such check exists and the kernel will panic if
-a userspace application attempts to allocate a 0x0 GBM buffer.
+vmpic_msi_feature is only used conditionally, which triggers a rare
+-Werror=unused-const-variable= warning with gcc:
 
-Tested by attempting to allocate a 0x0 GBM buffer on an MT8188 and
-verifying that we now return EINVAL.
+arch/powerpc/sysdev/fsl_msi.c:567:37: error: 'vmpic_msi_feature' defined but not used [-Werror=unused-const-variable=]
+  567 | static const struct fsl_msi_feature vmpic_msi_feature =
 
-Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
-Signed-off-by: Justin Green <greenjustin@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240307180051.4104425-1-greenjustin@chromium.org/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Hide this one in the same #ifdef as the reference so we can turn on
+the warning by default.
+
+Fixes: 305bcf26128e ("powerpc/fsl-soc: use CONFIG_EPAPR_PARAVIRT for hcalls")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240403080702.3509288-2-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_gem.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/powerpc/sysdev/fsl_msi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-index b09a37a38e0ae..079df67892df5 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-@@ -26,6 +26,9 @@ static struct mtk_drm_gem_obj *mtk_drm_gem_init(struct drm_device *dev,
+diff --git a/arch/powerpc/sysdev/fsl_msi.c b/arch/powerpc/sysdev/fsl_msi.c
+index 44aedb6b9f556..4c1fd9d93e584 100644
+--- a/arch/powerpc/sysdev/fsl_msi.c
++++ b/arch/powerpc/sysdev/fsl_msi.c
+@@ -578,10 +578,12 @@ static const struct fsl_msi_feature ipic_msi_feature = {
+ 	.msiir_offset = 0x38,
+ };
  
- 	size = round_up(size, PAGE_SIZE);
++#ifdef CONFIG_EPAPR_PARAVIRT
+ static const struct fsl_msi_feature vmpic_msi_feature = {
+ 	.fsl_pic_ip = FSL_PIC_IP_VMPIC,
+ 	.msiir_offset = 0,
+ };
++#endif
  
-+	if (size == 0)
-+		return ERR_PTR(-EINVAL);
-+
- 	mtk_gem_obj = kzalloc(sizeof(*mtk_gem_obj), GFP_KERNEL);
- 	if (!mtk_gem_obj)
- 		return ERR_PTR(-ENOMEM);
+ static const struct of_device_id fsl_of_msi_ids[] = {
+ 	{
 -- 
 2.43.0
 
