@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A967DDB1;
-	Thu, 13 Jun 2024 11:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23621DDB1;
+	Thu, 13 Jun 2024 11:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278630; cv=none; b=efQGasqYkL3o+4Te0mFVvLiH8hRyWghZnLAjhVo7txSm8E9QDsYZnqcg/6CSaSL6/D82CHlQwgkwhA6M95B6c2jv+uDXlp1wuTcBFBmGODwGicnSZuBIzUDSoZYlrj0BesHJZK+eM54rNCLLTnjw1Z6Idlfhyt8wPTlaad+idx4=
+	t=1718278633; cv=none; b=BUBr5+irVEY579STnHyzaqc+rdNGcHQlZriKN/Rv7NshHsWgT+olxjJA6zIyAZgxe0iuuWJUlUusW057t4fvKT1V4F24WC1BtqyGiYas805dliiyf+FyaCVJYXZrPxgbGdPx0MX2GLxE13a/u6muiYIIj1xR3h/hftTgLO5RpyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278630; c=relaxed/simple;
-	bh=OteLwmgavuDphEZuZCGcC+HIZhL/eEGr84DLuWfuCOg=;
+	s=arc-20240116; t=1718278633; c=relaxed/simple;
+	bh=q6UV4ZAXhy0YwHJCGDGWEuGkfjrbzMir5XaiNOdXyds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qgEIcME3pgZvpapaA66OWNxQy1D3bbN8crxGIBQx9uphjPDy+d4woveEel/JMC0QKIY4TcEw8F3e8nlxoHrqRlvocuA0dJ6P6cd1tuJB1PhIScPOC9ycZAMAYJVZVEc2BLeCLcafMXnqptd/P9XKfO5dOZYMGv5skcR9AddglUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxUISOm2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jn1zUpi5vIcy5UbAtSTinbOYbDI2wGckLY4BqDtgyfQkrGguNJveKMlmYMSNvn6nSNhwPwcabPAU1RVDkPJzDQrOSlnJC6E+G3dXsIlDlz5MddaFL5I9EyWWTdHM0UPWgiokQn0UIMtMquCKibAUDGPYYQyfaAB4pLZtvJGjQRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRQflXG6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxUISOm2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E82C2BBFC;
-	Thu, 13 Jun 2024 11:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRQflXG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97220C2BBFC;
+	Thu, 13 Jun 2024 11:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278630;
-	bh=OteLwmgavuDphEZuZCGcC+HIZhL/eEGr84DLuWfuCOg=;
+	s=korg; t=1718278633;
+	bh=q6UV4ZAXhy0YwHJCGDGWEuGkfjrbzMir5XaiNOdXyds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxUISOm2opJKtbwP9HKLvJABd+df0rdNOOpXthK/v6h7GZksg6j9LNjEqE57Iq5F6
-	 HZMuk5TUA8wtAjqBqfAGCvQPKxPB8KF8HGfiaxxXZT3tPPux4R7uFBciyMDIm+TLwD
-	 FGAYc8MtQDPR6NUlfqnGgoiuRPNzhmALOn6OFsVk=
+	b=MRQflXG6qon+oE1HC8/quBw8YskcvZ4Kfmd668dCDfzDD98lrPlVoSwbCuIcsFqPK
+	 dYLOE+tjNeieE28rQIOWJkEpRMNm+mENn9kFzyXTh37QoNaHinjQER2w/uMiec5KaX
+	 DVh1X3y/48ucS7thzrEtUy+hmk9WggQNE7fA59bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	j51569436@gmail.com,
-	Daniel Starke <daniel.starke@siemens.com>
-Subject: [PATCH 4.19 007/213] tty: n_gsm: fix possible out-of-bounds in gsm0_receive()
-Date: Thu, 13 Jun 2024 13:30:55 +0200
-Message-ID: <20240613113228.260224391@linuxfoundation.org>
+	Igor Artemiev <Igor.A.Artemiev@mcst.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 008/213] wifi: cfg80211: fix the order of arguments for trace events of the tx_rx_evt class
+Date: Thu, 13 Jun 2024 13:30:56 +0200
+Message-ID: <20240613113228.299027427@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -50,65 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Starke <daniel.starke@siemens.com>
+From: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
 
-commit 47388e807f85948eefc403a8a5fdc5b406a65d5a upstream.
+[ Upstream commit 9ef369973cd2c97cce3388d2c0c7e3c056656e8a ]
 
-Assuming the following:
-- side A configures the n_gsm in basic option mode
-- side B sends the header of a basic option mode frame with data length 1
-- side A switches to advanced option mode
-- side B sends 2 data bytes which exceeds gsm->len
-  Reason: gsm->len is not used in advanced option mode.
-- side A switches to basic option mode
-- side B keeps sending until gsm0_receive() writes past gsm->buf
-  Reason: Neither gsm->state nor gsm->len have been reset after
-  reconfiguration.
+The declarations of the tx_rx_evt class and the rdev_set_antenna event
+use the wrong order of arguments in the TP_ARGS macro.
 
-Fix this by changing gsm->count to gsm->len comparison from equal to less
-than. Also add upper limit checks against the constant MAX_MRU in
-gsm0_receive() and gsm1_receive() to harden against memory corruption of
-gsm->len and gsm->mru.
+Fix the order of arguments in the TP_ARGS macro.
 
-All other checks remain as we still need to limit the data according to the
-user configuration and actual payload size.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Reported-by: j51569436@gmail.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218708
-Tested-by: j51569436@gmail.com
-Fixes: e1eaea46bb40 ("tty: n_gsm line discipline")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://lore.kernel.org/r/20240424054842.7741-1-daniel.starke@siemens.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
+Link: https://msgid.link/20240405152431.270267-1-Igor.A.Artemiev@mcst.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/wireless/trace.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -1972,8 +1972,12 @@ static void gsm0_receive(struct gsm_mux
- 		break;
- 	case GSM_DATA:		/* Data */
- 		gsm->buf[gsm->count++] = c;
--		if (gsm->count == gsm->len)
-+		if (gsm->count >= MAX_MRU) {
-+			gsm->bad_size++;
-+			gsm->state = GSM_SEARCH;
-+		} else if (gsm->count >= gsm->len) {
- 			gsm->state = GSM_FCS;
-+		}
- 		break;
- 	case GSM_FCS:		/* FCS follows the packet */
- 		gsm->received_fcs = c;
-@@ -2053,7 +2057,7 @@ static void gsm1_receive(struct gsm_mux
- 		gsm->state = GSM_DATA;
- 		break;
- 	case GSM_DATA:		/* Data */
--		if (gsm->count > gsm->mru) {	/* Allow one for the FCS */
-+		if (gsm->count > gsm->mru || gsm->count > MAX_MRU) {	/* Allow one for the FCS */
- 			gsm->state = GSM_OVERRUN;
- 			gsm->bad_size++;
- 		} else
+diff --git a/net/wireless/trace.h b/net/wireless/trace.h
+index 54b0bb344cf93..68d547a4a5a53 100644
+--- a/net/wireless/trace.h
++++ b/net/wireless/trace.h
+@@ -1591,7 +1591,7 @@ TRACE_EVENT(rdev_return_void_tx_rx,
+ 
+ DECLARE_EVENT_CLASS(tx_rx_evt,
+ 	TP_PROTO(struct wiphy *wiphy, u32 tx, u32 rx),
+-	TP_ARGS(wiphy, rx, tx),
++	TP_ARGS(wiphy, tx, rx),
+ 	TP_STRUCT__entry(
+ 		WIPHY_ENTRY
+ 		__field(u32, tx)
+@@ -1608,7 +1608,7 @@ DECLARE_EVENT_CLASS(tx_rx_evt,
+ 
+ DEFINE_EVENT(tx_rx_evt, rdev_set_antenna,
+ 	TP_PROTO(struct wiphy *wiphy, u32 tx, u32 rx),
+-	TP_ARGS(wiphy, rx, tx)
++	TP_ARGS(wiphy, tx, rx)
+ );
+ 
+ DECLARE_EVENT_CLASS(wiphy_netdev_id_evt,
+-- 
+2.43.0
+
 
 
