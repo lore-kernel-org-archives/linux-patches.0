@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C2C14198E;
-	Thu, 13 Jun 2024 12:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F6A1EEE0;
+	Thu, 13 Jun 2024 12:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282304; cv=none; b=bhP36qpX2lzbTs50MlimKp6PHmop74+zLPr/P/d22CC+UbUv7okjDWrnMLmWi5rqwo/cM5AZhZT4KroNv15F9k52PMyTFLc5MN4st0IIGLUPTx7PHJaTJBIO3ht6H0stfNCZHZ5S98gKrJuoxCR4eS39jfuHo0uJbnRuAFG338s=
+	t=1718282307; cv=none; b=igM2LNZiKiSy02lV3YlhZZa6I5CRqM0wkuS5VuUel0PDe7xOA8M7+k6fO+3rBskDwvRTa8YggiG5q2m4X6tnLCOXTfavsvL/SHGg736LGdMFfT0KqKNd/05iW0jF+IlZh/fsAZO0A04jz2XmUTTJcDF/NJwiMUzccV7zzsZRX8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282304; c=relaxed/simple;
-	bh=ZQVXsEOXsfHdwCvMmsO8gqDEEbHBRUjCFCg6uTYNo+I=;
+	s=arc-20240116; t=1718282307; c=relaxed/simple;
+	bh=avFnPYkHbMQkItqg/BsckRiDPorwVNBg2FvR/Ie/K14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HgLyMhxcqOIn75uq6QTAS7K6M0v7CpT4tLx7co8elaTlA6AuYtJR4l+x4DKFSk31oLe5Dshf7CTD3syqEV8TLBYhtuYggAU9PnwI1KBGIJ+khbVQZ2DlE91RQ20Zz23SqBg/jNqJkDlt36aDejfKNyvut84cyNP2DbIotXIJS5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NzcXLyJc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fg0LkcdzKpCJY1wfAto6+3G8qqKn2RQsFoEHvz51YY5CniZvpwYVN4IDS/CpwYcfFOirUmrsqRcKbOT0OF6cFtqwo+vqF3kNKtGRwx/xh9plN3jBpQ179bFmu22kt9IE4iII8A+SP1RqHeFqb0EXFTAwcFrxv1c8ota3ukRNmuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5og/RFJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NzcXLyJc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F4DC2BBFC;
-	Thu, 13 Jun 2024 12:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5og/RFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BF6C2BBFC;
+	Thu, 13 Jun 2024 12:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282304;
-	bh=ZQVXsEOXsfHdwCvMmsO8gqDEEbHBRUjCFCg6uTYNo+I=;
+	s=korg; t=1718282307;
+	bh=avFnPYkHbMQkItqg/BsckRiDPorwVNBg2FvR/Ie/K14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NzcXLyJcSRcJFaeIo8Ez0PAosftvdikAbryqpn7s8Yjz8/WRlh7dmtHOcpuyh4JcZ
-	 gFh3EnKl+93hulZBJuXPrb5XS82IAlEqmSofxnEpKJ/bHPvaGHyH5ZmnpYWZ1Kq3VN
-	 nCShPqeLcnbIfM+YUWOp+wpW4xJzgPWQTCqeItx4=
+	b=J5og/RFJN/N+2OupkmMGwNp0VBYPNNoLNVhaVqnWn3w7BbwvvfMUN0PbhbzQ9mN74
+	 ogaeGTRKmmfLJn96pTd3LJebFG7H5BJrsRObXukqPJiSMaDYawjMZnkisyZn06+bXa
+	 TM6GkMM643tlfmukk5wNkUUj/8T1ExwB1PbS29XU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 232/402] f2fs: compress: fix to cover {reserve,release}_compress_blocks() w/ cp_rwsem lock
-Date: Thu, 13 Jun 2024 13:33:09 +0200
-Message-ID: <20240613113311.195042951@linuxfoundation.org>
+Subject: [PATCH 5.15 233/402] f2fs: fix to release node block count in error path of f2fs_new_node_page()
+Date: Thu, 13 Jun 2024 13:33:10 +0200
+Message-ID: <20240613113311.232925663@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,70 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 0a4ed2d97cb6d044196cc3e726b6699222b41019 ]
+[ Upstream commit 0fa4e57c1db263effd72d2149d4e21da0055c316 ]
 
-It needs to cover {reserve,release}_compress_blocks() w/ cp_rwsem lock
-to avoid racing with checkpoint, otherwise, filesystem metadata including
-blkaddr in dnode, inode fields and .total_valid_block_count may be
-corrupted after SPO case.
+It missed to call dec_valid_node_count() to release node block count
+in error path, fix it.
 
-Fixes: ef8d563f184e ("f2fs: introduce F2FS_IOC_RELEASE_COMPRESS_BLOCKS")
-Fixes: c75488fb4d82 ("f2fs: introduce F2FS_IOC_RESERVE_COMPRESS_BLOCKS")
+Fixes: 141170b759e0 ("f2fs: fix to avoid use f2fs_bug_on() in f2fs_new_node_page()")
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/f2fs/node.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index f10156aecf425..30b015fbec6a5 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -3490,9 +3490,12 @@ static int f2fs_release_compress_blocks(struct file *filp, unsigned long arg)
- 		struct dnode_of_data dn;
- 		pgoff_t end_offset, count;
- 
-+		f2fs_lock_op(sbi);
-+
- 		set_new_dnode(&dn, inode, NULL, NULL, 0);
- 		ret = f2fs_get_dnode_of_data(&dn, page_idx, LOOKUP_NODE);
- 		if (ret) {
-+			f2fs_unlock_op(sbi);
- 			if (ret == -ENOENT) {
- 				page_idx = f2fs_get_next_page_offset(&dn,
- 								page_idx);
-@@ -3510,6 +3513,8 @@ static int f2fs_release_compress_blocks(struct file *filp, unsigned long arg)
- 
- 		f2fs_put_dnode(&dn);
- 
-+		f2fs_unlock_op(sbi);
-+
- 		if (ret < 0)
- 			break;
- 
-@@ -3652,9 +3657,12 @@ static int f2fs_reserve_compress_blocks(struct file *filp, unsigned long arg)
- 		struct dnode_of_data dn;
- 		pgoff_t end_offset, count;
- 
-+		f2fs_lock_op(sbi);
-+
- 		set_new_dnode(&dn, inode, NULL, NULL, 0);
- 		ret = f2fs_get_dnode_of_data(&dn, page_idx, LOOKUP_NODE);
- 		if (ret) {
-+			f2fs_unlock_op(sbi);
- 			if (ret == -ENOENT) {
- 				page_idx = f2fs_get_next_page_offset(&dn,
- 								page_idx);
-@@ -3672,6 +3680,8 @@ static int f2fs_reserve_compress_blocks(struct file *filp, unsigned long arg)
- 
- 		f2fs_put_dnode(&dn);
- 
-+		f2fs_unlock_op(sbi);
-+
- 		if (ret < 0)
- 			break;
- 
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index dc85dd55314cc..b6758887540f2 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1300,6 +1300,7 @@ struct page *f2fs_new_node_page(struct dnode_of_data *dn, unsigned int ofs)
+ 	}
+ 	if (unlikely(new_ni.blk_addr != NULL_ADDR)) {
+ 		err = -EFSCORRUPTED;
++		dec_valid_node_count(sbi, dn->inode, !ofs);
+ 		set_sbi_flag(sbi, SBI_NEED_FSCK);
+ 		goto fail;
+ 	}
+@@ -1325,7 +1326,6 @@ struct page *f2fs_new_node_page(struct dnode_of_data *dn, unsigned int ofs)
+ 	if (ofs == 0)
+ 		inc_valid_inode_count(sbi);
+ 	return page;
+-
+ fail:
+ 	clear_node_page_dirty(page);
+ 	f2fs_put_page(page, 1);
 -- 
 2.43.0
 
