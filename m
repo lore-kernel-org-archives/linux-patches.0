@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D2A1877;
-	Thu, 13 Jun 2024 12:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C701877;
+	Thu, 13 Jun 2024 12:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281874; cv=none; b=fZ8eQZxBx982B4sS7zMrla6+WKtDQhxhYmWRtSZQSrz39/t0zW9W73S/L6MvbqDZD+vzMnDd3pJ23qbGpL0XGEjyuIej6W1TbrG5U3bsXZIzcGGeEb8K1r7nwzuDCo7QTQZys12/+f2ADH0gAoqkZBi1XiQlP10ePaD1BMcMrgk=
+	t=1718281877; cv=none; b=GwfnLfAqNsJBIGxkipaEseESZv72jSug5SbNojZ+FrqVtsZH9NOiX+GjeIlyQQMjf2WFlJlu5u3dsKCF5EWlzaQE4iru+egCt6el+HsRcaW9xGuHMAMgjS+++QZMZcvM5QATskGa9tSM9bmUgTzGWwNUAlDvJq871z2Buk9HJd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281874; c=relaxed/simple;
-	bh=fQp+BUAYOXpsIn8yg2DbfqiKu70YMkk5Rmrfqq1N8m8=;
+	s=arc-20240116; t=1718281877; c=relaxed/simple;
+	bh=3G0c4/SCznUP+RCIX1V7tKnZR8Uc8RilUaKzmCOjHyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSITOUdaAYymBhLx5JJFuuhUqcK85SW/kRnEzvDMFC3j2fpm15AmYeT75tH4Z2lKXTtzebHLxypg3A08tHJH8opLc9fp90De9VHGFSkq/Z7FLnkjEpdOkduFyCDA2YXszQ2RsmLnzYhlSrYgzVzphc/3SP2W0Z7SyEwufniV9E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=riPt4t83; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f/51Hy7kR9+d8eC08AlUQAkKM6j1jOxz0UVB/KN38WeUIqKSu5+R7TFFiV1G5TVuYQTHz7xPaWkmrB23S463o28heyX5LKpbTCikgybYFy+pUT/JAgahakSfv05Q0GRolYUyBKR6VPir/dn3GRLniKuaJtSAPVpfUlUgXKmPF9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qU+/awHL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="riPt4t83"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C89DC2BBFC;
-	Thu, 13 Jun 2024 12:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qU+/awHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BB6C2BBFC;
+	Thu, 13 Jun 2024 12:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281874;
-	bh=fQp+BUAYOXpsIn8yg2DbfqiKu70YMkk5Rmrfqq1N8m8=;
+	s=korg; t=1718281877;
+	bh=3G0c4/SCznUP+RCIX1V7tKnZR8Uc8RilUaKzmCOjHyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=riPt4t83mLW7u2rrEEI9mBagByZ5JApJ42hQ+6aTPyw3hLw0wFM0ilXMbohsrlxmM
-	 EwHLRlkW01/v7qqHRiUfTNm4nCZimGsatYuA8C4+yV00Sk3bfUqB9dOCo4cTyGja/J
-	 Gg7obV/MubAWfvDZYbNcbar67GD3BhHdtivF95aE=
+	b=qU+/awHLtgiC+ajrJ3T3Tpz81aV8GZPnazK34ufJ7aIVKXIIqbFh47VF5W+TxTLKO
+	 9qz7ys9xhDKjENx9S/A5jX2Mt8zRe5kiY0dl3H0csvWgIoEs492pdaZQbj7GFEzySv
+	 e2X6+T+QJ9cwEgYtLFpZ1rfB1D9Zx1w7LoGsUptU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Qais Yousef <qyousef@layalina.io>,
-	Srikar Dronamraju <srikar@linux.ibm.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/402] sched/fair: Add EAS checks before updating root_domain::overutilized
-Date: Thu, 13 Jun 2024 13:30:11 +0200
-Message-ID: <20240613113304.243979650@linuxfoundation.org>
+Subject: [PATCH 5.15 055/402] qed: avoid truncating work queue length
+Date: Thu, 13 Jun 2024 13:30:12 +0200
+Message-ID: <20240613113304.282563408@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,145 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit be3a51e68f2f1b17250ce40d8872c7645b7a2991 ]
+[ Upstream commit 954fd908f177604d4cce77e2a88cc50b29bad5ff ]
 
-root_domain::overutilized is only used for EAS(energy aware scheduler)
-to decide whether to do load balance or not. It is not used if EAS
-not possible.
+clang complains that the temporary string for the name passed into
+alloc_workqueue() is too short for its contents:
 
-Currently enqueue_task_fair and task_tick_fair accesses, sometime updates
-this field. In update_sd_lb_stats it is updated often. This causes cache
-contention due to true sharing and burns a lot of cycles. ::overload and
-::overutilized are part of the same cacheline. Updating it often invalidates
-the cacheline. That causes access to ::overload to slow down due to
-false sharing. Hence add EAS check before accessing/updating this field.
-EAS check is optimized at compile time or it is a static branch.
-Hence it shouldn't cost much.
+drivers/net/ethernet/qlogic/qed/qed_main.c:1218:3: error: 'snprintf' will always be truncated; specified size is 16, but format string expands to at least 18 [-Werror,-Wformat-truncation]
 
-With the patch, both enqueue_task_fair and newidle_balance don't show
-up as hot routines in perf profile.
+There is no need for a temporary buffer, and the actual name of a workqueue
+is 32 bytes (WQ_NAME_LEN), so just use the interface as intended to avoid
+the truncation.
 
-  6.8-rc4:
-  7.18%  swapper          [kernel.vmlinux]              [k] enqueue_task_fair
-  6.78%  s                [kernel.vmlinux]              [k] newidle_balance
-
-  +patch:
-  0.14%  swapper          [kernel.vmlinux]              [k] enqueue_task_fair
-  0.00%  swapper          [kernel.vmlinux]              [k] newidle_balance
-
-While at it: trace_sched_overutilized_tp expect that second argument to
-be bool. So do a int to bool conversion for that.
-
-Fixes: 2802bf3cd936 ("sched/fair: Add over-utilization/tipping point indicator")
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Qais Yousef <qyousef@layalina.io>
-Reviewed-by: Srikar Dronamraju <srikar@linux.ibm.com>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20240307085725.444486-2-sshegde@linux.ibm.com
+Fixes: 59ccf86fe69a ("qed: Add driver infrastucture for handling mfw requests.")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240326223825.4084412-4-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 53 +++++++++++++++++++++++++++++----------------
- 1 file changed, 34 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/qlogic/qed/qed_main.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 4a1393405a6fe..94fcd585eb7f0 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -5746,21 +5746,41 @@ static inline unsigned long cpu_util(int cpu);
- 
- static inline bool cpu_overutilized(int cpu)
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_main.c b/drivers/net/ethernet/qlogic/qed/qed_main.c
+index 6e902d57c793c..99a6d11fec62c 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_main.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_main.c
+@@ -1238,7 +1238,6 @@ static void qed_slowpath_task(struct work_struct *work)
+ static int qed_slowpath_wq_start(struct qed_dev *cdev)
  {
--	unsigned long rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
--	unsigned long rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
-+	unsigned long  rq_util_min, rq_util_max;
-+
-+	if (!sched_energy_enabled())
-+		return false;
-+
-+	rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
-+	rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
+ 	struct qed_hwfn *hwfn;
+-	char name[NAME_SIZE];
+ 	int i;
  
- 	return !util_fits_cpu(cpu_util(cpu), rq_util_min, rq_util_max, cpu);
- }
+ 	if (IS_VF(cdev))
+@@ -1247,11 +1246,11 @@ static int qed_slowpath_wq_start(struct qed_dev *cdev)
+ 	for_each_hwfn(cdev, i) {
+ 		hwfn = &cdev->hwfns[i];
  
--static inline void update_overutilized_status(struct rq *rq)
-+static inline void set_rd_overutilized_status(struct root_domain *rd,
-+					      unsigned int status)
- {
--	if (!READ_ONCE(rq->rd->overutilized) && cpu_overutilized(rq->cpu)) {
--		WRITE_ONCE(rq->rd->overutilized, SG_OVERUTILIZED);
--		trace_sched_overutilized_tp(rq->rd, SG_OVERUTILIZED);
--	}
-+	if (!sched_energy_enabled())
-+		return;
-+
-+	WRITE_ONCE(rd->overutilized, status);
-+	trace_sched_overutilized_tp(rd, !!status);
-+}
-+
-+static inline void check_update_overutilized_status(struct rq *rq)
-+{
-+	/*
-+	 * overutilized field is used for load balancing decisions only
-+	 * if energy aware scheduler is being used
-+	 */
-+	if (!sched_energy_enabled())
-+		return;
-+
-+	if (!READ_ONCE(rq->rd->overutilized) && cpu_overutilized(rq->cpu))
-+		set_rd_overutilized_status(rq->rd, SG_OVERUTILIZED);
- }
- #else
--static inline void update_overutilized_status(struct rq *rq) { }
-+static inline void check_update_overutilized_status(struct rq *rq) { }
- #endif
+-		snprintf(name, NAME_SIZE, "slowpath-%02x:%02x.%02x",
+-			 cdev->pdev->bus->number,
+-			 PCI_SLOT(cdev->pdev->devfn), hwfn->abs_pf_id);
++		hwfn->slowpath_wq = alloc_workqueue("slowpath-%02x:%02x.%02x",
++					 0, 0, cdev->pdev->bus->number,
++					 PCI_SLOT(cdev->pdev->devfn),
++					 hwfn->abs_pf_id);
  
- /* Runqueue only has SCHED_IDLE tasks enqueued */
-@@ -5868,7 +5888,7 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
- 	 * and the following generally works well enough in practice.
- 	 */
- 	if (!task_new)
--		update_overutilized_status(rq);
-+		check_update_overutilized_status(rq);
- 
- enqueue_throttle:
- 	if (cfs_bandwidth_used()) {
-@@ -9577,19 +9597,14 @@ static inline void update_sd_lb_stats(struct lb_env *env, struct sd_lb_stats *sd
- 		env->fbq_type = fbq_classify_group(&sds->busiest_stat);
- 
- 	if (!env->sd->parent) {
--		struct root_domain *rd = env->dst_rq->rd;
--
- 		/* update overload indicator if we are at root domain */
--		WRITE_ONCE(rd->overload, sg_status & SG_OVERLOAD);
-+		WRITE_ONCE(env->dst_rq->rd->overload, sg_status & SG_OVERLOAD);
- 
- 		/* Update over-utilization (tipping point, U >= 0) indicator */
--		WRITE_ONCE(rd->overutilized, sg_status & SG_OVERUTILIZED);
--		trace_sched_overutilized_tp(rd, sg_status & SG_OVERUTILIZED);
-+		set_rd_overutilized_status(env->dst_rq->rd,
-+					   sg_status & SG_OVERUTILIZED);
- 	} else if (sg_status & SG_OVERUTILIZED) {
--		struct root_domain *rd = env->dst_rq->rd;
--
--		WRITE_ONCE(rd->overutilized, SG_OVERUTILIZED);
--		trace_sched_overutilized_tp(rd, SG_OVERUTILIZED);
-+		set_rd_overutilized_status(env->dst_rq->rd, SG_OVERUTILIZED);
- 	}
- 
- 	update_idle_cpu_scan(env, sum_util);
-@@ -11460,7 +11475,7 @@ static void task_tick_fair(struct rq *rq, struct task_struct *curr, int queued)
- 		task_tick_numa(rq, curr);
- 
- 	update_misfit_status(curr, rq);
--	update_overutilized_status(task_rq(curr));
-+	check_update_overutilized_status(task_rq(curr));
- 
- 	task_tick_core(rq, curr);
- }
+-		hwfn->slowpath_wq = alloc_workqueue(name, 0, 0);
+ 		if (!hwfn->slowpath_wq) {
+ 			DP_NOTICE(hwfn, "Cannot create slowpath workqueue\n");
+ 			return -ENOMEM;
 -- 
 2.43.0
 
