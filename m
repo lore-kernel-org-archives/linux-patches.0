@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD2B143878;
-	Thu, 13 Jun 2024 11:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369AD1448C7;
+	Thu, 13 Jun 2024 11:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278885; cv=none; b=Gy0Dbom0ZeiJ1W0YxAzwYYGQTEfKxk46CKXKTk5WXEvEwhFGx11TOqZ4PLsr6+p9IxNX9n/RwHaooXs4mUFaE5TrYnmq9zf5+Irk+AlQNTIIurGy5DZM1L+iXHagThJS4m1iFb+jk6IMgzYczI6NK8c4OFw38t4xXVK+7tRPgXI=
+	t=1718278888; cv=none; b=sG/GJzuBxsuBKpGknSzN6uOZ8YHJtSn/N43H2DTdMGAno0n8muDG0pahiO4MX/yHlub1mnDbjgq4lx+bVEhfDu2qcqmIC+qxfwf28qGNzCx0aAc1N4qO4RxMXiSAhZTSvTiG/6RnInUtrYaSba0q364Ai04yllDsuxxeY0rDkHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278885; c=relaxed/simple;
-	bh=Y5CHcKxbOvzrlvl4HNHQWpVL5Djn4PbP/Y6s92vwzzE=;
+	s=arc-20240116; t=1718278888; c=relaxed/simple;
+	bh=UyQeI0OqrTF9oKxfB2XN/7FtmWCyn/4HY3wPwSYkNyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H0MJIarJUw8NcZGgdclosaCx6anpbnj+wLTGpbs+YlX2x17i/DLB8e1t7lGOH2ftmhxt17p8Qur/VVsOLKibCU5oxPcMlezfG3nbgUD9kymNzScFk3g3iSlLskweo0UWFTWNYh205RQ3jST1SICysoiZGoKuUEWmurjjGkEt0nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGtXE8RD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZxeyDZpHFVxwCuR4HWgpeoVIw8zh6YJWXD2O/V+K+7vDYPJ7XSjXnw7FIPl7CtNJ9tdyYNJpI/Yijb4d6ezTaH8dR+trzzrTmeeHS3t7Ui5fnn7nGN+nMnZXQN6EebxYgmGA7P9e9/ywVha9FXvpawotd4ac3e3GE6WsrtoJmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEmpdfpX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGtXE8RD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9688C2BBFC;
-	Thu, 13 Jun 2024 11:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEmpdfpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F9DC32786;
+	Thu, 13 Jun 2024 11:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278885;
-	bh=Y5CHcKxbOvzrlvl4HNHQWpVL5Djn4PbP/Y6s92vwzzE=;
+	s=korg; t=1718278888;
+	bh=UyQeI0OqrTF9oKxfB2XN/7FtmWCyn/4HY3wPwSYkNyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGtXE8RD4L5Np2x/SuqeC/Q4ZoXukEhsctu9OaJHNNBoqVDOxzFZE+Txa39Fw9ycY
-	 IVFDr4GeFQWfPu7kKAhFaGvWRLb3n0JsYg+Ii9QIv+3dVs/8Spl5U0Qjh6d1mnVN1e
-	 0eUqEfyOTU6O7AmwnOslfeEgvgrzd94/nA5aI9UY=
+	b=VEmpdfpXtqI3gaJkaNbMgEPqvBCfWfoqk5JPUMT8WA8WM7ocatPFxbVmlMut5eKEr
+	 +SQjQ8kPxI4uf+dPsAhMia+h4ep+cD6Eom8MLLjsLTDw1PKAowBhtlkoUcK/kMywWv
+	 WhGeFaYnK+1ylVgs4VHJOs98cmIxmUkm5a/ZO+F0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huai-Yuan Liu <qq810974084@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 102/213] ppdev: Add an error check in register_device
-Date: Thu, 13 Jun 2024 13:32:30 +0200
-Message-ID: <20240613113231.940681999@linuxfoundation.org>
+Subject: [PATCH 4.19 103/213] extcon: max8997: select IRQ_DOMAIN instead of depending on it
+Date: Thu, 13 Jun 2024 13:32:31 +0200
+Message-ID: <20240613113231.979319997@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -50,70 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huai-Yuan Liu <qq810974084@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit fbf740aeb86a4fe82ad158d26d711f2f3be79b3e ]
+[ Upstream commit b1781d0a1458070d40134e4f3412ec9d70099bec ]
 
-In register_device, the return value of ida_simple_get is unchecked,
-in witch ida_simple_get will use an invalid index value.
+IRQ_DOMAIN is a hidden (not user visible) symbol. Users cannot set
+it directly thru "make *config", so drivers should select it instead
+of depending on it if they need it.
+Relying on it being set for a dependency is risky.
 
-To address this issue, index should be checked after ida_simple_get. When
-the index value is abnormal, a warning message should be printed, the port
-should be dropped, and the value should be recorded.
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
-Fixes: 9a69645dde11 ("ppdev: fix registering same device name")
-Signed-off-by: Huai-Yuan Liu <qq810974084@gmail.com>
-Link: https://lore.kernel.org/r/20240412083840.234085-1-qq810974084@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Therefore, change EXTCON_MAX8997's use of "depends on" for
+IRQ_DOMAIN to "select".
+
+Link: https://lore.kernel.org/lkml/20240213060028.9744-1-rdunlap@infradead.org/
+Fixes: dca1a71e4108 ("extcon: Add support irq domain for MAX8997 muic")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ppdev.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/extcon/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/ppdev.c b/drivers/char/ppdev.c
-index af74b05d470c3..6422a184a58aa 100644
---- a/drivers/char/ppdev.c
-+++ b/drivers/char/ppdev.c
-@@ -300,28 +300,35 @@ static int register_device(int minor, struct pp_struct *pp)
- 	if (!port) {
- 		pr_warn("%s: no associated port!\n", name);
- 		rc = -ENXIO;
--		goto err;
-+		goto err_free_name;
- 	}
+diff --git a/drivers/extcon/Kconfig b/drivers/extcon/Kconfig
+index de15bf55895bd..19a1e32c3a7e9 100644
+--- a/drivers/extcon/Kconfig
++++ b/drivers/extcon/Kconfig
+@@ -101,7 +101,8 @@ config EXTCON_MAX77843
  
- 	index = ida_alloc(&ida_index, GFP_KERNEL);
-+	if (index < 0) {
-+		pr_warn("%s: failed to get index!\n", name);
-+		rc = index;
-+		goto err_put_port;
-+	}
-+
- 	memset(&ppdev_cb, 0, sizeof(ppdev_cb));
- 	ppdev_cb.irq_func = pp_irq;
- 	ppdev_cb.flags = (pp->flags & PP_EXCL) ? PARPORT_FLAG_EXCL : 0;
- 	ppdev_cb.private = pp;
- 	pdev = parport_register_dev_model(port, name, &ppdev_cb, index);
--	parport_put_port(port);
- 
- 	if (!pdev) {
- 		pr_warn("%s: failed to register device!\n", name);
- 		rc = -ENXIO;
- 		ida_free(&ida_index, index);
--		goto err;
-+		goto err_put_port;
- 	}
- 
- 	pp->pdev = pdev;
- 	pp->index = index;
- 	dev_dbg(&pdev->dev, "registered pardevice\n");
--err:
-+err_put_port:
-+	parport_put_port(port);
-+err_free_name:
- 	kfree(name);
- 	return rc;
- }
+ config EXTCON_MAX8997
+ 	tristate "Maxim MAX8997 EXTCON Support"
+-	depends on MFD_MAX8997 && IRQ_DOMAIN
++	depends on MFD_MAX8997
++	select IRQ_DOMAIN
+ 	help
+ 	  If you say yes here you get support for the MUIC device of
+ 	  Maxim MAX8997 PMIC. The MAX8997 MUIC is a USB port accessory
 -- 
 2.43.0
 
