@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18532161;
-	Thu, 13 Jun 2024 12:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33C21F937;
+	Thu, 13 Jun 2024 12:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282331; cv=none; b=SG0S/6mk5MpFRvgkmTxi96spRgrUDVJQyzaStHitan0K4Es3y4oN6OvNLE+fPq02Ba+f9v9hvxNa8kHuAb8czEyNImZl5lwgJQ0jl0sNvCtfn0cDaYl4hy/g/uLgjVV/pB2kv9dcRWSEaGNhvjpwnQK5TgC8WXe8R9C5VQWJdRI=
+	t=1718282333; cv=none; b=imLFAOZNTsmGPocrQlJaGpXrbk3YOh7Sh7y+thBsugyvawdOmHOsIZo7KOVshpboPqaVO7WCSNRd6byLDI3vFzOyquQ1jT3XTsRf6YBuIWPKdU67FTVJshM5IGJ9MJk6m+q9Q1DcMyL+O/qDgx1sjawSq6PlA6XygC/pCMKQ31Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282331; c=relaxed/simple;
-	bh=wT01WIPyJIwBsz4THtRKuk9NL4XnR6/RSb48D/sHQNk=;
+	s=arc-20240116; t=1718282333; c=relaxed/simple;
+	bh=nv/3M6LjsHNltjV/Xa7mc7eKcYMWIv7RJFj8hWE4xAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OY9t4HLymoikmKw/tgZf+iqk0gxdeCqnxIhnw2MJnQqFmMMPzsKYfEDKu+sAjCy3eAZCm2Z4AiZqzSzFikcOWyYFvlUbukd+pKrqqaEOTYI24yctV91syQOgJmoOD4Thhf9wZkHmL4Z+Ea5P6ddngh1lpsEL6AfGhAeSuIfaUps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=koyByUoU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ari1BaP6pZCyKL5H2OrjvM7XYXt6/m2kCJPFTf52juTxvLTaVfXse0KbxjZWJiOYb7/S9NSmr0mQHFfubmsIASHvR9fxzXQgn31SQFFKXleGKE1u828Wir40FQUouj+qQqsOUU7Ugsp/3aM41/ruCrbsNu0lE+RwdBpeeR4UOp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtSuIzfO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="koyByUoU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D53C2BBFC;
-	Thu, 13 Jun 2024 12:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtSuIzfO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26807C32786;
+	Thu, 13 Jun 2024 12:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282330;
-	bh=wT01WIPyJIwBsz4THtRKuk9NL4XnR6/RSb48D/sHQNk=;
+	s=korg; t=1718282333;
+	bh=nv/3M6LjsHNltjV/Xa7mc7eKcYMWIv7RJFj8hWE4xAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=koyByUoURfW0GlNp8CZvl5e1yM4J/d5Cxkw8maGILa8SG/4Bzyc9GTpuDnq/5Vjig
-	 m06cgGU6x+cOb2rRGtpYWvnWbCTSu0rvfSkOg53U5Q8+WGVcoHQmJYZeBNGf1yhcoH
-	 4lplLYPOsd9D43UCAtBfDTtrzSYbf2pRU/mEHf5I=
+	b=qtSuIzfOnc6vrInq+28efZFKkZygIHjZBDsnEHruej6DxBjREIPdp/pgQIZRgQ6BM
+	 HVgx7C5HqmZQNMBwHWkwr9cvVYrEIPyWsQMrsY92mYZGlKWeOa/WT59uG+TO1iutVK
+	 AyiT6iBcyRugy8HRX4zOZYI4r+4ens0NBngCU+8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Jens Remus <jremus@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 240/402] s390/vdso64: filter out munaligned-symbols flag for vdso
-Date: Thu, 13 Jun 2024 13:33:17 +0200
-Message-ID: <20240613113311.508164231@linuxfoundation.org>
+Subject: [PATCH 5.15 241/402] s390/vdso: Generate unwind information for C modules
+Date: Thu, 13 Jun 2024 13:33:18 +0200
+Message-ID: <20240613113311.547466994@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,54 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumanth Korikkar <sumanthk@linux.ibm.com>
+From: Jens Remus <jremus@linux.ibm.com>
 
-[ Upstream commit 8192a1b3807510d0ed5be1f8988c08f8d41cced9 ]
+[ Upstream commit 10f70525365146046dddcc3d36bfaea2aee0376a ]
 
-Gcc recently implemented an optimization [1] for loading symbols without
-explicit alignment, aligning with the IBM Z ELF ABI. This ABI mandates
-symbols to reside on a 2-byte boundary, enabling the use of the larl
-instruction. However, kernel linker scripts may still generate unaligned
-symbols. To address this, a new -munaligned-symbols option has been
-introduced [2] in recent gcc versions.
+GDB fails to unwind vDSO functions with error message "PC not saved",
+for instance when stepping through gettimeofday().
 
-[1] https://gcc.gnu.org/pipermail/gcc-patches/2023-June/622872.html
-[2] https://gcc.gnu.org/pipermail/gcc-patches/2023-August/625986.html
+Add -fasynchronous-unwind-tables to CFLAGS to generate .eh_frame
+DWARF unwind information for the vDSO C modules.
 
-However, when -munaligned-symbols  is used in vdso code, it leads to the
-following compilation error:
-`.data.rel.ro.local' referenced in section `.text' of
-arch/s390/kernel/vdso64/vdso64_generic.o: defined in discarded section
-`.data.rel.ro.local' of arch/s390/kernel/vdso64/vdso64_generic.o
-
-vdso linker script discards .data section to make it lightweight.
-However, -munaligned-symbols in vdso object files references literal
-pool and accesses _vdso_data. Hence, compile vdso code without
--munaligned-symbols.  This means in the future, vdso code should deal
-with alignment of newly introduced unaligned linker symbols.
-
-Acked-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240219132734.22881-2-sumanthk@linux.ibm.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Stable-dep-of: 10f705253651 ("s390/vdso: Generate unwind information for C modules")
+Fixes: 4bff8cb54502 ("s390: convert to GENERIC_VDSO")
+Signed-off-by: Jens Remus <jremus@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vdso64/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/kernel/vdso32/Makefile | 3 ++-
+ arch/s390/kernel/vdso64/Makefile | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/arch/s390/kernel/vdso32/Makefile b/arch/s390/kernel/vdso32/Makefile
+index 1783e4d335136..66f7b0c8e6117 100644
+--- a/arch/s390/kernel/vdso32/Makefile
++++ b/arch/s390/kernel/vdso32/Makefile
+@@ -21,7 +21,8 @@ KBUILD_AFLAGS_32 += -m31 -s
+ 
+ KBUILD_CFLAGS_32 := $(filter-out -m64,$(KBUILD_CFLAGS))
+ KBUILD_CFLAGS_32 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_32))
+-KBUILD_CFLAGS_32 += -m31 -fPIC -shared -fno-common -fno-builtin
++KBUILD_CFLAGS_32 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_32))
++KBUILD_CFLAGS_32 += -m31 -fPIC -shared -fno-common -fno-builtin -fasynchronous-unwind-tables
+ 
+ LDFLAGS_vdso32.so.dbg += -shared -soname=linux-vdso32.so.1 \
+ 	--hash-style=both --build-id=sha1 -melf_s390 -T
 diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
-index 08e87b083647c..e2e031e4d9243 100644
+index e2e031e4d9243..e520c548d303e 100644
 --- a/arch/s390/kernel/vdso64/Makefile
 +++ b/arch/s390/kernel/vdso64/Makefile
-@@ -26,6 +26,7 @@ KBUILD_AFLAGS_64 += -m64 -s
- 
+@@ -27,7 +27,8 @@ KBUILD_AFLAGS_64 += -m64 -s
  KBUILD_CFLAGS_64 := $(filter-out -m64,$(KBUILD_CFLAGS))
  KBUILD_CFLAGS_64 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_64))
-+KBUILD_CFLAGS_64 := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_64))
- KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin
+ KBUILD_CFLAGS_64 := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_64))
+-KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin
++KBUILD_CFLAGS_64 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_64))
++KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin -fasynchronous-unwind-tables
  ldflags-y := -shared -soname=linux-vdso64.so.1 \
  	     --hash-style=both --build-id=sha1 -T
+ 
 -- 
 2.43.0
 
