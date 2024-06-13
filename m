@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDBC14386B;
-	Thu, 13 Jun 2024 11:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC01F145B19;
+	Thu, 13 Jun 2024 11:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279519; cv=none; b=jsi5sqMuTZDis0Eyj3VgoXo30y+Sftx4GgeGwSZkSXURkWqDDTUe+6tEYb3EseSMP0V0dsBSD6HLR5RsSDToJK0mC97utxLakPI4UksrofEb5WKcVQJZyqTVwyyBcwvTMOHOepubQgU7G7QFBzBeiMG1DpnL4ildqxB0aikOKC0=
+	t=1718279522; cv=none; b=TVMrKelzSVENaF6uMGb6PV8Qga9F8u2agP+YJ25yrzhSn2CNf2FZ0mcgXImTJsfL8QIaPaSMICAS3kEZaPwpsikCNuhEhIQZYh7qnIPl9i6KIzUuRa6+rXAmjVePcy/fA5R/Bk7gkyFuesDuWaiTK8SokvBPETlZYPCJkrRKCIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279519; c=relaxed/simple;
-	bh=oiMR6ofTuQqkobY/6f0QOb+V/hLLRmHahjy0enuUtC4=;
+	s=arc-20240116; t=1718279522; c=relaxed/simple;
+	bh=g0TyOnr/+GThwomu5KH1gVAavWrle+dDeNSAWLoXpkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7WG3Sy0TTeqHGiP72KzHewMiWHtjtF4KkISQAVjvQUZ+eMlDe6ID4mTLtyRrv0YjWLHYF5oTYYxMkhot3Pqfcjm9dXkPf+oga9y4pyFPFRMWU/8DzD+JQLeXPXHMWG20htkT6WqlNYQvW19ZmQ/gwSNcmfBjZrJB8D7+oEN/z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npbbzfxw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YmI+Ji/niJM+5ft79dyzLVWxnHkMX3o/bM23nIaEgKM/HwDXv7d3nviZEs4d8ejjbGGXNTSL7PTlEuYUYPxY/CJOeYHib6tkXrzPmeeikh5ln/QqGt3Q2lbdUEi+P4xc402wUuPpHNjQpDKB8hiQLs+535N/4vAF0oZrdkHIEq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBPjeB1+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npbbzfxw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77B9C2BBFC;
-	Thu, 13 Jun 2024 11:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBPjeB1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A37C2BBFC;
+	Thu, 13 Jun 2024 11:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279519;
-	bh=oiMR6ofTuQqkobY/6f0QOb+V/hLLRmHahjy0enuUtC4=;
+	s=korg; t=1718279522;
+	bh=g0TyOnr/+GThwomu5KH1gVAavWrle+dDeNSAWLoXpkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npbbzfxwjIDBEOsExXxZkGDz4Je/U/ydnAw8aizaGLFhJXKz5ejg6ntAr2IsEA716
-	 6uJYYJaIMb17Avg+BcCz1BytiX+4AOyoPEX/HumN3rzTnEqbQUKxY233KmWqrDafMp
-	 s8ZLhHXsOW4exiO9G1H9yJGbUTN+FRdgP36hltpY=
+	b=UBPjeB1+2+j40eyukBSg6nDial5gdlLGNTCuOArvDVhK5hFa37+P1p4Gkx+kttYQf
+	 eYECdoFP+r8QlEt9DGxCOYBq+TSylrli+YGaIpC5Nrv8kGwkG1dZv2a6NGXELyA2Ot
+	 7usFdFocIUJ9B2Op7HOPf/npxPXB/uHWYCtHxuLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>
-Subject: [PATCH 6.9 104/157] watchdog: rti_wdt: Set min_hw_heartbeat_ms to accommodate a safety margin
-Date: Thu, 13 Jun 2024 13:33:49 +0200
-Message-ID: <20240613113231.443151952@linuxfoundation.org>
+	Tony Battersby <tonyb@cybernetics.com>,
+	Simon Horman <horms@kernel.org>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.9 105/157] bonding: fix oops during rmmod
+Date: Thu, 13 Jun 2024 13:33:50 +0200
+Message-ID: <20240613113231.482066497@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -51,107 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Tony Battersby <tonyb@cybernetics.com>
 
-commit cae58516534e110f4a8558d48aa4435e15519121 upstream.
+commit a45835a0bb6ef7d5ddbc0714dd760de979cb6ece upstream.
 
-On AM62x, the watchdog is pet before the valid window is open. Fix
-min_hw_heartbeat and accommodate a 2% + static offset safety margin.
-The static offset accounts for max hardware error.
+"rmmod bonding" causes an oops ever since commit cc317ea3d927 ("bonding:
+remove redundant NULL check in debugfs function").  Here are the relevant
+functions being called:
 
-Remove the hack in the driver which shifts the open window boundary,
-since it is no longer necessary due to the fix mentioned above.
+bonding_exit()
+  bond_destroy_debugfs()
+    debugfs_remove_recursive(bonding_debug_root);
+    bonding_debug_root = NULL; <--------- SET TO NULL HERE
+  bond_netlink_fini()
+    rtnl_link_unregister()
+      __rtnl_link_unregister()
+        unregister_netdevice_many_notify()
+          bond_uninit()
+            bond_debug_unregister()
+              (commit removed check for bonding_debug_root == NULL)
+              debugfs_remove()
+              simple_recursive_removal()
+                down_write() -> OOPS
 
-cc: stable@vger.kernel.org
-Fixes: 5527483f8f7c ("watchdog: rti-wdt: attach to running watchdog during probe")
-Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240417205700.3947408-1-jm@ti.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+However, reverting the bad commit does not solve the problem completely
+because the original code contains a race that could cause the same
+oops, although it was much less likely to be triggered unintentionally:
+
+CPU1
+  rmmod bonding
+    bonding_exit()
+      bond_destroy_debugfs()
+        debugfs_remove_recursive(bonding_debug_root);
+
+CPU2
+  echo -bond0 > /sys/class/net/bonding_masters
+    bond_uninit()
+      bond_debug_unregister()
+        if (!bonding_debug_root)
+
+CPU1
+        bonding_debug_root = NULL;
+
+So do NOT revert the bad commit (since the removed checks were racy
+anyway), and instead change the order of actions taken during module
+removal.  The same oops can also happen if there is an error during
+module init, so apply the same fix there.
+
+Fixes: cc317ea3d927 ("bonding: remove redundant NULL check in debugfs function")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Link: https://lore.kernel.org/r/641f914f-3216-4eeb-87dd-91b78aa97773@cybernetics.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/rti_wdt.c |   34 +++++++++++++++-------------------
- 1 file changed, 15 insertions(+), 19 deletions(-)
+ drivers/net/bonding/bond_main.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/watchdog/rti_wdt.c
-+++ b/drivers/watchdog/rti_wdt.c
-@@ -59,6 +59,8 @@
- #define PON_REASON_EOF_NUM	0xCCCCBBBB
- #define RESERVED_MEM_MIN_SIZE	12
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -6477,16 +6477,16 @@ static int __init bonding_init(void)
+ 	if (res)
+ 		goto out;
  
-+#define MAX_HW_ERROR		250
++	bond_create_debugfs();
 +
- static int heartbeat = DEFAULT_HEARTBEAT;
+ 	res = register_pernet_subsys(&bond_net_ops);
+ 	if (res)
+-		goto out;
++		goto err_net_ops;
  
- /*
-@@ -97,7 +99,7 @@ static int rti_wdt_start(struct watchdog
- 	 * to be 50% or less than that; we obviouly want to configure the open
- 	 * window as large as possible so we select the 50% option.
- 	 */
--	wdd->min_hw_heartbeat_ms = 500 * wdd->timeout;
-+	wdd->min_hw_heartbeat_ms = 520 * wdd->timeout + MAX_HW_ERROR;
+ 	res = bond_netlink_init();
+ 	if (res)
+ 		goto err_link;
  
- 	/* Generate NMI when wdt expires */
- 	writel_relaxed(RTIWWDRX_NMI, wdt->base + RTIWWDRXCTRL);
-@@ -131,31 +133,33 @@ static int rti_wdt_setup_hw_hb(struct wa
- 	 * be petted during the open window; not too early or not too late.
- 	 * The HW configuration options only allow for the open window size
- 	 * to be 50% or less than that.
-+	 * To avoid any glitches, we accommodate 2% + max hardware error
-+	 * safety margin.
- 	 */
- 	switch (wsize) {
- 	case RTIWWDSIZE_50P:
--		/* 50% open window => 50% min heartbeat */
--		wdd->min_hw_heartbeat_ms = 500 * heartbeat;
-+		/* 50% open window => 52% min heartbeat */
-+		wdd->min_hw_heartbeat_ms = 520 * heartbeat + MAX_HW_ERROR;
- 		break;
- 
- 	case RTIWWDSIZE_25P:
--		/* 25% open window => 75% min heartbeat */
--		wdd->min_hw_heartbeat_ms = 750 * heartbeat;
-+		/* 25% open window => 77% min heartbeat */
-+		wdd->min_hw_heartbeat_ms = 770 * heartbeat + MAX_HW_ERROR;
- 		break;
- 
- 	case RTIWWDSIZE_12P5:
--		/* 12.5% open window => 87.5% min heartbeat */
--		wdd->min_hw_heartbeat_ms = 875 * heartbeat;
-+		/* 12.5% open window => 89.5% min heartbeat */
-+		wdd->min_hw_heartbeat_ms = 895 * heartbeat + MAX_HW_ERROR;
- 		break;
- 
- 	case RTIWWDSIZE_6P25:
--		/* 6.5% open window => 93.5% min heartbeat */
--		wdd->min_hw_heartbeat_ms = 935 * heartbeat;
-+		/* 6.5% open window => 95.5% min heartbeat */
-+		wdd->min_hw_heartbeat_ms = 955 * heartbeat + MAX_HW_ERROR;
- 		break;
- 
- 	case RTIWWDSIZE_3P125:
--		/* 3.125% open window => 96.9% min heartbeat */
--		wdd->min_hw_heartbeat_ms = 969 * heartbeat;
-+		/* 3.125% open window => 98.9% min heartbeat */
-+		wdd->min_hw_heartbeat_ms = 989 * heartbeat + MAX_HW_ERROR;
- 		break;
- 
- 	default:
-@@ -233,14 +237,6 @@ static int rti_wdt_probe(struct platform
- 		return -EINVAL;
- 	}
- 
--	/*
--	 * If watchdog is running at 32k clock, it is not accurate.
--	 * Adjust frequency down in this case so that we don't pet
--	 * the watchdog too often.
--	 */
--	if (wdt->freq < 32768)
--		wdt->freq = wdt->freq * 9 / 10;
+-	bond_create_debugfs();
 -
- 	pm_runtime_enable(dev);
- 	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0) {
+ 	for (i = 0; i < max_bonds; i++) {
+ 		res = bond_create(&init_net, NULL);
+ 		if (res)
+@@ -6501,10 +6501,11 @@ static int __init bonding_init(void)
+ out:
+ 	return res;
+ err:
+-	bond_destroy_debugfs();
+ 	bond_netlink_fini();
+ err_link:
+ 	unregister_pernet_subsys(&bond_net_ops);
++err_net_ops:
++	bond_destroy_debugfs();
+ 	goto out;
+ 
+ }
+@@ -6513,11 +6514,11 @@ static void __exit bonding_exit(void)
+ {
+ 	unregister_netdevice_notifier(&bond_netdev_notifier);
+ 
+-	bond_destroy_debugfs();
+-
+ 	bond_netlink_fini();
+ 	unregister_pernet_subsys(&bond_net_ops);
+ 
++	bond_destroy_debugfs();
++
+ #ifdef CONFIG_NET_POLL_CONTROLLER
+ 	/* Make sure we don't have an imbalance on our netpoll blocking */
+ 	WARN_ON(atomic_read(&netpoll_block_tx));
 
 
