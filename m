@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78823145FE5;
-	Thu, 13 Jun 2024 12:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666D01448F2;
+	Thu, 13 Jun 2024 12:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280497; cv=none; b=puPAxB4FuZ4JnYnAE/ISjV7AHPbfHB+wV4gi6egNIcr8YAA4UACYXUoBrp+Wgxv3DiAu2wUfdxIohhA8h2rRMF6ek9E2tjb4LpdW/4cmvsH/Sd0p6uElq2KwvLP9NMYyV4ipRvNBilbZzeGUJkchv2zF7od85ofpSnsrapcNklI=
+	t=1718280500; cv=none; b=BH6BBzvX9QPk1ZAqRiiQehSxT18IKnp6n/vyH52TFYKvOpAtfK05nCia3LxGAqJjHMrrXKMxfvrSmm5nJY50Mbc+tIMtpDQP7dEjV7m5qzf0CCBOAVavAJO2t9n/apqnebYSQUGoxNprbF5knpKP6gmy8BzC/zYFSUK+hRWgGPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280497; c=relaxed/simple;
-	bh=jGCfjt5cQyXwgF5L08j74DzIcbGGe0McQb9E8hi8vmY=;
+	s=arc-20240116; t=1718280500; c=relaxed/simple;
+	bh=2EBqkgkJQNZ19KocOdWX47LjYHK+5CbpR8g6gwsAOk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhpwtlKAtYbzed7cX/D32Ex6EjwhpTAViDAU6lgUbfZfWaf816RT3n9M6YIYVPinjrSjucUXORGjg+Ouq/HZ3ctxTeWat5uwFsoYaBBGLBHLByIu74SCJ4BLTBdX9S2stDSD/6AtLt0VaCJ1LaTqHBbCp7yA2VyeuTY+CwxE0KA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Snl1qEQw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VZTITzxcSMjfK8q2N30Th2M7P92DmU/pHW6pnJn2aWJ+3FhwyVUihjm0oJIOwsso8Gw2kYO3EWp51qcG2BCn54YCDx+tWMBy34DHClEfVPld5Acb/LgNhUd9LBi+jeUrvtwK5HmvqxEuEJhq3Jj+CgK0DulXfXr9nPhBtiwnO3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wh++jGw6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Snl1qEQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01ECFC4AF1A;
-	Thu, 13 Jun 2024 12:08:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wh++jGw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2ECBC2BBFC;
+	Thu, 13 Jun 2024 12:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280497;
-	bh=jGCfjt5cQyXwgF5L08j74DzIcbGGe0McQb9E8hi8vmY=;
+	s=korg; t=1718280500;
+	bh=2EBqkgkJQNZ19KocOdWX47LjYHK+5CbpR8g6gwsAOk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Snl1qEQwVAzDXJv2WtS+ONQpjVKjr0tII95jNRVfPpjDJm99ANdZ4VIyg0ylw/4kl
-	 9SEHeDvB+nl0F4GMvl0b2xcOoqoilOW8FFnD8ary+d1WMjvY0ouaO0ReAxGmtE0QqL
-	 oWwX7w0VBKC6jPE4GKEw3pvHCesDJ7UjZh9F8nw4=
+	b=Wh++jGw6YN14ujPSQMelbsua1dJVxLA7cO6273XpYkl7HzZTSeMQmBRZ47Y+owueY
+	 SRQujgcJwGQptatfJJc9gtzhown54iP7uofXiRK/1kDyOCsq5SfuXXYbhT7QrKKtzI
+	 VksAYFK2RIfK+idXyCtFHTc9dX30R1oT1xwjw0qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 6.6 042/137] media: mxl5xx: Move xpt structures off stack
-Date: Thu, 13 Jun 2024 13:33:42 +0200
-Message-ID: <20240613113224.922986778@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.6 043/137] media: v4l2-core: hold videodev_lock until dev reg, finishes
+Date: Thu, 13 Jun 2024 13:33:43 +0200
+Message-ID: <20240613113224.960321193@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -51,115 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit 526f4527545b2d4ce0733733929fac7b6da09ac6 upstream.
+commit 1ed4477f2ea4743e7c5e1f9f3722152d14e6eeb1 upstream.
 
-When building for LoongArch with clang 18.0.0, the stack usage of
-probe() is larger than the allowed 2048 bytes:
+After the new V4L2 device node was registered, some additional
+initialization was done before the device node was marked as
+'registered'. During the time between creating the device node
+and marking it as 'registered' it was possible to open the
+device node, which would return -ENODEV since the 'registered'
+flag was not yet set.
 
-  drivers/media/dvb-frontends/mxl5xx.c:1698:12: warning: stack frame size (2368) exceeds limit (2048) in 'probe' [-Wframe-larger-than]
-   1698 | static int probe(struct mxl *state, struct mxl5xx_cfg *cfg)
-        |            ^
-  1 warning generated.
+Hold the videodev_lock mutex from just before the device node
+is registered until the 'registered' flag is set. Since v4l2_open
+will take the same lock, it will wait until this registration
+process is finished. This resolves this race condition.
 
-This is the result of the linked LLVM commit, which changes how the
-arrays of structures in config_ts() get handled with
-CONFIG_INIT_STACK_ZERO and CONFIG_INIT_STACK_PATTERN, which causes the
-above warning in combination with inlining, as config_ts() gets inlined
-into probe().
-
-This warning can be easily fixed by moving the array of structures off
-of the stackvia 'static const', which is a better location for these
-variables anyways because they are static data that is only ever read
-from, never modified, so allocating the stack space is wasteful.
-
-This drops the stack usage from 2368 bytes to 256 bytes with the same
-compiler and configuration.
-
-Link: https://lore.kernel.org/linux-media/20240111-dvb-mxl5xx-move-structs-off-stack-v1-1-ca4230e67c11@kernel.org
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1977
-Link: https://github.com/llvm/llvm-project/commit/afe8b93ffdfef5d8879e1894b9d7dda40dee2b8d
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Miguel Ojeda <ojeda@kernel.org>
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: <stable@vger.kernel.org>      # for vi4.18 and up
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/mxl5xx.c |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/media/v4l2-core/v4l2-dev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/dvb-frontends/mxl5xx.c
-+++ b/drivers/media/dvb-frontends/mxl5xx.c
-@@ -1381,57 +1381,57 @@ static int config_ts(struct mxl *state,
- 	u32 nco_count_min = 0;
- 	u32 clk_type = 0;
+--- a/drivers/media/v4l2-core/v4l2-dev.c
++++ b/drivers/media/v4l2-core/v4l2-dev.c
+@@ -1034,8 +1034,10 @@ int __video_register_device(struct video
+ 	vdev->dev.devt = MKDEV(VIDEO_MAJOR, vdev->minor);
+ 	vdev->dev.parent = vdev->dev_parent;
+ 	dev_set_name(&vdev->dev, "%s%d", name_base, vdev->num);
++	mutex_lock(&videodev_lock);
+ 	ret = device_register(&vdev->dev);
+ 	if (ret < 0) {
++		mutex_unlock(&videodev_lock);
+ 		pr_err("%s: device_register failed\n", __func__);
+ 		goto cleanup;
+ 	}
+@@ -1055,6 +1057,7 @@ int __video_register_device(struct video
  
--	struct MXL_REG_FIELD_T xpt_sync_polarity[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_sync_polarity[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x90700010, 8, 1}, {0x90700010, 9, 1},
- 		{0x90700010, 10, 1}, {0x90700010, 11, 1},
- 		{0x90700010, 12, 1}, {0x90700010, 13, 1},
- 		{0x90700010, 14, 1}, {0x90700010, 15, 1} };
--	struct MXL_REG_FIELD_T xpt_clock_polarity[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_clock_polarity[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x90700010, 16, 1}, {0x90700010, 17, 1},
- 		{0x90700010, 18, 1}, {0x90700010, 19, 1},
- 		{0x90700010, 20, 1}, {0x90700010, 21, 1},
- 		{0x90700010, 22, 1}, {0x90700010, 23, 1} };
--	struct MXL_REG_FIELD_T xpt_valid_polarity[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_valid_polarity[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x90700014, 0, 1}, {0x90700014, 1, 1},
- 		{0x90700014, 2, 1}, {0x90700014, 3, 1},
- 		{0x90700014, 4, 1}, {0x90700014, 5, 1},
- 		{0x90700014, 6, 1}, {0x90700014, 7, 1} };
--	struct MXL_REG_FIELD_T xpt_ts_clock_phase[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_ts_clock_phase[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x90700018, 0, 3}, {0x90700018, 4, 3},
- 		{0x90700018, 8, 3}, {0x90700018, 12, 3},
- 		{0x90700018, 16, 3}, {0x90700018, 20, 3},
- 		{0x90700018, 24, 3}, {0x90700018, 28, 3} };
--	struct MXL_REG_FIELD_T xpt_lsb_first[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_lsb_first[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x9070000C, 16, 1}, {0x9070000C, 17, 1},
- 		{0x9070000C, 18, 1}, {0x9070000C, 19, 1},
- 		{0x9070000C, 20, 1}, {0x9070000C, 21, 1},
- 		{0x9070000C, 22, 1}, {0x9070000C, 23, 1} };
--	struct MXL_REG_FIELD_T xpt_sync_byte[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_sync_byte[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x90700010, 0, 1}, {0x90700010, 1, 1},
- 		{0x90700010, 2, 1}, {0x90700010, 3, 1},
- 		{0x90700010, 4, 1}, {0x90700010, 5, 1},
- 		{0x90700010, 6, 1}, {0x90700010, 7, 1} };
--	struct MXL_REG_FIELD_T xpt_enable_output[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_enable_output[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x9070000C, 0, 1}, {0x9070000C, 1, 1},
- 		{0x9070000C, 2, 1}, {0x9070000C, 3, 1},
- 		{0x9070000C, 4, 1}, {0x9070000C, 5, 1},
- 		{0x9070000C, 6, 1}, {0x9070000C, 7, 1} };
--	struct MXL_REG_FIELD_T xpt_err_replace_sync[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_err_replace_sync[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x9070000C, 24, 1}, {0x9070000C, 25, 1},
- 		{0x9070000C, 26, 1}, {0x9070000C, 27, 1},
- 		{0x9070000C, 28, 1}, {0x9070000C, 29, 1},
- 		{0x9070000C, 30, 1}, {0x9070000C, 31, 1} };
--	struct MXL_REG_FIELD_T xpt_err_replace_valid[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_err_replace_valid[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x90700014, 8, 1}, {0x90700014, 9, 1},
- 		{0x90700014, 10, 1}, {0x90700014, 11, 1},
- 		{0x90700014, 12, 1}, {0x90700014, 13, 1},
- 		{0x90700014, 14, 1}, {0x90700014, 15, 1} };
--	struct MXL_REG_FIELD_T xpt_continuous_clock[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_continuous_clock[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x907001D4, 0, 1}, {0x907001D4, 1, 1},
- 		{0x907001D4, 2, 1}, {0x907001D4, 3, 1},
- 		{0x907001D4, 4, 1}, {0x907001D4, 5, 1},
- 		{0x907001D4, 6, 1}, {0x907001D4, 7, 1} };
--	struct MXL_REG_FIELD_T xpt_nco_clock_rate[MXL_HYDRA_DEMOD_MAX] = {
-+	static const struct MXL_REG_FIELD_T xpt_nco_clock_rate[MXL_HYDRA_DEMOD_MAX] = {
- 		{0x90700044, 16, 80}, {0x90700044, 16, 81},
- 		{0x90700044, 16, 82}, {0x90700044, 16, 83},
- 		{0x90700044, 16, 84}, {0x90700044, 16, 85},
+ 	/* Part 6: Activate this minor. The char device can now be used. */
+ 	set_bit(V4L2_FL_REGISTERED, &vdev->flags);
++	mutex_unlock(&videodev_lock);
+ 
+ 	return 0;
+ 
 
 
