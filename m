@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16631147C7F;
-	Thu, 13 Jun 2024 12:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC121487CB;
+	Thu, 13 Jun 2024 12:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281022; cv=none; b=fPkUacjarFpXxTZyMYLh0NdprCo5ux/2N2aJPiZAugPs/KLND3El6/TEeUK4l4pLEoWHNMW1VMIUbUDYtQA2bX6liZqpYcypNjrDrJg7uwV9mavXmobOTfb0aYV3KxZcfVD86CbGWH5UW6DrJjp9Bm3XFbAKa9YsLaMoq9uWZKQ=
+	t=1718281024; cv=none; b=ic7kL0uZo9VhWxpcW6fgRMIoVduPs9bxw0hsiW1YPQ+h3nZL+mGM8qdfHYbCxrk3SptJXiRODi581QZSXtZNJQ2ag8dPUGA5vmYubL3QR2e42XrWXjTB9/kvnntbGzbGI3jl5VhWO5KyfTYjiVZzt76Fzo6MPq10AMYtn6BZMNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281022; c=relaxed/simple;
-	bh=AND9kmotIyKYBED07mGZrzZh8aA5+ynEbeYlrtggL/E=;
+	s=arc-20240116; t=1718281024; c=relaxed/simple;
+	bh=qZ5KFg8/dL5w2zep4GFHhjtfka21iaCS0rwPdVuZHUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HhCsmQu57162hoFscV+wexJHc/D7LUKY8DiFIHmj06rJd3wmWhWAAoX57L58d1td+/+eq+UZt7si84FmGfhr5UKXkUDwyavjj/6/03jw5Yj2cm8OxMjyUHLEVb6ebDytdAAwcbmdD1HoK64yzUzZ4/0MUV8veqWgJj9ItFm07yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5RR8oib; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCfZOGxzB+GAqhvdlBx9aICL0jl9Jbt9rUC5MlqqJCQKVABk2Dsq2SYWSe1VRqw1u3QVgVypcEGCh1vMZNQEem3FOJJ+DYXoPbw4UWItEwjA+BKdT+0CO8DLEAKAH3wPQhyR04S83ECBKxDnS4xDmwPgBKGgb08/8yqwQAY2lOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4aaPA+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5RR8oib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309C7C4AF4D;
-	Thu, 13 Jun 2024 12:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4aaPA+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F67C4AF1A;
+	Thu, 13 Jun 2024 12:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281021;
-	bh=AND9kmotIyKYBED07mGZrzZh8aA5+ynEbeYlrtggL/E=;
+	s=korg; t=1718281024;
+	bh=qZ5KFg8/dL5w2zep4GFHhjtfka21iaCS0rwPdVuZHUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5RR8oiba+JRlzwe7YOeHkihhoO80ybqzDYmeilzsweKNaqxsiDzD3CNCmi/5amxh
-	 ENVfRNeibhJL5JjT+9PaZuZOFOYWj2I1xm9yV0/rfPmM3/4EBaiZ8z5F6cNoej+NJI
-	 CjUIk7rx17u7p+zR4/9YzOP9jRXLA18mGaGSu6tw=
+	b=j4aaPA+PU6hMVD53HKWWDG4ArGLN2nWKule6fFRGBGjeqanPcnVzpiOT4K7tiM9Q6
+	 Pj8K65Oi52kPW3u5Zd/TR/r73rzPA0kXjJci7S+uunl0y5gSqSwFCPixvh9FBGfZYD
+	 GKvoixzei3P49K2aXQp3o30qdoPtuBWayNQm+V7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Chengchang Tang <tangchengchang@huawei.com>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 114/317] RDMA/hns: Fix return value in hns_roce_map_mr_sg
-Date: Thu, 13 Jun 2024 13:32:12 +0200
-Message-ID: <20240613113251.962262333@linuxfoundation.org>
+Subject: [PATCH 5.10 115/317] RDMA/hns: Use complete parentheses in macros
+Date: Thu, 13 Jun 2024 13:32:13 +0200
+Message-ID: <20240613113252.000147845@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,73 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 203b70fda63425a4eb29f03f9074859afe821a39 ]
+[ Upstream commit 4125269bb9b22e1d8cdf4412c81be8074dbc61ca ]
 
-As described in the ib_map_mr_sg function comment, it returns the number
-of sg elements that were mapped to the memory region. However,
-hns_roce_map_mr_sg returns the number of pages required for mapping the
-DMA area. Fix it.
+Use complete parentheses to ensure that macro expansion does
+not produce unexpected results.
 
-Fixes: 9b2cf76c9f05 ("RDMA/hns: Optimize PBL buffer allocation process")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20240411033851.2884771-1-shaozhengchao@huawei.com
-Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Fixes: a25d13cbe816 ("RDMA/hns: Add the interfaces to support multi hop addressing for the contexts in hip08")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240412091616.370789-10-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_mr.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hem.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
-index 3d432a6918a78..c038ed7d94962 100644
---- a/drivers/infiniband/hw/hns/hns_roce_mr.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
-@@ -484,18 +484,18 @@ int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
- 	struct ib_device *ibdev = &hr_dev->ib_dev;
- 	struct hns_roce_mr *mr = to_hr_mr(ibmr);
- 	struct hns_roce_mtr *mtr = &mr->pbl_mtr;
--	int ret = 0;
-+	int ret, sg_num = 0;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.h b/drivers/infiniband/hw/hns/hns_roce_hem.h
+index b7617786b1005..5b2162a2b8cef 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.h
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.h
+@@ -60,16 +60,16 @@ enum {
+ 	 (sizeof(struct scatterlist) + sizeof(void *)))
  
- 	mr->npages = 0;
- 	mr->page_list = kvcalloc(mr->pbl_mtr.hem_cfg.buf_pg_count,
- 				 sizeof(dma_addr_t), GFP_KERNEL);
- 	if (!mr->page_list)
--		return ret;
-+		return sg_num;
+ #define check_whether_bt_num_3(type, hop_num) \
+-	(type < HEM_TYPE_MTT && hop_num == 2)
++	((type) < HEM_TYPE_MTT && (hop_num) == 2)
  
--	ret = ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset, hns_roce_set_page);
--	if (ret < 1) {
-+	sg_num = ib_sg_to_pages(ibmr, sg, sg_nents, sg_offset, hns_roce_set_page);
-+	if (sg_num < 1) {
- 		ibdev_err(ibdev, "failed to store sg pages %u %u, cnt = %d.\n",
--			  mr->npages, mr->pbl_mtr.hem_cfg.buf_pg_count, ret);
-+			  mr->npages, mr->pbl_mtr.hem_cfg.buf_pg_count, sg_num);
- 		goto err_page_list;
- 	}
+ #define check_whether_bt_num_2(type, hop_num) \
+-	((type < HEM_TYPE_MTT && hop_num == 1) || \
+-	(type >= HEM_TYPE_MTT && hop_num == 2))
++	(((type) < HEM_TYPE_MTT && (hop_num) == 1) || \
++	((type) >= HEM_TYPE_MTT && (hop_num) == 2))
  
-@@ -506,17 +506,16 @@ int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
- 	ret = hns_roce_mtr_map(hr_dev, mtr, mr->page_list, mr->npages);
- 	if (ret) {
- 		ibdev_err(ibdev, "failed to map sg mtr, ret = %d.\n", ret);
--		ret = 0;
-+		sg_num = 0;
- 	} else {
- 		mr->pbl_mtr.hem_cfg.buf_pg_shift = (u32)ilog2(ibmr->page_size);
--		ret = mr->npages;
- 	}
+ #define check_whether_bt_num_1(type, hop_num) \
+-	((type < HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0) || \
+-	(type >= HEM_TYPE_MTT && hop_num == 1) || \
+-	(type >= HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0))
++	(((type) < HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0) || \
++	((type) >= HEM_TYPE_MTT && (hop_num) == 1) || \
++	((type) >= HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0))
  
- err_page_list:
- 	kvfree(mr->page_list);
- 	mr->page_list = NULL;
- 
--	return ret;
-+	return sg_num;
- }
- 
- static void hns_roce_mw_free(struct hns_roce_dev *hr_dev,
+ struct hns_roce_hem_chunk {
+ 	struct list_head	 list;
 -- 
 2.43.0
 
