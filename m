@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF4381ABF;
-	Thu, 13 Jun 2024 12:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9684181ABF;
+	Thu, 13 Jun 2024 12:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281136; cv=none; b=QMLpPlo9iG0EAmiLN2Ik1OUPGG2JxHnH62drR7XMBAneOPkUKENMVq91+wJWdtw6rh/6jFcU+mrNxoNBsvNBovvQ6itdnbTCv9SP3jO1R1eMo4DQxU70BxoQ7lXm893taG0sSfJuLHbzQuI1WAxX/e8wNxtJEEI1HY6OxcsiFeA=
+	t=1718281139; cv=none; b=aWuXCo0T+rLmGt7LOVimGx7AfK+zO/Z/KEzY8VXDQfRd5mIxZEgMrFwtSnV00UEg08CSnUz74Lfjs11jhbucQmAHs51eaFjPm4kPse//itRgQjgly/uF+Hpm0f/D2tEnw81uE+6Ml+7mRC/GY1Ag9HWHRFDd9X+EGlYFq6I7Qc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281136; c=relaxed/simple;
-	bh=k6MPVErl4E93ZRaZf3JQIpaDVJsxMppbffGIiTfMKlA=;
+	s=arc-20240116; t=1718281139; c=relaxed/simple;
+	bh=QF1+vh0D1aZCmKpLUrGi9Am+VtwD/qWhooosGN89QKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUDyhD+Cy3AslFMR7bFwUYzqqQpW5asm62jZblaWZQz2jXzpqlsS4kWBOBVqdowTC5G/02pNLJue7iGZOkG+aJn3K9980GWIFvshZKfmgCQ4S4HZCiZn64bhMO3zjs0s4c8ohs+rzBJ5T2nxpJFmbIGa4abvTCpG2oDzzya/vh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeTdbrDN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZroXuUBEQptg1a65I4FyAs3dp0h/vayza7tm7NfFG+VCtJckfijbnFqmwye8Yucyk/O73h1RQx08t9WaMOtRWfcuT7MCytryhZHfgGU1WpNe8Q0XRBgHwLedYi3hNppv19auepfi+8bsGSFaIoGVhOVqZjdU1snvCQfcH4KpP+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEQTcRk0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeTdbrDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3463EC4AF1A;
-	Thu, 13 Jun 2024 12:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEQTcRk0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC06C2BBFC;
+	Thu, 13 Jun 2024 12:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281136;
-	bh=k6MPVErl4E93ZRaZf3JQIpaDVJsxMppbffGIiTfMKlA=;
+	s=korg; t=1718281139;
+	bh=QF1+vh0D1aZCmKpLUrGi9Am+VtwD/qWhooosGN89QKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EeTdbrDNfACYk2LP/ofnz3UKnNPEbDPT+JBeeZ51IH1yPZhT+Wg7M+Gir2ivP8xpx
-	 YQ5GIuUpV6KMJ1b8qD55wmhHY+ylvOX7j1qWnRaSdn+mB9YPlUnRVpEiWAioFfETTn
-	 YmCwRBKAwi9b6o1/3pMfYWXj9K3fFzUw9WWxC21w=
+	b=wEQTcRk0+H5lt/wYWPAKXQlTbXaXfWk8p2/F/IrqI3PMwCuQ2da0lNDGfO9tDE4wA
+	 NFBiV25YfBS15srVYfyxoXyL+JZ6GNYc1k4MhotsPMEG6H/yaWeUek8jvVidodYaFe
+	 c+2yoznQSXUCDFxo2vAKi2vAnrtTZ/xgk5tDTbRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <yuchao0@huawei.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 152/317] f2fs: compress: clean up parameter of __f2fs_cluster_blocks()
-Date: Thu, 13 Jun 2024 13:32:50 +0200
-Message-ID: <20240613113253.445290198@linuxfoundation.org>
+Subject: [PATCH 5.10 153/317] f2fs: compress: remove unneeded preallocation
+Date: Thu, 13 Jun 2024 13:32:51 +0200
+Message-ID: <20240613113253.482912794@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -53,97 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <yuchao0@huawei.com>
 
-[ Upstream commit 91f0fb6903ed30370135381f10c02a10c7872cdc ]
+[ Upstream commit 8f1d49832636d514e949b29ce64370ebebf6d6d2 ]
 
-Previously, in order to reuse __f2fs_cluster_blocks(),
-f2fs_is_compressed_cluster() assigned a compress_ctx type variable,
-which is used to pass few parameters (cc.inode, cc.cluster_size,
-cc.cluster_idx), it's wasteful to allocate such large space in stack.
+We will reserve iblocks for compression saved, so during compressed
+cluster overwrite, we don't need to preallocate blocks for later
+write.
 
-Let's clean up parameters of __f2fs_cluster_blocks() to avoid that.
+In addition, it adds a bug_on to detect wrong reserved iblock number
+in __f2fs_cluster_blocks().
+
+Bug fix in the original patch by Jaegeuk:
+If we released compressed blocks having an immutable bit, we can see less
+number of compressed block addresses. Let's fix wrong BUG_ON.
 
 Signed-off-by: Chao Yu <yuchao0@huawei.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Stable-dep-of: 7c5dffb3d90c ("f2fs: compress: fix to relocate check condition in f2fs_{release,reserve}_compress_blocks()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 33 +++++++++++++--------------------
- 1 file changed, 13 insertions(+), 20 deletions(-)
+ fs/f2fs/compress.c | 27 +++------------------------
+ fs/f2fs/file.c     |  4 ----
+ 2 files changed, 3 insertions(+), 28 deletions(-)
 
 diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 6c870b741cfe5..04b6de1a58744 100644
+index 04b6de1a58744..388ed7052d9b6 100644
 --- a/fs/f2fs/compress.c
 +++ b/fs/f2fs/compress.c
-@@ -866,14 +866,17 @@ static bool __cluster_may_compress(struct compress_ctx *cc)
- 	return true;
- }
- 
--static int __f2fs_cluster_blocks(struct compress_ctx *cc, bool compr)
-+static int __f2fs_cluster_blocks(struct inode *inode,
-+				unsigned int cluster_idx, bool compr)
- {
- 	struct dnode_of_data dn;
-+	unsigned int cluster_size = F2FS_I(inode)->i_cluster_size;
-+	unsigned int start_idx = cluster_idx <<
-+				F2FS_I(inode)->i_log_cluster_size;
- 	int ret;
- 
--	set_new_dnode(&dn, cc->inode, NULL, NULL, 0);
--	ret = f2fs_get_dnode_of_data(&dn, start_idx_of_cluster(cc),
--							LOOKUP_NODE);
-+	set_new_dnode(&dn, inode, NULL, NULL, 0);
-+	ret = f2fs_get_dnode_of_data(&dn, start_idx, LOOKUP_NODE);
- 	if (ret) {
- 		if (ret == -ENOENT)
- 			ret = 0;
-@@ -884,7 +887,7 @@ static int __f2fs_cluster_blocks(struct compress_ctx *cc, bool compr)
- 		int i;
- 
- 		ret = 1;
--		for (i = 1; i < cc->cluster_size; i++) {
-+		for (i = 1; i < cluster_size; i++) {
- 			block_t blkaddr;
- 
- 			blkaddr = data_blkaddr(dn.inode,
-@@ -906,25 +909,15 @@ static int __f2fs_cluster_blocks(struct compress_ctx *cc, bool compr)
- /* return # of compressed blocks in compressed cluster */
- static int f2fs_compressed_blocks(struct compress_ctx *cc)
- {
--	return __f2fs_cluster_blocks(cc, true);
-+	return __f2fs_cluster_blocks(cc->inode, cc->cluster_idx, true);
- }
- 
- /* return # of valid blocks in compressed cluster */
--static int f2fs_cluster_blocks(struct compress_ctx *cc)
--{
--	return __f2fs_cluster_blocks(cc, false);
--}
--
- int f2fs_is_compressed_cluster(struct inode *inode, pgoff_t index)
- {
--	struct compress_ctx cc = {
--		.inode = inode,
--		.log_cluster_size = F2FS_I(inode)->i_log_cluster_size,
--		.cluster_size = F2FS_I(inode)->i_cluster_size,
--		.cluster_idx = index >> F2FS_I(inode)->i_log_cluster_size,
--	};
--
--	return f2fs_cluster_blocks(&cc);
-+	return __f2fs_cluster_blocks(inode,
-+		index >> F2FS_I(inode)->i_log_cluster_size,
-+		false);
- }
- 
- static bool cluster_may_compress(struct compress_ctx *cc)
-@@ -975,7 +968,7 @@ static int prepare_compress_overwrite(struct compress_ctx *cc,
- 	bool prealloc;
+@@ -900,6 +900,9 @@ static int __f2fs_cluster_blocks(struct inode *inode,
+ 					ret++;
+ 			}
+ 		}
++
++		f2fs_bug_on(F2FS_I_SB(inode),
++			!compr && ret != cluster_size && !IS_IMMUTABLE(inode));
+ 	}
+ fail:
+ 	f2fs_put_dnode(&dn);
+@@ -960,21 +963,16 @@ static int prepare_compress_overwrite(struct compress_ctx *cc,
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(cc->inode);
+ 	struct address_space *mapping = cc->inode->i_mapping;
+ 	struct page *page;
+-	struct dnode_of_data dn;
+ 	sector_t last_block_in_bio;
+ 	unsigned fgp_flag = FGP_LOCK | FGP_WRITE | FGP_CREAT;
+ 	pgoff_t start_idx = start_idx_of_cluster(cc);
+ 	int i, ret;
+-	bool prealloc;
  
  retry:
--	ret = f2fs_cluster_blocks(cc);
-+	ret = f2fs_is_compressed_cluster(cc->inode, start_idx);
+ 	ret = f2fs_is_compressed_cluster(cc->inode, start_idx);
  	if (ret <= 0)
  		return ret;
  
+-	/* compressed case */
+-	prealloc = (ret < cc->cluster_size);
+-
+ 	ret = f2fs_init_compress_ctx(cc);
+ 	if (ret)
+ 		return ret;
+@@ -1032,25 +1030,6 @@ static int prepare_compress_overwrite(struct compress_ctx *cc,
+ 		}
+ 	}
+ 
+-	if (prealloc) {
+-		f2fs_do_map_lock(sbi, F2FS_GET_BLOCK_PRE_AIO, true);
+-
+-		set_new_dnode(&dn, cc->inode, NULL, NULL, 0);
+-
+-		for (i = cc->cluster_size - 1; i > 0; i--) {
+-			ret = f2fs_get_block(&dn, start_idx + i);
+-			if (ret) {
+-				i = cc->cluster_size;
+-				break;
+-			}
+-
+-			if (dn.data_blkaddr != NEW_ADDR)
+-				break;
+-		}
+-
+-		f2fs_do_map_lock(sbi, F2FS_GET_BLOCK_PRE_AIO, false);
+-	}
+-
+ 	if (likely(!ret)) {
+ 		*fsdata = cc->rpages;
+ 		*pagep = cc->rpages[offset_in_cluster(cc, index)];
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 678d72a870259..8b136f2dc2d22 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -81,10 +81,6 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ 			err = ret;
+ 			goto err;
+ 		} else if (ret) {
+-			if (ret < F2FS_I(inode)->i_cluster_size) {
+-				err = -EAGAIN;
+-				goto err;
+-			}
+ 			need_alloc = false;
+ 		}
+ 	}
 -- 
 2.43.0
 
