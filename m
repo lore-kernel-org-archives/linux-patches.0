@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43DC384;
-	Thu, 13 Jun 2024 12:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA24B143C60;
+	Thu, 13 Jun 2024 12:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282961; cv=none; b=cBCkEBKT2g3kbea0juF7R5hHc1sVGNHX9WHNAXm9ehsEd+0oIuFfr574DH4VF+AzUhrK0scjekDxEkPGY8RF5E+PUSnCaM54kvB0VOzkjP2wV2G6bExlLuCf5ENfOICtALgOfMMTm9mFDghB/0j9R+asY1QvyBudQioBd6c2D8c=
+	t=1718282963; cv=none; b=Px6w422NiY1C9H9KCUh122C6w5W/XlJi3PmurNc4dakoX+FgL8HKjjJTRotLIZsOXoG2P/zBc7OkpNvGKSq3kHFLfVJ15GrBdc6sPgdWIilCflgzn7TmXvrr+jlKGcmg1g+0ybhD0UojJaLNc8aNYN00gxlAyo14NewmVAJlAGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282961; c=relaxed/simple;
-	bh=qcn5L4eACC+RJU8R4Md8TgmHNR77qSY64Q9M5w+kMn4=;
+	s=arc-20240116; t=1718282963; c=relaxed/simple;
+	bh=1aV0MCHgjgdCQcS/WwBUhSglVC6CQ89nctau+aPkDXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lG8g85do8ouTC+cBfddpA617U/8EyiH2w5h26nr2ns/hEd0RsMuMb4Ey8ZSZb9CGhwTuCa+ndJdTmWH3FYlEKQtmL9A0OunnjRNvkk2qE8q0tdpT9VT/5s4GRQyMuZfqXkkwWPORmqBwdF4Zwgm9XObF6Devf4n7c8bqbunYJZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IbNrQdRu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K2jJD2wCl38RxtvYbVQbrBj3nwqAoMDsbpaQpUNX42uJXMEpXxfe4i2vDBRNPb/GHm3XnbM0mtxEkpAlKyZwYxqyajdvaDoKt1uHIQ0KgiA5VG59QoFm7qy6XgBEw9/L6fToRYHrJpBFzodYIRRsUwdzX5i7uoqoL6sPZSy1r2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEX5W6pe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IbNrQdRu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68909C2BBFC;
-	Thu, 13 Jun 2024 12:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEX5W6pe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5234BC2BBFC;
+	Thu, 13 Jun 2024 12:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282960;
-	bh=qcn5L4eACC+RJU8R4Md8TgmHNR77qSY64Q9M5w+kMn4=;
+	s=korg; t=1718282963;
+	bh=1aV0MCHgjgdCQcS/WwBUhSglVC6CQ89nctau+aPkDXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IbNrQdRu2vBeUa5cLOdeAnR22RQkIIVYuFYHWGlRhLn4IexKsqDrh0Nni1tb3ftZm
-	 VtFSxcA6QO97lhQRMjN9NQtTv7MM4wa9I071L5kKzaJu427Bbp3FdctBxe/O7mxJRP
-	 GmAYr9TkcW+sDRvp+bKvyRARQaBcHzB1tURSpEhQ=
+	b=rEX5W6peNGVsdMpFWc9GR3PsZwmsYw/ESTqtrYICmEZLkjra9C6wZ5TSLUfKUCv7A
+	 DNY7TRF3Zx16lwatIrcHb+ChNMSF/9TDJO+elvWJ5vmHIBBMdVUDryzEz1foB6xAit
+	 noCLP5quOFr+2LJhR1rr6aj4puaqdqIhuluvcRA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 50/85] KVM: arm64: AArch32: Fix spurious trapping of conditional instructions
-Date: Thu, 13 Jun 2024 13:35:48 +0200
-Message-ID: <20240613113216.069747361@linuxfoundation.org>
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Vitaly Chikunov <vt@altlinux.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 51/85] crypto: ecdsa - Fix module auto-load on add-key
+Date: Thu, 13 Jun 2024 13:35:49 +0200
+Message-ID: <20240613113216.108958534@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -50,65 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-commit c92e8b9eacebb4060634ebd9395bba1b29aadc68 upstream.
+commit 48e4fd6d54f54d0ceab5a952d73e47a9454a6ccb upstream.
 
-We recently upgraded the view of ESR_EL2 to 64bit, in keeping with
-the requirements of the architecture.
+Add module alias with the algorithm cra_name similar to what we have for
+RSA-related and other algorithms.
 
-However, the AArch32 emulation code was left unaudited, and the
-(already dodgy) code that triages whether a trap is spurious or not
-(because the condition code failed) broke in a subtle way:
+The kernel attempts to modprobe asymmetric algorithms using the names
+"crypto-$cra_name" and "crypto-$cra_name-all." However, since these
+aliases are currently missing, the modules are not loaded. For instance,
+when using the `add_key` function, the hash algorithm is typically
+loaded automatically, but the asymmetric algorithm is not.
 
-If ESR_EL2.ISS2 is ever non-zero (unlikely, but hey, this is the ARM
-architecture we're talking about), the hack that tests the top bits
-of ESR_EL2.EC will break in an interesting way.
+Steps to test:
 
-Instead, use kvm_vcpu_trap_get_class() to obtain the EC, and list
-all the possible ECs that can fail a condition code check.
+1. Create certificate
 
-While we're at it, add SMC32 to the list, as it is explicitly listed
-as being allowed to trap despite failing a condition code check (as
-described in the HCR_EL2.TSC documentation).
+  openssl req -x509 -sha256 -newkey ec \
+  -pkeyopt "ec_paramgen_curve:secp384r1" -keyout key.pem -days 365 \
+  -subj '/CN=test' -nodes -outform der -out nist-p384.der
 
-Fixes: 0b12620fddb8 ("KVM: arm64: Treat ESR_EL2 as a 64-bit register")
+2. Optionally, trace module requests with: trace-cmd stream -e module &
+
+3. Trigger add_key call for the cert:
+
+   # keyctl padd asymmetric "" @u < nist-p384.der
+   641069229
+   # lsmod | head -2
+   Module                  Size  Used by
+   ecdsa_generic          16384  0
+
+Fixes: c12d448ba939 ("crypto: ecdsa - Register NIST P384 and extend test suite")
 Cc: stable@vger.kernel.org
-Acked-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20240524141956.1450304-4-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Vitaly Chikunov <vt@altlinux.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/aarch32.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ crypto/ecdsa.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm64/kvm/hyp/aarch32.c
-+++ b/arch/arm64/kvm/hyp/aarch32.c
-@@ -50,9 +50,23 @@ bool kvm_condition_valid32(const struct
- 	u32 cpsr_cond;
- 	int cond;
- 
--	/* Top two bits non-zero?  Unconditional. */
--	if (kvm_vcpu_get_esr(vcpu) >> 30)
-+	/*
-+	 * These are the exception classes that could fire with a
-+	 * conditional instruction.
-+	 */
-+	switch (kvm_vcpu_trap_get_class(vcpu)) {
-+	case ESR_ELx_EC_CP15_32:
-+	case ESR_ELx_EC_CP15_64:
-+	case ESR_ELx_EC_CP14_MR:
-+	case ESR_ELx_EC_CP14_LS:
-+	case ESR_ELx_EC_FP_ASIMD:
-+	case ESR_ELx_EC_CP10_ID:
-+	case ESR_ELx_EC_CP14_64:
-+	case ESR_ELx_EC_SVC32:
-+		break;
-+	default:
- 		return true;
-+	}
- 
- 	/* Is condition field valid? */
- 	cond = kvm_vcpu_get_condition(vcpu);
+--- a/crypto/ecdsa.c
++++ b/crypto/ecdsa.c
+@@ -373,4 +373,7 @@ module_exit(ecdsa_exit);
+ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Stefan Berger <stefanb@linux.ibm.com>");
+ MODULE_DESCRIPTION("ECDSA generic algorithm");
++MODULE_ALIAS_CRYPTO("ecdsa-nist-p192");
++MODULE_ALIAS_CRYPTO("ecdsa-nist-p256");
++MODULE_ALIAS_CRYPTO("ecdsa-nist-p384");
+ MODULE_ALIAS_CRYPTO("ecdsa-generic");
 
 
