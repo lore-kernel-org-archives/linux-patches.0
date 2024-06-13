@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E351C32;
-	Thu, 13 Jun 2024 12:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810CB4A0F;
+	Thu, 13 Jun 2024 12:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283022; cv=none; b=j2zEcvB+7n3zPuCcYlHZhzAvLf59kBl7xlPOxNCLpDZfL75BjdrThhTPNJwM36x27Qbv9t0Q8NgeAHr6prdj7X52+Hc8GLtS0Aut2FWxGKHWm4kZOv7uH5nbgafzY81ilDRAofj2IHCTZp+cFyY90WHTWsa13oY2Xev3B3Jcsas=
+	t=1718283025; cv=none; b=sQpixAWra6yteqBGwkyhCVz7zk9l2adOUqUxpjUFjFxJ62NppSH33Rbr5DyRFde8GiYtNsyqVqJMu/4H5/nq3U47cqPN6m44hYPvLnhE5fzgJfLOFgHQO7HXe9kIYOd60LgcJ8GLIkrqFAMvXrle/uAn3vjLEAgv1pIEXZxizUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283022; c=relaxed/simple;
-	bh=BUx3nIs5pZVbcYoTc0OezZkhkPUZ7tA1UC87gE6kBOQ=;
+	s=arc-20240116; t=1718283025; c=relaxed/simple;
+	bh=ey63YgJo22EimOODqZg2lWw1NDiByNzPThaHIA+3j2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ugk6y9nIEeD/UKHm3kWaYPXFLqGm0OUbInYZOJr1ZSv014YxVY97fl/2yCqgJ5ceZhb2O0wMjn7s+VKVxPFiTCj6zXWxcvSGnX78ktx5yOgSxmoHcnqrFgTSPcKr6DCpBsEMrPDCcXS+Zz//S01AWovVuQEBZo55YZbczYToGls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTe8ACAl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BauXZ3pMm6apV4Gr5FIJWeum67HEE8MOsPCnt04pPjs0CHy+rlpwbP9S8DtH2HfFB5tjKKqYvkOaQYnlwQimtlj2c/nbpe/bqRSN6lntXHZr+phyNAaETJkT9TtW8bIRd8R1zjnGdihjivbTdA53+PBRAGPm++JLjWBw3CXk7qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkWqEW2F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTe8ACAl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F08DC32786;
-	Thu, 13 Jun 2024 12:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkWqEW2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E96C2BBFC;
+	Thu, 13 Jun 2024 12:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283022;
-	bh=BUx3nIs5pZVbcYoTc0OezZkhkPUZ7tA1UC87gE6kBOQ=;
+	s=korg; t=1718283025;
+	bh=ey63YgJo22EimOODqZg2lWw1NDiByNzPThaHIA+3j2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DTe8ACAlwddmOulscBNyKPGkABDMiyTCdh87IivlrOJfqBDHQw8bJ/50EUCToybhQ
-	 VUmdmsj0C+g77F9EuR+74vpIHpiVoA7kLlNk1ZyPevQd2QH5k++uTtYWq7Jfypuhtq
-	 HkAg3fKpWRzQnvq9+AZSwPGb+axFMPmqfHecrGy0=
+	b=LkWqEW2F9PJEZ2pSso/OBditNAXxHHCOVMOeztURaklmsgmCGKA0vQ8JPlBr5HRr9
+	 IOcqtGDIOl/Cst7hBWywtATtvs1OjfQFikD97YDCxhkdjbU+MqpTJY9xP4N9Wyu/WQ
+	 ajJl+ixwTyYiHBJcsm201BNNTm5i8UFaVJZyaYYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+dd43bd0f7474512edc47@syzkaller.appspotmail.com,
 	stable@kernel.org,
 	Baokun Li <libaokun1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 72/85] ext4: set type of ac_groups_linear_remaining to __u32 to avoid overflow
-Date: Thu, 13 Jun 2024 13:36:10 +0200
-Message-ID: <20240613113216.917047562@linuxfoundation.org>
+Subject: [PATCH 6.1 73/85] ext4: fix mb_cache_entrys e_refcnt leak in ext4_xattr_block_cache_find()
+Date: Thu, 13 Jun 2024 13:36:11 +0200
+Message-ID: <20240613113216.954936084@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -55,36 +55,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-commit 9a9f3a9842927e4af7ca10c19c94dad83bebd713 upstream.
+commit 0c0b4a49d3e7f49690a6827a41faeffad5df7e21 upstream.
 
-Now ac_groups_linear_remaining is of type __u16 and s_mb_max_linear_groups
-is of type unsigned int, so an overflow occurs when setting a value above
-65535 through the mb_max_linear_groups sysfs interface. Therefore, the
-type of ac_groups_linear_remaining is set to __u32 to avoid overflow.
+Syzbot reports a warning as follows:
 
-Fixes: 196e402adf2e ("ext4: improve cr 0 / cr 1 group scanning")
-CC: stable@kernel.org
+============================================
+WARNING: CPU: 0 PID: 5075 at fs/mbcache.c:419 mb_cache_destroy+0x224/0x290
+Modules linked in:
+CPU: 0 PID: 5075 Comm: syz-executor199 Not tainted 6.9.0-rc6-gb947cc5bf6d7
+RIP: 0010:mb_cache_destroy+0x224/0x290 fs/mbcache.c:419
+Call Trace:
+ <TASK>
+ ext4_put_super+0x6d4/0xcd0 fs/ext4/super.c:1375
+ generic_shutdown_super+0x136/0x2d0 fs/super.c:641
+ kill_block_super+0x44/0x90 fs/super.c:1675
+ ext4_kill_sb+0x68/0xa0 fs/ext4/super.c:7327
+[...]
+============================================
+
+This is because when finding an entry in ext4_xattr_block_cache_find(), if
+ext4_sb_bread() returns -ENOMEM, the ce's e_refcnt, which has already grown
+in the __entry_find(), won't be put away, and eventually trigger the above
+issue in mb_cache_destroy() due to reference count leakage.
+
+So call mb_cache_entry_put() on the -ENOMEM error branch as a quick fix.
+
+Reported-by: syzbot+dd43bd0f7474512edc47@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=dd43bd0f7474512edc47
+Fixes: fb265c9cb49e ("ext4: add ext4_sb_bread() to disambiguate ENOMEM cases")
+Cc: stable@kernel.org
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240319113325.3110393-8-libaokun1@huawei.com
+Link: https://lore.kernel.org/r/20240504075526.2254349-2-libaokun@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/xattr.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/mballoc.h
-+++ b/fs/ext4/mballoc.h
-@@ -180,8 +180,8 @@ struct ext4_allocation_context {
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -3076,8 +3076,10 @@ ext4_xattr_block_cache_find(struct inode
  
- 	__u32 ac_groups_considered;
- 	__u32 ac_flags;		/* allocation hints */
-+	__u32 ac_groups_linear_remaining;
- 	__u16 ac_groups_scanned;
--	__u16 ac_groups_linear_remaining;
- 	__u16 ac_found;
- 	__u16 ac_tail;
- 	__u16 ac_buddy;
+ 		bh = ext4_sb_bread(inode->i_sb, ce->e_value, REQ_PRIO);
+ 		if (IS_ERR(bh)) {
+-			if (PTR_ERR(bh) == -ENOMEM)
++			if (PTR_ERR(bh) == -ENOMEM) {
++				mb_cache_entry_put(ea_block_cache, ce);
+ 				return NULL;
++			}
+ 			bh = NULL;
+ 			EXT4_ERROR_INODE(inode, "block %lu read error",
+ 					 (unsigned long)ce->e_value);
 
 
