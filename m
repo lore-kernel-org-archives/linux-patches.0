@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C67913D607;
-	Thu, 13 Jun 2024 12:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E75145B32;
+	Thu, 13 Jun 2024 12:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281442; cv=none; b=lWoYzuUFd7MSJOW2X81Mp+w8kdoCn9kMcnFT4STOvBi/qtuI8uVIYZBM/QglyDNgIxbkevVV6zX32MnnGoxs4Y/2Q5/eSqYFDDqk/VnpAi2wdgzaz8ZKtOrJxi8Hcia8B6HM9SlX7cZxU7EFevJKxpcFP40//Kr3QeP2/XL6KnY=
+	t=1718281445; cv=none; b=ol0A/LPEFDAfw6i4Uz3cKFj281dW4ip1lSKtcah1Dgc6gVjKNRaddZI5SC3H7/iiWOx8CMHsFQ4uAy1N0nTX9sDHEIJmwbzF2y56Anis4yH+b+mJ3Z7jR+5pK0sAKkPB1kIJO5quG4nC8fjg4KmWF/xx5ALUcR73RfWZV/1+55s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281442; c=relaxed/simple;
-	bh=3Mf8Ge05Hd9QcXTa/H1OM11PL5LpVfLLjcN1tENhtEU=;
+	s=arc-20240116; t=1718281445; c=relaxed/simple;
+	bh=vPuGk4ar99gwQBVWAF0ehp2+dtBcMuw3ZjSYIxcw9Tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+/Mp6Dg4ZTLqy8gL3dRo2yJ7Nbymb7nQYuOVUxfPt8tz1u5FXGGUNpg+Lr66yZZhdHnKJvZm8Zj3eVhPE7xLM/7vT5+6gmfD6jvsJHe4G9vmhhpgrwZmfDQix4Ang7kLmDdEmCyumcyvDz39YAPFDC6nPHmAAVaB/BhfS8ID7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgRX6b5t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdRGGi3RmJ+Je7YNVTOC7ojLz6CJla1JaG40hNo00+/xMBesq+bvr/YdBky7YUtb46w1NsKE3fVezzjd+jP5xi/RVCwNPomV7OXTnqqfqXCsWnySohBBdkJEH8qVkx9vKGsqUTgbU+8cnqTCAbCXEWcyVLRQSEuXx+2w8Rkme9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScV8HyCU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgRX6b5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18674C2BBFC;
-	Thu, 13 Jun 2024 12:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScV8HyCU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025AAC2BBFC;
+	Thu, 13 Jun 2024 12:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281442;
-	bh=3Mf8Ge05Hd9QcXTa/H1OM11PL5LpVfLLjcN1tENhtEU=;
+	s=korg; t=1718281445;
+	bh=vPuGk4ar99gwQBVWAF0ehp2+dtBcMuw3ZjSYIxcw9Tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgRX6b5t9YjCFWkY9SCFrmnziyp3LPBt+ZDsgQhCu/0godosCyRCOBPBSNqvNKr1e
-	 1CUznOlZm2KCkIOeqzGj+JKaxTKamdS5QyXKaec249huJVaU7AZKCIWATPr3Lt0EME
-	 HH7G5AYXfYvoPLZ8xWR9i/agToK05XFQu9dOeqfY=
+	b=ScV8HyCUeki/37CGsvqGzbf9Ulg63mP6SRY9DbAb5FP4BKEq+grZwjkRvLD8RXdLg
+	 b63nKYpfVGkeRhdhK2qjgQ53QvJaK5RFftxga3JB8hM3mLMYfjFW/SQt3oPqOSdxmh
+	 fCPmravybDDZrqLxp608p7wxzzNQkHPI5HMyebKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+b94a6818504ea90d7661@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 256/317] netfilter: tproxy: bail out if IP has been disabled on the device
-Date: Thu, 13 Jun 2024 13:34:34 +0200
-Message-ID: <20240613113257.451916826@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Dan Aloni <dan.aloni@vastdata.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 230/317] sunrpc: fix NFSACL RPC retry on soft mount
+Date: Thu, 13 Jun 2024 13:34:08 +0200
+Message-ID: <20240613113256.448197620@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,43 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Dan Aloni <dan.aloni@vastdata.com>
 
-[ Upstream commit 21a673bddc8fd4873c370caf9ae70ffc6d47e8d3 ]
+[ Upstream commit 0dc9f430027b8bd9073fdafdfcdeb1a073ab5594 ]
 
-syzbot reports:
-general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
-[..]
-RIP: 0010:nf_tproxy_laddr4+0xb7/0x340 net/ipv4/netfilter/nf_tproxy_ipv4.c:62
-Call Trace:
- nft_tproxy_eval_v4 net/netfilter/nft_tproxy.c:56 [inline]
- nft_tproxy_eval+0xa9a/0x1a00 net/netfilter/nft_tproxy.c:168
+It used to be quite awhile ago since 1b63a75180c6 ('SUNRPC: Refactor
+rpc_clone_client()'), in 2012, that `cl_timeout` was copied in so that
+all mount parameters propagate to NFSACL clients. However since that
+change, if mount options as follows are given:
 
-__in_dev_get_rcu() can return NULL, so check for this.
+    soft,timeo=50,retrans=16,vers=3
 
-Reported-and-tested-by: syzbot+b94a6818504ea90d7661@syzkaller.appspotmail.com
-Fixes: cc6eb4338569 ("tproxy: use the interface primary IP address as a default value for --on-ip")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The resultant NFSACL client receives:
+
+    cl_softrtry: 1
+    cl_timeout: to_initval=60000, to_maxval=60000, to_increment=0, to_retries=2, to_exponential=0
+
+These values lead to NFSACL operations not being retried under the
+condition of transient network outages with soft mount. Instead, getacl
+call fails after 60 seconds with EIO.
+
+The simple fix is to pass the existing client's `cl_timeout` as the new
+client timeout.
+
+Cc: Chuck Lever <chuck.lever@oracle.com>
+Cc: Benjamin Coddington <bcodding@redhat.com>
+Link: https://lore.kernel.org/all/20231105154857.ryakhmgaptq3hb6b@gmail.com/T/
+Fixes: 1b63a75180c6 ('SUNRPC: Refactor rpc_clone_client()')
+Signed-off-by: Dan Aloni <dan.aloni@vastdata.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_tproxy_ipv4.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sunrpc/clnt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/netfilter/nf_tproxy_ipv4.c b/net/ipv4/netfilter/nf_tproxy_ipv4.c
-index 61cb2341f50fe..7c1a0cd9f4359 100644
---- a/net/ipv4/netfilter/nf_tproxy_ipv4.c
-+++ b/net/ipv4/netfilter/nf_tproxy_ipv4.c
-@@ -58,6 +58,8 @@ __be32 nf_tproxy_laddr4(struct sk_buff *skb, __be32 user_laddr, __be32 daddr)
- 
- 	laddr = 0;
- 	indev = __in_dev_get_rcu(skb->dev);
-+	if (!indev)
-+		return daddr;
- 
- 	in_dev_for_each_ifa_rcu(ifa, indev) {
- 		if (ifa->ifa_flags & IFA_F_SECONDARY)
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index a5ce9b937c42e..196a3b11d1509 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -970,6 +970,7 @@ struct rpc_clnt *rpc_bind_new_program(struct rpc_clnt *old,
+ 		.authflavor	= old->cl_auth->au_flavor,
+ 		.cred		= old->cl_cred,
+ 		.stats		= old->cl_stats,
++		.timeout	= old->cl_timeout,
+ 	};
+ 	struct rpc_clnt *clnt;
+ 	int err;
 -- 
 2.43.0
 
