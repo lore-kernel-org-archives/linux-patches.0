@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EC620ED;
-	Thu, 13 Jun 2024 12:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8437520ED;
+	Thu, 13 Jun 2024 12:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282872; cv=none; b=FvQtZTgQ8+GBSReQCudETWScmVWX5qWS4RtXTeC4P8wu6XEXiplHyYSjsWrBtTErJYMDtVvp4m96fNS/ssOHXTuRwiDhXVwg5xJuYRrWj77OgXlnV9hlhncshtaJcdaIFUn102ST2HP2y+L1M67mzRJAZh4Futumc+RjkfhRSRQ=
+	t=1718282875; cv=none; b=JyHATG4oLgjDoWH7jMaLuewMV+otPe1n0uvic5VpkFlkxcm54FFYM7+2f5GPBZ334c7UGP4bS7dvqXdaYLraBIwIv5YeMokfQlkhKwj9qa3ZY+xmPdqQz3t91cLvf4Rrc/p/h3/pY0CZCGqfBjIT0WYgSF8kPqv38lVMWrfLKuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282872; c=relaxed/simple;
-	bh=vtXWt5M9ldgovK6oLhPqaULarfr8DZbM+xMYpBW8/yA=;
+	s=arc-20240116; t=1718282875; c=relaxed/simple;
+	bh=gTwmoaF0M8EOs7nvL/+US534vPK7Qx/QK9196h5MJEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hVG1DcRoXoe7n3U0FnTuCB8203UBeKrSmuq1YKTwYS52PJwTGYA+Im/lgFH4pSvJtbYhueL1Y8RIMmNn6uY99JzwN3T6I4/rb07JMc0ZTkWABdtBYUhR7yhaPnCJhFv0qfFsVK84v4Yng7eAP5cWE20sTxW6wjN8Qw0OgJ9hur0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ye4KXrut; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LaVjBfvS0CH9Rw0lgWNaDRYZa6fSBwYwJQOw7XS1BWh2w7gCtgerxXK8QZi+SGt2YEuGrKbHvfbOtZS3M9StiumTJmAEKpQxp9pO/m04Sbg1wsSzxAfqgOGx2m0szLr7MDoMD9o65rCFLdfygGHtlZgPbThpHS76Rp8rDRGFZqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDMZ6erg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ye4KXrut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12620C2BBFC;
-	Thu, 13 Jun 2024 12:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDMZ6erg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B50C32786;
+	Thu, 13 Jun 2024 12:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282872;
-	bh=vtXWt5M9ldgovK6oLhPqaULarfr8DZbM+xMYpBW8/yA=;
+	s=korg; t=1718282875;
+	bh=gTwmoaF0M8EOs7nvL/+US534vPK7Qx/QK9196h5MJEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ye4KXrutIhOhy7XRciUw3XGD+TqTIl4XTdpnZyNbc0KeoXbJF0tQDeSK+TB6P2vh+
-	 AzCuosRSd5QhzYy3QJ9CWvKmkBiRg/T3jsdCfEpfw1c7QfxjLCcPoKkdN+eiqHZZFJ
-	 UKhk/GVM3o7XexjpvpqEV0IvkUWFp9vZAZo+4Ki0=
+	b=wDMZ6ergdivQw02QCLs3Y9uCbAJ5Qt0fO3RPpbsnXu99e1HVHUT/j/a4qZ+2NBrGc
+	 Ure/DLUBPimUJWkM1Ljq84vuGKDI2ELDTWqfrXSvLXLKOIf3JUo7cqLPZZNpg0Hf39
+	 NWr17ubkGhXuQpOY3OuD8usRFwFf0/yXDzTaLU5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Ramirez-Ortiz <jorge@foundries.io>,
-	Avri Altman <avri.altman@wdc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 6.1 06/85] mmc: core: Do not force a retune before RPMB switch
-Date: Thu, 13 Jun 2024 13:35:04 +0200
-Message-ID: <20240613113214.384714185@linuxfoundation.org>
+	Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>,
+	Markus Suvanto <markus.suvanto@gmail.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 07/85] afs: Dont cross .backup mountpoint from backup volume
+Date: Thu, 13 Jun 2024 13:35:05 +0200
+Message-ID: <20240613113214.421861673@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -53,66 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Ramirez-Ortiz <jorge@foundries.io>
+From: Marc Dionne <marc.dionne@auristor.com>
 
-commit 67380251e8bbd3302c64fea07f95c31971b91c22 upstream.
+commit 29be9100aca2915fab54b5693309bc42956542e5 upstream.
 
-Requesting a retune before switching to the RPMB partition has been
-observed to cause CRC errors on the RPMB reads (-EILSEQ).
+Don't cross a mountpoint that explicitly specifies a backup volume
+(target is <vol>.backup) when starting from a backup volume.
 
-Since RPMB reads can not be retried, the clients would be directly
-affected by the errors.
+It it not uncommon to mount a volume's backup directly in the volume
+itself.  This can cause tools that are not paying attention to get
+into a loop mounting the volume onto itself as they attempt to
+traverse the tree, leading to a variety of problems.
 
-This commit disables the retune request prior to switching to the RPMB
-partition: mmc_retune_pause() no longer triggers a retune before the
-pause period begins.
+This doesn't prevent the general case of loops in a sequence of
+mountpoints, but addresses a common special case in the same way
+as other afs clients.
 
-This was verified with the sdhci-of-arasan driver (ZynqMP) configured
-for HS200 using two separate eMMC cards (DG4064 and 064GB2). In both
-cases, the error was easy to reproduce triggering every few tenths of
-reads.
-
-With this commit, systems that were utilizing OP-TEE to access RPMB
-variables will experience an enhanced performance. Specifically, when
-OP-TEE is configured to employ RPMB as a secure storage solution, it not
-only writes the data but also the secure filesystem within the
-partition. As a result, retrieving any variable involves multiple RPMB
-reads, typically around five.
-
-For context, on ZynqMP, each retune request consumed approximately
-8ms. Consequently, reading any RPMB variable used to take at the very
-minimum 40ms.
-
-After droping the need to retune before switching to the RPMB partition,
-this is no longer the case.
-
-Signed-off-by: Jorge Ramirez-Ortiz <jorge@foundries.io>
-Acked-by: Avri Altman <avri.altman@wdc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240103112911.2954632-1-jorge@foundries.io
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reported-by: Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>
+Link: http://lists.infradead.org/pipermail/linux-afs/2024-May/008454.html
+Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
+Link: http://lists.infradead.org/pipermail/linux-afs/2024-February/008074.html
+Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/768760.1716567475@warthog.procyon.org.uk
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/host.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/afs/mntpt.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/mmc/core/host.c
-+++ b/drivers/mmc/core/host.c
-@@ -119,13 +119,12 @@ void mmc_retune_enable(struct mmc_host *
- 
- /*
-  * Pause re-tuning for a small set of operations.  The pause begins after the
-- * next command and after first doing re-tuning.
-+ * next command.
-  */
- void mmc_retune_pause(struct mmc_host *host)
- {
- 	if (!host->retune_paused) {
- 		host->retune_paused = 1;
--		mmc_retune_needed(host);
- 		mmc_retune_hold(host);
+--- a/fs/afs/mntpt.c
++++ b/fs/afs/mntpt.c
+@@ -140,6 +140,11 @@ static int afs_mntpt_set_params(struct f
+ 		put_page(page);
+ 		if (ret < 0)
+ 			return ret;
++
++		/* Don't cross a backup volume mountpoint from a backup volume */
++		if (src_as->volume && src_as->volume->type == AFSVL_BACKVOL &&
++		    ctx->type == AFSVL_BACKVOL)
++			return -ENODEV;
  	}
- }
+ 
+ 	return 0;
 
 
