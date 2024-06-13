@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92753145A05;
-	Thu, 13 Jun 2024 12:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81ABB145A05;
+	Thu, 13 Jun 2024 12:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281398; cv=none; b=SmMEITXXn4bWYk7cQ0Big/z9rKmplTQyaNKdWyoi9MU6FJznrtXgO6fr2brUtjfk+RK1aRvY8z/LiyoCIA6QoVBV2/f2ledtBKrIxUvd4xefW3X5aSgMAHI1ZawoYJ7Z60c/LGSTdDZU4l/5Vy0GcFC6C2N6nZXmcgUVyjW5jA4=
+	t=1718281401; cv=none; b=P71xKKdAXc5HH9K0AMMQ/78t87PQqIxoyOLzkVu5zLE3SsLXA4kNvX+vemNikgq7orNA3IZE6WGeNcru37FdT/zKQmebpNVhWzz4YBJWAW95EWczKXG+t1WhKcXEKeob10ZU79IcG/Bpc0zeT8sgW1jwdGFb17IY/etlc8RQ9dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281398; c=relaxed/simple;
-	bh=NSz+Syag+rlNBhRu6BsL2LXiUbBBWp5dA3tWpBf1e9w=;
+	s=arc-20240116; t=1718281401; c=relaxed/simple;
+	bh=2vjBHCven7dE4bs/pY/nlqCOphCAhTqKrmWNAhVCfjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NpRL00rxposn0SOli9IS2MJJzhvqnrHQjsIP5c98tGOKfhZ//Ky2Rw88YbBMQp+gQLpY+ZClADaboIjApGisax+25YTr2tICtEQJLOfuwseLgA/dWA8QUxaXJsOdjo73aPAdp9qbEOn4I4HSQhl7LkHBAoaqxKGl0xkJ+6CsqvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjCI0qv3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FKmKqbRHcT7wzHoFf4Ucxz/usxlJiEYZNfBYWb3PzaQ+K7fgsByr9i/Fhp4a9qu6s6c5yCj2l5MetYgDOkXffchOBa/gz2QsdBInzwV81CeI/YcWtbLUGMnoMsW4k3JW6nri2B+dzT7lrFXRiuf2313RRM4cI0EVci+x4rS9cDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0XzjF61; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjCI0qv3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185D9C32786;
-	Thu, 13 Jun 2024 12:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0XzjF61"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABADC2BBFC;
+	Thu, 13 Jun 2024 12:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281398;
-	bh=NSz+Syag+rlNBhRu6BsL2LXiUbBBWp5dA3tWpBf1e9w=;
+	s=korg; t=1718281401;
+	bh=2vjBHCven7dE4bs/pY/nlqCOphCAhTqKrmWNAhVCfjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjCI0qv3qjpsUaCQ4HLYgBFEbqYMbHJ+nOBPuiB59lcKUnEhaKAixRzLQ+PoPckuS
-	 y1II1y1OhVAE5sjCeXkiYZjCu8ro4YXVSOjAbNFeV6mFd5MQ3O8B+xZlOcG9VRQBhm
-	 aPu1luh72HC7zZu9SBI4czqrQFPIywlU7s70i5zI=
+	b=d0XzjF61YL/LK0xMhx7eZMLGjlMp2CKtyPQ4+eo/QBX3fmpXwkCq98uODuhuoVOqv
+	 fC01YxJOhS8KYPYbn5/e7w/SRMg1WJ9JEi/z5Tk3ef3w1YPMXZI2FQJ5q3ZBO/UgW0
+	 Tuk2kVZoK1pY7QvdwTIA0XGnJvTfDfOXUtodoim4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yewon Choi <woni9911@gmail.com>,
-	"Dae R. Jeong" <threeearcat@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot <syzbot+0438378d6f157baae1a2@syzkaller.appspotmail.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 242/317] tls: fix missing memory barrier in tls_init
-Date: Thu, 13 Jun 2024 13:34:20 +0200
-Message-ID: <20240613113256.909693692@linuxfoundation.org>
+Subject: [PATCH 5.10 243/317] nfc: nci: Fix kcov check in nci_rx_work()
+Date: Thu, 13 Jun 2024 13:34:21 +0200
+Message-ID: <20240613113256.948156720@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,70 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dae R. Jeong <threeearcat@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 91e61dd7a0af660408e87372d8330ceb218be302 ]
+[ Upstream commit 19e35f24750ddf860c51e51c68cf07ea181b4881 ]
 
-In tls_init(), a write memory barrier is missing, and store-store
-reordering may cause NULL dereference in tls_{setsockopt,getsockopt}.
+Commit 7e8cdc97148c ("nfc: Add KCOV annotations") added
+kcov_remote_start_common()/kcov_remote_stop() pair into nci_rx_work(),
+with an assumption that kcov_remote_stop() is called upon continue of
+the for loop. But commit d24b03535e5e ("nfc: nci: Fix uninit-value in
+nci_dev_up and nci_ntf_packet") forgot to call kcov_remote_stop() before
+break of the for loop.
 
-CPU0                               CPU1
------                              -----
-// In tls_init()
-// In tls_ctx_create()
-ctx = kzalloc()
-ctx->sk_proto = READ_ONCE(sk->sk_prot) -(1)
-
-// In update_sk_prot()
-WRITE_ONCE(sk->sk_prot, tls_prots)     -(2)
-
-                                   // In sock_common_setsockopt()
-                                   READ_ONCE(sk->sk_prot)->setsockopt()
-
-                                   // In tls_{setsockopt,getsockopt}()
-                                   ctx->sk_proto->setsockopt()    -(3)
-
-In the above scenario, when (1) and (2) are reordered, (3) can observe
-the NULL value of ctx->sk_proto, causing NULL dereference.
-
-To fix it, we rely on rcu_assign_pointer() which implies the release
-barrier semantic. By moving rcu_assign_pointer() after ctx->sk_proto is
-initialized, we can ensure that ctx->sk_proto are visible when
-changing sk->sk_prot.
-
-Fixes: d5bee7374b68 ("net/tls: Annotate access to sk_prot with READ_ONCE/WRITE_ONCE")
-Signed-off-by: Yewon Choi <woni9911@gmail.com>
-Signed-off-by: Dae R. Jeong <threeearcat@gmail.com>
-Link: https://lore.kernel.org/netdev/ZU4OJG56g2V9z_H7@dragonet/T/
-Link: https://lore.kernel.org/r/Zkx4vjSFp0mfpjQ2@libra05
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: syzbot <syzbot+0438378d6f157baae1a2@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=0438378d6f157baae1a2
+Fixes: d24b03535e5e ("nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet")
+Suggested-by: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/6d10f829-5a0c-405a-b39a-d7266f3a1a0b@I-love.SAKURA.ne.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 6671e352497c ("nfc: nci: Fix handling of zero-length payload packets in nci_rx_work()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_main.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/nfc/nci/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index 2bbacd9b97e56..ebf856cf821da 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -633,9 +633,17 @@ struct tls_context *tls_ctx_create(struct sock *sk)
- 		return NULL;
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 7b3f3d6285004..ada7f32d03e48 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1517,6 +1517,7 @@ static void nci_rx_work(struct work_struct *work)
  
- 	mutex_init(&ctx->tx_lock);
--	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
- 	ctx->sk_proto = READ_ONCE(sk->sk_prot);
- 	ctx->sk = sk;
-+	/* Release semantic of rcu_assign_pointer() ensures that
-+	 * ctx->sk_proto is visible before changing sk->sk_prot in
-+	 * update_sk_prot(), and prevents reading uninitialized value in
-+	 * tls_{getsockopt, setsockopt}. Note that we do not need a
-+	 * read barrier in tls_{getsockopt,setsockopt} as there is an
-+	 * address dependency between sk->sk_proto->{getsockopt,setsockopt}
-+	 * and ctx->sk_proto.
-+	 */
-+	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
- 	return ctx;
- }
+ 		if (!nci_valid_size(skb)) {
+ 			kfree_skb(skb);
++			kcov_remote_stop();
+ 			break;
+ 		}
  
 -- 
 2.43.0
