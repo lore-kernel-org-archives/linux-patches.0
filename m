@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36CD148FE0;
-	Thu, 13 Jun 2024 11:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D197D148FE0;
+	Thu, 13 Jun 2024 11:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279832; cv=none; b=kYX+7QXyJRzrInH7TC7HJ9dU3tTOia/pmwaKBEFelgEhS7t8Wykgj0JFGbRYjN0QLKgfRDShGbkZLerXqEVpnS90PaHS2FRWZ/XPX8chplV4qnhl+UvG6a4nxmAwhlCWOFtPcgurKSS3nLmDtUpm41PvsX/8YrYi3Jzr9J9kjns=
+	t=1718279835; cv=none; b=YfBfui8cz9m2LkpeedJEY9ZQokkY0mYrMtiwLrQcDY1YtU+nk7sGgvMmepcN5qdrYeN9vzV4vozti7rb0FImN792BbIkLyi7KSmA8PZS8GTQ1CmHjA8woD0wjWA/Rid6cYrYe+aR6ML/yGPWmzgFaLu5YltWM90Pj11gUOfY2sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279832; c=relaxed/simple;
-	bh=tqJqx3PVL2lr0dOQIety3qDl5GYqCc2EfFrKG5GlTu0=;
+	s=arc-20240116; t=1718279835; c=relaxed/simple;
+	bh=gqVjQN33rpq8zk33NnYTA9kXq2myhpAjfXqjVa/5Lg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P8PRJ9AqdcXKGVzviTPFwzKBvKJuUP0+KvmeoouRdIt/Ze1teI3SRGIZJRiiI4QBryxEvBZeUFFJ0mun4it18n8pKOluq9RoZidhzprjimVCbVP99mHUORa0a0IUcIlSaG8Kc6k3XyhesrhSijKQrw7BMqjM/XJRQ5I+U/nXYtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knonleZt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L/GaQBOMTG5bOJGv21uX+Gj+OJwULOOaqJ/D/sVoQiFGYQ8Co2apuuraVlZvaxZx6Bp/5VT76XHJPn3CrMaReHIb/MmvYHN/d6p9x/SWROdj8nswY+wTqMgz+7NRg1AvjWFVIvggRhyL1nm49xJEOUMAvc5pSRkHkCZ+HU2P17k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yB7/DJr5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knonleZt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056C0C2BBFC;
-	Thu, 13 Jun 2024 11:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yB7/DJr5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B867C2BBFC;
+	Thu, 13 Jun 2024 11:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279832;
-	bh=tqJqx3PVL2lr0dOQIety3qDl5GYqCc2EfFrKG5GlTu0=;
+	s=korg; t=1718279835;
+	bh=gqVjQN33rpq8zk33NnYTA9kXq2myhpAjfXqjVa/5Lg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knonleZtauSxo1dyKgHqy2bV/8Rijqd0ztHfbQd2gQbo0VLGmlx2ZIjyA7DrpZZ9V
-	 xxrjCgIsGMwqnSt+bKX/XHs6b7y/h4iTaTWtv9esh1XRhhgAqQA/w9d5FhX+XVs6CK
-	 W1Uwqp37U9UFuImXIY4I2xcXTrmiyjbfzQn2pueM=
+	b=yB7/DJr5weqGALuXw0GnbS9xbU52LxZQKV8K15qnMO0cPKO2byjw9583TKHNRlKNP
+	 0ijUloJoVH4wOzoiMJW5o51a3dJqU4YZDPb/sglOQUPZpGzspHupE+05IRemXX6FEB
+	 72yziD7DLHgkwQmOxZbl/r89OmYatSO2dGAxM/Fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+1bc2c2afd44f820a669f@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 050/202] wifi: ar5523: enable proper endpoint verification
-Date: Thu, 13 Jun 2024 13:32:28 +0200
-Message-ID: <20240613113229.705361686@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 022/202] crypto: ccp - drop platform ifdef checks
+Date: Thu, 13 Jun 2024 13:32:00 +0200
+Message-ID: <20240613113228.625021791@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -52,97 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit e120b6388d7d88635d67dcae6483f39c37111850 ]
+[ Upstream commit 42c2d7d02977ef09d434b1f5b354f5bc6c1027ab ]
 
-Syzkaller reports [1] hitting a warning about an endpoint in use
-not having an expected type to it.
+When both ACPI and OF are disabled, the dev_vdata variable is unused:
 
-Fix the issue by checking for the existence of all proper
-endpoints with their according types intact.
+drivers/crypto/ccp/sp-platform.c:33:34: error: unused variable 'dev_vdata' [-Werror,-Wunused-const-variable]
 
-Sadly, this patch has not been tested on real hardware.
+This is not a useful configuration, and there is not much point in saving
+a few bytes when only one of the two is enabled, so just remove all
+these ifdef checks and rely on of_match_node() and acpi_match_device()
+returning NULL when these subsystems are disabled.
 
-[1] Syzkaller report:
-------------[ cut here ]------------
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 0 PID: 3643 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
-...
-Call Trace:
- <TASK>
- ar5523_cmd+0x41b/0x780 drivers/net/wireless/ath/ar5523/ar5523.c:275
- ar5523_cmd_read drivers/net/wireless/ath/ar5523/ar5523.c:302 [inline]
- ar5523_host_available drivers/net/wireless/ath/ar5523/ar5523.c:1376 [inline]
- ar5523_probe+0x14b0/0x1d10 drivers/net/wireless/ath/ar5523/ar5523.c:1655
- usb_probe_interface+0x30f/0x7f0 drivers/usb/core/driver.c:396
- call_driver_probe drivers/base/dd.c:560 [inline]
- really_probe+0x249/0xb90 drivers/base/dd.c:639
- __driver_probe_device+0x1df/0x4d0 drivers/base/dd.c:778
- driver_probe_device+0x4c/0x1a0 drivers/base/dd.c:808
- __device_attach_driver+0x1d4/0x2e0 drivers/base/dd.c:936
- bus_for_each_drv+0x163/0x1e0 drivers/base/bus.c:427
- __device_attach+0x1e4/0x530 drivers/base/dd.c:1008
- bus_probe_device+0x1e8/0x2a0 drivers/base/bus.c:487
- device_add+0xbd9/0x1e90 drivers/base/core.c:3517
- usb_set_configuration+0x101d/0x1900 drivers/usb/core/message.c:2170
- usb_generic_driver_probe+0xbe/0x100 drivers/usb/core/generic.c:238
- usb_probe_device+0xd8/0x2c0 drivers/usb/core/driver.c:293
- call_driver_probe drivers/base/dd.c:560 [inline]
- really_probe+0x249/0xb90 drivers/base/dd.c:639
- __driver_probe_device+0x1df/0x4d0 drivers/base/dd.c:778
- driver_probe_device+0x4c/0x1a0 drivers/base/dd.c:808
- __device_attach_driver+0x1d4/0x2e0 drivers/base/dd.c:936
- bus_for_each_drv+0x163/0x1e0 drivers/base/bus.c:427
- __device_attach+0x1e4/0x530 drivers/base/dd.c:1008
- bus_probe_device+0x1e8/0x2a0 drivers/base/bus.c:487
- device_add+0xbd9/0x1e90 drivers/base/core.c:3517
- usb_new_device.cold+0x685/0x10ad drivers/usb/core/hub.c:2573
- hub_port_connect drivers/usb/core/hub.c:5353 [inline]
- hub_port_connect_change drivers/usb/core/hub.c:5497 [inline]
- port_event drivers/usb/core/hub.c:5653 [inline]
- hub_event+0x26cb/0x45d0 drivers/usb/core/hub.c:5735
- process_one_work+0x9bf/0x1710 kernel/workqueue.c:2289
- worker_thread+0x669/0x1090 kernel/workqueue.c:2436
- kthread+0x2e8/0x3a0 kernel/kthread.c:376
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
- </TASK>
-
-Reported-and-tested-by: syzbot+1bc2c2afd44f820a669f@syzkaller.appspotmail.com
-Fixes: b7d572e1871d ("ar5523: Add new driver")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240408121425.29392-1-n.zhandarovich@fintech.ru
+Fixes: 6c5063434098 ("crypto: ccp - Add ACPI support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ar5523/ar5523.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/crypto/ccp/sp-platform.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ar5523/ar5523.c b/drivers/net/wireless/ath/ar5523/ar5523.c
-index 5d3cf354f6cb5..5ffd6f2152920 100644
---- a/drivers/net/wireless/ath/ar5523/ar5523.c
-+++ b/drivers/net/wireless/ath/ar5523/ar5523.c
-@@ -1590,6 +1590,20 @@ static int ar5523_probe(struct usb_interface *intf,
- 	struct ar5523 *ar;
- 	int error = -ENOMEM;
+diff --git a/drivers/crypto/ccp/sp-platform.c b/drivers/crypto/ccp/sp-platform.c
+index 831aac1393a2f..d7a226b9d6221 100644
+--- a/drivers/crypto/ccp/sp-platform.c
++++ b/drivers/crypto/ccp/sp-platform.c
+@@ -39,44 +39,38 @@ static const struct sp_dev_vdata dev_vdata[] = {
+ 	},
+ };
  
-+	static const u8 bulk_ep_addr[] = {
-+		AR5523_CMD_TX_PIPE | USB_DIR_OUT,
-+		AR5523_DATA_TX_PIPE | USB_DIR_OUT,
-+		AR5523_CMD_RX_PIPE | USB_DIR_IN,
-+		AR5523_DATA_RX_PIPE | USB_DIR_IN,
-+		0};
+-#ifdef CONFIG_ACPI
+ static const struct acpi_device_id sp_acpi_match[] = {
+ 	{ "AMDI0C00", (kernel_ulong_t)&dev_vdata[0] },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(acpi, sp_acpi_match);
+-#endif
+ 
+-#ifdef CONFIG_OF
+ static const struct of_device_id sp_of_match[] = {
+ 	{ .compatible = "amd,ccp-seattle-v1a",
+ 	  .data = (const void *)&dev_vdata[0] },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(of, sp_of_match);
+-#endif
+ 
+ static struct sp_dev_vdata *sp_get_of_version(struct platform_device *pdev)
+ {
+-#ifdef CONFIG_OF
+ 	const struct of_device_id *match;
+ 
+ 	match = of_match_node(sp_of_match, pdev->dev.of_node);
+ 	if (match && match->data)
+ 		return (struct sp_dev_vdata *)match->data;
+-#endif
 +
-+	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr)) {
-+		dev_err(&dev->dev,
-+			"Could not find all expected endpoints\n");
-+		error = -ENODEV;
-+		goto out;
-+	}
+ 	return NULL;
+ }
+ 
+ static struct sp_dev_vdata *sp_get_acpi_version(struct platform_device *pdev)
+ {
+-#ifdef CONFIG_ACPI
+ 	const struct acpi_device_id *match;
+ 
+ 	match = acpi_match_device(sp_acpi_match, &pdev->dev);
+ 	if (match && match->driver_data)
+ 		return (struct sp_dev_vdata *)match->driver_data;
+-#endif
 +
- 	/*
- 	 * Load firmware if the device requires it.  This will return
- 	 * -ENXIO on success and we'll get called back afer the usb
+ 	return NULL;
+ }
+ 
+@@ -222,12 +216,8 @@ static int sp_platform_resume(struct platform_device *pdev)
+ static struct platform_driver sp_platform_driver = {
+ 	.driver = {
+ 		.name = "ccp",
+-#ifdef CONFIG_ACPI
+ 		.acpi_match_table = sp_acpi_match,
+-#endif
+-#ifdef CONFIG_OF
+ 		.of_match_table = sp_of_match,
+-#endif
+ 	},
+ 	.probe = sp_platform_probe,
+ 	.remove = sp_platform_remove,
 -- 
 2.43.0
 
