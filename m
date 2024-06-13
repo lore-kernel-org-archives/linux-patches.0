@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65756142E99;
-	Thu, 13 Jun 2024 11:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE10514265E;
+	Thu, 13 Jun 2024 11:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279029; cv=none; b=Aur4VEUbt6Ljxi4KeiQTJOyupoZ9KJpTlGLrJHCt3u2XX7DInCFBVnR600XAu2nWD7WT2dVFP6LjHHS3rj1KVHMB9Tr8+8l4mgofmjoH3ylYIL37c+FoLqp/sy9wSjjLOLS7RnYIRFOuXbyzzsGJvGw8a3mhR1soh++ot/xkoBk=
+	t=1718279032; cv=none; b=WxSuCMTqUAVTwKZ2wBzZnH6LAYIItYjTAfepoRcQmb5RvmNf6jVqnsv28752O9QaKgE7G+f9K/zb1CPcYxjncLhNhRN8AovD6CkaKvOFXUyrxriiiXKNE6AUQZsDlo3FHX+0faTxala+eDXvjibfl8WZmzyD3cPnSs+4JUdDQm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279029; c=relaxed/simple;
-	bh=iAXwICK9iD1QrbP3DBPpdYC5CI+wdih9d1nam0sw5kI=;
+	s=arc-20240116; t=1718279032; c=relaxed/simple;
+	bh=xeI3+tO3EB962pE5dCyam8CFvsoMGwhoITWAtWsp26c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTMQYV4lO5SqHhaxkrZTKxrs0cypmy+ifFbE+UC4oXT2BNNoIys52GBuhYviCzSsaQiYNJZoGmevwNCABeBrjrVb5y7ftzM7ag9GyA6S2vwEEYG5ouoMZYCYbJhV5v0jUCdGuFs4k3R7JMTgtKnhivhZHGhjr3hnbjBWkPjevgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsGORmcs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tgf+Hl5/XMGBYhwM6N8KAumB0h1J60RLuKtFX+2arJ5wmKUzeUgPOBsCRzSIKQF1XVbkn7Odvxynsicf7f2XLYXutUz1g2ttHCEcCj+wAdK2FRYFVp328yW2ZgHCz2D5V/Yk6bTmioibk/1nvdNH5dPmwufKWxC+mQXBkRzHCPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaUkxEp8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsGORmcs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE735C2BBFC;
-	Thu, 13 Jun 2024 11:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaUkxEp8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9B9C2BBFC;
+	Thu, 13 Jun 2024 11:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279029;
-	bh=iAXwICK9iD1QrbP3DBPpdYC5CI+wdih9d1nam0sw5kI=;
+	s=korg; t=1718279032;
+	bh=xeI3+tO3EB962pE5dCyam8CFvsoMGwhoITWAtWsp26c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RsGORmcs5LSc005MJEtWbG0Ij4AkvQPrksZJNYeznqxgiFzvnejlFOcf1ZpaplKh8
-	 i66P5D49CvfuK89mhL5C4Vn3DX6a+ak6flxJZvPA7jl/+dWlMcYWG31Oj96RMAdCmU
-	 b0LfqpUdjAt4rGaKmtAdVWeCa2/5MU/dsL2hzacg=
+	b=TaUkxEp8sf14pYdJRlm18IuzYHInIH8mEQeMedbRY0zulcPLwJXxHyX29U0M2vsq6
+	 qeFHEl+738JvpOwunGxYwg7HeUnJ83v3a+tRu3DQsYj72oYFCDI4bDz8meaOT6vRn6
+	 mwRF0mpV712F1//SIpINe+ELE2th090zzSrC5RQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryosuke Yasuoka <ryasuoka@redhat.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+d7b4dc6cd50410152534@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 121/213] nfc: nci: Fix uninit-value in nci_rx_work
-Date: Thu, 13 Jun 2024 13:32:49 +0200
-Message-ID: <20240613113232.665172084@linuxfoundation.org>
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Richard Weinberger <richard@nod.at>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 112/213] um: Fix return value in ubd_init()
+Date: Thu, 13 Jun 2024 13:32:40 +0200
+Message-ID: <20240613113232.322091116@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -53,61 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryosuke Yasuoka <ryasuoka@redhat.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit e4a87abf588536d1cdfb128595e6e680af5cf3ed ]
+[ Upstream commit 31a5990ed253a66712d7ddc29c92d297a991fdf2 ]
 
-syzbot reported the following uninit-value access issue [1]
+When kmalloc_array() fails to allocate memory, the ubd_init()
+should return -ENOMEM instead of -1. So, fix it.
 
-nci_rx_work() parses received packet from ndev->rx_q. It should be
-validated header size, payload size and total packet size before
-processing the packet. If an invalid packet is detected, it should be
-silently discarded.
-
-Fixes: d24b03535e5e ("nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet")
-Reported-and-tested-by: syzbot+d7b4dc6cd50410152534@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d7b4dc6cd50410152534 [1]
-Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f88f0bdfc32f ("um: UBD Improvements")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ arch/um/drivers/ubd_kern.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index 1f863ccf21211..6e83159b7b436 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -1461,6 +1461,19 @@ int nci_core_ntf_packet(struct nci_dev *ndev, __u16 opcode,
- 				 ndev->ops->n_core_ops);
- }
+diff --git a/arch/um/drivers/ubd_kern.c b/arch/um/drivers/ubd_kern.c
+index 788c80abff5d3..4a32df89a491e 100644
+--- a/arch/um/drivers/ubd_kern.c
++++ b/arch/um/drivers/ubd_kern.c
+@@ -1135,7 +1135,7 @@ static int __init ubd_init(void)
  
-+static bool nci_valid_size(struct sk_buff *skb)
-+{
-+	BUILD_BUG_ON(NCI_CTRL_HDR_SIZE != NCI_DATA_HDR_SIZE);
-+	unsigned int hdr_size = NCI_CTRL_HDR_SIZE;
-+
-+	if (skb->len < hdr_size ||
-+	    !nci_plen(skb->data) ||
-+	    skb->len < hdr_size + nci_plen(skb->data)) {
-+		return false;
-+	}
-+	return true;
-+}
-+
- /* ---- NCI TX Data worker thread ---- */
+ 	if (irq_req_buffer == NULL) {
+ 		printk(KERN_ERR "Failed to initialize ubd buffering\n");
+-		return -1;
++		return -ENOMEM;
+ 	}
+ 	io_req_buffer = kmalloc_array(UBD_REQ_BUFFER_SIZE,
+ 				      sizeof(struct io_thread_req *),
+@@ -1146,7 +1146,7 @@ static int __init ubd_init(void)
  
- static void nci_tx_work(struct work_struct *work)
-@@ -1511,7 +1524,7 @@ static void nci_rx_work(struct work_struct *work)
- 		nfc_send_to_raw_sock(ndev->nfc_dev, skb,
- 				     RAW_PAYLOAD_NCI, NFC_DIRECTION_RX);
- 
--		if (!nci_plen(skb->data)) {
-+		if (!nci_valid_size(skb)) {
- 			kfree_skb(skb);
- 			break;
- 		}
+ 	if (io_req_buffer == NULL) {
+ 		printk(KERN_ERR "Failed to initialize ubd buffering\n");
+-		return -1;
++		return -ENOMEM;
+ 	}
+ 	platform_driver_register(&ubd_driver);
+ 	mutex_lock(&ubd_lock);
 -- 
 2.43.0
 
