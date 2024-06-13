@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1591E49B;
-	Thu, 13 Jun 2024 12:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356DA1428EC;
+	Thu, 13 Jun 2024 12:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282235; cv=none; b=A7QH0VAp/l2kwsvpDv5KPf0F0BKSTDkvdMBftnoXiXU+YtYl5rqtoJItuwinIJHXQoNg7IplDdb8WorHvr5bZ6VksM0bq9zGH3gUWj4cLbVN9spS1rvVN9gtcr0VJWL7KCzfHjV75wvnVhix1LL+QKmp9i+YjuXF6FJU964jqtM=
+	t=1718282238; cv=none; b=WdGPz2SEZM/S99aDAKYd/QOBF9bdFECzcP14coXAVw6Xo80gyF7U4bCPi62zSd2e+0s6ZglsE0cT+DHoUN9AkKqlKn303rCEySPEPJzthb+X8xM3NNtpsB61EDu3zEKxceIfej1HE1zFSlPMmKOxuCiuxBoeiaT7anaj7EaSC64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282235; c=relaxed/simple;
-	bh=7BxvUsNiF9attcavSvdj/s8ghqvg6JDa//I3hlMLxu4=;
+	s=arc-20240116; t=1718282238; c=relaxed/simple;
+	bh=3cCsxTAIHclRyCZzjf8pjYWz1lwMMuAVL6n0czCFxo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwu8WOpJ+j6UzKL1gLjsU3Hy7Wv5kpXN4p4mZi0g7SW5lZTKdWvg+HSguuEe5YMqoXGvpnHjMPh49zA6Z22QN2HUj0eKRa4EWUdZlmsR4PNeICo2geGl4g+VskLra48+UxMIveM/6hYAP1E6aSjquDk5zghFncaMfOuQuniqmbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NA3rIA48; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEiokyPJZYt8cFgH+jQhF7e5y6xGtlp7sApEYL6PDJNOiUQcIe8KayVrZWSPB7v3f7iP3EegKFNFInRJgVMFmSU2OSowvmeCqeGHMgvudr7+l9FrS/D9727dEQNBIfaC6jZMHhu+bxg2emA+vxByAYiOvHwqhPZ5M7E7ixPJPK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICQQO4kK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NA3rIA48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDCAC2BBFC;
-	Thu, 13 Jun 2024 12:37:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICQQO4kK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B022BC4AF1C;
+	Thu, 13 Jun 2024 12:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282235;
-	bh=7BxvUsNiF9attcavSvdj/s8ghqvg6JDa//I3hlMLxu4=;
+	s=korg; t=1718282238;
+	bh=3cCsxTAIHclRyCZzjf8pjYWz1lwMMuAVL6n0czCFxo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NA3rIA48hF7cl1MOJuNH6kA4xCgUQCt2kfhHS78GnnrMnED7RYY0JTO84S9JXZaky
-	 3D9KdyjRmYA2CNYj+Bs1YqSxR4wMLY7X82jNY7AjIXeMM2GrgxJL2d2LYJMgF+uFlm
-	 WsXrS9ZDywjbHC/Srnn0YHOCTDazlmxCwAgO3Gzk=
+	b=ICQQO4kKl574Zb0nm2+bqxlHQrIrhTlyHAttLV/aXwIJ7ivu4IYJO8XIpdVs5Hqeo
+	 XQByEhW1+fTGzV7j6RCDTdMVFWaaZGwpjaq4mgELFxApwbb/1H3GZmyhLxdjvFpgmy
+	 Al4Q5o7YrMdMgDrloXzy/bHgbXMr77CgJIyKTrk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yabin Cui <yabinc@google.com>,
-	Mike Leach <mike.leach@linaro.org>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 208/402] coresight: etm4x: Safe access for TRCQCLTR
-Date: Thu, 13 Jun 2024 13:32:45 +0200
-Message-ID: <20240613113310.261868636@linuxfoundation.org>
+Subject: [PATCH 5.15 209/402] coresight: etm4x: Fix access to resource selector registers
+Date: Thu, 13 Jun 2024 13:32:46 +0200
+Message-ID: <20240613113310.300565874@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,86 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-[ Upstream commit 46bf8d7cd8530eca607379033b9bc4ac5590a0cd ]
+[ Upstream commit d6fc00d0f640d6010b51054aa8b0fd191177dbc9 ]
 
-ETM4x implements TRCQCLTR only when the Q elements are supported
-and the Q element filtering is supported (TRCIDR0.QFILT). Access
-to the register otherwise could be fatal. Fix this by tracking the
-availability, like the others.
+Resource selector pair 0 is always implemented and reserved. We must not
+touch it, even during save/restore for CPU Idle. Rest of the driver is
+well behaved. Fix the offending ones.
 
-Fixes: f188b5e76aae ("coresight: etm4x: Save/restore state across CPU low power states")
 Reported-by: Yabin Cui <yabinc@google.com>
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Fixes: f188b5e76aae ("coresight: etm4x: Save/restore state across CPU low power states")
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 Tested-by: Yabin Cui <yabinc@google.com>
-Link: https://lore.kernel.org/r/20240412142702.2882478-4-suzuki.poulose@arm.com
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Link: https://lore.kernel.org/r/20240412142702.2882478-5-suzuki.poulose@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 8 ++++++--
- drivers/hwtracing/coresight/coresight-etm4x.h      | 3 +++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index ed5b38013dc14..130e9030a8bef 100644
+index 130e9030a8bef..84734c7c19158 100644
 --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
 +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -1061,6 +1061,8 @@ static void etm4_init_arch_data(void *info)
- 	drvdata->nr_event = FIELD_GET(TRCIDR0_NUMEVENT_MASK, etmidr0);
- 	/* QSUPP, bits[16:15] Q element support field */
- 	drvdata->q_support = FIELD_GET(TRCIDR0_QSUPP_MASK, etmidr0);
-+	if (drvdata->q_support)
-+		drvdata->q_filt = !!(etmidr0 & TRCIDR0_QFILT);
- 	/* TSSIZE, bits[28:24] Global timestamp size field */
- 	drvdata->ts_size = FIELD_GET(TRCIDR0_TSSIZE_MASK, etmidr0);
+@@ -1608,7 +1608,8 @@ static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
+ 		state->trccntvr[i] = etm4x_read32(csa, TRCCNTVRn(i));
+ 	}
  
-@@ -1582,7 +1584,8 @@ static int etm4_cpu_save(struct etmv4_drvdata *drvdata)
- 	state->trcccctlr = etm4x_read32(csa, TRCCCCTLR);
- 	state->trcbbctlr = etm4x_read32(csa, TRCBBCTLR);
- 	state->trctraceidr = etm4x_read32(csa, TRCTRACEIDR);
--	state->trcqctlr = etm4x_read32(csa, TRCQCTLR);
-+	if (drvdata->q_filt)
-+		state->trcqctlr = etm4x_read32(csa, TRCQCTLR);
+-	for (i = 0; i < drvdata->nr_resource * 2; i++)
++	/* Resource selector pair 0 is reserved */
++	for (i = 2; i < drvdata->nr_resource * 2; i++)
+ 		state->trcrsctlr[i] = etm4x_read32(csa, TRCRSCTLRn(i));
  
- 	state->trcvictlr = etm4x_read32(csa, TRCVICTLR);
- 	state->trcviiectlr = etm4x_read32(csa, TRCVIIECTLR);
-@@ -1696,7 +1699,8 @@ static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
- 	etm4x_relaxed_write32(csa, state->trcccctlr, TRCCCCTLR);
- 	etm4x_relaxed_write32(csa, state->trcbbctlr, TRCBBCTLR);
- 	etm4x_relaxed_write32(csa, state->trctraceidr, TRCTRACEIDR);
--	etm4x_relaxed_write32(csa, state->trcqctlr, TRCQCTLR);
-+	if (drvdata->q_filt)
-+		etm4x_relaxed_write32(csa, state->trcqctlr, TRCQCTLR);
+ 	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
+@@ -1723,7 +1724,8 @@ static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
+ 		etm4x_relaxed_write32(csa, state->trccntvr[i], TRCCNTVRn(i));
+ 	}
  
- 	etm4x_relaxed_write32(csa, state->trcvictlr, TRCVICTLR);
- 	etm4x_relaxed_write32(csa, state->trcviiectlr, TRCVIIECTLR);
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x.h b/drivers/hwtracing/coresight/coresight-etm4x.h
-index c463dab350397..3ab528c6b91f1 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x.h
-+++ b/drivers/hwtracing/coresight/coresight-etm4x.h
-@@ -135,6 +135,7 @@
- #define TRCIDR0_TRCCCI				BIT(7)
- #define TRCIDR0_RETSTACK			BIT(9)
- #define TRCIDR0_NUMEVENT_MASK			GENMASK(11, 10)
-+#define TRCIDR0_QFILT				BIT(14)
- #define TRCIDR0_QSUPP_MASK			GENMASK(16, 15)
- #define TRCIDR0_TSSIZE_MASK			GENMASK(28, 24)
+-	for (i = 0; i < drvdata->nr_resource * 2; i++)
++	/* Resource selector pair 0 is reserved */
++	for (i = 2; i < drvdata->nr_resource * 2; i++)
+ 		etm4x_relaxed_write32(csa, state->trcrsctlr[i], TRCRSCTLRn(i));
  
-@@ -880,6 +881,7 @@ struct etmv4_save_state {
-  * @os_unlock:  True if access to management registers is allowed.
-  * @instrp0:	Tracing of load and store instructions
-  *		as P0 elements is supported.
-+ * @q_filt:	Q element filtering support, if Q elements are supported.
-  * @trcbb:	Indicates if the trace unit supports branch broadcast tracing.
-  * @trccond:	If the trace unit supports conditional
-  *		instruction tracing.
-@@ -938,6 +940,7 @@ struct etmv4_drvdata {
- 	bool				boot_enable;
- 	bool				os_unlock;
- 	bool				instrp0;
-+	bool				q_filt;
- 	bool				trcbb;
- 	bool				trccond;
- 	bool				retstack;
+ 	for (i = 0; i < drvdata->nr_ss_cmp; i++) {
 -- 
 2.43.0
 
