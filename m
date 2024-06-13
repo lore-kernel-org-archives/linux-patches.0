@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77EBDDB1;
-	Thu, 13 Jun 2024 11:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBFBDDB1;
+	Thu, 13 Jun 2024 11:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278760; cv=none; b=sSCS5MWNgpO4vEb6lHijYeJtjPWRZuzad51HLm6kTKpfuse38z5Y7OWxuttMT2kw9tw6XKgC+20M2wLORXYpNHRleTYIZDy2q8G3UAQpQEb1a4+alL/U0kMuhNBZvthKbmntMOhilHmKPUS7JF+fs3J5ZKCp3vBFZeeicTaweqk=
+	t=1718278763; cv=none; b=MxRU2lj8bewmAJx+kTkgSvnpmf6xIBjZpQ20E3kSzLRd/2glj0oXw49XFHostG5PP65L526JcYnRMS6LN/QdouktJhFgDvy2x9jxaO3TiG6YQ4s6ox+JYobVaDhDfAajw/1PcXDKEoiVVK4axh3TO6yKhdpqTmoGqYoSm6yECAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278760; c=relaxed/simple;
-	bh=Jfsvk0EAypvQtBAUJASSBb/Y1XF4hvVJLydalFhrQnc=;
+	s=arc-20240116; t=1718278763; c=relaxed/simple;
+	bh=izJtpBk7IXnGxLUfEfodBVVreDmjuh12MUcDsIdX2UY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K322sQvTvdDHldoX1MZQQn5cR4AgIm4lQiK0p9UEdp8/FXHeS7d5n2J5uOlRi72yV07LSAXWqIg913xW8n6V6yEdTfxLkUKxFfP3jS7qlQvS1nS4OnemGlo79/Qh7zksznG9PsVRzagE5HV6knNw2+pYTuOI4jcQSQc4OvhrZRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08sa92+K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J0s5kto+Aj68lPZ/eIt629STf6SsgwnKBJHXchqlchQHYk5kwbA/Du3Dr8L1Pve2HDsOJsCp+ZJs4JQEBDjluO+pXIqJydVNwx4VxfPpZUMO4uijron1ijPHfckZKWYQB4cwKGo53YBO+W33k8lnBUol1KY488kyVvyRnOq4r/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaRQLfz4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08sa92+K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE66C4AF1A;
-	Thu, 13 Jun 2024 11:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaRQLfz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25CF1C2BBFC;
+	Thu, 13 Jun 2024 11:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278760;
-	bh=Jfsvk0EAypvQtBAUJASSBb/Y1XF4hvVJLydalFhrQnc=;
+	s=korg; t=1718278763;
+	bh=izJtpBk7IXnGxLUfEfodBVVreDmjuh12MUcDsIdX2UY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08sa92+KnvqouajsLUZS0To5eYVt9r/ZhArpneFaHU4El9BB3Y1oTsjuzita+F1rm
-	 VWnrZLFDkHsFoxHmrsO8aGYzB8NbPsgh7BLXdBDSzeNdzFfvr+Ebf3hh4N6ZB3kJrz
-	 G9K9p2E7N7RSbO1NZ3ejtnwo4wGpr9iUH+dGvKnw=
+	b=LaRQLfz492CY6RyUS4eSom6ZOkP6WTw5hGZeBe+Hz8e9hq5kkP9elrSLy7ag4Am1A
+	 AeKSwqTim1fII/vKahs/R+LqyOHW6QLFCCZX16YPfokZUpr5BDfB982F+mL+dLFtc1
+	 oqkLLq4ojOCkcm8lHV2llS08LlPNu2A+cICP1U6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonin Bas <antonin.bas@broadcom.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Eelco Chaudron <echaudro@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 061/213] net: openvswitch: fix overwriting ct original tuple for ICMPv6
-Date: Thu, 13 Jun 2024 13:31:49 +0200
-Message-ID: <20240613113230.363977199@linuxfoundation.org>
+Subject: [PATCH 4.19 062/213] ipv6: sr: add missing seg6_local_exit
+Date: Thu, 13 Jun 2024 13:31:50 +0200
+Message-ID: <20240613113230.402497377@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -54,84 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 7c988176b6c16c516474f6fceebe0f055af5eb56 ]
+[ Upstream commit 3321687e321307629c71b664225b861ebf3e5753 ]
 
-OVS_PACKET_CMD_EXECUTE has 3 main attributes:
- - OVS_PACKET_ATTR_KEY - Packet metadata in a netlink format.
- - OVS_PACKET_ATTR_PACKET - Binary packet content.
- - OVS_PACKET_ATTR_ACTIONS - Actions to execute on the packet.
+Currently, we only call seg6_local_exit() in seg6_init() if
+seg6_local_init() failed. But forgot to call it in seg6_exit().
 
-OVS_PACKET_ATTR_KEY is parsed first to populate sw_flow_key structure
-with the metadata like conntrack state, input port, recirculation id,
-etc.  Then the packet itself gets parsed to populate the rest of the
-keys from the packet headers.
-
-Whenever the packet parsing code starts parsing the ICMPv6 header, it
-first zeroes out fields in the key corresponding to Neighbor Discovery
-information even if it is not an ND packet.
-
-It is an 'ipv6.nd' field.  However, the 'ipv6' is a union that shares
-the space between 'nd' and 'ct_orig' that holds the original tuple
-conntrack metadata parsed from the OVS_PACKET_ATTR_KEY.
-
-ND packets should not normally have conntrack state, so it's fine to
-share the space, but normal ICMPv6 Echo packets or maybe other types of
-ICMPv6 can have the state attached and it should not be overwritten.
-
-The issue results in all but the last 4 bytes of the destination
-address being wiped from the original conntrack tuple leading to
-incorrect packet matching and potentially executing wrong actions
-in case this packet recirculates within the datapath or goes back
-to userspace.
-
-ND fields should not be accessed in non-ND packets, so not clearing
-them should be fine.  Executing memset() only for actual ND packets to
-avoid the issue.
-
-Initializing the whole thing before parsing is needed because ND packet
-may not contain all the options.
-
-The issue only affects the OVS_PACKET_CMD_EXECUTE path and doesn't
-affect packets entering OVS datapath from network interfaces, because
-in this case CT metadata is populated from skb after the packet is
-already parsed.
-
-Fixes: 9dd7f8907c37 ("openvswitch: Add original direction conntrack tuple to sw_flow_key.")
-Reported-by: Antonin Bas <antonin.bas@broadcom.com>
-Closes: https://github.com/openvswitch/ovs-issues/issues/327
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://lore.kernel.org/r/20240509094228.1035477-1-i.maximets@ovn.org
+Fixes: d1df6fd8a1d2 ("ipv6: sr: define core operations for seg6local lightweight tunnel")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240509131812.1662197-2-liuhangbin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv6/seg6.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
-index 56b8e7167790f..857b1ffe3d856 100644
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -427,7 +427,6 @@ static int parse_icmpv6(struct sk_buff *skb, struct sw_flow_key *key,
- 	 */
- 	key->tp.src = htons(icmp->icmp6_type);
- 	key->tp.dst = htons(icmp->icmp6_code);
--	memset(&key->ipv6.nd, 0, sizeof(key->ipv6.nd));
- 
- 	if (icmp->icmp6_code == 0 &&
- 	    (icmp->icmp6_type == NDISC_NEIGHBOUR_SOLICITATION ||
-@@ -436,6 +435,8 @@ static int parse_icmpv6(struct sk_buff *skb, struct sw_flow_key *key,
- 		struct nd_msg *nd;
- 		int offset;
- 
-+		memset(&key->ipv6.nd, 0, sizeof(key->ipv6.nd));
-+
- 		/* In order to process neighbor discovery options, we need the
- 		 * entire packet.
- 		 */
+diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
+index 4bd601c964343..42ff4f421d42a 100644
+--- a/net/ipv6/seg6.c
++++ b/net/ipv6/seg6.c
+@@ -497,6 +497,7 @@ void seg6_exit(void)
+ 	seg6_hmac_exit();
+ #endif
+ #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
++	seg6_local_exit();
+ 	seg6_iptunnel_exit();
+ #endif
+ 	unregister_pernet_subsys(&ip6_segments_ops);
 -- 
 2.43.0
 
