@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE7E1465A7;
-	Thu, 13 Jun 2024 11:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FD91465B0;
+	Thu, 13 Jun 2024 11:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279587; cv=none; b=ho5spCBe2buaPa1LkhXXG8/HeKX5fmQXWwCjmRd45SjRNmpTQm40ABbfFW0f1fu3SIRD5m/L+5ogJUOPa9h++zJm/Pvbdwfh1ohY33O6UN1CLKfsEUSBRKFOR4yi+av1Q1XLNbjsGMSo35/sMd56MTmd3B0WqR70eYiwKv+SgMc=
+	t=1718279590; cv=none; b=IgCH+HiVzT6AnohrG/fZNOZq5MNLI79THZc5mk2Zqmtirhk6ztzW0uo0Dr8wxPYwTTuNyFdSKByw8JwLPhPKJ+8pB9ELQ94U+q4sujzXhqf5gfpCJXfeB1/hVIsnLL7ZbyO1PMasnKiWMMp7CJ7MlpYH4pKv3tuEwmXlpMkAXvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279587; c=relaxed/simple;
-	bh=XcZngvrOiFgiRdXevEXR+PurPTwgf9tTXx6HKoiwjuo=;
+	s=arc-20240116; t=1718279590; c=relaxed/simple;
+	bh=y0txJ4wajv1n+qqdE31I87uq+m+QAqWOlJG7gh3kMNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iExrOQtWGSn5Uh36pZDzRa+nv+CwF3oCkXuSrp3Kq7mKQ/HNhyHW4SkX638uSh2ojsnVLzBU5iHJc617lZThxTCC6eA5KZe7sR3EsML+FPIDbLBLruZ2hcknrN/ToifROgC4z/BQVXsBVSCLjoeGoGcYo2/QQyuMCLbcEaB5wjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XMqu1Zv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bozfhUdSZcxiadcGZHg0flTGPFH6WDEXHIhUSGfUE7PCs9T0/TCwp5ZKQstsEdrUQw0xVotYyutNiPosv8zdnSCHspJ0b2WXPujehEAjW/BXlfzmndL3l7h01e6EcF4pvBzVij0Ae5bZgyguVlBrbRnolYXYODXKOE2IGv7nMqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bz1bE+X3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XMqu1Zv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC9FCC2BBFC;
-	Thu, 13 Jun 2024 11:53:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bz1bE+X3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28C9C2BBFC;
+	Thu, 13 Jun 2024 11:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279587;
-	bh=XcZngvrOiFgiRdXevEXR+PurPTwgf9tTXx6HKoiwjuo=;
+	s=korg; t=1718279590;
+	bh=y0txJ4wajv1n+qqdE31I87uq+m+QAqWOlJG7gh3kMNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0XMqu1ZvJ6LDRx+/fk+e0LVQic0npgmHrVth0IpnYWzAzNV9NvS4KsjAzLyRj2NFT
-	 Em7684JtqMpcwfREpUJ6GNIDhA7KZHOol0IcWgCLpGK/FucXrGVy9J4LU1xwbf7+aQ
-	 qQTFG18dN+46UiaVenFauWJOOfW5PG1MtvJXmtgA=
+	b=Bz1bE+X3rXoNRug7Sm7Z8ABzo8BVXlt4Og6+oj8GLA4i1AzRJ9T+jiUYW420q33id
+	 dDs1NNx8VON/rh0FGO9Y8L46Up3GypG0j0hgCzEm4413FqFnZQ6g/juBaknwsSgq39
+	 hVaBXhfk8WXctyBaJssD31QwEjF0MxFZrTlXXiQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Frank van der Linden <fvdl@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	David Hildenbrand <david@redhat.com>,
 	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.9 096/157] mm/cma: drop incorrect alignment check in cma_init_reserved_mem
-Date: Thu, 13 Jun 2024 13:33:41 +0200
-Message-ID: <20240613113231.139277637@linuxfoundation.org>
+Subject: [PATCH 6.9 097/157] mm/hugetlb: pass correct order_per_bit to cma_declare_contiguous_nid
+Date: Thu, 13 Jun 2024 13:33:42 +0200
+Message-ID: <20240613113231.175986049@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -56,44 +56,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank van der Linden <fvdl@google.com>
 
-commit b174f139bdc8aaaf72f5b67ad1bd512c4868a87e upstream.
+commit 55d134a7b499c77e7cfd0ee41046f3c376e791e5 upstream.
 
-cma_init_reserved_mem uses IS_ALIGNED to check if the size represented by
-one bit in the cma allocation bitmask is aligned with
-CMA_MIN_ALIGNMENT_BYTES (pageblock size).
+The hugetlb_cma code passes 0 in the order_per_bit argument to
+cma_declare_contiguous_nid (the alignment, computed using the page order,
+is correctly passed in).
 
-However, this is too strict, as this will fail if order_per_bit >
-pageblock_order, which is a valid configuration.
+This causes a bit in the cma allocation bitmap to always represent a 4k
+page, making the bitmaps potentially very large, and slower.
 
-We could check IS_ALIGNED both ways, but since both numbers are powers of
-two, no check is needed at all.
+It would create bitmaps that would be pretty big.  E.g.  for a 4k page
+size on x86, hugetlb_cma=64G would mean a bitmap size of (64G / 4k) / 8
+== 2M.  With HUGETLB_PAGE_ORDER as order_per_bit, as intended, this
+would be (64G / 2M) / 8 == 4k.  So, that's quite a difference.
 
-Link: https://lkml.kernel.org/r/20240404162515.527802-1-fvdl@google.com
-Fixes: de9e14eebf33 ("drivers: dma-contiguous: add initialization from device tree")
+Also, this restricted the hugetlb_cma area to ((PAGE_SIZE <<
+MAX_PAGE_ORDER) * 8) * PAGE_SIZE (e.g.  128G on x86) , since
+bitmap_alloc uses normal page allocation, and is thus restricted by
+MAX_PAGE_ORDER.  Specifying anything about that would fail the CMA
+initialization.
+
+So, correctly pass in the order instead.
+
+Link: https://lkml.kernel.org/r/20240404162515.527802-2-fvdl@google.com
+Fixes: cf11e85fc08c ("mm: hugetlb: optionally allocate gigantic hugepages using cma")
 Signed-off-by: Frank van der Linden <fvdl@google.com>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
 Acked-by: David Hildenbrand <david@redhat.com>
 Cc: Marek Szyprowski <m.szyprowski@samsung.com>
 Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/cma.c |    4 ----
- 1 file changed, 4 deletions(-)
+ mm/hugetlb.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/mm/cma.c
-+++ b/mm/cma.c
-@@ -182,10 +182,6 @@ int __init cma_init_reserved_mem(phys_ad
- 	if (!size || !memblock_is_region_reserved(base, size))
- 		return -EINVAL;
- 
--	/* alignment should be aligned with order_per_bit */
--	if (!IS_ALIGNED(CMA_MIN_ALIGNMENT_PAGES, 1 << order_per_bit))
--		return -EINVAL;
--
- 	/* ensure minimal alignment required by mm core */
- 	if (!IS_ALIGNED(base | size, CMA_MIN_ALIGNMENT_BYTES))
- 		return -EINVAL;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -7879,9 +7879,9 @@ void __init hugetlb_cma_reserve(int orde
+ 		 * huge page demotion.
+ 		 */
+ 		res = cma_declare_contiguous_nid(0, size, 0,
+-						PAGE_SIZE << HUGETLB_PAGE_ORDER,
+-						 0, false, name,
+-						 &hugetlb_cma[nid], nid);
++					PAGE_SIZE << HUGETLB_PAGE_ORDER,
++					HUGETLB_PAGE_ORDER, false, name,
++					&hugetlb_cma[nid], nid);
+ 		if (res) {
+ 			pr_warn("hugetlb_cma: reservation failed: err %d, node %d",
+ 				res, nid);
 
 
