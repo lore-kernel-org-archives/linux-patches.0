@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1CD1448C6;
-	Thu, 13 Jun 2024 11:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B631474B8;
+	Thu, 13 Jun 2024 11:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279449; cv=none; b=IK3/6qOOtWpOtyz8lzliGeVrGjb0tqZR4KyVWxjcF+HMBAjufVzMUdEBe6sAIav/tfKtNNhrvbnzDHU1TxJ5MQMaWk6fj/vC94Rc3iO/jWMW8W8v/k8fa1tSQCih9CW2DiguEUOxRVmm/BxAIdEoQQ/+KD80ekrgb2EpBQ0DV5E=
+	t=1718279452; cv=none; b=DDc3JdsgODgpZLw48r1RIUVii3P+acOsYE4aFUQu+KEL3duSybFzFi/vPeL7VZSiLSWqW0B4HdaCDxYsso35XgNgyFjjJORrQgSSHkcH2pgReY1pIfO//ZeNQFbkUf+8tyAx3uefX+FMOo0CfqVlUqaYk8734hZZbK44K1ZOnAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279449; c=relaxed/simple;
-	bh=6xv+OtE+xEDmZjQV30EVHGT/zAyEe+XIy8R8499z/dg=;
+	s=arc-20240116; t=1718279452; c=relaxed/simple;
+	bh=PTSrmsBtAYIMpNPav9e9sSC4u8kNCVHUccrMuURHuGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZzriZY/ICu8HSAxTnFIkm7xjJ+lHS94h3JtLfva6HDDf5Y1Z7iwiJLalREYZeVU4KyaYjPl9afp6KtKwVS1fpxjkgqhI/wHScYAyzK/SZOKi6/79YVjnhigqGiPHEHe6HsOxUvPm9qC6ESPxEZ32Gb3TJvIOpmME0eOogpv6Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdFfYaAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gjMYfPNP+ZzfGYrByOoPejTLGap/atlbOzTumWyJbN6XpPXGU1V9O17a4zX+OICgChkqF2LZbZhm+aK1BzgtS1JDW22TUzy6SdxMIvv2TdgI48Oz1Kp62fLeYpPinp+jW7WUfegmYlZr7jV2SgBAyd+rCfJVjbITkh1eTw5DK00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRr6ynXA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdFfYaAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63231C32786;
-	Thu, 13 Jun 2024 11:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRr6ynXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D8DC4AF1D;
+	Thu, 13 Jun 2024 11:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279448;
-	bh=6xv+OtE+xEDmZjQV30EVHGT/zAyEe+XIy8R8499z/dg=;
+	s=korg; t=1718279451;
+	bh=PTSrmsBtAYIMpNPav9e9sSC4u8kNCVHUccrMuURHuGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdFfYaAqSpqkTH8skD4GSGfN7r4dmioLc3wfwRzBAf6GsFvIIGijTH96+bNuAaxBV
-	 ufNJFVoB7MNgsXbCK1gBDTOHyT6BYQdclcySMLuTDp+f0Sd/WJGCdUOQlKIBy6zr7r
-	 im6q/LASDXWgLH8Pc4hG2EoMKWr5HT7806N6tCQQ=
+	b=DRr6ynXA85svRANnxP5VONHk8L6QAJw5F+qUDiG4a8fyW0GGiiymTJGB+GVF4KmZy
+	 LnFakd17jrjWiU6r0O8DQ+UAoEnZVzKeiDeRHjMY+7EgpqwMPtms5ayJdyLAGbXM7+
+	 5VgPIbMWOto1MyBfwN/IegGo7tFd4KQ+UnoHCXfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hamish Martin <hamish.martin@alliedtelesis.co.nz>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.9 079/157] i2c: acpi: Unbind mux adapters before delete
-Date: Thu, 13 Jun 2024 13:33:24 +0200
-Message-ID: <20240613113230.479462324@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.9 080/157] HID: i2c-hid: elan: fix reset suspend current leakage
+Date: Thu, 13 Jun 2024 13:33:25 +0200
+Message-ID: <20240613113230.519063554@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -52,153 +52,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 3f858bbf04dbac934ac279aaee05d49eb9910051 upstream.
+commit 0eafc58f2194dbd01d4be40f99a697681171995b upstream.
 
-There is an issue with ACPI overlay table removal specifically related
-to I2C multiplexers.
+The Elan eKTH5015M touch controller found on the Lenovo ThinkPad X13s
+shares the VCC33 supply with other peripherals that may remain powered
+during suspend (e.g. when enabled as wakeup sources).
 
-Consider an ACPI SSDT Overlay that defines a PCA9548 I2C mux on an
-existing I2C bus. When this table is loaded we see the creation of a
-device for the overall PCA9548 chip and 8 further devices - one
-i2c_adapter each for the mux channels. These are all bound to their
-ACPI equivalents via an eventual invocation of acpi_bind_one().
+The reset line is also wired so that it can be left deasserted when the
+supply is off.
 
-When we unload the SSDT overlay we run into the problem. The ACPI
-devices are deleted as normal via acpi_device_del_work_fn() and the
-acpi_device_del_list.
+This is important as it avoids holding the controller in reset for
+extended periods of time when it remains powered, which can lead to
+increased power consumption, and also avoids leaking current through the
+X13s reset circuitry during suspend (and after driver unbind).
 
-However, the following warning and stack trace is output as the
-deletion does not go smoothly:
-------------[ cut here ]------------
-kernfs: can not remove 'physical_node', no directory
-WARNING: CPU: 1 PID: 11 at fs/kernfs/dir.c:1674 kernfs_remove_by_name_ns+0xb9/0xc0
-Modules linked in:
-CPU: 1 PID: 11 Comm: kworker/u128:0 Not tainted 6.8.0-rc6+ #1
-Hardware name: congatec AG conga-B7E3/conga-B7E3, BIOS 5.13 05/16/2023
-Workqueue: kacpi_hotplug acpi_device_del_work_fn
-RIP: 0010:kernfs_remove_by_name_ns+0xb9/0xc0
-Code: e4 00 48 89 ef e8 07 71 db ff 5b b8 fe ff ff ff 5d 41 5c 41 5d e9 a7 55 e4 00 0f 0b eb a6 48 c7 c7 f0 38 0d 9d e8 97 0a d5 ff <0f> 0b eb dc 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
-RSP: 0018:ffff9f864008fb28 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff8ef90a8d4940 RCX: 0000000000000000
-RDX: ffff8f000e267d10 RSI: ffff8f000e25c780 RDI: ffff8f000e25c780
-RBP: ffff8ef9186f9870 R08: 0000000000013ffb R09: 00000000ffffbfff
-R10: 00000000ffffbfff R11: ffff8f000e0a0000 R12: ffff9f864008fb50
-R13: ffff8ef90c93dd60 R14: ffff8ef9010d0958 R15: ffff8ef9186f98c8
-FS:  0000000000000000(0000) GS:ffff8f000e240000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f48f5253a08 CR3: 00000003cb82e000 CR4: 00000000003506f0
-Call Trace:
- <TASK>
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- ? __warn+0x7c/0x130
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- ? report_bug+0x171/0x1a0
- ? handle_bug+0x3c/0x70
- ? exc_invalid_op+0x17/0x70
- ? asm_exc_invalid_op+0x1a/0x20
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- ? kernfs_remove_by_name_ns+0xb9/0xc0
- acpi_unbind_one+0x108/0x180
- device_del+0x18b/0x490
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- device_unregister+0xd/0x30
- i2c_del_adapter.part.0+0x1bf/0x250
- i2c_mux_del_adapters+0xa1/0xe0
- i2c_device_remove+0x1e/0x80
- device_release_driver_internal+0x19a/0x200
- bus_remove_device+0xbf/0x100
- device_del+0x157/0x490
- ? __pfx_device_match_fwnode+0x10/0x10
- ? srso_return_thunk+0x5/0x5f
- device_unregister+0xd/0x30
- i2c_acpi_notify+0x10f/0x140
- notifier_call_chain+0x58/0xd0
- blocking_notifier_call_chain+0x3a/0x60
- acpi_device_del_work_fn+0x85/0x1d0
- process_one_work+0x134/0x2f0
- worker_thread+0x2f0/0x410
- ? __pfx_worker_thread+0x10/0x10
- kthread+0xe3/0x110
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2f/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1b/0x30
- </TASK>
----[ end trace 0000000000000000 ]---
-...
-repeated 7 more times, 1 for each channel of the mux
-...
+Use the new 'no-reset-on-power-off' devicetree property to determine
+when reset needs to be asserted on power down.
 
-The issue is that the binding of the ACPI devices to their peer I2C
-adapters is not correctly cleaned up. Digging deeper into the issue we
-see that the deletion order is such that the ACPI devices matching the
-mux channel i2c adapters are deleted first during the SSDT overlay
-removal. For each of the channels we see a call to i2c_acpi_notify()
-with ACPI_RECONFIG_DEVICE_REMOVE but, because these devices are not
-actually i2c_clients, nothing is done for them.
+Notably this also avoids wasting power on machine variants without a
+touchscreen for which the driver would otherwise exit probe with reset
+asserted.
 
-Later on, after each of the mux channels has been dealt with, we come
-to delete the i2c_client representing the PCA9548 device. This is the
-call stack we see above, whereby the kernel cleans up the i2c_client
-including destruction of the mux and its channel adapters. At this
-point we do attempt to unbind from the ACPI peers but those peers no
-longer exist and so we hit the kernfs errors.
-
-The fix is to augment i2c_acpi_notify() to handle i2c_adapters. But,
-given that the life cycle of the adapters is linked to the i2c_client,
-instead of deleting the i2c_adapters during the i2c_acpi_notify(), we
-just trigger unbinding of the ACPI device from the adapter device, and
-allow the clean up of the adapter to continue in the way it always has.
-
-Signed-off-by: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Fixes: 525e6fabeae2 ("i2c / ACPI: add support for ACPI reconfigure notifications")
-Cc: <stable@vger.kernel.org> # v4.8+
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Fixes: bd3cba00dcc6 ("HID: i2c-hid: elan: Add support for Elan eKTH6915 i2c-hid touchscreens")
+Cc: <stable@vger.kernel.org>	# 6.0
+Cc: Douglas Anderson <dianders@chromium.org>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240507144821.12275-5-johan+linaro@kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-acpi.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-of-elan.c |   59 +++++++++++++++++++++++++++-------
+ 1 file changed, 47 insertions(+), 12 deletions(-)
 
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -445,6 +445,11 @@ static struct i2c_client *i2c_acpi_find_
- 	return i2c_find_device_by_fwnode(acpi_fwnode_handle(adev));
- }
+--- a/drivers/hid/i2c-hid/i2c-hid-of-elan.c
++++ b/drivers/hid/i2c-hid/i2c-hid-of-elan.c
+@@ -31,6 +31,7 @@ struct i2c_hid_of_elan {
+ 	struct regulator *vcc33;
+ 	struct regulator *vccio;
+ 	struct gpio_desc *reset_gpio;
++	bool no_reset_on_power_off;
+ 	const struct elan_i2c_hid_chip_data *chip_data;
+ };
  
-+static struct i2c_adapter *i2c_acpi_find_adapter_by_adev(struct acpi_device *adev)
-+{
-+	return i2c_find_adapter_by_fwnode(acpi_fwnode_handle(adev));
-+}
+@@ -40,17 +41,17 @@ static int elan_i2c_hid_power_up(struct
+ 		container_of(ops, struct i2c_hid_of_elan, ops);
+ 	int ret;
+ 
++	gpiod_set_value_cansleep(ihid_elan->reset_gpio, 1);
 +
- static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
- 			   void *arg)
- {
-@@ -471,11 +476,17 @@ static int i2c_acpi_notify(struct notifi
- 			break;
- 
- 		client = i2c_acpi_find_client_by_adev(adev);
--		if (!client)
--			break;
-+		if (client) {
-+			i2c_unregister_device(client);
-+			put_device(&client->dev);
-+		}
-+
-+		adapter = i2c_acpi_find_adapter_by_adev(adev);
-+		if (adapter) {
-+			acpi_unbind_one(&adapter->dev);
-+			put_device(&adapter->dev);
-+		}
- 
--		i2c_unregister_device(client);
--		put_device(&client->dev);
- 		break;
+ 	if (ihid_elan->vcc33) {
+ 		ret = regulator_enable(ihid_elan->vcc33);
+ 		if (ret)
+-			return ret;
++			goto err_deassert_reset;
  	}
  
+ 	ret = regulator_enable(ihid_elan->vccio);
+-	if (ret) {
+-		regulator_disable(ihid_elan->vcc33);
+-		return ret;
+-	}
++	if (ret)
++		goto err_disable_vcc33;
+ 
+ 	if (ihid_elan->chip_data->post_power_delay_ms)
+ 		msleep(ihid_elan->chip_data->post_power_delay_ms);
+@@ -60,6 +61,15 @@ static int elan_i2c_hid_power_up(struct
+ 		msleep(ihid_elan->chip_data->post_gpio_reset_on_delay_ms);
+ 
+ 	return 0;
++
++err_disable_vcc33:
++	if (ihid_elan->vcc33)
++		regulator_disable(ihid_elan->vcc33);
++err_deassert_reset:
++	if (ihid_elan->no_reset_on_power_off)
++		gpiod_set_value_cansleep(ihid_elan->reset_gpio, 0);
++
++	return ret;
+ }
+ 
+ static void elan_i2c_hid_power_down(struct i2chid_ops *ops)
+@@ -67,7 +77,14 @@ static void elan_i2c_hid_power_down(stru
+ 	struct i2c_hid_of_elan *ihid_elan =
+ 		container_of(ops, struct i2c_hid_of_elan, ops);
+ 
+-	gpiod_set_value_cansleep(ihid_elan->reset_gpio, 1);
++	/*
++	 * Do not assert reset when the hardware allows for it to remain
++	 * deasserted regardless of the state of the (shared) power supply to
++	 * avoid wasting power when the supply is left on.
++	 */
++	if (!ihid_elan->no_reset_on_power_off)
++		gpiod_set_value_cansleep(ihid_elan->reset_gpio, 1);
++
+ 	if (ihid_elan->chip_data->post_gpio_reset_off_delay_ms)
+ 		msleep(ihid_elan->chip_data->post_gpio_reset_off_delay_ms);
+ 
+@@ -79,6 +96,7 @@ static void elan_i2c_hid_power_down(stru
+ static int i2c_hid_of_elan_probe(struct i2c_client *client)
+ {
+ 	struct i2c_hid_of_elan *ihid_elan;
++	int ret;
+ 
+ 	ihid_elan = devm_kzalloc(&client->dev, sizeof(*ihid_elan), GFP_KERNEL);
+ 	if (!ihid_elan)
+@@ -93,21 +111,38 @@ static int i2c_hid_of_elan_probe(struct
+ 	if (IS_ERR(ihid_elan->reset_gpio))
+ 		return PTR_ERR(ihid_elan->reset_gpio);
+ 
++	ihid_elan->no_reset_on_power_off = of_property_read_bool(client->dev.of_node,
++						"no-reset-on-power-off");
++
+ 	ihid_elan->vccio = devm_regulator_get(&client->dev, "vccio");
+-	if (IS_ERR(ihid_elan->vccio))
+-		return PTR_ERR(ihid_elan->vccio);
++	if (IS_ERR(ihid_elan->vccio)) {
++		ret = PTR_ERR(ihid_elan->vccio);
++		goto err_deassert_reset;
++	}
+ 
+ 	ihid_elan->chip_data = device_get_match_data(&client->dev);
+ 
+ 	if (ihid_elan->chip_data->main_supply_name) {
+ 		ihid_elan->vcc33 = devm_regulator_get(&client->dev,
+ 						      ihid_elan->chip_data->main_supply_name);
+-		if (IS_ERR(ihid_elan->vcc33))
+-			return PTR_ERR(ihid_elan->vcc33);
++		if (IS_ERR(ihid_elan->vcc33)) {
++			ret = PTR_ERR(ihid_elan->vcc33);
++			goto err_deassert_reset;
++		}
+ 	}
+ 
+-	return i2c_hid_core_probe(client, &ihid_elan->ops,
+-				  ihid_elan->chip_data->hid_descriptor_address, 0);
++	ret = i2c_hid_core_probe(client, &ihid_elan->ops,
++				 ihid_elan->chip_data->hid_descriptor_address, 0);
++	if (ret)
++		goto err_deassert_reset;
++
++	return 0;
++
++err_deassert_reset:
++	if (ihid_elan->no_reset_on_power_off)
++		gpiod_set_value_cansleep(ihid_elan->reset_gpio, 0);
++
++	return ret;
+ }
+ 
+ static const struct elan_i2c_hid_chip_data elan_ekth6915_chip_data = {
 
 
