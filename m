@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3664146D69;
-	Thu, 13 Jun 2024 12:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C045145A06;
+	Thu, 13 Jun 2024 12:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281384; cv=none; b=sdc73d7SBHRCYJ/8VkG0piLTe12OSZFPVNak6gVSR/ND3vbyWu0PwNhkVQV4SpQfDaL6MUdqEdohQ4e06g1F4xMiqLcrt6405AHQRz6ZxY0CrBRDRpE0ViVQ4O9pS+8cVPZtz+03d7qAfaynHJUaz3+meS9tIt26yPPrrQoS48g=
+	t=1718281387; cv=none; b=XUX+KOVyHAcLMTrfjMCxaxkpemrXuWECsFcJTJ5dRut6JcknfFQQXoQjcGzZKF3kKMOClnNUiGMUls2lM2ITv25WexrBjn1t5ht4DJNybgliPs6d+8Ibah13uRv65QxovGecVkA1XXrjs6xXS5v9PWYKvk762MVS07Vr6GOANFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281384; c=relaxed/simple;
-	bh=/k7jSyqvaaLSbHsA0+YkQBR394e760giHhFKrTTs+C8=;
+	s=arc-20240116; t=1718281387; c=relaxed/simple;
+	bh=XEr7eEYt6RyNdndWP2OlRB+pL1s+noF1369ip09fzxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYbeTUMYhMqsHTWWMdFlfLzRIoq/A8Ymxpno48BSebtyCK1CSAhrDCEp3adp6+lVy2Y95z3y+q1rn/E+IwZGw0TpmBIc0DVTHxQHZPYRUdD2ESi+PuidfdHDCbEFuGFlDJ9bHD0oR14jEvR8rdLYXxbLfc/s3TMEnOjvMw59M/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMJwo3VN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=f5wzTaYw4Chx1nmnCwbJIQzV/EXrFfnk8diaP23VqH4ztsNUaKYvg0GxMq1ggNy1FjeVSzkPUyP4GWnjnkLCFVeruBJsxmAu3juFvYY6dTJCqZShFxOPoFaiogdsuQpYeSns8oOiGyqlghpfDwX6j7Q4vZ4982VCHM8DcqYeFiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qmn2HM+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMJwo3VN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED64C2BBFC;
-	Thu, 13 Jun 2024 12:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qmn2HM+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523A6C2BBFC;
+	Thu, 13 Jun 2024 12:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281383;
-	bh=/k7jSyqvaaLSbHsA0+YkQBR394e760giHhFKrTTs+C8=;
+	s=korg; t=1718281386;
+	bh=XEr7eEYt6RyNdndWP2OlRB+pL1s+noF1369ip09fzxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMJwo3VNHuzsDnRNq4kUgXqEsnRe4L347JhUpF1CQy4sYF39IV3dXr5EyJ7O6rjIy
-	 yeVTbigz23Q65aticV5HxngQgVhVJ2UUorX1a/gPJRx+BdTdTQoQ0Mdt4f5HeOrPEY
-	 bRMeJrxu/N2lBKa7EA3KrAUnGBSVdv6A2x5sExtk=
+	b=Qmn2HM+DzGu0DSoFt2K/c7BrRTJGHZIghYV422y8wLCb5JCehTE+zzhPLxfOB+FE0
+	 9iG/UbWnHrpgwG0zQ3gL3Y8XCMl6N2DWpoQSRNU4yuYzmEefA6D1l1wnTYgOBmhfFl
+	 QlK0Z6/nssujltvMVcbVZ+xzBmkEXuqJsJaDp2Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Palmer Dabbelt <palmerdabbelt@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 237/317] virtio: delete vq in vp_find_vqs_msix() when request_irq() fails
-Date: Thu, 13 Jun 2024 13:34:15 +0200
-Message-ID: <20240613113256.717771877@linuxfoundation.org>
+Subject: [PATCH 5.10 238/317] riscv: Cleanup stacktrace
+Date: Thu, 13 Jun 2024 13:34:16 +0200
+Message-ID: <20240613113256.755914668@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -45,98 +45,125 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-[ Upstream commit 89875151fccdd024d571aa884ea97a0128b968b6 ]
+[ Upstream commit 99c168fccbfedbc10ce1cb2dcb9eb790c478d833 ]
 
-When request_irq() fails, error path calls vp_del_vqs(). There, as vq is
-present in the list, free_irq() is called for the same vector. That
-causes following splat:
+1. add asm/stacktrace.h for walk_stackframe and struct stackframe
+2. remove unnecessary blank lines in stacktrace.c
+3. fix warning "no previous prototype for ‘fill_callchain’"
 
-[    0.414355] Trying to free already-free IRQ 27
-[    0.414403] WARNING: CPU: 1 PID: 1 at kernel/irq/manage.c:1899 free_irq+0x1a1/0x2d0
-[    0.414510] Modules linked in:
-[    0.414540] CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.9.0-rc4+ #27
-[    0.414540] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-1.fc39 04/01/2014
-[    0.414540] RIP: 0010:free_irq+0x1a1/0x2d0
-[    0.414540] Code: 1e 00 48 83 c4 08 48 89 e8 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc 90 8b 74 24 04 48 c7 c7 98 80 6c b1 e8 00 c9 f7 ff 90 <0f> 0b 90 90 48 89 ee 4c 89 ef e8 e0 20 b8 00 49 8b 47 40 48 8b 40
-[    0.414540] RSP: 0000:ffffb71480013ae0 EFLAGS: 00010086
-[    0.414540] RAX: 0000000000000000 RBX: ffffa099c2722000 RCX: 0000000000000000
-[    0.414540] RDX: 0000000000000000 RSI: ffffb71480013998 RDI: 0000000000000001
-[    0.414540] RBP: 0000000000000246 R08: 00000000ffffdfff R09: 0000000000000001
-[    0.414540] R10: 00000000ffffdfff R11: ffffffffb18729c0 R12: ffffa099c1c91760
-[    0.414540] R13: ffffa099c1c916a4 R14: ffffa099c1d2f200 R15: ffffa099c1c91600
-[    0.414540] FS:  0000000000000000(0000) GS:ffffa099fec40000(0000) knlGS:0000000000000000
-[    0.414540] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    0.414540] CR2: 0000000000000000 CR3: 0000000008e3e001 CR4: 0000000000370ef0
-[    0.414540] Call Trace:
-[    0.414540]  <TASK>
-[    0.414540]  ? __warn+0x80/0x120
-[    0.414540]  ? free_irq+0x1a1/0x2d0
-[    0.414540]  ? report_bug+0x164/0x190
-[    0.414540]  ? handle_bug+0x3b/0x70
-[    0.414540]  ? exc_invalid_op+0x17/0x70
-[    0.414540]  ? asm_exc_invalid_op+0x1a/0x20
-[    0.414540]  ? free_irq+0x1a1/0x2d0
-[    0.414540]  vp_del_vqs+0xc1/0x220
-[    0.414540]  vp_find_vqs_msix+0x305/0x470
-[    0.414540]  vp_find_vqs+0x3e/0x1a0
-[    0.414540]  vp_modern_find_vqs+0x1b/0x70
-[    0.414540]  init_vqs+0x387/0x600
-[    0.414540]  virtnet_probe+0x50a/0xc80
-[    0.414540]  virtio_dev_probe+0x1e0/0x2b0
-[    0.414540]  really_probe+0xc0/0x2c0
-[    0.414540]  ? __pfx___driver_attach+0x10/0x10
-[    0.414540]  __driver_probe_device+0x73/0x120
-[    0.414540]  driver_probe_device+0x1f/0xe0
-[    0.414540]  __driver_attach+0x88/0x180
-[    0.414540]  bus_for_each_dev+0x85/0xd0
-[    0.414540]  bus_add_driver+0xec/0x1f0
-[    0.414540]  driver_register+0x59/0x100
-[    0.414540]  ? __pfx_virtio_net_driver_init+0x10/0x10
-[    0.414540]  virtio_net_driver_init+0x90/0xb0
-[    0.414540]  do_one_initcall+0x58/0x230
-[    0.414540]  kernel_init_freeable+0x1a3/0x2d0
-[    0.414540]  ? __pfx_kernel_init+0x10/0x10
-[    0.414540]  kernel_init+0x1a/0x1c0
-[    0.414540]  ret_from_fork+0x31/0x50
-[    0.414540]  ? __pfx_kernel_init+0x10/0x10
-[    0.414540]  ret_from_fork_asm+0x1a/0x30
-[    0.414540]  </TASK>
-
-Fix this by calling deleting the current vq when request_irq() fails.
-
-Fixes: 0b0f9dc52ed0 ("Revert "virtio_pci: use shared interrupts for virtqueues"")
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Message-Id: <20240426150845.3999481-1-jiri@resnulli.us>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Signed-off-by: Palmer Dabbelt <palmerdabbelt@google.com>
+Stable-dep-of: a2a4d4a6a0bf ("riscv: stacktrace: fixed walk_stackframe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_pci_common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/riscv/include/asm/stacktrace.h | 17 +++++++++++++++++
+ arch/riscv/kernel/perf_callchain.c  | 10 ++--------
+ arch/riscv/kernel/stacktrace.c      |  9 ++-------
+ 3 files changed, 21 insertions(+), 15 deletions(-)
+ create mode 100644 arch/riscv/include/asm/stacktrace.h
 
-diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
-index 1e890ef176873..a6f375417fd54 100644
---- a/drivers/virtio/virtio_pci_common.c
-+++ b/drivers/virtio/virtio_pci_common.c
-@@ -339,8 +339,10 @@ static int vp_find_vqs_msix(struct virtio_device *vdev, unsigned nvqs,
- 				  vring_interrupt, 0,
- 				  vp_dev->msix_names[msix_vec],
- 				  vqs[i]);
--		if (err)
-+		if (err) {
-+			vp_del_vq(vqs[i]);
- 			goto error_find;
-+		}
- 	}
- 	return 0;
+diff --git a/arch/riscv/include/asm/stacktrace.h b/arch/riscv/include/asm/stacktrace.h
+new file mode 100644
+index 0000000000000..f09c1e31bde9c
+--- /dev/null
++++ b/arch/riscv/include/asm/stacktrace.h
+@@ -0,0 +1,17 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#ifndef _ASM_RISCV_STACKTRACE_H
++#define _ASM_RISCV_STACKTRACE_H
++
++#include <linux/sched.h>
++#include <asm/ptrace.h>
++
++struct stackframe {
++	unsigned long fp;
++	unsigned long ra;
++};
++
++extern void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
++				    bool (*fn)(unsigned long, void *), void *arg);
++
++#endif /* _ASM_RISCV_STACKTRACE_H */
+diff --git a/arch/riscv/kernel/perf_callchain.c b/arch/riscv/kernel/perf_callchain.c
+index fb02811df7143..8b4bd418b3434 100644
+--- a/arch/riscv/kernel/perf_callchain.c
++++ b/arch/riscv/kernel/perf_callchain.c
+@@ -4,11 +4,7 @@
+ #include <linux/perf_event.h>
+ #include <linux/uaccess.h>
  
+-/* Kernel callchain */
+-struct stackframe {
+-	unsigned long fp;
+-	unsigned long ra;
+-};
++#include <asm/stacktrace.h>
+ 
+ /*
+  * Get the return address for a single stackframe and return a pointer to the
+@@ -75,13 +71,11 @@ void perf_callchain_user(struct perf_callchain_entry_ctx *entry,
+ 		fp = user_backtrace(entry, fp, 0);
+ }
+ 
+-bool fill_callchain(unsigned long pc, void *entry)
++static bool fill_callchain(unsigned long pc, void *entry)
+ {
+ 	return perf_callchain_store(entry, pc) == 0;
+ }
+ 
+-void notrace walk_stackframe(struct task_struct *task,
+-	struct pt_regs *regs, bool (*fn)(unsigned long, void *), void *arg);
+ void perf_callchain_kernel(struct perf_callchain_entry_ctx *entry,
+ 			   struct pt_regs *regs)
+ {
+diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+index 9c34735c1e771..cd14309fff0d9 100644
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -12,15 +12,12 @@
+ #include <linux/stacktrace.h>
+ #include <linux/ftrace.h>
+ 
++#include <asm/stacktrace.h>
++
+ register unsigned long sp_in_global __asm__("sp");
+ 
+ #ifdef CONFIG_FRAME_POINTER
+ 
+-struct stackframe {
+-	unsigned long fp;
+-	unsigned long ra;
+-};
+-
+ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+ 			     bool (*fn)(unsigned long, void *), void *arg)
+ {
+@@ -102,7 +99,6 @@ void notrace walk_stackframe(struct task_struct *task,
+ 
+ #endif /* CONFIG_FRAME_POINTER */
+ 
+-
+ static bool print_trace_address(unsigned long pc, void *arg)
+ {
+ 	const char *loglvl = arg;
+@@ -136,7 +132,6 @@ unsigned long get_wchan(struct task_struct *task)
+ 	return pc;
+ }
+ 
+-
+ #ifdef CONFIG_STACKTRACE
+ 
+ static bool __save_trace(unsigned long pc, void *arg, bool nosched)
 -- 
 2.43.0
 
