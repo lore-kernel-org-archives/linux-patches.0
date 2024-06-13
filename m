@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3BD1E519;
-	Thu, 13 Jun 2024 12:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB471F937;
+	Thu, 13 Jun 2024 12:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282261; cv=none; b=QGW2gH/O2N2rR2KwrNoiZOYFn3GQ5JH8WWuw1KcbdUSdue5JKaAlVG1+hlYH8wgE7iAolhAkwglxrKcSoLexJGyndMGpDrDOyrly/NDkWMzICf7wrXpflf2octfnUJtg17I6FAoi+ySPjqSjgsW0EgX7KVdShaUHqVhvTYY8Tbk=
+	t=1718282264; cv=none; b=BmjIhNsPG0vnnZxGq9z6Ny2S+mhkWKv8CB6H/DlIi6B01z4Qk9K9EjXRdLRhKwxJihvxkQdkjHy8+wQcHhrq5Jgd1eXyrKV8n9Ai1eU4kgzlU1bBC+TYvImt/TJewdajoJzz7QW8eohwPzNbxaJZ4jEXNYnC59k+PilXfdOfbr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282261; c=relaxed/simple;
-	bh=NABbrh2H2g9enxUDEdq9BtYxkgl/C4XJwOs88GIVKqc=;
+	s=arc-20240116; t=1718282264; c=relaxed/simple;
+	bh=IfGS+bg81Gb5IIY9ghi7bpWxei0kR5phRIxNQFn/yYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfcrIUqzrMfjvc10q7IfNxefhLRtXKuQCICXS/USYPg7ooJCMIMh+2cuwdxmJ/8at0Zz2LY/4AlhzEsZG9SB3w3rpQPyHSwSVvPdXbAmoVb706pNRfLm/85I6rAuZYa0tXtePu+E01m2Lm1/o7WTPDTcNG6Eipyo3SrYK+asJ+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Qsas425; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AR9KDEkZgsUz0+owuhqDMYGl/BpmX9DWvFWaEuw9nveuNUeXFu+wPyMdLgQPtrWtu12Zq0lVcP4e9Tl947In+t/9OA9nRHOw3Z4IpuehDMgGq0I9e8ggq2NVCBcf5UnazDNISyjZ6Krh2oRRGxFKXhtvvufdtdAYDgtVcR41UHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/mlLVzU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Qsas425"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A2AC2BBFC;
-	Thu, 13 Jun 2024 12:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/mlLVzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46538C2BBFC;
+	Thu, 13 Jun 2024 12:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282261;
-	bh=NABbrh2H2g9enxUDEdq9BtYxkgl/C4XJwOs88GIVKqc=;
+	s=korg; t=1718282264;
+	bh=IfGS+bg81Gb5IIY9ghi7bpWxei0kR5phRIxNQFn/yYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Qsas425RVox5wqALlxdGtNIOUXwsMbnPYI9I9yqu3nAgbSPByi3BmU5qscQ/vubz
-	 BuwsgZd3765OoP17TOoepxopbEQFDyzDlTq0RLrx2eBzQlH2RG4TAk+QdgHWr6DtgF
-	 qLbWraqyqNlqJQZw8BlvPvLwj9g4gqW/YCtVX3Do=
+	b=g/mlLVzUZj9LywqZrsa8D49VnSOp6wQD1Zrg7Vo8sXgLyLq7ZqwrBNs8CMnry+BWu
+	 cJ1dw0AVhm+6cXNcPqlRuIXO0a0R2uNrsP1y9m7naknMDGrpUyAA8gdGyaJAKf8qCg
+	 u3WzaGgOyyMnH941xGGG7OA5+bOTq6Qxp77NyH2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 186/402] serial: max3100: Lock port->lock when calling uart_handle_cts_change()
-Date: Thu, 13 Jun 2024 13:32:23 +0200
-Message-ID: <20240613113309.403571463@linuxfoundation.org>
+Subject: [PATCH 5.15 187/402] serial: max3100: Update uart_driver_registered on driver removal
+Date: Thu, 13 Jun 2024 13:32:24 +0200
+Message-ID: <20240613113309.441518536@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -44,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -52,61 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 77ab53371a2066fdf9b895246505f5ef5a4b5d47 ]
+[ Upstream commit 712a1fcb38dc7cac6da63ee79a88708fbf9c45ec ]
 
-uart_handle_cts_change() has to be called with port lock taken,
-Since we run it in a separate work, the lock may not be taken at
-the time of running. Make sure that it's taken by explicitly doing
-that. Without it we got a splat:
+The removal of the last MAX3100 device triggers the removal of
+the driver. However, code doesn't update the respective global
+variable and after insmod — rmmod — insmod cycle the kernel
+oopses:
 
-  WARNING: CPU: 0 PID: 10 at drivers/tty/serial/serial_core.c:3491 uart_handle_cts_change+0xa6/0xb0
+  max3100 spi-PRP0001:01: max3100_probe: adding port 0
+  BUG: kernel NULL pointer dereference, address: 0000000000000408
   ...
-  Workqueue: max3100-0 max3100_work [max3100]
-  RIP: 0010:uart_handle_cts_change+0xa6/0xb0
+  RIP: 0010:serial_core_register_port+0xa0/0x840
   ...
-   max3100_handlerx+0xc5/0x110 [max3100]
-   max3100_work+0x12a/0x340 [max3100]
+   max3100_probe+0x1b6/0x280 [max3100]
+   spi_probe+0x8d/0xb0
+
+Update the actual state so next time UART driver will be registered
+again.
+
+Hugo also noticed, that the error path in the probe also affected
+by having the variable set, and not cleared. Instead of clearing it
+move the assignment after the successfull uart_register_driver() call.
 
 Fixes: 7831d56b0a35 ("tty: MAX3100")
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240402195306.269276-2-andriy.shevchenko@linux.intel.com
+Reviewed-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240402195306.269276-3-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max3100.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/tty/serial/max3100.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/tty/serial/max3100.c b/drivers/tty/serial/max3100.c
-index 3c92d4e014887..b3b77ffd5b423 100644
+index b3b77ffd5b423..24cd345ea6e3d 100644
 --- a/drivers/tty/serial/max3100.c
 +++ b/drivers/tty/serial/max3100.c
-@@ -213,7 +213,7 @@ static int max3100_sr(struct max3100_port *s, u16 tx, u16 *rx)
+@@ -751,13 +751,14 @@ static int max3100_probe(struct spi_device *spi)
+ 	mutex_lock(&max3100s_lock);
+ 
+ 	if (!uart_driver_registered) {
+-		uart_driver_registered = 1;
+ 		retval = uart_register_driver(&max3100_uart_driver);
+ 		if (retval) {
+ 			printk(KERN_ERR "Couldn't register max3100 uart driver\n");
+ 			mutex_unlock(&max3100s_lock);
+ 			return retval;
+ 		}
++
++		uart_driver_registered = 1;
+ 	}
+ 
+ 	for (i = 0; i < MAX_MAX3100; i++)
+@@ -843,6 +844,7 @@ static int max3100_remove(struct spi_device *spi)
+ 		}
+ 	pr_debug("removing max3100 driver\n");
+ 	uart_unregister_driver(&max3100_uart_driver);
++	uart_driver_registered = 0;
+ 
+ 	mutex_unlock(&max3100s_lock);
  	return 0;
- }
- 
--static int max3100_handlerx(struct max3100_port *s, u16 rx)
-+static int max3100_handlerx_unlocked(struct max3100_port *s, u16 rx)
- {
- 	unsigned int ch, flg, status = 0;
- 	int ret = 0, cts;
-@@ -253,6 +253,17 @@ static int max3100_handlerx(struct max3100_port *s, u16 rx)
- 	return ret;
- }
- 
-+static int max3100_handlerx(struct max3100_port *s, u16 rx)
-+{
-+	unsigned long flags;
-+	int ret;
-+
-+	uart_port_lock_irqsave(&s->port, &flags);
-+	ret = max3100_handlerx_unlocked(s, rx);
-+	uart_port_unlock_irqrestore(&s->port, flags);
-+	return ret;
-+}
-+
- static void max3100_work(struct work_struct *w)
- {
- 	struct max3100_port *s = container_of(w, struct max3100_port, work);
 -- 
 2.43.0
 
