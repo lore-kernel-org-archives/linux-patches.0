@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BF01411C5;
-	Thu, 13 Jun 2024 12:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FCA142E84;
+	Thu, 13 Jun 2024 12:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280995; cv=none; b=D3s8a0U0guLGRjJyFKcA3oY3FqJSlz+szRs2gd0gi4MLveRTUcFFhhsgnnU4+eIcF/qyKDBRh+Z6+YmqeZWI9nMir6X/itnqKwl/dpNiVA8k9k2f6b/0Z8/z74RGcA8MCUQQ5btmsUUYcNvsbrk+iEnBhe6aSaC7/n7PCvDNHKE=
+	t=1718280997; cv=none; b=VTQLwxCzHXJ22ReNQrn1uoyd1FtaGskKWees45/YzEL3ScDRHc9PAS6Sx1ks9H7BccQdg1zKDwbaOF/V1jv136bjWiBgyp0fZgw45AHp7Ula8zzi0ESkp0mZ+I8YTYpqxTCVMbP1Ri7PozhZEjWGfLZvY7M8LZ2dtP/JYQkmWcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280995; c=relaxed/simple;
-	bh=0Rvg35jk8MehwPwgSew32l1mwb5yRsGfaXQHcrv12zI=;
+	s=arc-20240116; t=1718280997; c=relaxed/simple;
+	bh=MBr341mkM89cq/Z6YgL1e01dh5Mlwm+PBf7HlGnyELI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNebX4s0NwReepvZuIM8HkUmPFvgk0X8xmjPOL9tjynELzgKiuwwGwkcRztAQcDcfrHgkzukx62OaaCwFwFOokVNoNw5UXg8BLSDbsx3lC7FsFY58VgcE8LXHSG/MkSt9l1YPUDCDnp0PZf7bmDs0tvzQ2Sefpga38GD+n+RKUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLpZRhO6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NW1zS2KK4adGHw6ptcESK4YDUlXszQcR2RKJH1LKKaJ+NwQnrA5AoAuXA/tFS0vpRAHVQi/BYdl+PEQ2Cd2fpBKR0HACx570F+A/piv9f7Zw1w7NeDUt4b8sh4AD/CSGb6DjZpwNpVsmL61RovryQWuQ9l56u2/Dit/HPkz7hgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtviVpxd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLpZRhO6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6941BC2BBFC;
-	Thu, 13 Jun 2024 12:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtviVpxd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D84C2BBFC;
+	Thu, 13 Jun 2024 12:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280994;
-	bh=0Rvg35jk8MehwPwgSew32l1mwb5yRsGfaXQHcrv12zI=;
+	s=korg; t=1718280997;
+	bh=MBr341mkM89cq/Z6YgL1e01dh5Mlwm+PBf7HlGnyELI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLpZRhO6zi1hdocYyIXFk/rt4s7EQFGFGYJkzuZrUHcREeRGBKhWJsUexjqvXZPTb
-	 oebtvb3RRUz2SpsqnSK849GFl7kn5y4tBlwT/K0phqfqZDtgOSljwsDQAVAAcjUdCT
-	 fLkydkdSAQ3DnrW/GnWj1A2VHoYfVw5IuENOxG4k=
+	b=TtviVpxdyphZkqueRWfD8wwKEkEfkbAL48aJnV8FLD+JMFwRU1egvgwuarELnpdxM
+	 XvUomF+N4OsSVlVMmCi5G7UiI1KMIfwyPaMowJdIUmu7rFRzS9P+o8rDhXlJdJouz3
+	 dke9BgbctmbxOB+n3RZQhQGwBlnNviVDFInGAGFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqin Liu <yongqin.liu@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 063/317] wifi: ath10k: populate board data for WCN3990
-Date: Thu, 13 Jun 2024 13:31:21 +0200
-Message-ID: <20240613113249.987682089@linuxfoundation.org>
+Subject: [PATCH 5.10 098/317] fbdev: sisfb: hide unused variables
+Date: Thu, 13 Jun 2024 13:31:56 +0200
+Message-ID: <20240613113251.341328385@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,63 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit f1f1b5b055c9f27a2f90fd0f0521f5920e9b3c18 ]
+[ Upstream commit 688cf598665851b9e8cb5083ff1d208ce43d10ff ]
 
-Specify board data size (and board.bin filename) for the WCN3990
-platform.
+Building with W=1 shows that a couple of variables in this driver are only
+used in certain configurations:
 
-Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
-Fixes: 03a72288c546 ("ath10k: wmi: add hw params entry for wcn3990")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240130-wcn3990-board-fw-v1-1-738f7c19a8c8@linaro.org
+drivers/video/fbdev/sis/init301.c:239:28: error: 'SiS_Part2CLVX_6' defined but not used [-Werror=unused-const-variable=]
+  239 | static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:230:28: error: 'SiS_Part2CLVX_5' defined but not used [-Werror=unused-const-variable=]
+  230 | static const unsigned char SiS_Part2CLVX_5[] = {   /* 750p */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:211:28: error: 'SiS_Part2CLVX_4' defined but not used [-Werror=unused-const-variable=]
+  211 | static const unsigned char SiS_Part2CLVX_4[] = {   /* PAL */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:192:28: error: 'SiS_Part2CLVX_3' defined but not used [-Werror=unused-const-variable=]
+  192 | static const unsigned char SiS_Part2CLVX_3[] = {  /* NTSC, 525i, 525p */
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:184:28: error: 'SiS_Part2CLVX_2' defined but not used [-Werror=unused-const-variable=]
+  184 | static const unsigned char SiS_Part2CLVX_2[] = {
+      |                            ^~~~~~~~~~~~~~~
+drivers/video/fbdev/sis/init301.c:176:28: error: 'SiS_Part2CLVX_1' defined but not used [-Werror=unused-const-variable=]
+  176 | static const unsigned char SiS_Part2CLVX_1[] = {
+      |                            ^~~~~~~~~~~~~~~
+
+This started showing up after the definitions were moved into the
+source file from the header, which was not flagged by the compiler.
+Move the definition into the appropriate #ifdef block that already
+exists next to them.
+
+Fixes: 5908986ef348 ("video: fbdev: sis: avoid mismatched prototypes")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c      | 3 +++
- drivers/net/wireless/ath/ath10k/hw.h        | 1 +
- drivers/net/wireless/ath/ath10k/targaddrs.h | 3 +++
- 3 files changed, 7 insertions(+)
+ drivers/video/fbdev/sis/init301.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index 57ac80997319b..d03a36c45f9f3 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -625,6 +625,9 @@ static const struct ath10k_hw_params ath10k_hw_params_list[] = {
- 		.max_spatial_stream = 4,
- 		.fw = {
- 			.dir = WCN3990_HW_1_0_FW_DIR,
-+			.board = WCN3990_HW_1_0_BOARD_DATA_FILE,
-+			.board_size = WCN3990_BOARD_DATA_SZ,
-+			.board_ext_size = WCN3990_BOARD_EXT_DATA_SZ,
- 		},
- 		.sw_decrypt_mcast_mgmt = true,
- 		.hw_ops = &wcn3990_ops,
-diff --git a/drivers/net/wireless/ath/ath10k/hw.h b/drivers/net/wireless/ath/ath10k/hw.h
-index d3ef83ad577da..c4df0e4e161b6 100644
---- a/drivers/net/wireless/ath/ath10k/hw.h
-+++ b/drivers/net/wireless/ath/ath10k/hw.h
-@@ -132,6 +132,7 @@ enum qca9377_chip_id_rev {
- /* WCN3990 1.0 definitions */
- #define WCN3990_HW_1_0_DEV_VERSION	ATH10K_HW_WCN3990
- #define WCN3990_HW_1_0_FW_DIR		ATH10K_FW_DIR "/WCN3990/hw1.0"
-+#define WCN3990_HW_1_0_BOARD_DATA_FILE "board.bin"
+diff --git a/drivers/video/fbdev/sis/init301.c b/drivers/video/fbdev/sis/init301.c
+index a8fb41f1a2580..09329072004f4 100644
+--- a/drivers/video/fbdev/sis/init301.c
++++ b/drivers/video/fbdev/sis/init301.c
+@@ -172,7 +172,7 @@ static const unsigned char SiS_HiTVGroup3_2[] = {
+ };
  
- #define ATH10K_FW_FILE_BASE		"firmware"
- #define ATH10K_FW_API_MAX		6
-diff --git a/drivers/net/wireless/ath/ath10k/targaddrs.h b/drivers/net/wireless/ath/ath10k/targaddrs.h
-index ec556bb88d658..ba37e6c7ced08 100644
---- a/drivers/net/wireless/ath/ath10k/targaddrs.h
-+++ b/drivers/net/wireless/ath/ath10k/targaddrs.h
-@@ -491,4 +491,7 @@ struct host_interest {
- #define QCA4019_BOARD_DATA_SZ	  12064
- #define QCA4019_BOARD_EXT_DATA_SZ 0
+ /* 301C / 302ELV extended Part2 TV registers (4 tap scaler) */
+-
++#ifdef CONFIG_FB_SIS_315
+ static const unsigned char SiS_Part2CLVX_1[] = {
+     0x00,0x00,
+     0x00,0x20,0x00,0x00,0x7F,0x20,0x02,0x7F,0x7D,0x20,0x04,0x7F,0x7D,0x1F,0x06,0x7E,
+@@ -245,7 +245,6 @@ static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
+     0xFF,0xFF,
+ };
  
-+#define WCN3990_BOARD_DATA_SZ	  26328
-+#define WCN3990_BOARD_EXT_DATA_SZ 0
-+
- #endif /* __TARGADDRS_H__ */
+-#ifdef CONFIG_FB_SIS_315
+ /* 661 et al LCD data structure (2.03.00) */
+ static const unsigned char SiS_LCDStruct661[] = {
+     /* 1024x768 */
 -- 
 2.43.0
 
