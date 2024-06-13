@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757C3161;
-	Thu, 13 Jun 2024 12:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FFE161;
+	Thu, 13 Jun 2024 12:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281883; cv=none; b=Xq8KpGc9/8U5CLZWUkvkSe5TAprGTTY+6k2WLz+N9u0mqQqv8VZS5rZSJScdk9VvLOpxnME+9Cu4BzmjTS9WBMfz9ckbd8naGSwX7QKwS+ndAn1H8xq8EcP+AmDqlfpiyqRbOa577xAZvP7X25HGi9jFYkyAXgv7T2a+/eViXeU=
+	t=1718281886; cv=none; b=rSECeAzEoq3L8j2vRBWCZXMinGQcYH95kjqBAFfP+m/A8HyzxY/Ns0CaoK/Cmfg0wiMyVonHYUQmTuu5zIOExdMpYe8GyyDXH+Z2/egMVy4hI0Hk4CgA2859fb2wyWMgf5x9g8fz0lFuHaSml4W9qY90AkIX50y8QpCCDZHrEKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281883; c=relaxed/simple;
-	bh=jdDl5VCFvwqy7vEw12B4WI2SlWL8jUw30SPlDZAckK4=;
+	s=arc-20240116; t=1718281886; c=relaxed/simple;
+	bh=0BJewbPbRjUyYtZLjWTSvhbgGxHms5rQFgty7Of1moc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1qf3ezYwOIPx8OmObgMKd/M0w72+361VKN392x2l8sO5xut0YxJgsQ0oyz1ORpIwM39V4w2co+jEtLQZFYapWLB+tTjQz9XvgmWd3j1lhxwGYfaV+10/40sDc1MRU8IykaKc22iRZmrlb+oorNy9ZrfqnpTflIqvKx4c0TvBoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7iwWCvK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OJWTZNKLOUMYElOxcA+BhVVkNfRxHy7za056G1BmGa9soCVWp768tmI1ggAuECTLYhIkCkIlNmMudSG9Tvoo7U9l7qCkp8aRKbpdaWn+sB8rhfAuazpQT11d1rbhK5mCXSZeURBBal4gc6vgFvHr0jMBWmMSqWMOFa9nDMbo8B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfzEvSkW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7iwWCvK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AD7C2BBFC;
-	Thu, 13 Jun 2024 12:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfzEvSkW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0495C2BBFC;
+	Thu, 13 Jun 2024 12:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281883;
-	bh=jdDl5VCFvwqy7vEw12B4WI2SlWL8jUw30SPlDZAckK4=;
+	s=korg; t=1718281886;
+	bh=0BJewbPbRjUyYtZLjWTSvhbgGxHms5rQFgty7Of1moc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7iwWCvKJ1Xk8EQac6bkDhCA/nY3NUwbjim7SVcEDxtMw6k93eN+wDj6C1B72w7Hc
-	 ihPXInzG2Q/jB/2mkYgvkB0EOzt3EHVLKqp1XUApdZw3EJ4YW0/jZY4pNwBQi9y9mw
-	 H4J+kg7WPH6Di5d6sT2G4M1xqGgstVD0DwVokWOc=
+	b=tfzEvSkWiu81xZsoVbez0oM5016WU9ZKyjI+I71bZei6osec2nZ0ReWWUxcZ6eRVQ
+	 KLUFiqocbuWdoFM1I8Nul2Vyitugr0D0Z8zHHNydAR4vRUMEfxaXvOqbWwt5L40b6C
+	 EZHl7f8YKTUG66TA95gfrQ13kcFFNJ92xxjkej1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Fangrui Song <maskray@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/402] s390/cio: fix tracepoint subchannel type field
-Date: Thu, 13 Jun 2024 13:30:04 +0200
-Message-ID: <20240613113303.973557499@linuxfoundation.org>
+Subject: [PATCH 5.15 082/402] x86/purgatory: Switch to the position-independent small code model
+Date: Thu, 13 Jun 2024 13:30:39 +0200
+Message-ID: <20240613113305.334574423@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,36 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 8692a24d0fae19f674d51726d179ad04ba95d958 ]
+[ Upstream commit cba786af84a0f9716204e09f518ce3b7ada8555e ]
 
-The subchannel-type field "st" of s390_cio_stsch and s390_cio_msch
-tracepoints is incorrectly filled with the subchannel-enabled SCHIB
-value "ena". Fix this by assigning the correct value.
+On x86, the ordinary, position dependent small and kernel code models
+only support placement of the executable in 32-bit addressable memory,
+due to the use of 32-bit signed immediates to generate references to
+global variables. For the kernel, this implies that all global variables
+must reside in the top 2 GiB of the kernel virtual address space, where
+the implicit address bits 63:32 are equal to sign bit 31.
 
-Fixes: d1de8633d96a ("s390 cio: Rewrite trace point class s390_class_schib")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+This means the kernel code model is not suitable for other bare metal
+executables such as the kexec purgatory, which can be placed arbitrarily
+in the physical address space, where its address may no longer be
+representable as a sign extended 32-bit quantity. For this reason,
+commit
+
+  e16c2983fba0 ("x86/purgatory: Change compiler flags from -mcmodel=kernel to -mcmodel=large to fix kexec relocation errors")
+
+switched to the large code model, which uses 64-bit immediates for all
+symbol references, including function calls, in order to avoid relying
+on any assumptions regarding proximity of symbols in the final
+executable.
+
+The large code model is rarely used, clunky and the least likely to
+operate in a similar fashion when comparing GCC and Clang, so it is best
+avoided. This is especially true now that Clang 18 has started to emit
+executable code in two separate sections (.text and .ltext), which
+triggers an issue in the kexec loading code at runtime.
+
+The SUSE bugzilla fixes tag points to gcc 13 having issues with the
+large model too and that perhaps the large model should simply not be
+used at all.
+
+Instead, use the position independent small code model, which makes no
+assumptions about placement but only about proximity, where all
+referenced symbols must be within -/+ 2 GiB, i.e., in range for a
+RIP-relative reference. Use hidden visibility to suppress the use of a
+GOT, which carries absolute addresses that are not covered by static ELF
+relocations, and is therefore incompatible with the kexec loader's
+relocation logic.
+
+  [ bp: Massage commit message. ]
+
+Fixes: e16c2983fba0 ("x86/purgatory: Change compiler flags from -mcmodel=kernel to -mcmodel=large to fix kexec relocation errors")
+Fixes: https://bugzilla.suse.com/show_bug.cgi?id=1211853
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2016
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Fangrui Song <maskray@google.com>
+Acked-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/all/20240417-x86-fix-kexec-with-llvm-18-v1-0-5383121e8fb7@kernel.org/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/trace.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/purgatory/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/s390/cio/trace.h b/drivers/s390/cio/trace.h
-index 86993de253451..a4c5c6736b310 100644
---- a/drivers/s390/cio/trace.h
-+++ b/drivers/s390/cio/trace.h
-@@ -50,7 +50,7 @@ DECLARE_EVENT_CLASS(s390_class_schib,
- 		__entry->devno = schib->pmcw.dev;
- 		__entry->schib = *schib;
- 		__entry->pmcw_ena = schib->pmcw.ena;
--		__entry->pmcw_st = schib->pmcw.ena;
-+		__entry->pmcw_st = schib->pmcw.st;
- 		__entry->pmcw_dnv = schib->pmcw.dnv;
- 		__entry->pmcw_dev = schib->pmcw.dev;
- 		__entry->pmcw_lpm = schib->pmcw.lpm;
+diff --git a/arch/x86/purgatory/Makefile b/arch/x86/purgatory/Makefile
+index 7a7701d1e18d0..59373a4abfb43 100644
+--- a/arch/x86/purgatory/Makefile
++++ b/arch/x86/purgatory/Makefile
+@@ -41,7 +41,8 @@ KCOV_INSTRUMENT := n
+ # make up the standalone purgatory.ro
+ 
+ PURGATORY_CFLAGS_REMOVE := -mcmodel=kernel
+-PURGATORY_CFLAGS := -mcmodel=large -ffreestanding -fno-zero-initialized-in-bss -g0
++PURGATORY_CFLAGS := -mcmodel=small -ffreestanding -fno-zero-initialized-in-bss -g0
++PURGATORY_CFLAGS += -fpic -fvisibility=hidden
+ PURGATORY_CFLAGS += $(DISABLE_STACKLEAK_PLUGIN) -DDISABLE_BRANCH_PROFILING
+ PURGATORY_CFLAGS += -fno-stack-protector
+ 
 -- 
 2.43.0
 
