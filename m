@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8AB1459FA;
-	Thu, 13 Jun 2024 12:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6DB1459FA;
+	Thu, 13 Jun 2024 12:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281410; cv=none; b=LLVoA2Iy9R7/f05BiahduDZ5jDo8FsTIt/f6PWPHjgdsH5wQ64++p5jD5qFTiA2Oy25jfZlWPfbzsH1eXQAxOBVVm/yeiK3m/IJuYR1U983WyAAsOqbRoBLMHw/0dMvPWZMc6jVBmdmAHRWyqC5SLaVF46wuCMX2fKO0IX96fp4=
+	t=1718281413; cv=none; b=L37zdsErWc6xuifQB2HCgWz1BZsDcz+oXT2D/A64Imuh33G2b3rdI8CLQ4WM1B14ONWyzJv/EnwljZKwRK/U+q9kn3cf6mVYpj2e6EiRVfwiU/32u8dZW0ywiDFYUDxNA1FgypStKDOiBJLhdmx1mpgT/8zMMhD8Pak4ojma+yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281410; c=relaxed/simple;
-	bh=+CKJeWFj0UnLQEH3XrttvvxvDYA6oTFyPYzZVnE1Kec=;
+	s=arc-20240116; t=1718281413; c=relaxed/simple;
+	bh=xU2+X5SfxSfFtr+bnGiLJI3jubL/N5S675ulumPm4qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJtYyJEjvAqTd7Je13ku5ZDdkO3lsOAbg5caqEtnpKb9jT0cgaO07rgq4+8uJw0GAfJ/ca+U1nR+Hw/1ZVQk71c9X7v3XjYNoM5c8tqO3oF8xauF0Faq/8HUw+IvnJN80I0a+0hRIIU/VFlaRxesm46Q0JP67zJydJGvitxHSwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jItWVXPw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uijrUDtoSJ+6UFYG96+ATj9Pf0UEeW+6yVAwXCn83nLtv1zwwoHvHGLUfqb/8Ph8QfN2MTb13ipWZbyp8plIsc62MtQ9hAFap+ooOM4D/ahbuZ2YhXnp/+BOvA1N/MyzwKkMa60CtXUBsYqNRztV/uQ4vWl+pOKGN+dYEd7Z95g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLjeeZUU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jItWVXPw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49DAC2BBFC;
-	Thu, 13 Jun 2024 12:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLjeeZUU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8156C2BBFC;
+	Thu, 13 Jun 2024 12:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281410;
-	bh=+CKJeWFj0UnLQEH3XrttvvxvDYA6oTFyPYzZVnE1Kec=;
+	s=korg; t=1718281413;
+	bh=xU2+X5SfxSfFtr+bnGiLJI3jubL/N5S675ulumPm4qY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jItWVXPwFbX0tbp6LZkI3lBIFUjWmaam79NAUwqmQ2GY6WobxPrZBbCT66E4EHADz
-	 8Lflbjyvse23XFqLPuPrciHPf/n4/uATURFz+5n0XkMNO0D6qiImWe2Qhzt8e1du4y
-	 4LWngB1eyGqeAdu4UdBgJb4PMUMATAvrBxGMSkAc=
+	b=CLjeeZUUlf+p8Z6k7HLk7MEOm9ONi6XI2vkiWyLtZLJ8pqldH3yGdVN762kTcaBkY
+	 0bmybd4RuuyUb3CNX50uGnjOZUmZxANvlDMtQaieryIbQrAR2/o7QlgKkfxvB8OKwf
+	 P1dIkaaENKiRiQqmYdhBJg+CXknf1mtNtSfhgcyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 246/317] netfilter: nft_payload: restore vlan q-in-q match support
-Date: Thu, 13 Jun 2024 13:34:24 +0200
-Message-ID: <20240613113257.068441563@linuxfoundation.org>
+Subject: [PATCH 5.10 229/317] ASoC: tas2552: Add TX path for capturing AUDIO-OUT data
+Date: Thu, 13 Jun 2024 13:34:07 +0200
+Message-ID: <20240613113256.410155469@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -50,72 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-[ Upstream commit aff5c01fa1284d606f8e7cbdaafeef2511bb46c1 ]
+[ Upstream commit 7078ac4fd179a68d0bab448004fcd357e7a45f8d ]
 
-Revert f6ae9f120dad ("netfilter: nft_payload: add C-VLAN support").
+TAS2552 is a Smartamp with I/V sense data, add TX path
+to support capturing I/V data.
 
-f41f72d09ee1 ("netfilter: nft_payload: simplify vlan header handling")
-already allows to match on inner vlan tags by subtract the vlan header
-size to the payload offset which has been popped and stored in skbuff
-metadata fields.
-
-Fixes: f6ae9f120dad ("netfilter: nft_payload: add C-VLAN support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 38803ce7b53b ("ASoC: codecs: tas*: merge .digital_mute() into .mute_stream()")
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://msgid.link/r/20240518033515.866-1-shenghao-ding@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_payload.c | 23 +++++++----------------
- 1 file changed, 7 insertions(+), 16 deletions(-)
+ sound/soc/codecs/tas2552.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
-index 56f6c05362ae8..fa64b1b8ae918 100644
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -44,36 +44,27 @@ nft_payload_copy_vlan(u32 *d, const struct sk_buff *skb, u8 offset, u8 len)
- 	int mac_off = skb_mac_header(skb) - skb->data;
- 	u8 *vlanh, *dst_u8 = (u8 *) d;
- 	struct vlan_ethhdr veth;
--	u8 vlan_hlen = 0;
--
--	if ((skb->protocol == htons(ETH_P_8021AD) ||
--	     skb->protocol == htons(ETH_P_8021Q)) &&
--	    offset >= VLAN_ETH_HLEN && offset < VLAN_ETH_HLEN + VLAN_HLEN)
--		vlan_hlen += VLAN_HLEN;
+diff --git a/sound/soc/codecs/tas2552.c b/sound/soc/codecs/tas2552.c
+index bd00c35116cd5..f045876c12f17 100644
+--- a/sound/soc/codecs/tas2552.c
++++ b/sound/soc/codecs/tas2552.c
+@@ -2,7 +2,8 @@
+ /*
+  * tas2552.c - ALSA SoC Texas Instruments TAS2552 Mono Audio Amplifier
+  *
+- * Copyright (C) 2014 Texas Instruments Incorporated -  https://www.ti.com
++ * Copyright (C) 2014 - 2024 Texas Instruments Incorporated -
++ *	https://www.ti.com
+  *
+  * Author: Dan Murphy <dmurphy@ti.com>
+  */
+@@ -119,12 +120,14 @@ static const struct snd_soc_dapm_widget tas2552_dapm_widgets[] =
+ 			 &tas2552_input_mux_control),
  
- 	vlanh = (u8 *) &veth;
--	if (offset < VLAN_ETH_HLEN + vlan_hlen) {
-+	if (offset < VLAN_ETH_HLEN) {
- 		u8 ethlen = len;
+ 	SND_SOC_DAPM_AIF_IN("DAC IN", "DAC Playback", 0, SND_SOC_NOPM, 0, 0),
++	SND_SOC_DAPM_AIF_OUT("ASI OUT", "DAC Capture", 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_DAC("DAC", NULL, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_OUT_DRV("ClassD", TAS2552_CFG_2, 7, 0, NULL, 0),
+ 	SND_SOC_DAPM_SUPPLY("PLL", TAS2552_CFG_2, 3, 0, NULL, 0),
+ 	SND_SOC_DAPM_POST("Post Event", tas2552_post_event),
  
--		if (vlan_hlen &&
--		    skb_copy_bits(skb, mac_off, &veth, VLAN_ETH_HLEN) < 0)
--			return false;
--		else if (!nft_payload_rebuild_vlan_hdr(skb, mac_off, &veth))
-+		if (!nft_payload_rebuild_vlan_hdr(skb, mac_off, &veth))
- 			return false;
+-	SND_SOC_DAPM_OUTPUT("OUT")
++	SND_SOC_DAPM_OUTPUT("OUT"),
++	SND_SOC_DAPM_INPUT("DMIC")
+ };
  
--		if (offset + len > VLAN_ETH_HLEN + vlan_hlen)
--			ethlen -= offset + len - VLAN_ETH_HLEN - vlan_hlen;
-+		if (offset + len > VLAN_ETH_HLEN)
-+			ethlen -= offset + len - VLAN_ETH_HLEN;
+ static const struct snd_soc_dapm_route tas2552_audio_map[] = {
+@@ -134,6 +137,7 @@ static const struct snd_soc_dapm_route tas2552_audio_map[] = {
+ 	{"ClassD", NULL, "Input selection"},
+ 	{"OUT", NULL, "ClassD"},
+ 	{"ClassD", NULL, "PLL"},
++	{"ASI OUT", NULL, "DMIC"}
+ };
  
--		memcpy(dst_u8, vlanh + offset - vlan_hlen, ethlen);
-+		memcpy(dst_u8, vlanh + offset, ethlen);
- 
- 		len -= ethlen;
- 		if (len == 0)
- 			return true;
- 
- 		dst_u8 += ethlen;
--		offset = ETH_HLEN + vlan_hlen;
-+		offset = ETH_HLEN;
- 	} else {
--		offset -= VLAN_HLEN + vlan_hlen;
-+		offset -= VLAN_HLEN;
- 	}
- 
- 	return skb_copy_bits(skb, offset + mac_off, dst_u8, len) == 0;
+ #ifdef CONFIG_PM
+@@ -538,6 +542,13 @@ static struct snd_soc_dai_driver tas2552_dai[] = {
+ 			.rates = SNDRV_PCM_RATE_8000_192000,
+ 			.formats = TAS2552_FORMATS,
+ 		},
++		.capture = {
++			.stream_name = "Capture",
++			.channels_min = 2,
++			.channels_max = 2,
++			.rates = SNDRV_PCM_RATE_8000_192000,
++			.formats = TAS2552_FORMATS,
++		},
+ 		.ops = &tas2552_speaker_dai_ops,
+ 	},
+ };
 -- 
 2.43.0
 
