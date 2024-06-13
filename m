@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40B614198E;
-	Thu, 13 Jun 2024 12:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A854F144D3F;
+	Thu, 13 Jun 2024 12:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280014; cv=none; b=KLg7SZTg1jli/PHkPPScC5+OoJfYr/BthIx5NL0xrt8GYFcbhQz8kihnOlb9Gg44NDWCPi9yRcs7V9C+Tde5rdx/BwaiW/QPkSEWCgVZYmZS3uDT1nIrtFYnafx5dq6cKaeYLc5K4BceaztltKwJWqCO1vEBFWh5nj6amXFWbk8=
+	t=1718280017; cv=none; b=txRvPiare2qiGSJcw8RIeXt8Wextlgdr/jh2mfUPfTyRE4ldlBg1Eyz2zafE3dnnzEQwlAdpsB332hmrPTHK9x8rTL6kB2Hun49HWzJpUgyxCnCUWDsSQUzF6vYoUOa6C5IW8j9oO7ZkO1eTDOa8Pypg+BnD/8vOIZ97hX2hnqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280014; c=relaxed/simple;
-	bh=DCp4jC7dg0uNn6aSqgvaePNcLHMQ3hXhcBcTaCOcfSc=;
+	s=arc-20240116; t=1718280017; c=relaxed/simple;
+	bh=tdrUW9gaMtridZMAC6N1TyEBVsOIjg2JGOTnrEs8194=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cqaixbodc1B83BrD1FDCx3kHOM2P6ToQsms4KYO8nwmalu/OffixutAnRPQq1AC9pziRlr4Z6pgfMouOeiJkK50dQxJUaf3qLik/zf7j1HhITM6HWKZZkjUatuqJHBv8pUe1YZEWGe7pwaAUkw/YvfGa1s8Kowx7ps456WhPltY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0SmFbLx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qaghy7OlBOfmu3+b+xgdIwcnxayTrjmqhT9U9KLUc2IDmODjh2BHD/m27hv/AG8yj/8jdUbzyHJdlCPYRHWSw7iY7YU0QwA9rPnT+uAKi7COFBzXGm+p/gIRJjnBEInI0zqKx3QkUv94tqXgsDBwTmv36JFSjEwIJT8QYwrCymM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGTobW0I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0SmFbLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383B5C2BBFC;
-	Thu, 13 Jun 2024 12:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGTobW0I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2925EC2BBFC;
+	Thu, 13 Jun 2024 12:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280014;
-	bh=DCp4jC7dg0uNn6aSqgvaePNcLHMQ3hXhcBcTaCOcfSc=;
+	s=korg; t=1718280017;
+	bh=tdrUW9gaMtridZMAC6N1TyEBVsOIjg2JGOTnrEs8194=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0SmFbLxnDGIl89pe9VPdN6HABZ/Qf7+Wm4PWN5idCfpIjMZFH/3pSIe84gw0Yb7i
-	 dh0jdyWTCJfrEOxz1C7JUqxCCCKYV98hTZZ4jkFKhfv1ejiYVx6rWEp09i5mSDiOoQ
-	 vuwds6j6Jo8MlVaZyxRdwcZU0lvYDY79KOwKJF0c=
+	b=TGTobW0IpT56J9AbR8gNUF4+M/ctbgxKqMDwJaXT3L0bD4dJMWPdNXhrP4JxQs68Z
+	 f+7Bz4pAnyXRvqrPJQo66YpMMqEjLmEa1rRiZx1Naloqr0Nh3Azh2VJ4B53mm1+sz/
+	 4nY8d1Pi5PWrHca6pGib3UKroZHdL0GmJe2hv43k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Huai-Yuan Liu <qq810974084@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 113/202] ppdev: Remove usage of the deprecated ida_simple_xx() API
-Date: Thu, 13 Jun 2024 13:33:31 +0200
-Message-ID: <20240613113232.120601526@linuxfoundation.org>
+Subject: [PATCH 5.4 114/202] ppdev: Add an error check in register_device
+Date: Thu, 13 Jun 2024 13:33:32 +0200
+Message-ID: <20240613113232.159730210@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -50,55 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Huai-Yuan Liu <qq810974084@gmail.com>
 
-[ Upstream commit d8407f71ebeaeb6f50bd89791837873e44609708 ]
+[ Upstream commit fbf740aeb86a4fe82ad158d26d711f2f3be79b3e ]
 
-ida_alloc() and ida_free() should be preferred to the deprecated
-ida_simple_get() and ida_simple_remove().
+In register_device, the return value of ida_simple_get is unchecked,
+in witch ida_simple_get will use an invalid index value.
 
-This is less verbose.
+To address this issue, index should be checked after ida_simple_get. When
+the index value is abnormal, a warning message should be printed, the port
+should be dropped, and the value should be recorded.
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/ba9da12fdd5cdb2c28180b7160af5042447d803f.1702962092.git.christophe.jaillet@wanadoo.fr
+Fixes: 9a69645dde11 ("ppdev: fix registering same device name")
+Signed-off-by: Huai-Yuan Liu <qq810974084@gmail.com>
+Link: https://lore.kernel.org/r/20240412083840.234085-1-qq810974084@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: fbf740aeb86a ("ppdev: Add an error check in register_device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ppdev.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/char/ppdev.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/char/ppdev.c b/drivers/char/ppdev.c
-index 34bb88fe0b0a6..5246e0faaf9ae 100644
+index 5246e0faaf9ae..fb51430e1d5c6 100644
 --- a/drivers/char/ppdev.c
 +++ b/drivers/char/ppdev.c
-@@ -299,7 +299,7 @@ static int register_device(int minor, struct pp_struct *pp)
- 		goto err;
+@@ -296,28 +296,35 @@ static int register_device(int minor, struct pp_struct *pp)
+ 	if (!port) {
+ 		pr_warn("%s: no associated port!\n", name);
+ 		rc = -ENXIO;
+-		goto err;
++		goto err_free_name;
  	}
  
--	index = ida_simple_get(&ida_index, 0, 0, GFP_KERNEL);
-+	index = ida_alloc(&ida_index, GFP_KERNEL);
+ 	index = ida_alloc(&ida_index, GFP_KERNEL);
++	if (index < 0) {
++		pr_warn("%s: failed to get index!\n", name);
++		rc = index;
++		goto err_put_port;
++	}
++
  	memset(&ppdev_cb, 0, sizeof(ppdev_cb));
  	ppdev_cb.irq_func = pp_irq;
  	ppdev_cb.flags = (pp->flags & PP_EXCL) ? PARPORT_FLAG_EXCL : 0;
-@@ -310,7 +310,7 @@ static int register_device(int minor, struct pp_struct *pp)
+ 	ppdev_cb.private = pp;
+ 	pdev = parport_register_dev_model(port, name, &ppdev_cb, index);
+-	parport_put_port(port);
+ 
  	if (!pdev) {
  		pr_warn("%s: failed to register device!\n", name);
  		rc = -ENXIO;
--		ida_simple_remove(&ida_index, index);
-+		ida_free(&ida_index, index);
- 		goto err;
+ 		ida_free(&ida_index, index);
+-		goto err;
++		goto err_put_port;
  	}
  
-@@ -762,7 +762,7 @@ static int pp_release(struct inode *inode, struct file *file)
- 
- 	if (pp->pdev) {
- 		parport_unregister_device(pp->pdev);
--		ida_simple_remove(&ida_index, pp->index);
-+		ida_free(&ida_index, pp->index);
- 		pp->pdev = NULL;
- 		pr_debug(CHRDEV "%x: unregistered pardevice\n", minor);
- 	}
+ 	pp->pdev = pdev;
+ 	pp->index = index;
+ 	dev_dbg(&pdev->dev, "registered pardevice\n");
+-err:
++err_put_port:
++	parport_put_port(port);
++err_free_name:
+ 	kfree(name);
+ 	return rc;
+ }
 -- 
 2.43.0
 
