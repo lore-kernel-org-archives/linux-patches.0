@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A44A6EB56;
-	Thu, 13 Jun 2024 12:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E4E6EB56;
+	Thu, 13 Jun 2024 12:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280591; cv=none; b=tEP8+ABPqbtIVCdiLP0SCLJe8Xe8STLEJAkeI4lPx9lJhiK3xmy+YZAtOFiiKBjIazf2h1Ajsq2XW8qiBmO1IqBjn3n+pTDUeEz28j3BIkZLjKWVvoObUmWQuIM8rvsKB359oOm2TGO1jSu8yWjI8uC2Nzq/s3cVbWaGCpUlaB0=
+	t=1718280594; cv=none; b=uvc18UxqcFeWF9LrKLw8Yv92HdmIYcp+zwjj2tOom6TPgukVP+ClrBnn/kG/XWdzD6H2tM1+PkaNnkSWDm+KP+yW9jk1qq84qNrcDj7dbaegzLm7vBWlfFLLsWMI6zM3ctPJd0CR+2Y/aNGBlRIF/aUPi1cgu/Ee3xPXEenSfPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280591; c=relaxed/simple;
-	bh=z2gCG/SnmmjvQE+ac5TEaL6fc7RUzsv0gcUrxxqt4lg=;
+	s=arc-20240116; t=1718280594; c=relaxed/simple;
+	bh=IjpFLinK6FLXnvqEKRt8G5CtVBCLQcp3U22Al2yK0qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWA5VLGQ+cYejlVjlKojY7cBAdkeuPB+C/IIc5n8R/Dy+CZw+ugOOJMWar4wE0VZ1e4VmchcAQAl3uTzTU3eYplr3jcNc9TfdG3fbCg77qrjvyGmuyGwKI4/Oop9PcX43ouEgDD0OJqLl3lmPJ4JpAVq+Z/beVxkMiIwNEf8zmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsmvTsAA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OByNDwnN+TIVa6CmLV0pjFW5YNbIMUBS1hkOAyFp+nDp9UzwDvaUcqgd0cwze80IHQ/LWHTqz1CZAob9IzK5/02H4Ivb2AREpbrfSzLOEnxjaK9utZ5yncyrguIBSTW+yEMcZc4qHTOk6kxy0uePh5kwIN8LTsLTxt5xPworQiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LksmmHXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsmvTsAA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74ACC2BBFC;
-	Thu, 13 Jun 2024 12:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LksmmHXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36A7C2BBFC;
+	Thu, 13 Jun 2024 12:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280591;
-	bh=z2gCG/SnmmjvQE+ac5TEaL6fc7RUzsv0gcUrxxqt4lg=;
+	s=korg; t=1718280594;
+	bh=IjpFLinK6FLXnvqEKRt8G5CtVBCLQcp3U22Al2yK0qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CsmvTsAAIOv9n85FJDilHQZL8KNanWzNppWGISpXCSmLV8LNGHZhP2zmOmDQvVlSB
-	 CEVRXotDwtDPCXKHSoJu+PaJ5VwluGatkMTPVdS/e+Q4nFCow/duCtXLyKByJxpQ5p
-	 IlNXntcPANSauRgprxfei8BwbwSBwZDcsi2CRPJc=
+	b=LksmmHXhqZnY75lCKSJ9AhjlgFHkbUh2VkT2+RC9nmqoJA8nlC4XyCcjoJPrbYvKo
+	 2LHYPg8dQizHLynO0k47VZIs0QryghjwSMZ7/NcxWd6fbwDhhfg6rUGrMU0Q0+mmcx
+	 DkSlTpKin6urGnC695+waU2OSVWgEQsM3EhFaTP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ismael Luceno <ismael@iodev.co.uk>
-Subject: [PATCH 6.6 104/137] e1000e: move force SMBUS near the end of enable_ulp function
-Date: Thu, 13 Jun 2024 13:34:44 +0200
-Message-ID: <20240613113227.331992891@linuxfoundation.org>
+	Hamish Martin <hamish.martin@alliedtelesis.co.nz>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 6.6 076/137] i2c: acpi: Unbind mux adapters before delete
+Date: Thu, 13 Jun 2024 13:34:16 +0200
+Message-ID: <20240613113226.243183703@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -58,120 +52,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
 
-commit bfd546a552e140b0a4c8a21527c39d6d21addb28 upstream.
+commit 3f858bbf04dbac934ac279aaee05d49eb9910051 upstream.
 
-The commit 861e8086029e ("e1000e: move force SMBUS from enable ulp
-function to avoid PHY loss issue") introduces a regression on
-PCH_MTP_I219_LM18 (PCIID: 0x8086550A). Without the referred commit, the
-ethernet works well after suspend and resume, but after applying the
-commit, the ethernet couldn't work anymore after the resume and the
-dmesg shows that the NIC link changes to 10Mbps (1000Mbps originally):
+There is an issue with ACPI overlay table removal specifically related
+to I2C multiplexers.
 
-    [   43.305084] e1000e 0000:00:1f.6 enp0s31f6: NIC Link is Up 10 Mbps Full Duplex, Flow Control: Rx/Tx
+Consider an ACPI SSDT Overlay that defines a PCA9548 I2C mux on an
+existing I2C bus. When this table is loaded we see the creation of a
+device for the overall PCA9548 chip and 8 further devices - one
+i2c_adapter each for the mux channels. These are all bound to their
+ACPI equivalents via an eventual invocation of acpi_bind_one().
 
-Without the commit, the force SMBUS code will not be executed if
-"return 0" or "goto out" is executed in the enable_ulp(), and in my
-case, the "goto out" is executed since FWSM_FW_VALID is set. But after
-applying the commit, the force SMBUS code will be ran unconditionally.
+When we unload the SSDT overlay we run into the problem. The ACPI
+devices are deleted as normal via acpi_device_del_work_fn() and the
+acpi_device_del_list.
 
-Here move the force SMBUS code back to enable_ulp() and put it
-immediately ahead of hw->phy.ops.release(hw), this could allow the
-longest settling time as possible for interface in this function and
-doesn't change the original code logic.
+However, the following warning and stack trace is output as the
+deletion does not go smoothly:
+------------[ cut here ]------------
+kernfs: can not remove 'physical_node', no directory
+WARNING: CPU: 1 PID: 11 at fs/kernfs/dir.c:1674 kernfs_remove_by_name_ns+0xb9/0xc0
+Modules linked in:
+CPU: 1 PID: 11 Comm: kworker/u128:0 Not tainted 6.8.0-rc6+ #1
+Hardware name: congatec AG conga-B7E3/conga-B7E3, BIOS 5.13 05/16/2023
+Workqueue: kacpi_hotplug acpi_device_del_work_fn
+RIP: 0010:kernfs_remove_by_name_ns+0xb9/0xc0
+Code: e4 00 48 89 ef e8 07 71 db ff 5b b8 fe ff ff ff 5d 41 5c 41 5d e9 a7 55 e4 00 0f 0b eb a6 48 c7 c7 f0 38 0d 9d e8 97 0a d5 ff <0f> 0b eb dc 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
+RSP: 0018:ffff9f864008fb28 EFLAGS: 00010286
+RAX: 0000000000000000 RBX: ffff8ef90a8d4940 RCX: 0000000000000000
+RDX: ffff8f000e267d10 RSI: ffff8f000e25c780 RDI: ffff8f000e25c780
+RBP: ffff8ef9186f9870 R08: 0000000000013ffb R09: 00000000ffffbfff
+R10: 00000000ffffbfff R11: ffff8f000e0a0000 R12: ffff9f864008fb50
+R13: ffff8ef90c93dd60 R14: ffff8ef9010d0958 R15: ffff8ef9186f98c8
+FS:  0000000000000000(0000) GS:ffff8f000e240000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f48f5253a08 CR3: 00000003cb82e000 CR4: 00000000003506f0
+Call Trace:
+ <TASK>
+ ? kernfs_remove_by_name_ns+0xb9/0xc0
+ ? __warn+0x7c/0x130
+ ? kernfs_remove_by_name_ns+0xb9/0xc0
+ ? report_bug+0x171/0x1a0
+ ? handle_bug+0x3c/0x70
+ ? exc_invalid_op+0x17/0x70
+ ? asm_exc_invalid_op+0x1a/0x20
+ ? kernfs_remove_by_name_ns+0xb9/0xc0
+ ? kernfs_remove_by_name_ns+0xb9/0xc0
+ acpi_unbind_one+0x108/0x180
+ device_del+0x18b/0x490
+ ? srso_return_thunk+0x5/0x5f
+ ? srso_return_thunk+0x5/0x5f
+ device_unregister+0xd/0x30
+ i2c_del_adapter.part.0+0x1bf/0x250
+ i2c_mux_del_adapters+0xa1/0xe0
+ i2c_device_remove+0x1e/0x80
+ device_release_driver_internal+0x19a/0x200
+ bus_remove_device+0xbf/0x100
+ device_del+0x157/0x490
+ ? __pfx_device_match_fwnode+0x10/0x10
+ ? srso_return_thunk+0x5/0x5f
+ device_unregister+0xd/0x30
+ i2c_acpi_notify+0x10f/0x140
+ notifier_call_chain+0x58/0xd0
+ blocking_notifier_call_chain+0x3a/0x60
+ acpi_device_del_work_fn+0x85/0x1d0
+ process_one_work+0x134/0x2f0
+ worker_thread+0x2f0/0x410
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0xe3/0x110
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x2f/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1b/0x30
+ </TASK>
+---[ end trace 0000000000000000 ]---
+...
+repeated 7 more times, 1 for each channel of the mux
+...
 
-The issue was found on a Lenovo laptop with the ethernet hw as below:
-00:1f.6 Ethernet controller [0200]: Intel Corporation Device [8086:550a]
-(rev 20).
+The issue is that the binding of the ACPI devices to their peer I2C
+adapters is not correctly cleaned up. Digging deeper into the issue we
+see that the deletion order is such that the ACPI devices matching the
+mux channel i2c adapters are deleted first during the SSDT overlay
+removal. For each of the channels we see a call to i2c_acpi_notify()
+with ACPI_RECONFIG_DEVICE_REMOVE but, because these devices are not
+actually i2c_clients, nothing is done for them.
 
-And this patch is verified (cable plug and unplug, system suspend
-and resume) on Lenovo laptops with ethernet hw: [8086:550a],
-[8086:550b], [8086:15bb], [8086:15be], [8086:1a1f], [8086:1a1c] and
-[8086:0dc7].
+Later on, after each of the mux channels has been dealt with, we come
+to delete the i2c_client representing the PCA9548 device. This is the
+call stack we see above, whereby the kernel cleans up the i2c_client
+including destruction of the mux and its channel adapters. At this
+point we do attempt to unbind from the ACPI peers but those peers no
+longer exist and so we hit the kernfs errors.
 
-Fixes: 861e8086029e ("e1000e: move force SMBUS from enable ulp function to avoid PHY loss issue")
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Acked-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20240528-net-2024-05-28-intel-net-fixes-v1-1-dc8593d2bbc6@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Cc: Ismael Luceno <ismael@iodev.co.uk>
+The fix is to augment i2c_acpi_notify() to handle i2c_adapters. But,
+given that the life cycle of the adapters is linked to the i2c_client,
+instead of deleting the i2c_adapters during the i2c_acpi_notify(), we
+just trigger unbinding of the ACPI device from the adapter device, and
+allow the clean up of the adapter to continue in the way it always has.
+
+Signed-off-by: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: 525e6fabeae2 ("i2c / ACPI: add support for ACPI reconfigure notifications")
+Cc: <stable@vger.kernel.org> # v4.8+
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/e1000e/ich8lan.c |   22 ++++++++++++++++++++++
- drivers/net/ethernet/intel/e1000e/netdev.c  |   18 ------------------
- 2 files changed, 22 insertions(+), 18 deletions(-)
+ drivers/i2c/i2c-core-acpi.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -1225,6 +1225,28 @@ s32 e1000_enable_ulp_lpt_lp(struct e1000
+--- a/drivers/i2c/i2c-core-acpi.c
++++ b/drivers/i2c/i2c-core-acpi.c
+@@ -445,6 +445,11 @@ static struct i2c_client *i2c_acpi_find_
+ 	return i2c_find_device_by_fwnode(acpi_fwnode_handle(adev));
+ }
+ 
++static struct i2c_adapter *i2c_acpi_find_adapter_by_adev(struct acpi_device *adev)
++{
++	return i2c_find_adapter_by_fwnode(acpi_fwnode_handle(adev));
++}
++
+ static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
+ 			   void *arg)
+ {
+@@ -471,11 +476,17 @@ static int i2c_acpi_notify(struct notifi
+ 			break;
+ 
+ 		client = i2c_acpi_find_client_by_adev(adev);
+-		if (!client)
+-			break;
++		if (client) {
++			i2c_unregister_device(client);
++			put_device(&client->dev);
++		}
++
++		adapter = i2c_acpi_find_adapter_by_adev(adev);
++		if (adapter) {
++			acpi_unbind_one(&adapter->dev);
++			put_device(&adapter->dev);
++		}
+ 
+-		i2c_unregister_device(client);
+-		put_device(&client->dev);
+ 		break;
  	}
  
- release:
-+	/* Switching PHY interface always returns MDI error
-+	 * so disable retry mechanism to avoid wasting time
-+	 */
-+	e1000e_disable_phy_retry(hw);
-+
-+	/* Force SMBus mode in PHY */
-+	ret_val = e1000_read_phy_reg_hv_locked(hw, CV_SMB_CTRL, &phy_reg);
-+	if (ret_val) {
-+		e1000e_enable_phy_retry(hw);
-+		hw->phy.ops.release(hw);
-+		goto out;
-+	}
-+	phy_reg |= CV_SMB_CTRL_FORCE_SMBUS;
-+	e1000_write_phy_reg_hv_locked(hw, CV_SMB_CTRL, phy_reg);
-+
-+	e1000e_enable_phy_retry(hw);
-+
-+	/* Force SMBus mode in MAC */
-+	mac_reg = er32(CTRL_EXT);
-+	mac_reg |= E1000_CTRL_EXT_FORCE_SMBUS;
-+	ew32(CTRL_EXT, mac_reg);
-+
- 	hw->phy.ops.release(hw);
- out:
- 	if (ret_val)
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -6623,7 +6623,6 @@ static int __e1000_shutdown(struct pci_d
- 	struct e1000_hw *hw = &adapter->hw;
- 	u32 ctrl, ctrl_ext, rctl, status, wufc;
- 	int retval = 0;
--	u16 smb_ctrl;
- 
- 	/* Runtime suspend should only enable wakeup for link changes */
- 	if (runtime)
-@@ -6697,23 +6696,6 @@ static int __e1000_shutdown(struct pci_d
- 			if (retval)
- 				return retval;
- 		}
--
--		/* Force SMBUS to allow WOL */
--		/* Switching PHY interface always returns MDI error
--		 * so disable retry mechanism to avoid wasting time
--		 */
--		e1000e_disable_phy_retry(hw);
--
--		e1e_rphy(hw, CV_SMB_CTRL, &smb_ctrl);
--		smb_ctrl |= CV_SMB_CTRL_FORCE_SMBUS;
--		e1e_wphy(hw, CV_SMB_CTRL, smb_ctrl);
--
--		e1000e_enable_phy_retry(hw);
--
--		/* Force SMBus mode in MAC */
--		ctrl_ext = er32(CTRL_EXT);
--		ctrl_ext |= E1000_CTRL_EXT_FORCE_SMBUS;
--		ew32(CTRL_EXT, ctrl_ext);
- 	}
- 
- 	/* Ensure that the appropriate bits are set in LPI_CTRL
 
 
