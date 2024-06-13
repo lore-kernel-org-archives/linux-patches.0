@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76433143883;
-	Thu, 13 Jun 2024 11:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4AD1448C4;
+	Thu, 13 Jun 2024 11:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278828; cv=none; b=W24ke/qjnl4S6H8ey6oIZxh1GIHQI+mkZ2nekJxFa5oxDZ6FxiwHp/Yp2DwW0KZ8pf4hyFKdYGnGj0M4Kxe98k+Lu19QM4Ef5nF8mW//nrktL19trazprcCRoCLX1ORoepMlL+hw1VeME4uPws3EZiGk+jzXAs44LNKSV3h/x58=
+	t=1718278833; cv=none; b=CjhXckakWEZJp74rwQeOrjZ0zLpoO5QRJaDzvfYnjsCjEXuq4ytEPvmPItrv8kdZptpSY/5sDQDWaos3rBS/vbKLE8iE4HDbHFx15/cAboOaj2c7YWxL8u4u7472cmbwqFxX6WaNoKThTfLVcPw3YCnwO1F5UZVIrkHd+vA4VT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278828; c=relaxed/simple;
-	bh=1CZ8CVJQ2PKbjhqjTMOf8XFLi6nS0KqtVCYp8+U+00o=;
+	s=arc-20240116; t=1718278833; c=relaxed/simple;
+	bh=mW53Vd+dlAo0ImV7kemJPJqlT2+9qrVVwsMId4psv80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eW3+z3zsgEFaTVWyOk+3PCG5CWHA7fEy9ZGmQBl+F1PoDIsiTG2DlX4B3WidHLWXRaz80wVz9wM7r6vyob87qrH0xXhjyIsX1P7u4cLvMPBKRtcPuf/VH6T5QMU0ErBdBVDfG1qMGyn9Jeu9TwriM79rBWzkEituV7lNez2ZAjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcQoInlT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smzM5n8qiGsNvNqsEBn6HIxPCrNmQj3QAIKaxZPAlr+9gy4AqCkpvP/kKJunJlfkPJ9sN/DvaTqNtbXHJBv7ST/SDQGXrTwH6EfvRdNw1yzXoEUBqb3RC5zzNtsTuzKe3bA+UWc4tIj5vye2OG+0Sc8jOwrS+rW6wT6KEGjJpbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pe9Gz0sV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcQoInlT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60E0C4AF4D;
-	Thu, 13 Jun 2024 11:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pe9Gz0sV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8330C2BBFC;
+	Thu, 13 Jun 2024 11:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278828;
-	bh=1CZ8CVJQ2PKbjhqjTMOf8XFLi6nS0KqtVCYp8+U+00o=;
+	s=korg; t=1718278831;
+	bh=mW53Vd+dlAo0ImV7kemJPJqlT2+9qrVVwsMId4psv80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CcQoInlTAVWKmJEb/IHB+GDEKU+OAXbjBrGk3WcKkIsadNP3caiJCYjxkT43kn4vl
-	 7lG81gbg7Zm+6nkebWkO62JHguOw47yuY6eIAx450mp/Mpwb+hygazx6mnlt9L/dye
-	 qN44WAYw/zIjsNXc19Ywkd3L/N1kwgSiNIKN8+L8=
+	b=Pe9Gz0sV68OKeOyhLVZ1cngrXVk2jr1+VJbmJeP/X0+LxU6khgOfKN4POHtod8Iak
+	 fUqQY9kWgY4MQWE+72+tmdITqCwvrBTiCFbc1vBUHpI9mpdK7WgWbQ4N1BLisy58mS
+	 MH/R9Gol42SQ/3m/gAm0Pfjsq4nrUQk0DrfLg/I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bui Quang Minh <minhquangbui99@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 052/213] scsi: qedf: Ensure the copied buf is NUL terminated
-Date: Thu, 13 Jun 2024 13:31:40 +0200
-Message-ID: <20240613113230.016883948@linuxfoundation.org>
+Subject: [PATCH 4.19 053/213] wifi: mwl8k: initialize cmd->addr[] properly
+Date: Thu, 13 Jun 2024 13:31:41 +0200
+Message-ID: <20240613113230.055848323@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -51,37 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Quang Minh <minhquangbui99@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d0184a375ee797eb657d74861ba0935b6e405c62 ]
+[ Upstream commit 1d60eabb82694e58543e2b6366dae3e7465892a5 ]
 
-Currently, we allocate a count-sized kernel buffer and copy count from
-userspace to that buffer. Later, we use kstrtouint on this buffer but we
-don't ensure that the string is terminated inside the buffer, this can
-lead to OOB read when using kstrtouint. Fix this issue by using
-memdup_user_nul instead of memdup_user.
+This loop is supposed to copy the mac address to cmd->addr but the
+i++ increment is missing so it copies everything to cmd->addr[0] and
+only the last address is recorded.
 
-Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
-Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
-Link: https://lore.kernel.org/r/20240424-fix-oob-read-v2-4-f1f1b53a10f4@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 22bedad3ce11 ("net: convert multicast list to list_head")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/b788be9a-15f5-4cca-a3fe-79df4c8ce7b2@moroto.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_debugfs.c | 2 +-
+ drivers/net/wireless/marvell/mwl8k.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qedf/qedf_debugfs.c b/drivers/scsi/qedf/qedf_debugfs.c
-index 84f1ddcfbb218..4636c045e1e3e 100644
---- a/drivers/scsi/qedf/qedf_debugfs.c
-+++ b/drivers/scsi/qedf/qedf_debugfs.c
-@@ -190,7 +190,7 @@ qedf_dbg_debug_cmd_write(struct file *filp, const char __user *buffer,
- 	if (!count || *ppos)
- 		return 0;
- 
--	kern_buf = memdup_user(buffer, count);
-+	kern_buf = memdup_user_nul(buffer, count);
- 	if (IS_ERR(kern_buf))
- 		return PTR_ERR(kern_buf);
+diff --git a/drivers/net/wireless/marvell/mwl8k.c b/drivers/net/wireless/marvell/mwl8k.c
+index ee842797570b7..55129bd36786f 100644
+--- a/drivers/net/wireless/marvell/mwl8k.c
++++ b/drivers/net/wireless/marvell/mwl8k.c
+@@ -2711,7 +2711,7 @@ __mwl8k_cmd_mac_multicast_adr(struct ieee80211_hw *hw, int allmulti,
+ 		cmd->action |= cpu_to_le16(MWL8K_ENABLE_RX_MULTICAST);
+ 		cmd->numaddr = cpu_to_le16(mc_count);
+ 		netdev_hw_addr_list_for_each(ha, mc_list) {
+-			memcpy(cmd->addr[i], ha->addr, ETH_ALEN);
++			memcpy(cmd->addr[i++], ha->addr, ETH_ALEN);
+ 		}
+ 	}
  
 -- 
 2.43.0
