@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE27444C6F;
-	Thu, 13 Jun 2024 12:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC92213A406;
+	Thu, 13 Jun 2024 12:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281771; cv=none; b=NCHGVv4syPtwvAKPJrS+pYVi3+RSg8YXiaqplGU0zITt+kR5HmHNQ1pa/F0OFnNd30VNIs3LOkzLFY0RK0Aa6uGmfhDHIZagnP16kyORXgww9qbnvnRllNrTLjS4INh95TL82mdcSlS8oWKX8wNx4l03N5t9eg6/DA1DJfvT8v8=
+	t=1718281774; cv=none; b=oHyiq6ckkAOml4uNkzXgdu3hmMezqz0p4QrbxhXNWMGdWBryAw17l8n1Q/3JfovUp1JFHTo2lMCygpaaoCtUeLwRoSxcRfIUKh5vSE1ajftsnwBdlEU4LzZGHp5ua5xbMxCyh1E8gpty9oZnLIbGPTJ+1MoiBhn+vyhkE85L0RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281771; c=relaxed/simple;
-	bh=JAUk0RFP3zoaTSKvtr3Q3P7c5SDNeTnDzYZiU/NArRI=;
+	s=arc-20240116; t=1718281774; c=relaxed/simple;
+	bh=tYhlcpDGSY2GZCxOO9DPDv8TG7GEmq+OPuLHwAgLwDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LxNfCQWTSdEA8gVjQPHr5L464Kr3wNrmTBBXEfHURy4EAAM0MYgisKxROmTcctahYjO2vw3q4U29k6trgg0iVbeQqs//rLUW7v4OW7wGedfAtgudK3wP/cip1iOcmXjzNa9YkYvs3y02aT+x8kncozc6NpzK+39TBm+eUKcBqY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5ecc57J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MP1IRR/PcE7CI1gGIMRWuyUJxS3s9oX3RSjmAB67Bi3lBySCttv7J9Vc6svT+6iXxn3p3fDOsSIKrNNhq1pixDzhnAhgHPP3AHGLm5oU6NuREbKWT3O6ndplji4ZSSBkZuiZ0euoKa+bEA8UuBXJMB08D72q61ZJ298fN4W8FKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6NjbCuq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5ecc57J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574EAC2BBFC;
-	Thu, 13 Jun 2024 12:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6NjbCuq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E34C2BBFC;
+	Thu, 13 Jun 2024 12:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281771;
-	bh=JAUk0RFP3zoaTSKvtr3Q3P7c5SDNeTnDzYZiU/NArRI=;
+	s=korg; t=1718281774;
+	bh=tYhlcpDGSY2GZCxOO9DPDv8TG7GEmq+OPuLHwAgLwDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5ecc57Jvo0jS1hyaoegxYyOpeTujsfao5I6habyEzUJ8wu7FrUccy5NU/1ujjTWD
-	 CsjZkh+KxjrvuVwksqH64x4XxivV8gJguZkdwhFT+Xvxz9J6Jbj+yXhMeMGsfMmQ+w
-	 +uuaVs9/rFQ8a/cathch4Bpn3bZLGFDWJA1h+LSI=
+	b=G6NjbCuq3QhF3yEGaG4zyPg9YCa1xTxjnbDqweztppwoyA2KxxWLFNw/GiTByVXzy
+	 XhjJbfKHBsu6g/31HnN+h6Ui3wf0OLr2gLZOimUknGxDprdAKnmO/pdX/PdhM70DA4
+	 Bo7ftN968bCOKI+4mlUOQGXCDLCsUSamuI6X+4vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Artemiev <Igor.A.Artemiev@mcst.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Rob Herring <robh@kernel.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/402] wifi: cfg80211: fix the order of arguments for trace events of the tx_rx_evt class
-Date: Thu, 13 Jun 2024 13:29:36 +0200
-Message-ID: <20240613113302.888135269@linuxfoundation.org>
+Subject: [PATCH 5.15 020/402] dt-bindings: rockchip: grf: Add missing type to pcie-phy node
+Date: Thu, 13 Jun 2024 13:29:37 +0200
+Message-ID: <20240613113302.927228643@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,47 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
+From: Rob Herring <robh@kernel.org>
 
-[ Upstream commit 9ef369973cd2c97cce3388d2c0c7e3c056656e8a ]
+[ Upstream commit d41201c90f825f19a46afbfb502f22f612d8ccc4 ]
 
-The declarations of the tx_rx_evt class and the rdev_set_antenna event
-use the wrong order of arguments in the TP_ARGS macro.
+'pcie-phy' is missing any type. Add 'type: object' to indicate it's a
+node.
 
-Fix the order of arguments in the TP_ARGS macro.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
-Link: https://msgid.link/20240405152431.270267-1-Igor.A.Artemiev@mcst.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20240401204959.1698106-1-robh@kernel.org
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/trace.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/soc/rockchip/grf.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/wireless/trace.h b/net/wireless/trace.h
-index dafea8bfcf3cb..9467193424150 100644
---- a/net/wireless/trace.h
-+++ b/net/wireless/trace.h
-@@ -1687,7 +1687,7 @@ TRACE_EVENT(rdev_return_void_tx_rx,
+diff --git a/Documentation/devicetree/bindings/soc/rockchip/grf.yaml b/Documentation/devicetree/bindings/soc/rockchip/grf.yaml
+index dfebf425ca49c..8fe31a7083db8 100644
+--- a/Documentation/devicetree/bindings/soc/rockchip/grf.yaml
++++ b/Documentation/devicetree/bindings/soc/rockchip/grf.yaml
+@@ -141,6 +141,7 @@ allOf:
+           unevaluatedProperties: false
  
- DECLARE_EVENT_CLASS(tx_rx_evt,
- 	TP_PROTO(struct wiphy *wiphy, u32 tx, u32 rx),
--	TP_ARGS(wiphy, rx, tx),
-+	TP_ARGS(wiphy, tx, rx),
- 	TP_STRUCT__entry(
- 		WIPHY_ENTRY
- 		__field(u32, tx)
-@@ -1704,7 +1704,7 @@ DECLARE_EVENT_CLASS(tx_rx_evt,
+         pcie-phy:
++          type: object
+           description:
+             Documentation/devicetree/bindings/phy/rockchip-pcie-phy.txt
  
- DEFINE_EVENT(tx_rx_evt, rdev_set_antenna,
- 	TP_PROTO(struct wiphy *wiphy, u32 tx, u32 rx),
--	TP_ARGS(wiphy, rx, tx)
-+	TP_ARGS(wiphy, tx, rx)
- );
- 
- DECLARE_EVENT_CLASS(wiphy_netdev_id_evt,
 -- 
 2.43.0
 
