@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B726D384;
-	Thu, 13 Jun 2024 12:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC60384;
+	Thu, 13 Jun 2024 12:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282545; cv=none; b=u3/SJH9dGjUPd2zW7sCjVFMz+RlUdFDZhnOGYIsVgAJ7dH6hmb+dFloBE7OF6XVuOd1e7DEndR0/4QFgF0SWNhHeK5JwMAv0JRqo43rL+Lii04Tr71RDqfsD09Bh9dYR3GwY2FuEEt7gxjZwAXbjsMeEAn99tAPI9Ub+1cDdOQ8=
+	t=1718282548; cv=none; b=aiBTXCDQYmuQTEOLS+YNboHuoIkpfS658wmvxhALLbMCMdJihj+T+bclM/gtNMbMbDj+RSVvfEKJavcaNLL7Hzq/RpnPQEqrasmHbh7LxTpu72d/jcK7EKyH/iKDO9bfeRPJ8Gub2brFNM7KjjflHTePUsHeBpnTEyObfW/nLrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282545; c=relaxed/simple;
-	bh=0SMy/mWNEkNCAIZZ691x+uHGi4S9XCyFgb/x0N/WfDY=;
+	s=arc-20240116; t=1718282548; c=relaxed/simple;
+	bh=BoqyVun0o6Z06ylw6GWFWEh8pnVGXRswUT9ONoVzb2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbPRWr35blhKycC/YrA/hDJDZqsUTndJHQXNdpZWvhR1m8rnMPYtCtYWlQgGsRRn2g9+68bmDRcnAt5/9C2300ItF7K85fZ6YUAoecWMGMdvD41vwHaI/xv4c+hsjjJwYuO+YiG+yyNZgdqdCsshfJ+yq45S24hC7vkVExDmPXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dK46Khdi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z8j0Cx5paT5+AxsF08xQImcQS3MNpCU6xPmjZ2LZspeow5KblhASNU4i4iXH4n8lKYaJ5t70lAp7ejez5y9L9Huxp43vhrASVR366RSahOTr8lk2PBVXeRdt9E+g76k5Dq2IpM61xI3AO9TgDT5YJvJmVgRuHFacxh4a6oOcK+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOI35RTd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dK46Khdi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDF7C2BBFC;
-	Thu, 13 Jun 2024 12:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOI35RTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CBFC2BBFC;
+	Thu, 13 Jun 2024 12:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282545;
-	bh=0SMy/mWNEkNCAIZZ691x+uHGi4S9XCyFgb/x0N/WfDY=;
+	s=korg; t=1718282548;
+	bh=BoqyVun0o6Z06ylw6GWFWEh8pnVGXRswUT9ONoVzb2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dK46KhdiFav37uE5qiUfYiOSv2CMppAIz6KL2KzLXVwXYFqGhCeMJ9CPToqnVeOf1
-	 BVTuZwO3CwoaJC9JT8nPelkqOl3yI2uVgHpmg/EmNjyWuSe4LfOMI+HF0yNxjaDbfo
-	 3TXo91Mdp/uO/hTLwz/PFKv2ULjUGamrefdSLKbk=
+	b=jOI35RTdIzeFIH8cACVPxnvrzytoQBgGsjzYC8Yh2cPw+dyXdk8oT5KwqS2Kk57o9
+	 Vxowpa3vFBaBYCx3Y6wEvOv1TxGgQChF7UmnaYsEUYOn6Sz6nK8HBh69qqOXrtp2KQ
+	 Qn6Hu15Yk3TM8IGOrNIJy+E16MKMOB6hE/SOzcK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 312/402] net/mlx5e: Use rx_missed_errors instead of rx_dropped for reporting buffer exhaustion
-Date: Thu, 13 Jun 2024 13:34:29 +0200
-Message-ID: <20240613113314.312711499@linuxfoundation.org>
+Subject: [PATCH 5.15 313/402] dma-buf/sw-sync: dont enable IRQ from sync_print_obj()
+Date: Thu, 13 Jun 2024 13:34:30 +0200
+Message-ID: <20240613113314.350980309@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -47,49 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 5c74195d5dd977e97556e6fa76909b831c241230 ]
+[ Upstream commit b794918961516f667b0c745aebdfebbb8a98df39 ]
 
-Previously, the driver incorrectly used rx_dropped to report device
-buffer exhaustion.
+Since commit a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from
+known context") by error replaced spin_unlock_irqrestore() with
+spin_unlock_irq() for both sync_debugfs_show() and sync_print_obj() despite
+sync_print_obj() is called from sync_debugfs_show(), lockdep complains
+inconsistent lock state warning.
 
-According to the documentation, rx_dropped should not be used to count
-packets dropped due to buffer exhaustion, which is the purpose of
-rx_missed_errors.
+Use plain spin_{lock,unlock}() for sync_print_obj(), for
+sync_debugfs_show() is already using spin_{lock,unlock}_irq().
 
-Use rx_missed_errors as intended for counting packets dropped due to
-buffer exhaustion.
-
-Fixes: 269e6b3af3bf ("net/mlx5e: Report additional error statistics in get stats ndo")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=a225ee3df7e7f9372dbe
+Fixes: a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from known context")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/c2e46020-aaa6-4e06-bf73-f05823f913f0@I-love.SAKURA.ne.jp
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma-buf/sync_debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 923be5fb7d216..79d687c663d54 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -3185,7 +3185,7 @@ mlx5e_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats)
- 		mlx5e_fold_sw_stats64(priv, stats);
+diff --git a/drivers/dma-buf/sync_debug.c b/drivers/dma-buf/sync_debug.c
+index 101394f16930f..237bce21d1e72 100644
+--- a/drivers/dma-buf/sync_debug.c
++++ b/drivers/dma-buf/sync_debug.c
+@@ -110,12 +110,12 @@ static void sync_print_obj(struct seq_file *s, struct sync_timeline *obj)
+ 
+ 	seq_printf(s, "%s: %d\n", obj->name, obj->value);
+ 
+-	spin_lock_irq(&obj->lock);
++	spin_lock(&obj->lock); /* Caller already disabled IRQ. */
+ 	list_for_each(pos, &obj->pt_list) {
+ 		struct sync_pt *pt = container_of(pos, struct sync_pt, link);
+ 		sync_print_fence(s, &pt->base, false);
  	}
+-	spin_unlock_irq(&obj->lock);
++	spin_unlock(&obj->lock);
+ }
  
--	stats->rx_dropped = priv->stats.qcnt.rx_out_of_buffer;
-+	stats->rx_missed_errors = priv->stats.qcnt.rx_out_of_buffer;
- 
- 	stats->rx_length_errors =
- 		PPORT_802_3_GET(pstats, a_in_range_length_errors) +
+ static void sync_print_sync_file(struct seq_file *s,
 -- 
 2.43.0
 
