@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0355148855;
-	Thu, 13 Jun 2024 12:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F7A148FEB;
+	Thu, 13 Jun 2024 12:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280237; cv=none; b=cG3r5xYSSlS3JQbPKKWusN9lpqJb2pSck3NW7pxpCl8qp+75bNXEEupoS8gmlndNsaACLhzFCwqCkT9r0cXhhuSY3XOlvpU2yNxUflzHdhNehxlW7Kvn/cZDECriByobeDhV3/jdxfigpvZMnbj7oAZ9RWFSWLGRi1BzF3lxODw=
+	t=1718280239; cv=none; b=t7DxhvWMjZ3krad65XGBsYJiVmpb0RnrJafLEJLHI6xNTcmyT8w/r2lKBLmWxHH1iwkYxYCEqf9MvDtybZ7zn272vk0c7/aRZZ1XgAQ3neVGEgSSZOVwDUraOXsw7kUBPlC3whBDSk+LjHfwEmr25w+ozFBUVMLnPkj+96sQ9/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280237; c=relaxed/simple;
-	bh=HPHYxz3SuKAi5gZq2EH1ntQxjm+xIRl7WPPS3YG3h9c=;
+	s=arc-20240116; t=1718280239; c=relaxed/simple;
+	bh=z0sRN5WE/PgwUbOhdgtC3zBo44SCOK72QCWPRMVMw8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UsBHqoD7RYlq9Aup8v/ZpzHEsE88YUrbpPSvWGnLssX9k0vi3xwgqwgnBxIjVjj9lr+L9/aB7y7CU/vp6pfG3v+uL6y4wMytzIhaUHoTTFYsD4Pm2l/qRlobyQLgKLRIoVeWB9ivNGgCIy1eBZOER1lWdu8Z4s0CX/hJmnb6OvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auNWM6if; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qw6SePR16ntFECetPLBZGdd8j3o3KPSL/BuFcV1PaVIXNm3tOOfYW/6VkpFkheJnuv4xF3iX8l8N8zxaHUfLZTj7WUE3ThiZOvTwLjdig2DWz8nGfkBK+zMCZixPX7W0+9VDYQfuAIMmHlWvPnnX3CdRoVbykPHz9jSeaOe3mqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2ODDP0P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auNWM6if"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DF9C2BBFC;
-	Thu, 13 Jun 2024 12:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2ODDP0P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598C5C2BBFC;
+	Thu, 13 Jun 2024 12:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280236;
-	bh=HPHYxz3SuKAi5gZq2EH1ntQxjm+xIRl7WPPS3YG3h9c=;
+	s=korg; t=1718280239;
+	bh=z0sRN5WE/PgwUbOhdgtC3zBo44SCOK72QCWPRMVMw8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auNWM6ifGQ9Hb+e7y2oVNUlxdRfVHQ0KKj3FwUp6IsGg3jSF9JUzdF7DxO9QYdVLD
-	 gLYfODgj+rR97vEUFklQtQAG+Yr5+hfkfUotB08fIxsQPF3XzFgshIrNHHycF8zt2l
-	 SvjGPIRo18L8OK9QNj+NHzu7GviSemVyJ8Iz6icM=
+	b=I2ODDP0P2E3J/x84SbcLZBmi0zv6Ulq9zi14B2fOvrd+/PtIXGMgV+uegCKPd+yYX
+	 RIBGlBvrlR7W4ELGF22M9M3GSFMy1+9RpE2FCP5QpZpvpZvcC6kYllZsA7jB7g2I4O
+	 Vp95xthV/A5+TWlNO/i1oTr50M13hW20Pyy/K2Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 157/202] net:fec: Add fec_enet_deinit()
-Date: Thu, 13 Jun 2024 13:34:15 +0200
-Message-ID: <20240613113233.807289280@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+b94a6818504ea90d7661@syzkaller.appspotmail.com
+Subject: [PATCH 5.4 158/202] netfilter: tproxy: bail out if IP has been disabled on the device
+Date: Thu, 13 Jun 2024 13:34:16 +0200
+Message-ID: <20240613113233.845157572@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -53,61 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit bf0497f53c8535f99b72041529d3f7708a6e2c0d ]
+[ Upstream commit 21a673bddc8fd4873c370caf9ae70ffc6d47e8d3 ]
 
-When fec_probe() fails or fec_drv_remove() needs to release the
-fec queue and remove a NAPI context, therefore add a function
-corresponding to fec_enet_init() and call fec_enet_deinit() which
-does the opposite to release memory and remove a NAPI context.
+syzbot reports:
+general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+[..]
+RIP: 0010:nf_tproxy_laddr4+0xb7/0x340 net/ipv4/netfilter/nf_tproxy_ipv4.c:62
+Call Trace:
+ nft_tproxy_eval_v4 net/netfilter/nft_tproxy.c:56 [inline]
+ nft_tproxy_eval+0xa9a/0x1a00 net/netfilter/nft_tproxy.c:168
 
-Fixes: 59d0f7465644 ("net: fec: init multi queue date structure")
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240524050528.4115581-1-xiaolei.wang@windriver.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+__in_dev_get_rcu() can return NULL, so check for this.
+
+Reported-and-tested-by: syzbot+b94a6818504ea90d7661@syzkaller.appspotmail.com
+Fixes: cc6eb4338569 ("tproxy: use the interface primary IP address as a default value for --on-ip")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/ipv4/netfilter/nf_tproxy_ipv4.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index b55d6ed9aa133..fb7039b001ef8 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3371,6 +3371,14 @@ static int fec_enet_init(struct net_device *ndev)
- 	return ret;
- }
+diff --git a/net/ipv4/netfilter/nf_tproxy_ipv4.c b/net/ipv4/netfilter/nf_tproxy_ipv4.c
+index 61cb2341f50fe..7c1a0cd9f4359 100644
+--- a/net/ipv4/netfilter/nf_tproxy_ipv4.c
++++ b/net/ipv4/netfilter/nf_tproxy_ipv4.c
+@@ -58,6 +58,8 @@ __be32 nf_tproxy_laddr4(struct sk_buff *skb, __be32 user_laddr, __be32 daddr)
  
-+static void fec_enet_deinit(struct net_device *ndev)
-+{
-+	struct fec_enet_private *fep = netdev_priv(ndev);
-+
-+	netif_napi_del(&fep->napi);
-+	fec_enet_free_queue(ndev);
-+}
-+
- #ifdef CONFIG_OF
- static int fec_reset_phy(struct platform_device *pdev)
- {
-@@ -3735,6 +3743,7 @@ fec_probe(struct platform_device *pdev)
- 	fec_enet_mii_remove(fep);
- failed_mii_init:
- failed_irq:
-+	fec_enet_deinit(ndev);
- failed_init:
- 	fec_ptp_stop(pdev);
- failed_reset:
-@@ -3796,6 +3805,7 @@ fec_drv_remove(struct platform_device *pdev)
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+ 	laddr = 0;
+ 	indev = __in_dev_get_rcu(skb->dev);
++	if (!indev)
++		return daddr;
  
-+	fec_enet_deinit(ndev);
- 	free_netdev(ndev);
- 	return 0;
- }
+ 	in_dev_for_each_ifa_rcu(ifa, indev) {
+ 		if (ifa->ifa_flags & IFA_F_SECONDARY)
 -- 
 2.43.0
 
