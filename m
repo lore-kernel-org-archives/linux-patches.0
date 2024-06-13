@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF87A59;
-	Thu, 13 Jun 2024 12:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E183520ED;
+	Thu, 13 Jun 2024 12:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283066; cv=none; b=SSycvjzzvwh0MDodtI3XdtsDbXOR+gWjJwuyN4bOlKsDhnTX7EeEI6fR2Acc7FuEuz42M/a43Eq9b0K5sqUlm17xXcszKQow3ENST5dhzk/pMlIi2er+9Wu79nJ1hbgOw7WicBSxmRETi01far70xbzW4Pj/Oa2WOC2jQV10oJA=
+	t=1718283070; cv=none; b=Y8Of750kDZXzq88sLwclSfyU7nIXPqNBkvIvqDjA73ckGWk0VGV9YxfIpKWgtHWbHJE1jJAZw9lJ1vkB8/DgdrBrfSh3hHdDvG9QkKgbB7sC+MN6oy22GbmNIoy2RJr3m+1z5qyPfCVjNddGtNzpgLfCWlREfENUSIG27Eu2JkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283066; c=relaxed/simple;
-	bh=J/HjqBuNEN/hV6EGCgBdqexqWKmjagNWhnhgfOQvPj4=;
+	s=arc-20240116; t=1718283070; c=relaxed/simple;
+	bh=4Qgo1WefyfOYsir7tSRNbFjydve8Y5fQZ3CywWNHuX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qyJ5X/CH0iGWT5bOJo5QDrzWnlppXkNhhHI86ASg00IROk+QZu+T9ZbuBIDiSeAAXI0uFEpVPvPTyLUc1J8TE6wotGFU6v4uHdLq9YCMuvcOprjcgJYPDiU9tyUI+fHHt1HYUMzKCPIeKzwxRTnBAyLL1JmnLUzAPY/o3uu+keE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Whs5oSc7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jdotEmUvmU81R+Qiziw8lUuGDilwb23gTDxMfaXC5Ax/ooAn17S5ADGXt/mY29LKIW0gY8Lzu3sttoEO4f4pirG2GfORdypfS1T0JIzwmWYkkCWVIgqIEuFo7g6eN/oRBkZXufKqYkXVN8IkXkw8Bxal9+U35fzSstpZzZMzjf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQS0LOPp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Whs5oSc7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8B6C2BBFC;
-	Thu, 13 Jun 2024 12:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQS0LOPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6B0C2BBFC;
+	Thu, 13 Jun 2024 12:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283066;
-	bh=J/HjqBuNEN/hV6EGCgBdqexqWKmjagNWhnhgfOQvPj4=;
+	s=korg; t=1718283069;
+	bh=4Qgo1WefyfOYsir7tSRNbFjydve8Y5fQZ3CywWNHuX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Whs5oSc7YU/8C2Tt77SxCSbRJkZ56ZrFqrLaPujvPRjoNtgRonOuZz8NO7z5u50vE
-	 uwUNTJJIWFu8ID1GUMhos8cw/qLxmAticJIpNwCvzwD7+Kz7dxPEnpOLu/+q2UpPpH
-	 uaPT7LzjwGrnYskmL/IJGvbSvmZNa8K6g+CzWipY=
+	b=bQS0LOPpvkoatswAT9c25x/cEp/sHhuI6PY/LPKC3RiAEIQGEvqjpiMyA4SUOWwHw
+	 ueB39UYo6kbwdndXozNjQk+AIkYeO6EhIPFU3YHfGxyYYdeJCZeTrIOC7l0qn0aIQZ
+	 0NcmGxTvQPKtD2rZcKTixF8zCkF9iYrUjd1EM/4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	syzbot+ff14db38f56329ef68df@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 57/85] net/9p: fix uninit-value in p9_client_rpc()
-Date: Thu, 13 Jun 2024 13:35:55 +0200
-Message-ID: <20240613113216.340731559@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Brian Johannesmeyer <bjohannesmeyer@gmail.com>,
+	Marco Elver <elver@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 58/85] kmsan: do not wipe out origin when doing partial unpoisoning
+Date: Thu, 13 Jun 2024 13:35:56 +0200
+Message-ID: <20240613113216.377891197@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -52,90 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Alexander Potapenko <glider@google.com>
 
-commit 25460d6f39024cc3b8241b14c7ccf0d6f11a736a upstream.
+commit 2ef3cec44c60ae171b287db7fc2aa341586d65ba upstream.
 
-Syzbot with the help of KMSAN reported the following error:
+As noticed by Brian, KMSAN should not be zeroing the origin when
+unpoisoning parts of a four-byte uninitialized value, e.g.:
 
-BUG: KMSAN: uninit-value in trace_9p_client_res include/trace/events/9p.h:146 [inline]
-BUG: KMSAN: uninit-value in p9_client_rpc+0x1314/0x1340 net/9p/client.c:754
- trace_9p_client_res include/trace/events/9p.h:146 [inline]
- p9_client_rpc+0x1314/0x1340 net/9p/client.c:754
- p9_client_create+0x1551/0x1ff0 net/9p/client.c:1031
- v9fs_session_init+0x1b9/0x28e0 fs/9p/v9fs.c:410
- v9fs_mount+0xe2/0x12b0 fs/9p/vfs_super.c:122
- legacy_get_tree+0x114/0x290 fs/fs_context.c:662
- vfs_get_tree+0xa7/0x570 fs/super.c:1797
- do_new_mount+0x71f/0x15e0 fs/namespace.c:3352
- path_mount+0x742/0x1f20 fs/namespace.c:3679
- do_mount fs/namespace.c:3692 [inline]
- __do_sys_mount fs/namespace.c:3898 [inline]
- __se_sys_mount+0x725/0x810 fs/namespace.c:3875
- __x64_sys_mount+0xe4/0x150 fs/namespace.c:3875
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
+    char a[4];
+    kmsan_unpoison_memory(a, 1);
 
-Uninit was created at:
- __alloc_pages+0x9d6/0xe70 mm/page_alloc.c:4598
- __alloc_pages_node include/linux/gfp.h:238 [inline]
- alloc_pages_node include/linux/gfp.h:261 [inline]
- alloc_slab_page mm/slub.c:2175 [inline]
- allocate_slab mm/slub.c:2338 [inline]
- new_slab+0x2de/0x1400 mm/slub.c:2391
- ___slab_alloc+0x1184/0x33d0 mm/slub.c:3525
- __slab_alloc mm/slub.c:3610 [inline]
- __slab_alloc_node mm/slub.c:3663 [inline]
- slab_alloc_node mm/slub.c:3835 [inline]
- kmem_cache_alloc+0x6d3/0xbe0 mm/slub.c:3852
- p9_tag_alloc net/9p/client.c:278 [inline]
- p9_client_prepare_req+0x20a/0x1770 net/9p/client.c:641
- p9_client_rpc+0x27e/0x1340 net/9p/client.c:688
- p9_client_create+0x1551/0x1ff0 net/9p/client.c:1031
- v9fs_session_init+0x1b9/0x28e0 fs/9p/v9fs.c:410
- v9fs_mount+0xe2/0x12b0 fs/9p/vfs_super.c:122
- legacy_get_tree+0x114/0x290 fs/fs_context.c:662
- vfs_get_tree+0xa7/0x570 fs/super.c:1797
- do_new_mount+0x71f/0x15e0 fs/namespace.c:3352
- path_mount+0x742/0x1f20 fs/namespace.c:3679
- do_mount fs/namespace.c:3692 [inline]
- __do_sys_mount fs/namespace.c:3898 [inline]
- __se_sys_mount+0x725/0x810 fs/namespace.c:3875
- __x64_sys_mount+0xe4/0x150 fs/namespace.c:3875
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
+This led to false negatives, as certain poisoned values could receive zero
+origins, preventing those values from being reported.
 
-If p9_check_errors() fails early in p9_client_rpc(), req->rc.tag
-will not be properly initialized. However, trace_9p_client_res()
-ends up trying to print it out anyway before p9_client_rpc()
-finishes.
+To fix the problem, check that kmsan_internal_set_shadow_origin() writes
+zero origins only to slots which have zero shadow.
 
-Fix this issue by assigning default values to p9_fcall fields
-such as 'tag' and (just in case KMSAN unearths something new) 'id'
-during the tag allocation stage.
-
-Reported-and-tested-by: syzbot+ff14db38f56329ef68df@syzkaller.appspotmail.com
-Fixes: 348b59012e5c ("net/9p: Convert net/9p protocol dumps to tracepoints")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Cc: stable@vger.kernel.org
-Message-ID: <20240408141039.30428-1-n.zhandarovich@fintech.ru>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Link: https://lkml.kernel.org/r/20240528104807.738758-1-glider@google.com
+Fixes: f80be4571b19 ("kmsan: add KMSAN runtime core")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reported-by: Brian Johannesmeyer <bjohannesmeyer@gmail.com>
+  Link: https://lore.kernel.org/lkml/20240524232804.1984355-1-bjohannesmeyer@gmail.com/T/
+Reviewed-by: Marco Elver <elver@google.com>
+Tested-by: Brian Johannesmeyer <bjohannesmeyer@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/client.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/kmsan/core.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -231,6 +231,8 @@ static int p9_fcall_init(struct p9_clien
- 	if (!fc->sdata)
- 		return -ENOMEM;
- 	fc->capacity = alloc_msize;
-+	fc->id = 0;
-+	fc->tag = P9_NOTAG;
- 	return 0;
+--- a/mm/kmsan/core.c
++++ b/mm/kmsan/core.c
+@@ -258,8 +258,7 @@ void kmsan_internal_set_shadow_origin(vo
+ 				      u32 origin, bool checked)
+ {
+ 	u64 address = (u64)addr;
+-	void *shadow_start;
+-	u32 *origin_start;
++	u32 *shadow_start, *origin_start;
+ 	size_t pad = 0;
+ 
+ 	KMSAN_WARN_ON(!kmsan_metadata_is_contiguous(addr, size));
+@@ -287,8 +286,16 @@ void kmsan_internal_set_shadow_origin(vo
+ 	origin_start =
+ 		(u32 *)kmsan_get_metadata((void *)address, KMSAN_META_ORIGIN);
+ 
+-	for (int i = 0; i < size / KMSAN_ORIGIN_SIZE; i++)
+-		origin_start[i] = origin;
++	/*
++	 * If the new origin is non-zero, assume that the shadow byte is also non-zero,
++	 * and unconditionally overwrite the old origin slot.
++	 * If the new origin is zero, overwrite the old origin slot iff the
++	 * corresponding shadow slot is zero.
++	 */
++	for (int i = 0; i < size / KMSAN_ORIGIN_SIZE; i++) {
++		if (origin || !shadow_start[i])
++			origin_start[i] = origin;
++	}
  }
  
+ struct page *kmsan_vmalloc_to_page_or_null(void *vaddr)
 
 
