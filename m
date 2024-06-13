@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F8A144D1D;
-	Thu, 13 Jun 2024 11:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD9B1448FA;
+	Thu, 13 Jun 2024 11:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279876; cv=none; b=HiobQ67O/5XT3l9pElAUxJk+3bt3mKazkpSJ27f1TTSA7bZ8cnZQnD3KXgW+lA1fjq2/yV2g0GYYFvR4i9SpaND4s/qsn5oQGwSqJGECG4Np1XZ8MJ25aiDFPewyGgy4eQl/SPitl8I7CFKzSzjuJ0cY2RjouGy305Z2t0vTfQk=
+	t=1718279880; cv=none; b=UoRUCj1ZV0ZNRdXSXDbf0GSoEkYb8vLiWb1gDI29xDV/qSgEVBxD5RUYBQ/7pgX4n9DD2wg6I9RGeMfgIaep5kc56yZZ7JVb/vw+AXsOQST+Uo1mEaYGSPlqz5mGoECw5O+gMAyCdYEKJn0qG46R06xZO16tGBBEfj9glZVdW7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279876; c=relaxed/simple;
-	bh=JUnj/8BFeBQz3mX1NnfKoTrah9mBl4LBIHuv2XRcMo0=;
+	s=arc-20240116; t=1718279880; c=relaxed/simple;
+	bh=a3bbkyBVVuO1CMvQD+dk/rKM5ZuoeiM7NEvE1ZC8WOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+oef+svqukiW382JufHRWhJu7Si38C4xbQf07qbc24wtu3Vq6mcd2qeUIX/LtDpygAW2igUncAEhGSoR+aAizOhCwbvEzCtMPCU1/cBiaWULZNCwpYhoDnrQv6AhZl3BYyZST5pQaJjZ+XaCkVjdVOpiTQdoDZim+XJAHXtKnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtoFXNeb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nqxdDZ7baqWHzg5Y7Li49QSIMaBR5nxDc7rq/DU7ZZj+4qzjkJxv5EGWkRrJbAnRHpgMmPN5rwe35JIzC3SMEsWcEmUxDf0/j31TG6HVtJUXTlR9AZ6j0OEUGrCNwljN2uwCAbqGRr/NBhHGTGgLF6rd5KDX723R2HcjQq5qNFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYmIkF9D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtoFXNeb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E7AC32786;
-	Thu, 13 Jun 2024 11:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYmIkF9D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2611CC2BBFC;
+	Thu, 13 Jun 2024 11:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279876;
-	bh=JUnj/8BFeBQz3mX1NnfKoTrah9mBl4LBIHuv2XRcMo0=;
+	s=korg; t=1718279879;
+	bh=a3bbkyBVVuO1CMvQD+dk/rKM5ZuoeiM7NEvE1ZC8WOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtoFXNeb4WDwnOWCCPEke3a5SRYl0tJ5ApFeB2rTrOx3c//C4D4egEqgHQR6Edq0X
-	 3IKVXgPvq01LtUKLqlj3qDmUbmrVyW/hEdVJyqEMMCa+tv2MN46d+XHne6nf6MUa27
-	 UDZpA7L5SWHSTGt9lpeByWvANkIGe1liftrsQCak=
+	b=lYmIkF9DeQ7hzihLt/6yGf9vFAyDDgqy3G9sYZi+bZEqSODjMMkurt6iqw3Qd2xcO
+	 w6Bjz3AaU/9xy/Z3e5T7VlajuOLW1oQ/xWxAHQSVgHnNL4KmnOYKF5JVfSGHox7Eq5
+	 38My1WvNWGyL3UVoo8Ht6n10BkGM8TLv+nAGWFjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/202] ipv6: sr: fix invalid unregister error path
-Date: Thu, 13 Jun 2024 13:32:45 +0200
-Message-ID: <20240613113230.364473616@linuxfoundation.org>
+Subject: [PATCH 5.4 068/202] drm/amd/display: Fix potential index out of bounds in color transformation function
+Date: Thu, 13 Jun 2024 13:32:46 +0200
+Message-ID: <20240613113230.402643516@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -54,44 +58,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 160e9d2752181fcf18c662e74022d77d3164cd45 ]
+[ Upstream commit 63ae548f1054a0b71678d0349c7dc9628ddd42ca ]
 
-The error path of seg6_init() is wrong in case CONFIG_IPV6_SEG6_LWTUNNEL
-is not defined. In that case if seg6_hmac_init() fails, the
-genl_unregister_family() isn't called.
+Fixes index out of bounds issue in the color transformation function.
+The issue could occur when the index 'i' exceeds the number of transfer
+function points (TRANSFER_FUNC_POINTS).
 
-This issue exist since commit 46738b1317e1 ("ipv6: sr: add option to control
-lwtunnel support"), and commit 5559cea2d5aa ("ipv6: sr: fix possible
-use-after-free and null-ptr-deref") replaced unregister_pernet_subsys()
-with genl_unregister_family() in this error path.
+The fix adds a check to ensure 'i' is within bounds before accessing the
+transfer function points. If 'i' is out of bounds, an error message is
+logged and the function returns false to indicate an error.
 
-Fixes: 46738b1317e1 ("ipv6: sr: add option to control lwtunnel support")
-Reported-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240509131812.1662197-4-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:405 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:406 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:407 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
+
+Fixes: b629596072e5 ("drm/amd/display: Build unity lut for shaper")
+Cc: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Cc: Charlene Liu <Charlene.Liu@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
-index 98ee76b33b622..8962816925438 100644
---- a/net/ipv6/seg6.c
-+++ b/net/ipv6/seg6.c
-@@ -480,6 +480,8 @@ int __init seg6_init(void)
- #endif
- #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
- out_unregister_genl:
-+#endif
-+#if IS_ENABLED(CONFIG_IPV6_SEG6_LWTUNNEL) || IS_ENABLED(CONFIG_IPV6_SEG6_HMAC)
- 	genl_unregister_family(&seg6_genl_family);
- #endif
- out_unregister_pernet:
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
+index bbd6e01b3eca4..f1b1bc8da175b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
+@@ -380,6 +380,11 @@ bool cm_helper_translate_curve_to_hw_format(
+ 				i += increment) {
+ 			if (j == hw_points - 1)
+ 				break;
++			if (i >= TRANSFER_FUNC_POINTS) {
++				DC_LOG_ERROR("Index out of bounds: i=%d, TRANSFER_FUNC_POINTS=%d\n",
++					     i, TRANSFER_FUNC_POINTS);
++				return false;
++			}
+ 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
+ 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
+ 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
 -- 
 2.43.0
 
