@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381AA1494D5;
-	Thu, 13 Jun 2024 11:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9E3149E0A;
+	Thu, 13 Jun 2024 11:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279953; cv=none; b=BQDbQ4O+nOz6MauqtcYMOmknzoP3T0NWbCg2DCoDiBTEmb+99HTrdaelcm8ZkckKGLqaJ5a8Svxx+QdqKMbczhiZjg3lWVCyrI6pCwPBbCSKdXfeLpqtFyCeUJW0J1qsPJYXjHXwA0yse2a45G7S4FhuJmkPGXmwuBWwvy1TvOA=
+	t=1718279956; cv=none; b=fEjXhfTHWhRoppmLxH8BO/uMt5hEbSMugjyjYhCtjdatJzNxoyD+m39RD0jogxw8L2d5GF/q6mxxq036ovIx43zdcFMSHYgY55tqdltiMXfeRP5Cq31bbzQHRUmR6ZRSoByA38L8XzUV0hAocrGpSotXYD9FLXsrrIcD8C6A88A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279953; c=relaxed/simple;
-	bh=KmbhwZEBbvkvMG9ALOMhRE92WgBBMCFGZv+F59wjbnE=;
+	s=arc-20240116; t=1718279956; c=relaxed/simple;
+	bh=pcwKK381rf0fnihLb2kimVUrie71p6RKRfO5dZP5gac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rv8mxGHBI5RpLwsiIWx/9jtPmGrz12G64Im+U1XiAhOe5816/HdYIHCgKQfS65mQrfJeS/n/BvbmhNhPbJ/KZa1PPeP5eM58ZmLvTgpyg05a5lml+W0zVeBSsg7Y1EuVQSXKeXOT0sq9g/aPFRJ8fFrdJ/CDwTWaOxbyIB17PZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBs1mwi1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLjJ1tF/TMFla0aT7LhymqSoGB67Ec/jTErVqaeHunvNGl2uOe2CXxnOC8E/r4mnwd4W+u9q3JUdmT96vZ+M/r7dI5jW9rn17IiEAusUM6GaDTL9zjJ3Iz4/V+OzPCYE0i4vFDZJ4cadyE1eHdddjRInOVs82pTeczdzVnxvPUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MxjO/oY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBs1mwi1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0218C4AF1D;
-	Thu, 13 Jun 2024 11:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MxjO/oY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60EDC2BBFC;
+	Thu, 13 Jun 2024 11:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279953;
-	bh=KmbhwZEBbvkvMG9ALOMhRE92WgBBMCFGZv+F59wjbnE=;
+	s=korg; t=1718279956;
+	bh=pcwKK381rf0fnihLb2kimVUrie71p6RKRfO5dZP5gac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBs1mwi1Gvmif80v63yHPheAQKCtdn0SO668BAq0yF0qnE5IO2NoEni2xqEjXYDLb
-	 z8ptkWUqNG4+XeFh6J7CF8LnH4TFi8ErlZM9EGFF2oTkQGge0U4j+xm+fBXErxoocA
-	 Fh0Qo7HN916QBCqEUAhUxMl9hn7pniiHOMyGIpHo=
+	b=2MxjO/oYxn+lbNNsmS06TA/YJ1Ixrx9Mh1rcdrtFMM5xGyrZRTesk/NZZKluYTxaY
+	 RrBCSQ/M4r1J30qkw2/Pwy52VDi/k9bw3UcqNlF/cIhWDOXlNyELWu7OBjz0Hn2yGy
+	 f28Uda9D+LIOZRrM896mExMQJnt2MaaPmmLFYxeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Gautam Menghani <gautammenghani201@gmail.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 051/202] sh: kprobes: Merge arch_copy_kprobe() into arch_prepare_kprobe()
-Date: Thu, 13 Jun 2024 13:32:29 +0200
-Message-ID: <20240613113229.744095472@linuxfoundation.org>
+Subject: [PATCH 5.4 086/202] selftests/kcmp: Make the test output consistent and clear
+Date: Thu, 13 Jun 2024 13:33:04 +0200
+Message-ID: <20240613113231.089890013@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -51,51 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Gautam Menghani <gautammenghani201@gmail.com>
 
-[ Upstream commit 1422ae080b66134fe192082d9b721ab7bd93fcc5 ]
+[ Upstream commit ff682226a353d88ffa5db9c2a9b945066776311e ]
 
-arch/sh/kernel/kprobes.c:52:16: warning: no previous prototype for 'arch_copy_kprobe' [-Wmissing-prototypes]
+Make the output format of this test consistent. Currently the output is
+as follows:
 
-Although SH kprobes support was only merged in v2.6.28, it missed the
-earlier removal of the arch_copy_kprobe() callback in v2.6.15.
++TAP version 13
++1..1
++# selftests: kcmp: kcmp_test
++# pid1:  45814 pid2:  45815 FD:  1 FILES:  1 VM:  2 FS:  1 SIGHAND:  2
++  IO:  0 SYSVSEM:  0 INV: -1
++# PASS: 0 returned as expected
++# PASS: 0 returned as expected
++# PASS: 0 returned as expected
++# # Planned tests != run tests (0 != 3)
++# # Totals: pass:3 fail:0 xfail:0 xpass:0 skip:0 error:0
++# # Planned tests != run tests (0 != 3)
++# # Totals: pass:3 fail:0 xfail:0 xpass:0 skip:0 error:0
++# # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:0 error:0
++ok 1 selftests: kcmp: kcmp_test
 
-Based on the powerpc part of commit 49a2a1b83ba6fa40 ("[PATCH] kprobes:
-changed from using spinlock to mutex").
+With this patch applied the output is as follows:
 
-Fixes: d39f5450146ff39f ("sh: Add kprobes support.")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/717d47a19689cc944fae6e981a1ad7cae1642c89.1709326528.git.geert+renesas@glider.be
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
++TAP version 13
++1..1
++# selftests: kcmp: kcmp_test
++# TAP version 13
++# 1..3
++# pid1:  46330 pid2:  46331 FD:  1 FILES:  2 VM:  2 FS:  2 SIGHAND:  1
++  IO:  0 SYSVSEM:  0 INV: -1
++# PASS: 0 returned as expected
++# PASS: 0 returned as expected
++# PASS: 0 returned as expected
++# # Totals: pass:3 fail:0 xfail:0 xpass:0 skip:0 error:0
++ok 1 selftests: kcmp: kcmp_test
+
+Signed-off-by: Gautam Menghani <gautammenghani201@gmail.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Stable-dep-of: eb59a5811371 ("selftests/kcmp: remove unused open mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/kernel/kprobes.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ tools/testing/selftests/kcmp/kcmp_test.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/sh/kernel/kprobes.c b/arch/sh/kernel/kprobes.c
-index 318296f48f1ac..75f51bc2d801e 100644
---- a/arch/sh/kernel/kprobes.c
-+++ b/arch/sh/kernel/kprobes.c
-@@ -44,17 +44,12 @@ int __kprobes arch_prepare_kprobe(struct kprobe *p)
- 	if (OPCODE_RTE(opcode))
- 		return -EFAULT;	/* Bad breakpoint */
+diff --git a/tools/testing/selftests/kcmp/kcmp_test.c b/tools/testing/selftests/kcmp/kcmp_test.c
+index 6ea7b9f37a411..25110c7c0b3ed 100644
+--- a/tools/testing/selftests/kcmp/kcmp_test.c
++++ b/tools/testing/selftests/kcmp/kcmp_test.c
+@@ -88,6 +88,9 @@ int main(int argc, char **argv)
+ 		int pid2 = getpid();
+ 		int ret;
  
-+	memcpy(p->ainsn.insn, p->addr, MAX_INSN_SIZE * sizeof(kprobe_opcode_t));
- 	p->opcode = opcode;
++		ksft_print_header();
++		ksft_set_plan(3);
++
+ 		fd2 = open(kpath, O_RDWR, 0644);
+ 		if (fd2 < 0) {
+ 			perror("Can't open file");
+@@ -152,7 +155,6 @@ int main(int argc, char **argv)
+ 			ksft_inc_pass_cnt();
+ 		}
  
- 	return 0;
+-		ksft_print_cnts();
+ 
+ 		if (ret)
+ 			ksft_exit_fail();
+@@ -162,5 +164,5 @@ int main(int argc, char **argv)
+ 
+ 	waitpid(pid2, &status, P_ALL);
+ 
+-	return ksft_exit_pass();
++	return 0;
  }
- 
--void __kprobes arch_copy_kprobe(struct kprobe *p)
--{
--	memcpy(p->ainsn.insn, p->addr, MAX_INSN_SIZE * sizeof(kprobe_opcode_t));
--	p->opcode = *p->addr;
--}
--
- void __kprobes arch_arm_kprobe(struct kprobe *p)
- {
- 	*p->addr = BREAKPOINT_INSTRUCTION;
 -- 
 2.43.0
 
