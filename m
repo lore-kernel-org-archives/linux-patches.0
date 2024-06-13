@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55361849;
-	Thu, 13 Jun 2024 12:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C0C399;
+	Thu, 13 Jun 2024 12:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281830; cv=none; b=tsVOVB7ueTr2tiEHEuEhKpYj/qzZc5itPPacB1TXNBISGrzeszKNXGh9fa5teFmNYONZa6gXyuRFlbfCP8+DWrg9+fqQmgVHcxygHGjfTJikSt2PAwXrHNRYf5jeni86L5xyl71TRr44T7ML/61awFgmbBuMRybTOr/kh6hgwvE=
+	t=1718281834; cv=none; b=SDaMbhQWSl+VB4W0U3HelhEh7ub5mhNg6SVOAmdYA8VZReDlFMyB13cmX0Jx8XUbV92M8UJrRuKMS8C/P6eD3gSY+hhGjKLkxtdkLQj4SiBKZVmhI33BbgyqF3rg4k0RTdwOWKDorSR6mnNOGkPSHyvrm6O6ND30UxBS7PWlfZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281830; c=relaxed/simple;
-	bh=3khPvwX6WhdTgTdmtMjzV6mzS2yvGDhn9qve3qL/ARo=;
+	s=arc-20240116; t=1718281834; c=relaxed/simple;
+	bh=P5GkESFmeAmDEfIEUNtw6WhHPA8yeclbkzDnSNPF6Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mnwPxVNnTRo50i05/wqHuaEzkdb4Qw5WYREZs1h/b1qyO7LPGfj8ieH4YjWxlYWQT4VM5NuCEfpNvEFd2ED4rQKpYBZNfCWJHHC46i2qc8MamXkKkcqnKTZfrrKSesI9fx5IXzdAy5O+1Ni3u1JQQi5eJI9l006PixiaScSxkX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0R701yLb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rx/CE4DCR6gUoSJ5h9fQ/oLRyXZ9FeFWLzA5WlGYRHoztBldOrrQuvTminHGPtD8mvqeKXHLby3jTGoPPKHqKRDZBh2kY236vgCYJp+12cDiPAiMxBLxm2FaIknwkJBjh3WFeviUFL2xR6sFtsA4mDTO3RtAhwdnQPKeB7+UfrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwYVpUlb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0R701yLb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2C7C2BBFC;
-	Thu, 13 Jun 2024 12:30:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwYVpUlb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9C7C2BBFC;
+	Thu, 13 Jun 2024 12:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281830;
-	bh=3khPvwX6WhdTgTdmtMjzV6mzS2yvGDhn9qve3qL/ARo=;
+	s=korg; t=1718281833;
+	bh=P5GkESFmeAmDEfIEUNtw6WhHPA8yeclbkzDnSNPF6Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0R701yLbirlFsxKTTJXnikB0OQPtkDSVQH/dN81qVeLr3c3p0OdUwGzkTGrixoAjo
-	 L8kqoTY/skLCOGHI59z2HYa3Cp44FaQxKOhyjc6vAh8ZZbLbgmz5Qcw+qVZaoxnMbr
-	 MZ30SBYYp2XSBQ0sLCpmBx+6m5cxnw2DcPnisxQg=
+	b=KwYVpUlb+ltdlrA7JIumvCjUAadCdl689lsw3si/AbKveeaSiIngmCMMoYMHCZX0d
+	 3AHaDcyROQuRPH9kew8DVCO7NR+hsAp7Io/DUOh7ei5AC9stWhfXcHW4O5N3PGtVnP
+	 +7PhOZj2vcX9C3bQgOrySmOkvJchEmlkwO3a910E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/402] gfs2: Fix "ignore unlock failures after withdraw"
-Date: Thu, 13 Jun 2024 13:30:27 +0200
-Message-ID: <20240613113304.868894560@linuxfoundation.org>
+Subject: [PATCH 5.15 071/402] selftests/bpf: Fix umount cgroup2 error in test_sockmap
+Date: Thu, 13 Jun 2024 13:30:28 +0200
+Message-ID: <20240613113304.907304748@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -50,61 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 5d9231111966b6c5a65016d58dcbeab91055bc91 ]
+[ Upstream commit d75142dbeb2bd1587b9cc19f841578f541275a64 ]
 
-Commit 3e11e53041502 tries to suppress dlm_lock() lock conversion errors
-that occur when the lockspace has already been released.
+This patch fixes the following "umount cgroup2" error in test_sockmap.c:
 
-It does that by setting and checking the SDF_SKIP_DLM_UNLOCK flag.  This
-conflicts with the intended meaning of the SDF_SKIP_DLM_UNLOCK flag, so
-check whether the lockspace is still allocated instead.
+ (cgroup_helpers.c:353: errno: Device or resource busy) umount cgroup2
 
-(Given the current DLM API, checking for this kind of error after the
-fact seems easier that than to make sure that the lockspace is still
-allocated before calling dlm_lock().  Changing the DLM API so that users
-maintain the lockspace references themselves would be an option.)
+Cgroup fd cg_fd should be closed before cleanup_cgroup_environment().
 
-Fixes: 3e11e53041502 ("GFS2: ignore unlock failures after withdraw")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: 13a5f3ffd202 ("bpf: Selftests, sockmap test prog run without setting cgroup")
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/0399983bde729708773416b8488bac2cd5e022b8.1712639568.git.tanggeliang@kylinos.cn
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 4 +++-
- fs/gfs2/util.c  | 1 -
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/test_sockmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index e85ef6b14777d..7fed3beb5e80c 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -807,11 +807,13 @@ __acquires(&gl->gl_lockref.lock)
- 	}
+diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
+index eefd445b96fc7..7465cbe19bb08 100644
+--- a/tools/testing/selftests/bpf/test_sockmap.c
++++ b/tools/testing/selftests/bpf/test_sockmap.c
+@@ -2014,9 +2014,9 @@ int main(int argc, char **argv)
+ 		free(options.whitelist);
+ 	if (options.blacklist)
+ 		free(options.blacklist);
++	close(cg_fd);
+ 	if (cg_created)
+ 		cleanup_cgroup_environment();
+-	close(cg_fd);
+ 	return err;
+ }
  
- 	if (sdp->sd_lockstruct.ls_ops->lm_lock)	{
-+		struct lm_lockstruct *ls = &sdp->sd_lockstruct;
-+
- 		/* lock_dlm */
- 		ret = sdp->sd_lockstruct.ls_ops->lm_lock(gl, target, lck_flags);
- 		if (ret == -EINVAL && gl->gl_target == LM_ST_UNLOCKED &&
- 		    target == LM_ST_UNLOCKED &&
--		    test_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags)) {
-+		    test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
- 			finish_xmote(gl, target);
- 			gfs2_glock_queue_work(gl, 0);
- 		} else if (ret) {
-diff --git a/fs/gfs2/util.c b/fs/gfs2/util.c
-index cf345a86ef67b..9cdece4928454 100644
---- a/fs/gfs2/util.c
-+++ b/fs/gfs2/util.c
-@@ -351,7 +351,6 @@ int gfs2_withdraw(struct gfs2_sbd *sdp)
- 			fs_err(sdp, "telling LM to unmount\n");
- 			lm->lm_unmount(sdp);
- 		}
--		set_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags);
- 		fs_err(sdp, "File system withdrawn\n");
- 		dump_stack();
- 		clear_bit(SDF_WITHDRAW_IN_PROG, &sdp->sd_flags);
 -- 
 2.43.0
 
