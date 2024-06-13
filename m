@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A33144D36;
-	Thu, 13 Jun 2024 12:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D74144317;
+	Thu, 13 Jun 2024 12:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282908; cv=none; b=jlHeX1Gggj0hwJLOvlE4QOT51VXZcO7sGZG5LBKFpd74wadoHi3RM88HXymtkk8PB94ZGMtPHbr7VMB6AT55C8vSEF5Fpl3y3p9EedK2K+CSgtQB4UkQd9qgDXfZD6vaJe23x5LfA3Ipcxb4+05g5r05WNecUCsZaTsSYSBdS0s=
+	t=1718282911; cv=none; b=VfcKMM7OSA+L59KvZwbMMudVv10jixaq5PWJUa/Y+KuPNIII1KQRmFrb2QXdYOZRijnPE2XaReji0opzyC7GW1J+D+89T/YiEv4Pndh2KKu6ItgQ6QKhd5ZSAORm3dO0wc9SYmbPUs+2p40GlGOlZoNTYbHlVE594a+otvgH63k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282908; c=relaxed/simple;
-	bh=WCu0uCE1zbmbG962tRnlDoDOxyiz90uLovaGAI+w9qc=;
+	s=arc-20240116; t=1718282911; c=relaxed/simple;
+	bh=QQqS7Qzfl0nXxIaJPO71jp333d3YZjPQSqFD3LEGILo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HYUuLx+4hwmymvD3PvtiptPJW1cPqPUlypV4liySE0vHJMl/8/XX5MQoaWqZt9irOs/PmyLksZoC+pAe/Z+TLDeGXb/efOd9EaHxK1jbHjywXnO0a8y/T+gmYXEVlIoGb4ENS662swFl0WNmlXZPMZhTyZ/KFFVuXc9pzKQJvNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfMeQ5xr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QQl23MWcqzffUaanyoIMWd/+IrpcGXtAIxLrOlzKqnMYLLlh7MCHnHX8SS4BdU9QTiJKddixMhq9Bm2nJ3IrT+HrKnF2PiIK6lnBxxsGd0DAKbTRPukNKthsZbppBcQM0m7qPp2Fq/Ck6LDD+SqGdpgzwD8Wu/ykt0LB0DnU6VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJtT0j5G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfMeQ5xr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E57C2BBFC;
-	Thu, 13 Jun 2024 12:48:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJtT0j5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83655C2BBFC;
+	Thu, 13 Jun 2024 12:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282907;
-	bh=WCu0uCE1zbmbG962tRnlDoDOxyiz90uLovaGAI+w9qc=;
+	s=korg; t=1718282910;
+	bh=QQqS7Qzfl0nXxIaJPO71jp333d3YZjPQSqFD3LEGILo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfMeQ5xr26GyPm8+Z1+Tu1+C5eCJp/wHSHe5hm8hKzHluThrvhBhjNyA76vc26x5V
-	 TAzImjdKnEl7ZWB0TayCH5ZLoReT2zAqsCw/Fn0sgivvOnsPd0TMdLZpUYOBZm0uvG
-	 +sBy+bjgk5QxLPtdiSuXc57ID6wxtkikd+Yhi6ZI=
+	b=oJtT0j5GzCIjzRqzWwxw3kisD0rq97cqacjT1wNvziEAydNREpH38qZUDNVICKDhQ
+	 09NP/sV6YWlDCsb/x3YvSQiu3dYKQDNgqaof/BaD6Qu8i6EJxs2HD5uIfdw3X0WENY
+	 oUyO+fotZWyBul9r3fwCrgfIJ44hNHnKaPtmIbHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.1 34/85] media: mc: Fix graph walk in media_pipeline_start
-Date: Thu, 13 Jun 2024 13:35:32 +0200
-Message-ID: <20240613113215.461789794@linuxfoundation.org>
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: [PATCH 6.1 35/85] media: mc: mark the media devnode as registered from the, start
+Date: Thu, 13 Jun 2024 13:35:33 +0200
+Message-ID: <20240613113215.502938904@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -51,40 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit 8a9d420149c477e7c97fbd6453704e4612bdd3fa upstream.
+commit 4bc60736154bc9e0e39d3b88918f5d3762ebe5e0 upstream.
 
-The graph walk tries to follow all links, even if they are not between
-pads. This causes a crash with, e.g. a MEDIA_LNK_FL_ANCILLARY_LINK link.
+First the media device node was created, and if successful it was
+marked as 'registered'. This leaves a small race condition where
+an application can open the device node and get an error back
+because the 'registered' flag was not yet set.
 
-Fix this by allowing the walk to proceed only for MEDIA_LNK_FL_DATA_LINK
-links.
+Change the order: first set the 'registered' flag, then actually
+register the media device node. If that fails, then clear the flag.
 
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Cc: stable@vger.kernel.org # for 6.1 and later
-Fixes: ae219872834a ("media: mc: entity: Rewrite media_pipeline_start()")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: cf4b9211b568 ("[media] media: Media device node support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/mc/mc-entity.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/mc/mc-devnode.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/media/mc/mc-entity.c
-+++ b/drivers/media/mc/mc-entity.c
-@@ -593,6 +593,12 @@ static int media_pipeline_explore_next_l
- 	link = list_entry(entry->links, typeof(*link), list);
- 	last_link = media_pipeline_walk_pop(walk);
+--- a/drivers/media/mc/mc-devnode.c
++++ b/drivers/media/mc/mc-devnode.c
+@@ -246,15 +246,14 @@ int __must_check media_devnode_register(
+ 	kobject_set_name(&devnode->cdev.kobj, "media%d", devnode->minor);
  
-+	if ((link->flags & MEDIA_LNK_FL_LINK_TYPE) != MEDIA_LNK_FL_DATA_LINK) {
-+		dev_dbg(walk->mdev->dev,
-+			"media pipeline: skipping link (not data-link)\n");
-+		return 0;
-+	}
-+
- 	dev_dbg(walk->mdev->dev,
- 		"media pipeline: exploring link '%s':%u -> '%s':%u\n",
- 		link->source->entity->name, link->source->index,
+ 	/* Part 3: Add the media and char device */
++	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
+ 	ret = cdev_device_add(&devnode->cdev, &devnode->dev);
+ 	if (ret < 0) {
++		clear_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
+ 		pr_err("%s: cdev_device_add failed\n", __func__);
+ 		goto cdev_add_error;
+ 	}
+ 
+-	/* Part 4: Activate this minor. The char device can now be used. */
+-	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
+-
+ 	return 0;
+ 
+ cdev_add_error:
 
 
