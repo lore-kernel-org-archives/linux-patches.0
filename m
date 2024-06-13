@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C34FDDB1;
-	Thu, 13 Jun 2024 11:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2D71422B5;
+	Thu, 13 Jun 2024 11:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278663; cv=none; b=Lix/Ei7OQT+TJeC69yvPB/doLzWUxXsynRfR40PdYNzBGyjBZ6HkEPyiseCY/xag15uOMHoZ8WBysm9wOVlpEyXMmee4pVmeMCPrzXt8duSnS51gMZOHOVg9OnkfPttQ76AWv7zq0bi9fU3M4a8b6NU6StdTSRbiNJfJzHxV7iw=
+	t=1718278666; cv=none; b=YJUV2i+gNuW65pdYQTedBIkYChRWbXr+ViWCgt4pGb3XGeFXRwpnDYZ9xs23sZU3g1NhtkdizCqAVe6Dg6axGxBcgJr8En+AKJvGQ1qGalnF3jdDrN+QxfudflVN+r1e5Cvz6Ob/xT7xljCN4IT4xUhpMGxbVQ69qyjnDeqnOx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278663; c=relaxed/simple;
-	bh=7yFY/53Q42Ki3+u6XMmG/+dcbI3XHvzNIr+HNq8FgSU=;
+	s=arc-20240116; t=1718278666; c=relaxed/simple;
+	bh=X4VrjcV36iz+e8dq+LZJtIxflw73vJWB4Ls2dM0o/qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcKFMDCOcuo/0SALUEEYRmDk85r88hUlVPcjT2py0wufeh/7Qpn/dZvwFa2Ic7o+EGSfuUYTAD4KuOWiNSEuMBSjKK86V1k3+fCGnq2lJbLqPBOChoz2vas413tHNM+Cjk3cL2i08YZoWgaYGQYc/RAMaWhwBnH3R//aHcVDJHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQCbbDMx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CJlPfNWcK4mfQg6qCB2Jx8XmUCM6cHh6XOTCCBkNCpOU/hHzxjiG944uHBaFK9AI1y51J3hYrRWbBgzNAkmvouoyQ3rIgDKPaTTXy48/4kvlJ0ZbbDxfvVxOYRpEsjcS4SVJJj0kBNC6nnqUqBNSGt+bZg5pVJSw8eacPbXL14s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwwodDdP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQCbbDMx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93FFC2BBFC;
-	Thu, 13 Jun 2024 11:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwwodDdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B512FC32786;
+	Thu, 13 Jun 2024 11:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278663;
-	bh=7yFY/53Q42Ki3+u6XMmG/+dcbI3XHvzNIr+HNq8FgSU=;
+	s=korg; t=1718278666;
+	bh=X4VrjcV36iz+e8dq+LZJtIxflw73vJWB4Ls2dM0o/qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQCbbDMx6ToP1W447vpChXoMGRC/YntmxX6N3kXmfI9rXDr1eBzsA89v7rf9bWbEL
-	 JO9h8CUzerT8P10Q4WdwbPrcN6RnttsxYNReibSYcmcO6A4IhRMQaGfQvr/AV9cXtS
-	 zOjkhaMejangq90TlMeXJ7uE3vvX2b09b+2Wfzes=
+	b=WwwodDdPYb5oNFb9ekkSSqYTu6/EpAHHUSgbSzWnKhyJRRwDQSGi/z7plMPALhHnl
+	 63Bej+dRxXllGJpjklnsmyJZF2NeAW2ahbBlgVPNRL1Pn/gJIjJ1hXEWq6JuS9dWGb
+	 yi7hBzvYccnrKX4izGh2Hww7OZE9v11Glhby1kl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	James Prestwood <prestwoj@gmail.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 028/213] nfsd: drop st_mutex before calling move_to_close_lru()
-Date: Thu, 13 Jun 2024 13:31:16 +0200
-Message-ID: <20240613113229.082769729@linuxfoundation.org>
+Subject: [PATCH 4.19 029/213] wifi: ath10k: poll service ready message before failing
+Date: Thu, 13 Jun 2024 13:31:17 +0200
+Message-ID: <20240613113229.122193011@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,80 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 56c35f43eef013579c76c007ba1f386d8c2cac14 ]
+[ Upstream commit e57b7d62a1b2f496caf0beba81cec3c90fad80d5 ]
 
-move_to_close_lru() is currently called with ->st_mutex held.
-This can lead to a deadlock as move_to_close_lru() waits for sc_count to
-drop to 2, and some threads holding a reference might be waiting for the
-mutex.  These references will never be dropped so sc_count will never
-reach 2.
+Currently host relies on CE interrupts to get notified that
+the service ready message is ready. This results in timeout
+issue if the interrupt is not fired, due to some unknown
+reasons. See below logs:
 
-There can be no harm in dropping ->st_mutex before
-move_to_close_lru() because the only place that takes the mutex is
-nfsd4_lock_ol_stateid(), and it quickly aborts if sc_type is
-NFS4_CLOSED_STID, which it will be before move_to_close_lru() is called.
+[76321.937866] ath10k_pci 0000:02:00.0: wmi service ready event not received
+...
+[76322.016738] ath10k_pci 0000:02:00.0: Could not init core: -110
 
-See also
- https://lore.kernel.org/lkml/4dd1fe21e11344e5969bb112e954affb@jd.com/T/
-where this problem was raised but not successfully resolved.
+And finally it causes WLAN interface bring up failure.
 
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Change to give it one more chance here by polling CE rings,
+before failing directly.
+
+Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00157-QCARMSWPZ-1
+
+Fixes: 5e3dd157d7e7 ("ath10k: mac80211 driver for Qualcomm Atheros 802.11ac CQA98xx devices")
+Reported-by: James Prestwood <prestwoj@gmail.com>
+Tested-By: James Prestwood <prestwoj@gmail.com> # on QCA6174 hw3.2
+Link: https://lore.kernel.org/linux-wireless/304ce305-fbe6-420e-ac2a-d61ae5e6ca1a@gmail.com/
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240227030409.89702-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath10k/wmi.c | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 5c241e510888d..7ac644d64ab1d 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -5482,7 +5482,7 @@ nfsd4_open_downgrade(struct svc_rqst *rqstp,
- 	return status;
- }
+diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
+index 41eb57be92220..967a39304648e 100644
+--- a/drivers/net/wireless/ath/ath10k/wmi.c
++++ b/drivers/net/wireless/ath/ath10k/wmi.c
+@@ -1697,12 +1697,32 @@ void ath10k_wmi_put_wmi_channel(struct wmi_channel *ch,
  
--static void nfsd4_close_open_stateid(struct nfs4_ol_stateid *s)
-+static bool nfsd4_close_open_stateid(struct nfs4_ol_stateid *s)
+ int ath10k_wmi_wait_for_service_ready(struct ath10k *ar)
  {
- 	struct nfs4_client *clp = s->st_stid.sc_client;
- 	bool unhashed;
-@@ -5496,11 +5496,11 @@ static void nfsd4_close_open_stateid(struct nfs4_ol_stateid *s)
- 			put_ol_stateid_locked(s, &reaplist);
- 		spin_unlock(&clp->cl_lock);
- 		free_ol_stateid_reaplist(&reaplist);
-+		return false;
- 	} else {
- 		spin_unlock(&clp->cl_lock);
- 		free_ol_stateid_reaplist(&reaplist);
--		if (unhashed)
--			move_to_close_lru(s, clp->net);
-+		return unhashed;
- 	}
+-	unsigned long time_left;
++	unsigned long time_left, i;
+ 
+ 	time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
+ 						WMI_SERVICE_READY_TIMEOUT_HZ);
+-	if (!time_left)
+-		return -ETIMEDOUT;
++	if (!time_left) {
++		/* Sometimes the PCI HIF doesn't receive interrupt
++		 * for the service ready message even if the buffer
++		 * was completed. PCIe sniffer shows that it's
++		 * because the corresponding CE ring doesn't fires
++		 * it. Workaround here by polling CE rings once.
++		 */
++		ath10k_warn(ar, "failed to receive service ready completion, polling..\n");
++
++		for (i = 0; i < CE_COUNT; i++)
++			ath10k_hif_send_complete_check(ar, i, 1);
++
++		time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
++							WMI_SERVICE_READY_TIMEOUT_HZ);
++		if (!time_left) {
++			ath10k_warn(ar, "polling timed out\n");
++			return -ETIMEDOUT;
++		}
++
++		ath10k_warn(ar, "service ready completion received, continuing normally\n");
++	}
++
+ 	return 0;
  }
  
-@@ -5516,6 +5516,7 @@ nfsd4_close(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	struct nfs4_ol_stateid *stp;
- 	struct net *net = SVC_NET(rqstp);
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
-+	bool need_move_to_close_list;
- 
- 	dprintk("NFSD: nfsd4_close on file %pd\n", 
- 			cstate->current_fh.fh_dentry);
-@@ -5538,8 +5539,10 @@ nfsd4_close(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 	 */
- 	nfs4_inc_and_copy_stateid(&close->cl_stateid, &stp->st_stid);
- 
--	nfsd4_close_open_stateid(stp);
-+	need_move_to_close_list = nfsd4_close_open_stateid(stp);
- 	mutex_unlock(&stp->st_mutex);
-+	if (need_move_to_close_list)
-+		move_to_close_lru(stp, net);
- 
- 	/* v4.1+ suggests that we send a special stateid in here, since the
- 	 * clients should just ignore this anyway. Since this is not useful
 -- 
 2.43.0
 
