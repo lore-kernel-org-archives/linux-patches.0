@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD681448CD;
-	Thu, 13 Jun 2024 11:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5DE1448DC;
+	Thu, 13 Jun 2024 11:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279308; cv=none; b=JCajwg4FguazmA4A4TN0WVTNQhJkWnM4hiu11yw8LwYrQbzfGdlGU5gP003nK3Mv0FaXwQxZjFsBg0odMTwcIGb6P4QIolX7oTwftVBHMV1WuqC2/NoVpFMYVTky4/8JOaSe1qX8FaQWACnX4FHvXXXrcDkh07SWabuyIsUG9rs=
+	t=1718279310; cv=none; b=HJCaMi9FnRD6dWqvv4vxRM3CtoA/HDjtc1vUrhWniqH+3ekt6f4E6AedxDgJdT8RC/clb9sBOb6DbKkMfpj4bneypCdJnB5noGVaMNSpr7E/cpypfSrw88zr8x7RBMYuB2z8vDL1sAtrDPqLgTiLcwxsHOW+zbz0Rijd0d5OLEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279308; c=relaxed/simple;
-	bh=lhFOPcgCLyKR4PC08gHnfV1tfrlIThcFcN1tCE4tdaA=;
+	s=arc-20240116; t=1718279310; c=relaxed/simple;
+	bh=CkUH9wZW0gK7yexNJKA44NHguSee+evmv2QmaztJs78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C0e6AcYq1+690jd87hwGHCIu3UqYsZRQ0UnE3SUm5shPd5fXl4aBS6DD9IRy0MYk643sKfLmsUAuF19FT+AEKEHigaqHtJ+zRofxz4HQYkQIqIAyB13pK1Ym7xi13I201Ps0zIz/r68xtzCGDECZyFFqU3N24mOCNrX2y/I4wzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1EFKE8/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CxQgwsoBIcRJi72rkO4HfLKA1Zxry3FTJ3cymfqBpXQNrHB+EF9DKy1y3ZbcshoJF1T6TTei4VTI088cdPBhN+Kr4QbnAogALEATLAG9SzaEzEB4HoywzIKqmKh6ZPUd0PVscXjCswKk7PKbtFnWMTTWTZN9bEHQhYigRQD4syY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=goJpBW1U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1EFKE8/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3933EC32786;
-	Thu, 13 Jun 2024 11:48:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="goJpBW1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285A4C2BBFC;
+	Thu, 13 Jun 2024 11:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279307;
-	bh=lhFOPcgCLyKR4PC08gHnfV1tfrlIThcFcN1tCE4tdaA=;
+	s=korg; t=1718279310;
+	bh=CkUH9wZW0gK7yexNJKA44NHguSee+evmv2QmaztJs78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1EFKE8/tsi1yB3HJesOIPqJsttcFC92Ck/e5ddFeRTL949PUpFI84EPIXUURew0O
-	 tvdba3lzvueXy9eVfpk4UnFW5qx/uOXr/RMe8Yv17DqwJNMhKOhuI3ivJ6I2FrvEk0
-	 sX5bML0ukk1QMUAQYONoDFFT9XKHMscQBzvJRVGs=
+	b=goJpBW1UwNa+71AP90fsFF+9Go+iTGiRtaquMqwR/HLqVD2zGsR97zb2XbInSCVmU
+	 9HhFta170SvtCn5XWkZ7gk39MUqUQYBtgn4XNoc63hccwgBMj0jAff6YaGooiMfO1E
+	 WNt07h/Fu6d37s0Hs/LSoNKXGlnewBvOsP/WHlYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Xiwen <forbidden405@outlook.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.9 032/157] arm64: dts: hi3798cv200: fix the size of GICR
-Date: Thu, 13 Jun 2024 13:32:37 +0200
-Message-ID: <20240613113228.661011966@linuxfoundation.org>
+	Max Krummenacher <max.krummenacher@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Nishanth Menon <nm@ti.com>
+Subject: [PATCH 6.9 033/157] arm64: dts: ti: verdin-am62: Set memory size to 2gb
+Date: Thu, 13 Jun 2024 13:32:38 +0200
+Message-ID: <20240613113228.699005458@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -50,43 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Xiwen <forbidden405@outlook.com>
+From: Max Krummenacher <max.krummenacher@toradex.com>
 
-commit 428a575dc9038846ad259466d5ba109858c0a023 upstream.
+commit f70a88829723c1b462ea0fec15fa75809a0d670b upstream.
 
-During boot, Linux kernel complains:
+The maximum DDR RAM size stuffed on the Verdin AM62 is 2GB,
+correct the memory node accordingly.
 
-[    0.000000] GIC: GICv2 detected, but range too small and irqchip.gicv2_force_probe not set
-
-This SoC is using a regular GIC-400 and the GICR space size should be
-8KB rather than 256B.
-
-With this patch:
-
-[    0.000000] GIC: Using split EOI/Deactivate mode
-
-So this should be the correct fix.
-
-Fixes: 2f20182ed670 ("arm64: dts: hisilicon: add dts files for hi3798cv200-poplar board")
-Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240219-cache-v3-1-a33c57534ae9@outlook.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 316b80246b16 ("arm64: dts: ti: add verdin am62")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Max Krummenacher <max.krummenacher@toradex.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://lore.kernel.org/r/20240320142937.2028707-1-max.oss.09@gmail.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi |    2 +-
+ arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
-+++ b/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
-@@ -58,7 +58,7 @@
- 	gic: interrupt-controller@f1001000 {
- 		compatible = "arm,gic-400";
- 		reg = <0x0 0xf1001000 0x0 0x1000>,  /* GICD */
--		      <0x0 0xf1002000 0x0 0x100>;   /* GICC */
-+		      <0x0 0xf1002000 0x0 0x2000>;  /* GICC */
- 		#address-cells = <0>;
- 		#interrupt-cells = <3>;
- 		interrupt-controller;
+--- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
+@@ -76,7 +76,7 @@
+ 
+ 	memory@80000000 {
+ 		device_type = "memory";
+-		reg = <0x00000000 0x80000000 0x00000000 0x40000000>; /* 1G RAM */
++		reg = <0x00000000 0x80000000 0x00000000 0x80000000>; /* 2G RAM */
+ 	};
+ 
+ 	opp-table {
 
 
