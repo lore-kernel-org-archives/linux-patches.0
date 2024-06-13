@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B611DDDB;
-	Thu, 13 Jun 2024 12:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DD51EEF8;
+	Thu, 13 Jun 2024 12:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282276; cv=none; b=DgrP8hcopOx2SI1cLdrHPVMSF7CudV0tY9YKjL3pF5tPAVhSf3Sagqxb9Orbx6bDS2pgh62w751i5tfI2/Vb85SPui2Cy5lXP/w8MBqZrxz2I9AaHeiM/bgt78Uv2AT9ytELuMS6ceBF5eh5xkE4tydaclfA6f2V9o+V0u4bs3U=
+	t=1718282280; cv=none; b=K+i/kAnd/IB+EkiD4oZn+3CPCnpsv4WNpSWxNe69Zzc0i/FxPzv0M2apJDfhJcpqc0h1c847SeMMKTA5/UqqEmX/50lEknH9zS4CLft3NlVSAAJVaTObgNOxbXvcxPcjdb7UEKcxCk4NMwV9ews4VhXxaIurO0ZWb7LkaS2wCHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282276; c=relaxed/simple;
-	bh=7DHCxhGErL14IxVwsSFkwrtFaoAICwW5hCazLEJT61U=;
+	s=arc-20240116; t=1718282280; c=relaxed/simple;
+	bh=69o/0lwKFuCLr/fsDtmS/uQBQtWNH5ztnOY/QObtB70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GV1cuRXmQB1yPZZdd68ZvS/www2CB2GQRQS4MhEoJpgoQlakriRhzbgluO+/ox9eZfSBVnhPqMJJnUzGDiQ1t3qwAHk1tsJWVrfR8Ip2k21x0tXYea0acGCAeKcSVsz55oAGzQERGcYqu7EW2tbbs16B+/jz4AuiwDRKQm86+NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQQWyWEp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hzsw+rFObFktGw95RIad+bsYvXiYYEG+u8IzR5Jv8La/ALWZ7kjXxDrD+mv9rJfqEshQVQskqXrj5O58IezpiFSxgjDVapuPbb8v1vlwOZbiu0QT0Kpx3U5NMY8fTyl6CsEDFAtWTfKs6lTfm3MtYb6otYzfxeYJhjx45dloeUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVxukd70; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQQWyWEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E16C2BBFC;
-	Thu, 13 Jun 2024 12:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVxukd70"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C803C2BBFC;
+	Thu, 13 Jun 2024 12:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282276;
-	bh=7DHCxhGErL14IxVwsSFkwrtFaoAICwW5hCazLEJT61U=;
+	s=korg; t=1718282279;
+	bh=69o/0lwKFuCLr/fsDtmS/uQBQtWNH5ztnOY/QObtB70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQQWyWEpUbM9XCKVED8bAhHfYxplNL6XPpWF5ijLUpuM6O8UURN1IQ3Lm4CUad7Ss
-	 4Dxmr+Pm1X7ZvOlURtdIsCPUIvZmeULVe6F5PngHfSVyibDBH/iYdQ8o6/rH1s4Lzp
-	 pJ6z/qsK1cRetQcUUN0hCNCOexYXlMEq0lo4xzio=
+	b=XVxukd70qH3gvmAFR8Vfd9iPRRiOBulbB71E/8eNVCMi+HJaOE84VCsAmOH8kiusg
+	 0Zs2bnjKItKiIdMfVSmZxXlUIiN2JlW+YudBBunDCSvwDgtiaalR84D6I+0Y8GtXdP
+	 ypD19tf+U30XkLzpZJ30vpiNFPNYpMu+l/Ifmv7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Rob Herring <robh@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 181/402] f2fs: fix to wait on page writeback in __clone_blkaddrs()
-Date: Thu, 13 Jun 2024 13:32:18 +0200
-Message-ID: <20240613113309.210435896@linuxfoundation.org>
+Subject: [PATCH 5.15 216/402] dt-bindings: pinctrl: mediatek: mt7622: fix array properties
+Date: Thu, 13 Jun 2024 13:32:53 +0200
+Message-ID: <20240613113310.573029150@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -45,57 +46,170 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit d3876e34e7e789e2cbdd782360fef2a777391082 ]
+[ Upstream commit 61fcbbf3ca038c048c942ce31bb3d3c846c87581 ]
 
-In below race condition, dst page may become writeback status
-in __clone_blkaddrs(), it needs to wait writeback before update,
-fix it.
+Some properties (function groups & pins) are meant to be arrays and
+should allow multiple entries out of enum sets. Use "items" for those.
 
-Thread A				GC Thread
-- f2fs_move_file_range
-  - filemap_write_and_wait_range(dst)
-					- gc_data_segment
-					 - f2fs_down_write(dst)
-					 - move_data_page
-					  - set_page_writeback(dst_page)
-					  - f2fs_submit_page_write
-					 - f2fs_up_write(dst)
-  - f2fs_down_write(dst)
-  - __exchange_data_block
-   - __clone_blkaddrs
-    - f2fs_get_new_data_page
-    - memcpy_page
+Mistake was noticed during validation of in-kernel DTS files.
 
-Fixes: 0a2aa8fbb969 ("f2fs: refactor __exchange_data_block for speed up")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: b9ffc18c6388 ("dt-bindings: mediatek: convert pinctrl to yaml")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Acked-by: Rob Herring <robh@kernel.org>
+Message-ID: <20240423045502.7778-1-zajec5@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../pinctrl/mediatek,mt7622-pinctrl.yaml      | 92 ++++++++++---------
+ 1 file changed, 49 insertions(+), 43 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 9b7ecbb974258..3d811594d0d5c 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1276,6 +1276,9 @@ static int __clone_blkaddrs(struct inode *src_inode, struct inode *dst_inode,
- 				f2fs_put_page(psrc, 1);
- 				return PTR_ERR(pdst);
- 			}
-+
-+			f2fs_wait_on_page_writeback(pdst, DATA, true, true);
-+
- 			memcpy_page(pdst, 0, psrc, 0, PAGE_SIZE);
- 			set_page_dirty(pdst);
- 			set_page_private_gcing(pdst);
+diff --git a/Documentation/devicetree/bindings/pinctrl/mediatek,mt7622-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/mediatek,mt7622-pinctrl.yaml
+index 0feecd376c694..9aed3a58f39e4 100644
+--- a/Documentation/devicetree/bindings/pinctrl/mediatek,mt7622-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/mediatek,mt7622-pinctrl.yaml
+@@ -94,7 +94,8 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [emmc, emmc_rst]
++                  items:
++                    enum: [emmc, emmc_rst]
+           - if:
+               properties:
+                 function:
+@@ -102,8 +103,9 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [esw, esw_p0_p1, esw_p2_p3_p4, rgmii_via_esw,
+-                         rgmii_via_gmac1, rgmii_via_gmac2, mdc_mdio]
++                  items:
++                    enum: [esw, esw_p0_p1, esw_p2_p3_p4, rgmii_via_esw,
++                           rgmii_via_gmac1, rgmii_via_gmac2, mdc_mdio]
+           - if:
+               properties:
+                 function:
+@@ -120,10 +122,11 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [i2s_in_mclk_bclk_ws, i2s1_in_data, i2s2_in_data,
+-                         i2s3_in_data, i2s4_in_data, i2s_out_mclk_bclk_ws,
+-                         i2s1_out_data, i2s2_out_data, i2s3_out_data,
+-                         i2s4_out_data]
++                  items:
++                    enum: [i2s_in_mclk_bclk_ws, i2s1_in_data, i2s2_in_data,
++                           i2s3_in_data, i2s4_in_data, i2s_out_mclk_bclk_ws,
++                           i2s1_out_data, i2s2_out_data, i2s3_out_data,
++                           i2s4_out_data]
+           - if:
+               properties:
+                 function:
+@@ -156,10 +159,11 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [pcie0_0_waken, pcie0_1_waken, pcie1_0_waken,
+-                         pcie0_0_clkreq, pcie0_1_clkreq, pcie1_0_clkreq,
+-                         pcie0_pad_perst, pcie1_pad_perst, pcie_pereset,
+-                         pcie_wake, pcie_clkreq]
++                  items:
++                    enum: [pcie0_0_waken, pcie0_1_waken, pcie1_0_waken,
++                           pcie0_0_clkreq, pcie0_1_clkreq, pcie1_0_clkreq,
++                           pcie0_pad_perst, pcie1_pad_perst, pcie_pereset,
++                           pcie_wake, pcie_clkreq]
+           - if:
+               properties:
+                 function:
+@@ -175,11 +179,12 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [pwm_ch1_0, pwm_ch1_1, pwm_ch1_2, pwm_ch2_0, pwm_ch2_1,
+-                         pwm_ch2_2, pwm_ch3_0, pwm_ch3_1, pwm_ch3_2, pwm_ch4_0,
+-                         pwm_ch4_1, pwm_ch4_2, pwm_ch4_3, pwm_ch5_0, pwm_ch5_1,
+-                         pwm_ch5_2, pwm_ch6_0, pwm_ch6_1, pwm_ch6_2, pwm_ch6_3,
+-                         pwm_ch7_0, pwm_0, pwm_1]
++                  items:
++                    enum: [pwm_ch1_0, pwm_ch1_1, pwm_ch1_2, pwm_ch2_0, pwm_ch2_1,
++                           pwm_ch2_2, pwm_ch3_0, pwm_ch3_1, pwm_ch3_2, pwm_ch4_0,
++                           pwm_ch4_1, pwm_ch4_2, pwm_ch4_3, pwm_ch5_0, pwm_ch5_1,
++                           pwm_ch5_2, pwm_ch6_0, pwm_ch6_1, pwm_ch6_2, pwm_ch6_3,
++                           pwm_ch7_0, pwm_0, pwm_1]
+           - if:
+               properties:
+                 function:
+@@ -257,33 +262,34 @@ patternProperties:
+           pins:
+             description: |
+               An array of strings. Each string contains the name of a pin.
+-            enum: [GPIO_A, I2S1_IN, I2S1_OUT, I2S_BCLK, I2S_WS, I2S_MCLK, TXD0,
+-                   RXD0, SPI_WP, SPI_HOLD, SPI_CLK, SPI_MOSI, SPI_MISO, SPI_CS,
+-                   I2C_SDA, I2C_SCL, I2S2_IN, I2S3_IN, I2S4_IN, I2S2_OUT,
+-                   I2S3_OUT, I2S4_OUT, GPIO_B, MDC, MDIO, G2_TXD0, G2_TXD1,
+-                   G2_TXD2, G2_TXD3, G2_TXEN, G2_TXC, G2_RXD0, G2_RXD1, G2_RXD2,
+-                   G2_RXD3, G2_RXDV, G2_RXC, NCEB, NWEB, NREB, NDL4, NDL5, NDL6,
+-                   NDL7, NRB, NCLE, NALE, NDL0, NDL1, NDL2, NDL3, MDI_TP_P0,
+-                   MDI_TN_P0, MDI_RP_P0, MDI_RN_P0, MDI_TP_P1, MDI_TN_P1,
+-                   MDI_RP_P1, MDI_RN_P1, MDI_RP_P2, MDI_RN_P2, MDI_TP_P2,
+-                   MDI_TN_P2, MDI_TP_P3, MDI_TN_P3, MDI_RP_P3, MDI_RN_P3,
+-                   MDI_RP_P4, MDI_RN_P4, MDI_TP_P4, MDI_TN_P4, PMIC_SCL,
+-                   PMIC_SDA, SPIC1_CLK, SPIC1_MOSI, SPIC1_MISO, SPIC1_CS,
+-                   GPIO_D, WATCHDOG, RTS3_N, CTS3_N, TXD3, RXD3, PERST0_N,
+-                   PERST1_N, WLED_N, EPHY_LED0_N, AUXIN0, AUXIN1, AUXIN2,
+-                   AUXIN3, TXD4, RXD4, RTS4_N, CST4_N, PWM1, PWM2, PWM3, PWM4,
+-                   PWM5, PWM6, PWM7, GPIO_E, TOP_5G_CLK, TOP_5G_DATA,
+-                   WF0_5G_HB0, WF0_5G_HB1, WF0_5G_HB2, WF0_5G_HB3, WF0_5G_HB4,
+-                   WF0_5G_HB5, WF0_5G_HB6, XO_REQ, TOP_RST_N, SYS_WATCHDOG,
+-                   EPHY_LED0_N_JTDO, EPHY_LED1_N_JTDI, EPHY_LED2_N_JTMS,
+-                   EPHY_LED3_N_JTCLK, EPHY_LED4_N_JTRST_N, WF2G_LED_N,
+-                   WF5G_LED_N, GPIO_9, GPIO_10, GPIO_11, GPIO_12, UART1_TXD,
+-                   UART1_RXD, UART1_CTS, UART1_RTS, UART2_TXD, UART2_RXD,
+-                   UART2_CTS, UART2_RTS, SMI_MDC, SMI_MDIO, PCIE_PERESET_N,
+-                   PWM_0, GPIO_0, GPIO_1, GPIO_2, GPIO_3, GPIO_4, GPIO_5,
+-                   GPIO_6, GPIO_7, GPIO_8, UART0_TXD, UART0_RXD, TOP_2G_CLK,
+-                   TOP_2G_DATA, WF0_2G_HB0, WF0_2G_HB1, WF0_2G_HB2, WF0_2G_HB3,
+-                   WF0_2G_HB4, WF0_2G_HB5, WF0_2G_HB6]
++            items:
++              enum: [GPIO_A, I2S1_IN, I2S1_OUT, I2S_BCLK, I2S_WS, I2S_MCLK, TXD0,
++                     RXD0, SPI_WP, SPI_HOLD, SPI_CLK, SPI_MOSI, SPI_MISO, SPI_CS,
++                     I2C_SDA, I2C_SCL, I2S2_IN, I2S3_IN, I2S4_IN, I2S2_OUT,
++                     I2S3_OUT, I2S4_OUT, GPIO_B, MDC, MDIO, G2_TXD0, G2_TXD1,
++                     G2_TXD2, G2_TXD3, G2_TXEN, G2_TXC, G2_RXD0, G2_RXD1, G2_RXD2,
++                     G2_RXD3, G2_RXDV, G2_RXC, NCEB, NWEB, NREB, NDL4, NDL5, NDL6,
++                     NDL7, NRB, NCLE, NALE, NDL0, NDL1, NDL2, NDL3, MDI_TP_P0,
++                     MDI_TN_P0, MDI_RP_P0, MDI_RN_P0, MDI_TP_P1, MDI_TN_P1,
++                     MDI_RP_P1, MDI_RN_P1, MDI_RP_P2, MDI_RN_P2, MDI_TP_P2,
++                     MDI_TN_P2, MDI_TP_P3, MDI_TN_P3, MDI_RP_P3, MDI_RN_P3,
++                     MDI_RP_P4, MDI_RN_P4, MDI_TP_P4, MDI_TN_P4, PMIC_SCL,
++                     PMIC_SDA, SPIC1_CLK, SPIC1_MOSI, SPIC1_MISO, SPIC1_CS,
++                     GPIO_D, WATCHDOG, RTS3_N, CTS3_N, TXD3, RXD3, PERST0_N,
++                     PERST1_N, WLED_N, EPHY_LED0_N, AUXIN0, AUXIN1, AUXIN2,
++                     AUXIN3, TXD4, RXD4, RTS4_N, CST4_N, PWM1, PWM2, PWM3, PWM4,
++                     PWM5, PWM6, PWM7, GPIO_E, TOP_5G_CLK, TOP_5G_DATA,
++                     WF0_5G_HB0, WF0_5G_HB1, WF0_5G_HB2, WF0_5G_HB3, WF0_5G_HB4,
++                     WF0_5G_HB5, WF0_5G_HB6, XO_REQ, TOP_RST_N, SYS_WATCHDOG,
++                     EPHY_LED0_N_JTDO, EPHY_LED1_N_JTDI, EPHY_LED2_N_JTMS,
++                     EPHY_LED3_N_JTCLK, EPHY_LED4_N_JTRST_N, WF2G_LED_N,
++                     WF5G_LED_N, GPIO_9, GPIO_10, GPIO_11, GPIO_12, UART1_TXD,
++                     UART1_RXD, UART1_CTS, UART1_RTS, UART2_TXD, UART2_RXD,
++                     UART2_CTS, UART2_RTS, SMI_MDC, SMI_MDIO, PCIE_PERESET_N,
++                     PWM_0, GPIO_0, GPIO_1, GPIO_2, GPIO_3, GPIO_4, GPIO_5,
++                     GPIO_6, GPIO_7, GPIO_8, UART0_TXD, UART0_RXD, TOP_2G_CLK,
++                     TOP_2G_DATA, WF0_2G_HB0, WF0_2G_HB1, WF0_2G_HB2, WF0_2G_HB3,
++                     WF0_2G_HB4, WF0_2G_HB5, WF0_2G_HB6]
+ 
+           bias-disable: true
+ 
 -- 
 2.43.0
 
