@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147E282C76;
-	Thu, 13 Jun 2024 12:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F415082C76;
+	Thu, 13 Jun 2024 12:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280142; cv=none; b=MhyqNswbDddOcmiodsZh4GQ3XwNVAGwpnpW6vcTFJmRQmGcivmEq8QfIDFiMb7gvDZN6jAOXBEcGLR9JiTvnOyQT6cPt7SRedCelnn8utZ+llBE+c+7jVp+tdNeTvMY3AADqZOB13uMjt/uHjamekJsuasi69vXlrGnZJFIEjnk=
+	t=1718280145; cv=none; b=ZSZ3+AdR7JT89q0e/DlWRodbXekFVYO/PIvwk3h+jmH1yrk5xNObodAWk3In0spfogfuHKRvGIXNzb1W2qoolqnv8HV8kNetlDFBo+NGXwr79FhOMVR9737h01AF5485GOQdCeFrBU5IxMIc8Sjw+08WghbnNr/qy4Wnj8TPEI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280142; c=relaxed/simple;
-	bh=C4P3Vjjib4MhljAywFbL0c9dFmq2oXNN2xWTpoSasF4=;
+	s=arc-20240116; t=1718280145; c=relaxed/simple;
+	bh=wn0xuqeZgI7k7WLooMNNa+d/dUmuVjvucbDhtsgsoiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJIgtRuHacWXqCGGNRqaJ8IdZ0jna+FvrviG014N4R+wY4tdEn8flyNKPsc042WEES6G/kWt1ixY9OR1+c6+V/tLaA98BrItLt37uuZKzhxbQXq4d3RHZry7XDitJX3YQgY5xCo0BNK6jmWasChYA96l5jGB1RDiAyObOYPS1aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYQHTci9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K4d+QlWWlP0kvSPVnsjp2vZ6bvtwrMk5hJ3vHFgpGrzuJwpopZq5J6xJLu1a4nf7jUJeIVhpW97UTQPuwAqPEdq+/go2pvb8zYbKOhqlfAt1RGs1q0XsDhcOm3VkVDvxKKY8wtEhNoLbV2ZDhfmwL90MM+N+k2utSxQ/782Myr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1Um5hGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYQHTci9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876AAC2BBFC;
-	Thu, 13 Jun 2024 12:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1Um5hGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C04C4AF1A;
+	Thu, 13 Jun 2024 12:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280141;
-	bh=C4P3Vjjib4MhljAywFbL0c9dFmq2oXNN2xWTpoSasF4=;
+	s=korg; t=1718280144;
+	bh=wn0xuqeZgI7k7WLooMNNa+d/dUmuVjvucbDhtsgsoiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYQHTci9JhHeCGDB6eR1/kxmnz6dzdmevI5QUswqd0qqwujEIcXUdYev29ETZLzEC
-	 /b+u5b4L9vNapLqF++SAqYA+2fg1iWfZZ81WLPzWubB1Q0WwSEKic1q0XfI0Q7W8WE
-	 4O5IuJa/y0AR/mVW9I9YT3Wz9AqboDIVQDD3Wh7s=
+	b=k1Um5hGxYGyHXNnTOlMQoPVYN+lur1gOTjsZeq6oqFht93LQATlcPrCftwTDZN2QQ
+	 2WwE7tdfTvjiTn4AAbOIICjA8PE80qgoBS6v6vy4Q+Z4NVoB7SfjKn39aym1QHoOVC
+	 DR3ttajqbpa0A9JGzACnZ4bg50TYxuokwMxJdk2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 126/202] drm/msm/dpu: Always flush the slave INTF on the CTL
-Date: Thu, 13 Jun 2024 13:33:44 +0200
-Message-ID: <20240613113232.625666883@linuxfoundation.org>
+Subject: [PATCH 5.4 127/202] um: Fix return value in ubd_init()
+Date: Thu, 13 Jun 2024 13:33:45 +0200
+Message-ID: <20240613113232.664188601@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -51,47 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 2b938c3ab0a69ec6ea587bbf6fc2aec3db4a8736 ]
+[ Upstream commit 31a5990ed253a66712d7ddc29c92d297a991fdf2 ]
 
-As we can clearly see in a downstream kernel [1], flushing the slave INTF
-is skipped /only if/ the PPSPLIT topology is active.
+When kmalloc_array() fails to allocate memory, the ubd_init()
+should return -ENOMEM instead of -1. So, fix it.
 
-However, when DPU was originally submitted to mainline PPSPLIT was no
-longer part of it (seems to have been ripped out before submission), but
-this clause was incorrectly ported from the original SDE driver.  Given
-that there is no support for PPSPLIT (currently), flushing the slave
-INTF should /never/ be skipped (as the `if (ppsplit && !master) goto
-skip;` clause downstream never becomes true).
-
-[1]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/display-kernel.lnx.5.4.r1-rel/msm/sde/sde_encoder_phys_cmd.c?ref_type=heads#L1131-1139
-
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/589901/
-Link: https://lore.kernel.org/r/20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-3-78ae3ee9a697@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: f88f0bdfc32f ("um: UBD Improvements")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/um/drivers/ubd_kern.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index 2923b63d95fec..34b39a475e3e6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -479,9 +479,6 @@ static void dpu_encoder_phys_cmd_enable_helper(
+diff --git a/arch/um/drivers/ubd_kern.c b/arch/um/drivers/ubd_kern.c
+index 4e59ab817d3e7..a4e531f0e3b96 100644
+--- a/arch/um/drivers/ubd_kern.c
++++ b/arch/um/drivers/ubd_kern.c
+@@ -1157,7 +1157,7 @@ static int __init ubd_init(void)
  
- 	_dpu_encoder_phys_cmd_pingpong_config(phys_enc);
+ 	if (irq_req_buffer == NULL) {
+ 		printk(KERN_ERR "Failed to initialize ubd buffering\n");
+-		return -1;
++		return -ENOMEM;
+ 	}
+ 	io_req_buffer = kmalloc_array(UBD_REQ_BUFFER_SIZE,
+ 				      sizeof(struct io_thread_req *),
+@@ -1168,7 +1168,7 @@ static int __init ubd_init(void)
  
--	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
--		return;
--
- 	ctl = phys_enc->hw_ctl;
- 	ctl->ops.get_bitmask_intf(ctl, &flush_mask, phys_enc->intf_idx);
- 	ctl->ops.update_pending_flush(ctl, flush_mask);
+ 	if (io_req_buffer == NULL) {
+ 		printk(KERN_ERR "Failed to initialize ubd buffering\n");
+-		return -1;
++		return -ENOMEM;
+ 	}
+ 	platform_driver_register(&ubd_driver);
+ 	mutex_lock(&ubd_lock);
 -- 
 2.43.0
 
