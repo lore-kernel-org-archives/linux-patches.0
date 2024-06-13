@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D1681ABE;
-	Thu, 13 Jun 2024 12:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7E31428EF;
+	Thu, 13 Jun 2024 12:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282581; cv=none; b=EEhfNFxFO0Ka5/937Rme9/SFeWWvw0ypyywZTiNVksw2XET7opyAb5/5fYw8UWEa/KJT4+h99Q8VoLOZ2zTORQ1oCWiAS1f5Dj0WrgBtcBGs2sE5VlNocKEIX1xcW8qw4f3MujcyNPMSPZoP+pex2/IVvPkOLLMOp1zkPcWetVs=
+	t=1718282584; cv=none; b=INLGkvkxHA+ByHq6S26717tobV0tbiKFTbpY2MBBRn13wGJyBlFJiHl69b1Cat048SGcwkBO1OIoq35atP9ysTQ10cs4yfHoTQyCuJed1zXzzfqvQ0yUb2puTHoL8iOyTFGupK5WhOvfxEVcT4IPUrUmvXPwKS2h9FgV842xuUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282581; c=relaxed/simple;
-	bh=gOO/pFfZT3mYnNh00yn47j84xsT7hH/t/KYguQmjO30=;
+	s=arc-20240116; t=1718282584; c=relaxed/simple;
+	bh=lnwnmS5jg1N5O7uGAIgAkwf/mqfMToatRA/QjJ6U/aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZnh9At5cTt+T04rJH1SMSEKh7faacngzwsCBUbfvmLagoGNTutWA+3dM0o+jjwvzWJ0ZTJOoum2OUg7tOBB07hX2D7xBI7LtsTUoYE8mxsbMyTzywnu5rutVBCu8+a7iR7jR23vjx5Zd0h8glBT6P3l6uSTmt3dQHcovTwVHU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaWtlqaP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M06NPI1aqdtBxXqPyk8tbbYq0d+GcnKkSEFmm1mEbELN1bTwgj+iFUiaXK4kcoFv4AQ50ZfGV9PdPzQYeEsMlB23/tlW3SiR20VkISqBSRomaUUBy1EiH15yLNSqv9MaJm9DQ2F3Vbn+e9zePV2k0raa1XcJqLxtV7MmriJf1Ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGOVkorC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaWtlqaP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921CDC2BBFC;
-	Thu, 13 Jun 2024 12:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGOVkorC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A5EC2BBFC;
+	Thu, 13 Jun 2024 12:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282581;
-	bh=gOO/pFfZT3mYnNh00yn47j84xsT7hH/t/KYguQmjO30=;
+	s=korg; t=1718282583;
+	bh=lnwnmS5jg1N5O7uGAIgAkwf/mqfMToatRA/QjJ6U/aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaWtlqaPicZhPsgJGuP1eKKeJmM0PuyQNkhC2YNclUlNSGqFGk75ufpLyaMDhUPHV
-	 ooOOK/ALtYnXSUMGLz25DUOon/PH+lorvBwrshVNv8NHDL5t8YkQ+fSEPGER9RMfLw
-	 DTEcfTY/KDoyx2ksOBmZxFV09c4sPrAyDm9NeYtw=
+	b=EGOVkorCOF8SJMlClbpmYTxgrDP37O83aN1+0qgMNCsWu1sBQvOSRZdyUCsKruA5o
+	 gzPgUrgBkyzE3kAsqdMzZdwZG2kz4iGtiAKe8d4fsSLZATqQwAHzTkfz1sJpKS7XYE
+	 QEVoV2q/NWTUPGK3Z1vOucMBSBWPR/W0JYr3yzMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Agroskin <shayagr@amazon.com>,
+	Nati Koler <nkoler@amazon.com>,
 	Arthur Kiyanovski <akiyano@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 326/402] net: ena: Add capabilities field with support for ENI stats capability
-Date: Thu, 13 Jun 2024 13:34:43 +0200
-Message-ID: <20240613113314.855182180@linuxfoundation.org>
+Subject: [PATCH 5.15 327/402] net: ena: Extract recurring driver reset code into a function
+Date: Thu, 13 Jun 2024 13:34:44 +0200
+Message-ID: <20240613113314.894528552@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,129 +54,165 @@ Content-Transfer-Encoding: 8bit
 
 From: Arthur Kiyanovski <akiyano@amazon.com>
 
-[ Upstream commit a2d5d6a70fa5211e071747876fa6a7621c7257fd ]
+[ Upstream commit 9fe890cc5bb84d6859d9a2422830b7fd6fd20521 ]
 
-This bitmask field indicates what capabilities are supported by the
-device.
+Create an inline function for resetting the driver
+to reduce code duplication.
 
-The capabilities field differs from the 'supported_features' field which
-indicates what sub-commands for the set/get feature commands are
-supported. The sub-commands are specified in the 'feature_id' field of
-the 'ena_admin_set_feat_cmd' struct in the following way:
-
-        struct ena_admin_set_feat_cmd cmd;
-
-        cmd.aq_common_descriptor.opcode = ENA_ADMIN_SET_FEATURE;
-        cmd.feat_common.feature_
-
-The 'capabilities' field, on the other hand, specifies different
-capabilities of the device. For example, whether the device supports
-querying of ENI stats.
-
-Also add an enumerator which contains all the capabilities. The
-first added capability macro is for ENI stats feature.
-
-Capabilities are queried along with the other device attributes (in
-ena_com_get_dev_attr_feat()) during device initialization and are stored
-in the ena_com_dev struct. They can be later queried using the
-ena_com_get_cap() helper function.
-
-Signed-off-by: Shay Agroskin <shayagr@amazon.com>
+Signed-off-by: Nati Koler <nkoler@amazon.com>
 Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 2dc8b1e7177d ("net: ena: Fix redundant device NUMA node override")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_admin_defs.h | 10 +++++++++-
- drivers/net/ethernet/amazon/ena/ena_com.c        |  8 ++++++++
- drivers/net/ethernet/amazon/ena/ena_com.h        | 13 +++++++++++++
- 3 files changed, 30 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 45 ++++++--------------
+ drivers/net/ethernet/amazon/ena/ena_netdev.h |  9 ++++
+ 2 files changed, 23 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_admin_defs.h b/drivers/net/ethernet/amazon/ena/ena_admin_defs.h
-index f5ec35fa4c631..466ad9470d1f4 100644
---- a/drivers/net/ethernet/amazon/ena/ena_admin_defs.h
-+++ b/drivers/net/ethernet/amazon/ena/ena_admin_defs.h
-@@ -48,6 +48,11 @@ enum ena_admin_aq_feature_id {
- 	ENA_ADMIN_FEATURES_OPCODE_NUM               = 32,
- };
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index 3ea449be7bdc3..cf8148a159ee0 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -103,7 +103,7 @@ static void ena_tx_timeout(struct net_device *dev, unsigned int txqueue)
+ 	if (test_and_set_bit(ENA_FLAG_TRIGGER_RESET, &adapter->flags))
+ 		return;
  
-+/* device capabilities */
-+enum ena_admin_aq_caps_id {
-+	ENA_ADMIN_ENI_STATS                         = 0,
-+};
-+
- enum ena_admin_placement_policy_type {
- 	/* descriptors and headers are in host memory */
- 	ENA_ADMIN_PLACEMENT_POLICY_HOST             = 1,
-@@ -455,7 +460,10 @@ struct ena_admin_device_attr_feature_desc {
- 	 */
- 	u32 supported_features;
+-	adapter->reset_reason = ENA_REGS_RESET_OS_NETDEV_WD;
++	ena_reset_device(adapter, ENA_REGS_RESET_OS_NETDEV_WD);
+ 	ena_increase_stat(&adapter->dev_stats.tx_timeout, 1, &adapter->syncp);
  
--	u32 reserved3;
-+	/* bitmap of ena_admin_aq_caps_id, which represents device
-+	 * capabilities.
-+	 */
-+	u32 capabilities;
+ 	netif_err(adapter, tx_err, dev, "Transmit time out\n");
+@@ -166,11 +166,9 @@ static int ena_xmit_common(struct net_device *dev,
+ 			  "Failed to prepare tx bufs\n");
+ 		ena_increase_stat(&ring->tx_stats.prepare_ctx_err, 1,
+ 				  &ring->syncp);
+-		if (rc != -ENOMEM) {
+-			adapter->reset_reason =
+-				ENA_REGS_RESET_DRIVER_INVALID_STATE;
+-			set_bit(ENA_FLAG_TRIGGER_RESET, &adapter->flags);
+-		}
++		if (rc != -ENOMEM)
++			ena_reset_device(adapter,
++					 ENA_REGS_RESET_DRIVER_INVALID_STATE);
+ 		return rc;
+ 	}
  
- 	/* Indicates how many bits are used physical address access. */
- 	u32 phys_addr_width;
-diff --git a/drivers/net/ethernet/amazon/ena/ena_com.c b/drivers/net/ethernet/amazon/ena/ena_com.c
-index e37c82eb62326..4db689372980e 100644
---- a/drivers/net/ethernet/amazon/ena/ena_com.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_com.c
-@@ -1974,6 +1974,7 @@ int ena_com_get_dev_attr_feat(struct ena_com_dev *ena_dev,
- 	       sizeof(get_resp.u.dev_attr));
+@@ -1297,10 +1295,8 @@ static int handle_invalid_req_id(struct ena_ring *ring, u16 req_id,
+ 			  req_id);
  
- 	ena_dev->supported_features = get_resp.u.dev_attr.supported_features;
-+	ena_dev->capabilities = get_resp.u.dev_attr.capabilities;
+ 	ena_increase_stat(&ring->tx_stats.bad_req_id, 1, &ring->syncp);
++	ena_reset_device(ring->adapter, ENA_REGS_RESET_INV_TX_REQ_ID);
  
- 	if (ena_dev->supported_features & BIT(ENA_ADMIN_MAX_QUEUES_EXT)) {
- 		rc = ena_com_get_feature(ena_dev, &get_resp,
-@@ -2226,6 +2227,13 @@ int ena_com_get_eni_stats(struct ena_com_dev *ena_dev,
- 	struct ena_com_stats_ctx ctx;
- 	int ret;
- 
-+	if (!ena_com_get_cap(ena_dev, ENA_ADMIN_ENI_STATS)) {
-+		netdev_err(ena_dev->net_device,
-+			   "Capability %d isn't supported\n",
-+			   ENA_ADMIN_ENI_STATS);
-+		return -EOPNOTSUPP;
-+	}
-+
- 	memset(&ctx, 0x0, sizeof(ctx));
- 	ret = ena_get_dev_stats(ena_dev, &ctx, ENA_ADMIN_GET_STATS_TYPE_ENI);
- 	if (likely(ret == 0))
-diff --git a/drivers/net/ethernet/amazon/ena/ena_com.h b/drivers/net/ethernet/amazon/ena/ena_com.h
-index 73b03ce594129..3c5081d9d25d6 100644
---- a/drivers/net/ethernet/amazon/ena/ena_com.h
-+++ b/drivers/net/ethernet/amazon/ena/ena_com.h
-@@ -314,6 +314,7 @@ struct ena_com_dev {
- 
- 	struct ena_rss rss;
- 	u32 supported_features;
-+	u32 capabilities;
- 	u32 dma_addr_bits;
- 
- 	struct ena_host_attribute host_attr;
-@@ -967,6 +968,18 @@ static inline void ena_com_disable_adaptive_moderation(struct ena_com_dev *ena_d
- 	ena_dev->adaptive_coalescing = false;
+-	/* Trigger device reset */
+-	ring->adapter->reset_reason = ENA_REGS_RESET_INV_TX_REQ_ID;
+-	set_bit(ENA_FLAG_TRIGGER_RESET, &ring->adapter->flags);
+ 	return -EFAULT;
  }
  
-+/* ena_com_get_cap - query whether device supports a capability.
-+ * @ena_dev: ENA communication layer struct
-+ * @cap_id: enum value representing the capability
-+ *
-+ * @return - true if capability is supported or false otherwise
-+ */
-+static inline bool ena_com_get_cap(struct ena_com_dev *ena_dev,
-+				   enum ena_admin_aq_caps_id cap_id)
+@@ -1463,10 +1459,7 @@ static struct sk_buff *ena_rx_skb(struct ena_ring *rx_ring,
+ 		netif_err(adapter, rx_err, rx_ring->netdev,
+ 			  "Page is NULL. qid %u req_id %u\n", rx_ring->qid, req_id);
+ 		ena_increase_stat(&rx_ring->rx_stats.bad_req_id, 1, &rx_ring->syncp);
+-		adapter->reset_reason = ENA_REGS_RESET_INV_RX_REQ_ID;
+-		/* Make sure reset reason is set before triggering the reset */
+-		smp_mb__before_atomic();
+-		set_bit(ENA_FLAG_TRIGGER_RESET, &adapter->flags);
++		ena_reset_device(adapter, ENA_REGS_RESET_INV_RX_REQ_ID);
+ 		return NULL;
+ 	}
+ 
+@@ -1806,15 +1799,12 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 	if (rc == -ENOSPC) {
+ 		ena_increase_stat(&rx_ring->rx_stats.bad_desc_num, 1,
+ 				  &rx_ring->syncp);
+-		adapter->reset_reason = ENA_REGS_RESET_TOO_MANY_RX_DESCS;
++		ena_reset_device(adapter, ENA_REGS_RESET_TOO_MANY_RX_DESCS);
+ 	} else {
+ 		ena_increase_stat(&rx_ring->rx_stats.bad_req_id, 1,
+ 				  &rx_ring->syncp);
+-		adapter->reset_reason = ENA_REGS_RESET_INV_RX_REQ_ID;
++		ena_reset_device(adapter, ENA_REGS_RESET_INV_RX_REQ_ID);
+ 	}
+-
+-	set_bit(ENA_FLAG_TRIGGER_RESET, &adapter->flags);
+-
+ 	return 0;
+ }
+ 
+@@ -3740,9 +3730,8 @@ static int check_for_rx_interrupt_queue(struct ena_adapter *adapter,
+ 		netif_err(adapter, rx_err, adapter->netdev,
+ 			  "Potential MSIX issue on Rx side Queue = %d. Reset the device\n",
+ 			  rx_ring->qid);
+-		adapter->reset_reason = ENA_REGS_RESET_MISS_INTERRUPT;
+-		smp_mb__before_atomic();
+-		set_bit(ENA_FLAG_TRIGGER_RESET, &adapter->flags);
++
++		ena_reset_device(adapter, ENA_REGS_RESET_MISS_INTERRUPT);
+ 		return -EIO;
+ 	}
+ 
+@@ -3779,9 +3768,7 @@ static int check_missing_comp_in_tx_queue(struct ena_adapter *adapter,
+ 			netif_err(adapter, tx_err, adapter->netdev,
+ 				  "Potential MSIX issue on Tx side Queue = %d. Reset the device\n",
+ 				  tx_ring->qid);
+-			adapter->reset_reason = ENA_REGS_RESET_MISS_INTERRUPT;
+-			smp_mb__before_atomic();
+-			set_bit(ENA_FLAG_TRIGGER_RESET, &adapter->flags);
++			ena_reset_device(adapter, ENA_REGS_RESET_MISS_INTERRUPT);
+ 			return -EIO;
+ 		}
+ 
+@@ -3807,9 +3794,7 @@ static int check_missing_comp_in_tx_queue(struct ena_adapter *adapter,
+ 			  "The number of lost tx completions is above the threshold (%d > %d). Reset the device\n",
+ 			  missed_tx,
+ 			  adapter->missing_tx_completion_threshold);
+-		adapter->reset_reason =
+-			ENA_REGS_RESET_MISS_TX_CMPL;
+-		set_bit(ENA_FLAG_TRIGGER_RESET, &adapter->flags);
++		ena_reset_device(adapter, ENA_REGS_RESET_MISS_TX_CMPL);
+ 		rc = -EIO;
+ 	}
+ 
+@@ -3933,8 +3918,7 @@ static void check_for_missing_keep_alive(struct ena_adapter *adapter)
+ 			  "Keep alive watchdog timeout.\n");
+ 		ena_increase_stat(&adapter->dev_stats.wd_expired, 1,
+ 				  &adapter->syncp);
+-		adapter->reset_reason = ENA_REGS_RESET_KEEP_ALIVE_TO;
+-		set_bit(ENA_FLAG_TRIGGER_RESET, &adapter->flags);
++		ena_reset_device(adapter, ENA_REGS_RESET_KEEP_ALIVE_TO);
+ 	}
+ }
+ 
+@@ -3945,8 +3929,7 @@ static void check_for_admin_com_state(struct ena_adapter *adapter)
+ 			  "ENA admin queue is not in running state!\n");
+ 		ena_increase_stat(&adapter->dev_stats.admin_q_pause, 1,
+ 				  &adapter->syncp);
+-		adapter->reset_reason = ENA_REGS_RESET_ADMIN_TO;
+-		set_bit(ENA_FLAG_TRIGGER_RESET, &adapter->flags);
++		ena_reset_device(adapter, ENA_REGS_RESET_ADMIN_TO);
+ 	}
+ }
+ 
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+index bf2a39c91c00d..4ad5a086b47ea 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+@@ -410,6 +410,15 @@ int ena_set_rx_copybreak(struct ena_adapter *adapter, u32 rx_copybreak);
+ 
+ int ena_get_sset_count(struct net_device *netdev, int sset);
+ 
++static inline void ena_reset_device(struct ena_adapter *adapter,
++				    enum ena_regs_reset_reason_types reset_reason)
 +{
-+	return !!(ena_dev->capabilities & BIT(cap_id));
++	adapter->reset_reason = reset_reason;
++	/* Make sure reset reason is set before triggering the reset */
++	smp_mb__before_atomic();
++	set_bit(ENA_FLAG_TRIGGER_RESET, &adapter->flags);
 +}
 +
- /* ena_com_update_intr_reg - Prepare interrupt register
-  * @intr_reg: interrupt register to update.
-  * @rx_delay_interval: Rx interval in usecs
+ enum ena_xdp_errors_t {
+ 	ENA_XDP_ALLOWED = 0,
+ 	ENA_XDP_CURRENT_MTU_TOO_LARGE,
 -- 
 2.43.0
 
