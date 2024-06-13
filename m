@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F1981AA7;
-	Thu, 13 Jun 2024 12:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E884B1C32;
+	Thu, 13 Jun 2024 12:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283008; cv=none; b=GCl+kXXSBn/sUXTAAl8xGSPhGy2w1E751bZmqe0rKt62wio819OiOsEyicrIYnudpcH59nPzpwAhsPPGKAxixYnutuLIGNkN3DO9Yj+ITBwI8HVTRED412TZjiD5aXmy0f6Pa3P4gPUMavusBVxVCH2bPG0Q54/wh86QkrGf0Zg=
+	t=1718283011; cv=none; b=L79h6yp4WlOt+QoHfm8S01IwhR1ecIAy/f8VvGgZqOMFBYovw5tK8l+CdHTQodEvyAQ3+9BA4ugH6yaQHIyoyGzsrq0lSXVOw64XauW6UIQHMtQDQ1MoAX58P5U+NpU3iqKt4eISCTZB72jG0UB/ixdpk79jKiuqHexi7fRGImI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283008; c=relaxed/simple;
-	bh=TViRWNGidfCYnDjxxcJ+X1z/lrNu20921Odc0kfSJBw=;
+	s=arc-20240116; t=1718283011; c=relaxed/simple;
+	bh=GldmyxCQ5OQVl2Dg59wP8PGQpXNdk9BA7bXFYyz5jfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NnkH6A2tEtb9bnquaY6HyhFAuOqQ/36Lpu/mtS1uZvS0vL/mcwRzbfkCvCwa6a+7KS+u2jL3LwjPPVUqV3D6dHCnzBzQ+/EDL815M/RlLjprGVe8uv4YrwbZvaZf0k8b3LRUmwHEkuXa01wGvJGl3Hf3nYwOsv0+FIcS7Do8sPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eii0S+BE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TiHA5yHmejunDbkq8moINMwWOR/CWgsBqnwMjnffPOijlos6qZqCTH+8D113DGGwgNTOSHs3q7HneRI+DGp2OkvgDPXWhkCsAXVXA5tubNWHZf8wKjtL6WNQK2G71vztwgdBCSfQxnbM/uuV18JUtG8xh9VTmI/vWKIJmavUvqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HYbulIo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eii0S+BE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EBFC2BBFC;
-	Thu, 13 Jun 2024 12:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HYbulIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF66C2BBFC;
+	Thu, 13 Jun 2024 12:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283007;
-	bh=TViRWNGidfCYnDjxxcJ+X1z/lrNu20921Odc0kfSJBw=;
+	s=korg; t=1718283010;
+	bh=GldmyxCQ5OQVl2Dg59wP8PGQpXNdk9BA7bXFYyz5jfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eii0S+BEAQEHa/CMlQkDRBJfPEQ6gIk94wuMeDGltiBtAp9EDZo1gNbOwj/wmBX6+
-	 7UA5Gs42O5KQVFN6S5m+yFx05S4EEhlttlFSAeVJcQx81HYFw8M1Nossbb+fgfP/MQ
-	 lA/azBObXPbBrZesl7Uv4TTS1ModiRzFsESVvzpk=
+	b=0HYbulIoUXB7OHJ39Z6VQljVFTKeiXQEwRLHykjkCOKLbCDtnBTqtem4mtNn47lAY
+	 Z7kpWTIlSfkhXVl+eAZRyBlxNnDQ99oMPEkonVi6qG4TGd+fjxuvk3k0fQPB96lZy0
+	 xmu9O8taNH+JMO2TPMlGc6rR7EvDIeGbNczvj6D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Douglas Anderson <dianders@chromium.org>,
 	Justin Stitt <justinstitt@google.com>,
 	Daniel Thompson <daniel.thompson@linaro.org>
-Subject: [PATCH 6.1 68/85] kdb: Merge identical case statements in kdb_read()
-Date: Thu, 13 Jun 2024 13:36:06 +0200
-Message-ID: <20240613113216.762509042@linuxfoundation.org>
+Subject: [PATCH 6.1 69/85] kdb: Use format-specifiers rather than memset() for padding in kdb_read()
+Date: Thu, 13 Jun 2024 13:36:07 +0200
+Message-ID: <20240613113216.802371381@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -53,46 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Thompson <daniel.thompson@linaro.org>
 
-commit 6244917f377bf64719551b58592a02a0336a7439 upstream.
+commit c9b51ddb66b1d96e4d364c088da0f1dfb004c574 upstream.
 
-The code that handles case 14 (down) and case 16 (up) has been copy and
-pasted despite being byte-for-byte identical. Combine them.
+Currently when the current line should be removed from the display
+kdb_read() uses memset() to fill a temporary buffer with spaces.
+The problem is not that this could be trivially implemented using a
+format string rather than open coding it. The real problem is that
+it is possible, on systems with a long kdb_prompt_str, to write past
+the end of the tmpbuffer.
 
-Cc: stable@vger.kernel.org # Not a bug fix but it is needed for later bug fixes
+Happily, as mentioned above, this can be trivially implemented using a
+format string. Make it so!
+
+Cc: stable@vger.kernel.org
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Tested-by: Justin Stitt <justinstitt@google.com>
-Link: https://lore.kernel.org/r/20240424-kgdb_read_refactor-v3-4-f236dbe9828d@linaro.org
+Link: https://lore.kernel.org/r/20240424-kgdb_read_refactor-v3-5-f236dbe9828d@linaro.org
 Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/debug/kdb/kdb_io.c |   10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ kernel/debug/kdb/kdb_io.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
 --- a/kernel/debug/kdb/kdb_io.c
 +++ b/kernel/debug/kdb/kdb_io.c
-@@ -303,6 +303,7 @@ poll_again:
- 		}
+@@ -304,11 +304,9 @@ poll_again:
  		break;
  	case 14: /* Down */
-+	case 16: /* Up */
- 		memset(tmpbuffer, ' ',
- 		       strlen(kdb_prompt_str) + (lastchar-buffer));
- 		*(tmpbuffer+strlen(kdb_prompt_str) +
-@@ -317,15 +318,6 @@ poll_again:
- 			++cp;
- 		}
- 		break;
--	case 16: /* Up */
+ 	case 16: /* Up */
 -		memset(tmpbuffer, ' ',
 -		       strlen(kdb_prompt_str) + (lastchar-buffer));
 -		*(tmpbuffer+strlen(kdb_prompt_str) +
 -		  (lastchar-buffer)) = '\0';
 -		kdb_printf("\r%s\r", tmpbuffer);
--		*lastchar = (char)key;
--		*(lastchar+1) = '\0';
--		return lastchar;
- 	case 9: /* Tab */
- 		if (tab < 2)
- 			++tab;
++		kdb_printf("\r%*c\r",
++			   (int)(strlen(kdb_prompt_str) + (lastchar - buffer)),
++			   ' ');
+ 		*lastchar = (char)key;
+ 		*(lastchar+1) = '\0';
+ 		return lastchar;
 
 
