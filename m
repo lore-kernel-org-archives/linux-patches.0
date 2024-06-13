@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156FB384;
-	Thu, 13 Jun 2024 12:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7484B384;
+	Thu, 13 Jun 2024 12:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282027; cv=none; b=K/Ez2ODX50Cyu7WCtC2B8O70mCytYuBvzYta5cIX5l+ldJY/PNHzlDvLdCeyc6mmBbk4fNaDEpPWfQjbQk7/vIg4Hv9j7vIL36JqyLxNeLRTfzcqpdsTuk3gDsihSe2BEJTGP8s59MhXxrP/Xy+lDSQIzVGo2RgWnuYNHv57sOI=
+	t=1718282030; cv=none; b=WkmWzo7EBcXzz0MRCdXODFgQzMQHS+KmT4qr2AWyOn6bH4XU9lJ4u6xowR18o3APhlVFTuHGy7TzUlMgj3oncyaZDGibqfEYah0zemvpnMMw+mlX748AVYUGkfLyP0aZMv5Olii9nTDfpnQ1SOu/82iH+s3pzXkK4NJ6MXupE4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282027; c=relaxed/simple;
-	bh=EvHPonryX9B5vKl2fC/Xj9uPuBQoHSoFOiFujO53JFs=;
+	s=arc-20240116; t=1718282030; c=relaxed/simple;
+	bh=0GE9WSamdGCHsfBpNMEeXEbDOPGYkyUcgnmtfr/tbbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6abKz0/H+SagEP6rboOd1zCWWM407ADL/Erz0aTXPIsEZRGhUcNFQRdGoeKExFltfKPYnR2+xMztQKWV1NN83w2by5ymhJOGdgVF77cLkCmye0+Y6KbCPdQfSnHAHoJrdmqhNOJ1Yvx44+4cGiCOC7Z8B5S+oPQl9KBGfEozow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T97jMWZ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NZ6zyjfFZ/HymREQ80oMjJRdmOouxEkNbf1RIF1fuFxXSvgApOx/uWPUyx2bA7ZbtqkvMpKSzO2Iz3c7WsTTUbK1q1tOuguLv1UDtosPJyfHrMgLRvTsaqUUdXwo4JGNnXsKydguyNTXPlii/7ue/mX+A2HbO98gF0oZk6QHUQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yl/EIN80; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T97jMWZ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7F8C2BBFC;
-	Thu, 13 Jun 2024 12:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yl/EIN80"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FBAC2BBFC;
+	Thu, 13 Jun 2024 12:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282027;
-	bh=EvHPonryX9B5vKl2fC/Xj9uPuBQoHSoFOiFujO53JFs=;
+	s=korg; t=1718282029;
+	bh=0GE9WSamdGCHsfBpNMEeXEbDOPGYkyUcgnmtfr/tbbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T97jMWZ9/QXA+yVDY6VJ9iZYSsJCh7TbRqo7+iGpWL4QB9UWqCSu5zfPj/cMazzJa
-	 acPd8K1dnGHjfJQv8JPVvx1tRl6/dgkokPVWu6UhPD/zga1gkVOzJ10TkADxO07zeI
-	 g/F4IN3DNlUs+IZQdy5/fK6iWbkAnkkhiDnowG4M=
+	b=Yl/EIN80CK8Vpg1z/n1SkaC0yLeOgvInlZeYvmItTAnHrYA6wq/ObZHyjcNsW9MTJ
+	 vZ2WcJW0kV40QHJ+iQxeqLiz+Z+buyykkt0DJ1ZOJCmC4oEim9TSGPgSCvPTqXl8z4
+	 wWk1LEQo4PHN7SYBzTrYTLtou3xcd/jwBU7SkITs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Fabio Estevam <festevam@denx.de>,
+	Rob Herring <robh@kernel.org>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/402] media: ipu3-cio2: Request IRQ earlier
-Date: Thu, 13 Jun 2024 13:31:34 +0200
-Message-ID: <20240613113307.480715330@linuxfoundation.org>
+Subject: [PATCH 5.15 138/402] media: dt-bindings: ovti,ov2680: Fix the power supply names
+Date: Thu, 13 Jun 2024 13:31:35 +0200
+Message-ID: <20240613113307.520369860@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,50 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit a069f79bfa6ec1ea0744981ea8425c8a25322579 ]
+[ Upstream commit e2f6ea61b6f3e4ebbb7dff857eea6220c18cd17b ]
 
-Call devm_request_irq() before registering the async notifier, as otherwise
-it would be possible to use the device before the interrupts could be
-delivered to the driver.
+The original .txt bindings had the OV2680 power supply names correct,
+but the transition from .txt to yaml spelled them incorrectly.
 
-Fixes: c2a6a07afe4a ("media: intel-ipu3: cio2: add new MIPI-CSI2 driver")
+Fix the OV2680 power supply names as the original .txt bindings
+as these are the names used by the OV2680 driver and in devicetree.
+
+Fixes: 57226cd8c8bf ("media: dt-bindings: ov2680: convert bindings to yaml")
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/ipu3/ipu3-cio2-main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ .../bindings/media/i2c/ovti,ov2680.yaml        | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/media/pci/intel/ipu3/ipu3-cio2-main.c b/drivers/media/pci/intel/ipu3/ipu3-cio2-main.c
-index 29c660fe1425b..dfb2be0b9625a 100644
---- a/drivers/media/pci/intel/ipu3/ipu3-cio2-main.c
-+++ b/drivers/media/pci/intel/ipu3/ipu3-cio2-main.c
-@@ -1803,11 +1803,6 @@ static int cio2_pci_probe(struct pci_dev *pci_dev,
+diff --git a/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml b/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
+index cf456f8d9ddcb..c87677f5e2a25 100644
+--- a/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
++++ b/Documentation/devicetree/bindings/media/i2c/ovti,ov2680.yaml
+@@ -37,15 +37,15 @@ properties:
+       active low.
+     maxItems: 1
  
- 	v4l2_async_notifier_init(&cio2->notifier);
+-  dovdd-supply:
++  DOVDD-supply:
+     description:
+       Definition of the regulator used as interface power supply.
  
--	/* Register notifier for subdevices we care */
--	r = cio2_parse_firmware(cio2);
--	if (r)
--		goto fail_clean_notifier;
--
- 	r = devm_request_irq(dev, pci_dev->irq, cio2_irq, IRQF_SHARED,
- 			     CIO2_NAME, cio2);
- 	if (r) {
-@@ -1815,6 +1810,11 @@ static int cio2_pci_probe(struct pci_dev *pci_dev,
- 		goto fail_clean_notifier;
- 	}
+-  avdd-supply:
++  AVDD-supply:
+     description:
+       Definition of the regulator used as analog power supply.
  
-+	/* Register notifier for subdevices we care */
-+	r = cio2_parse_firmware(cio2);
-+	if (r)
-+		goto fail_clean_notifier;
-+
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_allow(dev);
+-  dvdd-supply:
++  DVDD-supply:
+     description:
+       Definition of the regulator used as digital power supply.
  
+@@ -59,9 +59,9 @@ required:
+   - reg
+   - clocks
+   - clock-names
+-  - dovdd-supply
+-  - avdd-supply
+-  - dvdd-supply
++  - DOVDD-supply
++  - AVDD-supply
++  - DVDD-supply
+   - reset-gpios
+   - port
+ 
+@@ -82,9 +82,9 @@ examples:
+                 clock-names = "xvclk";
+                 reset-gpios = <&gpio1 3 GPIO_ACTIVE_LOW>;
+ 
+-                dovdd-supply = <&sw2_reg>;
+-                dvdd-supply = <&sw2_reg>;
+-                avdd-supply = <&reg_peri_3p15v>;
++                DOVDD-supply = <&sw2_reg>;
++                DVDD-supply = <&sw2_reg>;
++                AVDD-supply = <&reg_peri_3p15v>;
+ 
+                 port {
+                         ov2680_to_mipi: endpoint {
 -- 
 2.43.0
 
