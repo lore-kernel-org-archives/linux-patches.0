@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FD8144D36;
-	Thu, 13 Jun 2024 12:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3E714535D;
+	Thu, 13 Jun 2024 12:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280321; cv=none; b=hnb/yfZGKr9PSbiDhyY2I5aEyZo80iaZ92Lm9RhIH2IIgWhT9vhuWn3O+8b21XJbTEiGX/tdd21Fv6wEiJpIadJOcSsMdEOeEhHEd/bTf30DpBXYKTAjE4ea9SWHZ0+gH5cpeYcN+PtvyP/acMP3OGDylRrGmJ/hyPTHMJ5XvI0=
+	t=1718280324; cv=none; b=Tmvgon/7n6GQP1vdmW3pMwyEHS4sXtMhk+sSRNMQdg4k1hDhG/741ATyiBbyTnzlUQTbO+OHtN6RGCPz/FFccoYUsSdlp1iLYAB4rzzHW5V3TGEpjRptrPTSGdFPpvXWhDD1PtiTPF4N2S7xHHBhjwNreqwolj0A96vCZ53l6HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280321; c=relaxed/simple;
-	bh=wxBraw0qe268jMxfb76bPqvNsYlUFQ1GJRj1nYOx8nI=;
+	s=arc-20240116; t=1718280324; c=relaxed/simple;
+	bh=yVFNa82CaYGQx+RIGppVnlG/5+k7YSYHFyoM3KvVxew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cRVVlUwTBTaKW4SH0z1wB0LsT5IP0aXdMb1HqJuidT0Sferlys7Pnqsh4XU/Y25qTmTEMDP6ZGjsKxkfkfKeHUieBrFpbe3a8DVLXPsbKsYSDmtAQz+96h7ePH4sITN4OIVgZTKfIk+0gjVgu43fYUdbJjQWXTn8Giqmb7l8WoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2/kNmiM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YP2oB24Ir5/wgc+ZDpTT2mzzf438VuABaefZNa9WU8zLzWQVEaWU+VtbWy3diYeNdyykF4Fblc4xjb9DFxxOLPf2UBQGhOcte1b3dzOT4J1tTohv2zO383t4cQXI+Rs10MSKaVuL2H7tWiJjd6oAVsX90DUpDrc1Ef21uwYeYQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yk3ZlLqf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2/kNmiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C31C32786;
-	Thu, 13 Jun 2024 12:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yk3ZlLqf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28473C2BBFC;
+	Thu, 13 Jun 2024 12:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280320;
-	bh=wxBraw0qe268jMxfb76bPqvNsYlUFQ1GJRj1nYOx8nI=;
+	s=korg; t=1718280323;
+	bh=yVFNa82CaYGQx+RIGppVnlG/5+k7YSYHFyoM3KvVxew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2/kNmiM2Sz2a1zZVUDW6G0kTSagesZQbUKn0Io4eG/+PqoQBJmOLFCsguiCfOeeg
-	 E9AK4HguAXjlbfsRtQNNDaNMgMXQ6dphIldbex8wIT3c4zxfLqyKZIci6V5vr/GmBk
-	 YU9C3sivmZjJqoxe8nGicvXQa+RNW05IQX/q3Gfc=
+	b=Yk3ZlLqfwiNz6ezCJEGdPVqRNjnAa79lCbu4AODNUOz2ulk5Dw40NMp4X6WohkKvn
+	 6u1fVWdUoaw6bGwT5AFrBfV4cQnbDIfiUaXoh/g0+p5m/x1LISLjMlgGstsper23Gw
+	 yLXwYocLGYfmeVsyw7NxKMisoYY8cBs9s0Vebmbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 006/137] mptcp: avoid some duplicate code in socket option handling
-Date: Thu, 13 Jun 2024 13:33:06 +0200
-Message-ID: <20240613113223.530809723@linuxfoundation.org>
+	Sui Jingfeng <sui.jingfeng@linux.dev>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>
+Subject: [PATCH 6.6 015/137] drm/sun4i: hdmi: Convert encoder to atomic
+Date: Thu, 13 Jun 2024 13:33:15 +0200
+Message-ID: <20240613113223.882041314@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -52,62 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-commit a74762675f700a5473ebe54a671a0788a5b23cc9 upstream.
+commit cedb7dd193f659fcc63f3a3f31454c25a5baef07 upstream.
 
-The mptcp_get_int_option() helper is needless open-coded in a
-couple of places, replace the duplicate code with the helper
-call.
+The sun4i_hdmi driver still uses the non-atomic variants of the encoder
+hooks, so let's convert to their atomic equivalents.
 
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: bd11dc4fb969 ("mptcp: fix full TCP keep-alive support")
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Acked-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240222-kms-hdmi-connector-state-v7-32-8f4af575fce2@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |   20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -626,13 +626,11 @@ static int mptcp_setsockopt_sol_tcp_cork
+--- a/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
++++ b/drivers/gpu/drm/sun4i/sun4i_hdmi_enc.c
+@@ -82,7 +82,8 @@ static int sun4i_hdmi_atomic_check(struc
+ 	return 0;
+ }
+ 
+-static void sun4i_hdmi_disable(struct drm_encoder *encoder)
++static void sun4i_hdmi_disable(struct drm_encoder *encoder,
++			       struct drm_atomic_state *state)
  {
- 	struct mptcp_subflow_context *subflow;
- 	struct sock *sk = (struct sock *)msk;
--	int val;
-+	int val, ret;
+ 	struct sun4i_hdmi *hdmi = drm_encoder_to_sun4i_hdmi(encoder);
+ 	u32 val;
+@@ -96,7 +97,8 @@ static void sun4i_hdmi_disable(struct dr
+ 	clk_disable_unprepare(hdmi->tmds_clk);
+ }
  
--	if (optlen < sizeof(int))
--		return -EINVAL;
--
--	if (copy_from_sockptr(&val, optval, sizeof(val)))
--		return -EFAULT;
-+	ret = mptcp_get_int_option(msk, optval, optlen, &val);
-+	if (ret)
-+		return ret;
- 
- 	lock_sock(sk);
- 	sockopt_seq_inc(msk);
-@@ -656,13 +654,11 @@ static int mptcp_setsockopt_sol_tcp_node
+-static void sun4i_hdmi_enable(struct drm_encoder *encoder)
++static void sun4i_hdmi_enable(struct drm_encoder *encoder,
++			      struct drm_atomic_state *state)
  {
- 	struct mptcp_subflow_context *subflow;
- 	struct sock *sk = (struct sock *)msk;
--	int val;
--
--	if (optlen < sizeof(int))
--		return -EINVAL;
-+	int val, ret;
+ 	struct drm_display_mode *mode = &encoder->crtc->state->adjusted_mode;
+ 	struct sun4i_hdmi *hdmi = drm_encoder_to_sun4i_hdmi(encoder);
+@@ -120,9 +122,10 @@ static void sun4i_hdmi_enable(struct drm
+ }
  
--	if (copy_from_sockptr(&val, optval, sizeof(val)))
--		return -EFAULT;
-+	ret = mptcp_get_int_option(msk, optval, optlen, &val);
-+	if (ret)
-+		return ret;
+ static void sun4i_hdmi_mode_set(struct drm_encoder *encoder,
+-				struct drm_display_mode *mode,
+-				struct drm_display_mode *adjusted_mode)
++				struct drm_crtc_state *crtc_state,
++				struct drm_connector_state *conn_state)
+ {
++	const struct drm_display_mode *mode = &crtc_state->mode;
+ 	struct sun4i_hdmi *hdmi = drm_encoder_to_sun4i_hdmi(encoder);
+ 	unsigned int x, y;
+ 	u32 val;
+@@ -201,9 +204,9 @@ static enum drm_mode_status sun4i_hdmi_m
  
- 	lock_sock(sk);
- 	sockopt_seq_inc(msk);
+ static const struct drm_encoder_helper_funcs sun4i_hdmi_helper_funcs = {
+ 	.atomic_check	= sun4i_hdmi_atomic_check,
+-	.disable	= sun4i_hdmi_disable,
+-	.enable		= sun4i_hdmi_enable,
+-	.mode_set	= sun4i_hdmi_mode_set,
++	.atomic_disable	= sun4i_hdmi_disable,
++	.atomic_enable	= sun4i_hdmi_enable,
++	.atomic_mode_set	= sun4i_hdmi_mode_set,
+ 	.mode_valid	= sun4i_hdmi_mode_valid,
+ };
+ 
 
 
