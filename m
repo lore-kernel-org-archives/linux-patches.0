@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F64384;
-	Thu, 13 Jun 2024 12:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B55384;
+	Thu, 13 Jun 2024 12:36:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282161; cv=none; b=As6QcysjNxOveo/UpiUaSwvWpRKYDsVGQZ5M+99jAxfR3bip9DQ3k2jdneTC2iQkApRzvVjAAQOdIqn0zgyYr0bXn3MlpAJ2TF65BzMC6kGsGkg4Q7M6V9NK6qILRpeFkQmc5AcA2T3xYyrcDm3kaWLbOXmTBIsYrljzYdGB7+0=
+	t=1718282164; cv=none; b=KrRLoauam5/97MGTSPWH7h08iodUOqCsjotqyec7/NERWZgVA9a21WMtXimAt8/RplZwko9bcnvoxpKOLE9HUBX7COZN/ahiG8urwgK+fqcfMHO+4CCdQHpArSXgOAIzpb3XCigSO86K8k38a8VXz1d6ehocfW0rATwLj6lZimI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282161; c=relaxed/simple;
-	bh=PxWMsd22FojUsH6c44+VzMzM4uxQSC2Ob8/qY6gki2I=;
+	s=arc-20240116; t=1718282164; c=relaxed/simple;
+	bh=vBXCtGvgFT8LGGDN1ClzotUCCx+7qUDvSQKisbZ8FWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhnyeOvnEOLCE821tS3bQqqJZk9GOVyLHY7tTZT4VNiPOIMn1u+ZDexDDiWkM15ziKHDD7VTpbxu/aqZjTFHCAA7vnV2qoSWhOA/i2MhBmJReN1EpAqRMovO1rfMN6iIrLXvBeKHxENC+Yy9JbhY+LR1nbcHtSSj5PoJbPdDmeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vV0FuAiG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mZgRAl+B7xX6ojrURe8jL8a4qaZ6RGWuPpKE/4Ll42FoRQr0IWowE3PvyNzrQVsKL1l9CyATZZEzzOt+e8c1s8d6BUoKDrD3BRKjBJXPXfUdgm2H3yJZobDwCyrqiRwjMDGH22Dicb1DY/AaL532JJHg2qt3GGLp57nBgGUUpgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hE0DxmJR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vV0FuAiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8DEC2BBFC;
-	Thu, 13 Jun 2024 12:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hE0DxmJR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44432C2BBFC;
+	Thu, 13 Jun 2024 12:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282161;
-	bh=PxWMsd22FojUsH6c44+VzMzM4uxQSC2Ob8/qY6gki2I=;
+	s=korg; t=1718282164;
+	bh=vBXCtGvgFT8LGGDN1ClzotUCCx+7qUDvSQKisbZ8FWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vV0FuAiGs0L2DCUm8BSix58VrlCtWYWCl/NayphFkK227e6vLP/N+wmOfQ0wjrXsd
-	 ozwU/C9ewN+zAdqzkoiRmEO2kmdS3dG665AmBcVKvyZJcGJ565YjiGDFz3Myi23HDb
-	 THOA80xuzXPYabyD2HJugM9V2IRIZuuwHCXk7eNk=
+	b=hE0DxmJRn3TIlc2jDZM598t6DDuvkgIhWsGggkRJZP7j/OmdgYoKARCDGby3ccZPo
+	 MgX5NSuabSrzZtpHX3jhZX4h2G6vEDecZA/J/uwPjgDo1Q1angYaaqB4xnsnsU/kzD
+	 UljDwxpmygJMWw0hfSzCYw5hwfex9/i0OlXnoiGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 153/402] RDMA/hns: Use complete parentheses in macros
-Date: Thu, 13 Jun 2024 13:31:50 +0200
-Message-ID: <20240613113308.104310538@linuxfoundation.org>
+Subject: [PATCH 5.15 154/402] RDMA/hns: Modify the print level of CQE error
+Date: Thu, 13 Jun 2024 13:31:51 +0200
+Message-ID: <20240613113308.143176124@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,48 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 4125269bb9b22e1d8cdf4412c81be8074dbc61ca ]
+[ Upstream commit 349e859952285ab9689779fb46de163f13f18f43 ]
 
-Use complete parentheses to ensure that macro expansion does
-not produce unexpected results.
+Too much print may lead to a panic in kernel. Change ibdev_err() to
+ibdev_err_ratelimited(), and change the printing level of cqe dump
+to debug level.
 
-Fixes: a25d13cbe816 ("RDMA/hns: Add the interfaces to support multi hop addressing for the contexts in hip08")
+Fixes: 7c044adca272 ("RDMA/hns: Simplify the cqe code of poll cq")
 Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240412091616.370789-10-huangjunxian6@hisilicon.com
+Link: https://lore.kernel.org/r/20240412091616.370789-11-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.h b/drivers/infiniband/hw/hns/hns_roce_hem.h
-index 2d84a6b3f05df..fa84ce33076ac 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.h
-@@ -61,16 +61,16 @@ enum {
- 	 (sizeof(struct scatterlist) + sizeof(void *)))
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index e541de3e6165b..4accc9efa6946 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -3514,8 +3514,9 @@ static void get_cqe_status(struct hns_roce_dev *hr_dev, struct hns_roce_qp *qp,
+ 		   wc->status == IB_WC_WR_FLUSH_ERR))
+ 		return;
  
- #define check_whether_bt_num_3(type, hop_num) \
--	(type < HEM_TYPE_MTT && hop_num == 2)
-+	((type) < HEM_TYPE_MTT && (hop_num) == 2)
+-	ibdev_err(&hr_dev->ib_dev, "error cqe status 0x%x:\n", cqe_status);
+-	print_hex_dump(KERN_ERR, "", DUMP_PREFIX_NONE, 16, 4, cqe,
++	ibdev_err_ratelimited(&hr_dev->ib_dev, "error cqe status 0x%x:\n",
++			      cqe_status);
++	print_hex_dump(KERN_DEBUG, "", DUMP_PREFIX_NONE, 16, 4, cqe,
+ 		       cq->cqe_size, false);
+ 	wc->vendor_err = hr_reg_read(cqe, CQE_SUB_STATUS);
  
- #define check_whether_bt_num_2(type, hop_num) \
--	((type < HEM_TYPE_MTT && hop_num == 1) || \
--	(type >= HEM_TYPE_MTT && hop_num == 2))
-+	(((type) < HEM_TYPE_MTT && (hop_num) == 1) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == 2))
- 
- #define check_whether_bt_num_1(type, hop_num) \
--	((type < HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0) || \
--	(type >= HEM_TYPE_MTT && hop_num == 1) || \
--	(type >= HEM_TYPE_MTT && hop_num == HNS_ROCE_HOP_NUM_0))
-+	(((type) < HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == 1) || \
-+	((type) >= HEM_TYPE_MTT && (hop_num) == HNS_ROCE_HOP_NUM_0))
- 
- struct hns_roce_hem_chunk {
- 	struct list_head	 list;
 -- 
 2.43.0
 
