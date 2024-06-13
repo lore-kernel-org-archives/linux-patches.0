@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC4F6EB56;
-	Thu, 13 Jun 2024 12:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A146EB56;
+	Thu, 13 Jun 2024 12:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280600; cv=none; b=OqdUja1d7ze6XamNotKP/p69AbPkrMuTN/zMMxHZiLTeHdN6OJh8UAzxiM16fG2iMEJ+OwWzHcVLuRpN1cRJmvbuBsyCzUzDq7pdb4Sl1QueKG+29AGv0PEWd4NJtUp8hc+52d/jWVDkWRseQ31ey0+4GEF8VWAF6xhrqVaAgDk=
+	t=1718280603; cv=none; b=m39O/bPwKyzG2JmuceaqJN7iqfaeR3W2WlBSLEUFxJN2M73AiiL6yykvQl9gIIFQmw2RQHRjLZahxHQimXbBgqyv0Y9cLCgpaj3tL2KrtC88be4WV8tZ7jaXOoTzeHq8NUnl6zj3doyJ4er6fd3RzVbohoIjI1fg+2dRoi/X+oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280600; c=relaxed/simple;
-	bh=7A4WEph/uQWLr4s7S+ZWYn+2h5QeFH/4eBEuO/Y+7h4=;
+	s=arc-20240116; t=1718280603; c=relaxed/simple;
+	bh=jBKXclspDB15Pygu8mlGGYHh5eljsb5UESee/Er2sB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qM8F2Jqr3b1rTw+Pq7TPR058DOt/WQzaxiLZbLACkwe6g4l/6xj2jBDIQqQSDzsf3lHvjfnQ8/J1fDJgwKK3rHaVL8RkgSAzsdqqQ+njyYGiQb90km3fkYEiK1EhG1TAvpMhXVbrkikMWjvklGjdxX9Siorm910uAP2s4v9X6h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qC7zRPtr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lM4VK/Ry6R+/O+cVqY/QIi7uI7GFxaAwCHfmnsjiUpt/KPZ9RtV8WAkJe9SLawTiVf9bvXxvvFptQSZM0e7dCiaPFItCSi6gflWaZs/1J+4JwglH8OE+feINwTjpWrztCxDgLSfEXSvT9mFQpFoNF68lBnXwIM6rXX/WFk7hZnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cte0Gmxk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qC7zRPtr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA74FC2BBFC;
-	Thu, 13 Jun 2024 12:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cte0Gmxk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4911C2BBFC;
+	Thu, 13 Jun 2024 12:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280600;
-	bh=7A4WEph/uQWLr4s7S+ZWYn+2h5QeFH/4eBEuO/Y+7h4=;
+	s=korg; t=1718280603;
+	bh=jBKXclspDB15Pygu8mlGGYHh5eljsb5UESee/Er2sB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qC7zRPtrZKsV+N5Q8tsjods5ds/vM/+LXbPZn1/2lBpMgu6E3/OcUvjayVXHmM8Do
-	 f4tvHKxQ4wfHJ2gVRC5263Ekh5uzIYz+oCkdfVRr6S1LaIvBQIhJboS6e2BpPRWlDW
-	 6pe5/Xj9bWFs4JL1Y/+kFwLDYDtLSrVx8xoCfwek=
+	b=Cte0GmxkRycuDrIRNAosIs4iWy12pRHhCpDXLEcw8v3HXVEIjPUDj0gryoQbQgseC
+	 9m6AIzi/D3V9CjxzvAEw+J+1+9EiAIuAKAXJiP0fVbEqeSwFW775+HUk4WE8IButKu
+	 TEgHxBtZVDr48xQqNlMWbBjJXob09ktJQHOj94aI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Schneider <pschneider1968@googlemail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 078/137] scsi: core: Handle devices which return an unusually large VPD page count
-Date: Thu, 13 Jun 2024 13:34:18 +0200
-Message-ID: <20240613113226.321851578@linuxfoundation.org>
+	Fan Yu <fan.yu9@zte.com.cn>,
+	xu xin <xu.xin16@zte.com.cn>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 079/137] net/ipv6: Fix route deleting failure when metric equals 0
+Date: Thu, 13 Jun 2024 13:34:19 +0200
+Message-ID: <20240613113226.361121692@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -51,51 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin K. Petersen <martin.petersen@oracle.com>
+From: xu xin <xu.xin16@zte.com.cn>
 
-commit d09c05aa35909adb7d29f92f0cd79fdcd1338ef0 upstream.
+commit bb487272380d120295e955ad8acfcbb281b57642 upstream.
 
-Peter Schneider reported that a system would no longer boot after
-updating to 6.8.4.  Peter bisected the issue and identified commit
-b5fc07a5fb56 ("scsi: core: Consult supported VPD page list prior to
-fetching page") as being the culprit.
+Problem
+=========
+After commit 67f695134703 ("ipv6: Move setting default metric for routes"),
+we noticed that the logic of assigning the default value of fc_metirc
+changed in the ioctl process. That is, when users use ioctl(fd, SIOCADDRT,
+rt) with a non-zero metric to add a route,  then they may fail to delete a
+route with passing in a metric value of 0 to the kernel by ioctl(fd,
+SIOCDELRT, rt). But iproute can succeed in deleting it.
 
-Turns out the enclosure device in Peter's system reports a byteswapped
-page length for VPD page 0. It reports "02 00" as page length instead
-of "00 02". This causes us to attempt to access 516 bytes (page length
-+ header) of information despite only 2 pages being present.
+As a reference, when using iproute tools by netlink to delete routes with
+a metric parameter equals 0, like the command as follows:
 
-Limit the page search scope to the size of our VPD buffer to guard
-against devices returning a larger page count than requested.
+	ip -6 route del fe80::/64 via fe81::5054:ff:fe11:3451 dev eth0 metric 0
 
-Link: https://lore.kernel.org/r/20240521023040.2703884-1-martin.petersen@oracle.com
-Fixes: b5fc07a5fb56 ("scsi: core: Consult supported VPD page list prior to fetching page")
-Cc: stable@vger.kernel.org
-Reported-by: Peter Schneider <pschneider1968@googlemail.com>
-Closes: https://lore.kernel.org/all/eec6ebbf-061b-4a7b-96dc-ea748aa4d035@googlemail.com/
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+the user can still succeed in deleting the route entry with the smallest
+metric.
+
+Root Reason
+===========
+After commit 67f695134703 ("ipv6: Move setting default metric for routes"),
+When ioctl() pass in SIOCDELRT with a zero metric, rtmsg_to_fib6_config()
+will set a defalut value (1024) to cfg->fc_metric in kernel, and in
+ip6_route_del() and the line 4074 at net/ipv3/route.c, it will check by
+
+	if (cfg->fc_metric && cfg->fc_metric != rt->fib6_metric)
+		continue;
+
+and the condition is true and skip the later procedure (deleting route)
+because cfg->fc_metric != rt->fib6_metric. But before that commit,
+cfg->fc_metric is still zero there, so the condition is false and it
+will do the following procedure (deleting).
+
+Solution
+========
+In order to keep a consistent behaviour across netlink() and ioctl(), we
+should allow to delete a route with a metric value of 0. So we only do
+the default setting of fc_metric in route adding.
+
+CC: stable@vger.kernel.org # 5.4+
+Fixes: 67f695134703 ("ipv6: Move setting default metric for routes")
+Co-developed-by: Fan Yu <fan.yu9@zte.com.cn>
+Signed-off-by: Fan Yu <fan.yu9@zte.com.cn>
+Signed-off-by: xu xin <xu.xin16@zte.com.cn>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240514201102055dD2Ba45qKbLlUMxu_DTHP@zte.com.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/ipv6/route.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/scsi.c
-+++ b/drivers/scsi/scsi.c
-@@ -350,6 +350,13 @@ static int scsi_get_vpd_size(struct scsi
- 		if (result < SCSI_VPD_HEADER_SIZE)
- 			return 0;
- 
-+		if (result > sizeof(vpd)) {
-+			dev_warn_once(&sdev->sdev_gendev,
-+				      "%s: long VPD page 0 length: %d bytes\n",
-+				      __func__, result);
-+			result = sizeof(vpd);
-+		}
-+
- 		result -= SCSI_VPD_HEADER_SIZE;
- 		if (!memchr(&vpd[SCSI_VPD_HEADER_SIZE], page, result))
- 			return 0;
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -4434,7 +4434,7 @@ static void rtmsg_to_fib6_config(struct
+ 		.fc_table = l3mdev_fib_table_by_index(net, rtmsg->rtmsg_ifindex) ?
+ 			 : RT6_TABLE_MAIN,
+ 		.fc_ifindex = rtmsg->rtmsg_ifindex,
+-		.fc_metric = rtmsg->rtmsg_metric ? : IP6_RT_PRIO_USER,
++		.fc_metric = rtmsg->rtmsg_metric,
+ 		.fc_expires = rtmsg->rtmsg_info,
+ 		.fc_dst_len = rtmsg->rtmsg_dst_len,
+ 		.fc_src_len = rtmsg->rtmsg_src_len,
+@@ -4464,6 +4464,9 @@ int ipv6_route_ioctl(struct net *net, un
+ 	rtnl_lock();
+ 	switch (cmd) {
+ 	case SIOCADDRT:
++		/* Only do the default setting of fc_metric in route adding */
++		if (cfg.fc_metric == 0)
++			cfg.fc_metric = IP6_RT_PRIO_USER;
+ 		err = ip6_route_add(&cfg, GFP_KERNEL, NULL);
+ 		break;
+ 	case SIOCDELRT:
 
 
