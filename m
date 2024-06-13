@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADB317FD;
-	Thu, 13 Jun 2024 12:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5BC17FD;
+	Thu, 13 Jun 2024 12:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282714; cv=none; b=XNER4MCX57iVP2zxxLmW8c55smDlSKxm7TKbFOkX5jTjK3lP09V9+5IEWH3FLQA+fRrQ+f5CVjNH3H/IzYE0IXXs9dJ+U8p7xPtSTC0xcB2F2ATkW5gImSHbW7Y1ksKoHuGqgmGKSQ4k3Lb2qy9KLP5/iB6pqzXhD8PFDLYsjXM=
+	t=1718282716; cv=none; b=upQKs3dMEdGQOdhm35IbWVE/iUQdKjukAGfqgkb6TZStwUFAIOkpDC0YOJS5UefedsexsZOoCjgq5LfKix/uBu9jIsBTOWk3C6cfERNf1GiCJpB9pQrFkrvq8WlyDjLsVc939DPsIfPDRZWIpzBErxwfgzDAx+95fjeSKC4HzmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282714; c=relaxed/simple;
-	bh=lkNfRMhq9HYu6U8OIU2ji6NYsVg1z+EQCcPNLJV87cU=;
+	s=arc-20240116; t=1718282716; c=relaxed/simple;
+	bh=DXHTB8tj2MqZgW7QRWOWtG0HsduzSX7dIdo6cfqrfwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rzauB6ht+1B6Pne86YtyIzoOKWxbrpJ5wse02PrcLxXPGaGRbInoOmNz7qjNXbm/+YWGtuMWYv9GB1wJnnwNykSU1rCJ73nxl1Nw8DQwCxxC+QUDf7q85MyldU/tS2C1FW1XXjZt6EigboxY5/ou32/8r6aq/ffMxnukuE1nbJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dREiFUYW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=syRA7LcoRe99Zovi/VXyFpK2ocb1fCBrwlRnNbs8P3oTwnm/x9vXV9YZ2OAfsU1xUX92XeUFH193bQqksEPmDYRkpUDYEUR70HLnJ6Pp9liTN5adaNnYdOX5SG6qx7M+GAAGqOjYTW29Q4eI/gzcAXSujXEfG0/rPdymhCmNUtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJ2wXVld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dREiFUYW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6EFC2BBFC;
-	Thu, 13 Jun 2024 12:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJ2wXVld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539F7C2BBFC;
+	Thu, 13 Jun 2024 12:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282713;
-	bh=lkNfRMhq9HYu6U8OIU2ji6NYsVg1z+EQCcPNLJV87cU=;
+	s=korg; t=1718282716;
+	bh=DXHTB8tj2MqZgW7QRWOWtG0HsduzSX7dIdo6cfqrfwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dREiFUYWsCRxbI+QWOp7NT0ttZD/8NJw84uIip+42bC9eqVltyM4x/HNxdMkJnis1
-	 zKUJfbt7M80nKcCIpjDuWjAohMBRS3EK50tirajfwQqhsrx6IH/GkqGzzktC6M60o3
-	 ulugRzAtBNsByRq6rMIh9762Ej5CzFCdXZWnYMwM=
+	b=gJ2wXVldzT7aer5Z1mYnKx5+rBo9H0Jd5biW3fg5jkQg6B3aBPiqYYZMJlU2WvGMP
+	 ar+pPLPf5kAb9dpnW3xW68fSBB4dQgcop8O199JpEAWNWL6G5emmVT4OwwBx1o1jqE
+	 Jgc1bk44BTxopJizXkS7Fucj/mylEt3tTd5J3U4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 370/402] mmc: core: Add mmc_gpiod_set_cd_config() function
-Date: Thu, 13 Jun 2024 13:35:27 +0200
-Message-ID: <20240613113316.569733119@linuxfoundation.org>
+Subject: [PATCH 5.15 371/402] mmc: sdhci-acpi: Sort DMI quirks alphabetically
+Date: Thu, 13 Jun 2024 13:35:28 +0200
+Message-ID: <20240613113316.608714434@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,69 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-commit 63a7cd660246aa36af263b85c33ecc6601bf04be upstream.
+commit a92a73b1d9249d155412d8ac237142fa716803ea upstream.
 
-Some mmc host drivers may need to fixup a card-detection GPIO's config
-to e.g. enable the GPIO controllers builtin pull-up resistor on devices
-where the firmware description of the GPIO is broken (e.g. GpioInt with
-PullNone instead of PullUp in ACPI DSDT).
-
-Since this is the exception rather then the rule adding a config
-parameter to mmc_gpiod_request_cd() seems undesirable, so instead
-add a new mmc_gpiod_set_cd_config() function. This is simply a wrapper
-to call gpiod_set_config() on the card-detect GPIO acquired through
-mmc_gpiod_request_cd().
+Sort the DMI quirks alphabetically.
 
 Reviewed-by: Andy Shevchenko <andy@kernel.org>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240410191639.526324-2-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20240410191639.526324-4-hdegoede@redhat.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/slot-gpio.c  |   20 ++++++++++++++++++++
- include/linux/mmc/slot-gpio.h |    1 +
- 2 files changed, 21 insertions(+)
+ drivers/mmc/host/sdhci-acpi.c |   25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
---- a/drivers/mmc/core/slot-gpio.c
-+++ b/drivers/mmc/core/slot-gpio.c
-@@ -202,6 +202,26 @@ int mmc_gpiod_request_cd(struct mmc_host
- }
- EXPORT_SYMBOL(mmc_gpiod_request_cd);
+--- a/drivers/mmc/host/sdhci-acpi.c
++++ b/drivers/mmc/host/sdhci-acpi.c
+@@ -795,9 +795,22 @@ static const struct acpi_device_id sdhci
+ };
+ MODULE_DEVICE_TABLE(acpi, sdhci_acpi_ids);
  
-+/**
-+ * mmc_gpiod_set_cd_config - set config for card-detection GPIO
-+ * @host: mmc host
-+ * @config: Generic pinconf config (from pinconf_to_config_packed())
-+ *
-+ * This can be used by mmc host drivers to fixup a card-detection GPIO's config
-+ * (e.g. set PIN_CONFIG_BIAS_PULL_UP) after acquiring the GPIO descriptor
-+ * through mmc_gpiod_request_cd().
-+ *
-+ * Returns:
-+ * 0 on success, or a negative errno value on error.
-+ */
-+int mmc_gpiod_set_cd_config(struct mmc_host *host, unsigned long config)
-+{
-+	struct mmc_gpio *ctx = host->slot.handler_priv;
-+
-+	return gpiod_set_config(ctx->cd_gpio, config);
-+}
-+EXPORT_SYMBOL(mmc_gpiod_set_cd_config);
-+
- bool mmc_can_gpio_cd(struct mmc_host *host)
- {
- 	struct mmc_gpio *ctx = host->slot.handler_priv;
---- a/include/linux/mmc/slot-gpio.h
-+++ b/include/linux/mmc/slot-gpio.h
-@@ -20,6 +20,7 @@ int mmc_gpiod_request_cd(struct mmc_host
- 			 unsigned int debounce);
- int mmc_gpiod_request_ro(struct mmc_host *host, const char *con_id,
- 			 unsigned int idx, unsigned int debounce);
-+int mmc_gpiod_set_cd_config(struct mmc_host *host, unsigned long config);
- void mmc_gpio_set_cd_isr(struct mmc_host *host,
- 			 irqreturn_t (*isr)(int irq, void *dev_id));
- int mmc_gpio_set_cd_wake(struct mmc_host *host, bool on);
++/* Please keep this list sorted alphabetically */
+ static const struct dmi_system_id sdhci_acpi_quirks[] = {
+ 	{
+ 		/*
++		 * The Acer Aspire Switch 10 (SW5-012) microSD slot always
++		 * reports the card being write-protected even though microSD
++		 * cards do not have a write-protect switch at all.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire SW5-012"),
++		},
++		.driver_data = (void *)DMI_QUIRK_SD_NO_WRITE_PROTECT,
++	},
++	{
++		/*
+ 		 * The Lenovo Miix 320-10ICR has a bug in the _PS0 method of
+ 		 * the SHC1 ACPI device, this bug causes it to reprogram the
+ 		 * wrong LDO (DLDO3) to 1.8V if 1.8V modes are used and the
+@@ -812,18 +825,6 @@ static const struct dmi_system_id sdhci_
+ 	},
+ 	{
+ 		/*
+-		 * The Acer Aspire Switch 10 (SW5-012) microSD slot always
+-		 * reports the card being write-protected even though microSD
+-		 * cards do not have a write-protect switch at all.
+-		 */
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire SW5-012"),
+-		},
+-		.driver_data = (void *)DMI_QUIRK_SD_NO_WRITE_PROTECT,
+-	},
+-	{
+-		/*
+ 		 * The Toshiba WT8-B's microSD slot always reports the card being
+ 		 * write-protected.
+ 		 */
 
 
