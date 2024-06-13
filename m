@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5980143C46;
-	Thu, 13 Jun 2024 11:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0511013541B;
+	Thu, 13 Jun 2024 11:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279413; cv=none; b=Hd0J4EGb4uSE9u60bMUdb0bMl0QxnVEUulVQzjrS6AxnnzeiNHIrZukfHifNbD9AAQKkgS+Tp2EYYYbCaACiU4NWDQYaI7AmpkFLdscwWkhCbmWSd9+LsUOCKMoAfDceemMLOTveHaGL2XoD6ydpac0G8KF6oT4YvnEgQ574NHI=
+	t=1718279417; cv=none; b=hRNLuPnUGM+2dyowFZ2GJfpFtZrRewQGDUyqJC8qsFczRc0ZQKhoLFZNfRnab6YI8SkKbjPB+TyR2vp0x5BDbJ1I4vpA4kXvDraq4iYx/eIxI+OHLxvbEi77ulYHqR6XxEXTD/j2BOMc86wmUbUIsPSb3UwcrLh7I3aR9Fci4qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279413; c=relaxed/simple;
-	bh=ubVzlbsdahbfBqyAfiYs3n7uViBlhjqSJLwK6KUDj9w=;
+	s=arc-20240116; t=1718279417; c=relaxed/simple;
+	bh=akAZggdBYlZ3/8ZXDSqLwWI6wwfkxm12hG3KuxEtyC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVs3UJcqoYv+awyRixNpiveyUSE0kVs1vElZ7hQG52iTtW231JIymuv77RlbzS0iy2b6Slhu+15jspfYgGIkTphNzS3LWpA6IRf0EFtx1R61MQhL64vvQNTnL7ghIltIGAhc2yDJEL9Ll7YmbxlM87S1Rc9ZY+UqfnRJxlNQVPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3zUqLP2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IIlnouv6ddgpbSiSHM0ufCHZTGUAhgzY/jr5vA/UMj8LRfuUKci7olt7qXUghZCoyQQGAsV39MUyfIgXIb8AChHGDgproq90ca9z0t0pqaNgNAwWZrB1HmM8mZaRCJ66weinJWuzMyaNrypAGi5RP5gu711iW43EZSm11/6rTGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cj9/wEsD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3zUqLP2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E49DC2BBFC;
-	Thu, 13 Jun 2024 11:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cj9/wEsD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30617C2BBFC;
+	Thu, 13 Jun 2024 11:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279413;
-	bh=ubVzlbsdahbfBqyAfiYs3n7uViBlhjqSJLwK6KUDj9w=;
+	s=korg; t=1718279416;
+	bh=akAZggdBYlZ3/8ZXDSqLwWI6wwfkxm12hG3KuxEtyC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3zUqLP2KVpkAbZCoGlFD4Ep8UiStBLvkknRhOPviM4NY/conmjw2XxnPFctVJtAA
-	 Jwhhs+X4BX0QvTGQFMthMdL8kkDur9jeTwmgER5IXhyH0739jTA1dGggX8kvCINn33
-	 Pirj12LYm90Z6SJNX/N7JvZI2wAjSns4CHXwpELg=
+	b=cj9/wEsDLXYZMms5LAhARGy8nGGa07jRqYrk7ievFMSAWWb9uu7km6szwf9fcet9D
+	 qXwJN/SDk5yY0L9Z7PJ2kHdh9c/fjBhxScnACz6d9lcHZMXurITuOz2k+Nk5X/EPSj
+	 zNEH7HKY5GggnOK8UbboMCT9yVpNnlT/QJEiXbnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.9 068/157] clk: qcom: apss-ipq-pll: use stromer ops for IPQ5018 to fix boot failure
-Date: Thu, 13 Jun 2024 13:33:13 +0200
-Message-ID: <20240613113230.053641198@linuxfoundation.org>
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Vitaly Chikunov <vt@altlinux.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.9 069/157] crypto: ecdsa - Fix module auto-load on add-key
+Date: Thu, 13 Jun 2024 13:33:14 +0200
+Message-ID: <20240613113230.092947142@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -51,94 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-commit 5fce38e2a1a97900989d9fedebcf5a4dacdaee30 upstream.
+commit 48e4fd6d54f54d0ceab5a952d73e47a9454a6ccb upstream.
 
-Booting v6.8 results in a hang on various IPQ5018 based boards.
-Investigating the problem showed that the hang happens when the
-clk_alpha_pll_stromer_plus_set_rate() function tries to write
-into the PLL_MODE register of the APSS PLL.
+Add module alias with the algorithm cra_name similar to what we have for
+RSA-related and other algorithms.
 
-Checking the downstream code revealed that it uses [1] stromer
-specific operations for IPQ5018, whereas in the current code
-the stromer plus specific operations are used.
+The kernel attempts to modprobe asymmetric algorithms using the names
+"crypto-$cra_name" and "crypto-$cra_name-all." However, since these
+aliases are currently missing, the modules are not loaded. For instance,
+when using the `add_key` function, the hash algorithm is typically
+loaded automatically, but the asymmetric algorithm is not.
 
-The ops in the 'ipq_pll_stromer_plus' clock definition can't be
-changed since that is needed for IPQ5332, so add a new alpha pll
-clock declaration which uses the correct stromer ops and use this
-new clock for IPQ5018 to avoid the boot failure.
+Steps to test:
 
-Also, change pll_type in 'ipq5018_pll_data' to
-CLK_ALPHA_PLL_TYPE_STROMER to better reflect that it is a Stromer
-PLL and change the apss_ipq_pll_probe() function accordingly.
+1. Create certificate
 
-1. https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4/drivers/clk/qcom/apss-ipq5018.c#L67
+  openssl req -x509 -sha256 -newkey ec \
+  -pkeyopt "ec_paramgen_curve:secp384r1" -keyout key.pem -days 365 \
+  -subj '/CN=test' -nodes -outform der -out nist-p384.der
 
+2. Optionally, trace module requests with: trace-cmd stream -e module &
+
+3. Trigger add_key call for the cert:
+
+   # keyctl padd asymmetric "" @u < nist-p384.der
+   641069229
+   # lsmod | head -2
+   Module                  Size  Used by
+   ecdsa_generic          16384  0
+
+Fixes: c12d448ba939 ("crypto: ecdsa - Register NIST P384 and extend test suite")
 Cc: stable@vger.kernel.org
-Fixes: 50492f929486 ("clk: qcom: apss-ipq-pll: add support for IPQ5018")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Link: https://lore.kernel.org/r/20240315-apss-ipq-pll-ipq5018-hang-v2-1-6fe30ada2009@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Vitaly Chikunov <vt@altlinux.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/apss-ipq-pll.c |   30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ crypto/ecdsa.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/clk/qcom/apss-ipq-pll.c
-+++ b/drivers/clk/qcom/apss-ipq-pll.c
-@@ -55,6 +55,29 @@ static struct clk_alpha_pll ipq_pll_huay
- 	},
- };
- 
-+static struct clk_alpha_pll ipq_pll_stromer = {
-+	.offset = 0x0,
-+	/*
-+	 * Reuse CLK_ALPHA_PLL_TYPE_STROMER_PLUS register offsets.
-+	 * Although this is a bit confusing, but the offset values
-+	 * are correct nevertheless.
-+	 */
-+	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
-+	.flags = SUPPORTS_DYNAMIC_UPDATE,
-+	.clkr = {
-+		.enable_reg = 0x0,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "a53pll",
-+			.parent_data = &(const struct clk_parent_data) {
-+				.fw_name = "xo",
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_alpha_pll_stromer_ops,
-+		},
-+	},
-+};
-+
- static struct clk_alpha_pll ipq_pll_stromer_plus = {
- 	.offset = 0x0,
- 	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
-@@ -145,8 +168,8 @@ struct apss_pll_data {
- };
- 
- static const struct apss_pll_data ipq5018_pll_data = {
--	.pll_type = CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
--	.pll = &ipq_pll_stromer_plus,
-+	.pll_type = CLK_ALPHA_PLL_TYPE_STROMER,
-+	.pll = &ipq_pll_stromer,
- 	.pll_config = &ipq5018_pll_config,
- };
- 
-@@ -204,7 +227,8 @@ static int apss_ipq_pll_probe(struct pla
- 
- 	if (data->pll_type == CLK_ALPHA_PLL_TYPE_HUAYRA)
- 		clk_alpha_pll_configure(data->pll, regmap, data->pll_config);
--	else if (data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER_PLUS)
-+	else if (data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER ||
-+		 data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER_PLUS)
- 		clk_stromer_pll_configure(data->pll, regmap, data->pll_config);
- 
- 	ret = devm_clk_register_regmap(dev, &data->pll->clkr);
+--- a/crypto/ecdsa.c
++++ b/crypto/ecdsa.c
+@@ -373,4 +373,7 @@ module_exit(ecdsa_exit);
+ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Stefan Berger <stefanb@linux.ibm.com>");
+ MODULE_DESCRIPTION("ECDSA generic algorithm");
++MODULE_ALIAS_CRYPTO("ecdsa-nist-p192");
++MODULE_ALIAS_CRYPTO("ecdsa-nist-p256");
++MODULE_ALIAS_CRYPTO("ecdsa-nist-p384");
+ MODULE_ALIAS_CRYPTO("ecdsa-generic");
 
 
