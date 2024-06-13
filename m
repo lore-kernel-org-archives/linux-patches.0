@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3546856458;
-	Thu, 13 Jun 2024 11:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B641442EA;
+	Thu, 13 Jun 2024 11:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279178; cv=none; b=osFUU6m8Dmedy0HR1riPo6k1X3IYyEteeHZGPj9USJiBTgQGHB8P4wvumWFCKt/kkzmPi0fHasYDkaln35efVZi6Gw++KpQ7Q1GO//onIO54MhOqVfXfQSxxF5WkasBZmumhUd7/X9KnbaKqe0uHhpvCvxOINzERMTzmmgR8A+U=
+	t=1718279181; cv=none; b=EDKFbfmu6Vj2fVGYi6dDEsgwBc22EwMApF8V8VA/SbL3IUbi+WcU2O6nhdDOMJP03q8QirEyfq+9plEuc4V2d/81BOsAiUiHScngOfTFlkvVCEzC4CBIHXTEo3UTRpdKFuN5TtVpjdFl1rmo928uvo14L8Zp7Wm8sWneYPo0ckE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279178; c=relaxed/simple;
-	bh=Tdi5dlcacdFG70i/iQ9VRa3tlOBRInvufdv/22nvW7o=;
+	s=arc-20240116; t=1718279181; c=relaxed/simple;
+	bh=JN4sETWbtypg/gAXLUtrEZMzH5GnjxiU0cPStC7Q2Uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXcg8gRHJszIKXjg6UBkX63eaSg2ku5QRqOhULm/gbuy7/3i3mwnJFL+c2ObIj9oPiGlfW7L73ZIXIKjpDHZflhvpqxRLVrxSrwmdZkJ37ece1PBgr3RTA5Ksq3/QtrWiuMka1qn9f9VUiIlGhBvEtJ9ThRvA2fr3qsOhNvPwyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7fLFBxQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j55FGFSoWov8v8oS1vjilHUi6CE5/t8SUVTQPCIfvgmLMB0rhOg43z96Yde28Fzd0SFXE6rXqVCwLwlrTNdVziAbNoz9jWA7/rnJjnbSvoz1CefdOJucZPNyYgnJ4zdr824C3uz+zw/L89cnJvBtYCqA02hLxm/VPIFFchiqR8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARzCGIaz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7fLFBxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A79C2BBFC;
-	Thu, 13 Jun 2024 11:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARzCGIaz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE49C4AF1A;
+	Thu, 13 Jun 2024 11:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279177;
-	bh=Tdi5dlcacdFG70i/iQ9VRa3tlOBRInvufdv/22nvW7o=;
+	s=korg; t=1718279180;
+	bh=JN4sETWbtypg/gAXLUtrEZMzH5GnjxiU0cPStC7Q2Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a7fLFBxQa32SgWO/qDVB1ReMfW+KfaCo9WMyuqpVl5SYvJ9eZLfi+wCrwr1DBVxx9
-	 soFe6GxHh050wskLhIVKUgOuBhR05jMb5qC2rIz+zLsA1jnYxOd/7+wZ5MuB6jOx9g
-	 bPbtudpca3VWt5X6J2syOtE8kPkK6wtclMOqRXGY=
+	b=ARzCGIazKhcFY8T6v7ywE7hOyeb0ZJgU+QNRE4g3qam1uQri5xtd3J0T7hjI7Rcoz
+	 FlCsdPCTCI/z42E30ITivy/dM81pggqW5x+pii1s2lg9WkgZPTxnlw+U6ngDo+DQSY
+	 nDQyjvlR491U4jgBDn7dGwK+k1Bv3VO7J4rkTpz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	syzbot+ff14db38f56329ef68df@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 201/213] net/9p: fix uninit-value in p9_client_rpc()
-Date: Thu, 13 Jun 2024 13:34:09 +0200
-Message-ID: <20240613113235.732959078@linuxfoundation.org>
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	stable@kernel.org
+Subject: [PATCH 4.19 202/213] intel_th: pci: Add Meteor Lake-S CPU support
+Date: Thu, 13 Jun 2024 13:34:10 +0200
+Message-ID: <20240613113235.770602882@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,90 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 
-commit 25460d6f39024cc3b8241b14c7ccf0d6f11a736a upstream.
+commit a4f813c3ec9d1c32bc402becd1f011b3904dd699 upstream.
 
-Syzbot with the help of KMSAN reported the following error:
+Add support for the Trace Hub in Meteor Lake-S CPU.
 
-BUG: KMSAN: uninit-value in trace_9p_client_res include/trace/events/9p.h:146 [inline]
-BUG: KMSAN: uninit-value in p9_client_rpc+0x1314/0x1340 net/9p/client.c:754
- trace_9p_client_res include/trace/events/9p.h:146 [inline]
- p9_client_rpc+0x1314/0x1340 net/9p/client.c:754
- p9_client_create+0x1551/0x1ff0 net/9p/client.c:1031
- v9fs_session_init+0x1b9/0x28e0 fs/9p/v9fs.c:410
- v9fs_mount+0xe2/0x12b0 fs/9p/vfs_super.c:122
- legacy_get_tree+0x114/0x290 fs/fs_context.c:662
- vfs_get_tree+0xa7/0x570 fs/super.c:1797
- do_new_mount+0x71f/0x15e0 fs/namespace.c:3352
- path_mount+0x742/0x1f20 fs/namespace.c:3679
- do_mount fs/namespace.c:3692 [inline]
- __do_sys_mount fs/namespace.c:3898 [inline]
- __se_sys_mount+0x725/0x810 fs/namespace.c:3875
- __x64_sys_mount+0xe4/0x150 fs/namespace.c:3875
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-Uninit was created at:
- __alloc_pages+0x9d6/0xe70 mm/page_alloc.c:4598
- __alloc_pages_node include/linux/gfp.h:238 [inline]
- alloc_pages_node include/linux/gfp.h:261 [inline]
- alloc_slab_page mm/slub.c:2175 [inline]
- allocate_slab mm/slub.c:2338 [inline]
- new_slab+0x2de/0x1400 mm/slub.c:2391
- ___slab_alloc+0x1184/0x33d0 mm/slub.c:3525
- __slab_alloc mm/slub.c:3610 [inline]
- __slab_alloc_node mm/slub.c:3663 [inline]
- slab_alloc_node mm/slub.c:3835 [inline]
- kmem_cache_alloc+0x6d3/0xbe0 mm/slub.c:3852
- p9_tag_alloc net/9p/client.c:278 [inline]
- p9_client_prepare_req+0x20a/0x1770 net/9p/client.c:641
- p9_client_rpc+0x27e/0x1340 net/9p/client.c:688
- p9_client_create+0x1551/0x1ff0 net/9p/client.c:1031
- v9fs_session_init+0x1b9/0x28e0 fs/9p/v9fs.c:410
- v9fs_mount+0xe2/0x12b0 fs/9p/vfs_super.c:122
- legacy_get_tree+0x114/0x290 fs/fs_context.c:662
- vfs_get_tree+0xa7/0x570 fs/super.c:1797
- do_new_mount+0x71f/0x15e0 fs/namespace.c:3352
- path_mount+0x742/0x1f20 fs/namespace.c:3679
- do_mount fs/namespace.c:3692 [inline]
- __do_sys_mount fs/namespace.c:3898 [inline]
- __se_sys_mount+0x725/0x810 fs/namespace.c:3875
- __x64_sys_mount+0xe4/0x150 fs/namespace.c:3875
- do_syscall_64+0xd5/0x1f0
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-
-If p9_check_errors() fails early in p9_client_rpc(), req->rc.tag
-will not be properly initialized. However, trace_9p_client_res()
-ends up trying to print it out anyway before p9_client_rpc()
-finishes.
-
-Fix this issue by assigning default values to p9_fcall fields
-such as 'tag' and (just in case KMSAN unearths something new) 'id'
-during the tag allocation stage.
-
-Reported-and-tested-by: syzbot+ff14db38f56329ef68df@syzkaller.appspotmail.com
-Fixes: 348b59012e5c ("net/9p: Convert net/9p protocol dumps to tracepoints")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Cc: stable@vger.kernel.org
-Message-ID: <20240408141039.30428-1-n.zhandarovich@fintech.ru>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20240429130119.1518073-15-alexander.shishkin@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/client.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwtracing/intel_th/pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -250,6 +250,8 @@ static int p9_fcall_init(struct p9_clien
- 	if (!fc->sdata)
- 		return -ENOMEM;
- 	fc->capacity = alloc_msize;
-+	fc->id = 0;
-+	fc->tag = P9_NOTAG;
- 	return 0;
- }
- 
+--- a/drivers/hwtracing/intel_th/pci.c
++++ b/drivers/hwtracing/intel_th/pci.c
+@@ -251,6 +251,11 @@ static const struct pci_device_id intel_
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+ 	},
+ 	{
++		/* Meteor Lake-S CPU */
++		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0xae24),
++		.driver_data = (kernel_ulong_t)&intel_th_2x,
++	},
++	{
+ 		/* Raptor Lake-S */
+ 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x7a26),
+ 		.driver_data = (kernel_ulong_t)&intel_th_2x,
 
 
