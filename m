@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCC5145A05;
-	Thu, 13 Jun 2024 11:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD681448CD;
+	Thu, 13 Jun 2024 11:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279305; cv=none; b=h8y9aFQ2kwueqk0RhnEw3xeEVJ3VnbkfPb6Hzutf2kSuJWPQ2yt6OZfia0eRTRJr3HcrufsCJzdVdStCQBtD2fLdHmsfA8BrFihzL2mHxegPOX4ho569PjA0nnr8amwT8YYo20M/cF5yEDJK+Pwa1wneaynn+Va9yKI622FGrTI=
+	t=1718279308; cv=none; b=JCajwg4FguazmA4A4TN0WVTNQhJkWnM4hiu11yw8LwYrQbzfGdlGU5gP003nK3Mv0FaXwQxZjFsBg0odMTwcIGb6P4QIolX7oTwftVBHMV1WuqC2/NoVpFMYVTky4/8JOaSe1qX8FaQWACnX4FHvXXXrcDkh07SWabuyIsUG9rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279305; c=relaxed/simple;
-	bh=/lNboxCC0oCfCmftXm28zRzTzKMPS8F6m+5yN7uS9hQ=;
+	s=arc-20240116; t=1718279308; c=relaxed/simple;
+	bh=lhFOPcgCLyKR4PC08gHnfV1tfrlIThcFcN1tCE4tdaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lasGB2pSQsyS2hUI244r2CDuACfm+/11cfX3xewMyv56DOxrZ8cd2AKW4mOMQXPMjJin8eu9k5ld6755Gwx5grWjGGMpjGHyh0RFZfybvhrg+JXIrUUh1YaJovI+EA3QJFhy4qADg13lFGjWAVss0SH9/6+drwa3jrKrr5r637A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpgRRKtk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C0e6AcYq1+690jd87hwGHCIu3UqYsZRQ0UnE3SUm5shPd5fXl4aBS6DD9IRy0MYk643sKfLmsUAuF19FT+AEKEHigaqHtJ+zRofxz4HQYkQIqIAyB13pK1Ym7xi13I201Ps0zIz/r68xtzCGDECZyFFqU3N24mOCNrX2y/I4wzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1EFKE8/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpgRRKtk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58114C2BBFC;
-	Thu, 13 Jun 2024 11:48:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1EFKE8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3933EC32786;
+	Thu, 13 Jun 2024 11:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279304;
-	bh=/lNboxCC0oCfCmftXm28zRzTzKMPS8F6m+5yN7uS9hQ=;
+	s=korg; t=1718279307;
+	bh=lhFOPcgCLyKR4PC08gHnfV1tfrlIThcFcN1tCE4tdaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TpgRRKtk9VL8igSIh6J7GwxZC4eCLDHkidV5x5xovL4qVfjaEe/iGBnYQ6aoWP2uw
-	 cxIu4SGCUlpmBAEfMcuzEjNb5JOBGTKpRg1cFbtVQd7DknuKV+0nBg6v/ndCtpwHmR
-	 o/ydIU8zwJ2+t99t696n3gYdGIG24k7QBI2AZmJw=
+	b=o1EFKE8/tsi1yB3HJesOIPqJsttcFC92Ck/e5ddFeRTL949PUpFI84EPIXUURew0O
+	 tvdba3lzvueXy9eVfpk4UnFW5qx/uOXr/RMe8Yv17DqwJNMhKOhuI3ivJ6I2FrvEk0
+	 sX5bML0ukk1QMUAQYONoDFFT9XKHMscQBzvJRVGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.9 023/157] arm64: dts: qcom: qcs404: fix bluetooth device address
-Date: Thu, 13 Jun 2024 13:32:28 +0200
-Message-ID: <20240613113228.306836804@linuxfoundation.org>
+	Yang Xiwen <forbidden405@outlook.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.9 032/157] arm64: dts: hi3798cv200: fix the size of GICR
+Date: Thu, 13 Jun 2024 13:32:37 +0200
+Message-ID: <20240613113228.661011966@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -51,37 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Yang Xiwen <forbidden405@outlook.com>
 
-commit f5f390a77f18eaeb2c93211a1b7c5e66b5acd423 upstream.
+commit 428a575dc9038846ad259466d5ba109858c0a023 upstream.
 
-The 'local-bd-address' property is used to pass a unique Bluetooth
-device address from the boot firmware to the kernel and should otherwise
-be left unset so that the OS can prevent the controller from being used
-until a valid address has been provided through some other means (e.g.
-using btmgmt).
+During boot, Linux kernel complains:
 
-Fixes: 60f77ae7d1c1 ("arm64: dts: qcom: qcs404-evb: Enable uart3 and add Bluetooth")
-Cc: stable@vger.kernel.org	# 5.10
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20240501075201.4732-1-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+[    0.000000] GIC: GICv2 detected, but range too small and irqchip.gicv2_force_probe not set
+
+This SoC is using a regular GIC-400 and the GICR space size should be
+8KB rather than 256B.
+
+With this patch:
+
+[    0.000000] GIC: Using split EOI/Deactivate mode
+
+So this should be the correct fix.
+
+Fixes: 2f20182ed670 ("arm64: dts: hisilicon: add dts files for hi3798cv200-poplar board")
+Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240219-cache-v3-1-a33c57534ae9@outlook.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi |    2 +-
+ arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-@@ -62,7 +62,7 @@
- 		vddrf-supply = <&vreg_l1_1p3>;
- 		vddch0-supply = <&vdd_ch0_3p3>;
- 
--		local-bd-address = [ 02 00 00 00 5a ad ];
-+		local-bd-address = [ 00 00 00 00 00 00 ];
- 
- 		max-speed = <3200000>;
- 	};
+--- a/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
++++ b/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
+@@ -58,7 +58,7 @@
+ 	gic: interrupt-controller@f1001000 {
+ 		compatible = "arm,gic-400";
+ 		reg = <0x0 0xf1001000 0x0 0x1000>,  /* GICD */
+-		      <0x0 0xf1002000 0x0 0x100>;   /* GICC */
++		      <0x0 0xf1002000 0x0 0x2000>;  /* GICC */
+ 		#address-cells = <0>;
+ 		#interrupt-cells = <3>;
+ 		interrupt-controller;
 
 
