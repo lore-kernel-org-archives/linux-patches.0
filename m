@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C736399;
-	Thu, 13 Jun 2024 12:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237971EEE0;
+	Thu, 13 Jun 2024 12:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282313; cv=none; b=oP/6QX71jkOJZbqL0iMD9mHtM84lQHF1mQvIG7B/5e/RldnhDmzIbliK9sMeKem4GVpyoSh8S3tSiTc1WO9lDMZ+3nNnZv7LOOZgEdHsG0M4/De1CZZNrYOSnthHNglSHE6oP8tb+5fC4SvXjMXpecP1fLEfKRJb8Lp+h9tT+UM=
+	t=1718282316; cv=none; b=Uc4kE869UDKoKFijmQCDBu7501LyPAqX9ifptiDMzU46GGeAjoDAjLqjN1B4JVvIB6q2kWiV7I35eLNxlmpKNT2GE/8P+ABCAmPP94B/ZqfQtZqz1Y4MqDxmoAhjusu0cwTWU4H2FnDs1qd4NicmPCU0WslBCntxU4aBbZt0RsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282313; c=relaxed/simple;
-	bh=Z+UkoeqddfnP7q6Wtf+ft1FjPO4nK+6NLSJuN2TaF+c=;
+	s=arc-20240116; t=1718282316; c=relaxed/simple;
+	bh=rQ8RNlV1B/cRHGh91WAHlUfDfBQcdDCGequ+3JE/sBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dQ3DNrkQc6B0SPAdrX5aE7IweP+5RiWoda4rPUodq/deOkwEdZN7BSQZdCbVgFpAB4HKL2V3SHS3EG0BXRfSeSvvAWFVzXOew7mzX40MTQJbs/MgUJ4/32GMILkUmVpxpOpz8yD/TZvwYEVXebFZAlAJ4q5mFu7jv1McYuPf1d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wbjzl1Pn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tLWl2tG872oq4TjMO/G2AvNPtdUiLVk+sk9L1bi+LCScj8+vkFPJWIK6cbfyZB0xIWcEcCH2Ktg8Y4bfw8hXGDSgFKhf0bgRVWsx/QQih/cqI7d3b/fM7PsJnkUykcqk/TWhQIlnqRZ7LAIB7QU/MV/2aPWzV7SWfvL+4nRXwvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HI19sVg9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wbjzl1Pn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77D3C2BBFC;
-	Thu, 13 Jun 2024 12:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HI19sVg9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDEBC2BBFC;
+	Thu, 13 Jun 2024 12:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282313;
-	bh=Z+UkoeqddfnP7q6Wtf+ft1FjPO4nK+6NLSJuN2TaF+c=;
+	s=korg; t=1718282316;
+	bh=rQ8RNlV1B/cRHGh91WAHlUfDfBQcdDCGequ+3JE/sBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wbjzl1PnkdmToPO1JSjLxxBP/moSp6o7lzmlErrCwPMN66lln4VyyGvf62gpEYOtK
-	 YWD36i0/FhniWASZNXPFlU9b/BzDrs5lBK1zP/8ekf3+9+nwWxaJIm4s6XYeCnquN5
-	 4Ag7wwIgGzDv3lsVHdca6lR0dbWjEQXvqdNY8pXI=
+	b=HI19sVg97ub0rf7B6WHNoG4erWo+sJYpzjeqOejuaKfMOFLrPD/E9COMocoAlGDjI
+	 1yPM0Y+hCIHtDTROeTdXfMhCNoCUYmHLAFTHsSI0DDdEOOFJJ8Ri/oiKCB2skNv5RH
+	 FtNaxN7RfEk/o/pQqmzcHwHdco34AYwKSZJIt794=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 217/402] watchdog: bd9576_wdt: switch to using devm_fwnode_gpiod_get()
-Date: Thu, 13 Jun 2024 13:32:54 +0200
-Message-ID: <20240613113310.613664524@linuxfoundation.org>
+Subject: [PATCH 5.15 235/402] serial: sh-sci: protect invalidating RXDMA on shutdown
+Date: Thu, 13 Jun 2024 13:33:12 +0200
+Message-ID: <20240613113311.311653487@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,125 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 4f719022a753bb15720c9ddeb0387a93caa372ce ]
+[ Upstream commit aae20f6e34cd0cbd67a1d0e5877561c40109a81b ]
 
-I would like to stop exporting OF-specific devm_gpiod_get_from_of_node()
-so that gpiolib can be cleaned a bit, so let's switch to the generic
-fwnode property API.
+The to-be-fixed commit removed locking when invalidating the DMA RX
+descriptors on shutdown. It overlooked that there is still a rx_timer
+running which may still access the protected data. So, re-add the
+locking.
 
-While at it, switch the rest of the calls to read properties in
-bd9576_wdt_probe() to the generic device property API as well.
-
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20220903-gpiod_get_from_of_node-remove-v1-10-b29adfb27a6c@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Stable-dep-of: e3b3afd34d84 ("watchdog: bd9576: Drop "always-running" property")
+Reported-by: Dirk Behme <dirk.behme@de.bosch.com>
+Closes: https://lore.kernel.org/r/ee6c9e16-9f29-450e-81da-4a8dceaa8fc7@de.bosch.com
+Fixes: 2c4ee23530ff ("serial: sh-sci: Postpone DMA release when falling back to PIO")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20240506114016.30498-7-wsa+renesas@sang-engineering.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/bd9576_wdt.c | 51 +++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 20 deletions(-)
+ drivers/tty/serial/sh-sci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/watchdog/bd9576_wdt.c b/drivers/watchdog/bd9576_wdt.c
-index 0b6999f3b6e83..4a20e07fbb699 100644
---- a/drivers/watchdog/bd9576_wdt.c
-+++ b/drivers/watchdog/bd9576_wdt.c
-@@ -9,8 +9,8 @@
- #include <linux/gpio/consumer.h>
- #include <linux/mfd/rohm-bd957x.h>
- #include <linux/module.h>
--#include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/regmap.h>
- #include <linux/watchdog.h>
- 
-@@ -202,10 +202,10 @@ static int bd957x_set_wdt_mode(struct bd9576_wdt_priv *priv, int hw_margin,
- static int bd9576_wdt_probe(struct platform_device *pdev)
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index 25318176091b2..6cd7bd7b6782d 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -1255,9 +1255,14 @@ static void sci_dma_rx_chan_invalidate(struct sci_port *s)
+ static void sci_dma_rx_release(struct sci_port *s)
  {
- 	struct device *dev = &pdev->dev;
--	struct device_node *np = dev->parent->of_node;
- 	struct bd9576_wdt_priv *priv;
- 	u32 hw_margin[2];
- 	u32 hw_margin_max = BD957X_WDT_DEFAULT_MARGIN, hw_margin_min = 0;
-+	int count;
- 	int ret;
+ 	struct dma_chan *chan = s->chan_rx_saved;
++	struct uart_port *port = &s->port;
++	unsigned long flags;
  
- 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-@@ -221,40 +221,51 @@ static int bd9576_wdt_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
- 
--	priv->gpiod_en = devm_gpiod_get_from_of_node(dev, dev->parent->of_node,
--						     "rohm,watchdog-enable-gpios",
--						     0, GPIOD_OUT_LOW,
--						     "watchdog-enable");
-+	priv->gpiod_en = devm_fwnode_gpiod_get(dev, dev_fwnode(dev->parent),
-+					       "rohm,watchdog-enable",
-+					       GPIOD_OUT_LOW,
-+					       "watchdog-enable");
- 	if (IS_ERR(priv->gpiod_en))
- 		return dev_err_probe(dev, PTR_ERR(priv->gpiod_en),
- 			      "getting watchdog-enable GPIO failed\n");
- 
--	priv->gpiod_ping = devm_gpiod_get_from_of_node(dev, dev->parent->of_node,
--						     "rohm,watchdog-ping-gpios",
--						     0, GPIOD_OUT_LOW,
--						     "watchdog-ping");
-+	priv->gpiod_ping = devm_fwnode_gpiod_get(dev, dev_fwnode(dev->parent),
-+						 "rohm,watchdog-ping",
-+						 GPIOD_OUT_LOW,
-+						 "watchdog-ping");
- 	if (IS_ERR(priv->gpiod_ping))
- 		return dev_err_probe(dev, PTR_ERR(priv->gpiod_ping),
- 				     "getting watchdog-ping GPIO failed\n");
- 
--	ret = of_property_read_variable_u32_array(np, "rohm,hw-timeout-ms",
--						  &hw_margin[0], 1, 2);
--	if (ret < 0 && ret != -EINVAL)
--		return ret;
-+	count = device_property_count_u32(dev->parent, "rohm,hw-timeout-ms");
-+	if (count < 0 && count != -EINVAL)
-+		return count;
++	uart_port_lock_irqsave(port, &flags);
+ 	s->chan_rx_saved = NULL;
+ 	sci_dma_rx_chan_invalidate(s);
++	uart_port_unlock_irqrestore(port, flags);
 +
-+	if (count > 0) {
-+		if (count > ARRAY_SIZE(hw_margin))
-+			return -EINVAL;
- 
--	if (ret == 1)
--		hw_margin_max = hw_margin[0];
-+		ret = device_property_read_u32_array(dev->parent,
-+						     "rohm,hw-timeout-ms",
-+						     hw_margin, count);
-+		if (ret < 0)
-+			return ret;
- 
--	if (ret == 2) {
--		hw_margin_max = hw_margin[1];
--		hw_margin_min = hw_margin[0];
-+		if (count == 1)
-+			hw_margin_max = hw_margin[0];
-+
-+		if (count == 2) {
-+			hw_margin_max = hw_margin[1];
-+			hw_margin_min = hw_margin[0];
-+		}
- 	}
- 
- 	ret = bd957x_set_wdt_mode(priv, hw_margin_max, hw_margin_min);
- 	if (ret)
- 		return ret;
- 
--	priv->always_running = of_property_read_bool(np, "always-running");
-+	priv->always_running = device_property_read_bool(dev->parent,
-+							 "always-running");
- 
- 	watchdog_set_drvdata(&priv->wdd, priv);
- 
+ 	dmaengine_terminate_sync(chan);
+ 	dma_free_coherent(chan->device->dev, s->buf_len_rx * 2, s->rx_buf[0],
+ 			  sg_dma_address(&s->sg_rx[0]));
 -- 
 2.43.0
 
