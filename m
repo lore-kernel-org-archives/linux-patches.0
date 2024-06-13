@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E03E14265A;
-	Thu, 13 Jun 2024 11:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125B514265A;
+	Thu, 13 Jun 2024 11:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279281; cv=none; b=iGH4a/mcnlSAz/VUBNNFLgnCw/fKrcUwI/PXPd0nwV9gpJIb0uk7BrWItFbZ/m3TiNasqeKeeiF0p6hCPc+KXbQRhQRbFQ7BH1Pe7MB96MpK5778aQxewZpQ5cSirMgvXHa5S3fzbC6EQNhyagRC0+2mKjvLRxQsr18vLDHA/aA=
+	t=1718279284; cv=none; b=UbKm3EGJhJ7hIOASIQuW+c4iQkt+jRtqTxI2B5HhNVTHS2VD/+h6N8I53ok0tu4AZ4KZdvA7hchla2ShVe0k+IlHGsxM6A9Axy1lOHDnFi7TICv1RjLRzyEnCXnqrJ5fWFvYsuODvvHjVM+w16BATGZuvPLmFmmLBKGonkfgLRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279281; c=relaxed/simple;
-	bh=XwTQpwIoJjs+VzvUKZXkINsfmL4hRTbZbdgc++NxqDY=;
+	s=arc-20240116; t=1718279284; c=relaxed/simple;
+	bh=Y0EJ5vzBuqJJUfp27xvnSopu+Ti0jktsB0Sgnx6xaiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bf6dmO3yvo3mmtPhXk7TlxO2TSBtyVn6cnf6H2392xvxYesFTEvzItREemp8B3odiVMwt+saBSvpZxb6WdnxHr0h7YpQ8thKnIuC0z9QI6qoeJx/23YiGo9JBijeWe6zzCQt15kCQKHun7HWjt+AgmsxHocs6PUJYamhsu2LgLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjsfD6kW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QJTLY0FZJ/noLjl0Cs72arP8D/ytixfAayNoOLH0/Lla42o0xLR0gx0VEt0FHscop2kc/oF7gX6UNbP6zTDvyta8gDKc7sASwT4MaNr/31uBDvtkOoTvogJceTC8+KO/y0pE1xga+N65TZlO5cEcbJdhhfZ68KSrnuWsTrix4L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9TJVU1A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjsfD6kW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9949CC2BBFC;
-	Thu, 13 Jun 2024 11:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9TJVU1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D95CC2BBFC;
+	Thu, 13 Jun 2024 11:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279281;
-	bh=XwTQpwIoJjs+VzvUKZXkINsfmL4hRTbZbdgc++NxqDY=;
+	s=korg; t=1718279284;
+	bh=Y0EJ5vzBuqJJUfp27xvnSopu+Ti0jktsB0Sgnx6xaiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjsfD6kWAf/h6ZlVy9x97lpdCwwlTgi7bwhbuvY3aA6VyOx1FPQJ7St1J9TpX2PXl
-	 N6px46ejGSZDSVWR+MZZjV+SZOQt0dAj+5vLkOeekL+KUL3FIx+qFvF0Lb8HNRBvmB
-	 G14uFqX0yI0jNLWNwumFrFpBf7+cKQnJkSNUE1rc=
+	b=M9TJVU1AMhMCd8AcoCzU+IK+dpNjWZ2BTL1purJhiWUiYrmd7qaLdl45CwxNlfaOe
+	 avLeZm1PKJADYEYlTB4D+2Y47EF3N9R1SwhV0y0pj//nswqZRdyFiqsSLjH84/PoHK
+	 Ig+NJu7nLwu4E5w2O+LTfO9ATyM4ecDpbr1EtAc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>,
-	Markus Suvanto <markus.suvanto@gmail.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.9 003/157] afs: Dont cross .backup mountpoint from backup volume
-Date: Thu, 13 Jun 2024 13:32:08 +0200
-Message-ID: <20240613113227.530125914@linuxfoundation.org>
+	Sandeep Dhavale <dhavale@google.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.9 004/157] erofs: avoid allocating DEFLATE streams before mounting
+Date: Thu, 13 Jun 2024 13:32:09 +0200
+Message-ID: <20240613113227.569434006@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -55,50 +50,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Dionne <marc.dionne@auristor.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 29be9100aca2915fab54b5693309bc42956542e5 upstream.
+commit 80eb4f62056d6ae709bdd0636ab96ce660f494b2 upstream.
 
-Don't cross a mountpoint that explicitly specifies a backup volume
-(target is <vol>.backup) when starting from a backup volume.
+Currently, each DEFLATE stream takes one 32 KiB permanent internal
+window buffer even if there is no running instance which uses DEFLATE
+algorithm.
 
-It it not uncommon to mount a volume's backup directly in the volume
-itself.  This can cause tools that are not paying attention to get
-into a loop mounting the volume onto itself as they attempt to
-traverse the tree, leading to a variety of problems.
+It's unexpected and wasteful on embedded devices with limited resources
+and servers with hundreds of CPU cores if DEFLATE is enabled but unused.
 
-This doesn't prevent the general case of loops in a sequence of
-mountpoints, but addresses a common special case in the same way
-as other afs clients.
-
-Reported-by: Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>
-Link: http://lists.infradead.org/pipermail/linux-afs/2024-May/008454.html
-Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
-Link: http://lists.infradead.org/pipermail/linux-afs/2024-February/008074.html
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/768760.1716567475@warthog.procyon.org.uk
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: ffa09b3bd024 ("erofs: DEFLATE compression support")
+Cc: <stable@vger.kernel.org> # 6.6+
+Reviewed-by: Sandeep Dhavale <dhavale@google.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20240520090106.2898681-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/mntpt.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/erofs/decompressor_deflate.c |   57 +++++++++++++++++++++-------------------
+ 1 file changed, 30 insertions(+), 27 deletions(-)
 
---- a/fs/afs/mntpt.c
-+++ b/fs/afs/mntpt.c
-@@ -140,6 +140,11 @@ static int afs_mntpt_set_params(struct f
- 		put_page(page);
- 		if (ret < 0)
- 			return ret;
-+
-+		/* Don't cross a backup volume mountpoint from a backup volume */
-+		if (src_as->volume && src_as->volume->type == AFSVL_BACKVOL &&
-+		    ctx->type == AFSVL_BACKVOL)
-+			return -ENODEV;
- 	}
- 
+--- a/fs/erofs/decompressor_deflate.c
++++ b/fs/erofs/decompressor_deflate.c
+@@ -46,39 +46,15 @@ int __init z_erofs_deflate_init(void)
+ 	/* by default, use # of possible CPUs instead */
+ 	if (!z_erofs_deflate_nstrms)
+ 		z_erofs_deflate_nstrms = num_possible_cpus();
+-
+-	for (; z_erofs_deflate_avail_strms < z_erofs_deflate_nstrms;
+-	     ++z_erofs_deflate_avail_strms) {
+-		struct z_erofs_deflate *strm;
+-
+-		strm = kzalloc(sizeof(*strm), GFP_KERNEL);
+-		if (!strm)
+-			goto out_failed;
+-
+-		/* XXX: in-kernel zlib cannot shrink windowbits currently */
+-		strm->z.workspace = vmalloc(zlib_inflate_workspacesize());
+-		if (!strm->z.workspace) {
+-			kfree(strm);
+-			goto out_failed;
+-		}
+-
+-		spin_lock(&z_erofs_deflate_lock);
+-		strm->next = z_erofs_deflate_head;
+-		z_erofs_deflate_head = strm;
+-		spin_unlock(&z_erofs_deflate_lock);
+-	}
  	return 0;
+-
+-out_failed:
+-	erofs_err(NULL, "failed to allocate zlib workspace");
+-	z_erofs_deflate_exit();
+-	return -ENOMEM;
+ }
+ 
+ int z_erofs_load_deflate_config(struct super_block *sb,
+ 			struct erofs_super_block *dsb, void *data, int size)
+ {
+ 	struct z_erofs_deflate_cfgs *dfl = data;
++	static DEFINE_MUTEX(deflate_resize_mutex);
++	static bool inited;
+ 
+ 	if (!dfl || size < sizeof(struct z_erofs_deflate_cfgs)) {
+ 		erofs_err(sb, "invalid deflate cfgs, size=%u", size);
+@@ -89,9 +65,36 @@ int z_erofs_load_deflate_config(struct s
+ 		erofs_err(sb, "unsupported windowbits %u", dfl->windowbits);
+ 		return -EOPNOTSUPP;
+ 	}
+-
++	mutex_lock(&deflate_resize_mutex);
++	if (!inited) {
++		for (; z_erofs_deflate_avail_strms < z_erofs_deflate_nstrms;
++		     ++z_erofs_deflate_avail_strms) {
++			struct z_erofs_deflate *strm;
++
++			strm = kzalloc(sizeof(*strm), GFP_KERNEL);
++			if (!strm)
++				goto failed;
++			/* XXX: in-kernel zlib cannot customize windowbits */
++			strm->z.workspace = vmalloc(zlib_inflate_workspacesize());
++			if (!strm->z.workspace) {
++				kfree(strm);
++				goto failed;
++			}
++
++			spin_lock(&z_erofs_deflate_lock);
++			strm->next = z_erofs_deflate_head;
++			z_erofs_deflate_head = strm;
++			spin_unlock(&z_erofs_deflate_lock);
++		}
++		inited = true;
++	}
++	mutex_unlock(&deflate_resize_mutex);
+ 	erofs_info(sb, "EXPERIMENTAL DEFLATE feature in use. Use at your own risk!");
+ 	return 0;
++failed:
++	mutex_unlock(&deflate_resize_mutex);
++	z_erofs_deflate_exit();
++	return -ENOMEM;
+ }
+ 
+ int z_erofs_deflate_decompress(struct z_erofs_decompress_req *rq,
 
 
