@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7147A1C32;
-	Thu, 13 Jun 2024 12:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EBF61C32;
+	Thu, 13 Jun 2024 12:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283028; cv=none; b=O3GI2AYbir6RjZIrwNKqyY8eYlj6hkYfO7nLt7BnnMQPOZ2zxTU5dFr6RZt8cEnCOWTYH01nV2RUEbGonfOnEBxVAZEnDf4XuQFpqrPYWzoGWOfanTlc/omi0waEuM0nCuidT9Mrq1PR6eoldcSOtrI3xChcla1FyFDRYIY3PqA=
+	t=1718283031; cv=none; b=cN69qXHoGIvd0hsxZMncEeuZ3DznS7nqoOx7B1PeZUNWdOH/FCmIJYo1YAIeAJmz51epsZSf1F0Xp/ux2HDFUWQzVSBkwmIFYiwKY4VH8GwdbHxr5GUjkaAKP2mkJduExdyYaQqcpcTmwZVEQW/Dr3l4ataZ3AYJMGVndSlRs2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283028; c=relaxed/simple;
-	bh=Oo+wFfFKXo0EkcA3h1BvSarqeyixqIHQQ828JwR5nqw=;
+	s=arc-20240116; t=1718283031; c=relaxed/simple;
+	bh=PgFWK3FdAIsZ/Ess6L4KIwCPORBYhvUayJhoorn5hy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZPzYjaKbFf00keVSdvdY+0QGJJ/x06sLmFP+PqAWWdXsYvXMcNVL5AG+bXuyxqvxhpsXcpVDGa7LxwdHhu1SffXduRw5wtNI1LGJCLYIn5xYySKgKKPy1X+QXV5Z+lXr+SnRrC3MHQ9M9kxJodUM7M+7YmGXx1RqlT908n1Bylo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OiRknJgx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FAyFPYUJnVKwGSAimLu/uOeJhGFOp6WZ4/cRETlJK+uGJf6CR7aozMzQ2rtnNPDW0IbzT13CJHqHG850aUQaQoXv4edoku+xKfLU7krW9jht6tZBUO4y+HIcP22EumwRhgtgOp5AZOqZzziiOFJbdh5a0kFtgHCTwk4YYW/5nlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oj7sXmIZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiRknJgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD17C2BBFC;
-	Thu, 13 Jun 2024 12:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oj7sXmIZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAFAC2BBFC;
+	Thu, 13 Jun 2024 12:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283028;
-	bh=Oo+wFfFKXo0EkcA3h1BvSarqeyixqIHQQ828JwR5nqw=;
+	s=korg; t=1718283031;
+	bh=PgFWK3FdAIsZ/Ess6L4KIwCPORBYhvUayJhoorn5hy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OiRknJgxMTRGZmT+GswFjctv0OmdRJqcsRVYk+HgDFmKTE32GU6xVT22wr0EMBxXe
-	 fHHZI0scK6KvKvkJhw0/W64pQX6v9fQsShjUKbW1eSkOz/CKk0fZpiwhR24oHKhgKQ
-	 H4bnfTVW+WZ/MZE4FdbClDg98iRUsQqAStCV/W5E=
+	b=Oj7sXmIZv5JWq+8yIkk2coUjdO1LwaJyhT40Ni2Hk11p2mk6L6W6CY/6SelgT0kCj
+	 nna3BKhUImJEgldzhXRJdKCHS+Zd1excyrTNhlV+MsJlT1gdqRTL6xYQqTLc3kZySM
+	 cqaDUvcqOuijOJO7Jl9vEcHeG3IRcgD7Zlv4jtQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	John David Anglin <dave.anglin@bell.net>
-Subject: [PATCH 6.1 74/85] parisc: Define HAVE_ARCH_HUGETLB_UNMAPPED_AREA
-Date: Thu, 13 Jun 2024 13:36:12 +0200
-Message-ID: <20240613113216.992868166@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 75/85] parisc: Define sigset_t in parisc uapi header
+Date: Thu, 13 Jun 2024 13:36:13 +0200
+Message-ID: <20240613113217.030905818@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -50,32 +49,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Helge Deller <deller@kernel.org>
 
-commit d4a599910193b85f76c100e30d8551c8794f8c2a upstream.
+commit 487fa28fa8b60417642ac58e8beda6e2509d18f9 upstream.
 
-Define the HAVE_ARCH_HUGETLB_UNMAPPED_AREA macro like other platforms do in
-their page.h files to avoid this compile warning:
-arch/parisc/mm/hugetlbpage.c:25:1: warning: no previous prototype for 'hugetlb_get_unmapped_area' [-Wmissing-prototypes]
+The util-linux debian package fails to build on parisc, because
+sigset_t isn't defined in asm/signal.h when included from userspace.
+Move the sigset_t type from internal header to the uapi header to fix the
+build.
 
+Link: https://buildd.debian.org/status/fetch.php?pkg=util-linux&arch=hppa&ver=2.40-7&stamp=1714163443&raw=0
 Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org  # 6.0+
-Reported-by: John David Anglin <dave.anglin@bell.net>
-Tested-by: John David Anglin <dave.anglin@bell.net>
+Cc: stable@vger.kernel.org # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/page.h |    1 +
- 1 file changed, 1 insertion(+)
+ arch/parisc/include/asm/signal.h      |   12 ------------
+ arch/parisc/include/uapi/asm/signal.h |   10 ++++++++++
+ 2 files changed, 10 insertions(+), 12 deletions(-)
 
---- a/arch/parisc/include/asm/page.h
-+++ b/arch/parisc/include/asm/page.h
-@@ -16,6 +16,7 @@
- #define PAGE_SIZE	(_AC(1,UL) << PAGE_SHIFT)
- #define PAGE_MASK	(~(PAGE_SIZE-1))
+--- a/arch/parisc/include/asm/signal.h
++++ b/arch/parisc/include/asm/signal.h
+@@ -4,23 +4,11 @@
  
-+#define HAVE_ARCH_HUGETLB_UNMAPPED_AREA
+ #include <uapi/asm/signal.h>
  
- #ifndef __ASSEMBLY__
+-#define _NSIG		64
+-/* bits-per-word, where word apparently means 'long' not 'int' */
+-#define _NSIG_BPW	BITS_PER_LONG
+-#define _NSIG_WORDS	(_NSIG / _NSIG_BPW)
+-
+ # ifndef __ASSEMBLY__
+ 
+ /* Most things should be clean enough to redefine this at will, if care
+    is taken to make libc match.  */
+ 
+-typedef unsigned long old_sigset_t;		/* at least 32 bits */
+-
+-typedef struct {
+-	/* next_signal() assumes this is a long - no choice */
+-	unsigned long sig[_NSIG_WORDS];
+-} sigset_t;
+-
+ #include <asm/sigcontext.h>
+ 
+ #endif /* !__ASSEMBLY */
+--- a/arch/parisc/include/uapi/asm/signal.h
++++ b/arch/parisc/include/uapi/asm/signal.h
+@@ -57,10 +57,20 @@
+ 
+ #include <asm-generic/signal-defs.h>
+ 
++#define _NSIG		64
++#define _NSIG_BPW	(sizeof(unsigned long) * 8)
++#define _NSIG_WORDS	(_NSIG / _NSIG_BPW)
++
+ # ifndef __ASSEMBLY__
+ 
+ #  include <linux/types.h>
+ 
++typedef unsigned long old_sigset_t;	/* at least 32 bits */
++
++typedef struct {
++	unsigned long sig[_NSIG_WORDS];
++} sigset_t;
++
+ /* Avoid too many header ordering problems.  */
+ struct siginfo;
  
 
 
