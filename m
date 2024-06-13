@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A1A12C47D;
-	Thu, 13 Jun 2024 12:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F3B143724;
+	Thu, 13 Jun 2024 12:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282244; cv=none; b=eUzCqvVLlVXtVhRx8T4rlHwTe5s3ccdIHoCSFV1/O0retqrBE9n1hZ0WjJO2B4ENYd/z7SvQdAbDEitaA9bUS5oMa9Gx2IA+hpklbx5G0BQDZ2tdzmXUCPQOWOklP3RaRMK9TN0dyEhP6yv4HK7Dx1aSxIm/w+XjNUrx3COGtwQ=
+	t=1718282247; cv=none; b=UOwKpjV68OQnV7rNxVOeGKRATzNyytUXHkycRFVv3p9bkC4oAC2qhnfWGCrSy0HoRamhQIiZePDebeGQDRpJf30Ok4EsFBraqQU6LQsRM0OaFatqqSJLaKoM/Mlq+wxGVa0T9F7GS9Sg0xwwI3/Sa4dwcjYXb6uiZT36FV2eNDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282244; c=relaxed/simple;
-	bh=91bgWSnv3qCUucN6FIIIIWcfu3shJ6QvvEl9gZ3q8ak=;
+	s=arc-20240116; t=1718282247; c=relaxed/simple;
+	bh=81kTT1X9TlGPgzylZS4FV41N6y7wXEYlW1EVkmkCYbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBfu4vrg15FgE2olvlYEEG2iSzO5t/kVVNwoi2uGvAR/kYNn9PYT/dQBv48AZxIx023gO4xEPZ6PqiLootoDjeUExH3VY49hO+fiVGGhbras4utvRibDutRdqyCQh8lYtbpyy2P5LFnH8mQn65VzFPCqCnL6QyRWS/yxQjARLm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6G4kdf4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bJQMzSUZdg03a3pFOm83sJWmmRz0px0fb3xCHg4QSDdgjGJT6PBII1T2VJkNfOtsY8l9W1f8Qb5ORLbNSDIebGrQC5h42rHARSHnyloqYh/jDgxyC741lsElc26x4ODX7paatbFLobWrHtBASGIc6vLRYo90PNSU11sqCzcim7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UoVB0myj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6G4kdf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC75C32786;
-	Thu, 13 Jun 2024 12:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UoVB0myj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEF8C2BBFC;
+	Thu, 13 Jun 2024 12:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282243;
-	bh=91bgWSnv3qCUucN6FIIIIWcfu3shJ6QvvEl9gZ3q8ak=;
+	s=korg; t=1718282246;
+	bh=81kTT1X9TlGPgzylZS4FV41N6y7wXEYlW1EVkmkCYbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X6G4kdf4SN8ONCDlxzm7MjGH1aE/QsHoL34Fj10T4dbIA1gy8jAQL8HR+zBpJb31e
-	 IWu4eW3nhDIKt4j92qK3KgQaOtFJM4r4Cu7QHiA/v/MVsHVBs7LUmHa+AeONGngKaB
-	 z4SE3sp5cOAL5TXIWKQmVZohrYcE7/kSyYOL3rHs=
+	b=UoVB0myjyLtnfgORstGFVX/Y0NtdVDxCNQcUjCB1Q6EeAUqB8znDKgUYDsYBVP+9B
+	 xSEjNOAgQkbdMZmpbjFv4csZlt/DIOtWSXuQEJdYeBsgNB/J/LlJkHmetnc4+7A98N
+	 n3YsVSojKBhDH0eml9eXcnVENqsS/4gIT5gJ2S9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Russ Weight <russ.weight@linux.dev>,
+	Marco Pagani <marpagan@redhat.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 184/402] dmaengine: idma64: Add check for dma_set_max_seg_size
-Date: Thu, 13 Jun 2024 13:32:21 +0200
-Message-ID: <20240613113309.326818205@linuxfoundation.org>
+Subject: [PATCH 5.15 211/402] fpga: region: add owner module and take its refcount
+Date: Thu, 13 Jun 2024 13:32:48 +0200
+Message-ID: <20240613113310.378344394@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,38 +53,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Marco Pagani <marpagan@redhat.com>
 
-[ Upstream commit 2b1c1cf08a0addb6df42f16b37133dc7a351de29 ]
+[ Upstream commit b7c0e1ecee403a43abc89eb3e75672b01ff2ece9 ]
 
-As the possible failure of the dma_set_max_seg_size(), it should be
-better to check the return value of the dma_set_max_seg_size().
+The current implementation of the fpga region assumes that the low-level
+module registers a driver for the parent device and uses its owner pointer
+to take the module's refcount. This approach is problematic since it can
+lead to a null pointer dereference while attempting to get the region
+during programming if the parent device does not have a driver.
 
-Fixes: e3fdb1894cfa ("dmaengine: idma64: set maximum allowed segment size for DMA")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240403024932.3342606-1-nichen@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+To address this problem, add a module owner pointer to the fpga_region
+struct and use it to take the module's refcount. Modify the functions for
+registering a region to take an additional owner module parameter and
+rename them to avoid conflicts. Use the old function names for helper
+macros that automatically set the module that registers the region as the
+owner. This ensures compatibility with existing low-level control modules
+and reduces the chances of registering a region without setting the owner.
+
+Also, update the documentation to keep it consistent with the new interface
+for registering an fpga region.
+
+Fixes: 0fa20cdfcc1f ("fpga: fpga-region: device tree control for FPGA")
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Xu Yilun <yilun.xu@intel.com>
+Reviewed-by: Russ Weight <russ.weight@linux.dev>
+Signed-off-by: Marco Pagani <marpagan@redhat.com>
+Acked-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20240419083601.77403-1-marpagan@redhat.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idma64.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/driver-api/fpga/fpga-region.rst | 13 ++++++----
+ drivers/fpga/fpga-region.c                    | 24 +++++++++++--------
+ include/linux/fpga/fpga-region.h              | 13 +++++++---
+ 3 files changed, 32 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
-index af8777a1ec2e3..89e4a3e1d5198 100644
---- a/drivers/dma/idma64.c
-+++ b/drivers/dma/idma64.c
-@@ -594,7 +594,9 @@ static int idma64_probe(struct idma64_chip *chip)
+diff --git a/Documentation/driver-api/fpga/fpga-region.rst b/Documentation/driver-api/fpga/fpga-region.rst
+index dc55d60a0b4a5..2d03b5fb76575 100644
+--- a/Documentation/driver-api/fpga/fpga-region.rst
++++ b/Documentation/driver-api/fpga/fpga-region.rst
+@@ -46,13 +46,16 @@ API to add a new FPGA region
+ ----------------------------
  
- 	idma64->dma.dev = chip->sysdev;
+ * struct fpga_region - The FPGA region struct
+-* struct fpga_region_info - Parameter structure for fpga_region_register_full()
+-* fpga_region_register_full() -  Create and register an FPGA region using the
++* struct fpga_region_info - Parameter structure for __fpga_region_register_full()
++* __fpga_region_register_full() -  Create and register an FPGA region using the
+   fpga_region_info structure to provide the full flexibility of options
+-* fpga_region_register() -  Create and register an FPGA region using standard
++* __fpga_region_register() -  Create and register an FPGA region using standard
+   arguments
+ * fpga_region_unregister() -  Unregister an FPGA region
  
--	dma_set_max_seg_size(idma64->dma.dev, IDMA64C_CTLH_BLOCK_TS_MASK);
-+	ret = dma_set_max_seg_size(idma64->dma.dev, IDMA64C_CTLH_BLOCK_TS_MASK);
-+	if (ret)
-+		return ret;
++Helper macros ``fpga_region_register()`` and ``fpga_region_register_full()``
++automatically set the module that registers the FPGA region as the owner.
++
+ The FPGA region's probe function will need to get a reference to the FPGA
+ Manager it will be using to do the programming.  This usually would happen
+ during the region's probe function.
+@@ -82,10 +85,10 @@ following APIs to handle building or tearing down that list.
+    :functions: fpga_region_info
  
- 	ret = dma_async_device_register(&idma64->dma);
- 	if (ret)
+ .. kernel-doc:: drivers/fpga/fpga-region.c
+-   :functions: fpga_region_register_full
++   :functions: __fpga_region_register_full
+ 
+ .. kernel-doc:: drivers/fpga/fpga-region.c
+-   :functions: fpga_region_register
++   :functions: __fpga_region_register
+ 
+ .. kernel-doc:: drivers/fpga/fpga-region.c
+    :functions: fpga_region_unregister
+diff --git a/drivers/fpga/fpga-region.c b/drivers/fpga/fpga-region.c
+index b0ac18de4885d..d73daea579ac7 100644
+--- a/drivers/fpga/fpga-region.c
++++ b/drivers/fpga/fpga-region.c
+@@ -52,7 +52,7 @@ static struct fpga_region *fpga_region_get(struct fpga_region *region)
+ 	}
+ 
+ 	get_device(dev);
+-	if (!try_module_get(dev->parent->driver->owner)) {
++	if (!try_module_get(region->ops_owner)) {
+ 		put_device(dev);
+ 		mutex_unlock(&region->mutex);
+ 		return ERR_PTR(-ENODEV);
+@@ -74,7 +74,7 @@ static void fpga_region_put(struct fpga_region *region)
+ 
+ 	dev_dbg(dev, "put\n");
+ 
+-	module_put(dev->parent->driver->owner);
++	module_put(region->ops_owner);
+ 	put_device(dev);
+ 	mutex_unlock(&region->mutex);
+ }
+@@ -180,14 +180,16 @@ static struct attribute *fpga_region_attrs[] = {
+ ATTRIBUTE_GROUPS(fpga_region);
+ 
+ /**
+- * fpga_region_register_full - create and register an FPGA Region device
++ * __fpga_region_register_full - create and register an FPGA Region device
+  * @parent: device parent
+  * @info: parameters for FPGA Region
++ * @owner: module containing the get_bridges function
+  *
+  * Return: struct fpga_region or ERR_PTR()
+  */
+ struct fpga_region *
+-fpga_region_register_full(struct device *parent, const struct fpga_region_info *info)
++__fpga_region_register_full(struct device *parent, const struct fpga_region_info *info,
++			    struct module *owner)
+ {
+ 	struct fpga_region *region;
+ 	int id, ret = 0;
+@@ -212,6 +214,7 @@ fpga_region_register_full(struct device *parent, const struct fpga_region_info *
+ 	region->compat_id = info->compat_id;
+ 	region->priv = info->priv;
+ 	region->get_bridges = info->get_bridges;
++	region->ops_owner = owner;
+ 
+ 	mutex_init(&region->mutex);
+ 	INIT_LIST_HEAD(&region->bridge_list);
+@@ -240,13 +243,14 @@ fpga_region_register_full(struct device *parent, const struct fpga_region_info *
+ 
+ 	return ERR_PTR(ret);
+ }
+-EXPORT_SYMBOL_GPL(fpga_region_register_full);
++EXPORT_SYMBOL_GPL(__fpga_region_register_full);
+ 
+ /**
+- * fpga_region_register - create and register an FPGA Region device
++ * __fpga_region_register - create and register an FPGA Region device
+  * @parent: device parent
+  * @mgr: manager that programs this region
+  * @get_bridges: optional function to get bridges to a list
++ * @owner: module containing the get_bridges function
+  *
+  * This simple version of the register function should be sufficient for most users.
+  * The fpga_region_register_full() function is available for users that need to
+@@ -255,17 +259,17 @@ EXPORT_SYMBOL_GPL(fpga_region_register_full);
+  * Return: struct fpga_region or ERR_PTR()
+  */
+ struct fpga_region *
+-fpga_region_register(struct device *parent, struct fpga_manager *mgr,
+-		     int (*get_bridges)(struct fpga_region *))
++__fpga_region_register(struct device *parent, struct fpga_manager *mgr,
++		       int (*get_bridges)(struct fpga_region *), struct module *owner)
+ {
+ 	struct fpga_region_info info = { 0 };
+ 
+ 	info.mgr = mgr;
+ 	info.get_bridges = get_bridges;
+ 
+-	return fpga_region_register_full(parent, &info);
++	return __fpga_region_register_full(parent, &info, owner);
+ }
+-EXPORT_SYMBOL_GPL(fpga_region_register);
++EXPORT_SYMBOL_GPL(__fpga_region_register);
+ 
+ /**
+  * fpga_region_unregister - unregister an FPGA region
+diff --git a/include/linux/fpga/fpga-region.h b/include/linux/fpga/fpga-region.h
+index 3b87f232425c9..1c446c2ce2f9c 100644
+--- a/include/linux/fpga/fpga-region.h
++++ b/include/linux/fpga/fpga-region.h
+@@ -36,6 +36,7 @@ struct fpga_region_info {
+  * @mgr: FPGA manager
+  * @info: FPGA image info
+  * @compat_id: FPGA region id for compatibility check.
++ * @ops_owner: module containing the get_bridges function
+  * @priv: private data
+  * @get_bridges: optional function to get bridges to a list
+  */
+@@ -46,6 +47,7 @@ struct fpga_region {
+ 	struct fpga_manager *mgr;
+ 	struct fpga_image_info *info;
+ 	struct fpga_compat_id *compat_id;
++	struct module *ops_owner;
+ 	void *priv;
+ 	int (*get_bridges)(struct fpga_region *region);
+ };
+@@ -58,12 +60,17 @@ struct fpga_region *fpga_region_class_find(
+ 
+ int fpga_region_program_fpga(struct fpga_region *region);
+ 
++#define fpga_region_register_full(parent, info) \
++	__fpga_region_register_full(parent, info, THIS_MODULE)
+ struct fpga_region *
+-fpga_region_register_full(struct device *parent, const struct fpga_region_info *info);
++__fpga_region_register_full(struct device *parent, const struct fpga_region_info *info,
++			    struct module *owner);
+ 
++#define fpga_region_register(parent, mgr, get_bridges) \
++	__fpga_region_register(parent, mgr, get_bridges, THIS_MODULE)
+ struct fpga_region *
+-fpga_region_register(struct device *parent, struct fpga_manager *mgr,
+-		     int (*get_bridges)(struct fpga_region *));
++__fpga_region_register(struct device *parent, struct fpga_manager *mgr,
++		       int (*get_bridges)(struct fpga_region *), struct module *owner);
+ void fpga_region_unregister(struct fpga_region *region);
+ 
+ #endif /* _FPGA_REGION_H */
 -- 
 2.43.0
 
