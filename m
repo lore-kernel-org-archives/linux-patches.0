@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9892B143866;
-	Thu, 13 Jun 2024 11:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A273143878;
+	Thu, 13 Jun 2024 11:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278870; cv=none; b=ZsdvoFg7w31jgZqvAL+v0AUUJaAvV4JRrl5LWQqSoMOHzCa4HCcFlZbR4lUpeQe0+TKVxjUTjSPlBc02iSJqcZbZ+I6IbsxJvgIIgB0yzrgm2/dVDzrjTcdR+6d5g8V7+QpE9JBXuttf8J5+8QB4pZr0Qit87DXN0H0KHdxt1Sc=
+	t=1718278873; cv=none; b=lHnTnQIQYyHzPFEMwtngQ5ciMlJPt5akGqVu56eekNIY2VeBFU1X3du3LdE2JZ1kLmFj5jDZEePRtRQZ0RRm4WwgcAlJOdpwJOROpPE02eW9WXLfp6kbz+NxHM/TvLmPGTW36rqRSzkiJ3P5X9s1osR4Tpuk8vR4RkXX4iiGs2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278870; c=relaxed/simple;
-	bh=XSqT1DNZkN7TRXqZ7Im/qe/rEEI+iBftdh70c8Qge28=;
+	s=arc-20240116; t=1718278873; c=relaxed/simple;
+	bh=heswE5XBfzDcENl0uUE67M65dqXOATbH+jSYAFFO7DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0V7mE6HJ1GF0O331WKrB693dKstL1P+BhtImD7fqq0bquruseH+48pyUFWHGvDlrn05RGLFWDtA+FegGJLQJWxIdZbTos59rSA6R1m8nm8yZa9zds3khHZBtWElKAEoq1GfV+CwUIjGHEQZkIP7LRzmxOrkwBwCGXVLqwygYig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFceJ31L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KyNo7azdZX708/fTshk8L+YQrDiQTS8PqAgs9O1tQ6iRxhStCRL8a+53srKhChxqql/Foe/V/UbTWAwwgouhesOO+fh6Bmut4b/mH99MAXJfC32WKpREXB81lZlp7g4Q6xOtMJW9900Af6y5H+hnhO9yn4/XVoPEINeAnsVyO/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtwN+AdM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFceJ31L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22565C2BBFC;
-	Thu, 13 Jun 2024 11:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtwN+AdM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B836C2BBFC;
+	Thu, 13 Jun 2024 11:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278870;
-	bh=XSqT1DNZkN7TRXqZ7Im/qe/rEEI+iBftdh70c8Qge28=;
+	s=korg; t=1718278873;
+	bh=heswE5XBfzDcENl0uUE67M65dqXOATbH+jSYAFFO7DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFceJ31LQc3Df8SbExEJg3Ns6wYuP2pnR1SOtInAAuxvSLuJO42jpNKaq4+SgFQTU
-	 G7FvZskwUQugPivg5QUhIRWku/n2xsAKcfuW1F8wNJRimnuimeMKaLYpHDsuWF28Jc
-	 YXee0wekc4LBAvWNV0rJn2NHvFymzin5FvMEotaQ=
+	b=UtwN+AdMBBcqjZyHN6Uxgl4L/VaK2lmHrWTJDzad6KmR40BMApvSm4ebCCk71jdcI
+	 o4uxlU7+rcENtPk4D7fQhhcrldwG+zZs7CA1Nc1o5ZBSRUk+kwu04c9eaNazYmPszG
+	 7OAO98Ab1Z+G9B6Agv9xzNHdWgvh4xPzLX3XRtSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
+	Edward Liaw <edliaw@google.com>,
+	Cyrill Gorcunov <gorcunov@gmail.com>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 098/213] microblaze: Remove early printk call from cpuinfo-static.c
-Date: Thu, 13 Jun 2024 13:32:26 +0200
-Message-ID: <20240613113231.789319248@linuxfoundation.org>
+Subject: [PATCH 4.19 081/213] selftests/kcmp: remove unused open mode
+Date: Thu, 13 Jun 2024 13:32:09 +0200
+Message-ID: <20240613113231.136019449@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -50,35 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: Edward Liaw <edliaw@google.com>
 
-[ Upstream commit 58d647506c92ccd3cfa0c453c68ddd14f40bf06f ]
+[ Upstream commit eb59a58113717df04b8a8229befd8ab1e5dbf86e ]
 
-Early printk has been removed already that's why also remove calling it.
-Similar change has been done in cpuinfo-pvr-full.c by commit cfbd8d1979af
-("microblaze: Remove early printk setup").
+Android bionic warns that open modes are ignored if O_CREAT or O_TMPFILE
+aren't specified.  The permissions for the file are set above:
 
-Fixes: 96f0e6fcc9ad ("microblaze: remove redundant early_printk support")
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/2f10db506be8188fa07b6ec331caca01af1b10f8.1712824039.git.michal.simek@amd.com
+	fd1 = open(kpath, O_RDWR | O_CREAT | O_TRUNC, 0644);
+
+Link: https://lkml.kernel.org/r/20240429234610.191144-1-edliaw@google.com
+Fixes: d97b46a64674 ("syscalls, x86: add __NR_kcmp syscall")
+Signed-off-by: Edward Liaw <edliaw@google.com>
+Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
+Cc: Eric Biederman <ebiederm@xmission.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/cpu/cpuinfo-static.c | 2 +-
+ tools/testing/selftests/kcmp/kcmp_test.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/microblaze/kernel/cpu/cpuinfo-static.c b/arch/microblaze/kernel/cpu/cpuinfo-static.c
-index 85dbda4a08a81..03da36dc6d9c9 100644
---- a/arch/microblaze/kernel/cpu/cpuinfo-static.c
-+++ b/arch/microblaze/kernel/cpu/cpuinfo-static.c
-@@ -18,7 +18,7 @@ static const char family_string[] = CONFIG_XILINX_MICROBLAZE0_FAMILY;
- static const char cpu_ver_string[] = CONFIG_XILINX_MICROBLAZE0_HW_VER;
+diff --git a/tools/testing/selftests/kcmp/kcmp_test.c b/tools/testing/selftests/kcmp/kcmp_test.c
+index 25110c7c0b3ed..d7a8e321bb16b 100644
+--- a/tools/testing/selftests/kcmp/kcmp_test.c
++++ b/tools/testing/selftests/kcmp/kcmp_test.c
+@@ -91,7 +91,7 @@ int main(int argc, char **argv)
+ 		ksft_print_header();
+ 		ksft_set_plan(3);
  
- #define err_printk(x) \
--	early_printk("ERROR: Microblaze " x "-different for kernel and DTS\n");
-+	pr_err("ERROR: Microblaze " x "-different for kernel and DTS\n");
- 
- void __init set_cpuinfo_static(struct cpuinfo *ci, struct device_node *cpu)
- {
+-		fd2 = open(kpath, O_RDWR, 0644);
++		fd2 = open(kpath, O_RDWR);
+ 		if (fd2 < 0) {
+ 			perror("Can't open file");
+ 			ksft_exit_fail();
 -- 
 2.43.0
 
