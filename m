@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1289B12C530;
-	Thu, 13 Jun 2024 12:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47531146D48;
+	Thu, 13 Jun 2024 12:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280042; cv=none; b=fJDy8BDAM35Ai5AL4ZDVtQWBr1MstyCzirvsTOSIei8oIxlc5H1DAWfFt4/TDgfr4y/FQmzZOIGU9hAJTkC5FJm+ePVKetXvU6KTejWMTyXhol4jGCcyfnM3lS4j0QQKqo9H5z88aYmz62lWaY7krtiQrDqLkYNfC0su8xW+0RU=
+	t=1718280045; cv=none; b=iFQjMLXpW+Ru07Mq+1pZKMoatHKFYiUkSE1itPOM5syO/xWBkpBdyq6MCu1sNhptuLoh2YkSBQXvIdGMcNvbBWPzQXYMDgdv3tVoES6kjLTF5hmXF4s7QUN02MR5uqthc2qLEyYwNyZhF1CbNW5nn1WUlEfBxOQ0EAiqXvtH5ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280042; c=relaxed/simple;
-	bh=BTYITVFDaH10HGNJ2+7SFwQh/yHBBLFXSziJvUvd4wU=;
+	s=arc-20240116; t=1718280045; c=relaxed/simple;
+	bh=jBGCFCE0zjvnIkognWBU1XI36NfKZCHN5/G+Dxv/ajs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Clo5sTlqQ2QkVjO/xQefSL4TcjPH/gDwbLL0Aybs9Ss6N37l1hDhhz8oVZKNAbjZj5Jnl3vuL5kDL5lVbNEGyI5Jroq1gWg2pDIlWzG3C/1g0HCk6FcYZn/w0C2/EaW9+00Oir7EL1yc2Zh0gS1UhZNgoGZrC1xm4Uonk6nmDNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjvZN3M8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bz7ig0sCiiRq497JWGCB9CSVmZwOnyxq23bHo0DxTcb0AgPJWA5u5MjJp8qRHpi/Pmz34j1KB+zUeolVLZHVQmQyiw6Nh4eQk6N0COoe66poBrxKnVIEIwdkHLsIMllnRgLLYpn2KOMy4meAuu5VKm/LimfliSVyRs0ObLiFqGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpLgI1o/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjvZN3M8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5B9C2BBFC;
-	Thu, 13 Jun 2024 12:00:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpLgI1o/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7319AC2BBFC;
+	Thu, 13 Jun 2024 12:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280042;
-	bh=BTYITVFDaH10HGNJ2+7SFwQh/yHBBLFXSziJvUvd4wU=;
+	s=korg; t=1718280044;
+	bh=jBGCFCE0zjvnIkognWBU1XI36NfKZCHN5/G+Dxv/ajs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjvZN3M8dZu2xAWXjRQpI8I8EeUBxpjzWsP5oUaTQ/20A3wcs5YYkcXACXSVX/jH7
-	 F/kvJgSkaxwk7X40F0Fh5qqMbYOJeE05FFe4eWNvqWIfmzXUfCn2y9obl9t8imWySO
-	 PCQ7wGVWr6CwInlX+Zw0G5IiUIhQxY553jdcVNZU=
+	b=XpLgI1o/+cflzVX+IPekwaeCXIeChDVxYuWujZWBltyyA2xKnsrixOrtP/SrsQ9XD
+	 eIhAT5t+5yIoIgTA1Vh2RIobQ8/IuqOHwdLVxVc1ayvljqeaZv8ncd00wuSL6j9f0B
+	 omRpb5cfmllMuUd7NOTi2s5yVzJZLEo3Vw3fNfB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Bursov <vitaly@bursov.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Valentin Schneider <vschneid@redhat.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/202] sched/fair: Allow disabling sched_balance_newidle with sched_relax_domain_level
-Date: Thu, 13 Jun 2024 13:33:10 +0200
-Message-ID: <20240613113231.319263254@linuxfoundation.org>
+Subject: [PATCH 5.4 093/202] perf probe: Add missing libgen.h header needed for using basename()
+Date: Thu, 13 Jun 2024 13:33:11 +0200
+Message-ID: <20240613113231.358364548@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -54,61 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Bursov <vitaly@bursov.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit a1fd0b9d751f840df23ef0e75b691fc00cfd4743 ]
+[ Upstream commit 581037151910126a7934e369e4b6ac70eda9a703 ]
 
-Change relax_domain_level checks so that it would be possible
-to include or exclude all domains from newidle balancing.
+This prototype is obtained indirectly, by luck, from some other header
+in probe-event.c in most systems, but recently exploded on alpine:edge:
 
-This matches the behavior described in the documentation:
+   8    13.39 alpine:edge                   : FAIL gcc version 13.2.1 20240309 (Alpine 13.2.1_git20240309)
+    util/probe-event.c: In function 'convert_exec_to_group':
+    util/probe-event.c:225:16: error: implicit declaration of function 'basename' [-Werror=implicit-function-declaration]
+      225 |         ptr1 = basename(exec_copy);
+          |                ^~~~~~~~
+    util/probe-event.c:225:14: error: assignment to 'char *' from 'int' makes pointer from integer without a cast [-Werror=int-conversion]
+      225 |         ptr1 = basename(exec_copy);
+          |              ^
+    cc1: all warnings being treated as errors
+    make[3]: *** [/git/perf-6.8.0/tools/build/Makefile.build:158: util] Error 2
 
-  -1   no request. use system default or follow request of others.
-   0   no search.
-   1   search siblings (hyperthreads in a core).
+Fix it by adding the libgen.h header where basename() is prototyped.
 
-"2" enables levels 0 and 1, level_max excludes the last (level_max)
-level, and level_max+1 includes all levels.
-
-Fixes: 1d3504fcf560 ("sched, cpuset: customize sched domains, core")
-Signed-off-by: Vitalii Bursov <vitaly@bursov.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Link: https://lore.kernel.org/r/bd6de28e80073c79466ec6401cdeae78f0d4423d.1714488502.git.vitaly@bursov.com
+Fixes: fb7345bbf7fad9bf ("perf probe: Support basic dwarf-based operations on uprobe events")
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/lkml/
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c  | 2 +-
- kernel/sched/topology.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/probe-event.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 5d50ac2f26525..6ec74b9120b75 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1868,7 +1868,7 @@ bool current_cpuset_is_being_rebound(void)
- static int update_relax_domain_level(struct cpuset *cs, s64 val)
- {
- #ifdef CONFIG_SMP
--	if (val < -1 || val >= sched_domain_level_max)
-+	if (val < -1 || val > sched_domain_level_max + 1)
- 		return -EINVAL;
- #endif
- 
-diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
-index 844dc30fc5593..fc0dcc812a07b 100644
---- a/kernel/sched/topology.c
-+++ b/kernel/sched/topology.c
-@@ -1205,7 +1205,7 @@ static void set_domain_attribute(struct sched_domain *sd,
- 	} else
- 		request = attr->relax_domain_level;
- 
--	if (sd->level > request) {
-+	if (sd->level >= request) {
- 		/* Turn off idle balance on this domain: */
- 		sd->flags &= ~(SD_BALANCE_WAKE|SD_BALANCE_NEWIDLE);
- 	}
+diff --git a/tools/perf/util/probe-event.c b/tools/perf/util/probe-event.c
+index 67b7d2af1755d..1fe1c3ac2e4c9 100644
+--- a/tools/perf/util/probe-event.c
++++ b/tools/perf/util/probe-event.c
+@@ -11,6 +11,7 @@
+ #include <sys/stat.h>
+ #include <fcntl.h>
+ #include <errno.h>
++#include <libgen.h>
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <stdlib.h>
 -- 
 2.43.0
 
