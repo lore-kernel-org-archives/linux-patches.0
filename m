@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A854F144D3F;
-	Thu, 13 Jun 2024 12:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E4A144D16;
+	Thu, 13 Jun 2024 12:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280017; cv=none; b=txRvPiare2qiGSJcw8RIeXt8Wextlgdr/jh2mfUPfTyRE4ldlBg1Eyz2zafE3dnnzEQwlAdpsB332hmrPTHK9x8rTL6kB2Hun49HWzJpUgyxCnCUWDsSQUzF6vYoUOa6C5IW8j9oO7ZkO1eTDOa8Pypg+BnD/8vOIZ97hX2hnqQ=
+	t=1718280020; cv=none; b=gCtvL1dPp671mpRKSzZIw/OkcSWfWQPtJl07tWwAE8GTsUtbKEAcMoYccasWamwxZpc2pkcvBNISpXfYowg+R4cUiLbvQ6pvjqcnD0sIJRZZrmMKSmXjRF2UnUdlfBvLltl3LUz0UuxAd9LEas6op1EWL14uxBKA9wqFcY/LEvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280017; c=relaxed/simple;
-	bh=tdrUW9gaMtridZMAC6N1TyEBVsOIjg2JGOTnrEs8194=;
+	s=arc-20240116; t=1718280020; c=relaxed/simple;
+	bh=TAKpKGjeyVfnFrTpmPNsokaKQRADjdaLUUrJnk+/e9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qaghy7OlBOfmu3+b+xgdIwcnxayTrjmqhT9U9KLUc2IDmODjh2BHD/m27hv/AG8yj/8jdUbzyHJdlCPYRHWSw7iY7YU0QwA9rPnT+uAKi7COFBzXGm+p/gIRJjnBEInI0zqKx3QkUv94tqXgsDBwTmv36JFSjEwIJT8QYwrCymM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGTobW0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fCYb0TNzg46mIdd19r0W/n3h58AVoh96fHR4NX35i4D5LVBAAMSHukfRHVo/p/PmEByZNFBL/AaPykX8sgWEaS2ZcZsn859deNKhSOakyKZwxdmFGBn8MQIfuFYQzLgWLw0qOXpXwVpuJlR2i+uoyp8lX9GQnMnVm9WYVV4fmKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ma3a6nwO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGTobW0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2925EC2BBFC;
-	Thu, 13 Jun 2024 12:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ma3a6nwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F00C2BBFC;
+	Thu, 13 Jun 2024 12:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280017;
-	bh=tdrUW9gaMtridZMAC6N1TyEBVsOIjg2JGOTnrEs8194=;
+	s=korg; t=1718280020;
+	bh=TAKpKGjeyVfnFrTpmPNsokaKQRADjdaLUUrJnk+/e9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGTobW0IpT56J9AbR8gNUF4+M/ctbgxKqMDwJaXT3L0bD4dJMWPdNXhrP4JxQs68Z
-	 f+7Bz4pAnyXRvqrPJQo66YpMMqEjLmEa1rRiZx1Naloqr0Nh3Azh2VJ4B53mm1+sz/
-	 4nY8d1Pi5PWrHca6pGib3UKroZHdL0GmJe2hv43k=
+	b=ma3a6nwOF02NUFq246IgbjeprVTcmDdiaXJRYGJ0sAAwTPpuSZvjySvvblPbvrBFv
+	 z9UJ0BJbfrRbpxk2rOthdBAGSDm/H/W+KVgKjsxYNfdnNC7Fwp5IRqVsNBEdnUir3W
+	 FeffOS+6xLCMXoV7XJa1OOLM0TIaQ9bkF5dfo4Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huai-Yuan Liu <qq810974084@gmail.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 114/202] ppdev: Add an error check in register_device
-Date: Thu, 13 Jun 2024 13:33:32 +0200
-Message-ID: <20240613113232.159730210@linuxfoundation.org>
+Subject: [PATCH 5.4 088/202] RDMA/IPoIB: Fix format truncation compilation errors
+Date: Thu, 13 Jun 2024 13:33:06 +0200
+Message-ID: <20240613113231.166142945@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -44,76 +44,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huai-Yuan Liu <qq810974084@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit fbf740aeb86a4fe82ad158d26d711f2f3be79b3e ]
+[ Upstream commit 49ca2b2ef3d003402584c68ae7b3055ba72e750a ]
 
-In register_device, the return value of ida_simple_get is unchecked,
-in witch ida_simple_get will use an invalid index value.
+Truncate the device name to store IPoIB VLAN name.
 
-To address this issue, index should be checked after ida_simple_get. When
-the index value is abnormal, a warning message should be printed, the port
-should be dropped, and the value should be recorded.
+[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 allmodconfig
+[leonro@5b4e8fba4ddd kernel]$ make -s -j 20 W=1 drivers/infiniband/ulp/ipoib/
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c: In function ‘ipoib_vlan_add’:
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:52: error: ‘%04x’
+directive output may be truncated writing 4 bytes into a region of size
+between 0 and 15 [-Werror=format-truncation=]
+  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+      |                                                    ^~~~
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:48: note: directive
+argument in the range [0, 65535]
+  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+      |                                                ^~~~~~~~~
+drivers/infiniband/ulp/ipoib/ipoib_vlan.c:187:9: note: ‘snprintf’ output
+between 6 and 21 bytes into a destination of size 16
+  187 |         snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  188 |                  ppriv->dev->name, pkey);
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:244: drivers/infiniband/ulp/ipoib/ipoib_vlan.o] Error 1
+make[6]: *** Waiting for unfinished jobs....
 
-Fixes: 9a69645dde11 ("ppdev: fix registering same device name")
-Signed-off-by: Huai-Yuan Liu <qq810974084@gmail.com>
-Link: https://lore.kernel.org/r/20240412083840.234085-1-qq810974084@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
+Link: https://lore.kernel.org/r/e9d3e1fef69df4c9beaf402cc3ac342bad680791.1715240029.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ppdev.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/infiniband/ulp/ipoib/ipoib_vlan.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/ppdev.c b/drivers/char/ppdev.c
-index 5246e0faaf9ae..fb51430e1d5c6 100644
---- a/drivers/char/ppdev.c
-+++ b/drivers/char/ppdev.c
-@@ -296,28 +296,35 @@ static int register_device(int minor, struct pp_struct *pp)
- 	if (!port) {
- 		pr_warn("%s: no associated port!\n", name);
- 		rc = -ENXIO;
--		goto err;
-+		goto err_free_name;
- 	}
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
+index 58ca5e9c6079c..1c1cd10283acf 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_vlan.c
+@@ -182,8 +182,12 @@ int ipoib_vlan_add(struct net_device *pdev, unsigned short pkey)
  
- 	index = ida_alloc(&ida_index, GFP_KERNEL);
-+	if (index < 0) {
-+		pr_warn("%s: failed to get index!\n", name);
-+		rc = index;
-+		goto err_put_port;
-+	}
-+
- 	memset(&ppdev_cb, 0, sizeof(ppdev_cb));
- 	ppdev_cb.irq_func = pp_irq;
- 	ppdev_cb.flags = (pp->flags & PP_EXCL) ? PARPORT_FLAG_EXCL : 0;
- 	ppdev_cb.private = pp;
- 	pdev = parport_register_dev_model(port, name, &ppdev_cb, index);
--	parport_put_port(port);
+ 	ppriv = ipoib_priv(pdev);
  
- 	if (!pdev) {
- 		pr_warn("%s: failed to register device!\n", name);
- 		rc = -ENXIO;
- 		ida_free(&ida_index, index);
--		goto err;
-+		goto err_put_port;
- 	}
+-	snprintf(intf_name, sizeof(intf_name), "%s.%04x",
+-		 ppriv->dev->name, pkey);
++	/* If you increase IFNAMSIZ, update snprintf below
++	 * to allow longer names.
++	 */
++	BUILD_BUG_ON(IFNAMSIZ != 16);
++	snprintf(intf_name, sizeof(intf_name), "%.10s.%04x", ppriv->dev->name,
++		 pkey);
  
- 	pp->pdev = pdev;
- 	pp->index = index;
- 	dev_dbg(&pdev->dev, "registered pardevice\n");
--err:
-+err_put_port:
-+	parport_put_port(port);
-+err_free_name:
- 	kfree(name);
- 	return rc;
- }
+ 	ndev = ipoib_intf_alloc(ppriv->ca, ppriv->port, intf_name);
+ 	if (IS_ERR(ndev)) {
 -- 
 2.43.0
 
