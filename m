@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFCC2AF19;
-	Thu, 13 Jun 2024 12:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EC620ED;
+	Thu, 13 Jun 2024 12:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282869; cv=none; b=tGDS9aUyPsfVP5fBK8fCRUzumZyZoRlYZ8kwIoFiqagPuinzCi4JuGoWfcqWrGZ4vLy6XBpb2oSaqw08DGlMIToA0dx+3vQxmgrfNGODl2Cz1X9K6iIhNcT58okDvw6Bsdo/r8GcKKTN0MdcCK2S/4Gq20738Q5jrYZlCaeYm8g=
+	t=1718282872; cv=none; b=FvQtZTgQ8+GBSReQCudETWScmVWX5qWS4RtXTeC4P8wu6XEXiplHyYSjsWrBtTErJYMDtVvp4m96fNS/ssOHXTuRwiDhXVwg5xJuYRrWj77OgXlnV9hlhncshtaJcdaIFUn102ST2HP2y+L1M67mzRJAZh4Futumc+RjkfhRSRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282869; c=relaxed/simple;
-	bh=t2ZZJOXi+5ZBZLanynCz2AWFGfiopqFPGmCnnrr+Oeo=;
+	s=arc-20240116; t=1718282872; c=relaxed/simple;
+	bh=vtXWt5M9ldgovK6oLhPqaULarfr8DZbM+xMYpBW8/yA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=usrc+FUTuxK6og2CCEqidMgJ7iao/EKBsTELcCtHmbv9R3aDrtuEfcOaEJaT9dWqCLRegG1+79tYAXt+iAn5JPRCyIinZz7Ts5k51DjtQcIpsUUB8JIfttIHSbEEOEhsrVZTz9buVPCTLsNzDcwFW4O6B8P83EIKp3xpx5fIPBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evdTWFu7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hVG1DcRoXoe7n3U0FnTuCB8203UBeKrSmuq1YKTwYS52PJwTGYA+Im/lgFH4pSvJtbYhueL1Y8RIMmNn6uY99JzwN3T6I4/rb07JMc0ZTkWABdtBYUhR7yhaPnCJhFv0qfFsVK84v4Yng7eAP5cWE20sTxW6wjN8Qw0OgJ9hur0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ye4KXrut; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evdTWFu7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2308DC4AF1A;
-	Thu, 13 Jun 2024 12:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ye4KXrut"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12620C2BBFC;
+	Thu, 13 Jun 2024 12:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282869;
-	bh=t2ZZJOXi+5ZBZLanynCz2AWFGfiopqFPGmCnnrr+Oeo=;
+	s=korg; t=1718282872;
+	bh=vtXWt5M9ldgovK6oLhPqaULarfr8DZbM+xMYpBW8/yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=evdTWFu7Ni4tUk99ydLod7pk5V5UQhigW9KMWuPWXVy11cFYhPFpSwuzTXHAoBZxI
-	 tIJ1cZFQWOv7ApohFW7zDhrWBJrJlOCFpl2o4zQXY/PO9JznwpiNyuKtZiyvXAZKnc
-	 4Ns983jkG3XpO/NmXvnQSo/VjByLO7YYmlt7np1c=
+	b=Ye4KXrutIhOhy7XRciUw3XGD+TqTIl4XTdpnZyNbc0KeoXbJF0tQDeSK+TB6P2vh+
+	 AzCuosRSd5QhzYy3QJ9CWvKmkBiRg/T3jsdCfEpfw1c7QfxjLCcPoKkdN+eiqHZZFJ
+	 UKhk/GVM3o7XexjpvpqEV0IvkUWFp9vZAZo+4Ki0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Marius Fleischer <fleischermarius@gmail.com>,
-	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 05/85] maple_tree: fix mas_empty_area_rev() null pointer dereference
-Date: Thu, 13 Jun 2024 13:35:03 +0200
-Message-ID: <20240613113214.346521925@linuxfoundation.org>
+	Jorge Ramirez-Ortiz <jorge@foundries.io>,
+	Avri Altman <avri.altman@wdc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 6.1 06/85] mmc: core: Do not force a retune before RPMB switch
+Date: Thu, 13 Jun 2024 13:35:04 +0200
+Message-ID: <20240613113214.384714185@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -52,65 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Jorge Ramirez-Ortiz <jorge@foundries.io>
 
-commit 955a923d2809803980ff574270f81510112be9cf upstream.
+commit 67380251e8bbd3302c64fea07f95c31971b91c22 upstream.
 
-Currently the code calls mas_start() followed by mas_data_end() if the
-maple state is MA_START, but mas_start() may return with the maple state
-node == NULL.  This will lead to a null pointer dereference when checking
-information in the NULL node, which is done in mas_data_end().
+Requesting a retune before switching to the RPMB partition has been
+observed to cause CRC errors on the RPMB reads (-EILSEQ).
 
-Avoid setting the offset if there is no node by waiting until after the
-maple state is checked for an empty or single entry state.
+Since RPMB reads can not be retried, the clients would be directly
+affected by the errors.
 
-A user could trigger the events to cause a kernel oops by unmapping all
-vmas to produce an empty maple tree, then mapping a vma that would cause
-the scenario described above.
+This commit disables the retune request prior to switching to the RPMB
+partition: mmc_retune_pause() no longer triggers a retune before the
+pause period begins.
 
-Link: https://lkml.kernel.org/r/20240422203349.2418465-1-Liam.Howlett@oracle.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reported-by: Marius Fleischer <fleischermarius@gmail.com>
-Closes: https://lore.kernel.org/lkml/CAJg=8jyuSxDL6XvqEXY_66M20psRK2J53oBTP+fjV5xpW2-R6w@mail.gmail.com/
-Link: https://lore.kernel.org/lkml/CAJg=8jyuSxDL6XvqEXY_66M20psRK2J53oBTP+fjV5xpW2-R6w@mail.gmail.com/
-Tested-by: Marius Fleischer <fleischermarius@gmail.com>
-Tested-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This was verified with the sdhci-of-arasan driver (ZynqMP) configured
+for HS200 using two separate eMMC cards (DG4064 and 064GB2). In both
+cases, the error was easy to reproduce triggering every few tenths of
+reads.
+
+With this commit, systems that were utilizing OP-TEE to access RPMB
+variables will experience an enhanced performance. Specifically, when
+OP-TEE is configured to employ RPMB as a secure storage solution, it not
+only writes the data but also the secure filesystem within the
+partition. As a result, retrieving any variable involves multiple RPMB
+reads, typically around five.
+
+For context, on ZynqMP, each retune request consumed approximately
+8ms. Consequently, reading any RPMB variable used to take at the very
+minimum 40ms.
+
+After droping the need to retune before switching to the RPMB partition,
+this is no longer the case.
+
+Signed-off-by: Jorge Ramirez-Ortiz <jorge@foundries.io>
+Acked-by: Avri Altman <avri.altman@wdc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20240103112911.2954632-1-jorge@foundries.io
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/mmc/core/host.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -5368,18 +5368,18 @@ int mas_empty_area_rev(struct ma_state *
- 	if (min >= max)
- 		return -EINVAL;
+--- a/drivers/mmc/core/host.c
++++ b/drivers/mmc/core/host.c
+@@ -119,13 +119,12 @@ void mmc_retune_enable(struct mmc_host *
  
--	if (mas_is_start(mas)) {
-+	if (mas_is_start(mas))
- 		mas_start(mas);
--		mas->offset = mas_data_end(mas);
--	} else if (mas->offset >= 2) {
--		mas->offset -= 2;
--	} else if (!mas_rewind_node(mas)) {
-+	else if ((mas->offset < 2) && (!mas_rewind_node(mas)))
- 		return -EBUSY;
--	}
- 
--	/* Empty set. */
--	if (mas_is_none(mas) || mas_is_ptr(mas))
-+	if (unlikely(mas_is_none(mas) || mas_is_ptr(mas)))
- 		return mas_sparse_area(mas, min, max, size, false);
-+	else if (mas->offset >= 2)
-+		mas->offset -= 2;
-+	else
-+		mas->offset = mas_data_end(mas);
-+
- 
- 	/* The start of the window can only be within these values. */
- 	mas->index = min;
+ /*
+  * Pause re-tuning for a small set of operations.  The pause begins after the
+- * next command and after first doing re-tuning.
++ * next command.
+  */
+ void mmc_retune_pause(struct mmc_host *host)
+ {
+ 	if (!host->retune_paused) {
+ 		host->retune_paused = 1;
+-		mmc_retune_needed(host);
+ 		mmc_retune_hold(host);
+ 	}
+ }
 
 
