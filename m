@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B17144D2F;
-	Thu, 13 Jun 2024 12:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BE8144D34;
+	Thu, 13 Jun 2024 12:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280877; cv=none; b=hJqnAtkq0KBSi0lUwqs8AmiWh2euS12yofrLS0fjjWk1dAbKcfpmWOds0BL7fke5Bs2QzNB51XbIjWMGazVKyL3ZmlucUAK3Q7A1xKmZ6vUvyW2tlU8s2qL5uFdrVGZaIXNRrkFN2crL8m1omaRVTt8DkdSPnXScimHPoBv7gCo=
+	t=1718280880; cv=none; b=fhbrXvcgbbqyCVfFhG7XSRuHsSzKEVQDi4K5OX2yK/xY+aX3esiql/r7kSLG5bi1A24kuRaOiBI//hfMlPlE5INNvJ2RPhX0JKk06F94D8mDRRkC+HrLkE+uR3E8uw/RE24SFbzYWlLAX+NHNsFbUC5H8hvjk4DgjvevweeWCZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280877; c=relaxed/simple;
-	bh=Ri7QjFJezTLwpdxVUnuNUY+x7YSdChaNizjoIqnBTMA=;
+	s=arc-20240116; t=1718280880; c=relaxed/simple;
+	bh=VJCpxQd7kfBtjpy90nuU3ecMEpsL6o+YDxjw3fgw98E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CbA2ZpK1SlyFtEQkEHSMIl+65XYkJh2zSsETyh0VYABssWl8S3IzNA59c4GN8SUHMsud3k5b3hDUDNuVzyx6v/Hsc5KvWXahYgoZwowdEaWeRw13HkTKcvHs/Z/VNj3qKO2k6DFMe++Xz8FIdLw7FBH9GxFTi5M97mU/vL7LbU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jz/2zoCO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cne4Gep4U1dUMICUibYdyixFH/MgbHAlZNLy6ne1xH8Shdlxa5AvWAbyGIoQK2nyprI1jkVpE67XQHNyGstKsJ1EIb/RqWGekgZPKuGcnMwQK0OjrpnC1DEzHZjMXP/qqSw9ghtQkvi4fcRplD75wg9/BuUB9rPVCdwioP79uIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=huerAjB2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jz/2zoCO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47EFC2BBFC;
-	Thu, 13 Jun 2024 12:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="huerAjB2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02EEC2BBFC;
+	Thu, 13 Jun 2024 12:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280877;
-	bh=Ri7QjFJezTLwpdxVUnuNUY+x7YSdChaNizjoIqnBTMA=;
+	s=korg; t=1718280880;
+	bh=VJCpxQd7kfBtjpy90nuU3ecMEpsL6o+YDxjw3fgw98E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jz/2zoCOLbd+MnNX+TnaQ16Zx6ZOJWr2mqSkS3ZbNey0k45na0pRBl+TFNPK8T5bw
-	 RZzVgoc7SJwM3RZFh8Od8zPRdHul9R5T5zqVNcbYpnjWQfuBIpxEVmXjkSeXr0Vbqo
-	 MwQruKeWFbjBXiedeZvWETz7/yxZ7YDCccDw9W+0=
+	b=huerAjB2gt/Jk1d/rtXDnNsHFCtwVsuL5CX4D/dCNSoU351CI8BjLHANMSdCKlYuW
+	 tu22rdwMIUK50J+E26mIOMhL5HR4UfAl7UdbRuaKcmgZzVJgVx7HhsiZh2Bt9aWUM6
+	 OJtC67qDpF+Oes/BsAXAEJIkWyQL2Upd2ekzX/Bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Prestwood <prestwoj@gmail.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Guixiong Wei <weiguixiong@bytedance.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 034/317] wifi: ath10k: poll service ready message before failing
-Date: Thu, 13 Jun 2024 13:30:52 +0200
-Message-ID: <20240613113248.861393707@linuxfoundation.org>
+Subject: [PATCH 5.10 035/317] x86/boot: Ignore relocations in .notes sections in walk_relocs() too
+Date: Thu, 13 Jun 2024 13:30:53 +0200
+Message-ID: <20240613113248.901214976@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -53,79 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Guixiong Wei <weiguixiong@bytedance.com>
 
-[ Upstream commit e57b7d62a1b2f496caf0beba81cec3c90fad80d5 ]
+[ Upstream commit 76e9762d66373354b45c33b60e9a53ef2a3c5ff2 ]
 
-Currently host relies on CE interrupts to get notified that
-the service ready message is ready. This results in timeout
-issue if the interrupt is not fired, due to some unknown
-reasons. See below logs:
+Commit:
 
-[76321.937866] ath10k_pci 0000:02:00.0: wmi service ready event not received
-...
-[76322.016738] ath10k_pci 0000:02:00.0: Could not init core: -110
+  aaa8736370db ("x86, relocs: Ignore relocations in .notes section")
 
-And finally it causes WLAN interface bring up failure.
+... only started ignoring the .notes sections in print_absolute_relocs(),
+but the same logic should also by applied in walk_relocs() to avoid
+such relocations.
 
-Change to give it one more chance here by polling CE rings,
-before failing directly.
+[ mingo: Fixed various typos in the changelog, removed extra curly braces from the code. ]
 
-Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00157-QCARMSWPZ-1
-
-Fixes: 5e3dd157d7e7 ("ath10k: mac80211 driver for Qualcomm Atheros 802.11ac CQA98xx devices")
-Reported-by: James Prestwood <prestwoj@gmail.com>
-Tested-By: James Prestwood <prestwoj@gmail.com> # on QCA6174 hw3.2
-Link: https://lore.kernel.org/linux-wireless/304ce305-fbe6-420e-ac2a-d61ae5e6ca1a@gmail.com/
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240227030409.89702-1-quic_bqiang@quicinc.com
+Fixes: aaa8736370db ("x86, relocs: Ignore relocations in .notes section")
+Fixes: 5ead97c84fa7 ("xen: Core Xen implementation")
+Fixes: da1a679cde9b ("Add /sys/kernel/notes")
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20240317150547.24910-1-weiguixiong@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/wmi.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ arch/x86/tools/relocs.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index 85fe855ece097..9cfd35dc87ba3 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -1762,12 +1762,32 @@ void ath10k_wmi_put_wmi_channel(struct ath10k *ar, struct wmi_channel *ch,
- 
- int ath10k_wmi_wait_for_service_ready(struct ath10k *ar)
- {
--	unsigned long time_left;
-+	unsigned long time_left, i;
- 
- 	time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
- 						WMI_SERVICE_READY_TIMEOUT_HZ);
--	if (!time_left)
--		return -ETIMEDOUT;
-+	if (!time_left) {
-+		/* Sometimes the PCI HIF doesn't receive interrupt
-+		 * for the service ready message even if the buffer
-+		 * was completed. PCIe sniffer shows that it's
-+		 * because the corresponding CE ring doesn't fires
-+		 * it. Workaround here by polling CE rings once.
+diff --git a/arch/x86/tools/relocs.c b/arch/x86/tools/relocs.c
+index 0043fd374a62f..f9ec998b7e946 100644
+--- a/arch/x86/tools/relocs.c
++++ b/arch/x86/tools/relocs.c
+@@ -689,6 +689,15 @@ static void walk_relocs(int (*process)(struct section *sec, Elf_Rel *rel,
+ 		if (!(sec_applies->shdr.sh_flags & SHF_ALLOC)) {
+ 			continue;
+ 		}
++
++		/*
++		 * Do not perform relocations in .notes sections; any
++		 * values there are meant for pre-boot consumption (e.g.
++		 * startup_xen).
 +		 */
-+		ath10k_warn(ar, "failed to receive service ready completion, polling..\n");
++		if (sec_applies->shdr.sh_type == SHT_NOTE)
++			continue;
 +
-+		for (i = 0; i < CE_COUNT; i++)
-+			ath10k_hif_send_complete_check(ar, i, 1);
-+
-+		time_left = wait_for_completion_timeout(&ar->wmi.service_ready,
-+							WMI_SERVICE_READY_TIMEOUT_HZ);
-+		if (!time_left) {
-+			ath10k_warn(ar, "polling timed out\n");
-+			return -ETIMEDOUT;
-+		}
-+
-+		ath10k_warn(ar, "service ready completion received, continuing normally\n");
-+	}
-+
- 	return 0;
- }
- 
+ 		sh_symtab = sec_symtab->symtab;
+ 		sym_strtab = sec_symtab->link->strtab;
+ 		for (j = 0; j < sec->shdr.sh_size/sizeof(Elf_Rel); j++) {
 -- 
 2.43.0
 
