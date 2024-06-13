@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9A3137914;
-	Thu, 13 Jun 2024 12:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6586181AA7;
+	Thu, 13 Jun 2024 12:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281036; cv=none; b=WIX86kvMxpHQSnT24l+krPAMM28c2SCQOCeahD6MIldwnsVdgWuq94Vfy0HscGLG/BczUXbvVM+PjQMSfC6ommGl+rKAKgU/N+9xqbHqA4pnTRG3HqrcobI5im9lWm1I6i7+4ovS8LfPzwFaOe44sx8Al6KVDf1mEriTJA/d2+M=
+	t=1718281039; cv=none; b=FioewSz/hKW3kLZzJ7SRIrSRWtr2bk+gS8m0LM4XbA/muLA8dJRfYyuZQLiqa7r6TSjUN7zewgYJmj59bWihz1cGSuJErWX6WAC9GhdXz7JIASRjRHlsp+axIYOJDbeIahfRrv3uAkyM9gbM4rfHjcCUGeQEeC14KHbdWY+6TKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281036; c=relaxed/simple;
-	bh=CEZzpOiI+4i3xMbOJpBGML9cVTx4HoZZSa8i1+M78jg=;
+	s=arc-20240116; t=1718281039; c=relaxed/simple;
+	bh=xXX1MiCB+PkcLKA9qkFfkQHggZQj+EkpRgbxe7fbpKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K0K+c2WJLcpDDYmCZ4Keep5x/tUN/rwvZuBGgirJ07eaAOGxfymhHv+uQSxMHQigsd0ayAxStp5syCjDc1qSySamOWKPJNFys5lMNHnhLKeJFlWGQDIhNcBSucmIve83hxHxp3uTSrR1FD5+6gzCXekJKBAfSqzEITZ8pGVlMqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCG1Goqg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fq4+CuEnxbPq/WDM3XFVS+UNgUyCcGW+qwbin2xWAAHBAdslGiNmtIDv0t48zCrJQTMRTfGIQrFt+5Kv2rYhhHYytTZ7wTXTo7PtkINUaEUiKaaSSnKDew8oE9hAQ4V3JXrPFZLZSMpkF5WmojVv+aq8VEyXjmtVqlRKe0x6RkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Owy4V4OF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCG1Goqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C855CC2BBFC;
-	Thu, 13 Jun 2024 12:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Owy4V4OF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B86C32786;
+	Thu, 13 Jun 2024 12:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281036;
-	bh=CEZzpOiI+4i3xMbOJpBGML9cVTx4HoZZSa8i1+M78jg=;
+	s=korg; t=1718281039;
+	bh=xXX1MiCB+PkcLKA9qkFfkQHggZQj+EkpRgbxe7fbpKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OCG1GoqgTk4l7YW0prWEe1Id9BNpyb7/TOf1tRcaLs4SXNfxfjK5LyH99TIQC6pq4
-	 y1vnSgPuE6TsRAcnuOdIeBdeWoD+litiafWjn1Szi75ujEm+X+FWGDPlzKdDvPy5/0
-	 guvsORtMHchIiQ4zZo7TwdpeDMcSC71AUJu3KKiM=
+	b=Owy4V4OFtM47qXAE5x2XvO2dwXqgq1hY8vLuGpsStTAsugSqMFquhGrAoUgzfohf3
+	 FbbL0H5iG8dMEGSORMmmOwcF47lzcgBGY7lVcUsXDhAEF1oTvzEwJHLTI494svQXnh
+	 qJGX2CHDyoietS7W2g6mE43tWb5Dr1km0TUUpd2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Luis Henriques <lhenriques@suse.de>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/317] x86/insn: Fix PUSH instruction in x86 instruction decoder opcode map
-Date: Thu, 13 Jun 2024 13:32:16 +0200
-Message-ID: <20240613113252.116584033@linuxfoundation.org>
+Subject: [PATCH 5.10 119/317] ext4: avoid excessive credit estimate in ext4_tmpfile()
+Date: Thu, 13 Jun 2024 13:32:17 +0200
+Message-ID: <20240613113252.155486259@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,96 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 59162e0c11d7257cde15f907d19fefe26da66692 ]
+[ Upstream commit 35a1f12f0ca857fee1d7a04ef52cbd5f1f84de13 ]
 
-The x86 instruction decoder is used not only for decoding kernel
-instructions. It is also used by perf uprobes (user space probes) and by
-perf tools Intel Processor Trace decoding. Consequently, it needs to
-support instructions executed by user space also.
+A user with minimum journal size (1024 blocks these days) complained
+about the following error triggered by generic/697 test in
+ext4_tmpfile():
 
-Opcode 0x68 PUSH instruction is currently defined as 64-bit operand size
-only i.e. (d64). That was based on Intel SDM Opcode Map. However that is
-contradicted by the Instruction Set Reference section for PUSH in the
-same manual.
+run fstests generic/697 at 2024-02-28 05:34:46
+JBD2: vfstest wants too many credits credits:260 rsv_credits:0 max:256
+EXT4-fs error (device loop0) in __ext4_new_inode:1083: error 28
 
-Remove 64-bit operand size only annotation from opcode 0x68 PUSH
-instruction.
+Indeed the credit estimate in ext4_tmpfile() is huge.
+EXT4_MAXQUOTAS_INIT_BLOCKS() is 219, then 10 credits from ext4_tmpfile()
+itself and then ext4_xattr_credits_for_new_inode() adds more credits
+needed for security attributes and ACLs. Now the
+EXT4_MAXQUOTAS_INIT_BLOCKS() is in fact unnecessary because we've
+already initialized quotas with dquot_init() shortly before and so
+EXT4_MAXQUOTAS_TRANS_BLOCKS() is enough (which boils down to 3 credits).
 
-Example:
-
-  $ cat pushw.s
-  .global  _start
-  .text
-  _start:
-          pushw   $0x1234
-          mov     $0x1,%eax   # system call number (sys_exit)
-          int     $0x80
-  $ as -o pushw.o pushw.s
-  $ ld -s -o pushw pushw.o
-  $ objdump -d pushw | tail -4
-  0000000000401000 <.text>:
-    401000:       66 68 34 12             pushw  $0x1234
-    401004:       b8 01 00 00 00          mov    $0x1,%eax
-    401009:       cd 80                   int    $0x80
-  $ perf record -e intel_pt//u ./pushw
-  [ perf record: Woken up 1 times to write data ]
-  [ perf record: Captured and wrote 0.014 MB perf.data ]
-
- Before:
-
-  $ perf script --insn-trace=disasm
-  Warning:
-  1 instruction trace errors
-           pushw   10349 [000] 10586.869237014:            401000 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           pushw $0x1234
-           pushw   10349 [000] 10586.869237014:            401006 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb %al, (%rax)
-           pushw   10349 [000] 10586.869237014:            401008 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb %cl, %ch
-           pushw   10349 [000] 10586.869237014:            40100a [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb $0x2e, (%rax)
-   instruction trace error type 1 time 10586.869237224 cpu 0 pid 10349 tid 10349 ip 0x40100d code 6: Trace doesn't match instruction
-
- After:
-
-  $ perf script --insn-trace=disasm
-             pushw   10349 [000] 10586.869237014:            401000 [unknown] (./pushw)           pushw $0x1234
-             pushw   10349 [000] 10586.869237014:            401004 [unknown] (./pushw)           movl $1, %eax
-
-Fixes: eb13296cfaf6 ("x86: Instruction decoder API")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20240502105853.5338-3-adrian.hunter@intel.com
+Fixes: af51a2ac36d1 ("ext4: ->tmpfile() support")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Tested-by: Luis Henriques <lhenriques@suse.de>
+Tested-by: Disha Goel <disgoel@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240307115320.28949-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/x86-opcode-map.txt       | 2 +-
- tools/arch/x86/lib/x86-opcode-map.txt | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/namei.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/lib/x86-opcode-map.txt b/arch/x86/lib/x86-opcode-map.txt
-index ec31f5b60323d..1c25c1072a84d 100644
---- a/arch/x86/lib/x86-opcode-map.txt
-+++ b/arch/x86/lib/x86-opcode-map.txt
-@@ -148,7 +148,7 @@ AVXcode:
- 65: SEG=GS (Prefix)
- 66: Operand-Size (Prefix)
- 67: Address-Size (Prefix)
--68: PUSH Iz (d64)
-+68: PUSH Iz
- 69: IMUL Gv,Ev,Iz
- 6a: PUSH Ib (d64)
- 6b: IMUL Gv,Ev,Ib
-diff --git a/tools/arch/x86/lib/x86-opcode-map.txt b/tools/arch/x86/lib/x86-opcode-map.txt
-index ec31f5b60323d..1c25c1072a84d 100644
---- a/tools/arch/x86/lib/x86-opcode-map.txt
-+++ b/tools/arch/x86/lib/x86-opcode-map.txt
-@@ -148,7 +148,7 @@ AVXcode:
- 65: SEG=GS (Prefix)
- 66: Operand-Size (Prefix)
- 67: Address-Size (Prefix)
--68: PUSH Iz (d64)
-+68: PUSH Iz
- 69: IMUL Gv,Ev,Iz
- 6a: PUSH Ib (d64)
- 6b: IMUL Gv,Ev,Ib
+diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
+index a50eb4c61ecc6..af0801593abb8 100644
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -2748,7 +2748,7 @@ static int ext4_tmpfile(struct inode *dir, struct dentry *dentry, umode_t mode)
+ 	inode = ext4_new_inode_start_handle(dir, mode,
+ 					    NULL, 0, NULL,
+ 					    EXT4_HT_DIR,
+-			EXT4_MAXQUOTAS_INIT_BLOCKS(dir->i_sb) +
++			EXT4_MAXQUOTAS_TRANS_BLOCKS(dir->i_sb) +
+ 			  4 + EXT4_XATTR_TRANS_BLOCKS);
+ 	handle = ext4_journal_current_handle();
+ 	err = PTR_ERR(inode);
 -- 
 2.43.0
 
