@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B532566;
-	Thu, 13 Jun 2024 12:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05124A07;
+	Thu, 13 Jun 2024 12:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282074; cv=none; b=BMYeez9BkvJ3JAQV7lmjwjh0HBILrkLXT80ef7qmM/Abq+KjdkOW2cMsYzrPhxgcV2ie20aM3oE4K7Yimn73NBivy6C+5783iD+mrgaKamlNekuafjIDLVWa9tQ+8vvsGrwj8MTwY6WrDZj+NjtYOktrQg6Z1+FyAJ9wI74GF98=
+	t=1718282077; cv=none; b=SlLG20eQBtvh9rESfqjq/Btia9BPjdkpU+0nHySCdqh/Di7pD+/zEpb6tOJ7ifp9UcKNYIoTg6Uf69Zd3vPCJqrwdVpYC27svgngJr9Fkfrf5JIzFa5YRRgDC+HL3nWeCl7ny9cvyyvCgRFb0REbIgUCZYHebvXRVBZiA9rrTjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282074; c=relaxed/simple;
-	bh=nYelEZ43DwjJW0dOyehzEFps4sOyCx/7oA5de+CO1bs=;
+	s=arc-20240116; t=1718282077; c=relaxed/simple;
+	bh=82aztCju/V0q34RtN8rt4GVGsFnOpMnmxRZlAdr4Lfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRziiRAuEH9zJo/v+QIFv1zWJeWrhaqAtcZWsSwBpJtpHdkRQ8y4O/qfOTr2TSQtaWeQhCOc0eh2vekIPjQMJEfWhAdzhoyQl+pbtOtu6cWyZ1MqtzIx9UiKkCdhuO98dwFWZYBqWuAlmQT5B+BupDozbcubgCD7QzZxmxODK9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+8rodAc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TVNZd0xkAnd81yGF4VwIbemrdHz4kHdft0TEG5X+MvcT+Z9DV8XOeIl1cYDGFJptvt9bB4b0OfHrUjGtLBbaBCdldctmWPZbFlzF/2MdEDE8NTI8r+U94a/GNhJetfK95rL9V8ReLHOF0PiAABP+7yVMVMfqEEJ0HO6rf5dhBA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tL/Krl7W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+8rodAc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5B4C2BBFC;
-	Thu, 13 Jun 2024 12:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tL/Krl7W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39DF7C2BBFC;
+	Thu, 13 Jun 2024 12:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282073;
-	bh=nYelEZ43DwjJW0dOyehzEFps4sOyCx/7oA5de+CO1bs=;
+	s=korg; t=1718282076;
+	bh=82aztCju/V0q34RtN8rt4GVGsFnOpMnmxRZlAdr4Lfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+8rodAcnDv7tiZxJop47Ch1Q7rH7TbXHeIUfuiauFLTCu6Qm3Sx3fHEAbaoUIGnq
-	 aGwnCn5TQ8UtAL1S/9lGVHtjJ9ufc3gbmVKSFMFE3qLTwFLtMA3JVDFzhTtCb53aAR
-	 E4LpWoOX30MfRAsCb4+DpftlSiA4r88FIWKFpEpE=
+	b=tL/Krl7WmL9La1we1ZdcOmZElITkEvfyB60L3/4tVXWdeUniXz69YRsUV6U+e3Tm8
+	 a6ktTfdVlNWDMQ1VsCoyw9f8WOuFQzR77S9MrG9Ev5evz547FRm2tKtQ7Cl5RTmUQF
+	 pfiuIAYhPDbW69OMVZjYi6MiB4ua+4PsKqeHDBUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Xiubo Li <xiubli@redhat.com>,
-	Chris Down <chris@chrisdown.name>,
-	Petr Mladek <pmladek@suse.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/402] dev_printk: Add and use dev_no_printk()
-Date: Thu, 13 Jun 2024 13:31:19 +0200
-Message-ID: <20240613113306.893956789@linuxfoundation.org>
+Subject: [PATCH 5.15 123/402] drm/amd/display: Fix potential index out of bounds in color transformation function
+Date: Thu, 13 Jun 2024 13:31:20 +0200
+Message-ID: <20240613113306.938531756@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,96 +58,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit c26ec799042a3888935d59b599f33e41efedf5f8 ]
+[ Upstream commit 63ae548f1054a0b71678d0349c7dc9628ddd42ca ]
 
-When printk-indexing is enabled, each dev_printk() invocation emits a
-pi_entry structure.  This is even true when the dev_printk() is
-protected by an always-false check, as is typically the case for debug
-messages: while the actual code to print the message is optimized out by
-the compiler, the pi_entry structure is still emitted.
+Fixes index out of bounds issue in the color transformation function.
+The issue could occur when the index 'i' exceeds the number of transfer
+function points (TRANSFER_FUNC_POINTS).
 
-Avoid emitting pi_entry structures for unavailable dev_printk() kernel
-messages by:
-  1. Introducing a dev_no_printk() helper, mimicked after the existing
-     no_printk() helper, which calls _dev_printk() instead of
-     dev_printk(),
-  2. Replacing all "if (0) dev_printk(...)" constructs by calls to the
-     new helper.
+The fix adds a check to ensure 'i' is within bounds before accessing the
+transfer function points. If 'i' is out of bounds, an error message is
+logged and the function returns false to indicate an error.
 
-This reduces the size of an arm64 defconfig kernel with
-CONFIG_PRINTK_INDEX=y by 957 KiB.
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:405 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:406 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:407 cm_helper_translate_curve_to_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
 
-Fixes: ad7d61f159db7397 ("printk: index: Add indexing support to dev_printk")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Chris Down <chris@chrisdown.name>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/8583d54f1687c801c6cda8edddf2cf0344c6e883.1709127473.git.geert+renesas@glider.be
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: b629596072e5 ("drm/amd/display: Build unity lut for shaper")
+Cc: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Cc: Charlene Liu <Charlene.Liu@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dev_printk.h | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/linux/dev_printk.h b/include/linux/dev_printk.h
-index 8904063d4c9f0..65eec5be8ccb9 100644
---- a/include/linux/dev_printk.h
-+++ b/include/linux/dev_printk.h
-@@ -129,6 +129,16 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
- 		_dev_printk(level, dev, fmt, ##__VA_ARGS__);		\
- 	})
- 
-+/*
-+ * Dummy dev_printk for disabled debugging statements to use whilst maintaining
-+ * gcc's format checking.
-+ */
-+#define dev_no_printk(level, dev, fmt, ...)				\
-+	({								\
-+		if (0)							\
-+			_dev_printk(level, dev, fmt, ##__VA_ARGS__);	\
-+	})
-+
- /*
-  * #defines for all the dev_<level> macros to prefix with whatever
-  * possible use of #define dev_fmt(fmt) ...
-@@ -158,10 +168,7 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
- 	dev_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__)
- #else
- #define dev_dbg(dev, fmt, ...)						\
--({									\
--	if (0)								\
--		dev_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__); \
--})
-+	dev_no_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__)
- #endif
- 
- #ifdef CONFIG_PRINTK
-@@ -247,20 +254,14 @@ do {									\
- } while (0)
- #else
- #define dev_dbg_ratelimited(dev, fmt, ...)				\
--do {									\
--	if (0)								\
--		dev_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__); \
--} while (0)
-+	dev_no_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__)
- #endif
- 
- #ifdef VERBOSE_DEBUG
- #define dev_vdbg	dev_dbg
- #else
- #define dev_vdbg(dev, fmt, ...)						\
--({									\
--	if (0)								\
--		dev_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__); \
--})
-+	dev_no_printk(KERN_DEBUG, dev, dev_fmt(fmt), ##__VA_ARGS__)
- #endif
- 
- /*
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
+index 7a00fe525dfba..bd9bc51983fec 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
+@@ -379,6 +379,11 @@ bool cm_helper_translate_curve_to_hw_format(
+ 				i += increment) {
+ 			if (j == hw_points - 1)
+ 				break;
++			if (i >= TRANSFER_FUNC_POINTS) {
++				DC_LOG_ERROR("Index out of bounds: i=%d, TRANSFER_FUNC_POINTS=%d\n",
++					     i, TRANSFER_FUNC_POINTS);
++				return false;
++			}
+ 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
+ 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
+ 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
 -- 
 2.43.0
 
