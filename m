@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A532B144313;
-	Thu, 13 Jun 2024 12:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E5156458;
+	Thu, 13 Jun 2024 12:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280859; cv=none; b=fP8tAc6wPZR/NqPS4XvAPd+QbSjTh2Sx5ZH9bjIdmrupoBcXpuJ7aj3pjnHSBK6ZgOhiyyEShuJDn1mx2K4PzemCgloQGw4WkVzfD87NHKYgjB1Tr0qBS6Ovfk4NGqLnhtKWxy4v1lx5/blEESOeA2G3Ec1z4Db/9va04bfmnlg=
+	t=1718280862; cv=none; b=EdPts1akrer8ZOcTiC28Uf9oTWyM7fNOL3S5fobMNuKhd9h9VOQgw+e9w0OF+siQL5BPn2M2VNKT6XWOrzvN1jxrOTK1uKcIqXI6ABjwi+AZZc6gAGZAfDsXrJvMF9UauWoMlmi9U6jDslRi5NUeCxBre2sEZYQdunjjNs9GmyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280859; c=relaxed/simple;
-	bh=NjIF/qyUNEbkIZwOnzTml5TPUp+S+bRDUwQP/PboUfU=;
+	s=arc-20240116; t=1718280862; c=relaxed/simple;
+	bh=e5zb0VY5v2PBSQraObKP2/WB+X4QhKwTb51GnEIsPcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P6RNdryMYgK0mY7O7JS/abEI2jL62Oq7EZkFoJANtffrDvlfDEof5gNq3KjnemTXHrOxEiSsh+OS07+O4SSnqVCbk0aXyt3m5rTgb+KtkbLy3lCNi/jHdQNu3c4Ie2qhw5ygNBp0CWJG+685xO9lFATHgdVsM7VmIlHAtso5tTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRLtSA8+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kUPb7ySs6aKOVoPZHfO8cuJxk2uoDrhBmj9+dudra3chQGFlfZ5vW79jHgyIRuZCP3ekaITTtQw5ayLJGCrqrRG9qoDCPu/YAuyTt8WYBi5uQfGHmymJJ4Eh7darmQMm+K6i9294XC1hbUcehsbM9hRh2DyfIGsKeZVxkzeHlyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQuF5ACG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRLtSA8+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B42BC2BBFC;
-	Thu, 13 Jun 2024 12:14:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQuF5ACG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8E5C2BBFC;
+	Thu, 13 Jun 2024 12:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280859;
-	bh=NjIF/qyUNEbkIZwOnzTml5TPUp+S+bRDUwQP/PboUfU=;
+	s=korg; t=1718280862;
+	bh=e5zb0VY5v2PBSQraObKP2/WB+X4QhKwTb51GnEIsPcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HRLtSA8+sNjHF3LkjQXzQ/nGT+NzY8A8xj5CeQy0vMl77in8FAAJFn2mFQ2QuZvrS
-	 4PFZoR13wpD5pb3slAv76sz5nczCMr6f/aDfmTKpJHqiN8UMHho+cKrKo6Fo18gw7y
-	 C1CwBhfWQjU+53JidC34Fmi7y8/CEZVo1p9fYaZ8=
+	b=iQuF5ACGhZjzeHSB52iHb4huOuv7Q4nIQTvUnpPOerhOA1NCVowwvJdVi50Vf7QS8
+	 2Z9sKR2xPlLAwgXdujKhi1FjLUta9TRmAgjbz9G2sx0hvbsOx4XX3itcc99T+3f38e
+	 PH/hog7tHUlGPtj2F6NMiopYtumHMp7yL+NY53T4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenz Bauer <lmb@isovalent.com>,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xingui Yang <yangxingui@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/317] udp: Avoid call to compute_score on multiple sites
-Date: Thu, 13 Jun 2024 13:31:16 +0200
-Message-ID: <20240613113249.792839964@linuxfoundation.org>
+Subject: [PATCH 5.10 059/317] scsi: libsas: Fix the failure of adding phy with zero-address to port
+Date: Thu, 13 Jun 2024 13:31:17 +0200
+Message-ID: <20240613113249.832080057@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -54,162 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@suse.de>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 50aee97d15113b95a68848db1f0cb2a6c09f753a ]
+[ Upstream commit 06036a0a5db34642c5dbe22021a767141f010b7a ]
 
-We've observed a 7-12% performance regression in iperf3 UDP ipv4 and
-ipv6 tests with multiple sockets on Zen3 cpus, which we traced back to
-commit f0ea27e7bfe1 ("udp: re-score reuseport groups when connected
-sockets are present").  The failing tests were those that would spawn
-UDP sockets per-cpu on systems that have a high number of cpus.
+As of commit 7d1d86518118 ("[SCSI] libsas: fix false positive 'device
+attached' conditions"), reset the phy->entacted_sas_addr address to a
+zero-address when the link rate is less than 1.5G.
 
-Unsurprisingly, it is not caused by the extra re-scoring of the reused
-socket, but due to the compiler no longer inlining compute_score, once
-it has the extra call site in udp4_lib_lookup2.  This is augmented by
-the "Safe RET" mitigation for SRSO, needed in our Zen3 cpus.
+Currently we find that when a new device is attached, and the link rate is
+less than 1.5G, but the device type is not NO_DEVICE, for example: the link
+rate is SAS_PHY_RESET_IN_PROGRESS and the device type is stp. After setting
+the phy->entacted_sas_addr address to the zero address, the port will
+continue to be created for the phy with the zero-address, and other phys
+with the zero-address will be tried to be added to the new port:
 
-We could just explicitly inline it, but compute_score() is quite a large
-function, around 300b.  Inlining in two sites would almost double
-udp4_lib_lookup2, which is a silly thing to do just to workaround a
-mitigation.  Instead, this patch shuffles the code a bit to avoid the
-multiple calls to compute_score.  Since it is a static function used in
-one spot, the compiler can safely fold it in, as it did before, without
-increasing the text size.
+[562240.051197] sas: ex 500e004aaaaaaa1f phy19:U:0 attached: 0000000000000000 (no device)
+// phy19 is deleted but still on the parent port's phy_list
+[562240.062536] sas: ex 500e004aaaaaaa1f phy0 new device attached
+[562240.062616] sas: ex 500e004aaaaaaa1f phy00:U:5 attached: 0000000000000000 (stp)
+[562240.062680] port-7:7:0: trying to add phy phy-7:7:19 fails: it's already part of another port
 
-With this patch applied I ran my original iperf3 testcases.  The failing
-cases all looked like this (ipv4):
-	iperf3 -c 127.0.0.1 --udp -4 -f K -b $R -l 8920 -t 30 -i 5 -P 64 -O 2
+Therefore, it should be the same as sas_get_phy_attached_dev(). Only when
+device_type is SAS_PHY_UNUSED, sas_address is set to the 0 address.
 
-where $R is either 1G/10G/0 (max, unlimited).  I ran 3 times each.
-baseline is v6.9-rc3. harmean == harmonic mean; CV == coefficient of
-variation.
-
-ipv4:
-                 1G                10G                  MAX
-	    HARMEAN  (CV)      HARMEAN  (CV)    HARMEAN     (CV)
-baseline 1743852.66(0.0208) 1725933.02(0.0167) 1705203.78(0.0386)
-patched  1968727.61(0.0035) 1962283.22(0.0195) 1923853.50(0.0256)
-
-ipv6:
-                 1G                10G                  MAX
-	    HARMEAN  (CV)      HARMEAN  (CV)    HARMEAN     (CV)
-baseline 1729020.03(0.0028) 1691704.49(0.0243) 1692251.34(0.0083)
-patched  1900422.19(0.0067) 1900968.01(0.0067) 1568532.72(0.1519)
-
-This restores the performance we had before the change above with this
-benchmark.  We obviously don't expect any real impact when mitigations
-are disabled, but just to be sure it also doesn't regresses:
-
-mitigations=off ipv4:
-                 1G                10G                  MAX
-	    HARMEAN  (CV)      HARMEAN  (CV)    HARMEAN     (CV)
-baseline 3230279.97(0.0066) 3229320.91(0.0060) 2605693.19(0.0697)
-patched  3242802.36(0.0073) 3239310.71(0.0035) 2502427.19(0.0882)
-
-Cc: Lorenz Bauer <lmb@isovalent.com>
-Fixes: f0ea27e7bfe1 ("udp: re-score reuseport groups when connected sockets are present")
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 7d1d86518118 ("[SCSI] libsas: fix false positive 'device attached' conditions")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Link: https://lore.kernel.org/r/20240312141103.31358-5-yangxingui@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 21 ++++++++++++++++-----
- net/ipv6/udp.c | 20 ++++++++++++++++----
- 2 files changed, 32 insertions(+), 9 deletions(-)
+ drivers/scsi/libsas/sas_expander.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 127aa7b5ce977..da9015efb45e4 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -420,15 +420,21 @@ static struct sock *udp4_lib_lookup2(struct net *net,
- {
- 	struct sock *sk, *result;
- 	int score, badness;
-+	bool need_rescore;
- 
- 	result = NULL;
- 	badness = 0;
- 	udp_portaddr_for_each_entry_rcu(sk, &hslot2->head) {
--		score = compute_score(sk, net, saddr, sport,
--				      daddr, hnum, dif, sdif);
-+		need_rescore = false;
-+rescore:
-+		score = compute_score(need_rescore ? result : sk, net, saddr,
-+				      sport, daddr, hnum, dif, sdif);
- 		if (score > badness) {
- 			badness = score;
- 
-+			if (need_rescore)
-+				continue;
-+
- 			if (sk->sk_state == TCP_ESTABLISHED) {
- 				result = sk;
- 				continue;
-@@ -449,9 +455,14 @@ static struct sock *udp4_lib_lookup2(struct net *net,
- 			if (IS_ERR(result))
- 				continue;
- 
--			badness = compute_score(result, net, saddr, sport,
--						daddr, hnum, dif, sdif);
--
-+			/* compute_score is too long of a function to be
-+			 * inlined, and calling it again here yields
-+			 * measureable overhead for some
-+			 * workloads. Work around it by jumping
-+			 * backwards to rescore 'result'.
-+			 */
-+			need_rescore = true;
-+			goto rescore;
- 		}
- 	}
- 	return result;
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 1632b940347c5..203a6d64d7e99 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -165,15 +165,21 @@ static struct sock *udp6_lib_lookup2(struct net *net,
- {
- 	struct sock *sk, *result;
- 	int score, badness;
-+	bool need_rescore;
- 
- 	result = NULL;
- 	badness = -1;
- 	udp_portaddr_for_each_entry_rcu(sk, &hslot2->head) {
--		score = compute_score(sk, net, saddr, sport,
--				      daddr, hnum, dif, sdif);
-+		need_rescore = false;
-+rescore:
-+		score = compute_score(need_rescore ? result : sk, net, saddr,
-+				      sport, daddr, hnum, dif, sdif);
- 		if (score > badness) {
- 			badness = score;
- 
-+			if (need_rescore)
-+				continue;
-+
- 			if (sk->sk_state == TCP_ESTABLISHED) {
- 				result = sk;
- 				continue;
-@@ -194,8 +200,14 @@ static struct sock *udp6_lib_lookup2(struct net *net,
- 			if (IS_ERR(result))
- 				continue;
- 
--			badness = compute_score(sk, net, saddr, sport,
--						daddr, hnum, dif, sdif);
-+			/* compute_score is too long of a function to be
-+			 * inlined, and calling it again here yields
-+			 * measureable overhead for some
-+			 * workloads. Work around it by jumping
-+			 * backwards to rescore 'result'.
-+			 */
-+			need_rescore = true;
-+			goto rescore;
- 		}
- 	}
- 	return result;
+diff --git a/drivers/scsi/libsas/sas_expander.c b/drivers/scsi/libsas/sas_expander.c
+index 8444a4287ac1c..8681e0cdfa5e9 100644
+--- a/drivers/scsi/libsas/sas_expander.c
++++ b/drivers/scsi/libsas/sas_expander.c
+@@ -256,8 +256,7 @@ static void sas_set_ex_phy(struct domain_device *dev, int phy_id, void *rsp)
+ 	/* help some expanders that fail to zero sas_address in the 'no
+ 	 * device' case
+ 	 */
+-	if (phy->attached_dev_type == SAS_PHY_UNUSED ||
+-	    phy->linkrate < SAS_LINK_RATE_1_5_GBPS)
++	if (phy->attached_dev_type == SAS_PHY_UNUSED)
+ 		memset(phy->attached_sas_addr, 0, SAS_ADDR_SIZE);
+ 	else
+ 		memcpy(phy->attached_sas_addr, dr->attached_sas_addr, SAS_ADDR_SIZE);
 -- 
 2.43.0
 
