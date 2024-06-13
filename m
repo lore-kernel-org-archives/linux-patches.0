@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D6F1448E5;
-	Thu, 13 Jun 2024 11:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8AB1448E5;
+	Thu, 13 Jun 2024 11:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279900; cv=none; b=bBRdYXjSjkWUTwRUrKVlEW+Y7TsW/Aa7xpZYNCZt/u20OsROsESbqJu68nD1G+8rcFGig69iyoZ0UNJtfnDW6KSq+GxWUnrdJXyNvGL9FAEugoAPa8wkj8+WBxiO44ylH38pX+0oAgsD1QWcaq+6yeI5Gmx3jJkKGxVlJkfbOl4=
+	t=1718279903; cv=none; b=Gzc220rjyeOgGzfpXz2bsbnGYPdiKzR1uy4quiL3KT0YuG+9z004tylOG5ky37BQA9ItqPNSCBlTgasRiDpnvJ+WYIkgeQLmykIVl4cmpubr0KvsAdld4vYDu/lqHpZP0vBbICmeHqHPx1TfpdWwksLgXxkN49PIH2VsziWiDUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279900; c=relaxed/simple;
-	bh=AgwQ1aNIuXOZ+HrGd6hsMW4Y9BjSo+p31RXeUAlQB5Q=;
+	s=arc-20240116; t=1718279903; c=relaxed/simple;
+	bh=0PrcuI2PMneRp/DMECtt3oWDNk+NvKFuL08AcyLVtHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1tKj1yjsDqe4S/ZJAp/t1CilByicE0p5RCMgpNiRs65hZgQh6uvp9j+dib6IHo3VaNkmwGxLXE6fzScQOSBFcasV6BE6GmzFAH2aKev2TTLWeiTQ3xU4OSe0YTQ9M2vE+PbfsK368ayBm1Ck06Q1araVD/q82lyE6fxUuusvd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOf9uwlK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OCewKQWXI1MUlAdHRmGLesmKfWTm0dEO/cFWCtQyJQ6/nwL3W6Uj/hqe1KPDsqIx6/PNOQpeeqizLkocTdZ4s637d1eE80Wc4BpQRLLxxnySxUHLabpaS6ScDlcjbmJFVPvCceLqfUQQwkKJa10T4Tu9aeCDOgB/AGNRI7ohqF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NVuu6RU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOf9uwlK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6010C2BBFC;
-	Thu, 13 Jun 2024 11:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NVuu6RU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93F9C32786;
+	Thu, 13 Jun 2024 11:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279900;
-	bh=AgwQ1aNIuXOZ+HrGd6hsMW4Y9BjSo+p31RXeUAlQB5Q=;
+	s=korg; t=1718279903;
+	bh=0PrcuI2PMneRp/DMECtt3oWDNk+NvKFuL08AcyLVtHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lOf9uwlKEgGtB3itQiXwiCLvSN/uYMKCrg0aZAiBZVyEkqiC7Q0W4zhoHc9IgnoC2
-	 O+gWmJ7YCf5lJz3zJ7KosjsqkrGHZZ/TRcuYZzVM5mwVlLMYA6FLLAM213LasGJFxv
-	 yxOSfIfcyDhtVpZSrRjTczphO21xHETXEoTDkins=
+	b=2NVuu6RUTstSF8LCu5rgJDOFuPIJnrctLl/KvlCTjE8t9NkLNUwBaMLPH+lJD0Nn+
+	 ePLxZZmS79Qv5BDZH3pvrhm4rCS8gjuIi/RM4E7C1Pi9f31zLpv4BMT7R1BEOsqP77
+	 AOK4+jr+Is5RbWCaVQmqeMqz3lZeOXeQ+k5j/g6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Burakov <a.burakov@rosalinux.ru>,
+	Ricardo Ribalda <ribalda@chromium.org>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 074/202] media: ngene: Add dvb_ca_en50221_init return value check
-Date: Thu, 13 Jun 2024 13:32:52 +0200
-Message-ID: <20240613113230.630400988@linuxfoundation.org>
+Subject: [PATCH 5.4 075/202] media: radio-shark2: Avoid led_names truncations
+Date: Thu, 13 Jun 2024 13:32:53 +0200
+Message-ID: <20240613113230.669368622@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -45,44 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Burakov <a.burakov@rosalinux.ru>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 9bb1fd7eddcab2d28cfc11eb20f1029154dac718 ]
+[ Upstream commit 1820e16a3019b6258e6009d34432946a6ddd0a90 ]
 
-The return value of dvb_ca_en50221_init() is not checked here that may
-cause undefined behavior in case of nonzero value return.
+Increase the size of led_names so it can fit any valid v4l2 device name.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fixes:
+drivers/media/radio/radio-shark2.c:197:17: warning: ‘%s’ directive output may be truncated writing up to 35 bytes into a region of size 32 [-Wformat-truncation=]
 
-Fixes: 25aee3debe04 ("[media] Rename media/dvb as media/pci")
-Signed-off-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/ngene/ngene-core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/radio/radio-shark2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/ngene/ngene-core.c b/drivers/media/pci/ngene/ngene-core.c
-index 919b297e645c5..622b2d2950a77 100644
---- a/drivers/media/pci/ngene/ngene-core.c
-+++ b/drivers/media/pci/ngene/ngene-core.c
-@@ -1488,7 +1488,9 @@ static int init_channel(struct ngene_channel *chan)
- 	}
- 
- 	if (dev->ci.en && (io & NGENE_IO_TSOUT)) {
--		dvb_ca_en50221_init(adapter, dev->ci.en, 0, 1);
-+		ret = dvb_ca_en50221_init(adapter, dev->ci.en, 0, 1);
-+		if (ret != 0)
-+			goto err;
- 		set_transfer(chan, 1);
- 		chan->dev->channel[2].DataFormatFlags = DF_SWAP32;
- 		set_transfer(&chan->dev->channel[2], 1);
+diff --git a/drivers/media/radio/radio-shark2.c b/drivers/media/radio/radio-shark2.c
+index f1c5c0a6a335c..e3e6aa87fe081 100644
+--- a/drivers/media/radio/radio-shark2.c
++++ b/drivers/media/radio/radio-shark2.c
+@@ -62,7 +62,7 @@ struct shark_device {
+ #ifdef SHARK_USE_LEDS
+ 	struct work_struct led_work;
+ 	struct led_classdev leds[NO_LEDS];
+-	char led_names[NO_LEDS][32];
++	char led_names[NO_LEDS][64];
+ 	atomic_t brightness[NO_LEDS];
+ 	unsigned long brightness_new;
+ #endif
 -- 
 2.43.0
 
