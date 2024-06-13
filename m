@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDBC1C32;
-	Thu, 13 Jun 2024 12:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F1981AA7;
+	Thu, 13 Jun 2024 12:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283005; cv=none; b=UyJbvvCK3IUej/x5b3+TzS4o9UZ51WmMRJmgFbD1sQnyayY2a97m0ZTZag9cnS7q4CwgaU2XiYqUoUp4FyvofgrAYqdDn0Ny9Wpd1T5UFlGdoj8TZhXHd/1mchXZstzSRqcKi/AUHXKc1iRLn4rNwfwvJIOm8PunvnZx8Gk2enE=
+	t=1718283008; cv=none; b=GCl+kXXSBn/sUXTAAl8xGSPhGy2w1E751bZmqe0rKt62wio819OiOsEyicrIYnudpcH59nPzpwAhsPPGKAxixYnutuLIGNkN3DO9Yj+ITBwI8HVTRED412TZjiD5aXmy0f6Pa3P4gPUMavusBVxVCH2bPG0Q54/wh86QkrGf0Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283005; c=relaxed/simple;
-	bh=kJNzlexGPkgFZC10e9/nusbGo1uW4rbgggHuG0F/qqE=;
+	s=arc-20240116; t=1718283008; c=relaxed/simple;
+	bh=TViRWNGidfCYnDjxxcJ+X1z/lrNu20921Odc0kfSJBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCtCqJXQ3ucRspcFCY/BxAc7ZkiCBOkyhhkXR9jdXlyi41EEobaaukNQDmklapxkBXk4876MJiG8KJbN637Sm4HxsEEbEA9FwDfpUlu91aFMzemwhUQeZlXXGK2V+02Rr5y9r8YALm1582z/aEueYH+YWH7ZYQ/zw7ibD7EhR8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORkTc+UZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NnkH6A2tEtb9bnquaY6HyhFAuOqQ/36Lpu/mtS1uZvS0vL/mcwRzbfkCvCwa6a+7KS+u2jL3LwjPPVUqV3D6dHCnzBzQ+/EDL815M/RlLjprGVe8uv4YrwbZvaZf0k8b3LRUmwHEkuXa01wGvJGl3Hf3nYwOsv0+FIcS7Do8sPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eii0S+BE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORkTc+UZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F64C2BBFC;
-	Thu, 13 Jun 2024 12:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eii0S+BE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EBFC2BBFC;
+	Thu, 13 Jun 2024 12:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283004;
-	bh=kJNzlexGPkgFZC10e9/nusbGo1uW4rbgggHuG0F/qqE=;
+	s=korg; t=1718283007;
+	bh=TViRWNGidfCYnDjxxcJ+X1z/lrNu20921Odc0kfSJBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ORkTc+UZ6vTAwTg7JciFT5IOJdDJAewSUrQmVfPCxgRePFWSt0Cj+DfRJ0ktQNtgp
-	 roi3GdScg511La20hYfJfavZ0/UIMTxJhqOyWDnBBt0iu0KkdcmMHgI0CUPVodTVJA
-	 USBEUfiQ7pYIojxEXOpL4zCsZI2ceRGz26Fi30yQ=
+	b=eii0S+BEAQEHa/CMlQkDRBJfPEQ6gIk94wuMeDGltiBtAp9EDZo1gNbOwj/wmBX6+
+	 7UA5Gs42O5KQVFN6S5m+yFx05S4EEhlttlFSAeVJcQx81HYFw8M1Nossbb+fgfP/MQ
+	 lA/azBObXPbBrZesl7Uv4TTS1ModiRzFsESVvzpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Douglas Anderson <dianders@chromium.org>,
 	Justin Stitt <justinstitt@google.com>,
 	Daniel Thompson <daniel.thompson@linaro.org>
-Subject: [PATCH 6.1 67/85] kdb: Fix console handling when editing and tab-completing commands
-Date: Thu, 13 Jun 2024 13:36:05 +0200
-Message-ID: <20240613113216.722987960@linuxfoundation.org>
+Subject: [PATCH 6.1 68/85] kdb: Merge identical case statements in kdb_read()
+Date: Thu, 13 Jun 2024 13:36:06 +0200
+Message-ID: <20240613113216.762509042@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -53,61 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Thompson <daniel.thompson@linaro.org>
 
-commit db2f9c7dc29114f531df4a425d0867d01e1f1e28 upstream.
+commit 6244917f377bf64719551b58592a02a0336a7439 upstream.
 
-Currently, if the cursor position is not at the end of the command buffer
-and the user uses the Tab-complete functions, then the console does not
-leave the cursor in the correct position.
+The code that handles case 14 (down) and case 16 (up) has been copy and
+pasted despite being byte-for-byte identical. Combine them.
 
-For example consider the following buffer with the cursor positioned
-at the ^:
-
-md kdb_pro 10
-          ^
-
-Pressing tab should result in:
-
-md kdb_prompt_str 10
-                 ^
-
-However this does not happen. Instead the cursor is placed at the end
-(after then 10) and further cursor movement redraws incorrectly. The
-same problem exists when we double-Tab but in a different part of the
-code.
-
-Fix this by sending a carriage return and then redisplaying the text to
-the left of the cursor.
-
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # Not a bug fix but it is needed for later bug fixes
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Tested-by: Justin Stitt <justinstitt@google.com>
-Link: https://lore.kernel.org/r/20240424-kgdb_read_refactor-v3-3-f236dbe9828d@linaro.org
+Link: https://lore.kernel.org/r/20240424-kgdb_read_refactor-v3-4-f236dbe9828d@linaro.org
 Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/debug/kdb/kdb_io.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/debug/kdb/kdb_io.c |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
 --- a/kernel/debug/kdb/kdb_io.c
 +++ b/kernel/debug/kdb/kdb_io.c
-@@ -369,6 +369,8 @@ poll_again:
- 			kdb_printf("\n");
- 			kdb_printf(kdb_prompt_str);
- 			kdb_printf("%s", buffer);
-+			if (cp != lastchar)
-+				kdb_position_cursor(kdb_prompt_str, buffer, cp);
- 		} else if (tab != 2 && count > 0) {
- 			/* How many new characters do we want from tmpbuffer? */
- 			len_tmp = strlen(p_tmp) - len;
-@@ -382,6 +384,9 @@ poll_again:
- 				kdb_printf("%s", cp);
- 				cp += len_tmp;
- 				lastchar += len_tmp;
-+				if (cp != lastchar)
-+					kdb_position_cursor(kdb_prompt_str,
-+							    buffer, cp);
- 			}
+@@ -303,6 +303,7 @@ poll_again:
  		}
- 		kdb_nextline = 1; /* reset output line number */
+ 		break;
+ 	case 14: /* Down */
++	case 16: /* Up */
+ 		memset(tmpbuffer, ' ',
+ 		       strlen(kdb_prompt_str) + (lastchar-buffer));
+ 		*(tmpbuffer+strlen(kdb_prompt_str) +
+@@ -317,15 +318,6 @@ poll_again:
+ 			++cp;
+ 		}
+ 		break;
+-	case 16: /* Up */
+-		memset(tmpbuffer, ' ',
+-		       strlen(kdb_prompt_str) + (lastchar-buffer));
+-		*(tmpbuffer+strlen(kdb_prompt_str) +
+-		  (lastchar-buffer)) = '\0';
+-		kdb_printf("\r%s\r", tmpbuffer);
+-		*lastchar = (char)key;
+-		*(lastchar+1) = '\0';
+-		return lastchar;
+ 	case 9: /* Tab */
+ 		if (tab < 2)
+ 			++tab;
 
 
