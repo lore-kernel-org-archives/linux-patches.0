@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A93817FD;
-	Thu, 13 Jun 2024 12:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684CEA59;
+	Thu, 13 Jun 2024 12:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283075; cv=none; b=G5/UBKBXmJnzujlO411Q+8FI95CX49gehgXRYZ8J2OiqLKrPEZ7gu/0kYp9SoFCckEk+fV1vxN3RxvvFtPmGPF5S8luJ+dcJ+IRnhML5lUypF1cpvLnhUJz5vpK/eodTpU6F8ls2/mKNqheg+wv2cCzxz6MNMtC1505VERgXIj0=
+	t=1718283078; cv=none; b=E1oPVlvVit2EifM7AXgyASg5a+rKijPaLicj6YI2QXd0gN2uwweZ+S6NiL0tOlfQvOGSiEkIXNBwjkWWtRGNd4QhevjPH4j1RhSxtiOuse6nw0GJqTzPeCKILEKSLaS00G/UukHyC0Nh6RqW+KvkUsNOKX/CXNWu+PvYTcsOBkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283075; c=relaxed/simple;
-	bh=onSOy6EXbA4I0vnm2n6GVT4C9UTg5MFYwz5CgvX/Sxg=;
+	s=arc-20240116; t=1718283078; c=relaxed/simple;
+	bh=rIUhREKEWIzJ2u6TEd3MiRdaN9JpifbHqoxkw3fbHB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cPRSSm80+hC9YFJiB+HwzFqpXI5/Gc2GbiGSr0XA0N6CBOqBa81pmpF1Mm+30cVwl0kmlnf+dwmrivoL7kjfPHvAaYzxrQSSUJVHp2quP0bZzJcxnYL609h8uD3AOW4yVSwsmv3Zpg37IMsY0gseVi5TUhejk2YwbR7s95dIMJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmaXF7vO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u/qrfkxlLwPwgk9Jg8tN8XhD7po/64NlJ0izn8863mimmOW+RgessPnz42LSdoOYMkXpnxxkjxBLEkewVspSkLpSu7SNaAgNfIA4BUq299JEgqUFjyn+NHbsDJXTu5MXaDaO4Dhq2HgKdqdst6x7swN8LhMgw4RHhVotSv4TZDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nz/nFXQZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmaXF7vO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7248C2BBFC;
-	Thu, 13 Jun 2024 12:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nz/nFXQZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8CDC2BBFC;
+	Thu, 13 Jun 2024 12:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283075;
-	bh=onSOy6EXbA4I0vnm2n6GVT4C9UTg5MFYwz5CgvX/Sxg=;
+	s=korg; t=1718283078;
+	bh=rIUhREKEWIzJ2u6TEd3MiRdaN9JpifbHqoxkw3fbHB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FmaXF7vOcnZpRMimlND7lHadFxStsA98k0S5FEJPdVbTnHwNe/ZNNTgMC26YnZI7q
-	 Bzm4nnQmYD2Ak9PJrfjzAPINT6uEF/zz5ClfIuuryCKxSVeD5a6p3CEstxa2JOKDYp
-	 bJT3hkxAvmTpZFiEWjHDxghWFk8BB6YPkDNWpwyY=
+	b=nz/nFXQZ2WnhnyNpnh5Pb4zA/Sog20yOTovlVbO0PnirE8zLaS+tQu6TO59hi6B2f
+	 3Hxc3FQrYEt0b1jXAwcs1gNgyNTGrFbC1HTk3dYRDhOgUYEtxMMFOse9jqz+Z5AkGh
+	 gpbEXDjVTXWzSCq14/kzLDzpfPwlK6euT9asAkTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.1 60/85] intel_th: pci: Add Meteor Lake-S CPU support
-Date: Thu, 13 Jun 2024 13:35:58 +0200
-Message-ID: <20240613113216.454210107@linuxfoundation.org>
+	Sam Ravnborg <sam@ravnborg.org>,
+	Nick Bowler <nbowler@draconx.ca>,
+	Andreas Larsson <andreas@gaisler.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Atish Patra <atish.patra@oracle.com>,
+	Bob Picco <bob.picco@oracle.com>,
+	Vijay Kumar <vijay.ac.kumar@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.1 61/85] sparc64: Fix number of online CPUs
+Date: Thu, 13 Jun 2024 13:35:59 +0200
+Message-ID: <20240613113216.492416528@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -51,34 +56,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+From: Sam Ravnborg <sam@ravnborg.org>
 
-commit a4f813c3ec9d1c32bc402becd1f011b3904dd699 upstream.
+commit 98937707fea8375e8acea0aaa0b68a956dd52719 upstream.
 
-Add support for the Trace Hub in Meteor Lake-S CPU.
+Nick Bowler reported:
+    When using newer kernels on my Ultra 60 with dual 450MHz UltraSPARC-II
+    CPUs, I noticed that only CPU 0 comes up, while older kernels (including
+    4.7) are working fine with both CPUs.
 
-Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20240429130119.1518073-15-alexander.shishkin@linux.intel.com
+      I bisected the failure to this commit:
+
+      9b2f753ec23710aa32c0d837d2499db92fe9115b is the first bad commit
+      commit 9b2f753ec23710aa32c0d837d2499db92fe9115b
+      Author: Atish Patra <atish.patra@oracle.com>
+      Date:   Thu Sep 15 14:54:40 2016 -0600
+
+      sparc64: Fix cpu_possible_mask if nr_cpus is set
+
+    This is a small change that reverts very easily on top of 5.18: there is
+    just one trivial conflict.  Once reverted, both CPUs work again.
+
+    Maybe this is related to the fact that the CPUs on this system are
+    numbered CPU0 and CPU2 (there is no CPU1)?
+
+The current code that adjust cpu_possible based on nr_cpu_ids do not
+take into account that CPU's may not come one after each other.
+Move the chech to the function that setup the cpu_possible mask
+so there is no need to adjust it later.
+
+Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+Fixes: 9b2f753ec237 ("sparc64: Fix cpu_possible_mask if nr_cpus is set")
+Reported-by: Nick Bowler <nbowler@draconx.ca>
+Tested-by: Nick Bowler <nbowler@draconx.ca>
+Link: https://lore.kernel.org/sparclinux/20201009161924.c8f031c079dd852941307870@gmx.de/
+Link: https://lore.kernel.org/all/CADyTPEwt=ZNams+1bpMB1F9w_vUdPsGCt92DBQxxq_VtaLoTdw@mail.gmail.com/
+Cc: stable@vger.kernel.org # v4.8+
+Cc: Andreas Larsson <andreas@gaisler.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Atish Patra <atish.patra@oracle.com>
+Cc: Bob Picco <bob.picco@oracle.com>
+Cc: Vijay Kumar <vijay.ac.kumar@oracle.com>
+Cc: David S. Miller <davem@davemloft.net>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240330-sparc64-warnings-v1-9-37201023ee2f@ravnborg.org
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/pci.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/sparc/include/asm/smp_64.h |    2 --
+ arch/sparc/kernel/prom_64.c     |    4 +++-
+ arch/sparc/kernel/setup_64.c    |    1 -
+ arch/sparc/kernel/smp_64.c      |   14 --------------
+ 4 files changed, 3 insertions(+), 18 deletions(-)
 
---- a/drivers/hwtracing/intel_th/pci.c
-+++ b/drivers/hwtracing/intel_th/pci.c
-@@ -290,6 +290,11 @@ static const struct pci_device_id intel_
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
- 	},
- 	{
-+		/* Meteor Lake-S CPU */
-+		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0xae24),
-+		.driver_data = (kernel_ulong_t)&intel_th_2x,
-+	},
-+	{
- 		/* Raptor Lake-S */
- 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x7a26),
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+--- a/arch/sparc/include/asm/smp_64.h
++++ b/arch/sparc/include/asm/smp_64.h
+@@ -47,7 +47,6 @@ void arch_send_call_function_ipi_mask(co
+ int hard_smp_processor_id(void);
+ #define raw_smp_processor_id() (current_thread_info()->cpu)
+ 
+-void smp_fill_in_cpu_possible_map(void);
+ void smp_fill_in_sib_core_maps(void);
+ void cpu_play_dead(void);
+ 
+@@ -77,7 +76,6 @@ void __cpu_die(unsigned int cpu);
+ #define smp_fill_in_sib_core_maps() do { } while (0)
+ #define smp_fetch_global_regs() do { } while (0)
+ #define smp_fetch_global_pmu() do { } while (0)
+-#define smp_fill_in_cpu_possible_map() do { } while (0)
+ #define smp_init_cpu_poke() do { } while (0)
+ #define scheduler_poke() do { } while (0)
+ 
+--- a/arch/sparc/kernel/prom_64.c
++++ b/arch/sparc/kernel/prom_64.c
+@@ -483,7 +483,9 @@ static void *record_one_cpu(struct devic
+ 	ncpus_probed++;
+ #ifdef CONFIG_SMP
+ 	set_cpu_present(cpuid, true);
+-	set_cpu_possible(cpuid, true);
++
++	if (num_possible_cpus() < nr_cpu_ids)
++		set_cpu_possible(cpuid, true);
+ #endif
+ 	return NULL;
+ }
+--- a/arch/sparc/kernel/setup_64.c
++++ b/arch/sparc/kernel/setup_64.c
+@@ -684,7 +684,6 @@ void __init setup_arch(char **cmdline_p)
+ 
+ 	paging_init();
+ 	init_sparc64_elf_hwcap();
+-	smp_fill_in_cpu_possible_map();
+ 	/*
+ 	 * Once the OF device tree and MDESC have been setup and nr_cpus has
+ 	 * been parsed, we know the list of possible cpus.  Therefore we can
+--- a/arch/sparc/kernel/smp_64.c
++++ b/arch/sparc/kernel/smp_64.c
+@@ -1204,20 +1204,6 @@ void __init smp_setup_processor_id(void)
+ 		xcall_deliver_impl = hypervisor_xcall_deliver;
+ }
+ 
+-void __init smp_fill_in_cpu_possible_map(void)
+-{
+-	int possible_cpus = num_possible_cpus();
+-	int i;
+-
+-	if (possible_cpus > nr_cpu_ids)
+-		possible_cpus = nr_cpu_ids;
+-
+-	for (i = 0; i < possible_cpus; i++)
+-		set_cpu_possible(i, true);
+-	for (; i < NR_CPUS; i++)
+-		set_cpu_possible(i, false);
+-}
+-
+ void smp_fill_in_sib_core_maps(void)
+ {
+ 	unsigned int i;
 
 
