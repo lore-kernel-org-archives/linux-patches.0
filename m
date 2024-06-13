@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F296F148833;
-	Thu, 13 Jun 2024 11:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4D5149006;
+	Thu, 13 Jun 2024 11:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279458; cv=none; b=spVrSfPdOsfCBA6rGClGhqSp55iATI8BP6lNjERi1OJAZIr7F5ElxpbYl1MCtsgIFYN5Er8Rsw+Wn4Nd/jIYDxGh4kDy25pK9xHUQmaeFbpsxun6+tKa2rJ8gjKT0McrH3UdkKLpw0tmgVlwwQU9e46DLxDYH9uPfhJp+uJ35g8=
+	t=1718279460; cv=none; b=G/SS2QQS/t9C8i/ZuLGxYz8f8f5UFTN8iGumvauR4w02wySkE27tXu8hncF1CtTlf1N/A49c+Eb+6kSYVs7lxugYVO/cWG3Ys+DbFKVtiXVKxAUb8hD803My7M5xqP9D6GOcWgW9CiFEXu7EFcQZrKv/jfD78jXE0PgYyGzilOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279458; c=relaxed/simple;
-	bh=bBq3pL4LmUnBO6deKlLCb6wdxpl+xNCuxLoRWO4BD6U=;
+	s=arc-20240116; t=1718279460; c=relaxed/simple;
+	bh=6ZmXHqjAragdgYxy11F2WZ1Zf5djUWVWCcIJEK9RdGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pot1t3RQXBtGUbMqeJEaamqc3O4TkbTzG4Tqf00vh9aHDm0P1FYPtHgI9mQnDybalEoE6Jl0vtOK7Zma74b27iTUiZfB713aA24BsTOhiBgeby4SNtAPz8vZIU2qhBjypulaiRhzy6FlGPCMMTwosVB9utyqSDwl2ywrsMoEjAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G29gJUQF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M6jil7cWpM2w4kDXKfjTfchbtYGnyqkbuGXYfrjZi9stVz/BUrnjjbL1b2scjLflyAtkkmA+5BB6Bo8E8l1YCMAUcErDEZ25Ag6o4nUdWWE4HLANFfERGxZ1GNnzI5he3Kb3XUotgDTKyM5MKe8A8Ve0m407ZOiivINoPulcv1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcpmii9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G29gJUQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268C0C4AF1A;
-	Thu, 13 Jun 2024 11:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcpmii9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179ACC32786;
+	Thu, 13 Jun 2024 11:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279457;
-	bh=bBq3pL4LmUnBO6deKlLCb6wdxpl+xNCuxLoRWO4BD6U=;
+	s=korg; t=1718279460;
+	bh=6ZmXHqjAragdgYxy11F2WZ1Zf5djUWVWCcIJEK9RdGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G29gJUQF5hkUTyK+gBKAQZCRQP7EzbB3qVtAD3j5ClGABL4HIHecaOjYZQnql/NZk
-	 Ciymbzj/zXsgLWeZXqQXKkIQgHhd5g23WsUR1WzCM/QwwfUmFD6tcqfMXTHSjgwhiu
-	 c5g5l2buB5dBefcnJ96c7kVYVSBAxf2QWzkBopn8=
+	b=dcpmii9XBXCpFw8SML79ZbVWkDQft7bPPYHWUh/c8/gL2mPfDULESTZJ07kkpOVth
+	 gp5XmUhcvn4lEfN3hWleZruKql0i3eaVOrMl2oVmZWAKzRDRx1MI6IDtbgch1H0qm3
+	 kRGm/fD6FgWYRgxEN2B6V3+u56aCPPe3V8r16GqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Yu <fan.yu9@zte.com.cn>,
-	xu xin <xu.xin16@zte.com.cn>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.9 082/157] net/ipv6: Fix route deleting failure when metric equals 0
-Date: Thu, 13 Jun 2024 13:33:27 +0200
-Message-ID: <20240613113230.596675236@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	syzbot+ff14db38f56329ef68df@syzkaller.appspotmail.com
+Subject: [PATCH 6.9 083/157] net/9p: fix uninit-value in p9_client_rpc()
+Date: Thu, 13 Jun 2024 13:33:28 +0200
+Message-ID: <20240613113230.636015710@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -52,81 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xu xin <xu.xin16@zte.com.cn>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit bb487272380d120295e955ad8acfcbb281b57642 upstream.
+commit 25460d6f39024cc3b8241b14c7ccf0d6f11a736a upstream.
 
-Problem
-=========
-After commit 67f695134703 ("ipv6: Move setting default metric for routes"),
-we noticed that the logic of assigning the default value of fc_metirc
-changed in the ioctl process. That is, when users use ioctl(fd, SIOCADDRT,
-rt) with a non-zero metric to add a route,  then they may fail to delete a
-route with passing in a metric value of 0 to the kernel by ioctl(fd,
-SIOCDELRT, rt). But iproute can succeed in deleting it.
+Syzbot with the help of KMSAN reported the following error:
 
-As a reference, when using iproute tools by netlink to delete routes with
-a metric parameter equals 0, like the command as follows:
+BUG: KMSAN: uninit-value in trace_9p_client_res include/trace/events/9p.h:146 [inline]
+BUG: KMSAN: uninit-value in p9_client_rpc+0x1314/0x1340 net/9p/client.c:754
+ trace_9p_client_res include/trace/events/9p.h:146 [inline]
+ p9_client_rpc+0x1314/0x1340 net/9p/client.c:754
+ p9_client_create+0x1551/0x1ff0 net/9p/client.c:1031
+ v9fs_session_init+0x1b9/0x28e0 fs/9p/v9fs.c:410
+ v9fs_mount+0xe2/0x12b0 fs/9p/vfs_super.c:122
+ legacy_get_tree+0x114/0x290 fs/fs_context.c:662
+ vfs_get_tree+0xa7/0x570 fs/super.c:1797
+ do_new_mount+0x71f/0x15e0 fs/namespace.c:3352
+ path_mount+0x742/0x1f20 fs/namespace.c:3679
+ do_mount fs/namespace.c:3692 [inline]
+ __do_sys_mount fs/namespace.c:3898 [inline]
+ __se_sys_mount+0x725/0x810 fs/namespace.c:3875
+ __x64_sys_mount+0xe4/0x150 fs/namespace.c:3875
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
 
-	ip -6 route del fe80::/64 via fe81::5054:ff:fe11:3451 dev eth0 metric 0
+Uninit was created at:
+ __alloc_pages+0x9d6/0xe70 mm/page_alloc.c:4598
+ __alloc_pages_node include/linux/gfp.h:238 [inline]
+ alloc_pages_node include/linux/gfp.h:261 [inline]
+ alloc_slab_page mm/slub.c:2175 [inline]
+ allocate_slab mm/slub.c:2338 [inline]
+ new_slab+0x2de/0x1400 mm/slub.c:2391
+ ___slab_alloc+0x1184/0x33d0 mm/slub.c:3525
+ __slab_alloc mm/slub.c:3610 [inline]
+ __slab_alloc_node mm/slub.c:3663 [inline]
+ slab_alloc_node mm/slub.c:3835 [inline]
+ kmem_cache_alloc+0x6d3/0xbe0 mm/slub.c:3852
+ p9_tag_alloc net/9p/client.c:278 [inline]
+ p9_client_prepare_req+0x20a/0x1770 net/9p/client.c:641
+ p9_client_rpc+0x27e/0x1340 net/9p/client.c:688
+ p9_client_create+0x1551/0x1ff0 net/9p/client.c:1031
+ v9fs_session_init+0x1b9/0x28e0 fs/9p/v9fs.c:410
+ v9fs_mount+0xe2/0x12b0 fs/9p/vfs_super.c:122
+ legacy_get_tree+0x114/0x290 fs/fs_context.c:662
+ vfs_get_tree+0xa7/0x570 fs/super.c:1797
+ do_new_mount+0x71f/0x15e0 fs/namespace.c:3352
+ path_mount+0x742/0x1f20 fs/namespace.c:3679
+ do_mount fs/namespace.c:3692 [inline]
+ __do_sys_mount fs/namespace.c:3898 [inline]
+ __se_sys_mount+0x725/0x810 fs/namespace.c:3875
+ __x64_sys_mount+0xe4/0x150 fs/namespace.c:3875
+ do_syscall_64+0xd5/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
 
-the user can still succeed in deleting the route entry with the smallest
-metric.
+If p9_check_errors() fails early in p9_client_rpc(), req->rc.tag
+will not be properly initialized. However, trace_9p_client_res()
+ends up trying to print it out anyway before p9_client_rpc()
+finishes.
 
-Root Reason
-===========
-After commit 67f695134703 ("ipv6: Move setting default metric for routes"),
-When ioctl() pass in SIOCDELRT with a zero metric, rtmsg_to_fib6_config()
-will set a defalut value (1024) to cfg->fc_metric in kernel, and in
-ip6_route_del() and the line 4074 at net/ipv3/route.c, it will check by
+Fix this issue by assigning default values to p9_fcall fields
+such as 'tag' and (just in case KMSAN unearths something new) 'id'
+during the tag allocation stage.
 
-	if (cfg->fc_metric && cfg->fc_metric != rt->fib6_metric)
-		continue;
-
-and the condition is true and skip the later procedure (deleting route)
-because cfg->fc_metric != rt->fib6_metric. But before that commit,
-cfg->fc_metric is still zero there, so the condition is false and it
-will do the following procedure (deleting).
-
-Solution
-========
-In order to keep a consistent behaviour across netlink() and ioctl(), we
-should allow to delete a route with a metric value of 0. So we only do
-the default setting of fc_metric in route adding.
-
-CC: stable@vger.kernel.org # 5.4+
-Fixes: 67f695134703 ("ipv6: Move setting default metric for routes")
-Co-developed-by: Fan Yu <fan.yu9@zte.com.cn>
-Signed-off-by: Fan Yu <fan.yu9@zte.com.cn>
-Signed-off-by: xu xin <xu.xin16@zte.com.cn>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240514201102055dD2Ba45qKbLlUMxu_DTHP@zte.com.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-and-tested-by: syzbot+ff14db38f56329ef68df@syzkaller.appspotmail.com
+Fixes: 348b59012e5c ("net/9p: Convert net/9p protocol dumps to tracepoints")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Cc: stable@vger.kernel.org
+Message-ID: <20240408141039.30428-1-n.zhandarovich@fintech.ru>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/route.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/9p/client.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -4446,7 +4446,7 @@ static void rtmsg_to_fib6_config(struct
- 		.fc_table = l3mdev_fib_table_by_index(net, rtmsg->rtmsg_ifindex) ?
- 			 : RT6_TABLE_MAIN,
- 		.fc_ifindex = rtmsg->rtmsg_ifindex,
--		.fc_metric = rtmsg->rtmsg_metric ? : IP6_RT_PRIO_USER,
-+		.fc_metric = rtmsg->rtmsg_metric,
- 		.fc_expires = rtmsg->rtmsg_info,
- 		.fc_dst_len = rtmsg->rtmsg_dst_len,
- 		.fc_src_len = rtmsg->rtmsg_src_len,
-@@ -4476,6 +4476,9 @@ int ipv6_route_ioctl(struct net *net, un
- 	rtnl_lock();
- 	switch (cmd) {
- 	case SIOCADDRT:
-+		/* Only do the default setting of fc_metric in route adding */
-+		if (cfg.fc_metric == 0)
-+			cfg.fc_metric = IP6_RT_PRIO_USER;
- 		err = ip6_route_add(&cfg, GFP_KERNEL, NULL);
- 		break;
- 	case SIOCDELRT:
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -235,6 +235,8 @@ static int p9_fcall_init(struct p9_clien
+ 	if (!fc->sdata)
+ 		return -ENOMEM;
+ 	fc->capacity = alloc_msize;
++	fc->id = 0;
++	fc->tag = P9_NOTAG;
+ 	return 0;
+ }
+ 
 
 
