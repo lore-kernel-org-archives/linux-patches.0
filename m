@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A37F17FD;
-	Thu, 13 Jun 2024 12:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A735A17FD;
+	Thu, 13 Jun 2024 12:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282354; cv=none; b=tjYXST6fAvRjAoz2ifJcYN6WFOfK3mITgBiPD9SG6wB6GecMbst31nomcPmjKJLUyddVStpR4DJLVVrHn9hhI+z2i9hmVaregWGxQeFsdREJAX8sexPaDR8GIygSs4O05WLoWRguMgoFJmsrGpAtvPpwHGao8cu0WV69dgpc79k=
+	t=1718282357; cv=none; b=JVDzIbvwLxEIl15uxd+FxRxhWuHWDVgKko7DMJmnm4Rg+3olpsX4Z5Yj8Z9Y2QpwkTv/frByc4jlqk/PA7KhvzQwoEqLKt2ThtlZu3Fwr5x5PPkGH4wc9IkbfzF3BShfK40oLmO4BSsftMWJ7EE5eFO2aNMA3kqOZ2xlSwSShl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282354; c=relaxed/simple;
-	bh=tNzXh/z5qCFe7RxmEOyTTtJ3seoYF0Tb+y7g0MMEMNo=;
+	s=arc-20240116; t=1718282357; c=relaxed/simple;
+	bh=fJWHUQoPL34O5J3XBVftLRUa+7kgkv9+RFECOOgXYx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Om5/9Sd+FKZuf6nb1BAfNMcaVWRMxQq8POXXYSL7g4uI90waczmOLkuwl0xs+MB7H2KXbqP6gUje9FnrBfe4XMuZJXF4OKXEGO3bO0Qtravkppngh3mjbao+Q4Qb/zHp8Thh11sG1ZYO/Hh7aDGXvIWVbssZTjO4P6Ua5W0YvDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twMkQHPY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZqZ45vaOt893Rw2Kc+mNa3W8HtRVyNY+reuG7BHOlLN+pJEfaeR1vnRLKjB6gjywQujt4uEQMmVMLum+JKCmVj/eOsDQbgMfrP9gxL9G6JRiLHRC1XJVh5+zWu/yQjDX5DkeL2jwLzlJ6YtDBlZ/Eh1pa5WkpH05HVMzJpjgytw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChCwvfDn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twMkQHPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3778C2BBFC;
-	Thu, 13 Jun 2024 12:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChCwvfDn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC3DC2BBFC;
+	Thu, 13 Jun 2024 12:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282354;
-	bh=tNzXh/z5qCFe7RxmEOyTTtJ3seoYF0Tb+y7g0MMEMNo=;
+	s=korg; t=1718282357;
+	bh=fJWHUQoPL34O5J3XBVftLRUa+7kgkv9+RFECOOgXYx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twMkQHPYl0qAKsTEbtDN6cEWVw5YkDk6gM6Cg5AGRC/l7pAJvmEQZtjuq0cm19KzU
-	 di12Xkk7wNHuYR+cHsQ5q9ipI9xiEvRi8IU+oa7HQhNkjfbizb0r2zkZ+rOnRjrqee
-	 vnOB+sd2dKn3uC6Y8mMZnbonoo2tbyB65NZTY8uY=
+	b=ChCwvfDnqeQc1YXnSGtUOw/qT/X8R+wyD4Ysvzm15V3XA0nB2+cYDeG+WCHbszpmd
+	 cMSYHcaOmq+tt8j1uh3jgiI91u/NBkt27gGb11CYBQlrM175osvh+OwSyXAA8HSG2t
+	 +r36oi53Xy5v7/lysVPTfiuRNsx/7SOW0Ji+rwtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Chris Wulff <chris.wulff@biamp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 247/402] Input: ioc3kbd - convert to platform remove callback returning void
-Date: Thu, 13 Jun 2024 13:33:24 +0200
-Message-ID: <20240613113311.782295277@linuxfoundation.org>
+Subject: [PATCH 5.15 219/402] usb: gadget: u_audio: Clear uac pointer when freed.
+Date: Thu, 13 Jun 2024 13:32:56 +0200
+Message-ID: <20240613113310.690231574@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -45,66 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Chris Wulff <Chris.Wulff@biamp.com>
 
-[ Upstream commit 150e792dee9ca8416f3d375e48f2f4d7f701fc6b ]
+[ Upstream commit a2cf936ebef291ef7395172b9e2f624779fb6dc0 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+This prevents use of a stale pointer if functions are called after
+g_cleanup that shouldn't be. This doesn't fix any races, but converts
+a possibly silent kernel memory corruption into an obvious NULL pointer
+dereference report.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230920125829.1478827-37-u.kleine-koenig@pengutronix.de
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Stable-dep-of: d40e9edcf3eb ("Input: ioc3kbd - add device table")
+Fixes: eb9fecb9e69b ("usb: gadget: f_uac2: split out audio core")
+Signed-off-by: Chris Wulff <chris.wulff@biamp.com>
+Link: https://lore.kernel.org/stable/CO1PR17MB54194226DA08BFC9EBD8C163E1172%40CO1PR17MB5419.namprd17.prod.outlook.com
+Link: https://lore.kernel.org/r/CO1PR17MB54194226DA08BFC9EBD8C163E1172@CO1PR17MB5419.namprd17.prod.outlook.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/ioc3kbd.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/function/u_audio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/input/serio/ioc3kbd.c b/drivers/input/serio/ioc3kbd.c
-index d51bfe912db5b..50552dc7b4f5e 100644
---- a/drivers/input/serio/ioc3kbd.c
-+++ b/drivers/input/serio/ioc3kbd.c
-@@ -190,7 +190,7 @@ static int ioc3kbd_probe(struct platform_device *pdev)
- 	return 0;
- }
+diff --git a/drivers/usb/gadget/function/u_audio.c b/drivers/usb/gadget/function/u_audio.c
+index 200eb788a74b3..5e34a7ff1b63d 100644
+--- a/drivers/usb/gadget/function/u_audio.c
++++ b/drivers/usb/gadget/function/u_audio.c
+@@ -1172,6 +1172,8 @@ void g_audio_cleanup(struct g_audio *g_audio)
+ 		return;
  
--static int ioc3kbd_remove(struct platform_device *pdev)
-+static void ioc3kbd_remove(struct platform_device *pdev)
- {
- 	struct ioc3kbd_data *d = platform_get_drvdata(pdev);
- 
-@@ -198,13 +198,11 @@ static int ioc3kbd_remove(struct platform_device *pdev)
- 
- 	serio_unregister_port(d->kbd);
- 	serio_unregister_port(d->aux);
--
--	return 0;
- }
- 
- static struct platform_driver ioc3kbd_driver = {
- 	.probe          = ioc3kbd_probe,
--	.remove         = ioc3kbd_remove,
-+	.remove_new     = ioc3kbd_remove,
- 	.driver = {
- 		.name = "ioc3-kbd",
- 	},
+ 	uac = g_audio->uac;
++	g_audio->uac = NULL;
++
+ 	card = uac->card;
+ 	if (card)
+ 		snd_card_free_when_closed(card);
 -- 
 2.43.0
 
