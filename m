@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A613384;
-	Thu, 13 Jun 2024 12:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28650384;
+	Thu, 13 Jun 2024 12:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282843; cv=none; b=QOi5XdZH9/1Dmq1txGV/7aps828Hqfp3J6XdGEX6mlCkg0W5pvvMIXRDTeDblbayxv3c5dBldCfAK3tp3QNLLhLZ4JMI0n4+Edm5S/xwBmfsp9KROo+CcwyrvfIjDsWLPQEeASwuchRRd0aQek68KpSvb889lnugWyjcq5lDalY=
+	t=1718282846; cv=none; b=K4LgG1wWbJmvsV5qCZ+aLGmNi7keeqkvzv5mQ/FrvrZIS/mSdrHFRF2L8mE3V+wSbhwsHBNgYf+uCbnHhFcbA2Qk6fzViS+DKmDcSETp25+Ic5fdwVDGx8DXOCt7EKjqP9E6F+gzJkIFDPn2fABdroTEk6NgmBMdLgPOGXSl4tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282843; c=relaxed/simple;
-	bh=IHgNvbGrug/nbvAGgFke6A5CyFAZsfyVN8PeAgDd83o=;
+	s=arc-20240116; t=1718282846; c=relaxed/simple;
+	bh=xWmtLIna0ABqwCA7WiYN6nA/QQ7I1EAC2t5nzp/q4W4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nM9INLTeYdydtT38EI+c4oq8SpdFHhOHop5sGLscO+rv2xDsB/bvTj91iMxolr9CjJEQDhVFENV+afdso7/msoNHh1lP4JEkeD35Y7cdNxFHpOxub76wvX/TcTYbEMb8qpchkXQByUGoj6jramdy34zaC1Pov3nZUtptnuPT3Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/GTc3Tl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a7SH39sHfxFKRbHcwc3x7/+adfog0XVhWcnqfCyNouf5WpRQylQb9mksobpahdTqw86UF8j3M3GY7bqGhV9mMqAVFkiBLo1wG5X/8411Bcz0mRTXkw//qtVKt/zH7A/i126h2j7iLDg/KUF7lL1/sCiq1m6wNHtS1ArOuyKO/MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTTruzAm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/GTc3Tl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55CAC2BBFC;
-	Thu, 13 Jun 2024 12:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTTruzAm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52AFC32786;
+	Thu, 13 Jun 2024 12:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282843;
-	bh=IHgNvbGrug/nbvAGgFke6A5CyFAZsfyVN8PeAgDd83o=;
+	s=korg; t=1718282846;
+	bh=xWmtLIna0ABqwCA7WiYN6nA/QQ7I1EAC2t5nzp/q4W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L/GTc3Tlc5c3opw5ZVgJu8OWFdyWJPBKzKchXs/B8kY6cDunzs8uHP0KaShSPTbdw
-	 y60q3Jv15qZyWYKUG5wFQSW69s8exSUrK/PhGNkqsJTx1GAY20QxxCt26F0GkGwh/q
-	 RhX50eIImK9uwSoHv/mnCo69UXclSFoLRp17fLgY=
+	b=UTTruzAmfeKQfzguCe3DYX82klA0JjRWuUXGsKLyb035PV5R4Tn3TYJF8K6Qfw9c+
+	 DYsree4DGlpvVzIJrMaB6ZYat65m37jWBYEWr1grzEflYikpDtJWCTrYcw3huzgQ3E
+	 yQShZxo/SsnH51BI6xIfPOz/ofLrKxFDxLYbLg4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 12/85] mptcp: cleanup SOL_TCP handling
-Date: Thu, 13 Jun 2024 13:35:10 +0200
-Message-ID: <20240613113214.615386427@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 13/85] mptcp: fix full TCP keep-alive support
+Date: Thu, 13 Jun 2024 13:35:11 +0200
+Message-ID: <20240613113214.654150864@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -52,141 +52,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 7f71a337b5152ea0e7bef408d1af53778a919316 upstream.
+commit bd11dc4fb969ec148e50cd87f88a78246dbc4d0b upstream.
 
-Most TCP-level socket options get an integer from user space, and
-set the corresponding field under the msk-level socket lock.
+SO_KEEPALIVE support has been added a while ago, as part of a series
+"adding SOL_SOCKET" support. To have a full control of this keep-alive
+feature, it is important to also support TCP_KEEP* socket options at the
+SOL_TCP level.
 
-Reduce the code duplication moving such operations in the common code.
+Supporting them on the setsockopt() part is easy, it is just a matter of
+remembering each value in the MPTCP sock structure, and calling
+tcp_sock_set_keep*() helpers on each subflow. If the value is not
+modified (0), calling these helpers will not do anything. For the
+getsockopt() part, the corresponding value from the MPTCP sock structure
+or the default one is simply returned. All of this is very similar to
+other TCP_* socket options supported by MPTCP.
 
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+It looks important for kernels supporting SO_KEEPALIVE, to also support
+TCP_KEEP* options as well: some apps seem to (wrongly) consider that if
+the former is supported, the latter ones will be supported as well. But
+also, not having this simple and isolated change is preventing MPTCP
+support in some apps, and libraries like GoLang [1]. This is why this
+patch is seen as a fix.
+
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/383
+Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
+Link: https://github.com/golang/go/issues/56539 [1]
+Acked-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: bd11dc4fb969 ("mptcp: fix full TCP keep-alive support")
-[ Without TCP_NOTSENT_LOWAT support, as it is not in this version, see
-  commit 29b5e5ef8739 ("mptcp: implement TCP_NOTSENT_LOWAT support") ]
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20240514011335.176158-3-martineau@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in the same context, because commit 29b5e5ef8739 ("mptcp:
+  implement TCP_NOTSENT_LOWAT support") (new feature) and commit
+  013e3179dbd2 ("mptcp: fix rcv space initialization") (not backported
+  because of the various conflicts, and because the race fixed by this
+  commit "does not produce ill effects in practice") are not in this
+  version. Also, TCP_KEEPINTVL and TCP_KEEPCNT value had to be set
+  without lock, the same way it was done on TCP side prior commit
+  6fd70a6b4e6f ("tcp: set TCP_KEEPINTVL locklessly") and commit
+  84485080cbc1 ("tcp: set TCP_KEEPCNT locklessly"). ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |   61 ++++++++++++++++++++++------------------------------
- 1 file changed, 26 insertions(+), 35 deletions(-)
+ net/mptcp/protocol.h |    3 +
+ net/mptcp/sockopt.c  |   79 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 82 insertions(+)
 
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -288,6 +288,9 @@ struct mptcp_sock {
+ 			fastopening:1,
+ 			in_accept_queue:1,
+ 			free_first:1;
++	int		keepalive_cnt;
++	int		keepalive_idle;
++	int		keepalive_intvl;
+ 	struct work_struct work;
+ 	struct sk_buff  *ooo_last_skb;
+ 	struct rb_root  out_of_order_queue;
 --- a/net/mptcp/sockopt.c
 +++ b/net/mptcp/sockopt.c
-@@ -616,18 +616,11 @@ static int mptcp_setsockopt_sol_tcp_cong
+@@ -616,6 +616,52 @@ static int mptcp_setsockopt_sol_tcp_cong
  	return ret;
  }
  
--static int mptcp_setsockopt_sol_tcp_cork(struct mptcp_sock *msk, sockptr_t optval,
--					 unsigned int optlen)
-+static int __mptcp_setsockopt_sol_tcp_cork(struct mptcp_sock *msk, int val)
- {
- 	struct mptcp_subflow_context *subflow;
- 	struct sock *sk = (struct sock *)msk;
--	int val, ret;
- 
--	ret = mptcp_get_int_option(msk, optval, optlen, &val);
--	if (ret)
--		return ret;
--
--	lock_sock(sk);
- 	sockopt_seq_inc(msk);
- 	msk->cork = !!val;
- 	mptcp_for_each_subflow(msk, subflow) {
-@@ -639,23 +632,15 @@ static int mptcp_setsockopt_sol_tcp_cork
- 	}
- 	if (!val)
- 		mptcp_check_and_set_pending(sk);
--	release_sock(sk);
- 
- 	return 0;
- }
- 
--static int mptcp_setsockopt_sol_tcp_nodelay(struct mptcp_sock *msk, sockptr_t optval,
--					    unsigned int optlen)
-+static int __mptcp_setsockopt_sol_tcp_nodelay(struct mptcp_sock *msk, int val)
- {
- 	struct mptcp_subflow_context *subflow;
- 	struct sock *sk = (struct sock *)msk;
--	int val, ret;
--
--	ret = mptcp_get_int_option(msk, optval, optlen, &val);
--	if (ret)
--		return ret;
- 
--	lock_sock(sk);
- 	sockopt_seq_inc(msk);
- 	msk->nodelay = !!val;
- 	mptcp_for_each_subflow(msk, subflow) {
-@@ -667,8 +652,6 @@ static int mptcp_setsockopt_sol_tcp_node
- 	}
- 	if (val)
- 		mptcp_check_and_set_pending(sk);
--	release_sock(sk);
--
- 	return 0;
- }
- 
-@@ -793,25 +776,10 @@ static int mptcp_setsockopt_sol_tcp(stru
- 	int ret, val;
- 
- 	switch (optname) {
--	case TCP_INQ:
--		ret = mptcp_get_int_option(msk, optval, optlen, &val);
--		if (ret)
--			return ret;
--		if (val < 0 || val > 1)
--			return -EINVAL;
--
--		lock_sock(sk);
--		msk->recvmsg_inq = !!val;
--		release_sock(sk);
--		return 0;
- 	case TCP_ULP:
- 		return -EOPNOTSUPP;
- 	case TCP_CONGESTION:
- 		return mptcp_setsockopt_sol_tcp_congestion(msk, optval, optlen);
--	case TCP_CORK:
--		return mptcp_setsockopt_sol_tcp_cork(msk, optval, optlen);
--	case TCP_NODELAY:
--		return mptcp_setsockopt_sol_tcp_nodelay(msk, optval, optlen);
- 	case TCP_DEFER_ACCEPT:
- 		return mptcp_setsockopt_sol_tcp_defer(msk, optval, optlen);
- 	case TCP_FASTOPEN_CONNECT:
-@@ -819,7 +787,30 @@ static int mptcp_setsockopt_sol_tcp(stru
- 						      optval, optlen);
- 	}
- 
--	return -EOPNOTSUPP;
-+	ret = mptcp_get_int_option(msk, optval, optlen, &val);
-+	if (ret)
-+		return ret;
++static int __tcp_sock_set_keepintvl(struct sock *sk, int val)
++{
++	if (val < 1 || val > MAX_TCP_KEEPINTVL)
++		return -EINVAL;
 +
-+	lock_sock(sk);
-+	switch (optname) {
-+	case TCP_INQ:
-+		if (val < 0 || val > 1)
-+			ret = -EINVAL;
-+		else
-+			msk->recvmsg_inq = !!val;
-+		break;
-+	case TCP_CORK:
-+		ret = __mptcp_setsockopt_sol_tcp_cork(msk, val);
-+		break;
-+	case TCP_NODELAY:
-+		ret = __mptcp_setsockopt_sol_tcp_nodelay(msk, val);
-+		break;
-+	default:
-+		ret = -ENOPROTOOPT;
++	WRITE_ONCE(tcp_sk(sk)->keepalive_intvl, val * HZ);
++
++	return 0;
++}
++
++static int __tcp_sock_set_keepcnt(struct sock *sk, int val)
++{
++	if (val < 1 || val > MAX_TCP_KEEPCNT)
++		return -EINVAL;
++
++	/* Paired with READ_ONCE() in keepalive_probes() */
++	WRITE_ONCE(tcp_sk(sk)->keepalive_probes, val);
++
++	return 0;
++}
++
++static int __mptcp_setsockopt_set_val(struct mptcp_sock *msk, int max,
++				      int (*set_val)(struct sock *, int),
++				      int *msk_val, int val)
++{
++	struct mptcp_subflow_context *subflow;
++	int err = 0;
++
++	mptcp_for_each_subflow(msk, subflow) {
++		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
++		int ret;
++
++		lock_sock(ssk);
++		ret = set_val(ssk, val);
++		err = err ? : ret;
++		release_sock(ssk);
 +	}
 +
-+	release_sock(sk);
-+	return ret;
++	if (!err) {
++		*msk_val = val;
++		sockopt_seq_inc(msk);
++	}
++
++	return err;
++}
++
+ static int __mptcp_setsockopt_sol_tcp_cork(struct mptcp_sock *msk, int val)
+ {
+ 	struct mptcp_subflow_context *subflow;
+@@ -805,6 +851,22 @@ static int mptcp_setsockopt_sol_tcp(stru
+ 	case TCP_NODELAY:
+ 		ret = __mptcp_setsockopt_sol_tcp_nodelay(msk, val);
+ 		break;
++	case TCP_KEEPIDLE:
++		ret = __mptcp_setsockopt_set_val(msk, MAX_TCP_KEEPIDLE,
++						 &tcp_sock_set_keepidle_locked,
++						 &msk->keepalive_idle, val);
++		break;
++	case TCP_KEEPINTVL:
++		ret = __mptcp_setsockopt_set_val(msk, MAX_TCP_KEEPINTVL,
++						 &__tcp_sock_set_keepintvl,
++						 &msk->keepalive_intvl, val);
++		break;
++	case TCP_KEEPCNT:
++		ret = __mptcp_setsockopt_set_val(msk, MAX_TCP_KEEPCNT,
++						 &__tcp_sock_set_keepcnt,
++						 &msk->keepalive_cnt,
++						 val);
++		break;
+ 	default:
+ 		ret = -ENOPROTOOPT;
+ 	}
+@@ -1163,6 +1225,8 @@ static int mptcp_put_int_option(struct m
+ static int mptcp_getsockopt_sol_tcp(struct mptcp_sock *msk, int optname,
+ 				    char __user *optval, int __user *optlen)
+ {
++	struct sock *sk = (void *)msk;
++
+ 	switch (optname) {
+ 	case TCP_ULP:
+ 	case TCP_CONGESTION:
+@@ -1178,6 +1242,18 @@ static int mptcp_getsockopt_sol_tcp(stru
+ 		return mptcp_put_int_option(msk, optval, optlen, msk->cork);
+ 	case TCP_NODELAY:
+ 		return mptcp_put_int_option(msk, optval, optlen, msk->nodelay);
++	case TCP_KEEPIDLE:
++		return mptcp_put_int_option(msk, optval, optlen,
++					    msk->keepalive_idle ? :
++					    READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_keepalive_time) / HZ);
++	case TCP_KEEPINTVL:
++		return mptcp_put_int_option(msk, optval, optlen,
++					    msk->keepalive_intvl ? :
++					    READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_keepalive_intvl) / HZ);
++	case TCP_KEEPCNT:
++		return mptcp_put_int_option(msk, optval, optlen,
++					    msk->keepalive_cnt ? :
++					    READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_keepalive_probes));
+ 	}
+ 	return -EOPNOTSUPP;
  }
+@@ -1282,6 +1358,9 @@ static void sync_socket_options(struct m
+ 		tcp_set_congestion_control(ssk, msk->ca_name, false, true);
+ 	__tcp_sock_set_cork(ssk, !!msk->cork);
+ 	__tcp_sock_set_nodelay(ssk, !!msk->nodelay);
++	tcp_sock_set_keepidle_locked(ssk, msk->keepalive_idle);
++	__tcp_sock_set_keepintvl(ssk, msk->keepalive_intvl);
++	__tcp_sock_set_keepcnt(ssk, msk->keepalive_cnt);
  
- int mptcp_setsockopt(struct sock *sk, int level, int optname,
+ 	inet_sk(ssk)->transparent = inet_sk(sk)->transparent;
+ 	inet_sk(ssk)->freebind = inet_sk(sk)->freebind;
 
 
