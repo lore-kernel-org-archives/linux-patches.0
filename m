@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FA314601B;
-	Thu, 13 Jun 2024 11:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA325146A81;
+	Thu, 13 Jun 2024 11:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279402; cv=none; b=Um5BfK+oljgOkqeRmFHJO8hKCfvRaYM4yAGfCKD4WpEVkUYjii05kuUIRNckMmhIpdXK+C0kCdihCPnEHkh1rdnP8gx35kYyw9MNzD5YjFko9LeomcMhfPqJB8eDRC3l+78ARjC+RY2Gpqb8+al+C3fpLP7lhDomNo9AP8b99BU=
+	t=1718279405; cv=none; b=bWA9UU5P2fk9F6Uc4W86xgY/+Qj71hXDKwJDAhbECuDNhTXK6oo0GICnFYgHeKxp6dBqLOcU2B04fH5CUmSUooQlxGSAAxre/EKyssdwhq4D2Wk0nYUNHp4pidU3Dfg+lQhGPu4/ACHFEjdbdcMFU2OmkzFeNzzBHO84jHo6/Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279402; c=relaxed/simple;
-	bh=cK7W3bqE35uJxojP5Rb62D+YzmcBqbf81DSkB9QPccU=;
+	s=arc-20240116; t=1718279405; c=relaxed/simple;
+	bh=DGGhTHwDyQnBakmgcFkpxuJNGrMbw7s+bT2Oql1lraU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=USjOtsOIUNj9ugLihhu4ZYn0KXUNYNOIk8429mYNothzxWimnlxhx7LYDQQjTmF5DzLdvRVDBDBnxsic35CJZNJu5C56R0AKDgbA3nf6uEBI2qJsQ+GrvLKvcc9RD2oNF7VkKpIP0Th/hcBHU92wcRmD1xyEmsLJnXlYUYFyV68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjBrqIJp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xz5czSvw3Jh5nstE3rbjRxBVR/lDHFGWyT1ntpxKaHe3gAWm510rczuF5Ep/D5MoV+Jr5i7vyG+rVZQYS9p6Jmlb/GpvHtAy8ydoiTiQ4hlgOstYrPrE83QTPx3TIoXgM3ysuag5Ipdq1wVk4Jjfy3/BFEOdCUTVHtD6zDkDkmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZdrw1rw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjBrqIJp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6E1C2BBFC;
-	Thu, 13 Jun 2024 11:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZdrw1rw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD56C32786;
+	Thu, 13 Jun 2024 11:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279401;
-	bh=cK7W3bqE35uJxojP5Rb62D+YzmcBqbf81DSkB9QPccU=;
+	s=korg; t=1718279404;
+	bh=DGGhTHwDyQnBakmgcFkpxuJNGrMbw7s+bT2Oql1lraU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DjBrqIJp9RLWkIDEpLyQOz8ZDk0rOqij4sLYzaNlzxiFW8GkAVM9cnHmqx6FsOEhY
-	 +An23ZcjFJRQousbjPTRtD6VU52z0GPR9/zaRCXGhgesEzHxt7CfJgmyfFWAEBkQ/B
-	 1kLhlilGFom6dgWHxh3kafNnk9JsezC8cJ/2wtvU=
+	b=KZdrw1rw/2OUbPeUriwexj7N2uwmMbEp8tQ4V27/R2oMY3dmDFFkv/hKgygSXf6LM
+	 zfSkTMBgL/5d7Gl6gu9y3avVfS/VPTewveor3eBDAAa5DMGrJc9e1Z6Vb9s7NeG81s
+	 GHb462P06qX1x4cQ0YEFuRKv4l/5bFrZUeKr42VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feifei Xu <Feifei.Xu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Feifei Xu <feifei.xu@amd.com>
-Subject: [PATCH 6.9 056/157] Revert "drm/amdkfd: fix gfx_target_version for certain 11.0.3 devices"
-Date: Thu, 13 Jun 2024 13:33:01 +0200
-Message-ID: <20240613113229.594157372@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.9 065/157] clk: bcm: dvp: Assign ->num before accessing ->hws
+Date: Thu, 13 Jun 2024 13:33:10 +0200
+Message-ID: <20240613113229.937998165@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -51,42 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit dd2b75fd9a79bf418e088656822af06fc253dbe3 upstream.
+commit 9368cdf90f52a68120d039887ccff74ff33b4444 upstream.
 
-This reverts commit 28ebbb4981cb1fad12e0b1227dbecc88810b1ee8.
+Commit f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with
+__counted_by") annotated the hws member of 'struct clk_hw_onecell_data'
+with __counted_by, which informs the bounds sanitizer about the number
+of elements in hws, so that it can warn when hws is accessed out of
+bounds. As noted in that change, the __counted_by member must be
+initialized with the number of elements before the first array access
+happens, otherwise there will be a warning from each access prior to the
+initialization because the number of elements is zero. This occurs in
+clk_dvp_probe() due to ->num being assigned after ->hws has been
+accessed:
 
-Revert this commit as apparently the LLVM code to take advantage of
-this never landed.
+  UBSAN: array-index-out-of-bounds in drivers/clk/bcm/clk-bcm2711-dvp.c:59:2
+  index 0 is out of range for type 'struct clk_hw *[] __counted_by(num)' (aka 'struct clk_hw *[]')
 
-Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Feifei Xu <feifei.xu@amd.com>
+Move the ->num initialization to before the first access of ->hws, which
+clears up the warning.
+
+Cc: stable@vger.kernel.org
+Fixes: f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with __counted_by")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20240425-cbl-bcm-assign-counted-by-val-before-access-v1-1-e2db3b82d5ef@kernel.org
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device.c |   11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/clk/bcm/clk-bcm2711-dvp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-@@ -408,15 +408,8 @@ struct kfd_dev *kgd2kfd_probe(struct amd
- 			f2g = &gfx_v11_kfd2kgd;
- 			break;
- 		case IP_VERSION(11, 0, 3):
--			if ((adev->pdev->device == 0x7460 &&
--			     adev->pdev->revision == 0x00) ||
--			    (adev->pdev->device == 0x7461 &&
--			     adev->pdev->revision == 0x00))
--				/* Note: Compiler version is 11.0.5 while HW version is 11.0.3 */
--				gfx_target_version = 110005;
--			else
--				/* Note: Compiler version is 11.0.1 while HW version is 11.0.3 */
--				gfx_target_version = 110001;
-+			/* Note: Compiler version is 11.0.1 while HW version is 11.0.3 */
-+			gfx_target_version = 110001;
- 			f2g = &gfx_v11_kfd2kgd;
- 			break;
- 		case IP_VERSION(11, 5, 0):
+--- a/drivers/clk/bcm/clk-bcm2711-dvp.c
++++ b/drivers/clk/bcm/clk-bcm2711-dvp.c
+@@ -56,6 +56,8 @@ static int clk_dvp_probe(struct platform
+ 	if (ret)
+ 		return ret;
+ 
++	data->num = NR_CLOCKS;
++
+ 	data->hws[0] = clk_hw_register_gate_parent_data(&pdev->dev,
+ 							"hdmi0-108MHz",
+ 							&clk_dvp_parent, 0,
+@@ -76,7 +78,6 @@ static int clk_dvp_probe(struct platform
+ 		goto unregister_clk0;
+ 	}
+ 
+-	data->num = NR_CLOCKS;
+ 	ret = of_clk_add_hw_provider(pdev->dev.of_node, of_clk_hw_onecell_get,
+ 				     data);
+ 	if (ret)
 
 
