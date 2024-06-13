@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23EC145B32;
-	Thu, 13 Jun 2024 12:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB62E145B08;
+	Thu, 13 Jun 2024 12:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280148; cv=none; b=VOqplTyFEkhoLuZiUh0kHa2Uh7CLvRSKC2f+YpXV/t1viu/BrWdxHkKojBfB+RS5QSaBLA9uAExCT7FbJ9UW4FM8AVX6Ie0GZ/JX8tvfFxFxuT+Wr2+Ys2iJbDH7N2b7h/6/SJ6ievvof/gA2V4vuVsidTZ9ANPkYTciEXtPPj8=
+	t=1718280150; cv=none; b=pDcvBm5PozcC92YJOIWQuzfhLgSBPobPQhyItyboRDQ8o60AGUqt+N8f5p4yuSl4Yds1xBNg5KW0v+QoeO6Y7jJOytoquHaU5B7gpo+EyVxc1Ah52L3JFwgJAfbyoqHY1/X/83iSd4rr6hTBP53hk7nsFnuGO52MbRSKRHJYMxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280148; c=relaxed/simple;
-	bh=1A9lW8hynRipUfSA1ltRo6AS5y6Rpt0D5bwoJP7Zh8I=;
+	s=arc-20240116; t=1718280150; c=relaxed/simple;
+	bh=UvURrZyTDgSQ11AmCdV26lZQv/AVWxXjuR72zhN56LM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0oGVWIFpgVyC4wx4Z26a3Ql4lswBjzkHvsx3Y8i32h3o68lOHt7eFIQqUIwEphWTGqr0f3aEI6UwZe9XUSeTYOwJkduRNWilVhWLYhwjmPh2zgLFbyY/wP9dFSWHMrzCRTxSY/0rXcNs/SrKSr6XqBUX23de6UJrJ1Xls3XGkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaRvboW5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gzrXBcfN689Xu0ApyY41iUNl0H9l0W/beFpw5B2fo30lz3YRvoyOxUJtZZKCxZezHtjDoGvrdZUzoACEbYpSKVFumpbfBd7rMI9v4cb8cqmPmb9xwiLsIte8VrCWBmxjMniHePWJP0z4MvsFdeAHWTTpHRMACe3YsIMaeKMaj+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARJopXCK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaRvboW5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CDDC2BBFC;
-	Thu, 13 Jun 2024 12:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARJopXCK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524FEC2BBFC;
+	Thu, 13 Jun 2024 12:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280147;
-	bh=1A9lW8hynRipUfSA1ltRo6AS5y6Rpt0D5bwoJP7Zh8I=;
+	s=korg; t=1718280150;
+	bh=UvURrZyTDgSQ11AmCdV26lZQv/AVWxXjuR72zhN56LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaRvboW55ULMUsG4KTCLXMlMLaTWX/DRmwsdV29x7Iv0SkfyJ0LOfsCXbSWASleu+
-	 TPjiQ463Mctuwapuju5KKkZORk4Z5VBoAwlJ85HDj4POUh6j5H3AGgasZjHIHvyVgE
-	 fU0hCyml/nz8WcOJFyeJnh+Am8D7IsQ911tKFKKg=
+	b=ARJopXCKNLhRt39FngFheH88XU74AdHQ3N+U2iQyIU8/S7Pcl1OZUL9e1ElQHQtUT
+	 luFry+mV+rmbKcmn5Z62hCXOKKgE/Q4bbwLZ7z2GQrWRCxzVpHP3MjaENZfcbqTSJ9
+	 nfjCA/G7ZqyJ9zzlpElmYBObFfq3vvdKRPxbSIz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 118/202] extcon: max8997: select IRQ_DOMAIN instead of depending on it
-Date: Thu, 13 Jun 2024 13:33:36 +0200
-Message-ID: <20240613113232.316477394@linuxfoundation.org>
+Subject: [PATCH 5.4 152/202] dma-buf/sw-sync: dont enable IRQ from sync_print_obj()
+Date: Thu, 13 Jun 2024 13:34:10 +0200
+Message-ID: <20240613113233.620513709@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -46,51 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit b1781d0a1458070d40134e4f3412ec9d70099bec ]
+[ Upstream commit b794918961516f667b0c745aebdfebbb8a98df39 ]
 
-IRQ_DOMAIN is a hidden (not user visible) symbol. Users cannot set
-it directly thru "make *config", so drivers should select it instead
-of depending on it if they need it.
-Relying on it being set for a dependency is risky.
+Since commit a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from
+known context") by error replaced spin_unlock_irqrestore() with
+spin_unlock_irq() for both sync_debugfs_show() and sync_print_obj() despite
+sync_print_obj() is called from sync_debugfs_show(), lockdep complains
+inconsistent lock state warning.
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
+Use plain spin_{lock,unlock}() for sync_print_obj(), for
+sync_debugfs_show() is already using spin_{lock,unlock}_irq().
 
-Therefore, change EXTCON_MAX8997's use of "depends on" for
-IRQ_DOMAIN to "select".
-
-Link: https://lore.kernel.org/lkml/20240213060028.9744-1-rdunlap@infradead.org/
-Fixes: dca1a71e4108 ("extcon: Add support irq domain for MAX8997 muic")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Reported-by: syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=a225ee3df7e7f9372dbe
+Fixes: a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from known context")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/c2e46020-aaa6-4e06-bf73-f05823f913f0@I-love.SAKURA.ne.jp
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma-buf/sync_debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/extcon/Kconfig b/drivers/extcon/Kconfig
-index aac507bff135c..09485803280ef 100644
---- a/drivers/extcon/Kconfig
-+++ b/drivers/extcon/Kconfig
-@@ -121,7 +121,8 @@ config EXTCON_MAX77843
+diff --git a/drivers/dma-buf/sync_debug.c b/drivers/dma-buf/sync_debug.c
+index 101394f16930f..237bce21d1e72 100644
+--- a/drivers/dma-buf/sync_debug.c
++++ b/drivers/dma-buf/sync_debug.c
+@@ -110,12 +110,12 @@ static void sync_print_obj(struct seq_file *s, struct sync_timeline *obj)
  
- config EXTCON_MAX8997
- 	tristate "Maxim MAX8997 EXTCON Support"
--	depends on MFD_MAX8997 && IRQ_DOMAIN
-+	depends on MFD_MAX8997
-+	select IRQ_DOMAIN
- 	help
- 	  If you say yes here you get support for the MUIC device of
- 	  Maxim MAX8997 PMIC. The MAX8997 MUIC is a USB port accessory
+ 	seq_printf(s, "%s: %d\n", obj->name, obj->value);
+ 
+-	spin_lock_irq(&obj->lock);
++	spin_lock(&obj->lock); /* Caller already disabled IRQ. */
+ 	list_for_each(pos, &obj->pt_list) {
+ 		struct sync_pt *pt = container_of(pos, struct sync_pt, link);
+ 		sync_print_fence(s, &pt->base, false);
+ 	}
+-	spin_unlock_irq(&obj->lock);
++	spin_unlock(&obj->lock);
+ }
+ 
+ static void sync_print_sync_file(struct seq_file *s,
 -- 
 2.43.0
 
