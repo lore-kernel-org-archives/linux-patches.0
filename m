@@ -1,60 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158C512C530;
-	Thu, 13 Jun 2024 12:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B9213D624;
+	Thu, 13 Jun 2024 12:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280030; cv=none; b=i0iQZgU5OPXNnezq9kWvXA2T21CdeoOuZj5QZfdi/zkbBg9Ka/r+oV+Uief9CYZuZoMwAP5/Vgmqdpu9QvmZgA5va6wtTvpmZEeOeExHmzFBF5fwgs3d/JGjFpkWYsvw9SWBMceuTkCNmG5kDmIj2G6HUniGSzUkbZLdeGjhkAo=
+	t=1718280033; cv=none; b=fBpgspgPvZcb1d/5fXTNFPDmKqoE/1hyFScNaxOtR4RHQBKOp5DVk9L37F7DHCkjLjvhFNQSprGF7Ll3MvOI0iagw/qgqoyZYQKDsVnd7faUDXECGjLbFmJMZQQwURaALZKmMrkCKZpi8PrieRy3k//gV8BAwmxXEo4+4YiBHuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280030; c=relaxed/simple;
-	bh=Q7eSktE/oQ40riiMDJ4hqsTYaOoRHaA73dZz+yP1iBQ=;
+	s=arc-20240116; t=1718280033; c=relaxed/simple;
+	bh=WaTanUgK+Ox7ULJRIjNIUDj9PAbqJQr9pTLtqsGL6VY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=onS9zU4VWrZn6DLdxkCngmlU299O/YajhOTJgiIeQDP0yOOz7UPoYgps+iborxHA5HmaZ3LG8ugRtq1srBqU4kL1QT77LOosBsliFfVFnlPn9ta26LSpx4a1tscoW7GDRcH9MjkT5v+4aIr3OS7OQRtez9A+QYA1YcXLpb9NkN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DeiLlEFC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwDjk7zN5UOyGakg0UwLJbKRbm/ZlZNGGdg8I32pq3GZgxeT4yiJKGhwI7ffMc3a+2RSwZ4ctdvA3njKjRxfzwjtbam2Tx9hSe26zn702PkJDRym6GzuDu+cKnceL6EJSwUf3TsBOM/BA+kd6FtRWTaZhyay0FGf3YQ1R1x/OE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaJ7E0RV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DeiLlEFC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6477EC32786;
-	Thu, 13 Jun 2024 12:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaJ7E0RV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85963C2BBFC;
+	Thu, 13 Jun 2024 12:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280030;
-	bh=Q7eSktE/oQ40riiMDJ4hqsTYaOoRHaA73dZz+yP1iBQ=;
+	s=korg; t=1718280032;
+	bh=WaTanUgK+Ox7ULJRIjNIUDj9PAbqJQr9pTLtqsGL6VY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DeiLlEFCXy1TqxIqYHXC9O49QwIwkyCBWLDYmbyQWhX87aoGb44zYSClaKkaAg/SJ
-	 MNiVzdnLzGjr4KWLvn/BEg4B3+k7cJsbfLYL45KnhksOfEXqlqMiHDuQNlDM/9RSMq
-	 Ua1Qjedg15ubmFzzNb2yUCfO538rL1sybeIV/kAg=
+	b=AaJ7E0RVVT9iGoKO+IhDX/BlhpwRuBrUhYuJ+epJ0mCGzGa/6h5I9bXdw3n2Frees
+	 /9fmNuU7MWqTmSUWehERaFYJXN1UovXvVH+4d/J9AxGzpM+I9+egfguE/8YDgARqJ8
+	 5EbUVvE4YL/lQ4RgoONpik8/uOVLBo6ufMMymQQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Ben Gainey <ben.gainey@arm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Li Dong <lidong@vivo.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Paran Lee <p4ranlee@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Sun Haiyong <sunhaiyong@loongson.cn>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	Yanteng Si <siyanteng@loongson.cn>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 117/202] perf ui browser: Dont save pointer to stack memory
-Date: Thu, 13 Jun 2024 13:33:35 +0200
-Message-ID: <20240613113232.276801054@linuxfoundation.org>
+Subject: [PATCH 5.4 089/202] netrom: fix possible dead-lock in nr_rt_ioctl()
+Date: Thu, 13 Jun 2024 13:33:07 +0200
+Message-ID: <20240613113231.204562234@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -73,141 +53,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 769e6a1e15bdbbaf2b0d2f37c24f2c53268bd21f ]
+[ Upstream commit e03e7f20ebf7e1611d40d1fdc1bde900fd3335f6 ]
 
-ui_browser__show() is capturing the input title that is stack allocated
-memory in hist_browser__run().
+syzbot loves netrom, and found a possible deadlock in nr_rt_ioctl [1]
 
-Avoid a use after return by strdup-ing the string.
+Make sure we always acquire nr_node_list_lock before nr_node_lock(nr_node)
 
-Committer notes:
+[1]
+WARNING: possible circular locking dependency detected
+6.9.0-rc7-syzkaller-02147-g654de42f3fc6 #0 Not tainted
+------------------------------------------------------
+syz-executor350/5129 is trying to acquire lock:
+ ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
+ ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_node_lock include/net/netrom.h:152 [inline]
+ ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:464 [inline]
+ ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
 
-Further explanation from Ian Rogers:
+but task is already holding lock:
+ ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
+ ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:462 [inline]
+ ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_rt_ioctl+0x10a/0x1090 net/netrom/nr_route.c:697
 
-My command line using tui is:
-$ sudo bash -c 'rm /tmp/asan.log*; export
-ASAN_OPTIONS="log_path=/tmp/asan.log"; /tmp/perf/perf mem record -a
-sleep 1; /tmp/perf/perf mem report'
-I then go to the perf annotate view and quit. This triggers the asan
-error (from the log file):
-```
-==1254591==ERROR: AddressSanitizer: stack-use-after-return on address
-0x7f2813331920 at pc 0x7f28180
-65991 bp 0x7fff0a21c750 sp 0x7fff0a21bf10
-READ of size 80 at 0x7f2813331920 thread T0
-    #0 0x7f2818065990 in __interceptor_strlen
-../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:461
-    #1 0x7f2817698251 in SLsmg_write_wrapped_string
-(/lib/x86_64-linux-gnu/libslang.so.2+0x98251)
-    #2 0x7f28176984b9 in SLsmg_write_nstring
-(/lib/x86_64-linux-gnu/libslang.so.2+0x984b9)
-    #3 0x55c94045b365 in ui_browser__write_nstring ui/browser.c:60
-    #4 0x55c94045c558 in __ui_browser__show_title ui/browser.c:266
-    #5 0x55c94045c776 in ui_browser__show ui/browser.c:288
-    #6 0x55c94045c06d in ui_browser__handle_resize ui/browser.c:206
-    #7 0x55c94047979b in do_annotate ui/browsers/hists.c:2458
-    #8 0x55c94047fb17 in evsel__hists_browse ui/browsers/hists.c:3412
-    #9 0x55c940480a0c in perf_evsel_menu__run ui/browsers/hists.c:3527
-    #10 0x55c940481108 in __evlist__tui_browse_hists ui/browsers/hists.c:3613
-    #11 0x55c9404813f7 in evlist__tui_browse_hists ui/browsers/hists.c:3661
-    #12 0x55c93ffa253f in report__browse_hists tools/perf/builtin-report.c:671
-    #13 0x55c93ffa58ca in __cmd_report tools/perf/builtin-report.c:1141
-    #14 0x55c93ffaf159 in cmd_report tools/perf/builtin-report.c:1805
-    #15 0x55c94000c05c in report_events tools/perf/builtin-mem.c:374
-    #16 0x55c94000d96d in cmd_mem tools/perf/builtin-mem.c:516
-    #17 0x55c9400e44ee in run_builtin tools/perf/perf.c:350
-    #18 0x55c9400e4a5a in handle_internal_command tools/perf/perf.c:403
-    #19 0x55c9400e4e22 in run_argv tools/perf/perf.c:447
-    #20 0x55c9400e53ad in main tools/perf/perf.c:561
-    #21 0x7f28170456c9 in __libc_start_call_main
-../sysdeps/nptl/libc_start_call_main.h:58
-    #22 0x7f2817045784 in __libc_start_main_impl ../csu/libc-start.c:360
-    #23 0x55c93ff544c0 in _start (/tmp/perf/perf+0x19a4c0) (BuildId:
-84899b0e8c7d3a3eaa67b2eb35e3d8b2f8cd4c93)
+which lock already depends on the new lock.
 
-Address 0x7f2813331920 is located in stack of thread T0 at offset 32 in frame
-    #0 0x55c94046e85e in hist_browser__run ui/browsers/hists.c:746
+the existing dependency chain (in reverse order) is:
 
-  This frame has 1 object(s):
-    [32, 192) 'title' (line 747) <== Memory access at offset 32 is
-inside this variable
-HINT: this may be a false positive if your program uses some custom
-stack unwind mechanism, swapcontext or vfork
-```
-hist_browser__run isn't on the stack so the asan error looks legit.
-There's no clean init/exit on struct ui_browser so I may be trading a
-use-after-return for a memory leak, but that seems look a good trade
-anyway.
+-> #1 (nr_node_list_lock){+...}-{2:2}:
+        lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+        __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
+        _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
+        spin_lock_bh include/linux/spinlock.h:356 [inline]
+        nr_remove_node net/netrom/nr_route.c:299 [inline]
+        nr_del_node+0x4b4/0x820 net/netrom/nr_route.c:355
+        nr_rt_ioctl+0xa95/0x1090 net/netrom/nr_route.c:683
+        sock_do_ioctl+0x158/0x460 net/socket.c:1222
+        sock_ioctl+0x629/0x8e0 net/socket.c:1341
+        vfs_ioctl fs/ioctl.c:51 [inline]
+        __do_sys_ioctl fs/ioctl.c:904 [inline]
+        __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
+        do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+        do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+       entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: 05e8b0804ec4 ("perf ui browser: Stop using 'self'")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Ben Gainey <ben.gainey@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Li Dong <lidong@vivo.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Oliver Upton <oliver.upton@linux.dev>
-Cc: Paran Lee <p4ranlee@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Sun Haiyong <sunhaiyong@loongson.cn>
-Cc: Tim Chen <tim.c.chen@linux.intel.com>
-Cc: Yanteng Si <siyanteng@loongson.cn>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20240507183545.1236093-2-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+-> #0 (&nr_node->node_lock){+...}-{2:2}:
+        check_prev_add kernel/locking/lockdep.c:3134 [inline]
+        check_prevs_add kernel/locking/lockdep.c:3253 [inline]
+        validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
+        __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
+        lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+        __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
+        _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
+        spin_lock_bh include/linux/spinlock.h:356 [inline]
+        nr_node_lock include/net/netrom.h:152 [inline]
+        nr_dec_obs net/netrom/nr_route.c:464 [inline]
+        nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
+        sock_do_ioctl+0x158/0x460 net/socket.c:1222
+        sock_ioctl+0x629/0x8e0 net/socket.c:1341
+        vfs_ioctl fs/ioctl.c:51 [inline]
+        __do_sys_ioctl fs/ioctl.c:904 [inline]
+        __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
+        do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+        do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+       entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+other info that might help us debug this:
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  lock(nr_node_list_lock);
+                               lock(&nr_node->node_lock);
+                               lock(nr_node_list_lock);
+  lock(&nr_node->node_lock);
+
+ *** DEADLOCK ***
+
+1 lock held by syz-executor350/5129:
+  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
+  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:462 [inline]
+  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_rt_ioctl+0x10a/0x1090 net/netrom/nr_route.c:697
+
+stack backtrace:
+CPU: 0 PID: 5129 Comm: syz-executor350 Not tainted 6.9.0-rc7-syzkaller-02147-g654de42f3fc6 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
+  check_noncircular+0x36a/0x4a0 kernel/locking/lockdep.c:2187
+  check_prev_add kernel/locking/lockdep.c:3134 [inline]
+  check_prevs_add kernel/locking/lockdep.c:3253 [inline]
+  validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
+  __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
+  lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
+  __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
+  _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
+  spin_lock_bh include/linux/spinlock.h:356 [inline]
+  nr_node_lock include/net/netrom.h:152 [inline]
+  nr_dec_obs net/netrom/nr_route.c:464 [inline]
+  nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
+  sock_do_ioctl+0x158/0x460 net/socket.c:1222
+  sock_ioctl+0x629/0x8e0 net/socket.c:1341
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:904 [inline]
+  __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240515142934.3708038-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browser.c | 4 +++-
- tools/perf/ui/browser.h | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/netrom/nr_route.c | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/tools/perf/ui/browser.c b/tools/perf/ui/browser.c
-index 9dc808020e824..6fa4f123d5ff7 100644
---- a/tools/perf/ui/browser.c
-+++ b/tools/perf/ui/browser.c
-@@ -287,7 +287,8 @@ int ui_browser__show(struct ui_browser *browser, const char *title,
- 	mutex_lock(&ui__lock);
- 	__ui_browser__show_title(browser, title);
- 
--	browser->title = title;
-+	free(browser->title);
-+	browser->title = strdup(title);
- 	zfree(&browser->helpline);
- 
- 	va_start(ap, helpline);
-@@ -304,6 +305,7 @@ void ui_browser__hide(struct ui_browser *browser)
- 	mutex_lock(&ui__lock);
- 	ui_helpline__pop();
- 	zfree(&browser->helpline);
-+	zfree(&browser->title);
- 	mutex_unlock(&ui__lock);
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index 37cfa880c2d05..85e4637dc8ab1 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -284,22 +284,14 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
+ 	return 0;
  }
  
-diff --git a/tools/perf/ui/browser.h b/tools/perf/ui/browser.h
-index 3678eb88f119c..815e6bf7ee531 100644
---- a/tools/perf/ui/browser.h
-+++ b/tools/perf/ui/browser.h
-@@ -21,7 +21,7 @@ struct ui_browser {
- 	u8	      extra_title_lines;
- 	int	      current_color;
- 	void	      *priv;
--	const char    *title;
-+	char	      *title;
- 	char	      *helpline;
- 	const char    *no_samples_msg;
- 	void 	      (*refresh_dimensions)(struct ui_browser *browser);
+-static inline void __nr_remove_node(struct nr_node *nr_node)
++static void nr_remove_node_locked(struct nr_node *nr_node)
+ {
++	lockdep_assert_held(&nr_node_list_lock);
++
+ 	hlist_del_init(&nr_node->node_node);
+ 	nr_node_put(nr_node);
+ }
+ 
+-#define nr_remove_node_locked(__node) \
+-	__nr_remove_node(__node)
+-
+-static void nr_remove_node(struct nr_node *nr_node)
+-{
+-	spin_lock_bh(&nr_node_list_lock);
+-	__nr_remove_node(nr_node);
+-	spin_unlock_bh(&nr_node_list_lock);
+-}
+-
+ static inline void __nr_remove_neigh(struct nr_neigh *nr_neigh)
+ {
+ 	hlist_del_init(&nr_neigh->neigh_node);
+@@ -338,6 +330,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 		return -EINVAL;
+ 	}
+ 
++	spin_lock_bh(&nr_node_list_lock);
+ 	nr_node_lock(nr_node);
+ 	for (i = 0; i < nr_node->count; i++) {
+ 		if (nr_node->routes[i].neighbour == nr_neigh) {
+@@ -351,7 +344,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 			nr_node->count--;
+ 
+ 			if (nr_node->count == 0) {
+-				nr_remove_node(nr_node);
++				nr_remove_node_locked(nr_node);
+ 			} else {
+ 				switch (i) {
+ 				case 0:
+@@ -365,12 +358,14 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
+ 				nr_node_put(nr_node);
+ 			}
+ 			nr_node_unlock(nr_node);
++			spin_unlock_bh(&nr_node_list_lock);
+ 
+ 			return 0;
+ 		}
+ 	}
+ 	nr_neigh_put(nr_neigh);
+ 	nr_node_unlock(nr_node);
++	spin_unlock_bh(&nr_node_list_lock);
+ 	nr_node_put(nr_node);
+ 
+ 	return -EINVAL;
 -- 
 2.43.0
 
