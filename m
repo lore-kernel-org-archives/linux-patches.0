@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D64614389D;
-	Thu, 13 Jun 2024 11:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C5C14389D;
+	Thu, 13 Jun 2024 11:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278983; cv=none; b=EWAMJ3GSY2+yxrb4ydRt3tXd5YI5Ab57CVO+QH2elMcacq3JExNlCxQTYi0vMSIYOvLBJNSBvlNpYO+hTUXWz+w1w1fP8z5YYhV6r6sxYN/0hGY7DxBw0meCzB30balI0G7ULtdJK5VWk+sDNN0CbcUeMIl5q10D0oYHwinXEKg=
+	t=1718278985; cv=none; b=uulhbcND9wPxOaGK3M/PSnB9V5/qXFxNZfqaB69dbhk/AXB6KUcT1nclp2YVPXtszzU/zakzIodw2Yl4WeLMJx1ZP05/BbF1ilYpzbMoZLvs9qhmbnoRm3q6wlq5xBDfe+yIzFVbQsLTgdbF3WqseEMSyFhrE8cPtYAvIhE5c/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278983; c=relaxed/simple;
-	bh=SDZTAyH8Iitce+reWP4YI0Lu/2KmcFLCoYcfh95Fjug=;
+	s=arc-20240116; t=1718278985; c=relaxed/simple;
+	bh=UPva8IuiQaJ/S+hLNYv0g8kLr1Zfibp3YbLT1du5BKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oZk3CkBBw+CWxLSJ+pLsGY4anqpgx8tHCquOt6v4EUVUoct7GVJW7i8KkX51+k2tE7mOjsIKwzEacmOlWGCpLxryXCOKwm62N50ZjIhsaV2WPVhAPp3bU4szQQKSFrD2IGCjOLP24pbY0PmwGulMhBlG7VcQrdwYarOoElWYvsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2QvV1C1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dNXlhMzTx/iq6ihTu/sOILRX2S0iB4HqEWdBN6z2Z5qsQjOaM4/59s4nkzJFk2AoZ8fwcSQt8WNyJKBwpBevhx36ZknGJkJJSXxM3He1uh+GANyOIHReLyPrbUXgqzIN9NciZNtDmpO0G6U5emEub6Ui0cHeOg/7aEShuP+Jb8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sumcBu80; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2QvV1C1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD79C2BBFC;
-	Thu, 13 Jun 2024 11:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sumcBu80"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE50C2BBFC;
+	Thu, 13 Jun 2024 11:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278982;
-	bh=SDZTAyH8Iitce+reWP4YI0Lu/2KmcFLCoYcfh95Fjug=;
+	s=korg; t=1718278985;
+	bh=UPva8IuiQaJ/S+hLNYv0g8kLr1Zfibp3YbLT1du5BKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b2QvV1C1KeasVS+TAENCEXW+vu198+kRvnTK1k2ky42Bo9MsjmbnGIiHM3ZxwhzrF
-	 OVg0COolrAkDhIBPDDDrX5cO1Qqpzr7MJz/duuSnnkbOKBokJyIgzt0NqrqwQAMVLI
-	 W2JrtbvsiMcY/XoHjoZLcZY/n2WWaanmbWIyUdpk=
+	b=sumcBu80UcSBXBpVf1bn3Xv9ZT5/B1ud/1RcNS6zhH2vx9lKawlWM65FhQX7Kwa9v
+	 KZ3ldhge4mGiEHlKiI5RhjddS5MyQQua91KH9HixfRUPpda0xZqhS9FqP81YoPwz8r
+	 IPQaWIdevHE9CgOgsk0hQSKagzKi+025Xpg3khMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Roded Zats <rzats@paloaltonetworks.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 135/213] dma-buf/sw-sync: dont enable IRQ from sync_print_obj()
-Date: Thu, 13 Jun 2024 13:33:03 +0200
-Message-ID: <20240613113233.205535651@linuxfoundation.org>
+Subject: [PATCH 4.19 136/213] enic: Validate length of nl attributes in enic_set_vf_port
+Date: Thu, 13 Jun 2024 13:33:04 +0200
+Message-ID: <20240613113233.243793580@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -46,57 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Roded Zats <rzats@paloaltonetworks.com>
 
-[ Upstream commit b794918961516f667b0c745aebdfebbb8a98df39 ]
+[ Upstream commit e8021b94b0412c37bcc79027c2e382086b6ce449 ]
 
-Since commit a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from
-known context") by error replaced spin_unlock_irqrestore() with
-spin_unlock_irq() for both sync_debugfs_show() and sync_print_obj() despite
-sync_print_obj() is called from sync_debugfs_show(), lockdep complains
-inconsistent lock state warning.
+enic_set_vf_port assumes that the nl attribute IFLA_PORT_PROFILE
+is of length PORT_PROFILE_MAX and that the nl attributes
+IFLA_PORT_INSTANCE_UUID, IFLA_PORT_HOST_UUID are of length PORT_UUID_MAX.
+These attributes are validated (in the function do_setlink in rtnetlink.c)
+using the nla_policy ifla_port_policy. The policy defines IFLA_PORT_PROFILE
+as NLA_STRING, IFLA_PORT_INSTANCE_UUID as NLA_BINARY and
+IFLA_PORT_HOST_UUID as NLA_STRING. That means that the length validation
+using the policy is for the max size of the attributes and not on exact
+size so the length of these attributes might be less than the sizes that
+enic_set_vf_port expects. This might cause an out of bands
+read access in the memcpys of the data of these
+attributes in enic_set_vf_port.
 
-Use plain spin_{lock,unlock}() for sync_print_obj(), for
-sync_debugfs_show() is already using spin_{lock,unlock}_irq().
-
-Reported-by: syzbot <syzbot+a225ee3df7e7f9372dbe@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=a225ee3df7e7f9372dbe
-Fixes: a6aa8fca4d79 ("dma-buf/sw-sync: Reduce irqsave/irqrestore from known context")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/c2e46020-aaa6-4e06-bf73-f05823f913f0@I-love.SAKURA.ne.jp
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: f8bd909183ac ("net: Add ndo_{set|get}_vf_port support for enic dynamic vnics")
+Signed-off-by: Roded Zats <rzats@paloaltonetworks.com>
+Link: https://lore.kernel.org/r/20240522073044.33519-1-rzats@paloaltonetworks.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/sync_debug.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/cisco/enic/enic_main.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/dma-buf/sync_debug.c b/drivers/dma-buf/sync_debug.c
-index c4c8ecb24aa9b..cfe31e52d78d8 100644
---- a/drivers/dma-buf/sync_debug.c
-+++ b/drivers/dma-buf/sync_debug.c
-@@ -119,12 +119,12 @@ static void sync_print_obj(struct seq_file *s, struct sync_timeline *obj)
+diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
+index bfe0e820956ca..6ad1734d96777 100644
+--- a/drivers/net/ethernet/cisco/enic/enic_main.c
++++ b/drivers/net/ethernet/cisco/enic/enic_main.c
+@@ -1152,18 +1152,30 @@ static int enic_set_vf_port(struct net_device *netdev, int vf,
+ 	pp->request = nla_get_u8(port[IFLA_PORT_REQUEST]);
  
- 	seq_printf(s, "%s: %d\n", obj->name, obj->value);
- 
--	spin_lock_irq(&obj->lock);
-+	spin_lock(&obj->lock); /* Caller already disabled IRQ. */
- 	list_for_each(pos, &obj->pt_list) {
- 		struct sync_pt *pt = container_of(pos, struct sync_pt, link);
- 		sync_print_fence(s, &pt->base, false);
+ 	if (port[IFLA_PORT_PROFILE]) {
++		if (nla_len(port[IFLA_PORT_PROFILE]) != PORT_PROFILE_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_NAME;
+ 		memcpy(pp->name, nla_data(port[IFLA_PORT_PROFILE]),
+ 			PORT_PROFILE_MAX);
  	}
--	spin_unlock_irq(&obj->lock);
-+	spin_unlock(&obj->lock);
- }
  
- static void sync_print_sync_file(struct seq_file *s,
+ 	if (port[IFLA_PORT_INSTANCE_UUID]) {
++		if (nla_len(port[IFLA_PORT_INSTANCE_UUID]) != PORT_UUID_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_INSTANCE;
+ 		memcpy(pp->instance_uuid,
+ 			nla_data(port[IFLA_PORT_INSTANCE_UUID]), PORT_UUID_MAX);
+ 	}
+ 
+ 	if (port[IFLA_PORT_HOST_UUID]) {
++		if (nla_len(port[IFLA_PORT_HOST_UUID]) != PORT_UUID_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_HOST;
+ 		memcpy(pp->host_uuid,
+ 			nla_data(port[IFLA_PORT_HOST_UUID]), PORT_UUID_MAX);
 -- 
 2.43.0
 
