@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C739DDB1;
-	Thu, 13 Jun 2024 11:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A967DDB1;
+	Thu, 13 Jun 2024 11:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278627; cv=none; b=EbSeznkfSeJbSICIyJbzvIBIExAIeYC+/TIsgg3z2cVHm85Xg8rNyFrhsVZRo9xu/hyx+Bg7G5QWfvzYnIwb81Fb3PUGxoc4sKDtOtqC4lcGMehX43z5ZzLdESHGyQQoRnNBEonP+K2NM82lvO6rMuP5hGmnX+/sEtnFY8stWac=
+	t=1718278630; cv=none; b=efQGasqYkL3o+4Te0mFVvLiH8hRyWghZnLAjhVo7txSm8E9QDsYZnqcg/6CSaSL6/D82CHlQwgkwhA6M95B6c2jv+uDXlp1wuTcBFBmGODwGicnSZuBIzUDSoZYlrj0BesHJZK+eM54rNCLLTnjw1Z6Idlfhyt8wPTlaad+idx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278627; c=relaxed/simple;
-	bh=Aoqb4jM7nE/iiLnbMqjJTW+TZ9iPqKghdL1xsDLyfE0=;
+	s=arc-20240116; t=1718278630; c=relaxed/simple;
+	bh=OteLwmgavuDphEZuZCGcC+HIZhL/eEGr84DLuWfuCOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asuoG1nlpG7wiJ558XIqriHB3VhNEDmaXCWyTfdZBPSTD23iaZEobHSNKgJ59QqvCTsODZznv8ct+P6McY4TqiEXLg9qmcDIO1DVVI++1iQI8zItgUhg5vzGEX+/+nQPz2ozWTyOIgEdBgEEvkmZ2DkF6dYqQq4yZpCpGRcBHlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkPL6v0Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qgEIcME3pgZvpapaA66OWNxQy1D3bbN8crxGIBQx9uphjPDy+d4woveEel/JMC0QKIY4TcEw8F3e8nlxoHrqRlvocuA0dJ6P6cd1tuJB1PhIScPOC9ycZAMAYJVZVEc2BLeCLcafMXnqptd/P9XKfO5dOZYMGv5skcR9AddglUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxUISOm2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkPL6v0Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF07AC2BBFC;
-	Thu, 13 Jun 2024 11:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxUISOm2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E82C2BBFC;
+	Thu, 13 Jun 2024 11:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278627;
-	bh=Aoqb4jM7nE/iiLnbMqjJTW+TZ9iPqKghdL1xsDLyfE0=;
+	s=korg; t=1718278630;
+	bh=OteLwmgavuDphEZuZCGcC+HIZhL/eEGr84DLuWfuCOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vkPL6v0ZnfhAoDx8Bm4eJKhNCsUVKfKLR3r307+9SGIfPudGr85FHfSapPHLkrr6p
-	 ZrWjFQRbUSWWsjdAOpOovYkR9hPuujHc37TSRVtP+7F3CDTh4i5yWAGr9CaUcA+dMi
-	 R7+ZB1Z9fam3WSUMP7/sKAZDEBjQ1J3KGXmedW0Q=
+	b=sxUISOm2opJKtbwP9HKLvJABd+df0rdNOOpXthK/v6h7GZksg6j9LNjEqE57Iq5F6
+	 HZMuk5TUA8wtAjqBqfAGCvQPKxPB8KF8HGfiaxxXZT3tPPux4R7uFBciyMDIm+TLwD
+	 FGAYc8MtQDPR6NUlfqnGgoiuRPNzhmALOn6OFsVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com,
-	"Bai, Shuangpeng" <sjb7183@psu.edu>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 006/213] nilfs2: fix potential hang in nilfs_detach_log_writer()
-Date: Thu, 13 Jun 2024 13:30:54 +0200
-Message-ID: <20240613113228.222141599@linuxfoundation.org>
+	j51569436@gmail.com,
+	Daniel Starke <daniel.starke@siemens.com>
+Subject: [PATCH 4.19 007/213] tty: n_gsm: fix possible out-of-bounds in gsm0_receive()
+Date: Thu, 13 Jun 2024 13:30:55 +0200
+Message-ID: <20240613113228.260224391@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,110 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Daniel Starke <daniel.starke@siemens.com>
 
-commit eb85dace897c5986bc2f36b3c783c6abb8a4292e upstream.
+commit 47388e807f85948eefc403a8a5fdc5b406a65d5a upstream.
 
-Syzbot has reported a potential hang in nilfs_detach_log_writer() called
-during nilfs2 unmount.
+Assuming the following:
+- side A configures the n_gsm in basic option mode
+- side B sends the header of a basic option mode frame with data length 1
+- side A switches to advanced option mode
+- side B sends 2 data bytes which exceeds gsm->len
+  Reason: gsm->len is not used in advanced option mode.
+- side A switches to basic option mode
+- side B keeps sending until gsm0_receive() writes past gsm->buf
+  Reason: Neither gsm->state nor gsm->len have been reset after
+  reconfiguration.
 
-Analysis revealed that this is because nilfs_segctor_sync(), which
-synchronizes with the log writer thread, can be called after
-nilfs_segctor_destroy() terminates that thread, as shown in the call trace
-below:
+Fix this by changing gsm->count to gsm->len comparison from equal to less
+than. Also add upper limit checks against the constant MAX_MRU in
+gsm0_receive() and gsm1_receive() to harden against memory corruption of
+gsm->len and gsm->mru.
 
-nilfs_detach_log_writer
-  nilfs_segctor_destroy
-    nilfs_segctor_kill_thread  --> Shut down log writer thread
-    flush_work
-      nilfs_iput_work_func
-        nilfs_dispose_list
-          iput
-            nilfs_evict_inode
-              nilfs_transaction_commit
-                nilfs_construct_segment (if inode needs sync)
-                  nilfs_segctor_sync  --> Attempt to synchronize with
-                                          log writer thread
-                           *** DEADLOCK ***
+All other checks remain as we still need to limit the data according to the
+user configuration and actual payload size.
 
-Fix this issue by changing nilfs_segctor_sync() so that the log writer
-thread returns normally without synchronizing after it terminates, and by
-forcing tasks that are already waiting to complete once after the thread
-terminates.
-
-The skipped inode metadata flushout will then be processed together in the
-subsequent cleanup work in nilfs_segctor_destroy().
-
-Link: https://lkml.kernel.org/r/20240520132621.4054-4-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e3973c409251e136fdd0
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Cc: "Bai, Shuangpeng" <sjb7183@psu.edu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: j51569436@gmail.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218708
+Tested-by: j51569436@gmail.com
+Fixes: e1eaea46bb40 ("tty: n_gsm line discipline")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
+Link: https://lore.kernel.org/r/20240424054842.7741-1-daniel.starke@siemens.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/tty/n_gsm.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2229,6 +2229,14 @@ static int nilfs_segctor_sync(struct nil
- 	for (;;) {
- 		set_current_state(TASK_INTERRUPTIBLE);
- 
-+		/*
-+		 * Synchronize only while the log writer thread is alive.
-+		 * Leave flushing out after the log writer thread exits to
-+		 * the cleanup work in nilfs_segctor_destroy().
-+		 */
-+		if (!sci->sc_task)
-+			break;
-+
- 		if (atomic_read(&wait_req.done)) {
- 			err = wait_req.err;
- 			break;
-@@ -2244,7 +2252,7 @@ static int nilfs_segctor_sync(struct nil
- 	return err;
- }
- 
--static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err)
-+static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
- {
- 	struct nilfs_segctor_wait_request *wrq, *n;
- 	unsigned long flags;
-@@ -2252,7 +2260,7 @@ static void nilfs_segctor_wakeup(struct
- 	spin_lock_irqsave(&sci->sc_wait_request.lock, flags);
- 	list_for_each_entry_safe(wrq, n, &sci->sc_wait_request.head, wq.entry) {
- 		if (!atomic_read(&wrq->done) &&
--		    nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq)) {
-+		    (force || nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq))) {
- 			wrq->err = err;
- 			atomic_set(&wrq->done, 1);
- 		}
-@@ -2392,7 +2400,7 @@ static void nilfs_segctor_notify(struct
- 	if (mode == SC_LSEG_SR) {
- 		sci->sc_state &= ~NILFS_SEGCTOR_COMMIT;
- 		sci->sc_seq_done = sci->sc_seq_accepted;
--		nilfs_segctor_wakeup(sci, err);
-+		nilfs_segctor_wakeup(sci, err, false);
- 		sci->sc_flush_request = 0;
- 	} else {
- 		if (mode == SC_FLUSH_FILE)
-@@ -2774,6 +2782,13 @@ static void nilfs_segctor_destroy(struct
- 		|| sci->sc_seq_request != sci->sc_seq_done);
- 	spin_unlock(&sci->sc_state_lock);
- 
-+	/*
-+	 * Forcibly wake up tasks waiting in nilfs_segctor_sync(), which can
-+	 * be called from delayed iput() via nilfs_evict_inode() and can race
-+	 * with the above log writer thread termination.
-+	 */
-+	nilfs_segctor_wakeup(sci, 0, true);
-+
- 	if (flush_work(&sci->sc_iput_work))
- 		flag = true;
- 
+--- a/drivers/tty/n_gsm.c
++++ b/drivers/tty/n_gsm.c
+@@ -1972,8 +1972,12 @@ static void gsm0_receive(struct gsm_mux
+ 		break;
+ 	case GSM_DATA:		/* Data */
+ 		gsm->buf[gsm->count++] = c;
+-		if (gsm->count == gsm->len)
++		if (gsm->count >= MAX_MRU) {
++			gsm->bad_size++;
++			gsm->state = GSM_SEARCH;
++		} else if (gsm->count >= gsm->len) {
+ 			gsm->state = GSM_FCS;
++		}
+ 		break;
+ 	case GSM_FCS:		/* FCS follows the packet */
+ 		gsm->received_fcs = c;
+@@ -2053,7 +2057,7 @@ static void gsm1_receive(struct gsm_mux
+ 		gsm->state = GSM_DATA;
+ 		break;
+ 	case GSM_DATA:		/* Data */
+-		if (gsm->count > gsm->mru) {	/* Allow one for the FCS */
++		if (gsm->count > gsm->mru || gsm->count > MAX_MRU) {	/* Allow one for the FCS */
+ 			gsm->state = GSM_OVERRUN;
+ 			gsm->bad_size++;
+ 		} else
 
 
