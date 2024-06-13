@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBB9A59;
-	Thu, 13 Jun 2024 12:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA5F142E9C;
+	Thu, 13 Jun 2024 12:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282634; cv=none; b=H9yob07bYxiSxkSaP5zljTweSD1hsbiSC1J0bgzGKS6k92DtOg++cK6p74fZAAzI4YV/U41Y0K+YYI5zCXa8VGVFb88V10JUnxZgqmE9Xjz+wEhMhhnYofe3eccR7lIcdMx0fhUY5Ur37N+xjMlj9sQj8+ZVeV/8bYunj/yFqGE=
+	t=1718282637; cv=none; b=ccWbeC4/dm3ACIqc/DKU8at5e+I9zSo2CQ+fOFmBTBrQ+KaleiIALwijno3qMGzb+VCn17Vbiv/8XMVoF2/6WoCzpbY+rJ+tObW8LrDP7EJsq/4vgq5r/Zn45xLLbUWxDZSclGoZl2/lid0ekieh7IYqfb+9n1OaCj0rzR3WqX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282634; c=relaxed/simple;
-	bh=I/nZeepu/Ver9jU8BoIlau4mnGydNnpb6Bg5uBT702o=;
+	s=arc-20240116; t=1718282637; c=relaxed/simple;
+	bh=zcGNALwnVIXrrJKLsV8GGaSo3u6SKftm+ilkomPAnfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AF3lcHLfB0j2W+UEn0OpvWycXLghccd5kA2rcxhUqqV2qYnkZz8+dNLyGLJhj0dkI2pY1X+//miUlD9k4ybx3AvA56hgu2yLnotnmKHnBxiSCvjkqyOCzzYwznpNhBLaH+BOZCrRrQdHmNjillysTB0uY11ANwl5Epv7ft5BYIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGcqPmyg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=am9/oBj9ooYNmuZ2nOGINVR6d0hGfa9RAs41J1DfA7+ogGjKHib4xhqwWQI9Bqto4JIfaJOdtGVZjrc2jOM5yIH40qBFXl0VIRIvYTzc0rLNVRAK0uvGXQh5HLzZJXPEhbbn2GHWeiWY/VjTmNxDOM94c9x2Fey3uDgRAre6BkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+FzJFu4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGcqPmyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3DBC32786;
-	Thu, 13 Jun 2024 12:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+FzJFu4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5C8C4AF1D;
+	Thu, 13 Jun 2024 12:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282634;
-	bh=I/nZeepu/Ver9jU8BoIlau4mnGydNnpb6Bg5uBT702o=;
+	s=korg; t=1718282637;
+	bh=zcGNALwnVIXrrJKLsV8GGaSo3u6SKftm+ilkomPAnfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGcqPmygh+QUN0Q2oaHJ1urEmP9a8msPMhcPy5yRk6A8BjXCa16LZRuVFu5LEeWG8
-	 f8VSe6yv8a3oZ3bK7G9iQayY2HCOGJ2VJWPfA6GogTH1YsMvKIG7nFIzSOTXOf2J9W
-	 2ZGwGOTml74/UK58r14+q5CjSn2EBzp93HKpgQBs=
+	b=D+FzJFu4M9D08E8gPRoJMsjkU9NQEqx0fVquNagEul0orCSqozQhAsSfAl7tSyy8u
+	 jdwoi2izUWhFs1xeZHk2K5QpxXswpNvkWRB8b3T3tjXYSPhb9WZAXIUaOYPWeN8/RO
+	 m+yscVmGCM9cNS9v2yPkrJSwIEPwN/Q6L+ZX9Ylg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Ming Lei <ming.lei@redhat.com>
-Subject: [PATCH 5.15 343/402] io_uring: fail NOP if non-zero op flags is passed in
-Date: Thu, 13 Jun 2024 13:35:00 +0200
-Message-ID: <20240613113315.510727831@linuxfoundation.org>
+	Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>,
+	Markus Suvanto <markus.suvanto@gmail.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.15 344/402] afs: Dont cross .backup mountpoint from backup volume
+Date: Thu, 13 Jun 2024 13:35:01 +0200
+Message-ID: <20240613113315.550730770@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -50,38 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Marc Dionne <marc.dionne@auristor.com>
 
-commit 3d8f874bd620ce03f75a5512847586828ab86544 upstream.
+commit 29be9100aca2915fab54b5693309bc42956542e5 upstream.
 
-The NOP op flags should have been checked from beginning like any other
-opcode, otherwise NOP may not be extended with the op flags.
+Don't cross a mountpoint that explicitly specifies a backup volume
+(target is <vol>.backup) when starting from a backup volume.
 
-Given both liburing and Rust io-uring crate always zeros SQE op flags, just
-ignore users which play raw NOP uring interface without zeroing SQE, because
-NOP is just for test purpose. Then we can save one NOP2 opcode.
+It it not uncommon to mount a volume's backup directly in the volume
+itself.  This can cause tools that are not paying attention to get
+into a loop mounting the volume onto itself as they attempt to
+traverse the tree, leading to a variety of problems.
 
-Suggested-by: Jens Axboe <axboe@kernel.dk>
-Fixes: 2b188cc1bb85 ("Add io_uring IO interface")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20240510035031.78874-2-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This doesn't prevent the general case of loops in a sequence of
+mountpoints, but addresses a common special case in the same way
+as other afs clients.
+
+Reported-by: Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>
+Link: http://lists.infradead.org/pipermail/linux-afs/2024-May/008454.html
+Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
+Link: http://lists.infradead.org/pipermail/linux-afs/2024-February/008074.html
+Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/768760.1716567475@warthog.procyon.org.uk
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/afs/mntpt.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -6621,6 +6621,8 @@ static int io_req_prep(struct io_kiocb *
- {
- 	switch (req->opcode) {
- 	case IORING_OP_NOP:
-+		if (READ_ONCE(sqe->rw_flags))
-+			return -EINVAL;
- 		return 0;
- 	case IORING_OP_READV:
- 	case IORING_OP_READ_FIXED:
+--- a/fs/afs/mntpt.c
++++ b/fs/afs/mntpt.c
+@@ -146,6 +146,11 @@ static int afs_mntpt_set_params(struct f
+ 		put_page(page);
+ 		if (ret < 0)
+ 			return ret;
++
++		/* Don't cross a backup volume mountpoint from a backup volume */
++		if (src_as->volume && src_as->volume->type == AFSVL_BACKVOL &&
++		    ctx->type == AFSVL_BACKVOL)
++			return -ENODEV;
+ 	}
+ 
+ 	return 0;
 
 
