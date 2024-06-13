@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E7F3209;
-	Thu, 13 Jun 2024 12:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508C83209;
+	Thu, 13 Jun 2024 12:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280924; cv=none; b=ALDTU+KhisCz/GlGS3aCReXqrlU8ggVEDqTOkosZfn2Y4h7DBCeBJtcY7R4/5TSi+wV4glIU7rvY7IeaMPC5zzgg3nkwZ2W9QnVoYFXHiRxaFo/mGtoGSJy8Nb59Zac/HhLNUTEr8NPCsJdKyuEWOdkNuloFlW8DO1Mx6ctq8Uk=
+	t=1718280927; cv=none; b=tiavP7rdP/A7ANXktlrjzzHVwzqNGNxl+0JZabI7ec4UwQueyPMaGJpBzd4n0dRJvVLsh6rBHEyOEW411rUaN9JDyG1QSU3qq+dFKdwIe8AdaDeoMyhWLA/culkJi64Xe96HrHqcNznUksLtTITk4vsK4CJlAVtfFvRucgmHEYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280924; c=relaxed/simple;
-	bh=Fw8PKRAjoywKnL2KYR+mtGfekB6mcLNh2Yhfn6lEgfs=;
+	s=arc-20240116; t=1718280927; c=relaxed/simple;
+	bh=zIuC1EdHESffXf2dgZoQJc+hDvoJ6ouC4jq/IWm+pn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=avbMA9dPVmBl4VPDiv0Bb22BTQ6IBNyCCleZaFOltAm58jgfCc13ITCkfE3aq5g7wsY/6b4w5xXv0ekxYCZzo/spQ0tHQXHmcdMLs8SCbl4LAhFX9v1LCHH9X3V+L0ZQZPOg0Ga307F9YfabmesgRT6BXuetAdDzKkSEsAEHWZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SN7tWIgf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gK/Hn9vpf++CYcGM8zEaIR9E1AUdBo6n8KQPD1w3f4IV/oF8rvJW4+4KElruVWhSg3/WkWw1LmTuRgL8A1IDTPTO1AJ+lfWhaFEZna4G7ttdRtFC7Z9BRZ6SJRIu8e7N7bu+OfoSm3CpLXCb2B3MPp39yfB19HIlMmN0xFvLZOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMFxgg9z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SN7tWIgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB600C2BBFC;
-	Thu, 13 Jun 2024 12:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMFxgg9z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA14BC2BBFC;
+	Thu, 13 Jun 2024 12:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280924;
-	bh=Fw8PKRAjoywKnL2KYR+mtGfekB6mcLNh2Yhfn6lEgfs=;
+	s=korg; t=1718280927;
+	bh=zIuC1EdHESffXf2dgZoQJc+hDvoJ6ouC4jq/IWm+pn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SN7tWIgfAAkwI3yK2XKDtA1TMGnOl2sJPA7TNtiDao8V+Wrsng0dOWY83NtQYAk2k
-	 qPRrui23Em8j4m4xeo1csYo6R7sLc8wsieha0RgQDS7484+TLwvuCeA0menRTohsHp
-	 A5nI1yPq0psEdaveongg4h7x4MQZcSose9kVG1Ks=
+	b=LMFxgg9zKrsHtZL1Y1IcyydHN6e2lsgGc3qOXTBEFBu7c+Fq0aAtNs6KzGwI8UZy+
+	 qa/ButC7mVEUAwmfIGKLFLL+8VJo/RJzSpwnx7VZ1rFyhXlM+pSbrLfTUljF6ESUpo
+	 dyFipovwqnXDOQnhwvkbFzDIlIqWVM36zI6OQq3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Erhard Furtner <erhard_f@mailbox.org>
-Subject: [PATCH 5.10 081/317] eth: sungem: remove .ndo_poll_controller to avoid deadlocks
-Date: Thu, 13 Jun 2024 13:31:39 +0200
-Message-ID: <20240613113250.683115621@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 082/317] net: ethernet: cortina: Locking fixes
+Date: Thu, 13 Jun 2024 13:31:40 +0200
+Message-ID: <20240613113250.721296631@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,65 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit ac0a230f719b02432d8c7eba7615ebd691da86f4 ]
+[ Upstream commit 812552808f7ff71133fc59768cdc253c5b8ca1bf ]
 
-Erhard reports netpoll warnings from sungem:
+This fixes a probably long standing problem in the Cortina
+Gemini ethernet driver: there are some paths in the code
+where the IRQ registers are written without taking the proper
+locks.
 
-  netpoll_send_skb_on_dev(): eth0 enabled interrupts in poll (gem_start_xmit+0x0/0x398)
-  WARNING: CPU: 1 PID: 1 at net/core/netpoll.c:370 netpoll_send_skb+0x1fc/0x20c
-
-gem_poll_controller() disables interrupts, which may sleep.
-We can't sleep in netpoll, it has interrupts disabled completely.
-Strangely, gem_poll_controller() doesn't even poll the completions,
-and instead acts as if an interrupt has fired so it just schedules
-NAPI and exits. None of this has been necessary for years, since
-netpoll invokes NAPI directly.
-
-Fixes: fe09bb619096 ("sungem: Spring cleaning and GRO support")
-Reported-and-tested-by: Erhard Furtner <erhard_f@mailbox.org>
-Link: https://lore.kernel.org/all/20240428125306.2c3080ef@legion
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240508134504.3560956-1-kuba@kernel.org
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240509-gemini-ethernet-locking-v1-1-afd00a528b95@linaro.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/sungem.c | 14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/sun/sungem.c b/drivers/net/ethernet/sun/sungem.c
-index 58f142ee78a30..4d6a9f02c7388 100644
---- a/drivers/net/ethernet/sun/sungem.c
-+++ b/drivers/net/ethernet/sun/sungem.c
-@@ -949,17 +949,6 @@ static irqreturn_t gem_interrupt(int irq, void *dev_id)
- 	return IRQ_HANDLED;
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index c78587ddb32fd..fa46854fd697c 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1109,10 +1109,13 @@ static void gmac_tx_irq_enable(struct net_device *netdev,
+ {
+ 	struct gemini_ethernet_port *port = netdev_priv(netdev);
+ 	struct gemini_ethernet *geth = port->geth;
++	unsigned long flags;
+ 	u32 val, mask;
+ 
+ 	netdev_dbg(netdev, "%s device %d\n", __func__, netdev->dev_id);
+ 
++	spin_lock_irqsave(&geth->irq_lock, flags);
++
+ 	mask = GMAC0_IRQ0_TXQ0_INTS << (6 * netdev->dev_id + txq);
+ 
+ 	if (en)
+@@ -1121,6 +1124,8 @@ static void gmac_tx_irq_enable(struct net_device *netdev,
+ 	val = readl(geth->base + GLOBAL_INTERRUPT_ENABLE_0_REG);
+ 	val = en ? val | mask : val & ~mask;
+ 	writel(val, geth->base + GLOBAL_INTERRUPT_ENABLE_0_REG);
++
++	spin_unlock_irqrestore(&geth->irq_lock, flags);
  }
  
--#ifdef CONFIG_NET_POLL_CONTROLLER
--static void gem_poll_controller(struct net_device *dev)
--{
--	struct gem *gp = netdev_priv(dev);
--
--	disable_irq(gp->pdev->irq);
--	gem_interrupt(gp->pdev->irq, dev);
--	enable_irq(gp->pdev->irq);
--}
--#endif
--
- static void gem_tx_timeout(struct net_device *dev, unsigned int txqueue)
- {
- 	struct gem *gp = netdev_priv(dev);
-@@ -2836,9 +2825,6 @@ static const struct net_device_ops gem_netdev_ops = {
- 	.ndo_change_mtu		= gem_change_mtu,
- 	.ndo_validate_addr	= eth_validate_addr,
- 	.ndo_set_mac_address    = gem_set_mac_address,
--#ifdef CONFIG_NET_POLL_CONTROLLER
--	.ndo_poll_controller    = gem_poll_controller,
--#endif
- };
+ static void gmac_tx_irq(struct net_device *netdev, unsigned int txq_num)
+@@ -1427,15 +1432,19 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	union gmac_rxdesc_3 word3;
+ 	struct page *page = NULL;
+ 	unsigned int page_offs;
++	unsigned long flags;
+ 	unsigned short r, w;
+ 	union dma_rwptr rw;
+ 	dma_addr_t mapping;
+ 	int frag_nr = 0;
  
- static int gem_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
++	spin_lock_irqsave(&geth->irq_lock, flags);
+ 	rw.bits32 = readl(ptr_reg);
+ 	/* Reset interrupt as all packages until here are taken into account */
+ 	writel(DEFAULT_Q0_INT_BIT << netdev->dev_id,
+ 	       geth->base + GLOBAL_INTERRUPT_STATUS_1_REG);
++	spin_unlock_irqrestore(&geth->irq_lock, flags);
++
+ 	r = rw.bits.rptr;
+ 	w = rw.bits.wptr;
+ 
+@@ -1738,10 +1747,9 @@ static irqreturn_t gmac_irq(int irq, void *data)
+ 		gmac_update_hw_stats(netdev);
+ 
+ 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
++		spin_lock(&geth->irq_lock);
+ 		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
+ 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
+-
+-		spin_lock(&geth->irq_lock);
+ 		u64_stats_update_begin(&port->ir_stats_syncp);
+ 		++port->stats.rx_fifo_errors;
+ 		u64_stats_update_end(&port->ir_stats_syncp);
 -- 
 2.43.0
 
