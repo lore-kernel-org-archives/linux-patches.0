@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45BC56458;
-	Thu, 13 Jun 2024 12:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C191422AB;
+	Thu, 13 Jun 2024 12:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281477; cv=none; b=GcTE1dCxbCfs36aFINBYnQSpMFu8jzh1qy9hEnxvcXgzKsuBrdBTWZrUFzSx7fW6PbLEkequBVV3VWd+/8ZnviMDV+URO/f4Mm33H07LcsmTiAQQYw9hYfMoJYoBvJgrZCXhbjsFyrtjXFaSwF6VZwnn0xZNPzMp8/U+Dnnf0ew=
+	t=1718281480; cv=none; b=cPDy0oXUKX27nrFO0LwW0mdveE4HRu9YL7T5s4XAsgwEfdUBQluQKCoAtLZVVui6/rztoRFT5B3r9d5mO11vWYSB4Al27+RXJhJ+J4jqP5k7aur6WrHl3cgkBDSzEKXcFPVuT9RSklvLcHXHzEBnIDUgm+b/Y6L4AA5QThnMDGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281477; c=relaxed/simple;
-	bh=UxekyblV+rITJuc/EivK4/HjeU+PV8Zs7OHMQuVfvws=;
+	s=arc-20240116; t=1718281480; c=relaxed/simple;
+	bh=gl7KiVdXz9ZtFIHpHJvOZhp3P42RALb7+5t/hUK2/04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncfeAIkpKlYNgMv1xKxWVWHrxhyi8SwCWKTxqHaHtDBvrnyhmVI/t3SjjvLATCHpJFzD77s+XR4p3qzrvxtxVmfiNiaFefW8Hlo8RLQvjTAgMbnx3/3KBaVnl/EjY5ORLv3V+uwfujM2ifezplRfLorax/PrELKoyUH6JG+QamA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m75wbf4Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pDkh+KWL+y7XWsi8mzN2Xc+sOlP01oLQIUccSB/Bm3zaKSAhsHpHHUh0ckkrYGs8CaKYUbwe0evVCiomFvp6s0C+7DlGc6oppROUDDFOOI9xUEN2MoRQzWEXbnfX4/uPiZf9ml5sZsJ8RDbuov71kf88ys4YqTB2XLO8QinHQuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nP0uX805; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m75wbf4Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C0EC2BBFC;
-	Thu, 13 Jun 2024 12:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nP0uX805"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28041C4AF1A;
+	Thu, 13 Jun 2024 12:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281477;
-	bh=UxekyblV+rITJuc/EivK4/HjeU+PV8Zs7OHMQuVfvws=;
+	s=korg; t=1718281480;
+	bh=gl7KiVdXz9ZtFIHpHJvOZhp3P42RALb7+5t/hUK2/04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m75wbf4ZF26vWpISk3LfgnHK5IEJgu/MsuIXxIz7Ly1ZFzhvvqm0sr59CTNA7DgPH
-	 FKMI0nacVA9yz02J2e134SQTuUCM5KptYlN+WSDUjopXDKUkSwtdSLpyFMPC1sg0gX
-	 UNyR/msr0Vkbsg24RGid4Y4sGnkcf7n17EcTLVHQ=
+	b=nP0uX805cY+JbPk0xBpOqYO47euaEU70iQfRx1aprzBeKdiP0Qk71X6tsYWOzvPfT
+	 thPjFuBLPEmVEYzUVYuI9X3D6vy2euxW5oR0T/tcY6OrGRxebVjo0Y+7M6LUkPvGUT
+	 1NLmzLHE/QMAa4StnigzQeNBJZJ3ej+54xv+IXJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 227/317] x86/kconfig: Select ARCH_WANT_FRAME_POINTERS again when UNWINDER_FRAME_POINTER=y
-Date: Thu, 13 Jun 2024 13:34:05 +0200
-Message-ID: <20240613113256.333336031@linuxfoundation.org>
+	syzbot+43120c2af6ca2938cc38@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 262/317] ALSA: timer: Set lower bound of start tick time
+Date: Thu, 13 Jun 2024 13:34:40 +0200
+Message-ID: <20240613113257.682209419@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,62 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 66ee3636eddcc82ab82b539d08b85fb5ac1dff9b ]
+commit 4a63bd179fa8d3fcc44a0d9d71d941ddd62f0c4e upstream.
 
-It took me some time to understand the purpose of the tricky code at
-the end of arch/x86/Kconfig.debug.
+Currently ALSA timer doesn't have the lower limit of the start tick
+time, and it allows a very small size, e.g. 1 tick with 1ns resolution
+for hrtimer.  Such a situation may lead to an unexpected RCU stall,
+where  the callback repeatedly queuing the expire update, as reported
+by fuzzer.
 
-Without it, the following would be shown:
+This patch introduces a sanity check of the timer start tick time, so
+that the system returns an error when a too small start size is set.
+As of this patch, the lower limit is hard-coded to 100us, which is
+small enough but can still work somehow.
 
-  WARNING: unmet direct dependencies detected for FRAME_POINTER
-
-because
-
-  81d387190039 ("x86/kconfig: Consolidate unwinders into multiple choice selection")
-
-removed 'select ARCH_WANT_FRAME_POINTERS'.
-
-The correct and more straightforward approach should have been to move
-it where 'select FRAME_POINTER' is located.
-
-Several architectures properly handle the conditional selection of
-ARCH_WANT_FRAME_POINTERS. For example, 'config UNWINDER_FRAME_POINTER'
-in arch/arm/Kconfig.debug.
-
-Fixes: 81d387190039 ("x86/kconfig: Consolidate unwinders into multiple choice selection")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lore.kernel.org/r/20240204122003.53795-1-masahiroy@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+43120c2af6ca2938cc38@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/000000000000fa00a1061740ab6d@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240514182745.4015-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ backport note: the error handling is changed, as the original commit
+  is based on the recent cleanup with guard() in commit beb45974dd49
+  -- tiwai ]
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Kconfig.debug | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ sound/core/timer.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/x86/Kconfig.debug b/arch/x86/Kconfig.debug
-index 27b5e2bc6a016..e6546aa448de1 100644
---- a/arch/x86/Kconfig.debug
-+++ b/arch/x86/Kconfig.debug
-@@ -258,6 +258,7 @@ config UNWINDER_ORC
+--- a/sound/core/timer.c
++++ b/sound/core/timer.c
+@@ -553,6 +553,16 @@ static int snd_timer_start1(struct snd_t
+ 		goto unlock;
+ 	}
  
- config UNWINDER_FRAME_POINTER
- 	bool "Frame pointer unwinder"
-+	select ARCH_WANT_FRAME_POINTERS
- 	select FRAME_POINTER
- 	help
- 	  This option enables the frame pointer unwinder for unwinding kernel
-@@ -281,7 +282,3 @@ config UNWINDER_GUESS
- 	  overhead.
- 
- endchoice
--
--config FRAME_POINTER
--	depends on !UNWINDER_ORC && !UNWINDER_GUESS
--	bool
--- 
-2.43.0
-
++	/* check the actual time for the start tick;
++	 * bail out as error if it's way too low (< 100us)
++	 */
++	if (start) {
++		if ((u64)snd_timer_hw_resolution(timer) * ticks < 100000) {
++			result = -EINVAL;
++			goto unlock;
++		}
++	}
++
+ 	if (start)
+ 		timeri->ticks = timeri->cticks = ticks;
+ 	else if (!timeri->cticks)
 
 
