@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DAB818;
-	Thu, 13 Jun 2024 12:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAFA384;
+	Thu, 13 Jun 2024 12:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281838; cv=none; b=sFtz+03NYLJFaxT48QfpQHYsV4eCocWZHDhq3KsQ6r3oX8kew2lMjz3pgCMknHEfzznOjIp4X1bH/ZI4DkwppqrWEGBP0n+O2grUJ9GaboqeXrfAbAF0QPqFuRUjGrmyItNIqlCyBpMyDBLz6ynts6GIdPQEhTMHn/txilFCa0U=
+	t=1718281839; cv=none; b=QT+yr8+PXBtah6iDivko7apj7VBqcunBl8pOStFn2IMWGM9QyfzxQAYg36aZimud48g4FE/lhy+hXlbkIPoIHEvZmsSbnk5zwdQTcZX7PKX9b5WTjCgOz67rO8Arml4ZByIPKk8AOczeP/JEFKHdzCAmlovN5X9AFBY/EuibMnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281838; c=relaxed/simple;
-	bh=tfLHirhVeUH5A+84DdiS5f1Q5baYg506nILXM2hrlhE=;
+	s=arc-20240116; t=1718281839; c=relaxed/simple;
+	bh=t5BrudpJIs79pmw5VKtgSIda0Dw8F+sXZYZvQessegU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNx6mjvRWyKA8sSSlccyGQCFL+DSHShsvabZv44WPcR2KCvZqsz1spZBAxjvfjd/4ZcYnET9rVtMdIVmsIFWdJut+hV24vbfpN8UumoQvR1NJeDiR1XBcz+sfgEKcbiON5ttnpuQZOdqllBA85tz43NGkYwxyvI2CIw7YaJTioc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHWRL/K+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jRZ0gwy9cmWhi9hxomIw8dsYAAnxrycW1+mDSAnWGtTpfWnYMGnjNAkxakKLI7PSakcQlLfPM4k04ZvKl/WFIaGVpTE8RwgF+ZreWNFG8s6SXFfU1KKdWN7PQzOUmI/dYtC1s6bFSNrnmqZ9A3Nm49qpzcM3AHVxCyxJT6a8dm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emqVDsUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHWRL/K+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1256BC2BBFC;
-	Thu, 13 Jun 2024 12:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emqVDsUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A26CC32786;
+	Thu, 13 Jun 2024 12:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281836;
-	bh=tfLHirhVeUH5A+84DdiS5f1Q5baYg506nILXM2hrlhE=;
+	s=korg; t=1718281839;
+	bh=t5BrudpJIs79pmw5VKtgSIda0Dw8F+sXZYZvQessegU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHWRL/K+7lrrUwacxOzVQlBCjVpY/YPWdE03Q9r3zetqUJlIk6uOpDBD9hoktvcmv
-	 kENRBtsiRpZwts2x9ks1Pr3f1Q5KmtA8Ejsj55SvTKnYP2UgPwvB9kk8uBlVrwC61I
-	 KO7lu8x1plQqCkLM7zsKTwTCeuDwXAuKJCOQP+sM=
+	b=emqVDsUA8k5qbRuYiqINlL4Ik06fbxokxmmEosLl+1OjoFuUpkNO5GRckBmAAptcd
+	 PKOQCP5jMWDZREwVbju1pNjUwO6eXqi4VilxiSAjg//nokafOge8bkFlEEyayd/Zc+
+	 9ycPGRAmXvetR701HTmxg9ZNCFnS/0qyDzCO4jWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/402] cpufreq: Reorganize checks in cpufreq_offline()
-Date: Thu, 13 Jun 2024 13:30:29 +0200
-Message-ID: <20240613113304.945348441@linuxfoundation.org>
+Subject: [PATCH 5.15 073/402] cpufreq: Split cpufreq_offline()
+Date: Thu, 13 Jun 2024 13:30:30 +0200
+Message-ID: <20240613113304.983831319@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,10 +53,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit e1e962c5b9edbc628a335bcdbd010331a12d3e5b ]
+[ Upstream commit fddd8f86dff4a24742a7f0322ccbb34c6c1c9850 ]
 
-Notice that cpufreq_offline() only needs to check policy_is_inactive()
-once and rearrange the code in there to make that happen.
+Split the "core" part running under the policy rwsem out of
+cpufreq_offline() to allow the locking in cpufreq_remove_dev() to be
+rearranged more easily.
+
+As a side-effect this eliminates the unlock label that's not needed
+any more.
 
 No expected functional impact.
 
@@ -65,57 +69,71 @@ Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
 Stable-dep-of: b8f85833c057 ("cpufreq: exit() callback is optional")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/cpufreq/cpufreq.c | 33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index c2227be7bad88..b65dc6af19f08 100644
+index b65dc6af19f08..ce7d718bdfced 100644
 --- a/drivers/cpufreq/cpufreq.c
 +++ b/drivers/cpufreq/cpufreq.c
-@@ -1586,24 +1586,18 @@ static int cpufreq_offline(unsigned int cpu)
- 	}
+@@ -1572,21 +1572,10 @@ static int cpufreq_add_dev(struct device *dev, struct subsys_interface *sif)
+ 	return 0;
+ }
  
- 	down_write(&policy->rwsem);
-+
+-static int cpufreq_offline(unsigned int cpu)
++static void __cpufreq_offline(unsigned int cpu, struct cpufreq_policy *policy)
+ {
+-	struct cpufreq_policy *policy;
+ 	int ret;
+ 
+-	pr_debug("%s: unregistering CPU %u\n", __func__, cpu);
+-
+-	policy = cpufreq_cpu_get_raw(cpu);
+-	if (!policy) {
+-		pr_debug("%s: No cpu_data found\n", __func__);
+-		return 0;
+-	}
+-
+-	down_write(&policy->rwsem);
+-
  	if (has_target())
  		cpufreq_stop_governor(policy);
  
- 	cpumask_clear_cpu(cpu, policy->cpus);
+@@ -1604,7 +1593,7 @@ static int cpufreq_offline(unsigned int cpu)
+ 				pr_err("%s: Failed to start governor\n", __func__);
+ 		}
  
--	if (policy_is_inactive(policy)) {
--		if (has_target())
--			strncpy(policy->last_governor, policy->governor->name,
--				CPUFREQ_NAME_LEN);
--		else
--			policy->last_policy = policy->policy;
--	} else if (cpu == policy->cpu) {
--		/* Nominate new CPU */
--		policy->cpu = cpumask_any(policy->cpus);
--	}
--
--	/* Start governor again for active policy */
- 	if (!policy_is_inactive(policy)) {
-+		/* Nominate a new CPU if necessary. */
-+		if (cpu == policy->cpu)
-+			policy->cpu = cpumask_any(policy->cpus);
-+
-+		/* Start the governor again for the active policy. */
- 		if (has_target()) {
- 			ret = cpufreq_start_governor(policy);
- 			if (ret)
-@@ -1613,6 +1607,12 @@ static int cpufreq_offline(unsigned int cpu)
- 		goto unlock;
+-		goto unlock;
++		return;
  	}
  
-+	if (has_target())
-+		strncpy(policy->last_governor, policy->governor->name,
-+			CPUFREQ_NAME_LEN);
-+	else
-+		policy->last_policy = policy->policy;
+ 	if (has_target())
+@@ -1631,8 +1620,24 @@ static int cpufreq_offline(unsigned int cpu)
+ 		cpufreq_driver->exit(policy);
+ 		policy->freq_table = NULL;
+ 	}
++}
 +
- 	if (cpufreq_thermal_control_enabled(cpufreq_driver)) {
- 		cpufreq_cooling_unregister(policy->cdev);
- 		policy->cdev = NULL;
++static int cpufreq_offline(unsigned int cpu)
++{
++	struct cpufreq_policy *policy;
++
++	pr_debug("%s: unregistering CPU %u\n", __func__, cpu);
++
++	policy = cpufreq_cpu_get_raw(cpu);
++	if (!policy) {
++		pr_debug("%s: No cpu_data found\n", __func__);
++		return 0;
++	}
++
++	down_write(&policy->rwsem);
++
++	__cpufreq_offline(cpu, policy);
+ 
+-unlock:
+ 	up_write(&policy->rwsem);
+ 	return 0;
+ }
 -- 
 2.43.0
 
