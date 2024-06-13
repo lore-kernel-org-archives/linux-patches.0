@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA8114265E;
-	Thu, 13 Jun 2024 11:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187A6143867;
+	Thu, 13 Jun 2024 11:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279047; cv=none; b=T94bN522d2kN8fRBLOXvblbWWCKPfvWwGa6xN8JXQF20jnA7C9UFaiZ6OlewS7PUEpOI+J+SQyGYvFLFp7hZUxOfdgW2jIdbQyQ84+E2rgxs8IXLjJIFKXYxxgrbons8m776m5acsrkP1OYcEIs5C8vX0JXGntqyoc+wIsXCOpc=
+	t=1718279050; cv=none; b=RNrrPQOKozTd/A+xDqck6ZnesaQYqcRHQNhJxy6mZdtU5+LkYKARMmu1bTGF9jqHzAmO1fpf56mSyHq5qGa9F95YGCUMhNrtc455gXCzySN+rBXu6qfIaKzfJ0F7eEAqFZhyzuxczqoA9TBdJYK+C6Pzm2ODWIMSA2k+rxRc3Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279047; c=relaxed/simple;
-	bh=4KbujfCK88SXRjcRqEGfORatlwtHKiAokLLC+IBeUo4=;
+	s=arc-20240116; t=1718279050; c=relaxed/simple;
+	bh=Gr9vYNS+GuJaU9GReXpvF0X61Ws7GWNwz8YNfd70SZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TzlrcmMAXj6g2Gd1tCGLnc2Fl+iyQpbc84lroPfb28GDmuBbEIRQ+JkUly4GPBWyl52x4jD2jW1ooXPvWaxGqyV7K3mQTirIk1oHco2+TsCJbNJSIAWCEzzYd/98jD5sxJUoreQp61O/iuS/0LNm5WWyjLZAjSNetoJurn3yoas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QlxOOL6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F6TS4l4sWXqUP+gSb9lXOKaWHLV80ezlC8VIsvWBkLZjlgwnKNIQHjHig9ZaeLGZ/4vUngpokKzMeKqTgH2ASp5HkUuNhDTZWt5OESbaXxYItLPXHtkBWY91YFFDnlVlXsE00xtCs7wdNePvOJ2Xm9VX/SpJltHGkkZ/vlmptbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2levDCj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QlxOOL6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B052C2BBFC;
-	Thu, 13 Jun 2024 11:44:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2levDCj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD85C2BBFC;
+	Thu, 13 Jun 2024 11:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279047;
-	bh=4KbujfCK88SXRjcRqEGfORatlwtHKiAokLLC+IBeUo4=;
+	s=korg; t=1718279050;
+	bh=Gr9vYNS+GuJaU9GReXpvF0X61Ws7GWNwz8YNfd70SZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2QlxOOL6gapUBlNENw+aQmBQZqnYh/zO3U8Yh9Y0QPHr+S4Yt9NpwHYG9HADWlxtB
-	 D21FEOXcGkLfDqJ8lqO0p4PE9oOAwYtmx/PpmS4dfYhHrpuLPcoetUL1w6KN5EVI3R
-	 Ff1kwWWEy2xYIZBMXbkm2UimYBikJbsbtq5+GABI=
+	b=P2levDCjGPKI9oAPT53CjjWKXQ6RQvUgUr/T6/IEJ6giWpmVBg0bEsleNeJLgY2Ah
+	 B+ggwnPfdtyWbGbzBM2wHD1Ow1LvbIst9cpE+1vJC5k7UJdo4fOr3AIVcvTkjmWAjW
+	 j1o1TdwUFl1/tZ8Sa+xQ8ELNkUsWPs79PnOUAHFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cai Xinchen <caixinchen1@huawei.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.19 158/213] fbdev: savage: Handle err return when savagefb_check_var failed
-Date: Thu, 13 Jun 2024 13:33:26 +0200
-Message-ID: <20240613113234.082117412@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 4.19 159/213] netfilter: nf_tables: pass context to nft_set_destroy()
+Date: Thu, 13 Jun 2024 13:33:27 +0200
+Message-ID: <20240613113234.121470444@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -50,37 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cai Xinchen <caixinchen1@huawei.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 6ad959b6703e2c4c5d7af03b4cfd5ff608036339 upstream.
+commit 0c2a85edd143162b3a698f31e94bf8cdc041da87 upstream.
 
-The commit 04e5eac8f3ab("fbdev: savage: Error out if pixclock equals zero")
-checks the value of pixclock to avoid divide-by-zero error. However
-the function savagefb_probe doesn't handle the error return of
-savagefb_check_var. When pixclock is 0, it will cause divide-by-zero error.
+The patch that adds support for stateful expressions in set definitions
+require this.
 
-Fixes: 04e5eac8f3ab ("fbdev: savage: Error out if pixclock equals zero")
-Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/savage/savagefb_driver.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/video/fbdev/savage/savagefb_driver.c
-+++ b/drivers/video/fbdev/savage/savagefb_driver.c
-@@ -2271,7 +2271,10 @@ static int savagefb_probe(struct pci_dev
- 	if (info->var.xres_virtual > 0x1000)
- 		info->var.xres_virtual = 0x1000;
- #endif
--	savagefb_check_var(&info->var, info);
-+	err = savagefb_check_var(&info->var, info);
-+	if (err)
-+		goto failed;
-+
- 	savagefb_set_fix(info);
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3753,7 +3753,7 @@ err1:
+ 	return err;
+ }
  
- 	/*
+-static void nft_set_destroy(struct nft_set *set)
++static void nft_set_destroy(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+ 	if (WARN_ON(set->use > 0))
+ 		return;
+@@ -3926,7 +3926,7 @@ EXPORT_SYMBOL_GPL(nf_tables_deactivate_s
+ void nf_tables_destroy_set(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+ 	if (list_empty(&set->bindings) && nft_set_is_anonymous(set))
+-		nft_set_destroy(set);
++		nft_set_destroy(ctx, set);
+ }
+ EXPORT_SYMBOL_GPL(nf_tables_destroy_set);
+ 
+@@ -6503,7 +6503,7 @@ static void nft_commit_release(struct nf
+ 		nf_tables_rule_destroy(&trans->ctx, nft_trans_rule(trans));
+ 		break;
+ 	case NFT_MSG_DELSET:
+-		nft_set_destroy(nft_trans_set(trans));
++		nft_set_destroy(&trans->ctx, nft_trans_set(trans));
+ 		break;
+ 	case NFT_MSG_DELSETELEM:
+ 		nf_tables_set_elem_destroy(&trans->ctx,
+@@ -6857,7 +6857,7 @@ static void nf_tables_abort_release(stru
+ 		nf_tables_rule_destroy(&trans->ctx, nft_trans_rule(trans));
+ 		break;
+ 	case NFT_MSG_NEWSET:
+-		nft_set_destroy(nft_trans_set(trans));
++		nft_set_destroy(&trans->ctx, nft_trans_set(trans));
+ 		break;
+ 	case NFT_MSG_NEWSETELEM:
+ 		nft_set_elem_destroy(nft_trans_elem_set(trans),
+@@ -7604,7 +7604,7 @@ static void __nft_release_table(struct n
+ 	list_for_each_entry_safe(set, ns, &table->sets, list) {
+ 		list_del(&set->list);
+ 		nft_use_dec(&table->use);
+-		nft_set_destroy(set);
++		nft_set_destroy(&ctx, set);
+ 	}
+ 	list_for_each_entry_safe(obj, ne, &table->objects, list) {
+ 		list_del(&obj->list);
 
 
