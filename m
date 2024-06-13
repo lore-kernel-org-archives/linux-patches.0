@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C186142911;
-	Thu, 13 Jun 2024 11:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7060D1428E9;
+	Thu, 13 Jun 2024 11:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279254; cv=none; b=f7CTfLJSaeSEB6mzXhUUPomizT7skukpBGgY1CKFHnqymTTcf+53VUJbwxZ4dLZBDdaMkg4bgRZbLCb/FP3ZN1xlpIIUxfy4//646QS9x4uj9xcmccGbmh77C+wpw5ojFej5IK3Kr8jV6+2tC63AsBQHzTnTo+MIHKsb+MUHqDw=
+	t=1718279257; cv=none; b=YqcHcYA5Anf+WiljQovuz2GIlzIDxccBc/kvGxFKw2KmeGrTtTC3/jhqN7K9kUeh7fWqh97/Xvexp34QVdPVLAKVWo46Yv36DZsD7to62iElUbVpq1yTfWxGVVFOLTP0PwsJuUvwWXXPufyzZ8S1nHjxEffjqRLhlOi7n7Ahja0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279254; c=relaxed/simple;
-	bh=H9SKgpk0zBbI/ydxMPjmLuMvxceMXNW8k5t/Eve/4X0=;
+	s=arc-20240116; t=1718279257; c=relaxed/simple;
+	bh=OW/eMcN77JmeOF3DtFGGxqZNH8QCdfLtJ9MWoL+mIfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDCxFQVDqNMX4ahz1KWSeqaqW73jNDqLO/z2wNbvaOPRKZxyXCVzeum/0crNHMqwkSA1RzmMmGqH1u2n65x/5KxCDSGanNrE8LF2biMIbGpFNnjBu8lw8yARK2nGNKA63BdYWHjKMne4g26eJFcUzU8wWPx/djOub5DsA+NNeY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNYiPsMK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQPm9JJgwpWQoCGKPzZv0KxXEnpXzcF6KlFl/WLGm9uNGbEa5pTgVkVwghmAa5hAyEZcnEcClutFRiI/oitrAPYZxr6f3HCN2xzqj8ci/fXgTeP68W2T/0VeNIoBGfRHMWM1qlTbqTg64am919Qdtltrk7v/IAUePr6cyCYEURc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=un+jljQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNYiPsMK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BDFC2BBFC;
-	Thu, 13 Jun 2024 11:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="un+jljQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC373C2BBFC;
+	Thu, 13 Jun 2024 11:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279254;
-	bh=H9SKgpk0zBbI/ydxMPjmLuMvxceMXNW8k5t/Eve/4X0=;
+	s=korg; t=1718279257;
+	bh=OW/eMcN77JmeOF3DtFGGxqZNH8QCdfLtJ9MWoL+mIfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SNYiPsMKSt32vLFS/ZZ5lQUPDFj3q6QaAUk6CozJG8T0c6LwW9TcTMZbdluQ20I2Y
-	 Y/J8exHifodSqeRcxcOZMvIhA1Z+5dF6Oe78nVJN2s4lHjE7s/D3KB/GwfvJs0Zk5a
-	 w4MBhHeigPyVp2S5PUiHyW+yWPFRIjxNwLfn3kdU=
+	b=un+jljQL8qcO2oGDO2oF6E9EeLvBKfh6hYel7tHG3XB5RW8LDhp+dHtyzKoVzVw3J
+	 6dz8C2OHPT1T59u3VVxouu/pfAZES7DaOLYGavUv98ivCsTTugGyXeN6+238N/zwLa
+	 MNC7BGesq5bViFrGXY0CIVYUjsXzxxU2ja6U00bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.9 014/157] wifi: rtw89: correct aSIFSTime for 6GHz band
-Date: Thu, 13 Jun 2024 13:32:19 +0200
-Message-ID: <20240613113227.958947828@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.9 015/157] ata: pata_legacy: make legacy_exit() work again
+Date: Thu, 13 Jun 2024 13:32:20 +0200
+Message-ID: <20240613113227.997413968@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -49,32 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit f506e3ee547669cd96842e03c8a772aa7df721fa upstream.
+commit d4a89339f17c87c4990070e9116462d16e75894f upstream.
 
-aSIFSTime is 10us for 2GHz band and 16us for 5GHz and 6GHz bands.
-Originally, it doesn't consider 6GHz band and use wrong value, so correct
-it accordingly.
+Commit defc9cd826e4 ("pata_legacy: resychronize with upstream changes and
+resubmit") missed to update legacy_exit(), so that it now fails to do any
+cleanup -- the loop body there can never be entered.  Fix that and finally
+remove now useless nr_legacy_host variable...
 
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
+
+Fixes: defc9cd826e4 ("pata_legacy: resychronize with upstream changes and resubmit")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://msgid.link/20240430020515.8399-1-pkshih@realtek.com
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac80211.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/pata_legacy.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw89/mac80211.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
-@@ -318,7 +318,7 @@ static u8 rtw89_aifsn_to_aifs(struct rtw
- 	u8 sifs;
+--- a/drivers/ata/pata_legacy.c
++++ b/drivers/ata/pata_legacy.c
+@@ -173,8 +173,6 @@ static int legacy_port[NR_HOST] = { 0x1f
+ static struct legacy_probe probe_list[NR_HOST];
+ static struct legacy_data legacy_data[NR_HOST];
+ static struct ata_host *legacy_host[NR_HOST];
+-static int nr_legacy_host;
+-
  
- 	slot_time = vif->bss_conf.use_short_slot ? 9 : 20;
--	sifs = chan->band_type == RTW89_BAND_5G ? 16 : 10;
-+	sifs = chan->band_type == RTW89_BAND_2G ? 10 : 16;
+ /**
+  *	legacy_probe_add	-	Add interface to probe list
+@@ -1276,9 +1274,11 @@ static __exit void legacy_exit(void)
+ {
+ 	int i;
  
- 	return aifsn * slot_time + sifs;
+-	for (i = 0; i < nr_legacy_host; i++) {
++	for (i = 0; i < NR_HOST; i++) {
+ 		struct legacy_data *ld = &legacy_data[i];
+-		ata_host_detach(legacy_host[i]);
++
++		if (legacy_host[i])
++			ata_host_detach(legacy_host[i]);
+ 		platform_device_unregister(ld->platform_dev);
+ 	}
  }
 
 
