@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862EE7F47B;
-	Thu, 13 Jun 2024 12:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D214256458;
+	Thu, 13 Jun 2024 12:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281792; cv=none; b=ilSo8rGE0N2YM62O1M9lNeAab06O3wE5DgHCjxqojtmo9Q1G35n4IgYIKjkcHMZcoL0OqCwiKNOoSXKb7i7RN7HlaI4dfOFtIWbi+VxY4p3VwrTeMdznC8QSzUgALC0K05FXFL26od5RSoPgwxnxo2/dpY9rOGfVmR8woRZ3Se4=
+	t=1718281795; cv=none; b=DHDaxr+IAoATRJhKHyh5EDOkncKd8BCk5aL54EDIOy86S0CKsE2wM63pPcMGPXI6EOgsu1ldZyMNzgtVJdmphp16LtSNvVJt34kVhQOC3AkFBDmco9wnDIVs5sJywVBBtbJuUD1TRyD80ti8t2DoWK66HOWRI8adzgBZYgHQs/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281792; c=relaxed/simple;
-	bh=b3nvCyHadrNZp6eRFG78JE05LwMwE8PQrS/ZYW7h1f0=;
+	s=arc-20240116; t=1718281795; c=relaxed/simple;
+	bh=mcX2AxHxiC/FQW5+P3OghDeiD6qmrfv/282CotewqGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d3cdT6i2sCUGoIOa5YtnFH/S/FvYvCz5WZ2SyEz5Mtxo5KIWvUMLp6BoNnYRW8iFavhyn9QiM/oJFvneAmdHtJRb57tTY7CHf10zBNEXwPJgCJkrTlIv79E/xks74KHT22PrjpJxn+B2CKY31k3lJelSYYxmO+OhGVl1UMN9pQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZE9sYA+C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q+iELTA65o/Jw8JoCd//mT5pj5CEVeyW8A/OgOEffC3B0bzpkQ3TDqxd6ngNJDi5NQkcbqEWNOFTTAe5i5FzsviwlkraKPazMtpcRbRq9D1TTLbOgDU+QOaZlt3M8p40pHFjygkoXKZzPfvblOarLaerQTC7HTuDBKbddsSqRyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXjQxIhv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZE9sYA+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A90C2BBFC;
-	Thu, 13 Jun 2024 12:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXjQxIhv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019E0C2BBFC;
+	Thu, 13 Jun 2024 12:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281792;
-	bh=b3nvCyHadrNZp6eRFG78JE05LwMwE8PQrS/ZYW7h1f0=;
+	s=korg; t=1718281795;
+	bh=mcX2AxHxiC/FQW5+P3OghDeiD6qmrfv/282CotewqGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZE9sYA+C57+Y8GnoSUROJLkuGorodnq6GrJ7+mTJUBwdHBygHPn4oqy/d2PxRNXab
-	 x83i7BK2NVuXmEfcQtkcZCBTEqPqX1W5qCrbBlGtty/H2N/dusfmPm8U3exCYgIVN2
-	 FaqR19+VsdjP+MCsNmG18beRNOgK0CfMa+grewtk=
+	b=gXjQxIhvLnJ1ZTYqddIHK/1aWsZmOLwihcE0GLotR08csPBNmNfiG4yqsiMqiypmw
+	 6u0WYNTODf2vaWLdFGulAkSrwaYLSrIUZsoESf7nGavznX7J4Da2RP/xgXT3bGktDH
+	 M0vkjGlBn2gSPPMCCgW8nP2QbmTsDg3QnCYE8Hoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Guo <quic_cang@quicinc.com>,
 	Andrew Halaney <ahalaney@redhat.com>,
+	Asutosh Das <quic_asutoshd@quicinc.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/402] scsi: ufs: qcom: Perform read back after writing REG_UFS_SYS1CLK_1US
-Date: Thu, 13 Jun 2024 13:30:15 +0200
-Message-ID: <20240613113304.399555791@linuxfoundation.org>
+Subject: [PATCH 5.15 059/402] scsi: ufs: ufs-qcom: Fix the Qcom register name for offset 0xD0
+Date: Thu, 13 Jun 2024 13:30:16 +0200
+Message-ID: <20240613113304.439213652@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,49 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit a862fafa263aea0f427d51aca6ff7fd9eeaaa8bd ]
+[ Upstream commit 7959587f3284bf163e4f1baff3c6fa71fc6a55b1 ]
 
-Currently after writing to REG_UFS_SYS1CLK_1US a mb() is used to ensure
-that write has gone through to the device.
+On newer UFS revisions, the register at offset 0xD0 is called,
+REG_UFS_PARAM0. Since the existing register, RETRY_TIMER_REG is not used
+anywhere, it is safe to use the new name.
 
-mb() ensures that the write completes, but completion doesn't mean that it
-isn't stored in a buffer somewhere. The recommendation for ensuring this
-bit has taken effect on the device is to perform a read back to force it to
-make it all the way to the device. This is documented in device-io.rst and
-a talk by Will Deacon on this can be seen over here:
-
-    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
-
-Let's do that to ensure the bit hits the device. Because the mb()'s purpose
-wasn't to add extra ordering (on top of the ordering guaranteed by
-writel()/readl()), it can safely be removed.
-
-Fixes: f06fcc7155dc ("scsi: ufs-qcom: add QUniPro hardware support and power optimizations")
-Reviewed-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20240329-ufs-reset-ensure-effect-before-delay-v5-2-181252004586@redhat.com
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Reviewed-by: Asutosh Das <quic_asutoshd@quicinc.com>
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # Qdrive3/sa8540p-ride
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 823150ecf04f ("scsi: ufs: qcom: Perform read back after writing unipro mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufs-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/ufs/ufs-qcom.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index f810b99ef5c51..4809ced13851e 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -449,7 +449,7 @@ static int ufs_qcom_cfg_timers(struct ufs_hba *hba, u32 gear,
- 		 * make sure above write gets applied before we return from
- 		 * this function.
- 		 */
--		mb();
-+		ufshcd_readl(hba, REG_UFS_SYS1CLK_1US);
- 	}
- 
- 	if (ufs_qcom_cap_qunipro(host))
+diff --git a/drivers/scsi/ufs/ufs-qcom.h b/drivers/scsi/ufs/ufs-qcom.h
+index a2f32aa1ce1b8..b9f9b246c43b3 100644
+--- a/drivers/scsi/ufs/ufs-qcom.h
++++ b/drivers/scsi/ufs/ufs-qcom.h
+@@ -35,7 +35,8 @@ enum {
+ 	REG_UFS_TX_SYMBOL_CLK_NS_US         = 0xC4,
+ 	REG_UFS_LOCAL_PORT_ID_REG           = 0xC8,
+ 	REG_UFS_PA_ERR_CODE                 = 0xCC,
+-	REG_UFS_RETRY_TIMER_REG             = 0xD0,
++	/* On older UFS revisions, this register is called "RETRY_TIMER_REG" */
++	REG_UFS_PARAM0                      = 0xD0,
+ 	REG_UFS_PA_LINK_STARTUP_TIMER       = 0xD8,
+ 	REG_UFS_CFG1                        = 0xDC,
+ 	REG_UFS_CFG2                        = 0xE0,
 -- 
 2.43.0
 
