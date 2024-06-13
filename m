@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7146014374F;
-	Thu, 13 Jun 2024 12:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C4512C81F;
+	Thu, 13 Jun 2024 12:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282009; cv=none; b=uD4vG1XB4k2A5KHhyQ7eVH/WxTtFvuqRvAfK1n+iCac7CkkufNAszQ+Gu9XZgy3T9VNB1Cwjv1Njq66CsLiTw3GP+ywPspHZYv9XXOkIjaDnhJ6XU5HA51fzM6k+nDg1rvKN0T7BIa6oeKakB0nweCloJVP6RW2Gdp1T11P/tMg=
+	t=1718282012; cv=none; b=IlWuiFT9JfjfvyJStRYvpdev3kgaApiwsJHua8t7GoIaFyQzhEovUQimQGpralsogBkn74/HrFLIdv+Z+CwqBkRXbinIrn4ekWjeO8UaXh8J4WbnUZ0bBWA3Gxl76O9yGYsar+pOhG8tcF7TNIY7Hj4ZzsglwPR4ycKHvycmYdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282009; c=relaxed/simple;
-	bh=XY3IdzXSMAgjBUKNgF/C/dBhnVajQv0mFZBIDwsfHtM=;
+	s=arc-20240116; t=1718282012; c=relaxed/simple;
+	bh=XknhAIpTihnkOLT4KbnwR/6GzI6r6DgUiuXhYr90+rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FcIY+uOx2qk3IxLgjzkYeevqHv0Zlc5pWPK8kX4PQ1Z6+xc/s0jscrea8rlKY9D+JU86KAtId7i/RzH9mAR6FVAXsRu2i059rm3EVaffSrKMTo9xQqt8WDzlKA58ENMLf70bPE+/gDlOwaHwHlGJZqGhuDu9u/TIdMqA2iEaZbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQwg7Xi2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XJPzQsra62OazFUCcoRByW96JFVwrsg0EC13M+UkmvRpPVt3d7cUIRO7rrIRgCFjlCMmwZXp/3aCNsemeVJ7ZzB4Oiz0X4gBUDYP71xt9+mmPt4qJZMgt9SQvRQyUA2r5JS3ZiMRCMZD7Pi6cenfO/HcyOpTxvPa+LwnstJRjNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j19t1Xxo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQwg7Xi2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E294DC2BBFC;
-	Thu, 13 Jun 2024 12:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j19t1Xxo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05AEC2BBFC;
+	Thu, 13 Jun 2024 12:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282009;
-	bh=XY3IdzXSMAgjBUKNgF/C/dBhnVajQv0mFZBIDwsfHtM=;
+	s=korg; t=1718282012;
+	bh=XknhAIpTihnkOLT4KbnwR/6GzI6r6DgUiuXhYr90+rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CQwg7Xi29ot2jEIaZxEsAOaNyq8G5x6lCQbqmgtK9DQS/vKACKhzDuVqsoZzKweWk
-	 98CK42ko284Noz5ZrP7m9lkZU/FxF/gPrQNeMQ+0nQYJrnIemvdvXkUGyVaeMOgkPB
-	 7HNJRRpKEN8LKzMJ1c4Kkp+YANXlexX3uNy5gEQU=
+	b=j19t1XxowPwAL24Re8CJp/2w1o6+TLpMkda0ygN/Fw55/IEgKo5s3LXhYl5gG4eS6
+	 4EO8Q5Rew/pXHcygGR54KRKkYpCf8pBabVMAqkRfE0A7e83TxvGwJqNoUix7h7XP2B
+	 mEFy29g8lKW8QbQiywWTOAq2AUzXcQwaRA1NoX/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Helge Deller <deller@gmx.de>,
+	Aleksandr Burakov <a.burakov@rosalinux.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/402] fbdev: sisfb: hide unused variables
-Date: Thu, 13 Jun 2024 13:31:29 +0200
-Message-ID: <20240613113307.287087895@linuxfoundation.org>
+Subject: [PATCH 5.15 133/402] media: ngene: Add dvb_ca_en50221_init return value check
+Date: Thu, 13 Jun 2024 13:31:30 +0200
+Message-ID: <20240613113307.325099918@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,66 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Aleksandr Burakov <a.burakov@rosalinux.ru>
 
-[ Upstream commit 688cf598665851b9e8cb5083ff1d208ce43d10ff ]
+[ Upstream commit 9bb1fd7eddcab2d28cfc11eb20f1029154dac718 ]
 
-Building with W=1 shows that a couple of variables in this driver are only
-used in certain configurations:
+The return value of dvb_ca_en50221_init() is not checked here that may
+cause undefined behavior in case of nonzero value return.
 
-drivers/video/fbdev/sis/init301.c:239:28: error: 'SiS_Part2CLVX_6' defined but not used [-Werror=unused-const-variable=]
-  239 | static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:230:28: error: 'SiS_Part2CLVX_5' defined but not used [-Werror=unused-const-variable=]
-  230 | static const unsigned char SiS_Part2CLVX_5[] = {   /* 750p */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:211:28: error: 'SiS_Part2CLVX_4' defined but not used [-Werror=unused-const-variable=]
-  211 | static const unsigned char SiS_Part2CLVX_4[] = {   /* PAL */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:192:28: error: 'SiS_Part2CLVX_3' defined but not used [-Werror=unused-const-variable=]
-  192 | static const unsigned char SiS_Part2CLVX_3[] = {  /* NTSC, 525i, 525p */
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:184:28: error: 'SiS_Part2CLVX_2' defined but not used [-Werror=unused-const-variable=]
-  184 | static const unsigned char SiS_Part2CLVX_2[] = {
-      |                            ^~~~~~~~~~~~~~~
-drivers/video/fbdev/sis/init301.c:176:28: error: 'SiS_Part2CLVX_1' defined but not used [-Werror=unused-const-variable=]
-  176 | static const unsigned char SiS_Part2CLVX_1[] = {
-      |                            ^~~~~~~~~~~~~~~
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This started showing up after the definitions were moved into the
-source file from the header, which was not flagged by the compiler.
-Move the definition into the appropriate #ifdef block that already
-exists next to them.
-
-Fixes: 5908986ef348 ("video: fbdev: sis: avoid mismatched prototypes")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 25aee3debe04 ("[media] Rename media/dvb as media/pci")
+Signed-off-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sis/init301.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/pci/ngene/ngene-core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/sis/init301.c b/drivers/video/fbdev/sis/init301.c
-index a8fb41f1a2580..09329072004f4 100644
---- a/drivers/video/fbdev/sis/init301.c
-+++ b/drivers/video/fbdev/sis/init301.c
-@@ -172,7 +172,7 @@ static const unsigned char SiS_HiTVGroup3_2[] = {
- };
+diff --git a/drivers/media/pci/ngene/ngene-core.c b/drivers/media/pci/ngene/ngene-core.c
+index 7481f553f9595..24ec576dc3bff 100644
+--- a/drivers/media/pci/ngene/ngene-core.c
++++ b/drivers/media/pci/ngene/ngene-core.c
+@@ -1488,7 +1488,9 @@ static int init_channel(struct ngene_channel *chan)
+ 	}
  
- /* 301C / 302ELV extended Part2 TV registers (4 tap scaler) */
--
-+#ifdef CONFIG_FB_SIS_315
- static const unsigned char SiS_Part2CLVX_1[] = {
-     0x00,0x00,
-     0x00,0x20,0x00,0x00,0x7F,0x20,0x02,0x7F,0x7D,0x20,0x04,0x7F,0x7D,0x1F,0x06,0x7E,
-@@ -245,7 +245,6 @@ static const unsigned char SiS_Part2CLVX_6[] = {   /* 1080i */
-     0xFF,0xFF,
- };
- 
--#ifdef CONFIG_FB_SIS_315
- /* 661 et al LCD data structure (2.03.00) */
- static const unsigned char SiS_LCDStruct661[] = {
-     /* 1024x768 */
+ 	if (dev->ci.en && (io & NGENE_IO_TSOUT)) {
+-		dvb_ca_en50221_init(adapter, dev->ci.en, 0, 1);
++		ret = dvb_ca_en50221_init(adapter, dev->ci.en, 0, 1);
++		if (ret != 0)
++			goto err;
+ 		set_transfer(chan, 1);
+ 		chan->dev->channel[2].DataFormatFlags = DF_SWAP32;
+ 		set_transfer(&chan->dev->channel[2], 1);
 -- 
 2.43.0
 
