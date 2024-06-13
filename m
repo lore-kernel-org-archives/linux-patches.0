@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DD63209;
-	Thu, 13 Jun 2024 12:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E863209;
+	Thu, 13 Jun 2024 12:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281157; cv=none; b=PMm2PCDeJLFkbpsC5EahQ6qViCe8QvQkvu8u763f/08st9q27tmcDJ1RojYQf4IlP4J1iQk424Nx8dTX7qnNy/SwGU82eCxRkXaD0Z+IjlLBRaMLELvjQFMFvDfwhbbKu21l3lXbCqm0FftSBeqO1POK2iyqxRIbf90yeQrkQcY=
+	t=1718281160; cv=none; b=SPKe7vNc1BzP2n7W1Z7oZ0c9D2sC50aXIPAiB0AVzOCpAW3Z+JWtbHsWZLscifPPEC1HuFTX9HKzFJWetuXB4h/AEEFt13WzCSSx6YaKihw0J8zlTofeBL5EhilpL1rblZwssoaBkkSQOF91WTMHtxIUjtRVbSr/CnyDJ/xZ9ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281157; c=relaxed/simple;
-	bh=Uf6USvYFmY3Q0cliI+oWuwgTDp4bkk1/HSbkGIZpZpI=;
+	s=arc-20240116; t=1718281160; c=relaxed/simple;
+	bh=3+lN9p31sly/0gFOUDJ8i2JrX48HWpKmP/MSo3lDlgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=trwmGkCwfDJ259qI/2FvVnLhCYBFHZSM3iwScSV85pVKiciCR6uazhTrTeVAGlNSHeya6sCfIVbJyepF9U5cxsTYhiL+xOA8c4ZX5D/JcZPFIMEXQ/sN/iY/z9sZiY8V1g+d3JNTbNnIOYPp0clSNpAD7ofLbcaC61TK+BMBvCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FC1XxB7y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S+o5KwAOY79u7DnjrP+lw0I2pPfU6RSEqAU+A6FsQ21L7Z3FPL4C7yaZes4oy3pEYXNqFwyKTIi9sIWPH90utx3sMFw+jAvv6+QseogtUz/d9ty91MII0l9+7X47Kddl6V8k6JhafR7ObQiLlimJTKMPkAXxCAlyTXgldllMr58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldCbMQcL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FC1XxB7y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DF8C2BBFC;
-	Thu, 13 Jun 2024 12:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldCbMQcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37FFC2BBFC;
+	Thu, 13 Jun 2024 12:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281157;
-	bh=Uf6USvYFmY3Q0cliI+oWuwgTDp4bkk1/HSbkGIZpZpI=;
+	s=korg; t=1718281160;
+	bh=3+lN9p31sly/0gFOUDJ8i2JrX48HWpKmP/MSo3lDlgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FC1XxB7yVW3l81kbnV94215zS6qovSGIBZfvrXtDPvYC3lkz/csLwDQeTj+cAkgMn
-	 0ovS0vjPdXSMQmaiLlFpxQE2tVusR7x83x4XEawaBtK7nYn40z4XpEmOaLrpRgXi9X
-	 lakc4q286oWefS/143QfeJvH45MLtsdUeAvKcuaY=
+	b=ldCbMQcLPVnCdLngA3gDm0z4yLosUtYs9m2nsXq4H1+iGxg1v0r2ZrUUYCQWeRfU0
+	 57UluRsehTquvkiKb6tuXsN6iYr2FXDy8k3ouQiX0Z+ANe1j0sgSGqat9yV6CbCSvb
+	 3TERIqYy4Ac/YLgWbD9Adept7TU0xnacNXZK0908=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jinyoung Choi <j-young.choi@samsung.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 132/317] netrom: fix possible dead-lock in nr_rt_ioctl()
-Date: Thu, 13 Jun 2024 13:32:30 +0200
-Message-ID: <20240613113252.663727584@linuxfoundation.org>
+Subject: [PATCH 5.10 159/317] f2fs: fix typos in comments
+Date: Thu, 13 Jun 2024 13:32:57 +0200
+Message-ID: <20240613113253.718015564@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -53,190 +52,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jinyoung CHOI <j-young.choi@samsung.com>
 
-[ Upstream commit e03e7f20ebf7e1611d40d1fdc1bde900fd3335f6 ]
+[ Upstream commit 146949defda868378992171b9e42318b06fcd482 ]
 
-syzbot loves netrom, and found a possible deadlock in nr_rt_ioctl [1]
+This patch is to fix typos in f2fs files.
 
-Make sure we always acquire nr_node_list_lock before nr_node_lock(nr_node)
-
-[1]
-WARNING: possible circular locking dependency detected
-6.9.0-rc7-syzkaller-02147-g654de42f3fc6 #0 Not tainted
-------------------------------------------------------
-syz-executor350/5129 is trying to acquire lock:
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_node_lock include/net/netrom.h:152 [inline]
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:464 [inline]
- ffff8880186e2070 (&nr_node->node_lock){+...}-{2:2}, at: nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
-
-but task is already holding lock:
- ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
- ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:462 [inline]
- ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_rt_ioctl+0x10a/0x1090 net/netrom/nr_route.c:697
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (nr_node_list_lock){+...}-{2:2}:
-        lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-        __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
-        _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
-        spin_lock_bh include/linux/spinlock.h:356 [inline]
-        nr_remove_node net/netrom/nr_route.c:299 [inline]
-        nr_del_node+0x4b4/0x820 net/netrom/nr_route.c:355
-        nr_rt_ioctl+0xa95/0x1090 net/netrom/nr_route.c:683
-        sock_do_ioctl+0x158/0x460 net/socket.c:1222
-        sock_ioctl+0x629/0x8e0 net/socket.c:1341
-        vfs_ioctl fs/ioctl.c:51 [inline]
-        __do_sys_ioctl fs/ioctl.c:904 [inline]
-        __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
-        do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-        do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
-       entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
--> #0 (&nr_node->node_lock){+...}-{2:2}:
-        check_prev_add kernel/locking/lockdep.c:3134 [inline]
-        check_prevs_add kernel/locking/lockdep.c:3253 [inline]
-        validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
-        __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
-        lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-        __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
-        _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
-        spin_lock_bh include/linux/spinlock.h:356 [inline]
-        nr_node_lock include/net/netrom.h:152 [inline]
-        nr_dec_obs net/netrom/nr_route.c:464 [inline]
-        nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
-        sock_do_ioctl+0x158/0x460 net/socket.c:1222
-        sock_ioctl+0x629/0x8e0 net/socket.c:1341
-        vfs_ioctl fs/ioctl.c:51 [inline]
-        __do_sys_ioctl fs/ioctl.c:904 [inline]
-        __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
-        do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-        do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
-       entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(nr_node_list_lock);
-                               lock(&nr_node->node_lock);
-                               lock(nr_node_list_lock);
-  lock(&nr_node->node_lock);
-
- *** DEADLOCK ***
-
-1 lock held by syz-executor350/5129:
-  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
-  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_dec_obs net/netrom/nr_route.c:462 [inline]
-  #0: ffffffff8f7053b8 (nr_node_list_lock){+...}-{2:2}, at: nr_rt_ioctl+0x10a/0x1090 net/netrom/nr_route.c:697
-
-stack backtrace:
-CPU: 0 PID: 5129 Comm: syz-executor350 Not tainted 6.9.0-rc7-syzkaller-02147-g654de42f3fc6 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  check_noncircular+0x36a/0x4a0 kernel/locking/lockdep.c:2187
-  check_prev_add kernel/locking/lockdep.c:3134 [inline]
-  check_prevs_add kernel/locking/lockdep.c:3253 [inline]
-  validate_chain+0x18cb/0x58e0 kernel/locking/lockdep.c:3869
-  __lock_acquire+0x1346/0x1fd0 kernel/locking/lockdep.c:5137
-  lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5754
-  __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
-  _raw_spin_lock_bh+0x35/0x50 kernel/locking/spinlock.c:178
-  spin_lock_bh include/linux/spinlock.h:356 [inline]
-  nr_node_lock include/net/netrom.h:152 [inline]
-  nr_dec_obs net/netrom/nr_route.c:464 [inline]
-  nr_rt_ioctl+0x1bb/0x1090 net/netrom/nr_route.c:697
-  sock_do_ioctl+0x158/0x460 net/socket.c:1222
-  sock_ioctl+0x629/0x8e0 net/socket.c:1341
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:904 [inline]
-  __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:890
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240515142934.3708038-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jinyoung Choi <j-young.choi@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 278a6253a673 ("f2fs: fix to relocate check condition in f2fs_fallocate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_route.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ fs/f2fs/checkpoint.c   | 4 ++--
+ fs/f2fs/compress.c     | 2 +-
+ fs/f2fs/data.c         | 8 ++++----
+ fs/f2fs/extent_cache.c | 4 ++--
+ fs/f2fs/file.c         | 6 +++---
+ fs/f2fs/namei.c        | 2 +-
+ fs/f2fs/segment.c      | 2 +-
+ 7 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index 895702337c92e..9269b5e69b9a5 100644
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -284,22 +284,14 @@ static int __must_check nr_add_node(ax25_address *nr, const char *mnemonic,
- 	return 0;
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index 8ca549cc975e4..f4ab9b313e4f5 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -776,7 +776,7 @@ static void write_orphan_inodes(struct f2fs_sb_info *sbi, block_t start_blk)
+ 	 */
+ 	head = &im->ino_list;
+ 
+-	/* loop for each orphan inode entry and write them in Jornal block */
++	/* loop for each orphan inode entry and write them in journal block */
+ 	list_for_each_entry(orphan, head, list) {
+ 		if (!page) {
+ 			page = f2fs_grab_meta_page(sbi, start_blk++);
+@@ -1109,7 +1109,7 @@ int f2fs_sync_dirty_inodes(struct f2fs_sb_info *sbi, enum inode_type type,
+ 	} else {
+ 		/*
+ 		 * We should submit bio, since it exists several
+-		 * wribacking dentry pages in the freeing inode.
++		 * writebacking dentry pages in the freeing inode.
+ 		 */
+ 		f2fs_submit_merged_write(sbi, DATA);
+ 		cond_resched();
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index 9dc2e09f0a60d..6fb875c8cf28d 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -1161,7 +1161,7 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
+ 	loff_t psize;
+ 	int i, err;
+ 
+-	/* we should bypass data pages to proceed the kworkder jobs */
++	/* we should bypass data pages to proceed the kworker jobs */
+ 	if (unlikely(f2fs_cp_error(sbi))) {
+ 		mapping_set_error(cc->rpages[0]->mapping, -EIO);
+ 		goto out_free;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index fc6c88e80cf4f..1b764f70b70ed 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2431,7 +2431,7 @@ static int f2fs_mpage_readpages(struct inode *inode,
+ 
+ #ifdef CONFIG_F2FS_FS_COMPRESSION
+ 		if (f2fs_compressed_file(inode)) {
+-			/* there are remained comressed pages, submit them */
++			/* there are remained compressed pages, submit them */
+ 			if (!f2fs_cluster_can_merge_page(&cc, page->index)) {
+ 				ret = f2fs_read_multi_pages(&cc, &bio,
+ 							max_nr_pages,
+@@ -2807,7 +2807,7 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
+ 
+ 	trace_f2fs_writepage(page, DATA);
+ 
+-	/* we should bypass data pages to proceed the kworkder jobs */
++	/* we should bypass data pages to proceed the kworker jobs */
+ 	if (unlikely(f2fs_cp_error(sbi))) {
+ 		mapping_set_error(page->mapping, -EIO);
+ 		/*
+@@ -2933,7 +2933,7 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
+ redirty_out:
+ 	redirty_page_for_writepage(wbc, page);
+ 	/*
+-	 * pageout() in MM traslates EAGAIN, so calls handle_write_error()
++	 * pageout() in MM translates EAGAIN, so calls handle_write_error()
+ 	 * -> mapping_set_error() -> set_bit(AS_EIO, ...).
+ 	 * file_write_and_wait_range() will see EIO error, which is critical
+ 	 * to return value of fsync() followed by atomic_write failure to user.
+@@ -2967,7 +2967,7 @@ static int f2fs_write_data_page(struct page *page,
  }
  
--static inline void __nr_remove_node(struct nr_node *nr_node)
-+static void nr_remove_node_locked(struct nr_node *nr_node)
+ /*
+- * This function was copied from write_cche_pages from mm/page-writeback.c.
++ * This function was copied from write_cache_pages from mm/page-writeback.c.
+  * The major change is making write step of cold data page separately from
+  * warm/hot data page.
+  */
+diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
+index ad0b83a412268..01f93fae56297 100644
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -112,7 +112,7 @@ struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
+  * @prev_ex: extent before ofs
+  * @next_ex: extent after ofs
+  * @insert_p: insert point for new extent at ofs
+- * in order to simpfy the insertion after.
++ * in order to simplify the insertion after.
+  * tree must stay unchanged between lookup and insertion.
+  */
+ struct rb_entry *f2fs_lookup_rb_tree_ret(struct rb_root_cached *root,
+@@ -572,7 +572,7 @@ static void f2fs_update_extent_tree_range(struct inode *inode,
+ 	if (!en)
+ 		en = next_en;
+ 
+-	/* 2. invlidate all extent nodes in range [fofs, fofs + len - 1] */
++	/* 2. invalidate all extent nodes in range [fofs, fofs + len - 1] */
+ 	while (en && en->ei.fofs < end) {
+ 		unsigned int org_end;
+ 		int parts = 0;	/* # of parts current extent split into */
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index e88d4c0f71e3e..367b19f059f3c 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -302,7 +302,7 @@ static int f2fs_do_sync_file(struct file *file, loff_t start, loff_t end,
+ 		 * for OPU case, during fsync(), node can be persisted before
+ 		 * data when lower device doesn't support write barrier, result
+ 		 * in data corruption after SPO.
+-		 * So for strict fsync mode, force to use atomic write sematics
++		 * So for strict fsync mode, force to use atomic write semantics
+ 		 * to keep write order in between data/node and last node to
+ 		 * avoid potential data corruption.
+ 		 */
+@@ -1746,7 +1746,7 @@ static long f2fs_fallocate(struct file *file, int mode,
+ 		return -EOPNOTSUPP;
+ 
+ 	/*
+-	 * Pinned file should not support partial trucation since the block
++	 * Pinned file should not support partial truncation since the block
+ 	 * can be used by applications.
+ 	 */
+ 	if ((f2fs_compressed_file(inode) || f2fs_is_pinned_file(inode)) &&
+@@ -1796,7 +1796,7 @@ static long f2fs_fallocate(struct file *file, int mode,
+ static int f2fs_release_file(struct inode *inode, struct file *filp)
  {
-+	lockdep_assert_held(&nr_node_list_lock);
-+
- 	hlist_del_init(&nr_node->node_node);
- 	nr_node_put(nr_node);
- }
+ 	/*
+-	 * f2fs_relase_file is called at every close calls. So we should
++	 * f2fs_release_file is called at every close calls. So we should
+ 	 * not drop any inmemory pages by close called by other process.
+ 	 */
+ 	if (!(filp->f_mode & FMODE_WRITE) ||
+diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
+index 99e4ec48d2a46..56d23bc254353 100644
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -937,7 +937,7 @@ static int f2fs_rename(struct inode *old_dir, struct dentry *old_dentry,
  
--#define nr_remove_node_locked(__node) \
--	__nr_remove_node(__node)
--
--static void nr_remove_node(struct nr_node *nr_node)
--{
--	spin_lock_bh(&nr_node_list_lock);
--	__nr_remove_node(nr_node);
--	spin_unlock_bh(&nr_node_list_lock);
--}
--
- static inline void __nr_remove_neigh(struct nr_neigh *nr_neigh)
- {
- 	hlist_del_init(&nr_neigh->neigh_node);
-@@ -338,6 +330,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 		return -EINVAL;
- 	}
+ 	/*
+ 	 * If new_inode is null, the below renaming flow will
+-	 * add a link in old_dir which can conver inline_dir.
++	 * add a link in old_dir which can convert inline_dir.
+ 	 * After then, if we failed to get the entry due to other
+ 	 * reasons like ENOMEM, we had to remove the new entry.
+ 	 * Instead of adding such the error handling routine, let's
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index ad30908ac99f3..134a78179e6ff 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3688,7 +3688,7 @@ void f2fs_wait_on_page_writeback(struct page *page,
  
-+	spin_lock_bh(&nr_node_list_lock);
- 	nr_node_lock(nr_node);
- 	for (i = 0; i < nr_node->count; i++) {
- 		if (nr_node->routes[i].neighbour == nr_neigh) {
-@@ -351,7 +344,7 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 			nr_node->count--;
- 
- 			if (nr_node->count == 0) {
--				nr_remove_node(nr_node);
-+				nr_remove_node_locked(nr_node);
- 			} else {
- 				switch (i) {
- 				case 0:
-@@ -365,12 +358,14 @@ static int nr_del_node(ax25_address *callsign, ax25_address *neighbour, struct n
- 				nr_node_put(nr_node);
- 			}
- 			nr_node_unlock(nr_node);
-+			spin_unlock_bh(&nr_node_list_lock);
- 
- 			return 0;
- 		}
- 	}
- 	nr_neigh_put(nr_neigh);
- 	nr_node_unlock(nr_node);
-+	spin_unlock_bh(&nr_node_list_lock);
- 	nr_node_put(nr_node);
- 
- 	return -EINVAL;
+ 		/* submit cached LFS IO */
+ 		f2fs_submit_merged_write_cond(sbi, NULL, page, 0, type);
+-		/* sbumit cached IPU IO */
++		/* submit cached IPU IO */
+ 		f2fs_submit_merged_ipu_write(sbi, NULL, page);
+ 		if (ordered) {
+ 			wait_on_page_writeback(page);
 -- 
 2.43.0
 
