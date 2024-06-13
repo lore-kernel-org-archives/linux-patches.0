@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C33E441D;
-	Thu, 13 Jun 2024 12:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3DC1420C6;
+	Thu, 13 Jun 2024 12:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281915; cv=none; b=TEaVn67lIzE9KQ19Kzdp2GtXhlGseo/wtNNz+lhFgMV48sSBeM4XrHOeTSv12G26crM12FuhKINlR1Si/NfOWoQo/L9f7o2DyWvogMhdSkwb1eW7XnpERw5bMfgzlo4qe65dtc5nuFx+ssJAPRMVTePnb0y/gSOshCkLxiilpMU=
+	t=1718281918; cv=none; b=TQda/NRmyMf8z1fn3Xk5nF27+JbFTFfmGM2DlTZVRMVf2wXwHaeBjAMyd+WloVJsC/f67HHGuXMS1UfMe/Tab0BtpYgy4lrlp57itYEijXW0xTqk/RJy7Vo668/VH+HEmg3kIn1xUw62gpXcaXJzPdkvz5VqXIb0tJ55XSxj3TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281915; c=relaxed/simple;
-	bh=76T8RUHoJxU7JEN0rClctDDlNKqiSn7FuvvKCon6KXA=;
+	s=arc-20240116; t=1718281918; c=relaxed/simple;
+	bh=Jd4GKJ6riX+nVRgCyLLeuOgcqJsIyhS0VKcEhxDGCB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SHvj+5XJwd47J62TV/pfCPc+bKkIwuL6HW+y68ysfV5eNDIybLmHcPG6/Nsq5f6cLvPlTmZWEycyfCF9MGGqBrR8ygkjCJJYaWgOHG6JkrUc6Ng7T3vg8myyEiCVwKHAe1NINJOGCHHFMhazND7FyD5htVZF9HB4vWEEGMJ8YHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMWGT/2n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=atZ43RuNFxDxOBI7Te8DCTQsqIN5GEkjo7ETt9sqBrjjB1+aW84chQd2h/AJe75TWsYj2ozAezH2NbfgG4/IOQMb5n1SCr953Cm46W4IShfI5DH6ZpEd40nnJNGxXFjNKnUcKfu2Y6yJZR7v/Plk9l/aVrIu3OKM7FAj3gHrjps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFrclsqj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMWGT/2n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24DC5C2BBFC;
-	Thu, 13 Jun 2024 12:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFrclsqj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1399EC4AF1C;
+	Thu, 13 Jun 2024 12:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281915;
-	bh=76T8RUHoJxU7JEN0rClctDDlNKqiSn7FuvvKCon6KXA=;
+	s=korg; t=1718281918;
+	bh=Jd4GKJ6riX+nVRgCyLLeuOgcqJsIyhS0VKcEhxDGCB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMWGT/2nC6qtc2UgM29lRGlluaZSxGoOjZ0VUhfHjDx9BpOiDbxcHnNs+DjzypRPa
-	 bbKif4mPGKE0rZPOP0uqjnktilw4HiSUtdpcaAQARf0/3FsZ9CxIpMqH4tZMUgvBzk
-	 2xycPt0zxq2TfzLT6PTqTVmup9TUoAHXZZZ1bDAE=
+	b=mFrclsqjLhf9oN+vStFH2lfk5RKJOADjB7BLfnjpvKY+8eRh2L1oMDdwtRzrxV0x/
+	 aRZVpKUkBW5P/FRTReEeifGDjlVkB8L7m/ZXssqjP8xr8xHmP3myDprumHBw6dbSmY
+	 Yeyhx9jdscmoJFSSzH0QOu6HrDcsYblRvfNxqs3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 100/402] HID: intel-ish-hid: ipc: Add check for pci_alloc_irq_vectors
-Date: Thu, 13 Jun 2024 13:30:57 +0200
-Message-ID: <20240613113306.037567493@linuxfoundation.org>
+Subject: [PATCH 5.15 083/402] thermal/drivers/tsens: Fix null pointer dereference
+Date: Thu, 13 Jun 2024 13:30:40 +0200
+Message-ID: <20240613113305.374649231@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,39 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 6baa4524027fd64d7ca524e1717c88c91a354b93 ]
+[ Upstream commit d998ddc86a27c92140b9f7984ff41e3d1d07a48f ]
 
-Add a check for the return value of pci_alloc_irq_vectors() and return
-error if it fails.
+compute_intercept_slope() is called from calibrate_8960() (in tsens-8960.c)
+as compute_intercept_slope(priv, p1, NULL, ONE_PT_CALIB) which lead to null
+pointer dereference (if DEBUG or DYNAMIC_DEBUG set).
+Fix this bug by adding null pointer check.
 
-[jkosina@suse.com: reworded changelog based on Srinivas' suggestion]
-Fixes: 74fbc7d371d9 ("HID: intel-ish-hid: add MSI interrupt support")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: dfc1193d4dbd ("thermal/drivers/tsens: Replace custom 8960 apis with generic apis")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20240411114021.12203-1-amishin@t-argos.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ipc/pci-ish.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/thermal/qcom/tsens.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/pci-ish.c b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-index 5916ef2933e27..bbc3ea34585d2 100644
---- a/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-+++ b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-@@ -212,6 +212,11 @@ static int ish_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 926cd8b41132c..2f31129cd5471 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -84,7 +84,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
+ 	for (i = 0; i < priv->num_sensors; i++) {
+ 		dev_dbg(priv->dev,
+ 			"%s: sensor%d - data_point1:%#x data_point2:%#x\n",
+-			__func__, i, p1[i], p2[i]);
++			__func__, i, p1[i], p2 ? p2[i] : 0);
  
- 	/* request and enable interrupt */
- 	ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
-+	if (ret < 0) {
-+		dev_err(dev, "ISH: Failed to allocate IRQ vectors\n");
-+		return ret;
-+	}
-+
- 	if (!pdev->msi_enabled && !pdev->msix_enabled)
- 		irq_flag = IRQF_SHARED;
- 
+ 		if (!priv->sensor[i].slope)
+ 			priv->sensor[i].slope = SLOPE_DEFAULT;
 -- 
 2.43.0
 
