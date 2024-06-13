@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E9B143872;
-	Thu, 13 Jun 2024 11:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8041448E9;
+	Thu, 13 Jun 2024 11:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279207; cv=none; b=Gv2gumJzb2BfNCJhqXhauGuQXPTMX/Jf21m7o/3LxzCWV5eggMlutbfNf9MW8TPyd8q2SuyFleb7SUJv3gPiu4yiP69hZlr4RvvK9s+QyPN41eBvuKIeeArW44x0O/6BUcK0pF9GHe2O7bQAd9Z3FCwxikEXvKl2Gdmx/G3pwPU=
+	t=1718279210; cv=none; b=hxeju4gvfYB9rdl97gfWKKj+6t9NLxkscdWHOWfEARn5Sk4O7csIIL4OwoYLH6afTk0i1HHRepMBUxG5eGiQxLF3YMyw0ZI0J8+sHdSAXZRhCAS7vxj7NHw/0X+d0h55x2WJbwWPWgpElUu7PNsgD3sgBENAYmOw1zbjlIQw7+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279207; c=relaxed/simple;
-	bh=Suxgchf+Pwdqfm/O/3H/lgyrF3fuMuXDmiMB1b6QXTE=;
+	s=arc-20240116; t=1718279210; c=relaxed/simple;
+	bh=wP8osGdPBuz1kTf5qJIN+EXwePbDSVSgK4/AY88b3Sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5XNUMQHbsPND56j1uFyW/9d7sM0pQeaf70Yvyclnz96sMqDPFU24v1k8McPqW75Pe+ZcWubyC96/OS9m8xtYoTF0TX43mMiUYrObUNQpPHQ40GNEk/va4WckgxWOslnSqaHbatN0F0lpsrzV3ppkj+X18PFIAv2OMyVzEkfFrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFwwi0UC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tuVRg+j9YEGZp0axMIb1DjbvduYcAQ97uG7ZlbPCnhS5872BRIUoC541BP1vrqDu37QRBmrpDVNhzkQtWjAYBSzDX1t6yKDiRFitcMw3Fmb4KLd9qdmuTtD1bWkiUPr5LeaCjPVrT0CzFdWrdGPiqRPcTbWNJev1tCJV2qrtmUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGlgNHnt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFwwi0UC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF23CC2BBFC;
-	Thu, 13 Jun 2024 11:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGlgNHnt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC76BC2BBFC;
+	Thu, 13 Jun 2024 11:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279207;
-	bh=Suxgchf+Pwdqfm/O/3H/lgyrF3fuMuXDmiMB1b6QXTE=;
+	s=korg; t=1718279210;
+	bh=wP8osGdPBuz1kTf5qJIN+EXwePbDSVSgK4/AY88b3Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFwwi0UCbXGXMJiw0i5Cv7OMysL+L2JdEUH5pkor622l4drxmhWlG4UGfuX9/Rs28
-	 rGC9ZKCBbcyupopWh87t4Erhwod8hWN4xJDCtvdurXdOJZkmepU9ymjkUq8CWuFAkO
-	 lVfDJXmM7D6/prPh8RwpvmfzD4OcYCFO0jLrdKig=
+	b=xGlgNHnt3b90P7VgMxODcsO5yhlTelr9xMr2DrJZ2vqVR+R6OdoqVFx4/hZcbtsda
+	 QXWMMS4TpIZz1rA/0ygngppajpQAhtTJV6T4itMt0VQFubutwjYyQwCl3HtLHagEGS
+	 XDZ06YEUzb5CugJnr70uc2SAL6JouhsDWhm+IxUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Gilbert <floppym@gentoo.org>,
-	Andreas Larsson <andreas@gaisler.com>
-Subject: [PATCH 4.19 210/213] sparc: move struct termio to asm/termios.h
-Date: Thu, 13 Jun 2024 13:34:18 +0200
-Message-ID: <20240613113236.084371828@linuxfoundation.org>
+	syzbot+dd43bd0f7474512edc47@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.19 211/213] ext4: fix mb_cache_entrys e_refcnt leak in ext4_xattr_block_cache_find()
+Date: Thu, 13 Jun 2024 13:34:19 +0200
+Message-ID: <20240613113236.122717727@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -50,64 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Gilbert <floppym@gentoo.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit c32d18e7942d7589b62e301eb426b32623366565 upstream.
+commit 0c0b4a49d3e7f49690a6827a41faeffad5df7e21 upstream.
 
-Every other arch declares struct termio in asm/termios.h, so make sparc
-match them.
+Syzbot reports a warning as follows:
 
-Resolves a build failure in the PPP software package, which includes
-both bits/ioctl-types.h via sys/ioctl.h (glibc) and asm/termbits.h.
+============================================
+WARNING: CPU: 0 PID: 5075 at fs/mbcache.c:419 mb_cache_destroy+0x224/0x290
+Modules linked in:
+CPU: 0 PID: 5075 Comm: syz-executor199 Not tainted 6.9.0-rc6-gb947cc5bf6d7
+RIP: 0010:mb_cache_destroy+0x224/0x290 fs/mbcache.c:419
+Call Trace:
+ <TASK>
+ ext4_put_super+0x6d4/0xcd0 fs/ext4/super.c:1375
+ generic_shutdown_super+0x136/0x2d0 fs/super.c:641
+ kill_block_super+0x44/0x90 fs/super.c:1675
+ ext4_kill_sb+0x68/0xa0 fs/ext4/super.c:7327
+[...]
+============================================
 
-Closes: https://bugs.gentoo.org/918992
-Signed-off-by: Mike Gilbert <floppym@gentoo.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Tested-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20240306171149.3843481-1-floppym@gentoo.org
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+This is because when finding an entry in ext4_xattr_block_cache_find(), if
+ext4_sb_bread() returns -ENOMEM, the ce's e_refcnt, which has already grown
+in the __entry_find(), won't be put away, and eventually trigger the above
+issue in mb_cache_destroy() due to reference count leakage.
+
+So call mb_cache_entry_put() on the -ENOMEM error branch as a quick fix.
+
+Reported-by: syzbot+dd43bd0f7474512edc47@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=dd43bd0f7474512edc47
+Fixes: fb265c9cb49e ("ext4: add ext4_sb_bread() to disambiguate ENOMEM cases")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240504075526.2254349-2-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/include/uapi/asm/termbits.h |   10 ----------
- arch/sparc/include/uapi/asm/termios.h  |    9 +++++++++
- 2 files changed, 9 insertions(+), 10 deletions(-)
+ fs/ext4/xattr.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/sparc/include/uapi/asm/termbits.h
-+++ b/arch/sparc/include/uapi/asm/termbits.h
-@@ -13,16 +13,6 @@ typedef unsigned int    tcflag_t;
- typedef unsigned long   tcflag_t;
- #endif
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -3104,8 +3104,10 @@ ext4_xattr_block_cache_find(struct inode
  
--#define NCC 8
--struct termio {
--	unsigned short c_iflag;		/* input mode flags */
--	unsigned short c_oflag;		/* output mode flags */
--	unsigned short c_cflag;		/* control mode flags */
--	unsigned short c_lflag;		/* local mode flags */
--	unsigned char c_line;		/* line discipline */
--	unsigned char c_cc[NCC];	/* control characters */
--};
--
- #define NCCS 17
- struct termios {
- 	tcflag_t c_iflag;		/* input mode flags */
---- a/arch/sparc/include/uapi/asm/termios.h
-+++ b/arch/sparc/include/uapi/asm/termios.h
-@@ -40,5 +40,14 @@ struct winsize {
- 	unsigned short ws_ypixel;
- };
- 
-+#define NCC 8
-+struct termio {
-+	unsigned short c_iflag;		/* input mode flags */
-+	unsigned short c_oflag;		/* output mode flags */
-+	unsigned short c_cflag;		/* control mode flags */
-+	unsigned short c_lflag;		/* local mode flags */
-+	unsigned char c_line;		/* line discipline */
-+	unsigned char c_cc[NCC];	/* control characters */
-+};
- 
- #endif /* _UAPI_SPARC_TERMIOS_H */
+ 		bh = ext4_sb_bread(inode->i_sb, ce->e_value, REQ_PRIO);
+ 		if (IS_ERR(bh)) {
+-			if (PTR_ERR(bh) == -ENOMEM)
++			if (PTR_ERR(bh) == -ENOMEM) {
++				mb_cache_entry_put(ea_block_cache, ce);
+ 				return NULL;
++			}
+ 			bh = NULL;
+ 			EXT4_ERROR_INODE(inode, "block %lu read error",
+ 					 (unsigned long)ce->e_value);
 
 
