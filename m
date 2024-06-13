@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C3C144304;
-	Thu, 13 Jun 2024 11:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6100D143C5C;
+	Thu, 13 Jun 2024 11:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278976; cv=none; b=LXovumkuVwL/cSUBHrZCLsl4EwtgshaWEtQu/WlQc13xLkcad66pSdeL+/L7FpzLIXKwJq7FjbRVqHHEgVfshOXDPbtos9WG/EcAXQDC9OIqAFybUy9VZ1hh5XXVPn79e1pQ+QwR0zqa2GsReqDZepGiMG3OcvdHaq/sC5py85s=
+	t=1718278979; cv=none; b=bcyevEZEuTjZjSAnI7PdAk1+P/oLKRjjUDehMIbE+8x5gBtL1WJRXMyHfqgxf057so/tWi0Trbm+tWCEmMCnLa7DpLOJ6Tq11aKpvQzc0xmzgxSENMmKldTyOLciO2quPE2609JDL8EyWvPvobMG5whHfmGgJflfw90UJnCHdIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278976; c=relaxed/simple;
-	bh=lSJOZl1nEIyYjtJJsDEzdWPjNTC8cg3C0E36R1XF4Oc=;
+	s=arc-20240116; t=1718278979; c=relaxed/simple;
+	bh=Zc1XTa6zAReVjyUSKKLRqN9X3nZY9P8g0jxHN5It71I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXq8O4VOBoegqy+Aci+d4uWJ0YJu4eNRHaCLPhdDKDejOdMXzRx0sdl0ZHMUwVF4rPeh/Mv4eih9Uud25s9F4eD6BzRD6lMwxIjK7v3SYDGFF09UyM+1ybWAE0PQFlfuLBQfY7dfe5G151FqS0CQ0eivJK3+I/GfKuorAg5vksA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6oAraBX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dFGhxEJHqzh5whvTmMeYLJfwqZwFsuVi4YLlvC6Jtqu2kKTAizoNmjou68c9WsuTh05Owt/meBINlCaiE0rxqCHudjgHXIoXOxHM/X+a/0eCGLqg6Rh7eWjXA06CeOg9YhR8K+AYWY3Z+x7oRSPnf/NQGwJPo0ZxsnBEAjxBNko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJwK+kpv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6oAraBX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C87C2BBFC;
-	Thu, 13 Jun 2024 11:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJwK+kpv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC728C32786;
+	Thu, 13 Jun 2024 11:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278976;
-	bh=lSJOZl1nEIyYjtJJsDEzdWPjNTC8cg3C0E36R1XF4Oc=;
+	s=korg; t=1718278979;
+	bh=Zc1XTa6zAReVjyUSKKLRqN9X3nZY9P8g0jxHN5It71I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6oAraBX+qYYgr1NnC9kP+8VIN2CikeBLord4uCgNZMJd1s/mX54AspKhE6bEGxfQ
-	 6ZyWbExcsJOVJnH/z7bSKjWwIBbLrEDS+l/qM6uRwzSRWymULxMClznsF8uy1+Y8dA
-	 WKSf058k70A8hT0GkVReSm8tfncnyyGmknuWqv0k=
+	b=BJwK+kpvntjsDnHc1jr0++71P+Fl8KUzY2b5lEpBTeR7hnqiIchrRVqgKqcYQCdDb
+	 pzzgLACV9OfbSwW45xXgVQP8wuvu5BTo9Rj5yIkVY1LiMa9RvBdLexdxdwWVtP8LsR
+	 U+AgoEyaCSGXTT5XiSlYt+BhKysLbNyN45+QuRDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 133/213] nvmet: fix ns enable/disable possible hang
-Date: Thu, 13 Jun 2024 13:33:01 +0200
-Message-ID: <20240613113233.127815638@linuxfoundation.org>
+Subject: [PATCH 4.19 134/213] net/mlx5e: Use rx_missed_errors instead of rx_dropped for reporting buffer exhaustion
+Date: Thu, 13 Jun 2024 13:33:02 +0200
+Message-ID: <20240613113233.166017540@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -53,57 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit f97914e35fd98b2b18fb8a092e0a0799f73afdfe ]
+[ Upstream commit 5c74195d5dd977e97556e6fa76909b831c241230 ]
 
-When disabling an nvmet namespace, there is a period where the
-subsys->lock is released, as the ns disable waits for backend IO to
-complete, and the ns percpu ref to be properly killed. The original
-intent was to avoid taking the subsystem lock for a prolong period as
-other processes may need to acquire it (for example new incoming
-connections).
+Previously, the driver incorrectly used rx_dropped to report device
+buffer exhaustion.
 
-However, it opens up a window where another process may come in and
-enable the ns, (re)intiailizing the ns percpu_ref, causing the disable
-sequence to hang.
+According to the documentation, rx_dropped should not be used to count
+packets dropped due to buffer exhaustion, which is the purpose of
+rx_missed_errors.
 
-Solve this by taking the global nvmet_config_sem over the entire configfs
-enable/disable sequence.
+Use rx_missed_errors as intended for counting packets dropped due to
+buffer exhaustion.
 
-Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 269e6b3af3bf ("net/mlx5e: Report additional error statistics in get stats ndo")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index b37a8e3e3f800..921efb20f6d7b 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -464,10 +464,18 @@ static ssize_t nvmet_ns_enable_store(struct config_item *item,
- 	if (strtobool(page, &enable))
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 6ecb92f55e974..6dd1ee76887ad 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3476,7 +3476,7 @@ mlx5e_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats)
+ 		stats->tx_dropped = sstats->tx_queue_dropped;
+ 	}
  
-+	/*
-+	 * take a global nvmet_config_sem because the disable routine has a
-+	 * window where it releases the subsys-lock, giving a chance to
-+	 * a parallel enable to concurrently execute causing the disable to
-+	 * have a misaccounting of the ns percpu_ref.
-+	 */
-+	down_write(&nvmet_config_sem);
- 	if (enable)
- 		ret = nvmet_ns_enable(ns);
- 	else
- 		nvmet_ns_disable(ns);
-+	up_write(&nvmet_config_sem);
+-	stats->rx_dropped = priv->stats.qcnt.rx_out_of_buffer;
++	stats->rx_missed_errors = priv->stats.qcnt.rx_out_of_buffer;
  
- 	return ret ? ret : count;
- }
+ 	stats->rx_length_errors =
+ 		PPORT_802_3_GET(pstats, a_in_range_length_errors) +
 -- 
 2.43.0
 
