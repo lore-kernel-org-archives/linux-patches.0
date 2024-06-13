@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E59384;
-	Thu, 13 Jun 2024 12:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5D3384;
+	Thu, 13 Jun 2024 12:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282156; cv=none; b=o/3vObBRk0nwAMe29SDxiHHPN4e8pwb5n8DglxZP5okBaJOT29F2Gy3TnA0ffHeuWxg0pxffloincZKeJtH6A1IMbZDuhNdeE2+4vJOyFuOA0GhbXZXuXhPZJYEiiH6mWXHX6oaIEmiYRrSL3Nfep1SAe/6fcj5dGUpGix+mLMs=
+	t=1718282159; cv=none; b=HdO9SVGWbBwaVWhN3kB1ZmF3MiPwQUPScoMlA1PMNRlkm8Zzafdvad/8N3UUnkC/RwdXLRUL1nPd5NXWFPU9mwwXWkrF0W3moHKANJI5BiMoul9Vf7TE4StVJ6dj0o1M0IhPi4agQBeHaPhWlC2Nr/Nxav3cErB9gSnvzEwiyRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282156; c=relaxed/simple;
-	bh=ww3494NSEG6WFhyzu9M13IzAqWqfdYenT/spkTf/7Lc=;
+	s=arc-20240116; t=1718282159; c=relaxed/simple;
+	bh=HZXo5/UuD5um97p2t4QxXKwEdC6Zj4KUQB9Rn6381lM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MyCNdbYirhoA44dYPDtzT/XyJ05cyC5QRxp91soG4wMJoP6p/RjhEPKgRJ+f6/kuycClxTaBQNFbqc+PmdtUm05f8c1B0I4Xa4gjbriDdkWUqGdw3aocxk5LP75pr6ChCIQjQNf9bHdjaHFdWP8+v55tPj5YUu1iMe+1xKrT6u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkPQjZzr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F7s90EJgw3McW2F/1DJX/JvNht9wczKVoCfRvT8xFHBPskk+bdCvLpsFZG8BYtHDBEmFuntTBd5GyzdhXg9bYR0C5su8Ki3s1v3AamimtBeG8zpFnOE/bVoeT9mErInU4xt92xeO+98S02vHlGK+KPbjsigK2d+nyfLHcp6CBf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3VxsKoh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkPQjZzr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CEF3C2BBFC;
-	Thu, 13 Jun 2024 12:35:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3VxsKoh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74458C2BBFC;
+	Thu, 13 Jun 2024 12:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282155;
-	bh=ww3494NSEG6WFhyzu9M13IzAqWqfdYenT/spkTf/7Lc=;
+	s=korg; t=1718282158;
+	bh=HZXo5/UuD5um97p2t4QxXKwEdC6Zj4KUQB9Rn6381lM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mkPQjZzrwBfMqaJQAR2wqnMiCu545NVYrMfwXjYbfQDgrUiIJGzonnpdegjVQESwf
-	 Uj1Ny2jRiv6bKo2RiKT4M9adTsBpCT0WZ0Db55L1iQttB9Ll/sn+eYudqSECmAPmQ0
-	 fN3mUmp/TSQb/4EqmwbBtjLLbSC32vEzb7zQXfCU=
+	b=h3VxsKohys+nR6KUHhzYGS2ky8KENzrdj7oY9Ot36IG64ueZx+mjXEve/S4wumKPq
+	 Tq2vmoZK4eZSv+2FZ4QQ6v5vCkMa3GiqvX0tNLXYz/dcVdyqRUGDXep2FOu++D3x4e
+	 edw9cod8D7IVuPXHgREnYfMgLy5BC9LfBqPZQp2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	Ira Weiny <ira.weiny@intel.com>,
-	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 180/402] f2fs: Delete f2fs_copy_page() and replace with memcpy_page()
-Date: Thu, 13 Jun 2024 13:32:17 +0200
-Message-ID: <20240613113309.172096477@linuxfoundation.org>
+Subject: [PATCH 5.15 152/402] RDMA/hns: Fix GMV table pagesize
+Date: Thu, 13 Jun 2024 13:31:49 +0200
+Message-ID: <20240613113308.064431480@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -49,83 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabio M. De Francesco <fmdefrancesco@gmail.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 1dd55358efc4f74e49fa9e1e97a03804852a4c20 ]
+[ Upstream commit ee045493283403969591087bd405fa280103282a ]
 
-f2fs_copy_page() is a wrapper around two kmap() + one memcpy() from/to
-the mapped pages. It unnecessarily duplicates a kernel API and it makes
-use of kmap(), which is being deprecated in favor of kmap_local_page().
+GMV's BA table only supports 4K pages. Currently, PAGESIZE is used to
+calculate gmv_bt_num, which will cause an abnormal number of gmv_bt_num
+in a 64K OS.
 
-Two main problems with kmap(): (1) It comes with an overhead as mapping
-space is restricted and protected by a global lock for synchronization and
-(2) it also requires global TLB invalidation when the kmap’s pool wraps
-and it might block when the mapping space is fully utilized until a slot
-becomes available.
-
-With kmap_local_page() the mappings are per thread, CPU local, can take
-page faults, and can be called from any context (including interrupts).
-It is faster than kmap() in kernels with HIGHMEM enabled. Therefore, its
-use in __clone_blkaddrs() is safe and should be preferred.
-
-Delete f2fs_copy_page() and use a plain memcpy_page() in the only one
-site calling the removed function. memcpy_page() avoids open coding two
-kmap_local_page() + one memcpy() between the two kernel virtual addresses.
-
-Suggested-by: Christoph Hellwig <hch@infradead.org>
-Suggested-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Fabio M. De Francesco <fmdefrancesco@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: d3876e34e7e7 ("f2fs: fix to wait on page writeback in __clone_blkaddrs()")
+Fixes: d6d91e46210f ("RDMA/hns: Add support for configuring GMV table")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240412091616.370789-8-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h | 10 ----------
- fs/f2fs/file.c |  2 +-
- 2 files changed, 1 insertion(+), 11 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 647d53df6a3de..e49fca9daf2d3 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -2587,16 +2587,6 @@ static inline struct page *f2fs_pagecache_get_page(
- 	return pagecache_get_page(mapping, index, fgp_flags, gfp_mask);
- }
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 7376f012ece12..e541de3e6165b 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -2202,7 +2202,7 @@ static void apply_func_caps(struct hns_roce_dev *hr_dev)
+ 		caps->gid_table_len[0] = caps->gmv_bt_num *
+ 					(HNS_HW_PAGE_SIZE / caps->gmv_entry_sz);
  
--static inline void f2fs_copy_page(struct page *src, struct page *dst)
--{
--	char *src_kaddr = kmap(src);
--	char *dst_kaddr = kmap(dst);
--
--	memcpy(dst_kaddr, src_kaddr, PAGE_SIZE);
--	kunmap(dst);
--	kunmap(src);
--}
--
- static inline void f2fs_put_page(struct page *page, int unlock)
- {
- 	if (!page)
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 378ab6bd1b8d8..9b7ecbb974258 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1276,7 +1276,7 @@ static int __clone_blkaddrs(struct inode *src_inode, struct inode *dst_inode,
- 				f2fs_put_page(psrc, 1);
- 				return PTR_ERR(pdst);
- 			}
--			f2fs_copy_page(psrc, pdst);
-+			memcpy_page(pdst, 0, psrc, 0, PAGE_SIZE);
- 			set_page_dirty(pdst);
- 			set_page_private_gcing(pdst);
- 			f2fs_put_page(pdst, 1);
+-		caps->gmv_entry_num = caps->gmv_bt_num * (PAGE_SIZE /
++		caps->gmv_entry_num = caps->gmv_bt_num * (HNS_HW_PAGE_SIZE /
+ 							  caps->gmv_entry_sz);
+ 	} else {
+ 		u32 func_num = max_t(u32, 1, hr_dev->func_num);
 -- 
 2.43.0
 
