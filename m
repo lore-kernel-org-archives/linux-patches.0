@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDDF145338;
-	Thu, 13 Jun 2024 12:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F0B13C68A;
+	Thu, 13 Jun 2024 12:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281307; cv=none; b=RWVWNYHE/Ic61L5idwM3zbH4zpD4JEBje88Qo7+GYegMv1Kiv/pHxJnUjEizRm+4PiTyyc/ioQk5HaHvKDEaL+HUdEjSNehPr5eS4ZBSnhs5RGy6Vt6ON2svxQnipuJfK6NZ0zlukT+6WzMx/hfGQmKyWdXNTTRwpSON9ZJV8Go=
+	t=1718281310; cv=none; b=Epxqjqg8XrZ29MCsV5rSjtz2aKskuWw/oKCi9iar/WuQvwjBegDSec+g9aDtUYhetzKQ1eKLT/7m2mKzXH8mLxGG1wALDs9gMaAZ639YjJQ4WwcSlx/5JBbNGOUohc949zXq25igKI59S1WE+bjxcc9UeHGnJacDMFdUMBTs9o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281307; c=relaxed/simple;
-	bh=so518BUJ7zWtusfgdCYYqfnMaZVGru3iJhJMrd89bEY=;
+	s=arc-20240116; t=1718281310; c=relaxed/simple;
+	bh=WPDk4suXbHa5zxOmshpeO1zx+1zCCmWQQQE/uxrMT/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=esq2mLt/cihtBZEb5El8g7oev6EQDgBnkgTSE3U4PcA/wVl0+h4S5oY5xZGAIhXTfzoZK6+WbkaeVZd0hV5nebjvxrHyKwDoX2nk0puYGVhBFEUWLppBp3U8DFf/1kkEMk9lBVLBOtIdx99RLll/6N16SzjzFL0wCGzwZhLP4Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9ubU9ee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C1jETCYudBR9lElpZ/CW6q24nVap3W34oiIfXiwjG8ERu5/F8omldb2L+cftKEDvH1MwqRUZjj110SgLNWBmnf4kN7s5RGwdRX8rKuCqh/cSZm77XaxuLz0S88tIchXzLzGTk9BGejuQnFK9/9v5AVYFo7CaNvfSbrqLWQbOY7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMnrrWqJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9ubU9ee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81BCC2BBFC;
-	Thu, 13 Jun 2024 12:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMnrrWqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3E5C2BBFC;
+	Thu, 13 Jun 2024 12:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281307;
-	bh=so518BUJ7zWtusfgdCYYqfnMaZVGru3iJhJMrd89bEY=;
+	s=korg; t=1718281310;
+	bh=WPDk4suXbHa5zxOmshpeO1zx+1zCCmWQQQE/uxrMT/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9ubU9eeb616qI5mwgWjtGZlT1QNioFXNGMDd8PvqP3Oe3qx0SdgUTDKBXaTmfDWC
-	 tcDZ0cxYt9Yjs0/8GJrCsvWRbI7MMqXVbwjX5KFG51DK9/XyvOb7dfgd0ETlg/TtDm
-	 mAm+fiAJbVMkcx+mN9sVyvo4ti0/KNHsY8wIbKi0=
+	b=gMnrrWqJ5I1qfLuQcTyN3HWcXDiJEuRNLyAz8esYbWKi4ZCee+7q5EXwe07JOfuwN
+	 CAWVs43ksEfwEKgNE9saVkbLKJPejwPlPDN9Oxe1ucK44vGTjdm6zTr6kKny1RJMpi
+	 8B/UDzXLHnX7X2jiJcZo5wMPmpJ+DI1DOz1RlsdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongliang Mu <mudongliangabcd@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 211/317] media: flexcop-usb: fix sanity check of bNumEndpoints
-Date: Thu, 13 Jun 2024 13:33:49 +0200
-Message-ID: <20240613113255.718693810@linuxfoundation.org>
+Subject: [PATCH 5.10 212/317] powerpc/pseries: Add failure related checks for h_get_mpp and h_get_ppp
+Date: Thu, 13 Jun 2024 13:33:50 +0200
+Message-ID: <20240613113255.756646043@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,38 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongliang Mu <mudongliangabcd@gmail.com>
+From: Shrikanth Hegde <sshegde@linux.ibm.com>
 
-[ Upstream commit f62dc8f6bf82d1b307fc37d8d22cc79f67856c2f ]
+[ Upstream commit 6d4341638516bf97b9a34947e0bd95035a8230a5 ]
 
-Commit d725d20e81c2 ("media: flexcop-usb: sanity checking of endpoint type
-") adds a sanity check for endpoint[1], but fails to modify the sanity
-check of bNumEndpoints.
+Couple of Minor fixes:
 
-Fix this by modifying the sanity check of bNumEndpoints to 2.
+- hcall return values are long. Fix that for h_get_mpp, h_get_ppp and
+parse_ppp_data
 
-Link: https://lore.kernel.org/linux-media/20220602055027.849014-1-dzm91@hust.edu.cn
-Fixes: d725d20e81c2 ("media: flexcop-usb: sanity checking of endpoint type")
-Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+- If hcall fails, values set should be at-least zero. It shouldn't be
+uninitialized values. Fix that for h_get_mpp and h_get_ppp
+
+Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240412092047.455483-3-sshegde@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/b2c2/flexcop-usb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/include/asm/hvcall.h        | 2 +-
+ arch/powerpc/platforms/pseries/lpar.c    | 6 +++---
+ arch/powerpc/platforms/pseries/lparcfg.c | 6 +++---
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/usb/b2c2/flexcop-usb.c b/drivers/media/usb/b2c2/flexcop-usb.c
-index 6d199b32e3170..6ded5a6181aa2 100644
---- a/drivers/media/usb/b2c2/flexcop-usb.c
-+++ b/drivers/media/usb/b2c2/flexcop-usb.c
-@@ -514,7 +514,7 @@ static int flexcop_usb_init(struct flexcop_usb *fc_usb)
+diff --git a/arch/powerpc/include/asm/hvcall.h b/arch/powerpc/include/asm/hvcall.h
+index 00c8cda1c9c31..1a60188f74ad8 100644
+--- a/arch/powerpc/include/asm/hvcall.h
++++ b/arch/powerpc/include/asm/hvcall.h
+@@ -494,7 +494,7 @@ struct hvcall_mpp_data {
+ 	unsigned long backing_mem;
+ };
  
- 	alt = fc_usb->uintf->cur_altsetting;
+-int h_get_mpp(struct hvcall_mpp_data *);
++long h_get_mpp(struct hvcall_mpp_data *mpp_data);
  
--	if (alt->desc.bNumEndpoints < 1)
-+	if (alt->desc.bNumEndpoints < 2)
- 		return -ENODEV;
- 	if (!usb_endpoint_is_isoc_in(&alt->endpoint[0].desc))
- 		return -ENODEV;
+ struct hvcall_mpp_x_data {
+ 	unsigned long coalesced_bytes;
+diff --git a/arch/powerpc/platforms/pseries/lpar.c b/arch/powerpc/platforms/pseries/lpar.c
+index 4a3425fb19398..aed67f1a1bc56 100644
+--- a/arch/powerpc/platforms/pseries/lpar.c
++++ b/arch/powerpc/platforms/pseries/lpar.c
+@@ -1883,10 +1883,10 @@ void __trace_hcall_exit(long opcode, long retval, unsigned long *retbuf)
+  * h_get_mpp
+  * H_GET_MPP hcall returns info in 7 parms
+  */
+-int h_get_mpp(struct hvcall_mpp_data *mpp_data)
++long h_get_mpp(struct hvcall_mpp_data *mpp_data)
+ {
+-	int rc;
+-	unsigned long retbuf[PLPAR_HCALL9_BUFSIZE];
++	unsigned long retbuf[PLPAR_HCALL9_BUFSIZE] = {0};
++	long rc;
+ 
+ 	rc = plpar_hcall9(H_GET_MPP, retbuf);
+ 
+diff --git a/arch/powerpc/platforms/pseries/lparcfg.c b/arch/powerpc/platforms/pseries/lparcfg.c
+index a7d4e25ae82a1..e0c5fc9ab242e 100644
+--- a/arch/powerpc/platforms/pseries/lparcfg.c
++++ b/arch/powerpc/platforms/pseries/lparcfg.c
+@@ -112,8 +112,8 @@ struct hvcall_ppp_data {
+  */
+ static unsigned int h_get_ppp(struct hvcall_ppp_data *ppp_data)
+ {
+-	unsigned long rc;
+-	unsigned long retbuf[PLPAR_HCALL9_BUFSIZE];
++	unsigned long retbuf[PLPAR_HCALL9_BUFSIZE] = {0};
++	long rc;
+ 
+ 	rc = plpar_hcall9(H_GET_PPP, retbuf);
+ 
+@@ -192,7 +192,7 @@ static void parse_ppp_data(struct seq_file *m)
+ 	struct hvcall_ppp_data ppp_data;
+ 	struct device_node *root;
+ 	const __be32 *perf_level;
+-	int rc;
++	long rc;
+ 
+ 	rc = h_get_ppp(&ppp_data);
+ 	if (rc)
 -- 
 2.43.0
 
