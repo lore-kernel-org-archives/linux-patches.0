@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131FBEC4;
-	Thu, 13 Jun 2024 12:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C44195;
+	Thu, 13 Jun 2024 12:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281816; cv=none; b=kIHb0Dzi0qjoU/uAke2g+kpVo9PQD/HLHZTTvGMRKFaB1+0fjeIbGuFE2MAztBZ/DPh882mY2Kn7bwaO0a5NBLWM79SbH3lGnZ1keyARLiWKOBh9mNsMylE4iIdg6/ALhEHmckC9IgEFBDdnSywkZ3y/wmEq9emm48HaWappxqk=
+	t=1718281819; cv=none; b=H5GBRylh0liSMnNgofFp/5sAq4J9gP7pB3eCL5S4sNhlSWsS9K6Ms+64ewz57oaKzH0RzWZgC2iEwzHqKp8BDC+yHdDAhkw/35VHz6A9znjfOR2bBehhd03kOCQU0es4/9DKyJIud2Wk8VLsAeAXE6q1yIG8VNfqpCheIKtmgMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281816; c=relaxed/simple;
-	bh=jlMNHDP5DQ1bI2vdG4iqo/x7EIQkVYTBHe0rawOgnQA=;
+	s=arc-20240116; t=1718281819; c=relaxed/simple;
+	bh=LsK7Na3cVBMCKOOzjEmASR37/GMi67FBGB5V5hqPfKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZirfC2DyCg1clxbAg8bdUds96xCkTR/xJiLFrQW6/wGevpYeQBFn0nIEiB4UuJBSudpkG1S6dMXUSuRY3sykwFNiN+eOBwVGJ8mB8tUR6K9sJ4yG6G0jYGg5A9vJlhQ7M+rZF7iihhhK86CGj9S0iXSEe5M5hccxgysp4BZZIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hols4l6W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F5XLVE0DVDZK8eu3ugX2kDe6Of8CjFaILh9aTt4a4i9LEYrvW7g/C2djRxZWYDdSzqFUiNCbSudvsiyKsrq7B+DMy9LoQUFc1Brxy/kLBt3kyFy/DzihiE9ze66BJobimY4h47f87uXShnu3P9pGfLCTM1b8fREu53f/cYlKKFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChFb7OG8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hols4l6W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87044C2BBFC;
-	Thu, 13 Jun 2024 12:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChFb7OG8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7032EC2BBFC;
+	Thu, 13 Jun 2024 12:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281815;
-	bh=jlMNHDP5DQ1bI2vdG4iqo/x7EIQkVYTBHe0rawOgnQA=;
+	s=korg; t=1718281818;
+	bh=LsK7Na3cVBMCKOOzjEmASR37/GMi67FBGB5V5hqPfKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hols4l6W7PgzsU7/DUh3hW+BI7kPSRBDtPH1aUi6oow7CRQ+IFoeUB4Vp13yEZ7N4
-	 Hh52kxuxjLAUYLTw+4O3k5Y27yngJKTxAxIMbTkt6/z8UCCkoQrAJ9QmQZRC7nkGSZ
-	 mDAmzO6LwkYBwg6KdbzR6WXNOgN0rB18d1uQfpks=
+	b=ChFb7OG80bVRiMMu5mffrc5ThDzHrrlVTjkW0TuGtc7Gkmsjun/UKtkP8tIg2Tbng
+	 ZQO7lZvUA1MgJ7jAH/pxd3p5Sd0VVcudJjm6cWb/fu3FAsxhN/RwnVWr2WR2fwotP6
+	 2WOUHfGPkU/pTpxTIAkapyoZR/Yi8kN/LmmhGFmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/402] irqchip/alpine-msi: Fix off-by-one in allocation error path
-Date: Thu, 13 Jun 2024 13:30:23 +0200
-Message-ID: <20240613113304.711155822@linuxfoundation.org>
+Subject: [PATCH 5.15 049/402] soc: mediatek: cmdq: Fix typo of CMDQ_JUMP_RELATIVE
+Date: Thu, 13 Jun 2024 13:30:06 +0200
+Message-ID: <20240613113304.050946462@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,38 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenghui Yu <yuzenghui@huawei.com>
+From: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 
-[ Upstream commit ff3669a71afa06208de58d6bea1cc49d5e3fcbd1 ]
+[ Upstream commit ed4d5ab179b9f0a60da87c650a31f1816db9b4b4 ]
 
-When alpine_msix_gic_domain_alloc() fails, there is an off-by-one in the
-number of interrupts to be freed.
+For cmdq jump command, offset 0 means relative jump and offset 1
+means absolute jump. cmdq_pkt_jump() is absolute jump, so fix the
+typo of CMDQ_JUMP_RELATIVE in cmdq_pkt_jump().
 
-Fix it by passing the number of successfully allocated interrupts, instead
-of the relative index of the last allocated one.
-
-Fixes: 3841245e8498 ("irqchip/alpine-msi: Fix freeing of interrupts on allocation error path")
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240327142305.1048-1-yuzenghui@huawei.com
+Fixes: 946f1792d3d7 ("soc: mediatek: cmdq: add jump function")
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20240222154120.16959-2-chunkuang.hu@kernel.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-alpine-msi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/mediatek/mtk-cmdq-helper.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-alpine-msi.c b/drivers/irqchip/irq-alpine-msi.c
-index fc1ef7de37973..c9ffd69dfc756 100644
---- a/drivers/irqchip/irq-alpine-msi.c
-+++ b/drivers/irqchip/irq-alpine-msi.c
-@@ -165,7 +165,7 @@ static int alpine_msix_middle_domain_alloc(struct irq_domain *domain,
- 	return 0;
+diff --git a/drivers/soc/mediatek/mtk-cmdq-helper.c b/drivers/soc/mediatek/mtk-cmdq-helper.c
+index 3c8e4212d9419..40fb935818f8b 100644
+--- a/drivers/soc/mediatek/mtk-cmdq-helper.c
++++ b/drivers/soc/mediatek/mtk-cmdq-helper.c
+@@ -13,7 +13,8 @@
+ #define CMDQ_POLL_ENABLE_MASK	BIT(0)
+ #define CMDQ_EOC_IRQ_EN		BIT(0)
+ #define CMDQ_REG_TYPE		1
+-#define CMDQ_JUMP_RELATIVE	1
++#define CMDQ_JUMP_RELATIVE	0
++#define CMDQ_JUMP_ABSOLUTE	1
  
- err_sgi:
--	irq_domain_free_irqs_parent(domain, virq, i - 1);
-+	irq_domain_free_irqs_parent(domain, virq, i);
- 	alpine_msix_free_sgi(priv, sgi, nr_irqs);
- 	return err;
- }
+ struct cmdq_instruction {
+ 	union {
+@@ -396,7 +397,7 @@ int cmdq_pkt_jump(struct cmdq_pkt *pkt, dma_addr_t addr)
+ 	struct cmdq_instruction inst = {};
+ 
+ 	inst.op = CMDQ_CODE_JUMP;
+-	inst.offset = CMDQ_JUMP_RELATIVE;
++	inst.offset = CMDQ_JUMP_ABSOLUTE;
+ 	inst.value = addr >>
+ 		cmdq_get_shift_pa(((struct cmdq_client *)pkt->cl)->chan);
+ 	return cmdq_pkt_append_command(pkt, inst);
 -- 
 2.43.0
 
