@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87778143867;
-	Thu, 13 Jun 2024 11:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B275143867;
+	Thu, 13 Jun 2024 11:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279422; cv=none; b=EqSAJW6R4RIUtHTIIF3vt4bmY6TxMvTjVlsv03pVCgU6k42Fj/s3/f3jPcVUvesu0DAMw8ynZ4ZlitfxlgykVVeF1I+utNF9YlDS6HkwMu2kbc7RCdRjdxUUl2Ys1OTZ4Do3HTKWS9n3mFE5IQsczCUV9lmWL6vAxJ3Pd2VWCoI=
+	t=1718279425; cv=none; b=bhLkyX5UTueDHhw16zKcjz0f+5wVYUpDj0aD7xQXTEQ3xRAvuXXPHOqw5LHPgLc5ptMjrUgK1Z2jNrNeyQjZ8YPpPJYmZrF0S+Uq11cjZpQJETyVth7Kjv3oGl0sxj8liJl0gJEwvXuxO16TWJlKgwBom8QlDzTg46p7ZRJgy/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279422; c=relaxed/simple;
-	bh=kIigc7g/M1/QpLy5BLjrrWg7IGl+lzdqt/fzD0hCt0s=;
+	s=arc-20240116; t=1718279425; c=relaxed/simple;
+	bh=eo1VNv6v9sVsMOgaa0rzl7hVgUEj4XnSQal6cRJJzg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvaXOyqfa+bGCuQIUOfwORJDcGuUgdzKBWRWWIRlTgAPvZLDbMzNNs+TR76eahy1YCBuZSGVSXEdJMQXC27W+egJ+U/o4kGaU7CXE3CokY1owXzzCjrkzNOYbD97Vwj7YgofMtUQhnfgFQ9RfVar/Lwo3vypz+52Dg37KqinKDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdzGsBLG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JLuRCNEf1JdeXgjqaZLg+M9zNn4eYBmyZ8mcTaDZ8dE669+f2LLTIsZJAfCaLmzmyHHYAXJNdJYXO/zX0ayx6RmkV1gU3iQtizSQEHsx0xkxERf9ckfpaKsswyGnDFlJjNndUoDN4FP3YLBphh19R99K7MegtY6a3tniNpMeyws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AG3Dzw/O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdzGsBLG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D02EC2BBFC;
-	Thu, 13 Jun 2024 11:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AG3Dzw/O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B70C2BBFC;
+	Thu, 13 Jun 2024 11:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279422;
-	bh=kIigc7g/M1/QpLy5BLjrrWg7IGl+lzdqt/fzD0hCt0s=;
+	s=korg; t=1718279425;
+	bh=eo1VNv6v9sVsMOgaa0rzl7hVgUEj4XnSQal6cRJJzg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdzGsBLGmC79QBfbbFfRiSzeiD2cztbOGgGdgh4+nLk40rHICpv0KiXGVZpJ15xUJ
-	 Y9vsfUab7vNvLXx4Gf88fOZY1wyDaBxqMzvK1EBG9SHyEKRzqicep3CNpS2JVconnx
-	 c3BO54qNskwORJJCzRMCfosKRxaWXXbTqAmiuW5I=
+	b=AG3Dzw/O8ZEQrzY3gsHaIcmt+dYsIJC1URujI0kq0kZ34/T8DVoxNaFDjtF+Ryqwm
+	 1jzne7ODgBLVTUOIdXKN1a3CBLrO2VwKkg2pdfkifn1mX9imb5Ek9gmDUURR6Casy1
+	 c6e++0X4F33Kj1ZujRngs19kF/MeUXlh/twsgfEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Subject: [PATCH 6.9 071/157] crypto: qat - Fix ADF_DEV_RESET_SYNC memory leak
-Date: Thu, 13 Jun 2024 13:33:16 +0200
-Message-ID: <20240613113230.170243445@linuxfoundation.org>
+	Yifan Hong <elsk@google.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.9 072/157] kbuild: Remove support for Clangs ThinLTO caching
+Date: Thu, 13 Jun 2024 13:33:17 +0200
+Message-ID: <20240613113230.209811567@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -44,77 +46,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit d3b17c6d9dddc2db3670bc9be628b122416a3d26 upstream.
+commit aba091547ef6159d52471f42a3ef531b7b660ed8 upstream.
 
-Using completion_done to determine whether the caller has gone
-away only works after a complete call.  Furthermore it's still
-possible that the caller has not yet called wait_for_completion,
-resulting in another potential UAF.
+There is an issue in clang's ThinLTO caching (enabled for the kernel via
+'--thinlto-cache-dir') with .incbin, which the kernel occasionally uses
+to include data within the kernel, such as the .config file for
+/proc/config.gz. For example, when changing the .config and rebuilding
+vmlinux, the copy of .config in vmlinux does not match the copy of
+.config in the build folder:
 
-Fix this by making the caller use cancel_work_sync and then freeing
-the memory safely.
+  $ echo 'CONFIG_LTO_NONE=n
+  CONFIG_LTO_CLANG_THIN=y
+  CONFIG_IKCONFIG=y
+  CONFIG_HEADERS_INSTALL=y' >kernel/configs/repro.config
 
-Fixes: 7d42e097607c ("crypto: qat - resolve race condition during AER recovery")
-Cc: <stable@vger.kernel.org> #6.8+
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+  $ make -skj"$(nproc)" ARCH=x86_64 LLVM=1 clean defconfig repro.config vmlinux
+  ...
+
+  $ grep CONFIG_HEADERS_INSTALL .config
+  CONFIG_HEADERS_INSTALL=y
+
+  $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
+  CONFIG_HEADERS_INSTALL=y
+
+  $ scripts/config -d HEADERS_INSTALL
+
+  $ make -kj"$(nproc)" ARCH=x86_64 LLVM=1 vmlinux
+  ...
+    UPD     kernel/config_data
+    GZIP    kernel/config_data.gz
+    CC      kernel/configs.o
+  ...
+    LD      vmlinux
+  ...
+
+  $ grep CONFIG_HEADERS_INSTALL .config
+  # CONFIG_HEADERS_INSTALL is not set
+
+  $ scripts/extract-ikconfig vmlinux | grep CONFIG_HEADERS_INSTALL
+  CONFIG_HEADERS_INSTALL=y
+
+Without '--thinlto-cache-dir' or when using full LTO, this issue does
+not occur.
+
+Benchmarking incremental builds on a few different machines with and
+without the cache shows a 20% increase in incremental build time without
+the cache when measured by touching init/main.c and running 'make all'.
+
+ARCH=arm64 defconfig + CONFIG_LTO_CLANG_THIN=y on an arm64 host:
+
+  Benchmark 1: With ThinLTO cache
+    Time (mean ± σ):     56.347 s ±  0.163 s    [User: 83.768 s, System: 24.661 s]
+    Range (min … max):   56.109 s … 56.594 s    10 runs
+
+  Benchmark 2: Without ThinLTO cache
+    Time (mean ± σ):     67.740 s ±  0.479 s    [User: 718.458 s, System: 31.797 s]
+    Range (min … max):   67.059 s … 68.556 s    10 runs
+
+  Summary
+    With ThinLTO cache ran
+      1.20 ± 0.01 times faster than Without ThinLTO cache
+
+ARCH=x86_64 defconfig + CONFIG_LTO_CLANG_THIN=y on an x86_64 host:
+
+  Benchmark 1: With ThinLTO cache
+    Time (mean ± σ):     85.772 s ±  0.252 s    [User: 91.505 s, System: 8.408 s]
+    Range (min … max):   85.447 s … 86.244 s    10 runs
+
+  Benchmark 2: Without ThinLTO cache
+    Time (mean ± σ):     103.833 s ±  0.288 s    [User: 232.058 s, System: 8.569 s]
+    Range (min … max):   103.286 s … 104.124 s    10 runs
+
+  Summary
+    With ThinLTO cache ran
+      1.21 ± 0.00 times faster than Without ThinLTO cache
+
+While it is unfortunate to take this performance improvement off the
+table, correctness is more important. If/when this is fixed in LLVM, it
+can potentially be brought back in a conditional manner. Alternatively,
+a developer can just disable LTO if doing incremental compiles quickly
+is important, as a full compile cycle can still take over a minute even
+with the cache and it is unlikely that LTO will result in functional
+differences for a kernel change.
+
+Cc: stable@vger.kernel.org
+Fixes: dc5723b02e52 ("kbuild: add support for Clang LTO")
+Reported-by: Yifan Hong <elsk@google.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2021
+Reported-by: Masami Hiramatsu <mhiramat@kernel.org>
+Closes: https://lore.kernel.org/r/20220327115526.cc4b0ff55fc53c97683c3e4d@kernel.org/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_aer.c |   19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ Makefile |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
-@@ -130,8 +130,7 @@ static void adf_device_reset_worker(stru
- 	if (adf_dev_restart(accel_dev)) {
- 		/* The device hanged and we can't restart it so stop here */
- 		dev_err(&GET_DEV(accel_dev), "Restart device failed\n");
--		if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
--		    completion_done(&reset_data->compl))
-+		if (reset_data->mode == ADF_DEV_RESET_ASYNC)
- 			kfree(reset_data);
- 		WARN(1, "QAT: device restart failed. Device is unusable\n");
- 		return;
-@@ -147,16 +146,8 @@ static void adf_device_reset_worker(stru
- 	adf_dev_restarted_notify(accel_dev);
- 	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+--- a/Makefile
++++ b/Makefile
+@@ -942,7 +942,6 @@ endif
+ ifdef CONFIG_LTO_CLANG
+ ifdef CONFIG_LTO_CLANG_THIN
+ CC_FLAGS_LTO	:= -flto=thin -fsplit-lto-unit
+-KBUILD_LDFLAGS	+= --thinlto-cache-dir=$(extmod_prefix).thinlto-cache
+ else
+ CC_FLAGS_LTO	:= -flto
+ endif
+@@ -1477,7 +1476,7 @@ endif # CONFIG_MODULES
+ # Directories & files removed with 'make clean'
+ CLEAN_FILES += vmlinux.symvers modules-only.symvers \
+ 	       modules.builtin modules.builtin.modinfo modules.nsdeps \
+-	       compile_commands.json .thinlto-cache rust/test \
++	       compile_commands.json rust/test \
+ 	       rust-project.json .vmlinux.objs .vmlinux.export.c
  
--	/*
--	 * The dev is back alive. Notify the caller if in sync mode
--	 *
--	 * If device restart will take a more time than expected,
--	 * the schedule_reset() function can timeout and exit. This can be
--	 * detected by calling the completion_done() function. In this case
--	 * the reset_data structure needs to be freed here.
--	 */
--	if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
--	    completion_done(&reset_data->compl))
-+	/* The dev is back alive. Notify the caller if in sync mode */
-+	if (reset_data->mode == ADF_DEV_RESET_ASYNC)
- 		kfree(reset_data);
- 	else
- 		complete(&reset_data->compl);
-@@ -191,10 +182,10 @@ static int adf_dev_aer_schedule_reset(st
- 		if (!timeout) {
- 			dev_err(&GET_DEV(accel_dev),
- 				"Reset device timeout expired\n");
-+			cancel_work_sync(&reset_data->reset_work);
- 			ret = -EFAULT;
--		} else {
--			kfree(reset_data);
- 		}
-+		kfree(reset_data);
- 		return ret;
- 	}
- 	return 0;
+ # Directories & files removed with 'make mrproper'
+@@ -1783,7 +1782,7 @@ PHONY += compile_commands.json
+ 
+ clean-dirs := $(KBUILD_EXTMOD)
+ clean: rm-files := $(KBUILD_EXTMOD)/Module.symvers $(KBUILD_EXTMOD)/modules.nsdeps \
+-	$(KBUILD_EXTMOD)/compile_commands.json $(KBUILD_EXTMOD)/.thinlto-cache
++	$(KBUILD_EXTMOD)/compile_commands.json
+ 
+ PHONY += prepare
+ # now expand this into a simple variable to reduce the cost of shell evaluations
 
 
