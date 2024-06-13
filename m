@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEB713A406;
-	Thu, 13 Jun 2024 12:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E7213D601;
+	Thu, 13 Jun 2024 12:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281745; cv=none; b=SjPAgZqFrxe4EVRz+NkSKA5aLVyIPhLHrrWySrWmKZcNLvEVuTfyz/Ctf4xhYn/tSIlHKV5whYnP/wadeW08Zo0GiA4ga5jgJrOOsm2DIrtF2F5vVFBnb3OvHgLDt77ihBEq6vku2usIYQC5kSEpvMgLiEGxFBJYpz2z0dpogOQ=
+	t=1718281748; cv=none; b=ZQsmqkYu95T6SFBZJO2aaB75uyLjZe4YiR9hoQZj//0+KeOmc7G2tDH7ZQRevGhDelLuZLCyzbvkqfmGM55RnC+n15Xk9uHpKWqXUFk01dv7+3m6nqqFciCaOMJ028I4z6MuYOQZctReRLLpl/bEhWeBqIgXtq9FzwUaYq2nhVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281745; c=relaxed/simple;
-	bh=cgAR5RQf6hHP1odp0QWLV7h6Z0mU1uI+t9sLN0N1of4=;
+	s=arc-20240116; t=1718281748; c=relaxed/simple;
+	bh=J9Ddu/WUGde+A75RdjpgF91J0XKO2KPoHcRQnK6xEdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cK/xnpR+RyCuHWiNRuifofJNUQkzyk1YK3CYBTlOGHjZNHafdkvkX2TvSZzBtrSVJZ8VqOKOeYK21L9qSyVrrxJRo+g2X+YzyEbEXtUQa4twY+ESwCYtf3ByDGj5MzvoJW+OSDcRhI3afQGW5D7PU9YH047/NO2jQogptGMcu6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvyid6kO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sYO+72fWmPnTToz7NakVqZ7rRTF+EdJCz1R1JCRqbMihk3Pi04vE7ckJG+tUMFll37n7D/6WdEZICHYO/QMzUBZWAlV0oOqKI/QTkZ+TtX2/IT1BjKn0oUgfxo46QArtlwxB+OO6ZeaHGrVtX4jnuSf+2ShjBLRU7Yu2w1I8gMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vf403HAK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvyid6kO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65D8C4AF1A;
-	Thu, 13 Jun 2024 12:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vf403HAK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4AFC4AF1C;
+	Thu, 13 Jun 2024 12:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281745;
-	bh=cgAR5RQf6hHP1odp0QWLV7h6Z0mU1uI+t9sLN0N1of4=;
+	s=korg; t=1718281748;
+	bh=J9Ddu/WUGde+A75RdjpgF91J0XKO2KPoHcRQnK6xEdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hvyid6kOae8puWSztHDkxdT+UPITwR94KJiJ6SN9D7MmeSUAvpLPDvEDiWVad/eZM
-	 SaOAaAu2IH7t5kadBkfLGW2b+GloBSkWxEcdXXnM7gn/josTz6W7y/DWIdb1K5Nh0x
-	 0Z7oe8RlwYnBxtYfmKwTgq2fb1S2m+BIGcpXGxNA=
+	b=vf403HAKO7AxhLWT76Yz7LPF0MTRupVo4HUMscX1chPvJHNahxhUxCii+nOHWthbi
+	 iir8P1g9OdzaFitSKlWefxoGUJjJzssUurvc6QjmcRgQ0ASAyE8V+4p1BPZMgD/6lt
+	 81/zH2UTguav9zy8/qen+U5S/KkOdm4bdVLFjLnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 041/402] nilfs2: fix out-of-range warning
-Date: Thu, 13 Jun 2024 13:29:58 +0200
-Message-ID: <20240613113303.740519282@linuxfoundation.org>
+Subject: [PATCH 5.15 042/402] parisc: add missing export of __cmpxchg_u8()
+Date: Thu, 13 Jun 2024 13:29:59 +0200
+Message-ID: <20240613113303.778712154@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,43 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit c473bcdd80d4ab2ae79a7a509a6712818366e32a ]
+[ Upstream commit c57e5dccb06decf3cb6c272ab138c033727149b5 ]
 
-clang-14 points out that v_size is always smaller than a 64KB
-page size if that is configured by the CPU architecture:
+__cmpxchg_u8() had been added (initially) for the sake of
+drivers/phy/ti/phy-tusb1210.c; the thing is, that drivers is
+modular, so we need an export
 
-fs/nilfs2/ioctl.c:63:19: error: result of comparison of constant 65536 with expression of type '__u16' (aka 'unsigned short') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
-        if (argv->v_size > PAGE_SIZE)
-            ~~~~~~~~~~~~ ^ ~~~~~~~~~
-
-This is ok, so just shut up that warning with a cast.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240328143051.1069575-7-arnd@kernel.org
-Fixes: 3358b4aaa84f ("nilfs2: fix problems of memory allocation in ioctl")
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reviewed-by: Justin Stitt <justinstitt@google.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: b344d6a83d01 "parisc: add support for cmpxchg on u8 pointers"
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/parisc/kernel/parisc_ksyms.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nilfs2/ioctl.c b/fs/nilfs2/ioctl.c
-index a39206705dd12..6a2f779e0bad4 100644
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -60,7 +60,7 @@ static int nilfs_ioctl_wrap_copy(struct the_nilfs *nilfs,
- 	if (argv->v_nmembs == 0)
- 		return 0;
- 
--	if (argv->v_size > PAGE_SIZE)
-+	if ((size_t)argv->v_size > PAGE_SIZE)
- 		return -EINVAL;
- 
- 	/*
+diff --git a/arch/parisc/kernel/parisc_ksyms.c b/arch/parisc/kernel/parisc_ksyms.c
+index 00297e8e1c888..317508493b81c 100644
+--- a/arch/parisc/kernel/parisc_ksyms.c
++++ b/arch/parisc/kernel/parisc_ksyms.c
+@@ -21,6 +21,7 @@ EXPORT_SYMBOL(memset);
+ #include <linux/atomic.h>
+ EXPORT_SYMBOL(__xchg8);
+ EXPORT_SYMBOL(__xchg32);
++EXPORT_SYMBOL(__cmpxchg_u8);
+ EXPORT_SYMBOL(__cmpxchg_u32);
+ EXPORT_SYMBOL(__cmpxchg_u64);
+ #ifdef CONFIG_SMP
 -- 
 2.43.0
 
