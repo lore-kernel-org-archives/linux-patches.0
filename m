@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA43145B1E;
-	Thu, 13 Jun 2024 12:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA539143C48;
+	Thu, 13 Jun 2024 12:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280162; cv=none; b=NKS/PaaY9AC+14baDBnk6rz2pYfwyqpXrCNbyUsEpQKnNIHLzi0DY6MeXV+qX1/vFCNYIrZmh8frOM0wRQuMoTfVYsVBa8aEdH6wt5EdV8q70e8TZqerCwzYgJSysDInbkO63tP7Htw4BciXTVERcOoX9yabtx2b5F3xqO3paSM=
+	t=1718280165; cv=none; b=SJ4w/c83GWavwuf6dfCk/Qr0BwVNEbzuwjnEpZhSABVi1WPyRfNzXxur7slmGWFCi2+QdsziFtDEej+Kz7/DB0DnRoXRGJakpvGxqbc83nfN6k4XlmkE3MrdPygAcg27MYGXKzxbHq6LXztDmIrOTK++948LKDVX171LyGn13Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280162; c=relaxed/simple;
-	bh=BCXBKZXCu6xdr50PA/DYa2Lekf4Mdb09Zor1RG6tUDc=;
+	s=arc-20240116; t=1718280165; c=relaxed/simple;
+	bh=ixNnmodNJFmINbBrOBqjBi2IumY0rPGcVda3nPXYD+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oe0MCYs5DByQhF/23R9F2iYOf+V5XX/wF1bU6lSJ2xvY2qRJKdBHQ9VNttwBAFiMRtbFHU4hnUwCxl9ViejL8baIHqJhvMN1DWqj/HctldZhej0DzfhbcNmptRWuOFIlCCvt36FYuJhacBOWV6lpuEtfgFVOUdadS2WKaYOXRGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBBWBqFG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mV420mvkRMQCZ3zLs6+97l/ihVCOVMraoa/hMRfcHZO7Fk3tyyhfKKwoR34fXsL3PUdLYUWgMDSVzcT4ExW+VH/WjjIlgY/URQtgY0yNF6MUgnnLNNuM6rshb31u1gZub5J8fIXq0fgPeujpDqNVtIrvP8wZaJ06hfTb4jhtgnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4B8d4a6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBBWBqFG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AACDC2BBFC;
-	Thu, 13 Jun 2024 12:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4B8d4a6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27891C2BBFC;
+	Thu, 13 Jun 2024 12:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280162;
-	bh=BCXBKZXCu6xdr50PA/DYa2Lekf4Mdb09Zor1RG6tUDc=;
+	s=korg; t=1718280165;
+	bh=ixNnmodNJFmINbBrOBqjBi2IumY0rPGcVda3nPXYD+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBBWBqFGFTfYFSHf6Fx43E5ACRYL4T9ry4Nip2aP9gXHjHseZ2VRKxNKuhbM60or2
-	 HaLEP99I4vHv0sW5gT8zvE+XQzZ50CRSNrttm5il4kRkTIiaZFnLsd8ulHlt3MF8P6
-	 LhFmYoUtUXal37sFbJj3qfz2LELTgQj22+1bi41k=
+	b=C4B8d4a6Fe77crBI1NoSJoRif68suH7e5wpt5rlJM9QCbNB4SUXqrms7AixbZw/uz
+	 K2CQpeqZ+Fc0EjrRpr17R4ep0Cm0Q7OpY5G51yMU2888vZnFKMOLnP8Jstpl2nhucz
+	 I+34z6a95oyfDRXKppcfBw93Hpvj4P4LLNv05IzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.4 164/202] SUNRPC: Fix loop termination condition in gss_free_in_token_pages()
-Date: Thu, 13 Jun 2024 13:34:22 +0200
-Message-ID: <20240613113234.077217645@linuxfoundation.org>
+	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 5.4 165/202] binder: fix max_thread type inconsistency
+Date: Thu, 13 Jun 2024 13:34:23 +0200
+Message-ID: <20240613113234.114908278@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -44,39 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 4a77c3dead97339478c7422eb07bf4bf63577008 upstream.
+commit 42316941335644a98335f209daafa4c122f28983 upstream.
 
-The in_token->pages[] array is not NULL terminated. This results in
-the following KASAN splat:
+The type defined for the BINDER_SET_MAX_THREADS ioctl was changed from
+size_t to __u32 in order to avoid incompatibility issues between 32 and
+64-bit kernels. However, the internal types used to copy from user and
+store the value were never updated. Use u32 to fix the inconsistency.
 
-  KASAN: maybe wild-memory-access in range [0x04a2013400000008-0x04a201340000000f]
-
-Fixes: bafa6b4d95d9 ("SUNRPC: Fix gss_free_in_token_pages()")
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: a9350fc859ae ("staging: android: binder: fix BINDER_SET_MAX_THREADS declaration")
+Reported-by: Arve Hjønnevåg <arve@android.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20240421173750.3117808-1-cmllamas@google.com
+[cmllamas: resolve minor conflicts due to missing commit 421518a2740f]
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/android/binder.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1104,7 +1104,7 @@ static int gss_read_proxy_verf(struct sv
- 	}
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -480,7 +480,7 @@ struct binder_proc {
+ 	struct list_head todo;
+ 	struct binder_stats stats;
+ 	struct list_head delivered_death;
+-	int max_threads;
++	u32 max_threads;
+ 	int requested_threads;
+ 	int requested_threads_started;
+ 	int tmp_ref;
+@@ -5412,7 +5412,7 @@ static long binder_ioctl(struct file *fi
+ 			goto err;
+ 		break;
+ 	case BINDER_SET_MAX_THREADS: {
+-		int max_threads;
++		u32 max_threads;
  
- 	pages = DIV_ROUND_UP(inlen, PAGE_SIZE);
--	in_token->pages = kcalloc(pages, sizeof(struct page *), GFP_KERNEL);
-+	in_token->pages = kcalloc(pages + 1, sizeof(struct page *), GFP_KERNEL);
- 	if (!in_token->pages) {
- 		kfree(in_handle->data);
- 		return SVC_DENIED;
+ 		if (copy_from_user(&max_threads, ubuf,
+ 				   sizeof(max_threads))) {
 
 
