@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C017143733;
-	Thu, 13 Jun 2024 11:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57C91448C6;
+	Thu, 13 Jun 2024 11:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279287; cv=none; b=hFWsIYeI8IlFLELogKPjM4I/oDwB/qloYJhRJAmZv3yDl0lSEiWTaU9yIK7bYZkYVwO8HTK2qsSlDfshOtcWIsNIW3KmLI3/tau9qALDL5oONhHV2ISNnG0vO5pn8bTf5IaKqVFLcFvWUKpULEqmbMcmWJ64gkKtHajgt+Mukak=
+	t=1718279290; cv=none; b=ZnvyDxuqmceBlcmC+PHPWfDBKL4MMgEh4Lewmrl4kLXB7iBtZZr0eMwMGksCLoMnZHr1VgC1ErUiJyw25Fmrq7HGaoasmAXkmlQuNtTXIVQFVRDL4HlhIVEHtndJyu+cSGssvMmUAP/A5evli2/7L98m1ILDKulhk4+zv/vbk/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279287; c=relaxed/simple;
-	bh=9PgRjtLYcDcPGqFeEo3VH0stqOCWYA3XNhfoo/uzG8g=;
+	s=arc-20240116; t=1718279290; c=relaxed/simple;
+	bh=H/BjiGzbHrUPax+BdIN/opOFTc95u+80ahLrOQWNDl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QdYApIbU9YwWm/lIKjQhgduixhn/UlTC8kgkzkssB06V3PXz5ZzX4lTGmjsp1Os2id5EHoCaqSh30ewACfzPWDhBYulImY7R0hZsMB5QJ+Vfk0xlfJghz78o1dZ3f/Xon6nWBoB/JSasQ+fUYqAmW00MzpDN0gfcsXLceE0KCfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wnn/VtpL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=teyKL1EJ7RS8TXii8lIISWsfdyWzDXUuDdQ6WdA3T7O4A9zHoxiWCVrF+Qy0aQVoJhNUiEdmHuxngTcel5QRztVrBiJoZwG2i8wnew2w9MW8S4YPz3RyG0dLvbwIAim+iyIPQOdSFMgtNAJBHF2oHGkJrdWX7FpqO0hGRPmYroc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hertagzH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wnn/VtpL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83EE0C2BBFC;
-	Thu, 13 Jun 2024 11:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hertagzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C256C2BBFC;
+	Thu, 13 Jun 2024 11:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279286;
-	bh=9PgRjtLYcDcPGqFeEo3VH0stqOCWYA3XNhfoo/uzG8g=;
+	s=korg; t=1718279289;
+	bh=H/BjiGzbHrUPax+BdIN/opOFTc95u+80ahLrOQWNDl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wnn/VtpLGgif9dmKDmiHLe+4BWoVEVw3KhnQd0DWuWjbAIdePUb5WVG87c5HwXIPk
-	 Nyk9cFL0HPFfWMvGbbPMdBwrgYLNdajgJ6am0Epmkr2RrMmdR4XDpjl8y1xJzUtO54
-	 X5RXmyZ2BkE+kvAtVvHpvVJmBoygYv5bvJoydZY8=
+	b=hertagzHKHGF+iK96IiMBhgCraWG9jQFfnv+vdYkiY/WqCS8mORaBL8fw2ZEuFWQU
+	 R+4HkPiVKCogQfmsHGLT9LMINn5sMH/2sN6PqtNApGMG2Qaph1e1LJWzvUSEslhR+W
+	 ib8Z3k6QNr4Czcmz1k9MMGWbTsJRAhqQkhbpvxDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Teichmann <teichmanntim@outlook.de>,
-	Christian Heusel <christian@heusel.eu>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.9 005/157] x86/topology/amd: Evaluate SMT in CPUID leaf 0x8000001e only on family 0x17 and greater
-Date: Thu, 13 Jun 2024 13:32:10 +0200
-Message-ID: <20240613113227.609089248@linuxfoundation.org>
+	Daniel Borkmann <daniel@iogearbox.net>,
+	David Bauer <mail@david-bauer.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.9 006/157] vxlan: Fix regression when dropping packets due to invalid src addresses
+Date: Thu, 13 Jun 2024 13:32:11 +0200
+Message-ID: <20240613113227.647604445@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -52,54 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 34bf6bae3286a58762711cfbce2cf74ecd42e1b5 upstream.
+commit 1cd4bc987abb2823836cbb8f887026011ccddc8a upstream.
 
-The new AMD/HYGON topology parser evaluates the SMT information in CPUID leaf
-0x8000001e unconditionally while the original code restricted it to CPUs with
-family 0x17 and greater.
+Commit f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
+has recently been added to vxlan mainly in the context of source
+address snooping/learning so that when it is enabled, an entry in the
+FDB is not being created for an invalid address for the corresponding
+tunnel endpoint.
 
-This breaks family 0x15 CPUs which advertise that leaf and have a non-zero
-value in the SMT section. The machine boots, but the scheduler complains loudly
-about the mismatch of the core IDs:
+Before commit f58f45c1e5b9 vxlan was similarly behaving as geneve in
+that it passed through whichever macs were set in the L2 header. It
+turns out that this change in behavior breaks setups, for example,
+Cilium with netkit in L3 mode for Pods as well as tunnel mode has been
+passing before the change in f58f45c1e5b9 for both vxlan and geneve.
+After mentioned change it is only passing for geneve as in case of
+vxlan packets are dropped due to vxlan_set_mac() returning false as
+source and destination macs are zero which for E/W traffic via tunnel
+is totally fine.
 
-  WARNING: CPU: 1 PID: 0 at kernel/sched/core.c:6482 sched_cpu_starting+0x183/0x250
-  WARNING: CPU: 0 PID: 1 at kernel/sched/topology.c:2408 build_sched_domains+0x76b/0x12b0
+Fix it by only opting into the is_valid_ether_addr() check in
+vxlan_set_mac() when in fact source address snooping/learning is
+actually enabled in vxlan. This is done by moving the check into
+vxlan_snoop(). With this change, the Cilium connectivity test suite
+passes again for both tunnel flavors.
 
-Add the condition back to cure it.
-
-  [ bp: Make it actually build because grandpa is not concerned with
-    trivial stuff. :-P ]
-
-Fixes: f7fb3b2dd92c ("x86/cpu: Provide an AMD/HYGON specific topology parser")
-Closes: https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/issues/56
-Reported-by: Tim Teichmann <teichmanntim@outlook.de>
-Reported-by: Christian Heusel <christian@heusel.eu>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Tim Teichmann <teichmanntim@outlook.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/7skhx6mwe4hxiul64v6azhlxnokheorksqsdbp7qw6g2jduf6c@7b5pvomauugk
-Signed-off-by: Christian Heusel <christian@heusel.eu>
+Fixes: f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: David Bauer <mail@david-bauer.net>
+Cc: Ido Schimmel <idosch@nvidia.com>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: David Bauer <mail@david-bauer.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/topology_amd.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/vxlan/vxlan_core.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/cpu/topology_amd.c
-+++ b/arch/x86/kernel/cpu/topology_amd.c
-@@ -84,9 +84,9 @@ static bool parse_8000_001e(struct topo_
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1446,6 +1446,10 @@ static bool vxlan_snoop(struct net_devic
+ 	struct vxlan_fdb *f;
+ 	u32 ifindex = 0;
  
- 	/*
- 	 * If leaf 0xb is available, then the domain shifts are set
--	 * already and nothing to do here.
-+	 * already and nothing to do here. Only valid for family >= 0x17.
- 	 */
--	if (!has_0xb) {
-+	if (!has_0xb && tscan->c->x86 >= 0x17) {
- 		/*
- 		 * Leaf 0x80000008 set the CORE domain shift already.
- 		 * Update the SMT domain, but do not propagate it.
++	/* Ignore packets from invalid src-address */
++	if (!is_valid_ether_addr(src_mac))
++		return true;
++
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (src_ip->sa.sa_family == AF_INET6 &&
+ 	    (ipv6_addr_type(&src_ip->sin6.sin6_addr) & IPV6_ADDR_LINKLOCAL))
+@@ -1615,10 +1619,6 @@ static bool vxlan_set_mac(struct vxlan_d
+ 	if (ether_addr_equal(eth_hdr(skb)->h_source, vxlan->dev->dev_addr))
+ 		return false;
+ 
+-	/* Ignore packets from invalid src-address */
+-	if (!is_valid_ether_addr(eth_hdr(skb)->h_source))
+-		return false;
+-
+ 	/* Get address from the outer IP header */
+ 	if (vxlan_get_sk_family(vs) == AF_INET) {
+ 		saddr.sin.sin_addr.s_addr = ip_hdr(skb)->saddr;
 
 
