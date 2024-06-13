@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4F61448F2;
-	Thu, 13 Jun 2024 12:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E8514600D;
+	Thu, 13 Jun 2024 12:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280509; cv=none; b=bsCrGgcYg8ntrKzMUhB0KZFrHd8MdUwkOwUG/k8lY5lffta2ADvbmtKs0MSWj3MagJpjnEbhXDsOmWi1GXaiLitLxLJYlmBAU37916zgeiuohgLCuBR45gkBgZUGlaB7Ng+a4H1v3UKKOptrRf8nwWIFrYICihgbG0oJ9fivMpE=
+	t=1718280512; cv=none; b=h5Guk2ZmbFyVfCdtm/CQ74KcDY6lANuKHL0yAaMQkwNM0JHAIbXr09xmg8Ctp7Kj+AAB//oifs/jL8y0goRtde3PNJahCwM9L252Oae7BqzyYHo8jdebPTqxkRRz2CncqtLC2g3Vqrr0m28mhK7VL3h3xcZoj1ZjyzSM5g5v6qE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280509; c=relaxed/simple;
-	bh=gksvNOL2diwEGmiluUnj63efImVXv2OhUaZooHr90DY=;
+	s=arc-20240116; t=1718280512; c=relaxed/simple;
+	bh=z54+IXJd2D7Q5EgB9hmlEweBGB3omQmg2+7PXSVCo0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTRgCY+YKCqcOnT5ZKEn7Kc3uoKTOev5ABlMBv/aQWeYVwycy96rGMedCixxciqmw9gBGGX+DB2O9lLoSii/8tKqbGynbAlf1XFSbeN2TZwoZBYvPtRc3B9eUxXlciTWE5O3clPKpV1zxPjLxiI6AkYSmumA4oYDddsvWNiSYQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLfz496U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UG1FJhm7u5FDV+nvTa3Dsg00WQK0e88hH6jzOQYVJ3unjNO92uFnNVMd7EeZoVaorR1gX6dQ1EikniuyVzMQMeNO3bMrG+0RJuj79/gy4hMakPMbLx4HLtOUTiRVVarQw6Fmg9ctaWZX2v+OWy/Mnb3vPHF/BbLjdlEr6tMERbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTnvEsTV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLfz496U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F37C2BBFC;
-	Thu, 13 Jun 2024 12:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTnvEsTV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C14C32786;
+	Thu, 13 Jun 2024 12:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280509;
-	bh=gksvNOL2diwEGmiluUnj63efImVXv2OhUaZooHr90DY=;
+	s=korg; t=1718280512;
+	bh=z54+IXJd2D7Q5EgB9hmlEweBGB3omQmg2+7PXSVCo0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sLfz496UP8d+WkrbNuzgSl67v6C4kusQLptYUdlw6yhCnjnfL4r/BCKrcCcviaiqh
-	 3cXTQamDrA4PObcTkvING2wkI0UWntL0HeJfZs55LLLzt+whjDmgaPz5NQMi+eLTao
-	 0L2N2eR9PCXIZdNMZcHLjsQxV/0G/pya/e7LzSAo=
+	b=cTnvEsTVAggwWqhoXNlbIT+iNxd0DN+P2Lg5R19HvwtTxp/rDwTPUjl+2q7PKK5N1
+	 DREwOJT+3mtdbAgCv5Rlro6NdO4LD1vgBn1gvRgv5Dc54+2tQNnQkvYXhFKfmzRW2Q
+	 S8plxoj5Bafpts6A4c29sZjCx3JuVB107Zb5QCnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 046/137] media: v4l: async: Fix notifier list entry init
-Date: Thu, 13 Jun 2024 13:33:46 +0200
-Message-ID: <20240613113225.080666176@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 047/137] mmc: davinci: Dont strip remove function when driver is builtin
+Date: Thu, 13 Jun 2024 13:33:47 +0200
+Message-ID: <20240613113225.120222516@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -45,52 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 6d8acd02c4c6a8f917eefac1de2e035521ca119d upstream.
+commit 55c421b364482b61c4c45313a535e61ed5ae4ea3 upstream.
 
-struct v4l2_async_notifier has several list_head members, but only
-waiting_list and done_list are initialized. notifier_entry was kept
-'zeroed' leading to an uninitialized list_head.
-This results in a NULL-pointer dereference if csi2_async_register() fails,
-e.g. node for remote endpoint is disabled, and returns -ENOTCONN.
-The following calls to v4l2_async_nf_unregister() results in a NULL
-pointer dereference.
-Add the missing list head initializer.
+Using __exit for the remove function results in the remove callback being
+discarded with CONFIG_MMC_DAVINCI=y. When such a device gets unbound (e.g.
+using sysfs or hotplug), the driver is just removed without the cleanup
+being performed. This results in resource leaks. Fix it by compiling in the
+remove callback unconditionally.
 
-Fixes: b8ec754ae4c5 ("media: v4l: async: Set v4l2_device and subdev in async notifier init")
-Cc: <stable@vger.kernel.org> # for 6.6 and later
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+This also fixes a W=1 modpost warning:
+
+WARNING: modpost: drivers/mmc/host/davinci_mmc: section mismatch in
+reference: davinci_mmcsd_driver+0x10 (section: .data) ->
+davinci_mmcsd_remove (section: .exit.text)
+
+Fixes: b4cff4549b7a ("DaVinci: MMC: MMC/SD controller driver for DaVinci family")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240324114017.231936-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-async.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/davinci_mmc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-async.c
-+++ b/drivers/media/v4l2-core/v4l2-async.c
-@@ -563,6 +563,7 @@ void v4l2_async_nf_init(struct v4l2_asyn
- {
- 	INIT_LIST_HEAD(&notifier->waiting_list);
- 	INIT_LIST_HEAD(&notifier->done_list);
-+	INIT_LIST_HEAD(&notifier->notifier_entry);
- 	notifier->v4l2_dev = v4l2_dev;
+--- a/drivers/mmc/host/davinci_mmc.c
++++ b/drivers/mmc/host/davinci_mmc.c
+@@ -1344,7 +1344,7 @@ ioremap_fail:
+ 	return ret;
  }
- EXPORT_SYMBOL(v4l2_async_nf_init);
-@@ -572,6 +573,7 @@ void v4l2_async_subdev_nf_init(struct v4
+ 
+-static void __exit davinci_mmcsd_remove(struct platform_device *pdev)
++static void davinci_mmcsd_remove(struct platform_device *pdev)
  {
- 	INIT_LIST_HEAD(&notifier->waiting_list);
- 	INIT_LIST_HEAD(&notifier->done_list);
-+	INIT_LIST_HEAD(&notifier->notifier_entry);
- 	notifier->sd = sd;
- }
- EXPORT_SYMBOL_GPL(v4l2_async_subdev_nf_init);
+ 	struct mmc_davinci_host *host = platform_get_drvdata(pdev);
+ 
+@@ -1399,7 +1399,7 @@ static struct platform_driver davinci_mm
+ 		.of_match_table = davinci_mmc_dt_ids,
+ 	},
+ 	.probe		= davinci_mmcsd_probe,
+-	.remove_new	= __exit_p(davinci_mmcsd_remove),
++	.remove_new	= davinci_mmcsd_remove,
+ 	.id_table	= davinci_mmc_devtype,
+ };
+ 
 
 
