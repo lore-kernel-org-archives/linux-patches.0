@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33B6143C55;
-	Thu, 13 Jun 2024 11:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A550B14265E;
+	Thu, 13 Jun 2024 11:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278967; cv=none; b=uZUaAvoSOe9cD9E+gf5IBIPZSWIZS6WjaHBZZxZqDoJUhqT5grGQMFlcafvkEq6aJNVNAvv7GrKHiXqJqcLa0ZazpFmytbhlx5KFp0qZW6XXhFseppRe+N4wzlWlVkBU6i8wScEWfvs7QQ1nzQreTGVCFCD+EsiBrh5Vni1T/s0=
+	t=1718278970; cv=none; b=LR3CL2+599MY1IjyuWh3DAsFjtJUuxp2TQLmPXAFTffGQnpr2RsYVVplZn2bkLizMWbi1flEGasV1y9eK3TA2/JWAY35O+9fy+/FUt5nApPcplMmlQgSB04/tH8UpVJnFrOsiwRppVqBm9346Q0egP/Xh94Lubh2LBj5UC/A170=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278967; c=relaxed/simple;
-	bh=o0fp1I1jNy9Xudxz3Y6k88oPWhU/Cgw98I7mXGYm0GE=;
+	s=arc-20240116; t=1718278970; c=relaxed/simple;
+	bh=dm/AiXYmNcZHTJEkx5e5Zu9ZBPF0+mffnP2aquopTVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ii+nmEif1SXh9d9u/Vs67qdY7sc65Y3C9YBxjQ0BOewkbOwYiqO5E74daWMeQN0DRHJgWbbRS+IEMFjZUInzEqhkv8MRmMquB9y5j7gVZXxjpFP8+LsunL2uogoVjgtlMNr4za6O1KU4D1b6SmCYtVq3V1tmh9qPEUWnICddS5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lENz9Bid; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LsywPf9XhtlLtXLp/u3Fk1Qkd7yh4cIx2WMP7Byicb3FOmH40pESXEvOxzJCc/upzQ3oIdzhWxYyNZByyitb0+nZ3FxjfFoK+NSe+0Jf9DLXUUiSOmEt/HOkIhzPEEGVgCVAFZz6sye7ruMH/izyilwgsR/h94R/VebgGRCOJHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+dP2fCQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lENz9Bid"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5FDC32786;
-	Thu, 13 Jun 2024 11:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+dP2fCQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB49C2BBFC;
+	Thu, 13 Jun 2024 11:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278967;
-	bh=o0fp1I1jNy9Xudxz3Y6k88oPWhU/Cgw98I7mXGYm0GE=;
+	s=korg; t=1718278970;
+	bh=dm/AiXYmNcZHTJEkx5e5Zu9ZBPF0+mffnP2aquopTVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lENz9BidK647X7JE8Neo9N/yQRgpL1d/mVTg7cgKakrl3MS/ahnWeaN2g1NTpv6uZ
-	 nWjiS/EFiyqBHBxkpFyYXFT4Xk46cf1y8DhbbQAA6h8BcSwSfjSWup5yXUKObuSp1e
-	 dIk6GexveS81zxxjkuvT0GGYqZRUeIXHvS5QlyQA=
+	b=c+dP2fCQt14DFYKGlHm8KL8tYw83MQ3jZguH/KxqRtHsVXXbRcp8OSUPqih8MzdUa
+	 p8mpqYgaKm/yVkU9v8uycIoUvQFTG8ps85FhJp/MIn5Jr3+gmQH4FNvxfESIFvbAXn
+	 mvT6OyQwgv4fgncAb+kDxCatFjtFZTUcZK5ffhCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 131/213] netfilter: nfnetlink_queue: acquire rcu_read_lock() in instance_destroy_rcu()
-Date: Thu, 13 Jun 2024 13:32:59 +0200
-Message-ID: <20240613113233.051217270@linuxfoundation.org>
+Subject: [PATCH 4.19 114/213] media: stk1160: fix bounds checking in stk1160_copy_video()
+Date: Thu, 13 Jun 2024 13:32:42 +0200
+Message-ID: <20240613113232.398202069@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -53,76 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit dc21c6cc3d6986d938efbf95de62473982c98dec ]
+[ Upstream commit faa4364bef2ec0060de381ff028d1d836600a381 ]
 
-syzbot reported that nf_reinject() could be called without rcu_read_lock() :
+The subtract in this condition is reversed.  The ->length is the length
+of the buffer.  The ->bytesused is how many bytes we have copied thus
+far.  When the condition is reversed that means the result of the
+subtraction is always negative but since it's unsigned then the result
+is a very high positive value.  That means the overflow check is never
+true.
 
-WARNING: suspicious RCU usage
-6.9.0-rc7-syzkaller-02060-g5c1672705a1a #0 Not tainted
+Additionally, the ->bytesused doesn't actually work for this purpose
+because we're not writing to "buf->mem + buf->bytesused".  Instead, the
+math to calculate the destination where we are writing is a bit
+involved.  You calculate the number of full lines already written,
+multiply by two, skip a line if necessary so that we start on an odd
+numbered line, and add the offset into the line.
 
-net/netfilter/nfnetlink_queue.c:263 suspicious rcu_dereference_check() usage!
+To fix this buffer overflow, just take the actual destination where we
+are writing, if the offset is already out of bounds print an error and
+return.  Otherwise, write up to buf->length bytes.
 
-other info that might help us debug this:
-
-rcu_scheduler_active = 2, debug_locks = 1
-2 locks held by syz-executor.4/13427:
-  #0: ffffffff8e334f60 (rcu_callback){....}-{0:0}, at: rcu_lock_acquire include/linux/rcupdate.h:329 [inline]
-  #0: ffffffff8e334f60 (rcu_callback){....}-{0:0}, at: rcu_do_batch kernel/rcu/tree.c:2190 [inline]
-  #0: ffffffff8e334f60 (rcu_callback){....}-{0:0}, at: rcu_core+0xa86/0x1830 kernel/rcu/tree.c:2471
-  #1: ffff88801ca92958 (&inst->lock){+.-.}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
-  #1: ffff88801ca92958 (&inst->lock){+.-.}-{2:2}, at: nfqnl_flush net/netfilter/nfnetlink_queue.c:405 [inline]
-  #1: ffff88801ca92958 (&inst->lock){+.-.}-{2:2}, at: instance_destroy_rcu+0x30/0x220 net/netfilter/nfnetlink_queue.c:172
-
-stack backtrace:
-CPU: 0 PID: 13427 Comm: syz-executor.4 Not tainted 6.9.0-rc7-syzkaller-02060-g5c1672705a1a #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-Call Trace:
- <IRQ>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  lockdep_rcu_suspicious+0x221/0x340 kernel/locking/lockdep.c:6712
-  nf_reinject net/netfilter/nfnetlink_queue.c:323 [inline]
-  nfqnl_reinject+0x6ec/0x1120 net/netfilter/nfnetlink_queue.c:397
-  nfqnl_flush net/netfilter/nfnetlink_queue.c:410 [inline]
-  instance_destroy_rcu+0x1ae/0x220 net/netfilter/nfnetlink_queue.c:172
-  rcu_do_batch kernel/rcu/tree.c:2196 [inline]
-  rcu_core+0xafd/0x1830 kernel/rcu/tree.c:2471
-  handle_softirqs+0x2d6/0x990 kernel/softirq.c:554
-  __do_softirq kernel/softirq.c:588 [inline]
-  invoke_softirq kernel/softirq.c:428 [inline]
-  __irq_exit_rcu+0xf4/0x1c0 kernel/softirq.c:637
-  irq_exit_rcu+0x9/0x30 kernel/softirq.c:649
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1043 [inline]
-  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1043
- </IRQ>
- <TASK>
-
-Fixes: 9872bec773c2 ("[NETFILTER]: nfnetlink: use RCU for queue instances hash")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 9cb2173e6ea8 ("[media] media: Add stk1160 new driver (easycap replacement)")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_queue.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/usb/stk1160/stk1160-video.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 1aacc31a6bf92..6ed2be4ac88eb 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -171,7 +171,9 @@ instance_destroy_rcu(struct rcu_head *head)
- 	struct nfqnl_instance *inst = container_of(head, struct nfqnl_instance,
- 						   rcu);
+diff --git a/drivers/media/usb/stk1160/stk1160-video.c b/drivers/media/usb/stk1160/stk1160-video.c
+index 0e98b450ae01b..687c7b6a0c303 100644
+--- a/drivers/media/usb/stk1160/stk1160-video.c
++++ b/drivers/media/usb/stk1160/stk1160-video.c
+@@ -109,7 +109,7 @@ void stk1160_buffer_done(struct stk1160 *dev)
+ static inline
+ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
+ {
+-	int linesdone, lineoff, lencopy;
++	int linesdone, lineoff, lencopy, offset;
+ 	int bytesperline = dev->width * 2;
+ 	struct stk1160_buffer *buf = dev->isoc_ctl.buf;
+ 	u8 *dst = buf->mem;
+@@ -149,8 +149,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
+ 	 * Check if we have enough space left in the buffer.
+ 	 * In that case, we force loop exit after copy.
+ 	 */
+-	if (lencopy > buf->bytesused - buf->length) {
+-		lencopy = buf->bytesused - buf->length;
++	offset = dst - (u8 *)buf->mem;
++	if (offset > buf->length) {
++		dev_warn_ratelimited(dev->dev, "out of bounds offset\n");
++		return;
++	}
++	if (lencopy > buf->length - offset) {
++		lencopy = buf->length - offset;
+ 		remain = lencopy;
+ 	}
  
-+	rcu_read_lock();
- 	nfqnl_flush(inst, NULL, 0);
-+	rcu_read_unlock();
- 	kfree(inst);
- 	module_put(THIS_MODULE);
- }
+@@ -192,8 +197,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
+ 		 * Check if we have enough space left in the buffer.
+ 		 * In that case, we force loop exit after copy.
+ 		 */
+-		if (lencopy > buf->bytesused - buf->length) {
+-			lencopy = buf->bytesused - buf->length;
++		offset = dst - (u8 *)buf->mem;
++		if (offset > buf->length) {
++			dev_warn_ratelimited(dev->dev, "offset out of bounds\n");
++			return;
++		}
++		if (lencopy > buf->length - offset) {
++			lencopy = buf->length - offset;
+ 			remain = lencopy;
+ 		}
+ 
 -- 
 2.43.0
 
