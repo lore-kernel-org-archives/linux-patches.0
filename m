@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08CD384;
-	Thu, 13 Jun 2024 12:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBBE384;
+	Thu, 13 Jun 2024 12:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282834; cv=none; b=sTV5muAOqg0dKP1T4gUzZb6x2cOcQgOtYR098bTGSMS1YPTU3RhhnpzLPuirlTcCfHjUbGVq4MZm1eQiU6/jzC5zE85oWj/AwmRygnUP4inOf79mF1M9OlkkHlEm9qzeQi9dACzO7hG7EUye53LDz9tvCAKRrlP/aEdhXx+17+Y=
+	t=1718282837; cv=none; b=EM5Ne6q5pvtDcrtuQb3OKgMwFoxQZB4N5G+yQ0Z5IGzELfS2xWjtJTlmvf+KP6heNtKeQINVTJzHl1YFC7gL6IAy0yvlOe6Yt0M/BU8YNuBrz7Wov+Rhzr6bGxTNeqc1X2GTOn+xXomjxBE8s2dUcIFh1z0pD24L6o5jq1VraP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282834; c=relaxed/simple;
-	bh=z7+TM88MzQ303OrKEv5MEasKw4v1QkUWq07I1CaMrLE=;
+	s=arc-20240116; t=1718282837; c=relaxed/simple;
+	bh=j8H0ixqbBBGK+Ww+uJpdeIcg+qmjeokywhY5nV3lY7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iy/uKqYxoadK50yFlabvsQlYNd2oX7Iz5dRPonjrTaotJpw9n5/3oXAv8u0xzQb5abAj8vrgvwHAf7mHpcFnu786WdszdY3xYfISGAk1kbatFSwhnrPZKdUof0QshJBEgOLEX+Td4DN6tXILNlld7Id4RbEHb1XfDY6EiV7umsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Agd8roEN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XtubMLEHcZc0fNgeUjK2SMfQ0s8oWenYG2Y0i9EdcznZl0UHnjinLxRX9Sp1nduMuTnPUh4hrme9xBsPwu87fFEz28D+H1rPVtOlGxInF8SQNr5b3kXrU/JMqDQfhGszjRBOnjn3h/a4jQt+fnUo1lFc3al022MDnVUQ6Bo22JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0q5pVZvx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Agd8roEN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61EEC2BBFC;
-	Thu, 13 Jun 2024 12:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0q5pVZvx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9101C32786;
+	Thu, 13 Jun 2024 12:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282834;
-	bh=z7+TM88MzQ303OrKEv5MEasKw4v1QkUWq07I1CaMrLE=;
+	s=korg; t=1718282837;
+	bh=j8H0ixqbBBGK+Ww+uJpdeIcg+qmjeokywhY5nV3lY7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Agd8roENVDrsPgE3c/4eN5AmPOPst8/tONlqkM5hsp4qXMb5tWo8nVqBQQt9agN+9
-	 TLTQsY0zOile3YbkATwjkbZxpmiaoLM26DWZB7UhijR75ayzERDHn3wFoY9w3+FzU1
-	 woH/UQzVpsdcLHgiXwrdf5sr6hLCwleydp9xW01E=
+	b=0q5pVZvxVO28TXwpJV7GnVotZ0OyVF0jypv6ItX/z2BvgJiI9Y4mEqT8xZGIRGn2W
+	 YD2FUhLIvSh13z3kSwMQrqYhG2PsOQUnA/HbVwc4o1wTj0T68zf3eIZGCq8f2Ypo5M
+	 gLh8UbjU+Oc85XWzwJ0JwKse9/w6V0HIwzjqa62c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>
-Subject: [PATCH 6.1 01/85] drm: Check output polling initialized before disabling
-Date: Thu, 13 Jun 2024 13:34:59 +0200
-Message-ID: <20240613113214.194436469@linuxfoundation.org>
+	Kai Vehmanen <kai.vehmanen@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.1 10/85] drm/i915/audio: Fix audio time stamp programming for DP
+Date: Thu, 13 Jun 2024 13:35:08 +0200
+Message-ID: <20240613113214.536018277@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -50,180 +53,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shradha Gupta <shradhagupta@linux.microsoft.com>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-commit 5abffb66d12bcac84bf7b66389c571b8bb6e82bd upstream.
+commit c66b8356273c8d22498f88e4223af47a7bf8a23c upstream.
 
-In drm_kms_helper_poll_disable() check if output polling
-support is initialized before disabling polling. If not flag
-this as a warning.
-Additionally in drm_mode_config_helper_suspend() and
-drm_mode_config_helper_resume() calls, that re the callers of these
-functions, avoid invoking them if polling is not initialized.
-For drivers like hyperv-drm, that do not initialize connector
-polling, if suspend is called without this check, it leads to
-suspend failure with following stack
-[  770.719392] Freezing remaining freezable tasks ... (elapsed 0.001 seconds) done.
-[  770.720592] printk: Suspending console(s) (use no_console_suspend to debug)
-[  770.948823] ------------[ cut here ]------------
-[  770.948824] WARNING: CPU: 1 PID: 17197 at kernel/workqueue.c:3162 __flush_work.isra.0+0x212/0x230
-[  770.948831] Modules linked in: rfkill nft_counter xt_conntrack xt_owner udf nft_compat crc_itu_t nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip_set nf_tables nfnetlink vfat fat mlx5_ib ib_uverbs ib_core mlx5_core intel_rapl_msr intel_rapl_common kvm_amd ccp mlxfw kvm psample hyperv_drm tls drm_shmem_helper drm_kms_helper irqbypass pcspkr syscopyarea sysfillrect sysimgblt hv_balloon hv_utils joydev drm fuse xfs libcrc32c pci_hyperv pci_hyperv_intf sr_mod sd_mod cdrom t10_pi sg hv_storvsc scsi_transport_fc hv_netvsc serio_raw hyperv_keyboard hid_hyperv crct10dif_pclmul crc32_pclmul crc32c_intel hv_vmbus ghash_clmulni_intel dm_mirror dm_region_hash dm_log dm_mod
-[  770.948863] CPU: 1 PID: 17197 Comm: systemd-sleep Not tainted 5.14.0-362.2.1.el9_3.x86_64 #1
-[  770.948865] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 05/09/2022
-[  770.948866] RIP: 0010:__flush_work.isra.0+0x212/0x230
-[  770.948869] Code: 8b 4d 00 4c 8b 45 08 89 ca 48 c1 e9 04 83 e2 08 83 e1 0f 83 ca 02 89 c8 48 0f ba 6d 00 03 e9 25 ff ff ff 0f 0b e9 4e ff ff ff <0f> 0b 45 31 ed e9 44 ff ff ff e8 8f 89 b2 00 66 66 2e 0f 1f 84 00
-[  770.948870] RSP: 0018:ffffaf4ac213fb10 EFLAGS: 00010246
-[  770.948871] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff8c992857
-[  770.948872] RDX: 0000000000000001 RSI: 0000000000000001 RDI: ffff9aad82b00330
-[  770.948873] RBP: ffff9aad82b00330 R08: 0000000000000000 R09: ffff9aad87ee3d10
-[  770.948874] R10: 0000000000000200 R11: 0000000000000000 R12: ffff9aad82b00330
-[  770.948874] R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
-[  770.948875] FS:  00007ff1b2f6bb40(0000) GS:ffff9aaf37d00000(0000) knlGS:0000000000000000
-[  770.948878] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  770.948878] CR2: 0000555f345cb666 CR3: 00000001462dc005 CR4: 0000000000370ee0
-[  770.948879] Call Trace:
-[  770.948880]  <TASK>
-[  770.948881]  ? show_trace_log_lvl+0x1c4/0x2df
-[  770.948884]  ? show_trace_log_lvl+0x1c4/0x2df
-[  770.948886]  ? __cancel_work_timer+0x103/0x190
-[  770.948887]  ? __flush_work.isra.0+0x212/0x230
-[  770.948889]  ? __warn+0x81/0x110
-[  770.948891]  ? __flush_work.isra.0+0x212/0x230
-[  770.948892]  ? report_bug+0x10a/0x140
-[  770.948895]  ? handle_bug+0x3c/0x70
-[  770.948898]  ? exc_invalid_op+0x14/0x70
-[  770.948899]  ? asm_exc_invalid_op+0x16/0x20
-[  770.948903]  ? __flush_work.isra.0+0x212/0x230
-[  770.948905]  __cancel_work_timer+0x103/0x190
-[  770.948907]  ? _raw_spin_unlock_irqrestore+0xa/0x30
-[  770.948910]  drm_kms_helper_poll_disable+0x1e/0x40 [drm_kms_helper]
-[  770.948923]  drm_mode_config_helper_suspend+0x1c/0x80 [drm_kms_helper]
-[  770.948933]  ? __pfx_vmbus_suspend+0x10/0x10 [hv_vmbus]
-[  770.948942]  hyperv_vmbus_suspend+0x17/0x40 [hyperv_drm]
-[  770.948944]  ? __pfx_vmbus_suspend+0x10/0x10 [hv_vmbus]
-[  770.948951]  dpm_run_callback+0x4c/0x140
-[  770.948954]  __device_suspend_noirq+0x74/0x220
-[  770.948956]  dpm_noirq_suspend_devices+0x148/0x2a0
-[  770.948958]  dpm_suspend_end+0x54/0xe0
-[  770.948960]  create_image+0x14/0x290
-[  770.948963]  hibernation_snapshot+0xd6/0x200
-[  770.948964]  hibernate.cold+0x8b/0x1fb
-[  770.948967]  state_store+0xcd/0xd0
-[  770.948969]  kernfs_fop_write_iter+0x124/0x1b0
-[  770.948973]  new_sync_write+0xff/0x190
-[  770.948976]  vfs_write+0x1ef/0x280
-[  770.948978]  ksys_write+0x5f/0xe0
-[  770.948979]  do_syscall_64+0x5c/0x90
-[  770.948981]  ? syscall_exit_work+0x103/0x130
-[  770.948983]  ? syscall_exit_to_user_mode+0x12/0x30
-[  770.948985]  ? do_syscall_64+0x69/0x90
-[  770.948986]  ? do_syscall_64+0x69/0x90
-[  770.948987]  ? do_user_addr_fault+0x1d6/0x6a0
-[  770.948989]  ? do_syscall_64+0x69/0x90
-[  770.948990]  ? exc_page_fault+0x62/0x150
-[  770.948992]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[  770.948995] RIP: 0033:0x7ff1b293eba7
-[  770.949010] Code: 0b 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74 24
-[  770.949011] RSP: 002b:00007ffde3912128 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-[  770.949012] RAX: ffffffffffffffda RBX: 0000000000000005 RCX: 00007ff1b293eba7
-[  770.949013] RDX: 0000000000000005 RSI: 00007ffde3912210 RDI: 0000000000000004
-[  770.949014] RBP: 00007ffde3912210 R08: 000055d7dd4c9510 R09: 00007ff1b29b14e0
-[  770.949014] R10: 00007ff1b29b13e0 R11: 0000000000000246 R12: 0000000000000005
-[  770.949015] R13: 000055d7dd4c53e0 R14: 0000000000000005 R15: 00007ff1b29f69e0
-[  770.949016]  </TASK>
-[  770.949017] ---[ end trace e6fa0618bfa2f31d ]---
+Intel hardware is capable of programming the Maud/Naud SDPs on its
+own based on real-time clocks. While doing so, it takes care
+of any deviations from the theoretical values. Programming the registers
+explicitly with static values can interfere with this logic. Therefore,
+let the HW decide the Maud and Naud SDPs on it's own.
 
-Built-on: Rhel9, Ubuntu22
-Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/1706856208-9617-1-git-send-email-shradhagupta@linux.microsoft.com
+Cc: stable@vger.kernel.org # v5.17
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8097
+Co-developed-by: Kai Vehmanen <kai.vehmanen@intel.com>
+Signed-off-by: Kai Vehmanen <kai.vehmanen@intel.com>
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Animesh Manna <animesh.manna@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240430091825.733499-1-chaitanya.kumar.borah@intel.com
+(cherry picked from commit 8e056b50d92ae7f4d6895d1c97a69a2a953cf97b)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_modeset_helper.c |   19 ++++++++++++++++---
- drivers/gpu/drm/drm_probe_helper.c   |   12 ++++++++++--
- 2 files changed, 26 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/i915/display/intel_audio.c |  116 ++---------------------------
+ 1 file changed, 9 insertions(+), 107 deletions(-)
 
---- a/drivers/gpu/drm/drm_modeset_helper.c
-+++ b/drivers/gpu/drm/drm_modeset_helper.c
-@@ -193,13 +193,22 @@ int drm_mode_config_helper_suspend(struc
+--- a/drivers/gpu/drm/i915/display/intel_audio.c
++++ b/drivers/gpu/drm/i915/display/intel_audio.c
+@@ -73,19 +73,6 @@ struct intel_audio_funcs {
+ 				    const struct drm_connector_state *old_conn_state);
+ };
  
- 	if (!dev)
- 		return 0;
-+	/*
-+	 * Don't disable polling if it was never initialized
-+	 */
-+	if (dev->mode_config.poll_enabled)
-+		drm_kms_helper_poll_disable(dev);
+-/* DP N/M table */
+-#define LC_810M	810000
+-#define LC_540M	540000
+-#define LC_270M	270000
+-#define LC_162M	162000
+-
+-struct dp_aud_n_m {
+-	int sample_rate;
+-	int clock;
+-	u16 m;
+-	u16 n;
+-};
+-
+ struct hdmi_aud_ncts {
+ 	int sample_rate;
+ 	int clock;
+@@ -93,60 +80,6 @@ struct hdmi_aud_ncts {
+ 	int cts;
+ };
  
--	drm_kms_helper_poll_disable(dev);
- 	drm_fb_helper_set_suspend_unlocked(dev->fb_helper, 1);
- 	state = drm_atomic_helper_suspend(dev);
- 	if (IS_ERR(state)) {
- 		drm_fb_helper_set_suspend_unlocked(dev->fb_helper, 0);
--		drm_kms_helper_poll_enable(dev);
-+		/*
-+		 * Don't enable polling if it was never initialized
-+		 */
-+		if (dev->mode_config.poll_enabled)
-+			drm_kms_helper_poll_enable(dev);
-+
- 		return PTR_ERR(state);
- 	}
- 
-@@ -239,7 +248,11 @@ int drm_mode_config_helper_resume(struct
- 	dev->mode_config.suspend_state = NULL;
- 
- 	drm_fb_helper_set_suspend_unlocked(dev->fb_helper, 0);
--	drm_kms_helper_poll_enable(dev);
-+	/*
-+	 * Don't enable polling if it is not initialized
-+	 */
-+	if (dev->mode_config.poll_enabled)
-+		drm_kms_helper_poll_enable(dev);
- 
- 	return ret;
- }
---- a/drivers/gpu/drm/drm_probe_helper.c
-+++ b/drivers/gpu/drm/drm_probe_helper.c
-@@ -235,6 +235,9 @@ drm_connector_mode_valid(struct drm_conn
-  * Drivers can call this helper from their device resume implementation. It is
-  * not an error to call this even when output polling isn't enabled.
-  *
-+ * If device polling was never initialized before, this call will trigger a
-+ * warning and return.
-+ *
-  * Note that calls to enable and disable polling must be strictly ordered, which
-  * is automatically the case when they're only call from suspend/resume
-  * callbacks.
-@@ -246,7 +249,8 @@ void drm_kms_helper_poll_enable(struct d
- 	struct drm_connector_list_iter conn_iter;
- 	unsigned long delay = DRM_OUTPUT_POLL_PERIOD;
- 
--	if (!dev->mode_config.poll_enabled || !drm_kms_helper_poll)
-+	if (drm_WARN_ON_ONCE(dev, !dev->mode_config.poll_enabled) ||
-+	    !drm_kms_helper_poll || dev->mode_config.poll_running)
- 		return;
- 
- 	drm_connector_list_iter_begin(dev, &conn_iter);
-@@ -821,14 +825,18 @@ EXPORT_SYMBOL(drm_kms_helper_is_poll_wor
-  * not an error to call this even when output polling isn't enabled or already
-  * disabled. Polling is re-enabled by calling drm_kms_helper_poll_enable().
-  *
-+ * If however, the polling was never initialized, this call will trigger a
-+ * warning and return
-+ *
-  * Note that calls to enable and disable polling must be strictly ordered, which
-  * is automatically the case when they're only call from suspend/resume
-  * callbacks.
-  */
- void drm_kms_helper_poll_disable(struct drm_device *dev)
+-/* Values according to DP 1.4 Table 2-104 */
+-static const struct dp_aud_n_m dp_aud_n_m[] = {
+-	{ 32000, LC_162M, 1024, 10125 },
+-	{ 44100, LC_162M, 784, 5625 },
+-	{ 48000, LC_162M, 512, 3375 },
+-	{ 64000, LC_162M, 2048, 10125 },
+-	{ 88200, LC_162M, 1568, 5625 },
+-	{ 96000, LC_162M, 1024, 3375 },
+-	{ 128000, LC_162M, 4096, 10125 },
+-	{ 176400, LC_162M, 3136, 5625 },
+-	{ 192000, LC_162M, 2048, 3375 },
+-	{ 32000, LC_270M, 1024, 16875 },
+-	{ 44100, LC_270M, 784, 9375 },
+-	{ 48000, LC_270M, 512, 5625 },
+-	{ 64000, LC_270M, 2048, 16875 },
+-	{ 88200, LC_270M, 1568, 9375 },
+-	{ 96000, LC_270M, 1024, 5625 },
+-	{ 128000, LC_270M, 4096, 16875 },
+-	{ 176400, LC_270M, 3136, 9375 },
+-	{ 192000, LC_270M, 2048, 5625 },
+-	{ 32000, LC_540M, 1024, 33750 },
+-	{ 44100, LC_540M, 784, 18750 },
+-	{ 48000, LC_540M, 512, 11250 },
+-	{ 64000, LC_540M, 2048, 33750 },
+-	{ 88200, LC_540M, 1568, 18750 },
+-	{ 96000, LC_540M, 1024, 11250 },
+-	{ 128000, LC_540M, 4096, 33750 },
+-	{ 176400, LC_540M, 3136, 18750 },
+-	{ 192000, LC_540M, 2048, 11250 },
+-	{ 32000, LC_810M, 1024, 50625 },
+-	{ 44100, LC_810M, 784, 28125 },
+-	{ 48000, LC_810M, 512, 16875 },
+-	{ 64000, LC_810M, 2048, 50625 },
+-	{ 88200, LC_810M, 1568, 28125 },
+-	{ 96000, LC_810M, 1024, 16875 },
+-	{ 128000, LC_810M, 4096, 50625 },
+-	{ 176400, LC_810M, 3136, 28125 },
+-	{ 192000, LC_810M, 2048, 16875 },
+-};
+-
+-static const struct dp_aud_n_m *
+-audio_config_dp_get_n_m(const struct intel_crtc_state *crtc_state, int rate)
+-{
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(dp_aud_n_m); i++) {
+-		if (rate == dp_aud_n_m[i].sample_rate &&
+-		    crtc_state->port_clock == dp_aud_n_m[i].clock)
+-			return &dp_aud_n_m[i];
+-	}
+-
+-	return NULL;
+-}
+-
+ static const struct {
+ 	int clock;
+ 	u32 config;
+@@ -392,48 +325,17 @@ static void
+ hsw_dp_audio_config_update(struct intel_encoder *encoder,
+ 			   const struct intel_crtc_state *crtc_state)
  {
--	if (!dev->mode_config.poll_enabled)
-+	if (drm_WARN_ON(dev, !dev->mode_config.poll_enabled))
- 		return;
-+
- 	cancel_delayed_work_sync(&dev->mode_config.output_poll_work);
+-	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
+-	struct i915_audio_component *acomp = dev_priv->display.audio.component;
++	struct drm_i915_private *i915 = to_i915(encoder->base.dev);
+ 	enum transcoder cpu_transcoder = crtc_state->cpu_transcoder;
+-	enum port port = encoder->port;
+-	const struct dp_aud_n_m *nm;
+-	int rate;
+-	u32 tmp;
+-
+-	rate = acomp ? acomp->aud_sample_rate[port] : 0;
+-	nm = audio_config_dp_get_n_m(crtc_state, rate);
+-	if (nm)
+-		drm_dbg_kms(&dev_priv->drm, "using Maud %u, Naud %u\n", nm->m,
+-			    nm->n);
+-	else
+-		drm_dbg_kms(&dev_priv->drm, "using automatic Maud, Naud\n");
+-
+-	tmp = intel_de_read(dev_priv, HSW_AUD_CFG(cpu_transcoder));
+-	tmp &= ~AUD_CONFIG_N_VALUE_INDEX;
+-	tmp &= ~AUD_CONFIG_PIXEL_CLOCK_HDMI_MASK;
+-	tmp &= ~AUD_CONFIG_N_PROG_ENABLE;
+-	tmp |= AUD_CONFIG_N_VALUE_INDEX;
+-
+-	if (nm) {
+-		tmp &= ~AUD_CONFIG_N_MASK;
+-		tmp |= AUD_CONFIG_N(nm->n);
+-		tmp |= AUD_CONFIG_N_PROG_ENABLE;
+-	}
+-
+-	intel_de_write(dev_priv, HSW_AUD_CFG(cpu_transcoder), tmp);
+-
+-	tmp = intel_de_read(dev_priv, HSW_AUD_M_CTS_ENABLE(cpu_transcoder));
+-	tmp &= ~AUD_CONFIG_M_MASK;
+-	tmp &= ~AUD_M_CTS_M_VALUE_INDEX;
+-	tmp &= ~AUD_M_CTS_M_PROG_ENABLE;
+-
+-	if (nm) {
+-		tmp |= nm->m;
+-		tmp |= AUD_M_CTS_M_VALUE_INDEX;
+-		tmp |= AUD_M_CTS_M_PROG_ENABLE;
+-	}
+ 
+-	intel_de_write(dev_priv, HSW_AUD_M_CTS_ENABLE(cpu_transcoder), tmp);
++	/* Enable time stamps. Let HW calculate Maud/Naud values */
++	intel_de_rmw(i915, HSW_AUD_CFG(cpu_transcoder),
++		     AUD_CONFIG_N_VALUE_INDEX |
++		     AUD_CONFIG_PIXEL_CLOCK_HDMI_MASK |
++		     AUD_CONFIG_UPPER_N_MASK |
++		     AUD_CONFIG_LOWER_N_MASK |
++		     AUD_CONFIG_N_PROG_ENABLE,
++		     AUD_CONFIG_N_VALUE_INDEX);
  }
- EXPORT_SYMBOL(drm_kms_helper_poll_disable);
+ 
+ static void
 
 
