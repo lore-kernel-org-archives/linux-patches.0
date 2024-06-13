@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325A81482F5;
-	Thu, 13 Jun 2024 12:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732791474BF;
+	Thu, 13 Jun 2024 12:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280086; cv=none; b=Hgzv30/d4E034rY8yhMSPPPPpoGHppKbm89EyKDZ/i9TJ2PviDBRaX9qFRRIYNEUwGEtuGJBYMZvubeWTLYqCqa0bT6Z6m2i87pGXyYKXZQmq1bJPTTGxz7uZaXpsMJmMMdCD6Xz2/qlxQXaZWYxF6ICcEjWcb7BC5D74vSCKUk=
+	t=1718280089; cv=none; b=LuDKDfjVs0FOgSGtv+bzhnU/OpsaUr7WdQ6/3UUjZ9qevCUzova/iJEI71vKQcL9ag3eL2RuO5c6e1iyNzB44001xtO7GzJN+6L85McbrTecV0s2Lf00Fp/WDLY1bfIERDEbvWAjMMnLnpMHx2b8W3bQK7uHTvAMEs2AYiIAYiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280086; c=relaxed/simple;
-	bh=2kEd5YV+PzS2IsUcw+Vv5yK7igNy9PR4vRyXOt7zA8M=;
+	s=arc-20240116; t=1718280089; c=relaxed/simple;
+	bh=rhEHQGYV1JqRvTKRgRcjzCIEG4HoUxQRfzbgXL4oAGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cb3Y1cten4gGg+F51GB3cg2xm+cx137ptopFBcqCgBhn5Sa9SkogeK9V7K7sVo6zL+eQiVVOSywwPe59nKp1goP7nOQElNGadrg38H3MsN1gTyBwPSxg3VlCH9Noq9ifaaLFbLmukCg/TpNUX9EF5pyh6rfErgxMEItItoXd24U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EirnrXXF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hzuGt6DdEPryVU8oFqfh/IMVjAU1aZ5fM00c9XxUdtp2SYkcuVa1heehtojKj5A9xDuuw1UydN92NmmfGIwFXcQYoacavEEb7RcSn9VpbfH9FiBencJe1gnJRE8SyFGPLBXalQrWYQo2y1KZI5PR+wihbZ/dncqMU8kAK3mZjZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rY7ADKqI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EirnrXXF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E8FC4AF1A;
-	Thu, 13 Jun 2024 12:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rY7ADKqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D816C2BBFC;
+	Thu, 13 Jun 2024 12:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280086;
-	bh=2kEd5YV+PzS2IsUcw+Vv5yK7igNy9PR4vRyXOt7zA8M=;
+	s=korg; t=1718280088;
+	bh=rhEHQGYV1JqRvTKRgRcjzCIEG4HoUxQRfzbgXL4oAGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EirnrXXFMRhaAI+NauA8o1gYscqbvKgfokrf7+V+knhqIajExggwusEAX8mJzGUWG
-	 +0Vk8eZ19f/uyNgqS3TRMk2xSE00rSUarpkosoIdy8birMvzFT621BxiX8xKuWTqFQ
-	 ErpxoT0UgFCLkV7n5BycTAKev8V7RoclnWT64CTg=
+	b=rY7ADKqIuB84EeZ/p9NTsL4iUxr52BG0q37knQiZO/8ViGxx4FIPdNDOVZXgdsf9P
+	 PjDHQeikkonwKdkhmLCQuyzel6lRYvUL6IF3TYfm/U7GbAk3CsOHmdvQf99TP6RgdF
+	 Eu3Wl0Yn7P1NOdUz73PdcsafuIPZ4uMIDsmP/4HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Dan Aloni <dan.aloni@vastdata.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 120/202] f2fs: fix to release node block count in error path of f2fs_new_node_page()
-Date: Thu, 13 Jun 2024 13:33:38 +0200
-Message-ID: <20240613113232.393343882@linuxfoundation.org>
+Subject: [PATCH 5.4 138/202] sunrpc: fix NFSACL RPC retry on soft mount
+Date: Thu, 13 Jun 2024 13:33:56 +0200
+Message-ID: <20240613113233.086842677@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -51,41 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Dan Aloni <dan.aloni@vastdata.com>
 
-[ Upstream commit 0fa4e57c1db263effd72d2149d4e21da0055c316 ]
+[ Upstream commit 0dc9f430027b8bd9073fdafdfcdeb1a073ab5594 ]
 
-It missed to call dec_valid_node_count() to release node block count
-in error path, fix it.
+It used to be quite awhile ago since 1b63a75180c6 ('SUNRPC: Refactor
+rpc_clone_client()'), in 2012, that `cl_timeout` was copied in so that
+all mount parameters propagate to NFSACL clients. However since that
+change, if mount options as follows are given:
 
-Fixes: 141170b759e0 ("f2fs: fix to avoid use f2fs_bug_on() in f2fs_new_node_page()")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+    soft,timeo=50,retrans=16,vers=3
+
+The resultant NFSACL client receives:
+
+    cl_softrtry: 1
+    cl_timeout: to_initval=60000, to_maxval=60000, to_increment=0, to_retries=2, to_exponential=0
+
+These values lead to NFSACL operations not being retried under the
+condition of transient network outages with soft mount. Instead, getacl
+call fails after 60 seconds with EIO.
+
+The simple fix is to pass the existing client's `cl_timeout` as the new
+client timeout.
+
+Cc: Chuck Lever <chuck.lever@oracle.com>
+Cc: Benjamin Coddington <bcodding@redhat.com>
+Link: https://lore.kernel.org/all/20231105154857.ryakhmgaptq3hb6b@gmail.com/T/
+Fixes: 1b63a75180c6 ('SUNRPC: Refactor rpc_clone_client()')
+Signed-off-by: Dan Aloni <dan.aloni@vastdata.com>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/clnt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 8256a2dedae8c..d629b3c6546c8 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -1244,6 +1244,7 @@ struct page *f2fs_new_node_page(struct dnode_of_data *dn, unsigned int ofs)
- 	}
- 	if (unlikely(new_ni.blk_addr != NULL_ADDR)) {
- 		err = -EFSCORRUPTED;
-+		dec_valid_node_count(sbi, dn->inode, !ofs);
- 		set_sbi_flag(sbi, SBI_NEED_FSCK);
- 		goto fail;
- 	}
-@@ -1269,7 +1270,6 @@ struct page *f2fs_new_node_page(struct dnode_of_data *dn, unsigned int ofs)
- 	if (ofs == 0)
- 		inc_valid_inode_count(sbi);
- 	return page;
--
- fail:
- 	clear_node_page_dirty(page);
- 	f2fs_put_page(page, 1);
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index c6fe108845e8b..dc3226edf22fb 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -964,6 +964,7 @@ struct rpc_clnt *rpc_bind_new_program(struct rpc_clnt *old,
+ 		.authflavor	= old->cl_auth->au_flavor,
+ 		.cred		= old->cl_cred,
+ 		.stats		= old->cl_stats,
++		.timeout	= old->cl_timeout,
+ 	};
+ 	struct rpc_clnt *clnt;
+ 	int err;
 -- 
 2.43.0
 
