@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7749144D2C;
-	Thu, 13 Jun 2024 12:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6E613CF9E;
+	Thu, 13 Jun 2024 12:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280868; cv=none; b=VNlRdLWTeU+nXexTzISd2asvbtueQn4lutqys0UzHMc6L07Lrn1iNXH5lbZwM6niOn/ywU+6Pj+trcQXGustKcSiATZ2qq9+B7X/4zKvRcbFa3nSzNWt9IV71ofTJiKIBh4IjichM1o8iqIJpegQ1SkdNtk4wWOKrxaB0AydvL8=
+	t=1718280872; cv=none; b=rJGWGzYG+ZRgAjk0wmI2U5O47D1DQ3Q1MyKPK6qRotGGoGyN1vroKXvBLS1pVy/iGufaOlLOHLOP/aBiGKEgR+GTfzxysqfqRKR3xSaorzHjx88YaCmgR+GFaMR/ZIaex3n1Hm0IYJHXpqEA7k7hP/VWp2lNm9fSkcKEhfrJaiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280868; c=relaxed/simple;
-	bh=2hcx5jvBXamuVyRDPPGaxdLBrGzyhlc7z3a+fsSPxI8=;
+	s=arc-20240116; t=1718280872; c=relaxed/simple;
+	bh=fTH2q7QqtJZmGrn9+JEdKGn9K3AeZadfLpjUbX58P7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FLld9jDyjIzJypVaGEjYuWwdJDkvuBgvp1SZFPK4EivweiiQqqJ4HKxNABHTBCLcs0K+TgMYHYK0Wus7d0vR07Y5D1f3OS28Yi32ZYxDfH6Rsqb7lVV24KYCpmKfCrkdxEFti9aoixzrBWtiUMZSrO0Sw5hzSqk5cktzKAmQUTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORSqE5jZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PdBZITJpsS2trBJbHjZ9V98dasXVlttVpL7nHM4Sd0qxH9UwkIHbnHTweHw0UF3y0oPZTqxJaB1e9Iyk281q5cR6962dFNtU2qN+y+alWuzmijPt2DbuW8DGpHVpLQg5jPHiJjoslEjOvIX1hK1D4e3vL51961y0qcooavKxuC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VGi3BoD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORSqE5jZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74BFC2BBFC;
-	Thu, 13 Jun 2024 12:14:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VGi3BoD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74D5C2BBFC;
+	Thu, 13 Jun 2024 12:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280868;
-	bh=2hcx5jvBXamuVyRDPPGaxdLBrGzyhlc7z3a+fsSPxI8=;
+	s=korg; t=1718280871;
+	bh=fTH2q7QqtJZmGrn9+JEdKGn9K3AeZadfLpjUbX58P7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ORSqE5jZkvgbAvv82IMKaU2EfiTTqrMJlNDpRQ/BkbXSnYwq7xv0OTTwN4W9s3WHr
-	 MRyboNMNpAZt340r4pWSpqP1YPkD4wD08ivxY2LUpF6x490BZlOnjFDATA3gaElHKy
-	 dEdiv3k+D9uoameM+AtbxxeO+PZvgED7Lqd4yhzA=
+	b=1VGi3BoD6VmC98JAhMkTP/3HDN+ps1ee/viKSiW1z5gxfcYxeJ8s3cHQ1hS6nLgNU
+	 VM7XrGa8bt67VC0XETVMBijZc9tKgibYszB1TQ3j2Jf9kgsFwCGo2fsF3VKPFJivtQ
+	 /ZWY5sz8B/+4Sfikx22sKdx4Uh5berK9wK2LF4PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuri Karpov <YKarpov@ispras.ru>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Fangrui Song <maskray@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 060/317] scsi: hpsa: Fix allocation size for Scsi_Host private data
-Date: Thu, 13 Jun 2024 13:31:18 +0200
-Message-ID: <20240613113249.872473042@linuxfoundation.org>
+Subject: [PATCH 5.10 061/317] x86/purgatory: Switch to the position-independent small code model
+Date: Thu, 13 Jun 2024 13:31:19 +0200
+Message-ID: <20240613113249.910748703@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,39 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuri Karpov <YKarpov@ispras.ru>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 504e2bed5d50610c1836046c0c195b0a6dba9c72 ]
+[ Upstream commit cba786af84a0f9716204e09f518ce3b7ada8555e ]
 
-struct Scsi_Host private data contains pointer to struct ctlr_info.
+On x86, the ordinary, position dependent small and kernel code models
+only support placement of the executable in 32-bit addressable memory,
+due to the use of 32-bit signed immediates to generate references to
+global variables. For the kernel, this implies that all global variables
+must reside in the top 2 GiB of the kernel virtual address space, where
+the implicit address bits 63:32 are equal to sign bit 31.
 
-Restore allocation of only 8 bytes to store pointer in struct Scsi_Host
-private data area.
+This means the kernel code model is not suitable for other bare metal
+executables such as the kexec purgatory, which can be placed arbitrarily
+in the physical address space, where its address may no longer be
+representable as a sign extended 32-bit quantity. For this reason,
+commit
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+  e16c2983fba0 ("x86/purgatory: Change compiler flags from -mcmodel=kernel to -mcmodel=large to fix kexec relocation errors")
 
-Fixes: bbbd25499100 ("scsi: hpsa: Fix allocation size for scsi_host_alloc()")
-Signed-off-by: Yuri Karpov <YKarpov@ispras.ru>
-Link: https://lore.kernel.org/r/20240312170447.743709-1-YKarpov@ispras.ru
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+switched to the large code model, which uses 64-bit immediates for all
+symbol references, including function calls, in order to avoid relying
+on any assumptions regarding proximity of symbols in the final
+executable.
+
+The large code model is rarely used, clunky and the least likely to
+operate in a similar fashion when comparing GCC and Clang, so it is best
+avoided. This is especially true now that Clang 18 has started to emit
+executable code in two separate sections (.text and .ltext), which
+triggers an issue in the kexec loading code at runtime.
+
+The SUSE bugzilla fixes tag points to gcc 13 having issues with the
+large model too and that perhaps the large model should simply not be
+used at all.
+
+Instead, use the position independent small code model, which makes no
+assumptions about placement but only about proximity, where all
+referenced symbols must be within -/+ 2 GiB, i.e., in range for a
+RIP-relative reference. Use hidden visibility to suppress the use of a
+GOT, which carries absolute addresses that are not covered by static ELF
+relocations, and is therefore incompatible with the kexec loader's
+relocation logic.
+
+  [ bp: Massage commit message. ]
+
+Fixes: e16c2983fba0 ("x86/purgatory: Change compiler flags from -mcmodel=kernel to -mcmodel=large to fix kexec relocation errors")
+Fixes: https://bugzilla.suse.com/show_bug.cgi?id=1211853
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2016
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Fangrui Song <maskray@google.com>
+Acked-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/all/20240417-x86-fix-kexec-with-llvm-18-v1-0-5383121e8fb7@kernel.org/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hpsa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/purgatory/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index a44a098dbb9c7..4e7ec83c07cf6 100644
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -5834,7 +5834,7 @@ static int hpsa_scsi_host_alloc(struct ctlr_info *h)
- {
- 	struct Scsi_Host *sh;
+diff --git a/arch/x86/purgatory/Makefile b/arch/x86/purgatory/Makefile
+index dc0b91c1db04b..7c7bfdf0d0c0f 100644
+--- a/arch/x86/purgatory/Makefile
++++ b/arch/x86/purgatory/Makefile
+@@ -37,7 +37,8 @@ KCOV_INSTRUMENT := n
+ # make up the standalone purgatory.ro
  
--	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(struct ctlr_info));
-+	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(struct ctlr_info *));
- 	if (sh == NULL) {
- 		dev_err(&h->pdev->dev, "scsi_host_alloc failed\n");
- 		return -ENOMEM;
+ PURGATORY_CFLAGS_REMOVE := -mcmodel=kernel
+-PURGATORY_CFLAGS := -mcmodel=large -ffreestanding -fno-zero-initialized-in-bss -g0
++PURGATORY_CFLAGS := -mcmodel=small -ffreestanding -fno-zero-initialized-in-bss -g0
++PURGATORY_CFLAGS += -fpic -fvisibility=hidden
+ PURGATORY_CFLAGS += $(DISABLE_STACKLEAK_PLUGIN) -DDISABLE_BRANCH_PROFILING
+ PURGATORY_CFLAGS += -fno-stack-protector
+ 
 -- 
 2.43.0
 
