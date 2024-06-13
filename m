@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCA613D635;
-	Thu, 13 Jun 2024 12:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C29E13D635;
+	Thu, 13 Jun 2024 12:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280468; cv=none; b=gSmHRqyPsyrJftHDjdmUbNqEAbcQ1Tb4+QgCrnrpQRnmdTAeOpwR0eZYgJCEHDUevAlNH7sTmt9msOv4Pf52hAy0LUWzpbb9DPx+FyPDWbcKY76jaqJKqcrCYDd77Kehf3+NSboZOwFigi+saQpqprpEiF+uGVTpE7uFCIgazNM=
+	t=1718280471; cv=none; b=SuuRqtSNOhQ3A29bDwMk9RX/aypqEa5+14SdNZUgHQ6UwgQUdcGAiMC4yFHO4s0bHS9opuZYg48K54A0Y8yIemJ26rI0PXiFU13NxxhOZGCEmidEqBUnCZr/KsO5pIM5VLIPbL4xbCP9qEJgtCy+9dkCx81y5lfjlQfKl8idxiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280468; c=relaxed/simple;
-	bh=mFau7EG/3sz3VKvDbAwNGA0vpGcbwNR0P9/jPYyiVF4=;
+	s=arc-20240116; t=1718280471; c=relaxed/simple;
+	bh=Cn/4wXCuUj6OXb/FxZcuM+tJfzWV7Pm+H4EjvneQ/OU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cwsbQsrAN1frIEH8w3mGZSCyIXRceiRLtmu6FmWhl5rw8VG2LfQK6Itc/pjQp3+Yv0AYZMHbKoFpmNgKVJEeI5uT2+B26oxTtLULE6mKJQlZRavTietw36pneWEPjym1AUnd6bkgbHbRxZWwozLtEmpG/ReVjMcy5NRYQyX05sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnuoHBKQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VdUCngWfJK53XDXS6Af0hJ7SqSNjjqP6LHqWI4T+Wu3o1l/fSMg+IqzRwpCO5xvXqyk5pqOxmGDTIK9rsaFBSQ2xpjks++aYZXRYX8KeIlKEKzpuwsmoU62E9OAV2B8+U0vOz+xpoG7RB+3GedsQ4eUUUCqOwypZZy1bnMcGA5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVz/CMHt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnuoHBKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B57C2BBFC;
-	Thu, 13 Jun 2024 12:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVz/CMHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C659C2BBFC;
+	Thu, 13 Jun 2024 12:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280468;
-	bh=mFau7EG/3sz3VKvDbAwNGA0vpGcbwNR0P9/jPYyiVF4=;
+	s=korg; t=1718280470;
+	bh=Cn/4wXCuUj6OXb/FxZcuM+tJfzWV7Pm+H4EjvneQ/OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnuoHBKQ4TT8OJwQAQT1iYWrhePejriihTxQHiM05qm4frcUiIdvwaxflRUFT/LW2
-	 XhG759wBs3Znv5gZhIUZK14NRPFgGDqq1xt+LrUX5tbC+3WtdzUwd+a1WHX6Yh+WQJ
-	 qkW2DEq/Xck6+zOieFeRmBC9EtShY9RhSWFLMlTw=
+	b=bVz/CMHtEjr5Ikzf9iwZ0S+PFTyHmadslA7z4MZJW9NFZutyw15JoieR+dBtLMas7
+	 /7PYoKBINAFJcPBI9uhRHKo5LyCeoK8DhhEP7f1i8RTEgz28LWWzUV0sMLoDGHwSZp
+	 JdF4InxLSisMpSxfPD42AyrTvTmCzPnlkxjSQQbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.6 063/137] KVM: arm64: AArch32: Fix spurious trapping of conditional instructions
-Date: Thu, 13 Jun 2024 13:34:03 +0200
-Message-ID: <20240613113225.746596749@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 064/137] LoongArch: Add all CPUs enabled by fdt to NUMA node 0
+Date: Thu, 13 Jun 2024 13:34:04 +0200
+Message-ID: <20240613113225.785305265@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -50,65 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit c92e8b9eacebb4060634ebd9395bba1b29aadc68 upstream.
+commit 3de9c42d02a79a5e09bbee7a4421ddc00cfd5c6d upstream.
 
-We recently upgraded the view of ESR_EL2 to 64bit, in keeping with
-the requirements of the architecture.
+NUMA enabled kernel on FDT based machine fails to boot because CPUs
+are all in NUMA_NO_NODE and mm subsystem won't accept that.
 
-However, the AArch32 emulation code was left unaudited, and the
-(already dodgy) code that triages whether a trap is spurious or not
-(because the condition code failed) broke in a subtle way:
+Fix by adding them to default NUMA node at FDT parsing phase and move
+numa_add_cpu(0) to a later point.
 
-If ESR_EL2.ISS2 is ever non-zero (unlikely, but hey, this is the ARM
-architecture we're talking about), the hack that tests the top bits
-of ESR_EL2.EC will break in an interesting way.
-
-Instead, use kvm_vcpu_trap_get_class() to obtain the EC, and list
-all the possible ECs that can fail a condition code check.
-
-While we're at it, add SMC32 to the list, as it is explicitly listed
-as being allowed to trap despite failing a condition code check (as
-described in the HCR_EL2.TSC documentation).
-
-Fixes: 0b12620fddb8 ("KVM: arm64: Treat ESR_EL2 as a 64-bit register")
 Cc: stable@vger.kernel.org
-Acked-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20240524141956.1450304-4-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: 88d4d957edc7 ("LoongArch: Add FDT booting support from efi system table")
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/aarch32.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ arch/loongarch/include/asm/numa.h |    1 +
+ arch/loongarch/kernel/smp.c       |    5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/hyp/aarch32.c
-+++ b/arch/arm64/kvm/hyp/aarch32.c
-@@ -50,9 +50,23 @@ bool kvm_condition_valid32(const struct
- 	u32 cpsr_cond;
- 	int cond;
+--- a/arch/loongarch/include/asm/numa.h
++++ b/arch/loongarch/include/asm/numa.h
+@@ -56,6 +56,7 @@ extern int early_cpu_to_node(int cpu);
+ static inline void early_numa_add_cpu(int cpuid, s16 node)	{ }
+ static inline void numa_add_cpu(unsigned int cpu)		{ }
+ static inline void numa_remove_cpu(unsigned int cpu)		{ }
++static inline void set_cpuid_to_node(int cpuid, s16 node)	{ }
  
--	/* Top two bits non-zero?  Unconditional. */
--	if (kvm_vcpu_get_esr(vcpu) >> 30)
-+	/*
-+	 * These are the exception classes that could fire with a
-+	 * conditional instruction.
-+	 */
-+	switch (kvm_vcpu_trap_get_class(vcpu)) {
-+	case ESR_ELx_EC_CP15_32:
-+	case ESR_ELx_EC_CP15_64:
-+	case ESR_ELx_EC_CP14_MR:
-+	case ESR_ELx_EC_CP14_LS:
-+	case ESR_ELx_EC_FP_ASIMD:
-+	case ESR_ELx_EC_CP10_ID:
-+	case ESR_ELx_EC_CP14_64:
-+	case ESR_ELx_EC_SVC32:
-+		break;
-+	default:
- 		return true;
-+	}
+ static inline int early_cpu_to_node(int cpu)
+ {
+--- a/arch/loongarch/kernel/smp.c
++++ b/arch/loongarch/kernel/smp.c
+@@ -262,7 +262,6 @@ static void __init fdt_smp_setup(void)
  
- 	/* Is condition field valid? */
- 	cond = kvm_vcpu_get_condition(vcpu);
+ 		if (cpuid == loongson_sysconf.boot_cpu_id) {
+ 			cpu = 0;
+-			numa_add_cpu(cpu);
+ 		} else {
+ 			cpu = cpumask_next_zero(-1, cpu_present_mask);
+ 		}
+@@ -272,6 +271,9 @@ static void __init fdt_smp_setup(void)
+ 		set_cpu_present(cpu, true);
+ 		__cpu_number_map[cpuid] = cpu;
+ 		__cpu_logical_map[cpu] = cpuid;
++
++		early_numa_add_cpu(cpu, 0);
++		set_cpuid_to_node(cpuid, 0);
+ 	}
+ 
+ 	loongson_sysconf.nr_cpus = num_processors;
+@@ -453,6 +455,7 @@ void smp_prepare_boot_cpu(void)
+ 	set_cpu_possible(0, true);
+ 	set_cpu_online(0, true);
+ 	set_my_cpu_offset(per_cpu_offset(0));
++	numa_add_cpu(0);
+ 
+ 	rr_node = first_node(node_online_map);
+ 	for_each_possible_cpu(cpu) {
 
 
