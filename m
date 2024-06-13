@@ -1,67 +1,66 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC48A1411D6
-	for <patches@lists.linux.dev>; Thu, 13 Jun 2024 14:47:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A4B12C528
+	for <patches@lists.linux.dev>; Thu, 13 Jun 2024 14:54:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718290080; cv=none; b=ZoINLp+iQPmpsIyl9NL1+vKKl7LpYz09w2FDh+G1mt+J9k+hqlTDjhdFCZKS8VZ7G/6yJHbCdjqgmfuTP5or+G/4CWZlLnbZyhtriri7rQzZ1T1wEAS60J/yGKoX6PGLLOZJ/ZOX+CCNFBYQRSHdyvBFQZhfHAg8ipvQn1yE7NA=
+	t=1718290471; cv=none; b=bqBaFAYYIQX89fr1wo4KZoWqqLRELEQKtcXmijBtnnoy6c2a59Ok1zptZm5dLtaFNPKtSXA9apfgdEegvVu5MJgm8K3xw+1J2ftNttBPK3i9wa4lJYcFRSjMDh9/WEnzEs53NDSfNihv8YJK1qIpA+6O8QCHZ285Tix7wmoc+r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718290080; c=relaxed/simple;
-	bh=ZefUIUyomFMimAAhveylaaGjEmkSppUTk1bAsNB6uJk=;
+	s=arc-20240116; t=1718290471; c=relaxed/simple;
+	bh=+HZBDinZDCMT7Ez14OypUVVwLMkZvNTY8vfAf9qVU3o=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pn9eLdGc9RWi5vcbyR8+ilHhsbfGJ/iSe33AierM/36pP9KFEB0ouIV4lN3O3UaLzWqWh1bFBj261e9iCzZEoG2s0dnhrX//qnAiTM2MBc0GoCWDO6GiMZ1ygNoQjPONh7ZqTb0fYyIh10IqYXwQA/XDV7cr5j2KpnhXnGXUlXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=JBLCJGfi; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	 To:Cc:Content-Type; b=HzXHtA1MT9Xhxwj//pyPIVSpkfmKA4YTvpdTCSy13woalGw0x2sgNEM6ih2QYVvNBiSTKrCOncXcB90z4jD/l33CFH21i3JxOj9wxr/o8OLemWdLk73uwH6WS7WL9naISVeShrRTWhrcj8oU6Wm4v/jbOnlqPKbWlLuC+J/X+TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=p7I8zU3x; arc=none smtp.client-ip=209.85.221.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="JBLCJGfi"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7041a7d4beeso988451b3a.2
-        for <patches@lists.linux.dev>; Thu, 13 Jun 2024 07:47:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p7I8zU3x"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-4e1c721c040so384006e0c.3
+        for <patches@lists.linux.dev>; Thu, 13 Jun 2024 07:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1718290078; x=1718894878; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sJbpBNKH1nKMaS+tK4/41cAHjDB09P3ZLPEGUZzZCqo=;
-        b=JBLCJGfidAP/zdvrjKDNCammeQpe9R6bwlkqIw7urVn1vj+jONVmI2NTc29pWMiNOW
-         T3QPVQbYGDixukVGXi0efxyzQOcadTTKn1o4CIe6AJRgd+5yE9KZNC43UdsmSvxSGvVw
-         zoyCBHooym4AlcS5IW0pqRYmXVcumshcfR9BDlRNgg4nfh3HHeR+G6pHY+83tiljMb9b
-         woA5YJOlcWADeEfE18NVjCj2WZQTtVCeLfDq7zkRwti7vuWDFAVDPiJFgW0gC0SnAu7n
-         4xbpfS1D8F7p5iQfGR5NIILVPmQL396k5KeUbEmaKLAMVrcU+EcngrXPs25J70drnBFU
-         UcEw==
+        d=linaro.org; s=google; t=1718290469; x=1718895269; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z7g5SALnsdPJQWBZt0kVgnA0bB4kjPLGUDBHBwv4noI=;
+        b=p7I8zU3xtMXy64fn7q6AU1b+1BsA1zpAgliZLWAMve9S2Y3bojzjodEXrJQY/tGvt0
+         C3Frc/LRadLZEmRIQiLnwuGsPVVwafZud2QSdHGuv7QJacX8iKCTZQQeUZ113rrgTE2P
+         yqy9tgIzulxYVDkSm85ONfNAxUNEuk6k+hDb+GeJjtMe+PdCUS6Rm0X8BQREChhWVbPB
+         gO1O0lZ8oxSmD4JhdkGMepvqvnbnsMZ3pHOXf4j5fMwbamXOtOcH+Q22uo++3BF32S4q
+         W99cp6mvSDnQIkU+1Sgj6CDBrIeOsWFbA5nsGuI02/pxwG1uk3srU7I/XextPC2cWMvu
+         YXkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718290078; x=1718894878;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sJbpBNKH1nKMaS+tK4/41cAHjDB09P3ZLPEGUZzZCqo=;
-        b=CCf4WqQAA3N4D682N2LhnLoSsmTwSG2aVd2+FQ8tesZugEUT37Kx8q1K+ypxVRfJ+Y
-         Hd5ZWjFB2DolP9nQTm0any8jG9ARKDrxl98G0fzTHSOeCNW6Q1OcELoJCYkgWfJNKETA
-         8QgHeJx1SFuFh5sZrxckslfxDiVuqFubg83Z//1hgnlmlykUh/ePHH1BPqlOm7JXkCHz
-         vYXB7ioaTwXrPOR9nIxAivDVm8vKZnJFXUHKF6oZd3ZrMx0hi0oSbOjDY9VbFOeyWpnM
-         tVDumhNBs6jT7Pql8vt5GcgWZlX94FjSxmWSErqLNPj3pzHHHWsDfIEeUqDGNa4Ep4Op
-         47FA==
-X-Forwarded-Encrypted: i=1; AJvYcCX+P+Pij16NW2mQd65YNnH8vPT511H0w9IzQ0JBCuCNjOhjywSSPw+xYLChpVQ+pOChtfPLO0lvDl4jV3dTJYcU98oupbTR9Q==
-X-Gm-Message-State: AOJu0YyqI4ad0AxRQcDApVvRJoymFL6XCtt80ibqY7dEfBWzQHkjqG1L
-	/yI0ykT5qH+4VhjLHwhWdFU6bo6+T+4dFDKSBq3UnevmMDGNV4ZuIxd976RYXpKPcCR3k0/orzB
-	c+OUOqnUoMI80UyVtpTmxxBqFyjCvqQhhxUYR0g==
-X-Google-Smtp-Source: AGHT+IGctOV4sUJXx3kX4lbRej3zxxjongFChJ+rwztXfqOuHwCwpySuoVQD6u2sUxihtO5b6CbJl6hbO99jW4+2BQ4=
-X-Received: by 2002:a05:6a20:394a:b0:1b4:772d:2885 with SMTP id
- adf61e73a8af0-1bae7d9453bmr74989637.3.1718290077789; Thu, 13 Jun 2024
- 07:47:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718290469; x=1718895269;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z7g5SALnsdPJQWBZt0kVgnA0bB4kjPLGUDBHBwv4noI=;
+        b=WyN6oKvej0OFxykp5nPr4dwDlv0mIWkM1qPRMsoaupCtbiuCD/ZTmIpBTED5YVuE7s
+         v9DSNdRBY0NLlJ26MqPAHHpTuEjIi+I9rXSg1WJF0HEKwqaaJHz2w5KvmIr9HO3rr9UN
+         f9tLAfhYhbGQRL9mTa0hMJZDEb409WyVm0TxffqR//8AZtYgVIllufH2rtDgJbdHHyN1
+         5EgqMbUvflJqQ0XLbOdtjAetYnKuQ1HZTwzI8loJxnhG4bzoNdxfurZQIxboPCKfUE60
+         YQ8Nb3o+d1K0RHL/PJFi/FHQD90IaRQjeJGW+CuDbvSmhBCHWfaHUK73wD/3rRe27CrL
+         fDsw==
+X-Forwarded-Encrypted: i=1; AJvYcCUeW/DEs4W+78AXWSi6+TheI2AipwJukc/6XedRef6p425IDkLGlwaltfqkALkhUBn2KtKgURZ9tt/i+r7YrAfGHuLBiHWjFA==
+X-Gm-Message-State: AOJu0YyjjZsVeik12CpYrk/Ac+5zx5w08Bfarr1V/4MdIwBlsI484RCs
+	wRumCMea/0vlJBEgdq74cfl0N0pIqLYWPimv69sCJDkiiroZNG5/YQPIb3xpW6N9UFm3sSPwJ0f
+	I2O5BT4KreQ1t/Qc9O+vYuJaUIlHeMXTVtYiisA==
+X-Google-Smtp-Source: AGHT+IEFJBIeVpnD+lw3dEtVlaKMEXn/UPaJkQ+jBNt3IL0NdXWuc6/aVyLKENNOoHl9TZ+IQBZ2xK7qOnH1FQoGYNM=
+X-Received: by 2002:a05:6122:20a1:b0:4ec:f27b:ee9c with SMTP id
+ 71dfb90a1353d-4ee3f1628c5mr73958e0c.5.1718290467801; Thu, 13 Jun 2024
+ 07:54:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240613113223.281378087@linuxfoundation.org>
-In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Thu, 13 Jun 2024 23:47:46 +0900
-Message-ID: <CAKL4bV4Mmy-SNKTf2gScQ_YEr1WH1Uz_ydGHKVKN0v17kJn7Nw@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/137] 6.6.34-rc1 review
+References: <20240613113247.525431100@linuxfoundation.org>
+In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 13 Jun 2024 20:24:16 +0530
+Message-ID: <CA+G9fYvS7u7seBUY36kGdJQJ4LS==ex=zzvBztYUE_X9AT5nYg@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/317] 5.10.219-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -71,15 +70,12 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
 	broonie@kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Greg
-
-On Thu, Jun 13, 2024 at 9:10=E2=80=AFPM Greg Kroah-Hartman
+On Thu, 13 Jun 2024 at 17:43, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.6.34 release.
-> There are 137 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.10.219 release.
+> There are 317 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -87,32 +83,40 @@ On Thu, Jun 13, 2024 at 9:10=E2=80=AFPM Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.34-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.219-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
->
 
-6.6.34-rc1 tested.
+The powerpc builds failed on stable-rc 5.10 branch with gcc-12 and clang.
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+Powerpc:
+ - maple_defconfig
+ - ppc6xx_defconfig
+ - tinyconfig
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-[    0.000000] Linux version 6.6.34-rc1rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.1.1 20240522, GNU ld (GNU
-Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Thu Jun 13 23:11:09 JST 2024
+Build log:
+---------
+from /builds/linux/arch/powerpc/kernel/asm-offsets.c:14:
+arch/powerpc/include/asm/uaccess.h: In function 'raw_copy_from_user':
+arch/powerpc/include/asm/uaccess.h:472:25: error: implicit declaration
+of function '__get_user_size'; did you mean '__get_user_bad'?
+[-Werror=implicit-function-declaration]
+  472 |                         __get_user_size(*(u8 *)to, from, 1, ret);
+      |                         ^~~~~~~~~~~~~~~
+      |                         __get_user_bad
+cc1: some warnings being treated as errors
 
-Thanks
+Links:
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.218-318-g853b71b570fb/testrun/24321785/suite/build/test/gcc-12-maple_defconfig/log
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.218-318-g853b71b570fb/testrun/24321785/suite/build/test/gcc-12-maple_defconfig/history/
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+--
+Linaro LKFT
+https://lkft.linaro.org
