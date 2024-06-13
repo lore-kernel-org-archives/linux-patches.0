@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8AB1448E5;
-	Thu, 13 Jun 2024 11:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5844D145A12;
+	Thu, 13 Jun 2024 11:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279903; cv=none; b=Gzc220rjyeOgGzfpXz2bsbnGYPdiKzR1uy4quiL3KT0YuG+9z004tylOG5ky37BQA9ItqPNSCBlTgasRiDpnvJ+WYIkgeQLmykIVl4cmpubr0KvsAdld4vYDu/lqHpZP0vBbICmeHqHPx1TfpdWwksLgXxkN49PIH2VsziWiDUE=
+	t=1718279906; cv=none; b=DsX3IaIp5+GHs2jnT/20tSLuzj4CDD0Zk6N0gpIU+FiZm+IjEnjpG7L2ZRHucg5bpvcmTgLvonMMXETZixOlXcBelEfNY88cQOhNnn9/Hgt3S+VjA0wz4+X1215A7rTmmagXYlMRPI4kOvqIUKbs0OI6pscKyAUjPaZ7OrqnH8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279903; c=relaxed/simple;
-	bh=0PrcuI2PMneRp/DMECtt3oWDNk+NvKFuL08AcyLVtHw=;
+	s=arc-20240116; t=1718279906; c=relaxed/simple;
+	bh=cGZKsdNgdviCV9yNBoUugDx2SuyyKWR+ZICm/wDIw8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OCewKQWXI1MUlAdHRmGLesmKfWTm0dEO/cFWCtQyJQ6/nwL3W6Uj/hqe1KPDsqIx6/PNOQpeeqizLkocTdZ4s637d1eE80Wc4BpQRLLxxnySxUHLabpaS6ScDlcjbmJFVPvCceLqfUQQwkKJa10T4Tu9aeCDOgB/AGNRI7ohqF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NVuu6RU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QD0+IAvv/4nH1tpGMWxGE7n57hmQ4e2fl4TDfHxPVDFc26HW3Z2cHhkyIDELImHXBpXbhATNmLLkWxteKyg6Q99ts0J7a8J+fjezOCctE/YI84A2MRtKpnRa/tLOQvNIZfXe5IcYpSD2McooYjuSEWImxDyqAHj3/DVPL+jeSyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wx0Kvumc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NVuu6RU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93F9C32786;
-	Thu, 13 Jun 2024 11:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wx0Kvumc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4649C2BBFC;
+	Thu, 13 Jun 2024 11:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279903;
-	bh=0PrcuI2PMneRp/DMECtt3oWDNk+NvKFuL08AcyLVtHw=;
+	s=korg; t=1718279906;
+	bh=cGZKsdNgdviCV9yNBoUugDx2SuyyKWR+ZICm/wDIw8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2NVuu6RUTstSF8LCu5rgJDOFuPIJnrctLl/KvlCTjE8t9NkLNUwBaMLPH+lJD0Nn+
-	 ePLxZZmS79Qv5BDZH3pvrhm4rCS8gjuIi/RM4E7C1Pi9f31zLpv4BMT7R1BEOsqP77
-	 AOK4+jr+Is5RbWCaVQmqeMqz3lZeOXeQ+k5j/g6w=
+	b=Wx0KvumczyIn4oUHT3J1Lutsp//JMdXkgodJRWz9AP4uKdKS0E2kE6uxq0l+4d/VO
+	 eTyOAPETWxuI2p1DuS8i7wjdTh2DWg40tDtP9l0e0nstL2TtQYBryc04xsmormrhwj
+	 V9lJP9njaFfs2ByB0Rrfvfv9qlFwTVC1GVjjcvKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Hulk Robot <hulkci@huawei.com>,
+	YueHaibing <yuehaibing@huawei.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 075/202] media: radio-shark2: Avoid led_names truncations
-Date: Thu, 13 Jun 2024 13:32:53 +0200
-Message-ID: <20240613113230.669368622@linuxfoundation.org>
+Subject: [PATCH 5.4 076/202] platform/x86: wmi: Make two functions static
+Date: Thu, 13 Jun 2024 13:32:54 +0200
+Message-ID: <20240613113230.706885617@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -45,42 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 1820e16a3019b6258e6009d34432946a6ddd0a90 ]
+[ Upstream commit 713df99a9ef0133c09ad05bac10cf7d0163cd272 ]
 
-Increase the size of led_names so it can fit any valid v4l2 device name.
+Fix sparse warnings:
 
-Fixes:
-drivers/media/radio/radio-shark2.c:197:17: warning: ‘%s’ directive output may be truncated writing up to 35 bytes into a region of size 32 [-Wformat-truncation=]
+drivers/platform/x86/xiaomi-wmi.c:26:5: warning: symbol 'xiaomi_wmi_probe' was not declared. Should it be static?
+drivers/platform/x86/xiaomi-wmi.c:51:6: warning: symbol 'xiaomi_wmi_notify' was not declared. Should it be static?
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Stable-dep-of: 290680c2da80 ("platform/x86: xiaomi-wmi: Fix race condition when reporting key events")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/radio/radio-shark2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/xiaomi-wmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/radio/radio-shark2.c b/drivers/media/radio/radio-shark2.c
-index f1c5c0a6a335c..e3e6aa87fe081 100644
---- a/drivers/media/radio/radio-shark2.c
-+++ b/drivers/media/radio/radio-shark2.c
-@@ -62,7 +62,7 @@ struct shark_device {
- #ifdef SHARK_USE_LEDS
- 	struct work_struct led_work;
- 	struct led_classdev leds[NO_LEDS];
--	char led_names[NO_LEDS][32];
-+	char led_names[NO_LEDS][64];
- 	atomic_t brightness[NO_LEDS];
- 	unsigned long brightness_new;
- #endif
+diff --git a/drivers/platform/x86/xiaomi-wmi.c b/drivers/platform/x86/xiaomi-wmi.c
+index 601cbb282f543..54a2546bb93bf 100644
+--- a/drivers/platform/x86/xiaomi-wmi.c
++++ b/drivers/platform/x86/xiaomi-wmi.c
+@@ -23,7 +23,7 @@ struct xiaomi_wmi {
+ 	unsigned int key_code;
+ };
+ 
+-int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
++static int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
+ {
+ 	struct xiaomi_wmi *data;
+ 
+@@ -48,7 +48,7 @@ int xiaomi_wmi_probe(struct wmi_device *wdev, const void *context)
+ 	return input_register_device(data->input_dev);
+ }
+ 
+-void xiaomi_wmi_notify(struct wmi_device *wdev, union acpi_object *dummy)
++static void xiaomi_wmi_notify(struct wmi_device *wdev, union acpi_object *dummy)
+ {
+ 	struct xiaomi_wmi *data;
+ 
 -- 
 2.43.0
 
