@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8E9146592;
-	Thu, 13 Jun 2024 11:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32460143C4B;
+	Thu, 13 Jun 2024 11:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279396; cv=none; b=j97kaNEsnEtihy3AqHhCUsq/T9o2Zx7hH7k7MEcq8bCFtxHKIVpuq2AYc/5/4xGNfJe8fRcDCgCURZcM6UNx/+ev8gOzAA94DRwi/SeYOG2Rd12c+NCvqrw2cTpg0FBg4RH3jsxRV8jRV+xNAPdvoDDPh+xvGLcamKHpCNcQ0zM=
+	t=1718279399; cv=none; b=RxZ0kjvAREKcwLK50cxTbqoKsi2+oIfulKD4Rls4+z/AokiQybR+JevmFMEietGdWI9iZLF4YMvH2Jk/Rn+mlFjohz+GMz0NXsfQgc/Rp4VPfv+kwU9ZldJ4miy7LfI9f2j0hJTpH71u8SGZ+W3fJ1W43e2slZOzH/DMn3KIsZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279396; c=relaxed/simple;
-	bh=GBBjBpMWgI5FJg5/eP56rPrHrjCOxFISW+bcMzZyWFY=;
+	s=arc-20240116; t=1718279399; c=relaxed/simple;
+	bh=uX8T5PtCkgOGRvqMNg6BXFxOf8JdI4vIUEndm1Ll890=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=byp7QdDmWtf/O7jEP/RB8tzZtynRgJu88V2kE5TeClL3GCBFjdS61xHUwFgxExjP3LVoEdHKxm6Bkn3DH1kHJspnVp5rCMCXfPHKEIY++Vz+h1qWGvnwzx3lfMUMxABIzO2xf+AvbNvGq3oqDnXJGoCz10y7egi2DWSiIRkh9ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vutj71pr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oKlAouwZstNkZNNWMBWWzJvzQtMfeLnQqkxKNt8F/Yrvn/oF7D1MsjHPwGOaTS7pf6baZ3GOkb439PNq9IW7UluQTMfb12QpniQbdwVJnF9rn1aze8iWXIReH6CJH/AAh4/7MemIEfZH+g7T/PPK3ddIScLp7zM72iGX3sgZrgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdqefEIA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vutj71pr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4226C32786;
-	Thu, 13 Jun 2024 11:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdqefEIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F907C32786;
+	Thu, 13 Jun 2024 11:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279396;
-	bh=GBBjBpMWgI5FJg5/eP56rPrHrjCOxFISW+bcMzZyWFY=;
+	s=korg; t=1718279399;
+	bh=uX8T5PtCkgOGRvqMNg6BXFxOf8JdI4vIUEndm1Ll890=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vutj71prfuJMGbh7y0Fhw0uQTi0fpgoM6SiP/9E+l7tRPpwk1TgqRFbNbJGuK2ZIs
-	 r2fZahiUz7hjwmnUF+vyC53PoAU/Qmpc9eC1AL+17nMUbfDZNAB5frTX1ftBdyWVPO
-	 IzHLqo2VagHYtWvmiiuCleM5LgAB0LmMaEEe8uJ8=
+	b=hdqefEIAWGVQU1/hyk1wTk1wrXyTPUe9Ig/8CUBRuh+Y7Zr/gad2FyYTQonmEOcTb
+	 YmyjSN8KGSPIsnBgvHb8H4/cmsyYu/qN9dhQZLv/RFWBm4J/igbSJk4GNWUpAXywBP
+	 HfzMswvSJ06BEWlJpgn4ksYlnveBGDJukXVvTzRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.9 031/157] arm64: dts: qcom: sc8280xp: add missing PCIe minimum OPP
-Date: Thu, 13 Jun 2024 13:32:36 +0200
-Message-ID: <20240613113228.621392035@linuxfoundation.org>
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.9 022/157] arm64: tegra: Correct Tegra132 I2C alias
+Date: Thu, 13 Jun 2024 13:32:27 +0200
+Message-ID: <20240613113228.268342956@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -52,67 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-commit 2b621971554a94094cf489314dc1c2b65401965c upstream.
+commit 2633c58e1354d7de2c8e7be8bdb6f68a0a01bad7 upstream.
 
-Add the missing PCIe CX performance level votes to avoid relying on
-other drivers (e.g. USB or UFS) to maintain the nominal performance
-level required for Gen3 speeds.
+There is no such device as "as3722@40", because its name is "pmic".  Use
+phandles for aliases to fix relying on full node path.  This corrects
+aliases for RTC devices and also fixes dtc W=1 warning:
 
-Fixes: 813e83157001 ("arm64: dts: qcom: sc8280xp/sa8540p: add PCIe2-4 nodes")
-Cc: stable@vger.kernel.org      # 6.2
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240306095651.4551-5-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  tegra132-norrin.dts:12.3-36: Warning (alias_paths): /aliases:rtc0: aliases property is not a valid node (/i2c@7000d000/as3722@40)
+
+Fixes: 0f279ebdf3ce ("arm64: tegra: Add NVIDIA Tegra132 Norrin support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/nvidia/tegra132-norrin.dts |    4 ++--
+ arch/arm64/boot/dts/nvidia/tegra132.dtsi       |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -1799,6 +1799,7 @@
- 			assigned-clock-rates = <100000000>;
+--- a/arch/arm64/boot/dts/nvidia/tegra132-norrin.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra132-norrin.dts
+@@ -9,8 +9,8 @@
+ 	compatible = "nvidia,norrin", "nvidia,tegra132", "nvidia,tegra124";
  
- 			power-domains = <&gcc PCIE_4_GDSC>;
-+			required-opps = <&rpmhpd_opp_nom>;
+ 	aliases {
+-		rtc0 = "/i2c@7000d000/as3722@40";
+-		rtc1 = "/rtc@7000e000";
++		rtc0 = &as3722;
++		rtc1 = &tegra_rtc;
+ 		serial0 = &uarta;
+ 	};
  
- 			resets = <&gcc GCC_PCIE_4_PHY_BCR>;
- 			reset-names = "phy";
-@@ -1898,6 +1899,7 @@
- 			assigned-clock-rates = <100000000>;
+--- a/arch/arm64/boot/dts/nvidia/tegra132.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra132.dtsi
+@@ -572,7 +572,7 @@
+ 		status = "disabled";
+ 	};
  
- 			power-domains = <&gcc PCIE_3B_GDSC>;
-+			required-opps = <&rpmhpd_opp_nom>;
- 
- 			resets = <&gcc GCC_PCIE_3B_PHY_BCR>;
- 			reset-names = "phy";
-@@ -1998,6 +2000,7 @@
- 			assigned-clock-rates = <100000000>;
- 
- 			power-domains = <&gcc PCIE_3A_GDSC>;
-+			required-opps = <&rpmhpd_opp_nom>;
- 
- 			resets = <&gcc GCC_PCIE_3A_PHY_BCR>;
- 			reset-names = "phy";
-@@ -2099,6 +2102,7 @@
- 			assigned-clock-rates = <100000000>;
- 
- 			power-domains = <&gcc PCIE_2B_GDSC>;
-+			required-opps = <&rpmhpd_opp_nom>;
- 
- 			resets = <&gcc GCC_PCIE_2B_PHY_BCR>;
- 			reset-names = "phy";
-@@ -2199,6 +2203,7 @@
- 			assigned-clock-rates = <100000000>;
- 
- 			power-domains = <&gcc PCIE_2A_GDSC>;
-+			required-opps = <&rpmhpd_opp_nom>;
- 
- 			resets = <&gcc GCC_PCIE_2A_PHY_BCR>;
- 			reset-names = "phy";
+-	rtc@7000e000 {
++	tegra_rtc: rtc@7000e000 {
+ 		compatible = "nvidia,tegra124-rtc", "nvidia,tegra20-rtc";
+ 		reg = <0x0 0x7000e000 0x0 0x100>;
+ 		interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
 
 
