@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0826D7F47B;
-	Thu, 13 Jun 2024 12:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED22F7F47B;
+	Thu, 13 Jun 2024 12:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281463; cv=none; b=aTmpVfJy+LOxlq/THbAEHR5pLGK9V8zreuBiN5DzFr7kY9JwpxPl6KnNq5TIHYpIrqt8ZWQsLwAtKLIaNQaWAhkW6mEyjr8sEbXlZucSWBRfu8NAmkwirF+hLvvBepSsyQWFwByUcD/C4GLbR/Wkl+hzQYT9p+SkoVpclP2dg4g=
+	t=1718281466; cv=none; b=rw8bwPrsJCkxqGbCyHXAYxK7N5ukiPbQgXF81zbqqKkW/ghScqq5lDB5W1OzFicRffVBugPqaxyyP/hEVFVGAoNTua4GYLjtWQ8Jlmvy8nVo/C+ahZq1aisGTlz9pKSK3yzkBWlwhEOuvDmn2C6xYVnZb0G/6ibrSc7i1eqpThE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281463; c=relaxed/simple;
-	bh=xWw8Ep1doQY4qcWTwYTTy1J0uLR2mZ2uuM4fSwFCGXg=;
+	s=arc-20240116; t=1718281466; c=relaxed/simple;
+	bh=KSWV19/cZO9X584RhCgZfHPzeihIF2suZK17mIV5LM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XsA4EjwUzwRvzuAbUO/+bu5QYUGEDpIdfXJqmaf1bS4b4BbxcseuIw4trAwisTUKkD1awxCTOquIc3HqTLb5AmhhJy2MKlCwshxu41bhRMNsiKhJsrI12FJFc7MT4IGjqCDFUy/6m3QfYm0KeuAkahnFCVUKWckJe/wR8BJXH2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLy4DsVM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PliUP5uPYCiRqifDSgwuEYW71PBqiqM9Wnr50v/u/yPsGYAzKSmkJKTWxeHzYoAXgo6F4cavyOv2jZ1k3oaem71ZyaasrrVyQiYkwRaY1rwMO1vu1ec/lEsNaWCDcI2H8uekUwTVMmL94OeTc5ecxG5hM/RZv4ujmP2UkMsrTRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6I6O9VW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLy4DsVM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD29C2BBFC;
-	Thu, 13 Jun 2024 12:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6I6O9VW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B0CC2BBFC;
+	Thu, 13 Jun 2024 12:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281462;
-	bh=xWw8Ep1doQY4qcWTwYTTy1J0uLR2mZ2uuM4fSwFCGXg=;
+	s=korg; t=1718281465;
+	bh=KSWV19/cZO9X584RhCgZfHPzeihIF2suZK17mIV5LM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JLy4DsVMFo5p67/KBzvzEr4CeIEjMzV7hmTALGl8SVJ4cSgDelIoM7yfomhhuRB+0
-	 pRlTRIQr2Z8tQPr/qkNZvfiVm7HtW1P4YC3kne/COiSxNo93ICtyJAyvxN5WoX7OXQ
-	 fyRxA6Xcg3moIp/tzD8qkHVDZzn6fuyhzaF21tS0=
+	b=H6I6O9VWSYyOTtbEwSqMWvtg9zsddfVE0QI9ILj2/qaIVfsmbboiXbM9vM6WUrfH+
+	 B6tjxNsWZdCC4m7gjEmlvKsmlwUic9XJM/CsQ20tKvXnICP8KqPCvabufgv0E6WAZV
+	 fuywSXPCLMBEF2MMYl00hQL56am5kuYph56mxMno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>,
+	Hannes Reinecke <hare@suse.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 232/317] ipv6: sr: fix memleak in seg6_hmac_init_algo
-Date: Thu, 13 Jun 2024 13:34:10 +0200
-Message-ID: <20240613113256.525120988@linuxfoundation.org>
+Subject: [PATCH 5.10 233/317] params: lift param_set_uint_minmax to common code
+Date: Thu, 13 Jun 2024 13:34:11 +0200
+Message-ID: <20240613113256.563556896@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -53,123 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit efb9f4f19f8e37fde43dfecebc80292d179f56c6 ]
+[ Upstream commit 2a14c9ae15a38148484a128b84bff7e9ffd90d68 ]
 
-seg6_hmac_init_algo returns without cleaning up the previous allocations
-if one fails, so it's going to leak all that memory and the crypto tfms.
+It is a useful helper hence move it to common code so others can enjoy
+it.
 
-Update seg6_hmac_exit to only free the memory when allocated, so we can
-reuse the code directly.
-
-Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
-Reported-by: Sabrina Dubroca <sd@queasysnail.net>
-Closes: https://lore.kernel.org/netdev/Zj3bh-gE7eT6V6aH@hog/
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/20240517005435.2600277-1-liuhangbin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>
+Reviewed-by: Hannes Reinecke <hare@suse.com>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: 3ebc46ca8675 ("tcp: Fix shift-out-of-bounds in dctcp_update_alpha().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_hmac.c | 42 ++++++++++++++++++++++++++++--------------
- 1 file changed, 28 insertions(+), 14 deletions(-)
+ include/linux/moduleparam.h |  2 ++
+ kernel/params.c             | 18 ++++++++++++++++++
+ net/sunrpc/xprtsock.c       | 18 ------------------
+ 3 files changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
-index 552bce1fdfb94..2e2b94ae63552 100644
---- a/net/ipv6/seg6_hmac.c
-+++ b/net/ipv6/seg6_hmac.c
-@@ -355,6 +355,7 @@ static int seg6_hmac_init_algo(void)
- 	struct crypto_shash *tfm;
- 	struct shash_desc *shash;
- 	int i, alg_count, cpu;
-+	int ret = -ENOMEM;
+diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
+index 6388eb9734a51..f25a1c4843903 100644
+--- a/include/linux/moduleparam.h
++++ b/include/linux/moduleparam.h
+@@ -431,6 +431,8 @@ extern int param_get_int(char *buffer, const struct kernel_param *kp);
+ extern const struct kernel_param_ops param_ops_uint;
+ extern int param_set_uint(const char *val, const struct kernel_param *kp);
+ extern int param_get_uint(char *buffer, const struct kernel_param *kp);
++int param_set_uint_minmax(const char *val, const struct kernel_param *kp,
++		unsigned int min, unsigned int max);
+ #define param_check_uint(name, p) __param_check(name, p, unsigned int)
  
- 	alg_count = ARRAY_SIZE(hmac_algos);
+ extern const struct kernel_param_ops param_ops_long;
+diff --git a/kernel/params.c b/kernel/params.c
+index 164d79330849a..eb00abef7076a 100644
+--- a/kernel/params.c
++++ b/kernel/params.c
+@@ -243,6 +243,24 @@ STANDARD_PARAM_DEF(ulong,	unsigned long,		"%lu",		kstrtoul);
+ STANDARD_PARAM_DEF(ullong,	unsigned long long,	"%llu",		kstrtoull);
+ STANDARD_PARAM_DEF(hexint,	unsigned int,		"%#08x", 	kstrtouint);
  
-@@ -365,12 +366,14 @@ static int seg6_hmac_init_algo(void)
- 		algo = &hmac_algos[i];
- 		algo->tfms = alloc_percpu(struct crypto_shash *);
- 		if (!algo->tfms)
--			return -ENOMEM;
-+			goto error_out;
- 
- 		for_each_possible_cpu(cpu) {
- 			tfm = crypto_alloc_shash(algo->name, 0, 0);
--			if (IS_ERR(tfm))
--				return PTR_ERR(tfm);
-+			if (IS_ERR(tfm)) {
-+				ret = PTR_ERR(tfm);
-+				goto error_out;
-+			}
- 			p_tfm = per_cpu_ptr(algo->tfms, cpu);
- 			*p_tfm = tfm;
- 		}
-@@ -382,18 +385,22 @@ static int seg6_hmac_init_algo(void)
- 
- 		algo->shashs = alloc_percpu(struct shash_desc *);
- 		if (!algo->shashs)
--			return -ENOMEM;
-+			goto error_out;
- 
- 		for_each_possible_cpu(cpu) {
- 			shash = kzalloc_node(shsize, GFP_KERNEL,
- 					     cpu_to_node(cpu));
- 			if (!shash)
--				return -ENOMEM;
-+				goto error_out;
- 			*per_cpu_ptr(algo->shashs, cpu) = shash;
- 		}
- 	}
- 
- 	return 0;
++int param_set_uint_minmax(const char *val, const struct kernel_param *kp,
++		unsigned int min, unsigned int max)
++{
++	unsigned int num;
++	int ret;
 +
-+error_out:
-+	seg6_hmac_exit();
-+	return ret;
- }
- 
- int __init seg6_hmac_init(void)
-@@ -413,22 +420,29 @@ int __net_init seg6_hmac_net_init(struct net *net)
- void seg6_hmac_exit(void)
++	if (!val)
++		return -EINVAL;
++	ret = kstrtouint(val, 0, &num);
++	if (ret)
++		return ret;
++	if (num < min || num > max)
++		return -EINVAL;
++	*((unsigned int *)kp->arg) = num;
++	return 0;
++}
++EXPORT_SYMBOL_GPL(param_set_uint_minmax);
++
+ int param_set_charp(const char *val, const struct kernel_param *kp)
  {
- 	struct seg6_hmac_algo *algo = NULL;
-+	struct crypto_shash *tfm;
-+	struct shash_desc *shash;
- 	int i, alg_count, cpu;
- 
- 	alg_count = ARRAY_SIZE(hmac_algos);
- 	for (i = 0; i < alg_count; i++) {
- 		algo = &hmac_algos[i];
--		for_each_possible_cpu(cpu) {
--			struct crypto_shash *tfm;
--			struct shash_desc *shash;
- 
--			shash = *per_cpu_ptr(algo->shashs, cpu);
--			kfree(shash);
--			tfm = *per_cpu_ptr(algo->tfms, cpu);
--			crypto_free_shash(tfm);
-+		if (algo->shashs) {
-+			for_each_possible_cpu(cpu) {
-+				shash = *per_cpu_ptr(algo->shashs, cpu);
-+				kfree(shash);
-+			}
-+			free_percpu(algo->shashs);
-+		}
-+
-+		if (algo->tfms) {
-+			for_each_possible_cpu(cpu) {
-+				tfm = *per_cpu_ptr(algo->tfms, cpu);
-+				crypto_free_shash(tfm);
-+			}
-+			free_percpu(algo->tfms);
- 		}
--		free_percpu(algo->tfms);
--		free_percpu(algo->shashs);
- 	}
+ 	if (strlen(val) > 1024) {
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index ae5b5380f0f03..0666f981618a2 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -3166,24 +3166,6 @@ void cleanup_socket_xprt(void)
+ 	xprt_unregister_transport(&xs_bc_tcp_transport);
  }
- EXPORT_SYMBOL(seg6_hmac_exit);
+ 
+-static int param_set_uint_minmax(const char *val,
+-		const struct kernel_param *kp,
+-		unsigned int min, unsigned int max)
+-{
+-	unsigned int num;
+-	int ret;
+-
+-	if (!val)
+-		return -EINVAL;
+-	ret = kstrtouint(val, 0, &num);
+-	if (ret)
+-		return ret;
+-	if (num < min || num > max)
+-		return -EINVAL;
+-	*((unsigned int *)kp->arg) = num;
+-	return 0;
+-}
+-
+ static int param_set_portnr(const char *val, const struct kernel_param *kp)
+ {
+ 	return param_set_uint_minmax(val, kp,
 -- 
 2.43.0
 
