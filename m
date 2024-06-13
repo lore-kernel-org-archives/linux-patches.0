@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3F2142903;
-	Thu, 13 Jun 2024 12:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D735143895;
+	Thu, 13 Jun 2024 12:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281486; cv=none; b=kk8Afjs0AyblJ8ZgxDj0jIRIppXqBZA4rOHHcUQaHQH0XA4E6l5/fQuBnI6Ben763ZNC551dNeOi8N17M0FYS6ipBujxwjOfvp4OjM60+oTzDlig23vxFCY+irbk+BrVlfwICoWc/y8ndfqxmFvhYWzxJVLB9pm0Dyrpny7I+/0=
+	t=1718281489; cv=none; b=iRmAGJb+nel28Cpd6aeYOpItRhmZ5HjRUlW1wtYHtsQQbzJ3cvt/L+RqDFJvOTZ5ZjJCklP0+DMOxqNA0HdKr4pai8PhY2Vma9lW5Dk3xLZj8qnsf8PtuQTGwiIW6XGk/NK9B19cj/jGReyOYx1YvUa3e58FxD5BFKyuWRcKbd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281486; c=relaxed/simple;
-	bh=QsOWPoFs8N695zx7qZ2nXFdM2sdlFRw6UxinaI8DovI=;
+	s=arc-20240116; t=1718281489; c=relaxed/simple;
+	bh=mC2TjjLJVr35yKowa0NbHADNr3ThTXNFwFmYvJqdtWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2IWc0AuRtbRGAEoPl3N6omHY9eOBLLxzP/KkRzlnJMAhwK9eN9YBSQR4Hx5jLmWbWcyktdo9EozMtkNbwH9pMznKB0U49V+1A3wzA/mHboxR1mlYiHot55Orxa9M1OSOXUtzf1kr9r0G1fGxBqo7hle/TJw7+RHT+AjhnegEpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbMVrvF7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RpAf+065ZOu2y1gBRrxALW9AGUe+cF9WE3sKsACwgrEzwCPxwA7f4JAE+P+TPBWjgKmhMqXqIPbRporX7LO7FMyxbK6uyVxwg2gJvO6ouAGFBNJgH9YoguGH1GACLg8p4TZQNNT1TVnNjEgzdkk9sVfS0FWS8Nf1azmwuAVy6sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pFCxLuG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbMVrvF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15196C2BBFC;
-	Thu, 13 Jun 2024 12:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pFCxLuG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10360C2BBFC;
+	Thu, 13 Jun 2024 12:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281486;
-	bh=QsOWPoFs8N695zx7qZ2nXFdM2sdlFRw6UxinaI8DovI=;
+	s=korg; t=1718281489;
+	bh=mC2TjjLJVr35yKowa0NbHADNr3ThTXNFwFmYvJqdtWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HbMVrvF7vMOJBhjKhF3Fre1/ZpTYhC0GZl9kN2q/GO7dnRhm0f8LTiJ+9yvkE2KPM
-	 bd2a1wRIwLzQoKAasGxBiQQ5SM9TafByUJDHBL7LRF3lUjiamZBy6raC/aTM4ym13L
-	 NMMkIPbH1BrkfJEq2KJfS4z/zmpcsDa5h7Cj4sio=
+	b=0pFCxLuGmxLh+3zYPaFJOs+sT7xbQz25SOlmFOhxHwLlFP3SBLO4sUCFLnaHI2oK2
+	 YkaZL9mkgLjbAfRxYCra+6odMI/l5oXZZxF50tU6cBRixB9/q71yiSjILPEc6hePXa
+	 qp0xyPX1QOW1HUBTN64fZ7xXfwNUawPiPBKxNEFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	syzbot+83e7f982ca045ab4405c@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 272/317] x86/mm: Remove broken vsyscall emulation code from the page fault code
-Date: Thu, 13 Jun 2024 13:34:50 +0200
-Message-ID: <20240613113258.075011239@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Kuntal Nayak <kuntal.nayak@broadcom.com>
+Subject: [PATCH 5.10 273/317] netfilter: nf_tables: restrict tunnel object to NFPROTO_NETDEV
+Date: Thu, 13 Jun 2024 13:34:51 +0200
+Message-ID: <20240613113258.113068400@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -55,225 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 02b670c1f88e78f42a6c5aee155c7b26960ca054 upstream.
+commit 776d451648443f9884be4a1b4e38e8faf1c621f9 upstream.
 
-The syzbot-reported stack trace from hell in this discussion thread
-actually has three nested page faults:
+Bail out on using the tunnel dst template from other than netdev family.
+Add the infrastructure to check for the family in objects.
 
-  https://lore.kernel.org/r/000000000000d5f4fc0616e816d4@google.com
-
-... and I think that's actually the important thing here:
-
- - the first page fault is from user space, and triggers the vsyscall
-   emulation.
-
- - the second page fault is from __do_sys_gettimeofday(), and that should
-   just have caused the exception that then sets the return value to
-   -EFAULT
-
- - the third nested page fault is due to _raw_spin_unlock_irqrestore() ->
-   preempt_schedule() -> trace_sched_switch(), which then causes a BPF
-   trace program to run, which does that bpf_probe_read_compat(), which
-   causes that page fault under pagefault_disable().
-
-It's quite the nasty backtrace, and there's a lot going on.
-
-The problem is literally the vsyscall emulation, which sets
-
-        current->thread.sig_on_uaccess_err = 1;
-
-and that causes the fixup_exception() code to send the signal *despite* the
-exception being caught.
-
-And I think that is in fact completely bogus.  It's completely bogus
-exactly because it sends that signal even when it *shouldn't* be sent -
-like for the BPF user mode trace gathering.
-
-In other words, I think the whole "sig_on_uaccess_err" thing is entirely
-broken, because it makes any nested page-faults do all the wrong things.
-
-Now, arguably, I don't think anybody should enable vsyscall emulation any
-more, but this test case clearly does.
-
-I think we should just make the "send SIGSEGV" be something that the
-vsyscall emulation does on its own, not this broken per-thread state for
-something that isn't actually per thread.
-
-The x86 page fault code actually tried to deal with the "incorrect nesting"
-by having that:
-
-                if (in_interrupt())
-                        return;
-
-which ignores the sig_on_uaccess_err case when it happens in interrupts,
-but as shown by this example, these nested page faults do not need to be
-about interrupts at all.
-
-IOW, I think the only right thing is to remove that horrendously broken
-code.
-
-The attached patch looks like the ObviouslyCorrect(tm) thing to do.
-
-NOTE! This broken code goes back to this commit in 2011:
-
-  4fc3490114bb ("x86-64: Set siginfo and context on vsyscall emulation faults")
-
-... and back then the reason was to get all the siginfo details right.
-Honestly, I do not for a moment believe that it's worth getting the siginfo
-details right here, but part of the commit says:
-
-    This fixes issues with UML when vsyscall=emulate.
-
-... and so my patch to remove this garbage will probably break UML in this
-situation.
-
-I do not believe that anybody should be running with vsyscall=emulate in
-2024 in the first place, much less if you are doing things like UML. But
-let's see if somebody screams.
-
-Reported-and-tested-by: syzbot+83e7f982ca045ab4405c@syzkaller.appspotmail.com
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Andy Lutomirski <luto@kernel.org>
-Link: https://lore.kernel.org/r/CAHk-=wh9D6f7HUkDgZHKmDCHUQmp+Co89GP+b8+z+G56BKeyNg@mail.gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[gpiccoli: Backport the patch due to differences in the trees. The main change
- between 5.10.y and 5.15.y is due to renaming the fixup function, by
- commit 6456a2a69ee1 ("x86/fault: Rename no_context() to kernelmode_fixup_or_oops()").
- Following 2 commits cause divergence in the diffs too (in the removed lines):
- cd072dab453a ("x86/fault: Add a helper function to sanitize error code")
- d4ffd5df9d18 ("x86/fault: Fix wrong signal when vsyscall fails with pkey")
- Finally, there is context adjustment in the processor.h file.]
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Fixes: af308b94a2a4 ("netfilter: nf_tables: add tunnel support")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[KN: Backport patch according to v5.10.x source]
+Signed-off-by: Kuntal Nayak <kuntal.nayak@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/entry/vsyscall/vsyscall_64.c |   28 ++--------------------------
- arch/x86/include/asm/processor.h      |    1 -
- arch/x86/mm/fault.c                   |   27 +--------------------------
- 3 files changed, 3 insertions(+), 53 deletions(-)
+ include/net/netfilter/nf_tables.h |    2 ++
+ net/netfilter/nf_tables_api.c     |   14 +++++++++-----
+ net/netfilter/nft_tunnel.c        |    1 +
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
---- a/arch/x86/entry/vsyscall/vsyscall_64.c
-+++ b/arch/x86/entry/vsyscall/vsyscall_64.c
-@@ -98,11 +98,6 @@ static int addr_to_vsyscall_nr(unsigned
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1174,6 +1174,7 @@ void nft_obj_notify(struct net *net, con
+  *	@type: stateful object numeric type
+  *	@owner: module owner
+  *	@maxattr: maximum netlink attribute
++ *	@family: address family for AF-specific object types
+  *	@policy: netlink attribute policy
+  */
+ struct nft_object_type {
+@@ -1183,6 +1184,7 @@ struct nft_object_type {
+ 	struct list_head		list;
+ 	u32				type;
+ 	unsigned int                    maxattr;
++	u8				family;
+ 	struct module			*owner;
+ 	const struct nla_policy		*policy;
+ };
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6234,11 +6234,15 @@ nla_put_failure:
+ 	return -1;
+ }
  
- static bool write_ok_or_segv(unsigned long ptr, size_t size)
+-static const struct nft_object_type *__nft_obj_type_get(u32 objtype)
++static const struct nft_object_type *__nft_obj_type_get(u32 objtype, u8 family)
  {
--	/*
--	 * XXX: if access_ok, get_user, and put_user handled
--	 * sig_on_uaccess_err, this could go away.
--	 */
--
- 	if (!access_ok((void __user *)ptr, size)) {
- 		struct thread_struct *thread = &current->thread;
+ 	const struct nft_object_type *type;
  
-@@ -120,10 +115,8 @@ static bool write_ok_or_segv(unsigned lo
- bool emulate_vsyscall(unsigned long error_code,
- 		      struct pt_regs *regs, unsigned long address)
+ 	list_for_each_entry(type, &nf_tables_objects, list) {
++		if (type->family != NFPROTO_UNSPEC &&
++		    type->family != family)
++			continue;
++
+ 		if (objtype == type->type)
+ 			return type;
+ 	}
+@@ -6246,11 +6250,11 @@ static const struct nft_object_type *__n
+ }
+ 
+ static const struct nft_object_type *
+-nft_obj_type_get(struct net *net, u32 objtype)
++nft_obj_type_get(struct net *net, u32 objtype, u8 family)
  {
--	struct task_struct *tsk;
- 	unsigned long caller;
- 	int vsyscall_nr, syscall_nr, tmp;
--	int prev_sig_on_uaccess_err;
- 	long ret;
- 	unsigned long orig_dx;
+ 	const struct nft_object_type *type;
  
-@@ -172,8 +165,6 @@ bool emulate_vsyscall(unsigned long erro
- 		goto sigsegv;
- 	}
+-	type = __nft_obj_type_get(objtype);
++	type = __nft_obj_type_get(objtype, family);
+ 	if (type != NULL && try_module_get(type->owner))
+ 		return type;
  
--	tsk = current;
--
- 	/*
- 	 * Check for access_ok violations and find the syscall nr.
- 	 *
-@@ -233,12 +224,8 @@ bool emulate_vsyscall(unsigned long erro
- 		goto do_ret;  /* skip requested */
+@@ -6343,7 +6347,7 @@ static int nf_tables_newobj(struct net *
+ 		if (nlh->nlmsg_flags & NLM_F_REPLACE)
+ 			return -EOPNOTSUPP;
  
- 	/*
--	 * With a real vsyscall, page faults cause SIGSEGV.  We want to
--	 * preserve that behavior to make writing exploits harder.
-+	 * With a real vsyscall, page faults cause SIGSEGV.
- 	 */
--	prev_sig_on_uaccess_err = current->thread.sig_on_uaccess_err;
--	current->thread.sig_on_uaccess_err = 1;
--
- 	ret = -EFAULT;
- 	switch (vsyscall_nr) {
- 	case 0:
-@@ -261,23 +248,12 @@ bool emulate_vsyscall(unsigned long erro
- 		break;
- 	}
+-		type = __nft_obj_type_get(objtype);
++		type = __nft_obj_type_get(objtype, family);
+ 		nft_ctx_init(&ctx, net, skb, nlh, family, table, NULL, nla);
  
--	current->thread.sig_on_uaccess_err = prev_sig_on_uaccess_err;
--
- check_fault:
- 	if (ret == -EFAULT) {
- 		/* Bad news -- userspace fed a bad pointer to a vsyscall. */
- 		warn_bad_vsyscall(KERN_INFO, regs,
- 				  "vsyscall fault (exploit attempt?)");
--
--		/*
--		 * If we failed to generate a signal for any reason,
--		 * generate one here.  (This should be impossible.)
--		 */
--		if (WARN_ON_ONCE(!sigismember(&tsk->pending.signal, SIGBUS) &&
--				 !sigismember(&tsk->pending.signal, SIGSEGV)))
--			goto sigsegv;
--
--		return true;  /* Don't emulate the ret. */
-+		goto sigsegv;
- 	}
+ 		return nf_tables_updobj(&ctx, type, nla[NFTA_OBJ_DATA], obj);
+@@ -6354,7 +6358,7 @@ static int nf_tables_newobj(struct net *
+ 	if (!nft_use_inc(&table->use))
+ 		return -EMFILE;
  
- 	regs->ax = ret;
---- a/arch/x86/include/asm/processor.h
-+++ b/arch/x86/include/asm/processor.h
-@@ -528,7 +528,6 @@ struct thread_struct {
- 	unsigned long		iopl_emul;
+-	type = nft_obj_type_get(net, objtype);
++	type = nft_obj_type_get(net, objtype, family);
+ 	if (IS_ERR(type)) {
+ 		err = PTR_ERR(type);
+ 		goto err_type;
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -684,6 +684,7 @@ static const struct nft_object_ops nft_t
  
- 	unsigned int		iopl_warn:1;
--	unsigned int		sig_on_uaccess_err:1;
- 
- 	/* Floating point and extended processor state */
- 	struct fpu		fpu;
---- a/arch/x86/mm/fault.c
-+++ b/arch/x86/mm/fault.c
-@@ -649,33 +649,8 @@ no_context(struct pt_regs *regs, unsigne
- 	}
- 
- 	/* Are we prepared to handle this kernel fault? */
--	if (fixup_exception(regs, X86_TRAP_PF, error_code, address)) {
--		/*
--		 * Any interrupt that takes a fault gets the fixup. This makes
--		 * the below recursive fault logic only apply to a faults from
--		 * task context.
--		 */
--		if (in_interrupt())
--			return;
--
--		/*
--		 * Per the above we're !in_interrupt(), aka. task context.
--		 *
--		 * In this case we need to make sure we're not recursively
--		 * faulting through the emulate_vsyscall() logic.
--		 */
--		if (current->thread.sig_on_uaccess_err && signal) {
--			set_signal_archinfo(address, error_code);
--
--			/* XXX: hwpoison faults will set the wrong code. */
--			force_sig_fault(signal, si_code, (void __user *)address);
--		}
--
--		/*
--		 * Barring that, we can do the fixup and be happy.
--		 */
-+	if (fixup_exception(regs, X86_TRAP_PF, error_code, address))
- 		return;
--	}
- 
- #ifdef CONFIG_VMAP_STACK
- 	/*
+ static struct nft_object_type nft_tunnel_obj_type __read_mostly = {
+ 	.type		= NFT_OBJECT_TUNNEL,
++	.family		= NFPROTO_NETDEV,
+ 	.ops		= &nft_tunnel_obj_ops,
+ 	.maxattr	= NFTA_TUNNEL_KEY_MAX,
+ 	.policy		= nft_tunnel_key_policy,
 
 
