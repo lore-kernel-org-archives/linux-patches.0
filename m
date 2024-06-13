@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259316EB56;
-	Thu, 13 Jun 2024 12:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105E96EB56;
+	Thu, 13 Jun 2024 12:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281704; cv=none; b=qULJ2AooJ9WtbWaHTh9kNjfDAd4GTaTHMNFPjZkD5oXSRpPh+2bKedtkdU17jyUQFj35zjVauzeRjaKjPBcGajDHD9R73FnvwkIQwQooDt9Pw/FXHV3Bg9Ahp4ADz6Gyupxw5KbKCJ4zNCoHSs8ASLbJdaFwvo0FC/D6bL2LP80=
+	t=1718281707; cv=none; b=fqlv6eyGduey9s9rX9YZTjt6Rh+HIjP9kD+pRx5VYEr4jqeSImJkL0uwZaFfuou7bzfDhmqT1EQBLTSX5rv5mEghtlXx12cA/g61tFG51JIUbkrVROnfwwZHXYA8hnooAnLPHI2KOLB6P9usdfp+aSt02w+Dtf3pRfOrkH4nAbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281704; c=relaxed/simple;
-	bh=0uqPRv+xerFzg6Xg0LLg0HuWEISrjbGI4H7fUZEOkR4=;
+	s=arc-20240116; t=1718281707; c=relaxed/simple;
+	bh=sDjwpFj8LCHiZKbM3bUsEZNVKF6af73XaCgIUGGrqTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F7LWUsrJ6qyw5x3h7Ra9CcwfdfCj+uuefF1kjo8x6a0hXYNd0s9h5aR6xvSn0hyzctjiLOF+Ok3sT/1JH70gzN1sPXx4/sgsiIG5Xk3GN6tQ+3cANfS38SgC1WL5A0lMbLnQjNTwvqH6zIttoqEayg22H8EaB5KTKC155jjNI4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePdxHyQs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ihW6HOYRhZCgFyLCCcNyqntVSjPr4hWFH+zbzASeskz2TYQszdAmimxy1yGmOaCdAxW/z13ziQG7/qVUtraCr5MZkB3SR1uAdPx8wFHX+9FSAdTF70jOoNg4CBzTubna6Catnf12GWM7+Jl9V4sfcIvb0BS7X031wQLHn2Hclm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7hPk0r8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePdxHyQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0332C2BBFC;
-	Thu, 13 Jun 2024 12:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7hPk0r8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB81C32786;
+	Thu, 13 Jun 2024 12:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281704;
-	bh=0uqPRv+xerFzg6Xg0LLg0HuWEISrjbGI4H7fUZEOkR4=;
+	s=korg; t=1718281706;
+	bh=sDjwpFj8LCHiZKbM3bUsEZNVKF6af73XaCgIUGGrqTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ePdxHyQsL00CLVLCpgI2axthnTieEreSYjVDqItLXZadxA3zIQCP7Es86v2rNWqnt
-	 uhV23T1864/3EeS92LQCaMIp54O4ZQ5S1Egzca3YSawQ6+wEiGMZI/2KF8VDampHQF
-	 R84t9im+JKGTwA8vDNLXgriDigVhyldmRa+Jtc+U=
+	b=M7hPk0r8gQA3xaa7703ybPm+F/0la/4ohTMauRNz7Wkgo9s9g+Y2mZ09Cs9iS7LW/
+	 Fi6WuznZ2NhMPVc9VBjU48irCulbAoug64ALFUJn+cyCoBQszIBMzLwE+fCCTXd3LJ
+	 xo+CaN6+zpWhVlejQcBeQ9LwaUo5IouXEvZjRbls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jack Yu <jack.yu@realtek.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/402] ASoC: rt715: add vendor clear control register
-Date: Thu, 13 Jun 2024 13:29:45 +0200
-Message-ID: <20240613113303.236435410@linuxfoundation.org>
+Subject: [PATCH 5.15 029/402] ASoC: rt715-sdca: volume step modification
+Date: Thu, 13 Jun 2024 13:29:46 +0200
+Message-ID: <20240613113303.274168585@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,34 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Jack Yu <jack.yu@realtek.com>
 
-[ Upstream commit cebfbc89ae2552dbb58cd9b8206a5c8e0e6301e9 ]
+[ Upstream commit bda16500dd0b05e2e047093b36cbe0873c95aeae ]
 
-Add vendor clear control register in readable register's
-callback function. This prevents an access failure reported
-in Intel CI tests.
+Volume step (dB/step) modification to fix format error
+which shown in amixer control.
 
 Signed-off-by: Jack Yu <jack.yu@realtek.com>
-Closes: https://github.com/thesofproject/linux/issues/4860
-Tested-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/6a103ce9134d49d8b3941172c87a7bd4@realtek.com
+Link: https://lore.kernel.org/r/b1f546ad16dc4c7abb7daa7396e8345c@realtek.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt715-sdw.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/rt715-sdca.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/rt715-sdw.c b/sound/soc/codecs/rt715-sdw.c
-index b047bf87a100c..e269026942e17 100644
---- a/sound/soc/codecs/rt715-sdw.c
-+++ b/sound/soc/codecs/rt715-sdw.c
-@@ -111,6 +111,7 @@ static bool rt715_readable_register(struct device *dev, unsigned int reg)
- 	case 0x839d:
- 	case 0x83a7:
- 	case 0x83a9:
-+	case 0x752001:
- 	case 0x752039:
- 		return true;
- 	default:
+diff --git a/sound/soc/codecs/rt715-sdca.c b/sound/soc/codecs/rt715-sdca.c
+index bfa536bd71960..7c8d6a012f610 100644
+--- a/sound/soc/codecs/rt715-sdca.c
++++ b/sound/soc/codecs/rt715-sdca.c
+@@ -315,7 +315,7 @@ static int rt715_sdca_set_amp_gain_8ch_get(struct snd_kcontrol *kcontrol,
+ 	return 0;
+ }
+ 
+-static const DECLARE_TLV_DB_SCALE(in_vol_tlv, -17625, 375, 0);
++static const DECLARE_TLV_DB_SCALE(in_vol_tlv, -1725, 75, 0);
+ static const DECLARE_TLV_DB_SCALE(mic_vol_tlv, 0, 1000, 0);
+ 
+ static int rt715_sdca_get_volsw(struct snd_kcontrol *kcontrol,
+@@ -476,7 +476,7 @@ static const struct snd_kcontrol_new rt715_sdca_snd_controls[] = {
+ 			RT715_SDCA_FU_VOL_CTRL, CH_01),
+ 		SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_ADC7_27_VOL,
+ 			RT715_SDCA_FU_VOL_CTRL, CH_02),
+-			0x2f, 0x7f, 0,
++			0x2f, 0x3f, 0,
+ 		rt715_sdca_set_amp_gain_get, rt715_sdca_set_amp_gain_put,
+ 		in_vol_tlv),
+ 	RT715_SDCA_EXT_TLV("FU02 Capture Volume",
+@@ -484,13 +484,13 @@ static const struct snd_kcontrol_new rt715_sdca_snd_controls[] = {
+ 			RT715_SDCA_FU_VOL_CTRL, CH_01),
+ 		rt715_sdca_set_amp_gain_4ch_get,
+ 		rt715_sdca_set_amp_gain_4ch_put,
+-		in_vol_tlv, 4, 0x7f),
++		in_vol_tlv, 4, 0x3f),
+ 	RT715_SDCA_EXT_TLV("FU06 Capture Volume",
+ 		SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_ADC10_11_VOL,
+ 			RT715_SDCA_FU_VOL_CTRL, CH_01),
+ 		rt715_sdca_set_amp_gain_4ch_get,
+ 		rt715_sdca_set_amp_gain_4ch_put,
+-		in_vol_tlv, 4, 0x7f),
++		in_vol_tlv, 4, 0x3f),
+ 	/* MIC Boost Control */
+ 	RT715_SDCA_BOOST_EXT_TLV("FU0E Boost",
+ 		SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_DMIC_GAIN_EN,
 -- 
 2.43.0
 
