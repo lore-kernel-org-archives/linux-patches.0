@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B1D143861;
-	Thu, 13 Jun 2024 12:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A1F143861;
+	Thu, 13 Jun 2024 12:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281542; cv=none; b=hVSfLgQbMh7G+3AluID9mWBDDNjdE88RSIMSuysEnCYX5lwEn3PGY70JXLmOdK9QdDk7a5mDGBUaNZOQqisJE+Gchm498ee6FYO+npn9Kd7t347GuzGXizP5jJhOqeyudiubQoo/FwyspkwTHcI4Dj/j+KfRG6C4lssfHOCYXYg=
+	t=1718281545; cv=none; b=Z+texx1eLw7efhTg3ltSVV55knT5YfzSDyeyWbd+ZHKvZ5Oz/0kCoLRECAoJPgx4xNn0csIQdFvJNYh532clfjd2a0k8dwgyoKvryNY6bXJt+d1vxnDI4Y/QG4TdcmkPwPDn5dAGsy3nj1tHOY4Wx1is6U6sqOX75HU+Ovm7cYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281542; c=relaxed/simple;
-	bh=AvFSAjZSR7dd4D6hUenbO74YAS7y/Ri43ZjW9hdRiCc=;
+	s=arc-20240116; t=1718281545; c=relaxed/simple;
+	bh=x876JyfMDwrcxP87hIjUVbHZItOEGXn7JsX2PIcZVuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXPq5mZNUceaXRLXfZBeaRg3Q76U/diUSQxi5XNUK2a32/pPO/919Mxod/ikPnwYCtvPmhOk6zU5kIvEliYL65+wo9eYzpxUpplOCpmnM/B6hMbUK9FUmFk8yj2U76lfmML+L8FaQgLAlUA/M0gb6afg2yqumu62hxtN/Y2vvk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntzqEnjZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p2Oa/ds/FsCP8+laGajGQh+8a+SaMy0SXDp8HJmOkBdSXbYzSKxP7V6qeEAwBrKMGnRVeFnRoBSdmlB3MP+Xos0J1YCWbE9TzDZv0i1ooUUwFWZoXJ7SoVbEIpAcyjQxeR6a4goFfvUjiwOuIz7MKnimcKXJp3u9mVFsgQxk1zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XF36S+7O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntzqEnjZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F289BC2BBFC;
-	Thu, 13 Jun 2024 12:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XF36S+7O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FEEC2BBFC;
+	Thu, 13 Jun 2024 12:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281542;
-	bh=AvFSAjZSR7dd4D6hUenbO74YAS7y/Ri43ZjW9hdRiCc=;
+	s=korg; t=1718281545;
+	bh=x876JyfMDwrcxP87hIjUVbHZItOEGXn7JsX2PIcZVuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ntzqEnjZt7qVtuIFK/P5Lph79Q3wohAusKp0VUTNDGFG8lXz74kkhCxe5jhU1XfQk
-	 dE4a2zkaxWYfTkzgTN4Df29GJsVMUhv+4X4hwnmumc/XBP4Y8Q5o0Vdk7L4RrXiAnT
-	 QIIttjURSorQWbVW4hx5eKhPlA43QHNT1Ta3ZPsY=
+	b=XF36S+7OrMOmm2s6ccKYHRvUnrVcDhyRZzP3m6dx90vIU2MkmrGM77vKff2h5anyu
+	 9bofWoP5ZxN2WXTT8+Horm19d/Sh8UGIf/KVTgtXhmhNLUvXLMdGBb/FwmnXX4jOBv
+	 +mSfFxXBbF01B86clQvYBGEfba7okotOdIz5cGeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 290/317] mmc: core: Add mmc_gpiod_set_cd_config() function
-Date: Thu, 13 Jun 2024 13:35:08 +0200
-Message-ID: <20240613113258.771121725@linuxfoundation.org>
+	Zheng Zhang <zheng.zhang@email.ucr.edu>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 5.10 264/317] media: cec: core: add adap_nb_transmit_canceled() callback
+Date: Thu, 13 Jun 2024 13:34:42 +0200
+Message-ID: <20240613113257.758975088@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,71 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit 63a7cd660246aa36af263b85c33ecc6601bf04be upstream.
+commit da53c36ddd3f118a525a04faa8c47ca471e6c467 upstream.
 
-Some mmc host drivers may need to fixup a card-detection GPIO's config
-to e.g. enable the GPIO controllers builtin pull-up resistor on devices
-where the firmware description of the GPIO is broken (e.g. GpioInt with
-PullNone instead of PullUp in ACPI DSDT).
+A potential deadlock was found by Zheng Zhang with a local syzkaller
+instance.
 
-Since this is the exception rather then the rule adding a config
-parameter to mmc_gpiod_request_cd() seems undesirable, so instead
-add a new mmc_gpiod_set_cd_config() function. This is simply a wrapper
-to call gpiod_set_config() on the card-detect GPIO acquired through
-mmc_gpiod_request_cd().
+The problem is that when a non-blocking CEC transmit is canceled by calling
+cec_data_cancel, that in turn can call the high-level received() driver
+callback, which can call cec_transmit_msg() to transmit a new message.
 
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240410191639.526324-2-hdegoede@redhat.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+The cec_data_cancel() function is called with the adap->lock mutex held,
+and cec_transmit_msg() tries to take that same lock.
+
+The root cause is that the received() callback can either be used to pass
+on a received message (and then adap->lock is not held), or to report a
+canceled transmit (and then adap->lock is held).
+
+This is confusing, so create a new low-level adap_nb_transmit_canceled
+callback that reports back that a non-blocking transmit was canceled.
+
+And the received() callback is only called when a message is received,
+as was the case before commit f9d0ecbf56f4 ("media: cec: correctly pass
+on reply results") complicated matters.
+
+Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: f9d0ecbf56f4 ("media: cec: correctly pass on reply results")
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/slot-gpio.c  |   20 ++++++++++++++++++++
- include/linux/mmc/slot-gpio.h |    1 +
- 2 files changed, 21 insertions(+)
+ drivers/media/cec/core/cec-adap.c |    4 ++--
+ include/media/cec.h               |    6 ++++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/mmc/core/slot-gpio.c
-+++ b/drivers/mmc/core/slot-gpio.c
-@@ -202,6 +202,26 @@ int mmc_gpiod_request_cd(struct mmc_host
- }
- EXPORT_SYMBOL(mmc_gpiod_request_cd);
+--- a/drivers/media/cec/core/cec-adap.c
++++ b/drivers/media/cec/core/cec-adap.c
+@@ -397,8 +397,8 @@ static void cec_data_cancel(struct cec_d
+ 	cec_queue_msg_monitor(adap, &data->msg, 1);
  
-+/**
-+ * mmc_gpiod_set_cd_config - set config for card-detection GPIO
-+ * @host: mmc host
-+ * @config: Generic pinconf config (from pinconf_to_config_packed())
-+ *
-+ * This can be used by mmc host drivers to fixup a card-detection GPIO's config
-+ * (e.g. set PIN_CONFIG_BIAS_PULL_UP) after acquiring the GPIO descriptor
-+ * through mmc_gpiod_request_cd().
-+ *
-+ * Returns:
-+ * 0 on success, or a negative errno value on error.
-+ */
-+int mmc_gpiod_set_cd_config(struct mmc_host *host, unsigned long config)
-+{
-+	struct mmc_gpio *ctx = host->slot.handler_priv;
-+
-+	return gpiod_set_config(ctx->cd_gpio, config);
-+}
-+EXPORT_SYMBOL(mmc_gpiod_set_cd_config);
-+
- bool mmc_can_gpio_cd(struct mmc_host *host)
- {
- 	struct mmc_gpio *ctx = host->slot.handler_priv;
---- a/include/linux/mmc/slot-gpio.h
-+++ b/include/linux/mmc/slot-gpio.h
-@@ -20,6 +20,7 @@ int mmc_gpiod_request_cd(struct mmc_host
- 			 unsigned int debounce);
- int mmc_gpiod_request_ro(struct mmc_host *host, const char *con_id,
- 			 unsigned int idx, unsigned int debounce);
-+int mmc_gpiod_set_cd_config(struct mmc_host *host, unsigned long config);
- void mmc_gpio_set_cd_isr(struct mmc_host *host,
- 			 irqreturn_t (*isr)(int irq, void *dev_id));
- int mmc_gpio_set_cd_wake(struct mmc_host *host, bool on);
+ 	if (!data->blocking && data->msg.sequence)
+-		/* Allow drivers to process the message first */
+-		call_op(adap, received, &data->msg);
++		/* Allow drivers to react to a canceled transmit */
++		call_void_op(adap, adap_nb_transmit_canceled, &data->msg);
+ 
+ 	cec_data_completed(data);
+ }
+--- a/include/media/cec.h
++++ b/include/media/cec.h
+@@ -120,14 +120,16 @@ struct cec_adap_ops {
+ 	int (*adap_log_addr)(struct cec_adapter *adap, u8 logical_addr);
+ 	int (*adap_transmit)(struct cec_adapter *adap, u8 attempts,
+ 			     u32 signal_free_time, struct cec_msg *msg);
++	void (*adap_nb_transmit_canceled)(struct cec_adapter *adap,
++					  const struct cec_msg *msg);
+ 	void (*adap_status)(struct cec_adapter *adap, struct seq_file *file);
+ 	void (*adap_free)(struct cec_adapter *adap);
+ 
+-	/* Error injection callbacks */
++	/* Error injection callbacks, called without adap->lock held */
+ 	int (*error_inj_show)(struct cec_adapter *adap, struct seq_file *sf);
+ 	bool (*error_inj_parse_line)(struct cec_adapter *adap, char *line);
+ 
+-	/* High-level CEC message callback */
++	/* High-level CEC message callback, called without adap->lock held */
+ 	int (*received)(struct cec_adapter *adap, struct cec_msg *msg);
+ };
+ 
 
 
