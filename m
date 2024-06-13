@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD9F1E49B;
-	Thu, 13 Jun 2024 12:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0378820ED;
+	Thu, 13 Jun 2024 12:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282516; cv=none; b=OP3BgPmvR36vWAICNcrTeWVH/tY9CRwDQpZMz7YdgqLzhEgWxXs+4XUQcnBeiDU0gTKDHAKjHANSLNK4w/D7PTncujb9GiRKS/l0o2+ENS/8sHo5i8YL5Y/67kIcY6l+xNsBP4WshUQZZLe9XHI1IqQEUX8xdyc8yaVx+NRBtqs=
+	t=1718282519; cv=none; b=GwGrBCx53PcTrJ641ogOxYIDsdW1MB8UKsBlCX+i8+esL2Lyw/BSgeuKgY+h0tRdZLuzmveYLXqFh7NABuRQ1T3/ia9rty8fchcqLe1Rm3qpaz6Je3/9wgxqVzD/Fzq1NJd3Hdl0yJmUCaDL+0Sth0UYZ4BDXziIyMfJm6NwdYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282516; c=relaxed/simple;
-	bh=Aus1QVJizoVW4hfc/Io142087SIgW6D9U6pknx8JiXc=;
+	s=arc-20240116; t=1718282519; c=relaxed/simple;
+	bh=rWmwuCP+at3XqIBdGvf31IY6jB1cs3WZGbLrYvRjweA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1zK0yVYIFAQSyeyrq8jYUZ7/ND25s+xDs4UVbqdQecqKohiDWQheZaHWrEH8yTitCnvR8U5NX7k5IGGXZLyOR65621CgRC49Ujx3JBlJ1mgotNEp1RFUl9O/XAmZtwoHqF1+WOwP94fpFyCGS4ySnUrw2PyI6klV/KSFJZisKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6QX37pg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Otcy24u6Hmn7EbOWiGenC+88woz9dYpiwhx576tfkDuwc842/YzL0usHVmqRc1yTReAxIwG88pJJTk/5xnqniAgoa+zjkc3s2Hahs3kkP+TMZfFmP2Mf9wbaOsnbIelARSaqZ0cuVWbLylQvh/PCesj6hnpQV2LAnhA4QUJRwjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GiZfPEts; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6QX37pg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8706DC2BBFC;
-	Thu, 13 Jun 2024 12:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GiZfPEts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8032AC2BBFC;
+	Thu, 13 Jun 2024 12:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282515;
-	bh=Aus1QVJizoVW4hfc/Io142087SIgW6D9U6pknx8JiXc=;
+	s=korg; t=1718282518;
+	bh=rWmwuCP+at3XqIBdGvf31IY6jB1cs3WZGbLrYvRjweA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w6QX37pgd86xvXCEvbA1+ktX50CCEfLsm1+bnCpXPNssIFO8J4ylynU1b4jmaVfs9
-	 BI7I7o1V5HJPovmbWXurJvHVx01NeJyTksS3GhzK3VPrYeLPjx2XjHcYpgTfJCx6SW
-	 9b9yy9glXe4LcvXwRhy4vCSRC0I0pUCgPEiyMW3k=
+	b=GiZfPEtsMlOFb1ayBdnTtvlHpsCfGPaYrDL6My/kKoKwxcQ+b0U5xTw0eSxAXUQjP
+	 OL/POz57/3skPF3uRZSmgKBecwveN80QLnnRT/QV9mvCg5Ids1VY5Er4VSA4sD3iev
+	 fx19lOmp/ACJGOdXGFLR1TpeUg4kuccsIeKz3apA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 303/402] ice: Interpret .set_channels() input differently
-Date: Thu, 13 Jun 2024 13:34:20 +0200
-Message-ID: <20240613113313.962581490@linuxfoundation.org>
+Subject: [PATCH 5.15 304/402] netfilter: nfnetlink_queue: acquire rcu_read_lock() in instance_destroy_rcu()
+Date: Thu, 13 Jun 2024 13:34:21 +0200
+Message-ID: <20240613113314.000806540@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -56,88 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 05d6f442f31f901d27dbc64fd504a8ec7d5013de ]
+[ Upstream commit dc21c6cc3d6986d938efbf95de62473982c98dec ]
 
-A bug occurs because a safety check guarding AF_XDP-related queues in
-ethnl_set_channels(), does not trigger. This happens, because kernel and
-ice driver interpret the ethtool command differently.
+syzbot reported that nf_reinject() could be called without rcu_read_lock() :
 
-How the bug occurs:
-1. ethtool -l <IFNAME> -> combined: 40
-2. Attach AF_XDP to queue 30
-3. ethtool -L <IFNAME> rx 15 tx 15
-   combined number is not specified, so command becomes {rx_count = 15,
-   tx_count = 15, combined_count = 40}.
-4. ethnl_set_channels checks, if there are any AF_XDP of queues from the
-   new (combined_count + rx_count) to the old one, so from 55 to 40, check
-   does not trigger.
-5. ice interprets `rx 15 tx 15` as 15 combined channels and deletes the
-   queue that AF_XDP is attached to.
+WARNING: suspicious RCU usage
+6.9.0-rc7-syzkaller-02060-g5c1672705a1a #0 Not tainted
 
-Interpret the command in a way that is more consistent with ethtool
-manual [0] (--show-channels and --set-channels).
+net/netfilter/nfnetlink_queue.c:263 suspicious rcu_dereference_check() usage!
 
-Considering that in the ice driver only the difference between RX and TX
-queues forms dedicated channels, change the correct way to set number of
-channels to:
+other info that might help us debug this:
 
-ethtool -L <IFNAME> combined 10 /* For symmetric queues */
-ethtool -L <IFNAME> combined 8 tx 2 rx 0 /* For asymmetric queues */
+rcu_scheduler_active = 2, debug_locks = 1
+2 locks held by syz-executor.4/13427:
+  #0: ffffffff8e334f60 (rcu_callback){....}-{0:0}, at: rcu_lock_acquire include/linux/rcupdate.h:329 [inline]
+  #0: ffffffff8e334f60 (rcu_callback){....}-{0:0}, at: rcu_do_batch kernel/rcu/tree.c:2190 [inline]
+  #0: ffffffff8e334f60 (rcu_callback){....}-{0:0}, at: rcu_core+0xa86/0x1830 kernel/rcu/tree.c:2471
+  #1: ffff88801ca92958 (&inst->lock){+.-.}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
+  #1: ffff88801ca92958 (&inst->lock){+.-.}-{2:2}, at: nfqnl_flush net/netfilter/nfnetlink_queue.c:405 [inline]
+  #1: ffff88801ca92958 (&inst->lock){+.-.}-{2:2}, at: instance_destroy_rcu+0x30/0x220 net/netfilter/nfnetlink_queue.c:172
 
-[0] https://man7.org/linux/man-pages/man8/ethtool.8.html
+stack backtrace:
+CPU: 0 PID: 13427 Comm: syz-executor.4 Not tainted 6.9.0-rc7-syzkaller-02060-g5c1672705a1a #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
+Call Trace:
+ <IRQ>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
+  lockdep_rcu_suspicious+0x221/0x340 kernel/locking/lockdep.c:6712
+  nf_reinject net/netfilter/nfnetlink_queue.c:323 [inline]
+  nfqnl_reinject+0x6ec/0x1120 net/netfilter/nfnetlink_queue.c:397
+  nfqnl_flush net/netfilter/nfnetlink_queue.c:410 [inline]
+  instance_destroy_rcu+0x1ae/0x220 net/netfilter/nfnetlink_queue.c:172
+  rcu_do_batch kernel/rcu/tree.c:2196 [inline]
+  rcu_core+0xafd/0x1830 kernel/rcu/tree.c:2471
+  handle_softirqs+0x2d6/0x990 kernel/softirq.c:554
+  __do_softirq kernel/softirq.c:588 [inline]
+  invoke_softirq kernel/softirq.c:428 [inline]
+  __irq_exit_rcu+0xf4/0x1c0 kernel/softirq.c:637
+  irq_exit_rcu+0x9/0x30 kernel/softirq.c:649
+  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1043 [inline]
+  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1043
+ </IRQ>
+ <TASK>
 
-Fixes: 87324e747fde ("ice: Implement ethtool ops for channels")
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 9872bec773c2 ("[NETFILTER]: nfnetlink: use RCU for queue instances hash")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c | 19 ++-----------------
- 1 file changed, 2 insertions(+), 17 deletions(-)
+ net/netfilter/nfnetlink_queue.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index 60f73e775beeb..2440c82ea1fa4 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -3394,7 +3394,6 @@ static int ice_set_channels(struct net_device *dev, struct ethtool_channels *ch)
- 	struct ice_pf *pf = vsi->back;
- 	int new_rx = 0, new_tx = 0;
- 	bool locked = false;
--	u32 curr_combined;
- 	int ret = 0;
+diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
+index 8c96e01f6a023..89b16d36da9cf 100644
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -167,7 +167,9 @@ instance_destroy_rcu(struct rcu_head *head)
+ 	struct nfqnl_instance *inst = container_of(head, struct nfqnl_instance,
+ 						   rcu);
  
- 	/* do not support changing channels in Safe Mode */
-@@ -3411,22 +3410,8 @@ static int ice_set_channels(struct net_device *dev, struct ethtool_channels *ch)
- 		return -EOPNOTSUPP;
- 	}
- 
--	curr_combined = ice_get_combined_cnt(vsi);
--
--	/* these checks are for cases where user didn't specify a particular
--	 * value on cmd line but we get non-zero value anyway via
--	 * get_channels(); look at ethtool.c in ethtool repository (the user
--	 * space part), particularly, do_schannels() routine
--	 */
--	if (ch->rx_count == vsi->num_rxq - curr_combined)
--		ch->rx_count = 0;
--	if (ch->tx_count == vsi->num_txq - curr_combined)
--		ch->tx_count = 0;
--	if (ch->combined_count == curr_combined)
--		ch->combined_count = 0;
--
--	if (!(ch->combined_count || (ch->rx_count && ch->tx_count))) {
--		netdev_err(dev, "Please specify at least 1 Rx and 1 Tx channel\n");
-+	if (ch->rx_count && ch->tx_count) {
-+		netdev_err(dev, "Dedicated RX or TX channels cannot be used simultaneously\n");
- 		return -EINVAL;
- 	}
- 
++	rcu_read_lock();
+ 	nfqnl_flush(inst, NULL, 0);
++	rcu_read_unlock();
+ 	kfree(inst);
+ 	module_put(THIS_MODULE);
+ }
 -- 
 2.43.0
 
