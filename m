@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAB21494A8;
-	Thu, 13 Jun 2024 12:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D6814601F;
+	Thu, 13 Jun 2024 12:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280248; cv=none; b=bjCTu3YDVNKOTKtK4qaZ6CDEG8F9xggO09QryHDHnl65SM7JtIPfReN6xL8oCOJlWf5Ekx/5BOHOd5k3ZYaEfnP63ZeR/RZIBYYsqE0xlID+/xFikurMqLQ26/hgkS2ftAJrVey6j7hPckKi9cuF3/xVlNSaeAUgwXay0wH7q6U=
+	t=1718280251; cv=none; b=c3cj8yaNmspC5lu9CxLMrrnUK7gxjvYFiGTa1l3n0sLQ9QqP9QuUeaCtTobd4Wg+XvuzJMZ4CYV9FSp4G20tPaFuIgurGyzorCbd5QyMHfjdbm+/+8miShyZspWo0CIB5nDULl4FuwuENtOfLtCdr+pTPWS22FeNNGUnC3dVYhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280248; c=relaxed/simple;
-	bh=6INgmWuf5sHLM7F9p2bBxRlxcYN2JRP+r5r+w5pRn6Y=;
+	s=arc-20240116; t=1718280251; c=relaxed/simple;
+	bh=VUx8GuVdZZIXgQSXWd6Ol4cuqgi0ww7vgh/M3/G8K3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qsCN6boEyAhCPFiNFKx+3tYEJ6LwMV02IpGKs7ImzUWYcyDy6WPP58i6ip01zkULwauDB3xH2e84oO5Th7RR5vv3i1s//y9/jd/PMaJ75fcRMwXvjZFIUae2Ot4BLpoIAJddTpvLTqZ2JdLWDljNCXkvhkCGavxjVGLbYmOs24o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7DmEAg9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YVPSR/CIaYJpLK/1t9Ly4YOujl+Xqzw8Skxp3NmtgutsJUtiIROZXaEpLvS1eyVIGQGUPsbYJehZ08Pd5mWbyNTEOZPOktkGnyQR3X37x5y53fiC5d1rDYp12iF40pRRpfoz+IuCIRH0CFC3xJDvKqJ48y6XhyaEvyyKRJgSoLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deIRMTKL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7DmEAg9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46AC8C2BBFC;
-	Thu, 13 Jun 2024 12:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deIRMTKL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3423AC2BBFC;
+	Thu, 13 Jun 2024 12:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280248;
-	bh=6INgmWuf5sHLM7F9p2bBxRlxcYN2JRP+r5r+w5pRn6Y=;
+	s=korg; t=1718280251;
+	bh=VUx8GuVdZZIXgQSXWd6Ol4cuqgi0ww7vgh/M3/G8K3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7DmEAg9s+AD7/YT1+7KJMiJpkp9zSe5dLojHhuoL/vPljz1KCRHWexldR0srYbsj
-	 eiPgBOYh/TZKxTHS1z88htJUZrdCpPWfmf7kLw1VQV7S2dJy+gvDtFmrLLdBr7rE7/
-	 JWNWUWaZVywBhP6TfU+v6CBZ3Vjhh0v3R532YONM=
+	b=deIRMTKLZBwFBrTQ7uA9fyD/n/5BSa7Twr8xSHKoY9TrnvMssar5q8cRtFMs/qbWC
+	 bBrygcyAbrjbu3Uj5nf9fi/Ys+WuYlCW3WLjpPxxbY7ZgV5afohAc9cUPcoChsZnRY
+	 MnJGSbvAOTtdDRd5xMcBTBIijyJcjHvji+rhMCVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 151/202] net/mlx5e: Use rx_missed_errors instead of rx_dropped for reporting buffer exhaustion
-Date: Thu, 13 Jun 2024 13:34:09 +0200
-Message-ID: <20240613113233.581089007@linuxfoundation.org>
+	Vitaly Chikunov <vt@altlinux.org>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Paul Wolneykien <manowar@altlinux.org>
+Subject: [PATCH 5.4 186/202] crypto: ecrdsa - Fix module auto-load on add_key
+Date: Thu, 13 Jun 2024 13:34:44 +0200
+Message-ID: <20240613113234.915920502@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -53,45 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Vitaly Chikunov <vt@altlinux.org>
 
-[ Upstream commit 5c74195d5dd977e97556e6fa76909b831c241230 ]
+commit eb5739a1efbc9ff216271aeea0ebe1c92e5383e5 upstream.
 
-Previously, the driver incorrectly used rx_dropped to report device
-buffer exhaustion.
+Add module alias with the algorithm cra_name similar to what we have for
+RSA-related and other algorithms.
 
-According to the documentation, rx_dropped should not be used to count
-packets dropped due to buffer exhaustion, which is the purpose of
-rx_missed_errors.
+The kernel attempts to modprobe asymmetric algorithms using the names
+"crypto-$cra_name" and "crypto-$cra_name-all." However, since these
+aliases are currently missing, the modules are not loaded. For instance,
+when using the `add_key` function, the hash algorithm is typically
+loaded automatically, but the asymmetric algorithm is not.
 
-Use rx_missed_errors as intended for counting packets dropped due to
-buffer exhaustion.
+Steps to test:
 
-Fixes: 269e6b3af3bf ("net/mlx5e: Report additional error statistics in get stats ndo")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+1. Cert is generated usings ima-evm-utils test suite with
+   `gen-keys.sh`, example cert is provided below:
+
+  $ base64 -d >test-gost2012_512-A.cer <<EOF
+  MIIB/DCCAWagAwIBAgIUK8+whWevr3FFkSdU9GLDAM7ure8wDAYIKoUDBwEBAwMFADARMQ8wDQYD
+  VQQDDAZDQSBLZXkwIBcNMjIwMjAxMjIwOTQxWhgPMjA4MjEyMDUyMjA5NDFaMBExDzANBgNVBAMM
+  BkNBIEtleTCBoDAXBggqhQMHAQEBAjALBgkqhQMHAQIBAgEDgYQABIGALXNrTJGgeErBUOov3Cfo
+  IrHF9fcj8UjzwGeKCkbCcINzVUbdPmCopeJRHDJEvQBX1CQUPtlwDv6ANjTTRoq5nCk9L5PPFP1H
+  z73JIXHT0eRBDVoWy0cWDRz1mmQlCnN2HThMtEloaQI81nTlKZOcEYDtDpi5WODmjEeRNQJMdqCj
+  UDBOMAwGA1UdEwQFMAMBAf8wHQYDVR0OBBYEFCwfOITMbE9VisW1i2TYeu1tAo5QMB8GA1UdIwQY
+  MBaAFCwfOITMbE9VisW1i2TYeu1tAo5QMAwGCCqFAwcBAQMDBQADgYEAmBfJCMTdC0/NSjz4BBiQ
+  qDIEjomO7FEHYlkX5NGulcF8FaJW2jeyyXXtbpnub1IQ8af1KFIpwoS2e93LaaofxpWlpQLlju6m
+  KYLOcO4xK3Whwa2hBAz9YbpUSFjvxnkS2/jpH2MsOSXuUEeCruG/RkHHB3ACef9umG6HCNQuAPY=
+  EOF
+
+2. Optionally, trace module requests with: trace-cmd stream -e module &
+
+3. Trigger add_key call for the cert:
+
+  # keyctl padd asymmetric "" @u <test-gost2012_512-A.cer
+  939910969
+  # lsmod | head -3
+  Module                  Size  Used by
+  ecrdsa_generic         16384  0
+  streebog_generic       28672  0
+
+Repored-by: Paul Wolneykien <manowar@altlinux.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Vitaly Chikunov <vt@altlinux.org>
+Tested-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/ecrdsa.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 35630b538c826..facbbd3fac66a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -3667,7 +3667,7 @@ mlx5e_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats)
- 		mlx5e_fold_sw_stats64(priv, stats);
- 	}
- 
--	stats->rx_dropped = priv->stats.qcnt.rx_out_of_buffer;
-+	stats->rx_missed_errors = priv->stats.qcnt.rx_out_of_buffer;
- 
- 	stats->rx_length_errors =
- 		PPORT_802_3_GET(pstats, a_in_range_length_errors) +
--- 
-2.43.0
-
+--- a/crypto/ecrdsa.c
++++ b/crypto/ecrdsa.c
+@@ -293,4 +293,5 @@ module_exit(ecrdsa_mod_fini);
+ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Vitaly Chikunov <vt@altlinux.org>");
+ MODULE_DESCRIPTION("EC-RDSA generic algorithm");
++MODULE_ALIAS_CRYPTO("ecrdsa");
+ MODULE_ALIAS_CRYPTO("ecrdsa-generic");
 
 
