@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227711F937;
-	Thu, 13 Jun 2024 12:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100E5EC4;
+	Thu, 13 Jun 2024 12:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282150; cv=none; b=avKERusUv/azJePLk1c50Wpl4gnf+LnKvccBZMM+ktJS8JLtnXgmfj0D5lwWtKD6TOOAqHwZb9+Y7QaMvsb1+MWjw0iM30iM39UxpEC+ZjvIEr5M9mpIitbCVwSlvR5y5Fug43sD31XVIlFyOWhukz14yEPiN0+avqlgqq52kJQ=
+	t=1718282153; cv=none; b=SbRoLNrF+0ZNQJ3dTj5wxDDIioFouM23cFwQ8HdJTACveldEVOfPoLtJTWoIzQ/NDDIkSah9DuDIeX2cTSGt5MNXnwnkLZuoCoLVrtHfxp+uYUO5m+3XlKbnPnbKi5LcbhO0SNfzHppm0DGNCgYvHzq36yvYAooff5VeMQAb5Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282150; c=relaxed/simple;
-	bh=BeUiFD8BKdLQNsKGEUBb/1XSve5BvZrrWY5ODBcT9uI=;
+	s=arc-20240116; t=1718282153; c=relaxed/simple;
+	bh=y+HX9gTNq4sfiBSTIUb+w0IaDyGZxRFPla85ycAJJ70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QypkXZNs1bM8E4AzXqRgRJmvhwW8uKRsSz29aaOz4v4aUGACgAtvQvzubC5xTlH/OW/MxjtmiHDWKp3CVJc8ERlkrYlv2Z39U4VqhDzDVojyvHh1pIi3Ivm0RJkp7SwV9fC2OigUWZQZoA9gZExURJlCZs4fDd0Kmj8TDExw3KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqI47u5V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ss6mVj4JvqARBdPIO/zoQLXSH03uz7csmGhu1agQfBMp8f8RrHONs9IV6VcQLggaMUr0O+/wYdqD/lnuBJd+/jlJ0oqnGC2weoKeqW1wFWmUD/Uw457EpdjgPl/FN1ffKIaiCGgwckMSR6bcqjMg8tpMnjp9h5txJwKAMnIMcG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cc3R/IVI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqI47u5V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCEDC2BBFC;
-	Thu, 13 Jun 2024 12:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cc3R/IVI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882B6C2BBFC;
+	Thu, 13 Jun 2024 12:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282150;
-	bh=BeUiFD8BKdLQNsKGEUBb/1XSve5BvZrrWY5ODBcT9uI=;
+	s=korg; t=1718282152;
+	bh=y+HX9gTNq4sfiBSTIUb+w0IaDyGZxRFPla85ycAJJ70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GqI47u5VvTfv3J1+dbSM5yHlufvgS9MkKON4KNH8HbTZCaHt8FLhUuoubcZ9L6OUI
-	 ZyLzm6XKKHfe4Lebte0InS9KlZyQWktvP5dCGLqVJ/IQv64o3gnbWwzTexYg8RXAIZ
-	 6Dc7yrEuIX5e/c4o2ohKDaH4saJKv7tkzemZPdl8=
+	b=Cc3R/IVIeTCZPHfzy2527XtU81R+7oplhuYXIIJ5tQTdzv566BBs0OqYhN/GzUAjZ
+	 l2q8d3NJ/3V1txHvTuhHsBAP2lelB9oFYMqGcvXGRfjRLbdsbI7WrbWE3YbMjcDYb5
+	 AshZwJT92w9oOtn9ZBszqA0lEleqBbj/AVwdZvlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
+	Alex Elder <elder@ieee.org>,
+	Rui Miguel Silva <rmfrfs@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 178/402] perf probe: Add missing libgen.h header needed for using basename()
-Date: Thu, 13 Jun 2024 13:32:15 +0200
-Message-ID: <20240613113309.093046045@linuxfoundation.org>
+Subject: [PATCH 5.15 179/402] greybus: lights: check return of get_channel_from_mode
+Date: Thu, 13 Jun 2024 13:32:16 +0200
+Message-ID: <20240613113309.132212489@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -55,51 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Rui Miguel Silva <rmfrfs@gmail.com>
 
-[ Upstream commit 581037151910126a7934e369e4b6ac70eda9a703 ]
+[ Upstream commit a1ba19a1ae7cd1e324685ded4ab563e78fe68648 ]
 
-This prototype is obtained indirectly, by luck, from some other header
-in probe-event.c in most systems, but recently exploded on alpine:edge:
+If channel for the given node is not found we return null from
+get_channel_from_mode. Make sure we validate the return pointer
+before using it in two of the missing places.
 
-   8    13.39 alpine:edge                   : FAIL gcc version 13.2.1 20240309 (Alpine 13.2.1_git20240309)
-    util/probe-event.c: In function 'convert_exec_to_group':
-    util/probe-event.c:225:16: error: implicit declaration of function 'basename' [-Werror=implicit-function-declaration]
-      225 |         ptr1 = basename(exec_copy);
-          |                ^~~~~~~~
-    util/probe-event.c:225:14: error: assignment to 'char *' from 'int' makes pointer from integer without a cast [-Werror=int-conversion]
-      225 |         ptr1 = basename(exec_copy);
-          |              ^
-    cc1: all warnings being treated as errors
-    make[3]: *** [/git/perf-6.8.0/tools/build/Makefile.build:158: util] Error 2
+This was originally reported in [0]:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fix it by adding the libgen.h header where basename() is prototyped.
+[0] https://lore.kernel.org/all/20240301190425.120605-1-m.lobanov@rosalinux.ru
 
-Fixes: fb7345bbf7fad9bf ("perf probe: Support basic dwarf-based operations on uprobe events")
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/lkml/
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 2870b52bae4c ("greybus: lights: add lights implementation")
+Reported-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+Suggested-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+Suggested-by: Alex Elder <elder@ieee.org>
+Signed-off-by: Rui Miguel Silva <rmfrfs@gmail.com>
+Link: https://lore.kernel.org/r/20240325221549.2185265-1-rmfrfs@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/probe-event.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/greybus/light.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/probe-event.c b/tools/perf/util/probe-event.c
-index 68844c48f688a..454a7e2325d87 100644
---- a/tools/perf/util/probe-event.c
-+++ b/tools/perf/util/probe-event.c
-@@ -11,6 +11,7 @@
- #include <sys/stat.h>
- #include <fcntl.h>
- #include <errno.h>
-+#include <libgen.h>
- #include <stdio.h>
- #include <unistd.h>
- #include <stdlib.h>
+diff --git a/drivers/staging/greybus/light.c b/drivers/staging/greybus/light.c
+index c6bd86a5335ab..9999f84016992 100644
+--- a/drivers/staging/greybus/light.c
++++ b/drivers/staging/greybus/light.c
+@@ -147,6 +147,9 @@ static int __gb_lights_flash_brightness_set(struct gb_channel *channel)
+ 		channel = get_channel_from_mode(channel->light,
+ 						GB_CHANNEL_MODE_TORCH);
+ 
++	if (!channel)
++		return -EINVAL;
++
+ 	/* For not flash we need to convert brightness to intensity */
+ 	intensity = channel->intensity_uA.min +
+ 			(channel->intensity_uA.step * channel->led->brightness);
+@@ -549,7 +552,10 @@ static int gb_lights_light_v4l2_register(struct gb_light *light)
+ 	}
+ 
+ 	channel_flash = get_channel_from_mode(light, GB_CHANNEL_MODE_FLASH);
+-	WARN_ON(!channel_flash);
++	if (!channel_flash) {
++		dev_err(dev, "failed to get flash channel from mode\n");
++		return -EINVAL;
++	}
+ 
+ 	fled = &channel_flash->fled;
+ 
 -- 
 2.43.0
 
