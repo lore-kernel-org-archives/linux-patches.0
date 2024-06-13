@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70A814659D;
-	Thu, 13 Jun 2024 11:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5980143C46;
+	Thu, 13 Jun 2024 11:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279410; cv=none; b=kUN+7JzuS/cer3/591Usmj/GZYD19iwq4y2C7MR7Hyl7kZhZhbdQBtU39aW1Y5tRCzZ4tJWhAOU61Tq4l9RuyM1hJrmtLz5xu+PA+kOSsUR34JZkj7lJeLLJFVsQu+aPIkKVQBMpl0w6uK8l9bIg17/g+ThzeJ/D4XmNnDSoJNM=
+	t=1718279413; cv=none; b=Hd0J4EGb4uSE9u60bMUdb0bMl0QxnVEUulVQzjrS6AxnnzeiNHIrZukfHifNbD9AAQKkgS+Tp2EYYYbCaACiU4NWDQYaI7AmpkFLdscwWkhCbmWSd9+LsUOCKMoAfDceemMLOTveHaGL2XoD6ydpac0G8KF6oT4YvnEgQ574NHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279410; c=relaxed/simple;
-	bh=pMMXgV0SK9taN60iUoF0ltkYaCL1yCcevDK2fa5vBG8=;
+	s=arc-20240116; t=1718279413; c=relaxed/simple;
+	bh=ubVzlbsdahbfBqyAfiYs3n7uViBlhjqSJLwK6KUDj9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F7B97MdGhALk84ylj1GAHm076pXvCg0J1jr+8x8JS5HX9++lcM4cJPEC3pmm0QebVLG6q31DE8yV4eTYKHMXb5aPQtf3ayS/DVsWmK+rAuYUFxEla3fYHxdgLvWyNigi9w/c4JvV5vzqSiNcNB5mpSnI6qFiWIRXtusk8gL6JF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwezIXx1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lVs3UJcqoYv+awyRixNpiveyUSE0kVs1vElZ7hQG52iTtW231JIymuv77RlbzS0iy2b6Slhu+15jspfYgGIkTphNzS3LWpA6IRf0EFtx1R61MQhL64vvQNTnL7ghIltIGAhc2yDJEL9Ll7YmbxlM87S1Rc9ZY+UqfnRJxlNQVPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3zUqLP2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwezIXx1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F082C2BBFC;
-	Thu, 13 Jun 2024 11:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3zUqLP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E49DC2BBFC;
+	Thu, 13 Jun 2024 11:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279410;
-	bh=pMMXgV0SK9taN60iUoF0ltkYaCL1yCcevDK2fa5vBG8=;
+	s=korg; t=1718279413;
+	bh=ubVzlbsdahbfBqyAfiYs3n7uViBlhjqSJLwK6KUDj9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FwezIXx1u9jsLEXODrvJhqxiAKXaudmkndcclgxNLbOqf0qertsmP3B27kOIYuufU
-	 qCF7rvTa6VgtkjD0iX3nCgmmtpTQxXodEdu4i9fXpocb77OCYJmlNvjtbMfDCgotzy
-	 WGgYpTwOTpFDm+Bk0H7rvQaoy5N4JX7ifrM5irGA=
+	b=m3zUqLP2KVpkAbZCoGlFD4Ep8UiStBLvkknRhOPviM4NY/conmjw2XxnPFctVJtAA
+	 Jwhhs+X4BX0QvTGQFMthMdL8kkDur9jeTwmgER5IXhyH0739jTA1dGggX8kvCINn33
+	 Pirj12LYm90Z6SJNX/N7JvZI2wAjSns4CHXwpELg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Gabor Juhos <j4g8y7@gmail.com>,
+	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.9 067/157] clk: qcom: clk-alpha-pll: fix rate setting for Stromer PLLs
-Date: Thu, 13 Jun 2024 13:33:12 +0200
-Message-ID: <20240613113230.014995971@linuxfoundation.org>
+Subject: [PATCH 6.9 068/157] clk: qcom: apss-ipq-pll: use stromer ops for IPQ5018 to fix boot failure
+Date: Thu, 13 Jun 2024 13:33:13 +0200
+Message-ID: <20240613113230.053641198@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -53,58 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 3c5b3e17b8fd1f1add5a9477306c355fab126977 upstream.
+commit 5fce38e2a1a97900989d9fedebcf5a4dacdaee30 upstream.
 
-The clk_alpha_pll_stromer_set_rate() function writes inproper
-values into the ALPHA_VAL{,_U} registers which results in wrong
-clock rates when the alpha value is used.
+Booting v6.8 results in a hang on various IPQ5018 based boards.
+Investigating the problem showed that the hang happens when the
+clk_alpha_pll_stromer_plus_set_rate() function tries to write
+into the PLL_MODE register of the APSS PLL.
 
-The broken behaviour can be seen on IPQ5018 for example, when
-dynamic scaling sets the CPU frequency to 800000 KHz. In this
-case the CPU cores are running only at 792031 KHz:
+Checking the downstream code revealed that it uses [1] stromer
+specific operations for IPQ5018, whereas in the current code
+the stromer plus specific operations are used.
 
-  # cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
-  800000
-  # cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
-  792031
+The ops in the 'ipq_pll_stromer_plus' clock definition can't be
+changed since that is needed for IPQ5332, so add a new alpha pll
+clock declaration which uses the correct stromer ops and use this
+new clock for IPQ5018 to avoid the boot failure.
 
-This happens because the function ignores the fact that the alpha
-value calculated by the alpha_pll_round_rate() function is only
-32 bits wide which must be extended to 40 bits if it is used on
-a hardware which supports 40 bits wide values.
+Also, change pll_type in 'ipq5018_pll_data' to
+CLK_ALPHA_PLL_TYPE_STROMER to better reflect that it is a Stromer
+PLL and change the apss_ipq_pll_probe() function accordingly.
 
-Extend the clk_alpha_pll_stromer_set_rate() function to convert
-the alpha value to 40 bits before wrinting that into the registers
-in order to ensure that the hardware really uses the requested rate.
-
-After the change the CPU frequency is correct:
-
-  # cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
-  800000
-  # cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
-  800000
+1. https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/blob/NHSS.QSDK.12.4/drivers/clk/qcom/apss-ipq5018.c#L67
 
 Cc: stable@vger.kernel.org
-Fixes: e47a4f55f240 ("clk: qcom: clk-alpha-pll: Add support for Stromer PLLs")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 50492f929486 ("clk: qcom: apss-ipq-pll: add support for IPQ5018")
 Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/r/20240328-alpha-pll-fix-stromer-set-rate-v3-1-1b79714c78bc@gmail.com
+Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Link: https://lore.kernel.org/r/20240315-apss-ipq-pll-ipq5018-hang-v2-1-6fe30ada2009@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/apss-ipq-pll.c |   30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -2489,6 +2489,8 @@ static int clk_alpha_pll_stromer_set_rat
- 	rate = alpha_pll_round_rate(rate, prate, &l, &a, ALPHA_REG_BITWIDTH);
+--- a/drivers/clk/qcom/apss-ipq-pll.c
++++ b/drivers/clk/qcom/apss-ipq-pll.c
+@@ -55,6 +55,29 @@ static struct clk_alpha_pll ipq_pll_huay
+ 	},
+ };
  
- 	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
++static struct clk_alpha_pll ipq_pll_stromer = {
++	.offset = 0x0,
++	/*
++	 * Reuse CLK_ALPHA_PLL_TYPE_STROMER_PLUS register offsets.
++	 * Although this is a bit confusing, but the offset values
++	 * are correct nevertheless.
++	 */
++	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
++	.flags = SUPPORTS_DYNAMIC_UPDATE,
++	.clkr = {
++		.enable_reg = 0x0,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "a53pll",
++			.parent_data = &(const struct clk_parent_data) {
++				.fw_name = "xo",
++			},
++			.num_parents = 1,
++			.ops = &clk_alpha_pll_stromer_ops,
++		},
++	},
++};
 +
-+	a <<= ALPHA_REG_BITWIDTH - ALPHA_BITWIDTH;
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL(pll), a);
- 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
- 		     a >> ALPHA_BITWIDTH);
+ static struct clk_alpha_pll ipq_pll_stromer_plus = {
+ 	.offset = 0x0,
+ 	.regs = ipq_pll_offsets[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
+@@ -145,8 +168,8 @@ struct apss_pll_data {
+ };
+ 
+ static const struct apss_pll_data ipq5018_pll_data = {
+-	.pll_type = CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
+-	.pll = &ipq_pll_stromer_plus,
++	.pll_type = CLK_ALPHA_PLL_TYPE_STROMER,
++	.pll = &ipq_pll_stromer,
+ 	.pll_config = &ipq5018_pll_config,
+ };
+ 
+@@ -204,7 +227,8 @@ static int apss_ipq_pll_probe(struct pla
+ 
+ 	if (data->pll_type == CLK_ALPHA_PLL_TYPE_HUAYRA)
+ 		clk_alpha_pll_configure(data->pll, regmap, data->pll_config);
+-	else if (data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER_PLUS)
++	else if (data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER ||
++		 data->pll_type == CLK_ALPHA_PLL_TYPE_STROMER_PLUS)
+ 		clk_stromer_pll_configure(data->pll, regmap, data->pll_config);
+ 
+ 	ret = devm_clk_register_regmap(dev, &data->pll->clkr);
 
 
