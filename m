@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE98E142E84;
-	Thu, 13 Jun 2024 12:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD391145A18;
+	Thu, 13 Jun 2024 12:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280962; cv=none; b=ZS17DhgpnWSe0+mYUtKi0OTswZ1VDZF/HiL9YBVs+YOU6zjMLHbu8NVMNnsFAtyzyWaqKXwuT/vDA4l7LfG5VtjNktIS9X2EGyh/gLgp/8rnTl9+OU+r+FGZDwXi9M1tp2DisNDyqJx77VeyaSQIsK+pBsaQhFA2HJCrp63MHp4=
+	t=1718280965; cv=none; b=aEWiobbf6XN8FTeke1mVuBNXUlAiRzUyjeHJRz2f899WfUpwES8p2mJAp07MNzdz12mSX0lJbzuXe4OiRV2Ov9O5AP1DYvRUcr0g5JltjG8vR+t4ceuzCRT3BmEPeV4B7GG1c2eBvf0HPxLOo2SjJbB0sj9C8I6Zh4gVuvOl52k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280962; c=relaxed/simple;
-	bh=dAYX/IRrz2Qk8yqEra8XPBFbRWEKfcrgAY9PEazSWwM=;
+	s=arc-20240116; t=1718280965; c=relaxed/simple;
+	bh=L4U3N5le8806V23sEF2ujXC8R3gLL9rdS80hK3ZAWis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6Ur1aQc29Rr9kkL1wtddvFZeSJ/vx5mooaELdyOMJvWRB6n/ziBfKRqR/vSaDaVRCPPY8DJtbq7ndnpyMGlqF5rGVOv7ycoDNUQCOhbqBAIquFcsnp0VmWzSgcIcW8y4IwwU6+TRT+erv4Lq5P5+otYCxJ6PEi0oPvxnYExXjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evzzuNSs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pmQSfg3dH3XZ94CEUj1OtEFGJOL8apoQk2akaOZxJescmPEHti2NOAk8Siuo2CgrhbgA9XhGe/jeIUB0H6WeWiPAvRXagKwI4p7fUqxqIBAcElXMVZeQGzrV5XZqjp4tBj/8NMaI8jd17FrRCU6N58sLIyP/MjfiDGw4e4LHAqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XSonEztk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evzzuNSs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56017C2BBFC;
-	Thu, 13 Jun 2024 12:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XSonEztk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468D7C2BBFC;
+	Thu, 13 Jun 2024 12:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280962;
-	bh=dAYX/IRrz2Qk8yqEra8XPBFbRWEKfcrgAY9PEazSWwM=;
+	s=korg; t=1718280965;
+	bh=L4U3N5le8806V23sEF2ujXC8R3gLL9rdS80hK3ZAWis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=evzzuNSsIW9GWSpWwHQCnKdoqLeuVU/Ynpgym3RAZwekTDNwY/xAb8U0cAhgMqOxs
-	 pcIu7DNhibIC9wA+M0JYYL49bAxGxUJii+G5A94UtvW12w/t/T67L5PtoJ0ZXxgayu
-	 fWE9X/5nW4P725vO8BgNykL3knN4RK5UexsUxesU=
+	b=XSonEztkt420orCtwZfUglAe+83ZnfSRAYQmkqBho3imUGerHhoAfBmqJcQ6zGShG
+	 BJD4I9szSIUDIyuaYgwtxxtLi20iItlXq/KEzlbORYg+vPySQQ8a+ZVB0JCgBrSdW4
+	 t0gH3JZE55wIS5OXHVeDbmD40IKwid2Pr1yKj5RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/317] macintosh/via-macii: Fix "BUG: sleeping function called from invalid context"
-Date: Thu, 13 Jun 2024 13:31:24 +0200
-Message-ID: <20240613113250.103174314@linuxfoundation.org>
+Subject: [PATCH 5.10 093/317] mtd: rawnand: hynix: fixed typo
+Date: Thu, 13 Jun 2024 13:31:51 +0200
+Message-ID: <20240613113251.149015213@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,56 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-[ Upstream commit d301a71c76ee4c384b4e03cdc320a55f5cf1df05 ]
+[ Upstream commit 6819db94e1cd3ce24a432f3616cd563ed0c4eaba ]
 
-The via-macii ADB driver calls request_irq() after disabling hard
-interrupts. But disabling interrupts isn't necessary here because the
-VIA shift register interrupt was masked during VIA1 initialization.
+The function hynix_nand_rr_init() should probably return an error code.
+Judging by the usage, it seems that the return code is passed up
+the call stack.
+Right now, it always returns 0 and the function hynix_nand_cleanup()
+in hynix_nand_init() has never been called.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/419fcc09d0e563b425c419053d02236b044d86b0.1710298421.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Found by RASU JSC and Linux Verification Center (linuxtesting.org)
+
+Fixes: 626994e07480 ("mtd: nand: hynix: Add read-retry support for 1x nm MLC NANDs")
+
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240313102721.1991299-1-korotkov.maxim.s@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/macintosh/via-macii.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/mtd/nand/raw/nand_hynix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/macintosh/via-macii.c b/drivers/macintosh/via-macii.c
-index 060e03f2264bc..6adb34d1e381b 100644
---- a/drivers/macintosh/via-macii.c
-+++ b/drivers/macintosh/via-macii.c
-@@ -142,24 +142,19 @@ static int macii_probe(void)
- /* Initialize the driver */
- static int macii_init(void)
- {
--	unsigned long flags;
- 	int err;
+diff --git a/drivers/mtd/nand/raw/nand_hynix.c b/drivers/mtd/nand/raw/nand_hynix.c
+index a9f50c9af1097..856b3d6eceb73 100644
+--- a/drivers/mtd/nand/raw/nand_hynix.c
++++ b/drivers/mtd/nand/raw/nand_hynix.c
+@@ -402,7 +402,7 @@ static int hynix_nand_rr_init(struct nand_chip *chip)
+ 	if (ret)
+ 		pr_warn("failed to initialize read-retry infrastructure");
  
--	local_irq_save(flags);
--
- 	err = macii_init_via();
- 	if (err)
--		goto out;
-+		return err;
- 
- 	err = request_irq(IRQ_MAC_ADB, macii_interrupt, 0, "ADB",
- 			  macii_interrupt);
- 	if (err)
--		goto out;
-+		return err;
- 
- 	macii_state = idle;
--out:
--	local_irq_restore(flags);
--	return err;
-+	return 0;
+-	return 0;
++	return ret;
  }
  
- /* initialize the hardware */
+ static void hynix_nand_extract_oobsize(struct nand_chip *chip,
 -- 
 2.43.0
 
