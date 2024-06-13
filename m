@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6358A81AA7;
-	Thu, 13 Jun 2024 12:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9A3137914;
+	Thu, 13 Jun 2024 12:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281033; cv=none; b=qn2PmZrBdZyzrPDOQH+jHAO/rXm/L7YN7BmXQCTCuoieivWllLy/PipQZYUdpzOH/59PzcTIlNR+jY3fbo/7OAWCo2Jn74BLOSmRHjNe28zevtAyE99HLhOeboir5/Xji0QGA+68ui4UZ5QbVZ6Q7ZP0fyHVnRIk6/Xs3LyXCaU=
+	t=1718281036; cv=none; b=WIX86kvMxpHQSnT24l+krPAMM28c2SCQOCeahD6MIldwnsVdgWuq94Vfy0HscGLG/BczUXbvVM+PjQMSfC6ommGl+rKAKgU/N+9xqbHqA4pnTRG3HqrcobI5im9lWm1I6i7+4ovS8LfPzwFaOe44sx8Al6KVDf1mEriTJA/d2+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281033; c=relaxed/simple;
-	bh=MuwuugYTT0aYfewpIht73GKOlLDpCv6W8X8VfLsNt0s=;
+	s=arc-20240116; t=1718281036; c=relaxed/simple;
+	bh=CEZzpOiI+4i3xMbOJpBGML9cVTx4HoZZSa8i1+M78jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VuE6REj0yQbYkJ6q0xh2maAEZ1BkMPXcmUvCloh6ngntnDq0t89okx7AmT5H0pTIXKB2nxREENkiCLpumnBcKCykyNMc4tkl2yNVusv4RYQHJW8tghn5N5U3rsY9HVoXXThE7MWVphxDaD8iCG0yV+fI1U4av0ivxFDbWYDVMyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzidGcJ3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K0K+c2WJLcpDDYmCZ4Keep5x/tUN/rwvZuBGgirJ07eaAOGxfymhHv+uQSxMHQigsd0ayAxStp5syCjDc1qSySamOWKPJNFys5lMNHnhLKeJFlWGQDIhNcBSucmIve83hxHxp3uTSrR1FD5+6gzCXekJKBAfSqzEITZ8pGVlMqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCG1Goqg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzidGcJ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEEEC2BBFC;
-	Thu, 13 Jun 2024 12:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCG1Goqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C855CC2BBFC;
+	Thu, 13 Jun 2024 12:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281033;
-	bh=MuwuugYTT0aYfewpIht73GKOlLDpCv6W8X8VfLsNt0s=;
+	s=korg; t=1718281036;
+	bh=CEZzpOiI+4i3xMbOJpBGML9cVTx4HoZZSa8i1+M78jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzidGcJ3NxnpwvXEZANHrxO1TiAC3dpABnQesg0O2bPuQoFEJC4zsZNwCfJ3N7wZ3
-	 DN2Kz3ejpvVn71SaEMsDlbMj+3JV8nrxMUm/75XYl5kcgnVfFAErl+oiv2S9WaLbtt
-	 yeIn4lQdSiUCMFVEfUOThuAn7oOFyC33DfJFRQIs=
+	b=OCG1GoqgTk4l7YW0prWEe1Id9BNpyb7/TOf1tRcaLs4SXNfxfjK5LyH99TIQC6pq4
+	 y1vnSgPuE6TsRAcnuOdIeBdeWoD+litiafWjn1Szi75ujEm+X+FWGDPlzKdDvPy5/0
+	 guvsORtMHchIiQ4zZo7TwdpeDMcSC71AUJu3KKiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Marc Gonzalez <mgonzalez@freebox.fr>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 117/317] clk: qcom: mmcc-msm8998: fix venus clock issue
-Date: Thu, 13 Jun 2024 13:32:15 +0200
-Message-ID: <20240613113252.078512193@linuxfoundation.org>
+Subject: [PATCH 5.10 118/317] x86/insn: Fix PUSH instruction in x86 instruction decoder opcode map
+Date: Thu, 13 Jun 2024 13:32:16 +0200
+Message-ID: <20240613113252.116584033@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -53,112 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Gonzalez <mgonzalez@freebox.fr>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit e20ae5ae9f0c843aded4f06f3d1cab7384789e92 ]
+[ Upstream commit 59162e0c11d7257cde15f907d19fefe26da66692 ]
 
-Right now, msm8998 video decoder (venus) is non-functional:
+The x86 instruction decoder is used not only for decoding kernel
+instructions. It is also used by perf uprobes (user space probes) and by
+perf tools Intel Processor Trace decoding. Consequently, it needs to
+support instructions executed by user space also.
 
-$ time mpv --hwdec=v4l2m2m-copy --vd-lavc-software-fallback=no --vo=null --no-audio --untimed --length=30 --quiet demo-480.webm
- (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
-     Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
-[ffmpeg/video] vp9_v4l2m2m: output VIDIOC_REQBUFS failed: Connection timed out
-[ffmpeg/video] vp9_v4l2m2m: no v4l2 output context's buffers
-[ffmpeg/video] vp9_v4l2m2m: can't configure decoder
-Could not open codec.
-Software decoding fallback is disabled.
-Exiting... (Quit)
+Opcode 0x68 PUSH instruction is currently defined as 64-bit operand size
+only i.e. (d64). That was based on Intel SDM Opcode Map. However that is
+contradicted by the Instruction Set Reference section for PUSH in the
+same manual.
 
-Bryan O'Donoghue suggested the proper fix:
-- Set required register offsets in venus GDSC structs.
-- Set HW_CTRL flag.
+Remove 64-bit operand size only annotation from opcode 0x68 PUSH
+instruction.
 
-$ time mpv --hwdec=v4l2m2m-copy --vd-lavc-software-fallback=no --vo=null --no-audio --untimed --length=30 --quiet demo-480.webm
- (+) Video --vid=1 (*) (vp9 854x480 29.970fps)
-     Audio --aid=1 --alang=eng (*) (opus 2ch 48000Hz)
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-[ffmpeg/video] vp9_v4l2m2m: VIDIOC_G_FMT ioctl
-...
-Using hardware decoding (v4l2m2m-copy).
-VO: [null] 854x480 nv12
-Exiting... (End of file)
-real	0m3.315s
-user	0m1.277s
-sys	0m0.453s
+Example:
 
-NOTES:
+  $ cat pushw.s
+  .global  _start
+  .text
+  _start:
+          pushw   $0x1234
+          mov     $0x1,%eax   # system call number (sys_exit)
+          int     $0x80
+  $ as -o pushw.o pushw.s
+  $ ld -s -o pushw pushw.o
+  $ objdump -d pushw | tail -4
+  0000000000401000 <.text>:
+    401000:       66 68 34 12             pushw  $0x1234
+    401004:       b8 01 00 00 00          mov    $0x1,%eax
+    401009:       cd 80                   int    $0x80
+  $ perf record -e intel_pt//u ./pushw
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.014 MB perf.data ]
 
-GDSC = Globally Distributed Switch Controller
+ Before:
 
-Use same code as mmcc-msm8996 with:
-s/venus_gdsc/video_top_gdsc/
-s/venus_core0_gdsc/video_subcore0_gdsc/
-s/venus_core1_gdsc/video_subcore1_gdsc/
+  $ perf script --insn-trace=disasm
+  Warning:
+  1 instruction trace errors
+           pushw   10349 [000] 10586.869237014:            401000 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           pushw $0x1234
+           pushw   10349 [000] 10586.869237014:            401006 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb %al, (%rax)
+           pushw   10349 [000] 10586.869237014:            401008 [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb %cl, %ch
+           pushw   10349 [000] 10586.869237014:            40100a [unknown] (/home/ahunter/git/misc/rtit-tests/pushw)           addb $0x2e, (%rax)
+   instruction trace error type 1 time 10586.869237224 cpu 0 pid 10349 tid 10349 ip 0x40100d code 6: Trace doesn't match instruction
 
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8996.h
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/include/dt-bindings/clock/msm-clocks-hwio-8998.h
+ After:
 
-0x1024 = MMSS_VIDEO GDSCR (undocumented)
-0x1028 = MMSS_VIDEO_CORE_CBCR
-0x1030 = MMSS_VIDEO_AHB_CBCR
-0x1034 = MMSS_VIDEO_AXI_CBCR
-0x1038 = MMSS_VIDEO_MAXI_CBCR
-0x1040 = MMSS_VIDEO_SUBCORE0 GDSCR (undocumented)
-0x1044 = MMSS_VIDEO_SUBCORE1 GDSCR (undocumented)
-0x1048 = MMSS_VIDEO_SUBCORE0_CBCR
-0x104c = MMSS_VIDEO_SUBCORE1_CBCR
+  $ perf script --insn-trace=disasm
+             pushw   10349 [000] 10586.869237014:            401000 [unknown] (./pushw)           pushw $0x1234
+             pushw   10349 [000] 10586.869237014:            401004 [unknown] (./pushw)           movl $1, %eax
 
-Fixes: d14b15b5931c2b ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Link: https://lore.kernel.org/r/ff4e2e34-a677-4c39-8c29-83655c5512ae@freebox.fr
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: eb13296cfaf6 ("x86: Instruction decoder API")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20240502105853.5338-3-adrian.hunter@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-msm8998.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/lib/x86-opcode-map.txt       | 2 +-
+ tools/arch/x86/lib/x86-opcode-map.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
-index a68764cfb7930..5e2e60c1c2283 100644
---- a/drivers/clk/qcom/mmcc-msm8998.c
-+++ b/drivers/clk/qcom/mmcc-msm8998.c
-@@ -2587,6 +2587,8 @@ static struct clk_hw *mmcc_msm8998_hws[] = {
- 
- static struct gdsc video_top_gdsc = {
- 	.gdscr = 0x1024,
-+	.cxcs = (unsigned int []){ 0x1028, 0x1034, 0x1038 },
-+	.cxc_count = 3,
- 	.pd = {
- 		.name = "video_top",
- 	},
-@@ -2595,20 +2597,26 @@ static struct gdsc video_top_gdsc = {
- 
- static struct gdsc video_subcore0_gdsc = {
- 	.gdscr = 0x1040,
-+	.cxcs = (unsigned int []){ 0x1048 },
-+	.cxc_count = 1,
- 	.pd = {
- 		.name = "video_subcore0",
- 	},
- 	.parent = &video_top_gdsc.pd,
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = HW_CTRL,
- };
- 
- static struct gdsc video_subcore1_gdsc = {
- 	.gdscr = 0x1044,
-+	.cxcs = (unsigned int []){ 0x104c },
-+	.cxc_count = 1,
- 	.pd = {
- 		.name = "video_subcore1",
- 	},
- 	.parent = &video_top_gdsc.pd,
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = HW_CTRL,
- };
- 
- static struct gdsc mdss_gdsc = {
+diff --git a/arch/x86/lib/x86-opcode-map.txt b/arch/x86/lib/x86-opcode-map.txt
+index ec31f5b60323d..1c25c1072a84d 100644
+--- a/arch/x86/lib/x86-opcode-map.txt
++++ b/arch/x86/lib/x86-opcode-map.txt
+@@ -148,7 +148,7 @@ AVXcode:
+ 65: SEG=GS (Prefix)
+ 66: Operand-Size (Prefix)
+ 67: Address-Size (Prefix)
+-68: PUSH Iz (d64)
++68: PUSH Iz
+ 69: IMUL Gv,Ev,Iz
+ 6a: PUSH Ib (d64)
+ 6b: IMUL Gv,Ev,Ib
+diff --git a/tools/arch/x86/lib/x86-opcode-map.txt b/tools/arch/x86/lib/x86-opcode-map.txt
+index ec31f5b60323d..1c25c1072a84d 100644
+--- a/tools/arch/x86/lib/x86-opcode-map.txt
++++ b/tools/arch/x86/lib/x86-opcode-map.txt
+@@ -148,7 +148,7 @@ AVXcode:
+ 65: SEG=GS (Prefix)
+ 66: Operand-Size (Prefix)
+ 67: Address-Size (Prefix)
+-68: PUSH Iz (d64)
++68: PUSH Iz
+ 69: IMUL Gv,Ev,Iz
+ 6a: PUSH Ib (d64)
+ 6b: IMUL Gv,Ev,Ib
 -- 
 2.43.0
 
