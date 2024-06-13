@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F0B13C68A;
-	Thu, 13 Jun 2024 12:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960C813C660;
+	Thu, 13 Jun 2024 12:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281310; cv=none; b=Epxqjqg8XrZ29MCsV5rSjtz2aKskuWw/oKCi9iar/WuQvwjBegDSec+g9aDtUYhetzKQ1eKLT/7m2mKzXH8mLxGG1wALDs9gMaAZ639YjJQ4WwcSlx/5JBbNGOUohc949zXq25igKI59S1WE+bjxcc9UeHGnJacDMFdUMBTs9o4=
+	t=1718281313; cv=none; b=ElPWqYd0xtJck6OLbQcZ7PRQabjdXs9jTQVZ0F9tNKbweW1cfd+nfe+85L9nZYcpY0FCcsgk6hdi2VYsjcU79XwG/d8L54fkwnolXAWmCekpV6V0dxGIL/KCbnMZaUFYoNR6KwXO5SaskvaQqnvzbeHStUNZpZGAKvENWq2IW3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281310; c=relaxed/simple;
-	bh=WPDk4suXbHa5zxOmshpeO1zx+1zCCmWQQQE/uxrMT/0=;
+	s=arc-20240116; t=1718281313; c=relaxed/simple;
+	bh=0dg3FNVyKuI/50lvtbqxvt1qbqqEzkwo9a8RSUrL4Sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C1jETCYudBR9lElpZ/CW6q24nVap3W34oiIfXiwjG8ERu5/F8omldb2L+cftKEDvH1MwqRUZjj110SgLNWBmnf4kN7s5RGwdRX8rKuCqh/cSZm77XaxuLz0S88tIchXzLzGTk9BGejuQnFK9/9v5AVYFo7CaNvfSbrqLWQbOY7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMnrrWqJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lxIqeMiUdYkz3KGV8oNoNU1990F0E2sDJw/WW49FDvIGj/K0+hTALcfICgaarhEkHo45IIYvIacVvhVwmGbIc+u8KWOlYdK1bCoWuzLExL+jM8BKrXmvxutKIBw9LGr4jFXk0shi1j9LPhtfMPEQSTPdLy257Nyb+PsBu0PjQOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFkUMH2r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMnrrWqJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3E5C2BBFC;
-	Thu, 13 Jun 2024 12:21:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFkUMH2r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD69FC2BBFC;
+	Thu, 13 Jun 2024 12:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281310;
-	bh=WPDk4suXbHa5zxOmshpeO1zx+1zCCmWQQQE/uxrMT/0=;
+	s=korg; t=1718281313;
+	bh=0dg3FNVyKuI/50lvtbqxvt1qbqqEzkwo9a8RSUrL4Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMnrrWqJ5I1qfLuQcTyN3HWcXDiJEuRNLyAz8esYbWKi4ZCee+7q5EXwe07JOfuwN
-	 CAWVs43ksEfwEKgNE9saVkbLKJPejwPlPDN9Oxe1ucK44vGTjdm6zTr6kKny1RJMpi
-	 8B/UDzXLHnX7X2jiJcZo5wMPmpJ+DI1DOz1RlsdI=
+	b=xFkUMH2r0PiGW8ls0jcSltz7ECyq5NAnkXC2yD+omN0OQelYjCzVxr5JHpN2pKR2x
+	 YZ+4m0bHPYOKultv0UP5RSgYYYRsWOEGzFVcH8h0IJDfOM8AqXZtzMMolQP0dqMpKp
+	 ee6XmazaC6Qfwit+HuRTDNLe+8IgTXPbFoJEoajw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 212/317] powerpc/pseries: Add failure related checks for h_get_mpp and h_get_ppp
-Date: Thu, 13 Jun 2024 13:33:50 +0200
-Message-ID: <20240613113255.756646043@linuxfoundation.org>
+Subject: [PATCH 5.10 213/317] um: Fix the -Wmissing-prototypes warning for __switch_mm
+Date: Thu, 13 Jun 2024 13:33:51 +0200
+Message-ID: <20240613113255.795041662@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,83 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit 6d4341638516bf97b9a34947e0bd95035a8230a5 ]
+[ Upstream commit 2cbade17b18c0f0fd9963f26c9fc9b057eb1cb3a ]
 
-Couple of Minor fixes:
+The __switch_mm function is defined in the user code, and is called
+by the kernel code. It should be declared in a shared header.
 
-- hcall return values are long. Fix that for h_get_mpp, h_get_ppp and
-parse_ppp_data
-
-- If hcall fails, values set should be at-least zero. It shouldn't be
-uninitialized values. Fix that for h_get_mpp and h_get_ppp
-
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240412092047.455483-3-sshegde@linux.ibm.com
+Fixes: 4dc706c2f292 ("um: take um_mmu.h to asm/mmu.h, clean asm/mmu_context.h a bit")
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/hvcall.h        | 2 +-
- arch/powerpc/platforms/pseries/lpar.c    | 6 +++---
- arch/powerpc/platforms/pseries/lparcfg.c | 6 +++---
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ arch/um/include/asm/mmu.h           | 2 --
+ arch/um/include/shared/skas/mm_id.h | 2 ++
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/hvcall.h b/arch/powerpc/include/asm/hvcall.h
-index 00c8cda1c9c31..1a60188f74ad8 100644
---- a/arch/powerpc/include/asm/hvcall.h
-+++ b/arch/powerpc/include/asm/hvcall.h
-@@ -494,7 +494,7 @@ struct hvcall_mpp_data {
- 	unsigned long backing_mem;
+diff --git a/arch/um/include/asm/mmu.h b/arch/um/include/asm/mmu.h
+index 5b072aba5b658..a7cb380c0b5c0 100644
+--- a/arch/um/include/asm/mmu.h
++++ b/arch/um/include/asm/mmu.h
+@@ -15,8 +15,6 @@ typedef struct mm_context {
+ 	struct page *stub_pages[2];
+ } mm_context_t;
+ 
+-extern void __switch_mm(struct mm_id * mm_idp);
+-
+ /* Avoid tangled inclusion with asm/ldt.h */
+ extern long init_new_ldt(struct mm_context *to_mm, struct mm_context *from_mm);
+ extern void free_ldt(struct mm_context *mm);
+diff --git a/arch/um/include/shared/skas/mm_id.h b/arch/um/include/shared/skas/mm_id.h
+index e82e203f5f419..92dbf727e3842 100644
+--- a/arch/um/include/shared/skas/mm_id.h
++++ b/arch/um/include/shared/skas/mm_id.h
+@@ -15,4 +15,6 @@ struct mm_id {
+ 	int kill;
  };
  
--int h_get_mpp(struct hvcall_mpp_data *);
-+long h_get_mpp(struct hvcall_mpp_data *mpp_data);
- 
- struct hvcall_mpp_x_data {
- 	unsigned long coalesced_bytes;
-diff --git a/arch/powerpc/platforms/pseries/lpar.c b/arch/powerpc/platforms/pseries/lpar.c
-index 4a3425fb19398..aed67f1a1bc56 100644
---- a/arch/powerpc/platforms/pseries/lpar.c
-+++ b/arch/powerpc/platforms/pseries/lpar.c
-@@ -1883,10 +1883,10 @@ void __trace_hcall_exit(long opcode, long retval, unsigned long *retbuf)
-  * h_get_mpp
-  * H_GET_MPP hcall returns info in 7 parms
-  */
--int h_get_mpp(struct hvcall_mpp_data *mpp_data)
-+long h_get_mpp(struct hvcall_mpp_data *mpp_data)
- {
--	int rc;
--	unsigned long retbuf[PLPAR_HCALL9_BUFSIZE];
-+	unsigned long retbuf[PLPAR_HCALL9_BUFSIZE] = {0};
-+	long rc;
- 
- 	rc = plpar_hcall9(H_GET_MPP, retbuf);
- 
-diff --git a/arch/powerpc/platforms/pseries/lparcfg.c b/arch/powerpc/platforms/pseries/lparcfg.c
-index a7d4e25ae82a1..e0c5fc9ab242e 100644
---- a/arch/powerpc/platforms/pseries/lparcfg.c
-+++ b/arch/powerpc/platforms/pseries/lparcfg.c
-@@ -112,8 +112,8 @@ struct hvcall_ppp_data {
-  */
- static unsigned int h_get_ppp(struct hvcall_ppp_data *ppp_data)
- {
--	unsigned long rc;
--	unsigned long retbuf[PLPAR_HCALL9_BUFSIZE];
-+	unsigned long retbuf[PLPAR_HCALL9_BUFSIZE] = {0};
-+	long rc;
- 
- 	rc = plpar_hcall9(H_GET_PPP, retbuf);
- 
-@@ -192,7 +192,7 @@ static void parse_ppp_data(struct seq_file *m)
- 	struct hvcall_ppp_data ppp_data;
- 	struct device_node *root;
- 	const __be32 *perf_level;
--	int rc;
-+	long rc;
- 
- 	rc = h_get_ppp(&ppp_data);
- 	if (rc)
++void __switch_mm(struct mm_id *mm_idp);
++
+ #endif
 -- 
 2.43.0
 
