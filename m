@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F1D1420C6;
-	Thu, 13 Jun 2024 12:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE29A1428EA;
+	Thu, 13 Jun 2024 12:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282610; cv=none; b=GHzMNnHOCxhB4IMPxAF33CAjV7Nrjfj7O4Lg9xtdpZk1a9bvGBMtDU0B41hlsa1CdVsahbw19nXYTobOxdl5U/42u112Ybf3eB5dLEv14/Feaw9ZXjLm3TVBXtsdWMytOAfgPUbQ3djgd4hIG3VpwNb3rlOM4O4NOXmJoS/wcAI=
+	t=1718282613; cv=none; b=Xy5cpJ8FD/PPNsO8+jNFsUgNu/0EjSOcN9Q63FM3bdRx41TUXRwdD62UNcPk/RAixj/+NCoh7ox9xfqtuaUOi94VT3lXVuD0sazZhjwPcgwdFQs1PxgWgSOgiOfsWtRtokYIwSgmk5i9Qrzd333GRlP3oQIVDf3UTqMpqD4ZYf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282610; c=relaxed/simple;
-	bh=Xw7h0z+Qr7j60+U0uTJ7XkKm8wmrOExylemwVW8yV3E=;
+	s=arc-20240116; t=1718282613; c=relaxed/simple;
+	bh=QIsA47UqU6KSrw0Wb9LtU5NdCIXRK/vZ3SqcdVKLw7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cPJ2xZhDyYxnG45ZbFGmV1ZWHan12xyk3vn+DVLrSJR70zJaRhQzpe1qaBDY7PvIuoKNN4aojWLfpKHTqJOIuO7mqjuy7InFTcfeefWhB2CSzLQByvLhNPaihNVwi8QTzXIr1+7W5mdSmvZiIRLaAPT09Rnd8z3iBRVxDVilb5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgAaimYE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YVAn08Egho18Kp0dLpCVzGqD+HA4pENhtku5pheKwBRkvOFhkRiPISTtqQONKXwlTLhBDr9eJJzUy/Ad37jFXnghYYhYBHpdwCGy2z4S/EowVvC6TBLCftjTJfQxKWaLqL6/BGMfKJYi2T+WkFZf/n0FvYMACVv2WoyoZbqjcMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ol4gx0IO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgAaimYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5048DC2BBFC;
-	Thu, 13 Jun 2024 12:43:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ol4gx0IO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CF6C2BBFC;
+	Thu, 13 Jun 2024 12:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282610;
-	bh=Xw7h0z+Qr7j60+U0uTJ7XkKm8wmrOExylemwVW8yV3E=;
+	s=korg; t=1718282613;
+	bh=QIsA47UqU6KSrw0Wb9LtU5NdCIXRK/vZ3SqcdVKLw7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vgAaimYEnpSd4RZJEK4xZAu3KjBx4EUS4yodmqTJMi9d9H4LD+0VmKOMouedjIvHq
-	 yz18Or2B0xEWGLH1OEPQdnpVmXX5Kfgw4e2PS08IkucVg0q16vrBK8F6vCOKtheeVU
-	 mHLDpaPo0v9Cvt9BP8+U6Ro09qVhzmw0olFoZ30E=
+	b=Ol4gx0IOe2dP0sGTZiw6PybwD4+zaHrGfH30+RqJ+2U7RfRRdDOfqcSDRG7fj1Yoa
+	 vo5zFy5zl/QVQo7DXUrb+KOtM7fRPIPfYOUykIioXGhuc5gWtRLTMalgPtGnc+bInl
+	 1rWlHEorKT5BxPBnA840R4n3EjUzuo3T+WPQkICc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Hoffmann <kraxel@redhat.com>,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 335/402] KVM: x86: Dont advertise guest.MAXPHYADDR as host.MAXPHYADDR in CPUID
-Date: Thu, 13 Jun 2024 13:34:52 +0200
-Message-ID: <20240613113315.203564801@linuxfoundation.org>
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 336/402] genirq/cpuhotplug, x86/vector: Prevent vector leak during CPU offline
+Date: Thu, 13 Jun 2024 13:34:53 +0200
+Message-ID: <20240613113315.243301890@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,74 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-commit 6f5c9600621b4efb5c61b482d767432eb1ad3a9c upstream.
+commit a6c11c0a5235fb144a65e0cb2ffd360ddc1f6c32 upstream.
 
-Drop KVM's propagation of GuestPhysBits (CPUID leaf 80000008, EAX[23:16])
-to HostPhysBits (same leaf, EAX[7:0]) when advertising the address widths
-to userspace via KVM_GET_SUPPORTED_CPUID.
+The absence of IRQD_MOVE_PCNTXT prevents immediate effectiveness of
+interrupt affinity reconfiguration via procfs. Instead, the change is
+deferred until the next instance of the interrupt being triggered on the
+original CPU.
 
-Per AMD, GuestPhysBits is intended for software use, and physical CPUs do
-not set that field.  I.e. GuestPhysBits will be non-zero if and only if
-KVM is running as a nested hypervisor, and in that case, GuestPhysBits is
-NOT guaranteed to capture the CPU's effective MAXPHYADDR when running with
-TDP enabled.
+When the interrupt next triggers on the original CPU, the new affinity is
+enforced within __irq_move_irq(). A vector is allocated from the new CPU,
+but the old vector on the original CPU remains and is not immediately
+reclaimed. Instead, apicd->move_in_progress is flagged, and the reclaiming
+process is delayed until the next trigger of the interrupt on the new CPU.
 
-E.g. KVM will soon use GuestPhysBits to communicate the CPU's maximum
-*addressable* guest physical address, which would result in KVM under-
-reporting PhysBits when running as an L1 on a CPU with MAXPHYADDR=52,
-but without 5-level paging.
+Upon the subsequent triggering of the interrupt on the new CPU,
+irq_complete_move() adds a task to the old CPU's vector_cleanup list if it
+remains online. Subsequently, the timer on the old CPU iterates over its
+vector_cleanup list, reclaiming old vectors.
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+However, a rare scenario arises if the old CPU is outgoing before the
+interrupt triggers again on the new CPU.
+
+In that case irq_force_complete_move() is not invoked on the outgoing CPU
+to reclaim the old apicd->prev_vector because the interrupt isn't currently
+affine to the outgoing CPU, and irq_needs_fixup() returns false. Even
+though __vector_schedule_cleanup() is later called on the new CPU, it
+doesn't reclaim apicd->prev_vector; instead, it simply resets both
+apicd->move_in_progress and apicd->prev_vector to 0.
+
+As a result, the vector remains unreclaimed in vector_matrix, leading to a
+CPU vector leak.
+
+To address this issue, move the invocation of irq_force_complete_move()
+before the irq_needs_fixup() call to reclaim apicd->prev_vector, if the
+interrupt is currently or used to be affine to the outgoing CPU.
+
+Additionally, reclaim the vector in __vector_schedule_cleanup() as well,
+following a warning message, although theoretically it should never see
+apicd->move_in_progress with apicd->prev_cpu pointing to an offline CPU.
+
+Fixes: f0383c24b485 ("genirq/cpuhotplug: Add support for cleaning up move in progress")
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20240313125844.912415-2-kraxel@redhat.com
-[sean: rewrite changelog with --verbose, Cc stable@]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20240522220218.162423-1-dongli.zhang@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/cpuid.c |   21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ arch/x86/kernel/apic/vector.c |    9 ++++++---
+ kernel/irq/cpuhotplug.c       |   16 ++++++++--------
+ 2 files changed, 14 insertions(+), 11 deletions(-)
 
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -934,9 +934,8 @@ static inline int __do_cpuid_func(struct
- 		entry->eax = entry->ebx = entry->ecx = 0;
- 		break;
- 	case 0x80000008: {
--		unsigned g_phys_as = (entry->eax >> 16) & 0xff;
--		unsigned virt_as = max((entry->eax >> 8) & 0xff, 48U);
--		unsigned phys_as = entry->eax & 0xff;
-+		unsigned int virt_as = max((entry->eax >> 8) & 0xff, 48U);
-+		unsigned int phys_as;
+--- a/arch/x86/kernel/apic/vector.c
++++ b/arch/x86/kernel/apic/vector.c
+@@ -982,7 +982,8 @@ static void __send_cleanup_vector(struct
+ 		hlist_add_head(&apicd->clist, per_cpu_ptr(&cleanup_list, cpu));
+ 		apic->send_IPI(cpu, IRQ_MOVE_CLEANUP_VECTOR);
+ 	} else {
+-		apicd->prev_vector = 0;
++		pr_warn("IRQ %u schedule cleanup for offline CPU %u\n", apicd->irq, cpu);
++		free_moved_vector(apicd);
+ 	}
+ 	raw_spin_unlock(&vector_lock);
+ }
+@@ -1019,6 +1020,7 @@ void irq_complete_move(struct irq_cfg *c
+  */
+ void irq_force_complete_move(struct irq_desc *desc)
+ {
++	unsigned int cpu = smp_processor_id();
+ 	struct apic_chip_data *apicd;
+ 	struct irq_data *irqd;
+ 	unsigned int vector;
+@@ -1043,10 +1045,11 @@ void irq_force_complete_move(struct irq_
+ 		goto unlock;
  
- 		/*
- 		 * If TDP (NPT) is disabled use the adjusted host MAXPHYADDR as
-@@ -944,16 +943,16 @@ static inline int __do_cpuid_func(struct
- 		 * reductions in MAXPHYADDR for memory encryption affect shadow
- 		 * paging, too.
- 		 *
--		 * If TDP is enabled but an explicit guest MAXPHYADDR is not
--		 * provided, use the raw bare metal MAXPHYADDR as reductions to
--		 * the HPAs do not affect GPAs.
-+		 * If TDP is enabled, use the raw bare metal MAXPHYADDR as
-+		 * reductions to the HPAs do not affect GPAs.
- 		 */
--		if (!tdp_enabled)
--			g_phys_as = boot_cpu_data.x86_phys_bits;
--		else if (!g_phys_as)
--			g_phys_as = phys_as;
-+		if (!tdp_enabled) {
-+			phys_as = boot_cpu_data.x86_phys_bits;
-+		} else {
-+			phys_as = entry->eax & 0xff;
-+		}
+ 	/*
+-	 * If prev_vector is empty, no action required.
++	 * If prev_vector is empty or the descriptor is neither currently
++	 * nor previously on the outgoing CPU no action required.
+ 	 */
+ 	vector = apicd->prev_vector;
+-	if (!vector)
++	if (!vector || (apicd->cpu != cpu && apicd->prev_cpu != cpu))
+ 		goto unlock;
  
--		entry->eax = g_phys_as | (virt_as << 8);
-+		entry->eax = phys_as | (virt_as << 8);
- 		entry->ecx &= ~(GENMASK(31, 16) | GENMASK(11, 8));
- 		entry->edx = 0;
- 		cpuid_entry_override(entry, CPUID_8000_0008_EBX);
+ 	/*
+--- a/kernel/irq/cpuhotplug.c
++++ b/kernel/irq/cpuhotplug.c
+@@ -70,6 +70,14 @@ static bool migrate_one_irq(struct irq_d
+ 	}
+ 
+ 	/*
++	 * Complete an eventually pending irq move cleanup. If this
++	 * interrupt was moved in hard irq context, then the vectors need
++	 * to be cleaned up. It can't wait until this interrupt actually
++	 * happens and this CPU was involved.
++	 */
++	irq_force_complete_move(desc);
++
++	/*
+ 	 * No move required, if:
+ 	 * - Interrupt is per cpu
+ 	 * - Interrupt is not started
+@@ -88,14 +96,6 @@ static bool migrate_one_irq(struct irq_d
+ 	}
+ 
+ 	/*
+-	 * Complete an eventually pending irq move cleanup. If this
+-	 * interrupt was moved in hard irq context, then the vectors need
+-	 * to be cleaned up. It can't wait until this interrupt actually
+-	 * happens and this CPU was involved.
+-	 */
+-	irq_force_complete_move(desc);
+-
+-	/*
+ 	 * If there is a setaffinity pending, then try to reuse the pending
+ 	 * mask, so the last change of the affinity does not get lost. If
+ 	 * there is no move pending or the pending mask does not contain
 
 
