@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF1E145320;
-	Thu, 13 Jun 2024 11:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D3313D624;
+	Thu, 13 Jun 2024 11:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279184; cv=none; b=O6IAE5w1jCZUu1SJhxtlBMdnrwk3e/9EqdfA5VN84WsqB9rwn7fJqre3cv5Mth0KW2kbsKjFEaMoalURrMaqw5hs8HSJUqrtCNpIe2jIeZCsmYtgASU7le5mmdQ8ZC86FNl4wVAzPkk1RBJuZGnvg0hEqmCzs1Q7cdKpnzNBVfs=
+	t=1718279187; cv=none; b=Fo/SnM5qRNakyGilRyyz13ahk4s6k8brJgYUadRW7kukSMTuXf6v7Bu7qLJj2p9Kgnlmjy3z2ZOrSyN3UZv0Wo2TbDO20Mvhie1Ck5z6tt/ZMB0wKb7DsYIcFXy1U3gR1h0knwLskqLQrBlcowBmFumAP7tp7i47l+l8MmBMyL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279184; c=relaxed/simple;
-	bh=4sxWBhny482towLy84YQ2oTG+jXlWOUJvCHXwRdTv2E=;
+	s=arc-20240116; t=1718279187; c=relaxed/simple;
+	bh=grA2bFU2SgNvC3gKiFwmJ+woFPy6It7bQY1bz16F64A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KqIy5OH+m7GU0q8NxI7Hn2rfs3XEYrZ2rONn2rQIlKZKmFdsoCgTQnVGK1ez01kBPPuSqEZBn8vhCk8484cNIV1wCz1QTkFsPXJEmuF7YwiwdWXW3vloeESZ3VtQVdLpyuxdj5JgHJ21MHDyZFTL9hl68KGu+zgdVBE/H1IWYQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7t3iea8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rF8QnYrAjeNmLzBXxZwSugijSxVBvzG9VxR9H15KnCm5MFHYEBQD6brVFWBc3YxYxSmXlshkieQAxeTd0fLHQZiBJMb3RxmGfdo2Df02ZG1o5b9ImE9yNk5V0/hzK0LZza2VlDBn1kw6cc3Kr0UpWVzJubZwLgUsYs93lhcX/80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOpKfOgd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7t3iea8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B929C4AF49;
-	Thu, 13 Jun 2024 11:46:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOpKfOgd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CB7C2BBFC;
+	Thu, 13 Jun 2024 11:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279183;
-	bh=4sxWBhny482towLy84YQ2oTG+jXlWOUJvCHXwRdTv2E=;
+	s=korg; t=1718279186;
+	bh=grA2bFU2SgNvC3gKiFwmJ+woFPy6It7bQY1bz16F64A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7t3iea8rF3twk2y+rbnWfQpfDi8NHkIVY4sN8KO08cS8KXpAePc0PkUAPFgLVfYW
-	 7Id/L+MLG8pKxs4bzbLRz1Pf9sX7ECO1O/ESbhH3Kzs3r20RWpL5541MJVIa7BDmDR
-	 N1n5FDtL4BGPX7RnFA5m9sC9lOZ+Cm8o6J3a6/ps=
+	b=bOpKfOgdKkA1swy7FZtTT6N0g4EbYiN3GLBph+0mB8GJ+1N8mMYmffJax51Q5kwfy
+	 s8KDyae31FmO1xLWZPOUm3K6TiF18VSLshFq9rOXuf0n3mtlhWXDCIGjgd6f/8pnbX
+	 SRFu76KmBGEEmcFkL6EE00Pj1mX9ujKlgXyuIs94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Nick Bowler <nbowler@draconx.ca>,
-	Andreas Larsson <andreas@gaisler.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Atish Patra <atish.patra@oracle.com>,
-	Bob Picco <bob.picco@oracle.com>,
-	Vijay Kumar <vijay.ac.kumar@oracle.com>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 4.19 203/213] sparc64: Fix number of online CPUs
-Date: Thu, 13 Jun 2024 13:34:11 +0200
-Message-ID: <20240613113235.809290198@linuxfoundation.org>
+	Justin Stitt <justinstitt@google.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>
+Subject: [PATCH 4.19 204/213] kdb: Fix buffer overflow during tab-complete
+Date: Thu, 13 Jun 2024 13:34:12 +0200
+Message-ID: <20240613113235.849526175@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -56,123 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Ravnborg <sam@ravnborg.org>
+From: Daniel Thompson <daniel.thompson@linaro.org>
 
-commit 98937707fea8375e8acea0aaa0b68a956dd52719 upstream.
+commit e9730744bf3af04cda23799029342aa3cddbc454 upstream.
 
-Nick Bowler reported:
-    When using newer kernels on my Ultra 60 with dual 450MHz UltraSPARC-II
-    CPUs, I noticed that only CPU 0 comes up, while older kernels (including
-    4.7) are working fine with both CPUs.
+Currently, when the user attempts symbol completion with the Tab key, kdb
+will use strncpy() to insert the completed symbol into the command buffer.
+Unfortunately it passes the size of the source buffer rather than the
+destination to strncpy() with predictably horrible results. Most obviously
+if the command buffer is already full but cp, the cursor position, is in
+the middle of the buffer, then we will write past the end of the supplied
+buffer.
 
-      I bisected the failure to this commit:
+Fix this by replacing the dubious strncpy() calls with memmove()/memcpy()
+calls plus explicit boundary checks to make sure we have enough space
+before we start moving characters around.
 
-      9b2f753ec23710aa32c0d837d2499db92fe9115b is the first bad commit
-      commit 9b2f753ec23710aa32c0d837d2499db92fe9115b
-      Author: Atish Patra <atish.patra@oracle.com>
-      Date:   Thu Sep 15 14:54:40 2016 -0600
-
-      sparc64: Fix cpu_possible_mask if nr_cpus is set
-
-    This is a small change that reverts very easily on top of 5.18: there is
-    just one trivial conflict.  Once reverted, both CPUs work again.
-
-    Maybe this is related to the fact that the CPUs on this system are
-    numbered CPU0 and CPU2 (there is no CPU1)?
-
-The current code that adjust cpu_possible based on nr_cpu_ids do not
-take into account that CPU's may not come one after each other.
-Move the chech to the function that setup the cpu_possible mask
-so there is no need to adjust it later.
-
-Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
-Fixes: 9b2f753ec237 ("sparc64: Fix cpu_possible_mask if nr_cpus is set")
-Reported-by: Nick Bowler <nbowler@draconx.ca>
-Tested-by: Nick Bowler <nbowler@draconx.ca>
-Link: https://lore.kernel.org/sparclinux/20201009161924.c8f031c079dd852941307870@gmx.de/
-Link: https://lore.kernel.org/all/CADyTPEwt=ZNams+1bpMB1F9w_vUdPsGCt92DBQxxq_VtaLoTdw@mail.gmail.com/
-Cc: stable@vger.kernel.org # v4.8+
-Cc: Andreas Larsson <andreas@gaisler.com>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Atish Patra <atish.patra@oracle.com>
-Cc: Bob Picco <bob.picco@oracle.com>
-Cc: Vijay Kumar <vijay.ac.kumar@oracle.com>
-Cc: David S. Miller <davem@davemloft.net>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240330-sparc64-warnings-v1-9-37201023ee2f@ravnborg.org
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Reported-by: Justin Stitt <justinstitt@google.com>
+Closes: https://lore.kernel.org/all/CAFhGd8qESuuifuHsNjFPR-Va3P80bxrw+LqvC8deA8GziUJLpw@mail.gmail.com/
+Cc: stable@vger.kernel.org
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Justin Stitt <justinstitt@google.com>
+Tested-by: Justin Stitt <justinstitt@google.com>
+Link: https://lore.kernel.org/r/20240424-kgdb_read_refactor-v3-1-f236dbe9828d@linaro.org
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/include/asm/smp_64.h |    2 --
- arch/sparc/kernel/prom_64.c     |    4 +++-
- arch/sparc/kernel/setup_64.c    |    1 -
- arch/sparc/kernel/smp_64.c      |   14 --------------
- 4 files changed, 3 insertions(+), 18 deletions(-)
+ kernel/debug/kdb/kdb_io.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/arch/sparc/include/asm/smp_64.h
-+++ b/arch/sparc/include/asm/smp_64.h
-@@ -47,7 +47,6 @@ void arch_send_call_function_ipi_mask(co
- int hard_smp_processor_id(void);
- #define raw_smp_processor_id() (current_thread_info()->cpu)
- 
--void smp_fill_in_cpu_possible_map(void);
- void smp_fill_in_sib_core_maps(void);
- void cpu_play_dead(void);
- 
-@@ -77,7 +76,6 @@ void __cpu_die(unsigned int cpu);
- #define smp_fill_in_sib_core_maps() do { } while (0)
- #define smp_fetch_global_regs() do { } while (0)
- #define smp_fetch_global_pmu() do { } while (0)
--#define smp_fill_in_cpu_possible_map() do { } while (0)
- #define smp_init_cpu_poke() do { } while (0)
- #define scheduler_poke() do { } while (0)
- 
---- a/arch/sparc/kernel/prom_64.c
-+++ b/arch/sparc/kernel/prom_64.c
-@@ -479,7 +479,9 @@ static void *record_one_cpu(struct devic
- 	ncpus_probed++;
- #ifdef CONFIG_SMP
- 	set_cpu_present(cpuid, true);
--	set_cpu_possible(cpuid, true);
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -364,14 +364,19 @@ poll_again:
+ 			kdb_printf(kdb_prompt_str);
+ 			kdb_printf("%s", buffer);
+ 		} else if (tab != 2 && count > 0) {
+-			len_tmp = strlen(p_tmp);
+-			strncpy(p_tmp+len_tmp, cp, lastchar-cp+1);
+-			len_tmp = strlen(p_tmp);
+-			strncpy(cp, p_tmp+len, len_tmp-len + 1);
+-			len = len_tmp - len;
+-			kdb_printf("%s", cp);
+-			cp += len;
+-			lastchar += len;
++			/* How many new characters do we want from tmpbuffer? */
++			len_tmp = strlen(p_tmp) - len;
++			if (lastchar + len_tmp >= bufend)
++				len_tmp = bufend - lastchar;
 +
-+	if (num_possible_cpus() < nr_cpu_ids)
-+		set_cpu_possible(cpuid, true);
- #endif
- 	return NULL;
- }
---- a/arch/sparc/kernel/setup_64.c
-+++ b/arch/sparc/kernel/setup_64.c
-@@ -690,7 +690,6 @@ void __init setup_arch(char **cmdline_p)
- 
- 	paging_init();
- 	init_sparc64_elf_hwcap();
--	smp_fill_in_cpu_possible_map();
- 	/*
- 	 * Once the OF device tree and MDESC have been setup and nr_cpus has
- 	 * been parsed, we know the list of possible cpus.  Therefore we can
---- a/arch/sparc/kernel/smp_64.c
-+++ b/arch/sparc/kernel/smp_64.c
-@@ -1213,20 +1213,6 @@ void __init smp_setup_processor_id(void)
- 		xcall_deliver_impl = hypervisor_xcall_deliver;
- }
- 
--void __init smp_fill_in_cpu_possible_map(void)
--{
--	int possible_cpus = num_possible_cpus();
--	int i;
--
--	if (possible_cpus > nr_cpu_ids)
--		possible_cpus = nr_cpu_ids;
--
--	for (i = 0; i < possible_cpus; i++)
--		set_cpu_possible(i, true);
--	for (; i < NR_CPUS; i++)
--		set_cpu_possible(i, false);
--}
--
- void smp_fill_in_sib_core_maps(void)
- {
- 	unsigned int i;
++			if (len_tmp) {
++				/* + 1 ensures the '\0' is memmove'd */
++				memmove(cp+len_tmp, cp, (lastchar-cp) + 1);
++				memcpy(cp, p_tmp+len, len_tmp);
++				kdb_printf("%s", cp);
++				cp += len_tmp;
++				lastchar += len_tmp;
++			}
+ 		}
+ 		kdb_nextline = 1; /* reset output line number */
+ 		break;
 
 
