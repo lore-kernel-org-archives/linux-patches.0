@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7467C145B02;
-	Thu, 13 Jun 2024 11:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7645F143C7B;
+	Thu, 13 Jun 2024 11:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279319; cv=none; b=vA6pZOVqhVKFp4Ir55A8YiPZDxrAQxxerYf1CwH+LsxoSI07sWTmdKcJ4UCsrmxIJ8DpECA8WKIPBblRt2zFdhVSPGDNdYmIrviV+9w96pVbDV++rygVLyqbNCSplqG+8dLavCuwMLDT+f9+Qp9B0x5vtoQBm2KRftkN3r88KyU=
+	t=1718279322; cv=none; b=fKXYZzx02eePaZRZuExf+FgnSDCe3lcdBXK7W8yNJf/j8b75+Z9xSRnbs3Y9wgYz7r0RW5hhXCd4unUJZ6iu7nOU6Ak1GlaEfbLVfF3yVCEVRc3zr/e2E3XNHfZCDdkURr2RPUoI44Th10TSDRAmFAGQCLw8R2Wh/zbIeIZ3aDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279319; c=relaxed/simple;
-	bh=Y46yFjD98PV7g1hwEVYEyDd0YNc7VsZ/8hyDqZg5w0o=;
+	s=arc-20240116; t=1718279322; c=relaxed/simple;
+	bh=7UaEi5iiUJIEJFcvVPj+wLNaHb+MKmln0uiB88flQVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2PGj71gh3bUbypZJA+7bLBV5s0wm3A+epkyiccC7GqU2dkthEqVyrDOZKKLl9A9nUP8IjvaQHouj6+LdBGLAd5vL9IfhxzN1DQu31WpmFeFpwftO/sOokgRf60536yUXjyB8JDeiaJEt+1e1FAKBHjfyyHlfKzN+rkmwWRlokQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vhvc6MEw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0TlwOBidzl3suz9oVxvCj0jGEC5A/26SoyRFupzsspkWkjHZBlC1PLqBCZLSwPH5OCtk2zEYNqlw6Jq9IbPAUNBb1Qyht1KteSXisZuU9//V0OhITzbmBjjy15nLsSbQCLJkTjsgej2Y1uIgFdYvDRvshz3yCVvIn8dFbhp0BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgtuHAdK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vhvc6MEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DB3C2BBFC;
-	Thu, 13 Jun 2024 11:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgtuHAdK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EECC2BBFC;
+	Thu, 13 Jun 2024 11:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279319;
-	bh=Y46yFjD98PV7g1hwEVYEyDd0YNc7VsZ/8hyDqZg5w0o=;
+	s=korg; t=1718279322;
+	bh=7UaEi5iiUJIEJFcvVPj+wLNaHb+MKmln0uiB88flQVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vhvc6MEwlX1bQ/htYXh8jOcC8lub+R1hFc96mVyh2v72aNI+E7U1xg0Oia2mCEwJC
-	 FWJ76yRb8ALwLzvPlQBRVamH8L63KqLhprZsNcYA240TZd/gC580p0CJAsrN0ECIZM
-	 NF7GmVd/OIEIzop7sue4fMhVJ8hZzFOeAgnabI90=
+	b=AgtuHAdKN0YeKv51upodQA+RruklUvWoHaYAc/REE26djzlLB8qYR88bvarHWMY/s
+	 3SwIdBUpbJ8EoqDSZ/KJXa65aGp4UycRuMX0d1/k8yWgvUNK0FHbEtBvBLB1KKgC3u
+	 3jItTzvMc+5U44H3ZzGYwu0NM9YRguyCML6ExypQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: [PATCH 6.9 036/157] media: mc: mark the media devnode as registered from the, start
-Date: Thu, 13 Jun 2024 13:32:41 +0200
-Message-ID: <20240613113228.815937702@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.9 037/157] media: mxl5xx: Move xpt structures off stack
+Date: Thu, 13 Jun 2024 13:32:42 +0200
+Message-ID: <20240613113228.855136187@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -51,48 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 4bc60736154bc9e0e39d3b88918f5d3762ebe5e0 upstream.
+commit 526f4527545b2d4ce0733733929fac7b6da09ac6 upstream.
 
-First the media device node was created, and if successful it was
-marked as 'registered'. This leaves a small race condition where
-an application can open the device node and get an error back
-because the 'registered' flag was not yet set.
+When building for LoongArch with clang 18.0.0, the stack usage of
+probe() is larger than the allowed 2048 bytes:
 
-Change the order: first set the 'registered' flag, then actually
-register the media device node. If that fails, then clear the flag.
+  drivers/media/dvb-frontends/mxl5xx.c:1698:12: warning: stack frame size (2368) exceeds limit (2048) in 'probe' [-Wframe-larger-than]
+   1698 | static int probe(struct mxl *state, struct mxl5xx_cfg *cfg)
+        |            ^
+  1 warning generated.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Fixes: cf4b9211b568 ("[media] media: Media device node support")
+This is the result of the linked LLVM commit, which changes how the
+arrays of structures in config_ts() get handled with
+CONFIG_INIT_STACK_ZERO and CONFIG_INIT_STACK_PATTERN, which causes the
+above warning in combination with inlining, as config_ts() gets inlined
+into probe().
+
+This warning can be easily fixed by moving the array of structures off
+of the stackvia 'static const', which is a better location for these
+variables anyways because they are static data that is only ever read
+from, never modified, so allocating the stack space is wasteful.
+
+This drops the stack usage from 2368 bytes to 256 bytes with the same
+compiler and configuration.
+
+Link: https://lore.kernel.org/linux-media/20240111-dvb-mxl5xx-move-structs-off-stack-v1-1-ca4230e67c11@kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1977
+Link: https://github.com/llvm/llvm-project/commit/afe8b93ffdfef5d8879e1894b9d7dda40dee2b8d
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Miguel Ojeda <ojeda@kernel.org>
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/mc/mc-devnode.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/media/dvb-frontends/mxl5xx.c |   22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
---- a/drivers/media/mc/mc-devnode.c
-+++ b/drivers/media/mc/mc-devnode.c
-@@ -245,15 +245,14 @@ int __must_check media_devnode_register(
- 	kobject_set_name(&devnode->cdev.kobj, "media%d", devnode->minor);
+--- a/drivers/media/dvb-frontends/mxl5xx.c
++++ b/drivers/media/dvb-frontends/mxl5xx.c
+@@ -1381,57 +1381,57 @@ static int config_ts(struct mxl *state,
+ 	u32 nco_count_min = 0;
+ 	u32 clk_type = 0;
  
- 	/* Part 3: Add the media and char device */
-+	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
- 	ret = cdev_device_add(&devnode->cdev, &devnode->dev);
- 	if (ret < 0) {
-+		clear_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
- 		pr_err("%s: cdev_device_add failed\n", __func__);
- 		goto cdev_add_error;
- 	}
- 
--	/* Part 4: Activate this minor. The char device can now be used. */
--	set_bit(MEDIA_FLAG_REGISTERED, &devnode->flags);
--
- 	return 0;
- 
- cdev_add_error:
+-	struct MXL_REG_FIELD_T xpt_sync_polarity[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_sync_polarity[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x90700010, 8, 1}, {0x90700010, 9, 1},
+ 		{0x90700010, 10, 1}, {0x90700010, 11, 1},
+ 		{0x90700010, 12, 1}, {0x90700010, 13, 1},
+ 		{0x90700010, 14, 1}, {0x90700010, 15, 1} };
+-	struct MXL_REG_FIELD_T xpt_clock_polarity[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_clock_polarity[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x90700010, 16, 1}, {0x90700010, 17, 1},
+ 		{0x90700010, 18, 1}, {0x90700010, 19, 1},
+ 		{0x90700010, 20, 1}, {0x90700010, 21, 1},
+ 		{0x90700010, 22, 1}, {0x90700010, 23, 1} };
+-	struct MXL_REG_FIELD_T xpt_valid_polarity[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_valid_polarity[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x90700014, 0, 1}, {0x90700014, 1, 1},
+ 		{0x90700014, 2, 1}, {0x90700014, 3, 1},
+ 		{0x90700014, 4, 1}, {0x90700014, 5, 1},
+ 		{0x90700014, 6, 1}, {0x90700014, 7, 1} };
+-	struct MXL_REG_FIELD_T xpt_ts_clock_phase[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_ts_clock_phase[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x90700018, 0, 3}, {0x90700018, 4, 3},
+ 		{0x90700018, 8, 3}, {0x90700018, 12, 3},
+ 		{0x90700018, 16, 3}, {0x90700018, 20, 3},
+ 		{0x90700018, 24, 3}, {0x90700018, 28, 3} };
+-	struct MXL_REG_FIELD_T xpt_lsb_first[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_lsb_first[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x9070000C, 16, 1}, {0x9070000C, 17, 1},
+ 		{0x9070000C, 18, 1}, {0x9070000C, 19, 1},
+ 		{0x9070000C, 20, 1}, {0x9070000C, 21, 1},
+ 		{0x9070000C, 22, 1}, {0x9070000C, 23, 1} };
+-	struct MXL_REG_FIELD_T xpt_sync_byte[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_sync_byte[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x90700010, 0, 1}, {0x90700010, 1, 1},
+ 		{0x90700010, 2, 1}, {0x90700010, 3, 1},
+ 		{0x90700010, 4, 1}, {0x90700010, 5, 1},
+ 		{0x90700010, 6, 1}, {0x90700010, 7, 1} };
+-	struct MXL_REG_FIELD_T xpt_enable_output[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_enable_output[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x9070000C, 0, 1}, {0x9070000C, 1, 1},
+ 		{0x9070000C, 2, 1}, {0x9070000C, 3, 1},
+ 		{0x9070000C, 4, 1}, {0x9070000C, 5, 1},
+ 		{0x9070000C, 6, 1}, {0x9070000C, 7, 1} };
+-	struct MXL_REG_FIELD_T xpt_err_replace_sync[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_err_replace_sync[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x9070000C, 24, 1}, {0x9070000C, 25, 1},
+ 		{0x9070000C, 26, 1}, {0x9070000C, 27, 1},
+ 		{0x9070000C, 28, 1}, {0x9070000C, 29, 1},
+ 		{0x9070000C, 30, 1}, {0x9070000C, 31, 1} };
+-	struct MXL_REG_FIELD_T xpt_err_replace_valid[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_err_replace_valid[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x90700014, 8, 1}, {0x90700014, 9, 1},
+ 		{0x90700014, 10, 1}, {0x90700014, 11, 1},
+ 		{0x90700014, 12, 1}, {0x90700014, 13, 1},
+ 		{0x90700014, 14, 1}, {0x90700014, 15, 1} };
+-	struct MXL_REG_FIELD_T xpt_continuous_clock[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_continuous_clock[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x907001D4, 0, 1}, {0x907001D4, 1, 1},
+ 		{0x907001D4, 2, 1}, {0x907001D4, 3, 1},
+ 		{0x907001D4, 4, 1}, {0x907001D4, 5, 1},
+ 		{0x907001D4, 6, 1}, {0x907001D4, 7, 1} };
+-	struct MXL_REG_FIELD_T xpt_nco_clock_rate[MXL_HYDRA_DEMOD_MAX] = {
++	static const struct MXL_REG_FIELD_T xpt_nco_clock_rate[MXL_HYDRA_DEMOD_MAX] = {
+ 		{0x90700044, 16, 80}, {0x90700044, 16, 81},
+ 		{0x90700044, 16, 82}, {0x90700044, 16, 83},
+ 		{0x90700044, 16, 84}, {0x90700044, 16, 85},
 
 
