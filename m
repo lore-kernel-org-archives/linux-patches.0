@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D507E136E00;
-	Thu, 13 Jun 2024 12:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02261448E4;
+	Thu, 13 Jun 2024 12:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281089; cv=none; b=p5M6DviFwLZI5hN4YTklENy5Nojt7lFdAmkimdCp6ADwHrMqmPlbgLo0dmpsoB/yPouqmqOmLk8HXBoisorXbn37LNdf096gawdcTdu/qW31FrA47N9uGKJVUsjRmqLBVGvv4d8l6/8pFrx5AMMqnhDzqobIyx9dDatV8H9DwrM=
+	t=1718281092; cv=none; b=Za8yApJFiGQ8uIRKKdpGZlJAxyus/fRVIpWERkScZ7oKU5iXDd3O//Igm7t31HGf/F3MCXJIL3xMrXsACAwpPWdJ2AeHRkkDzTgOTK6W2kC2jY298ApiFC+OmL4i9IOqGTY1EJA0LwBeMzy65emfBI2TpOY5eNlspd+DdsNQtyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281089; c=relaxed/simple;
-	bh=Anh1kAiTiiNqfL4xcXM3eayzFnLOY3LBqnLz3vLOHqo=;
+	s=arc-20240116; t=1718281092; c=relaxed/simple;
+	bh=3gpZR1/pNCFTb73XeL4b+cGjydice9JV0ob8cOJJbSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/WgpohshVjMYAJ49PXb5h8juGM/aEkgSz/5sG4QbVSaJg1Sf5o85NaXBOS91paCjY7B0miOMmeajEAJpdzrmD12WzBDNjpZS22TLk19lrtkTT4Kkh/4M7ZDQZTiN6GVmTTLrjy/C4i1xj/bBMazIUOJe2bwdKAY7XSl09iA3TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrG6ZnbU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NSp0Ho5xatSuNkBYTTHQeoDHtz1+YMPJN8zBM9A+F2DQjxPunHUHTSI4GNg/2b7JsoyT0RdD1ZclH/EPXbtE+oPCAGLgQmfqmCt3eR316fNnJLxepWkDDpj++rNvTfj/m0IZguaF/HUn5C9VEHF7ahxSwcSbgT7uoO7UmEgLk50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNy1T4bh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrG6ZnbU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BECBC2BBFC;
-	Thu, 13 Jun 2024 12:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNy1T4bh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D50C2BBFC;
+	Thu, 13 Jun 2024 12:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281089;
-	bh=Anh1kAiTiiNqfL4xcXM3eayzFnLOY3LBqnLz3vLOHqo=;
+	s=korg; t=1718281092;
+	bh=3gpZR1/pNCFTb73XeL4b+cGjydice9JV0ob8cOJJbSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WrG6ZnbUdcrSefhCSfpq/0UUxyb6EpVDxVLD2Q3cC9zkRPdCP0GAUgy7xQ3i/xZ0f
-	 7d4Vko77a2Klu2CIvuNEKdEGwd3qeuRrveSBgRPRTlY4TiyTvko44D4CWFoZY2Zc6B
-	 rQ73r80XR7Ji+0jxL0AlNw/ZZZCge1wEqlJLfeS8=
+	b=hNy1T4bh/TStiYSRNumGk1E7Y1u7gXQrD32T+rrekP+4wRxu7P3sKGg44fCUAal0l
+	 P3Zl4GUFqt3SLJVCltEevib+G4b6kBdZ6Ys2hppsOY4AsQIV/V2Ty7Tc8V4Lsat0Pj
+	 YpKxq+9q2xVMCXcjmUvmdRiYY51Jjvu0pmw7x7Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Hulk Robot <hulkci@huawei.com>,
+	Qinglang Miao <miaoqinglang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/317] powerpc/fsl-soc: hide unused const variable
-Date: Thu, 13 Jun 2024 13:31:55 +0200
-Message-ID: <20240613113251.302679348@linuxfoundation.org>
+Subject: [PATCH 5.10 130/317] net: qrtr: fix null-ptr-deref in qrtr_ns_remove
+Date: Thu, 13 Jun 2024 13:32:28 +0200
+Message-ID: <20240613113252.587909639@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,46 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Qinglang Miao <miaoqinglang@huawei.com>
 
-[ Upstream commit 01acaf3aa75e1641442cc23d8fe0a7bb4226efb1 ]
+[ Upstream commit 4beb17e553b49c3dd74505c9f361e756aaae653e ]
 
-vmpic_msi_feature is only used conditionally, which triggers a rare
--Werror=unused-const-variable= warning with gcc:
+A null-ptr-deref bug is reported by Hulk Robot like this:
+--------------
+KASAN: null-ptr-deref in range [0x0000000000000128-0x000000000000012f]
+Call Trace:
+qrtr_ns_remove+0x22/0x40 [ns]
+qrtr_proto_fini+0xa/0x31 [qrtr]
+__x64_sys_delete_module+0x337/0x4e0
+do_syscall_64+0x34/0x80
+entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x468ded
+--------------
 
-arch/powerpc/sysdev/fsl_msi.c:567:37: error: 'vmpic_msi_feature' defined but not used [-Werror=unused-const-variable=]
-  567 | static const struct fsl_msi_feature vmpic_msi_feature =
+When qrtr_ns_init fails in qrtr_proto_init, qrtr_ns_remove which would
+be called later on would raise a null-ptr-deref because qrtr_ns.workqueue
+has been destroyed.
 
-Hide this one in the same #ifdef as the reference so we can turn on
-the warning by default.
+Fix it by making qrtr_ns_init have a return value and adding a check in
+qrtr_proto_init.
 
-Fixes: 305bcf26128e ("powerpc/fsl-soc: use CONFIG_EPAPR_PARAVIRT for hcalls")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240403080702.3509288-2-arnd@kernel.org
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: fd76e5ccc48f ("net: qrtr: ns: Fix module refcnt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/fsl_msi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/qrtr/af_qrtr.c | 16 +++++++++++-----
+ net/qrtr/ns.c      |  7 ++++---
+ net/qrtr/qrtr.h    |  2 +-
+ 3 files changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/arch/powerpc/sysdev/fsl_msi.c b/arch/powerpc/sysdev/fsl_msi.c
-index d276c5e964458..77aa7a13ab1db 100644
---- a/arch/powerpc/sysdev/fsl_msi.c
-+++ b/arch/powerpc/sysdev/fsl_msi.c
-@@ -573,10 +573,12 @@ static const struct fsl_msi_feature ipic_msi_feature = {
- 	.msiir_offset = 0x38,
- };
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index 71c2295d4a573..29c0886eb9efe 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -1279,13 +1279,19 @@ static int __init qrtr_proto_init(void)
+ 		return rc;
  
-+#ifdef CONFIG_EPAPR_PARAVIRT
- static const struct fsl_msi_feature vmpic_msi_feature = {
- 	.fsl_pic_ip = FSL_PIC_IP_VMPIC,
- 	.msiir_offset = 0,
- };
-+#endif
+ 	rc = sock_register(&qrtr_family);
+-	if (rc) {
+-		proto_unregister(&qrtr_proto);
+-		return rc;
+-	}
++	if (rc)
++		goto err_proto;
  
- static const struct of_device_id fsl_of_msi_ids[] = {
- 	{
+-	qrtr_ns_init();
++	rc = qrtr_ns_init();
++	if (rc)
++		goto err_sock;
+ 
++	return 0;
++
++err_sock:
++	sock_unregister(qrtr_family.family);
++err_proto:
++	proto_unregister(&qrtr_proto);
+ 	return rc;
+ }
+ postcore_initcall(qrtr_proto_init);
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index c92dd960bfefa..3376a656da39f 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -771,7 +771,7 @@ static void qrtr_ns_data_ready(struct sock *sk)
+ 	queue_work(qrtr_ns.workqueue, &qrtr_ns.work);
+ }
+ 
+-void qrtr_ns_init(void)
++int qrtr_ns_init(void)
+ {
+ 	struct sockaddr_qrtr sq;
+ 	int ret;
+@@ -782,7 +782,7 @@ void qrtr_ns_init(void)
+ 	ret = sock_create_kern(&init_net, AF_QIPCRTR, SOCK_DGRAM,
+ 			       PF_QIPCRTR, &qrtr_ns.sock);
+ 	if (ret < 0)
+-		return;
++		return ret;
+ 
+ 	ret = kernel_getsockname(qrtr_ns.sock, (struct sockaddr *)&sq);
+ 	if (ret < 0) {
+@@ -815,12 +815,13 @@ void qrtr_ns_init(void)
+ 	if (ret < 0)
+ 		goto err_wq;
+ 
+-	return;
++	return 0;
+ 
+ err_wq:
+ 	destroy_workqueue(qrtr_ns.workqueue);
+ err_sock:
+ 	sock_release(qrtr_ns.sock);
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(qrtr_ns_init);
+ 
+diff --git a/net/qrtr/qrtr.h b/net/qrtr/qrtr.h
+index dc2b67f179271..3f2d28696062a 100644
+--- a/net/qrtr/qrtr.h
++++ b/net/qrtr/qrtr.h
+@@ -29,7 +29,7 @@ void qrtr_endpoint_unregister(struct qrtr_endpoint *ep);
+ 
+ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len);
+ 
+-void qrtr_ns_init(void);
++int qrtr_ns_init(void);
+ 
+ void qrtr_ns_remove(void);
+ 
 -- 
 2.43.0
 
