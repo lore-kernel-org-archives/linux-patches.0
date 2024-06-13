@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0378820ED;
-	Thu, 13 Jun 2024 12:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC641EEF8;
+	Thu, 13 Jun 2024 12:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282519; cv=none; b=GwGrBCx53PcTrJ641ogOxYIDsdW1MB8UKsBlCX+i8+esL2Lyw/BSgeuKgY+h0tRdZLuzmveYLXqFh7NABuRQ1T3/ia9rty8fchcqLe1Rm3qpaz6Je3/9wgxqVzD/Fzq1NJd3Hdl0yJmUCaDL+0Sth0UYZ4BDXziIyMfJm6NwdYs=
+	t=1718282522; cv=none; b=GjTSI/NerZ2OsEjc39ayFtpLOJQlXYGMkuQVZCCqzzwaFbaYfAqq527qf/wRnVuN8vSRcfdug3li0egDKFgh9F309dqfrR9Np9tQ5J+G9fvEZdPRMLBy0wpecBLA3bM1HYcZFxHVaEn0Iz6RowuUpOpDj49hX6nf/9jonisG4DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282519; c=relaxed/simple;
-	bh=rWmwuCP+at3XqIBdGvf31IY6jB1cs3WZGbLrYvRjweA=;
+	s=arc-20240116; t=1718282522; c=relaxed/simple;
+	bh=/X+86ZmPaI4ixN1TF26W4cdhbvA8ObXwJ4MQpMQ3spc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Otcy24u6Hmn7EbOWiGenC+88woz9dYpiwhx576tfkDuwc842/YzL0usHVmqRc1yTReAxIwG88pJJTk/5xnqniAgoa+zjkc3s2Hahs3kkP+TMZfFmP2Mf9wbaOsnbIelARSaqZ0cuVWbLylQvh/PCesj6hnpQV2LAnhA4QUJRwjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GiZfPEts; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RAV8TbWalee9yd31NvxP9YMtSz05k7PA5f6mWF4da3vm8GVkVEhAXbB/Q5F+LE5TDNU2Wd3nXmeDvnXgE1nj8gTXe0TGlUE7LLYnuhDpKJub0NO4w2K+CVEDqZk/jhyZW7PcRNkwt0Ceez/4NWbeCq6Ipl/FlIeSc4H5rhrsKiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdQUvEHJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GiZfPEts"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8032AC2BBFC;
-	Thu, 13 Jun 2024 12:41:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdQUvEHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6596CC2BBFC;
+	Thu, 13 Jun 2024 12:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282518;
-	bh=rWmwuCP+at3XqIBdGvf31IY6jB1cs3WZGbLrYvRjweA=;
+	s=korg; t=1718282521;
+	bh=/X+86ZmPaI4ixN1TF26W4cdhbvA8ObXwJ4MQpMQ3spc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GiZfPEtsMlOFb1ayBdnTtvlHpsCfGPaYrDL6My/kKoKwxcQ+b0U5xTw0eSxAXUQjP
-	 OL/POz57/3skPF3uRZSmgKBecwveN80QLnnRT/QV9mvCg5Ids1VY5Er4VSA4sD3iev
-	 fx19lOmp/ACJGOdXGFLR1TpeUg4kuccsIeKz3apA=
+	b=rdQUvEHJey5v0eLKRkZGvcPe8Rk4FdJO7/6Gm9nhhKalvGDteFKflXcKYUcARN13q
+	 AwIm0Qf9yuD4G91OU3Mwv5baSs8Zk556GjBulcl6+5oiLZTOQLTMqW3QlD6m6aX385
+	 83tsxauiAnhrTdTwvzxg+4VIwJ0/0vnfTHFAD5bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 304/402] netfilter: nfnetlink_queue: acquire rcu_read_lock() in instance_destroy_rcu()
-Date: Thu, 13 Jun 2024 13:34:21 +0200
-Message-ID: <20240613113314.000806540@linuxfoundation.org>
+Subject: [PATCH 5.15 305/402] netfilter: nft_payload: restore vlan q-in-q match support
+Date: Thu, 13 Jun 2024 13:34:22 +0200
+Message-ID: <20240613113314.038725982@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,76 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit dc21c6cc3d6986d938efbf95de62473982c98dec ]
+[ Upstream commit aff5c01fa1284d606f8e7cbdaafeef2511bb46c1 ]
 
-syzbot reported that nf_reinject() could be called without rcu_read_lock() :
+Revert f6ae9f120dad ("netfilter: nft_payload: add C-VLAN support").
 
-WARNING: suspicious RCU usage
-6.9.0-rc7-syzkaller-02060-g5c1672705a1a #0 Not tainted
+f41f72d09ee1 ("netfilter: nft_payload: simplify vlan header handling")
+already allows to match on inner vlan tags by subtract the vlan header
+size to the payload offset which has been popped and stored in skbuff
+metadata fields.
 
-net/netfilter/nfnetlink_queue.c:263 suspicious rcu_dereference_check() usage!
-
-other info that might help us debug this:
-
-rcu_scheduler_active = 2, debug_locks = 1
-2 locks held by syz-executor.4/13427:
-  #0: ffffffff8e334f60 (rcu_callback){....}-{0:0}, at: rcu_lock_acquire include/linux/rcupdate.h:329 [inline]
-  #0: ffffffff8e334f60 (rcu_callback){....}-{0:0}, at: rcu_do_batch kernel/rcu/tree.c:2190 [inline]
-  #0: ffffffff8e334f60 (rcu_callback){....}-{0:0}, at: rcu_core+0xa86/0x1830 kernel/rcu/tree.c:2471
-  #1: ffff88801ca92958 (&inst->lock){+.-.}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:356 [inline]
-  #1: ffff88801ca92958 (&inst->lock){+.-.}-{2:2}, at: nfqnl_flush net/netfilter/nfnetlink_queue.c:405 [inline]
-  #1: ffff88801ca92958 (&inst->lock){+.-.}-{2:2}, at: instance_destroy_rcu+0x30/0x220 net/netfilter/nfnetlink_queue.c:172
-
-stack backtrace:
-CPU: 0 PID: 13427 Comm: syz-executor.4 Not tainted 6.9.0-rc7-syzkaller-02060-g5c1672705a1a #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/02/2024
-Call Trace:
- <IRQ>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  lockdep_rcu_suspicious+0x221/0x340 kernel/locking/lockdep.c:6712
-  nf_reinject net/netfilter/nfnetlink_queue.c:323 [inline]
-  nfqnl_reinject+0x6ec/0x1120 net/netfilter/nfnetlink_queue.c:397
-  nfqnl_flush net/netfilter/nfnetlink_queue.c:410 [inline]
-  instance_destroy_rcu+0x1ae/0x220 net/netfilter/nfnetlink_queue.c:172
-  rcu_do_batch kernel/rcu/tree.c:2196 [inline]
-  rcu_core+0xafd/0x1830 kernel/rcu/tree.c:2471
-  handle_softirqs+0x2d6/0x990 kernel/softirq.c:554
-  __do_softirq kernel/softirq.c:588 [inline]
-  invoke_softirq kernel/softirq.c:428 [inline]
-  __irq_exit_rcu+0xf4/0x1c0 kernel/softirq.c:637
-  irq_exit_rcu+0x9/0x30 kernel/softirq.c:649
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1043 [inline]
-  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1043
- </IRQ>
- <TASK>
-
-Fixes: 9872bec773c2 ("[NETFILTER]: nfnetlink: use RCU for queue instances hash")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Florian Westphal <fw@strlen.de>
+Fixes: f6ae9f120dad ("netfilter: nft_payload: add C-VLAN support")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_queue.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nft_payload.c | 23 +++++++----------------
+ 1 file changed, 7 insertions(+), 16 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 8c96e01f6a023..89b16d36da9cf 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -167,7 +167,9 @@ instance_destroy_rcu(struct rcu_head *head)
- 	struct nfqnl_instance *inst = container_of(head, struct nfqnl_instance,
- 						   rcu);
+diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
+index 02327ffebc495..4192f0e366554 100644
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -45,36 +45,27 @@ nft_payload_copy_vlan(u32 *d, const struct sk_buff *skb, u8 offset, u8 len)
+ 	int mac_off = skb_mac_header(skb) - skb->data;
+ 	u8 *vlanh, *dst_u8 = (u8 *) d;
+ 	struct vlan_ethhdr veth;
+-	u8 vlan_hlen = 0;
+-
+-	if ((skb->protocol == htons(ETH_P_8021AD) ||
+-	     skb->protocol == htons(ETH_P_8021Q)) &&
+-	    offset >= VLAN_ETH_HLEN && offset < VLAN_ETH_HLEN + VLAN_HLEN)
+-		vlan_hlen += VLAN_HLEN;
  
-+	rcu_read_lock();
- 	nfqnl_flush(inst, NULL, 0);
-+	rcu_read_unlock();
- 	kfree(inst);
- 	module_put(THIS_MODULE);
- }
+ 	vlanh = (u8 *) &veth;
+-	if (offset < VLAN_ETH_HLEN + vlan_hlen) {
++	if (offset < VLAN_ETH_HLEN) {
+ 		u8 ethlen = len;
+ 
+-		if (vlan_hlen &&
+-		    skb_copy_bits(skb, mac_off, &veth, VLAN_ETH_HLEN) < 0)
+-			return false;
+-		else if (!nft_payload_rebuild_vlan_hdr(skb, mac_off, &veth))
++		if (!nft_payload_rebuild_vlan_hdr(skb, mac_off, &veth))
+ 			return false;
+ 
+-		if (offset + len > VLAN_ETH_HLEN + vlan_hlen)
+-			ethlen -= offset + len - VLAN_ETH_HLEN - vlan_hlen;
++		if (offset + len > VLAN_ETH_HLEN)
++			ethlen -= offset + len - VLAN_ETH_HLEN;
+ 
+-		memcpy(dst_u8, vlanh + offset - vlan_hlen, ethlen);
++		memcpy(dst_u8, vlanh + offset, ethlen);
+ 
+ 		len -= ethlen;
+ 		if (len == 0)
+ 			return true;
+ 
+ 		dst_u8 += ethlen;
+-		offset = ETH_HLEN + vlan_hlen;
++		offset = ETH_HLEN;
+ 	} else {
+-		offset -= VLAN_HLEN + vlan_hlen;
++		offset -= VLAN_HLEN;
+ 	}
+ 
+ 	return skb_copy_bits(skb, offset + mac_off, dst_u8, len) == 0;
 -- 
 2.43.0
 
