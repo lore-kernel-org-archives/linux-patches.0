@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064DB146012;
-	Thu, 13 Jun 2024 12:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F208E1465B0;
+	Thu, 13 Jun 2024 12:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281296; cv=none; b=Mj1u4AQ8qD2Yhc69Su01iqeVfKDt2piwPuyES4TKXyDEMUm/BcskrJeeVbRkKAA8F69Cbj7PWezSQSeh49/U5SlXsR/70ekSoAyBskDB+D5BnUsqgHmvqam3CnAK0QvUWqLlSJU0T6Vgc57nvm7oO7j1085C77xkNzm1WWl32Og=
+	t=1718281299; cv=none; b=Y8a08yKC5Y15/a0blbvQ81v0x3kzlDRK4W0BOhPGIBC88WCCrFG+p966dV4ewwOTIS+bQIuGy5gwIX3ichzBTStPaDN9kXREEXIMJbJx39PhI4HW+A4Y1myNu+qJqMrEK5kJYI518Os/A0TQTayIhc4qcJ/e0dEGaiXjWRS230M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281296; c=relaxed/simple;
-	bh=ojVjPI8JqODIl884hmN6hw69JMdiV0kW61hkO8FB3Mw=;
+	s=arc-20240116; t=1718281299; c=relaxed/simple;
+	bh=MT4BR5vp12KlnfJ3wPJa2USfwJM0UUevfvg3SIWr9wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gcm/cLLC5Yt1rwxzFlS8llfOLRsj42UBd+mkpnKeIzKF/7lXFTruLzT4a2mDl2rkkXLIWIhA9lXxZFvDBBPbA1Uc2obmCzvkXHH2d5Mf83fA1d3xnpqdXS97kw/7fjqFmeZCWmQBI0GRSbQZDYNvJ8y2m3j02nydePtxTE9jYfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCkRISsb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VIPaqI2vgk7HSNLPlr9HScjc9g42XY2nUGc1FB6jEiqUvm3/5yGxEuOV4lnSvgRvxlAIXpjrtTvbK6wcwrAw3fMaMiug3uhyF7Rz4kUv9jB5zyjq2mUZnQU4WMJw8lqff2fJcclIdVOnOO1oARUDoNnq/vq275YbqGad2pf5q+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x617/TV9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCkRISsb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C7CC2BBFC;
-	Thu, 13 Jun 2024 12:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x617/TV9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150C6C2BBFC;
+	Thu, 13 Jun 2024 12:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281295;
-	bh=ojVjPI8JqODIl884hmN6hw69JMdiV0kW61hkO8FB3Mw=;
+	s=korg; t=1718281298;
+	bh=MT4BR5vp12KlnfJ3wPJa2USfwJM0UUevfvg3SIWr9wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCkRISsbmDVZIpKRV1pmZJLeEZeL6JveTRei+fNECB2xT3XKp7dIL5VEE26am/r45
-	 E+o7TgjVl8UGIER9EsfBnNfzsiP1Dw3ISnqdYtJAmrU7q9JpXO6wjnwnRKiqY51N7Y
-	 ehKoLVjOM2wpsIoLyW0kDLGUs7K+bggFXVuT/QE0=
+	b=x617/TV91NIAcdtf5+4HKZMTtlrwm+M3WxQH4GPVgb13QjfLP0O7RxRx8EzfMMPkJ
+	 T0R1ZG0ZpY6XNjOguEIDxL5Qi0Pp+GG9NzfNx0b5THvMvyT77DPkjbP61AGQk1sYW8
+	 ECifhmhXBL1OxDQ6IitdLgkoAtwATAwykF4PzdSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Tony Lindgren <tony@atomide.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 207/317] drm/bridge: tc358775: fix support for jeida-18 and jeida-24
-Date: Thu, 13 Jun 2024 13:33:45 +0200
-Message-ID: <20240613113255.561498459@linuxfoundation.org>
+Subject: [PATCH 5.10 208/317] media: stk1160: fix bounds checking in stk1160_copy_video()
+Date: Thu, 13 Jun 2024 13:33:46 +0200
+Message-ID: <20240613113255.599447092@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,73 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 30ea09a182cb37c4921b9d477ed18107befe6d78 ]
+[ Upstream commit faa4364bef2ec0060de381ff028d1d836600a381 ]
 
-The bridge always uses 24bpp internally. Therefore, for jeida-18
-mapping we need to discard the lowest two bits for each channel and thus
-starting with LV_[RGB]2. jeida-24 has the same mapping but uses four
-lanes instead of three, with the forth pair transmitting the lowest two
-bits of each channel. Thus, the mapping between jeida-18 and jeida-24
-is actually the same, except that one channel is turned off (by
-selecting the RGB666 format in VPCTRL).
+The subtract in this condition is reversed.  The ->length is the length
+of the buffer.  The ->bytesused is how many bytes we have copied thus
+far.  When the condition is reversed that means the result of the
+subtraction is always negative but since it's unsigned then the result
+is a very high positive value.  That means the overflow check is never
+true.
 
-While at it, remove the bogus comment about the hardware default because
-the default is overwritten in any case.
+Additionally, the ->bytesused doesn't actually work for this purpose
+because we're not writing to "buf->mem + buf->bytesused".  Instead, the
+math to calculate the destination where we are writing is a bit
+involved.  You calculate the number of full lines already written,
+multiply by two, skip a line if necessary so that we start on an odd
+numbered line, and add the offset into the line.
 
-Tested with a jeida-18 display (Evervision VGG644804).
+To fix this buffer overflow, just take the actual destination where we
+are writing, if the offset is already out of bounds print an error and
+return.  Otherwise, write up to buf->length bytes.
 
-Fixes: b26975593b17 ("display/drm/bridge: TC358775 DSI/LVDS driver")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240225062008.33191-5-tony@atomide.com
+Fixes: 9cb2173e6ea8 ("[media] media: Add stk1160 new driver (easycap replacement)")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358775.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ drivers/media/usb/stk1160/stk1160-video.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358775.c b/drivers/gpu/drm/bridge/tc358775.c
-index 55697fa4d7c8b..2e299cfe4e487 100644
---- a/drivers/gpu/drm/bridge/tc358775.c
-+++ b/drivers/gpu/drm/bridge/tc358775.c
-@@ -453,10 +453,6 @@ static void tc_bridge_enable(struct drm_bridge *bridge)
- 	dev_dbg(tc->dev, "bus_formats %04x bpc %d\n",
- 		connector->display_info.bus_formats[0],
- 		tc->bpc);
--	/*
--	 * Default hardware register settings of tc358775 configured
--	 * with MEDIA_BUS_FMT_RGB888_1X7X4_JEIDA jeida-24 format
--	 */
- 	if (connector->display_info.bus_formats[0] ==
- 		MEDIA_BUS_FMT_RGB888_1X7X4_SPWG) {
- 		/* VESA-24 */
-@@ -467,14 +463,15 @@ static void tc_bridge_enable(struct drm_bridge *bridge)
- 		d2l_write(tc->i2c, LV_MX1619, LV_MX(LVI_B6, LVI_B7, LVI_B1, LVI_B2));
- 		d2l_write(tc->i2c, LV_MX2023, LV_MX(LVI_B3, LVI_B4, LVI_B5, LVI_L0));
- 		d2l_write(tc->i2c, LV_MX2427, LV_MX(LVI_HS, LVI_VS, LVI_DE, LVI_R6));
--	} else { /*  MEDIA_BUS_FMT_RGB666_1X7X3_SPWG - JEIDA-18 */
--		d2l_write(tc->i2c, LV_MX0003, LV_MX(LVI_R0, LVI_R1, LVI_R2, LVI_R3));
--		d2l_write(tc->i2c, LV_MX0407, LV_MX(LVI_R4, LVI_L0, LVI_R5, LVI_G0));
--		d2l_write(tc->i2c, LV_MX0811, LV_MX(LVI_G1, LVI_G2, LVI_L0, LVI_L0));
--		d2l_write(tc->i2c, LV_MX1215, LV_MX(LVI_G3, LVI_G4, LVI_G5, LVI_B0));
--		d2l_write(tc->i2c, LV_MX1619, LV_MX(LVI_L0, LVI_L0, LVI_B1, LVI_B2));
--		d2l_write(tc->i2c, LV_MX2023, LV_MX(LVI_B3, LVI_B4, LVI_B5, LVI_L0));
--		d2l_write(tc->i2c, LV_MX2427, LV_MX(LVI_HS, LVI_VS, LVI_DE, LVI_L0));
-+	} else {
-+		/* JEIDA-18 and JEIDA-24 */
-+		d2l_write(tc->i2c, LV_MX0003, LV_MX(LVI_R2, LVI_R3, LVI_R4, LVI_R5));
-+		d2l_write(tc->i2c, LV_MX0407, LV_MX(LVI_R6, LVI_R1, LVI_R7, LVI_G2));
-+		d2l_write(tc->i2c, LV_MX0811, LV_MX(LVI_G3, LVI_G4, LVI_G0, LVI_G1));
-+		d2l_write(tc->i2c, LV_MX1215, LV_MX(LVI_G5, LVI_G6, LVI_G7, LVI_B2));
-+		d2l_write(tc->i2c, LV_MX1619, LV_MX(LVI_B0, LVI_B1, LVI_B3, LVI_B4));
-+		d2l_write(tc->i2c, LV_MX2023, LV_MX(LVI_B5, LVI_B6, LVI_B7, LVI_L0));
-+		d2l_write(tc->i2c, LV_MX2427, LV_MX(LVI_HS, LVI_VS, LVI_DE, LVI_R0));
+diff --git a/drivers/media/usb/stk1160/stk1160-video.c b/drivers/media/usb/stk1160/stk1160-video.c
+index 4cf540d1b2501..2a5a90311e0cc 100644
+--- a/drivers/media/usb/stk1160/stk1160-video.c
++++ b/drivers/media/usb/stk1160/stk1160-video.c
+@@ -99,7 +99,7 @@ void stk1160_buffer_done(struct stk1160 *dev)
+ static inline
+ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
+ {
+-	int linesdone, lineoff, lencopy;
++	int linesdone, lineoff, lencopy, offset;
+ 	int bytesperline = dev->width * 2;
+ 	struct stk1160_buffer *buf = dev->isoc_ctl.buf;
+ 	u8 *dst = buf->mem;
+@@ -139,8 +139,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
+ 	 * Check if we have enough space left in the buffer.
+ 	 * In that case, we force loop exit after copy.
+ 	 */
+-	if (lencopy > buf->bytesused - buf->length) {
+-		lencopy = buf->bytesused - buf->length;
++	offset = dst - (u8 *)buf->mem;
++	if (offset > buf->length) {
++		dev_warn_ratelimited(dev->dev, "out of bounds offset\n");
++		return;
++	}
++	if (lencopy > buf->length - offset) {
++		lencopy = buf->length - offset;
+ 		remain = lencopy;
  	}
  
- 	d2l_write(tc->i2c, VFUEN, VFUEN_EN);
+@@ -182,8 +187,13 @@ void stk1160_copy_video(struct stk1160 *dev, u8 *src, int len)
+ 		 * Check if we have enough space left in the buffer.
+ 		 * In that case, we force loop exit after copy.
+ 		 */
+-		if (lencopy > buf->bytesused - buf->length) {
+-			lencopy = buf->bytesused - buf->length;
++		offset = dst - (u8 *)buf->mem;
++		if (offset > buf->length) {
++			dev_warn_ratelimited(dev->dev, "offset out of bounds\n");
++			return;
++		}
++		if (lencopy > buf->length - offset) {
++			lencopy = buf->length - offset;
+ 			remain = lencopy;
+ 		}
+ 
 -- 
 2.43.0
 
