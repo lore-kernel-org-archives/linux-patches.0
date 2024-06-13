@@ -1,67 +1,67 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B7013BC39
-	for <patches@lists.linux.dev>; Thu, 13 Jun 2024 07:50:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCEA13C9AB
+	for <patches@lists.linux.dev>; Thu, 13 Jun 2024 07:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718265024; cv=none; b=qrVAScBRxENVmby/7rD54sJw5EtTnjAyRbCOHzyh4fii8PO5FVZlMLM+6xS79Q5LChLBvz5B2wMzB9G0Fdbd/hxNnRzYY9ni/ACozeQTkYtlnEoadLHOKJnQVmI8fTPUxQzElmxPX7bxKlDQQf9xJ+4fuUgSYUWXaE6SAs0o858=
+	t=1718265034; cv=none; b=YW3RhmSW5SkCCfqyCxagwoGnieHkBXMYdEk6czltbnLS4STue29NShBowYhDsmmgP3RlF1A+IcdoRNEN4otCGa2sfrASjR++LlsAIS4U6O6mSu/fa4akFCmUh7DxiFUQveCbBB60ZBWbAVagdqk+b/4zLyYsZf33DDB76uK1SYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718265024; c=relaxed/simple;
-	bh=Hhnmp1cDk4UAUoN4SyL4IAqZLva9HDQKJGVrgdAXm1w=;
+	s=arc-20240116; t=1718265034; c=relaxed/simple;
+	bh=jeGhBhw0/SHOuBBDtNBqeJK7eF10uCwraFCzNfiHONY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BLbdXKqDGR1WDkhUn8YczZHF+RKdcCGZsFAAnHqakgwnwBtBAULIp6TX2Hccyz0NQZkorI7G7zM6A/5hoe/LJUgD/OgLmVvcb00Tok5CTlhdzSfrNyIDyy/airTVQvbJe9hUxMVW2PSuvxuUiSfY5Vn8fESVdHd2hkH2Dp0oD1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GLLPWsCo; arc=none smtp.client-ip=209.85.160.182
+	 To:Cc:Content-Type; b=dmq/2paeNkjtXe7BvlUnkbdV+AM/9wJZKrhS/AIx3NAu/4b9asaMPQ7I70fxSv/Jv98+f/6vHrCxGXaB5cIimUU+Gey7GD8lfplauO2GoaVTxebRRf3V2Qvr0gj+ZJRg97H1cwM6JsIm3wO/cWr+9mw0xNDAYK9cineOvXKsIfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bhCu/j4x; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GLLPWsCo"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4405cf01a7fso214501cf.1
-        for <patches@lists.linux.dev>; Thu, 13 Jun 2024 00:50:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bhCu/j4x"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4400cc0dad1so348201cf.0
+        for <patches@lists.linux.dev>; Thu, 13 Jun 2024 00:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1718265021; x=1718869821; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1718265029; x=1718869829; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4K6KTkGYAg5aIAqmvUBjhjsZY3iZD+djGzjNVwGSP/o=;
-        b=GLLPWsCoVVRPZ30AAhEDv5x/9BTatDgPEldnQdf6nl6OG4NS7vDphiUBJZz3KsZaTt
-         jFfp49Ett3nRDzFXsJ3sz1PjAsNLcdR8jtWYTiT5f/ez7IsRqJmE4Ka60sFXTwgQyTdB
-         i9D/TVEDhAndbCq1Dy+n6Lc8j8m8Mkq9KMqUh9lzKM0QEvlJApzmOn9oaQgn0dGkqA1n
-         ZJD1mILhmUc0FnKFw/HtBaGyvVKbM29HAXk+nyPStjRpWMazA2qnW1eaF4PRWoOKj/UA
-         g94qokKEQKmUPuLxdBDtga9OXn5C77iaNd8pVjjJfRGE8O1fm+x/UA92nVDyKvLUxhmG
-         PAtw==
+        bh=lCps521bOiDwACNHwKBJ/vm8yCtgv0kXnhMA3z5ZKW4=;
+        b=bhCu/j4xxWApCEJ68UZ2T9gBLG98qSDRiwCO7h/UqjvE8Q9uPP96iDKOrsfgvcNbkC
+         E/Hygsb8BhjE037+XRbjfy5NnCTd1wj/HWLroDnBpwMg0XZbjnBemPrv4a3KUPEmZK8O
+         zq1ZYjMoWKYXlKy8A9It5jfQk0G9TdA+UEmuYlUSd6zHERbQV/1X3yh7pGCAxzzoLM1M
+         i3bboUw9YtP73TcU9Gx7L/2V/3L2O+mLEAQJao+7il6Js8uK0ex6+7iz0laZG5jLI/47
+         PsBjTBnU8f1PQGOTcQ+ezNYlLMQqhIV+YiaMG80QmQoCJVEdzugPiQt6ZV70yd1mJYKd
+         SMyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718265021; x=1718869821;
+        d=1e100.net; s=20230601; t=1718265029; x=1718869829;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=4K6KTkGYAg5aIAqmvUBjhjsZY3iZD+djGzjNVwGSP/o=;
-        b=d9mtpj10GqyJLOYYd9FpukQRLDWHSIrmdmFzOk3tJq59ut7tjPy3CO2uJRzXjA+Lvf
-         f4aWPEJ6apBmPtOYa/W4Zqerm/T7ubnKKNoeIl6K7icPnS39hivawNsKD5hOFfKMDSnL
-         VXy32/8xAZTCuYBapml7MQpRQ4cz/5pHtWbRXOjj2Sozzr4VwxUzHJJcNiZ017x+EMjR
-         hkOSe50nFsYhVhGDuK6Gy0+iQPEwwcFIap/vDT3RBf0kSmGQIFkbbhh6rQ7TTfDpz1L8
-         om31UDagTEiGU8JKlSOMAVtXuHGbgrm8hcpfZ3jtsYP3NJ8AY/o7mdUXGv0JOxhL5G/z
-         5oRg==
-X-Forwarded-Encrypted: i=1; AJvYcCUviVTu3tqcP1SVgAOpK19B/HHjBtEK98I4zmqbr/HpvmaL4ErfRW21ee0OjMASmesL2Ixk3hSx/bST0ikCxPtS1AguW65EXA==
-X-Gm-Message-State: AOJu0YyjFz0jjFuikZqCZJMKSVaTGPiictkXW8+n6taTysj2JfmBXnMW
-	NJXbC9vncnF6F9SWmVavs7nuGx64EpjPgsghrBptV+UA24n5YhG4DDc/Pla/nPaw76mVN6V/w20
-	h7sLyYc7OydtcLXgryeDNLUn8LOeX54L1yugS
-X-Google-Smtp-Source: AGHT+IG8n6g4c8z4QVX1hgfuPJfMSLuAoJyy90kELELQLfvqbOkUjhKgen7ANSio4ovrFikIP0/IrygTXFyf686fh+4=
-X-Received: by 2002:a05:622a:4084:b0:441:4878:1238 with SMTP id
- d75a77b69052e-4419dcfe91fmr2721421cf.8.1718265021394; Thu, 13 Jun 2024
- 00:50:21 -0700 (PDT)
+        bh=lCps521bOiDwACNHwKBJ/vm8yCtgv0kXnhMA3z5ZKW4=;
+        b=XEkmqxGtwRoAlglhSUQB8rtEu7HP4jtssKvqXSv8siWykmP1Z918LNUBN2EGzgZt8i
+         COrOkm/5Z7lko5e1X3AeJ03SY8PiAFookgIYwa/nOCMQf/Fe2MgdbYtZ6dbP/lm0TaF0
+         czzTCCr8UbhpFKpHwEJpFzQmRBdtAQtoi41gkLuVg1RZvWMsDFNFuUc5+Leu7R9OLF4C
+         96nD0o8pumX2eu2wUglq8CVDylhfnCM3vnfOHZGleAxHkdgugfmFlH48mfH4wJ/vL7a2
+         WESZFISIIHCIJQwnujVaAbJnubii84HTfmPvF5fOZVjjN5R1fNhCmLh+8+MbeOB+exTb
+         LrlA==
+X-Forwarded-Encrypted: i=1; AJvYcCVR7cICigAZyb0apd8J/TfYrbGlul3/zRn1mcCFHMZw0KgGV+4wkpntIth/VtyZQ1cx0kTEHkvXN82PsUh94gE24Wi0zevFOA==
+X-Gm-Message-State: AOJu0Yx0JAt02atCpiUyLLjk3g2Rey/SLofvSZ8+YYCPMtsIwytZlNA8
+	vemLMZp7xV5/NiBDzl3YRFIDXitIFLOZPsLzx6cTkx6aUw+N1ebSeb+08ujmV7ruS8oxbQ+Rf1h
+	jF7D9uN+PHhVe1QJi+26jNC99Chla59BZt4Uv
+X-Google-Smtp-Source: AGHT+IFdU8P4U7BkeL+GaRcMEegAO28T6zs/xDX0n17xlUK0ETTFxa6kZ3EKv5dj4i6IEKZOyQN8y982TD5Plsho0UA=
+X-Received: by 2002:a05:622a:1c08:b0:440:4673:9854 with SMTP id
+ d75a77b69052e-441eea6061bmr1292471cf.21.1718265029167; Thu, 13 Jun 2024
+ 00:50:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240603223811.3815762-1-sboyd@kernel.org> <20240603223811.3815762-6-sboyd@kernel.org>
-In-Reply-To: <20240603223811.3815762-6-sboyd@kernel.org>
+References: <20240603223811.3815762-1-sboyd@kernel.org> <20240603223811.3815762-7-sboyd@kernel.org>
+In-Reply-To: <20240603223811.3815762-7-sboyd@kernel.org>
 From: David Gow <davidgow@google.com>
-Date: Thu, 13 Jun 2024 15:50:10 +0800
-Message-ID: <CABVgOSkASLVve_Ki2HAx34BJDEM=AXzZxNZ8Ji9T5pKq2hER=A@mail.gmail.com>
-Subject: Re: [PATCH v5 05/11] of: Add a KUnit test for overlays and test
- managed APIs
+Date: Thu, 13 Jun 2024 15:50:18 +0800
+Message-ID: <CABVgOSm=R2-SvCRLsep_2Zk20eq7rg_RBvXK4ZYWvjWnmpboKA@mail.gmail.com>
+Subject: Re: [PATCH v5 06/11] platform: Add test managed platform_device/driver
+ APIs
 To: Stephen Boyd <sboyd@kernel.org>
 Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
 	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
@@ -74,237 +74,677 @@ Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Maxime Ripard <maxime@cerno.tech>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="00000000000042c122061ac0c06a"
+	boundary="000000000000bb0d1a061ac0c03c"
 
---00000000000042c122061ac0c06a
+--000000000000bb0d1a061ac0c03c
 Content-Type: text/plain; charset="UTF-8"
 
 On Tue, 4 Jun 2024 at 06:38, Stephen Boyd <sboyd@kernel.org> wrote:
 >
-> Test the KUnit test managed overlay APIs. Confirm that platform devices
-> are created and destroyed properly. This provides us confidence that the
-> test managed APIs work correctly and can be relied upon to provide tests
-> with fake platform devices and device nodes via overlays compiled into
-> the kernel image.
+> Introduce KUnit resource wrappers around platform_driver_register(),
+> platform_device_alloc(), and platform_device_add() so that test authors
+> can register platform drivers/devices from their tests and have the
+> drivers/devices automatically be unregistered when the test is done.
 >
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Daniel Latypov <dlatypov@google.com>
+> This makes test setup code simpler when a platform driver or platform
+> device is needed. Add a few test cases at the same time to make sure the
+> APIs work as intended.
+>
 > Cc: Brendan Higgins <brendan.higgins@linux.dev>
 > Cc: David Gow <davidgow@google.com>
 > Cc: Rae Moar <rmoar@google.com>
-> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 > ---
 
-This is looking good from my point of view, and passes on my test
-setup. One minor question (do we need both to select OF_OVERLAY and
-skip if it's not enabled?), but otherwise:
+This looks great, thanks!
 
 Reviewed-by: David Gow <davidgow@google.com>
 
+Cheers,
 -- David
 
 
--- David
-
->  drivers/of/.kunitconfig            |   1 +
->  drivers/of/Kconfig                 |  10 +++
->  drivers/of/Makefile                |   1 +
->  drivers/of/kunit_overlay_test.dtso |   9 +++
->  drivers/of/overlay_test.c          | 116 +++++++++++++++++++++++++++++
->  5 files changed, 137 insertions(+)
->  create mode 100644 drivers/of/kunit_overlay_test.dtso
->  create mode 100644 drivers/of/overlay_test.c
+>  Documentation/dev-tools/kunit/api/index.rst   |   5 +
+>  .../dev-tools/kunit/api/platformdevice.rst    |  10 +
+>  include/kunit/platform_device.h               |  20 ++
+>  lib/kunit/Makefile                            |   4 +-
+>  lib/kunit/platform-test.c                     | 223 +++++++++++++
+>  lib/kunit/platform.c                          | 302 ++++++++++++++++++
+>  6 files changed, 563 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/dev-tools/kunit/api/platformdevice.rst
+>  create mode 100644 include/kunit/platform_device.h
+>  create mode 100644 lib/kunit/platform-test.c
+>  create mode 100644 lib/kunit/platform.c
 >
-> diff --git a/drivers/of/.kunitconfig b/drivers/of/.kunitconfig
-> index 5a8fee11978c..4c53d2c7a275 100644
-> --- a/drivers/of/.kunitconfig
-> +++ b/drivers/of/.kunitconfig
-> @@ -1,3 +1,4 @@
->  CONFIG_KUNIT=y
->  CONFIG_OF=y
->  CONFIG_OF_KUNIT_TEST=y
-> +CONFIG_OF_OVERLAY_KUNIT_TEST=y
-> diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
-> index dd726c7056bf..0e2d608c3e20 100644
-> --- a/drivers/of/Kconfig
-> +++ b/drivers/of/Kconfig
-> @@ -107,6 +107,16 @@ config OF_OVERLAY
->           While this option is selected automatically when needed, you can
->           enable it manually to improve device tree unit test coverage.
+> diff --git a/Documentation/dev-tools/kunit/api/index.rst b/Documentation/dev-tools/kunit/api/index.rst
+> index 282befa17edf..02b26f5e8750 100644
+> --- a/Documentation/dev-tools/kunit/api/index.rst
+> +++ b/Documentation/dev-tools/kunit/api/index.rst
+> @@ -10,6 +10,7 @@ API Reference
+>         resource
+>         functionredirection
+>         of
+> +       platformdevice
 >
-> +config OF_OVERLAY_KUNIT_TEST
-> +       tristate "Device Tree overlay KUnit tests" if !KUNIT_ALL_TESTS
-> +       depends on KUNIT
-> +       default KUNIT_ALL_TESTS
-> +       select OF_OVERLAY
-> +       help
-> +         This option builds KUnit unit tests for the device tree overlay code.
+>
+>  This page documents the KUnit kernel testing API. It is divided into the
+> @@ -36,3 +37,7 @@ Driver KUnit API
+>  Documentation/dev-tools/kunit/api/of.rst
+>
+>   - Documents the KUnit device tree (OF) API
 > +
-> +         If unsure, say N here, but this option is safe to enable.
+> +Documentation/dev-tools/kunit/api/platformdevice.rst
 > +
->  config OF_NUMA
->         bool
->
-> diff --git a/drivers/of/Makefile b/drivers/of/Makefile
-> index 2ae909adde49..abd9c578343b 100644
-> --- a/drivers/of/Makefile
-> +++ b/drivers/of/Makefile
-> @@ -21,5 +21,6 @@ endif
->
->  obj-$(CONFIG_KUNIT) += of_kunit_helpers.o
->  obj-$(CONFIG_OF_KUNIT_TEST) += of_test.o
-> +obj-$(CONFIG_OF_OVERLAY_KUNIT_TEST) += overlay_test.o kunit_overlay_test.dtbo.o
->
->  obj-$(CONFIG_OF_UNITTEST) += unittest-data/
-> diff --git a/drivers/of/kunit_overlay_test.dtso b/drivers/of/kunit_overlay_test.dtso
+> + - Documents the KUnit platform device API
+> diff --git a/Documentation/dev-tools/kunit/api/platformdevice.rst b/Documentation/dev-tools/kunit/api/platformdevice.rst
 > new file mode 100644
-> index 000000000000..85f20b4b4c16
+> index 000000000000..49ddd5729003
 > --- /dev/null
-> +++ b/drivers/of/kunit_overlay_test.dtso
-> @@ -0,0 +1,9 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/dts-v1/;
-> +/plugin/;
+> +++ b/Documentation/dev-tools/kunit/api/platformdevice.rst
+> @@ -0,0 +1,10 @@
+> +.. SPDX-License-Identifier: GPL-2.0
 > +
-> +&{/} {
-> +       kunit-test {
-> +               compatible = "test,empty";
-> +       };
-> +};
-> diff --git a/drivers/of/overlay_test.c b/drivers/of/overlay_test.c
+> +===================
+> +Platform Device API
+> +===================
+> +
+> +The KUnit platform device API is used to test platform devices.
+> +
+> +.. kernel-doc:: lib/kunit/platform.c
+> +   :export:
+> diff --git a/include/kunit/platform_device.h b/include/kunit/platform_device.h
 > new file mode 100644
-> index 000000000000..9a8083c3a659
+> index 000000000000..0fc0999d2420
 > --- /dev/null
-> +++ b/drivers/of/overlay_test.c
-> @@ -0,0 +1,116 @@
+> +++ b/include/kunit/platform_device.h
+> @@ -0,0 +1,20 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#ifndef _KUNIT_PLATFORM_DRIVER_H
+> +#define _KUNIT_PLATFORM_DRIVER_H
+> +
+> +struct kunit;
+> +struct platform_device;
+> +struct platform_driver;
+> +
+> +struct platform_device *
+> +kunit_platform_device_alloc(struct kunit *test, const char *name, int id);
+> +int kunit_platform_device_add(struct kunit *test, struct platform_device *pdev);
+> +
+> +int kunit_platform_device_prepare_wait_for_probe(struct kunit *test,
+> +                                                struct platform_device *pdev,
+> +                                                struct completion *x);
+> +
+> +int kunit_platform_driver_register(struct kunit *test,
+> +                                  struct platform_driver *drv);
+> +
+> +#endif
+> diff --git a/lib/kunit/Makefile b/lib/kunit/Makefile
+> index 309659a32a78..a980ae62eff6 100644
+> --- a/lib/kunit/Makefile
+> +++ b/lib/kunit/Makefile
+> @@ -8,7 +8,8 @@ kunit-objs +=                           test.o \
+>                                         try-catch.o \
+>                                         executor.o \
+>                                         attributes.o \
+> -                                       device.o
+> +                                       device.o \
+> +                                       platform.o
+>
+>  ifeq ($(CONFIG_KUNIT_DEBUGFS),y)
+>  kunit-objs +=                          debugfs.o
+> @@ -18,6 +19,7 @@ endif
+>  obj-y +=                               hooks.o
+>
+>  obj-$(CONFIG_KUNIT_TEST) +=            kunit-test.o
+> +obj-$(CONFIG_KUNIT_TEST) +=            platform-test.o
+>
+>  # string-stream-test compiles built-in only.
+>  ifeq ($(CONFIG_KUNIT_TEST),y)
+> diff --git a/lib/kunit/platform-test.c b/lib/kunit/platform-test.c
+> new file mode 100644
+> index 000000000000..b4fbedadc55e
+> --- /dev/null
+> +++ b/lib/kunit/platform-test.c
+> @@ -0,0 +1,223 @@
 > +// SPDX-License-Identifier: GPL-2.0
 > +/*
-> + * KUnit tests for device tree overlays
+> + * KUnit test for platform driver infrastructure.
 > + */
-> +#include <linux/device/bus.h>
-> +#include <linux/kconfig.h>
-> +#include <linux/of.h>
-> +#include <linux/of_platform.h>
+> +
 > +#include <linux/platform_device.h>
 > +
-> +#include <kunit/of.h>
+> +#include <kunit/platform_device.h>
 > +#include <kunit/test.h>
 > +
-> +static const char * const kunit_node_name = "kunit-test";
-> +static const char * const kunit_compatible = "test,empty";
-> +
-> +/* Test that of_overlay_apply_kunit() adds a node to the live tree */
-> +static void of_overlay_apply_kunit_apply(struct kunit *test)
+> +/*
+> + * Test that kunit_platform_device_alloc() creates a platform device.
+> + */
+> +static void kunit_platform_device_alloc_test(struct kunit *test)
 > +{
-> +       struct device_node *np;
-> +
-> +       KUNIT_ASSERT_EQ(test, 0,
-> +                       of_overlay_apply_kunit(test, kunit_overlay_test));
-> +
-> +       np = of_find_node_by_name(NULL, kunit_node_name);
-> +       KUNIT_EXPECT_NOT_ERR_OR_NULL(test, np);
-> +       of_node_put(np);
+> +       KUNIT_EXPECT_NOT_ERR_OR_NULL(test,
+> +                       kunit_platform_device_alloc(test, "kunit-platform", 1));
 > +}
 > +
 > +/*
-> + * Test that of_overlay_apply_kunit() creates platform devices with the
-> + * expected device_node
+> + * Test that kunit_platform_device_add() registers a platform device on the
+> + * platform bus with the proper name and id.
 > + */
-> +static void of_overlay_apply_kunit_platform_device(struct kunit *test)
+> +static void kunit_platform_device_add_test(struct kunit *test)
 > +{
 > +       struct platform_device *pdev;
-> +       struct device_node *np;
+> +       const char *name = "kunit-platform-add";
+> +       const int id = -1;
 > +
-> +       KUNIT_ASSERT_EQ(test, 0,
-> +                       of_overlay_apply_kunit(test, kunit_overlay_test));
+> +       pdev = kunit_platform_device_alloc(test, name, id);
+> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pdev);
 > +
-> +       np = of_find_node_by_name(NULL, kunit_node_name);
-> +       of_node_put_kunit(test, np);
-> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, np);
-> +
-> +       pdev = of_find_device_by_node(np);
-> +       KUNIT_EXPECT_NOT_ERR_OR_NULL(test, pdev);
-> +       if (pdev)
-> +               put_device(&pdev->dev);
+> +       KUNIT_EXPECT_EQ(test, 0, kunit_platform_device_add(test, pdev));
+> +       KUNIT_EXPECT_TRUE(test, dev_is_platform(&pdev->dev));
+> +       KUNIT_EXPECT_STREQ(test, pdev->name, name);
+> +       KUNIT_EXPECT_EQ(test, pdev->id, id);
 > +}
 > +
-> +static int of_overlay_bus_match_compatible(struct device *dev, const void *data)
+> +/*
+> + * Test that kunit_platform_device_add() called twice with the same device name
+> + * and id fails the second time and properly cleans up.
+> + */
+> +static void kunit_platform_device_add_twice_fails_test(struct kunit *test)
 > +{
-> +       return of_device_is_compatible(dev->of_node, data);
+> +       struct platform_device *pdev;
+> +       const char *name = "kunit-platform-add-2";
+> +       const int id = -1;
+> +
+> +       pdev = kunit_platform_device_alloc(test, name, id);
+> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pdev);
+> +       KUNIT_ASSERT_EQ(test, 0, kunit_platform_device_add(test, pdev));
+> +
+> +       pdev = kunit_platform_device_alloc(test, name, id);
+> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pdev);
+> +
+> +       KUNIT_EXPECT_NE(test, 0, kunit_platform_device_add(test, pdev));
 > +}
 > +
-> +/* Test that of_overlay_apply_kunit() cleans up after the test is finished */
-> +static void of_overlay_apply_kunit_cleanup(struct kunit *test)
+> +static int kunit_platform_device_find_by_name(struct device *dev, const void *data)
 > +{
+> +       return strcmp(dev_name(dev), data) == 0;
+> +}
+> +
+> +/*
+> + * Test that kunit_platform_device_add() cleans up by removing the platform
+> + * device when the test finishes. */
+> +static void kunit_platform_device_add_cleans_up(struct kunit *test)
+> +{
+> +       struct platform_device *pdev;
+> +       const char *name = "kunit-platform-clean";
+> +       const int id = -1;
 > +       struct kunit fake;
-> +       struct platform_device *pdev;
 > +       struct device *dev;
-> +       struct device_node *np;
 > +
-> +       if (!IS_ENABLED(CONFIG_OF_OVERLAY))
-> +               kunit_skip(test, "requires CONFIG_OF_OVERLAY");
-> +       if (!IS_ENABLED(CONFIG_OF_EARLY_FLATTREE))
-> +               kunit_skip(test, "requires CONFIG_OF_EARLY_FLATTREE for root node");
-> +
-> +       kunit_init_test(&fake, "fake test", NULL);
+> +       kunit_init_test(&fake, "kunit_platform_device_add_fake_test", NULL);
 > +       KUNIT_ASSERT_EQ(test, fake.status, KUNIT_SUCCESS);
 > +
-> +       KUNIT_ASSERT_EQ(test, 0,
-> +                       of_overlay_apply_kunit(&fake, kunit_overlay_test));
-> +
-> +       np = of_find_node_by_name(NULL, kunit_node_name);
-> +       of_node_put(np); /* Not derefing 'np' after this */
-> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, np);
-> +
-> +       pdev = of_find_device_by_node(np);
+> +       pdev = kunit_platform_device_alloc(&fake, name, id);
 > +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pdev);
-> +       put_device(&pdev->dev); /* Not derefing 'pdev' after this */
+> +       KUNIT_ASSERT_EQ(test, 0, kunit_platform_device_add(&fake, pdev));
+> +       dev = bus_find_device(&platform_bus_type, NULL, name,
+> +                             kunit_platform_device_find_by_name);
+> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
+> +       put_device(dev);
 > +
-> +       /* Remove overlay */
+> +       /* Remove pdev */
 > +       kunit_cleanup(&fake);
 > +
-> +       /* The node and device should be removed */
-> +       np = of_find_node_by_name(NULL, kunit_node_name);
-> +       KUNIT_EXPECT_PTR_EQ(test, NULL, np);
-> +       of_node_put(np);
-> +
-> +       dev = bus_find_device(&platform_bus_type, NULL, kunit_compatible,
-> +                             of_overlay_bus_match_compatible);
+> +       /*
+> +        * Failing to migrate the kunit_resource would lead to an extra
+> +        * put_device() call on the platform device. The best we can do here is
+> +        * make sure the device no longer exists on the bus, but if something
+> +        * is wrong we'll see a refcount underflow here. We can't test for a
+> +        * refcount underflow because the kref matches the lifetime of the
+> +        * device which should already be freed and could be used by something
+> +        * else.
+> +        */
+> +       dev = bus_find_device(&platform_bus_type, NULL, name,
+> +                             kunit_platform_device_find_by_name);
 > +       KUNIT_EXPECT_PTR_EQ(test, NULL, dev);
 > +       put_device(dev);
 > +}
 > +
-> +static struct kunit_case of_overlay_apply_kunit_test_cases[] = {
-> +       KUNIT_CASE(of_overlay_apply_kunit_apply),
-> +       KUNIT_CASE(of_overlay_apply_kunit_platform_device),
-> +       KUNIT_CASE(of_overlay_apply_kunit_cleanup),
+> +/*
+> + * Test suite for struct platform_device kunit APIs
+> + */
+> +static struct kunit_case kunit_platform_device_test_cases[] = {
+> +       KUNIT_CASE(kunit_platform_device_alloc_test),
+> +       KUNIT_CASE(kunit_platform_device_add_test),
+> +       KUNIT_CASE(kunit_platform_device_add_twice_fails_test),
+> +       KUNIT_CASE(kunit_platform_device_add_cleans_up),
+> +       {}
+> +};
+> +
+> +static struct kunit_suite kunit_platform_device_suite = {
+> +       .name = "kunit_platform_device",
+> +       .test_cases = kunit_platform_device_test_cases,
+> +};
+> +
+> +struct kunit_platform_driver_test_context {
+> +       struct platform_driver pdrv;
+> +       const char *data;
+> +};
+> +
+> +static const char * const test_data = "test data";
+> +
+> +static inline struct kunit_platform_driver_test_context *
+> +to_test_context(struct platform_device *pdev)
+> +{
+> +       return container_of(to_platform_driver(pdev->dev.driver),
+> +                           struct kunit_platform_driver_test_context,
+> +                           pdrv);
+> +}
+> +
+> +static int kunit_platform_driver_probe(struct platform_device *pdev)
+> +{
+> +       struct kunit_platform_driver_test_context *ctx;
+> +
+> +       ctx = to_test_context(pdev);
+> +       ctx->data = test_data;
+> +
+> +       return 0;
+> +}
+> +
+> +/* Test that kunit_platform_driver_register() registers a driver that probes. */
+> +static void kunit_platform_driver_register_test(struct kunit *test)
+> +{
+> +       struct platform_device *pdev;
+> +       struct kunit_platform_driver_test_context *ctx;
+> +       DECLARE_COMPLETION_ONSTACK(comp);
+> +       const char *name = "kunit-platform-register";
+> +
+> +       ctx = kunit_kzalloc(test, sizeof(*ctx), GFP_KERNEL);
+> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
+> +
+> +       pdev = kunit_platform_device_alloc(test, name, -1);
+> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pdev);
+> +       KUNIT_ASSERT_EQ(test, 0, kunit_platform_device_add(test, pdev));
+> +
+> +       ctx->pdrv.probe = kunit_platform_driver_probe;
+> +       ctx->pdrv.driver.name = name;
+> +       ctx->pdrv.driver.owner = THIS_MODULE;
+> +
+> +       KUNIT_ASSERT_EQ(test, 0, kunit_platform_device_prepare_wait_for_probe(test, pdev, &comp));
+> +
+> +       KUNIT_EXPECT_EQ(test, 0, kunit_platform_driver_register(test, &ctx->pdrv));
+> +       KUNIT_EXPECT_NE(test, 0, wait_for_completion_timeout(&comp, 3 * HZ));
+> +       KUNIT_EXPECT_STREQ(test, ctx->data, test_data);
+> +}
+> +
+> +/*
+> + * Test that kunit_platform_device_prepare_wait_for_probe() completes the completion
+> + * when the device is already probed.
+> + */
+> +static void kunit_platform_device_prepare_wait_for_probe_completes_when_already_probed(struct kunit *test)
+> +{
+> +       struct platform_device *pdev;
+> +       struct kunit_platform_driver_test_context *ctx;
+> +       DECLARE_COMPLETION_ONSTACK(comp);
+> +       const char *name = "kunit-platform-wait";
+> +
+> +       ctx = kunit_kzalloc(test, sizeof(*ctx), GFP_KERNEL);
+> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
+> +
+> +       pdev = kunit_platform_device_alloc(test, name, -1);
+> +       KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pdev);
+> +       KUNIT_ASSERT_EQ(test, 0, kunit_platform_device_add(test, pdev));
+> +
+> +       ctx->pdrv.probe = kunit_platform_driver_probe;
+> +       ctx->pdrv.driver.name = name;
+> +       ctx->pdrv.driver.owner = THIS_MODULE;
+> +
+> +       /* Make sure driver has actually probed */
+> +       KUNIT_ASSERT_EQ(test, 0, kunit_platform_device_prepare_wait_for_probe(test, pdev, &comp));
+> +       KUNIT_ASSERT_EQ(test, 0, kunit_platform_driver_register(test, &ctx->pdrv));
+> +       KUNIT_ASSERT_NE(test, 0, wait_for_completion_timeout(&comp, 3 * HZ));
+> +
+> +       reinit_completion(&comp);
+> +       KUNIT_ASSERT_EQ(test, 0, kunit_platform_device_prepare_wait_for_probe(test, pdev, &comp));
+> +
+> +       KUNIT_EXPECT_NE(test, 0, wait_for_completion_timeout(&comp, HZ));
+> +}
+> +
+> +static struct kunit_case kunit_platform_driver_test_cases[] = {
+> +       KUNIT_CASE(kunit_platform_driver_register_test),
+> +       KUNIT_CASE(kunit_platform_device_prepare_wait_for_probe_completes_when_already_probed),
 > +       {}
 > +};
 > +
 > +/*
-> + * Test suite for test managed device tree overlays.
+> + * Test suite for struct platform_driver kunit APIs
 > + */
-> +static struct kunit_suite of_overlay_apply_kunit_suite = {
-> +       .name = "of_overlay_apply_kunit",
-> +       .test_cases = of_overlay_apply_kunit_test_cases,
+> +static struct kunit_suite kunit_platform_driver_suite = {
+> +       .name = "kunit_platform_driver",
+> +       .test_cases = kunit_platform_driver_test_cases,
 > +};
 > +
 > +kunit_test_suites(
-> +       &of_overlay_apply_kunit_suite,
+> +       &kunit_platform_device_suite,
+> +       &kunit_platform_driver_suite,
 > +);
+> +
 > +MODULE_LICENSE("GPL");
+> diff --git a/lib/kunit/platform.c b/lib/kunit/platform.c
+> new file mode 100644
+> index 000000000000..ba1b0006dc45
+> --- /dev/null
+> +++ b/lib/kunit/platform.c
+> @@ -0,0 +1,302 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Test managed platform driver
+> + */
+> +
+> +#include <linux/completion.h>
+> +#include <linux/device/bus.h>
+> +#include <linux/device/driver.h>
+> +#include <linux/platform_device.h>
+> +
+> +#include <kunit/platform_device.h>
+> +#include <kunit/resource.h>
+> +
+> +struct kunit_platform_device_alloc_params {
+> +       const char *name;
+> +       int id;
+> +};
+> +
+> +static int kunit_platform_device_alloc_init(struct kunit_resource *res, void *context)
+> +{
+> +       struct kunit_platform_device_alloc_params *params = context;
+> +       struct platform_device *pdev;
+> +
+> +       pdev = platform_device_alloc(params->name, params->id);
+> +       if (!pdev)
+> +               return -ENOMEM;
+> +
+> +       res->data = pdev;
+> +
+> +       return 0;
+> +}
+> +
+> +static void kunit_platform_device_alloc_exit(struct kunit_resource *res)
+> +{
+> +       struct platform_device *pdev = res->data;
+> +
+> +       platform_device_put(pdev);
+> +}
+> +
+> +/**
+> + * kunit_platform_device_alloc() - Allocate a KUnit test managed platform device
+> + * @test: test context
+> + * @name: device name of platform device to alloc
+> + * @id: identifier of platform device to alloc.
+> + *
+> + * Allocate a test managed platform device. The device is put when the test completes.
+> + *
+> + * Return: Allocated platform device on success, NULL on failure.
+> + */
+> +struct platform_device *
+> +kunit_platform_device_alloc(struct kunit *test, const char *name, int id)
+> +{
+> +       struct kunit_platform_device_alloc_params params = {
+> +               .name = name,
+> +               .id = id,
+> +       };
+> +
+> +       return kunit_alloc_resource(test,
+> +                                   kunit_platform_device_alloc_init,
+> +                                   kunit_platform_device_alloc_exit,
+> +                                   GFP_KERNEL, &params);
+> +}
+> +EXPORT_SYMBOL_GPL(kunit_platform_device_alloc);
+> +
+> +static void kunit_platform_device_add_exit(struct kunit_resource *res)
+> +{
+> +       struct platform_device *pdev = res->data;
+> +
+> +       platform_device_unregister(pdev);
+> +}
+> +
+> +static bool
+> +kunit_platform_device_alloc_match(struct kunit *test,
+> +                                 struct kunit_resource *res, void *match_data)
+> +{
+> +       struct platform_device *pdev = match_data;
+> +
+> +       return res->data == pdev && res->free != kunit_platform_device_alloc_exit;
+> +}
+> +
+> +KUNIT_DEFINE_ACTION_WRAPPER(platform_device_unregister_wrapper,
+> +                           platform_device_unregister, struct platform_device *);
+> +/**
+> + * kunit_platform_device_add() - Register a KUnit test managed platform device
+> + * @test: test context
+> + * @pdev: platform device to add
+> + *
+> + * Register a test managed platform device. The device is unregistered when the
+> + * test completes.
+> + *
+> + * Return: 0 on success, negative errno on failure.
+> + */
+> +int kunit_platform_device_add(struct kunit *test, struct platform_device *pdev)
+> +{
+> +       struct kunit_resource *res;
+> +       int ret;
+> +
+> +       ret = platform_device_add(pdev);
+> +       if (ret)
+> +               return ret;
+> +
+> +       res = kunit_find_resource(test, kunit_platform_device_alloc_match, pdev);
+> +       if (res) {
+> +               /*
+> +                * Transfer the reference count of the platform device if it
+> +                * was allocated with kunit_platform_device_alloc(). In this
+> +                * case, calling platform_device_put() when the test exits from
+> +                * kunit_platform_device_alloc_exit() would lead to reference
+> +                * count underflow because platform_device_unregister_wrapper()
+> +                * calls platform_device_unregister() which also calls
+> +                * platform_device_put().
+> +                *
+> +                * Usually callers transfer the refcount initialized in
+> +                * platform_device_alloc() to platform_device_add() by calling
+> +                * platform_device_unregister() when platform_device_add()
+> +                * succeeds or platform_device_put() when it fails. KUnit has to
+> +                * keep this straight by redirecting the free routine for the
+> +                * resource to the right function. Luckily this only has to
+> +                * account for the success scenario.
+> +                */
+> +               res->free = kunit_platform_device_add_exit;
+> +               kunit_put_resource(res);
+> +       } else {
+> +               ret = kunit_add_action_or_reset(test, platform_device_unregister_wrapper, pdev);
+> +               if (ret)
+> +                       return ret;
+> +       }
+> +
+> +       return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(kunit_platform_device_add);
+> +
+> +struct kunit_platform_device_probe_nb {
+> +       struct completion *x;
+> +       struct device *dev;
+> +       struct notifier_block nb;
+> +};
+> +
+> +static int kunit_platform_device_probe_notify(struct notifier_block *nb,
+> +                                             unsigned long event, void *data)
+> +{
+> +       struct kunit_platform_device_probe_nb *knb;
+> +       struct device *dev = data;
+> +
+> +       knb = container_of(nb, struct kunit_platform_device_probe_nb, nb);
+> +       if (event != BUS_NOTIFY_BOUND_DRIVER || knb->dev != dev)
+> +               return NOTIFY_DONE;
+> +
+> +       complete(knb->x);
+> +
+> +       return NOTIFY_OK;
+> +}
+> +
+> +static void kunit_platform_device_probe_nb_remove(void *nb)
+> +{
+> +       bus_unregister_notifier(&platform_bus_type, nb);
+> +}
+> +
+> +/**
+> + * kunit_platform_device_prepare_wait_for_probe() - Prepare a completion
+> + * variable to wait for a platform device to probe
+> + * @test: test context
+> + * @pdev: platform device to prepare to wait for probe of
+> + * @x: completion variable completed when @dev has probed
+> + *
+> + * Prepare a completion variable @x to wait for @pdev to probe. Waiting on the
+> + * completion forces a preemption, allowing the platform driver to probe.
+> + *
+> + * Example
+> + *
+> + * .. code-block:: c
+> + *
+> + *     static int kunit_platform_driver_probe(struct platform_device *pdev)
+> + *     {
+> + *             return 0;
+> + *     }
+> + *
+> + *     static void kunit_platform_driver_test(struct kunit *test)
+> + *     {
+> + *             struct platform_device *pdev;
+> + *             struct platform_driver *pdrv;
+> + *             DECLARE_COMPLETION_ONSTACK(comp);
+> + *
+> + *             pdev = kunit_platform_device_alloc(test, "kunit-platform", -1);
+> + *             KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pdev);
+> + *             KUNIT_ASSERT_EQ(test, 0, kunit_platform_device_add(test, pdev));
+> + *
+> + *             pdrv = kunit_kzalloc(test, sizeof(*pdrv), GFP_KERNEL);
+> + *             KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pdrv);
+> + *
+> + *             pdrv->probe = kunit_platform_driver_probe;
+> + *             pdrv->driver.name = "kunit-platform";
+> + *             pdrv->driver.owner = THIS_MODULE;
+> + *
+> + *             KUNIT_ASSERT_EQ(test, 0, kunit_platform_device_prepare_wait_for_probe(test, pdev, &comp));
+> + *             KUNIT_ASSERT_EQ(test, 0, kunit_platform_driver_register(test, pdrv));
+> + *
+> + *             KUNIT_EXPECT_NE(test, 0, wait_for_completion_timeout(&comp, 3 * HZ));
+> + *     }
+> + *
+> + * Return: 0 on success, negative errno on failure.
+> + */
+> +int kunit_platform_device_prepare_wait_for_probe(struct kunit *test,
+> +                                                struct platform_device *pdev,
+> +                                                struct completion *x)
+> +{
+> +       struct device *dev = &pdev->dev;
+> +       struct kunit_platform_device_probe_nb *knb;
+> +       bool bound;
+> +
+> +       knb = kunit_kzalloc(test, sizeof(*knb), GFP_KERNEL);
+> +       if (!knb)
+> +               return -ENOMEM;
+> +
+> +       knb->nb.notifier_call = kunit_platform_device_probe_notify;
+> +       knb->dev = dev;
+> +       knb->x = x;
+> +
+> +       device_lock(dev);
+> +       bound = device_is_bound(dev);
+> +       if (bound) {
+> +               device_unlock(dev);
+> +               complete(x);
+> +               kunit_kfree(test, knb);
+> +               return 0;
+> +       }
+> +
+> +       bus_register_notifier(&platform_bus_type, &knb->nb);
+> +       device_unlock(&pdev->dev);
+> +
+> +       return kunit_add_action_or_reset(test, kunit_platform_device_probe_nb_remove, &knb->nb);
+> +}
+> +EXPORT_SYMBOL_GPL(kunit_platform_device_prepare_wait_for_probe);
+> +
+> +KUNIT_DEFINE_ACTION_WRAPPER(platform_driver_unregister_wrapper,
+> +                           platform_driver_unregister, struct platform_driver *);
+> +/**
+> + * kunit_platform_driver_register() - Register a KUnit test managed platform driver
+> + * @test: test context
+> + * @drv: platform driver to register
+> + *
+> + * Register a test managed platform driver. This allows callers to embed the
+> + * @drv in a container structure and use container_of() in the probe function
+> + * to pass information to KUnit tests.
+> + *
+> + * Example
+> + *
+> + * .. code-block:: c
+> + *
+> + *     struct kunit_test_context {
+> + *             struct platform_driver pdrv;
+> + *             const char *data;
+> + *     };
+> + *
+> + *     static inline struct kunit_test_context *
+> + *     to_test_context(struct platform_device *pdev)
+> + *     {
+> + *             return container_of(to_platform_driver(pdev->dev.driver),
+> + *                                 struct kunit_test_context,
+> + *                                 pdrv);
+> + *     }
+> + *
+> + *     static int kunit_platform_driver_probe(struct platform_device *pdev)
+> + *     {
+> + *             struct kunit_test_context *ctx;
+> + *
+> + *             ctx = to_test_context(pdev);
+> + *             ctx->data = "test data";
+> + *
+> + *             return 0;
+> + *     }
+> + *
+> + *     static void kunit_platform_driver_test(struct kunit *test)
+> + *     {
+> + *             struct kunit_test_context *ctx;
+> + *
+> + *             ctx = kunit_kzalloc(test, sizeof(*ctx), GFP_KERNEL);
+> + *             KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
+> + *
+> + *             ctx->pdrv.probe = kunit_platform_driver_probe;
+> + *             ctx->pdrv.driver.name = "kunit-platform";
+> + *             ctx->pdrv.driver.owner = THIS_MODULE;
+> + *
+> + *             KUNIT_EXPECT_EQ(test, 0, kunit_platform_driver_register(test, &ctx->pdrv));
+> + *             <... wait for driver to probe ...>
+> + *             KUNIT_EXPECT_STREQ(test, ctx->data, "test data");
+> + *     }
+> + *
+> + * Return: 0 on success, negative errno on failure.
+> + */
+> +int kunit_platform_driver_register(struct kunit *test,
+> +                                  struct platform_driver *drv)
+> +{
+> +       int ret;
+> +
+> +       ret = platform_driver_register(drv);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return kunit_add_action_or_reset(test, platform_driver_unregister_wrapper, drv);
+> +}
+> +EXPORT_SYMBOL_GPL(kunit_platform_driver_register);
 > --
 > https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
 > https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 >
-> --
-> You received this message because you are subscribed to the Google Groups "KUnit Development" group.
-> To unsubscribe from this group and stop receiving emails from it, send an email to kunit-dev+unsubscribe@googlegroups.com.
-> To view this discussion on the web visit https://groups.google.com/d/msgid/kunit-dev/20240603223811.3815762-6-sboyd%40kernel.org.
 
---00000000000042c122061ac0c06a
+--000000000000bb0d1a061ac0c03c
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -372,13 +812,13 @@ GQs0EfiilyTgsH8iMOPqUJ1h4oX9z1FpaiJzfxcvcGG46SCieSFP0USs9aMl7GeERue37kBf14Pd
 kOYIfx09Pcv/N6lHV6kXlzG0xeUuV3RxtLtszQgxggJqMIICZgIBATBoMFQxCzAJBgNVBAYTAkJF
 MRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSowKAYDVQQDEyFHbG9iYWxTaWduIEF0bGFzIFIz
 IFNNSU1FIENBIDIwMjACEAFsPHWl8lqMEwx3lAnpufYwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZI
-hvcNAQkEMSIEIJ3L1c1moLlkJrXnIT729z5C9FGtTsuhkhOGof3LNBzZMBgGCSqGSIb3DQEJAzEL
-BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI0MDYxMzA3NTAyMVowaQYJKoZIhvcNAQkPMVww
+hvcNAQkEMSIEIAiy9iNBGxBIRaFa5LJ2p/d6gxX0AOaWHjykEKGEffXcMBgGCSqGSIb3DQEJAzEL
+BgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI0MDYxMzA3NTAyOVowaQYJKoZIhvcNAQkPMVww
 WjALBglghkgBZQMEASowCwYJYIZIAWUDBAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkq
-hkiG9w0BAQowCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQBAvDb6
-XrwU25Km8AlBUCn1NsePgrGYg81MrOmx9apOOiHRm4bX1LkXOIoCgdecrtYU4Fix7MBjeixufbIp
-qjq8vMgdMrwK52hRoAEZwxyDeEYqh1VNaki3DqANTdc4UdiHLVJCTgN8C88JL+4mmi3au7wZfvb7
-f7nvRJaSzWEheTSWcVhu4ULS96sUig0nUMO5Zi7GfZBRDh0mNZgzO7svpMPoipTCdyAExqyRr6HF
-mz1mkoJd9Jp5Ohbnt5nhH5NQEdcgg8ltfIbRh2Um4gZ8Z/6xk/HJ0Kyq0MygePXwqoXGZZ9ad/VS
-pbrvIB+0WunpjjrhHIrrFBC2AfY2rcEW
---00000000000042c122061ac0c06a--
+hkiG9w0BAQowCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAucqCk
+aKhpLLlTSF2f6sLEPzUjGH9dYuCzumET9hyp4ihQUaoooH+PILm+DqqJb9UwlOKgOyMOJZhFQUDM
+NEykYOGY06gKAZmNLx5N+ZkAKbgPryxeJ0jEDSygmLlKOWPBbQfKOBmu3qaX/UFCSLEoeVM38goT
+tLehA9pAsLWV/xnKNCMIDZgXNwPgPddCZ1BPbJqaKCyjCZGfqwXInI/TxrhCLM+YX678JgIB1HhQ
+OlUk2uLeommwTmm60ccBYhkMYhcDTlC+izqnIpPN1lGrx2T69JsaISr80d/vXrvYHthmm5z1qATI
+1pO5xsmtneUlG4d1VJCD042vhPUo+lo5
+--000000000000bb0d1a061ac0c03c--
