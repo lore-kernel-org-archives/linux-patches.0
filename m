@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8437520ED;
-	Thu, 13 Jun 2024 12:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE05144317;
+	Thu, 13 Jun 2024 12:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282875; cv=none; b=JyHATG4oLgjDoWH7jMaLuewMV+otPe1n0uvic5VpkFlkxcm54FFYM7+2f5GPBZ334c7UGP4bS7dvqXdaYLraBIwIv5YeMokfQlkhKwj9qa3ZY+xmPdqQz3t91cLvf4Rrc/p/h3/pY0CZCGqfBjIT0WYgSF8kPqv38lVMWrfLKuo=
+	t=1718282878; cv=none; b=Dkqzzk+WavESVHHPoocR7rbMBwlGOOngOnXTN05RgFrxmyd9bIK7FAagWKlEHZKMuvuEsNJEETyWBTeYqih0xeH6tSMX4677Zix7kVAIxpWJgz2X2T4JEGwkqXiVJNbEFRWRB0QAooCuqvMbTlZYFSTISvQ1LDbgkFt4IKMJNb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282875; c=relaxed/simple;
-	bh=gTwmoaF0M8EOs7nvL/+US534vPK7Qx/QK9196h5MJEU=;
+	s=arc-20240116; t=1718282878; c=relaxed/simple;
+	bh=Gvq2R7aifBJsV9mZhzM8tSmja08iRFxYE7IAFb8lEF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LaVjBfvS0CH9Rw0lgWNaDRYZa6fSBwYwJQOw7XS1BWh2w7gCtgerxXK8QZi+SGt2YEuGrKbHvfbOtZS3M9StiumTJmAEKpQxp9pO/m04Sbg1wsSzxAfqgOGx2m0szLr7MDoMD9o65rCFLdfygGHtlZgPbThpHS76Rp8rDRGFZqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDMZ6erg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aw9s2sF8qLiGWtM/k4iy4ipmnAugwQnOIqhMNjnI8SbEKE/VxVBK5bHtJjB481gVg9XkSo+s5xx7ZO3e4Y227X3oQlrCTMsCOgQn7yDbk1kE6x0emCybo0cZLz6Inxy81GkEye990M0TBzmJ411KDaYH5sq3/Nh8AK2Bu5oC+R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aWA4YD7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDMZ6erg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B50C32786;
-	Thu, 13 Jun 2024 12:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aWA4YD7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED943C4AF1A;
+	Thu, 13 Jun 2024 12:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282875;
-	bh=gTwmoaF0M8EOs7nvL/+US534vPK7Qx/QK9196h5MJEU=;
+	s=korg; t=1718282878;
+	bh=Gvq2R7aifBJsV9mZhzM8tSmja08iRFxYE7IAFb8lEF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDMZ6ergdivQw02QCLs3Y9uCbAJ5Qt0fO3RPpbsnXu99e1HVHUT/j/a4qZ+2NBrGc
-	 Ure/DLUBPimUJWkM1Ljq84vuGKDI2ELDTWqfrXSvLXLKOIf3JUo7cqLPZZNpg0Hf39
-	 NWr17ubkGhXuQpOY3OuD8usRFwFf0/yXDzTaLU5U=
+	b=0aWA4YD79AYyuoUGZ4/2bnvCIp/7AMj60r0s6L3icH5geQkpoGd/yHasF8S2ivDHr
+	 mAszelHf2Ow38dGuPO6Q8Knh2E+slloeWh3gDXjjH2XhtDDYx8LgR1vBAlzdmzUMjf
+	 9+IkY+x+DMeMflDIpd6t0P0O3oCfrLjLwOWCEXfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>,
-	Markus Suvanto <markus.suvanto@gmail.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 07/85] afs: Dont cross .backup mountpoint from backup volume
-Date: Thu, 13 Jun 2024 13:35:05 +0200
-Message-ID: <20240613113214.421861673@linuxfoundation.org>
+	Haorong Lu <ancientmodern4@gmail.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Conor Dooley <conor@kernel.org>
+Subject: [PATCH 6.1 08/85] riscv: signal: handle syscall restart before get_signal
+Date: Thu, 13 Jun 2024 13:35:06 +0200
+Message-ID: <20240613113214.460101693@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -55,50 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Dionne <marc.dionne@auristor.com>
+From: Haorong Lu <ancientmodern4@gmail.com>
 
-commit 29be9100aca2915fab54b5693309bc42956542e5 upstream.
+commit ce4f78f1b53d3327fbd32764aa333bf05fb68818 upstream.
 
-Don't cross a mountpoint that explicitly specifies a backup volume
-(target is <vol>.backup) when starting from a backup volume.
+In the current riscv implementation, blocking syscalls like read() may
+not correctly restart after being interrupted by ptrace. This problem
+arises when the syscall restart process in arch_do_signal_or_restart()
+is bypassed due to changes to the regs->cause register, such as an
+ebreak instruction.
 
-It it not uncommon to mount a volume's backup directly in the volume
-itself.  This can cause tools that are not paying attention to get
-into a loop mounting the volume onto itself as they attempt to
-traverse the tree, leading to a variety of problems.
+Steps to reproduce:
+1. Interrupt the tracee process with PTRACE_SEIZE & PTRACE_INTERRUPT.
+2. Backup original registers and instruction at new_pc.
+3. Change pc to new_pc, and inject an instruction (like ebreak) to this
+   address.
+4. Resume with PTRACE_CONT and wait for the process to stop again after
+   executing ebreak.
+5. Restore original registers and instructions, and detach from the
+   tracee process.
+6. Now the read() syscall in tracee will return -1 with errno set to
+   ERESTARTSYS.
 
-This doesn't prevent the general case of loops in a sequence of
-mountpoints, but addresses a common special case in the same way
-as other afs clients.
+Specifically, during an interrupt, the regs->cause changes from
+EXC_SYSCALL to EXC_BREAKPOINT due to the injected ebreak, which is
+inaccessible via ptrace so we cannot restore it. This alteration breaks
+the syscall restart condition and ends the read() syscall with an
+ERESTARTSYS error. According to include/linux/errno.h, it should never
+be seen by user programs. X86 can avoid this issue as it checks the
+syscall condition using a register (orig_ax) exposed to user space.
+Arm64 handles syscall restart before calling get_signal, where it could
+be paused and inspected by ptrace/debugger.
 
-Reported-by: Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>
-Link: http://lists.infradead.org/pipermail/linux-afs/2024-May/008454.html
-Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
-Link: http://lists.infradead.org/pipermail/linux-afs/2024-February/008074.html
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/768760.1716567475@warthog.procyon.org.uk
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+This patch adjusts the riscv implementation to arm64 style, which also
+checks syscall using a kernel register (syscallno). It ensures the
+syscall restart process is not bypassed when changes to the cause
+register occur, providing more consistent behavior across various
+architectures.
+
+For a simplified reproduction program, feel free to visit:
+https://github.com/ancientmodern/riscv-ptrace-bug-demo.
+
+Signed-off-by: Haorong Lu <ancientmodern4@gmail.com>
+Link: https://lore.kernel.org/r/20230803224458.4156006-1-ancientmodern4@gmail.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Conor Dooley <conor@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/mntpt.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/riscv/kernel/signal.c |   85 ++++++++++++++++++++++++---------------------
+ 1 file changed, 46 insertions(+), 39 deletions(-)
 
---- a/fs/afs/mntpt.c
-+++ b/fs/afs/mntpt.c
-@@ -140,6 +140,11 @@ static int afs_mntpt_set_params(struct f
- 		put_page(page);
- 		if (ret < 0)
- 			return ret;
-+
-+		/* Don't cross a backup volume mountpoint from a backup volume */
-+		if (src_as->volume && src_as->volume->type == AFSVL_BACKVOL &&
-+		    ctx->type == AFSVL_BACKVOL)
-+			return -ENODEV;
+--- a/arch/riscv/kernel/signal.c
++++ b/arch/riscv/kernel/signal.c
+@@ -246,30 +246,6 @@ static void handle_signal(struct ksignal
+ 	sigset_t *oldset = sigmask_to_save();
+ 	int ret;
+ 
+-	/* Are we from a system call? */
+-	if (regs->cause == EXC_SYSCALL) {
+-		/* Avoid additional syscall restarting via ret_from_exception */
+-		regs->cause = -1UL;
+-		/* If so, check system call restarting.. */
+-		switch (regs->a0) {
+-		case -ERESTART_RESTARTBLOCK:
+-		case -ERESTARTNOHAND:
+-			regs->a0 = -EINTR;
+-			break;
+-
+-		case -ERESTARTSYS:
+-			if (!(ksig->ka.sa.sa_flags & SA_RESTART)) {
+-				regs->a0 = -EINTR;
+-				break;
+-			}
+-			fallthrough;
+-		case -ERESTARTNOINTR:
+-                        regs->a0 = regs->orig_a0;
+-			regs->epc -= 0x4;
+-			break;
+-		}
+-	}
+-
+ 	rseq_signal_deliver(ksig, regs);
+ 
+ 	/* Set up the stack frame */
+@@ -283,36 +259,67 @@ static void handle_signal(struct ksignal
+ 
+ static void do_signal(struct pt_regs *regs)
+ {
++	unsigned long continue_addr = 0, restart_addr = 0;
++	int retval = 0;
+ 	struct ksignal ksig;
++	bool syscall = (regs->cause == EXC_SYSCALL);
+ 
+-	if (get_signal(&ksig)) {
+-		/* Actually deliver the signal */
+-		handle_signal(&ksig, regs);
+-		return;
+-	}
++	/* If we were from a system call, check for system call restarting */
++	if (syscall) {
++		continue_addr = regs->epc;
++		restart_addr = continue_addr - 4;
++		retval = regs->a0;
+ 
+-	/* Did we come from a system call? */
+-	if (regs->cause == EXC_SYSCALL) {
+ 		/* Avoid additional syscall restarting via ret_from_exception */
+ 		regs->cause = -1UL;
+ 
+-		/* Restart the system call - no handlers present */
+-		switch (regs->a0) {
++		/*
++		 * Prepare for system call restart. We do this here so that a
++		 * debugger will see the already changed PC.
++		 */
++		switch (retval) {
+ 		case -ERESTARTNOHAND:
+ 		case -ERESTARTSYS:
+ 		case -ERESTARTNOINTR:
+-                        regs->a0 = regs->orig_a0;
+-			regs->epc -= 0x4;
+-			break;
+ 		case -ERESTART_RESTARTBLOCK:
+-                        regs->a0 = regs->orig_a0;
+-			regs->a7 = __NR_restart_syscall;
+-			regs->epc -= 0x4;
++			regs->a0 = regs->orig_a0;
++			regs->epc = restart_addr;
+ 			break;
+ 		}
  	}
  
- 	return 0;
+ 	/*
++	 * Get the signal to deliver. When running under ptrace, at this point
++	 * the debugger may change all of our registers.
++	 */
++	if (get_signal(&ksig)) {
++		/*
++		 * Depending on the signal settings, we may need to revert the
++		 * decision to restart the system call, but skip this if a
++		 * debugger has chosen to restart at a different PC.
++		 */
++		if (regs->epc == restart_addr &&
++		    (retval == -ERESTARTNOHAND ||
++		     retval == -ERESTART_RESTARTBLOCK ||
++		     (retval == -ERESTARTSYS &&
++		      !(ksig.ka.sa.sa_flags & SA_RESTART)))) {
++			regs->a0 = -EINTR;
++			regs->epc = continue_addr;
++		}
++
++		/* Actually deliver the signal */
++		handle_signal(&ksig, regs);
++		return;
++	}
++
++	/*
++	 * Handle restarting a different system call. As above, if a debugger
++	 * has chosen to restart at a different PC, ignore the restart.
++	 */
++	if (syscall && regs->epc == restart_addr && retval == -ERESTART_RESTARTBLOCK)
++		regs->a7 = __NR_restart_syscall;
++
++	/*
+ 	 * If there is no signal to deliver, we just put the saved
+ 	 * sigmask back.
+ 	 */
 
 
