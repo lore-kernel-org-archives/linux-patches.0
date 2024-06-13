@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5ED1849;
-	Thu, 13 Jun 2024 12:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029CF17FD;
+	Thu, 13 Jun 2024 12:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281906; cv=none; b=bc3auxuQ1K5dISv7HOrbAEEoBF5vvAS5oq44qOC0ega6n95ttqV1WbnYCbhNXHsqLY8eRJatZM/OvthOZ6la+joFGIvAa4Q6S5qXmz2xkKyBah5tY8obgH0Sx9I5l9+egtFjuWeTaVXWoES/p03qP/15Mc8vXYBVWBwCmN6LTM4=
+	t=1718281910; cv=none; b=HiXl0wBPxv7E71goCbJa/yYXAw/CV6l7//Zi9Lhhtf6sa6qNOP3oEpHWzCkkAHl8brOK7pTctBNf3OHnPjh8ARGk8GOoB3oFxj+RqD+bNHe9eWstAfp/1wDmoemk1LrQGHZw2bXPiQ4GeDJFyFXeBg5WmUpK26oBTc0pm//FpNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281906; c=relaxed/simple;
-	bh=DyflVMRcxiRA+4dDq6ugKd8m0E+J+TiiXLiMEq8Yx00=;
+	s=arc-20240116; t=1718281910; c=relaxed/simple;
+	bh=EVpGUnnyTgQb0u5y/vw4uKXG88dxr7EcqVOG5iI6klY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCFMvSg/AVI0LAL7lW2QNsTT4efd/PaFtzeah7md2qtTRK8T53IODSzvjkfu2LecswDrUNu/g7jeDkrJo2vvfkTFvmJwN3NcnAU/1gpbJW4+6iIjkUBVZEYIHKAOntqRPgownamuJ4xiIOkuTVLlgaJEUlsDPeRVO1ZTZ/kNRrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRUSZTBH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hfsv+0MZ8xdy2a9J+9Uk9nejS/ZNSZvTPePZqIWkug0DdAoIZkNzOmn3Hka9nHwSVA5u/QRTUUaff35NJ3GfaVbx7cXWyHvzt+vCX5vIAgI8UOV4zSyE65yKM/exgSy/qcO9GTBAjTu3nl7JBaMx+vA1i8+3a3419jLd2+W+FNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZXq5iei; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRUSZTBH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547BAC2BBFC;
-	Thu, 13 Jun 2024 12:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZXq5iei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C07EC2BBFC;
+	Thu, 13 Jun 2024 12:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281906;
-	bh=DyflVMRcxiRA+4dDq6ugKd8m0E+J+TiiXLiMEq8Yx00=;
+	s=korg; t=1718281909;
+	bh=EVpGUnnyTgQb0u5y/vw4uKXG88dxr7EcqVOG5iI6klY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRUSZTBHIsTvHjh9sBCT+e4Rsc1bYwH4QWaZn4f3hZ8sjPGeBqicORukodvMvp61h
-	 nkmVGq5XfwSOBU0QfNIGnrop0fNgWDt+FbRV0hkNDlWryEzO44UhjBEvqjjct+Ua6N
-	 kRf6f2GhdYZpyNuF5zfqZN/MyYK1epd62yMmXAWc=
+	b=aZXq5iein7usbdxiWmbxpyzttLGXhvRI3XBXfhUaDCxhf1o+fZRv4psVQUPEuLOaM
+	 jlu/ZX0XTOGmZumPJsowcL9+1lKHFEkZR70fKsWJvoYPCOzLgOdP/z+/riZ86l2I6h
+	 uHQgKMSiVMumtqoFBTmvA4vV5ojtP85CB3WciXFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Christian Brauner <brauner@kernel.org>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/402] Revert "sh: Handle calling csum_partial with misaligned data"
-Date: Thu, 13 Jun 2024 13:30:54 +0200
-Message-ID: <20240613113305.922536925@linuxfoundation.org>
+Subject: [PATCH 5.15 098/402] selftests/binderfs: use the Makefiles rules, not Makes implicit rules
+Date: Thu, 13 Jun 2024 13:30:55 +0200
+Message-ID: <20240613113305.960949124@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,185 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: John Hubbard <jhubbard@nvidia.com>
 
-[ Upstream commit b5319c96292ff877f6b58d349acf0a9dc8d3b454 ]
+[ Upstream commit 019baf635eb6ffe8d6c1343f81788f02a7e0ed98 ]
 
-This reverts commit cadc4e1a2b4d20d0cc0e81f2c6ba0588775e54e5.
+First of all, in order to build with clang at all, one must first apply
+Valentin Obst's build fix for LLVM [1]. Once that is done, then when
+building with clang, via:
 
-Commit cadc4e1a2b4d ("sh: Handle calling csum_partial with misaligned
-data") causes bad checksum calculations on unaligned data. Reverting
-it fixes the problem.
+    make LLVM=1 -C tools/testing/selftests
 
-    # Subtest: checksum
-    # module: checksum_kunit
-    1..5
-    # test_csum_fixed_random_inputs: ASSERTION FAILED at lib/checksum_kunit.c:500
-    Expected ( u64)result == ( u64)expec, but
-        ( u64)result == 53378 (0xd082)
-        ( u64)expec == 33488 (0x82d0)
-    # test_csum_fixed_random_inputs: pass:0 fail:1 skip:0 total:1
-    not ok 1 test_csum_fixed_random_inputs
-    # test_csum_all_carry_inputs: ASSERTION FAILED at lib/checksum_kunit.c:525
-    Expected ( u64)result == ( u64)expec, but
-        ( u64)result == 65281 (0xff01)
-        ( u64)expec == 65280 (0xff00)
-    # test_csum_all_carry_inputs: pass:0 fail:1 skip:0 total:1
-    not ok 2 test_csum_all_carry_inputs
-    # test_csum_no_carry_inputs: ASSERTION FAILED at lib/checksum_kunit.c:573
-    Expected ( u64)result == ( u64)expec, but
-        ( u64)result == 65535 (0xffff)
-        ( u64)expec == 65534 (0xfffe)
-    # test_csum_no_carry_inputs: pass:0 fail:1 skip:0 total:1
-    not ok 3 test_csum_no_carry_inputs
-    # test_ip_fast_csum: pass:1 fail:0 skip:0 total:1
-    ok 4 test_ip_fast_csum
-    # test_csum_ipv6_magic: pass:1 fail:0 skip:0 total:1
-    ok 5 test_csum_ipv6_magic
- # checksum: pass:2 fail:3 skip:0 total:5
- # Totals: pass:2 fail:3 skip:0 total:5
-not ok 22 checksum
+...the following error occurs:
 
-Fixes: cadc4e1a2b4d ("sh: Handle calling csum_partial with misaligned data")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20240324231804.841099-1-linux@roeck-us.net
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+   clang: error: cannot specify -o when generating multiple output files
+
+This is because clang, unlike gcc, won't accept invocations of this
+form:
+
+    clang file1.c header2.h
+
+While trying to fix this, I noticed that:
+
+a) selftests/lib.mk already avoids the problem, and
+
+b) The binderfs Makefile indavertently bypasses the selftests/lib.mk
+build system, and quitely uses Make's implicit build rules for .c files
+instead.
+
+The Makefile attempts to set up both a dependency and a source file,
+neither of which was needed, because lib.mk is able to automatically
+handle both. This line:
+
+    binderfs_test: binderfs_test.c
+
+...causes Make's implicit rules to run, which builds binderfs_test
+without ever looking at lib.mk.
+
+Fix this by simply deleting the "binderfs_test:" Makefile target and
+letting lib.mk handle it instead.
+
+[1] https://lore.kernel.org/all/20240329-selftests-libmk-llvm-rfc-v1-1-2f9ed7d1c49f@valentinobst.de/
+
+Fixes: 6e29225af902 ("binderfs: port tests to test harness infrastructure")
+Cc: Christian Brauner <brauner@kernel.org>
+Signed-off-by: John Hubbard <jhubbard@nvidia.com>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/lib/checksum.S | 67 ++++++++++++------------------------------
- 1 file changed, 18 insertions(+), 49 deletions(-)
+ tools/testing/selftests/filesystems/binderfs/Makefile | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/sh/lib/checksum.S b/arch/sh/lib/checksum.S
-index 3e07074e00981..06fed5a21e8ba 100644
---- a/arch/sh/lib/checksum.S
-+++ b/arch/sh/lib/checksum.S
-@@ -33,7 +33,8 @@
-  */
+diff --git a/tools/testing/selftests/filesystems/binderfs/Makefile b/tools/testing/selftests/filesystems/binderfs/Makefile
+index 8af25ae960498..24d8910c7ab58 100644
+--- a/tools/testing/selftests/filesystems/binderfs/Makefile
++++ b/tools/testing/selftests/filesystems/binderfs/Makefile
+@@ -3,6 +3,4 @@
+ CFLAGS += -I../../../../../usr/include/ -pthread
+ TEST_GEN_PROGS := binderfs_test
  
- /*	
-- * asmlinkage __wsum csum_partial(const void *buf, int len, __wsum sum);
-+ * unsigned int csum_partial(const unsigned char *buf, int len,
-+ *                           unsigned int sum);
-  */
- 
- .text
-@@ -45,31 +46,11 @@ ENTRY(csum_partial)
- 	   * Fortunately, it is easy to convert 2-byte alignment to 4-byte
- 	   * alignment for the unrolled loop.
- 	   */
-+	mov	r5, r1
- 	mov	r4, r0
--	tst	#3, r0		! Check alignment.
--	bt/s	2f		! Jump if alignment is ok.
--	 mov	r4, r7		! Keep a copy to check for alignment
-+	tst	#2, r0		! Check alignment.
-+	bt	2f		! Jump if alignment is ok.
- 	!
--	tst	#1, r0		! Check alignment.
--	bt	21f		! Jump if alignment is boundary of 2bytes.
+-binderfs_test: binderfs_test.c ../../kselftest.h ../../kselftest_harness.h
 -
--	! buf is odd
--	tst	r5, r5
--	add	#-1, r5
--	bt	9f
--	mov.b	@r4+, r0
--	extu.b	r0, r0
--	addc	r0, r6		! t=0 from previous tst
--	mov	r6, r0
--	shll8	r6
--	shlr16	r0
--	shlr8	r0
--	or	r0, r6
--	mov	r4, r0
--	tst	#2, r0
--	bt	2f
--21:
--	! buf is 2 byte aligned (len could be 0)
- 	add	#-2, r5		! Alignment uses up two bytes.
- 	cmp/pz	r5		!
- 	bt/s	1f		! Jump if we had at least two bytes.
-@@ -77,17 +58,16 @@ ENTRY(csum_partial)
- 	bra	6f
- 	 add	#2, r5		! r5 was < 2.  Deal with it.
- 1:
-+	mov	r5, r1		! Save new len for later use.
- 	mov.w	@r4+, r0
- 	extu.w	r0, r0
- 	addc	r0, r6
- 	bf	2f
- 	add	#1, r6
- 2:
--	! buf is 4 byte aligned (len could be 0)
--	mov	r5, r1
- 	mov	#-5, r0
--	shld	r0, r1
--	tst	r1, r1
-+	shld	r0, r5
-+	tst	r5, r5
- 	bt/s	4f		! if it's =0, go to 4f
- 	 clrt
- 	.align	2
-@@ -109,31 +89,30 @@ ENTRY(csum_partial)
- 	addc	r0, r6
- 	addc	r2, r6
- 	movt	r0
--	dt	r1
-+	dt	r5
- 	bf/s	3b
- 	 cmp/eq	#1, r0
--	! here, we know r1==0
--	addc	r1, r6			! add carry to r6
-+	! here, we know r5==0
-+	addc	r5, r6			! add carry to r6
- 4:
--	mov	r5, r0
-+	mov	r1, r0
- 	and	#0x1c, r0
- 	tst	r0, r0
--	bt	6f
--	! 4 bytes or more remaining
--	mov	r0, r1
--	shlr2	r1
-+	bt/s	6f
-+	 mov	r0, r5
-+	shlr2	r5
- 	mov	#0, r2
- 5:
- 	addc	r2, r6
- 	mov.l	@r4+, r2
- 	movt	r0
--	dt	r1
-+	dt	r5
- 	bf/s	5b
- 	 cmp/eq	#1, r0
- 	addc	r2, r6
--	addc	r1, r6		! r1==0 here, so it means add carry-bit
-+	addc	r5, r6		! r5==0 here, so it means add carry-bit
- 6:
--	! 3 bytes or less remaining
-+	mov	r1, r5
- 	mov	#3, r0
- 	and	r0, r5
- 	tst	r5, r5
-@@ -159,16 +138,6 @@ ENTRY(csum_partial)
- 	mov	#0, r0
- 	addc	r0, r6
- 9:
--	! Check if the buffer was misaligned, if so realign sum
--	mov	r7, r0
--	tst	#1, r0
--	bt	10f
--	mov	r6, r0
--	shll8	r6
--	shlr16	r0
--	shlr8	r0
--	or	r0, r6
--10:
- 	rts
- 	 mov	r6, r0
- 
+ include ../../lib.mk
 -- 
 2.43.0
 
