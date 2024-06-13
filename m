@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3F817FD;
-	Thu, 13 Jun 2024 12:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E4617FD;
+	Thu, 13 Jun 2024 12:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283043; cv=none; b=DPgRSg/E0fHG2ImHHgHPmOQlascs1o1BhmaM0ZkVK8dg5DBBPeDBEQzSbd5rZdd/ckMuPJDdxh1JkIQpttVE+0xW8QfIll7TPg+rxJZknHUERhZos9o/cFwSYxnNG8dyA/3kWymmv1OypwUeJoRTj+qKp3Wb40XpFIYoSu4hono=
+	t=1718283046; cv=none; b=VBE6RaWrAr4Gq7uG0JBmYMOVFM1MDmaOxeO0kknZHqik1OPbye81s2Ql965npyE0n5gvfPWRUOYnt5CHPsX77X3hoE6dTmywwJob65ohBZ3S2Di7VqmoWDVw1IYtaYv0vj9HLYra10fHXowuYXL1P6bJIO/VMy5OAa/KqZohR7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283043; c=relaxed/simple;
-	bh=1m7IVIPGiEeKv9WhIAkaDZsj58I8pZChOJz+DZkMEwA=;
+	s=arc-20240116; t=1718283046; c=relaxed/simple;
+	bh=Tf3W8elHE/gsLUsWjfqIhi8EpIadXw2WlsGBgkkIK10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FxihbNLl1pb3ljxHQlUpJAV6kol92f64pbNtSh7V6YT+zYT56lhGdt9RKZgH2LlFjcb96+kmZz1Cz6l5SBZpgtWBE5B3bccZZIBkXgdgvh81O+Ampn6Q/ID8KviY3hZOsWUNQtxbS5f+CatBWFBM4CXWekx6F9FMQtg+EujyeKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBU9bU6k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z155boohriSZaj+uDCjAOgnt/IlsFRXODP3e/EoYlkmH3SQzVxnW4dvtDU04K0jkGU6zj9K9GtZYMlavRF7UFo4nrJmogQbmjMZ8AsOMi+D+xEmam61Bz8zfOEnvxbNwtHQdwqgvgB20hltV9BGPSwyvyi6EoDNIRjQkVK6ynLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3ZKiTkC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBU9bU6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9901FC2BBFC;
-	Thu, 13 Jun 2024 12:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3ZKiTkC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA35C2BBFC;
+	Thu, 13 Jun 2024 12:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718283043;
-	bh=1m7IVIPGiEeKv9WhIAkaDZsj58I8pZChOJz+DZkMEwA=;
+	s=korg; t=1718283046;
+	bh=Tf3W8elHE/gsLUsWjfqIhi8EpIadXw2WlsGBgkkIK10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rBU9bU6kLz6kEEQqYJuxd1iBuJeM+ArVw9jLnQO+HtwABfpoGek8Th5Iy7GoM8tS+
-	 EUV3YbqkpnEl0C3lThWlcCo6XcLfmIbnYLrqzL53mSF1EOZm48QobVskAIIKBBHXTG
-	 pJh4/VwYjrvl2P4XUcgp3Gn+rLeMqudZtilAhOQI=
+	b=W3ZKiTkCVSg8atfF2aPLHuh2EZUQ/HreQL1h5sbmzGt8sjzcxbrb3uzAorpEZnuyq
+	 1FV95jBZz4asyyO1KhXzYnYlypC/uqcDwacnVvDj1+sxsVmZUWQMXH001H5EX5DR8C
+	 q5wiLzShLkFXfIR3pF4BWQz/G8C0E8+mFpeY7kiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 79/85] i3c: master: svc: fix invalidate IBI type and miss call client IBI handler
-Date: Thu, 13 Jun 2024 13:36:17 +0200
-Message-ID: <20240613113217.183988167@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Subject: [PATCH 6.1 80/85] EDAC/igen6: Convert PCIBIOS_* return codes to errnos
+Date: Thu, 13 Jun 2024 13:36:18 +0200
+Message-ID: <20240613113217.222853362@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -45,80 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 38baed9b8600008e5d7bc8cb9ceccc1af3dd54b7 upstream.
+commit f8367a74aebf88dc8b58a0db6a6c90b4cb8fc9d3 upstream.
 
-In an In-Band Interrupt (IBI) handle, the code logic is as follows:
+errcmd_enable_error_reporting() uses pci_{read,write}_config_word()
+that return PCIBIOS_* codes. The return code is then returned all the
+way into the probe function igen6_probe() that returns it as is. The
+probe functions, however, should return normal errnos.
 
-1: writel(SVC_I3C_MCTRL_REQUEST_AUTO_IBI | SVC_I3C_MCTRL_IBIRESP_AUTO,
-	  master->regs + SVC_I3C_MCTRL);
+Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
+errno before returning it from errcmd_enable_error_reporting().
 
-2: ret = readl_relaxed_poll_timeout(master->regs + SVC_I3C_MSTATUS, val,
-                                    SVC_I3C_MSTATUS_IBIWON(val), 0, 1000);
-	...
-3: ibitype = SVC_I3C_MSTATUS_IBITYPE(status);
-   ibiaddr = SVC_I3C_MSTATUS_IBIADDR(status);
-
-SVC_I3C_MSTATUS_IBIWON may be set before step 1. Thus, step 2 will return
-immediately, and the I3C controller has not sent out the 9th SCL yet.
-Consequently, ibitype and ibiaddr are 0, resulting in an unknown IBI type
-occurrence and missing call I3C client driver's IBI handler.
-
-A typical case is that SVC_I3C_MSTATUS_IBIWON is set when an IBI occurs
-during the controller send start frame in svc_i3c_master_xfer().
-
-Clear SVC_I3C_MSTATUS_IBIWON before issue SVC_I3C_MCTRL_REQUEST_AUTO_IBI
-to fix this issue.
-
+Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Cc: stable@vger.kernel.org
-Fixes: 5e5e3c92e748 ("i3c: master: svc: fix wrong data return when IBI happen during start frame")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20240506164009.21375-3-Frank.Li@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/r/20240527132236.13875-2-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/edac/igen6_edac.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -397,6 +397,19 @@ static void svc_i3c_master_ibi_work(stru
- 	int ret;
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -627,7 +627,7 @@ static int errcmd_enable_error_reporting
  
- 	mutex_lock(&master->lock);
-+	/*
-+	 * IBIWON may be set before SVC_I3C_MCTRL_REQUEST_AUTO_IBI, causing
-+	 * readl_relaxed_poll_timeout() to return immediately. Consequently,
-+	 * ibitype will be 0 since it was last updated only after the 8th SCL
-+	 * cycle, leading to missed client IBI handlers.
-+	 *
-+	 * A typical scenario is when IBIWON occurs and bus arbitration is lost
-+	 * at svc_i3c_master_priv_xfers().
-+	 *
-+	 * Clear SVC_I3C_MINT_IBIWON before sending SVC_I3C_MCTRL_REQUEST_AUTO_IBI.
-+	 */
-+	writel(SVC_I3C_MINT_IBIWON, master->regs + SVC_I3C_MSTATUS);
-+
- 	/* Acknowledge the incoming interrupt with the AUTOIBI mechanism */
- 	writel(SVC_I3C_MCTRL_REQUEST_AUTO_IBI |
- 	       SVC_I3C_MCTRL_IBIRESP_AUTO,
-@@ -411,9 +424,6 @@ static void svc_i3c_master_ibi_work(stru
- 		goto reenable_ibis;
- 	}
+ 	rc = pci_read_config_word(imc->pdev, ERRCMD_OFFSET, &errcmd);
+ 	if (rc)
+-		return rc;
++		return pcibios_err_to_errno(rc);
  
--	/* Clear the interrupt status */
--	writel(SVC_I3C_MINT_IBIWON, master->regs + SVC_I3C_MSTATUS);
--
- 	status = readl(master->regs + SVC_I3C_MSTATUS);
- 	ibitype = SVC_I3C_MSTATUS_IBITYPE(status);
- 	ibiaddr = SVC_I3C_MSTATUS_IBIADDR(status);
+ 	if (enable)
+ 		errcmd |= ERRCMD_CE | ERRSTS_UE;
+@@ -636,7 +636,7 @@ static int errcmd_enable_error_reporting
+ 
+ 	rc = pci_write_config_word(imc->pdev, ERRCMD_OFFSET, errcmd);
+ 	if (rc)
+-		return rc;
++		return pcibios_err_to_errno(rc);
+ 
+ 	return 0;
+ }
 
 
