@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C761145B1F;
-	Thu, 13 Jun 2024 11:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EB2145B2B;
+	Thu, 13 Jun 2024 11:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279918; cv=none; b=t+tb2fAx1HkfSQtoHygBhQFQRwUKKH+CFIyatf7Ik9usxqfkJrNHCFAJ5Zt1T6BvHzCQGQe0G7gLawgbdzT+c7EBFya6/fUbnVFR8UGB5LBVfJqVUCo7yKC47A/loPyLHccLW6USW9SjJCuVtuCmD4UHgVYA1/PVO/M6sZZ/Pco=
+	t=1718279921; cv=none; b=HGWhwRdxtR4e1d5y4YiLFZi//wvn8LCKkzdgGodZvZ1/Z142HriQXw6mrwy6PfutQ+vdL04Ej065eVesx1RucbpG8iMNeVqYKgPeNiuwQPj7K9D39EQZAEzZuVE31si5zls219ryvyKwnDgLtHm0B10pKTlHxsm6bZ//4quEJxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279918; c=relaxed/simple;
-	bh=8P4zCihjU9WRCA3RtPOkl8T4jayZF9+WHwZGpq9RhDk=;
+	s=arc-20240116; t=1718279921; c=relaxed/simple;
+	bh=MPEeA7+uat9tcgR1gNw3ZofER6qu4ZjaoiNxUseyGcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nOy1+zUKtDQ6YYvc2BSdkh6adRmotGFo4rAdngTeYI331K8r7xdcpQVU5cYEFZilmveBsWzB+xI9sKUiZLisSIY0e+xtMhXMM/C3TVYfEDkPzrL8RwG9213p++ZClRNiAESrrt00RQg4mDn/fqvMM/oKI1Vop73IPgkYNa1dHM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufaYkMto; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CPLzwi5SWgQUov5MU+TSusC7Fbm81DZoORcQoJYSOTVBWhra0q0Hisv2ya19kKByAU3vrm6/VpeISAloarEBo4whbEeHnW2cIzKaWYRulueRTNJE/tp7IjNLFLbtKuNq+D5YY076T4fFLqFMkyRtzA5IN+5vPgKfMdkISTRBugk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1L6AQNC5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufaYkMto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9687AC2BBFC;
-	Thu, 13 Jun 2024 11:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1L6AQNC5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE01C2BBFC;
+	Thu, 13 Jun 2024 11:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279918;
-	bh=8P4zCihjU9WRCA3RtPOkl8T4jayZF9+WHwZGpq9RhDk=;
+	s=korg; t=1718279920;
+	bh=MPEeA7+uat9tcgR1gNw3ZofER6qu4ZjaoiNxUseyGcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ufaYkMto4FvwDnP3KHanHJpUVtlHtFD+PcCctLgzpq+kMDVEcfLczkc35Y1kkopWL
-	 kKvQXdhOwCoPs9Uxdq1bMoPN+yTAb5LiV0IAQeUhBAE4A9JTmiuESboIFO2uMERX8L
-	 3k1uc0RFVPk9bQzblqQSHV4V3bMltfpatkoJLyg0=
+	b=1L6AQNC5OS+Jj96ZZJ3XjVyBUqth7TPBDzHtUr2m+b3sv8u3CWT/nrA2Mx2+7Vi98
+	 KB5jGNW1M3pQ9Z0k3dxEjZwmwrspNYx7zrUooH5rQoZdlqUNDFHsN4gHDz85NQLeOC
+	 Di4SoGYs3BERPLs7byVa+U2G2JED0nRJKlZGVCYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 080/202] drm/panel: simple: Add missing Innolux G121X1-L03 format, flags, connector
-Date: Thu, 13 Jun 2024 13:32:58 +0200
-Message-ID: <20240613113230.862680278@linuxfoundation.org>
+Subject: [PATCH 5.4 054/202] scsi: bfa: Ensure the copied buf is NUL terminated
+Date: Thu, 13 Jun 2024 13:32:32 +0200
+Message-ID: <20240613113229.863075204@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -51,47 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-[ Upstream commit 11ac72d033b9f577e8ba0c7a41d1c312bb232593 ]
+[ Upstream commit 13d0cecb4626fae67c00c84d3c7851f6b62f7df3 ]
 
-The .bpc = 6 implies .bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG ,
-add the missing bus_format. Add missing connector type and bus_flags
-as well.
+Currently, we allocate a nbytes-sized kernel buffer and copy nbytes from
+userspace to that buffer. Later, we use sscanf on this buffer but we don't
+ensure that the string is terminated inside the buffer, this can lead to
+OOB read when using sscanf. Fix this issue by using memdup_user_nul instead
+of memdup_user.
 
-Documentation [1] 1.4 GENERAL SPECIFICATI0NS indicates this panel is
-capable of both RGB 18bit/24bit panel, the current configuration uses
-18bit mode, .bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG , .bpc = 6.
-
-Support for the 24bit mode would require another entry in panel-simple
-with .bus_format = MEDIA_BUS_FMT_RGB666_1X7X4_SPWG and .bpc = 8, which
-is out of scope of this fix.
-
-[1] https://www.distec.de/fileadmin/pdf/produkte/TFT-Displays/Innolux/G121X1-L03_Datasheet.pdf
-
-Fixes: f8fa17ba812b ("drm/panel: simple: Add support for Innolux G121X1-L03")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240328102746.17868-2-marex@denx.de
+Fixes: 9f30b674759b ("bfa: replace 2 kzalloc/copy_from_user by memdup_user")
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Link: https://lore.kernel.org/r/20240424-fix-oob-read-v2-3-f1f1b53a10f4@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/bfa/bfad_debugfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index fd8b16dcf13e7..83cba00f854d6 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -1729,6 +1729,9 @@ static const struct panel_desc innolux_g121x1_l03 = {
- 		.unprepare = 200,
- 		.disable = 400,
- 	},
-+	.bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG,
-+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
-+	.connector_type = DRM_MODE_CONNECTOR_LVDS,
- };
+diff --git a/drivers/scsi/bfa/bfad_debugfs.c b/drivers/scsi/bfa/bfad_debugfs.c
+index fd1b378a263a0..d3c7d4423c514 100644
+--- a/drivers/scsi/bfa/bfad_debugfs.c
++++ b/drivers/scsi/bfa/bfad_debugfs.c
+@@ -250,7 +250,7 @@ bfad_debugfs_write_regrd(struct file *file, const char __user *buf,
+ 	unsigned long flags;
+ 	void *kern_buf;
  
- /*
+-	kern_buf = memdup_user(buf, nbytes);
++	kern_buf = memdup_user_nul(buf, nbytes);
+ 	if (IS_ERR(kern_buf))
+ 		return PTR_ERR(kern_buf);
+ 
+@@ -317,7 +317,7 @@ bfad_debugfs_write_regwr(struct file *file, const char __user *buf,
+ 	unsigned long flags;
+ 	void *kern_buf;
+ 
+-	kern_buf = memdup_user(buf, nbytes);
++	kern_buf = memdup_user_nul(buf, nbytes);
+ 	if (IS_ERR(kern_buf))
+ 		return PTR_ERR(kern_buf);
+ 
 -- 
 2.43.0
 
