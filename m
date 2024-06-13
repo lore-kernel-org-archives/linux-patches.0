@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A3413CA99;
-	Thu, 13 Jun 2024 11:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF2B13D624;
+	Thu, 13 Jun 2024 11:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279172; cv=none; b=qxGNWoYFx7G8j1FU0AtpVzRPKJtPM239QB8LPN3OqZoQRfW36xXQxHkTSJqvVEKPI4XuLjolc5Fb/bYjSqVNxAAWmIw71FIlnsBQ+iMg3xND8s+gw+avb4/FO56uU/cOeAyakiHTZjsxeFNp4+shmghk8ncLG/I4qOoESVxirps=
+	t=1718279175; cv=none; b=rpx1EUIAmQzDMxqIxD7HVe6poAQ4B03hx5ia/2ozqBn3TwitKskdiuBotTTNsVjHnwe4/Nao5ZGhcx/es+qZ7Sdt9+zeOqfaLzh8f0YR2kxTzo0u6G8m/FPz1awCTMq+oBGruB1aP2HN4FzWrm8rLDohNP95wghRglR0khXIFdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279172; c=relaxed/simple;
-	bh=5SMrO+DqoQ8OSg5f/8SJ0lQ2/eG+6ifVSWAuC4lduh0=;
+	s=arc-20240116; t=1718279175; c=relaxed/simple;
+	bh=/i08v+W+f2AiEWIQ03Uv8IwZ7QqOE7hbZiHMnT64Mp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JLvPrBzS/gEm95vysbkDfOLU90BqMXw3CUrSKhOfHp4bWawCzyQPOOvD0qXAf623Xm1VhoGPuy7elZmE0MLkkSXq9Mb2W7qXmLzhSoeNJiWepNP5FXHTek1tMTGkcC9CIMUreWCMul5EesfdyNyLrgXcbo6XpU3TeIZMzo4uxgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e34opGk4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k+H7h8YLMZf68wZwVTnexuaPqWNCA6R2mSKV47hThl7MvLitHWdDAWx6Pjpqr/PBvhcLNLOtiwGhp/idFyTnc1uESd3DJwP563sTHBMxTurR9mgbVM9pWqlo+y6vSmro3VstKXXHC/dCvxTVjsTmoxNV4ucEp3U/CYaw0xgVits=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3zaobS2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e34opGk4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90330C32786;
-	Thu, 13 Jun 2024 11:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3zaobS2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8717EC2BBFC;
+	Thu, 13 Jun 2024 11:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279171;
-	bh=5SMrO+DqoQ8OSg5f/8SJ0lQ2/eG+6ifVSWAuC4lduh0=;
+	s=korg; t=1718279174;
+	bh=/i08v+W+f2AiEWIQ03Uv8IwZ7QqOE7hbZiHMnT64Mp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e34opGk4+JPcBaNzF07ggDuHx/R8cCPQyzQCzn5rCvot+mUfEQcZqrx2I6KNEO55F
-	 soS/DDo0n9TfhVNu1TJM+9yXQcaotu/4QmsC0ttCvE95CJ0pN4+B4x/l9b/9z0LLMy
-	 n2WfrO3egyWzxVbX6aJCcbwcXqedvV5vnTft1JVk=
+	b=C3zaobS26vE/VZNY2Gg4EJuQhj2EBrO9aYOI4RnLwPd2HgxZh+W6ItTpwRI+4EEgg
+	 nZEKKvKXUBn+vS016l72qEangNYbMgjvMWtA2+t1dblgNpO2zv4Hm5Mq5uWBMn3iqL
+	 dw+ofGvgMiIMO3k/XNvgxK3/ztvPgA6N3L3b/jgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 4.19 199/213] KVM: arm64: Allow AArch32 PSTATE.M to be restored as System mode
-Date: Thu, 13 Jun 2024 13:34:07 +0200
-Message-ID: <20240613113235.654786459@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Subject: [PATCH 4.19 200/213] crypto: qat - Fix ADF_DEV_RESET_SYNC memory leak
+Date: Thu, 13 Jun 2024 13:34:08 +0200
+Message-ID: <20240613113235.694460209@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -50,34 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit dfe6d190f38fc5df5ff2614b463a5195a399c885 upstream.
+commit d3b17c6d9dddc2db3670bc9be628b122416a3d26 upstream.
 
-It appears that we don't allow a vcpu to be restored in AArch32
-System mode, as we *never* included it in the list of valid modes.
+Using completion_done to determine whether the caller has gone
+away only works after a complete call.  Furthermore it's still
+possible that the caller has not yet called wait_for_completion,
+resulting in another potential UAF.
 
-Just add it to the list of allowed modes.
+Fix this by making the caller use cancel_work_sync and then freeing
+the memory safely.
 
-Fixes: 0d854a60b1d7 ("arm64: KVM: enable initialization of a 32bit vcpu")
-Cc: stable@vger.kernel.org
-Acked-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20240524141956.1450304-3-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: 7d42e097607c ("crypto: qat - resolve race condition during AER recovery")
+Cc: <stable@vger.kernel.org> #6.8+
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/guest.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/qat/qat_common/adf_aer.c |   19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
---- a/arch/arm64/kvm/guest.c
-+++ b/arch/arm64/kvm/guest.c
-@@ -175,6 +175,7 @@ static int set_core_reg(struct kvm_vcpu
- 		case PSR_AA32_MODE_SVC:
- 		case PSR_AA32_MODE_ABT:
- 		case PSR_AA32_MODE_UND:
-+		case PSR_AA32_MODE_SYS:
- 			if (!vcpu_el1_is_32bit(vcpu))
- 				return -EINVAL;
- 			break;
+--- a/drivers/crypto/qat/qat_common/adf_aer.c
++++ b/drivers/crypto/qat/qat_common/adf_aer.c
+@@ -139,8 +139,7 @@ static void adf_device_reset_worker(stru
+ 	if (adf_dev_init(accel_dev) || adf_dev_start(accel_dev)) {
+ 		/* The device hanged and we can't restart it so stop here */
+ 		dev_err(&GET_DEV(accel_dev), "Restart device failed\n");
+-		if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
+-		    completion_done(&reset_data->compl))
++		if (reset_data->mode == ADF_DEV_RESET_ASYNC)
+ 			kfree(reset_data);
+ 		WARN(1, "QAT: device restart failed. Device is unusable\n");
+ 		return;
+@@ -148,16 +147,8 @@ static void adf_device_reset_worker(stru
+ 	adf_dev_restarted_notify(accel_dev);
+ 	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
+ 
+-	/*
+-	 * The dev is back alive. Notify the caller if in sync mode
+-	 *
+-	 * If device restart will take a more time than expected,
+-	 * the schedule_reset() function can timeout and exit. This can be
+-	 * detected by calling the completion_done() function. In this case
+-	 * the reset_data structure needs to be freed here.
+-	 */
+-	if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
+-	    completion_done(&reset_data->compl))
++	/* The dev is back alive. Notify the caller if in sync mode */
++	if (reset_data->mode == ADF_DEV_RESET_ASYNC)
+ 		kfree(reset_data);
+ 	else
+ 		complete(&reset_data->compl);
+@@ -192,10 +183,10 @@ static int adf_dev_aer_schedule_reset(st
+ 		if (!timeout) {
+ 			dev_err(&GET_DEV(accel_dev),
+ 				"Reset device timeout expired\n");
++			cancel_work_sync(&reset_data->reset_work);
+ 			ret = -EFAULT;
+-		} else {
+-			kfree(reset_data);
+ 		}
++		kfree(reset_data);
+ 		return ret;
+ 	}
+ 	return 0;
 
 
