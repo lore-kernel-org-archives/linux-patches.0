@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3449DDDB1;
-	Thu, 13 Jun 2024 11:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB281422B5;
+	Thu, 13 Jun 2024 11:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278716; cv=none; b=XekqdSbOtSLon3r3NsP76WaTJWrNd+85nOEORcrcDaHlmd9BvmyzogHmWqGi1EwowvlOhi384HmFr0QYeFgMwBRO1BVSdgjoNhCMAqaRwhttRxZ/0zsf5i+O5dbOErRIGVKbflzyZz07Ek03kzIGPvK1pIbt0Dz4CbWKSPVrxOo=
+	t=1718278719; cv=none; b=RE3ntZxA41BxwEvJAyBt+WkTCQRsroKst015MRpvpbl4i84AEgN+X013JuEi3AGjCxjr6AKOEHALADwdvgJCFeiK6kxUuJZ45cT+HcDsKi6imfk/c/We4SwkQwOzwIHgYAXUCya3fgjWtGbUEj7VVrkAenxnyTSTKeSoswWD2qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278716; c=relaxed/simple;
-	bh=UfHQxxWC41xQgm/emXt8N+c97wq7XZ4+rvfnwLqJGP8=;
+	s=arc-20240116; t=1718278719; c=relaxed/simple;
+	bh=1fX8Jp6LePnAmaSc8S7u36y8c7QSY2OAiVWRJEagS/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4QTzaZnqKEnay2KIn9/i3yhL4DVVqvwH5IBaLJRJtOSFWZdHn6jzzC/B6ZcotoeQtpU6xC3KGxA6wycTXr/4yUcer8VO5agpOMQQoTl5jugJFG9FgM28e5aUKFwQ2/+IRajxJT+Oie48x0/e0VnLOoGVG3MSLRQ6zJFReUdXTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSmI0h6F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ks7VYCeh6Ia7xVE8UyORn9dB+w/NBMMYSW9dYvSO/6J/iHhcYoQy80rXs8BnzKkUvrxmRNFift/bZOOBeXY8Dsj2oGIQvY3qU5s4mB5fY+0kgDaGMF/QQ7usrACiXM4K8rBHK9oUqXyLzpoheHoeoM2BPEFmviV4pOL9c2tnk88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dh0VVVv6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSmI0h6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6044C2BBFC;
-	Thu, 13 Jun 2024 11:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dh0VVVv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A538C2BBFC;
+	Thu, 13 Jun 2024 11:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278716;
-	bh=UfHQxxWC41xQgm/emXt8N+c97wq7XZ4+rvfnwLqJGP8=;
+	s=korg; t=1718278718;
+	bh=1fX8Jp6LePnAmaSc8S7u36y8c7QSY2OAiVWRJEagS/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eSmI0h6FPEkpp/sO34tbe9Hi0Dho9GtKkFAs3k6z2x5bYNQLHXLI8gnuioQeK2MK7
-	 rzQVgA1xbu/2Hv7f9HTC2Bsm3ZgpDpAQaCw/Q/01jIq301JYKnlkHL1jiy5RXbIUxs
-	 VNnp8WvYMwfEVkpi8zvOI6+nh8lfZTnPy9VSHjSg=
+	b=Dh0VVVv6y4+srNxY12tceNjVv3ANsiWwFcXAdfxqS8+rb90Ao+11wzr0VQZYEbRxi
+	 vv9QRnM3CrK3p8vV4a8nywhJy18Prbjlt+jfxiyhP+DQ9vl9BhBpeKMam9l9zCrnTS
+	 WbVN7Ubzanmqc8xr2aLQeHxKn90PsxBg+5ye9hzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stan Johnson <userm57@yahoo.com>,
-	Finn Thain <fthain@telegraphics.com.au>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Brian Kubisiak <brian@kubisiak.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 044/213] macintosh/via-macii: Remove BUG_ON assertions
-Date: Thu, 13 Jun 2024 13:31:32 +0200
-Message-ID: <20240613113229.704602501@linuxfoundation.org>
+Subject: [PATCH 4.19 016/213] ecryptfs: Fix buffer size for tag 66 packet
+Date: Thu, 13 Jun 2024 13:31:04 +0200
+Message-ID: <20240613113228.614983639@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,159 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@telegraphics.com.au>
+From: Brian Kubisiak <brian@kubisiak.com>
 
-[ Upstream commit 5f93d7081a47e1972031ccf57c4b2779eee162fb ]
+[ Upstream commit 85a6a1aff08ec9f5b929d345d066e2830e8818e5 ]
 
-The BUG_ON assertions I added to the via-macii driver over a decade ago
-haven't fired AFAIK. Some can never fire (by inspection). One assertion
-checks for a NULL pointer, but that would merely substitute a BUG crash
-for an Oops crash. Remove the pointless BUG_ON assertions and replace
-the others with a WARN_ON and an array bounds check.
+The 'TAG 66 Packet Format' description is missing the cipher code and
+checksum fields that are packed into the message packet. As a result,
+the buffer allocated for the packet is 3 bytes too small and
+write_tag_66_packet() will write up to 3 bytes past the end of the
+buffer.
 
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Signed-off-by: Finn Thain <fthain@telegraphics.com.au>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Stable-dep-of: d301a71c76ee ("macintosh/via-macii: Fix "BUG: sleeping function called from invalid context"")
+Fix this by increasing the size of the allocation so the whole packet
+will always fit in the buffer.
+
+This fixes the below kasan slab-out-of-bounds bug:
+
+  BUG: KASAN: slab-out-of-bounds in ecryptfs_generate_key_packet_set+0x7d6/0xde0
+  Write of size 1 at addr ffff88800afbb2a5 by task touch/181
+
+  CPU: 0 PID: 181 Comm: touch Not tainted 6.6.13-gnu #1 4c9534092be820851bb687b82d1f92a426598dc6
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2/GNU Guix 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x4c/0x70
+   print_report+0xc5/0x610
+   ? ecryptfs_generate_key_packet_set+0x7d6/0xde0
+   ? kasan_complete_mode_report_info+0x44/0x210
+   ? ecryptfs_generate_key_packet_set+0x7d6/0xde0
+   kasan_report+0xc2/0x110
+   ? ecryptfs_generate_key_packet_set+0x7d6/0xde0
+   __asan_store1+0x62/0x80
+   ecryptfs_generate_key_packet_set+0x7d6/0xde0
+   ? __pfx_ecryptfs_generate_key_packet_set+0x10/0x10
+   ? __alloc_pages+0x2e2/0x540
+   ? __pfx_ovl_open+0x10/0x10 [overlay 30837f11141636a8e1793533a02e6e2e885dad1d]
+   ? dentry_open+0x8f/0xd0
+   ecryptfs_write_metadata+0x30a/0x550
+   ? __pfx_ecryptfs_write_metadata+0x10/0x10
+   ? ecryptfs_get_lower_file+0x6b/0x190
+   ecryptfs_initialize_file+0x77/0x150
+   ecryptfs_create+0x1c2/0x2f0
+   path_openat+0x17cf/0x1ba0
+   ? __pfx_path_openat+0x10/0x10
+   do_filp_open+0x15e/0x290
+   ? __pfx_do_filp_open+0x10/0x10
+   ? __kasan_check_write+0x18/0x30
+   ? _raw_spin_lock+0x86/0xf0
+   ? __pfx__raw_spin_lock+0x10/0x10
+   ? __kasan_check_write+0x18/0x30
+   ? alloc_fd+0xf4/0x330
+   do_sys_openat2+0x122/0x160
+   ? __pfx_do_sys_openat2+0x10/0x10
+   __x64_sys_openat+0xef/0x170
+   ? __pfx___x64_sys_openat+0x10/0x10
+   do_syscall_64+0x60/0xd0
+   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+  RIP: 0033:0x7f00a703fd67
+  Code: 25 00 00 41 00 3d 00 00 41 00 74 37 64 8b 04 25 18 00 00 00 85 c0 75 5b 44 89 e2 48 89 ee bf 9c ff ff ff b8 01 01 00 00 0f 05 <48> 3d 00 f0 ff ff 0f 87 85 00 00 00 48 83 c4 68 5d 41 5c c3 0f 1f
+  RSP: 002b:00007ffc088e30b0 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
+  RAX: ffffffffffffffda RBX: 00007ffc088e3368 RCX: 00007f00a703fd67
+  RDX: 0000000000000941 RSI: 00007ffc088e48d7 RDI: 00000000ffffff9c
+  RBP: 00007ffc088e48d7 R08: 0000000000000001 R09: 0000000000000000
+  R10: 00000000000001b6 R11: 0000000000000246 R12: 0000000000000941
+  R13: 0000000000000000 R14: 00007ffc088e48d7 R15: 00007f00a7180040
+   </TASK>
+
+  Allocated by task 181:
+   kasan_save_stack+0x2f/0x60
+   kasan_set_track+0x29/0x40
+   kasan_save_alloc_info+0x25/0x40
+   __kasan_kmalloc+0xc5/0xd0
+   __kmalloc+0x66/0x160
+   ecryptfs_generate_key_packet_set+0x6d2/0xde0
+   ecryptfs_write_metadata+0x30a/0x550
+   ecryptfs_initialize_file+0x77/0x150
+   ecryptfs_create+0x1c2/0x2f0
+   path_openat+0x17cf/0x1ba0
+   do_filp_open+0x15e/0x290
+   do_sys_openat2+0x122/0x160
+   __x64_sys_openat+0xef/0x170
+   do_syscall_64+0x60/0xd0
+   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+Fixes: dddfa461fc89 ("[PATCH] eCryptfs: Public key; packet management")
+Signed-off-by: Brian Kubisiak <brian@kubisiak.com>
+Link: https://lore.kernel.org/r/5j2q56p6qkhezva6b2yuqfrsurmvrrqtxxzrnp3wqu7xrz22i7@hoecdztoplbl
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/macintosh/via-macii.c | 49 +++++------------------------------
- 1 file changed, 7 insertions(+), 42 deletions(-)
+ fs/ecryptfs/keystore.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/macintosh/via-macii.c b/drivers/macintosh/via-macii.c
-index cf6f7d52d6bee..fc6ad5bf1875a 100644
---- a/drivers/macintosh/via-macii.c
-+++ b/drivers/macintosh/via-macii.c
-@@ -120,23 +120,6 @@ static int srq_asserted;     /* have to poll for the device that asserted it */
- static int command_byte;         /* the most recent command byte transmitted */
- static int autopoll_devs;      /* bits set are device addresses to be polled */
- 
--/* Sanity check for request queue. Doesn't check for cycles. */
--static int request_is_queued(struct adb_request *req) {
--	struct adb_request *cur;
--	unsigned long flags;
--	local_irq_save(flags);
--	cur = current_req;
--	while (cur) {
--		if (cur == req) {
--			local_irq_restore(flags);
--			return 1;
--		}
--		cur = cur->next;
--	}
--	local_irq_restore(flags);
--	return 0;
--}
--
- /* Check for MacII style ADB */
- static int macii_probe(void)
- {
-@@ -213,8 +196,6 @@ static void macii_queue_poll(void)
- 	else
- 		next_device = ffs(autopoll_devs) - 1;
- 
--	BUG_ON(request_is_queued(&req));
--
- 	adb_request(&req, NULL, ADBREQ_NOSEND, 1,
- 	            ADB_READREG(next_device, 0));
- 
-@@ -237,18 +218,13 @@ static int macii_send_request(struct adb_request *req, int sync)
- 	int err;
- 	unsigned long flags;
- 
--	BUG_ON(request_is_queued(req));
--
- 	local_irq_save(flags);
- 	err = macii_write(req);
- 	local_irq_restore(flags);
- 
--	if (!err && sync) {
--		while (!req->complete) {
-+	if (!err && sync)
-+		while (!req->complete)
- 			macii_poll();
--		}
--		BUG_ON(request_is_queued(req));
--	}
- 
- 	return err;
- }
-@@ -327,9 +303,6 @@ static int macii_reset_bus(void)
- {
- 	static struct adb_request req;
- 	
--	if (request_is_queued(&req))
--		return 0;
--
- 	/* Command = 0, Address = ignored */
- 	adb_request(&req, NULL, 0, 1, ADB_BUSRESET);
- 
-@@ -346,10 +319,6 @@ static void macii_start(void)
- 
- 	req = current_req;
- 
--	BUG_ON(req == NULL);
--
--	BUG_ON(macii_state != idle);
--
- 	/* Now send it. Be careful though, that first byte of the request
- 	 * is actually ADB_PACKET; the real data begins at index 1!
- 	 * And req->nbytes is the number of bytes of real data plus one.
-@@ -387,7 +356,6 @@ static void macii_start(void)
- static irqreturn_t macii_interrupt(int irq, void *arg)
- {
- 	int x;
--	static int entered;
- 	struct adb_request *req;
- 
- 	if (!arg) {
-@@ -398,8 +366,6 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
- 			return IRQ_NONE;
- 	}
- 
--	BUG_ON(entered++);
--
- 	last_status = status;
- 	status = via[B] & (ST_MASK|CTLR_IRQ);
- 
-@@ -408,7 +374,7 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
- 			if (reading_reply) {
- 				reply_ptr = current_req->reply;
- 			} else {
--				BUG_ON(current_req != NULL);
-+				WARN_ON(current_req);
- 				reply_ptr = reply_buf;
- 			}
- 
-@@ -473,8 +439,8 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
- 
- 		case reading:
- 			x = via[SR];
--			BUG_ON((status & ST_MASK) == ST_CMD ||
--			       (status & ST_MASK) == ST_IDLE);
-+			WARN_ON((status & ST_MASK) == ST_CMD ||
-+				(status & ST_MASK) == ST_IDLE);
- 
- 			/* Bus timeout with SRQ sequence:
- 			 *     data is "XX FF"      while CTLR_IRQ is "L L"
-@@ -501,8 +467,8 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
- 				}
- 			}
- 
--			if (macii_state == reading) {
--				BUG_ON(reply_len > 15);
-+			if (macii_state == reading &&
-+			    reply_len < ARRAY_SIZE(reply_buf)) {
- 				reply_ptr++;
- 				*reply_ptr = x;
- 				reply_len++;
-@@ -545,6 +511,5 @@ static irqreturn_t macii_interrupt(int irq, void *arg)
- 		break;
- 	}
- 
--	entered--;
- 	return IRQ_HANDLED;
- }
+diff --git a/fs/ecryptfs/keystore.c b/fs/ecryptfs/keystore.c
+index 250cb23ae69f2..12a5ea9e3e35d 100644
+--- a/fs/ecryptfs/keystore.c
++++ b/fs/ecryptfs/keystore.c
+@@ -314,9 +314,11 @@ write_tag_66_packet(char *signature, u8 cipher_code,
+ 	 *         | Key Identifier Size      | 1 or 2 bytes |
+ 	 *         | Key Identifier           | arbitrary    |
+ 	 *         | File Encryption Key Size | 1 or 2 bytes |
++	 *         | Cipher Code              | 1 byte       |
+ 	 *         | File Encryption Key      | arbitrary    |
++	 *         | Checksum                 | 2 bytes      |
+ 	 */
+-	data_len = (5 + ECRYPTFS_SIG_SIZE_HEX + crypt_stat->key_size);
++	data_len = (8 + ECRYPTFS_SIG_SIZE_HEX + crypt_stat->key_size);
+ 	*packet = kmalloc(data_len, GFP_KERNEL);
+ 	message = *packet;
+ 	if (!message) {
 -- 
 2.43.0
 
