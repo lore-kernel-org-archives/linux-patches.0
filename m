@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC956AFAE;
-	Thu, 13 Jun 2024 11:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515DA6AFAE;
+	Thu, 13 Jun 2024 11:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279213; cv=none; b=eFK/EqsppqozK7w1id6If6jS4xbNnD72rrBBEzmp8xGJyPsRvBXqGNmPBJEdlDw6NQcj+2EXyZlDkFJbHi7tfauBAqmaRf0JiWWZScK2Mlsg4uLGvzPdOg9QtQafdS2KzDsxZFeLoI33o3TchQ8q+pVhqoGldXAhFL8w//WWNCk=
+	t=1718279216; cv=none; b=oi4jno61HSmwXaO2oGih5hB+8oSE0ApbbkvKbyBPZVu1bDp+4bSB8aUvLkE1BWAeGNdypchvysvaBILXs5/WoI3EneAqCcFQ8dL73VTtADREXzVoeJxiQ8Haf5oir+B6HgaCSCtTu8/lc8bZk+E+qxXm31oVuA0LMVtFQqa+LSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279213; c=relaxed/simple;
-	bh=NFPbb3IjqcjZNed+LGgT1Okrj0zSjuLx7Ao4To7t8J4=;
+	s=arc-20240116; t=1718279216; c=relaxed/simple;
+	bh=1dKMl+MQeu+vS88q8H3Suq9gh5CfAGHOiU/wPx41slQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fkm5gDnWAIRHoqzaIKlVGaHbkJQybFyW07mlgRL3CfotfjTo2dd9I47A++3a0RGelqARfNtneLWrySo2cU1E+qS7QCuBTu96iHL5+s8ysFkpr9wtyMG4Y3bNmPeyoQ9o9TYkRTV8b/V0IEjKowbmnqRC0ISuC/MUcGvoIu55IfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czeKlhiN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CXzgWzM7J6GUgkuM5GDWg8ydOgj/tktX2mP+0Jqp270eLvR/PVeMiTuhHTgCq5YQtxKhzwKLNzLDHm9QJG/lP1q1R0LxW2+ZdBGVaQQbMsD7YuKpGMpbbcA3GSxmkzVrRkFpxczrv9LFEVHI74zswUZwMwqh1n4w13QnDQsqnHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gbyu2le3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czeKlhiN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB13C2BBFC;
-	Thu, 13 Jun 2024 11:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gbyu2le3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB128C2BBFC;
+	Thu, 13 Jun 2024 11:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279213;
-	bh=NFPbb3IjqcjZNed+LGgT1Okrj0zSjuLx7Ao4To7t8J4=;
+	s=korg; t=1718279216;
+	bh=1dKMl+MQeu+vS88q8H3Suq9gh5CfAGHOiU/wPx41slQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=czeKlhiNivtwSWiS15teAwpHBs35p7/JGq8THEVSzmWffnYk4b51ydGXJrYmgV1ld
-	 V6VazOlmemrcg4UoIcrPJaR9bRr6mMOeuJqIn8n93veANbO3ao47QzkOWDzrg/1PPa
-	 JS1Ka9A5jQjvYEp9vRZq2Zv3+ys3+YiToP0J+FzY=
+	b=Gbyu2le3Xtj03BSnTP0Ad2AKMqs6ERXD5wqvHtO5OknZLdQCljX0rc+tGhHyhD+v9
+	 /t3Ues+QZk501vBypXZtEdAW+aQ9EQw43YWljU1AwxD5lXSKS7YZsLvRST3iHqckx5
+	 182wWDoOl8aipAubepBN6knuKH6cIPCdO8js54T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Hartmayer <mhartmay@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 4.19 212/213] s390/ap: Fix crash in AP internal function modify_bitmap()
-Date: Thu, 13 Jun 2024 13:34:20 +0200
-Message-ID: <20240613113236.161617884@linuxfoundation.org>
+	"Lee, Cherie-Anne" <cherie.lee@starlabs.sg>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	info@starlabs.sg,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 4.19 183/213] netfilter: nf_tables: disable toggling dormant table state more than once
+Date: Thu, 13 Jun 2024 13:33:51 +0200
+Message-ID: <20240613113235.041765697@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -52,75 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit d4f9d5a99a3fd1b1c691b7a1a6f8f3f25f4116c9 upstream.
+commit c9bd26513b3a11b3adb3c2ed8a31a01a87173ff1 upstream.
 
-A system crash like this
+nft -f -<<EOF
+add table ip t
+add table ip t { flags dormant; }
+add chain ip t c { type filter hook input priority 0; }
+add table ip t
+EOF
 
-  Failing address: 200000cb7df6f000 TEID: 200000cb7df6f403
-  Fault in home space mode while using kernel ASCE.
-  AS:00000002d71bc007 R3:00000003fe5b8007 S:000000011a446000 P:000000015660c13d
-  Oops: 0038 ilc:3 [#1] PREEMPT SMP
-  Modules linked in: mlx5_ib ...
-  CPU: 8 PID: 7556 Comm: bash Not tainted 6.9.0-rc7 #8
-  Hardware name: IBM 3931 A01 704 (LPAR)
-  Krnl PSW : 0704e00180000000 0000014b75e7b606 (ap_parse_bitmap_str+0x10e/0x1f8)
-  R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:2 PM:0 RI:0 EA:3
-  Krnl GPRS: 0000000000000001 ffffffffffffffc0 0000000000000001 00000048f96b75d3
-  000000cb00000100 ffffffffffffffff ffffffffffffffff 000000cb7df6fce0
-  000000cb7df6fce0 00000000ffffffff 000000000000002b 00000048ffffffff
-  000003ff9b2dbc80 200000cb7df6fcd8 0000014bffffffc0 000000cb7df6fbc8
-  Krnl Code: 0000014b75e7b5fc: a7840047            brc     8,0000014b75e7b68a
-  0000014b75e7b600: 18b2                lr      %r11,%r2
-  #0000014b75e7b602: a7f4000a            brc     15,0000014b75e7b616
-  >0000014b75e7b606: eb22d00000e6        laog    %r2,%r2,0(%r13)
-  0000014b75e7b60c: a7680001            lhi     %r6,1
-  0000014b75e7b610: 187b                lr      %r7,%r11
-  0000014b75e7b612: 84960021            brxh    %r9,%r6,0000014b75e7b654
-  0000014b75e7b616: 18e9                lr      %r14,%r9
-  Call Trace:
-  [<0000014b75e7b606>] ap_parse_bitmap_str+0x10e/0x1f8
-  ([<0000014b75e7b5dc>] ap_parse_bitmap_str+0xe4/0x1f8)
-  [<0000014b75e7b758>] apmask_store+0x68/0x140
-  [<0000014b75679196>] kernfs_fop_write_iter+0x14e/0x1e8
-  [<0000014b75598524>] vfs_write+0x1b4/0x448
-  [<0000014b7559894c>] ksys_write+0x74/0x100
-  [<0000014b7618a440>] __do_syscall+0x268/0x328
-  [<0000014b761a3558>] system_call+0x70/0x98
-  INFO: lockdep is turned off.
-  Last Breaking-Event-Address:
-  [<0000014b75e7b636>] ap_parse_bitmap_str+0x13e/0x1f8
-  Kernel panic - not syncing: Fatal exception: panic_on_oops
+Triggers a splat from nf core on next table delete because we lose
+track of right hook register state:
 
-occured when /sys/bus/ap/a[pq]mask was updated with a relative mask value
-(like +0x10-0x12,+60,-90) with one of the numeric values exceeding INT_MAX.
+WARNING: CPU: 2 PID: 1597 at net/netfilter/core.c:501 __nf_unregister_net_hook
+RIP: 0010:__nf_unregister_net_hook+0x41b/0x570
+ nf_unregister_net_hook+0xb4/0xf0
+ __nf_tables_unregister_hook+0x160/0x1d0
+[..]
 
-The fix is simple: use unsigned long values for the internal variables. The
-correct checks are already in place in the function but a simple int for
-the internal variables was used with the possibility to overflow.
+The above should have table in *active* state, but in fact no
+hooks were registered.
 
-Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Tested-by: Marc Hartmayer <mhartmay@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reject on/off/on games rather than attempting to fix this.
+
+Fixes: 179d9ba5559a ("netfilter: nf_tables: fix table flag updates")
+Reported-by: "Lee, Cherie-Anne" <cherie.lee@starlabs.sg>
+Cc: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Cc: info@starlabs.sg
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/ap_bus.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/s390/crypto/ap_bus.c
-+++ b/drivers/s390/crypto/ap_bus.c
-@@ -916,7 +916,7 @@ static int hex2bitmap(const char *str, u
-  */
- static int modify_bitmap(const char *str, unsigned long *bitmap, int bits)
- {
--	int a, i, z;
-+	unsigned long a, i, z;
- 	char *np, sign;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -893,6 +893,10 @@ static int nf_tables_updtable(struct nft
+ 	if (flags == ctx->table->flags)
+ 		return 0;
  
- 	/* bits needs to be a multiple of 8 */
++	/* No dormant off/on/off/on games in single transaction */
++	if (ctx->table->flags & __NFT_TABLE_F_UPDATE)
++		return -EINVAL;
++
+ 	trans = nft_trans_alloc(ctx, NFT_MSG_NEWTABLE,
+ 				sizeof(struct nft_trans_table));
+ 	if (trans == NULL)
 
 
