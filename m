@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203B7143C52;
-	Thu, 13 Jun 2024 12:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CE1148855;
+	Thu, 13 Jun 2024 12:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280213; cv=none; b=jwvjm+ptpbSQ76NKuL8Kbrq4GvDQo2AAvSRQy77A/gWdmnjCxMDnRAHLcwWEuI3Ht9PzcP9aXLBbtHdvbCxeZV3DUk/TUCLJy3RdnceabhULPBOSCv8GccnfxzBZ0v6QR85L2vpeBg0MQ59q1kwrjkgwP0CEBQTCqEl/8jebDZw=
+	t=1718280216; cv=none; b=R1XcAcGcVZoAZSNQIEedb3yxQkCffMG1xAmoqfjVc7MVE6x2qFuUGD3rikqqtZgOiZMq4YJNAyNc9/UkQq+FtC/PToLWYI1rU46JmksnrlsPzmEtHXzyEqRf3QNMGYvF+kdmsKczaQ50vGbhYJE2XNwzsB/aFpcK67Vjqxwi3GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280213; c=relaxed/simple;
-	bh=aGGWRGbTvfUbCqeWZi99hPPtXY0r1D4edy8YMU39yAU=;
+	s=arc-20240116; t=1718280216; c=relaxed/simple;
+	bh=aqYHuUVx0cZJ6QKkv5usuQNNifuWL+k/8k+FzFQmQJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMeGiysHe/hTkVUJtD+buSPQYyCUk/+rZlzDpz/znSGfuzrSS82xyAINtRUv1NxB4E+ln4IMQGi4dwIgqMM7X5zKxa4KDwoUDYjHcksSI6bcDQephJxjCg4WzLoRZNfeRoeFuRJBfi5WE5E4pfMlOiTSL7nztZykhNBd2iQJ8TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1VSl6Qd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hr5u82f5fVqyKJ0vovezYVv4O70HEseixW0PaJkjN6vsVgSgc4DidZ9+nHDM84NAiFJ5yHu9S1wd5MR1OMGVdgPfZN1UFOpOJ51QSjCF9YFp3QmLgcxnZjEHBBq3D/6rlBOyOOH+8O+RtDHWsq5kg3XJahOPsFU//upxPLdbXHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzifSjLF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1VSl6Qd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CAB5C32786;
-	Thu, 13 Jun 2024 12:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzifSjLF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9555BC2BBFC;
+	Thu, 13 Jun 2024 12:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280213;
-	bh=aGGWRGbTvfUbCqeWZi99hPPtXY0r1D4edy8YMU39yAU=;
+	s=korg; t=1718280216;
+	bh=aqYHuUVx0cZJ6QKkv5usuQNNifuWL+k/8k+FzFQmQJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1VSl6Qdae3TPkvtKb8MAJiTCo1xdOL9+yzCGTlgAyavnQMOzYOD5xie3fJzFP3tL
-	 vWxlLNOZIzr6D1ts+CccKlXwJrg8GPR+RDTgdicBFKCJrzDUwP8y/h+gupcp4BMhNO
-	 XhORe8zXgN+nSAMb1/w7cjHt+kJzdzVFFt/XXR6Q=
+	b=dzifSjLF6Ub0WzDewHEi+4UEVnKHGKLN4GYdPrkJy7rsMmtoh+ymIcXrsz7onnTq9
+	 MV0v1y654Z79DDQU2U1vcxZsYgiUXHnS54CoSHqUst4wCGXZJOfhJBuf6c9mbmMzSb
+	 qCgyclpXk5hzXbcPPaKUrYZditls2s5W6uCJhCUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Xiwen <forbidden405@outlook.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.4 180/202] arm64: dts: hi3798cv200: fix the size of GICR
-Date: Thu, 13 Jun 2024 13:34:38 +0200
-Message-ID: <20240613113234.685290570@linuxfoundation.org>
+	Andre Edich <andre.edich@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 154/202] smsc95xx: remove redundant function arguments
+Date: Thu, 13 Jun 2024 13:34:12 +0200
+Message-ID: <20240613113233.694593766@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -50,43 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Xiwen <forbidden405@outlook.com>
+From: Andre Edich <andre.edich@microchip.com>
 
-commit 428a575dc9038846ad259466d5ba109858c0a023 upstream.
+[ Upstream commit 368be1ca28f66deba16627e2a02e78adedd023a6 ]
 
-During boot, Linux kernel complains:
+This patch removes arguments netdev and phy_id from the functions
+smsc95xx_mdio_read_nopm and smsc95xx_mdio_write_nopm.  Both removed
+arguments are recovered from a new argument `struct usbnet *dev`.
 
-[    0.000000] GIC: GICv2 detected, but range too small and irqchip.gicv2_force_probe not set
-
-This SoC is using a regular GIC-400 and the GICR space size should be
-8KB rather than 256B.
-
-With this patch:
-
-[    0.000000] GIC: Using split EOI/Deactivate mode
-
-So this should be the correct fix.
-
-Fixes: 2f20182ed670 ("arm64: dts: hisilicon: add dts files for hi3798cv200-poplar board")
-Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240219-cache-v3-1-a33c57534ae9@outlook.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andre Edich <andre.edich@microchip.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 52a2f0608366 ("net: usb: smsc95xx: fix changing LED_SEL bit value updated from EEPROM")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/smsc95xx.c | 35 +++++++++++++++++------------------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
 
---- a/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
-+++ b/arch/arm64/boot/dts/hisilicon/hi3798cv200.dtsi
-@@ -58,7 +58,7 @@
- 	gic: interrupt-controller@f1001000 {
- 		compatible = "arm,gic-400";
- 		reg = <0x0 0xf1001000 0x0 0x1000>,  /* GICD */
--		      <0x0 0xf1002000 0x0 0x100>;   /* GICC */
-+		      <0x0 0xf1002000 0x0 0x2000>;  /* GICC */
- 		#address-cells = <0>;
- 		#interrupt-cells = <3>;
- 		interrupt-controller;
+diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
+index 1aa99727d40c7..6fe6edc59623d 100644
+--- a/drivers/net/usb/smsc95xx.c
++++ b/drivers/net/usb/smsc95xx.c
+@@ -261,16 +261,18 @@ static void __smsc95xx_mdio_write(struct net_device *netdev, int phy_id,
+ 	mutex_unlock(&dev->phy_mutex);
+ }
+ 
+-static int smsc95xx_mdio_read_nopm(struct net_device *netdev, int phy_id,
+-				   int idx)
++static int smsc95xx_mdio_read_nopm(struct usbnet *dev, int idx)
+ {
+-	return __smsc95xx_mdio_read(netdev, phy_id, idx, 1);
++	struct mii_if_info *mii = &dev->mii;
++
++	return __smsc95xx_mdio_read(dev->net, mii->phy_id, idx, 1);
+ }
+ 
+-static void smsc95xx_mdio_write_nopm(struct net_device *netdev, int phy_id,
+-				     int idx, int regval)
++static void smsc95xx_mdio_write_nopm(struct usbnet *dev, int idx, int regval)
+ {
+-	__smsc95xx_mdio_write(netdev, phy_id, idx, regval, 1);
++	struct mii_if_info *mii = &dev->mii;
++
++	__smsc95xx_mdio_write(dev->net, mii->phy_id, idx, regval, 1);
+ }
+ 
+ static int smsc95xx_mdio_read(struct net_device *netdev, int phy_id, int idx)
+@@ -1347,39 +1349,37 @@ static u32 smsc_crc(const u8 *buffer, size_t len, int filter)
+ 
+ static int smsc95xx_enable_phy_wakeup_interrupts(struct usbnet *dev, u16 mask)
+ {
+-	struct mii_if_info *mii = &dev->mii;
+ 	int ret;
+ 
+ 	netdev_dbg(dev->net, "enabling PHY wakeup interrupts\n");
+ 
+ 	/* read to clear */
+-	ret = smsc95xx_mdio_read_nopm(dev->net, mii->phy_id, PHY_INT_SRC);
++	ret = smsc95xx_mdio_read_nopm(dev, PHY_INT_SRC);
+ 	if (ret < 0)
+ 		return ret;
+ 
+ 	/* enable interrupt source */
+-	ret = smsc95xx_mdio_read_nopm(dev->net, mii->phy_id, PHY_INT_MASK);
++	ret = smsc95xx_mdio_read_nopm(dev, PHY_INT_MASK);
+ 	if (ret < 0)
+ 		return ret;
+ 
+ 	ret |= mask;
+ 
+-	smsc95xx_mdio_write_nopm(dev->net, mii->phy_id, PHY_INT_MASK, ret);
++	smsc95xx_mdio_write_nopm(dev, PHY_INT_MASK, ret);
+ 
+ 	return 0;
+ }
+ 
+ static int smsc95xx_link_ok_nopm(struct usbnet *dev)
+ {
+-	struct mii_if_info *mii = &dev->mii;
+ 	int ret;
+ 
+ 	/* first, a dummy read, needed to latch some MII phys */
+-	ret = smsc95xx_mdio_read_nopm(dev->net, mii->phy_id, MII_BMSR);
++	ret = smsc95xx_mdio_read_nopm(dev, MII_BMSR);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = smsc95xx_mdio_read_nopm(dev->net, mii->phy_id, MII_BMSR);
++	ret = smsc95xx_mdio_read_nopm(dev, MII_BMSR);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -1428,7 +1428,6 @@ static int smsc95xx_enter_suspend0(struct usbnet *dev)
+ static int smsc95xx_enter_suspend1(struct usbnet *dev)
+ {
+ 	struct smsc95xx_priv *pdata = (struct smsc95xx_priv *)(dev->data[0]);
+-	struct mii_if_info *mii = &dev->mii;
+ 	u32 val;
+ 	int ret;
+ 
+@@ -1436,17 +1435,17 @@ static int smsc95xx_enter_suspend1(struct usbnet *dev)
+ 	 * compatibility with non-standard link partners
+ 	 */
+ 	if (pdata->features & FEATURE_PHY_NLP_CROSSOVER)
+-		smsc95xx_mdio_write_nopm(dev->net, mii->phy_id,	PHY_EDPD_CONFIG,
+-			PHY_EDPD_CONFIG_DEFAULT);
++		smsc95xx_mdio_write_nopm(dev, PHY_EDPD_CONFIG,
++					 PHY_EDPD_CONFIG_DEFAULT);
+ 
+ 	/* enable energy detect power-down mode */
+-	ret = smsc95xx_mdio_read_nopm(dev->net, mii->phy_id, PHY_MODE_CTRL_STS);
++	ret = smsc95xx_mdio_read_nopm(dev, PHY_MODE_CTRL_STS);
+ 	if (ret < 0)
+ 		return ret;
+ 
+ 	ret |= MODE_CTRL_STS_EDPWRDOWN_;
+ 
+-	smsc95xx_mdio_write_nopm(dev->net, mii->phy_id, PHY_MODE_CTRL_STS, ret);
++	smsc95xx_mdio_write_nopm(dev, PHY_MODE_CTRL_STS, ret);
+ 
+ 	/* enter SUSPEND1 mode */
+ 	ret = smsc95xx_read_reg_nopm(dev, PM_CTRL, &val);
+-- 
+2.43.0
+
 
 
