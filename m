@@ -1,141 +1,260 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990351411C3;
-	Thu, 13 Jun 2024 22:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2B3155CB8
+	for <patches@lists.linux.dev>; Thu, 13 Jun 2024 23:32:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718318126; cv=none; b=gdG6L4k8uyGnlBvYXHxTdAAvkmBI/4fH4LQ3UgOYHf+xPJ5Yz4y2Ox9GTDLaxpEQstBLT3BzBYjQ5XjhcOXx4czrKpW0Peg/+dpDjbd8r4j9o37RI+UYM8rDWiJFv+zXBLwrVqyPXtwmGJ3ZZTtdikbY+PkuxwU1E0rNsSeUg3k=
+	t=1718321569; cv=none; b=dcoKbvdqOUJkIKb6bSFAYJtboFir72mfUju4zqFdzXVS3dpeC3AgaLP8kjRhGBOJTk1pYYoretiUbfGEonmxDySOWsiht2tNDBuh7U9/0PY238N/PgJpOD2ZYQ9iJ25eG076bU6LBUfA9fQ/xtBSUzK9AUQw91HjS+2Rnz77u4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718318126; c=relaxed/simple;
-	bh=p+VwQhv5G5CYvaf+I9sazjD4wTWlRzKTz9+GDqPyq38=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CVCvSs7u/hYGEdUn59sWDzX6CuaKRooQZsNAO2RS1uh+gi0pWW+FPB2cFp5kgt/NAXN4RLaJND/YWmN/TORH9avAob2WivLHKoZPWL6eRVZlcXQKxip6AzxuI3L2Si4r47RLFRY3tgrHOFZzXtdULOe8MExXHAMuMyIYuoQuuIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TZJFn8FF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718321569; c=relaxed/simple;
+	bh=M8o41hq2y/cLCRJOH2p4sk/4nnWqpAlctqY1GvPsGqQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j/h9xSmX98wVitaE6CIx8snzaDcD4XidnUm7r3iQBiueRRD/Pa+Ej+2Ts+cGDwO9GjamT4utP/92EJI5OrQ125/No9EzOi4v600eX3JYw5Qp6ZQAVpQUu02vKFnmJfU40DK2VWzMaP2akLo5ayHWs9uzAF1HXrsVcfWGp7pz76k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Etfs7nim; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TZJFn8FF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1322C2BBFC;
-	Thu, 13 Jun 2024 22:35:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718318126;
-	bh=p+VwQhv5G5CYvaf+I9sazjD4wTWlRzKTz9+GDqPyq38=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TZJFn8FFLtDllkEQfxJ9kmP6cm2LJADJXIuh4dWKR2L6D1gmcq535DcLm4ILeSoMK
-	 j3T+KyxIUCa1o1IBySiyVxushNMc+7F3+72NyFG1bE0bKS3hNqDyKGFuoIzABi03he
-	 nX5LMBLtIqjTb3td27LRsRQAs0KnDjwiRlvtU5X7lq+l8C7hY2MFbxJ2n51zvBRDiU
-	 IGBWaxfQbmekfiZLftmONNSVRaKIKhcXjPoa9KcInwDj2rnEjxA0AThLm1ktqZuv8j
-	 9YKIYpWy+EL54RiNB75HCp0BTx+5XXq0f/8N8LX0TvS6HGAwmYZuc+dljPLorULz3Q
-	 utC1PoKU7hXhQ==
-Date: Thu, 13 Jun 2024 15:35:23 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, broonie@kernel.org,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Guo Ren <guoren@linux.alibaba.com>, Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	clang-built-linux <llvm@lists.linux.dev>
-Subject: Re: [PATCH 5.10 000/317] 5.10.219-rc1 review
-Message-ID: <20240613223523.GB1849801@thelio-3990X>
-References: <20240613113247.525431100@linuxfoundation.org>
- <CA+G9fYvnVJi1RFhO5f6ZH2mpagZ6jcEdoQAxnSBxWPHsEVQwYg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Etfs7nim"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1718321568; x=1749857568;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=M8o41hq2y/cLCRJOH2p4sk/4nnWqpAlctqY1GvPsGqQ=;
+  b=Etfs7nimWfOGysal62eGhEH0YtXUotXHp+gUX+L7ICKiUsyACEQ/1EnO
+   kOwixTLEQ6P4tkffa/XrD0PgukV7yiMeWSVfzC4e4CeWVmo1B0znJHSGi
+   juqjU2DCokNSUB00AfMU/RSQIgRZgCVHqi8F5hb1pgofFZch/RKs7LvPr
+   pnr7/Ca7AejvWMITNaYZARNQpmm2KVL41M4kJfmizeY7X6Dn8bHwFjVdY
+   OXkDFEEmm9hh6iLKuAasIaC151VqH5pAk4tLTu5fC6QPjxb5W1/2ucMJb
+   pIEJ+jFEAp+46G/tGdTvbbtUO/qcN4stsw8HdFNkUwewogI5v5gmVRMXH
+   A==;
+X-CSE-ConnectionGUID: 6UW+o2tWQiuSv7dJndlNHQ==
+X-CSE-MsgGUID: ad4VCiSSSmO8VBTpCQyjqg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11102"; a="40600289"
+X-IronPort-AV: E=Sophos;i="6.08,236,1712646000"; 
+   d="scan'208";a="40600289"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2024 16:32:47 -0700
+X-CSE-ConnectionGUID: 6CCGTarnRZGv3VPNn1kTfg==
+X-CSE-MsgGUID: euhTvjf/Q9iUmBVZzwfelg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,236,1712646000"; 
+   d="scan'208";a="40272567"
+Received: from djiang5-mobl3.amr.corp.intel.com (HELO [10.125.111.43]) ([10.125.111.43])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2024 16:32:45 -0700
+Message-ID: <358d2e11-59e2-46eb-a7f4-3c69e6befe02@intel.com>
+Date: Thu, 13 Jun 2024 16:32:44 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYvnVJi1RFhO5f6ZH2mpagZ6jcEdoQAxnSBxWPHsEVQwYg@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/8] fwctl: FWCTL_INFO to return basic information about
+ the device
+To: Jason Gunthorpe <jgg@nvidia.com>, Jonathan Corbet <corbet@lwn.net>,
+ Itay Avraham <itayavr@nvidia.com>, Jakub Kicinski <kuba@kernel.org>,
+ Leon Romanovsky <leon@kernel.org>, linux-doc@vger.kernel.org,
+ linux-rdma@vger.kernel.org, netdev@vger.kernel.org,
+ Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed <saeedm@nvidia.com>,
+ Tariq Toukan <tariqt@nvidia.com>
+Cc: Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+ Aron Silverton <aron.silverton@oracle.com>,
+ Dan Williams <dan.j.williams@intel.com>, David Ahern <dsahern@kernel.org>,
+ Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
+ Leonid Bloch <lbloch@nvidia.com>, Leon Romanovsky <leonro@nvidia.com>,
+ linux-cxl@vger.kernel.org, patches@lists.linux.dev
+References: <3-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
+Content-Language: en-US
+From: Dave Jiang <dave.jiang@intel.com>
+In-Reply-To: <3-v1-9912f1a11620+2a-fwctl_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 13, 2024 at 08:43:41PM +0530, Naresh Kamboju wrote:
-> On Thu, 13 Jun 2024 at 17:43, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 5.10.219 release.
-> > There are 317 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Sat, 15 Jun 2024 11:31:50 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.219-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-> 
-> 
-> The following build errors are noticed on riscv with clang-18 toolchain
-> but gcc-12 builds pass.
-> 
-> However, compared with older releases this is a build regression on
-> stable-rc 5.10.
-> 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> riscv:
->  defconfig - gcc-12 - PASS
->  defconfig - clang-18 - FAILED
-> 
-> Build error:
-> ------
-> arch/riscv/kernel/stacktrace.c:75:52: error: incompatible pointer to
-> integer conversion passing 'void *' to parameter of type 'unsigned
-> long' [-Wint-conversion]
->    75 |                                 if
-> (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
->       |
->                 ^~~
-> include/linux/compiler.h:78:42: note: expanded from macro 'unlikely'
->    78 | # define unlikely(x)    __builtin_expect(!!(x), 0)
->       |                                             ^
-> arch/riscv/kernel/stacktrace.c:75:57: error: incompatible integer to
-> pointer conversion passing 'unsigned long' to parameter of type 'void
-> *' [-Wint-conversion]
->    75 |                                 if
-> (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
->       |
->                      ^~
-> include/linux/compiler.h:78:42: note: expanded from macro 'unlikely'
->    78 | # define unlikely(x)    __builtin_expect(!!(x), 0)
->       |                                             ^
-> 2 errors generated.
-> make[3]: *** [scripts/Makefile.build:286:
-> arch/riscv/kernel/stacktrace.o] Error 1
 
-It looks like either commit 9dd97064e21f ("riscv: Make stack walk
-callback consistent with generic code") should be applied with the
-straight from upstream copy of commit 7ecdadf7f8c6 ("riscv: stacktrace:
-Make walk_stackframe cross pt_regs frame") or the latter commit's 5.10
-backport should be modified to match the linux-5.10.y order of the
-arguments:
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index c38b20caad7c..010e4c881c8b 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -72,7 +72,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
- 						   &frame->ra);
- 			if (pc == (unsigned long)ret_from_exception) {
--				if (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
-+				if (unlikely(!__kernel_text_address(pc) || !fn(pc, arg)))
- 					break;
- 
- 				pc = ((struct pt_regs *)sp)->epc;
+On 6/3/24 8:53 AM, Jason Gunthorpe wrote:
+> Userspace will need to know some details about the fwctl interface being
+> used to locate the correct userspace code to communicate with the
+> kernel. Provide a simple device_type enum indicating what the kernel
+> driver is.
+> 
+> Allow the device to provide a device specific info struct that contains
+> any additional information that the driver may need to provide to
+> userspace.
+> 
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/fwctl/main.c       | 54 ++++++++++++++++++++++++++++++++++++++
+>  include/linux/fwctl.h      |  8 ++++++
+>  include/uapi/fwctl/fwctl.h | 29 ++++++++++++++++++++
+>  3 files changed, 91 insertions(+)
+> 
+> diff --git a/drivers/fwctl/main.c b/drivers/fwctl/main.c
+> index 7ecdabdd9dcb1e..10e3f504893892 100644
+> --- a/drivers/fwctl/main.c
+> +++ b/drivers/fwctl/main.c
+> @@ -17,6 +17,8 @@ enum {
+>  static dev_t fwctl_dev;
+>  static DEFINE_IDA(fwctl_ida);
+>  
+> +DEFINE_FREE(kfree_errptr, void *, if (!IS_ERR_OR_NULL(_T)) kfree(_T));
+> +
+>  struct fwctl_ucmd {
+>  	struct fwctl_uctx *uctx;
+>  	void __user *ubuffer;
+> @@ -24,8 +26,59 @@ struct fwctl_ucmd {
+>  	u32 user_size;
+>  };
+>  
+> +static int ucmd_respond(struct fwctl_ucmd *ucmd, size_t cmd_len)
+> +{
+> +	if (copy_to_user(ucmd->ubuffer, ucmd->cmd,
+> +			 min_t(size_t, ucmd->user_size, cmd_len)))
+> +		return -EFAULT;
+> +	return 0;
+> +}
+> +
+> +static int copy_to_user_zero_pad(void __user *to, const void *from,
+> +				 size_t from_len, size_t user_len)
+> +{
+> +	size_t copy_len;
+> +
+> +	copy_len = min(from_len, user_len);
+> +	if (copy_to_user(to, from, copy_len))
+> +		return -EFAULT;
+> +	if (copy_len < user_len) {
+> +		if (clear_user(to + copy_len, user_len - copy_len))
+> +			return -EFAULT;
+> +	}
+> +	return 0;
+> +}
+> +
+> +static int fwctl_cmd_info(struct fwctl_ucmd *ucmd)
+> +{
+> +	struct fwctl_device *fwctl = ucmd->uctx->fwctl;
+> +	struct fwctl_info *cmd = ucmd->cmd;
+> +	size_t driver_info_len = 0;
+> +
+> +	if (cmd->flags)
+> +		return -EOPNOTSUPP;
+> +
+> +	if (cmd->device_data_len) {
+> +		void *driver_info __free(kfree_errptr) = NULL;
+> +
+> +		driver_info = fwctl->ops->info(ucmd->uctx, &driver_info_len);
 
-Cheers,
-Nathan
+Hi Jason,
+Are you open to pass in potential user input for the info query? I'm working on plumbing fwctl for CXL. The current CXL query command [1] takes a number of commands as input for its ioctl. For fwctl_cmd_info(), the current implementation is when ->info() is called no information about the user buffer length or an input buffer is provided. To make things work I can just return everything each ioctl call and user can sort it out by calling the ioctl twice and provide a u32 size buffer first to figure out the total number of commands and then provide a larger buffer for all the command info. Just trying to see if you are open to something a bit more cleaner than depending on a side effect of the ioctl to retrieve all the information.  
+
+[1] https://elixir.bootlin.com/linux/v6.10-rc3/source/drivers/cxl/core/mbox.c#L526
+
+DJ
+
+> +		if (IS_ERR(driver_info))
+> +			return PTR_ERR(driver_info);
+> +
+> +		if (copy_to_user_zero_pad(u64_to_user_ptr(cmd->out_device_data),
+> +					  driver_info, driver_info_len,
+> +					  cmd->device_data_len))
+> +			return -EFAULT;
+> +	}
+> +
+> +	cmd->out_device_type = fwctl->ops->device_type;
+> +	cmd->device_data_len = driver_info_len;
+> +	return ucmd_respond(ucmd, sizeof(*cmd));
+> +}
+> +
+>  /* On stack memory for the ioctl structs */
+>  union ucmd_buffer {
+> +	struct fwctl_info info;
+>  };
+>  
+>  struct fwctl_ioctl_op {
+> @@ -45,6 +98,7 @@ struct fwctl_ioctl_op {
+>  		.execute = _fn,                                       \
+>  	}
+>  static const struct fwctl_ioctl_op fwctl_ioctl_ops[] = {
+> +	IOCTL_OP(FWCTL_INFO, fwctl_cmd_info, struct fwctl_info, out_device_data),
+>  };
+>  
+>  static long fwctl_fops_ioctl(struct file *filp, unsigned int cmd,
+> diff --git a/include/linux/fwctl.h b/include/linux/fwctl.h
+> index 1d9651de92fc19..9a906b861acf3a 100644
+> --- a/include/linux/fwctl.h
+> +++ b/include/linux/fwctl.h
+> @@ -7,12 +7,14 @@
+>  #include <linux/device.h>
+>  #include <linux/cdev.h>
+>  #include <linux/cleanup.h>
+> +#include <uapi/fwctl/fwctl.h>
+>  
+>  struct fwctl_device;
+>  struct fwctl_uctx;
+>  
+>  /**
+>   * struct fwctl_ops - Driver provided operations
+> + * @device_type: The drivers assigned device_type number. This is uABI
+>   * @uctx_size: The size of the fwctl_uctx struct to allocate. The first
+>   *	bytes of this memory will be a fwctl_uctx. The driver can use the
+>   *	remaining bytes as its private memory.
+> @@ -20,11 +22,17 @@ struct fwctl_uctx;
+>   *	used.
+>   * @close_uctx: Called when the uctx is destroyed, usually when the FD is
+>   *	closed.
+> + * @info: Implement FWCTL_INFO. Return a kmalloc() memory that is copied to
+> + *	out_device_data. On input length indicates the size of the user buffer
+> + *	on output it indicates the size of the memory. The driver can ignore
+> + *	length on input, the core code will handle everything.
+>   */
+>  struct fwctl_ops {
+> +	enum fwctl_device_type device_type;
+>  	size_t uctx_size;
+>  	int (*open_uctx)(struct fwctl_uctx *uctx);
+>  	void (*close_uctx)(struct fwctl_uctx *uctx);
+> +	void *(*info)(struct fwctl_uctx *uctx, size_t *length);
+>  };
+>  
+>  /**
+> diff --git a/include/uapi/fwctl/fwctl.h b/include/uapi/fwctl/fwctl.h
+> index 0bdce95b6d69d9..39db9f09f8068e 100644
+> --- a/include/uapi/fwctl/fwctl.h
+> +++ b/include/uapi/fwctl/fwctl.h
+> @@ -36,6 +36,35 @@
+>   */
+>  enum {
+>  	FWCTL_CMD_BASE = 0,
+> +	FWCTL_CMD_INFO = 0,
+> +	FWCTL_CMD_RPC = 1,
+>  };
+>  
+> +enum fwctl_device_type {
+> +	FWCTL_DEVICE_TYPE_ERROR = 0,
+> +};
+> +
+> +/**
+> + * struct fwctl_info - ioctl(FWCTL_INFO)
+> + * @size: sizeof(struct fwctl_info)
+> + * @flags: Must be 0
+> + * @out_device_type: Returns the type of the device from enum fwctl_device_type
+> + * @device_data_len: On input the length of the out_device_data memory. On
+> + *	output the size of the kernel's device_data which may be larger or
+> + *	smaller than the input. Maybe 0 on input.
+> + * @out_device_data: Pointer to a memory of device_data_len bytes. Kernel will
+> + *	fill the entire memory, zeroing as required.
+> + *
+> + * Returns basic information about this fwctl instance, particularly what driver
+> + * is being used to define the device_data format.
+> + */
+> +struct fwctl_info {
+> +	__u32 size;
+> +	__u32 flags;
+> +	__u32 out_device_type;
+> +	__u32 device_data_len;
+> +	__aligned_u64 out_device_data;
+> +};
+> +#define FWCTL_INFO _IO(FWCTL_TYPE, FWCTL_CMD_INFO)
+> +
+>  #endif
