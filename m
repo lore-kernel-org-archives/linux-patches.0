@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DFC144D2F;
-	Thu, 13 Jun 2024 12:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460161448E0;
+	Thu, 13 Jun 2024 12:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280647; cv=none; b=ii2kF2qLOyVtl4jDazb9BjS9zyOdittlnU51zSrvYmgSUq0YS3cWvXXSJFD27E7QETt/+3a2ypQOrevzJndBr1gIeu03TGuDGZpP7oCSJCaya1puHAGsVpvxFWnjQznX9t5SQH+IM9ah8PwjKB3qDpnWNAZJa8Q5H7orLnLQxPs=
+	t=1718280650; cv=none; b=vCWhY/NmI3MkOr9l7ueDSpwQrJPj+Zm6GfmJmc4xXnEcJb4PQ3o6JVPn0SsFftWbh0hFF2vnvKl23+DEV5/mcbhvHROYfsacWYJu2V+qMPDBLX6lCqwhl2Ju+wBn2iEpvu+apcN0weE5NwYe1DQjCgXpGgqoBcuOEBPcwy/OgUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280647; c=relaxed/simple;
-	bh=D8RiNhwJuEUxV+S49JdjYhW9HuuZmbuFK8it5GLDNL8=;
+	s=arc-20240116; t=1718280650; c=relaxed/simple;
+	bh=H1xElcmmTfhAVHIiEWoHypkGTPoRdsjIOjd6G4JBrJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHAFP6BMwY8Z2CRJSI9BpP2rYgppbRq4BhjSptuVNb2ioYM2PK3AMM4dZo7XQ/HlsLkAkUlz9b8+VQbzXaAW+9mDrUjFg4DX2Prp/EKXzZZSEWXm6TpmMn/mfVe6tKynsZtQnMAOIG2k+3EiH7NTnVhqrDnPM8P7mcVrWYAm2UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJDZuQJJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JlrlJgOXcDFMJBCX6r9hA+HtheN/QM58mT+Fl4JtHxobWdf6P6H6PajuprJ/jiXBqi3Tqz5jBBRisEpno/a0lDrT53K0UC7+qee34E1Pad81tYGo1fK2//PYUinrXI/fDLxNPKnnZV4Mitvu+3xqUdau4Djf31xXotGVMZoodbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQBmb72k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJDZuQJJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD754C2BBFC;
-	Thu, 13 Jun 2024 12:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQBmb72k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C58C2BBFC;
+	Thu, 13 Jun 2024 12:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280647;
-	bh=D8RiNhwJuEUxV+S49JdjYhW9HuuZmbuFK8it5GLDNL8=;
+	s=korg; t=1718280650;
+	bh=H1xElcmmTfhAVHIiEWoHypkGTPoRdsjIOjd6G4JBrJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJDZuQJJWTQvM0+0VoKeo5h9iHe6d1EsDZTaHJAMpKo56L6/ahuj9Nk1iEomlyl88
-	 m0TK5Mj/wyyaANw6n0MvHgfN1V4JYKKECObYoE/QODR5PiGLJYPN4WounqpmEbt6+1
-	 Z9ZQAuISRjQXLIQvrGiul5HgZp2+ejojiwoTu2Ww=
+	b=tQBmb72kjHbs18qEDByok7+VYMwCTpF528aNkdR/+3+DXxXkrr/dz4utR6jlS2hL9
+	 P7YHL1bKH3Cqn322xtPHMPlROAz35FykLdg3vJdGGh9w1dljTwtmk6tcIe0d5bSxIC
+	 6vqTiRoKsVPw+C+U95cCINVPbOVEtrD99IhCjWMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 107/137] ext4: Fixes len calculation in mpage_journal_page_buffers
-Date: Thu, 13 Jun 2024 13:34:47 +0200
-Message-ID: <20240613113227.448926547@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Subject: [PATCH 6.6 125/137] EDAC/igen6: Convert PCIBIOS_* return codes to errnos
+Date: Thu, 13 Jun 2024 13:35:05 +0200
+Message-ID: <20240613113228.148570100@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -46,42 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit c2a09f3d782de952f09a3962d03b939e7fa7ffa4 upstream.
+commit f8367a74aebf88dc8b58a0db6a6c90b4cb8fc9d3 upstream.
 
-Truncate operation can race with writeback, in which inode->i_size can get
-truncated and therefore size - folio_pos() can be negative. This fixes the
-len calculation. However this path doesn't get easily triggered even
-with data journaling.
+errcmd_enable_error_reporting() uses pci_{read,write}_config_word()
+that return PCIBIOS_* codes. The return code is then returned all the
+way into the probe function igen6_probe() that returns it as is. The
+probe functions, however, should return normal errnos.
 
-Cc: stable@kernel.org # v6.5
-Fixes: 80be8c5cc925 ("Fixes: ext4: Make mpage_journal_page_buffers use folio")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/cff4953b5c9306aba71e944ab176a5d396b9a1b7.1709182250.git.ritesh.list@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
+errno before returning it from errcmd_enable_error_reporting().
+
+Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240527132236.13875-2-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/igen6_edac.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -2342,7 +2342,7 @@ static int mpage_journal_page_buffers(ha
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -627,7 +627,7 @@ static int errcmd_enable_error_reporting
  
- 	if (folio_pos(folio) + len > size &&
- 	    !ext4_verity_in_progress(inode))
--		len = size - folio_pos(folio);
-+		len = size & (len - 1);
+ 	rc = pci_read_config_word(imc->pdev, ERRCMD_OFFSET, &errcmd);
+ 	if (rc)
+-		return rc;
++		return pcibios_err_to_errno(rc);
  
- 	return ext4_journal_folio_buffers(handle, folio, len);
+ 	if (enable)
+ 		errcmd |= ERRCMD_CE | ERRSTS_UE;
+@@ -636,7 +636,7 @@ static int errcmd_enable_error_reporting
+ 
+ 	rc = pci_write_config_word(imc->pdev, ERRCMD_OFFSET, errcmd);
+ 	if (rc)
+-		return rc;
++		return pcibios_err_to_errno(rc);
+ 
+ 	return 0;
  }
 
 
