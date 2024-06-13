@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D6E145B3F;
-	Thu, 13 Jun 2024 12:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6352C145B3F;
+	Thu, 13 Jun 2024 12:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280180; cv=none; b=H0hdNQnx0ETor6eYcyWCrL7ODLlSRlLIf0UrS5VpntxTBGkidWzkQ+POhBqiTXZ/jnnX+9bUVGeUHl567KoT4sbAXyDZNJAt/6GDCkO+KP2Nf0kkZmb+C2S6julvZstPsiraZnDVMxpslW+eBaOspulxCThEk7H+djjZWlsK9hU=
+	t=1718280183; cv=none; b=YGOvXwqIe/suSoCjeI/Eybm3HoQeWtaD9D9CsDg0TfFhwkBUeGmRPJaj4ZXFyOjVIgaIBxJ5h3aF9cxg6TsHQLtfno9euRkKSM8B18unH39DFj0czaqhyfVmHIKhLy9Z4ajdRXl6G714PKuF1HL7rhLc68ojrDInY2Sbd3oL2z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280180; c=relaxed/simple;
-	bh=v+uO36W+QRO+sSYdV6OVEBM1uIFZXhlJ0JvdXf1YS+E=;
+	s=arc-20240116; t=1718280183; c=relaxed/simple;
+	bh=u2PuHTIr2XH+znC+/FzKefyDLDgIjxsjN5EjplAS/fI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lak74+WIDv13/qGkW1/JjIbRTPky1nA6A3HKKd4gVHrIA84ynJ1ex+eUIKYnY0j09PwbbxSsrtK84K0nBpKRIEgA2fAAURSwy47axOQLSZT9bUnzxQ6tyFDrkyFUjKrN5tp3a8cJf1EnsBVgxzqTgF3lWgNrFtjKWzM8vmmdwqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIZ/c0rt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QDPTjAzRqWnjpyGoAyIPR9Qy80GnSbNf3jedO/ojPUgdLJDM9DOfcMCQD87u1W9lePYnZZcmZw7UE8TtX0lqr04CSrWAk6EV4jwKGOqQwubR8jUbVuPgEz5h7CyDdJFgi6MWqtakpsWUTm5m1nTZfeKfLlAoq+0eccZW5WSchm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGoijvGv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIZ/c0rt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDCCC2BBFC;
-	Thu, 13 Jun 2024 12:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGoijvGv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDD0C2BBFC;
+	Thu, 13 Jun 2024 12:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280180;
-	bh=v+uO36W+QRO+sSYdV6OVEBM1uIFZXhlJ0JvdXf1YS+E=;
+	s=korg; t=1718280183;
+	bh=u2PuHTIr2XH+znC+/FzKefyDLDgIjxsjN5EjplAS/fI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NIZ/c0rthfsGcBaEcKUo7VModyvkk3qAh4jhjtaflsP7QWg26am1aYh98LrEqyO8c
-	 OVec27cYMBNVnMXA8LmixTGV+sDhFwpM7qPUiwZ+qbiArzpjmo2PhJU3lil9rCsxXd
-	 omR+2c/l4SL/d17mbcF2a5l9h8V9xYpaL837JU58=
+	b=GGoijvGv0ExWjHk8LRYLe2R0SIDjSi8HfIRLYUyroZSr0/kKVjFqMqXi3ZI5EIvk4
+	 5xxk9Oghy3rpqyvqILYeGwBqxS0kVLiR+C4dJdXfvAFoGUVjtzBgZ2E4C7ApteCuRD
+	 Xv+bUaEW1puR1ZJdWXyQexq9ubTsufWwOeDtQ5As=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	David Bauer <mail@david-bauer.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.4 170/202] vxlan: Fix regression when dropping packets due to invalid src addresses
-Date: Thu, 13 Jun 2024 13:34:28 +0200
-Message-ID: <20240613113234.303973122@linuxfoundation.org>
+	Roded Zats <rzats@paloaltonetworks.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 153/202] enic: Validate length of nl attributes in enic_set_vf_port
+Date: Thu, 13 Jun 2024 13:34:11 +0200
+Message-ID: <20240613113233.657828225@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -54,62 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Roded Zats <rzats@paloaltonetworks.com>
 
-commit 1cd4bc987abb2823836cbb8f887026011ccddc8a upstream.
+[ Upstream commit e8021b94b0412c37bcc79027c2e382086b6ce449 ]
 
-Commit f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
-has recently been added to vxlan mainly in the context of source
-address snooping/learning so that when it is enabled, an entry in the
-FDB is not being created for an invalid address for the corresponding
-tunnel endpoint.
+enic_set_vf_port assumes that the nl attribute IFLA_PORT_PROFILE
+is of length PORT_PROFILE_MAX and that the nl attributes
+IFLA_PORT_INSTANCE_UUID, IFLA_PORT_HOST_UUID are of length PORT_UUID_MAX.
+These attributes are validated (in the function do_setlink in rtnetlink.c)
+using the nla_policy ifla_port_policy. The policy defines IFLA_PORT_PROFILE
+as NLA_STRING, IFLA_PORT_INSTANCE_UUID as NLA_BINARY and
+IFLA_PORT_HOST_UUID as NLA_STRING. That means that the length validation
+using the policy is for the max size of the attributes and not on exact
+size so the length of these attributes might be less than the sizes that
+enic_set_vf_port expects. This might cause an out of bands
+read access in the memcpys of the data of these
+attributes in enic_set_vf_port.
 
-Before commit f58f45c1e5b9 vxlan was similarly behaving as geneve in
-that it passed through whichever macs were set in the L2 header. It
-turns out that this change in behavior breaks setups, for example,
-Cilium with netkit in L3 mode for Pods as well as tunnel mode has been
-passing before the change in f58f45c1e5b9 for both vxlan and geneve.
-After mentioned change it is only passing for geneve as in case of
-vxlan packets are dropped due to vxlan_set_mac() returning false as
-source and destination macs are zero which for E/W traffic via tunnel
-is totally fine.
-
-Fix it by only opting into the is_valid_ether_addr() check in
-vxlan_set_mac() when in fact source address snooping/learning is
-actually enabled in vxlan. This is done by moving the check into
-vxlan_snoop(). With this change, the Cilium connectivity test suite
-passes again for both tunnel flavors.
-
-Fixes: f58f45c1e5b9 ("vxlan: drop packets from invalid src-address")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: David Bauer <mail@david-bauer.net>
-Cc: Ido Schimmel <idosch@nvidia.com>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: David Bauer <mail@david-bauer.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[ Backport note: vxlan snooping/learning not supported in 6.8 or older,
-  so commit is simply a revert. ]
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f8bd909183ac ("net: Add ndo_{set|get}_vf_port support for enic dynamic vnics")
+Signed-off-by: Roded Zats <rzats@paloaltonetworks.com>
+Link: https://lore.kernel.org/r/20240522073044.33519-1-rzats@paloaltonetworks.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/net/ethernet/cisco/enic/enic_main.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/net/vxlan.c
-+++ b/drivers/net/vxlan.c
-@@ -1605,10 +1605,6 @@ static bool vxlan_set_mac(struct vxlan_d
- 	if (ether_addr_equal(eth_hdr(skb)->h_source, vxlan->dev->dev_addr))
- 		return false;
+diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
+index 03c8af58050c9..892c4b5ff3036 100644
+--- a/drivers/net/ethernet/cisco/enic/enic_main.c
++++ b/drivers/net/ethernet/cisco/enic/enic_main.c
+@@ -1152,18 +1152,30 @@ static int enic_set_vf_port(struct net_device *netdev, int vf,
+ 	pp->request = nla_get_u8(port[IFLA_PORT_REQUEST]);
  
--	/* Ignore packets from invalid src-address */
--	if (!is_valid_ether_addr(eth_hdr(skb)->h_source))
--		return false;
--
- 	/* Get address from the outer IP header */
- 	if (vxlan_get_sk_family(vs) == AF_INET) {
- 		saddr.sin.sin_addr.s_addr = ip_hdr(skb)->saddr;
+ 	if (port[IFLA_PORT_PROFILE]) {
++		if (nla_len(port[IFLA_PORT_PROFILE]) != PORT_PROFILE_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_NAME;
+ 		memcpy(pp->name, nla_data(port[IFLA_PORT_PROFILE]),
+ 			PORT_PROFILE_MAX);
+ 	}
+ 
+ 	if (port[IFLA_PORT_INSTANCE_UUID]) {
++		if (nla_len(port[IFLA_PORT_INSTANCE_UUID]) != PORT_UUID_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_INSTANCE;
+ 		memcpy(pp->instance_uuid,
+ 			nla_data(port[IFLA_PORT_INSTANCE_UUID]), PORT_UUID_MAX);
+ 	}
+ 
+ 	if (port[IFLA_PORT_HOST_UUID]) {
++		if (nla_len(port[IFLA_PORT_HOST_UUID]) != PORT_UUID_MAX) {
++			memcpy(pp, &prev_pp, sizeof(*pp));
++			return -EINVAL;
++		}
+ 		pp->set |= ENIC_SET_HOST;
+ 		memcpy(pp->host_uuid,
+ 			nla_data(port[IFLA_PORT_HOST_UUID]), PORT_UUID_MAX);
+-- 
+2.43.0
+
 
 
