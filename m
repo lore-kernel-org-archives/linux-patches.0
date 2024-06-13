@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A001849;
-	Thu, 13 Jun 2024 12:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217321849;
+	Thu, 13 Jun 2024 12:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282560; cv=none; b=RA97x4GTBv+TzH6HwqIjNjoyISZjhywFxL7BGgBmXWEYq3kIv7sa+/eo2LcT2Z/ICXP+3HD3pjkvrJtIMNGz/1Zvqc01S89FydVyI4RIBmD4vWhrWGYat/rxkrOaI7kCYCVE6jyI2Bns7PQL/tMzwxkD2NH6HyADElDJlwRVFrM=
+	t=1718282563; cv=none; b=JeqBGCVxZxr9XTAAsimDscZGcODVESOhEezZNRTTTQAId1bvl/3uSY4ksuEBXRGOIGDqRNf3yuHplHJZmpxmSvdydEkR8IQFSQh2pwihe+/962gaefyYnaFTc2J5UAmvHB7cOfudB9iPbhlFvxM9gwVCnQqJaRw4dSRiMh5fEEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282560; c=relaxed/simple;
-	bh=QDP0Au1+pYHbGwWaOAc+k2y8rLJmf6E6uBwevhfTYGo=;
+	s=arc-20240116; t=1718282563; c=relaxed/simple;
+	bh=r92TeYbC+S01cO2bnWjlNp62ptjoQObsgWoaua8uqjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZNOzmhQ0FSCRWytjxrKwzre6j/SJo11vAcEuu7lj4NvRovf4w5nOKvw+J60lxv0UgecMwXUPEQqB8p7gK24YfoxFkR850S4TujsPOIJXTde8/1Y7luc+qbXs2rXHGdvDoswH5ydR6qiNVEJY61mrGiHhtQaPYpuk5CeZATnelY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnYG8eeh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bw7TsiykocbOpoKwjQ/0ZJDYLfew2fFK2mY2bMX5AfNloa9Ib6byc/0KaTFD1KRowWq0/JgaaiGcJP+IYkRhDljbptBEfUQ3DTaUigqjENvw1tOPxMC53QsKoXuAUkafEMjMbOWtCotVuAQidvp/yeqE3DRGwiRFKZMbOB85UKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ri05o54M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnYG8eeh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20E2C2BBFC;
-	Thu, 13 Jun 2024 12:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ri05o54M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA99C32786;
+	Thu, 13 Jun 2024 12:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282560;
-	bh=QDP0Au1+pYHbGwWaOAc+k2y8rLJmf6E6uBwevhfTYGo=;
+	s=korg; t=1718282563;
+	bh=r92TeYbC+S01cO2bnWjlNp62ptjoQObsgWoaua8uqjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xnYG8eehQfW8JUX1SaCwA/deTzKuggydvpzhFyllc26/UKxCSsNpHoCL5Cq0t3LVn
-	 ajxqZOxcGxXqR0PK/9CNP7m8PVWuPTz1Mbg549uvSMA94nFuX+/6XVyIfah6lI8qS6
-	 qlngaVG5NhiSdYzd6E+c/KqOfIoqrUERzj8ZXWjQ=
+	b=Ri05o54MVeuFqL6ImOFRG2ypZHBSqyoHpwD6Msoy6fIBhLe3nedet12J/aQLOpYBp
+	 DrAtbV56DGlJGE/QkmQC2Oz32J032YCOGvBxHKnZu2rHg6zU8KyjmM7E6hgzEwi3sK
+	 vVMnIvXuid8KeW+ctNsSnDRwCHkD87jM9fgMEiAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenghao Ding <shenghao-ding@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 287/402] ASoC: tas2552: Add TX path for capturing AUDIO-OUT data
-Date: Thu, 13 Jun 2024 13:34:04 +0200
-Message-ID: <20240613113313.347836171@linuxfoundation.org>
+Subject: [PATCH 5.15 288/402] NFSv4: Fixup smatch warning for ambiguous return
+Date: Thu, 13 Jun 2024 13:34:05 +0200
+Message-ID: <20240613113313.386279069@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,74 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenghao Ding <shenghao-ding@ti.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit 7078ac4fd179a68d0bab448004fcd357e7a45f8d ]
+[ Upstream commit 37ffe06537af3e3ec212e7cbe941046fce0a822f ]
 
-TAS2552 is a Smartamp with I/V sense data, add TX path
-to support capturing I/V data.
+Dan Carpenter reports smatch warning for nfs4_try_migration() when a memory
+allocation failure results in a zero return value.  In this case, a
+transient allocation failure error will likely be retried the next time the
+server responds with NFS4ERR_MOVED.
 
-Fixes: 38803ce7b53b ("ASoC: codecs: tas*: merge .digital_mute() into .mute_stream()")
-Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
-Link: https://msgid.link/r/20240518033515.866-1-shenghao-ding@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+We can fixup the smatch warning with a small refactor: attempt all three
+allocations before testing and returning on a failure.
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: c3ed222745d9 ("NFSv4: Fix free of uninitialized nfs4_label on referral lookup.")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2552.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ fs/nfs/nfs4state.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2552.c b/sound/soc/codecs/tas2552.c
-index 700baa6314aa8..ba36525a57898 100644
---- a/sound/soc/codecs/tas2552.c
-+++ b/sound/soc/codecs/tas2552.c
-@@ -2,7 +2,8 @@
- /*
-  * tas2552.c - ALSA SoC Texas Instruments TAS2552 Mono Audio Amplifier
-  *
-- * Copyright (C) 2014 Texas Instruments Incorporated -  https://www.ti.com
-+ * Copyright (C) 2014 - 2024 Texas Instruments Incorporated -
-+ *	https://www.ti.com
-  *
-  * Author: Dan Murphy <dmurphy@ti.com>
-  */
-@@ -119,12 +120,14 @@ static const struct snd_soc_dapm_widget tas2552_dapm_widgets[] =
- 			 &tas2552_input_mux_control),
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index d7868cc527805..d452fa85a567c 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2102,6 +2102,7 @@ static int nfs4_try_migration(struct nfs_server *server, const struct cred *cred
+ {
+ 	struct nfs_client *clp = server->nfs_client;
+ 	struct nfs4_fs_locations *locations = NULL;
++	struct nfs_fattr *fattr;
+ 	struct inode *inode;
+ 	struct page *page;
+ 	int status, result;
+@@ -2111,19 +2112,16 @@ static int nfs4_try_migration(struct nfs_server *server, const struct cred *cred
+ 			(unsigned long long)server->fsid.minor,
+ 			clp->cl_hostname);
  
- 	SND_SOC_DAPM_AIF_IN("DAC IN", "DAC Playback", 0, SND_SOC_NOPM, 0, 0),
-+	SND_SOC_DAPM_AIF_OUT("ASI OUT", "DAC Capture", 0, SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_DAC("DAC", NULL, SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_OUT_DRV("ClassD", TAS2552_CFG_2, 7, 0, NULL, 0),
- 	SND_SOC_DAPM_SUPPLY("PLL", TAS2552_CFG_2, 3, 0, NULL, 0),
- 	SND_SOC_DAPM_POST("Post Event", tas2552_post_event),
+-	result = 0;
+ 	page = alloc_page(GFP_KERNEL);
+ 	locations = kmalloc(sizeof(struct nfs4_fs_locations), GFP_KERNEL);
+-	if (page == NULL || locations == NULL) {
+-		dprintk("<-- %s: no memory\n", __func__);
+-		goto out;
+-	}
+-	locations->fattr = nfs_alloc_fattr();
+-	if (locations->fattr == NULL) {
++	fattr = nfs_alloc_fattr();
++	if (page == NULL || locations == NULL || fattr == NULL) {
+ 		dprintk("<-- %s: no memory\n", __func__);
++		result = 0;
+ 		goto out;
+ 	}
  
--	SND_SOC_DAPM_OUTPUT("OUT")
-+	SND_SOC_DAPM_OUTPUT("OUT"),
-+	SND_SOC_DAPM_INPUT("DMIC")
- };
- 
- static const struct snd_soc_dapm_route tas2552_audio_map[] = {
-@@ -134,6 +137,7 @@ static const struct snd_soc_dapm_route tas2552_audio_map[] = {
- 	{"ClassD", NULL, "Input selection"},
- 	{"OUT", NULL, "ClassD"},
- 	{"ClassD", NULL, "PLL"},
-+	{"ASI OUT", NULL, "DMIC"}
- };
- 
- #ifdef CONFIG_PM
-@@ -538,6 +542,13 @@ static struct snd_soc_dai_driver tas2552_dai[] = {
- 			.rates = SNDRV_PCM_RATE_8000_192000,
- 			.formats = TAS2552_FORMATS,
- 		},
-+		.capture = {
-+			.stream_name = "Capture",
-+			.channels_min = 2,
-+			.channels_max = 2,
-+			.rates = SNDRV_PCM_RATE_8000_192000,
-+			.formats = TAS2552_FORMATS,
-+		},
- 		.ops = &tas2552_speaker_dai_ops,
- 	},
- };
++	locations->fattr = fattr;
+ 	inode = d_inode(server->super->s_root);
+ 	result = nfs4_proc_get_locations(server, NFS_FH(inode), locations,
+ 					 page, cred);
 -- 
 2.43.0
 
