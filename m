@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9F51E49B;
-	Thu, 13 Jun 2024 12:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0E21E49B;
+	Thu, 13 Jun 2024 12:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282289; cv=none; b=jL3dw22lcHGyMbTOnBPDKiuRpZFVzlSvJ483MfTSFiEc+Ye9F7dYgc7IZszHZQZOiwlVloMJeAQfcR8O+UweWTUfsxtGdBgp4CoH37znK6G+2xhtKvrTH8kaF9E0+/Rgw32v0yRhsGCvom5jSub5miUX5A7vdHHxvPz1hx2K+HA=
+	t=1718282292; cv=none; b=iuJ2GZ/wDaZcpr1yIa8CJ3iqatRn3sb8aVyH06sL1WHaNZp9+Tsf3MQR6sPZ6v33vIx5wTF3Cardm5ahbPnT8sKdVDcPZDEmammz5B32KQ7F13tg3wokUwE8Ug3kVXWSpwdqHao3SUsNscNKEZfRz53HNntRTkYm0zUi8iqQz3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282289; c=relaxed/simple;
-	bh=x93EXZVY+d7mmwuJ/l6VAunAp0xrIxnA3XM3wlmjdpw=;
+	s=arc-20240116; t=1718282292; c=relaxed/simple;
+	bh=tJE/s18zy6S+rcUVzxqijenhBnrYaSF8hk1QnZfIf4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SftQvIEp+EhLHzIckRLLtOMKxXY5ui7vzhnPSOtMYA+8Q8MvHHE69KU4Ubk8vfi1XxYsWYGhB42P0I9sYqyb7jn930x+2J2D+Phk7DeEmQGZ66lsdqdyM7CNSF2MGluz0ZM6UEqEo6pBvyOiDy1HkaGMQzKNOqo+FeerUL6LXo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fs7x02OH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jDmJ//PdBGSL267IgFvh4hpoaQl9qVpG2zzTKXzv1PgADHxM9OGKf9UJZOVuq7xp5AM5vy8TSOn+tKSMhTSNOpdzXTU9u0pNJbFXWeTVuBh/y9ZXtUldGeMtHR4tmitwUgIFlAMrV/GB2nzyvLwoUy590uBadPdm5uX6dEjefKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=herlh3tj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fs7x02OH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1ADAC2BBFC;
-	Thu, 13 Jun 2024 12:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="herlh3tj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4407C2BBFC;
+	Thu, 13 Jun 2024 12:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282289;
-	bh=x93EXZVY+d7mmwuJ/l6VAunAp0xrIxnA3XM3wlmjdpw=;
+	s=korg; t=1718282292;
+	bh=tJE/s18zy6S+rcUVzxqijenhBnrYaSF8hk1QnZfIf4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fs7x02OHs7oI3jTgvjjFhzLHcGg21PYMC+Ah7f6zgNB5nqf7GFMBqhIaZOaQx32h9
-	 XkHyOIvd2TP17t5zTGujAksK19I5sEV1LgBnJH8KbwKWbtVxJCNXrFA/WiSmZugOS0
-	 z1AfUb4Efnw6PIfqidbZ/Tqun9TFN11Qnm6l2N4U=
+	b=herlh3tjXOq6SXIAsezFaN99K1kS2RVxxcwXktbLvcdrkLrdjEvrHjDksP+ducgII
+	 6AXCLwnCi/WS+zl1r71IVK79N4noQiRrbvnc1tQABw8gCUkubicYWlCypXRPBCi0Ad
+	 0uaInBYmOZ09HYfj01UmsjQRCAlVgsrCOSZlevlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 227/402] extcon: max8997: select IRQ_DOMAIN instead of depending on it
-Date: Thu, 13 Jun 2024 13:33:04 +0200
-Message-ID: <20240613113310.998406518@linuxfoundation.org>
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com>
+Subject: [PATCH 5.15 228/402] PCI/EDR: Align EDR_PORT_DPC_ENABLE_DSM with PCI Firmware r3.3
+Date: Thu, 13 Jun 2024 13:33:05 +0200
+Message-ID: <20240613113311.036804957@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,45 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-[ Upstream commit b1781d0a1458070d40134e4f3412ec9d70099bec ]
+[ Upstream commit f24ba846133d0edec785ac6430d4daf6e9c93a09 ]
 
-IRQ_DOMAIN is a hidden (not user visible) symbol. Users cannot set
-it directly thru "make *config", so drivers should select it instead
-of depending on it if they need it.
-Relying on it being set for a dependency is risky.
+The "Downstream Port Containment related Enhancements" ECN of Jan 28, 2019
+(document 12888 below), defined the EDR_PORT_DPC_ENABLE_DSM function with
+Revision ID 5 with Arg3 being an integer.  But when the ECN was integrated
+into PCI Firmware r3.3, sec 4.6.12, it was defined as Revision ID 6 with
+Arg3 being a package containing an integer.
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
+The implementation in acpi_enable_dpc() supplies a package as Arg3 (arg4 in
+the code), but it previously specified Revision ID 5.  Align this with PCI
+Firmware r3.3 by using Revision ID 6.
 
-Therefore, change EXTCON_MAX8997's use of "depends on" for
-IRQ_DOMAIN to "select".
+If firmware implemented per the ECN, its Revision 5 function would receive
+a package as Arg3 when it expects an integer, so acpi_enable_dpc() would
+likely fail.  If such firmware exists and lacks a Revision 6 function that
+expects a package, we may have to add support for Revision 5.
 
-Link: https://lore.kernel.org/lkml/20240213060028.9744-1-rdunlap@infradead.org/
-Fixes: dca1a71e4108 ("extcon: Add support irq domain for MAX8997 muic")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Link: https://lore.kernel.org/r/20240501022543.1626025-1-sathyanarayanan.kuppuswamy@linux.intel.com
+Link: https://members.pcisig.com/wg/PCI-SIG/document/12888
+Fixes: ac1c8e35a326 ("PCI/DPC: Add Error Disconnect Recover (EDR) support")
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+[bhelgaas: split into two patches, update commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Satish Thatchanamurthy <Satish.Thatchanamurt@Dell.com> # one platform
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/pcie/edr.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/extcon/Kconfig b/drivers/extcon/Kconfig
-index 7684b3afa6304..ba0542ef4d888 100644
---- a/drivers/extcon/Kconfig
-+++ b/drivers/extcon/Kconfig
-@@ -113,7 +113,8 @@ config EXTCON_MAX77843
+diff --git a/drivers/pci/pcie/edr.c b/drivers/pci/pcie/edr.c
+index 87734e4c3c204..5b5a502363c00 100644
+--- a/drivers/pci/pcie/edr.c
++++ b/drivers/pci/pcie/edr.c
+@@ -32,10 +32,10 @@ static int acpi_enable_dpc(struct pci_dev *pdev)
+ 	int status = 0;
  
- config EXTCON_MAX8997
- 	tristate "Maxim MAX8997 EXTCON Support"
--	depends on MFD_MAX8997 && IRQ_DOMAIN
-+	depends on MFD_MAX8997
-+	select IRQ_DOMAIN
- 	help
- 	  If you say yes here you get support for the MUIC device of
- 	  Maxim MAX8997 PMIC. The MAX8997 MUIC is a USB port accessory
+ 	/*
+-	 * Behavior when calling unsupported _DSM functions is undefined,
+-	 * so check whether EDR_PORT_DPC_ENABLE_DSM is supported.
++	 * Per PCI Firmware r3.3, sec 4.6.12, EDR_PORT_DPC_ENABLE_DSM is
++	 * optional. Return success if it's not implemented.
+ 	 */
+-	if (!acpi_check_dsm(adev->handle, &pci_acpi_dsm_guid, 5,
++	if (!acpi_check_dsm(adev->handle, &pci_acpi_dsm_guid, 6,
+ 			    1ULL << EDR_PORT_DPC_ENABLE_DSM))
+ 		return 0;
+ 
+@@ -46,12 +46,7 @@ static int acpi_enable_dpc(struct pci_dev *pdev)
+ 	argv4.package.count = 1;
+ 	argv4.package.elements = &req;
+ 
+-	/*
+-	 * Per Downstream Port Containment Related Enhancements ECN to PCI
+-	 * Firmware Specification r3.2, sec 4.6.12, EDR_PORT_DPC_ENABLE_DSM is
+-	 * optional.  Return success if it's not implemented.
+-	 */
+-	obj = acpi_evaluate_dsm(adev->handle, &pci_acpi_dsm_guid, 5,
++	obj = acpi_evaluate_dsm(adev->handle, &pci_acpi_dsm_guid, 6,
+ 				EDR_PORT_DPC_ENABLE_DSM, &argv4);
+ 	if (!obj)
+ 		return 0;
 -- 
 2.43.0
 
