@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0585E3209;
-	Thu, 13 Jun 2024 12:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2060E3209;
+	Thu, 13 Jun 2024 12:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281710; cv=none; b=uxA8jLbaMYVV5VSmKMFFNIykliWW1ZDYYpsEevvcBKV0ZjuvX4b5PPG+BrbeEB/jvLjJJJl7HM+2bn/2PO6vcxxN5e98XNg2g66wJvmP2k33SfyWwtz0FsHXsklhmHPQ090EjvnCTeNKeWI16OaS5MnefadPrF/Vjc+yIDaC0bA=
+	t=1718281713; cv=none; b=jsenIOSqtiyRWp6dqQBHDP6/GpcV2PUNQhoUqvCNxskAxWe7aON1uaQ4gyfSTABE+j+1JzofjGSdJlkoxRekjWpPgKNRsWT5rMCU1BULeKrQtP5aRa/pG7t3IfSnQBmYSqM0E5EBb0MkwPQTD5Kn9xANqEYg764XRw3bd3E/HDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281710; c=relaxed/simple;
-	bh=NCYbzxGIZ8MdvOJjEU8a34KorEJE46B7LYpwIzQqgXE=;
+	s=arc-20240116; t=1718281713; c=relaxed/simple;
+	bh=h0XlQjwhX7JezVJyiwbgkKbgtFxjAd+3snSuY3Zh9a8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6DRUpBbJBjzwLZtQWUK7dLQ84qa6179LDOcNR7327Y5Wl2ljtTAEPfLrgw1VSejedLsHAcMooUZWdz3KWpO4MaOvG5hKt04rl3rhBwDOYAkjQ+GJZldfZcnAHZj4rNcj5UxYnfSxKxFXQeN5ypPH1YwMH4acm9mXrqqLcRqtDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIW+vfN/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DU2pjWynxTdX426/loofeIslyKn8sXWpBJ12A0aGdXc+IEpPp27gMmLgrpQA7a0sT32EVjU+Q08CfcexXsyGmsY+jkxPoPu8e8rYlA4kFKejeUOdI5OflFufWhtUY/MbhjdvIxHKbANBWmf5+OhiMTTP7EQ9npL7mxZEeaVutYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Biv8qKSj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIW+vfN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFFCC32786;
-	Thu, 13 Jun 2024 12:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Biv8qKSj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64970C2BBFC;
+	Thu, 13 Jun 2024 12:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281709;
-	bh=NCYbzxGIZ8MdvOJjEU8a34KorEJE46B7LYpwIzQqgXE=;
+	s=korg; t=1718281712;
+	bh=h0XlQjwhX7JezVJyiwbgkKbgtFxjAd+3snSuY3Zh9a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIW+vfN/R8w7snQnKLttYUyvkifa22D1nIYf1DBBxiUUkvcuccwt1VR2DNMnz8leb
-	 Ky3ZRCXTozl0F3RUiMzDrd4yJ0OrtUx1oPa440DUKFR8IA5kIa5lA1JOLDpbP3LWyv
-	 5rW+55srg//zpLk/FxIuwgd9fe2+VAiZP40a+Nn0=
+	b=Biv8qKSjotFM45coxCRHFVyNFNRKxt+I6WA3P3XvvQib4RJ05vTMQpT4Bi5TrEj/2
+	 /BbIqujUkYNj8GwPnGOurw5TdgYaAwcUFbrrzLR9uhxrTtGDb1bE3t82wYU+ky/MNw
+	 I6bIZe/tMRwxLAQbFNbyXxaGcf09pNL5ftR+BuWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dce04ed6d1438ad69656@syzkaller.appspotmail.com,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Zqiang <qiang.zhang1211@gmail.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/402] softirq: Fix suspicious RCU usage in __do_softirq()
-Date: Thu, 13 Jun 2024 13:29:47 +0200
-Message-ID: <20240613113303.313213009@linuxfoundation.org>
+Subject: [PATCH 5.15 031/402] ASoC: da7219-aad: fix usage of device_get_named_child_node()
+Date: Thu, 13 Jun 2024 13:29:48 +0200
+Message-ID: <20240613113303.352517261@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,100 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 1dd1eff161bd55968d3d46bc36def62d71fb4785 ]
+[ Upstream commit e8a6a5ad73acbafd98e8fd3f0cbf6e379771bb76 ]
 
-Currently, the condition "__this_cpu_read(ksoftirqd) == current" is used to
-invoke rcu_softirq_qs() in ksoftirqd tasks context for non-RT kernels.
+The documentation for device_get_named_child_node() mentions this
+important point:
 
-This works correctly as long as the context is actually task context but
-this condition is wrong when:
+"
+The caller is responsible for calling fwnode_handle_put() on the
+returned fwnode pointer.
+"
 
-     - the current task is ksoftirqd
-     - the task is interrupted in a RCU read side critical section
-     - __do_softirq() is invoked on return from interrupt
+Add fwnode_handle_put() to avoid a leaked reference.
 
-Syzkaller triggered the following scenario:
-
-  -> finish_task_switch()
-    -> put_task_struct_rcu_user()
-      -> call_rcu(&task->rcu, delayed_put_task_struct)
-        -> __kasan_record_aux_stack()
-          -> pfn_valid()
-            -> rcu_read_lock_sched()
-              <interrupt>
-                __irq_exit_rcu()
-                -> __do_softirq)()
-                   -> if (!IS_ENABLED(CONFIG_PREEMPT_RT) &&
-                     __this_cpu_read(ksoftirqd) == current)
-                     -> rcu_softirq_qs()
-                       -> RCU_LOCKDEP_WARN(lock_is_held(&rcu_sched_lock_map))
-
-The rcu quiescent state is reported in the rcu-read critical section, so
-the lockdep warning is triggered.
-
-Fix this by splitting out the inner working of __do_softirq() into a helper
-function which takes an argument to distinguish between ksoftirqd task
-context and interrupted context and invoke it from the relevant call sites
-with the proper context information and use that for the conditional
-invocation of rcu_softirq_qs().
-
-Reported-by: syzbot+dce04ed6d1438ad69656@syzkaller.appspotmail.com
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240427102808.29356-1-qiang.zhang1211@gmail.com
-Link: https://lore.kernel.org/lkml/8f281a10-b85a-4586-9586-5bbc12dc784f@paulmck-laptop/T/#mea8aba4abfcb97bbf499d169ce7f30c4cff1b0e3
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20240426153033.38500-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/softirq.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ sound/soc/codecs/da7219-aad.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/softirq.c b/kernel/softirq.c
-index 41f470929e991..dc60f0c66a25f 100644
---- a/kernel/softirq.c
-+++ b/kernel/softirq.c
-@@ -512,7 +512,7 @@ static inline bool lockdep_softirq_start(void) { return false; }
- static inline void lockdep_softirq_end(bool in_hardirq) { }
- #endif
+diff --git a/sound/soc/codecs/da7219-aad.c b/sound/soc/codecs/da7219-aad.c
+index 4dc6eed6c18aa..99676c426f781 100644
+--- a/sound/soc/codecs/da7219-aad.c
++++ b/sound/soc/codecs/da7219-aad.c
+@@ -629,8 +629,10 @@ static struct da7219_aad_pdata *da7219_aad_fw_to_pdata(struct device *dev)
+ 		return NULL;
  
--asmlinkage __visible void __softirq_entry __do_softirq(void)
-+static void handle_softirqs(bool ksirqd)
- {
- 	unsigned long end = jiffies + MAX_SOFTIRQ_TIME;
- 	unsigned long old_flags = current->flags;
-@@ -567,8 +567,7 @@ asmlinkage __visible void __softirq_entry __do_softirq(void)
- 		pending >>= softirq_bit;
- 	}
+ 	aad_pdata = devm_kzalloc(dev, sizeof(*aad_pdata), GFP_KERNEL);
+-	if (!aad_pdata)
++	if (!aad_pdata) {
++		fwnode_handle_put(aad_np);
+ 		return NULL;
++	}
  
--	if (!IS_ENABLED(CONFIG_PREEMPT_RT) &&
--	    __this_cpu_read(ksoftirqd) == current)
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT) && ksirqd)
- 		rcu_softirq_qs();
+ 	aad_pdata->irq = i2c->irq;
  
- 	local_irq_disable();
-@@ -588,6 +587,11 @@ asmlinkage __visible void __softirq_entry __do_softirq(void)
- 	current_restore_flags(old_flags, PF_MEMALLOC);
+@@ -705,6 +707,8 @@ static struct da7219_aad_pdata *da7219_aad_fw_to_pdata(struct device *dev)
+ 	else
+ 		aad_pdata->adc_1bit_rpt = DA7219_AAD_ADC_1BIT_RPT_1;
+ 
++	fwnode_handle_put(aad_np);
++
+ 	return aad_pdata;
  }
  
-+asmlinkage __visible void __softirq_entry __do_softirq(void)
-+{
-+	handle_softirqs(false);
-+}
-+
- /**
-  * irq_enter_rcu - Enter an interrupt context with RCU watching
-  */
-@@ -918,7 +922,7 @@ static void run_ksoftirqd(unsigned int cpu)
- 		 * We can safely run softirq on inline stack, as we are not deep
- 		 * in the task stack here.
- 		 */
--		__do_softirq();
-+		handle_softirqs(true);
- 		ksoftirqd_run_end();
- 		cond_resched();
- 		return;
 -- 
 2.43.0
 
