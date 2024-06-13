@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CC3144312;
-	Thu, 13 Jun 2024 12:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACF356458;
+	Thu, 13 Jun 2024 12:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280311; cv=none; b=WUhGsc3QdLiJ/gknJ5i6s0G8OdwRuHUp4lvOWlm2B13bgQ9o34WN3FjwNnSs0AaL0+7UehUokMXtINWQoWczhLjzKGhtkXlY2ZlVlKgzCRDujQgQYC8jxgLLJQPKArGZGw02WxEsDPzaQBXE2YdkblLn7FkF2RYXkjDIe+tFpBo=
+	t=1718280315; cv=none; b=LzsFVqL9EO/hx3xDquRHBIypVI8pQsyKmv5lOKyQo7WTSXGuBeBCDRTFvUovVftQp7arMwCt/QafNK+RGjaOmrukp4pDQaeShfduhweVM7sCCzpEGBibw8Tzw+TCCAzu0R3ykOmtrNvHLZkRgryESm/YSAOsdsaCWL1+xP2WzsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280311; c=relaxed/simple;
-	bh=4ZEVny77icUi1UV/Efc68pqtDXWSOOdJUn3wrsnFGfk=;
+	s=arc-20240116; t=1718280315; c=relaxed/simple;
+	bh=236x9JkAn1HN7bkLaa30orKevFlfREOWkYYQ5rhfERU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VJ7YlWtuS3sHvan2/vf7C87Gne+TuP6x+m4MOqVFAdAq5F9qia7F2uU2lhPzL9XsAfJUsItSZ9XuuzfVImVRYxVC5Pxgd+XRG5UTLNPf4YoW/iHrh1P2Y4A3e5jeFO9S3KGjgCQyhrESZ4effFoAlmalk3nUl5oqpBKoZ2W1CKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=asWEufGe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WbiKJf2ovPzY5S2zwuA0tDaZOxwusMEzFzN/aKyw50OCrLcu+lWhTG7fmoUaJFDArHAxUErc+pniL/HPTzN1q796jo256NLloc8mOlZzWJ/qUAoWEDIuJzW74haDmdnYI+OSRlsVeiBOD5XW/4nha6nSyK/ryBTi5jSP9oCHgAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU8iJhzZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="asWEufGe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2024EC2BBFC;
-	Thu, 13 Jun 2024 12:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU8iJhzZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A2DC2BBFC;
+	Thu, 13 Jun 2024 12:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280311;
-	bh=4ZEVny77icUi1UV/Efc68pqtDXWSOOdJUn3wrsnFGfk=;
+	s=korg; t=1718280314;
+	bh=236x9JkAn1HN7bkLaa30orKevFlfREOWkYYQ5rhfERU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=asWEufGetob3vXmeKTdeSRtUDcKfkGtUo/KTRwHCvgvSQ9zXX6yxqm3fgK2a1aEY4
-	 fGdN6rJethp9BpDL+rGs4DCpyAuqsSftetj1GAuAUsGtSjLoNVG210mphbPOhRZJ5F
-	 XUJ0tl07rNtRy72xPvsHsX+8TO6HhnQXzHRrqt90=
+	b=tU8iJhzZ7/YOe3IAYDD6fE3Qo3aPArsZMehE5T3JNPTH0HzJvHCvt8+XG8NF4kcHo
+	 v6a5XgexkwtHvW9S5wPa2QE4vm94CeWuLmzWDRJbyDKCLr+8fAuvh0vNZg/6X+5baH
+	 Onu1chMXxrRo422zNB1Yho3Dh2brJWg9c7mQlGpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>,
-	Markus Suvanto <markus.suvanto@gmail.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.6 003/137] afs: Dont cross .backup mountpoint from backup volume
-Date: Thu, 13 Jun 2024 13:33:03 +0200
-Message-ID: <20240613113223.416442580@linuxfoundation.org>
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>
+Subject: [PATCH 6.6 004/137] net: sfp-bus: fix SFP mode detect from bitrate
+Date: Thu, 13 Jun 2024 13:33:04 +0200
+Message-ID: <20240613113223.454096893@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -55,50 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Dionne <marc.dionne@auristor.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-commit 29be9100aca2915fab54b5693309bc42956542e5 upstream.
+commit 97eb5d51b4a584a60e5d096bdb6b33edc9f50d8d upstream.
 
-Don't cross a mountpoint that explicitly specifies a backup volume
-(target is <vol>.backup) when starting from a backup volume.
+The referenced commit moved the setting of the Autoneg and pause bits
+early in sfp_parse_support(). However, we check whether the modes are
+empty before using the bitrate to set some modes. Setting these bits
+so early causes that test to always be false, preventing this working,
+and thus some modules that used to work no longer do.
 
-It it not uncommon to mount a volume's backup directly in the volume
-itself.  This can cause tools that are not paying attention to get
-into a loop mounting the volume onto itself as they attempt to
-traverse the tree, leading to a variety of problems.
+Move them just before the call to the quirk.
 
-This doesn't prevent the general case of loops in a sequence of
-mountpoints, but addresses a common special case in the same way
-as other afs clients.
-
-Reported-by: Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>
-Link: http://lists.infradead.org/pipermail/linux-afs/2024-May/008454.html
-Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
-Link: http://lists.infradead.org/pipermail/linux-afs/2024-February/008074.html
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/768760.1716567475@warthog.procyon.org.uk
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 8110633db49d ("net: sfp-bus: allow SFP quirks to override Autoneg and pause bits")
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://lore.kernel.org/r/E1rPMJW-001Ahf-L0@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Daniel Golle <daniel@makrotopia.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/mntpt.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/phy/sfp-bus.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/afs/mntpt.c
-+++ b/fs/afs/mntpt.c
-@@ -140,6 +140,11 @@ static int afs_mntpt_set_params(struct f
- 		put_page(page);
- 		if (ret < 0)
- 			return ret;
-+
-+		/* Don't cross a backup volume mountpoint from a backup volume */
-+		if (src_as->volume && src_as->volume->type == AFSVL_BACKVOL &&
-+		    ctx->type == AFSVL_BACKVOL)
-+			return -ENODEV;
+--- a/drivers/net/phy/sfp-bus.c
++++ b/drivers/net/phy/sfp-bus.c
+@@ -151,10 +151,6 @@ void sfp_parse_support(struct sfp_bus *b
+ 	unsigned int br_min, br_nom, br_max;
+ 	__ETHTOOL_DECLARE_LINK_MODE_MASK(modes) = { 0, };
+ 
+-	phylink_set(modes, Autoneg);
+-	phylink_set(modes, Pause);
+-	phylink_set(modes, Asym_Pause);
+-
+ 	/* Decode the bitrate information to MBd */
+ 	br_min = br_nom = br_max = 0;
+ 	if (id->base.br_nominal) {
+@@ -339,6 +335,10 @@ void sfp_parse_support(struct sfp_bus *b
+ 		}
  	}
  
- 	return 0;
++	phylink_set(modes, Autoneg);
++	phylink_set(modes, Pause);
++	phylink_set(modes, Asym_Pause);
++
+ 	if (bus->sfp_quirk && bus->sfp_quirk->modes)
+ 		bus->sfp_quirk->modes(id, modes, interfaces);
+ 
 
 
