@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90001474A5;
-	Thu, 13 Jun 2024 11:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB63C1474C9;
+	Thu, 13 Jun 2024 11:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279746; cv=none; b=iNCXxqRWYkPejdvv+jnwZHzqk/PhQwi/8TIkMqyS6ARUZw/Lw81IhcDnTJ/rlDqavx9k/p5IFf44LIOt9meaewupnJwKvd+7bl34Za0AXo0KLJyhMzI5urWXUYSLhTfGBVx03pQVmP48lp83YE2cFbNRPW8bDOsqD8FL1ib/Ys4=
+	t=1718279749; cv=none; b=kAD48EoP1IP/E78D/vYWpFIxuzWkeJLo9pqxj0C34CF2aXYTgBVG8fCn4JOW73OpHqk4dIdDvWjXSR/6OJ4cp/ZaPE5jLZEt4Q02z218z1RIqLL3xhSW3ES8v+pk8I9onmV+s/bjq0Hdtoi/96W2apAB+GbYQkd94ShDaupnV50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279746; c=relaxed/simple;
-	bh=LM/32f94V0Uw8RGcGoFM1ByHSeloOykEf4H8ID0FZ2o=;
+	s=arc-20240116; t=1718279749; c=relaxed/simple;
+	bh=Y5OMvtCpgJ3IgF+PhUtCQAnzfTDeCm3YWMiKHHRjUJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHpliLSOn4NI8u6j0QYiYuaeghTu0kZibXF7BEQEELXA5lvaTd/vx4QdNbQousW99VYwGSd1Sq+ixy2X97r+rVB8w7d8kf4Pz6B23073Y2kU6WOrUvB6lc+edgfaPAgS6wI2eUFYJH2fjBjxx/tWkqGdraj31ahD0FEcamk/SXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzdEsd5l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bzxa0h2NC1oRJGVtKnNwUFzdB+l/CCFOgUOaPmrSMW1MDnNyTiLEAalP5YJ6ysXOQWI762TGeTnxGtvkASFC445Gxb6pLeIWwxJ8Csjeg929ZPvZugUUtwsD7ls3dmN9TTqt50SlkBgopGh/NypSBvBkqVOdqn0hrr9K/+oJIU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wduIRIRa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzdEsd5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620B2C2BBFC;
-	Thu, 13 Jun 2024 11:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wduIRIRa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A58C32786;
+	Thu, 13 Jun 2024 11:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279746;
-	bh=LM/32f94V0Uw8RGcGoFM1ByHSeloOykEf4H8ID0FZ2o=;
+	s=korg; t=1718279749;
+	bh=Y5OMvtCpgJ3IgF+PhUtCQAnzfTDeCm3YWMiKHHRjUJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzdEsd5lAzfHUTiGQoZi2aMbtDybAagtg36ufBIGcq+iZfzii3ptpSpeOwN9ztW6u
-	 w0liauKXkUOLOKV1VViTT8KRI24o1iXJK35slp0iFuqD7N/kdk28TkQv4AuNq8GK8T
-	 xrKjy++sdztcS5/i8QsceZYn2p7f5B/8wFdd38i8=
+	b=wduIRIRaZ8wHqMNnTeA8btfd7kGR17B6sNckPfE65Gqr6TMFQJ5k7gQgzXqnUAENC
+	 yKO6X78kvkfBVI8TkzLFbP3IlSst8YaZWEg7kkVEksyv2sP5ffwK+OTiQR2V1tKm3I
+	 dQHGbiVcWgYOOP2n7a5Cip+0KWzJdObnOueFUZWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com,
-	"Bai, Shuangpeng" <sjb7183@psu.edu>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 007/202] nilfs2: fix potential hang in nilfs_detach_log_writer()
-Date: Thu, 13 Jun 2024 13:31:45 +0200
-Message-ID: <20240613113228.045649720@linuxfoundation.org>
+	Igor Artemiev <Igor.A.Artemiev@mcst.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 008/202] wifi: cfg80211: fix the order of arguments for trace events of the tx_rx_evt class
+Date: Thu, 13 Jun 2024 13:31:46 +0200
+Message-ID: <20240613113228.085055952@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -52,110 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
 
-commit eb85dace897c5986bc2f36b3c783c6abb8a4292e upstream.
+[ Upstream commit 9ef369973cd2c97cce3388d2c0c7e3c056656e8a ]
 
-Syzbot has reported a potential hang in nilfs_detach_log_writer() called
-during nilfs2 unmount.
+The declarations of the tx_rx_evt class and the rdev_set_antenna event
+use the wrong order of arguments in the TP_ARGS macro.
 
-Analysis revealed that this is because nilfs_segctor_sync(), which
-synchronizes with the log writer thread, can be called after
-nilfs_segctor_destroy() terminates that thread, as shown in the call trace
-below:
+Fix the order of arguments in the TP_ARGS macro.
 
-nilfs_detach_log_writer
-  nilfs_segctor_destroy
-    nilfs_segctor_kill_thread  --> Shut down log writer thread
-    flush_work
-      nilfs_iput_work_func
-        nilfs_dispose_list
-          iput
-            nilfs_evict_inode
-              nilfs_transaction_commit
-                nilfs_construct_segment (if inode needs sync)
-                  nilfs_segctor_sync  --> Attempt to synchronize with
-                                          log writer thread
-                           *** DEADLOCK ***
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fix this issue by changing nilfs_segctor_sync() so that the log writer
-thread returns normally without synchronizing after it terminates, and by
-forcing tasks that are already waiting to complete once after the thread
-terminates.
-
-The skipped inode metadata flushout will then be processed together in the
-subsequent cleanup work in nilfs_segctor_destroy().
-
-Link: https://lkml.kernel.org/r/20240520132621.4054-4-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e3973c409251e136fdd0
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Cc: "Bai, Shuangpeng" <sjb7183@psu.edu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
+Link: https://msgid.link/20240405152431.270267-1-Igor.A.Artemiev@mcst.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/segment.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ net/wireless/trace.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2229,6 +2229,14 @@ static int nilfs_segctor_sync(struct nil
- 	for (;;) {
- 		set_current_state(TASK_INTERRUPTIBLE);
+diff --git a/net/wireless/trace.h b/net/wireless/trace.h
+index 630b72355ebb5..90307fe4639b2 100644
+--- a/net/wireless/trace.h
++++ b/net/wireless/trace.h
+@@ -1630,7 +1630,7 @@ TRACE_EVENT(rdev_return_void_tx_rx,
  
-+		/*
-+		 * Synchronize only while the log writer thread is alive.
-+		 * Leave flushing out after the log writer thread exits to
-+		 * the cleanup work in nilfs_segctor_destroy().
-+		 */
-+		if (!sci->sc_task)
-+			break;
-+
- 		if (atomic_read(&wait_req.done)) {
- 			err = wait_req.err;
- 			break;
-@@ -2244,7 +2252,7 @@ static int nilfs_segctor_sync(struct nil
- 	return err;
- }
+ DECLARE_EVENT_CLASS(tx_rx_evt,
+ 	TP_PROTO(struct wiphy *wiphy, u32 tx, u32 rx),
+-	TP_ARGS(wiphy, rx, tx),
++	TP_ARGS(wiphy, tx, rx),
+ 	TP_STRUCT__entry(
+ 		WIPHY_ENTRY
+ 		__field(u32, tx)
+@@ -1647,7 +1647,7 @@ DECLARE_EVENT_CLASS(tx_rx_evt,
  
--static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err)
-+static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
- {
- 	struct nilfs_segctor_wait_request *wrq, *n;
- 	unsigned long flags;
-@@ -2252,7 +2260,7 @@ static void nilfs_segctor_wakeup(struct
- 	spin_lock_irqsave(&sci->sc_wait_request.lock, flags);
- 	list_for_each_entry_safe(wrq, n, &sci->sc_wait_request.head, wq.entry) {
- 		if (!atomic_read(&wrq->done) &&
--		    nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq)) {
-+		    (force || nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq))) {
- 			wrq->err = err;
- 			atomic_set(&wrq->done, 1);
- 		}
-@@ -2392,7 +2400,7 @@ static void nilfs_segctor_notify(struct
- 	if (mode == SC_LSEG_SR) {
- 		sci->sc_state &= ~NILFS_SEGCTOR_COMMIT;
- 		sci->sc_seq_done = sci->sc_seq_accepted;
--		nilfs_segctor_wakeup(sci, err);
-+		nilfs_segctor_wakeup(sci, err, false);
- 		sci->sc_flush_request = 0;
- 	} else {
- 		if (mode == SC_FLUSH_FILE)
-@@ -2774,6 +2782,13 @@ static void nilfs_segctor_destroy(struct
- 		|| sci->sc_seq_request != sci->sc_seq_done);
- 	spin_unlock(&sci->sc_state_lock);
+ DEFINE_EVENT(tx_rx_evt, rdev_set_antenna,
+ 	TP_PROTO(struct wiphy *wiphy, u32 tx, u32 rx),
+-	TP_ARGS(wiphy, rx, tx)
++	TP_ARGS(wiphy, tx, rx)
+ );
  
-+	/*
-+	 * Forcibly wake up tasks waiting in nilfs_segctor_sync(), which can
-+	 * be called from delayed iput() via nilfs_evict_inode() and can race
-+	 * with the above log writer thread termination.
-+	 */
-+	nilfs_segctor_wakeup(sci, 0, true);
-+
- 	if (flush_work(&sci->sc_iput_work))
- 		flag = true;
- 
+ DECLARE_EVENT_CLASS(wiphy_netdev_id_evt,
+-- 
+2.43.0
+
 
 
