@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25A2142E84;
-	Thu, 13 Jun 2024 12:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BF01411C5;
+	Thu, 13 Jun 2024 12:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280992; cv=none; b=YJ82VgJcJ7WZS0iyt5xiM3Rz+z2/kU/X5XZn/1mdCV6T0DjBQccprswgcMjXrMDlCbWcpAFQvwNosMZPqnpvb5GDw4VUqKAg/EwWIK6vcJAlDdEFw5XJ1jYZ7xf4FNScyL/Us8uXRt0o4uugNQKRjOc9CIW4OlJw7aspZicOthA=
+	t=1718280995; cv=none; b=D3s8a0U0guLGRjJyFKcA3oY3FqJSlz+szRs2gd0gi4MLveRTUcFFhhsgnnU4+eIcF/qyKDBRh+Z6+YmqeZWI9nMir6X/itnqKwl/dpNiVA8k9k2f6b/0Z8/z74RGcA8MCUQQ5btmsUUYcNvsbrk+iEnBhe6aSaC7/n7PCvDNHKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280992; c=relaxed/simple;
-	bh=YTVCG8yhiIcjsrN9gDaGA4Axzx00+snL0rvcZzd99dY=;
+	s=arc-20240116; t=1718280995; c=relaxed/simple;
+	bh=0Rvg35jk8MehwPwgSew32l1mwb5yRsGfaXQHcrv12zI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fri7GlwbW9jfwPz0FB1dnuSYcYrGmpq5ZOfEMtlzWghhSYWFX4nU2xdcAsbMXZtyK6599Dm2DmT25vmnJ6ZHy+y4543C9ISaBNgPOwc8KJPhxauUD5aegunBLFDvemSZGXSI+zTiqIEXAa8EUqvyrXU6i9jOjcerxPLvXl09MRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzSmcPXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cNebX4s0NwReepvZuIM8HkUmPFvgk0X8xmjPOL9tjynELzgKiuwwGwkcRztAQcDcfrHgkzukx62OaaCwFwFOokVNoNw5UXg8BLSDbsx3lC7FsFY58VgcE8LXHSG/MkSt9l1YPUDCDnp0PZf7bmDs0tvzQ2Sefpga38GD+n+RKUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLpZRhO6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzSmcPXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79EB5C2BBFC;
-	Thu, 13 Jun 2024 12:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLpZRhO6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6941BC2BBFC;
+	Thu, 13 Jun 2024 12:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280991;
-	bh=YTVCG8yhiIcjsrN9gDaGA4Axzx00+snL0rvcZzd99dY=;
+	s=korg; t=1718280994;
+	bh=0Rvg35jk8MehwPwgSew32l1mwb5yRsGfaXQHcrv12zI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzSmcPXNRl9PJKplu8LKjZWdvaGRiRe9j9mbRUBHLVDACgzgNywZuoHhUjWwL2u7P
-	 WidjKn6ja32f+L+qfq2xwqUzsKgFO8fdXnwqh9ZFFZ+LzixloLw2j32egXZ1rc/WvO
-	 59VQRnxr+RF69cEbCONAbehj/X3LJb60MX6H4YBY=
+	b=eLpZRhO6zi1hdocYyIXFk/rt4s7EQFGFGYJkzuZrUHcREeRGBKhWJsUexjqvXZPTb
+	 oebtvb3RRUz2SpsqnSK849GFl7kn5y4tBlwT/K0phqfqZDtgOSljwsDQAVAAcjUdCT
+	 fLkydkdSAQ3DnrW/GnWj1A2VHoYfVw5IuENOxG4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 072/317] HID: intel-ish-hid: ipc: Add check for pci_alloc_irq_vectors
-Date: Thu, 13 Jun 2024 13:31:30 +0200
-Message-ID: <20240613113250.333322368@linuxfoundation.org>
+Subject: [PATCH 5.10 063/317] wifi: ath10k: populate board data for WCN3990
+Date: Thu, 13 Jun 2024 13:31:21 +0200
+Message-ID: <20240613113249.987682089@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,39 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 6baa4524027fd64d7ca524e1717c88c91a354b93 ]
+[ Upstream commit f1f1b5b055c9f27a2f90fd0f0521f5920e9b3c18 ]
 
-Add a check for the return value of pci_alloc_irq_vectors() and return
-error if it fails.
+Specify board data size (and board.bin filename) for the WCN3990
+platform.
 
-[jkosina@suse.com: reworded changelog based on Srinivas' suggestion]
-Fixes: 74fbc7d371d9 ("HID: intel-ish-hid: add MSI interrupt support")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
+Fixes: 03a72288c546 ("ath10k: wmi: add hw params entry for wcn3990")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240130-wcn3990-board-fw-v1-1-738f7c19a8c8@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ipc/pci-ish.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/ath/ath10k/core.c      | 3 +++
+ drivers/net/wireless/ath/ath10k/hw.h        | 1 +
+ drivers/net/wireless/ath/ath10k/targaddrs.h | 3 +++
+ 3 files changed, 7 insertions(+)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/pci-ish.c b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-index c6d48a8648b70..4a16ede402ff5 100644
---- a/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-+++ b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-@@ -164,6 +164,11 @@ static int ish_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index 57ac80997319b..d03a36c45f9f3 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -625,6 +625,9 @@ static const struct ath10k_hw_params ath10k_hw_params_list[] = {
+ 		.max_spatial_stream = 4,
+ 		.fw = {
+ 			.dir = WCN3990_HW_1_0_FW_DIR,
++			.board = WCN3990_HW_1_0_BOARD_DATA_FILE,
++			.board_size = WCN3990_BOARD_DATA_SZ,
++			.board_ext_size = WCN3990_BOARD_EXT_DATA_SZ,
+ 		},
+ 		.sw_decrypt_mcast_mgmt = true,
+ 		.hw_ops = &wcn3990_ops,
+diff --git a/drivers/net/wireless/ath/ath10k/hw.h b/drivers/net/wireless/ath/ath10k/hw.h
+index d3ef83ad577da..c4df0e4e161b6 100644
+--- a/drivers/net/wireless/ath/ath10k/hw.h
++++ b/drivers/net/wireless/ath/ath10k/hw.h
+@@ -132,6 +132,7 @@ enum qca9377_chip_id_rev {
+ /* WCN3990 1.0 definitions */
+ #define WCN3990_HW_1_0_DEV_VERSION	ATH10K_HW_WCN3990
+ #define WCN3990_HW_1_0_FW_DIR		ATH10K_FW_DIR "/WCN3990/hw1.0"
++#define WCN3990_HW_1_0_BOARD_DATA_FILE "board.bin"
  
- 	/* request and enable interrupt */
- 	ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
-+	if (ret < 0) {
-+		dev_err(dev, "ISH: Failed to allocate IRQ vectors\n");
-+		return ret;
-+	}
+ #define ATH10K_FW_FILE_BASE		"firmware"
+ #define ATH10K_FW_API_MAX		6
+diff --git a/drivers/net/wireless/ath/ath10k/targaddrs.h b/drivers/net/wireless/ath/ath10k/targaddrs.h
+index ec556bb88d658..ba37e6c7ced08 100644
+--- a/drivers/net/wireless/ath/ath10k/targaddrs.h
++++ b/drivers/net/wireless/ath/ath10k/targaddrs.h
+@@ -491,4 +491,7 @@ struct host_interest {
+ #define QCA4019_BOARD_DATA_SZ	  12064
+ #define QCA4019_BOARD_EXT_DATA_SZ 0
+ 
++#define WCN3990_BOARD_DATA_SZ	  26328
++#define WCN3990_BOARD_EXT_DATA_SZ 0
 +
- 	if (!pdev->msi_enabled && !pdev->msix_enabled)
- 		irq_flag = IRQF_SHARED;
- 
+ #endif /* __TARGADDRS_H__ */
 -- 
 2.43.0
 
