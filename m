@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC001292FF;
-	Thu, 13 Jun 2024 12:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4181EEE0;
+	Thu, 13 Jun 2024 12:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282401; cv=none; b=KyCLYPXn8NUDUL/r6AasS+aPyj7NUc1Fazu9Y1oj8m4WNG1cowuwo9zm19I8ZZ5/O05tcMAIZjQeCKkUG852JMwtBKcwBw+J1s6gpp/0VfRE5k+N/zKNpCXokr66tef3tmZJO7mj6HNuzOTK0zQj08Bfjqi4aX/UGTV1vnlSbBA=
+	t=1718282404; cv=none; b=oAGsQleT40zlWcx4L/l2qV4gQ95DnZePS3rJHdbidaeELEdXh0To3KUEXvqlcy9tmoWFN2U+dxCwTLgPR2aCzNDpXET/pX0B42hBHtkhKxhWlkEcggpYjmHmRdGUe/OglYl4gso1t3HLyIpzs5zutW1qfi43S5jPTKzKlmqRfjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282401; c=relaxed/simple;
-	bh=zUg6w2eqiiQRixl8QKvoQk188tX3Ge7V87oqO1+pHhk=;
+	s=arc-20240116; t=1718282404; c=relaxed/simple;
+	bh=mhaqfAFoVtDffjkZEMy3OxXpRLKfxGOMGVPOTbGpqk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fva1D6Tev4imVEZBYTpOEZm8n0EPRJ2TuoZX1WEKo7u0CgBLL2LuiRb4k14j2v0exKcq1MuSfJqy7//f5k75AuHc1h8KFi2DZU/bIPWcRzwJew9tiZbg78aArsHmeNW3ASi9cTxGT0zMYteZ069tmQwN7M+Q1npSBl1IBxOsFeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMS7rO03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DFQgG+zgbRLk9/PeLooWSkaFj7u45O3S/xzds0MKfNxShzUKN85BO/x7uZWKlLrfXdGcWRQ1FB1UcdIaByxMfemrr358z5QzOrFtBZ13hn2jBcQvxTiNHudeTO/hmS6gNi3gDfCzqg+vg3QA4qp+4Air7DevmzeICTfdKta8Eo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tL63S6+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMS7rO03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7955C2BBFC;
-	Thu, 13 Jun 2024 12:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tL63S6+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE69CC2BBFC;
+	Thu, 13 Jun 2024 12:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282401;
-	bh=zUg6w2eqiiQRixl8QKvoQk188tX3Ge7V87oqO1+pHhk=;
+	s=korg; t=1718282404;
+	bh=mhaqfAFoVtDffjkZEMy3OxXpRLKfxGOMGVPOTbGpqk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMS7rO03NM5yiLCZGkwjO0KqeeK9czWmQ6AsKZpeAHQkDxdKuXzGozoiScHDaaLI7
-	 fuq/cEDkbTEyQVwj+kXUqSBWjXbgJQFIeGGHpe5FqpFzPYFFklRwD6ozAq25p5JdsU
-	 ThI/blHDRi80KYxMa5DtspHTIRB9iswiKukB1Qb0=
+	b=0tL63S6+rzGnwoBy+evz7enCU4AppSBtCYcBtQxeNOEi5Ulow7vcz1sG07eL5p+QX
+	 9SGY7xhvw5tVp6ub/FBrg3OeIJlH017oPbZmZ5xEQR4xyTyGBLwk4jY0OUoKx24ntq
+	 GuEiiTBsGq1VAs8TNb9dnbwmDY/xgQrlRz22Ia8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Azeem Shaikh <azeemshaikh38@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 265/402] scsi: qla2xxx: Replace all non-returning strlcpy() with strscpy()
-Date: Thu, 13 Jun 2024 13:33:42 +0200
-Message-ID: <20240613113312.487573651@linuxfoundation.org>
+Subject: [PATCH 5.15 266/402] Input: cyapa - add missing input core locking to suspend/resume functions
+Date: Thu, 13 Jun 2024 13:33:43 +0200
+Message-ID: <20240613113312.528680341@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -52,115 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Azeem Shaikh <azeemshaikh38@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 37f1663c91934f664fb850306708094a324c227c ]
+[ Upstream commit 7b4e0b39182cf5e677c1fc092a3ec40e621c25b6 ]
 
-strlcpy() reads the entire source buffer first.  This read may exceed the
-destination size limit.  This is both inefficient and can lead to linear
-read overflows if a source string is not NUL-terminated [1].  In an effort
-to remove strlcpy() completely [2], replace strlcpy() here with strscpy().
-No return values were used, so direct replacement is safe.
+Grab input->mutex during suspend/resume functions like it is done in
+other input drivers. This fixes the following warning during system
+suspend/resume cycle on Samsung Exynos5250-based Snow Chromebook:
 
-[1] https://www.kernel.org/doc/html/latest/process/deprecated.html#strlcpy
-[2] https://github.com/KSPP/linux/issues/89
+------------[ cut here ]------------
+WARNING: CPU: 1 PID: 1680 at drivers/input/input.c:2291 input_device_enabled+0x68/0x6c
+Modules linked in: ...
+CPU: 1 PID: 1680 Comm: kworker/u4:12 Tainted: G        W          6.6.0-rc5-next-20231009 #14109
+Hardware name: Samsung Exynos (Flattened Device Tree)
+Workqueue: events_unbound async_run_entry_fn
+ unwind_backtrace from show_stack+0x10/0x14
+ show_stack from dump_stack_lvl+0x58/0x70
+ dump_stack_lvl from __warn+0x1a8/0x1cc
+ __warn from warn_slowpath_fmt+0x18c/0x1b4
+ warn_slowpath_fmt from input_device_enabled+0x68/0x6c
+ input_device_enabled from cyapa_gen3_set_power_mode+0x13c/0x1dc
+ cyapa_gen3_set_power_mode from cyapa_reinitialize+0x10c/0x15c
+ cyapa_reinitialize from cyapa_resume+0x48/0x98
+ cyapa_resume from dpm_run_callback+0x90/0x298
+ dpm_run_callback from device_resume+0xb4/0x258
+ device_resume from async_resume+0x20/0x64
+ async_resume from async_run_entry_fn+0x40/0x15c
+ async_run_entry_fn from process_scheduled_works+0xbc/0x6a8
+ process_scheduled_works from worker_thread+0x188/0x454
+ worker_thread from kthread+0x108/0x140
+ kthread from ret_from_fork+0x14/0x28
+Exception stack(0xf1625fb0 to 0xf1625ff8)
+...
+---[ end trace 0000000000000000 ]---
+...
+------------[ cut here ]------------
+WARNING: CPU: 1 PID: 1680 at drivers/input/input.c:2291 input_device_enabled+0x68/0x6c
+Modules linked in: ...
+CPU: 1 PID: 1680 Comm: kworker/u4:12 Tainted: G        W          6.6.0-rc5-next-20231009 #14109
+Hardware name: Samsung Exynos (Flattened Device Tree)
+Workqueue: events_unbound async_run_entry_fn
+ unwind_backtrace from show_stack+0x10/0x14
+ show_stack from dump_stack_lvl+0x58/0x70
+ dump_stack_lvl from __warn+0x1a8/0x1cc
+ __warn from warn_slowpath_fmt+0x18c/0x1b4
+ warn_slowpath_fmt from input_device_enabled+0x68/0x6c
+ input_device_enabled from cyapa_gen3_set_power_mode+0x13c/0x1dc
+ cyapa_gen3_set_power_mode from cyapa_reinitialize+0x10c/0x15c
+ cyapa_reinitialize from cyapa_resume+0x48/0x98
+ cyapa_resume from dpm_run_callback+0x90/0x298
+ dpm_run_callback from device_resume+0xb4/0x258
+ device_resume from async_resume+0x20/0x64
+ async_resume from async_run_entry_fn+0x40/0x15c
+ async_run_entry_fn from process_scheduled_works+0xbc/0x6a8
+ process_scheduled_works from worker_thread+0x188/0x454
+ worker_thread from kthread+0x108/0x140
+ kthread from ret_from_fork+0x14/0x28
+Exception stack(0xf1625fb0 to 0xf1625ff8)
+...
+---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Azeem Shaikh <azeemshaikh38@gmail.com>
-Link: https://lore.kernel.org/r/20230516025404.2843867-1-azeemshaikh38@gmail.com
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: c3408c4ae041 ("scsi: qla2xxx: Avoid possible run-time warning with long model_num")
+Fixes: d69f0a43c677 ("Input: use input_device_enabled()")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Link: https://lore.kernel.org/r/20231009121018.1075318-1-m.szyprowski@samsung.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |  8 ++++----
- drivers/scsi/qla2xxx/qla_mr.c   | 20 ++++++++++----------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ drivers/input/mouse/cyapa.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
-index 585df40e95bb0..531e0ea87202e 100644
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -5145,7 +5145,7 @@ qla2x00_set_model_info(scsi_qla_host_t *vha, uint8_t *model, size_t len,
- 		if (use_tbl &&
- 		    ha->pdev->subsystem_vendor == PCI_VENDOR_ID_QLOGIC &&
- 		    index < QLA_MODEL_NAMES)
--			strlcpy(ha->model_desc,
-+			strscpy(ha->model_desc,
- 			    qla2x00_model_name[index * 2 + 1],
- 			    sizeof(ha->model_desc));
- 	} else {
-@@ -5153,14 +5153,14 @@ qla2x00_set_model_info(scsi_qla_host_t *vha, uint8_t *model, size_t len,
- 		if (use_tbl &&
- 		    ha->pdev->subsystem_vendor == PCI_VENDOR_ID_QLOGIC &&
- 		    index < QLA_MODEL_NAMES) {
--			strlcpy(ha->model_number,
-+			strscpy(ha->model_number,
- 				qla2x00_model_name[index * 2],
- 				sizeof(ha->model_number));
--			strlcpy(ha->model_desc,
-+			strscpy(ha->model_desc,
- 			    qla2x00_model_name[index * 2 + 1],
- 			    sizeof(ha->model_desc));
- 		} else {
--			strlcpy(ha->model_number, def,
-+			strscpy(ha->model_number, def,
- 				sizeof(ha->model_number));
- 		}
- 	}
-diff --git a/drivers/scsi/qla2xxx/qla_mr.c b/drivers/scsi/qla2xxx/qla_mr.c
-index f726eb8449c5e..083f94e43fba0 100644
---- a/drivers/scsi/qla2xxx/qla_mr.c
-+++ b/drivers/scsi/qla2xxx/qla_mr.c
-@@ -691,7 +691,7 @@ qlafx00_pci_info_str(struct scsi_qla_host *vha, char *str, size_t str_len)
- 	struct qla_hw_data *ha = vha->hw;
+diff --git a/drivers/input/mouse/cyapa.c b/drivers/input/mouse/cyapa.c
+index 77cc653edca22..e401934df4642 100644
+--- a/drivers/input/mouse/cyapa.c
++++ b/drivers/input/mouse/cyapa.c
+@@ -1357,10 +1357,16 @@ static int __maybe_unused cyapa_suspend(struct device *dev)
+ 	u8 power_mode;
+ 	int error;
  
- 	if (pci_is_pcie(ha->pdev))
--		strlcpy(str, "PCIe iSA", str_len);
-+		strscpy(str, "PCIe iSA", str_len);
- 	return str;
+-	error = mutex_lock_interruptible(&cyapa->state_sync_lock);
++	error = mutex_lock_interruptible(&cyapa->input->mutex);
+ 	if (error)
+ 		return error;
+ 
++	error = mutex_lock_interruptible(&cyapa->state_sync_lock);
++	if (error) {
++		mutex_unlock(&cyapa->input->mutex);
++		return error;
++	}
++
+ 	/*
+ 	 * Runtime PM is enable only when device is in operational mode and
+ 	 * users in use, so need check it before disable it to
+@@ -1395,6 +1401,8 @@ static int __maybe_unused cyapa_suspend(struct device *dev)
+ 		cyapa->irq_wake = (enable_irq_wake(client->irq) == 0);
+ 
+ 	mutex_unlock(&cyapa->state_sync_lock);
++	mutex_unlock(&cyapa->input->mutex);
++
+ 	return 0;
  }
  
-@@ -1850,21 +1850,21 @@ qlafx00_fx_disc(scsi_qla_host_t *vha, fc_port_t *fcport, uint16_t fx_type)
- 			phost_info = &preg_hsi->hsi;
- 			memset(preg_hsi, 0, sizeof(struct register_host_info));
- 			phost_info->os_type = OS_TYPE_LINUX;
--			strlcpy(phost_info->sysname, p_sysid->sysname,
-+			strscpy(phost_info->sysname, p_sysid->sysname,
- 				sizeof(phost_info->sysname));
--			strlcpy(phost_info->nodename, p_sysid->nodename,
-+			strscpy(phost_info->nodename, p_sysid->nodename,
- 				sizeof(phost_info->nodename));
- 			if (!strcmp(phost_info->nodename, "(none)"))
- 				ha->mr.host_info_resend = true;
--			strlcpy(phost_info->release, p_sysid->release,
-+			strscpy(phost_info->release, p_sysid->release,
- 				sizeof(phost_info->release));
--			strlcpy(phost_info->version, p_sysid->version,
-+			strscpy(phost_info->version, p_sysid->version,
- 				sizeof(phost_info->version));
--			strlcpy(phost_info->machine, p_sysid->machine,
-+			strscpy(phost_info->machine, p_sysid->machine,
- 				sizeof(phost_info->machine));
--			strlcpy(phost_info->domainname, p_sysid->domainname,
-+			strscpy(phost_info->domainname, p_sysid->domainname,
- 				sizeof(phost_info->domainname));
--			strlcpy(phost_info->hostdriver, QLA2XXX_VERSION,
-+			strscpy(phost_info->hostdriver, QLA2XXX_VERSION,
- 				sizeof(phost_info->hostdriver));
- 			preg_hsi->utc = (uint64_t)ktime_get_real_seconds();
- 			ql_dbg(ql_dbg_init, vha, 0x0149,
-@@ -1909,9 +1909,9 @@ qlafx00_fx_disc(scsi_qla_host_t *vha, fc_port_t *fcport, uint16_t fx_type)
- 	if (fx_type == FXDISC_GET_CONFIG_INFO) {
- 		struct config_info_data *pinfo =
- 		    (struct config_info_data *) fdisc->u.fxiocb.rsp_addr;
--		strlcpy(vha->hw->model_number, pinfo->model_num,
-+		strscpy(vha->hw->model_number, pinfo->model_num,
- 			ARRAY_SIZE(vha->hw->model_number));
--		strlcpy(vha->hw->model_desc, pinfo->model_description,
-+		strscpy(vha->hw->model_desc, pinfo->model_description,
- 			ARRAY_SIZE(vha->hw->model_desc));
- 		memcpy(&vha->hw->mr.symbolic_name, pinfo->symbolic_name,
- 		    sizeof(vha->hw->mr.symbolic_name));
+@@ -1404,6 +1412,7 @@ static int __maybe_unused cyapa_resume(struct device *dev)
+ 	struct cyapa *cyapa = i2c_get_clientdata(client);
+ 	int error;
+ 
++	mutex_lock(&cyapa->input->mutex);
+ 	mutex_lock(&cyapa->state_sync_lock);
+ 
+ 	if (device_may_wakeup(dev) && cyapa->irq_wake) {
+@@ -1422,6 +1431,7 @@ static int __maybe_unused cyapa_resume(struct device *dev)
+ 	enable_irq(client->irq);
+ 
+ 	mutex_unlock(&cyapa->state_sync_lock);
++	mutex_unlock(&cyapa->input->mutex);
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
