@@ -1,60 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF48145B0F;
-	Thu, 13 Jun 2024 12:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1953145B10;
+	Thu, 13 Jun 2024 12:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281213; cv=none; b=o5pN0AVKSQmIeWW9zZm3pIwnF2yRiJNYVlG++yvibYWANx/7alwwJN2oqvMcl17scnpLJkbnFx+y1LxiVDCsPcphY+wK2VNQ80bEO9J7L5ck3zJwFCo70LQQJCVpWOEfRAXOC0JeqF7uYzz1GS86///Tl+HXJcvReDEKCqQVzcM=
+	t=1718281217; cv=none; b=g6OXVqEcnXITpQlJSNKjGqzaMXo6cPjUMivK3Bq77MiSzBTyoyu5z3cjwtpOQ/KPN00gxKvQdwtakIBmPv62qIoYUzXgRjYqbOVN7Ac82FpVtsrMWFm1RT0sECd5oXDgizUBsjJnrSBU6rt6c3uyFOtPTaeAFawxGmH7AkKr2Lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281213; c=relaxed/simple;
-	bh=fLEsQjdpFk/mJsdJFbNezYfv6BHHFLFrARalm8w0lnI=;
+	s=arc-20240116; t=1718281217; c=relaxed/simple;
+	bh=nqiXJ7BoNTSKZWE4Y5zeCftIbl7w7y+BDquE+eNxAas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t2N4dS6/kweIRiEZ4xogPCsGwuB/YUQ4ZrkSFT75Pp/YsDDNXQ2zzXVHLDu+QdhBdjRPN4ykEfxqYPu4yEQbP1zaNPy3RzzTvv+8PsusUuZtfHGv7Y6jwuFcudJHjS2ThAi4FD99Ay9kwhvH9qh3BfQCcXnQChs34vehSqCmWAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5zFAaew; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eVM7l3H9o5LhBZk6VfVMO102NVZUz1GevaE5B3UEBUqetbOef6Rlen3qvLxbuRI0k5QxxjD1ALL603eTTJAeFcmM4YIIS0vXntVZloRNVvJZfqrhlTBTQ4YyZx5+C2is0ESWKcBbShXwsnN9iTIIMpBRLmDtb4nvpOe6mvTHUSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zbqn+Sz5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5zFAaew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAE0C2BBFC;
-	Thu, 13 Jun 2024 12:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zbqn+Sz5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC34C2BBFC;
+	Thu, 13 Jun 2024 12:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281213;
-	bh=fLEsQjdpFk/mJsdJFbNezYfv6BHHFLFrARalm8w0lnI=;
+	s=korg; t=1718281216;
+	bh=nqiXJ7BoNTSKZWE4Y5zeCftIbl7w7y+BDquE+eNxAas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5zFAaewVZltw+zRMVIOUiG8Ea51mkvePHqdzpWs/lulotENoZU5h+hmyx66kggRe
-	 c6A89ajiLGVK3j6BvnXsvSNK2oNlF3KZMAl74KQApN12D2x/rGgy94S1TWixOe+U/8
-	 LuMHY/JnpeSE9Zcl+j1uq+Pm+d4ihqwIZQyacFbA=
+	b=Zbqn+Sz5Nl4FCOVUcznY5KTbh0wrJwrkQMGFQZdcouDhKCz117lrimgsRJTdcDTA6
+	 l+L4xvW3CRyfQO2G7pFhHugTIK2fTyY5XlyjgoOKIWn70xDkmO3AEexkNGxzgPuqh3
+	 vkH2Ea9EWKPVOYtpqHgivV3XCnq+sdjakVnodmHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Ben Gainey <ben.gainey@arm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Li Dong <lidong@vivo.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Paran Lee <p4ranlee@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Sun Haiyong <sunhaiyong@loongson.cn>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	Yanteng Si <siyanteng@loongson.cn>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 179/317] perf ui browser: Dont save pointer to stack memory
-Date: Thu, 13 Jun 2024 13:33:17 +0200
-Message-ID: <20240613113254.483589869@linuxfoundation.org>
+Subject: [PATCH 5.10 180/317] extcon: max8997: select IRQ_DOMAIN instead of depending on it
+Date: Thu, 13 Jun 2024 13:33:18 +0200
+Message-ID: <20240613113254.522224167@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -73,141 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 769e6a1e15bdbbaf2b0d2f37c24f2c53268bd21f ]
+[ Upstream commit b1781d0a1458070d40134e4f3412ec9d70099bec ]
 
-ui_browser__show() is capturing the input title that is stack allocated
-memory in hist_browser__run().
+IRQ_DOMAIN is a hidden (not user visible) symbol. Users cannot set
+it directly thru "make *config", so drivers should select it instead
+of depending on it if they need it.
+Relying on it being set for a dependency is risky.
 
-Avoid a use after return by strdup-ing the string.
+Consistently using "select" or "depends on" can also help reduce
+Kconfig circular dependency issues.
 
-Committer notes:
+Therefore, change EXTCON_MAX8997's use of "depends on" for
+IRQ_DOMAIN to "select".
 
-Further explanation from Ian Rogers:
-
-My command line using tui is:
-$ sudo bash -c 'rm /tmp/asan.log*; export
-ASAN_OPTIONS="log_path=/tmp/asan.log"; /tmp/perf/perf mem record -a
-sleep 1; /tmp/perf/perf mem report'
-I then go to the perf annotate view and quit. This triggers the asan
-error (from the log file):
-```
-==1254591==ERROR: AddressSanitizer: stack-use-after-return on address
-0x7f2813331920 at pc 0x7f28180
-65991 bp 0x7fff0a21c750 sp 0x7fff0a21bf10
-READ of size 80 at 0x7f2813331920 thread T0
-    #0 0x7f2818065990 in __interceptor_strlen
-../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:461
-    #1 0x7f2817698251 in SLsmg_write_wrapped_string
-(/lib/x86_64-linux-gnu/libslang.so.2+0x98251)
-    #2 0x7f28176984b9 in SLsmg_write_nstring
-(/lib/x86_64-linux-gnu/libslang.so.2+0x984b9)
-    #3 0x55c94045b365 in ui_browser__write_nstring ui/browser.c:60
-    #4 0x55c94045c558 in __ui_browser__show_title ui/browser.c:266
-    #5 0x55c94045c776 in ui_browser__show ui/browser.c:288
-    #6 0x55c94045c06d in ui_browser__handle_resize ui/browser.c:206
-    #7 0x55c94047979b in do_annotate ui/browsers/hists.c:2458
-    #8 0x55c94047fb17 in evsel__hists_browse ui/browsers/hists.c:3412
-    #9 0x55c940480a0c in perf_evsel_menu__run ui/browsers/hists.c:3527
-    #10 0x55c940481108 in __evlist__tui_browse_hists ui/browsers/hists.c:3613
-    #11 0x55c9404813f7 in evlist__tui_browse_hists ui/browsers/hists.c:3661
-    #12 0x55c93ffa253f in report__browse_hists tools/perf/builtin-report.c:671
-    #13 0x55c93ffa58ca in __cmd_report tools/perf/builtin-report.c:1141
-    #14 0x55c93ffaf159 in cmd_report tools/perf/builtin-report.c:1805
-    #15 0x55c94000c05c in report_events tools/perf/builtin-mem.c:374
-    #16 0x55c94000d96d in cmd_mem tools/perf/builtin-mem.c:516
-    #17 0x55c9400e44ee in run_builtin tools/perf/perf.c:350
-    #18 0x55c9400e4a5a in handle_internal_command tools/perf/perf.c:403
-    #19 0x55c9400e4e22 in run_argv tools/perf/perf.c:447
-    #20 0x55c9400e53ad in main tools/perf/perf.c:561
-    #21 0x7f28170456c9 in __libc_start_call_main
-../sysdeps/nptl/libc_start_call_main.h:58
-    #22 0x7f2817045784 in __libc_start_main_impl ../csu/libc-start.c:360
-    #23 0x55c93ff544c0 in _start (/tmp/perf/perf+0x19a4c0) (BuildId:
-84899b0e8c7d3a3eaa67b2eb35e3d8b2f8cd4c93)
-
-Address 0x7f2813331920 is located in stack of thread T0 at offset 32 in frame
-    #0 0x55c94046e85e in hist_browser__run ui/browsers/hists.c:746
-
-  This frame has 1 object(s):
-    [32, 192) 'title' (line 747) <== Memory access at offset 32 is
-inside this variable
-HINT: this may be a false positive if your program uses some custom
-stack unwind mechanism, swapcontext or vfork
-```
-hist_browser__run isn't on the stack so the asan error looks legit.
-There's no clean init/exit on struct ui_browser so I may be trading a
-use-after-return for a memory leak, but that seems look a good trade
-anyway.
-
-Fixes: 05e8b0804ec4 ("perf ui browser: Stop using 'self'")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Ben Gainey <ben.gainey@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Li Dong <lidong@vivo.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Oliver Upton <oliver.upton@linux.dev>
-Cc: Paran Lee <p4ranlee@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Sun Haiyong <sunhaiyong@loongson.cn>
-Cc: Tim Chen <tim.c.chen@linux.intel.com>
-Cc: Yanteng Si <siyanteng@loongson.cn>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20240507183545.1236093-2-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://lore.kernel.org/lkml/20240213060028.9744-1-rdunlap@infradead.org/
+Fixes: dca1a71e4108 ("extcon: Add support irq domain for MAX8997 muic")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browser.c | 4 +++-
- tools/perf/ui/browser.h | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/extcon/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/ui/browser.c b/tools/perf/ui/browser.c
-index 9dc808020e824..6fa4f123d5ff7 100644
---- a/tools/perf/ui/browser.c
-+++ b/tools/perf/ui/browser.c
-@@ -287,7 +287,8 @@ int ui_browser__show(struct ui_browser *browser, const char *title,
- 	mutex_lock(&ui__lock);
- 	__ui_browser__show_title(browser, title);
+diff --git a/drivers/extcon/Kconfig b/drivers/extcon/Kconfig
+index aac507bff135c..09485803280ef 100644
+--- a/drivers/extcon/Kconfig
++++ b/drivers/extcon/Kconfig
+@@ -121,7 +121,8 @@ config EXTCON_MAX77843
  
--	browser->title = title;
-+	free(browser->title);
-+	browser->title = strdup(title);
- 	zfree(&browser->helpline);
- 
- 	va_start(ap, helpline);
-@@ -304,6 +305,7 @@ void ui_browser__hide(struct ui_browser *browser)
- 	mutex_lock(&ui__lock);
- 	ui_helpline__pop();
- 	zfree(&browser->helpline);
-+	zfree(&browser->title);
- 	mutex_unlock(&ui__lock);
- }
- 
-diff --git a/tools/perf/ui/browser.h b/tools/perf/ui/browser.h
-index 3678eb88f119c..815e6bf7ee531 100644
---- a/tools/perf/ui/browser.h
-+++ b/tools/perf/ui/browser.h
-@@ -21,7 +21,7 @@ struct ui_browser {
- 	u8	      extra_title_lines;
- 	int	      current_color;
- 	void	      *priv;
--	const char    *title;
-+	char	      *title;
- 	char	      *helpline;
- 	const char    *no_samples_msg;
- 	void 	      (*refresh_dimensions)(struct ui_browser *browser);
+ config EXTCON_MAX8997
+ 	tristate "Maxim MAX8997 EXTCON Support"
+-	depends on MFD_MAX8997 && IRQ_DOMAIN
++	depends on MFD_MAX8997
++	select IRQ_DOMAIN
+ 	help
+ 	  If you say yes here you get support for the MUIC device of
+ 	  Maxim MAX8997 PMIC. The MAX8997 MUIC is a USB port accessory
 -- 
 2.43.0
 
