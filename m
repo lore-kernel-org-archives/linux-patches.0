@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF7A6EB56;
-	Thu, 13 Jun 2024 12:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DA61420C6;
+	Thu, 13 Jun 2024 12:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281724; cv=none; b=ZCFc7WN6wu2ORFcVXhUryrQfEIvdCoAiO/8yvj7mq0o7ervBVNFVNtCdiAm8qVpB1tfv+LWEP7rHrbhbyq9cnVn83oF1b6bFK6sHBSbRWHoqMhFa4EgmArW2EZ//abyFeMfQNAF3KKtfSTK8CdR4MlPkk4sXnVMRwmNohDpB+t4=
+	t=1718281727; cv=none; b=q3z7+UU1nBDVAiWYd39X3WW4nc4hbOXNENOoP6dMKIBQLpIWZOXyvcGPpeAe4XQ7O+kmoO2EyMsaGw5aa1M8jSQAva9YnwlA/GqRbkQCrZozXbJlaytsMw5YUoUwffp6TZfBG1Tzp8B1jcvAWGpaO3enBYqAtRY2tltV/UHu994=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281724; c=relaxed/simple;
-	bh=9Vi+1cXkZqzdA+hcQf3b6L8pEqjDyTGAh/HbIkcwUsw=;
+	s=arc-20240116; t=1718281727; c=relaxed/simple;
+	bh=27pPK8dWCloz60SpKflWZ3ciRfufKKRAuQy+iUM1mz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxZyT48LDGwg5kNLPx/4W14NH1KT++Chc0hB0q4nyu6n8oatZ+Mvd7nh4J8Mn8T2cBdlSzzmp6lTskKgB6TTOa8c4ZszA9MxOfbR+Usytcf4ef/g8JLEv3kx5TfGtgRf3DrHLHxyIoJ7GHm3Cjmp00P9BoY0u97lSAzHLvwSeE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ed4pYweI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dKgIZityjY7UZsx1Pv9DqK2ZF/rEZPxD0X+smYtISrrBfbEAwLu+Z141mRd8DYgMvfT8TK/nKQyz8CqWtmPcITnTcU+cYq5JEbhokzw1w8rsZl2WAbyZ672Vn4bey5oP30LaJ5LDTp3OSe5fJiLTTuB23x2dCzcgPtgAvOv3ISQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwgLr2MV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ed4pYweI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26724C2BBFC;
-	Thu, 13 Jun 2024 12:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwgLr2MV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168AEC2BBFC;
+	Thu, 13 Jun 2024 12:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281724;
-	bh=9Vi+1cXkZqzdA+hcQf3b6L8pEqjDyTGAh/HbIkcwUsw=;
+	s=korg; t=1718281727;
+	bh=27pPK8dWCloz60SpKflWZ3ciRfufKKRAuQy+iUM1mz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ed4pYweIGHsDxg9Y8rygD+yMVFTxqTd/4EK9X+g2+7ENffWxYlwTMZAAWG7vsZ/h0
-	 JRanaL6HuOfX6uUfKse7vaOiVYFFOT1L/ce1tZoIEiMQI8J1IfF2jkEoN9rc1T6+fY
-	 g/Vo9smwU+inZJMI/D1QxRVtbKUoFU4g77xjTwR4=
+	b=iwgLr2MVdN41PdtFxzon+q0VEW98jerOzp5fy9ucuNk2CKnw6BgdjS4sFzVVLD0dZ
+	 0MhDfIHinmiNdS0fvGl0XX7G3msvFFvd4tbyGPm9Zma7HzV/8c4mZGB5XQGoHTcmzA
+	 Us0bVtnc0uz92ntW2NJP4HcfxienfindzxDXT2ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
+	syzbot+045b454ab35fd82a35fb@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/402] nvme: find numa distance only if controller has valid numa id
-Date: Thu, 13 Jun 2024 13:29:51 +0200
-Message-ID: <20240613113303.467351881@linuxfoundation.org>
+Subject: [PATCH 5.15 035/402] epoll: be better about file lifetimes
+Date: Thu, 13 Jun 2024 13:29:52 +0200
+Message-ID: <20240613113303.506526954@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,45 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 863fe60ed27f2c85172654a63c5b827e72c8b2e6 ]
+[ Upstream commit 4efaa5acf0a1d2b5947f98abb3acf8bfd966422b ]
 
-On system where native nvme multipath is configured and iopolicy
-is set to numa but the nvme controller numa node id is undefined
-or -1 (NUMA_NO_NODE) then avoid calculating node distance for
-finding optimal io path. In such case we may access numa distance
-table with invalid index and that may potentially refer to incorrect
-memory. So this patch ensures that if the nvme controller numa node
-id is -1 then instead of calculating node distance for finding optimal
-io path, we set the numa node distance of such controller to default 10
-(LOCAL_DISTANCE).
+epoll can call out to vfs_poll() with a file pointer that may race with
+the last 'fput()'. That would make f_count go down to zero, and while
+the ep->mtx locking means that the resulting file pointer tear-down will
+be blocked until the poll returns, it means that f_count is already
+dead, and any use of it won't actually get a reference to the file any
+more: it's dead regardless.
 
-Link: https://lore.kernel.org/all/20240413090614.678353-1-nilay@linux.ibm.com/
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Make sure we have a valid ref on the file pointer before we call down to
+vfs_poll() from the epoll routines.
+
+Link: https://lore.kernel.org/lkml/0000000000002d631f0615918f1e@google.com/
+Reported-by: syzbot+045b454ab35fd82a35fb@syzkaller.appspotmail.com
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/eventpoll.c | 38 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 37 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 73eddb67f0d24..f8ad43b5f0690 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -190,7 +190,8 @@ static struct nvme_ns *__nvme_find_path(struct nvme_ns_head *head, int node)
- 		if (nvme_path_is_disabled(ns))
- 			continue;
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 1c254094c4c36..b60edddf17870 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -832,6 +832,34 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
+ 	return res;
+ }
  
--		if (READ_ONCE(head->subsys->iopolicy) == NVME_IOPOLICY_NUMA)
-+		if (ns->ctrl->numa_node != NUMA_NO_NODE &&
-+		    READ_ONCE(head->subsys->iopolicy) == NVME_IOPOLICY_NUMA)
- 			distance = node_distance(node, ns->ctrl->numa_node);
- 		else
- 			distance = LOCAL_DISTANCE;
++/*
++ * The ffd.file pointer may be in the process of being torn down due to
++ * being closed, but we may not have finished eventpoll_release() yet.
++ *
++ * Normally, even with the atomic_long_inc_not_zero, the file may have
++ * been free'd and then gotten re-allocated to something else (since
++ * files are not RCU-delayed, they are SLAB_TYPESAFE_BY_RCU).
++ *
++ * But for epoll, users hold the ep->mtx mutex, and as such any file in
++ * the process of being free'd will block in eventpoll_release_file()
++ * and thus the underlying file allocation will not be free'd, and the
++ * file re-use cannot happen.
++ *
++ * For the same reason we can avoid a rcu_read_lock() around the
++ * operation - 'ffd.file' cannot go away even if the refcount has
++ * reached zero (but we must still not call out to ->poll() functions
++ * etc).
++ */
++static struct file *epi_fget(const struct epitem *epi)
++{
++	struct file *file;
++
++	file = epi->ffd.file;
++	if (!atomic_long_inc_not_zero(&file->f_count))
++		file = NULL;
++	return file;
++}
++
+ /*
+  * Differs from ep_eventpoll_poll() in that internal callers already have
+  * the ep->mtx so we need to start from depth=1, such that mutex_lock_nested()
+@@ -840,14 +868,22 @@ static __poll_t __ep_eventpoll_poll(struct file *file, poll_table *wait, int dep
+ static __poll_t ep_item_poll(const struct epitem *epi, poll_table *pt,
+ 				 int depth)
+ {
+-	struct file *file = epi->ffd.file;
++	struct file *file = epi_fget(epi);
+ 	__poll_t res;
+ 
++	/*
++	 * We could return EPOLLERR | EPOLLHUP or something, but let's
++	 * treat this more as "file doesn't exist, poll didn't happen".
++	 */
++	if (!file)
++		return 0;
++
+ 	pt->_key = epi->event.events;
+ 	if (!is_file_epoll(file))
+ 		res = vfs_poll(file, pt);
+ 	else
+ 		res = __ep_eventpoll_poll(file, pt, depth);
++	fput(file);
+ 	return res & epi->event.events;
+ }
+ 
 -- 
 2.43.0
 
