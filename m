@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FAF145350;
-	Thu, 13 Jun 2024 12:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28029145A07;
+	Thu, 13 Jun 2024 12:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280653; cv=none; b=aeW5VVpM6L0YisLtOrWVBH4Wcv99tQV8zF/llJvzXFXy0K9709JljdLg43jPpD6NGNj8HoxqYHTHUoAOpg/4fC21JObvme7IYAC0yjk/oPqM2XNQTiAa4cwnVemsosRn0jymZWO4Gxbjkk1GGOBcRoo+9trkBb+8XsRD9+EvLnw=
+	t=1718280656; cv=none; b=qE4KuJF3y7yySE1NE0/o7CbhHJBBBk/bQMmMJBDQ7hqEAjdDDkKtZFhknYujtpkJBS6gpMMmLCX0hv3uBJqZP0vJFEDTGn1c8WOZqX5l2DdB/8bVzMqWx+GEQKHXGiwTGttRgWnGojNqo+ccfwzy8/kr0vZOG91bNUafpiEwLv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280653; c=relaxed/simple;
-	bh=J85dj1RIIoXWHlU2N3sRv26zqQmQZTQl2fiHWjUmt/M=;
+	s=arc-20240116; t=1718280656; c=relaxed/simple;
+	bh=p07P1lOCplvjWiX8jYKUV6BcwZc4xzSbJYbrsmz4PC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jF7nMWigqwDpCphplLsqQ+u1ZNXvTO5siI74YbEepPuUIpMiHFD1X/uAbzaJ1eyB47CW/DfBYLz192FbJH79k0flqGt/HVv1sCisRS8+huZudz0Ewv/+hnzPxtBMKO2QIP6o57vpbw6Fa057oD2TFptf1HbzD0Ic6t5oj7madiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJ+Noc6V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DnM/lCWzOIAfvtoPXpft7VDR26ZqLiOTfwQhf3dqddQWbBtrZpoY0n9QJogYDP6ZF8MzMKaAY4P9pPFhGMVLx0pqvaW5U98idUCV69DeTSDsUcPXx38lFq+Mj5xDmC3KZ6CSOT5shZL6XpSBHLG6W2XpBoUMAkzbLkcC0RxEkDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFpIU6F6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJ+Noc6V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F96C2BBFC;
-	Thu, 13 Jun 2024 12:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFpIU6F6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FE2C2BBFC;
+	Thu, 13 Jun 2024 12:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280653;
-	bh=J85dj1RIIoXWHlU2N3sRv26zqQmQZTQl2fiHWjUmt/M=;
+	s=korg; t=1718280656;
+	bh=p07P1lOCplvjWiX8jYKUV6BcwZc4xzSbJYbrsmz4PC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GJ+Noc6VqgPK3MBwIRTl6YEY6hABSbXvG0fnTJWMYcmH5RjhgHYU+y7gs9EzEBl7J
-	 YZ9+/1nacQ1L22/dhOSS1Sj5r0XqS97S/3DWFwjMQqybXiBqWEB85F2/IJWS8X5Isj
-	 UhV+zFElOKbBAeDKY8n5s5NL7bAVq46/ap2OieVs=
+	b=MFpIU6F6ev6jHHkWBAkl3Uhp5451/LzHGaEhg9O2FgpQOBexbhZEdF8pd6JEzmy6g
+	 BdheuQiJedoPpLRAkOL9d4nQZcpQ0c5jmRV+6xAWHlwVB8sK7T1ujmsDPi8PUg1noP
+	 OZeGTNjCdOl0a3YYWaKewDF+p/ip78cIXcC+KtXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Benjamin Coddington <bcodding@redhat.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 6.6 126/137] nfs: fix undefined behavior in nfs_block_bits()
-Date: Thu, 13 Jun 2024 13:35:06 +0200
-Message-ID: <20240613113228.187356096@linuxfoundation.org>
+Subject: [PATCH 6.6 127/137] NFS: Fix READ_PLUS when server doesnt support OP_READ_PLUS
+Date: Thu, 13 Jun 2024 13:35:07 +0200
+Message-ID: <20240613113228.225512396@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -51,38 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Anna Schumaker <Anna.Schumaker@Netapp.com>
 
-commit 3c0a2e0b0ae661457c8505fecc7be5501aa7a715 upstream.
+commit f06d1b10cb016d5aaecdb1804fefca025387bd10 upstream.
 
-Shifting *signed int* typed constant 1 left by 31 bits causes undefined
-behavior. Specify the correct *unsigned long* type by using 1UL instead.
+Olga showed me a case where the client was sending multiple READ_PLUS
+calls to the server in parallel, and the server replied
+NFS4ERR_OPNOTSUPP to each. The client would fall back to READ for the
+first reply, but fail to retry the other calls.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+I fix this by removing the test for NFS_CAP_READ_PLUS in
+nfs4_read_plus_not_supported(). This allows us to reschedule any
+READ_PLUS call that has a NFS4ERR_OPNOTSUPP return value, even after the
+capability has been cleared.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reported-by: Olga Kornievskaia <kolga@netapp.com>
+Fixes: c567552612ec ("NFS: Add READ_PLUS data segment support")
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/internal.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/nfs4proc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -710,9 +710,9 @@ unsigned long nfs_block_bits(unsigned lo
- 	if ((bsize & (bsize - 1)) || nrbitsp) {
- 		unsigned char	nrbits;
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -5435,7 +5435,7 @@ static bool nfs4_read_plus_not_supported
+ 	struct rpc_message *msg = &task->tk_msg;
  
--		for (nrbits = 31; nrbits && !(bsize & (1 << nrbits)); nrbits--)
-+		for (nrbits = 31; nrbits && !(bsize & (1UL << nrbits)); nrbits--)
- 			;
--		bsize = 1 << nrbits;
-+		bsize = 1UL << nrbits;
- 		if (nrbitsp)
- 			*nrbitsp = nrbits;
- 	}
+ 	if (msg->rpc_proc == &nfs4_procedures[NFSPROC4_CLNT_READ_PLUS] &&
+-	    server->caps & NFS_CAP_READ_PLUS && task->tk_status == -ENOTSUPP) {
++	    task->tk_status == -ENOTSUPP) {
+ 		server->caps &= ~NFS_CAP_READ_PLUS;
+ 		msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_READ];
+ 		rpc_restart_call_prepare(task);
 
 
