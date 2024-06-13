@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036DC130A47;
-	Thu, 13 Jun 2024 12:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D48145B18;
+	Thu, 13 Jun 2024 12:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280765; cv=none; b=l0J4OuTjkhbzyXj0XIjTUXpC2YAJ5YN6jiFIOqbQGo3VbBpdSsN5nxMpmeFKlRjx2k6WVsHLUd9XA8DOwtbjKCH9avIA6PmF/wjLUvLV9VdqA2hliw5n3V2YaOOUIKQ6dxgWRlG0myOi2YmO0SPXzTma884zhE/tTGr+ISoqBOY=
+	t=1718280768; cv=none; b=KCm/vv7ESb98t60MLB0POeqVGGP/nKFgiNQIIYoobHPZLxXrBqoTHRnfFn1Gy1H1XB9tdRhrUKQCE2Hqqq63A97D3rGn7hnXtUURHjNk8u/D3dU/Fv1xswcFBLPqDo744X0GAabahBmE0/HDYYctxvoald8nDnLQI9haXWduio0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280765; c=relaxed/simple;
-	bh=FFy1bmYa5YOdZ4swGga2DyVv8+vbIqMmPq47/+tfILM=;
+	s=arc-20240116; t=1718280768; c=relaxed/simple;
+	bh=LBAFaDjGuu0KZYqFJqMv14XZoVNLhS9EQvHu2Wp3hJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nTMxceAgEBOTDW4x9Ig1opoEfTGsoMbzhnD76BuX+EBq2y/P1hcnOIborXBuoVRNP8bm2HxUotI3uk1Eb1jU5kuTx2ygk98Are9ig3j87xthZRmzhEy4OSiBHEQ2wbAlEG3uHou63ApX0Dq7iePZF5YJYv4+kmP78M+HD8sE3II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xW2xvpPb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QftT2qjtIGUT27boTmgiCrGDlChsAVtV0QzyET4xl8jxtEGYipO4vbrDO13EO9DpHrqa/B849vfzdyCUUsyJ5AMEPuSB9skTYaI8YoLl1IINXE0lBYfOB3Jo3Ax9bdSOEtpBPUKAm8AvX6vOMzn4XoM5Kp77LFm03NowrFFf85I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZf3Mojf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xW2xvpPb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DECC4AF1A;
-	Thu, 13 Jun 2024 12:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZf3Mojf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F08C2BBFC;
+	Thu, 13 Jun 2024 12:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280764;
-	bh=FFy1bmYa5YOdZ4swGga2DyVv8+vbIqMmPq47/+tfILM=;
+	s=korg; t=1718280767;
+	bh=LBAFaDjGuu0KZYqFJqMv14XZoVNLhS9EQvHu2Wp3hJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xW2xvpPbNlQgLvRsbt63wGOV/ZzhRc5ezo7pxGrWuPOP0quR5/t36BkseuLPasCPM
-	 FVoW64luqvCe9nw5z1ZlIiy1W7Ii4rpw2sfRHBtvXE6QQL3EGDpgwiGsRLoWh/u9gZ
-	 0favQGG5SgQBQzVMmAh1AK0BujConoOx8mVlQwSw=
+	b=AZf3MojfPIBS2uYQKRJ7/xAlm0gufgYwed2Qf2iRLJ5XEUGDAHdDS05p7+Ydtthxm
+	 QjWpqo4Y1x6sFulYHpU6cgmrw34CsFSULlAXCgezH6GYSe6dIXJm2TOBzh3AyJ3aEk
+	 OXVCHpyVm+FKwVna8pRBAZ5Tr+cAGt/4bXNb26Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/317] crypto: ccp - drop platform ifdef checks
-Date: Thu, 13 Jun 2024 13:30:44 +0200
-Message-ID: <20240613113248.552994574@linuxfoundation.org>
+Subject: [PATCH 5.10 027/317] crypto: x86/nh-avx2 - add missing vzeroupper
+Date: Thu, 13 Jun 2024 13:30:45 +0200
+Message-ID: <20240613113248.590952606@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,92 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit 42c2d7d02977ef09d434b1f5b354f5bc6c1027ab ]
+[ Upstream commit 4ad096cca942959871d8ff73826d30f81f856f6e ]
 
-When both ACPI and OF are disabled, the dev_vdata variable is unused:
+Since nh_avx2() uses ymm registers, execute vzeroupper before returning
+from it.  This is necessary to avoid reducing the performance of SSE
+code.
 
-drivers/crypto/ccp/sp-platform.c:33:34: error: unused variable 'dev_vdata' [-Werror,-Wunused-const-variable]
-
-This is not a useful configuration, and there is not much point in saving
-a few bytes when only one of the two is enabled, so just remove all
-these ifdef checks and rely on of_match_node() and acpi_match_device()
-returning NULL when these subsystems are disabled.
-
-Fixes: 6c5063434098 ("crypto: ccp - Add ACPI support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Fixes: 0f961f9f670e ("crypto: x86/nhpoly1305 - add AVX2 accelerated NHPoly1305")
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Acked-by: Tim Chen <tim.c.chen@linux.intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sp-platform.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ arch/x86/crypto/nh-avx2-x86_64.S | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/ccp/sp-platform.c b/drivers/crypto/ccp/sp-platform.c
-index 9dba52fbee997..121f9d0cb608e 100644
---- a/drivers/crypto/ccp/sp-platform.c
-+++ b/drivers/crypto/ccp/sp-platform.c
-@@ -39,44 +39,38 @@ static const struct sp_dev_vdata dev_vdata[] = {
- 	},
- };
- 
--#ifdef CONFIG_ACPI
- static const struct acpi_device_id sp_acpi_match[] = {
- 	{ "AMDI0C00", (kernel_ulong_t)&dev_vdata[0] },
- 	{ },
- };
- MODULE_DEVICE_TABLE(acpi, sp_acpi_match);
--#endif
- 
--#ifdef CONFIG_OF
- static const struct of_device_id sp_of_match[] = {
- 	{ .compatible = "amd,ccp-seattle-v1a",
- 	  .data = (const void *)&dev_vdata[0] },
- 	{ },
- };
- MODULE_DEVICE_TABLE(of, sp_of_match);
--#endif
- 
- static struct sp_dev_vdata *sp_get_of_version(struct platform_device *pdev)
- {
--#ifdef CONFIG_OF
- 	const struct of_device_id *match;
- 
- 	match = of_match_node(sp_of_match, pdev->dev.of_node);
- 	if (match && match->data)
- 		return (struct sp_dev_vdata *)match->data;
--#endif
-+
- 	return NULL;
- }
- 
- static struct sp_dev_vdata *sp_get_acpi_version(struct platform_device *pdev)
- {
--#ifdef CONFIG_ACPI
- 	const struct acpi_device_id *match;
- 
- 	match = acpi_match_device(sp_acpi_match, &pdev->dev);
- 	if (match && match->driver_data)
- 		return (struct sp_dev_vdata *)match->driver_data;
--#endif
-+
- 	return NULL;
- }
- 
-@@ -222,12 +216,8 @@ static int sp_platform_resume(struct platform_device *pdev)
- static struct platform_driver sp_platform_driver = {
- 	.driver = {
- 		.name = "ccp",
--#ifdef CONFIG_ACPI
- 		.acpi_match_table = sp_acpi_match,
--#endif
--#ifdef CONFIG_OF
- 		.of_match_table = sp_of_match,
--#endif
- 	},
- 	.probe = sp_platform_probe,
- 	.remove = sp_platform_remove,
+diff --git a/arch/x86/crypto/nh-avx2-x86_64.S b/arch/x86/crypto/nh-avx2-x86_64.S
+index 6a0b15e7196a8..54c0ee41209d5 100644
+--- a/arch/x86/crypto/nh-avx2-x86_64.S
++++ b/arch/x86/crypto/nh-avx2-x86_64.S
+@@ -153,5 +153,6 @@ SYM_FUNC_START(nh_avx2)
+ 	vpaddq		T1, T0, T0
+ 	vpaddq		T4, T0, T0
+ 	vmovdqu		T0, (HASH)
++	vzeroupper
+ 	RET
+ SYM_FUNC_END(nh_avx2)
 -- 
 2.43.0
 
