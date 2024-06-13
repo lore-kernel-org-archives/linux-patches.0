@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B06143884;
-	Thu, 13 Jun 2024 12:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF49143878;
+	Thu, 13 Jun 2024 12:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280792; cv=none; b=N1uOTXGqksdj2BHPnk1c0CVerVQjEc6bMDq5VqARlMC8v5dO81CEFnQ8wNe9a43IqXzZkDBO+MzrubRZN7mlkzmctwiW6onbUYC4haTZo6OUFVjQszNNw6r2bBRf96253pXDfb+VR+Tdj6fQkItYXh3tJ/9Koe/245+d/V6CDGE=
+	t=1718280794; cv=none; b=jdMaDwmWC2z4xgEnFJyo9hrdz2eYYsocBMuR+TzPRa09VupXO8zkwKZS/KVUJhMIr3pEcgFjEdajgJXrbGW4VGOEiUzffPkORjeI0G0o3lVPg5gE3aDmbSpAYGYplX3rwBCW8ecWBgqM1W3TG3tVU3Drm8YQDjJ5cyGQ1Jc8gkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280792; c=relaxed/simple;
-	bh=BP5Pto84SUOKo+l60YLGPSKQyEAMrEzFQd3KfRbLdbE=;
+	s=arc-20240116; t=1718280794; c=relaxed/simple;
+	bh=rHdX88HN+kRB+mrcBKzFiWtY3i+zZqPwX/z5ULoXofc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G6MYhDdiJddtrJ2xT0ExOoVymdVU/x/RyX7sW2bXLcON7OfhnQyao+ZOhKIzumXYBl4519oA0AtfoztmbZKxnXInywtBvTT0DlXbxyDly+UpXnmrV/wCImB4pCw/8sWRpDc1VT41mXpIP06vCqV+HNFQmwxrDysxvQNfj6PTkOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7FK7iCB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ml48ofG1EsgTHT8fG258CPxGHUzbawEPzadDNdw45kX3pWjABdv6WR1Iir68meeLK4+Wps9B7FSX4dOwTUWpza7GCyMUOsHoexjmbSa0LmJ75vHOPHO5GP8Zv+GhiKcZY2Vjl5bR9WsIR3hO1rqcogWZCLVsSODwPSpzv8YL8pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kg3LrsFd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7FK7iCB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A64C2BBFC;
-	Thu, 13 Jun 2024 12:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kg3LrsFd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F85AC2BBFC;
+	Thu, 13 Jun 2024 12:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280791;
-	bh=BP5Pto84SUOKo+l60YLGPSKQyEAMrEzFQd3KfRbLdbE=;
+	s=korg; t=1718280794;
+	bh=rHdX88HN+kRB+mrcBKzFiWtY3i+zZqPwX/z5ULoXofc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V7FK7iCBZYzHIG9RKBQmhv+bcNaQ89q2Is6f3FVDZOXSBVnewi2ZS4S2ELz+0Q66a
-	 HiuhXTkerM0EQvowLcwjioFYGCWZJ1UYN8i60leLMbt7mQfQyYEGTtT2IPPr+Fo11F
-	 06lJduKcEMC3NY5c9OF43OjkHm/4qx9FTmgir2qw=
+	b=kg3LrsFdQedJRcXksv/hbKSa5tVKij6mdWkA+AFGw8RoADcXJy3genPblgOP9LscR
+	 dTU50KMmCaZ+Zkh0LVqSxQ0OEoStDn2gybspwclUsPwk8KOWp5dwUTlGB4IpXvZN+X
+	 9aKJtxcAOTh3EhITGuswYWJKZadoC33gi4r1uRN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com,
-	"Bai, Shuangpeng" <sjb7183@psu.edu>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 008/317] nilfs2: fix potential hang in nilfs_detach_log_writer()
-Date: Thu, 13 Jun 2024 13:30:26 +0200
-Message-ID: <20240613113247.859425020@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 009/317] ALSA: core: Fix NULL module pointer assignment at card init
+Date: Thu, 13 Jun 2024 13:30:27 +0200
+Message-ID: <20240613113247.898100696@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -52,110 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit eb85dace897c5986bc2f36b3c783c6abb8a4292e upstream.
+commit 39381fe7394e5eafac76e7e9367e7351138a29c1 upstream.
 
-Syzbot has reported a potential hang in nilfs_detach_log_writer() called
-during nilfs2 unmount.
+The commit 81033c6b584b ("ALSA: core: Warn on empty module")
+introduced a WARN_ON() for a NULL module pointer passed at snd_card
+object creation, and it also wraps the code around it with '#ifdef
+MODULE'.  This works in most cases, but the devils are always in
+details.  "MODULE" is defined when the target code (i.e. the sound
+core) is built as a module; but this doesn't mean that the caller is
+also built-in or not.  Namely, when only the sound core is built-in
+(CONFIG_SND=y) while the driver is a module (CONFIG_SND_USB_AUDIO=m),
+the passed module pointer is ignored even if it's non-NULL, and
+card->module remains as NULL.  This would result in the missing module
+reference up/down at the device open/close, leading to a race with the
+code execution after the module removal.
 
-Analysis revealed that this is because nilfs_segctor_sync(), which
-synchronizes with the log writer thread, can be called after
-nilfs_segctor_destroy() terminates that thread, as shown in the call trace
-below:
+For addressing the bug, move the assignment of card->module again out
+of ifdef.  The WARN_ON() is still wrapped with ifdef because the
+module can be really NULL when all sound drivers are built-in.
 
-nilfs_detach_log_writer
-  nilfs_segctor_destroy
-    nilfs_segctor_kill_thread  --> Shut down log writer thread
-    flush_work
-      nilfs_iput_work_func
-        nilfs_dispose_list
-          iput
-            nilfs_evict_inode
-              nilfs_transaction_commit
-                nilfs_construct_segment (if inode needs sync)
-                  nilfs_segctor_sync  --> Attempt to synchronize with
-                                          log writer thread
-                           *** DEADLOCK ***
+Note that we keep 'ifdef MODULE' for WARN_ON(), otherwise it would
+lead to a false-positive NULL module check.  Admittedly it won't catch
+perfectly, i.e. no check is performed when CONFIG_SND=y.  But, it's no
+real problem as it's only for debugging, and the condition is pretty
+rare.
 
-Fix this issue by changing nilfs_segctor_sync() so that the log writer
-thread returns normally without synchronizing after it terminates, and by
-forcing tasks that are already waiting to complete once after the thread
-terminates.
-
-The skipped inode metadata flushout will then be processed together in the
-subsequent cleanup work in nilfs_segctor_destroy().
-
-Link: https://lkml.kernel.org/r/20240520132621.4054-4-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+e3973c409251e136fdd0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e3973c409251e136fdd0
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Fixes: 81033c6b584b ("ALSA: core: Warn on empty module")
+Reported-by: Xu Yang <xu.yang_2@nxp.com>
+Closes: https://lore.kernel.org/r/20240520170349.2417900-1-xu.yang_2@nxp.com
 Cc: <stable@vger.kernel.org>
-Cc: "Bai, Shuangpeng" <sjb7183@psu.edu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Tested-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20240522070442.17786-1-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ sound/core/init.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2234,6 +2234,14 @@ static int nilfs_segctor_sync(struct nil
- 	for (;;) {
- 		set_current_state(TASK_INTERRUPTIBLE);
- 
-+		/*
-+		 * Synchronize only while the log writer thread is alive.
-+		 * Leave flushing out after the log writer thread exits to
-+		 * the cleanup work in nilfs_segctor_destroy().
-+		 */
-+		if (!sci->sc_task)
-+			break;
-+
- 		if (atomic_read(&wait_req.done)) {
- 			err = wait_req.err;
- 			break;
-@@ -2249,7 +2257,7 @@ static int nilfs_segctor_sync(struct nil
- 	return err;
- }
- 
--static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err)
-+static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
- {
- 	struct nilfs_segctor_wait_request *wrq, *n;
- 	unsigned long flags;
-@@ -2257,7 +2265,7 @@ static void nilfs_segctor_wakeup(struct
- 	spin_lock_irqsave(&sci->sc_wait_request.lock, flags);
- 	list_for_each_entry_safe(wrq, n, &sci->sc_wait_request.head, wq.entry) {
- 		if (!atomic_read(&wrq->done) &&
--		    nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq)) {
-+		    (force || nilfs_cnt32_ge(sci->sc_seq_done, wrq->seq))) {
- 			wrq->err = err;
- 			atomic_set(&wrq->done, 1);
- 		}
-@@ -2397,7 +2405,7 @@ static void nilfs_segctor_notify(struct
- 	if (mode == SC_LSEG_SR) {
- 		sci->sc_state &= ~NILFS_SEGCTOR_COMMIT;
- 		sci->sc_seq_done = sci->sc_seq_accepted;
--		nilfs_segctor_wakeup(sci, err);
-+		nilfs_segctor_wakeup(sci, err, false);
- 		sci->sc_flush_request = 0;
- 	} else {
- 		if (mode == SC_FLUSH_FILE)
-@@ -2779,6 +2787,13 @@ static void nilfs_segctor_destroy(struct
- 		|| sci->sc_seq_request != sci->sc_seq_done);
- 	spin_unlock(&sci->sc_state_lock);
- 
-+	/*
-+	 * Forcibly wake up tasks waiting in nilfs_segctor_sync(), which can
-+	 * be called from delayed iput() via nilfs_evict_inode() and can race
-+	 * with the above log writer thread termination.
-+	 */
-+	nilfs_segctor_wakeup(sci, 0, true);
-+
- 	if (flush_work(&sci->sc_iput_work))
- 		flag = true;
- 
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -206,8 +206,8 @@ int snd_card_new(struct device *parent,
+ 	card->number = idx;
+ #ifdef MODULE
+ 	WARN_ON(!module);
+-	card->module = module;
+ #endif
++	card->module = module;
+ 	INIT_LIST_HEAD(&card->devices);
+ 	init_rwsem(&card->controls_rwsem);
+ 	rwlock_init(&card->ctl_files_rwlock);
 
 
