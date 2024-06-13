@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DB73209;
-	Thu, 13 Jun 2024 12:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD0A13C69C;
+	Thu, 13 Jun 2024 12:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281651; cv=none; b=Mjib+JJmsm1FXfD/R9RnIeqm8Mp8KYFD++2135to+/sojOOgIX2RJizWDts+WGr6yLtWtsss/V95bJYOwWCiMcapheLh1hushKUgn8D9FiagSXPD9hDRYIzRIi9DUGhrayKUU3jvdpSplvbjtxm2Qt6Wu1QMUGq1b4L0Ir8o6NU=
+	t=1718281654; cv=none; b=WZxsp4nd6/yGDVgiorNfR7q8HUYBv0jGDm24QlwMy2BcjM9vZyfQJxzkD+IKpsNo8UFQtQCdpB+c+IFQvkr42fQDka1ZhD4QvxgdtguSrw3xJAPXcYJvkg1qP9JG78ml/MXQDu528DdAcMmeJbcUmRqp8m7U7IDhUZBqlptc+ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281651; c=relaxed/simple;
-	bh=NlrDlp3gWBiRjkzdRFXWJ6hy/2a+PFdY77ENq2b7sk4=;
+	s=arc-20240116; t=1718281654; c=relaxed/simple;
+	bh=J642IvyFLkKCtBFeBUIybLBw/a7GuhXClXFco1kb2eY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ijV0fwTDRBjxCFq75R/o/cOxvz2LTNPhKBlz4ohfYX0tMp+ZXOVzIjC3KZbS6rcU78xQUTZAOsWgU6EItLCRaaGl29jqfdYyJrkdGUY7/Q0bAq0O+ALEggQlo8WTFWNKUs/7mvxv9usm2kwHcflsqpTZ+Y/ZlHRQF2bgHsDM640=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yf9eNOtW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Co74q++tWRkTta6+dM0bSyLIn4GRcrFjeJH89oDXUGvJHqBasJ2vLsTs+yKTFcs0kH5oHIDTpSlA35+S71T12Vhh7BqigpXcsKo4DPsasF8eMLp5/6pbfr7+hS2m9xhMV1O+UBH5L0pi4pONWrdwWEiNGzO7A0cdy4UgyPnvyME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmjxc9Ta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yf9eNOtW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4E1C2BBFC;
-	Thu, 13 Jun 2024 12:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmjxc9Ta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59125C32786;
+	Thu, 13 Jun 2024 12:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281650;
-	bh=NlrDlp3gWBiRjkzdRFXWJ6hy/2a+PFdY77ENq2b7sk4=;
+	s=korg; t=1718281653;
+	bh=J642IvyFLkKCtBFeBUIybLBw/a7GuhXClXFco1kb2eY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yf9eNOtWnnVnG3Np9TQUNTpyiwrwQ0CYDbHnP+JGR6j+IcOXUqHFpzvoqUBX/inRV
-	 Q2pe7HQhVMGrgc6Sg4mDwYmR3mTSI/Pvk0XZW1H4EBHhKRxUyQkgELrJCDaKUPQtJp
-	 mpWtRNtumVdG6NsXKVRW1OIo7MExXFZQGrhaFSwk=
+	b=hmjxc9TadIiBJ2KiYCQP4gemY7JkNjvTjB56PAb76qSsSc9W9nk2zwcl852tb/0nO
+	 4vBV6LyMxFM7muVTCvW7jDFAsCmWreQn69dLOnarhedVb7Kw/Ltsz5LjO/vtoxziSj
+	 uJZpy7LTncFyT5wHGKjx+5RhZvSwFUTib/hdnS6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@toblux.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 010/402] net: smc91x: Fix m68k kernel compilation for ColdFire CPU
-Date: Thu, 13 Jun 2024 13:29:27 +0200
-Message-ID: <20240613113302.538948804@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	"Bai, Shuangpeng" <sjb7183@psu.edu>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 011/402] nilfs2: fix unexpected freezing of nilfs_segctor_sync()
+Date: Thu, 13 Jun 2024 13:29:28 +0200
+Message-ID: <20240613113302.577474701@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -45,62 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@toblux.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 5eefb477d21a26183bc3499aeefa991198315a2d upstream.
+commit 936184eadd82906992ff1f5ab3aada70cce44cee upstream.
 
-Compiling the m68k kernel with support for the ColdFire CPU family fails
-with the following error:
+A potential and reproducible race issue has been identified where
+nilfs_segctor_sync() would block even after the log writer thread writes a
+checkpoint, unless there is an interrupt or other trigger to resume log
+writing.
 
-In file included from drivers/net/ethernet/smsc/smc91x.c:80:
-drivers/net/ethernet/smsc/smc91x.c: In function ‘smc_reset’:
-drivers/net/ethernet/smsc/smc91x.h:160:40: error: implicit declaration of function ‘_swapw’; did you mean ‘swap’? [-Werror=implicit-function-declaration]
-  160 | #define SMC_outw(lp, v, a, r)   writew(_swapw(v), (a) + (r))
-      |                                        ^~~~~~
-drivers/net/ethernet/smsc/smc91x.h:904:25: note: in expansion of macro ‘SMC_outw’
-  904 |                         SMC_outw(lp, x, ioaddr, BANK_SELECT);           \
-      |                         ^~~~~~~~
-drivers/net/ethernet/smsc/smc91x.c:250:9: note: in expansion of macro ‘SMC_SELECT_BANK’
-  250 |         SMC_SELECT_BANK(lp, 2);
-      |         ^~~~~~~~~~~~~~~
-cc1: some warnings being treated as errors
+This turned out to be because, depending on the execution timing of the
+log writer thread running in parallel, the log writer thread may skip
+responding to nilfs_segctor_sync(), which causes a call to schedule()
+waiting for completion within nilfs_segctor_sync() to lose the opportunity
+to wake up.
 
-The function _swapw() was removed in commit d97cf70af097 ("m68k: use
-asm-generic/io.h for non-MMU io access functions"), but is still used in
-drivers/net/ethernet/smsc/smc91x.h.
+The reason why waking up the task waiting in nilfs_segctor_sync() may be
+skipped is that updating the request generation issued using a shared
+sequence counter and adding an wait queue entry to the request wait queue
+to the log writer, are not done atomically.  There is a possibility that
+log writing and request completion notification by nilfs_segctor_wakeup()
+may occur between the two operations, and in that case, the wait queue
+entry is not yet visible to nilfs_segctor_wakeup() and the wake-up of
+nilfs_segctor_sync() will be carried over until the next request occurs.
 
-Use ioread16be() and iowrite16be() to resolve the error.
+Fix this issue by performing these two operations simultaneously within
+the lock section of sc_state_lock.  Also, following the memory barrier
+guidelines for event waiting loops, move the call to set_current_state()
+in the same location into the event waiting loop to ensure that a memory
+barrier is inserted just before the event condition determination.
 
-Cc: stable@vger.kernel.org
-Fixes: d97cf70af097 ("m68k: use asm-generic/io.h for non-MMU io access functions")
-Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240510113054.186648-2-thorsten.blum@toblux.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20240520132621.4054-3-konishi.ryusuke@gmail.com
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Cc: "Bai, Shuangpeng" <sjb7183@psu.edu>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/smsc/smc91x.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nilfs2/segment.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/smsc/smc91x.h
-+++ b/drivers/net/ethernet/smsc/smc91x.h
-@@ -175,8 +175,8 @@ static inline void mcf_outsw(void *a, un
- 		writew(*wp++, a);
- }
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2207,19 +2207,28 @@ static int nilfs_segctor_sync(struct nil
+ 	struct nilfs_segctor_wait_request wait_req;
+ 	int err = 0;
  
--#define SMC_inw(a, r)		_swapw(readw((a) + (r)))
--#define SMC_outw(lp, v, a, r)	writew(_swapw(v), (a) + (r))
-+#define SMC_inw(a, r)		ioread16be((a) + (r))
-+#define SMC_outw(lp, v, a, r)	iowrite16be(v, (a) + (r))
- #define SMC_insw(a, r, p, l)	mcf_insw(a + r, p, l)
- #define SMC_outsw(a, r, p, l)	mcf_outsw(a + r, p, l)
+-	spin_lock(&sci->sc_state_lock);
+ 	init_wait(&wait_req.wq);
+ 	wait_req.err = 0;
+ 	atomic_set(&wait_req.done, 0);
++	init_waitqueue_entry(&wait_req.wq, current);
++
++	/*
++	 * To prevent a race issue where completion notifications from the
++	 * log writer thread are missed, increment the request sequence count
++	 * "sc_seq_request" and insert a wait queue entry using the current
++	 * sequence number into the "sc_wait_request" queue at the same time
++	 * within the lock section of "sc_state_lock".
++	 */
++	spin_lock(&sci->sc_state_lock);
+ 	wait_req.seq = ++sci->sc_seq_request;
++	add_wait_queue(&sci->sc_wait_request, &wait_req.wq);
+ 	spin_unlock(&sci->sc_state_lock);
  
+-	init_waitqueue_entry(&wait_req.wq, current);
+-	add_wait_queue(&sci->sc_wait_request, &wait_req.wq);
+-	set_current_state(TASK_INTERRUPTIBLE);
+ 	wake_up(&sci->sc_wait_daemon);
+ 
+ 	for (;;) {
++		set_current_state(TASK_INTERRUPTIBLE);
++
+ 		if (atomic_read(&wait_req.done)) {
+ 			err = wait_req.err;
+ 			break;
 
 
