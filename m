@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFAE1EEF8;
-	Thu, 13 Jun 2024 12:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9562E20ED;
+	Thu, 13 Jun 2024 12:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282221; cv=none; b=XKQPaUkV7WRewJmsiW1BtCf4WMOK9htjzWqhYN1GVWoW/JT2E+V/wx0hVa1D5+Yi1c+EXTEmQFgiXFGuN+nZfweZAgsgHUqDfrVe8dI3x8VfuLoD7Pipyn3pVvKLTwHZ6DMypbpSjJH9s4OkBpLsZTeOTpYrlRlYyYvuvIrqdUk=
+	t=1718282223; cv=none; b=KXmdc6cj+zl1YCV3QBKhp3OxOAYCcQKe/H9g/fXZhYQqz7zvghcnIQAGJy8IIIiibCE9HYdwdqMDDdqN1Ep2cHrveKVsI0CtA8L4TAWVKQD8m0AbxWIV9j8unOW/NWuMSwzjZ6dVW7Y0cGpa1rD4YztPfQJayKpfGiZqrr9/ShQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282221; c=relaxed/simple;
-	bh=4aDKwESArYrT+rzHDXYtRCWjfwdKNl7re+KuaVxHu9c=;
+	s=arc-20240116; t=1718282223; c=relaxed/simple;
+	bh=VQXKN1H3oNnZdshvUe4yFUf4EGsnUr4k/wFV3W9g7Zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TjKMHuXO1UdxllhhrtsaANMPVgGyyYSxtg2mR5EzSPrTQK9RGQm+bFzJFyIZ4HtRLpsi0VWbY+PeD5Acf2VdHU34LQKuwVkJkYGthg4O3hsn5B3Ty9KCttmKaeQdoSZM+29VK6TDY2CJge1kXKTnQBAZ8IPiOcWBySdXpsMPU00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+arEH4L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQ/A0WLA8KRQmEEZGQAyQWVKc/QKC44QvamUg80BA1schJsnNdO4WVISk4kGm8qYW1q/xDQ/HSDzpQ4N2QqnqgYSB4Puqb0kL5AtNYapHnf4iS685Ds5mNYCA1zloQS8Fj/BJGtneTJpihRAXRbKKqJuePHdJN9YCtSkrLkbW8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgxE1jKW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+arEH4L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3D7C2BBFC;
-	Thu, 13 Jun 2024 12:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgxE1jKW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199D3C2BBFC;
+	Thu, 13 Jun 2024 12:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282220;
-	bh=4aDKwESArYrT+rzHDXYtRCWjfwdKNl7re+KuaVxHu9c=;
+	s=korg; t=1718282223;
+	bh=VQXKN1H3oNnZdshvUe4yFUf4EGsnUr4k/wFV3W9g7Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T+arEH4L+uxA1C/qNnAly0yqvV4e3ac0O+awKZvWFZk8Bj/lJZqlhfQMP26D+ZPKp
-	 c9CoeFGXiql3UBUHl3KRrbw44cN/X6WZ+0RxLlCZzUqrtbUrpuNJ896w+fLEpgpQbB
-	 2LAZ+ZyfwZiEZoSFWTeyQeqJEBKEW/AOY9cGfIlQ=
+	b=BgxE1jKWdGxnw+DQDR6sxfO47vyFH1XmxjCUpVuBpJUf+ZGuZJ7zHxg1ow5IKtYwl
+	 BC0/aEB8Cc4unJ4UNruW4q1OtR2i2Gay+pTgnW7cCdVYCD+b/U0Dpm//WfQq4ZGWS/
+	 Rr3Yo1dbx4TViw+v0paqfg3PtFezxdlUcaxO6FSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Haemmerle <thomas.haemmerle@leica-geosystems.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Yabin Cui <yabinc@google.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 203/402] iio: pressure: dps310: support negative temperature values
-Date: Thu, 13 Jun 2024 13:32:40 +0200
-Message-ID: <20240613113310.066606754@linuxfoundation.org>
+Subject: [PATCH 5.15 204/402] coresight: etm4x: Do not hardcode IOMEM access for register restore
+Date: Thu, 13 Jun 2024 13:32:41 +0200
+Message-ID: <20240613113310.104297229@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,65 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Haemmerle <thomas.haemmerle@leica-geosystems.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-[ Upstream commit 9dd6b32e76ff714308964cd9ec91466a343dcb8b ]
+[ Upstream commit 1e7ba33fa591de1cf60afffcabb45600b3607025 ]
 
-The current implementation interprets negative values returned from
-`dps310_calculate_temp` as error codes.
-This has a side effect that when negative temperature values are
-calculated, they are interpreted as error.
+When we restore the register state for ETM4x, while coming back
+from CPU idle, we hardcode IOMEM access. This is wrong and could
+blow up for an ETM with system instructions access (and for ETE).
 
-Fix this by using the return value only for error handling and passing a
-pointer for the value.
-
-Fixes: ba6ec48e76bc ("iio: Add driver for Infineon DPS310")
-Signed-off-by: Thomas Haemmerle <thomas.haemmerle@leica-geosystems.com>
-Link: https://lore.kernel.org/r/20240415105030.1161770-2-thomas.haemmerle@leica-geosystems.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: f5bd523690d2 ("coresight: etm4x: Convert all register accesses")
+Reported-by: Yabin Cui <yabinc@google.com>
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Tested-by: Yabin Cui <yabinc@google.com>
+Link: https://lore.kernel.org/r/20240412142702.2882478-2-suzuki.poulose@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/dps310.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/pressure/dps310.c b/drivers/iio/pressure/dps310.c
-index 1b6b9530f1662..7fdc7a0147f0e 100644
---- a/drivers/iio/pressure/dps310.c
-+++ b/drivers/iio/pressure/dps310.c
-@@ -730,7 +730,7 @@ static int dps310_read_pressure(struct dps310_data *data, int *val, int *val2,
- 	}
- }
- 
--static int dps310_calculate_temp(struct dps310_data *data)
-+static int dps310_calculate_temp(struct dps310_data *data, int *val)
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 3f5e9400222e7..07f1c0ff89961 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -1697,8 +1697,10 @@ static void etm4_cpu_restore(struct etmv4_drvdata *drvdata)
  {
- 	s64 c0;
- 	s64 t;
-@@ -746,7 +746,9 @@ static int dps310_calculate_temp(struct dps310_data *data)
- 	t = c0 + ((s64)data->temp_raw * (s64)data->c1);
- 
- 	/* Convert to milliCelsius and scale the temperature */
--	return (int)div_s64(t * 1000LL, kt);
-+	*val = (int)div_s64(t * 1000LL, kt);
+ 	int i;
+ 	struct etmv4_save_state *state = drvdata->save_state;
+-	struct csdev_access tmp_csa = CSDEV_ACCESS_IOMEM(drvdata->base);
+-	struct csdev_access *csa = &tmp_csa;
++	struct csdev_access *csa = &drvdata->csdev->access;
 +
-+	return 0;
- }
++	if (WARN_ON(!drvdata->csdev))
++		return;
  
- static int dps310_read_temp(struct dps310_data *data, int *val, int *val2,
-@@ -768,11 +770,10 @@ static int dps310_read_temp(struct dps310_data *data, int *val, int *val2,
- 		if (rc)
- 			return rc;
- 
--		rc = dps310_calculate_temp(data);
--		if (rc < 0)
-+		rc = dps310_calculate_temp(data, val);
-+		if (rc)
- 			return rc;
- 
--		*val = rc;
- 		return IIO_VAL_INT;
- 
- 	case IIO_CHAN_INFO_OVERSAMPLING_RATIO:
+ 	etm4_cs_unlock(drvdata, csa);
+ 	etm4x_relaxed_write32(csa, state->trcclaimset, TRCCLAIMSET);
 -- 
 2.43.0
 
