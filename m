@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C237C81ABF;
-	Thu, 13 Jun 2024 12:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B75143C50;
+	Thu, 13 Jun 2024 12:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280726; cv=none; b=gqYCtAKh/pXO2EItJaB8XYSJz1TImErZgUdRSs/XrUR+uUy8Xlcd8xaV+KvCcq2YDPpHEbFxg+DLV0q/ZppqFMjHKVWGycfLCMt/ulEPAkgV96fT595TGx0lnhHgaoQhHhIkEvGZOgpF/Hgkt74XRPTE3SjYa6GZXC8L0M2QyZ8=
+	t=1718280730; cv=none; b=BnB5dcdHERXYi29mh2ci/7vscH7ND4K8o2e815n3HrkzzSN8hiHG0GFV88+Re3awNStMJ7gFjpKqh/W2tEw47bMR8TAJGdxq158k2wYweQHOpatrZ5cxzwGSjlfHtQ3c4EFfp0DqzvHN3PvxMVmTe8zpYum9NlZSldSzelUHnaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280726; c=relaxed/simple;
-	bh=vMFvwmWDdoTj9elLoaSNj/m9pDqVP+qaqkas6m1Kffs=;
+	s=arc-20240116; t=1718280730; c=relaxed/simple;
+	bh=e/nuxvRQH3Dy8k3v7Cshp0yG8Ta1dFaSTD/Mj3deuWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DUkEIVIUheErgcj4RK4C7ZlZnllHY/K2qf3F8wSQy45eDQIQaVfX4XuZRS434zN+ABL3UliLRYjEgCs6IxcU5zdh3LNcxHfLJoXUkkpinZaidesyHxva7mZD2AmqQfwu/fz3dkJI6TxF+a4iV4jxCkK3XUpzHJ+cCZeT2zw2MD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZEVrHbm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tp4tOWOYTeetuETA3+m6tqnjCQm/Gk7NcexQPJoVSAf2uVJVnmUb8+DCNRu0UrycE73MJVfmpky/Pv5KInO6vJ6lN/TIYjE0uaPp+Naa3ES2IsXkXRL5NFcYxSvuXsa8AcXdcEH9zyHiyr+XlZEs87gS3qS6lwglUF8SLlMHvro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bErQfEKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZEVrHbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACABC2BBFC;
-	Thu, 13 Jun 2024 12:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bErQfEKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC3BC2BBFC;
+	Thu, 13 Jun 2024 12:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280726;
-	bh=vMFvwmWDdoTj9elLoaSNj/m9pDqVP+qaqkas6m1Kffs=;
+	s=korg; t=1718280729;
+	bh=e/nuxvRQH3Dy8k3v7Cshp0yG8Ta1dFaSTD/Mj3deuWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZEVrHbmswyP27bRiQWIxejQGxbfNVt71PcIwaqcA/Rqd355N9VFruh4CQs+xOz0/
-	 0EhGY7iZx0lIdPMywpeDEXRlxtgLNld1FF7ZlCOcwIXV4rZNiAdc1BSJiGfMRrP3hu
-	 pqRleGpOMyGakg+NDGhBr8HGtXkX/94rStg+t428=
+	b=bErQfEKYrGMS0wY/IoKlFuIXRQLMu0ZLCznBYi/Q/4oL64wJt1ZIhJHWrNg4Wi+wZ
+	 qAytpzTpg33M84597D//iTTBcyZDnrEaoRqII1Rm0Qmlo58qtYRa3eWb86VGGWjBmg
+	 IPyBwHTkvmiyheIubbzY1n+Kx2itRmupq0kJ34k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Fang <derek.fang@realtek.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/317] ASoC: dt-bindings: rt5645: add cbj sleeve gpio property
-Date: Thu, 13 Jun 2024 13:30:32 +0200
-Message-ID: <20240613113248.092073238@linuxfoundation.org>
+Subject: [PATCH 5.10 015/317] regulator: vqmmc-ipq4019: fix module autoloading
+Date: Thu, 13 Jun 2024 13:30:33 +0200
+Message-ID: <20240613113248.131333071@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,46 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Derek Fang <derek.fang@realtek.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 
-[ Upstream commit 306b38e3fa727d22454a148a364123709e356600 ]
+[ Upstream commit 68adb581a39ae63a0ed082c47f01fbbe515efa0e ]
 
-Add an optional gpio property to control external CBJ circuits
-to avoid some electric noise caused by sleeve/ring2 contacts floating.
+Add MODULE_DEVICE_TABLE(), so the module could be properly autoloaded
+based on the alias from of_device_id table.
 
-Signed-off-by: Derek Fang <derek.fang@realtek.com>
-
-Link: https://msgid.link/r/20240408091057.14165-2-derek.fang@realtek.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://msgid.link/r/20240410172615.255424-2-krzk@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/sound/rt5645.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/regulator/vqmmc-ipq4019-regulator.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/sound/rt5645.txt b/Documentation/devicetree/bindings/sound/rt5645.txt
-index 41a62fd2ae1ff..c1fa379f5f3ea 100644
---- a/Documentation/devicetree/bindings/sound/rt5645.txt
-+++ b/Documentation/devicetree/bindings/sound/rt5645.txt
-@@ -20,6 +20,11 @@ Optional properties:
-   a GPIO spec for the external headphone detect pin. If jd-mode = 0,
-   we will get the JD status by getting the value of hp-detect-gpios.
+diff --git a/drivers/regulator/vqmmc-ipq4019-regulator.c b/drivers/regulator/vqmmc-ipq4019-regulator.c
+index 6d5ae25d08d1e..e2a28788d8a22 100644
+--- a/drivers/regulator/vqmmc-ipq4019-regulator.c
++++ b/drivers/regulator/vqmmc-ipq4019-regulator.c
+@@ -86,6 +86,7 @@ static const struct of_device_id regulator_ipq4019_of_match[] = {
+ 	{ .compatible = "qcom,vqmmc-ipq4019-regulator", },
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, regulator_ipq4019_of_match);
  
-+- cbj-sleeve-gpios:
-+  a GPIO spec to control the external combo jack circuit to tie the sleeve/ring2
-+  contacts to the ground or floating. It could avoid some electric noise from the
-+  active speaker jacks.
-+
- - realtek,in2-differential
-   Boolean. Indicate MIC2 input are differential, rather than single-ended.
- 
-@@ -68,6 +73,7 @@ codec: rt5650@1a {
- 	compatible = "realtek,rt5650";
- 	reg = <0x1a>;
- 	hp-detect-gpios = <&gpio 19 0>;
-+	cbj-sleeve-gpios = <&gpio 20 0>;
- 	interrupt-parent = <&gpio>;
- 	interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
- 	realtek,dmic-en = "true";
+ static struct platform_driver ipq4019_regulator_driver = {
+ 	.probe = ipq4019_regulator_probe,
 -- 
 2.43.0
 
