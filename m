@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F0114533A;
-	Thu, 13 Jun 2024 12:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B011414533A;
+	Thu, 13 Jun 2024 12:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281007; cv=none; b=qrqKh7Ru+Xi/0uvR7CO0L8vt9qymDsAMIy+MRmyikNwhNzpGbPgauGDt6cUC43rmgewOxY/Un5BxvBha+7K0dKATGXvPAMpWQU98/3Un3PqC5KttQ+BqvUPOCAAoT+kDDAw2SJVkhhjBAb1FEwToWVFq6/CSlT7r7A0v4Pp+26c=
+	t=1718281009; cv=none; b=cA45nJpyVl4/sVTcNoNLjyTg0Lr8ONV+TQltpqocX+765m5jw5PDLVT4Q140o4QbX1Jf0kn+VNxOP+BPsGQ1Em4uFzsBU8tgnb8Tf3r3hM7FS37rUoGx+abxMGXfGVl/7/hH1NjdSi32vrrjFwRlG9N6T22iaDCH4mPqGKWEurg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281007; c=relaxed/simple;
-	bh=C+4CAtPcMUEQhudMFq3PkGiYNdE7v6Ot39v1jNhu6bE=;
+	s=arc-20240116; t=1718281009; c=relaxed/simple;
+	bh=tIUNik9dWiD8zd4+Fpia6KU4ItvI2ybhospzXOZKgTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzsiYhqwM2njsqm7npdbM7zozzE7HPFsOr1PEGdjeBZnUdBXGKRHqtHnK4qigL53idmHU0Thb06ClHZm2OXbFbBYEgrgWR5c+InxpWxTTExR9gpddgOm4dEIl2Gb2gNlsw6teiVdQ02FIffMQ8ucOdpvJcy/w+e8nHFeCsp3k8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LocBVme2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LSSDskyT85vaM5WsOnYJm/962K2rPrHkYvf0KpS3XDgxV7TYNZqyy1lT4SGi3UhzYdMk1ebgLSnGikUO6DEiQbzSLdsjY+WQqO0GxJ5IsmmBduXfTlQyE4zo6ghI2/BPvqoBAcG4dIeod5P/4IwbfRcAvjtVSBEIIIcpEEyqr08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KRqqOsY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LocBVme2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DB4C2BBFC;
-	Thu, 13 Jun 2024 12:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KRqqOsY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F16C32786;
+	Thu, 13 Jun 2024 12:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281006;
-	bh=C+4CAtPcMUEQhudMFq3PkGiYNdE7v6Ot39v1jNhu6bE=;
+	s=korg; t=1718281009;
+	bh=tIUNik9dWiD8zd4+Fpia6KU4ItvI2ybhospzXOZKgTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LocBVme2BWGHEWNvS1f4kgYdlNtffnJfKDLtg57A81toFW+aZVkfeD+xad4sh6bzh
-	 0DCX7RQijt0kKugmSxpErovn9Xvj3fTE6nsnZPrsGUtsczgI8r5yr7ff3KLhHy/ETH
-	 0xnK/uwTVZTUr/xET6+voAGIoPtcPPqcnGDpwdro=
+	b=1KRqqOsYJa/AeSBTuBA58j5w7GezKbANeQ927I6zErihzIV8SZ0hFDpM0FjkvnA+B
+	 LhpjRpaJtB7YvmdQqR+lUUmJKs1avo9QJeMattZmxVXZpXB5GGRdYv75OXu2VPzUDT
+	 hebffJkvvhZfs862MvJHUKhrVUA+TbGnYh54Kgwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/317] drm/panel: simple: Add missing Innolux G121X1-L03 format, flags, connector
-Date: Thu, 13 Jun 2024 13:32:07 +0200
-Message-ID: <20240613113251.767744396@linuxfoundation.org>
+Subject: [PATCH 5.10 110/317] drm/mipi-dsi: use correct return type for the DSC functions
+Date: Thu, 13 Jun 2024 13:32:08 +0200
+Message-ID: <20240613113251.805565748@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113247.525431100@linuxfoundation.org>
 References: <20240613113247.525431100@linuxfoundation.org>
@@ -51,47 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 11ac72d033b9f577e8ba0c7a41d1c312bb232593 ]
+[ Upstream commit de1c705c50326acaceaf1f02bc5bf6f267c572bd ]
 
-The .bpc = 6 implies .bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG ,
-add the missing bus_format. Add missing connector type and bus_flags
-as well.
+The functions mipi_dsi_compression_mode() and
+mipi_dsi_picture_parameter_set() return 0-or-error rather than a buffer
+size. Follow example of other similar MIPI DSI functions and use int
+return type instead of size_t.
 
-Documentation [1] 1.4 GENERAL SPECIFICATI0NS indicates this panel is
-capable of both RGB 18bit/24bit panel, the current configuration uses
-18bit mode, .bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG , .bpc = 6.
-
-Support for the 24bit mode would require another entry in panel-simple
-with .bus_format = MEDIA_BUS_FMT_RGB666_1X7X4_SPWG and .bpc = 8, which
-is out of scope of this fix.
-
-[1] https://www.distec.de/fileadmin/pdf/produkte/TFT-Displays/Innolux/G121X1-L03_Datasheet.pdf
-
-Fixes: f8fa17ba812b ("drm/panel: simple: Add support for Innolux G121X1-L03")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Acked-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240328102746.17868-2-marex@denx.de
+Fixes: f4dea1aaa9a1 ("drm/dsi: add helpers for DSI compression mode and PPS packets")
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240408-lg-sw43408-panel-v5-2-4e092da22991@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/drm_mipi_dsi.c | 6 +++---
+ include/drm/drm_mipi_dsi.h     | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 51470020ba61d..7797aad592a19 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -2235,6 +2235,9 @@ static const struct panel_desc innolux_g121x1_l03 = {
- 		.unprepare = 200,
- 		.disable = 400,
- 	},
-+	.bus_format = MEDIA_BUS_FMT_RGB666_1X7X3_SPWG,
-+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
-+	.connector_type = DRM_MODE_CONNECTOR_LVDS,
- };
+diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+index 83918ac1f6086..1e9842aac4dc9 100644
+--- a/drivers/gpu/drm/drm_mipi_dsi.c
++++ b/drivers/gpu/drm/drm_mipi_dsi.c
+@@ -572,7 +572,7 @@ EXPORT_SYMBOL(mipi_dsi_set_maximum_return_packet_size);
+  *
+  * Return: 0 on success or a negative error code on failure.
+  */
+-ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
++int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable)
+ {
+ 	/* Note: Needs updating for non-default PPS or algorithm */
+ 	u8 tx[2] = { enable << 0, 0 };
+@@ -597,8 +597,8 @@ EXPORT_SYMBOL(mipi_dsi_compression_mode);
+  *
+  * Return: 0 on success or a negative error code on failure.
+  */
+-ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+-				       const struct drm_dsc_picture_parameter_set *pps)
++int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
++				   const struct drm_dsc_picture_parameter_set *pps)
+ {
+ 	struct mipi_dsi_msg msg = {
+ 		.channel = dsi->channel,
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index 3c0d1495c062d..0dbed65c0ca5a 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -231,9 +231,9 @@ int mipi_dsi_shutdown_peripheral(struct mipi_dsi_device *dsi);
+ int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
+ int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+ 					    u16 value);
+-ssize_t mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
+-ssize_t mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
+-				       const struct drm_dsc_picture_parameter_set *pps);
++int mipi_dsi_compression_mode(struct mipi_dsi_device *dsi, bool enable);
++int mipi_dsi_picture_parameter_set(struct mipi_dsi_device *dsi,
++				   const struct drm_dsc_picture_parameter_set *pps);
  
- /*
+ ssize_t mipi_dsi_generic_write(struct mipi_dsi_device *dsi, const void *payload,
+ 			       size_t size);
 -- 
 2.43.0
 
