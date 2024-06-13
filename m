@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E23143C7E;
-	Thu, 13 Jun 2024 11:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6074C143C6B;
+	Thu, 13 Jun 2024 11:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279844; cv=none; b=TJVuUD8PNTlphN/2eVe/pRLF7fc1RidJYdnuBJZ+XmXne8PpoFz/6iN+k9Ks37NlM5Uy/n3JM4s3Z1NpZPio+y6IvjNCBuiIfq/9LIjPqfD8BfjpK12kVgTYon4tQ6oyq1M4gpOZ5BWjZ0D1x8mAfF2MCiJ8ph9by/9nkaVkTfo=
+	t=1718279847; cv=none; b=KavdE6L/L5lePgPzTSur9W0/jaZDkhIX7H/c306jl3oNiM+QkXE+9HBKBciTgcDPPLGbUfz2o841d0nKPvSsN5I+nQH/uZGS1JUA+nefMZ/wkIGcF/Xnlp8V+7Vz5feD+RmWE5YFn1l4BeT8R8uizbkr+DBnqA1E842be0PjHxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279844; c=relaxed/simple;
-	bh=1wDhBlEWu0vIEJQZELIayosyshRi8lViiKWpQmkEPeA=;
+	s=arc-20240116; t=1718279847; c=relaxed/simple;
+	bh=+ZZfsWOX3mllky9NKYxoeqGtoEHhkwa5PILl+rMe1M8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSEvCIimTena0dkNTucoLEXvDPDGePjrAt994UGDPqLb6bNrCI5ptlk1l0SxAB86uutPlLrIPBeDVK1Acnf9u/Rjs9frH1PJWtfp/XamMtcrB7W3oFXFjHHb1hlKcdwtOXukDOVXYsxX8lr+ZipcYbvvfG4R3ybVJH8Mmfk7b/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArWpcPU9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jF/zY5vrx+eZWla7lf1xxDgMaZtR245IJQVpUdceExoJP+/yII9MSI5nuazyHD7W6Hq7wjKQdBcG4I+UESTSzz3zAPBhVVTKmsSmf0jihmeLyQKKDjEUYSR8HZhVEltQxRGmU10qVrx+oJrQGfFPnnCeBZQmjQPE8KHvCFrYRYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=se7m4tgk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArWpcPU9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDFEC2BBFC;
-	Thu, 13 Jun 2024 11:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="se7m4tgk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8D2C32786;
+	Thu, 13 Jun 2024 11:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279844;
-	bh=1wDhBlEWu0vIEJQZELIayosyshRi8lViiKWpQmkEPeA=;
+	s=korg; t=1718279847;
+	bh=+ZZfsWOX3mllky9NKYxoeqGtoEHhkwa5PILl+rMe1M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ArWpcPU99hNqxrFhwa7vn5yi3tEPfPDgG3vPQhsywygQAykMy31wfYo+zmF8DWt9q
-	 f6hCDrIJgAcirqQmQ2Yp6p99blB4gMAqhQw74aLPD98SpmnyDt8okcyC8RJf6ME6a/
-	 ahse0v8FcHr0jte5lsbAk93GcL2Osolb/ryAOPCk=
+	b=se7m4tgkL16CZ/cmdKUG4FIzjlrpcbrBsJL+w9HqqJ/Czi1yGZvzeINkTdx5478ej
+	 aVPHqLHXNQBULKv8dQ4YM3C435DLsdPWHY9v2BYA3br8GlSHkh8w+c1SVkyjuTnt0z
+	 KJIXXX8SBZY7Q6ctEF5fQKAQCkgeS+vExtKnbspg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 025/202] null_blk: Fix missing mutex_destroy() at module removal
-Date: Thu, 13 Jun 2024 13:32:03 +0200
-Message-ID: <20240613113228.740926303@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Nigel Croxon <ncroxon@redhat.com>
+Subject: [PATCH 5.4 026/202] md: fix resync softlockup when bitmap size is less than array size
+Date: Thu, 13 Jun 2024 13:32:04 +0200
+Message-ID: <20240613113228.779597670@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -51,35 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 07d1b99825f40f9c0d93e6b99d79a08d0717bac1 ]
+[ Upstream commit f0e729af2eb6bee9eb58c4df1087f14ebaefe26b ]
 
-When a mutex lock is not used any more, the function mutex_destroy
-should be called to mark the mutex lock uninitialized.
+Is is reported that for dm-raid10, lvextend + lvchange --syncaction will
+trigger following softlockup:
 
-Fixes: f2298c0403b0 ("null_blk: multi queue aware block test driver")
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://lore.kernel.org/r/20240425171635.4227-1-yanjun.zhu@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+kernel:watchdog: BUG: soft lockup - CPU#3 stuck for 26s! [mdX_resync:6976]
+CPU: 7 PID: 3588 Comm: mdX_resync Kdump: loaded Not tainted 6.9.0-rc4-next-20240419 #1
+RIP: 0010:_raw_spin_unlock_irq+0x13/0x30
+Call Trace:
+ <TASK>
+ md_bitmap_start_sync+0x6b/0xf0
+ raid10_sync_request+0x25c/0x1b40 [raid10]
+ md_do_sync+0x64b/0x1020
+ md_thread+0xa7/0x170
+ kthread+0xcf/0x100
+ ret_from_fork+0x30/0x50
+ ret_from_fork_asm+0x1a/0x30
+
+And the detailed process is as follows:
+
+md_do_sync
+ j = mddev->resync_min
+ while (j < max_sectors)
+  sectors = raid10_sync_request(mddev, j, &skipped)
+   if (!md_bitmap_start_sync(..., &sync_blocks))
+    // md_bitmap_start_sync set sync_blocks to 0
+    return sync_blocks + sectors_skippe;
+  // sectors = 0;
+  j += sectors;
+  // j never change
+
+Root cause is that commit 301867b1c168 ("md/raid10: check
+slab-out-of-bounds in md_bitmap_get_counter") return early from
+md_bitmap_get_counter(), without setting returned blocks.
+
+Fix this problem by always set returned blocks from
+md_bitmap_get_counter"(), as it used to be.
+
+Noted that this patch just fix the softlockup problem in kernel, the
+case that bitmap size doesn't match array size still need to be fixed.
+
+Fixes: 301867b1c168 ("md/raid10: check slab-out-of-bounds in md_bitmap_get_counter")
+Reported-and-tested-by: Nigel Croxon <ncroxon@redhat.com>
+Closes: https://lore.kernel.org/all/71ba5272-ab07-43ba-8232-d2da642acb4e@redhat.com/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240422065824.2516-1-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/md-bitmap.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/block/null_blk_main.c b/drivers/block/null_blk_main.c
-index 6cbdd8a691d2b..b6210bf0724d5 100644
---- a/drivers/block/null_blk_main.c
-+++ b/drivers/block/null_blk_main.c
-@@ -1868,6 +1868,8 @@ static void __exit null_exit(void)
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 843139447a964..8fc85b6251e48 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -1359,7 +1359,7 @@ __acquires(bitmap->lock)
+ 	sector_t chunk = offset >> bitmap->chunkshift;
+ 	unsigned long page = chunk >> PAGE_COUNTER_SHIFT;
+ 	unsigned long pageoff = (chunk & PAGE_COUNTER_MASK) << COUNTER_BYTE_SHIFT;
+-	sector_t csize;
++	sector_t csize = ((sector_t)1) << bitmap->chunkshift;
+ 	int err;
  
- 	if (g_queue_mode == NULL_Q_MQ && shared_tags)
- 		blk_mq_free_tag_set(&tag_set);
+ 	if (page >= bitmap->pages) {
+@@ -1368,6 +1368,7 @@ __acquires(bitmap->lock)
+ 		 * End-of-device while looking for a whole page or
+ 		 * user set a huge number to sysfs bitmap_set_bits.
+ 		 */
++		*blocks = csize - (offset & (csize - 1));
+ 		return NULL;
+ 	}
+ 	err = md_bitmap_checkpage(bitmap, page, create, 0);
+@@ -1376,8 +1377,7 @@ __acquires(bitmap->lock)
+ 	    bitmap->bp[page].map == NULL)
+ 		csize = ((sector_t)1) << (bitmap->chunkshift +
+ 					  PAGE_COUNTER_SHIFT);
+-	else
+-		csize = ((sector_t)1) << bitmap->chunkshift;
 +
-+	mutex_destroy(&lock);
- }
+ 	*blocks = csize - (offset & (csize - 1));
  
- module_init(null_init);
+ 	if (err < 0)
 -- 
 2.43.0
 
