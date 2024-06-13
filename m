@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2DA1292FF;
-	Thu, 13 Jun 2024 12:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF34917FD;
+	Thu, 13 Jun 2024 12:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282852; cv=none; b=TZZYyd4e0u+FkWMvlbvuXj5uDrWPeebo09SAXv9z3pR2w2XtfxeN0tDw264EPFT0LHemm0hzxJoCysRz9SsUNlkgiQYmTB/38/C3227+y+OiASB5oxJuOoPAFSh4PotgU5LdAgDBdKR6nZorjAmW6dKpzR0bOyDxbLaa65DFVCU=
+	t=1718282855; cv=none; b=YPbEDqMMbrWwc4yte/Xzdqnduasm4g+35EUgiC5H+wu2B/GPgTOJfF/HRy6bBHQuAPFlA1jthiYV3ug8GwuSj9xxCDlabh8UHuJY0SBV1S7svVBTp9JBNL4Psqs4H1qfVTBv+yo4PTjR4Z21DFC5OxsPEQWENFi/IVna1Ej2P2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282852; c=relaxed/simple;
-	bh=mTNYB+3nZMRegCKICBsJIWlgJHgWQrfjntuhRe6mE1E=;
+	s=arc-20240116; t=1718282855; c=relaxed/simple;
+	bh=LHr1oZp9kStpWuLqntG0SbTpByR1oLGy4kv7rTIMo+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYTGKAEq1hoUmpE8dHYfewOF8t8VC1Wq3XWOgXNVPOFokF/6PMnSB0HT4ZzEmBckqPVw0IA+p4rRmooRuQKS0qAh3q5H0wj+mPp3wyS7ic5FadDeuY6Hvfbp5FjpKTet9XGdIR2j03cgb0nlwPCB+1umjPT3Z3Ck0fuE1rP4YdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJP6KesI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXChL67PftYUKIIKOQkoE7gh2EqQUfopd3uLcyEsHRkUQKZKxB7HR4rYxJ+CgfJap3VZKKIrxtPIdCzDr3PYSFPcToASn9LuPgIHEEn1sVEKkn8Xd0wxFY1W1qoSeenoHqDSUpdHiFvqEQjScFaE5u4uWc7f1lgIslNICpucsII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJ9A3+Tz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJP6KesI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76668C32786;
-	Thu, 13 Jun 2024 12:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJ9A3+Tz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E548C32786;
+	Thu, 13 Jun 2024 12:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282851;
-	bh=mTNYB+3nZMRegCKICBsJIWlgJHgWQrfjntuhRe6mE1E=;
+	s=korg; t=1718282854;
+	bh=LHr1oZp9kStpWuLqntG0SbTpByR1oLGy4kv7rTIMo+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJP6KesI1pJX9xQC88CRqYW7wvRdHjVg4xKnD7r54W3z1fUD0NV+ejFVnBAcjNCes
-	 08p8n/mwS41AN9tPrfLE9Os0VnMPQT6ZXX6su9LjNOFsyfrRUIrcMx9ez2OABB+KC1
-	 Kq7cO9lylbTfdFBMAjOZIIm1VDPk0MhAOpYackF4=
+	b=IJ9A3+TzLHXWa3KVWc3puHtN1zY6qRRlfNAzYqcOz2Uf98NVxE0ZvXJE8rlRmPvY5
+	 d44NGY0INpzaHPtKo0zRzvwLSlhrNZEQEsscnnfwpRMKM4eZmWz3hUlZXjHuZSH/96
+	 lUkIrMsd4On6CaOIT0u+kGKBMGER3rB40fLbkFvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Hao Ge <gehao@kylinos.cn>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 15/85] scripts/gdb: fix SB_* constants parsing
-Date: Thu, 13 Jun 2024 13:35:13 +0200
-Message-ID: <20240613113214.732658990@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	syzbot+3694e283cf5c40df6d14@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 16/85] f2fs: fix to do sanity check on i_xattr_nid in sanity_check_inode()
+Date: Thu, 13 Jun 2024 13:35:14 +0200
+Message-ID: <20240613113214.770712732@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -56,63 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 6a59cb5158bff13b80f116305155fbe4967a5010 upstream.
+commit 20faaf30e55522bba2b56d9c46689233205d7717 upstream.
 
---0000000000009a0c9905fd9173ad
-Content-Transfer-Encoding: 8bit
+syzbot reports a kernel bug as below:
 
-After f15afbd34d8f ("fs: fix undefined behavior in bit shift for
-SB_NOUSER") the constants were changed from plain integers which
-LX_VALUE() can parse to constants using the BIT() macro which causes the
-following:
+F2FS-fs (loop0): Mounted with checkpoint version = 48b305e4
+==================================================================
+BUG: KASAN: slab-out-of-bounds in f2fs_test_bit fs/f2fs/f2fs.h:2933 [inline]
+BUG: KASAN: slab-out-of-bounds in current_nat_addr fs/f2fs/node.h:213 [inline]
+BUG: KASAN: slab-out-of-bounds in f2fs_get_node_info+0xece/0x1200 fs/f2fs/node.c:600
+Read of size 1 at addr ffff88807a58c76c by task syz-executor280/5076
 
-Reading symbols from build/linux-custom/vmlinux...done.
-Traceback (most recent call last):
-  File "/home/fainelli/work/buildroot/output/arm64/build/linux-custom/vmlinux-gdb.py", line 25, in <module>
-    import linux.constants
-  File "/home/fainelli/work/buildroot/output/arm64/build/linux-custom/scripts/gdb/linux/constants.py", line 5
-    LX_SB_RDONLY = ((((1UL))) << (0))
+CPU: 1 PID: 5076 Comm: syz-executor280 Not tainted 6.9.0-rc5-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ f2fs_test_bit fs/f2fs/f2fs.h:2933 [inline]
+ current_nat_addr fs/f2fs/node.h:213 [inline]
+ f2fs_get_node_info+0xece/0x1200 fs/f2fs/node.c:600
+ f2fs_xattr_fiemap fs/f2fs/data.c:1848 [inline]
+ f2fs_fiemap+0x55d/0x1ee0 fs/f2fs/data.c:1925
+ ioctl_fiemap fs/ioctl.c:220 [inline]
+ do_vfs_ioctl+0x1c07/0x2e50 fs/ioctl.c:838
+ __do_sys_ioctl fs/ioctl.c:902 [inline]
+ __se_sys_ioctl+0x81/0x170 fs/ioctl.c:890
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Use LX_GDBPARSED() which does not suffer from that issue.
+The root cause is we missed to do sanity check on i_xattr_nid during
+f2fs_iget(), so that in fiemap() path, current_nat_addr() will access
+nat_bitmap w/ offset from invalid i_xattr_nid, result in triggering
+kasan bug report, fix it.
 
-f15afbd34d8f ("fs: fix undefined behavior in bit shift for SB_NOUSER")
-Link: https://lkml.kernel.org/r/20230607221337.2781730-1-florian.fainelli@broadcom.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Acked-by: Christian Brauner <brauner@kernel.org>
-Cc: Hao Ge <gehao@kylinos.cn>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reported-and-tested-by: syzbot+3694e283cf5c40df6d14@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/00000000000094036c0616e72a1d@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gdb/linux/constants.py.in |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/f2fs/inode.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/scripts/gdb/linux/constants.py.in
-+++ b/scripts/gdb/linux/constants.py.in
-@@ -46,12 +46,12 @@ if IS_BUILTIN(CONFIG_COMMON_CLK):
-     LX_GDBPARSED(CLK_GET_RATE_NOCACHE)
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -298,6 +298,12 @@ static bool sanity_check_inode(struct in
+ 		}
+ 	}
  
- /* linux/fs.h */
--LX_VALUE(SB_RDONLY)
--LX_VALUE(SB_SYNCHRONOUS)
--LX_VALUE(SB_MANDLOCK)
--LX_VALUE(SB_DIRSYNC)
--LX_VALUE(SB_NOATIME)
--LX_VALUE(SB_NODIRATIME)
-+LX_GDBPARSED(SB_RDONLY)
-+LX_GDBPARSED(SB_SYNCHRONOUS)
-+LX_GDBPARSED(SB_MANDLOCK)
-+LX_GDBPARSED(SB_DIRSYNC)
-+LX_GDBPARSED(SB_NOATIME)
-+LX_GDBPARSED(SB_NODIRATIME)
++	if (fi->i_xattr_nid && f2fs_check_nid_range(sbi, fi->i_xattr_nid)) {
++		f2fs_warn(sbi, "%s: inode (ino=%lx) has corrupted i_xattr_nid: %u, run fsck to fix.",
++			  __func__, inode->i_ino, fi->i_xattr_nid);
++		return false;
++	}
++
+ 	return true;
+ }
  
- /* linux/htimer.h */
- LX_GDBPARSED(hrtimer_resolution)
 
 
