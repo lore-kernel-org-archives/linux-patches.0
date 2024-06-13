@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E7213D601;
-	Thu, 13 Jun 2024 12:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505D21411CD;
+	Thu, 13 Jun 2024 12:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281748; cv=none; b=ZQsmqkYu95T6SFBZJO2aaB75uyLjZe4YiR9hoQZj//0+KeOmc7G2tDH7ZQRevGhDelLuZLCyzbvkqfmGM55RnC+n15Xk9uHpKWqXUFk01dv7+3m6nqqFciCaOMJ028I4z6MuYOQZctReRLLpl/bEhWeBqIgXtq9FzwUaYq2nhVo=
+	t=1718281751; cv=none; b=rJg2/FIN9rjnfoSqxeSLuevJXQ4WaoyNc/QemPoqb48CjInJhbZzGViu+BsbtOyjoXPExZXKwx5yWGZ+pZaSE0LtkrQwat6Tq0FQyV8s3AP1w4xriGcrWF8C73mEh+JDrOFxpV8gHlqlfyXSs+mMNj6hIdycDa+nmDwEAjcCKD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281748; c=relaxed/simple;
-	bh=J9Ddu/WUGde+A75RdjpgF91J0XKO2KPoHcRQnK6xEdQ=;
+	s=arc-20240116; t=1718281751; c=relaxed/simple;
+	bh=XfHjqJoKtaekeFoF8HQnwo+dqXFJnc1qS8FYW6rOUw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYO+72fWmPnTToz7NakVqZ7rRTF+EdJCz1R1JCRqbMihk3Pi04vE7ckJG+tUMFll37n7D/6WdEZICHYO/QMzUBZWAlV0oOqKI/QTkZ+TtX2/IT1BjKn0oUgfxo46QArtlwxB+OO6ZeaHGrVtX4jnuSf+2ShjBLRU7Yu2w1I8gMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vf403HAK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+Cb3cRIy8QBIKLIC04v0o4DDAwUlqYPpmoFmlx62glzgQQPco2cZGkruDnc1I34BnYV09GmtG6M7rk4yWbh6cpumFFbRntoQETWetvgrpfooz5wLBcYEmFEbi2qiCy0b4L02onm+HyhX8KfxachDDgUzNBVl1GsSp/xXqvB/aE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lj0vHGRn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vf403HAK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4AFC4AF1C;
-	Thu, 13 Jun 2024 12:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lj0vHGRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA71C2BBFC;
+	Thu, 13 Jun 2024 12:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281748;
-	bh=J9Ddu/WUGde+A75RdjpgF91J0XKO2KPoHcRQnK6xEdQ=;
+	s=korg; t=1718281751;
+	bh=XfHjqJoKtaekeFoF8HQnwo+dqXFJnc1qS8FYW6rOUw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vf403HAKO7AxhLWT76Yz7LPF0MTRupVo4HUMscX1chPvJHNahxhUxCii+nOHWthbi
-	 iir8P1g9OdzaFitSKlWefxoGUJjJzssUurvc6QjmcRgQ0ASAyE8V+4p1BPZMgD/6lt
-	 81/zH2UTguav9zy8/qen+U5S/KkOdm4bdVLFjLnY=
+	b=Lj0vHGRnunZzUdzeTRHdujBKVTjKR9kLTkOwJFkMMQSb4sTKPDi9clHdhYRDYnj7G
+	 J10t7nd5VUWxRWpEJa1kI5EJVzU8YDlmkP8pnUhBqvnyG8q+pNGLGcBC5Ng8gLn3Fy
+	 UBOdg/7iG+oKVeNVDxCuzl4MwykjDSxtCU5VZT30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/402] parisc: add missing export of __cmpxchg_u8()
-Date: Thu, 13 Jun 2024 13:29:59 +0200
-Message-ID: <20240613113303.778712154@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 5.15 016/402] fs/ntfs3: Break dir enumeration if directory contents error
+Date: Thu, 13 Jun 2024 13:29:33 +0200
+Message-ID: <20240613113302.770475810@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,36 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit c57e5dccb06decf3cb6c272ab138c033727149b5 ]
+commit 302e9dca8428979c9c99f2dbb44dc1783f5011c3 upstream.
 
-__cmpxchg_u8() had been added (initially) for the sake of
-drivers/phy/ti/phy-tusb1210.c; the thing is, that drivers is
-modular, so we need an export
+If we somehow attempt to read beyond the directory size, an error
+is supposed to be returned.
 
-Fixes: b344d6a83d01 "parisc: add support for cmpxchg on u8 pointers"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, in some cases, read requests do not stop and instead enter
+into a loop.
+
+To avoid this, we set the position in the directory to the end.
+
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/parisc_ksyms.c | 1 +
+ fs/ntfs3/dir.c |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/parisc/kernel/parisc_ksyms.c b/arch/parisc/kernel/parisc_ksyms.c
-index 00297e8e1c888..317508493b81c 100644
---- a/arch/parisc/kernel/parisc_ksyms.c
-+++ b/arch/parisc/kernel/parisc_ksyms.c
-@@ -21,6 +21,7 @@ EXPORT_SYMBOL(memset);
- #include <linux/atomic.h>
- EXPORT_SYMBOL(__xchg8);
- EXPORT_SYMBOL(__xchg32);
-+EXPORT_SYMBOL(__cmpxchg_u8);
- EXPORT_SYMBOL(__cmpxchg_u32);
- EXPORT_SYMBOL(__cmpxchg_u64);
- #ifdef CONFIG_SMP
--- 
-2.43.0
-
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -475,6 +475,7 @@ static int ntfs_readdir(struct file *fil
+ 		vbo = (u64)bit << index_bits;
+ 		if (vbo >= i_size) {
+ 			ntfs_inode_err(dir, "Looks like your dir is corrupt");
++			ctx->pos = eod;
+ 			err = -EINVAL;
+ 			goto out;
+ 		}
 
 
