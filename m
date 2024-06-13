@@ -1,40 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F6F384;
-	Thu, 13 Jun 2024 12:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BA9161;
+	Thu, 13 Jun 2024 12:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282212; cv=none; b=nXcFznMAIH3OXCnh573y0TyhCQyf/7cdSbkdO0sEUAyqE3NHqB+advoR8hklqyAlbYbhKyxQSrrSC1fk7UyATt1Tb9RnFwc32psR/Z1agKO/TgzGwihZ/tSLEGSFW4CKLVqtKq1NMqAS0Jx7LQEdVovvOLrUF2ZVhMV/6ebCeYc=
+	t=1718282215; cv=none; b=ehCVCdNIjzJxydp9bzYVgGpgKjxksN7mgyC2eqa7f13ykXKqWeWUBlfwJjGgW5ulerr0QZOoWTL0z7zj+vq1BjGRmGiuOEyXdWDbUghNMagmKtnWIuBryUOFiGhKE+ATYDq4kzu9KdFq0M7Lx7KYb+Ej8RIl5SICDorLwaYkAi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282212; c=relaxed/simple;
-	bh=ceth468h9KrvRoWwJIW5xSohwTMZWCFYT5siTArLpXE=;
+	s=arc-20240116; t=1718282215; c=relaxed/simple;
+	bh=Lmm6tXZTC3jIXcaeCEEA6/VnvpVEp8ej1EHFZPnras8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNSdehadkdD3f23yZ2mYeULlCwaouSzcO/wysS2QBWW1TXUM8J1cqcjcuCYkurl4HXwH7gZSEXb6gZF+lsCzeQY+Qg/qa7bTH7ArGGtz7Ay0hsuNWkDN0UE8EwmwtRUPF30xmyOFIMJzSLkJe7iNqUDjuM3ybl7Rn/v4i5pChmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1l/Ip2GY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s29GCX9WeIuv1x8k7F/cXyoPTELVD2QH1tIGgM4iA5FSHPo3xCTL010BzZ9EfdqVNjraajjAvpWsLMSt3rQAJHXj378//DMTGakQNufWOl+qhKYhQPv+lpWG5MtxppNSRVzEixDI6qU6TWN3xRJwQ3T8ni08iu45vtLvQT1k+QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/CcFr7R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1l/Ip2GY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E3DC2BBFC;
-	Thu, 13 Jun 2024 12:36:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/CcFr7R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0997C2BBFC;
+	Thu, 13 Jun 2024 12:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282211;
-	bh=ceth468h9KrvRoWwJIW5xSohwTMZWCFYT5siTArLpXE=;
+	s=korg; t=1718282214;
+	bh=Lmm6tXZTC3jIXcaeCEEA6/VnvpVEp8ej1EHFZPnras8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1l/Ip2GYQsqzpdt2wHw4JNDxCv1qtupdTv/B36EYkG8S8zJNzXB69Z00fEtQcS5s0
-	 GGQvuNnvWs8zhdtKuxjM/MllUOjmcSkHQ3SSwzF5qgRjykSIMlkr3+1IfmuNuWqpp0
-	 nCjgu8BuIVfuGjrCc0bg+GS5ewgeQf5uUjJkV2ho=
+	b=u/CcFr7RwuSDJy+zhhOm7Q8n2xy5ztaLRtei9DJSLtLt4wv3dO4EIV8OVflFUTDfb
+	 z1AaDGsF9YaBEP5a1sgqjKC75vZvl6FqvMNwdE9JLRWTv0q5r+g7uM0cuSoPWfH0sT
+	 noqGzhKf4d+nRaRIG+v8QVzqjOMNwsWFLuBQqOms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Len Brown <lenb@kernel.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@arm.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	linux-acpi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	coresight@lists.linaro.org,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 183/402] soundwire: cadence: fix invalid PDI offset
-Date: Thu, 13 Jun 2024 13:32:20 +0200
-Message-ID: <20240613113309.287990350@linuxfoundation.org>
+Subject: [PATCH 5.15 201/402] coresight: etm4x: Fix unbalanced pm_runtime_enable()
+Date: Thu, 13 Jun 2024 13:32:38 +0200
+Message-ID: <20240613113309.983930117@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -53,46 +63,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit 8ee1b439b1540ae543149b15a2a61b9dff937d91 ]
+[ Upstream commit caa41c47dab7e1054f587e592ab21296e3a6781c ]
 
-For some reason, we add an offset to the PDI, presumably to skip the
-PDI0 and PDI1 which are reserved for BPT.
+There is an unbalanced pm_runtime_enable() in etm4_probe_platform_dev()
+when etm4_probe() fails. This problem can be observed via the coresight
+etm4 module's (load -> unload -> load) sequence when etm4_probe() fails
+in etm4_probe_platform_dev().
 
-This code is however completely wrong and leads to an out-of-bounds
-access. We were just lucky so far since we used only a couple of PDIs
-and remained within the PDI array bounds.
+[   63.379943] coresight-etm4x 7040000.etm: Unbalanced pm_runtime_enable!
+[   63.393630] coresight-etm4x 7140000.etm: Unbalanced pm_runtime_enable!
+[   63.407455] coresight-etm4x 7240000.etm: Unbalanced pm_runtime_enable!
+[   63.420983] coresight-etm4x 7340000.etm: Unbalanced pm_runtime_enable!
+[   63.420999] coresight-etm4x 7440000.etm: Unbalanced pm_runtime_enable!
+[   63.441209] coresight-etm4x 7540000.etm: Unbalanced pm_runtime_enable!
+[   63.454689] coresight-etm4x 7640000.etm: Unbalanced pm_runtime_enable!
+[   63.474982] coresight-etm4x 7740000.etm: Unbalanced pm_runtime_enable!
 
-A Fixes: tag is not provided since there are no known platforms where
-the out-of-bounds would be accessed, and the initial code had problems
-as well.
+This fixes the above problem - with an explicit pm_runtime_disable() call
+when etm4_probe() fails during etm4_probe_platform_dev().
 
-A follow-up patch completely removes this useless offset.
-
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20240326090122.1051806-2-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc: Hanjun Guo <guohanjun@huawei.com>
+Cc: Sudeep Holla <sudeep.holla@arm.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Len Brown <lenb@kernel.org>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: James Clark <james.clark@arm.com>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: linux-acpi@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Cc: coresight@lists.linaro.org
+Fixes: 5214b563588e ("coresight: etm4x: Add support for sysreg only devices")
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20240314055843.2625883-2-anshuman.khandual@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/cadence_master.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
-index 7b340f3832133..fb37e14404ec8 100644
---- a/drivers/soundwire/cadence_master.c
-+++ b/drivers/soundwire/cadence_master.c
-@@ -1830,7 +1830,7 @@ struct sdw_cdns_pdi *sdw_cdns_alloc_pdi(struct sdw_cdns *cdns,
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 26d0d4485ae99..3f5e9400222e7 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -2022,6 +2022,9 @@ static int etm4_probe_platform_dev(struct platform_device *pdev)
+ 	ret = etm4_probe(&pdev->dev, NULL, 0);
  
- 	/* check if we found a PDI, else find in bi-directional */
- 	if (!pdi)
--		pdi = cdns_find_pdi(cdns, 2, stream->num_bd, stream->bd,
-+		pdi = cdns_find_pdi(cdns, 0, stream->num_bd, stream->bd,
- 				    dai_id);
+ 	pm_runtime_put(&pdev->dev);
++	if (ret)
++		pm_runtime_disable(&pdev->dev);
++
+ 	return ret;
+ }
  
- 	if (pdi) {
 -- 
 2.43.0
 
