@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370F4EC4;
-	Thu, 13 Jun 2024 12:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288A4143867;
+	Thu, 13 Jun 2024 12:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281971; cv=none; b=e4VPonfqoyzlNM5qS44ASwiwg9UdVu3SMi+Tz53cFdIvNZf4rPbYoj0oXWnehJ2wNWSM2+xsRLiCzk1gTgdqtj1b4flu7g4mCrcxs1pg9IbIuC/Xg185DoMX3yJSYw3Audt4YHQU1iS4rHtAFP5bg7CysU+skdckT6ddxgzqH/Q=
+	t=1718281974; cv=none; b=ej2V6KSdVN1bFIvHFI6nBz3mdW6WfdLFVNLPSaQPuogsNDgija3v6k9n20HTvCyBryXEi+xwDxTgfqZYROuyGElZjdWcifx7zrmVDTgoXvJNw23aGOOl4eRjkUcgBxwV5qzJuRLN6HC23ZqpTJDnHhjENzvHk0xAy/22gS0uGBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281971; c=relaxed/simple;
-	bh=HkgnaXPSnHM0PeDE5RWxB2P1yggoiegIoQLVwm3k5i4=;
+	s=arc-20240116; t=1718281974; c=relaxed/simple;
+	bh=TjouqR8cMyE1CNGGZT7c+weBBoxOr3n3i7UT584FKhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFZKJJrycLlqdLZuuHL87fSzzFT4MNJd45oa/zZbG8+gw0ykTsbqjLJ2QyeS/rN2nZvh50RvSZioM0p2/dCslSdu9ZTde/WJt3o22NK8pLjs2iJvcINStIwUScX0T5aexTDLrUgTyCELFIbPwZTnR68MlO17f6ScrfXEBFsvS+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVJMYI3H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=j/+bYQOln2TAYOFnWw/WeYVXDhXAo5MROT/8KM2riL6Vcvd74F3ReKij76MvQX8edY8b31bD68cV0ieoL40Q5aB6vSW7Ppy9Kqkw4yVRv4OcN7IiG4q/Mvw8TWPtzjgqa6BuPdLpJi0dg9jVJ0xP8Sjz2ey1mgTxEdQqrQC7uXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OoBVZ1jj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVJMYI3H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B255FC2BBFC;
-	Thu, 13 Jun 2024 12:32:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OoBVZ1jj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DE5C2BBFC;
+	Thu, 13 Jun 2024 12:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281971;
-	bh=HkgnaXPSnHM0PeDE5RWxB2P1yggoiegIoQLVwm3k5i4=;
+	s=korg; t=1718281974;
+	bh=TjouqR8cMyE1CNGGZT7c+weBBoxOr3n3i7UT584FKhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qVJMYI3HzkMuOd49J/nmYglJ1/st9beOjLE3Y+vwIgcfjomu7wGmKnSZglSG82YCN
-	 3P0tSbAUDwxHF6BVq29Y1fVifK1QaeY4HRTsqrngBy5vEVW4quQTDYrNdPt37wt6dI
-	 yJyaoXIMzYpJqvF+jfHzgwcQr1yHC8W0Vbu0GGnI=
+	b=OoBVZ1jjasYhWW4OhaFM3hUUfk6ymouTBvnEpnhoQVcy7qZlwtcdyHXfdHo6R+u2Q
+	 PmlxxLRnYBeg2GjExzZtrk5PEoounv/iJfLWcwzhbMGkAhMjTOqDijECKjtKyFxXR4
+	 qI6BjSXIAfRN1ui1fLCnJq5cvrOMhlkW8yIehPcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/402] tcp: avoid premature drops in tcp_add_backlog()
-Date: Thu, 13 Jun 2024 13:30:45 +0200
-Message-ID: <20240613113305.569507785@linuxfoundation.org>
+Subject: [PATCH 5.15 089/402] pwm: sti: Convert to platform remove callback returning void
+Date: Thu, 13 Jun 2024 13:30:46 +0200
+Message-ID: <20240613113305.611416201@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -45,91 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit ec00ed472bdb7d0af840da68c8c11bff9f4d9caa ]
+[ Upstream commit e13cec3617c6ace4fc389b60d2a7d5b305b62683 ]
 
-While testing TCP performance with latest trees,
-I saw suspect SOCKET_BACKLOG drops.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-tcp_add_backlog() computes its limit with :
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-    limit = (u32)READ_ONCE(sk->sk_rcvbuf) +
-            (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
-    limit += 64 * 1024;
-
-This does not take into account that sk->sk_backlog.len
-is reset only at the very end of __release_sock().
-
-Both sk->sk_backlog.len and sk->sk_rmem_alloc could reach
-sk_rcvbuf in normal conditions.
-
-We should double sk->sk_rcvbuf contribution in the formula
-to absorb bubbles in the backlog, which happen more often
-for very fast flows.
-
-This change maintains decent protection against abuses.
-
-Fixes: c377411f2494 ("net: sk_add_backlog() take rmem_alloc into account")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240423125620.3309458-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 5bb0b194aeee ("pwm: sti: Simplify probe function using devm functions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-sti.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index e162bed1916ae..e9b1dcf2d463a 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1817,7 +1817,7 @@ int tcp_v4_early_demux(struct sk_buff *skb)
+diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
+index 0a7920cbd4949..c782378dff5e5 100644
+--- a/drivers/pwm/pwm-sti.c
++++ b/drivers/pwm/pwm-sti.c
+@@ -677,7 +677,7 @@ static int sti_pwm_probe(struct platform_device *pdev)
+ 	return 0;
+ }
  
- bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
+-static int sti_pwm_remove(struct platform_device *pdev)
++static void sti_pwm_remove(struct platform_device *pdev)
  {
--	u32 limit, tail_gso_size, tail_gso_segs;
-+	u32 tail_gso_size, tail_gso_segs;
- 	struct skb_shared_info *shinfo;
- 	const struct tcphdr *th;
- 	struct tcphdr *thtail;
-@@ -1826,6 +1826,7 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- 	bool fragstolen;
- 	u32 gso_segs;
- 	u32 gso_size;
-+	u64 limit;
- 	int delta;
+ 	struct sti_pwm_chip *pc = platform_get_drvdata(pdev);
  
- 	/* In case all data was pulled from skb frags (in __pskb_pull_tail()),
-@@ -1922,7 +1923,13 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- 	__skb_push(skb, hdrlen);
+@@ -685,8 +685,6 @@ static int sti_pwm_remove(struct platform_device *pdev)
  
- no_coalesce:
--	limit = (u32)READ_ONCE(sk->sk_rcvbuf) + (u32)(READ_ONCE(sk->sk_sndbuf) >> 1);
-+	/* sk->sk_backlog.len is reset only at the end of __release_sock().
-+	 * Both sk->sk_backlog.len and sk->sk_rmem_alloc could reach
-+	 * sk_rcvbuf in normal conditions.
-+	 */
-+	limit = ((u64)READ_ONCE(sk->sk_rcvbuf)) << 1;
-+
-+	limit += ((u32)READ_ONCE(sk->sk_sndbuf)) >> 1;
+ 	clk_unprepare(pc->pwm_clk);
+ 	clk_unprepare(pc->cpt_clk);
+-
+-	return 0;
+ }
  
- 	/* Only socket owner can try to collapse/prune rx queues
- 	 * to reduce memory overhead, so add a little headroom here.
-@@ -1930,6 +1937,8 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb)
- 	 */
- 	limit += 64 * 1024;
+ static const struct of_device_id sti_pwm_of_match[] = {
+@@ -701,7 +699,7 @@ static struct platform_driver sti_pwm_driver = {
+ 		.of_match_table = sti_pwm_of_match,
+ 	},
+ 	.probe = sti_pwm_probe,
+-	.remove = sti_pwm_remove,
++	.remove_new = sti_pwm_remove,
+ };
+ module_platform_driver(sti_pwm_driver);
  
-+	limit = min_t(u64, limit, UINT_MAX);
-+
- 	if (unlikely(sk_add_backlog(sk, skb, limit))) {
- 		bh_unlock_sock(sk);
- 		__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPBACKLOGDROP);
 -- 
 2.43.0
 
