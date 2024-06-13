@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B388B143C52;
-	Thu, 13 Jun 2024 12:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F93143C52;
+	Thu, 13 Jun 2024 12:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280535; cv=none; b=C5FLPIzbJx8hWy4Usxb0SfIxpidCNVLkS7fhJTgxiy1XRbL77TP81xSIR+zbw0CRLqvUwhG7zrFsgg4H8UPrV5nbnUQ3XWWuNjLyW1LC3ofuaiL6Q81XVcFUtSSIB6AbITv8GpE0z1gejEtBM6/sQ5iQ6ze1Kobz8XmNT4l/bMM=
+	t=1718280538; cv=none; b=ENWR+obteW0LabOgeOUKMNaF4E9ohr/yakKEPeQ6OyvTCKR/kYZ9XGX+wCuGBIt3dX83QU+nHZbQkubznPtUqLEtj95wZqXNbr2Ssh0K7VGmWVQOUjSK/0c9P2sCi6zFL25Dy95EkGwKmbWNahdWQqfTDGuGbnDnTTGaLsw32qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280535; c=relaxed/simple;
-	bh=Mke7C7a7uMmWPFtgWo58HXCTQ2l1+Qif5CGvUkD8V9A=;
+	s=arc-20240116; t=1718280538; c=relaxed/simple;
+	bh=Ru204zuSrx3yr+kIvmQdQToMvNf/eHW8wzelmTK6PwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=trhkn7UT2MSsQWzVNYjB2boTNJ3ohMUrud+ZASClNxMYxi6jZJTjbzQFUBUKANFiqdHNdeZ3Ab1+CBusC6u4XECSneTq5rziabv7c0VAzEXEJuPPDVzGmoELM86/QgwC+Yfy5b/PbExHwleOh4dzuzk/oevVVOTxrKPWfA6E9T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRvz551h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fUrwL6frJi54AoD6eZGXloSZ88rGft57Qai/0/zuDfRgvrNA5Z88si+i8NSIaLTZu8/co2yKmF8jrITTheVVSsCEWsXHQxXiU9zUrYCl/zguh/3nujuO6zGZFj2YQQywihZC8rSDCmzAnL9ij/pBVS62kAT8MTBQMyvcfXbZLxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKF6L6JW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRvz551h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC0CC2BBFC;
-	Thu, 13 Jun 2024 12:08:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKF6L6JW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24254C2BBFC;
+	Thu, 13 Jun 2024 12:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280535;
-	bh=Mke7C7a7uMmWPFtgWo58HXCTQ2l1+Qif5CGvUkD8V9A=;
+	s=korg; t=1718280538;
+	bh=Ru204zuSrx3yr+kIvmQdQToMvNf/eHW8wzelmTK6PwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jRvz551hEX5K2y0Pi2W4+xAu3NfD5bLbAaZOxL95I9wS+U8tcToZDxS6iBErfZYx+
-	 PZaXsQJUJqZ6B9SCMtA7iybxQqVrNL91FUVN//2RbqhmNmblf8waIokyYaB6zlduGh
-	 ay/ygSyTPzoBHXPjZcWBO70v0cySIrfPc6igljAg=
+	b=dKF6L6JWhHOE3LwYE55OckfsGu11Z02JzC0TQWgpm4IsSWNCCnNW9RukwNBbjW0gC
+	 t581v/RXECvOWWz9mdLu3p7iGZSrDmYAK1FM8BpwnEU5tiF1mYcIcdDTUA+L7qeG/Q
+	 9jwtXGC9O8fpqc8QwOYsKEarvB5sKU99jk/oUcTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Bristot de Oliveria <bristot@kernel.org>,
-	John Kacur <jkacur@redhat.com>
-Subject: [PATCH 6.6 087/137] rtla/timerlat: Fix histogram report when a cpu count is 0
-Date: Thu, 13 Jun 2024 13:34:27 +0200
-Message-ID: <20240613113226.672397045@linuxfoundation.org>
+	Sam Ravnborg <sam@ravnborg.org>,
+	Nick Bowler <nbowler@draconx.ca>,
+	Andreas Larsson <andreas@gaisler.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Atish Patra <atish.patra@oracle.com>,
+	Bob Picco <bob.picco@oracle.com>,
+	Vijay Kumar <vijay.ac.kumar@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.6 088/137] sparc64: Fix number of online CPUs
+Date: Thu, 13 Jun 2024 13:34:28 +0200
+Message-ID: <20240613113226.712936529@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -50,136 +56,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Kacur <jkacur@redhat.com>
+From: Sam Ravnborg <sam@ravnborg.org>
 
-commit 01b05fc0e5f3aec443a9a8ffa0022cbca2fd3608 upstream.
+commit 98937707fea8375e8acea0aaa0b68a956dd52719 upstream.
 
-On short runs it is possible to get no samples on a cpu, like this:
+Nick Bowler reported:
+    When using newer kernels on my Ultra 60 with dual 450MHz UltraSPARC-II
+    CPUs, I noticed that only CPU 0 comes up, while older kernels (including
+    4.7) are working fine with both CPUs.
 
-  # rtla timerlat hist -u -T50
+      I bisected the failure to this commit:
 
-  Index   IRQ-001   Thr-001   Usr-001   IRQ-002   Thr-002   Usr-002
-  2             1         0         0         0         0         0
-  33            0         1         0         0         0         0
-  36            0         0         1         0         0         0
-  49            0         0         0         1         0         0
-  52            0         0         0         0         1         0
-  over:         0         0         0         0         0         0
-  count:        1         1         1         1         1         0
-  min:          2        33        36        49        52 18446744073709551615
-  avg:          2        33        36        49        52         -
-  max:          2        33        36        49        52         0
-  rtla timerlat hit stop tracing
-    IRQ handler delay:		(exit from idle)	    48.21 us (91.09 %)
-    IRQ latency:						    49.11 us
-    Timerlat IRQ duration:				     2.17 us (4.09 %)
-    Blocking thread:					     1.01 us (1.90 %)
-  	               swapper/2:0        		     1.01 us
-  ------------------------------------------------------------------------
-    Thread latency:					    52.93 us (100%)
+      9b2f753ec23710aa32c0d837d2499db92fe9115b is the first bad commit
+      commit 9b2f753ec23710aa32c0d837d2499db92fe9115b
+      Author: Atish Patra <atish.patra@oracle.com>
+      Date:   Thu Sep 15 14:54:40 2016 -0600
 
-  Max timerlat IRQ latency from idle: 49.11 us in cpu 2
+      sparc64: Fix cpu_possible_mask if nr_cpus is set
 
-Note, the value 18446744073709551615 is the same as ~0.
+    This is a small change that reverts very easily on top of 5.18: there is
+    just one trivial conflict.  Once reverted, both CPUs work again.
 
-Fix this by reporting no results for the min, avg and max if the count
-is 0.
+    Maybe this is related to the fact that the CPUs on this system are
+    numbered CPU0 and CPU2 (there is no CPU1)?
 
-Link: https://lkml.kernel.org/r/20240510190318.44295-1-jkacur@redhat.com
+The current code that adjust cpu_possible based on nr_cpu_ids do not
+take into account that CPU's may not come one after each other.
+Move the chech to the function that setup the cpu_possible mask
+so there is no need to adjust it later.
 
-Cc: stable@vger.kernel.org
-Fixes: 1eeb6328e8b3 ("rtla/timerlat: Add timerlat hist mode")
-Suggested-by: Daniel Bristot de Oliveria <bristot@kernel.org>
-Signed-off-by: John Kacur <jkacur@redhat.com>
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
+Signed-off-by: Sam Ravnborg <sam@ravnborg.org>
+Fixes: 9b2f753ec237 ("sparc64: Fix cpu_possible_mask if nr_cpus is set")
+Reported-by: Nick Bowler <nbowler@draconx.ca>
+Tested-by: Nick Bowler <nbowler@draconx.ca>
+Link: https://lore.kernel.org/sparclinux/20201009161924.c8f031c079dd852941307870@gmx.de/
+Link: https://lore.kernel.org/all/CADyTPEwt=ZNams+1bpMB1F9w_vUdPsGCt92DBQxxq_VtaLoTdw@mail.gmail.com/
+Cc: stable@vger.kernel.org # v4.8+
+Cc: Andreas Larsson <andreas@gaisler.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Atish Patra <atish.patra@oracle.com>
+Cc: Bob Picco <bob.picco@oracle.com>
+Cc: Vijay Kumar <vijay.ac.kumar@oracle.com>
+Cc: David S. Miller <davem@davemloft.net>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240330-sparc64-warnings-v1-9-37201023ee2f@ravnborg.org
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/tracing/rtla/src/timerlat_hist.c |   68 ++++++++++++++++++++++-----------
- 1 file changed, 46 insertions(+), 22 deletions(-)
+ arch/sparc/include/asm/smp_64.h |    2 --
+ arch/sparc/kernel/prom_64.c     |    4 +++-
+ arch/sparc/kernel/setup_64.c    |    1 -
+ arch/sparc/kernel/smp_64.c      |   14 --------------
+ 4 files changed, 3 insertions(+), 18 deletions(-)
 
---- a/tools/tracing/rtla/src/timerlat_hist.c
-+++ b/tools/tracing/rtla/src/timerlat_hist.c
-@@ -323,17 +323,29 @@ timerlat_print_summary(struct timerlat_h
- 		if (!data->hist[cpu].irq_count && !data->hist[cpu].thread_count)
- 			continue;
+--- a/arch/sparc/include/asm/smp_64.h
++++ b/arch/sparc/include/asm/smp_64.h
+@@ -47,7 +47,6 @@ void arch_send_call_function_ipi_mask(co
+ int hard_smp_processor_id(void);
+ #define raw_smp_processor_id() (current_thread_info()->cpu)
  
--		if (!params->no_irq)
--			trace_seq_printf(trace->seq, "%9llu ",
--					data->hist[cpu].min_irq);
--
--		if (!params->no_thread)
--			trace_seq_printf(trace->seq, "%9llu ",
--					data->hist[cpu].min_thread);
--
--		if (params->user_hist)
--			trace_seq_printf(trace->seq, "%9llu ",
--					data->hist[cpu].min_user);
-+		if (!params->no_irq) {
-+			if (data->hist[cpu].irq_count)
-+				trace_seq_printf(trace->seq, "%9llu ",
-+						data->hist[cpu].min_irq);
-+			else
-+				trace_seq_printf(trace->seq, "        - ");
-+		}
-+
-+		if (!params->no_thread) {
-+			if (data->hist[cpu].thread_count)
-+				trace_seq_printf(trace->seq, "%9llu ",
-+						data->hist[cpu].min_thread);
-+			else
-+				trace_seq_printf(trace->seq, "        - ");
-+		}
-+
-+		if (params->user_hist) {
-+			if (data->hist[cpu].user_count)
-+				trace_seq_printf(trace->seq, "%9llu ",
-+						data->hist[cpu].min_user);
-+			else
-+				trace_seq_printf(trace->seq, "        - ");
-+		}
- 	}
- 	trace_seq_printf(trace->seq, "\n");
+-void smp_fill_in_cpu_possible_map(void);
+ void smp_fill_in_sib_core_maps(void);
+ void __noreturn cpu_play_dead(void);
  
-@@ -383,17 +395,29 @@ timerlat_print_summary(struct timerlat_h
- 		if (!data->hist[cpu].irq_count && !data->hist[cpu].thread_count)
- 			continue;
+@@ -77,7 +76,6 @@ void __cpu_die(unsigned int cpu);
+ #define smp_fill_in_sib_core_maps() do { } while (0)
+ #define smp_fetch_global_regs() do { } while (0)
+ #define smp_fetch_global_pmu() do { } while (0)
+-#define smp_fill_in_cpu_possible_map() do { } while (0)
+ #define smp_init_cpu_poke() do { } while (0)
+ #define scheduler_poke() do { } while (0)
  
--		if (!params->no_irq)
--			trace_seq_printf(trace->seq, "%9llu ",
--					data->hist[cpu].max_irq);
--
--		if (!params->no_thread)
--			trace_seq_printf(trace->seq, "%9llu ",
--					data->hist[cpu].max_thread);
--
--		if (params->user_hist)
--			trace_seq_printf(trace->seq, "%9llu ",
--					data->hist[cpu].max_user);
-+		if (!params->no_irq) {
-+			if (data->hist[cpu].irq_count)
-+				trace_seq_printf(trace->seq, "%9llu ",
-+						 data->hist[cpu].max_irq);
-+			else
-+				trace_seq_printf(trace->seq, "        - ");
-+		}
+--- a/arch/sparc/kernel/prom_64.c
++++ b/arch/sparc/kernel/prom_64.c
+@@ -483,7 +483,9 @@ static void *record_one_cpu(struct devic
+ 	ncpus_probed++;
+ #ifdef CONFIG_SMP
+ 	set_cpu_present(cpuid, true);
+-	set_cpu_possible(cpuid, true);
 +
-+		if (!params->no_thread) {
-+			if (data->hist[cpu].thread_count)
-+				trace_seq_printf(trace->seq, "%9llu ",
-+						data->hist[cpu].max_thread);
-+			else
-+				trace_seq_printf(trace->seq, "        - ");
-+		}
-+
-+		if (params->user_hist) {
-+			if (data->hist[cpu].user_count)
-+				trace_seq_printf(trace->seq, "%9llu ",
-+						data->hist[cpu].max_user);
-+			else
-+				trace_seq_printf(trace->seq, "        - ");
-+		}
- 	}
- 	trace_seq_printf(trace->seq, "\n");
- 	trace_seq_do_printf(trace->seq);
++	if (num_possible_cpus() < nr_cpu_ids)
++		set_cpu_possible(cpuid, true);
+ #endif
+ 	return NULL;
+ }
+--- a/arch/sparc/kernel/setup_64.c
++++ b/arch/sparc/kernel/setup_64.c
+@@ -684,7 +684,6 @@ void __init setup_arch(char **cmdline_p)
+ 
+ 	paging_init();
+ 	init_sparc64_elf_hwcap();
+-	smp_fill_in_cpu_possible_map();
+ 	/*
+ 	 * Once the OF device tree and MDESC have been setup and nr_cpus has
+ 	 * been parsed, we know the list of possible cpus.  Therefore we can
+--- a/arch/sparc/kernel/smp_64.c
++++ b/arch/sparc/kernel/smp_64.c
+@@ -1220,20 +1220,6 @@ void __init smp_setup_processor_id(void)
+ 		xcall_deliver_impl = hypervisor_xcall_deliver;
+ }
+ 
+-void __init smp_fill_in_cpu_possible_map(void)
+-{
+-	int possible_cpus = num_possible_cpus();
+-	int i;
+-
+-	if (possible_cpus > nr_cpu_ids)
+-		possible_cpus = nr_cpu_ids;
+-
+-	for (i = 0; i < possible_cpus; i++)
+-		set_cpu_possible(i, true);
+-	for (; i < NR_CPUS; i++)
+-		set_cpu_possible(i, false);
+-}
+-
+ void smp_fill_in_sib_core_maps(void)
+ {
+ 	unsigned int i;
 
 
