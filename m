@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D49384;
-	Thu, 13 Jun 2024 12:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EBE384;
+	Thu, 13 Jun 2024 12:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281980; cv=none; b=TUxv0blom4rpiECgawlnN01B7WwTbH4kFXLaVQvUOYAZCMtKimkX5SbpZ3nX7N9ymIiJX/3dQYOzwlDZTE5ztxXmgxb4zx8QFBBx3ypnmnmIM2gwDKE8xYvwIB/K1YGKYzwcmbb5zez+dxl41R5+UNRMlH8GY4auREsNy+wjGwg=
+	t=1718281983; cv=none; b=PbF9PLesBeriBGgV12C+ytmlKM4h9lcmcbiJ67iFh+9MXGPO58SV5JsCvjkvSZ1C9+qjTpaD7FjRINiIfXPhyAiYbhbcxu5g6CzpT9GUjuLfv9b0TxCgz6dsSo4eTzEq1sgavHwgNiT6R0OhX5B4e4yl02xXUt+vSCxO79BiTPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281980; c=relaxed/simple;
-	bh=khD6AEXs6WjYw2MOj6iqVM0Vrhf4TVe9CPTl0qTPwkI=;
+	s=arc-20240116; t=1718281983; c=relaxed/simple;
+	bh=WKuTV4Y0lmpZEaVx+WbsP2M77t/pxJARSXqOij8JDJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ng6UIfkHsaT+6YYrNg6u/UisOg3ehkvnKpmhKIoTcYeOYWbi9/yZ0rxhbpSUppLNv3kht+Sg+ANX7UCWv3i7BvPpiK6IBK9crCYEURycMKUGtAQy1+BD4TyWWOqk6mCvZs7OuFxmxexNY5VdASM5GFyxZ8DVqgsWXMeFyYqLhRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AMh3Jf4u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EFNBqQIBjoNatUcfCamkkdtnUmSFUjTBOiSuPNLo/cRC1fPV2dG90DMCWDAlrOHLiYw/UBmCu6U6ho/uh591WT67amE8gNhSF8QsQ1Ax8ATEaXIQ5X0IG9XcUcez2f1TrYIU2usIN2NAFslG0aGp0xH/L2xCUId6e44OhX7Tykw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKCknBUL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMh3Jf4u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB28C4AF1A;
-	Thu, 13 Jun 2024 12:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKCknBUL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF6BC2BBFC;
+	Thu, 13 Jun 2024 12:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281979;
-	bh=khD6AEXs6WjYw2MOj6iqVM0Vrhf4TVe9CPTl0qTPwkI=;
+	s=korg; t=1718281982;
+	bh=WKuTV4Y0lmpZEaVx+WbsP2M77t/pxJARSXqOij8JDJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AMh3Jf4uzDYO/Kw+Pzuc/ezJtCpipWZ/765DySoiz464Bx5DXg7q2oRw3lecnQmjr
-	 jFS5kKeAmiG1/ixIFNRJ+Nm3A3If7f9ZLaguoQCfwB3MPWfpFqjoYJnL3pxRRtgkdP
-	 fc82s0umDmVrOjwCH81nXgr3UqdfkqXBcOYwI1XQ=
+	b=TKCknBULWJdEEdkKgoJUVL/NX97z5Nw5tjd9dR+futAMMQ4t4Nu+ENCxrXmTozDG+
+	 K8vBrw24PPH7MnsIY4PlRnbvqZ5IPxNdNYpuN/zFdBZVazDcsayy7BzEN3Xz2umewi
+	 NeIaN6eu4JKoR5tkVbdAmTeGFag/XEaWNEWq8lM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuri Karpov <YKarpov@ispras.ru>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/402] scsi: hpsa: Fix allocation size for Scsi_Host private data
-Date: Thu, 13 Jun 2024 13:30:38 +0200
-Message-ID: <20240613113305.294941213@linuxfoundation.org>
+Subject: [PATCH 5.15 115/402] ipv6: sr: add missing seg6_local_exit
+Date: Thu, 13 Jun 2024 13:31:12 +0200
+Message-ID: <20240613113306.618351884@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,39 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuri Karpov <YKarpov@ispras.ru>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 504e2bed5d50610c1836046c0c195b0a6dba9c72 ]
+[ Upstream commit 3321687e321307629c71b664225b861ebf3e5753 ]
 
-struct Scsi_Host private data contains pointer to struct ctlr_info.
+Currently, we only call seg6_local_exit() in seg6_init() if
+seg6_local_init() failed. But forgot to call it in seg6_exit().
 
-Restore allocation of only 8 bytes to store pointer in struct Scsi_Host
-private data area.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: bbbd25499100 ("scsi: hpsa: Fix allocation size for scsi_host_alloc()")
-Signed-off-by: Yuri Karpov <YKarpov@ispras.ru>
-Link: https://lore.kernel.org/r/20240312170447.743709-1-YKarpov@ispras.ru
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: d1df6fd8a1d2 ("ipv6: sr: define core operations for seg6local lightweight tunnel")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240509131812.1662197-2-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hpsa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/seg6.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index 8aa5c22ae3ff9..b54c8aa8e8035 100644
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -5848,7 +5848,7 @@ static int hpsa_scsi_host_alloc(struct ctlr_info *h)
- {
- 	struct Scsi_Host *sh;
- 
--	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(struct ctlr_info));
-+	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(struct ctlr_info *));
- 	if (sh == NULL) {
- 		dev_err(&h->pdev->dev, "scsi_host_alloc failed\n");
- 		return -ENOMEM;
+diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
+index dc434e4ee6d66..d626e0767a069 100644
+--- a/net/ipv6/seg6.c
++++ b/net/ipv6/seg6.c
+@@ -559,6 +559,7 @@ void seg6_exit(void)
+ 	seg6_hmac_exit();
+ #endif
+ #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
++	seg6_local_exit();
+ 	seg6_iptunnel_exit();
+ #endif
+ 	unregister_pernet_subsys(&ip6_segments_ops);
 -- 
 2.43.0
 
