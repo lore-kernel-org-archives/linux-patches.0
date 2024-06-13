@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82AF23209;
-	Thu, 13 Jun 2024 12:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687473209;
+	Thu, 13 Jun 2024 12:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281668; cv=none; b=JYVQ1qPDKzWF001f6Jp+lhaZJ8EkR3Z2YH2cTcZR7QulMQ/Bap5f+XmAKItw8OXZce4xRtHvmqa1o4oFxBlB1iC5/m2KcNcIHFA0C6M9dP52FFCcE5LwMapb5cV1glHeRtzs9oC22hUalTq8EK5XN1zFeJa7IwaWBsAdmD/5nn0=
+	t=1718281671; cv=none; b=nzewSbR+6U055bEQzENJCFxnCO4u3AdwoBwNIcP0/tfzyWI1yCFE8C7ghle+sOVOmVdutGMEzW6tch1/gea6b8whI6Onyi+I1JDZeShOmMa9r/jSiscjKKgm9AHkhOMxFZrf9VoBqXz+uoPiR1aT157RRdSYZBW+pXuhaWcc/Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281668; c=relaxed/simple;
-	bh=iQy1EhoEzEjTfnJGNAhEVFHneDj+5rJSi181RUFrgYs=;
+	s=arc-20240116; t=1718281671; c=relaxed/simple;
+	bh=xhRkYyLSF2q5Cly00cBqLBIam8GGrhVFt30KLupcgW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pSaUgzM8iJkbvg6z1Sa5aixQSn0Qn+GuYlgY/owKNuEvKe+L2MW0NbxK23ARSQItR2C1gsgYzl2JSmiowljn/wxDnrgVuBYYlqlZpGqzkNRrZHckK+deY7dbCWHRogE6Y7ztq5v1+OkuEle4Wc/jr1CBSCX9E1rHrWcZUlz81N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HosibRaH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VDCTaY+TrnU/tJ2zZ9qUvRzKEVZv9hYlnYOIBglM+1H7bHj3g3nBT02YqlGCcCI9+cNe4OZeLh/Zu7n/6nEzIlTkac6XH/HJId+fp1vjISF9yPgpYNEGUFJ9klGlyCtC2CwrkaYX6eRSdS9pX67onDTkuOdjku9QlwTKZW0vXok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esWBNgnk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HosibRaH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6ACC2BBFC;
-	Thu, 13 Jun 2024 12:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esWBNgnk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7340C2BBFC;
+	Thu, 13 Jun 2024 12:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281668;
-	bh=iQy1EhoEzEjTfnJGNAhEVFHneDj+5rJSi181RUFrgYs=;
+	s=korg; t=1718281671;
+	bh=xhRkYyLSF2q5Cly00cBqLBIam8GGrhVFt30KLupcgW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HosibRaHoxzT+vQjrExFlty5Vg+DssfJt2GPnbXqeSA+X9UKP8j9WZDFArJO6pnQz
-	 leJJi/q8cNfQxenfdanCtgl24tbuzkKg6EUdx5TY3IWN09uwzr3cOHUvQY93iOj4SR
-	 ncYq2DsuRa0GiWpxOAgZ0bKhpqPPsMIce1uZOPhs=
+	b=esWBNgnk4a9USjxXAd5LE7muoDcjwcUZAk2Cvb/MSzG6qqzAJPZij/j1xCaEQu9vb
+	 s2sWvztI6dEDtNVAbraLzN/K60KTjh1mbliSOCV5O9HZCFB8DY3TAHS77RLbHTD4PZ
+	 VDqrDsPav039GtLnb+Xgf7EYFcxem0NqlgLhRIPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 5.15 005/402] serial: 8250_bcm7271: use default_mux_rate if possible
-Date: Thu, 13 Jun 2024 13:29:22 +0200
-Message-ID: <20240613113302.334948011@linuxfoundation.org>
+	Ken Milmore <ken.milmore@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 006/402] Revert "r8169: dont try to disable interrupts if NAPI is, scheduled already"
+Date: Thu, 13 Jun 2024 13:29:23 +0200
+Message-ID: <20240613113302.374681310@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -50,175 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Berger <opendmb@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 614a19b89ca43449196a8af1afac7d55c6781687 upstream.
+commit eabb8a9be1e4a12f3bf37ceb7411083e3775672d upstream.
 
-There is a scenario when resuming from some power saving states
-with no_console_suspend where console output can be generated
-before the 8250_bcm7271 driver gets the opportunity to restore
-the baud_mux_clk frequency. Since the baud_mux_clk is at its
-default frequency at this time the output can be garbled until
-the driver gets the opportunity to resume.
+This reverts commit 7274c4147afbf46f45b8501edbdad6da8cd013b9.
 
-Since this is only an issue with console use of the serial port
-during that window and the console isn't likely to use baud
-rates that require alternate baud_mux_clk frequencies, allow the
-driver to select the default_mux_rate if it is accurate enough.
+Ken reported that RTL8125b can lock up if gro_flush_timeout has the
+default value of 20000 and napi_defer_hard_irqs is set to 0.
+In this scenario device interrupts aren't disabled, what seems to
+trigger some silicon bug under heavy load. I was able to reproduce this
+behavior on RTL8168h. Fix this by reverting 7274c4147afb.
 
-Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
+Fixes: 7274c4147afb ("r8169: don't try to disable interrupts if NAPI is scheduled already")
 Cc: stable@vger.kernel.org
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20240424222559.1844045-1-opendmb@gmail.com
+Reported-by: Ken Milmore <ken.milmore@gmail.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/9b5b6f4c-4f54-4b90-b0b3-8d8023c2e780@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_bcm7271.c |  101 +++++++++++++++++++--------------
- 1 file changed, 60 insertions(+), 41 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_bcm7271.c
-+++ b/drivers/tty/serial/8250/8250_bcm7271.c
-@@ -674,18 +674,46 @@ static void init_real_clk_rates(struct d
- 	clk_set_rate(priv->baud_mux_clk, priv->default_mux_rate);
- }
- 
-+static u32 find_quot(struct device *dev, u32 freq, u32 baud, u32 *percent)
-+{
-+	u32 quot;
-+	u32 rate;
-+	u64 hires_rate;
-+	u64 hires_baud;
-+	u64 hires_err;
-+
-+	rate = freq / 16;
-+	quot = DIV_ROUND_CLOSEST(rate, baud);
-+	if (!quot)
-+		return 0;
-+
-+	/* increase resolution to get xx.xx percent */
-+	hires_rate = div_u64((u64)rate * 10000, (u64)quot);
-+	hires_baud = (u64)baud * 10000;
-+
-+	/* get the delta */
-+	if (hires_rate > hires_baud)
-+		hires_err = (hires_rate - hires_baud);
-+	else
-+		hires_err = (hires_baud - hires_rate);
-+
-+	*percent = (unsigned long)DIV_ROUND_CLOSEST_ULL(hires_err, baud);
-+
-+	dev_dbg(dev, "Baud rate: %u, MUX Clk: %u, Error: %u.%u%%\n",
-+		baud, freq, *percent / 100, *percent % 100);
-+
-+	return quot;
-+}
-+
- static void set_clock_mux(struct uart_port *up, struct brcmuart_priv *priv,
- 			u32 baud)
- {
- 	u32 percent;
- 	u32 best_percent = UINT_MAX;
- 	u32 quot;
-+	u32 freq;
- 	u32 best_quot = 1;
--	u32 rate;
--	int best_index = -1;
--	u64 hires_rate;
--	u64 hires_baud;
--	u64 hires_err;
-+	u32 best_freq = 0;
- 	int rc;
- 	int i;
- 	int real_baud;
-@@ -694,44 +722,35 @@ static void set_clock_mux(struct uart_po
- 	if (priv->baud_mux_clk == NULL)
- 		return;
- 
--	/* Find the closest match for specified baud */
--	for (i = 0; i < ARRAY_SIZE(priv->real_rates); i++) {
--		if (priv->real_rates[i] == 0)
--			continue;
--		rate = priv->real_rates[i] / 16;
--		quot = DIV_ROUND_CLOSEST(rate, baud);
--		if (!quot)
--			continue;
--
--		/* increase resolution to get xx.xx percent */
--		hires_rate = (u64)rate * 10000;
--		hires_baud = (u64)baud * 10000;
--
--		hires_err = div_u64(hires_rate, (u64)quot);
--
--		/* get the delta */
--		if (hires_err > hires_baud)
--			hires_err = (hires_err - hires_baud);
--		else
--			hires_err = (hires_baud - hires_err);
--
--		percent = (unsigned long)DIV_ROUND_CLOSEST_ULL(hires_err, baud);
--		dev_dbg(up->dev,
--			"Baud rate: %u, MUX Clk: %u, Error: %u.%u%%\n",
--			baud, priv->real_rates[i], percent / 100,
--			percent % 100);
--		if (percent < best_percent) {
--			best_percent = percent;
--			best_index = i;
--			best_quot = quot;
-+	/* Try default_mux_rate first */
-+	quot = find_quot(up->dev, priv->default_mux_rate, baud, &percent);
-+	if (quot) {
-+		best_percent = percent;
-+		best_freq = priv->default_mux_rate;
-+		best_quot = quot;
-+	}
-+	/* If more than 1% error, find the closest match for specified baud */
-+	if (best_percent > 100) {
-+		for (i = 0; i < ARRAY_SIZE(priv->real_rates); i++) {
-+			freq = priv->real_rates[i];
-+			if (freq == 0 || freq == priv->default_mux_rate)
-+				continue;
-+			quot = find_quot(up->dev, freq, baud, &percent);
-+			if (!quot)
-+				continue;
-+
-+			if (percent < best_percent) {
-+				best_percent = percent;
-+				best_freq = freq;
-+				best_quot = quot;
-+			}
- 		}
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4617,10 +4617,8 @@ static irqreturn_t rtl8169_interrupt(int
+ 		rtl_schedule_task(tp, RTL_FLAG_TASK_RESET_PENDING);
  	}
--	if (best_index == -1) {
-+	if (!best_freq) {
- 		dev_err(up->dev, "Error, %d BAUD rate is too fast.\n", baud);
- 		return;
- 	}
--	rate = priv->real_rates[best_index];
--	rc = clk_set_rate(priv->baud_mux_clk, rate);
-+	rc = clk_set_rate(priv->baud_mux_clk, best_freq);
- 	if (rc)
- 		dev_err(up->dev, "Error selecting BAUD MUX clock\n");
  
-@@ -740,8 +759,8 @@ static void set_clock_mux(struct uart_po
- 		dev_err(up->dev, "Error, baud: %d has %u.%u%% error\n",
- 			baud, percent / 100, percent % 100);
+-	if (napi_schedule_prep(&tp->napi)) {
+-		rtl_irq_disable(tp);
+-		__napi_schedule(&tp->napi);
+-	}
++	rtl_irq_disable(tp);
++	napi_schedule(&tp->napi);
+ out:
+ 	rtl_ack_events(tp, status);
  
--	real_baud = rate / 16 / best_quot;
--	dev_dbg(up->dev, "Selecting BAUD MUX rate: %u\n", rate);
-+	real_baud = best_freq / 16 / best_quot;
-+	dev_dbg(up->dev, "Selecting BAUD MUX rate: %u\n", best_freq);
- 	dev_dbg(up->dev, "Requested baud: %u, Actual baud: %u\n",
- 		baud, real_baud);
- 
-@@ -750,7 +769,7 @@ static void set_clock_mux(struct uart_po
- 	i += (i / 2);
- 	priv->char_wait = ns_to_ktime(i);
- 
--	up->uartclk = rate;
-+	up->uartclk = best_freq;
- }
- 
- static void brcmstb_set_termios(struct uart_port *up,
 
 
