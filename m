@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45D56EB56;
-	Thu, 13 Jun 2024 12:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDE11448C1;
+	Thu, 13 Jun 2024 12:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280617; cv=none; b=HXb7Dvm19hcrauATOuZr/ufJV9mVL2QC3O+DixEuAPxjd/VbpLODgaPotiJfnrT2OAvWQr3Lm3JAB88oQeUUqpXfZTaZFS9+Gk+ahOVi1A0jA2K6lcoQG9V3V1P70gtn+OMXEI72kSB7AUstixb8EkXN0Tj819svQch1BntGd40=
+	t=1718280620; cv=none; b=hwALDvbt7HInM6V27ziko9KiddEbBK3jYZVxOXuGQ5V5TfA7V+WOBKFg67AavrWlKBzPsqXXqnxDoeJEb4Ehoxx/EkIfYjXFYfAu4KLiokC7ICcyWuAzjK7kFkWkxjR07ilaZjUVofSme1cUIVAjCk+BVFc6adIIOIPAnC2Uw6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280617; c=relaxed/simple;
-	bh=FxCElrmZoq3RCxY86ps4Hu5mpbNn20q/SF9Gz1RCzsI=;
+	s=arc-20240116; t=1718280620; c=relaxed/simple;
+	bh=cvb64Eo630MY8N+V1/2yAaLGWIEpAY67HzPHjgtJxss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GCAGExEbgQS/EifECDMC1wlmL3emxpTAXzIe08HUxW9l8wX3O08AblpJBiUrr6TIZzP9I9OaGTCmTY4PWBmPXvnggB+xgAqutMs5hG66TgSnKROMRjmlzoxVc5+oGQhQuQw8aG5VgJYJhJPKKcxT80cmNSkXnxiRxEkyDhHwWx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siDCwNvH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U/B3dj8ucG+E1P8AUhDbFxh+mJ3F+j/LfB+VZmQf4YmKFd9UtNXpJpVsWeNeUnsS4gC43IWM02Fi++XFlJ3UPpLaLbmpi6K+M0B6Zh16YZCpeoQ0gKvpJMuxJhmTc53z+SdQ7yEBq/o8jN6C/03X1weT4rv7vNDTwt5PislYOrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVfv8Efb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siDCwNvH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA2AC2BBFC;
-	Thu, 13 Jun 2024 12:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVfv8Efb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4813FC2BBFC;
+	Thu, 13 Jun 2024 12:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280617;
-	bh=FxCElrmZoq3RCxY86ps4Hu5mpbNn20q/SF9Gz1RCzsI=;
+	s=korg; t=1718280620;
+	bh=cvb64Eo630MY8N+V1/2yAaLGWIEpAY67HzPHjgtJxss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=siDCwNvHpcdBEY/bjYtm/vdK2MlKyxbzVZrsW09dPTlK3RESSmuFDW8rtRfndmopX
-	 7XsYSLOlivp2q9tJsqhooVep+0dudef00hy8uZMB6p6/iJVf+Ut8/Ryq3XAkW2waLc
-	 AGgr5BjhYi0q2kR4lA50ngr0TU2Gq5agVICujQNY=
+	b=BVfv8Efbr0NlEn0BWebBmrN4FPsr5ziNCH7PNLWowxZvilng96Itcn75hMA5CZqfL
+	 bg2MTmgtx05yQIsEBBbekSsx2zAtXXd/syMAKCPHm5WAq1RbAihnawfwctc/S+di1C
+	 kXqVQcdqOkluDwlHe6/iMPrcgsm2UaGEYD96BSWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 115/137] parisc: Define sigset_t in parisc uapi header
-Date: Thu, 13 Jun 2024 13:34:55 +0200
-Message-ID: <20240613113227.759892242@linuxfoundation.org>
+	Marc Hartmayer <mhartmay@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.6 116/137] s390/ap: Fix crash in AP internal function modify_bitmap()
+Date: Thu, 13 Jun 2024 13:34:56 +0200
+Message-ID: <20240613113227.800614065@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -49,72 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@kernel.org>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit 487fa28fa8b60417642ac58e8beda6e2509d18f9 upstream.
+commit d4f9d5a99a3fd1b1c691b7a1a6f8f3f25f4116c9 upstream.
 
-The util-linux debian package fails to build on parisc, because
-sigset_t isn't defined in asm/signal.h when included from userspace.
-Move the sigset_t type from internal header to the uapi header to fix the
-build.
+A system crash like this
 
-Link: https://buildd.debian.org/status/fetch.php?pkg=util-linux&arch=hppa&ver=2.40-7&stamp=1714163443&raw=0
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v6.0+
+  Failing address: 200000cb7df6f000 TEID: 200000cb7df6f403
+  Fault in home space mode while using kernel ASCE.
+  AS:00000002d71bc007 R3:00000003fe5b8007 S:000000011a446000 P:000000015660c13d
+  Oops: 0038 ilc:3 [#1] PREEMPT SMP
+  Modules linked in: mlx5_ib ...
+  CPU: 8 PID: 7556 Comm: bash Not tainted 6.9.0-rc7 #8
+  Hardware name: IBM 3931 A01 704 (LPAR)
+  Krnl PSW : 0704e00180000000 0000014b75e7b606 (ap_parse_bitmap_str+0x10e/0x1f8)
+  R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:2 PM:0 RI:0 EA:3
+  Krnl GPRS: 0000000000000001 ffffffffffffffc0 0000000000000001 00000048f96b75d3
+  000000cb00000100 ffffffffffffffff ffffffffffffffff 000000cb7df6fce0
+  000000cb7df6fce0 00000000ffffffff 000000000000002b 00000048ffffffff
+  000003ff9b2dbc80 200000cb7df6fcd8 0000014bffffffc0 000000cb7df6fbc8
+  Krnl Code: 0000014b75e7b5fc: a7840047            brc     8,0000014b75e7b68a
+  0000014b75e7b600: 18b2                lr      %r11,%r2
+  #0000014b75e7b602: a7f4000a            brc     15,0000014b75e7b616
+  >0000014b75e7b606: eb22d00000e6        laog    %r2,%r2,0(%r13)
+  0000014b75e7b60c: a7680001            lhi     %r6,1
+  0000014b75e7b610: 187b                lr      %r7,%r11
+  0000014b75e7b612: 84960021            brxh    %r9,%r6,0000014b75e7b654
+  0000014b75e7b616: 18e9                lr      %r14,%r9
+  Call Trace:
+  [<0000014b75e7b606>] ap_parse_bitmap_str+0x10e/0x1f8
+  ([<0000014b75e7b5dc>] ap_parse_bitmap_str+0xe4/0x1f8)
+  [<0000014b75e7b758>] apmask_store+0x68/0x140
+  [<0000014b75679196>] kernfs_fop_write_iter+0x14e/0x1e8
+  [<0000014b75598524>] vfs_write+0x1b4/0x448
+  [<0000014b7559894c>] ksys_write+0x74/0x100
+  [<0000014b7618a440>] __do_syscall+0x268/0x328
+  [<0000014b761a3558>] system_call+0x70/0x98
+  INFO: lockdep is turned off.
+  Last Breaking-Event-Address:
+  [<0000014b75e7b636>] ap_parse_bitmap_str+0x13e/0x1f8
+  Kernel panic - not syncing: Fatal exception: panic_on_oops
+
+occured when /sys/bus/ap/a[pq]mask was updated with a relative mask value
+(like +0x10-0x12,+60,-90) with one of the numeric values exceeding INT_MAX.
+
+The fix is simple: use unsigned long values for the internal variables. The
+correct checks are already in place in the function but a simple int for
+the internal variables was used with the possibility to overflow.
+
+Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Tested-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/signal.h      |   12 ------------
- arch/parisc/include/uapi/asm/signal.h |   10 ++++++++++
- 2 files changed, 10 insertions(+), 12 deletions(-)
+ drivers/s390/crypto/ap_bus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/parisc/include/asm/signal.h
-+++ b/arch/parisc/include/asm/signal.h
-@@ -4,23 +4,11 @@
+--- a/drivers/s390/crypto/ap_bus.c
++++ b/drivers/s390/crypto/ap_bus.c
+@@ -1098,7 +1098,7 @@ static int hex2bitmap(const char *str, u
+  */
+ static int modify_bitmap(const char *str, unsigned long *bitmap, int bits)
+ {
+-	int a, i, z;
++	unsigned long a, i, z;
+ 	char *np, sign;
  
- #include <uapi/asm/signal.h>
- 
--#define _NSIG		64
--/* bits-per-word, where word apparently means 'long' not 'int' */
--#define _NSIG_BPW	BITS_PER_LONG
--#define _NSIG_WORDS	(_NSIG / _NSIG_BPW)
--
- # ifndef __ASSEMBLY__
- 
- /* Most things should be clean enough to redefine this at will, if care
-    is taken to make libc match.  */
- 
--typedef unsigned long old_sigset_t;		/* at least 32 bits */
--
--typedef struct {
--	/* next_signal() assumes this is a long - no choice */
--	unsigned long sig[_NSIG_WORDS];
--} sigset_t;
--
- #include <asm/sigcontext.h>
- 
- #endif /* !__ASSEMBLY */
---- a/arch/parisc/include/uapi/asm/signal.h
-+++ b/arch/parisc/include/uapi/asm/signal.h
-@@ -57,10 +57,20 @@
- 
- #include <asm-generic/signal-defs.h>
- 
-+#define _NSIG		64
-+#define _NSIG_BPW	(sizeof(unsigned long) * 8)
-+#define _NSIG_WORDS	(_NSIG / _NSIG_BPW)
-+
- # ifndef __ASSEMBLY__
- 
- #  include <linux/types.h>
- 
-+typedef unsigned long old_sigset_t;	/* at least 32 bits */
-+
-+typedef struct {
-+	unsigned long sig[_NSIG_WORDS];
-+} sigset_t;
-+
- /* Avoid too many header ordering problems.  */
- struct siginfo;
- 
+ 	/* bits needs to be a multiple of 8 */
 
 
