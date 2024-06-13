@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8A31428F0;
-	Thu, 13 Jun 2024 12:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07C114535E;
+	Thu, 13 Jun 2024 12:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280008; cv=none; b=B4vLT7yGQyrdfMKKTB5g6pYV3FR6vLYk/03pHl8XlrUfA6Yx5tHAiYJquODNZywlOF7Qhxv/jt/bx4XyivXbQwbZV6l9pxq15qHFHBWSRYUmHAOdOh9cUyZURIxxDTvLeb5IfacHWeqOlEGb+ORzUxgJM0tVozwJDLJr6Ay5KWk=
+	t=1718280011; cv=none; b=bker7zavoZ3BuxXUq3naKNBXy8GqWZwwud1LzF79zyZy7ruIcUxNQZ8/RQRD6M0//MpaIKvvN5VfZwqjMSxYvum/IGhU4/HROIfgrgF/MiJf7JbrMjM0xpWoalxn8q/ByuqrRQOFLVUz4VLYlm1AmWuou2SUrsr9/hrh9BTZk2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280008; c=relaxed/simple;
-	bh=sJGSwo/1On3tMuuR+Rg4kdWuwI7nhqsH2UvO/pZio+U=;
+	s=arc-20240116; t=1718280011; c=relaxed/simple;
+	bh=4T36Y1RBxruxdyh+mg6c/FRqaCWbQsmEnq3qcoeFqfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WytPV7iBArhPQ1PUU05AkiinN6lLOpMmANumBlg2EoWpNam1RHrfQAOuKmiiBeSRerUsRUwnaEjQu++ETj/WDxSpVesPoyk3QQK8gExsQlVDFxAEC1dCEl67c4zm+YQE2NvPhzTC8umjCd51iL6Lx/7HieS2fZK+ykHdTl3EjzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFXffDRV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UAOm/vMd4oUeQa3w9JN5jS9s//3Fk45gu7rKEiL5fraCSzwfEIk2jrBQZnfe+oVoK6QGXFJ7AWUL5/K/+lxlDZgdvUNs3GhDEdOHO+DG8aJtzV8nSAi9YT8gt0xPajMaI0A3PVYZWFW5/BtxcJfH654PH7IZ46IS1nxD67WgDEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urnhMY6s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFXffDRV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F23C2BBFC;
-	Thu, 13 Jun 2024 12:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urnhMY6s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47163C2BBFC;
+	Thu, 13 Jun 2024 12:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280008;
-	bh=sJGSwo/1On3tMuuR+Rg4kdWuwI7nhqsH2UvO/pZio+U=;
+	s=korg; t=1718280011;
+	bh=4T36Y1RBxruxdyh+mg6c/FRqaCWbQsmEnq3qcoeFqfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YFXffDRV5hDCp01l8cb0ilGUHyK+gBO1siZCsmQcLYPT45PmI+tWztbGjjjYghLPU
-	 LgcVpWrmY4/AnxK0i6NpHJOtRJMYHK2Cd1aJGy0CjtIJQDSGZ3xh60MoiQUJV4CROp
-	 +I1V1ckgoJwOP6L+IB5KCHlS0mPPbCkUsXqKkgwc=
+	b=urnhMY6szCtKsgA2+D4u3AXogClpDu5V4nyPmWxy0vIvrm5UoLuLORQ+MhRSAC0pB
+	 Bu5OPNbM7lSZARMyYfZFG6vlNUpnzwtPg7RhawAuxnM8Br3Jg8T0VxFgrtA7f5/RGl
+	 zsy0zeRlRRN6AHbuASYVA8AkRJLqiLtbnbnsQZv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wulff <chris.wulff@biamp.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 111/202] usb: gadget: u_audio: Clear uac pointer when freed.
-Date: Thu, 13 Jun 2024 13:33:29 +0200
-Message-ID: <20240613113232.045353658@linuxfoundation.org>
+Subject: [PATCH 5.4 112/202] stm class: Fix a double free in stm_register_device()
+Date: Thu, 13 Jun 2024 13:33:30 +0200
+Message-ID: <20240613113232.083886226@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.759341286@linuxfoundation.org>
 References: <20240613113227.759341286@linuxfoundation.org>
@@ -50,38 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Wulff <Chris.Wulff@biamp.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit a2cf936ebef291ef7395172b9e2f624779fb6dc0 ]
+[ Upstream commit 3df463865ba42b8f88a590326f4c9ea17a1ce459 ]
 
-This prevents use of a stale pointer if functions are called after
-g_cleanup that shouldn't be. This doesn't fix any races, but converts
-a possibly silent kernel memory corruption into an obvious NULL pointer
-dereference report.
+The put_device(&stm->dev) call will trigger stm_device_release() which
+frees "stm" so the vfree(stm) on the next line is a double free.
 
-Fixes: eb9fecb9e69b ("usb: gadget: f_uac2: split out audio core")
-Signed-off-by: Chris Wulff <chris.wulff@biamp.com>
-Link: https://lore.kernel.org/stable/CO1PR17MB54194226DA08BFC9EBD8C163E1172%40CO1PR17MB5419.namprd17.prod.outlook.com
-Link: https://lore.kernel.org/r/CO1PR17MB54194226DA08BFC9EBD8C163E1172@CO1PR17MB5419.namprd17.prod.outlook.com
+Fixes: 389b6699a2aa ("stm class: Fix stm device initialization order")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Link: https://lore.kernel.org/r/20240429130119.1518073-2-alexander.shishkin@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/u_audio.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwtracing/stm/core.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/u_audio.c b/drivers/usb/gadget/function/u_audio.c
-index 53b30de16a896..994316d51a0e1 100644
---- a/drivers/usb/gadget/function/u_audio.c
-+++ b/drivers/usb/gadget/function/u_audio.c
-@@ -624,6 +624,8 @@ void g_audio_cleanup(struct g_audio *g_audio)
- 		return;
+diff --git a/drivers/hwtracing/stm/core.c b/drivers/hwtracing/stm/core.c
+index 603b83ac50852..1cfae56c4fdbd 100644
+--- a/drivers/hwtracing/stm/core.c
++++ b/drivers/hwtracing/stm/core.c
+@@ -878,8 +878,11 @@ int stm_register_device(struct device *parent, struct stm_data *stm_data,
+ 		return -ENOMEM;
  
- 	uac = g_audio->uac;
-+	g_audio->uac = NULL;
-+
- 	card = uac->card;
- 	if (card)
- 		snd_card_free_when_closed(card);
+ 	stm->major = register_chrdev(0, stm_data->name, &stm_fops);
+-	if (stm->major < 0)
+-		goto err_free;
++	if (stm->major < 0) {
++		err = stm->major;
++		vfree(stm);
++		return err;
++	}
+ 
+ 	device_initialize(&stm->dev);
+ 	stm->dev.devt = MKDEV(stm->major, 0);
+@@ -923,10 +926,8 @@ int stm_register_device(struct device *parent, struct stm_data *stm_data,
+ err_device:
+ 	unregister_chrdev(stm->major, stm_data->name);
+ 
+-	/* matches device_initialize() above */
++	/* calls stm_device_release() */
+ 	put_device(&stm->dev);
+-err_free:
+-	vfree(stm);
+ 
+ 	return err;
+ }
 -- 
 2.43.0
 
