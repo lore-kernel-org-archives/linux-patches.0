@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DA3384;
-	Thu, 13 Jun 2024 12:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18D84A0F;
+	Thu, 13 Jun 2024 12:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282746; cv=none; b=JNWJglZTujdk4tRZAejuI9C8IGv4jNcqOReaKFIUgrgJvxvIoYjXxdXzQQv9pT6lgxom4vC5QLl3FWJ4GrIkXKdnfyURbfFCKdCRbNTtYV+XdovkVvb8xtlaKnAa+4exy9G33Vz7xiOTvI7EZtLD6VvzWYGKm9KynC3VVLjh5jc=
+	t=1718282749; cv=none; b=mR29QVL2O2t6EUaKUgwMZhMR3QY6WtuxyVo+FDt/JfsXfwObLCrDGigdffC/TWYnQ+6q/t5TsVv2oSYv+PO1L0SRNUmM/91OtuV7jRPtxqnrPDNuWpgf9jRRiDzw2Hqbew4V1EvRYR915wxVsXvwbdsx8jYAzrUZbTHZkYVus3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282746; c=relaxed/simple;
-	bh=1mOFNcrKMK0BG7QvmyLhzY27h7f3vqwwULP8jjM6Zjg=;
+	s=arc-20240116; t=1718282749; c=relaxed/simple;
+	bh=Z+LvWwHiBCx2cmtGG4H1KLzqso3eT1FF0vdSZ1njee4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J6HwVp7iAz6Ou7WjcoEmgrE35rZdZPAA2cZ2iNmDyRsofPwTPrgaiUrQcc+KbqeVyIk7yJjpTTcy3Mmb8xYdCbUk/rl8FIymnhTkOPbpB4V1dkP+x2EFPemcejBLKoqUe95lmIwX6XLioZP2vOSkoi4vJzUSUISdjMBtZbitPj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6RRgQ/W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jjrz3cxAzZMqA9DZ9m8mAH9rb1fNBjINmpf0e2NXga3fbZSm5UR5s+3lDCiEFqsMtgwxOpV8FC06/Gf5XnzrzB8BSNYCnat/wj/ZIlw6ni2Rbp42tNN8aU8sm7DicwlQJcekqYfk3nCCrIsXFXNoESDAAI/oprWS8T9I0yZV45c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=queYmYCO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6RRgQ/W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEBBC2BBFC;
-	Thu, 13 Jun 2024 12:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="queYmYCO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12FAC2BBFC;
+	Thu, 13 Jun 2024 12:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282746;
-	bh=1mOFNcrKMK0BG7QvmyLhzY27h7f3vqwwULP8jjM6Zjg=;
+	s=korg; t=1718282749;
+	bh=Z+LvWwHiBCx2cmtGG4H1KLzqso3eT1FF0vdSZ1njee4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6RRgQ/WBsw0ctEILttK91JMAKurpUdHMRfOyq86W60LHnie652CiPlqdQpqJeMWV
-	 a91FxPrm/qMDwn7CCGh9T6/xMvWlgRX7nmW1eq0W0COo29r4i6oSznttEg/Xr2RB9u
-	 PR/e1LPxcQ3PXZRj0ZjJ5pQNhO/kaEmrrVCmzEU0=
+	b=queYmYCONviwdN0jeqAmJI7RUxW0i8eGq8dElqrJSUsG/okUQZZHZSN1Qm0eV2ajq
+	 zzw5FYL5WSqCSWz/IEkNQZOSgike/a+W060ZkbUGpuqWJnnKPMt9pbVXob02+fL5Gz
+	 BTOg1QDRzeRFhtGUl7yx1TidBCpBMqNBFSzqox74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Subject: [PATCH 5.15 380/402] crypto: qat - Fix ADF_DEV_RESET_SYNC memory leak
-Date: Thu, 13 Jun 2024 13:35:37 +0200
-Message-ID: <20240613113316.964111907@linuxfoundation.org>
+	Fan Yu <fan.yu9@zte.com.cn>,
+	xu xin <xu.xin16@zte.com.cn>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 381/402] net/ipv6: Fix route deleting failure when metric equals 0
+Date: Thu, 13 Jun 2024 13:35:38 +0200
+Message-ID: <20240613113317.004270834@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -50,71 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: xu xin <xu.xin16@zte.com.cn>
 
-commit d3b17c6d9dddc2db3670bc9be628b122416a3d26 upstream.
+commit bb487272380d120295e955ad8acfcbb281b57642 upstream.
 
-Using completion_done to determine whether the caller has gone
-away only works after a complete call.  Furthermore it's still
-possible that the caller has not yet called wait_for_completion,
-resulting in another potential UAF.
+Problem
+=========
+After commit 67f695134703 ("ipv6: Move setting default metric for routes"),
+we noticed that the logic of assigning the default value of fc_metirc
+changed in the ioctl process. That is, when users use ioctl(fd, SIOCADDRT,
+rt) with a non-zero metric to add a route,  then they may fail to delete a
+route with passing in a metric value of 0 to the kernel by ioctl(fd,
+SIOCDELRT, rt). But iproute can succeed in deleting it.
 
-Fix this by making the caller use cancel_work_sync and then freeing
-the memory safely.
+As a reference, when using iproute tools by netlink to delete routes with
+a metric parameter equals 0, like the command as follows:
 
-Fixes: 7d42e097607c ("crypto: qat - resolve race condition during AER recovery")
-Cc: <stable@vger.kernel.org> #6.8+
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+	ip -6 route del fe80::/64 via fe81::5054:ff:fe11:3451 dev eth0 metric 0
+
+the user can still succeed in deleting the route entry with the smallest
+metric.
+
+Root Reason
+===========
+After commit 67f695134703 ("ipv6: Move setting default metric for routes"),
+When ioctl() pass in SIOCDELRT with a zero metric, rtmsg_to_fib6_config()
+will set a defalut value (1024) to cfg->fc_metric in kernel, and in
+ip6_route_del() and the line 4074 at net/ipv3/route.c, it will check by
+
+	if (cfg->fc_metric && cfg->fc_metric != rt->fib6_metric)
+		continue;
+
+and the condition is true and skip the later procedure (deleting route)
+because cfg->fc_metric != rt->fib6_metric. But before that commit,
+cfg->fc_metric is still zero there, so the condition is false and it
+will do the following procedure (deleting).
+
+Solution
+========
+In order to keep a consistent behaviour across netlink() and ioctl(), we
+should allow to delete a route with a metric value of 0. So we only do
+the default setting of fc_metric in route adding.
+
+CC: stable@vger.kernel.org # 5.4+
+Fixes: 67f695134703 ("ipv6: Move setting default metric for routes")
+Co-developed-by: Fan Yu <fan.yu9@zte.com.cn>
+Signed-off-by: Fan Yu <fan.yu9@zte.com.cn>
+Signed-off-by: xu xin <xu.xin16@zte.com.cn>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240514201102055dD2Ba45qKbLlUMxu_DTHP@zte.com.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/qat/qat_common/adf_aer.c |   19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ net/ipv6/route.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/crypto/qat/qat_common/adf_aer.c
-+++ b/drivers/crypto/qat/qat_common/adf_aer.c
-@@ -95,8 +95,7 @@ static void adf_device_reset_worker(stru
- 	if (adf_dev_init(accel_dev) || adf_dev_start(accel_dev)) {
- 		/* The device hanged and we can't restart it so stop here */
- 		dev_err(&GET_DEV(accel_dev), "Restart device failed\n");
--		if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
--		    completion_done(&reset_data->compl))
-+		if (reset_data->mode == ADF_DEV_RESET_ASYNC)
- 			kfree(reset_data);
- 		WARN(1, "QAT: device restart failed. Device is unusable\n");
- 		return;
-@@ -104,16 +103,8 @@ static void adf_device_reset_worker(stru
- 	adf_dev_restarted_notify(accel_dev);
- 	clear_bit(ADF_STATUS_RESTARTING, &accel_dev->status);
- 
--	/*
--	 * The dev is back alive. Notify the caller if in sync mode
--	 *
--	 * If device restart will take a more time than expected,
--	 * the schedule_reset() function can timeout and exit. This can be
--	 * detected by calling the completion_done() function. In this case
--	 * the reset_data structure needs to be freed here.
--	 */
--	if (reset_data->mode == ADF_DEV_RESET_ASYNC ||
--	    completion_done(&reset_data->compl))
-+	/* The dev is back alive. Notify the caller if in sync mode */
-+	if (reset_data->mode == ADF_DEV_RESET_ASYNC)
- 		kfree(reset_data);
- 	else
- 		complete(&reset_data->compl);
-@@ -148,10 +139,10 @@ static int adf_dev_aer_schedule_reset(st
- 		if (!timeout) {
- 			dev_err(&GET_DEV(accel_dev),
- 				"Reset device timeout expired\n");
-+			cancel_work_sync(&reset_data->reset_work);
- 			ret = -EFAULT;
--		} else {
--			kfree(reset_data);
- 		}
-+		kfree(reset_data);
- 		return ret;
- 	}
- 	return 0;
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -4456,7 +4456,7 @@ static void rtmsg_to_fib6_config(struct
+ 		.fc_table = l3mdev_fib_table_by_index(net, rtmsg->rtmsg_ifindex) ?
+ 			 : RT6_TABLE_MAIN,
+ 		.fc_ifindex = rtmsg->rtmsg_ifindex,
+-		.fc_metric = rtmsg->rtmsg_metric ? : IP6_RT_PRIO_USER,
++		.fc_metric = rtmsg->rtmsg_metric,
+ 		.fc_expires = rtmsg->rtmsg_info,
+ 		.fc_dst_len = rtmsg->rtmsg_dst_len,
+ 		.fc_src_len = rtmsg->rtmsg_src_len,
+@@ -4486,6 +4486,9 @@ int ipv6_route_ioctl(struct net *net, un
+ 	rtnl_lock();
+ 	switch (cmd) {
+ 	case SIOCADDRT:
++		/* Only do the default setting of fc_metric in route adding */
++		if (cfg.fc_metric == 0)
++			cfg.fc_metric = IP6_RT_PRIO_USER;
+ 		err = ip6_route_add(&cfg, GFP_KERNEL, NULL);
+ 		break;
+ 	case SIOCDELRT:
 
 
