@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8100256458;
-	Thu, 13 Jun 2024 11:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C186142911;
+	Thu, 13 Jun 2024 11:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279251; cv=none; b=il408MvjZr3nJcUZO2qzi+dan0prUnlH8dW9VlHbY3F69oYNcueAdEHc7ikKo+WVEtbavIULcE39aN83UVA3Q1ifAI4Er/16Ix5d4M+WMshAGePj2OvIUcvL5zCHQnoCosJRs5WjXWfwF9cCL/KxyTzXe0uArZO5uYeDAd+/tp4=
+	t=1718279254; cv=none; b=f7CTfLJSaeSEB6mzXhUUPomizT7skukpBGgY1CKFHnqymTTcf+53VUJbwxZ4dLZBDdaMkg4bgRZbLCb/FP3ZN1xlpIIUxfy4//646QS9x4uj9xcmccGbmh77C+wpw5ojFej5IK3Kr8jV6+2tC63AsBQHzTnTo+MIHKsb+MUHqDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279251; c=relaxed/simple;
-	bh=8wxlCXn8rDlGonzQ1DJzMQbj1zDhFtVgEgJ6diULvH4=;
+	s=arc-20240116; t=1718279254; c=relaxed/simple;
+	bh=H9SKgpk0zBbI/ydxMPjmLuMvxceMXNW8k5t/Eve/4X0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oi0yOGaCDlSpDTTbTCPaD2q3tR4OFQ/2mWpy94QIc08NTrglddMC8hlsS8r3GbNIWDnYiB95UZANhVjxFERAnoHcA6RVv6PS8zKmzBoQbAqOs0UZcWy61l6wCbnqAB18cS3JTa6wzLPZrQAcQC1+lajpHrtRhulmK6OJiRcqVxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WtEFheX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tDCxFQVDqNMX4ahz1KWSeqaqW73jNDqLO/z2wNbvaOPRKZxyXCVzeum/0crNHMqwkSA1RzmMmGqH1u2n65x/5KxCDSGanNrE8LF2biMIbGpFNnjBu8lw8yARK2nGNKA63BdYWHjKMne4g26eJFcUzU8wWPx/djOub5DsA+NNeY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNYiPsMK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WtEFheX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06374C2BBFC;
-	Thu, 13 Jun 2024 11:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNYiPsMK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BDFC2BBFC;
+	Thu, 13 Jun 2024 11:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718279251;
-	bh=8wxlCXn8rDlGonzQ1DJzMQbj1zDhFtVgEgJ6diULvH4=;
+	s=korg; t=1718279254;
+	bh=H9SKgpk0zBbI/ydxMPjmLuMvxceMXNW8k5t/Eve/4X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1WtEFheXI7FOGWVWoSIShwNtU1CGlfsre2HneKYcsyW1VJfn7Fp0+jb0X8vC4Uyow
-	 NiNSx4QmY6zKhDPtYw3OmUOIezioZIlMd1FL5lvSnsk4jC5lp5nqUfPY2oXSWH5pP+
-	 3w5BUiOhGcoVlqtc8uwLw+W9LTqNSYE3WZoIV0Ao=
+	b=SNYiPsMKSt32vLFS/ZZ5lQUPDFj3q6QaAUk6CozJG8T0c6LwW9TcTMZbdluQ20I2Y
+	 Y/J8exHifodSqeRcxcOZMvIhA1Z+5dF6Oe78nVJN2s4lHjE7s/D3KB/GwfvJs0Zk5a
+	 w4MBhHeigPyVp2S5PUiHyW+yWPFRIjxNwLfn3kdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.9 013/157] btrfs: qgroup: fix initialization of auto inherit array
-Date: Thu, 13 Jun 2024 13:32:18 +0200
-Message-ID: <20240613113227.919719616@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.9 014/157] wifi: rtw89: correct aSIFSTime for 6GHz band
+Date: Thu, 13 Jun 2024 13:32:19 +0200
+Message-ID: <20240613113227.958947828@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.389465891@linuxfoundation.org>
 References: <20240613113227.389465891@linuxfoundation.org>
@@ -51,38 +49,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit 0e39c9e524479b85c1b83134df0cfc6e3cb5353a upstream.
+commit f506e3ee547669cd96842e03c8a772aa7df721fa upstream.
 
-The "i++" was accidentally left out so it just sets qgids[0] over and
-over.
+aSIFSTime is 10us for 2GHz band and 16us for 5GHz and 6GHz bands.
+Originally, it doesn't consider 6GHz band and use wrong value, so correct
+it accordingly.
 
-This can lead to unexpected problems, as the groups[1:] would be all 0,
-leading to later find_qgroup_rb() unable to find a qgroup and cause
-snapshot creation failure.
-
-Fixes: 5343cd9364ea ("btrfs: qgroup: simple quota auto hierarchy for nested subvolumes")
-CC: stable@vger.kernel.org # 6.7+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://msgid.link/20240430020515.8399-1-pkshih@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/qgroup.c |    2 +-
+ drivers/net/wireless/realtek/rtw89/mac80211.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -3129,7 +3129,7 @@ static int qgroup_auto_inherit(struct bt
- 	qgids = res->qgroups;
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -318,7 +318,7 @@ static u8 rtw89_aifsn_to_aifs(struct rtw
+ 	u8 sifs;
  
- 	list_for_each_entry(qg_list, &inode_qg->groups, next_group)
--		qgids[i] = qg_list->group->qgroupid;
-+		qgids[i++] = qg_list->group->qgroupid;
+ 	slot_time = vif->bss_conf.use_short_slot ? 9 : 20;
+-	sifs = chan->band_type == RTW89_BAND_5G ? 16 : 10;
++	sifs = chan->band_type == RTW89_BAND_2G ? 10 : 16;
  
- 	*inherit = res;
- 	return 0;
+ 	return aifsn * slot_time + sifs;
+ }
 
 
