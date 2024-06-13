@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D045161;
-	Thu, 13 Jun 2024 12:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADE0161;
+	Thu, 13 Jun 2024 12:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718281959; cv=none; b=mXyAroK4Bha/pVwqi/TAegXPF4YHSoiJ8Pb2pJMxcnnmF3LwUm/OKeHGq1k/I9HWbLhy0CBTEggEIuSvV9kVtnfU5NXjSmlB7oa7JyKH3swxcu6vJS0+lfF1hqX4ozdiLUZyddzD5XlXcLiH8p/1gd1k3eniM8k+rdATedbWQ88=
+	t=1718281962; cv=none; b=mESkrzvV4NVmN2PQeNscT0LhtjXO+nDptbHxrVCGYOxTaJYtcUvCix9rhs8Yx4/mT74ivvA0ZOEzJwuK8XnSBBVWMub/chXIjB71bKMIn02nr5SafkKOnK08K1b8nF3nMjZumF7glq+htW//MTU/ZrYJ2u0/lK7l/A+WBlQGWnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718281959; c=relaxed/simple;
-	bh=2m64ye5IGMeAy8rdBK9h3I0N87Cu2Se99ZYRbo1hIms=;
+	s=arc-20240116; t=1718281962; c=relaxed/simple;
+	bh=rIZeeGQoHYYTfn3bVX2XBFcT9UdRBfMMLuz2PiXrLek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xm7SceQg4IFaaoXxyc3zKAJz9PwxaALmR4IvOaklUxiILbFAsDJDxxE+Dn9zj8tr2nSedgS7TKXcOT+BT2ac2Xf/p7C9o3r4Vy1hd7u9P8P82FcNCkN9bz5qJOpAvkJbWsBUKDyNBxXWMbHMT/c2QFk/UmUFP9zOqpb+tBMwLKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTZa/gsz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NUAkrzkELbl0hnC74+2ea9cLpAIgGAkcR2iook1CBNpC55+UpgkIismVQJkMo+BMpMvW14LOJU6s1o2Bg+IGVkeo7+yT4qqT3+7NDOFktMqSMgGgPHWJuE/xuO0Cej1hjNzj1C+2/BVEFWK6ooQ8SmZaWgxMSy+PPicnVesDKvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEAEfoEP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTZa/gsz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14249C2BBFC;
-	Thu, 13 Jun 2024 12:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEAEfoEP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045C9C2BBFC;
+	Thu, 13 Jun 2024 12:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718281959;
-	bh=2m64ye5IGMeAy8rdBK9h3I0N87Cu2Se99ZYRbo1hIms=;
+	s=korg; t=1718281962;
+	bh=rIZeeGQoHYYTfn3bVX2XBFcT9UdRBfMMLuz2PiXrLek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTZa/gsze8rI3+KWlbO4HvID5sQB8dpiElOFQmxZy3pd+h1Oo7ADa5x2SAV/bT3ga
-	 DD6qKZQAoqay1NigPGJoSn8QEagh1Gp5Mam+VOUU3rpNnZxxr/8CstUzMgsAlk5R25
-	 pyPoYmBNaWPZ1/KIcOc3nSi/0eh+Ls1reiWzKwf0=
+	b=tEAEfoEP/lj8Wp/uBUT6w3JV2IbScmpcPWSQ1vvtkFA1m1b0ZRXUzgI+tiLoMTuwe
+	 EJgE17Yui6sMTmRLGzuLS9dh6axMluqwfPt/w23IMgKcXma6BZQJ2kwelZw+oV33MW
+	 wuquS8Pkx2aBCjv1UlcQwbQZPkcZyCE8/sE57sBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Steve Glendinning <steve.glendinning@shawell.net>,
-	UNGLinuxDriver@microchip.com,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 113/402] net: usb: smsc95xx: stop lying about skb->truesize
-Date: Thu, 13 Jun 2024 13:31:10 +0200
-Message-ID: <20240613113306.541276017@linuxfoundation.org>
+Subject: [PATCH 5.15 085/402] wifi: ath10k: populate board data for WCN3990
+Date: Thu, 13 Jun 2024 13:30:42 +0200
+Message-ID: <20240613113305.451685667@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -54,85 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d50729f1d60bca822ef6d9c1a5fb28d486bd7593 ]
+[ Upstream commit f1f1b5b055c9f27a2f90fd0f0521f5920e9b3c18 ]
 
-Some usb drivers try to set small skb->truesize and break
-core networking stacks.
+Specify board data size (and board.bin filename) for the WCN3990
+platform.
 
-In this patch, I removed one of the skb->truesize override.
-
-I also replaced one skb_clone() by an allocation of a fresh
-and small skb, to get minimally sized skbs, like we did
-in commit 1e2c61172342 ("net: cdc_ncm: reduce skb truesize
-in rx path") and 4ce62d5b2f7a ("net: usb: ax88179_178a:
-stop lying about skb->truesize")
-
-v3: also fix a sparse error ( https://lore.kernel.org/oe-kbuild-all/202405091310.KvncIecx-lkp@intel.com/ )
-v2: leave the skb_trim() game because smsc95xx_rx_csum_offload()
-    needs the csum part. (Jakub)
-    While we are it, use get_unaligned() in smsc95xx_rx_csum_offload().
-
-Fixes: 2f7ca802bdae ("net: Add SMSC LAN9500 USB2.0 10/100 ethernet adapter driver")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steve Glendinning <steve.glendinning@shawell.net>
-Cc: UNGLinuxDriver@microchip.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240509083313.2113832-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
+Fixes: 03a72288c546 ("ath10k: wmi: add hw params entry for wcn3990")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240130-wcn3990-board-fw-v1-1-738f7c19a8c8@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/smsc95xx.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath10k/core.c      | 3 +++
+ drivers/net/wireless/ath/ath10k/hw.h        | 1 +
+ drivers/net/wireless/ath/ath10k/targaddrs.h | 3 +++
+ 3 files changed, 7 insertions(+)
 
-diff --git a/drivers/net/usb/smsc95xx.c b/drivers/net/usb/smsc95xx.c
-index 5f962f58ff496..10fae3989fbdb 100644
---- a/drivers/net/usb/smsc95xx.c
-+++ b/drivers/net/usb/smsc95xx.c
-@@ -1785,9 +1785,11 @@ static int smsc95xx_reset_resume(struct usb_interface *intf)
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index eca24a61165ee..4a93c415db07b 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -640,6 +640,9 @@ static const struct ath10k_hw_params ath10k_hw_params_list[] = {
+ 		.max_spatial_stream = 4,
+ 		.fw = {
+ 			.dir = WCN3990_HW_1_0_FW_DIR,
++			.board = WCN3990_HW_1_0_BOARD_DATA_FILE,
++			.board_size = WCN3990_BOARD_DATA_SZ,
++			.board_ext_size = WCN3990_BOARD_EXT_DATA_SZ,
+ 		},
+ 		.sw_decrypt_mcast_mgmt = true,
+ 		.hw_ops = &wcn3990_ops,
+diff --git a/drivers/net/wireless/ath/ath10k/hw.h b/drivers/net/wireless/ath/ath10k/hw.h
+index 591ef7416b613..0d8c8e948bb5a 100644
+--- a/drivers/net/wireless/ath/ath10k/hw.h
++++ b/drivers/net/wireless/ath/ath10k/hw.h
+@@ -132,6 +132,7 @@ enum qca9377_chip_id_rev {
+ /* WCN3990 1.0 definitions */
+ #define WCN3990_HW_1_0_DEV_VERSION	ATH10K_HW_WCN3990
+ #define WCN3990_HW_1_0_FW_DIR		ATH10K_FW_DIR "/WCN3990/hw1.0"
++#define WCN3990_HW_1_0_BOARD_DATA_FILE "board.bin"
  
- static void smsc95xx_rx_csum_offload(struct sk_buff *skb)
- {
--	skb->csum = *(u16 *)(skb_tail_pointer(skb) - 2);
-+	u16 *csum_ptr = (u16 *)(skb_tail_pointer(skb) - 2);
+ #define ATH10K_FW_FILE_BASE		"firmware"
+ #define ATH10K_FW_API_MAX		6
+diff --git a/drivers/net/wireless/ath/ath10k/targaddrs.h b/drivers/net/wireless/ath/ath10k/targaddrs.h
+index ec556bb88d658..ba37e6c7ced08 100644
+--- a/drivers/net/wireless/ath/ath10k/targaddrs.h
++++ b/drivers/net/wireless/ath/ath10k/targaddrs.h
+@@ -491,4 +491,7 @@ struct host_interest {
+ #define QCA4019_BOARD_DATA_SZ	  12064
+ #define QCA4019_BOARD_EXT_DATA_SZ 0
+ 
++#define WCN3990_BOARD_DATA_SZ	  26328
++#define WCN3990_BOARD_EXT_DATA_SZ 0
 +
-+	skb->csum = (__force __wsum)get_unaligned(csum_ptr);
- 	skb->ip_summed = CHECKSUM_COMPLETE;
--	skb_trim(skb, skb->len - 2);
-+	skb_trim(skb, skb->len - 2); /* remove csum */
- }
- 
- static int smsc95xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
-@@ -1845,25 +1847,22 @@ static int smsc95xx_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 				if (dev->net->features & NETIF_F_RXCSUM)
- 					smsc95xx_rx_csum_offload(skb);
- 				skb_trim(skb, skb->len - 4); /* remove fcs */
--				skb->truesize = size + sizeof(struct sk_buff);
- 
- 				return 1;
- 			}
- 
--			ax_skb = skb_clone(skb, GFP_ATOMIC);
-+			ax_skb = netdev_alloc_skb_ip_align(dev->net, size);
- 			if (unlikely(!ax_skb)) {
- 				netdev_warn(dev->net, "Error allocating skb\n");
- 				return 0;
- 			}
- 
--			ax_skb->len = size;
--			ax_skb->data = packet;
--			skb_set_tail_pointer(ax_skb, size);
-+			skb_put(ax_skb, size);
-+			memcpy(ax_skb->data, packet, size);
- 
- 			if (dev->net->features & NETIF_F_RXCSUM)
- 				smsc95xx_rx_csum_offload(ax_skb);
- 			skb_trim(ax_skb, ax_skb->len - 4); /* remove fcs */
--			ax_skb->truesize = size + sizeof(struct sk_buff);
- 
- 			usbnet_skb_return(dev, ax_skb);
- 		}
+ #endif /* __TARGADDRS_H__ */
 -- 
 2.43.0
 
