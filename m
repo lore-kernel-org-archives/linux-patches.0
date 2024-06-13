@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E662D2F55;
-	Thu, 13 Jun 2024 12:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA711C32;
+	Thu, 13 Jun 2024 12:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282917; cv=none; b=jygQSHNyWjV8HCr6ova1i2ewpOTydWtF6GS6jhJb9fKj+fIQTAUo1EJzEiJkdQgTkoxBbk5IXbL+oVWCWbbnK+9v/vvZAJxuXwkYIixidKlK100/An44kYhm6cnRozRn+JKnklk02O2qs8dX+M6wiQ0BVhxrfcanqPqB5CiCxF0=
+	t=1718282920; cv=none; b=gMF3EHf4z0tW9wO7woRqh3c4H/TdaYeHyjPNTdRj7On0AcDOgNG8bKx5lwKjjAFGABdS0csg6s5YsKbRMeZyRK+A/PsLnLt8bCfP61MF88aEm40xR3YAfLzQ6NnvsRnbOFv8Lw+hbQy2fiNTWcPnXhA/JMHolzjjuQf6Fi2G7jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282917; c=relaxed/simple;
-	bh=1u+JFDBejGDXKopOGhjun4MTCTlp2kbLlGZyNRQIKzY=;
+	s=arc-20240116; t=1718282920; c=relaxed/simple;
+	bh=kfnYECqkozsAQjHem5xSAkvFCb8hYjqrvjd8axuLc9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjS0F/CgPpp4phoZBNiNWXNkwFNzj3vKMu7mQRyXcJCYiF/NyxJBzaN45vr3BuDknpUmEjqDbJAp0cldL5/ioPGY9qsnjyx3PCq2qGZc11vItDagQ8ExmHuDLdzYBaGGxDqB0G+S3bcJFppHmUuXrZz2HsmOu6Eb5YoDES7Lp3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMgnbQNZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mjFU696Kke1L25fFXYRBnLuExbEWfif7T7BpiRLJtgpFQQY7ZrYED9PDKXHdRs6nDEIBlU7CAhGGxRIYjWdGvqhVUpbHNUd019T4c0LTOutWQ8VaWstIaD5zA6a9M1J3djxNDY4smyCbV1VLLKWASlOg504k8MQX9bTI+4w5UpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiD7svLT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMgnbQNZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3A7C2BBFC;
-	Thu, 13 Jun 2024 12:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiD7svLT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647A9C2BBFC;
+	Thu, 13 Jun 2024 12:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282916;
-	bh=1u+JFDBejGDXKopOGhjun4MTCTlp2kbLlGZyNRQIKzY=;
+	s=korg; t=1718282919;
+	bh=kfnYECqkozsAQjHem5xSAkvFCb8hYjqrvjd8axuLc9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LMgnbQNZZAUvcb+VLEorZlpEtLC7XsJjUWMyloxcGHr8YB9YEa1g/C7WA/K8MsIQh
-	 0b+TnGMttopzDMlobxL0DFRfsvwztD8sVEGnTHCWvdGJ7NQJsWVhWZE53dkziDtkP3
-	 rKbeiqcohQnwpTXcTuDVqZFV+/ivfJmiIvZkw4nU=
+	b=UiD7svLTxe2AxYOPqbi1qQTLwGs5u8c4M6AmI2KaIKJ4NeDKSdWq5G8f7+GLak2xS
+	 IMpmwYEZ8BQArbnK1thommNcs9Mg/CP3yowZDC9blfzViqK5TX12+QivDnIqxSa3/t
+	 Tp3NKTDxcZXFykTyANejA8kkWAAEyVQZug+hgwoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.1 37/85] media: v4l2-core: hold videodev_lock until dev reg, finishes
-Date: Thu, 13 Jun 2024 13:35:35 +0200
-Message-ID: <20240613113215.579559103@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.1 20/85] wifi: rtw89: correct aSIFSTime for 6GHz band
+Date: Thu, 13 Jun 2024 13:35:18 +0200
+Message-ID: <20240613113214.923003617@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113214.134806994@linuxfoundation.org>
 References: <20240613113214.134806994@linuxfoundation.org>
@@ -50,50 +49,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit 1ed4477f2ea4743e7c5e1f9f3722152d14e6eeb1 upstream.
+commit f506e3ee547669cd96842e03c8a772aa7df721fa upstream.
 
-After the new V4L2 device node was registered, some additional
-initialization was done before the device node was marked as
-'registered'. During the time between creating the device node
-and marking it as 'registered' it was possible to open the
-device node, which would return -ENODEV since the 'registered'
-flag was not yet set.
+aSIFSTime is 10us for 2GHz band and 16us for 5GHz and 6GHz bands.
+Originally, it doesn't consider 6GHz band and use wrong value, so correct
+it accordingly.
 
-Hold the videodev_lock mutex from just before the device node
-is registered until the 'registered' flag is set. Since v4l2_open
-will take the same lock, it will wait until this registration
-process is finished. This resolves this race condition.
-
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Cc: <stable@vger.kernel.org>      # for vi4.18 and up
+Cc: stable@vger.kernel.org
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://msgid.link/20240430020515.8399-1-pkshih@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-dev.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/realtek/rtw89/mac80211.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-dev.c
-+++ b/drivers/media/v4l2-core/v4l2-dev.c
-@@ -1033,8 +1033,10 @@ int __video_register_device(struct video
- 	vdev->dev.devt = MKDEV(VIDEO_MAJOR, vdev->minor);
- 	vdev->dev.parent = vdev->dev_parent;
- 	dev_set_name(&vdev->dev, "%s%d", name_base, vdev->num);
-+	mutex_lock(&videodev_lock);
- 	ret = device_register(&vdev->dev);
- 	if (ret < 0) {
-+		mutex_unlock(&videodev_lock);
- 		pr_err("%s: device_register failed\n", __func__);
- 		goto cleanup;
- 	}
-@@ -1054,6 +1056,7 @@ int __video_register_device(struct video
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -263,7 +263,7 @@ static u8 rtw89_aifsn_to_aifs(struct rtw
+ 	u8 sifs;
  
- 	/* Part 6: Activate this minor. The char device can now be used. */
- 	set_bit(V4L2_FL_REGISTERED, &vdev->flags);
-+	mutex_unlock(&videodev_lock);
+ 	slot_time = vif->bss_conf.use_short_slot ? 9 : 20;
+-	sifs = chan->band_type == RTW89_BAND_5G ? 16 : 10;
++	sifs = chan->band_type == RTW89_BAND_2G ? 10 : 16;
  
- 	return 0;
- 
+ 	return aifsn * slot_time + sifs;
+ }
 
 
