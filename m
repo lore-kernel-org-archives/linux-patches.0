@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25DD2F55;
-	Thu, 13 Jun 2024 12:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DA4144304;
+	Thu, 13 Jun 2024 12:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282772; cv=none; b=Bm97YojbA1vjv2faPLyOOJ+GG2mfLToPb3kLQxXGvjvrqxzMnLJRTwU+1gvEB6D2jJDvLGbJ9zLJlg8Q9ncYBTjEZYFb78z62RYsYEUkHSQkLSAOcV8yaCOtJtQxUq5P3Iz4tLR9+CksX3sNiMT0/le7s7sILWVcEI/H1dWEQLk=
+	t=1718282776; cv=none; b=lJaWld+gk2E1GCIAYy9z/JXRZrQelXZjU5JHWPnTxFa6nq9fMMbZ/ciSpJeNRLlalQoO24DyQYIlXef0EJfYutvtBygSFOTELRqkp8RCgkY3d66f/X8edD4r6h91c9AEIRZ0kXr1uVSRHlkuQAq51T7RrNfStJTJkRqqZhrYSP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282772; c=relaxed/simple;
-	bh=46FJehp5H7a7jl+FG0NiF9NEzI8F3ujSOA8qadkQHI0=;
+	s=arc-20240116; t=1718282776; c=relaxed/simple;
+	bh=Glxh2HRMnyk+2ZQpTBHemrnCNm4eSvvrPNylHQfbD9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iO1MZL23GGiqAKP5z4zcROxJMqUl0Tu/52fXYhszlm1M+QenFeqluW1rbN1T5Ho6xC6Zr6GLKpBI0RwII8OJ+3R5dCb1Vc8qrhcpduqpQUJRQab503cq43kkAfKDEd4co6bufnfJrt/6bucft5tnBc0U+P1Y0wUtuCEuWCb5G6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NN4Ef5su; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UBBPUSYKb/jFnX3DnL7Wkt7rxTpBIVTGQmouk7T95CPba+QIjB77E9dKA3ToJ7Bd3vV3Z5JRhnxrCYM346Pm3SDp4AHrwyD0i/EnBPG/vhO2r77FfKyIq9mqsk5r0JMVLqWA4I5KVCdzN71I7gCFSCPQ6riImR4yY5HTiAjUxUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alSMgurl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NN4Ef5su"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABE4C2BBFC;
-	Thu, 13 Jun 2024 12:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alSMgurl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CAABC2BBFC;
+	Thu, 13 Jun 2024 12:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282772;
-	bh=46FJehp5H7a7jl+FG0NiF9NEzI8F3ujSOA8qadkQHI0=;
+	s=korg; t=1718282775;
+	bh=Glxh2HRMnyk+2ZQpTBHemrnCNm4eSvvrPNylHQfbD9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NN4Ef5su6Jjd5UPR1f4iyX2QoZmVjAkR0sYi68bM+hr4JVPk3FC8EU/XWzX/F81hH
-	 XXsHPrQb+MFbKELoXMGVoQswKG5vreeZIM/NYhUwehAusTbFGAi+akSqDyEN6JVOxZ
-	 /BFbSzx5nO7CxDFkUKDYVV51R33RJNX9Xs33To4E=
+	b=alSMgurlbgjYLZnm3uuSlS2o2W5w83TsAgAdPApFcUJusbHyB4EB3iUI6UjCsQpRz
+	 t2ixO5MPKgh/rT0zL90e3xvoJ9VQR1N8j8gu8sWrc+2OXBHxaWdGvwXA1G+gCNcSR9
+	 8oL9QDz1pAFzQe4lX/v6eNL1o+ATIsIWR8f9SR4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 5.15 383/402] intel_th: pci: Add Meteor Lake-S CPU support
-Date: Thu, 13 Jun 2024 13:35:40 +0200
-Message-ID: <20240613113317.083757884@linuxfoundation.org>
+	Mike Gilbert <floppym@gentoo.org>,
+	Andreas Larsson <andreas@gaisler.com>
+Subject: [PATCH 5.15 392/402] sparc: move struct termio to asm/termios.h
+Date: Thu, 13 Jun 2024 13:35:49 +0200
+Message-ID: <20240613113317.444766789@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -51,34 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+From: Mike Gilbert <floppym@gentoo.org>
 
-commit a4f813c3ec9d1c32bc402becd1f011b3904dd699 upstream.
+commit c32d18e7942d7589b62e301eb426b32623366565 upstream.
 
-Add support for the Trace Hub in Meteor Lake-S CPU.
+Every other arch declares struct termio in asm/termios.h, so make sparc
+match them.
 
-Signed-off-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20240429130119.1518073-15-alexander.shishkin@linux.intel.com
+Resolves a build failure in the PPP software package, which includes
+both bits/ioctl-types.h via sys/ioctl.h (glibc) and asm/termbits.h.
+
+Closes: https://bugs.gentoo.org/918992
+Signed-off-by: Mike Gilbert <floppym@gentoo.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Tested-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20240306171149.3843481-1-floppym@gentoo.org
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/pci.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/sparc/include/uapi/asm/termbits.h |   10 ----------
+ arch/sparc/include/uapi/asm/termios.h  |    9 +++++++++
+ 2 files changed, 9 insertions(+), 10 deletions(-)
 
---- a/drivers/hwtracing/intel_th/pci.c
-+++ b/drivers/hwtracing/intel_th/pci.c
-@@ -290,6 +290,11 @@ static const struct pci_device_id intel_
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
- 	},
- 	{
-+		/* Meteor Lake-S CPU */
-+		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0xae24),
-+		.driver_data = (kernel_ulong_t)&intel_th_2x,
-+	},
-+	{
- 		/* Raptor Lake-S */
- 		PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x7a26),
- 		.driver_data = (kernel_ulong_t)&intel_th_2x,
+--- a/arch/sparc/include/uapi/asm/termbits.h
++++ b/arch/sparc/include/uapi/asm/termbits.h
+@@ -13,16 +13,6 @@ typedef unsigned int    tcflag_t;
+ typedef unsigned long   tcflag_t;
+ #endif
+ 
+-#define NCC 8
+-struct termio {
+-	unsigned short c_iflag;		/* input mode flags */
+-	unsigned short c_oflag;		/* output mode flags */
+-	unsigned short c_cflag;		/* control mode flags */
+-	unsigned short c_lflag;		/* local mode flags */
+-	unsigned char c_line;		/* line discipline */
+-	unsigned char c_cc[NCC];	/* control characters */
+-};
+-
+ #define NCCS 17
+ struct termios {
+ 	tcflag_t c_iflag;		/* input mode flags */
+--- a/arch/sparc/include/uapi/asm/termios.h
++++ b/arch/sparc/include/uapi/asm/termios.h
+@@ -40,5 +40,14 @@ struct winsize {
+ 	unsigned short ws_ypixel;
+ };
+ 
++#define NCC 8
++struct termio {
++	unsigned short c_iflag;		/* input mode flags */
++	unsigned short c_oflag;		/* output mode flags */
++	unsigned short c_cflag;		/* control mode flags */
++	unsigned short c_lflag;		/* local mode flags */
++	unsigned char c_line;		/* line discipline */
++	unsigned char c_cc[NCC];	/* control characters */
++};
+ 
+ #endif /* _UAPI_SPARC_TERMIOS_H */
 
 
