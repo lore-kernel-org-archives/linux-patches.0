@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA5F142E9C;
-	Thu, 13 Jun 2024 12:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AEA17FD;
+	Thu, 13 Jun 2024 12:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282637; cv=none; b=ccWbeC4/dm3ACIqc/DKU8at5e+I9zSo2CQ+fOFmBTBrQ+KaleiIALwijno3qMGzb+VCn17Vbiv/8XMVoF2/6WoCzpbY+rJ+tObW8LrDP7EJsq/4vgq5r/Zn45xLLbUWxDZSclGoZl2/lid0ekieh7IYqfb+9n1OaCj0rzR3WqX0=
+	t=1718282640; cv=none; b=Tv0f6NhsgvVNkPwLSANHGUwg8RjUB/zXJOnb1lmT7b9AM0v9kUOPI1VrtEdklLuB76DomeEFAINDIUOx7lhN8uNWsGS84w53sbJSPTinMID21mrOFyu/xz6wamaplv6Z2kRUcMs9TRsHSXNU+DeHKqeE8iN1LMLe99/BttiCJtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282637; c=relaxed/simple;
-	bh=zcGNALwnVIXrrJKLsV8GGaSo3u6SKftm+ilkomPAnfo=;
+	s=arc-20240116; t=1718282640; c=relaxed/simple;
+	bh=AtBA0DwF/9ocoL3GSIz8g6plWA15RSEgKytU7G+GqcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=am9/oBj9ooYNmuZ2nOGINVR6d0hGfa9RAs41J1DfA7+ogGjKHib4xhqwWQI9Bqto4JIfaJOdtGVZjrc2jOM5yIH40qBFXl0VIRIvYTzc0rLNVRAK0uvGXQh5HLzZJXPEhbbn2GHWeiWY/VjTmNxDOM94c9x2Fey3uDgRAre6BkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+FzJFu4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XGprE1MKiJyvvmzwQhNWGa6wZyKzEzZ91bnKbtW9MB8ElayUzTXnc4zLB9BNhUfiWhh+6484s+DKjcY+ltnF+eBNDvhckxi4eP0S/zPU5zHMTdpXyUsLk4FwR2U0xXyfBR2+9WCA8DO1JyLI4VstRxk5eg8ku1tEquGqgGAnz2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5LxF+KT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+FzJFu4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5C8C4AF1D;
-	Thu, 13 Jun 2024 12:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5LxF+KT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D280DC2BBFC;
+	Thu, 13 Jun 2024 12:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718282637;
-	bh=zcGNALwnVIXrrJKLsV8GGaSo3u6SKftm+ilkomPAnfo=;
+	s=korg; t=1718282640;
+	bh=AtBA0DwF/9ocoL3GSIz8g6plWA15RSEgKytU7G+GqcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+FzJFu4M9D08E8gPRoJMsjkU9NQEqx0fVquNagEul0orCSqozQhAsSfAl7tSyy8u
-	 jdwoi2izUWhFs1xeZHk2K5QpxXswpNvkWRB8b3T3tjXYSPhb9WZAXIUaOYPWeN8/RO
-	 m+yscVmGCM9cNS9v2yPkrJSwIEPwN/Q6L+ZX9Ylg=
+	b=m5LxF+KTwR8FJmfdE8hdz7xohl+hKXlBn3FlspXVtSXY+s3tK07dKnPKVKtnrzs5T
+	 TmtnVFFkZ2x4/HxtAo7dUUm/SHXm1t5FET2XFmDeSQ6iVdwqjcAOT5m/QtOzUFJ3Br
+	 YFdbxzbKUO8Nh07SQC9xCmvcW/+ZHVmztpJ0i2S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>,
-	Markus Suvanto <markus.suvanto@gmail.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 344/402] afs: Dont cross .backup mountpoint from backup volume
-Date: Thu, 13 Jun 2024 13:35:01 +0200
-Message-ID: <20240613113315.550730770@linuxfoundation.org>
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 318/402] net:fec: Add fec_enet_deinit()
+Date: Thu, 13 Jun 2024 13:34:35 +0200
+Message-ID: <20240613113314.544173065@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113302.116811394@linuxfoundation.org>
 References: <20240613113302.116811394@linuxfoundation.org>
@@ -55,50 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Dionne <marc.dionne@auristor.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit 29be9100aca2915fab54b5693309bc42956542e5 upstream.
+[ Upstream commit bf0497f53c8535f99b72041529d3f7708a6e2c0d ]
 
-Don't cross a mountpoint that explicitly specifies a backup volume
-(target is <vol>.backup) when starting from a backup volume.
+When fec_probe() fails or fec_drv_remove() needs to release the
+fec queue and remove a NAPI context, therefore add a function
+corresponding to fec_enet_init() and call fec_enet_deinit() which
+does the opposite to release memory and remove a NAPI context.
 
-It it not uncommon to mount a volume's backup directly in the volume
-itself.  This can cause tools that are not paying attention to get
-into a loop mounting the volume onto itself as they attempt to
-traverse the tree, leading to a variety of problems.
-
-This doesn't prevent the general case of loops in a sequence of
-mountpoints, but addresses a common special case in the same way
-as other afs clients.
-
-Reported-by: Jan Henrik Sylvester <jan.henrik.sylvester@uni-hamburg.de>
-Link: http://lists.infradead.org/pipermail/linux-afs/2024-May/008454.html
-Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
-Link: http://lists.infradead.org/pipermail/linux-afs/2024-February/008074.html
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/768760.1716567475@warthog.procyon.org.uk
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 59d0f7465644 ("net: fec: init multi queue date structure")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240524050528.4115581-1-xiaolei.wang@windriver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/mntpt.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/freescale/fec_main.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/afs/mntpt.c
-+++ b/fs/afs/mntpt.c
-@@ -146,6 +146,11 @@ static int afs_mntpt_set_params(struct f
- 		put_page(page);
- 		if (ret < 0)
- 			return ret;
-+
-+		/* Don't cross a backup volume mountpoint from a backup volume */
-+		if (src_as->volume && src_as->volume->type == AFSVL_BACKVOL &&
-+		    ctx->type == AFSVL_BACKVOL)
-+			return -ENODEV;
- 	}
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 972808777f308..f02376555ed45 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3627,6 +3627,14 @@ static int fec_enet_init(struct net_device *ndev)
+ 	return ret;
+ }
  
++static void fec_enet_deinit(struct net_device *ndev)
++{
++	struct fec_enet_private *fep = netdev_priv(ndev);
++
++	netif_napi_del(&fep->napi);
++	fec_enet_free_queue(ndev);
++}
++
+ #ifdef CONFIG_OF
+ static int fec_reset_phy(struct platform_device *pdev)
+ {
+@@ -4023,6 +4031,7 @@ fec_probe(struct platform_device *pdev)
+ 	fec_enet_mii_remove(fep);
+ failed_mii_init:
+ failed_irq:
++	fec_enet_deinit(ndev);
+ failed_init:
+ 	fec_ptp_stop(pdev);
+ failed_reset:
+@@ -4085,6 +4094,7 @@ fec_drv_remove(struct platform_device *pdev)
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
++	fec_enet_deinit(ndev);
+ 	free_netdev(ndev);
  	return 0;
+ }
+-- 
+2.43.0
+
 
 
