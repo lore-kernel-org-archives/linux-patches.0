@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460161448E0;
-	Thu, 13 Jun 2024 12:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FAF145350;
+	Thu, 13 Jun 2024 12:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280650; cv=none; b=vCWhY/NmI3MkOr9l7ueDSpwQrJPj+Zm6GfmJmc4xXnEcJb4PQ3o6JVPn0SsFftWbh0hFF2vnvKl23+DEV5/mcbhvHROYfsacWYJu2V+qMPDBLX6lCqwhl2Ju+wBn2iEpvu+apcN0weE5NwYe1DQjCgXpGgqoBcuOEBPcwy/OgUE=
+	t=1718280653; cv=none; b=aeW5VVpM6L0YisLtOrWVBH4Wcv99tQV8zF/llJvzXFXy0K9709JljdLg43jPpD6NGNj8HoxqYHTHUoAOpg/4fC21JObvme7IYAC0yjk/oPqM2XNQTiAa4cwnVemsosRn0jymZWO4Gxbjkk1GGOBcRoo+9trkBb+8XsRD9+EvLnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280650; c=relaxed/simple;
-	bh=H1xElcmmTfhAVHIiEWoHypkGTPoRdsjIOjd6G4JBrJI=;
+	s=arc-20240116; t=1718280653; c=relaxed/simple;
+	bh=J85dj1RIIoXWHlU2N3sRv26zqQmQZTQl2fiHWjUmt/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JlrlJgOXcDFMJBCX6r9hA+HtheN/QM58mT+Fl4JtHxobWdf6P6H6PajuprJ/jiXBqi3Tqz5jBBRisEpno/a0lDrT53K0UC7+qee34E1Pad81tYGo1fK2//PYUinrXI/fDLxNPKnnZV4Mitvu+3xqUdau4Djf31xXotGVMZoodbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQBmb72k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jF7nMWigqwDpCphplLsqQ+u1ZNXvTO5siI74YbEepPuUIpMiHFD1X/uAbzaJ1eyB47CW/DfBYLz192FbJH79k0flqGt/HVv1sCisRS8+huZudz0Ewv/+hnzPxtBMKO2QIP6o57vpbw6Fa057oD2TFptf1HbzD0Ic6t5oj7madiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJ+Noc6V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQBmb72k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C58C2BBFC;
-	Thu, 13 Jun 2024 12:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJ+Noc6V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F96C2BBFC;
+	Thu, 13 Jun 2024 12:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280650;
-	bh=H1xElcmmTfhAVHIiEWoHypkGTPoRdsjIOjd6G4JBrJI=;
+	s=korg; t=1718280653;
+	bh=J85dj1RIIoXWHlU2N3sRv26zqQmQZTQl2fiHWjUmt/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tQBmb72kjHbs18qEDByok7+VYMwCTpF528aNkdR/+3+DXxXkrr/dz4utR6jlS2hL9
-	 P7YHL1bKH3Cqn322xtPHMPlROAz35FykLdg3vJdGGh9w1dljTwtmk6tcIe0d5bSxIC
-	 6vqTiRoKsVPw+C+U95cCINVPbOVEtrD99IhCjWMo=
+	b=GJ+Noc6VqgPK3MBwIRTl6YEY6hABSbXvG0fnTJWMYcmH5RjhgHYU+y7gs9EzEBl7J
+	 YZ9+/1nacQ1L22/dhOSS1Sj5r0XqS97S/3DWFwjMQqybXiBqWEB85F2/IJWS8X5Isj
+	 UhV+zFElOKbBAeDKY8n5s5NL7bAVq46/ap2OieVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Subject: [PATCH 6.6 125/137] EDAC/igen6: Convert PCIBIOS_* return codes to errnos
-Date: Thu, 13 Jun 2024 13:35:05 +0200
-Message-ID: <20240613113228.148570100@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.6 126/137] nfs: fix undefined behavior in nfs_block_bits()
+Date: Thu, 13 Jun 2024 13:35:06 +0200
+Message-ID: <20240613113228.187356096@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -45,55 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit f8367a74aebf88dc8b58a0db6a6c90b4cb8fc9d3 upstream.
+commit 3c0a2e0b0ae661457c8505fecc7be5501aa7a715 upstream.
 
-errcmd_enable_error_reporting() uses pci_{read,write}_config_word()
-that return PCIBIOS_* codes. The return code is then returned all the
-way into the probe function igen6_probe() that returns it as is. The
-probe functions, however, should return normal errnos.
+Shifting *signed int* typed constant 1 left by 31 bits causes undefined
+behavior. Specify the correct *unsigned long* type by using 1UL instead.
 
-Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
-errno before returning it from errcmd_enable_error_reporting().
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
 
-Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240527132236.13875-2-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/igen6_edac.c |    4 ++--
+ fs/nfs/internal.h |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/edac/igen6_edac.c
-+++ b/drivers/edac/igen6_edac.c
-@@ -627,7 +627,7 @@ static int errcmd_enable_error_reporting
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -710,9 +710,9 @@ unsigned long nfs_block_bits(unsigned lo
+ 	if ((bsize & (bsize - 1)) || nrbitsp) {
+ 		unsigned char	nrbits;
  
- 	rc = pci_read_config_word(imc->pdev, ERRCMD_OFFSET, &errcmd);
- 	if (rc)
--		return rc;
-+		return pcibios_err_to_errno(rc);
- 
- 	if (enable)
- 		errcmd |= ERRCMD_CE | ERRSTS_UE;
-@@ -636,7 +636,7 @@ static int errcmd_enable_error_reporting
- 
- 	rc = pci_write_config_word(imc->pdev, ERRCMD_OFFSET, errcmd);
- 	if (rc)
--		return rc;
-+		return pcibios_err_to_errno(rc);
- 
- 	return 0;
- }
+-		for (nrbits = 31; nrbits && !(bsize & (1 << nrbits)); nrbits--)
++		for (nrbits = 31; nrbits && !(bsize & (1UL << nrbits)); nrbits--)
+ 			;
+-		bsize = 1 << nrbits;
++		bsize = 1UL << nrbits;
+ 		if (nrbitsp)
+ 			*nrbitsp = nrbits;
+ 	}
 
 
