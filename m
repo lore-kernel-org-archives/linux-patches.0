@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A273143878;
-	Thu, 13 Jun 2024 11:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C30A14388E;
+	Thu, 13 Jun 2024 11:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278873; cv=none; b=lHnTnQIQYyHzPFEMwtngQ5ciMlJPt5akGqVu56eekNIY2VeBFU1X3du3LdE2JZ1kLmFj5jDZEePRtRQZ0RRm4WwgcAlJOdpwJOROpPE02eW9WXLfp6kbz+NxHM/TvLmPGTW36rqRSzkiJ3P5X9s1osR4Tpuk8vR4RkXX4iiGs2g=
+	t=1718278876; cv=none; b=aB5RyousV5pwylzzj9h53RKc3ain1OLY6ipVR1HeLNkqqPj5odCkCddQ83lzbYj996ph6hD/dQcW38b05xQEqZrDqwmwrBu24Egoi9f2KCvFse4CNIo2fzzTT3n/NTrnCBnqLc90Cv4FzmVgpVA0Un/mMkMicV5CrJO5j2lciao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278873; c=relaxed/simple;
-	bh=heswE5XBfzDcENl0uUE67M65dqXOATbH+jSYAFFO7DQ=;
+	s=arc-20240116; t=1718278876; c=relaxed/simple;
+	bh=DcMWXBjhnO5/011n5xySqPTSxvESynmLui1G7CRy6Qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KyNo7azdZX708/fTshk8L+YQrDiQTS8PqAgs9O1tQ6iRxhStCRL8a+53srKhChxqql/Foe/V/UbTWAwwgouhesOO+fh6Bmut4b/mH99MAXJfC32WKpREXB81lZlp7g4Q6xOtMJW9900Af6y5H+hnhO9yn4/XVoPEINeAnsVyO/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtwN+AdM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ws9W08g2QDMZ16GB2EgomD5hZtOEppg096qkmJtQPNgkBoyWhk7K45ER/QN/Em7N4VcRSW9CIg1j2luBG/jLCBX7gFP1O3TSVyvHyVT85o0Zi3xqFVUqFEqvP+xfpQx8Yz8jvU9f83K/4PoO3PDKrY6Pe+JKOW+2ZEhoKYhQ6J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCjlofae; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtwN+AdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B836C2BBFC;
-	Thu, 13 Jun 2024 11:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCjlofae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0E7C4AF1A;
+	Thu, 13 Jun 2024 11:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278873;
-	bh=heswE5XBfzDcENl0uUE67M65dqXOATbH+jSYAFFO7DQ=;
+	s=korg; t=1718278876;
+	bh=DcMWXBjhnO5/011n5xySqPTSxvESynmLui1G7CRy6Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UtwN+AdMBBcqjZyHN6Uxgl4L/VaK2lmHrWTJDzad6KmR40BMApvSm4ebCCk71jdcI
-	 o4uxlU7+rcENtPk4D7fQhhcrldwG+zZs7CA1Nc1o5ZBSRUk+kwu04c9eaNazYmPszG
-	 7OAO98Ab1Z+G9B6Agv9xzNHdWgvh4xPzLX3XRtSM=
+	b=UCjlofaeb1T3ByoY6oxk+WQLGGxr0IJ3HD5VKc6JWEVC6QWgaGCVp50qQTQWXAGcU
+	 bWFS4CeA/u4Rky2plv1uiUgai82UAQPlnziID5eUs2JOcVymFbcIj/oq342wt33amj
+	 f93lfOt3fDkguYTY8sUGmaXmSGgsF+5nGkndvPFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Liaw <edliaw@google.com>,
-	Cyrill Gorcunov <gorcunov@gmail.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Chris Wulff <chris.wulff@biamp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 081/213] selftests/kcmp: remove unused open mode
-Date: Thu, 13 Jun 2024 13:32:09 +0200
-Message-ID: <20240613113231.136019449@linuxfoundation.org>
+Subject: [PATCH 4.19 099/213] usb: gadget: u_audio: Clear uac pointer when freed.
+Date: Thu, 13 Jun 2024 13:32:27 +0200
+Message-ID: <20240613113231.827681818@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -54,40 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Liaw <edliaw@google.com>
+From: Chris Wulff <Chris.Wulff@biamp.com>
 
-[ Upstream commit eb59a58113717df04b8a8229befd8ab1e5dbf86e ]
+[ Upstream commit a2cf936ebef291ef7395172b9e2f624779fb6dc0 ]
 
-Android bionic warns that open modes are ignored if O_CREAT or O_TMPFILE
-aren't specified.  The permissions for the file are set above:
+This prevents use of a stale pointer if functions are called after
+g_cleanup that shouldn't be. This doesn't fix any races, but converts
+a possibly silent kernel memory corruption into an obvious NULL pointer
+dereference report.
 
-	fd1 = open(kpath, O_RDWR | O_CREAT | O_TRUNC, 0644);
-
-Link: https://lkml.kernel.org/r/20240429234610.191144-1-edliaw@google.com
-Fixes: d97b46a64674 ("syscalls, x86: add __NR_kcmp syscall")
-Signed-off-by: Edward Liaw <edliaw@google.com>
-Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: eb9fecb9e69b ("usb: gadget: f_uac2: split out audio core")
+Signed-off-by: Chris Wulff <chris.wulff@biamp.com>
+Link: https://lore.kernel.org/stable/CO1PR17MB54194226DA08BFC9EBD8C163E1172%40CO1PR17MB5419.namprd17.prod.outlook.com
+Link: https://lore.kernel.org/r/CO1PR17MB54194226DA08BFC9EBD8C163E1172@CO1PR17MB5419.namprd17.prod.outlook.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kcmp/kcmp_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_audio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/kcmp/kcmp_test.c b/tools/testing/selftests/kcmp/kcmp_test.c
-index 25110c7c0b3ed..d7a8e321bb16b 100644
---- a/tools/testing/selftests/kcmp/kcmp_test.c
-+++ b/tools/testing/selftests/kcmp/kcmp_test.c
-@@ -91,7 +91,7 @@ int main(int argc, char **argv)
- 		ksft_print_header();
- 		ksft_set_plan(3);
+diff --git a/drivers/usb/gadget/function/u_audio.c b/drivers/usb/gadget/function/u_audio.c
+index 3136a239e7828..f7c610b7e3fd3 100644
+--- a/drivers/usb/gadget/function/u_audio.c
++++ b/drivers/usb/gadget/function/u_audio.c
+@@ -624,6 +624,8 @@ void g_audio_cleanup(struct g_audio *g_audio)
+ 		return;
  
--		fd2 = open(kpath, O_RDWR, 0644);
-+		fd2 = open(kpath, O_RDWR);
- 		if (fd2 < 0) {
- 			perror("Can't open file");
- 			ksft_exit_fail();
+ 	uac = g_audio->uac;
++	g_audio->uac = NULL;
++
+ 	card = uac->card;
+ 	if (card)
+ 		snd_card_free_when_closed(card);
 -- 
 2.43.0
 
