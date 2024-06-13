@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7001BDDB1;
-	Thu, 13 Jun 2024 11:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29191DDB1;
+	Thu, 13 Jun 2024 11:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718278654; cv=none; b=n4wuQo/wJn9+X4rDz9GNwLbMNOdOo5z3AXh8ez1+KoTIUZT1jBlZ+fqiIoktIMaPPi0Vq+B5LOmhgK9rfPrlLoZnjw7vOGZwePaWWYaSVWT/h4CgGxI7V7H5lF1uddztUxYKOFRicMlchFcdSJpnw7qdT8xe2lsGYovkwZGCvgk=
+	t=1718278657; cv=none; b=bJ8/w2wHJmWdpl7yUKj+pdqiffNEW0SZLRhsMgGH23HqXlELziWKe+ofCgRULTlwxbCZIIKMcvChdybNNGTna4CtJuBc9uRChaC0qYzO0213gZMLxJmgcFZ9ztnB9W1MLdS3YYNGH/0oKSAbBr5hoXeaDdKuuEDHZvo6r6tfbI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718278654; c=relaxed/simple;
-	bh=V3LDj/5aJYUc/pVPcoX+GKjSLU3yMQ8SkgsMLXSZJFs=;
+	s=arc-20240116; t=1718278657; c=relaxed/simple;
+	bh=GO0nNY1AX4qun/0+ZCP0/L22D+uD44wje98yFF4uE0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCMJkweEvAIvVhFy9Go6e12qwWBx2bOI5cZOR9bZHobE/GISz1pdF1VvwGzjPHEpz6rkIwU4zc4vwK6YFwlRtdln6z0GgK2HLHqTR0/ADSmtRZJKqh84pLQz4DG0MEei+DhA12ALhwB4NMk3soNKHbvbCZfV2Izs09GxdOF6ssU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mS/YoD12; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=m/g+bJmC9Nvmee/JJKZ5yTithymM+LRGmZFqwzUFhInTsFWiGwaSElASaiPrqcH89QDyyh4rX/VRmyMjhNdtvgKBlR8tR6xzYyc9K754fh6nLOoBgPhla6z8ugOgXfakvz1cXOCnxfrgB3X18xQtuwDff/dVcq7FpPTqhnLXeLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyEV1SHH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mS/YoD12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980DFC32786;
-	Thu, 13 Jun 2024 11:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyEV1SHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B371C2BBFC;
+	Thu, 13 Jun 2024 11:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718278654;
-	bh=V3LDj/5aJYUc/pVPcoX+GKjSLU3yMQ8SkgsMLXSZJFs=;
+	s=korg; t=1718278657;
+	bh=GO0nNY1AX4qun/0+ZCP0/L22D+uD44wje98yFF4uE0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mS/YoD12iS8SB2Mj0vENZJXgTGSWV9H3Xl8yy4r9iENMjHnhhheMXtwGtr6AUHtq8
-	 gEhoGDjgkKzUWWTx+Qpg10p9hqO419wEd5Xj0Pml1pYoqGY6kucx3ezvLkffouaK+Q
-	 x/CGpxdqP2Kgw0pC3y3Lwh3gO7Xs7xHevHVyiGtM=
+	b=DyEV1SHHwQUUTA9DyBYxI9cE+yDlh3hZi5kl46kt1EXDUgfLkois2G7IQmYkG6nWm
+	 h0WPNoubOXTP4jUGtX1G0ulh4C+EVxZnhJxIeYUyXVBLE7ntytvNBBwhP/wgZuy9mt
+	 r/gBW5uSkVbNQJGR6UHvHkR0LeW2PPMViurCblg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 025/213] power: supply: cros_usbpd: provide ID table for avoiding fallback match
-Date: Thu, 13 Jun 2024 13:31:13 +0200
-Message-ID: <20240613113228.966061503@linuxfoundation.org>
+Subject: [PATCH 4.19 026/213] HSI: omap_ssi_core: Convert to platform remove callback returning void
+Date: Thu, 13 Jun 2024 13:31:14 +0200
+Message-ID: <20240613113229.004890558@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113227.969123070@linuxfoundation.org>
 References: <20240613113227.969123070@linuxfoundation.org>
@@ -48,69 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 0f8678c34cbfdc63569a9b0ede1fe235ec6ec693 ]
+[ Upstream commit 94eabddc24b3ec2d9e0ff77e17722a2afb092155 ]
 
-Instead of using fallback driver name match, provide ID table[1] for the
-primary match.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-[1]: https://elixir.bootlin.com/linux/v6.8/source/drivers/base/platform.c#L1353
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Prashant Malani <pmalani@chromium.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20240401030052.2887845-4-tzungbi@kernel.org
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/bc6b1caafa977346b33c1040d0f8e616bc0457bf.1712756364.git.u.kleine-koenig@pengutronix.de
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cros_usbpd-charger.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/hsi/controllers/omap_ssi_core.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/power/supply/cros_usbpd-charger.c b/drivers/power/supply/cros_usbpd-charger.c
-index 74b5914abbf7e..123a5572fe5b1 100644
---- a/drivers/power/supply/cros_usbpd-charger.c
-+++ b/drivers/power/supply/cros_usbpd-charger.c
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2014 - 2018 Google, Inc
-  */
+diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
+index 6595f34e51aad..366117e51f418 100644
+--- a/drivers/hsi/controllers/omap_ssi_core.c
++++ b/drivers/hsi/controllers/omap_ssi_core.c
+@@ -581,7 +581,7 @@ static int ssi_probe(struct platform_device *pd)
+ 	return err;
+ }
  
-+#include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/mfd/cros_ec.h>
- #include <linux/mfd/cros_ec_commands.h>
-@@ -530,16 +531,22 @@ static int cros_usbpd_charger_resume(struct device *dev)
- static SIMPLE_DEV_PM_OPS(cros_usbpd_charger_pm_ops, NULL,
- 			 cros_usbpd_charger_resume);
+-static int ssi_remove(struct platform_device *pd)
++static void ssi_remove(struct platform_device *pd)
+ {
+ 	struct hsi_controller *ssi = platform_get_drvdata(pd);
  
-+static const struct platform_device_id cros_usbpd_charger_id[] = {
-+	{ DRV_NAME, 0 },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(platform, cros_usbpd_charger_id);
-+
- static struct platform_driver cros_usbpd_charger_driver = {
- 	.driver = {
- 		.name = DRV_NAME,
- 		.pm = &cros_usbpd_charger_pm_ops,
- 	},
--	.probe = cros_usbpd_charger_probe
-+	.probe = cros_usbpd_charger_probe,
-+	.id_table = cros_usbpd_charger_id,
- };
+@@ -595,8 +595,6 @@ static int ssi_remove(struct platform_device *pd)
+ 	platform_set_drvdata(pd, NULL);
  
- module_platform_driver(cros_usbpd_charger_driver);
+ 	pm_runtime_disable(&pd->dev);
+-
+-	return 0;
+ }
  
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("ChromeOS EC USBPD charger");
--MODULE_ALIAS("platform:" DRV_NAME);
+ #ifdef CONFIG_PM
+@@ -652,7 +650,7 @@ MODULE_DEVICE_TABLE(of, omap_ssi_of_match);
+ 
+ static struct platform_driver ssi_pdriver = {
+ 	.probe = ssi_probe,
+-	.remove	= ssi_remove,
++	.remove_new = ssi_remove,
+ 	.driver	= {
+ 		.name	= "omap_ssi",
+ 		.pm     = DEV_PM_OPS,
 -- 
 2.43.0
 
