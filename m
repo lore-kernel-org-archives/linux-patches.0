@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06315144D3C;
-	Thu, 13 Jun 2024 12:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00598144D21;
+	Thu, 13 Jun 2024 12:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718280459; cv=none; b=SA0V9rxVdnRcQHGGn7NW5mxKENtggqjhCPjnWLMutjosMH0f8JFCVZZirun0aZDbrdQdsJDLqR1fH4PVCe9kymuv0VUsNZ0VJ+kMdu0+Z3ISC4XhVFogGdB1fDupEQZNl9YdpGUngKkaIJjdesSckMBKx5LNfTXyeCMnwu4WDOE=
+	t=1718280462; cv=none; b=U5suZj8yssuoQG1kjZyljn2nVweXF5IU9MgrFA1jkFsWxKP9Cmp9PfdLw2uhmspRYEo7kn5TUf7BjzTEURAGoFf1KoJ5R7jYYn1dN/L2s1EXgP0DzcfAtb7h0vDFGIgRmRHEVNSAGatpJPA+G5eupUrmUkXGlbr6WqpxLyw0wHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718280459; c=relaxed/simple;
-	bh=ojAj5Yv4nmqlmh83q5Kw1e/tiRcZYb8iJ+MEo0cqjK8=;
+	s=arc-20240116; t=1718280462; c=relaxed/simple;
+	bh=sH0/jnnTXKMR58clrCqMbubBr2tB2CPAFlbmBBp8QBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imd2nbg52TPFufIJhieHinp1kMSQAjUx/e6tpRw7rGu3huNqBy5W9oop4gBcr+OCSyOaU4jktGyMoFBTHvc5BnQLJWwBOigMxDwMVY4t9yR+UvculAbfkQ4IsFhgrVW9IJVmIB/UGASjbilmrpDbEhehCQuctaQdwlJaBBTciOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1VHkz8p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HpxLdUNl58Ye11Xti76ppMHGbpMQe+Z8xWafX1WddzrlNChYLJ8q5nPNrj2q/P7o4u2+/7hjrTj+BUuZiejUWVwDhB+Z1WM2+3UvnEf0o5+ktpQ9vORgEAxhmTWTNw1p6ANR9A/dMq1RHgtszBVF6bCdLt+3ebyISdYjQitet0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7ATSxYP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1VHkz8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803B3C2BBFC;
-	Thu, 13 Jun 2024 12:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7ATSxYP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736FBC2BBFC;
+	Thu, 13 Jun 2024 12:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1718280458;
-	bh=ojAj5Yv4nmqlmh83q5Kw1e/tiRcZYb8iJ+MEo0cqjK8=;
+	s=korg; t=1718280461;
+	bh=sH0/jnnTXKMR58clrCqMbubBr2tB2CPAFlbmBBp8QBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l1VHkz8pQhc1hxi7YLtGtqPUKYHhrui30OK2ycD5/VLBFOGgWk8K8XUN3LnShKqdT
-	 WhmttFpEoDe5TGjG5ors3IhGAXhQQrTBD0QOjGscfJxfeaSS+WYkvZ4uddFE2z3HWK
-	 NbsA9V1WElZBIMbw+6Q3bqvJEC8BKkHre/JiwLd8=
+	b=p7ATSxYPKIa5zihPpGmNgbEgfkNII5LZ/+6KK+IEyPPUONNlLiqhtR54H2edVv5TR
+	 U5B8zFkSbqKgqYt6ZiFz6nSvbV2nTPGa5wyCRRd9UA5qo5iBru9++C1RMm8RpgKS3g
+	 YDXQQg3a7TIJjZqtmqUj7zlvcHQ8tKZgF0tggDVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Santosh Shukla <Santosh.Shukla@amd.com>,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 060/137] KVM: SVM: WARN on vNMI + NMI window iff NMIs are outright masked
-Date: Thu, 13 Jun 2024 13:34:00 +0200
-Message-ID: <20240613113225.631292183@linuxfoundation.org>
+	Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.6 061/137] KVM: arm64: Fix AArch32 register narrowing on userspace write
+Date: Thu, 13 Jun 2024 13:34:01 +0200
+Message-ID: <20240613113225.669379953@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240613113223.281378087@linuxfoundation.org>
 References: <20240613113223.281378087@linuxfoundation.org>
@@ -52,86 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit b4bd556467477420ee3a91fbcba73c579669edc6 upstream.
+commit 947051e361d551e0590777080ffc4926190f62f2 upstream.
 
-When requesting an NMI window, WARN on vNMI support being enabled if and
-only if NMIs are actually masked, i.e. if the vCPU is already handling an
-NMI.  KVM's ABI for NMIs that arrive simultanesouly (from KVM's point of
-view) is to inject one NMI and pend the other.  When using vNMI, KVM pends
-the second NMI simply by setting V_NMI_PENDING, and lets the CPU do the
-rest (hardware automatically sets V_NMI_BLOCKING when an NMI is injected).
+When userspace writes to one of the core registers, we make
+sure to narrow the corresponding GPRs if PSTATE indicates
+an AArch32 context.
 
-However, if KVM can't immediately inject an NMI, e.g. because the vCPU is
-in an STI shadow or is running with GIF=0, then KVM will request an NMI
-window and trigger the WARN (but still function correctly).
+The code tries to check whether the context is EL0 or EL1 so
+that it narrows the correct registers. But it does so by checking
+the full PSTATE instead of PSTATE.M.
 
-Whether or not the GIF=0 case makes sense is debatable, as the intent of
-KVM's behavior is to provide functionality that is as close to real
-hardware as possible.  E.g. if two NMIs are sent in quick succession, the
-probability of both NMIs arriving in an STI shadow is infinitesimally low
-on real hardware, but significantly larger in a virtual environment, e.g.
-if the vCPU is preempted in the STI shadow.  For GIF=0, the argument isn't
-as clear cut, because the window where two NMIs can collide is much larger
-in bare metal (though still small).
+As a consequence, and if we are restoring an AArch32 EL0 context
+in a 64bit guest, and that PSTATE has *any* bit set outside of
+PSTATE.M, we narrow *all* registers instead of only the first 15,
+destroying the 64bit state.
 
-That said, KVM should not have divergent behavior for the GIF=0 case based
-on whether or not vNMI support is enabled.  And KVM has allowed
-simultaneous NMIs with GIF=0 for over a decade, since commit 7460fb4a3400
-("KVM: Fix simultaneous NMIs").  I.e. KVM's GIF=0 handling shouldn't be
-modified without a *really* good reason to do so, and if KVM's behavior
-were to be modified, it should be done irrespective of vNMI support.
+Obviously, this is not something the guest is likely to enjoy.
 
-Fixes: fa4c027a7956 ("KVM: x86: Add support for SVM's Virtual NMI")
+Correctly masking PSTATE to only evaluate PSTATE.M fixes it.
+
+Fixes: 90c1f934ed71 ("KVM: arm64: Get rid of the AArch32 register mapping code")
+Reported-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Cc: Santosh Shukla <Santosh.Shukla@amd.com>
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20240522021435.1684366-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Acked-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20240524141956.1450304-2-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |   27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ arch/arm64/kvm/guest.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -3856,16 +3856,27 @@ static void svm_enable_nmi_window(struct
- 	struct vcpu_svm *svm = to_svm(vcpu);
+--- a/arch/arm64/kvm/guest.c
++++ b/arch/arm64/kvm/guest.c
+@@ -276,7 +276,7 @@ static int set_core_reg(struct kvm_vcpu
+ 	if (*vcpu_cpsr(vcpu) & PSR_MODE32_BIT) {
+ 		int i, nr_reg;
  
- 	/*
--	 * KVM should never request an NMI window when vNMI is enabled, as KVM
--	 * allows at most one to-be-injected NMI and one pending NMI, i.e. if
--	 * two NMIs arrive simultaneously, KVM will inject one and set
--	 * V_NMI_PENDING for the other.  WARN, but continue with the standard
--	 * single-step approach to try and salvage the pending NMI.
-+	 * If NMIs are outright masked, i.e. the vCPU is already handling an
-+	 * NMI, and KVM has not yet intercepted an IRET, then there is nothing
-+	 * more to do at this time as KVM has already enabled IRET intercepts.
-+	 * If KVM has already intercepted IRET, then single-step over the IRET,
-+	 * as NMIs aren't architecturally unmasked until the IRET completes.
-+	 *
-+	 * If vNMI is enabled, KVM should never request an NMI window if NMIs
-+	 * are masked, as KVM allows at most one to-be-injected NMI and one
-+	 * pending NMI.  If two NMIs arrive simultaneously, KVM will inject one
-+	 * NMI and set V_NMI_PENDING for the other, but if and only if NMIs are
-+	 * unmasked.  KVM _will_ request an NMI window in some situations, e.g.
-+	 * if the vCPU is in an STI shadow or if GIF=0, KVM can't immediately
-+	 * inject the NMI.  In those situations, KVM needs to single-step over
-+	 * the STI shadow or intercept STGI.
- 	 */
--	WARN_ON_ONCE(is_vnmi_enabled(svm));
-+	if (svm_get_nmi_mask(vcpu)) {
-+		WARN_ON_ONCE(is_vnmi_enabled(svm));
- 
--	if (svm_get_nmi_mask(vcpu) && !svm->awaiting_iret_completion)
--		return; /* IRET will cause a vm exit */
-+		if (!svm->awaiting_iret_completion)
-+			return; /* IRET will cause a vm exit */
-+	}
- 
- 	/*
- 	 * SEV-ES guests are responsible for signaling when a vCPU is ready to
+-		switch (*vcpu_cpsr(vcpu)) {
++		switch (*vcpu_cpsr(vcpu) & PSR_AA32_MODE_MASK) {
+ 		/*
+ 		 * Either we are dealing with user mode, and only the
+ 		 * first 15 registers (+ PC) must be narrowed to 32bit.
 
 
